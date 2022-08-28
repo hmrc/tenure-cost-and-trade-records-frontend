@@ -1,0 +1,75 @@
+@*
+ * Copyright 2022 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import org.joda.time.DateTime
+@import uk.gov.hmrc.govukfrontend.views.html.components._
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.button.Button
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
+
+@this(layout: Layout,
+        govukInput: GovukInput,
+        govukButton: GovukButton,
+        formWithCSRF: FormWithCSRF
+)
+
+@()(implicit request: Request[_], messages: Messages)
+
+@layout(
+  pageHeading = messages("login.heading"),
+  showBanner = true
+) {
+ <p class="govuk-body">@messages("label.letter")</p>
+
+ <form action="/tenure-cost-and-trade-records-frontend/test" method="get">
+
+
+  @govukInput(
+   Input(
+    id = "referenceNumber",
+    name = "referenceNumber",
+//    value = Some("referenceNumber"), //theForm("referenceNumber").value,
+    classes = "govuk-input--width-20",
+    label = Label(
+     content = Text(messages("label.referenceNumber"))
+    ),
+//    errorMessage =  theForm.errors.asTextErrorMessageForField("referenceNumber")
+   )
+  )
+
+  @govukInput(
+   Input(
+    id = "postcode",
+    name = "postcode",
+//    value = Some("postcode"), //theForm("postcode").value,
+    classes = "govuk-input--width-10",
+    label = Label(
+     content = Text(messages("label.postcode"))
+    ),
+//    errorMessage =  theForm.errors.asTextErrorMessageForField("postcode")
+   )
+  )
+
+
+ @govukButton(
+  Button(
+   inputType = Some("submit"),
+   content = Text(messages("button.label.continue")),
+
+  )
+ )
+  </form>
+}
+

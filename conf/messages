@@ -1,0 +1,27 @@
+# COMMON
+##############################
+site.service_name = Tenure cost and trade records
+gov.name = GOV.UK
+phase.beta = BETA
+phase.text = This is a new service – your <a href="{0}" class="govuk-link" target="_blank" id="betaFeedback">feedback</a> will help us to improve it.
+button.label.continue = Continue
+back.link.label = Back
+
+# Dummy Start Page
+##############################
+start.page.heading = Dummy Start Page
+start.desc = This is a dummy start gov.uk page. It is not shown to users in production but allows testing of the journey
+start.text = This is your new service
+start.button = Start now
+
+#LOGIN
+##############################
+login.heading = Enter your reference number
+label.letter = You’ll find your reference number and postcode in your rent and lease detail letter.
+label.referenceNumber = Reference number
+label.postcode = Postcode
+
+#LOGIN
+##############################
+test.heading = You are signed in
+test.text = Welcome
