@@ -1,0 +1,96 @@
+@*
+ * Copyright 2022 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import config.AppConfig
+@import uk.gov.hmrc.hmrcfrontend.views.html.helpers.{HmrcLayout, HmrcLanguageSelectHelper}
+@import uk.gov.hmrc.govukfrontend.views.html.components.{GovukPhaseBanner, GovukBackLink, GovukNotificationBanner}
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.phasebanner.PhaseBanner
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.backlink.BackLink
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.tag.Tag
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.{Text, HtmlContent}
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.notificationbanner.NotificationBanner
+@import play.api.Configuration
+
+@this(
+        appConfig: AppConfig,
+        hmrcLayout: HmrcLayout,
+        govukPhaseBanner: GovukPhaseBanner,
+        hmrcLanguageSelectHelper: HmrcLanguageSelectHelper,
+        govukBackLink: GovukBackLink,
+        govukNotificationBanner: GovukNotificationBanner,
+        configuration: Configuration
+)
+
+@(
+        pageTitle: Option[String] = None,
+        pageHeading: String,
+        theForm: Form[_] = null,
+        showBanner: Boolean = false,
+        showFeedback: Boolean = true,
+        showH1: Boolean = true,
+        backLinkUrl: Option[String] = None,
+        beforeContentBlock: Option[Html] = None
+)(contentBlock: Html)(implicit request: Request[_], messages: Messages)
+
+@beforeBLock = {
+ @if(showFeedback) {
+  @govukPhaseBanner(
+   PhaseBanner(
+    classes = "no-print",
+    tag = Option(Tag(Text(messages("phase.beta")))),
+    content = HtmlContent(messages("phase.text", s"dummy.url"))
+   )
+  )
+ }
+
+ @hmrcLanguageSelectHelper()
+
+ @backLinkUrl.map{ url =>
+  <div>@govukBackLink(
+   BackLink(
+    href = url,
+    content = Text(messages("back.link.label"))
+   )
+  )
+  </div>
+ }
+
+ @beforeContentBlock
+ }
+
+ @contentWithHeading = {
+ @if(showBanner && configuration.get[Boolean]("bannerNotice.enabled")) {
+  @govukNotificationBanner(NotificationBanner(
+   content = HtmlContent("<p class='govuk-notification-banner__heading'>" + configuration.get[String]("bannerNotice." + messages.lang.code + ".body") + "</p>"),
+   title = Text(configuration.get[String]("bannerNotice." + messages.lang.code + ".title"))
+  ))
+ }
+
+ @if(showH1){
+  <h1 class="govuk-heading-xl">@pageHeading</h1>
+ }
+ @contentBlock
+
+ }
+
+ @hmrcLayout(
+  pageTitle = Some(pageTitle.getOrElse(pageHeading) + " - " + messages("site.service_name") + " - " + messages("gov.name")),
+  serviceName = Some(messages("site.service_name")),
+  serviceUrl= Some(routes.LoginController.show.url),
+  isWelshTranslationAvailable = true,
+  beforeContentBlock = Option(beforeBLock)
+ )(contentWithHeading)
+
