@@ -21,6 +21,11 @@ import play.api.Configuration
 
 @Singleton
 class AppConfig @Inject()(config: Configuration) {
-//  val welshLanguageSupportEnabled: Boolean = config.getOptional[Boolean]("features.welsh-language-support").getOrElse(false)
+  lazy val startPageRedirect = getBoolean("startPageRedirect")
+  lazy val govukStartPage = getString("govukStartPage")
 
+  private def getString(key: String): String = config.getOptional[String](key).getOrElse(throw ConfigSettingMissing(key))
+  private def getBoolean(key: String): Boolean = config.getOptional[Boolean](key).getOrElse(throw ConfigSettingMissing(key))
 }
+
+case class ConfigSettingMissing(key: String) extends Exception(key)
