@@ -34,7 +34,7 @@
   Button(
    isStartButton = true,
    content = Text(messages("start.button")),
-   href = Some("http://localhost:9526/tenure-cost-and-trade-records-frontend/login")
+   href = Some(routes.LoginController.show().url)
   )
  )
 }
