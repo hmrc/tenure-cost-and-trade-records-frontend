@@ -2,12 +2,14 @@
 
 ->         /hmrc-frontend           hmrcfrontend.Routes
 
-GET        /assets/*file            controllers.Assets.versioned(path = "/public", file: Asset)
+GET         /assets/*file           controllers.Assets.versioned(path = "/public", file: Asset)
 # Dummy start page
-GET         /                        controllers.Application.index()
+GET         /                       controllers.Application.index()
 # Sign in page
 GET         /login                  controllers.LoginController.show()
 
-GET         /test                  controllers.LoginController.submit(referenceNumber: String, postcode: String)
+GET         /test                   controllers.LoginController.submit(referenceNumber: String, postcode: String)
 
 GET         /about-the-property     controllers.AboutThePropertyController.index()
+
+GET         /website-for-property   controllers.WebsiteForPropertyController.index()
