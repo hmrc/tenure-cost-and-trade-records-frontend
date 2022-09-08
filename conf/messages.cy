@@ -62,6 +62,13 @@ hint.nameCurrentOccupier = This should be the trading name of the business opera
 aboutProperty.desc1 = This should be the trading name of the business operating from the property
 label.propertyCurrentlyUsed = How is the property currently used?
 
+#WEBSITE FOR PROPERTY (USED ON 6010, 6011, 6015, 6016,6030, 6035, 6036, 6037, 6045)
+##############################
+websiteForProperty.header = About the property
+websiteForProperty.label = Does the business operating from the property have a website?
+label.yes = Oes
+label.no = Nac oes
+
 #6010 TYPES
 ##############################
 userType.occupierTrustee = Occupier or trustee for occupier
