@@ -1,6 +1,6 @@
 # COMMON
 ##############################
-site.service_name = Tenure cost and trade records
+site.service_name = Request for rental information
 gov.name = GOV.UK
 phase.beta = BETA
 phase.text = This is a new service – your <a href="{0}" class="govuk-link" target="_blank" id="betaFeedback">feedback</a> will help us to improve it.
