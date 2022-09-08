@@ -1,6 +1,6 @@
 #COMMON
 ##############################
-site.service_name = Tenure cost and trade records
+site.service_name = Request for rental information
 gov.name = GOV.UK
 phase.beta = BETA
 phase.text = Mae hwn yn wasanaeth newydd – bydd eich <a href="{0}" class="govuk-link" target="_blank" id="betaFeedback">adborth</a> yn ein helpu i’w wella
