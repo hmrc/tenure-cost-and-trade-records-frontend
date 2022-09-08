@@ -6,7 +6,6 @@ phase.beta = BETA
 phase.text = This is a new service – your <a href="{0}" class="govuk-link" target="_blank" id="betaFeedback">feedback</a> will help us to improve it.
 button.label.continue = Continue
 back.link.label = Back
-button.label.continue = Continue
 button.label.save = Save
 
 # Dummy Start Page
@@ -37,12 +36,12 @@ landing.desc3 = If you do not send the information within 56 days of getting the
 landing.warning = You could be taken to court if you submit false information
 landing.heading = What you’ll need
 landing.desc4 = Collect the following information before you begin:
-landing.list1 = the reference number from the letter the VOA sent you
-landing.list2 = your lease or agreement, including the current rent you pay, or any tenants’ details if you’re the owner
-landing.list3 = trading receipts for the last three financial years, or since you occupied the property
-landing.list4 = details of any sub-lettings or franchises
-landing.list5 = information about any recent changes to your rent or any rent-free periods
-landing.list6 = information about any changes you’ve made to the property
+landing.listItem1 = the reference number from the letter the VOA sent you
+landing.listItem2 = your lease or agreement, including the current rent you pay, or any tenants’ details if you’re the owner
+landing.listItem3 = trading receipts for the last three financial years, or since you occupied the property
+landing.listItem4 = details of any sub-lettings or franchises
+landing.listItem5 = information about any recent changes to your rent or any rent-free periods
+landing.listItem6 = information about any changes you’ve made to the property
 landing.desc5 = You do not have to complete the form in one go. You can save what you’ve done and return to finish it later on.
 
 #6010 ABOUT YOU
