@@ -47,7 +47,7 @@ landing.desc5 = You do not have to complete the form in one go. You can save wha
 #6010 ABOUT YOU
 ##############################
 aboutYou.header = About you
-aboutYou.desc1 = These should be the details of the person completing this. We’ll only use your contact details to update you about your enquiry.
+aboutYou.subheading = These should be the details of the person completing this.
 aboutYou.fullName = Full Name
 aboutYou.email = Email address
 aboutYou.telephone = Telephone number
@@ -66,6 +66,13 @@ label.propertyCurrentlyUsed = How is the property currently used?
 ##############################
 websiteForProperty.header = About the property
 label.websiteForProperty = Does the business operating from the property have a website?
+label.yes = Yes
+label.no = No
+
+#TENANCY LEASE AGREEMENT(USED ON 6010, 6015, 6016, 6030, 6032, 6033, 6034, 6035, 6036, 6037, 6038, 6043, 6049, 6056, 6057, 6066)
+##############################
+tenancyLeaseAgreement.header = About the property
+label.tenancyLeaseAgreement = Do you hold a tenancy, lease or agreement to occupy?
 label.yes = Yes
 label.no = No
 
