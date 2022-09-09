@@ -74,6 +74,11 @@ websiteForProperty.label = Does the business operating from the property have a 
 label.yes = Oes
 label.no = Nac oes
 
+#WEBSITE ADDRESS FOR PROPERTY (USED ON 6010, 6011, 6015, 6016,6030, 6035, 6036, 6037, 6045)
+##############################
+websiteAddressForProperty.header = About the property
+websiteAddressForProperty.label = What's the web address?
+
 #TENANCY LEASE AGREEMENT(USED ON 6010, 6015, 6016, 6030, 6032, 6033, 6034, 6035, 6036, 6037, 6038, 6043, 6049, 6056, 6057, 6066)
 ##############################
 websiteForProperty.header = About the property
