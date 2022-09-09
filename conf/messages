@@ -48,11 +48,16 @@ landing.desc5 = You do not have to complete the form in one go. You can save wha
 ##############################
 aboutYou.header = About you
 aboutYou.subheading = These should be the details of the person completing this.
+aboutYou.subheading2 = We will only use your contact details to update you about your enquiry.
 aboutYou.fullName = Full Name
 aboutYou.email = Email address
 aboutYou.telephone = Telephone number
-aboutYou.header2 = I am the
-aboutYou.desc2 = If you’re renting or leasing the property, even as a charity or non-profit organisation, you’re considered the occupier. If you’re both the owner and occupier, select ‘Owner or trustee for owner’.
+label.aboutYou = What is your relationship to the property?
+hint.aboutYou = If you'''re renting or leasing the property, even as a charity or non-profit organisation, you're considered the occupier. If you are both the owner and the occupier, select 'Owner or trustee for owner'.
+relationshipToProperty.occupierTrustee = Occupier or trustee for occupier
+relationshipToProperty.ownerTrustee = Owner or trustee for owner
+relationshipToProperty.occupier = Occupier’s agent
+relationshipToProperty.owner = Owner’s agent
 
 #6010 ABOUT THE PROPERTY
 ##############################
