@@ -69,6 +69,13 @@ websiteForProperty.label = Does the business operating from the property have a 
 label.yes = Oes
 label.no = Nac oes
 
+#TENANCY LEASE AGREEMENT(USED ON 6010, 6015, 6016, 6030, 6032, 6033, 6034, 6035, 6036, 6037, 6038, 6043, 6049, 6056, 6057, 6066)
+##############################
+websiteForProperty.header = About the property
+websiteForProperty.label = Does the business operating from the property have a website?
+label.yes = Oes
+label.no = Nac oes
+
 #6010 TYPES
 ##############################
 userType.occupierTrustee = Occupier or trustee for occupier
