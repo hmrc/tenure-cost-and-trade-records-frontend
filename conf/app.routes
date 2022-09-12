@@ -25,3 +25,5 @@ GET         /franchise-or-lettings-tied-to-property     controllers.FranchiseOrL
 GET         /about-your-landlord                        controllers.AboutYourLandlordController.index()
 
 GET         /lease-or-agreement-details                 controllers.LeaseOrAgreementDetailsController.index()
+
+GET         /included-in-your-rent                      controllers.IncludedInYourRentController.index()
