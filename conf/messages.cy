@@ -86,6 +86,16 @@ websiteForProperty.label = Does the business operating from the property have a 
 label.yes = Oes
 label.no = Nac oes
 
+#FRANCHISE OR LETTINGS TIED TO PROPERTY
+##############################
+franchiseLettings.header = Tell us about any franchises or lettings tied to the property
+franchiseLettings.subheading = We need to know about any:
+franchiseLettings.list1 = catering operation or letting accommodation run as a separate business if you've not included their turnover on the previous page
+franchiseLettings.list2 = rent received from letting other parts of the property including advertising rights, stations or hoardings
+label.franchiseLettings = Do you need to report anything listed on this page?
+label.yes = Oes
+label.no = Nac oes
+
 #6010 TYPES
 ##############################
 userType.occupierTrustee = Occupier or trustee for occupier
