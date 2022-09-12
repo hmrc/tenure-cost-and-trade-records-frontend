@@ -21,3 +21,5 @@ GET         /about-you                                  controllers.AboutYouCont
 GET         /website-address-for-property               controllers.WebsiteAddressForPropertyController.index()
 
 GET         /franchise-or-lettings-tied-to-property     controllers.FranchiseOrLettingsTiedToPropertyController.index()
+
+GET         /about-your-landlord                        controllers.AboutYourLandlordController.index()
