@@ -23,3 +23,5 @@ GET         /website-address-for-property               controllers.WebsiteAddre
 GET         /franchise-or-lettings-tied-to-property     controllers.FranchiseOrLettingsTiedToPropertyController.index()
 
 GET         /about-your-landlord                        controllers.AboutYourLandlordController.index()
+
+GET         /lease-or-agreement-details                 controllers.LeaseOrAgreementDetailsController.index()
