@@ -96,6 +96,17 @@ label.franchiseLettings = Do you need to report anything listed on this page?
 label.yes = Yes
 label.no = No
 
+#ABOUT YOUR LANDLORD
+##############################
+aboutYourLandlord.header = About your landlord
+aboutYourLandlord.name.label = Landlord'''s name
+aboutYourLandlord.address.label = Landlord'''s address
+aboutYourLandlord.address1.label = Address line 1
+aboutYourLandlord.address2.label = Address line 2 (optional)
+aboutYourLandlord.town.label = Town or city
+aboutYourLandlord.county.label = County (optional)
+aboutYourLandlord.postcode.label = Postcode
+
 #6010 TYPES
 ##############################
 userType.occupierTrustee = Occupier or trustee for occupier
