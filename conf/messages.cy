@@ -96,6 +96,24 @@ label.franchiseLettings = Do you need to report anything listed on this page?
 label.yes = Oes
 label.no = Nac oes
 
+#ABOUT YOUR LANDLORD
+##############################
+aboutYourLandlord.header = About your landlord
+aboutYourLandlord.name.label = Landlord'''s name
+aboutYourLandlord.address.label = Landlord'''s address
+aboutYourLandlord.address1.label = Address line 1
+aboutYourLandlord.address2.label = Address line 2 (optional)
+aboutYourLandlord.town.label = Town or city
+aboutYourLandlord.county.label = County (optional)
+aboutYourLandlord.postcode.label = Postcode
+
+#LEASE OR AGREEMENT DETAILS
+##############################
+leaseOrAgreement.header = Lease or agreement details
+leaseOrAgreement.option1 = Did the tenancy, lease or agreement commence within the last 3 years?
+leaseOrAgreement.option2 = Has the rent been agreed, reviewed or altered within the last 3 years?
+leaseOrAgreement.option3 = Is the rent currently under review, or is a new lease or agreement being negotiated?
+
 #6010 TYPES
 ##############################
 userType.occupierTrustee = Occupier or trustee for occupier
