@@ -29,3 +29,5 @@ GET         /lease-or-agreement-details                 controllers.Form6010.Lea
 GET         /included-in-your-rent                      controllers.Form6010.IncludedInYourRentController.index()
 
 GET         /licensable-activities                      controllers.Form6010.LicensableActivitiesController.index()
+
+GET         /licensable-activities-details              controllers.Form6010.LicensableActivitiesDetailsController.index()
