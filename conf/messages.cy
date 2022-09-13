@@ -114,6 +114,21 @@ leaseOrAgreement.option1 = Did the tenancy, lease or agreement commence within t
 leaseOrAgreement.option2 = Has the rent been agreed, reviewed or altered within the last 3 years?
 leaseOrAgreement.option3 = Is the rent currently under review, or is a new lease or agreement being negotiated?
 
+#INCLUDED IN YOUR RENT
+##############################
+includedInYourRent.header = Lease or agreement details
+includedInYourRent.subheader = Are any of the following included in your rent?
+leaseOrAgreement.option1 = VAT
+leaseOrAgreement.option2 = Non-domestic rates
+leaseOrAgreement.option3 = Water charges
+
+#LICENSABLE ACTIVITIES
+##############################
+licensableActivities.header = About the property
+includedInYourRent.subheader = Are any of the following included in your rent?
+leaseOrAgreement.option = Do licensable activities regularly commence before 10:00 or after 23:30 on any day of the week?
+hint.leaseOrAgreement = Licensable activities could include, selling alcohol, selling food and refreshments, or providing live entertainment
+
 #6010 TYPES
 ##############################
 userType.occupierTrustee = Occupier or trustee for occupier
