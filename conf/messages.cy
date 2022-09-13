@@ -140,6 +140,12 @@ premisesLicence.header = About the property
 label.premisesLicence = Does your premises licence have conditions restricting the use of all or parts of the property?
 hint.premisesLicence = For example, no drinks outside after 22:00
 
+#TIED FOR GOODS
+##############################
+tiedForGoods.header = About the property
+label.tiedForGoods = Are you tied for any goods?
+hint.tiedForGoods = Are you required to sell certain goods as part of your lease or tenancy agreement?
+
 #6010 TYPES
 ##############################
 userType.occupierTrustee = Occupier or trustee for occupier
