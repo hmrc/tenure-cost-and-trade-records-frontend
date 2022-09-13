@@ -32,4 +32,6 @@ GET         /licensable-activities                      controllers.Form6010.Lic
 
 GET         /licensable-activities-details              controllers.Form6010.LicensableActivitiesDetailsController.index()
 
+GET         /premises-license                           controllers.Form6010.PremisesLicenseController.index()
+
 GET         /premises-license-conditions                controllers.Form6010.PremisesLicenseConditionsController.index()
