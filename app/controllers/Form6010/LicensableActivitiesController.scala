@@ -14,25 +14,25 @@
  * limitations under the License.
  */
 
-package controllers
+package controllers.Form6010
 
 import config.AppConfig
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.franchiseOrLettingsTiedToProperty
+import views.html.Form6010.licensableActivities
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class FranchiseOrLettingsTiedToPropertyController @Inject()(
+class LicensableActivitiesController @Inject()(
   mcc: MessagesControllerComponents,
   appConfig: AppConfig,
-  franchiseOrLettingsTiedToProperty: franchiseOrLettingsTiedToProperty)
+  licensableActivities: licensableActivities)
   extends FrontendController(mcc) {
 
   def index: Action[AnyContent] = Action.async { implicit request =>
-    Future.successful(Ok(franchiseOrLettingsTiedToProperty()))
+    Future.successful(Ok(licensableActivities()))
   }
 
 }

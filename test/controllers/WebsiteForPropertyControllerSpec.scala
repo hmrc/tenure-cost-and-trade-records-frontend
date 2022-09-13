@@ -16,6 +16,7 @@
 
 package controllers
 
+import controllers.Form6010.WebsiteForPropertyController
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
@@ -36,7 +37,7 @@ class WebsiteForPropertyControllerSpec extends AnyWordSpec with Matchers with Gu
 
   private val fakeRequest = FakeRequest("GET", "/")
 
-  private val controller = app.injector.instanceOf[controllers.WebsiteForPropertyController]
+  private val controller = app.injector.instanceOf[WebsiteForPropertyController]
 
   "GET /" should {
     "return 200" in {

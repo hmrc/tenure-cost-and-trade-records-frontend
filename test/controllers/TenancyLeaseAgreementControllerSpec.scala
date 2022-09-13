@@ -16,6 +16,7 @@
 
 package controllers
 
+import controllers.Form6010.TenancyLeaseAgreementController
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
@@ -36,7 +37,7 @@ class TenancyLeaseAgreementControllerSpec extends AnyWordSpec with Matchers with
 
   private val fakeRequest = FakeRequest("GET", "/")
 
-  private val controller = app.injector.instanceOf[controllers.TenancyLeaseAgreementController]
+  private val controller = app.injector.instanceOf[TenancyLeaseAgreementController]
 
   "GET /" should {
     "return 200" in {

@@ -14,25 +14,25 @@
  * limitations under the License.
  */
 
-package controllers
+package controllers.Form6010
 
 import config.AppConfig
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.tenancyLeaseAgreement
+import views.html.Form6010.includedInYourRent
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class TenancyLeaseAgreementController @Inject()(
+class IncludedInYourRentController @Inject()(
   mcc: MessagesControllerComponents,
   appConfig: AppConfig,
-  tenancyLeaseAgreement: tenancyLeaseAgreement)
+  includedInYourRent: includedInYourRent)
   extends FrontendController(mcc) {
 
   def index: Action[AnyContent] = Action.async { implicit request =>
-    Future.successful(Ok(tenancyLeaseAgreement()))
+    Future.successful(Ok(includedInYourRent()))
   }
 
-  }
+}

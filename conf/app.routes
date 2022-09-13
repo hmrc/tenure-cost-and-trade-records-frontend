@@ -10,20 +10,22 @@ GET         /login                                      controllers.LoginControl
 
 GET         /test                                       controllers.LoginController.submit(referenceNumber: String, postcode: String)
 
-GET         /about-the-property                         controllers.AboutThePropertyController.index()
+GET         /about-the-property                         controllers.Form6010.AboutThePropertyController.index()
 
-GET         /website-for-property                       controllers.WebsiteForPropertyController.index()
+GET         /website-for-property                       controllers.Form6010.WebsiteForPropertyController.index()
 
-GET         /tenancy-lease-agreement                    controllers.TenancyLeaseAgreementController.index()
+GET         /tenancy-lease-agreement                    controllers.Form6010.TenancyLeaseAgreementController.index()
 
-GET         /about-you                                  controllers.AboutYouController.index()
+GET         /about-you                                  controllers.Form6010.AboutYouController.index()
 
-GET         /website-address-for-property               controllers.WebsiteAddressForPropertyController.index()
+GET         /website-address-for-property               controllers.Form6010.WebsiteAddressForPropertyController.index()
 
-GET         /franchise-or-lettings-tied-to-property     controllers.FranchiseOrLettingsTiedToPropertyController.index()
+GET         /franchise-or-lettings-tied-to-property     controllers.Form6010.FranchiseOrLettingsTiedToPropertyController.index()
 
-GET         /about-your-landlord                        controllers.AboutYourLandlordController.index()
+GET         /about-your-landlord                        controllers.Form6010.AboutYourLandlordController.index()
 
-GET         /lease-or-agreement-details                 controllers.LeaseOrAgreementDetailsController.index()
+GET         /lease-or-agreement-details                 controllers.Form6010.LeaseOrAgreementDetailsController.index()
 
-GET         /included-in-your-rent                      controllers.IncludedInYourRentController.index()
+GET         /included-in-your-rent                      controllers.Form6010.IncludedInYourRentController.index()
+
+GET         /licensable-activities                      controllers.Form6010.LicensableActivitiesController.index()

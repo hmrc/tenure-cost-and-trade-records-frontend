@@ -14,25 +14,25 @@
  * limitations under the License.
  */
 
-package controllers
+package controllers.Form6010
 
 import config.AppConfig
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.{aboutYou}
+import views.html.Form6010.websiteForProperty
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class AboutYouController @Inject()(
+class WebsiteForPropertyController @Inject()(
   mcc: MessagesControllerComponents,
   appConfig: AppConfig,
-  aboutYou: aboutYou)
-    extends FrontendController(mcc) {
+  websiteForProperty: websiteForProperty)
+  extends FrontendController(mcc) {
 
   def index: Action[AnyContent] = Action.async { implicit request =>
-    Future.successful(Ok(aboutYou()))
+    Future.successful(Ok(websiteForProperty()))
   }
 
 }
