@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-package controllers
+package controllers.Form6010
 
 import config.AppConfig
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.leaseOrAgreementDetails
+import views.html.Form6010.leaseOrAgreementDetails
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
