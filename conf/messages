@@ -132,7 +132,8 @@ hint.leaseOrAgreement = Licensable activities could include, selling alcohol, se
 #PREMISES LICENCE CONDITIONS
 ##############################
 premisesLicenceConditions.header = About the property
-premisesLicenceConditions.subheader = Does your premises licence have conditions restricting the use of all or parts of the property?
+label.premisesLicenceConditions = Does your premises licence have conditions restricting the use of all or parts of the property?
+
 
 #6010 TYPES
 ##############################
