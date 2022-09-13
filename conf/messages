@@ -129,11 +129,21 @@ includedInYourRent.subheader = Are any of the following included in your rent?
 leaseOrAgreement.option = Do licensable activities regularly commence before 10:00 or after 23:30 on any day of the week?
 hint.leaseOrAgreement = Licensable activities could include, selling alcohol, selling food and refreshments, or providing live entertainment
 
+#LICENSABLE ACTIVITIES DETAILS
+##############################
+licensableActivities.header = About the property
+label.licensableActivitiesDetails = Please describe the licensable activities regularly commencing before 10:00 or after 23:30
+
 #PREMISES LICENCE CONDITIONS
 ##############################
 premisesLicenceConditions.header = About the property
 label.premisesLicenceConditions = Does your premises licence have conditions restricting the use of all or parts of the property?
 
+#PREMISES LICENCE
+##############################
+premisesLicence.header = About the property
+label.premisesLicence = Does your premises licence have conditions restricting the use of all or parts of the property?
+hint.premisesLicence = For example, no drinks outside after 22:00
 
 #6010 TYPES
 ##############################
