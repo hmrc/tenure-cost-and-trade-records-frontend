@@ -181,6 +181,10 @@ currentAnnualRent.header = Lease or agreement details
 label.currentAnnualRent = What is the current annual rent?
 hint.currentAnnualRent = For example, 32000
 
+#RENT OPEN MARKET VALUE
+##############################
+rentOpenMarketValue.header = About your lease or agreement
+label.rentOpenMarketValue = Is the rent based on the open market value?
 
 #6010 TYPES
 ##############################
