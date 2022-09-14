@@ -150,6 +150,20 @@ tiedForGoods.header = About the property
 label.tiedForGoods = Are you tied for any goods?
 hint.tiedForGoods = Are you required to sell certain goods as part of your lease or tenancy agreement?
 
+#TIED FOR GOODS DETAILS
+##############################
+tiedForGoodsDetails.header = About the property
+label.tiedForGoodsDetails = What type of tie do you have?
+tiedForGoodsDetails.fullTie = Full tie
+tiedForGoodsDetails.beerOnly = Beer only
+tiedForGoodsDetails.partialTie = Partial tie
+
+#CATERING OPERATION OR LETTING ACCOMMODATION
+##############################
+cateringOperationOrLettingAccommodation.header = Franchises or lettings tied to the property
+label.cateringOperationOrLettingAccommodation = Is any catering operation or letting accomodation run as a separate business from the property?
+hint.cateringOperationOrLettingAccommodation = Choose 'no' if you've included turnover from these businesses on the previous page
+
 #6010 TYPES
 ##############################
 userType.occupierTrustee = Occupier or trustee for occupier
