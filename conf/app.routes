@@ -41,3 +41,5 @@ GET         /tied-for-goods                                 controllers.Form6010
 GET         /tied-for-goods-details                         controllers.Form6010.TiedForGoodsDetailsController.index()
 
 GET         /catering-operation-or-letting-accommodation    controllers.Form6010.TiedForGoodsDetailsController.index()
+
+GET         /letting-other-part-of-property                 controllers.Form6010.LettingOtherPartOfPropertyController.index()

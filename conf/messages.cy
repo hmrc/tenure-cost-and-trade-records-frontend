@@ -164,6 +164,12 @@ cateringOperationOrLettingAccommodation.header = Franchises or lettings tied to 
 label.cateringOperationOrLettingAccommodation = Is any catering operation or letting accomodation run as a separate business from the property?
 hint.cateringOperationOrLettingAccommodation = Choose 'no' if you've included turnover from these businesses on the previous page
 
+#LETTING OTHER PART OF PROPERTY
+##############################
+lettingOtherPartOfProperty.header = Franchises or lettings tied to the property
+label.lettingOtherPartOfProperty = Is any rent received from letting other parts of the property?
+hint.lettingOtherPartOfProperty = Including advertising rights, stations or hoardings
+
 #6010 TYPES
 ##############################
 userType.occupierTrustee = Occupier or trustee for occupier
