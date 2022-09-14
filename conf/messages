@@ -175,6 +175,10 @@ lettingOtherPartOfProperty.header = Lettings
 label.lettingOtherPartOfProperty = Is any rent received from letting other parts of the property?
 hint.lettingOtherPartOfProperty = Including advertising rights, stations or hoardings
 
+#RENT OPEN MARKET VALUE
+##############################
+rentOpenMarketValue.header = About your lease or agreement
+label.rentOpenMarketValue = Is the rent based on the open market value?
 
 #6010 TYPES
 ##############################
