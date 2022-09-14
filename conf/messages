@@ -175,6 +175,12 @@ lettingOtherPartOfProperty.header = Lettings
 label.lettingOtherPartOfProperty = Is any rent received from letting other parts of the property?
 hint.lettingOtherPartOfProperty = Including advertising rights, stations or hoardings
 
+#CURRENT ANNUAL RENT
+##############################
+currentAnnualRent.header = Lease or agreement details
+label.currentAnnualRent = What is the current annual rent?
+hint.currentAnnualRent = For example, 32000
+
 
 #6010 TYPES
 ##############################
