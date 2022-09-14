@@ -8,7 +8,7 @@ GET         /                                           controllers.Application.
 # Sign in page
 GET         /login                                      controllers.LoginController.show()
 
-GET         /test                                       controllers.LoginController.submit(referenceNumber: String, postcode: String)
+GET         /test                                       controllers.LoginController.submit()
 
 GET         /about-the-property                         controllers.Form6010.AboutThePropertyController.index()
 

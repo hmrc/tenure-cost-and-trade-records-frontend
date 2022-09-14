@@ -15,6 +15,7 @@ object AppDependencies {
   val compile = Seq(
     "uk.gov.hmrc"             %% "bootstrap-frontend-play-28" % bootstrapVersion,
     "uk.gov.hmrc"             %% "play-frontend-hmrc"         % playFrontendVersion,
+    "com.typesafe.play"       %% "play-joda-forms"            % PlayVersion.current,
     // temp
     "com.softwaremill.sttp.client3" %% "core" % "3.7.5"
   )

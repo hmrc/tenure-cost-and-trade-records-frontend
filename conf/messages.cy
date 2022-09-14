@@ -7,6 +7,8 @@ phase.text = Mae hwn yn wasanaeth newydd – bydd eich <a href="{0}" class="govu
 button.label.continue = Yn eich blaen
 back.link.label = Yn ôl
 button.label.save = Cadw ar gyfer nes ymlaen
+label.checkTheForm = Mae problem wedi codi
+error.title = Gwall:
 
 # Dummy Start Page
 ##############################
@@ -21,6 +23,8 @@ login.heading = Rhowch eich cyfeirnod
 label.letter = Gallwch weld eich cyfeirnod a’ch cod post yn eich llythyr manylion rhent a phrydles.
 label.referenceNumber = Cyfeirnod
 label.postcode = Cod post
+error.invalid_refnum = Rhowch y cyfeirnod fel y mae'n ymddangos ar eich llythyr
+error.invalid_postcode_as_on_letter = Nodwch eich cod post fel mae’n ymddangos ar eich llythyr
 
 #LOGIN
 ##############################
