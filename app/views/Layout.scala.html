@@ -16,7 +16,7 @@
 
 @import config.AppConfig
 @import uk.gov.hmrc.hmrcfrontend.views.html.helpers.{HmrcLayout, HmrcLanguageSelectHelper}
-@import uk.gov.hmrc.govukfrontend.views.html.components.{GovukPhaseBanner, GovukBackLink, GovukNotificationBanner}
+@import uk.gov.hmrc.govukfrontend.views.html.components.{GovukPhaseBanner, GovukBackLink, GovukErrorSummary, GovukNotificationBanner}
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.phasebanner.PhaseBanner
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.backlink.BackLink
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.tag.Tag
@@ -30,6 +30,7 @@
         govukPhaseBanner: GovukPhaseBanner,
         hmrcLanguageSelectHelper: HmrcLanguageSelectHelper,
         govukBackLink: GovukBackLink,
+        govukErrorSummary: GovukErrorSummary,
         govukNotificationBanner: GovukNotificationBanner,
         configuration: Configuration
 )
@@ -46,51 +47,68 @@
 )(contentBlock: Html)(implicit request: Request[_], messages: Messages)
 
 @beforeBLock = {
- @if(showFeedback) {
-  @govukPhaseBanner(
-   PhaseBanner(
-    classes = "no-print",
-    tag = Option(Tag(Text(messages("phase.beta")))),
-    content = HtmlContent(messages("phase.text", s"dummy.url"))
-   )
-  )
- }
+    @if(showFeedback) {
+        @govukPhaseBanner(
+            PhaseBanner(
+                classes = "no-print",
+                tag = Option(Tag(Text(messages("phase.beta")))),
+                content = HtmlContent(messages("phase.text", s"dummy.url"))
+            )
+            )
+    }
 
- @hmrcLanguageSelectHelper()
+    @hmrcLanguageSelectHelper()
 
- @backLinkUrl.map{ url =>
-  <div>@govukBackLink(
-   BackLink(
-    href = url,
-    content = Text(messages("back.link.label"))
-   )
-  )
-  </div>
- }
+    @backLinkUrl.map{ url =>
+        <div>@govukBackLink(
+            BackLink(
+                href = url,
+                content = Text(messages("back.link.label"))
+            )
+        )
+        </div>
+    }
 
- @beforeContentBlock
- }
+    @beforeContentBlock
+}
 
- @contentWithHeading = {
- @if(showBanner && configuration.get[Boolean]("bannerNotice.enabled")) {
-  @govukNotificationBanner(NotificationBanner(
-   content = HtmlContent("<p class='govuk-notification-banner__heading'>" + configuration.get[String]("bannerNotice." + messages.lang.code + ".body") + "</p>"),
-   title = Text(configuration.get[String]("bannerNotice." + messages.lang.code + ".title"))
-  ))
- }
+@contentWithHeading = {
+    @if(theForm!=null){
+        @includes.summaryErrors(theForm = theForm, govukErrorSummary = govukErrorSummary)
+    }
 
- @if(showH1){
-  <h1 class="govuk-heading-xl">@pageHeading</h1>
- }
- @contentBlock
+    @if(showBanner && configuration.get[Boolean]("bannerNotice.enabled")) {
+        @govukNotificationBanner(NotificationBanner(
+            content = HtmlContent("<p class='govuk-notification-banner__heading'>" + configuration.get[String]("bannerNotice." + messages.lang.code + ".body") + "</p>"),
+            title = Text(configuration.get[String]("bannerNotice." + messages.lang.code + ".title"))
+        ))
+    }
 
- }
+    @if(showH1){
+        <h1 class="govuk-heading-xl">@pageHeading</h1>
+    }
 
- @hmrcLayout(
-  pageTitle = Some(pageTitle.getOrElse(pageHeading) + " - " + messages("site.service_name") + " - " + messages("gov.name")),
-  serviceName = Some(messages("site.service_name")),
-  serviceUrl= Some(routes.LoginController.show.url),
-  isWelshTranslationAvailable = true,
-  beforeContentBlock = Option(beforeBLock)
+    @contentBlock
+
+}
+
+@title = @{
+  if(theForm != null) {
+    if(theForm.hasErrors) {
+      messages("error.title") + " " + pageTitle.getOrElse(pageHeading) + " - " + messages("site.service_name") + " - " + messages("gov.name")
+    } else {
+      pageTitle.getOrElse(pageHeading) + " - " + messages("site.service_name") + " - " + messages("gov.name")
+    }
+  } else {
+    pageTitle.getOrElse(pageHeading) + " - " + messages("site.service_name") + " - " + messages("gov.name")
+  }
+}
+
+@hmrcLayout(
+    pageTitle = Some(title),
+    serviceName = Some(messages("site.service_name")),
+    serviceUrl= Some(routes.LoginController.show.url),
+    isWelshTranslationAvailable = true,
+    beforeContentBlock = Option(beforeBLock)
  )(contentWithHeading)
 

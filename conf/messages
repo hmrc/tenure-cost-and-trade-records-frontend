@@ -7,6 +7,8 @@ phase.text = This is a new service – your <a href="{0}" class="govuk-link" tar
 button.label.continue = Continue
 back.link.label = Back
 button.label.save = Save
+label.checkTheForm = There is a problem
+error.title = Error:
 
 # Dummy Start Page
 ##############################
@@ -21,6 +23,8 @@ login.heading = Enter your reference number
 label.letter = You’ll find your reference number and postcode in your rent and lease detail letter.
 label.referenceNumber = Reference number
 label.postcode = Postcode
+error.invalid_refnum = Enter your reference number as it appears on your letter
+error.invalid_postcode_as_on_letter = Enter your postcode as it appears on your letter
 
 #LOGIN
 ##############################
