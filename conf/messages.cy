@@ -217,6 +217,19 @@ label.rentPayableVaryAccordingToGrossOrNet = Does the rent payable vary accordin
 rentPayableVaryAccordingToGrossOrNetDetails.header = How your turnover affects the rent
 label.rentPayableVaryAccordingToGrossOrNetDetails = Please tell us how the rent payable is affected by your turnover
 
+#ULTIMATELY RESPONSIBLE
+##############################
+ultimatelyResponsible.header = Who is ultimately responsible for the following costs?
+ultimatelyResponsible.subheading = This could be either by direct payment, or by reimbursing the person who initially paid for the service
+label.ultimatelyResponsible.outsideRepairs = Outside repairs
+label.ultimatelyResponsible.insideRepairs = Inside repairs public and business areas
+label.ultimatelyResponsible.buildingInsurance = Building insurance
+label.ultimatelyResponsible.optionLandlord = Landlord
+label.ultimatelyResponsible.optionTenant = Tenant
+label.ultimatelyResponsible.optionBoth = Both
+label.ultimatelyResponsible.areaShared = If responsible for any area are shared, give details
+hint.ultimatelyResponsible.areaShared = For example, costs are shared equally, landlord 75%, tenant 25%
+
 #6010 TYPES
 ##############################
 userType.occupierTrustee = Occupier or trustee for occupier
