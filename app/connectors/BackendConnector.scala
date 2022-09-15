@@ -20,8 +20,10 @@ import play.api.Logging
 import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
 import views.html.helper.urlEncode
 import sttp.client3._
+import uk.gov.hmrc.http.HeaderCarrier
 
 import javax.inject.{Inject, Singleton}
+import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class BackendConnector@Inject()(config: ServicesConfig) extends Logging {
@@ -47,5 +49,9 @@ class BackendConnector@Inject()(config: ServicesConfig) extends Logging {
     logger.debug(s"Connecting with: ${url(s"${parts.mkString("/")}/test")}, response: ${name}")
     if (name.startsWith("\"")) name = name.substring(1, name.length -1)
     name
+  }
+
+  def verifyCredentials(refNum: String, postcode: String)(implicit hc: HeaderCarrier, ec: ExecutionContext): Future[String] = {
+    Future.successful("Anonymous")
   }
 }

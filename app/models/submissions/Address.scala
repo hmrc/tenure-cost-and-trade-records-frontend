@@ -14,22 +14,8 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.voatctr.controllers
+package models.submissions
 
-import views.html.start
-import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import javax.inject.{Inject, Singleton}
-import scala.concurrent.Future
-
-@Singleton
-class ApplicationController @Inject()(
-  mcc: MessagesControllerComponents,
-  start: start)
-    extends FrontendController(mcc) {
-
-  val index: Action[AnyContent] = Action.async { implicit request =>
-    Future.successful(Ok(start()))
-  }
+case class Address(buildingNameNumber: String, street1: Option[String], street2: Option[String], postcode: String) {
 
 }

@@ -17,18 +17,21 @@
 package controllers
 
 import play.api.Logging
-import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, MessagesRequest}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import connectors.BackendConnector
+import connectors.{Audit, BackendConnector}
+import models.submissions.Address
 import play.api.data.Form
 import play.api.data.Forms._
 import views.html.{login, testSign}
 import org.joda.time.DateTime
 import play.api.data.JodaForms._
 import form.{Errors, MappingSupport}
+import play.api.libs.json.Json
+import uk.gov.hmrc.http.{HeaderCarrier, SessionId}
 
 import javax.inject.{Inject, Singleton}
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 case class LoginDetails(referenceNumber: String, postcode: String, startTime: DateTime)
 
@@ -53,11 +56,12 @@ object LoginController {
 
 @Singleton
 class LoginController  @Inject()(
+    audit: Audit,
     mcc: MessagesControllerComponents,
     login: login,
     test: testSign,
     connector: BackendConnector
-) extends FrontendController(mcc) with Logging {
+) (implicit ec: ExecutionContext) extends FrontendController(mcc) with Logging {
 
   import LoginController.loginForm
 
@@ -68,11 +72,26 @@ class LoginController  @Inject()(
   def submit = Action.async { implicit request =>
     loginForm.bindFromRequest.fold(
       formWithErrors => Future.successful(BadRequest(login(formWithErrors))),
-      loginData => {
-        logger.debug(s"Signing in with: reference number : ${loginData.referenceNumber}, postcode: ${loginData.postcode}")
-        Future.successful(Ok(test(connector.testConnection(loginData.referenceNumber, loginData.postcode))))
-      }
+      loginData => verifyLogin(loginData.referenceNumber, loginData.postcode, loginData.startTime)
     )
   }
 
+  def verifyLogin(referenceNumber: String, postcode: String, startTime: DateTime)(implicit r: MessagesRequest[AnyContent]) = {
+    val cleanedRefNumber = referenceNumber.replaceAll("[^0-9]", "")
+    var cleanPostcode = postcode.replaceAll("[^\\w\\d]", "")
+    cleanPostcode = cleanPostcode.patch(cleanPostcode.length - 4, " ", 0)
+
+    implicit val hc2: HeaderCarrier = hc.copy(sessionId = Some(SessionId(java.util.UUID.randomUUID().toString)))
+    logger.debug(s"Signing in with: reference number : ${cleanedRefNumber}, postcode: ${cleanPostcode}")
+    connector.verifyCredentials(referenceNumber, postcode)(hc2, ec).flatMap {
+      case name =>
+        auditLogin(referenceNumber, false, Address("Somewhere", None, None, "BN12 4AX"), "6010")(hc2)
+        Future.successful(Ok(test(name)))
+    }
+  }
+
+  private def auditLogin(refNumber: String, returnUser: Boolean, address: Address, formOfReturn: String)(implicit hc: HeaderCarrier): Unit = {
+    val json = Json.obj("returningUser" -> returnUser, Audit.referenceNumber -> refNumber, Audit.formOfReturn -> formOfReturn)
+    audit.sendExplicitAudit("UserLogin", json)
+  }
 }
