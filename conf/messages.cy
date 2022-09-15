@@ -202,6 +202,16 @@ hint.rentOpenMarketValue.details = For example, the rent includes an upstairs fl
 rentPayableVaryOnQuantityOfBeers.header = About the property
 label.rentPayableVaryOnQuantityOfBeers = Does the rent payable vary according to the quantity of beers, wines, spirits?
 
+#RENT PAYABLE VARY ON QUANTITY OF BEERS DETAILS
+##############################
+rentPayableVaryOnQuantityOfBeersDetails.header = How your turnover affects the rent
+label.rentPayableVaryOnQuantityOfBeersDetails = Please tell us how the rent payable is affected by the drinks supplied to your property
+
+#RENT PAYABLE VARY ACCORDING TO GROSS OR NET
+##############################
+rentPayableVaryAccordingToGrossOrNet.header = About the property
+label.rentPayableVaryAccordingToGrossOrNet = Does the rent payable vary according to the gross or net turnover of the business?
+
 #6010 TYPES
 ##############################
 userType.occupierTrustee = Occupier or trustee for occupier
@@ -218,8 +228,3 @@ propertyCurrentlyUsed.wineCafeBar = Wine bar or cafe bar
 propertyCurrentlyUsed.pubRestaurant = Pub or restaurant
 propertyCurrentlyUsed.hotel = Hotel
 propertyCurrentlyUsed.other = Other
-
-#RENT PAYABLE VARY ON QUANTITY OF BEERS DETAILS
-##############################
-rentPayableVaryOnQuantityOfBeersDetails.header = How your turnover affects the rent
-label.rentPayableVaryOnQuantityOfBeersDetails = Please tell us how the rent payable is affected by the drinks supplied to your property
