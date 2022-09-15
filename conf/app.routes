@@ -49,3 +49,5 @@ GET         /rent-open-market-value                         controllers.Form6010
 GET         /current-annual-rent                            controllers.Form6010.CurrentAnnualRentController.index()
 
 GET         /does-the-rent-payable                          controllers.Form6010.DoesTheRentPayableController.index()
+
+GET         /rent-payable-vary-on-quantity-of-beers         controllers.Form6010.RentPayableVaryOnQuantityOfBeersController.index()

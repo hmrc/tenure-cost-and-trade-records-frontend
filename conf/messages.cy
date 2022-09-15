@@ -197,6 +197,11 @@ label.rentOpenMarketValue.shellUnit = relate to a 'shell' unit (did you have to 
 label.rentOpenMarketValue.details = Please give details if you answered yes to any of these questions
 hint.rentOpenMarketValue.details = For example, the rent includes an upstairs flat, or also includes the premises next door
 
+#RENT PAYABLE VARY ON QUANTITY OF BEERS
+##############################
+rentPayableVaryOnQuantityOfBeers.header = About the property
+label.rentPayableVaryOnQuantityOfBeers = Does the rent payable vary according to the quantity of beers, wines, spirits?
+
 #6010 TYPES
 ##############################
 userType.occupierTrustee = Occupier or trustee for occupier
