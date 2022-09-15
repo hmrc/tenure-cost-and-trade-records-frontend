@@ -74,7 +74,7 @@ label.propertyCurrentlyUsed = How is the property currently used?
 #WEBSITE FOR PROPERTY (USED ON 6010, 6011, 6015, 6016,6030, 6035, 6036, 6037, 6045)
 ##############################
 websiteForProperty.header = About the property
-websiteForProperty.label = Does the business operating from the property have a website?
+label.websiteForProperty = Does the business operating from the property have a website?
 label.yes = Oes
 label.no = Nac oes
 
@@ -85,8 +85,8 @@ websiteAddressForProperty.label = What's the web address?
 
 #TENANCY LEASE AGREEMENT(USED ON 6010, 6015, 6016, 6030, 6032, 6033, 6034, 6035, 6036, 6037, 6038, 6043, 6049, 6056, 6057, 6066)
 ##############################
-websiteForProperty.header = About the property
-websiteForProperty.label = Does the business operating from the property have a website?
+tenancyLeaseAgreement.header = About the property
+label.tenancyLeaseAgreement = Do you hold a tenancy, lease or agreement to occupy?
 label.yes = Oes
 label.no = Nac oes
 
@@ -133,10 +133,15 @@ includedInYourRent.subheader = Are any of the following included in your rent?
 leaseOrAgreement.option = Do licensable activities regularly commence before 10:00 or after 23:30 on any day of the week?
 hint.leaseOrAgreement = Licensable activities could include, selling alcohol, selling food and refreshments, or providing live entertainment
 
+#LICENSABLE ACTIVITIES DETAILS
+##############################
+licensableActivities.header = About the property
+label.licensableActivitiesDetails = Please describe the licensable activities regularly commencing before 10:00 or after 23:30
+
 #PREMISES LICENCE CONDITIONS
 ##############################
 premisesLicenceConditions.header = About the property
-premisesLicenceConditions.subheader = Does your premises licence have conditions restricting the use of all or parts of the property?
+label.premisesLicenceConditions = Does your premises licence have conditions restricting the use of all or parts of the property?
 
 #PREMISES LICENCE
 ##############################
@@ -166,9 +171,31 @@ hint.cateringOperationOrLettingAccommodation = Choose 'no' if you've included tu
 
 #LETTING OTHER PART OF PROPERTY
 ##############################
-lettingOtherPartOfProperty.header = Franchises or lettings tied to the property
+lettingOtherPartOfProperty.header = Lettings
 label.lettingOtherPartOfProperty = Is any rent received from letting other parts of the property?
 hint.lettingOtherPartOfProperty = Including advertising rights, stations or hoardings
+
+#CURRENT ANNUAL RENT
+##############################
+currentAnnualRent.header = Lease or agreement details
+label.currentAnnualRent = What is the current annual rent?
+hint.currentAnnualRent = For example, 32000
+
+#RENT OPEN MARKET VALUE
+##############################
+rentOpenMarketValue.header = About your lease or agreement
+label.rentOpenMarketValue = Is the rent based on the open market value?
+
+#DOES THE RENT PAYABLE
+##############################
+rentOpenMarketValue.header = Does the rent payable
+label.rentOpenMarketValue.includeLicensee = include licensee'''s, manager's or staff living accomodation?
+label.rentOpenMarketValue.includeOtherProperty = include other property?
+label.rentOpenMarketValue.onlyPartOfProperty = relate to only part of the property?
+label.rentOpenMarketValue.onlyToLand = relate only to land (excluding buildings)?
+label.rentOpenMarketValue.shellUnit = relate to a 'shell' unit (did you have to fit the property out yourself)?
+label.rentOpenMarketValue.details = Please give details if you answered yes to any of these questions
+hint.rentOpenMarketValue.details = For example, the rent includes an upstairs flat, or also includes the premises next door
 
 #6010 TYPES
 ##############################
