@@ -252,6 +252,15 @@ label.rentIncludeFixturesAndFittings = Does the rent include any trade fixtures 
 rentIncludeFixturesAndFittingsDetails.header = About your fixtures and fittings
 label.rentIncludeFixturesAndFittingsDetails = Where specifically itemised, what sum is included in the rent (excluding VAT)?
 
+#INCENTIVES, PAYMENTS AND CONDITIONS
+##############################
+incentivesPaymentsConditions.header = Incentives, payments and conditions
+label.incentivesPaymentsConditions.formerLeaseAgreement = Was a former lease or agreement surrendered early as a condition of the present one being granted?
+label.incentivesPaymentsConditions.rentReduced = Can the rent be reduced on review under the terms of the lease or agreement?
+label.incentivesPaymentsConditions.capitalSum = Did you pay a capital sum or premium for your lease or agreement ignoring tenants inventory?
+hint.incentivesPaymentsConditions.capitalSum = The sum could be paid to the landlord or a previous lessee
+label.incentivesPaymentsConditions.receivePayment = Did you receive any payment when the lease was granted (if the rent has not been reviewed in the lease), or following assignment of the lease or agreement?
+
 #6010 TYPES
 ##############################
 userType.occupierTrustee = Occupier or trustee for occupier

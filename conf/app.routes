@@ -67,3 +67,5 @@ GET         /ultimately-responsible                                 controllers.
 GET         /rent-include-fixtures-and-fittings                     controllers.Form6010.RentIncludeFixtureAndFittingsController.index()
 
 GET         /rent-include-fixtures-and-fittings-details             controllers.Form6010.RentIncludeFixtureAndFittingsDetailsController.index()
+
+GET         /incentives-payments-conditions                         controllers.Form6010.IncentivesPaymentsConditionsController.index()
