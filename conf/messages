@@ -212,6 +212,11 @@ label.rentPayableVaryOnQuantityOfBeersDetails = Please tell us how the rent paya
 rentPayableVaryAccordingToGrossOrNet.header = About the property
 label.rentPayableVaryAccordingToGrossOrNet = Does the rent payable vary according to the gross or net turnover of the business?
 
+#RENT PAYABLE VARY ACCORDING TO GROSS OR NET DETAILS
+##############################
+rentPayableVaryAccordingToGrossOrNetDetails.header = How your turnover affects the rent
+label.rentPayableVaryAccordingToGrossOrNetDetails = Please tell us how the rent payable is affected by your turnover
+
 #6010 TYPES
 ##############################
 userType.occupierTrustee = Occupier or trustee for occupier
