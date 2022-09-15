@@ -7,8 +7,7 @@ GET         /assets/*file                                           controllers.
 GET         /                                                       controllers.Application.index()
 # Sign in page
 GET         /login                                                  controllers.LoginController.show()
-
-GET         /test                                                   controllers.LoginController.submit()
+POST        /login                                                  controllers.LoginController.submit()
 
 GET         /about-the-property                                     controllers.Form6010.AboutThePropertyController.index()
 
