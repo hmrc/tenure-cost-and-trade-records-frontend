@@ -213,3 +213,8 @@ propertyCurrentlyUsed.wineCafeBar = Wine bar or cafe bar
 propertyCurrentlyUsed.pubRestaurant = Pub or restaurant
 propertyCurrentlyUsed.hotel = Hotel
 propertyCurrentlyUsed.other = Other
+
+#RENT PAYABLE VARY ON QUANTITY OF BEERS DETAILS
+##############################
+rentPayableVaryOnQuantityOfBeersDetails.header = How your turnover affects the rent
+label.rentPayableVaryOnQuantityOfBeersDetails = Please tell us how the rent payable is affected by the drinks supplied to your property
