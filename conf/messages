@@ -246,3 +246,23 @@ propertyCurrentlyUsed.wineCafeBar = Wine bar or cafe bar
 propertyCurrentlyUsed.pubRestaurant = Pub or restaurant
 propertyCurrentlyUsed.hotel = Hotel
 propertyCurrentlyUsed.other = Other
+
+
+
+
+
+
+
+
+
+#RENT INCLUDE TRADE SERVICES
+##############################
+rentIncludeTradeServices.header = About your lease or agreement (continued)
+label.rentIncludeTradeServices = Does the rent include any trade services provided by the landlord?
+hint.rentIncludeTradeServices = For example, maintenance of trade fixtures and fittings, cellar services, marketing, staff training etc.
+
+#RENT INCLUDE TRADE SERVICES DETAILS
+##############################
+rentIncludeTradeServicesDetails.header = About the services your landlord provides
+label.rentIncludeTradeServicesDetails = Where specifically itemised, what sum is included in the rent (excluding VAT)?
+label.rentIncludeTradeServicesDetails.describeServices = Please describe the services provided
