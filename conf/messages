@@ -230,6 +230,28 @@ label.ultimatelyResponsible.optionBoth = Both
 label.ultimatelyResponsible.areaShared = If responsible for any area are shared, give details
 hint.ultimatelyResponsible.areaShared = For example, costs are shared equally, landlord 75%, tenant 25%
 
+#RENT INCLUDE TRADE SERVICES
+##############################
+rentIncludeTradeServices.header = About your lease or agreement (continued)
+label.rentIncludeTradeServices = Does the rent include any trade services provided by the landlord?
+hint.rentIncludeTradeServices = For example, maintenance of trade fixtures and fittings, cellar services, marketing, staff training etc.
+
+#RENT INCLUDE TRADE SERVICES DETAILS
+##############################
+rentIncludeTradeServicesDetails.header = About the services your landlord provides
+label.rentIncludeTradeServicesDetails = Where specifically itemised, what sum is included in the rent (excluding VAT)?
+label.rentIncludeTradeServicesDetails.describeServices = Please describe the services provided
+
+#RENT INCLUDE FIXTURES AND FITTINGS
+##############################
+rentIncludeFixturesAndFittings.header = About your lease or agreement
+label.rentIncludeFixturesAndFittings = Does the rent include any trade fixtures and fittings, plant and machinery, furniture and other equipment belonging to the landlord?
+
+#RENT INCLUDE FIXTURES AND FITTINGS DETAILS
+##############################
+rentIncludeFixturesAndFittingsDetails.header = About your fixtures and fittings
+label.rentIncludeFixturesAndFittingsDetails = Where specifically itemised, what sum is included in the rent (excluding VAT)?
+
 #6010 TYPES
 ##############################
 userType.occupierTrustee = Occupier or trustee for occupier
@@ -247,22 +269,3 @@ propertyCurrentlyUsed.pubRestaurant = Pub or restaurant
 propertyCurrentlyUsed.hotel = Hotel
 propertyCurrentlyUsed.other = Other
 
-
-
-
-
-
-
-
-
-#RENT INCLUDE TRADE SERVICES
-##############################
-rentIncludeTradeServices.header = About your lease or agreement (continued)
-label.rentIncludeTradeServices = Does the rent include any trade services provided by the landlord?
-hint.rentIncludeTradeServices = For example, maintenance of trade fixtures and fittings, cellar services, marketing, staff training etc.
-
-#RENT INCLUDE TRADE SERVICES DETAILS
-##############################
-rentIncludeTradeServicesDetails.header = About the services your landlord provides
-label.rentIncludeTradeServicesDetails = Where specifically itemised, what sum is included in the rent (excluding VAT)?
-label.rentIncludeTradeServicesDetails.describeServices = Please describe the services provided
