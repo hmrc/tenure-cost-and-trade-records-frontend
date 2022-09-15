@@ -47,3 +47,5 @@ GET         /letting-other-part-of-property                 controllers.Form6010
 GET         /rent-open-market-value                         controllers.Form6010.RentOpenMarketValueController.index()
 
 GET         /current-annual-rent                            controllers.Form6010.CurrentAnnualRentController.index()
+
+GET         /does-the-rent-payable                          controllers.Form6010.DoesTheRentPayableController.index()

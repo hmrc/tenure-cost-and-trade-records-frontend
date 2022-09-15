@@ -186,6 +186,17 @@ hint.currentAnnualRent = For example, 32000
 rentOpenMarketValue.header = About your lease or agreement
 label.rentOpenMarketValue = Is the rent based on the open market value?
 
+#DOES THE RENT PAYABLE
+##############################
+rentPayable.header = Does the rent payable
+label.rentPayable.includeLicensee = include licensee'''s, manager's or staff living accomodation?
+label.rentPayable.includeOtherProperty = include other property?
+label.rentPayable.onlyPartOfProperty = relate to only part of the property?
+label.rentPayable.onlyToLand = relate only to land (excluding buildings)?
+label.rentPayable.shellUnit = relate to a 'shell' unit (did you have to fit the property out yourself)?
+label.rentPayable.details = Please give details if you answered yes to any of these questions
+hint.rentPayable.details = For example, the rent includes an upstairs flat, or also includes the premises next door
+
 #6010 TYPES
 ##############################
 userType.occupierTrustee = Occupier or trustee for occupier
