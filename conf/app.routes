@@ -57,3 +57,7 @@ GET         /rent-payable-vary-on-quantity-of-beers-details         controllers.
 GET         /rent-payable-vary-according-to-gross-or-net            controllers.Form6010.RentPayableVaryAccordingToGrossOrNetController.index()
 
 GET         /rent-payable-vary-according-to-gross-or-net-details    controllers.Form6010.RentPayableVaryAccordingToGrossOrNetDetailsController.index()
+
+GET         /rent-include-trade-services                            controllers.Form6010.RentIncludeTradeServicesController.index()
+
+GET         /rent-include-trade-services-details                    controllers.Form6010.RentIncludeTradeServicesDetailsController.index()
