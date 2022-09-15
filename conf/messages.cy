@@ -218,3 +218,16 @@ propertyCurrentlyUsed.wineCafeBar = Wine bar or cafe bar
 propertyCurrentlyUsed.pubRestaurant = Pub or restaurant
 propertyCurrentlyUsed.hotel = Hotel
 propertyCurrentlyUsed.other = Other
+
+
+
+
+
+
+
+
+
+#RENT PAYABLE VARY ACCORDING TO GROSS OR NET
+##############################
+rentPayableVaryAccordingToGrossOrNet.header = About the property
+label.rentPayableVaryAccordingToGrossOrNet = Does the rent payable vary according to the gross or net turnover of the business?

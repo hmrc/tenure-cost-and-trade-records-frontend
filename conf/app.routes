@@ -51,3 +51,5 @@ GET         /current-annual-rent                            controllers.Form6010
 GET         /does-the-rent-payable                          controllers.Form6010.DoesTheRentPayableController.index()
 
 GET         /rent-payable-vary-on-quantity-of-beers         controllers.Form6010.RentPayableVaryOnQuantityOfBeersController.index()
+
+GET         /rent-payable-vary-according-to-gross-or-net    controllers.Form6010.RentPayableVaryAccordingToGrossOrNetController.index()
