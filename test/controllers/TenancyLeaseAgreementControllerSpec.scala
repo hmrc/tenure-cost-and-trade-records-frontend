@@ -41,12 +41,12 @@ class TenancyLeaseAgreementControllerSpec extends AnyWordSpec with Matchers with
 
   "GET /" should {
     "return 200" in {
-      val result = controller.index(fakeRequest)
+      val result = controller.show(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return HTML" in {
-      val result = controller.index(fakeRequest)
+      val result = controller.show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
