@@ -31,7 +31,7 @@ class RentPayableVaryAccordingToGrossOrNetController @Inject()(
   rentPayableVaryAccordingToGrossOrNet: rentPayableVaryAccordingToGrossOrNet)
   extends FrontendController(mcc) {
 
-  def index: Action[AnyContent] = Action.async { implicit request =>
+  def show: Action[AnyContent] = Action.async { implicit request =>
     Future.successful(Ok(rentPayableVaryAccordingToGrossOrNet()))
   }
 

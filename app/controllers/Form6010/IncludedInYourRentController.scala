@@ -31,7 +31,7 @@ class IncludedInYourRentController @Inject()(
   includedInYourRent: includedInYourRent)
   extends FrontendController(mcc) {
 
-  def index: Action[AnyContent] = Action.async { implicit request =>
+  def show: Action[AnyContent] = Action.async { implicit request =>
     Future.successful(Ok(includedInYourRent()))
   }
 
