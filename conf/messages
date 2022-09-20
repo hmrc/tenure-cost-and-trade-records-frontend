@@ -266,6 +266,15 @@ label.incentivesPaymentsConditions.receivePayment = Did you receive any payment 
 rentIncreaseAnnuallyWithRPI.header = About your lease or agreement
 label.rentIncreaseAnnuallyWithRPI = Does the rent increase annually in line with the retail price index (RPI)?
 
+#METHOD USED TO FIX CURRENT RENT
+##############################
+methodUsedToFixCurrentRent.header = About your lease or agreement
+label.methodUsedToFixCurrentRent = Which method was used to fix the current rent?
+label.methodUsedToFixCurrentRent.agreement = Agreement
+label.methodUsedToFixCurrentRent.arbitration = Arbitration
+label.methodUsedToFixCurrentRent.independentExpert = Independent expert
+label.methodUsedToFixCurrentRent.aCourt = A court
+
 #6010 TYPES
 ##############################
 userType.occupierTrustee = Occupier or trustee for occupier

@@ -261,6 +261,15 @@ label.incentivesPaymentsConditions.capitalSum = Did you pay a capital sum or pre
 hint.incentivesPaymentsConditions.capitalSum = The sum could be paid to the landlord or a previous lessee
 label.incentivesPaymentsConditions.receivePayment = Did you receive any payment when the lease was granted (if the rent has not been reviewed in the lease), or following assignment of the lease or agreement?
 
+#METHOD USED TO FIX CURRENT RENT
+##############################
+methodUsedToFixCurrentRent.header = About your lease or agreement
+label.methodUsedToFixCurrentRent = Which method was used to fix the current rent?
+label.methodUsedToFixCurrentRent.agreement = Agreement
+label.methodUsedToFixCurrentRent.agreement = Arbitration
+label.methodUsedToFixCurrentRent.agreement = Independent expert
+label.methodUsedToFixCurrentRent.agreement = A court
+
 #6010 TYPES
 ##############################
 userType.occupierTrustee = Occupier or trustee for occupier
