@@ -70,3 +70,5 @@ GET         /rent-include-fixtures-and-fittings-details             controllers.
 GET         /incentives-payments-conditions                         controllers.Form6010.IncentivesPaymentsConditionsController.show()
 
 GET         /rent-increase-annually-with-rpi                        controllers.Form6010.RentIncreaseAnnuallyWithRPIController.show()
+
+GET         /method-to-fix-current-rent                             controllers.Form6010.MethodToFixCurrentRentController.show()
