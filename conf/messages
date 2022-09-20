@@ -261,6 +261,11 @@ label.incentivesPaymentsConditions.capitalSum = Did you pay a capital sum or pre
 hint.incentivesPaymentsConditions.capitalSum = The sum could be paid to the landlord or a previous lessee
 label.incentivesPaymentsConditions.receivePayment = Did you receive any payment when the lease was granted (if the rent has not been reviewed in the lease), or following assignment of the lease or agreement?
 
+#RENT INCREASE ANNUALLY WITH RPI
+##############################
+rentIncreaseAnnuallyWithRPI.header = About your lease or agreement
+label.rentIncreaseAnnuallyWithRPI = Does the rent increase annually in line with the retail price index (RPI)?
+
 #6010 TYPES
 ##############################
 userType.occupierTrustee = Occupier or trustee for occupier

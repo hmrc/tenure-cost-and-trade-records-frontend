@@ -31,7 +31,7 @@ class RentPayableVaryOnQuantityOfBeersController @Inject()(
   rentPayableVaryOnQuantityOfBeers: rentPayableVaryOnQuantityOfBeers)
   extends FrontendController(mcc) {
 
-  def index: Action[AnyContent] = Action.async { implicit request =>
+  def show: Action[AnyContent] = Action.async { implicit request =>
     Future.successful(Ok(rentPayableVaryOnQuantityOfBeers()))
   }
 
