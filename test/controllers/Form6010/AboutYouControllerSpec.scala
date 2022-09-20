@@ -14,9 +14,8 @@
  * limitations under the License.
  */
 
-package controllers
+package controllers.Form6010
 
-import controllers.Form6010.AboutYouController
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
@@ -41,12 +40,12 @@ class AboutYouControllerSpec extends AnyWordSpec with Matchers with GuiceOneAppP
 
   "GET /" should {
     "return 200" in {
-      val result = controller.index(fakeRequest)
+      val result = controller.show(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return HTML" in {
-      val result = controller.index(fakeRequest)
+      val result = controller.show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }

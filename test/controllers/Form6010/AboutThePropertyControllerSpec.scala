@@ -14,9 +14,8 @@
  * limitations under the License.
  */
 
-package controllers
+package controllers.Form6010
 
-import controllers.Form6010.AboutYourLandlordController
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
@@ -26,7 +25,7 @@ import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 
-class AboutYourLandlordControllerSpec extends AnyWordSpec with Matchers with GuiceOneAppPerSuite {
+class AboutThePropertyControllerSpec extends AnyWordSpec with Matchers with GuiceOneAppPerSuite {
   override def fakeApplication(): Application =
     new GuiceApplicationBuilder()
       .configure(
@@ -37,16 +36,16 @@ class AboutYourLandlordControllerSpec extends AnyWordSpec with Matchers with Gui
 
   private val fakeRequest = FakeRequest("GET", "/")
 
-  private val controller = app.injector.instanceOf[AboutYourLandlordController]
+  private val controller = app.injector.instanceOf[AboutThePropertyController]
 
   "GET /" should {
     "return 200" in {
-      val result = controller.index(fakeRequest)
+      val result = controller.show(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return HTML" in {
-      val result = controller.index(fakeRequest)
+      val result = controller.show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
