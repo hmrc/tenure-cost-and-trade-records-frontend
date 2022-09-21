@@ -270,6 +270,17 @@ label.methodUsedToFixCurrentRent.agreement = Arbitration
 label.methodUsedToFixCurrentRent.agreement = Independent expert
 label.methodUsedToFixCurrentRent.agreement = A court
 
+#ENFORCEMENT ACTION BEEN TAKEN
+##############################
+enforcementActionHasBeenTaken.header = About the property
+label.enforcementActionHasBeenTaken = Has any enforcement action been taken?
+hint.enforcementActionHasBeenTaken = This can be any suspensions, closure orders or temporary restrictions
+
+#ENFORCEMENT ACTION BEEN TAKEN DETAILS
+##############################
+enforcementActionHasBeenTaken.header = About the property
+label.enforcementActionHasBeenTaken = Describe any enforcement action taken
+
 #6010 TYPES
 ##############################
 userType.occupierTrustee = Occupier or trustee for occupier
