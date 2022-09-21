@@ -72,3 +72,7 @@ GET         /incentives-payments-conditions                         controllers.
 GET         /rent-increase-annually-with-rpi                        controllers.Form6010.RentIncreaseAnnuallyWithRPIController.show()
 
 GET         /method-to-fix-current-rent                             controllers.Form6010.MethodToFixCurrentRentController.show()
+
+GET         /enforcement-action-been-taken                          controllers.Form6010.EnforcementActionBeenTakenController.show()
+
+GET         /enforcement-action-been-take-details                   controllers.Form6010.EnforcementActionBeenTakenDetailsController.show()
