@@ -225,8 +225,8 @@ hint.enforcementActionHasBeenTaken = This can be any suspensions, closure orders
 
 #ENFORCEMENT ACTION BEEN TAKEN DETAILS
 ##############################
-enforcementActionHasBeenTaken.header = About the property
-label.enforcementActionHasBeenTaken = Describe any enforcement action taken
+enforcementActionHasBeenTakenDetails.header = About the property
+label.enforcementActionHasBeenTakenDetails = Describe any enforcement action taken
 
 #ULTIMATELY RESPONSIBLE
 ##############################

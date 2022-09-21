@@ -51,13 +51,13 @@
 @()(implicit request: Request[_], messages: Messages)
 
 @layout(
- pageHeading = messages("tiedForGoods.header"),
+ pageHeading = messages("enforcementActionHasBeenTaken.header"),
 
 ) {
 
  @govukRadios(
   Radios(
-   name = "tiedForGoods",
+   name = "enforcementActionHasBeenTaken",
    classes = "radio-button-that-show-hides",
    idPrefix = Option("tiedForGoods"),
    items = Seq(
@@ -72,13 +72,12 @@
     Fieldset(
      legend = Option(
       Legend(
-       content = Text(messages("label.tiedForGoods")),
+       content = Text(messages("label.enforcementActionHasBeenTaken")),
        classes = "govuk-!-font-weight-bold"
       )
      )
     )
-   ),
-   hint = Some(Hint(content = Text(messages("hint.tiedForGoods")))),
+   )
   )
  )
 
