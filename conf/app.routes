@@ -39,7 +39,7 @@ GET         /tied-for-goods                                         controllers.
 
 GET         /tied-for-goods-details                                 controllers.Form6010.TiedForGoodsDetailsController.show()
 
-GET         /catering-operation-or-letting-accommodation            controllers.Form6010.TiedForGoodsDetailsController.show()
+GET         /catering-operation-or-letting-accommodation            controllers.Form6010.CateringOperationOrLettingAccommodationController.show()
 
 GET         /letting-other-part-of-property                         controllers.Form6010.LettingOtherPartOfPropertyController.show()
 
@@ -78,3 +78,8 @@ GET         /enforcement-action-been-taken                          controllers.
 GET         /enforcement-action-been-taken-details                  controllers.Form6010.EnforcementActionBeenTakenDetailsController.show()
 
 GET         /how-is-current-rent-fixed                              controllers.Form6010.HowIsCurrentRentFixedController.show()
+
+GET         /catering-operation-or-letting-accommodation-details    controllers.Form6010.CateringOperationOrLettingAccommodationDetailsController.show()
+
+GET         /letting-other-part-of-property-details                 controllers.Form6010.LettingOtherPartOfPropertyDetailsController.show()
+

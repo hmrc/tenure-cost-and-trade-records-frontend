@@ -295,6 +295,62 @@ label.howIsCurrentRentFixed.interimRent = As an interim rent under the Landlord 
 label.howIsCurrentRentFixed.rentReview = At a rent review
 label.howIsCurrentRentFixed.renewalLeaseTenancy = On a renewal of a lease or tenancy
 label.howIsCurrentRentFixed.saleLeaseback = As part of a sale and leaseback transaction
+dateInput.howIsCurrentRentFixed.saleLeaseback = When was the rent actually agreed or set?
+
+#ENFORCEMENT ACTION BEEN TAKEN
+##############################
+enforcementActionHasBeenTaken.header = About the property
+label.enforcementActionHasBeenTaken = Has any enforcement action been taken?
+hint.enforcementActionHasBeenTaken = This can be any suspensions, closure orders or temporary restrictions
+
+#ENFORCEMENT ACTION BEEN TAKEN DETAILS
+##############################
+enforcementActionHasBeenTaken.header = About the property
+label.enforcementActionHasBeenTaken = Describe any enforcement action taken
+
+##CATERING OPERATION OR LETTING ACCOMMODATION DETAILS
+##############################
+cateringOperationOrLettingAccommodationDetails.header = Separate businesses or franchises
+cateringOperationOrLettingAccommodationDetails.subheading = Enter the details of business
+label.cateringOperationOrLettingAccommodationDetails.operatorName = Enter operator'''s name
+label.cateringOperationOrLettingAccommodationDetails.typeOfBusiness = Describe the type of business
+hint.cateringOperationOrLettingAccommodationDetails.typeOfBusiness = For example, bed and breakfast, hotel, restaurant
+cateringOperationOrLettingAccommodationDetails.correspondanceAddress = Correspondence address
+label.cateringOperationOrLettingAccommodationDetails.addressLine1 = Address line 1
+label.cateringOperationOrLettingAccommodationDetails.addressLine2 = Address line 1
+label.cateringOperationOrLettingAccommodationDetails.townOrCity = Town or city
+label.cateringOperationOrLettingAccommodationDetails.county = County (optional)
+label.cateringOperationOrLettingAccommodationDetails.postcode = Postcode
+label.cateringOperationOrLettingAccommodationDetails = Are any of the following included in your rent?
+hint.cateringOperationOrLettingAccommodationDetails = Select any that apply
+checkbox.cateringOperationOrLettingAccommodationDetails.rates = Rates
+checkbox.cateringOperationOrLettingAccommodationDetails.propertyInsurance = Property insurance
+checkbox.cateringOperationOrLettingAccommodationDetails.outsideRepairs = Outside repairs
+checkbox.cateringOperationOrLettingAccommodationDetails.insideRepairs = Inside repairs
+label.cateringOperationOrLettingAccommodationDetails.annualRent = Annual rent payment (excluding VAT)
+prefix.cateringOperationOrLettingAccommodationDetails = £
+
+##LETTING OTHER PART OF PROPERTY DETAILS
+##############################
+lettingOtherPartOfPropertyDetails.header = Lettings
+lettingOtherPartOfPropertyDetails.subheading = Enter the details of letting
+label.lettingOtherPartOfPropertyDetails.operatorName = Enter operator'''s name
+label.lettingOtherPartOfPropertyDetails.typeOfBusiness = Describe the type of business
+hint.lettingOtherPartOfPropertyDetails.typeOfBusiness = For example, a billboard, residential accommodation etc
+lettingOtherPartOfPropertyDetails.correspondanceAddress = Correspondence address
+label.lettingOtherPartOfPropertyDetails.addressLine1 = Address line 1
+label.lettingOtherPartOfPropertyDetails.addressLine2 = Address line 1
+label.lettingOtherPartOfPropertyDetails.townOrCity = Town or city
+label.lettingOtherPartOfPropertyDetails.county = County (optional)
+label.lettingOtherPartOfPropertyDetails.postcode = Postcode
+label.lettingOtherPartOfPropertyDetails = Are any of the following included in your rent?
+hint.lettingOtherPartOfPropertyDetails = Select any that apply
+checkbox.lettingOtherPartOfPropertyDetails.rates = Rates
+checkbox.lettingOtherPartOfPropertyDetails.propertyInsurance = Property insurance
+checkbox.lettingOtherPartOfPropertyDetails.outsideRepairs = Outside repairs
+checkbox.lettingOtherPartOfPropertyDetails.insideRepairs = Inside repairs
+label.lettingOtherPartOfPropertyDetails.annualRent = Annual rent payment (excluding VAT)
+prefix.lettingOtherPartOfPropertyDetails = £
 
 #6010 TYPES
 ##############################
@@ -312,4 +368,9 @@ propertyCurrentlyUsed.wineCafeBar = Wine bar or cafe bar
 propertyCurrentlyUsed.pubRestaurant = Pub or restaurant
 propertyCurrentlyUsed.hotel = Hotel
 propertyCurrentlyUsed.other = Other
+
+
+
+
+
 

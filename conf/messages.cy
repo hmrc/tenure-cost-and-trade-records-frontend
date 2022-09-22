@@ -281,6 +281,50 @@ hint.enforcementActionHasBeenTaken = This can be any suspensions, closure orders
 enforcementActionHasBeenTaken.header = About the property
 label.enforcementActionHasBeenTaken = Describe any enforcement action taken
 
+##CATERING OPERATION OR LETTING ACCOMMODATION DETAILS
+##############################
+cateringOperationOrLettingAccommodationDetails.header = Separate businesses or franchises
+cateringOperationOrLettingAccommodationDetails.subheading = Enter the details of business
+label.cateringOperationOrLettingAccommodationDetails.operatorName = Enter operator's name
+label.cateringOperationOrLettingAccommodationDetails.typeOfBusiness = Describe the type of business
+hint.cateringOperationOrLettingAccommodationDetails.typeOfBusiness = For example, bed and breakfast, hotel, restaurant
+cateringOperationOrLettingAccommodationDetails.correspondanceAddress = Correspondence address
+label.cateringOperationOrLettingAccommodationDetails.addressLine1 = Address line 1
+label.cateringOperationOrLettingAccommodationDetails.addressLine2 = Address line 1
+label.cateringOperationOrLettingAccommodationDetails.townOrCity = Town or city
+label.cateringOperationOrLettingAccommodationDetails.county = County (optional)
+label.cateringOperationOrLettingAccommodationDetails.postcode = Postcode
+label.cateringOperationOrLettingAccommodationDetails = Are any of the following included in your rent?
+hint.cateringOperationOrLettingAccommodationDetails = Select any that apply
+checkbox.cateringOperationOrLettingAccommodationDetails.rates = Rates
+checkbox.cateringOperationOrLettingAccommodationDetails.propertyInsurance = Property insurance
+checkbox.cateringOperationOrLettingAccommodationDetails.outsideRepairs = Outside repairs
+checkbox.cateringOperationOrLettingAccommodationDetails.insideRepairs = Inside repairs
+label.cateringOperationOrLettingAccommodationDetails.annualRent = Annual rent payment (excluding VAT)
+prefix.cateringOperationOrLettingAccommodationDetails = £
+
+##LETTING OTHER PART OF PROPERTY DETAILS
+##############################
+cateringOperationOrLettingAccommodationDetails.header = Separate businesses or franchises
+cateringOperationOrLettingAccommodationDetails.subheading = Enter the details of business
+label.cateringOperationOrLettingAccommodationDetails.operatorName = Enter operator's name
+label.cateringOperationOrLettingAccommodationDetails.typeOfBusiness = Describe the type of business
+hint.cateringOperationOrLettingAccommodationDetails.typeOfBusiness = For example, bed and breakfast, hotel, restaurant
+cateringOperationOrLettingAccommodationDetails.correspondanceAddress = Correspondence address
+label.cateringOperationOrLettingAccommodationDetails.addressLine1 = Address line 1
+label.cateringOperationOrLettingAccommodationDetails.addressLine2 = Address line 1
+label.cateringOperationOrLettingAccommodationDetails.townOrCity = Town or city
+label.cateringOperationOrLettingAccommodationDetails.county = County (optional)
+label.cateringOperationOrLettingAccommodationDetails.postcode = Postcode
+label.cateringOperationOrLettingAccommodationDetails = Are any of the following included in your rent?
+hint.cateringOperationOrLettingAccommodationDetails = Select any that apply
+checkbox.cateringOperationOrLettingAccommodationDetails.rates = Rates
+checkbox.cateringOperationOrLettingAccommodationDetails.propertyInsurance = Property insurance
+checkbox.cateringOperationOrLettingAccommodationDetails.outsideRepairs = Outside repairs
+checkbox.cateringOperationOrLettingAccommodationDetails.insideRepairs = Inside repairs
+label.cateringOperationOrLettingAccommodationDetails.annualRent = Annual rent payment (excluding VAT)
+prefix.cateringOperationOrLettingAccommodationDetails = £
+
 #6010 TYPES
 ##############################
 userType.occupierTrustee = Occupier or trustee for occupier
@@ -298,3 +342,24 @@ propertyCurrentlyUsed.pubRestaurant = Pub or restaurant
 propertyCurrentlyUsed.hotel = Hotel
 propertyCurrentlyUsed.other = Other
 
+##CATERING OPERATION OR LETTING ACCOMMODATION DETAILS
+##############################
+cateringOperationOrLettingAccommodationDetails.header = Separate businesses or franchises
+cateringOperationOrLettingAccommodationDetails.subheading = Enter the details of business
+label.cateringOperationOrLettingAccommodationDetails.operatorName = Enter operator's name
+label.cateringOperationOrLettingAccommodationDetails.typeOfBusiness = Describe the type of business
+hint.cateringOperationOrLettingAccommodationDetails.typeOfBusiness = For example, bed and breakfast, hotel, restaurant
+cateringOperationOrLettingAccommodationDetails.correspondanceAddress = Correspondence address
+label.cateringOperationOrLettingAccommodationDetails.addressLine1 = Address line 1
+label.cateringOperationOrLettingAccommodationDetails.addressLine2 = Address line 1
+label.cateringOperationOrLettingAccommodationDetails.townOrCity = Town or city
+label.cateringOperationOrLettingAccommodationDetails.county = County (optional)
+label.cateringOperationOrLettingAccommodationDetails.postcode = Postcode
+label.cateringOperationOrLettingAccommodationDetails = Are any of the following included in your rent?
+hint.cateringOperationOrLettingAccommodationDetails = Select any that apply
+checkbox.cateringOperationOrLettingAccommodationDetails.rates = Rates
+checkbox.cateringOperationOrLettingAccommodationDetails.propertyInsurance = Property insurance
+checkbox.cateringOperationOrLettingAccommodationDetails.outsideRepairs = Outside repairs
+checkbox.cateringOperationOrLettingAccommodationDetails.insideRepairs = Inside repairs
+label.cateringOperationOrLettingAccommodationDetails.annualRent = Annual rent payment (excluding VAT)
+prefix.cateringOperationOrLettingAccommodationDetails = £
