@@ -83,3 +83,5 @@ GET         /catering-operation-or-letting-accommodation-details    controllers.
 
 GET         /letting-other-part-of-property-details                 controllers.Form6010.LettingOtherPartOfPropertyDetailsController.show()
 
+GET         /tenants-additions-disregarded                          controllers.Form6010.TenantsAdditionsDisregardedController.show()
+
