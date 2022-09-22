@@ -75,8 +75,8 @@ label.propertyCurrentlyUsed = How is the property currently used?
 ##############################
 websiteForProperty.header = About the property
 label.websiteForProperty = Does the business operating from the property have a website?
-label.yes = Oes
-label.no = Nac oes
+label.yes = Yes
+label.no = No
 
 #WEBSITE ADDRESS FOR PROPERTY (USED ON 6010, 6011, 6015, 6016,6030, 6035, 6036, 6037, 6045)
 ##############################
@@ -87,8 +87,8 @@ websiteAddressForProperty.label = What's the web address?
 ##############################
 tenancyLeaseAgreement.header = About the property
 label.tenancyLeaseAgreement = Do you hold a tenancy, lease or agreement to occupy?
-label.yes = Oes
-label.no = Nac oes
+label.yes = Yes
+label.no = No
 
 #FRANCHISE OR LETTINGS TIED TO PROPERTY
 ##############################
@@ -97,8 +97,8 @@ franchiseLettings.subheading = We need to know about any:
 franchiseLettings.list1 = catering operation or letting accommodation run as a separate business if you've not included their turnover on the previous page
 franchiseLettings.list2 = rent received from letting other parts of the property including advertising rights, stations or hoardings
 label.franchiseLettings = Do you need to report anything listed on this page?
-label.yes = Oes
-label.no = Nac oes
+label.yes = Yes
+label.no = No
 
 #ABOUT YOUR LANDLORD
 ##############################
@@ -188,14 +188,14 @@ label.rentOpenMarketValue = Is the rent based on the open market value?
 
 #DOES THE RENT PAYABLE
 ##############################
-rentOpenMarketValue.header = Does the rent payable
-label.rentOpenMarketValue.includeLicensee = include licensee'''s, manager's or staff living accomodation?
-label.rentOpenMarketValue.includeOtherProperty = include other property?
-label.rentOpenMarketValue.onlyPartOfProperty = relate to only part of the property?
-label.rentOpenMarketValue.onlyToLand = relate only to land (excluding buildings)?
-label.rentOpenMarketValue.shellUnit = relate to a 'shell' unit (did you have to fit the property out yourself)?
-label.rentOpenMarketValue.details = Please give details if you answered yes to any of these questions
-hint.rentOpenMarketValue.details = For example, the rent includes an upstairs flat, or also includes the premises next door
+rentPayable.header = Does the rent payable
+label.rentPayable.includeLicensee = include licensee'''s, manager's or staff living accomodation?
+label.rentPayable.includeOtherProperty = include other property?
+label.rentPayable.onlyPartOfProperty = relate to only part of the property?
+label.rentPayable.onlyToLand = relate only to land (excluding buildings)?
+label.rentPayable.shellUnit = relate to a 'shell' unit (did you have to fit the property out yourself)?
+label.rentPayable.details = Please give details if you answered yes to any of these questions
+hint.rentPayable.details = For example, the rent includes an upstairs flat, or also includes the premises next door
 
 #RENT PAYABLE VARY ON QUANTITY OF BEERS
 ##############################
@@ -216,6 +216,17 @@ label.rentPayableVaryAccordingToGrossOrNet = Does the rent payable vary accordin
 ##############################
 rentPayableVaryAccordingToGrossOrNetDetails.header = How your turnover affects the rent
 label.rentPayableVaryAccordingToGrossOrNetDetails = Please tell us how the rent payable is affected by your turnover
+
+#ENFORCEMENT ACTION BEEN TAKEN
+##############################
+enforcementActionHasBeenTaken.header = About the property
+label.enforcementActionHasBeenTaken = Has any enforcement action been taken?
+hint.enforcementActionHasBeenTaken = This can be any suspensions, closure orders or temporary restrictions
+
+#ENFORCEMENT ACTION BEEN TAKEN DETAILS
+##############################
+enforcementActionHasBeenTakenDetails.header = About the property
+label.enforcementActionHasBeenTakenDetails = Describe any enforcement action taken
 
 #ULTIMATELY RESPONSIBLE
 ##############################
@@ -261,14 +272,19 @@ label.incentivesPaymentsConditions.capitalSum = Did you pay a capital sum or pre
 hint.incentivesPaymentsConditions.capitalSum = The sum could be paid to the landlord or a previous lessee
 label.incentivesPaymentsConditions.receivePayment = Did you receive any payment when the lease was granted (if the rent has not been reviewed in the lease), or following assignment of the lease or agreement?
 
+#RENT INCREASE ANNUALLY WITH RPI
+##############################
+rentIncreaseAnnuallyWithRPI.header = About your lease or agreement
+label.rentIncreaseAnnuallyWithRPI = Does the rent increase annually in line with the retail price index (RPI)?
+
 #METHOD USED TO FIX CURRENT RENT
 ##############################
 methodUsedToFixCurrentRent.header = About your lease or agreement
 label.methodUsedToFixCurrentRent = Which method was used to fix the current rent?
 label.methodUsedToFixCurrentRent.agreement = Agreement
-label.methodUsedToFixCurrentRent.agreement = Arbitration
-label.methodUsedToFixCurrentRent.agreement = Independent expert
-label.methodUsedToFixCurrentRent.agreement = A court
+label.methodUsedToFixCurrentRent.arbitration = Arbitration
+label.methodUsedToFixCurrentRent.independentExpert = Independent expert
+label.methodUsedToFixCurrentRent.aCourt = A court
 
 #ENFORCEMENT ACTION BEEN TAKEN
 ##############################
@@ -285,7 +301,7 @@ label.enforcementActionHasBeenTaken = Describe any enforcement action taken
 ##############################
 cateringOperationOrLettingAccommodationDetails.header = Separate businesses or franchises
 cateringOperationOrLettingAccommodationDetails.subheading = Enter the details of business
-label.cateringOperationOrLettingAccommodationDetails.operatorName = Enter operator's name
+label.cateringOperationOrLettingAccommodationDetails.operatorName = Enter operator'''s name
 label.cateringOperationOrLettingAccommodationDetails.typeOfBusiness = Describe the type of business
 hint.cateringOperationOrLettingAccommodationDetails.typeOfBusiness = For example, bed and breakfast, hotel, restaurant
 cateringOperationOrLettingAccommodationDetails.correspondanceAddress = Correspondence address
@@ -305,25 +321,33 @@ prefix.cateringOperationOrLettingAccommodationDetails = £
 
 ##LETTING OTHER PART OF PROPERTY DETAILS
 ##############################
-cateringOperationOrLettingAccommodationDetails.header = Separate businesses or franchises
-cateringOperationOrLettingAccommodationDetails.subheading = Enter the details of business
-label.cateringOperationOrLettingAccommodationDetails.operatorName = Enter operator's name
-label.cateringOperationOrLettingAccommodationDetails.typeOfBusiness = Describe the type of business
-hint.cateringOperationOrLettingAccommodationDetails.typeOfBusiness = For example, bed and breakfast, hotel, restaurant
-cateringOperationOrLettingAccommodationDetails.correspondanceAddress = Correspondence address
-label.cateringOperationOrLettingAccommodationDetails.addressLine1 = Address line 1
-label.cateringOperationOrLettingAccommodationDetails.addressLine2 = Address line 1
-label.cateringOperationOrLettingAccommodationDetails.townOrCity = Town or city
-label.cateringOperationOrLettingAccommodationDetails.county = County (optional)
-label.cateringOperationOrLettingAccommodationDetails.postcode = Postcode
-label.cateringOperationOrLettingAccommodationDetails = Are any of the following included in your rent?
-hint.cateringOperationOrLettingAccommodationDetails = Select any that apply
-checkbox.cateringOperationOrLettingAccommodationDetails.rates = Rates
-checkbox.cateringOperationOrLettingAccommodationDetails.propertyInsurance = Property insurance
-checkbox.cateringOperationOrLettingAccommodationDetails.outsideRepairs = Outside repairs
-checkbox.cateringOperationOrLettingAccommodationDetails.insideRepairs = Inside repairs
-label.cateringOperationOrLettingAccommodationDetails.annualRent = Annual rent payment (excluding VAT)
-prefix.cateringOperationOrLettingAccommodationDetails = £
+lettingOtherPartOfPropertyDetails.header = Lettings
+lettingOtherPartOfPropertyDetails.subheading = Enter the details of letting
+label.lettingOtherPartOfPropertyDetails.operatorName = Enter operator'''s name
+label.lettingOtherPartOfPropertyDetails.typeOfBusiness = Describe the type of business
+hint.lettingOtherPartOfPropertyDetails.typeOfBusiness = For example, a billboard, residential accommodation etc
+lettingOtherPartOfPropertyDetails.correspondanceAddress = Correspondence address
+label.lettingOtherPartOfPropertyDetails.addressLine1 = Address line 1
+label.lettingOtherPartOfPropertyDetails.addressLine2 = Address line 1
+label.lettingOtherPartOfPropertyDetails.townOrCity = Town or city
+label.lettingOtherPartOfPropertyDetails.county = County (optional)
+label.lettingOtherPartOfPropertyDetails.postcode = Postcode
+label.lettingOtherPartOfPropertyDetails = Are any of the following included in your rent?
+hint.lettingOtherPartOfPropertyDetails = Select any that apply
+checkbox.lettingOtherPartOfPropertyDetails.rates = Rates
+checkbox.lettingOtherPartOfPropertyDetails.propertyInsurance = Property insurance
+checkbox.lettingOtherPartOfPropertyDetails.outsideRepairs = Outside repairs
+checkbox.lettingOtherPartOfPropertyDetails.insideRepairs = Inside repairs
+label.lettingOtherPartOfPropertyDetails.annualRent = Annual rent payment (excluding VAT)
+prefix.lettingOtherPartOfPropertyDetails = £
+
+##TENANTS ADDITIONS DISREGARDED
+##############################
+tenantsAdditionsDisregarded.header = About your property
+label.tenantsAdditionsDisregarded = Were any tenant's additions disregarded at the time the rent was agreed or determined?
+hint.tenantsAdditionsDisregarded = For example, is your rent based on the market value of the property before you made improvements like fitting out a shell, or adding parking
+label.tenantsAdditionsDisregarded.legalPlanning = Are there any legal or planning restrictions, unusual terms or conditions in the lease or agreement that may have affected the rent payable?
+hint.tenantsAdditionsDisregarded.legalPlanning = For example, a break clause, contracting out of the Landlord and Tenant Act, etc
 
 #6010 TYPES
 ##############################
@@ -341,25 +365,3 @@ propertyCurrentlyUsed.wineCafeBar = Wine bar or cafe bar
 propertyCurrentlyUsed.pubRestaurant = Pub or restaurant
 propertyCurrentlyUsed.hotel = Hotel
 propertyCurrentlyUsed.other = Other
-
-##CATERING OPERATION OR LETTING ACCOMMODATION DETAILS
-##############################
-cateringOperationOrLettingAccommodationDetails.header = Separate businesses or franchises
-cateringOperationOrLettingAccommodationDetails.subheading = Enter the details of business
-label.cateringOperationOrLettingAccommodationDetails.operatorName = Enter operator's name
-label.cateringOperationOrLettingAccommodationDetails.typeOfBusiness = Describe the type of business
-hint.cateringOperationOrLettingAccommodationDetails.typeOfBusiness = For example, bed and breakfast, hotel, restaurant
-cateringOperationOrLettingAccommodationDetails.correspondanceAddress = Correspondence address
-label.cateringOperationOrLettingAccommodationDetails.addressLine1 = Address line 1
-label.cateringOperationOrLettingAccommodationDetails.addressLine2 = Address line 1
-label.cateringOperationOrLettingAccommodationDetails.townOrCity = Town or city
-label.cateringOperationOrLettingAccommodationDetails.county = County (optional)
-label.cateringOperationOrLettingAccommodationDetails.postcode = Postcode
-label.cateringOperationOrLettingAccommodationDetails = Are any of the following included in your rent?
-hint.cateringOperationOrLettingAccommodationDetails = Select any that apply
-checkbox.cateringOperationOrLettingAccommodationDetails.rates = Rates
-checkbox.cateringOperationOrLettingAccommodationDetails.propertyInsurance = Property insurance
-checkbox.cateringOperationOrLettingAccommodationDetails.outsideRepairs = Outside repairs
-checkbox.cateringOperationOrLettingAccommodationDetails.insideRepairs = Inside repairs
-label.cateringOperationOrLettingAccommodationDetails.annualRent = Annual rent payment (excluding VAT)
-prefix.cateringOperationOrLettingAccommodationDetails = £
