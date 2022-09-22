@@ -78,3 +78,5 @@ GET         /enforcement-action-been-taken                          controllers.
 GET         /enforcement-action-been-taken-details                  controllers.Form6010.EnforcementActionBeenTakenDetailsController.show()
 
 GET         /catering-operation-or-letting-accommodation-details    controllers.Form6010.CateringOperationOrLettingAccommodationDetailsController.show()
+
+GET         /letting-other-part-of-property-details                 controllers.Form6010.LettingOtherPartOfPropertyDetailsController.show()

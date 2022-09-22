@@ -59,19 +59,19 @@
 @()(implicit request: Request[_], messages: Messages)
 
 @layout(
- pageHeading = messages("cateringOperationOrLettingAccommodationDetails.header"),
+ pageHeading = messages("lettingOtherPartOfPropertyDetails.header"),
 
 ) {
 
- <p class="govuk-body"><b>@messages("cateringOperationOrLettingAccommodationDetails.subheading")</b></p>
+ <p class="govuk-body"><b>@messages("lettingOtherPartOfPropertyDetails.subheading")</b></p>
 
  @govukInput(
   Input(
-   id = "cateringOperationOrLettingAccommodationDetails",
-   name = "cateringOperationOrLettingAccommodationDetails",
+   id = "lettingOtherPartOfPropertyDetails",
+   name = "lettingOtherPartOfPropertyDetails",
    classes = "govuk-input--width-20",
    label = Label(
-    content = Text(messages("label.cateringOperationOrLettingAccommodationDetails.operatorName") ),
+    content = Text(messages("label.lettingOtherPartOfPropertyDetails.operatorName") ),
     classes = "govuk-!-font-weight-bold"
    )
   )
@@ -79,26 +79,27 @@
 
  @govukInput(
   Input(
-   id = "cateringOperationOrLettingAccommodationDetails",
-   name = "cateringOperationOrLettingAccommodationDetails",
+   id = "lettingOtherPartOfPropertyDetails",
+   name = "lettingOtherPartOfPropertyDetails",
    classes = "govuk-input--width-20",
    label = Label(
-    content = Text(messages("label.cateringOperationOrLettingAccommodationDetails.typeOfBusiness") ),
+    content = Text(messages("label.lettingOtherPartOfPropertyDetails.typeOfBusiness") ),
     classes = "govuk-!-font-weight-bold"
    ),
-   hint = Some(Hint(content = Text(messages("hint.cateringOperationOrLettingAccommodationDetails.typeOfBusiness")))),
+   hint = Some(Hint(content = Text(messages("hint.lettingOtherPartOfPropertyDetails.typeOfBusiness")))),
+
   )
  )
 
- <p class="govuk-body"><b>@messages("cateringOperationOrLettingAccommodationDetails.correspondanceAddress")</b></p>
+ <p class="govuk-body"><b>@messages("lettingOtherPartOfPropertyDetails.correspondanceAddress")</b></p>
 
  @govukInput(
   Input(
-   id = "cateringOperationOrLettingAccommodationDetails",
-   name = "cateringOperationOrLettingAccommodationDetails",
+   id = "lettingOtherPartOfPropertyDetails",
+   name = "lettingOtherPartOfPropertyDetails",
    classes = "govuk-input--width-20",
    label = Label(
-    content = Text(messages("label.cateringOperationOrLettingAccommodationDetails.addressLine1") ),
+    content = Text(messages("label.lettingOtherPartOfPropertyDetails.addressLine1") ),
     classes = "govuk-!-font-weight-bold"
    )
   )
@@ -106,11 +107,11 @@
 
  @govukInput(
   Input(
-   id = "cateringOperationOrLettingAccommodationDetails",
-   name = "cateringOperationOrLettingAccommodationDetails",
+   id = "lettingOtherPartOfPropertyDetails",
+   name = "lettingOtherPartOfPropertyDetails",
    classes = "govuk-input--width-20",
    label = Label(
-    content = Text(messages("label.cateringOperationOrLettingAccommodationDetails.addressLine2") ),
+    content = Text(messages("label.lettingOtherPartOfPropertyDetails.addressLine2") ),
     classes = "govuk-!-font-weight-bold"
    )
   )
@@ -118,11 +119,11 @@
 
  @govukInput(
   Input(
-   id = "cateringOperationOrLettingAccommodationDetails",
-   name = "cateringOperationOrLettingAccommodationDetails",
+   id = "lettingOtherPartOfPropertyDetails",
+   name = "lettingOtherPartOfPropertyDetails",
    classes = "govuk-input--width-20",
    label = Label(
-    content = Text(messages("label.cateringOperationOrLettingAccommodationDetails.townOrCity") ),
+    content = Text(messages("label.lettingOtherPartOfPropertyDetails.townOrCity") ),
     classes = "govuk-!-font-weight-bold"
    )
   )
@@ -130,11 +131,11 @@
 
  @govukInput(
   Input(
-   id = "cateringOperationOrLettingAccommodationDetails",
-   name = "cateringOperationOrLettingAccommodationDetails",
+   id = "lettingOtherPartOfPropertyDetails",
+   name = "lettingOtherPartOfPropertyDetails",
    classes = "govuk-input--width-20",
    label = Label(
-    content = Text(messages("label.cateringOperationOrLettingAccommodationDetails.county") ),
+    content = Text(messages("label.lettingOtherPartOfPropertyDetails.county") ),
     classes = "govuk-!-font-weight-bold"
    )
   )
@@ -142,11 +143,11 @@
 
  @govukInput(
   Input(
-   id = "cateringOperationOrLettingAccommodationDetails",
-   name = "cateringOperationOrLettingAccommodationDetails",
+   id = "lettingOtherPartOfPropertyDetails",
+   name = "lettingOtherPartOfPropertyDetails",
    classes = "govuk-input--width-10",
    label = Label(
-    content = Text(messages("label.cateringOperationOrLettingAccommodationDetails.postcode") ),
+    content = Text(messages("label.lettingOtherPartOfPropertyDetails.postcode") ),
     classes = "govuk-!-font-weight-bold"
    )
   )
@@ -154,45 +155,45 @@
 
  @govukInput(
   Input(
-   id = "cateringOperationOrLettingAccommodationDetails",
-   name = "cateringOperationOrLettingAccommodationDetails",
+   id = "lettingOtherPartOfPropertyDetails",
+   name = "lettingOtherPartOfPropertyDetails",
    classes = "govuk-input--width-5",
    label = Label(
-    content = Text(messages("label.cateringOperationOrLettingAccommodationDetails.annualRent")),
+    content = Text(messages("label.lettingOtherPartOfPropertyDetails.annualRent")),
     classes = "govuk-!-font-weight-bold"
    ),
-   prefix = Some(PrefixOrSuffix(content = Text(messages("prefix.cateringOperationOrLettingAccommodationDetails")))),
+   prefix = Some(PrefixOrSuffix(content = Text(messages("prefix.lettingOtherPartOfPropertyDetails")))),
   )
  )
 
  @govukCheckboxes(
   Checkboxes(
-   name = "cateringOperationOrLettingAccommodationDetails",
+   name = "lettingOtherPartOfPropertyDetails",
    fieldset = Some(Fieldset(
     legend = Some(Legend(
-     content = Text(Messages("label.cateringOperationOrLettingAccommodationDetails")),
+     content = Text(Messages("label.lettingOtherPartOfPropertyDetails")),
      classes = "govuk-fieldset__legend--s"
     ))
    )),
    items = Seq(
     CheckboxItem(
      id = Some("rates"),
-     content = Text(messages("checkbox.cateringOperationOrLettingAccommodationDetails.rates"))
+     content = Text(messages("checkbox.lettingOtherPartOfPropertyDetails.rates"))
     ),
     CheckboxItem(
      id = Some("propertyInsurance"),
-     content = Text(messages("checkbox.cateringOperationOrLettingAccommodationDetails.propertyInsurance"))
+     content = Text(messages("checkbox.lettingOtherPartOfPropertyDetails.propertyInsurance"))
     ),
     CheckboxItem(
      id = Some("outsideRepairs"),
-     content = Text(messages("checkbox.cateringOperationOrLettingAccommodationDetails.outsideRepairs"))
+     content = Text(messages("checkbox.lettingOtherPartOfPropertyDetails.outsideRepairs"))
     ),
     CheckboxItem(
      id = Some("insideRepairs"),
-     content = Text(messages("checkbox.cateringOperationOrLettingAccommodationDetails.insideRepairs"))
+     content = Text(messages("checkbox.lettingOtherPartOfPropertyDetails.insideRepairs"))
     )
    ),
-   hint = Some(Hint(content = Text(messages("hint.cateringOperationOrLettingAccommodationDetails"))))
+   hint = Some(Hint(content = Text(messages("hint.lettingOtherPartOfPropertyDetails"))))
    )
   )
 
