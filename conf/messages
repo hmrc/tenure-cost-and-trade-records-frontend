@@ -286,6 +286,16 @@ label.methodUsedToFixCurrentRent.arbitration = Arbitration
 label.methodUsedToFixCurrentRent.independentExpert = Independent expert
 label.methodUsedToFixCurrentRent.aCourt = A court
 
+#HOW IS CURRENT RENT FIXED
+##############################
+howIsCurrentRentFixed.header = About your lease or agreement
+label.howIsCurrentRentFixed = How was the current rent fixed?
+label.howIsCurrentRentFixed.newLeaseAgreement = At the beginning of a new lease or agreement
+label.howIsCurrentRentFixed.interimRent = As an interim rent under the Landlord and Tenants Acts
+label.howIsCurrentRentFixed.rentReview = At a rent review
+label.howIsCurrentRentFixed.renewalLeaseTenancy = On a renewal of a lease or tenancy
+label.howIsCurrentRentFixed.saleLeaseback = As part of a sale and leaseback transaction
+
 #6010 TYPES
 ##############################
 userType.occupierTrustee = Occupier or trustee for occupier

@@ -75,4 +75,6 @@ GET         /method-to-fix-current-rent                             controllers.
 
 GET         /enforcement-action-been-taken                          controllers.Form6010.EnforcementActionBeenTakenController.show()
 
-GET         /enforcement-action-been-taken-details                   controllers.Form6010.EnforcementActionBeenTakenDetailsController.show()
+GET         /enforcement-action-been-taken-details                  controllers.Form6010.EnforcementActionBeenTakenDetailsController.show()
+
+GET         /how-is-current-rent-fixed                              controllers.Form6010.HowIsCurrentRentFixedController.show()
