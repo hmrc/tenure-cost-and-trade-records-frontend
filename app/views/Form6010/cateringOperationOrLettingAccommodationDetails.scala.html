@@ -1,0 +1,209 @@
+@*
+ * Copyright 2022 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.button.Button
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.textarea.Textarea
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.checkboxes.Checkboxes
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.checkboxes.CheckboxItem
+
+
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukErrorSummary
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukDateInput
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukTextarea
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukCharacterCount
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukCheckboxes
+@import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.checkboxes
+
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Label
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Radios
+@import uk.gov.hmrc.govukfrontend.views.Aliases.RadioItem
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Fieldset
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Legend
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Hint
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Input
+
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.input.PrefixOrSuffix
+
+
+@this(layout: Layout,
+        govukButton: GovukButton,
+        govukRadios: GovukRadios,
+        govukInput: GovukInput,
+        govukErrorSummary: GovukErrorSummary,
+        govukDateInput: GovukDateInput,
+        govukTextarea: GovukTextarea,
+        govukCharacterCount: GovukCharacterCount,
+        govukCheckboxes: GovukCheckboxes,
+        formWithCSRF: FormWithCSRF
+)
+
+
+@()(implicit request: Request[_], messages: Messages)
+
+@layout(
+ pageHeading = messages("cateringOperationOrLettingAccommodationDetails.header"),
+
+) {
+
+ <p class="govuk-body"><b>@messages("cateringOperationOrLettingAccommodationDetails.subheading")</b></p>
+
+ @govukInput(
+  Input(
+   id = "cateringOperationOrLettingAccommodationDetails",
+   name = "cateringOperationOrLettingAccommodationDetails",
+   classes = "govuk-input--width-20",
+   label = Label(
+    content = Text(messages("label.cateringOperationOrLettingAccommodationDetails.operatorName") ),
+    classes = "govuk-!-font-weight-bold"
+   )
+  )
+ )
+
+ @govukInput(
+  Input(
+   id = "cateringOperationOrLettingAccommodationDetails",
+   name = "cateringOperationOrLettingAccommodationDetails",
+   classes = "govuk-input--width-20",
+   label = Label(
+    content = Text(messages("label.cateringOperationOrLettingAccommodationDetails.typeOfBusiness") ),
+    classes = "govuk-!-font-weight-bold"
+   )
+  )
+ )
+
+ <p class="govuk-body"><b>@messages("cateringOperationOrLettingAccommodationDetails.correspondanceAddress")</b></p>
+
+ @govukInput(
+  Input(
+   id = "cateringOperationOrLettingAccommodationDetails",
+   name = "cateringOperationOrLettingAccommodationDetails",
+   classes = "govuk-input--width-20",
+   label = Label(
+    content = Text(messages("label.cateringOperationOrLettingAccommodationDetails.addressLine1") ),
+    classes = "govuk-!-font-weight-bold"
+   )
+  )
+ )
+
+ @govukInput(
+  Input(
+   id = "cateringOperationOrLettingAccommodationDetails",
+   name = "cateringOperationOrLettingAccommodationDetails",
+   classes = "govuk-input--width-20",
+   label = Label(
+    content = Text(messages("label.cateringOperationOrLettingAccommodationDetails.addressLine2") ),
+    classes = "govuk-!-font-weight-bold"
+   )
+  )
+ )
+
+ @govukInput(
+  Input(
+   id = "cateringOperationOrLettingAccommodationDetails",
+   name = "cateringOperationOrLettingAccommodationDetails",
+   classes = "govuk-input--width-20",
+   label = Label(
+    content = Text(messages("label.cateringOperationOrLettingAccommodationDetails.townOrCity") ),
+    classes = "govuk-!-font-weight-bold"
+   )
+  )
+ )
+
+ @govukInput(
+  Input(
+   id = "cateringOperationOrLettingAccommodationDetails",
+   name = "cateringOperationOrLettingAccommodationDetails",
+   classes = "govuk-input--width-20",
+   label = Label(
+    content = Text(messages("label.cateringOperationOrLettingAccommodationDetails.county") ),
+    classes = "govuk-!-font-weight-bold"
+   )
+  )
+ )
+
+ @govukInput(
+  Input(
+   id = "cateringOperationOrLettingAccommodationDetails",
+   name = "cateringOperationOrLettingAccommodationDetails",
+   classes = "govuk-input--width-10",
+   label = Label(
+    content = Text(messages("label.cateringOperationOrLettingAccommodationDetails.postcode") ),
+    classes = "govuk-!-font-weight-bold"
+   )
+  )
+ )
+
+ @govukInput(
+  Input(
+   id = "cateringOperationOrLettingAccommodationDetails",
+   name = "cateringOperationOrLettingAccommodationDetails",
+   classes = "govuk-input--width-5",
+   label = Label(
+    content = Text(messages("label.cateringOperationOrLettingAccommodationDetails.annualRent")),
+    classes = "govuk-!-font-weight-bold"
+   ),
+   prefix = Some(PrefixOrSuffix(content = Text(messages("prefix.cateringOperationOrLettingAccommodationDetails")))),
+  )
+ )
+
+ @govukCheckboxes(
+  Checkboxes(
+   name = "cateringOperationOrLettingAccommodationDetails",
+   fieldset = Some(Fieldset(
+    legend = Some(Legend(
+     content = Text(Messages("label.cateringOperationOrLettingAccommodationDetails")),
+     classes = "govuk-fieldset__legend--s"
+    ))
+   )),
+   items = Seq(
+    CheckboxItem(
+     id = Some("rates"),
+     content = Text(messages("checkbox.cateringOperationOrLettingAccommodationDetails.rates"))
+    ),
+    CheckboxItem(
+     id = Some("propertyInsurance"),
+     content = Text(messages("checkbox.cateringOperationOrLettingAccommodationDetails.propertyInsurance"))
+    ),
+    CheckboxItem(
+     id = Some("outsideRepairs"),
+     content = Text(messages("checkbox.cateringOperationOrLettingAccommodationDetails.outsideRepairs"))
+    ),
+    CheckboxItem(
+     id = Some("insideRepairs"),
+     content = Text(messages("checkbox.cateringOperationOrLettingAccommodationDetails.insideRepairs"))
+    )
+   ),
+   hint = Some(Hint(content = Text(messages("hint.cateringOperationOrLettingAccommodationDetails"))))
+   )
+  )
+
+
+ @govukButton(
+  Button(
+   content = Text(messages("button.label.continue")),
+   href = Some(routes.LoginController.show().url)
+  )
+ )
+
+}
+
+
+
