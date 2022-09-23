@@ -88,3 +88,5 @@ GET         /tenants-additions-disregarded                          controllers.
 GET         /current-rent-first-paid                                controllers.Form6010.CurrentRentFirstPaidController.show()
 
 GET         /about-your-trading-history                             controllers.Form6010.AboutYourTradingHistoryController.show()
+
+GET         /current-lease-or-agreement-begin                       controllers.Form6010.CurrentLeaseOrAgreementBeginController.show()
