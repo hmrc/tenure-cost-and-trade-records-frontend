@@ -85,3 +85,5 @@ GET         /letting-other-part-of-property-details                 controllers.
 
 GET         /tenants-additions-disregarded                          controllers.Form6010.TenantsAdditionsDisregardedController.show()
 
+GET         /about-your-trading-history                             controllers.Form6010.AboutYourTradingHistoryController.show()
+
