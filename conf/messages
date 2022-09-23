@@ -351,6 +351,7 @@ checkbox.lettingOtherPartOfPropertyDetails.propertyInsurance = Property insuranc
 checkbox.lettingOtherPartOfPropertyDetails.outsideRepairs = Outside repairs
 checkbox.lettingOtherPartOfPropertyDetails.insideRepairs = Inside repairs
 label.lettingOtherPartOfPropertyDetails.annualRent = Annual rent payment (excluding VAT)
+label.lettingOtherPartOfPropertyDetails.dateInput = When was this sum fixed?
 prefix.lettingOtherPartOfPropertyDetails = £
 
 ##TENANTS ADDITIONS DISREGARDED
