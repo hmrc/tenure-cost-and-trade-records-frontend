@@ -349,6 +349,13 @@ hint.tenantsAdditionsDisregarded = For example, is your rent based on the market
 label.tenantsAdditionsDisregarded.legalPlanning = Are there any legal or planning restrictions, unusual terms or conditions in the lease or agreement that may have affected the rent payable?
 hint.tenantsAdditionsDisregarded.legalPlanning = For example, a break clause, contracting out of the Landlord and Tenant Act, etc
 
+##ABOUT YOUR TRADING HISTORY
+##############################
+aboutYourTradingHistory.header = About your trading history
+aboutYourTradingHistory.subheading = In the following section, you need to provide us with your trading information for the last 3 years. If you took occupation within that time, please provide your trading history since you occupied the property
+label.aboutYourTradingHistory.firstOccupy = When did you first occupy the property?
+label.aboutYourTradingHistory.financialYear =When does your financial year end?
+
 #6010 TYPES
 ##############################
 userType.occupierTrustee = Occupier or trustee for occupier
@@ -365,3 +372,9 @@ propertyCurrentlyUsed.wineCafeBar = Wine bar or cafe bar
 propertyCurrentlyUsed.pubRestaurant = Pub or restaurant
 propertyCurrentlyUsed.hotel = Hotel
 propertyCurrentlyUsed.other = Other
+
+##CURRENT RENT FIRST PAID
+##############################
+currentRentFirstPaid.header = About your lease or agreement
+label.currentRentFirstPaid.currentRent = When was the current rent first paid under the terms of the current lease or agreement?
+hint.currentRentFirstPaid = Disregard any instances where the rent altered after changes in the amount of rates or services payable
