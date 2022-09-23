@@ -372,3 +372,9 @@ propertyCurrentlyUsed.wineCafeBar = Wine bar or cafe bar
 propertyCurrentlyUsed.pubRestaurant = Pub or restaurant
 propertyCurrentlyUsed.hotel = Hotel
 propertyCurrentlyUsed.other = Other
+
+##CURRENT RENT FIRST PAID
+##############################
+currentRentFirstPaid.header = About your lease or agreement
+label.currentRentFirstPaid.currentRent = When was the current rent first paid under the terms of the current lease or agreement?
+hint.currentRentFirstPaid = Disregard any instances where the rent altered after changes in the amount of rates or services payable
