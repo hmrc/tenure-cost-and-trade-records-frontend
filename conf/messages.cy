@@ -356,6 +356,20 @@ aboutYourTradingHistory.subheading = In the following section, you need to provi
 label.aboutYourTradingHistory.firstOccupy = When did you first occupy the property?
 label.aboutYourTradingHistory.financialYear =When does your financial year end?
 
+##CURRENT RENT FIRST PAID
+##############################
+currentRentFirstPaid.header = About your lease or agreement
+label.currentRentFirstPaid.currentRent = When was the current rent first paid under the terms of the current lease or agreement?
+hint.currentRentFirstPaid = Disregard any instances where the rent altered after changes in the amount of rates or services payable
+
+##CURRENT LEASE OR AGREEMENT BEGIN
+##############################
+currentLeaseOrAgreementBegin.header = About your lease or agreement
+label.currentLeaseOrAgreementBegin.leaseBegin = When did the current lease or agreement begin?
+hint.currentLeaseOrAgreementBegin.leaseBegin = If the current lease was granted to a previous occupier, tell us when it was started by them
+label.currentLeaseOrAgreementBegin.grantedFor = How long was it granted for?
+suffix.currentLeaseOrAgreementBegin.grantedFor = months
+
 #6010 TYPES
 ##############################
 userType.occupierTrustee = Occupier or trustee for occupier
@@ -373,8 +387,3 @@ propertyCurrentlyUsed.pubRestaurant = Pub or restaurant
 propertyCurrentlyUsed.hotel = Hotel
 propertyCurrentlyUsed.other = Other
 
-##CURRENT RENT FIRST PAID
-##############################
-currentRentFirstPaid.header = About your lease or agreement
-label.currentRentFirstPaid.currentRent = When was the current rent first paid under the terms of the current lease or agreement?
-hint.currentRentFirstPaid = Disregard any instances where the rent altered after changes in the amount of rates or services payable
