@@ -318,6 +318,7 @@ checkbox.cateringOperationOrLettingAccommodationDetails.outsideRepairs = Outside
 checkbox.cateringOperationOrLettingAccommodationDetails.insideRepairs = Inside repairs
 label.cateringOperationOrLettingAccommodationDetails.annualRent = Annual rent payment (excluding VAT)
 label.cateringOperationOrLettingAccommodationDetails.dateInput = When was this sum fixed?
+label.lettingOtherPartOfPropertyDetails.dateInput = When was this sum fixed?
 prefix.cateringOperationOrLettingAccommodationDetails = £
 
 ##LETTING OTHER PART OF PROPERTY DETAILS
