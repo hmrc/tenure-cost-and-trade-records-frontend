@@ -17,10 +17,9 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.button.Button
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.textarea.Textarea
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.checkboxes.Checkboxes
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.checkboxes.CheckboxItem
-
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.input.PrefixOrSuffix
 
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
@@ -30,17 +29,13 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukCharacterCount
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukCheckboxes
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.checkboxes
 
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Label
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Radios
-@import uk.gov.hmrc.govukfrontend.views.Aliases.RadioItem
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Fieldset
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Legend
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Hint
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Input
-
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.input.PrefixOrSuffix
+@import uk.gov.hmrc.govukfrontend.views.Aliases.DateInput
 
 
 @this(layout: Layout,
@@ -162,6 +157,18 @@
     classes = "govuk-!-font-weight-bold"
    ),
    prefix = Some(PrefixOrSuffix(content = Text(messages("prefix.cateringOperationOrLettingAccommodationDetails")))),
+  )
+ )
+
+ @govukDateInput(
+  DateInput(
+   id = "dateInput",
+   fieldset = Some(Fieldset(
+    legend = Some(Legend(
+     content = Text(Messages("label.aboutYourTradingHistory.firstOccupy")),
+     classes = "govuk-fieldset__legend--s"
+    ))
+   )),
   )
  )
 
