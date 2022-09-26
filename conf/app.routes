@@ -94,3 +94,5 @@ GET         /current-lease-or-agreement-begin                       controllers.
 GET         /intervals-of-rent-review                               controllers.Form6010.IntervalsOfRentReviewController.show()
 
 GET         /current-rent-payable-within-12-months                  controllers.Form6010.CurrentRentPayableWithin12MonthsController.show()
+
+GET         /what-is-your-rent-based-on                             controllers.Form6010.WhatIsYourRentBasedOnController.show()
