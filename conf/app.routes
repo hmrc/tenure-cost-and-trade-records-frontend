@@ -92,3 +92,5 @@ GET         /about-your-trading-history                             controllers.
 GET         /current-lease-or-agreement-begin                       controllers.Form6010.CurrentLeaseOrAgreementBeginController.show()
 
 GET         /intervals-of-rent-review                               controllers.Form6010.IntervalsOfRentReviewController.show()
+
+GET         /current-rent-payable-within-12-months                  controllers.Form6010.CurrentRentPayableWithin12MonthsController.show()
