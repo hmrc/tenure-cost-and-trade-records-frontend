@@ -397,6 +397,20 @@ label.currentRentPayableWithin12Months.rentPayable = Is the current rent payable
 hint.currentRentPayableWithin12Months.rentPayable = Do not include any rent increases linked to turnover or the retail price index (RPI)
 label.currentRentPayableWithin12Months.dateReview = Date of next rent review or expiry of existing lease
 
+##WHAT IS YOUR RENT BASED ON
+##############################
+whatIsYourRentBasedOn.header = About your lease or agreement
+label.whatIsYourRentBasedOn = What is the rent based on?
+hint.whatIsYourRentBasedOn = Select any that apply and give details
+checkbox.whatIsYourRentBasedOn.percentageOpenMarket = A percentage of open market value
+checkbox.whatIsYourRentBasedOn.fixed = A fixed amount
+checkbox.whatIsYourRentBasedOn.percentageTurnover = A percentage of turnover of the occupier's business
+checkbox.whatIsYourRentBasedOn.indexed = Indexed to the retail price index (RPI) or another index
+checkbox.whatIsYourRentBasedOn.stepped = Stepped rent arrangement
+checkbox.whatIsYourRentBasedOn.other = Other (for example, combination of the above)
+label.whatIsYourRentBasedOn.describe = Describe
+hint.whatIsYourRentBasedOn.describe = For example, 75% of the open market value, or indexed to the consumer price index
+
 #6010 TYPES
 ##############################
 userType.occupierTrustee = Occupier or trustee for occupier
