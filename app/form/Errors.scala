@@ -23,4 +23,22 @@ object Errors {
   val invalidPostcode = "error.invalid_postcode"
   val invalidPostcodeOnLetter = "error.invalid_postcode_as_on_letter"
 
+  //About You Errors
+  val userTypeRequired = "error.userType.required"
+  val contactDetailsMissing = "error.contact.details.missing"
+  val contactPhoneRequired = "error.contact.phone.required"
+  val contactEmailRequired = "error.contact.email.required"
+  val alternativeAddressMissing = "error.alternative.address.missing"
+  val alternativeContactMissing  = "error.alternative.contact.missing"
+
+  //generic errors
+  val required = "error.required"
+  val booleanMissing = "error.boolean_missing"
+  val noValueSelected = "error.no_value_selected"
+  val maxLength = "error.maxLength"
+  val invalidPhone = "error.invalid_phone"
+  val invalidCurrency = "error.invalid_currency"
+  val password = "error.invalid_password"
+
+
 }

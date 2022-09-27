@@ -16,8 +16,31 @@
 
 package form
 
+import models.submissions._
+import play.api.data.Forms.{default, email, mapping, text}
+import play.api.data.validation.Constraints.{maxLength, minLength, nonEmpty, pattern}
+import play.api.data.{Forms, Mapping}
+
 object MappingSupport {
 
   val postcodeRegex = """(GIR ?0AA)|((([A-Z-[QVX]][0-9][0-9]?)|(([A-Z-[QVX]][A-Z-[IJZ]][0-9][0-9]?)|(([A-Z-[QVX]][0-9][A-HJKPSTUW])|([A-Z-[QVX]][A-Z-[IJZ]][0-9][ABEHMNPRVWXY])))) ?[0-9][A-Z-[CIKMOV]]{2})""" //scalastyle:ignore
+  val phoneRegex = """^^[0-9\s\+()-]+$"""
+  val userType: Mapping[UserType] = Forms.of[UserType]
+
+  val contactDetailsMapping: Mapping[ContactDetails] =
+    mapping(
+      "phone" -> default(text, "").verifying(
+        nonEmpty(errorMessage = Errors.contactPhoneRequired),
+        pattern(phoneRegex.r, error = Errors.invalidPhone),
+        minLength(11, "error.contact.phone.minLength"),
+        maxLength(20, "error.contact.phone.maxLength")
+      ),
+      "email1" -> default(email, "").verifying(
+        nonEmpty(errorMessage = Errors.contactEmailRequired),
+        maxLength(50, "contactDetails.email1.email.tooLong")
+      )
+    )(ContactDetails.apply)(ContactDetails.unapply)
+
+
 
 }
