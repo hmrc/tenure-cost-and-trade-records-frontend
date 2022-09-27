@@ -27,11 +27,6 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Radios
 
-
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Label
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Hint
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Input
-@import akka.protobufv3.internal.DescriptorProtos.EnumOptions
 @import uk.gov.hmrc.govukfrontend.views.Aliases.RadioItem
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Fieldset
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Legend
@@ -52,59 +47,19 @@
 @()(implicit request: Request[_], messages: Messages)
 
 @layout(
- pageHeading = messages("aboutYou.header"),
+ pageHeading = messages("areYouConnected.header"),
 
 ) {
-
- <p class="govuk-body">@messages("aboutYou.subheading")</p>
- <p class="govuk-body">@messages("aboutYou.subheading2")</p>
-
- @govukInput(
-  Input(
-   id = "fullName",
-   name = "fullName",
-   classes = "govuk-input--width-20",
-   label = Label(
-    content = Text(messages("aboutYou.fullName") ),
-    classes = "govuk-!-font-weight-bold"
-   )
-  )
- )
-
- @govukInput(
-  Input(
-   id = "email",
-   name = "email",
-   classes = "govuk-input--width-20",
-   label = Label(
-    content = Text(messages("aboutYou.email") ),
-    classes = "govuk-!-font-weight-bold"
-   )
-  )
- )
-
- @govukInput(
-  Input(
-   id = "telephone",
-   name = "telephone",
-   classes = "govuk-input--width-20",
-   label = Label(
-    content = Text(messages("aboutYou.telephone") ),
-    classes = "govuk-!-font-weight-bold"
-   )
-  )
- )
 
  @govukRadios(
   Radios(
    name = "relationshipToProperty",
-   classes = "radio-button-that-show-hides",
+   classes = "relationshipToProperty",
    idPrefix = Option("relationshipToProperty"),
    items = Seq(
-    "occupierTrustee" -> messages("relationshipToProperty.occupierTrustee"),
-    "ownerTrustee" -> messages("relationshipToProperty.ownerTrustee"),
-    "occupier" -> messages("relationshipToProperty.occupier"),
-    "owner" -> messages("relationshipToProperty.owner")
+    "yes" -> messages("label.yes"),
+    "yesUpdate" -> messages("label.areYouConnected.addressUpdate"),
+    "no" -> messages("label.no")
    ).map( radioItem => RadioItem (
     content = Text(radioItem._2),
     value=Option(radioItem._1)
@@ -114,13 +69,11 @@
     Fieldset(
      legend = Option(
       Legend(
-       content = Text(messages("label.aboutYou")),
        classes = "govuk-!-font-weight-bold"
       )
      )
     )
-   ),
-   hint = Some(Hint(content = Text(messages("hint.aboutYou")))),
+   )
   )
   )
 
