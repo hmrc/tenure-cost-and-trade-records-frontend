@@ -29,6 +29,7 @@ import play.api.data.JodaForms._
 import form.{Errors, MappingSupport}
 import play.api.libs.json.Json
 import uk.gov.hmrc.http.{HeaderCarrier, SessionId}
+import views.html.Form6010.areYouStillConnected
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
@@ -60,7 +61,8 @@ class LoginController  @Inject()(
     mcc: MessagesControllerComponents,
     login: login,
     test: testSign,
-    connector: BackendConnector
+    connector: BackendConnector,
+    areYouStillConnected: areYouStillConnected
 ) (implicit ec: ExecutionContext) extends FrontendController(mcc) with Logging {
 
   import LoginController.loginForm
@@ -86,7 +88,7 @@ class LoginController  @Inject()(
     connector.verifyCredentials(referenceNumber, postcode)(hc2, ec).flatMap {
       case name =>
         auditLogin(referenceNumber, false, Address("Somewhere", None, None, "BN12 4AX"), "6010")(hc2)
-        Future.successful(Ok(test(name)))
+        Future.successful(Ok(areYouStillConnected()))
     }
   }
 

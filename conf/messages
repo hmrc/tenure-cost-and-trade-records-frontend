@@ -48,6 +48,11 @@ landing.listItem5 = information about any recent changes to your rent or any ren
 landing.listItem6 = information about any changes you’ve made to the property
 landing.desc5 = You do not have to complete the form in one go. You can save what you’ve done and return to finish it later on.
 
+#6010 ARE YOU STILL CONNECTED
+##############################
+areYouConnected.header = Are you still connected to 747, GORING ROAD, GORING-BY-SEA, WORTHING, BN12 4AX?
+label.areYouConnected.addressUpdate = Yes, and the address needs to be updated
+
 #6010 ABOUT YOU
 ##############################
 aboutYou.header = About you
