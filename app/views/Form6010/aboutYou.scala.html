@@ -28,7 +28,7 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukCharacterCount
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Radios
-
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
 
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Label
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Hint
@@ -51,11 +51,11 @@
 )
 
 
-@(form: Form[CustomerDetails])(implicit request: Request[_], messages: Messages)
+@(theForm: Form[CustomerDetails])(implicit request: Request[_], messages: Messages)
 
 @layout(
  pageHeading = messages("aboutYou.header"),
-
+ theForm = theForm
 ) {
 
  @formWithCSRF(action = controllers.Form6010.routes.AboutYouController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
@@ -71,7 +71,8 @@
      label = Label(
       content = Text(messages("aboutYou.fullName") ),
       classes = "govuk-!-font-weight-bold"
-     )
+     ),
+     errorMessage =  theForm.errors.asTextErrorMessageForField("fullName")
     )
    )
 
@@ -83,7 +84,8 @@
    label = Label(
     content = Text(messages("aboutYou.email") ),
     classes = "govuk-!-font-weight-bold"
-   )
+   ),
+   errorMessage = theForm.errors.asTextErrorMessageForField("contactDetails.email1")
   )
  )
 
@@ -95,7 +97,8 @@
    label = Label(
     content = Text(messages("aboutYou.telephone") ),
     classes = "govuk-!-font-weight-bold"
-   )
+   ),
+   errorMessage = theForm.errors.asTextErrorMessageForField("contactDetails.phone")
   )
  )
 
@@ -114,6 +117,7 @@
     value=Option(radioItem._1)
    )
    ),
+   errorMessage = theForm.errors.asTextErrorMessageForField("userType"),
    fieldset = Option(
     Fieldset(
      legend = Option(
