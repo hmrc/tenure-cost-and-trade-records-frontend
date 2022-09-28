@@ -16,6 +16,7 @@
 
 package form
 
+import form.Formats._
 import models.submissions._
 import play.api.data.Forms.{default, email, mapping, text}
 import play.api.data.validation.Constraints.{maxLength, minLength, nonEmpty, pattern}

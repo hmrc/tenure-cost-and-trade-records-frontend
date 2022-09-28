@@ -20,6 +20,7 @@ import config.AppConfig
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.Form6010.aboutYou
+import form.AboutYouForm.aboutYouForm
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
@@ -32,7 +33,13 @@ class AboutYouController @Inject()(
     extends FrontendController(mcc) {
 
   def show: Action[AnyContent] = Action.async { implicit request =>
-    Future.successful(Ok(aboutYou()))
+    Future.successful(Ok(aboutYou(aboutYouForm)))
   }
 
+  def submit = Action.async { implicit request =>
+    aboutYouForm.bindFromRequest.fold(
+      formWithErrors => Future.successful(BadRequest(aboutYou(formWithErrors))),
+      data => Future.successful(Ok(aboutYou(aboutYouForm)))
+    )
+  }
 }

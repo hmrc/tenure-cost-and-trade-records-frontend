@@ -7,7 +7,6 @@ GET         /assets/*file                                           controllers.
 GET         /                                                       controllers.Application.index()
 # Sign in page
 GET         /login                                                  controllers.LoginController.show()
-
 POST        /login                                                  controllers.LoginController.submit()
 
 GET         /are-you-still-connected                                controllers.Form6010.AreYouStillConnectedController.show()
@@ -19,6 +18,7 @@ GET         /website-for-property                                   controllers.
 GET         /tenancy-lease-agreement                                controllers.Form6010.TenancyLeaseAgreementController.show()
 
 GET         /about-you                                              controllers.Form6010.AboutYouController.show()
+POST        /about-you                                              controllers.Form6010.AboutYouController.submit()
 
 GET         /website-address-for-property                           controllers.Form6010.WebsiteAddressForPropertyController.show()
 
