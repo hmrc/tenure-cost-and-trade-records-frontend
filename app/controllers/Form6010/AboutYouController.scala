@@ -16,7 +16,8 @@
 
 package controllers.Form6010
 
-import config.AppConfig
+import models.submissions.CustomerDetails
+import play.api.data.Form
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.Form6010.aboutYou
@@ -27,12 +28,11 @@ import scala.concurrent.Future
 @Singleton
 class AboutYouController @Inject()(
   mcc: MessagesControllerComponents,
-  appConfig: AppConfig,
-  aboutYou: aboutYou)
+  theForm: Form[CustomerDetails],
+  aboutYouView: aboutYou)
     extends FrontendController(mcc) {
 
   def show: Action[AnyContent] = Action.async { implicit request =>
-    Future.successful(Ok(aboutYou()))
+    Future.successful(Ok(aboutYouView(theForm)))
   }
-
 }

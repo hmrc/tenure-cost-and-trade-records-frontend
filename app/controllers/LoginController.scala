@@ -57,13 +57,13 @@ object LoginController {
 
 @Singleton
 class LoginController  @Inject()(
-    audit: Audit,
-    mcc: MessagesControllerComponents,
-    login: login,
-    test: testSign,
-    connector: BackendConnector,
-    areYouStillConnected: areYouStillConnected
-) (implicit ec: ExecutionContext) extends FrontendController(mcc) with Logging {
+                                  audit: Audit,
+                                  mcc: MessagesControllerComponents,
+                                  login: login,
+                                  test: testSign,
+                                  connector: BackendConnector,
+                                  areYouStillConnected: areYouStillConnected
+                                ) (implicit ec: ExecutionContext) extends FrontendController(mcc) with Logging {
 
   import LoginController.loginForm
 

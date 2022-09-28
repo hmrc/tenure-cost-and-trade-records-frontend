@@ -27,15 +27,14 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Radios
 
-
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Label
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Hint
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Input
-@import akka.protobufv3.internal.DescriptorProtos.EnumOptions
 @import uk.gov.hmrc.govukfrontend.views.Aliases.RadioItem
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Fieldset
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Legend
 
+@import models.submissions.CustomerDetails
 
 @this(layout: Layout,
         govukButton: GovukButton,
@@ -49,7 +48,7 @@
 )
 
 
-@()(implicit request: Request[_], messages: Messages)
+@(theForm: Form[CustomerDetails])(implicit request: Request[_], messages: Messages)
 
 @layout(
  pageHeading = messages("aboutYou.header"),
@@ -67,7 +66,8 @@
    label = Label(
     content = Text(messages("aboutYou.fullName") ),
     classes = "govuk-!-font-weight-bold"
-   )
+   ),
+   //errorMessage =  theForm.errors.asTextErrorMessageForField("fullName")
   )
  )
 

@@ -16,10 +16,13 @@
 
 package form
 
+import models._
 import models.submissions._
+import form.Formats
 import play.api.data.Forms.{default, email, mapping, text}
 import play.api.data.validation.Constraints.{maxLength, minLength, nonEmpty, pattern}
 import play.api.data.{Forms, Mapping}
+
 
 object MappingSupport {
 
