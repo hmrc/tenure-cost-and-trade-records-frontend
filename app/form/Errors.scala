@@ -33,7 +33,7 @@ object Errors {
   val invalidPostcode = "error.invalid_postcode"
   val invalidPostcodeOnLetter = "error.invalid_postcode_as_on_letter"
 
-  //page 0
+  //Are you still connected Error
   val isConnectedError = "error.isRelated"
 
   //About You Errors

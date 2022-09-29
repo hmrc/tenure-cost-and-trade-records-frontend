@@ -10,6 +10,29 @@ button.label.save = Save
 label.checkTheForm = There is a problem
 error.title = Error:
 
+#WELSH YES/NO
+#############
+label.yes.oes=Yes
+label.no.nac.oes=No
+label.yes.ie=Yes
+label.no.nage=No
+label.yes.ydy=Yes
+label.no.nac.ydy=No
+label.yes.ydw=Yes
+label.no.nac.ydw=No
+label.yes.ydw.ydy=Yes
+label.no.nac.ydw.ydy=No
+label.yes.gall=Yes
+label.no.na.all=No
+label.yes.do=Yes
+label.no.naddo=No
+label.yes.ydyn=Yes
+label.no.nac.ydyn=No
+label.yes.oedd=Yes
+label.no.nac.oedd=No
+label.yes.iawn = Yes
+label.no.na = No
+
 # Dummy Start Page
 ##############################
 start.page.heading = Dummy Start Page
@@ -52,6 +75,7 @@ landing.desc5 = You do not have to complete the form in one go. You can save wha
 ##############################
 areYouConnected.header = Are you still connected to 747, GORING ROAD, GORING-BY-SEA, WORTHING, BN12 4AX?
 label.areYouConnected.addressUpdate = Yes, and the address needs to be updated
+label.yes.change.address=Yes - I want to edit the address
 
 #6010 ARE YOU STILL CONNECTED YES UPDATE ADDRESS
 ##############################
