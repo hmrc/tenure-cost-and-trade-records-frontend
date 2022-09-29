@@ -51,7 +51,7 @@
 @(theForm: Form[_])(implicit request: Request[_], messages: Messages)
 
 @layout(
- pageHeading = "",
+ pageHeading = messages("areYouConnected.header"),
  theForm = theForm
 ) {
 
@@ -75,7 +75,6 @@
      Fieldset(
       legend = Option(
        Legend(
-        content = Text(messages("areYouConnected.header")),
         isPageHeading = true,
         classes = "govuk-fieldset__legend--l"
        )
