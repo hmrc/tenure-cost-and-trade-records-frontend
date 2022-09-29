@@ -16,10 +16,12 @@
 
 package controllers.Form6010
 
+import controllers.LoginController.loginForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.Form6010.aboutYou
 import form.AboutYouForm.aboutYouForm
+import views.html.login
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
@@ -27,6 +29,7 @@ import scala.concurrent.Future
 @Singleton
 class AboutYouController @Inject()(
   mcc: MessagesControllerComponents,
+  login: login,
   aboutYouView: aboutYou)
     extends FrontendController(mcc) {
 
@@ -37,7 +40,7 @@ class AboutYouController @Inject()(
   def submit = Action.async { implicit request =>
     aboutYouForm.bindFromRequest.fold(
       formWithErrors => Future.successful(BadRequest(aboutYouView(formWithErrors))),
-      data => Future.successful(Ok(aboutYouView(aboutYouForm)))
+      data => Future.successful(Ok(login(loginForm)))
     )
   }
 }
