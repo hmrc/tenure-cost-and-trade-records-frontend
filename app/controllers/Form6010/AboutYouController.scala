@@ -16,11 +16,10 @@
 
 package controllers.Form6010
 
-import models.submissions.CustomerDetails
-import play.api.data.Form
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.Form6010.aboutYou
+import form.AboutYouForm.aboutYouForm
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
@@ -28,11 +27,17 @@ import scala.concurrent.Future
 @Singleton
 class AboutYouController @Inject()(
   mcc: MessagesControllerComponents,
-  theForm: Form[CustomerDetails],
   aboutYouView: aboutYou)
     extends FrontendController(mcc) {
 
   def show: Action[AnyContent] = Action.async { implicit request =>
-    Future.successful(Ok(aboutYouView(theForm)))
+    Future.successful(Ok(aboutYouView(aboutYouForm)))
+  }
+
+  def submit = Action.async { implicit request =>
+    aboutYouForm.bindFromRequest.fold(
+      formWithErrors => Future.successful(BadRequest(aboutYouView(formWithErrors))),
+      data => Future.successful(Ok(aboutYouView(aboutYouForm)))
+    )
   }
 }
