@@ -53,6 +53,28 @@ landing.desc5 = You do not have to complete the form in one go. You can save wha
 areYouConnected.header = Are you still connected to 747, GORING ROAD, GORING-BY-SEA, WORTHING, BN12 4AX?
 label.areYouConnected.addressUpdate = Yes, and the address needs to be updated
 
+#6010 ARE YOU STILL CONNECTED YES UPDATE ADDRESS
+##############################
+areYouConnectedYesUpdateAddress.header = How do you expect the connected address to be shown?
+label.areYouConnectedYesUpdateAddress.addressLine1 = Address line 1
+label.areYouConnectedYesUpdateAddress.addressLine2 = Address line 2
+label.areYouConnectedYesUpdateAddress.addressLine3 = Address line 3 (Optional)
+label.areYouConnectedYesUpdateAddress.postcode = Postcode
+
+#6010 ARE YOU STILL CONNECTED NO
+##############################
+areYouConnectedNo.header = Have you ever had a connection to the property?
+
+#6010 REMOVE CONNECTION
+##############################
+removeConnection.header = Remove your connection to this property
+removeConnection.subheading = We'''ll use these details if we need to contact you
+label.removeConnection.fullName = Full name
+label.removeConnection.emailAddress = Email address
+label.removeConnection.telephoneNumber = Telephone number
+label.removeConnection.additionalInformation = Additional information
+hint.removeConnection.additionalInformation = For example, the name of the current owner or occupier
+
 #6010 ABOUT YOU
 ##############################
 aboutYou.header = About you
