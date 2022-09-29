@@ -476,7 +476,7 @@ error.invalid_postcode=Enter a valid UK postcode
 error.invalid_currency = This must be a number greater than 0
 error.invalid_phone=Enter a phone number, like 01632 960 001
 error.email=Enter an email in the correct format, like name@example.com
-
+error.isRelated=Select ‘Yes’ if you are still connected
 error.invalid_date = Enter a valid date
 error.date_must_be_in_past = Date must be in the past
 error.number = This must be a number

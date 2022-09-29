@@ -44,6 +44,7 @@ object Errors {
   val alternativeAddressMissing = "error.alternative.address.missing"
   val alternativeContactMissing  = "error.alternative.contact.missing"
 
+
   //page 3
   val propertyTypeRequired = "error.propertyType.required"
   val companyNameRequired = "error.companyName.required"

@@ -31,9 +31,6 @@
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Fieldset
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Legend
 
-@import models.submissions.AddressConnectionTypeYes
-@import models.submissions.AddressConnectionTypeYesChangeAddress
-@import models.submissions.AddressConnectionTypeNo
 
 @this(layout: Layout,
         govukButton: GovukButton,
@@ -47,19 +44,40 @@
 )
 
 
-@()(implicit request: Request[_], messages: Messages)
+@(theForm: Form[_])(implicit request: Request[_], messages: Messages)
 
 @layout(
  pageHeading = messages("areYouConnected.header"),
-
+ theForm = theForm
 ) {
 
- @formWithCSRF(action = controllers.Form6010.routes.AboutYouController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
-
-
-  @includes.continueButton(govukButton)
+ @formWithCSRF(action = controllers.Form6010.routes.AreYouStillConnectedController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
+  @govukRadios(
+   Radios(
+    name = "areYouConnected",
+    idPrefix = Option("areYouConnected"),
+    items = Seq(
+     "yes" -> messages("label.yes"),
+     "yesUpdate" -> messages("label.areYouConnected.addressUpdate"),
+     "no" -> messages("label.no")
+    ).map(radioItem => RadioItem(
+     content = Text(radioItem._2),
+     value = Option(radioItem._1)
+    )
+    ),
+    fieldset = Option(
+     Fieldset(
+      legend = Option(
+       Legend(
+        classes = "govuk-!-font-weight-bold"
+       )
+      )
+     )
+    )
    )
   )
+  @includes.continueButton(govukButton)
+
  }
 }
 
