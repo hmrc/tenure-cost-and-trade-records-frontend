@@ -12,6 +12,12 @@ POST        /login                                                  controllers.
 
 GET         /are-you-still-connected                                controllers.Form6010.AreYouStillConnectedController.show()
 
+GET         /edit-address                                           controllers.Form6010.AreYouStillConnectedYesUpdateAddressController.show()
+
+GET         /previously-connected                                   controllers.Form6010.AreYouStillConnectedNoController.show()
+
+GET         /remove-connection                                     controllers.Form6010.RemoveConnectionController.show()
+
 GET         /about-the-property                                     controllers.Form6010.AboutThePropertyController.show()
 
 GET         /website-for-property                                   controllers.Form6010.WebsiteForPropertyController.show()
