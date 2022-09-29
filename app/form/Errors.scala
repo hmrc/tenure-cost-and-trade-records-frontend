@@ -33,7 +33,7 @@ object Errors {
   val invalidPostcode = "error.invalid_postcode"
   val invalidPostcodeOnLetter = "error.invalid_postcode_as_on_letter"
 
-  //page 0
+  //Are you still connected Error
   val isConnectedError = "error.isRelated"
 
   //About You Errors
@@ -43,6 +43,7 @@ object Errors {
   val contactEmailRequired = "error.contact.email.required"
   val alternativeAddressMissing = "error.alternative.address.missing"
   val alternativeContactMissing  = "error.alternative.contact.missing"
+
 
   //page 3
   val propertyTypeRequired = "error.propertyType.required"

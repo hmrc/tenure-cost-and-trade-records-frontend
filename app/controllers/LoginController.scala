@@ -30,6 +30,7 @@ import models.submissions.Address
 import play.api.libs.json.Json
 import uk.gov.hmrc.http.{HeaderCarrier, SessionId}
 import views.html.Form6010.areYouStillConnected
+import form.AreYouStillConnectedForm.areYouStillConnectedForm
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
@@ -88,7 +89,7 @@ class LoginController  @Inject()(
     connector.verifyCredentials(referenceNumber, postcode)(hc2, ec).flatMap {
       case name =>
         auditLogin(referenceNumber, false, Address("Somewhere", None, None, "BN12 4AX"), "6010")(hc2)
-        Future.successful(Ok(areYouStillConnected()))
+        Future.successful(Ok(areYouStillConnected(areYouStillConnectedForm)))
     }
   }
 
