@@ -31,6 +31,9 @@
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Fieldset
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Legend
 
+@import models.submissions.AddressConnectionTypeYes
+@import models.submissions.AddressConnectionTypeYesChangeAddress
+@import models.submissions.AddressConnectionTypeNo
 
 @this(layout: Layout,
         govukButton: GovukButton,
@@ -51,40 +54,40 @@
 
 ) {
 
- @govukRadios(
-  Radios(
-   name = "areYouConnected",
-   classes = "relationshipToProperty",
-   idPrefix = Option("areYouConnected"),
-   items = Seq(
-    "yes" -> messages("label.yes"),
-    "yesUpdate" -> messages("label.areYouConnected.addressUpdate"),
-    "no" -> messages("label.no")
-   ).map( radioItem => RadioItem (
-    content = Text(radioItem._2),
-    value=Option(radioItem._1)
-   )
-   ),
-   fieldset = Option(
-    Fieldset(
-     legend = Option(
-      Legend(
-       classes = "govuk-!-font-weight-bold"
+ @formWithCSRF(action = controllers.Form6010.routes.AboutYouController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
+
+  @govukRadios(
+   Radios(
+    name = "isRelated",
+    idPrefix = Option("isRelated"),
+    items = Seq(
+     AddressConnectionTypeYes.name -> messages("label.yes.oes"),
+     AddressConnectionTypeYesChangeAddress.name -> Messages("label.yes.change.address"),
+     AddressConnectionTypeNo.name -> messages("label.no.nac.oes")
+    ).map(i => RadioItem (
+     content = Text(i._2),
+     checked = i._1.equals(theForm("isRelated").value.getOrElse("")),
+     value=Option(i._1)
+    )
+    ),
+    errorMessage = theForm.errors.asTextErrorMessageForField("isRelated"),
+    fieldset = Option(
+     Fieldset(
+      legend = Option(
+       Legend(
+        content = Text(heading),
+        isPageHeading = true,
+        classes = "govuk-fieldset__legend--l"
+       )
       )
      )
     )
    )
   )
+  @includes.continueButton(govukButton)
+   )
   )
-
-
- @govukButton(
-  Button(
-   content = Text(messages("button.label.continue")),
-   href = Some(routes.LoginController.show().url)
-  )
- )
-
+ }
 }
 
 

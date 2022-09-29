@@ -15,7 +15,6 @@
  *@
 
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.button.Button
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
@@ -46,7 +45,7 @@
         govukDateInput: GovukDateInput,
         govukTextarea: GovukTextarea,
         govukCharacterCount: GovukCharacterCount,
-        formWithCSRF: FormWithCSRF
+        formWithCSRF: FormWithCSRF,
 )
 
 
@@ -54,7 +53,6 @@
 
 @layout(
  pageHeading = messages("aboutYou.header"),
-
  theForm = theForm
 ) {
 
@@ -137,12 +135,7 @@
    )
   )
 
-  @govukButton(
-   Button(
-    content = Text(messages("button.label.continue")),
-    href = Some(routes.LoginController.show().url)
-   )
-  )
+  @includes.continueButton(govukButton)
  }
 
 }
