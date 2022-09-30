@@ -20,9 +20,10 @@ import config.AppConfig
 import controllers.LoginController.loginForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.Form6010.areYouStillConnected
+import views.html.Form6010.{aboutYou, areYouStillConnected}
 import views.html.login
 import form.AreYouStillConnectedForm.areYouStillConnectedForm
+import form.AboutYouForm.aboutYouForm
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
@@ -32,7 +33,8 @@ class AreYouStillConnectedController @Inject()(
   mcc: MessagesControllerComponents,
   appConfig: AppConfig,
   login: login,
-  areYouStillConnectedView: areYouStillConnected)
+  areYouStillConnectedView: areYouStillConnected,
+  aboutYouView: aboutYou)
     extends FrontendController(mcc) {
 
   def show: Action[AnyContent] = Action.async { implicit request =>
@@ -42,7 +44,7 @@ class AreYouStillConnectedController @Inject()(
   def submit = Action.async { implicit request =>
     areYouStillConnectedForm.bindFromRequest.fold(
       formWithErrors => Future.successful(BadRequest(areYouStillConnectedView(formWithErrors))),
-      data => Future.successful(Ok(login(loginForm)))
+      data => Future.successful(Ok(aboutYouView(aboutYouForm)))
     )
   }
 }
