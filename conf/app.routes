@@ -13,7 +13,7 @@ POST        /login                                                  controllers.
 GET         /are-you-still-connected                                controllers.Form6010.AreYouStillConnectedController.show()
 POST        /are-you-still-connected                                controllers.Form6010.AreYouStillConnectedController.submit()
 
-GET         /edit-address                                           controllers.Form6010.AreYouStillConnectedYesUpdateAddressController.show()
+GET         /edit-address                                           controllers.Form6010.EditAddressController.show()
 
 GET         /previously-connected                                   controllers.Form6010.AreYouStillConnectedNoController.show()
 

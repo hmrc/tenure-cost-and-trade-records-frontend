@@ -108,7 +108,7 @@ aboutYou.fullName = Full Name
 aboutYou.email = Email address
 aboutYou.telephone = Telephone number
 label.aboutYou = What is your relationship to the property?
-hint.aboutYou = If you’re renting or leasing the property, even as a charity or non-profit organisation, you're considered the occupier. If you are both the owner and the occupier, select 'Owner or trustee for owner'.
+hint.aboutYou = If you’re renting or leasing the property, even as a charity or non-profit organisation, you’re considered the occupier. If you are both the owner and the occupier, select ’Owner or trustee for owner’.
 relationshipToProperty.occupierTrustee = Occupier or trustee for occupier
 relationshipToProperty.ownerTrustee = Owner or trustee for owner
 relationshipToProperty.occupier = Occupier’s agent
@@ -132,7 +132,7 @@ label.no = No
 #WEBSITE ADDRESS FOR PROPERTY (USED ON 6010, 6011, 6015, 6016,6030, 6035, 6036, 6037, 6045)
 ##############################
 websiteAddressForProperty.header = About the property
-websiteAddressForProperty.label = What's the web address?
+websiteAddressForProperty.label = What’s the web address?
 
 #TENANCY LEASE AGREEMENT(USED ON 6010, 6015, 6016, 6030, 6032, 6033, 6034, 6035, 6036, 6037, 6038, 6043, 6049, 6056, 6057, 6066)
 ##############################
@@ -145,7 +145,7 @@ label.no = No
 ##############################
 franchiseLettings.header = Tell us about any franchises or lettings tied to the property
 franchiseLettings.subheading = We need to know about any:
-franchiseLettings.list1 = catering operation or letting accommodation run as a separate business if you've not included their turnover on the previous page
+franchiseLettings.list1 = catering operation or letting accommodation run as a separate business if you’ve not included their turnover on the previous page
 franchiseLettings.list2 = rent received from letting other parts of the property including advertising rights, stations or hoardings
 label.franchiseLettings = Do you need to report anything listed on this page?
 label.yes = Yes
@@ -218,7 +218,7 @@ tiedForGoodsDetails.partialTie = Partial tie
 ##############################
 cateringOperationOrLettingAccommodation.header = Franchises or lettings tied to the property
 label.cateringOperationOrLettingAccommodation = Is any catering operation or letting accomodation run as a separate business from the property?
-hint.cateringOperationOrLettingAccommodation = Choose 'no' if you've included turnover from these businesses on the previous page
+hint.cateringOperationOrLettingAccommodation = Choose ’no’ if you’ve included turnover from these businesses on the previous page
 
 #LETTING OTHER PART OF PROPERTY
 ##############################
@@ -240,11 +240,11 @@ label.rentOpenMarketValue = Is the rent based on the open market value?
 #DOES THE RENT PAYABLE
 ##############################
 rentPayable.header = Does the rent payable
-label.rentPayable.includeLicensee = include licensee’s, manager's or staff living accomodation?
+label.rentPayable.includeLicensee = include licensee’s, manager’s or staff living accomodation?
 label.rentPayable.includeOtherProperty = include other property?
 label.rentPayable.onlyPartOfProperty = relate to only part of the property?
 label.rentPayable.onlyToLand = relate only to land (excluding buildings)?
-label.rentPayable.shellUnit = relate to a 'shell' unit (did you have to fit the property out yourself)?
+label.rentPayable.shellUnit = relate to a ’shell’ unit (did you have to fit the property out yourself)?
 label.rentPayable.details = Please give details if you answered yes to any of these questions
 hint.rentPayable.details = For example, the rent includes an upstairs flat, or also includes the premises next door
 
@@ -408,7 +408,7 @@ prefix.lettingOtherPartOfPropertyDetails = £
 ##TENANTS ADDITIONS DISREGARDED
 ##############################
 tenantsAdditionsDisregarded.header = About your property
-label.tenantsAdditionsDisregarded = Were any tenant's additions disregarded at the time the rent was agreed or determined?
+label.tenantsAdditionsDisregarded = Were any tenant’s additions disregarded at the time the rent was agreed or determined?
 hint.tenantsAdditionsDisregarded = For example, is your rent based on the market value of the property before you made improvements like fitting out a shell, or adding parking
 label.tenantsAdditionsDisregarded.legalPlanning = Are there any legal or planning restrictions, unusual terms or conditions in the lease or agreement that may have affected the rent payable?
 hint.tenantsAdditionsDisregarded.legalPlanning = For example, a break clause, contracting out of the Landlord and Tenant Act, etc
@@ -455,7 +455,7 @@ label.whatIsYourRentBasedOn = What is the rent based on?
 hint.whatIsYourRentBasedOn = Select any that apply and give details
 checkbox.whatIsYourRentBasedOn.percentageOpenMarket = A percentage of open market value
 checkbox.whatIsYourRentBasedOn.fixed = A fixed amount
-checkbox.whatIsYourRentBasedOn.percentageTurnover = A percentage of turnover of the occupier's business
+checkbox.whatIsYourRentBasedOn.percentageTurnover = A percentage of turnover of the occupier’s business
 checkbox.whatIsYourRentBasedOn.indexed = Indexed to the retail price index (RPI) or another index
 checkbox.whatIsYourRentBasedOn.stepped = Stepped rent arrangement
 checkbox.whatIsYourRentBasedOn.other = Other (for example, combination of the above)
@@ -471,7 +471,7 @@ userType.occupier = Occupier’s agent
 userType.lessee = Lessee’s agent
 userType.owner = Owner’s agent
 label.userType = What is your relationship to the property?
-hint.aboutYou = If you’re renting or leasing the property, even as a charity or non-profit organisation, you're considered the occupier. If you are both the owner and the occupier, select 'Owner or trustee for owner'.
+hint.aboutYou = If you’re renting or leasing the property, even as a charity or non-profit organisation, you’re considered the occupier. If you are both the owner and the occupier, select ’Owner or trustee for owner’.
 propertyCurrentlyUsed.publicHouse = Public house
 propertyCurrentlyUsed.otherBar = Other bar
 propertyCurrentlyUsed.licencedRestaurant = Licenced restaurant

@@ -17,22 +17,33 @@
 package controllers.Form6010
 
 import config.AppConfig
+import controllers.LoginController.loginForm
+import form.EditAddressForm.editAddressForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.Form6010.areYouStillConnectedYesUpdateAddress
+import views.html.Form6010.editAddress
+import views.html.login
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class AreYouStillConnectedYesUpdateAddressController @Inject()(
+class EditAddressController @Inject()(
   mcc: MessagesControllerComponents,
   appConfig: AppConfig,
-  areYouStillConnectedYesUpdateAddress: areYouStillConnectedYesUpdateAddress)
+  login: login,
+  editAddressView: editAddress)
     extends FrontendController(mcc) {
 
   def show: Action[AnyContent] = Action.async { implicit request =>
-    Future.successful(Ok(areYouStillConnectedYesUpdateAddress()))
+    Future.successful(Ok(editAddressView(editAddressForm)))
+  }
+
+  def submit = Action.async { implicit request =>
+    editAddressForm.bindFromRequest.fold(
+      formWithErrors => Future.successful(BadRequest(editAddressView(formWithErrors))),
+      data => Future.successful(Ok(login(loginForm)))
+    )
   }
 
 }

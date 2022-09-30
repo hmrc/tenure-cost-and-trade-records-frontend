@@ -16,11 +16,11 @@
 
 package form
 
-import models._
+import form.ConditionalMapping.nonEmptyTextOr
 import models.submissions._
 import form.Formats._
 import form.Formats.userTypeFormat
-import play.api.data.Forms.{default, email, mapping, text}
+import play.api.data.Forms.{default, email, mapping, optional, text}
 import play.api.data.validation.Constraints.{maxLength, minLength, nonEmpty, pattern}
 import play.api.data.{Forms, Mapping}
 
@@ -31,6 +31,7 @@ object MappingSupport {
   val phoneRegex = """^^[0-9\s\+()-]+$"""
   val userType: Mapping[UserType] = Forms.of[UserType]
   val addressConnectionType: Mapping[AddressConnectionType] = Forms.of[AddressConnectionType]
+  val postcode: Mapping[String] = PostcodeMapping.postcode()
 
   val contactDetailsMapping: Mapping[ContactDetails] =
     mapping(
@@ -45,6 +46,17 @@ object MappingSupport {
         maxLength(50, "contactDetails.email1.email.tooLong")
       )
     )(ContactDetails.apply)(ContactDetails.unapply)
+
+  def addressMapping: Mapping[Address] = mapping(
+    "buildingNameNumber" -> default(text, "").verifying(
+      nonEmpty(errorMessage = "error.buildingNameNumber.required"),
+      maxLength(50, "error.buildingNameNumber.maxLength")
+    ),
+    "street1" -> optional(text(maxLength = 50)),
+    "street2" -> optional(text(maxLength = 50)),
+    "postcode" ->  nonEmptyTextOr("postcode", postcode, "error.postcode.required")
+  )(Address.apply)(Address.unapply)
+
 
 
 
