@@ -119,8 +119,8 @@ relationshipToProperty.owner = Owner’s agent
 #6010 ABOUT THE PROPERTY
 ##############################
 aboutProperty.header = About the property
-label.nameCurrentOccupier = What is the name of the current occupier?
-hint.nameCurrentOccupier = This should be the trading name of the business operating from the property
+label.currentOccupierName = What is the name of the current occupier?
+hint.currentOccupierName = This should be the trading name of the business operating from the property
 aboutProperty.desc1 = This should be the trading name of the business operating from the property
 label.propertyCurrentlyUsed = How is the property currently used?
 
@@ -515,6 +515,8 @@ error.duration.years = Years must be a number between 0 and 999
 error.duration.months = Months must be a number between 0 and 12
 error.months.required = Enter months amount
 error.years.required = Enter years amount
+error.currentOccupierName.required = Please enter the current occupier'''s name
+error.currentPropertyUse.required=Select your connection to the property
 
 error.buildingNameNumber.required = Enter the first line of the address
 error.buildingNameNumber.maxLength = First line of the address must be 50 characters or fewer

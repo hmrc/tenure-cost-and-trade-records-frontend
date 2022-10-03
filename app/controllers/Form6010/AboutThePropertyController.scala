@@ -17,9 +17,12 @@
 package controllers.Form6010
 
 import config.AppConfig
+import controllers.LoginController.loginForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.Form6010.aboutTheProperty
+import form.AboutThePropertyForm.aboutThePropertyForm
+import views.html.login
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
@@ -27,12 +30,20 @@ import scala.concurrent.Future
 @Singleton
 class AboutThePropertyController @Inject()(
   mcc: MessagesControllerComponents,
+  login: login,
   appConfig: AppConfig,
-  aboutTheProperty: aboutTheProperty)
+  aboutThePropertyView: aboutTheProperty)
     extends FrontendController(mcc) {
 
   def show: Action[AnyContent] = Action.async { implicit request =>
-    Future.successful(Ok(aboutTheProperty()))
+    Future.successful(Ok(aboutThePropertyView(aboutThePropertyForm)))
+  }
+
+  def submit = Action.async { implicit request =>
+    aboutThePropertyForm.bindFromRequest.fold(
+      formWithErrors => Future.successful(BadRequest(aboutThePropertyView(formWithErrors))),
+      data => Future.successful(Ok(login(loginForm)))
+    )
   }
 
 }

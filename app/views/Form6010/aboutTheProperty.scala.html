@@ -27,15 +27,16 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Radios
 
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
 
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Label
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Hint
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Input
-@import akka.protobufv3.internal.DescriptorProtos.EnumOptions
 @import uk.gov.hmrc.govukfrontend.views.Aliases.RadioItem
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Fieldset
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Legend
 
+@import models.submissions.PropertyDetails
 
 @this(layout: Layout,
         govukButton: GovukButton,
@@ -49,31 +50,32 @@
 )
 
 
-@()(implicit request: Request[_], messages: Messages)
+@(theForm: Form[PropertyDetails])(implicit request: Request[_], messages: Messages)
 
 @layout(
  pageHeading = messages("aboutProperty.header"),
-
+ theForm = theForm
 ) {
 
  @govukInput(
   Input(
-   id = "nameCurrentOccupier",
-   name = "nameCurrentOccupier",
+   id = "currentOccupierName",
+   name = "currentOccupierName",
+   value = theForm("currentOccupierName").value,
    classes = "govuk-input--width-20",
    label = Label(
-    content = Text(messages("label.nameCurrentOccupier") ),
+    content = Text(messages("label.currentOccupierName")),
     classes = "govuk-!-font-weight-bold"
    ),
-   hint = Some(Hint(content = Text(messages("hint.nameCurrentOccupier")))),
+   hint = Some(Hint(content = Text(messages("hint.currentOccupierName")))),
+   errorMessage =  theForm.errors.asTextErrorMessageForField("currentOccupierName")
   )
  )
 
  @govukRadios(
   Radios(
-   name = "propertyCurrentlyUsed",
-   classes = "radio-button-that-show-hides",
-   idPrefix = Option("propertyCurrentlyUsed"),
+   name = "currentPropertyUse",
+   idPrefix = Option("currentPropertyUse"),
    items = Seq(
     "publicHouse" -> messages("propertyCurrentlyUsed.publicHouse"),
     "wineCafeBar" -> messages("propertyCurrentlyUsed.wineCafeBar"),
@@ -88,6 +90,7 @@
     value=Option(radioItem._1)
    )
    ),
+   errorMessage = theForm.errors.asTextErrorMessageForField("currentPropertyUse"),
    fieldset = Option(
     Fieldset(
      legend = Option(
