@@ -77,13 +77,15 @@ areYouConnected.header = Are you still connected to 747, GORING ROAD, GORING-BY-
 label.areYouConnected.addressUpdate = Yes, and the address needs to be updated
 label.yes.change.address=Yes - I want to edit the address
 
-#6010 ARE YOU STILL CONNECTED YES UPDATE ADDRESS
+#6010 EDIT ADDRESS
 ##############################
-areYouConnectedYesUpdateAddress.header = How do you expect the connected address to be shown?
-label.areYouConnectedYesUpdateAddress.addressLine1 = Address line 1
-label.areYouConnectedYesUpdateAddress.addressLine2 = Address line 2
-label.areYouConnectedYesUpdateAddress.addressLine3 = Address line 3 (Optional)
-label.areYouConnectedYesUpdateAddress.postcode = Postcode
+editAddress.header = How do you expect the connected address to be shown?
+label.buildingNameNumber=Address line 1
+label.street1=Address line 2 (optional)
+label.street2=Address line 3 (optional)
+label.townCity=Town or city
+label.address.townCity=Town or city
+label.address.postcode=Postcode (optional)
 
 #6010 ARE YOU STILL CONNECTED NO
 ##############################
@@ -513,4 +515,14 @@ error.duration.years = Years must be a number between 0 and 999
 error.duration.months = Months must be a number between 0 and 12
 error.months.required = Enter months amount
 error.years.required = Enter years amount
+
+error.buildingNameNumber.required = Enter the first line of the address
+error.buildingNameNumber.maxLength = First line of the address must be 50 characters or fewer
+error.line2.maxLength = Second line of address must be 50 characters or fewer
+error.line3.maxLength = Third line of address must be 50 characters or fewer
+error.postcode.required = Enter the postcode
+error.postcode.maxLength = Postcode must be 10 characters or fewer
+error.day.required = The date must include a day
+error.month.required = The date must include a month
+error.year.required = The date must include a year
 
