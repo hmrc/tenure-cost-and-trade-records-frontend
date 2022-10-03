@@ -14,10 +14,11 @@ GET         /are-you-still-connected                                controllers.
 POST        /are-you-still-connected                                controllers.Form6010.AreYouStillConnectedController.submit()
 
 GET         /edit-address                                           controllers.Form6010.EditAddressController.show()
+POST        /edit-address                                           controllers.Form6010.EditAddressController.submit()
 
 GET         /previously-connected                                   controllers.Form6010.AreYouStillConnectedNoController.show()
 
-GET         /remove-connection                                     controllers.Form6010.RemoveConnectionController.show()
+GET         /remove-connection                                      controllers.Form6010.RemoveConnectionController.show()
 
 GET         /about-the-property                                     controllers.Form6010.AboutThePropertyController.show()
 

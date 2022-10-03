@@ -16,7 +16,6 @@
 
 package controllers.Form6010
 
-import config.AppConfig
 import controllers.LoginController.loginForm
 import form.EditAddressForm.editAddressForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
@@ -30,7 +29,6 @@ import scala.concurrent.Future
 @Singleton
 class EditAddressController @Inject()(
   mcc: MessagesControllerComponents,
-  appConfig: AppConfig,
   login: login,
   editAddressView: editAddress)
     extends FrontendController(mcc) {

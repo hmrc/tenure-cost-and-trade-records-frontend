@@ -77,13 +77,15 @@ areYouConnected.header = Are you still connected to 747, GORING ROAD, GORING-BY-
 label.areYouConnected.addressUpdate = Yes, and the address needs to be updated
 label.yes.change.address=Yes - I want to edit the address
 
-#6010 ARE YOU STILL CONNECTED YES UPDATE ADDRESS
+#6010 EDIT ADDRESS
 ##############################
-areYouConnectedYesUpdateAddress.header = How do you expect the connected address to be shown?
-label.areYouConnectedYesUpdateAddress.addressLine1 = Address line 1
-label.areYouConnectedYesUpdateAddress.addressLine2 = Address line 2
-label.areYouConnectedYesUpdateAddress.addressLine3 = Address line 3 (Optional)
-label.areYouConnectedYesUpdateAddress.postcode = Postcode
+editAddress.header = How do you expect the connected address to be shown?
+label.buildingNameNumber=Address line 1
+label.street1=Address line 2 (optional)
+label.street2=Address line 3 (optional)
+label.townCity=Town or city
+label.address.townCity=Town or city
+label.address.postcode=Postcode (optional)
 
 #6010 ARE YOU STILL CONNECTED NO
 ##############################
