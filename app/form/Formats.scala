@@ -17,7 +17,7 @@
 package form
 
 import models._
-import models.submissions.{AddressConnectionType, AddressConnectionTypes, UserType, UserTypes}
+import models.submissions.{AddressConnectionType, AddressConnectionTypes, CurrentPropertyUse, CurrentPropertyUsed, UserType, UserTypes}
 import play.api.data.FormError
 import play.api.data.format.Formatter
 
@@ -59,5 +59,6 @@ object Formats {
   }
 
   implicit val userTypeFormat: Formatter[UserType] = namedEnumFormatter(UserTypes, Errors.userTypeRequired)
+  implicit val aboutYourPropertyFormat: Formatter[CurrentPropertyUsed] = namedEnumFormatter(CurrentPropertyUse, Errors.currentOccupierName)
   implicit val addressConnectionTypeFormatter: Formatter[AddressConnectionType] = namedEnumFormatter(AddressConnectionTypes, Errors.isConnectedError)
 }

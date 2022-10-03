@@ -44,6 +44,9 @@ object Errors {
   val alternativeAddressMissing = "error.alternative.address.missing"
   val alternativeContactMissing  = "error.alternative.contact.missing"
 
+  //About The Property Errors
+  val currentOccupierName = "error.currentOccupierName.required"
+  val currentPropertyUse = "error.currentPropertyUse.required"
 
   //page 3
   val propertyTypeRequired = "error.propertyType.required"
