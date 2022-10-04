@@ -20,7 +20,7 @@ import form.ConditionalMapping.nonEmptyTextOr
 import models.submissions._
 import form.Formats._
 import form.Formats.userTypeFormat
-import play.api.data.Forms.{default, email, mapping, optional, text}
+import play.api.data.Forms.{boolean, default, email, mapping, optional, text}
 import play.api.data.validation.Constraints.{maxLength, minLength, nonEmpty, pattern}
 import play.api.data.{Forms, Mapping}
 
@@ -31,6 +31,7 @@ object MappingSupport {
   val phoneRegex = """^^[0-9\s\+()-]+$"""
   val userType: Mapping[UserType] = Forms.of[UserType]
   val aboutYourPropertyType: Mapping[CurrentPropertyUsed] = Forms.of[CurrentPropertyUsed]
+  val buildingOperatingHaveAWebsiteType: Mapping[BuildingOperationHaveAWebsite] = Forms.of[BuildingOperationHaveAWebsite]
   val addressConnectionType: Mapping[AddressConnectionType] = Forms.of[AddressConnectionType]
   val postcode: Mapping[String] = PostcodeMapping.postcode()
 
@@ -58,7 +59,14 @@ object MappingSupport {
     "postcode" ->  nonEmptyTextOr("postcode", postcode, "error.postcode.required")
   )(Address.apply)(Address.unapply)
 
+  def mandatoryBooleanWithError(message: String) = {
+    optional(boolean)
+      .verifying(message, _.isDefined)
+      .transform({ s: Option[Boolean] => s.get }, { v: Boolean => Some(v) })
+  }
 
-
+  val mandatoryBoolean = optional(boolean)
+    .verifying(Errors.booleanMissing, _.isDefined)
+    .transform({ s: Option[Boolean] => s.get }, { v: Boolean => Some(v) })
 
 }

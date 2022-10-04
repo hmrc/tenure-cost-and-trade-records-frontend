@@ -134,8 +134,8 @@ propertyCurrentlyUsed.other = Other
 
 #WEBSITE FOR PROPERTY (USED ON 6010, 6011, 6015, 6016,6030, 6035, 6036, 6037, 6045)
 ##############################
-websiteForProperty.header = About the property
-label.websiteForProperty = Does the business operating from the property have a website?
+buildingOperatingHaveAWebsite.header = About the property
+label.buildingOperatingHaveAWebsite = Does the business operating from the property have a website?
 label.yes = Yes
 label.no = No
 
