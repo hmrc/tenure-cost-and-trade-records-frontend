@@ -17,7 +17,7 @@
 package form
 
 import models._
-import models.submissions.{AddressConnectionType, AddressConnectionTypes, CurrentPropertyUse, CurrentPropertyUsed, UserType, UserTypes}
+import models.submissions.{AddressConnectionType, AddressConnectionTypes, CurrentPropertyUse, CurrentPropertyUsed, UserType, UserTypes, WebsiteForPropertyDetails}
 import play.api.data.FormError
 import play.api.data.format.Formatter
 

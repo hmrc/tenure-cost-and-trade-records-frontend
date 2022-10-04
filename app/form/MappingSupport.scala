@@ -20,7 +20,7 @@ import form.ConditionalMapping.nonEmptyTextOr
 import models.submissions._
 import form.Formats._
 import form.Formats.userTypeFormat
-import play.api.data.Forms.{default, email, mapping, optional, text}
+import play.api.data.Forms.{boolean, default, email, mapping, optional, text}
 import play.api.data.validation.Constraints.{maxLength, minLength, nonEmpty, pattern}
 import play.api.data.{Forms, Mapping}
 
@@ -57,6 +57,12 @@ object MappingSupport {
     "street2" -> optional(text(maxLength = 50)),
     "postcode" ->  nonEmptyTextOr("postcode", postcode, "error.postcode.required")
   )(Address.apply)(Address.unapply)
+
+  def mandatoryBooleanWithError(message: String) = {
+    optional(boolean)
+      .verifying(message, _.isDefined)
+      .transform({ s: Option[Boolean] => s.get }, { v: Boolean => Some(v) })
+  }
 
 
 

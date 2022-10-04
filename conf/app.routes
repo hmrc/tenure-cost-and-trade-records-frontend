@@ -24,6 +24,7 @@ GET         /about-the-property                                     controllers.
 POST        /about-the-property                                     controllers.Form6010.AboutThePropertyController.submit()
 
 GET         /website-for-property                                   controllers.Form6010.WebsiteForPropertyController.show()
+POST        /website-for-property                                   controllers.Form6010.WebsiteForPropertyController.submit()
 
 GET         /tenancy-lease-agreement                                controllers.Form6010.TenancyLeaseAgreementController.show()
 
