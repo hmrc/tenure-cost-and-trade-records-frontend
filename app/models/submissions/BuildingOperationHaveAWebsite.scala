@@ -14,17 +14,20 @@
  * limitations under the License.
  */
 
-package form
+package models.submissions
 
-import models.submissions.WebsiteForPropertyDetails
-import play.api.data.Form
-import play.api.data.Forms.mapping
-import MappingSupport._
+import models.{NamedEnum, NamedEnumSupport}
 
+sealed trait BuildingOperationHaveAWebsite extends NamedEnum{
+  val key = "buildingOperatingHaveAWebsite"
+}
+object BuildingOperationHaveAWebsiteYes extends BuildingOperationHaveAWebsite {
+  val name = "yes"
+}
+object BuildingOperationHaveAWebsiteNo extends BuildingOperationHaveAWebsite {
+  val name = "no"
+}
 
-object WebsiteForPropertyForm {
-
-  val websiteForPropertyForm = Form(mapping(
-    "buildingOperatingHaveAWebsite" -> buildingOperatingHaveAWebsiteType
-  )(WebsiteForPropertyDetails.apply)(WebsiteForPropertyDetails.unapply))
+object BuildingOperationHasAWebsite extends NamedEnumSupport[BuildingOperationHaveAWebsite] {
+  val all = List(BuildingOperationHaveAWebsiteYes,BuildingOperationHaveAWebsiteNo)
 }

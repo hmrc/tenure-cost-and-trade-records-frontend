@@ -16,4 +16,4 @@
 
 package models.submissions
 
-case class WebsiteForPropertyDetails(buildingOperatingHaveAWebsite: Boolean)
+case class WebsiteForPropertyDetails(buildingOperatingHaveAWebsite: BuildingOperationHaveAWebsite)

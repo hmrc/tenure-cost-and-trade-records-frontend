@@ -17,7 +17,7 @@
 package form
 
 import models._
-import models.submissions.{AddressConnectionType, AddressConnectionTypes, CurrentPropertyUse, CurrentPropertyUsed, UserType, UserTypes, WebsiteForPropertyDetails}
+import models.submissions.{AddressConnectionType, AddressConnectionTypes, BuildingOperationHasAWebsite, BuildingOperationHaveAWebsite, CurrentPropertyUse, CurrentPropertyUsed, UserType, UserTypes, WebsiteForPropertyDetails}
 import play.api.data.FormError
 import play.api.data.format.Formatter
 
@@ -60,5 +60,6 @@ object Formats {
 
   implicit val userTypeFormat: Formatter[UserType] = namedEnumFormatter(UserTypes, Errors.userTypeRequired)
   implicit val aboutYourPropertyFormat: Formatter[CurrentPropertyUsed] = namedEnumFormatter(CurrentPropertyUse, Errors.currentOccupierName)
+  implicit val buildingOperatingHaveAWebsiteFormat: Formatter[BuildingOperationHaveAWebsite] = namedEnumFormatter(BuildingOperationHasAWebsite, Errors.booleanMissing)
   implicit val addressConnectionTypeFormatter: Formatter[AddressConnectionType] = namedEnumFormatter(AddressConnectionTypes, Errors.isConnectedError)
 }

@@ -31,6 +31,7 @@ object MappingSupport {
   val phoneRegex = """^^[0-9\s\+()-]+$"""
   val userType: Mapping[UserType] = Forms.of[UserType]
   val aboutYourPropertyType: Mapping[CurrentPropertyUsed] = Forms.of[CurrentPropertyUsed]
+  val buildingOperatingHaveAWebsiteType: Mapping[BuildingOperationHaveAWebsite] = Forms.of[BuildingOperationHaveAWebsite]
   val addressConnectionType: Mapping[AddressConnectionType] = Forms.of[AddressConnectionType]
   val postcode: Mapping[String] = PostcodeMapping.postcode()
 
@@ -64,7 +65,8 @@ object MappingSupport {
       .transform({ s: Option[Boolean] => s.get }, { v: Boolean => Some(v) })
   }
 
-
-
+  val mandatoryBoolean = optional(boolean)
+    .verifying(Errors.booleanMissing, _.isDefined)
+    .transform({ s: Option[Boolean] => s.get }, { v: Boolean => Some(v) })
 
 }
