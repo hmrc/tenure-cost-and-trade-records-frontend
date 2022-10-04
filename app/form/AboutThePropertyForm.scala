@@ -34,7 +34,7 @@ object AboutThePropertyForm {
 
   val aboutThePropertyForm: Form[PropertyDetails] = Form(mapping(
     "currentOccupierName" -> nonEmptyText(maxLength = 100),
-    "currentPropertyUsed" -> aboutYourPropertyType
+    "propertyCurrentlyUsed" -> aboutYourPropertyType
   )(PropertyDetails.apply)(PropertyDetails.unapply))
 
 }

@@ -16,7 +16,6 @@
 
 package controllers.Form6010
 
-import config.AppConfig
 import controllers.LoginController.loginForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
@@ -31,7 +30,6 @@ import scala.concurrent.Future
 class AboutThePropertyController @Inject()(
   mcc: MessagesControllerComponents,
   login: login,
-  appConfig: AppConfig,
   aboutThePropertyView: aboutTheProperty)
     extends FrontendController(mcc) {
 
