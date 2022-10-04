@@ -119,10 +119,18 @@ relationshipToProperty.owner = Owner’s agent
 #6010 ABOUT THE PROPERTY
 ##############################
 aboutProperty.header = About the property
-label.currentOccupierName = What is the name of the current occupier?
+currentOccupierName.fullName = What is the name of the current occupier?
 hint.currentOccupierName = This should be the trading name of the business operating from the property
 aboutProperty.desc1 = This should be the trading name of the business operating from the property
 label.propertyCurrentlyUsed = How is the property currently used?
+propertyCurrentlyUsed.publicHouse = Public house
+propertyCurrentlyUsed.otherBar = Other bar
+propertyCurrentlyUsed.licencedRestaurant = Licenced restaurant
+propertyCurrentlyUsed.discoNightclub = Disco or nightclub
+propertyCurrentlyUsed.wineCafeBar = Wine bar or cafe bar
+propertyCurrentlyUsed.pubRestaurant = Pub or restaurant
+propertyCurrentlyUsed.hotel = Hotel
+propertyCurrentlyUsed.other = Other
 
 #WEBSITE FOR PROPERTY (USED ON 6010, 6011, 6015, 6016,6030, 6035, 6036, 6037, 6045)
 ##############################
@@ -474,14 +482,6 @@ userType.lessee = Lessee’s agent
 userType.owner = Owner’s agent
 label.userType = What is your relationship to the property?
 hint.aboutYou = If you’re renting or leasing the property, even as a charity or non-profit organisation, you’re considered the occupier. If you are both the owner and the occupier, select ’Owner or trustee for owner’.
-propertyCurrentlyUsed.publicHouse = Public house
-propertyCurrentlyUsed.otherBar = Other bar
-propertyCurrentlyUsed.licencedRestaurant = Licenced restaurant
-propertyCurrentlyUsed.discoNightclub = Disco or nightclub
-propertyCurrentlyUsed.wineCafeBar = Wine bar or cafe bar
-propertyCurrentlyUsed.pubRestaurant = Pub or restaurant
-propertyCurrentlyUsed.hotel = Hotel
-propertyCurrentlyUsed.other = Other
 
 #ERRORS
 ##############################
@@ -515,8 +515,8 @@ error.duration.years = Years must be a number between 0 and 999
 error.duration.months = Months must be a number between 0 and 12
 error.months.required = Enter months amount
 error.years.required = Enter years amount
-error.currentOccupierName.required = Please enter the current occupier'''s name
-error.currentPropertyUse.required=Select your connection to the property
+error.currentOccupierName.required = Please select how the the property is currently used
+error.propertyCurrentlyUsed.required=Select your connection to the property
 
 error.buildingNameNumber.required = Enter the first line of the address
 error.buildingNameNumber.maxLength = First line of the address must be 50 characters or fewer

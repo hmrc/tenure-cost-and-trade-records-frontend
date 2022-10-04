@@ -110,7 +110,7 @@ aboutYou.fullName = Full Name
 aboutYou.email = Email address
 aboutYou.telephone = Telephone number
 label.aboutYou = What is your relationship to the property?
-hint.aboutYou = If you’re renting or leasing the property, even as a charity or non-profit organisation, you're considered the occupier. If you are both the owner and the occupier, select 'Owner or trustee for owner'.
+hint.aboutYou = If you’re renting or leasing the property, even as a charity or non-profit organisation, you’re considered the occupier. If you are both the owner and the occupier, select ’Owner or trustee for owner’.
 relationshipToProperty.occupierTrustee = Occupier or trustee for occupier
 relationshipToProperty.ownerTrustee = Owner or trustee for owner
 relationshipToProperty.occupier = Occupier’s agent
@@ -119,10 +119,18 @@ relationshipToProperty.owner = Owner’s agent
 #6010 ABOUT THE PROPERTY
 ##############################
 aboutProperty.header = About the property
-label.nameCurrentOccupier = What is the name of the current occupier?
-hint.nameCurrentOccupier = This should be the trading name of the business operating from the property
+currentOccupierName.fullName = What is the name of the current occupier?
+hint.currentOccupierName = This should be the trading name of the business operating from the property
 aboutProperty.desc1 = This should be the trading name of the business operating from the property
 label.propertyCurrentlyUsed = How is the property currently used?
+propertyCurrentlyUsed.publicHouse = Public house
+propertyCurrentlyUsed.otherBar = Other bar
+propertyCurrentlyUsed.licencedRestaurant = Licenced restaurant
+propertyCurrentlyUsed.discoNightclub = Disco or nightclub
+propertyCurrentlyUsed.wineCafeBar = Wine bar or cafe bar
+propertyCurrentlyUsed.pubRestaurant = Pub or restaurant
+propertyCurrentlyUsed.hotel = Hotel
+propertyCurrentlyUsed.other = Other
 
 #WEBSITE FOR PROPERTY (USED ON 6010, 6011, 6015, 6016,6030, 6035, 6036, 6037, 6045)
 ##############################
@@ -134,7 +142,7 @@ label.no = No
 #WEBSITE ADDRESS FOR PROPERTY (USED ON 6010, 6011, 6015, 6016,6030, 6035, 6036, 6037, 6045)
 ##############################
 websiteAddressForProperty.header = About the property
-websiteAddressForProperty.label = What's the web address?
+websiteAddressForProperty.label = What’s the web address?
 
 #TENANCY LEASE AGREEMENT(USED ON 6010, 6015, 6016, 6030, 6032, 6033, 6034, 6035, 6036, 6037, 6038, 6043, 6049, 6056, 6057, 6066)
 ##############################
@@ -147,7 +155,7 @@ label.no = No
 ##############################
 franchiseLettings.header = Tell us about any franchises or lettings tied to the property
 franchiseLettings.subheading = We need to know about any:
-franchiseLettings.list1 = catering operation or letting accommodation run as a separate business if you've not included their turnover on the previous page
+franchiseLettings.list1 = catering operation or letting accommodation run as a separate business if you’ve not included their turnover on the previous page
 franchiseLettings.list2 = rent received from letting other parts of the property including advertising rights, stations or hoardings
 label.franchiseLettings = Do you need to report anything listed on this page?
 label.yes = Yes
@@ -220,7 +228,7 @@ tiedForGoodsDetails.partialTie = Partial tie
 ##############################
 cateringOperationOrLettingAccommodation.header = Franchises or lettings tied to the property
 label.cateringOperationOrLettingAccommodation = Is any catering operation or letting accomodation run as a separate business from the property?
-hint.cateringOperationOrLettingAccommodation = Choose 'no' if you've included turnover from these businesses on the previous page
+hint.cateringOperationOrLettingAccommodation = Choose ’no’ if you’ve included turnover from these businesses on the previous page
 
 #LETTING OTHER PART OF PROPERTY
 ##############################
@@ -242,11 +250,11 @@ label.rentOpenMarketValue = Is the rent based on the open market value?
 #DOES THE RENT PAYABLE
 ##############################
 rentPayable.header = Does the rent payable
-label.rentPayable.includeLicensee = include licensee’s, manager's or staff living accomodation?
+label.rentPayable.includeLicensee = include licensee’s, manager’s or staff living accomodation?
 label.rentPayable.includeOtherProperty = include other property?
 label.rentPayable.onlyPartOfProperty = relate to only part of the property?
 label.rentPayable.onlyToLand = relate only to land (excluding buildings)?
-label.rentPayable.shellUnit = relate to a 'shell' unit (did you have to fit the property out yourself)?
+label.rentPayable.shellUnit = relate to a ’shell’ unit (did you have to fit the property out yourself)?
 label.rentPayable.details = Please give details if you answered yes to any of these questions
 hint.rentPayable.details = For example, the rent includes an upstairs flat, or also includes the premises next door
 
@@ -339,6 +347,17 @@ label.methodUsedToFixCurrentRent.arbitration = Arbitration
 label.methodUsedToFixCurrentRent.independentExpert = Independent expert
 label.methodUsedToFixCurrentRent.aCourt = A court
 
+#HOW IS CURRENT RENT FIXED
+##############################
+howIsCurrentRentFixed.header = About your lease or agreement
+label.howIsCurrentRentFixed = How was the current rent fixed?
+label.howIsCurrentRentFixed.newLeaseAgreement = At the beginning of a new lease or agreement
+label.howIsCurrentRentFixed.interimRent = As an interim rent under the Landlord and Tenants Acts
+label.howIsCurrentRentFixed.rentReview = At a rent review
+label.howIsCurrentRentFixed.renewalLeaseTenancy = On a renewal of a lease or tenancy
+label.howIsCurrentRentFixed.saleLeaseback = As part of a sale and leaseback transaction
+dateInput.howIsCurrentRentFixed.saleLeaseback = When was the rent actually agreed or set?
+
 #ENFORCEMENT ACTION BEEN TAKEN
 ##############################
 enforcementActionHasBeenTaken.header = About the property
@@ -371,7 +390,6 @@ checkbox.cateringOperationOrLettingAccommodationDetails.outsideRepairs = Outside
 checkbox.cateringOperationOrLettingAccommodationDetails.insideRepairs = Inside repairs
 label.cateringOperationOrLettingAccommodationDetails.annualRent = Annual rent payment (excluding VAT)
 label.cateringOperationOrLettingAccommodationDetails.dateInput = When was this sum fixed?
-label.lettingOtherPartOfPropertyDetails.dateInput = When was this sum fixed?
 prefix.cateringOperationOrLettingAccommodationDetails = £
 
 ##LETTING OTHER PART OF PROPERTY DETAILS
@@ -394,12 +412,13 @@ checkbox.lettingOtherPartOfPropertyDetails.propertyInsurance = Property insuranc
 checkbox.lettingOtherPartOfPropertyDetails.outsideRepairs = Outside repairs
 checkbox.lettingOtherPartOfPropertyDetails.insideRepairs = Inside repairs
 label.lettingOtherPartOfPropertyDetails.annualRent = Annual rent payment (excluding VAT)
+label.lettingOtherPartOfPropertyDetails.dateInput = When was this sum fixed?
 prefix.lettingOtherPartOfPropertyDetails = £
 
 ##TENANTS ADDITIONS DISREGARDED
 ##############################
 tenantsAdditionsDisregarded.header = About your property
-label.tenantsAdditionsDisregarded = Were any tenant's additions disregarded at the time the rent was agreed or determined?
+label.tenantsAdditionsDisregarded = Were any tenant’s additions disregarded at the time the rent was agreed or determined?
 hint.tenantsAdditionsDisregarded = For example, is your rent based on the market value of the property before you made improvements like fitting out a shell, or adding parking
 label.tenantsAdditionsDisregarded.legalPlanning = Are there any legal or planning restrictions, unusual terms or conditions in the lease or agreement that may have affected the rent payable?
 hint.tenantsAdditionsDisregarded.legalPlanning = For example, a break clause, contracting out of the Landlord and Tenant Act, etc
@@ -446,7 +465,7 @@ label.whatIsYourRentBasedOn = What is the rent based on?
 hint.whatIsYourRentBasedOn = Select any that apply and give details
 checkbox.whatIsYourRentBasedOn.percentageOpenMarket = A percentage of open market value
 checkbox.whatIsYourRentBasedOn.fixed = A fixed amount
-checkbox.whatIsYourRentBasedOn.percentageTurnover = A percentage of turnover of the occupier's business
+checkbox.whatIsYourRentBasedOn.percentageTurnover = A percentage of turnover of the occupier’s business
 checkbox.whatIsYourRentBasedOn.indexed = Indexed to the retail price index (RPI) or another index
 checkbox.whatIsYourRentBasedOn.stepped = Stepped rent arrangement
 checkbox.whatIsYourRentBasedOn.other = Other (for example, combination of the above)
@@ -462,15 +481,7 @@ userType.occupier = Occupier’s agent
 userType.lessee = Lessee’s agent
 userType.owner = Owner’s agent
 label.userType = What is your relationship to the property?
-hint.aboutYou = If you’re renting or leasing the property, even as a charity or non-profit organisation, you're considered the occupier. If you are both the owner and the occupier, select 'Owner or trustee for owner'.
-propertyCurrentlyUsed.publicHouse = Public house
-propertyCurrentlyUsed.otherBar = Other bar
-propertyCurrentlyUsed.licencedRestaurant = Licenced restaurant
-propertyCurrentlyUsed.discoNightclub = Disco or nightclub
-propertyCurrentlyUsed.wineCafeBar = Wine bar or cafe bar
-propertyCurrentlyUsed.pubRestaurant = Pub or restaurant
-propertyCurrentlyUsed.hotel = Hotel
-propertyCurrentlyUsed.other = Other
+hint.aboutYou = If you’re renting or leasing the property, even as a charity or non-profit organisation, you’re considered the occupier. If you are both the owner and the occupier, select ’Owner or trustee for owner’.
 
 #ERRORS
 ##############################
@@ -493,7 +504,7 @@ error.invalid_postcode=Enter a valid UK postcode
 error.invalid_currency = This must be a number greater than 0
 error.invalid_phone=Enter a phone number, like 01632 960 001
 error.email=Enter an email in the correct format, like name@example.com
-
+error.isRelated=Select ‘Yes’ if you are still connected
 error.invalid_date = Enter a valid date
 error.date_must_be_in_past = Date must be in the past
 error.number = This must be a number
@@ -504,3 +515,16 @@ error.duration.years = Years must be a number between 0 and 999
 error.duration.months = Months must be a number between 0 and 12
 error.months.required = Enter months amount
 error.years.required = Enter years amount
+error.currentOccupierName.required = Please select how the the property is currently used
+error.propertyCurrentlyUsed.required=Select your connection to the property
+
+error.buildingNameNumber.required = Enter the first line of the address
+error.buildingNameNumber.maxLength = First line of the address must be 50 characters or fewer
+error.line2.maxLength = Second line of address must be 50 characters or fewer
+error.line3.maxLength = Third line of address must be 50 characters or fewer
+error.postcode.required = Enter the postcode
+error.postcode.maxLength = Postcode must be 10 characters or fewer
+error.day.required = The date must include a day
+error.month.required = The date must include a month
+error.year.required = The date must include a year
+

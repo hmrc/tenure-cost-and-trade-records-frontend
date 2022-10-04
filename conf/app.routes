@@ -21,6 +21,7 @@ GET         /previously-connected                                   controllers.
 GET         /remove-connection                                      controllers.Form6010.RemoveConnectionController.show()
 
 GET         /about-the-property                                     controllers.Form6010.AboutThePropertyController.show()
+POST        /about-the-property                                     controllers.Form6010.AboutThePropertyController.submit()
 
 GET         /website-for-property                                   controllers.Form6010.WebsiteForPropertyController.show()
 

@@ -18,5 +18,5 @@ package models.submissions
 
 case class PropertyDetails(
                             currentOccupierName: String,
-                            currentPropertyUsed: CurrentPropertyUsed
+                            propertyCurrentlyUsed: CurrentPropertyUsed
                           )
