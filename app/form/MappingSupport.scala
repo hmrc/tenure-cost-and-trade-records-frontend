@@ -35,6 +35,7 @@ object MappingSupport {
   val cateringOperationType: Mapping[CateringOperationOrLettingAccommodation] = Forms.of[CateringOperationOrLettingAccommodation]
   val lettingOtherPartOfPropertiesType: Mapping[LettingOtherPartOfProperties] = Forms.of[LettingOtherPartOfProperties]
   val licensableActivitiesType: Mapping[LicensableActivities] = Forms.of[LicensableActivities]
+  val tiedForGoodsType: Mapping[TiedForGoods] = Forms.of[TiedForGoods]
   val tenancyLeaseAgreementType: Mapping[TenancyLeaseAgreements] = Forms.of[TenancyLeaseAgreements]
   val addressConnectionType: Mapping[AddressConnectionType] = Forms.of[AddressConnectionType]
   val postcode: Mapping[String] = PostcodeMapping.postcode()

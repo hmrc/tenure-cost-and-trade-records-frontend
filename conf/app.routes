@@ -52,6 +52,7 @@ GET         /premises-license                                       controllers.
 GET         /premises-license-conditions                            controllers.Form6010.PremisesLicenseConditionsController.show()
 
 GET         /tied-for-goods                                         controllers.Form6010.TiedForGoodsController.show()
+POST        /tied-for-goods                                         controllers.Form6010.TiedForGoodsController.submit()
 
 GET         /tied-for-goods-details                                 controllers.Form6010.TiedForGoodsDetailsController.show()
 
