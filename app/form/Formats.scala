@@ -61,8 +61,9 @@ object Formats {
   implicit val userTypeFormat: Formatter[UserType] = namedEnumFormatter(UserTypes, Errors.userTypeRequired)
   implicit val aboutYourPropertyFormat: Formatter[CurrentPropertyUsed] = namedEnumFormatter(CurrentPropertyUse, Errors.currentOccupierName)
   implicit val buildingOperatingHaveAWebsiteFormat: Formatter[BuildingOperationHaveAWebsite] = namedEnumFormatter(BuildingOperationHasAWebsite, Errors.booleanMissing)
-  implicit val CateringOperationsFormat: Formatter[CateringOperationOrLettingAccommodation] = namedEnumFormatter(CateringOperation, Errors.booleanMissing)
+  implicit val cateringOperationsFormat: Formatter[CateringOperationOrLettingAccommodation] = namedEnumFormatter(CateringOperation, Errors.booleanMissing)
   implicit val lettingOtherPartOfPropertiesFormat: Formatter[LettingOtherPartOfProperties] = namedEnumFormatter(LettingOtherPartOfProperty, Errors.booleanMissing)
   implicit val tenancyLeaseAgreementsFormat: Formatter[TenancyLeaseAgreements] = namedEnumFormatter(TenancyLeaseAgreement, Errors.booleanMissing)
+  implicit val licensableActivitiesFormat: Formatter[LicensableActivities] = namedEnumFormatter(LicensableActivity, Errors.booleanMissing)
   implicit val addressConnectionTypeFormatter: Formatter[AddressConnectionType] = namedEnumFormatter(AddressConnectionTypes, Errors.isConnectedError)
 }
