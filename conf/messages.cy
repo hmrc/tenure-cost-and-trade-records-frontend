@@ -134,8 +134,8 @@ propertyCurrentlyUsed.other = Other
 
 #WEBSITE FOR PROPERTY (USED ON 6010, 6011, 6015, 6016,6030, 6035, 6036, 6037, 6045)
 ##############################
-websiteForProperty.header = About the property
-label.websiteForProperty = Does the business operating from the property have a website?
+buildingOperatingHaveAWebsite.header = About the property
+label.buildingOperatingHaveAWebsite = Does the business operating from the property have a website?
 label.yes = Yes
 label.no = No
 
@@ -227,14 +227,14 @@ tiedForGoodsDetails.partialTie = Partial tie
 #CATERING OPERATION OR LETTING ACCOMMODATION
 ##############################
 cateringOperationOrLettingAccommodation.header = Franchises or lettings tied to the property
-label.cateringOperationOrLettingAccommodation = Is any catering operation or letting accomodation run as a separate business from the property?
+label.cateringOperationOrLettingAccommodation = Is any catering operation or letting accommodation run as a separate business from the property?
 hint.cateringOperationOrLettingAccommodation = Choose ’no’ if you’ve included turnover from these businesses on the previous page
 
 #LETTING OTHER PART OF PROPERTY
 ##############################
-lettingOtherPartOfProperty.header = Lettings
-label.lettingOtherPartOfProperty = Is any rent received from letting other parts of the property?
-hint.lettingOtherPartOfProperty = Including advertising rights, stations or hoardings
+LettingOtherPartOfProperties.header = Lettings
+label.LettingOtherPartOfProperties = Is any rent received from letting other parts of the property?
+hint.LettingOtherPartOfProperties = Including advertising rights, stations or hoardings
 
 #CURRENT ANNUAL RENT
 ##############################
@@ -527,4 +527,3 @@ error.postcode.maxLength = Postcode must be 10 characters or fewer
 error.day.required = The date must include a day
 error.month.required = The date must include a month
 error.year.required = The date must include a year
-

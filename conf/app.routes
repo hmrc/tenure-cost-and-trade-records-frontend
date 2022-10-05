@@ -57,6 +57,7 @@ GET         /catering-operation-or-letting-accommodation            controllers.
 POST        /catering-operation-or-letting-accommodation            controllers.Form6010.CateringOperationOrLettingAccommodationController.submit()
 
 GET         /letting-other-part-of-property                         controllers.Form6010.LettingOtherPartOfPropertyController.show()
+POST        /letting-other-part-of-property                         controllers.Form6010.LettingOtherPartOfPropertyController.submit()
 
 GET         /rent-open-market-value                                 controllers.Form6010.RentOpenMarketValueController.show()
 

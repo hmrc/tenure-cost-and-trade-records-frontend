@@ -232,9 +232,9 @@ hint.cateringOperationOrLettingAccommodation = Choose ’no’ if you’ve inclu
 
 #LETTING OTHER PART OF PROPERTY
 ##############################
-lettingOtherPartOfProperty.header = Lettings
-label.lettingOtherPartOfProperty = Is any rent received from letting other parts of the property?
-hint.lettingOtherPartOfProperty = Including advertising rights, stations or hoardings
+LettingOtherPartOfProperties.header = Lettings
+label.LettingOtherPartOfProperties = Is any rent received from letting other parts of the property?
+hint.LettingOtherPartOfProperties = Including advertising rights, stations or hoardings
 
 #CURRENT ANNUAL RENT
 ##############################
@@ -527,4 +527,3 @@ error.postcode.maxLength = Postcode must be 10 characters or fewer
 error.day.required = The date must include a day
 error.month.required = The date must include a month
 error.year.required = The date must include a year
-
