@@ -54,6 +54,7 @@ GET         /tied-for-goods                                         controllers.
 GET         /tied-for-goods-details                                 controllers.Form6010.TiedForGoodsDetailsController.show()
 
 GET         /catering-operation-or-letting-accommodation            controllers.Form6010.CateringOperationOrLettingAccommodationController.show()
+POST        /catering-operation-or-letting-accommodation            controllers.Form6010.CateringOperationOrLettingAccommodationController.submit()
 
 GET         /letting-other-part-of-property                         controllers.Form6010.LettingOtherPartOfPropertyController.show()
 
