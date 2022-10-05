@@ -33,6 +33,7 @@ object MappingSupport {
   val aboutYourPropertyType: Mapping[CurrentPropertyUsed] = Forms.of[CurrentPropertyUsed]
   val buildingOperatingHaveAWebsiteType: Mapping[BuildingOperationHaveAWebsite] = Forms.of[BuildingOperationHaveAWebsite]
   val cateringOperationType: Mapping[CateringOperationOrLettingAccommodation] = Forms.of[CateringOperationOrLettingAccommodation]
+  val lettingOtherPartOfPropertiesType: Mapping[LettingOtherPartOfProperties] = Forms.of[LettingOtherPartOfProperties]
   val addressConnectionType: Mapping[AddressConnectionType] = Forms.of[AddressConnectionType]
   val postcode: Mapping[String] = PostcodeMapping.postcode()
 
