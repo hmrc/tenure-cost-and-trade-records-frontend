@@ -190,9 +190,9 @@ leaseOrAgreement.option3 = Water charges
 #LICENSABLE ACTIVITIES
 ##############################
 licensableActivities.header = About the property
-includedInYourRent.subheader = Are any of the following included in your rent?
-leaseOrAgreement.option = Do licensable activities regularly commence before 10:00 or after 23:30 on any day of the week?
-hint.leaseOrAgreement = Licensable activities could include, selling alcohol, selling food and refreshments, or providing live entertainment
+licensableActivities.subheader = Are any of the following included in your rent?
+licensableActivities.option = Do licensable activities regularly commence before 10:00 or after 23:30 on any day of the week?
+hint.licensableActivities= Licensable activities could include, selling alcohol, selling food and refreshments, or providing live entertainment
 
 #LICENSABLE ACTIVITIES DETAILS
 ##############################
