@@ -16,10 +16,12 @@
 
 package controllers.Form6010
 
-import config.AppConfig
+import controllers.LoginController.loginForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.Form6010.premisesLicense
+import form.PremisesLicenseForm.premisesLicenseForm
+import views.html.login
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
@@ -27,12 +29,19 @@ import scala.concurrent.Future
 @Singleton
 class PremisesLicenseController @Inject()(
   mcc: MessagesControllerComponents,
-  appConfig: AppConfig,
-  premisesLicense: premisesLicense)
+  login: login,
+  premisesLicenseView: premisesLicense)
   extends FrontendController(mcc) {
 
   def show: Action[AnyContent] = Action.async { implicit request =>
-    Future.successful(Ok(premisesLicense()))
+    Future.successful(Ok(premisesLicenseView(premisesLicenseForm)))
+  }
+
+  def submit = Action.async { implicit request =>
+    premisesLicenseForm.bindFromRequest.fold(
+      formWithErrors => Future.successful(BadRequest(premisesLicenseView(formWithErrors))),
+      data => Future.successful(Ok(login(loginForm)))
+    )
   }
 
 }

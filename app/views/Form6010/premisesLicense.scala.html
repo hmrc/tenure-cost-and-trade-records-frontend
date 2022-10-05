@@ -15,9 +15,7 @@
  *@
 
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.button.Button
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.textarea.Textarea
 
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
@@ -27,14 +25,15 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukCharacterCount
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
 
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Label
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
+
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Radios
 @import uk.gov.hmrc.govukfrontend.views.Aliases.RadioItem
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Fieldset
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Legend
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Hint
 
-
+@import models.submissions.PremisesLicenseDetails
 
 @this(layout: Layout,
         govukButton: GovukButton,
@@ -47,48 +46,46 @@
         formWithCSRF: FormWithCSRF
 )
 
-
-@()(implicit request: Request[_], messages: Messages)
+@(theForm: Form[PremisesLicenseDetails])(implicit request: Request[_], messages: Messages)
 
 @layout(
  pageHeading = messages("premisesLicence.header"),
-
+ theForm = theForm
 ) {
 
- @govukRadios(
-  Radios(
-   name = "premisesLicense",
-   classes = "radio-button-that-show-hides",
-   idPrefix = Option("premisesLicense"),
-   items = Seq(
-    "yes" -> messages("label.yes"),
-    "no" -> messages("label.no")
-   ).map( radioItem => RadioItem (
-    content = Text(radioItem._2),
-    value=Option(radioItem._1)
-   )
-   ),
-   fieldset = Option(
-    Fieldset(
-     legend = Option(
-      Legend(
-       content = Text(messages("label.premisesLicence")),
-       classes = "govuk-!-font-weight-bold"
+ @formWithCSRF(action = controllers.Form6010.routes.PremisesLicenseController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
+
+  @govukRadios(
+   Radios(
+    name = "premisesLicense",
+    idPrefix = Option("premisesLicense"),
+    items = Seq(
+     "yes" -> messages("label.yes"),
+     "no" -> messages("label.no")
+    ).map(radioItem => RadioItem(
+     content = Text(radioItem._2),
+     checked = radioItem._1.equals(theForm("premisesLicense").value.getOrElse("")),
+     value = Option(radioItem._1)
+    )
+    ),
+    errorMessage =  theForm.errors.asTextErrorMessageForField("premisesLicense"),
+    fieldset = Option(
+     Fieldset(
+      legend = Option(
+       Legend(
+        content = Text(messages("label.premisesLicence")),
+        classes = "govuk-!-font-weight-bold"
+       )
       )
      )
-    )
-   ),
-   hint = Some(Hint(content = Text(messages("hint.premisesLicence")))),
+    ),
+    hint = Some(Hint(content = Text(messages("hint.premisesLicence")))),
+   )
   )
- )
 
- @govukButton(
-  Button(
-   content = Text(messages("button.label.continue")),
-   href = Some(routes.LoginController.show().url)
-  )
- )
+  @includes.continueButton(govukButton)
 
+ }
 }
 
 
