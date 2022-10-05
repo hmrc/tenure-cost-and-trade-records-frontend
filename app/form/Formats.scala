@@ -66,5 +66,6 @@ object Formats {
   implicit val tenancyLeaseAgreementsFormat: Formatter[TenancyLeaseAgreements] = namedEnumFormatter(TenancyLeaseAgreement, Errors.booleanMissing)
   implicit val licensableActivitiesFormat: Formatter[LicensableActivities] = namedEnumFormatter(LicensableActivity, Errors.booleanMissing)
   implicit val tiedForGoodsFormat: Formatter[TiedForGoods] = namedEnumFormatter(TiedForGood, Errors.booleanMissing)
+  implicit val premisesLicenseFormat: Formatter[PremisesLicenses] = namedEnumFormatter(PremisesLicense, Errors.booleanMissing)
   implicit val addressConnectionTypeFormatter: Formatter[AddressConnectionType] = namedEnumFormatter(AddressConnectionTypes, Errors.isConnectedError)
 }
