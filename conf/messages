@@ -335,8 +335,8 @@ label.incentivesPaymentsConditions.receivePayment = Did you receive any payment 
 
 #RENT INCREASE ANNUALLY WITH RPI
 ##############################
-rentIncreaseAnnuallyWithRPI.header = About your lease or agreement
-label.rentIncreaseAnnuallyWithRPI = Does the rent increase annually in line with the retail price index (RPI)?
+rentIncreasedAnnuallyWithRPIs.header = About your lease or agreement
+label.rentIncreasedAnnuallyWithRPIs = Does the rent increase annually in line with the retail price index (RPI)?
 
 #METHOD USED TO FIX CURRENT RENT
 ##############################
