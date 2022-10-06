@@ -43,6 +43,7 @@ object MappingSupport {
   val rentIncreasedAnnuallyWithRPIDetailsType: Mapping[RentIncreasedAnnuallyWithRPIs] = Forms.of[RentIncreasedAnnuallyWithRPIs]
   val rentPayableVaryAccordingToGrossOrNetDetailsType: Mapping[RentPayableVaryAccordingToGrossOrNets] = Forms.of[RentPayableVaryAccordingToGrossOrNets]
   val rentPayableVaryOnQuantityOfBeersType: Mapping[RentPayableVaryOnQuantityOfBeers] = Forms.of[RentPayableVaryOnQuantityOfBeers]
+  val rentIncludeTradeServicesType: Mapping[RentIncludeTradeServices] = Forms.of[RentIncludeTradeServices]
   val addressConnectionType: Mapping[AddressConnectionType] = Forms.of[AddressConnectionType]
   val postcode: Mapping[String] = PostcodeMapping.postcode()
 
