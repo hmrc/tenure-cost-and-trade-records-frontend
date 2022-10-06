@@ -39,6 +39,7 @@ object MappingSupport {
   val premisesLicenseType: Mapping[PremisesLicenses] = Forms.of[PremisesLicenses]
   val tenancyLeaseAgreementType: Mapping[TenancyLeaseAgreements] = Forms.of[TenancyLeaseAgreements]
   val enforcementActionType: Mapping[EnforcementActions] = Forms.of[EnforcementActions]
+  val franchiseOrLettingsTiedToPropertyType: Mapping[FranchiseOrLettingsTiedToProperties] = Forms.of[FranchiseOrLettingsTiedToProperties]
   val addressConnectionType: Mapping[AddressConnectionType] = Forms.of[AddressConnectionType]
   val postcode: Mapping[String] = PostcodeMapping.postcode()
 
