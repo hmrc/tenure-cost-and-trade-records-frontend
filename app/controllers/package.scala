@@ -14,16 +14,10 @@
  * limitations under the License.
  */
 
-package models.submissions
+import scala.concurrent.Future
 
-case class Address(buildingNameNumber: String, street1: Option[String], street2: Option[String], postcode: String) {
+package object controllers {
+  implicit def toOpt[A](a: A): Option[A] = Some(a)
 
-  def singleLine: String = {
-    List(Some(buildingNameNumber), street1, street2, Some(postcode.replaceAll("^(\\S+?)\\s*?(\\d\\w\\w)$", "$1 $2"))).flatten.mkString(", ")
-  }
-
-  def multiLine: String = {
-    List(Some(buildingNameNumber), street1, street2, Some(postcode.replaceAll("^(\\S+?)\\s*?(\\d\\w\\w)$", "$1 $2"))).flatten.mkString("<br /> ")
-  }
-
+  implicit def toFut[A](a: A): Future[A] = Future.successful(a)
 }

@@ -14,16 +14,12 @@
  * limitations under the License.
  */
 
-package models.submissions
+package connectors
 
-case class Address(buildingNameNumber: String, street1: Option[String], street2: Option[String], postcode: String) {
+import play.api.libs.json._
 
-  def singleLine: String = {
-    List(Some(buildingNameNumber), street1, street2, Some(postcode.replaceAll("^(\\S+?)\\s*?(\\d\\w\\w)$", "$1 $2"))).flatten.mkString(", ")
-  }
+case class Page(pageNumber: Int, fields: Map[String, Seq[String]])
 
-  def multiLine: String = {
-    List(Some(buildingNameNumber), street1, street2, Some(postcode.replaceAll("^(\\S+?)\\s*?(\\d\\w\\w)$", "$1 $2"))).flatten.mkString("<br /> ")
-  }
-
+object Page {
+  implicit val formats = Json.format[Page]
 }

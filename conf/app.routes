@@ -10,6 +10,8 @@ GET         /login                                                  controllers.
 
 POST        /login                                                  controllers.LoginController.submit()
 
+GET         /sessiontimeout                                         controllers.Application.sessionTimeout()
+
 GET         /are-you-still-connected                                controllers.Form6010.AreYouStillConnectedController.show()
 POST        /are-you-still-connected                                controllers.Form6010.AreYouStillConnectedController.submit()
 
