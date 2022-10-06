@@ -88,6 +88,7 @@ GET         /rent-include-trade-services-details                    controllers.
 GET         /ultimately-responsible                                 controllers.Form6010.UltimatelyResponsibleController.show()
 
 GET         /rent-include-fixtures-and-fittings                     controllers.Form6010.RentIncludeFixtureAndFittingsController.show()
+POST        /rent-include-fixtures-and-fittings                     controllers.Form6010.RentIncludeFixtureAndFittingsController.submit()
 
 GET         /rent-include-fixtures-and-fittings-details             controllers.Form6010.RentIncludeFixtureAndFittingsDetailsController.show()
 
