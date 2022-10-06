@@ -16,42 +16,62 @@
 
 package connectors
 
-import play.api.Logging
+import com.google.inject.ImplementedBy
+import models.FORLoginResponse
+import uk.gov.hmrc.http.{BadRequestException, HeaderCarrier, HttpReads, HttpResponse, Upstream4xxResponse}
 import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
 import views.html.helper.urlEncode
-import sttp.client3._
-import uk.gov.hmrc.http.HeaderCarrier
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
-class BackendConnector@Inject()(config: ServicesConfig) extends Logging {
+class DefaultBackendConnector @Inject() (config: ServicesConfig, http: ForHttp)(implicit ec: ExecutionContext)
+    extends BackendConnector {
 
-  lazy val serviceUrl = config.baseUrl("tenure-cost-and-trade-records")
+  lazy val serviceUrl           = config.baseUrl("tenure-cost-and-trade-records")
   private def url(path: String) = s"$serviceUrl/tenure-cost-and-trade-records/$path"
 
-  val backend = HttpClientSyncBackend()
+//  val backend = HttpClientSyncBackend()
+//
+//  def testConnection(referenceNumber: String, postcode: String): String = {
+//
+//    val parts = Seq(referenceNumber, postcode).map(urlEncode)
+//
+//    val request = basicRequest.get(uri"${url(s"${parts.mkString("/")}/verify")}")
+//
+//    val response = request.send(backend)
+//
+//    var name = ""
+//    response.body match {
+//      case Left(f) => name = "Anonymous"
+//      case Right(n) => name = n
+//    }
+//    logger.debug(s"Connecting with: ${url(s"${parts.mkString("/")}/test")}, response: ${name}")
+//    if (name.startsWith("\"")) name = name.substring(1, name.length -1)
+//    name
+//  }
 
-  def testConnection(referenceNumber: String, postcode: String): String = {
-
-    val parts = Seq(referenceNumber, postcode).map(urlEncode)
-
-    val request = basicRequest.get(uri"${url(s"${parts.mkString("/")}/verify")}")
-
-    val response = request.send(backend)
-
-    var name = ""
-    response.body match {
-      case Left(f) => name = "Anonymous"
-      case Right(n) => name = n
+  def readsHack(implicit httpReads: HttpReads[FORLoginResponse]) =
+    new HttpReads[FORLoginResponse] {
+      override def read(method: String, url: String, response: HttpResponse): FORLoginResponse =
+        response.status match {
+          case 400 => throw new BadRequestException(response.body)
+          case 401 => throw new Upstream4xxResponse(response.body, 401, 401, response.allHeaders)
+          case _   => httpReads.read(method, url, response)
+        }
     }
-    logger.debug(s"Connecting with: ${url(s"${parts.mkString("/")}/test")}, response: ${name}")
-    if (name.startsWith("\"")) name = name.substring(1, name.length -1)
-    name
+
+  override def verifyCredentials(refNumber: String, postcode: String)(implicit
+    hc: HeaderCarrier
+  ): Future[FORLoginResponse] = {
+    val parts = Seq(refNumber, postcode).map(urlEncode)
+    http.GET[FORLoginResponse](url(s"${parts.mkString("/")}/verify"))(readsHack, hc, ec)
   }
 
-  def verifyCredentials(refNum: String, postcode: String)(implicit hc: HeaderCarrier, ec: ExecutionContext): Future[String] = {
-    Future.successful("Anonymous")
-  }
+}
+
+@ImplementedBy(classOf[DefaultBackendConnector])
+trait BackendConnector {
+  def verifyCredentials(refNumber: String, postcode: String)(implicit hc: HeaderCarrier): Future[FORLoginResponse]
 }

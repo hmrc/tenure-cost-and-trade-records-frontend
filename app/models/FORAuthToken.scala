@@ -14,22 +14,13 @@
  * limitations under the License.
  */
 
-package models.submissions
+package models
 
-case class Address(buildingNameNumber: String, street1: Option[String], street2: Option[String], postcode: String) {
-  def singleLine: String =
-    List(
-      Some(buildingNameNumber),
-      street1,
-      street2,
-      Some(postcode.replaceAll("^(\\S+?)\\s*?(\\d\\w\\w)$", "$1 $2"))
-    ).flatten.mkString(", ")
+import models.submissions.Address
+import play.api.libs.json.Json
 
-  def multiLine: String =
-    List(
-      Some(buildingNameNumber),
-      street1,
-      street2,
-      Some(postcode.replaceAll("^(\\S+?)\\s*?(\\d\\w\\w)$", "$1 $2"))
-    ).flatten.mkString("<br /> ")
+case class FORLoginResponse(forAuthToken: String, forType: String, address: Address)
+
+object FORLoginResponse {
+  implicit val formats = Json.format[FORLoginResponse]
 }
