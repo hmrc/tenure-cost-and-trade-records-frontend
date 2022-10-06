@@ -43,5 +43,4 @@ class LettingOtherPartOfPropertyController @Inject()(
       data => Future.successful(Ok(login(loginForm)))
     )
   }
-
-  }
+}

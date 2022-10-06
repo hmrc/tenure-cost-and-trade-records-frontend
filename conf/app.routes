@@ -94,6 +94,7 @@ GET         /rent-increase-annually-with-rpi                        controllers.
 GET         /method-to-fix-current-rent                             controllers.Form6010.MethodToFixCurrentRentController.show()
 
 GET         /enforcement-action-been-taken                          controllers.Form6010.EnforcementActionBeenTakenController.show()
+POST        /enforcement-action-been-taken                          controllers.Form6010.EnforcementActionBeenTakenController.submit()
 
 GET         /enforcement-action-been-taken-details                  controllers.Form6010.EnforcementActionBeenTakenDetailsController.show()
 

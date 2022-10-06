@@ -38,6 +38,7 @@ object MappingSupport {
   val tiedForGoodsType: Mapping[TiedForGoods] = Forms.of[TiedForGoods]
   val premisesLicenseType: Mapping[PremisesLicenses] = Forms.of[PremisesLicenses]
   val tenancyLeaseAgreementType: Mapping[TenancyLeaseAgreements] = Forms.of[TenancyLeaseAgreements]
+  val enforcementActionType: Mapping[EnforcementActions] = Forms.of[EnforcementActions]
   val addressConnectionType: Mapping[AddressConnectionType] = Forms.of[AddressConnectionType]
   val postcode: Mapping[String] = PostcodeMapping.postcode()
 
