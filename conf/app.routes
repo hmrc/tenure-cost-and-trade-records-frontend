@@ -81,6 +81,7 @@ POST        /rent-payable-vary-according-to-gross-or-net            controllers.
 GET         /rent-payable-vary-according-to-gross-or-net-details    controllers.Form6010.RentPayableVaryAccordingToGrossOrNetDetailsController.show()
 
 GET         /rent-include-trade-services                            controllers.Form6010.RentIncludeTradeServicesController.show()
+POST        /rent-include-trade-services                            controllers.Form6010.RentIncludeTradeServicesController.submit()
 
 GET         /rent-include-trade-services-details                    controllers.Form6010.RentIncludeTradeServicesDetailsController.show()
 

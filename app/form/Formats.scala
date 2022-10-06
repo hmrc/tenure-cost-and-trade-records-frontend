@@ -32,8 +32,8 @@ object Formats {
         keyVal <- data.get(key)
         enumTypeValue <- named.fromName(keyVal)
       } yield {
-          Right(enumTypeValue)
-        }
+        Right(enumTypeValue)
+      }
       resOpt.getOrElse(Left(Seq(FormError(key, missingCode, Nil))))
     }
 
@@ -72,5 +72,6 @@ object Formats {
   implicit val rentIncreasedAnnuallyWithRPIsFormat: Formatter[RentIncreasedAnnuallyWithRPIs] = namedEnumFormatter(RentIncreasedAnnuallyWithRPI, Errors.booleanMissing)
   implicit val rentPayableVaryAccordingToGrossOrNetsFormat: Formatter[RentPayableVaryAccordingToGrossOrNets] = namedEnumFormatter(RentPayableVaryAccordingToGrossOrNet, Errors.booleanMissing)
   implicit val rentPayableVaryOnQuantityOfBeersFormat: Formatter[RentPayableVaryOnQuantityOfBeers] = namedEnumFormatter(RentPayableVaryOnQuantityOfBeer, Errors.booleanMissing)
+  implicit val RentIncludeTradeServicesFormat: Formatter[RentIncludeTradeServices] = namedEnumFormatter(RentIncludeTradeService, Errors.booleanMissing)
   implicit val addressConnectionTypeFormatter: Formatter[AddressConnectionType] = namedEnumFormatter(AddressConnectionTypes, Errors.isConnectedError)
 }
