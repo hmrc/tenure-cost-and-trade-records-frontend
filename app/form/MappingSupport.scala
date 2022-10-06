@@ -41,6 +41,7 @@ object MappingSupport {
   val enforcementActionType: Mapping[EnforcementActions] = Forms.of[EnforcementActions]
   val franchiseOrLettingsTiedToPropertyType: Mapping[FranchiseOrLettingsTiedToProperties] = Forms.of[FranchiseOrLettingsTiedToProperties]
   val rentIncreasedAnnuallyWithRPIDetailsType: Mapping[RentIncreasedAnnuallyWithRPIs] = Forms.of[RentIncreasedAnnuallyWithRPIs]
+  val rentPayableVaryAccordingToGrossOrNetDetailsType: Mapping[RentPayableVaryAccordingToGrossOrNets] = Forms.of[RentPayableVaryAccordingToGrossOrNets]
   val addressConnectionType: Mapping[AddressConnectionType] = Forms.of[AddressConnectionType]
   val postcode: Mapping[String] = PostcodeMapping.postcode()
 

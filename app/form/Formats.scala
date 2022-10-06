@@ -70,5 +70,6 @@ object Formats {
   implicit val enforcementActionFormat: Formatter[EnforcementActions] = namedEnumFormatter(EnforcementAction, Errors.booleanMissing)
   implicit val franchiseOrLettingsTiedToPropertiesFormat: Formatter[FranchiseOrLettingsTiedToProperties] = namedEnumFormatter(FranchiseOrLettingsTiedToProperty, Errors.booleanMissing)
   implicit val rentIncreasedAnnuallyWithRPIsFormat: Formatter[RentIncreasedAnnuallyWithRPIs] = namedEnumFormatter(RentIncreasedAnnuallyWithRPI, Errors.booleanMissing)
+  implicit val rentPayableVaryAccordingToGrossOrNetsFormat: Formatter[RentPayableVaryAccordingToGrossOrNets] = namedEnumFormatter(RentPayableVaryAccordingToGrossOrNet, Errors.booleanMissing)
   implicit val addressConnectionTypeFormatter: Formatter[AddressConnectionType] = namedEnumFormatter(AddressConnectionTypes, Errors.isConnectedError)
 }
