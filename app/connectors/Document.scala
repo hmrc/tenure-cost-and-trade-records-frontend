@@ -19,8 +19,8 @@ package connectors
 import models.submissions.Address
 import org.joda.time.DateTime
 import play.api.libs.json._
-import play.api.libs.json.JodaReads._
 import play.api.libs.json.JodaWrites._
+import play.api.libs.json.JodaReads._
 
 case class Document(referenceNumber: String, journeyStarted: DateTime,  pages: Seq[Page] = Seq(), address: Option[Address] = None,
                     saveForLaterPassword: Option[String] = None, journeyResumptions: Seq[DateTime] = Seq.empty) {
@@ -33,5 +33,5 @@ case class Document(referenceNumber: String, journeyStarted: DateTime,  pages: S
 }
 
 object Document {
-  implicit val formats = Json.format[Document]
+  implicit val formats: OFormat[Document] = Json.format[Document]
 }
