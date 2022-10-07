@@ -32,8 +32,8 @@ object Formats {
         keyVal <- data.get(key)
         enumTypeValue <- named.fromName(keyVal)
       } yield {
-          Right(enumTypeValue)
-        }
+        Right(enumTypeValue)
+      }
       resOpt.getOrElse(Left(Seq(FormError(key, missingCode, Nil))))
     }
 
@@ -68,5 +68,15 @@ object Formats {
   implicit val tiedForGoodsFormat: Formatter[TiedForGoods] = namedEnumFormatter(TiedForGood, Errors.booleanMissing)
   implicit val premisesLicenseFormat: Formatter[PremisesLicenses] = namedEnumFormatter(PremisesLicense, Errors.booleanMissing)
   implicit val enforcementActionFormat: Formatter[EnforcementActions] = namedEnumFormatter(EnforcementAction, Errors.booleanMissing)
+  implicit val franchiseOrLettingsTiedToPropertiesFormat: Formatter[FranchiseOrLettingsTiedToProperties] = namedEnumFormatter(FranchiseOrLettingsTiedToProperty, Errors.booleanMissing)
+  implicit val rentIncreasedAnnuallyWithRPIsFormat: Formatter[RentIncreasedAnnuallyWithRPIs] = namedEnumFormatter(RentIncreasedAnnuallyWithRPI, Errors.booleanMissing)
+  implicit val rentPayableVaryAccordingToGrossOrNetsFormat: Formatter[RentPayableVaryAccordingToGrossOrNets] = namedEnumFormatter(RentPayableVaryAccordingToGrossOrNet, Errors.booleanMissing)
+  implicit val rentPayableVaryOnQuantityOfBeersFormat: Formatter[RentPayableVaryOnQuantityOfBeers] = namedEnumFormatter(RentPayableVaryOnQuantityOfBeer, Errors.booleanMissing)
+  implicit val rentIncludeTradeServicesFormat: Formatter[RentIncludeTradeServices] = namedEnumFormatter(RentIncludeTradeService, Errors.booleanMissing)
+  implicit val rentIncludeFixturesAndFittingsFormat: Formatter[RentIncludeFixturesAndFittings] = namedEnumFormatter(RentIncludeFixturesAndFitting, Errors.booleanMissing)
+  implicit val rentOpenMarketValuesFormat: Formatter[RentOpenMarketValues] = namedEnumFormatter(RentOpenMarketValue, Errors.booleanMissing)
+  implicit val areYouStillConnectedNoFormat: Formatter[AreYouStillConnectedNo] = namedEnumFormatter(NotStillConnected, Errors.booleanMissing)
+  implicit val methodToFixCurrentRentDetailsFormat: Formatter[MethodToFixCurrentRents] = namedEnumFormatter(MethodToFixCurrentRent, Errors.booleanMissing)
+  implicit val tiedForGoodsDetailsFormat: Formatter[TiedForGoodsInformationDetail] = namedEnumFormatter(TiedForGoodsInformation, Errors.booleanMissing)
   implicit val addressConnectionTypeFormatter: Formatter[AddressConnectionType] = namedEnumFormatter(AddressConnectionTypes, Errors.isConnectedError)
 }

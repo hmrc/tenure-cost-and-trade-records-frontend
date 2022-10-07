@@ -16,10 +16,12 @@
 
 package controllers.Form6010
 
-import config.AppConfig
+import controllers.LoginController.loginForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.Form6010.methodToFixCurrentRent
+import form.MethodToFixCurrentRentForm.methodToFixCurrentRentForm
+import views.html.login
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
@@ -27,12 +29,18 @@ import scala.concurrent.Future
 @Singleton
 class MethodToFixCurrentRentController @Inject()(
   mcc: MessagesControllerComponents,
-  appConfig: AppConfig,
-  methodToFixCurrentRent: methodToFixCurrentRent)
+  login: login,
+  methodToFixCurrentRentView: methodToFixCurrentRent)
   extends FrontendController(mcc) {
 
   def show: Action[AnyContent] = Action.async { implicit request =>
-    Future.successful(Ok(methodToFixCurrentRent()))
+    Future.successful(Ok(methodToFixCurrentRentView(methodToFixCurrentRentForm)))
   }
 
+  def submit = Action.async { implicit request =>
+    methodToFixCurrentRentForm.bindFromRequest().fold(
+      formWithErrors => Future.successful(BadRequest(methodToFixCurrentRentView(formWithErrors))),
+      data => Future.successful(Ok(login(loginForm)))
+    )
+  }
 }

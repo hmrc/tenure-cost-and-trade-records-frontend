@@ -38,7 +38,7 @@ class AboutThePropertyController @Inject()(
   }
 
   def submit = Action.async { implicit request =>
-    aboutThePropertyForm.bindFromRequest.fold(
+    aboutThePropertyForm.bindFromRequest().fold(
       formWithErrors => Future.successful(BadRequest(aboutThePropertyView(formWithErrors))),
       data => Future.successful(Ok(login(loginForm)))
     )

@@ -17,13 +17,13 @@
 package controllers.Form6010
 
 import config.AppConfig
-import controllers.LoginController.loginForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.Form6010.{aboutYou, areYouStillConnected}
 import views.html.login
 import form.AreYouStillConnectedForm.areYouStillConnectedForm
 import form.AboutYouForm.aboutYouForm
+import form.FormDocumentRepository
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
@@ -31,6 +31,7 @@ import scala.concurrent.Future
 @Singleton
 class AreYouStillConnectedController @Inject()(
   mcc: MessagesControllerComponents,
+  formDocumentRepository: FormDocumentRepository,
   appConfig: AppConfig,
   login: login,
   areYouStillConnectedView: areYouStillConnected,
@@ -42,7 +43,7 @@ class AreYouStillConnectedController @Inject()(
   }
 
   def submit = Action.async { implicit request =>
-    areYouStillConnectedForm.bindFromRequest.fold(
+    areYouStillConnectedForm.bindFromRequest().fold(
       formWithErrors => Future.successful(BadRequest(areYouStillConnectedView(formWithErrors))),
       data => Future.successful(Ok(aboutYouView(aboutYouForm)))
     )

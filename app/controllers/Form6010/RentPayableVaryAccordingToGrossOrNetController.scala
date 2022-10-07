@@ -16,10 +16,12 @@
 
 package controllers.Form6010
 
-import config.AppConfig
+import controllers.LoginController.loginForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.Form6010.rentPayableVaryAccordingToGrossOrNet
+import form.RentPayableVaryAccordingToGrossOrNetForm.rentPayableVaryAccordingToGrossOrNetForm
+import views.html.login
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
@@ -27,12 +29,18 @@ import scala.concurrent.Future
 @Singleton
 class RentPayableVaryAccordingToGrossOrNetController @Inject()(
   mcc: MessagesControllerComponents,
-  appConfig: AppConfig,
-  rentPayableVaryAccordingToGrossOrNet: rentPayableVaryAccordingToGrossOrNet)
+  login: login,
+  rentPayableVaryAccordingToGrossOrNetView: rentPayableVaryAccordingToGrossOrNet)
   extends FrontendController(mcc) {
 
   def show: Action[AnyContent] = Action.async { implicit request =>
-    Future.successful(Ok(rentPayableVaryAccordingToGrossOrNet()))
+    Future.successful(Ok(rentPayableVaryAccordingToGrossOrNetView(rentPayableVaryAccordingToGrossOrNetForm)))
   }
 
+  def submit = Action.async { implicit request =>
+    rentPayableVaryAccordingToGrossOrNetForm.bindFromRequest().fold(
+      formWithErrors => Future.successful(BadRequest(rentPayableVaryAccordingToGrossOrNetView(formWithErrors))),
+      data => Future.successful(Ok(login(loginForm)))
+    )
+  }
 }

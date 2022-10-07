@@ -11,6 +11,8 @@ POST        /login                                                  controllers.
 
 GET         /invalid-form-type                                      controllers.LoginController.notValidFORType()
 
+GET         /sessiontimeout                                         controllers.Application.sessionTimeout()
+
 GET         /are-you-still-connected                                controllers.Form6010.AreYouStillConnectedController.show()
 POST        /are-you-still-connected                                controllers.Form6010.AreYouStillConnectedController.submit()
 
@@ -18,6 +20,7 @@ GET         /edit-address                                           controllers.
 POST        /edit-address                                           controllers.Form6010.EditAddressController.submit()
 
 GET         /previously-connected                                   controllers.Form6010.AreYouStillConnectedNoController.show()
+POST        /previously-connected                                   controllers.Form6010.AreYouStillConnectedNoController.submit()
 
 GET         /remove-connection                                      controllers.Form6010.RemoveConnectionController.show()
 
@@ -36,6 +39,7 @@ POST        /about-you                                              controllers.
 GET         /website-address-for-property                           controllers.Form6010.WebsiteAddressForPropertyController.show()
 
 GET         /franchise-or-lettings-tied-to-property                 controllers.Form6010.FranchiseOrLettingsTiedToPropertyController.show()
+POST        /franchise-or-lettings-tied-to-property                 controllers.Form6010.FranchiseOrLettingsTiedToPropertyController.submit()
 
 GET         /about-your-landlord                                    controllers.Form6010.AboutYourLandlordController.show()
 
@@ -57,6 +61,7 @@ GET         /tied-for-goods                                         controllers.
 POST        /tied-for-goods                                         controllers.Form6010.TiedForGoodsController.submit()
 
 GET         /tied-for-goods-details                                 controllers.Form6010.TiedForGoodsDetailsController.show()
+POST        /tied-for-goods-details                                 controllers.Form6010.TiedForGoodsDetailsController.submit()
 
 GET         /catering-operation-or-letting-accommodation            controllers.Form6010.CateringOperationOrLettingAccommodationController.show()
 POST        /catering-operation-or-letting-accommodation            controllers.Form6010.CateringOperationOrLettingAccommodationController.submit()
@@ -65,34 +70,41 @@ GET         /letting-other-part-of-property                         controllers.
 POST        /letting-other-part-of-property                         controllers.Form6010.LettingOtherPartOfPropertyController.submit()
 
 GET         /rent-open-market-value                                 controllers.Form6010.RentOpenMarketValueController.show()
+POST        /rent-open-market-value                                 controllers.Form6010.RentOpenMarketValueController.submit()
 
 GET         /current-annual-rent                                    controllers.Form6010.CurrentAnnualRentController.show()
 
 GET         /does-the-rent-payable                                  controllers.Form6010.DoesTheRentPayableController.show()
 
 GET         /rent-payable-vary-on-quantity-of-beers                 controllers.Form6010.RentPayableVaryOnQuantityOfBeersController.show()
+POST        /rent-payable-vary-on-quantity-of-beers                 controllers.Form6010.RentPayableVaryOnQuantityOfBeersController.submit()
 
 GET         /rent-payable-vary-on-quantity-of-beers-details         controllers.Form6010.RentPayableVaryOnQuantityOfBeersDetailsController.show()
 
 GET         /rent-payable-vary-according-to-gross-or-net            controllers.Form6010.RentPayableVaryAccordingToGrossOrNetController.show()
+POST        /rent-payable-vary-according-to-gross-or-net            controllers.Form6010.RentPayableVaryAccordingToGrossOrNetController.submit()
 
 GET         /rent-payable-vary-according-to-gross-or-net-details    controllers.Form6010.RentPayableVaryAccordingToGrossOrNetDetailsController.show()
 
 GET         /rent-include-trade-services                            controllers.Form6010.RentIncludeTradeServicesController.show()
+POST        /rent-include-trade-services                            controllers.Form6010.RentIncludeTradeServicesController.submit()
 
 GET         /rent-include-trade-services-details                    controllers.Form6010.RentIncludeTradeServicesDetailsController.show()
 
 GET         /ultimately-responsible                                 controllers.Form6010.UltimatelyResponsibleController.show()
 
 GET         /rent-include-fixtures-and-fittings                     controllers.Form6010.RentIncludeFixtureAndFittingsController.show()
+POST        /rent-include-fixtures-and-fittings                     controllers.Form6010.RentIncludeFixtureAndFittingsController.submit()
 
 GET         /rent-include-fixtures-and-fittings-details             controllers.Form6010.RentIncludeFixtureAndFittingsDetailsController.show()
 
 GET         /incentives-payments-conditions                         controllers.Form6010.IncentivesPaymentsConditionsController.show()
 
 GET         /rent-increase-annually-with-rpi                        controllers.Form6010.RentIncreaseAnnuallyWithRPIController.show()
+POST        /rent-increase-annually-with-rpi                        controllers.Form6010.RentIncreaseAnnuallyWithRPIController.submit()
 
 GET         /method-to-fix-current-rent                             controllers.Form6010.MethodToFixCurrentRentController.show()
+POST        /method-to-fix-current-rent                             controllers.Form6010.MethodToFixCurrentRentController.submit()
 
 GET         /enforcement-action-been-taken                          controllers.Form6010.EnforcementActionBeenTakenController.show()
 POST        /enforcement-action-been-taken                          controllers.Form6010.EnforcementActionBeenTakenController.submit()

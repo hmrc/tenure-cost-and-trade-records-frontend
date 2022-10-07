@@ -23,10 +23,14 @@
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.{Text, HtmlContent}
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.notificationbanner.NotificationBanner
 @import play.api.Configuration
+@import views.html.govuk.{head, scripts}
+
 
 @this(
         appConfig: AppConfig,
         hmrcLayout: HmrcLayout,
+        headTemplate: head,
+        scriptsTemplate: scripts,
         govukPhaseBanner: GovukPhaseBanner,
         hmrcLanguageSelectHelper: HmrcLanguageSelectHelper,
         govukBackLink: GovukBackLink,
@@ -43,7 +47,8 @@
         showFeedback: Boolean = true,
         showH1: Boolean = true,
         backLinkUrl: Option[String] = None,
-        beforeContentBlock: Option[Html] = None
+        beforeContentBlock: Option[Html] = None,
+        withTimeoutDialog: Boolean = true
 )(contentBlock: Html)(implicit request: Request[_], messages: Messages)
 
 @beforeBLock = {
@@ -109,6 +114,8 @@
     serviceName = Some(messages("site.service_name")),
     serviceUrl= Some(routes.LoginController.show.url),
     isWelshTranslationAvailable = true,
+    additionalHeadBlock = Some(headTemplate(withTimeoutDialog)),
+    additionalScriptsBlock = Some(scriptsTemplate()),
     beforeContentBlock = Option(beforeBLock)
  )(contentWithHeading)
 
