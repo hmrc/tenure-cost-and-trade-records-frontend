@@ -16,26 +16,21 @@
 
 package models.submissions
 
-import play.api.libs.json.Json
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
 
-case class Address(buildingNameNumber: String, street1: Option[String], street2: Option[String], postcode: String) {
-  def singleLine: String =
-    List(
-      Some(buildingNameNumber),
-      street1,
-      street2,
-      Some(postcode.replaceAll("^(\\S+?)\\s*?(\\d\\w\\w)$", "$1 $2"))
-    ).flatten.mkString(", ")
+class AddressSpec extends AnyFlatSpec with Matchers {
+  val address = Address("001", Some("GORING ROAD"), Some("GORING-BY-SEA, WORTHING"), "BN12 4AX")
 
-  def multiLine: String =
-    List(
-      Some(buildingNameNumber),
-      street1,
-      street2,
-      Some(postcode.replaceAll("^(\\S+?)\\s*?(\\d\\w\\w)$", "$1 $2"))
-    ).flatten.mkString("<br/> ")
-}
+  "Address" should "return the address as a single line" in {
+    val result = address.singleLine
+    result shouldBe "001, GORING ROAD, GORING-BY-SEA, WORTHING, BN12 4AX"
+  }
 
-object Address {
-  implicit val format = Json.format[Address]
+  "Address" should "return the address as a multi line" in {
+    val result = address.multiLine
+    println(result)
+    result shouldBe "001<br/> GORING ROAD<br/> GORING-BY-SEA, WORTHING<br/> BN12 4AX"
+  }
+
 }
