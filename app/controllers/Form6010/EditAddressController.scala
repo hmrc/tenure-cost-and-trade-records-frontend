@@ -38,7 +38,7 @@ class EditAddressController @Inject()(
   }
 
   def submit = Action.async { implicit request =>
-    editAddressForm.bindFromRequest.fold(
+    editAddressForm.bindFromRequest().fold(
       formWithErrors => Future.successful(BadRequest(editAddressView(formWithErrors))),
       data => Future.successful(Ok(login(loginForm)))
     )

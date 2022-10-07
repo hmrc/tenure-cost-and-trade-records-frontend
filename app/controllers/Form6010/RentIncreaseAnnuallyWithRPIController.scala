@@ -38,7 +38,7 @@ class RentIncreaseAnnuallyWithRPIController @Inject()(
   }
 
   def submit = Action.async { implicit request =>
-    rentIncreasedAnnuallyWithRPIDetailsForm.bindFromRequest.fold(
+    rentIncreasedAnnuallyWithRPIDetailsForm.bindFromRequest().fold(
       formWithErrors => Future.successful(BadRequest(rentIncreaseAnnuallyWithRPIView(formWithErrors))),
       data => Future.successful(Ok(login(loginForm)))
     )

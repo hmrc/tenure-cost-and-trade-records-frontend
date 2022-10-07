@@ -17,7 +17,6 @@
 package controllers.Form6010
 
 import config.AppConfig
-import controllers.LoginController.loginForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.Form6010.{aboutYou, areYouStillConnected}
@@ -42,7 +41,7 @@ class AreYouStillConnectedController @Inject()(
   }
 
   def submit = Action.async { implicit request =>
-    areYouStillConnectedForm.bindFromRequest.fold(
+    areYouStillConnectedForm.bindFromRequest().fold(
       formWithErrors => Future.successful(BadRequest(areYouStillConnectedView(formWithErrors))),
       data => Future.successful(Ok(aboutYouView(aboutYouForm)))
     )

@@ -33,7 +33,7 @@ class RefNumAction @Inject() (bodyParser: BodyParsers.Default, messagesApi: Mess
 
     request.session.get("refNum") match {
       case Some(refNum) => Right(new RefNumRequest(refNum, request, messagesApi))
-      case None => Left(Redirect(controllers.routes.LoginController.show))
+      case None => Left(Redirect(controllers.routes.LoginController.show()))
     }
   }
 

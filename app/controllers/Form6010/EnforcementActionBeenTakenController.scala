@@ -38,7 +38,7 @@ class EnforcementActionBeenTakenController @Inject()(
   }
 
   def submit = Action.async { implicit request =>
-    enforcementActionForm.bindFromRequest.fold(
+    enforcementActionForm.bindFromRequest().fold(
       formWithErrors => Future.successful(BadRequest(enforcementActionBeenTakenView(formWithErrors))),
       data => Future.successful(Ok(login(loginForm)))
     )

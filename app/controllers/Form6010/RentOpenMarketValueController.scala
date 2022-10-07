@@ -38,7 +38,7 @@ class RentOpenMarketValueController @Inject()(
   }
 
   def submit = Action.async { implicit request =>
-    rentOpenMarketValuesForm.bindFromRequest.fold(
+    rentOpenMarketValuesForm.bindFromRequest().fold(
       formWithErrors => Future.successful(BadRequest(rentOpenMarketValueView(formWithErrors))),
       data => Future.successful(Ok(login(loginForm)))
     )

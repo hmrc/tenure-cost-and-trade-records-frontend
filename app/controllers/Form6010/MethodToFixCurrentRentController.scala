@@ -38,7 +38,7 @@ class MethodToFixCurrentRentController @Inject()(
   }
 
   def submit = Action.async { implicit request =>
-    methodToFixCurrentRentForm.bindFromRequest.fold(
+    methodToFixCurrentRentForm.bindFromRequest().fold(
       formWithErrors => Future.successful(BadRequest(methodToFixCurrentRentView(formWithErrors))),
       data => Future.successful(Ok(login(loginForm)))
     )
