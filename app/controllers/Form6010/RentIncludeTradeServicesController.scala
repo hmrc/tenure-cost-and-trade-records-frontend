@@ -28,9 +28,10 @@ import scala.concurrent.Future
 
 @Singleton
 class RentIncludeTradeServicesController @Inject()(
-                                                    mcc: MessagesControllerComponents,
-                                                    login: login,
-                                                    rentIncludeTradeServicesView: rentIncludeTradeServices)
+  mcc: MessagesControllerComponents,
+  login: login,
+  rentIncludeTradeServicesView: rentIncludeTradeServices)
+
   extends FrontendController(mcc) {
 
   def show: Action[AnyContent] = Action.async { implicit request =>
