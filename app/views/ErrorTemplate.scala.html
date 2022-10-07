@@ -15,20 +15,20 @@
  *@
 
 @import uk.gov.hmrc.govukfrontend.views.html.components.Text
-
-@import uk.gov.hmrc.govukfrontend.views.html.components.Text
 @import views.html.Layout
 
 @this(layout: Layout)
 @(pageTitle: String, heading: String, message: String)(implicit request: Request[_], messages: Messages)
 
-@title = @{
- messages("service.name")
-}
+    @title = @{
+        messages("service.name")
+    }
 
-@layout(
- pageHeading = pageTitle,
- pageTitle = Some(title)
-) {
- <p class="govuk-body">@{Text(message).asHtml}</p>
-}
+    @layout(
+        pageHeading = pageTitle,
+        pageTitle = Some(title)
+    ) {
+        <p class="govuk-body">@{
+            Text(message).asHtml
+        }</p>
+    }

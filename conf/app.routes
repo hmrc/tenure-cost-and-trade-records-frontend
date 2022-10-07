@@ -7,8 +7,9 @@ GET         /assets/*file                                           controllers.
 GET         /                                                       controllers.Application.index()
 # Sign in page
 GET         /login                                                  controllers.LoginController.show()
-
 POST        /login                                                  controllers.LoginController.submit()
+
+GET         /invalid-form-type                                      controllers.LoginController.notValidFORType()
 
 GET         /sessiontimeout                                         controllers.Application.sessionTimeout()
 
