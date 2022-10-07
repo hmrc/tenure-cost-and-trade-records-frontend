@@ -17,6 +17,7 @@ GET         /edit-address                                           controllers.
 POST        /edit-address                                           controllers.Form6010.EditAddressController.submit()
 
 GET         /previously-connected                                   controllers.Form6010.AreYouStillConnectedNoController.show()
+POST        /previously-connected                                   controllers.Form6010.AreYouStillConnectedNoController.submit()
 
 GET         /remove-connection                                      controllers.Form6010.RemoveConnectionController.show()
 
