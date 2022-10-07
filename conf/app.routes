@@ -100,6 +100,7 @@ GET         /rent-increase-annually-with-rpi                        controllers.
 POST        /rent-increase-annually-with-rpi                        controllers.Form6010.RentIncreaseAnnuallyWithRPIController.submit()
 
 GET         /method-to-fix-current-rent                             controllers.Form6010.MethodToFixCurrentRentController.show()
+POST        /method-to-fix-current-rent                             controllers.Form6010.MethodToFixCurrentRentController.submit()
 
 GET         /enforcement-action-been-taken                          controllers.Form6010.EnforcementActionBeenTakenController.show()
 POST        /enforcement-action-been-taken                          controllers.Form6010.EnforcementActionBeenTakenController.submit()
