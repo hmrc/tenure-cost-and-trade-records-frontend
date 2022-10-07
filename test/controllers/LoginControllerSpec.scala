@@ -65,7 +65,7 @@ class LoginControllerSpec extends AnyFlatSpec with should.Matchers with MockitoS
 
     val fakeRequest = FakeRequest()
     //should strip out all non digits then split string 3 from end to create ref1/ref2
-    val response    = loginController.verifyLogin("01234567/*ok blah 000", "BN12 1AB", time)(fakeRequest)
+    val response    = loginController.verifyLogin("01234567000", "BN12 1AB", time)(fakeRequest)
 
     status(response) shouldBe SEE_OTHER
 
@@ -88,10 +88,14 @@ class LoginControllerSpec extends AnyFlatSpec with should.Matchers with MockitoS
     doNothing.when(audit).sendExplicitAudit(any[String], any[JsObject])(any[HeaderCarrier], any[ExecutionContext])
 
     val loginController =
-      new LoginController(audit, stubMessagesControllerComponents(), mock[login], null, mock[views.html.ErrorTemplate])
-
-//    val loginController = new LoginController(audit, documentRepo, null, stubMessagesControllerComponents(),
-//      mock[login], mock[views.html.error.error], mock[loginFailed], mock[views.html.lockedOut])
+      new LoginController(
+        audit,
+        stubMessagesControllerComponents(),
+        mock[login],
+        null,
+        mock[views.html.ErrorTemplate],
+        mock[views.html.testSign]
+      )
 
     val fakeRequest = FakeRequest()
 
