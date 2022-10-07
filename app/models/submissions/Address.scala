@@ -16,6 +16,8 @@
 
 package models.submissions
 
+import play.api.libs.json.Json
+
 case class Address(buildingNameNumber: String, street1: Option[String], street2: Option[String], postcode: String) {
   def singleLine: String =
     List(
@@ -32,4 +34,8 @@ case class Address(buildingNameNumber: String, street1: Option[String], street2:
       street2,
       Some(postcode.replaceAll("^(\\S+?)\\s*?(\\d\\w\\w)$", "$1 $2"))
     ).flatten.mkString("<br /> ")
+}
+
+object Address {
+  implicit val format = Json.format[Address]
 }

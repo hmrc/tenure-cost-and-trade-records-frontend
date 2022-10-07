@@ -104,16 +104,15 @@ class LoginController @Inject() (
     logger.debug(s"Signing in with: reference number : $cleanedRefNumber, postcode: $cleanPostcode")
 
     loginToBackend(hc2, ec)(referenceNumber, cleanPostcode, startTime)
-      .flatMap {
-        case NoExistingDocument(token, forNum, address) =>
-          auditLogin(referenceNumber, false, address, forNum)(hc2)
-          withNewSession(
-            Redirect(controllers.Form6010.routes.AreYouStillConnectedController.show),
-            token,
-            forNum,
-            s"$referenceNumber",
-            sessionId
-          )
+      .map { case NoExistingDocument(token, forNum, address) =>
+        auditLogin(referenceNumber, false, address, forNum)(hc2)
+        withNewSession(
+          Redirect(controllers.Form6010.routes.AreYouStillConnectedController.show),
+          token,
+          forNum,
+          s"$referenceNumber",
+          sessionId
+        )
       }
       .recover {
         case Upstream4xxResponse(_, 409, _, _)    =>
