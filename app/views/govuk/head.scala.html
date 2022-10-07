@@ -1,4 +1,4 @@
-/*
+@*
  * Copyright 2022 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,24 +12,22 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */
+ *@
 
-package models.submissions
+@import play.api.Environment
+@import uk.gov.hmrc.hmrcfrontend.views.html.helpers.HmrcTimeoutDialogHelper
 
-import play.api.libs.json._
+@this(
+        environment: Environment,
+        hmrcTimeoutDialogHelper: HmrcTimeoutDialogHelper
+)
 
-case class Address(buildingNameNumber: String, street1: Option[String], street2: Option[String], postcode: String) {
+@(enableTimeoutDialog: Boolean)(implicit request: RequestHeader, messages: Messages)
 
-  def singleLine: String = {
-    List(Some(buildingNameNumber), street1, street2, Some(postcode.replaceAll("^(\\S+?)\\s*?(\\d\\w\\w)$", "$1 $2"))).flatten.mkString(", ")
-  }
+<link href='@routes.Assets.versioned("stylesheets/application2.min.css")' media="all" rel="stylesheet" type="text/css" />
 
-  def multiLine: String = {
-    List(Some(buildingNameNumber), street1, street2, Some(postcode.replaceAll("^(\\S+?)\\s*?(\\d\\w\\w)$", "$1 $2"))).flatten.mkString("<br /> ")
-  }
-
-}
-
-object Address {
-  implicit val formats = Json.format[Address]
+@if(enableTimeoutDialog) {
+    @hmrcTimeoutDialogHelper(
+        signOutUrl = routes.LoginController.show.url
+    )
 }

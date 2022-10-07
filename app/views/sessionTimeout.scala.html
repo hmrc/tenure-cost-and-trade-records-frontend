@@ -1,4 +1,4 @@
-/*
+@*
  * Copyright 2022 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,24 +12,13 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */
+ *@
 
-package models.submissions
+@this()
 
-import play.api.libs.json._
+@()(implicit request: Request[_],  messages: Messages)
 
-case class Address(buildingNameNumber: String, street1: Option[String], street2: Option[String], postcode: String) {
 
-  def singleLine: String = {
-    List(Some(buildingNameNumber), street1, street2, Some(postcode.replaceAll("^(\\S+?)\\s*?(\\d\\w\\w)$", "$1 $2"))).flatten.mkString(", ")
-  }
+<p class="govuk-body">@messages("sessionTimeout.copy")</p>
 
-  def multiLine: String = {
-    List(Some(buildingNameNumber), street1, street2, Some(postcode.replaceAll("^(\\S+?)\\s*?(\\d\\w\\w)$", "$1 $2"))).flatten.mkString("<br /> ")
-  }
-
-}
-
-object Address {
-  implicit val formats = Json.format[Address]
-}
+<p class="govuk-body"><a class="govuk-link" href="@routes.LoginController.show().url">@messages("sessionTimeout.button")</a></p>

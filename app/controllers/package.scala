@@ -14,22 +14,10 @@
  * limitations under the License.
  */
 
-package models.submissions
+import scala.concurrent.Future
 
-import play.api.libs.json._
+package object controllers {
+  implicit def toOpt[A](a: A): Option[A] = Some(a)
 
-case class Address(buildingNameNumber: String, street1: Option[String], street2: Option[String], postcode: String) {
-
-  def singleLine: String = {
-    List(Some(buildingNameNumber), street1, street2, Some(postcode.replaceAll("^(\\S+?)\\s*?(\\d\\w\\w)$", "$1 $2"))).flatten.mkString(", ")
-  }
-
-  def multiLine: String = {
-    List(Some(buildingNameNumber), street1, street2, Some(postcode.replaceAll("^(\\S+?)\\s*?(\\d\\w\\w)$", "$1 $2"))).flatten.mkString("<br /> ")
-  }
-
-}
-
-object Address {
-  implicit val formats = Json.format[Address]
+  implicit def toFut[A](a: A): Future[A] = Future.successful(a)
 }

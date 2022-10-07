@@ -10,6 +10,12 @@ button.label.save = Save
 label.checkTheForm = There is a problem
 error.title = Error:
 
+#SESSION TIMEOUT
+##############################
+heading.sessionTimeout=Session timed out
+sessionTimeout.copy=You have been logged out as you have not used this form for the last 24 hours.
+sessionTimeout.button=Please log in again
+
 #WELSH YES/NO
 #############
 label.yes.oes=Yes
