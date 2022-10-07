@@ -77,5 +77,6 @@ object Formats {
   implicit val rentOpenMarketValuesFormat: Formatter[RentOpenMarketValues] = namedEnumFormatter(RentOpenMarketValue, Errors.booleanMissing)
   implicit val areYouStillConnectedNoFormat: Formatter[AreYouStillConnectedNo] = namedEnumFormatter(NotStillConnected, Errors.booleanMissing)
   implicit val methodToFixCurrentRentDetailsFormat: Formatter[MethodToFixCurrentRents] = namedEnumFormatter(MethodToFixCurrentRent, Errors.booleanMissing)
+  implicit val tiedForGoodsDetailsFormat: Formatter[TiedForGoodsInformationDetail] = namedEnumFormatter(TiedForGoodsInformation, Errors.booleanMissing)
   implicit val addressConnectionTypeFormatter: Formatter[AddressConnectionType] = namedEnumFormatter(AddressConnectionTypes, Errors.isConnectedError)
 }
