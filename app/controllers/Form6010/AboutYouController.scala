@@ -38,7 +38,7 @@ class AboutYouController @Inject()(
   }
 
   def submit = Action.async { implicit request =>
-    aboutYouForm.bindFromRequest.fold(
+    aboutYouForm.bindFromRequest().fold(
       formWithErrors => Future.successful(BadRequest(aboutYouView(formWithErrors))),
       data => Future.successful(Ok(login(loginForm)))
     )

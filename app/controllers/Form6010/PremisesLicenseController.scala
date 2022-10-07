@@ -38,7 +38,7 @@ class PremisesLicenseController @Inject()(
   }
 
   def submit = Action.async { implicit request =>
-    premisesLicenseForm.bindFromRequest.fold(
+    premisesLicenseForm.bindFromRequest().fold(
       formWithErrors => Future.successful(BadRequest(premisesLicenseView(formWithErrors))),
       data => Future.successful(Ok(login(loginForm)))
     )

@@ -38,7 +38,7 @@ class TiedForGoodsDetailsController @Inject()(
   }
 
   def submit = Action.async { implicit request =>
-    tiedForGoodsDetailsForm.bindFromRequest.fold(
+    tiedForGoodsDetailsForm.bindFromRequest().fold(
       formWithErrors => Future.successful(BadRequest(tiedForGoodsDetailsView(formWithErrors))),
       data => Future.successful(Ok(login(loginForm)))
     )

@@ -38,7 +38,7 @@ class RentPayableVaryOnQuantityOfBeersController @Inject()(
   }
 
   def submit = Action.async { implicit request =>
-    rentPayableVaryOnQuantityOfBeersForm.bindFromRequest.fold(
+    rentPayableVaryOnQuantityOfBeersForm.bindFromRequest().fold(
       formWithErrors => Future.successful(BadRequest(rentPayableVaryOnQuantityOfBeersView(formWithErrors))),
       data => Future.successful(Ok(login(loginForm)))
     )

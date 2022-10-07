@@ -38,7 +38,7 @@ class RentIncludeFixtureAndFittingsController @Inject()(
   }
 
   def submit = Action.async { implicit request =>
-    rentIncludeFixturesAndFittingsForm.bindFromRequest.fold(
+    rentIncludeFixturesAndFittingsForm.bindFromRequest().fold(
       formWithErrors => Future.successful(BadRequest(rentIncludeFixtureAndFittingsView(formWithErrors))),
       data => Future.successful(Ok(login(loginForm)))
     )

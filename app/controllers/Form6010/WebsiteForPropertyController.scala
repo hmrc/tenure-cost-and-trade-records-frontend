@@ -38,7 +38,7 @@ class WebsiteForPropertyController @Inject()(
   }
 
   def submit = Action.async { implicit request =>
-    websiteForPropertyForm.bindFromRequest.fold(
+    websiteForPropertyForm.bindFromRequest().fold(
       formWithErrors => Future.successful(BadRequest(websiteForPropertyView(formWithErrors))),
       data => Future.successful(Ok(login(loginForm)))
     )

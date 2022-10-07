@@ -38,7 +38,7 @@ class LicensableActivitiesController @Inject()(
   }
 
   def submit = Action.async { implicit request =>
-    licensableActivitiesForm.bindFromRequest.fold(
+    licensableActivitiesForm.bindFromRequest().fold(
       formWithErrors => Future.successful(BadRequest(licensableActivitiesView(formWithErrors))),
       data => Future.successful(Ok(login(loginForm)))
     )

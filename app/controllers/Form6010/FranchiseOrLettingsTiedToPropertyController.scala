@@ -38,7 +38,7 @@ class FranchiseOrLettingsTiedToPropertyController @Inject()(
   }
 
   def submit = Action.async { implicit request =>
-    franchiseOrLettingsTiedToPropertyForm.bindFromRequest.fold(
+    franchiseOrLettingsTiedToPropertyForm.bindFromRequest().fold(
       formWithErrors => Future.successful(BadRequest(franchiseOrLettingsTiedToPropertyView(formWithErrors))),
       data => Future.successful(Ok(login(loginForm)))
     )

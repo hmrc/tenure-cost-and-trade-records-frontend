@@ -38,7 +38,7 @@ class TenancyLeaseAgreementController @Inject()(
   }
 
   def submit = Action.async { implicit request =>
-    tenancyLeaseAgreementForm.bindFromRequest.fold(
+    tenancyLeaseAgreementForm.bindFromRequest().fold(
       formWithErrors => Future.successful(BadRequest(tenancyLeaseAgreementView(formWithErrors))),
       data => Future.successful(Ok(login(loginForm)))
     )

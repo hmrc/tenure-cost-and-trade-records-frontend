@@ -16,7 +16,6 @@
 
 package controllers.Form6010
 
-import config.AppConfig
 import controllers.LoginController.loginForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
@@ -39,7 +38,7 @@ class CateringOperationOrLettingAccommodationController @Inject()(
   }
 
   def submit = Action.async { implicit request =>
-    cateringOperationForm.bindFromRequest.fold(
+    cateringOperationForm.bindFromRequest().fold(
       formWithErrors => Future.successful(BadRequest(cateringOperationOrLettingAccommodationView(formWithErrors))),
       data => Future.successful(Ok(login(loginForm)))
     )

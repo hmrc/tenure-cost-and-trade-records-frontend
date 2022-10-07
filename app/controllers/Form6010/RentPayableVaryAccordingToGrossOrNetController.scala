@@ -38,7 +38,7 @@ class RentPayableVaryAccordingToGrossOrNetController @Inject()(
   }
 
   def submit = Action.async { implicit request =>
-    rentPayableVaryAccordingToGrossOrNetForm.bindFromRequest.fold(
+    rentPayableVaryAccordingToGrossOrNetForm.bindFromRequest().fold(
       formWithErrors => Future.successful(BadRequest(rentPayableVaryAccordingToGrossOrNetView(formWithErrors))),
       data => Future.successful(Ok(login(loginForm)))
     )

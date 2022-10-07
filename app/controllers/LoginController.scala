@@ -73,7 +73,7 @@ class LoginController  @Inject()(
   }
 
   def submit = Action.async { implicit request =>
-    loginForm.bindFromRequest.fold(
+    loginForm.bindFromRequest().fold(
       formWithErrors => Future.successful(BadRequest(login(formWithErrors))),
       loginData => verifyLogin(loginData.referenceNumber, loginData.postcode, loginData.startTime)
     )
