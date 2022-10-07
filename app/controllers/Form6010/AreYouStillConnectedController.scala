@@ -24,6 +24,7 @@ import views.html.Form6010.{aboutYou, areYouStillConnected}
 import views.html.login
 import form.AreYouStillConnectedForm.areYouStillConnectedForm
 import form.AboutYouForm.aboutYouForm
+import form.FormDocumentRepository
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
@@ -31,6 +32,7 @@ import scala.concurrent.Future
 @Singleton
 class AreYouStillConnectedController @Inject()(
   mcc: MessagesControllerComponents,
+  formDocumentRepository: FormDocumentRepository,
   appConfig: AppConfig,
   login: login,
   areYouStillConnectedView: areYouStillConnected,
