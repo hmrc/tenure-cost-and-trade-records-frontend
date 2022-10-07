@@ -49,7 +49,7 @@ label.postcode = Cod post
 error.invalid_refnum = Rhowch y cyfeirnod fel y mae'n ymddangos ar eich llythyr
 error.invalid_postcode_as_on_letter = Nodwch eich cod post fel mae’n ymddangos ar eich llythyr
 
-#LOGIN
+#TEST - Invalid Form Type
 ##############################
 test.heading = You are signed in
 test.text = Croeso

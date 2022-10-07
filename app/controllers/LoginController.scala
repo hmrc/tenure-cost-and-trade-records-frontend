@@ -31,7 +31,8 @@ import security.NoExistingDocument
 import uk.gov.hmrc.http.HeaderNames.trueClientIp
 import uk.gov.hmrc.http.{HeaderCarrier, SessionId, SessionKeys, Upstream4xxResponse}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.login
+import uk.gov.hmrc.play.http.HeaderCarrierConverter
+import views.html._
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
@@ -70,8 +71,8 @@ class LoginController @Inject() (
   mcc: MessagesControllerComponents,
   login: login,
   loginToBackend: LoginToBackendAction,
-  errorView: views.html.ErrorTemplate
-//                                  test: testSign,
+  errorView: ErrorTemplate,
+  test: testSign // setup proper error page
 //                                  connector: DefaultBackendConnector,
 //                                  areYouStillConnected: areYouStillConnected
 )(implicit ec: ExecutionContext)
@@ -84,11 +85,32 @@ class LoginController @Inject() (
     Future.successful(Ok(login(loginForm)))
   }
 
+  def logout = Action { implicit request =>
+    val refNum                     = request.session.get("refNum").getOrElse("-")
+    val refNumJson                 = Json.obj(Audit.referenceNumber -> refNum)
+    implicit val hc: HeaderCarrier = HeaderCarrierConverter.fromRequestAndSession(request, request.session)
+
+//    hc.sessionId.map(sessionId =>
+//      documentRepo.findById(sessionId.value, refNum).flatMap {
+//        case Some(doc) => refNumJson ++ Addresses.addressJson(SummaryBuilder.build(doc))
+//        case None => refNumJson
+//      }.map(jsObject => audit.sendExplicitAudit("Logout", jsObject))
+//    ).getOrElse {
+    audit.sendExplicitAudit("Logout", refNumJson)
+//    }
+
+    Redirect(routes.LoginController.show).withNewSession
+  }
+
   def submit = Action.async { implicit request =>
     loginForm.bindFromRequest.fold(
       formWithErrors => Future.successful(BadRequest(login(formWithErrors))),
       loginData => verifyLogin(loginData.referenceNumber, loginData.postcode, loginData.startTime)
     )
+  }
+
+  def notValidFORType: Action[AnyContent] = Action.async { implicit request =>
+    Future.successful(Ok(test()))
   }
 
   def verifyLogin(referenceNumber: String, postcode: String, startTime: DateTime)(implicit
@@ -103,16 +125,26 @@ class LoginController @Inject() (
     implicit val hc2: HeaderCarrier = hc.copy(sessionId = Some(SessionId(java.util.UUID.randomUUID().toString)))
     logger.debug(s"Signing in with: reference number : $cleanedRefNumber, postcode: $cleanPostcode")
 
-    loginToBackend(hc2, ec)(referenceNumber, cleanPostcode, startTime)
+    loginToBackend(hc2, ec)(cleanedRefNumber, cleanPostcode, startTime)
       .map { case NoExistingDocument(token, forNum, address) =>
         auditLogin(referenceNumber, false, address, forNum)(hc2)
-        withNewSession(
-          Redirect(controllers.Form6010.routes.AreYouStillConnectedController.show),
-          token,
-          forNum,
-          s"$referenceNumber",
-          sessionId
-        )
+        if (forNum == "FOR6010" || forNum == "FOR6020") {
+          withNewSession(
+            Redirect(controllers.Form6010.routes.AreYouStillConnectedController.show),
+            token,
+            forNum,
+            s"$referenceNumber",
+            sessionId
+          )
+        } else {
+          withNewSession(
+            Redirect(routes.LoginController.notValidFORType),
+            token,
+            forNum,
+            s"$referenceNumber",
+            sessionId
+          )
+        }
       }
       .recover {
         case Upstream4xxResponse(_, 409, _, _)    =>
@@ -141,8 +173,9 @@ class LoginController @Inject() (
     val json = Json.obj(
       "returningUser"       -> returnUser,
       Audit.referenceNumber -> refNumber,
-      Audit.formOfReturn    -> formOfReturn
-    ) //, Audit.address -> address)
+      Audit.formOfReturn    -> formOfReturn,
+      Audit.address         -> address
+    )
     audit.sendExplicitAudit("UserLogin", json)
   }
 

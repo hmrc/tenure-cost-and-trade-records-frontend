@@ -1,4 +1,4 @@
-@*
+/*
  * Copyright 2022 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,23 +12,24 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *@
+ */
 
-@import uk.gov.hmrc.govukfrontend.views.html.components.Text
-@import views.html.Layout
+package utils
 
-@this(layout: Layout)
-@(pageTitle: String, heading: String, message: String)(implicit request: Request[_], messages: Messages)
+import actions.RefNumAction
+import play.api.mvc._
+import play.api.test.FakeRequest
 
-    @title = @{
-        messages("service.name")
-    }
+object Helpers {
 
-    @layout(
-        pageHeading = pageTitle,
-        pageTitle = Some(title)
-    ) {
-        <p class="govuk-body">@{
-            Text(message).asHtml
-        }</p>
-    }
+  implicit def fakeRequest2MessageRequest[A](fakeRequest: FakeRequest[A]): MessagesRequest[A] = {
+    new MessagesRequest[A](fakeRequest, play.api.test.Helpers.stubMessagesApi())
+  }
+
+  def refNumAction(): RefNumAction = {
+    val cc = play.api.test.Helpers.stubControllerComponents()
+
+    new RefNumAction(new play.api.mvc.BodyParsers.Default(cc.parsers), cc.messagesApi)(cc.executionContext)
+  }
+
+}

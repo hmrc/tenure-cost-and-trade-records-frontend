@@ -49,9 +49,9 @@ label.postcode = Postcode
 error.invalid_refnum = Enter your reference number as it appears on your letter
 error.invalid_postcode_as_on_letter = Enter your postcode as it appears on your letter
 
-#LOGIN
+#LOGIN- Invalid Form Type
 ##############################
-test.heading = You are signed in
+test.heading = Invalid Form Type
 test.text = Welcome
 
 #6010 LANDING PAGE
