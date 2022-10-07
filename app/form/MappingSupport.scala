@@ -47,6 +47,7 @@ object MappingSupport {
   val addressConnectionType: Mapping[AddressConnectionType] = Forms.of[AddressConnectionType]
   val rentIncludeFixturesAndFittingsType: Mapping[RentIncludeFixturesAndFittings] = Forms.of[RentIncludeFixturesAndFittings]
   val rentOpenMarketValuesType: Mapping[RentOpenMarketValues] = Forms.of[RentOpenMarketValues]
+  val areYouStillConnectedNoType: Mapping[AreYouStillConnectedNo] = Forms.of[AreYouStillConnectedNo]
   val postcode: Mapping[String] = PostcodeMapping.postcode()
 
   val contactDetailsMapping: Mapping[ContactDetails] =
