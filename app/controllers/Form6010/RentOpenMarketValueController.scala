@@ -16,10 +16,12 @@
 
 package controllers.Form6010
 
-import config.AppConfig
+import controllers.LoginController.loginForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.Form6010.rentOpenMarketValue
+import form.RentOpenMarketValueForm.rentOpenMarketValuesForm
+import views.html.login
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
@@ -27,12 +29,18 @@ import scala.concurrent.Future
 @Singleton
 class RentOpenMarketValueController @Inject()(
   mcc: MessagesControllerComponents,
-  appConfig: AppConfig,
-  rentOpenMarketValue: rentOpenMarketValue)
+  login: login,
+  rentOpenMarketValueView: rentOpenMarketValue)
   extends FrontendController(mcc) {
 
   def show: Action[AnyContent] = Action.async { implicit request =>
-    Future.successful(Ok(rentOpenMarketValue()))
+    Future.successful(Ok(rentOpenMarketValueView(rentOpenMarketValuesForm)))
   }
 
+  def submit = Action.async { implicit request =>
+    rentOpenMarketValuesForm.bindFromRequest.fold(
+      formWithErrors => Future.successful(BadRequest(rentOpenMarketValueView(formWithErrors))),
+      data => Future.successful(Ok(login(loginForm)))
+    )
+  }
 }

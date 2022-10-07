@@ -65,6 +65,7 @@ GET         /letting-other-part-of-property                         controllers.
 POST        /letting-other-part-of-property                         controllers.Form6010.LettingOtherPartOfPropertyController.submit()
 
 GET         /rent-open-market-value                                 controllers.Form6010.RentOpenMarketValueController.show()
+POST        /rent-open-market-value                                 controllers.Form6010.RentOpenMarketValueController.submit()
 
 GET         /current-annual-rent                                    controllers.Form6010.CurrentAnnualRentController.show()
 
