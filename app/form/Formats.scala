@@ -72,7 +72,7 @@ object Formats {
   implicit val rentIncreasedAnnuallyWithRPIsFormat: Formatter[RentIncreasedAnnuallyWithRPIs] = namedEnumFormatter(RentIncreasedAnnuallyWithRPI, Errors.booleanMissing)
   implicit val rentPayableVaryAccordingToGrossOrNetsFormat: Formatter[RentPayableVaryAccordingToGrossOrNets] = namedEnumFormatter(RentPayableVaryAccordingToGrossOrNet, Errors.booleanMissing)
   implicit val rentPayableVaryOnQuantityOfBeersFormat: Formatter[RentPayableVaryOnQuantityOfBeers] = namedEnumFormatter(RentPayableVaryOnQuantityOfBeer, Errors.booleanMissing)
-  implicit val rentIncludeTradeServicesFormat: Formatter[RentIncludeTradeServices] = namedEnumFormatter(RentIncludeTradeService, Errors.booleanMissing)
+  implicit val rentIncludeTradeServicesFormat: Formatter[RentIncludeTradesServices] = namedEnumFormatter(RentIncludeTradesService, Errors.booleanMissing)
   implicit val rentIncludeFixturesAndFittingsFormat: Formatter[RentIncludeFixturesAndFittings] = namedEnumFormatter(RentIncludeFixturesAndFitting, Errors.booleanMissing)
   implicit val rentOpenMarketValuesFormat: Formatter[RentOpenMarketValues] = namedEnumFormatter(RentOpenMarketValue, Errors.booleanMissing)
   implicit val areYouStillConnectedNoFormat: Formatter[AreYouStillConnectedNo] = namedEnumFormatter(NotStillConnected, Errors.booleanMissing)

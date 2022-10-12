@@ -16,4 +16,18 @@
 
 package models.submissions
 
-case class RentIncludeTradeServicesDetails(rentIncludeTradeServices: RentIncludeTradeServices)
+import models.{NamedEnum, NamedEnumSupport}
+
+sealed trait RentIncludeTradesServices extends NamedEnum{
+  val key = "rentIncludeTradeServices"
+}
+object RentIncludeTradesServicesYes extends RentIncludeTradesServices {
+  val name = "yes"
+}
+object RentIncludeTradesServicesNo extends RentIncludeTradesServices {
+  val name = "no"
+}
+
+object RentIncludeTradesService extends NamedEnumSupport[RentIncludeTradesServices] {
+  val all = List(RentIncludeTradesServicesYes,RentIncludeTradesServicesNo)
+}
