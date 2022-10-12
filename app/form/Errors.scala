@@ -48,6 +48,7 @@ object Errors {
   val currentOccupierName = "error.currentOccupierName.required"
   val currentPropertyUse = "error.currentPropertyUse.required"
 
+  val test = "error.currentPropertyUse.required"
   //generic errors
   val required = "error.required"
   val booleanMissing = "error.boolean_missing"

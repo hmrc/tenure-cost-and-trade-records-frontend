@@ -48,6 +48,7 @@ GET         /licensable-activities                                  controllers.
 POST        /licensable-activities                                  controllers.Form6010.LicensableActivitiesController.submit()
 
 GET         /licensable-activities-details                          controllers.Form6010.LicensableActivitiesDetailsController.show()
+POST        /licensable-activities-details                          controllers.Form6010.LicensableActivitiesDetailsController.submit()
 
 GET         /premises-license                                       controllers.Form6010.PremisesLicenseController.show()
 POST        /premises-license                                       controllers.Form6010.PremisesLicenseController.submit()
