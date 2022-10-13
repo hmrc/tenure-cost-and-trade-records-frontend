@@ -52,14 +52,7 @@ object MappingSupport {
   val methodToFixCurrentRentsType: Mapping[MethodToFixCurrentRents] = Forms.of[MethodToFixCurrentRents]
   val tiedForGoodsDetailsType: Mapping[TiedForGoodsInformationDetail] = Forms.of[TiedForGoodsInformationDetail]
   val postcode: Mapping[String] = PostcodeMapping.postcode()
-
-  val textBoxMapping: Mapping[LicensableActivitiesInformationDetails] =
-    mapping(
-      "licensableActivitiesDetails"-> default(text, "").verifying(
-        nonEmpty(errorMessage = Errors.test),
-        maxLength(50, "contactDetails.email1.email.tooLong")
-    ))(LicensableActivitiesInformationDetails.apply)(LicensableActivitiesInformationDetails.unapply)
-
+  
   val contactDetailsMapping: Mapping[ContactDetails] =
     mapping(
       "phone" -> default(text, "").verifying(
