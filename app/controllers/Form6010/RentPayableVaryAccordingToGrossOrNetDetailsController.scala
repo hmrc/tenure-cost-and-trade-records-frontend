@@ -16,10 +16,12 @@
 
 package controllers.Form6010
 
-import config.AppConfig
+import controllers.LoginController.loginForm
+import form.RentPayableVaryAccordingToGrossOrNetDetailsForm.rentPayableVaryAccordingToGrossOrNetInformationForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.Form6010.rentPayableVaryAccordingToGrossOrNetDetails
+import views.html.login
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
@@ -27,12 +29,19 @@ import scala.concurrent.Future
 @Singleton
 class RentPayableVaryAccordingToGrossOrNetDetailsController @Inject()(
   mcc: MessagesControllerComponents,
-  appConfig: AppConfig,
-  rentPayableVaryAccordingToGrossOrNetDetails: rentPayableVaryAccordingToGrossOrNetDetails)
+  login: login,
+  rentPayableVaryAccordingToGrossOrNetDetailsView: rentPayableVaryAccordingToGrossOrNetDetails)
   extends FrontendController(mcc) {
 
   def show: Action[AnyContent] = Action.async { implicit request =>
-    Future.successful(Ok(rentPayableVaryAccordingToGrossOrNetDetails()))
+    Future.successful(Ok(rentPayableVaryAccordingToGrossOrNetDetailsView(rentPayableVaryAccordingToGrossOrNetInformationForm)))
+  }
+
+  def submit = Action.async { implicit request =>
+    rentPayableVaryAccordingToGrossOrNetInformationForm.bindFromRequest().fold(
+      formWithErrors => Future.successful(BadRequest(rentPayableVaryAccordingToGrossOrNetDetailsView(formWithErrors))),
+      data => Future.successful(Ok(login(loginForm)))
+    )
   }
 
 }

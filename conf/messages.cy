@@ -277,6 +277,8 @@ label.rentPayableVaryAccordingToGrossOrNet = Does the rent payable vary accordin
 ##############################
 rentPayableVaryAccordingToGrossOrNetDetails.header = How your turnover affects the rent
 label.rentPayableVaryAccordingToGrossOrNetDetails = Please tell us how the rent payable is affected by your turnover
+error.rentPayableVaryAccordingToGrossOrNetDetails.required = Tell us how the rent payable is affected by your turnover
+error.rentPayableVaryAccordingToGrossOrNetDetails.maxLength  = This must be 1000 characters or fewer
 
 #ENFORCEMENT ACTION BEEN TAKEN
 ##############################
