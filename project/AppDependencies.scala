@@ -4,7 +4,7 @@ import sbt._
 object AppDependencies {
 
   val bootstrapVersion = "7.7.0"
-  val playFrontendVersion = "3.29.0-play-28"
+  val playFrontendVersion = "3.32.0-play-28"
 
   // Test dependencies
   val scalatestPlusPlayVersion = "5.1.0"
@@ -16,6 +16,10 @@ object AppDependencies {
     "uk.gov.hmrc"             %% "bootstrap-frontend-play-28" % bootstrapVersion,
     "uk.gov.hmrc"             %% "play-frontend-hmrc"         % playFrontendVersion,
     "com.typesafe.play"       %% "play-joda-forms"            % PlayVersion.current,
+    "uk.gov.hmrc.mongo"       %% "hmrc-mongo-play-28" % "0.73.0",
+    "com.typesafe.play" %% "play-json-joda" % "2.9.3",
+    "com.typesafe.play" %% "play-joda-forms" % PlayVersion.current,
+
     // temp
     "com.softwaremill.sttp.client3" %% "core" % "3.7.5"
   )

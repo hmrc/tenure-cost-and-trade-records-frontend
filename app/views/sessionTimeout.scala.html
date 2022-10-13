@@ -14,22 +14,11 @@
  * limitations under the License.
  *@
 
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.button.Button
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
+@this()
 
-@this(layout: Layout,
-        govukButton: GovukButton
-)
+@()(implicit request: Request[_],  messages: Messages)
 
-@()(implicit request: Request[_], messages: Messages)
 
-@layout(
-    pageHeading = messages("test.heading"),
-    backLinkUrl = Some(routes.LoginController.show.url)
-) {
-    <p class="govuk-body">@{
-        messages("test.text")
-    }</p>
-}
+<p class="govuk-body">@messages("sessionTimeout.copy")</p>
 
+<p class="govuk-body"><a class="govuk-link" href="@routes.LoginController.show().url">@messages("sessionTimeout.button")</a></p>

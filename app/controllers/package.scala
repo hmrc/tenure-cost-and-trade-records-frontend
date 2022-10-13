@@ -1,4 +1,4 @@
-@*
+/*
  * Copyright 2022 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,24 +12,12 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *@
+ */
 
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.button.Button
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
+import scala.concurrent.Future
 
-@this(layout: Layout,
-        govukButton: GovukButton
-)
+package object controllers {
+  implicit def toOpt[A](a: A): Option[A] = Some(a)
 
-@()(implicit request: Request[_], messages: Messages)
-
-@layout(
-    pageHeading = messages("test.heading"),
-    backLinkUrl = Some(routes.LoginController.show.url)
-) {
-    <p class="govuk-body">@{
-        messages("test.text")
-    }</p>
+  implicit def toFut[A](a: A): Future[A] = Future.successful(a)
 }
-

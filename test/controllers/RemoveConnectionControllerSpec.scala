@@ -16,7 +16,7 @@
 
 package controllers
 
-import controllers.Form6010.AreYouStillConnectedController
+import controllers.Form6010.RemoveConnectionController
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
@@ -37,7 +37,7 @@ class RemoveConnectionControllerSpec extends AnyWordSpec with Matchers with Guic
 
   private val fakeRequest = FakeRequest("GET", "/")
 
-  private val controller = app.injector.instanceOf[AreYouStillConnectedController]
+  private val controller = app.injector.instanceOf[RemoveConnectionController]
 
   "GET /" should {
     "return 200" in {

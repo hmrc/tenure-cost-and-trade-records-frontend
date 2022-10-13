@@ -14,22 +14,13 @@
  * limitations under the License.
  *@
 
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.button.Button
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
+@import play.api.Configuration
+@import views.html.includes.javascripts
 
-@this(layout: Layout,
-        govukButton: GovukButton
-)
+@this(configuration: Configuration, javascripts: javascripts)
 
-@()(implicit request: Request[_], messages: Messages)
+@()
 
-@layout(
-    pageHeading = messages("test.heading"),
-    backLinkUrl = Some(routes.LoginController.show.url)
-) {
-    <p class="govuk-body">@{
-        messages("test.text")
-    }</p>
-}
+<script src="https://cdn.optimizely.com/js/@{configuration.getOptional[String]("optimizely.projectId").getOrElse("")}.js"></script>
 
+@javascripts()

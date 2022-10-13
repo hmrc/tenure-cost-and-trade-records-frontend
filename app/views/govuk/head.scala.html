@@ -14,22 +14,20 @@
  * limitations under the License.
  *@
 
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.button.Button
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
+@import play.api.Environment
+@import uk.gov.hmrc.hmrcfrontend.views.html.helpers.HmrcTimeoutDialogHelper
 
-@this(layout: Layout,
-        govukButton: GovukButton
+@this(
+        environment: Environment,
+        hmrcTimeoutDialogHelper: HmrcTimeoutDialogHelper
 )
 
-@()(implicit request: Request[_], messages: Messages)
+@(enableTimeoutDialog: Boolean)(implicit request: RequestHeader, messages: Messages)
 
-@layout(
-    pageHeading = messages("test.heading"),
-    backLinkUrl = Some(routes.LoginController.show.url)
-) {
-    <p class="govuk-body">@{
-        messages("test.text")
-    }</p>
+<link href='@routes.Assets.versioned("stylesheets/application2.min.css")' media="all" rel="stylesheet" type="text/css" />
+
+@if(enableTimeoutDialog) {
+    @hmrcTimeoutDialogHelper(
+        signOutUrl = routes.LoginController.show.url
+    )
 }
-

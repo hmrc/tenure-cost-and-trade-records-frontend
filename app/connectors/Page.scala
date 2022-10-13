@@ -1,4 +1,4 @@
-@*
+/*
  * Copyright 2022 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,24 +12,14 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *@
+ */
 
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.button.Button
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
+package connectors
 
-@this(layout: Layout,
-        govukButton: GovukButton
-)
+import play.api.libs.json._
 
-@()(implicit request: Request[_], messages: Messages)
+case class Page(pageNumber: Int, fields: Map[String, Seq[String]])
 
-@layout(
-    pageHeading = messages("test.heading"),
-    backLinkUrl = Some(routes.LoginController.show.url)
-) {
-    <p class="govuk-body">@{
-        messages("test.text")
-    }</p>
+object Page {
+  implicit val formats = Json.format[Page]
 }
-
