@@ -23,6 +23,7 @@ import form.Formats.userTypeFormat
 import play.api.data.Forms.{boolean, default, email, mapping, optional, text}
 import play.api.data.validation.Constraints.{maxLength, minLength, nonEmpty, pattern}
 import play.api.data.{Forms, Mapping}
+import views.html.Form6010.licensableActivitiesDetails
 
 
 object MappingSupport {
@@ -51,7 +52,7 @@ object MappingSupport {
   val methodToFixCurrentRentsType: Mapping[MethodToFixCurrentRents] = Forms.of[MethodToFixCurrentRents]
   val tiedForGoodsDetailsType: Mapping[TiedForGoodsInformationDetail] = Forms.of[TiedForGoodsInformationDetail]
   val postcode: Mapping[String] = PostcodeMapping.postcode()
-
+  
   val contactDetailsMapping: Mapping[ContactDetails] =
     mapping(
       "phone" -> default(text, "").verifying(
