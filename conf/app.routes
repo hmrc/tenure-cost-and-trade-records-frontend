@@ -37,6 +37,7 @@ GET         /about-you                                              controllers.
 POST        /about-you                                              controllers.Form6010.AboutYouController.submit()
 
 GET         /website-address-for-property                           controllers.Form6010.WebsiteAddressForPropertyController.show()
+POST        /website-address-for-property                           controllers.Form6010.WebsiteAddressForPropertyController.submit()
 
 GET         /franchise-or-lettings-tied-to-property                 controllers.Form6010.FranchiseOrLettingsTiedToPropertyController.show()
 POST        /franchise-or-lettings-tied-to-property                 controllers.Form6010.FranchiseOrLettingsTiedToPropertyController.submit()

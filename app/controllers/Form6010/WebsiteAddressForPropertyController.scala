@@ -16,10 +16,12 @@
 
 package controllers.Form6010
 
-import config.AppConfig
+import controllers.LoginController.loginForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.Form6010.websiteAddressForProperty
+import form.WebsiteAddressForPropertyForm.websiteAddressForPropertyForm
+import views.html.login
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
@@ -27,12 +29,19 @@ import scala.concurrent.Future
 @Singleton
 class WebsiteAddressForPropertyController @Inject()(
   mcc: MessagesControllerComponents,
-  appConfig: AppConfig,
-  websiteAddressForProperty: websiteAddressForProperty)
+  login: login,
+  websiteAddressForPropertyView: websiteAddressForProperty)
   extends FrontendController(mcc) {
 
   def show: Action[AnyContent] = Action.async { implicit request =>
-    Future.successful(Ok(websiteAddressForProperty()))
+    Future.successful(Ok(websiteAddressForPropertyView(websiteAddressForPropertyForm)))
+  }
+
+  def submit = Action.async { implicit request =>
+    websiteAddressForPropertyForm.bindFromRequest().fold(
+      formWithErrors => Future.successful(BadRequest(websiteAddressForPropertyView(formWithErrors))),
+      data => Future.successful(Ok(login(loginForm)))
+    )
   }
 
 }
