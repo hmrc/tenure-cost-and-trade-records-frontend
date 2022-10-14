@@ -16,10 +16,12 @@
 
 package controllers.Form6010
 
-import config.AppConfig
+import controllers.LoginController.loginForm
+import form.RentPayableVaryOnQuantityOfBeersDetailsForm.rentPayableVaryOnQuantityOfBeersForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.Form6010.rentPayableVaryOnQuantityOfBeersDetails
+import views.html.login
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
@@ -27,12 +29,19 @@ import scala.concurrent.Future
 @Singleton
 class RentPayableVaryOnQuantityOfBeersDetailsController @Inject()(
   mcc: MessagesControllerComponents,
-  appConfig: AppConfig,
-  rentPayableVaryOnQuantityOfBeersDetails: rentPayableVaryOnQuantityOfBeersDetails)
+  login: login,
+  rentPayableVaryOnQuantityOfBeersDetailsView: rentPayableVaryOnQuantityOfBeersDetails)
   extends FrontendController(mcc) {
 
   def show: Action[AnyContent] = Action.async { implicit request =>
-    Future.successful(Ok(rentPayableVaryOnQuantityOfBeersDetails()))
+    Future.successful(Ok(rentPayableVaryOnQuantityOfBeersDetailsView(rentPayableVaryOnQuantityOfBeersForm)))
+  }
+
+  def submit = Action.async { implicit request =>
+    rentPayableVaryOnQuantityOfBeersForm.bindFromRequest().fold(
+      formWithErrors => Future.successful(BadRequest(rentPayableVaryOnQuantityOfBeersDetailsView(formWithErrors))),
+      data => Future.successful(Ok(login(loginForm)))
+    )
   }
 
 }

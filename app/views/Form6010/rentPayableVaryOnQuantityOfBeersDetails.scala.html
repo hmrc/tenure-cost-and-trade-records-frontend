@@ -15,9 +15,7 @@
  *@
 
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.button.Button
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.textarea.Textarea
 
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
@@ -27,10 +25,12 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukCharacterCount
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
 
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
+
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Label
 @import uk.gov.hmrc.govukfrontend.views.Aliases.CharacterCount
 
-
+@import models.submissions.RentPayableVaryOnQuantityOfBeersInformationDetails
 
 
 @this(layout: Layout,
@@ -44,34 +44,33 @@
         formWithCSRF: FormWithCSRF
 )
 
-@()(implicit request: Request[_], messages: Messages)
+
+@(theForm: Form[RentPayableVaryOnQuantityOfBeersInformationDetails])(implicit request: Request[_], messages: Messages)
 
 @layout(
  pageHeading = messages("rentPayableVaryOnQuantityOfBeersDetails.header"),
-
+ theForm = theForm
 ) {
 
- @govukCharacterCount(
-  CharacterCount(
-   id = "rentPayableVaryOnQuantityOfBeersDetails",
-   name = "rentPayableVaryOnQuantityOfBeersDetails",
-   rows = 5,
-   maxLength = Some(1000),
-   label = Label(
-    content = Text(messages("label.rentPayableVaryOnQuantityOfBeersDetails")),
-    classes = "govuk-!-font-weight-bold"
+ @formWithCSRF(action = controllers.Form6010.routes.RentPayableVaryOnQuantityOfBeersDetailsController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
 
+  @govukCharacterCount(
+   CharacterCount(
+    id = "rentPayableVaryOnQuantityOfBeersDetails",
+    name = "rentPayableVaryOnQuantityOfBeersDetails",
+    rows = 5,
+    maxLength = 1000,
+    label = Label(
+     content = Text(messages("label.rentPayableVaryOnQuantityOfBeersDetails")),
+     classes = "govuk-!-font-weight-bold"
+    ),
+    errorMessage = theForm.errors.asTextErrorMessageForField("rentPayableVaryOnQuantityOfBeersDetails")
    )
   )
- )
 
- @govukButton(
-  Button(
-   content = Text(messages("button.label.continue")),
-   href = Some(routes.LoginController.show().url)
-  )
- )
-
+  @includes.continueButton(govukButton)
+ }
 }
+
 
 

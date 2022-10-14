@@ -273,6 +273,8 @@ label.rentPayableVaryOnQuantityOfBeers = Does the rent payable vary according to
 ##############################
 rentPayableVaryOnQuantityOfBeersDetails.header = How your turnover affects the rent
 label.rentPayableVaryOnQuantityOfBeersDetails = Please tell us how the rent payable is affected by the drinks supplied to your property
+error.rentPayableVaryOnQuantityOfBeersDetails.required = Tell us how the rent payable is affected by the drinks supplied to your property
+error.rentPayableVaryOnQuantityOfBeersDetails.maxLength  = This must be 1000 characters or fewer
 
 #RENT PAYABLE VARY ACCORDING TO GROSS OR NET
 ##############################

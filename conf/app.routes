@@ -81,6 +81,7 @@ GET         /rent-payable-vary-on-quantity-of-beers                 controllers.
 POST        /rent-payable-vary-on-quantity-of-beers                 controllers.Form6010.RentPayableVaryOnQuantityOfBeersController.submit()
 
 GET         /rent-payable-vary-on-quantity-of-beers-details         controllers.Form6010.RentPayableVaryOnQuantityOfBeersDetailsController.show()
+POST        /rent-payable-vary-on-quantity-of-beers-details         controllers.Form6010.RentPayableVaryOnQuantityOfBeersDetailsController.submit()
 
 GET         /rent-payable-vary-according-to-gross-or-net            controllers.Form6010.RentPayableVaryAccordingToGrossOrNetController.show()
 POST        /rent-payable-vary-according-to-gross-or-net            controllers.Form6010.RentPayableVaryAccordingToGrossOrNetController.submit()
