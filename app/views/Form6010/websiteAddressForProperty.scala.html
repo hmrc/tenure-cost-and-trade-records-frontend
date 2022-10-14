@@ -18,6 +18,8 @@
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.button.Button
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
+
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukErrorSummary
@@ -25,16 +27,11 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukTextarea
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukCharacterCount
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Radios
-
 
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Label
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Hint
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Input
-@import akka.protobufv3.internal.DescriptorProtos.EnumOptions
-@import uk.gov.hmrc.govukfrontend.views.Aliases.RadioItem
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Fieldset
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Legend
+
+@import models.submissions.WebsiteAddressForPropertyDetails
 
 
 @this(layout: Layout,
@@ -49,33 +46,31 @@
 )
 
 
-@()(implicit request: Request[_], messages: Messages)
+@(theForm: Form[WebsiteAddressForPropertyDetails])(implicit request: Request[_], messages: Messages)
 
 @layout(
  pageHeading = messages("websiteAddressForProperty.header"),
-
+ theForm = theForm
 ) {
 
- @govukInput(
-  Input(
-   id = "webAddress",
-   name = "webAddress",
-   classes = "govuk-input--width-20",
-   label = Label(
-    content = Text(messages("websiteAddressForProperty.label") ),
-    classes = "govuk-!-font-weight-bold"
+ @formWithCSRF(action = controllers.Form6010.routes.WebsiteAddressForPropertyController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
+
+  @govukInput(
+   Input(
+    id = "websiteAddressForProperty",
+    name = "websiteAddressForProperty",
+    classes = "govuk-input--width-20",
+    label = Label(
+     content = Text(messages("websiteAddressForProperty.label")),
+     classes = "govuk-!-font-weight-bold"
+    ),
+    errorMessage = theForm.errors.asTextErrorMessageForField("websiteAddressForProperty")
    )
   )
- )
 
+  @includes.continueButton(govukButton)
 
- @govukButton(
-  Button(
-   content = Text(messages("button.label.continue")),
-   href = Some(routes.LoginController.show().url)
-  )
- )
-
+ }
 }
 
 
