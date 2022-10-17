@@ -103,6 +103,7 @@ POST        /rent-include-fixtures-and-fittings                     controllers.
 GET         /rent-include-fixtures-and-fittings-details             controllers.Form6010.RentIncludeFixtureAndFittingsDetailsController.show()
 
 GET         /incentives-payments-conditions                         controllers.Form6010.IncentivesPaymentsConditionsController.show()
+POST        /incentives-payments-conditions                         controllers.Form6010.IncentivesPaymentsConditionsController.submit()
 
 GET         /rent-increase-annually-with-rpi                        controllers.Form6010.RentIncreaseAnnuallyWithRPIController.show()
 POST        /rent-increase-annually-with-rpi                        controllers.Form6010.RentIncreaseAnnuallyWithRPIController.submit()

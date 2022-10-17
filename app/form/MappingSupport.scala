@@ -50,6 +50,12 @@ object MappingSupport {
   val rentOpenMarketValuesType: Mapping[RentOpenMarketValues] = Forms.of[RentOpenMarketValues]
   val areYouStillConnectedNoType: Mapping[AreYouStillConnectedNo] = Forms.of[AreYouStillConnectedNo]
   val methodToFixCurrentRentsType: Mapping[MethodToFixCurrentRents] = Forms.of[MethodToFixCurrentRents]
+
+  val formerLeaseSurrenderedType: Mapping[FormerLeaseSurrendered] = Forms.of[FormerLeaseSurrendered]
+  val rentReducedOnReviewsType: Mapping[RentReducedOnReviews] = Forms.of[RentReducedOnReviews]
+  val capitalSumOrPremiumType: Mapping[CapitalSumOrPremiums] = Forms.of[CapitalSumOrPremiums]
+  val receivePaymentWhenLeaseGrantedType: Mapping[ReceivePaymentWhenLeaseGrants] = Forms.of[ReceivePaymentWhenLeaseGrants]
+
   val tiedForGoodsDetailsType: Mapping[TiedForGoodsInformationDetail] = Forms.of[TiedForGoodsInformationDetail]
   val postcode: Mapping[String] = PostcodeMapping.postcode()
 
