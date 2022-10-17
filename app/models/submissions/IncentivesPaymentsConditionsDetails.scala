@@ -16,4 +16,4 @@
 
 package models.submissions
 
-case class IncentivesPaymentsConditionsDetails(formerLeaseSurrendered:Boolean, rentReducedOnReview: Boolean, capitalSumOrPremium: Boolean, receivePaymentWhenLeaseGranted: Boolean)
+case class IncentivesPaymentsConditionsDetails(formerLeaseSurrendered: FormerLeaseSurrendered, rentReducedOnReview: RentReducedOnReviews, capitalSumOrPremium: CapitalSumOrPremiums, receivePaymentWhenLeaseGranted: ReceivePaymentWhenLeaseGrants)

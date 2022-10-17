@@ -24,9 +24,9 @@ import play.api.data.Forms.mapping
 object IncentivesPaymentsConditionsForm {
 
   val incentivesPaymentsConditionsForm = Form(mapping(
-    "formerLeaseSurrendered" -> mandatoryBooleanWithError(Errors.formerLeaseAgreementSurrendered),
-    "rentReducedOnReview" -> mandatoryBooleanWithError(Errors.rentReducedOnReview),
-    "capitalSumOrPremium" -> mandatoryBooleanWithError(Errors.capitalSumOrPremium),
-    "receivePaymentWhenLeaseGranted" -> mandatoryBooleanWithError(Errors.receivePaymentWhenLeaseGranted)
+    "formerLeaseSurrendered" -> formerLeaseSurrenderedType,
+    "rentReducedOnReview" -> rentReducedOnReviewsType,
+    "capitalSumOrPremium" -> capitalSumOrPremiumType,
+    "receivePaymentWhenLeaseGranted" -> receivePaymentWhenLeaseGrantedType
   )(IncentivesPaymentsConditionsDetails.apply)(IncentivesPaymentsConditionsDetails.unapply))
 }
