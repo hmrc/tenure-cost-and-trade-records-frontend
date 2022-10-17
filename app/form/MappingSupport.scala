@@ -56,6 +56,10 @@ object MappingSupport {
   val capitalSumOrPremiumType: Mapping[CapitalSumOrPremiums] = Forms.of[CapitalSumOrPremiums]
   val receivePaymentWhenLeaseGrantedType: Mapping[ReceivePaymentWhenLeaseGrants] = Forms.of[ReceivePaymentWhenLeaseGrants]
 
+  val vatType: Mapping[VATs] = Forms.of[VATs]
+  val nondomesticRatesType: Mapping[NonDomesticRates] = Forms.of[NonDomesticRates]
+  val waterChargesType: Mapping[WaterCharges] = Forms.of[WaterCharges]
+
   val tiedForGoodsDetailsType: Mapping[TiedForGoodsInformationDetail] = Forms.of[TiedForGoodsInformationDetail]
   val postcode: Mapping[String] = PostcodeMapping.postcode()
 

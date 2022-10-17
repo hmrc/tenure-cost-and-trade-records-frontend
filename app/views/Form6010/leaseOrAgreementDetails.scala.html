@@ -15,7 +15,6 @@
  *@
 
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.button.Button
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
@@ -27,15 +26,13 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Radios
 
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
 
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Label
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Hint
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Input
-@import akka.protobufv3.internal.DescriptorProtos.EnumOptions
 @import uk.gov.hmrc.govukfrontend.views.Aliases.RadioItem
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Fieldset
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Legend
 
+@import models.submissions.LeaseOrAgreementDetails
 
 @this(layout: Layout,
         govukButton: GovukButton,
@@ -49,30 +46,36 @@
 )
 
 
-@()(implicit request: Request[_], messages: Messages)
+@(theForm: Form[LeaseOrAgreementDetails])(implicit request: Request[_], messages: Messages)
 
 @layout(
- pageHeading = messages("franchiseLettings.header"),
-
+ pageHeading = messages("includedInYourRent.header"),
+ theForm = theForm
 ) {
- @govukRadios(
+
+ @formWithCSRF(action = controllers.Form6010.routes.LeaseOrAgreementDetailsController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
+
+  <p class="govuk-body">@messages("includedInYourRent.subheading")</p>
+
+  @govukRadios(
   Radios(
-   name = "leaseOrAgreement",
-   classes = "radio-button-that-show-hides",
-   idPrefix = Option("leaseOrAgreement"),
+   name = "vat",
+   idPrefix = Option("vat"),
    items = Seq(
     "yes" -> messages("label.yes"),
     "no" -> messages("label.no")
-   ).map( radioItem => RadioItem (
+   ).map(radioItem => RadioItem(
     content = Text(radioItem._2),
-    value=Option(radioItem._1)
+    checked = radioItem._1.equals(theForm("vat").value.getOrElse("")),
+    value = Option(radioItem._1)
    )
    ),
+   errorMessage =  theForm.errors.asTextErrorMessageForField("vat"),
    fieldset = Option(
     Fieldset(
      legend = Option(
       Legend(
-       content = Text(messages("leaseOrAgreement.option1")),
+       content = Text(messages("label.vat")),
        classes = "govuk-!-font-weight-bold"
       )
      )
@@ -83,22 +86,23 @@
 
  @govukRadios(
   Radios(
-   name = "leaseOrAgreement",
-   classes = "radio-button-that-show-hides",
-   idPrefix = Option("leaseOrAgreement"),
+   name = "nondomesticRates",
+   idPrefix = Option("nondomesticRates"),
    items = Seq(
     "yes" -> messages("label.yes"),
     "no" -> messages("label.no")
-   ).map( radioItem => RadioItem (
+   ).map(radioItem => RadioItem(
     content = Text(radioItem._2),
-    value=Option(radioItem._1)
+    checked = radioItem._1.equals(theForm("nondomesticRates").value.getOrElse("")),
+    value = Option(radioItem._1)
    )
    ),
+   errorMessage =  theForm.errors.asTextErrorMessageForField("nondomesticRates"),
    fieldset = Option(
     Fieldset(
      legend = Option(
       Legend(
-       content = Text(messages("leaseOrAgreement.option2")),
+       content = Text(messages("label.nondomesticRates")),
        classes = "govuk-!-font-weight-bold"
       )
      )
@@ -109,22 +113,23 @@
 
  @govukRadios(
   Radios(
-   name = "leaseOrAgreement",
-   classes = "radio-button-that-show-hides",
-   idPrefix = Option("leaseOrAgreement"),
+   name = "waterCharges",
+   idPrefix = Option("waterCharges"),
    items = Seq(
     "yes" -> messages("label.yes"),
     "no" -> messages("label.no")
-   ).map( radioItem => RadioItem (
+   ).map(radioItem => RadioItem(
     content = Text(radioItem._2),
-    value=Option(radioItem._1)
+    checked = radioItem._1.equals(theForm("waterCharges").value.getOrElse("")),
+    value = Option(radioItem._1)
    )
    ),
+   errorMessage =  theForm.errors.asTextErrorMessageForField("waterCharges"),
    fieldset = Option(
     Fieldset(
      legend = Option(
       Legend(
-       content = Text(messages("leaseOrAgreement.option3")),
+       content = Text(messages("label.waterCharges")),
        classes = "govuk-!-font-weight-bold"
       )
      )
@@ -133,13 +138,8 @@
   )
  )
 
- @govukButton(
-  Button(
-   content = Text(messages("button.label.continue")),
-   href = Some(routes.LoginController.show().url)
-  )
- )
-
+ @includes.continueButton(govukButton)
+}
 }
 
 
