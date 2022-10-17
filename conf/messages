@@ -189,10 +189,10 @@ leaseOrAgreement.option3 = Is the rent currently under review, or is a new lease
 #INCLUDED IN YOUR RENT
 ##############################
 includedInYourRent.header = Lease or agreement details
-includedInYourRent.subheader = Are any of the following included in your rent?
-leaseOrAgreement.option1 = VAT
-leaseOrAgreement.option2 = Non-domestic rates
-leaseOrAgreement.option3 = Water charges
+includedInYourRent.subheading = Are any of the following included in your rent?
+label.vat = VAT
+label.nondomesticRates = Non-domestic rates
+label.waterCharges = Water charges
 
 #LICENSABLE ACTIVITIES
 ##############################

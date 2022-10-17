@@ -45,6 +45,7 @@ POST        /franchise-or-lettings-tied-to-property                 controllers.
 GET         /about-your-landlord                                    controllers.Form6010.AboutYourLandlordController.show()
 
 GET         /lease-or-agreement-details                             controllers.Form6010.LeaseOrAgreementDetailsController.show()
+POST        /lease-or-agreement-details                             controllers.Form6010.LeaseOrAgreementDetailsController.submit()
 
 GET         /included-in-your-rent                                  controllers.Form6010.IncludedInYourRentController.show()
 
