@@ -49,6 +49,13 @@ object Errors {
   val currentPropertyUse = "error.currentPropertyUse.required"
 
   val test = "error.currentPropertyUse.required"
+
+  //Incentives, Payments and Conditions
+  val formerLeaseAgreementSurrendered = "error.formerLeaseAgreementSurrendered.required"
+  val rentReducedOnReview = "error.rentReducedOnReview.required"
+  val capitalSumOrPremium = "error.capitalSumOrPremium.required"
+  val receivePaymentWhenLeaseGranted = "error.receivePaymentWhenLeaseGranted.required"
+
   //generic errors
   val required = "error.required"
   val booleanMissing = "error.boolean_missing"
