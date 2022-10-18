@@ -27,21 +27,23 @@ import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class LicensableActivitiesController @Inject()(
+class LicensableActivitiesController @Inject() (
   mcc: MessagesControllerComponents,
   login: login,
-  licensableActivitiesView: licensableActivities)
-  extends FrontendController(mcc) {
+  licensableActivitiesView: licensableActivities
+) extends FrontendController(mcc) {
 
   def show: Action[AnyContent] = Action.async { implicit request =>
     Future.successful(Ok(licensableActivitiesView(licensableActivitiesForm)))
   }
 
   def submit = Action.async { implicit request =>
-    licensableActivitiesForm.bindFromRequest().fold(
-      formWithErrors => Future.successful(BadRequest(licensableActivitiesView(formWithErrors))),
-      data => Future.successful(Ok(login(loginForm)))
-    )
+    licensableActivitiesForm
+      .bindFromRequest()
+      .fold(
+        formWithErrors => Future.successful(BadRequest(licensableActivitiesView(formWithErrors))),
+        data => Future.successful(Ok(login(loginForm)))
+      )
   }
 
 }

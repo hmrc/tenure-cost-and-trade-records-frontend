@@ -22,8 +22,13 @@ import play.api.data.{FormError, Mapping}
 // TODO: Remove package uk.gov.voa.play.form if library uk.gov.hmrc:play-conditional-form-mapping_2.13 for Scala 2.13 released
 // https://artefacts.tax.service.gov.uk/ui/packages?name=%2Aplay-conditional-form-mapping%2A&type=packages
 
-case class ConditionalMapping[T](condition: Condition, wrapped: Mapping[T], defaultValue: T,
-  constraints: Seq[Constraint[T]] = Nil, keys: Set[String] = Set()) extends Mapping[T] {
+case class ConditionalMapping[T](
+  condition: Condition,
+  wrapped: Mapping[T],
+  defaultValue: T,
+  constraints: Seq[Constraint[T]] = Nil,
+  keys: Set[String] = Set()
+) extends Mapping[T] {
 
   override val format: Option[(String, Seq[Any])] = wrapped.format
 

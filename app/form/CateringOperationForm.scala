@@ -21,10 +21,11 @@ import models.submissions.CateringOperationDetails
 import play.api.data.Form
 import play.api.data.Forms.mapping
 
-
 object CateringOperationForm {
 
-  val cateringOperationForm = Form(mapping(
-    "cateringOperationOrLettingAccommodation" -> cateringOperationType
-  )(CateringOperationDetails.apply)(CateringOperationDetails.unapply))
+  val cateringOperationForm = Form(
+    mapping(
+      "cateringOperationOrLettingAccommodation" -> cateringOperationType
+    )(CateringOperationDetails.apply)(CateringOperationDetails.unapply)
+  )
 }

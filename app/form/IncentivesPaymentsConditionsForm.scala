@@ -23,10 +23,12 @@ import play.api.data.Forms.mapping
 
 object IncentivesPaymentsConditionsForm {
 
-  val incentivesPaymentsConditionsForm = Form(mapping(
-    "formerLeaseSurrendered" -> formerLeaseSurrenderedType,
-    "rentReducedOnReview" -> rentReducedOnReviewsType,
-    "capitalSumOrPremium" -> capitalSumOrPremiumType,
-    "receivePaymentWhenLeaseGranted" -> receivePaymentWhenLeaseGrantedType
-  )(IncentivesPaymentsConditionsDetails.apply)(IncentivesPaymentsConditionsDetails.unapply))
+  val incentivesPaymentsConditionsForm = Form(
+    mapping(
+      "formerLeaseSurrendered"         -> formerLeaseSurrenderedType,
+      "rentReducedOnReview"            -> rentReducedOnReviewsType,
+      "capitalSumOrPremium"            -> capitalSumOrPremiumType,
+      "receivePaymentWhenLeaseGranted" -> receivePaymentWhenLeaseGrantedType
+    )(IncentivesPaymentsConditionsDetails.apply)(IncentivesPaymentsConditionsDetails.unapply)
+  )
 }

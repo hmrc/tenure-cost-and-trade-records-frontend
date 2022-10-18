@@ -23,17 +23,20 @@ import play.api.mvc._
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
-class RefNumRequest[A](val refNum: String, request: Request[A], messagesApi: MessagesApi) extends MessagesRequest[A](request, messagesApi)
+class RefNumRequest[A](val refNum: String, request: Request[A], messagesApi: MessagesApi)
+    extends MessagesRequest[A](request, messagesApi)
 
-
-class RefNumAction @Inject() (bodyParser: BodyParsers.Default, messagesApi: MessagesApi)(implicit val executionContext: ExecutionContext)
-  extends ActionBuilder[RefNumRequest, AnyContent] with ActionRefiner[Request, RefNumRequest] with MessagesActionBuilder {
+class RefNumAction @Inject() (bodyParser: BodyParsers.Default, messagesApi: MessagesApi)(implicit
+  val executionContext: ExecutionContext
+) extends ActionBuilder[RefNumRequest, AnyContent]
+    with ActionRefiner[Request, RefNumRequest]
+    with MessagesActionBuilder {
 
   override def refine[A](request: Request[A]): Future[Either[Result, RefNumRequest[A]]] = Future.successful {
 
     request.session.get("refNum") match {
       case Some(refNum) => Right(new RefNumRequest(refNum, request, messagesApi))
-      case None => Left(Redirect(controllers.routes.LoginController.show()))
+      case None         => Left(Redirect(controllers.routes.LoginController.show()))
     }
   }
 

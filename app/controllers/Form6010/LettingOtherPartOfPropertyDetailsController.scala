@@ -24,14 +24,14 @@ import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class LettingOtherPartOfPropertyDetailsController @Inject()(
+class LettingOtherPartOfPropertyDetailsController @Inject() (
   mcc: MessagesControllerComponents,
   appConfig: AppConfig,
-  lettingOtherPartOfPropertyDetails: lettingOtherPartOfPropertyDetails)
-  extends FrontendController(mcc) {
+  lettingOtherPartOfPropertyDetails: lettingOtherPartOfPropertyDetails
+) extends FrontendController(mcc) {
 
   def show: Action[AnyContent] = Action.async { implicit request =>
     Future.successful(Ok(lettingOtherPartOfPropertyDetails()))
   }
 
-  }
+}

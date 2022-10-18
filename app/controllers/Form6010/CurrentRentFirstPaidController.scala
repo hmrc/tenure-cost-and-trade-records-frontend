@@ -24,11 +24,11 @@ import views.html.Form6010.currentRentFirstPaid
 import javax.inject.{Inject, Singleton}
 
 @Singleton
-class CurrentRentFirstPaidController @Inject()(
+class CurrentRentFirstPaidController @Inject() (
   mcc: MessagesControllerComponents,
   appConfig: AppConfig,
-  currentRentFirstPaid: currentRentFirstPaid)
-  extends FrontendController(mcc) {
+  currentRentFirstPaid: currentRentFirstPaid
+) extends FrontendController(mcc) {
 
   def show: Action[AnyContent] = Action { implicit request =>
     Ok(currentRentFirstPaid())

@@ -23,7 +23,9 @@ import play.api.data.Forms.{mapping, nonEmptyText}
 
 object LicensableActivitiesInformationForm {
 
-  val licensableActivitiesDetailsForm = Form(mapping(
-    "licensableActivitiesDetails" -> nonEmptyText(maxLength = 100)
-  )(LicensableActivitiesInformationDetails.apply)(LicensableActivitiesInformationDetails.unapply))
+  val licensableActivitiesDetailsForm = Form(
+    mapping(
+      "licensableActivitiesDetails" -> nonEmptyText(maxLength = 100)
+    )(LicensableActivitiesInformationDetails.apply)(LicensableActivitiesInformationDetails.unapply)
+  )
 }

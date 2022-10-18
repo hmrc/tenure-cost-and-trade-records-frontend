@@ -27,21 +27,23 @@ import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class RentPayableVaryOnQuantityOfBeersDetailsController @Inject()(
+class RentPayableVaryOnQuantityOfBeersDetailsController @Inject() (
   mcc: MessagesControllerComponents,
   login: login,
-  rentPayableVaryOnQuantityOfBeersDetailsView: rentPayableVaryOnQuantityOfBeersDetails)
-  extends FrontendController(mcc) {
+  rentPayableVaryOnQuantityOfBeersDetailsView: rentPayableVaryOnQuantityOfBeersDetails
+) extends FrontendController(mcc) {
 
   def show: Action[AnyContent] = Action.async { implicit request =>
     Future.successful(Ok(rentPayableVaryOnQuantityOfBeersDetailsView(rentPayableVaryOnQuantityOfBeersForm)))
   }
 
   def submit = Action.async { implicit request =>
-    rentPayableVaryOnQuantityOfBeersForm.bindFromRequest().fold(
-      formWithErrors => Future.successful(BadRequest(rentPayableVaryOnQuantityOfBeersDetailsView(formWithErrors))),
-      data => Future.successful(Ok(login(loginForm)))
-    )
+    rentPayableVaryOnQuantityOfBeersForm
+      .bindFromRequest()
+      .fold(
+        formWithErrors => Future.successful(BadRequest(rentPayableVaryOnQuantityOfBeersDetailsView(formWithErrors))),
+        data => Future.successful(Ok(login(loginForm)))
+      )
   }
 
 }

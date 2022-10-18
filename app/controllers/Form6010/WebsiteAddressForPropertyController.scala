@@ -27,21 +27,23 @@ import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class WebsiteAddressForPropertyController @Inject()(
+class WebsiteAddressForPropertyController @Inject() (
   mcc: MessagesControllerComponents,
   login: login,
-  websiteAddressForPropertyView: websiteAddressForProperty)
-  extends FrontendController(mcc) {
+  websiteAddressForPropertyView: websiteAddressForProperty
+) extends FrontendController(mcc) {
 
   def show: Action[AnyContent] = Action.async { implicit request =>
     Future.successful(Ok(websiteAddressForPropertyView(websiteAddressForPropertyForm)))
   }
 
   def submit = Action.async { implicit request =>
-    websiteAddressForPropertyForm.bindFromRequest().fold(
-      formWithErrors => Future.successful(BadRequest(websiteAddressForPropertyView(formWithErrors))),
-      data => Future.successful(Ok(login(loginForm)))
-    )
+    websiteAddressForPropertyForm
+      .bindFromRequest()
+      .fold(
+        formWithErrors => Future.successful(BadRequest(websiteAddressForPropertyView(formWithErrors))),
+        data => Future.successful(Ok(login(loginForm)))
+      )
   }
 
 }

@@ -25,14 +25,14 @@ import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class EnforcementActionBeenTakenDetailsController @Inject()(
+class EnforcementActionBeenTakenDetailsController @Inject() (
   mcc: MessagesControllerComponents,
   appConfig: AppConfig,
-  enforcementActionBeenTakenDetails: enforcementActionBeenTakenDetails)
-  extends FrontendController(mcc) {
+  enforcementActionBeenTakenDetails: enforcementActionBeenTakenDetails
+) extends FrontendController(mcc) {
 
   def show: Action[AnyContent] = Action.async { implicit request =>
     Future.successful(Ok(enforcementActionBeenTakenDetails()))
   }
 
-  }
+}

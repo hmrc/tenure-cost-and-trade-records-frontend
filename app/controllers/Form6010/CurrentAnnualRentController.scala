@@ -28,7 +28,7 @@ import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class CurrentAnnualRentController @Inject()(
+class CurrentAnnualRentController @Inject() (
   mcc: MessagesControllerComponents,
   login: login,
   currentAnnualRentView: currentAnnualRent)
@@ -45,4 +45,4 @@ class CurrentAnnualRentController @Inject()(
     )
   }
 
-  }
+}

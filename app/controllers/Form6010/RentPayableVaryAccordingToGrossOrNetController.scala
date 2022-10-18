@@ -27,20 +27,22 @@ import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class RentPayableVaryAccordingToGrossOrNetController @Inject()(
+class RentPayableVaryAccordingToGrossOrNetController @Inject() (
   mcc: MessagesControllerComponents,
   login: login,
-  rentPayableVaryAccordingToGrossOrNetView: rentPayableVaryAccordingToGrossOrNet)
-  extends FrontendController(mcc) {
+  rentPayableVaryAccordingToGrossOrNetView: rentPayableVaryAccordingToGrossOrNet
+) extends FrontendController(mcc) {
 
   def show: Action[AnyContent] = Action.async { implicit request =>
     Future.successful(Ok(rentPayableVaryAccordingToGrossOrNetView(rentPayableVaryAccordingToGrossOrNetForm)))
   }
 
   def submit = Action.async { implicit request =>
-    rentPayableVaryAccordingToGrossOrNetForm.bindFromRequest().fold(
-      formWithErrors => Future.successful(BadRequest(rentPayableVaryAccordingToGrossOrNetView(formWithErrors))),
-      data => Future.successful(Ok(login(loginForm)))
-    )
+    rentPayableVaryAccordingToGrossOrNetForm
+      .bindFromRequest()
+      .fold(
+        formWithErrors => Future.successful(BadRequest(rentPayableVaryAccordingToGrossOrNetView(formWithErrors))),
+        data => Future.successful(Ok(login(loginForm)))
+      )
   }
 }

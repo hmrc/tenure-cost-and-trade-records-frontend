@@ -25,11 +25,11 @@ import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class RemoveConnectionController @Inject()(
+class RemoveConnectionController @Inject() (
   mcc: MessagesControllerComponents,
   appConfig: AppConfig,
-  removeConnection: removeConnection)
-    extends FrontendController(mcc) {
+  removeConnection: removeConnection
+) extends FrontendController(mcc) {
 
   def show: Action[AnyContent] = Action.async { implicit request =>
     Future.successful(Ok(removeConnection()))

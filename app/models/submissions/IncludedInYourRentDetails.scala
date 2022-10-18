@@ -16,4 +16,8 @@
 
 package models.submissions
 
-case class IncludedInYourRentDetails(commenceWithinThreeYears: CommenceWithinThreeYears, agreedReviewedAlteredThreeYears: AgreedReviewedAlteredThreeYears, rentUnderReviewNegotiated: RentUnderReviewNegotiated)
+case class IncludedInYourRentDetails(
+  commenceWithinThreeYears: CommenceWithinThreeYears,
+  agreedReviewedAlteredThreeYears: AgreedReviewedAlteredThreeYears,
+  rentUnderReviewNegotiated: RentUnderReviewNegotiated
+)

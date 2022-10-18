@@ -24,11 +24,11 @@ import views.html.Form6010.currentLeaseOrAgreementBegin
 import javax.inject.{Inject, Singleton}
 
 @Singleton
-class CurrentLeaseOrAgreementBeginController @Inject()(
+class CurrentLeaseOrAgreementBeginController @Inject() (
   mcc: MessagesControllerComponents,
   appConfig: AppConfig,
-  currentLeaseOrAgreementBegin: currentLeaseOrAgreementBegin)
-  extends FrontendController(mcc) {
+  currentLeaseOrAgreementBegin: currentLeaseOrAgreementBegin
+) extends FrontendController(mcc) {
 
   def show: Action[AnyContent] = Action { implicit request =>
     Ok(currentLeaseOrAgreementBegin())

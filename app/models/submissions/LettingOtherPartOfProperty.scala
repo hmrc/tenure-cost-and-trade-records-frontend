@@ -18,7 +18,7 @@ package models.submissions
 
 import models.{NamedEnum, NamedEnumSupport}
 
-sealed trait LettingOtherPartOfProperties extends NamedEnum{
+sealed trait LettingOtherPartOfProperties extends NamedEnum {
   val key = "lettingOtherPartOfProperties"
 }
 object LettingOtherPartOfPropertiesYes extends LettingOtherPartOfProperties {
@@ -29,5 +29,5 @@ object LettingOtherPartOfPropertiesNo extends LettingOtherPartOfProperties {
 }
 
 object LettingOtherPartOfProperty extends NamedEnumSupport[LettingOtherPartOfProperties] {
-  val all = List(LettingOtherPartOfPropertiesYes,LettingOtherPartOfPropertiesNo)
+  val all = List(LettingOtherPartOfPropertiesYes, LettingOtherPartOfPropertiesNo)
 }

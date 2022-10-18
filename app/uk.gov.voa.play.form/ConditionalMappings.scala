@@ -43,7 +43,7 @@ object ConditionalMappings {
     onlyIf(isTrue(fieldName), mapping)
 
   def onlyIfAny[T](pairs: Seq[(String, String)], mapping: Mapping[T])(implicit nonMapValue: T): Mapping[T] = {
-    val allowable: Set[(String, String)] = pairs.toSet
+    val allowable: Set[(String, String)]     = pairs.toSet
     def condition(data: Map[String, String]) = allowable.intersect(data.toSet).nonEmpty
     ConditionalMapping(condition, mapping, nonMapValue, keys = pairs.toMap.keySet)
   }
@@ -54,10 +54,14 @@ object ConditionalMappings {
   def mandatoryIfTrue[T](fieldName: String, mapping: Mapping[T], prefix: Option[String] = None): Mapping[Option[T]] =
     ConditionalMapping(isTrue(fieldName)(_), MandatoryOptionalMapping(mapping, Nil), None, Seq.empty)
 
-  def mandatoryIfAnyAreTrue[T](fields: Seq[String], mapping: Mapping[T], prefix: Option[String] = None,
-                               showNestedErrors: Boolean = true, fieldsToExclude: Seq[String] = Seq.empty): Mapping[Option[T]] = {
+  def mandatoryIfAnyAreTrue[T](
+    fields: Seq[String],
+    mapping: Mapping[T],
+    prefix: Option[String] = None,
+    showNestedErrors: Boolean = true,
+    fieldsToExclude: Seq[String] = Seq.empty
+  ): Mapping[Option[T]] =
     ConditionalMapping(x => fields.exists(isTrue(_)(x)), MandatoryOptionalMapping(mapping, Nil), None, Seq.empty)
-  }
 
   def mandatoryIfFalse[T](fieldName: String, mapping: Mapping[T], prefix: Option[String] = None): Mapping[Option[T]] =
     ConditionalMapping(isFalse(fieldName), MandatoryOptionalMapping(mapping, Nil), None, Seq.empty)
@@ -85,8 +89,13 @@ object ConditionalMappings {
   def mandatoryIfEqualToAny[T](fieldName: String, values: Seq[String], mapping: Mapping[T]): Mapping[Option[T]] =
     ConditionalMapping(isAnyOf(fieldName, values), MandatoryOptionalMapping(mapping, Nil), None, Seq.empty)
 
-  def mandatoryIfAllEqual[T](pairs: Seq[(String, String)], mapping: Mapping[T], prefix: Option[String] = None,
-                             showNestedErrors: Boolean = true, error: Option[String] = None): Mapping[Option[T]] = {
+  def mandatoryIfAllEqual[T](
+    pairs: Seq[(String, String)],
+    mapping: Mapping[T],
+    prefix: Option[String] = None,
+    showNestedErrors: Boolean = true,
+    error: Option[String] = None
+  ): Mapping[Option[T]] = {
     val condition: Condition = x => (for (pair <- pairs) yield x.get(pair._1).contains(pair._2)).forall(b => b)
     ConditionalMapping(condition, MandatoryOptionalMapping(mapping, Nil), None, Seq.empty)
   }

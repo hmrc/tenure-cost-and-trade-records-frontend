@@ -27,21 +27,23 @@ import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class CateringOperationOrLettingAccommodationController @Inject()(
+class CateringOperationOrLettingAccommodationController @Inject() (
   mcc: MessagesControllerComponents,
   login: login,
-  cateringOperationOrLettingAccommodationView: cateringOperationOrLettingAccommodation)
-  extends FrontendController(mcc) {
+  cateringOperationOrLettingAccommodationView: cateringOperationOrLettingAccommodation
+) extends FrontendController(mcc) {
 
   def show: Action[AnyContent] = Action.async { implicit request =>
     Future.successful(Ok(cateringOperationOrLettingAccommodationView(cateringOperationForm)))
   }
 
   def submit = Action.async { implicit request =>
-    cateringOperationForm.bindFromRequest().fold(
-      formWithErrors => Future.successful(BadRequest(cateringOperationOrLettingAccommodationView(formWithErrors))),
-      data => Future.successful(Ok(login(loginForm)))
-    )
+    cateringOperationForm
+      .bindFromRequest()
+      .fold(
+        formWithErrors => Future.successful(BadRequest(cateringOperationOrLettingAccommodationView(formWithErrors))),
+        data => Future.successful(Ok(login(loginForm)))
+      )
   }
 
 }

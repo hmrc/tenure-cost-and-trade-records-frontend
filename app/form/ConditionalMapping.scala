@@ -25,72 +25,74 @@ object ConditionalMapping {
   def ifTrueElse[T](fieldName: String, trueMapping: Mapping[T], falseMapping: Mapping[T]): Mapping[T] =
     IfElseMapping(isTrue(fieldName), trueMapping, falseMapping)
 
-  def nonEmptyTextOr(fieldName: String, mapping: Mapping[String],
-                     errorRequiredKey: String = "error.required"): Mapping[String] =
+  def nonEmptyTextOr(
+    fieldName: String,
+    mapping: Mapping[String],
+    errorRequiredKey: String = "error.required"
+  ): Mapping[String] =
     NonEmptyTextOrMapping(fieldName, mapping, errorRequiredKey = errorRequiredKey)
 }
 
-case class IfElseMapping[T](condition: Condition, trueMapping: Mapping[T], falseMapping: Mapping[T],
-                            keys: Set[String] = Set(), constraints: Seq[Constraint[T]] = Nil) extends Mapping[T] {
+case class IfElseMapping[T](
+  condition: Condition,
+  trueMapping: Mapping[T],
+  falseMapping: Mapping[T],
+  keys: Set[String] = Set(),
+  constraints: Seq[Constraint[T]] = Nil
+) extends Mapping[T] {
 
   override val format: Option[(String, Seq[Any])] = trueMapping.format
 
-  def verifying(addConstraints: Constraint[T]*): Mapping[T] = {
+  def verifying(addConstraints: Constraint[T]*): Mapping[T] =
     this.copy(constraints = constraints ++ addConstraints.toSeq)
-  }
 
-  def bind(data: Map[String, String]): Either[Seq[FormError], T] = {
+  def bind(data: Map[String, String]): Either[Seq[FormError], T] =
     if (condition(data)) trueMapping.bind(data) else falseMapping.bind(data)
-  }
 
-  def unbind(value: T): Map[String, String] = {
+  def unbind(value: T): Map[String, String] =
     trueMapping.unbind(value)
-  }
 
-  def unbindAndValidate(value: T): (Map[String, String], Seq[FormError]) = {
+  def unbindAndValidate(value: T): (Map[String, String], Seq[FormError]) =
     trueMapping.unbindAndValidate(value)
-  }
 
-  def withPrefix(prefix: String): IfElseMapping[T] = {
+  def withPrefix(prefix: String): IfElseMapping[T] =
     copy(trueMapping = trueMapping.withPrefix(prefix), falseMapping = falseMapping.withPrefix(prefix))
-  }
 
   val mappings: Seq[Mapping[_]] = trueMapping.mappings :+ this
 
   override val key: String = trueMapping.key
 }
 
-case class NonEmptyTextOrMapping(fieldName: String, wrapped: Mapping[String], keys: Set[String] = Set(),
-                                 constraints: Seq[Constraint[String]] = Nil,
-                                 errorRequiredKey: String = "error.required") extends Mapping[String] {
+case class NonEmptyTextOrMapping(
+  fieldName: String,
+  wrapped: Mapping[String],
+  keys: Set[String] = Set(),
+  constraints: Seq[Constraint[String]] = Nil,
+  errorRequiredKey: String = "error.required"
+) extends Mapping[String] {
 
   override val format: Option[(String, Seq[Any])] = wrapped.format
 
   val key = wrapped.key
 
-  def verifying(addConstraints: Constraint[String]*): Mapping[String] = {
+  def verifying(addConstraints: Constraint[String]*): Mapping[String] =
     this.copy(constraints = constraints ++ addConstraints.toSeq)
-  }
 
-  def bind(data: Map[String, String]): Either[Seq[FormError], String] = {
+  def bind(data: Map[String, String]): Either[Seq[FormError], String] =
     if (data.get(fieldName).exists(_ != "")) {
       wrapped.bind(data)
     } else {
       Left(Seq(FormError(wrapped.key, Seq(errorRequiredKey))))
     }
-  }
 
-  def unbind(value: String): Map[String, String] = {
+  def unbind(value: String): Map[String, String] =
     wrapped.unbind(value)
-  }
 
-  def unbindAndValidate(value: String): (Map[String, String], Seq[FormError]) = {
+  def unbindAndValidate(value: String): (Map[String, String], Seq[FormError]) =
     wrapped.unbindAndValidate(value)
-  }
 
-  def withPrefix(prefix: String): Mapping[String] = {
+  def withPrefix(prefix: String): Mapping[String] =
     copy(wrapped = wrapped.withPrefix(prefix))
-  }
 
   val mappings: Seq[Mapping[_]] = wrapped.mappings :+ this
 

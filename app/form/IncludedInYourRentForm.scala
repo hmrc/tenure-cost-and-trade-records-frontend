@@ -23,9 +23,11 @@ import play.api.data.Forms.mapping
 
 object IncludedInYourRentForm {
 
-  val includedInYourRentForm = Form(mapping(
-    "commenceWithinThreeYears" -> commenceWithinThreeYearsType,
-    "agreedReviewedAlteredThreeYears" -> agreedReviewedAlteredThreeYearsType,
-    "rentUnderReviewNegotiated" -> rentUnderReviewNegotiatedType
-  )(IncludedInYourRentDetails.apply)(IncludedInYourRentDetails.unapply))
+  val includedInYourRentForm = Form(
+    mapping(
+      "commenceWithinThreeYears"        -> commenceWithinThreeYearsType,
+      "agreedReviewedAlteredThreeYears" -> agreedReviewedAlteredThreeYearsType,
+      "rentUnderReviewNegotiated"       -> rentUnderReviewNegotiatedType
+    )(IncludedInYourRentDetails.apply)(IncludedInYourRentDetails.unapply)
+  )
 }

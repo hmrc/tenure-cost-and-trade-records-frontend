@@ -18,7 +18,7 @@ package models.submissions
 
 import models.{NamedEnum, NamedEnumSupport}
 
-sealed trait RentPayableVaryOnQuantityOfBeers extends NamedEnum{
+sealed trait RentPayableVaryOnQuantityOfBeers extends NamedEnum {
   val key = "rentPayableVaryOnQuantityOfBeers"
 }
 object RentPayableVaryOnQuantityOfBeersYes extends RentPayableVaryOnQuantityOfBeers {
@@ -29,5 +29,5 @@ object RentPayableVaryOnQuantityOfBeersNo extends RentPayableVaryOnQuantityOfBee
 }
 
 object RentPayableVaryOnQuantityOfBeer extends NamedEnumSupport[RentPayableVaryOnQuantityOfBeers] {
-  val all = List(RentPayableVaryOnQuantityOfBeersYes,RentPayableVaryOnQuantityOfBeersNo)
+  val all = List(RentPayableVaryOnQuantityOfBeersYes, RentPayableVaryOnQuantityOfBeersNo)
 }
