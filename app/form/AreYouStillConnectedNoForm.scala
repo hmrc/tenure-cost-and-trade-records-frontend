@@ -23,7 +23,9 @@ import play.api.data.Forms.mapping
 
 object AreYouStillConnectedNoForm {
 
-  val areYouStillConnectedNoForm = Form(mapping(
-    "areYouConnectedNo" -> areYouStillConnectedNoType
-  )(AreYouStillConnectedNoDetails.apply)(AreYouStillConnectedNoDetails.unapply))
+  val areYouStillConnectedNoForm = Form(
+    mapping(
+      "areYouConnectedNo" -> areYouStillConnectedNoType
+    )(AreYouStillConnectedNoDetails.apply)(AreYouStillConnectedNoDetails.unapply)
+  )
 }

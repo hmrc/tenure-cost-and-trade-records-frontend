@@ -22,9 +22,8 @@ import play.api.test.FakeRequest
 
 object Helpers {
 
-  implicit def fakeRequest2MessageRequest[A](fakeRequest: FakeRequest[A]): MessagesRequest[A] = {
+  implicit def fakeRequest2MessageRequest[A](fakeRequest: FakeRequest[A]): MessagesRequest[A] =
     new MessagesRequest[A](fakeRequest, play.api.test.Helpers.stubMessagesApi())
-  }
 
   def refNumAction(): RefNumAction = {
     val cc = play.api.test.Helpers.stubControllerComponents()

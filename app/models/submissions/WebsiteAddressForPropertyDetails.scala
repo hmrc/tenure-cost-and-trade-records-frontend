@@ -17,5 +17,5 @@
 package models.submissions
 
 case class WebsiteAddressForPropertyDetails(
-                                             websiteAddressForPropertyDetails: String
-                                           )
+  websiteAddressForPropertyDetails: String
+)

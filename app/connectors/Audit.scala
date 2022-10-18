@@ -32,13 +32,14 @@ trait Audit extends AuditConnector {
 
 object Audit {
   val referenceNumber = "referenceNumber"
-  val address = "address"
-  val formOfReturn = "for"
+  val address         = "address"
+  val formOfReturn    = "for"
 }
 
 @Singleton
-class TctrAuditConnector @Inject() (val auditingConfig: AuditingConfig,
-                                   val auditChannel: AuditChannel,
-                                   val datastreamMetrics: DatastreamMetrics
-                                  )(implicit val ec: ExecutionContext) extends Audit {
-}
+class TctrAuditConnector @Inject() (
+  val auditingConfig: AuditingConfig,
+  val auditChannel: AuditChannel,
+  val datastreamMetrics: DatastreamMetrics
+)(implicit val ec: ExecutionContext)
+    extends Audit {}

@@ -18,7 +18,7 @@ package models.submissions
 
 import models.{NamedEnum, NamedEnumSupport}
 
-sealed trait FranchiseOrLettingsTiedToProperties extends NamedEnum{
+sealed trait FranchiseOrLettingsTiedToProperties extends NamedEnum {
   val key = "franchiseOrLettingsTiedToProperties"
 }
 object FranchiseOrLettingsTiedToPropertiesYes extends FranchiseOrLettingsTiedToProperties {
@@ -29,5 +29,5 @@ object FranchiseOrLettingsTiedToPropertiesNo extends FranchiseOrLettingsTiedToPr
 }
 
 object FranchiseOrLettingsTiedToProperty extends NamedEnumSupport[FranchiseOrLettingsTiedToProperties] {
-  val all = List(FranchiseOrLettingsTiedToPropertiesYes,FranchiseOrLettingsTiedToPropertiesNo)
+  val all = List(FranchiseOrLettingsTiedToPropertiesYes, FranchiseOrLettingsTiedToPropertiesNo)
 }

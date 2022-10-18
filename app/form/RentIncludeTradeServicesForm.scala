@@ -23,7 +23,9 @@ import play.api.data.Forms.mapping
 
 object RentIncludeTradeServicesForm {
 
-  val rentIncludeTradeServicesForm = Form(mapping(
-    "rentIncludeTradeServices" -> rentIncludeTradeServicesType
-  )(RentIncludeTradeServicesDetails.apply)(RentIncludeTradeServicesDetails.unapply))
+  val rentIncludeTradeServicesForm = Form(
+    mapping(
+      "rentIncludeTradeServices" -> rentIncludeTradeServicesType
+    )(RentIncludeTradeServicesDetails.apply)(RentIncludeTradeServicesDetails.unapply)
+  )
 }

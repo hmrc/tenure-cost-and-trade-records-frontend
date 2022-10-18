@@ -29,23 +29,25 @@ import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class AreYouStillConnectedController @Inject()(
+class AreYouStillConnectedController @Inject() (
   mcc: MessagesControllerComponents,
   formDocumentRepository: FormDocumentRepository,
   appConfig: AppConfig,
   login: login,
   areYouStillConnectedView: areYouStillConnected,
-  aboutYouView: aboutYou)
-    extends FrontendController(mcc) {
+  aboutYouView: aboutYou
+) extends FrontendController(mcc) {
 
   def show: Action[AnyContent] = Action.async { implicit request =>
     Future.successful(Ok(areYouStillConnectedView(areYouStillConnectedForm)))
   }
 
   def submit = Action.async { implicit request =>
-    areYouStillConnectedForm.bindFromRequest().fold(
-      formWithErrors => Future.successful(BadRequest(areYouStillConnectedView(formWithErrors))),
-      data => Future.successful(Ok(aboutYouView(aboutYouForm)))
-    )
+    areYouStillConnectedForm
+      .bindFromRequest()
+      .fold(
+        formWithErrors => Future.successful(BadRequest(areYouStillConnectedView(formWithErrors))),
+        data => Future.successful(Ok(aboutYouView(aboutYouForm)))
+      )
   }
 }

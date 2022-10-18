@@ -18,7 +18,7 @@ package models.submissions
 
 import models.{NamedEnum, NamedEnumSupport}
 
-sealed trait UserType extends NamedEnum{
+sealed trait UserType extends NamedEnum {
   val key = "userType"
 }
 object UserTypeOccupier extends UserType {

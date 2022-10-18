@@ -25,11 +25,11 @@ import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class RentIncludeFixtureAndFittingsDetailsController @Inject()(
+class RentIncludeFixtureAndFittingsDetailsController @Inject() (
   mcc: MessagesControllerComponents,
   appConfig: AppConfig,
-  rentIncludeFixtureAndFittingsDetails: rentIncludeFixtureAndFittingsDetails)
-  extends FrontendController(mcc) {
+  rentIncludeFixtureAndFittingsDetails: rentIncludeFixtureAndFittingsDetails
+) extends FrontendController(mcc) {
 
   def show: Action[AnyContent] = Action.async { implicit request =>
     Future.successful(Ok(rentIncludeFixtureAndFittingsDetails()))

@@ -18,7 +18,7 @@ package models.submissions
 
 import models.{NamedEnum, NamedEnumSupport}
 
-sealed trait VATs extends NamedEnum{
+sealed trait VATs extends NamedEnum {
   val key = "vat"
 }
 object VATsYes extends VATs {
@@ -29,11 +29,10 @@ object VATsNo extends VATs {
 }
 
 object VAT extends NamedEnumSupport[VATs] {
-  val all = List(VATsYes,VATsNo)
+  val all = List(VATsYes, VATsNo)
 }
 
-
-sealed trait NonDomesticRates extends NamedEnum{
+sealed trait NonDomesticRates extends NamedEnum {
   val key = "nondomesticRates"
 }
 object NonDomesticRatesYes extends NonDomesticRates {
@@ -44,11 +43,10 @@ object NonDomesticRatesNo extends NonDomesticRates {
 }
 
 object NonDomesticRate extends NamedEnumSupport[NonDomesticRates] {
-  val all = List(NonDomesticRatesYes,NonDomesticRatesNo)
+  val all = List(NonDomesticRatesYes, NonDomesticRatesNo)
 }
 
-
-sealed trait WaterCharges extends NamedEnum{
+sealed trait WaterCharges extends NamedEnum {
   val key = "waterCharges"
 }
 object WaterChargesYes extends WaterCharges {
@@ -59,6 +57,5 @@ object WaterChargesNo extends WaterCharges {
 }
 
 object WaterCharge extends NamedEnumSupport[WaterCharges] {
-  val all = List(WaterChargesYes,WaterChargesNo)
+  val all = List(WaterChargesYes, WaterChargesNo)
 }
-

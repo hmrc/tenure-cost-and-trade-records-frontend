@@ -22,13 +22,19 @@ import play.api.libs.json._
 import play.api.libs.json.JodaWrites._
 import play.api.libs.json.JodaReads._
 
-case class Document(referenceNumber: String, journeyStarted: DateTime,  pages: Seq[Page] = Seq(), address: Option[Address] = None,
-                    saveForLaterPassword: Option[String] = None, journeyResumptions: Seq[DateTime] = Seq.empty) {
+case class Document(
+  referenceNumber: String,
+  journeyStarted: DateTime,
+  pages: Seq[Page] = Seq(),
+  address: Option[Address] = None,
+  saveForLaterPassword: Option[String] = None,
+  journeyResumptions: Seq[DateTime] = Seq.empty
+) {
   def page(pageNumber: Int): Option[Page] = pages.find(_.pageNumber == pageNumber)
 
   def add(page: Page): Document = {
     val newPages = (pages.filterNot(_.pageNumber == page.pageNumber) :+ page).sortBy(_.pageNumber)
-    this.copy(pages =  newPages)
+    this.copy(pages = newPages)
   }
 }
 

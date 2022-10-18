@@ -25,11 +25,11 @@ import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class HowIsCurrentRentFixedController @Inject()(
+class HowIsCurrentRentFixedController @Inject() (
   mcc: MessagesControllerComponents,
   appConfig: AppConfig,
-  howIsCurrentRentFixed: howIsCurrentRentFixed)
-  extends FrontendController(mcc) {
+  howIsCurrentRentFixed: howIsCurrentRentFixed
+) extends FrontendController(mcc) {
 
   def show: Action[AnyContent] = Action.async { implicit request =>
     Future.successful(Ok(howIsCurrentRentFixed()))

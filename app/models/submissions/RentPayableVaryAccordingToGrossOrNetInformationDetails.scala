@@ -17,5 +17,5 @@
 package models.submissions
 
 case class RentPayableVaryAccordingToGrossOrNetInformationDetails(
-                                                                   rentPayableVaryAccordingToGrossOrNet: String
-                                                                 )
+  rentPayableVaryAccordingToGrossOrNet: String
+)

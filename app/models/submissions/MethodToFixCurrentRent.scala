@@ -18,7 +18,7 @@ package models.submissions
 
 import models.{NamedEnum, NamedEnumSupport}
 
-sealed trait MethodToFixCurrentRents extends NamedEnum{
+sealed trait MethodToFixCurrentRents extends NamedEnum {
   val key = "methodUsedToFixCurrentRent"
 }
 object MethodToFixCurrentRentsAgreement extends MethodToFixCurrentRents {
@@ -36,5 +36,10 @@ object MethodToFixCurrentRentsACourt extends MethodToFixCurrentRents {
 }
 
 object MethodToFixCurrentRent extends NamedEnumSupport[MethodToFixCurrentRents] {
-  val all = List(MethodToFixCurrentRentsAgreement,MethodToFixCurrentRentsArbitration,MethodToFixCurrentRentIndependentExpert,MethodToFixCurrentRentsACourt)
+  val all = List(
+    MethodToFixCurrentRentsAgreement,
+    MethodToFixCurrentRentsArbitration,
+    MethodToFixCurrentRentIndependentExpert,
+    MethodToFixCurrentRentsACourt
+  )
 }

@@ -16,4 +16,6 @@
 
 package models.submissions
 
-case class FranchiseOrLettingsTiedToPropertiesDetails(franchiseOrLettingsTiedToProperty: FranchiseOrLettingsTiedToProperties)
+case class FranchiseOrLettingsTiedToPropertiesDetails(
+  franchiseOrLettingsTiedToProperty: FranchiseOrLettingsTiedToProperties
+)

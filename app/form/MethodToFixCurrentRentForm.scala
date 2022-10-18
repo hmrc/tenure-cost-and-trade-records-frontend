@@ -23,7 +23,9 @@ import play.api.data.Forms.mapping
 
 object MethodToFixCurrentRentForm {
 
-  val methodToFixCurrentRentForm = Form(mapping(
-    "methodUsedToFixCurrentRent" -> methodToFixCurrentRentsType
-  )(MethodToFixCurrentRentDetails.apply)(MethodToFixCurrentRentDetails.unapply))
+  val methodToFixCurrentRentForm = Form(
+    mapping(
+      "methodUsedToFixCurrentRent" -> methodToFixCurrentRentsType
+    )(MethodToFixCurrentRentDetails.apply)(MethodToFixCurrentRentDetails.unapply)
+  )
 }

@@ -23,7 +23,9 @@ import play.api.data.Forms.mapping
 
 object EnforcementActionForm {
 
-  val enforcementActionForm = Form(mapping(
-    "enforcementActionHasBeenTaken" -> enforcementActionType
-  )(EnforcementActionHasBeenTakenDetails.apply)(EnforcementActionHasBeenTakenDetails.unapply))
+  val enforcementActionForm = Form(
+    mapping(
+      "enforcementActionHasBeenTaken" -> enforcementActionType
+    )(EnforcementActionHasBeenTakenDetails.apply)(EnforcementActionHasBeenTakenDetails.unapply)
+  )
 }

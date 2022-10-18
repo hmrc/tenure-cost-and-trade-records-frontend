@@ -18,7 +18,7 @@ package models.submissions
 
 import models.{NamedEnum, NamedEnumSupport}
 
-sealed trait FormerLeaseSurrendered extends NamedEnum{
+sealed trait FormerLeaseSurrendered extends NamedEnum {
   val key = "formerLeaseSurrendered"
 }
 object FormerLeaseSurrenderedYes extends FormerLeaseSurrendered {
@@ -29,11 +29,10 @@ object FormerLeaseSurrenderedNo extends FormerLeaseSurrendered {
 }
 
 object FormerLeaseSurrender extends NamedEnumSupport[FormerLeaseSurrendered] {
-  val all = List(FormerLeaseSurrenderedYes,FormerLeaseSurrenderedNo)
+  val all = List(FormerLeaseSurrenderedYes, FormerLeaseSurrenderedNo)
 }
 
-
-sealed trait RentReducedOnReviews extends NamedEnum{
+sealed trait RentReducedOnReviews extends NamedEnum {
   val key = "rentReducedOnReviews"
 }
 object RentReducedOnReviewsYes extends RentReducedOnReviews {
@@ -44,11 +43,10 @@ object RentReducedOnReviewsNo extends RentReducedOnReviews {
 }
 
 object RentReducedOnReview extends NamedEnumSupport[RentReducedOnReviews] {
-  val all = List(RentReducedOnReviewsYes,RentReducedOnReviewsNo)
+  val all = List(RentReducedOnReviewsYes, RentReducedOnReviewsNo)
 }
 
-
-sealed trait CapitalSumOrPremiums extends NamedEnum{
+sealed trait CapitalSumOrPremiums extends NamedEnum {
   val key = "capitalSumOrPremium"
 }
 object CapitalSumOrPremiumsYes extends CapitalSumOrPremiums {
@@ -59,11 +57,10 @@ object CapitalSumOrPremiumsNo extends CapitalSumOrPremiums {
 }
 
 object CapitalSumOrPremium extends NamedEnumSupport[CapitalSumOrPremiums] {
-  val all = List(CapitalSumOrPremiumsYes,CapitalSumOrPremiumsNo)
+  val all = List(CapitalSumOrPremiumsYes, CapitalSumOrPremiumsNo)
 }
 
-
-sealed trait ReceivePaymentWhenLeaseGrants extends NamedEnum{
+sealed trait ReceivePaymentWhenLeaseGrants extends NamedEnum {
   val key = "receivePaymentWhenLeaseGranted"
 }
 object ReceivePaymentWhenLeaseGrantsYes extends ReceivePaymentWhenLeaseGrants {
@@ -74,5 +71,5 @@ object ReceivePaymentWhenLeaseGrantsNo extends ReceivePaymentWhenLeaseGrants {
 }
 
 object ReceivePaymentWhenLeaseGranted extends NamedEnumSupport[ReceivePaymentWhenLeaseGrants] {
-  val all = List(ReceivePaymentWhenLeaseGrantsYes,ReceivePaymentWhenLeaseGrantsNo)
+  val all = List(ReceivePaymentWhenLeaseGrantsYes, ReceivePaymentWhenLeaseGrantsNo)
 }

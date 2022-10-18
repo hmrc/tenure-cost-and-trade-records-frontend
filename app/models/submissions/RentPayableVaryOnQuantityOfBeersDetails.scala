@@ -16,4 +16,6 @@
 
 package models.submissions
 
-case class RentPayableVaryOnQuantityOfBeersDetails(rentPayableVaryOnQuantityOfBeersDetails: RentPayableVaryOnQuantityOfBeers)
+case class RentPayableVaryOnQuantityOfBeersDetails(
+  rentPayableVaryOnQuantityOfBeersDetails: RentPayableVaryOnQuantityOfBeers
+)

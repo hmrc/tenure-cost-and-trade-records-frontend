@@ -17,5 +17,5 @@
 package models.submissions
 
 case class RentPayableVaryOnQuantityOfBeersInformationDetails(
-                                                               rentPayableVaryOnQuantityOfBeersDetails: String
-                                                             )
+  rentPayableVaryOnQuantityOfBeersDetails: String
+)

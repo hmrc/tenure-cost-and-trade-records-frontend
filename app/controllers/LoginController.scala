@@ -103,10 +103,12 @@ class LoginController @Inject() (
   }
 
   def submit = Action.async { implicit request =>
-    loginForm.bindFromRequest().fold(
-      formWithErrors => Future.successful(BadRequest(login(formWithErrors))),
-      loginData => verifyLogin(loginData.referenceNumber, loginData.postcode, loginData.startTime)
-    )
+    loginForm
+      .bindFromRequest()
+      .fold(
+        formWithErrors => Future.successful(BadRequest(login(formWithErrors))),
+        loginData => verifyLogin(loginData.referenceNumber, loginData.postcode, loginData.startTime)
+      )
   }
 
   def notValidFORType: Action[AnyContent] = Action.async { implicit request =>

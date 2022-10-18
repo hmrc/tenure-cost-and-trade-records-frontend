@@ -23,7 +23,9 @@ import play.api.data.Forms.mapping
 
 object TiedForGoodsForm {
 
-  val tiedForGoodsForm = Form(mapping(
-    "tiedForGoods" -> tiedForGoodsType
-  )(TiedForGoodsDetails.apply)(TiedForGoodsDetails.unapply))
+  val tiedForGoodsForm = Form(
+    mapping(
+      "tiedForGoods" -> tiedForGoodsType
+    )(TiedForGoodsDetails.apply)(TiedForGoodsDetails.unapply)
+  )
 }

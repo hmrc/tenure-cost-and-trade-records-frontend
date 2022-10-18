@@ -23,7 +23,9 @@ import play.api.data.Forms.mapping
 
 object RentPayableVaryOnQuantityOfBeersForm {
 
-  val rentPayableVaryOnQuantityOfBeersForm = Form(mapping(
-    "rentPayableVaryOnQuantityOfBeers" -> rentPayableVaryOnQuantityOfBeersType
-  )(RentPayableVaryOnQuantityOfBeersDetails.apply)(RentPayableVaryOnQuantityOfBeersDetails.unapply))
+  val rentPayableVaryOnQuantityOfBeersForm = Form(
+    mapping(
+      "rentPayableVaryOnQuantityOfBeers" -> rentPayableVaryOnQuantityOfBeersType
+    )(RentPayableVaryOnQuantityOfBeersDetails.apply)(RentPayableVaryOnQuantityOfBeersDetails.unapply)
+  )
 }

@@ -27,21 +27,23 @@ import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class AboutThePropertyController @Inject()(
+class AboutThePropertyController @Inject() (
   mcc: MessagesControllerComponents,
   login: login,
-  aboutThePropertyView: aboutTheProperty)
-    extends FrontendController(mcc) {
+  aboutThePropertyView: aboutTheProperty
+) extends FrontendController(mcc) {
 
   def show: Action[AnyContent] = Action.async { implicit request =>
     Future.successful(Ok(aboutThePropertyView(aboutThePropertyForm)))
   }
 
   def submit = Action.async { implicit request =>
-    aboutThePropertyForm.bindFromRequest().fold(
-      formWithErrors => Future.successful(BadRequest(aboutThePropertyView(formWithErrors))),
-      data => Future.successful(Ok(login(loginForm)))
-    )
+    aboutThePropertyForm
+      .bindFromRequest()
+      .fold(
+        formWithErrors => Future.successful(BadRequest(aboutThePropertyView(formWithErrors))),
+        data => Future.successful(Ok(login(loginForm)))
+      )
   }
 
 }

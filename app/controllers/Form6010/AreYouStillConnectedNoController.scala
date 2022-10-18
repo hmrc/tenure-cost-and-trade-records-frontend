@@ -27,21 +27,23 @@ import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class AreYouStillConnectedNoController @Inject()(
+class AreYouStillConnectedNoController @Inject() (
   mcc: MessagesControllerComponents,
   login: login,
-  areYouStillConnectedNoView: areYouStillConnectedNo)
-  extends FrontendController(mcc) {
+  areYouStillConnectedNoView: areYouStillConnectedNo
+) extends FrontendController(mcc) {
 
   def show: Action[AnyContent] = Action.async { implicit request =>
     Future.successful(Ok(areYouStillConnectedNoView(areYouStillConnectedNoForm)))
   }
 
   def submit = Action.async { implicit request =>
-    areYouStillConnectedNoForm.bindFromRequest().fold(
-      formWithErrors => Future.successful(BadRequest(areYouStillConnectedNoView(formWithErrors))),
-      data => Future.successful(Ok(login(loginForm)))
-    )
+    areYouStillConnectedNoForm
+      .bindFromRequest()
+      .fold(
+        formWithErrors => Future.successful(BadRequest(areYouStillConnectedNoView(formWithErrors))),
+        data => Future.successful(Ok(login(loginForm)))
+      )
   }
 
-  }
+}

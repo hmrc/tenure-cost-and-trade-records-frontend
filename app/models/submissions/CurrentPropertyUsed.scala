@@ -18,7 +18,7 @@ package models.submissions
 
 import models.{NamedEnum, NamedEnumSupport}
 
-sealed trait CurrentPropertyUsed extends NamedEnum{
+sealed trait CurrentPropertyUsed extends NamedEnum {
   val key = "currentPropertyUsed"
 }
 object CurrentPropertyPublicHouse extends CurrentPropertyUsed {
@@ -47,5 +47,14 @@ object CurrentPropertyOther extends CurrentPropertyUsed {
 }
 
 object CurrentPropertyUse extends NamedEnumSupport[CurrentPropertyUsed] {
-  val all = List(CurrentPropertyPublicHouse, CurrentPropertyWineBarOrCafe, CurrentPropertyOtherBar, CurrentPropertyPubAndRestaurant, CurrentPropertyLicencedRestaurant, CurrentPropertyHotel, CurrentPropertyDiscoOrNightclub, CurrentPropertyOther)
+  val all = List(
+    CurrentPropertyPublicHouse,
+    CurrentPropertyWineBarOrCafe,
+    CurrentPropertyOtherBar,
+    CurrentPropertyPubAndRestaurant,
+    CurrentPropertyLicencedRestaurant,
+    CurrentPropertyHotel,
+    CurrentPropertyDiscoOrNightclub,
+    CurrentPropertyOther
+  )
 }

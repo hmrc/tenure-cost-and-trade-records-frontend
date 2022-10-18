@@ -23,18 +23,20 @@ import play.api.data.Forms.{mapping, nonEmptyText}
 
 object AboutThePropertyForm {
 
-  val publicHouse = CurrentPropertyPublicHouse.name
-  val wineBarOrCafe = CurrentPropertyWineBarOrCafe.name
-  val otherBar = CurrentPropertyOtherBar.name
-  val pubAndRestaurant = CurrentPropertyPubAndRestaurant.name
+  val publicHouse        = CurrentPropertyPublicHouse.name
+  val wineBarOrCafe      = CurrentPropertyWineBarOrCafe.name
+  val otherBar           = CurrentPropertyOtherBar.name
+  val pubAndRestaurant   = CurrentPropertyPubAndRestaurant.name
   val licencedRestaurant = CurrentPropertyLicencedRestaurant.name
-  val hotel = CurrentPropertyHotel.name
-  val discoOrNightclub = CurrentPropertyDiscoOrNightclub.name
-  val other = CurrentPropertyOther.name
+  val hotel              = CurrentPropertyHotel.name
+  val discoOrNightclub   = CurrentPropertyDiscoOrNightclub.name
+  val other              = CurrentPropertyOther.name
 
-  val aboutThePropertyForm: Form[PropertyDetails] = Form(mapping(
-    "currentOccupierName" -> nonEmptyText(maxLength = 100),
-    "propertyCurrentlyUsed" -> aboutYourPropertyType
-  )(PropertyDetails.apply)(PropertyDetails.unapply))
+  val aboutThePropertyForm: Form[PropertyDetails] = Form(
+    mapping(
+      "currentOccupierName"   -> nonEmptyText(maxLength = 100),
+      "propertyCurrentlyUsed" -> aboutYourPropertyType
+    )(PropertyDetails.apply)(PropertyDetails.unapply)
+  )
 
 }

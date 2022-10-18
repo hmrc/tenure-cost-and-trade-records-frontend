@@ -18,7 +18,7 @@ package models.submissions
 
 import models.{NamedEnum, NamedEnumSupport}
 
-sealed trait TiedForGoods extends NamedEnum{
+sealed trait TiedForGoods extends NamedEnum {
   val key = "tenancyLeaseAgreement"
 }
 object TiedGoodsYes extends TiedForGoods {
@@ -29,5 +29,5 @@ object TiedGoodsNo extends TiedForGoods {
 }
 
 object TiedForGood extends NamedEnumSupport[TiedForGoods] {
-  val all = List(TiedGoodsYes,TiedGoodsNo)
+  val all = List(TiedGoodsYes, TiedGoodsNo)
 }

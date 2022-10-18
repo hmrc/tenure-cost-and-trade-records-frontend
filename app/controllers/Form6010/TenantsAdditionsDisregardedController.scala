@@ -24,11 +24,11 @@ import views.html.Form6010.tenantsAdditionsDisregarded
 import javax.inject.{Inject, Singleton}
 
 @Singleton
-class TenantsAdditionsDisregardedController @Inject()(
+class TenantsAdditionsDisregardedController @Inject() (
   mcc: MessagesControllerComponents,
   appConfig: AppConfig,
-  tenantsAdditionsDisregarded: tenantsAdditionsDisregarded)
-  extends FrontendController(mcc) {
+  tenantsAdditionsDisregarded: tenantsAdditionsDisregarded
+) extends FrontendController(mcc) {
 
   def show: Action[AnyContent] = Action { implicit request =>
     Ok(tenantsAdditionsDisregarded())

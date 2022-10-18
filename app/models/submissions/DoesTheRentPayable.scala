@@ -16,4 +16,11 @@
 
 package models.submissions
 
-case class DoesTheRentPayable(includeLicensee: IncludeLicensees, includeOtherProperty: IncludeOtherProperties, onlyPartOfProperty: OnlyPartOfProperties, onlyToLand: OnlyToLands, shellUnit: ShellUnits, detailsToQuestions: String)
+case class DoesTheRentPayable(
+  includeLicensee: IncludeLicensees,
+  includeOtherProperty: IncludeOtherProperties,
+  onlyPartOfProperty: OnlyPartOfProperties,
+  onlyToLand: OnlyToLands,
+  shellUnit: ShellUnits,
+  detailsToQuestions: String
+)

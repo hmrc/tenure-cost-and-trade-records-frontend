@@ -27,20 +27,22 @@ import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class MethodToFixCurrentRentController @Inject()(
+class MethodToFixCurrentRentController @Inject() (
   mcc: MessagesControllerComponents,
   login: login,
-  methodToFixCurrentRentView: methodToFixCurrentRent)
-  extends FrontendController(mcc) {
+  methodToFixCurrentRentView: methodToFixCurrentRent
+) extends FrontendController(mcc) {
 
   def show: Action[AnyContent] = Action.async { implicit request =>
     Future.successful(Ok(methodToFixCurrentRentView(methodToFixCurrentRentForm)))
   }
 
   def submit = Action.async { implicit request =>
-    methodToFixCurrentRentForm.bindFromRequest().fold(
-      formWithErrors => Future.successful(BadRequest(methodToFixCurrentRentView(formWithErrors))),
-      data => Future.successful(Ok(login(loginForm)))
-    )
+    methodToFixCurrentRentForm
+      .bindFromRequest()
+      .fold(
+        formWithErrors => Future.successful(BadRequest(methodToFixCurrentRentView(formWithErrors))),
+        data => Future.successful(Ok(login(loginForm)))
+      )
   }
 }

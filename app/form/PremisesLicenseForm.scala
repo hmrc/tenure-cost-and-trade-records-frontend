@@ -23,7 +23,9 @@ import play.api.data.Forms.mapping
 
 object PremisesLicenseForm {
 
-  val premisesLicenseForm = Form(mapping(
-    "premisesLicense" -> premisesLicenseType
-  )(PremisesLicenseDetails.apply)(PremisesLicenseDetails.unapply))
+  val premisesLicenseForm = Form(
+    mapping(
+      "premisesLicense" -> premisesLicenseType
+    )(PremisesLicenseDetails.apply)(PremisesLicenseDetails.unapply)
+  )
 }
