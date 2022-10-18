@@ -92,4 +92,10 @@ object Formats {
   implicit val commenceWithinThreeYearsFormatter: Formatter[CommenceWithinThreeYears] = namedEnumFormatter(CommenceWithinThreeYear, Errors.booleanMissing)
   implicit val agreedReviewedAlteredThreeYearsFormatter: Formatter[AgreedReviewedAlteredThreeYears] = namedEnumFormatter(AgreedReviewedAlteredThreeYear, Errors.booleanMissing)
   implicit val rentUnderReviewNegotiatedFormatter: Formatter[RentUnderReviewNegotiated] = namedEnumFormatter(RentUnderReviewNegotiate, Errors.booleanMissing)
+
+  implicit val includeLicenseeFormatter: Formatter[IncludeLicensees] = namedEnumFormatter(IncludeLicensee, Errors.booleanMissing)
+  implicit val includeOtherPropertyFormatter: Formatter[IncludeOtherProperties] = namedEnumFormatter(IncludeOtherProperty, Errors.booleanMissing)
+  implicit val onlyPartOfPropertyFormatter: Formatter[OnlyPartOfProperties] = namedEnumFormatter(OnlyPartOfProperty, Errors.booleanMissing)
+  implicit val onlyToLandFormatter: Formatter[OnlyToLands] = namedEnumFormatter(OnlyToLand, Errors.booleanMissing)
+  implicit val shellUnitFormatter: Formatter[ShellUnits] = namedEnumFormatter(ShellUnit, Errors.booleanMissing)
 }

@@ -64,6 +64,12 @@ object MappingSupport {
   val agreedReviewedAlteredThreeYearsType: Mapping[AgreedReviewedAlteredThreeYears] = Forms.of[AgreedReviewedAlteredThreeYears]
   val rentUnderReviewNegotiatedType: Mapping[RentUnderReviewNegotiated] = Forms.of[RentUnderReviewNegotiated]
 
+  val includeLicenseeType: Mapping[IncludeLicensees] = Forms.of[IncludeLicensees]
+  val includeOtherPropertyType: Mapping[IncludeOtherProperties] = Forms.of[IncludeOtherProperties]
+  val onlyPartOfPropertyType: Mapping[OnlyPartOfProperties] = Forms.of[OnlyPartOfProperties]
+  val onlyToLandType: Mapping[OnlyToLands] = Forms.of[OnlyToLands]
+  val shellUnitType: Mapping[ShellUnits] = Forms.of[ShellUnits]
+
   val tiedForGoodsDetailsType: Mapping[TiedForGoodsInformationDetail] = Forms.of[TiedForGoodsInformationDetail]
   val postcode: Mapping[String] = PostcodeMapping.postcode()
 
