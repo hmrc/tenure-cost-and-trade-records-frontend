@@ -179,14 +179,14 @@ aboutYourLandlord.town.label = Town or city
 aboutYourLandlord.county.label = County (optional)
 aboutYourLandlord.postcode.label = Postcode
 
-#LEASE OR AGREEMENT DETAILS
+#LEASE OR AGREEMENT DETAILS COMMENCE WITHIN 3 YEARS
 ##############################
 leaseOrAgreement.header = Lease or agreement details
-leaseOrAgreement.option1 = Did the tenancy, lease or agreement commence within the last 3 years?
-leaseOrAgreement.option2 = Has the rent been agreed, reviewed or altered within the last 3 years?
-leaseOrAgreement.option3 = Is the rent currently under review, or is a new lease or agreement being negotiated?
+label.commenceWithinThreeYears = Did the tenancy, lease or agreement commence within the last 3 years?
+label.agreedReviewedAlteredThreeYears  = Has the rent been agreed, reviewed or altered within the last 3 years?
+label.rentUnderReviewNegotiated  = Is the rent currently under review, or is a new lease or agreement being negotiated?
 
-#INCLUDED IN YOUR RENT
+#LEASE OR AGREEMENT DETAILS VAT
 ##############################
 includedInYourRent.header = Lease or agreement details
 includedInYourRent.subheading = Are any of the following included in your rent?

@@ -48,6 +48,7 @@ GET         /lease-or-agreement-details                             controllers.
 POST        /lease-or-agreement-details                             controllers.Form6010.LeaseOrAgreementDetailsController.submit()
 
 GET         /included-in-your-rent                                  controllers.Form6010.IncludedInYourRentController.show()
+POST        /included-in-your-rent                                  controllers.Form6010.IncludedInYourRentController.submit()
 
 GET         /licensable-activities                                  controllers.Form6010.LicensableActivitiesController.show()
 POST        /licensable-activities                                  controllers.Form6010.LicensableActivitiesController.submit()
