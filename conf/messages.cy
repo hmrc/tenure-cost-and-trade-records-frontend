@@ -242,6 +242,8 @@ hint.LettingOtherPartOfProperties = Including advertising rights, stations or ho
 currentAnnualRent.header = Lease or agreement details
 label.currentAnnualRent = What is the current annual rent?
 hint.currentAnnualRent = For example, 32000
+error.required.currentAnnualRent = Please provide a value
+error.invalid_currency.currentAnnualRent = Please provide a number
 
 #RENT OPEN MARKET VALUE
 ##############################

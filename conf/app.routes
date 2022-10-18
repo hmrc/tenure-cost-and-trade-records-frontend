@@ -77,6 +77,7 @@ GET         /rent-open-market-value                                 controllers.
 POST        /rent-open-market-value                                 controllers.Form6010.RentOpenMarketValueController.submit()
 
 GET         /current-annual-rent                                    controllers.Form6010.CurrentAnnualRentController.show()
+POST        /current-annual-rent                                    controllers.Form6010.CurrentAnnualRentController.submit()
 
 GET         /does-the-rent-payable                                  controllers.Form6010.DoesTheRentPayableController.show()
 POST        /does-the-rent-payable                                  controllers.Form6010.DoesTheRentPayableController.submit()

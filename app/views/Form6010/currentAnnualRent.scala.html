@@ -15,7 +15,6 @@
  *@
 
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.button.Button
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
@@ -25,17 +24,13 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukTextarea
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukCharacterCount
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Radios
 
 @import uk.gov.hmrc.hmrcfrontend.views.html.components._
 
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
+
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Label
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Hint
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Input
-@import akka.protobufv3.internal.DescriptorProtos.EnumOptions
-@import uk.gov.hmrc.govukfrontend.views.Aliases.RadioItem
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Fieldset
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Legend
 @import uk.gov.hmrc.hmrcfrontend.views.Aliases.CurrencyInput
 
 
@@ -52,33 +47,34 @@
 )
 
 
-@()(implicit request: Request[_], messages: Messages)
+@(theForm: Form[AnnualRent])(implicit request: Request[_], messages: Messages)
 
 @layout(
  pageHeading = messages("currentAnnualRent.header"),
-
+ theForm = theForm
 ) {
 
- @hmrcCurrencyInput(
-  CurrencyInput(
-   id = "currentAnnualRent",
-   name = "currentAnnualRent",
-   classes = "govuk-input--width-10",
-   label = Label(
-    content = Text(messages("label.currentAnnualRent")),
-    classes = "govuk-!-font-weight-bold"
-   ),
-   hint = Some(Hint(content = Text(messages("hint.currentAnnualRent"))))
- )
- )
+ @formWithCSRF(action = controllers.Form6010.routes.CurrentAnnualRentController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
 
- @govukButton(
-  Button(
-   content = Text(messages("button.label.continue")),
-   href = Some(routes.LoginController.show().url)
+  @hmrcCurrencyInput(
+   CurrencyInput(
+    id = "currentAnnualRent",
+    name = "currentAnnualRent",
+    value = theForm("currentAnnualRent").value,
+    classes = "govuk-input--width-10 total-annual-rent",
+    label = Label(
+     content = Text(messages("label.currentAnnualRent")),
+     classes = "govuk-!-font-weight-bold"
+    ),
+    hint = Hint(content = Text(messages("hint.currentAnnualRent"))),
+    autocomplete = Some("off"),
+    errorMessage =  theForm.errors.asTextErrorMessageForField("currentAnnualRent"),
+   )
   )
- )
 
+  @includes.continueButton(govukButton)
+
+ }
 }
 
 
