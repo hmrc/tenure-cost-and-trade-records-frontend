@@ -18,7 +18,7 @@ package models.submissions
 
 import models.{NamedEnum, NamedEnumSupport}
 
-sealed trait CommenceWithinThreeYears extends NamedEnum{
+sealed trait CommenceWithinThreeYears extends NamedEnum {
   val key = "commenceWithinThreeYears"
 }
 object CommenceWithinThreeYearsYes extends CommenceWithinThreeYears {
@@ -29,11 +29,10 @@ object CommenceWithinThreeYearsNo extends CommenceWithinThreeYears {
 }
 
 object CommenceWithinThreeYear extends NamedEnumSupport[CommenceWithinThreeYears] {
-  val all = List(CommenceWithinThreeYearsYes,CommenceWithinThreeYearsNo)
+  val all = List(CommenceWithinThreeYearsYes, CommenceWithinThreeYearsNo)
 }
 
-
-sealed trait AgreedReviewedAlteredThreeYears extends NamedEnum{
+sealed trait AgreedReviewedAlteredThreeYears extends NamedEnum {
   val key = "agreedReviewedAlteredThreeYears"
 }
 object AgreedReviewedAlteredThreeYearsYes extends AgreedReviewedAlteredThreeYears {
@@ -44,11 +43,10 @@ object AgreedReviewedAlteredThreeYearsNo extends AgreedReviewedAlteredThreeYears
 }
 
 object AgreedReviewedAlteredThreeYear extends NamedEnumSupport[AgreedReviewedAlteredThreeYears] {
-  val all = List(AgreedReviewedAlteredThreeYearsYes,AgreedReviewedAlteredThreeYearsNo)
+  val all = List(AgreedReviewedAlteredThreeYearsYes, AgreedReviewedAlteredThreeYearsNo)
 }
 
-
-sealed trait RentUnderReviewNegotiated extends NamedEnum{
+sealed trait RentUnderReviewNegotiated extends NamedEnum {
   val key = "rentUnderReviewNegotiated"
 }
 object RentUnderReviewNegotiatedYes extends RentUnderReviewNegotiated {
@@ -59,5 +57,5 @@ object RentUnderReviewNegotiatedNo extends RentUnderReviewNegotiated {
 }
 
 object RentUnderReviewNegotiate extends NamedEnumSupport[RentUnderReviewNegotiated] {
-  val all = List(RentUnderReviewNegotiatedYes,RentUnderReviewNegotiatedNo)
+  val all = List(RentUnderReviewNegotiatedYes, RentUnderReviewNegotiatedNo)
 }

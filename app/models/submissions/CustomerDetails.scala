@@ -17,7 +17,7 @@
 package models.submissions
 
 case class CustomerDetails(
-                            fullName: String,
-                            userType: UserType,
-                            contactDetails: ContactDetails
-                          )
+  fullName: String,
+  userType: UserType,
+  contactDetails: ContactDetails
+)

@@ -18,7 +18,7 @@ package models.submissions
 
 import models.{NamedEnum, NamedEnumSupport}
 
-sealed trait IncludeLicensees extends NamedEnum{
+sealed trait IncludeLicensees extends NamedEnum {
   val key = "includeLicensee"
 }
 object IncludeLicenseesYes extends IncludeLicensees {
@@ -29,11 +29,10 @@ object IncludeLicenseesNo extends IncludeLicensees {
 }
 
 object IncludeLicensee extends NamedEnumSupport[IncludeLicensees] {
-  val all = List(IncludeLicenseesYes,IncludeLicenseesNo)
+  val all = List(IncludeLicenseesYes, IncludeLicenseesNo)
 }
 
-
-sealed trait IncludeOtherProperties extends NamedEnum{
+sealed trait IncludeOtherProperties extends NamedEnum {
   val key = "includeOtherProperty"
 }
 object IncludeOtherPropertiesYes extends IncludeOtherProperties {
@@ -44,11 +43,10 @@ object IncludeOtherPropertiesNo extends IncludeOtherProperties {
 }
 
 object IncludeOtherProperty extends NamedEnumSupport[IncludeOtherProperties] {
-  val all = List(IncludeOtherPropertiesYes,IncludeOtherPropertiesNo)
+  val all = List(IncludeOtherPropertiesYes, IncludeOtherPropertiesNo)
 }
 
-
-sealed trait OnlyPartOfProperties extends NamedEnum{
+sealed trait OnlyPartOfProperties extends NamedEnum {
   val key = "onlyPartOfProperty"
 }
 object OnlyPartOfPropertiesYes extends OnlyPartOfProperties {
@@ -59,11 +57,10 @@ object OnlyPartOfPropertiesNo extends OnlyPartOfProperties {
 }
 
 object OnlyPartOfProperty extends NamedEnumSupport[OnlyPartOfProperties] {
-  val all = List(OnlyPartOfPropertiesYes,OnlyPartOfPropertiesNo)
+  val all = List(OnlyPartOfPropertiesYes, OnlyPartOfPropertiesNo)
 }
 
-
-sealed trait OnlyToLands extends NamedEnum{
+sealed trait OnlyToLands extends NamedEnum {
   val key = "onlyToLand"
 }
 object OnlyToLandsYes extends OnlyToLands {
@@ -74,11 +71,10 @@ object OnlyToLandsNo extends OnlyToLands {
 }
 
 object OnlyToLand extends NamedEnumSupport[OnlyToLands] {
-  val all = List(OnlyToLandsYes,OnlyToLandsNo)
+  val all = List(OnlyToLandsYes, OnlyToLandsNo)
 }
 
-
-sealed trait ShellUnits extends NamedEnum{
+sealed trait ShellUnits extends NamedEnum {
   val key = "shellUnit"
 }
 object ShellUnitsYes extends ShellUnits {
@@ -89,5 +85,5 @@ object ShellUnitsNo extends ShellUnits {
 }
 
 object ShellUnit extends NamedEnumSupport[ShellUnits] {
-  val all = List(ShellUnitsYes,ShellUnitsNo)
+  val all = List(ShellUnitsYes, ShellUnitsNo)
 }

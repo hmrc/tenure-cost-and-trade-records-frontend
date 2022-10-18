@@ -25,11 +25,11 @@ import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class CateringOperationOrLettingAccommodationDetailsController @Inject()(
+class CateringOperationOrLettingAccommodationDetailsController @Inject() (
   mcc: MessagesControllerComponents,
   appConfig: AppConfig,
-  cateringOperationOrLettingAccommodationDetails: cateringOperationOrLettingAccommodationDetails)
-  extends FrontendController(mcc) {
+  cateringOperationOrLettingAccommodationDetails: cateringOperationOrLettingAccommodationDetails
+) extends FrontendController(mcc) {
 
   def show: Action[AnyContent] = Action.async { implicit request =>
     Future.successful(Ok(cateringOperationOrLettingAccommodationDetails()))

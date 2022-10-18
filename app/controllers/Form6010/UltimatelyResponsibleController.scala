@@ -25,11 +25,11 @@ import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class UltimatelyResponsibleController @Inject()(
+class UltimatelyResponsibleController @Inject() (
   mcc: MessagesControllerComponents,
   appConfig: AppConfig,
-  ultimatelyResponsible: ultimatelyResponsible)
-  extends FrontendController(mcc) {
+  ultimatelyResponsible: ultimatelyResponsible
+) extends FrontendController(mcc) {
 
   def show: Action[AnyContent] = Action.async { implicit request =>
     Future.successful(Ok(ultimatelyResponsible()))

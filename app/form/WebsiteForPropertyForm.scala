@@ -21,10 +21,11 @@ import play.api.data.Form
 import play.api.data.Forms.mapping
 import MappingSupport._
 
-
 object WebsiteForPropertyForm {
 
-  val websiteForPropertyForm = Form(mapping(
-    "buildingOperatingHaveAWebsite" -> buildingOperatingHaveAWebsiteType
-  )(WebsiteForPropertyDetails.apply)(WebsiteForPropertyDetails.unapply))
+  val websiteForPropertyForm = Form(
+    mapping(
+      "buildingOperatingHaveAWebsite" -> buildingOperatingHaveAWebsiteType
+    )(WebsiteForPropertyDetails.apply)(WebsiteForPropertyDetails.unapply)
+  )
 }

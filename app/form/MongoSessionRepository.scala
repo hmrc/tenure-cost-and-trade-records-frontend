@@ -28,18 +28,18 @@ import scala.concurrent.duration.Duration
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
-class MongoSessionRepository @Inject()(
-                                        config: Configuration,
-                                        mongo: MongoComponent,
-                                        timestampSupport: TimestampSupport
-                                      )(implicit ec: ExecutionContext)
-  extends MongoCacheRepository(
-    mongoComponent = mongo,
-    collectionName = "sessionFormData",
-    ttl = Duration(config.get[Long]("session.timeoutSeconds"), SECONDS),
-    timestampSupport = timestampSupport,
-    cacheIdType = SimpleCacheId
-  ) {
+class MongoSessionRepository @Inject() (
+  config: Configuration,
+  mongo: MongoComponent,
+  timestampSupport: TimestampSupport
+)(implicit ec: ExecutionContext)
+    extends MongoCacheRepository(
+      mongoComponent = mongo,
+      collectionName = "sessionFormData",
+      ttl = Duration(config.get[Long]("session.timeoutSeconds"), SECONDS),
+      timestampSupport = timestampSupport,
+      cacheIdType = SimpleCacheId
+    ) {
 
   def fetchAndGetEntry[T](cacheId: String, key: String)(implicit rds: Reads[T]): Future[Option[T]] =
     get[T](cacheId)(DataKey(key))

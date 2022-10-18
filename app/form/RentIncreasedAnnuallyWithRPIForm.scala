@@ -23,7 +23,9 @@ import play.api.data.Forms.mapping
 
 object RentIncreasedAnnuallyWithRPIForm {
 
-  val rentIncreasedAnnuallyWithRPIDetailsForm = Form(mapping(
-    "rentIncreasedAnnuallyWithRPIs" -> rentIncreasedAnnuallyWithRPIDetailsType
-  )(RentIncreasedAnnuallyWithRPIDetails.apply)(RentIncreasedAnnuallyWithRPIDetails.unapply))
+  val rentIncreasedAnnuallyWithRPIDetailsForm = Form(
+    mapping(
+      "rentIncreasedAnnuallyWithRPIs" -> rentIncreasedAnnuallyWithRPIDetailsType
+    )(RentIncreasedAnnuallyWithRPIDetails.apply)(RentIncreasedAnnuallyWithRPIDetails.unapply)
+  )
 }

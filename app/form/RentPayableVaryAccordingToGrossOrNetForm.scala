@@ -23,7 +23,9 @@ import play.api.data.Forms.mapping
 
 object RentPayableVaryAccordingToGrossOrNetForm {
 
-  val rentPayableVaryAccordingToGrossOrNetForm = Form(mapping(
-    "rentPayableVaryAccordingToGrossOrNet" -> rentPayableVaryAccordingToGrossOrNetDetailsType
-  )(RentPayableVaryAccordingToGrossOrNetDetails.apply)(RentPayableVaryAccordingToGrossOrNetDetails.unapply))
+  val rentPayableVaryAccordingToGrossOrNetForm = Form(
+    mapping(
+      "rentPayableVaryAccordingToGrossOrNet" -> rentPayableVaryAccordingToGrossOrNetDetailsType
+    )(RentPayableVaryAccordingToGrossOrNetDetails.apply)(RentPayableVaryAccordingToGrossOrNetDetails.unapply)
+  )
 }

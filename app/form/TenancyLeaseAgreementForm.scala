@@ -21,10 +21,11 @@ import models.submissions.TenancyLeaseAgreementDetails
 import play.api.data.Form
 import play.api.data.Forms.mapping
 
-
 object TenancyLeaseAgreementForm {
 
-  val tenancyLeaseAgreementForm = Form(mapping(
-    "tenancyLeaseAgreement" -> tenancyLeaseAgreementType
-  )(TenancyLeaseAgreementDetails.apply)(TenancyLeaseAgreementDetails.unapply))
+  val tenancyLeaseAgreementForm = Form(
+    mapping(
+      "tenancyLeaseAgreement" -> tenancyLeaseAgreementType
+    )(TenancyLeaseAgreementDetails.apply)(TenancyLeaseAgreementDetails.unapply)
+  )
 }

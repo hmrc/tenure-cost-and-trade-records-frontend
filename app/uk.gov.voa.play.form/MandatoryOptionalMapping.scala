@@ -23,31 +23,28 @@ import play.api.data.{FormError, Mapping}
 // https://artefacts.tax.service.gov.uk/ui/packages?name=%2Aplay-conditional-form-mapping%2A&type=packages
 
 case class MandatoryOptionalMapping[T](wrapped: Mapping[T], constraints: Seq[Constraint[Option[T]]] = Nil)
-  extends Mapping[Option[T]] {
+    extends Mapping[Option[T]] {
 
   override val format: Option[(String, Seq[Any])] = wrapped.format
 
   val key = wrapped.key
 
-  def verifying(addConstraints: Constraint[Option[T]]*): Mapping[Option[T]] = {
+  def verifying(addConstraints: Constraint[Option[T]]*): Mapping[Option[T]] =
     this.copy(constraints = this.constraints ++ addConstraints.toSeq)
-  }
 
   def bind(data: Map[String, String]): Either[Seq[FormError], Option[T]] =
     wrapped.bind(data).map(Some(_)).flatMap(applyConstraints)
 
-  def unbind(value: Option[T]): Map[String, String] = {
+  def unbind(value: Option[T]): Map[String, String] =
     value.map(wrapped.unbind).getOrElse(Map.empty)
-  }
 
   def unbindAndValidate(value: Option[T]): (Map[String, String], Seq[FormError]) = {
     val errors = collectErrors(value)
     value.map(wrapped.unbindAndValidate).map(r => r._1 -> (r._2 ++ errors)).getOrElse(Map.empty -> errors)
   }
 
-  def withPrefix(prefix: String): Mapping[Option[T]] = {
+  def withPrefix(prefix: String): Mapping[Option[T]] =
     copy(wrapped = wrapped.withPrefix(prefix))
-  }
 
   val mappings: Seq[Mapping[_]] = wrapped.mappings
 }

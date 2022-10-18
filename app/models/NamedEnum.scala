@@ -17,16 +17,15 @@
 package models
 
 trait NamedEnum {
-  def name:String
-  def key:String
+  def name: String
+  def key: String
   def msgKey: String = s"$key.$name"
 }
 
-trait NamedEnumSupport[E <: NamedEnum]{
+trait NamedEnumSupport[E <: NamedEnum] {
 
-  def all:List[E]
+  def all: List[E]
 
-  def fromName(name: String): Option[E] = {
-    all.find { _.name.equalsIgnoreCase(name) }
-  }
+  def fromName(name: String): Option[E] =
+    all.find(_.name.equalsIgnoreCase(name))
 }

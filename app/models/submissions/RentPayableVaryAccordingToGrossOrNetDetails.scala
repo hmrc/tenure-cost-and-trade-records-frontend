@@ -16,4 +16,6 @@
 
 package models.submissions
 
-case class RentPayableVaryAccordingToGrossOrNetDetails(rentPayableVaryAccordingToGrossOrNets: RentPayableVaryAccordingToGrossOrNets)
+case class RentPayableVaryAccordingToGrossOrNetDetails(
+  rentPayableVaryAccordingToGrossOrNets: RentPayableVaryAccordingToGrossOrNets
+)

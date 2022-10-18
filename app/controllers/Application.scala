@@ -28,12 +28,12 @@ import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class Application @Inject()(
+class Application @Inject() (
   mcc: MessagesControllerComponents,
   appConfig: AppConfig,
   start: start,
-  sessionTimeoutView: sessionTimeout)
-    extends FrontendController(mcc) {
+  sessionTimeoutView: sessionTimeout
+) extends FrontendController(mcc) {
 
   val index: Action[AnyContent] = Action.async { implicit request =>
     if (appConfig.startPageRedirect) {
@@ -43,7 +43,6 @@ class Application @Inject()(
     }
   }
 
-  def sessionTimeout = Action { implicit request => Ok(sessionTimeoutView()) }
-
+  def sessionTimeout = Action(implicit request => Ok(sessionTimeoutView()))
 
 }

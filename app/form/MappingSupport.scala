@@ -25,57 +25,66 @@ import play.api.data.validation.Constraints.{maxLength, minLength, nonEmpty, pat
 import play.api.data.{Forms, Mapping}
 import views.html.Form6010.licensableActivitiesDetails
 
-
 object MappingSupport {
 
-  val postcodeRegex = """(GIR ?0AA)|((([A-Z-[QVX]][0-9][0-9]?)|(([A-Z-[QVX]][A-Z-[IJZ]][0-9][0-9]?)|(([A-Z-[QVX]][0-9][A-HJKPSTUW])|([A-Z-[QVX]][A-Z-[IJZ]][0-9][ABEHMNPRVWXY])))) ?[0-9][A-Z-[CIKMOV]]{2})""" //scalastyle:ignore
-  val phoneRegex = """^^[0-9\s\+()-]+$"""
-  val userType: Mapping[UserType] = Forms.of[UserType]
-  val aboutYourPropertyType: Mapping[CurrentPropertyUsed] = Forms.of[CurrentPropertyUsed]
-  val buildingOperatingHaveAWebsiteType: Mapping[BuildingOperationHaveAWebsite] = Forms.of[BuildingOperationHaveAWebsite]
-  val cateringOperationType: Mapping[CateringOperationOrLettingAccommodation] = Forms.of[CateringOperationOrLettingAccommodation]
-  val lettingOtherPartOfPropertiesType: Mapping[LettingOtherPartOfProperties] = Forms.of[LettingOtherPartOfProperties]
-  val licensableActivitiesType: Mapping[LicensableActivities] = Forms.of[LicensableActivities]
-  val tiedForGoodsType: Mapping[TiedForGoods] = Forms.of[TiedForGoods]
-  val premisesLicenseType: Mapping[PremisesLicenses] = Forms.of[PremisesLicenses]
-  val tenancyLeaseAgreementType: Mapping[TenancyLeaseAgreements] = Forms.of[TenancyLeaseAgreements]
-  val enforcementActionType: Mapping[EnforcementActions] = Forms.of[EnforcementActions]
-  val franchiseOrLettingsTiedToPropertyType: Mapping[FranchiseOrLettingsTiedToProperties] = Forms.of[FranchiseOrLettingsTiedToProperties]
-  val rentIncreasedAnnuallyWithRPIDetailsType: Mapping[RentIncreasedAnnuallyWithRPIs] = Forms.of[RentIncreasedAnnuallyWithRPIs]
-  val rentPayableVaryAccordingToGrossOrNetDetailsType: Mapping[RentPayableVaryAccordingToGrossOrNets] = Forms.of[RentPayableVaryAccordingToGrossOrNets]
-  val rentPayableVaryOnQuantityOfBeersType: Mapping[RentPayableVaryOnQuantityOfBeers] = Forms.of[RentPayableVaryOnQuantityOfBeers]
-  val rentIncludeTradeServicesType: Mapping[RentIncludeTradesServices] = Forms.of[RentIncludeTradesServices]
-  val addressConnectionType: Mapping[AddressConnectionType] = Forms.of[AddressConnectionType]
-  val rentIncludeFixturesAndFittingsType: Mapping[RentIncludeFixturesAndFittings] = Forms.of[RentIncludeFixturesAndFittings]
-  val rentOpenMarketValuesType: Mapping[RentOpenMarketValues] = Forms.of[RentOpenMarketValues]
-  val areYouStillConnectedNoType: Mapping[AreYouStillConnectedNo] = Forms.of[AreYouStillConnectedNo]
-  val methodToFixCurrentRentsType: Mapping[MethodToFixCurrentRents] = Forms.of[MethodToFixCurrentRents]
+  val postcodeRegex                                                                                   =
+    """(GIR ?0AA)|((([A-Z-[QVX]][0-9][0-9]?)|(([A-Z-[QVX]][A-Z-[IJZ]][0-9][0-9]?)|(([A-Z-[QVX]][0-9][A-HJKPSTUW])|([A-Z-[QVX]][A-Z-[IJZ]][0-9][ABEHMNPRVWXY])))) ?[0-9][A-Z-[CIKMOV]]{2})""" //scalastyle:ignore
+  val phoneRegex                                                                                      = """^^[0-9\s\+()-]+$"""
+  val userType: Mapping[UserType]                                                                     = Forms.of[UserType]
+  val aboutYourPropertyType: Mapping[CurrentPropertyUsed]                                             = Forms.of[CurrentPropertyUsed]
+  val buildingOperatingHaveAWebsiteType: Mapping[BuildingOperationHaveAWebsite]                       =
+    Forms.of[BuildingOperationHaveAWebsite]
+  val cateringOperationType: Mapping[CateringOperationOrLettingAccommodation]                         =
+    Forms.of[CateringOperationOrLettingAccommodation]
+  val lettingOtherPartOfPropertiesType: Mapping[LettingOtherPartOfProperties]                         = Forms.of[LettingOtherPartOfProperties]
+  val licensableActivitiesType: Mapping[LicensableActivities]                                         = Forms.of[LicensableActivities]
+  val tiedForGoodsType: Mapping[TiedForGoods]                                                         = Forms.of[TiedForGoods]
+  val premisesLicenseType: Mapping[PremisesLicenses]                                                  = Forms.of[PremisesLicenses]
+  val tenancyLeaseAgreementType: Mapping[TenancyLeaseAgreements]                                      = Forms.of[TenancyLeaseAgreements]
+  val enforcementActionType: Mapping[EnforcementActions]                                              = Forms.of[EnforcementActions]
+  val franchiseOrLettingsTiedToPropertyType: Mapping[FranchiseOrLettingsTiedToProperties]             =
+    Forms.of[FranchiseOrLettingsTiedToProperties]
+  val rentIncreasedAnnuallyWithRPIDetailsType: Mapping[RentIncreasedAnnuallyWithRPIs]                 =
+    Forms.of[RentIncreasedAnnuallyWithRPIs]
+  val rentPayableVaryAccordingToGrossOrNetDetailsType: Mapping[RentPayableVaryAccordingToGrossOrNets] =
+    Forms.of[RentPayableVaryAccordingToGrossOrNets]
+  val rentPayableVaryOnQuantityOfBeersType: Mapping[RentPayableVaryOnQuantityOfBeers]                 =
+    Forms.of[RentPayableVaryOnQuantityOfBeers]
+  val rentIncludeTradeServicesType: Mapping[RentIncludeTradesServices]                                = Forms.of[RentIncludeTradesServices]
+  val addressConnectionType: Mapping[AddressConnectionType]                                           = Forms.of[AddressConnectionType]
+  val rentIncludeFixturesAndFittingsType: Mapping[RentIncludeFixturesAndFittings]                     =
+    Forms.of[RentIncludeFixturesAndFittings]
+  val rentOpenMarketValuesType: Mapping[RentOpenMarketValues]                                         = Forms.of[RentOpenMarketValues]
+  val areYouStillConnectedNoType: Mapping[AreYouStillConnectedNo]                                     = Forms.of[AreYouStillConnectedNo]
+  val methodToFixCurrentRentsType: Mapping[MethodToFixCurrentRents]                                   = Forms.of[MethodToFixCurrentRents]
 
-  val formerLeaseSurrenderedType: Mapping[FormerLeaseSurrendered] = Forms.of[FormerLeaseSurrendered]
-  val rentReducedOnReviewsType: Mapping[RentReducedOnReviews] = Forms.of[RentReducedOnReviews]
-  val capitalSumOrPremiumType: Mapping[CapitalSumOrPremiums] = Forms.of[CapitalSumOrPremiums]
-  val receivePaymentWhenLeaseGrantedType: Mapping[ReceivePaymentWhenLeaseGrants] = Forms.of[ReceivePaymentWhenLeaseGrants]
+  val formerLeaseSurrenderedType: Mapping[FormerLeaseSurrendered]                = Forms.of[FormerLeaseSurrendered]
+  val rentReducedOnReviewsType: Mapping[RentReducedOnReviews]                    = Forms.of[RentReducedOnReviews]
+  val capitalSumOrPremiumType: Mapping[CapitalSumOrPremiums]                     = Forms.of[CapitalSumOrPremiums]
+  val receivePaymentWhenLeaseGrantedType: Mapping[ReceivePaymentWhenLeaseGrants] =
+    Forms.of[ReceivePaymentWhenLeaseGrants]
 
-  val vatType: Mapping[VATs] = Forms.of[VATs]
+  val vatType: Mapping[VATs]                          = Forms.of[VATs]
   val nondomesticRatesType: Mapping[NonDomesticRates] = Forms.of[NonDomesticRates]
-  val waterChargesType: Mapping[WaterCharges] = Forms.of[WaterCharges]
+  val waterChargesType: Mapping[WaterCharges]         = Forms.of[WaterCharges]
 
-  val commenceWithinThreeYearsType: Mapping[CommenceWithinThreeYears] = Forms.of[CommenceWithinThreeYears]
-  val agreedReviewedAlteredThreeYearsType: Mapping[AgreedReviewedAlteredThreeYears] = Forms.of[AgreedReviewedAlteredThreeYears]
-  val rentUnderReviewNegotiatedType: Mapping[RentUnderReviewNegotiated] = Forms.of[RentUnderReviewNegotiated]
+  val commenceWithinThreeYearsType: Mapping[CommenceWithinThreeYears]               = Forms.of[CommenceWithinThreeYears]
+  val agreedReviewedAlteredThreeYearsType: Mapping[AgreedReviewedAlteredThreeYears] =
+    Forms.of[AgreedReviewedAlteredThreeYears]
+  val rentUnderReviewNegotiatedType: Mapping[RentUnderReviewNegotiated]             = Forms.of[RentUnderReviewNegotiated]
 
-  val includeLicenseeType: Mapping[IncludeLicensees] = Forms.of[IncludeLicensees]
+  val includeLicenseeType: Mapping[IncludeLicensees]            = Forms.of[IncludeLicensees]
   val includeOtherPropertyType: Mapping[IncludeOtherProperties] = Forms.of[IncludeOtherProperties]
-  val onlyPartOfPropertyType: Mapping[OnlyPartOfProperties] = Forms.of[OnlyPartOfProperties]
-  val onlyToLandType: Mapping[OnlyToLands] = Forms.of[OnlyToLands]
-  val shellUnitType: Mapping[ShellUnits] = Forms.of[ShellUnits]
+  val onlyPartOfPropertyType: Mapping[OnlyPartOfProperties]     = Forms.of[OnlyPartOfProperties]
+  val onlyToLandType: Mapping[OnlyToLands]                      = Forms.of[OnlyToLands]
+  val shellUnitType: Mapping[ShellUnits]                        = Forms.of[ShellUnits]
 
   val tiedForGoodsDetailsType: Mapping[TiedForGoodsInformationDetail] = Forms.of[TiedForGoodsInformationDetail]
-  val postcode: Mapping[String] = PostcodeMapping.postcode()
+  val postcode: Mapping[String]                                       = PostcodeMapping.postcode()
 
   val contactDetailsMapping: Mapping[ContactDetails] =
     mapping(
-      "phone" -> default(text, "").verifying(
+      "phone"  -> default(text, "").verifying(
         nonEmpty(errorMessage = Errors.contactPhoneRequired),
         pattern(phoneRegex.r, error = Errors.invalidPhone),
         minLength(11, "error.contact.phone.minLength"),
@@ -92,16 +101,15 @@ object MappingSupport {
       nonEmpty(errorMessage = "error.buildingNameNumber.required"),
       maxLength(50, "error.buildingNameNumber.maxLength")
     ),
-    "street1" -> optional(text(maxLength = 50)),
-    "street2" -> optional(text(maxLength = 50)),
-    "postcode" ->  nonEmptyTextOr("postcode", postcode, "error.postcode.required")
+    "street1"            -> optional(text(maxLength = 50)),
+    "street2"            -> optional(text(maxLength = 50)),
+    "postcode"           -> nonEmptyTextOr("postcode", postcode, "error.postcode.required")
   )(Address.apply)(Address.unapply)
 
-  def mandatoryBooleanWithError(message: String) = {
+  def mandatoryBooleanWithError(message: String) =
     optional(boolean)
       .verifying(message, _.isDefined)
       .transform({ s: Option[Boolean] => s.get }, { v: Boolean => Some(v) })
-  }
 
   val mandatoryBoolean = optional(boolean)
     .verifying(Errors.booleanMissing, _.isDefined)

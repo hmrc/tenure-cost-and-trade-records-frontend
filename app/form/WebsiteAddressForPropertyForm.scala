@@ -22,14 +22,15 @@ import play.api.data.Form
 import play.api.data.Forms.{default, mapping, text}
 import play.api.data.validation.Constraints.nonEmpty
 
-
 object WebsiteAddressForPropertyForm {
 
-  val websiteAddressForPropertyForm = Form(mapping(
-    "websiteAddressForProperty" ->
-      default(text, "").verifying(
-        nonEmpty(errorMessage = "error.websiteAddressForProperty.required")
-      ))(WebsiteAddressForPropertyDetails.apply)(WebsiteAddressForPropertyDetails.unapply))
+  val websiteAddressForPropertyForm = Form(
+    mapping(
+      "websiteAddressForProperty" ->
+        default(text, "").verifying(
+          nonEmpty(errorMessage = "error.websiteAddressForProperty.required")
+        )
+    )(WebsiteAddressForPropertyDetails.apply)(WebsiteAddressForPropertyDetails.unapply)
+  )
 
 }
-

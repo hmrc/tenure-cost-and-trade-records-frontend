@@ -24,13 +24,13 @@ import views.html.Form6010.aboutYourTradingHistory
 import javax.inject.{Inject, Singleton}
 
 @Singleton
-class AboutYourTradingHistoryController @Inject()(
+class AboutYourTradingHistoryController @Inject() (
   mcc: MessagesControllerComponents,
   appConfig: AppConfig,
-  aboutYourTradingHistory: aboutYourTradingHistory)
-  extends FrontendController(mcc) {
+  aboutYourTradingHistory: aboutYourTradingHistory
+) extends FrontendController(mcc) {
 
-  def show: Action[AnyContent] = Action{ implicit request =>
+  def show: Action[AnyContent] = Action { implicit request =>
     Ok(aboutYourTradingHistory())
   }
 

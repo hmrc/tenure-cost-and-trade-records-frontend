@@ -23,9 +23,11 @@ import play.api.data.Forms.mapping
 
 object LeaseOrAgreementForm {
 
-  val leaseOrAgreementForm = Form(mapping(
-    "vat" -> vatType,
-    "nondomesticRates" -> nondomesticRatesType,
-    "waterCharges" -> waterChargesType
-  )(LeaseOrAgreementDetails.apply)(LeaseOrAgreementDetails.unapply))
+  val leaseOrAgreementForm = Form(
+    mapping(
+      "vat"              -> vatType,
+      "nondomesticRates" -> nondomesticRatesType,
+      "waterCharges"     -> waterChargesType
+    )(LeaseOrAgreementDetails.apply)(LeaseOrAgreementDetails.unapply)
+  )
 }

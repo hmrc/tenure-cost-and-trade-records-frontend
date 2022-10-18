@@ -29,3 +29,5 @@ lazy val microservice = Project(appName, file("."))
   .settings(resolvers += Resolver.jcenterRepo)
   .settings(CodeCoverageSettings.settings: _*)
   .disablePlugins(JUnitXmlReportPlugin)
+
+addCommandAlias("precommit", ";scalafmt;test:scalafmt;it:scalafmt;coverage;test;it:test;coverageReport")

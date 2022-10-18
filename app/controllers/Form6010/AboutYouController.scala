@@ -27,10 +27,7 @@ import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class AboutYouController @Inject()(
-  mcc: MessagesControllerComponents,
-  login: login,
-  aboutYouView: aboutYou)
+class AboutYouController @Inject() (mcc: MessagesControllerComponents, login: login, aboutYouView: aboutYou)
     extends FrontendController(mcc) {
 
   def show: Action[AnyContent] = Action.async { implicit request =>
@@ -38,9 +35,11 @@ class AboutYouController @Inject()(
   }
 
   def submit = Action.async { implicit request =>
-    aboutYouForm.bindFromRequest().fold(
-      formWithErrors => Future.successful(BadRequest(aboutYouView(formWithErrors))),
-      data => Future.successful(Ok(login(loginForm)))
-    )
+    aboutYouForm
+      .bindFromRequest()
+      .fold(
+        formWithErrors => Future.successful(BadRequest(aboutYouView(formWithErrors))),
+        data => Future.successful(Ok(login(loginForm)))
+      )
   }
 }

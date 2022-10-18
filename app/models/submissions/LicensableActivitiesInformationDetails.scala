@@ -17,5 +17,5 @@
 package models.submissions
 
 case class LicensableActivitiesInformationDetails(
-                                                   licensableActivitiesDetails: String
-                                                 )
+  licensableActivitiesDetails: String
+)

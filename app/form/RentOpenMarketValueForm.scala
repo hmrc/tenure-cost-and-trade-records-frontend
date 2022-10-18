@@ -23,7 +23,9 @@ import play.api.data.Forms.mapping
 
 object RentOpenMarketValueForm {
 
-  val rentOpenMarketValuesForm = Form(mapping(
-    "rentOpenMarketValue" -> rentOpenMarketValuesType
-  )(RentOpenMarketValueDetails.apply)(RentOpenMarketValueDetails.unapply))
+  val rentOpenMarketValuesForm = Form(
+    mapping(
+      "rentOpenMarketValue" -> rentOpenMarketValuesType
+    )(RentOpenMarketValueDetails.apply)(RentOpenMarketValueDetails.unapply)
+  )
 }

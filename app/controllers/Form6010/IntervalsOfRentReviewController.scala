@@ -24,11 +24,11 @@ import views.html.Form6010.intervalsOfRentReview
 import javax.inject.{Inject, Singleton}
 
 @Singleton
-class IntervalsOfRentReviewController @Inject()(
+class IntervalsOfRentReviewController @Inject() (
   mcc: MessagesControllerComponents,
   appConfig: AppConfig,
-  intervalsOfRentReview: intervalsOfRentReview)
-  extends FrontendController(mcc) {
+  intervalsOfRentReview: intervalsOfRentReview
+) extends FrontendController(mcc) {
 
   def show: Action[AnyContent] = Action { implicit request =>
     Ok(intervalsOfRentReview())

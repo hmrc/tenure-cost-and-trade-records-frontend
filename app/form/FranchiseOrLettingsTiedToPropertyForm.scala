@@ -23,7 +23,9 @@ import play.api.data.Forms.mapping
 
 object FranchiseOrLettingsTiedToPropertyForm {
 
-  val franchiseOrLettingsTiedToPropertyForm = Form(mapping(
-    "franchiseLettings" -> franchiseOrLettingsTiedToPropertyType
-  )(FranchiseOrLettingsTiedToPropertiesDetails.apply)(FranchiseOrLettingsTiedToPropertiesDetails.unapply))
+  val franchiseOrLettingsTiedToPropertyForm = Form(
+    mapping(
+      "franchiseLettings" -> franchiseOrLettingsTiedToPropertyType
+    )(FranchiseOrLettingsTiedToPropertiesDetails.apply)(FranchiseOrLettingsTiedToPropertiesDetails.unapply)
+  )
 }

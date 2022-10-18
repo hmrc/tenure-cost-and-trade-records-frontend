@@ -27,21 +27,23 @@ import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class DoesTheRentPayableController @Inject()(
+class DoesTheRentPayableController @Inject() (
   mcc: MessagesControllerComponents,
   login: login,
-  doesTheRentPayableView: doesTheRentPayable)
-  extends FrontendController(mcc) {
+  doesTheRentPayableView: doesTheRentPayable
+) extends FrontendController(mcc) {
 
   def show: Action[AnyContent] = Action.async { implicit request =>
     Future.successful(Ok(doesTheRentPayableView(doesTheRentPayableForm)))
   }
 
   def submit = Action.async { implicit request =>
-    doesTheRentPayableForm.bindFromRequest().fold(
-      formWithErrors => Future.successful(BadRequest(doesTheRentPayableView(formWithErrors))),
-      data => Future.successful(Ok(login(loginForm)))
-    )
+    doesTheRentPayableForm
+      .bindFromRequest()
+      .fold(
+        formWithErrors => Future.successful(BadRequest(doesTheRentPayableView(formWithErrors))),
+        data => Future.successful(Ok(login(loginForm)))
+      )
   }
 
 }

@@ -18,7 +18,7 @@ package models.submissions
 
 import models.{NamedEnum, NamedEnumSupport}
 
-sealed trait AreYouStillConnectedNo extends NamedEnum{
+sealed trait AreYouStillConnectedNo extends NamedEnum {
   val key = "areYouConnectedNo"
 }
 object AreYouStillConnectedNoYes extends AreYouStillConnectedNo {
@@ -29,5 +29,5 @@ object AreYouStillConnectedNoNo extends AreYouStillConnectedNo {
 }
 
 object NotStillConnected extends NamedEnumSupport[AreYouStillConnectedNo] {
-  val all = List(AreYouStillConnectedNoYes,AreYouStillConnectedNoNo)
+  val all = List(AreYouStillConnectedNoYes, AreYouStillConnectedNoNo)
 }
