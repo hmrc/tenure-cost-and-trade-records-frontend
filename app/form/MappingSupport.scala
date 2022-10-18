@@ -60,6 +60,10 @@ object MappingSupport {
   val nondomesticRatesType: Mapping[NonDomesticRates] = Forms.of[NonDomesticRates]
   val waterChargesType: Mapping[WaterCharges] = Forms.of[WaterCharges]
 
+  val commenceWithinThreeYearsType: Mapping[CommenceWithinThreeYears] = Forms.of[CommenceWithinThreeYears]
+  val agreedReviewedAlteredThreeYearsType: Mapping[AgreedReviewedAlteredThreeYears] = Forms.of[AgreedReviewedAlteredThreeYears]
+  val rentUnderReviewNegotiatedType: Mapping[RentUnderReviewNegotiated] = Forms.of[RentUnderReviewNegotiated]
+
   val tiedForGoodsDetailsType: Mapping[TiedForGoodsInformationDetail] = Forms.of[TiedForGoodsInformationDetail]
   val postcode: Mapping[String] = PostcodeMapping.postcode()
 
