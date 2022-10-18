@@ -257,13 +257,15 @@ label.rentOpenMarketValue = Is the rent based on the open market value?
 #DOES THE RENT PAYABLE
 ##############################
 rentPayable.header = Does the rent payable
-label.rentPayable.includeLicensee = include licensee’s, manager’s or staff living accomodation?
-label.rentPayable.includeOtherProperty = include other property?
-label.rentPayable.onlyPartOfProperty = relate to only part of the property?
-label.rentPayable.onlyToLand = relate only to land (excluding buildings)?
-label.rentPayable.shellUnit = relate to a ’shell’ unit (did you have to fit the property out yourself)?
-label.rentPayable.details = Please give details if you answered yes to any of these questions
-hint.rentPayable.details = For example, the rent includes an upstairs flat, or also includes the premises next door
+label.includeLicensee = include licensee’s, manager’s or staff living accomodation?
+label.includeOtherProperty = include other property?
+label.onlyPartOfProperty = relate to only part of the property?
+label.onlyToLand = relate only to land (excluding buildings)?
+label.shellUnit = relate to a ’shell’ unit (did you have to fit the property out yourself)?
+label.detailsToQuestions = Please give details if you answered yes to any of these questions
+hint.detailsToQuestions = For example, the rent includes an upstairs flat, or also includes the premises next door
+error.detailsToQuestions.required = Please provide further information
+error.detailsToQuestions.maxLength = This must be 1000 characters or fewer
 
 #RENT PAYABLE VARY ON QUANTITY OF BEERS
 ##############################

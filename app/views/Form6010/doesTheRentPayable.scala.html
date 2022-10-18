@@ -15,9 +15,7 @@
  *@
 
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.button.Button
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.textarea.Textarea
 
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
@@ -27,14 +25,17 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukCharacterCount
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
 
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
+
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Label
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Radios
 @import uk.gov.hmrc.govukfrontend.views.Aliases.RadioItem
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Fieldset
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Legend
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Hint
+@import uk.gov.hmrc.govukfrontend.views.Aliases.CharacterCount
 
-
+@import models.submissions.DoesTheRentPayable
 
 @this(layout: Layout,
         govukButton: GovukButton,
@@ -48,165 +49,167 @@
 )
 
 
-@()(implicit request: Request[_], messages: Messages)
+@(theForm: Form[DoesTheRentPayable])(implicit request: Request[_], messages: Messages)
 
 @layout(
  pageHeading = messages("rentPayable.header"),
-
+ theForm = theForm
 ) {
 
- @govukRadios(
-  Radios(
-   name = "rentPayable",
-   classes = "radio-button-that-show-hides",
-   idPrefix = Option("rentPayable"),
-   items = Seq(
-    "yes" -> messages("label.yes"),
-    "no" -> messages("label.no")
-   ).map( radioItem => RadioItem (
-    content = Text(radioItem._2),
-    value=Option(radioItem._1)
-   )
-   ),
-   fieldset = Option(
-    Fieldset(
-     legend = Option(
-      Legend(
-       content = Text(messages("label.rentPayable.includeLicensee")),
-       classes = "govuk-!-font-weight-bold"
+ @formWithCSRF(action = controllers.Form6010.routes.DoesTheRentPayableController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
+
+  @govukRadios(
+   Radios(
+    name = "includeLicensee",
+    idPrefix = Option("includeLicensee"),
+    items = Seq(
+     "yes" -> messages("label.yes"),
+     "no" -> messages("label.no")
+    ).map(radioItem => RadioItem(
+     content = Text(radioItem._2),
+     checked = radioItem._1.equals(theForm("includeLicensee").value.getOrElse("")),
+     value = Option(radioItem._1)
+    )
+    ),
+    errorMessage = theForm.errors.asTextErrorMessageForField("includeLicensee"),
+    fieldset = Option(
+     Fieldset(
+      legend = Option(
+       Legend(
+        content = Text(messages("label.includeLicensee")),
+        classes = "govuk-!-font-weight-bold"
+       )
       )
      )
     )
    )
   )
- )
 
- @govukRadios(
-  Radios(
-   name = "rentPayable",
-   classes = "radio-button-that-show-hides",
-   idPrefix = Option("rentPayable"),
-   items = Seq(
-    "yes" -> messages("label.yes"),
-    "no" -> messages("label.no")
-   ).map( radioItem => RadioItem (
-    content = Text(radioItem._2),
-    value=Option(radioItem._1)
-   )
-   ),
-   fieldset = Option(
-    Fieldset(
-     legend = Option(
-      Legend(
-       content = Text(messages("label.rentPayable.includeOtherProperty")),
-       classes = "govuk-!-font-weight-bold"
+  @govukRadios(
+   Radios(
+    name = "includeOtherProperty",
+    idPrefix = Option("includeOtherProperty"),
+    items = Seq(
+     "yes" -> messages("label.yes"),
+     "no" -> messages("label.no")
+    ).map(radioItem => RadioItem(
+     content = Text(radioItem._2),
+     checked = radioItem._1.equals(theForm("includeOtherProperty").value.getOrElse("")),
+     value = Option(radioItem._1)
+    )
+    ),
+    errorMessage = theForm.errors.asTextErrorMessageForField("includeOtherProperty"),
+    fieldset = Option(
+     Fieldset(
+      legend = Option(
+       Legend(
+        content = Text(messages("label.includeOtherProperty")),
+        classes = "govuk-!-font-weight-bold"
+       )
       )
      )
     )
    )
   )
- )
 
- @govukRadios(
-  Radios(
-   name = "rentPayable",
-   classes = "radio-button-that-show-hides",
-   idPrefix = Option("rentPayable"),
-   items = Seq(
-    "yes" -> messages("label.yes"),
-    "no" -> messages("label.no")
-   ).map( radioItem => RadioItem (
-    content = Text(radioItem._2),
-    value=Option(radioItem._1)
-   )
-   ),
-   fieldset = Option(
-    Fieldset(
-     legend = Option(
-      Legend(
-       content = Text(messages("label.rentPayable.onlyPartOfProperty")),
-       classes = "govuk-!-font-weight-bold"
+  @govukRadios(
+   Radios(
+    name = "onlyPartOfProperty",
+    idPrefix = Option("onlyPartOfProperty"),
+    items = Seq(
+     "yes" -> messages("label.yes"),
+     "no" -> messages("label.no")
+    ).map(radioItem => RadioItem(
+     content = Text(radioItem._2),
+     checked = radioItem._1.equals(theForm("onlyPartOfProperty").value.getOrElse("")),
+     value = Option(radioItem._1)
+    )
+    ),
+    errorMessage = theForm.errors.asTextErrorMessageForField("onlyPartOfProperty"),
+    fieldset = Option(
+     Fieldset(
+      legend = Option(
+       Legend(
+        content = Text(messages("label.onlyPartOfProperty")),
+        classes = "govuk-!-font-weight-bold"
+       )
       )
      )
     )
    )
   )
- )
 
- @govukRadios(
-  Radios(
-   name = "rentPayable",
-   classes = "radio-button-that-show-hides",
-   idPrefix = Option("rentPayable"),
-   items = Seq(
-    "yes" -> messages("label.yes"),
-    "no" -> messages("label.no")
-   ).map( radioItem => RadioItem (
-    content = Text(radioItem._2),
-    value=Option(radioItem._1)
-   )
-   ),
-   fieldset = Option(
-    Fieldset(
-     legend = Option(
-      Legend(
-       content = Text(messages("label.rentPayable.onlyToLand")),
-       classes = "govuk-!-font-weight-bold"
+  @govukRadios(
+   Radios(
+    name = "onlyToLand",
+    idPrefix = Option("onlyToLand"),
+    items = Seq(
+     "yes" -> messages("label.yes"),
+     "no" -> messages("label.no")
+    ).map(radioItem => RadioItem(
+     content = Text(radioItem._2),
+     checked = radioItem._1.equals(theForm("onlyToLand").value.getOrElse("")),
+     value = Option(radioItem._1)
+    )
+    ),
+    errorMessage = theForm.errors.asTextErrorMessageForField("onlyToLand"),
+    fieldset = Option(
+     Fieldset(
+      legend = Option(
+       Legend(
+        content = Text(messages("label.onlyToLand")),
+        classes = "govuk-!-font-weight-bold"
+       )
       )
      )
     )
    )
   )
- )
 
- @govukRadios(
-  Radios(
-   name = "rentPayable",
-   classes = "radio-button-that-show-hides",
-   idPrefix = Option("rentPayable"),
-   items = Seq(
-    "yes" -> messages("label.yes"),
-    "no" -> messages("label.no")
-   ).map( radioItem => RadioItem (
-    content = Text(radioItem._2),
-    value=Option(radioItem._1)
-   )
-   ),
-   fieldset = Option(
-    Fieldset(
-     legend = Option(
-      Legend(
-       content = Text(messages("label.rentPayable.shellUnit")),
-       classes = "govuk-!-font-weight-bold"
+  @govukRadios(
+   Radios(
+    name = "shellUnit",
+    idPrefix = Option("shellUnit"),
+    items = Seq(
+     "yes" -> messages("label.yes"),
+     "no" -> messages("label.no")
+    ).map(radioItem => RadioItem(
+     content = Text(radioItem._2),
+     checked = radioItem._1.equals(theForm("shellUnit").value.getOrElse("")),
+     value = Option(radioItem._1)
+    )
+    ),
+    errorMessage = theForm.errors.asTextErrorMessageForField("shellUnit"),
+    fieldset = Option(
+     Fieldset(
+      legend = Option(
+       Legend(
+        content = Text(messages("label.shellUnit")),
+        classes = "govuk-!-font-weight-bold"
+       )
       )
      )
     )
    )
   )
- )
 
- @govukTextarea(
-  Textarea(
-   id = "licensableActivitiesDetails",
-   name = "licensableActivitiesDetails",
-   rows = 5,
-   label = Label(
-    content = Text(messages("label.rentPayable.details")),
-    classes = "govuk-!-font-weight-bold"
-   ),
-   hint = Some(Hint(content = Text(messages("hint.rentPayable.details")))),
+  @govukCharacterCount(
+   CharacterCount(
+    id = "detailsToQuestions",
+    name = "detailsToQuestions",
+    rows = 5,
+    maxLength = 1000,
+    label = Label(
+     content = Text(messages("label.detailsToQuestions")),
+     classes = "govuk-!-font-weight-bold"
+    ),
+    errorMessage = theForm.errors.asTextErrorMessageForField("detailsToQuestions"),
+    hint = Some(Hint(content = Text(messages("hint.detailsToQuestions")))),
+   )
   )
-  )
- )
 
- @govukButton(
-  Button(
-   content = Text(messages("button.label.continue")),
-   href = Some(routes.LoginController.show().url)
-  )
- )
-
+  @includes.continueButton(govukButton)
+ }
 }
-
 
 

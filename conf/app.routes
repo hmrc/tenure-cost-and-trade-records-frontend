@@ -79,6 +79,7 @@ POST        /rent-open-market-value                                 controllers.
 GET         /current-annual-rent                                    controllers.Form6010.CurrentAnnualRentController.show()
 
 GET         /does-the-rent-payable                                  controllers.Form6010.DoesTheRentPayableController.show()
+POST        /does-the-rent-payable                                  controllers.Form6010.DoesTheRentPayableController.submit()
 
 GET         /rent-payable-vary-on-quantity-of-beers                 controllers.Form6010.RentPayableVaryOnQuantityOfBeersController.show()
 POST        /rent-payable-vary-on-quantity-of-beers                 controllers.Form6010.RentPayableVaryOnQuantityOfBeersController.submit()
