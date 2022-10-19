@@ -332,6 +332,8 @@ label.rentIncludeFixturesAndFittings = Does the rent include any trade fixtures 
 ##############################
 rentIncludeFixturesAndFittingsDetails.header = About your fixtures and fittings
 label.rentIncludeFixturesAndFittingsDetails = Where specifically itemised, what sum is included in the rent (excluding VAT)?
+error.required.rentIncludeFixturesAndFittingsDetails = Please provide a value
+error.invalid_currency.rentIncludeFixturesAndFittingsDetails = Please provide a number
 
 #INCENTIVES, PAYMENTS AND CONDITIONS
 ##############################

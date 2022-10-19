@@ -92,6 +92,10 @@ object MappingSupport {
     "annualRentExcludingVat" -> currencyMapping(".annualRentExcludingVat")
   )(AnnualRent.apply)(AnnualRent.unapply).verifying(Errors.maxCurrencyAmountExceeded, _.amount <= cdbMaxCurrencyAmount)
 
+  lazy val rentIncludeFixturesAndFittingsDetails: Mapping[AnnualRent] = mapping(
+    "rentIncludeFixturesAndFittingsDetails" -> currencyMapping(".rentIncludeFixturesAndFittingsDetails")
+  )(AnnualRent.apply)(AnnualRent.unapply).verifying(Errors.maxCurrencyAmountExceeded, _.amount <= cdbMaxCurrencyAmount)
+
   val currency: Mapping[BigDecimal] = currencyMapping()
 
   def currencyMapping(fieldErrorPart: String = ""): Mapping[BigDecimal] = default(text, "")
