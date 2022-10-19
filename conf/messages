@@ -328,16 +328,22 @@ hint.rentIncludeTradeServices = For example, maintenance of trade fixtures and f
 rentIncludeTradeServicesDetails.header = About the services your landlord provides
 label.rentIncludeTradeServicesDetails = Where specifically itemised, what sum is included in the rent (excluding VAT)?
 label.rentIncludeTradeServicesDetails.describeServices = Please describe the services provided
+error.required.rentIncludeTradeServicesDetails = Please provide a value
+error.invalid_currency.rentIncludeTradeServicesDetails = Please provide a number
 
 #RENT INCLUDE FIXTURES AND FITTINGS
 ##############################
 rentIncludeFixturesAndFittings.header = About your lease or agreement
 label.rentIncludeFixturesAndFittings = Does the rent include any trade fixtures and fittings, plant and machinery, furniture and other equipment belonging to the landlord?
+error.required.rentIncludeFixturesAndFittings = Please provide a value
+error.invalid_currency.rentIncludeFixturesAndFittings = Please provide a number
 
 #RENT INCLUDE FIXTURES AND FITTINGS DETAILS
 ##############################
 rentIncludeFixturesAndFittingsDetails.header = About your fixtures and fittings
 label.rentIncludeFixturesAndFittingsDetails = Where specifically itemised, what sum is included in the rent (excluding VAT)?
+error.required.rentIncludeFixturesAndFittingsDetails = Please provide a value
+error.invalid_currency.rentIncludeFixturesAndFittingsDetails = Please provide a number
 
 #INCENTIVES, PAYMENTS AND CONDITIONS
 ##############################
