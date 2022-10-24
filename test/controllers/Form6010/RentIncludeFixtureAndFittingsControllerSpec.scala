@@ -16,6 +16,9 @@
 
 package controllers.Form6010
 
+import form.Errors
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
@@ -25,7 +28,12 @@ import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 
-class RentIncludeFixtureAndFittingsControllerSpec extends AnyWordSpec with Matchers with GuiceOneAppPerSuite {
+class RentIncludeFixtureAndFittingsControllerSpec extends AnyFlatSpec with should.Matchers with GuiceOneAppPerSuite {
+
+  import TestData._
+  import form.RentIncludeFixtureAndFittingsForm._
+  import utils.FormBindingTestAssertions._
+
   override def fakeApplication(): Application =
     new GuiceApplicationBuilder()
       .configure(
@@ -38,16 +46,30 @@ class RentIncludeFixtureAndFittingsControllerSpec extends AnyWordSpec with Match
 
   private val controller = app.injector.instanceOf[RentIncludeFixtureAndFittingsController]
 
-  "GET /" should {
-    "return 200" in {
+    it should "return 200" in {
       val result = controller.show(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
-    "return HTML" in {
+    it should "return HTML" in {
       val result = controller.show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
+
+  it should "error if rentIncludeFixturesAndFittings is missing" in {
+    val formData = baseFormData - errorKey.rentIncludeFixturesAndFittings
+    val form = rentIncludeFixturesAndFittingsForm.bind(formData)
+
+    mustContainError(errorKey.rentIncludeFixturesAndFittings, Errors.booleanMissing, form)
+  }
+
+  object TestData {
+    val errorKey = new {
+      val rentIncludeFixturesAndFittings: String = "rentIncludeFixturesAndFittings"
+    }
+
+    val baseFormData: Map[String, String] = Map(
+      "rentIncludeFixturesAndFittings" -> "yes")
   }
 }

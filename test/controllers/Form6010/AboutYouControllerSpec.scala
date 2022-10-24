@@ -48,18 +48,17 @@ class AboutYouControllerSpec extends AnyFlatSpec with should.Matchers with Guice
 
   private val controller = app.injector.instanceOf[AboutYouController]
 
-//  "GET /" should {
-//    "return 200" in {
-//      val result = controller.show(fakeRequest)
-//      status(result) shouldBe Status.OK
-//    }
-//
-//    "return HTML" in {
-//      val result = controller.show(fakeRequest)
-//      contentType(result) shouldBe Some("text/html")
-//      charset(result) shouldBe Some("utf-8")
-//    }
-//  }
+
+    it should "return 200" in {
+      val result = controller.show(fakeRequest)
+      status(result) shouldBe Status.OK
+    }
+
+    it should "return HTML" in {
+      val result = controller.show(fakeRequest)
+      contentType(result) shouldBe Some("text/html")
+      charset(result) shouldBe Some("utf-8")
+    }
 
   "About you form" should "error if fullName is missing " in {
     val formData = baseFormData - errorKey.fullName
