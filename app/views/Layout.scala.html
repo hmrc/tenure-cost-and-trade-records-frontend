@@ -24,11 +24,17 @@
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.notificationbanner.NotificationBanner
 @import play.api.Configuration
 @import views.html.govuk.{head, scripts}
+@import uk.gov.hmrc.hmrcfrontend.views.html.helpers.HmrcInternalHead
+@import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcInternalHeader
+@import uk.gov.hmrc.hmrcfrontend.views.viewmodels.internalheader.InternalHeader
+@import views.html.helper.CSPNonce
 
 
 @this(
         appConfig: AppConfig,
         hmrcLayout: HmrcLayout,
+        hmrcInternalHead: HmrcInternalHead,
+        hmrcInternalHeader: HmrcInternalHeader,
         headTemplate: head,
         scriptsTemplate: scripts,
         govukPhaseBanner: GovukPhaseBanner,
@@ -114,6 +120,7 @@
     serviceName = Some(messages("site.service_name")),
     serviceUrl= Some(routes.LoginController.show.url),
     isWelshTranslationAvailable = true,
+    nonce = CSPNonce.get,
     additionalHeadBlock = Some(headTemplate(withTimeoutDialog)),
     additionalScriptsBlock = Some(scriptsTemplate()),
     beforeContentBlock = Option(beforeBLock)
