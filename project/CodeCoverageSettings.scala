@@ -10,13 +10,21 @@ object CodeCoverageSettings {
     "app.*",
     "prod.*",
     ".*Routes.*",
+    ".*RoutesPrefix.*",
+    ".*Filters?",
+    "MicroserviceAuditConnector",
+    "Module",
+    "GraphiteStartUp",
+    """.*\.Reverse[^.]*;""",
+    """views\.*""",
+    ".*.template.scala",
     "testOnly.*",
     "testOnlyDoNotUseInAppConf.*"
   )
 
   val settings: Seq[Setting[_]] = Seq(
     ScoverageKeys.coverageExcludedPackages := excludedPackages.mkString(";"),
-    ScoverageKeys.coverageMinimumStmtTotal := 80,
+    ScoverageKeys.coverageMinimumStmtTotal := 76,
     ScoverageKeys.coverageFailOnMinimum := true,
     ScoverageKeys.coverageHighlighting := true
   )

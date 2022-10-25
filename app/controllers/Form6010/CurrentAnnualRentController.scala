@@ -31,18 +31,20 @@ import scala.concurrent.Future
 class CurrentAnnualRentController @Inject() (
   mcc: MessagesControllerComponents,
   login: login,
-  currentAnnualRentView: currentAnnualRent)
-  extends FrontendController(mcc) {
+  currentAnnualRentView: currentAnnualRent
+) extends FrontendController(mcc) {
 
   def show: Action[AnyContent] = Action.async { implicit request =>
     Future.successful(Ok(currentAnnualRentView(currentAnnualRentForm)))
   }
 
   def submit = Action.async { implicit request =>
-    currentAnnualRentForm.bindFromRequest().fold(
-      formWithErrors => Future.successful(BadRequest(currentAnnualRentView(formWithErrors))),
-      data => Future.successful(Ok(login(loginForm)))
-    )
+    currentAnnualRentForm
+      .bindFromRequest()
+      .fold(
+        formWithErrors => Future.successful(BadRequest(currentAnnualRentView(formWithErrors))),
+        data => Future.successful(Ok(login(loginForm)))
+      )
   }
 
 }

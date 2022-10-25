@@ -16,8 +16,9 @@
 
 package controllers.Form6010
 
-import org.scalatest.matchers.should.Matchers
-import org.scalatest.wordspec.AnyWordSpec
+import form.Errors
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.Application
 import play.api.http.Status
@@ -25,7 +26,12 @@ import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 
-class RentIncludeTradeServicesControllerSpec extends AnyWordSpec with Matchers with GuiceOneAppPerSuite {
+class RentIncludeTradeServicesControllerSpec extends AnyFlatSpec with should.Matchers with GuiceOneAppPerSuite {
+
+  import TestData._
+  import form.RentIncludeTradeServicesForm._
+  import utils.FormBindingTestAssertions._
+
   override def fakeApplication(): Application =
     new GuiceApplicationBuilder()
       .configure(
@@ -38,16 +44,29 @@ class RentIncludeTradeServicesControllerSpec extends AnyWordSpec with Matchers w
 
   private val controller = app.injector.instanceOf[RentIncludeTradeServicesController]
 
-  "GET /" should {
-    "return 200" in {
-      val result = controller.show(fakeRequest)
-      status(result) shouldBe Status.OK
+  it should "return 200" in {
+    val result = controller.show(fakeRequest)
+    status(result) shouldBe Status.OK
+  }
+
+  it should "return HTML" in {
+    val result = controller.show(fakeRequest)
+    contentType(result) shouldBe Some("text/html")
+    charset(result)     shouldBe Some("utf-8")
+  }
+
+  it should "error if rentIncludeTradeServices is missing" in {
+    val formData = baseFormData - errorKey.rentIncludeTradeServices
+    val form     = rentIncludeTradeServicesForm.bind(formData)
+
+    mustContainError(errorKey.rentIncludeTradeServices, Errors.booleanMissing, form)
+  }
+
+  object TestData {
+    val errorKey = new {
+      val rentIncludeTradeServices: String = "rentIncludeTradeServices"
     }
 
-    "return HTML" in {
-      val result = controller.show(fakeRequest)
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
-    }
+    val baseFormData: Map[String, String] = Map("rentIncludeTradeServices" -> "yes")
   }
 }
