@@ -14,21 +14,15 @@
  * limitations under the License.
  */
 
-package form
+package utils
 
-import form.MappingSupport.currencyMapping
-import models.AnnualRent
-import play.api.data.Form
-import play.api.data.Forms.mapping
+import org.scalatest.matchers.should
+import org.scalatest.wordspec.AnyWordSpec
+import play.api.test.{DefaultAwaitTimeout, FutureAwaits}
 
-object CurrentAnnualRentForm {
-
-  val cdbMaxCurrencyAmount = 9999999.99
-
-  val currentAnnualRentForm = Form(
-    mapping(
-      "currentAnnualRent" -> currencyMapping(".currentAnnualRent")
-    )(AnnualRent.apply)(AnnualRent.unapply)
-      .verifying(Errors.maxCurrencyAmountExceeded, _.amount <= cdbMaxCurrencyAmount)
-  )
-}
+abstract class UnitTest
+    extends AnyWordSpec
+    with should.Matchers
+    with FutureAwaits
+    with DefaultAwaitTimeout
+    with BehaviourVerification

@@ -16,8 +16,9 @@
 
 package controllers.Form6010
 
-import org.scalatest.matchers.should.Matchers
-import org.scalatest.wordspec.AnyWordSpec
+import form.Errors
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.Application
 import play.api.http.Status
@@ -25,7 +26,12 @@ import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 
-class WebsiteForPropertyControllerSpec extends AnyWordSpec with Matchers with GuiceOneAppPerSuite {
+class WebsiteForPropertyControllerSpec extends AnyFlatSpec with should.Matchers with GuiceOneAppPerSuite {
+
+  import TestData._
+  import form.WebsiteForPropertyForm._
+  import utils.FormBindingTestAssertions._
+
   override def fakeApplication(): Application =
     new GuiceApplicationBuilder()
       .configure(
@@ -38,16 +44,56 @@ class WebsiteForPropertyControllerSpec extends AnyWordSpec with Matchers with Gu
 
   private val controller = app.injector.instanceOf[WebsiteForPropertyController]
 
-  "GET /" should {
-    "return 200" in {
-      val result = controller.show(fakeRequest)
-      status(result) shouldBe Status.OK
+  it should "return 200" in {
+    val result = controller.show(fakeRequest)
+    status(result) shouldBe Status.OK
+  }
+
+  it should "return HTML" in {
+    val result = controller.show(fakeRequest)
+    contentType(result) shouldBe Some("text/html")
+    charset(result)     shouldBe Some("utf-8")
+  }
+
+  it should "error if buildingOperatingHaveAWebsite is missing" in {
+    val formData = baseFormData - errorKey.buildingOperatingHaveAWebsite
+    val form     = websiteForPropertyForm.bind(formData)
+
+    mustContainError(errorKey.buildingOperatingHaveAWebsite, Errors.booleanMissing, form)
+  }
+
+  object TestData {
+    val errorKey = new {
+      val buildingOperatingHaveAWebsite: String = "buildingOperatingHaveAWebsite"
     }
 
-    "return HTML" in {
-      val result = controller.show(fakeRequest)
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
-    }
+    val baseFormData: Map[String, String] = Map("buildingOperatingHaveAWebsite" -> "yes")
   }
 }
+
+//class WebsiteForPropertyControllerSpec extends AnyWordSpec with Matchers with GuiceOneAppPerSuite {
+//  override def fakeApplication(): Application =
+//    new GuiceApplicationBuilder()
+//      .configure(
+//        "metrics.jvm"     -> false,
+//        "metrics.enabled" -> false
+//      )
+//      .build()
+//
+//  private val fakeRequest = FakeRequest("GET", "/")
+//
+//  private val controller = app.injector.instanceOf[WebsiteForPropertyController]
+//
+//  "GET /" should {
+//    "return 200" in {
+//      val result = controller.show(fakeRequest)
+//      status(result) shouldBe Status.OK
+//    }
+//
+//    "return HTML" in {
+//      val result = controller.show(fakeRequest)
+//      contentType(result) shouldBe Some("text/html")
+//      charset(result)     shouldBe Some("utf-8")
+//    }
+//  }
+//}

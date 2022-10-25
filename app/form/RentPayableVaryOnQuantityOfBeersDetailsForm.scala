@@ -16,7 +16,6 @@
 
 package form
 
-import form.MappingSupport._
 import models.submissions.RentPayableVaryOnQuantityOfBeersInformationDetails
 import play.api.data.Form
 import play.api.data.Forms.{default, mapping, text}

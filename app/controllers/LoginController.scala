@@ -99,7 +99,7 @@ class LoginController @Inject() (
     audit.sendExplicitAudit("Logout", refNumJson)
 //    }
 
-    Redirect(routes.LoginController.show).withNewSession
+    Redirect(routes.LoginController.show()).withNewSession
   }
 
   def submit = Action.async { implicit request =>
@@ -132,7 +132,7 @@ class LoginController @Inject() (
         auditLogin(referenceNumber, false, address, forNum)(hc2)
         if (forNum == "FOR6010" || forNum == "FOR6020") {
           withNewSession(
-            Redirect(controllers.Form6010.routes.AreYouStillConnectedController.show),
+            Redirect(controllers.Form6010.routes.AreYouStillConnectedController.show()),
             token,
             forNum,
             s"$referenceNumber",
@@ -140,7 +140,7 @@ class LoginController @Inject() (
           )
         } else {
           withNewSession(
-            Redirect(routes.LoginController.notValidFORType),
+            Redirect(routes.LoginController.notValidFORType()),
             token,
             forNum,
             s"$referenceNumber",
@@ -161,9 +161,9 @@ class LoginController @Inject() (
             val clientIP = r.headers.get(trueClientIp).getOrElse("")
             auditLockedOut(cleanedRefNumber, postcode, cleanPostcode, clientIP)(hc2)
 
-            Redirect(routes.LoginController.show)
+            Redirect(routes.LoginController.show())
           } else {
-            Redirect(routes.LoginController.show)
+            Redirect(routes.LoginController.show())
           }
       }
 

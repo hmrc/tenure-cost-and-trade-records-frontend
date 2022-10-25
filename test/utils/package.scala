@@ -14,21 +14,8 @@
  * limitations under the License.
  */
 
-package form
+import scala.concurrent.Future
 
-import form.MappingSupport.currencyMapping
-import models.AnnualRent
-import play.api.data.Form
-import play.api.data.Forms.mapping
-
-object CurrentAnnualRentForm {
-
-  val cdbMaxCurrencyAmount = 9999999.99
-
-  val currentAnnualRentForm = Form(
-    mapping(
-      "currentAnnualRent" -> currencyMapping(".currentAnnualRent")
-    )(AnnualRent.apply)(AnnualRent.unapply)
-      .verifying(Errors.maxCurrencyAmountExceeded, _.amount <= cdbMaxCurrencyAmount)
-  )
+package object testutils {
+  implicit def toFut[A](a: A): Future[A] = Future.successful(a)
 }
