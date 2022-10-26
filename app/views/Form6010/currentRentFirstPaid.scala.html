@@ -17,7 +17,6 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.button.Button
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.textarea.Textarea
 
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
@@ -27,14 +26,14 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukCharacterCount
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
 
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Label
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Radios
-@import uk.gov.hmrc.govukfrontend.views.Aliases.RadioItem
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
+
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Fieldset
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Legend
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Hint
 @import uk.gov.hmrc.govukfrontend.views.Aliases.DateInput
 
+@import models.submissions.CurrentRentFirstPaid
 
 
 @this(layout: Layout,
@@ -49,33 +48,20 @@
 )
 
 
-@()(implicit request: Request[_], messages: Messages)
+@(theForm: Form[CurrentRentFirstPaid])(implicit request: Request[_], messages: Messages)
 
 @layout(
  pageHeading = messages("currentRentFirstPaid.header"),
-
+ theForm = theForm
 ) {
 
- @govukDateInput(
-  DateInput(
-   id = "dateInput",
-   fieldset = Some(Fieldset(
-    legend = Some(Legend(
-     content = Text(Messages("label.currentRentFirstPaid.currentRent")),
-     classes = "govuk-fieldset__legend--s"
-    ))
-   )),
-   hint = Some(Hint(content = Text(messages("hint.currentRentFirstPaid")))),
-  )
- )
+ @formWithCSRF(action = controllers.Form6010.routes.CurrentRentFirstPaidController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
 
- @govukButton(
-  Button(
-   content = Text(messages("button.label.continue")),
-   href = Some(routes.LoginController.show().url)
-  )
- )
 
+  @includes.dateFields(form = theForm, field = "currentRentFirstPaid", govukDate = govukDateInput, showDays = true)
+
+  @includes.continueButton(govukButton)
+ }
 }
 
 

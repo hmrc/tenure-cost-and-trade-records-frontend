@@ -460,8 +460,15 @@ label.aboutYourTradingHistory.financialYear =When does your financial year end?
 ##CURRENT RENT FIRST PAID
 ##############################
 currentRentFirstPaid.header = About your lease or agreement
-label.currentRentFirstPaid.currentRent = When was the current rent first paid under the terms of the current lease or agreement?
-hint.currentRentFirstPaid = Disregard any instances where the rent altered after changes in the amount of rates or services payable
+label.currentRentFirstPaid = When was the current rent first paid under the terms of the current lease or agreement?
+help.date.day.month.year = Disregard any instances where the rent altered after changes in the amount of rates or services payable
+label.date.day = Day
+label.date.month = Month
+label.date.year = Year
+error.currentRentFirstPaid.day.required = The date must include a day
+error.currentRentFirstPaid.month.required = The date must include a month
+error.currentRentFirstPaid.year.required = The date must include a year
+error.date_before_1900.currentRentFirstPaid = The date must be after December 1899
 
 ##CURRENT LEASE OR AGREEMENT BEGIN
 ##############################
@@ -554,4 +561,5 @@ error.postcode.maxLength = Postcode must be 10 characters or fewer
 error.day.required = The date must include a day
 error.month.required = The date must include a month
 error.year.required = The date must include a year
+
 

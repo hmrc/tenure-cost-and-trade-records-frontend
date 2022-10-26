@@ -131,6 +131,7 @@ GET         /tenants-additions-disregarded                          controllers.
 POST        /tenants-additions-disregarded                          controllers.Form6010.TenantsAdditionsDisregardedController.submit()
 
 GET         /current-rent-first-paid                                controllers.Form6010.CurrentRentFirstPaidController.show()
+POST        /current-rent-first-paid                                controllers.Form6010.CurrentRentFirstPaidController.submit()
 
 GET         /about-your-trading-history                             controllers.Form6010.AboutYourTradingHistoryController.show()
 
