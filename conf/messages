@@ -486,7 +486,12 @@ suffix.currentLeaseOrAgreementBegin.grantedFor = months
 currentLeaseOrAgreementBegin.header = About your lease or agreement
 label.currentLeaseOrAgreementBegin = At what intervals is the rent reviewed under the terms of the lease or agreement?
 hint.currentLeaseOrAgreementBegin = Do not include any changes to your rent linked to indexes such as the RPI, or your sales. For example, rent is reviewed annually, every two years, every three years.
-label.currentLeaseOrAgreementBegin.nextReview = When is the next rent review due?
+label.nextReview = When is the next rent review due?
+error.nextReview.day.required = The date must include a day
+error.nextReview.month.required = The date must include a month
+error.nextReview.year.required = The date must include a year
+error.currentLeaseOrAgreementBegin.required = Please provide at what intervals is the rent reviewed under the terms of the lease or agreement
+error.currentLeaseOrAgreementBegin.maxLength = This must be 1000 characters or fewer
 
 ##CURRENT RENT PAYABLE WITHIN 12 MONTHS
 ##############################
