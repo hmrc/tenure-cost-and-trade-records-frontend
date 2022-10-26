@@ -121,6 +121,7 @@ GET         /enforcement-action-been-taken                          controllers.
 POST        /enforcement-action-been-taken                          controllers.Form6010.EnforcementActionBeenTakenController.submit()
 
 GET         /enforcement-action-been-taken-details                  controllers.Form6010.EnforcementActionBeenTakenDetailsController.show()
+POST        /enforcement-action-been-taken-details                  controllers.Form6010.EnforcementActionBeenTakenDetailsController.submit()
 
 GET         /how-is-current-rent-fixed                              controllers.Form6010.HowIsCurrentRentFixedController.show()
 
