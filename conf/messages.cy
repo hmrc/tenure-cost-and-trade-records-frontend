@@ -366,12 +366,15 @@ label.methodUsedToFixCurrentRent.aCourt = A court
 ##############################
 howIsCurrentRentFixed.header = About your lease or agreement
 label.howIsCurrentRentFixed = How was the current rent fixed?
-label.howIsCurrentRentFixed.newLeaseAgreement = At the beginning of a new lease or agreement
-label.howIsCurrentRentFixed.interimRent = As an interim rent under the Landlord and Tenants Acts
-label.howIsCurrentRentFixed.rentReview = At a rent review
-label.howIsCurrentRentFixed.renewalLeaseTenancy = On a renewal of a lease or tenancy
-label.howIsCurrentRentFixed.saleLeaseback = As part of a sale and leaseback transaction
-dateInput.howIsCurrentRentFixed.saleLeaseback = When was the rent actually agreed or set?
+label.newLeaseAgreement = At the beginning of a new lease or agreement
+label.interimRent = As an interim rent under the Landlord and Tenants Acts
+label.rentReview = At a rent review
+label.renewalLeaseTenancy = On a renewal of a lease or tenancy
+label.saleLeaseback = As part of a sale and leaseback transaction
+label.rentActuallyAgreed = When was the rent actually agreed or set?
+error.rentActuallyAgreed.day.required = The date must include a day
+error.rentActuallyAgreed.month.required = The date must include a month
+error.rentActuallyAgreed.year.required = The date must include a year
 
 #ENFORCEMENT ACTION BEEN TAKEN
 ##############################

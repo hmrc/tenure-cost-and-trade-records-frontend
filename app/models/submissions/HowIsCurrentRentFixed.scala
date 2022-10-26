@@ -18,4 +18,4 @@ package models.submissions
 
 import org.joda.time.LocalDate
 
-case class HowIsCurrentRentFixed(howIsCurrentRentFixed: LocalDate)
+case class HowIsCurrentRentFixed(currentRentFixed: CurrentRentFixed, rentActuallyAgreed: LocalDate)

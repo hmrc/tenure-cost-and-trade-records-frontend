@@ -140,4 +140,5 @@ object Formats {
     namedEnumFormatter(OnlyPartOfProperty, Errors.booleanMissing)
   implicit val onlyToLandFormatter: Formatter[OnlyToLands]                      = namedEnumFormatter(OnlyToLand, Errors.booleanMissing)
   implicit val shellUnitFormatter: Formatter[ShellUnits]                        = namedEnumFormatter(ShellUnit, Errors.booleanMissing)
+  implicit val howIsCurrentRentFixedFormatter: Formatter[CurrentRentFixed]      = namedEnumFormatter(CurrentRentFix, Errors.booleanMissing)
 }

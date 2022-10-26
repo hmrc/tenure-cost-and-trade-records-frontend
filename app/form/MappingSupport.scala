@@ -86,6 +86,8 @@ object MappingSupport {
   val onlyToLandType: Mapping[OnlyToLands]                      = Forms.of[OnlyToLands]
   val shellUnitType: Mapping[ShellUnits]                        = Forms.of[ShellUnits]
 
+  val howIsCurrentRentFixedType: Mapping[CurrentRentFixed]      = Forms.of[CurrentRentFixed]
+
   val tiedForGoodsDetailsType: Mapping[TiedForGoodsInformationDetail] = Forms.of[TiedForGoodsInformationDetail]
   val postcode: Mapping[String]                                       = PostcodeMapping.postcode()
 
