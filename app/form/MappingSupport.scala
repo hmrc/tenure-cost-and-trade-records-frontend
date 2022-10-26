@@ -67,6 +67,10 @@ object MappingSupport {
   val tenantsAdditionsDisregardedType: Mapping[TenantsAdditionsDisregarded] = Forms.of[TenantsAdditionsDisregarded]
   val legalPlanningRestrictionsType: Mapping[LegalPlanningRestrictions] = Forms.of[LegalPlanningRestrictions]
 
+  val outsideRepairsType: Mapping[OutsideRepairs] = Forms.of[OutsideRepairs]
+  val insideRepairsType: Mapping[InsideRepairs] = Forms.of[InsideRepairs]
+  val buildingInsuranceType: Mapping[BuildingInsurances] = Forms.of[BuildingInsurances]
+
   val vatType: Mapping[VATs]                          = Forms.of[VATs]
   val nondomesticRatesType: Mapping[NonDomesticRates] = Forms.of[NonDomesticRates]
   val waterChargesType: Mapping[WaterCharges]         = Forms.of[WaterCharges]

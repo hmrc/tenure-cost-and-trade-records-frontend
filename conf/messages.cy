@@ -304,14 +304,16 @@ error.enforcementActionHasBeenTakenDetails.maxLength  = This must be 1000 charac
 ##############################
 ultimatelyResponsible.header = Who is ultimately responsible for the following costs?
 ultimatelyResponsible.subheading = This could be either by direct payment, or by reimbursing the person who initially paid for the service
-label.ultimatelyResponsible.outsideRepairs = Outside repairs
-label.ultimatelyResponsible.insideRepairs = Inside repairs public and business areas
-label.ultimatelyResponsible.buildingInsurance = Building insurance
-label.ultimatelyResponsible.optionLandlord = Landlord
-label.ultimatelyResponsible.optionTenant = Tenant
-label.ultimatelyResponsible.optionBoth = Both
-label.ultimatelyResponsible.areaShared = If responsible for any area are shared, give details
-hint.ultimatelyResponsible.areaShared = For example, costs are shared equally, landlord 75%, tenant 25%
+label.outsideRepairs = Outside repairs
+label.insideRepairs = Inside repairs public and business areas
+label.buildingInsurance = Building insurance
+label.landlord = Landlord
+label.tenant = Tenant
+label.both = Both
+label.areaShared = If responsible for any area are shared, give details
+hint.areaShared = For example, costs are shared equally, landlord 75%, tenant 25%
+error.areaShared.required = Please provide details if you are responsible for any area shared, if any
+error.areaShared.maxLength = This must be 1000 characters or fewer
 
 #RENT INCLUDE TRADE SERVICES
 ##############################
