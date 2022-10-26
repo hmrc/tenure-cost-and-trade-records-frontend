@@ -16,7 +16,7 @@
 
 package form
 
-import form.MappingSupport.{cdbMaxCurrencyAmount, rentIncludeTradeServiceDetails}
+import form.MappingSupport.{cdbMaxCurrencyAmount, currencyMapping, rentIncludeTradeServiceDetails}
 import models.submissions.RentIncludeTradeServicesInformationDetails
 import play.api.data.Form
 import play.api.data.Forms.{default, mapping, text}
@@ -25,7 +25,7 @@ import play.api.data.validation.Constraints.{maxLength, nonEmpty}
 object RentIncludeTradeServicesDetailsForm {
 
   val rentIncludeTradeServicesDetailsForm = Form(mapping(
-    "sumIncludedInRent" -> rentIncludeTradeServiceDetails.verifying(Errors.maxCurrencyAmountExceeded, _.amount <= cdbMaxCurrencyAmount),
+    "sumIncludedInRent" -> currencyMapping(".rentIncludeFixturesAndFittingsDetails"),
     "describeServices" ->
       default(text, "").verifying(
         nonEmpty(errorMessage = "error.describeServices.required"),
