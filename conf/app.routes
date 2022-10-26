@@ -122,6 +122,7 @@ GET         /enforcement-action-been-taken-details                  controllers.
 POST        /enforcement-action-been-taken-details                  controllers.Form6010.EnforcementActionBeenTakenDetailsController.submit()
 
 GET         /how-is-current-rent-fixed                              controllers.Form6010.HowIsCurrentRentFixedController.show()
+POST        /how-is-current-rent-fixed                              controllers.Form6010.HowIsCurrentRentFixedController.submit()
 
 GET         /catering-operation-or-letting-accommodation-details    controllers.Form6010.CateringOperationOrLettingAccommodationDetailsController.show()
 

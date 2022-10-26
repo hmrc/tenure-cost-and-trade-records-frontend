@@ -36,6 +36,7 @@
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Hint
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.dateinput
 
+@import models.submissions.HowIsCurrentRentFixed
 
 
 @this(layout: Layout,
@@ -50,61 +51,21 @@
 )
 
 
-@()(implicit request: Request[_], messages: Messages)
+@(theForm: Form[HowIsCurrentRentFixed])(implicit request: Request[_], messages: Messages)
 
 @layout(
  pageHeading = messages("howIsCurrentRentFixed.header"),
-
+ theForm = theForm
 ) {
 
- @govukRadios(
-  Radios(
-   name = "howIsCurrentRentFixed",
-   classes = "radio-button-that-show-hides",
-   idPrefix = Option("howIsCurrentRentFixed"),
-   items = Seq(
-    "newLeaseAgreement" -> messages("label.howIsCurrentRentFixed.newLeaseAgreement"),
-    "interimRent" -> messages("label.howIsCurrentRentFixed.interimRent"),
-    "rentReview" -> messages("label.howIsCurrentRentFixed.rentReview"),
-    "renewalLeaseTenancy" -> messages("label.howIsCurrentRentFixed.renewalLeaseTenancy"),
-    "saleLeaseback" -> messages("label.howIsCurrentRentFixed.saleLeaseback")
-   ).map( radioItem => RadioItem (
-    content = Text(radioItem._2),
-    value=Option(radioItem._1)
-   )
-   ),
-   fieldset = Option(
-    Fieldset(
-     legend = Option(
-      Legend(
-       content = Text(messages("label.howIsCurrentRentFixed")),
-       classes = "govuk-!-font-weight-bold"
-      )
-     )
-    )
-   )
-  )
- )
+ @formWithCSRF(action = controllers.Form6010.routes.HowIsCurrentRentFixedController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
 
- @govukDateInput(
-  DateInput(
-   id = "dateInput",
-   fieldset = Some(Fieldset(
-    legend = Some(Legend(
-     content = Text(Messages("dateInput.howIsCurrentRentFixed.saleLeaseback")),
-     classes = "govuk-fieldset__legend--s"
-    ))
-   )),
-  )
- )
 
- @govukButton(
-  Button(
-   content = Text(messages("button.label.continue")),
-   href = Some(routes.LoginController.show().url)
-  )
- )
+  @includes.dateFields(form = theForm, field = "rentActuallyAgreed", govukDate = govukDateInput, showDays = true)
 
+  @includes.continueButton(govukButton)
+
+ }
 }
 
 

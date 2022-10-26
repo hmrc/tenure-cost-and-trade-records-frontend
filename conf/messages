@@ -383,7 +383,10 @@ label.howIsCurrentRentFixed.interimRent = As an interim rent under the Landlord 
 label.howIsCurrentRentFixed.rentReview = At a rent review
 label.howIsCurrentRentFixed.renewalLeaseTenancy = On a renewal of a lease or tenancy
 label.howIsCurrentRentFixed.saleLeaseback = As part of a sale and leaseback transaction
-dateInput.howIsCurrentRentFixed.saleLeaseback = When was the rent actually agreed or set?
+label.rentActuallyAgreed = When was the rent actually agreed or set?
+error.howIsCurrentRentFixed.day.required = The date must include a day
+error.howIsCurrentRentFixed.month.required = The date must include a month
+error.howIsCurrentRentFixed.year.required = The date must include a year
 
 #ENFORCEMENT ACTION BEEN TAKEN
 ##############################
