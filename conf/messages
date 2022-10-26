@@ -303,6 +303,8 @@ hint.enforcementActionHasBeenTaken = This can be any suspensions, closure orders
 ##############################
 enforcementActionHasBeenTakenDetails.header = About the property
 label.enforcementActionHasBeenTakenDetails = Describe any enforcement action taken
+error.enforcementActionHasBeenTakenDetails.required = Please describe any enforcement action taken
+error.enforcementActionHasBeenTakenDetails.maxLength  = This must be 1000 characters or fewer
 
 #ULTIMATELY RESPONSIBLE
 ##############################
