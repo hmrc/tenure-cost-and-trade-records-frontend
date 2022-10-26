@@ -113,6 +113,13 @@ object Formats {
   implicit val legalPlanningRestrictionsFormatter: Formatter[LegalPlanningRestrictions] =
     namedEnumFormatter(LegalPlanningRestriction, Errors.booleanMissing)
 
+  implicit val outsideRepairsFormatter: Formatter[OutsideRepairs] =
+    namedEnumFormatter(OutsideRepair, Errors.booleanMissing)
+  implicit val insideRepairsFormatter: Formatter[InsideRepairs] =
+    namedEnumFormatter(InsideRepair, Errors.booleanMissing)
+  implicit val buildingInsuranceFormatter: Formatter[BuildingInsurances] =
+    namedEnumFormatter(BuildingInsurance, Errors.booleanMissing)
+
   implicit val vatFormatter: Formatter[VATs]                          = namedEnumFormatter(VAT, Errors.booleanMissing)
   implicit val nondomesticRatesFormatter: Formatter[NonDomesticRates] =
     namedEnumFormatter(NonDomesticRate, Errors.booleanMissing)

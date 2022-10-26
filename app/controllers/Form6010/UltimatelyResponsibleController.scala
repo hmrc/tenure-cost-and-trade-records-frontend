@@ -16,10 +16,12 @@
 
 package controllers.Form6010
 
-import config.AppConfig
+import controllers.LoginController.loginForm
+import form.UltimatelyResponsibleForm.ultimatelyResponsibleForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.Form6010.ultimatelyResponsible
+import views.html.login
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
@@ -27,12 +29,22 @@ import scala.concurrent.Future
 @Singleton
 class UltimatelyResponsibleController @Inject() (
   mcc: MessagesControllerComponents,
-  appConfig: AppConfig,
-  ultimatelyResponsible: ultimatelyResponsible
+  login: login,
+  ultimatelyResponsibleView: ultimatelyResponsible
 ) extends FrontendController(mcc) {
 
   def show: Action[AnyContent] = Action.async { implicit request =>
-    Future.successful(Ok(ultimatelyResponsible()))
+    Future.successful(Ok(ultimatelyResponsibleView(ultimatelyResponsibleForm)))
+  }
+
+
+  def submit = Action.async { implicit request =>
+    ultimatelyResponsibleForm
+      .bindFromRequest()
+      .fold(
+        formWithErrors => Future.successful(BadRequest(ultimatelyResponsibleView(formWithErrors))),
+        data => Future.successful(Ok(login(loginForm)))
+      )
   }
 
 }
