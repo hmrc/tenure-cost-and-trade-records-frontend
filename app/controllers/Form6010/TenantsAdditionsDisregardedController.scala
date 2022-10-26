@@ -16,22 +16,33 @@
 
 package controllers.Form6010
 
-import config.AppConfig
+import controllers.LoginController.loginForm
+import form.TenantsAdditionsDisregardedForm.tenantsAdditionsDisregardedForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.Form6010.tenantsAdditionsDisregarded
+import views.html.login
 
 import javax.inject.{Inject, Singleton}
+import scala.concurrent.Future
 
 @Singleton
 class TenantsAdditionsDisregardedController @Inject() (
   mcc: MessagesControllerComponents,
-  appConfig: AppConfig,
-  tenantsAdditionsDisregarded: tenantsAdditionsDisregarded
+  login: login,
+  tenantsAdditionsDisregardedView: tenantsAdditionsDisregarded
 ) extends FrontendController(mcc) {
 
   def show: Action[AnyContent] = Action { implicit request =>
-    Ok(tenantsAdditionsDisregarded())
+    Ok(tenantsAdditionsDisregardedView(tenantsAdditionsDisregardedForm))
   }
 
+  def submit = Action.async { implicit request =>
+    tenantsAdditionsDisregardedForm
+      .bindFromRequest()
+      .fold(
+        formWithErrors => Future.successful(BadRequest(tenantsAdditionsDisregardedView(formWithErrors))),
+        data => Future.successful(Ok(login(loginForm)))
+      )
+  }
 }

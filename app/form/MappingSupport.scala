@@ -64,6 +64,9 @@ object MappingSupport {
   val receivePaymentWhenLeaseGrantedType: Mapping[ReceivePaymentWhenLeaseGrants] =
     Forms.of[ReceivePaymentWhenLeaseGrants]
 
+  val tenantsAdditionsDisregardedType: Mapping[TenantsAdditionsDisregarded] = Forms.of[TenantsAdditionsDisregarded]
+  val legalPlanningRestrictionsType: Mapping[LegalPlanningRestrictions] = Forms.of[LegalPlanningRestrictions]
+
   val vatType: Mapping[VATs]                          = Forms.of[VATs]
   val nondomesticRatesType: Mapping[NonDomesticRates] = Forms.of[NonDomesticRates]
   val waterChargesType: Mapping[WaterCharges]         = Forms.of[WaterCharges]
