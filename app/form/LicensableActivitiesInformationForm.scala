@@ -16,7 +16,6 @@
 
 package form
 
-import form.MappingSupport._
 import models.submissions.LicensableActivitiesInformationDetails
 import play.api.data.Form
 import play.api.data.Forms.{mapping, nonEmptyText}

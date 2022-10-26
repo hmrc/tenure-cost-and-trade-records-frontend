@@ -25,7 +25,10 @@ object RentIncludeFixtureAndFittingDetailsForm {
 
   val cdbMaxCurrencyAmount = 9999999.99
 
-  val rentIncludeFixtureAndFittingsDetailsForm = Form(mapping(
-    "rentIncludeFixturesAndFittingsDetails" -> currencyMapping(".rentIncludeFixturesAndFittingsDetails")
-  )(AnnualRent.apply)(AnnualRent.unapply).verifying(Errors.maxCurrencyAmountExceeded, _.amount <= cdbMaxCurrencyAmount))
+  val rentIncludeFixtureAndFittingsDetailsForm = Form(
+    mapping(
+      "rentIncludeFixturesAndFittingsDetails" -> currencyMapping(".rentIncludeFixturesAndFittingsDetails")
+    )(AnnualRent.apply)(AnnualRent.unapply)
+      .verifying(Errors.maxCurrencyAmountExceeded, _.amount <= cdbMaxCurrencyAmount)
+  )
 }

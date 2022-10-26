@@ -16,17 +16,19 @@
 
 package form
 
-import form.MappingSupport.{annualRent, currencyMapping}
+import form.MappingSupport.currencyMapping
 import models.AnnualRent
-import models.submissions.CurrentAnnualRent
-import play.api.data.{Form, Mapping}
+import play.api.data.Form
 import play.api.data.Forms.mapping
 
 object CurrentAnnualRentForm {
 
   val cdbMaxCurrencyAmount = 9999999.99
 
-  val currentAnnualRentForm = Form(mapping(
-    "currentAnnualRent" -> currencyMapping(".currentAnnualRent")
-  )(AnnualRent.apply)(AnnualRent.unapply).verifying(Errors.maxCurrencyAmountExceeded, _.amount <= cdbMaxCurrencyAmount))
+  val currentAnnualRentForm = Form(
+    mapping(
+      "currentAnnualRent" -> currencyMapping(".currentAnnualRent")
+    )(AnnualRent.apply)(AnnualRent.unapply)
+      .verifying(Errors.maxCurrencyAmountExceeded, _.amount <= cdbMaxCurrencyAmount)
+  )
 }

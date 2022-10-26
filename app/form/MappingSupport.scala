@@ -20,7 +20,6 @@ import form.ConditionalMapping.nonEmptyTextOr
 import models.submissions._
 import form.Formats._
 import form.Formats.userTypeFormat
-import form.MappingSupport.currencyMapping
 import models.AnnualRent
 import play.api.data.Forms.{boolean, default, email, mapping, optional, text}
 import play.api.data.validation.Constraints.{maxLength, minLength, nonEmpty, pattern}
@@ -83,10 +82,10 @@ object MappingSupport {
   val tiedForGoodsDetailsType: Mapping[TiedForGoodsInformationDetail] = Forms.of[TiedForGoodsInformationDetail]
   val postcode: Mapping[String]                                       = PostcodeMapping.postcode()
 
-  val decimalRegex = """^[0-9]{1,10}\.?[0-9]{0,2}$"""
+  val decimalRegex         = """^[0-9]{1,10}\.?[0-9]{0,2}$"""
   val cdbMaxCurrencyAmount = 9999999.99
-  val spacesIntRegex = """^\-?\d{1,10}$""".r
-  val intRegex = """^\d{1,3}$""".r
+  val spacesIntRegex       = """^\-?\d{1,10}$""".r
+  val intRegex             = """^\d{1,3}$""".r
 
   lazy val annualRent: Mapping[AnnualRent] = mapping(
     "annualRentExcludingVat" -> currencyMapping(".annualRentExcludingVat")
@@ -104,7 +103,10 @@ object MappingSupport {
 
   def currencyMapping(fieldErrorPart: String = ""): Mapping[BigDecimal] = default(text, "")
     .verifying(nonEmpty(errorMessage = Errors.required + fieldErrorPart))
-    .verifying(Errors.invalidCurrency + fieldErrorPart, x => x == "" || ((x.replace(",", "") matches decimalRegex) && BigDecimal(x.replace(",", "")) >= 0.000))
+    .verifying(
+      Errors.invalidCurrency + fieldErrorPart,
+      x => x == "" || ((x.replace(",", "") matches decimalRegex) && BigDecimal(x.replace(",", "")) >= 0.000)
+    )
     .transform({ s: String => BigDecimal(s.replace(",", "")) }, { v: BigDecimal => v.toString })
     .verifying(Errors.maxCurrencyAmountExceeded + fieldErrorPart, _ <= cdbMaxCurrencyAmount)
 
