@@ -88,6 +88,8 @@ object MappingSupport {
 
   val howIsCurrentRentFixedType: Mapping[CurrentRentFixed]      = Forms.of[CurrentRentFixed]
 
+  val currentRentPayableWithin12MonthsType: Mapping[CurrentRentWithin12Months]      = Forms.of[CurrentRentWithin12Months]
+
   val tiedForGoodsDetailsType: Mapping[TiedForGoodsInformationDetail] = Forms.of[TiedForGoodsInformationDetail]
   val postcode: Mapping[String]                                       = PostcodeMapping.postcode()
 

@@ -491,9 +491,12 @@ label.currentLeaseOrAgreementBegin.nextReview = When is the next rent review due
 ##CURRENT RENT PAYABLE WITHIN 12 MONTHS
 ##############################
 currentRentPayableWithin12Months.header = Lease or agreement details
-label.currentRentPayableWithin12Months.rentPayable = Is the current rent payable due to review within the next 12 months, either under the terms of the existing lease, or upon grant of a new lease?
-hint.currentRentPayableWithin12Months.rentPayable = Do not include any rent increases linked to turnover or the retail price index (RPI)
-label.currentRentPayableWithin12Months.dateReview = Date of next rent review or expiry of existing lease
+label.rentPayable = Is the current rent payable due to review within the next 12 months, either under the terms of the existing lease, or upon grant of a new lease?
+hint.rentPayable = Do not include any rent increases linked to turnover or the retail price index (RPI)
+label.dateReview = Date of next rent review or expiry of existing lease
+error.dateReview.day.required = The date must include a day
+error.dateReview.month.required = The date must include a month
+error.dateReview.year.required = The date must include a year
 
 ##WHAT IS YOUR RENT BASED ON
 ##############################
