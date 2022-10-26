@@ -108,6 +108,11 @@ object Formats {
   implicit val receivePaymentWhenLeaseGrantedFormatter: Formatter[ReceivePaymentWhenLeaseGrants] =
     namedEnumFormatter(ReceivePaymentWhenLeaseGranted, Errors.booleanMissing)
 
+  implicit val tenantsAdditionsDisregardedFormatter: Formatter[TenantsAdditionsDisregarded] =
+    namedEnumFormatter(TenantsAdditionsDisregard, Errors.booleanMissing)
+  implicit val legalPlanningRestrictionsFormatter: Formatter[LegalPlanningRestrictions] =
+    namedEnumFormatter(LegalPlanningRestriction, Errors.booleanMissing)
+
   implicit val vatFormatter: Formatter[VATs]                          = namedEnumFormatter(VAT, Errors.booleanMissing)
   implicit val nondomesticRatesFormatter: Formatter[NonDomesticRates] =
     namedEnumFormatter(NonDomesticRate, Errors.booleanMissing)

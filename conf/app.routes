@@ -100,8 +100,6 @@ POST        /rent-include-trade-services                            controllers.
 GET         /rent-include-trade-services-details                    controllers.Form6010.RentIncludeTradeServicesDetailsController.show()
 POST        /rent-include-trade-services-details                    controllers.Form6010.RentIncludeTradeServicesDetailsController.submit()
 
-GET         /ultimately-responsible                                 controllers.Form6010.UltimatelyResponsibleController.show()
-
 GET         /rent-include-fixtures-and-fittings                     controllers.Form6010.RentIncludeFixtureAndFittingsController.show()
 POST        /rent-include-fixtures-and-fittings                     controllers.Form6010.RentIncludeFixtureAndFittingsController.submit()
 
@@ -130,6 +128,7 @@ GET         /catering-operation-or-letting-accommodation-details    controllers.
 GET         /letting-other-part-of-property-details                 controllers.Form6010.LettingOtherPartOfPropertyDetailsController.show()
 
 GET         /tenants-additions-disregarded                          controllers.Form6010.TenantsAdditionsDisregardedController.show()
+POST        /tenants-additions-disregarded                          controllers.Form6010.TenantsAdditionsDisregardedController.submit()
 
 GET         /current-rent-first-paid                                controllers.Form6010.CurrentRentFirstPaidController.show()
 
@@ -142,3 +141,5 @@ GET         /intervals-of-rent-review                               controllers.
 GET         /current-rent-payable-within-12-months                  controllers.Form6010.CurrentRentPayableWithin12MonthsController.show()
 
 GET         /what-is-your-rent-based-on                             controllers.Form6010.WhatIsYourRentBasedOnController.show()
+
+GET         /ultimately-responsible                                 controllers.Form6010.UltimatelyResponsibleController.show()

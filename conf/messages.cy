@@ -433,8 +433,8 @@ prefix.lettingOtherPartOfPropertyDetails = £
 tenantsAdditionsDisregarded.header = About your property
 label.tenantsAdditionsDisregarded = Were any tenant’s additions disregarded at the time the rent was agreed or determined?
 hint.tenantsAdditionsDisregarded = For example, is your rent based on the market value of the property before you made improvements like fitting out a shell, or adding parking
-label.tenantsAdditionsDisregarded.legalPlanning = Are there any legal or planning restrictions, unusual terms or conditions in the lease or agreement that may have affected the rent payable?
-hint.tenantsAdditionsDisregarded.legalPlanning = For example, a break clause, contracting out of the Landlord and Tenant Act, etc
+label.legalPlanningRestrictions = Are there any legal or planning restrictions, unusual terms or conditions in the lease or agreement that may have affected the rent payable?
+hint.legalPlanningRestrictions = For example, a break clause, contracting out of the Landlord and Tenant Act, etc
 
 ##ABOUT YOUR TRADING HISTORY
 ##############################
