@@ -393,24 +393,28 @@ label.enforcementActionHasBeenTaken = Describe any enforcement action taken
 ##############################
 cateringOperationOrLettingAccommodationDetails.header = Separate businesses or franchises
 cateringOperationOrLettingAccommodationDetails.subheading = Enter the details of business
-label.cateringOperationOrLettingAccommodationDetails.operatorName = Enter operator’s name
-label.cateringOperationOrLettingAccommodationDetails.typeOfBusiness = Describe the type of business
-hint.cateringOperationOrLettingAccommodationDetails.typeOfBusiness = For example, bed and breakfast, hotel, restaurant
-cateringOperationOrLettingAccommodationDetails.correspondanceAddress = Correspondence address
-label.cateringOperationOrLettingAccommodationDetails.addressLine1 = Address line 1
-label.cateringOperationOrLettingAccommodationDetails.addressLine2 = Address line 1
-label.cateringOperationOrLettingAccommodationDetails.townOrCity = Town or city
-label.cateringOperationOrLettingAccommodationDetails.county = County (optional)
-label.cateringOperationOrLettingAccommodationDetails.postcode = Postcode
+label.operatorName = Enter operator’s name
+label.typeOfBusiness = Describe the type of business
+hint.typeOfBusiness = For example, bed and breakfast, hotel, restaurant
+cateringAddress.correspondenceAddress = Correspondence address
+cateringAddress.buildingNameNumber.label = Address line 1
+cateringAddress.address2.label = Address line 2
+cateringAddress.town.label = Town or city
+cateringAddress.county.label = County (optional)
+cateringAddress.postcode.label = Postcode
 label.cateringOperationOrLettingAccommodationDetails = Are any of the following included in your rent?
 hint.cateringOperationOrLettingAccommodationDetails = Select any that apply
 checkbox.cateringOperationOrLettingAccommodationDetails.rates = Rates
 checkbox.cateringOperationOrLettingAccommodationDetails.propertyInsurance = Property insurance
 checkbox.cateringOperationOrLettingAccommodationDetails.outsideRepairs = Outside repairs
 checkbox.cateringOperationOrLettingAccommodationDetails.insideRepairs = Inside repairs
-label.cateringOperationOrLettingAccommodationDetails.annualRent = Annual rent payment (excluding VAT)
-label.cateringOperationOrLettingAccommodationDetails.dateInput = When was this sum fixed?
-prefix.cateringOperationOrLettingAccommodationDetails = £
+label.annualRent = Annual rent payment (excluding VAT)
+label.dateInput = When was this sum fixed?
+error.required.annualRentExcludingVat = Please provide a number
+error.dateInput.day.required = The date must include a day
+error.dateInput.month.required = The date must include a month
+error.dateInput.year.required = The date must include a year
+error.required.annualRent = Please provide an annual rent amount
 
 ##LETTING OTHER PART OF PROPERTY DETAILS
 ##############################
