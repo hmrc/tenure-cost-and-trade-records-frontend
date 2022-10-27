@@ -464,10 +464,15 @@ error.date_before_1900.currentRentFirstPaid = The date must be after December 18
 ##CURRENT LEASE OR AGREEMENT BEGIN
 ##############################
 currentLeaseOrAgreementBegin.header = About your lease or agreement
-label.currentLeaseOrAgreementBegin.leaseBegin = When did the current lease or agreement begin?
-hint.currentLeaseOrAgreementBegin.leaseBegin = If the current lease was granted to a previous occupier, tell us when it was started by them
-label.currentLeaseOrAgreementBegin.grantedFor = How long was it granted for?
-suffix.currentLeaseOrAgreementBegin.grantedFor = months
+label.leaseBegin = When did the current lease or agreement begin?
+hint.leaseBegin = If the current lease was granted to a previous occupier, tell us when it was started by them
+label.grantedFor = How long was it granted for?
+suffix.grantedFor = months
+error.leaseBegin.day.required = The date must include a day
+error.leaseBegin.month.required = The date must include a month
+error.leaseBegin.year.required = The date must include a year
+error.empty.required = Please enter how long it was granted for
+error.maxValueRentFreeIsBlank.required = This must be a number
 
 ##INTERVALS OF RENT REVIEW
 ##############################

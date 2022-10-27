@@ -154,4 +154,9 @@ object MappingSupport {
     .verifying(Errors.booleanMissing, _.isDefined)
     .transform({ s: Option[Boolean] => s.get }, { v: Boolean => Some(v) })
 
+  def intMapping(): Mapping[Int] = default(text, "0")
+    .verifying("error.maxValueRentFreeIsBlank.required", x => x == "0" || intRegex.findFirstIn(x).isDefined)
+    .transform[Int](_.replace(",", "").toInt, _.toString)
+    .verifying(s"error.empty.required", _ >= 1)
+
 }
