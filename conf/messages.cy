@@ -165,13 +165,15 @@ label.no = No
 #ABOUT YOUR LANDLORD
 ##############################
 aboutYourLandlord.header = About your landlord
-aboutYourLandlord.name.label = Landlord’s name
-aboutYourLandlord.address.label = Landlord’s address
-aboutYourLandlord.address1.label = Address line 1
-aboutYourLandlord.address2.label = Address line 2 (optional)
-aboutYourLandlord.town.label = Town or city
-aboutYourLandlord.county.label = County (optional)
-aboutYourLandlord.postcode.label = Postcode
+landlordFullName.label = Landlord’s name
+landlordAddress.address.label = Landlord’s address
+landlordAddress.buildingNameNumber.label = Address line 1
+landlordAddress.address2.label = Address line 2 (optional)
+landlordAddress.town.label = Town or city (optional)
+landlordAddress.county.label = County (optional)
+landlordAddress.postcode.label = Postcode
+error.landlordFullName.required = Please enter the landlord's full name
+error.landlordFullName.maxLength = This must be 1000 characters or fewer
 
 #LEASE OR AGREEMENT DETAILS COMMENCE WITHIN 3 YEARS
 ##############################
