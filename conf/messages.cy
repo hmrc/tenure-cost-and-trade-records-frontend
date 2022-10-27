@@ -366,12 +366,15 @@ label.methodUsedToFixCurrentRent.aCourt = A court
 ##############################
 howIsCurrentRentFixed.header = About your lease or agreement
 label.howIsCurrentRentFixed = How was the current rent fixed?
-label.howIsCurrentRentFixed.newLeaseAgreement = At the beginning of a new lease or agreement
-label.howIsCurrentRentFixed.interimRent = As an interim rent under the Landlord and Tenants Acts
-label.howIsCurrentRentFixed.rentReview = At a rent review
-label.howIsCurrentRentFixed.renewalLeaseTenancy = On a renewal of a lease or tenancy
-label.howIsCurrentRentFixed.saleLeaseback = As part of a sale and leaseback transaction
-dateInput.howIsCurrentRentFixed.saleLeaseback = When was the rent actually agreed or set?
+label.newLeaseAgreement = At the beginning of a new lease or agreement
+label.interimRent = As an interim rent under the Landlord and Tenants Acts
+label.rentReview = At a rent review
+label.renewalLeaseTenancy = On a renewal of a lease or tenancy
+label.saleLeaseback = As part of a sale and leaseback transaction
+label.rentActuallyAgreed = When was the rent actually agreed or set?
+error.rentActuallyAgreed.day.required = The date must include a day
+error.rentActuallyAgreed.month.required = The date must include a month
+error.rentActuallyAgreed.year.required = The date must include a year
 
 #ENFORCEMENT ACTION BEEN TAKEN
 ##############################
@@ -461,24 +464,37 @@ error.date_before_1900.currentRentFirstPaid = The date must be after December 18
 ##CURRENT LEASE OR AGREEMENT BEGIN
 ##############################
 currentLeaseOrAgreementBegin.header = About your lease or agreement
-label.currentLeaseOrAgreementBegin.leaseBegin = When did the current lease or agreement begin?
-hint.currentLeaseOrAgreementBegin.leaseBegin = If the current lease was granted to a previous occupier, tell us when it was started by them
-label.currentLeaseOrAgreementBegin.grantedFor = How long was it granted for?
-suffix.currentLeaseOrAgreementBegin.grantedFor = months
+label.leaseBegin = When did the current lease or agreement begin?
+hint.leaseBegin = If the current lease was granted to a previous occupier, tell us when it was started by them
+label.grantedFor = How long was it granted for?
+suffix.grantedFor = months
+error.leaseBegin.day.required = The date must include a day
+error.leaseBegin.month.required = The date must include a month
+error.leaseBegin.year.required = The date must include a year
+error.empty.required = Please enter how long it was granted for
+error.maxValueRentFreeIsBlank.required = This must be a number
 
 ##INTERVALS OF RENT REVIEW
 ##############################
 currentLeaseOrAgreementBegin.header = About your lease or agreement
 label.currentLeaseOrAgreementBegin = At what intervals is the rent reviewed under the terms of the lease or agreement?
 hint.currentLeaseOrAgreementBegin = Do not include any changes to your rent linked to indexes such as the RPI, or your sales. For example, rent is reviewed annually, every two years, every three years.
-label.currentLeaseOrAgreementBegin.nextReview = When is the next rent review due?
+label.nextReview = When is the next rent review due?
+error.nextReview.day.required = The date must include a day
+error.nextReview.month.required = The date must include a month
+error.nextReview.year.required = The date must include a year
+error.currentLeaseOrAgreementBegin.required = Please provide at what intervals is the rent reviewed under the terms of the lease or agreement
+error.currentLeaseOrAgreementBegin.maxLength = This must be 1000 characters or fewer
 
 ##CURRENT RENT PAYABLE WITHIN 12 MONTHS
 ##############################
 currentRentPayableWithin12Months.header = Lease or agreement details
-label.currentRentPayableWithin12Months.rentPayable = Is the current rent payable due to review within the next 12 months, either under the terms of the existing lease, or upon grant of a new lease?
-hint.currentRentPayableWithin12Months.rentPayable = Do not include any rent increases linked to turnover or the retail price index (RPI)
-label.currentRentPayableWithin12Months.dateReview = Date of next rent review or expiry of existing lease
+label.rentPayable = Is the current rent payable due to review within the next 12 months, either under the terms of the existing lease, or upon grant of a new lease?
+hint.rentPayable = Do not include any rent increases linked to turnover or the retail price index (RPI)
+label.dateReview = Date of next rent review or expiry of existing lease
+error.dateReview.day.required = The date must include a day
+error.dateReview.month.required = The date must include a month
+error.dateReview.year.required = The date must include a year
 
 ##WHAT IS YOUR RENT BASED ON
 ##############################

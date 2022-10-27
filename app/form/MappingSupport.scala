@@ -86,6 +86,10 @@ object MappingSupport {
   val onlyToLandType: Mapping[OnlyToLands]                      = Forms.of[OnlyToLands]
   val shellUnitType: Mapping[ShellUnits]                        = Forms.of[ShellUnits]
 
+  val howIsCurrentRentFixedType: Mapping[CurrentRentFixed]      = Forms.of[CurrentRentFixed]
+
+  val currentRentPayableWithin12MonthsType: Mapping[CurrentRentWithin12Months]      = Forms.of[CurrentRentWithin12Months]
+
   val tiedForGoodsDetailsType: Mapping[TiedForGoodsInformationDetail] = Forms.of[TiedForGoodsInformationDetail]
   val postcode: Mapping[String]                                       = PostcodeMapping.postcode()
 
@@ -149,5 +153,10 @@ object MappingSupport {
   val mandatoryBoolean = optional(boolean)
     .verifying(Errors.booleanMissing, _.isDefined)
     .transform({ s: Option[Boolean] => s.get }, { v: Boolean => Some(v) })
+
+  def intMapping(): Mapping[Int] = default(text, "0")
+    .verifying("error.maxValueRentFreeIsBlank.required", x => x == "0" || intRegex.findFirstIn(x).isDefined)
+    .transform[Int](_.replace(",", "").toInt, _.toString)
+    .verifying(s"error.empty.required", _ >= 1)
 
 }

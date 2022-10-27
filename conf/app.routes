@@ -122,6 +122,7 @@ GET         /enforcement-action-been-taken-details                  controllers.
 POST        /enforcement-action-been-taken-details                  controllers.Form6010.EnforcementActionBeenTakenDetailsController.submit()
 
 GET         /how-is-current-rent-fixed                              controllers.Form6010.HowIsCurrentRentFixedController.show()
+POST        /how-is-current-rent-fixed                              controllers.Form6010.HowIsCurrentRentFixedController.submit()
 
 GET         /catering-operation-or-letting-accommodation-details    controllers.Form6010.CateringOperationOrLettingAccommodationDetailsController.show()
 
@@ -136,10 +137,13 @@ POST        /current-rent-first-paid                                controllers.
 GET         /about-your-trading-history                             controllers.Form6010.AboutYourTradingHistoryController.show()
 
 GET         /current-lease-or-agreement-begin                       controllers.Form6010.CurrentLeaseOrAgreementBeginController.show()
+POST        /current-lease-or-agreement-begin                       controllers.Form6010.CurrentLeaseOrAgreementBeginController.submit()
 
 GET         /intervals-of-rent-review                               controllers.Form6010.IntervalsOfRentReviewController.show()
+POST        /intervals-of-rent-review                               controllers.Form6010.IntervalsOfRentReviewController.submit()
 
 GET         /current-rent-payable-within-12-months                  controllers.Form6010.CurrentRentPayableWithin12MonthsController.show()
+POST        /current-rent-payable-within-12-months                  controllers.Form6010.CurrentRentPayableWithin12MonthsController.submit()
 
 GET         /what-is-your-rent-based-on                             controllers.Form6010.WhatIsYourRentBasedOnController.show()
 

@@ -16,22 +16,34 @@
 
 package controllers.Form6010
 
-import config.AppConfig
+import controllers.LoginController.loginForm
+import form.CurrentRentPayableWithin12MonthsForm.currentRentPayableWithin12MonthsForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.Form6010.currentRentPayableWithin12Months
+import views.html.login
 
 import javax.inject.{Inject, Singleton}
+import scala.concurrent.Future
 
 @Singleton
 class CurrentRentPayableWithin12MonthsController @Inject() (
   mcc: MessagesControllerComponents,
-  appConfig: AppConfig,
-  currentRentPayableWithin12Months: currentRentPayableWithin12Months
+  login: login,
+  currentRentPayableWithin12MonthsView: currentRentPayableWithin12Months
 ) extends FrontendController(mcc) {
 
   def show: Action[AnyContent] = Action { implicit request =>
-    Ok(currentRentPayableWithin12Months())
+    Ok(currentRentPayableWithin12MonthsView(currentRentPayableWithin12MonthsForm))
+  }
+
+  def submit = Action.async { implicit request =>
+    currentRentPayableWithin12MonthsForm
+      .bindFromRequest()
+      .fold(
+        formWithErrors => Future.successful(BadRequest(currentRentPayableWithin12MonthsView(formWithErrors))),
+        data => Future.successful(Ok(login(loginForm)))
+      )
   }
 
 }
