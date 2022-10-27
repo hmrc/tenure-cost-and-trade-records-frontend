@@ -1,0 +1,84 @@
+@*
+ * Copyright 2022 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import models._
+@import play.api.data._
+@import play.api.data.Forms._
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.input.Input
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Label
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Text
+
+@(theForm: Form[_], prefix: String, govukInput: GovukInput)(implicit request: Request[_], messages: Messages)
+
+    @govukInput(
+        Input(
+            id = "lettingAddress.buildingNameNumber",
+            name = "lettingAddress.buildingNameNumber",
+            value = theForm("lettingAddress.buildingNameNumber").value,
+            classes = "govuk-input--width-20",
+            formGroupClasses = "address-field-one address-fields",
+            label = Label(content = Text(messages("lettingAddress.buildingNameNumber.label") )),
+            errorMessage =  theForm.errors.asTextErrorMessageForField("lettingAddress.buildingNameNumber")
+        )
+    )
+    @govukInput(
+        Input(
+            id = "lettingAddress.street1",
+            name = "lettingAddress.street1",
+            value = theForm("lettingAddress.street1").value,
+            classes = "govuk-input--width-20",
+            formGroupClasses = "address-field-two address-fields",
+            label = Label(content = Text(messages("lettingAddress.address2.label") )),
+            errorMessage =  theForm.errors.asTextErrorMessageForField("lettingAddress.street1")
+        )
+    )
+    @govukInput(
+        Input(
+            id = "lettingAddress.town",
+            name = "lettingAddress.town",
+            value = theForm("lettingAddress.town").value,
+            classes = "govuk-input--width-20",
+            formGroupClasses = "address-field-three address-fields",
+            label = Label(content = Text(messages("lettingAddress.town.label") )),
+            errorMessage =  theForm.errors.asTextErrorMessageForField("lettingAddress.town")
+        )
+    )
+
+    @govukInput(
+        Input(
+            id = "lettingAddress.county",
+            name = "lettingAddress.county",
+            value = theForm("lettingAddress.county").value,
+            classes = "govuk-input--width-20",
+            formGroupClasses = "address-field-four address-fields",
+            label = Label(content = Text(messages("lettingAddress.county.label") )),
+            errorMessage =  theForm.errors.asTextErrorMessageForField("lettingAddress.county")
+        )
+    )
+
+    @govukInput(
+        Input(
+            id = "lettingAddress.postcode",
+            name = "lettingAddress.postcode",
+            value = theForm("lettingAddress.postcode").value,
+            classes = "govuk-input--width-10",
+            formGroupClasses = "address-field-postcode",
+            label = Label(content = Text(messages("lettingAddress.postcode.label") )),
+            errorMessage =  theForm.errors.asTextErrorMessageForField("lettingAddress.postcode")
+        )
+    )

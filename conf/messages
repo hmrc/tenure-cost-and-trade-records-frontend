@@ -432,24 +432,28 @@ error.required.annualRent = Please provide an annual rent amount
 ##############################
 lettingOtherPartOfPropertyDetails.header = Lettings
 lettingOtherPartOfPropertyDetails.subheading = Enter the details of letting
-label.lettingOtherPartOfPropertyDetails.operatorName = Enter operator’s name
-label.lettingOtherPartOfPropertyDetails.typeOfBusiness = Describe the type of business
-hint.lettingOtherPartOfPropertyDetails.typeOfBusiness = For example, a billboard, residential accommodation etc
-lettingOtherPartOfPropertyDetails.correspondanceAddress = Correspondence address
-label.lettingOtherPartOfPropertyDetails.addressLine1 = Address line 1
-label.lettingOtherPartOfPropertyDetails.addressLine2 = Address line 1
-label.lettingOtherPartOfPropertyDetails.townOrCity = Town or city
-label.lettingOtherPartOfPropertyDetails.county = County (optional)
-label.lettingOtherPartOfPropertyDetails.postcode = Postcode
+label.lettingOperatorName = Enter operator’s name
+label.lettingTypeOfBusiness = Describe the type of business
+hint.lettingTypeOfBusiness = For example, a billboard, residential accommodation etc
+lettingAddress.correspondenceAddress = Correspondence address
+lettingAddress.buildingNameNumber.label = Address line 1
+lettingAddress.address2.label = Address line 2
+lettingAddress.town.label = Town or city
+lettingAddress.county.label = County (optional)
+lettingAddress.postcode.label = Postcode
 label.lettingOtherPartOfPropertyDetails = Are any of the following included in your rent?
 hint.lettingOtherPartOfPropertyDetails = Select any that apply
 checkbox.lettingOtherPartOfPropertyDetails.rates = Rates
 checkbox.lettingOtherPartOfPropertyDetails.propertyInsurance = Property insurance
 checkbox.lettingOtherPartOfPropertyDetails.outsideRepairs = Outside repairs
 checkbox.lettingOtherPartOfPropertyDetails.insideRepairs = Inside repairs
-label.lettingOtherPartOfPropertyDetails.annualRent = Annual rent payment (excluding VAT)
-label.lettingOtherPartOfPropertyDetails.dateInput = When was this sum fixed?
-prefix.lettingOtherPartOfPropertyDetails = £
+label.lettingAnnualRent = Annual rent payment (excluding VAT)
+label.lettingDateInput = When was this sum fixed?
+error.required.lettingAnnualRent = Please provide a number
+error.dateInput.day.required = The date must include a day
+error.dateInput.month.required = The date must include a month
+error.dateInput.year.required = The date must include a year
+error.required.annualRent = Please provide an annual rent amount
 
 ##TENANTS ADDITIONS DISREGARDED
 ##############################

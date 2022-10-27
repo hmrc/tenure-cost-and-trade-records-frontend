@@ -16,22 +16,34 @@
 
 package controllers.Form6010
 
-import config.AppConfig
+import controllers.LoginController.loginForm
+import form.LettingOtherPartOfPropertyForm.lettingOtherPartOfPropertyForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.Form6010.lettingOtherPartOfPropertyDetails
+import views.html.login
+
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
 
 @Singleton
 class LettingOtherPartOfPropertyDetailsController @Inject() (
   mcc: MessagesControllerComponents,
-  appConfig: AppConfig,
-  lettingOtherPartOfPropertyDetails: lettingOtherPartOfPropertyDetails
+  login: login,
+  lettingOtherPartOfPropertyDetailsView: lettingOtherPartOfPropertyDetails
 ) extends FrontendController(mcc) {
 
   def show: Action[AnyContent] = Action.async { implicit request =>
-    Future.successful(Ok(lettingOtherPartOfPropertyDetails()))
+    Future.successful(Ok(lettingOtherPartOfPropertyDetailsView(lettingOtherPartOfPropertyForm)))
+  }
+
+  def submit = Action.async { implicit request =>
+    lettingOtherPartOfPropertyForm
+      .bindFromRequest()
+      .fold(
+        formWithErrors => Future.successful(BadRequest(lettingOtherPartOfPropertyDetailsView(formWithErrors))),
+        data => Future.successful(Ok(login(loginForm)))
+      )
   }
 
 }

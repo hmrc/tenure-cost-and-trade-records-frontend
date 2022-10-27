@@ -16,12 +16,24 @@
 
 package models.submissions
 
-import org.joda.time.LocalDate
+case class LettingAddress(buildingNameNumber: String, street1: Option[String], town: Option[String], county: Option[String], postcode: String) {
+  def singleLine: String =
+    List(
+      Some(buildingNameNumber),
+      street1,
+      town,
+      county,
+      Some(postcode.replaceAll("^(\\S+?)\\s*?(\\d\\w\\w)$", "$1 $2"))
+    ).flatten.mkString(", ")
 
-case class CateringOperationOrLettingAccommodationDetails(
-                                                           operatorName: String,
-                                                           typeOfBusiness: String,
-                                                           cateringAddress: CateringAddress,
-                                                           annualRent: BigDecimal,
-                                                           dateInput: LocalDate
-                                                         )
+  def multiLine: String =
+    List(
+      Some(buildingNameNumber),
+      street1,
+      town,
+      county,
+      Some(postcode.replaceAll("^(\\S+?)\\s*?(\\d\\w\\w)$", "$1 $2"))
+    ).flatten.mkString("<br/> ")
+}
+
+

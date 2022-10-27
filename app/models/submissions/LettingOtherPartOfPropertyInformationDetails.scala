@@ -18,10 +18,10 @@ package models.submissions
 
 import org.joda.time.LocalDate
 
-case class CateringOperationOrLettingAccommodationDetails(
-                                                           operatorName: String,
-                                                           typeOfBusiness: String,
-                                                           cateringAddress: CateringAddress,
-                                                           annualRent: BigDecimal,
-                                                           dateInput: LocalDate
-                                                         )
+case class LettingOtherPartOfPropertyInformationDetails(
+                                                         operatorName: String,
+                                                         typeOfBusiness: String,
+                                                         lettingAddress: LettingAddress,
+                                                         annualRent: BigDecimal,
+                                                         dateInput: LocalDate
+                                                       )
