@@ -144,4 +144,6 @@ object Formats {
   implicit val howIsCurrentRentFixedFormatter: Formatter[CurrentRentFixed]      = namedEnumFormatter(CurrentRentFix, Errors.booleanMissing)
 
   implicit val currentRentPayableWithin12MonthsFormatter: Formatter[CurrentRentWithin12Months]      = namedEnumFormatter(CurrentRentWithin12Month, Errors.booleanMissing)
+
+  implicit val whatIsYourRentBasedOnFormatter: Formatter[CurrentRentBasedOn]      = namedEnumFormatter(CurrentRentBased, Errors.booleanMissing)
 }

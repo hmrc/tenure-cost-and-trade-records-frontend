@@ -147,6 +147,7 @@ GET         /current-rent-payable-within-12-months                  controllers.
 POST        /current-rent-payable-within-12-months                  controllers.Form6010.CurrentRentPayableWithin12MonthsController.submit()
 
 GET         /what-is-your-rent-based-on                             controllers.Form6010.WhatIsYourRentBasedOnController.show()
+POST        /what-is-your-rent-based-on                             controllers.Form6010.WhatIsYourRentBasedOnController.submit()
 
 GET         /ultimately-responsible                                 controllers.Form6010.UltimatelyResponsibleController.show()
 POST        /ultimately-responsible                                 controllers.Form6010.UltimatelyResponsibleController.submit()

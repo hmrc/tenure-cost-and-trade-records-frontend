@@ -15,10 +15,7 @@
  *@
 
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.button.Button
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.checkboxes.Checkboxes
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.checkboxes.CheckboxItem
 
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
@@ -26,15 +23,19 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukDateInput
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukTextarea
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukCharacterCount
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukCheckboxes
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
+
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
 
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Label
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Fieldset
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Legend
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Hint
 @import uk.gov.hmrc.govukfrontend.views.Aliases.CharacterCount
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Radios
+@import uk.gov.hmrc.govukfrontend.views.Aliases.RadioItem
 
+@import models.submissions.WhatIsYourCurrentRentBasedOnDetails
 
 @this(layout: Layout,
         govukButton: GovukButton,
@@ -44,54 +45,47 @@
         govukDateInput: GovukDateInput,
         govukTextarea: GovukTextarea,
         govukCharacterCount: GovukCharacterCount,
-        govukCheckboxes: GovukCheckboxes,
         formWithCSRF: FormWithCSRF
 )
 
 
-@()(implicit request: Request[_], messages: Messages)
+@(theForm: Form[WhatIsYourCurrentRentBasedOnDetails])(implicit request: Request[_], messages: Messages)
 
 @layout(
- pageHeading = messages("whatIsYourRentBasedOn.header"),
-
+ pageHeading = messages("currentRentBasedOn.header"),
+ theForm = theForm
 ) {
 
- @govukCheckboxes(
-  Checkboxes(
-   name = "whatIsYourRentBasedOn",
-   fieldset = Some(Fieldset(
-    legend = Some(Legend(
-     content = Text(Messages("label.whatIsYourRentBasedOn")),
-     classes = "govuk-fieldset__legend--s"
-    ))
-   )),
-   items = Seq(
-    CheckboxItem(
-     id = Some("percentageOpenMarket"),
-     content = Text(messages("checkbox.whatIsYourRentBasedOn.percentageOpenMarket"))
-    ),
-    CheckboxItem(
-     id = Some("fixed"),
-     content = Text(messages("checkbox.whatIsYourRentBasedOn.fixed"))
-    ),
-    CheckboxItem(
-     id = Some("percentageTurnover"),
-     content = Text(messages("checkbox.whatIsYourRentBasedOn.percentageTurnover"))
-    ),
-    CheckboxItem(
-     id = Some("indexed"),
-     content = Text(messages("checkbox.whatIsYourRentBasedOn.indexed"))
-    ),
-    CheckboxItem(
-     id = Some("stepped"),
-     content = Text(messages("checkbox.whatIsYourRentBasedOn.stepped"))
-    ),
-    CheckboxItem(
-     id = Some("other"),
-     content = Text(messages("checkbox.whatIsYourRentBasedOn.other"))
+ @formWithCSRF(action = controllers.Form6010.routes.WhatIsYourRentBasedOnController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
+
+  @govukRadios(
+   Radios(
+    name = "currentRentBasedOn",
+    idPrefix = Option("currentRentBasedOn"),
+    items = Seq(
+     "percentageOpenMarket" -> messages("label.percentageOpenMarket"),
+     "fixed" -> messages("label.fixed"),
+     "percentageTurnover" -> messages("label.percentageTurnover"),
+     "indexed" -> messages("label.indexed"),
+     "stepped" -> messages("label.stepped"),
+     "other" -> messages("label.other"),
+    ).map(radioItem => RadioItem(
+     content = Text(radioItem._2),
+     checked = radioItem._1.equals(theForm("currentRentBasedOn").value.getOrElse("")),
+     value = Option(radioItem._1)
     )
-   ),
-   hint = Some(Hint(content = Text(messages("hint.whatIsYourRentBasedOn"))))
+    ),
+    errorMessage =  theForm.errors.asTextErrorMessageForField("currentRentBasedOn"),
+    fieldset = Option(
+     Fieldset(
+      legend = Option(
+       Legend(
+        content = Text(messages("label.currentRentBasedOn")),
+        classes = "govuk-!-font-weight-bold"
+       )
+      )
+     )
+    )
    )
   )
 
@@ -105,18 +99,14 @@
     content = Text(messages("label.whatIsYourRentBasedOn.describe")),
     classes = "govuk-!-font-weight-bold"
    ),
+   errorMessage = theForm.errors.asTextErrorMessageForField("whatIsYourRentBasedOn"),
    hint = Some(Hint(content = Text(messages("hint.whatIsYourRentBasedOn.describe")))),
   )
  )
 
+ @includes.continueButton(govukButton)
 
- @govukButton(
-  Button(
-   content = Text(messages("button.label.continue")),
-   href = Some(routes.LoginController.show().url)
-  )
- )
-
+ }
 }
 
 
