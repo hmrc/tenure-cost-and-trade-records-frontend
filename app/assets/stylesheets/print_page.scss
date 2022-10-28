@@ -1,0 +1,28 @@
+.print-link {
+  display: none;
+}
+
+.js-enabled .print-link {
+  display: inline-block;
+  background-repeat: no-repeat;
+  background-position: 0;
+  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAASAgMAAAAvVbb5AAAACVBMVEX///////8KDAwmYEUdAAAAAXRSTlMAQObYZgAAADBJREFUCFtjYOBa1cDAoBkKJFYCCSYwEYpCrAICZCI0FEhkrURmQRRnrYRpW7WqAQAlGR86Ip1rwwAAAABJRU5ErkJggg==");
+  padding: 0.5em 0 0.5em 28px;
+  zoom: 1;
+}
+
+@media print {
+  a.print-link, a, .govuk-summary-list__actions,
+  .govuk-button, .button, button, .govuk-back-link,
+  .no-print, footer,  .form-help-toggle, .help-container, .govuk-details:not([open]) {
+    display: none !important;
+  }
+}
+
+@media print {
+  .la-link-print {
+    text-decoration: none;
+    color: #0b0c0c !important;
+    display: block !important;
+  }
+}
