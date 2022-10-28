@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package form
+package form.persistence
 
 import play.api.Configuration
 import play.api.libs.json.{Reads, Writes}

@@ -14,14 +14,15 @@
  * limitations under the License.
  */
 
-package form
+package form.persistence
 
-import java.util.Base64
 import com.google.inject.ImplementedBy
 import connectors.{Document, Page}
 import controllers.toFut
-import javax.inject.{Inject, Singleton}
 import play.api.libs.json.{Format, Json}
+
+import java.util.Base64
+import javax.inject.{Inject, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
 
 @ImplementedBy(classOf[SessionScopedFormDocumentRepository])

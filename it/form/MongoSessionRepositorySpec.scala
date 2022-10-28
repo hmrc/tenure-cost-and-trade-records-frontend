@@ -17,12 +17,12 @@
 package form
 
 import java.util.UUID
-
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import org.scalatestplus.play.PlaySpec
 import play.api.libs.json.Json
 import play.api.test.{DefaultAwaitTimeout, FutureAwaits}
 import MongoSessionRepositorySpecData._
+import form.persistence.MongoSessionRepository
 import org.scalatest.OptionValues
 
 import scala.concurrent.ExecutionContext

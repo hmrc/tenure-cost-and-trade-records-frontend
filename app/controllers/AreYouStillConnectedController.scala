@@ -21,32 +21,47 @@ import controllers.LoginController.loginForm
 import form.AreYouStillConnectedForm.areYouStillConnectedForm
 import form.ConnectionToThePropertyForm.connectionToThePropertyForm
 import form.EditAddressForm.editAddressForm
-import form.FormDocumentRepository
 import models.submissions.Form6010.{AddressConnectionTypeNo, AddressConnectionTypeYes, AddressConnectionTypeYesChangeAddress}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.{areYouStillConnected, connectionToTheProperty, editAddress, login}
+import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
+import views.html.Form6010.aboutYou
+import views.html.login
+import form.Form6010.AboutYouForm
+import form.EnumMapping
+import form.persistence.FormDocumentRepository
+import repositories.SessionRepo
+import models.areYouStillConnectedToAddress
+import models.submissions.Form6010.AddressConnectionType
+import play.api.data.Form
+import play.api.data.Forms.mapping
 
-import javax.inject.{Inject, Singleton}
+import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
 
 @Singleton
 class AreYouStillConnectedController @Inject() (
-  mcc: MessagesControllerComponents,
-  formDocumentRepository: FormDocumentRepository,
-  appConfig: AppConfig,
-  login: login,
-  areYouStillConnectedView: areYouStillConnected,
-  connectionToThePropertyView: connectionToTheProperty,
-  editAddressView: editAddress
-) extends FrontendController(mcc) {
+                                                 mcc: MessagesControllerComponents,
+                                                 formDocumentRepository: FormDocumentRepository,
+                                                 appConfig: AppConfig,
+                                                 login: login,
+                                                 areYouStillConnectedView: areYouStillConnected,
+                                                 connectionToThePropertyView: connectionToTheProperty,
+                                                 editAddressView: editAddress,
+                                                 aboutYouView: aboutYou,
+                                                 @Named("Session") val Session: SessionRepo
+                                               ) extends FrontendController(mcc) {
+
+  import AreYouStillConnected._
 
   def show: Action[AnyContent] = Action.async { implicit request =>
-    Future.successful(Ok(areYouStillConnectedView(areYouStillConnectedForm)))
+    Future.successful(Ok(areYouStillConnectedView(stillConnectedForm)))
   }
 
   def submit = Action.async { implicit request =>
-    areYouStillConnectedForm
+    stillConnectedForm
       .bindFromRequest()
       .fold(
         formWithErrors => Future.successful(BadRequest(areYouStillConnectedView(formWithErrors))),
@@ -61,5 +76,13 @@ class AreYouStillConnectedController @Inject() (
             Future.successful(Ok(login(loginForm)))
           }
       )
+  }
+
+  object AreYouStillConnected {
+    lazy val stillConnectedForm: Form[areYouStillConnectedToAddress] = Form(
+      mapping(
+        "areYouStillConnected" -> EnumMapping(AddressConnectionType)
+      )(areYouStillConnectedToAddress.apply)(areYouStillConnectedToAddress.unapply)
+    )
   }
 }
