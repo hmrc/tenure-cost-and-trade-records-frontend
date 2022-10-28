@@ -126,8 +126,10 @@ GET         /how-is-current-rent-fixed                              controllers.
 POST        /how-is-current-rent-fixed                              controllers.Form6010.HowIsCurrentRentFixedController.submit()
 
 GET         /catering-operation-or-letting-accommodation-details    controllers.Form6010.CateringOperationOrLettingAccommodationDetailsController.show()
+POST        /catering-operation-or-letting-accommodation-details    controllers.Form6010.CateringOperationOrLettingAccommodationDetailsController.submit()
 
 GET         /letting-other-part-of-property-details                 controllers.Form6010.LettingOtherPartOfPropertyDetailsController.show()
+POST        /letting-other-part-of-property-details                 controllers.Form6010.LettingOtherPartOfPropertyDetailsController.submit()
 
 GET         /tenants-additions-disregarded                          controllers.Form6010.TenantsAdditionsDisregardedController.show()
 POST        /tenants-additions-disregarded                          controllers.Form6010.TenantsAdditionsDisregardedController.submit()

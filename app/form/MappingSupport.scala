@@ -158,6 +158,28 @@ object MappingSupport {
     "postcode"           -> nonEmptyTextOr("landlordAddress.postcode", postcode, "error.postcode.required")
   )(LandlordAddress.apply)(LandlordAddress.unapply)
 
+  def cateringAddressMapping: Mapping[CateringAddress] = mapping(
+    "buildingNameNumber" -> default(text, "").verifying(
+      nonEmpty(errorMessage = "error.buildingNameNumber.required"),
+      maxLength(50, "error.buildingNameNumber.maxLength")
+    ),
+    "street1"            -> optional(text(maxLength = 50)),
+    "town"               -> optional(text(maxLength = 50)),
+    "county"             -> optional(text(maxLength = 50)),
+    "postcode"           -> nonEmptyTextOr("cateringAddress.postcode", postcode, "error.postcode.required")
+  )(CateringAddress.apply)(CateringAddress.unapply)
+
+  def lettingOtherPartAddressMapping: Mapping[LettingAddress] = mapping(
+    "buildingNameNumber" -> default(text, "").verifying(
+      nonEmpty(errorMessage = "error.buildingNameNumber.required"),
+      maxLength(50, "error.buildingNameNumber.maxLength")
+    ),
+    "street1"            -> optional(text(maxLength = 50)),
+    "town"               -> optional(text(maxLength = 50)),
+    "county"             -> optional(text(maxLength = 50)),
+    "postcode"           -> nonEmptyTextOr("lettingAddress.postcode", postcode, "error.postcode.required")
+  )(LettingAddress.apply)(LettingAddress.unapply)
+
   def mandatoryBooleanWithError(message: String) =
     optional(boolean)
       .verifying(message, _.isDefined)
