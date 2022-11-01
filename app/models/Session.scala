@@ -30,6 +30,10 @@ case class Session(
 
 object Session {
   implicit val format: OFormat[Session] = Json.format[Session]
+
+  def apply(areYouStillConnectedToAddress: areYouStillConnectedToAddress): Session = {
+    Session(areYouStillConnectedToAddress)
+  }
 }
 
 case class areYouStillConnectedToAddress(areYouStillConnected: AddressConnectionType)
