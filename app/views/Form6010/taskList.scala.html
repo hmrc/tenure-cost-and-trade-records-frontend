@@ -1,0 +1,239 @@
+@*
+ * Copyright 2022 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
+
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukErrorSummary
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukDateInput
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukTextarea
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukCharacterCount
+@import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
+
+
+@this(layout: Layout,
+        govukButton: GovukButton,
+        govukRadios: GovukRadios,
+        govukInput: GovukInput,
+        govukErrorSummary: GovukErrorSummary,
+        govukDateInput: GovukDateInput,
+        govukTextarea: GovukTextarea,
+        govukCharacterCount: GovukCharacterCount,
+        formWithCSRF: FormWithCSRF
+)
+
+
+@()(implicit request: Request[_], messages: Messages)
+
+@layout(
+ pageHeading = messages("ultimatelyResponsible.header"),
+) {
+
+  <div class="govuk-grid-row">
+   <div class="govuk-grid-column-two-thirds">
+
+    <h1 class="govuk-heading-l">
+     Declaration summary
+    </h1>
+
+    <p class="govuk-body">You can save your declaration and come back later. You have 30 days from the first time you save to complete this declaration or your information will be deleted. </p>
+
+    <ol class="app-task-list">
+     <li>
+      <h2 class="app-task-list__section">
+       1. About you
+      </h2>
+      <ul class="app-task-list__items">
+       <li class="app-task-list__item">
+        <span class="app-task-list__task-name">
+         <a href="about-you">Provide your contact details</a></span>
+        <span class="govuk-tag app-task-list__tag govuk-tag--grey" id="trader-details-not-started">Not started</span>
+       </li>
+
+
+      </ul></li></ol>
+
+
+    <ol class="app-task-list">
+
+     <li>
+      <h2 class="app-task-list__section">
+       2. About the property
+      </h2>
+
+      <ul class="app-task-list__items">
+
+        <!-- Movement details -->
+
+
+       <li class="app-task-list__item">
+        <span class="app-task-list__task-name">
+
+         <a href="about-the-property">Current Occupier Details</a></span>
+
+        </span>
+        <span class="govuk-tag app-task-list__tag govuk-tag--grey" id="goods-summary-not-started">
+         Not started
+        </span>
+       </li>
+
+       <li class="app-task-list__item">
+        <span class="app-task-list__task-name">
+         <a href="website-for-property">Website for business</a></span>
+        </span>
+        <span class="govuk-tag app-task-list__tag govuk-tag--grey" id="goods-summary-not-started">
+         Not started
+        </span>
+       </li>
+
+
+      </ul>
+     </li>
+    </ol>
+
+    <ol class="app-task-list">
+     <li>
+      <h2 class="app-task-list__section">
+       3. About your trading history
+      </h2>
+      <ul class="app-task-list__items">
+       <li class="app-task-list__item">
+        <span class="app-task-list__task-name">
+         Provide your trading details</span>
+        <span class="govuk-tag app-task-list__tag govuk-tag--grey" id="goods-summary-not-started">
+         Cannot start yet
+        </span>
+       </li>
+
+
+      </ul>
+     </li>
+    </ol>
+
+    <ol class="app-task-list">
+     <li>
+      <h2 class="app-task-list__section">
+       4. About any franchises or lettings
+      </h2>
+      <ul class="app-task-list__items">
+       <li class="app-task-list__item">
+        <span class="app-task-list__task-name">
+         Declare any separate businesses</span>
+        <span class="govuk-tag app-task-list__tag govuk-tag--grey" id="goods-summary-not-started">
+         Cannot start yet
+        </span>
+       </li>
+       <li class="app-task-list__item">
+        <span class="app-task-list__task-name">
+         Declare any lettings</span>
+        <span class="govuk-tag app-task-list__tag govuk-tag--grey" id="goods-summary-not-started">
+         Cannot start yet
+        </span>
+       </li>
+
+
+      </ul>
+     </li>
+    </ol>
+
+    <ol class="app-task-list">
+     <li>
+      <h2 class="app-task-list__section">
+       5. About your lease or agreement
+      </h2>
+      <ul class="app-task-list__items">
+
+       <li class="app-task-list__item">
+        <span class="app-task-list__task-name">
+         Tell us about your landlord</span>
+        <span class="govuk-tag app-task-list__tag govuk-tag--grey" id="goods-summary-not-started">
+         Cannot start yet
+        </span>
+       </li>
+       <li class="app-task-list__item">
+        <span class="app-task-list__task-name">
+         Report any changes to your lease</span>
+        <span class="govuk-tag app-task-list__tag govuk-tag--grey" id="goods-summary-not-started">
+         Cannot start yet
+        </span>
+       </li>
+       <li class="app-task-list__item">
+        <span class="app-task-list__task-name">
+         Report lease start date and payment</span>
+        <span class="govuk-tag app-task-list__tag govuk-tag--grey" id="goods-summary-not-started">
+         Cannot start yet
+        </span>
+       </li>
+       <li class="app-task-list__item">
+        <span class="app-task-list__task-name">
+         Describe what the rent includes</span>
+        <span class="govuk-tag app-task-list__tag govuk-tag--grey" id="goods-summary-not-started">
+         Cannot start yet
+        </span>
+       </li>
+       <li class="app-task-list__item">
+        <span class="app-task-list__task-name">
+         Explain how the rent was calculated</span>
+        <span class="govuk-tag app-task-list__tag govuk-tag--grey" id="goods-summary-not-started">
+         Cannot start yet
+        </span>
+       </li>
+       <li class="app-task-list__item">
+        <span class="app-task-list__task-name">
+         Report exclusions, restrictions or incentives</a></span>
+        <span class="govuk-tag app-task-list__tag govuk-tag--grey" id="goods-summary-not-started">
+         Cannot start yet
+        </span>
+       </li>
+
+
+      </ul>
+     </li>
+    </ol>
+
+    <ol class="app-task-list">
+     <li>
+      <h2 class="app-task-list__section">
+       6. Additional information
+      </h2>
+      <ul class="app-task-list__items">
+       <li class="app-task-list__item">
+        <span class="app-task-list__task-name">
+         Report additional information</span>
+        <span class="govuk-tag app-task-list__tag govuk-tag--grey" id="goods-summary-not-started">
+         Cannot start yet
+        </span>
+       </li>
+
+       <li class="app-task-list__item">
+        <span class="app-task-list__task-name">
+         Provide alternative contact details
+        </span>
+        <span class="govuk-tag app-task-list__tag govuk-tag--grey" id="goods-summary-not-started">
+         Cannot start yet
+        </span>
+       </li>
+      </ul></li></ol>
+
+
+   </div>
+  </div>
+
+}
+
+
+
