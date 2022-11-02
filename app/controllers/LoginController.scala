@@ -33,6 +33,7 @@ import uk.gov.hmrc.http.{HeaderCarrier, SessionId, SessionKeys, Upstream4xxRespo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import uk.gov.hmrc.play.http.HeaderCarrierConverter
 import views.html._
+import views.html.{login, loginFailed}
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
@@ -72,6 +73,8 @@ class LoginController @Inject() (
   login: login,
   loginToBackend: LoginToBackendAction,
   errorView: ErrorTemplate,
+  loginFailedView: loginFailed,
+  lockedOutView: views.html.lockedOut,
   test: testSign // setup proper error page
 //                                  connector: DefaultBackendConnector,
 //                                  areYouStillConnected: areYouStillConnected
@@ -119,12 +122,11 @@ class LoginController @Inject() (
     r: MessagesRequest[AnyContent]
   ) = {
     val sessionId = java.util.UUID.randomUUID().toString //TODO - Why new session? Why manually?
-
+    implicit val hc2: HeaderCarrier = hc.copy(sessionId = Some(SessionId(sessionId)))
     val cleanedRefNumber = referenceNumber.replaceAll("[^0-9]", "")
     var cleanPostcode    = postcode.replaceAll("[^\\w\\d]", "")
     cleanPostcode = cleanPostcode.patch(cleanPostcode.length - 4, " ", 0)
 
-    implicit val hc2: HeaderCarrier = hc.copy(sessionId = Some(SessionId(java.util.UUID.randomUUID().toString)))
     logger.debug(s"Signing in with: reference number : $cleanedRefNumber, postcode: $cleanPostcode")
 
     loginToBackend(hc2, ec)(cleanedRefNumber, cleanPostcode, startTime)
@@ -161,9 +163,9 @@ class LoginController @Inject() (
             val clientIP = r.headers.get(trueClientIp).getOrElse("")
             auditLockedOut(cleanedRefNumber, postcode, cleanPostcode, clientIP)(hc2)
 
-            Redirect(routes.LoginController.show())
+            Redirect(routes.LoginController.lockedOut)
           } else {
-            Redirect(routes.LoginController.show())
+            Redirect(routes.LoginController.loginFailed(remainingAttempts))
           }
       }
 
@@ -191,6 +193,14 @@ class LoginController @Inject() (
       "lockedIP"            -> lockedIP
     )
     audit.sendExplicitAudit("LockedOut", detailJson)
+  }
+
+  def lockedOut = Action { implicit request =>
+    Unauthorized(lockedOutView())
+  }
+
+  def loginFailed(attemptsRemaining: Int) = Action { implicit request =>
+    Unauthorized(loginFailedView(attemptsRemaining))
   }
 
   private def withNewSession(r: Result, token: String, forNum: String, ref: String, sessionId: String)(implicit

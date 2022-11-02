@@ -576,3 +576,8 @@ error.postcode.maxLength = Postcode must be 10 characters or fewer
 error.day.required = The date must include a day
 error.month.required = The date must include a month
 error.year.required = The date must include a year
+
+error.login.failed=Enter the reference number and postcode as they appear in the letter we sent you.
+error.login.attemptsleft=You have {0} remaining attempts to enter the correct details before your account is locked for 24 hours.
+error.login.1.attempt.left=You have one remaining attempt to enter the correct details before your account is locked for 24 hours.
+error.login.lockedOut=You are now locked out. You can try again after 24 hours.

@@ -54,6 +54,9 @@ label.referenceNumber = Reference number
 label.postcode = Postcode
 error.invalid_refnum = Enter your reference number as it appears on your letter
 error.invalid_postcode_as_on_letter = Enter your postcode as it appears on your letter
+heading.login.lockedOut=You are now locked out
+heading.login.loginFailed=The details you have entered do not match our records
+label.retryLogin=Try again
 
 #LOGIN- Invalid Form Type
 ##############################
@@ -589,4 +592,8 @@ error.day.required = The date must include a day
 error.month.required = The date must include a month
 error.year.required = The date must include a year
 
+error.login.failed=Enter the reference number and postcode as they appear in the letter we sent you.
+error.login.attemptsleft=You have {0} remaining attempts to enter the correct details before your account is locked for 24 hours.
+error.login.1.attempt.left=You have one remaining attempt to enter the correct details before your account is locked for 24 hours.
+error.login.lockedOut=You are now locked out. You can try again after 24 hours.
 
