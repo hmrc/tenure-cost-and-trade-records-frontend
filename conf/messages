@@ -122,6 +122,15 @@ relationshipToProperty.ownerTrustee = Owner or trustee for owner
 relationshipToProperty.occupier = Occupier’s agent
 relationshipToProperty.owner = Owner’s agent
 
+#6010 CONNECTION TO THE PROPERTY
+##############################
+connectionToTheProperty.header = What is your connection to the property?
+hint.connectionToTheProperty = If you’re renting or leasing the property, even as a charity or non-profit organisation, you’re considered the occupier. If you are both the owner and the occupier, select ’Owner or trustee for owner’.
+label.occupierTrustee = Occupier or trustee for occupier
+label.ownerTrustee = Owner or trustee for owner
+label.occupierAgent = Occupier’s agent
+label.ownerAgent = Owner’s agent
+
 #6010 ABOUT THE PROPERTY
 ##############################
 aboutProperty.header = About the property
