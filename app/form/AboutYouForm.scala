@@ -23,13 +23,9 @@ import play.api.data.Forms.{mapping, nonEmptyText}
 
 object AboutYouForm {
 
-  val ownerAndOccupier = Seq(UserTypeOwner.name, UserTypeOccupier.name)
-  val agents           = Seq(UserTypeOwnersAgent.name, UserTypeOccupiersAgent.name)
-
   val aboutYouForm: Form[CustomerDetails] = Form(
     mapping(
       "fullName"       -> nonEmptyText(maxLength = 50),
-      "userType"       -> userType,
       "contactDetails" -> contactDetailsMapping
     )(CustomerDetails.apply)(CustomerDetails.unapply)
   )

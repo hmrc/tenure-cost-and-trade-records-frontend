@@ -18,6 +18,5 @@ package models.submissions
 
 case class CustomerDetails(
   fullName: String,
-  userType: UserType,
   contactDetails: ContactDetails
 )

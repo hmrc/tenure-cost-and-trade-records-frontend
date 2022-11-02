@@ -105,36 +105,6 @@
 
   </fieldset>
 
-  @govukRadios(
-   Radios(
-    name = "userType",
-    idPrefix = Option("userType"),
-    items = Seq(
-     "occupiersAgent" -> messages("userType.occupierTrustee"),
-     "ownersAgent" -> messages("userType.ownerTrustee"),
-     "occupier" -> messages("userType.occupier"),
-     "owner" -> messages("userType.owner")
-    ).map( radioItem => RadioItem (
-     content = Text(radioItem._2),
-     checked = radioItem._1.equals(theForm("userType").value.getOrElse("")),
-     value=Option(radioItem._1)
-    )
-    ),
-    hint = Some(Hint(content = Text(messages("hint.aboutYou")))),
-    errorMessage = theForm.errors.asTextErrorMessageForField("userType"),
-    fieldset = Option(
-     Fieldset(
-      legend = Option(
-       Legend(
-        content = Text(messages("label.userType")),
-        classes = "govuk-!-font-weight-bold"
-       )
-      )
-     )
-    )
-   )
-  )
-
   @includes.continueButton(govukButton)
  }
 
