@@ -59,6 +59,7 @@ object Formats {
   }
 
   implicit val userTypeFormat: Formatter[UserType]                                                           = namedEnumFormatter(UserTypes, Errors.userTypeRequired)
+  implicit val connectionToPropertyFormat: Formatter[ConnectionToTheProperties]                              = namedEnumFormatter(ConnectionToProperty, Errors.booleanMissing)
   implicit val aboutYourPropertyFormat: Formatter[CurrentPropertyUsed]                                       =
     namedEnumFormatter(CurrentPropertyUse, Errors.currentOccupierName)
   implicit val buildingOperatingHaveAWebsiteFormat: Formatter[BuildingOperationHaveAWebsite]                 =
