@@ -29,8 +29,5 @@ object CurrentRentWithin12MonthsNo extends CurrentRentWithin12Months {
 }
 
 object CurrentRentWithin12Month extends NamedEnumSupport[CurrentRentWithin12Months] {
-  val all = List(
-    CurrentRentWithin12MonthsYes,
-    CurrentRentWithin12MonthsNo)
+  val all = List(CurrentRentWithin12MonthsYes, CurrentRentWithin12MonthsNo)
 }
-

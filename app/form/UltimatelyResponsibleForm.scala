@@ -26,10 +26,10 @@ object UltimatelyResponsibleForm {
 
   val ultimatelyResponsibleForm = Form(
     mapping(
-      "outsideRepairs"                  -> outsideRepairsType,
-      "insideRepairs"                   -> insideRepairsType,
-      "buildingInsurance"               -> buildingInsuranceType,
-      "areaShared"  -> default(text, "").verifying(
+      "outsideRepairs"    -> outsideRepairsType,
+      "insideRepairs"     -> insideRepairsType,
+      "buildingInsurance" -> buildingInsuranceType,
+      "areaShared"        -> default(text, "").verifying(
         nonEmpty(errorMessage = "error.areaShared.required"),
         maxLength(1000, "error.areaShared.maxLength")
       )

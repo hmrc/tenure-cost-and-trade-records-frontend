@@ -25,7 +25,7 @@ object ConnectionToThePropertyForm {
 
   val connectionToThePropertyForm = Form(
     mapping(
-      "connectionToTheProperty"       -> connectionToThePropertyType,
+      "connectionToTheProperty" -> connectionToThePropertyType
     )(ConnectionToThePropertyDetails.apply)(ConnectionToThePropertyDetails.unapply)
   )
 }

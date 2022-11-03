@@ -37,7 +37,6 @@ class UltimatelyResponsibleController @Inject() (
     Future.successful(Ok(ultimatelyResponsibleView(ultimatelyResponsibleForm)))
   }
 
-
   def submit = Action.async { implicit request =>
     ultimatelyResponsibleForm
       .bindFromRequest()

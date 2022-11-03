@@ -35,7 +35,6 @@ object OutsideRepair extends NamedEnumSupport[OutsideRepairs] {
   val all = List(OutsideRepairsLandlord, OutsideRepairsTenant, OutsideRepairsBoth)
 }
 
-
 sealed trait InsideRepairs extends NamedEnum {
   val key = "insideRepairs"
 }
@@ -69,4 +68,3 @@ object BuildingInsurancesBoth extends BuildingInsurances {
 object BuildingInsurance extends NamedEnumSupport[BuildingInsurances] {
   val all = List(BuildingInsurancesLandlord, BuildingInsurancesTenant, BuildingInsurancesBoth)
 }
-

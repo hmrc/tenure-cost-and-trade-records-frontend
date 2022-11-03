@@ -16,7 +16,13 @@
 
 package models.submissions
 
-case class LandlordAddress(buildingNameNumber: String, street1: Option[String], town: Option[String], county: Option[String], postcode: String) {
+case class LandlordAddress(
+  buildingNameNumber: String,
+  street1: Option[String],
+  town: Option[String],
+  county: Option[String],
+  postcode: String
+) {
   def singleLine: String =
     List(
       Some(buildingNameNumber),
@@ -35,5 +41,3 @@ case class LandlordAddress(buildingNameNumber: String, street1: Option[String], 
       Some(postcode.replaceAll("^(\\S+?)\\s*?(\\d\\w\\w)$", "$1 $2"))
     ).flatten.mkString("<br/> ")
 }
-
-
