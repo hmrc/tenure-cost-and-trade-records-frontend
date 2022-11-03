@@ -30,7 +30,7 @@ object IntervalsOfRentReviewForm {
         nonEmpty(errorMessage = "error.currentLeaseOrAgreementBegin.required"),
         maxLength(1000, "error.currentLeaseOrAgreementBegin.maxLength")
       ),
-      "nextReview" -> dateFieldsMapping("nextReview", fieldErrorPart = ".nextReview")
+      "nextReview"                   -> dateFieldsMapping("nextReview", fieldErrorPart = ".nextReview")
     )(IntervalsOfRentReview.apply)(IntervalsOfRentReview.unapply)
   )
 }

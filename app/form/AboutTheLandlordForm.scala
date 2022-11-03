@@ -16,7 +16,7 @@
 
 package form
 
-import form.MappingSupport.{landlordAddressMapping, contactDetailsMapping, userType}
+import form.MappingSupport.{contactDetailsMapping, landlordAddressMapping, userType}
 import models.submissions._
 import play.api.data.Form
 import play.api.data.Forms.{default, mapping, nonEmptyText, text}
@@ -27,8 +27,9 @@ object AboutTheLandlordForm {
     mapping(
       "landlordFullName" -> default(text, "").verifying(
         nonEmpty(errorMessage = "error.landlordFullName.required"),
-        maxLength(50, "error.landlordFullName.maxLength")),
-      "landlordAddress"       -> landlordAddressMapping
+        maxLength(50, "error.landlordFullName.maxLength")
+      ),
+      "landlordAddress"  -> landlordAddressMapping
     )(AboutTheLandlord.apply)(AboutTheLandlord.unapply)
   )
 }

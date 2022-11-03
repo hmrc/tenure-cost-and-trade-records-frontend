@@ -21,14 +21,14 @@ import java.time.{ZoneId, ZonedDateTime}
 import java.util.Locale
 
 /**
- * @author Yuriy Tumakha
- */
+  * @author Yuriy Tumakha
+  */
 object DateUtil {
 
   val ukTimezone: ZoneId = ZoneId.of("Europe/London")
 
   private val dayMonthYearExampleFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("d M yyyy", Locale.UK)
-  private val monthYearExampleFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("M yyyy", Locale.UK)
+  private val monthYearExampleFormatter: DateTimeFormatter    = DateTimeFormatter.ofPattern("M yyyy", Locale.UK)
 
   def nowInUK: ZonedDateTime = ZonedDateTime.now(ukTimezone)
 

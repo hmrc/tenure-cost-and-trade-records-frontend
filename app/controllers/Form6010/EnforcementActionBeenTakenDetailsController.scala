@@ -41,8 +41,7 @@ class EnforcementActionBeenTakenDetailsController @Inject() (
     enforcementActionDetailsForm
       .bindFromRequest()
       .fold(
-        formWithErrors =>
-          Future.successful(BadRequest(enforcementActionBeenTakenDetailsView(formWithErrors))),
+        formWithErrors => Future.successful(BadRequest(enforcementActionBeenTakenDetailsView(formWithErrors))),
         data => Future.successful(Ok(login(loginForm)))
       )
   }

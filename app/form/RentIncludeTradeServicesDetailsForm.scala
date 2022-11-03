@@ -24,13 +24,14 @@ import play.api.data.validation.Constraints.{maxLength, nonEmpty}
 
 object RentIncludeTradeServicesDetailsForm {
 
-  val rentIncludeTradeServicesDetailsForm = Form(mapping(
-    "sumIncludedInRent" -> currencyMapping(".rentIncludeFixturesAndFittingsDetails"),
-    "describeServices" ->
-      default(text, "").verifying(
-        nonEmpty(errorMessage = "error.describeServices.required"),
-        maxLength(1000, "error.describeServices.maxLength")
-      )
-  )(RentIncludeTradeServicesInformationDetails.apply)(RentIncludeTradeServicesInformationDetails.unapply)
+  val rentIncludeTradeServicesDetailsForm = Form(
+    mapping(
+      "sumIncludedInRent" -> currencyMapping(".rentIncludeFixturesAndFittingsDetails"),
+      "describeServices"  ->
+        default(text, "").verifying(
+          nonEmpty(errorMessage = "error.describeServices.required"),
+          maxLength(1000, "error.describeServices.maxLength")
+        )
+    )(RentIncludeTradeServicesInformationDetails.apply)(RentIncludeTradeServicesInformationDetails.unapply)
   )
 }

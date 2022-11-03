@@ -34,7 +34,11 @@ object ConnectionToThePropertyOwnerAgent extends ConnectionToTheProperties {
   val name = "ownerAgent"
 }
 
-
 object ConnectionToProperty extends NamedEnumSupport[ConnectionToTheProperties] {
-  val all = List(ConnectionToThePropertyOccupierTrustee, ConnectionToThePropertyOwnerTrustee, ConnectionToThePropertyOccupierAgent, ConnectionToThePropertyOwnerAgent)
+  val all = List(
+    ConnectionToThePropertyOccupierTrustee,
+    ConnectionToThePropertyOwnerTrustee,
+    ConnectionToThePropertyOccupierAgent,
+    ConnectionToThePropertyOwnerAgent
+  )
 }

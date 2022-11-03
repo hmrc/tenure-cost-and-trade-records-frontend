@@ -27,7 +27,7 @@ object HowIsCurrentRentFixedForm {
   val howIsCurrentRentFixedForm = Form(
     mapping(
       "howIsCurrentRentFixed" -> howIsCurrentRentFixedType,
-      "rentActuallyAgreed" -> dateFieldsMapping("rentActuallyAgreed", fieldErrorPart = ".rentActuallyAgreed"),
+      "rentActuallyAgreed"    -> dateFieldsMapping("rentActuallyAgreed", fieldErrorPart = ".rentActuallyAgreed")
     )(HowIsCurrentRentFixed.apply)(HowIsCurrentRentFixed.unapply)
   )
 }

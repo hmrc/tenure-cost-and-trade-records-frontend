@@ -22,13 +22,12 @@ import models.submissions.CurrentLeaseOrAgreementBegin
 import play.api.data.Form
 import play.api.data.Forms.{default, mapping, number, text}
 
-
 object CurrentLeaseOrAgreementBeginForm {
 
   val currentLeaseOrAgreementBeginForm = Form(
     mapping(
       "leaseBegin" -> dateFieldsMapping("leaseBegin", fieldErrorPart = ".leaseBegin"),
-      "grantedFor" -> intMapping(),
+      "grantedFor" -> intMapping()
     )(CurrentLeaseOrAgreementBegin.apply)(CurrentLeaseOrAgreementBegin.unapply)
   )
 }
