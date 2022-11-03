@@ -26,6 +26,9 @@ POST        /previously-connected                                   controllers.
 
 GET         /remove-connection                                      controllers.Form6010.RemoveConnectionController.show()
 
+GET         /connection-to-the-property                             controllers.Form6010.ConnectionToThePropertyController.show()
+POST        /connection-to-the-property                             controllers.Form6010.ConnectionToThePropertyController.submit()
+
 GET         /about-the-property                                     controllers.Form6010.AboutThePropertyController.show()
 POST        /about-the-property                                     controllers.Form6010.AboutThePropertyController.submit()
 
@@ -155,3 +158,5 @@ POST        /what-is-your-rent-based-on                             controllers.
 
 GET         /ultimately-responsible                                 controllers.Form6010.UltimatelyResponsibleController.show()
 POST        /ultimately-responsible                                 controllers.Form6010.UltimatelyResponsibleController.submit()
+
+GET         /task-list                                              controllers.Form6010.TaskListController.show()

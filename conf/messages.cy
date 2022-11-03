@@ -33,11 +33,22 @@ label.no.nac.oedd=No
 label.yes.iawn = Yes
 label.no.na = No
 
-# Dummy Start Page
+#DUMMY START PAGE FULL INFORMATION
 ##############################
-start.page.heading = Dummy Start Page
-start.desc = This is a dummy start gov.uk page. It is not shown to users in production but allows testing of the journey
-start.text = Dyma'ch gwasanaeth newydd
+start.page.heading = Send information about your pubs, licensed restaurants and wine bars to the Valuation Office Agency
+start.desc = You must send the Valuation Office Agency (VOA) information about your business property if they’ve asked you to. You need to do this even if you no longer own or rent the property.
+start.desc1 = The information you provide will be used by the local authority to help calculate business rates in your area.
+start.inset = If you do not send the information within 56 days of getting the letter the VOA sent to you, you may have to pay a penalty.
+start.warning = You could be taken to court if you submit false information
+start.subheading = What you’ll need
+start.headingList = Collect the following information before you begin:
+start.item1 = the reference number from the letter the VOA sent you
+start.item2 = your lease or agreement, including the current rent you pay, or any tenants’ details if you’re the owner
+start.item3 = trading receipts for the last three financial years, or since you occupied the property
+start.item4 = details of any sub-lettings or franchises
+start.item5 = information about any recent changes to your rent or any rent-free periods
+start.item6 = information about any changes you’ve made to the property
+start.headingFooter = You do not have to complete the form in one go. You can save what you’ve done and return to finish it later on.
 start.button = Start now
 
 #LOGIN
@@ -125,6 +136,15 @@ relationshipToProperty.occupierTrustee = Occupier or trustee for occupier
 relationshipToProperty.ownerTrustee = Owner or trustee for owner
 relationshipToProperty.occupier = Occupier’s agent
 relationshipToProperty.owner = Owner’s agent
+
+#6010 CONNECTION TO THE PROPERTY
+##############################
+connectionToTheProperty.header = What is your connection to the property?
+hint.connectionToTheProperty = If you’re renting or leasing the property, even as a charity or non-profit organisation, you’re considered the occupier. If you are both the owner and the occupier, select ’Owner or trustee for owner’.
+label.occupierTrustee = Occupier or trustee for occupier
+label.ownerTrustee = Owner or trustee for owner
+label.occupierAgent = Occupier’s agent
+label.ownerAgent = Owner’s agent
 
 #6010 ABOUT THE PROPERTY
 ##############################
@@ -541,6 +561,10 @@ userType.lessee = Lessee’s agent
 userType.owner = Owner’s agent
 label.userType = What is your relationship to the property?
 hint.aboutYou = If you’re renting or leasing the property, even as a charity or non-profit organisation, you’re considered the occupier. If you are both the owner and the occupier, select ’Owner or trustee for owner’.
+
+#TASK LIST
+##############################
+taskList.header = Declaration summary
 
 #ERRORS
 ##############################

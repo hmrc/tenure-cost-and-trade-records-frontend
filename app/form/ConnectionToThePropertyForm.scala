@@ -16,17 +16,16 @@
 
 package form
 
-import form.MappingSupport.{contactDetailsMapping, userType}
+import form.MappingSupport.connectionToThePropertyType
 import models.submissions._
 import play.api.data.Form
 import play.api.data.Forms.{mapping, nonEmptyText}
 
-object AboutYouForm {
+object ConnectionToThePropertyForm {
 
-  val aboutYouForm: Form[CustomerDetails] = Form(
+  val connectionToThePropertyForm = Form(
     mapping(
-      "fullName"       -> nonEmptyText(maxLength = 50),
-      "contactDetails" -> contactDetailsMapping
-    )(CustomerDetails.apply)(CustomerDetails.unapply)
+      "connectionToTheProperty"       -> connectionToThePropertyType,
+    )(ConnectionToThePropertyDetails.apply)(ConnectionToThePropertyDetails.unapply)
   )
 }

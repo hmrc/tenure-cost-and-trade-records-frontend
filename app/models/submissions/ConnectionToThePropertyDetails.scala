@@ -14,19 +14,6 @@
  * limitations under the License.
  */
 
-package form
+package models.submissions
 
-import form.MappingSupport.{contactDetailsMapping, userType}
-import models.submissions._
-import play.api.data.Form
-import play.api.data.Forms.{mapping, nonEmptyText}
-
-object AboutYouForm {
-
-  val aboutYouForm: Form[CustomerDetails] = Form(
-    mapping(
-      "fullName"       -> nonEmptyText(maxLength = 50),
-      "contactDetails" -> contactDetailsMapping
-    )(CustomerDetails.apply)(CustomerDetails.unapply)
-  )
-}
+case class ConnectionToThePropertyDetails(connectionToTheProperties: ConnectionToTheProperties)

@@ -49,61 +49,43 @@
 )
 
 
-@(theForm: Form[CustomerDetails])(implicit request: Request[_], messages: Messages)
+@(theForm: Form[ConnectionToThePropertyDetails])(implicit request: Request[_], messages: Messages)
 
 @layout(
-  pageHeading = messages("aboutYou.header"),
+  pageHeading = messages("connectionToTheProperty.header"),
   theForm = theForm
 ) {
 
- @formWithCSRF(action = controllers.Form6010.routes.AboutYouController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
+ @formWithCSRF(action = controllers.Form6010.routes.ConnectionToThePropertyController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
 
-  <p class="govuk-body">@messages("aboutYou.subheading")</p>
-  <p class="govuk-body">@messages("aboutYou.subheading2")</p>
-
-  @govukInput(
-   Input(
-    id = "fullName",
-    name = "fullName",
-    value = theForm("fullName").value,
-    classes = "govuk-input--width-20",
-    label = Label(
-     content = Text(messages("aboutYou.fullName")),
-     classes = "govuk-!-font-weight-bold"
+  @govukRadios(
+   Radios(
+    name = "connectionToTheProperty",
+    idPrefix = Option("connectionToTheProperty"),
+    items = Seq(
+     "occupierTrustee" -> messages("label.occupierTrustee"),
+     "ownerTrustee" -> messages("label.ownerTrustee"),
+     "occupierAgent" -> messages("label.occupierAgent"),
+     "ownerAgent" -> messages("label.ownerAgent")
+    ).map( radioItem => RadioItem (
+     content = Text(radioItem._2),
+     checked = radioItem._1.equals(theForm("connectionToTheProperty").value.getOrElse("")),
+     value=Option(radioItem._1)
+    )
     ),
-    errorMessage =  theForm.errors.asTextErrorMessageForField("fullName")
+    hint = Some(Hint(content = Text(messages("hint.connectionToTheProperty")))),
+    errorMessage = theForm.errors.asTextErrorMessageForField("connectionToTheProperty"),
+    fieldset = Option(
+     Fieldset(
+      legend = Option(
+       Legend(
+        classes = "govuk-!-font-weight-bold"
+       )
+      )
+     )
+    )
    )
   )
-
-  <fieldset class="govuk-fieldset" aria-describedby="contactDetails-hint">
-   <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-   </legend>
-
-   @govukInput(
-    Input(
-     classes = "govuk-input--width-20 ",
-     attributes = Map("maxlength" -> "50"),
-     label = Label(
-      content = Text(messages("aboutYou.email")),
-      classes = "govuk-!-font-weight-bold"
-     ),
-     errorMessage = theForm.errors.asTextErrorMessageForField("contactDetails.email1")
-    ).withFormField(theForm("contactDetails.email1"))
-   )
-
-   @govukInput(
-    Input(
-     classes = "govuk-input--width-20 ",
-     attributes = Map("maxlength" -> "20"),
-     label = Label(
-      content = Text(messages("aboutYou.telephone") ),
-      classes = "govuk-!-font-weight-bold"
-     ),
-     errorMessage = theForm.errors.asTextErrorMessageForField("contactDetails.phone")
-    ).withFormField(theForm("contactDetails.phone"))
-   )
-
-  </fieldset>
 
   @includes.continueButton(govukButton)
  }

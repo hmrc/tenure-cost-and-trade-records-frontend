@@ -65,13 +65,6 @@ class AboutYouControllerSpec extends AnyFlatSpec with should.Matchers with Guice
     mustContainRequiredErrorFor(errorKey.fullName, form)
   }
 
-  "form"           should "error if userType is missing" in {
-    val formData = baseFormData - errorKey.userType
-    val form     = aboutYouForm.bind(formData)
-
-    mustContainError(errorKey.userType, Errors.userTypeRequired, form)
-  }
-
   "form"           should "error if phone is missing" in {
     val formData = baseFormData - errorKey.phone
     val form     = aboutYouForm.bind(formData)
@@ -89,7 +82,6 @@ class AboutYouControllerSpec extends AnyFlatSpec with should.Matchers with Guice
   object TestData {
     val errorKey = new {
       val fullName: String = "fullName"
-      val userType: String = "userType"
       val phone            = "contactDetails.phone"
       val email1           = "contactDetails.email1"
       val email1TooLong    = "contactDetails.email1.email.tooLong"
@@ -103,7 +95,6 @@ class AboutYouControllerSpec extends AnyFlatSpec with should.Matchers with Guice
 
     val tooLongEmail                      = "email_too_long_for_validation_againt_business_rules_specify_but_DB_constraints@something.co.uk"
     val baseFormData: Map[String, String] = Map(
-      "userType"              -> "owner",
       "contactDetails.phone"  -> "12345678901",
       "contactDetails.phone"  -> "01234 123123",
       "contactDetails.email1" -> "blah.blah@test.com",

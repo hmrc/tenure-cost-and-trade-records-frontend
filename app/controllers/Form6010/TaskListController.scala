@@ -14,19 +14,23 @@
  * limitations under the License.
  */
 
-package form
+package controllers.Form6010
 
-import form.MappingSupport.{contactDetailsMapping, userType}
-import models.submissions._
-import play.api.data.Form
-import play.api.data.Forms.{mapping, nonEmptyText}
+import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
+import views.html.Form6010.taskList
 
-object AboutYouForm {
+import javax.inject.{Inject, Singleton}
+import scala.concurrent.Future
 
-  val aboutYouForm: Form[CustomerDetails] = Form(
-    mapping(
-      "fullName"       -> nonEmptyText(maxLength = 50),
-      "contactDetails" -> contactDetailsMapping
-    )(CustomerDetails.apply)(CustomerDetails.unapply)
-  )
+@Singleton
+class TaskListController @Inject()(
+  mcc: MessagesControllerComponents,
+  taskListView: taskList
+) extends FrontendController(mcc) {
+
+  def show: Action[AnyContent] = Action.async { implicit request =>
+    Future.successful(Ok(taskListView()))
+  }
+
 }
