@@ -17,18 +17,49 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.button.Button
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.warningtext.WarningText
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.insettext.InsetText
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukWarningText
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukInsetText
 
 @this(layout: Layout,
-        govukButton: GovukButton
+        govukButton: GovukButton,
+        govukWarningText: GovukWarningText,
+        govukInsetText: GovukInsetText,
 )
+
 
 @()(implicit request: Request[_], messages: Messages)
 
-@layout(pageHeading = messages("start.page.heading"),
-
+@layout(
+ pageHeading = messages("start.page.heading"),
+ showBanner = true
 ) {
  <p class="govuk-body">@{messages("start.desc")}</p>
- <p class="govuk-body">@{messages("start.text")}</p>
+ <p class="govuk-body">@{messages("start.desc1")}</p>
+
+ @govukInsetText(InsetText(
+  content = Text(messages("start.inset"))
+ ))
+
+ @govukWarningText(WarningText(
+  iconFallbackText = "Warning",
+  content = Text(messages("start.warning"))
+ ))
+
+ <p class="govuk-heading-m">@{messages("start.subheading")}</p>
+ <p class="govuk-body">@{messages("start.headingList")}</p>
+
+ <ul class="govuk-list govuk-list--bullet">
+  <li>@{messages("start.item1")}</li>
+  <li>@{messages("start.item2")}</li>
+  <li>@{messages("start.item3")}</li>
+  <li>@{messages("start.item4")}</li>
+  <li>@{messages("start.item5")}</li>
+  <li>@{messages("start.item6")}</li>
+ </ul>
+
+ <p class="govuk-body">@{messages("start.headingFooter")}</p>
 
  @govukButton(
   Button(
