@@ -19,9 +19,9 @@ package models.submissions
 import org.joda.time.LocalDate
 
 case class LettingOtherPartOfPropertyInformationDetails(
-                                                         operatorName: String,
-                                                         typeOfBusiness: String,
-                                                         lettingAddress: LettingAddress,
-                                                         annualRent: BigDecimal,
-                                                         dateInput: LocalDate
-                                                       )
+  operatorName: String,
+  typeOfBusiness: String,
+  lettingAddress: LettingAddress,
+  annualRent: BigDecimal,
+  dateInput: LocalDate
+)

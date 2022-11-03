@@ -1,4 +1,4 @@
-/*
+@*
  * Copyright 2022 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,22 +12,12 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */
+ *@
 
-package form
+@this( layout: Layout)
 
-import form.DateMappings.dateFieldsMapping
-import form.MappingSupport.howIsCurrentRentFixedType
-import models.submissions.HowIsCurrentRentFixed
-import play.api.data.Form
-import play.api.data.Forms.mapping
+@()(implicit request: Request[_],  messages: Messages)
 
-object HowIsCurrentRentFixedForm {
-
-  val howIsCurrentRentFixedForm = Form(
-    mapping(
-      "howIsCurrentRentFixed" -> howIsCurrentRentFixedType,
-      "rentActuallyAgreed"    -> dateFieldsMapping("rentActuallyAgreed", fieldErrorPart = ".rentActuallyAgreed")
-    )(HowIsCurrentRentFixed.apply)(HowIsCurrentRentFixed.unapply)
-  )
+@layout(pageHeading = messages("heading.login.lockedOut")){
+    <p class="govuk-body">@messages("error.login.lockedOut")</p>
 }

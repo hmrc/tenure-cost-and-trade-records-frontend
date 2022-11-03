@@ -17,6 +17,6 @@
 package models.submissions
 
 case class WhatIsYourCurrentRentBasedOnDetails(
-                                                currentRentBasedOn: CurrentRentBasedOn,
-                                                describe: String
+  currentRentBasedOn: CurrentRentBasedOn,
+  describe: String
 )

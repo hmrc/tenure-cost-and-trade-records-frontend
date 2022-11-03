@@ -72,6 +72,8 @@ class LoginController @Inject() (
   login: login,
   loginToBackend: LoginToBackendAction,
   errorView: ErrorTemplate,
+  loginFailedView: loginFailed,
+  lockedOutView: lockedOut,
   test: testSign // setup proper error page
 //                                  connector: DefaultBackendConnector,
 //                                  areYouStillConnected: areYouStillConnected
@@ -161,9 +163,9 @@ class LoginController @Inject() (
             val clientIP = r.headers.get(trueClientIp).getOrElse("")
             auditLockedOut(cleanedRefNumber, postcode, cleanPostcode, clientIP)(hc2)
 
-            Redirect(routes.LoginController.show())
+            Redirect(routes.LoginController.lockedOut)
           } else {
-            Redirect(routes.LoginController.show())
+            Redirect(routes.LoginController.loginFailed(remainingAttempts))
           }
       }
 
@@ -193,6 +195,14 @@ class LoginController @Inject() (
     audit.sendExplicitAudit("LockedOut", detailJson)
   }
 
+  def lockedOut = Action { implicit request =>
+    Unauthorized(lockedOutView())
+  }
+
+  def loginFailed(attemptsRemaining: Int) = Action { implicit request =>
+    Unauthorized(loginFailedView(attemptsRemaining))
+  }
+
   private def withNewSession(r: Result, token: String, forNum: String, ref: String, sessionId: String)(implicit
     req: Request[AnyContent]
   ) =
@@ -204,6 +214,7 @@ class LoginController @Inject() (
         "refNum"              -> ref
       )).toSeq: _*
     )
+
 }
 
 object FailedLoginResponse {

@@ -26,12 +26,11 @@ object CateringOperationOrLettingAccommodationForm {
 
   val cateringOperationOrLettingAccommodationForm = Form(
     mapping(
-      "operatorName" -> nonEmptyText(maxLength = 100),
-      "typeOfBusiness" -> nonEmptyText(maxLength = 100),
+      "operatorName"    -> nonEmptyText(maxLength = 100),
+      "typeOfBusiness"  -> nonEmptyText(maxLength = 100),
       "cateringAddress" -> cateringAddressMapping,
-      "annualRent" -> currencyMapping(".annualRent"),
-      "dateInput" -> dateFieldsMapping("dateInput", fieldErrorPart = ".dateInput"),
-
+      "annualRent"      -> currencyMapping(".annualRent"),
+      "dateInput"       -> dateFieldsMapping("dateInput", fieldErrorPart = ".dateInput")
     )(CateringOperationOrLettingAccommodationDetails.apply)(CateringOperationOrLettingAccommodationDetails.unapply)
   )
 }

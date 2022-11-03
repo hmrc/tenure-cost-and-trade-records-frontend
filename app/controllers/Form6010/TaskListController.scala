@@ -24,7 +24,7 @@ import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class TaskListController @Inject()(
+class TaskListController @Inject() (
   mcc: MessagesControllerComponents,
   taskListView: taskList
 ) extends FrontendController(mcc) {

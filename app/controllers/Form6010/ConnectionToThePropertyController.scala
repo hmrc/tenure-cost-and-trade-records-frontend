@@ -25,11 +25,13 @@ import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
 
 @Singleton
+
 class ConnectionToThePropertyController @Inject()(
                                                    mcc: MessagesControllerComponents,
                                                    taskListView: taskList,
                                                    connectionToThePropertyView: connectionToTheProperty)
-    extends FrontendController(mcc) {
+ extends FrontendController(mcc) {
+
 
   def show: Action[AnyContent] = Action.async { implicit request =>
     Future.successful(Ok(connectionToThePropertyView(connectionToThePropertyForm)))

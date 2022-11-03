@@ -18,4 +18,7 @@ package models.submissions
 
 import org.joda.time.LocalDate
 
-case class CurrentRentPayableWithin12Months(currentRentWithin12Months: CurrentRentWithin12Months, rentActuallyAgreed: LocalDate)
+case class CurrentRentPayableWithin12Months(
+  currentRentWithin12Months: CurrentRentWithin12Months,
+  rentActuallyAgreed: LocalDate
+)

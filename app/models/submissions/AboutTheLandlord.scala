@@ -17,5 +17,6 @@
 package models.submissions
 
 case class AboutTheLandlord(
-                             landlordFullName: String, landlordAddress: LandlordAddress
-                           )
+  landlordFullName: String,
+  landlordAddress: LandlordAddress
+)

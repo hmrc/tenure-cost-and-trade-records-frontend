@@ -25,7 +25,7 @@ object EnforcementActionDetailsForm {
 
   val enforcementActionDetailsForm = Form(
     mapping(
-      "enforcementActionHasBeenTakenDetails" ->         default(text, "").verifying(
+      "enforcementActionHasBeenTakenDetails" -> default(text, "").verifying(
         nonEmpty(errorMessage = "error.enforcementActionHasBeenTakenDetails.required"),
         maxLength(1000, "error.enforcementActionHasBeenTakenDetails.maxLength")
       )

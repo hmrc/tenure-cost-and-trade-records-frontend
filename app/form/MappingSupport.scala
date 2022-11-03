@@ -32,7 +32,7 @@ object MappingSupport {
   val phoneRegex                                                                                      = """^^[0-9\s\+()-]+$"""
   val userType: Mapping[UserType]                                                                     = Forms.of[UserType]
   val aboutYourPropertyType: Mapping[CurrentPropertyUsed]                                             = Forms.of[CurrentPropertyUsed]
-  val connectionToThePropertyType: Mapping[ConnectionToTheProperties]                                   = Forms.of[ConnectionToTheProperties]
+  val connectionToThePropertyType: Mapping[ConnectionToTheProperties]                                 = Forms.of[ConnectionToTheProperties]
   val buildingOperatingHaveAWebsiteType: Mapping[BuildingOperationHaveAWebsite]                       =
     Forms.of[BuildingOperationHaveAWebsite]
   val cateringOperationType: Mapping[CateringOperationOrLettingAccommodation]                         =
@@ -66,10 +66,10 @@ object MappingSupport {
     Forms.of[ReceivePaymentWhenLeaseGrants]
 
   val tenantsAdditionsDisregardedType: Mapping[TenantsAdditionsDisregarded] = Forms.of[TenantsAdditionsDisregarded]
-  val legalPlanningRestrictionsType: Mapping[LegalPlanningRestrictions] = Forms.of[LegalPlanningRestrictions]
+  val legalPlanningRestrictionsType: Mapping[LegalPlanningRestrictions]     = Forms.of[LegalPlanningRestrictions]
 
-  val outsideRepairsType: Mapping[OutsideRepairs] = Forms.of[OutsideRepairs]
-  val insideRepairsType: Mapping[InsideRepairs] = Forms.of[InsideRepairs]
+  val outsideRepairsType: Mapping[OutsideRepairs]        = Forms.of[OutsideRepairs]
+  val insideRepairsType: Mapping[InsideRepairs]          = Forms.of[InsideRepairs]
   val buildingInsuranceType: Mapping[BuildingInsurances] = Forms.of[BuildingInsurances]
 
   val vatType: Mapping[VATs]                          = Forms.of[VATs]
@@ -87,11 +87,11 @@ object MappingSupport {
   val onlyToLandType: Mapping[OnlyToLands]                      = Forms.of[OnlyToLands]
   val shellUnitType: Mapping[ShellUnits]                        = Forms.of[ShellUnits]
 
-  val howIsCurrentRentFixedType: Mapping[CurrentRentFixed]      = Forms.of[CurrentRentFixed]
+  val howIsCurrentRentFixedType: Mapping[CurrentRentFixed] = Forms.of[CurrentRentFixed]
 
-  val whatIsYourRentBasedOnType: Mapping[CurrentRentBasedOn]      = Forms.of[CurrentRentBasedOn]
+  val whatIsYourRentBasedOnType: Mapping[CurrentRentBasedOn] = Forms.of[CurrentRentBasedOn]
 
-  val currentRentPayableWithin12MonthsType: Mapping[CurrentRentWithin12Months]      = Forms.of[CurrentRentWithin12Months]
+  val currentRentPayableWithin12MonthsType: Mapping[CurrentRentWithin12Months] = Forms.of[CurrentRentWithin12Months]
 
   val tiedForGoodsDetailsType: Mapping[TiedForGoodsInformationDetail] = Forms.of[TiedForGoodsInformationDetail]
   val postcode: Mapping[String]                                       = PostcodeMapping.postcode()
@@ -144,7 +144,7 @@ object MappingSupport {
       maxLength(50, "error.buildingNameNumber.maxLength")
     ),
     "street1"            -> optional(text(maxLength = 50)),
-    "street2"            -> optional  (text(maxLength = 50)),
+    "street2"            -> optional(text(maxLength = 50)),
     "postcode"           -> nonEmptyTextOr("postcode", postcode, "error.postcode.required")
   )(Address.apply)(Address.unapply)
 
