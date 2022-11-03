@@ -60,6 +60,8 @@ class LoginControllerSpec extends AnyFlatSpec with should.Matchers with MockitoS
       mock[login],
       loginToBackend,
       mock[views.html.ErrorTemplate],
+      mock[views.html.loginFailed],
+      mock[views.html.lockedOut],
       mock[views.html.testSign]
     )
 
@@ -94,6 +96,8 @@ class LoginControllerSpec extends AnyFlatSpec with should.Matchers with MockitoS
         mock[login],
         null,
         mock[views.html.ErrorTemplate],
+        mock[views.html.loginFailed],
+        mock[views.html.lockedOut],
         mock[views.html.testSign]
       )
 
