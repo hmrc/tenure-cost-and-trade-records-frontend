@@ -60,6 +60,16 @@ error.invalid_postcode_as_on_letter = Enter your postcode as it appears on your 
 test.heading = Invalid Form Type
 test.text = Welcome
 
+#LOGIN- Invalid Credentials
+##############################
+heading.login.loginFailed=The details you have entered do not match our records
+error.login.failed=Enter the reference number and postcode as they appear in the letter we sent you.
+error.login.attemptsleft=You have {0} remaining attempts to enter the correct details before your account is locked for 2 hours.
+error.login.1.attempt.left=You have one remaining attempt to enter the correct details before your account is locked for 2 hours.
+heading.login.lockedOut=You are now locked out
+error.login.lockedOut=You are now locked out. You can try again after 2 hours.
+label.retryLogin=Try again
+
 #6010 LANDING PAGE
 ##############################
 landing.header = Send information about your licensed premises to the Valuation Office Agency

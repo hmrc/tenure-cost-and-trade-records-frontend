@@ -54,6 +54,16 @@ error.invalid_postcode_as_on_letter = Nodwch eich cod post fel mae’n ymddangos
 test.heading = You are signed in
 test.text = Croeso
 
+#LOGIN- Invalid Credentials
+##############################
+heading.login.loginFailed=Nid yw’r manylion yr ydych wedi eu nodi yn cyfateb gydag ein cofnodion
+error.login.failed=Nodwch y cyfeirnod a’r côd post fel y maent yn ymddangos yn y llythyr yr anfonom atoch
+error.login.attemptsleft=Mae gennych chi {0} ymgais ar ôl i nodi’r manylion cywir cyn i’ch cyfrif cael ei gloi am 2 awr.
+error.login.1.attempt.left=Mae gennych chi un ymgais ar ôl i nodi’r manylion cywir cyn i’ch cyfrif cael ei gloi am 2 awr.
+heading.login.lockedOut=Rydych wedi eich cloi allan nawr
+error.login.lockedOut=Rydych wedi eich cloi allan nawr. Gallwch roi cynnig arall arni ar ôl 2 awr.
+label.retryLogin=Rhowch gynnig arall ar fewngofnodi
+
 #6010 LANDING PAGE
 ##############################
 landing.header = Send information about your licensed premises to the Valuation Office Agency
