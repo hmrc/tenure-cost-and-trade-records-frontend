@@ -566,7 +566,7 @@ hint.aboutYou = If you’re renting or leasing the property, even as a charity o
 
 #TASK LIST
 ##############################
-tasklist.header = Declaration summary
+taskList.header = Declaration summary
 
 #ERRORS
 ##############################
