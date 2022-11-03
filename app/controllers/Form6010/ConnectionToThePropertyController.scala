@@ -16,12 +16,10 @@
 
 package controllers.Form6010
 
-import controllers.LoginController.loginForm
 import form.ConnectionToThePropertyForm.connectionToThePropertyForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.Form6010.connectionToTheProperty
-import views.html.login
+import views.html.Form6010.{connectionToTheProperty, taskList}
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
@@ -29,7 +27,7 @@ import scala.concurrent.Future
 @Singleton
 class ConnectionToThePropertyController @Inject()(
                                                    mcc: MessagesControllerComponents,
-                                                   login: login,
+                                                   taskListView: taskList,
                                                    connectionToThePropertyView: connectionToTheProperty)
     extends FrontendController(mcc) {
 
@@ -42,7 +40,7 @@ class ConnectionToThePropertyController @Inject()(
       .bindFromRequest()
       .fold(
         formWithErrors => Future.successful(BadRequest(connectionToThePropertyView(formWithErrors))),
-        data => Future.successful(Ok(login(loginForm)))
+        data => Future.successful(Ok(taskListView()))
       )
   }
 }

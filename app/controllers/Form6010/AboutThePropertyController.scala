@@ -19,8 +19,9 @@ package controllers.Form6010
 import controllers.LoginController.loginForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.Form6010.aboutTheProperty
+import views.html.Form6010.{aboutTheProperty, websiteForProperty}
 import form.AboutThePropertyForm.aboutThePropertyForm
+import form.WebsiteForPropertyForm.websiteForPropertyForm
 import views.html.login
 
 import javax.inject.{Inject, Singleton}
@@ -29,7 +30,7 @@ import scala.concurrent.Future
 @Singleton
 class AboutThePropertyController @Inject() (
   mcc: MessagesControllerComponents,
-  login: login,
+  websiteForPropertyView: websiteForProperty,
   aboutThePropertyView: aboutTheProperty
 ) extends FrontendController(mcc) {
 
@@ -42,7 +43,7 @@ class AboutThePropertyController @Inject() (
       .bindFromRequest()
       .fold(
         formWithErrors => Future.successful(BadRequest(aboutThePropertyView(formWithErrors))),
-        data => Future.successful(Ok(login(loginForm)))
+        data => Future.successful(Ok(websiteForPropertyView(websiteForPropertyForm)))
       )
   }
 

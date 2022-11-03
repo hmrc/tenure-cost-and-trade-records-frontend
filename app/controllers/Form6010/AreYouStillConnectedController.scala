@@ -17,13 +17,16 @@
 package controllers.Form6010
 
 import config.AppConfig
+import controllers.LoginController.loginForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.Form6010.{aboutYou, areYouStillConnected}
+import views.html.Form6010.{areYouStillConnected, connectionToTheProperty, editAddress}
 import views.html.login
 import form.AreYouStillConnectedForm.areYouStillConnectedForm
-import form.AboutYouForm.aboutYouForm
+import form.ConnectionToThePropertyForm.connectionToThePropertyForm
+import form.EditAddressForm.editAddressForm
 import form.FormDocumentRepository
+import models.submissions.{AddressConnectionTypeNo, AddressConnectionTypeYes, AddressConnectionTypeYesChangeAddress}
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
@@ -35,7 +38,8 @@ class AreYouStillConnectedController @Inject() (
   appConfig: AppConfig,
   login: login,
   areYouStillConnectedView: areYouStillConnected,
-  aboutYouView: aboutYou
+  connectionToThePropertyView: connectionToTheProperty,
+  editAddressView: editAddress
 ) extends FrontendController(mcc) {
 
   def show: Action[AnyContent] = Action.async { implicit request =>
@@ -47,7 +51,17 @@ class AreYouStillConnectedController @Inject() (
       .bindFromRequest()
       .fold(
         formWithErrors => Future.successful(BadRequest(areYouStillConnectedView(formWithErrors))),
-        data => Future.successful(Ok(aboutYouView(aboutYouForm)))
+        data => {
+          if (data.equals(AddressConnectionTypeYes)) {
+            Future.successful(Ok(connectionToThePropertyView(connectionToThePropertyForm)))
+          } else if (data.equals(AddressConnectionTypeNo)) {
+            Future.successful(Ok(login(loginForm)))
+          } else if (data.equals(AddressConnectionTypeYesChangeAddress)) {
+            Future.successful(Ok(editAddressView(editAddressForm)))
+          } else {
+            Future.successful(Ok(login(loginForm)))
+          }
+        }
       )
   }
 }
