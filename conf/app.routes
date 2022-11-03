@@ -156,3 +156,5 @@ POST        /what-is-your-rent-based-on                             controllers.
 
 GET         /ultimately-responsible                                 controllers.Form6010.UltimatelyResponsibleController.show()
 POST        /ultimately-responsible                                 controllers.Form6010.UltimatelyResponsibleController.submit()
+
+GET         /task-list                                              controllers.Form6010.TaskListController.show()
