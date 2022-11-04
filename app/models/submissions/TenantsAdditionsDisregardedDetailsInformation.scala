@@ -45,4 +45,3 @@ object LegalPlanningRestrictionsNo extends LegalPlanningRestrictions {
 object LegalPlanningRestriction extends NamedEnumSupport[LegalPlanningRestrictions] {
   val all = List(LegalPlanningRestrictionsYes, LegalPlanningRestrictionsNo)
 }
-

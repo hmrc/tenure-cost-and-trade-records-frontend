@@ -26,12 +26,11 @@ object LettingOtherPartOfPropertyForm {
 
   val lettingOtherPartOfPropertyForm = Form(
     mapping(
-      "lettingOperatorName" -> nonEmptyText(maxLength = 100),
+      "lettingOperatorName"   -> nonEmptyText(maxLength = 100),
       "lettingTypeOfBusiness" -> nonEmptyText(maxLength = 100),
-      "lettingAddress" -> lettingOtherPartAddressMapping,
-      "lettingAnnualRent" -> currencyMapping(".lettingAnnualRent"),
-      "lettingDateInput" -> dateFieldsMapping("lettingDateInput", fieldErrorPart = ".dateInput"),
-
+      "lettingAddress"        -> lettingOtherPartAddressMapping,
+      "lettingAnnualRent"     -> currencyMapping(".lettingAnnualRent"),
+      "lettingDateInput"      -> dateFieldsMapping("lettingDateInput", fieldErrorPart = ".dateInput")
     )(LettingOtherPartOfPropertyInformationDetails.apply)(LettingOtherPartOfPropertyInformationDetails.unapply)
   )
 }

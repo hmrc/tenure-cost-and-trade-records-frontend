@@ -26,8 +26,8 @@ object WhatIsYourCurrentRentBasedOnForm {
 
   val whatIsYourCurrentRentBasedOnForm = Form(
     mapping(
-      "currentRentBasedOn"         -> whatIsYourRentBasedOnType,
-      "whatIsYourRentBasedOn"      -> default(text, "").verifying(
+      "currentRentBasedOn"    -> whatIsYourRentBasedOnType,
+      "whatIsYourRentBasedOn" -> default(text, "").verifying(
         nonEmpty(errorMessage = "error.whatIsYourRentBasedOn.required"),
         maxLength(1000, "error.whatIsYourRentBasedOn.maxLength")
       )

@@ -16,12 +16,10 @@
 
 package controllers.Form6010
 
-import controllers.LoginController.loginForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.Form6010.{taskList, websiteAddressForProperty}
 import form.WebsiteAddressForPropertyForm.websiteAddressForPropertyForm
-import views.html.login
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future

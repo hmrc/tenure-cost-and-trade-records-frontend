@@ -41,5 +41,12 @@ object CurrentRentBasedOnOther extends CurrentRentBasedOn {
 }
 
 object CurrentRentBased extends NamedEnumSupport[CurrentRentBasedOn] {
-  val all = List(CurrentRentBasedOnPercentageOpenMarket, CurrentRentBasedOnFixedAmount, CurrentRentBasedOnPercentageTurnover, CurrentRentBasedOnIndexedToRPI, CurrentRentBasedOnSteppedRent, CurrentRentBasedOnOther)
+  val all = List(
+    CurrentRentBasedOnPercentageOpenMarket,
+    CurrentRentBasedOnFixedAmount,
+    CurrentRentBasedOnPercentageTurnover,
+    CurrentRentBasedOnIndexedToRPI,
+    CurrentRentBasedOnSteppedRent,
+    CurrentRentBasedOnOther
+  )
 }

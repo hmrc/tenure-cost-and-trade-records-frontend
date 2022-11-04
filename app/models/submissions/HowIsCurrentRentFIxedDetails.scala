@@ -43,6 +43,6 @@ object CurrentRentFix extends NamedEnumSupport[CurrentRentFixed] {
     CurrentRentFixedInterimRent,
     CurrentRentFixedRentReview,
     CurrentRentFixedRenewalLeaseTenancy,
-    CurrentRentFixedSaleLeaseback)
+    CurrentRentFixedSaleLeaseback
+  )
 }
-

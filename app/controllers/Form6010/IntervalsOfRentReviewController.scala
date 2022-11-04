@@ -16,7 +16,6 @@
 
 package controllers.Form6010
 
-
 import controllers.LoginController.loginForm
 import form.IntervalsOfRentReviewForm.intervalsOfRentReviewForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}

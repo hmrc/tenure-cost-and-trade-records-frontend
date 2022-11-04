@@ -27,7 +27,7 @@ object CurrentRentPayableWithin12MonthsForm {
   val currentRentPayableWithin12MonthsForm = Form(
     mapping(
       "rentPayable" -> currentRentPayableWithin12MonthsType,
-      "dateReview" -> dateFieldsMapping("dateReview", fieldErrorPart = ".dateReview"),
+      "dateReview"  -> dateFieldsMapping("dateReview", fieldErrorPart = ".dateReview")
     )(CurrentRentPayableWithin12Months.apply)(CurrentRentPayableWithin12Months.unapply)
   )
 }

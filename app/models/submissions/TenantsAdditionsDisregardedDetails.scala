@@ -17,6 +17,6 @@
 package models.submissions
 
 case class TenantsAdditionsDisregardedDetails(
-                                               tenantsAdditionalDisregarded: TenantsAdditionsDisregarded,
-                                               legalPlanningRestrictions: LegalPlanningRestrictions
+  tenantsAdditionalDisregarded: TenantsAdditionsDisregarded,
+  legalPlanningRestrictions: LegalPlanningRestrictions
 )
