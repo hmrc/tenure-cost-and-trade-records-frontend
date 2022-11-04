@@ -17,7 +17,7 @@
 package form
 
 import form.MappingSupport._
-import models.submissions.AddressConnectionType
+import models.submissions.Form6010.AddressConnectionType
 import play.api.data.Form
 import play.api.data.Forms.mapping
 

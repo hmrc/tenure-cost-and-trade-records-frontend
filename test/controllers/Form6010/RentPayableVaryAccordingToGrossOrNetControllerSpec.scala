@@ -32,7 +32,7 @@ class RentPayableVaryAccordingToGrossOrNetControllerSpec
     with GuiceOneAppPerSuite {
 
   import TestData._
-  import form.RentPayableVaryAccordingToGrossOrNetForm._
+  import form.Form6010.RentPayableVaryAccordingToGrossOrNetForm._
   import utils.FormBindingTestAssertions._
 
   override def fakeApplication(): Application =

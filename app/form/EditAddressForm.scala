@@ -18,7 +18,7 @@ package form
 
 import play.api.data.Form
 import MappingSupport._
-import models.submissions.Address
+import models.submissions.Form6010.Address
 
 object EditAddressForm {
 

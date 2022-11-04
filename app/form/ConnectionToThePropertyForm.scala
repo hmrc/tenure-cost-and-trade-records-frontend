@@ -19,7 +19,7 @@ package form
 import form.MappingSupport.connectionToThePropertyType
 import models.submissions._
 import play.api.data.Form
-import play.api.data.Forms.{mapping, nonEmptyText}
+import play.api.data.Forms.mapping
 
 object ConnectionToThePropertyForm {
 

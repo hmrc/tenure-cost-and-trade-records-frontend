@@ -16,7 +16,7 @@
 
 package connectors
 
-import models.submissions.Address
+import models.submissions.Form6010.Address
 import org.joda.time.DateTime
 import play.api.libs.json._
 import play.api.libs.json.JodaWrites._

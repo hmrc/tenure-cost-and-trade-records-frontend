@@ -20,7 +20,7 @@ import controllers.LoginController.loginForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.Form6010.tiedForGoods
-import form.TiedForGoodsForm.tiedForGoodsForm
+import form.Form6010.TiedForGoodsForm.tiedForGoodsForm
 import views.html.login
 
 import javax.inject.{Inject, Singleton}

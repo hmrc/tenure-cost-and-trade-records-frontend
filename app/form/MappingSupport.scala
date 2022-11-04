@@ -16,11 +16,12 @@
 
 package form
 
-import form.ConditionalMapping.nonEmptyTextOr
+import form.Form6010.ConditionalMapping.nonEmptyTextOr
 import models.submissions._
 import form.Formats._
 import form.Formats.userTypeFormat
 import models.AnnualRent
+import models.submissions.Form6010.{Address, AddressConnectionType, AgreedReviewedAlteredThreeYears, BuildingInsurances, BuildingOperationHaveAWebsite, CapitalSumOrPremiums, CateringAddress, CateringOperationOrLettingAccommodation, CommenceWithinThreeYears, ContactDetails, CurrentPropertyUsed, CurrentRentBasedOn, CurrentRentFixed, CurrentRentWithin12Months, EnforcementActions, FormerLeaseSurrendered, FranchiseOrLettingsTiedToProperties, IncludeLicensees, IncludeOtherProperties, InsideRepairs, LandlordAddress, LegalPlanningRestrictions, LettingAddress, LettingOtherPartOfProperties, LicensableActivities, MethodToFixCurrentRents, NonDomesticRates, OnlyPartOfProperties, OnlyToLands, OutsideRepairs, PremisesLicenses, ReceivePaymentWhenLeaseGrants, RentIncludeFixturesAndFittings, RentIncludeTradesServices, RentIncreasedAnnuallyWithRPIs, RentOpenMarketValues, RentPayableVaryAccordingToGrossOrNets, RentPayableVaryOnQuantityOfBeers, RentReducedOnReviews, RentUnderReviewNegotiated, ShellUnits, TenancyLeaseAgreements, TenantsAdditionsDisregarded, TiedForGoods, TiedForGoodsInformationDetail, VATs, WaterCharges}
 import play.api.data.Forms.{boolean, default, email, mapping, optional, text}
 import play.api.data.validation.Constraints.{maxLength, minLength, nonEmpty, pattern}
 import play.api.data.{Forms, Mapping}

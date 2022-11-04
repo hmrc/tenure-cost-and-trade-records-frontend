@@ -16,6 +16,7 @@
 
 package models.submissions
 
+import models.submissions.Form6010.{Address, CateringAddress, LandlordAddress, LettingAddress}
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 

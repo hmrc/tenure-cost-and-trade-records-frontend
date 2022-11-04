@@ -29,7 +29,7 @@ import play.api.test.Helpers._
 class WebsiteForPropertyControllerSpec extends AnyFlatSpec with should.Matchers with GuiceOneAppPerSuite {
 
   import TestData._
-  import form.WebsiteForPropertyForm._
+  import form.Form6010.WebsiteForPropertyForm._
   import utils.FormBindingTestAssertions._
 
   override def fakeApplication(): Application =
