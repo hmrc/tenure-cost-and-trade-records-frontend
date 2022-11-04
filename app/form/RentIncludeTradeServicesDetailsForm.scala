@@ -16,7 +16,7 @@
 
 package form
 
-import form.MappingSupport.{cdbMaxCurrencyAmount, currencyMapping, rentIncludeTradeServiceDetails}
+import form.MappingSupport.currencyMapping
 import models.submissions.RentIncludeTradeServicesInformationDetails
 import play.api.data.Form
 import play.api.data.Forms.{default, mapping, text}

@@ -21,16 +21,16 @@ import form.EditAddressForm.editAddressForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.Form6010.{connectionToTheProperty, editAddress}
-import views.html.login
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class EditAddressController @Inject() (mcc: MessagesControllerComponents,
-                                       connectionToThePropertyView: connectionToTheProperty,
-                                       editAddressView: editAddress)
-    extends FrontendController(mcc) {
+class EditAddressController @Inject() (
+  mcc: MessagesControllerComponents,
+  connectionToThePropertyView: connectionToTheProperty,
+  editAddressView: editAddress
+) extends FrontendController(mcc) {
 
   def show: Action[AnyContent] = Action.async { implicit request =>
     Future.successful(Ok(editAddressView(editAddressForm)))

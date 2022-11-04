@@ -16,6 +16,4 @@
 
 package models.submissions
 
-import models.AnnualRent
-
 case class RentIncludeTradeServicesInformationDetails(sumIncludedInRent: BigDecimal, describeTheServices: String)

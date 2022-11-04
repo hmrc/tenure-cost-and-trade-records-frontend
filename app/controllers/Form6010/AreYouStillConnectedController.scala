@@ -51,7 +51,7 @@ class AreYouStillConnectedController @Inject() (
       .bindFromRequest()
       .fold(
         formWithErrors => Future.successful(BadRequest(areYouStillConnectedView(formWithErrors))),
-        data => {
+        data =>
           if (data.equals(AddressConnectionTypeYes)) {
             Future.successful(Ok(connectionToThePropertyView(connectionToThePropertyForm)))
           } else if (data.equals(AddressConnectionTypeNo)) {
@@ -61,7 +61,6 @@ class AreYouStillConnectedController @Inject() (
           } else {
             Future.successful(Ok(login(loginForm)))
           }
-        }
       )
   }
 }

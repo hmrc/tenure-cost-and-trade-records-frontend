@@ -25,9 +25,7 @@ import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class AboutYouController @Inject() (mcc: MessagesControllerComponents,
-                                    taskListView: taskList,
-                                    aboutYouView: aboutYou)
+class AboutYouController @Inject() (mcc: MessagesControllerComponents, taskListView: taskList, aboutYouView: aboutYou)
     extends FrontendController(mcc) {
 
   def show: Action[AnyContent] = Action.async { implicit request =>
