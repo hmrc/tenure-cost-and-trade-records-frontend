@@ -25,6 +25,7 @@ class AppConfig @Inject() (config: Configuration) {
   lazy val useDummyIp        = getBoolean("useDummyTrueIP")
   lazy val startPageRedirect = getBoolean("startPageRedirect")
   lazy val govukStartPage    = getString("govukStartPage")
+  lazy val validForTypes     = getString("validForTypes").split(",").toSeq
 
   private def getString(key: String): String   =
     config.getOptional[String](key).getOrElse(throw ConfigSettingMissing(key))

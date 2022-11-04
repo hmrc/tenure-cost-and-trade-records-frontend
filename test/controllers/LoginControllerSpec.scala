@@ -16,7 +16,7 @@
 
 package controllers
 
-import config.LoginToBackendAction
+import config.{AppConfig, LoginToBackendAction}
 import connectors.Audit
 import models.submissions.Address
 import org.joda.time.DateTime
@@ -35,8 +35,10 @@ import views.html.login
 import scala.concurrent.{ExecutionContext, Future}
 
 class LoginControllerSpec extends AnyFlatSpec with should.Matchers with MockitoSugar {
-  implicit val globalEc = scala.concurrent.ExecutionContext.Implicits.global
-//  val documentRepo = mock[FormDocumentRepository]
+  implicit val globalEc    = scala.concurrent.ExecutionContext.Implicits.global
+
+  def appConfig: AppConfig = mock[AppConfig]
+  when(appConfig.validForTypes).thenReturn(Seq("FOR6010", "FOR6011", "FOR6020"))
 
   private val testAddress = Address("13", Some("Street"), Some("City"), "AA11 1AA")
 
@@ -55,6 +57,7 @@ class LoginControllerSpec extends AnyFlatSpec with should.Matchers with MockitoS
     when(loginToBackend.apply(any[HeaderCarrier], any[ExecutionContext])).thenReturn(loginToBackendFunction)
 
     val loginController = new LoginController(
+      appConfig,
       audit,
       stubMessagesControllerComponents(),
       mock[login],
@@ -66,7 +69,7 @@ class LoginControllerSpec extends AnyFlatSpec with should.Matchers with MockitoS
     )
 
     val fakeRequest = FakeRequest()
-    //should strip out all non digits then split string 3 from end to create ref1/ref2
+
     val response    = loginController.verifyLogin("01234567000", "BN12 1AB", time)(fakeRequest)
 
     status(response) shouldBe SEE_OTHER
@@ -91,6 +94,7 @@ class LoginControllerSpec extends AnyFlatSpec with should.Matchers with MockitoS
 
     val loginController =
       new LoginController(
+        appConfig,
         audit,
         stubMessagesControllerComponents(),
         mock[login],

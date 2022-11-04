@@ -16,7 +16,7 @@
 
 package controllers
 
-import config.LoginToBackendAction
+import config.{AppConfig, LoginToBackendAction}
 import connectors.Audit
 import form.{Errors, MappingSupport}
 import models.submissions.Address
@@ -67,6 +67,7 @@ object LoginController {
 
 @Singleton
 class LoginController @Inject() (
+  appConfig: AppConfig,
   audit: Audit,
   mcc: MessagesControllerComponents,
   login: login,
@@ -132,7 +133,7 @@ class LoginController @Inject() (
     loginToBackend(hc2, ec)(cleanedRefNumber, cleanPostcode, startTime)
       .map { case NoExistingDocument(token, forNum, address) =>
         auditLogin(referenceNumber, false, address, forNum)(hc2)
-        if (forNum == "FOR6010" || forNum == "FOR6020") {
+        if (appConfig.validForTypes.contains(forNum)) {
           withNewSession(
             Redirect(controllers.Form6010.routes.AreYouStillConnectedController.show()),
             token,
