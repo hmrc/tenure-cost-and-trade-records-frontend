@@ -16,22 +16,34 @@
 
 package controllers.Form6010
 
-import config.AppConfig
+import controllers.LoginController.loginForm
+import form.Form6010.AboutYourTradingHistoryForm.aboutYourTradingHistoryForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.Form6010.aboutYourTradingHistory
+import views.html.login
 
 import javax.inject.{Inject, Singleton}
+import scala.concurrent.Future
 
 @Singleton
 class AboutYourTradingHistoryController @Inject() (
   mcc: MessagesControllerComponents,
-  appConfig: AppConfig,
-  aboutYourTradingHistory: aboutYourTradingHistory
+  login: login,
+  aboutYourTradingHistoryView: aboutYourTradingHistory
 ) extends FrontendController(mcc) {
 
   def show: Action[AnyContent] = Action { implicit request =>
-    Ok(aboutYourTradingHistory())
+    Ok(aboutYourTradingHistoryView(aboutYourTradingHistoryForm))
+  }
+
+  def submit = Action.async { implicit request =>
+    aboutYourTradingHistoryForm
+      .bindFromRequest()
+      .fold(
+        formWithErrors => Future.successful(BadRequest(aboutYourTradingHistoryView(formWithErrors))),
+        data => Future.successful(Ok(login(loginForm)))
+      )
   }
 
 }
