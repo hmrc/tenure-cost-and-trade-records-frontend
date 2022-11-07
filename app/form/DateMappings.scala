@@ -16,9 +16,9 @@
 
 package form
 
-import form.ConditionalMapping._
+import form.Form6010.ConditionalMapping._
 import models.RoughDate
-import models.submissions.MonthsYearDuration
+import models.submissions.Form6010.MonthsYearDuration
 import org.joda.time.{DateTime, LocalDate}
 import play.api.data.Forms._
 import play.api.data.Mapping

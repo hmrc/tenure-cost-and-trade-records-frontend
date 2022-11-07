@@ -19,7 +19,7 @@ package controllers
 import config.LoginToBackendAction
 import connectors.Audit
 import form.{Errors, MappingSupport}
-import models.submissions.Address
+import models.submissions.Form6010.Address
 import org.joda.time.DateTime
 import play.api.Logging
 import play.api.data.Form
@@ -134,7 +134,7 @@ class LoginController @Inject() (
         auditLogin(referenceNumber, false, address, forNum)(hc2)
         if (forNum == "FOR6010" || forNum == "FOR6020") {
           withNewSession(
-            Redirect(controllers.Form6010.routes.AreYouStillConnectedController.show()),
+            Redirect(controllers.routes.AreYouStillConnectedController.show()),
             token,
             forNum,
             s"$referenceNumber",

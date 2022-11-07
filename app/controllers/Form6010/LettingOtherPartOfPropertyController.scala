@@ -20,7 +20,7 @@ import controllers.LoginController.loginForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.Form6010.lettingOtherPartOfProperty
-import form.LettingOtherPartOfPropertiesForm.lettingOtherPartOfPropertiesForm
+import form.Form6010.LettingOtherPartOfPropertiesForm.lettingOtherPartOfPropertiesForm
 import views.html.login
 
 import javax.inject.{Inject, Singleton}

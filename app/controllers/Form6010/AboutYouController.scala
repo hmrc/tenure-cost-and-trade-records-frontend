@@ -18,8 +18,9 @@ package controllers.Form6010
 
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.Form6010.{aboutYou, taskList}
-import form.AboutYouForm.aboutYouForm
+import views.html.Form6010.aboutYou
+import views.html.taskList
+import form.Form6010.AboutYouForm.aboutYouForm
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future

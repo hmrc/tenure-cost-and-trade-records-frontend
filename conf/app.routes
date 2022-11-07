@@ -15,19 +15,19 @@ GET         /invalid-form-type                                      controllers.
 
 GET         /sessiontimeout                                         controllers.Application.sessionTimeout()
 
-GET         /are-you-still-connected                                controllers.Form6010.AreYouStillConnectedController.show()
-POST        /are-you-still-connected                                controllers.Form6010.AreYouStillConnectedController.submit()
+GET         /are-you-still-connected                                controllers.AreYouStillConnectedController.show()
+POST        /are-you-still-connected                                controllers.AreYouStillConnectedController.submit()
 
-GET         /edit-address                                           controllers.Form6010.EditAddressController.show()
-POST        /edit-address                                           controllers.Form6010.EditAddressController.submit()
+GET         /edit-address                                           controllers.EditAddressController.show()
+POST        /edit-address                                           controllers.EditAddressController.submit()
 
-GET         /previously-connected                                   controllers.Form6010.AreYouStillConnectedNoController.show()
-POST        /previously-connected                                   controllers.Form6010.AreYouStillConnectedNoController.submit()
+GET         /previously-connected                                   controllers.AreYouStillConnectedNoController.show()
+POST        /previously-connected                                   controllers.AreYouStillConnectedNoController.submit()
 
-GET         /remove-connection                                      controllers.Form6010.RemoveConnectionController.show()
+GET         /remove-connection                                      controllers.RemoveConnectionController.show()
 
-GET         /connection-to-the-property                             controllers.Form6010.ConnectionToThePropertyController.show()
-POST        /connection-to-the-property                             controllers.Form6010.ConnectionToThePropertyController.submit()
+GET         /connection-to-the-property                             controllers.ConnectionToThePropertyController.show()
+POST        /connection-to-the-property                             controllers.ConnectionToThePropertyController.submit()
 
 GET         /about-the-property                                     controllers.Form6010.AboutThePropertyController.show()
 POST        /about-the-property                                     controllers.Form6010.AboutThePropertyController.submit()
@@ -159,4 +159,4 @@ POST        /what-is-your-rent-based-on                             controllers.
 GET         /ultimately-responsible                                 controllers.Form6010.UltimatelyResponsibleController.show()
 POST        /ultimately-responsible                                 controllers.Form6010.UltimatelyResponsibleController.submit()
 
-GET         /task-list                                              controllers.Form6010.TaskListController.show()
+GET         /task-list                                              controllers.TaskListController.show()

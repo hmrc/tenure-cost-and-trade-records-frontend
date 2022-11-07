@@ -18,7 +18,7 @@ package controllers
 
 import config.LoginToBackendAction
 import connectors.Audit
-import models.submissions.Address
+import models.submissions.Form6010.Address
 import org.joda.time.DateTime
 import org.mockito.scalatest.MockitoSugar
 import org.scalatest.flatspec.AnyFlatSpec

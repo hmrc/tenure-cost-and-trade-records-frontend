@@ -18,8 +18,8 @@ package security
 
 import connectors.Document
 import models.FORLoginResponse
+import models.submissions.Form6010.Address
 //import models.serviceContracts.submissions.Address
-import models.submissions.Address
 import org.joda.time.DateTime
 import uk.gov.hmrc.http.HeaderCarrier
 import utils.UnitTest

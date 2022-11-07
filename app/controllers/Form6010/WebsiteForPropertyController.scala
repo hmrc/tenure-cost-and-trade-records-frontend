@@ -16,11 +16,11 @@
 
 package controllers.Form6010
 
-import form.WebsiteAddressForPropertyForm.websiteAddressForPropertyForm
+import form.Form6010.WebsiteAddressForPropertyForm.websiteAddressForPropertyForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.Form6010.{websiteAddressForProperty, websiteForProperty}
-import form.WebsiteForPropertyForm.websiteForPropertyForm
+import form.Form6010.WebsiteForPropertyForm.websiteForPropertyForm
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future

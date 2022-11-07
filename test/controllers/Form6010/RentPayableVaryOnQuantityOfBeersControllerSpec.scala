@@ -29,7 +29,7 @@ import play.api.test.Helpers._
 class RentPayableVaryOnQuantityOfBeersControllerSpec extends AnyFlatSpec with should.Matchers with GuiceOneAppPerSuite {
 
   import TestData._
-  import form.RentPayableVaryOnQuantityOfBeersForm._
+  import form.Form6010.RentPayableVaryOnQuantityOfBeersForm._
   import utils.FormBindingTestAssertions._
 
   override def fakeApplication(): Application =

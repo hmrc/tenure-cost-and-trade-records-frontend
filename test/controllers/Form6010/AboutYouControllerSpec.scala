@@ -30,7 +30,7 @@ import play.api.test.Helpers._
 class AboutYouControllerSpec extends AnyFlatSpec with should.Matchers with GuiceOneAppPerSuite { //with AnyFlatSpec
 
   import TestData._
-  import form.AboutYouForm._
+  import form.Form6010.AboutYouForm._
   import utils.FormBindingTestAssertions._
 
   override def fakeApplication(): Application =

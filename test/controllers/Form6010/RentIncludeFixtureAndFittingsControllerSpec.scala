@@ -29,7 +29,7 @@ import play.api.test.Helpers._
 class RentIncludeFixtureAndFittingsControllerSpec extends AnyFlatSpec with should.Matchers with GuiceOneAppPerSuite {
 
   import TestData._
-  import form.RentIncludeFixtureAndFittingsForm._
+  import form.Form6010.RentIncludeFixtureAndFittingsForm._
   import utils.FormBindingTestAssertions._
 
   override def fakeApplication(): Application =

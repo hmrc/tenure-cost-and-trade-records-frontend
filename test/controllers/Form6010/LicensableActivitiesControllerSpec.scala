@@ -29,7 +29,7 @@ import play.api.test.Helpers._
 class LicensableActivitiesControllerSpec extends AnyFlatSpec with should.Matchers with GuiceOneAppPerSuite {
 
   import TestData._
-  import form.LicensableActivitiesForm._
+  import form.Form6010.LicensableActivitiesForm._
   import utils.FormBindingTestAssertions._
 
   override def fakeApplication(): Application =

@@ -19,8 +19,8 @@ package controllers.Form6010
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.Form6010.{aboutTheProperty, websiteForProperty}
-import form.AboutThePropertyForm.aboutThePropertyForm
-import form.WebsiteForPropertyForm.websiteForPropertyForm
+import form.Form6010.AboutThePropertyForm.aboutThePropertyForm
+import form.Form6010.WebsiteForPropertyForm.websiteForPropertyForm
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
