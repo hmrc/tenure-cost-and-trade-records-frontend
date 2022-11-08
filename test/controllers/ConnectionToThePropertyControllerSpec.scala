@@ -40,9 +40,10 @@ class ConnectionToThePropertyControllerSpec extends AnyFlatSpec with should.Matc
   private val controller = app.injector.instanceOf[ConnectionToThePropertyController]
 
   "GET /" should "return 200" in {
-//    "return 200" in {
-    val result = controller.show(fakeRequest)
-    status(result) shouldBe Status.OK
+    {
+      val result = controller.show(fakeRequest)
+      status(result) shouldBe Status.OK
+    }
   }
 
   "GET /" should "return HTML" in {
@@ -50,5 +51,4 @@ class ConnectionToThePropertyControllerSpec extends AnyFlatSpec with should.Matc
     contentType(result) shouldBe Some("text/html")
     charset(result)     shouldBe Some("utf-8")
   }
-//  }
 }
