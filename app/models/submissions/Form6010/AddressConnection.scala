@@ -17,7 +17,7 @@
 package models.submissions.Form6010
 
 import models.{EnumFormat, NamedEnum, NamedEnumSupport}
-import play.api.libs.json.Format
+import play.api.libs.json.{Format, Json}
 
 sealed trait AddressConnectionType extends NamedEnum {
   override def key: String = "addressConnectionType"
@@ -25,21 +25,21 @@ sealed trait AddressConnectionType extends NamedEnum {
 }
 
 object AddressConnectionTypeYes extends AddressConnectionType {
-  val name: String = "YES"
+  override def name: String = "yes"
 }
 
 object AddressConnectionTypeNo extends AddressConnectionType {
-  val name: String = "NO"
+  override def name: String = "no"
 }
 
 object AddressConnectionTypeYesChangeAddress extends AddressConnectionType {
-  val name: String = "YES-CHANGE-ADDRESS"
+  override def name: String = "yes-change-address"
 }
 
 object AddressConnectionType extends NamedEnumSupport[AddressConnectionType] {
   implicit val format: Format[AddressConnectionType] = EnumFormat(AddressConnectionType)
 
-  override def all: List[AddressConnectionType] = List(AddressConnectionTypeYes, AddressConnectionTypeNo, AddressConnectionTypeYesChangeAddress)
+  override def all = List(AddressConnectionTypeYes, AddressConnectionTypeNo, AddressConnectionTypeYesChangeAddress)
 
   val key = all.head.key
 }
