@@ -144,6 +144,7 @@ GET         /current-rent-first-paid                                controllers.
 POST        /current-rent-first-paid                                controllers.Form6010.CurrentRentFirstPaidController.submit()
 
 GET         /about-your-trading-history                             controllers.Form6010.AboutYourTradingHistoryController.show()
+POST        /about-your-trading-history                             controllers.Form6010.AboutYourTradingHistoryController.submit()
 
 GET         /current-lease-or-agreement-begin                       controllers.Form6010.CurrentLeaseOrAgreementBeginController.show()
 POST        /current-lease-or-agreement-begin                       controllers.Form6010.CurrentLeaseOrAgreementBeginController.submit()
