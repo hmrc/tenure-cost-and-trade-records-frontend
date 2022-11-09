@@ -14,35 +14,34 @@
  * limitations under the License.
  */
 
-package actions.Form6010
-import actions.Form6010.requests.SessionRequest6010
-import config.ErrorHandler
+package actions
 
-import javax.inject.{Inject, Named}
-import models.Form6010.Session6010
+import config.ErrorHandler
+import models.Session
 import play.api.libs.json.Reads
-import play.api.mvc.Results._
-import play.api.mvc._
+import play.api.mvc.Results.NotFound
+import play.api.mvc.{ActionRefiner, Request, Result}
 import repositories.SessionRepo
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.http.HeaderCarrierConverter
 
+import javax.inject.{Inject, Named}
 import scala.concurrent.{ExecutionContext, Future}
 
-case class With6010SessionRefiner @Inject()(
-                                            errorHandler: ErrorHandler,
-                                            @Named("session6010") val sessionRepository: SessionRepo
-                                          )(implicit override val executionContext: ExecutionContext)
-  extends ActionRefiner[Request, SessionRequest6010] {
+case class WithSessionRefiner @Inject()(
+                                         errorHandler: ErrorHandler,
+                                         @Named("session") val sessionRepository: SessionRepo
+                                       )(implicit override val executionContext: ExecutionContext)
+  extends ActionRefiner[Request, SessionRequest] {
 
   implicit def hc(implicit request: Request[_]): HeaderCarrier =
     HeaderCarrierConverter.fromRequestAndSession(request, request.session)
+
   override protected def refine[A](
-                                    request: Request[A]): Future[Either[Result, SessionRequest6010[A]]] =
-  {
-    sessionRepository.get[Session6010](implicitly[Reads[Session6010]], hc(request)).map {
+                                    request: Request[A]): Future[Either[Result, SessionRequest[A]]] = {
+    sessionRepository.get[Session](implicitly[Reads[Session]], hc(request)).map {
       case Some(s) =>
-        Right(SessionRequest6010(sessionData = s, request = request))
+        Right(actions.SessionRequest(sessionData = s, request = request))
       case None => Left(NotFound(errorHandler.notFoundTemplate(request)))
     }
   }

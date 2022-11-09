@@ -16,30 +16,52 @@
 
 package models
 
-import models.submissions.Form6010.AddressConnectionType
+import form.MappingSupport._
+import models.submissions.Form6010.{AddressConnectionType, CustomerDetails}
+import models.submissions.UserType
+import play.api.data.Form
+import play.api.data.Forms.mapping
 import play.api.libs.json._
-case class Session(
-                      areYouSTillConnected: AddressConnectionType,
-                      fullName: Option[String],
-                      emailAddress: Option[String],
-                      telephoneNumber: Option[String],
-                      relationshipToProperty: Option[String]
-                      ) {
 
-}
+case class Session (
+                     areYouStillConnected: Option[AddressConnectionType],
+                     fullName: Option[String],
+                     email: Option[String],
+                     telephoneNumber: Option[String],
+                   )
 
 object Session {
-  implicit val format: OFormat[Session] = Json.format[Session]
+  implicit val format = Json.format[Session]
 
-  def apply(areYouStillConnectedToAddress: areYouStillConnectedToAddress): Session = {
-    Session(areYouStillConnectedToAddress)
+  def apply(addressConnectionType: AddressConnectionType): Session = {
+    Session(
+      addressConnectionType)
   }
+
+  def apply(customerDetails: CustomerDetails): Session = {
+    Session(
+      None,
+      fullName = Some(customerDetails.fullName),
+      email = Some(customerDetails.contactDetails.email),
+      telephoneNumber = Some(customerDetails.contactDetails.phone),
+    )
+  }
+
 }
 
-case class areYouStillConnectedToAddress(areYouStillConnected: AddressConnectionType)
 
-object areYouStillConnectedToAddress {
+object areYouStillConnectedToAddress{
+  object AreYouStillConnectedForm {
 
-  implicit val format: OFormat[areYouStillConnectedToAddress] = Json.format[areYouStillConnectedToAddress]
+    lazy val baseAreYouStillConnectedForm: Form[AddressConnectionType] = Form(baseAreYouStillConnectedMapping)
 
+    val baseAreYouStillConnectedMapping = mapping(
+      "isRelated" -> addressConnectionType
+    )(x => x)(b => Some(b))
+
+    val areYouStillConnectedForm = Form(baseAreYouStillConnectedMapping)
+
+
+
+  }
 }

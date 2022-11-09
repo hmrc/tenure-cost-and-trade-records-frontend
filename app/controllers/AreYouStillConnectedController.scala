@@ -31,7 +31,6 @@ import views.html.Form6010.aboutYou
 import views.html.login
 import form.Form6010.AboutYouForm
 import form.EnumMapping
-import form.persistence.FormDocumentRepository
 import repositories.SessionRepo
 import models.areYouStillConnectedToAddress
 import models.submissions.Form6010.AddressConnectionType
@@ -44,7 +43,6 @@ import scala.concurrent.Future
 @Singleton
 class AreYouStillConnectedController @Inject() (
                                                  mcc: MessagesControllerComponents,
-                                                 formDocumentRepository: FormDocumentRepository,
                                                  appConfig: AppConfig,
                                                  login: login,
                                                  areYouStillConnectedView: areYouStillConnected,
@@ -54,14 +52,13 @@ class AreYouStillConnectedController @Inject() (
                                                  @Named("Session") val Session: SessionRepo
                                                ) extends FrontendController(mcc) {
 
-  import AreYouStillConnected._
 
   def show: Action[AnyContent] = Action.async { implicit request =>
-    Future.successful(Ok(areYouStillConnectedView(stillConnectedForm)))
+    Future.successful(Ok(areYouStillConnectedView(areYouStillConnectedForm)))
   }
 
   def submit = Action.async { implicit request =>
-    stillConnectedForm
+    areYouStillConnectedForm
       .bindFromRequest()
       .fold(
         formWithErrors => Future.successful(BadRequest(areYouStillConnectedView(formWithErrors))),
@@ -78,11 +75,4 @@ class AreYouStillConnectedController @Inject() (
       )
   }
 
-  object AreYouStillConnected {
-    lazy val stillConnectedForm: Form[areYouStillConnectedToAddress] = Form(
-      mapping(
-        "areYouStillConnected" -> EnumMapping(AddressConnectionType)
-      )(areYouStillConnectedToAddress.apply)(areYouStillConnectedToAddress.unapply)
-    )
-  }
 }

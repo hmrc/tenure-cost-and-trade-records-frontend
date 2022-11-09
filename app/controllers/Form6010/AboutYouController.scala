@@ -16,17 +16,25 @@
 
 package controllers.Form6010
 
+import actions.WithSessionRefiner
+import controllers.LoginController.loginForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.Form6010.aboutYou
 import views.html.taskList
 import form.Form6010.AboutYouForm.aboutYouForm
+import repositories.SessionRepo
 
-import javax.inject.{Inject, Singleton}
+import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class AboutYouController @Inject() (mcc: MessagesControllerComponents, taskListView: taskList, aboutYouView: aboutYou)
+class AboutYouController @Inject() (mcc: MessagesControllerComponents,
+                                    taskListView: taskList,
+                                    aboutYouView: aboutYou,
+                                    withSessionRefiner: WithSessionRefiner,
+                                    @Named("session") val session: SessionRepo
+                                   )
     extends FrontendController(mcc) {
 
   def show: Action[AnyContent] = Action.async { implicit request =>
@@ -38,7 +46,10 @@ class AboutYouController @Inject() (mcc: MessagesControllerComponents, taskListV
       .bindFromRequest()
       .fold(
         formWithErrors => Future.successful(BadRequest(aboutYouView(formWithErrors))),
-        data => Future.successful(Ok(taskListView()))
+        data => {
+//          session.start(data)
+          Future.successful(Ok(taskListView()))
+        }
       )
   }
 }

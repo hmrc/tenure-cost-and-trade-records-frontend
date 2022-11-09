@@ -59,7 +59,7 @@ object Formats {
     def unbind(key: String, value: T): Map[String, String] = Map(key -> value.name)
   }
 
-  implicit val userTypeFormat: Formatter[UserType]                                                           = namedEnumFormatter(UserTypes, Errors.userTypeRequired)
+  implicit val userTypeFormat: Formatter[UserType]                                                           = namedEnumFormatter(UserType, Errors.userTypeRequired)
   implicit val connectionToPropertyFormat: Formatter[ConnectionToTheProperties]                              =
     namedEnumFormatter(ConnectionToProperty, Errors.booleanMissing)
   implicit val aboutYourPropertyFormat: Formatter[CurrentPropertyUsed]                                       =

@@ -35,7 +35,7 @@ import uk.gov.hmrc.mongo.play.json.formats.MongoJavatimeFormats
 
 @Singleton
 class Session @Inject()(mongo: MongoComponent)(implicit executionContext: ExecutionContext)
-  extends SessionRepository("Session", mongo)
+  extends SessionRepository("session", mongo)
 
 
 abstract class SessionRepository @Inject()(formId: String, mongo: MongoComponent)(

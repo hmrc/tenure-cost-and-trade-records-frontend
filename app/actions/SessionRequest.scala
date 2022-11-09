@@ -14,13 +14,14 @@
  * limitations under the License.
  */
 
-package actions.Form6010.requests
-import models.Form6010.Session6010
+package actions
+
+import models.Session
 import play.api.mvc.{Request, WrappedRequest}
 
-case class SessionRequest6010[A](
-                                sessionData: Session6010,
-                                request: Request[A]
-                                ) extends WrappedRequest[A](request){
+case class SessionRequest[A](
+                              sessionData: Session,
+                              request: Request[A]
+                            ) extends WrappedRequest[A](request) {
 
 }

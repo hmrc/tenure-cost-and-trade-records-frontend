@@ -17,7 +17,6 @@
 package config
 
 import java.time.Clock
-
 import com.google.inject.AbstractModule
 import com.google.inject.name.Names
 import com.google.inject.name.Names.named
@@ -25,7 +24,6 @@ import com.typesafe.config.ConfigException
 import play.api._
 import repositories._
 import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
-
 import scala.util.Try
 
 class GuiceModule(
@@ -38,9 +36,10 @@ class GuiceModule(
   override def configure() = {
 
     bind(classOf[SessionRepo])
-      .annotatedWith(Names.named("Session"))
+      .annotatedWith(Names.named("session"))
       .to(classOf[Session])
     bind(classOf[Clock]).toInstance(Clock.systemUTC())
+
 
   }
 
