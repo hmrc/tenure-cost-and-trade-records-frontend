@@ -100,7 +100,7 @@ object Formats {
   implicit val tiedForGoodsDetailsFormat: Formatter[TiedForGoodsInformationDetail]                           =
     namedEnumFormatter(TiedForGoodsInformation, Errors.booleanMissing)
   implicit val addressConnectionTypeFormatter: Formatter[AddressConnectionType]                              =
-    namedEnumFormatter(AddressConnectionTypes, Errors.isConnectedError)
+    namedEnumFormatter(AddressConnectionType, Errors.isConnectedError)
 
   implicit val formerLeaseSurrenderedFormatter: Formatter[FormerLeaseSurrendered]                =
     namedEnumFormatter(FormerLeaseSurrender, Errors.booleanMissing)

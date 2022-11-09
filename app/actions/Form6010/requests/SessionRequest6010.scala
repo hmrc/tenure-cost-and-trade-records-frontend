@@ -14,16 +14,13 @@
  * limitations under the License.
  */
 
-package models.submissions.Form6010
+package actions.Form6010.requests
+import models.Form6010.Session6010
+import play.api.mvc.{Request, WrappedRequest}
 
-import play.api.libs.json.Json
-
-case class CustomerDetails(
-  fullName: String,
-  contactDetails: ContactDetails
-)
-
-object CustomerDetails {
-  implicit val format = Json.format[CustomerDetails]
+case class SessionRequest6010[A](
+                                sessionData: Session6010,
+                                request: Request[A]
+                                ) extends WrappedRequest[A](request){
 
 }

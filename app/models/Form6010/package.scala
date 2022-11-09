@@ -14,16 +14,11 @@
  * limitations under the License.
  */
 
-package models.submissions.Form6010
+package models
 
-import play.api.libs.json.Json
-
-case class CustomerDetails(
-  fullName: String,
-  contactDetails: ContactDetails
-)
-
-object CustomerDetails {
-  implicit val format = Json.format[CustomerDetails]
+package object Form6010 {
+  object keys {
+    val fullName = "fullName"
+  }
 
 }

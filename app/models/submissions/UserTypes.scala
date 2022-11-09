@@ -16,7 +16,8 @@
 
 package models.submissions
 
-import models.{NamedEnum, NamedEnumSupport}
+import models.{EnumFormat, NamedEnum, NamedEnumSupport}
+import play.api.libs.json.Format
 
 sealed trait UserType extends NamedEnum {
   val key = "userType"
@@ -34,6 +35,8 @@ object UserTypeOccupiersAgent extends UserType {
 object UserTypeOwnersAgent extends UserType {
   val name = "ownersAgent"
 }
-object UserTypes extends NamedEnumSupport[UserType] {
+object UserType extends NamedEnumSupport[UserType] {
+  implicit val format: Format[UserType] = EnumFormat(UserType)
+
   val all = List(UserTypeOccupier, UserTypeOwner, UserTypeOccupiersAgent, UserTypeOwnersAgent)
 }
