@@ -48,24 +48,21 @@
 
 @layout(
  pageHeading = messages("aboutYourTradingHistory.header"),
+ backLinkUrl = controllers.Form6010.routes.TiedForGoodsController.show.url,
  theForm = theForm
 ) {
 
  <p class="govuk-body">@messages("aboutYourTradingHistory.subheading")</p>
 
- @includes.dateFields(form = theForm, field = "firstOccupy", govukDate = govukDateInput, showDays = false)
+ @formWithCSRF(action = controllers.Form6010.routes.AboutYourTradingHistoryController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
 
 
- @includes.dateFields(form = theForm, field = "financialYearEnd", govukDate = govukDateInput, showDays = false)
+  @includes.dateFields(form = theForm, field = "firstOccupy", govukDate = govukDateInput, showDays = true)
 
+  @includes.dateFields(form = theForm, field = "financialYear", govukDate = govukDateInput, showDays = true)
 
- @govukButton(
-  Button(
-   content = Text(messages("button.label.continue")),
-   href = Some(routes.LoginController.show().url)
-  )
- )
-
+  @includes.continueButton(govukButton)
+ }
 }
 
 

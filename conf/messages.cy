@@ -486,7 +486,14 @@ hint.legalPlanningRestrictions = For example, a break clause, contracting out of
 aboutYourTradingHistory.header = About your trading history
 aboutYourTradingHistory.subheading = In the following section, you need to provide us with your trading information for the last 3 years. If you took occupation within that time, please provide your trading history since you occupied the property
 label.firstOccupy = When did you first occupy the property?
-label.financialYearEnd =When does your financial year end?
+label.financialYear =When does your financial year end?
+help.date.month.year = Please format in mm/yyyy
+error.firstOccupy.day.required = The date must include a day
+error.firstOccupy.month.required = The date must include a month
+error.firstOccupy.year.required = The date must include a year
+error.financialYear.day.required = The date must include a day
+error.financialYear.month.required = The date must include a month
+error.financialYear.year.required = The date must include a year
 
 ##CURRENT RENT FIRST PAID
 ##############################
