@@ -20,7 +20,7 @@ import controllers.LoginController.loginForm
 import form.Form6010.AboutYourTradingHistoryForm.aboutYourTradingHistoryForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.Form6010.aboutYourTradingHistory
+import views.html.Form6010.{aboutYourTradingHistory, turnover}
 import views.html.login
 
 import javax.inject.{Inject, Singleton}
@@ -29,7 +29,7 @@ import scala.concurrent.Future
 @Singleton
 class AboutYourTradingHistoryController @Inject() (
   mcc: MessagesControllerComponents,
-  login: login,
+  turnoverView: turnover,
   aboutYourTradingHistoryView: aboutYourTradingHistory
 ) extends FrontendController(mcc) {
 
@@ -42,7 +42,7 @@ class AboutYourTradingHistoryController @Inject() (
       .bindFromRequest()
       .fold(
         formWithErrors => Future.successful(BadRequest(aboutYourTradingHistoryView(formWithErrors))),
-        data => Future.successful(Ok(login(loginForm)))
+        data => Future.successful(Ok(turnoverView()))
       )
   }
 

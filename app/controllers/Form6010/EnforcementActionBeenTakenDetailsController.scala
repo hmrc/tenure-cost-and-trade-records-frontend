@@ -18,10 +18,10 @@ package controllers.Form6010
 
 import controllers.LoginController.loginForm
 import form.Form6010.EnforcementActionDetailsForm.enforcementActionDetailsForm
+import form.Form6010.TiedForGoodsForm.tiedForGoodsForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.Form6010.enforcementActionBeenTakenDetails
-import views.html.login
+import views.html.Form6010.{enforcementActionBeenTakenDetails, tiedForGoods}
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
@@ -29,7 +29,7 @@ import scala.concurrent.Future
 @Singleton
 class EnforcementActionBeenTakenDetailsController @Inject() (
   mcc: MessagesControllerComponents,
-  login: login,
+  tiedForGoodsView: tiedForGoods,
   enforcementActionBeenTakenDetailsView: enforcementActionBeenTakenDetails
 ) extends FrontendController(mcc) {
 
@@ -42,7 +42,7 @@ class EnforcementActionBeenTakenDetailsController @Inject() (
       .bindFromRequest()
       .fold(
         formWithErrors => Future.successful(BadRequest(enforcementActionBeenTakenDetailsView(formWithErrors))),
-        data => Future.successful(Ok(login(loginForm)))
+        data => Future.successful(Ok(tiedForGoodsView(tiedForGoodsForm)))
       )
   }
 

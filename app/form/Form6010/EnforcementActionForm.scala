@@ -25,7 +25,7 @@ object EnforcementActionForm {
 
   val enforcementActionForm = Form(
     mapping(
-      "enforcementActionHasBeenTaken" -> enforcementActionType
+      "enforcementAction" -> enforcementActionType
     )(EnforcementActionHasBeenTakenDetails.apply)(EnforcementActionHasBeenTakenDetails.unapply)
   )
 }

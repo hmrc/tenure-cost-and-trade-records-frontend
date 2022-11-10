@@ -328,9 +328,9 @@ error.rentPayableVaryAccordingToGrossOrNetDetails.maxLength  = This must be 1000
 
 #ENFORCEMENT ACTION BEEN TAKEN
 ##############################
-enforcementActionHasBeenTaken.header = About the property
-label.enforcementActionHasBeenTaken = Has any enforcement action been taken?
-hint.enforcementActionHasBeenTaken = This can be any suspensions, closure orders or temporary restrictions
+enforcementAction.header = About the property
+label.enforcementAction = Has any enforcement action been taken?
+hint.enforcementAction = This can be any suspensions, closure orders or temporary restrictions
 
 #ENFORCEMENT ACTION BEEN TAKEN DETAILS
 ##############################
@@ -585,6 +585,10 @@ hint.aboutYou = If you’re renting or leasing the property, even as a charity o
 #TASK LIST
 ##############################
 taskList.header = Declaration summary
+
+#TURNOVER
+##############################
+turnover.header = This is a holding page for the turnover page
 
 #ERRORS
 ##############################

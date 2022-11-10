@@ -18,11 +18,10 @@ package controllers.Form6010
 
 import controllers.LoginController.loginForm
 import form.Form6010.CurrentAnnualRentForm.currentAnnualRentForm
+import form.Form6010.CurrentRentFirstPaidForm.currentRentFirstPaidForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.Form6010.currentAnnualRent
-
-import views.html.login
+import views.html.Form6010.{currentAnnualRent, currentRentFirstPaid}
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
@@ -30,7 +29,7 @@ import scala.concurrent.Future
 @Singleton
 class CurrentAnnualRentController @Inject() (
   mcc: MessagesControllerComponents,
-  login: login,
+  currentRentFirstPaidView: currentRentFirstPaid,
   currentAnnualRentView: currentAnnualRent
 ) extends FrontendController(mcc) {
 
@@ -43,7 +42,7 @@ class CurrentAnnualRentController @Inject() (
       .bindFromRequest()
       .fold(
         formWithErrors => Future.successful(BadRequest(currentAnnualRentView(formWithErrors))),
-        data => Future.successful(Ok(login(loginForm)))
+        data => Future.successful(Ok(currentRentFirstPaidView(currentRentFirstPaidForm)))
       )
   }
 

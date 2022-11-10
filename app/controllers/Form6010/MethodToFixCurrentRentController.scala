@@ -19,9 +19,9 @@ package controllers.Form6010
 import controllers.LoginController.loginForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.Form6010.methodToFixCurrentRent
+import views.html.Form6010.{intervalsOfRentReview, methodToFixCurrentRent}
 import form.Form6010.MethodToFixCurrentRentForm.methodToFixCurrentRentForm
-import views.html.login
+import form.Form6010.IntervalsOfRentReviewForm.intervalsOfRentReviewForm
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
@@ -29,7 +29,7 @@ import scala.concurrent.Future
 @Singleton
 class MethodToFixCurrentRentController @Inject() (
   mcc: MessagesControllerComponents,
-  login: login,
+  intervalsOfRentReviewView: intervalsOfRentReview,
   methodToFixCurrentRentView: methodToFixCurrentRent
 ) extends FrontendController(mcc) {
 
@@ -42,7 +42,7 @@ class MethodToFixCurrentRentController @Inject() (
       .bindFromRequest()
       .fold(
         formWithErrors => Future.successful(BadRequest(methodToFixCurrentRentView(formWithErrors))),
-        data => Future.successful(Ok(login(loginForm)))
+        data => Future.successful(Ok(intervalsOfRentReviewView(intervalsOfRentReviewForm)))
       )
   }
 }

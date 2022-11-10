@@ -573,6 +573,10 @@ hint.aboutYou = If you’re renting or leasing the property, even as a charity o
 ##############################
 taskList.header = Declaration summary
 
+#TURNOVER
+##############################
+turnover.header = This is a holding page for the turnover page
+
 #ERRORS
 ##############################
 error.required=This must be filled in
