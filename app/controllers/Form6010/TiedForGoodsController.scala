@@ -17,17 +17,26 @@
 package controllers.Form6010
 
 import controllers.LoginController.loginForm
+import form.Form6010.TiedForGoodsDetailsForm.tiedForGoodsDetailsForm
+import form.Form6010.AboutYourTradingHistoryForm.aboutYourTradingHistoryForm
+import form.Form6010.TiedForGoodsForm.tiedForGoodsForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.Form6010.tiedForGoods
-import form.Form6010.TiedForGoodsForm.tiedForGoodsForm
+import views.html.Form6010.{aboutYourTradingHistory, tiedForGoods, tiedForGoodsDetails}
+import models.submissions.Form6010.{TiedGoodsNo, TiedGoodsYes}
 import views.html.login
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class TiedForGoodsController @Inject() (mcc: MessagesControllerComponents, login: login, tiedForGoodsView: tiedForGoods)
+class TiedForGoodsController @Inject() (
+                                         mcc: MessagesControllerComponents,
+                                         login: login,
+                                         tiedForGoodsView: tiedForGoods,
+                                         tiedForGoodsDetailsView: tiedForGoodsDetails,
+                                         aboutYourTradingHistoryView: aboutYourTradingHistory
+                                       )
     extends FrontendController(mcc) {
 
   def show: Action[AnyContent] = Action.async { implicit request =>
@@ -39,7 +48,14 @@ class TiedForGoodsController @Inject() (mcc: MessagesControllerComponents, login
       .bindFromRequest()
       .fold(
         formWithErrors => Future.successful(BadRequest(tiedForGoodsView(formWithErrors))),
-        data => Future.successful(Ok(login(loginForm)))
+        data =>
+          if (data.equals(TiedGoodsYes)) {
+            Future.successful(Ok(tiedForGoodsDetailsView(tiedForGoodsDetailsForm)))
+          } else if (data.equals(TiedGoodsNo)) {
+            Future.successful(Ok(aboutYourTradingHistoryView(aboutYourTradingHistoryForm)))
+          } else {
+            Future.successful(Ok(login(loginForm)))
+          }
       )
   }
 

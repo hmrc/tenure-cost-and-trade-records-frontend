@@ -14,11 +14,9 @@
  * limitations under the License.
  *@
 
-@import models.submissions.Form6010.CateringOperationDetails
+@import models.submissions.Form6010.CateringOperationOrLettingAccommodation
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.button.Button
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.textarea.Textarea
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukErrorSummary
@@ -45,8 +43,7 @@
         formWithCSRF: FormWithCSRF
 )
 
-
-@(theForm: Form[CateringOperationDetails])(implicit request: Request[_], messages: Messages)
+@(theForm: Form[CateringOperationOrLettingAccommodation])(implicit request: Request[_], messages: Messages)
 
 @layout(
  pageHeading = messages("cateringOperationOrLettingAccommodation.header"),

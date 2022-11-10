@@ -49,7 +49,7 @@
 @(theForm: Form[PremisesLicenseInformationDetails])(implicit request: Request[_], messages: Messages)
 
 @layout(
- pageHeading = messages("premisesLicenceConditions.header"),
+ pageHeading = messages("premisesLicenseConditions.header"),
  backLinkUrl = controllers.Form6010.routes.PremisesLicenseController.show.url,
  theForm = theForm
 ) {
@@ -58,14 +58,14 @@
 
   @govukTextarea(
    Textarea(
-    id = "premisesLicenceConditions",
-    name = "premisesLicenceConditions",
+    id = "premisesLicenseConditions",
+    name = "premisesLicenseConditions",
     rows = 5,
     label = Label(
-     content = Text(messages("label.premisesLicenceConditions")),
+     content = Text(messages("label.premisesLicenseConditions")),
      classes = "govuk-!-font-weight-bold"
     ),
-    errorMessage = theForm.errors.asTextErrorMessageForField("premisesLicenceConditions")
+    errorMessage = theForm.errors.asTextErrorMessageForField("premisesLicenseConditions")
    )
   )
 

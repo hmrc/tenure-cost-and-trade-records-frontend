@@ -19,8 +19,11 @@ package controllers.Form6010
 import controllers.LoginController.loginForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.Form6010.premisesLicense
+import views.html.Form6010.{enforcementActionBeenTaken, premisesLicense, premisesLicenseConditions}
 import form.Form6010.PremisesLicenseForm.premisesLicenseForm
+import form.Form6010.PremisesLicenseDetailsForm.premisesLicenceDetailsForm
+import form.Form6010.EnforcementActionForm.enforcementActionForm
+import models.submissions.Form6010.{PremisesLicensesNo, PremisesLicensesYes}
 import views.html.login
 
 import javax.inject.{Inject, Singleton}
@@ -30,7 +33,9 @@ import scala.concurrent.Future
 class PremisesLicenseController @Inject() (
   mcc: MessagesControllerComponents,
   login: login,
-  premisesLicenseView: premisesLicense
+  premisesLicenseView: premisesLicense,
+  premisesLicenceDetailsView: premisesLicenseConditions,
+  enforcementActionBeenTakenView: enforcementActionBeenTaken
 ) extends FrontendController(mcc) {
 
   def show: Action[AnyContent] = Action.async { implicit request =>
@@ -42,7 +47,14 @@ class PremisesLicenseController @Inject() (
       .bindFromRequest()
       .fold(
         formWithErrors => Future.successful(BadRequest(premisesLicenseView(formWithErrors))),
-        data => Future.successful(Ok(login(loginForm)))
+        data =>
+          if (data.equals(PremisesLicensesYes)) {
+            Future.successful(Ok(premisesLicenceDetailsView(premisesLicenceDetailsForm)))
+          } else if (data.equals(PremisesLicensesNo)) {
+            Future.successful(Ok(enforcementActionBeenTakenView(enforcementActionForm)))
+          } else {
+            Future.successful(Ok(login(loginForm)))
+          }
       )
   }
 

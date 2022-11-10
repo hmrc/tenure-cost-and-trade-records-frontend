@@ -14,7 +14,7 @@
  * limitations under the License.
  *@
 
-@import models.submissions.Form6010.EnforcementActionHasBeenTakenDetails
+@import models.submissions.Form6010.EnforcementActions
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.button.Button
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
@@ -44,7 +44,7 @@
 )
 
 
-@(theForm: Form[EnforcementActionHasBeenTakenDetails])(implicit request: Request[_], messages: Messages)
+@(theForm: Form[EnforcementActions])(implicit request: Request[_], messages: Messages)
 
 @layout(
  pageHeading = messages("enforcementActionHasBeenTaken.header"),

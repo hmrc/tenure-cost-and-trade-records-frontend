@@ -17,15 +17,17 @@
 package form.Form6010
 
 import form.MappingSupport.tiedForGoodsType
-import models.submissions.Form6010.TiedForGoodsDetails
+import models.submissions.Form6010.{TiedForGoods, TiedForGoodsDetails}
 import play.api.data.Form
 import play.api.data.Forms.mapping
 
 object TiedForGoodsForm {
 
-  val tiedForGoodsForm = Form(
-    mapping(
-      "tiedForGoods" -> tiedForGoodsType
-    )(TiedForGoodsDetails.apply)(TiedForGoodsDetails.unapply)
-  )
+  lazy val baseTiedForGoodsForm: Form[TiedForGoods] = Form(baseTiedForGoodsMapping)
+
+  val baseTiedForGoodsMapping = mapping(
+    "tiedForGoods" -> tiedForGoodsType
+  )(x => x)(b => Some(b))
+
+  val tiedForGoodsForm = Form(baseTiedForGoodsMapping)
 }

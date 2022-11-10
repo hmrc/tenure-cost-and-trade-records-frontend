@@ -17,15 +17,17 @@
 package form.Form6010
 
 import form.MappingSupport.franchiseOrLettingsTiedToPropertyType
-import models.submissions.Form6010.FranchiseOrLettingsTiedToPropertiesDetails
+import models.submissions.Form6010.FranchiseOrLettingsTiedToProperties
 import play.api.data.Form
 import play.api.data.Forms.mapping
 
 object FranchiseOrLettingsTiedToPropertyForm {
 
-  val franchiseOrLettingsTiedToPropertyForm = Form(
-    mapping(
-      "franchiseLettings" -> franchiseOrLettingsTiedToPropertyType
-    )(FranchiseOrLettingsTiedToPropertiesDetails.apply)(FranchiseOrLettingsTiedToPropertiesDetails.unapply)
-  )
+  lazy val baseFranchiseOrLettingsTiedToPropertyForm: Form[FranchiseOrLettingsTiedToProperties] = Form(baseFranchiseOrLettingsTiedToPropertyMapping)
+
+  val baseFranchiseOrLettingsTiedToPropertyMapping = mapping(
+    "franchiseLettings" -> franchiseOrLettingsTiedToPropertyType
+  )(x => x)(b => Some(b))
+
+  val franchiseOrLettingsTiedToPropertyForm = Form(baseFranchiseOrLettingsTiedToPropertyMapping)
 }
