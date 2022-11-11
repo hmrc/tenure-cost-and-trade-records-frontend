@@ -27,7 +27,6 @@ object UserTypeOccupier extends UserType {
 object UserTypeOwner extends UserType {
   val name = "owner"
 }
-
 object UserTypeOccupiersAgent extends UserType {
   val name = "occupiersAgent"
 }
