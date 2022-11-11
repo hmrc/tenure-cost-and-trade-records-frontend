@@ -49,9 +49,9 @@ class TiedForGoodsController @Inject() (
       .fold(
         formWithErrors => Future.successful(BadRequest(tiedForGoodsView(formWithErrors))),
         data =>
-          if (data.equals(TiedGoodsYes)) {
+          if (data.tiedGoodsDetails.equals(TiedGoodsYes)) {
             Future.successful(Ok(tiedForGoodsDetailsView(tiedForGoodsDetailsForm)))
-          } else if (data.equals(TiedGoodsNo)) {
+          } else if (data.tiedGoodsDetails.equals(TiedGoodsNo)) {
             Future.successful(Ok(aboutYourTradingHistoryView(aboutYourTradingHistoryForm)))
           } else {
             Future.successful(Ok(login(loginForm)))

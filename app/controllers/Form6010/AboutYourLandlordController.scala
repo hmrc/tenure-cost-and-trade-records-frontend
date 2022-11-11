@@ -18,10 +18,10 @@ package controllers.Form6010
 
 import controllers.LoginController.loginForm
 import form.Form6010.AboutTheLandlordForm.aboutTheLandlordForm
-import form.Form6010.IncludedInYourRentForm.includedInYourRentForm
+import form.Form6010.LeaseOrAgreementYearsForm.leaseOrAgreementYearsForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.Form6010.{aboutYourLandlord, includedInYourRent}
+import views.html.Form6010.{aboutYourLandlord, includedInYourRent, leaseOrAgreementYears}
 import views.html.login
 
 import javax.inject.{Inject, Singleton}
@@ -30,7 +30,7 @@ import scala.concurrent.Future
 @Singleton
 class AboutYourLandlordController @Inject() (
   mcc: MessagesControllerComponents,
-  includedInYourRentView: includedInYourRent,
+  leaseOrAgreementYearsView: leaseOrAgreementYears,
   aboutYourLandlordView: aboutYourLandlord
 ) extends FrontendController(mcc) {
 
@@ -43,7 +43,7 @@ class AboutYourLandlordController @Inject() (
       .bindFromRequest()
       .fold(
         formWithErrors => Future.successful(BadRequest(aboutYourLandlordView(formWithErrors))),
-        data => Future.successful(Ok(includedInYourRentView(includedInYourRentForm  )))
+        data => Future.successful(Ok(leaseOrAgreementYearsView(leaseOrAgreementYearsForm)))
       )
   }
 

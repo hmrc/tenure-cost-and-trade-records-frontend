@@ -21,7 +21,7 @@ import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.Form6010.{aboutYourLandlord, cateringOperationOrLettingAccommodation, franchiseOrLettingsTiedToProperty}
 import form.Form6010.FranchiseOrLettingsTiedToPropertyForm.franchiseOrLettingsTiedToPropertyForm
-import form.Form6010.CateringOperationForm.{baseCateringOperationForm, cateringOperationForm}
+import form.Form6010.CateringOperationForm.cateringOperationForm
 import form.Form6010.AboutTheLandlordForm.aboutTheLandlordForm
 import models.submissions.Form6010.{FranchiseOrLettingsTiedToPropertiesNo, FranchiseOrLettingsTiedToPropertiesYes}
 import views.html.login
@@ -48,9 +48,9 @@ class FranchiseOrLettingsTiedToPropertyController @Inject() (
       .fold(
         formWithErrors => Future.successful(BadRequest(franchiseOrLettingsTiedToPropertyView(formWithErrors))),
         data =>
-          if (data.equals(FranchiseOrLettingsTiedToPropertiesYes)) {
+          if (data.franchiseOrLettingsTiedToProperty.equals(FranchiseOrLettingsTiedToPropertiesYes)) {
             Future.successful(Ok(cateringOperationOrLettingAccommodationView(cateringOperationForm)))
-          } else if (data.equals(FranchiseOrLettingsTiedToPropertiesNo)) {
+          } else if (data.franchiseOrLettingsTiedToProperty.equals(FranchiseOrLettingsTiedToPropertiesNo)) {
             Future.successful(Ok(aboutYourLandlordView(aboutTheLandlordForm)))
           } else {
             Future.successful(Ok(login(loginForm)))

@@ -16,8 +16,4 @@
 
 package models.submissions.Form6010
 
-case class IncludedInYourRentDetails(
-  commenceWithinThreeYears: CommenceWithinThreeYears,
-  agreedReviewedAlteredThreeYears: AgreedReviewedAlteredThreeYears,
-  rentUnderReviewNegotiated: RentUnderReviewNegotiated
-)
+case class IncludedInYourRentDetails(vat: VATs, nonDomesticRates: NonDomesticRates, waterCharges: WaterCharges)

@@ -17,17 +17,15 @@
 package form.Form6010
 
 import form.MappingSupport.enforcementActionType
-import models.submissions.Form6010.EnforcementActions
+import models.submissions.Form6010.{EnforcementActionHasBeenTakenDetails}
 import play.api.data.Form
 import play.api.data.Forms.mapping
 
 object EnforcementActionForm {
 
-  lazy val baseEnforcementActionForm: Form[EnforcementActions] = Form(baseEnforcementActionMapping)
-
-  val baseEnforcementActionMapping = mapping(
-    "enforcementAction" -> enforcementActionType
-  )(x => x)(b => Some(b))
-
-  val enforcementActionForm = Form(baseEnforcementActionMapping)
+  val enforcementActionForm = Form(
+    mapping(
+      "enforcementAction" -> enforcementActionType
+    )(EnforcementActionHasBeenTakenDetails.apply)(EnforcementActionHasBeenTakenDetails.unapply)
+  )
 }

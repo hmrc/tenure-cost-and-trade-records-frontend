@@ -14,8 +14,8 @@
  * limitations under the License.
  *@
 
+@import models.submissions.Form6010.LeaseOrAgreementYearsDetails
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.button.Button
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
@@ -26,15 +26,9 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Radios
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Label
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Hint
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Input
-@import akka.protobufv3.internal.DescriptorProtos.EnumOptions
-@import models.submissions.Form6010.LicensableActivitiesDetails
 @import uk.gov.hmrc.govukfrontend.views.Aliases.RadioItem
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Fieldset
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Legend
-@import models.submissions.Form6010.LicensableActivities
 
 @this(layout: Layout,
         govukButton: GovukButton,
@@ -47,45 +41,98 @@
         formWithCSRF: FormWithCSRF
 )
 
-
-@(theForm: Form[LicensableActivitiesDetails])(implicit request: Request[_], messages: Messages)
+@(theForm: Form[LeaseOrAgreementYearsDetails])(implicit request: Request[_], messages: Messages)
 
 @layout(
- pageHeading = messages("licensableActivities.header"),
- backLinkUrl = controllers.Form6010.routes.WebsiteForPropertyController.show.url,
+ pageHeading = messages("leaseOrAgreement.header"),
+ backLinkUrl = controllers.Form6010.routes.AboutYourLandlordController.show.url,
  theForm = theForm
 ) {
 
- @formWithCSRF(action = controllers.Form6010.routes.LicensableActivitiesController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
+ @formWithCSRF(action = controllers.Form6010.routes.LeaseOrAgreementYearsController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
 
   @govukRadios(
    Radios(
-    name = "licensableActivities",
-    idPrefix = Option("licensableActivities"),
+    name = "commenceWithinThreeYears",
+    idPrefix = Option("commenceWithinThreeYears"),
     items = Seq(
      "yes" -> messages("label.yes"),
      "no" -> messages("label.no")
     ).map(radioItem => RadioItem(
      content = Text(radioItem._2),
+     checked = radioItem._1.equals(theForm("commenceWithinThreeYears").value.getOrElse("")),
      value = Option(radioItem._1)
     )
     ),
+    errorMessage =  theForm.errors.asTextErrorMessageForField("commenceWithinThreeYears"),
     fieldset = Option(
      Fieldset(
       legend = Option(
        Legend(
-        content = Text(messages("licensableActivities.option")),
+        content = Text(messages("label.commenceWithinThreeYears")),
         classes = "govuk-!-font-weight-bold"
        )
       )
      )
+    )
+   )
+  )
+
+  @govukRadios(
+   Radios(
+    name = "agreedReviewedAlteredThreeYears",
+    idPrefix = Option("agreedReviewedAlteredThreeYears"),
+    items = Seq(
+     "yes" -> messages("label.yes"),
+     "no" -> messages("label.no")
+    ).map(radioItem => RadioItem(
+     content = Text(radioItem._2),
+     checked = radioItem._1.equals(theForm("agreedReviewedAlteredThreeYears").value.getOrElse("")),
+     value = Option(radioItem._1)
+    )
     ),
-    hint = Some(Hint(content = Text(messages("hint.licensableActivities")))),
+    errorMessage =  theForm.errors.asTextErrorMessageForField("agreedReviewedAlteredThreeYears"),
+    fieldset = Option(
+     Fieldset(
+      legend = Option(
+       Legend(
+        content = Text(messages("label.agreedReviewedAlteredThreeYears")),
+        classes = "govuk-!-font-weight-bold"
+       )
+      )
+     )
+    )
+   )
+  )
+
+  @govukRadios(
+   Radios(
+    name = "rentUnderReviewNegotiated",
+    idPrefix = Option("rentUnderReviewNegotiated"),
+    items = Seq(
+     "yes" -> messages("label.yes"),
+     "no" -> messages("label.no")
+    ).map(radioItem => RadioItem(
+     content = Text(radioItem._2),
+     checked = radioItem._1.equals(theForm("rentUnderReviewNegotiated").value.getOrElse("")),
+     value = Option(radioItem._1)
+    )
+    ),
+    errorMessage =  theForm.errors.asTextErrorMessageForField("rentUnderReviewNegotiated"),
+    fieldset = Option(
+     Fieldset(
+      legend = Option(
+       Legend(
+        content = Text(messages("label.rentUnderReviewNegotiated")),
+        classes = "govuk-!-font-weight-bold"
+       )
+      )
+     )
+    )
    )
   )
 
   @includes.continueButton(govukButton)
-
  }
 }
 

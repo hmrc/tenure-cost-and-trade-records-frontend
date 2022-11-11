@@ -25,9 +25,9 @@ object IncludedInYourRentForm {
 
   val includedInYourRentForm = Form(
     mapping(
-      "commenceWithinThreeYears"        -> commenceWithinThreeYearsType,
-      "agreedReviewedAlteredThreeYears" -> agreedReviewedAlteredThreeYearsType,
-      "rentUnderReviewNegotiated"       -> rentUnderReviewNegotiatedType
+      "vat"              -> vatType,
+      "nondomesticRates" -> nondomesticRatesType,
+      "waterCharges"     -> waterChargesType
     )(IncludedInYourRentDetails.apply)(IncludedInYourRentDetails.unapply)
   )
 }

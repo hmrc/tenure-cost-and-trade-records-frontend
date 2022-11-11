@@ -17,17 +17,14 @@
 package form.Form6010
 
 import form.MappingSupport.licensableActivitiesType
-import models.submissions.Form6010.LicensableActivities
+import models.submissions.Form6010.LicensableActivitiesDetails
 import play.api.data.Form
 import play.api.data.Forms.mapping
 
 object LicensableActivitiesForm {
 
-  lazy val baseLicensableActivitiesForm: Form[LicensableActivities] = Form(baseLicensableActivitiesMapping)
-
-  val baseLicensableActivitiesMapping = mapping(
+  val licensableActivitiesForm = Form(mapping(
       "licensableActivities" -> licensableActivitiesType
-    )(x => x)(b => Some(b))
-
-  val licensableActivitiesForm = Form(baseLicensableActivitiesMapping)
+  )(LicensableActivitiesDetails.apply)(LicensableActivitiesDetails.unapply)
+  )
 }

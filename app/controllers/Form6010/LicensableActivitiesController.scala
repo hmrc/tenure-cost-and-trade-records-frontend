@@ -48,9 +48,9 @@ class LicensableActivitiesController @Inject() (
       .fold(
         formWithErrors => Future.successful(BadRequest(licensableActivitiesView(formWithErrors))),
         data =>
-          if (data.equals(LicensableActivitiesYes)) {
+          if (data.licensableActivities.equals(LicensableActivitiesYes)) {
             Future.successful(Ok(licensableActivitiesDetailsView(licensableActivitiesDetailsForm)))
-          } else if (data.equals(LicensableActivitiesNo)) {
+          } else if (data.licensableActivities.equals(LicensableActivitiesNo)) {
             Future.successful(Ok(premisesLicenseView(premisesLicenseForm)))
           } else {
             Future.successful(Ok(login(loginForm)))

@@ -16,4 +16,8 @@
 
 package models.submissions.Form6010
 
-case class LeaseOrAgreementDetails(vat: VATs, nonDomesticRates: NonDomesticRates, waterCharges: WaterCharges)
+case class LeaseOrAgreementYearsDetails(
+  commenceWithinThreeYears: CommenceWithinThreeYears,
+  agreedReviewedAlteredThreeYears: AgreedReviewedAlteredThreeYears,
+  rentUnderReviewNegotiated: RentUnderReviewNegotiated
+)

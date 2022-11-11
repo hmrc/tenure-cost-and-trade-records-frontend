@@ -41,99 +41,102 @@
         formWithCSRF: FormWithCSRF
 )
 
+
 @(theForm: Form[IncludedInYourRentDetails])(implicit request: Request[_], messages: Messages)
 
 @layout(
- pageHeading = messages("leaseOrAgreement.header"),
- backLinkUrl = controllers.Form6010.routes.AboutYourLandlordController.show.url,
+ pageHeading = messages("includedInYourRent.header"),
+ backLinkUrl = controllers.Form6010.routes.CurrentLeaseOrAgreementBeginController.show.url,
  theForm = theForm
 ) {
 
  @formWithCSRF(action = controllers.Form6010.routes.IncludedInYourRentController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
 
+  <p class="govuk-body">@messages("includedInYourRent.subheading")</p>
+
   @govukRadios(
-   Radios(
-    name = "commenceWithinThreeYears",
-    idPrefix = Option("commenceWithinThreeYears"),
-    items = Seq(
-     "yes" -> messages("label.yes"),
-     "no" -> messages("label.no")
-    ).map(radioItem => RadioItem(
-     content = Text(radioItem._2),
-     checked = radioItem._1.equals(theForm("commenceWithinThreeYears").value.getOrElse("")),
-     value = Option(radioItem._1)
-    )
-    ),
-    errorMessage =  theForm.errors.asTextErrorMessageForField("commenceWithinThreeYears"),
-    fieldset = Option(
-     Fieldset(
-      legend = Option(
-       Legend(
-        content = Text(messages("label.commenceWithinThreeYears")),
-        classes = "govuk-!-font-weight-bold"
-       )
+  Radios(
+   name = "vat",
+   idPrefix = Option("vat"),
+   items = Seq(
+    "yes" -> messages("label.yes"),
+    "no" -> messages("label.no")
+   ).map(radioItem => RadioItem(
+    content = Text(radioItem._2),
+    checked = radioItem._1.equals(theForm("vat").value.getOrElse("")),
+    value = Option(radioItem._1)
+   )
+   ),
+   errorMessage =  theForm.errors.asTextErrorMessageForField("vat"),
+   fieldset = Option(
+    Fieldset(
+     legend = Option(
+      Legend(
+       content = Text(messages("label.vat")),
+       classes = "govuk-!-font-weight-bold"
       )
      )
     )
    )
   )
+ )
 
-  @govukRadios(
-   Radios(
-    name = "agreedReviewedAlteredThreeYears",
-    idPrefix = Option("agreedReviewedAlteredThreeYears"),
-    items = Seq(
-     "yes" -> messages("label.yes"),
-     "no" -> messages("label.no")
-    ).map(radioItem => RadioItem(
-     content = Text(radioItem._2),
-     checked = radioItem._1.equals(theForm("agreedReviewedAlteredThreeYears").value.getOrElse("")),
-     value = Option(radioItem._1)
-    )
-    ),
-    errorMessage =  theForm.errors.asTextErrorMessageForField("agreedReviewedAlteredThreeYears"),
-    fieldset = Option(
-     Fieldset(
-      legend = Option(
-       Legend(
-        content = Text(messages("label.agreedReviewedAlteredThreeYears")),
-        classes = "govuk-!-font-weight-bold"
-       )
+ @govukRadios(
+  Radios(
+   name = "nondomesticRates",
+   idPrefix = Option("nondomesticRates"),
+   items = Seq(
+    "yes" -> messages("label.yes"),
+    "no" -> messages("label.no")
+   ).map(radioItem => RadioItem(
+    content = Text(radioItem._2),
+    checked = radioItem._1.equals(theForm("nondomesticRates").value.getOrElse("")),
+    value = Option(radioItem._1)
+   )
+   ),
+   errorMessage =  theForm.errors.asTextErrorMessageForField("nondomesticRates"),
+   fieldset = Option(
+    Fieldset(
+     legend = Option(
+      Legend(
+       content = Text(messages("label.nondomesticRates")),
+       classes = "govuk-!-font-weight-bold"
       )
      )
     )
    )
   )
+ )
 
-  @govukRadios(
-   Radios(
-    name = "rentUnderReviewNegotiated",
-    idPrefix = Option("rentUnderReviewNegotiated"),
-    items = Seq(
-     "yes" -> messages("label.yes"),
-     "no" -> messages("label.no")
-    ).map(radioItem => RadioItem(
-     content = Text(radioItem._2),
-     checked = radioItem._1.equals(theForm("rentUnderReviewNegotiated").value.getOrElse("")),
-     value = Option(radioItem._1)
-    )
-    ),
-    errorMessage =  theForm.errors.asTextErrorMessageForField("rentUnderReviewNegotiated"),
-    fieldset = Option(
-     Fieldset(
-      legend = Option(
-       Legend(
-        content = Text(messages("label.rentUnderReviewNegotiated")),
-        classes = "govuk-!-font-weight-bold"
-       )
+ @govukRadios(
+  Radios(
+   name = "waterCharges",
+   idPrefix = Option("waterCharges"),
+   items = Seq(
+    "yes" -> messages("label.yes"),
+    "no" -> messages("label.no")
+   ).map(radioItem => RadioItem(
+    content = Text(radioItem._2),
+    checked = radioItem._1.equals(theForm("waterCharges").value.getOrElse("")),
+    value = Option(radioItem._1)
+   )
+   ),
+   errorMessage =  theForm.errors.asTextErrorMessageForField("waterCharges"),
+   fieldset = Option(
+    Fieldset(
+     legend = Option(
+      Legend(
+       content = Text(messages("label.waterCharges")),
+       classes = "govuk-!-font-weight-bold"
       )
      )
     )
    )
   )
+ )
 
-  @includes.continueButton(govukButton)
- }
+ @includes.continueButton(govukButton)
+}
 }
 
 

@@ -14,7 +14,7 @@
  * limitations under the License.
  *@
 
-@import models.submissions.Form6010.TiedForGoods
+@import models.submissions.Form6010.TiedForGoodsDetails
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
@@ -42,7 +42,8 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[TiedForGoods])(implicit request: Request[_], messages: Messages)
+
+@(theForm: Form[TiedForGoodsDetails])(implicit request: Request[_], messages: Messages)
 
 @layout(
  pageHeading = messages("tiedForGoods.header"),

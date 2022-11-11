@@ -16,20 +16,19 @@
 
 package controllers.Form6010
 
-import controllers.LoginController.loginForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.Form6010.includedInYourRent
+import views.html.Form6010.{doesTheRentPayable, includedInYourRent}
 import form.Form6010.IncludedInYourRentForm.includedInYourRentForm
-import views.html.login
+import form.Form6010.DoesTheRentPayableForm.doesTheRentPayableForm
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class IncludedInYourRentController @Inject() (
+class IncludedInYourRentController @Inject()(
   mcc: MessagesControllerComponents,
-  login: login,
+  doesTheRentPayableView: doesTheRentPayable,
   includedInYourRentView: includedInYourRent
 ) extends FrontendController(mcc) {
 
@@ -42,8 +41,7 @@ class IncludedInYourRentController @Inject() (
       .bindFromRequest()
       .fold(
         formWithErrors => Future.successful(BadRequest(includedInYourRentView(formWithErrors))),
-        data => Future.successful(Ok(login(loginForm)))
+        data => Future.successful(Ok(doesTheRentPayableView(doesTheRentPayableForm)))
       )
   }
-
 }

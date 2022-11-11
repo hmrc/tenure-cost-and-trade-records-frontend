@@ -48,9 +48,9 @@ class EnforcementActionBeenTakenController @Inject() (
       .fold(
         formWithErrors => Future.successful(BadRequest(enforcementActionBeenTakenView(formWithErrors))),
         data =>
-          if (data.equals(EnforcementActionsYes)) {
+          if (data.enforcementActionHasBeenTaken.equals(EnforcementActionsYes)) {
             Future.successful(Ok(enforcementActionBeenTakenDetailsView(enforcementActionDetailsForm)))
-          } else if (data.equals(EnforcementActionsNo)) {
+          } else if (data.enforcementActionHasBeenTaken.equals(EnforcementActionsNo)) {
             Future.successful(Ok(tiedForGoodsView(tiedForGoodsForm)))
           } else {
             Future.successful(Ok(login(loginForm)))
