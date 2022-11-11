@@ -18,16 +18,13 @@ package models
 
 import form.MappingSupport._
 import models.submissions.Form6010.{AddressConnectionType, CustomerDetails}
-import models.submissions.UserType
+import models.submissions.{ConnectionToThePropertyDetails, UserType}
 import play.api.data.Form
 import play.api.data.Forms.mapping
 import play.api.libs.json._
 
 case class Session (
-                     areYouStillConnected: Option[AddressConnectionType],
-                     fullName: Option[String],
-                     email: Option[String],
-                     telephoneNumber: Option[String],
+                     areYouStillConnected: AddressConnectionType
                    )
 
 object Session {
@@ -38,14 +35,12 @@ object Session {
       addressConnectionType)
   }
 
-  def apply(customerDetails: CustomerDetails): Session = {
-    Session(
-      None,
-      fullName = Some(customerDetails.fullName),
-      email = Some(customerDetails.contactDetails.email),
-      telephoneNumber = Some(customerDetails.contactDetails.phone),
-    )
-  }
+//  def apply(connectionToThePropertyDetails: ConnectionToThePropertyDetails)(implicit ses: Session): Session = {
+//    Session(
+//      ses.areYouStillConnected,
+//      connectionToTheProperty = Some(connectionToThePropertyDetails)
+//    )
+//  }
 
 }
 

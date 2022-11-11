@@ -16,7 +16,9 @@
 
 package controllers
 
+import actions.WithSessionRefiner
 import form.ConnectionToThePropertyForm.connectionToThePropertyForm
+import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.{connectionToTheProperty, taskList}
@@ -28,14 +30,15 @@ import scala.concurrent.Future
 class ConnectionToThePropertyController @Inject() (
   mcc: MessagesControllerComponents,
   taskListView: taskList,
-  connectionToThePropertyView: connectionToTheProperty
-) extends FrontendController(mcc) {
+  connectionToThePropertyView: connectionToTheProperty,
+  withSessionRefiner: WithSessionRefiner
+) extends FrontendController(mcc) with I18nSupport {
 
-  def show: Action[AnyContent] = Action.async { implicit request =>
+  def show: Action[AnyContent] = Action andThen withSessionRefiner async { implicit request =>
     Future.successful(Ok(connectionToThePropertyView(connectionToThePropertyForm)))
   }
 
-  def submit = Action.async { implicit request =>
+  def submit = Action andThen withSessionRefiner async{ implicit request =>
     connectionToThePropertyForm
       .bindFromRequest()
       .fold(

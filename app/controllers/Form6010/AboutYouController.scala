@@ -32,7 +32,6 @@ import scala.concurrent.Future
 class AboutYouController @Inject() (mcc: MessagesControllerComponents,
                                     taskListView: taskList,
                                     aboutYouView: aboutYou,
-                                    withSessionRefiner: WithSessionRefiner,
                                     @Named("session") val session: SessionRepo
                                    )
     extends FrontendController(mcc) {
@@ -47,7 +46,6 @@ class AboutYouController @Inject() (mcc: MessagesControllerComponents,
       .fold(
         formWithErrors => Future.successful(BadRequest(aboutYouView(formWithErrors))),
         data => {
-//          session.start(data)
           Future.successful(Ok(taskListView()))
         }
       )

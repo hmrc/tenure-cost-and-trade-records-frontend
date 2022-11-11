@@ -16,6 +16,7 @@
 
 package controllers
 
+import actions.WithSessionRefiner
 import config.AppConfig
 import controllers.LoginController.loginForm
 import form.AreYouStillConnectedForm.areYouStillConnectedForm
@@ -49,7 +50,8 @@ class AreYouStillConnectedController @Inject() (
                                                  connectionToThePropertyView: connectionToTheProperty,
                                                  editAddressView: editAddress,
                                                  aboutYouView: aboutYou,
-                                                 @Named("Session") val Session: SessionRepo
+                                                 withSessionRefiner: WithSessionRefiner,
+                                                 @Named("session") val session: SessionRepo
                                                ) extends FrontendController(mcc) {
 
 
@@ -64,10 +66,13 @@ class AreYouStillConnectedController @Inject() (
         formWithErrors => Future.successful(BadRequest(areYouStillConnectedView(formWithErrors))),
         data =>
           if (data.equals(AddressConnectionTypeYes)) {
+            session.start(data)
             Future.successful(Ok(connectionToThePropertyView(connectionToThePropertyForm)))
           } else if (data.equals(AddressConnectionTypeNo)) {
+            session.start(data)
             Future.successful(Ok(login(loginForm)))
           } else if (data.equals(AddressConnectionTypeYesChangeAddress)) {
+            session.start(data)
             Future.successful(Ok(editAddressView(editAddressForm)))
           } else {
             Future.successful(Ok(login(loginForm)))
