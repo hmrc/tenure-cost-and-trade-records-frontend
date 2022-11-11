@@ -68,10 +68,10 @@ class AreYouStillConnectedController @Inject() (
             session.start(Session(data))
             Future.successful(Ok(connectionToThePropertyView(connectionToThePropertyForm)))
           } else if (data.equals(AddressConnectionTypeNo)) {
-            session.start(data)
+            session.start(Session(data))
             Future.successful(Ok(login(loginForm)))
           } else if (data.equals(AddressConnectionTypeYesChangeAddress)) {
-            session.start(data)
+            session.start(Session(data))
             Future.successful(Ok(editAddressView(editAddressForm)))
           } else {
             Future.successful(Ok(login(loginForm)))
