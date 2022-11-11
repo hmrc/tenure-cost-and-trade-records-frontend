@@ -49,7 +49,6 @@ class AreYouStillConnectedController @Inject() (
                                                  areYouStillConnectedView: areYouStillConnected,
                                                  connectionToThePropertyView: connectionToTheProperty,
                                                  editAddressView: editAddress,
-                                                 aboutYouView: aboutYou,
                                                  withSessionRefiner: WithSessionRefiner,
                                                  @Named("session") val session: SessionRepo
                                                ) extends FrontendController(mcc) {

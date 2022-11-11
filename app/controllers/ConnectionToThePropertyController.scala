@@ -20,10 +20,11 @@ import actions.WithSessionRefiner
 import form.ConnectionToThePropertyForm.connectionToThePropertyForm
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.{connectionToTheProperty, taskList}
 
-import javax.inject.{Inject, Singleton}
+import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
 
 @Singleton
@@ -31,14 +32,14 @@ class ConnectionToThePropertyController @Inject() (
   mcc: MessagesControllerComponents,
   taskListView: taskList,
   connectionToThePropertyView: connectionToTheProperty,
-  withSessionRefiner: WithSessionRefiner
-) extends FrontendController(mcc) with I18nSupport {
+  withSessionRefiner: WithSessionRefiner,
+  @Named("session") val session: SessionRepo) extends FrontendController(mcc) with I18nSupport {
 
-  def show: Action[AnyContent] = Action andThen withSessionRefiner async { implicit request =>
+  def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Future.successful(Ok(connectionToThePropertyView(connectionToThePropertyForm)))
   }
 
-  def submit = Action andThen withSessionRefiner async{ implicit request =>
+  def submit = Action.async{ implicit request =>
     connectionToThePropertyForm
       .bindFromRequest()
       .fold(
