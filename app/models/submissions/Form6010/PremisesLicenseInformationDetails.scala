@@ -17,5 +17,5 @@
 package models.submissions.Form6010
 
 case class PremisesLicenseInformationDetails(
-                                              premisesLicenseInformationDetails: String
+  premisesLicenseInformationDetails: String
 )

@@ -16,4 +16,11 @@
 
 package models.submissions.Form6010
 
+import play.api.libs.json.Json
+
 case class ContactDetails(phone: String, email: String)
+
+object ContactDetails {
+  implicit val format = Json.format[ContactDetails]
+
+}

@@ -14,16 +14,11 @@
  * limitations under the License.
  */
 
-package models.submissions.Form6010
+package utils
 
-import play.api.libs.json.Json
+import scala.concurrent.ExecutionContext
+import scala.concurrent.ExecutionContext.global
 
-case class CustomerDetails(
-  fullName: String,
-  contactDetails: ContactDetails
-)
-
-object CustomerDetails {
-  implicit val format = Json.format[CustomerDetails]
-
+trait GlobalExecutionContext {
+  implicit val executionContext: ExecutionContext = global
 }

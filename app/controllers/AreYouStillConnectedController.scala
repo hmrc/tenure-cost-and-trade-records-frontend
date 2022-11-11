@@ -16,29 +16,42 @@
 
 package controllers
 
+import actions.WithSessionRefiner
 import config.AppConfig
 import controllers.LoginController.loginForm
 import form.AreYouStillConnectedForm.areYouStillConnectedForm
 import form.ConnectionToThePropertyForm.connectionToThePropertyForm
 import form.EditAddressForm.editAddressForm
-import form.FormDocumentRepository
 import models.submissions.Form6010.{AddressConnectionTypeNo, AddressConnectionTypeYes, AddressConnectionTypeYesChangeAddress}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.{areYouStillConnected, connectionToTheProperty, editAddress, login}
+import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
+import views.html.Form6010.aboutYou
+import views.html.login
+import form.Form6010.AboutYouForm
+import form.EnumMapping
+import repositories.SessionRepo
+import models.areYouStillConnectedToAddress
+import models.submissions.Form6010.AddressConnectionType
+import play.api.data.Form
+import play.api.data.Forms.mapping
+import models.Session
 
-import javax.inject.{Inject, Singleton}
+import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
 
 @Singleton
 class AreYouStillConnectedController @Inject() (
   mcc: MessagesControllerComponents,
-  formDocumentRepository: FormDocumentRepository,
   appConfig: AppConfig,
   login: login,
   areYouStillConnectedView: areYouStillConnected,
   connectionToThePropertyView: connectionToTheProperty,
-  editAddressView: editAddress
+  editAddressView: editAddress,
+  withSessionRefiner: WithSessionRefiner,
+  @Named("session") val session: SessionRepo
 ) extends FrontendController(mcc) {
 
   def show: Action[AnyContent] = Action.async { implicit request =>
@@ -52,14 +65,18 @@ class AreYouStillConnectedController @Inject() (
         formWithErrors => Future.successful(BadRequest(areYouStillConnectedView(formWithErrors))),
         data =>
           if (data.equals(AddressConnectionTypeYes)) {
+            session.start(Session(data))
             Future.successful(Ok(connectionToThePropertyView(connectionToThePropertyForm)))
           } else if (data.equals(AddressConnectionTypeNo)) {
+            session.start(data)
             Future.successful(Ok(login(loginForm)))
           } else if (data.equals(AddressConnectionTypeYesChangeAddress)) {
+            session.start(data)
             Future.successful(Ok(editAddressView(editAddressForm)))
           } else {
             Future.successful(Ok(login(loginForm)))
           }
       )
   }
+
 }

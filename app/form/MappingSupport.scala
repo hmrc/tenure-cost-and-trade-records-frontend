@@ -22,9 +22,11 @@ import form.Formats._
 import form.Formats.userTypeFormat
 import models.AnnualRent
 import models.submissions.Form6010.{Address, AddressConnectionType, AgreedReviewedAlteredThreeYears, BuildingInsurances, BuildingOperationHaveAWebsite, CapitalSumOrPremiums, CateringAddress, CateringOperationOrLettingAccommodation, CommenceWithinThreeYears, ContactDetails, CurrentPropertyUsed, CurrentRentBasedOn, CurrentRentFixed, CurrentRentWithin12Months, EnforcementActions, FormerLeaseSurrendered, FranchiseOrLettingsTiedToProperties, IncludeLicensees, IncludeOtherProperties, InsideRepairs, LandlordAddress, LegalPlanningRestrictions, LettingAddress, LettingOtherPartOfProperties, LicensableActivities, MethodToFixCurrentRents, NonDomesticRates, OnlyPartOfProperties, OnlyToLands, OutsideRepairs, PremisesLicenses, ReceivePaymentWhenLeaseGrants, RentIncludeFixturesAndFittings, RentIncludeTradesServices, RentIncreasedAnnuallyWithRPIs, RentOpenMarketValues, RentPayableVaryAccordingToGrossOrNets, RentPayableVaryOnQuantityOfBeers, RentReducedOnReviews, RentUnderReviewNegotiated, ShellUnits, TenancyLeaseAgreements, TenantsAdditionsDisregarded, TiedForGoods, TiedForGoodsInformationDetail, VATs, WaterCharges}
+import models.{AnnualRent, NamedEnum, NamedEnumSupport}
 import play.api.data.Forms.{boolean, default, email, mapping, optional, text}
+import play.api.data.format.Formatter
 import play.api.data.validation.Constraints.{maxLength, minLength, nonEmpty, pattern}
-import play.api.data.{Forms, Mapping}
+import play.api.data.{FormError, Forms, Mapping}
 
 object MappingSupport {
 
@@ -196,4 +198,22 @@ object MappingSupport {
     .transform[Int](_.replace(",", "").toInt, _.toString)
     .verifying(s"error.empty.required", _ >= 1)
 
+}
+
+object EnumMapping {
+  def apply[T <: NamedEnum](named: NamedEnumSupport[T], defaultErrorMessageKey: String = Errors.noValueSelected) =
+    Forms.of[T](new Formatter[T] {
+
+      override val format = Some((defaultErrorMessageKey, Nil))
+
+      def bind(key: String, data: Map[String, String]): Either[Seq[FormError], T] = {
+        val resOpt = for {
+          keyVal        <- data.get(key)
+          enumTypeValue <- named.fromName(keyVal)
+        } yield Right(enumTypeValue)
+        resOpt.getOrElse(Left(Seq(FormError(key, defaultErrorMessageKey, Nil))))
+      }
+
+      def unbind(key: String, value: T): Map[String, String] = Map(key -> value.name)
+    })
 }
