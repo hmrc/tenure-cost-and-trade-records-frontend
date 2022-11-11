@@ -37,22 +37,22 @@ import models.areYouStillConnectedToAddress
 import models.submissions.Form6010.AddressConnectionType
 import play.api.data.Form
 import play.api.data.Forms.mapping
+import models.Session
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
 
 @Singleton
 class AreYouStillConnectedController @Inject() (
-                                                 mcc: MessagesControllerComponents,
-                                                 appConfig: AppConfig,
-                                                 login: login,
-                                                 areYouStillConnectedView: areYouStillConnected,
-                                                 connectionToThePropertyView: connectionToTheProperty,
-                                                 editAddressView: editAddress,
-                                                 withSessionRefiner: WithSessionRefiner,
-                                                 @Named("session") val session: SessionRepo
-                                               ) extends FrontendController(mcc) {
-
+  mcc: MessagesControllerComponents,
+  appConfig: AppConfig,
+  login: login,
+  areYouStillConnectedView: areYouStillConnected,
+  connectionToThePropertyView: connectionToTheProperty,
+  editAddressView: editAddress,
+  withSessionRefiner: WithSessionRefiner,
+  @Named("session") val session: SessionRepo
+) extends FrontendController(mcc) {
 
   def show: Action[AnyContent] = Action.async { implicit request =>
     Future.successful(Ok(areYouStillConnectedView(areYouStillConnectedForm)))
@@ -65,7 +65,7 @@ class AreYouStillConnectedController @Inject() (
         formWithErrors => Future.successful(BadRequest(areYouStillConnectedView(formWithErrors))),
         data =>
           if (data.equals(AddressConnectionTypeYes)) {
-            session.start(data)
+            session.start(Session(data))
             Future.successful(Ok(connectionToThePropertyView(connectionToThePropertyForm)))
           } else if (data.equals(AddressConnectionTypeNo)) {
             session.start(data)

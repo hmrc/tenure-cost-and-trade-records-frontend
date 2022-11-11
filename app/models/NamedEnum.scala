@@ -45,11 +45,9 @@ trait NamedEnumSupport[E <: NamedEnum] {
       for {
         vs <- params.get(key)
         v  <- vs.headOption
-      } yield {
-        unapply(v) match {
-          case Some(e) => Right(e)
-          case None    => Left(s"Invalid value; expected one of $options")
-        }
+      } yield unapply(v) match {
+        case Some(e) => Right(e)
+        case None    => Left(s"Invalid value; expected one of $options")
       }
 
     override def unbind(key: String, value: E): String = key + "=" + value.name
@@ -72,7 +70,7 @@ object EnumFormat {
           case Some(enumValue) => JsSuccess(enumValue)
           case None            => JsError(s"Value: $value is not valid; expected one of ${enumObject.all}")
         }
-      case js =>
+      case js              =>
         JsError(s"Invalid Json: expected string, got: $js")
     }
   }

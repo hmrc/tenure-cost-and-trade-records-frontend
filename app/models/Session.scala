@@ -23,17 +23,17 @@ import play.api.data.Form
 import play.api.data.Forms.mapping
 import play.api.libs.json._
 
-case class Session (
-                     areYouStillConnected: AddressConnectionType
-                   )
+case class Session(
+  areYouStillConnected: AddressConnectionType
+)
 
 object Session {
   implicit val format = Json.format[Session]
 
-  def apply(addressConnectionType: AddressConnectionType): Session = {
-    Session(
-      addressConnectionType)
-  }
+//  def apply(addressConnectionType: AddressConnectionType): Session = {
+//    Session(
+//      addressConnectionType)
+//  }
 
 //  def apply(connectionToThePropertyDetails: ConnectionToThePropertyDetails)(implicit ses: Session): Session = {
 //    Session(
@@ -44,8 +44,7 @@ object Session {
 
 }
 
-
-object areYouStillConnectedToAddress{
+object areYouStillConnectedToAddress {
   object AreYouStillConnectedForm {
 
     lazy val baseAreYouStillConnectedForm: Form[AddressConnectionType] = Form(baseAreYouStillConnectedMapping)
@@ -55,8 +54,6 @@ object areYouStillConnectedToAddress{
     )(x => x)(b => Some(b))
 
     val areYouStillConnectedForm = Form(baseAreYouStillConnectedMapping)
-
-
 
   }
 }

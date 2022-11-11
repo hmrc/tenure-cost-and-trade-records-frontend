@@ -28,22 +28,20 @@ import uk.gov.hmrc.play.http.HeaderCarrierConverter
 import javax.inject.{Inject, Named}
 import scala.concurrent.{ExecutionContext, Future}
 
-case class WithSessionRefiner @Inject()(
-                                         errorHandler: ErrorHandler,
-                                         @Named("session") val sessionRepository: SessionRepo
-                                       )(implicit override val executionContext: ExecutionContext)
-  extends ActionRefiner[Request, SessionRequest] {
+case class WithSessionRefiner @Inject() (
+  errorHandler: ErrorHandler,
+  @Named("session") val sessionRepository: SessionRepo
+)(implicit override val executionContext: ExecutionContext)
+    extends ActionRefiner[Request, SessionRequest] {
 
   implicit def hc(implicit request: Request[_]): HeaderCarrier =
     HeaderCarrierConverter.fromRequestAndSession(request, request.session)
 
-  override protected def refine[A](
-                                    request: Request[A]): Future[Either[Result, SessionRequest[A]]] = {
+  override protected def refine[A](request: Request[A]): Future[Either[Result, SessionRequest[A]]] =
     sessionRepository.get[Session](implicitly[Reads[Session]], hc(request)).map {
       case Some(s) =>
         Right(actions.SessionRequest(sessionData = s, request = request))
-      case None => Left(NotFound(errorHandler.notFoundTemplate(request)))
+      case None    => Left(NotFound(errorHandler.notFoundTemplate(request)))
     }
-  }
 
 }

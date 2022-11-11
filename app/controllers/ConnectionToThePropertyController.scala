@@ -33,13 +33,15 @@ class ConnectionToThePropertyController @Inject() (
   taskListView: taskList,
   connectionToThePropertyView: connectionToTheProperty,
   withSessionRefiner: WithSessionRefiner,
-  @Named("session") val session: SessionRepo) extends FrontendController(mcc) with I18nSupport {
+  @Named("session") val session: SessionRepo
+) extends FrontendController(mcc)
+    with I18nSupport {
 
-  def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+  def show: Action[AnyContent] = Action.async { implicit request =>
     Future.successful(Ok(connectionToThePropertyView(connectionToThePropertyForm)))
   }
 
-  def submit = Action.async{ implicit request =>
+  def submit = Action.async { implicit request =>
     connectionToThePropertyForm
       .bindFromRequest()
       .fold(

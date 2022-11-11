@@ -14,12 +14,11 @@
  * limitations under the License.
  */
 
-package actions
+package utils
 
-import models.Session
-import play.api.mvc.{Request, WrappedRequest}
+import scala.concurrent.ExecutionContext
+import scala.concurrent.ExecutionContext.global
 
-case class SessionRequest[A](
-  sessionData: Session,
-  request: Request[A]
-) extends WrappedRequest[A](request) {}
+trait GlobalExecutionContext {
+  implicit val executionContext: ExecutionContext = global
+}

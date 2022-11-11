@@ -29,12 +29,12 @@ import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class AboutYouController @Inject() (mcc: MessagesControllerComponents,
-                                    taskListView: taskList,
-                                    aboutYouView: aboutYou,
-                                    @Named("session") val session: SessionRepo
-                                   )
-    extends FrontendController(mcc) {
+class AboutYouController @Inject() (
+  mcc: MessagesControllerComponents,
+  taskListView: taskList,
+  aboutYouView: aboutYou,
+  @Named("session") val session: SessionRepo
+) extends FrontendController(mcc) {
 
   def show: Action[AnyContent] = Action.async { implicit request =>
     Future.successful(Ok(aboutYouView(aboutYouForm)))
@@ -45,9 +45,7 @@ class AboutYouController @Inject() (mcc: MessagesControllerComponents,
       .bindFromRequest()
       .fold(
         formWithErrors => Future.successful(BadRequest(aboutYouView(formWithErrors))),
-        data => {
-          Future.successful(Ok(taskListView()))
-        }
+        data => Future.successful(Ok(taskListView()))
       )
   }
 }

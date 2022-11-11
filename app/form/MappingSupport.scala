@@ -210,9 +210,7 @@ object EnumMapping {
         val resOpt = for {
           keyVal        <- data.get(key)
           enumTypeValue <- named.fromName(keyVal)
-        } yield {
-          Right(enumTypeValue)
-        }
+        } yield Right(enumTypeValue)
         resOpt.getOrElse(Left(Seq(FormError(key, defaultErrorMessageKey, Nil))))
       }
 

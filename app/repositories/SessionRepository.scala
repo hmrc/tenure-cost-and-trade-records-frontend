@@ -34,19 +34,19 @@ import java.time.Instant
 import uk.gov.hmrc.mongo.play.json.formats.MongoJavatimeFormats
 
 @Singleton
-class Session @Inject()(mongo: MongoComponent)(implicit executionContext: ExecutionContext)
-  extends SessionRepository("session", mongo)
+class Session @Inject() (mongo: MongoComponent)(implicit executionContext: ExecutionContext)
+    extends SessionRepository("session", mongo)
 
-
-abstract class SessionRepository @Inject()(formId: String, mongo: MongoComponent)(
-  implicit executionContext: ExecutionContext)
-  extends PlayMongoRepository[SessionData](
-    collectionName = "sessions",
-    mongoComponent = mongo,
-    domainFormat = SessionData.format,
-    indexes =
-      Seq(IndexModel(Indexes.ascending("createdAt"), IndexOptions().name("sessionTTL").expireAfter((2L), HOURS)))
-  ) with SessionRepo {
+abstract class SessionRepository @Inject() (formId: String, mongo: MongoComponent)(implicit
+  executionContext: ExecutionContext
+) extends PlayMongoRepository[SessionData](
+      collectionName = "sessions",
+      mongoComponent = mongo,
+      domainFormat = SessionData.format,
+      indexes =
+        Seq(IndexModel(Indexes.ascending("createdAt"), IndexOptions().name("sessionTTL").expireAfter(2L, HOURS)))
+    )
+    with SessionRepo {
 
   override def start[A](data: A)(implicit wts: Writes[A], hc: HeaderCarrier): Future[Unit] =
     saveOrUpdate[A](data)
@@ -55,19 +55,17 @@ abstract class SessionRepository @Inject()(formId: String, mongo: MongoComponent
     Mdc.preservingMdc {
       for {
         sessionId <- getSessionId
-        _ <- collection
-          .findOneAndUpdate(
-            filter = Filters.equal("_id", sessionId),
-            update = Updates.combine(
-              Updates.set(s"data.$formId", Codecs.toBson(data)),
-              Updates.setOnInsert("createdAt", Instant.now)
-            ),
-            options = FindOneAndUpdateOptions().upsert(true)
-          )
-          .toFuture()
-      } yield {
-        ()
-      }
+        _         <- collection
+                       .findOneAndUpdate(
+                         filter = Filters.equal("_id", sessionId),
+                         update = Updates.combine(
+                           Updates.set(s"data.$formId", Codecs.toBson(data)),
+                           Updates.setOnInsert("createdAt", Instant.now)
+                         ),
+                         options = FindOneAndUpdateOptions().upsert(true)
+                       )
+                       .toFuture()
+      } yield ()
     }
 
   override def get[A](implicit rds: Reads[A], hc: HeaderCarrier): Future[Option[A]] =
@@ -75,15 +73,14 @@ abstract class SessionRepository @Inject()(formId: String, mongo: MongoComponent
       for {
         sessionId   <- getSessionId
         maybeOption <- collection.find(Filters.equal("_id", sessionId)).headOption()
-      } yield {
-        maybeOption
-          .map(_.data \ formId)
-          .flatMap(x =>
-            x match {
-              case JsDefined(value) => Some(value.as[A])
-              case JsUndefined()    => None
-            })
-      }
+      } yield maybeOption
+        .map(_.data \ formId)
+        .flatMap(x =>
+          x match {
+            case JsDefined(value) => Some(value.as[A])
+            case JsUndefined()    => None
+          }
+        )
     }
 
   def findFirst(): Future[SessionData] =
@@ -99,9 +96,7 @@ abstract class SessionRepository @Inject()(formId: String, mongo: MongoComponent
       for {
         sessionId <- getSessionId
         -         <- collection.deleteOne(equal("_id", sessionId)).toFuture
-      } yield {
-        ()
-      }
+      } yield ()
     }
 
   def removeAll()(implicit hc: HeaderCarrier): Future[Unit] =
@@ -109,9 +104,7 @@ abstract class SessionRepository @Inject()(formId: String, mongo: MongoComponent
       for {
         sessionId <- getSessionId
         -         <- collection.deleteMany(equal("_id", sessionId)).toFuture
-      } yield {
-        ()
-      }
+      } yield ()
     }
 
   private val noSession = Future.failed[String](NoSessionException)
@@ -126,7 +119,7 @@ case class SessionData(_id: String, data: JsValue, createdAt: Instant = Instant.
 object SessionData {
 
   implicit val formatInstant: Format[Instant] = MongoJavatimeFormats.instantFormat
-  val format = Json.format[SessionData]
+  val format                                  = Json.format[SessionData]
 }
 
 trait SessionRepo {
