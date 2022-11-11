@@ -18,10 +18,10 @@ package controllers.Form6010
 
 import controllers.LoginController.loginForm
 import form.Form6010.UltimatelyResponsibleForm.ultimatelyResponsibleForm
+import form.Form6010.RentIncludeTradeServicesForm.rentIncludeTradeServicesForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.Form6010.ultimatelyResponsible
-import views.html.login
+import views.html.Form6010.{rentIncludeTradeServices, ultimatelyResponsible}
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
@@ -29,7 +29,7 @@ import scala.concurrent.Future
 @Singleton
 class UltimatelyResponsibleController @Inject() (
   mcc: MessagesControllerComponents,
-  login: login,
+  rentIncludeTradeServicesView: rentIncludeTradeServices,
   ultimatelyResponsibleView: ultimatelyResponsible
 ) extends FrontendController(mcc) {
 
@@ -42,7 +42,7 @@ class UltimatelyResponsibleController @Inject() (
       .bindFromRequest()
       .fold(
         formWithErrors => Future.successful(BadRequest(ultimatelyResponsibleView(formWithErrors))),
-        data => Future.successful(Ok(login(loginForm)))
+        data => Future.successful(Ok(rentIncludeTradeServicesView(rentIncludeTradeServicesForm)))
       )
   }
 

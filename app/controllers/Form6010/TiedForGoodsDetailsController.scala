@@ -19,9 +19,9 @@ package controllers.Form6010
 import controllers.LoginController.loginForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.Form6010.tiedForGoodsDetails
+import views.html.Form6010.{aboutYourTradingHistory, tiedForGoodsDetails}
 import form.Form6010.TiedForGoodsDetailsForm.tiedForGoodsDetailsForm
-import views.html.login
+import form.Form6010.AboutYourTradingHistoryForm.aboutYourTradingHistoryForm
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
@@ -29,7 +29,7 @@ import scala.concurrent.Future
 @Singleton
 class TiedForGoodsDetailsController @Inject() (
   mcc: MessagesControllerComponents,
-  login: login,
+  aboutYourTradingHistoryView: aboutYourTradingHistory,
   tiedForGoodsDetailsView: tiedForGoodsDetails
 ) extends FrontendController(mcc) {
 
@@ -42,7 +42,8 @@ class TiedForGoodsDetailsController @Inject() (
       .bindFromRequest()
       .fold(
         formWithErrors => Future.successful(BadRequest(tiedForGoodsDetailsView(formWithErrors))),
-        data => Future.successful(Ok(login(loginForm)))
+        data =>
+          Future.successful(Ok(aboutYourTradingHistoryView(aboutYourTradingHistoryForm)))
       )
   }
 

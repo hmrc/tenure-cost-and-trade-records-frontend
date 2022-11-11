@@ -18,9 +18,10 @@ package controllers.Form6010
 
 import controllers.LoginController.loginForm
 import form.Form6010.RentIncludeFixtureAndFittingDetailsForm.rentIncludeFixtureAndFittingsDetailsForm
+import form.Form6010.RentOpenMarketValueForm.rentOpenMarketValuesForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.Form6010.rentIncludeFixtureAndFittingsDetails
+import views.html.Form6010.{rentIncludeFixtureAndFittingsDetails, rentOpenMarketValue}
 import views.html.login
 
 import javax.inject.{Inject, Singleton}
@@ -29,7 +30,7 @@ import scala.concurrent.Future
 @Singleton
 class RentIncludeFixtureAndFittingsDetailsController @Inject() (
   mcc: MessagesControllerComponents,
-  login: login,
+  rentOpenMarketValueView: rentOpenMarketValue,
   rentIncludeFixtureAndFittingsDetailsView: rentIncludeFixtureAndFittingsDetails
 ) extends FrontendController(mcc) {
 
@@ -42,7 +43,7 @@ class RentIncludeFixtureAndFittingsDetailsController @Inject() (
       .bindFromRequest()
       .fold(
         formWithErrors => Future.successful(BadRequest(rentIncludeFixtureAndFittingsDetailsView(formWithErrors))),
-        data => Future.successful(Ok(login(loginForm)))
+        data => Future.successful(Ok(rentOpenMarketValueView(rentOpenMarketValuesForm)))
       )
   }
 }

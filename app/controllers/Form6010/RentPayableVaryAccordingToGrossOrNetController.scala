@@ -19,8 +19,11 @@ package controllers.Form6010
 import controllers.LoginController.loginForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.Form6010.rentPayableVaryAccordingToGrossOrNet
+import views.html.Form6010.{rentPayableVaryAccordingToGrossOrNet, rentPayableVaryAccordingToGrossOrNetDetails, rentPayableVaryOnQuantityOfBeers}
 import form.Form6010.RentPayableVaryAccordingToGrossOrNetForm.rentPayableVaryAccordingToGrossOrNetForm
+import form.Form6010.RentPayableVaryAccordingToGrossOrNetDetailsForm.rentPayableVaryAccordingToGrossOrNetInformationForm
+import form.Form6010.RentPayableVaryOnQuantityOfBeersForm.rentPayableVaryOnQuantityOfBeersForm
+import models.submissions.Form6010.{RentPayableVaryAccordingToGrossOrNetsNo, RentPayableVaryAccordingToGrossOrNetsYes}
 import views.html.login
 
 import javax.inject.{Inject, Singleton}
@@ -30,7 +33,9 @@ import scala.concurrent.Future
 class RentPayableVaryAccordingToGrossOrNetController @Inject() (
   mcc: MessagesControllerComponents,
   login: login,
-  rentPayableVaryAccordingToGrossOrNetView: rentPayableVaryAccordingToGrossOrNet
+  rentPayableVaryAccordingToGrossOrNetView: rentPayableVaryAccordingToGrossOrNet,
+  rentPayableVaryAccordingToGrossOrNetDetailsView: rentPayableVaryAccordingToGrossOrNetDetails,
+  rentPayableVaryOnQuantityOfBeersView: rentPayableVaryOnQuantityOfBeers
 ) extends FrontendController(mcc) {
 
   def show: Action[AnyContent] = Action.async { implicit request =>
@@ -42,7 +47,14 @@ class RentPayableVaryAccordingToGrossOrNetController @Inject() (
       .bindFromRequest()
       .fold(
         formWithErrors => Future.successful(BadRequest(rentPayableVaryAccordingToGrossOrNetView(formWithErrors))),
-        data => Future.successful(Ok(login(loginForm)))
+        data =>
+          if (data.rentPayableVaryAccordingToGrossOrNets.equals(RentPayableVaryAccordingToGrossOrNetsYes)) {
+          Future.successful(Ok(rentPayableVaryAccordingToGrossOrNetDetailsView(rentPayableVaryAccordingToGrossOrNetInformationForm)))
+        } else if (data.rentPayableVaryAccordingToGrossOrNets.equals(RentPayableVaryAccordingToGrossOrNetsNo)) {
+          Future.successful(Ok(rentPayableVaryOnQuantityOfBeersView(rentPayableVaryOnQuantityOfBeersForm)))
+        } else {
+          Future.successful(Ok(login(loginForm)))
+        }
       )
   }
 }

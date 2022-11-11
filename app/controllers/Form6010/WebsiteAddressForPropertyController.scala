@@ -18,8 +18,8 @@ package controllers.Form6010
 
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.Form6010.websiteAddressForProperty
-import views.html.taskList
+import views.html.Form6010.{licensableActivities, websiteAddressForProperty}
+import form.Form6010.LicensableActivitiesForm.licensableActivitiesForm
 import form.Form6010.WebsiteAddressForPropertyForm.websiteAddressForPropertyForm
 
 import javax.inject.{Inject, Singleton}
@@ -28,7 +28,7 @@ import scala.concurrent.Future
 @Singleton
 class WebsiteAddressForPropertyController @Inject() (
   mcc: MessagesControllerComponents,
-  taskListView: taskList,
+  licensableActivitiesView: licensableActivities,
   websiteAddressForPropertyView: websiteAddressForProperty
 ) extends FrontendController(mcc) {
 
@@ -41,7 +41,7 @@ class WebsiteAddressForPropertyController @Inject() (
       .bindFromRequest()
       .fold(
         formWithErrors => Future.successful(BadRequest(websiteAddressForPropertyView(formWithErrors))),
-        data => Future.successful(Ok(taskListView()))
+        data => Future.successful(Ok(licensableActivitiesView(licensableActivitiesForm)))
       )
   }
 

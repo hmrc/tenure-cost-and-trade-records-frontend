@@ -14,7 +14,7 @@
  * limitations under the License.
  *@
 
-@import models.submissions.Form6010.LettingOtherPartOfProperties
+@import models.submissions.Form6010.LettingOtherPartOfPropertyDetails
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
@@ -42,7 +42,7 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[LettingOtherPartOfProperties])(implicit request: Request[_], messages: Messages)
+@(theForm: Form[LettingOtherPartOfPropertyDetails])(implicit request: Request[_], messages: Messages)
 
 @layout(
  pageHeading = messages("LettingOtherPartOfProperties.header"),

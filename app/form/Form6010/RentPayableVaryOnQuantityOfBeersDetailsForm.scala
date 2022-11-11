@@ -23,7 +23,7 @@ import play.api.data.validation.Constraints.{maxLength, nonEmpty}
 
 object RentPayableVaryOnQuantityOfBeersDetailsForm {
 
-  val rentPayableVaryOnQuantityOfBeersForm = Form(
+  val rentPayableVaryOnQuantityOfBeersDetailsForm = Form(
     mapping(
       "rentPayableVaryOnQuantityOfBeersDetails" ->
         default(text, "").verifying(

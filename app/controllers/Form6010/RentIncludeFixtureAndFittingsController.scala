@@ -19,8 +19,11 @@ package controllers.Form6010
 import controllers.LoginController.loginForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.Form6010.rentIncludeFixtureAndFittings
+import views.html.Form6010.{rentIncludeFixtureAndFittings, rentIncludeFixtureAndFittingsDetails, rentOpenMarketValue}
 import form.Form6010.RentIncludeFixtureAndFittingsForm.rentIncludeFixturesAndFittingsForm
+import form.Form6010.RentIncludeFixtureAndFittingDetailsForm.rentIncludeFixtureAndFittingsDetailsForm
+import form.Form6010.RentOpenMarketValueForm.rentOpenMarketValuesForm
+import models.submissions.Form6010.{RentIncludeFixturesAndFittingsNo, RentIncludeFixturesAndFittingsYes}
 import views.html.login
 
 import javax.inject.{Inject, Singleton}
@@ -30,7 +33,9 @@ import scala.concurrent.Future
 class RentIncludeFixtureAndFittingsController @Inject() (
   mcc: MessagesControllerComponents,
   login: login,
-  rentIncludeFixtureAndFittingsView: rentIncludeFixtureAndFittings
+  rentIncludeFixtureAndFittingsView: rentIncludeFixtureAndFittings,
+  rentIncludeFixtureAndFittingsDetailsView: rentIncludeFixtureAndFittingsDetails,
+  rentOpenMarketValueView: rentOpenMarketValue
 ) extends FrontendController(mcc) {
 
   def show: Action[AnyContent] = Action.async { implicit request =>
@@ -42,7 +47,14 @@ class RentIncludeFixtureAndFittingsController @Inject() (
       .bindFromRequest()
       .fold(
         formWithErrors => Future.successful(BadRequest(rentIncludeFixtureAndFittingsView(formWithErrors))),
-        data => Future.successful(Ok(login(loginForm)))
+        data =>
+          if (data.rentIncludeFixturesAndFittingsDetails.equals(RentIncludeFixturesAndFittingsYes)){
+          Future.successful(Ok(rentIncludeFixtureAndFittingsDetailsView(rentIncludeFixtureAndFittingsDetailsForm)))
+        } else if (data.rentIncludeFixturesAndFittingsDetails.equals(RentIncludeFixturesAndFittingsNo)) {
+          Future.successful(Ok(rentOpenMarketValueView(rentOpenMarketValuesForm)))
+        } else {
+          Future.successful(Ok(login(loginForm)))
+        }
       )
   }
 }

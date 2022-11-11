@@ -19,8 +19,11 @@ package controllers.Form6010
 import controllers.LoginController.loginForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.Form6010.rentPayableVaryOnQuantityOfBeers
+import views.html.Form6010.{howIsCurrentRentFixed, rentPayableVaryOnQuantityOfBeers, rentPayableVaryOnQuantityOfBeersDetails}
 import form.Form6010.RentPayableVaryOnQuantityOfBeersForm.rentPayableVaryOnQuantityOfBeersForm
+import form.Form6010.RentPayableVaryOnQuantityOfBeersDetailsForm.rentPayableVaryOnQuantityOfBeersDetailsForm
+import form.Form6010.HowIsCurrentRentFixedForm.howIsCurrentRentFixedForm
+import models.submissions.Form6010.{RentPayableVaryOnQuantityOfBeersNo, RentPayableVaryOnQuantityOfBeersYes}
 import views.html.login
 
 import javax.inject.{Inject, Singleton}
@@ -30,6 +33,8 @@ import scala.concurrent.Future
 class RentPayableVaryOnQuantityOfBeersController @Inject() (
   mcc: MessagesControllerComponents,
   login: login,
+  howIsCurrentRentFixedView: howIsCurrentRentFixed,
+  rentPayableVaryOnQuantityOfBeersDetailsView: rentPayableVaryOnQuantityOfBeersDetails,
   rentPayableVaryOnQuantityOfBeersView: rentPayableVaryOnQuantityOfBeers
 ) extends FrontendController(mcc) {
 
@@ -42,7 +47,14 @@ class RentPayableVaryOnQuantityOfBeersController @Inject() (
       .bindFromRequest()
       .fold(
         formWithErrors => Future.successful(BadRequest(rentPayableVaryOnQuantityOfBeersView(formWithErrors))),
-        data => Future.successful(Ok(login(loginForm)))
+        data =>
+          if (data.rentPayableVaryOnQuantityOfBeersDetails.equals(RentPayableVaryOnQuantityOfBeersYes)) {
+            Future.successful(Ok(rentPayableVaryOnQuantityOfBeersDetailsView(rentPayableVaryOnQuantityOfBeersDetailsForm)))
+          } else if (data.rentPayableVaryOnQuantityOfBeersDetails.equals(RentPayableVaryOnQuantityOfBeersNo)) {
+            Future.successful(Ok(howIsCurrentRentFixedView(howIsCurrentRentFixedForm)))
+          } else {
+            Future.successful(Ok(login(loginForm)))
+          }
       )
   }
 }

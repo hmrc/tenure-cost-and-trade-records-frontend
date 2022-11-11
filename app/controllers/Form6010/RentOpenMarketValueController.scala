@@ -19,8 +19,11 @@ package controllers.Form6010
 import controllers.LoginController.loginForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.Form6010.rentOpenMarketValue
+import views.html.Form6010.{rentIncreaseAnnuallyWithRPI, rentOpenMarketValue, whatIsYourRentBasedOn}
 import form.Form6010.RentOpenMarketValueForm.rentOpenMarketValuesForm
+import form.Form6010.WhatIsYourCurrentRentBasedOnForm.whatIsYourCurrentRentBasedOnForm
+import form.Form6010.RentIncreasedAnnuallyWithRPIForm.rentIncreasedAnnuallyWithRPIDetailsForm
+import models.submissions.Form6010.{RentOpenMarketValuesNo, RentOpenMarketValuesYes}
 import views.html.login
 
 import javax.inject.{Inject, Singleton}
@@ -30,7 +33,9 @@ import scala.concurrent.Future
 class RentOpenMarketValueController @Inject() (
   mcc: MessagesControllerComponents,
   login: login,
-  rentOpenMarketValueView: rentOpenMarketValue
+  rentOpenMarketValueView: rentOpenMarketValue,
+  whatIsYourRentBasedOnView: whatIsYourRentBasedOn,
+  rentIncreaseAnnuallyWithRPIView: rentIncreaseAnnuallyWithRPI
 ) extends FrontendController(mcc) {
 
   def show: Action[AnyContent] = Action.async { implicit request =>
@@ -42,7 +47,14 @@ class RentOpenMarketValueController @Inject() (
       .bindFromRequest()
       .fold(
         formWithErrors => Future.successful(BadRequest(rentOpenMarketValueView(formWithErrors))),
-        data => Future.successful(Ok(login(loginForm)))
+        data =>
+          if (data.rentOpenMarketValues.equals(RentOpenMarketValuesYes)){
+          Future.successful(Ok(whatIsYourRentBasedOnView(whatIsYourCurrentRentBasedOnForm)))
+        } else if (data.rentOpenMarketValues.equals(RentOpenMarketValuesNo)) {
+          Future.successful(Ok(rentIncreaseAnnuallyWithRPIView(rentIncreasedAnnuallyWithRPIDetailsForm)))
+        } else {
+            Future.successful(Ok(login(loginForm)))
+          }
       )
   }
 }
