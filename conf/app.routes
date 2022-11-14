@@ -162,3 +162,9 @@ GET         /ultimately-responsible                                 controllers.
 POST        /ultimately-responsible                                 controllers.Form6010.UltimatelyResponsibleController.submit()
 
 GET         /task-list                                              controllers.TaskListController.show()
+
+GET         /further-information-or-remarks                         controllers.Form6010.FurtherInformationOrRemarksController.show()
+POST        /further-information-or-remarks                         controllers.Form6010.FurtherInformationOrRemarksController.submit()
+
+GET         /alternate-contact-details                              controllers.Form6010.AlternativeContactDetailsController.show()
+POST        /alternate-contact-details                              controllers.Form6010.AlternativeContactDetailsController.submit()

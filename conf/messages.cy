@@ -577,6 +577,28 @@ taskList.header = Declaration summary
 ##############################
 turnover.header = This is a holding page for the turnover page
 
+#FURTHER INFORMATION OR REMARKS
+##############################
+furtherInformationOrRemarks.header = Additional information
+label.furtherInformationOrRemarks = Further information or remarks (if any)
+hint.furtherInformationOrRemarks = Please provide further details if there is insufficient room for you to complete your answers to any of the forgoing questions, or if any of the questions require further explanation or clarification
+error.furtherInformationOrRemarks.maxLength = This must be 1000 characters or fewer
+
+#ALTERNATIVE CONTACT DETAILS
+##############################
+alternativeContactDetails.header = Additional information
+label.alternativeContactDetails = Alternative contact details
+hint.alternativeContactDetails = If you like us to either contact you at at different address or  contact someone else if we have any queries about this form, please give details here
+alternativeContactDetails.label = Landlord’s name
+alternativeContactDetails.address.label = Landlord’s address
+alternativeContactDetails.buildingNameNumber.label = Address line 1
+alternativeContactDetails.address2.label = Address line 2 (optional)
+alternativeContactDetails.town.label = Town or city (optional)
+alternativeContactDetails.county.label = County (optional)
+alternativeContactDetails.postcode.label = Postcode
+error.alternativeContactDetails.required = Please enter the landlord's full name
+error.alternativeContactDetails.maxLength = This must be 1000 characters or fewer
+
 #ERRORS
 ##############################
 error.required=This must be filled in

@@ -590,6 +590,29 @@ taskList.header = Declaration summary
 ##############################
 turnover.header = This is a holding page for the turnover page
 
+#FURTHER INFORMATION OR REMARKS
+##############################
+furtherInformationOrRemarks.header = Additional information
+label.furtherInformationOrRemarks = Further information or remarks (if any)
+hint.furtherInformationOrRemarks = Please provide further details if there is insufficient room for you to complete your answers to any of the forgoing questions, or if any of the questions require further explanation or clarification
+error.furtherInformationOrRemarks.maxLength = This must be 1000 characters or fewer
+
+#ALTERNATIVE CONTACT DETAILS
+##############################
+alternativeContactDetails.header = Additional information
+label.alternativeContactDetails = Contact details
+hint.alternativeContactDetails = If you like us to either contact you at at different address or  contact someone else if we have any queries about this form, please give details here
+alternativeContactFullName.label = Full name
+label.phone = Telephone number
+label.email1 = Email address
+alternativeContactDetails.address.label = Correspondence address
+alternativeContactAddress.buildingNameNumber.label = Address line 1
+alternativeContactAddress.address2.label = Address line 2 (optional)
+alternativeContactAddress.town.label = Town or city (optional)
+alternativeContactAddress.county.label = County (optional)
+alternativeContactAddress.postcode.label = Postcode
+error.alternativeContactFullName.required = Please enter the full name
+
 #ERRORS
 ##############################
 error.required=This must be filled in
