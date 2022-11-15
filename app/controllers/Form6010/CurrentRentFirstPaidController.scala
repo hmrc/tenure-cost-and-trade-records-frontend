@@ -16,13 +16,11 @@
 
 package controllers.Form6010
 
-import controllers.LoginController.loginForm
 import form.Form6010.CurrentRentFirstPaidForm.currentRentFirstPaidForm
 import form.Form6010.CurrentLeaseOrAgreementBeginForm.currentLeaseOrAgreementBeginForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.Form6010.{currentLeaseOrAgreementBegin, currentRentFirstPaid}
-import views.html.login
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future

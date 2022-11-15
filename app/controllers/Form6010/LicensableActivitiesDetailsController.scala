@@ -16,7 +16,6 @@
 
 package controllers.Form6010
 
-import controllers.LoginController.loginForm
 import form.Form6010.LicensableActivitiesInformationForm.licensableActivitiesDetailsForm
 import form.Form6010.PremisesLicenseForm.premisesLicenseForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}

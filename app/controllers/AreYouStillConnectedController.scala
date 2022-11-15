@@ -23,20 +23,11 @@ import form.AreYouStillConnectedForm.areYouStillConnectedForm
 import form.ConnectionToThePropertyForm.connectionToThePropertyForm
 import form.EditAddressForm.editAddressForm
 import models.submissions.Form6010.{AddressConnectionTypeNo, AddressConnectionTypeYes, AddressConnectionTypeYesChangeAddress}
+import views.html.{areYouStillConnected, connectionToTheProperty, editAddress}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.{areYouStillConnected, connectionToTheProperty, editAddress, login}
-import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.Form6010.aboutYou
 import views.html.login
-import form.Form6010.AboutYouForm
-import form.EnumMapping
 import repositories.SessionRepo
-import models.areYouStillConnectedToAddress
-import models.submissions.Form6010.AddressConnectionType
-import play.api.data.Form
-import play.api.data.Forms.mapping
 import models.Session
 
 import javax.inject.{Inject, Named, Singleton}

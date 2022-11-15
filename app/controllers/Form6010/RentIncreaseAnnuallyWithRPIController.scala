@@ -16,13 +16,11 @@
 
 package controllers.Form6010
 
-import controllers.LoginController.loginForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.Form6010.{rentIncreaseAnnuallyWithRPI, rentPayableVaryAccordingToGrossOrNet}
 import form.Form6010.RentIncreasedAnnuallyWithRPIForm.rentIncreasedAnnuallyWithRPIDetailsForm
 import form.Form6010.RentPayableVaryAccordingToGrossOrNetForm.rentPayableVaryAccordingToGrossOrNetForm
-import views.html.login
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future

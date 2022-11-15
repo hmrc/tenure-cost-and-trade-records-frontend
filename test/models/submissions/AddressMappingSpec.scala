@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package controllers.models
+package models.submissions
 
 import models.submissions.Form6010.Address
 import org.scalatest.flatspec.AnyFlatSpec
