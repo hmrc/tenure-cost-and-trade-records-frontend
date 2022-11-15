@@ -17,7 +17,7 @@
 package models.submissions.Form6010
 
 import models.{EnumFormat, NamedEnum, NamedEnumSupport}
-import play.api.libs.json.{Format, Json}
+import play.api.libs.json.Format
 
 sealed trait AddressConnectionType extends NamedEnum {
   override def key: String = "addressConnectionType"

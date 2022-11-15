@@ -16,7 +16,6 @@
 
 package controllers.Form6010
 
-import controllers.LoginController.loginForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.Form6010.{currentAnnualRent, currentRentPayableWithin12Months, leaseOrAgreementYears}
@@ -24,7 +23,6 @@ import form.Form6010.LeaseOrAgreementYearsForm.leaseOrAgreementYearsForm
 import form.Form6010.CurrentRentPayableWithin12MonthsForm.currentRentPayableWithin12MonthsForm
 import form.Form6010.CurrentAnnualRentForm.currentAnnualRentForm
 import models.submissions.Form6010.{AgreedReviewedAlteredThreeYearsNo, CommenceWithinThreeYearsNo, RentUnderReviewNegotiatedNo}
-import views.html.login
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
@@ -32,7 +30,6 @@ import scala.concurrent.Future
 @Singleton
 class LeaseOrAgreementYearsController @Inject()(
   mcc: MessagesControllerComponents,
-  login: login,
   currentRentPayableWithin12MonthsView: currentRentPayableWithin12Months,
   currentAnnualRentView: currentAnnualRent,
   leaseOrAgreementYearsView: leaseOrAgreementYears

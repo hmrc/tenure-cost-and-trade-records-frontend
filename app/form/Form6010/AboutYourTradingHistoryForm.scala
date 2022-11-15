@@ -17,8 +17,7 @@
 package form.Form6010
 
 import form.DateMappings.dateFieldsMapping
-import form.MappingSupport.currentRentPayableWithin12MonthsType
-import models.submissions.Form6010.{AboutYourTradingHistory, CurrentRentPayableWithin12Months}
+import models.submissions.Form6010.AboutYourTradingHistory
 import play.api.data.Form
 import play.api.data.Forms.mapping
 

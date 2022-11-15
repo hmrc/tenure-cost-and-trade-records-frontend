@@ -16,7 +16,6 @@
 
 package controllers.Form6010
 
-import controllers.LoginController.loginForm
 import form.Form6010.CurrentAnnualRentForm.currentAnnualRentForm
 import form.Form6010.CurrentRentFirstPaidForm.currentRentFirstPaidForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}

@@ -16,7 +16,6 @@
 
 package controllers.Form6010
 
-import controllers.LoginController.loginForm
 import form.Form6010.UltimatelyResponsibleForm.ultimatelyResponsibleForm
 import form.Form6010.RentIncludeTradeServicesForm.rentIncludeTradeServicesForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}

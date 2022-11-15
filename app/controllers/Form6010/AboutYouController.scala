@@ -16,8 +16,6 @@
 
 package controllers.Form6010
 
-import actions.WithSessionRefiner
-import controllers.LoginController.loginForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.Form6010.aboutYou

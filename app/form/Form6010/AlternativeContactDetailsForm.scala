@@ -16,7 +16,7 @@
 
 package form.Form6010
 
-import form.MappingSupport.{alternativeContactMapping, contactDetailsMapping, intRegex, landlordAddressMapping}
+import form.MappingSupport.{alternativeContactMapping, contactDetailsMapping}
 import models.submissions.Form6010.AlternativeContactDetails
 import play.api.data.Form
 import play.api.data.Forms.{default, mapping, text}

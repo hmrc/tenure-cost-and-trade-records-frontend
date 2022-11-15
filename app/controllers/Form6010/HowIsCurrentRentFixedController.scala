@@ -16,7 +16,6 @@
 
 package controllers.Form6010
 
-import controllers.LoginController.loginForm
 import form.Form6010.HowIsCurrentRentFixedForm.howIsCurrentRentFixedForm
 import form.Form6010.MethodToFixCurrentRentForm.methodToFixCurrentRentForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
