@@ -16,12 +16,11 @@
 
 package controllers.Form6010
 
-import controllers.LoginController.loginForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.Form6010.incentivesPaymentsConditions
+import views.html.Form6010.{incentivesPaymentsConditions, tenantsAdditionsDisregarded}
 import form.Form6010.IncentivesPaymentsConditionsForm.incentivesPaymentsConditionsForm
-import views.html.login
+import form.Form6010.TenantsAdditionsDisregardedForm.tenantsAdditionsDisregardedForm
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
@@ -29,7 +28,7 @@ import scala.concurrent.Future
 @Singleton
 class IncentivesPaymentsConditionsController @Inject() (
   mcc: MessagesControllerComponents,
-  login: login,
+  tenantsAdditionsDisregardedView: tenantsAdditionsDisregarded,
   incentivesPaymentsConditionsView: incentivesPaymentsConditions
 ) extends FrontendController(mcc) {
 
@@ -42,7 +41,7 @@ class IncentivesPaymentsConditionsController @Inject() (
       .bindFromRequest()
       .fold(
         formWithErrors => Future.successful(BadRequest(incentivesPaymentsConditionsView(formWithErrors))),
-        data => Future.successful(Ok(login(loginForm)))
+        data => Future.successful(Ok(tenantsAdditionsDisregardedView(tenantsAdditionsDisregardedForm)))
       )
   }
 }

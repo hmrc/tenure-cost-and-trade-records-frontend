@@ -16,4 +16,28 @@
 
 package models.submissions.Form6010
 
-case class IncludedInYourRentDetails(vat: VATs, nonDomesticRates: NonDomesticRates, waterCharges: WaterCharges)
+case class AlternativeContactDetailsAddress(
+  buildingNameNumber: String,
+  street1: Option[String],
+  town: Option[String],
+  county: Option[String],
+  postcode: String
+) {
+  def singleLine: String =
+    List(
+      Some(buildingNameNumber),
+      street1,
+      town,
+      county,
+      Some(postcode.replaceAll("^(\\S+?)\\s*?(\\d\\w\\w)$", "$1 $2"))
+    ).flatten.mkString(", ")
+
+  def multiLine: String =
+    List(
+      Some(buildingNameNumber),
+      street1,
+      town,
+      county,
+      Some(postcode.replaceAll("^(\\S+?)\\s*?(\\d\\w\\w)$", "$1 $2"))
+    ).flatten.mkString("<br/> ")
+}

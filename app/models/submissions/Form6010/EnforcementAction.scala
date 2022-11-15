@@ -19,7 +19,7 @@ package models.submissions.Form6010
 import models.{NamedEnum, NamedEnumSupport}
 
 sealed trait EnforcementActions extends NamedEnum {
-  val key = "enforcementActionHasBeenTaken"
+  val key = "enforcementAction"
 }
 object EnforcementActionsYes extends EnforcementActions {
   val name = "yes"

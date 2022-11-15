@@ -17,33 +17,33 @@
 package controllers.Form6010
 
 import controllers.LoginController.loginForm
-import form.Form6010.RentIncludeFixtureAndFittingsForm.rentIncludeFixturesAndFittingsForm
-import form.Form6010.RentIncludeTradeServicesDetailsForm.rentIncludeTradeServicesDetailsForm
+import form.Form6010.AlternativeContactDetailsForm.alternativeContactDetailsForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.Form6010.{rentIncludeFixtureAndFittings, rentIncludeTradeServicesDetails}
+import views.html.Form6010.alternativeContactDetails
 import views.html.login
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class RentIncludeTradeServicesDetailsController @Inject() (
+class AlternativeContactDetailsController @Inject()(
   mcc: MessagesControllerComponents,
-  rentIncludeFixturesAndFittingsView: rentIncludeFixtureAndFittings,
-  rentIncludeTradeServicesDetailsView: rentIncludeTradeServicesDetails
+  login: login,
+  alternativeContactDetailsView: alternativeContactDetails,
 ) extends FrontendController(mcc) {
 
   def show: Action[AnyContent] = Action.async { implicit request =>
-    Future.successful(Ok(rentIncludeTradeServicesDetailsView(rentIncludeTradeServicesDetailsForm)))
+    Future.successful(Ok(alternativeContactDetailsView(alternativeContactDetailsForm)))
   }
 
   def submit = Action.async { implicit request =>
-    rentIncludeTradeServicesDetailsForm
+    alternativeContactDetailsForm
       .bindFromRequest()
       .fold(
-        formWithErrors => Future.successful(BadRequest(rentIncludeTradeServicesDetailsView(formWithErrors))),
-        data => Future.successful(Ok(rentIncludeFixturesAndFittingsView(rentIncludeFixturesAndFittingsForm)))
+        formWithErrors => Future.successful(BadRequest(alternativeContactDetailsView(formWithErrors))),
+        data => Future.successful(Ok(login(loginForm)))
       )
   }
+
 }

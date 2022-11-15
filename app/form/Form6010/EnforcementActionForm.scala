@@ -17,7 +17,7 @@
 package form.Form6010
 
 import form.MappingSupport.enforcementActionType
-import models.submissions.Form6010.EnforcementActionHasBeenTakenDetails
+import models.submissions.Form6010.{EnforcementActionHasBeenTakenDetails}
 import play.api.data.Form
 import play.api.data.Forms.mapping
 
@@ -25,7 +25,7 @@ object EnforcementActionForm {
 
   val enforcementActionForm = Form(
     mapping(
-      "enforcementActionHasBeenTaken" -> enforcementActionType
+      "enforcementAction" -> enforcementActionType
     )(EnforcementActionHasBeenTakenDetails.apply)(EnforcementActionHasBeenTakenDetails.unapply)
   )
 }

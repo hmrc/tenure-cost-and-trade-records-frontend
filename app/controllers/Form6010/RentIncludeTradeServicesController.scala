@@ -19,8 +19,11 @@ package controllers.Form6010
 import controllers.LoginController.loginForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.Form6010.rentIncludeTradeServices
+import views.html.Form6010.{rentIncludeFixtureAndFittings, rentIncludeTradeServices, rentIncludeTradeServicesDetails}
 import form.Form6010.RentIncludeTradeServicesForm.rentIncludeTradeServicesForm
+import form.Form6010.RentIncludeTradeServicesDetailsForm.rentIncludeTradeServicesDetailsForm
+import form.Form6010.RentIncludeFixtureAndFittingsForm.rentIncludeFixturesAndFittingsForm
+import models.submissions.Form6010.{RentIncludeTradesServicesNo, RentIncludeTradesServicesYes}
 import views.html.login
 
 import javax.inject.{Inject, Singleton}
@@ -30,6 +33,8 @@ import scala.concurrent.Future
 class RentIncludeTradeServicesController @Inject() (
   mcc: MessagesControllerComponents,
   login: login,
+  rentIncludeTradeServicesDetailsView: rentIncludeTradeServicesDetails,
+  rentIncludeFixtureAndFittingsView: rentIncludeFixtureAndFittings,
   rentIncludeTradeServicesView: rentIncludeTradeServices
 ) extends FrontendController(mcc) {
 
@@ -42,7 +47,14 @@ class RentIncludeTradeServicesController @Inject() (
       .bindFromRequest()
       .fold(
         formWithErrors => Future.successful(BadRequest(rentIncludeTradeServicesView(formWithErrors))),
-        data => Future.successful(Ok(login(loginForm)))
+        data =>
+          if (data.rentIncludeTradeServices.equals(RentIncludeTradesServicesYes)){
+            Future.successful(Ok(rentIncludeTradeServicesDetailsView(rentIncludeTradeServicesDetailsForm)))
+          } else if (data.rentIncludeTradeServices.equals(RentIncludeTradesServicesNo)) {
+            Future.successful(Ok(rentIncludeFixtureAndFittingsView(rentIncludeFixturesAndFittingsForm)))
+          } else {
+            Future.successful(Ok(login(loginForm)))
+          }
       )
   }
 }

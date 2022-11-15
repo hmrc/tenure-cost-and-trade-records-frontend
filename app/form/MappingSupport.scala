@@ -20,8 +20,7 @@ import form.Form6010.ConditionalMapping.nonEmptyTextOr
 import models.submissions._
 import form.Formats._
 import form.Formats.userTypeFormat
-import models.AnnualRent
-import models.submissions.Form6010.{Address, AddressConnectionType, AgreedReviewedAlteredThreeYears, BuildingInsurances, BuildingOperationHaveAWebsite, CapitalSumOrPremiums, CateringAddress, CateringOperationOrLettingAccommodation, CommenceWithinThreeYears, ContactDetails, CurrentPropertyUsed, CurrentRentBasedOn, CurrentRentFixed, CurrentRentWithin12Months, EnforcementActions, FormerLeaseSurrendered, FranchiseOrLettingsTiedToProperties, IncludeLicensees, IncludeOtherProperties, InsideRepairs, LandlordAddress, LegalPlanningRestrictions, LettingAddress, LettingOtherPartOfProperties, LicensableActivities, MethodToFixCurrentRents, NonDomesticRates, OnlyPartOfProperties, OnlyToLands, OutsideRepairs, PremisesLicenses, ReceivePaymentWhenLeaseGrants, RentIncludeFixturesAndFittings, RentIncludeTradesServices, RentIncreasedAnnuallyWithRPIs, RentOpenMarketValues, RentPayableVaryAccordingToGrossOrNets, RentPayableVaryOnQuantityOfBeers, RentReducedOnReviews, RentUnderReviewNegotiated, ShellUnits, TenancyLeaseAgreements, TenantsAdditionsDisregarded, TiedForGoods, TiedForGoodsInformationDetail, VATs, WaterCharges}
+import models.submissions.Form6010._
 import models.{AnnualRent, NamedEnum, NamedEnumSupport}
 import play.api.data.Forms.{boolean, default, email, mapping, optional, text}
 import play.api.data.format.Formatter
@@ -183,6 +182,17 @@ object MappingSupport {
     "county"             -> optional(text(maxLength = 50)),
     "postcode"           -> nonEmptyTextOr("lettingAddress.postcode", postcode, "error.postcode.required")
   )(LettingAddress.apply)(LettingAddress.unapply)
+
+  def alternativeContactMapping: Mapping[AlternativeContactDetailsAddress] = mapping(
+    "buildingNameNumber" -> default(text, "").verifying(
+      nonEmpty(errorMessage = "error.buildingNameNumber.required"),
+      maxLength(50, "error.buildingNameNumber.maxLength")
+    ),
+    "street1"            -> optional(text(maxLength = 50)),
+    "town"               -> optional(text(maxLength = 50)),
+    "county"             -> optional(text(maxLength = 50)),
+    "postcode"           -> nonEmptyTextOr("alternativeContactAddress.postcode", postcode, "error.postcode.required")
+  )(AlternativeContactDetailsAddress.apply)(AlternativeContactDetailsAddress.unapply)
 
   def mandatoryBooleanWithError(message: String) =
     optional(boolean)

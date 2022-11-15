@@ -28,4 +28,5 @@ object CateringOperationForm {
       "cateringOperationOrLettingAccommodation" -> cateringOperationType
     )(CateringOperationDetails.apply)(CateringOperationDetails.unapply)
   )
+
 }

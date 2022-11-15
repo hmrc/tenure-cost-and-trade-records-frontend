@@ -19,8 +19,11 @@ package controllers.Form6010
 import controllers.LoginController.loginForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.Form6010.cateringOperationOrLettingAccommodation
+import views.html.Form6010.{cateringOperationOrLettingAccommodation, cateringOperationOrLettingAccommodationDetails, lettingOtherPartOfProperty}
 import form.Form6010.CateringOperationForm.cateringOperationForm
+import form.Form6010.CateringOperationOrLettingAccommodationForm.cateringOperationOrLettingAccommodationForm
+import form.Form6010.LettingOtherPartOfPropertiesForm.lettingOtherPartOfPropertiesForm
+import models.submissions.Form6010.{CateringOperationNo, CateringOperationYes}
 import views.html.login
 
 import javax.inject.{Inject, Singleton}
@@ -30,6 +33,8 @@ import scala.concurrent.Future
 class CateringOperationOrLettingAccommodationController @Inject() (
   mcc: MessagesControllerComponents,
   login: login,
+  cateringOperationOrLettingAccommodationDetailsView: cateringOperationOrLettingAccommodationDetails,
+  lettingOtherPartOfPropertyView: lettingOtherPartOfProperty,
   cateringOperationOrLettingAccommodationView: cateringOperationOrLettingAccommodation
 ) extends FrontendController(mcc) {
 
@@ -42,7 +47,14 @@ class CateringOperationOrLettingAccommodationController @Inject() (
       .bindFromRequest()
       .fold(
         formWithErrors => Future.successful(BadRequest(cateringOperationOrLettingAccommodationView(formWithErrors))),
-        data => Future.successful(Ok(login(loginForm)))
+        data =>
+          if (data.cateringOperationOrLettingAccommodation.equals(CateringOperationYes)) {
+            Future.successful(Ok(cateringOperationOrLettingAccommodationDetailsView(cateringOperationOrLettingAccommodationForm)))
+          } else if (data.cateringOperationOrLettingAccommodation.equals(CateringOperationNo)) {
+            Future.successful(Ok(lettingOtherPartOfPropertyView(lettingOtherPartOfPropertiesForm)))
+          } else {
+            Future.successful(Ok(login(loginForm)))
+          }
       )
   }
 

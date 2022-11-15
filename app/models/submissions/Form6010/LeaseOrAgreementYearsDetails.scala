@@ -14,20 +14,10 @@
  * limitations under the License.
  */
 
-package form.Form6010
+package models.submissions.Form6010
 
-import form.MappingSupport._
-import models.submissions.Form6010.IncludedInYourRentDetails
-import play.api.data.Form
-import play.api.data.Forms.mapping
-
-object IncludedInYourRentForm {
-
-  val includedInYourRentForm = Form(
-    mapping(
-      "vat"              -> vatType,
-      "nondomesticRates" -> nondomesticRatesType,
-      "waterCharges"     -> waterChargesType
-    )(IncludedInYourRentDetails.apply)(IncludedInYourRentDetails.unapply)
-  )
-}
+case class LeaseOrAgreementYearsDetails(
+  commenceWithinThreeYears: CommenceWithinThreeYears,
+  agreedReviewedAlteredThreeYears: AgreedReviewedAlteredThreeYears,
+  rentUnderReviewNegotiated: RentUnderReviewNegotiated
+)

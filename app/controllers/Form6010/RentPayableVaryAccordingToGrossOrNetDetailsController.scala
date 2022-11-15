@@ -18,9 +18,10 @@ package controllers.Form6010
 
 import controllers.LoginController.loginForm
 import form.Form6010.RentPayableVaryAccordingToGrossOrNetDetailsForm.rentPayableVaryAccordingToGrossOrNetInformationForm
+import form.Form6010.RentPayableVaryOnQuantityOfBeersForm.rentPayableVaryOnQuantityOfBeersForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.Form6010.rentPayableVaryAccordingToGrossOrNetDetails
+import views.html.Form6010.{rentPayableVaryAccordingToGrossOrNetDetails, rentPayableVaryOnQuantityOfBeers}
 import views.html.login
 
 import javax.inject.{Inject, Singleton}
@@ -29,7 +30,7 @@ import scala.concurrent.Future
 @Singleton
 class RentPayableVaryAccordingToGrossOrNetDetailsController @Inject() (
   mcc: MessagesControllerComponents,
-  login: login,
+  rentPayableVaryOnQuantityOfBeersView: rentPayableVaryOnQuantityOfBeers,
   rentPayableVaryAccordingToGrossOrNetDetailsView: rentPayableVaryAccordingToGrossOrNetDetails
 ) extends FrontendController(mcc) {
 
@@ -45,7 +46,7 @@ class RentPayableVaryAccordingToGrossOrNetDetailsController @Inject() (
       .fold(
         formWithErrors =>
           Future.successful(BadRequest(rentPayableVaryAccordingToGrossOrNetDetailsView(formWithErrors))),
-        data => Future.successful(Ok(login(loginForm)))
+        data => Future.successful(Ok(rentPayableVaryOnQuantityOfBeersView(rentPayableVaryOnQuantityOfBeersForm)))
       )
   }
 

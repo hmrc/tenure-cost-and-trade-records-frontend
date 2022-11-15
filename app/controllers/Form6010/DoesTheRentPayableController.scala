@@ -19,9 +19,9 @@ package controllers.Form6010
 import controllers.LoginController.loginForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.Form6010.doesTheRentPayable
+import views.html.Form6010.{doesTheRentPayable, ultimatelyResponsible}
 import form.Form6010.DoesTheRentPayableForm.doesTheRentPayableForm
-import views.html.login
+import form.Form6010.UltimatelyResponsibleForm.ultimatelyResponsibleForm
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
@@ -29,7 +29,7 @@ import scala.concurrent.Future
 @Singleton
 class DoesTheRentPayableController @Inject() (
   mcc: MessagesControllerComponents,
-  login: login,
+  ultimatelyResponsibleView: ultimatelyResponsible,
   doesTheRentPayableView: doesTheRentPayable
 ) extends FrontendController(mcc) {
 
@@ -42,7 +42,7 @@ class DoesTheRentPayableController @Inject() (
       .bindFromRequest()
       .fold(
         formWithErrors => Future.successful(BadRequest(doesTheRentPayableView(formWithErrors))),
-        data => Future.successful(Ok(login(loginForm)))
+        data => Future.successful(Ok(ultimatelyResponsibleView(ultimatelyResponsibleForm)))
       )
   }
 

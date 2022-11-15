@@ -17,10 +17,11 @@
 package controllers.Form6010
 
 import controllers.LoginController.loginForm
-import form.Form6010.RentPayableVaryOnQuantityOfBeersDetailsForm.rentPayableVaryOnQuantityOfBeersForm
+import form.Form6010.HowIsCurrentRentFixedForm.howIsCurrentRentFixedForm
+import form.Form6010.RentPayableVaryOnQuantityOfBeersDetailsForm.rentPayableVaryOnQuantityOfBeersDetailsForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.Form6010.rentPayableVaryOnQuantityOfBeersDetails
+import views.html.Form6010.{howIsCurrentRentFixed, rentPayableVaryOnQuantityOfBeersDetails}
 import views.html.login
 
 import javax.inject.{Inject, Singleton}
@@ -29,20 +30,20 @@ import scala.concurrent.Future
 @Singleton
 class RentPayableVaryOnQuantityOfBeersDetailsController @Inject() (
   mcc: MessagesControllerComponents,
-  login: login,
+  howIsCurrentRentFixedView: howIsCurrentRentFixed,
   rentPayableVaryOnQuantityOfBeersDetailsView: rentPayableVaryOnQuantityOfBeersDetails
 ) extends FrontendController(mcc) {
 
   def show: Action[AnyContent] = Action.async { implicit request =>
-    Future.successful(Ok(rentPayableVaryOnQuantityOfBeersDetailsView(rentPayableVaryOnQuantityOfBeersForm)))
+    Future.successful(Ok(rentPayableVaryOnQuantityOfBeersDetailsView(rentPayableVaryOnQuantityOfBeersDetailsForm)))
   }
 
   def submit = Action.async { implicit request =>
-    rentPayableVaryOnQuantityOfBeersForm
+    rentPayableVaryOnQuantityOfBeersDetailsForm
       .bindFromRequest()
       .fold(
         formWithErrors => Future.successful(BadRequest(rentPayableVaryOnQuantityOfBeersDetailsView(formWithErrors))),
-        data => Future.successful(Ok(login(loginForm)))
+        data => Future.successful(Ok(howIsCurrentRentFixedView(howIsCurrentRentFixedForm)))
       )
   }
 

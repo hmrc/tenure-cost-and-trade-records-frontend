@@ -16,23 +16,20 @@
 
 package form.Form6010
 
-import models.submissions.Form6010.RentPayableVaryOnQuantityOfBeersInformationDetails
+import form.MappingSupport.{alternativeContactMapping, contactDetailsMapping, intRegex, landlordAddressMapping}
+import models.submissions.Form6010.AlternativeContactDetails
 import play.api.data.Form
 import play.api.data.Forms.{default, mapping, text}
-import play.api.data.validation.Constraints.{maxLength, nonEmpty}
+import play.api.data.validation.Constraints.nonEmpty
 
-object RentPayableVaryOnQuantityOfBeersDetailsForm {
-
-  val rentPayableVaryOnQuantityOfBeersDetailsForm = Form(
+object AlternativeContactDetailsForm {
+  val alternativeContactDetailsForm: Form[AlternativeContactDetails] = Form(
     mapping(
-      "rentPayableVaryOnQuantityOfBeersDetails" ->
-        default(text, "").verifying(
-          nonEmpty(errorMessage = "error.rentPayableVaryOnQuantityOfBeersDetails.required"),
-          maxLength(1000, "error.rentPayableVaryOnQuantityOfBeersDetails.maxLength")
-        )
-    )(RentPayableVaryOnQuantityOfBeersInformationDetails.apply)(
-      RentPayableVaryOnQuantityOfBeersInformationDetails.unapply
-    )
+      "alternativeContactFullName" -> default(text, "").verifying(
+        nonEmpty(errorMessage = "error.alternativeContactFullName.required")
+      ),
+      "alternativeContactDetails" -> contactDetailsMapping,
+      "alternativeContactAddress"  -> alternativeContactMapping
+    )(AlternativeContactDetails.apply)(AlternativeContactDetails.unapply)
   )
-
 }

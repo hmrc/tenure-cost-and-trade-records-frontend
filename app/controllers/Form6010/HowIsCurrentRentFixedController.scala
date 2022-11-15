@@ -18,10 +18,10 @@ package controllers.Form6010
 
 import controllers.LoginController.loginForm
 import form.Form6010.HowIsCurrentRentFixedForm.howIsCurrentRentFixedForm
+import form.Form6010.MethodToFixCurrentRentForm.methodToFixCurrentRentForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.Form6010.howIsCurrentRentFixed
-import views.html.login
+import views.html.Form6010.{howIsCurrentRentFixed, methodToFixCurrentRent}
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
@@ -29,7 +29,7 @@ import scala.concurrent.Future
 @Singleton
 class HowIsCurrentRentFixedController @Inject() (
   mcc: MessagesControllerComponents,
-  login: login,
+  methodToFixCurrentRentView: methodToFixCurrentRent,
   howIsCurrentRentFixedView: howIsCurrentRentFixed
 ) extends FrontendController(mcc) {
 
@@ -42,7 +42,7 @@ class HowIsCurrentRentFixedController @Inject() (
       .bindFromRequest()
       .fold(
         formWithErrors => Future.successful(BadRequest(howIsCurrentRentFixedView(formWithErrors))),
-        data => Future.successful(Ok(login(loginForm)))
+        data => Future.successful(Ok(methodToFixCurrentRentView(methodToFixCurrentRentForm)))
       )
   }
 

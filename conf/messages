@@ -241,14 +241,14 @@ label.licensableActivitiesDetails = Please describe the licensable activities re
 
 #PREMISES LICENCE CONDITIONS
 ##############################
-premisesLicenceConditions.header = About the property
-label.premisesLicenceConditions = Does your premises licence have conditions restricting the use of all or parts of the property?
+premisesLicenseConditions.header = About the property
+label.premisesLicenseConditions = Describe the conditions restricting the use of all or parts of the property
 
 #PREMISES LICENCE
 ##############################
-premisesLicence.header = About the property
-label.premisesLicence = Does your premises licence have conditions restricting the use of all or parts of the property?
-hint.premisesLicence = For example, no drinks outside after 22:00
+premisesLicense.header = About the property
+label.premisesLicense = Does your premises licence have conditions restricting the use of all or parts of the property?
+hint.premisesLicense = For example, no drinks outside after 22:00
 
 #TIED FOR GOODS
 ##############################
@@ -328,9 +328,9 @@ error.rentPayableVaryAccordingToGrossOrNetDetails.maxLength  = This must be 1000
 
 #ENFORCEMENT ACTION BEEN TAKEN
 ##############################
-enforcementActionHasBeenTaken.header = About the property
-label.enforcementActionHasBeenTaken = Has any enforcement action been taken?
-hint.enforcementActionHasBeenTaken = This can be any suspensions, closure orders or temporary restrictions
+enforcementAction.header = About the property
+label.enforcementAction = Has any enforcement action been taken?
+hint.enforcementAction = This can be any suspensions, closure orders or temporary restrictions
 
 #ENFORCEMENT ACTION BEEN TAKEN DETAILS
 ##############################
@@ -585,6 +585,33 @@ hint.aboutYou = If you’re renting or leasing the property, even as a charity o
 #TASK LIST
 ##############################
 taskList.header = Declaration summary
+
+#TURNOVER
+##############################
+turnover.header = This is a holding page for the turnover page
+
+#FURTHER INFORMATION OR REMARKS
+##############################
+furtherInformationOrRemarks.header = Additional information
+label.furtherInformationOrRemarks = Further information or remarks (if any)
+hint.furtherInformationOrRemarks = Please provide further details if there is insufficient room for you to complete your answers to any of the forgoing questions, or if any of the questions require further explanation or clarification
+error.furtherInformationOrRemarks.maxLength = This must be 1000 characters or fewer
+
+#ALTERNATIVE CONTACT DETAILS
+##############################
+alternativeContactDetails.header = Additional information
+label.alternativeContactDetails = Contact details
+hint.alternativeContactDetails = If you like us to either contact you at at different address or  contact someone else if we have any queries about this form, please give details here
+alternativeContactFullName.label = Full name
+label.phone = Telephone number
+label.email1 = Email address
+alternativeContactDetails.address.label = Correspondence address
+alternativeContactAddress.buildingNameNumber.label = Address line 1
+alternativeContactAddress.address2.label = Address line 2 (optional)
+alternativeContactAddress.town.label = Town or city (optional)
+alternativeContactAddress.county.label = County (optional)
+alternativeContactAddress.postcode.label = Postcode
+error.alternativeContactFullName.required = Please enter the full name
 
 #ERRORS
 ##############################

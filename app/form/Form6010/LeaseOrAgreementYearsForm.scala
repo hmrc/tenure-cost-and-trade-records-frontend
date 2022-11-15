@@ -17,17 +17,17 @@
 package form.Form6010
 
 import form.MappingSupport._
-import models.submissions.Form6010.IncludedInYourRentDetails
+import models.submissions.Form6010.LeaseOrAgreementYearsDetails
 import play.api.data.Form
 import play.api.data.Forms.mapping
 
-object IncludedInYourRentForm {
+object LeaseOrAgreementYearsForm {
 
-  val includedInYourRentForm = Form(
+  val   leaseOrAgreementYearsForm = Form(
     mapping(
-      "vat"              -> vatType,
-      "nondomesticRates" -> nondomesticRatesType,
-      "waterCharges"     -> waterChargesType
-    )(IncludedInYourRentDetails.apply)(IncludedInYourRentDetails.unapply)
+      "commenceWithinThreeYears"        -> commenceWithinThreeYearsType,
+      "agreedReviewedAlteredThreeYears" -> agreedReviewedAlteredThreeYearsType,
+      "rentUnderReviewNegotiated"       -> rentUnderReviewNegotiatedType
+    )(LeaseOrAgreementYearsDetails.apply)(LeaseOrAgreementYearsDetails.unapply)
   )
 }

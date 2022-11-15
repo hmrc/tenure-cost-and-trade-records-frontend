@@ -14,7 +14,7 @@
  * limitations under the License.
  *@
 
-@import models.submissions.Form6010.WebsiteForPropertyDetails
+@import models.submissions.Form6010.LeaseOrAgreementYearsDetails
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
@@ -41,36 +41,89 @@
         formWithCSRF: FormWithCSRF
 )
 
-
-@(theForm: Form[WebsiteForPropertyDetails])(implicit request: Request[_], messages: Messages)
+@(theForm: Form[LeaseOrAgreementYearsDetails])(implicit request: Request[_], messages: Messages)
 
 @layout(
- pageHeading = messages("buildingOperatingHaveAWebsite.header"),
- backLinkUrl = controllers.routes.TaskListController.show.url,
+ pageHeading = messages("leaseOrAgreement.header"),
+ backLinkUrl = controllers.Form6010.routes.AboutYourLandlordController.show.url,
  theForm = theForm
 ) {
 
- @formWithCSRF(action = controllers.Form6010.routes.WebsiteForPropertyController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
+ @formWithCSRF(action = controllers.Form6010.routes.LeaseOrAgreementYearsController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
 
   @govukRadios(
    Radios(
-    name = "buildingOperatingHaveAWebsite",
-    idPrefix = Option("buildingOperatingHaveAWebsite"),
+    name = "commenceWithinThreeYears",
+    idPrefix = Option("commenceWithinThreeYears"),
     items = Seq(
      "yes" -> messages("label.yes"),
      "no" -> messages("label.no")
     ).map(radioItem => RadioItem(
      content = Text(radioItem._2),
-     checked = radioItem._1.equals(theForm("buildingOperatingHaveAWebsite").value.getOrElse("")),
+     checked = radioItem._1.equals(theForm("commenceWithinThreeYears").value.getOrElse("")),
      value = Option(radioItem._1)
     )
     ),
-    errorMessage =  theForm.errors.asTextErrorMessageForField("buildingOperatingHaveAWebsite"),
+    errorMessage =  theForm.errors.asTextErrorMessageForField("commenceWithinThreeYears"),
     fieldset = Option(
      Fieldset(
       legend = Option(
        Legend(
-        content = Text(messages("label.buildingOperatingHaveAWebsite")),
+        content = Text(messages("label.commenceWithinThreeYears")),
+        classes = "govuk-!-font-weight-bold"
+       )
+      )
+     )
+    )
+   )
+  )
+
+  @govukRadios(
+   Radios(
+    name = "agreedReviewedAlteredThreeYears",
+    idPrefix = Option("agreedReviewedAlteredThreeYears"),
+    items = Seq(
+     "yes" -> messages("label.yes"),
+     "no" -> messages("label.no")
+    ).map(radioItem => RadioItem(
+     content = Text(radioItem._2),
+     checked = radioItem._1.equals(theForm("agreedReviewedAlteredThreeYears").value.getOrElse("")),
+     value = Option(radioItem._1)
+    )
+    ),
+    errorMessage =  theForm.errors.asTextErrorMessageForField("agreedReviewedAlteredThreeYears"),
+    fieldset = Option(
+     Fieldset(
+      legend = Option(
+       Legend(
+        content = Text(messages("label.agreedReviewedAlteredThreeYears")),
+        classes = "govuk-!-font-weight-bold"
+       )
+      )
+     )
+    )
+   )
+  )
+
+  @govukRadios(
+   Radios(
+    name = "rentUnderReviewNegotiated",
+    idPrefix = Option("rentUnderReviewNegotiated"),
+    items = Seq(
+     "yes" -> messages("label.yes"),
+     "no" -> messages("label.no")
+    ).map(radioItem => RadioItem(
+     content = Text(radioItem._2),
+     checked = radioItem._1.equals(theForm("rentUnderReviewNegotiated").value.getOrElse("")),
+     value = Option(radioItem._1)
+    )
+    ),
+    errorMessage =  theForm.errors.asTextErrorMessageForField("rentUnderReviewNegotiated"),
+    fieldset = Option(
+     Fieldset(
+      legend = Option(
+       Legend(
+        content = Text(messages("label.rentUnderReviewNegotiated")),
         classes = "govuk-!-font-weight-bold"
        )
       )

@@ -23,9 +23,8 @@ import play.api.data.Forms.mapping
 
 object LicensableActivitiesForm {
 
-  val licensableActivitiesForm = Form(
-    mapping(
+  val licensableActivitiesForm = Form(mapping(
       "licensableActivities" -> licensableActivitiesType
-    )(LicensableActivitiesDetails.apply)(LicensableActivitiesDetails.unapply)
+  )(LicensableActivitiesDetails.apply)(LicensableActivitiesDetails.unapply)
   )
 }

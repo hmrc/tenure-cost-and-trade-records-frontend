@@ -19,8 +19,11 @@ package controllers.Form6010
 import controllers.LoginController.loginForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.Form6010.lettingOtherPartOfProperty
+import views.html.Form6010.{aboutYourLandlord, lettingOtherPartOfProperty, lettingOtherPartOfPropertyDetails}
+import form.Form6010.LettingOtherPartOfPropertyForm.lettingOtherPartOfPropertyForm
+import form.Form6010.AboutTheLandlordForm.aboutTheLandlordForm
 import form.Form6010.LettingOtherPartOfPropertiesForm.lettingOtherPartOfPropertiesForm
+import models.submissions.Form6010.{LettingOtherPartOfPropertiesNo, LettingOtherPartOfPropertiesYes}
 import views.html.login
 
 import javax.inject.{Inject, Singleton}
@@ -30,7 +33,9 @@ import scala.concurrent.Future
 class LettingOtherPartOfPropertyController @Inject() (
   mcc: MessagesControllerComponents,
   login: login,
-  lettingOtherPartOfPropertyView: lettingOtherPartOfProperty
+  lettingOtherPartOfPropertyDetailsView: lettingOtherPartOfPropertyDetails,
+  lettingOtherPartOfPropertyView: lettingOtherPartOfProperty,
+  aboutTheLandlordView: aboutYourLandlord
 ) extends FrontendController(mcc) {
 
   def show: Action[AnyContent] = Action.async { implicit request =>
@@ -42,7 +47,14 @@ class LettingOtherPartOfPropertyController @Inject() (
       .bindFromRequest()
       .fold(
         formWithErrors => Future.successful(BadRequest(lettingOtherPartOfPropertyView(formWithErrors))),
-        data => Future.successful(Ok(login(loginForm)))
+        data =>
+          if (data.lettingOtherPartOfProperties.equals(LettingOtherPartOfPropertiesYes)) {
+          Future.successful(Ok(lettingOtherPartOfPropertyDetailsView(lettingOtherPartOfPropertyForm)))
+        } else if (data.lettingOtherPartOfProperties.equals(LettingOtherPartOfPropertiesNo)) {
+          Future.successful(Ok(aboutTheLandlordView(aboutTheLandlordForm)))
+        } else {
+          Future.successful(Ok(login(loginForm)))
+        }
       )
   }
 }

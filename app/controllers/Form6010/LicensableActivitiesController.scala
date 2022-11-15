@@ -19,8 +19,11 @@ package controllers.Form6010
 import controllers.LoginController.loginForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.Form6010.licensableActivities
+import views.html.Form6010.{licensableActivities, licensableActivitiesDetails, premisesLicense}
+import form.Form6010.LicensableActivitiesInformationForm.licensableActivitiesDetailsForm
 import form.Form6010.LicensableActivitiesForm.licensableActivitiesForm
+import form.Form6010.PremisesLicenseForm.premisesLicenseForm
+import models.submissions.Form6010.{LicensableActivitiesNo, LicensableActivitiesYes}
 import views.html.login
 
 import javax.inject.{Inject, Singleton}
@@ -30,8 +33,10 @@ import scala.concurrent.Future
 class LicensableActivitiesController @Inject() (
   mcc: MessagesControllerComponents,
   login: login,
-  licensableActivitiesView: licensableActivities
-) extends FrontendController(mcc) {
+  licensableActivitiesView: licensableActivities,
+  licensableActivitiesDetailsView: licensableActivitiesDetails,
+  premisesLicenseView: premisesLicense
+                                               ) extends FrontendController(mcc) {
 
   def show: Action[AnyContent] = Action.async { implicit request =>
     Future.successful(Ok(licensableActivitiesView(licensableActivitiesForm)))
@@ -42,7 +47,14 @@ class LicensableActivitiesController @Inject() (
       .bindFromRequest()
       .fold(
         formWithErrors => Future.successful(BadRequest(licensableActivitiesView(formWithErrors))),
-        data => Future.successful(Ok(login(loginForm)))
+        data =>
+          if (data.licensableActivities.equals(LicensableActivitiesYes)) {
+            Future.successful(Ok(licensableActivitiesDetailsView(licensableActivitiesDetailsForm)))
+          } else if (data.licensableActivities.equals(LicensableActivitiesNo)) {
+            Future.successful(Ok(premisesLicenseView(premisesLicenseForm)))
+          } else {
+            Future.successful(Ok(login(loginForm)))
+          }
       )
   }
 

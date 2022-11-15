@@ -24,7 +24,7 @@ object PremisesLicenseDetailsForm {
 
   val premisesLicenceDetailsForm = Form(
     mapping(
-      "premisesLicenceDetails" -> nonEmptyText(maxLength = 100)
+      "premisesLicenseConditions" -> nonEmptyText(maxLength = 100)
     )(PremisesLicenseInformationDetails.apply)(PremisesLicenseInformationDetails.unapply)
   )
 }

@@ -16,4 +16,6 @@
 
 package models.submissions.Form6010
 
-case class LeaseOrAgreementDetails(vat: VATs, nonDomesticRates: NonDomesticRates, waterCharges: WaterCharges)
+case class FurtherInformationOrRemarksDetails(
+                                               furtherInformationOrRemarksDetails: String
+)

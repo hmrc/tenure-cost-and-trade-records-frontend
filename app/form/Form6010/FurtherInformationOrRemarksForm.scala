@@ -16,18 +16,21 @@
 
 package form.Form6010
 
-import form.MappingSupport._
-import models.submissions.Form6010.LeaseOrAgreementDetails
+import models.submissions.Form6010.{FurtherInformationOrRemarksDetails}
 import play.api.data.Form
-import play.api.data.Forms.mapping
+import play.api.data.Forms.{default, mapping, text}
+import play.api.data.validation.Constraints.maxLength
 
-object LeaseOrAgreementForm {
+object FurtherInformationOrRemarksForm {
 
-  val leaseOrAgreementForm = Form(
+  val furtherInformationOrRemarksForm = Form(
     mapping(
-      "vat"              -> vatType,
-      "nondomesticRates" -> nondomesticRatesType,
-      "waterCharges"     -> waterChargesType
-    )(LeaseOrAgreementDetails.apply)(LeaseOrAgreementDetails.unapply)
+      "furtherInformationOrRemarks" ->
+        default(text, "").verifying(
+          maxLength(1000, "error.furtherInformationOrRemarks.maxLength")
+        )
+    )(FurtherInformationOrRemarksDetails.apply)(
+      FurtherInformationOrRemarksDetails.unapply
+    )
   )
 }

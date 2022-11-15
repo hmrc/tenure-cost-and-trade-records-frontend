@@ -16,33 +16,33 @@
 
 package controllers.Form6010
 
-import controllers.LoginController.loginForm
+import form.Form6010.FurtherInformationOrRemarksForm.furtherInformationOrRemarksForm
+import form.Form6010.HowIsCurrentRentFixedForm.howIsCurrentRentFixedForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.Form6010.leaseOrAgreementDetails
-import form.Form6010.LeaseOrAgreementForm.leaseOrAgreementForm
-import views.html.login
+import views.html.Form6010.{furtherInformationOrRemarks, howIsCurrentRentFixed}
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class LeaseOrAgreementDetailsController @Inject() (
+class FurtherInformationOrRemarksController @Inject()(
   mcc: MessagesControllerComponents,
-  login: login,
-  leaseOrAgreementDetailsView: leaseOrAgreementDetails
+  howIsCurrentRentFixedView: howIsCurrentRentFixed,
+  furtherInformationOrRemarksView: furtherInformationOrRemarks
 ) extends FrontendController(mcc) {
 
   def show: Action[AnyContent] = Action.async { implicit request =>
-    Future.successful(Ok(leaseOrAgreementDetailsView(leaseOrAgreementForm)))
+    Future.successful(Ok(furtherInformationOrRemarksView(furtherInformationOrRemarksForm)))
   }
 
   def submit = Action.async { implicit request =>
-    leaseOrAgreementForm
+    furtherInformationOrRemarksForm
       .bindFromRequest()
       .fold(
-        formWithErrors => Future.successful(BadRequest(leaseOrAgreementDetailsView(formWithErrors))),
-        data => Future.successful(Ok(login(loginForm)))
+        formWithErrors => Future.successful(BadRequest(furtherInformationOrRemarksView(formWithErrors))),
+        data => Future.successful(Ok(howIsCurrentRentFixedView(howIsCurrentRentFixedForm)))
       )
   }
+
 }

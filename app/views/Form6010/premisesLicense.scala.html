@@ -45,7 +45,7 @@
 @(theForm: Form[PremisesLicenseDetails])(implicit request: Request[_], messages: Messages)
 
 @layout(
- pageHeading = messages("premisesLicence.header"),
+ pageHeading = messages("premisesLicense.header"),
  backLinkUrl = controllers.Form6010.routes.LicensableActivitiesController.show.url,
  theForm = theForm
 ) {
@@ -70,13 +70,13 @@
      Fieldset(
       legend = Option(
        Legend(
-        content = Text(messages("label.premisesLicence")),
+        content = Text(messages("label.premisesLicense")),
         classes = "govuk-!-font-weight-bold"
        )
       )
      )
     ),
-    hint = Some(Hint(content = Text(messages("hint.premisesLicence")))),
+    hint = Some(Hint(content = Text(messages("hint.premisesLicense")))),
    )
   )
 

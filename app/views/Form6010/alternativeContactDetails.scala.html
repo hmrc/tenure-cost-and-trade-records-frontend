@@ -1,0 +1,103 @@
+@*
+ * Copyright 2022 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import models.submissions.Form6010.AlternativeContactDetails
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukErrorSummary
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukDateInput
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukTextarea
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukCharacterCount
+@import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Label
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Input
+
+@this(layout: Layout,
+        govukButton: GovukButton,
+        govukRadios: GovukRadios,
+        govukInput: GovukInput,
+        govukErrorSummary: GovukErrorSummary,
+        govukDateInput: GovukDateInput,
+        govukTextarea: GovukTextarea,
+        govukCharacterCount: GovukCharacterCount,
+        formWithCSRF: FormWithCSRF
+)
+
+@(theForm: Form[AlternativeContactDetails])(implicit request: Request[_], messages: Messages)
+
+@layout(
+ pageHeading = messages("alternativeContactDetails.header"),
+ backLinkUrl = controllers.Form6010.routes.FurtherInformationOrRemarksController.show.url,
+ theForm = theForm
+) {
+
+ @formWithCSRF(action = controllers.Form6010.routes.AlternativeContactDetailsController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
+
+  <p class="govuk-body"><b>@messages("hint.alternativeContactDetails")</b></p>
+
+  @govukInput(
+   Input(
+    id = "alternativeContactFullName",
+    name = "alternativeContactFullName",
+    classes = "govuk-input--width-20",
+    label = Label(
+     content = Text(messages("alternativeContactFullName.label")),
+     classes = "govuk-!-font-weight-bold"
+    ),
+    errorMessage = theForm.errors.asTextErrorMessageForField("alternativeContactFullName")
+   )
+  )
+
+  <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+   <h2 class="govuk-fieldset__heading">@messages("label.alternativeContactDetails")</h2>
+  </legend>
+
+  @govukInput(
+   Input(
+    classes = "govuk-input--width-20 ",
+    attributes = Map("maxlength" -> "20"),
+    label = Label(
+     content = Text(messages("label.phone") ),
+     classes = "govuk-!-font-weight-bold"
+    ),
+    errorMessage = theForm.errors.asTextErrorMessageForField("alternativeContactDetails.phone")
+   ).withFormField(theForm("alternativeContactDetails.phone"))
+  )
+
+  @govukInput(
+   Input(
+    classes = "govuk-input--width-20 ",
+    attributes = Map("maxlength" -> "50"),
+    label = Label(
+     content = Text(messages("label.email1") ),
+     classes = "govuk-!-font-weight-bold"
+    ),
+    errorMessage = theForm.errors.asTextErrorMessageForField("alternativeContactDetails.email1")
+   ).withFormField(theForm("alternativeContactDetails.email1"))
+  )
+
+  <p class="govuk-body"><b>@messages("alternativeContactDetails.address.label")</b></p>
+
+  @includes.lookupAlternativeContactAddress(theForm, "alternativeContactDetails", govukInput)
+
+  @includes.continueButton(govukButton)
+ }
+}
+
+

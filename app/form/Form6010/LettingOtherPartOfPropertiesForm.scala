@@ -23,9 +23,8 @@ import play.api.data.Forms.mapping
 
 object LettingOtherPartOfPropertiesForm {
 
-  val lettingOtherPartOfPropertiesForm = Form(
-    mapping(
-      "LettingOtherPartOfProperties" -> lettingOtherPartOfPropertiesType
-    )(LettingOtherPartOfPropertyDetails.apply)(LettingOtherPartOfPropertyDetails.unapply)
+  val lettingOtherPartOfPropertiesForm = Form(mapping(
+    "LettingOtherPartOfProperties" -> lettingOtherPartOfPropertiesType
+  )(LettingOtherPartOfPropertyDetails.apply)(LettingOtherPartOfPropertyDetails.unapply)
   )
 }
