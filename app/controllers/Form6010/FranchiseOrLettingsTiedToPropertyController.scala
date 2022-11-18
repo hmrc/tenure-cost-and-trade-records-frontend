@@ -48,12 +48,10 @@ class FranchiseOrLettingsTiedToPropertyController @Inject() (
       .fold(
         formWithErrors => Future.successful(BadRequest(franchiseOrLettingsTiedToPropertyView(formWithErrors))),
         data =>
-          if (data.franchiseOrLettingsTiedToProperty.equals(FranchiseOrLettingsTiedToPropertiesYes)) {
-            Future.successful(Ok(cateringOperationOrLettingAccommodationView(cateringOperationForm)))
-          } else if (data.franchiseOrLettingsTiedToProperty.equals(FranchiseOrLettingsTiedToPropertiesNo)) {
-            Future.successful(Ok(aboutYourLandlordView(aboutTheLandlordForm)))
-          } else {
-            Future.successful(Ok(login(loginForm)))
+          data.franchiseOrLettingsTiedToProperty match {
+            case FranchiseOrLettingsTiedToPropertiesYes => Future.successful(Ok(cateringOperationOrLettingAccommodationView(cateringOperationForm)))
+            case FranchiseOrLettingsTiedToPropertiesNo => Future.successful(Ok(aboutYourLandlordView(aboutTheLandlordForm)))
+            case _ => Future.successful(Ok(login(loginForm)))
           }
       )
   }

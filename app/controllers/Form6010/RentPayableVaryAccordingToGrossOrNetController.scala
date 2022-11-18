@@ -48,12 +48,10 @@ class RentPayableVaryAccordingToGrossOrNetController @Inject() (
       .fold(
         formWithErrors => Future.successful(BadRequest(rentPayableVaryAccordingToGrossOrNetView(formWithErrors))),
         data =>
-          if (data.rentPayableVaryAccordingToGrossOrNets.equals(RentPayableVaryAccordingToGrossOrNetsYes)) {
-          Future.successful(Ok(rentPayableVaryAccordingToGrossOrNetDetailsView(rentPayableVaryAccordingToGrossOrNetInformationForm)))
-        } else if (data.rentPayableVaryAccordingToGrossOrNets.equals(RentPayableVaryAccordingToGrossOrNetsNo)) {
-          Future.successful(Ok(rentPayableVaryOnQuantityOfBeersView(rentPayableVaryOnQuantityOfBeersForm)))
-        } else {
-          Future.successful(Ok(login(loginForm)))
+          data.rentPayableVaryAccordingToGrossOrNets match {
+            case RentPayableVaryAccordingToGrossOrNetsYes => Future.successful(Ok(rentPayableVaryAccordingToGrossOrNetDetailsView(rentPayableVaryAccordingToGrossOrNetInformationForm)))
+            case RentPayableVaryAccordingToGrossOrNetsNo => Future.successful(Ok(rentPayableVaryOnQuantityOfBeersView(rentPayableVaryOnQuantityOfBeersForm)))
+            case _ =>Future.successful(Ok(login(loginForm)))
         }
       )
   }

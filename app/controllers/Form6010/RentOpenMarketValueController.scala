@@ -48,12 +48,10 @@ class RentOpenMarketValueController @Inject() (
       .fold(
         formWithErrors => Future.successful(BadRequest(rentOpenMarketValueView(formWithErrors))),
         data =>
-          if (data.rentOpenMarketValues.equals(RentOpenMarketValuesYes)){
-          Future.successful(Ok(whatIsYourRentBasedOnView(whatIsYourCurrentRentBasedOnForm)))
-        } else if (data.rentOpenMarketValues.equals(RentOpenMarketValuesNo)) {
-          Future.successful(Ok(rentIncreaseAnnuallyWithRPIView(rentIncreasedAnnuallyWithRPIDetailsForm)))
-        } else {
-            Future.successful(Ok(login(loginForm)))
+          data.rentOpenMarketValues match {
+            case RentOpenMarketValuesYes => Future.successful(Ok(whatIsYourRentBasedOnView(whatIsYourCurrentRentBasedOnForm)))
+            case RentOpenMarketValuesNo => Future.successful(Ok(rentIncreaseAnnuallyWithRPIView(rentIncreasedAnnuallyWithRPIDetailsForm)))
+            case _ => Future.successful(Ok(login(loginForm)))
           }
       )
   }
