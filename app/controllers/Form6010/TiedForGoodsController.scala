@@ -49,12 +49,10 @@ class TiedForGoodsController @Inject() (
       .fold(
         formWithErrors => Future.successful(BadRequest(tiedForGoodsView(formWithErrors))),
         data =>
-          if (data.tiedGoodsDetails.equals(TiedGoodsYes)) {
-            Future.successful(Ok(tiedForGoodsDetailsView(tiedForGoodsDetailsForm)))
-          } else if (data.tiedGoodsDetails.equals(TiedGoodsNo)) {
-            Future.successful(Ok(aboutYourTradingHistoryView(aboutYourTradingHistoryForm)))
-          } else {
-            Future.successful(Ok(login(loginForm)))
+          data.tiedGoodsDetails match {
+            case TiedGoodsYes => Future.successful(Ok(tiedForGoodsDetailsView(tiedForGoodsDetailsForm)))
+            case TiedGoodsNo => Future.successful(Ok(aboutYourTradingHistoryView(aboutYourTradingHistoryForm)))
+            case _ => Future.successful(Ok(login(loginForm)))
           }
       )
   }
