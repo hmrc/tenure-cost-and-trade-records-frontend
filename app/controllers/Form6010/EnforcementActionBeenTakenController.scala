@@ -48,12 +48,10 @@ class EnforcementActionBeenTakenController @Inject() (
       .fold(
         formWithErrors => Future.successful(BadRequest(enforcementActionBeenTakenView(formWithErrors))),
         data =>
-          if (data.enforcementActionHasBeenTaken.equals(EnforcementActionsYes)) {
-            Future.successful(Ok(enforcementActionBeenTakenDetailsView(enforcementActionDetailsForm)))
-          } else if (data.enforcementActionHasBeenTaken.equals(EnforcementActionsNo)) {
-            Future.successful(Ok(tiedForGoodsView(tiedForGoodsForm)))
-          } else {
-            Future.successful(Ok(login(loginForm)))
+          data.enforcementActionHasBeenTaken match {
+            case EnforcementActionsYes => Future.successful(Ok(enforcementActionBeenTakenDetailsView(enforcementActionDetailsForm)))
+            case EnforcementActionsNo => Future.successful(Ok(tiedForGoodsView(tiedForGoodsForm)))
+            case _ => Future.successful(Ok(login(loginForm)))
           }
       )
   }

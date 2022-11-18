@@ -48,12 +48,10 @@ class CateringOperationOrLettingAccommodationController @Inject() (
       .fold(
         formWithErrors => Future.successful(BadRequest(cateringOperationOrLettingAccommodationView(formWithErrors))),
         data =>
-          if (data.cateringOperationOrLettingAccommodation.equals(CateringOperationYes)) {
-            Future.successful(Ok(cateringOperationOrLettingAccommodationDetailsView(cateringOperationOrLettingAccommodationForm)))
-          } else if (data.cateringOperationOrLettingAccommodation.equals(CateringOperationNo)) {
-            Future.successful(Ok(lettingOtherPartOfPropertyView(lettingOtherPartOfPropertiesForm)))
-          } else {
-            Future.successful(Ok(login(loginForm)))
+          data.cateringOperationOrLettingAccommodation match {
+          case CateringOperationYes => Future.successful(Ok(cateringOperationOrLettingAccommodationDetailsView(cateringOperationOrLettingAccommodationForm)))
+          case CateringOperationNo => Future.successful(Ok(lettingOtherPartOfPropertyView(lettingOtherPartOfPropertiesForm)))
+          case _ => Future.successful(Ok(login(loginForm)))
           }
       )
   }

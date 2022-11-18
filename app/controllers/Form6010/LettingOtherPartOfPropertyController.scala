@@ -48,12 +48,10 @@ class LettingOtherPartOfPropertyController @Inject() (
       .fold(
         formWithErrors => Future.successful(BadRequest(lettingOtherPartOfPropertyView(formWithErrors))),
         data =>
-          if (data.lettingOtherPartOfProperties.equals(LettingOtherPartOfPropertiesYes)) {
-          Future.successful(Ok(lettingOtherPartOfPropertyDetailsView(lettingOtherPartOfPropertyForm)))
-        } else if (data.lettingOtherPartOfProperties.equals(LettingOtherPartOfPropertiesNo)) {
-          Future.successful(Ok(aboutTheLandlordView(aboutTheLandlordForm)))
-        } else {
-          Future.successful(Ok(login(loginForm)))
+          data.lettingOtherPartOfProperties match {
+            case LettingOtherPartOfPropertiesYes => Future.successful(Ok(lettingOtherPartOfPropertyDetailsView(lettingOtherPartOfPropertyForm)))
+            case LettingOtherPartOfPropertiesNo => Future.successful(Ok(aboutTheLandlordView(aboutTheLandlordForm)))
+            case _ => Future.successful(Ok(login(loginForm)))
         }
       )
   }

@@ -48,12 +48,10 @@ class RentPayableVaryOnQuantityOfBeersController @Inject() (
       .fold(
         formWithErrors => Future.successful(BadRequest(rentPayableVaryOnQuantityOfBeersView(formWithErrors))),
         data =>
-          if (data.rentPayableVaryOnQuantityOfBeersDetails.equals(RentPayableVaryOnQuantityOfBeersYes)) {
-            Future.successful(Ok(rentPayableVaryOnQuantityOfBeersDetailsView(rentPayableVaryOnQuantityOfBeersDetailsForm)))
-          } else if (data.rentPayableVaryOnQuantityOfBeersDetails.equals(RentPayableVaryOnQuantityOfBeersNo)) {
-            Future.successful(Ok(howIsCurrentRentFixedView(howIsCurrentRentFixedForm)))
-          } else {
-            Future.successful(Ok(login(loginForm)))
+          data.rentPayableVaryOnQuantityOfBeersDetails match {
+            case RentPayableVaryOnQuantityOfBeersYes => Future.successful(Ok(rentPayableVaryOnQuantityOfBeersDetailsView(rentPayableVaryOnQuantityOfBeersDetailsForm)))
+            case RentPayableVaryOnQuantityOfBeersNo => Future.successful(Ok(howIsCurrentRentFixedView(howIsCurrentRentFixedForm)))
+            case _ => Future.successful(Ok(login(loginForm)))
           }
       )
   }

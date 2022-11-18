@@ -45,7 +45,7 @@ class CateringOperationOrLettingAccommodationDetailsController @Inject() (
       .fold(
         formWithErrors =>
           Future.successful(BadRequest(cateringOperationOrLettingAccommodationDetailsView(formWithErrors))),
-        data => Future.successful(Ok(login(loginForm)))
+          data => Future.successful(Ok(login(loginForm)))
       )
   }
 
