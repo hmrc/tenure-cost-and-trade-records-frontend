@@ -31,10 +31,6 @@ case class Session(
 object Session {
   implicit val format = Json.format[Session]
 
-  def apply(addressConnectionType: AddressConnectionType): Session = {
-    Session(
-      addressConnectionType)
-  }
 
   def apply(session: Session, pastConnectionType: PastConnectionType): Session = {
     Session(

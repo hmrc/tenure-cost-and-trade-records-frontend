@@ -54,7 +54,7 @@
  theForm = theForm
 ) {
 
- @formWithCSRF(action = controllers.routes.AreYouStillConnectedNoController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
+ @formWithCSRF(action = controllers.routes.PastConnectionController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
 
   @govukRadios(
    Radios(
