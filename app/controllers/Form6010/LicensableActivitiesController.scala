@@ -36,7 +36,7 @@ class LicensableActivitiesController @Inject() (
   licensableActivitiesView: licensableActivities,
   licensableActivitiesDetailsView: licensableActivitiesDetails,
   premisesLicenseView: premisesLicense
-                                               ) extends FrontendController(mcc) {
+) extends FrontendController(mcc) {
 
   def show: Action[AnyContent] = Action.async { implicit request =>
     Future.successful(Ok(licensableActivitiesView(licensableActivitiesForm)))
@@ -49,9 +49,10 @@ class LicensableActivitiesController @Inject() (
         formWithErrors => Future.successful(BadRequest(licensableActivitiesView(formWithErrors))),
         data =>
           data.licensableActivities match {
-            case LicensableActivitiesYes => Future.successful(Ok(licensableActivitiesDetailsView(licensableActivitiesDetailsForm)))
-            case LicensableActivitiesNo => Future.successful(Ok(premisesLicenseView(premisesLicenseForm)))
-            case _ => Future.successful(Ok(login(loginForm)))
+            case LicensableActivitiesYes =>
+              Future.successful(Ok(licensableActivitiesDetailsView(licensableActivitiesDetailsForm)))
+            case LicensableActivitiesNo  => Future.successful(Ok(premisesLicenseView(premisesLicenseForm)))
+            case _                       => Future.successful(Ok(login(loginForm)))
           }
       )
   }

@@ -27,10 +27,10 @@ import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class AlternativeContactDetailsController @Inject()(
+class AlternativeContactDetailsController @Inject() (
   mcc: MessagesControllerComponents,
   login: login,
-  alternativeContactDetailsView: alternativeContactDetails,
+  alternativeContactDetailsView: alternativeContactDetails
 ) extends FrontendController(mcc) {
 
   def show: Action[AnyContent] = Action.async { implicit request =>

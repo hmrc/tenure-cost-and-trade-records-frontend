@@ -25,7 +25,7 @@ import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 
-class AreYouStillConnectedNoControllerSpec extends AnyWordSpec with Matchers with GuiceOneAppPerSuite {
+class PastConnectionControllerSpec extends AnyWordSpec with Matchers with GuiceOneAppPerSuite {
   override def fakeApplication(): Application =
     new GuiceApplicationBuilder()
       .configure(
@@ -36,7 +36,7 @@ class AreYouStillConnectedNoControllerSpec extends AnyWordSpec with Matchers wit
 
   private val fakeRequest = FakeRequest("GET", "/")
 
-  private val controller = app.injector.instanceOf[AreYouStillConnectedNoController]
+  private val controller = app.injector.instanceOf[PastConnectionController]
 
   "GET /" should {
     "return 200" in {

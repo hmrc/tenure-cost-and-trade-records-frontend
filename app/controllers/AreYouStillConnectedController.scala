@@ -24,7 +24,7 @@ import form.ConnectionToThePropertyForm.connectionToThePropertyForm
 import form.EditAddressForm.editAddressForm
 import form.PastConnectionForm.pastConnectionForm
 import models.submissions.Form6010.{AddressConnectionTypeNo, AddressConnectionTypeYes, AddressConnectionTypeYesChangeAddress}
-import views.html.{areYouStillConnected, pastConnection, connectionToTheProperty, editAddress, login}
+import views.html.{areYouStillConnected, connectionToTheProperty, editAddress, login, pastConnection}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import repositories.SessionRepo
@@ -45,7 +45,8 @@ class AreYouStillConnectedController @Inject() (
   editAddressView: editAddress,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FrontendController(mcc) with I18nSupport{
+) extends FrontendController(mcc)
+    with I18nSupport {
 
   def show: Action[AnyContent] = Action.async { implicit request =>
     Future.successful(Ok(areYouStillConnectedView(areYouStillConnectedForm)))

@@ -49,9 +49,11 @@ class RentIncludeTradeServicesController @Inject() (
         formWithErrors => Future.successful(BadRequest(rentIncludeTradeServicesView(formWithErrors))),
         data =>
           data.rentIncludeTradeServices match {
-            case RentIncludeTradesServicesYes => Future.successful(Ok(rentIncludeTradeServicesDetailsView(rentIncludeTradeServicesDetailsForm)))
-            case RentIncludeTradesServicesNo => Future.successful(Ok(rentIncludeFixtureAndFittingsView(rentIncludeFixturesAndFittingsForm)))
-            case _ => Future.successful(Ok(login(loginForm)))
+            case RentIncludeTradesServicesYes =>
+              Future.successful(Ok(rentIncludeTradeServicesDetailsView(rentIncludeTradeServicesDetailsForm)))
+            case RentIncludeTradesServicesNo  =>
+              Future.successful(Ok(rentIncludeFixtureAndFittingsView(rentIncludeFixturesAndFittingsForm)))
+            case _                            => Future.successful(Ok(login(loginForm)))
           }
       )
   }

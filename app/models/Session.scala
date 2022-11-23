@@ -31,16 +31,12 @@ case class Session(
 object Session {
   implicit val format = Json.format[Session]
 
-
-  def apply(session: Session, pastConnectionType: PastConnectionType): Session = {
+  def apply(session: Session, pastConnectionType: PastConnectionType): Session =
     Session(
       session.areYouStillConnected,
       pastConnectionType = Some(pastConnectionType)
     )
-  }
 
 }
 
-object areYouStillConnectedToAddress {
-
-}
+object areYouStillConnectedToAddress {}

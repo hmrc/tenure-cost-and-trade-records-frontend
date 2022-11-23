@@ -23,7 +23,7 @@ import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.{pastConnection, login}
+import views.html.{login, pastConnection}
 import models.Session
 
 import javax.inject.{Inject, Named, Singleton}
@@ -36,7 +36,8 @@ class PastConnectionController @Inject() (
   pastConnectionView: pastConnection,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FrontendController(mcc) with I18nSupport  {
+) extends FrontendController(mcc)
+    with I18nSupport {
 
   def show: Action[AnyContent] = Action.async { implicit request =>
     Future.successful(Ok(pastConnectionView(pastConnectionForm)))

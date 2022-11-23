@@ -28,7 +28,7 @@ object AlternativeContactDetailsForm {
       "alternativeContactFullName" -> default(text, "").verifying(
         nonEmpty(errorMessage = "error.alternativeContactFullName.required")
       ),
-      "alternativeContactDetails" -> contactDetailsMapping,
+      "alternativeContactDetails"  -> contactDetailsMapping,
       "alternativeContactAddress"  -> alternativeContactMapping
     )(AlternativeContactDetails.apply)(AlternativeContactDetails.unapply)
   )

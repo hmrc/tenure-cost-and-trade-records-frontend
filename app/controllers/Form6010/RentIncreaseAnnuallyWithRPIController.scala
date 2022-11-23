@@ -41,7 +41,8 @@ class RentIncreaseAnnuallyWithRPIController @Inject() (
       .bindFromRequest()
       .fold(
         formWithErrors => Future.successful(BadRequest(rentIncreaseAnnuallyWithRPIView(formWithErrors))),
-        data => Future.successful(Ok(rentPayableVaryAccordingToGrossOrNetView(rentPayableVaryAccordingToGrossOrNetForm)))
+        data =>
+          Future.successful(Ok(rentPayableVaryAccordingToGrossOrNetView(rentPayableVaryAccordingToGrossOrNetForm)))
       )
   }
 }

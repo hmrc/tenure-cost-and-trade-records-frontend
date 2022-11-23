@@ -23,7 +23,7 @@ import play.api.data.Forms.mapping
 
 object LeaseOrAgreementYearsForm {
 
-  val   leaseOrAgreementYearsForm = Form(
+  val leaseOrAgreementYearsForm = Form(
     mapping(
       "commenceWithinThreeYears"        -> commenceWithinThreeYearsType,
       "agreedReviewedAlteredThreeYears" -> agreedReviewedAlteredThreeYearsType,
