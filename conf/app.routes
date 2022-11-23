@@ -21,8 +21,8 @@ POST        /are-you-still-connected                                controllers.
 GET         /edit-address                                           controllers.EditAddressController.show()
 POST        /edit-address                                           controllers.EditAddressController.submit()
 
-GET         /previously-connected                                   controllers.AreYouStillConnectedNoController.show()
-POST        /previously-connected                                   controllers.AreYouStillConnectedNoController.submit()
+GET         /previously-connected                                   controllers.PastConnectionController.show()
+POST        /previously-connected                                   controllers.PastConnectionController.submit()
 
 GET         /remove-connection                                      controllers.RemoveConnectionController.show()
 

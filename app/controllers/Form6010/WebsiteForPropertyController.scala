@@ -49,9 +49,10 @@ class WebsiteForPropertyController @Inject() (
         formWithErrors => Future.successful(BadRequest(websiteForPropertyView(formWithErrors))),
         data =>
           data.buildingOperatingHaveAWebsite match {
-            case BuildingOperationHaveAWebsiteYes => Future.successful(Ok(websiteAddressForPropertyView(websiteAddressForPropertyForm)))
-            case BuildingOperationHaveAWebsiteNo => Future.successful(Ok(taskListView()))
-            case _ => Future.successful(Ok(login(loginForm)))
+            case BuildingOperationHaveAWebsiteYes =>
+              Future.successful(Ok(websiteAddressForPropertyView(websiteAddressForPropertyForm)))
+            case BuildingOperationHaveAWebsiteNo  => Future.successful(Ok(taskListView()))
+            case _                                => Future.successful(Ok(login(loginForm)))
           }
       )
   }

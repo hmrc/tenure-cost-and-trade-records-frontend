@@ -49,10 +49,12 @@ class RentIncludeFixtureAndFittingsController @Inject() (
         formWithErrors => Future.successful(BadRequest(rentIncludeFixtureAndFittingsView(formWithErrors))),
         data =>
           data.rentIncludeFixturesAndFittingsDetails match {
-            case RentIncludeFixturesAndFittingsYes => Future.successful(Ok(rentIncludeFixtureAndFittingsDetailsView(rentIncludeFixtureAndFittingsDetailsForm)))
-            case RentIncludeFixturesAndFittingsNo => Future.successful(Ok(rentOpenMarketValueView(rentOpenMarketValuesForm)))
-            case _ => Future.successful(Ok(login(loginForm)))
-        }
+            case RentIncludeFixturesAndFittingsYes =>
+              Future.successful(Ok(rentIncludeFixtureAndFittingsDetailsView(rentIncludeFixtureAndFittingsDetailsForm)))
+            case RentIncludeFixturesAndFittingsNo  =>
+              Future.successful(Ok(rentOpenMarketValueView(rentOpenMarketValuesForm)))
+            case _                                 => Future.successful(Ok(login(loginForm)))
+          }
       )
   }
 }

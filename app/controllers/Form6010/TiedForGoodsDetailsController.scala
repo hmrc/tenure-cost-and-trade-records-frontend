@@ -41,8 +41,7 @@ class TiedForGoodsDetailsController @Inject() (
       .bindFromRequest()
       .fold(
         formWithErrors => Future.successful(BadRequest(tiedForGoodsDetailsView(formWithErrors))),
-        data =>
-          Future.successful(Ok(aboutYourTradingHistoryView(aboutYourTradingHistoryForm)))
+        data => Future.successful(Ok(aboutYourTradingHistoryView(aboutYourTradingHistoryForm)))
       )
   }
 

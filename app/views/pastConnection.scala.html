@@ -33,7 +33,7 @@
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Fieldset
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Legend
 
-@import models.submissions.AreYouStillConnectedNoDetails
+@import models.submissions.PastConnectionType
 
 @this(layout: Layout,
         govukButton: GovukButton,
@@ -47,29 +47,29 @@
 )
 
 
-@(theForm: Form[AreYouStillConnectedNoDetails])(implicit request: Request[_], messages: Messages)
+@(theForm: Form[_])(implicit request: Request[_], messages: Messages)
 
 @layout(
  pageHeading = messages("areYouConnectedNo.header"),
  theForm = theForm
 ) {
 
- @formWithCSRF(action = controllers.routes.AreYouStillConnectedNoController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
+ @formWithCSRF(action = controllers.routes.PastConnectionController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
 
   @govukRadios(
    Radios(
-    name = "areYouConnectedNo",
-    idPrefix = Option("areYouConnectedNo"),
+    name = "pastConnectionType",
+    idPrefix = Option("pastConnectionType"),
     items = Seq(
      "yes" -> messages("label.yes"),
      "no" -> messages("label.no")
     ).map(radioItem => RadioItem(
      content = Text(radioItem._2),
-     checked = radioItem._1.equals(theForm("areYouConnectedNo").value.getOrElse("")),
+     checked = radioItem._1.equals(theForm("pastConnectionType").value.getOrElse("")),
      value = Option(radioItem._1)
     )
     ),
-    errorMessage = theForm.errors.asTextErrorMessageForField("areYouConnectedNo"),
+    errorMessage = theForm.errors.asTextErrorMessageForField("pastConnectionType"),
     fieldset = Option(
      Fieldset(
       legend = Option(

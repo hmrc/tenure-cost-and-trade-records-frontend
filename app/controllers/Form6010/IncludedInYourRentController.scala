@@ -26,7 +26,7 @@ import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class IncludedInYourRentController @Inject()(
+class IncludedInYourRentController @Inject() (
   mcc: MessagesControllerComponents,
   doesTheRentPayableView: doesTheRentPayable,
   includedInYourRentView: includedInYourRent

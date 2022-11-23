@@ -49,9 +49,10 @@ class EnforcementActionBeenTakenController @Inject() (
         formWithErrors => Future.successful(BadRequest(enforcementActionBeenTakenView(formWithErrors))),
         data =>
           data.enforcementActionHasBeenTaken match {
-            case EnforcementActionsYes => Future.successful(Ok(enforcementActionBeenTakenDetailsView(enforcementActionDetailsForm)))
-            case EnforcementActionsNo => Future.successful(Ok(tiedForGoodsView(tiedForGoodsForm)))
-            case _ => Future.successful(Ok(login(loginForm)))
+            case EnforcementActionsYes =>
+              Future.successful(Ok(enforcementActionBeenTakenDetailsView(enforcementActionDetailsForm)))
+            case EnforcementActionsNo  => Future.successful(Ok(tiedForGoodsView(tiedForGoodsForm)))
+            case _                     => Future.successful(Ok(login(loginForm)))
           }
       )
   }

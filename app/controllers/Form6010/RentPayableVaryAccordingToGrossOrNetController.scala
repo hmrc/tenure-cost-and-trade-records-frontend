@@ -49,10 +49,14 @@ class RentPayableVaryAccordingToGrossOrNetController @Inject() (
         formWithErrors => Future.successful(BadRequest(rentPayableVaryAccordingToGrossOrNetView(formWithErrors))),
         data =>
           data.rentPayableVaryAccordingToGrossOrNets match {
-            case RentPayableVaryAccordingToGrossOrNetsYes => Future.successful(Ok(rentPayableVaryAccordingToGrossOrNetDetailsView(rentPayableVaryAccordingToGrossOrNetInformationForm)))
-            case RentPayableVaryAccordingToGrossOrNetsNo => Future.successful(Ok(rentPayableVaryOnQuantityOfBeersView(rentPayableVaryOnQuantityOfBeersForm)))
-            case _ =>Future.successful(Ok(login(loginForm)))
-        }
+            case RentPayableVaryAccordingToGrossOrNetsYes =>
+              Future.successful(
+                Ok(rentPayableVaryAccordingToGrossOrNetDetailsView(rentPayableVaryAccordingToGrossOrNetInformationForm))
+              )
+            case RentPayableVaryAccordingToGrossOrNetsNo  =>
+              Future.successful(Ok(rentPayableVaryOnQuantityOfBeersView(rentPayableVaryOnQuantityOfBeersForm)))
+            case _                                        => Future.successful(Ok(login(loginForm)))
+          }
       )
   }
 }

@@ -31,13 +31,12 @@ import scala.concurrent.Future
 
 @Singleton
 class TiedForGoodsController @Inject() (
-                                         mcc: MessagesControllerComponents,
-                                         login: login,
-                                         tiedForGoodsView: tiedForGoods,
-                                         tiedForGoodsDetailsView: tiedForGoodsDetails,
-                                         aboutYourTradingHistoryView: aboutYourTradingHistory
-                                       )
-    extends FrontendController(mcc) {
+  mcc: MessagesControllerComponents,
+  login: login,
+  tiedForGoodsView: tiedForGoods,
+  tiedForGoodsDetailsView: tiedForGoodsDetails,
+  aboutYourTradingHistoryView: aboutYourTradingHistory
+) extends FrontendController(mcc) {
 
   def show: Action[AnyContent] = Action.async { implicit request =>
     Future.successful(Ok(tiedForGoodsView(tiedForGoodsForm)))
@@ -51,8 +50,8 @@ class TiedForGoodsController @Inject() (
         data =>
           data.tiedGoodsDetails match {
             case TiedGoodsYes => Future.successful(Ok(tiedForGoodsDetailsView(tiedForGoodsDetailsForm)))
-            case TiedGoodsNo => Future.successful(Ok(aboutYourTradingHistoryView(aboutYourTradingHistoryForm)))
-            case _ => Future.successful(Ok(login(loginForm)))
+            case TiedGoodsNo  => Future.successful(Ok(aboutYourTradingHistoryView(aboutYourTradingHistoryForm)))
+            case _            => Future.successful(Ok(login(loginForm)))
           }
       )
   }

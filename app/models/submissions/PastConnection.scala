@@ -16,4 +16,23 @@
 
 package models.submissions
 
-case class AreYouStillConnectedNoDetails(areYouStillConnectedNo: AreYouStillConnectedNo)
+import models.{EnumFormat, NamedEnum, NamedEnumSupport}
+import play.api.libs.json.Format
+
+sealed trait PastConnectionType extends NamedEnum {
+  override def key: String = "pastConnectionType"
+}
+object PastConnectionTypeYes extends PastConnectionType {
+  override def name: String = "yes"
+}
+object PastConnectionTypeNo extends PastConnectionType {
+  override def name: String = "no"
+}
+
+object PastConnectionType extends NamedEnumSupport[PastConnectionType] {
+  implicit val format: Format[PastConnectionType] = EnumFormat(PastConnectionType)
+
+  val all = List(PastConnectionTypeYes, PastConnectionTypeNo)
+
+  val key = all.head.key
+}
