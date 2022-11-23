@@ -16,32 +16,42 @@
 
 package controllers
 
+import actions.WithSessionRefiner
 import controllers.LoginController.loginForm
-import form.AreYouStillConnectedNoForm.areYouStillConnectedNoForm
+import form.PastConnectionForm.pastConnectionForm
+import play.api.i18n.I18nSupport
+import play.api.i18n.Messages.implicitMessagesProviderToMessages
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.{areYouStillConnectedNo, login}
+import models.Session
 
-import javax.inject.{Inject, Singleton}
+import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
 
 @Singleton
 class AreYouStillConnectedNoController @Inject() (
   mcc: MessagesControllerComponents,
   login: login,
-  areYouStillConnectedNoView: areYouStillConnectedNo
-) extends FrontendController(mcc) {
+  areYouStillConnectedNoView: areYouStillConnectedNo,
+  withSessionRefiner: WithSessionRefiner,
+  @Named("session") val session: SessionRepo
+) extends FrontendController(mcc) with I18nSupport  {
 
   def show: Action[AnyContent] = Action.async { implicit request =>
-    Future.successful(Ok(areYouStillConnectedNoView(areYouStillConnectedNoForm)))
+    Future.successful(Ok(areYouStillConnectedNoView(pastConnectionForm)))
   }
 
-  def submit = Action.async { implicit request =>
-    areYouStillConnectedNoForm
+  def submit = (Action andThen withSessionRefiner).async { implicit request =>
+    pastConnectionForm
       .bindFromRequest()
       .fold(
         formWithErrors => Future.successful(BadRequest(areYouStillConnectedNoView(formWithErrors))),
-        data => Future.successful(Ok(login(loginForm)))
+        data => {
+          session.saveOrUpdate(Session(request.sessionData, data))
+          Future.successful(Ok(login(loginForm)))
+        }
       )
   }
 

@@ -58,7 +58,7 @@ object MappingSupport {
   val rentIncludeFixturesAndFittingsType: Mapping[RentIncludeFixturesAndFittings]                     =
     Forms.of[RentIncludeFixturesAndFittings]
   val rentOpenMarketValuesType: Mapping[RentOpenMarketValues]                                         = Forms.of[RentOpenMarketValues]
-  val areYouStillConnectedNoType: Mapping[AreYouStillConnectedNo]                                     = Forms.of[AreYouStillConnectedNo]
+  val pastConnectionType: Mapping[PastConnectionType]                                                 = Forms.of[PastConnectionType]
   val methodToFixCurrentRentsType: Mapping[MethodToFixCurrentRents]                                   = Forms.of[MethodToFixCurrentRents]
 
   val formerLeaseSurrenderedType: Mapping[FormerLeaseSurrendered]                = Forms.of[FormerLeaseSurrendered]

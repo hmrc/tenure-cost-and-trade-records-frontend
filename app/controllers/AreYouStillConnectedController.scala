@@ -29,6 +29,7 @@ import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.login
 import repositories.SessionRepo
 import models.Session
+import play.api.i18n.I18nSupport
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
@@ -43,7 +44,7 @@ class AreYouStillConnectedController @Inject() (
   editAddressView: editAddress,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FrontendController(mcc) {
+) extends FrontendController(mcc) with I18nSupport{
 
   def show: Action[AnyContent] = Action.async { implicit request =>
     Future.successful(Ok(areYouStillConnectedView(areYouStillConnectedForm)))
