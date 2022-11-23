@@ -30,7 +30,7 @@ import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class AddAnotherCateringOperationOrLettingAccommodationController @Inject()(
+class AddAnotherCateringOperationOrLettingAccommodationController @Inject() (
   mcc: MessagesControllerComponents,
   websiteAddressForPropertyView: websiteAddressForProperty,
   addAnotherCateringOperationOrLettingAccommodationView: addAnotherCateringOperationOrLettingAccommodation,
@@ -41,19 +41,26 @@ class AddAnotherCateringOperationOrLettingAccommodationController @Inject()(
 ) extends FrontendController(mcc) {
 
   def show: Action[AnyContent] = Action.async { implicit request =>
-    Future.successful(Ok(addAnotherCateringOperationOrLettingAccommodationView(addAnotherCateringOperationOrLettingAccommodationForm)))
+    Future.successful(
+      Ok(addAnotherCateringOperationOrLettingAccommodationView(addAnotherCateringOperationOrLettingAccommodationForm))
+    )
   }
 
   def submit = Action.async { implicit request =>
     addAnotherCateringOperationOrLettingAccommodationForm
       .bindFromRequest()
       .fold(
-        formWithErrors => Future.successful(BadRequest(addAnotherCateringOperationOrLettingAccommodationView(formWithErrors))),
+        formWithErrors =>
+          Future.successful(BadRequest(addAnotherCateringOperationOrLettingAccommodationView(formWithErrors))),
         data =>
           data.addAnotherCateringOperationOrLettingAccommodationDetails match {
-            case AddAnotherCateringOperationOrLettingAccommodationYes => Future.successful(Ok(cateringOperationOrLettingAccommodationDetailsView(cateringOperationOrLettingAccommodationForm)))
-            case AddAnotherCateringOperationOrLettingAccommodationNo => Future.successful(Ok(lettingOtherPartOfPropertyView(lettingOtherPartOfPropertiesForm)))
-            case _ => Future.successful(Ok(login(loginForm)))
+            case AddAnotherCateringOperationOrLettingAccommodationYes =>
+              Future.successful(
+                Ok(cateringOperationOrLettingAccommodationDetailsView(cateringOperationOrLettingAccommodationForm))
+              )
+            case AddAnotherCateringOperationOrLettingAccommodationNo  =>
+              Future.successful(Ok(lettingOtherPartOfPropertyView(lettingOtherPartOfPropertiesForm)))
+            case _                                                    => Future.successful(Ok(login(loginForm)))
           }
       )
   }

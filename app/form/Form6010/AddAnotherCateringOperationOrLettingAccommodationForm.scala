@@ -26,6 +26,8 @@ object AddAnotherCateringOperationOrLettingAccommodationForm {
   val addAnotherCateringOperationOrLettingAccommodationForm = Form(
     mapping(
       "addAnotherCateringOperationOrLettingAccommodation" -> addAnotherCateringOperationOrLettingAccommodationType
-    )(AddAnotherCateringOperationOrLettingAccommodationDetails.apply)(AddAnotherCateringOperationOrLettingAccommodationDetails.unapply)
+    )(AddAnotherCateringOperationOrLettingAccommodationDetails.apply)(
+      AddAnotherCateringOperationOrLettingAccommodationDetails.unapply
+    )
   )
 }

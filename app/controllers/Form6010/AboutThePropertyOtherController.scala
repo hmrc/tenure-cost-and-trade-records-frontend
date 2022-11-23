@@ -26,7 +26,7 @@ import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class AboutThePropertyOtherController @Inject()(
+class AboutThePropertyOtherController @Inject() (
   mcc: MessagesControllerComponents,
   websiteForPropertyView: websiteForProperty,
   aboutThePropertyOtherView: aboutThePropertyOther

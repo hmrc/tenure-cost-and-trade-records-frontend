@@ -37,7 +37,8 @@ object MappingSupport {
   val connectionToThePropertyType: Mapping[ConnectionToTheProperties]                                 = Forms.of[ConnectionToTheProperties]
   val buildingOperatingHaveAWebsiteType: Mapping[BuildingOperationHaveAWebsite]                       =
     Forms.of[BuildingOperationHaveAWebsite]
-  val addAnotherCateringOperationOrLettingAccommodationType: Mapping[AddAnotherCateringOperationOrLettingAccommodations]                       =
+  val addAnotherCateringOperationOrLettingAccommodationType
+    : Mapping[AddAnotherCateringOperationOrLettingAccommodations]                                     =
     Forms.of[AddAnotherCateringOperationOrLettingAccommodations]
   val cateringOperationType: Mapping[CateringOperationOrLettingAccommodation]                         =
     Forms.of[CateringOperationOrLettingAccommodation]

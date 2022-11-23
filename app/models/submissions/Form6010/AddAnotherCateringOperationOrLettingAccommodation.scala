@@ -28,6 +28,8 @@ object AddAnotherCateringOperationOrLettingAccommodationNo extends AddAnotherCat
   val name = "no"
 }
 
-object AddAnotherCateringOperationOrLettingAccommodation extends NamedEnumSupport[AddAnotherCateringOperationOrLettingAccommodations] {
-  val all = List(AddAnotherCateringOperationOrLettingAccommodationYes, AddAnotherCateringOperationOrLettingAccommodationNo)
+object AddAnotherCateringOperationOrLettingAccommodation
+    extends NamedEnumSupport[AddAnotherCateringOperationOrLettingAccommodations] {
+  val all =
+    List(AddAnotherCateringOperationOrLettingAccommodationYes, AddAnotherCateringOperationOrLettingAccommodationNo)
 }

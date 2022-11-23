@@ -49,10 +49,11 @@ class LettingOtherPartOfPropertyController @Inject() (
         formWithErrors => Future.successful(BadRequest(lettingOtherPartOfPropertyView(formWithErrors))),
         data =>
           data.lettingOtherPartOfProperties match {
-            case LettingOtherPartOfPropertiesYes => Future.successful(Ok(lettingOtherPartOfPropertyDetailsView(lettingOtherPartOfPropertyForm)))
-            case LettingOtherPartOfPropertiesNo => Future.successful(Ok(aboutTheLandlordView(aboutTheLandlordForm)))
-            case _ => Future.successful(Ok(login(loginForm)))
-        }
+            case LettingOtherPartOfPropertiesYes =>
+              Future.successful(Ok(lettingOtherPartOfPropertyDetailsView(lettingOtherPartOfPropertyForm)))
+            case LettingOtherPartOfPropertiesNo  => Future.successful(Ok(aboutTheLandlordView(aboutTheLandlordForm)))
+            case _                               => Future.successful(Ok(login(loginForm)))
+          }
       )
   }
 }

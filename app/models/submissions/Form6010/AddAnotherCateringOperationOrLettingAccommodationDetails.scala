@@ -16,4 +16,6 @@
 
 package models.submissions.Form6010
 
-case class AddAnotherCateringOperationOrLettingAccommodationDetails(addAnotherCateringOperationOrLettingAccommodationDetails: AddAnotherCateringOperationOrLettingAccommodations)
+case class AddAnotherCateringOperationOrLettingAccommodationDetails(
+  addAnotherCateringOperationOrLettingAccommodationDetails: AddAnotherCateringOperationOrLettingAccommodations
+)

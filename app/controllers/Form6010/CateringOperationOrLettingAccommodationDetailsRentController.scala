@@ -27,7 +27,7 @@ import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class CateringOperationOrLettingAccommodationDetailsRentController @Inject()(
+class CateringOperationOrLettingAccommodationDetailsRentController @Inject() (
   mcc: MessagesControllerComponents,
   cateringOperationOrLettingAccommodationCheckboxesDetailsView: cateringOperationOrLettingAccommodationCheckboxesDetails,
   cateringOperationOrLettingAccommodationRentDetailsView: cateringOperationOrLettingAccommodationRentDetails
@@ -45,7 +45,7 @@ class CateringOperationOrLettingAccommodationDetailsRentController @Inject()(
       .fold(
         formWithErrors =>
           Future.successful(BadRequest(cateringOperationOrLettingAccommodationRentDetailsView(formWithErrors))),
-          data => Future.successful(Ok(cateringOperationOrLettingAccommodationCheckboxesDetailsView()))
+        data => Future.successful(Ok(cateringOperationOrLettingAccommodationCheckboxesDetailsView()))
       )
   }
 

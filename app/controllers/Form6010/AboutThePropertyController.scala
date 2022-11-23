@@ -48,10 +48,9 @@ class AboutThePropertyController @Inject() (
         data =>
           data.propertyCurrentlyUsed match {
             case CurrentPropertyOther => Future.successful(Ok(aboutThePropertyOtherView(aboutThePropertyOtherForm)))
-            case _ => Future.successful(Ok(websiteForPropertyView(websiteForPropertyForm)))
+            case _                    => Future.successful(Ok(websiteForPropertyView(websiteForPropertyForm)))
           }
       )
   }
-
 
 }

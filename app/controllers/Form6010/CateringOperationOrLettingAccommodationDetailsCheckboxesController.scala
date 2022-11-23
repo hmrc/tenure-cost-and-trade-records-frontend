@@ -27,7 +27,7 @@ import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class CateringOperationOrLettingAccommodationDetailsCheckboxesController @Inject()(
+class CateringOperationOrLettingAccommodationDetailsCheckboxesController @Inject() (
   mcc: MessagesControllerComponents,
   login: login,
   cateringOperationOrLettingAccommodationDetailsCheckboxesView: cateringOperationOrLettingAccommodationCheckboxesDetails,
@@ -41,8 +41,9 @@ class CateringOperationOrLettingAccommodationDetailsCheckboxesController @Inject
   }
 
   def submit = Action.async { implicit request =>
-    Future.successful(Ok(addAnotherCateringOperationOrLettingAccommodationView(addAnotherCateringOperationOrLettingAccommodationForm))
-      )
+    Future.successful(
+      Ok(addAnotherCateringOperationOrLettingAccommodationView(addAnotherCateringOperationOrLettingAccommodationForm))
+    )
   }
 
 }

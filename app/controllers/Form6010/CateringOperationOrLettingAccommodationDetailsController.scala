@@ -33,8 +33,7 @@ class CateringOperationOrLettingAccommodationDetailsController @Inject() (
   login: login,
   cateringOperationOrLettingAccommodationDetailsView: cateringOperationOrLettingAccommodationDetails,
   cateringOperationOrLettingAccommodationRentDetailsView: cateringOperationOrLettingAccommodationRentDetails
-
-                                                                         ) extends FrontendController(mcc) {
+) extends FrontendController(mcc) {
 
   def show: Action[AnyContent] = Action.async { implicit request =>
     Future.successful(
@@ -48,7 +47,10 @@ class CateringOperationOrLettingAccommodationDetailsController @Inject() (
       .fold(
         formWithErrors =>
           Future.successful(BadRequest(cateringOperationOrLettingAccommodationDetailsView(formWithErrors))),
-          data => Future.successful(Ok(cateringOperationOrLettingAccommodationRentDetailsView(cateringOperationOrLettingAccommodationRentForm)))
+        data =>
+          Future.successful(
+            Ok(cateringOperationOrLettingAccommodationRentDetailsView(cateringOperationOrLettingAccommodationRentForm))
+          )
       )
   }
 
