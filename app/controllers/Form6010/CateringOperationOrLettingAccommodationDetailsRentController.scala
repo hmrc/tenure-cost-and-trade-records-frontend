@@ -16,39 +16,36 @@
 
 package controllers.Form6010
 
-import controllers.LoginController.loginForm
-import form.Form6010.CateringOperationOrLettingAccommodationForm.cateringOperationOrLettingAccommodationForm
 import form.Form6010.CateringOperationOrLettingAccommodationRentForm.cateringOperationOrLettingAccommodationRentForm
+import form.Form6010.CateringOperationOrLettingAccommodationForm.cateringOperationOrLettingAccommodationForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.Form6010.{cateringOperationOrLettingAccommodationDetails, cateringOperationOrLettingAccommodationRentDetails}
+import views.html.Form6010.{cateringOperationOrLettingAccommodationCheckboxesDetails, cateringOperationOrLettingAccommodationDetails, cateringOperationOrLettingAccommodationRentDetails}
 import views.html.login
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class CateringOperationOrLettingAccommodationDetailsController @Inject() (
+class CateringOperationOrLettingAccommodationDetailsRentController @Inject()(
   mcc: MessagesControllerComponents,
-  login: login,
-  cateringOperationOrLettingAccommodationDetailsView: cateringOperationOrLettingAccommodationDetails,
+  cateringOperationOrLettingAccommodationCheckboxesDetailsView: cateringOperationOrLettingAccommodationCheckboxesDetails,
   cateringOperationOrLettingAccommodationRentDetailsView: cateringOperationOrLettingAccommodationRentDetails
-
-                                                                         ) extends FrontendController(mcc) {
+) extends FrontendController(mcc) {
 
   def show: Action[AnyContent] = Action.async { implicit request =>
     Future.successful(
-      Ok(cateringOperationOrLettingAccommodationDetailsView(cateringOperationOrLettingAccommodationForm))
+      Ok(cateringOperationOrLettingAccommodationRentDetailsView(cateringOperationOrLettingAccommodationRentForm))
     )
   }
 
   def submit = Action.async { implicit request =>
-    cateringOperationOrLettingAccommodationForm
+    cateringOperationOrLettingAccommodationRentForm
       .bindFromRequest()
       .fold(
         formWithErrors =>
-          Future.successful(BadRequest(cateringOperationOrLettingAccommodationDetailsView(formWithErrors))),
-          data => Future.successful(Ok(cateringOperationOrLettingAccommodationRentDetailsView(cateringOperationOrLettingAccommodationRentForm)))
+          Future.successful(BadRequest(cateringOperationOrLettingAccommodationRentDetailsView(formWithErrors))),
+          data => Future.successful(Ok(cateringOperationOrLettingAccommodationCheckboxesDetailsView()))
       )
   }
 

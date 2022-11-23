@@ -17,7 +17,7 @@
 package form
 
 import models._
-import models.submissions.Form6010.{AddressConnectionType, AgreedReviewedAlteredThreeYear, AgreedReviewedAlteredThreeYears, BuildingInsurance, BuildingInsurances, BuildingOperationHasAWebsite, BuildingOperationHaveAWebsite, CapitalSumOrPremium, CapitalSumOrPremiums, CateringOperation, CateringOperationOrLettingAccommodation, CommenceWithinThreeYear, CommenceWithinThreeYears, CurrentPropertyUse, CurrentPropertyUsed, CurrentRentBased, CurrentRentBasedOn, CurrentRentFix, CurrentRentFixed, CurrentRentWithin12Month, CurrentRentWithin12Months, EnforcementAction, EnforcementActions, FormerLeaseSurrender, FormerLeaseSurrendered, FranchiseOrLettingsTiedToProperties, FranchiseOrLettingsTiedToProperty, IncludeLicensee, IncludeLicensees, IncludeOtherProperties, IncludeOtherProperty, InsideRepair, InsideRepairs, LegalPlanningRestriction, LegalPlanningRestrictions, LettingOtherPartOfProperties, LettingOtherPartOfProperty, LicensableActivities, LicensableActivity, MethodToFixCurrentRent, MethodToFixCurrentRents, NonDomesticRate, NonDomesticRates, OnlyPartOfProperties, OnlyPartOfProperty, OnlyToLand, OnlyToLands, OutsideRepair, OutsideRepairs, PremisesLicense, PremisesLicenses, ReceivePaymentWhenLeaseGranted, ReceivePaymentWhenLeaseGrants, RentIncludeFixturesAndFitting, RentIncludeFixturesAndFittings, RentIncludeTradesService, RentIncludeTradesServices, RentIncreasedAnnuallyWithRPI, RentIncreasedAnnuallyWithRPIs, RentOpenMarketValue, RentOpenMarketValues, RentPayableVaryAccordingToGrossOrNet, RentPayableVaryAccordingToGrossOrNets, RentPayableVaryOnQuantityOfBeer, RentPayableVaryOnQuantityOfBeers, RentReducedOnReview, RentReducedOnReviews, RentUnderReviewNegotiate, RentUnderReviewNegotiated, ShellUnit, ShellUnits, TenancyLeaseAgreement, TenancyLeaseAgreements, TenantsAdditionsDisregard, TenantsAdditionsDisregarded, TiedForGood, TiedForGoods, TiedForGoodsInformation, TiedForGoodsInformationDetail, VAT, VATs, WaterCharge, WaterCharges}
+import models.submissions.Form6010._
 import models.submissions._
 import play.api.data.FormError
 import play.api.data.format.Formatter
@@ -66,6 +66,8 @@ object Formats {
     namedEnumFormatter(CurrentPropertyUse, Errors.currentOccupierName)
   implicit val buildingOperatingHaveAWebsiteFormat: Formatter[BuildingOperationHaveAWebsite]                 =
     namedEnumFormatter(BuildingOperationHasAWebsite, Errors.booleanMissing)
+  implicit val addAnotherCateringOperationOrLettingAccommodationFormat: Formatter[AddAnotherCateringOperationOrLettingAccommodations]                 =
+    namedEnumFormatter(AddAnotherCateringOperationOrLettingAccommodation, Errors.booleanMissing)
   implicit val cateringOperationsFormat: Formatter[CateringOperationOrLettingAccommodation]                  =
     namedEnumFormatter(CateringOperation, Errors.booleanMissing)
   implicit val lettingOtherPartOfPropertiesFormat: Formatter[LettingOtherPartOfProperties]                   =

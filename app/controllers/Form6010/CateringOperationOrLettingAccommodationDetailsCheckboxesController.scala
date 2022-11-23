@@ -17,41 +17,32 @@
 package controllers.Form6010
 
 import controllers.LoginController.loginForm
+import form.Form6010.AddAnotherCateringOperationOrLettingAccommodationForm.addAnotherCateringOperationOrLettingAccommodationForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.Form6010.{aboutTheProperty, aboutThePropertyOther, websiteForProperty}
-import form.Form6010.AboutThePropertyForm.aboutThePropertyForm
-import form.Form6010.AboutThePropertyOtherForm.aboutThePropertyOtherForm
-import form.Form6010.WebsiteForPropertyForm.websiteForPropertyForm
-import models.submissions.Form6010.CurrentPropertyOther
+import views.html.Form6010.{addAnotherCateringOperationOrLettingAccommodation, cateringOperationOrLettingAccommodationCheckboxesDetails, cateringOperationOrLettingAccommodationDetails}
+import views.html.login
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class AboutThePropertyController @Inject() (
+class CateringOperationOrLettingAccommodationDetailsCheckboxesController @Inject()(
   mcc: MessagesControllerComponents,
-  websiteForPropertyView: websiteForProperty,
-  aboutThePropertyOtherView: aboutThePropertyOther,
-  aboutThePropertyView: aboutTheProperty
+  login: login,
+  cateringOperationOrLettingAccommodationDetailsCheckboxesView: cateringOperationOrLettingAccommodationCheckboxesDetails,
+  addAnotherCateringOperationOrLettingAccommodationView: addAnotherCateringOperationOrLettingAccommodation
 ) extends FrontendController(mcc) {
 
   def show: Action[AnyContent] = Action.async { implicit request =>
-    Future.successful(Ok(aboutThePropertyView(aboutThePropertyForm)))
+    Future.successful(
+      Ok(cateringOperationOrLettingAccommodationDetailsCheckboxesView())
+    )
   }
 
   def submit = Action.async { implicit request =>
-    aboutThePropertyForm
-      .bindFromRequest()
-      .fold(
-        formWithErrors => Future.successful(BadRequest(aboutThePropertyView(formWithErrors))),
-        data =>
-          data.propertyCurrentlyUsed match {
-            case CurrentPropertyOther => Future.successful(Ok(aboutThePropertyOtherView(aboutThePropertyOtherForm)))
-            case _ => Future.successful(Ok(websiteForPropertyView(websiteForPropertyForm)))
-          }
+    Future.successful(Ok(addAnotherCateringOperationOrLettingAccommodationView(addAnotherCateringOperationOrLettingAccommodationForm))
       )
   }
-
 
 }

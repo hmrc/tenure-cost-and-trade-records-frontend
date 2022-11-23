@@ -32,6 +32,9 @@ POST        /connection-to-the-property                             controllers.
 GET         /about-the-property                                     controllers.Form6010.AboutThePropertyController.show()
 POST        /about-the-property                                     controllers.Form6010.AboutThePropertyController.submit()
 
+GET         /about-the-property-other                               controllers.Form6010.AboutThePropertyOtherController.show()
+POST        /about-the-property-other                               controllers.Form6010.AboutThePropertyOtherController.submit()
+
 GET         /website-for-property                                   controllers.Form6010.WebsiteForPropertyController.show()
 POST        /website-for-property                                   controllers.Form6010.WebsiteForPropertyController.submit()
 
@@ -133,6 +136,15 @@ POST        /how-is-current-rent-fixed                              controllers.
 
 GET         /catering-operation-or-letting-accommodation-details    controllers.Form6010.CateringOperationOrLettingAccommodationDetailsController.show()
 POST        /catering-operation-or-letting-accommodation-details    controllers.Form6010.CateringOperationOrLettingAccommodationDetailsController.submit()
+
+GET         /catering-operation-or-letting-accommodation-rent       controllers.Form6010.CateringOperationOrLettingAccommodationDetailsRentController.show()
+POST        /catering-operation-or-letting-accommodation-rent       controllers.Form6010.CateringOperationOrLettingAccommodationDetailsRentController.submit()
+
+GET         /catering-operation-or-letting-accommodation-checkbox   controllers.Form6010.CateringOperationOrLettingAccommodationDetailsCheckboxesController.show()
+POST        /catering-operation-or-letting-accommodation-checkbox   controllers.Form6010.CateringOperationOrLettingAccommodationDetailsCheckboxesController.submit()
+
+GET         /add-another-catering-operation-or-letting-accommodation controllers.Form6010.AddAnotherCateringOperationOrLettingAccommodationController.show()
+POST        /add-another-catering-operation-or-letting-accommodation controllers.Form6010.AddAnotherCateringOperationOrLettingAccommodationController.submit()
 
 GET         /letting-other-part-of-property-details                 controllers.Form6010.LettingOtherPartOfPropertyDetailsController.show()
 POST        /letting-other-part-of-property-details                 controllers.Form6010.LettingOtherPartOfPropertyDetailsController.submit()

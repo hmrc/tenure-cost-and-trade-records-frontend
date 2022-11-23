@@ -16,42 +16,33 @@
 
 package controllers.Form6010
 
-import controllers.LoginController.loginForm
-import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.Form6010.{aboutTheProperty, aboutThePropertyOther, websiteForProperty}
-import form.Form6010.AboutThePropertyForm.aboutThePropertyForm
 import form.Form6010.AboutThePropertyOtherForm.aboutThePropertyOtherForm
 import form.Form6010.WebsiteForPropertyForm.websiteForPropertyForm
-import models.submissions.Form6010.CurrentPropertyOther
+import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
+import views.html.Form6010.{aboutThePropertyOther, websiteForProperty}
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class AboutThePropertyController @Inject() (
+class AboutThePropertyOtherController @Inject()(
   mcc: MessagesControllerComponents,
   websiteForPropertyView: websiteForProperty,
-  aboutThePropertyOtherView: aboutThePropertyOther,
-  aboutThePropertyView: aboutTheProperty
+  aboutThePropertyOtherView: aboutThePropertyOther
 ) extends FrontendController(mcc) {
 
   def show: Action[AnyContent] = Action.async { implicit request =>
-    Future.successful(Ok(aboutThePropertyView(aboutThePropertyForm)))
+    Future.successful(Ok(aboutThePropertyOtherView(aboutThePropertyOtherForm)))
   }
 
   def submit = Action.async { implicit request =>
-    aboutThePropertyForm
+    aboutThePropertyOtherForm
       .bindFromRequest()
       .fold(
-        formWithErrors => Future.successful(BadRequest(aboutThePropertyView(formWithErrors))),
-        data =>
-          data.propertyCurrentlyUsed match {
-            case CurrentPropertyOther => Future.successful(Ok(aboutThePropertyOtherView(aboutThePropertyOtherForm)))
-            case _ => Future.successful(Ok(websiteForPropertyView(websiteForPropertyForm)))
-          }
+        formWithErrors => Future.successful(BadRequest(aboutThePropertyOtherView(formWithErrors))),
+        data => Future.successful(Ok(websiteForPropertyView(websiteForPropertyForm)))
       )
   }
-
 
 }

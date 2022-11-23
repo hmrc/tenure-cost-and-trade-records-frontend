@@ -18,17 +18,16 @@ package form.Form6010
 
 import form.DateMappings.dateFieldsMapping
 import form.MappingSupport.{cateringAddressMapping, currencyMapping}
-import models.submissions.Form6010.CateringOperationOrLettingAccommodationDetails
+import models.submissions.Form6010.{CateringOperationOrLettingAccommodationDetails, CateringOperationOrLettingAccommodationRentDetails}
 import play.api.data.Form
 import play.api.data.Forms.{mapping, nonEmptyText}
 
-object CateringOperationOrLettingAccommodationForm {
+object CateringOperationOrLettingAccommodationRentForm {
 
-  val cateringOperationOrLettingAccommodationForm = Form(
+  val cateringOperationOrLettingAccommodationRentForm = Form(
     mapping(
-      "operatorName"    -> nonEmptyText(maxLength = 100),
-      "typeOfBusiness"  -> nonEmptyText(maxLength = 100),
-      "cateringAddress" -> cateringAddressMapping
-    )(CateringOperationOrLettingAccommodationDetails.apply)(CateringOperationOrLettingAccommodationDetails.unapply)
+      "annualRent"      -> currencyMapping(".annualRent"),
+      "dateInput"       -> dateFieldsMapping("dateInput", fieldErrorPart = ".dateInput")
+    )(CateringOperationOrLettingAccommodationRentDetails.apply)(CateringOperationOrLettingAccommodationRentDetails.unapply)
   )
 }

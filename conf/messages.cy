@@ -124,7 +124,7 @@ hint.removeConnection.additionalInformation = For example, the name of the curre
 
 #6010 ABOUT YOU
 ##############################
-aboutYou.header = About you
+aboutYou.header = Provide your contact details
 aboutYou.subheading = These should be the details of the person completing this.
 aboutYou.subheading2 = We will only use your contact details to update you about your enquiry.
 aboutYou.fullName = Full Name
@@ -161,6 +161,12 @@ propertyCurrentlyUsed.wineCafeBar = Wine bar or cafe bar
 propertyCurrentlyUsed.pubRestaurant = Pub or restaurant
 propertyCurrentlyUsed.hotel = Hotel
 propertyCurrentlyUsed.other = Other
+
+#6010 ABOUT THE PROPERTY OTHER
+##############################
+propertyCurrentlyUsedOther.header = About the property
+propertyCurrentlyUsedOther.label = Please give details if the property has another use or is vacant
+error.propertyCurrentlyUsedOther.required = Please provide the relevant information
 
 #WEBSITE FOR PROPERTY (USED ON 6010, 6011, 6015, 6016,6030, 6035, 6036, 6037, 6045)
 ##############################
@@ -215,7 +221,8 @@ label.rentUnderReviewNegotiated  = Is the rent currently under review, or is a n
 #LEASE OR AGREEMENT DETAILS VAT
 ##############################
 includedInYourRent.header = Lease or agreement details
-includedInYourRent.subheading = Are any of the following included in your rent?
+includedInYourRent.subheading = Are any of the ;'\
+d in your rent?
 label.vat = VAT
 label.nondomesticRates = Non-domestic rates
 label.waterCharges = Water charges
@@ -229,7 +236,7 @@ hint.licensableActivities= Licensable activities could include, selling alcohol,
 
 #LICENSABLE ACTIVITIES DETAILS
 ##############################
-licensableActivities.header = About the property
+licensableActivitiesDetails.header = About the property
 label.licensableActivitiesDetails = Please describe the licensable activities regularly commencing before 10:00 or after 23:30
 
 #PREMISES LICENCE CONDITIONS
@@ -321,9 +328,9 @@ error.rentPayableVaryAccordingToGrossOrNetDetails.maxLength  = This must be 1000
 
 #ENFORCEMENT ACTION BEEN TAKEN
 ##############################
-enforcementActionHasBeenTaken.header = About the property
-label.enforcementActionHasBeenTaken = Has any enforcement action been taken?
-hint.enforcementActionHasBeenTaken = This can be any suspensions, closure orders or temporary restrictions
+enforcementAction.header = About the property
+label.enforcementAction = Has any enforcement action been taken?
+hint.enforcementAction = This can be any suspensions, closure orders or temporary restrictions
 
 #ENFORCEMENT ACTION BEEN TAKEN DETAILS
 ##############################
@@ -356,13 +363,19 @@ hint.rentIncludeTradeServices = For example, maintenance of trade fixtures and f
 #RENT INCLUDE TRADE SERVICES DETAILS
 ##############################
 rentIncludeTradeServicesDetails.header = About the services your landlord provides
-label.rentIncludeTradeServicesDetails = Where specifically itemised, what sum is included in the rent (excluding VAT)?
-label.rentIncludeTradeServicesDetails.describeServices = Please describe the services provided
+label.sumIncludedInRent = Where specifically itemised, what sum is included in the rent (excluding VAT)?
+label.describeServices = Please describe the services provided
+error.required.sumIncludedInRent = Please provide a value
+error.invalid_currency.sumIncludedInRent= Please provide a number
+error.describeServices.required = Please provide further information
+error.describeServices.maxLength = This must be 1000 characters or fewer
 
 #RENT INCLUDE FIXTURES AND FITTINGS
 ##############################
 rentIncludeFixturesAndFittings.header = About your lease or agreement
 label.rentIncludeFixturesAndFittings = Does the rent include any trade fixtures and fittings, plant and machinery, furniture and other equipment belonging to the landlord?
+error.required.rentIncludeFixturesAndFittings = Please provide a value
+error.invalid_currency.rentIncludeFixturesAndFittings = Please provide a number
 
 #RENT INCLUDE FIXTURES AND FITTINGS DETAILS
 ##############################
@@ -374,11 +387,11 @@ error.invalid_currency.rentIncludeFixturesAndFittingsDetails = Please provide a 
 #INCENTIVES, PAYMENTS AND CONDITIONS
 ##############################
 incentivesPaymentsConditions.header = Incentives, payments and conditions
-label.incentivesPaymentsConditions.formerLeaseAgreement = Was a former lease or agreement surrendered early as a condition of the present one being granted?
-label.incentivesPaymentsConditions.rentReduced = Can the rent be reduced on review under the terms of the lease or agreement?
-label.incentivesPaymentsConditions.capitalSum = Did you pay a capital sum or premium for your lease or agreement ignoring tenants inventory?
-hint.incentivesPaymentsConditions.capitalSum = The sum could be paid to the landlord or a previous lessee
-label.incentivesPaymentsConditions.receivePayment = Did you receive any payment when the lease was granted (if the rent has not been reviewed in the lease), or following assignment of the lease or agreement?
+label.formerLeaseSurrendered = Was a former lease or agreement surrendered early as a condition of the present one being granted?
+label.rentReducedOnReview = Can the rent be reduced on review under the terms of the lease or agreement?
+label.capitalSumOrPremium = Did you pay a capital sum or premium for your lease or agreement ignoring tenants inventory?
+hint.incentivesPaymentsConditions.capitalSumOrPremium = The sum could be paid to the landlord or a previous lessee
+label.receivePaymentWhenLeaseGranted = Did you receive any payment when the lease was granted (if the rent has not been reviewed in the lease), or following assignment of the lease or agreement?
 
 #RENT INCREASE ANNUALLY WITH RPI
 ##############################
@@ -432,12 +445,10 @@ cateringAddress.address2.label = Address line 2
 cateringAddress.town.label = Town or city
 cateringAddress.county.label = County (optional)
 cateringAddress.postcode.label = Postcode
-label.cateringOperationOrLettingAccommodationDetails = Are any of the following included in your rent?
-hint.cateringOperationOrLettingAccommodationDetails = Select any that apply
-checkbox.cateringOperationOrLettingAccommodationDetails.rates = Rates
-checkbox.cateringOperationOrLettingAccommodationDetails.propertyInsurance = Property insurance
-checkbox.cateringOperationOrLettingAccommodationDetails.outsideRepairs = Outside repairs
-checkbox.cateringOperationOrLettingAccommodationDetails.insideRepairs = Inside repairs
+
+##CATERING OPERATION OR LETTING ACCOMMODATION DETAILS RENT
+##############################
+cateringOperationOrLettingAccommodationRentDetails.header = Annual rent for business
 label.annualRent = Annual rent payment (excluding VAT)
 label.dateInput = When was this sum fixed?
 error.required.annualRentExcludingVat = Please provide a number
@@ -445,6 +456,22 @@ error.dateInput.day.required = The date must include a day
 error.dateInput.month.required = The date must include a month
 error.dateInput.year.required = The date must include a year
 error.required.annualRent = Please provide an annual rent amount
+
+##CATERING OPERATION OR LETTING ACCOMMODATION DETAILS CHECKBOXES
+##############################
+label.cateringOperationOrLettingAccommodationCheckboxesDetails = Are any of the following included in your rent?
+hint.cateringOperationOrLettingAccommodationCheckboxesDetails = Select any that apply
+checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.rates = Rates
+checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.propertyInsurance = Property insurance
+checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.outsideRepairs = Outside repairs
+checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.insideRepairs = Inside repairs
+
+##ADD ANOTHER CATERING OPERATION OR LETTING ACCOMMODATION DETAILS CHECKBOXES
+##############################
+addAnotherCateringOperationOrLettingAccommodation.header = Franchises or lettings tied to the property
+label.addAnotherCateringOperationOrLettingAccommodation = Do you need to add another separate business or franchise?
+label.yes = Yes
+label.no = No
 
 ##LETTING OTHER PART OF PROPERTY DETAILS
 ##############################
@@ -499,7 +526,7 @@ error.financialYear.year.required = The date must include a year
 ##############################
 currentRentFirstPaid.header = About your lease or agreement
 label.currentRentFirstPaid = When was the current rent first paid under the terms of the current lease or agreement?
-help.date.day.month.year = Disregard any instances where the rent altered after changes in the amount of rates or services payable
+help.date.day.month.year = Please format in dd/mm/yyyy
 label.date.day = Day
 label.date.month = Month
 label.date.year = Year
@@ -587,17 +614,18 @@ error.furtherInformationOrRemarks.maxLength = This must be 1000 characters or fe
 #ALTERNATIVE CONTACT DETAILS
 ##############################
 alternativeContactDetails.header = Additional information
-label.alternativeContactDetails = Alternative contact details
+label.alternativeContactDetails = Contact details
 hint.alternativeContactDetails = If you like us to either contact you at at different address or  contact someone else if we have any queries about this form, please give details here
-alternativeContactDetails.label = Landlord’s name
-alternativeContactDetails.address.label = Landlord’s address
-alternativeContactDetails.buildingNameNumber.label = Address line 1
-alternativeContactDetails.address2.label = Address line 2 (optional)
-alternativeContactDetails.town.label = Town or city (optional)
-alternativeContactDetails.county.label = County (optional)
-alternativeContactDetails.postcode.label = Postcode
-error.alternativeContactDetails.required = Please enter the landlord's full name
-error.alternativeContactDetails.maxLength = This must be 1000 characters or fewer
+alternativeContactFullName.label = Full name
+label.phone = Telephone number
+label.email1 = Email address
+alternativeContactDetails.address.label = Correspondence address
+alternativeContactAddress.buildingNameNumber.label = Address line 1
+alternativeContactAddress.address2.label = Address line 2 (optional)
+alternativeContactAddress.town.label = Town or city (optional)
+alternativeContactAddress.county.label = County (optional)
+alternativeContactAddress.postcode.label = Postcode
+error.alternativeContactFullName.required = Please enter the full name
 
 #ERRORS
 ##############################
