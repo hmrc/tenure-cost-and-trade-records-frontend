@@ -16,22 +16,23 @@
 
 package controllers.Form6010
 
-import controllers.LoginController.loginForm
 import form.Form6010.CateringOperationOrLettingAccommodationForm.cateringOperationOrLettingAccommodationForm
+import form.Form6010.CateringOperationOrLettingAccommodationRentForm.cateringOperationOrLettingAccommodationRentForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.Form6010.cateringOperationOrLettingAccommodationDetails
+import views.html.Form6010.{cateringOperationOrLettingAccommodationDetails, cateringOperationOrLettingAccommodationRentDetails}
 import views.html.login
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class CateringOperationOrLettingAccommodationDetailsController @Inject() (
-  mcc: MessagesControllerComponents,
-  login: login,
-  cateringOperationOrLettingAccommodationDetailsView: cateringOperationOrLettingAccommodationDetails
-) extends FrontendController(mcc) {
+class CateringOperationOrLettingAccommodationDetailController @Inject() (
+                                                                           mcc: MessagesControllerComponents,
+                                                                           login: login,
+                                                                           cateringOperationOrLettingAccommodationDetailsView: cateringOperationOrLettingAccommodationDetails,
+                                                                           cateringOperationOrLettingAccommodationRentDetailsView: cateringOperationOrLettingAccommodationRentDetails
+                                                                         ) extends FrontendController(mcc) {
 
   def show: Action[AnyContent] = Action.async { implicit request =>
     Future.successful(
@@ -45,7 +46,10 @@ class CateringOperationOrLettingAccommodationDetailsController @Inject() (
       .fold(
         formWithErrors =>
           Future.successful(BadRequest(cateringOperationOrLettingAccommodationDetailsView(formWithErrors))),
-          data => Future.successful(Ok(login(loginForm)))
+        data =>
+          Future.successful(
+            Ok(cateringOperationOrLettingAccommodationRentDetailsView(cateringOperationOrLettingAccommodationRentForm))
+          )
       )
   }
 

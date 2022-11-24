@@ -28,9 +28,7 @@ object LettingOtherPartOfPropertyForm {
     mapping(
       "lettingOperatorName"   -> nonEmptyText(maxLength = 100),
       "lettingTypeOfBusiness" -> nonEmptyText(maxLength = 100),
-      "lettingAddress"        -> lettingOtherPartAddressMapping,
-      "lettingAnnualRent"     -> currencyMapping(".lettingAnnualRent"),
-      "lettingDateInput"      -> dateFieldsMapping("lettingDateInput", fieldErrorPart = ".dateInput")
+      "lettingAddress"        -> lettingOtherPartAddressMapping
     )(LettingOtherPartOfPropertyInformationDetails.apply)(LettingOtherPartOfPropertyInformationDetails.unapply)
   )
 }

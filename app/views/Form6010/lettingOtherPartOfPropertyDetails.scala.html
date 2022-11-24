@@ -94,54 +94,6 @@
 
   @includes.lookupLettingAddress(theForm, "lettingAddress", govukInput)
 
-  @hmrcCurrencyInput(
-   CurrencyInput(
-    id = "lettingAnnualRent",
-    name = "lettingAnnualRent",
-    value = theForm("lettingAnnualRent").value,
-    classes = "govuk-input--width-10 total-annual-rent",
-    label = Label(
-     content = Text(messages("label.lettingAnnualRent")),
-     classes = "govuk-!-font-weight-bold"
-    ),
-    autocomplete = Some("off"),
-    errorMessage =  theForm.errors.asTextErrorMessageForField("lettingAnnualRent"),
-   )
-  )
-
-  @includes.dateFields(form = theForm, field = "lettingDateInput", govukDate = govukDateInput, showDays = true)
-
-  @govukCheckboxes(
-   Checkboxes(
-    name = "lettingOtherPartOfPropertyDetails",
-    fieldset = Some(Fieldset(
-     legend = Some(Legend(
-      content = Text(Messages("label.lettingOtherPartOfPropertyDetails")),
-      classes = "govuk-fieldset__legend--s"
-     ))
-    )),
-    items = Seq(
-     CheckboxItem(
-      id = Some("rates"),
-      content = Text(messages("checkbox.lettingOtherPartOfPropertyDetails.rates"))
-     ),
-     CheckboxItem(
-      id = Some("propertyInsurance"),
-      content = Text(messages("checkbox.lettingOtherPartOfPropertyDetails.propertyInsurance"))
-     ),
-     CheckboxItem(
-      id = Some("outsideRepairs"),
-      content = Text(messages("checkbox.lettingOtherPartOfPropertyDetails.outsideRepairs"))
-     ),
-     CheckboxItem(
-      id = Some("insideRepairs"),
-      content = Text(messages("checkbox.lettingOtherPartOfPropertyDetails.insideRepairs"))
-     )
-    ),
-    hint = Some(Hint(content = Text(messages("hint.lettingOtherPartOfPropertyDetails"))))
-   )
-  )
-
   @includes.continueButton(govukButton)
  }
 }

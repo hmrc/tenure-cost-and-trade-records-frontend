@@ -16,9 +16,20 @@
 
 package models.submissions.Form6010
 
+import models.{NamedEnum, NamedEnumSupport}
 
-case class LettingOtherPartOfPropertyInformationDetails(
-  operatorName: String,
-  typeOfBusiness: String,
-  lettingAddress: LettingAddress
-)
+sealed trait AddAnotherLettingOtherPartOfProperties extends NamedEnum {
+  val key = "addAnotherLettingOtherPartOfProperty"
+}
+object AddAnotherLettingOtherPartOfPropertiesYes extends AddAnotherLettingOtherPartOfProperties {
+  val name = "yes"
+}
+object AddAnotherLettingOtherPartOfPropertiesNo extends AddAnotherLettingOtherPartOfProperties {
+  val name = "no"
+}
+
+object AddAnotherLettingOtherPartOfProperty
+  extends NamedEnumSupport[AddAnotherLettingOtherPartOfProperties] {
+  val all =
+    List(AddAnotherLettingOtherPartOfPropertiesYes, AddAnotherLettingOtherPartOfPropertiesNo)
+}

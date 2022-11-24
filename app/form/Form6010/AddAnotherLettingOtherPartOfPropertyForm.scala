@@ -14,11 +14,20 @@
  * limitations under the License.
  */
 
-package models.submissions.Form6010
+package form.Form6010
 
+import form.MappingSupport._
+import models.submissions.Form6010.{AddAnotherCateringOperationOrLettingAccommodationDetails, AddAnotherLettingOtherPartOfPropertyDetails}
+import play.api.data.Form
+import play.api.data.Forms.mapping
 
-case class LettingOtherPartOfPropertyInformationDetails(
-  operatorName: String,
-  typeOfBusiness: String,
-  lettingAddress: LettingAddress
-)
+object AddAnotherLettingOtherPartOfPropertyForm {
+
+  val addAnotherLettingOtherPartOfPropertyForm = Form(
+    mapping(
+      "addAnotherLettingOtherPartOfProperty" -> addAnotherLettingOtherPartOfPropertyType
+    )(AddAnotherLettingOtherPartOfPropertyDetails.apply)(
+      AddAnotherLettingOtherPartOfPropertyDetails.unapply
+    )
+  )
+}

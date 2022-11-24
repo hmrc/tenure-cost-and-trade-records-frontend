@@ -14,11 +14,22 @@
  * limitations under the License.
  */
 
-package models.submissions.Form6010
+package form.Form6010
 
+import models.submissions.Form6010.AboutThePropertyOtherDetails
+import play.api.data.Form
+import play.api.data.Forms.{default, mapping, text}
+import play.api.data.validation.Constraints.nonEmpty
 
-case class LettingOtherPartOfPropertyInformationDetails(
-  operatorName: String,
-  typeOfBusiness: String,
-  lettingAddress: LettingAddress
-)
+object AboutThePropertyOtherForm {
+
+  val aboutThePropertyOtherForm = Form(
+    mapping(
+      "propertyCurrentlyUsedOther" ->
+        default(text, "").verifying(
+          nonEmpty(errorMessage = "error.propertyCurrentlyUsedOther.required")
+        )
+    )(AboutThePropertyOtherDetails.apply)(AboutThePropertyOtherDetails.unapply)
+  )
+
+}

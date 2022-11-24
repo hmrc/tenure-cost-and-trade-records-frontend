@@ -16,21 +16,25 @@
 
 package controllers.Form6010
 
+import controllers.LoginController.loginForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.Form6010.{aboutTheProperty, websiteForProperty}
+import views.html.Form6010.{aboutTheProperty, aboutThePropertyOther, websiteForProperty}
 import form.Form6010.AboutThePropertyForm.aboutThePropertyForm
+import form.Form6010.AboutThePropertyOtherForm.aboutThePropertyOtherForm
 import form.Form6010.WebsiteForPropertyForm.websiteForPropertyForm
+import models.submissions.Form6010.CurrentPropertyOther
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
 
 @Singleton
 class AboutThePropertyController @Inject() (
-  mcc: MessagesControllerComponents,
-  websiteForPropertyView: websiteForProperty,
-  aboutThePropertyView: aboutTheProperty
-) extends FrontendController(mcc) {
+                                             mcc: MessagesControllerComponents,
+                                             websiteForPropertyView: websiteForProperty,
+                                             aboutThePropertyOtherView: aboutThePropertyOther,
+                                             aboutThePropertyView: aboutTheProperty
+                                           ) extends FrontendController(mcc) {
 
   def show: Action[AnyContent] = Action.async { implicit request =>
     Future.successful(Ok(aboutThePropertyView(aboutThePropertyForm)))
@@ -41,8 +45,13 @@ class AboutThePropertyController @Inject() (
       .bindFromRequest()
       .fold(
         formWithErrors => Future.successful(BadRequest(aboutThePropertyView(formWithErrors))),
-        data => Future.successful(Ok(websiteForPropertyView(websiteForPropertyForm)))
+        data =>
+          data.propertyCurrentlyUsed match {
+            case CurrentPropertyOther => Future.successful(Ok(aboutThePropertyOtherView(aboutThePropertyOtherForm)))
+            case _ => Future.successful(Ok(websiteForPropertyView(websiteForPropertyForm)))
+          }
       )
   }
+
 
 }

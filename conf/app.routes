@@ -32,6 +32,9 @@ POST        /connection-to-the-property                             controllers.
 GET         /about-the-property                                     controllers.Form6010.AboutThePropertyController.show()
 POST        /about-the-property                                     controllers.Form6010.AboutThePropertyController.submit()
 
+GET         /about-the-property-other                               controllers.Form6010.AboutThePropertyOtherController.show()
+POST        /about-the-property-other                               controllers.Form6010.AboutThePropertyOtherController.submit()
+
 GET         /website-for-property                                   controllers.Form6010.WebsiteForPropertyController.show()
 POST        /website-for-property                                   controllers.Form6010.WebsiteForPropertyController.submit()
 
@@ -131,11 +134,29 @@ POST        /enforcement-action-been-taken-details                  controllers.
 GET         /how-is-current-rent-fixed                              controllers.Form6010.HowIsCurrentRentFixedController.show()
 POST        /how-is-current-rent-fixed                              controllers.Form6010.HowIsCurrentRentFixedController.submit()
 
-GET         /catering-operation-or-letting-accommodation-details    controllers.Form6010.CateringOperationOrLettingAccommodationDetailsController.show()
-POST        /catering-operation-or-letting-accommodation-details    controllers.Form6010.CateringOperationOrLettingAccommodationDetailsController.submit()
+GET         /catering-operation-or-letting-accommodation-details    controllers.Form6010.CateringOperationOrLettingAccommodationDetailController.show()
+POST        /catering-operation-or-letting-accommodation-details    controllers.Form6010.CateringOperationOrLettingAccommodationDetailController.submit()
+
+GET         /catering-operation-or-letting-accommodation-rent       controllers.Form6010.CateringOperationOrLettingAccommodationDetailsRentController.show()
+POST        /catering-operation-or-letting-accommodation-rent       controllers.Form6010.CateringOperationOrLettingAccommodationDetailsRentController.submit()
+
+GET         /catering-operation-or-letting-accommodation-checkbox   controllers.Form6010.CateringOperationOrLettingAccommodationDetailsCheckboxesController.show()
+POST        /catering-operation-or-letting-accommodation-checkbox   controllers.Form6010.CateringOperationOrLettingAccommodationDetailsCheckboxesController.submit()
+
+GET         /add-another-catering-operation-or-letting-accommodation controllers.Form6010.AddAnotherCateringOperationOrLettingAccommodationController.show()
+POST        /add-another-catering-operation-or-letting-accommodation controllers.Form6010.AddAnotherCateringOperationOrLettingAccommodationController.submit()
 
 GET         /letting-other-part-of-property-details                 controllers.Form6010.LettingOtherPartOfPropertyDetailsController.show()
 POST        /letting-other-part-of-property-details                 controllers.Form6010.LettingOtherPartOfPropertyDetailsController.submit()
+
+GET         /letting-other-part-of-property-rent                    controllers.Form6010.LettingOtherPartOfPropertyDetailsRentController.show()
+POST        /letting-other-part-of-property-rent                    controllers.Form6010.LettingOtherPartOfPropertyDetailsRentController.submit()
+
+GET         /letting-other-part-of-property-checkbox                controllers.Form6010.LettingOtherPartOfPropertyDetailsCheckboxesController.show()
+POST        /letting-other-part-of-property-checkbox                controllers.Form6010.LettingOtherPartOfPropertyDetailsCheckboxesController.submit()
+
+GET         /add-another-letting-other-part-of-property             controllers.Form6010.AddAnotherLettingOtherPartOfPropertyController.show()
+POST        /add-another-letting-other-part-of-property             controllers.Form6010.AddAnotherLettingOtherPartOfPropertyController.submit()
 
 GET         /tenants-additions-disregarded                          controllers.Form6010.TenantsAdditionsDisregardedController.show()
 POST        /tenants-additions-disregarded                          controllers.Form6010.TenantsAdditionsDisregardedController.submit()
