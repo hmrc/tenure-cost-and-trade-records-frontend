@@ -18,41 +18,25 @@ package models
 
 import form.MappingSupport._
 import models.submissions.Form6010.AddressConnectionType
+import models.submissions.PastConnectionType
 import play.api.data.Form
 import play.api.data.Forms.mapping
 import play.api.libs.json._
 
 case class Session(
-  areYouStillConnected: AddressConnectionType
+  areYouStillConnected: AddressConnectionType,
+  pastConnectionType: Option[PastConnectionType] = None
 )
 
 object Session {
   implicit val format = Json.format[Session]
 
-//  def apply(addressConnectionType: AddressConnectionType): Session = {
-//    Session(
-//      addressConnectionType)
-//  }
-
-//  def apply(connectionToThePropertyDetails: ConnectionToThePropertyDetails)(implicit ses: Session): Session = {
-//    Session(
-//      ses.areYouStillConnected,
-//      connectionToTheProperty = Some(connectionToThePropertyDetails)
-//    )
-//  }
+  def apply(session: Session, pastConnectionType: PastConnectionType): Session =
+    Session(
+      session.areYouStillConnected,
+      pastConnectionType = Some(pastConnectionType)
+    )
 
 }
 
-object areYouStillConnectedToAddress {
-  object AreYouStillConnectedForm {
-
-    lazy val baseAreYouStillConnectedForm: Form[AddressConnectionType] = Form(baseAreYouStillConnectedMapping)
-
-    val baseAreYouStillConnectedMapping = mapping(
-      "isRelated" -> addressConnectionType
-    )(x => x)(b => Some(b))
-
-    val areYouStillConnectedForm = Form(baseAreYouStillConnectedMapping)
-
-  }
-}
+object areYouStillConnectedToAddress {}

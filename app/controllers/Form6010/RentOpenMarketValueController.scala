@@ -49,9 +49,11 @@ class RentOpenMarketValueController @Inject() (
         formWithErrors => Future.successful(BadRequest(rentOpenMarketValueView(formWithErrors))),
         data =>
           data.rentOpenMarketValues match {
-            case RentOpenMarketValuesYes => Future.successful(Ok(whatIsYourRentBasedOnView(whatIsYourCurrentRentBasedOnForm)))
-            case RentOpenMarketValuesNo => Future.successful(Ok(rentIncreaseAnnuallyWithRPIView(rentIncreasedAnnuallyWithRPIDetailsForm)))
-            case _ => Future.successful(Ok(login(loginForm)))
+            case RentOpenMarketValuesYes =>
+              Future.successful(Ok(whatIsYourRentBasedOnView(whatIsYourCurrentRentBasedOnForm)))
+            case RentOpenMarketValuesNo  =>
+              Future.successful(Ok(rentIncreaseAnnuallyWithRPIView(rentIncreasedAnnuallyWithRPIDetailsForm)))
+            case _                       => Future.successful(Ok(login(loginForm)))
           }
       )
   }

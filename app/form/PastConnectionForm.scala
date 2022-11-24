@@ -17,15 +17,18 @@
 package form
 
 import form.MappingSupport._
-import models.submissions.AreYouStillConnectedNoDetails
+import models.submissions.PastConnectionType
 import play.api.data.Form
 import play.api.data.Forms.mapping
 
-object AreYouStillConnectedNoForm {
+object PastConnectionForm {
 
-  val areYouStillConnectedNoForm = Form(
-    mapping(
-      "areYouConnectedNo" -> areYouStillConnectedNoType
-    )(AreYouStillConnectedNoDetails.apply)(AreYouStillConnectedNoDetails.unapply)
-  )
+  lazy val basePastConnectionForm: Form[PastConnectionType] = Form(basePastConnectionMapping)
+
+  val basePastConnectionMapping = mapping(
+    "pastConnectionType" -> pastConnectionType
+  )(x => x)(b => Some(b))
+
+  val pastConnectionForm = Form(basePastConnectionMapping)
+
 }

@@ -51,7 +51,7 @@ class PremisesLicenseController @Inject() (
           data.premisesLicenses match {
             case PremisesLicensesYes => Future.successful(Ok(premisesLicenceDetailsView(premisesLicenceDetailsForm)))
             case PremisesLicensesNo  => Future.successful(Ok(enforcementActionBeenTakenView(enforcementActionForm)))
-            case _ => Future.successful(Ok(login(loginForm)))
+            case _                   => Future.successful(Ok(login(loginForm)))
           }
       )
   }
