@@ -14,22 +14,26 @@
  * limitations under the License.
  *@
 
-@import models.submissions.Form6010.PremisesLicenseDetails
+@import models.submissions.Form6010.CateringOperationOrLettingAccommodationRentDetails
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.checkboxes.Checkboxes
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.checkboxes.CheckboxItem
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
+@import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcCurrencyInput
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukErrorSummary
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukDateInput
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukTextarea
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukCharacterCount
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukCheckboxes
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
-@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Radios
-@import uk.gov.hmrc.govukfrontend.views.Aliases.RadioItem
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Label
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Fieldset
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Legend
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Hint
+@import uk.gov.hmrc.hmrcfrontend.views.viewmodels.currencyinput.CurrencyInput
 
 @this(layout: Layout,
         govukButton: GovukButton,
@@ -39,50 +43,39 @@
         govukDateInput: GovukDateInput,
         govukTextarea: GovukTextarea,
         govukCharacterCount: GovukCharacterCount,
+        govukCheckboxes: GovukCheckboxes,
+        hmrcCurrencyInput : HmrcCurrencyInput,
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[PremisesLicenseDetails])(implicit request: Request[_], messages: Messages)
+@(theForm: Form[CateringOperationOrLettingAccommodationRentDetails])(implicit request: Request[_], messages: Messages)
 
 @layout(
- pageHeading = messages("premisesLicense.header"),
- backLinkUrl = controllers.Form6010.routes.LicensableActivitiesController.show.url,
+ pageHeading = messages("cateringOperationOrLettingAccommodationRentDetails.header"),
+ backLinkUrl = controllers.Form6010.routes.CateringOperationOrLettingAccommodationController.show.url,
  theForm = theForm
 ) {
 
- @formWithCSRF(action = controllers.Form6010.routes.PremisesLicenseController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
+ @formWithCSRF(action = controllers.Form6010.routes.CateringOperationOrLettingAccommodationDetailsRentController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
 
-  @govukRadios(
-   Radios(
-    name = "premisesLicense",
-    idPrefix = Option("premisesLicense"),
-    classes = "govuk-radios--inline",
-    items = Seq(
-     "yes" -> messages("label.yes"),
-     "no" -> messages("label.no")
-    ).map(radioItem => RadioItem(
-     content = Text(radioItem._2),
-     checked = radioItem._1.equals(theForm("premisesLicense").value.getOrElse("")),
-     value = Option(radioItem._1)
-    )
+  @hmrcCurrencyInput(
+   CurrencyInput(
+    id = "annualRent",
+    name = "annualRent",
+    value = theForm("annualRent").value,
+    classes = "govuk-input--width-10 total-annual-rent",
+    label = Label(
+     content = Text(messages("label.annualRent")),
+     classes = "govuk-!-font-weight-bold"
     ),
-    errorMessage =  theForm.errors.asTextErrorMessageForField("premisesLicense"),
-    fieldset = Option(
-     Fieldset(
-      legend = Option(
-       Legend(
-        content = Text(messages("label.premisesLicense")),
-        classes = "govuk-!-font-weight-bold"
-       )
-      )
-     )
-    ),
-    hint = Some(Hint(content = Text(messages("hint.premisesLicense")))),
+    autocomplete = Some("off"),
+    errorMessage =  theForm.errors.asTextErrorMessageForField("annualRent"),
    )
   )
 
-  @includes.continueButton(govukButton)
+  @includes.dateFields(form = theForm, field = "dateInput", govukDate = govukDateInput, showDays = true)
 
+  @includes.continueButton(govukButton)
  }
 }
 

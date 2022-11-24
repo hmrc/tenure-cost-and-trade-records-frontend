@@ -178,8 +178,8 @@ error.propertyCurrentlyUsedOther.required = Please provide the relevant informat
 ##############################
 buildingOperatingHaveAWebsite.header = About the property
 label.buildingOperatingHaveAWebsite = Does the business operating from the property have a website?
-label.yes = Yes
-label.no = No
+buildingOperatingHaveAWebsite.yes = Yes
+buildingOperatingHaveAWebsite.no = No
 
 #WEBSITE ADDRESS FOR PROPERTY (USED ON 6010, 6011, 6015, 6016,6030, 6035, 6036, 6037, 6045)
 ##############################
@@ -243,7 +243,7 @@ hint.licensableActivities= Licensable activities could include, selling alcohol,
 #LICENSABLE ACTIVITIES DETAILS
 ##############################
 licensableActivitiesDetails.header = About the property
-label.licensableActivitiesDetails = Please describe the licensable activities regularly commencing before 10:00 or after 23:30
+label.licensableActivitiesDetails = Describe the licensable activities regularly commending before 10:00 or after 23:30
 
 #PREMISES LICENCE CONDITIONS
 ##############################
@@ -436,7 +436,7 @@ hint.enforcementActionHasBeenTaken = This can be any suspensions, closure orders
 #ENFORCEMENT ACTION BEEN TAKEN DETAILS
 ##############################
 enforcementActionHasBeenTaken.header = About the property
-label.enforcementActionHasBeenTaken = Describe any enforcement action taken
+label.enforcementActionHasBeenTaken = Describe the enforcement action taken
 
 ##CATERING OPERATION OR LETTING ACCOMMODATION DETAILS
 ##############################
