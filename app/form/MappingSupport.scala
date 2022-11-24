@@ -34,7 +34,7 @@ object MappingSupport {
   val phoneRegex                                                                                      = """^^[0-9\s\+()-]+$"""
   val userType: Mapping[UserType]                                                                     = Forms.of[UserType]
   val aboutYourPropertyType: Mapping[CurrentPropertyUsed]                                             = Forms.of[CurrentPropertyUsed]
-  val connectionToThePropertyType: Mapping[ConnectionToTheProperties]                                 = Forms.of[ConnectionToTheProperties]
+  val connectionToThePropertyType: Mapping[ConnectionToProperty]                                      = Forms.of[ConnectionToProperty]
   val buildingOperatingHaveAWebsiteType: Mapping[BuildingOperationHaveAWebsite]                       =
     Forms.of[BuildingOperationHaveAWebsite]
   val cateringOperationType: Mapping[CateringOperationOrLettingAccommodation]                         =
