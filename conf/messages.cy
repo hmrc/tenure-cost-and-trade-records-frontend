@@ -125,7 +125,6 @@ hint.removeConnection.additionalInformation = For example, the name of the curre
 #6010 ABOUT YOU
 ##############################
 aboutYou.header = Provide your contact details
-aboutYou.subheading = These should be the details of the person completing this.
 aboutYou.subheading2 = We will only use your contact details to update you about your enquiry.
 aboutYou.fullName = Full Name
 aboutYou.email = Email address
@@ -221,8 +220,7 @@ label.rentUnderReviewNegotiated  = Is the rent currently under review, or is a n
 #LEASE OR AGREEMENT DETAILS VAT
 ##############################
 includedInYourRent.header = Lease or agreement details
-includedInYourRent.subheading = Are any of the ;'\
-d in your rent?
+includedInYourRent.subheading = Are any of the following included in your rent?
 label.vat = VAT
 label.nondomesticRates = Non-domestic rates
 label.waterCharges = Water charges
@@ -466,7 +464,7 @@ checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.propertyInsura
 checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.outsideRepairs = Outside repairs
 checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.insideRepairs = Inside repairs
 
-##ADD ANOTHER CATERING OPERATION OR LETTING ACCOMMODATION DETAILS CHECKBOXES
+##ADD ANOTHER CATERING OPERATION OR LETTING ACCOMMODATION DETAILS
 ##############################
 addAnotherCateringOperationOrLettingAccommodation.header = Franchises or lettings tied to the property
 label.addAnotherCateringOperationOrLettingAccommodation = Do you need to add another separate business or franchise?
@@ -475,10 +473,9 @@ label.no = No
 
 ##LETTING OTHER PART OF PROPERTY DETAILS
 ##############################
-lettingOtherPartOfPropertyDetails.header = Lettings
-lettingOtherPartOfPropertyDetails.subheading = Enter the details of letting
-label.lettingOperatorName = Enter operator’s name
-label.lettingTypeOfBusiness = Describe the type of business
+lettingOtherPartOfPropertyDetails.header = Franchises or lettings tied to the property
+label.lettingOperatorName = Tenant’s name
+label.lettingTypeOfBusiness = Description of letting
 hint.lettingTypeOfBusiness = For example, a billboard, residential accommodation etc
 lettingAddress.correspondenceAddress = Correspondence address
 lettingAddress.buildingNameNumber.label = Address line 1
@@ -486,19 +483,33 @@ lettingAddress.address2.label = Address line 2
 lettingAddress.town.label = Town or city
 lettingAddress.county.label = County (optional)
 lettingAddress.postcode.label = Postcode
-label.lettingOtherPartOfPropertyDetails = Are any of the following included in your rent?
-hint.lettingOtherPartOfPropertyDetails = Select any that apply
-checkbox.lettingOtherPartOfPropertyDetails.rates = Rates
-checkbox.lettingOtherPartOfPropertyDetails.propertyInsurance = Property insurance
-checkbox.lettingOtherPartOfPropertyDetails.outsideRepairs = Outside repairs
-checkbox.lettingOtherPartOfPropertyDetails.insideRepairs = Inside repairs
-label.lettingAnnualRent = Annual rent payment (excluding VAT)
-label.lettingDateInput = When was this sum fixed?
-error.required.lettingAnnualRent = Please provide a number
+
+##LETTING OTHER PART OF PROPERTY DETAILS RENT
+##############################
+lettingOtherPartOfPropertyRentDetails.header = Annual rent for letting
+label.annualRent = Annual rent payment (excluding VAT)
+label.dateInput = When was this sum fixed?
+error.required.annualRentExcludingVat = Please provide a number
 error.dateInput.day.required = The date must include a day
 error.dateInput.month.required = The date must include a month
 error.dateInput.year.required = The date must include a year
 error.required.annualRent = Please provide an annual rent amount
+
+##LETTING OTHER PART OF PROPERTY DETAILS CHECKBOXES
+##############################
+label.lettingOtherPartOfPropertyCheckboxesDetails = Are any of the following included in your rent for letting?
+hint.lettingOtherPartOfPropertyCheckboxesDetails = Select any that apply
+checkbox.lettingOtherPartOfPropertyCheckboxesDetails.rates = Rates
+checkbox.lettingOtherPartOfPropertyCheckboxesDetails.propertyInsurance = Property insurance
+checkbox.lettingOtherPartOfPropertyCheckboxesDetails.outsideRepairs = Outside repairs
+checkbox.lettingOtherPartOfPropertyCheckboxesDetails.insideRepairs = Inside repairs
+
+##ADD ANOTHER LETTING OTHER PART OF PROPERTY DETAILS
+##############################
+addAnotherLettingOtherPartOfProperty.header = Franchises or lettings tied to the property
+label.addAnotherLettingOtherPartOfProperty = Do you need to add another letting?
+label.yes = Yes
+label.no = No
 
 ##TENANTS ADDITIONS DISREGARDED
 ##############################
