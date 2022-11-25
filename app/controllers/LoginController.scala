@@ -19,6 +19,7 @@ package controllers
 import config.LoginToBackendAction
 import connectors.Audit
 import form.{Errors, MappingSupport}
+import models.ForTypes
 import models.submissions.Form6010.Address
 import org.joda.time.DateTime
 import play.api.Logging
@@ -132,22 +133,23 @@ class LoginController @Inject() (
     loginToBackend(hc2, ec)(cleanedRefNumber, cleanPostcode, startTime)
       .map { case NoExistingDocument(token, forNum, address) =>
         auditLogin(referenceNumber, false, address, forNum)(hc2)
-        if (forNum == "FOR6010" || forNum == "FOR6020") {
-          withNewSession(
-            Redirect(controllers.routes.AreYouStillConnectedController.show()),
-            token,
-            forNum,
-            s"$referenceNumber",
-            sessionId
-          )
-        } else {
-          withNewSession(
-            Redirect(routes.LoginController.notValidFORType()),
-            token,
-            forNum,
-            s"$referenceNumber",
-            sessionId
-          )
+        ForTypes.find(forNum) match {
+          case Some(_) =>
+            withNewSession(
+              Redirect(controllers.routes.AreYouStillConnectedController.show()),
+              token,
+              forNum,
+              s"$referenceNumber",
+              sessionId
+            )
+          case None    =>
+            withNewSession(
+              Redirect(routes.LoginController.notValidFORType()),
+              token,
+              forNum,
+              s"$referenceNumber",
+              sessionId
+            )
         }
       }
       .recover {

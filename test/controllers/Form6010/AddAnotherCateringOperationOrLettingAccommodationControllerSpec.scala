@@ -25,7 +25,10 @@ import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 
-class AddAnotherCateringOperationOrLettingAccommodationControllerSpec extends AnyWordSpec with Matchers with GuiceOneAppPerSuite {
+class AddAnotherCateringOperationOrLettingAccommodationControllerSpec
+    extends AnyWordSpec
+    with Matchers
+    with GuiceOneAppPerSuite {
   override def fakeApplication(): Application =
     new GuiceApplicationBuilder()
       .configure(
