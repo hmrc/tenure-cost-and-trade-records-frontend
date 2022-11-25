@@ -34,7 +34,7 @@
 @import uk.gov.hmrc.govukfrontend.views.Aliases.RadioItem
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Fieldset
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Legend
-
+@import models.Session
 @import models.submissions._
 
 @this(layout: Layout,
@@ -49,7 +49,7 @@
 )
 
 
-@(theForm: Form[ConnectionToThePropertyDetails])(implicit request: Request[_], messages: Messages)
+@(theForm: Form[_])(implicit request: Request[_], messages: Messages)
 
 @layout(
   pageHeading = messages("connectionToTheProperty.header"),

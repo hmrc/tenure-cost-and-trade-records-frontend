@@ -60,7 +60,7 @@ object Formats {
   }
 
   implicit val userTypeFormat: Formatter[UserType]                                                           = namedEnumFormatter(UserType, Errors.userTypeRequired)
-  implicit val connectionToPropertyFormat: Formatter[ConnectionToTheProperties]                              =
+  implicit val connectionToPropertyFormat: Formatter[ConnectionToProperty]                                   =
     namedEnumFormatter(ConnectionToProperty, Errors.booleanMissing)
   implicit val aboutYourPropertyFormat: Formatter[CurrentPropertyUsed]                                       =
     namedEnumFormatter(CurrentPropertyUse, Errors.currentOccupierName)
@@ -93,7 +93,7 @@ object Formats {
     namedEnumFormatter(RentIncludeFixturesAndFitting, Errors.booleanMissing)
   implicit val rentOpenMarketValuesFormat: Formatter[RentOpenMarketValues]                                   =
     namedEnumFormatter(RentOpenMarketValue, Errors.booleanMissing)
-  implicit val areYouStillConnectedNoFormat: Formatter[PastConnectionType]                                   =
+  implicit val pastConnectionFormat: Formatter[PastConnectionType]                                           =
     namedEnumFormatter(PastConnectionType, Errors.booleanMissing)
   implicit val methodToFixCurrentRentDetailsFormat: Formatter[MethodToFixCurrentRents]                       =
     namedEnumFormatter(MethodToFixCurrentRent, Errors.booleanMissing)

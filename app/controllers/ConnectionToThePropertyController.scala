@@ -41,12 +41,15 @@ class ConnectionToThePropertyController @Inject() (
     Future.successful(Ok(connectionToThePropertyView(connectionToThePropertyForm)))
   }
 
-  def submit = Action.async { implicit request =>
+  def submit = (Action andThen withSessionRefiner).async { implicit request =>
     connectionToThePropertyForm
       .bindFromRequest()
       .fold(
         formWithErrors => Future.successful(BadRequest(connectionToThePropertyView(formWithErrors))),
-        data => Future.successful(Ok(taskListView()))
+        data => {
+          session.saveOrUpdate(request.sessionData, data)
+          Future.successful(Ok(taskListView()))
+        }
       )
   }
 }

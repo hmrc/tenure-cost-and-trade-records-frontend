@@ -23,9 +23,12 @@ import play.api.data.Forms.mapping
 
 object ConnectionToThePropertyForm {
 
-  val connectionToThePropertyForm = Form(
-    mapping(
-      "connectionToTheProperty" -> connectionToThePropertyType
-    )(ConnectionToThePropertyDetails.apply)(ConnectionToThePropertyDetails.unapply)
-  )
+  lazy val baseConnectionToThePropertyForm: Form[ConnectionToProperty] = Form(baseConnectionToThePropertyMapping)
+
+  val baseConnectionToThePropertyMapping = mapping(
+    "connectionToTheProperty" -> connectionToThePropertyType
+  )(x => x)(b => Some(b))
+
+  val connectionToThePropertyForm = Form(baseConnectionToThePropertyMapping)
+
 }

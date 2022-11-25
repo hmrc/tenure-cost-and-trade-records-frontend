@@ -16,29 +16,34 @@
 
 package models.submissions
 
-import models.{NamedEnum, NamedEnumSupport}
+import models.{EnumFormat, NamedEnum, NamedEnumSupport}
+import play.api.libs.json.Format
 
-sealed trait ConnectionToTheProperties extends NamedEnum {
-  val key = "connectionToTheProperty"
+sealed trait ConnectionToProperty extends NamedEnum {
+  override def key: String = "connectionToTheProperty"
 }
-object ConnectionToThePropertyOccupierTrustee extends ConnectionToTheProperties {
-  val name = "occupierTrustee"
+object ConnectionToThePropertyOccupierTrustee extends ConnectionToProperty {
+  override def name: String = "occupierTrustee"
 }
-object ConnectionToThePropertyOwnerTrustee extends ConnectionToTheProperties {
-  val name = "ownerTrustee"
+object ConnectionToThePropertyOwnerTrustee extends ConnectionToProperty {
+  override def name: String = "ownerTrustee"
 }
-object ConnectionToThePropertyOccupierAgent extends ConnectionToTheProperties {
-  val name = "occupierAgent"
+object ConnectionToThePropertyOccupierAgent extends ConnectionToProperty {
+  override def name: String = "occupierAgent"
 }
-object ConnectionToThePropertyOwnerAgent extends ConnectionToTheProperties {
-  val name = "ownerAgent"
+object ConnectionToThePropertyOwnerAgent extends ConnectionToProperty {
+  override def name: String = "ownerAgent"
 }
 
-object ConnectionToProperty extends NamedEnumSupport[ConnectionToTheProperties] {
+object ConnectionToProperty extends NamedEnumSupport[ConnectionToProperty] {
+  implicit val format: Format[ConnectionToProperty] = EnumFormat(ConnectionToProperty)
+
   val all = List(
     ConnectionToThePropertyOccupierTrustee,
     ConnectionToThePropertyOwnerTrustee,
     ConnectionToThePropertyOccupierAgent,
     ConnectionToThePropertyOwnerAgent
   )
+
+  val key = all.head.key
 }
