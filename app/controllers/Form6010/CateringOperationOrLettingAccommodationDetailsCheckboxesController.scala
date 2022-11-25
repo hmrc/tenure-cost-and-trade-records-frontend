@@ -16,33 +16,31 @@
 
 package controllers.Form6010
 
-import form.Form6010.LettingOtherPartOfPropertyForm.lettingOtherPartOfPropertyForm
-import form.Form6010.LettingOtherPartOfPropertyRentForm.lettingOtherPartOfPropertyRentForm
+import form.Form6010.AddAnotherCateringOperationOrLettingAccommodationForm.addAnotherCateringOperationOrLettingAccommodationForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.Form6010.{lettingOtherPartOfPropertyDetails, lettingOtherPartOfPropertyRentDetails}
+import views.html.Form6010.{addAnotherCateringOperationOrLettingAccommodation, cateringOperationOrLettingAccommodationCheckboxesDetails}
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class LettingOtherPartOfPropertyDetailsController @Inject() (
+class CateringOperationOrLettingAccommodationDetailsCheckboxesController @Inject() (
   mcc: MessagesControllerComponents,
-  lettingOtherPartOfPropertyDetailsView: lettingOtherPartOfPropertyDetails,
-  lettingOtherPartOfPropertyDetailsRentView: lettingOtherPartOfPropertyRentDetails
+  cateringOperationOrLettingAccommodationDetailsCheckboxesView: cateringOperationOrLettingAccommodationCheckboxesDetails,
+  addAnotherCateringOperationOrLettingAccommodationView: addAnotherCateringOperationOrLettingAccommodation
 ) extends FrontendController(mcc) {
 
   def show: Action[AnyContent] = Action.async { implicit request =>
-    Future.successful(Ok(lettingOtherPartOfPropertyDetailsView(lettingOtherPartOfPropertyForm)))
+    Future.successful(
+      Ok(cateringOperationOrLettingAccommodationDetailsCheckboxesView())
+    )
   }
 
   def submit = Action.async { implicit request =>
-    lettingOtherPartOfPropertyForm
-      .bindFromRequest()
-      .fold(
-        formWithErrors => Future.successful(BadRequest(lettingOtherPartOfPropertyDetailsView(formWithErrors))),
-        data => Future.successful(Ok(lettingOtherPartOfPropertyDetailsRentView(lettingOtherPartOfPropertyRentForm)))
-      )
+    Future.successful(
+      Ok(addAnotherCateringOperationOrLettingAccommodationView(addAnotherCateringOperationOrLettingAccommodationForm))
+    )
   }
 
 }

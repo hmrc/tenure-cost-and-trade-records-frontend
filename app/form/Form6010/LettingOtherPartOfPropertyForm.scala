@@ -16,8 +16,7 @@
 
 package form.Form6010
 
-import form.DateMappings.dateFieldsMapping
-import form.MappingSupport.{currencyMapping, lettingOtherPartAddressMapping}
+import form.MappingSupport.lettingOtherPartAddressMapping
 import models.submissions.Form6010.LettingOtherPartOfPropertyInformationDetails
 import play.api.data.Form
 import play.api.data.Forms.{mapping, nonEmptyText}
@@ -28,9 +27,7 @@ object LettingOtherPartOfPropertyForm {
     mapping(
       "lettingOperatorName"   -> nonEmptyText(maxLength = 100),
       "lettingTypeOfBusiness" -> nonEmptyText(maxLength = 100),
-      "lettingAddress"        -> lettingOtherPartAddressMapping,
-      "lettingAnnualRent"     -> currencyMapping(".lettingAnnualRent"),
-      "lettingDateInput"      -> dateFieldsMapping("lettingDateInput", fieldErrorPart = ".dateInput")
+      "lettingAddress"        -> lettingOtherPartAddressMapping
     )(LettingOtherPartOfPropertyInformationDetails.apply)(LettingOtherPartOfPropertyInformationDetails.unapply)
   )
 }

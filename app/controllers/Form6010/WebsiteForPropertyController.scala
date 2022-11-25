@@ -23,7 +23,6 @@ import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.Form6010.{websiteAddressForProperty, websiteForProperty}
 import form.Form6010.WebsiteForPropertyForm.websiteForPropertyForm
 import models.submissions.Form6010.{BuildingOperationHaveAWebsiteNo, BuildingOperationHaveAWebsiteYes}
-import sun.security.jgss.GSSUtil.login
 import views.html.{login, taskList}
 
 import javax.inject.{Inject, Singleton}

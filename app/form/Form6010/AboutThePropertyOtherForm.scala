@@ -16,18 +16,20 @@
 
 package form.Form6010
 
-import form.MappingSupport.cateringAddressMapping
-import models.submissions.Form6010.CateringOperationOrLettingAccommodationDetails
+import models.submissions.Form6010.AboutThePropertyOtherDetails
 import play.api.data.Form
-import play.api.data.Forms.{mapping, nonEmptyText}
+import play.api.data.Forms.{default, mapping, text}
+import play.api.data.validation.Constraints.nonEmpty
 
-object CateringOperationOrLettingAccommodationForm {
+object AboutThePropertyOtherForm {
 
-  val cateringOperationOrLettingAccommodationForm = Form(
+  val aboutThePropertyOtherForm = Form(
     mapping(
-      "operatorName"    -> nonEmptyText(maxLength = 100),
-      "typeOfBusiness"  -> nonEmptyText(maxLength = 100),
-      "cateringAddress" -> cateringAddressMapping
-    )(CateringOperationOrLettingAccommodationDetails.apply)(CateringOperationOrLettingAccommodationDetails.unapply)
+      "propertyCurrentlyUsedOther" ->
+        default(text, "").verifying(
+          nonEmpty(errorMessage = "error.propertyCurrentlyUsedOther.required")
+        )
+    )(AboutThePropertyOtherDetails.apply)(AboutThePropertyOtherDetails.unapply)
   )
+
 }

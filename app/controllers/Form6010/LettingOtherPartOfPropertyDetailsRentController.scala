@@ -16,32 +16,31 @@
 
 package controllers.Form6010
 
-import form.Form6010.LettingOtherPartOfPropertyForm.lettingOtherPartOfPropertyForm
 import form.Form6010.LettingOtherPartOfPropertyRentForm.lettingOtherPartOfPropertyRentForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.Form6010.{lettingOtherPartOfPropertyDetails, lettingOtherPartOfPropertyRentDetails}
+import views.html.Form6010.{lettingOtherPartOfPropertyCheckboxesDetails, lettingOtherPartOfPropertyRentDetails}
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class LettingOtherPartOfPropertyDetailsController @Inject() (
+class LettingOtherPartOfPropertyDetailsRentController @Inject() (
   mcc: MessagesControllerComponents,
-  lettingOtherPartOfPropertyDetailsView: lettingOtherPartOfPropertyDetails,
+  lettingOtherPartOfPropertyCheckboxesDetailsView: lettingOtherPartOfPropertyCheckboxesDetails,
   lettingOtherPartOfPropertyDetailsRentView: lettingOtherPartOfPropertyRentDetails
 ) extends FrontendController(mcc) {
 
   def show: Action[AnyContent] = Action.async { implicit request =>
-    Future.successful(Ok(lettingOtherPartOfPropertyDetailsView(lettingOtherPartOfPropertyForm)))
+    Future.successful(Ok(lettingOtherPartOfPropertyDetailsRentView(lettingOtherPartOfPropertyRentForm)))
   }
 
   def submit = Action.async { implicit request =>
-    lettingOtherPartOfPropertyForm
+    lettingOtherPartOfPropertyRentForm
       .bindFromRequest()
       .fold(
-        formWithErrors => Future.successful(BadRequest(lettingOtherPartOfPropertyDetailsView(formWithErrors))),
-        data => Future.successful(Ok(lettingOtherPartOfPropertyDetailsRentView(lettingOtherPartOfPropertyRentForm)))
+        formWithErrors => Future.successful(BadRequest(lettingOtherPartOfPropertyDetailsRentView(formWithErrors))),
+        data => Future.successful(Ok(lettingOtherPartOfPropertyCheckboxesDetailsView()))
       )
   }
 

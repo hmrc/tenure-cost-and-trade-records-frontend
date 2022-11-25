@@ -16,12 +16,8 @@
 
 package models.submissions.Form6010
 
-import org.joda.time.LocalDate
-
 case class CateringOperationOrLettingAccommodationDetails(
   operatorName: String,
   typeOfBusiness: String,
-  cateringAddress: CateringAddress,
-  annualRent: BigDecimal,
-  dateInput: LocalDate
+  cateringAddress: CateringAddress
 )

@@ -16,18 +16,18 @@
 
 package form.Form6010
 
-import form.MappingSupport.cateringAddressMapping
-import models.submissions.Form6010.CateringOperationOrLettingAccommodationDetails
+import form.MappingSupport._
+import models.submissions.Form6010.AddAnotherLettingOtherPartOfPropertyDetails
 import play.api.data.Form
-import play.api.data.Forms.{mapping, nonEmptyText}
+import play.api.data.Forms.mapping
 
-object CateringOperationOrLettingAccommodationForm {
+object AddAnotherLettingOtherPartOfPropertyForm {
 
-  val cateringOperationOrLettingAccommodationForm = Form(
+  val addAnotherLettingOtherPartOfPropertyForm = Form(
     mapping(
-      "operatorName"    -> nonEmptyText(maxLength = 100),
-      "typeOfBusiness"  -> nonEmptyText(maxLength = 100),
-      "cateringAddress" -> cateringAddressMapping
-    )(CateringOperationOrLettingAccommodationDetails.apply)(CateringOperationOrLettingAccommodationDetails.unapply)
+      "addAnotherLettingOtherPartOfProperty" -> addAnotherLettingOtherPartOfPropertyType
+    )(AddAnotherLettingOtherPartOfPropertyDetails.apply)(
+      AddAnotherLettingOtherPartOfPropertyDetails.unapply
+    )
   )
 }
