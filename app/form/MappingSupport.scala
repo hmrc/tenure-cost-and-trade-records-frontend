@@ -38,10 +38,9 @@ object MappingSupport {
   val buildingOperatingHaveAWebsiteType: Mapping[BuildingOperationHaveAWebsite]                       =
     Forms.of[BuildingOperationHaveAWebsite]
   val addAnotherCateringOperationOrLettingAccommodationType
-  : Mapping[AddAnotherCateringOperationOrLettingAccommodations]                                     =
+    : Mapping[AddAnotherCateringOperationOrLettingAccommodations]                                     =
     Forms.of[AddAnotherCateringOperationOrLettingAccommodations]
-  val addAnotherLettingOtherPartOfPropertyType
-  : Mapping[AddAnotherLettingOtherPartOfProperties]                                     =
+  val addAnotherLettingOtherPartOfPropertyType: Mapping[AddAnotherLettingOtherPartOfProperties]       =
     Forms.of[AddAnotherLettingOtherPartOfProperties]
   val cateringOperationType: Mapping[CateringOperationOrLettingAccommodation]                         =
     Forms.of[CateringOperationOrLettingAccommodation]

@@ -28,7 +28,7 @@ import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class LeaseOrAgreementYearsController @Inject()(
+class LeaseOrAgreementYearsController @Inject() (
   mcc: MessagesControllerComponents,
   currentRentPayableWithin12MonthsView: currentRentPayableWithin12Months,
   currentAnnualRentView: currentAnnualRent,
@@ -44,12 +44,16 @@ class LeaseOrAgreementYearsController @Inject()(
       .bindFromRequest()
       .fold(
         formWithErrors => Future.successful(BadRequest(leaseOrAgreementYearsView(formWithErrors))),
-        data => if (data.commenceWithinThreeYears.equals(CommenceWithinThreeYearsNo) && data.agreedReviewedAlteredThreeYears.equals(AgreedReviewedAlteredThreeYearsNo) &&  data.rentUnderReviewNegotiated.equals(RentUnderReviewNegotiatedNo))
-        {
-          Future.successful(Ok(currentRentPayableWithin12MonthsView(currentRentPayableWithin12MonthsForm)))
-        } else {
-          Future.successful(Ok(currentAnnualRentView(currentAnnualRentForm)))
-        }
+        data =>
+          if (
+            data.commenceWithinThreeYears.equals(CommenceWithinThreeYearsNo) && data.agreedReviewedAlteredThreeYears
+              .equals(AgreedReviewedAlteredThreeYearsNo) && data.rentUnderReviewNegotiated
+              .equals(RentUnderReviewNegotiatedNo)
+          ) {
+            Future.successful(Ok(currentRentPayableWithin12MonthsView(currentRentPayableWithin12MonthsForm)))
+          } else {
+            Future.successful(Ok(currentAnnualRentView(currentAnnualRentForm)))
+          }
       )
   }
 

@@ -49,9 +49,11 @@ class FranchiseOrLettingsTiedToPropertyController @Inject() (
         formWithErrors => Future.successful(BadRequest(franchiseOrLettingsTiedToPropertyView(formWithErrors))),
         data =>
           data.franchiseOrLettingsTiedToProperty match {
-            case FranchiseOrLettingsTiedToPropertiesYes => Future.successful(Ok(cateringOperationOrLettingAccommodationView(cateringOperationForm)))
-            case FranchiseOrLettingsTiedToPropertiesNo => Future.successful(Ok(aboutYourLandlordView(aboutTheLandlordForm)))
-            case _ => Future.successful(Ok(login(loginForm)))
+            case FranchiseOrLettingsTiedToPropertiesYes =>
+              Future.successful(Ok(cateringOperationOrLettingAccommodationView(cateringOperationForm)))
+            case FranchiseOrLettingsTiedToPropertiesNo  =>
+              Future.successful(Ok(aboutYourLandlordView(aboutTheLandlordForm)))
+            case _                                      => Future.successful(Ok(login(loginForm)))
           }
       )
   }

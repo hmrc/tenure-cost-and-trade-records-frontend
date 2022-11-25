@@ -16,8 +16,7 @@
 
 package form.Form6010
 
-import form.DateMappings.dateFieldsMapping
-import form.MappingSupport.{cateringAddressMapping, currencyMapping}
+import form.MappingSupport.cateringAddressMapping
 import models.submissions.Form6010.CateringOperationOrLettingAccommodationDetails
 import play.api.data.Form
 import play.api.data.Forms.{mapping, nonEmptyText}

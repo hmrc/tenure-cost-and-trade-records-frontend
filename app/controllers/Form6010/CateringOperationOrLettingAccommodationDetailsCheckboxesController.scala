@@ -16,23 +16,20 @@
 
 package controllers.Form6010
 
-import controllers.LoginController.loginForm
 import form.Form6010.AddAnotherCateringOperationOrLettingAccommodationForm.addAnotherCateringOperationOrLettingAccommodationForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.Form6010.{addAnotherCateringOperationOrLettingAccommodation, cateringOperationOrLettingAccommodationCheckboxesDetails, cateringOperationOrLettingAccommodationDetails}
-import views.html.login
+import views.html.Form6010.{addAnotherCateringOperationOrLettingAccommodation, cateringOperationOrLettingAccommodationCheckboxesDetails}
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
 
 @Singleton
 class CateringOperationOrLettingAccommodationDetailsCheckboxesController @Inject() (
-                                                                                     mcc: MessagesControllerComponents,
-                                                                                     login: login,
-                                                                                     cateringOperationOrLettingAccommodationDetailsCheckboxesView: cateringOperationOrLettingAccommodationCheckboxesDetails,
-                                                                                     addAnotherCateringOperationOrLettingAccommodationView: addAnotherCateringOperationOrLettingAccommodation
-                                                                                   ) extends FrontendController(mcc) {
+  mcc: MessagesControllerComponents,
+  cateringOperationOrLettingAccommodationDetailsCheckboxesView: cateringOperationOrLettingAccommodationCheckboxesDetails,
+  addAnotherCateringOperationOrLettingAccommodationView: addAnotherCateringOperationOrLettingAccommodation
+) extends FrontendController(mcc) {
 
   def show: Action[AnyContent] = Action.async { implicit request =>
     Future.successful(

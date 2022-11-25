@@ -19,6 +19,6 @@ package models.submissions.Form6010
 import org.joda.time.LocalDate
 
 case class LettingOtherPartOfPropertyRentDetails(
-                                                  annualRent: BigDecimal,
-                                                  dateInput: LocalDate
-                                                )
+  annualRent: BigDecimal,
+  dateInput: LocalDate
+)

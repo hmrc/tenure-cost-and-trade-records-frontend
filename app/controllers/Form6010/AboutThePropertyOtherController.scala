@@ -26,11 +26,11 @@ import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class AboutThePropertyOtherController @Inject()(
-                                                 mcc: MessagesControllerComponents,
-                                                 websiteForPropertyView: websiteForProperty,
-                                                 aboutThePropertyOtherView: aboutThePropertyOther
-                                               ) extends FrontendController(mcc) {
+class AboutThePropertyOtherController @Inject() (
+  mcc: MessagesControllerComponents,
+  websiteForPropertyView: websiteForProperty,
+  aboutThePropertyOtherView: aboutThePropertyOther
+) extends FrontendController(mcc) {
 
   def show: Action[AnyContent] = Action.async { implicit request =>
     Future.successful(Ok(aboutThePropertyOtherView(aboutThePropertyOtherForm)))

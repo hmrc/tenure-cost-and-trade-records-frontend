@@ -16,23 +16,20 @@
 
 package controllers.Form6010
 
-import controllers.LoginController.loginForm
 import form.Form6010.LettingOtherPartOfPropertyRentForm.lettingOtherPartOfPropertyRentForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.Form6010.{lettingOtherPartOfPropertyCheckboxesDetails, lettingOtherPartOfPropertyDetails, lettingOtherPartOfPropertyRentDetails}
-import views.html.login
+import views.html.Form6010.{lettingOtherPartOfPropertyCheckboxesDetails, lettingOtherPartOfPropertyRentDetails}
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class LettingOtherPartOfPropertyDetailsRentController @Inject()(
-                                                                 mcc: MessagesControllerComponents,
-                                                                 login: login,
-                                                                 lettingOtherPartOfPropertyCheckboxesDetailsView: lettingOtherPartOfPropertyCheckboxesDetails,
-                                                                 lettingOtherPartOfPropertyDetailsRentView: lettingOtherPartOfPropertyRentDetails
-                                                               ) extends FrontendController(mcc) {
+class LettingOtherPartOfPropertyDetailsRentController @Inject() (
+  mcc: MessagesControllerComponents,
+  lettingOtherPartOfPropertyCheckboxesDetailsView: lettingOtherPartOfPropertyCheckboxesDetails,
+  lettingOtherPartOfPropertyDetailsRentView: lettingOtherPartOfPropertyRentDetails
+) extends FrontendController(mcc) {
 
   def show: Action[AnyContent] = Action.async { implicit request =>
     Future.successful(Ok(lettingOtherPartOfPropertyDetailsRentView(lettingOtherPartOfPropertyRentForm)))

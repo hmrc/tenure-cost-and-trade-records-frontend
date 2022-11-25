@@ -18,7 +18,6 @@ package controllers.Form6010
 
 import form.Form6010.LettingOtherPartOfPropertyForm.lettingOtherPartOfPropertyForm
 import form.Form6010.LettingOtherPartOfPropertyRentForm.lettingOtherPartOfPropertyRentForm
-import models.submissions.Form6010.LettingOtherPartOfPropertyRentDetails
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.Form6010.{lettingOtherPartOfPropertyDetails, lettingOtherPartOfPropertyRentDetails}

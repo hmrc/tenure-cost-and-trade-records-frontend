@@ -20,26 +20,23 @@ import controllers.LoginController.loginForm
 import form.Form6010.LettingOtherPartOfPropertyForm.lettingOtherPartOfPropertyForm
 import form.Form6010.AddAnotherLettingOtherPartOfPropertyForm.addAnotherLettingOtherPartOfPropertyForm
 import form.Form6010.AboutTheLandlordForm.aboutTheLandlordForm
-import form.Form6010.LettingOtherPartOfPropertiesForm.lettingOtherPartOfPropertiesForm
 import models.submissions.Form6010._
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.Form6010._
-import views.html.{login, taskList}
+import views.html.login
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class AddAnotherLettingOtherPartOfPropertyController @Inject()(
-                                                                mcc: MessagesControllerComponents,
-                                                                websiteAddressForPropertyView: websiteAddressForProperty,
-                                                                addAnotherLettingOtherPartOfPropertyView: addAnotherLettingOtherPartOfProperty,
-                                                                lettingOtherPartOfPropertyDetailsView: lettingOtherPartOfPropertyDetails,
-                                                                login: login,
-                                                                aboutTheLandlordView: aboutYourLandlord,
-                                                                lettingOtherPartOfPropertyView: lettingOtherPartOfProperty
-                                                              ) extends FrontendController(mcc) {
+class AddAnotherLettingOtherPartOfPropertyController @Inject() (
+  mcc: MessagesControllerComponents,
+  addAnotherLettingOtherPartOfPropertyView: addAnotherLettingOtherPartOfProperty,
+  lettingOtherPartOfPropertyDetailsView: lettingOtherPartOfPropertyDetails,
+  login: login,
+  aboutTheLandlordView: aboutYourLandlord,
+) extends FrontendController(mcc) {
 
   def show: Action[AnyContent] = Action.async { implicit request =>
     Future.successful(
@@ -51,8 +48,7 @@ class AddAnotherLettingOtherPartOfPropertyController @Inject()(
     addAnotherLettingOtherPartOfPropertyForm
       .bindFromRequest()
       .fold(
-        formWithErrors =>
-          Future.successful(BadRequest(addAnotherLettingOtherPartOfPropertyView(formWithErrors))),
+        formWithErrors => Future.successful(BadRequest(addAnotherLettingOtherPartOfPropertyView(formWithErrors))),
         data =>
           data.addAnotherLettingOtherPartOfPropertyDetails match {
             case AddAnotherLettingOtherPartOfPropertiesYes =>
@@ -61,7 +57,7 @@ class AddAnotherLettingOtherPartOfPropertyController @Inject()(
               )
             case AddAnotherLettingOtherPartOfPropertiesNo  =>
               Future.successful(Ok(aboutTheLandlordView(aboutTheLandlordForm)))
-            case _                                                    => Future.successful(Ok(login(loginForm)))
+            case _                                         => Future.successful(Ok(login(loginForm)))
           }
       )
   }

@@ -49,9 +49,13 @@ class CateringOperationOrLettingAccommodationController @Inject() (
         formWithErrors => Future.successful(BadRequest(cateringOperationOrLettingAccommodationView(formWithErrors))),
         data =>
           data.cateringOperationOrLettingAccommodation match {
-          case CateringOperationYes => Future.successful(Ok(cateringOperationOrLettingAccommodationDetailsView(cateringOperationOrLettingAccommodationForm)))
-          case CateringOperationNo => Future.successful(Ok(lettingOtherPartOfPropertyView(lettingOtherPartOfPropertiesForm)))
-          case _ => Future.successful(Ok(login(loginForm)))
+            case CateringOperationYes =>
+              Future.successful(
+                Ok(cateringOperationOrLettingAccommodationDetailsView(cateringOperationOrLettingAccommodationForm))
+              )
+            case CateringOperationNo  =>
+              Future.successful(Ok(lettingOtherPartOfPropertyView(lettingOtherPartOfPropertiesForm)))
+            case _                    => Future.successful(Ok(login(loginForm)))
           }
       )
   }

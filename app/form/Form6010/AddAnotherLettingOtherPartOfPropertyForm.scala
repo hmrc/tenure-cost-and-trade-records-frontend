@@ -17,7 +17,7 @@
 package form.Form6010
 
 import form.MappingSupport._
-import models.submissions.Form6010.{AddAnotherCateringOperationOrLettingAccommodationDetails, AddAnotherLettingOtherPartOfPropertyDetails}
+import models.submissions.Form6010.AddAnotherLettingOtherPartOfPropertyDetails
 import play.api.data.Form
 import play.api.data.Forms.mapping
 

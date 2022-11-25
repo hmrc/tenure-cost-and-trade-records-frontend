@@ -19,19 +19,17 @@ package controllers.Form6010
 import form.Form6010.AddAnotherLettingOtherPartOfPropertyForm.addAnotherLettingOtherPartOfPropertyForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.Form6010.{addAnotherLettingOtherPartOfProperty, lettingOtherPartOfPropertyCheckboxesDetails, lettingOtherPartOfPropertyDetails}
-import views.html.login
+import views.html.Form6010.{addAnotherLettingOtherPartOfProperty, lettingOtherPartOfPropertyCheckboxesDetails}
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class LettingOtherPartOfPropertyDetailsCheckboxesController @Inject()(
-                                                                       mcc: MessagesControllerComponents,
-                                                                       login: login,
-                                                                       lettingOtherPartOfPropertyDetailsCheckboxView: lettingOtherPartOfPropertyCheckboxesDetails,
-                                                                       addAnotherLettingOtherPartOfPropertyView: addAnotherLettingOtherPartOfProperty
-                                                                     ) extends FrontendController(mcc) {
+class LettingOtherPartOfPropertyDetailsCheckboxesController @Inject() (
+  mcc: MessagesControllerComponents,
+  lettingOtherPartOfPropertyDetailsCheckboxView: lettingOtherPartOfPropertyCheckboxesDetails,
+  addAnotherLettingOtherPartOfPropertyView: addAnotherLettingOtherPartOfProperty
+) extends FrontendController(mcc) {
 
   def show: Action[AnyContent] = Action.async { implicit request =>
     Future.successful(Ok(lettingOtherPartOfPropertyDetailsCheckboxView()))

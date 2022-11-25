@@ -27,4 +27,5 @@ object FranchiseOrLettingsTiedToPropertyForm {
     mapping(
       "franchiseLettings" -> franchiseOrLettingsTiedToPropertyType
     )(FranchiseOrLettingsTiedToPropertiesDetails.apply)(FranchiseOrLettingsTiedToPropertiesDetails.unapply)
-  )}
+  )
+}

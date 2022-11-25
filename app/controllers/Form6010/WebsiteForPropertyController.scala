@@ -23,7 +23,6 @@ import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.Form6010.{websiteAddressForProperty, websiteForProperty}
 import form.Form6010.WebsiteForPropertyForm.websiteForPropertyForm
 import models.submissions.Form6010.{BuildingOperationHaveAWebsiteNo, BuildingOperationHaveAWebsiteYes}
-import sun.security.jgss.GSSUtil.login
 import views.html.{login, taskList}
 
 import javax.inject.{Inject, Singleton}
@@ -49,9 +48,10 @@ class WebsiteForPropertyController @Inject() (
         formWithErrors => Future.successful(BadRequest(websiteForPropertyView(formWithErrors))),
         data =>
           data.buildingOperatingHaveAWebsite match {
-            case BuildingOperationHaveAWebsiteYes => Future.successful(Ok(websiteAddressForPropertyView(websiteAddressForPropertyForm)))
-            case BuildingOperationHaveAWebsiteNo => Future.successful(Ok(taskListView()))
-            case _ => Future.successful(Ok(login(loginForm)))
+            case BuildingOperationHaveAWebsiteYes =>
+              Future.successful(Ok(websiteAddressForPropertyView(websiteAddressForPropertyForm)))
+            case BuildingOperationHaveAWebsiteNo  => Future.successful(Ok(taskListView()))
+            case _                                => Future.successful(Ok(login(loginForm)))
           }
       )
   }

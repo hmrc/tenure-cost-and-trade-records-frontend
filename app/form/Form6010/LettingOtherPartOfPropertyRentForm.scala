@@ -18,7 +18,7 @@ package form.Form6010
 
 import form.DateMappings.dateFieldsMapping
 import form.MappingSupport.currencyMapping
-import models.submissions.Form6010.{CateringOperationOrLettingAccommodationRentDetails, LettingOtherPartOfPropertyRentDetails}
+import models.submissions.Form6010.LettingOtherPartOfPropertyRentDetails
 import play.api.data.Form
 import play.api.data.Forms.mapping
 

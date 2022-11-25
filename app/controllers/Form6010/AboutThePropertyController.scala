@@ -16,7 +16,6 @@
 
 package controllers.Form6010
 
-import controllers.LoginController.loginForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.Form6010.{aboutTheProperty, aboutThePropertyOther, websiteForProperty}
@@ -30,11 +29,11 @@ import scala.concurrent.Future
 
 @Singleton
 class AboutThePropertyController @Inject() (
-                                             mcc: MessagesControllerComponents,
-                                             websiteForPropertyView: websiteForProperty,
-                                             aboutThePropertyOtherView: aboutThePropertyOther,
-                                             aboutThePropertyView: aboutTheProperty
-                                           ) extends FrontendController(mcc) {
+  mcc: MessagesControllerComponents,
+  websiteForPropertyView: websiteForProperty,
+  aboutThePropertyOtherView: aboutThePropertyOther,
+  aboutThePropertyView: aboutTheProperty
+) extends FrontendController(mcc) {
 
   def show: Action[AnyContent] = Action.async { implicit request =>
     Future.successful(Ok(aboutThePropertyView(aboutThePropertyForm)))
@@ -48,10 +47,9 @@ class AboutThePropertyController @Inject() (
         data =>
           data.propertyCurrentlyUsed match {
             case CurrentPropertyOther => Future.successful(Ok(aboutThePropertyOtherView(aboutThePropertyOtherForm)))
-            case _ => Future.successful(Ok(websiteForPropertyView(websiteForPropertyForm)))
+            case _                    => Future.successful(Ok(websiteForPropertyView(websiteForPropertyForm)))
           }
       )
   }
-
 
 }

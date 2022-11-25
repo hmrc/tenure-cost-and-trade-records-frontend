@@ -1,6 +1,6 @@
 #COMMON
 ##############################
-site.service_name = Request for rental information
+site.service_name = Send trade and cost information
 gov.name = GOV.UK
 phase.beta = BETA
 phase.text = Mae hwn yn wasanaeth newydd – bydd eich <a href="{0}" class="govuk-link" target="_blank" id="betaFeedback">adborth</a> yn ein helpu i’w wella

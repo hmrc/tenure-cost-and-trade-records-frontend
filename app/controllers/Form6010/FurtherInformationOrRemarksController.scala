@@ -26,7 +26,7 @@ import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class FurtherInformationOrRemarksController @Inject()(
+class FurtherInformationOrRemarksController @Inject() (
   mcc: MessagesControllerComponents,
   howIsCurrentRentFixedView: howIsCurrentRentFixed,
   furtherInformationOrRemarksView: furtherInformationOrRemarks

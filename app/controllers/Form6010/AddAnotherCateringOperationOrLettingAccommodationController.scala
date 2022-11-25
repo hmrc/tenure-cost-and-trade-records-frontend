@@ -20,25 +20,23 @@ import controllers.LoginController.loginForm
 import form.Form6010.AddAnotherCateringOperationOrLettingAccommodationForm.addAnotherCateringOperationOrLettingAccommodationForm
 import form.Form6010.LettingOtherPartOfPropertiesForm.lettingOtherPartOfPropertiesForm
 import form.Form6010.CateringOperationOrLettingAccommodationForm.cateringOperationOrLettingAccommodationForm
-import models.submissions.Form6010.{AddAnotherCateringOperationOrLettingAccommodationNo, AddAnotherCateringOperationOrLettingAccommodationYes, BuildingOperationHaveAWebsiteNo, BuildingOperationHaveAWebsiteYes}
+import models.submissions.Form6010.{AddAnotherCateringOperationOrLettingAccommodationNo, AddAnotherCateringOperationOrLettingAccommodationYes}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.Form6010.{addAnotherCateringOperationOrLettingAccommodation, cateringOperationOrLettingAccommodationDetails, lettingOtherPartOfProperty, websiteAddressForProperty, websiteForProperty}
-import views.html.{login, taskList}
+import views.html.Form6010.{addAnotherCateringOperationOrLettingAccommodation, cateringOperationOrLettingAccommodationDetails, lettingOtherPartOfProperty}
+import views.html.login
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
 
 @Singleton
 class AddAnotherCateringOperationOrLettingAccommodationController @Inject() (
-                                                                              mcc: MessagesControllerComponents,
-                                                                              websiteAddressForPropertyView: websiteAddressForProperty,
-                                                                              addAnotherCateringOperationOrLettingAccommodationView: addAnotherCateringOperationOrLettingAccommodation,
-                                                                              taskListView: taskList,
-                                                                              login: login,
-                                                                              cateringOperationOrLettingAccommodationDetailsView: cateringOperationOrLettingAccommodationDetails,
-                                                                              lettingOtherPartOfPropertyView: lettingOtherPartOfProperty
-                                                                            ) extends FrontendController(mcc) {
+  mcc: MessagesControllerComponents,
+  addAnotherCateringOperationOrLettingAccommodationView: addAnotherCateringOperationOrLettingAccommodation,
+  login: login,
+  cateringOperationOrLettingAccommodationDetailsView: cateringOperationOrLettingAccommodationDetails,
+  lettingOtherPartOfPropertyView: lettingOtherPartOfProperty
+) extends FrontendController(mcc) {
 
   def show: Action[AnyContent] = Action.async { implicit request =>
     Future.successful(

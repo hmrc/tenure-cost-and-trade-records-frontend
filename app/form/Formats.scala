@@ -67,10 +67,9 @@ object Formats {
   implicit val buildingOperatingHaveAWebsiteFormat: Formatter[BuildingOperationHaveAWebsite]                 =
     namedEnumFormatter(BuildingOperationHasAWebsite, Errors.booleanMissing)
   implicit val addAnotherCateringOperationOrLettingAccommodationFormat
-  : Formatter[AddAnotherCateringOperationOrLettingAccommodations]                                          =
+    : Formatter[AddAnotherCateringOperationOrLettingAccommodations]                                          =
     namedEnumFormatter(AddAnotherCateringOperationOrLettingAccommodation, Errors.booleanMissing)
-  implicit val addAnotherLettingOtherPartOfPropertyFormat
-  : Formatter[AddAnotherLettingOtherPartOfProperties]                                          =
+  implicit val addAnotherLettingOtherPartOfPropertyFormat: Formatter[AddAnotherLettingOtherPartOfProperties] =
     namedEnumFormatter(AddAnotherLettingOtherPartOfProperty, Errors.booleanMissing)
   implicit val cateringOperationsFormat: Formatter[CateringOperationOrLettingAccommodation]                  =
     namedEnumFormatter(CateringOperation, Errors.booleanMissing)

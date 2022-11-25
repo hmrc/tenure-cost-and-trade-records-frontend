@@ -28,8 +28,7 @@ object AddAnotherLettingOtherPartOfPropertiesNo extends AddAnotherLettingOtherPa
   val name = "no"
 }
 
-object AddAnotherLettingOtherPartOfProperty
-  extends NamedEnumSupport[AddAnotherLettingOtherPartOfProperties] {
+object AddAnotherLettingOtherPartOfProperty extends NamedEnumSupport[AddAnotherLettingOtherPartOfProperties] {
   val all =
     List(AddAnotherLettingOtherPartOfPropertiesYes, AddAnotherLettingOtherPartOfPropertiesNo)
 }

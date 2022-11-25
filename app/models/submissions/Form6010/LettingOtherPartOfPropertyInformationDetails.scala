@@ -16,7 +16,6 @@
 
 package models.submissions.Form6010
 
-
 case class LettingOtherPartOfPropertyInformationDetails(
   operatorName: String,
   typeOfBusiness: String,
