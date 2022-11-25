@@ -71,7 +71,7 @@ class SessionRepositorySpec
 
     val returnedSessionData: Option[Session] = repository.get[Session](reads, hc).futureValue
 
-    inside(returnedSessionData) { case Some(Session(areYouStillConnected)) =>
+    inside(returnedSessionData) { case Some(Session(areYouStillConnected, None)) =>
       areYouStillConnected.name shouldBe AddressConnectionTypeYes.name
     }
 

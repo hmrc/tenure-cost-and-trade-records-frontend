@@ -22,13 +22,14 @@ import controllers.LoginController.loginForm
 import form.AreYouStillConnectedForm.areYouStillConnectedForm
 import form.ConnectionToThePropertyForm.connectionToThePropertyForm
 import form.EditAddressForm.editAddressForm
+import form.PastConnectionForm.pastConnectionForm
 import models.submissions.Form6010.{AddressConnectionTypeNo, AddressConnectionTypeYes, AddressConnectionTypeYesChangeAddress}
-import views.html.{areYouStillConnected, connectionToTheProperty, editAddress}
+import views.html.{areYouStillConnected, connectionToTheProperty, editAddress, login, pastConnection}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.login
 import repositories.SessionRepo
 import models.Session
+import play.api.i18n.I18nSupport
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
@@ -39,11 +40,13 @@ class AreYouStillConnectedController @Inject() (
   appConfig: AppConfig,
   login: login,
   areYouStillConnectedView: areYouStillConnected,
+  pastConnectionView: pastConnection,
   connectionToThePropertyView: connectionToTheProperty,
   editAddressView: editAddress,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FrontendController(mcc) {
+) extends FrontendController(mcc)
+    with I18nSupport {
 
   def show: Action[AnyContent] = Action.async { implicit request =>
     Future.successful(Ok(areYouStillConnectedView(areYouStillConnectedForm)))
@@ -60,7 +63,7 @@ class AreYouStillConnectedController @Inject() (
             Future.successful(Ok(connectionToThePropertyView(connectionToThePropertyForm)))
           } else if (data.equals(AddressConnectionTypeNo)) {
             session.start(Session(data))
-            Future.successful(Ok(login(loginForm)))
+            Future.successful(Ok(pastConnectionView(pastConnectionForm)))
           } else if (data.equals(AddressConnectionTypeYesChangeAddress)) {
             session.start(Session(data))
             Future.successful(Ok(editAddressView(editAddressForm)))
