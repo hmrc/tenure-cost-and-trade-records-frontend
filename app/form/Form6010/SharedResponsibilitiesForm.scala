@@ -16,16 +16,23 @@
 
 package form.Form6010
 
-import form.MappingSupport._
-import models.submissions.Form6010.IncentivesPaymentsConditionsDetails
+import models.submissions.Form6010.{RentPayableVaryOnQuantityOfBeersInformationDetails, SharedResponsibilitiesDetails}
 import play.api.data.Form
-import play.api.data.Forms.mapping
+import play.api.data.Forms.{default, mapping, text}
+import play.api.data.validation.Constraints.{maxLength, nonEmpty}
 
-object IncentivesPaymentsConditionsForm {
+object SharedResponsibilitiesForm {
 
-  val incentivesPaymentsConditionsForm = Form(
+  val sharedResponsibilitiesForm = Form(
     mapping(
-      "formerLeaseSurrendered"         -> formerLeaseSurrenderedType
-    )(IncentivesPaymentsConditionsDetails.apply)(IncentivesPaymentsConditionsDetails.unapply)
+      "sharedResponsibilities" ->
+        default(text, "").verifying(
+          nonEmpty(errorMessage = "error.sharedResponsibilities.required"),
+          maxLength(1000, "error.sharedResponsibilities.maxLength")
+        )
+    )(SharedResponsibilitiesDetails.apply)(
+      SharedResponsibilitiesDetails.unapply
+    )
   )
+
 }

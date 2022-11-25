@@ -18,9 +18,12 @@ package controllers.Form6010
 
 import form.Form6010.UltimatelyResponsibleForm.ultimatelyResponsibleForm
 import form.Form6010.RentIncludeTradeServicesForm.rentIncludeTradeServicesForm
+import form.Form6010.SharedResponsibilitiesForm.sharedResponsibilitiesForm
+import form.Form6010.IntervalsOfRentReviewForm.intervalsOfRentReviewForm
+import models.submissions.Form6010.{BuildingInsurancesBoth, InsideRepairsBoth, OutsideRepairsBoth}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.Form6010.{rentIncludeTradeServices, ultimatelyResponsible}
+import views.html.Form6010.{intervalsOfRentReview, rentIncludeTradeServices, sharedResponsibilities, ultimatelyResponsible}
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
@@ -29,7 +32,9 @@ import scala.concurrent.Future
 class UltimatelyResponsibleController @Inject() (
   mcc: MessagesControllerComponents,
   rentIncludeTradeServicesView: rentIncludeTradeServices,
-  ultimatelyResponsibleView: ultimatelyResponsible
+  ultimatelyResponsibleView: ultimatelyResponsible,
+  sharedResponsibilitiesView: sharedResponsibilities,
+  intervalsOfRentReviewView: intervalsOfRentReview
 ) extends FrontendController(mcc) {
 
   def show: Action[AnyContent] = Action.async { implicit request =>
@@ -41,7 +46,14 @@ class UltimatelyResponsibleController @Inject() (
       .bindFromRequest()
       .fold(
         formWithErrors => Future.successful(BadRequest(ultimatelyResponsibleView(formWithErrors))),
-        data => Future.successful(Ok(rentIncludeTradeServicesView(rentIncludeTradeServicesForm)))
+        data =>
+          if (data.insideRepairs.equals(InsideRepairsBoth) || data.outsideRepairs.equals(OutsideRepairsBoth) || data.buildingInsurance.equals(BuildingInsurancesBoth))
+            {
+              Future.successful(Ok(sharedResponsibilitiesView(sharedResponsibilitiesForm)))
+          }  else {
+            Future.successful(Ok(intervalsOfRentReviewView(intervalsOfRentReviewForm)))
+          }
+
       )
   }
 

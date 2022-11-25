@@ -17,10 +17,5 @@
 package models.submissions.Form6010
 
 case class DoesTheRentPayable(
-  includeLicensee: IncludeLicensees,
-  includeOtherProperty: IncludeOtherProperties,
-  onlyPartOfProperty: OnlyPartOfProperties,
-  onlyToLand: OnlyToLands,
-  shellUnit: ShellUnits,
   detailsToQuestions: String
 )

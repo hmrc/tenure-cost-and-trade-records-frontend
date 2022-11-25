@@ -119,6 +119,15 @@ POST        /rent-include-fixtures-and-fittings-details             controllers.
 GET         /incentives-payments-conditions                         controllers.Form6010.IncentivesPaymentsConditionsController.show()
 POST        /incentives-payments-conditions                         controllers.Form6010.IncentivesPaymentsConditionsController.submit()
 
+GET         /pay-a-capital-sum                                      controllers.Form6010.PayACapitalSumController.show()
+POST        /pay-a-capital-sum                                      controllers.Form6010.PayACapitalSumController.submit()
+
+GET         /payment-when-lease-is-granted                          controllers.Form6010.PaymentWhenLeaseIsGrantedController.show()
+POST        /payment-when-lease-is-granted                          controllers.Form6010.PaymentWhenLeaseIsGrantedController.submit()
+
+GET         /can-rent-be-reduced-on-review                          controllers.Form6010.CanRentBeReducedOnReviewController.show()
+POST        /can-rent-be-reduced-on-review                          controllers.Form6010.CanRentBeReducedOnReviewController.submit()
+
 GET         /rent-increase-annually-with-rpi                        controllers.Form6010.RentIncreaseAnnuallyWithRPIController.show()
 POST        /rent-increase-annually-with-rpi                        controllers.Form6010.RentIncreaseAnnuallyWithRPIController.submit()
 
@@ -181,6 +190,9 @@ POST        /what-is-your-rent-based-on                             controllers.
 
 GET         /ultimately-responsible                                 controllers.Form6010.UltimatelyResponsibleController.show()
 POST        /ultimately-responsible                                 controllers.Form6010.UltimatelyResponsibleController.submit()
+
+GET         /shared-responsibilities                                controllers.Form6010.SharedResponsibilitiesController.show()
+POST        /shared-responsibilities                                controllers.Form6010.SharedResponsibilitiesController.submit()
 
 GET         /task-list                                              controllers.TaskListController.show()
 

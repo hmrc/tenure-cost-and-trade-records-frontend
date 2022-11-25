@@ -52,7 +52,9 @@
 
  @formWithCSRF(action = controllers.Form6010.routes.IncludedInYourRentController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
 
-  <p class="govuk-body">@messages("includedInYourRent.subheading")</p>
+  <p class="govuk-heading-m">@messages("includedInYourRent.subheading")</p>
+
+  <p class="govuk-body">@messages("includedInYourRentApply.subheading")</p>
 
   @govukRadios(
   Radios(

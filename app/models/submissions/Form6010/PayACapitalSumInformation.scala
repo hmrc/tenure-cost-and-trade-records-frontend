@@ -16,8 +16,18 @@
 
 package models.submissions.Form6010
 
-case class UltimatelyResponsible(
-  outsideRepairs: OutsideRepairs,
-  insideRepairs: InsideRepairs,
-  buildingInsurance: BuildingInsurances
-)
+import models.{NamedEnum, NamedEnumSupport}
+
+sealed trait CapitalSumOrPremiums extends NamedEnum {
+  val key = "capitalSumOrPremium"
+}
+object CapitalSumOrPremiumsYes extends CapitalSumOrPremiums {
+  val name = "yes"
+}
+object CapitalSumOrPremiumsNo extends CapitalSumOrPremiums {
+  val name = "no"
+}
+
+object CapitalSumOrPremium extends NamedEnumSupport[CapitalSumOrPremiums] {
+  val all = List(CapitalSumOrPremiumsYes, CapitalSumOrPremiumsNo)
+}

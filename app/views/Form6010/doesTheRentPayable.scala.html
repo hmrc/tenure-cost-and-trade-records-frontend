@@ -32,6 +32,9 @@
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Legend
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Hint
 @import uk.gov.hmrc.govukfrontend.views.Aliases.CharacterCount
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Checkboxes
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukCheckboxes
+@import uk.gov.hmrc.govukfrontend.views.Aliases.CheckboxItem
 
 @this(layout: Layout,
         govukButton: GovukButton,
@@ -41,6 +44,7 @@
         govukDateInput: GovukDateInput,
         govukTextarea: GovukTextarea,
         govukCharacterCount: GovukCharacterCount,
+        govukCheckboxes: GovukCheckboxes,
         formWithCSRF: FormWithCSRF
 )
 
@@ -55,140 +59,40 @@
 
  @formWithCSRF(action = controllers.Form6010.routes.DoesTheRentPayableController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
 
-  @govukRadios(
-   Radios(
-    name = "includeLicensee",
-    idPrefix = Option("includeLicensee"),
+  @govukCheckboxes(
+   Checkboxes(
+    name = "rentPayable",
+    fieldset = Some(Fieldset(
+     legend = Some(Legend(
+      content = Text(Messages("label.rentPayable")),
+      classes = "govuk-fieldset__legend--s"
+     ))
+    )),
     items = Seq(
-     "yes" -> messages("label.yes"),
-     "no" -> messages("label.no")
-    ).map(radioItem => RadioItem(
-     content = Text(radioItem._2),
-     checked = radioItem._1.equals(theForm("includeLicensee").value.getOrElse("")),
-     value = Option(radioItem._1)
-    )
-    ),
-    errorMessage = theForm.errors.asTextErrorMessageForField("includeLicensee"),
-    fieldset = Option(
-     Fieldset(
-      legend = Option(
-       Legend(
-        content = Text(messages("label.includeLicensee")),
-        classes = "govuk-!-font-weight-bold"
-       )
-      )
+     CheckboxItem(
+      id = Some("rates"),
+      content = Text(messages("checkbox.rentPayable.includeLicensee"))
+     ),
+     CheckboxItem(
+      id = Some("propertyInsurance"),
+      content = Text(messages("checkbox.rentPayable.includeOtherProperty"))
+     ),
+     CheckboxItem(
+      id = Some("outsideRepairs"),
+      content = Text(messages("checkbox.rentPayable.onlyPartOfProperty"))
+     ),
+     CheckboxItem(
+      id = Some("insideRepairs"),
+      content = Text(messages("checkbox.rentPayable.onlyToLand"))
+     ),
+     CheckboxItem(
+      id = Some("insideRepairs"),
+      content = Text(messages("checkbox.rentPayable.shellUnit"))
      )
     )
    )
   )
 
-  @govukRadios(
-   Radios(
-    name = "includeOtherProperty",
-    idPrefix = Option("includeOtherProperty"),
-    items = Seq(
-     "yes" -> messages("label.yes"),
-     "no" -> messages("label.no")
-    ).map(radioItem => RadioItem(
-     content = Text(radioItem._2),
-     checked = radioItem._1.equals(theForm("includeOtherProperty").value.getOrElse("")),
-     value = Option(radioItem._1)
-    )
-    ),
-    errorMessage = theForm.errors.asTextErrorMessageForField("includeOtherProperty"),
-    fieldset = Option(
-     Fieldset(
-      legend = Option(
-       Legend(
-        content = Text(messages("label.includeOtherProperty")),
-        classes = "govuk-!-font-weight-bold"
-       )
-      )
-     )
-    )
-   )
-  )
-
-  @govukRadios(
-   Radios(
-    name = "onlyPartOfProperty",
-    idPrefix = Option("onlyPartOfProperty"),
-    items = Seq(
-     "yes" -> messages("label.yes"),
-     "no" -> messages("label.no")
-    ).map(radioItem => RadioItem(
-     content = Text(radioItem._2),
-     checked = radioItem._1.equals(theForm("onlyPartOfProperty").value.getOrElse("")),
-     value = Option(radioItem._1)
-    )
-    ),
-    errorMessage = theForm.errors.asTextErrorMessageForField("onlyPartOfProperty"),
-    fieldset = Option(
-     Fieldset(
-      legend = Option(
-       Legend(
-        content = Text(messages("label.onlyPartOfProperty")),
-        classes = "govuk-!-font-weight-bold"
-       )
-      )
-     )
-    )
-   )
-  )
-
-  @govukRadios(
-   Radios(
-    name = "onlyToLand",
-    idPrefix = Option("onlyToLand"),
-    items = Seq(
-     "yes" -> messages("label.yes"),
-     "no" -> messages("label.no")
-    ).map(radioItem => RadioItem(
-     content = Text(radioItem._2),
-     checked = radioItem._1.equals(theForm("onlyToLand").value.getOrElse("")),
-     value = Option(radioItem._1)
-    )
-    ),
-    errorMessage = theForm.errors.asTextErrorMessageForField("onlyToLand"),
-    fieldset = Option(
-     Fieldset(
-      legend = Option(
-       Legend(
-        content = Text(messages("label.onlyToLand")),
-        classes = "govuk-!-font-weight-bold"
-       )
-      )
-     )
-    )
-   )
-  )
-
-  @govukRadios(
-   Radios(
-    name = "shellUnit",
-    idPrefix = Option("shellUnit"),
-    items = Seq(
-     "yes" -> messages("label.yes"),
-     "no" -> messages("label.no")
-    ).map(radioItem => RadioItem(
-     content = Text(radioItem._2),
-     checked = radioItem._1.equals(theForm("shellUnit").value.getOrElse("")),
-     value = Option(radioItem._1)
-    )
-    ),
-    errorMessage = theForm.errors.asTextErrorMessageForField("shellUnit"),
-    fieldset = Option(
-     Fieldset(
-      legend = Option(
-       Legend(
-        content = Text(messages("label.shellUnit")),
-        classes = "govuk-!-font-weight-bold"
-       )
-      )
-     )
-    )
-   )
-  )
 
   @govukCharacterCount(
    CharacterCount(

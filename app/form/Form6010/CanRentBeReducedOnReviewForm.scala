@@ -14,10 +14,18 @@
  * limitations under the License.
  */
 
-package models.submissions.Form6010
+package form.Form6010
 
-case class UltimatelyResponsible(
-  outsideRepairs: OutsideRepairs,
-  insideRepairs: InsideRepairs,
-  buildingInsurance: BuildingInsurances
-)
+import form.MappingSupport._
+import models.submissions.Form6010.{CanRentBeReducedOnReviewDetails, IncentivesPaymentsConditionsDetails}
+import play.api.data.Form
+import play.api.data.Forms.mapping
+
+object CanRentBeReducedOnReviewForm {
+
+  val canRentBeReducedOnReviewForm = Form(
+    mapping(
+      "rentReducedOnReview"            -> rentReducedOnReviewsType
+    )(CanRentBeReducedOnReviewDetails.apply)(CanRentBeReducedOnReviewDetails.unapply)
+  )
+}

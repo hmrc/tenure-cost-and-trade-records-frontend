@@ -19,10 +19,11 @@ package controllers.Form6010
 import controllers.LoginController.loginForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.Form6010.{howIsCurrentRentFixed, rentPayableVaryOnQuantityOfBeers, rentPayableVaryOnQuantityOfBeersDetails}
+import views.html.Form6010.{howIsCurrentRentFixed, rentPayableVaryOnQuantityOfBeers, rentPayableVaryOnQuantityOfBeersDetails, ultimatelyResponsible}
 import form.Form6010.RentPayableVaryOnQuantityOfBeersForm.rentPayableVaryOnQuantityOfBeersForm
 import form.Form6010.RentPayableVaryOnQuantityOfBeersDetailsForm.rentPayableVaryOnQuantityOfBeersDetailsForm
 import form.Form6010.HowIsCurrentRentFixedForm.howIsCurrentRentFixedForm
+import form.Form6010.UltimatelyResponsibleForm.ultimatelyResponsibleForm
 import models.submissions.Form6010.{RentPayableVaryOnQuantityOfBeersNo, RentPayableVaryOnQuantityOfBeersYes}
 import views.html.login
 
@@ -33,7 +34,7 @@ import scala.concurrent.Future
 class RentPayableVaryOnQuantityOfBeersController @Inject() (
   mcc: MessagesControllerComponents,
   login: login,
-  howIsCurrentRentFixedView: howIsCurrentRentFixed,
+  ultimatelyResponsibleView: ultimatelyResponsible,
   rentPayableVaryOnQuantityOfBeersDetailsView: rentPayableVaryOnQuantityOfBeersDetails,
   rentPayableVaryOnQuantityOfBeersView: rentPayableVaryOnQuantityOfBeers
 ) extends FrontendController(mcc) {
@@ -54,7 +55,7 @@ class RentPayableVaryOnQuantityOfBeersController @Inject() (
                 Ok(rentPayableVaryOnQuantityOfBeersDetailsView(rentPayableVaryOnQuantityOfBeersDetailsForm))
               )
             case RentPayableVaryOnQuantityOfBeersNo  =>
-              Future.successful(Ok(howIsCurrentRentFixedView(howIsCurrentRentFixedForm)))
+              Future.successful(Ok(ultimatelyResponsibleView(ultimatelyResponsibleForm)))
             case _                                   => Future.successful(Ok(login(loginForm)))
           }
       )

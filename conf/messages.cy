@@ -220,7 +220,8 @@ label.rentUnderReviewNegotiated  = Is the rent currently under review, or is a n
 #LEASE OR AGREEMENT DETAILS VAT
 ##############################
 includedInYourRent.header = Lease or agreement details
-includedInYourRent.subheading = Are any of the following included in your rent?
+includedInYourRent.subheading = Which of the following are included in your rent?
+includedInYourRentApply.subheading = Select any that apply
 label.vat = VAT
 label.nondomesticRates = Non-domestic rates
 label.waterCharges = Water charges
@@ -290,11 +291,12 @@ label.rentOpenMarketValue = Is the rent based on the open market value?
 #DOES THE RENT PAYABLE
 ##############################
 rentPayable.header = Does the rent payable
-label.includeLicensee = include licensee’s, manager’s or staff living accomodation?
-label.includeOtherProperty = include other property?
-label.onlyPartOfProperty = relate to only part of the property?
-label.onlyToLand = relate only to land (excluding buildings)?
-label.shellUnit = relate to a ’shell’ unit (did you have to fit the property out yourself)?
+label.rentPayable = Select any that apply
+checkbox.rentPayable.includeLicensee = include licensee’s, manager’s or staff living accomodation?
+checkbox.rentPayable.includeOtherProperty = include other property?
+checkbox.rentPayable.onlyPartOfProperty = relate to only part of the property?
+checkbox.rentPayable.onlyToLand = relate only to land (excluding buildings)?
+checkbox.rentPayable.shellUnit = relate to a ’shell’ unit (did you have to fit the property out yourself)?
 label.detailsToQuestions = Please give details if you answered yes to any of these questions
 hint.detailsToQuestions = For example, the rent includes an upstairs flat, or also includes the premises next door
 error.detailsToQuestions.required = Please provide further information
@@ -302,12 +304,12 @@ error.detailsToQuestions.maxLength = This must be 1000 characters or fewer
 
 #RENT PAYABLE VARY ON QUANTITY OF BEERS
 ##############################
-rentPayableVaryOnQuantityOfBeers.header = About the property
+rentPayableVaryOnQuantityOfBeers.header = About your lease or agreement
 label.rentPayableVaryOnQuantityOfBeers = Does the rent payable vary according to the quantity of beers, wines, spirits?
 
 #RENT PAYABLE VARY ON QUANTITY OF BEERS DETAILS
 ##############################
-rentPayableVaryOnQuantityOfBeersDetails.header = How your turnover affects the rent
+rentPayableVaryOnQuantityOfBeersDetails.header = About your lease or agreement
 label.rentPayableVaryOnQuantityOfBeersDetails = Please tell us how the rent payable is affected by the drinks supplied to your property
 error.rentPayableVaryOnQuantityOfBeersDetails.required = Tell us how the rent payable is affected by the drinks supplied to your property
 error.rentPayableVaryOnQuantityOfBeersDetails.maxLength  = This must be 1000 characters or fewer
@@ -347,10 +349,6 @@ label.buildingInsurance = Building insurance
 label.landlord = Landlord
 label.tenant = Tenant
 label.both = Both
-label.areaShared = If responsible for any area are shared, give details
-hint.areaShared = For example, costs are shared equally, landlord 75%, tenant 25%
-error.areaShared.required = Please provide details if you are responsible for any area shared, if any
-error.areaShared.maxLength = This must be 1000 characters or fewer
 
 #RENT INCLUDE TRADE SERVICES
 ##############################
@@ -384,11 +382,23 @@ error.invalid_currency.rentIncludeFixturesAndFittingsDetails = Please provide a 
 
 #INCENTIVES, PAYMENTS AND CONDITIONS
 ##############################
-incentivesPaymentsConditions.header = Incentives, payments and conditions
+incentivesPaymentsConditions.header = About your lease or agreement
 label.formerLeaseSurrendered = Was a former lease or agreement surrendered early as a condition of the present one being granted?
+
+#CAN RENT BE REDUCED ON REVIEW
+##############################
+rentReducedOnReview.header = About your lease or agreement
 label.rentReducedOnReview = Can the rent be reduced on review under the terms of the lease or agreement?
+
+#PAY A CAPITAL SUM
+##############################
+capitalSumOrPremium.header = About your lease or agreement
 label.capitalSumOrPremium = Did you pay a capital sum or premium for your lease or agreement ignoring tenants inventory?
-hint.incentivesPaymentsConditions.capitalSumOrPremium = The sum could be paid to the landlord or a previous lessee
+hint.capitalSumOrPremium = The sum could be paid to the landlord or a previous lessee
+
+#PAYMENT WHEN LEASE IS GRANTED
+##############################
+receivePaymentWhenLeaseGranted.header = About your lease or agreement
 label.receivePaymentWhenLeaseGranted = Did you receive any payment when the lease was granted (if the rent has not been reviewed in the lease), or following assignment of the lease or agreement?
 
 #RENT INCREASE ANNUALLY WITH RPI
@@ -574,8 +584,8 @@ error.currentLeaseOrAgreementBegin.maxLength = This must be 1000 characters or f
 ##CURRENT RENT PAYABLE WITHIN 12 MONTHS
 ##############################
 currentRentPayableWithin12Months.header = Lease or agreement details
-label.rentPayable = Is the current rent payable due to review within the next 12 months, either under the terms of the existing lease, or upon grant of a new lease?
-hint.rentPayable = Do not include any rent increases linked to turnover or the retail price index (RPI)
+label.currentRentPayableWithin12Months = Is the current rent payable due to review within the next 12 months, either under the terms of the existing lease, or upon grant of a new lease?
+hint.currentRentPayableWithin12Months = Do not include any rent increases linked to turnover or the retail price index (RPI)
 label.dateReview = Date of next rent review or expiry of existing lease
 error.dateReview.day.required = The date must include a day
 error.dateReview.month.required = The date must include a month
@@ -614,6 +624,14 @@ taskList.header = Declaration summary
 #TURNOVER
 ##############################
 turnover.header = This is a holding page for the turnover page
+
+#SHARED RESPONSIBILITIES
+##############################
+sharedResponsibilities.header = About your lease or agreement
+label.sharedResponsibilities = Please give details of shared responsibilities
+hint.sharedResponsibilities = For example, costs are shared equally, landlord 75%, tenant 25%
+error.sharedResponsibilities.required = Please provide details if you are responsible for any area shared, if any
+error.sharedResponsibilities.maxLength = This must be 1000 characters or fewer
 
 #FURTHER INFORMATION OR REMARKS
 ##############################

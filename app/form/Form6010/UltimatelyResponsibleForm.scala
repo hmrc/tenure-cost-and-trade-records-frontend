@@ -28,11 +28,7 @@ object UltimatelyResponsibleForm {
     mapping(
       "outsideRepairs"    -> outsideRepairsType,
       "insideRepairs"     -> insideRepairsType,
-      "buildingInsurance" -> buildingInsuranceType,
-      "areaShared"        -> default(text, "").verifying(
-        nonEmpty(errorMessage = "error.areaShared.required"),
-        maxLength(1000, "error.areaShared.maxLength")
-      )
+      "buildingInsurance" -> buildingInsuranceType
     )(UltimatelyResponsible.apply)(UltimatelyResponsible.unapply)
   )
 }

@@ -142,20 +142,6 @@
   )
  )
 
- @govukCharacterCount(
-  CharacterCount(
-   id = "areaShared",
-   name = "areaShared",
-   rows = 5,
-   maxLength = Some(1000),
-   label = Label(
-    content = Text(messages("label.areaShared")),
-    classes = "govuk-!-font-weight-bold"
-   ),
-   hint = Some(Hint(content = Text(messages("hint.areaShared")))),
-  )
- )
-
  @includes.continueButton(govukButton)
 }
 }

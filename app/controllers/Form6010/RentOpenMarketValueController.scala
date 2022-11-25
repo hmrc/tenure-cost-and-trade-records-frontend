@@ -50,9 +50,9 @@ class RentOpenMarketValueController @Inject() (
         data =>
           data.rentOpenMarketValues match {
             case RentOpenMarketValuesYes =>
-              Future.successful(Ok(whatIsYourRentBasedOnView(whatIsYourCurrentRentBasedOnForm)))
-            case RentOpenMarketValuesNo  =>
               Future.successful(Ok(rentIncreaseAnnuallyWithRPIView(rentIncreasedAnnuallyWithRPIDetailsForm)))
+            case RentOpenMarketValuesNo  =>
+              Future.successful(Ok(whatIsYourRentBasedOnView(whatIsYourCurrentRentBasedOnForm)))
             case _                       => Future.successful(Ok(login(loginForm)))
           }
       )

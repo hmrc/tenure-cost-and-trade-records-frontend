@@ -16,8 +16,6 @@
 
 package models.submissions.Form6010
 
-case class UltimatelyResponsible(
-  outsideRepairs: OutsideRepairs,
-  insideRepairs: InsideRepairs,
-  buildingInsurance: BuildingInsurances
+case class PaymentWhenLeaseIsGrantedDetails(
+  receivePaymentWhenLeaseGranted: ReceivePaymentWhenLeaseGrants
 )

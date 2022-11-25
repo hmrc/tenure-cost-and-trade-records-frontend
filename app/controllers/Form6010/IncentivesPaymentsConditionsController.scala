@@ -18,9 +18,10 @@ package controllers.Form6010
 
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.Form6010.{incentivesPaymentsConditions, tenantsAdditionsDisregarded}
+import views.html.Form6010.{canRentBeReducedOnReview, incentivesPaymentsConditions, tenantsAdditionsDisregarded}
 import form.Form6010.IncentivesPaymentsConditionsForm.incentivesPaymentsConditionsForm
 import form.Form6010.TenantsAdditionsDisregardedForm.tenantsAdditionsDisregardedForm
+import form.Form6010.CanRentBeReducedOnReviewForm.canRentBeReducedOnReviewForm
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
@@ -28,8 +29,8 @@ import scala.concurrent.Future
 @Singleton
 class IncentivesPaymentsConditionsController @Inject() (
   mcc: MessagesControllerComponents,
-  tenantsAdditionsDisregardedView: tenantsAdditionsDisregarded,
-  incentivesPaymentsConditionsView: incentivesPaymentsConditions
+  incentivesPaymentsConditionsView: incentivesPaymentsConditions,
+  canRentBeReducedOnReviewView: canRentBeReducedOnReview
 ) extends FrontendController(mcc) {
 
   def show: Action[AnyContent] = Action.async { implicit request =>
@@ -41,7 +42,7 @@ class IncentivesPaymentsConditionsController @Inject() (
       .bindFromRequest()
       .fold(
         formWithErrors => Future.successful(BadRequest(incentivesPaymentsConditionsView(formWithErrors))),
-        data => Future.successful(Ok(tenantsAdditionsDisregardedView(tenantsAdditionsDisregardedForm)))
+        data => Future.successful(Ok(canRentBeReducedOnReviewView(canRentBeReducedOnReviewForm)))
       )
   }
 }

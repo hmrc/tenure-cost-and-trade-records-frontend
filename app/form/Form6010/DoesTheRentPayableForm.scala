@@ -26,11 +26,6 @@ object DoesTheRentPayableForm {
 
   val doesTheRentPayableForm = Form(
     mapping(
-      "includeLicensee"      -> includeLicenseeType,
-      "includeOtherProperty" -> includeOtherPropertyType,
-      "onlyPartOfProperty"   -> onlyPartOfPropertyType,
-      "onlyToLand"           -> onlyToLandType,
-      "shellUnit"            -> shellUnitType,
       "detailsToQuestions"   ->
         default(text, "").verifying(
           nonEmpty(errorMessage = "error.detailsToQuestions.required"),

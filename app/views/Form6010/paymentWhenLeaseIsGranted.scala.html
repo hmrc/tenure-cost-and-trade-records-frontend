@@ -14,7 +14,7 @@
  * limitations under the License.
  *@
 
-@import models.submissions.Form6010.IncentivesPaymentsConditionsDetails
+@import models.submissions.Form6010.PaymentWhenLeaseIsGrantedDetails
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
@@ -29,9 +29,6 @@
 @import uk.gov.hmrc.govukfrontend.views.Aliases.RadioItem
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Fieldset
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Legend
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Hint
-
-
 
 @this(layout: Layout,
         govukButton: GovukButton,
@@ -44,36 +41,36 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[IncentivesPaymentsConditionsDetails])(implicit request: Request[_], messages: Messages)
+
+@(theForm: Form[PaymentWhenLeaseIsGrantedDetails])(implicit request: Request[_], messages: Messages)
 
 @layout(
- pageHeading = messages("incentivesPaymentsConditions.header"),
- backLinkUrl = controllers.Form6010.routes.IntervalsOfRentReviewController.show.url,
+ pageHeading = messages("receivePaymentWhenLeaseGranted.header"),
+ backLinkUrl = controllers.Form6010.routes.PayACapitalSumController.show.url,
  theForm = theForm
 ) {
 
- @formWithCSRF(action = controllers.Form6010.routes.IncentivesPaymentsConditionsController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
-
+ @formWithCSRF(action = controllers.Form6010.routes.PaymentWhenLeaseIsGrantedController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
 
   @govukRadios(
    Radios(
-    name = "formerLeaseSurrendered",
-    idPrefix = Option("formerLeaseSurrendered"),
+    name = "receivePaymentWhenLeaseGranted",
+    idPrefix = Option("receivePaymentWhenLeaseGranted"),
     items = Seq(
      "yes" -> messages("label.yes"),
      "no" -> messages("label.no")
     ).map(radioItem => RadioItem(
      content = Text(radioItem._2),
-     checked = radioItem._1.equals(theForm("formerLeaseSurrendered").value.getOrElse("")),
+     checked = radioItem._1.equals(theForm("receivePaymentWhenLeaseGranted").value.getOrElse("")),
      value = Option(radioItem._1)
     )
     ),
-    errorMessage =  theForm.errors.asTextErrorMessageForField("formerLeaseSurrendered"),
+    errorMessage =  theForm.errors.asTextErrorMessageForField("receivePaymentWhenLeaseGranted"),
     fieldset = Option(
      Fieldset(
       legend = Option(
        Legend(
-        content = Text(messages("label.formerLeaseSurrendered")),
+        content = Text(messages("label.receivePaymentWhenLeaseGranted")),
         classes = "govuk-!-font-weight-bold"
        )
       )

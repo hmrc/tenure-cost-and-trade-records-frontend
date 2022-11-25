@@ -16,32 +16,36 @@
 
 package controllers.Form6010
 
+import form.Form6010.IntervalsOfRentReviewForm.intervalsOfRentReviewForm
+import form.Form6010.UltimatelyResponsibleForm.ultimatelyResponsibleForm
+import form.Form6010.SharedResponsibilitiesForm.sharedResponsibilitiesForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.Form6010.{doesTheRentPayable, rentIncludeTradeServices, ultimatelyResponsible}
-import form.Form6010.DoesTheRentPayableForm.doesTheRentPayableForm
-import form.Form6010.RentIncludeTradeServicesForm.rentIncludeTradeServicesForm
+import views.html.Form6010.{intervalsOfRentReview, rentPayableVaryOnQuantityOfBeersDetails, sharedResponsibilities, ultimatelyResponsible}
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class DoesTheRentPayableController @Inject() (
+class SharedResponsibilitiesController @Inject()(
   mcc: MessagesControllerComponents,
-  rentIncludeTradeServicesView: rentIncludeTradeServices,
-  doesTheRentPayableView: doesTheRentPayable
+  ultimatelyResponsibleView: ultimatelyResponsible,
+  rentPayableVaryOnQuantityOfBeersDetailsView: rentPayableVaryOnQuantityOfBeersDetails,
+  intervalsOfRentReviewView: intervalsOfRentReview,
+  sharedResponsibilitiesView: sharedResponsibilities
+
 ) extends FrontendController(mcc) {
 
   def show: Action[AnyContent] = Action.async { implicit request =>
-    Future.successful(Ok(doesTheRentPayableView(doesTheRentPayableForm)))
+    Future.successful(Ok(sharedResponsibilitiesView(sharedResponsibilitiesForm)))
   }
 
   def submit = Action.async { implicit request =>
-    doesTheRentPayableForm
+    sharedResponsibilitiesForm
       .bindFromRequest()
       .fold(
-        formWithErrors => Future.successful(BadRequest(doesTheRentPayableView(formWithErrors))),
-        data => Future.successful(Ok(rentIncludeTradeServicesView(rentIncludeTradeServicesForm)))
+        formWithErrors => Future.successful(BadRequest(sharedResponsibilitiesView(formWithErrors))),
+        data => Future.successful(Ok(intervalsOfRentReviewView(intervalsOfRentReviewForm)))
       )
   }
 

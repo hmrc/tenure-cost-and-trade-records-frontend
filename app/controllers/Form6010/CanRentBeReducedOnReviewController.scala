@@ -16,33 +16,33 @@
 
 package controllers.Form6010
 
+import form.Form6010.IncentivesPaymentsConditionsForm.incentivesPaymentsConditionsForm
+import form.Form6010.PayACapitalSumForm.payACapitalSumForm
+import form.Form6010.CanRentBeReducedOnReviewForm.canRentBeReducedOnReviewForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.Form6010.{doesTheRentPayable, rentIncludeTradeServices, ultimatelyResponsible}
-import form.Form6010.DoesTheRentPayableForm.doesTheRentPayableForm
-import form.Form6010.RentIncludeTradeServicesForm.rentIncludeTradeServicesForm
+import views.html.Form6010.{canRentBeReducedOnReview, payACapitalSum}
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class DoesTheRentPayableController @Inject() (
+class CanRentBeReducedOnReviewController @Inject()(
   mcc: MessagesControllerComponents,
-  rentIncludeTradeServicesView: rentIncludeTradeServices,
-  doesTheRentPayableView: doesTheRentPayable
+  canRentBeReducedOnReviewView: canRentBeReducedOnReview,
+  payACapitalSumView: payACapitalSum
 ) extends FrontendController(mcc) {
 
   def show: Action[AnyContent] = Action.async { implicit request =>
-    Future.successful(Ok(doesTheRentPayableView(doesTheRentPayableForm)))
+    Future.successful(Ok(canRentBeReducedOnReviewView(canRentBeReducedOnReviewForm)))
   }
 
   def submit = Action.async { implicit request =>
-    doesTheRentPayableForm
+    canRentBeReducedOnReviewForm
       .bindFromRequest()
       .fold(
-        formWithErrors => Future.successful(BadRequest(doesTheRentPayableView(formWithErrors))),
-        data => Future.successful(Ok(rentIncludeTradeServicesView(rentIncludeTradeServicesForm)))
+        formWithErrors => Future.successful(BadRequest(canRentBeReducedOnReviewView(formWithErrors))),
+        data => Future.successful(Ok(payACapitalSumView(payACapitalSumForm)))
       )
   }
-
 }
