@@ -19,6 +19,5 @@ package models.submissions.Form6010
 case class UltimatelyResponsible(
   outsideRepairs: OutsideRepairs,
   insideRepairs: InsideRepairs,
-  buildingInsurance: BuildingInsurances,
-  rentPayableIsAffected: String
+  buildingInsurance: BuildingInsurances
 )

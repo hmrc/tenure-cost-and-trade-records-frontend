@@ -17,8 +17,5 @@
 package models.submissions.Form6010
 
 case class IncentivesPaymentsConditionsDetails(
-  formerLeaseSurrendered: FormerLeaseSurrendered,
-  rentReducedOnReview: RentReducedOnReviews,
-  capitalSumOrPremium: CapitalSumOrPremiums,
-  receivePaymentWhenLeaseGranted: ReceivePaymentWhenLeaseGrants
+  formerLeaseSurrendered: FormerLeaseSurrendered
 )

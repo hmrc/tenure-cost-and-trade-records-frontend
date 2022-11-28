@@ -18,9 +18,9 @@ package controllers.Form6010
 
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.Form6010.{doesTheRentPayable, ultimatelyResponsible}
+import views.html.Form6010.{doesTheRentPayable, rentIncludeTradeServices, ultimatelyResponsible}
 import form.Form6010.DoesTheRentPayableForm.doesTheRentPayableForm
-import form.Form6010.UltimatelyResponsibleForm.ultimatelyResponsibleForm
+import form.Form6010.RentIncludeTradeServicesForm.rentIncludeTradeServicesForm
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
@@ -28,7 +28,7 @@ import scala.concurrent.Future
 @Singleton
 class DoesTheRentPayableController @Inject() (
   mcc: MessagesControllerComponents,
-  ultimatelyResponsibleView: ultimatelyResponsible,
+  rentIncludeTradeServicesView: rentIncludeTradeServices,
   doesTheRentPayableView: doesTheRentPayable
 ) extends FrontendController(mcc) {
 
@@ -41,7 +41,7 @@ class DoesTheRentPayableController @Inject() (
       .bindFromRequest()
       .fold(
         formWithErrors => Future.successful(BadRequest(doesTheRentPayableView(formWithErrors))),
-        data => Future.successful(Ok(ultimatelyResponsibleView(ultimatelyResponsibleForm)))
+        data => Future.successful(Ok(rentIncludeTradeServicesView(rentIncludeTradeServicesForm)))
       )
   }
 

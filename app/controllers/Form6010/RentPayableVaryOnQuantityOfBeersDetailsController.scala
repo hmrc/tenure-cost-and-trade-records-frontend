@@ -16,11 +16,11 @@
 
 package controllers.Form6010
 
-import form.Form6010.HowIsCurrentRentFixedForm.howIsCurrentRentFixedForm
+import form.Form6010.UltimatelyResponsibleForm.ultimatelyResponsibleForm
 import form.Form6010.RentPayableVaryOnQuantityOfBeersDetailsForm.rentPayableVaryOnQuantityOfBeersDetailsForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.Form6010.{howIsCurrentRentFixed, rentPayableVaryOnQuantityOfBeersDetails}
+import views.html.Form6010.{rentPayableVaryOnQuantityOfBeersDetails, ultimatelyResponsible}
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
@@ -28,7 +28,7 @@ import scala.concurrent.Future
 @Singleton
 class RentPayableVaryOnQuantityOfBeersDetailsController @Inject() (
   mcc: MessagesControllerComponents,
-  howIsCurrentRentFixedView: howIsCurrentRentFixed,
+  ultimatelyResponsibleView: ultimatelyResponsible,
   rentPayableVaryOnQuantityOfBeersDetailsView: rentPayableVaryOnQuantityOfBeersDetails
 ) extends FrontendController(mcc) {
 
@@ -41,7 +41,7 @@ class RentPayableVaryOnQuantityOfBeersDetailsController @Inject() (
       .bindFromRequest()
       .fold(
         formWithErrors => Future.successful(BadRequest(rentPayableVaryOnQuantityOfBeersDetailsView(formWithErrors))),
-        data => Future.successful(Ok(howIsCurrentRentFixedView(howIsCurrentRentFixedForm)))
+        data => Future.successful(Ok(ultimatelyResponsibleView(ultimatelyResponsibleForm)))
       )
   }
 

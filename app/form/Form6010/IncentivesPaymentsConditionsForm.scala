@@ -25,10 +25,7 @@ object IncentivesPaymentsConditionsForm {
 
   val incentivesPaymentsConditionsForm = Form(
     mapping(
-      "formerLeaseSurrendered"         -> formerLeaseSurrenderedType,
-      "rentReducedOnReview"            -> rentReducedOnReviewsType,
-      "capitalSumOrPremium"            -> capitalSumOrPremiumType,
-      "receivePaymentWhenLeaseGranted" -> receivePaymentWhenLeaseGrantedType
+      "formerLeaseSurrendered" -> formerLeaseSurrenderedType
     )(IncentivesPaymentsConditionsDetails.apply)(IncentivesPaymentsConditionsDetails.unapply)
   )
 }

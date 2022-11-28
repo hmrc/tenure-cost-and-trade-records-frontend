@@ -17,7 +17,7 @@
 package form.Form6010
 
 import form.MappingSupport._
-import models.submissions.Form6010.TenantsAdditionsDisregardedDetails
+import models.submissions.Form6010.TenantAdditionsDisregardedDetails
 import play.api.data.Form
 import play.api.data.Forms.mapping
 
@@ -25,8 +25,7 @@ object TenantsAdditionsDisregardedForm {
 
   val tenantsAdditionsDisregardedForm = Form(
     mapping(
-      "tenantsAdditionsDisregarded" -> tenantsAdditionsDisregardedType,
-      "legalPlanningRestrictions"   -> legalPlanningRestrictionsType
-    )(TenantsAdditionsDisregardedDetails.apply)(TenantsAdditionsDisregardedDetails.unapply)
+      "tenantsAdditionsDisregarded" -> tenantsAdditionsDisregardedType
+    )(TenantAdditionsDisregardedDetails.apply)(TenantAdditionsDisregardedDetails.unapply)
   )
 }

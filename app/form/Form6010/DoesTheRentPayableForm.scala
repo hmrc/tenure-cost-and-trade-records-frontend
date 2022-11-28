@@ -26,12 +26,7 @@ object DoesTheRentPayableForm {
 
   val doesTheRentPayableForm = Form(
     mapping(
-      "includeLicensee"      -> includeLicenseeType,
-      "includeOtherProperty" -> includeOtherPropertyType,
-      "onlyPartOfProperty"   -> onlyPartOfPropertyType,
-      "onlyToLand"           -> onlyToLandType,
-      "shellUnit"            -> shellUnitType,
-      "detailsToQuestions"   ->
+      "detailsToQuestions" ->
         default(text, "").verifying(
           nonEmpty(errorMessage = "error.detailsToQuestions.required"),
           maxLength(1000, "error.detailsToQuestions.maxLength")

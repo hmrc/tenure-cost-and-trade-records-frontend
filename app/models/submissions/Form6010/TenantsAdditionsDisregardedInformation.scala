@@ -18,30 +18,16 @@ package models.submissions.Form6010
 
 import models.{NamedEnum, NamedEnumSupport}
 
-sealed trait TenantsAdditionsDisregarded extends NamedEnum {
+sealed trait TenantAdditionalDisregarded extends NamedEnum {
   val key = "tenantsAdditionsDisregarded"
 }
-object TenantsAdditionsDisregardedYes extends TenantsAdditionsDisregarded {
+object TenantsAdditionsDisregardedYes extends TenantAdditionalDisregarded {
   val name = "yes"
 }
-object TenantsAdditionsDisregardedNo extends TenantsAdditionsDisregarded {
+object TenantsAdditionsDisregardedNo extends TenantAdditionalDisregarded {
   val name = "no"
 }
 
-object TenantsAdditionsDisregard extends NamedEnumSupport[TenantsAdditionsDisregarded] {
+object TenantsAdditionsDisregard extends NamedEnumSupport[TenantAdditionalDisregarded] {
   val all = List(TenantsAdditionsDisregardedYes, TenantsAdditionsDisregardedNo)
-}
-
-sealed trait LegalPlanningRestrictions extends NamedEnum {
-  val key = "legalPlanningRestrictions"
-}
-object LegalPlanningRestrictionsYes extends LegalPlanningRestrictions {
-  val name = "yes"
-}
-object LegalPlanningRestrictionsNo extends LegalPlanningRestrictions {
-  val name = "no"
-}
-
-object LegalPlanningRestriction extends NamedEnumSupport[LegalPlanningRestrictions] {
-  val all = List(LegalPlanningRestrictionsYes, LegalPlanningRestrictionsNo)
 }

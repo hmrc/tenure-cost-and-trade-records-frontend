@@ -17,10 +17,13 @@
 package controllers.Form6010
 
 import controllers.LoginController.loginForm
+import form.Form6010.TenantsAdditionsDisregardedDetailsForm.tenantsAdditionsDisregardedDetailsForm
 import form.Form6010.TenantsAdditionsDisregardedForm.tenantsAdditionsDisregardedForm
+import form.Form6010.LegalOrPlanningRestrictionsForm.legalPlanningRestrictionsForm
+import models.submissions.Form6010.{TenantsAdditionsDisregardedNo, TenantsAdditionsDisregardedYes}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.Form6010.tenantsAdditionsDisregarded
+import views.html.Form6010.{legalOrPlanningRestrictions, tenantsAdditionsDisregarded, tenantsAdditionsDisregardedDetails}
 import views.html.login
 
 import javax.inject.{Inject, Singleton}
@@ -29,8 +32,10 @@ import scala.concurrent.Future
 @Singleton
 class TenantsAdditionsDisregardedController @Inject() (
   mcc: MessagesControllerComponents,
-  login: login,
-  tenantsAdditionsDisregardedView: tenantsAdditionsDisregarded
+  tenantsAdditionsDisregardedDetailsView: tenantsAdditionsDisregardedDetails,
+  tenantsAdditionsDisregardedView: tenantsAdditionsDisregarded,
+  legalOrPlanningRestrictionsView: legalOrPlanningRestrictions,
+  login: login
 ) extends FrontendController(mcc) {
 
   def show: Action[AnyContent] = Action { implicit request =>
@@ -42,7 +47,17 @@ class TenantsAdditionsDisregardedController @Inject() (
       .bindFromRequest()
       .fold(
         formWithErrors => Future.successful(BadRequest(tenantsAdditionsDisregardedView(formWithErrors))),
-        data => Future.successful(Ok(login(loginForm)))
+        data =>
+          data.tenantAdditionalDisregarded match {
+            case TenantsAdditionsDisregardedYes =>
+              Future.successful(
+                Ok(tenantsAdditionsDisregardedDetailsView(tenantsAdditionsDisregardedDetailsForm))
+              )
+            case TenantsAdditionsDisregardedNo  =>
+              Future.successful(Ok(legalOrPlanningRestrictionsView(legalPlanningRestrictionsForm)))
+            case _                              => Future.successful(Ok(login(loginForm)))
+
+          }
       )
   }
 }
