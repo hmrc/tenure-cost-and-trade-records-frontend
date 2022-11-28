@@ -14,18 +14,20 @@
  * limitations under the License.
  */
 
-package form.Form6010
+package models.submissions.Form6010
 
-import form.MappingSupport._
-import models.submissions.Form6010.PayACapitalSumDetails
-import play.api.data.Form
-import play.api.data.Forms.mapping
+import models.{NamedEnum, NamedEnumSupport}
 
-object PayACapitalSumForm {
+sealed trait LegalPlanningRestrictions extends NamedEnum {
+  val key = "legalPlanningRestrictions"
+}
+object LegalPlanningRestrictionsYes extends LegalPlanningRestrictions {
+  val name = "yes"
+}
+object LegalPlanningRestrictionsNo extends LegalPlanningRestrictions {
+  val name = "no"
+}
 
-  val payACapitalSumForm = Form(
-    mapping(
-      "capitalSumOrPremium" -> capitalSumOrPremiumType
-    )(PayACapitalSumDetails.apply)(PayACapitalSumDetails.unapply)
-  )
+object LegalPlanningRestriction extends NamedEnumSupport[LegalPlanningRestrictions] {
+  val all = List(LegalPlanningRestrictionsYes, LegalPlanningRestrictionsNo)
 }

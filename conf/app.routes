@@ -170,6 +170,15 @@ POST        /add-another-letting-other-part-of-property             controllers.
 GET         /tenants-additions-disregarded                          controllers.Form6010.TenantsAdditionsDisregardedController.show()
 POST        /tenants-additions-disregarded                          controllers.Form6010.TenantsAdditionsDisregardedController.submit()
 
+GET         /tenants-additions-disregarded-details                  controllers.Form6010.TenantsAdditionsDisregardedDetailsController.show()
+POST        /tenants-additions-disregarded-details                  controllers.Form6010.TenantsAdditionsDisregardedDetailsController.submit()
+
+GET         /legal-or-planning-restrictions                         controllers.Form6010.LegalOrPlanningRestrictionsController.show()
+POST        /legal-or-planning-restrictions                         controllers.Form6010.LegalOrPlanningRestrictionsController.submit()
+
+GET         /legal-or-planning-restrictions-details                 controllers.Form6010.LegalOrPlanningRestrictionsDetailsController.show()
+POST        /legal-or-planning-restrictions-details                 controllers.Form6010.LegalOrPlanningRestrictionsDetailsController.submit()
+
 GET         /current-rent-first-paid                                controllers.Form6010.CurrentRentFirstPaidController.show()
 POST        /current-rent-first-paid                                controllers.Form6010.CurrentRentFirstPaidController.submit()
 

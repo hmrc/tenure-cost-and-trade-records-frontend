@@ -25,10 +25,7 @@ import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 
-class CateringOperationOrLettingAccommodationDetailsCheckboxesControllerSpec
-    extends AnyWordSpec
-    with Matchers
-    with GuiceOneAppPerSuite {
+class AboutThePropertyOtherControllerSpec extends AnyWordSpec with Matchers with GuiceOneAppPerSuite {
   override def fakeApplication(): Application =
     new GuiceApplicationBuilder()
       .configure(
@@ -39,7 +36,7 @@ class CateringOperationOrLettingAccommodationDetailsCheckboxesControllerSpec
 
   private val fakeRequest = FakeRequest("GET", "/")
 
-  private val controller = app.injector.instanceOf[CateringOperationOrLettingAccommodationDetailsCheckboxesController]
+  private val controller = app.injector.instanceOf[AboutThePropertyOtherController]
 
   "GET /" should {
     "return 200" in {

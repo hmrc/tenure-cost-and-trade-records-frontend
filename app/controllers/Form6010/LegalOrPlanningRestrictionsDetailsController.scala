@@ -16,32 +16,35 @@
 
 package controllers.Form6010
 
+import controllers.LoginController.loginForm
+import form.Form6010.FurtherInformationOrRemarksForm.furtherInformationOrRemarksForm
 import form.Form6010.TenantsAdditionsDisregardedForm.tenantsAdditionsDisregardedForm
-import form.Form6010.PaymentWhenLeaseIsGrantedForm.paymentWhenLeaseIsGrantedForm
+import form.Form6010.LegalOrPlanningRestrictionsDetailsForm.legalOrPlanningRestrictionsDetailsForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.Form6010.{paymentWhenLeaseIsGranted, tenantsAdditionsDisregarded}
+import views.html.Form6010.{furtherInformationOrRemarks, legalOrPlanningRestrictionsDetails, tenantsAdditionsDisregarded}
+import views.html.login
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class PaymentWhenLeaseIsGrantedController @Inject() (
+class LegalOrPlanningRestrictionsDetailsController @Inject() (
   mcc: MessagesControllerComponents,
-  tenantsAdditionsDisregardedView: tenantsAdditionsDisregarded,
-  paymentWhenLeaseIsGrantedView: paymentWhenLeaseIsGranted
+  legalOrPlanningRestrictionsDetailsView: legalOrPlanningRestrictionsDetails,
+  furtherInformationOrRemarksView: furtherInformationOrRemarks
 ) extends FrontendController(mcc) {
 
-  def show: Action[AnyContent] = Action.async { implicit request =>
-    Future.successful(Ok(paymentWhenLeaseIsGrantedView(paymentWhenLeaseIsGrantedForm)))
+  def show: Action[AnyContent] = Action { implicit request =>
+    Ok(legalOrPlanningRestrictionsDetailsView(legalOrPlanningRestrictionsDetailsForm))
   }
 
   def submit = Action.async { implicit request =>
-    paymentWhenLeaseIsGrantedForm
+    legalOrPlanningRestrictionsDetailsForm
       .bindFromRequest()
       .fold(
-        formWithErrors => Future.successful(BadRequest(paymentWhenLeaseIsGrantedView(formWithErrors))),
-        data => Future.successful(Ok(tenantsAdditionsDisregardedView(tenantsAdditionsDisregardedForm)))
+        formWithErrors => Future.successful(BadRequest(legalOrPlanningRestrictionsDetailsView(formWithErrors))),
+        data => Future.successful(Ok(furtherInformationOrRemarksView(furtherInformationOrRemarksForm)))
       )
   }
 }

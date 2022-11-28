@@ -27,7 +27,7 @@ import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class CanRentBeReducedOnReviewController @Inject()(
+class CanRentBeReducedOnReviewController @Inject() (
   mcc: MessagesControllerComponents,
   canRentBeReducedOnReviewView: canRentBeReducedOnReview,
   payACapitalSumView: payACapitalSum

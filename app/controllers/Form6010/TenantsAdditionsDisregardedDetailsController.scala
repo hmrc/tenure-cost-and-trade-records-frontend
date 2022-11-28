@@ -16,32 +16,33 @@
 
 package controllers.Form6010
 
-import form.Form6010.PaymentWhenLeaseIsGrantedForm.paymentWhenLeaseIsGrantedForm
-import form.Form6010.PayACapitalSumForm.payACapitalSumForm
+import form.Form6010.LegalOrPlanningRestrictionsForm.legalPlanningRestrictionsForm
+import form.Form6010.TenantsAdditionsDisregardedDetailsForm.tenantsAdditionsDisregardedDetailsForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.Form6010.{payACapitalSum, paymentWhenLeaseIsGranted}
+import views.html.Form6010.{legalOrPlanningRestrictions, legalOrPlanningRestrictionsDetails, tenantsAdditionsDisregardedDetails}
+import views.html.login
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class PayACapitalSumController @Inject() (
+class TenantsAdditionsDisregardedDetailsController @Inject() (
   mcc: MessagesControllerComponents,
-  paymentWhenLeaseIsGrantedView: paymentWhenLeaseIsGranted,
-  payACapitalSumView: payACapitalSum
+  legalOrPlanningRestrictionsView: legalOrPlanningRestrictions,
+  tenantsAdditionsDisregardedDetailsView: tenantsAdditionsDisregardedDetails
 ) extends FrontendController(mcc) {
 
-  def show: Action[AnyContent] = Action.async { implicit request =>
-    Future.successful(Ok(payACapitalSumView(payACapitalSumForm)))
+  def show: Action[AnyContent] = Action { implicit request =>
+    Ok(tenantsAdditionsDisregardedDetailsView(tenantsAdditionsDisregardedDetailsForm))
   }
 
   def submit = Action.async { implicit request =>
-    payACapitalSumForm
+    tenantsAdditionsDisregardedDetailsForm
       .bindFromRequest()
       .fold(
-        formWithErrors => Future.successful(BadRequest(payACapitalSumView(formWithErrors))),
-        data => Future.successful(Ok(paymentWhenLeaseIsGrantedView(paymentWhenLeaseIsGrantedForm)))
+        formWithErrors => Future.successful(BadRequest(tenantsAdditionsDisregardedDetailsView(formWithErrors))),
+        data => Future.successful(Ok(legalOrPlanningRestrictionsView(legalPlanningRestrictionsForm)))
       )
   }
 }

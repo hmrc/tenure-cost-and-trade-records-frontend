@@ -35,7 +35,7 @@ class AddAnotherLettingOtherPartOfPropertyController @Inject() (
   addAnotherLettingOtherPartOfPropertyView: addAnotherLettingOtherPartOfProperty,
   lettingOtherPartOfPropertyDetailsView: lettingOtherPartOfPropertyDetails,
   login: login,
-  aboutTheLandlordView: aboutYourLandlord,
+  aboutTheLandlordView: aboutYourLandlord
 ) extends FrontendController(mcc) {
 
   def show: Action[AnyContent] = Action.async { implicit request =>

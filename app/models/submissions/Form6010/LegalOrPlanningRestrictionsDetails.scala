@@ -14,18 +14,8 @@
  * limitations under the License.
  */
 
-package form.Form6010
+package models.submissions.Form6010
 
-import form.MappingSupport._
-import models.submissions.Form6010.PayACapitalSumDetails
-import play.api.data.Form
-import play.api.data.Forms.mapping
-
-object PayACapitalSumForm {
-
-  val payACapitalSumForm = Form(
-    mapping(
-      "capitalSumOrPremium" -> capitalSumOrPremiumType
-    )(PayACapitalSumDetails.apply)(PayACapitalSumDetails.unapply)
-  )
-}
+case class LegalOrPlanningRestrictionsDetails(
+  legalPlanningRestrictions: String
+)

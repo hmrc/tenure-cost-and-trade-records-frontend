@@ -47,13 +47,14 @@ class UltimatelyResponsibleController @Inject() (
       .fold(
         formWithErrors => Future.successful(BadRequest(ultimatelyResponsibleView(formWithErrors))),
         data =>
-          if (data.insideRepairs.equals(InsideRepairsBoth) || data.outsideRepairs.equals(OutsideRepairsBoth) || data.buildingInsurance.equals(BuildingInsurancesBoth))
-            {
-              Future.successful(Ok(sharedResponsibilitiesView(sharedResponsibilitiesForm)))
-          }  else {
+          if (
+            data.insideRepairs.equals(InsideRepairsBoth) || data.outsideRepairs
+              .equals(OutsideRepairsBoth) || data.buildingInsurance.equals(BuildingInsurancesBoth)
+          ) {
+            Future.successful(Ok(sharedResponsibilitiesView(sharedResponsibilitiesForm)))
+          } else {
             Future.successful(Ok(intervalsOfRentReviewView(intervalsOfRentReviewForm)))
           }
-
       )
   }
 

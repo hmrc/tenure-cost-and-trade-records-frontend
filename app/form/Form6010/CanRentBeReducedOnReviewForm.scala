@@ -25,7 +25,7 @@ object CanRentBeReducedOnReviewForm {
 
   val canRentBeReducedOnReviewForm = Form(
     mapping(
-      "rentReducedOnReview"            -> rentReducedOnReviewsType
+      "rentReducedOnReview" -> rentReducedOnReviewsType
     )(CanRentBeReducedOnReviewDetails.apply)(CanRentBeReducedOnReviewDetails.unapply)
   )
 }

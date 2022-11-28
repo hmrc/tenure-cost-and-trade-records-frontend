@@ -16,21 +16,23 @@
 
 package form.Form6010
 
-import form.MappingSupport._
-import models.submissions.Form6010.DoesTheRentPayable
+import models.submissions.Form6010.{LegalOrPlanningRestrictionsDetails, RentPayableVaryOnQuantityOfBeersInformationDetails}
 import play.api.data.Form
 import play.api.data.Forms.{default, mapping, text}
 import play.api.data.validation.Constraints.{maxLength, nonEmpty}
 
-object DoesTheRentPayableForm {
+object LegalOrPlanningRestrictionsDetailsForm {
 
-  val doesTheRentPayableForm = Form(
+  val legalOrPlanningRestrictionsDetailsForm = Form(
     mapping(
-      "detailsToQuestions" ->
+      "legalOrPlanningRestrictionsDetails" ->
         default(text, "").verifying(
-          nonEmpty(errorMessage = "error.detailsToQuestions.required"),
-          maxLength(1000, "error.detailsToQuestions.maxLength")
+          nonEmpty(errorMessage = "error.legalOrPlanningRestrictionsDetails.required"),
+          maxLength(1000, "error.legalOrPlanningRestrictionsDetails.maxLength")
         )
-    )(DoesTheRentPayable.apply)(DoesTheRentPayable.unapply)
+    )(LegalOrPlanningRestrictionsDetails.apply)(
+      LegalOrPlanningRestrictionsDetails.unapply
+    )
   )
+
 }

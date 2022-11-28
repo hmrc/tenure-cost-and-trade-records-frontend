@@ -17,15 +17,15 @@
 package form.Form6010
 
 import form.MappingSupport._
-import models.submissions.Form6010.PayACapitalSumDetails
+import models.submissions.Form6010.LegalOrPlanningRestrictions
 import play.api.data.Form
 import play.api.data.Forms.mapping
 
-object PayACapitalSumForm {
+object LegalOrPlanningRestrictionsForm {
 
-  val payACapitalSumForm = Form(
+  val legalPlanningRestrictionsForm = Form(
     mapping(
-      "capitalSumOrPremium" -> capitalSumOrPremiumType
-    )(PayACapitalSumDetails.apply)(PayACapitalSumDetails.unapply)
+      "legalPlanningRestrictions" -> legalPlanningRestrictionsType
+    )(LegalOrPlanningRestrictions.apply)(LegalOrPlanningRestrictions.unapply)
   )
 }

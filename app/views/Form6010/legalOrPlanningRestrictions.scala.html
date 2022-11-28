@@ -14,7 +14,7 @@
  * limitations under the License.
  *@
 
-@import models.submissions.Form6010.TenantAdditionsDisregardedDetails
+@import models.submissions.Form6010.LegalOrPlanningRestrictions
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
@@ -42,7 +42,7 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[TenantAdditionsDisregardedDetails])(implicit request: Request[_], messages: Messages)
+@(theForm: Form[LegalOrPlanningRestrictions])(implicit request: Request[_], messages: Messages)
 
 @layout(
  pageHeading = messages("tenantsAdditionsDisregarded.header"),
@@ -50,33 +50,33 @@
  theForm = theForm
 ) {
 
- @formWithCSRF(action = controllers.Form6010.routes.TenantsAdditionsDisregardedController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
+ @formWithCSRF(action = controllers.Form6010.routes.LegalOrPlanningRestrictionsController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
 
   @govukRadios(
    Radios(
-    name = "tenantsAdditionsDisregarded",
-    idPrefix = Option("tenantsAdditionsDisregarded"),
+    name = "legalPlanningRestrictions",
+    idPrefix = Option("legalPlanningRestrictions"),
     items = Seq(
      "yes" -> messages("label.yes"),
      "no" -> messages("label.no")
     ).map(radioItem => RadioItem(
      content = Text(radioItem._2),
-     checked = radioItem._1.equals(theForm("tenantsAdditionsDisregarded").value.getOrElse("")),
+     checked = radioItem._1.equals(theForm("legalPlanningRestrictions").value.getOrElse("")),
      value = Option(radioItem._1)
     )
     ),
-    errorMessage = theForm.errors.asTextErrorMessageForField("tenantsAdditionsDisregarded"),
+    errorMessage = theForm.errors.asTextErrorMessageForField("legalPlanningRestrictions"),
     fieldset = Option(
      Fieldset(
       legend = Option(
        Legend(
-        content = Text(messages("label.tenantsAdditionsDisregarded")),
+        content = Text(messages("label.legalPlanningRestrictions")),
         classes = "govuk-!-font-weight-bold"
        )
       )
      )
     ),
-    hint = Some(Hint(content = Text(messages("hint.tenantsAdditionsDisregarded")))),
+    hint = Some(Hint(content = Text(messages("hint.legalPlanningRestrictions")))),
    )
   )
 

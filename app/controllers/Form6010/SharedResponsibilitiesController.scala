@@ -27,13 +27,12 @@ import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class SharedResponsibilitiesController @Inject()(
+class SharedResponsibilitiesController @Inject() (
   mcc: MessagesControllerComponents,
   ultimatelyResponsibleView: ultimatelyResponsible,
   rentPayableVaryOnQuantityOfBeersDetailsView: rentPayableVaryOnQuantityOfBeersDetails,
   intervalsOfRentReviewView: intervalsOfRentReview,
   sharedResponsibilitiesView: sharedResponsibilities
-
 ) extends FrontendController(mcc) {
 
   def show: Action[AnyContent] = Action.async { implicit request =>

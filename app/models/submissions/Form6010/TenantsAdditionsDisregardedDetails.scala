@@ -17,6 +17,5 @@
 package models.submissions.Form6010
 
 case class TenantsAdditionsDisregardedDetails(
-  tenantsAdditionalDisregarded: TenantsAdditionsDisregarded,
-  legalPlanningRestrictions: LegalPlanningRestrictions
+  tenantsAdditionsDisregarded: String
 )

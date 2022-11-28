@@ -16,16 +16,22 @@
 
 package form.Form6010
 
-import form.MappingSupport._
-import models.submissions.Form6010.PayACapitalSumDetails
+import models.submissions.Form6010.TenantsAdditionsDisregardedDetails
 import play.api.data.Form
-import play.api.data.Forms.mapping
+import play.api.data.Forms.{default, mapping, text}
+import play.api.data.validation.Constraints.{maxLength, nonEmpty}
 
-object PayACapitalSumForm {
+object TenantsAdditionsDisregardedDetailsForm {
 
-  val payACapitalSumForm = Form(
+  val tenantsAdditionsDisregardedDetailsForm = Form(
     mapping(
-      "capitalSumOrPremium" -> capitalSumOrPremiumType
-    )(PayACapitalSumDetails.apply)(PayACapitalSumDetails.unapply)
+      "tenantsAdditionsDisregardedDetails" ->
+        default(text, "").verifying(
+          nonEmpty(errorMessage = "error.tenantsAdditionsDisregardedDetails.required"),
+          maxLength(1000, "error.tenantsAdditionsDisregardedDetails.maxLength")
+        )
+    )(TenantsAdditionsDisregardedDetails.apply)(
+      TenantsAdditionsDisregardedDetails.unapply
+    )
   )
 }

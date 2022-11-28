@@ -523,11 +523,28 @@ label.no = No
 
 ##TENANTS ADDITIONS DISREGARDED
 ##############################
-tenantsAdditionsDisregarded.header = About your property
+tenantsAdditionsDisregarded.header = About your lease or agreement
 label.tenantsAdditionsDisregarded = Were any tenant’s additions disregarded at the time the rent was agreed or determined?
 hint.tenantsAdditionsDisregarded = For example, is your rent based on the market value of the property before you made improvements like fitting out a shell, or adding parking
+
+##TENANTS ADDITIONS DISREGARDED DETAILS
+##############################
+tenantsAdditionsDisregardedDetails.header = About your lease or agreement
+label.tenantsAdditionsDisregardedDetails = Describe the tenant’s additions disregarded at the time the rent was agreed or determined
+error.tenantsAdditionsDisregardedDetails.required = Please describe the tenant’s additions disregarded at the time the rent was agreed or determined
+error.tenantsAdditionsDisregardedDetails.maxLength = This must be 1000 characters or fewer
+
+##TENANTS ADDITIONS DISREGARDED
+##############################
 label.legalPlanningRestrictions = Are there any legal or planning restrictions, unusual terms or conditions in the lease or agreement that may have affected the rent payable?
 hint.legalPlanningRestrictions = For example, a break clause, contracting out of the Landlord and Tenant Act, etc
+
+##TENANTS ADDITIONS DISREGARDED DETAILS
+##############################
+legalOrPlanningRestrictionsDetails.header = About your lease or agreement
+label.legalOrPlanningRestrictionsDetails = Describe the legal or planning restrictions, unusual terms or conditions in the lease or agreement that may have affected the rent payable
+error.legalOrPlanningRestrictionsDetails.required = Please describe the legal or planning restrictions, unusual terms or conditions in the lease or agreement that may have affected the rent payable
+error.legalOrPlanningRestrictionsDetails.maxLength = This must be 1000 characters or fewer
 
 ##ABOUT YOUR TRADING HISTORY
 ##############################

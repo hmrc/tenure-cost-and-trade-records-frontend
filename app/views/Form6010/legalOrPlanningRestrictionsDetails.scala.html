@@ -14,7 +14,7 @@
  * limitations under the License.
  *@
 
-@import models.submissions.Form6010.TenantAdditionsDisregardedDetails
+@import models.submissions.Form6010.LegalOrPlanningRestrictionsDetails
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
@@ -25,12 +25,8 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukCharacterCount
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Radios
-@import uk.gov.hmrc.govukfrontend.views.Aliases.RadioItem
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Fieldset
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Legend
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Hint
-
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.charactercount.CharacterCount
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Label
 @this(layout: Layout,
         govukButton: GovukButton,
         govukRadios: GovukRadios,
@@ -42,41 +38,27 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[TenantAdditionsDisregardedDetails])(implicit request: Request[_], messages: Messages)
+@(theForm: Form[LegalOrPlanningRestrictionsDetails])(implicit request: Request[_], messages: Messages)
 
 @layout(
- pageHeading = messages("tenantsAdditionsDisregarded.header"),
+ pageHeading = messages("legalOrPlanningRestrictionsDetails.header"),
  backLinkUrl = controllers.Form6010.routes.IncentivesPaymentsConditionsController.show.url,
  theForm = theForm
 ) {
 
- @formWithCSRF(action = controllers.Form6010.routes.TenantsAdditionsDisregardedController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
+ @formWithCSRF(action = controllers.Form6010.routes.LegalOrPlanningRestrictionsDetailsController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
 
-  @govukRadios(
-   Radios(
-    name = "tenantsAdditionsDisregarded",
-    idPrefix = Option("tenantsAdditionsDisregarded"),
-    items = Seq(
-     "yes" -> messages("label.yes"),
-     "no" -> messages("label.no")
-    ).map(radioItem => RadioItem(
-     content = Text(radioItem._2),
-     checked = radioItem._1.equals(theForm("tenantsAdditionsDisregarded").value.getOrElse("")),
-     value = Option(radioItem._1)
-    )
+  @govukCharacterCount(
+   CharacterCount(
+    id = "legalOrPlanningRestrictionsDetails",
+    name = "legalOrPlanningRestrictionsDetails",
+    rows = 5,
+    maxLength = 1000,
+    label = Label(
+     content = Text(messages("label.legalOrPlanningRestrictionsDetails")),
+     classes = "govuk-!-font-weight-bold"
     ),
-    errorMessage = theForm.errors.asTextErrorMessageForField("tenantsAdditionsDisregarded"),
-    fieldset = Option(
-     Fieldset(
-      legend = Option(
-       Legend(
-        content = Text(messages("label.tenantsAdditionsDisregarded")),
-        classes = "govuk-!-font-weight-bold"
-       )
-      )
-     )
-    ),
-    hint = Some(Hint(content = Text(messages("hint.tenantsAdditionsDisregarded")))),
+    errorMessage = theForm.errors.asTextErrorMessageForField("legalOrPlanningRestrictionsDetails")
    )
   )
 

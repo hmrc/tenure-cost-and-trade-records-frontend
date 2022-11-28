@@ -17,46 +17,46 @@
 package controllers.Form6010
 
 import controllers.LoginController.loginForm
-import form.Form6010.TenantsAdditionsDisregardedDetailsForm.tenantsAdditionsDisregardedDetailsForm
-import form.Form6010.TenantsAdditionsDisregardedForm.tenantsAdditionsDisregardedForm
 import form.Form6010.LegalOrPlanningRestrictionsForm.legalPlanningRestrictionsForm
-import models.submissions.Form6010.{TenantsAdditionsDisregardedNo, TenantsAdditionsDisregardedYes}
+import form.Form6010.LegalOrPlanningRestrictionsDetailsForm.legalOrPlanningRestrictionsDetailsForm
+import form.Form6010.FurtherInformationOrRemarksForm.furtherInformationOrRemarksForm
+import models.submissions.Form6010.{LegalPlanningRestrictionsNo, LegalPlanningRestrictionsYes}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.Form6010.{legalOrPlanningRestrictions, tenantsAdditionsDisregarded, tenantsAdditionsDisregardedDetails}
+import views.html.Form6010.{furtherInformationOrRemarks, legalOrPlanningRestrictions, legalOrPlanningRestrictionsDetails}
 import views.html.login
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class TenantsAdditionsDisregardedController @Inject() (
+class LegalOrPlanningRestrictionsController @Inject() (
   mcc: MessagesControllerComponents,
-  tenantsAdditionsDisregardedDetailsView: tenantsAdditionsDisregardedDetails,
-  tenantsAdditionsDisregardedView: tenantsAdditionsDisregarded,
+  login: login,
   legalOrPlanningRestrictionsView: legalOrPlanningRestrictions,
-  login: login
+  legalOrPlanningRestrictionsDetailsView: legalOrPlanningRestrictionsDetails,
+  furtherInformationOrRemarksView: furtherInformationOrRemarks
 ) extends FrontendController(mcc) {
 
   def show: Action[AnyContent] = Action { implicit request =>
-    Ok(tenantsAdditionsDisregardedView(tenantsAdditionsDisregardedForm))
+    Ok(legalOrPlanningRestrictionsView(legalPlanningRestrictionsForm))
   }
 
   def submit = Action.async { implicit request =>
-    tenantsAdditionsDisregardedForm
+    legalPlanningRestrictionsForm
       .bindFromRequest()
       .fold(
-        formWithErrors => Future.successful(BadRequest(tenantsAdditionsDisregardedView(formWithErrors))),
+        formWithErrors => Future.successful(BadRequest(legalOrPlanningRestrictionsView(formWithErrors))),
         data =>
-          data.tenantAdditionalDisregarded match {
-            case TenantsAdditionsDisregardedYes =>
+          data.legalPlanningRestrictions match {
+            case LegalPlanningRestrictionsYes =>
               Future.successful(
-                Ok(tenantsAdditionsDisregardedDetailsView(tenantsAdditionsDisregardedDetailsForm))
+                Ok(legalOrPlanningRestrictionsDetailsView(legalOrPlanningRestrictionsDetailsForm))
               )
-            case TenantsAdditionsDisregardedNo  =>
-              Future.successful(Ok(legalOrPlanningRestrictionsView(legalPlanningRestrictionsForm)))
-            case _                              => Future.successful(Ok(login(loginForm)))
-
+            case LegalPlanningRestrictionsNo  =>
+              Future.successful(
+                Ok(furtherInformationOrRemarksView(furtherInformationOrRemarksForm))
+              )
           }
       )
   }
