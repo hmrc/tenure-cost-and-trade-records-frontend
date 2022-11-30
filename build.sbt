@@ -23,13 +23,6 @@ lazy val microservice = Project(appName, file("."))
     )
     // ***************
   )
-  .settings(publishingSettings: _*)
-  .configs(IntegrationTest)
-  .settings(integrationTestSettings(): _*)
-  .settings(resolvers += Resolver.jcenterRepo)
-  .settings(CodeCoverageSettings.settings: _*)
-  .settings()
-  .disablePlugins(JUnitXmlReportPlugin)
   .settings(
     Concat.groups := Seq(
       "javascripts/app.js" -> group(Seq(
@@ -47,5 +40,12 @@ lazy val microservice = Project(appName, file("."))
     // Include only final files for assets fingerprinting
     digest / includeFilter := GlobFilter("app.js") || GlobFilter("*.min.js") || GlobFilter("*.min.css")
   )
+  .settings(publishingSettings: _*)
+  .configs(IntegrationTest)
+  .settings(integrationTestSettings(): _*)
+  .settings(resolvers += Resolver.jcenterRepo)
+  .settings(CodeCoverageSettings.settings: _*)
+  .disablePlugins(JUnitXmlReportPlugin)
+
 
 addCommandAlias("precommit", ";scalafmt;test:scalafmt;it:scalafmt;coverage;test;it:test;coverageReport")
