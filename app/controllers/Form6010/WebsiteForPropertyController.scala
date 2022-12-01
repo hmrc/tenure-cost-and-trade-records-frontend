@@ -16,26 +16,22 @@
 
 package controllers.Form6010
 
-import controllers.LoginController.loginForm
-import form.Form6010.WebsiteAddressForPropertyForm.websiteAddressForPropertyForm
+
+import form.Form6010.LicensableActivitiesForm.licensableActivitiesForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.Form6010.{websiteAddressForProperty, websiteForProperty}
+import views.html.Form6010.{licensableActivities, websiteForProperty}
 import form.Form6010.WebsiteForPropertyForm.websiteForPropertyForm
-import models.submissions.Form6010.{BuildingOperationHaveAWebsiteNo, BuildingOperationHaveAWebsiteYes}
-import views.html.{login, taskList}
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
 
 @Singleton
 class WebsiteForPropertyController @Inject() (
-  mcc: MessagesControllerComponents,
-  websiteAddressForPropertyView: websiteAddressForProperty,
-  websiteForPropertyView: websiteForProperty,
-  taskListView: taskList,
-  login: login
-) extends FrontendController(mcc) {
+                                               mcc: MessagesControllerComponents,
+                                               websiteForPropertyView: websiteForProperty,
+                                               licensableActivitiesView: licensableActivities
+                                             ) extends FrontendController(mcc) {
 
   def show: Action[AnyContent] = Action.async { implicit request =>
     Future.successful(Ok(websiteForPropertyView(websiteForPropertyForm)))
@@ -46,14 +42,10 @@ class WebsiteForPropertyController @Inject() (
       .bindFromRequest()
       .fold(
         formWithErrors => Future.successful(BadRequest(websiteForPropertyView(formWithErrors))),
-        data =>
-          data.buildingOperatingHaveAWebsite match {
-            case BuildingOperationHaveAWebsiteYes =>
-              Future.successful(Ok(websiteAddressForPropertyView(websiteAddressForPropertyForm)))
-            case BuildingOperationHaveAWebsiteNo  => Future.successful(Ok(taskListView()))
-            case _                                => Future.successful(Ok(login(loginForm)))
-          }
+        data => Future.successful(Ok(licensableActivitiesView(licensableActivitiesForm)))
+
       )
   }
 
 }
+
