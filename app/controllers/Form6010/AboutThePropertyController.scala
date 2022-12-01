@@ -44,11 +44,7 @@ class AboutThePropertyController @Inject() (
       .bindFromRequest()
       .fold(
         formWithErrors => Future.successful(BadRequest(aboutThePropertyView(formWithErrors))),
-        data =>
-          data.propertyCurrentlyUsed match {
-            case CurrentPropertyOther => Future.successful(Ok(aboutThePropertyOtherView(aboutThePropertyOtherForm)))
-            case _                    => Future.successful(Ok(websiteForPropertyView(websiteForPropertyForm)))
-          }
+        data => Future.successful(Ok(websiteForPropertyView(websiteForPropertyForm)))
       )
   }
 

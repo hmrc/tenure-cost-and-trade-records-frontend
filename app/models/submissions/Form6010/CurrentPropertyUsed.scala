@@ -25,13 +25,13 @@ object CurrentPropertyPublicHouse extends CurrentPropertyUsed {
   val name = "publicHouse"
 }
 object CurrentPropertyWineBarOrCafe extends CurrentPropertyUsed {
-  val name = "wineBarOrCafe"
+  val name = "wineCafeBar"
 }
 object CurrentPropertyOtherBar extends CurrentPropertyUsed {
   val name = "otherBar"
 }
 object CurrentPropertyPubAndRestaurant extends CurrentPropertyUsed {
-  val name = "pubAndRestaurant"
+  val name = "pubRestaurant"
 }
 object CurrentPropertyLicencedRestaurant extends CurrentPropertyUsed {
   val name = "licencedRestaurant"
@@ -40,7 +40,7 @@ object CurrentPropertyHotel extends CurrentPropertyUsed {
   val name = "hotel"
 }
 object CurrentPropertyDiscoOrNightclub extends CurrentPropertyUsed {
-  val name = "discoOrNightclub"
+  val name = "discoNightclub"
 }
 object CurrentPropertyOther extends CurrentPropertyUsed {
   val name = "other"

@@ -19,13 +19,14 @@ package form.Form6010
 import form.MappingSupport._
 import models.submissions.Form6010.WebsiteForPropertyDetails
 import play.api.data.Form
-import play.api.data.Forms.mapping
+import play.api.data.Forms.{mapping, optional, text}
 
 object WebsiteForPropertyForm {
 
   val websiteForPropertyForm = Form(
     mapping(
-      "buildingOperatingHaveAWebsite" -> buildingOperatingHaveAWebsiteType
+      "buildingOperatingHaveAWebsite" -> buildingOperatingHaveAWebsiteType,
+      "websiteAddressForProperty" -> optional(text)
     )(WebsiteForPropertyDetails.apply)(WebsiteForPropertyDetails.unapply)
   )
 }
