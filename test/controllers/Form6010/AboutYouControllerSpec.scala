@@ -26,8 +26,9 @@ import play.api.http.Status
 import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
+import utils.TestBaseSpec
 
-class AboutYouControllerSpec extends AnyFlatSpec with should.Matchers with GuiceOneAppPerSuite { //with AnyFlatSpec
+class AboutYouControllerSpec extends TestBaseSpec { //with AnyFlatSpec
 
   import TestData._
   import form.Form6010.AboutYouForm._
@@ -45,38 +46,41 @@ class AboutYouControllerSpec extends AnyFlatSpec with should.Matchers with Guice
 
   private val controller = app.injector.instanceOf[AboutYouController]
 
-  "GET /"          should "return 200" in {
-//    "return 200" in {
-    val result = controller.show(fakeRequest)
-    status(result) shouldBe Status.OK
+  "GET /" should {
+    "return 200" in {
+      //    "return 200" in {
+      val result = controller.show(fakeRequest)
+      status(result) shouldBe Status.OK
+    }
+
+    "return HTML" in {
+      val result = controller.show(fakeRequest)
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
+    }
   }
 
-  "GET /"          should "return HTML" in {
-    val result = controller.show(fakeRequest)
-    contentType(result) shouldBe Some("text/html")
-    charset(result)     shouldBe Some("utf-8")
-  }
-//  }
+  "About you form" should {
+    "error if fullName is missing " in {
+      val formData = baseFormData - errorKey.fullName
+      val form     = aboutYouForm.bind(formData)
 
-  "About you form" should "error if fullName is missing " in {
-    val formData = baseFormData - errorKey.fullName
-    val form     = aboutYouForm.bind(formData)
+      mustContainRequiredErrorFor(errorKey.fullName, form)
+    }
 
-    mustContainRequiredErrorFor(errorKey.fullName, form)
-  }
+    "error if phone is missing" in {
+      val formData = baseFormData - errorKey.phone
+      val form     = aboutYouForm.bind(formData)
 
-  "form"           should "error if phone is missing" in {
-    val formData = baseFormData - errorKey.phone
-    val form     = aboutYouForm.bind(formData)
+      mustContainError(errorKey.phone, Errors.contactPhoneRequired, form)
+    }
 
-    mustContainError(errorKey.phone, Errors.contactPhoneRequired, form)
-  }
+    "error if email is missing" in {
+      val formData = baseFormData - errorKey.email1
+      val form     = aboutYouForm.bind(formData)
 
-  "form"           should "error if email is missing" in {
-    val formData = baseFormData - errorKey.email1
-    val form     = aboutYouForm.bind(formData)
-
-    mustContainError(errorKey.email1, Errors.contactEmailRequired, form)
+      mustContainError(errorKey.email1, Errors.contactEmailRequired, form)
+    }
   }
 
   object TestData {

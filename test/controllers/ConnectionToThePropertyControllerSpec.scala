@@ -16,16 +16,14 @@
 
 package controllers
 
-import org.scalatest.flatspec.AnyFlatSpec
-import org.scalatest.matchers.should
-import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.Application
 import play.api.http.Status
 import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
+import utils.TestBaseSpec
 
-class ConnectionToThePropertyControllerSpec extends AnyFlatSpec with should.Matchers with GuiceOneAppPerSuite { //with AnyFlatSpec
+class ConnectionToThePropertyControllerSpec extends TestBaseSpec {
 
   override def fakeApplication(): Application =
     new GuiceApplicationBuilder()
@@ -39,16 +37,16 @@ class ConnectionToThePropertyControllerSpec extends AnyFlatSpec with should.Matc
 
   private val controller = app.injector.instanceOf[ConnectionToThePropertyController]
 
-  "GET /" should "return 200" in {
-    {
+  "GET /" should {
+    "return 200" in {
       val result = controller.show(fakeRequest)
       status(result) shouldBe Status.OK
     }
-  }
 
-  "GET /" should "return HTML" in {
-    val result = controller.show(fakeRequest)
-    contentType(result) shouldBe Some("text/html")
-    charset(result)     shouldBe Some("utf-8")
+    "return HTML" in {
+      val result = controller.show(fakeRequest)
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
+    }
   }
 }

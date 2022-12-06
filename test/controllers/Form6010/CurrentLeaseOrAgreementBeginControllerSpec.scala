@@ -24,8 +24,9 @@ import play.api.http.Status
 import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
+import utils.TestBaseSpec
 
-class CurrentLeaseOrAgreementBeginControllerSpec extends AnyWordSpec with Matchers with GuiceOneAppPerSuite {
+class CurrentLeaseOrAgreementBeginControllerSpec extends TestBaseSpec {
   override def fakeApplication(): Application =
     new GuiceApplicationBuilder()
       .configure(

@@ -17,11 +17,11 @@
 package models.submissions
 
 import models.submissions.Form6010.Address
-import org.scalatest.flatspec.AnyFlatSpec
-import org.scalatest.matchers.should
-import play.api.libs.json.{JsResult, JsSuccess, Json}
 
-class AddressMappingSpec extends AnyFlatSpec with should.Matchers {
+import play.api.libs.json.{JsResult, JsSuccess, Json}
+import utils.TestBaseSpec
+
+class AddressMappingSpec extends TestBaseSpec {
 
   val json2 =
     """{"buildingNameNumber":"Some House","street1":"Some Street","street2":"Some City","postcode":"AA11 1AA"}"""
@@ -35,8 +35,10 @@ class AddressMappingSpec extends AnyFlatSpec with should.Matchers {
   def fromJson(json: String): JsResult[Address] =
     Json.fromJson[Address](Json.parse(json))
 
-  "Address with a fully filled in address" should "create a fully filled Address" in {
-    fromJson(json2) should be(JsSuccess(data2))
+  "Address with a fully filled in address" should {
+    "create a fully filled Address" in {
+      fromJson(json2) should be(JsSuccess(data2))
+    }
   }
 
 }

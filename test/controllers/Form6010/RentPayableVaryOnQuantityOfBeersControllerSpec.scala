@@ -25,8 +25,9 @@ import play.api.http.Status
 import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
+import utils.TestBaseSpec
 
-class RentPayableVaryOnQuantityOfBeersControllerSpec extends AnyFlatSpec with should.Matchers with GuiceOneAppPerSuite {
+class RentPayableVaryOnQuantityOfBeersControllerSpec extends TestBaseSpec {
 
   import TestData._
   import form.Form6010.RentPayableVaryOnQuantityOfBeersForm._
@@ -44,22 +45,24 @@ class RentPayableVaryOnQuantityOfBeersControllerSpec extends AnyFlatSpec with sh
 
   private val controller = app.injector.instanceOf[RentPayableVaryOnQuantityOfBeersController]
 
-  it should "return 200" in {
-    val result = controller.show(fakeRequest)
-    status(result) shouldBe Status.OK
-  }
+  "RentPayableVaryOnQuantityOfBeers controller" should {
+    "return 200" in {
+      val result = controller.show(fakeRequest)
+      status(result) shouldBe Status.OK
+    }
 
-  it should "return HTML" in {
-    val result = controller.show(fakeRequest)
-    contentType(result) shouldBe Some("text/html")
-    charset(result)     shouldBe Some("utf-8")
-  }
+    "return HTML" in {
+      val result = controller.show(fakeRequest)
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
+    }
 
-  it should "error if rentPayableVaryOnQuantityOfBeers is missing" in {
-    val formData = baseFormData - errorKey.rentPayableVaryOnQuantityOfBeers
-    val form     = rentPayableVaryOnQuantityOfBeersForm.bind(formData)
+    "error if rentPayableVaryOnQuantityOfBeers is missing" in {
+      val formData = baseFormData - errorKey.rentPayableVaryOnQuantityOfBeers
+      val form     = rentPayableVaryOnQuantityOfBeersForm.bind(formData)
 
-    mustContainError(errorKey.rentPayableVaryOnQuantityOfBeers, Errors.booleanMissing, form)
+      mustContainError(errorKey.rentPayableVaryOnQuantityOfBeers, Errors.booleanMissing, form)
+    }
   }
 
   object TestData {
@@ -71,30 +74,3 @@ class RentPayableVaryOnQuantityOfBeersControllerSpec extends AnyFlatSpec with sh
   }
 
 }
-
-//class RentPayableVaryOnQuantityOfBeersControllerSpec extends AnyWordSpec with Matchers with GuiceOneAppPerSuite {
-//  override def fakeApplication(): Application =
-//    new GuiceApplicationBuilder()
-//      .configure(
-//        "metrics.jvm"     -> false,
-//        "metrics.enabled" -> false
-//      )
-//      .build()
-//
-//  private val fakeRequest = FakeRequest("GET", "/")
-//
-//  private val controller = app.injector.instanceOf[RentPayableVaryOnQuantityOfBeersController]
-//
-//  "GET /" should {
-//    "return 200" in {
-//      val result = controller.show(fakeRequest)
-//      status(result) shouldBe Status.OK
-//    }
-//
-//    "return HTML" in {
-//      val result = controller.show(fakeRequest)
-//      contentType(result) shouldBe Some("text/html")
-//      charset(result)     shouldBe Some("utf-8")
-//    }
-//  }
-//}
