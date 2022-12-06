@@ -17,19 +17,14 @@
 package controllers.Form6010
 
 import form.Errors
-import org.scalatest.flatspec.AnyFlatSpec
-import org.scalatest.matchers.should
-import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.Application
 import play.api.http.Status
 import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
+import utils.TestBaseSpec
 
-class RentPayableVaryAccordingToGrossOrNetControllerSpec
-    extends AnyFlatSpec
-    with should.Matchers
-    with GuiceOneAppPerSuite {
+class RentPayableVaryAccordingToGrossOrNetControllerSpec extends TestBaseSpec {
 
   import TestData._
   import form.Form6010.RentPayableVaryAccordingToGrossOrNetForm._
@@ -47,22 +42,24 @@ class RentPayableVaryAccordingToGrossOrNetControllerSpec
 
   private val controller = app.injector.instanceOf[RentPayableVaryAccordingToGrossOrNetController]
 
-  it should "return 200" in {
-    val result = controller.show(fakeRequest)
-    status(result) shouldBe Status.OK
-  }
+  "RentPayableVaryAccordingToGrossOrNet controller" should {
+    "return 200" in {
+      val result = controller.show(fakeRequest)
+      status(result) shouldBe Status.OK
+    }
 
-  it should "return HTML" in {
-    val result = controller.show(fakeRequest)
-    contentType(result) shouldBe Some("text/html")
-    charset(result)     shouldBe Some("utf-8")
-  }
+    "return HTML" in {
+      val result = controller.show(fakeRequest)
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
+    }
 
-  it should "error if rentPayableVaryAccordingToGrossOrNet is missing" in {
-    val formData = baseFormData - errorKey.rentPayableVaryAccordingToGrossOrNet
-    val form     = rentPayableVaryAccordingToGrossOrNetForm.bind(formData)
+    "error if rentPayableVaryAccordingToGrossOrNet is missing" in {
+      val formData = baseFormData - errorKey.rentPayableVaryAccordingToGrossOrNet
+      val form     = rentPayableVaryAccordingToGrossOrNetForm.bind(formData)
 
-    mustContainError(errorKey.rentPayableVaryAccordingToGrossOrNet, Errors.booleanMissing, form)
+      mustContainError(errorKey.rentPayableVaryAccordingToGrossOrNet, Errors.booleanMissing, form)
+    }
   }
 
   object TestData {

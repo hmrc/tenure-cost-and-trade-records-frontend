@@ -15,77 +15,58 @@
  */
 
 package repository
-import org.scalatestplus.play.guice.GuiceOneAppPerSuite
-import org.scalatestplus.play.PlaySpec
+
 import play.api.libs.json.{Json, Reads, Writes}
-import play.api.test.{DefaultAwaitTimeout, FutureAwaits}
 import models.Session
 import models.submissions.Form6010.AddressConnectionTypeYes
-import org.mockito.scalatest.MockitoSugar
-import org.scalatest.concurrent.ScalaFutures
-import org.scalatest.flatspec.AnyFlatSpec
-import org.scalatest.matchers.should.Matchers
-import org.scalatest.{AppendedClues, BeforeAndAfterEach, Inside, LoneElement, OptionValues}
 import repositories.SessionData
 import repositories.{Session => SessionRepo}
 import uk.gov.hmrc.http.{HeaderCarrier, SessionId}
-import utils.GlobalExecutionContext
+import utils.TestBaseSpec
 
-import java.time.Instant
-import java.time.temporal.ChronoUnit.SECONDS
-
-class SessionRepositorySpec
-    extends AnyFlatSpec
-    with Matchers
-    with FutureAwaits
-    with DefaultAwaitTimeout
-    with BeforeAndAfterEach
-    with AppendedClues
-    with MockitoSugar
-    with ScalaFutures
-    with Inside
-    with LoneElement
-    with GuiceOneAppPerSuite
-    with GlobalExecutionContext {
+class SessionRepositorySpec extends TestBaseSpec {
 
   lazy val repository   = app.injector.instanceOf[SessionRepo]
   val hc: HeaderCarrier = HeaderCarrier(sessionId = Some(SessionId("my-session")))
   val writes            = implicitly[Writes[Session]]
   val reads             = implicitly[Reads[Session]]
 
-  "session repository" should "start by saving or updating data" in {
-    val session = Session(AddressConnectionTypeYes)
+  "session repository" should {
 
-    repository.start(session)(writes, hc).futureValue
+    "start by saving or updating data" in {
+      val session = Session(AddressConnectionTypeYes)
 
-    val returnedSessionData: SessionData = repository.findFirst.futureValue // shouldBe session
+      repository.start(session)(writes, hc).futureValue
 
-    inside(returnedSessionData) { case SessionData(_, data, createdAt) =>
-      (data \ "session" \ "areYouStillConnected").as[String] shouldBe session.areYouStillConnected.name
-    }
-  }
+      val returnedSessionData: SessionData = repository.findFirst.futureValue // shouldBe session
 
-  "session repository" should "get data from current session" in {
-    val session = Session(AddressConnectionTypeYes)
-    repository.start(session)(writes, hc).futureValue
-
-    val returnedSessionData: Option[Session] = repository.get[Session](reads, hc).futureValue
-
-    inside(returnedSessionData) { case Some(Session(areYouStillConnected, None, None)) =>
-      areYouStillConnected.name shouldBe AddressConnectionTypeYes.name
+      inside(returnedSessionData) { case SessionData(_, data, createdAt) =>
+        (data \ "session" \ "areYouStillConnected").as[String] shouldBe session.areYouStillConnected.name
+      }
     }
 
-  }
+    "get data from current session" in {
+      val session = Session(AddressConnectionTypeYes)
+      repository.start(session)(writes, hc).futureValue
 
-  "session repository" should "remove data from current session" in {
-    val session = Session(AddressConnectionTypeYes)
-    repository.start(session)(writes, hc).futureValue
-    repository.remove()(hc).futureValue
+      val returnedSessionData: Option[Session] = repository.get[Session](reads, hc).futureValue
 
-    val returnedSessionData: Option[Session] = repository.get[Session](reads, hc).futureValue
+      inside(returnedSessionData) { case Some(Session(areYouStillConnected, None, None)) =>
+        areYouStillConnected.name shouldBe AddressConnectionTypeYes.name
+      }
 
-    returnedSessionData shouldBe None
+    }
 
+    "remove data from current session" in {
+      val session = Session(AddressConnectionTypeYes)
+      repository.start(session)(writes, hc).futureValue
+      repository.remove()(hc).futureValue
+
+      val returnedSessionData: Option[Session] = repository.get[Session](reads, hc).futureValue
+
+      returnedSessionData shouldBe None
+
+    }
   }
 
   override protected def beforeEach(): Unit = {

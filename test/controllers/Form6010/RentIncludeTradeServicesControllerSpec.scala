@@ -17,16 +17,15 @@
 package controllers.Form6010
 
 import form.Errors
-import org.scalatest.flatspec.AnyFlatSpec
-import org.scalatest.matchers.should
-import org.scalatestplus.play.guice.GuiceOneAppPerSuite
+
 import play.api.Application
 import play.api.http.Status
 import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
+import utils.TestBaseSpec
 
-class RentIncludeTradeServicesControllerSpec extends AnyFlatSpec with should.Matchers with GuiceOneAppPerSuite {
+class RentIncludeTradeServicesControllerSpec extends TestBaseSpec {
 
   import TestData._
   import form.Form6010.RentIncludeTradeServicesForm._
@@ -44,22 +43,24 @@ class RentIncludeTradeServicesControllerSpec extends AnyFlatSpec with should.Mat
 
   private val controller = app.injector.instanceOf[RentIncludeTradeServicesController]
 
-  it should "return 200" in {
-    val result = controller.show(fakeRequest)
-    status(result) shouldBe Status.OK
-  }
+  "RentIncludetradeServices controller" should {
+    "return 200" in {
+      val result = controller.show(fakeRequest)
+      status(result) shouldBe Status.OK
+    }
 
-  it should "return HTML" in {
-    val result = controller.show(fakeRequest)
-    contentType(result) shouldBe Some("text/html")
-    charset(result)     shouldBe Some("utf-8")
-  }
+    "return HTML" in {
+      val result = controller.show(fakeRequest)
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
+    }
 
-  it should "error if rentIncludeTradeServices is missing" in {
-    val formData = baseFormData - errorKey.rentIncludeTradeServices
-    val form     = rentIncludeTradeServicesForm.bind(formData)
+    "error if rentIncludeTradeServices is missing" in {
+      val formData = baseFormData - errorKey.rentIncludeTradeServices
+      val form     = rentIncludeTradeServicesForm.bind(formData)
 
-    mustContainError(errorKey.rentIncludeTradeServices, Errors.booleanMissing, form)
+      mustContainError(errorKey.rentIncludeTradeServices, Errors.booleanMissing, form)
+    }
   }
 
   object TestData {

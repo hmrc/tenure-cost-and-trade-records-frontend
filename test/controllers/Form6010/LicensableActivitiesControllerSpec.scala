@@ -25,8 +25,9 @@ import play.api.http.Status
 import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
+import utils.TestBaseSpec
 
-class LicensableActivitiesControllerSpec extends AnyFlatSpec with should.Matchers with GuiceOneAppPerSuite {
+class LicensableActivitiesControllerSpec extends TestBaseSpec {
 
   import TestData._
   import form.Form6010.LicensableActivitiesForm._
@@ -44,22 +45,22 @@ class LicensableActivitiesControllerSpec extends AnyFlatSpec with should.Matcher
 
   private val controller = app.injector.instanceOf[LicensableActivitiesController]
 
-  it should "return 200" in {
-    val result = controller.show(fakeRequest)
-    status(result) shouldBe Status.OK
-  }
+  "Controller" should {
+    "return 200" in {
+      val result = controller.show(fakeRequest)
+      status(result) shouldBe Status.OK
+    }
+    "return HTML" in {
+      val result = controller.show(fakeRequest)
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
+    }
+    "error if licensableActivities is missing" in {
+      val formData = baseFormData - errorKey.licensableActivities
+      val form     = licensableActivitiesForm.bind(formData)
 
-  it should "return HTML" in {
-    val result = controller.show(fakeRequest)
-    contentType(result) shouldBe Some("text/html")
-    charset(result)     shouldBe Some("utf-8")
-  }
-
-  it should "error if licensableActivities is missing" in {
-    val formData = baseFormData - errorKey.licensableActivities
-    val form     = licensableActivitiesForm.bind(formData)
-
-    mustContainError(errorKey.licensableActivities, Errors.booleanMissing, form)
+      mustContainError(errorKey.licensableActivities, Errors.booleanMissing, form)
+    }
   }
 
   object TestData {
