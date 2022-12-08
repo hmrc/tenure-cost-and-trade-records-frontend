@@ -64,7 +64,6 @@
     value = theForm("currentAnnualRent").value,
     classes = "govuk-input--width-10 total-annual-rent",
     label = Label(
-     content = Text(messages("label.currentAnnualRent")),
      classes = "govuk-!-font-weight-bold"
     ),
     hint = Hint(content = Text(messages("hint.currentAnnualRent"))),
@@ -74,6 +73,8 @@
   )
 
   @includes.continueButton(govukButton)
+
+  @includes.help_with_service()
 
  }
 }

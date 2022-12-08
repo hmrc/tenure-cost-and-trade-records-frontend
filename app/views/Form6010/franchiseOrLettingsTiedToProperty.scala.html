@@ -77,7 +77,6 @@
     Fieldset(
      legend = Option(
       Legend(
-       content = Text(messages("label.franchiseLettings")),
        classes = "govuk-!-font-weight-bold"
       )
      )
@@ -87,6 +86,8 @@
  )
 
   @includes.continueButton(govukButton)
+
+  @includes.help_with_service_franchiseLettings()
 
  }
 }

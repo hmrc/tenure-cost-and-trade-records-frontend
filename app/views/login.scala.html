@@ -28,6 +28,7 @@
         govukErrorSummary: GovukErrorSummary,
         formWithCSRF: FormWithCSRF)
 
+
 @(theForm: Form[LoginDetails])(implicit request: Request[_], messages: Messages)
 
 @layout(
@@ -49,9 +50,11 @@
                 value = theForm("referenceNumber").value,
                 classes = "govuk-input--width-20",
                 label = Label(
-                    content = Text(messages("label.referenceNumber"))
+                    content = Text(messages("label.referenceNumber")),
+                    classes = "govuk-!-font-weight-bold"
                 ),
-                errorMessage = theForm.errors.asTextErrorMessageForField("referenceNumber")
+                errorMessage = theForm.errors.asTextErrorMessageForField("referenceNumber"),
+                hint = Some(Hint(content = Text(messages("hint.referenceNumber")))),
             )
         )
 
@@ -62,9 +65,11 @@
                 value = theForm("postcode").value,
                 classes = "govuk-input--width-10",
                 label = Label(
-                    content = Text(messages("label.postcode"))
+                    content = Text(messages("label.postcode")),
+                    classes = "govuk-!-font-weight-bold"
                 ),
-                errorMessage = theForm.errors.asTextErrorMessageForField("postcode")
+                errorMessage = theForm.errors.asTextErrorMessageForField("postcode"),
+                hint = Some(Hint(content = Text(messages("hint.postcode")))),
             )
         )
 
@@ -73,6 +78,8 @@
         }
 
         @includes.continueButton(govukButton)
+
+        @includes.help_with_service()
     }
 
 }
