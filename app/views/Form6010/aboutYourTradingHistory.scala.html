@@ -52,6 +52,8 @@
  theForm = theForm
 ) {
 
+ <p class="govuk-body"><b>@messages("aboutYourTradingHistory.subheader")</b></p>
+
  <p class="govuk-body">@messages("aboutYourTradingHistory.subheading")</p>
 
  @formWithCSRF(action = controllers.Form6010.routes.AboutYourTradingHistoryController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
@@ -62,6 +64,8 @@
   @includes.dateFields(form = theForm, field = "financialYear", govukDate = govukDateInput, showDays = true)
 
   @includes.continueButton(govukButton)
+
+  @includes.help_with_service_aboutYourTradingHistory()
  }
 }
 

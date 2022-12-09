@@ -54,10 +54,11 @@
 
  @formWithCSRF(action = controllers.Form6010.routes.CurrentRentFirstPaidController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
 
-
   @includes.dateFields(form = theForm, field = "currentRentFirstPaid", govukDate = govukDateInput, showDays = true)
 
   @includes.continueButton(govukButton)
+
+  @includes.help_with_service_currentRentFirstPaid()
  }
 }
 

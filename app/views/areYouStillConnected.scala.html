@@ -59,7 +59,7 @@
     idPrefix = Option("isRelated"),
     items = Seq(
      AddressConnectionTypeYes.name -> messages("label.yes.oes"),
-     AddressConnectionTypeYesChangeAddress.name -> Messages("label.yes.change.address"),
+     AddressConnectionTypeYesChangeAddress.name -> Messages("label.areYouConnected.addressUpdate"),
      AddressConnectionTypeNo.name -> messages("label.no.nac.oes")
     ).map(i => RadioItem (
      content = Text(i._2),
@@ -81,6 +81,8 @@
    )
   )
   @includes.continueButton(govukButton)
+
+  @includes.help_with_service()
  }
  }
 

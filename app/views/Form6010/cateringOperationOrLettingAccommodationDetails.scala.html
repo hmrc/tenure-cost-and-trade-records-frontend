@@ -60,8 +60,6 @@
 
  @formWithCSRF(action = controllers.Form6010.routes.CateringOperationOrLettingAccommodationDetailController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
 
-  <p class="govuk-body"><b>@messages("cateringOperationOrLettingAccommodationDetails.subheading")</b></p>
-
   @govukInput(
    Input(
     id = "operatorName",
@@ -94,6 +92,8 @@
   @includes.lookupCateringAddress(theForm, "cateringAddress", govukInput)
 
   @includes.continueButton(govukButton)
+
+  @includes.help_with_service()
  }
 }
 

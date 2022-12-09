@@ -53,20 +53,17 @@
 @()(implicit request: Request[_], messages: Messages)
 
 @layout(
- pageHeading = messages("cateringOperationOrLettingAccommodationDetails.header"),
+ pageHeading = messages("cateringOperationOrLettingAccommodationCheckboxesDetails.header"),
  backLinkUrl = controllers.Form6010.routes.CateringOperationOrLettingAccommodationController.show.url
 ) {
 
  @formWithCSRF(action = controllers.Form6010.routes.CateringOperationOrLettingAccommodationDetailsCheckboxesController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
-
-  <p class="govuk-body"><b>@messages("cateringOperationOrLettingAccommodationDetails.subheading")</b></p>
 
   @govukCheckboxes(
    Checkboxes(
     name = "cateringOperationOrLettingAccommodationCheckboxesDetails",
     fieldset = Some(Fieldset(
      legend = Some(Legend(
-      content = Text(Messages("label.cateringOperationOrLettingAccommodationCheckboxesDetails")),
       classes = "govuk-fieldset__legend--s"
      ))
     )),
@@ -93,6 +90,8 @@
   )
 
   @includes.continueButton(govukButton)
+
+  @includes.help_with_service()
  }
 }
 
