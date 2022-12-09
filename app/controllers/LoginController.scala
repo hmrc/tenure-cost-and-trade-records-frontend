@@ -16,26 +16,30 @@
 
 package controllers
 
+import actions.WithSessionRefiner
 import config.LoginToBackendAction
 import connectors.Audit
 import form.{Errors, MappingSupport}
-import models.ForTypes
+import models.{ForTypes, Session, UserLoginDetails}
 import models.submissions.Form6010.Address
 import org.joda.time.DateTime
 import play.api.Logging
 import play.api.data.Form
 import play.api.data.Forms._
 import play.api.data.JodaForms._
+import play.api.i18n.I18nSupport
 import play.api.libs.json.{Format, Json}
 import play.api.mvc._
+import repositories.SessionRepo
 import security.NoExistingDocument
 import uk.gov.hmrc.http.HeaderNames.trueClientIp
+import uk.gov.hmrc.http.cache.client.NoSessionException
 import uk.gov.hmrc.http.{HeaderCarrier, SessionId, SessionKeys, Upstream4xxResponse}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import uk.gov.hmrc.play.http.HeaderCarrierConverter
 import views.html._
 
-import javax.inject.{Inject, Singleton}
+import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
 
 case class LoginDetails(referenceNumber: String, postcode: String, startTime: DateTime)
@@ -75,12 +79,13 @@ class LoginController @Inject() (
   errorView: ErrorTemplate,
   loginFailedView: loginFailed,
   lockedOutView: lockedOut,
+  withSessionRefiner: WithSessionRefiner,
+  @Named("session") val session: SessionRepo,
   test: testSign // setup proper error page
-//                                  connector: DefaultBackendConnector,
-//                                  areYouStillConnected: areYouStillConnected
 )(implicit ec: ExecutionContext)
     extends FrontendController(mcc)
-    with Logging {
+    with Logging
+    with I18nSupport {
 
   import LoginController.loginForm
 
@@ -88,21 +93,14 @@ class LoginController @Inject() (
     Future.successful(Ok(login(loginForm)))
   }
 
-  def logout = Action { implicit request =>
-    val refNum                     = request.session.get("refNum").getOrElse("-")
-    val refNumJson                 = Json.obj(Audit.referenceNumber -> refNum)
-    implicit val hc: HeaderCarrier = HeaderCarrierConverter.fromRequestAndSession(request, request.session)
+  def logout(implicit hc: HeaderCarrier) = (Action andThen withSessionRefiner).async { implicit request =>
+    val refNumJson = Json.obj(Audit.referenceNumber -> request.sessionData.userLoginDetails.referenceNumber)
 
-//    hc.sessionId.map(sessionId =>
-//      documentRepo.findById(sessionId.value, refNum).flatMap {
-//        case Some(doc) => refNumJson ++ Addresses.addressJson(SummaryBuilder.build(doc))
-//        case None => refNumJson
-//      }.map(jsObject => audit.sendExplicitAudit("Logout", jsObject))
-//    ).getOrElse {
-    audit.sendExplicitAudit("Logout", refNumJson)
-//    }
+    session.remove().map { _ =>
+      audit.sendExplicitAudit("Logout", refNumJson)
+      Redirect(routes.LoginController.show())
+    }
 
-    Redirect(routes.LoginController.show()).withNewSession
   }
 
   def submit = Action.async { implicit request =>
@@ -121,35 +119,25 @@ class LoginController @Inject() (
   def verifyLogin(referenceNumber: String, postcode: String, startTime: DateTime)(implicit
     r: MessagesRequest[AnyContent]
   ) = {
-    val sessionId = java.util.UUID.randomUUID().toString //TODO - Why new session? Why manually?
 
     val cleanedRefNumber = referenceNumber.replaceAll("[^0-9]", "")
     var cleanPostcode    = postcode.replaceAll("[^\\w\\d]", "")
     cleanPostcode = cleanPostcode.patch(cleanPostcode.length - 4, " ", 0)
 
-    implicit val hc2: HeaderCarrier = hc.copy(sessionId = Some(SessionId(java.util.UUID.randomUUID().toString)))
     logger.debug(s"Signing in with: reference number : $cleanedRefNumber, postcode: $cleanPostcode")
 
-    loginToBackend(hc2, ec)(cleanedRefNumber, cleanPostcode, startTime)
-      .map { case NoExistingDocument(token, forNum, address) =>
-        auditLogin(referenceNumber, false, address, forNum)(hc2)
+    loginToBackend(hc, ec)(cleanedRefNumber, cleanPostcode, startTime)
+      .flatMap { case NoExistingDocument(token, forNum, address) =>
+        auditLogin(referenceNumber, false, address, forNum)
         ForTypes.find(forNum) match {
           case Some(_) =>
-            withNewSession(
-              Redirect(controllers.routes.AreYouStillConnectedController.show()),
-              token,
-              forNum,
-              s"$referenceNumber",
-              sessionId
-            )
+            session
+              .start(Session(UserLoginDetails(token, forNum, referenceNumber)))
+              .map(_ => Redirect(controllers.routes.AreYouStillConnectedController.show()))
           case None    =>
-            withNewSession(
-              Redirect(routes.LoginController.notValidFORType()),
-              token,
-              forNum,
-              s"$referenceNumber",
-              sessionId
-            )
+            session
+              .start(Session(UserLoginDetails(token, forNum, referenceNumber)))
+              .map(_ => Redirect(routes.LoginController.notValidFORType()))
         }
       }
       .recover {
@@ -163,7 +151,7 @@ class LoginController @Inject() (
           logger.warn(s"Failed login: RefNum: $referenceNumber Attempts remaining: $remainingAttempts")
           if (remainingAttempts < 1) {
             val clientIP = r.headers.get(trueClientIp).getOrElse("")
-            auditLockedOut(cleanedRefNumber, postcode, cleanPostcode, clientIP)(hc2)
+            auditLockedOut(cleanedRefNumber, postcode, cleanPostcode, clientIP)
 
             Redirect(routes.LoginController.lockedOut)
           } else {
@@ -204,18 +192,6 @@ class LoginController @Inject() (
   def loginFailed(attemptsRemaining: Int) = Action { implicit request =>
     Unauthorized(loginFailedView(attemptsRemaining))
   }
-
-  private def withNewSession(r: Result, token: String, forNum: String, ref: String, sessionId: String)(implicit
-    req: Request[AnyContent]
-  ) =
-    r.withSession(
-      (req.session.data ++ Seq(
-        SessionKeys.sessionId -> sessionId,
-        SessionKeys.authToken -> token,
-        "forNum"              -> forNum,
-        "refNum"              -> ref
-      )).toSeq: _*
-    )
 
 }
 

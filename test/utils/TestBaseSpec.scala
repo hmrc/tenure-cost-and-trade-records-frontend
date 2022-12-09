@@ -16,6 +16,9 @@
 
 package utils
 
+import actions.{SessionRequest, WithSessionRefiner}
+import config.ErrorHandler
+import models.{Session, UserLoginDetails}
 import org.mockito.scalatest.MockitoSugar
 import org.scalatest.{BeforeAndAfterEach, Inside}
 import org.scalatest.concurrent.ScalaFutures
@@ -23,10 +26,14 @@ import org.scalatest.matchers.should.Matchers
 import org.scalatest.time.{Millis, Seconds, Span}
 import org.scalatest.wordspec.AnyWordSpec
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
+import play.api.mvc.{Request, Result}
 import play.api.test.{DefaultAwaitTimeout, FutureAwaits}
+import repositories.SessionRepository
+import repository.RepositoryUtils
+import uk.gov.hmrc.http.{HeaderCarrier, SessionId}
 
 import java.time.{Clock, Instant, ZoneId}
-import scala.concurrent.ExecutionContext
+import scala.concurrent.{ExecutionContext, Future}
 
 trait TestBaseSpec
     extends AnyWordSpec
@@ -38,12 +45,34 @@ trait TestBaseSpec
     with ScalaFutures
     with Inside
     with GuiceOneAppPerSuite
-    with GlobalExecutionContext {
+    with GlobalExecutionContext
+    with RepositoryUtils {
 
   override implicit val patienceConfig: PatienceConfig =
     PatienceConfig(timeout = Span(10, Seconds), interval = Span(20, Millis))
 
   implicit val ec: ExecutionContext = ExecutionContext.Implicits.global
+  implicit val hc: HeaderCarrier    = HeaderCarrier(sessionId = Some(SessionId("my-session")))
   implicit val clock: Clock         = Clock.fixed(Instant.now(), ZoneId.systemDefault())
 
+  val mockCustomErrorHandler: ErrorHandler     = mock[ErrorHandler]
+  val mockSessionRepository: SessionRepository = mock[SessionRepository]
+  val testUserLoginDetails                     = UserLoginDetails("jwtToken", "FOR6010", "123456")
+  val preFilledSession                         = preEnrichedActionRefiner(testUserLoginDetails)
+
+  def preEnrichedActionRefiner(userLoginDetails: UserLoginDetails): WithSessionRefiner =
+    new WithSessionRefiner(mockCustomErrorHandler, mockSessionRepository) {
+
+      override def refine[A](request: Request[A]): Future[Either[Result, SessionRequest[A]]] =
+        Future.successful(
+          Right(
+            SessionRequest[A](
+              Session(
+                userLoginDetails = userLoginDetails
+              ),
+              request = request
+            )
+          )
+        )
+    }
 }

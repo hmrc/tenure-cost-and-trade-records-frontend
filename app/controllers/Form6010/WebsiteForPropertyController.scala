@@ -16,7 +16,6 @@
 
 package controllers.Form6010
 
-
 import form.Form6010.LicensableActivitiesForm.licensableActivitiesForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
@@ -28,10 +27,10 @@ import scala.concurrent.Future
 
 @Singleton
 class WebsiteForPropertyController @Inject() (
-                                               mcc: MessagesControllerComponents,
-                                               websiteForPropertyView: websiteForProperty,
-                                               licensableActivitiesView: licensableActivities
-                                             ) extends FrontendController(mcc) {
+  mcc: MessagesControllerComponents,
+  websiteForPropertyView: websiteForProperty,
+  licensableActivitiesView: licensableActivities
+) extends FrontendController(mcc) {
 
   def show: Action[AnyContent] = Action.async { implicit request =>
     Future.successful(Ok(websiteForPropertyView(websiteForPropertyForm)))
@@ -43,9 +42,7 @@ class WebsiteForPropertyController @Inject() (
       .fold(
         formWithErrors => Future.successful(BadRequest(websiteForPropertyView(formWithErrors))),
         data => Future.successful(Ok(licensableActivitiesView(licensableActivitiesForm)))
-
       )
   }
 
 }
-

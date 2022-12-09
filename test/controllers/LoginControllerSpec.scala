@@ -18,26 +18,27 @@ package controllers
 
 import config.LoginToBackendAction
 import connectors.Audit
+import models.{Session, UserLoginDetails}
 import models.submissions.Form6010.Address
 import org.joda.time.DateTime
-import org.mockito.scalatest.MockitoSugar
-import org.scalatest.flatspec.AnyFlatSpec
-import org.scalatest.matchers.should
 import play.api.libs.json.{JsObject, Json}
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
+import repositories.SessionRepo
+import repository.RepositoryUtils
 import security.LoginToBackend.{Postcode, RefNumber, StartTime}
 import security.NoExistingDocument
 import uk.gov.hmrc.http.HeaderCarrier
 import utils.Helpers.fakeRequest2MessageRequest
 import views.html.login
 import utils.TestBaseSpec
+
 import scala.concurrent.{ExecutionContext, Future}
 
 class LoginControllerSpec extends TestBaseSpec {
-  implicit val globalEc = scala.concurrent.ExecutionContext.Implicits.global
 
   private val testAddress = Address("13", Some("Street"), Some("City"), "AA11 1AA")
+  val loginToBackend      = mock[LoginToBackendAction]
 
   "login controller" should {
     "Audit successful login" in {
@@ -62,6 +63,8 @@ class LoginControllerSpec extends TestBaseSpec {
         mock[views.html.ErrorTemplate],
         mock[views.html.loginFailed],
         mock[views.html.lockedOut],
+        preFilledSession,
+        mockSessionRepo,
         mock[views.html.testSign]
       )
 
@@ -88,25 +91,26 @@ class LoginControllerSpec extends TestBaseSpec {
       val audit = mock[Audit]
       doNothing.when(audit).sendExplicitAudit(any[String], any[JsObject])(any[HeaderCarrier], any[ExecutionContext])
 
-      val loginController =
-        new LoginController(
-          audit,
-          stubMessagesControllerComponents(),
-          mock[login],
-          null,
-          mock[views.html.ErrorTemplate],
-          mock[views.html.loginFailed],
-          mock[views.html.lockedOut],
-          mock[views.html.testSign]
-        )
+      val loginController = new LoginController(
+        audit,
+        stubMessagesControllerComponents(),
+        mock[login],
+        loginToBackend,
+        mock[views.html.ErrorTemplate],
+        mock[views.html.loginFailed],
+        mock[views.html.lockedOut],
+        preFilledSession,
+        mockSessionRepo,
+        mock[views.html.testSign]
+      )
 
       val fakeRequest = FakeRequest()
 
-      val response = loginController.logout().apply(fakeRequest)
+      val response = loginController.logout.apply(fakeRequest)
 
       status(response) shouldBe SEE_OTHER
 
-      verify(audit).sendExplicitAudit(eqTo("Logout"), eqTo(Json.obj(Audit.referenceNumber -> "-")))(
+      verify(audit).sendExplicitAudit(eqTo("Logout"), eqTo(Json.obj(Audit.referenceNumber -> "123456")))(
         any[HeaderCarrier],
         any[ExecutionContext]
       )

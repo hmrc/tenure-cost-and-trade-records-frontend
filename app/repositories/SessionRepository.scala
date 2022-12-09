@@ -83,12 +83,12 @@ abstract class SessionRepository @Inject() (formId: String, mongo: MongoComponen
         )
     }
 
-  def findFirst(): Future[SessionData] =
+  def findFirst(implicit hc: HeaderCarrier): Future[SessionData] =
     Mdc.preservingMdc {
-      collection
-        .find()
-        .first()
-        .toFuture()
+      for {
+        sessionId <- getSessionId
+        session   <- collection.find(Filters.equal("_id", sessionId)).first().toFuture()
+      } yield session
     }
 
   override def remove()(implicit hc: HeaderCarrier): Future[Unit] =

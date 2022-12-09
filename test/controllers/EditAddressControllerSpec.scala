@@ -21,9 +21,11 @@ import play.api.http.Status
 import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
+import play.twirl.api.HtmlFormat
 import utils.TestBaseSpec
+import views.html.{connectionToTheProperty, editAddress}
 
-class AreYouStillConnectedYesUpdateAddressControllerSpec extends TestBaseSpec {
+class EditAddressControllerSpec extends TestBaseSpec {
   override def fakeApplication(): Application =
     new GuiceApplicationBuilder()
       .configure(
@@ -34,16 +36,25 @@ class AreYouStillConnectedYesUpdateAddressControllerSpec extends TestBaseSpec {
 
   private val fakeRequest = FakeRequest("GET", "/")
 
-  private val controller = app.injector.instanceOf[EditAddressController]
+  val mockEditAddressView = mock[editAddress]
+  when(mockEditAddressView.apply(any)(any, any)).thenReturn(HtmlFormat.empty)
+
+  val editAddressController = new EditAddressController(
+    stubMessagesControllerComponents(),
+    mock[connectionToTheProperty],
+    mockEditAddressView,
+    preFilledSession,
+    mockSessionRepo
+  )
 
   "GET /" should {
     "return 200" in {
-      val result = controller.show(fakeRequest)
+      val result = editAddressController.show(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return HTML" in {
-      val result = controller.show(fakeRequest)
+      val result = editAddressController.show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }

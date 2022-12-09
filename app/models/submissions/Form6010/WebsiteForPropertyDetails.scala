@@ -32,5 +32,7 @@
 
 package models.submissions.Form6010
 
-case class WebsiteForPropertyDetails(buildingOperatingHaveAWebsite: BuildingOperationHaveAWebsite, websiteAddressForProperty: Option[String])
-
+case class WebsiteForPropertyDetails(
+  buildingOperatingHaveAWebsite: BuildingOperationHaveAWebsite,
+  websiteAddressForProperty: Option[String]
+)
