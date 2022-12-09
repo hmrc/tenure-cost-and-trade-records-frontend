@@ -223,8 +223,7 @@ label.rentUnderReviewNegotiated  = Is the rent currently under review, or is a n
 
 #LEASE OR AGREEMENT DETAILS VAT
 ##############################
-includedInYourRent.header = Lease or agreement details
-includedInYourRent.subheading = Which of the following are included in your rent?
+includedInYourRent.header = Which of the following are included in your rent?
 includedInYourRentApply.subheading = Select any that apply
 label.vat = VAT
 label.nondomesticRates = Non-domestic rates
@@ -293,14 +292,14 @@ label.rentOpenMarketValue = Is the rent based on the open market value?
 
 #DOES THE RENT PAYABLE
 ##############################
-rentPayable.header = Does the rent payable
+rentPayable.header = Does the rent payable include or relate to any of the following?
 label.rentPayable = Select any that apply
-checkbox.rentPayable.includeLicensee = include licensee’s, manager’s or staff living accomodation?
+checkbox.rentPayable.includeLicensee = include licensee’s, manager’s or staff living accommodation?
 checkbox.rentPayable.includeOtherProperty = include other property?
 checkbox.rentPayable.onlyPartOfProperty = relate to only part of the property?
 checkbox.rentPayable.onlyToLand = relate only to land (excluding buildings)?
 checkbox.rentPayable.shellUnit = relate to a ’shell’ unit (did you have to fit the property out yourself)?
-label.detailsToQuestions = Please give details if you answered yes to any of these questions
+label.detailsToQuestions = Give details if you selected any of the options
 hint.detailsToQuestions = For example, the rent includes an upstairs flat, or also includes the premises next door
 error.detailsToQuestions.required = Please provide further information
 error.detailsToQuestions.maxLength = This must be 1000 characters or fewer
@@ -308,12 +307,12 @@ error.detailsToQuestions.maxLength = This must be 1000 characters or fewer
 #RENT PAYABLE VARY ON QUANTITY OF BEERS
 ##############################
 rentPayableVaryOnQuantityOfBeers.header = About your lease or agreement
-label.rentPayableVaryOnQuantityOfBeers = Does the rent payable vary according to the quantity of beers, wines, spirits?
+label.rentPayableVaryOnQuantityOfBeers = Does the rent payable vary according to the quantity of beers, wines or spirits supplied to the property?
 
 #RENT PAYABLE VARY ON QUANTITY OF BEERS DETAILS
 ##############################
 rentPayableVaryOnQuantityOfBeersDetails.header = About your lease or agreement
-label.rentPayableVaryOnQuantityOfBeersDetails = Please tell us how the rent payable is affected by the drinks supplied to your property
+label.rentPayableVaryOnQuantityOfBeersDetails = How is the rent payable affected by the drinks supplied to your property?
 error.rentPayableVaryOnQuantityOfBeersDetails.required = Tell us how the rent payable is affected by the drinks supplied to your property
 error.rentPayableVaryOnQuantityOfBeersDetails.maxLength  = This must be 1000 characters or fewer
 
@@ -324,8 +323,8 @@ label.rentPayableVaryAccordingToGrossOrNet = Does the rent payable vary accordin
 
 #RENT PAYABLE VARY ACCORDING TO GROSS OR NET DETAILS
 ##############################
-rentPayableVaryAccordingToGrossOrNetDetails.header = How your turnover affects the rent
-label.rentPayableVaryAccordingToGrossOrNetDetails = Please tell us how the rent payable is affected by your turnover
+rentPayableVaryAccordingToGrossOrNetDetails.header = About your lease or agreement
+label.rentPayableVaryAccordingToGrossOrNetDetails = Tell us how the rent payable is affected by your turnover
 error.rentPayableVaryAccordingToGrossOrNetDetails.required = Tell us how the rent payable is affected by your turnover
 error.rentPayableVaryAccordingToGrossOrNetDetails.maxLength  = This must be 1000 characters or fewer
 
@@ -362,8 +361,8 @@ hint.rentIncludeTradeServices = For example, maintenance of trade fixtures and f
 #RENT INCLUDE TRADE SERVICES DETAILS
 ##############################
 rentIncludeTradeServicesDetails.header = About the services your landlord provides
-label.sumIncludedInRent = Where specifically itemised, what sum is included in the rent (excluding VAT)?
-label.describeServices = Please describe the services provided
+label.sumIncludedInRent = Where specifically itemised, what sum is included in the rent (excluding VAT) to cover services provided by the landlord?
+label.describeServices = Describe services provided
 error.required.sumIncludedInRent = Please provide a value
 error.invalid_currency.sumIncludedInRent= Please provide a number
 error.describeServices.required = Please provide further information
@@ -379,7 +378,7 @@ error.invalid_currency.rentIncludeFixturesAndFittings = Please provide a number
 #RENT INCLUDE FIXTURES AND FITTINGS DETAILS
 ##############################
 rentIncludeFixturesAndFittingsDetails.header = About your fixtures and fittings
-label.rentIncludeFixturesAndFittingsDetails = Where specifically itemised, what sum is included in the rent (excluding VAT)?
+label.rentIncludeFixturesAndFittingsDetails = Where specifically itemised, what sum is included in the rent (excluding VAT) to cover equipment provided by the landlord?
 error.required.rentIncludeFixturesAndFittingsDetails = Please provide a value
 error.invalid_currency.rentIncludeFixturesAndFittingsDetails = Please provide a number
 
@@ -396,7 +395,7 @@ label.rentReducedOnReview = Can the rent be reduced on review under the terms of
 #PAY A CAPITAL SUM
 ##############################
 capitalSumOrPremium.header = About your lease or agreement
-label.capitalSumOrPremium = Did you pay a capital sum or premium for your lease or agreement ignoring tenants inventory?
+label.capitalSumOrPremium = Did you pay a capital sum or premium for your lease or agreement, ignoring tenants’ inventory?
 hint.capitalSumOrPremium = The sum could be paid to the landlord or a previous lessee
 
 #PAYMENT WHEN LEASE IS GRANTED
@@ -412,7 +411,7 @@ label.rentIncreasedAnnuallyWithRPIs = Does the rent increase annually in line wi
 #METHOD USED TO FIX CURRENT RENT
 ##############################
 methodUsedToFixCurrentRent.header = About your lease or agreement
-label.methodUsedToFixCurrentRent = Which method was used to fix the current rent?
+label.methodUsedToFixCurrentRent = How was the current rent agreed?
 label.methodUsedToFixCurrentRent.agreement = Agreement
 label.methodUsedToFixCurrentRent.arbitration = Arbitration
 label.methodUsedToFixCurrentRent.independentExpert = Independent expert
@@ -527,7 +526,7 @@ label.no = No
 ##TENANTS ADDITIONS DISREGARDED
 ##############################
 tenantsAdditionsDisregarded.header = About your lease or agreement
-label.tenantsAdditionsDisregarded = Were any tenant’s additions disregarded at the time the rent was agreed or determined?
+label.tenantsAdditionsDisregarded = Describe the tenants’ additions disregarded at the time the rent was agreed or determined
 hint.tenantsAdditionsDisregarded = For example, is your rent based on the market value of the property before you made improvements like fitting out a shell, or adding parking
 
 ##TENANTS ADDITIONS DISREGARDED DETAILS
@@ -537,12 +536,12 @@ label.tenantsAdditionsDisregardedDetails = Describe the tenant’s additions dis
 error.tenantsAdditionsDisregardedDetails.required = Please describe the tenant’s additions disregarded at the time the rent was agreed or determined
 error.tenantsAdditionsDisregardedDetails.maxLength = This must be 1000 characters or fewer
 
-##TENANTS ADDITIONS DISREGARDED
+##LEGAL PLANNING RESTRICTIONS
 ##############################
 label.legalPlanningRestrictions = Are there any legal or planning restrictions, unusual terms or conditions in the lease or agreement that may have affected the rent payable?
 hint.legalPlanningRestrictions = For example, a break clause, contracting out of the Landlord and Tenant Act, etc
 
-##TENANTS ADDITIONS DISREGARDED DETAILS
+##LEGAL PLANNING RESTRICTIONS DETAILS
 ##############################
 legalOrPlanningRestrictionsDetails.header = About your lease or agreement
 label.legalOrPlanningRestrictionsDetails = Describe the legal or planning restrictions, unusual terms or conditions in the lease or agreement that may have affected the rent payable
@@ -649,7 +648,7 @@ turnover.header = This is a holding page for the turnover page
 #SHARED RESPONSIBILITIES
 ##############################
 sharedResponsibilities.header = About your lease or agreement
-label.sharedResponsibilities = Please give details of shared responsibilities
+label.sharedResponsibilities = Give details of the shared responsibilities
 hint.sharedResponsibilities = For example, costs are shared equally, landlord 75%, tenant 25%
 error.sharedResponsibilities.required = Please provide details if you are responsible for any area shared, if any
 error.sharedResponsibilities.maxLength = This must be 1000 characters or fewer
@@ -676,8 +675,6 @@ alternativeContactAddress.town.label = Town or city (optional)
 alternativeContactAddress.county.label = County (optional)
 alternativeContactAddress.postcode.label = Postcode
 error.alternativeContactFullName.required = Please enter the full name
-
-
 
 #HELP WITH SERVICE COMMON
 ##############################
@@ -820,6 +817,73 @@ currentRentFirstPaid.listBlock.p2 = a lease renewal or alteration
 currentRentFirstPaid.listBlock.p3 = the assignment of an existing lease from another party
 currentRentFirstPaid.listBlock.p4 = an initial rent-free period
 currentRentFirstPaid.helpWithServiceCurrentRentFirstPaidDontNeedToKnow = We don’t need to know about any changes in the rent which are part of your current agreement. These could include, but are not limited to, changes linked to your sales figures, or fluctuations in the retail price index.
+
+#HELP WITH SERVICE DOES THE RENT PAYABLE
+##############################
+doesTheRentPayable.helpWithServiceDoesTheRentPayableHeader = What you need to tell us
+doesTheRentPayable.helpWithServiceDoesTheRentPayable.p1 = Please select any of the items that your rent covers. You can select multiple boxes. If none of the items are covered your rent, leave the boxes blank and select ‘Save and continue’.
+doesTheRentPayable.helpWithServiceDoesTheRentPayable.p2 = If you select any of the options, or multiple options, please use the text box to provide a brief description.
+doesTheRentPayable.helpWithServiceDoesTheRentPayable.p3 = If none of the items are covered your rent, leave the boxes blank and select ‘Save and continue’.
+
+#HELP WITH SERVICE ULTIMATELY RESPONSIBLE
+##############################
+ultimatelyResponsible.helpWithServiceUltimatelyResponsibleHeader = What you need to tell us
+ultimatelyResponsible.helpWithServiceUltimatelyResponsible.p1 = What you need to tell us We only need to know which party is responsible for the costs listed on the page.
+ultimatelyResponsible.helpWithServiceUltimatelyResponsible.p2 = For example, if a tenant normally arranges and pays for outside repairs, then is reimbursed by the landlord, you should select landlord.
+
+#HELP WITH SERVICE OPEN MARKET VALUE
+##############################
+openMarketValue.helpWithServiceOpenMarketValueHeader = Open market value
+openMarketValue.helpWithServiceOpenMarketValue = If your rent isn’t based on open market value, it may simply be a fixed amount agreed between both parties, or linked to another factor. If you’re unsure, it may be stipulated in your lease or agreement.
+
+#HELP WITH SERVICE CURRENT RENT FIXED
+##############################
+currentRentFixed.helpWithServiceCurrentRentFixedHeader = How the rent was fixed
+currentRentFixed.helpWithServiceCurrentRentFixed.p1 = You only need to choose one of the displayed options.
+currentRentFixed.helpWithServiceCurrentRentFixed.p2 = You don’t need to tell us about any variations to the rent which are part of your current agreement. These could include, but are not limited to, changes linked to your sales figures, or fluctuations in the retail price index.
+currentRentFixed.helpWithServiceCurrentRentFixed.subHeader = When the rent was agreed or set
+currentRentFixed.helpWithServiceCurrentRentFixed.p3 = The date when the rent was agreed, or set is normally the date when:
+currentRentFixed.listBlock.p1 = a new lease or agreement is signed
+currentRentFixed.listBlock.p2 = an interim rent is established
+currentRentFixed.listBlock.p3 = a new rent is established following a rent review
+currentRentFixed.listBlock.p4 = a lease is renewed
+currentRentFixed.listBlock.p5 = a sale and leaseback is agreed
+currentRentFixed.helpWithServiceCurrentRentFixed.p4 = It may not necessarily be the date of occupation, or the date a rent is first paid.
+
+#HELP WITH SERVICE OPEN MARKET VALUE
+##############################
+intervalsOfRentReview.helpWithServiceIntervalsOfRentReviewHeader = Rent reviews
+intervalsOfRentReview.helpWithServiceIntervalsOfRentReview = Please give a brief description of any rent-review schedule laid out in your lease or agreement. If your lease or agreement doesn’t include any rent reviews, select ‘Save and continue’ to move to the next page.
+
+#HELP WITH SERVICE RENT INCLUDE TRADE SERVICES DETAILS
+##############################
+rentIncludeTradeServicesDetails.helpWithServiceRentIncludeTradeServicesDetailsHeader = Services provided by the landlord
+rentIncludeTradeServicesDetails.helpWithServiceRentIncludeTradeServicesDetails = If your rent includes services provided by the landlord, but these aren’t specifically itemised, please leave the field blank.
+
+#HELP WITH SERVICE RENT INCLUDE FIXTURE FITTINGS DETAILS
+##############################
+rentIncludeFixtureFittingsDetails.helpWithServiceRentIncludeFixtureFittingsDetailsHeader = Equipment provided by the landlord
+rentIncludeFixtureFittingsDetails.helpWithServiceRentIncludeFixtureFittingsDetails = If your rent includes equipment provided by the landlord, but these aren’t specifically itemised, please leave the field blank.
+
+#HELP WITH SERVICE RENT GROSS OR NET DETAILS
+##############################
+rentGrossOrNetDetails.helpWithServiceRentGrossOrNetDetailsHeader = What we need to know
+rentGrossOrNetDetails.helpWithServiceRentGrossOrNetDetails = Please give a brief description of how your turnover affects your rent. For example, does your rent increase if your turnover exceeds a certain amount?
+
+#HELP WITH SERVICE RENT GROSS OR NET DETAILS
+##############################
+rentGrossOrNetDetails.helpWithServiceRentGrossOrNetDetailsHeader = What we need to know
+rentGrossOrNetDetails.helpWithServiceRentGrossOrNetDetails = Please give a brief description of how your turnover affects your rent. For example, does your rent increase if your turnover exceeds a certain amount?
+
+#HELP WITH SERVICE RENT QUANTITY OF BEERS DETAILS
+##############################
+rentQuantityOfBeersDetails.helpWithServiceRentQuantityOfBeersDetailsHeader = What we need to know
+rentQuantityOfBeersDetails.helpWithServiceRentQuantityOfBeersDetails = Please give a brief description of how the quantity of drinks supplied to your property affects your rent. For example, does your rent change if the amount exceeds a certain amount?
+
+#HELP WITH SERVICE ALTERNATIVE CONTACT
+##############################
+alternativeContact.helpWithServiceAlternativeContactHeader = Alternative contact details
+alternativeContact.helpWithServiceAlternativeContact = If you don’t need to provide us with alternative contact details, please select ‘Save and continue’.
 
 #ERRORS
 ##############################
