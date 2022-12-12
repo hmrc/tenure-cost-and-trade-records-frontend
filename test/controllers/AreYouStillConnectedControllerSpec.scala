@@ -21,7 +21,10 @@ import play.api.http.Status
 import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
+import play.twirl.api.HtmlFormat
+
 import utils.TestBaseSpec
+import views.html.{areYouStillConnected, connectionToTheProperty, editAddress, login, pastConnection}
 
 class AreYouStillConnectedControllerSpec extends TestBaseSpec {
   override def fakeApplication(): Application =
@@ -32,18 +35,29 @@ class AreYouStillConnectedControllerSpec extends TestBaseSpec {
       )
       .build()
 
-  private val fakeRequest = FakeRequest("GET", "/")
+  private val fakeRequest          = FakeRequest("GET", "/")
+  val mockAreYouStillConnectedView = mock[areYouStillConnected]
+  when(mockAreYouStillConnectedView.apply(any)(any, any)).thenReturn(HtmlFormat.empty)
 
-  private val controller = app.injector.instanceOf[AreYouStillConnectedController]
+  val areYouStillConnectedController = new AreYouStillConnectedController(
+    stubMessagesControllerComponents(),
+    mock[login],
+    mockAreYouStillConnectedView,
+    mock[pastConnection],
+    mock[connectionToTheProperty],
+    mock[editAddress],
+    preFilledSession,
+    mockSessionRepo
+  )
 
   "GET /" should {
     "return 200" in {
-      val result = controller.show(fakeRequest)
+      val result = areYouStillConnectedController.show(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return HTML" in {
-      val result = controller.show(fakeRequest)
+      val result = areYouStillConnectedController.show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }

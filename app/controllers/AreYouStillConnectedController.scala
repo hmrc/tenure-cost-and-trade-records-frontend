@@ -32,12 +32,11 @@ import models.Session
 import play.api.i18n.I18nSupport
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class AreYouStillConnectedController @Inject() (
   mcc: MessagesControllerComponents,
-  appConfig: AppConfig,
   login: login,
   areYouStillConnectedView: areYouStillConnected,
   pastConnectionView: pastConnection,
@@ -45,27 +44,36 @@ class AreYouStillConnectedController @Inject() (
   editAddressView: editAddress,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FrontendController(mcc)
+)(implicit ec: ExecutionContext)
+    extends FrontendController(mcc)
     with I18nSupport {
 
-  def show: Action[AnyContent] = Action.async { implicit request =>
-    Future.successful(Ok(areYouStillConnectedView(areYouStillConnectedForm)))
+  def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    Future.successful(
+      Ok(
+        areYouStillConnectedView(
+          request.sessionData.addressConnectionType.fold(areYouStillConnectedForm)(addressConnectionType =>
+            areYouStillConnectedForm.fillAndValidate(addressConnectionType)
+          )
+        )
+      )
+    )
   }
 
-  def submit = Action.async { implicit request =>
+  def submit = (Action andThen withSessionRefiner).async { implicit request =>
     areYouStillConnectedForm
       .bindFromRequest()
       .fold(
         formWithErrors => Future.successful(BadRequest(areYouStillConnectedView(formWithErrors))),
         data =>
           if (data.equals(AddressConnectionTypeYes)) {
-            session.start(Session(data))
+            session.saveOrUpdate(request.sessionData.copy(addressConnectionType = data))
             Future.successful(Ok(connectionToThePropertyView(connectionToThePropertyForm)))
           } else if (data.equals(AddressConnectionTypeNo)) {
-            session.start(Session(data))
+            session.saveOrUpdate(request.sessionData.copy(addressConnectionType = data))
             Future.successful(Ok(pastConnectionView(pastConnectionForm)))
           } else if (data.equals(AddressConnectionTypeYesChangeAddress)) {
-            session.start(Session(data))
+            session.saveOrUpdate(request.sessionData.copy(addressConnectionType = data))
             Future.successful(Ok(editAddressView(editAddressForm)))
           } else {
             Future.successful(Ok(login(loginForm)))

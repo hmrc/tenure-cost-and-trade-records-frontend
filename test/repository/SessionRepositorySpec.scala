@@ -17,7 +17,7 @@
 package repository
 
 import play.api.libs.json.{Json, Reads, Writes}
-import models.Session
+import models.{Session, UserLoginDetails}
 import models.submissions.Form6010.AddressConnectionTypeYes
 import repositories.SessionData
 import repositories.{Session => SessionRepo}
@@ -26,43 +26,41 @@ import utils.TestBaseSpec
 
 class SessionRepositorySpec extends TestBaseSpec {
 
-  lazy val repository   = app.injector.instanceOf[SessionRepo]
-  val hc: HeaderCarrier = HeaderCarrier(sessionId = Some(SessionId("my-session")))
-  val writes            = implicitly[Writes[Session]]
-  val reads             = implicitly[Reads[Session]]
-
+  lazy val repository = app.injector.instanceOf[SessionRepo]
+  val token           = "testToken"
+  val forNumber       = "FOR6010"
+  val referenceNumber = "123456"
+  val session         = Session(UserLoginDetails(token, forNumber, referenceNumber))
   "session repository" should {
 
     "start by saving or updating data" in {
-      val session = Session(AddressConnectionTypeYes)
 
-      repository.start(session)(writes, hc).futureValue
+      repository.start(session).futureValue
 
       val returnedSessionData: SessionData = repository.findFirst.futureValue // shouldBe session
 
       inside(returnedSessionData) { case SessionData(_, data, createdAt) =>
-        (data \ "session" \ "areYouStillConnected").as[String] shouldBe session.areYouStillConnected.name
+        (data \ "session" \ "userLoginDetails" \ "referenceNumber")
+          .as[String] shouldBe session.userLoginDetails.referenceNumber
       }
     }
 
     "get data from current session" in {
-      val session = Session(AddressConnectionTypeYes)
-      repository.start(session)(writes, hc).futureValue
+      repository.start(session).futureValue
 
-      val returnedSessionData: Option[Session] = repository.get[Session](reads, hc).futureValue
+      val returnedSessionData: Option[Session] = repository.get[Session].futureValue
 
-      inside(returnedSessionData) { case Some(Session(areYouStillConnected, None, None)) =>
-        areYouStillConnected.name shouldBe AddressConnectionTypeYes.name
+      inside(returnedSessionData) { case Some(session) =>
+        session.userLoginDetails.referenceNumber shouldBe referenceNumber
       }
 
     }
 
     "remove data from current session" in {
-      val session = Session(AddressConnectionTypeYes)
-      repository.start(session)(writes, hc).futureValue
-      repository.remove()(hc).futureValue
+      repository.start(session).futureValue
+      repository.remove().futureValue
 
-      val returnedSessionData: Option[Session] = repository.get[Session](reads, hc).futureValue
+      val returnedSessionData: Option[Session] = repository.get[Session].futureValue
 
       returnedSessionData shouldBe None
 
@@ -71,7 +69,7 @@ class SessionRepositorySpec extends TestBaseSpec {
 
   override protected def beforeEach(): Unit = {
     super.beforeEach()
-    repository.removeAll()(hc).futureValue
+    repository.removeAll().futureValue
   }
 
 }

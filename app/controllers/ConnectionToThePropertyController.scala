@@ -18,6 +18,7 @@ package controllers
 
 import actions.WithSessionRefiner
 import form.ConnectionToThePropertyForm.connectionToThePropertyForm
+import models.Session
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
@@ -37,8 +38,16 @@ class ConnectionToThePropertyController @Inject() (
 ) extends FrontendController(mcc)
     with I18nSupport {
 
-  def show: Action[AnyContent] = Action.async { implicit request =>
-    Future.successful(Ok(connectionToThePropertyView(connectionToThePropertyForm)))
+  def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    Future.successful(
+      Ok(
+        connectionToThePropertyView(
+          request.sessionData.connectionToProperty.fold(connectionToThePropertyForm)(connectionToProperty =>
+            connectionToThePropertyForm.fillAndValidate(connectionToProperty)
+          )
+        )
+      )
+    )
   }
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
@@ -47,7 +56,7 @@ class ConnectionToThePropertyController @Inject() (
       .fold(
         formWithErrors => Future.successful(BadRequest(connectionToThePropertyView(formWithErrors))),
         data => {
-          session.saveOrUpdate(request.sessionData, data)
+          session.saveOrUpdate(request.sessionData.copy(connectionToProperty = Some(data)))
           Future.successful(Ok(taskListView()))
         }
       )

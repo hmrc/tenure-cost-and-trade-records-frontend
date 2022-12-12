@@ -49,7 +49,7 @@ class PastConnectionController @Inject() (
       .fold(
         formWithErrors => Future.successful(BadRequest(pastConnectionView(formWithErrors))),
         data => {
-          session.saveOrUpdate(Session(request.sessionData, data))
+          session.saveOrUpdate(request.sessionData.copy(pastConnectionType = Some(data)))
           Future.successful(Ok(login(loginForm)))
         }
       )

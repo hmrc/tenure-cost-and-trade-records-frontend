@@ -16,32 +16,48 @@
 
 package controllers
 
+import actions.WithSessionRefiner
 import form.ConnectionToThePropertyForm.connectionToThePropertyForm
 import form.EditAddressForm.editAddressForm
+import models.Session
+import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.{connectionToTheProperty, editAddress}
 
-import javax.inject.{Inject, Singleton}
+import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
 
 @Singleton
 class EditAddressController @Inject() (
   mcc: MessagesControllerComponents,
   connectionToThePropertyView: connectionToTheProperty,
-  editAddressView: editAddress
-) extends FrontendController(mcc) {
+  editAddressView: editAddress,
+  withSessionRefiner: WithSessionRefiner,
+  @Named("session") val session: SessionRepo
+) extends FrontendController(mcc)
+    with I18nSupport {
 
-  def show: Action[AnyContent] = Action.async { implicit request =>
-    Future.successful(Ok(editAddressView(editAddressForm)))
+  def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    Future.successful(
+      Ok(
+        editAddressView(
+          request.sessionData.address.fold(editAddressForm)(address => editAddressForm.fillAndValidate(address))
+        )
+      )
+    )
   }
 
-  def submit = Action.async { implicit request =>
+  def submit = (Action andThen withSessionRefiner).async { implicit request =>
     editAddressForm
       .bindFromRequest()
       .fold(
         formWithErrors => Future.successful(BadRequest(editAddressView(formWithErrors))),
-        data => Future.successful(Ok(connectionToThePropertyView(connectionToThePropertyForm)))
+        data => {
+          session.saveOrUpdate(request.sessionData.copy(address = data))
+          Future.successful(Ok(connectionToThePropertyView(connectionToThePropertyForm)))
+        }
       )
   }
 

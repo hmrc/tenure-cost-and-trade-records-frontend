@@ -14,19 +14,17 @@
  * limitations under the License.
  */
 
-package form.Form6010
+package repository
 
-import form.MappingSupport._
-import models.submissions.Form6010.WebsiteForPropertyDetails
-import play.api.data.Form
-import play.api.data.Forms.{mapping, optional, text}
+import models.Session
+import org.mockito.scalatest.MockitoSugar
+import repositories.SessionRepo
 
-object WebsiteForPropertyForm {
+import scala.concurrent.Future
 
-  val websiteForPropertyForm = Form(
-    mapping(
-      "buildingOperatingHaveAWebsite" -> buildingOperatingHaveAWebsiteType,
-      "websiteAddressForProperty"     -> optional(text)
-    )(WebsiteForPropertyDetails.apply)(WebsiteForPropertyDetails.unapply)
-  )
+trait RepositoryUtils { this: MockitoSugar =>
+  val mockSessionRepo: SessionRepo = mock[SessionRepo]
+  when(mockSessionRepo.start(any[Session])(any, any)).thenReturn(Future.successful(()))
+  when(mockSessionRepo.saveOrUpdate(any[Session])(any, any)).thenReturn(Future.successful(()))
+  when(mockSessionRepo.remove()(any)).thenReturn(Future.successful(()))
 }
