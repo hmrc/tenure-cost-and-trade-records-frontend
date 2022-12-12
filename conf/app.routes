@@ -210,3 +210,8 @@ POST        /further-information-or-remarks                         controllers.
 
 GET         /alternate-contact-details                              controllers.Form6010.AlternativeContactDetailsController.show()
 POST        /alternate-contact-details                              controllers.Form6010.AlternativeContactDetailsController.submit()
+
+#Form 6011 routing is below
+
+GET         /tenancy-lease-agreement-expire                         controllers.Form6011.TenancyLeaseAgreementExpireController.show()
+POST        /tenancy-lease-agreement-expire                         controllers.Form6011.TenancyLeaseAgreementExpireController.submit()
