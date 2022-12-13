@@ -39,8 +39,16 @@ class PastConnectionController @Inject() (
 ) extends FrontendController(mcc)
     with I18nSupport {
 
-  def show: Action[AnyContent] = Action.async { implicit request =>
-    Future.successful(Ok(pastConnectionView(pastConnectionForm)))
+  def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    Future.successful(
+      Ok(
+        pastConnectionView(
+          request.sessionData.pastConnectionType.fold(pastConnectionForm)(pastConnectionType =>
+            pastConnectionForm.fillAndValidate(pastConnectionType)
+          )
+        )
+      )
+    )
   }
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>

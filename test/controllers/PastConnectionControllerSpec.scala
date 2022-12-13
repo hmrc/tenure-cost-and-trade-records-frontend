@@ -21,7 +21,10 @@ import play.api.http.Status
 import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
+import play.twirl.api.HtmlFormat
+import uk.gov.hmrc.play.bootstrap.controller
 import utils.TestBaseSpec
+import views.html.{editAddress, login, pastConnection}
 
 class PastConnectionControllerSpec extends TestBaseSpec {
   override def fakeApplication(): Application =
@@ -34,16 +37,25 @@ class PastConnectionControllerSpec extends TestBaseSpec {
 
   private val fakeRequest = FakeRequest("GET", "/")
 
-  private val controller = app.injector.instanceOf[PastConnectionController]
+  val mockPastConnectionView = mock[pastConnection]
+  when(mockPastConnectionView.apply(any)(any, any)).thenReturn(HtmlFormat.empty)
+
+  val pastConnectionController = new PastConnectionController(
+    stubMessagesControllerComponents(),
+    mock[login],
+    mockPastConnectionView,
+    preFilledSession,
+    mockSessionRepo
+  )
 
   "GET /" should {
     "return 200" in {
-      val result = controller.show(fakeRequest)
+      val result = pastConnectionController.show(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return HTML" in {
-      val result = controller.show(fakeRequest)
+      val result = pastConnectionController.show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
