@@ -19,11 +19,12 @@ package controllers
 import actions.WithSessionRefiner
 import form.ConnectionToThePropertyForm.connectionToThePropertyForm
 import models.Session
+import models.submissions.ConnectionToThePropertyOwnerTrustee
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.{connectionToTheProperty, taskList}
+import views.html.{connectionToTheProperty, taskList, taskListOwner}
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
@@ -32,6 +33,7 @@ import scala.concurrent.Future
 class ConnectionToThePropertyController @Inject() (
   mcc: MessagesControllerComponents,
   taskListView: taskList,
+  taskListOwnerView: taskListOwner,
   connectionToThePropertyView: connectionToTheProperty,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
@@ -55,9 +57,14 @@ class ConnectionToThePropertyController @Inject() (
       .bindFromRequest()
       .fold(
         formWithErrors => Future.successful(BadRequest(connectionToThePropertyView(formWithErrors))),
-        data => {
+        data =>
+        data match {
+          case ConnectionToThePropertyOwnerTrustee =>
           session.saveOrUpdate(request.sessionData.copy(connectionToProperty = Some(data)))
-          Future.successful(Ok(taskListView()))
+          Future.successful(Ok(taskListOwnerView()))
+          case  _ =>
+            session.saveOrUpdate(request.sessionData.copy(connectionToProperty = Some(data)))
+            Future.successful(Ok(taskListView()))
         }
       )
   }

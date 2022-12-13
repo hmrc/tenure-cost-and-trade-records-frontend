@@ -23,7 +23,7 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import play.twirl.api.HtmlFormat
 import utils.TestBaseSpec
-import views.html.{connectionToTheProperty, taskList}
+import views.html.{connectionToTheProperty, taskList, taskListOwner}
 
 class ConnectionToThePropertyControllerSpec extends TestBaseSpec {
 
@@ -43,6 +43,7 @@ class ConnectionToThePropertyControllerSpec extends TestBaseSpec {
   val connectionToThePropertyController = new ConnectionToThePropertyController(
     stubMessagesControllerComponents(),
     mock[taskList],
+    mock[taskListOwner],
     mockConnectionToThePropertyView,
     preFilledSession,
     mockSessionRepo

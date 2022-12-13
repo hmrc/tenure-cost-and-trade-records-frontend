@@ -16,27 +16,33 @@
 
 package controllers.Form6010
 
+import actions.WithSessionRefiner
 import form.Form6010.EnforcementActionDetailsForm.enforcementActionDetailsForm
 import form.Form6010.TiedForGoodsForm.tiedForGoodsForm
+import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.Form6010.{enforcementActionBeenTakenDetails, tiedForGoods}
 
-import javax.inject.{Inject, Singleton}
-import scala.concurrent.Future
+import javax.inject.{Inject, Named, Singleton}
+import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class EnforcementActionBeenTakenDetailsController @Inject() (
   mcc: MessagesControllerComponents,
   tiedForGoodsView: tiedForGoods,
-  enforcementActionBeenTakenDetailsView: enforcementActionBeenTakenDetails
-) extends FrontendController(mcc) {
+  enforcementActionBeenTakenDetailsView: enforcementActionBeenTakenDetails,
+  withSessionRefiner: WithSessionRefiner,
+  @Named("session") val session: SessionRepo
+) (implicit ec: ExecutionContext) extends FrontendController(mcc) with I18nSupport {
 
   def show: Action[AnyContent] = Action.async { implicit request =>
     Future.successful(Ok(enforcementActionBeenTakenDetailsView(enforcementActionDetailsForm)))
   }
 
   def submit = Action.async { implicit request =>
+
     enforcementActionDetailsForm
       .bindFromRequest()
       .fold(

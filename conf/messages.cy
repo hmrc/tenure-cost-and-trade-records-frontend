@@ -676,6 +676,11 @@ alternativeContactAddress.county.label = County (optional)
 alternativeContactAddress.postcode.label = Postcode
 error.alternativeContactFullName.required = Please enter the full name
 
+#TENANCY LEASE AGREEMENT EXPIRE (FORM 6011)
+##############################
+tenancyLeaseAgreementExpire.header = About your lease or agreement
+label.tenancyLeaseAgreementExpire = When does your tenancy, lease or agreement expire, or if earlier, what is the date of your next review (excluding indexation)?
+
 #HELP WITH SERVICE COMMON
 ##############################
 helpWithService.title = Get help with this service
