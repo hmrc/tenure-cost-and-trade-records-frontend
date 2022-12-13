@@ -152,6 +152,8 @@ label.occupierTrustee = Occupier or trustee for occupier
 label.ownerTrustee = Owner or trustee for owner
 label.occupierAgent = Occupier’s agent
 label.ownerAgent = Owner’s agent
+hint.occupierTrustee = Select this if you’re renting or leasing the property, even through a Leaseback arrangement
+hint.ownerTrustee = Select this if you own and occupy the property-you’re considered an occupier if you own the property and lease it back to a business you operate from the property
 
 #6010 ABOUT THE PROPERTY
 ##############################
