@@ -18,6 +18,7 @@ package utils
 
 import actions.{SessionRequest, WithSessionRefiner}
 import config.ErrorHandler
+import models.submissions.Form6010.Address
 import models.{Session, UserLoginDetails}
 import org.mockito.scalatest.MockitoSugar
 import org.scalatest.{BeforeAndAfterEach, Inside}
@@ -57,7 +58,7 @@ trait TestBaseSpec
 
   val mockCustomErrorHandler: ErrorHandler     = mock[ErrorHandler]
   val mockSessionRepository: SessionRepository = mock[SessionRepository]
-  val testUserLoginDetails                     = UserLoginDetails("jwtToken", "FOR6010", "123456")
+  val testUserLoginDetails                     = UserLoginDetails("jwtToken", "FOR6010", "123456", Address("13", Some("Street"), Some("City"), "AA11 1AA"))
   val preFilledSession                         = preEnrichedActionRefiner(testUserLoginDetails)
 
   def preEnrichedActionRefiner(userLoginDetails: UserLoginDetails): WithSessionRefiner =
