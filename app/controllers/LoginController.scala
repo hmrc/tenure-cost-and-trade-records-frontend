@@ -132,11 +132,11 @@ class LoginController @Inject() (
         ForTypes.find(forNum) match {
           case Some(_) =>
             session
-              .start(Session(UserLoginDetails(token, forNum, referenceNumber)))
+              .start(Session(UserLoginDetails(token, forNum, referenceNumber, address)))
               .map(_ => Redirect(controllers.routes.AreYouStillConnectedController.show()))
           case None    =>
             session
-              .start(Session(UserLoginDetails(token, forNum, referenceNumber)))
+              .start(Session(UserLoginDetails(token, forNum, referenceNumber, address)))
               .map(_ => Redirect(routes.LoginController.notValidFORType()))
         }
       }

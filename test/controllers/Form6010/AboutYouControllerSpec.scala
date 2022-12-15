@@ -26,7 +26,10 @@ import play.api.http.Status
 import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
+import play.twirl.api.HtmlFormat
 import utils.TestBaseSpec
+import views.html.Form6010.aboutYou
+import views.html.{areYouStillConnected, taskList}
 
 class AboutYouControllerSpec extends TestBaseSpec { //with AnyFlatSpec
 
@@ -43,18 +46,26 @@ class AboutYouControllerSpec extends TestBaseSpec { //with AnyFlatSpec
       .build()
 
   private val fakeRequest = FakeRequest("GET", "/")
+  val mockAboutYouView = mock[aboutYou]
+  when(mockAboutYouView.apply(any)(any, any)).thenReturn(HtmlFormat.empty)
 
-  private val controller = app.injector.instanceOf[AboutYouController]
+  val aboutYouController = new AboutYouController(
+    stubMessagesControllerComponents(),
+    mock[taskList],
+    mockAboutYouView,
+    preFilledSession,
+    mockSessionRepo
+  )
 
   "GET /" should {
     "return 200" in {
       //    "return 200" in {
-      val result = controller.show(fakeRequest)
+      val result = aboutYouController.show(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return HTML" in {
-      val result = controller.show(fakeRequest)
+      val result = aboutYouController.show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }

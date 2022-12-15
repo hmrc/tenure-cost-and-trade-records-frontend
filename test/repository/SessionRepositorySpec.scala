@@ -16,12 +16,10 @@
 
 package repository
 
-import play.api.libs.json.{Json, Reads, Writes}
 import models.{Session, UserLoginDetails}
-import models.submissions.Form6010.AddressConnectionTypeYes
+import models.submissions.Form6010.Address
 import repositories.SessionData
 import repositories.{Session => SessionRepo}
-import uk.gov.hmrc.http.{HeaderCarrier, SessionId}
 import utils.TestBaseSpec
 
 class SessionRepositorySpec extends TestBaseSpec {
@@ -30,7 +28,7 @@ class SessionRepositorySpec extends TestBaseSpec {
   val token           = "testToken"
   val forNumber       = "FOR6010"
   val referenceNumber = "123456"
-  val session         = Session(UserLoginDetails(token, forNumber, referenceNumber))
+  val session         = Session(UserLoginDetails(token, forNumber, referenceNumber, Address("13", Some("Street"), Some("City"), "AA11 1AA")))
   "session repository" should {
 
     "start by saving or updating data" in {
