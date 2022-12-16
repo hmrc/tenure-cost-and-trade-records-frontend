@@ -22,9 +22,8 @@ import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import play.twirl.api.HtmlFormat
-import uk.gov.hmrc.play.bootstrap.controller
 import utils.TestBaseSpec
-import views.html.{editAddress, login, pastConnection}
+import views.html.{login, pastConnection}
 
 class PastConnectionControllerSpec extends TestBaseSpec {
   override def fakeApplication(): Application =

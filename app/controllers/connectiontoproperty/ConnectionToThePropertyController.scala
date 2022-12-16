@@ -18,22 +18,24 @@ package controllers
 
 import actions.WithSessionRefiner
 import form.ConnectionToThePropertyForm.connectionToThePropertyForm
-import form.EditAddressForm.editAddressForm
-import models.Session
+//import models.Session
+import navigation.AreYouStillConnectedToPropertyNavigator
+import navigation.identifiers.ConnectionToPropertyPageId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.{connectionToTheProperty, editAddress}
+import views.html.{connectionToTheProperty, taskList}
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class EditAddressController @Inject() (
+class ConnectionToThePropertyController @Inject() (
   mcc: MessagesControllerComponents,
+  navigator: AreYouStillConnectedToPropertyNavigator,
+//  taskListView: taskList,
   connectionToThePropertyView: connectionToTheProperty,
-  editAddressView: editAddress,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
 ) extends FrontendController(mcc)
@@ -42,23 +44,24 @@ class EditAddressController @Inject() (
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Future.successful(
       Ok(
-        editAddressView(
-          request.sessionData.address.fold(editAddressForm)(address => editAddressForm.fillAndValidate(address))
+        connectionToThePropertyView(
+          request.sessionData.connectionToProperty.fold(connectionToThePropertyForm)(connectionToProperty =>
+            connectionToThePropertyForm.fillAndValidate(connectionToProperty)
+          )
         )
       )
     )
   }
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
-    editAddressForm
+    connectionToThePropertyForm
       .bindFromRequest()
       .fold(
-        formWithErrors => Future.successful(BadRequest(editAddressView(formWithErrors))),
+        formWithErrors => Future.successful(BadRequest(connectionToThePropertyView(formWithErrors))),
         data => {
-          session.saveOrUpdate(request.sessionData.copy(address = data))
-          Future.successful(Ok(connectionToThePropertyView(connectionToThePropertyForm)))
+          session.saveOrUpdate(request.sessionData.copy(connectionToProperty = Some(data)))
+          Future.successful(Redirect(navigator.nextPage(ConnectionToPropertyPageId)))
         }
       )
   }
-
 }

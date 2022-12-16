@@ -14,18 +14,6 @@
  * limitations under the License.
  */
 
-package form
+package navigation.page
 
-import play.api.data.Form
-import MappingSupport._
-import models.submissions.Form6010.Address
-
-object EditAddressForm {
-
-  lazy val baseEditAddressForm: Form[Address] = Form(baseEditAddressMapping)
-
-  val baseEditAddressMapping = addressMapping
-
-  val editAddressForm = Form(baseEditAddressMapping)
-
-}
+class Identifier

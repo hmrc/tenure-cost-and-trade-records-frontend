@@ -14,8 +14,9 @@
  * limitations under the License.
  */
 
-package controllers
+package controllers.connectiontoproperty
 
+import navigation.ConnectionToPropertyNavigator
 import play.api.Application
 import play.api.http.Status
 import play.api.inject.guice.GuiceApplicationBuilder
@@ -23,9 +24,9 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import play.twirl.api.HtmlFormat
 import utils.TestBaseSpec
-import views.html.{connectionToTheProperty, editAddress}
+import views.html.connectiontoproperty.areYouStillConnected
 
-class EditAddressControllerSpec extends TestBaseSpec {
+class AreYouStillConnectedControllerSpec extends TestBaseSpec {
   override def fakeApplication(): Application =
     new GuiceApplicationBuilder()
       .configure(
@@ -34,27 +35,27 @@ class EditAddressControllerSpec extends TestBaseSpec {
       )
       .build()
 
-  private val fakeRequest = FakeRequest("GET", "/")
+  private val fakeRequest              = FakeRequest("GET", "/")
+  val mockConnectedToPropertyNavigator = mock[ConnectionToPropertyNavigator]
+  val mockAreYouStillConnectedView     = mock[areYouStillConnected]
+  when(mockAreYouStillConnectedView.apply(any)(any, any)).thenReturn(HtmlFormat.empty)
 
-  val mockEditAddressView = mock[editAddress]
-  when(mockEditAddressView.apply(any)(any, any)).thenReturn(HtmlFormat.empty)
-
-  val editAddressController = new EditAddressController(
+  val areYouStillConnectedController = new AreYouStillConnectedController(
     stubMessagesControllerComponents(),
-    mock[connectionToTheProperty],
-    mockEditAddressView,
+    mockConnectedToPropertyNavigator,
+    mockAreYouStillConnectedView,
     preFilledSession,
     mockSessionRepo
   )
 
   "GET /" should {
     "return 200" in {
-      val result = editAddressController.show(fakeRequest)
+      val result = areYouStillConnectedController.show(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return HTML" in {
-      val result = editAddressController.show(fakeRequest)
+      val result = areYouStillConnectedController.show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }

@@ -14,19 +14,19 @@
  * limitations under the License.
  */
 
-package controllers
+package controllers.connectiontoproperty
 
+import navigation.ConnectionToPropertyNavigator
 import play.api.Application
 import play.api.http.Status
 import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import play.twirl.api.HtmlFormat
-
 import utils.TestBaseSpec
-import views.html.{areYouStillConnected, connectionToTheProperty, editAddress, login, pastConnection}
+import views.html.connectiontoproperty.editAddress
 
-class AreYouStillConnectedControllerSpec extends TestBaseSpec {
+class EditAddressControllerSpec extends TestBaseSpec {
   override def fakeApplication(): Application =
     new GuiceApplicationBuilder()
       .configure(
@@ -35,29 +35,27 @@ class AreYouStillConnectedControllerSpec extends TestBaseSpec {
       )
       .build()
 
-  private val fakeRequest          = FakeRequest("GET", "/")
-  val mockAreYouStillConnectedView = mock[areYouStillConnected]
-  when(mockAreYouStillConnectedView.apply(any)(any, any)).thenReturn(HtmlFormat.empty)
+  private val fakeRequest              = FakeRequest("GET", "/")
+  val mockConnectedToPropertyNavigator = mock[ConnectionToPropertyNavigator]
+  val mockEditAddressView              = mock[editAddress]
+  when(mockEditAddressView.apply(any)(any, any)).thenReturn(HtmlFormat.empty)
 
-  val areYouStillConnectedController = new AreYouStillConnectedController(
+  val editAddressController = new EditAddressController(
     stubMessagesControllerComponents(),
-    mock[login],
-    mockAreYouStillConnectedView,
-    mock[pastConnection],
-    mock[connectionToTheProperty],
-    mock[editAddress],
+    mockConnectedToPropertyNavigator,
+    mockEditAddressView,
     preFilledSession,
     mockSessionRepo
   )
 
   "GET /" should {
     "return 200" in {
-      val result = areYouStillConnectedController.show(fakeRequest)
+      val result = editAddressController.show(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return HTML" in {
-      val result = areYouStillConnectedController.show(fakeRequest)
+      val result = editAddressController.show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }

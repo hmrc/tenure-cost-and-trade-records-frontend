@@ -14,21 +14,20 @@
  * limitations under the License.
  */
 
-package form
+package navigation
 
-import form.MappingSupport._
-import models.submissions.Form6010.AddressConnectionType
-import play.api.data.Form
-import play.api.data.Forms.mapping
+import navigation.page.Identifier
+import play.api.mvc.Call
 
-object AreYouStillConnectedForm {
+trait Navigator {
 
-  lazy val baseAreYouStillConnectedForm: Form[AddressConnectionType] = Form(baseAreYouStillConnectedMapping)
+  val routeMap:Map[Identifier, String => Call] //, DataObject => String]
 
-  val baseAreYouStillConnectedMapping = mapping(
-    "isRelated" -> addressConnectionType
-  )(x => x)(b => Some(b))
-
-  val areYouStillConnectedForm = Form(baseAreYouStillConnectedMapping)
-
+  def nextPage(id: Identifier): Call = {
+    println(s"***** $id")
+    routeMap.getOrElse(id, "Invalid selection display sign in page")
+  }
+//  def nextPage(id: Identifier) { //: DataObject => String = {
+//    routeMap.getOrElse(id) //, (_: DataObject) => "Invalid selection display sign in page")
+//  }
 }

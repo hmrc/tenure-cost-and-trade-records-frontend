@@ -28,10 +28,14 @@
 
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
 
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Label
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Hint
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Input
 @import uk.gov.hmrc.govukfrontend.views.Aliases.RadioItem
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Fieldset
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Legend
-@import models.submissions.Form6010.{AddressConnectionTypeNo, AddressConnectionTypeYes, AddressConnectionTypeYesChangeAddress}
+@import models.Session
+@import models.submissions._
 
 @this(layout: Layout,
         govukButton: GovukButton,
@@ -41,50 +45,54 @@
         govukDateInput: GovukDateInput,
         govukTextarea: GovukTextarea,
         govukCharacterCount: GovukCharacterCount,
-        formWithCSRF: FormWithCSRF
+        formWithCSRF: FormWithCSRF,
 )
 
 
 @(theForm: Form[_])(implicit request: Request[_], messages: Messages)
 
 @layout(
- pageHeading = messages("areYouConnected.header"),
- theForm = theForm
+  pageHeading = messages("connectionToTheProperty.header"),
+  backLinkUrl = controllers.connectiontoproperty.routes.AreYouStillConnectedController.show.url,
+  theForm = theForm
 ) {
 
- @formWithCSRF(action = controllers.routes.AreYouStillConnectedController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
+ @formWithCSRF(action = controllers.connectiontoproperty.routes.ConnectionToThePropertyController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
+
   @govukRadios(
    Radios(
-    name = "isRelated",
-    idPrefix = Option("isRelated"),
+    name = "connectionToTheProperty",
+    idPrefix = Option("connectionToTheProperty"),
     items = Seq(
-     AddressConnectionTypeYes.name -> messages("label.yes.oes"),
-     AddressConnectionTypeYesChangeAddress.name -> Messages("label.areYouConnected.addressUpdate"),
-     AddressConnectionTypeNo.name -> messages("label.no.nac.oes")
-    ).map(i => RadioItem (
-     content = Text(i._2),
-     checked = i._1.equals(theForm("isRelated").value.getOrElse("")),
-     value=Option(i._1)
+     "occupierTrustee" -> messages("label.occupierTrustee"),
+     "ownerTrustee" -> messages("label.ownerTrustee"),
+     "occupierAgent" -> messages("label.occupierAgent"),
+     "ownerAgent" -> messages("label.ownerAgent")
+    ).map( radioItem => RadioItem (
+     content = Text(radioItem._2),
+     checked = radioItem._1.equals(theForm("connectionToTheProperty").value.getOrElse("")),
+     value=Option(radioItem._1)
     )
     ),
-    errorMessage = theForm.errors.asTextErrorMessageForField("isRelated"),
+    hint = Some(Hint(content = Text(messages("hint.connectionToTheProperty")))),
+    errorMessage = theForm.errors.asTextErrorMessageForField("connectionToTheProperty"),
     fieldset = Option(
      Fieldset(
       legend = Option(
        Legend(
-        isPageHeading = true,
-        classes = "govuk-fieldset__legend--l"
+        classes = "govuk-!-font-weight-bold"
        )
       )
      )
     )
    )
   )
+
   @includes.continueButton(govukButton)
 
-  @includes.help_with_service()
- }
+  @includes.help_with_service_connection()
  }
 
+}
 
 
