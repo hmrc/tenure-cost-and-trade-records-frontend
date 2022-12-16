@@ -46,7 +46,7 @@ class AboutYouControllerSpec extends TestBaseSpec { //with AnyFlatSpec
       .build()
 
   private val fakeRequest = FakeRequest("GET", "/")
-  val mockAboutYouView = mock[aboutYou]
+  val mockAboutYouView    = mock[aboutYou]
   when(mockAboutYouView.apply(any)(any, any)).thenReturn(HtmlFormat.empty)
 
   val aboutYouController = new AboutYouController(

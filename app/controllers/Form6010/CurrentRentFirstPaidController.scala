@@ -37,14 +37,15 @@ class CurrentRentFirstPaidController @Inject() (
   tenancyLeaseAgreementExpireView: tenancyLeaseAgreementExpire,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) (implicit ec: ExecutionContext) extends FrontendController(mcc) with I18nSupport {
+)(implicit ec: ExecutionContext)
+    extends FrontendController(mcc)
+    with I18nSupport {
 
   def show: Action[AnyContent] = Action { implicit request =>
     Ok(currentRentFirstPaidView(currentRentFirstPaidForm))
   }
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
-
     val forNumberRequest = request.sessionData.userLoginDetails.forNumber
 
     currentRentFirstPaidForm
@@ -52,7 +53,7 @@ class CurrentRentFirstPaidController @Inject() (
       .fold(
         formWithErrors => Future.successful(BadRequest(currentRentFirstPaidView(formWithErrors))),
         data =>
-          if(forNumberRequest == "FOR6011") {
+          if (forNumberRequest == "FOR6011") {
             Future.successful(Ok(tenancyLeaseAgreementExpireView(tenancyLeaseAgreementExpireForm)))
           } else {
             Future.successful(Ok(currentLeaseOrAgreementBeginView(currentLeaseOrAgreementBeginForm)))

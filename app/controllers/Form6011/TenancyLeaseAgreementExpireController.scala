@@ -29,20 +29,21 @@ import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
-class TenancyLeaseAgreementExpireController @Inject()(
+class TenancyLeaseAgreementExpireController @Inject() (
   mcc: MessagesControllerComponents,
   tenancyLeaseAgreementExpireView: tenancyLeaseAgreementExpire,
   withSessionRefiner: WithSessionRefiner,
   furtherInformationView: furtherInformationOrRemarks,
   @Named("session") val session: SessionRepo
-) (implicit ec: ExecutionContext) extends FrontendController(mcc) with I18nSupport {
+)(implicit ec: ExecutionContext)
+    extends FrontendController(mcc)
+    with I18nSupport {
 
   def show: Action[AnyContent] = Action { implicit request =>
     Ok(tenancyLeaseAgreementExpireView(tenancyLeaseAgreementExpireForm))
   }
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
-
     val forNumberRequest = request.sessionData.userLoginDetails.forNumber
 
     tenancyLeaseAgreementExpireForm

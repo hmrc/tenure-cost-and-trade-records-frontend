@@ -43,7 +43,9 @@ class EnforcementActionBeenTakenController @Inject() (
   aboutYourTradingHistoryView: aboutYourTradingHistory,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext) extends FrontendController(mcc) with I18nSupport{
+)(implicit ec: ExecutionContext)
+    extends FrontendController(mcc)
+    with I18nSupport {
 
   def show: Action[AnyContent] = Action.async { implicit request =>
     Future.successful(Ok(enforcementActionBeenTakenView(enforcementActionForm)))
@@ -56,9 +58,10 @@ class EnforcementActionBeenTakenController @Inject() (
         formWithErrors => Future.successful(BadRequest(enforcementActionBeenTakenView(formWithErrors))),
         data =>
           data.enforcementActionHasBeenTaken match {
-            case EnforcementActionsYes => Future.successful(Ok(enforcementActionBeenTakenDetailsView(enforcementActionDetailsForm)))
+            case EnforcementActionsYes =>
+              Future.successful(Ok(enforcementActionBeenTakenDetailsView(enforcementActionDetailsForm)))
             case EnforcementActionsNo  =>
-              if(request.sessionData.userLoginDetails.forNumber == "FOR6011") {
+              if (request.sessionData.userLoginDetails.forNumber == "FOR6011") {
                 Future.successful(Ok(aboutYourTradingHistoryView(aboutYourTradingHistoryForm)))
               } else {
                 Future.successful(Ok(tiedForGoodsView(tiedForGoodsForm)))
