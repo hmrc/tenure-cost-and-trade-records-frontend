@@ -16,18 +16,30 @@
 
 package navigation
 
-import navigation.page.Identifier
+import connectors.Audit
+import controllers.routes
+import models.Session
+import navigation.identifiers.Identifier
 import play.api.mvc.Call
+import uk.gov.hmrc.http.HeaderCarrier
 
-trait Navigator {
+import javax.inject.Inject
+import scala.concurrent.ExecutionContext
+import scala.language.postfixOps
 
-  val routeMap:Map[Identifier, String => Call] //, DataObject => String]
+abstract class Navigator @Inject() (
+  audit: Audit
+)(implicit ec: ExecutionContext) {
 
-  def nextPage(id: Identifier): Call = {
-    println(s"***** $id")
-    routeMap.getOrElse(id, "Invalid selection display sign in page")
+  val routeMap: Map[Identifier, Session => Call]
+
+  def nextPage(id: Identifier)(implicit hc: HeaderCarrier): Session => Call =
+    routeMap.getOrElse(id, (_: Session) => routes.LoginController.show)
+  //  andThen auditNextUrl
+
+  private def auditNextUrl(call: Call)(implicit hc: HeaderCarrier): Call = {
+    val json = "Details to be added: refNum, Address, form data"
+    audit.sendExplicitAudit("ContinueNextPage", json)
+    call
   }
-//  def nextPage(id: Identifier) { //: DataObject => String = {
-//    routeMap.getOrElse(id) //, (_: DataObject) => "Invalid selection display sign in page")
-//  }
 }

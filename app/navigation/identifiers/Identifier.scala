@@ -14,6 +14,6 @@
  * limitations under the License.
  */
 
-package navigation.page
+package navigation.identifiers
 
 class Identifier

@@ -48,12 +48,11 @@
         formWithCSRF: FormWithCSRF,
 )
 
-
-@(theForm: Form[_])(implicit request: Request[_], messages: Messages)
+@(theForm: Form[_], backLink: String)(implicit request: Request[_], messages: Messages)
 
 @layout(
   pageHeading = messages("connectionToTheProperty.header"),
-  backLinkUrl = controllers.connectiontoproperty.routes.AreYouStillConnectedController.show.url,
+  backLinkUrl = backLink,
   theForm = theForm
 ) {
 
