@@ -30,6 +30,7 @@ import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import repositories.SessionRepo
 import models.Session
 import play.api.i18n.I18nSupport
+import models.submissions.StillConnectedDetails.updateStillConnectedDetails
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
@@ -52,12 +53,16 @@ class AreYouStillConnectedController @Inject() (
     Future.successful(
       Ok(
         areYouStillConnectedView(
-          request.sessionData.addressConnectionType.fold(areYouStillConnectedForm)(addressConnectionType =>
-            areYouStillConnectedForm.fillAndValidate(addressConnectionType)
+          request.sessionData.stillConnectedDetails match {
+            case Some(stillConnectedDetails) => stillConnectedDetails.addressConnectionType match {
+              case Some(addressConnectionType) => areYouStillConnectedForm.fillAndValidate(addressConnectionType)
+              case _ => areYouStillConnectedForm
+            }
+            case _ => areYouStillConnectedForm
+          }
           )
         )
       )
-    )
   }
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
@@ -67,13 +72,13 @@ class AreYouStillConnectedController @Inject() (
         formWithErrors => Future.successful(BadRequest(areYouStillConnectedView(formWithErrors))),
         data =>
           if (data.equals(AddressConnectionTypeYes)) {
-            session.saveOrUpdate(request.sessionData.copy(addressConnectionType = data))
+            session.saveOrUpdate(updateStillConnectedDetails(_.copy(addressConnectionType = Some(data))))
             Future.successful(Ok(connectionToThePropertyView(connectionToThePropertyForm)))
           } else if (data.equals(AddressConnectionTypeNo)) {
-            session.saveOrUpdate(request.sessionData.copy(addressConnectionType = data))
+            session.saveOrUpdate(updateStillConnectedDetails(_.copy(addressConnectionType = Some(data))))
             Future.successful(Ok(pastConnectionView(pastConnectionForm)))
           } else if (data.equals(AddressConnectionTypeYesChangeAddress)) {
-            session.saveOrUpdate(request.sessionData.copy(addressConnectionType = data))
+            session.saveOrUpdate(updateStillConnectedDetails(_.copy(addressConnectionType = Some(data))))
             Future.successful(Ok(editAddressView(editAddressForm)))
           } else {
             Future.successful(Ok(login(loginForm)))

@@ -16,12 +16,14 @@
 
 package controllers.Form6010
 
-import actions.WithSessionRefiner
+import actions.{SessionRequest, WithSessionRefiner}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.Form6010.aboutYou
 import views.html.taskList
 import form.Form6010.AboutYouForm.aboutYouForm
+import models.Session
+import models.submissions.SectionOne.updateSectionOne
 import play.api.i18n.I18nSupport
 import repositories.SessionRepo
 
@@ -40,7 +42,13 @@ class AboutYouController @Inject() (
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Future.successful(Ok(
       aboutYouView(
-        request.sessionData.customerDetails.fold(aboutYouForm)(customerDetails => aboutYouForm.fillAndValidate(customerDetails))
+        request.sessionData.sectionOne match {
+          case Some(sectionOne) => sectionOne.customerDetails match {
+            case Some(customerDetails) => aboutYouForm.fillAndValidate(customerDetails)
+            case _ => aboutYouForm
+          }
+          case _ => aboutYouForm
+        }
       )
     )
     )
@@ -52,7 +60,7 @@ class AboutYouController @Inject() (
       .fold(
         formWithErrors => Future.successful(BadRequest(aboutYouView(formWithErrors))),
         data => {
-          session.saveOrUpdate(request.sessionData.copy(customerDetails = Some(data)))
+          session.saveOrUpdate(updateSectionOne(_.copy(customerDetails = Some(data))))
           Future.successful(Ok(taskListView()))
         }
       )

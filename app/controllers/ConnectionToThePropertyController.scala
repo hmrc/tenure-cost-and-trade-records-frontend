@@ -20,6 +20,7 @@ import actions.WithSessionRefiner
 import form.ConnectionToThePropertyForm.connectionToThePropertyForm
 import models.Session
 import models.submissions.ConnectionToThePropertyOwnerTrustee
+import models.submissions.StillConnectedDetails.updateStillConnectedDetails
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
@@ -44,9 +45,13 @@ class ConnectionToThePropertyController @Inject() (
     Future.successful(
       Ok(
         connectionToThePropertyView(
-          request.sessionData.connectionToProperty.fold(connectionToThePropertyForm)(connectionToProperty =>
-            connectionToThePropertyForm.fillAndValidate(connectionToProperty)
-          )
+          request.sessionData.stillConnectedDetails match {
+            case Some(stillConnectedDetails) => stillConnectedDetails.connectionToProperty match {
+              case Some(connectionToProperty) => connectionToThePropertyForm.fillAndValidate(connectionToProperty)
+              case _ => connectionToThePropertyForm
+            }
+            case _ => connectionToThePropertyForm
+          }
         )
       )
     )
@@ -60,10 +65,10 @@ class ConnectionToThePropertyController @Inject() (
         data =>
         data match {
           case ConnectionToThePropertyOwnerTrustee =>
-          session.saveOrUpdate(request.sessionData.copy(connectionToProperty = Some(data)))
+            session.saveOrUpdate(updateStillConnectedDetails(_.copy(connectionToProperty = Some(data))))
           Future.successful(Ok(taskListOwnerView()))
           case  _ =>
-            session.saveOrUpdate(request.sessionData.copy(connectionToProperty = Some(data)))
+            session.saveOrUpdate(updateStillConnectedDetails(_.copy(connectionToProperty = Some(data))))
             Future.successful(Ok(taskListView()))
         }
       )

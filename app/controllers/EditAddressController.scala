@@ -20,6 +20,7 @@ import actions.WithSessionRefiner
 import form.ConnectionToThePropertyForm.connectionToThePropertyForm
 import form.EditAddressForm.editAddressForm
 import models.Session
+import models.submissions.StillConnectedDetails.updateStillConnectedDetails
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
@@ -43,7 +44,13 @@ class EditAddressController @Inject() (
     Future.successful(
       Ok(
         editAddressView(
-          request.sessionData.address.fold(editAddressForm)(address => editAddressForm.fillAndValidate(address))
+          request.sessionData.stillConnectedDetails match {
+            case Some(stillConnectedDetails) => stillConnectedDetails.editAddress match {
+              case Some(address) => editAddressForm.fillAndValidate(address)
+              case _ => editAddressForm
+            }
+            case _ => editAddressForm
+          }
         )
       )
     )
@@ -55,7 +62,7 @@ class EditAddressController @Inject() (
       .fold(
         formWithErrors => Future.successful(BadRequest(editAddressView(formWithErrors))),
         data => {
-          session.saveOrUpdate(request.sessionData.copy(address = data))
+          session.saveOrUpdate(updateStillConnectedDetails(_.copy(editAddress = Some(data))))
           Future.successful(Ok(connectionToThePropertyView(connectionToThePropertyForm)))
         }
       )
