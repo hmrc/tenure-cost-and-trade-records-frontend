@@ -20,7 +20,7 @@ import form.Form6010.RentIncludeFixtureAndFittingDetailsForm.rentIncludeFixtureA
 import form.Form6010.RentOpenMarketValueForm.rentOpenMarketValuesForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.Form6010.{rentIncludeFixtureAndFittingsDetails, rentOpenMarketValue}
+import views.html.form.{rentIncludeFixtureAndFittingsDetails, rentOpenMarketValue}
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future

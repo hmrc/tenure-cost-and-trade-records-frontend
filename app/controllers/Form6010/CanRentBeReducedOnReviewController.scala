@@ -16,12 +16,11 @@
 
 package controllers.Form6010
 
-import form.Form6010.IncentivesPaymentsConditionsForm.incentivesPaymentsConditionsForm
 import form.Form6010.PayACapitalSumForm.payACapitalSumForm
 import form.Form6010.CanRentBeReducedOnReviewForm.canRentBeReducedOnReviewForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.Form6010.{canRentBeReducedOnReview, payACapitalSum}
+import views.html.form.{canRentBeReducedOnReview, payACapitalSum}
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future

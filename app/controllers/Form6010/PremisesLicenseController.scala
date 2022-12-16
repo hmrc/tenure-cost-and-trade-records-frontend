@@ -19,7 +19,7 @@ package controllers.Form6010
 import controllers.LoginController.loginForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.Form6010.{enforcementActionBeenTaken, premisesLicense, premisesLicenseConditions}
+import views.html.form.{enforcementActionBeenTaken, premisesLicense, premisesLicenseConditions}
 import form.Form6010.PremisesLicenseForm.premisesLicenseForm
 import form.Form6010.PremisesLicenseDetailsForm.premisesLicenceDetailsForm
 import form.Form6010.EnforcementActionForm.enforcementActionForm

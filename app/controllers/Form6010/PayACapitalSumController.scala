@@ -20,7 +20,7 @@ import form.Form6010.PaymentWhenLeaseIsGrantedForm.paymentWhenLeaseIsGrantedForm
 import form.Form6010.PayACapitalSumForm.payACapitalSumForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.Form6010.{payACapitalSum, paymentWhenLeaseIsGranted}
+import views.html.form.{payACapitalSum, paymentWhenLeaseIsGranted}
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future

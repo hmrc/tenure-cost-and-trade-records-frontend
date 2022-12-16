@@ -20,7 +20,7 @@ import controllers.LoginController.loginForm
 import form.Form6010.CurrentRentPayableWithin12MonthsForm.currentRentPayableWithin12MonthsForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.Form6010.currentRentPayableWithin12Months
+import views.html.form.currentRentPayableWithin12Months
 import views.html.login
 
 import javax.inject.{Inject, Singleton}

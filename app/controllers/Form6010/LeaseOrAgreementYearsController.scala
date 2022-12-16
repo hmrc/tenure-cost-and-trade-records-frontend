@@ -18,7 +18,7 @@ package controllers.Form6010
 
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.Form6010.{currentAnnualRent, currentRentPayableWithin12Months, leaseOrAgreementYears}
+import views.html.form.{currentAnnualRent, currentRentPayableWithin12Months, leaseOrAgreementYears}
 import form.Form6010.LeaseOrAgreementYearsForm.leaseOrAgreementYearsForm
 import form.Form6010.CurrentRentPayableWithin12MonthsForm.currentRentPayableWithin12MonthsForm
 import form.Form6010.CurrentAnnualRentForm.currentAnnualRentForm

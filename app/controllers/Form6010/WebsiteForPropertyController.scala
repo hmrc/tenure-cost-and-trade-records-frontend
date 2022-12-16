@@ -19,7 +19,7 @@ package controllers.Form6010
 import form.Form6010.LicensableActivitiesForm.licensableActivitiesForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.Form6010.{licensableActivities, websiteForProperty}
+import views.html.form.{licensableActivities, websiteForProperty}
 import form.Form6010.WebsiteForPropertyForm.websiteForPropertyForm
 
 import javax.inject.{Inject, Singleton}

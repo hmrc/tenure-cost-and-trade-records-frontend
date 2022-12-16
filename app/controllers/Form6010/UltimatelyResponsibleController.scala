@@ -17,13 +17,12 @@
 package controllers.Form6010
 
 import form.Form6010.UltimatelyResponsibleForm.ultimatelyResponsibleForm
-import form.Form6010.RentIncludeTradeServicesForm.rentIncludeTradeServicesForm
 import form.Form6010.SharedResponsibilitiesForm.sharedResponsibilitiesForm
 import form.Form6010.IntervalsOfRentReviewForm.intervalsOfRentReviewForm
 import models.submissions.Form6010.{BuildingInsurancesBoth, InsideRepairsBoth, OutsideRepairsBoth}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.Form6010.{intervalsOfRentReview, rentIncludeTradeServices, sharedResponsibilities, ultimatelyResponsible}
+import views.html.form.{intervalsOfRentReview, sharedResponsibilities, ultimatelyResponsible}
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
@@ -31,7 +30,6 @@ import scala.concurrent.Future
 @Singleton
 class UltimatelyResponsibleController @Inject() (
   mcc: MessagesControllerComponents,
-  rentIncludeTradeServicesView: rentIncludeTradeServices,
   ultimatelyResponsibleView: ultimatelyResponsible,
   sharedResponsibilitiesView: sharedResponsibilities,
   intervalsOfRentReviewView: intervalsOfRentReview

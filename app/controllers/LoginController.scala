@@ -33,10 +33,8 @@ import play.api.mvc._
 import repositories.SessionRepo
 import security.NoExistingDocument
 import uk.gov.hmrc.http.HeaderNames.trueClientIp
-import uk.gov.hmrc.http.cache.client.NoSessionException
-import uk.gov.hmrc.http.{HeaderCarrier, SessionId, SessionKeys, Upstream4xxResponse}
+import uk.gov.hmrc.http.{HeaderCarrier, Upstream4xxResponse}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import uk.gov.hmrc.play.http.HeaderCarrierConverter
 import views.html._
 
 import javax.inject.{Inject, Named, Singleton}
@@ -132,11 +130,11 @@ class LoginController @Inject() (
         ForTypes.find(forNum) match {
           case Some(_) =>
             session
-              .start(Session(UserLoginDetails(token, forNum, referenceNumber)))
-              .map(_ => Redirect(controllers.routes.AreYouStillConnectedController.show()))
+              .start(Session(UserLoginDetails(token, forNum, referenceNumber, address)))
+              .map(_ => Redirect(controllers.connectiontoproperty.routes.AreYouStillConnectedController.show))
           case None    =>
             session
-              .start(Session(UserLoginDetails(token, forNum, referenceNumber)))
+              .start(Session(UserLoginDetails(token, forNum, referenceNumber, address)))
               .map(_ => Redirect(routes.LoginController.notValidFORType()))
         }
       }

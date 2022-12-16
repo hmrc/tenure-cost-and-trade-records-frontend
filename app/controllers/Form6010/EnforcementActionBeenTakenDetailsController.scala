@@ -20,7 +20,7 @@ import form.Form6010.EnforcementActionDetailsForm.enforcementActionDetailsForm
 import form.Form6010.TiedForGoodsForm.tiedForGoodsForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.Form6010.{enforcementActionBeenTakenDetails, tiedForGoods}
+import views.html.form.{enforcementActionBeenTakenDetails, tiedForGoods}
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future

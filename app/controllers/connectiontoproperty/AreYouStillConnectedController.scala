@@ -29,78 +29,58 @@
 // * See the License for the specific language governing permissions and
 // * limitations under the License.
 // */
-//
-//package controllers
-//
-//import actions.WithSessionRefiner
-//import controllers.LoginController.loginForm
-//import form.AreYouStillConnectedForm.areYouStillConnectedForm
-//import form.EditAddressForm.editAddressForm
-//import form.PastConnectionForm.pastConnectionForm
-//import models.submissions.Form6010.{AddressConnectionTypeNo, AddressConnectionTypeYes, AddressConnectionTypeYesChangeAddress}
-//import navigation.ConnectionToPropertyNavigator
-//import navigation.identifiers.AreYouStillConnectedPageId
-//import play.api.i18n.I18nSupport
-//import play.api.mvc._
-//import repositories.SessionRepo
-//import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-//import repositories.SessionRepo
-//import models.Session
-//import play.api.i18n.I18nSupport
-//import views.html._
-//import views.html.connectiontoproperty._
-//
-//import javax.inject.{Inject, Named, Singleton}
-//import scala.concurrent.{ExecutionContext, Future}
-//
-//@Singleton
-//class AreYouStillConnectedController @Inject()(
-//                                                mcc: MessagesControllerComponents,
-//                                                navigator: ConnectionToPropertyNavigator,
-//                                                login: login,
-//                                                areYouStillConnectedView: areYouStillConnected,
-//                                                pastConnectionView: pastConnection,
-//                                                connectionToThePropertyView: connectionToTheProperty,
-//                                                editAddressView: editAddress,
-//                                                withSessionRefiner: WithSessionRefiner,
-//                                                @Named("session") val session: SessionRepo
-//                                              )(implicit ec: ExecutionContext)
-//  extends FrontendController(mcc)
-//    with I18nSupport {
-//
-//  def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-//    Future.successful(
-//      Ok(
-//        areYouStillConnectedView(
-//          request.sessionData.addressConnectionType.fold(areYouStillConnectedForm)(addressConnectionType =>
-//            areYouStillConnectedForm.fillAndValidate(addressConnectionType)
-//          )
-//        )
-//      )
-//    )
-//  }
-//
-//  def submit = (Action andThen withSessionRefiner).async { implicit request =>
-//    areYouStillConnectedForm
-//      .bindFromRequest()
-//      .fold(
-//        formWithErrors => Future.successful(BadRequest(areYouStillConnectedView(formWithErrors))),
-//        data =>
-//          if (data.equals(AddressConnectionTypeYes)) {
-//            session.saveOrUpdate(request.sessionData.copy(addressConnectionType = data))
-//            println(s"***** ${navigator.nextPage(AreYouStillConnectedPageId)}")
-//            Future.successful(Redirect(navigator.nextPage(AreYouStillConnectedPageId)))
-//            //            Future.successful(Ok(connectionToThePropertyView(connectionToThePropertyForm)))
-//          } else if (data.equals(AddressConnectionTypeNo)) {
-//            session.saveOrUpdate(request.sessionData.copy(addressConnectionType = data))
-//            Future.successful(Ok(pastConnectionView(pastConnectionForm)))
-//          } else if (data.equals(AddressConnectionTypeYesChangeAddress)) {
-//            session.saveOrUpdate(request.sessionData.copy(addressConnectionType = data))
-//            Future.successful(Ok(editAddressView(editAddressForm)))
-//          } else {
-//            Future.successful(Ok(login(loginForm)))
-//          }
-//      )
-//  }
-//
-//}
+
+package controllers.connectiontoproperty
+
+import actions.WithSessionRefiner
+
+import form.connectiontoproperty.AreYouStillConnectedForm.areYouStillConnectedForm
+import navigation.ConnectionToPropertyNavigator
+import navigation.identifiers.AreYouStillConnectedPageId
+import play.api.i18n.I18nSupport
+import play.api.mvc._
+import repositories.SessionRepo
+import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
+import views.html.connectiontoproperty._
+
+import javax.inject.{Inject, Named, Singleton}
+import scala.concurrent.{ExecutionContext, Future}
+
+@Singleton
+class AreYouStillConnectedController @Inject() (
+  mcc: MessagesControllerComponents,
+  navigator: ConnectionToPropertyNavigator,
+  areYouStillConnectedView: areYouStillConnected,
+  withSessionRefiner: WithSessionRefiner,
+  @Named("session") val session: SessionRepo
+)(implicit ec: ExecutionContext)
+    extends FrontendController(mcc)
+    with I18nSupport {
+
+  def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    println(s"Address: ${request.sessionData.userLoginDetails}")
+    Future.successful(
+      Ok(
+        areYouStillConnectedView(
+          request.sessionData.addressConnectionType.fold(areYouStillConnectedForm)(addressConnectionType =>
+            areYouStillConnectedForm.fillAndValidate(addressConnectionType)
+          )
+        )
+      )
+    )
+  }
+
+  def submit = (Action andThen withSessionRefiner).async { implicit request =>
+    areYouStillConnectedForm
+      .bindFromRequest()
+      .fold(
+        formWithErrors => Future.successful(BadRequest(areYouStillConnectedView(formWithErrors))),
+        data => {
+          val updatedData = request.sessionData.copy(addressConnectionType = Some(data))
+          session.saveOrUpdate(updatedData)
+          Future.successful(Redirect(navigator.nextPage(AreYouStillConnectedPageId).apply(updatedData)))
+        }
+      )
+  }
+
+}

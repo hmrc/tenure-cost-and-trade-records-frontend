@@ -20,7 +20,7 @@ import controllers.LoginController.loginForm
 import form.Form6010.WhatIsYourCurrentRentBasedOnForm.whatIsYourCurrentRentBasedOnForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.Form6010.whatIsYourRentBasedOn
+import views.html.form.whatIsYourRentBasedOn
 import views.html.login
 
 import javax.inject.{Inject, Singleton}

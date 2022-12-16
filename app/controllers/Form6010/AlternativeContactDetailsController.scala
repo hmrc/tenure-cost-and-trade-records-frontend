@@ -20,7 +20,7 @@ import controllers.LoginController.loginForm
 import form.Form6010.AlternativeContactDetailsForm.alternativeContactDetailsForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.Form6010.alternativeContactDetails
+import views.html.form.alternativeContactDetails
 import views.html.login
 
 import javax.inject.{Inject, Singleton}

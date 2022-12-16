@@ -18,7 +18,7 @@ package controllers.Form6010
 
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.Form6010.{doesTheRentPayable, rentIncludeTradeServices, ultimatelyResponsible}
+import views.html.form.{doesTheRentPayable, rentIncludeTradeServices, ultimatelyResponsible}
 import form.Form6010.DoesTheRentPayableForm.doesTheRentPayableForm
 import form.Form6010.RentIncludeTradeServicesForm.rentIncludeTradeServicesForm
 

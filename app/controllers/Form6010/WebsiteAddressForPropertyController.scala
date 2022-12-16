@@ -18,7 +18,7 @@ package controllers.Form6010
 
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.Form6010.{licensableActivities, websiteAddressForProperty}
+import views.html.form.{licensableActivities, websiteAddressForProperty}
 import form.Form6010.LicensableActivitiesForm.licensableActivitiesForm
 import form.Form6010.WebsiteAddressForPropertyForm.websiteAddressForPropertyForm
 

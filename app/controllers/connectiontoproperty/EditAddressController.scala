@@ -14,17 +14,16 @@
  * limitations under the License.
  */
 
-package controllers
+package controllers.connectiontoproperty
 
 import actions.WithSessionRefiner
-import form.ConnectionToThePropertyForm.connectionToThePropertyForm
-import form.EditAddressForm.editAddressForm
-import models.Session
+import form.connectiontoproperty.EditAddressForm.editAddressForm
+import navigation.ConnectionToPropertyNavigator
+import navigation.identifiers.EditAddressPageId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.editAddress
 import views.html.connectiontoproperty._
 
 import javax.inject.{Inject, Named, Singleton}
@@ -33,7 +32,7 @@ import scala.concurrent.Future
 @Singleton
 class EditAddressController @Inject() (
   mcc: MessagesControllerComponents,
-  connectionToThePropertyView: connectionToTheProperty,
+  navigator: ConnectionToPropertyNavigator,
   editAddressView: editAddress,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
@@ -56,8 +55,9 @@ class EditAddressController @Inject() (
       .fold(
         formWithErrors => Future.successful(BadRequest(editAddressView(formWithErrors))),
         data => {
-          session.saveOrUpdate(request.sessionData.copy(address = data))
-          Future.successful(Ok(connectionToThePropertyView(connectionToThePropertyForm, controllers.connectiontoproperty.routes.AreYouStillConnectedController.show.url)))
+          val updatedData = request.sessionData.copy(address = Some(data))
+          session.saveOrUpdate(updatedData)
+          Future.successful(Redirect(navigator.nextPage(EditAddressPageId).apply(updatedData)))
         }
       )
   }

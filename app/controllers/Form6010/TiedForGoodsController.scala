@@ -22,7 +22,7 @@ import form.Form6010.AboutYourTradingHistoryForm.aboutYourTradingHistoryForm
 import form.Form6010.TiedForGoodsForm.tiedForGoodsForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.Form6010.{aboutYourTradingHistory, tiedForGoods, tiedForGoodsDetails}
+import views.html.form.{aboutYourTradingHistory, tiedForGoods, tiedForGoodsDetails}
 import models.submissions.Form6010.{TiedGoodsNo, TiedGoodsYes}
 import views.html.login
 

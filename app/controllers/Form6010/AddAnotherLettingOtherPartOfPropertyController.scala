@@ -23,7 +23,7 @@ import form.Form6010.AboutTheLandlordForm.aboutTheLandlordForm
 import models.submissions.Form6010._
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.Form6010._
+import views.html.form._
 import views.html.login
 
 import javax.inject.{Inject, Singleton}

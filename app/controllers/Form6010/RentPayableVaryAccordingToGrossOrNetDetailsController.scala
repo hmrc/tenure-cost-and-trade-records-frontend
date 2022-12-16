@@ -20,7 +20,7 @@ import form.Form6010.RentPayableVaryAccordingToGrossOrNetDetailsForm.rentPayable
 import form.Form6010.RentPayableVaryOnQuantityOfBeersForm.rentPayableVaryOnQuantityOfBeersForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.Form6010.{rentPayableVaryAccordingToGrossOrNetDetails, rentPayableVaryOnQuantityOfBeers}
+import views.html.form.{rentPayableVaryAccordingToGrossOrNetDetails, rentPayableVaryOnQuantityOfBeers}
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future

@@ -14,18 +14,19 @@
  * limitations under the License.
  */
 
-package controllers
+package controllers.connectiontoproperty
 
 import actions.WithSessionRefiner
-import form.ConnectionToThePropertyForm.connectionToThePropertyForm
-//import models.Session
-import navigation.AreYouStillConnectedToPropertyNavigator
+import form.connectiontoproperty.ConnectionToThePropertyForm.connectionToThePropertyForm
+import models.Session
+import navigation.ConnectionToPropertyNavigator
 import navigation.identifiers.ConnectionToPropertyPageId
+import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.{connectionToTheProperty, taskList}
+import views.html.connectiontoproperty._
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
@@ -33,13 +34,13 @@ import scala.concurrent.Future
 @Singleton
 class ConnectionToThePropertyController @Inject() (
   mcc: MessagesControllerComponents,
-  navigator: AreYouStillConnectedToPropertyNavigator,
-//  taskListView: taskList,
+  navigator: ConnectionToPropertyNavigator,
   connectionToThePropertyView: connectionToTheProperty,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
 ) extends FrontendController(mcc)
-    with I18nSupport {
+    with I18nSupport
+    with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Future.successful(
@@ -47,7 +48,13 @@ class ConnectionToThePropertyController @Inject() (
         connectionToThePropertyView(
           request.sessionData.connectionToProperty.fold(connectionToThePropertyForm)(connectionToProperty =>
             connectionToThePropertyForm.fillAndValidate(connectionToProperty)
-          )
+          ),
+          getBackLink(request.sessionData) match {
+            case Right(link) => link
+            case Left(msg)   =>
+              logger.warn(s"Navigation for connection to property page reached with error: $msg")
+              throw new RuntimeException(s"Navigation for connection to property page reached with error $msg")
+          }
         )
       )
     )
@@ -57,11 +64,28 @@ class ConnectionToThePropertyController @Inject() (
     connectionToThePropertyForm
       .bindFromRequest()
       .fold(
-        formWithErrors => Future.successful(BadRequest(connectionToThePropertyView(formWithErrors))),
+        formWithErrors =>
+          Future.successful(
+            BadRequest(
+              connectionToThePropertyView(
+                formWithErrors,
+                controllers.connectiontoproperty.routes.AreYouStillConnectedController.show.url
+              )
+            )
+          ),
         data => {
+          val updatedData = request.sessionData.copy(connectionToProperty = Some(data))
           session.saveOrUpdate(request.sessionData.copy(connectionToProperty = Some(data)))
-          Future.successful(Redirect(navigator.nextPage(ConnectionToPropertyPageId)))
+          Future.successful(Redirect(navigator.nextPage(ConnectionToPropertyPageId).apply(updatedData)))
         }
       )
+  }
+
+  private def getBackLink(answers: Session): Either[String, String] = {
+    (answers.addressConnectionType.map(_.name)) match {
+      case Some("yes-change-address") => Right(controllers.connectiontoproperty.routes.EditAddressController.show().url)
+      case Some("yes")                => Right(controllers.connectiontoproperty.routes.AreYouStillConnectedController.show().url)
+      case _                          => Left(s"Unknown connection to property back link")
+    }
   }
 }
