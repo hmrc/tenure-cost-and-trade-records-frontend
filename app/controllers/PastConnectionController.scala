@@ -45,11 +45,12 @@ class PastConnectionController @Inject() (
       Ok(
         pastConnectionView(
           request.sessionData.stillConnectedDetails match {
-            case Some(stillConnectedDetails) => stillConnectedDetails.pastConnectionType match {
-              case Some(pastConnection) => pastConnectionForm.fillAndValidate(pastConnection)
-              case _ => pastConnectionForm
-            }
-            case _ => pastConnectionForm
+            case Some(stillConnectedDetails) =>
+              stillConnectedDetails.pastConnectionType match {
+                case Some(pastConnection) => pastConnectionForm.fillAndValidate(pastConnection)
+                case _                    => pastConnectionForm
+              }
+            case _                           => pastConnectionForm
           }
         )
       )

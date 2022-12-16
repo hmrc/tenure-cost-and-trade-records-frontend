@@ -17,5 +17,5 @@
 package models.submissions
 
 case class ConnectionToThePropertyDetails(
-                                           connectionToTheProperty: ConnectionToProperty
-                                         )
+  connectionToTheProperty: ConnectionToProperty
+)

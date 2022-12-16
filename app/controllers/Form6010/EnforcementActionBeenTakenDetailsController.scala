@@ -35,14 +35,15 @@ class EnforcementActionBeenTakenDetailsController @Inject() (
   enforcementActionBeenTakenDetailsView: enforcementActionBeenTakenDetails,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) (implicit ec: ExecutionContext) extends FrontendController(mcc) with I18nSupport {
+)(implicit ec: ExecutionContext)
+    extends FrontendController(mcc)
+    with I18nSupport {
 
   def show: Action[AnyContent] = Action.async { implicit request =>
     Future.successful(Ok(enforcementActionBeenTakenDetailsView(enforcementActionDetailsForm)))
   }
 
   def submit = Action.async { implicit request =>
-
     enforcementActionDetailsForm
       .bindFromRequest()
       .fold(

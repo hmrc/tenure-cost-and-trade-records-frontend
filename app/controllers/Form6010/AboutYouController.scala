@@ -37,20 +37,23 @@ class AboutYouController @Inject() (
   aboutYouView: aboutYou,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FrontendController(mcc) with I18nSupport {
+) extends FrontendController(mcc)
+    with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    Future.successful(Ok(
-      aboutYouView(
-        request.sessionData.sectionOne match {
-          case Some(sectionOne) => sectionOne.customerDetails match {
-            case Some(customerDetails) => aboutYouForm.fillAndValidate(customerDetails)
-            case _ => aboutYouForm
+    Future.successful(
+      Ok(
+        aboutYouView(
+          request.sessionData.sectionOne match {
+            case Some(sectionOne) =>
+              sectionOne.customerDetails match {
+                case Some(customerDetails) => aboutYouForm.fillAndValidate(customerDetails)
+                case _                     => aboutYouForm
+              }
+            case _                => aboutYouForm
           }
-          case _ => aboutYouForm
-        }
+        )
       )
-    )
     )
   }
 

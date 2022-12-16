@@ -46,11 +46,12 @@ class ConnectionToThePropertyController @Inject() (
       Ok(
         connectionToThePropertyView(
           request.sessionData.stillConnectedDetails match {
-            case Some(stillConnectedDetails) => stillConnectedDetails.connectionToProperty match {
-              case Some(connectionToProperty) => connectionToThePropertyForm.fillAndValidate(connectionToProperty)
-              case _ => connectionToThePropertyForm
-            }
-            case _ => connectionToThePropertyForm
+            case Some(stillConnectedDetails) =>
+              stillConnectedDetails.connectionToProperty match {
+                case Some(connectionToProperty) => connectionToThePropertyForm.fillAndValidate(connectionToProperty)
+                case _                          => connectionToThePropertyForm
+              }
+            case _                           => connectionToThePropertyForm
           }
         )
       )
@@ -63,14 +64,14 @@ class ConnectionToThePropertyController @Inject() (
       .fold(
         formWithErrors => Future.successful(BadRequest(connectionToThePropertyView(formWithErrors))),
         data =>
-        data match {
-          case ConnectionToThePropertyOwnerTrustee =>
-            session.saveOrUpdate(updateStillConnectedDetails(_.copy(connectionToProperty = Some(data))))
-          Future.successful(Ok(taskListOwnerView()))
-          case  _ =>
-            session.saveOrUpdate(updateStillConnectedDetails(_.copy(connectionToProperty = Some(data))))
-            Future.successful(Ok(taskListView()))
-        }
+          data match {
+            case ConnectionToThePropertyOwnerTrustee =>
+              session.saveOrUpdate(updateStillConnectedDetails(_.copy(connectionToProperty = Some(data))))
+              Future.successful(Ok(taskListOwnerView()))
+            case _                                   =>
+              session.saveOrUpdate(updateStillConnectedDetails(_.copy(connectionToProperty = Some(data))))
+              Future.successful(Ok(taskListView()))
+          }
       )
   }
 }

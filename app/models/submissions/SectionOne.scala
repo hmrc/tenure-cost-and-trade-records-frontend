@@ -28,11 +28,11 @@ object SectionOne {
 
   def updateSectionOne(copy: SectionOne => SectionOne)(implicit sessionRequest: SessionRequest[_]): Session = {
 
-    val currentSectionOne =  sessionRequest.sessionData.sectionOne
+    val currentSectionOne = sessionRequest.sessionData.sectionOne
 
     val updatedSectionOne = currentSectionOne match {
       case Some(_) => sessionRequest.sessionData.sectionOne.map(copy)
-      case _ => Some(copy(SectionOne()))
+      case _       => Some(copy(SectionOne()))
     }
 
     sessionRequest.sessionData.copy(sectionOne = updatedSectionOne)

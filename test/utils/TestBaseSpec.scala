@@ -58,7 +58,8 @@ trait TestBaseSpec
 
   val mockCustomErrorHandler: ErrorHandler     = mock[ErrorHandler]
   val mockSessionRepository: SessionRepository = mock[SessionRepository]
-  val testUserLoginDetails                     = UserLoginDetails("jwtToken", "FOR6010", "123456", Address("13", Some("Street"), Some("City"), "AA11 1AA"))
+  val testUserLoginDetails                     =
+    UserLoginDetails("jwtToken", "FOR6010", "123456", Address("13", Some("Street"), Some("City"), "AA11 1AA"))
   val preFilledSession                         = preEnrichedActionRefiner(testUserLoginDetails)
 
   def preEnrichedActionRefiner(userLoginDetails: UserLoginDetails): WithSessionRefiner =

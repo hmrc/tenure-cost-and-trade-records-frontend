@@ -21,20 +21,24 @@ import models.Session
 import models.submissions.Form6010.{Address, AddressConnectionType}
 import play.api.libs.json.Json
 
-case class StillConnectedDetails(  addressConnectionType: Option[AddressConnectionType] = None,
-                                   connectionToProperty: Option[ConnectionToProperty] = None,
-                                   pastConnectionType: Option[PastConnectionType] = None,
-                                   editAddress: Option[Address] = None)
-object StillConnectedDetails{
+case class StillConnectedDetails(
+  addressConnectionType: Option[AddressConnectionType] = None,
+  connectionToProperty: Option[ConnectionToProperty] = None,
+  pastConnectionType: Option[PastConnectionType] = None,
+  editAddress: Option[Address] = None
+)
+object StillConnectedDetails {
   implicit val format = Json.format[StillConnectedDetails]
 
-  def updateStillConnectedDetails(copy: StillConnectedDetails => StillConnectedDetails)(implicit sessionRequest: SessionRequest[_]): Session = {
+  def updateStillConnectedDetails(
+    copy: StillConnectedDetails => StillConnectedDetails
+  )(implicit sessionRequest: SessionRequest[_]): Session = {
 
-    val currentStillConnectedDetails =  sessionRequest.sessionData.stillConnectedDetails
+    val currentStillConnectedDetails = sessionRequest.sessionData.stillConnectedDetails
 
     val updatedStillConnectedDetails = currentStillConnectedDetails match {
       case Some(_) => sessionRequest.sessionData.stillConnectedDetails.map(copy)
-      case _ => Some(copy(StillConnectedDetails()))
+      case _       => Some(copy(StillConnectedDetails()))
     }
 
     sessionRequest.sessionData.copy(stillConnectedDetails = updatedStillConnectedDetails)

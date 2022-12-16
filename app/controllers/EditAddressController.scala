@@ -45,11 +45,12 @@ class EditAddressController @Inject() (
       Ok(
         editAddressView(
           request.sessionData.stillConnectedDetails match {
-            case Some(stillConnectedDetails) => stillConnectedDetails.editAddress match {
-              case Some(address) => editAddressForm.fillAndValidate(address)
-              case _ => editAddressForm
-            }
-            case _ => editAddressForm
+            case Some(stillConnectedDetails) =>
+              stillConnectedDetails.editAddress match {
+                case Some(address) => editAddressForm.fillAndValidate(address)
+                case _             => editAddressForm
+              }
+            case _                           => editAddressForm
           }
         )
       )

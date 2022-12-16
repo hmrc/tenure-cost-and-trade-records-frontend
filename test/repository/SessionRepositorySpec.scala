@@ -28,7 +28,9 @@ class SessionRepositorySpec extends TestBaseSpec {
   val token           = "testToken"
   val forNumber       = "FOR6010"
   val referenceNumber = "123456"
-  val session         = Session(UserLoginDetails(token, forNumber, referenceNumber, Address("13", Some("Street"), Some("City"), "AA11 1AA")))
+  val session         = Session(
+    UserLoginDetails(token, forNumber, referenceNumber, Address("13", Some("Street"), Some("City"), "AA11 1AA"))
+  )
   "session repository" should {
 
     "start by saving or updating data" in {

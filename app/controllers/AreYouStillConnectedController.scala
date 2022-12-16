@@ -54,15 +54,16 @@ class AreYouStillConnectedController @Inject() (
       Ok(
         areYouStillConnectedView(
           request.sessionData.stillConnectedDetails match {
-            case Some(stillConnectedDetails) => stillConnectedDetails.addressConnectionType match {
-              case Some(addressConnectionType) => areYouStillConnectedForm.fillAndValidate(addressConnectionType)
-              case _ => areYouStillConnectedForm
-            }
-            case _ => areYouStillConnectedForm
+            case Some(stillConnectedDetails) =>
+              stillConnectedDetails.addressConnectionType match {
+                case Some(addressConnectionType) => areYouStillConnectedForm.fillAndValidate(addressConnectionType)
+                case _                           => areYouStillConnectedForm
+              }
+            case _                           => areYouStillConnectedForm
           }
-          )
         )
       )
+    )
   }
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
