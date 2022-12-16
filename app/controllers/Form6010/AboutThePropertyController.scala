@@ -18,7 +18,7 @@ package controllers.Form6010
 
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.form.{aboutTheProperty, aboutThePropertyOther, websiteForProperty}
+import views.html.form.{aboutTheProperty, websiteForProperty}
 import form.Form6010.AboutThePropertyForm.aboutThePropertyForm
 import form.Form6010.WebsiteForPropertyForm.websiteForPropertyForm
 

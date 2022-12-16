@@ -69,7 +69,7 @@ class ConnectionToThePropertyController @Inject() (
             BadRequest(
               connectionToThePropertyView(
                 formWithErrors,
-                controllers.connectiontoproperty.routes.AreYouStillConnectedController.show.url
+                controllers.connectiontoproperty.routes.AreYouStillConnectedController.show().url
               )
             )
           ),
@@ -81,11 +81,10 @@ class ConnectionToThePropertyController @Inject() (
       )
   }
 
-  private def getBackLink(answers: Session): Either[String, String] = {
+  private def getBackLink(answers: Session): Either[String, String] =
     (answers.addressConnectionType.map(_.name)) match {
       case Some("yes-change-address") => Right(controllers.connectiontoproperty.routes.EditAddressController.show().url)
       case Some("yes")                => Right(controllers.connectiontoproperty.routes.AreYouStillConnectedController.show().url)
       case _                          => Left(s"Unknown connection to property back link")
     }
-  }
 }

@@ -17,9 +17,6 @@
 package controllers.Form6010
 
 import form.Errors
-import org.scalatest.flatspec.AnyFlatSpec
-import org.scalatest.matchers.should
-import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.Application
 import play.api.data.FormError
 import play.api.http.Status

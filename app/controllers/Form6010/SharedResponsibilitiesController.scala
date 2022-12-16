@@ -20,7 +20,7 @@ import form.Form6010.IntervalsOfRentReviewForm.intervalsOfRentReviewForm
 import form.Form6010.SharedResponsibilitiesForm.sharedResponsibilitiesForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.form.{intervalsOfRentReview, rentPayableVaryOnQuantityOfBeersDetails, sharedResponsibilities, ultimatelyResponsible}
+import views.html.form.{intervalsOfRentReview, sharedResponsibilities}
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future

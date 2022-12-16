@@ -31,9 +31,9 @@ class ConnectionToPropertyNavigator @Inject() (audit: Audit)(implicit ec: Execut
 
   private def areYouStillConnectedRouting: Session => Call = answers => {
     answers.addressConnectionType.map(_.name) match {
-      case Some("yes")                => controllers.connectiontoproperty.routes.ConnectionToThePropertyController.show
-      case Some("yes-change-address") => controllers.connectiontoproperty.routes.EditAddressController.show
-      case Some("no")                 => controllers.routes.PastConnectionController.show
+      case Some("yes")                => controllers.connectiontoproperty.routes.ConnectionToThePropertyController.show()
+      case Some("yes-change-address") => controllers.connectiontoproperty.routes.EditAddressController.show()
+      case Some("no")                 => controllers.routes.PastConnectionController.show()
       case _                          =>
         logger.warn(
           s"Navigation for are you still connected reached without correct selection of are you connected by controller"
@@ -44,7 +44,7 @@ class ConnectionToPropertyNavigator @Inject() (audit: Audit)(implicit ec: Execut
 
   override val routeMap: Map[Identifier, Session => Call] = Map(
     AreYouStillConnectedPageId -> areYouStillConnectedRouting,
-    EditAddressPageId          -> (_ => controllers.connectiontoproperty.routes.ConnectionToThePropertyController.show),
-    ConnectionToPropertyPageId -> (_ => controllers.routes.TaskListController.show)
+    EditAddressPageId          -> (_ => controllers.connectiontoproperty.routes.ConnectionToThePropertyController.show()),
+    ConnectionToPropertyPageId -> (_ => controllers.routes.TaskListController.show())
   )
 }

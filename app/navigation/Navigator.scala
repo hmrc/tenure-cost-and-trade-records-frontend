@@ -25,7 +25,6 @@ import uk.gov.hmrc.http.HeaderCarrier
 
 import javax.inject.Inject
 import scala.concurrent.ExecutionContext
-import scala.language.postfixOps
 
 abstract class Navigator @Inject() (
   audit: Audit
@@ -34,7 +33,7 @@ abstract class Navigator @Inject() (
   val routeMap: Map[Identifier, Session => Call]
 
   def nextPage(id: Identifier)(implicit hc: HeaderCarrier): Session => Call =
-    routeMap.getOrElse(id, (_: Session) => routes.LoginController.show)
+    routeMap.getOrElse(id, (_: Session) => routes.LoginController.show())
   //  andThen auditNextUrl
 
   private def auditNextUrl(call: Call)(implicit hc: HeaderCarrier): Call = {
