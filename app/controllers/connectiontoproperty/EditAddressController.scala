@@ -20,16 +20,12 @@ import actions.WithSessionRefiner
 import form.connectiontoproperty.EditAddressForm.editAddressForm
 import navigation.ConnectionToPropertyNavigator
 import navigation.identifiers.EditAddressPageId
-import form.connectiontoproperty.ConnectionToThePropertyForm
-import form.connectiontoproperty.ConnectionToThePropertyForm.connectionToThePropertyForm
-import form.connectiontoproperty.EditAddressForm.editAddressForm
-import models.Session
 import models.submissions.StillConnectedDetails.updateStillConnectedDetails
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.connectiontoproperty._
+import views.html.connectiontoproperty.editAddress
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
@@ -38,7 +34,6 @@ import scala.concurrent.Future
 class EditAddressController @Inject() (
   mcc: MessagesControllerComponents,
   navigator: ConnectionToPropertyNavigator,
-  connectionToThePropertyView: connectionToTheProperty,
   editAddressView: editAddress,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
@@ -49,12 +44,8 @@ class EditAddressController @Inject() (
     Future.successful(
       Ok(
         editAddressView(
-          request.sessionData.stillConnectedDetails match {
-            case Some(stillConnectedDetails) =>
-              stillConnectedDetails.editAddress match {
-                case Some(address) => editAddressForm.fillAndValidate(address)
-                case _             => editAddressForm
-              }
+          request.sessionData.stillConnectedDetails.flatMap(_.editAddress) match {
+            case Some(editAddress) => editAddressForm.fillAndValidate(editAddress)
             case _                           => editAddressForm
           }
         )
@@ -68,17 +59,9 @@ class EditAddressController @Inject() (
       .fold(
         formWithErrors => Future.successful(BadRequest(editAddressView(formWithErrors))),
         data => {
-
-
-//          val updatedData = request.sessionData.copy(address = Some(data))
-//          session.saveOrUpdate(updatedData)
-//          Future.successful(Redirect(navigator.nextPage(EditAddressPageId).apply(updatedData)))
-
-
-          session.saveOrUpdate(updateStillConnectedDetails(_.copy(editAddress = Some(data))))
-          Future.successful(Ok(connectionToThePropertyView(connectionToThePropertyForm, controllers.connectiontoproperty.routes.AreYouStillConnectedController.show().url)))
-
-
+          val updatedData = updateStillConnectedDetails(_.copy(editAddress = Some(data)))
+          session.saveOrUpdate(updatedData)
+          Future.successful(Redirect(navigator.nextPage(EditAddressPageId).apply(updatedData)))
         }
       )
   }

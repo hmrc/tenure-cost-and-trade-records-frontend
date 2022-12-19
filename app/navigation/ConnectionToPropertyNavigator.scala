@@ -17,7 +17,6 @@
 package navigation
 
 import connectors.Audit
-//import form.MappingSupport.addressConnectionType
 import identifiers.{AreYouStillConnectedPageId, ConnectionToPropertyPageId, EditAddressPageId, Identifier}
 import play.api.mvc.Call
 import models.Session
@@ -31,17 +30,16 @@ class ConnectionToPropertyNavigator @Inject() (audit: Audit)(implicit ec: Execut
     with Logging {
 
   private def areYouStillConnectedRouting: Session => Call = answers => {
-//    answers.addressConnectionType.map(_.name)) match {
-//      case Some("yes")                => controllers.connectiontoproperty.routes.ConnectionToThePropertyController.show()
-//      case Some("yes-change-address") => controllers.connectiontoproperty.routes.EditAddressController.show()
-//      case Some("no")                 => controllers.routes.PastConnectionController.show()
-//      case _                          =>
-//        logger.warn(
-//          s"Navigation for are you still connected reached without correct selection of are you connected by controller"
-//        )
-//        throw new RuntimeException("Invalid option exception for are you connected routing")
-//    }
-    controllers.connectiontoproperty.routes.ConnectionToThePropertyController.show()
+    answers.stillConnectedDetails.flatMap(_.addressConnectionType.map(_.name)) match {
+      case Some("yes")                => controllers.connectiontoproperty.routes.ConnectionToThePropertyController.show()
+      case Some("yes-change-address") => controllers.connectiontoproperty.routes.EditAddressController.show()
+      case Some("no")                 => controllers.routes.PastConnectionController.show()
+      case _                          =>
+        logger.warn(
+          s"Navigation for are you still connected reached without correct selection of are you connected by controller"
+        )
+        throw new RuntimeException("Invalid option exception for are you connected routing")
+    }
   }
 
   override val routeMap: Map[Identifier, Session => Call] = Map(

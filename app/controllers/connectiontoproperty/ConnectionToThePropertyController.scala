@@ -22,20 +22,12 @@ import models.Session
 import navigation.ConnectionToPropertyNavigator
 import navigation.identifiers.ConnectionToPropertyPageId
 import play.api.Logging
-
-import models.submissions.ConnectionToThePropertyOwnerTrustee
 import models.submissions.StillConnectedDetails.updateStillConnectedDetails
-
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-
-import views.html.connectiontoproperty._
-import views.html.connectiontoproperty._
-import views.html.{taskList, taskListOwner}
-
-
+import views.html.connectiontoproperty.connectionToTheProperty
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
 
@@ -43,9 +35,6 @@ import scala.concurrent.Future
 class ConnectionToThePropertyController @Inject() (
   mcc: MessagesControllerComponents,
   navigator: ConnectionToPropertyNavigator,
-
-  taskListView: taskList,
-  taskListOwnerView: taskListOwner,
   connectionToThePropertyView: connectionToTheProperty,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
@@ -57,25 +46,16 @@ class ConnectionToThePropertyController @Inject() (
     Future.successful(
       Ok(
         connectionToThePropertyView(
-
-//          request.sessionData.connectionToProperty.fold(connectionToThePropertyForm)(connectionToProperty =>
-//            connectionToThePropertyForm.fillAndValidate(connectionToProperty)
-//          ),
-//          getBackLink(request.sessionData) match {
-//            case Right(link) => link
-//            case Left(msg)   =>
-//              logger.warn(s"Navigation for connection to property page reached with error: $msg")
-//              throw new RuntimeException(s"Navigation for connection to property page reached with error $msg")
-
-          request.sessionData.stillConnectedDetails match {
-            case Some(stillConnectedDetails) =>
-              stillConnectedDetails.connectionToProperty match {
-                case Some(connectionToProperty) => connectionToThePropertyForm.fillAndValidate(connectionToProperty)
-                case _                          => connectionToThePropertyForm
-              }
+          request.sessionData.stillConnectedDetails.flatMap(_.connectionToProperty) match {
+            case Some(connectionToProperty) => connectionToThePropertyForm.fillAndValidate(connectionToProperty)
             case _                           => connectionToThePropertyForm
           },
-          controllers.connectiontoproperty.routes.AreYouStillConnectedController.show().url
+          getBackLink(request.sessionData) match {
+            case Right(link) => link
+            case Left(msg) =>
+              logger.warn(s"Navigation for connection to property page reached with error: $msg")
+              throw new RuntimeException(s"Navigation for connection to property page reached with error $msg")
+          }
         )
       )
     )
@@ -85,7 +65,6 @@ class ConnectionToThePropertyController @Inject() (
     connectionToThePropertyForm
       .bindFromRequest()
       .fold(
-
         formWithErrors =>
           Future.successful(
             BadRequest(
@@ -95,31 +74,18 @@ class ConnectionToThePropertyController @Inject() (
               )
             )
           ),
-//        data => {
-//          val updatedData = request.sessionData.copy(connectionToProperty = Some(data))
-//          session.saveOrUpdate(request.sessionData.copy(connectionToProperty = Some(data)))
-//          Future.successful(Redirect(navigator.nextPage(ConnectionToPropertyPageId).apply(updatedData)))
-//        }
-
-
-//        formWithErrors => Future.successful(BadRequest(connectionToThePropertyView(formWithErrors))),
-        data =>
-          data match {
-            case ConnectionToThePropertyOwnerTrustee =>
-              session.saveOrUpdate(updateStillConnectedDetails(_.copy(connectionToProperty = Some(data))))
-              Future.successful(Ok(taskListOwnerView()))
-            case _                                   =>
-              session.saveOrUpdate(updateStillConnectedDetails(_.copy(connectionToProperty = Some(data))))
-              Future.successful(Ok(taskListView()))
+          data => {
+            val updatedData = updateStillConnectedDetails(_.copy(connectionToProperty = Some(data)))
+            session.saveOrUpdate(updatedData)
+            Future.successful(Redirect(navigator.nextPage(ConnectionToPropertyPageId).apply(updatedData)))
           }
-
       )
   }
 
-//  private def getBackLink(answers: Session): Either[String, String] =
-//    (answers.addressConnectionType.map(_.name)) match {
-//      case Some("yes-change-address") => Right(controllers.connectiontoproperty.routes.EditAddressController.show().url)
-//      case Some("yes")                => Right(controllers.connectiontoproperty.routes.AreYouStillConnectedController.show().url)
-//      case _                          => Left(s"Unknown connection to property back link")
-//    }
+  private def getBackLink(answers: Session): Either[String, String] =
+    answers.stillConnectedDetails.flatMap(_.addressConnectionType.map(_.name)) match {
+      case Some("yes-change-address") => Right(controllers.connectiontoproperty.routes.EditAddressController.show().url)
+      case Some("yes")                => Right(controllers.connectiontoproperty.routes.AreYouStillConnectedController.show().url)
+      case _                          => Left(s"Unknown connection to property back link")
+    }
 }
