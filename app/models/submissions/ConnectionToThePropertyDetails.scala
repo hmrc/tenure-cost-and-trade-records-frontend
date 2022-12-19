@@ -14,7 +14,9 @@
  * limitations under the License.
  */
 
-package navigation.identifiers
+package models.submissions
 
-class Identifier
+case class ConnectionToThePropertyDetails(
+  connectionToTheProperty: ConnectionToProperty
+)
 

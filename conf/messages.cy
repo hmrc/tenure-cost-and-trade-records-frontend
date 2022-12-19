@@ -144,6 +144,8 @@ label.occupierTrustee = Occupier or trustee for occupier
 label.ownerTrustee = Owner or trustee for owner
 label.occupierAgent = Occupier’s agent
 label.ownerAgent = Owner’s agent
+hint.occupierTrustee = Select this if you’re renting or leasing the property, even through a Leaseback arrangement
+hint.ownerTrustee = Select this if you own and occupy the property-you’re considered an occupier if you own the property and lease it back to a business you operate from the property
 
 #6010 ABOUT THE PROPERTY
 ##############################
@@ -675,6 +677,11 @@ alternativeContactAddress.town.label = Town or city (optional)
 alternativeContactAddress.county.label = County (optional)
 alternativeContactAddress.postcode.label = Postcode
 error.alternativeContactFullName.required = Please enter the full name
+
+#TENANCY LEASE AGREEMENT EXPIRE (FORM 6011)
+##############################
+tenancyLeaseAgreementExpire.header = About your lease or agreement
+label.tenancyLeaseAgreementExpire = When does your tenancy, lease or agreement expire, or if earlier, what is the date of your next review (excluding indexation)?
 
 #HELP WITH SERVICE COMMON
 ##############################

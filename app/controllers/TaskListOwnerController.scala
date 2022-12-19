@@ -14,7 +14,23 @@
  * limitations under the License.
  */
 
-package navigation.identifiers
+package controllers
 
-class Identifier
+import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
+import views.html.{taskList, taskListOwner}
 
+import javax.inject.{Inject, Singleton}
+import scala.concurrent.Future
+
+@Singleton
+class TaskListOwnerController @Inject() (
+  mcc: MessagesControllerComponents,
+  taskListOwnerView: taskListOwner
+) extends FrontendController(mcc) {
+
+  def show: Action[AnyContent] = Action.async { implicit request =>
+    Future.successful(Ok(taskListOwnerView()))
+  }
+
+}

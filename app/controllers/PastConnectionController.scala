@@ -24,7 +24,8 @@ import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.{login, pastConnection}
-
+import models.Session
+import models.submissions.StillConnectedDetails.updateStillConnectedDetails
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
 
@@ -42,9 +43,14 @@ class PastConnectionController @Inject() (
     Future.successful(
       Ok(
         pastConnectionView(
-          request.sessionData.pastConnectionType.fold(pastConnectionForm)(pastConnectionType =>
-            pastConnectionForm.fillAndValidate(pastConnectionType)
-          )
+          request.sessionData.stillConnectedDetails match {
+            case Some(stillConnectedDetails) =>
+              stillConnectedDetails.pastConnectionType match {
+                case Some(pastConnection) => pastConnectionForm.fillAndValidate(pastConnection)
+                case _                    => pastConnectionForm
+              }
+            case _                           => pastConnectionForm
+          }
         )
       )
     )
@@ -56,7 +62,7 @@ class PastConnectionController @Inject() (
       .fold(
         formWithErrors => Future.successful(BadRequest(pastConnectionView(formWithErrors))),
         data => {
-          session.saveOrUpdate(request.sessionData.copy(pastConnectionType = Some(data)))
+          session.saveOrUpdate(updateStillConnectedDetails(_.copy(pastConnectionType = Some(data))))
           Future.successful(Ok(login(loginForm)))
         }
       )

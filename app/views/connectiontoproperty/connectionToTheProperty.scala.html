@@ -58,35 +58,37 @@
 
  @formWithCSRF(action = controllers.connectiontoproperty.routes.ConnectionToThePropertyController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
 
-  @govukRadios(
-   Radios(
-    name = "connectionToTheProperty",
-    idPrefix = Option("connectionToTheProperty"),
-    items = Seq(
-     "occupierTrustee" -> messages("label.occupierTrustee"),
-     "ownerTrustee" -> messages("label.ownerTrustee"),
-     "occupierAgent" -> messages("label.occupierAgent"),
-     "ownerAgent" -> messages("label.ownerAgent")
-    ).map( radioItem => RadioItem (
-     content = Text(radioItem._2),
-     checked = radioItem._1.equals(theForm("connectionToTheProperty").value.getOrElse("")),
-     value=Option(radioItem._1)
-    )
+  @govukRadios(Radios(
+   fieldset = Some(Fieldset(
+    legend = Some(Legend(
+     content = Text(messages("connectionToTheProperty.header")),
+     classes = "govuk-fieldset__legend--m",
+    ))
+   )),
+   hint = Some(Hint(content = Text(messages("hint.connectionToTheProperty")))),
+   name = "connectionToTheProperty",
+   items = Seq(
+    RadioItem(
+     content = Text(messages("label.occupierTrustee")),
+     value = Some("occupierTrustee"),
+     hint = Some(Hint(content = Text(messages("hint.occupierTrustee")))),
     ),
-    hint = Some(Hint(content = Text(messages("hint.connectionToTheProperty")))),
-    errorMessage = theForm.errors.asTextErrorMessageForField("connectionToTheProperty"),
-    fieldset = Option(
-     Fieldset(
-      legend = Option(
-       Legend(
-        classes = "govuk-!-font-weight-bold"
-       )
-      )
-     )
+    RadioItem(
+     content = Text(messages("label.ownerTrustee")),
+     value = Some("ownerTrustee"),
+     hint = Some(Hint(content = Text(messages("hint.ownerTrustee")))),
+    ),
+    RadioItem(
+     content = Text(messages("label.occupierAgent")),
+     value = Some("occupierAgent")
+    ),
+    RadioItem(
+     content = Text(messages("label.ownerAgent")),
+     value = Some("ownerAgent")
     )
-   )
-  )
-
+   ),
+   errorMessage = theForm.errors.asTextErrorMessageForField("connectionToTheProperty")
+  ).withFormField(theForm("connectionToTheProperty")))
   @includes.continueButton(govukButton)
 
   @includes.help_with_service_connection()

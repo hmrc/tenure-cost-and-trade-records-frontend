@@ -14,7 +14,8 @@
  * limitations under the License.
  */
 
-package navigation.identifiers
+package models.submissions.Form6011
 
-class Identifier
+import org.joda.time.LocalDate
 
+case class TenancyLeaseAgreementExpire(tenancyLeaseAgreementExpire: LocalDate)

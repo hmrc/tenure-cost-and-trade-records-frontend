@@ -16,32 +16,47 @@
 
 package controllers.Form6010
 
+import actions.WithSessionRefiner
 import form.Form6010.CurrentRentFirstPaidForm.currentRentFirstPaidForm
 import form.Form6010.CurrentLeaseOrAgreementBeginForm.currentLeaseOrAgreementBeginForm
+import form.Form6011.TenancyLeaseAgreementExpireForm.tenancyLeaseAgreementExpireForm
+import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.form.{currentLeaseOrAgreementBegin, currentRentFirstPaid}
-
-import javax.inject.{Inject, Singleton}
-import scala.concurrent.Future
+import views.html.form.{currentLeaseOrAgreementBegin, currentRentFirstPaid, tenancyLeaseAgreementExpire}
+import javax.inject.{Inject, Named, Singleton}
+import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class CurrentRentFirstPaidController @Inject() (
   mcc: MessagesControllerComponents,
   currentLeaseOrAgreementBeginView: currentLeaseOrAgreementBegin,
-  currentRentFirstPaidView: currentRentFirstPaid
-) extends FrontendController(mcc) {
+  currentRentFirstPaidView: currentRentFirstPaid,
+  tenancyLeaseAgreementExpireView: tenancyLeaseAgreementExpire,
+  withSessionRefiner: WithSessionRefiner,
+  @Named("session") val session: SessionRepo
+)(implicit ec: ExecutionContext)
+    extends FrontendController(mcc)
+    with I18nSupport {
 
   def show: Action[AnyContent] = Action { implicit request =>
     Ok(currentRentFirstPaidView(currentRentFirstPaidForm))
   }
 
-  def submit = Action.async { implicit request =>
+  def submit = (Action andThen withSessionRefiner).async { implicit request =>
+    val forNumberRequest = request.sessionData.userLoginDetails.forNumber
+
     currentRentFirstPaidForm
       .bindFromRequest()
       .fold(
         formWithErrors => Future.successful(BadRequest(currentRentFirstPaidView(formWithErrors))),
-        data => Future.successful(Ok(currentLeaseOrAgreementBeginView(currentLeaseOrAgreementBeginForm)))
+        data =>
+          if (forNumberRequest == "FOR6011") {
+            Future.successful(Ok(tenancyLeaseAgreementExpireView(tenancyLeaseAgreementExpireForm)))
+          } else {
+            Future.successful(Ok(currentLeaseOrAgreementBeginView(currentLeaseOrAgreementBeginForm)))
+          }
       )
   }
 }

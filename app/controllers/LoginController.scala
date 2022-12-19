@@ -131,7 +131,7 @@ class LoginController @Inject() (
           case Some(_) =>
             session
               .start(Session(UserLoginDetails(token, forNum, referenceNumber, address)))
-              .map(_ => Redirect(controllers.connectiontoproperty.routes.AreYouStillConnectedController.show))
+              .map(_ => Redirect(controllers.connectiontoproperty.routes.AreYouStillConnectedController.show()))
           case None    =>
             session
               .start(Session(UserLoginDetails(token, forNum, referenceNumber, address)))

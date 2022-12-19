@@ -16,18 +16,22 @@
 
 package controllers.Form6010
 
+import actions.WithSessionRefiner
 import controllers.LoginController.loginForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.form.{enforcementActionBeenTaken, enforcementActionBeenTakenDetails, tiedForGoods}
+import views.html.form.{aboutYourTradingHistory, enforcementActionBeenTaken, enforcementActionBeenTakenDetails, tiedForGoods}
 import form.Form6010.EnforcementActionForm.enforcementActionForm
 import form.Form6010.EnforcementActionDetailsForm.enforcementActionDetailsForm
 import form.Form6010.TiedForGoodsForm.tiedForGoodsForm
+import form.Form6010.AboutYourTradingHistoryForm.aboutYourTradingHistoryForm
 import models.submissions.Form6010.{EnforcementActionsNo, EnforcementActionsYes}
+import play.api.i18n.I18nSupport
+import repositories.SessionRepo
 import views.html.login
 
-import javax.inject.{Inject, Singleton}
-import scala.concurrent.Future
+import javax.inject.{Inject, Named, Singleton}
+import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class EnforcementActionBeenTakenController @Inject() (
@@ -35,14 +39,19 @@ class EnforcementActionBeenTakenController @Inject() (
   enforcementActionBeenTakenDetailsView: enforcementActionBeenTakenDetails,
   tiedForGoodsView: tiedForGoods,
   login: login,
-  enforcementActionBeenTakenView: enforcementActionBeenTaken
-) extends FrontendController(mcc) {
+  enforcementActionBeenTakenView: enforcementActionBeenTaken,
+  aboutYourTradingHistoryView: aboutYourTradingHistory,
+  withSessionRefiner: WithSessionRefiner,
+  @Named("session") val session: SessionRepo
+)(implicit ec: ExecutionContext)
+    extends FrontendController(mcc)
+    with I18nSupport {
 
   def show: Action[AnyContent] = Action.async { implicit request =>
     Future.successful(Ok(enforcementActionBeenTakenView(enforcementActionForm)))
   }
 
-  def submit = Action.async { implicit request =>
+  def submit = (Action andThen withSessionRefiner).async { implicit request =>
     enforcementActionForm
       .bindFromRequest()
       .fold(
@@ -51,7 +60,12 @@ class EnforcementActionBeenTakenController @Inject() (
           data.enforcementActionHasBeenTaken match {
             case EnforcementActionsYes =>
               Future.successful(Ok(enforcementActionBeenTakenDetailsView(enforcementActionDetailsForm)))
-            case EnforcementActionsNo  => Future.successful(Ok(tiedForGoodsView(tiedForGoodsForm)))
+            case EnforcementActionsNo  =>
+              if (request.sessionData.userLoginDetails.forNumber == "FOR6011") {
+                Future.successful(Ok(aboutYourTradingHistoryView(aboutYourTradingHistoryForm)))
+              } else {
+                Future.successful(Ok(tiedForGoodsView(tiedForGoodsForm)))
+              }
             case _                     => Future.successful(Ok(login(loginForm)))
           }
       )

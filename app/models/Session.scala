@@ -16,16 +16,13 @@
 
 package models
 
-import models.submissions.Form6010.{Address, AddressConnectionType}
-import models.submissions.{ConnectionToProperty, PastConnectionType}
+import models.submissions.{SectionOne, StillConnectedDetails}
 import play.api.libs.json._
 
 case class Session(
   userLoginDetails: UserLoginDetails,
-  addressConnectionType: Option[AddressConnectionType] = None,
-  connectionToProperty: Option[ConnectionToProperty] = None,
-  pastConnectionType: Option[PastConnectionType] = None,
-  address: Option[Address] = None
+  StillConnectedDetails: Option[StillConnectedDetails] = None,
+  sectionOne: Option[SectionOne] = None
 )
 
 object Session {
