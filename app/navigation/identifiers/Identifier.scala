@@ -17,4 +17,3 @@
 package navigation.identifiers
 
 class Identifier
-

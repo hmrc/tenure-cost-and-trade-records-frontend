@@ -48,11 +48,11 @@ class ConnectionToThePropertyController @Inject() (
         connectionToThePropertyView(
           request.sessionData.stillConnectedDetails.flatMap(_.connectionToProperty) match {
             case Some(connectionToProperty) => connectionToThePropertyForm.fillAndValidate(connectionToProperty)
-            case _                           => connectionToThePropertyForm
+            case _                          => connectionToThePropertyForm
           },
           getBackLink(request.sessionData) match {
             case Right(link) => link
-            case Left(msg) =>
+            case Left(msg)   =>
               logger.warn(s"Navigation for connection to property page reached with error: $msg")
               throw new RuntimeException(s"Navigation for connection to property page reached with error $msg")
           }
@@ -74,11 +74,11 @@ class ConnectionToThePropertyController @Inject() (
               )
             )
           ),
-          data => {
-            val updatedData = updateStillConnectedDetails(_.copy(connectionToProperty = Some(data)))
-            session.saveOrUpdate(updatedData)
-            Future.successful(Redirect(navigator.nextPage(ConnectionToPropertyPageId).apply(updatedData)))
-          }
+        data => {
+          val updatedData = updateStillConnectedDetails(_.copy(connectionToProperty = Some(data)))
+          session.saveOrUpdate(updatedData)
+          Future.successful(Redirect(navigator.nextPage(ConnectionToPropertyPageId).apply(updatedData)))
+        }
       )
   }
 

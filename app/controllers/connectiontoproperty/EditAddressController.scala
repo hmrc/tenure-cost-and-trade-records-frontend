@@ -46,7 +46,7 @@ class EditAddressController @Inject() (
         editAddressView(
           request.sessionData.stillConnectedDetails.flatMap(_.editAddress) match {
             case Some(editAddress) => editAddressForm.fillAndValidate(editAddress)
-            case _                           => editAddressForm
+            case _                 => editAddressForm
           }
         )
       )
