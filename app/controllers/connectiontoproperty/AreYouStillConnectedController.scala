@@ -73,7 +73,7 @@ class AreYouStillConnectedController @Inject() (
     Future.successful(
       Ok(
         areYouStillConnectedView(
-          request.sessionData.StillConnectedDetails match {
+          request.sessionData.stillConnectedDetails match {
             case Some(stillConnectedDetails) =>
               stillConnectedDetails.addressConnectionType match {
                 case Some(addressConnectionType) => areYouStillConnectedForm.fillAndValidate(addressConnectionType)
@@ -96,7 +96,7 @@ class AreYouStillConnectedController @Inject() (
         data => {
 //                    val updatedData = request.sessionData.copy(addressConnectionType = Some(data))
                     val updatedData = updateStillConnectedDetails(_.copy(addressConnectionType = Some(data)))
-                    session.saveOrUpdate(updateStillConnectedDetails(_.copy(addressConnectionType = Some(data)))
+                    session.saveOrUpdate(updateStillConnectedDetails(_.copy(addressConnectionType = Some(data))))
           Future.successful(Redirect(navigator.nextPage(AreYouStillConnectedPageId).apply(updatedData)))
                   }
 

@@ -21,7 +21,7 @@ import play.api.libs.json._
 
 case class Session(
   userLoginDetails: UserLoginDetails,
-  StillConnectedDetails: Option[StillConnectedDetails] = None,
+  stillConnectedDetails: Option[StillConnectedDetails] = None,
   sectionOne: Option[SectionOne] = None
 )
 
