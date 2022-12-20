@@ -17,17 +17,30 @@
 package connectors
 
 import com.google.inject.ImplementedBy
+import uk.gov.hmrc.http.HeaderCarrier
+import uk.gov.hmrc.play.audit.AuditExtensions.auditHeaderCarrier
 import uk.gov.hmrc.play.audit.http.config.AuditingConfig
-import uk.gov.hmrc.play.audit.http.connector.{AuditChannel, AuditConnector, DatastreamMetrics}
+import uk.gov.hmrc.play.audit.http.connector.{AuditChannel, AuditConnector, AuditResult, DatastreamMetrics}
+import uk.gov.hmrc.play.audit.model.DataEvent
 
 import javax.inject.{Inject, Singleton}
-import scala.concurrent.ExecutionContext
+import scala.concurrent.{ExecutionContext, Future}
 
 @ImplementedBy(classOf[TctrAuditConnector])
 trait Audit extends AuditConnector {
 
   private val AUDIT_SOURCE = "tenure-cost-and-trade-records-frontend"
 
+  def sendContinueNextPage(url: String)(implicit ec: ExecutionContext, hc: HeaderCarrier): Unit =
+    sendEventMap("ContinueNextPage", Map("url" -> url), hc.toAuditTags())
+
+  private def sendEventMap(event: String, detail: Map[String, String], tags: Map[String, String])(implicit
+    ec: ExecutionContext,
+    hc: HeaderCarrier
+  ): Future[AuditResult] = {
+    val de = DataEvent(auditSource = AUDIT_SOURCE, auditType = event, tags = tags, detail = detail)
+    sendEvent(de)
+  }
 }
 
 object Audit {

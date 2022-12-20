@@ -38,7 +38,7 @@ class AreYouStillConnectedControllerSpec extends TestBaseSpec {
   private val fakeRequest              = FakeRequest("GET", "/")
   val mockConnectedToPropertyNavigator = mock[ConnectionToPropertyNavigator]
   val mockAreYouStillConnectedView     = mock[areYouStillConnected]
-  when(mockAreYouStillConnectedView.apply(any)(any, any)).thenReturn(HtmlFormat.empty)
+  when(mockAreYouStillConnectedView.apply(any, any)(any, any)).thenReturn(HtmlFormat.empty)
 
   val areYouStillConnectedController = new AreYouStillConnectedController(
     stubMessagesControllerComponents(),

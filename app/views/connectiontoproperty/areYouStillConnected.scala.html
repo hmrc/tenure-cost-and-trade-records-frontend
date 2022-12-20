@@ -31,6 +31,7 @@
 @import uk.gov.hmrc.govukfrontend.views.Aliases.RadioItem
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Fieldset
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Legend
+@import models.submissions.Form6010.Address
 @import models.submissions.Form6010.{AddressConnectionTypeNo, AddressConnectionTypeYes, AddressConnectionTypeYesChangeAddress}
 
 @this(layout: Layout,
@@ -44,11 +45,10 @@
         formWithCSRF: FormWithCSRF
 )
 
-
-@(theForm: Form[_])(implicit request: Request[_], messages: Messages)
+@(theForm: Form[_], address: Address)(implicit request: Request[_], messages: Messages)
 
 @layout(
- pageHeading = messages("areYouConnected.header"),
+ pageHeading = messages("areYouConnected.header", address.singleLine),
  theForm = theForm
 ) {
 

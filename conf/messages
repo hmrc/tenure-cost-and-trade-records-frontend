@@ -102,7 +102,7 @@ landing.desc5 = You do not have to complete the form in one go. You can save wha
 
 #6010 ARE YOU STILL CONNECTED
 ##############################
-areYouConnected.header = Are you still connected to: 747, GORING ROAD, GORING-BY-SEA, WORTHING, BN12 4AX?
+areYouConnected.header = Are you still connected to {0}?
 label.areYouConnected.addressUpdate = Yes, and the address needs to be updated
 label.yes.change.address=Yes - I want to edit the address
 
