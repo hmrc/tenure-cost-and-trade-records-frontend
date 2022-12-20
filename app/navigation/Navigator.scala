@@ -32,13 +32,12 @@ abstract class Navigator @Inject() (
 
   val routeMap: Map[Identifier, Session => Call]
 
-  def nextPage(id: Identifier)(implicit hc: HeaderCarrier): Session => Call =
+  def nextPage(id: Identifier)(implicit hc: HeaderCarrier): Session => Call = (
     routeMap.getOrElse(id, (_: Session) => routes.LoginController.show())
-  //  andThen auditNextUrl
+  ) andThen auditNextUrl
 
   private def auditNextUrl(call: Call)(implicit hc: HeaderCarrier): Call = {
-    val json = "Details to be added: refNum, Address, form data"
-    audit.sendExplicitAudit("ContinueNextPage", json)
+    audit.sendContinueNextPage(call.url)
     call
   }
 }

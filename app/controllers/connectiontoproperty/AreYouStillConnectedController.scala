@@ -18,6 +18,7 @@ package controllers.connectiontoproperty
 
 import actions.WithSessionRefiner
 import form.connectiontoproperty.AreYouStillConnectedForm.areYouStillConnectedForm
+import models.submissions.Form6010.Address
 import navigation.ConnectionToPropertyNavigator
 import navigation.identifiers.AreYouStillConnectedPageId
 import play.api.i18n.I18nSupport
@@ -48,17 +49,19 @@ class AreYouStillConnectedController @Inject() (
           request.sessionData.stillConnectedDetails.flatMap(_.addressConnectionType) match {
             case Some(addressConnectionType) => areYouStillConnectedForm.fillAndValidate(addressConnectionType)
             case _                           => areYouStillConnectedForm
-          }
+          },
+          request.sessionData.userLoginDetails.address
         )
       )
     )
   }
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
+    val address: Address = request.sessionData.userLoginDetails.address
     areYouStillConnectedForm
       .bindFromRequest()
       .fold(
-        formWithErrors => Future.successful(BadRequest(areYouStillConnectedView(formWithErrors))),
+        formWithErrors => Future.successful(BadRequest(areYouStillConnectedView(formWithErrors, address))),
         data => {
           val updatedData = updateStillConnectedDetails(_.copy(addressConnectionType = Some(data)))
           session.saveOrUpdate(updatedData)

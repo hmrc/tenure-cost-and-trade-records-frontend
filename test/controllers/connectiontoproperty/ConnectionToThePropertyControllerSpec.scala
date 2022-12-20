@@ -14,53 +14,52 @@
  * limitations under the License.
  */
 
-//package controllers.connectiontoproperty
-//
-//import navigation.ConnectionToPropertyNavigator
-//import play.api.Application
-//import play.api.http.Status
-//import play.api.inject.guice.GuiceApplicationBuilder
-//import play.api.test.FakeRequest
-//import play.api.test.Helpers._
-//import play.twirl.api.HtmlFormat
-//import utils.TestBaseSpec
-//import views.html.connectiontoproperty.connectionToTheProperty
-//import views.html.taskList
-//
-//class ConnectionToThePropertyControllerSpec extends TestBaseSpec {
-//
-//  override def fakeApplication(): Application =
-//    new GuiceApplicationBuilder()
-//      .configure(
-//        "metrics.jvm"     -> false,
-//        "metrics.enabled" -> false
-//      )
-//      .build()
-//
-//  private val fakeRequest              = FakeRequest("GET", "/")
-//  val mockConnectedToPropertyNavigator = mock[ConnectionToPropertyNavigator]
-//  val mockConnectionToThePropertyView  = mock[connectionToTheProperty]
-//  when(mockConnectionToThePropertyView.apply(any, any)(any, any)).thenReturn(HtmlFormat.empty)
-//
-//  val connectionToThePropertyController = new ConnectionToThePropertyController(
-//    stubMessagesControllerComponents(),
-////    mock[taskList],
-//    mockConnectedToPropertyNavigator,
-//    mockConnectionToThePropertyView,
-//    preFilledSession,
-//    mockSessionRepo
-//  )
-//
-//  "GET /" should {
-//    "return 200" in {
-//      val result = connectionToThePropertyController.show(fakeRequest)
-//      status(result) shouldBe Status.OK
-//    }
-//
-//    "return HTML" in {
-//      val result = connectionToThePropertyController.show(fakeRequest)
-//      contentType(result) shouldBe Some("text/html")
-//      charset(result)     shouldBe Some("utf-8")
-//    }
-//  }
-//}
+package controllers.connectiontoproperty
+
+import navigation.ConnectionToPropertyNavigator
+import play.api.Application
+import play.api.http.Status
+import play.api.inject.guice.GuiceApplicationBuilder
+import play.api.test.FakeRequest
+import play.api.test.Helpers._
+import play.twirl.api.HtmlFormat
+import utils.TestBaseSpec
+import views.html.connectiontoproperty.connectionToTheProperty
+
+class ConnectionToThePropertyControllerSpec extends TestBaseSpec {
+
+  override def fakeApplication(): Application =
+    new GuiceApplicationBuilder()
+      .configure(
+        "metrics.jvm"     -> false,
+        "metrics.enabled" -> false
+      )
+      .build()
+
+  private val fakeRequest = FakeRequest("GET", "/")
+
+  val mockConnectedToPropertyNavigator = mock[ConnectionToPropertyNavigator]
+  val mockConnectionToThePropertyView  = mock[connectionToTheProperty]
+  when(mockConnectionToThePropertyView.apply(any, any)(any, any)).thenReturn(HtmlFormat.empty)
+
+  val connectionToThePropertyController = new ConnectionToThePropertyController(
+    stubMessagesControllerComponents(),
+    mockConnectedToPropertyNavigator,
+    mockConnectionToThePropertyView,
+    preFilledSession,
+    mockSessionRepo
+  )
+
+  "GET /" should {
+    "return 200" in {
+      val result = connectionToThePropertyController.show(fakeRequest)
+      status(result) shouldBe Status.OK
+    }
+
+    "return HTML" in {
+      val result = connectionToThePropertyController.show(fakeRequest)
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
+    }
+  }
+}

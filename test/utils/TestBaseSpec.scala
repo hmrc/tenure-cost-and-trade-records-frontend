@@ -18,7 +18,8 @@ package utils
 
 import actions.{SessionRequest, WithSessionRefiner}
 import config.ErrorHandler
-import models.submissions.Form6010.Address
+import models.submissions.Form6010.{Address, AddressConnectionTypeYes}
+import models.submissions.StillConnectedDetails
 import models.{Session, UserLoginDetails}
 import org.mockito.scalatest.MockitoSugar
 import org.scalatest.{BeforeAndAfterEach, Inside}
@@ -60,9 +61,13 @@ trait TestBaseSpec
   val mockSessionRepository: SessionRepository = mock[SessionRepository]
   val testUserLoginDetails                     =
     UserLoginDetails("jwtToken", "FOR6010", "123456", Address("13", Some("Street"), Some("City"), "AA11 1AA"))
-  val preFilledSession                         = preEnrichedActionRefiner(testUserLoginDetails)
+  val testStillConnectedDetailsYes             = StillConnectedDetails(Some(AddressConnectionTypeYes))
+  val preFilledSession                         = preEnrichedActionRefiner(testUserLoginDetails, testStillConnectedDetailsYes)
 
-  def preEnrichedActionRefiner(userLoginDetails: UserLoginDetails): WithSessionRefiner =
+  def preEnrichedActionRefiner(
+    userLoginDetails: UserLoginDetails,
+    stillConnectedDetailsYes: StillConnectedDetails
+  ): WithSessionRefiner =
     new WithSessionRefiner(mockCustomErrorHandler, mockSessionRepository) {
 
       override def refine[A](request: Request[A]): Future[Either[Result, SessionRequest[A]]] =
@@ -70,7 +75,8 @@ trait TestBaseSpec
           Right(
             SessionRequest[A](
               Session(
-                userLoginDetails = userLoginDetails
+                userLoginDetails = userLoginDetails,
+                stillConnectedDetails = Some(stillConnectedDetailsYes)
               ),
               request = request
             )
