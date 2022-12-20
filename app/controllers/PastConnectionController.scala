@@ -26,7 +26,6 @@ import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.{login, pastConnection}
 import models.Session
 import models.submissions.StillConnectedDetails.updateStillConnectedDetails
-
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
 

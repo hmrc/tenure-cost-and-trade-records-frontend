@@ -14,21 +14,6 @@
  * limitations under the License.
  */
 
-package form
+package navigation.identifiers
 
-import form.MappingSupport._
-import models.submissions.Form6010.AddressConnectionType
-import play.api.data.Form
-import play.api.data.Forms.mapping
-
-object AreYouStillConnectedForm {
-
-  lazy val baseAreYouStillConnectedForm: Form[AddressConnectionType] = Form(baseAreYouStillConnectedMapping)
-
-  val baseAreYouStillConnectedMapping = mapping(
-    "isRelated" -> addressConnectionType
-  )(x => x)(b => Some(b))
-
-  val areYouStillConnectedForm = Form(baseAreYouStillConnectedMapping)
-
-}
+class Identifier

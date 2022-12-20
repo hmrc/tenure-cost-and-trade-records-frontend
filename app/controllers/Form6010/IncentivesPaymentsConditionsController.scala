@@ -18,9 +18,8 @@ package controllers.Form6010
 
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.Form6010.{canRentBeReducedOnReview, incentivesPaymentsConditions, tenantsAdditionsDisregarded}
+import views.html.form.{canRentBeReducedOnReview, incentivesPaymentsConditions}
 import form.Form6010.IncentivesPaymentsConditionsForm.incentivesPaymentsConditionsForm
-import form.Form6010.TenantsAdditionsDisregardedForm.tenantsAdditionsDisregardedForm
 import form.Form6010.CanRentBeReducedOnReviewForm.canRentBeReducedOnReviewForm
 
 import javax.inject.{Inject, Singleton}

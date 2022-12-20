@@ -20,7 +20,7 @@ import form.Form6010.FurtherInformationOrRemarksForm.furtherInformationOrRemarks
 import form.Form6010.HowIsCurrentRentFixedForm.howIsCurrentRentFixedForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.Form6010.{furtherInformationOrRemarks, howIsCurrentRentFixed}
+import views.html.form.{furtherInformationOrRemarks, howIsCurrentRentFixed}
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future

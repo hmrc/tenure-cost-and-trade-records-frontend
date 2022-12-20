@@ -17,11 +17,10 @@
 package controllers.Form6010
 
 import form.Form6010.IntervalsOfRentReviewForm.intervalsOfRentReviewForm
-import form.Form6010.UltimatelyResponsibleForm.ultimatelyResponsibleForm
 import form.Form6010.SharedResponsibilitiesForm.sharedResponsibilitiesForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.Form6010.{intervalsOfRentReview, rentPayableVaryOnQuantityOfBeersDetails, sharedResponsibilities, ultimatelyResponsible}
+import views.html.form.{intervalsOfRentReview, sharedResponsibilities}
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
@@ -29,8 +28,6 @@ import scala.concurrent.Future
 @Singleton
 class SharedResponsibilitiesController @Inject() (
   mcc: MessagesControllerComponents,
-  ultimatelyResponsibleView: ultimatelyResponsible,
-  rentPayableVaryOnQuantityOfBeersDetailsView: rentPayableVaryOnQuantityOfBeersDetails,
   intervalsOfRentReviewView: intervalsOfRentReview,
   sharedResponsibilitiesView: sharedResponsibilities
 ) extends FrontendController(mcc) {

@@ -15,19 +15,19 @@ GET         /invalid-form-type                                      controllers.
 
 GET         /sessiontimeout                                         controllers.Application.sessionTimeout()
 
-GET         /are-you-still-connected                                controllers.AreYouStillConnectedController.show()
-POST        /are-you-still-connected                                controllers.AreYouStillConnectedController.submit()
+GET         /are-you-still-connected                                controllers.connectiontoproperty.AreYouStillConnectedController.show()
+POST        /are-you-still-connected                                controllers.connectiontoproperty.AreYouStillConnectedController.submit()
 
-GET         /edit-address                                           controllers.EditAddressController.show()
-POST        /edit-address                                           controllers.EditAddressController.submit()
+GET         /edit-address                                           controllers.connectiontoproperty.EditAddressController.show()
+POST        /edit-address                                           controllers.connectiontoproperty.EditAddressController.submit()
 
 GET         /previously-connected                                   controllers.PastConnectionController.show()
 POST        /previously-connected                                   controllers.PastConnectionController.submit()
 
 GET         /remove-connection                                      controllers.RemoveConnectionController.show()
 
-GET         /connection-to-the-property                             controllers.ConnectionToThePropertyController.show()
-POST        /connection-to-the-property                             controllers.ConnectionToThePropertyController.submit()
+GET         /connection-to-the-property                             controllers.connectiontoproperty.ConnectionToThePropertyController.show()
+POST        /connection-to-the-property                             controllers.connectiontoproperty.ConnectionToThePropertyController.submit()
 
 GET         /about-the-property                                     controllers.Form6010.AboutThePropertyController.show()
 POST        /about-the-property                                     controllers.Form6010.AboutThePropertyController.submit()

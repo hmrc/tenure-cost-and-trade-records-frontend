@@ -20,8 +20,7 @@ import form.Form6010.LegalOrPlanningRestrictionsForm.legalPlanningRestrictionsFo
 import form.Form6010.TenantsAdditionsDisregardedDetailsForm.tenantsAdditionsDisregardedDetailsForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.Form6010.{legalOrPlanningRestrictions, legalOrPlanningRestrictionsDetails, tenantsAdditionsDisregardedDetails}
-import views.html.login
+import views.html.form.{legalOrPlanningRestrictions, tenantsAdditionsDisregardedDetails}
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future

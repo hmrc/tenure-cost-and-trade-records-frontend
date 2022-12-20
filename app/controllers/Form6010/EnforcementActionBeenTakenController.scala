@@ -20,7 +20,7 @@ import actions.WithSessionRefiner
 import controllers.LoginController.loginForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.Form6010.{aboutYourTradingHistory, enforcementActionBeenTaken, enforcementActionBeenTakenDetails, tiedForGoods}
+import views.html.form.{aboutYourTradingHistory, enforcementActionBeenTaken, enforcementActionBeenTakenDetails, tiedForGoods}
 import form.Form6010.EnforcementActionForm.enforcementActionForm
 import form.Form6010.EnforcementActionDetailsForm.enforcementActionDetailsForm
 import form.Form6010.TiedForGoodsForm.tiedForGoodsForm

@@ -14,8 +14,9 @@
  * limitations under the License.
  */
 
-package controllers
+package controllers.connectiontoproperty
 
+import navigation.ConnectionToPropertyNavigator
 import play.api.Application
 import play.api.http.Status
 import play.api.inject.guice.GuiceApplicationBuilder
@@ -23,10 +24,9 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import play.twirl.api.HtmlFormat
 import utils.TestBaseSpec
-import views.html.{connectionToTheProperty, taskList, taskListOwner}
+import views.html.connectiontoproperty.areYouStillConnected
 
-class ConnectionToThePropertyControllerSpec extends TestBaseSpec {
-
+class AreYouStillConnectedControllerSpec extends TestBaseSpec {
   override def fakeApplication(): Application =
     new GuiceApplicationBuilder()
       .configure(
@@ -35,28 +35,27 @@ class ConnectionToThePropertyControllerSpec extends TestBaseSpec {
       )
       .build()
 
-  private val fakeRequest = FakeRequest("GET", "/")
+  private val fakeRequest              = FakeRequest("GET", "/")
+  val mockConnectedToPropertyNavigator = mock[ConnectionToPropertyNavigator]
+  val mockAreYouStillConnectedView     = mock[areYouStillConnected]
+  when(mockAreYouStillConnectedView.apply(any)(any, any)).thenReturn(HtmlFormat.empty)
 
-  val mockConnectionToThePropertyView = mock[connectionToTheProperty]
-  when(mockConnectionToThePropertyView.apply(any)(any, any)).thenReturn(HtmlFormat.empty)
-
-  val connectionToThePropertyController = new ConnectionToThePropertyController(
+  val areYouStillConnectedController = new AreYouStillConnectedController(
     stubMessagesControllerComponents(),
-    mock[taskList],
-    mock[taskListOwner],
-    mockConnectionToThePropertyView,
+    mockConnectedToPropertyNavigator,
+    mockAreYouStillConnectedView,
     preFilledSession,
     mockSessionRepo
   )
 
   "GET /" should {
     "return 200" in {
-      val result = connectionToThePropertyController.show(fakeRequest)
+      val result = areYouStillConnectedController.show(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return HTML" in {
-      val result = connectionToThePropertyController.show(fakeRequest)
+      val result = areYouStillConnectedController.show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }

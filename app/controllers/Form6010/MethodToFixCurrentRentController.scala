@@ -18,7 +18,7 @@ package controllers.Form6010
 
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.Form6010.{intervalsOfRentReview, methodToFixCurrentRent}
+import views.html.form.{intervalsOfRentReview, methodToFixCurrentRent}
 import form.Form6010.MethodToFixCurrentRentForm.methodToFixCurrentRentForm
 import form.Form6010.IntervalsOfRentReviewForm.intervalsOfRentReviewForm
 

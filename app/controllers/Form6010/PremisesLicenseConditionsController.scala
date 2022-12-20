@@ -20,7 +20,7 @@ import form.Form6010.PremisesLicenseDetailsForm.premisesLicenceDetailsForm
 import form.Form6010.EnforcementActionForm.enforcementActionForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.Form6010.{enforcementActionBeenTaken, premisesLicenseConditions}
+import views.html.form.{enforcementActionBeenTaken, premisesLicenseConditions}
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future

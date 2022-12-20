@@ -18,7 +18,7 @@ package controllers.Form6010
 
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.Form6010.{aboutYourTradingHistory, tiedForGoodsDetails}
+import views.html.form.{aboutYourTradingHistory, tiedForGoodsDetails}
 import form.Form6010.TiedForGoodsDetailsForm.tiedForGoodsDetailsForm
 import form.Form6010.AboutYourTradingHistoryForm.aboutYourTradingHistoryForm
 

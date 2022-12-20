@@ -17,9 +17,6 @@
 package controllers.Form6010
 
 import form.Errors
-import org.scalatest.flatspec.AnyFlatSpec
-import org.scalatest.matchers.should
-import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.Application
 import play.api.data.FormError
 import play.api.http.Status
@@ -28,8 +25,8 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import play.twirl.api.HtmlFormat
 import utils.TestBaseSpec
-import views.html.Form6010.aboutYou
-import views.html.{areYouStillConnected, taskList}
+import views.html.form.aboutYou
+import views.html.taskList
 
 class AboutYouControllerSpec extends TestBaseSpec { //with AnyFlatSpec
 

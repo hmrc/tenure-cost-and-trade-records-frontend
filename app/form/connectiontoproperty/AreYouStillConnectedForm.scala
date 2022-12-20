@@ -14,21 +14,21 @@
  * limitations under the License.
  */
 
-package form
+package form.connectiontoproperty
 
-import form.MappingSupport.connectionToThePropertyType
-import models.submissions._
+import form.MappingSupport.addressConnectionType
+import models.submissions.Form6010.AddressConnectionType
 import play.api.data.Form
 import play.api.data.Forms.mapping
 
-object ConnectionToThePropertyForm {
+object AreYouStillConnectedForm {
 
-  lazy val baseConnectionToThePropertyForm: Form[ConnectionToProperty] = Form(baseConnectionToThePropertyMapping)
+  lazy val baseAreYouStillConnectedForm: Form[AddressConnectionType] = Form(baseAreYouStillConnectedMapping)
 
-  val baseConnectionToThePropertyMapping = mapping(
-    "connectionToTheProperty" -> connectionToThePropertyType
+  val baseAreYouStillConnectedMapping = mapping(
+    "isRelated" -> addressConnectionType
   )(x => x)(b => Some(b))
 
-  val connectionToThePropertyForm = Form(baseConnectionToThePropertyMapping)
+  val areYouStillConnectedForm = Form(baseAreYouStillConnectedMapping)
 
 }

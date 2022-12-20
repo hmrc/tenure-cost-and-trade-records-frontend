@@ -20,7 +20,7 @@ import form.Form6010.LicensableActivitiesInformationForm.licensableActivitiesDet
 import form.Form6010.PremisesLicenseForm.premisesLicenseForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.Form6010.{licensableActivitiesDetails, premisesLicense}
+import views.html.form.{licensableActivitiesDetails, premisesLicense}
 import views.html.login
 
 import javax.inject.{Inject, Singleton}

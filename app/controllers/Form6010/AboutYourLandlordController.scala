@@ -24,7 +24,7 @@ import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.Form6010.{aboutYourLandlord, currentAnnualRent, leaseOrAgreementYears}
+import views.html.form.{aboutYourLandlord, currentAnnualRent, leaseOrAgreementYears}
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.{ExecutionContext, Future}

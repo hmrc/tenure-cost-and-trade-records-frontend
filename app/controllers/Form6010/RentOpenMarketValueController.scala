@@ -19,7 +19,7 @@ package controllers.Form6010
 import controllers.LoginController.loginForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.Form6010.{rentIncreaseAnnuallyWithRPI, rentOpenMarketValue, whatIsYourRentBasedOn}
+import views.html.form.{rentIncreaseAnnuallyWithRPI, rentOpenMarketValue, whatIsYourRentBasedOn}
 import form.Form6010.RentOpenMarketValueForm.rentOpenMarketValuesForm
 import form.Form6010.WhatIsYourCurrentRentBasedOnForm.whatIsYourCurrentRentBasedOnForm
 import form.Form6010.RentIncreasedAnnuallyWithRPIForm.rentIncreasedAnnuallyWithRPIDetailsForm

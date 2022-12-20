@@ -18,14 +18,11 @@ package controllers
 
 import config.LoginToBackendAction
 import connectors.Audit
-import models.{Session, UserLoginDetails}
 import models.submissions.Form6010.Address
 import org.joda.time.DateTime
 import play.api.libs.json.{JsObject, Json}
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import repositories.SessionRepo
-import repository.RepositoryUtils
 import security.LoginToBackend.{Postcode, RefNumber, StartTime}
 import security.NoExistingDocument
 import uk.gov.hmrc.http.HeaderCarrier

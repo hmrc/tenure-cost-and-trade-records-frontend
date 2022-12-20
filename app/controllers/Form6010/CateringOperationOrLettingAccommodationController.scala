@@ -19,7 +19,7 @@ package controllers.Form6010
 import controllers.LoginController.loginForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.Form6010.{cateringOperationOrLettingAccommodation, cateringOperationOrLettingAccommodationDetails, lettingOtherPartOfProperty}
+import views.html.form.{cateringOperationOrLettingAccommodation, cateringOperationOrLettingAccommodationDetails, lettingOtherPartOfProperty}
 import form.Form6010.CateringOperationForm.cateringOperationForm
 import form.Form6010.CateringOperationOrLettingAccommodationForm.cateringOperationOrLettingAccommodationForm
 import form.Form6010.LettingOtherPartOfPropertiesForm.lettingOtherPartOfPropertiesForm

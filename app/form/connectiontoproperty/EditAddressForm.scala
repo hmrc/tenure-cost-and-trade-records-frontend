@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-package form
+package form.connectiontoproperty
 
-import play.api.data.Form
-import MappingSupport._
+import form.MappingSupport.addressMapping
 import models.submissions.Form6010.Address
+import play.api.data.Form
 
 object EditAddressForm {
 

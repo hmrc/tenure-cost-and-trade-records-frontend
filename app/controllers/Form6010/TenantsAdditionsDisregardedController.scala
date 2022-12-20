@@ -23,7 +23,7 @@ import form.Form6010.LegalOrPlanningRestrictionsForm.legalPlanningRestrictionsFo
 import models.submissions.Form6010.{TenantsAdditionsDisregardedNo, TenantsAdditionsDisregardedYes}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.Form6010.{legalOrPlanningRestrictions, tenantsAdditionsDisregarded, tenantsAdditionsDisregardedDetails}
+import views.html.form.{legalOrPlanningRestrictions, tenantsAdditionsDisregarded, tenantsAdditionsDisregardedDetails}
 import views.html.login
 
 import javax.inject.{Inject, Singleton}

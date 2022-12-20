@@ -20,7 +20,7 @@ import form.Form6010.CurrentLeaseOrAgreementBeginForm.currentLeaseOrAgreementBeg
 import form.Form6010.IncludedInYourRentForm.includedInYourRentForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.Form6010.{currentLeaseOrAgreementBegin, includedInYourRent}
+import views.html.form.{currentLeaseOrAgreementBegin, includedInYourRent}
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future

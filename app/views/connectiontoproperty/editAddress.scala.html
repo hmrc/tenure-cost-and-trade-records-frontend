@@ -43,9 +43,10 @@
 
 @layout(
  pageHeading = messages("editAddress.header"),
+ backLinkUrl = controllers.connectiontoproperty.routes.AreYouStillConnectedController.show.url,
  theForm = theForm
 ) {
- @formWithCSRF(action = controllers.routes.EditAddressController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
+ @formWithCSRF(action = controllers.connectiontoproperty.routes.EditAddressController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
 
   @govukInput(
    Input(

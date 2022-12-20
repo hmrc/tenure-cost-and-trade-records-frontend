@@ -24,6 +24,12 @@ object ForTypes {
     "FOR6010" -> "Public Houses",
     "FOR6011" -> "Pubs, licensed restaurants and wine bars",
     "FOR6015" -> "Hotels",
-    "FOR6016" -> "Hotels and guest houses"
+    "FOR6016" -> "Hotels and guest houses",
+    "FOR6020" -> "Petrol filling stations (occupier)",
+    "FOR6030" -> "Petrol filling stations (trade)",
+    "FOR6045" -> "Caravan sites – receipts",
+    "FOR6046" -> "Caravan sites – rental",
+    "FOR6048" -> "Self catering holiday homes",
+    "FOR6076" -> "Renewable Energy"
   )
 }
