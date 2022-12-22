@@ -21,21 +21,21 @@ import models.Session
 import models.submissions.Form6010.CustomerDetails
 import play.api.libs.json.Json
 
-case class SectionOne(customerDetails: Option[CustomerDetails] = None)
+case class AboutYou(customerDetails: Option[CustomerDetails] = None)
 
-object SectionOne {
-  implicit val format = Json.format[SectionOne]
+object AboutYou {
+  implicit val format = Json.format[AboutYou]
 
-  def updateSectionOne(copy: SectionOne => SectionOne)(implicit sessionRequest: SessionRequest[_]): Session = {
+  def updateAboutYou(copy: AboutYou => AboutYou)(implicit sessionRequest: SessionRequest[_]): Session = {
 
-    val currentSectionOne = sessionRequest.sessionData.sectionOne
+    val currentAboutYou = sessionRequest.sessionData.aboutYou
 
-    val updatedSectionOne = currentSectionOne match {
-      case Some(_) => sessionRequest.sessionData.sectionOne.map(copy)
-      case _       => Some(copy(SectionOne()))
+    val updatedAboutYou = currentAboutYou match {
+      case Some(_) => sessionRequest.sessionData.aboutYou.map(copy)
+      case _       => Some(copy(AboutYou()))
     }
 
-    sessionRequest.sessionData.copy(sectionOne = updatedSectionOne)
+    sessionRequest.sessionData.copy(aboutYou = updatedAboutYou)
 
   }
 }

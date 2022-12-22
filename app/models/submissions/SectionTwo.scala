@@ -21,8 +21,10 @@ import models.Session
 import models.submissions.Form6010.{PropertyDetails, WebsiteForPropertyDetails}
 import play.api.libs.json.Json
 
-case class SectionTwo(propertyDetails: Option[PropertyDetails] = None,
-                      websiteForPropertyDetails: Option[WebsiteForPropertyDetails] = None)
+case class SectionTwo(
+  propertyDetails: Option[PropertyDetails] = None,
+  websiteForPropertyDetails: Option[WebsiteForPropertyDetails] = None
+)
 
 object SectionTwo {
   implicit val format = Json.format[SectionTwo]

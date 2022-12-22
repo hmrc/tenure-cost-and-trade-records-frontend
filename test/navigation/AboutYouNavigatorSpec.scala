@@ -20,7 +20,7 @@ import connectors.Audit
 import controllers.Form6010.routes
 import models.Session
 import models.submissions.Form6010._
-import models.submissions.{SectionOne, StillConnectedDetails}
+import models.submissions.{AboutYou, StillConnectedDetails}
 import navigation.identifiers.{AboutYouPageId, Identifier}
 import org.scalatest.matchers.must.Matchers.convertToAnyMustWrapper
 import play.api.libs.json.JsObject
@@ -37,7 +37,7 @@ class AboutYouNavigatorSpec extends TestBaseSpec {
   val navigator = new AboutYouNavigator(audit)
 
   val stillConnectedDetailsYes = Some(StillConnectedDetails(Some(AddressConnectionTypeYes)))
-  val aboutYou                 = Some(SectionOne(Some(CustomerDetails("Tobermory", ContactDetails("12345678909", "test@email.com")))))
+  val aboutYou                 = Some(AboutYou(Some(CustomerDetails("Tobermory", ContactDetails("12345678909", "test@email.com")))))
   val sessionAboutYou          = Session(testUserLoginDetails, stillConnectedDetailsYes, aboutYou)
 
   implicit override val hc: HeaderCarrier = HeaderCarrier()
