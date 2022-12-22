@@ -16,7 +16,14 @@
 
 package models.submissions.Form6010
 
+import play.api.libs.json.Json
+
 case class PropertyDetails(
   currentOccupierName: String,
   propertyCurrentlyUsed: CurrentPropertyUsed
 )
+
+object PropertyDetails {
+  implicit val format = Json.format[PropertyDetails]
+
+}

@@ -16,32 +16,55 @@
 
 package controllers.Form6010
 
+import actions.WithSessionRefiner
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.form.{aboutTheProperty, websiteForProperty}
+import views.html.form.{aboutTheProperty, aboutThePropertyOther, websiteForProperty}
 import form.Form6010.AboutThePropertyForm.aboutThePropertyForm
+import form.Form6010.AboutThePropertyOtherForm.aboutThePropertyOtherForm
 import form.Form6010.WebsiteForPropertyForm.websiteForPropertyForm
-
-import javax.inject.{Inject, Singleton}
+import play.api.i18n.I18nSupport
+import repositories.SessionRepo
+import models.submissions.SectionTwo._
+import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
 
 @Singleton
 class AboutThePropertyController @Inject() (
   mcc: MessagesControllerComponents,
   websiteForPropertyView: websiteForProperty,
-  aboutThePropertyView: aboutTheProperty
-) extends FrontendController(mcc) {
+  aboutThePropertyOtherView: aboutThePropertyOther,
+  aboutThePropertyView: aboutTheProperty,
+  withSessionRefiner: WithSessionRefiner,
+  @Named("session") val session: SessionRepo
+) extends FrontendController(mcc) with I18nSupport{
 
-  def show: Action[AnyContent] = Action.async { implicit request =>
-    Future.successful(Ok(aboutThePropertyView(aboutThePropertyForm)))
+  def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    Future.successful(
+        Ok(
+        aboutThePropertyView(
+          request.sessionData.sectionTwo match {
+            case Some(sectionTwo) =>
+              sectionTwo.propertyDetails match {
+                case Some(propertyDetails) => aboutThePropertyForm.fillAndValidate(propertyDetails)
+                case _                     => aboutThePropertyForm
+              }
+            case _ => aboutThePropertyForm
+          }
+        )
+      )
+    )
   }
 
-  def submit = Action.async { implicit request =>
+  def submit = (Action andThen withSessionRefiner).async { implicit request =>
     aboutThePropertyForm
       .bindFromRequest()
       .fold(
         formWithErrors => Future.successful(BadRequest(aboutThePropertyView(formWithErrors))),
-        data => Future.successful(Ok(websiteForPropertyView(websiteForPropertyForm)))
+        data => {
+          session.saveOrUpdate(updateSectionTwo(_.copy(propertyDetails = Some(data))))
+          Future.successful(Ok(websiteForPropertyView(websiteForPropertyForm)))
+        }
       )
   }
 

@@ -16,13 +16,14 @@
 
 package models
 
-import models.submissions.{SectionOne, StillConnectedDetails}
+import models.submissions.{SectionOne, SectionTwo, StillConnectedDetails}
 import play.api.libs.json._
 
 case class Session(
   userLoginDetails: UserLoginDetails,
   stillConnectedDetails: Option[StillConnectedDetails] = None,
-  sectionOne: Option[SectionOne] = None
+  sectionOne: Option[SectionOne] = None,
+  sectionTwo: Option[SectionTwo] = None
 )
 
 object Session {

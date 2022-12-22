@@ -63,9 +63,9 @@ object Formats {
   implicit val connectionToPropertyFormat: Formatter[ConnectionToProperty]                                   =
     namedEnumFormatter(ConnectionToProperty, Errors.booleanMissing)
   implicit val aboutYourPropertyFormat: Formatter[CurrentPropertyUsed]                                       =
-    namedEnumFormatter(CurrentPropertyUse, Errors.currentOccupierName)
+    namedEnumFormatter(CurrentPropertyUsed, Errors.currentOccupierName)
   implicit val buildingOperatingHaveAWebsiteFormat: Formatter[BuildingOperationHaveAWebsite]                 =
-    namedEnumFormatter(BuildingOperationHasAWebsite, Errors.booleanMissing)
+    namedEnumFormatter(BuildingOperationHaveAWebsite, Errors.booleanMissing)
   implicit val addAnotherCateringOperationOrLettingAccommodationFormat
     : Formatter[AddAnotherCateringOperationOrLettingAccommodations]                                          =
     namedEnumFormatter(AddAnotherCateringOperationOrLettingAccommodation, Errors.booleanMissing)
