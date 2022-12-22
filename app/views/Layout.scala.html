@@ -26,7 +26,6 @@
 @import views.html.govuk.{head, scripts}
 @import uk.gov.hmrc.hmrcfrontend.views.html.helpers.HmrcInternalHead
 @import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcInternalHeader
-@import uk.gov.hmrc.hmrcfrontend.views.viewmodels.internalheader.InternalHeader
 @import views.html.helper.CSPNonce
 
 
@@ -118,7 +117,7 @@
 @hmrcLayout(
     pageTitle = Some(title),
     serviceName = Some(messages("site.service_name")),
-    serviceUrl= Some(routes.LoginController.show.url),
+    serviceUrl= Some(routes.LoginController.show().url),
     isWelshTranslationAvailable = true,
     nonce = CSPNonce.get,
     additionalHeadBlock = Some(headTemplate(withTimeoutDialog)),

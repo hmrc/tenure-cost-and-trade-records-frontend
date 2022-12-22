@@ -14,24 +14,19 @@
  * limitations under the License.
  */
 
-package navigation.identifiers
+package navigation
 
-case object SignInPageId extends Identifier {
-  override def toString: String = "signInPage"
-}
+import connectors.Audit
+import models.Session
+import navigation.identifiers.{AboutYouPageId, Identifier}
+import play.api.mvc.Call
 
-case object AreYouStillConnectedPageId extends Identifier {
-  override def toString: String = "areYouStillConnectedPage"
-}
+import javax.inject.Inject
+import scala.concurrent.ExecutionContext
 
-case object EditAddressPageId extends Identifier {
-  override def toString: String = "editAddressPage"
-}
+class AboutYouNavigator @Inject() (audit: Audit)(implicit ec: ExecutionContext) extends Navigator(audit) {
 
-case object ConnectionToPropertyPageId extends Identifier {
-  override def toString: String = "ConnectionToPropertyPage"
-}
-
-case object TaskListPageId extends Identifier {
-  override def toString: String = "taskListPage"
+  override val routeMap: Map[Identifier, Session => Call] = Map(
+    AboutYouPageId -> (_ => controllers.Form6010.routes.AboutThePropertyController.show())
+  )
 }

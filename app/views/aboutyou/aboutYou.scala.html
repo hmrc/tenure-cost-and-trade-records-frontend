@@ -47,11 +47,11 @@
 
 @layout(
   pageHeading = messages("aboutYou.header"),
-  backLinkUrl = controllers.routes.TaskListController.show.url,
+  backLinkUrl = controllers.routes.TaskListController.show().url,
   theForm = theForm
 ) {
 
- @formWithCSRF(action = controllers.Form6010.routes.AboutYouController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
+ @formWithCSRF(action = controllers.aboutyou.routes.AboutYouController.submit(), args = Symbol("class") -> "myForm", Symbol("id") -> "myFormId") {
 
   <p class="govuk-body">@messages("aboutYou.subheading2")</p>
 

@@ -36,8 +36,6 @@ class ConnectionToPropertyNavigatorSpec extends TestBaseSpec {
 
   val navigator = new ConnectionToPropertyNavigator(audit)
 
-//  val userLoginDetails                  =
-//    UserLoginDetails("testToken", "FOR6010", "123456", Address("13", Some("Street"), Some("City"), "AA11 1AA"))
   val stillConnectedDetailsYes  = Some(StillConnectedDetails(Some(AddressConnectionTypeYes)))
   val stillConnectedDetailsEdit = Some(StillConnectedDetails(Some(AddressConnectionTypeYesChangeAddress)))
   val stillConnectedDetailsNo   = Some(StillConnectedDetails(Some(AddressConnectionTypeNo)))

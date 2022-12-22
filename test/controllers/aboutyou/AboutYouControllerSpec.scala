@@ -14,9 +14,10 @@
  * limitations under the License.
  */
 
-package controllers.Form6010
+package controllers.aboutyou
 
 import form.Errors
+import navigation.AboutYouNavigator
 import play.api.Application
 import play.api.data.FormError
 import play.api.http.Status
@@ -25,14 +26,13 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import play.twirl.api.HtmlFormat
 import utils.TestBaseSpec
-import views.html.form.aboutYou
-import views.html.taskList
+import views.html.aboutyou.aboutYou
 
-class AboutYouControllerSpec extends TestBaseSpec { //with AnyFlatSpec
+class AboutYouControllerSpec extends TestBaseSpec {
 
-  import TestData._
-  import form.Form6010.AboutYouForm._
-  import utils.FormBindingTestAssertions._
+  import TestData.{baseFormData, errorKey}
+  import form.aboutyou.AboutYouForm.aboutYouForm
+  import utils.FormBindingTestAssertions.{mustContainError, mustContainRequiredErrorFor}
 
   override def fakeApplication(): Application =
     new GuiceApplicationBuilder()
@@ -42,13 +42,15 @@ class AboutYouControllerSpec extends TestBaseSpec { //with AnyFlatSpec
       )
       .build()
 
-  private val fakeRequest = FakeRequest("GET", "/")
-  val mockAboutYouView    = mock[aboutYou]
+  private val fakeRequest   = FakeRequest("GET", "/")
+  val mockAboutYouNavigator = mock[AboutYouNavigator]
+  val mockAboutYouView      = mock[aboutYou]
   when(mockAboutYouView.apply(any)(any, any)).thenReturn(HtmlFormat.empty)
 
+//  private val aboutYouController = app.injector.instanceOf[AboutYouController]
   val aboutYouController = new AboutYouController(
     stubMessagesControllerComponents(),
-    mock[taskList],
+    mockAboutYouNavigator,
     mockAboutYouView,
     preFilledSession,
     mockSessionRepo

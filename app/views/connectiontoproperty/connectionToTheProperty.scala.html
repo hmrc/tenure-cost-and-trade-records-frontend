@@ -56,7 +56,7 @@
   theForm = theForm
 ) {
 
- @formWithCSRF(action = controllers.connectiontoproperty.routes.ConnectionToThePropertyController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
+@formWithCSRF(action = controllers.connectiontoproperty.routes.ConnectionToThePropertyController.submit(), args = Symbol("class") -> "myForm", Symbol("id") -> "myFormId") {
 
   @govukRadios(Radios(
    fieldset = Some(Fieldset(

@@ -16,22 +16,14 @@
 
 package navigation.identifiers
 
-case object SignInPageId extends Identifier {
-  override def toString: String = "signInPage"
-}
+import utils.TestBaseSpec
 
-case object AreYouStillConnectedPageId extends Identifier {
-  override def toString: String = "areYouStillConnectedPage"
-}
+class AboutYouIdentifiersSpec extends TestBaseSpec {
 
-case object EditAddressPageId extends Identifier {
-  override def toString: String = "editAddressPage"
-}
+  "About you identifiers" when {
 
-case object ConnectionToPropertyPageId extends Identifier {
-  override def toString: String = "ConnectionToPropertyPage"
-}
-
-case object TaskListPageId extends Identifier {
-  override def toString: String = "taskListPage"
+    "Identifier for about you page" in {
+      assert(AboutYouPageId.toString.equals("aboutYouPage"))
+    }
+  }
 }
