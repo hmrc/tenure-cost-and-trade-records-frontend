@@ -16,7 +16,9 @@
 
 package models
 
-import models.submissions.{AboutYou, SectionTwo, StillConnectedDetails}
+import models.submissions.aboutyou.AboutYou
+import models.submissions.SectionTwo
+import models.submissions.connectiontoproperty.StillConnectedDetails
 import play.api.libs.json._
 
 case class Session(

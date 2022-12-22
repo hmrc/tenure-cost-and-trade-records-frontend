@@ -16,8 +16,8 @@
 
 package repository
 
+import models.submissions.common.Address
 import models.{Session, UserLoginDetails}
-import models.submissions.Form6010.Address
 import repositories.SessionData
 import repositories.{Session => SessionRepo}
 import utils.TestBaseSpec

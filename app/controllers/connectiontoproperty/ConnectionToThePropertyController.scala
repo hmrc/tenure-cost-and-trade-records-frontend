@@ -22,7 +22,7 @@ import models.Session
 import navigation.ConnectionToPropertyNavigator
 import navigation.identifiers.ConnectionToPropertyPageId
 import play.api.Logging
-import models.submissions.StillConnectedDetails.updateStillConnectedDetails
+import models.submissions.connectiontoproperty.StillConnectedDetails.updateStillConnectedDetails
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo

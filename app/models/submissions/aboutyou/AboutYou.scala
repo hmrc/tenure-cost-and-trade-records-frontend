@@ -14,11 +14,10 @@
  * limitations under the License.
  */
 
-package models.submissions
+package models.submissions.aboutyou
 
 import actions.SessionRequest
 import models.Session
-import models.submissions.Form6010.CustomerDetails
 import play.api.libs.json.Json
 
 case class AboutYou(customerDetails: Option[CustomerDetails] = None)

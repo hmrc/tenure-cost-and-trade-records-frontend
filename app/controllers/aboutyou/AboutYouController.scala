@@ -18,8 +18,7 @@ package controllers.aboutyou
 
 import actions.WithSessionRefiner
 import form.aboutyou.AboutYouForm.aboutYouForm
-import form.connectiontoproperty.AreYouStillConnectedForm.areYouStillConnectedForm
-import models.submissions.AboutYou.updateAboutYou
+import models.submissions.aboutyou.AboutYou.updateAboutYou
 import navigation.AboutYouNavigator
 import navigation.identifiers.AboutYouPageId
 import play.api.i18n.I18nSupport

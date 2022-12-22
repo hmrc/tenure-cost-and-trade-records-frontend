@@ -17,7 +17,7 @@
 package form.connectiontoproperty
 
 import form.MappingSupport.addressMapping
-import models.submissions.Form6010.Address
+import models.submissions.common.Address
 import play.api.data.Form
 
 object EditAddressForm {
