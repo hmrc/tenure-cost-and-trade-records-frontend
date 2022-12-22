@@ -32,7 +32,14 @@
 
 package models.submissions.Form6010
 
+import play.api.libs.json.Json
+
 case class WebsiteForPropertyDetails(
   buildingOperatingHaveAWebsite: BuildingOperationHaveAWebsite,
   websiteAddressForProperty: Option[String]
 )
+
+object WebsiteForPropertyDetails{
+  implicit val format = Json.format[WebsiteForPropertyDetails]
+
+}

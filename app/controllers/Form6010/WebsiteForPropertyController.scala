@@ -16,32 +16,51 @@
 
 package controllers.Form6010
 
+import actions.WithSessionRefiner
 import form.Form6010.LicensableActivitiesForm.licensableActivitiesForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.form.{licensableActivities, websiteForProperty}
 import form.Form6010.WebsiteForPropertyForm.websiteForPropertyForm
-
-import javax.inject.{Inject, Singleton}
+import play.api.i18n.I18nSupport
+import repositories.SessionRepo
+import models.submissions.SectionTwo._
+import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
 
 @Singleton
 class WebsiteForPropertyController @Inject() (
   mcc: MessagesControllerComponents,
   websiteForPropertyView: websiteForProperty,
-  licensableActivitiesView: licensableActivities
-) extends FrontendController(mcc) {
+  licensableActivitiesView: licensableActivities,
+  withSessionRefiner: WithSessionRefiner,
+  @Named("session") val session: SessionRepo
+) extends FrontendController(mcc) with I18nSupport{
 
-  def show: Action[AnyContent] = Action.async { implicit request =>
-    Future.successful(Ok(websiteForPropertyView(websiteForPropertyForm)))
+  def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    Future.successful(Ok(
+      websiteForPropertyView(
+        request.sessionData.sectionTwo match {
+          case Some(sectionTwo) =>
+            sectionTwo.websiteForPropertyDetails match {
+              case Some(websiteForPropertyDetails) => websiteForPropertyForm.fillAndValidate(websiteForPropertyDetails)
+              case _ => websiteForPropertyForm
+            }
+          case _ => websiteForPropertyForm
+        }
+      )))
   }
 
-  def submit = Action.async { implicit request =>
+  //TODO - the view needs to be updated so that if the user selects 'yes' the text field is mandatory. It is currently possible for a user to click 'yes' and enter no data.
+  def submit = (Action andThen withSessionRefiner).async { implicit request =>
     websiteForPropertyForm
       .bindFromRequest()
       .fold(
         formWithErrors => Future.successful(BadRequest(websiteForPropertyView(formWithErrors))),
-        data => Future.successful(Ok(licensableActivitiesView(licensableActivitiesForm)))
+        data => {
+          session.saveOrUpdate(updateSectionTwo(_.copy(websiteForPropertyDetails = Some(data))))
+          Future.successful(Ok(licensableActivitiesView(licensableActivitiesForm)))
+        }
       )
   }
 

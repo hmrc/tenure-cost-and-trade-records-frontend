@@ -16,7 +16,8 @@
 
 package models.submissions.Form6010
 
-import models.{NamedEnum, NamedEnumSupport}
+import models.{EnumFormat, NamedEnum, NamedEnumSupport}
+import play.api.libs.json.Format
 
 sealed trait CurrentPropertyUsed extends NamedEnum {
   val key = "currentPropertyUsed"
@@ -46,8 +47,10 @@ object CurrentPropertyOther extends CurrentPropertyUsed {
   val name = "other"
 }
 
-object CurrentPropertyUse extends NamedEnumSupport[CurrentPropertyUsed] {
-  val all = List(
+object CurrentPropertyUsed extends NamedEnumSupport[CurrentPropertyUsed] {
+  implicit val format: Format[CurrentPropertyUsed] = EnumFormat(CurrentPropertyUsed)
+
+  override def all = List(
     CurrentPropertyPublicHouse,
     CurrentPropertyWineBarOrCafe,
     CurrentPropertyOtherBar,
@@ -57,4 +60,7 @@ object CurrentPropertyUse extends NamedEnumSupport[CurrentPropertyUsed] {
     CurrentPropertyDiscoOrNightclub,
     CurrentPropertyOther
   )
+
+  val key = all.head.key
+
 }

@@ -16,7 +16,8 @@
 
 package models.submissions.Form6010
 
-import models.{NamedEnum, NamedEnumSupport}
+import models.{EnumFormat, NamedEnum, NamedEnumSupport}
+import play.api.libs.json.Format
 
 sealed trait BuildingOperationHaveAWebsite extends NamedEnum {
   val key = "buildingOperatingHaveAWebsite"
@@ -28,6 +29,12 @@ object BuildingOperationHaveAWebsiteNo extends BuildingOperationHaveAWebsite {
   val name = "no"
 }
 
-object BuildingOperationHasAWebsite extends NamedEnumSupport[BuildingOperationHaveAWebsite] {
+object BuildingOperationHaveAWebsite extends NamedEnumSupport[BuildingOperationHaveAWebsite] {
+
+  implicit val format: Format[BuildingOperationHaveAWebsite] = EnumFormat(BuildingOperationHaveAWebsite)
+
   val all = List(BuildingOperationHaveAWebsiteYes, BuildingOperationHaveAWebsiteNo)
+
+  val key = all.head.key
+
 }

@@ -22,7 +22,9 @@ import play.api.http.Status
 import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
+import play.twirl.api.HtmlFormat
 import utils.TestBaseSpec
+import views.html.form.{licensableActivities, websiteForProperty}
 
 class WebsiteForPropertyControllerSpec extends TestBaseSpec {
 
@@ -39,17 +41,24 @@ class WebsiteForPropertyControllerSpec extends TestBaseSpec {
       .build()
 
   private val fakeRequest = FakeRequest("GET", "/")
+  val mockWebsiteForPropertyView: websiteForProperty = mock[websiteForProperty]
+  when(mockWebsiteForPropertyView.apply(any)(any, any)).thenReturn(HtmlFormat.empty)
 
-  private val controller = app.injector.instanceOf[WebsiteForPropertyController]
-
+  val websiteForPropertyController = new WebsiteForPropertyController(
+    stubMessagesControllerComponents(),
+    mockWebsiteForPropertyView,
+    mock[licensableActivities],
+    preFilledSession,
+    mockSessionRepo
+  )
   "WebsiteForProperty controller" should {
     "return 200" in {
-      val result = controller.show(fakeRequest)
+      val result = websiteForPropertyController.show(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return HTML" in {
-      val result = controller.show(fakeRequest)
+      val result = websiteForPropertyController.show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
