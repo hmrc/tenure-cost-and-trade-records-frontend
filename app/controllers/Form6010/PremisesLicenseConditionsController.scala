@@ -16,32 +16,46 @@
 
 package controllers.Form6010
 
+import actions.WithSessionRefiner
 import form.Form6010.PremisesLicenseDetailsForm.premisesLicenceDetailsForm
 import form.Form6010.EnforcementActionForm.enforcementActionForm
+import models.submissions.SectionTwo.updateSectionTwo
+import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.form.{enforcementActionBeenTaken, premisesLicenseConditions}
 
-import javax.inject.{Inject, Singleton}
+import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
 
 @Singleton
 class PremisesLicenseConditionsController @Inject() (
   mcc: MessagesControllerComponents,
   enforcementActionBeenTakenView: enforcementActionBeenTaken,
-  premisesLicenseConditionsView: premisesLicenseConditions
-) extends FrontendController(mcc) {
+  premisesLicenseConditionsView: premisesLicenseConditions,
+  withSessionRefiner: WithSessionRefiner,
+  @Named("session") val session: SessionRepo
+) extends FrontendController(mcc) with I18nSupport {
 
-  def show: Action[AnyContent] = Action.async { implicit request =>
-    Future.successful(Ok(premisesLicenseConditionsView(premisesLicenceDetailsForm)))
+  def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    Future.successful(Ok(premisesLicenseConditionsView(
+      request.sessionData.sectionTwo.flatMap(_.premisesLicenseInformationDetails) match {
+        case Some(premisesLicenseInformation) => premisesLicenceDetailsForm.fillAndValidate(premisesLicenseInformation)
+        case _ => premisesLicenceDetailsForm
+      }
+    )))
   }
 
-  def submit = Action.async { implicit request =>
+  def submit = (Action andThen withSessionRefiner).async { implicit request =>
     premisesLicenceDetailsForm
       .bindFromRequest()
       .fold(
         formWithErrors => Future.successful(BadRequest(premisesLicenseConditionsView(formWithErrors))),
-        data => Future.successful(Ok(enforcementActionBeenTakenView(enforcementActionForm)))
+        data => {
+          session.saveOrUpdate(updateSectionTwo(_.copy(premisesLicenseInformationDetails = Some(data))))
+          Future.successful(Ok(enforcementActionBeenTakenView(enforcementActionForm)))
+        }
       )
   }
 

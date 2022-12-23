@@ -16,34 +16,47 @@
 
 package controllers.Form6010
 
+import actions.WithSessionRefiner
 import form.Form6010.LicensableActivitiesInformationForm.licensableActivitiesDetailsForm
 import form.Form6010.PremisesLicenseForm.premisesLicenseForm
+import models.submissions.SectionTwo.updateSectionTwo
+import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.form.{licensableActivitiesDetails, premisesLicense}
 import views.html.login
 
-import javax.inject.{Inject, Singleton}
+import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
 
 @Singleton
 class LicensableActivitiesDetailsController @Inject() (
   mcc: MessagesControllerComponents,
-  login: login,
   licensableActivitiesDetailsView: licensableActivitiesDetails,
-  premisesLicenseView: premisesLicense
-) extends FrontendController(mcc) {
+  premisesLicenseView: premisesLicense,
+  withSessionRefiner: WithSessionRefiner,
+  @Named("session") val session: SessionRepo
+) extends FrontendController(mcc) with I18nSupport  {
 
-  def show: Action[AnyContent] = Action.async { implicit request =>
-    Future.successful(Ok(licensableActivitiesDetailsView(licensableActivitiesDetailsForm)))
+  def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    Future.successful(Ok(licensableActivitiesDetailsView(
+      request.sessionData.sectionTwo.flatMap(_.licensableActivitiesInformationDetails) match {
+        case Some(licensableActivitiesInformation) => licensableActivitiesDetailsForm.fillAndValidate(licensableActivitiesInformation)
+        case _ => licensableActivitiesDetailsForm
+      }
+    )))
   }
 
-  def submit = Action.async { implicit request =>
+  def submit = (Action andThen withSessionRefiner).async { implicit request =>
     licensableActivitiesDetailsForm
       .bindFromRequest()
       .fold(
         formWithErrors => Future.successful(BadRequest(licensableActivitiesDetailsView(formWithErrors))),
-        data => Future.successful(Ok(premisesLicenseView(premisesLicenseForm)))
+        data => {
+          session.saveOrUpdate(updateSectionTwo(_.copy(licensableActivitiesInformationDetails = Some(data))))
+          Future.successful(Ok(premisesLicenseView(premisesLicenseForm)))
+        }
       )
   }
 

@@ -16,17 +16,21 @@
 
 package controllers.Form6010
 
+import actions.WithSessionRefiner
 import controllers.LoginController.loginForm
-import form.Form6010.TiedForGoodsDetailsForm.tiedForGoodsDetailsForm
 import form.Form6010.AboutYourTradingHistoryForm.aboutYourTradingHistoryForm
+import form.Form6010.TiedForGoodsDetailsForm.tiedForGoodsDetailsForm
 import form.Form6010.TiedForGoodsForm.tiedForGoodsForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.form.{aboutYourTradingHistory, tiedForGoods, tiedForGoodsDetails}
 import models.submissions.Form6010.{TiedGoodsNo, TiedGoodsYes}
+import models.submissions.SectionTwo.updateSectionTwo
+import play.api.i18n.I18nSupport
+import repositories.SessionRepo
 import views.html.login
 
-import javax.inject.{Inject, Singleton}
+import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
 
 @Singleton
@@ -35,24 +39,34 @@ class TiedForGoodsController @Inject() (
   login: login,
   tiedForGoodsView: tiedForGoods,
   tiedForGoodsDetailsView: tiedForGoodsDetails,
-  aboutYourTradingHistoryView: aboutYourTradingHistory
-) extends FrontendController(mcc) {
+  aboutYourTradingHistoryView: aboutYourTradingHistory,
+  withSessionRefiner: WithSessionRefiner,
+  @Named("session") val session: SessionRepo
+) extends FrontendController(mcc) with I18nSupport {
 
-  def show: Action[AnyContent] = Action.async { implicit request =>
-    Future.successful(Ok(tiedForGoodsView(tiedForGoodsForm)))
+  def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    Future.successful(Ok(tiedForGoodsView(
+      request.sessionData.sectionTwo.flatMap(_.tiedForGoods) match {
+        case Some(tiedForGoods) => tiedForGoodsForm.fillAndValidate(tiedForGoods)
+        case _ => tiedForGoodsForm
+      }
+      )))
   }
 
-  def submit = Action.async { implicit request =>
+  def submit = (Action andThen withSessionRefiner).async { implicit request =>
     tiedForGoodsForm
       .bindFromRequest()
       .fold(
         formWithErrors => Future.successful(BadRequest(tiedForGoodsView(formWithErrors))),
-        data =>
-          data.tiedGoodsDetails match {
-            case TiedGoodsYes => Future.successful(Ok(tiedForGoodsDetailsView(tiedForGoodsDetailsForm)))
-            case TiedGoodsNo  => Future.successful(Ok(aboutYourTradingHistoryView(aboutYourTradingHistoryForm)))
-            case _            => Future.successful(Ok(login(loginForm)))
-          }
+        {
+          case data@TiedGoodsYes =>
+            session.saveOrUpdate(updateSectionTwo(_.copy(tiedForGoods = Some(data))))
+            Future.successful(Ok(tiedForGoodsDetailsView(tiedForGoodsDetailsForm)))
+          case data@TiedGoodsNo =>
+            session.saveOrUpdate(updateSectionTwo(_.copy(tiedForGoods = Some(data))))
+            Future.successful(Ok(aboutYourTradingHistoryView(aboutYourTradingHistoryForm)))
+          case _ => Future.successful(Ok(login(loginForm)))
+        }
       )
   }
 

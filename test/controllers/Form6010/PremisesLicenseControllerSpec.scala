@@ -21,7 +21,10 @@ import play.api.http.Status
 import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
+import play.twirl.api.HtmlFormat
 import utils.TestBaseSpec
+import views.html.form.{enforcementActionBeenTaken, premisesLicense, premisesLicenseConditions}
+import views.html.login
 
 class PremisesLicenseControllerSpec extends TestBaseSpec {
   override def fakeApplication(): Application =
@@ -33,17 +36,27 @@ class PremisesLicenseControllerSpec extends TestBaseSpec {
       .build()
 
   private val fakeRequest = FakeRequest("GET", "/")
+  val mockPremisesLicenseView = mock[premisesLicense]
+  when(mockPremisesLicenseView.apply(any)(any, any)).thenReturn(HtmlFormat.empty)
 
-  private val controller = app.injector.instanceOf[PremisesLicenseController]
+  val premisesLicenseController = new PremisesLicenseController(
+    stubMessagesControllerComponents(),
+    mock[login],
+    mockPremisesLicenseView,
+    mock[premisesLicenseConditions],
+    mock[enforcementActionBeenTaken],
+    preFilledSession,
+    mockSessionRepo
+  )
 
   "GET /" should {
     "return 200" in {
-      val result = controller.show(fakeRequest)
+      val result = premisesLicenseController.show(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return HTML" in {
-      val result = controller.show(fakeRequest)
+      val result = premisesLicenseController.show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
