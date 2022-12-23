@@ -16,6 +16,7 @@
 
 package controllers.Form6010
 
+import actions.WithSessionRefiner
 import controllers.LoginController.loginForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
@@ -24,9 +25,12 @@ import form.Form6010.LicensableActivitiesInformationForm.licensableActivitiesDet
 import form.Form6010.LicensableActivitiesForm.licensableActivitiesForm
 import form.Form6010.PremisesLicenseForm.premisesLicenseForm
 import models.submissions.Form6010.{LicensableActivitiesNo, LicensableActivitiesYes}
+import models.submissions.SectionTwo.updateSectionTwo
+import play.api.i18n.I18nSupport
+import repositories.SessionRepo
 import views.html.login
 
-import javax.inject.{Inject, Singleton}
+import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
 
 @Singleton
@@ -35,25 +39,35 @@ class LicensableActivitiesController @Inject() (
   login: login,
   licensableActivitiesView: licensableActivities,
   licensableActivitiesDetailsView: licensableActivitiesDetails,
-  premisesLicenseView: premisesLicense
-) extends FrontendController(mcc) {
+  premisesLicenseView: premisesLicense,
+  withSessionRefiner: WithSessionRefiner,
+  @Named("session") val session: SessionRepo
+) extends FrontendController(mcc) with I18nSupport {
 
-  def show: Action[AnyContent] = Action.async { implicit request =>
-    Future.successful(Ok(licensableActivitiesView(licensableActivitiesForm)))
+  def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    Future.successful(Ok(
+      licensableActivitiesView(
+        request.sessionData.sectionTwo.flatMap(_.licensableActivities) match {
+          case Some(licensableActivities) => licensableActivitiesForm.fillAndValidate(licensableActivities)
+          case _ => licensableActivitiesForm
+        }
+        )))
   }
 
-  def submit = Action.async { implicit request =>
+  def submit = (Action andThen withSessionRefiner).async { implicit request =>
     licensableActivitiesForm
       .bindFromRequest()
       .fold(
         formWithErrors => Future.successful(BadRequest(licensableActivitiesView(formWithErrors))),
-        data =>
-          data.licensableActivities match {
-            case LicensableActivitiesYes =>
-              Future.successful(Ok(licensableActivitiesDetailsView(licensableActivitiesDetailsForm)))
-            case LicensableActivitiesNo  => Future.successful(Ok(premisesLicenseView(premisesLicenseForm)))
-            case _                       => Future.successful(Ok(login(loginForm)))
-          }
+        {
+          case data@LicensableActivitiesYes =>
+            session.saveOrUpdate(updateSectionTwo(_.copy(licensableActivities = Some(data))))
+            Future.successful(Ok(licensableActivitiesDetailsView(licensableActivitiesDetailsForm)))
+          case data@LicensableActivitiesNo =>
+            session.saveOrUpdate(updateSectionTwo(_.copy(licensableActivities = Some(data))))
+            Future.successful(Ok(premisesLicenseView(premisesLicenseForm)))
+          case _ => Future.successful(Ok(login(loginForm)))
+        }
       )
   }
 

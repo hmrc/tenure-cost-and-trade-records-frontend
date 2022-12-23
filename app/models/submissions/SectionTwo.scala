@@ -18,11 +18,19 @@ package models.submissions
 
 import actions.SessionRequest
 import models.Session
-import models.submissions.Form6010.{PropertyDetails, WebsiteForPropertyDetails}
+import models.submissions.Form6010.{EnforcementAction, EnforcementActionHasBeenTakenInformationDetails, LicensableActivities, LicensableActivitiesInformationDetails, PremisesLicense, PremisesLicenseInformationDetails, PropertyDetails, TiedForGoods, TiedForGoodsInformation, TiedForGoodsInformationDetails, WebsiteForPropertyDetails}
 import play.api.libs.json.Json
 
 case class SectionTwo(propertyDetails: Option[PropertyDetails] = None,
-                      websiteForPropertyDetails: Option[WebsiteForPropertyDetails] = None)
+                      websiteForPropertyDetails: Option[WebsiteForPropertyDetails] = None,
+                      licensableActivities: Option[LicensableActivities] = None,
+                      licensableActivitiesInformationDetails: Option[LicensableActivitiesInformationDetails] = None,
+                      premisesLicense: Option[PremisesLicense] = None,
+                      premisesLicenseInformationDetails: Option[PremisesLicenseInformationDetails] = None,
+                      enforcementAction: Option[EnforcementAction] = None,
+                      enforcementActionHasBeenTakenInformationDetails: Option[EnforcementActionHasBeenTakenInformationDetails] = None,
+                      tiedForGoods: Option[TiedForGoods] = None,
+                      tiedForGoodsDetails : Option[TiedForGoodsInformationDetails] = None)
 
 object SectionTwo {
   implicit val format = Json.format[SectionTwo]

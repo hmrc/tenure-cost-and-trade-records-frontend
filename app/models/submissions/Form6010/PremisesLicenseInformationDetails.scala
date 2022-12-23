@@ -16,6 +16,13 @@
 
 package models.submissions.Form6010
 
+import play.api.libs.json.Json
+
 case class PremisesLicenseInformationDetails(
   premisesLicenseInformationDetails: String
 )
+
+object PremisesLicenseInformationDetails {
+  implicit val format = Json.format[PremisesLicenseInformationDetails]
+
+}

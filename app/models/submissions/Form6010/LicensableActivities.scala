@@ -16,18 +16,24 @@
 
 package models.submissions.Form6010
 
-import models.{NamedEnum, NamedEnumSupport}
+import models.{EnumFormat, NamedEnum, NamedEnumSupport}
+import play.api.libs.json.Format
 
 sealed trait LicensableActivities extends NamedEnum {
-  val key = "licensableActivities"
+  override def key: String = "licensableActivities"
 }
 object LicensableActivitiesYes extends LicensableActivities {
-  val name = "yes"
+  override def name: String = "yes"
 }
 object LicensableActivitiesNo extends LicensableActivities {
-  val name = "no"
+  override def name: String = "no"
 }
 
-object LicensableActivity extends NamedEnumSupport[LicensableActivities] {
-  val all = List(LicensableActivitiesYes, LicensableActivitiesNo)
+object LicensableActivities extends NamedEnumSupport[LicensableActivities] {
+  implicit val format: Format[LicensableActivities] = EnumFormat(LicensableActivities)
+
+  override def all = List(LicensableActivitiesYes, LicensableActivitiesNo)
+
+  val key = all.head.key
+
 }
