@@ -41,12 +41,12 @@ class LicensableActivitiesControllerSpec extends TestBaseSpec {
       )
       .build()
 
-  private val fakeRequest = FakeRequest("GET", "/")
+  private val fakeRequest          = FakeRequest("GET", "/")
   val mockLicensableActivitiesView = mock[licensableActivities]
   when(mockLicensableActivitiesView.apply(any)(any, any)).thenReturn(HtmlFormat.empty)
 
   val licensableActivitiesController = new LicensableActivitiesController(
-   stubMessagesControllerComponents(),
+    stubMessagesControllerComponents(),
     mock[login],
     mockLicensableActivitiesView,
     mock[licensableActivitiesDetails],

@@ -37,15 +37,21 @@ class LicensableActivitiesDetailsController @Inject() (
   premisesLicenseView: premisesLicense,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FrontendController(mcc) with I18nSupport  {
+) extends FrontendController(mcc)
+    with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    Future.successful(Ok(licensableActivitiesDetailsView(
-      request.sessionData.sectionTwo.flatMap(_.licensableActivitiesInformationDetails) match {
-        case Some(licensableActivitiesInformation) => licensableActivitiesDetailsForm.fillAndValidate(licensableActivitiesInformation)
-        case _ => licensableActivitiesDetailsForm
-      }
-    )))
+    Future.successful(
+      Ok(
+        licensableActivitiesDetailsView(
+          request.sessionData.sectionTwo.flatMap(_.licensableActivitiesInformationDetails) match {
+            case Some(licensableActivitiesInformation) =>
+              licensableActivitiesDetailsForm.fillAndValidate(licensableActivitiesInformation)
+            case _                                     => licensableActivitiesDetailsForm
+          }
+        )
+      )
+    )
   }
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>

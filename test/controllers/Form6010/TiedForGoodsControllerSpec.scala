@@ -50,7 +50,6 @@ class TiedForGoodsControllerSpec extends TestBaseSpec {
     mockSessionRepo
   )
 
-
   "GET /" should {
     "return 200" in {
       val result = tiedForGoodsController.show(fakeRequest)

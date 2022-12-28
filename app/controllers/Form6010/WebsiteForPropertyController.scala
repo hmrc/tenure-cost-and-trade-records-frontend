@@ -35,20 +35,25 @@ class WebsiteForPropertyController @Inject() (
   licensableActivitiesView: licensableActivities,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FrontendController(mcc) with I18nSupport{
+) extends FrontendController(mcc)
+    with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    Future.successful(Ok(
-      websiteForPropertyView(
-        request.sessionData.sectionTwo match {
-          case Some(sectionTwo) =>
-            sectionTwo.websiteForPropertyDetails match {
-              case Some(websiteForPropertyDetails) => websiteForPropertyForm.fillAndValidate(websiteForPropertyDetails)
-              case _ => websiteForPropertyForm
-            }
-          case _ => websiteForPropertyForm
-        }
-      )))
+    Future.successful(
+      Ok(
+        websiteForPropertyView(
+          request.sessionData.sectionTwo match {
+            case Some(sectionTwo) =>
+              sectionTwo.websiteForPropertyDetails match {
+                case Some(websiteForPropertyDetails) =>
+                  websiteForPropertyForm.fillAndValidate(websiteForPropertyDetails)
+                case _                               => websiteForPropertyForm
+              }
+            case _                => websiteForPropertyForm
+          }
+        )
+      )
+    )
   }
 
   //TODO - the view needs to be updated so that if the user selects 'yes' the text field is mandatory. It is currently possible for a user to click 'yes' and enter no data.

@@ -34,7 +34,7 @@ class AboutThePropertyControllerSpec extends TestBaseSpec {
       )
       .build()
 
-  private val fakeRequest = FakeRequest("GET", "/")
+  private val fakeRequest                        = FakeRequest("GET", "/")
   val mockAboutThePropertyView: aboutTheProperty = mock[aboutTheProperty]
   when(mockAboutThePropertyView.apply(any)(any, any)).thenReturn(HtmlFormat.empty)
 
