@@ -14,18 +14,18 @@
  * limitations under the License.
  */
 
-package controllers.Form6010
+package controllers.aboutyou
 
-import actions.{SessionRequest, WithSessionRefiner}
-import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.form.aboutYou
-import views.html.taskList
-import form.Form6010.AboutYouForm.aboutYouForm
-import models.Session
+import actions.WithSessionRefiner
+import form.aboutyou.AboutYouForm.aboutYouForm
 import models.submissions.SectionOne.updateSectionOne
+import navigation.AboutYouNavigator
+import navigation.identifiers.AboutYouPageId
 import play.api.i18n.I18nSupport
+import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
+import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
+import views.html.aboutyou.aboutYou
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
@@ -33,7 +33,7 @@ import scala.concurrent.Future
 @Singleton
 class AboutYouController @Inject() (
   mcc: MessagesControllerComponents,
-  taskListView: taskList,
+  navigator: AboutYouNavigator,
   aboutYouView: aboutYou,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
@@ -44,13 +44,9 @@ class AboutYouController @Inject() (
     Future.successful(
       Ok(
         aboutYouView(
-          request.sessionData.sectionOne match {
-            case Some(sectionOne) =>
-              sectionOne.customerDetails match {
-                case Some(customerDetails) => aboutYouForm.fillAndValidate(customerDetails)
-                case _                     => aboutYouForm
-              }
-            case _                => aboutYouForm
+          request.sessionData.sectionOne.flatMap(_.customerDetails) match {
+            case Some(customerDetails) => aboutYouForm.fillAndValidate(customerDetails)
+            case _                     => aboutYouForm
           }
         )
       )
@@ -63,8 +59,9 @@ class AboutYouController @Inject() (
       .fold(
         formWithErrors => Future.successful(BadRequest(aboutYouView(formWithErrors))),
         data => {
-          session.saveOrUpdate(updateSectionOne(_.copy(customerDetails = Some(data))))
-          Future.successful(Ok(taskListView()))
+          val updatedData = updateSectionOne(_.copy(customerDetails = Some(data)))
+          session.saveOrUpdate(updatedData)
+          Future.successful(Redirect(navigator.nextPage(AboutYouPageId).apply(updatedData)))
         }
       )
   }
