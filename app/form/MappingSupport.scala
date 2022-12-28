@@ -49,9 +49,9 @@ object MappingSupport {
   val lettingOtherPartOfPropertiesType: Mapping[LettingOtherPartOfProperties]                         = Forms.of[LettingOtherPartOfProperties]
   val licensableActivitiesType: Mapping[LicensableActivities]                                         = Forms.of[LicensableActivities]
   val tiedForGoodsType: Mapping[TiedForGoods]                                                         = Forms.of[TiedForGoods]
-  val premisesLicenseType: Mapping[PremisesLicenses]                                                  = Forms.of[PremisesLicenses]
+  val premisesLicenseType: Mapping[PremisesLicense]                                                  = Forms.of[PremisesLicense]
   val tenancyLeaseAgreementType: Mapping[TenancyLeaseAgreements]                                      = Forms.of[TenancyLeaseAgreements]
-  val enforcementActionType: Mapping[EnforcementActions]                                              = Forms.of[EnforcementActions]
+  val enforcementActionType: Mapping[EnforcementAction]                                              = Forms.of[EnforcementAction]
   val franchiseOrLettingsTiedToPropertyType: Mapping[FranchiseOrLettingsTiedToProperties]             =
     Forms.of[FranchiseOrLettingsTiedToProperties]
   val rentIncreasedAnnuallyWithRPIDetailsType: Mapping[RentIncreasedAnnuallyWithRPIs]                 =
@@ -102,7 +102,7 @@ object MappingSupport {
 
   val currentRentPayableWithin12MonthsType: Mapping[CurrentRentWithin12Months] = Forms.of[CurrentRentWithin12Months]
 
-  val tiedForGoodsDetailsType: Mapping[TiedForGoodsInformationDetail] = Forms.of[TiedForGoodsInformationDetail]
+  val tiedForGoodsDetailsType: Mapping[TiedForGoodsInformation] = Forms.of[TiedForGoodsInformation]
   val postcode: Mapping[String]                                       = PostcodeMapping.postcode()
 
   val decimalRegex         = """^[0-9]{1,10}\.?[0-9]{0,2}$"""

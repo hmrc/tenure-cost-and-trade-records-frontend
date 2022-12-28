@@ -21,7 +21,9 @@ import play.api.http.Status
 import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
+import play.twirl.api.HtmlFormat
 import utils.TestBaseSpec
+import views.html.form.{enforcementActionBeenTakenDetails, licensableActivitiesDetails, tiedForGoods}
 
 class EnforcementActionBeenTakenDetailsControllerSpec extends TestBaseSpec {
   override def fakeApplication(): Application =
@@ -34,16 +36,25 @@ class EnforcementActionBeenTakenDetailsControllerSpec extends TestBaseSpec {
 
   private val fakeRequest = FakeRequest("GET", "/")
 
-  private val controller = app.injector.instanceOf[EnforcementActionBeenTakenDetailsController]
+  val mockEnforcementActionBeenTakenDetailsView = mock[enforcementActionBeenTakenDetails]
+  when(mockEnforcementActionBeenTakenDetailsView.apply(any)(any, any)).thenReturn(HtmlFormat.empty)
+
+ val enforcementActionBeenTakenDetailsController = new EnforcementActionBeenTakenDetailsController(
+   stubMessagesControllerComponents(),
+   mock[tiedForGoods],
+   mockEnforcementActionBeenTakenDetailsView,
+   preFilledSession,
+   mockSessionRepo
+ )
 
   "GET /" should {
     "return 200" in {
-      val result = controller.show(fakeRequest)
+      val result = enforcementActionBeenTakenDetailsController.show(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return HTML" in {
-      val result = controller.show(fakeRequest)
+      val result = enforcementActionBeenTakenDetailsController.show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }

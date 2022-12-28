@@ -16,32 +16,46 @@
 
 package controllers.Form6010
 
+import actions.WithSessionRefiner
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.form.{aboutYourTradingHistory, tiedForGoodsDetails}
 import form.Form6010.TiedForGoodsDetailsForm.tiedForGoodsDetailsForm
 import form.Form6010.AboutYourTradingHistoryForm.aboutYourTradingHistoryForm
+import models.submissions.SectionTwo.updateSectionTwo
+import play.api.i18n.I18nSupport
+import repositories.SessionRepo
 
-import javax.inject.{Inject, Singleton}
+import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
 
 @Singleton
 class TiedForGoodsDetailsController @Inject() (
   mcc: MessagesControllerComponents,
   aboutYourTradingHistoryView: aboutYourTradingHistory,
-  tiedForGoodsDetailsView: tiedForGoodsDetails
-) extends FrontendController(mcc) {
+  tiedForGoodsDetailsView: tiedForGoodsDetails,
+  withSessionRefiner: WithSessionRefiner,
+  @Named("session") val session: SessionRepo
+) extends FrontendController(mcc) with I18nSupport {
 
-  def show: Action[AnyContent] = Action.async { implicit request =>
-    Future.successful(Ok(tiedForGoodsDetailsView(tiedForGoodsDetailsForm)))
+  def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    Future.successful(Ok(tiedForGoodsDetailsView(
+      request.sessionData.sectionTwo.flatMap(_.tiedForGoodsDetails) match {
+        case Some(tiedForGoodsDetails) => tiedForGoodsDetailsForm.fillAndValidate(tiedForGoodsDetails)
+        case _ => tiedForGoodsDetailsForm
+      }
+      )))
   }
 
-  def submit = Action.async { implicit request =>
+  def submit = (Action andThen withSessionRefiner).async { implicit request =>
     tiedForGoodsDetailsForm
       .bindFromRequest()
       .fold(
         formWithErrors => Future.successful(BadRequest(tiedForGoodsDetailsView(formWithErrors))),
-        data => Future.successful(Ok(aboutYourTradingHistoryView(aboutYourTradingHistoryForm)))
+        data => {
+          session.saveOrUpdate(updateSectionTwo(_.copy(tiedForGoodsDetails = Some(data))))
+          Future.successful(Ok(aboutYourTradingHistoryView(aboutYourTradingHistoryForm)))
+        }
       )
   }
 

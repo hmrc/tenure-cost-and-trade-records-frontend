@@ -19,6 +19,7 @@ package controllers.Form6010
 import actions.WithSessionRefiner
 import form.Form6010.EnforcementActionDetailsForm.enforcementActionDetailsForm
 import form.Form6010.TiedForGoodsForm.tiedForGoodsForm
+import models.submissions.SectionTwo.updateSectionTwo
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
@@ -39,16 +40,24 @@ class EnforcementActionBeenTakenDetailsController @Inject() (
     extends FrontendController(mcc)
     with I18nSupport {
 
-  def show: Action[AnyContent] = Action.async { implicit request =>
-    Future.successful(Ok(enforcementActionBeenTakenDetailsView(enforcementActionDetailsForm)))
+  def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    Future.successful(Ok(enforcementActionBeenTakenDetailsView(
+      request.sessionData.sectionTwo.flatMap(_.enforcementActionHasBeenTakenInformationDetails) match {
+        case Some(enforcementActionInformation) => enforcementActionDetailsForm.fillAndValidate(enforcementActionInformation)
+        case _ => enforcementActionDetailsForm
+      }
+      )))
   }
 
-  def submit = Action.async { implicit request =>
+  def submit = (Action andThen withSessionRefiner).async { implicit request =>
     enforcementActionDetailsForm
       .bindFromRequest()
       .fold(
         formWithErrors => Future.successful(BadRequest(enforcementActionBeenTakenDetailsView(formWithErrors))),
-        data => Future.successful(Ok(tiedForGoodsView(tiedForGoodsForm)))
+        data => {
+          session.saveOrUpdate(updateSectionTwo(_.copy(enforcementActionHasBeenTakenInformationDetails = Some(data))))
+          Future.successful(Ok(tiedForGoodsView(tiedForGoodsForm)))
+        }
       )
   }
 
