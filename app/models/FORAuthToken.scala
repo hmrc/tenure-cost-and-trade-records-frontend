@@ -16,7 +16,7 @@
 
 package models
 
-import models.submissions.Form6010.Address
+import models.submissions.common.Address
 import play.api.libs.json.Json
 
 case class FORLoginResponse(forAuthToken: String, forType: String, address: Address)

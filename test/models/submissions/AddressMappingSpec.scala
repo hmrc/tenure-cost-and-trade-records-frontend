@@ -16,8 +16,7 @@
 
 package models.submissions
 
-import models.submissions.Form6010.Address
-
+import models.submissions.common.Address
 import play.api.libs.json.{JsResult, JsSuccess, Json}
 import utils.TestBaseSpec
 

@@ -18,8 +18,8 @@ package utils
 
 import actions.{SessionRequest, WithSessionRefiner}
 import config.ErrorHandler
-import models.submissions.Form6010.{Address, AddressConnectionTypeYes}
-import models.submissions.StillConnectedDetails
+import models.submissions.common.Address
+import models.submissions.connectiontoproperty.{AddressConnectionTypeYes, StillConnectedDetails}
 import models.{Session, UserLoginDetails}
 import org.mockito.scalatest.MockitoSugar
 import org.scalatest.{BeforeAndAfterEach, Inside}

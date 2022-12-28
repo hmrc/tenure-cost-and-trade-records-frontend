@@ -14,13 +14,28 @@
  * limitations under the License.
  */
 
-package models.submissions.Form6010
+package models.submissions.common
 
 import play.api.libs.json.Json
 
-case class ContactDetails(phone: String, email: String)
+case class Address(buildingNameNumber: String, street1: Option[String], street2: Option[String], postcode: String) {
+  def singleLine: String =
+    List(
+      Some(buildingNameNumber),
+      street1,
+      street2,
+      Some(postcode.replaceAll("^(\\S+?)\\s*?(\\d\\w\\w)$", "$1 $2"))
+    ).flatten.mkString(", ")
 
-object ContactDetails {
-  implicit val format = Json.format[ContactDetails]
+  def multiLine: String =
+    List(
+      Some(buildingNameNumber),
+      street1,
+      street2,
+      Some(postcode.replaceAll("^(\\S+?)\\s*?(\\d\\w\\w)$", "$1 $2"))
+    ).flatten.mkString("<br/> ")
+}
 
+object Address {
+  implicit val format = Json.format[Address]
 }

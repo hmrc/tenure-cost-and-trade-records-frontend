@@ -18,7 +18,7 @@ package controllers.aboutyou
 
 import actions.WithSessionRefiner
 import form.aboutyou.AboutYouForm.aboutYouForm
-import models.submissions.SectionOne.updateSectionOne
+import models.submissions.aboutyou.AboutYou.updateAboutYou
 import navigation.AboutYouNavigator
 import navigation.identifiers.AboutYouPageId
 import play.api.i18n.I18nSupport
@@ -44,7 +44,7 @@ class AboutYouController @Inject() (
     Future.successful(
       Ok(
         aboutYouView(
-          request.sessionData.sectionOne.flatMap(_.customerDetails) match {
+          request.sessionData.aboutYou.flatMap(_.customerDetails) match {
             case Some(customerDetails) => aboutYouForm.fillAndValidate(customerDetails)
             case _                     => aboutYouForm
           }
@@ -59,7 +59,7 @@ class AboutYouController @Inject() (
       .fold(
         formWithErrors => Future.successful(BadRequest(aboutYouView(formWithErrors))),
         data => {
-          val updatedData = updateSectionOne(_.copy(customerDetails = Some(data)))
+          val updatedData = updateAboutYou(_.copy(customerDetails = Some(data)))
           session.saveOrUpdate(updatedData)
           Future.successful(Redirect(navigator.nextPage(AboutYouPageId).apply(updatedData)))
         }

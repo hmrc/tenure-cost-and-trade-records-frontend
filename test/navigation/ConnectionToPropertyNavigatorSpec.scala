@@ -19,13 +19,13 @@ package navigation
 import connectors.Audit
 import models.Session
 import models.submissions.Form6010._
-import models.submissions.StillConnectedDetails
 import navigation.identifiers.{AreYouStillConnectedPageId, ConnectionToPropertyPageId, EditAddressPageId, Identifier}
 import org.scalatest.matchers.must.Matchers.convertToAnyMustWrapper
 import play.api.libs.json.JsObject
 import uk.gov.hmrc.http.HeaderCarrier
 import utils.TestBaseSpec
 import controllers.connectiontoproperty.routes
+import models.submissions.connectiontoproperty.{AddressConnectionTypeNo, AddressConnectionTypeYes, AddressConnectionTypeYesChangeAddress, StillConnectedDetails}
 
 import scala.concurrent.ExecutionContext
 

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package models.submissions
+package models.submissions.connectiontoproperty
 
 import models.{EnumFormat, NamedEnum, NamedEnumSupport}
 import play.api.libs.json.Format

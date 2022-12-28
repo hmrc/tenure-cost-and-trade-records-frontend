@@ -16,6 +16,8 @@
 
 package models.submissions.Form6010
 
+import models.submissions.common.ContactDetails
+
 case class AlternativeContactDetails(
   alternativeContactFullName: String,
   alternativeContactDetails: ContactDetails,

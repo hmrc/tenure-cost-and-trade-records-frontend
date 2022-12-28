@@ -16,6 +16,8 @@
 
 package models.submissions
 
+import models.submissions.connectiontoproperty.ConnectionToProperty
+
 case class ConnectionToThePropertyDetails(
   connectionToTheProperty: ConnectionToProperty
 )

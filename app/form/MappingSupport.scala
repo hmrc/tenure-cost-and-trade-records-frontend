@@ -21,6 +21,8 @@ import models.submissions._
 import form.Formats._
 import form.Formats.userTypeFormat
 import models.submissions.Form6010._
+import models.submissions.common.{Address, ContactDetails}
+import models.submissions.connectiontoproperty.{AddressConnectionType, ConnectionToProperty}
 import models.{AnnualRent, NamedEnum, NamedEnumSupport}
 import play.api.data.Forms.{boolean, default, email, mapping, optional, text}
 import play.api.data.format.Formatter

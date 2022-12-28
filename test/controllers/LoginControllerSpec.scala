@@ -18,7 +18,7 @@ package controllers
 
 import config.LoginToBackendAction
 import connectors.Audit
-import models.submissions.Form6010.Address
+import models.submissions.common.Address
 import org.joda.time.DateTime
 import play.api.libs.json.{JsObject, Json}
 import play.api.test.FakeRequest

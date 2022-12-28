@@ -17,7 +17,7 @@
 package form.aboutyou
 
 import form.MappingSupport.contactDetailsMapping
-import models.submissions.Form6010.CustomerDetails
+import models.submissions.aboutyou.CustomerDetails
 import play.api.data.Form
 import play.api.data.Forms.{mapping, nonEmptyText}
 

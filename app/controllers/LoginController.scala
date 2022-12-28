@@ -20,8 +20,8 @@ import actions.WithSessionRefiner
 import config.LoginToBackendAction
 import connectors.Audit
 import form.{Errors, MappingSupport}
+import models.submissions.common.Address
 import models.{ForTypes, Session, UserLoginDetails}
-import models.submissions.Form6010.Address
 import org.joda.time.DateTime
 import play.api.Logging
 import play.api.data.Form
