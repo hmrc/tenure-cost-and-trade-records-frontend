@@ -16,4 +16,11 @@
 
 package models.submissions.Form6010
 
-case class LicensableActivitiesDetails(licensableActivities: LicensableActivities)
+import play.api.libs.json.Json
+
+case class EnforcementActionHasBeenTakenInformationDetails(enforcementActionHasBeenTakenDetails: String)
+
+object EnforcementActionHasBeenTakenInformationDetails {
+    implicit val format = Json.format[EnforcementActionHasBeenTakenInformationDetails]
+
+}

@@ -17,15 +17,19 @@
 package form.Form6010
 
 import form.MappingSupport.premisesLicenseType
-import models.submissions.Form6010.PremisesLicenseDetails
+import models.submissions.Form6010.PremisesLicense
 import play.api.data.Form
 import play.api.data.Forms.mapping
 
 object PremisesLicenseForm {
+  lazy val basePremisesLicenseForm: Form[PremisesLicense] = Form(basePremisesLicenseMapping)
 
-  val premisesLicenseForm = Form(
-    mapping(
-      "premisesLicense" -> premisesLicenseType
-    )(PremisesLicenseDetails.apply)(PremisesLicenseDetails.unapply)
-  )
+  val basePremisesLicenseMapping = mapping(
+    "premisesLicense" -> premisesLicenseType
+  )(x => x)(b => Some(b))
+
+
+  val premisesLicenseForm = Form(basePremisesLicenseMapping)
+
+
 }

@@ -18,7 +18,7 @@ package models.submissions
 
 import actions.SessionRequest
 import models.Session
-import models.submissions.Form6010.{PropertyDetails, WebsiteForPropertyDetails}
+import models.submissions.Form6010.{EnforcementAction, EnforcementActionHasBeenTakenInformationDetails, LicensableActivities, LicensableActivitiesInformationDetails, PremisesLicense, PremisesLicenseInformationDetails, PropertyDetails, TiedForGoods, TiedForGoodsInformation, TiedForGoodsInformationDetails, WebsiteForPropertyDetails}
 import play.api.libs.json.Json
 
 case class SectionTwo(
