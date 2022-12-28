@@ -39,13 +39,13 @@ class EnforcementActionBeenTakenDetailsControllerSpec extends TestBaseSpec {
   val mockEnforcementActionBeenTakenDetailsView = mock[enforcementActionBeenTakenDetails]
   when(mockEnforcementActionBeenTakenDetailsView.apply(any)(any, any)).thenReturn(HtmlFormat.empty)
 
- val enforcementActionBeenTakenDetailsController = new EnforcementActionBeenTakenDetailsController(
-   stubMessagesControllerComponents(),
-   mock[tiedForGoods],
-   mockEnforcementActionBeenTakenDetailsView,
-   preFilledSession,
-   mockSessionRepo
- )
+  val enforcementActionBeenTakenDetailsController = new EnforcementActionBeenTakenDetailsController(
+    stubMessagesControllerComponents(),
+    mock[tiedForGoods],
+    mockEnforcementActionBeenTakenDetailsView,
+    preFilledSession,
+    mockSessionRepo
+  )
 
   "GET /" should {
     "return 200" in {

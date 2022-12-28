@@ -28,8 +28,6 @@ object PremisesLicenseForm {
     "premisesLicense" -> premisesLicenseType
   )(x => x)(b => Some(b))
 
-
   val premisesLicenseForm = Form(basePremisesLicenseMapping)
-
 
 }

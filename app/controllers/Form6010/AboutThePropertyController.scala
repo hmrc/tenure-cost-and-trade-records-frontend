@@ -37,11 +37,12 @@ class AboutThePropertyController @Inject() (
   aboutThePropertyView: aboutTheProperty,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FrontendController(mcc) with I18nSupport{
+) extends FrontendController(mcc)
+    with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Future.successful(
-        Ok(
+      Ok(
         aboutThePropertyView(
           request.sessionData.sectionTwo match {
             case Some(sectionTwo) =>
@@ -49,7 +50,7 @@ class AboutThePropertyController @Inject() (
                 case Some(propertyDetails) => aboutThePropertyForm.fillAndValidate(propertyDetails)
                 case _                     => aboutThePropertyForm
               }
-            case _ => aboutThePropertyForm
+            case _                => aboutThePropertyForm
           }
         )
       )

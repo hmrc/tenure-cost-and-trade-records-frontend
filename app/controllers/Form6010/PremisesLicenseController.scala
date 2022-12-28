@@ -42,15 +42,20 @@ class PremisesLicenseController @Inject() (
   enforcementActionBeenTakenView: enforcementActionBeenTaken,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FrontendController(mcc) with I18nSupport {
+) extends FrontendController(mcc)
+    with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    Future.successful(Ok(premisesLicenseView(
-      request.sessionData.sectionTwo.flatMap(_.premisesLicense) match {
-        case Some(premisesLicense) => premisesLicenseForm.fillAndValidate(premisesLicense)
-        case _ => premisesLicenseForm
-      }
-    )))
+    Future.successful(
+      Ok(
+        premisesLicenseView(
+          request.sessionData.sectionTwo.flatMap(_.premisesLicense) match {
+            case Some(premisesLicense) => premisesLicenseForm.fillAndValidate(premisesLicense)
+            case _                     => premisesLicenseForm
+          }
+        )
+      )
+    )
   }
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
@@ -59,13 +64,13 @@ class PremisesLicenseController @Inject() (
       .fold(
         formWithErrors => Future.successful(BadRequest(premisesLicenseView(formWithErrors))),
         {
-          case data@PremisesLicensesYes =>
+          case data @ PremisesLicensesYes =>
             session.saveOrUpdate(updateSectionTwo(_.copy(premisesLicense = Some(data))))
             Future.successful(Ok(premisesLicenceDetailsView(premisesLicenceDetailsForm)))
-          case data@PremisesLicensesNo =>
+          case data @ PremisesLicensesNo  =>
             session.saveOrUpdate(updateSectionTwo(_.copy(premisesLicense = Some(data))))
             Future.successful(Ok(enforcementActionBeenTakenView(enforcementActionForm)))
-          case _ => Future.successful(Ok(login(loginForm)))
+          case _                          => Future.successful(Ok(login(loginForm)))
         }
       )
   }

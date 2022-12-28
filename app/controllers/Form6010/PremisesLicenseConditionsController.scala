@@ -36,15 +36,21 @@ class PremisesLicenseConditionsController @Inject() (
   premisesLicenseConditionsView: premisesLicenseConditions,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FrontendController(mcc) with I18nSupport {
+) extends FrontendController(mcc)
+    with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    Future.successful(Ok(premisesLicenseConditionsView(
-      request.sessionData.sectionTwo.flatMap(_.premisesLicenseInformationDetails) match {
-        case Some(premisesLicenseInformation) => premisesLicenceDetailsForm.fillAndValidate(premisesLicenseInformation)
-        case _ => premisesLicenceDetailsForm
-      }
-    )))
+    Future.successful(
+      Ok(
+        premisesLicenseConditionsView(
+          request.sessionData.sectionTwo.flatMap(_.premisesLicenseInformationDetails) match {
+            case Some(premisesLicenseInformation) =>
+              premisesLicenceDetailsForm.fillAndValidate(premisesLicenseInformation)
+            case _                                => premisesLicenceDetailsForm
+          }
+        )
+      )
+    )
   }
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>

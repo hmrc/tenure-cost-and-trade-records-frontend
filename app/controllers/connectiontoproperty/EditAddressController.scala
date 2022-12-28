@@ -20,7 +20,7 @@ import actions.WithSessionRefiner
 import form.connectiontoproperty.EditAddressForm.editAddressForm
 import navigation.ConnectionToPropertyNavigator
 import navigation.identifiers.EditAddressPageId
-import models.submissions.StillConnectedDetails.updateStillConnectedDetails
+import models.submissions.connectiontoproperty.StillConnectedDetails.updateStillConnectedDetails
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo

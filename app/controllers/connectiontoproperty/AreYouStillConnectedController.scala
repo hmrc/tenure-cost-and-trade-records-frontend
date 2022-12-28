@@ -18,7 +18,6 @@ package controllers.connectiontoproperty
 
 import actions.WithSessionRefiner
 import form.connectiontoproperty.AreYouStillConnectedForm.areYouStillConnectedForm
-import models.submissions.Form6010.Address
 import navigation.ConnectionToPropertyNavigator
 import navigation.identifiers.AreYouStillConnectedPageId
 import play.api.i18n.I18nSupport
@@ -26,7 +25,8 @@ import play.api.mvc._
 import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.connectiontoproperty.areYouStillConnected
-import models.submissions.StillConnectedDetails.updateStillConnectedDetails
+import models.submissions.connectiontoproperty.StillConnectedDetails.updateStillConnectedDetails
+import models.submissions.common.Address
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.{ExecutionContext, Future}

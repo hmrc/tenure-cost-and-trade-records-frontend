@@ -14,13 +14,19 @@
  * limitations under the License.
  */
 
-package models.submissions.Form6010
+package navigation
 
-import play.api.libs.json.Json
+import connectors.Audit
+import models.Session
+import navigation.identifiers.{AboutYouPageId, Identifier}
+import play.api.mvc.Call
 
-case class EnforcementActionHasBeenTakenInformationDetails(enforcementActionHasBeenTakenDetails: String)
+import javax.inject.Inject
+import scala.concurrent.ExecutionContext
 
-object EnforcementActionHasBeenTakenInformationDetails {
-  implicit val format = Json.format[EnforcementActionHasBeenTakenInformationDetails]
+class AboutYouNavigator @Inject() (audit: Audit)(implicit ec: ExecutionContext) extends Navigator(audit) {
 
+  override val routeMap: Map[Identifier, Session => Call] = Map(
+    AboutYouPageId -> (_ => controllers.Form6010.routes.AboutThePropertyController.show())
+  )
 }

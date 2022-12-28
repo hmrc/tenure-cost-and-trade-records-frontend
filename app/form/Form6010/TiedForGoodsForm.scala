@@ -28,6 +28,5 @@ object TiedForGoodsForm {
     "tiedForGoods" -> tiedForGoodsType
   )(x => x)(b => Some(b))
 
-
   val tiedForGoodsForm = Form(baseTiedForGoodsMapping)
 }

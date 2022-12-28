@@ -14,13 +14,8 @@
  * limitations under the License.
  */
 
-package models.submissions.Form6010
+package navigation.identifiers
 
-import play.api.libs.json.Json
-
-case class EnforcementActionHasBeenTakenInformationDetails(enforcementActionHasBeenTakenDetails: String)
-
-object EnforcementActionHasBeenTakenInformationDetails {
-  implicit val format = Json.format[EnforcementActionHasBeenTakenInformationDetails]
-
+case object AboutYouPageId extends Identifier {
+  override def toString: String = "aboutYouPage"
 }

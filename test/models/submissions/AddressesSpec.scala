@@ -16,7 +16,8 @@
 
 package models.submissions
 
-import models.submissions.Form6010.{Address, CateringAddress, LandlordAddress, LettingAddress}
+import models.submissions.Form6010.{CateringAddress, LandlordAddress, LettingAddress}
+import models.submissions.common.Address
 import utils.TestBaseSpec
 
 class AddressesSpec extends TestBaseSpec {

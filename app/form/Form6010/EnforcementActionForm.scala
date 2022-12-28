@@ -28,7 +28,6 @@ object EnforcementActionForm {
     "enforcementAction" -> enforcementActionType
   )(x => x)(b => Some(b))
 
-
   val enforcementActionForm = Form(baseEnforcementActionMapping)
 
 }

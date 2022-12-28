@@ -42,15 +42,20 @@ class TiedForGoodsController @Inject() (
   aboutYourTradingHistoryView: aboutYourTradingHistory,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FrontendController(mcc) with I18nSupport {
+) extends FrontendController(mcc)
+    with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    Future.successful(Ok(tiedForGoodsView(
-      request.sessionData.sectionTwo.flatMap(_.tiedForGoods) match {
-        case Some(tiedForGoods) => tiedForGoodsForm.fillAndValidate(tiedForGoods)
-        case _ => tiedForGoodsForm
-      }
-      )))
+    Future.successful(
+      Ok(
+        tiedForGoodsView(
+          request.sessionData.sectionTwo.flatMap(_.tiedForGoods) match {
+            case Some(tiedForGoods) => tiedForGoodsForm.fillAndValidate(tiedForGoods)
+            case _                  => tiedForGoodsForm
+          }
+        )
+      )
+    )
   }
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
@@ -59,13 +64,13 @@ class TiedForGoodsController @Inject() (
       .fold(
         formWithErrors => Future.successful(BadRequest(tiedForGoodsView(formWithErrors))),
         {
-          case data@TiedGoodsYes =>
+          case data @ TiedGoodsYes =>
             session.saveOrUpdate(updateSectionTwo(_.copy(tiedForGoods = Some(data))))
             Future.successful(Ok(tiedForGoodsDetailsView(tiedForGoodsDetailsForm)))
-          case data@TiedGoodsNo =>
+          case data @ TiedGoodsNo  =>
             session.saveOrUpdate(updateSectionTwo(_.copy(tiedForGoods = Some(data))))
             Future.successful(Ok(aboutYourTradingHistoryView(aboutYourTradingHistoryForm)))
-          case _ => Future.successful(Ok(login(loginForm)))
+          case _                   => Future.successful(Ok(login(loginForm)))
         }
       )
   }

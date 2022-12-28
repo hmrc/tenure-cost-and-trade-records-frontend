@@ -42,16 +42,20 @@ class LicensableActivitiesController @Inject() (
   premisesLicenseView: premisesLicense,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FrontendController(mcc) with I18nSupport {
+) extends FrontendController(mcc)
+    with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    Future.successful(Ok(
-      licensableActivitiesView(
-        request.sessionData.sectionTwo.flatMap(_.licensableActivities) match {
-          case Some(licensableActivities) => licensableActivitiesForm.fillAndValidate(licensableActivities)
-          case _ => licensableActivitiesForm
-        }
-        )))
+    Future.successful(
+      Ok(
+        licensableActivitiesView(
+          request.sessionData.sectionTwo.flatMap(_.licensableActivities) match {
+            case Some(licensableActivities) => licensableActivitiesForm.fillAndValidate(licensableActivities)
+            case _                          => licensableActivitiesForm
+          }
+        )
+      )
+    )
   }
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
@@ -60,13 +64,13 @@ class LicensableActivitiesController @Inject() (
       .fold(
         formWithErrors => Future.successful(BadRequest(licensableActivitiesView(formWithErrors))),
         {
-          case data@LicensableActivitiesYes =>
+          case data @ LicensableActivitiesYes =>
             session.saveOrUpdate(updateSectionTwo(_.copy(licensableActivities = Some(data))))
             Future.successful(Ok(licensableActivitiesDetailsView(licensableActivitiesDetailsForm)))
-          case data@LicensableActivitiesNo =>
+          case data @ LicensableActivitiesNo  =>
             session.saveOrUpdate(updateSectionTwo(_.copy(licensableActivities = Some(data))))
             Future.successful(Ok(premisesLicenseView(premisesLicenseForm)))
-          case _ => Future.successful(Ok(login(loginForm)))
+          case _                              => Future.successful(Ok(login(loginForm)))
         }
       )
   }

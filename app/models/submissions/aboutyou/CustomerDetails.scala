@@ -14,8 +14,9 @@
  * limitations under the License.
  */
 
-package models.submissions.Form6010
+package models.submissions.aboutyou
 
+import models.submissions.common.ContactDetails
 import play.api.libs.json.Json
 
 case class CustomerDetails(

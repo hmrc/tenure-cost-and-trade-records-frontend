@@ -14,13 +14,16 @@
  * limitations under the License.
  */
 
-package models.submissions.Form6010
+package navigation.identifiers
 
-import play.api.libs.json.Json
+import utils.TestBaseSpec
 
-case class EnforcementActionHasBeenTakenInformationDetails(enforcementActionHasBeenTakenDetails: String)
+class AboutYouIdentifiersSpec extends TestBaseSpec {
 
-object EnforcementActionHasBeenTakenInformationDetails {
-  implicit val format = Json.format[EnforcementActionHasBeenTakenInformationDetails]
+  "About you identifiers" when {
 
+    "Identifier for about you page" in {
+      assert(AboutYouPageId.toString.equals("aboutYouPage"))
+    }
+  }
 }

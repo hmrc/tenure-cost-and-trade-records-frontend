@@ -36,15 +36,20 @@ class TiedForGoodsDetailsController @Inject() (
   tiedForGoodsDetailsView: tiedForGoodsDetails,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FrontendController(mcc) with I18nSupport {
+) extends FrontendController(mcc)
+    with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    Future.successful(Ok(tiedForGoodsDetailsView(
-      request.sessionData.sectionTwo.flatMap(_.tiedForGoodsDetails) match {
-        case Some(tiedForGoodsDetails) => tiedForGoodsDetailsForm.fillAndValidate(tiedForGoodsDetails)
-        case _ => tiedForGoodsDetailsForm
-      }
-      )))
+    Future.successful(
+      Ok(
+        tiedForGoodsDetailsView(
+          request.sessionData.sectionTwo.flatMap(_.tiedForGoodsDetails) match {
+            case Some(tiedForGoodsDetails) => tiedForGoodsDetailsForm.fillAndValidate(tiedForGoodsDetails)
+            case _                         => tiedForGoodsDetailsForm
+          }
+        )
+      )
+    )
   }
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>

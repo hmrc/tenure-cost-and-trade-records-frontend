@@ -21,6 +21,8 @@ import models.submissions._
 import form.Formats._
 import form.Formats.userTypeFormat
 import models.submissions.Form6010._
+import models.submissions.common.{Address, ContactDetails}
+import models.submissions.connectiontoproperty.{AddressConnectionType, ConnectionToProperty}
 import models.{AnnualRent, NamedEnum, NamedEnumSupport}
 import play.api.data.Forms.{boolean, default, email, mapping, optional, text}
 import play.api.data.format.Formatter
@@ -47,9 +49,9 @@ object MappingSupport {
   val lettingOtherPartOfPropertiesType: Mapping[LettingOtherPartOfProperties]                         = Forms.of[LettingOtherPartOfProperties]
   val licensableActivitiesType: Mapping[LicensableActivities]                                         = Forms.of[LicensableActivities]
   val tiedForGoodsType: Mapping[TiedForGoods]                                                         = Forms.of[TiedForGoods]
-  val premisesLicenseType: Mapping[PremisesLicense]                                                  = Forms.of[PremisesLicense]
+  val premisesLicenseType: Mapping[PremisesLicense]                                                   = Forms.of[PremisesLicense]
   val tenancyLeaseAgreementType: Mapping[TenancyLeaseAgreements]                                      = Forms.of[TenancyLeaseAgreements]
-  val enforcementActionType: Mapping[EnforcementAction]                                              = Forms.of[EnforcementAction]
+  val enforcementActionType: Mapping[EnforcementAction]                                               = Forms.of[EnforcementAction]
   val franchiseOrLettingsTiedToPropertyType: Mapping[FranchiseOrLettingsTiedToProperties]             =
     Forms.of[FranchiseOrLettingsTiedToProperties]
   val rentIncreasedAnnuallyWithRPIDetailsType: Mapping[RentIncreasedAnnuallyWithRPIs]                 =
@@ -101,7 +103,7 @@ object MappingSupport {
   val currentRentPayableWithin12MonthsType: Mapping[CurrentRentWithin12Months] = Forms.of[CurrentRentWithin12Months]
 
   val tiedForGoodsDetailsType: Mapping[TiedForGoodsInformation] = Forms.of[TiedForGoodsInformation]
-  val postcode: Mapping[String]                                       = PostcodeMapping.postcode()
+  val postcode: Mapping[String]                                 = PostcodeMapping.postcode()
 
   val decimalRegex         = """^[0-9]{1,10}\.?[0-9]{0,2}$"""
   val cdbMaxCurrencyAmount = 9999999.99

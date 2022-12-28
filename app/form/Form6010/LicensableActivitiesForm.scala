@@ -29,6 +29,5 @@ object LicensableActivitiesForm {
     "licensableActivities" -> licensableActivitiesType
   )(x => x)(b => Some(b))
 
-
   val licensableActivitiesForm = Form(baseLicensableActivitiesMapping)
 }

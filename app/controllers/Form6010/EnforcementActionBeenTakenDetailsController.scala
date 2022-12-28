@@ -41,12 +41,17 @@ class EnforcementActionBeenTakenDetailsController @Inject() (
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    Future.successful(Ok(enforcementActionBeenTakenDetailsView(
-      request.sessionData.sectionTwo.flatMap(_.enforcementActionHasBeenTakenInformationDetails) match {
-        case Some(enforcementActionInformation) => enforcementActionDetailsForm.fillAndValidate(enforcementActionInformation)
-        case _ => enforcementActionDetailsForm
-      }
-      )))
+    Future.successful(
+      Ok(
+        enforcementActionBeenTakenDetailsView(
+          request.sessionData.sectionTwo.flatMap(_.enforcementActionHasBeenTakenInformationDetails) match {
+            case Some(enforcementActionInformation) =>
+              enforcementActionDetailsForm.fillAndValidate(enforcementActionInformation)
+            case _                                  => enforcementActionDetailsForm
+          }
+        )
+      )
+    )
   }
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>

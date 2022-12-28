@@ -40,7 +40,7 @@ class WebsiteForPropertyControllerSpec extends TestBaseSpec {
       )
       .build()
 
-  private val fakeRequest = FakeRequest("GET", "/")
+  private val fakeRequest                            = FakeRequest("GET", "/")
   val mockWebsiteForPropertyView: websiteForProperty = mock[websiteForProperty]
   when(mockWebsiteForPropertyView.apply(any)(any, any)).thenReturn(HtmlFormat.empty)
 

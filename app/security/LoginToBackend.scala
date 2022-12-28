@@ -19,7 +19,7 @@ package security
 //import connectors.Document
 //import controllers.toFut
 import models.FORLoginResponse
-import models.submissions.Form6010.Address
+import models.submissions.common.Address
 import org.joda.time.DateTime
 //import useCases.ReferenceNumber
 //import useCases.SaveInProgressSubmissionForLater.UpdateDocumentInCurrentSession

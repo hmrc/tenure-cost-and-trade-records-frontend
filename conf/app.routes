@@ -14,7 +14,7 @@ GET         /lockedout                                              controllers.
 GET         /invalid-form-type                                      controllers.LoginController.notValidFORType()
 
 GET         /sessiontimeout                                         controllers.Application.sessionTimeout()
-
+# Connection to the property
 GET         /are-you-still-connected                                controllers.connectiontoproperty.AreYouStillConnectedController.show()
 POST        /are-you-still-connected                                controllers.connectiontoproperty.AreYouStillConnectedController.submit()
 
@@ -28,6 +28,9 @@ GET         /remove-connection                                      controllers.
 
 GET         /connection-to-the-property                             controllers.connectiontoproperty.ConnectionToThePropertyController.show()
 POST        /connection-to-the-property                             controllers.connectiontoproperty.ConnectionToThePropertyController.submit()
+# About you
+GET         /about-you                                              controllers.aboutyou.AboutYouController.show()
+POST        /about-you                                              controllers.aboutyou.AboutYouController.submit()
 
 GET         /about-the-property                                     controllers.Form6010.AboutThePropertyController.show()
 POST        /about-the-property                                     controllers.Form6010.AboutThePropertyController.submit()
@@ -40,9 +43,6 @@ POST        /website-for-property                                   controllers.
 
 GET         /tenancy-lease-agreement                                controllers.Form6010.TenancyLeaseAgreementController.show()
 POST        /tenancy-lease-agreement                                controllers.Form6010.TenancyLeaseAgreementController.submit()
-
-GET         /about-you                                              controllers.Form6010.AboutYouController.show()
-POST        /about-you                                              controllers.Form6010.AboutYouController.submit()
 
 GET         /website-address-for-property                           controllers.Form6010.WebsiteAddressForPropertyController.show()
 POST        /website-address-for-property                           controllers.Form6010.WebsiteAddressForPropertyController.submit()

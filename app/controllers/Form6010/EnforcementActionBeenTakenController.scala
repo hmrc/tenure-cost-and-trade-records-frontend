@@ -58,10 +58,10 @@ class EnforcementActionBeenTakenController @Inject() (
       .fold(
         formWithErrors => Future.successful(BadRequest(enforcementActionBeenTakenView(formWithErrors))),
         {
-          case data@EnforcementActionsYes =>
+          case data @ EnforcementActionsYes =>
             session.saveOrUpdate(updateSectionTwo(_.copy(enforcementAction = Some(data))))
             Future.successful(Ok(enforcementActionBeenTakenDetailsView(enforcementActionDetailsForm)))
-          case data@EnforcementActionsNo =>
+          case data @ EnforcementActionsNo  =>
             //TODO - this should map to a forType with a string name associated, not a string
             if (request.sessionData.userLoginDetails.forNumber == "FOR6011") {
               session.saveOrUpdate(updateSectionTwo(_.copy(enforcementAction = Some(data))))
@@ -70,7 +70,7 @@ class EnforcementActionBeenTakenController @Inject() (
               session.saveOrUpdate(updateSectionTwo(_.copy(enforcementAction = Some(data))))
               Future.successful(Ok(tiedForGoodsView(tiedForGoodsForm)))
             }
-          case _ => Future.successful(Ok(login(loginForm)))
+          case _                            => Future.successful(Ok(login(loginForm)))
         }
       )
   }

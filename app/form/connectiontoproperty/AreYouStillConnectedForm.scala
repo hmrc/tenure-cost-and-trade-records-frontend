@@ -17,7 +17,7 @@
 package form.connectiontoproperty
 
 import form.MappingSupport.addressConnectionType
-import models.submissions.Form6010.AddressConnectionType
+import models.submissions.connectiontoproperty.AddressConnectionType
 import play.api.data.Form
 import play.api.data.Forms.mapping
 

@@ -39,7 +39,7 @@ case class WebsiteForPropertyDetails(
   websiteAddressForProperty: Option[String]
 )
 
-object WebsiteForPropertyDetails{
+object WebsiteForPropertyDetails {
   implicit val format = Json.format[WebsiteForPropertyDetails]
 
 }
