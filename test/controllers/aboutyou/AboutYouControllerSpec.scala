@@ -42,9 +42,9 @@ class AboutYouControllerSpec extends TestBaseSpec {
       )
       .build()
 
-  private val fakeRequest = FakeRequest("GET", "/")
+  private val fakeRequest   = FakeRequest("GET", "/")
   val mockAboutYouNavigator = mock[AboutYouNavigator]
-  val mockAboutYouView    = mock[aboutYou]
+  val mockAboutYouView      = mock[aboutYou]
   when(mockAboutYouView.apply(any)(any, any)).thenReturn(HtmlFormat.empty)
 
   val aboutYouController = new AboutYouController(
@@ -52,7 +52,7 @@ class AboutYouControllerSpec extends TestBaseSpec {
     mockAboutYouNavigator,
     mockAboutYouView,
     preFilledSession,
-    mockSessionRepo,
+    mockSessionRepo
   )
 
   "GET /" should {
