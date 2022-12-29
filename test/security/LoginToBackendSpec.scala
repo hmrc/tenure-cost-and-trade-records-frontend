@@ -34,13 +34,13 @@ class LoginToBackendSpec extends UnitTest {
     implicit val hc = HeaderCarrier()
 
     "there is no previously stored document" should {
-      var updated: (HeaderCarrier, ReferenceNumber, Document) = null
-      val l                                                   = LoginToBackend(
+//      var updated: (HeaderCarrier, ReferenceNumber, Document) = null
+      val l = LoginToBackend(
         respondWith(refNum, postcode)(loginResponse)
 //        none,
 //        set[HeaderCarrier, ReferenceNumber, Document, Unit](updated = _)
       ) _
-      val r                                                   = await(l(refNum, postcode, now))
+      val r = await(l(refNum, postcode, now))
 
       "indicate there is no saved document" in {
         assert(

@@ -17,7 +17,7 @@
 package utils
 
 import actions.{SessionRequest, WithSessionRefiner}
-import config.ErrorHandler
+import config.{AppConfig, ErrorHandler}
 import models.submissions.common.Address
 import models.submissions.connectiontoproperty.{AddressConnectionTypeYes, StillConnectedDetails}
 import models.{Session, UserLoginDetails}
@@ -28,11 +28,16 @@ import org.scalatest.matchers.should.Matchers
 import org.scalatest.time.{Millis, Seconds, Span}
 import org.scalatest.wordspec.AnyWordSpec
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
-import play.api.mvc.{Request, Result}
-import play.api.test.{DefaultAwaitTimeout, FutureAwaits}
+import play.api.Application
+import play.api.i18n.{Messages, MessagesApi}
+import play.api.inject.Injector
+import play.api.inject.guice.GuiceApplicationBuilder
+import play.api.mvc.{AnyContentAsEmpty, Request, Result}
+import play.api.test.{DefaultAwaitTimeout, FakeRequest, FutureAwaits}
 import repositories.SessionRepository
 import repository.RepositoryUtils
 import uk.gov.hmrc.http.{HeaderCarrier, SessionId}
+import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
 
 import java.time.{Clock, Instant, ZoneId}
 import scala.concurrent.{ExecutionContext, Future}
@@ -50,12 +55,33 @@ trait TestBaseSpec
     with GlobalExecutionContext
     with RepositoryUtils {
 
+  override def fakeApplication(): Application =
+    new GuiceApplicationBuilder()
+      .configure(
+        "metrics.jvm"     -> false,
+        "metrics.enabled" -> false
+      )
+      .build()
+
   override implicit val patienceConfig: PatienceConfig =
     PatienceConfig(timeout = Span(10, Seconds), interval = Span(20, Millis))
 
-  implicit val ec: ExecutionContext = ExecutionContext.Implicits.global
-  implicit val hc: HeaderCarrier    = HeaderCarrier(sessionId = Some(SessionId("my-session")))
-  implicit val clock: Clock         = Clock.fixed(Instant.now(), ZoneId.systemDefault())
+  def injector: Injector = app.injector
+
+  def frontendAppConfig: AppConfig = injector.instanceOf[AppConfig]
+
+  def messagesApi: MessagesApi = injector.instanceOf[MessagesApi]
+
+  def fakeRequest: FakeRequest[AnyContentAsEmpty.type] = FakeRequest("GET", "/")
+
+  def messages: Messages = messagesApi.preferred(fakeRequest)
+
+  def servicesConfig: ServicesConfig = app.injector.instanceOf[ServicesConfig]
+
+  implicit def ec: ExecutionContext = app.injector.instanceOf[ExecutionContext]
+
+  implicit val hc: HeaderCarrier = HeaderCarrier(sessionId = Some(SessionId("my-session")))
+  implicit val clock: Clock      = Clock.fixed(Instant.now(), ZoneId.systemDefault())
 
   val mockCustomErrorHandler: ErrorHandler     = mock[ErrorHandler]
   val mockSessionRepository: SessionRepository = mock[SessionRepository]

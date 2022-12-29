@@ -17,25 +17,14 @@
 package controllers.connectiontoproperty
 
 import navigation.ConnectionToPropertyNavigator
-import play.api.Application
 import play.api.http.Status
-import play.api.inject.guice.GuiceApplicationBuilder
-import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import play.twirl.api.HtmlFormat
 import utils.TestBaseSpec
 import views.html.connectiontoproperty.areYouStillConnected
 
 class AreYouStillConnectedControllerSpec extends TestBaseSpec {
-  override def fakeApplication(): Application =
-    new GuiceApplicationBuilder()
-      .configure(
-        "metrics.jvm"     -> false,
-        "metrics.enabled" -> false
-      )
-      .build()
 
-  private val fakeRequest              = FakeRequest("GET", "/")
   val mockConnectedToPropertyNavigator = mock[ConnectionToPropertyNavigator]
   val mockAreYouStillConnectedView     = mock[areYouStillConnected]
   when(mockAreYouStillConnectedView.apply(any, any)(any, any)).thenReturn(HtmlFormat.empty)

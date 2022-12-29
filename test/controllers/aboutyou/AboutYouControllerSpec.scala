@@ -18,11 +18,8 @@ package controllers.aboutyou
 
 import form.Errors
 import navigation.AboutYouNavigator
-import play.api.Application
 import play.api.data.FormError
 import play.api.http.Status
-import play.api.inject.guice.GuiceApplicationBuilder
-import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import play.twirl.api.HtmlFormat
 import utils.TestBaseSpec
@@ -34,21 +31,12 @@ class AboutYouControllerSpec extends TestBaseSpec {
   import form.aboutyou.AboutYouForm.aboutYouForm
   import utils.FormBindingTestAssertions.{mustContainError, mustContainRequiredErrorFor}
 
-  override def fakeApplication(): Application =
-    new GuiceApplicationBuilder()
-      .configure(
-        "metrics.jvm"     -> false,
-        "metrics.enabled" -> false
-      )
-      .build()
-
-  private val fakeRequest   = FakeRequest("GET", "/")
   val mockAboutYouNavigator = mock[AboutYouNavigator]
   val mockAboutYouView      = mock[aboutYou]
   when(mockAboutYouView.apply(any)(any, any)).thenReturn(HtmlFormat.empty)
 
   val aboutYouController = new AboutYouController(
-    stubMessagesControllerComponents,
+    stubMessagesControllerComponents(),
     mockAboutYouNavigator,
     mockAboutYouView,
     preFilledSession,
@@ -57,7 +45,6 @@ class AboutYouControllerSpec extends TestBaseSpec {
 
   "GET /" should {
     "return 200" in {
-      //    "return 200" in {
       val result = aboutYouController.show(fakeRequest)
       status(result) shouldBe Status.OK
     }

@@ -16,26 +16,14 @@
 
 package controllers.Form6010
 
-import play.api.Application
 import play.api.http.Status
-import play.api.inject.guice.GuiceApplicationBuilder
-import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import play.twirl.api.HtmlFormat
 import utils.TestBaseSpec
-import views.html.form.{aboutYourTradingHistory, enforcementActionBeenTaken, tiedForGoods, tiedForGoodsDetails}
+import views.html.form.{aboutYourTradingHistory, tiedForGoods, tiedForGoodsDetails}
 import views.html.login
 
 class TiedForGoodsControllerSpec extends TestBaseSpec {
-  override def fakeApplication(): Application =
-    new GuiceApplicationBuilder()
-      .configure(
-        "metrics.jvm"     -> false,
-        "metrics.enabled" -> false
-      )
-      .build()
-
-  private val fakeRequest = FakeRequest("GET", "/")
 
   val mockTiedForGoodsView = mock[tiedForGoods]
   when(mockTiedForGoodsView.apply(any)(any, any)).thenReturn(HtmlFormat.empty)

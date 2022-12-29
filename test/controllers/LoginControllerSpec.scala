@@ -21,7 +21,7 @@ import connectors.Audit
 import models.submissions.common.Address
 import org.joda.time.DateTime
 import play.api.libs.json.{JsObject, Json}
-import play.api.test.FakeRequest
+//import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import security.LoginToBackend.{Postcode, RefNumber, StartTime}
 import security.NoExistingDocument
@@ -65,8 +65,8 @@ class LoginControllerSpec extends TestBaseSpec {
         mock[views.html.testSign]
       )
 
-      val fakeRequest = FakeRequest()
-      val response    = loginController.verifyLogin("01234567000", "BN12 1AB", time)(fakeRequest)
+//      val fakeRequest = FakeRequest()
+      val response = loginController.verifyLogin("01234567000", "BN12 1AB", time)(fakeRequest)
 
       status(response) shouldBe SEE_OTHER
 
@@ -101,7 +101,7 @@ class LoginControllerSpec extends TestBaseSpec {
         mock[views.html.testSign]
       )
 
-      val fakeRequest = FakeRequest()
+//      val fakeRequest = FakeRequest()
 
       val response = loginController.logout.apply(fakeRequest)
 

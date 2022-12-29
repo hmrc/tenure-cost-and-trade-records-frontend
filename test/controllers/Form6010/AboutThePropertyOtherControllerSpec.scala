@@ -16,23 +16,11 @@
 
 package controllers.Form6010
 
-import play.api.Application
 import play.api.http.Status
-import play.api.inject.guice.GuiceApplicationBuilder
-import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import utils.TestBaseSpec
 
 class AboutThePropertyOtherControllerSpec extends TestBaseSpec {
-  override def fakeApplication(): Application =
-    new GuiceApplicationBuilder()
-      .configure(
-        "metrics.jvm"     -> false,
-        "metrics.enabled" -> false
-      )
-      .build()
-
-  private val fakeRequest = FakeRequest("GET", "/")
 
   private val controller = app.injector.instanceOf[AboutThePropertyOtherController]
 

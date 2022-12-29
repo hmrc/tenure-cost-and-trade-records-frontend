@@ -20,12 +20,8 @@ import connectors.Audit
 import controllers.Form6010.routes
 import models.Session
 import models.submissions.aboutyou.{AboutYou, CustomerDetails}
-import models.submissions.Form6010._
 import models.submissions.common.ContactDetails
 import models.submissions.connectiontoproperty.{AddressConnectionTypeYes, StillConnectedDetails}
-//import models.submissions.aboutyou.{AboutYou, CustomerDetails}
-//import models.submissions.common.ContactDetails
-//import models.submissions.connectiontoproperty.{AddressConnectionTypeYes, StillConnectedDetails}
 import navigation.identifiers.{AboutYouPageId, Identifier}
 import org.scalatest.matchers.must.Matchers.convertToAnyMustWrapper
 import play.api.libs.json.JsObject
