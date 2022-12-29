@@ -17,10 +17,7 @@
 package controllers.Form6010
 
 import form.Errors
-import play.api.Application
 import play.api.http.Status
-import play.api.inject.guice.GuiceApplicationBuilder
-import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import play.twirl.api.HtmlFormat
 import utils.TestBaseSpec
@@ -33,15 +30,6 @@ class LicensableActivitiesControllerSpec extends TestBaseSpec {
   import form.Form6010.LicensableActivitiesForm._
   import utils.FormBindingTestAssertions._
 
-  override def fakeApplication(): Application =
-    new GuiceApplicationBuilder()
-      .configure(
-        "metrics.jvm"     -> false,
-        "metrics.enabled" -> false
-      )
-      .build()
-
-  private val fakeRequest          = FakeRequest("GET", "/")
   val mockLicensableActivitiesView = mock[licensableActivities]
   when(mockLicensableActivitiesView.apply(any)(any, any)).thenReturn(HtmlFormat.empty)
 

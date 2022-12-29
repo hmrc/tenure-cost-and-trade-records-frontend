@@ -16,25 +16,13 @@
 
 package controllers
 
-import play.api.Application
 import play.api.http.Status
-import play.api.inject.guice.GuiceApplicationBuilder
-import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import play.twirl.api.HtmlFormat
 import utils.TestBaseSpec
 import views.html.{login, pastConnection}
 
 class PastConnectionControllerSpec extends TestBaseSpec {
-  override def fakeApplication(): Application =
-    new GuiceApplicationBuilder()
-      .configure(
-        "metrics.jvm"     -> false,
-        "metrics.enabled" -> false
-      )
-      .build()
-
-  private val fakeRequest = FakeRequest("GET", "/")
 
   val mockPastConnectionView = mock[pastConnection]
   when(mockPastConnectionView.apply(any)(any, any)).thenReturn(HtmlFormat.empty)
