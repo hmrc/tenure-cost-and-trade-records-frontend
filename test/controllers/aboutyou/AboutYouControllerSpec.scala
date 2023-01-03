@@ -72,10 +72,10 @@ class AboutYouControllerSpec extends TestBaseSpec {
     }
 
     "error if email is missing" in {
-      val formData = baseFormData - errorKey.email1
+      val formData = baseFormData - errorKey.email
       val form     = aboutYouForm.bind(formData)
 
-      mustContainError(errorKey.email1, Errors.contactEmailRequired, form)
+      mustContainError(errorKey.email, Errors.contactEmailRequired, form)
     }
   }
 
@@ -83,8 +83,8 @@ class AboutYouControllerSpec extends TestBaseSpec {
     val errorKey = new {
       val fullName: String = "fullName"
       val phone            = "contactDetails.phone"
-      val email1           = "contactDetails.email1"
-      val email1TooLong    = "contactDetails.email1.email.tooLong"
+      val email            = "contactDetails.email"
+      val email1TooLong    = "contactDetails.email.email.tooLong"
     }
 
     val formErrors = new {

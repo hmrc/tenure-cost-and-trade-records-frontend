@@ -17,6 +17,7 @@
 @import models.submissions.aboutyou.CustomerDetails
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.fieldset.Fieldset
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukErrorSummary
@@ -24,6 +25,7 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukTextarea
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukCharacterCount
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukFieldset
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Label
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Input
@@ -37,64 +39,50 @@
         govukDateInput: GovukDateInput,
         govukTextarea: GovukTextarea,
         govukCharacterCount: GovukCharacterCount,
+        govukFieldset: GovukFieldset,
         formWithCSRF: FormWithCSRF
 )
 
 @(theForm: Form[CustomerDetails])(implicit request: Request[_], messages: Messages)
 
+ @textInput(id: String, optional: Boolean, classes: String, autoCompleteLabel: String) = {
+ @govukInput(Input(
+  id=id,
+  name=id,
+  inputType = "text",
+  value = theForm(id).value,
+  classes=classes,
+  autocomplete=Some(autoCompleteLabel),
+  label = if(optional) Label(content = Text(s"${messages(s"aboutYou.${id}")} ${messages("hintText.optional")}"), classes = "govuk-!-font-weight-bold")
+  else Label(content = Text(messages(s"aboutYou.${id}")), classes = "govuk-!-font-weight-bold"),
+  errorMessage = theForm.errors.asTextErrorMessageForField(id)
+ ))
+ }
+
+ @content = {
+  <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+   <h1 class="govuk-fieldset__heading">@messages("aboutYou.heading")</h1>
+  </legend>
+
+  <p class="govuk-body">@messages("aboutYou.subheading2")</p>
+
+ @textInput("fullName", false, "govuk-input govuk-input--width-20", "fullName")
+ @textInput("contactDetails.email", false, "govuk-input govuk-input--width-20", "contactDetails.email")
+ @textInput("contactDetails.phone", false, "govuk-input govuk-input--width-20", "contactDetails.phone")
+ }
+
 @layout(
-  pageHeading = messages("aboutYou.header"),
+  pageHeading = messages("aboutYou.heading"),
+  showH1 = false,
   backLinkUrl = controllers.routes.TaskListController.show.url,
+  showSection = true,
+  sectionName = messages("label.section.aboutYou"),
   theForm = theForm
 ) {
 
  @formWithCSRF(action = controllers.aboutyou.routes.AboutYouController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
 
-  <p class="govuk-body">@messages("aboutYou.subheading2")</p>
-
-  @govukInput(
-   Input(
-    id = "fullName",
-    name = "fullName",
-    value = theForm("fullName").value,
-    classes = "govuk-input--width-20",
-    label = Label(
-     content = Text(messages("aboutYou.fullName")),
-     classes = "govuk-!-font-weight-bold"
-    ),
-    errorMessage =  theForm.errors.asTextErrorMessageForField("fullName")
-   )
-  )
-
-  <fieldset class="govuk-fieldset" aria-describedby="contactDetails-hint">
-   <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-   </legend>
-
-   @govukInput(
-    Input(
-     classes = "govuk-input--width-20 ",
-     attributes = Map("maxlength" -> "50"),
-     label = Label(
-      content = Text(messages("aboutYou.email")),
-      classes = "govuk-!-font-weight-bold"
-     ),
-     errorMessage = theForm.errors.asTextErrorMessageForField("contactDetails.email1")
-    ).withFormField(theForm("contactDetails.email1"))
-   )
-
-   @govukInput(
-    Input(
-     classes = "govuk-input--width-20 ",
-     attributes = Map("maxlength" -> "20"),
-     label = Label(
-      content = Text(messages("aboutYou.telephone") ),
-      classes = "govuk-!-font-weight-bold"
-     ),
-     errorMessage = theForm.errors.asTextErrorMessageForField("contactDetails.phone")
-    ).withFormField(theForm("contactDetails.phone"))
-   )
-
-  </fieldset>
+  @govukFieldset(Fieldset(html = content))
 
   @includes.continueButton(govukButton)
 

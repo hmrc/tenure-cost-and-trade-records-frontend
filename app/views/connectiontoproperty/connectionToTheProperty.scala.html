@@ -51,7 +51,10 @@
 @(theForm: Form[_], backLink: String)(implicit request: Request[_], messages: Messages)
 
 @layout(
-  pageHeading = messages("connectionToTheProperty.header"),
+  pageHeading = messages("connectionToTheProperty.heading"),
+  showH1 = false,
+  showSection = true,
+  sectionName = messages("label.section.checkBeforeStart"),
   backLinkUrl = backLink,
   theForm = theForm
 ) {
@@ -60,12 +63,9 @@
 
   @govukRadios(Radios(
    fieldset = Some(Fieldset(
-    legend = Some(Legend(
-     content = Text(messages("connectionToTheProperty.header")),
-     classes = "govuk-fieldset__legend--m",
-    ))
+    legend = Some(Legend(content = Text(messages("connectionToTheProperty.heading")), isPageHeading = true, classes = "govuk-fieldset__legend--l"))
    )),
-   hint = Some(Hint(content = Text(messages("hint.connectionToTheProperty")))),
+   hint = Some(Hint(content = Text(messages("connectionToTheProperty.hint")))),
    name = "connectionToTheProperty",
    items = Seq(
     RadioItem(

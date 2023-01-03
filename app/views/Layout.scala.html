@@ -52,6 +52,8 @@
         showBanner: Boolean = false,
         showFeedback: Boolean = true,
         showH1: Boolean = true,
+        showSection: Boolean = false,
+        sectionName: Option[String] = None,
         backLinkUrl: Option[String] = None,
         beforeContentBlock: Option[Html] = None,
         withTimeoutDialog: Boolean = true
@@ -93,6 +95,10 @@
             content = HtmlContent("<p class='govuk-notification-banner__heading'>" + configuration.get[String]("bannerNotice." + messages.lang.code + ".body") + "</p>"),
             title = Text(configuration.get[String]("bannerNotice." + messages.lang.code + ".title"))
         ))
+    }
+
+    @if(showSection){
+        <span class="govuk-caption-m">@sectionName</span>
     }
 
     @if(showH1){

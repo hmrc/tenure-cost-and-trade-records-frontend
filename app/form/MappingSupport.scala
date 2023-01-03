@@ -135,13 +135,13 @@ object MappingSupport {
 
   val contactDetailsMapping: Mapping[ContactDetails] =
     mapping(
-      "phone"  -> default(text, "").verifying(
+      "phone" -> default(text, "").verifying(
         nonEmpty(errorMessage = Errors.contactPhoneRequired),
         pattern(phoneRegex.r, error = Errors.invalidPhone),
         minLength(11, "error.contact.phone.minLength"),
         maxLength(20, "error.contact.phone.maxLength")
       ),
-      "email1" -> default(email, "").verifying(
+      "email" -> default(email, "").verifying(
         nonEmpty(errorMessage = Errors.contactEmailRequired),
         maxLength(50, "contactDetails.email1.email.tooLong")
       )

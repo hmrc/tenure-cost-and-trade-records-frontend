@@ -18,10 +18,8 @@ package controllers
 
 import config.LoginToBackendAction
 import connectors.Audit
-import models.submissions.common.Address
 import org.joda.time.DateTime
 import play.api.libs.json.{JsObject, Json}
-//import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import security.LoginToBackend.{Postcode, RefNumber, StartTime}
 import security.NoExistingDocument
@@ -34,8 +32,7 @@ import scala.concurrent.{ExecutionContext, Future}
 
 class LoginControllerSpec extends TestBaseSpec {
 
-  private val testAddress = Address("13", Some("Street"), Some("City"), "AA11 1AA")
-  val loginToBackend      = mock[LoginToBackendAction]
+  val loginToBackend = mock[LoginToBackendAction]
 
   "login controller" should {
     "Audit successful login" in {

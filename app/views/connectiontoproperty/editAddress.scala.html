@@ -17,6 +17,7 @@
 @import models.submissions.common.Address
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.fieldset.Fieldset
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukErrorSummary
@@ -24,6 +25,7 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukTextarea
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukCharacterCount
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukFieldset
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Input
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Label
@@ -36,74 +38,53 @@
         govukDateInput: GovukDateInput,
         govukTextarea: GovukTextarea,
         govukCharacterCount: GovukCharacterCount,
+        govukFieldset: GovukFieldset,
         formWithCSRF: FormWithCSRF
 )
 
 @(theForm: Form[Address])(implicit request: Request[_], messages: Messages)
 
+@textInput(id: String, optional: Boolean, classes: String, autoCompleteLabel: String) = {
+  @govukInput(Input(
+    id=id,
+    name=id,
+    inputType = "text",
+    value = theForm(id).value,
+    classes=classes,
+    autocomplete=Some(autoCompleteLabel),
+    label = if(optional) Label(content = Text(s"${messages(s"label.${id}")} ${messages("hintText.optional")}"))
+            else Label(content = Text(messages(s"label.${id}"))),
+    errorMessage = theForm.errors.asTextErrorMessageForField(id)
+  ))
+}
+
+@content = {
+  <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+    <h1 class="govuk-fieldset__heading">@messages("editAddress.heading")</h1>
+  </legend>
+
+  @textInput("buildingNameNumber", false, "govuk-input govuk-!-width-one-half", "buildingNameNumber")
+  @textInput("street1", true, "govuk-input govuk-!-width-one-half", "street1")
+  @textInput("street2", true, "govuk-input govuk-!-width-one-half", "street2")
+  @textInput("postcode", false, "govuk-input govuk-!-width-one-half", "postcode")
+}
+
 @layout(
- pageHeading = messages("editAddress.header"),
- backLinkUrl = controllers.connectiontoproperty.routes.AreYouStillConnectedController.show.url,
- theForm = theForm
+  pageHeading = messages("editAddress.heading"),
+  showH1 = false,
+  showSection = true,
+  sectionName = messages("label.section.checkBeforeStart"),
+  backLinkUrl = controllers.connectiontoproperty.routes.AreYouStillConnectedController.show.url,
+  theForm = theForm
 ) {
- @formWithCSRF(action = controllers.connectiontoproperty.routes.EditAddressController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
+  @formWithCSRF(action = controllers.connectiontoproperty.routes.EditAddressController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
 
-  @govukInput(
-   Input(
-    id = "buildingNameNumber",
-    name = "buildingNameNumber",
-    value = theForm("buildingNameNumber").value,
-    classes = "govuk-!-width-one-half",
-    label = Label(
-     content = Text(messages("label.buildingNameNumber"))
-    ),
-    errorMessage = theForm.errors.asTextErrorMessageForField("buildingNameNumber")
-   )
-  )
+    @govukFieldset(Fieldset(html = content))
 
-  @govukInput(
-   Input(
-    id = "street1",
-    name = "street1",
-    value = theForm("street1").value,
-    classes = "govuk-!-width-one-half",
-    label = Label(
-     content = Text(messages("label.street1"))
-    ),
-    errorMessage = theForm.errors.asTextErrorMessageForField("street1")
-   )
-  )
+    @includes.continueButton(govukButton)
 
-  @govukInput(
-   Input(
-    id = "street2",
-    name = "street2",
-    value = theForm("street2").value,
-    classes = "govuk-!-width-one-half",
-    label = Label(
-     content = Text(messages("label.street2"))
-    ),
-    errorMessage = theForm.errors.asTextErrorMessageForField("street2")
-   )
-  )
-
-  @govukInput(
-   Input(
-    id = "postcode",
-    name = "postcode",
-    value = theForm("postcode").value,
-    classes = "govuk-!-width-one-half",
-    label = Label(
-     content = Text(messages("label.postcode"))
-    ),
-    errorMessage = theForm.errors.asTextErrorMessageForField("postcode")
-   )
-  )
-
-  @includes.continueButton(govukButton)
-
-  @includes.help_with_service()
- }
+    @includes.help_with_service()
+  }
 }
 
 

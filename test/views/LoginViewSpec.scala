@@ -16,7 +16,7 @@
 
 package views
 
-import controllers.{LoginController, LoginDetails, routes}
+import controllers.{LoginController, LoginDetails}
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 

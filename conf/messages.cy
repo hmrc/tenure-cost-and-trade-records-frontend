@@ -10,6 +10,13 @@ back.link.label = Yn ôl
 button.label.save = Cadw ar gyfer nes ymlaen
 label.checkTheForm = Mae problem wedi codi
 error.title = Gwall:
+hintText.optional = (opsiynol)
+
+#SESSION TIMEOUT
+##############################
+heading.sessionTimeout=Session timed out
+sessionTimeout.copy=You have been logged out as you have not used this form for the last 24 hours.
+sessionTimeout.button=Please log in again
 
 #WELSH YES/NO
 #############
@@ -34,6 +41,11 @@ label.no.nac.oedd=No
 label.yes.iawn = Yes
 label.no.na = No
 
+#Section names
+##############
+label.section.checkBeforeStart = Check before you start
+label.section.aboutYou = About you
+
 #DUMMY START PAGE FULL INFORMATION
 ##############################
 start.page.heading = Send information about your pubs, licensed restaurants and wine bars to the Valuation Office Agency
@@ -57,7 +69,9 @@ start.button = Start now
 login.heading = Rhowch eich cyfeirnod
 label.letter = Gallwch weld eich cyfeirnod a’ch cod post yn eich llythyr manylion rhent a phrydles.
 label.referenceNumber = Cyfeirnod
+hint.referenceNumber = For example, 1000001/101
 label.postcode = Cod post
+hint.postcode = For example, AB12 3CD
 error.invalid_refnum = Rhowch y cyfeirnod fel y mae'n ymddangos ar eich llythyr
 error.invalid_postcode_as_on_letter = Nodwch eich cod post fel mae’n ymddangos ar eich llythyr
 
@@ -95,13 +109,13 @@ landing.desc5 = You do not have to complete the form in one go. You can save wha
 
 #6010 ARE YOU STILL CONNECTED
 ##############################
-areYouConnected.header = Are you still connected to {0}?
+areYouConnected.heading = Are you still connected to {0}?
 label.areYouConnected.addressUpdate = Yes, and the address needs to be updated
-label.yes.change.address=Yes - I want to edit the address
+#label.yes.change.address=Yes - I want to edit the address
 
 #6010 EDIT ADDRESS
 ##############################
-editAddress.header = How do you expect the connected address to be shown?
+editAddress.heading = How do you expect the connected address to be shown?
 label.buildingNameNumber=Address line 1
 label.street1=Address line 2 (optional)
 label.street2=Address line 3 (optional)
@@ -125,22 +139,22 @@ hint.removeConnection.additionalInformation = For example, the name of the curre
 
 #6010 ABOUT YOU
 ##############################
-aboutYou.header = Provide your contact details
+aboutYou.heading = Provide your contact details
 aboutYou.subheading2 = We will only use your contact details to update you about your enquiry.
 aboutYou.fullName = Full Name
-aboutYou.email = Email address
-aboutYou.telephone = Telephone number
+aboutYou.contactDetails.email = Email address
+aboutYou.contactDetails.phone = Telephone number
 label.aboutYou = What is your relationship to the property?
 hint.aboutYou = If you’re renting or leasing the property, even as a charity or non-profit organisation, you’re considered the occupier. If you are both the owner and the occupier, select ’Owner or trustee for owner’.
-relationshipToProperty.occupierTrustee = Occupier or trustee for occupier
-relationshipToProperty.ownerTrustee = Owner or trustee for owner
-relationshipToProperty.occupier = Occupier’s agent
-relationshipToProperty.owner = Owner’s agent
+#relationshipToProperty.occupierTrustee = Occupier or trustee for occupier
+#relationshipToProperty.ownerTrustee = Owner or trustee for owner
+#relationshipToProperty.occupier = Occupier’s agent
+#relationshipToProperty.owner = Owner’s agent
 
 #6010 CONNECTION TO THE PROPERTY
 ##############################
-connectionToTheProperty.header = What is your connection to the property?
-hint.connectionToTheProperty = If you’re renting or leasing the property, even as a charity or non-profit organisation, you’re considered the occupier. If you are both the owner and the occupier, select ’Owner or trustee for owner’.
+connectionToTheProperty.heading = What is your connection to the property?
+connectionToTheProperty.hint = If you’re renting or leasing the property, even as a charity or non-profit organisation, you’re considered the occupier. If you are both the owner and the occupier, select ’Owner or trustee for owner’.
 label.occupierTrustee = Occupier or trustee for occupier
 label.ownerTrustee = Owner or trustee for owner
 label.occupierAgent = Occupier’s agent

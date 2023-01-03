@@ -85,6 +85,7 @@ trait TestBaseSpec
 
   val mockCustomErrorHandler: ErrorHandler     = mock[ErrorHandler]
   val mockSessionRepository: SessionRepository = mock[SessionRepository]
+  val testAddress                              = Address("001", Some("GORING ROAD"), Some("GORING-BY-SEA, WORTHING"), "BN12 4AX")
   val testUserLoginDetails                     =
     UserLoginDetails("jwtToken", "FOR6010", "123456", Address("13", Some("Street"), Some("City"), "AA11 1AA"))
   val testStillConnectedDetailsYes             = StillConnectedDetails(Some(AddressConnectionTypeYes))

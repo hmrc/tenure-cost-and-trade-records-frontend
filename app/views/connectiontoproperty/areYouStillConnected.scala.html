@@ -44,8 +44,13 @@
 
 @(theForm: Form[_], address: Address)(implicit request: Request[_], messages: Messages)
 
+@heading = @{messages("areYouConnected.heading", address.singleLine)}
+
 @layout(
- pageHeading = messages("areYouConnected.header", address.singleLine),
+ pageHeading = messages("areYouConnected.heading", address.singleLine),
+ showH1 = false,
+ showSection = true,
+ sectionName = messages("label.section.checkBeforeStart"),
  theForm = theForm
 ) {
 
@@ -66,14 +71,9 @@
     ),
     errorMessage = theForm.errors.asTextErrorMessageForField("isRelated"),
     fieldset = Option(
-     Fieldset(
-      legend = Option(
-       Legend(
-        isPageHeading = true,
-        classes = "govuk-fieldset__legend--l"
-       )
-      )
-     )
+     Fieldset(legend = Option(
+       Legend(Text(heading), isPageHeading = true, classes = "govuk-fieldset__legend--l")
+      ))
     )
    )
   )
