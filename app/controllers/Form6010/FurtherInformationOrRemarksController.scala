@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 HM Revenue & Customs
+ * Copyright 2023 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,24 +16,30 @@
 
 package controllers.Form6010
 
+import actions.WithSessionRefiner
 import form.Form6010.FurtherInformationOrRemarksForm.furtherInformationOrRemarksForm
 import form.Form6010.HowIsCurrentRentFixedForm.howIsCurrentRentFixedForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import play.api.i18n.I18nSupport
+import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.form.{furtherInformationOrRemarks, howIsCurrentRentFixed}
 
-import javax.inject.{Inject, Singleton}
+import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
 
 @Singleton
 class FurtherInformationOrRemarksController @Inject() (
   mcc: MessagesControllerComponents,
   howIsCurrentRentFixedView: howIsCurrentRentFixed,
-  furtherInformationOrRemarksView: furtherInformationOrRemarks
-) extends FrontendController(mcc) {
+  furtherInformationOrRemarksView: furtherInformationOrRemarks,
+  withSessionRefiner: WithSessionRefiner,
+  @Named("session") val session: SessionRepo
+) extends FrontendController(mcc) with I18nSupport {
 
-  def show: Action[AnyContent] = Action.async { implicit request =>
-    Future.successful(Ok(furtherInformationOrRemarksView(furtherInformationOrRemarksForm)))
+  def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    Future.successful(
+      Ok(furtherInformationOrRemarksView(furtherInformationOrRemarksForm)))
   }
 
   def submit = Action.async { implicit request =>
