@@ -1,5 +1,5 @@
 @*
- * Copyright 2022 HM Revenue & Customs
+ * Copyright 2023 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -47,14 +47,14 @@
 @(theForm: Form[AboutYourTradingHistory])(implicit request: Request[_], messages: Messages)
 
 @layout(
- pageHeading = messages("aboutYourTradingHistory.header"),
+ pageHeading = messages("aboutYourTradingHistory.heading"),
  backLinkUrl = controllers.routes.TaskListController.show.url,
  theForm = theForm
 ) {
 
  <p class="govuk-body"><b>@messages("aboutYourTradingHistory.subheader")</b></p>
 
- <p class="govuk-body">@messages("aboutYourTradingHistory.subheading")</p>
+ <p class="govuk-body">@messages("aboutYourTradingHistory.subheader2")</p>
 
  @formWithCSRF(action = controllers.Form6010.routes.AboutYourTradingHistoryController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
 

@@ -1,5 +1,5 @@
 @*
- * Copyright 2022 HM Revenue & Customs
+ * Copyright 2023 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -43,7 +43,7 @@
 @(theForm: Form[TenantsAdditionsDisregardedDetails])(implicit request: Request[_], messages: Messages)
 
 @layout(
- pageHeading = messages("tenantsAdditionsDisregarded.header"),
+ pageHeading = messages("tenantsAdditionsDisregarded.heading"),
  backLinkUrl = controllers.Form6010.routes.IncentivesPaymentsConditionsController.show.url,
  theForm = theForm
 ) {

@@ -90,23 +90,6 @@ heading.login.lockedOut=Rydych wedi eich cloi allan nawr
 error.login.lockedOut=Rydych wedi eich cloi allan nawr. Gallwch roi cynnig arall arni ar ôl 2 awr.
 label.retryLogin=Rhowch gynnig arall ar fewngofnodi
 
-#6010 LANDING PAGE
-##############################
-landing.header = Send information about your licensed premises to the Valuation Office Agency
-landing.desc1 = You must send the Valuation Office Agency (VOA) information about your business property if they’ve asked you to. You need to do this even if you no longer own or rent the property.
-landing.desc2 = The information you provide will be used by the local authority to help calculate business rates in your area.
-landing.desc3 = If you do not send the information within 56 days of getting the letter the VOA sent to you, you may have to pay a penalty.
-landing.warning = You could be taken to court if you submit false information
-landing.heading = What you’ll need
-landing.desc4 = Collect the following information before you begin:
-landing.listItem1 = the reference number from the letter the VOA sent you
-landing.listItem2 = your lease or agreement, including the current rent you pay, or any tenants’ details if you’re the owner
-landing.listItem3 = trading receipts for the last three financial years, or since you occupied the property
-landing.listItem4 = details of any sub-lettings or franchises
-landing.listItem5 = information about any recent changes to your rent or any rent-free periods
-landing.listItem6 = information about any changes you’ve made to the property
-landing.desc5 = You do not have to complete the form in one go. You can save what you’ve done and return to finish it later on.
-
 #6010 ARE YOU STILL CONNECTED
 ##############################
 areYouConnected.heading = Are you still connected to {0}?
@@ -125,11 +108,11 @@ label.address.postcode=Postcode (optional)
 
 #6010 ARE YOU STILL CONNECTED NO
 ##############################
-areYouConnectedNo.header = Have you ever had a connection to the property?
+areYouConnectedNo.heading = Have you ever had a connection to the property?
 
 #6010 REMOVE CONNECTION
 ##############################
-removeConnection.header = Remove your connection to this property
+removeConnection.heading = Remove your connection to this property
 removeConnection.subheading = We’ll use these details if we need to contact you
 label.removeConnection.fullName = Full name
 label.removeConnection.emailAddress = Email address
@@ -164,7 +147,7 @@ hint.ownerTrustee = Select this if you own and occupy the property-you’re cons
 
 #6010 ABOUT THE PROPERTY
 ##############################
-aboutProperty.header = About the property
+aboutProperty.heading = About the property
 currentOccupierName.fullName = What is the name of the current occupier?
 hint.currentOccupierName = This should be the trading name of the business operating from the property
 aboutProperty.desc1 = This should be the trading name of the business operating from the property
@@ -182,13 +165,13 @@ propertyCurrentlyUsedOther.textbox = Please give details if the property has ano
 ############################## PLEASE KEEP THE BELOW! IT MAY BE REQUIRED IF WE REVERT A CONDITIONAL HTML BACK TO ONE THING PER PAGE!!!##############################
 #6010 ABOUT THE PROPERTY OTHER
 ##############################
-propertyCurrentlyUsedOther.header = About the property
+propertyCurrentlyUsedOther.heading = About the property
 propertyCurrentlyUsedOther.label = ???
 error.propertyCurrentlyUsedOther.required = Please provide the relevant information
 
 #WEBSITE FOR PROPERTY (USED ON 6010, 6011, 6015, 6016,6030, 6035, 6036, 6037, 6045)
 ##############################
-buildingOperatingHaveAWebsite.header = About the property
+buildingOperatingHaveAWebsite.heading = About the property
 label.buildingOperatingHaveAWebsite = Does the business operating from the property have a website?
 buildingOperatingHaveAWebsite.yes = Yes
 buildingOperatingHaveAWebsite.no = No
@@ -197,20 +180,20 @@ websiteAddressForProperty.textbox = Enter website address
 ############################## PLEASE KEEP THE BELOW! IT MAY BE REQUIRED IF WE REVERT A CONDITIONAL HTML BACK TO ONE THING PER PAGE!!!##############################
 #WEBSITE ADDRESS FOR PROPERTY (USED ON 6010, 6011, 6015, 6016,6030, 6035, 6036, 6037, 6045)
 ##############################
-websiteAddressForProperty.header = About the property
+websiteAddressForProperty.heading = About the property
 websiteAddressForProperty.label = ???
 error.websiteAddressForProperty.required = Please provide the web address
 
 #TENANCY LEASE AGREEMENT(USED ON 6010, 6015, 6016, 6030, 6032, 6033, 6034, 6035, 6036, 6037, 6038, 6043, 6049, 6056, 6057, 6066)
 ##############################
-tenancyLeaseAgreement.header = About the property
+tenancyLeaseAgreement.heading = About the property
 label.tenancyLeaseAgreement = Do you hold a tenancy, lease or agreement to occupy?
 label.yes = Yes
 label.no = No
 
 #FRANCHISE OR LETTINGS TIED TO PROPERTY
 ##############################
-franchiseLettings.header = Do you have any franchises or lettings tied to the property?
+franchiseLettings.heading = Do you have any franchises or lettings tied to the property?
 franchiseLettings.subheading = These include:
 franchiseLettings.list1 = catering operation or letting accommodation run as a separate business if you’ve not included their turnover on the previous page
 franchiseLettings.list2 = rent received from letting other parts of the property including advertising rights, stations or hoardings
@@ -220,7 +203,7 @@ label.no = No
 
 #ABOUT YOUR LANDLORD
 ##############################
-aboutYourLandlord.header = About your landlord
+aboutYourLandlord.heading = About your landlord
 landlordFullName.label = Landlord’s name
 landlordAddress.address.label = Landlord’s address
 landlordAddress.buildingNameNumber.label = Address line 1
@@ -233,14 +216,14 @@ error.landlordFullName.maxLength = This must be 1000 characters or fewer
 
 #LEASE OR AGREEMENT DETAILS COMMENCE WITHIN 3 YEARS
 ##############################
-leaseOrAgreement.header = Lease or agreement details
+leaseOrAgreement.heading = Lease or agreement details
 label.commenceWithinThreeYears = Did the tenancy, lease or agreement commence within the last 3 years?
 label.agreedReviewedAlteredThreeYears  = Has the rent been agreed, reviewed or altered within the last 3 years?
 label.rentUnderReviewNegotiated  = Is the rent currently under review, or is a new lease or agreement being negotiated?
 
 #LEASE OR AGREEMENT DETAILS VAT
 ##############################
-includedInYourRent.header = Which of the following are included in your rent?
+includedInYourRent.heading = Which of the following are included in your rent?
 includedInYourRentApply.subheading = Select any that apply
 label.vat = VAT
 label.nondomesticRates = Non-domestic rates
@@ -248,36 +231,36 @@ label.waterCharges = Water charges
 
 #LICENSABLE ACTIVITIES
 ##############################
-licensableActivities.header = About the property
+licensableActivities.heading = About the property
 licensableActivities.subheader = Are any of the following included in your rent?
 licensableActivities.option = Do licensable activities regularly commence before 10:00 or after 23:30 on any day of the week?
 hint.licensableActivities= Licensable activities could include, selling alcohol, selling food and refreshments, or providing live entertainment
 
 #LICENSABLE ACTIVITIES DETAILS
 ##############################
-licensableActivitiesDetails.header = About the property
+licensableActivitiesDetails.heading = About the property
 label.licensableActivitiesDetails = Describe the licensable activities regularly commending before 10:00 or after 23:30
 
 #PREMISES LICENCE CONDITIONS
 ##############################
-premisesLicenseConditions.header = About the property
+premisesLicenseConditions.heading = About the property
 label.premisesLicenseConditions = Describe the conditions restricting the use of all or parts of the property
 
 #PREMISES LICENCE
 ##############################
-premisesLicense.header = About the property
+premisesLicense.heading = About the property
 label.premisesLicense = Does your premises licence have conditions restricting the use of all or parts of the property?
 hint.premisesLicense = For example, no drinks outside after 22:00
 
 #TIED FOR GOODS
 ##############################
-tiedForGoods.header = About the property
+tiedForGoods.heading = About the property
 label.tiedForGoods = Are you tied for any goods?
 hint.tiedForGoods = Are you required to sell certain goods as part of your lease or tenancy agreement?
 
 #TIED FOR GOODS DETAILS
 ##############################
-tiedForGoodsDetails.header = About the property
+tiedForGoodsDetails.heading = About the property
 label.tiedForGoodsDetails = What type of tie do you have?
 tiedForGoodsDetails.fullTie = Full tie
 tiedForGoodsDetails.beerOnly = Beer only
@@ -285,31 +268,31 @@ tiedForGoodsDetails.partialTie = Partial tie
 
 #CATERING OPERATION OR LETTING ACCOMMODATION
 ##############################
-cateringOperationOrLettingAccommodation.header = Franchises or lettings tied to the property
+cateringOperationOrLettingAccommodation.heading = Franchises or lettings tied to the property
 label.cateringOperationOrLettingAccommodation = Is any catering operation or letting accommodation run as a separate business from the property?
 hint.cateringOperationOrLettingAccommodation = Choose ‘no’ if you’ve included turnover from these businesses on the previous page. You will have the opportunity to add more than one business if required.
 
 #LETTING OTHER PART OF PROPERTY
 ##############################
-LettingOtherPartOfProperties.header = Lettings
+LettingOtherPartOfProperties.heading = Lettings
 label.LettingOtherPartOfProperties = Is any rent received from letting other parts of the property?
 hint.LettingOtherPartOfProperties = Including advertising rights, stations or hoardings. Choose ‘no’ if you’ve already included the rental payments in your turnover.
 
 #CURRENT ANNUAL RENT
 ##############################
-currentAnnualRent.header = What is the current annual rent?
+currentAnnualRent.heading = What is the current annual rent?
 hint.currentAnnualRent = For example, 32000
 error.required.currentAnnualRent = Please provide a value
 error.invalid_currency.currentAnnualRent = Please provide a number
 
 #RENT OPEN MARKET VALUE
 ##############################
-rentOpenMarketValue.header = About your lease or agreement
+rentOpenMarketValue.heading = About your lease or agreement
 label.rentOpenMarketValue = Is the rent based on the open market value?
 
 #DOES THE RENT PAYABLE
 ##############################
-rentPayable.header = Does the rent payable include or relate to any of the following?
+rentPayable.heading = Does the rent payable include or relate to any of the following?
 label.rentPayable = Select any that apply
 checkbox.rentPayable.includeLicensee = include licensee’s, manager’s or staff living accommodation?
 checkbox.rentPayable.includeOtherProperty = include other property?
@@ -323,44 +306,44 @@ error.detailsToQuestions.maxLength = This must be 1000 characters or fewer
 
 #RENT PAYABLE VARY ON QUANTITY OF BEERS
 ##############################
-rentPayableVaryOnQuantityOfBeers.header = About your lease or agreement
+rentPayableVaryOnQuantityOfBeers.heading = About your lease or agreement
 label.rentPayableVaryOnQuantityOfBeers = Does the rent payable vary according to the quantity of beers, wines or spirits supplied to the property?
 
 #RENT PAYABLE VARY ON QUANTITY OF BEERS DETAILS
 ##############################
-rentPayableVaryOnQuantityOfBeersDetails.header = About your lease or agreement
+rentPayableVaryOnQuantityOfBeersDetails.heading = About your lease or agreement
 label.rentPayableVaryOnQuantityOfBeersDetails = How is the rent payable affected by the drinks supplied to your property?
 error.rentPayableVaryOnQuantityOfBeersDetails.required = Tell us how the rent payable is affected by the drinks supplied to your property
 error.rentPayableVaryOnQuantityOfBeersDetails.maxLength  = This must be 1000 characters or fewer
 
 #RENT PAYABLE VARY ACCORDING TO GROSS OR NET
 ##############################
-rentPayableVaryAccordingToGrossOrNet.header = About the property
+rentPayableVaryAccordingToGrossOrNet.heading = About the property
 label.rentPayableVaryAccordingToGrossOrNet = Does the rent payable vary according to the gross or net turnover of the business?
 
 #RENT PAYABLE VARY ACCORDING TO GROSS OR NET DETAILS
 ##############################
-rentPayableVaryAccordingToGrossOrNetDetails.header = About your lease or agreement
+rentPayableVaryAccordingToGrossOrNetDetails.heading = About your lease or agreement
 label.rentPayableVaryAccordingToGrossOrNetDetails = Tell us how the rent payable is affected by your turnover
 error.rentPayableVaryAccordingToGrossOrNetDetails.required = Tell us how the rent payable is affected by your turnover
 error.rentPayableVaryAccordingToGrossOrNetDetails.maxLength  = This must be 1000 characters or fewer
 
 #ENFORCEMENT ACTION BEEN TAKEN
 ##############################
-enforcementAction.header = About the property
+enforcementAction.heading = About the property
 label.enforcementAction = Has any enforcement action been taken?
 hint.enforcementAction = This can be any suspensions, closure orders or temporary restrictions
 
 #ENFORCEMENT ACTION BEEN TAKEN DETAILS
 ##############################
-enforcementActionHasBeenTakenDetails.header = About the property
+enforcementActionHasBeenTakenDetails.heading = About the property
 label.enforcementActionHasBeenTakenDetails = Describe any enforcement action taken
 error.enforcementActionHasBeenTakenDetails.required = Please describe any enforcement action taken
 error.enforcementActionHasBeenTakenDetails.maxLength  = This must be 1000 characters or fewer
 
 #ULTIMATELY RESPONSIBLE
 ##############################
-ultimatelyResponsible.header = Who is ultimately responsible for the following costs?
+ultimatelyResponsible.heading = Who is ultimately responsible for the following costs?
 ultimatelyResponsible.subheading = This could be either by direct payment, or by reimbursing the person who initially paid for the service
 label.outsideRepairs = Outside repairs
 label.insideRepairs = Inside repairs public and business areas
@@ -371,13 +354,13 @@ label.both = Both
 
 #RENT INCLUDE TRADE SERVICES
 ##############################
-rentIncludeTradeServices.header = About your lease or agreement (continued)
+rentIncludeTradeServices.heading = About your lease or agreement (continued)
 label.rentIncludeTradeServices = Does the rent include any trade services provided by the landlord?
 hint.rentIncludeTradeServices = For example, maintenance of trade fixtures and fittings, cellar services, marketing, staff training etc.
 
 #RENT INCLUDE TRADE SERVICES DETAILS
 ##############################
-rentIncludeTradeServicesDetails.header = About the services your landlord provides
+rentIncludeTradeServicesDetails.heading = About the services your landlord provides
 label.sumIncludedInRent = Where specifically itemised, what sum is included in the rent (excluding VAT) to cover services provided by the landlord?
 label.describeServices = Describe services provided
 error.required.sumIncludedInRent = Please provide a value
@@ -387,47 +370,47 @@ error.describeServices.maxLength = This must be 1000 characters or fewer
 
 #RENT INCLUDE FIXTURES AND FITTINGS
 ##############################
-rentIncludeFixturesAndFittings.header = About your lease or agreement
+rentIncludeFixturesAndFittings.heading = About your lease or agreement
 label.rentIncludeFixturesAndFittings = Does the rent include any trade fixtures and fittings, plant and machinery, furniture and other equipment belonging to the landlord?
 error.required.rentIncludeFixturesAndFittings = Please provide a value
 error.invalid_currency.rentIncludeFixturesAndFittings = Please provide a number
 
 #RENT INCLUDE FIXTURES AND FITTINGS DETAILS
 ##############################
-rentIncludeFixturesAndFittingsDetails.header = About your fixtures and fittings
+rentIncludeFixturesAndFittingsDetails.heading = About your fixtures and fittings
 label.rentIncludeFixturesAndFittingsDetails = Where specifically itemised, what sum is included in the rent (excluding VAT) to cover equipment provided by the landlord?
 error.required.rentIncludeFixturesAndFittingsDetails = Please provide a value
 error.invalid_currency.rentIncludeFixturesAndFittingsDetails = Please provide a number
 
 #INCENTIVES, PAYMENTS AND CONDITIONS
 ##############################
-incentivesPaymentsConditions.header = About your lease or agreement
+incentivesPaymentsConditions.heading = About your lease or agreement
 label.formerLeaseSurrendered = Was a former lease or agreement surrendered early as a condition of the present one being granted?
 
 #CAN RENT BE REDUCED ON REVIEW
 ##############################
-rentReducedOnReview.header = About your lease or agreement
+rentReducedOnReview.heading = About your lease or agreement
 label.rentReducedOnReview = Can the rent be reduced on review under the terms of the lease or agreement?
 
 #PAY A CAPITAL SUM
 ##############################
-capitalSumOrPremium.header = About your lease or agreement
+capitalSumOrPremium.heading = About your lease or agreement
 label.capitalSumOrPremium = Did you pay a capital sum or premium for your lease or agreement, ignoring tenants’ inventory?
 hint.capitalSumOrPremium = The sum could be paid to the landlord or a previous lessee
 
 #PAYMENT WHEN LEASE IS GRANTED
 ##############################
-receivePaymentWhenLeaseGranted.header = About your lease or agreement
+receivePaymentWhenLeaseGranted.heading = About your lease or agreement
 label.receivePaymentWhenLeaseGranted = Did you receive any payment when the lease was granted (if the rent has not been reviewed in the lease), or following assignment of the lease or agreement?
 
 #RENT INCREASE ANNUALLY WITH RPI
 ##############################
-rentIncreasedAnnuallyWithRPIs.header = About your lease or agreement
+rentIncreasedAnnuallyWithRPIs.heading = About your lease or agreement
 label.rentIncreasedAnnuallyWithRPIs = Does the rent increase annually in line with the retail price index (RPI)?
 
 #METHOD USED TO FIX CURRENT RENT
 ##############################
-methodUsedToFixCurrentRent.header = About your lease or agreement
+methodUsedToFixCurrentRent.heading = About your lease or agreement
 label.methodUsedToFixCurrentRent = How was the current rent agreed?
 label.methodUsedToFixCurrentRent.agreement = Agreement
 label.methodUsedToFixCurrentRent.arbitration = Arbitration
@@ -436,7 +419,7 @@ label.methodUsedToFixCurrentRent.aCourt = A court
 
 #HOW IS CURRENT RENT FIXED
 ##############################
-howIsCurrentRentFixed.header = About your lease or agreement
+howIsCurrentRentFixed.heading = About your lease or agreement
 label.howIsCurrentRentFixed = How was the current rent fixed?
 label.newLeaseAgreement = At the beginning of a new lease or agreement
 label.interimRent = As an interim rent under the Landlord and Tenants Acts
@@ -450,18 +433,18 @@ error.rentActuallyAgreed.year.required = The date must include a year
 
 #ENFORCEMENT ACTION BEEN TAKEN
 ##############################
-enforcementActionHasBeenTaken.header = About the property
+enforcementActionHasBeenTaken.heading = About the property
 label.enforcementActionHasBeenTaken = Has any enforcement action been taken?
 hint.enforcementActionHasBeenTaken = This can be any suspensions, closure orders or temporary restrictions
 
 #ENFORCEMENT ACTION BEEN TAKEN DETAILS
 ##############################
-enforcementActionHasBeenTaken.header = About the property
+enforcementActionHasBeenTaken.heading = About the property
 label.enforcementActionHasBeenTaken = Describe the enforcement action taken
 
 ##CATERING OPERATION OR LETTING ACCOMMODATION DETAILS
 ##############################
-cateringOperationOrLettingAccommodationDetails.header = Provide the business’s details
+cateringOperationOrLettingAccommodationDetails.heading = Provide the business’s details
 label.operatorName = Operator’s name
 label.typeOfBusiness = Describe the type of business
 hint.typeOfBusiness = For example, bed and breakfast, hotel, restaurant
@@ -474,7 +457,7 @@ cateringAddress.postcode.label = Postcode
 
 ##CATERING OPERATION OR LETTING ACCOMMODATION DETAILS RENT
 ##############################
-cateringOperationOrLettingAccommodationRentDetails.header = Annual rent for business
+cateringOperationOrLettingAccommodationRentDetails.heading = Annual rent for business
 label.annualRent = Annual rent payment (excluding VAT)
 label.dateInput = When was this sum fixed?
 error.required.annualRentExcludingVat = Please provide a number
@@ -485,7 +468,7 @@ error.required.annualRent = Please provide an annual rent amount
 
 ##CATERING OPERATION OR LETTING ACCOMMODATION DETAILS CHECKBOXES
 ##############################
-cateringOperationOrLettingAccommodationCheckboxesDetails.header = Are any of the following included in your rent for business?
+cateringOperationOrLettingAccommodationCheckboxesDetails.heading = Are any of the following included in your rent for business?
 label.cateringOperationOrLettingAccommodationCheckboxesDetails = Are any of the following included in your rent?
 hint.cateringOperationOrLettingAccommodationCheckboxesDetails = Select any that apply
 checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.rates = Rates
@@ -495,14 +478,14 @@ checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.insideRepairs 
 
 ##ADD ANOTHER CATERING OPERATION OR LETTING ACCOMMODATION DETAILS
 ##############################
-addAnotherCateringOperationOrLettingAccommodation.header = Franchises or lettings tied to the property
+addAnotherCateringOperationOrLettingAccommodation.heading = Franchises or lettings tied to the property
 label.addAnotherCateringOperationOrLettingAccommodation = Do you need to add another separate business or franchise?
 label.yes = Yes
 label.no = No
 
 ##LETTING OTHER PART OF PROPERTY DETAILS
 ##############################
-lettingOtherPartOfPropertyDetails.header = Provide the tenant’s details
+lettingOtherPartOfPropertyDetails.heading = Provide the tenant’s details
 label.lettingOperatorName = Tenant’s name
 label.lettingTypeOfBusiness = Description of letting
 hint.lettingTypeOfBusiness = For example, a billboard, residential accommodation
@@ -515,7 +498,7 @@ lettingAddress.postcode.label = Postcode
 
 ##LETTING OTHER PART OF PROPERTY DETAILS RENT
 ##############################
-lettingOtherPartOfPropertyRentDetails.header = Annual rent for letting
+lettingOtherPartOfPropertyRentDetails.heading = Annual rent for letting
 label.annualRent = Annual rent payment (excluding VAT)
 label.dateInput = When was this sum fixed?
 error.required.annualRentExcludingVat = Please provide a number
@@ -526,7 +509,7 @@ error.required.annualRent = Please provide an annual rent amount
 
 ##LETTING OTHER PART OF PROPERTY DETAILS CHECKBOXES
 ##############################
-lettingOtherPartOfPropertyCheckboxesDetails.header = Are any of the following included in your rent for letting?
+lettingOtherPartOfPropertyCheckboxesDetails.heading = Are any of the following included in your rent for letting?
 hint.lettingOtherPartOfPropertyCheckboxesDetails = Select any that apply
 checkbox.lettingOtherPartOfPropertyCheckboxesDetails.rates = Rates
 checkbox.lettingOtherPartOfPropertyCheckboxesDetails.propertyInsurance = Property insurance
@@ -535,20 +518,20 @@ checkbox.lettingOtherPartOfPropertyCheckboxesDetails.insideRepairs = Inside repa
 
 ##ADD ANOTHER LETTING OTHER PART OF PROPERTY DETAILS
 ##############################
-addAnotherLettingOtherPartOfProperty.header = Franchises or lettings tied to the property
+addAnotherLettingOtherPartOfProperty.heading = Franchises or lettings tied to the property
 label.addAnotherLettingOtherPartOfProperty = Do you need to add another letting?
 label.yes = Yes
 label.no = No
 
 ##TENANTS ADDITIONS DISREGARDED
 ##############################
-tenantsAdditionsDisregarded.header = About your lease or agreement
+tenantsAdditionsDisregarded.heading = About your lease or agreement
 label.tenantsAdditionsDisregarded = Describe the tenants’ additions disregarded at the time the rent was agreed or determined
 hint.tenantsAdditionsDisregarded = For example, is your rent based on the market value of the property before you made improvements like fitting out a shell, or adding parking
 
 ##TENANTS ADDITIONS DISREGARDED DETAILS
 ##############################
-tenantsAdditionsDisregardedDetails.header = About your lease or agreement
+tenantsAdditionsDisregardedDetails.heading = About your lease or agreement
 label.tenantsAdditionsDisregardedDetails = Describe the tenant’s additions disregarded at the time the rent was agreed or determined
 error.tenantsAdditionsDisregardedDetails.required = Please describe the tenant’s additions disregarded at the time the rent was agreed or determined
 error.tenantsAdditionsDisregardedDetails.maxLength = This must be 1000 characters or fewer
@@ -560,16 +543,16 @@ hint.legalPlanningRestrictions = For example, a break clause, contracting out of
 
 ##LEGAL PLANNING RESTRICTIONS DETAILS
 ##############################
-legalOrPlanningRestrictionsDetails.header = About your lease or agreement
+legalOrPlanningRestrictionsDetails.heading = About your lease or agreement
 label.legalOrPlanningRestrictionsDetails = Describe the legal or planning restrictions, unusual terms or conditions in the lease or agreement that may have affected the rent payable
 error.legalOrPlanningRestrictionsDetails.required = Please describe the legal or planning restrictions, unusual terms or conditions in the lease or agreement that may have affected the rent payable
 error.legalOrPlanningRestrictionsDetails.maxLength = This must be 1000 characters or fewer
 
 ##ABOUT YOUR TRADING HISTORY
 ##############################
-aboutYourTradingHistory.header = About your trading history
+aboutYourTradingHistory.heading = About your trading history
 aboutYourTradingHistory.subheader = Occupation and accounting information
-aboutYourTradingHistory.subheading = The questions on this page will ensure we only ask you for relevant information about your trading history
+aboutYourTradingHistory.subheader2 = The questions on this page will ensure we only ask you for relevant information about your trading history
 label.firstOccupy = When did you first occupy the property?
 label.financialYear =When does your current financial year end?
 help.date.month.year = Please format in mm/yyyy
@@ -582,7 +565,7 @@ error.financialYear.year.required = The date must include a year
 
 ##CURRENT RENT FIRST PAID
 ##############################
-currentRentFirstPaid.header = When was the current rent first paid under the terms of the current lease or agreement?
+currentRentFirstPaid.heading = When was the current rent first paid under the terms of the current lease or agreement?
 label.currentRentFirstPaid = Disregard alterations solely due to changes in the amount of rates or services payable
 help.date.day.month.year = Please format in dd/mm/yyyy
 label.date.day = Day
@@ -595,7 +578,7 @@ error.date_before_1900.currentRentFirstPaid = The date must be after December 18
 
 ##CURRENT LEASE OR AGREEMENT BEGIN
 ##############################
-currentLeaseOrAgreementBegin.header = About your lease or agreement
+currentLeaseOrAgreementBegin.heading = About your lease or agreement
 label.leaseBegin = When did the current lease or agreement begin?
 hint.leaseBegin = If the current lease was granted to a previous occupier, tell us when it was started by them
 label.grantedFor = How long was it granted for?
@@ -608,7 +591,7 @@ error.maxValueRentFreeIsBlank.required = This must be a number
 
 ##INTERVALS OF RENT REVIEW
 ##############################
-currentLeaseOrAgreementBegin.header = About your lease or agreement
+currentLeaseOrAgreementBegin.heading = About your lease or agreement
 label.currentLeaseOrAgreementBegin = At what intervals is the rent reviewed under the terms of the lease or agreement?
 hint.currentLeaseOrAgreementBegin = Do not include any changes to your rent linked to indexes such as the RPI, or your sales. For example, rent is reviewed annually, every two years, every three years.
 label.nextReview = When is the next rent review due?
@@ -620,7 +603,7 @@ error.currentLeaseOrAgreementBegin.maxLength = This must be 1000 characters or f
 
 ##CURRENT RENT PAYABLE WITHIN 12 MONTHS
 ##############################
-currentRentPayableWithin12Months.header = Lease or agreement details
+currentRentPayableWithin12Months.heading = Lease or agreement details
 label.currentRentPayableWithin12Months = Is the current rent payable due to review within the next 12 months, either under the terms of the existing lease, or upon grant of a new lease?
 hint.currentRentPayableWithin12Months = Do not include any rent increases linked to turnover or the retail price index (RPI)
 label.dateReview = Date of next rent review or expiry of existing lease
@@ -630,7 +613,7 @@ error.dateReview.year.required = The date must include a year
 
 ##WHAT IS YOUR RENT BASED ON
 ##############################
-currentRentBasedOn.header = About your lease or agreement
+currentRentBasedOn.heading = About your lease or agreement
 label.currentRentBasedOn = What is the rent based on?
 hint.currentRentBasedOn = Select any that apply and give details
 label.percentageOpenMarket = A percentage of open market value
@@ -656,15 +639,15 @@ hint.aboutYou = If you’re renting or leasing the property, even as a charity o
 
 #TASK LIST
 ##############################
-taskList.header = Declaration summary
+taskList.heading = Declaration summary
 
 #TURNOVER
 ##############################
-turnover.header = This is a holding page for the turnover page
+turnover.heading = This is a holding page for the turnover page
 
 #SHARED RESPONSIBILITIES
 ##############################
-sharedResponsibilities.header = About your lease or agreement
+sharedResponsibilities.heading = About your lease or agreement
 label.sharedResponsibilities = Give details of the shared responsibilities
 hint.sharedResponsibilities = For example, costs are shared equally, landlord 75%, tenant 25%
 error.sharedResponsibilities.required = Please provide details if you are responsible for any area shared, if any
@@ -672,14 +655,14 @@ error.sharedResponsibilities.maxLength = This must be 1000 characters or fewer
 
 #FURTHER INFORMATION OR REMARKS
 ##############################
-furtherInformationOrRemarks.header = Additional information
+furtherInformationOrRemarks.heading = Additional information
 label.furtherInformationOrRemarks = Further information or remarks (if any)
 hint.furtherInformationOrRemarks = Please provide further details if there is insufficient room for you to complete your answers to any of the forgoing questions, or if any of the questions require further explanation or clarification
 error.furtherInformationOrRemarks.maxLength = This must be 1000 characters or fewer
 
 #ALTERNATIVE CONTACT DETAILS
 ##############################
-alternativeContactDetails.header = Additional information
+alternativeContactDetails.heading = Additional information
 label.alternativeContactDetails = Contact details
 hint.alternativeContactDetails = If you like us to either contact you at at different address or  contact someone else if we have any queries about this form, please give details here
 alternativeContactFullName.label = Full name
@@ -695,7 +678,7 @@ error.alternativeContactFullName.required = Please enter the full name
 
 #TENANCY LEASE AGREEMENT EXPIRE (FORM 6011)
 ##############################
-tenancyLeaseAgreementExpire.header = About your lease or agreement
+tenancyLeaseAgreementExpire.heading = About your lease or agreement
 label.tenancyLeaseAgreementExpire = When does your tenancy, lease or agreement expire, or if earlier, what is the date of your next review (excluding indexation)?
 
 #HELP WITH SERVICE COMMON
