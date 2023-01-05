@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 HM Revenue & Customs
+ * Copyright 2023 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -48,9 +48,9 @@ class AboutYouViewSpec extends QuestionViewBehaviours[CustomerDetails] {
       backlinkUrl mustBe controllers.routes.TaskListController.show().url
     }
 
-    "contain aboutYou.subheading2 paragraph" in {
+    "contain aboutYou.subheading paragraph" in {
       val doc = asDocument(createView())
-      assert(doc.toString.contains(messages("aboutYou.subheading2")))
+      assert(doc.toString.contains(messages("aboutYou.subheading")))
     }
 
     "contain save and continue button with the value Save and Continue" in {
