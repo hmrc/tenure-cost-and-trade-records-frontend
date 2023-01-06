@@ -14,26 +14,26 @@
  * limitations under the License.
  */
 
-package controllers.Form6010
+package controllers.abouttheproperty
 
 import actions.WithSessionRefiner
-import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.form.{aboutTheProperty, aboutThePropertyOther, websiteForProperty}
-import form.Form6010.AboutThePropertyForm.aboutThePropertyForm
-import form.Form6010.AboutThePropertyOtherForm.aboutThePropertyOtherForm
-import form.Form6010.WebsiteForPropertyForm.websiteForPropertyForm
+import form.abouttheproperty.AboutThePropertyForm.aboutThePropertyForm
+import models.submissions.abouttheproperty.AboutTheProperty.updateAboutTheProperty
+import navigation.AboutThePropertyNavigator
+import navigation.identifiers.AboutThePropertyPageId
 import play.api.i18n.I18nSupport
+import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import models.submissions.SectionTwo._
+import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
+import views.html.abouttheproperty.aboutTheProperty
+
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
 
 @Singleton
 class AboutThePropertyController @Inject() (
   mcc: MessagesControllerComponents,
-  websiteForPropertyView: websiteForProperty,
-  aboutThePropertyOtherView: aboutThePropertyOther,
+  navigator: AboutThePropertyNavigator,
   aboutThePropertyView: aboutTheProperty,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
@@ -44,13 +44,9 @@ class AboutThePropertyController @Inject() (
     Future.successful(
       Ok(
         aboutThePropertyView(
-          request.sessionData.sectionTwo match {
-            case Some(sectionTwo) =>
-              sectionTwo.propertyDetails match {
-                case Some(propertyDetails) => aboutThePropertyForm.fillAndValidate(propertyDetails)
-                case _                     => aboutThePropertyForm
-              }
-            case _                => aboutThePropertyForm
+          request.sessionData.aboutTheProperty.flatMap(_.propertyDetails) match {
+            case Some(propertyDetails) => aboutThePropertyForm.fillAndValidate(propertyDetails)
+            case _                     => aboutThePropertyForm
           }
         )
       )
@@ -63,8 +59,9 @@ class AboutThePropertyController @Inject() (
       .fold(
         formWithErrors => Future.successful(BadRequest(aboutThePropertyView(formWithErrors))),
         data => {
-          session.saveOrUpdate(updateSectionTwo(_.copy(propertyDetails = Some(data))))
-          Future.successful(Ok(websiteForPropertyView(websiteForPropertyForm)))
+          val updatedData = updateAboutTheProperty(_.copy(propertyDetails = Some(data)))
+          session.saveOrUpdate(updatedData)
+          Future.successful(Redirect(navigator.nextPage(AboutThePropertyPageId).apply(updatedData)))
         }
       )
   }

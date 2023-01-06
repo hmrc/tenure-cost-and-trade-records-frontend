@@ -14,25 +14,27 @@
  * limitations under the License.
  */
 
-package controllers.Form6010
+package controllers.abouttheproperty
 
 import actions.WithSessionRefiner
-import form.Form6010.LicensableActivitiesForm.licensableActivitiesForm
-import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.form.{licensableActivities, websiteForProperty}
-import form.Form6010.WebsiteForPropertyForm.websiteForPropertyForm
+import form.abouttheproperty.WebsiteForPropertyForm.websiteForPropertyForm
+import models.submissions.abouttheproperty.AboutTheProperty.updateAboutTheProperty
+import navigation.AboutThePropertyNavigator
+import navigation.identifiers.WebsiteForPropertyPageId
 import play.api.i18n.I18nSupport
+import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import models.submissions.SectionTwo._
+import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
+import views.html.abouttheproperty.websiteForProperty
+
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
 
 @Singleton
 class WebsiteForPropertyController @Inject() (
   mcc: MessagesControllerComponents,
+  navigator: AboutThePropertyNavigator,
   websiteForPropertyView: websiteForProperty,
-  licensableActivitiesView: licensableActivities,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
 ) extends FrontendController(mcc)
@@ -42,14 +44,9 @@ class WebsiteForPropertyController @Inject() (
     Future.successful(
       Ok(
         websiteForPropertyView(
-          request.sessionData.sectionTwo match {
-            case Some(sectionTwo) =>
-              sectionTwo.websiteForPropertyDetails match {
-                case Some(websiteForPropertyDetails) =>
-                  websiteForPropertyForm.fillAndValidate(websiteForPropertyDetails)
-                case _                               => websiteForPropertyForm
-              }
-            case _                => websiteForPropertyForm
+          request.sessionData.aboutTheProperty.flatMap(_.websiteForPropertyDetails) match {
+            case Some(websiteForPropertyDetails) => websiteForPropertyForm.fillAndValidate(websiteForPropertyDetails)
+            case _                               => websiteForPropertyForm
           }
         )
       )
@@ -63,8 +60,9 @@ class WebsiteForPropertyController @Inject() (
       .fold(
         formWithErrors => Future.successful(BadRequest(websiteForPropertyView(formWithErrors))),
         data => {
-          session.saveOrUpdate(updateSectionTwo(_.copy(websiteForPropertyDetails = Some(data))))
-          Future.successful(Ok(licensableActivitiesView(licensableActivitiesForm)))
+          val updatedData = updateAboutTheProperty(_.copy(websiteForPropertyDetails = Some(data)))
+          session.saveOrUpdate(updatedData)
+          Future.successful(Redirect(navigator.nextPage(WebsiteForPropertyPageId).apply(updatedData)))
         }
       )
   }

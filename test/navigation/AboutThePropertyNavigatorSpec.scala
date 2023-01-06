@@ -21,7 +21,7 @@ import models.Session
 import models.submissions.aboutyou.{AboutYou, CustomerDetails}
 import models.submissions.common.ContactDetails
 import models.submissions.connectiontoproperty.{AddressConnectionTypeYes, StillConnectedDetails}
-import navigation.identifiers.{AboutYouPageId, Identifier}
+import navigation.identifiers.{AboutThePropertyPageId, WebsiteForPropertyPageId}
 import org.scalatest.matchers.must.Matchers.convertToAnyMustWrapper
 import play.api.libs.json.JsObject
 import uk.gov.hmrc.http.HeaderCarrier
@@ -29,12 +29,12 @@ import utils.TestBaseSpec
 
 import scala.concurrent.ExecutionContext
 
-class AboutYouNavigatorSpec extends TestBaseSpec {
+class AboutThePropertyNavigatorSpec extends TestBaseSpec {
 
   val audit = mock[Audit]
   doNothing.when(audit).sendExplicitAudit(any[String], any[JsObject])(any[HeaderCarrier], any[ExecutionContext])
 
-  val navigator = new AboutYouNavigator(audit)
+  val navigator = new AboutThePropertyNavigator(audit)
 
   val stillConnectedDetailsYes = Some(StillConnectedDetails(Some(AddressConnectionTypeYes)))
   val aboutYou                 = Some(AboutYou(Some(CustomerDetails("Tobermory", ContactDetails("12345678909", "test@email.com")))))
@@ -42,17 +42,18 @@ class AboutYouNavigatorSpec extends TestBaseSpec {
 
   implicit override val hc: HeaderCarrier = HeaderCarrier()
 
-  "Connection to property navigator" when {
+  "About to property navigator" when {
 
-    "go to sign in from an identifier that doesn't exist in the route map" in {
-      case object UnknownIdentifier extends Identifier
-      navigator.nextPage(UnknownIdentifier).apply(sessionAboutYou) mustBe controllers.routes.LoginController.show()
+    "return a function that goes to about the property website page when about the property page has been completed" in {
+      navigator
+        .nextPage(AboutThePropertyPageId)
+        .apply(sessionAboutYou) mustBe controllers.abouttheproperty.routes.WebsiteForPropertyController.show()
     }
 
-    "return a function that goes to about the property page when about you has been completed" in {
+    "return a function that goes to licence activity page when the property website page has been completed" in {
       navigator
-        .nextPage(AboutYouPageId)
-        .apply(sessionAboutYou) mustBe controllers.abouttheproperty.routes.AboutThePropertyController.show()
+        .nextPage(WebsiteForPropertyPageId)
+        .apply(sessionAboutYou) mustBe controllers.Form6010.routes.LicensableActivitiesController.show()
     }
   }
 }

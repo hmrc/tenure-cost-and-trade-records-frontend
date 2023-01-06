@@ -25,7 +25,7 @@ import form.Form6010.PremisesLicenseForm.premisesLicenseForm
 import form.Form6010.PremisesLicenseDetailsForm.premisesLicenceDetailsForm
 import form.Form6010.EnforcementActionForm.enforcementActionForm
 import models.submissions.Form6010.{PremisesLicensesNo, PremisesLicensesYes}
-import models.submissions.SectionTwo.updateSectionTwo
+import models.submissions.abouttheproperty.AboutTheProperty.updateAboutTheProperty
 import play.api.i18n.I18nSupport
 import repositories.SessionRepo
 import views.html.login
@@ -49,7 +49,7 @@ class PremisesLicenseController @Inject() (
     Future.successful(
       Ok(
         premisesLicenseView(
-          request.sessionData.sectionTwo.flatMap(_.premisesLicense) match {
+          request.sessionData.aboutTheProperty.flatMap(_.premisesLicense) match {
             case Some(premisesLicense) => premisesLicenseForm.fillAndValidate(premisesLicense)
             case _                     => premisesLicenseForm
           }
@@ -65,10 +65,10 @@ class PremisesLicenseController @Inject() (
         formWithErrors => Future.successful(BadRequest(premisesLicenseView(formWithErrors))),
         {
           case data @ PremisesLicensesYes =>
-            session.saveOrUpdate(updateSectionTwo(_.copy(premisesLicense = Some(data))))
+            session.saveOrUpdate(updateAboutTheProperty(_.copy(premisesLicense = Some(data))))
             Future.successful(Ok(premisesLicenceDetailsView(premisesLicenceDetailsForm)))
           case data @ PremisesLicensesNo  =>
-            session.saveOrUpdate(updateSectionTwo(_.copy(premisesLicense = Some(data))))
+            session.saveOrUpdate(updateAboutTheProperty(_.copy(premisesLicense = Some(data))))
             Future.successful(Ok(enforcementActionBeenTakenView(enforcementActionForm)))
           case _                          => Future.successful(Ok(login(loginForm)))
         }

@@ -25,7 +25,7 @@ import form.Form6010.LicensableActivitiesInformationForm.licensableActivitiesDet
 import form.Form6010.LicensableActivitiesForm.licensableActivitiesForm
 import form.Form6010.PremisesLicenseForm.premisesLicenseForm
 import models.submissions.Form6010.{LicensableActivitiesNo, LicensableActivitiesYes}
-import models.submissions.SectionTwo.updateSectionTwo
+import models.submissions.abouttheproperty.AboutTheProperty.updateAboutTheProperty
 import play.api.i18n.I18nSupport
 import repositories.SessionRepo
 import views.html.login
@@ -49,7 +49,7 @@ class LicensableActivitiesController @Inject() (
     Future.successful(
       Ok(
         licensableActivitiesView(
-          request.sessionData.sectionTwo.flatMap(_.licensableActivities) match {
+          request.sessionData.aboutTheProperty.flatMap(_.licensableActivities) match {
             case Some(licensableActivities) => licensableActivitiesForm.fillAndValidate(licensableActivities)
             case _                          => licensableActivitiesForm
           }
@@ -65,10 +65,10 @@ class LicensableActivitiesController @Inject() (
         formWithErrors => Future.successful(BadRequest(licensableActivitiesView(formWithErrors))),
         {
           case data @ LicensableActivitiesYes =>
-            session.saveOrUpdate(updateSectionTwo(_.copy(licensableActivities = Some(data))))
+            session.saveOrUpdate(updateAboutTheProperty(_.copy(licensableActivities = Some(data))))
             Future.successful(Ok(licensableActivitiesDetailsView(licensableActivitiesDetailsForm)))
           case data @ LicensableActivitiesNo  =>
-            session.saveOrUpdate(updateSectionTwo(_.copy(licensableActivities = Some(data))))
+            session.saveOrUpdate(updateAboutTheProperty(_.copy(licensableActivities = Some(data))))
             Future.successful(Ok(premisesLicenseView(premisesLicenseForm)))
           case _                              => Future.successful(Ok(login(loginForm)))
         }

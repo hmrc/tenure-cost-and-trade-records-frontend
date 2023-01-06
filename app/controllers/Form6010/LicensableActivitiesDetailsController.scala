@@ -19,13 +19,12 @@ package controllers.Form6010
 import actions.WithSessionRefiner
 import form.Form6010.LicensableActivitiesInformationForm.licensableActivitiesDetailsForm
 import form.Form6010.PremisesLicenseForm.premisesLicenseForm
-import models.submissions.SectionTwo.updateSectionTwo
+import models.submissions.abouttheproperty.AboutTheProperty.updateAboutTheProperty
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.form.{licensableActivitiesDetails, premisesLicense}
-import views.html.login
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
@@ -44,7 +43,7 @@ class LicensableActivitiesDetailsController @Inject() (
     Future.successful(
       Ok(
         licensableActivitiesDetailsView(
-          request.sessionData.sectionTwo.flatMap(_.licensableActivitiesInformationDetails) match {
+          request.sessionData.aboutTheProperty.flatMap(_.licensableActivitiesInformationDetails) match {
             case Some(licensableActivitiesInformation) =>
               licensableActivitiesDetailsForm.fillAndValidate(licensableActivitiesInformation)
             case _                                     => licensableActivitiesDetailsForm
@@ -60,7 +59,7 @@ class LicensableActivitiesDetailsController @Inject() (
       .fold(
         formWithErrors => Future.successful(BadRequest(licensableActivitiesDetailsView(formWithErrors))),
         data => {
-          session.saveOrUpdate(updateSectionTwo(_.copy(licensableActivitiesInformationDetails = Some(data))))
+          session.saveOrUpdate(updateAboutTheProperty(_.copy(licensableActivitiesInformationDetails = Some(data))))
           Future.successful(Ok(premisesLicenseView(premisesLicenseForm)))
         }
       )

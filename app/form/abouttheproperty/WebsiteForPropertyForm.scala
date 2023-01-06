@@ -14,8 +14,19 @@
  * limitations under the License.
  */
 
-package models.submissions.Form6010
+package form.abouttheproperty
 
-case class AboutThePropertyOtherDetails(
-  aboutThePropertyOtherDetails: String
-)
+import form.MappingSupport.buildingOperatingHaveAWebsiteType
+import models.submissions.abouttheproperty.WebsiteForPropertyDetails
+import play.api.data.Form
+import play.api.data.Forms.{mapping, optional, text}
+
+object WebsiteForPropertyForm {
+
+  val websiteForPropertyForm = Form(
+    mapping(
+      "buildingOperatingHaveAWebsite" -> buildingOperatingHaveAWebsiteType,
+      "websiteAddressForProperty"     -> optional(text)
+    )(WebsiteForPropertyDetails.apply)(WebsiteForPropertyDetails.unapply)
+  )
+}

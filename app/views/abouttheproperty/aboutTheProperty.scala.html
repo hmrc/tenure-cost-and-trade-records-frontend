@@ -14,28 +14,25 @@
  * limitations under the License.
  *@
 
+@import models.submissions.abouttheproperty.PropertyDetails
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
-
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukErrorSummary
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukDateInput
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukTextarea
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukCharacterCount
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukFieldset
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Radios
-
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
-
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Label
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Hint
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Input
 @import uk.gov.hmrc.govukfrontend.views.Aliases.RadioItem
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Fieldset
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Legend
-
-@import models.submissions.Form6010.PropertyDetails
 
 @this(layout: Layout,
         govukButton: GovukButton,
@@ -45,11 +42,75 @@
         govukDateInput: GovukDateInput,
         govukTextarea: GovukTextarea,
         govukCharacterCount: GovukCharacterCount,
+        govukFieldset: GovukFieldset,
         formWithCSRF: FormWithCSRF
 )
 
 @(theForm: Form[PropertyDetails])(implicit request: Request[_], messages: Messages)
 
+@content = {
+  <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+    <h1 class="govuk-fieldset__heading">@messages("aboutProperty.heading")</h1>
+  </legend>
+
+@govukInput(
+ Input(
+  id = "currentOccupierName",
+  name = "currentOccupierName",
+  value = theForm("currentOccupierName").value,
+  classes = "govuk-input--width-20",
+  hint = Some(Hint(content = Text(messages("hint.currentOccupierName")))),
+  errorMessage =  theForm.errors.asTextErrorMessageForField("currentOccupierName")
+ )
+)
+
+@govukRadios(Radios(
+ fieldset = Some(Fieldset(
+  legend = Some(Legend(
+   content = Text(messages("label.propertyCurrentlyUsed")),
+   classes = "govuk-fieldset__legend--m",
+  ))
+ )),
+ name = "propertyCurrentlyUsed",
+ items = Seq(
+  RadioItem(
+   content = Text(messages("propertyCurrentlyUsed.publicHouse")),
+   value = Some("publicHouse")
+  ),
+  RadioItem(
+   content = Text(messages("propertyCurrentlyUsed.wineCafeBar")),
+   value = Some("wineCafeBar")
+  ),
+  RadioItem(
+   content = Text(messages("propertyCurrentlyUsed.otherBar")),
+   value = Some("otherBar")
+  ),
+  RadioItem(
+   content = Text(messages("propertyCurrentlyUsed.pubRestaurant")),
+   value = Some("pubRestaurant")
+  ),
+  RadioItem(
+   content = Text(messages("propertyCurrentlyUsed.licencedRestaurant")),
+   value = Some("licencedRestaurant")
+  ),
+  RadioItem(
+   content = Text(messages("propertyCurrentlyUsed.hotel")),
+   value = Some("hotel")
+  ),
+  RadioItem(
+   content = Text(messages("propertyCurrentlyUsed.discoNightclub")),
+   value = Some("discoNightclub")
+  ),
+  RadioItem(
+   content = Text(messages("propertyCurrentlyUsed.other")),
+   value = Some("other"),
+   conditionalHtml = Some(conditionalHTML)
+  )
+ ),
+ errorMessage = theForm.errors.asTextErrorMessageForField("propertyCurrentlyUsed")
+).withFormField(theForm("propertyCurrentlyUsed")))
+
+}
 
 @conditionalHTML = {
 
@@ -69,72 +130,16 @@
 
 @layout(
  pageHeading = messages("aboutProperty.heading"),
- backLinkUrl = controllers.routes.TaskListController.show.url,
+ showH1 = false,
+ showSection = true,
+ sectionName = messages("label.section.aboutTheProperty"),
+ backLinkUrl = controllers.aboutyou.routes.AboutYouController.show.url,
  theForm = theForm
 ) {
 
- @formWithCSRF(action = controllers.Form6010.routes.AboutThePropertyController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
+ @formWithCSRF(action = controllers.abouttheproperty.routes.AboutThePropertyController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
 
-  @govukInput(
-   Input(
-    id = "currentOccupierName",
-    name = "currentOccupierName",
-    value = theForm("currentOccupierName").value,
-    classes = "govuk-input--width-20",
-    label = Label(
-     content = Text(messages("currentOccupierName.fullName")),
-     classes = "govuk-!-font-weight-bold"
-    ),
-    hint = Some(Hint(content = Text(messages("hint.currentOccupierName")))),
-    errorMessage =  theForm.errors.asTextErrorMessageForField("currentOccupierName")
-   )
-  )
-
-  @govukRadios(Radios(
-   fieldset = Some(Fieldset(
-    legend = Some(Legend(
-     content = Text(messages("label.propertyCurrentlyUsed")),
-     classes = "govuk-fieldset__legend--m",
-    ))
-   )),
-   name = "propertyCurrentlyUsed",
-   items = Seq(
-    RadioItem(
-     content = Text(messages("propertyCurrentlyUsed.publicHouse")),
-     value = Some("publicHouse")
-    ),
-    RadioItem(
-     content = Text(messages("propertyCurrentlyUsed.wineCafeBar")),
-     value = Some("wineCafeBar")
-    ),
-    RadioItem(
-     content = Text(messages("propertyCurrentlyUsed.otherBar")),
-     value = Some("otherBar")
-    ),
-    RadioItem(
-     content = Text(messages("propertyCurrentlyUsed.pubRestaurant")),
-     value = Some("pubRestaurant")
-    ),
-    RadioItem(
-     content = Text(messages("propertyCurrentlyUsed.licencedRestaurant")),
-     value = Some("licencedRestaurant")
-    ),
-    RadioItem(
-     content = Text(messages("propertyCurrentlyUsed.hotel")),
-     value = Some("hotel")
-    ),
-    RadioItem(
-     content = Text(messages("propertyCurrentlyUsed.discoNightclub")),
-     value = Some("discoNightclub")
-    ),
-    RadioItem(
-     content = Text(messages("propertyCurrentlyUsed.other")),
-     value = Some("other"),
-     conditionalHtml = Some(conditionalHTML)
-    )
-   ),
-   errorMessage = theForm.errors.asTextErrorMessageForField("propertyCurrentlyUsed")
-  ).withFormField(theForm("propertyCurrentlyUsed")))
+  @govukFieldset(Fieldset(html = content))
 
   @includes.continueButton(govukButton)
 

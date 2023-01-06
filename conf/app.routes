@@ -31,21 +31,15 @@ POST        /connection-to-the-property                             controllers.
 # About you
 GET         /about-you                                              controllers.aboutyou.AboutYouController.show()
 POST        /about-you                                              controllers.aboutyou.AboutYouController.submit()
+# About the property
+GET         /about-the-property                                     controllers.abouttheproperty.AboutThePropertyController.show()
+POST        /about-the-property                                     controllers.abouttheproperty.AboutThePropertyController.submit()
 
-GET         /about-the-property                                     controllers.Form6010.AboutThePropertyController.show()
-POST        /about-the-property                                     controllers.Form6010.AboutThePropertyController.submit()
-
-GET         /about-the-property-other                               controllers.Form6010.AboutThePropertyOtherController.show()
-POST        /about-the-property-other                               controllers.Form6010.AboutThePropertyOtherController.submit()
-
-GET         /website-for-property                                   controllers.Form6010.WebsiteForPropertyController.show()
-POST        /website-for-property                                   controllers.Form6010.WebsiteForPropertyController.submit()
+GET         /website-for-property                                   controllers.abouttheproperty.WebsiteForPropertyController.show()
+POST        /website-for-property                                   controllers.abouttheproperty.WebsiteForPropertyController.submit()
 
 GET         /tenancy-lease-agreement                                controllers.Form6010.TenancyLeaseAgreementController.show()
 POST        /tenancy-lease-agreement                                controllers.Form6010.TenancyLeaseAgreementController.submit()
-
-GET         /website-address-for-property                           controllers.Form6010.WebsiteAddressForPropertyController.show()
-POST        /website-address-for-property                           controllers.Form6010.WebsiteAddressForPropertyController.submit()
 
 GET         /franchise-or-lettings-tied-to-property                 controllers.Form6010.FranchiseOrLettingsTiedToPropertyController.show()
 POST        /franchise-or-lettings-tied-to-property                 controllers.Form6010.FranchiseOrLettingsTiedToPropertyController.submit()

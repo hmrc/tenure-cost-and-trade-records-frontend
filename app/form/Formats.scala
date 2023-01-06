@@ -19,6 +19,7 @@ package form
 import models._
 import models.submissions.Form6010._
 import models.submissions._
+import models.submissions.abouttheproperty.{BuildingOperationHaveAWebsite, CurrentPropertyUsed}
 import models.submissions.connectiontoproperty.{AddressConnectionType, ConnectionToProperty}
 import play.api.data.FormError
 import play.api.data.format.Formatter

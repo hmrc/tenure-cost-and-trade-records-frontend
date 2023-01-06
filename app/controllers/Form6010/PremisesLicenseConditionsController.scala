@@ -19,7 +19,7 @@ package controllers.Form6010
 import actions.WithSessionRefiner
 import form.Form6010.PremisesLicenseDetailsForm.premisesLicenceDetailsForm
 import form.Form6010.EnforcementActionForm.enforcementActionForm
-import models.submissions.SectionTwo.updateSectionTwo
+import models.submissions.abouttheproperty.AboutTheProperty.updateAboutTheProperty
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
@@ -43,7 +43,7 @@ class PremisesLicenseConditionsController @Inject() (
     Future.successful(
       Ok(
         premisesLicenseConditionsView(
-          request.sessionData.sectionTwo.flatMap(_.premisesLicenseInformationDetails) match {
+          request.sessionData.aboutTheProperty.flatMap(_.premisesLicenseInformationDetails) match {
             case Some(premisesLicenseInformation) =>
               premisesLicenceDetailsForm.fillAndValidate(premisesLicenseInformation)
             case _                                => premisesLicenceDetailsForm
@@ -59,7 +59,7 @@ class PremisesLicenseConditionsController @Inject() (
       .fold(
         formWithErrors => Future.successful(BadRequest(premisesLicenseConditionsView(formWithErrors))),
         data => {
-          session.saveOrUpdate(updateSectionTwo(_.copy(premisesLicenseInformationDetails = Some(data))))
+          session.saveOrUpdate(updateAboutTheProperty(_.copy(premisesLicenseInformationDetails = Some(data))))
           Future.successful(Ok(enforcementActionBeenTakenView(enforcementActionForm)))
         }
       )
