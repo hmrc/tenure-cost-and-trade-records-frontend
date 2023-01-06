@@ -45,6 +45,7 @@ label.no.na = No
 ##############
 label.section.checkBeforeStart = Check before you start
 label.section.aboutYou = About you
+label.section.aboutTheProperty = About the property
 
 #DUMMY START PAGE FULL INFORMATION
 ##############################
@@ -147,8 +148,7 @@ hint.ownerTrustee = Select this if you own and occupy the property-you’re cons
 
 #6010 ABOUT THE PROPERTY
 ##############################
-aboutProperty.heading = About the property
-currentOccupierName.fullName = What is the name of the current occupier?
+aboutProperty.heading = What is the name of the current occupier?
 hint.currentOccupierName = This should be the trading name of the business operating from the property
 aboutProperty.desc1 = This should be the trading name of the business operating from the property
 label.propertyCurrentlyUsed = How is the property currently used?
@@ -162,27 +162,10 @@ propertyCurrentlyUsed.hotel = Hotel
 propertyCurrentlyUsed.other = Other
 propertyCurrentlyUsedOther.textbox = Please give details if the property has another use, or is vacant
 
-############################## PLEASE KEEP THE BELOW! IT MAY BE REQUIRED IF WE REVERT A CONDITIONAL HTML BACK TO ONE THING PER PAGE!!!##############################
-#6010 ABOUT THE PROPERTY OTHER
-##############################
-propertyCurrentlyUsedOther.heading = About the property
-propertyCurrentlyUsedOther.label = ???
-error.propertyCurrentlyUsedOther.required = Please provide the relevant information
-
 #WEBSITE FOR PROPERTY (USED ON 6010, 6011, 6015, 6016,6030, 6035, 6036, 6037, 6045)
 ##############################
-buildingOperatingHaveAWebsite.heading = About the property
-label.buildingOperatingHaveAWebsite = Does the business operating from the property have a website?
-buildingOperatingHaveAWebsite.yes = Yes
-buildingOperatingHaveAWebsite.no = No
+buildingOperatingHaveAWebsite.heading = Does the business operating from the property have a website?
 websiteAddressForProperty.textbox = Enter website address
-
-############################## PLEASE KEEP THE BELOW! IT MAY BE REQUIRED IF WE REVERT A CONDITIONAL HTML BACK TO ONE THING PER PAGE!!!##############################
-#WEBSITE ADDRESS FOR PROPERTY (USED ON 6010, 6011, 6015, 6016,6030, 6035, 6036, 6037, 6045)
-##############################
-websiteAddressForProperty.heading = About the property
-websiteAddressForProperty.label = ???
-error.websiteAddressForProperty.required = Please provide the web address
 
 #TENANCY LEASE AGREEMENT(USED ON 6010, 6015, 6016, 6030, 6032, 6033, 6034, 6035, 6036, 6037, 6038, 6043, 6049, 6056, 6057, 6066)
 ##############################

@@ -14,16 +14,12 @@
  * limitations under the License.
  */
 
-package models.submissions.Form6010
+package navigation.identifiers
 
-import play.api.libs.json.Json
+case object AboutThePropertyPageId extends Identifier {
+  override def toString: String = "aboutThePropertyPage"
+}
 
-case class PropertyDetails(
-  currentOccupierName: String,
-  propertyCurrentlyUsed: CurrentPropertyUsed
-)
-
-object PropertyDetails {
-  implicit val format = Json.format[PropertyDetails]
-
+case object WebsiteForPropertyPageId extends Identifier {
+  override def toString: String = "websiteForPropertyPage"
 }

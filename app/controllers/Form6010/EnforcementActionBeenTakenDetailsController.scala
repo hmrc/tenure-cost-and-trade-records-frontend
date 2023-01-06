@@ -19,7 +19,7 @@ package controllers.Form6010
 import actions.WithSessionRefiner
 import form.Form6010.EnforcementActionDetailsForm.enforcementActionDetailsForm
 import form.Form6010.TiedForGoodsForm.tiedForGoodsForm
-import models.submissions.SectionTwo.updateSectionTwo
+import models.submissions.abouttheproperty.AboutTheProperty.updateAboutTheProperty
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
@@ -44,7 +44,7 @@ class EnforcementActionBeenTakenDetailsController @Inject() (
     Future.successful(
       Ok(
         enforcementActionBeenTakenDetailsView(
-          request.sessionData.sectionTwo.flatMap(_.enforcementActionHasBeenTakenInformationDetails) match {
+          request.sessionData.aboutTheProperty.flatMap(_.enforcementActionHasBeenTakenInformationDetails) match {
             case Some(enforcementActionInformation) =>
               enforcementActionDetailsForm.fillAndValidate(enforcementActionInformation)
             case _                                  => enforcementActionDetailsForm
@@ -60,7 +60,8 @@ class EnforcementActionBeenTakenDetailsController @Inject() (
       .fold(
         formWithErrors => Future.successful(BadRequest(enforcementActionBeenTakenDetailsView(formWithErrors))),
         data => {
-          session.saveOrUpdate(updateSectionTwo(_.copy(enforcementActionHasBeenTakenInformationDetails = Some(data))))
+          session
+            .saveOrUpdate(updateAboutTheProperty(_.copy(enforcementActionHasBeenTakenInformationDetails = Some(data))))
           Future.successful(Ok(tiedForGoodsView(tiedForGoodsForm)))
         }
       )

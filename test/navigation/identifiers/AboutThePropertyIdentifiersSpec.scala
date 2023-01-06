@@ -14,8 +14,20 @@
  * limitations under the License.
  */
 
-package models.submissions.Form6010
+package navigation.identifiers
 
-case class WebsiteAddressForPropertyDetails(
-  websiteAddressForPropertyDetails: String
-)
+import utils.TestBaseSpec
+
+class AboutThePropertyIdentifiersSpec extends TestBaseSpec {
+
+  "About the property identifiers" when {
+
+    "Identifier for about the property page" in {
+      assert(AboutThePropertyPageId.toString.equals("aboutThePropertyPage"))
+    }
+
+    "Identifier for website for property page" in {
+      assert(WebsiteForPropertyPageId.toString.equals("websiteForPropertyPage"))
+    }
+  }
+}

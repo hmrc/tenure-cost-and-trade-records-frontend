@@ -14,19 +14,16 @@
  * limitations under the License.
  */
 
-package form.Form6010
+package models.submissions.abouttheproperty
 
-import form.MappingSupport._
-import models.submissions.Form6010.WebsiteForPropertyDetails
-import play.api.data.Form
-import play.api.data.Forms.{mapping, optional, text}
+import play.api.libs.json.Json
 
-object WebsiteForPropertyForm {
+case class PropertyDetails(
+  currentOccupierName: String,
+  propertyCurrentlyUsed: CurrentPropertyUsed
+)
 
-  val websiteForPropertyForm = Form(
-    mapping(
-      "buildingOperatingHaveAWebsite" -> buildingOperatingHaveAWebsiteType,
-      "websiteAddressForProperty"     -> optional(text)
-    )(WebsiteForPropertyDetails.apply)(WebsiteForPropertyDetails.unapply)
-  )
+object PropertyDetails {
+  implicit val format = Json.format[PropertyDetails]
+
 }

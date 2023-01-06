@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package form.Form6010
+package form.abouttheproperty
 
 import form.MappingSupport.aboutYourPropertyType
-import models.submissions.Form6010._
+import models.submissions.abouttheproperty._
 import play.api.data.Form
 import play.api.data.Forms.{mapping, nonEmptyText}
 

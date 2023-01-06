@@ -30,7 +30,7 @@
  * limitations under the License.
  */
 
-package models.submissions.Form6010
+package models.submissions.abouttheproperty
 
 import play.api.libs.json.Json
 

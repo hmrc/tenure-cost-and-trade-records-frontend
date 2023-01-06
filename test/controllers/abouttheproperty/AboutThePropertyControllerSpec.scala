@@ -14,23 +14,30 @@
  * limitations under the License.
  */
 
-package controllers.Form6010
+package controllers.abouttheproperty
 
+import form.Errors
+import navigation.AboutThePropertyNavigator
 import play.api.http.Status
 import play.api.test.Helpers._
 import play.twirl.api.HtmlFormat
+import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
-import views.html.form.{aboutTheProperty, aboutThePropertyOther, websiteForProperty}
+import views.html.abouttheproperty.aboutTheProperty
+import form.abouttheproperty.AboutThePropertyForm.aboutThePropertyForm
+import models.submissions.abouttheproperty.CurrentPropertyPublicHouse
 
 class AboutThePropertyControllerSpec extends TestBaseSpec {
 
+  import TestData._
+
+  val mockAboutThePropertyNavigator              = mock[AboutThePropertyNavigator]
   val mockAboutThePropertyView: aboutTheProperty = mock[aboutTheProperty]
   when(mockAboutThePropertyView.apply(any)(any, any)).thenReturn(HtmlFormat.empty)
 
   val aboutThePropertyController = new AboutThePropertyController(
     stubMessagesControllerComponents(),
-    mock[websiteForProperty],
-    mock[aboutThePropertyOther],
+    mockAboutThePropertyNavigator,
     mockAboutThePropertyView,
     preFilledSession,
     mockSessionRepo
@@ -47,5 +54,29 @@ class AboutThePropertyControllerSpec extends TestBaseSpec {
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
+
+    "error if currentOccupierName is missing" in {
+      val formData = baseFormData - errorKey.currentOccupierName
+      val form     = aboutThePropertyForm.bind(formData)
+
+      mustContainError(errorKey.currentOccupierName, Errors.required, form)
+    }
+
+    "error if propertyCurrentlyUsed is missing" in {
+      val formData = baseFormData - errorKey.propertyCurrentlyUsed
+      val form     = aboutThePropertyForm.bind(formData)
+
+      mustContainError(errorKey.propertyCurrentlyUsed, Errors.currentOccupierName, form)
+    }
+  }
+
+  object TestData {
+    val errorKey = new {
+      val currentOccupierName: String   = "currentOccupierName"
+      val propertyCurrentlyUsed: String = "propertyCurrentlyUsed"
+    }
+
+    val baseFormData: Map[String, String] =
+      Map("currentOccupierName" -> "Tobermory", "propertyCurrentlyUsed" -> CurrentPropertyPublicHouse.name)
   }
 }

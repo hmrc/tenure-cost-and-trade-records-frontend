@@ -25,7 +25,7 @@ import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.form.{aboutYourTradingHistory, tiedForGoods, tiedForGoodsDetails}
 import models.submissions.Form6010.{TiedGoodsNo, TiedGoodsYes}
-import models.submissions.SectionTwo.updateSectionTwo
+import models.submissions.abouttheproperty.AboutTheProperty.updateAboutTheProperty
 import play.api.i18n.I18nSupport
 import repositories.SessionRepo
 import views.html.login
@@ -49,7 +49,7 @@ class TiedForGoodsController @Inject() (
     Future.successful(
       Ok(
         tiedForGoodsView(
-          request.sessionData.sectionTwo.flatMap(_.tiedForGoods) match {
+          request.sessionData.aboutTheProperty.flatMap(_.tiedForGoods) match {
             case Some(tiedForGoods) => tiedForGoodsForm.fillAndValidate(tiedForGoods)
             case _                  => tiedForGoodsForm
           }
@@ -65,10 +65,10 @@ class TiedForGoodsController @Inject() (
         formWithErrors => Future.successful(BadRequest(tiedForGoodsView(formWithErrors))),
         {
           case data @ TiedGoodsYes =>
-            session.saveOrUpdate(updateSectionTwo(_.copy(tiedForGoods = Some(data))))
+            session.saveOrUpdate(updateAboutTheProperty(_.copy(tiedForGoods = Some(data))))
             Future.successful(Ok(tiedForGoodsDetailsView(tiedForGoodsDetailsForm)))
           case data @ TiedGoodsNo  =>
-            session.saveOrUpdate(updateSectionTwo(_.copy(tiedForGoods = Some(data))))
+            session.saveOrUpdate(updateAboutTheProperty(_.copy(tiedForGoods = Some(data))))
             Future.successful(Ok(aboutYourTradingHistoryView(aboutYourTradingHistoryForm)))
           case _                   => Future.successful(Ok(login(loginForm)))
         }

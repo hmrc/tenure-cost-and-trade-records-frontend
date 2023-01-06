@@ -17,7 +17,8 @@
 package views.abouttheproperty
 
 import form.Form6010.LicensableActivitiesForm
-import models.submissions.Form6010.{BuildingOperationHaveAWebsiteNo, BuildingOperationHaveAWebsiteYes, LicensableActivities}
+import models.submissions.Form6010.LicensableActivities
+import models.submissions.abouttheproperty.{BuildingOperationHaveAWebsiteNo, BuildingOperationHaveAWebsiteYes}
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
@@ -43,7 +44,7 @@ class LicensableActivitiesViewSpec extends QuestionViewBehaviours[LicensableActi
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText mustBe messages("back.link.label")
       val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.Form6010.routes.WebsiteForPropertyController.show().url
+      backlinkUrl mustBe controllers.abouttheproperty.routes.WebsiteForPropertyController.show().url
     }
 
     "contain radio buttons for the value yes" in {

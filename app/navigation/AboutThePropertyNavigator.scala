@@ -18,15 +18,16 @@ package navigation
 
 import connectors.Audit
 import models.Session
-import navigation.identifiers.{AboutYouPageId, Identifier}
+import navigation.identifiers.{AboutThePropertyPageId, Identifier, WebsiteForPropertyPageId}
 import play.api.mvc.Call
 
 import javax.inject.Inject
 import scala.concurrent.ExecutionContext
 
-class AboutYouNavigator @Inject() (audit: Audit)(implicit ec: ExecutionContext) extends Navigator(audit) {
+class AboutThePropertyNavigator @Inject() (audit: Audit)(implicit ec: ExecutionContext) extends Navigator(audit) {
 
   override val routeMap: Map[Identifier, Session => Call] = Map(
-    AboutYouPageId -> (_ => controllers.abouttheproperty.routes.AboutThePropertyController.show())
+    AboutThePropertyPageId   -> (_ => controllers.abouttheproperty.routes.WebsiteForPropertyController.show()),
+    WebsiteForPropertyPageId -> (_ => controllers.Form6010.routes.LicensableActivitiesController.show())
   )
 }

@@ -16,15 +16,15 @@
 
 package views.abouttheproperty
 
-import form.Form6010.AboutThePropertyForm
-import models.submissions.Form6010._
+import form.abouttheproperty.AboutThePropertyForm
+import models.submissions.abouttheproperty._
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
 class AboutThePropertyViewSpec extends QuestionViewBehaviours[PropertyDetails] {
 
-  def aboutThePropertyView = app.injector.instanceOf[views.html.form.aboutTheProperty]
+  def aboutThePropertyView = app.injector.instanceOf[views.html.abouttheproperty.aboutTheProperty]
 
   val messageKeyPrefix = "aboutProperty"
 
@@ -43,7 +43,12 @@ class AboutThePropertyViewSpec extends QuestionViewBehaviours[PropertyDetails] {
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText mustBe messages("back.link.label")
       val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.routes.TaskListController.show().url
+      backlinkUrl mustBe controllers.aboutyou.routes.AboutYouController.show.url
+    }
+
+    "contain an input for currentOccupierName" in {
+      val doc = asDocument(createViewUsingForm(form))
+      assertRenderedById(doc, "currentOccupierName")
     }
 
     "contain radio buttons for the value public house" in {

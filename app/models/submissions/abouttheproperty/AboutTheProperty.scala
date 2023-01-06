@@ -14,14 +14,14 @@
  * limitations under the License.
  */
 
-package models.submissions
+package models.submissions.abouttheproperty
 
 import actions.SessionRequest
 import models.Session
-import models.submissions.Form6010.{EnforcementAction, EnforcementActionHasBeenTakenInformationDetails, LicensableActivities, LicensableActivitiesInformationDetails, PremisesLicense, PremisesLicenseInformationDetails, PropertyDetails, TiedForGoods, TiedForGoodsInformation, TiedForGoodsInformationDetails, WebsiteForPropertyDetails}
+import models.submissions.Form6010._
 import play.api.libs.json.Json
 
-case class SectionTwo(
+case class AboutTheProperty(
   propertyDetails: Option[PropertyDetails] = None,
   websiteForPropertyDetails: Option[WebsiteForPropertyDetails] = None,
   licensableActivities: Option[LicensableActivities] = None,
@@ -34,19 +34,21 @@ case class SectionTwo(
   tiedForGoodsDetails: Option[TiedForGoodsInformationDetails] = None
 )
 
-object SectionTwo {
-  implicit val format = Json.format[SectionTwo]
+object AboutTheProperty {
+  implicit val format = Json.format[AboutTheProperty]
 
-  def updateSectionTwo(copy: SectionTwo => SectionTwo)(implicit sessionRequest: SessionRequest[_]): Session = {
+  def updateAboutTheProperty(
+    copy: AboutTheProperty => AboutTheProperty
+  )(implicit sessionRequest: SessionRequest[_]): Session = {
 
-    val currentSectionTwo = sessionRequest.sessionData.sectionTwo
+    val currentAboutTheProperty = sessionRequest.sessionData.aboutTheProperty
 
-    val updatedSectionTwo = currentSectionTwo match {
-      case Some(_) => sessionRequest.sessionData.sectionTwo.map(copy)
-      case _       => Some(copy(SectionTwo()))
+    val updateAboutTheProperty = currentAboutTheProperty match {
+      case Some(_) => sessionRequest.sessionData.aboutTheProperty.map(copy)
+      case _       => Some(copy(AboutTheProperty()))
     }
 
-    sessionRequest.sessionData.copy(sectionTwo = updatedSectionTwo)
+    sessionRequest.sessionData.copy(aboutTheProperty = updateAboutTheProperty)
 
   }
 }

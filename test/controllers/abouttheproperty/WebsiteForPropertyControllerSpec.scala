@@ -14,31 +14,34 @@
  * limitations under the License.
  */
 
-package controllers.Form6010
+package controllers.abouttheproperty
 
 import form.Errors
+import navigation.AboutThePropertyNavigator
 import play.api.http.Status
 import play.api.test.Helpers._
 import play.twirl.api.HtmlFormat
 import utils.TestBaseSpec
-import views.html.form.{licensableActivities, websiteForProperty}
+import views.html.abouttheproperty.websiteForProperty
 
 class WebsiteForPropertyControllerSpec extends TestBaseSpec {
 
   import TestData._
-  import form.Form6010.WebsiteForPropertyForm._
+  import form.abouttheproperty.WebsiteForPropertyForm._
   import utils.FormBindingTestAssertions._
 
+  val mockAboutThePropertyNavigator                  = mock[AboutThePropertyNavigator]
   val mockWebsiteForPropertyView: websiteForProperty = mock[websiteForProperty]
   when(mockWebsiteForPropertyView.apply(any)(any, any)).thenReturn(HtmlFormat.empty)
 
   val websiteForPropertyController = new WebsiteForPropertyController(
     stubMessagesControllerComponents(),
+    mockAboutThePropertyNavigator,
     mockWebsiteForPropertyView,
-    mock[licensableActivities],
     preFilledSession,
     mockSessionRepo
   )
+
   "WebsiteForProperty controller" should {
     "return 200" in {
       val result = websiteForPropertyController.show(fakeRequest)

@@ -16,17 +16,17 @@
 
 package views.abouttheproperty
 
-import form.Form6010.WebsiteForPropertyForm
-import models.submissions.Form6010._
+import form.abouttheproperty.WebsiteForPropertyForm
+import models.submissions.abouttheproperty.{BuildingOperationHaveAWebsiteNo, BuildingOperationHaveAWebsiteYes, WebsiteForPropertyDetails}
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
 class WebsiteForPropertyViewSpec extends QuestionViewBehaviours[WebsiteForPropertyDetails] {
 
-  def websiteForPropertyView = app.injector.instanceOf[views.html.form.websiteForProperty]
+  def websiteForPropertyView = app.injector.instanceOf[views.html.abouttheproperty.websiteForProperty]
 
-  val messageKeyPrefix = "aboutProperty"
+  val messageKeyPrefix = "buildingOperatingHaveAWebsite"
 
   override val form = WebsiteForPropertyForm.websiteForPropertyForm
 
@@ -44,7 +44,7 @@ class WebsiteForPropertyViewSpec extends QuestionViewBehaviours[WebsiteForProper
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText mustBe messages("back.link.label")
       val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.routes.TaskListController.show().url
+      backlinkUrl mustBe controllers.abouttheproperty.routes.AboutThePropertyController.show().url
     }
 
     "contain radio buttons for the value yes" in {
@@ -56,7 +56,7 @@ class WebsiteForPropertyViewSpec extends QuestionViewBehaviours[WebsiteForProper
         BuildingOperationHaveAWebsiteYes.name,
         false
       )
-      assertContainsText(doc, messages("buildingOperatingHaveAWebsite.yes"))
+      assertContainsText(doc, messages("label.yes"))
     }
 
     "contain radio buttons for the value no" in {
@@ -68,7 +68,7 @@ class WebsiteForPropertyViewSpec extends QuestionViewBehaviours[WebsiteForProper
         BuildingOperationHaveAWebsiteNo.name,
         false
       )
-      assertContainsText(doc, messages("buildingOperatingHaveAWebsite.no"))
+      assertContainsText(doc, messages("label.no"))
     }
 
     "contain an input for websiteAddressForProperty" in {
