@@ -16,8 +16,8 @@
 
 package views.abouttheproperty
 
-import form.Form6010.EnforcementActionDetailsForm
-import models.submissions.Form6010.EnforcementActionHasBeenTakenInformationDetails
+import form.abouttheproperty.EnforcementActionDetailsForm
+import models.submissions.abouttheproperty.EnforcementActionHasBeenTakenInformationDetails
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
@@ -25,7 +25,8 @@ import views.behaviours.QuestionViewBehaviours
 class EnforcementActionBeenTakenDetailsViewSpec
     extends QuestionViewBehaviours[EnforcementActionHasBeenTakenInformationDetails] {
 
-  def enforcemenntActionBeenTakenDetails = app.injector.instanceOf[views.html.form.enforcementActionBeenTakenDetails]
+  def enforcemenntActionBeenTakenDetails =
+    app.injector.instanceOf[views.html.abouttheproperty.enforcementActionBeenTakenDetails]
 
   val messageKeyPrefix = "enforcementActionHasBeenTakenDetails"
 
@@ -47,7 +48,7 @@ class EnforcementActionBeenTakenDetailsViewSpec
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText mustBe messages("back.link.label")
       val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.Form6010.routes.EnforcementActionBeenTakenController.show().url
+      backlinkUrl mustBe controllers.abouttheproperty.routes.EnforcementActionBeenTakenController.show().url
     }
 
     "contain save and continue button with the value Save and Continue" in {
