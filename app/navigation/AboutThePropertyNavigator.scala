@@ -28,6 +28,6 @@ class AboutThePropertyNavigator @Inject() (audit: Audit)(implicit ec: ExecutionC
 
   override val routeMap: Map[Identifier, Session => Call] = Map(
     AboutThePropertyPageId   -> (_ => controllers.abouttheproperty.routes.WebsiteForPropertyController.show()),
-    WebsiteForPropertyPageId -> (_ => controllers.Form6010.routes.LicensableActivitiesController.show())
+    WebsiteForPropertyPageId -> (_ => controllers.abouttheproperty.routes.LicensableActivitiesController.show())
   )
 }

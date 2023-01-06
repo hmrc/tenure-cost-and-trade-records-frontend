@@ -16,16 +16,15 @@
 
 package views.abouttheproperty
 
-import form.Form6010.LicensableActivitiesForm
-import models.submissions.Form6010.LicensableActivities
-import models.submissions.abouttheproperty.{BuildingOperationHaveAWebsiteNo, BuildingOperationHaveAWebsiteYes}
+import form.abouttheproperty.LicensableActivitiesForm
+import models.submissions.abouttheproperty.{BuildingOperationHaveAWebsiteNo, BuildingOperationHaveAWebsiteYes, LicensableActivities}
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
 class LicensableActivitiesViewSpec extends QuestionViewBehaviours[LicensableActivities] {
 
-  def licencableActivitiesView = app.injector.instanceOf[views.html.form.licensableActivities]
+  def licencableActivitiesView = app.injector.instanceOf[views.html.abouttheproperty.licensableActivities]
 
   val messageKeyPrefix = "licensableActivities"
 

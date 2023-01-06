@@ -38,6 +38,30 @@ POST        /about-the-property                                     controllers.
 GET         /website-for-property                                   controllers.abouttheproperty.WebsiteForPropertyController.show()
 POST        /website-for-property                                   controllers.abouttheproperty.WebsiteForPropertyController.submit()
 
+GET         /licensable-activities                                  controllers.abouttheproperty.LicensableActivitiesController.show()
+POST        /licensable-activities                                  controllers.abouttheproperty.LicensableActivitiesController.submit()
+
+GET         /licensable-activities-details                          controllers.abouttheproperty.LicensableActivitiesDetailsController.show()
+POST        /licensable-activities-details                          controllers.abouttheproperty.LicensableActivitiesDetailsController.submit()
+
+GET         /premises-license                                       controllers.abouttheproperty.PremisesLicenseController.show()
+POST        /premises-license                                       controllers.abouttheproperty.PremisesLicenseController.submit()
+
+GET         /premises-license-conditions                            controllers.abouttheproperty.PremisesLicenseConditionsController.show()
+POST        /premises-license-conditions                            controllers.abouttheproperty.PremisesLicenseConditionsController.submit()
+
+GET         /enforcement-action-been-taken                          controllers.abouttheproperty.EnforcementActionBeenTakenController.show()
+POST        /enforcement-action-been-taken                          controllers.abouttheproperty.EnforcementActionBeenTakenController.submit()
+
+GET         /enforcement-action-been-taken-details                  controllers.abouttheproperty.EnforcementActionBeenTakenDetailsController.show()
+POST        /enforcement-action-been-taken-details                  controllers.abouttheproperty.EnforcementActionBeenTakenDetailsController.submit()
+
+GET         /tied-for-goods                                         controllers.abouttheproperty.TiedForGoodsController.show()
+POST        /tied-for-goods                                         controllers.abouttheproperty.TiedForGoodsController.submit()
+
+GET         /tied-for-goods-details                                 controllers.abouttheproperty.TiedForGoodsDetailsController.show()
+POST        /tied-for-goods-details                                 controllers.abouttheproperty.TiedForGoodsDetailsController.submit()
+
 GET         /tenancy-lease-agreement                                controllers.Form6010.TenancyLeaseAgreementController.show()
 POST        /tenancy-lease-agreement                                controllers.Form6010.TenancyLeaseAgreementController.submit()
 
@@ -52,24 +76,6 @@ POST        /included-in-your-rent                                  controllers.
 
 GET         /lease-or-agreement-details                             controllers.Form6010.LeaseOrAgreementYearsController.show()
 POST        /lease-or-agreement-details                             controllers.Form6010.LeaseOrAgreementYearsController.submit()
-
-GET         /licensable-activities                                  controllers.Form6010.LicensableActivitiesController.show()
-POST        /licensable-activities                                  controllers.Form6010.LicensableActivitiesController.submit()
-
-GET         /licensable-activities-details                          controllers.Form6010.LicensableActivitiesDetailsController.show()
-POST        /licensable-activities-details                          controllers.Form6010.LicensableActivitiesDetailsController.submit()
-
-GET         /premises-license                                       controllers.Form6010.PremisesLicenseController.show()
-POST        /premises-license                                       controllers.Form6010.PremisesLicenseController.submit()
-
-GET         /premises-license-conditions                            controllers.Form6010.PremisesLicenseConditionsController.show()
-POST        /premises-license-conditions                            controllers.Form6010.PremisesLicenseConditionsController.submit()
-
-GET         /tied-for-goods                                         controllers.Form6010.TiedForGoodsController.show()
-POST        /tied-for-goods                                         controllers.Form6010.TiedForGoodsController.submit()
-
-GET         /tied-for-goods-details                                 controllers.Form6010.TiedForGoodsDetailsController.show()
-POST        /tied-for-goods-details                                 controllers.Form6010.TiedForGoodsDetailsController.submit()
 
 GET         /catering-operation-or-letting-accommodation            controllers.Form6010.CateringOperationOrLettingAccommodationController.show()
 POST        /catering-operation-or-letting-accommodation            controllers.Form6010.CateringOperationOrLettingAccommodationController.submit()
@@ -127,12 +133,6 @@ POST        /rent-increase-annually-with-rpi                        controllers.
 
 GET         /method-to-fix-current-rent                             controllers.Form6010.MethodToFixCurrentRentController.show()
 POST        /method-to-fix-current-rent                             controllers.Form6010.MethodToFixCurrentRentController.submit()
-
-GET         /enforcement-action-been-taken                          controllers.Form6010.EnforcementActionBeenTakenController.show()
-POST        /enforcement-action-been-taken                          controllers.Form6010.EnforcementActionBeenTakenController.submit()
-
-GET         /enforcement-action-been-taken-details                  controllers.Form6010.EnforcementActionBeenTakenDetailsController.show()
-POST        /enforcement-action-been-taken-details                  controllers.Form6010.EnforcementActionBeenTakenDetailsController.submit()
 
 GET         /how-is-current-rent-fixed                              controllers.Form6010.HowIsCurrentRentFixedController.show()
 POST        /how-is-current-rent-fixed                              controllers.Form6010.HowIsCurrentRentFixedController.submit()

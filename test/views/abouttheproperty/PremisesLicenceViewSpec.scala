@@ -16,15 +16,16 @@
 
 package views.abouttheproperty
 
-import form.Form6010.PremisesLicenseForm
-import models.submissions.Form6010.{PremisesLicense, PremisesLicensesNo, PremisesLicensesYes}
+import form.abouttheproperty.PremisesLicenseForm
+import models.submissions.abouttheproperty.PremisesLicense
+import models.submissions.abouttheproperty.{PremisesLicense, PremisesLicensesNo, PremisesLicensesYes}
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
 class PremisesLicenceViewSpec extends QuestionViewBehaviours[PremisesLicense] {
 
-  def premisesLicencableView = app.injector.instanceOf[views.html.form.premisesLicense]
+  def premisesLicencableView = app.injector.instanceOf[views.html.abouttheproperty.premisesLicense]
 
   val messageKeyPrefix = "premisesLicense"
 
@@ -43,7 +44,7 @@ class PremisesLicenceViewSpec extends QuestionViewBehaviours[PremisesLicense] {
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText mustBe messages("back.link.label")
       val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.Form6010.routes.LicensableActivitiesController.show().url
+      backlinkUrl mustBe controllers.abouttheproperty.routes.LicensableActivitiesController.show().url
     }
 
     "contain radio buttons for the value yes" in {

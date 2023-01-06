@@ -16,15 +16,16 @@
 
 package views.abouttheproperty
 
-import form.Form6010.EnforcementActionForm
-import models.submissions.Form6010.{EnforcementAction, EnforcementActionsNo, EnforcementActionsYes}
+import form.abouttheproperty.EnforcementActionForm
+import models.submissions.abouttheproperty.EnforcementActionsYes
+import models.submissions.abouttheproperty.{EnforcementAction, EnforcementActionsNo, EnforcementActionsYes}
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
 class EnforcementActionBeenTakenViewSpec extends QuestionViewBehaviours[EnforcementAction] {
 
-  def enforcementActionsTakenView = app.injector.instanceOf[views.html.form.enforcementActionBeenTaken]
+  def enforcementActionsTakenView = app.injector.instanceOf[views.html.abouttheproperty.enforcementActionBeenTaken]
 
   val messageKeyPrefix = "enforcementAction"
 
@@ -43,7 +44,7 @@ class EnforcementActionBeenTakenViewSpec extends QuestionViewBehaviours[Enforcem
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText mustBe messages("back.link.label")
       val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.Form6010.routes.PremisesLicenseController.show().url
+      backlinkUrl mustBe controllers.abouttheproperty.routes.PremisesLicenseController.show().url
     }
 
     "contain radio buttons for the value yes" in {

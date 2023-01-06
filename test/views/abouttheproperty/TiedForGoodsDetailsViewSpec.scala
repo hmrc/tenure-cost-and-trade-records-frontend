@@ -16,15 +16,15 @@
 
 package views.abouttheproperty
 
-import form.Form6010.TiedForGoodsDetailsForm
-import models.submissions.Form6010.{TiedForGoodsInformationDetails, TiedForGoodsInformationDetailsBeerOnly, TiedForGoodsInformationDetailsFullTie, TiedForGoodsInformationDetailsPartialTie}
+import form.abouttheproperty.TiedForGoodsDetailsForm
+import models.submissions.abouttheproperty.{TiedForGoodsInformationDetails, TiedForGoodsInformationDetailsBeerOnly, TiedForGoodsInformationDetailsFullTie, TiedForGoodsInformationDetailsPartialTie}
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
 class TiedForGoodsDetailsViewSpec extends QuestionViewBehaviours[TiedForGoodsInformationDetails] {
 
-  def tiedForGoodsDetailsView = app.injector.instanceOf[views.html.form.tiedForGoodsDetails]
+  def tiedForGoodsDetailsView = app.injector.instanceOf[views.html.abouttheproperty.tiedForGoodsDetails]
 
   val messageKeyPrefix = "tiedForGoodsDetails"
 
@@ -44,7 +44,7 @@ class TiedForGoodsDetailsViewSpec extends QuestionViewBehaviours[TiedForGoodsInf
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText mustBe messages("back.link.label")
       val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.Form6010.routes.TiedForGoodsController.show().url
+      backlinkUrl mustBe controllers.abouttheproperty.routes.TiedForGoodsController.show().url
     }
 
     "contain radio buttons for the value full tie" in {

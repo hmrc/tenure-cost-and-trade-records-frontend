@@ -16,15 +16,15 @@
 
 package views.abouttheproperty
 
-import form.Form6010.LicensableActivitiesInformationForm
-import models.submissions.Form6010.LicensableActivitiesInformationDetails
+import form.abouttheproperty.LicensableActivitiesInformationForm
+import models.submissions.abouttheproperty.LicensableActivitiesInformationDetails
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
 class LicenceActivitiesDetailsViewSpec extends QuestionViewBehaviours[LicensableActivitiesInformationDetails] {
 
-  def licensableActivitiesDetailsView = app.injector.instanceOf[views.html.form.licensableActivitiesDetails]
+  def licensableActivitiesDetailsView = app.injector.instanceOf[views.html.abouttheproperty.licensableActivitiesDetails]
 
   val messageKeyPrefix = "licensableActivitiesDetails"
 
@@ -46,7 +46,7 @@ class LicenceActivitiesDetailsViewSpec extends QuestionViewBehaviours[Licensable
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText mustBe messages("back.link.label")
       val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.Form6010.routes.LicensableActivitiesController.show().url
+      backlinkUrl mustBe controllers.abouttheproperty.routes.LicensableActivitiesController.show().url
     }
 
     "contain save and continue button with the value Save and Continue" in {

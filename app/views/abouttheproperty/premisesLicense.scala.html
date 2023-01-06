@@ -1,0 +1,91 @@
+@*
+ * Copyright 2023 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import models.submissions.abouttheproperty.PremisesLicense
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukErrorSummary
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukDateInput
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukTextarea
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukCharacterCount
+@import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Radios
+@import uk.gov.hmrc.govukfrontend.views.Aliases.RadioItem
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Fieldset
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Legend
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Hint
+
+@this(layout: Layout,
+        govukButton: GovukButton,
+        govukRadios: GovukRadios,
+        govukInput: GovukInput,
+        govukErrorSummary: GovukErrorSummary,
+        govukDateInput: GovukDateInput,
+        govukTextarea: GovukTextarea,
+        govukCharacterCount: GovukCharacterCount,
+        formWithCSRF: FormWithCSRF
+)
+
+@(theForm: Form[PremisesLicense])(implicit request: Request[_], messages: Messages)
+
+@layout(
+ pageHeading = messages("premisesLicense.heading"),
+ backLinkUrl = controllers.abouttheproperty.routes.LicensableActivitiesController.show.url,
+ theForm = theForm
+) {
+
+ @formWithCSRF(action = controllers.abouttheproperty.routes.PremisesLicenseController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
+
+  @govukRadios(
+   Radios(
+    name = "premisesLicense",
+    idPrefix = Option("premisesLicense"),
+    items = Seq(
+     "yes" -> messages("label.yes"),
+     "no" -> messages("label.no")
+    ).map(radioItem => RadioItem(
+     content = Text(radioItem._2),
+     checked = radioItem._1.equals(theForm("premisesLicense").value.getOrElse("")),
+     value = Option(radioItem._1)
+    )
+    ),
+    errorMessage =  theForm.errors.asTextErrorMessageForField("premisesLicense"),
+    fieldset = Option(
+     Fieldset(
+      legend = Option(
+       Legend(
+        content = Text(messages("label.premisesLicense")),
+        classes = "govuk-!-font-weight-bold"
+       )
+      )
+     )
+    ),
+    hint = Some(Hint(content = Text(messages("hint.premisesLicense")))),
+   )
+  )
+
+  @includes.continueButton(govukButton)
+
+  @includes.help_with_service_premisesLicense()
+
+ }
+}
+
+
+

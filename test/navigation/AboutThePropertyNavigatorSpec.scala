@@ -53,7 +53,7 @@ class AboutThePropertyNavigatorSpec extends TestBaseSpec {
     "return a function that goes to licence activity page when the property website page has been completed" in {
       navigator
         .nextPage(WebsiteForPropertyPageId)
-        .apply(sessionAboutYou) mustBe controllers.Form6010.routes.LicensableActivitiesController.show()
+        .apply(sessionAboutYou) mustBe controllers.abouttheproperty.routes.LicensableActivitiesController.show()
     }
   }
 }

@@ -21,7 +21,7 @@ import models.submissions._
 import form.Formats._
 import form.Formats.userTypeFormat
 import models.submissions.Form6010._
-import models.submissions.abouttheproperty.{BuildingOperationHaveAWebsite, CurrentPropertyUsed}
+import models.submissions.abouttheproperty.{BuildingOperationHaveAWebsite, CurrentPropertyUsed, EnforcementAction, LicensableActivities, PremisesLicense, TiedForGoods, TiedForGoodsInformation}
 import models.submissions.common.{Address, ContactDetails}
 import models.submissions.connectiontoproperty.{AddressConnectionType, ConnectionToProperty}
 import models.{AnnualRent, NamedEnum, NamedEnumSupport}
