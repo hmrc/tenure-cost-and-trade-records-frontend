@@ -19,7 +19,7 @@ package controllers.abouttheproperty
 import actions.WithSessionRefiner
 import controllers.LoginController.loginForm
 import form.abouttheproperty.EnforcementActionForm.enforcementActionForm
-import form.abouttheproperty.PremisesLicenseDetailsForm.premisesLicenceDetailsForm
+import form.abouttheproperty.PremisesLicenseConditionsDetailsForm.premisesLicenceDetailsForm
 import form.abouttheproperty.PremisesLicenseForm.premisesLicenseForm
 import models.submissions.abouttheproperty.PremisesLicensesYes
 import models.submissions.abouttheproperty.AboutTheProperty.updateAboutTheProperty
@@ -28,7 +28,7 @@ import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.abouttheproperty.{enforcementActionBeenTaken, premisesLicense, premisesLicenseConditions}
+import views.html.abouttheproperty.{enforcementActionBeenTaken, premisesLicense, premisesLicenseConditionsDetails}
 import views.html.login
 
 import javax.inject.{Inject, Named, Singleton}
@@ -39,7 +39,7 @@ class PremisesLicenseController @Inject() (
   mcc: MessagesControllerComponents,
   login: login,
   premisesLicenseView: premisesLicense,
-  premisesLicenceDetailsView: premisesLicenseConditions,
+  premisesLicenceDetailsView: premisesLicenseConditionsDetails,
   enforcementActionBeenTakenView: enforcementActionBeenTaken,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo

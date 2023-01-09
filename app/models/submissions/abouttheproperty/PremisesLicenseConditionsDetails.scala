@@ -14,17 +14,15 @@
  * limitations under the License.
  */
 
-package form.abouttheproperty
+package models.submissions.abouttheproperty
 
-import models.submissions.abouttheproperty.PremisesLicenseInformationDetails
-import play.api.data.Form
-import play.api.data.Forms.{mapping, nonEmptyText}
+import play.api.libs.json.Json
 
-object PremisesLicenseDetailsForm {
+case class PremisesLicenseConditionsDetails(
+  premisesLicenseInformationDetails: String
+)
 
-  val premisesLicenceDetailsForm = Form(
-    mapping(
-      "premisesLicenseConditions" -> nonEmptyText(maxLength = 100)
-    )(PremisesLicenseInformationDetails.apply)(PremisesLicenseInformationDetails.unapply)
-  )
+object PremisesLicenseConditionsDetails {
+  implicit val format = Json.format[PremisesLicenseConditionsDetails]
+
 }

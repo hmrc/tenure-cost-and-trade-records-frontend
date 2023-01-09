@@ -22,16 +22,16 @@ import models.submissions.Form6010._
 import play.api.libs.json.Json
 
 case class AboutTheProperty(
-  propertyDetails: Option[PropertyDetails] = None,
-  websiteForPropertyDetails: Option[WebsiteForPropertyDetails] = None,
-  licensableActivities: Option[LicensableActivities] = None,
-  licensableActivitiesInformationDetails: Option[LicensableActivitiesInformationDetails] = None,
-  premisesLicense: Option[PremisesLicense] = None,
-  premisesLicenseInformationDetails: Option[PremisesLicenseInformationDetails] = None,
-  enforcementAction: Option[EnforcementAction] = None,
-  enforcementActionHasBeenTakenInformationDetails: Option[EnforcementActionHasBeenTakenInformationDetails] = None,
-  tiedForGoods: Option[TiedForGoods] = None,
-  tiedForGoodsDetails: Option[TiedForGoodsInformationDetails] = None
+                             propertyDetails: Option[PropertyDetails] = None,
+                             websiteForPropertyDetails: Option[WebsiteForPropertyDetails] = None,
+                             licensableActivities: Option[LicensableActivities] = None,
+                             licensableActivitiesInformationDetails: Option[LicensableActivitiesInformationDetails] = None,
+                             premisesLicense: Option[PremisesLicense] = None,
+                             premisesLicenseInformationDetails: Option[PremisesLicenseConditionsDetails] = None,
+                             enforcementAction: Option[EnforcementAction] = None,
+                             enforcementActionHasBeenTakenInformationDetails: Option[EnforcementActionHasBeenTakenInformationDetails] = None,
+                             tiedForGoods: Option[TiedForGoods] = None,
+                             tiedForGoodsDetails: Option[TiedForGoodsInformationDetails] = None
 )
 
 object AboutTheProperty {

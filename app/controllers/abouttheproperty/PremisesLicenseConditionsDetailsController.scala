@@ -18,22 +18,22 @@ package controllers.abouttheproperty
 
 import actions.WithSessionRefiner
 import form.abouttheproperty.EnforcementActionForm.enforcementActionForm
-import form.abouttheproperty.PremisesLicenseDetailsForm.premisesLicenceDetailsForm
+import form.abouttheproperty.PremisesLicenseConditionsDetailsForm.premisesLicenceDetailsForm
 import models.submissions.abouttheproperty.AboutTheProperty.updateAboutTheProperty
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.abouttheproperty.{enforcementActionBeenTaken, premisesLicenseConditions}
+import views.html.abouttheproperty.{enforcementActionBeenTaken, premisesLicenseConditionsDetails}
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class PremisesLicenseConditionsController @Inject() (
+class PremisesLicenseConditionsDetailsController @Inject()(
   mcc: MessagesControllerComponents,
   enforcementActionBeenTakenView: enforcementActionBeenTaken,
-  premisesLicenseConditionsView: premisesLicenseConditions,
+  premisesLicenseConditionsView: premisesLicenseConditionsDetails,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
 ) extends FrontendController(mcc)

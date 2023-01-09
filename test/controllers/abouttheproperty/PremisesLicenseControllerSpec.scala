@@ -20,7 +20,7 @@ import play.api.http.Status
 import play.api.test.Helpers._
 import play.twirl.api.HtmlFormat
 import utils.TestBaseSpec
-import views.html.abouttheproperty.{enforcementActionBeenTaken, premisesLicense, premisesLicenseConditions}
+import views.html.abouttheproperty.{enforcementActionBeenTaken, premisesLicense, premisesLicenseConditionsDetails}
 import views.html.login
 
 class PremisesLicenseControllerSpec extends TestBaseSpec {
@@ -32,7 +32,7 @@ class PremisesLicenseControllerSpec extends TestBaseSpec {
     stubMessagesControllerComponents(),
     mock[login],
     mockPremisesLicenseView,
-    mock[premisesLicenseConditions],
+    mock[premisesLicenseConditionsDetails],
     mock[enforcementActionBeenTaken],
     preFilledSession,
     mockSessionRepo

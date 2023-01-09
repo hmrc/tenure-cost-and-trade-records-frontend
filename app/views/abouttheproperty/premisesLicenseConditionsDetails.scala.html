@@ -14,7 +14,7 @@
  * limitations under the License.
  *@
 
-@import models.submissions.abouttheproperty.PremisesLicenseInformationDetails
+@import models.submissions.abouttheproperty.PremisesLicenseConditionsDetails
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
 @import uk.gov.hmrc.govukfrontend.views.html.components._
@@ -26,7 +26,7 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[PremisesLicenseInformationDetails])(implicit request: Request[_], messages: Messages)
+@(theForm: Form[PremisesLicenseConditionsDetails])(implicit request: Request[_], messages: Messages)
 
 @layout(
  pageHeading = messages("premisesLicenseConditionsDetails.heading"),
@@ -37,7 +37,7 @@
  theForm = theForm
 ) {
 
- @formWithCSRF(action = controllers.abouttheproperty.routes.PremisesLicenseConditionsController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
+ @formWithCSRF(action = controllers.abouttheproperty.routes.PremisesLicenseConditionsDetailsController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
 
   <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
    <h1 class="govuk-fieldset__heading">@messages("premisesLicenseConditionsDetails.heading")</h1>

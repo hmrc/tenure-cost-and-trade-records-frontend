@@ -16,23 +16,23 @@
 
 package views.abouttheproperty
 
-import form.abouttheproperty.PremisesLicenseDetailsForm
-import models.submissions.abouttheproperty.PremisesLicenseInformationDetails
+import form.abouttheproperty.PremisesLicenseConditionsDetailsForm
+import models.submissions.abouttheproperty.PremisesLicenseConditionsDetails
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class PremisesLicenceConditionsViewSpec extends QuestionViewBehaviours[PremisesLicenseInformationDetails] {
+class PremisesLicenceConditionsDetailsViewSpec extends QuestionViewBehaviours[PremisesLicenseConditionsDetails] {
 
-  def premisesLicenceConditionsView = app.injector.instanceOf[views.html.abouttheproperty.premisesLicenseConditions]
+  def premisesLicenceConditionsView = app.injector.instanceOf[views.html.abouttheproperty.premisesLicenseConditionsDetails]
 
   val messageKeyPrefix = "premisesLicenseConditionsDetails"
 
-  override val form = PremisesLicenseDetailsForm.premisesLicenceDetailsForm
+  override val form = PremisesLicenseConditionsDetailsForm.premisesLicenceDetailsForm
 
   def createView = () => premisesLicenceConditionsView(form)(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[PremisesLicenseInformationDetails]) =>
+  def createViewUsingForm = (form: Form[PremisesLicenseConditionsDetails]) =>
     premisesLicenceConditionsView(form)(fakeRequest, messages)
 
   "Property licence conditions details view" must {

@@ -47,8 +47,8 @@ POST        /licensable-activities-details                          controllers.
 GET         /premises-license                                       controllers.abouttheproperty.PremisesLicenseController.show()
 POST        /premises-license                                       controllers.abouttheproperty.PremisesLicenseController.submit()
 
-GET         /premises-license-conditions                            controllers.abouttheproperty.PremisesLicenseConditionsController.show()
-POST        /premises-license-conditions                            controllers.abouttheproperty.PremisesLicenseConditionsController.submit()
+GET         /premises-license-conditions                            controllers.abouttheproperty.PremisesLicenseConditionsDetailsController.show()
+POST        /premises-license-conditions                            controllers.abouttheproperty.PremisesLicenseConditionsDetailsController.submit()
 
 GET         /enforcement-action-been-taken                          controllers.abouttheproperty.EnforcementActionBeenTakenController.show()
 POST        /enforcement-action-been-taken                          controllers.abouttheproperty.EnforcementActionBeenTakenController.submit()
