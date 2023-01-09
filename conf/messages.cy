@@ -214,37 +214,30 @@ label.waterCharges = Water charges
 
 #LICENSABLE ACTIVITIES
 ##############################
-licensableActivities.heading = About the property
-licensableActivities.subheader = Are any of the following included in your rent?
-licensableActivities.option = Do licensable activities regularly commence before 10:00 or after 23:30 on any day of the week?
+licensableActivities.heading = Do licensable activities regularly commence before 10:00 or after 23:30 on any day of the week?
 hint.licensableActivities= Licensable activities could include, selling alcohol, selling food and refreshments, or providing live entertainment
 
 #LICENSABLE ACTIVITIES DETAILS
 ##############################
-licensableActivitiesDetails.heading = About the property
-label.licensableActivitiesDetails = Describe the licensable activities regularly commending before 10:00 or after 23:30
+licensableActivitiesDetails.heading = Describe the licensable activities regularly commending before 10:00 or after 23:30
 
-#PREMISES LICENCE CONDITIONS
-##############################
-premisesLicenseConditions.heading = About the property
-label.premisesLicenseConditions = Describe the conditions restricting the use of all or parts of the property
+#PREMISES LICENCE CONDITIONS Details
+####################################
+premisesLicenseConditionsDetails.heading = Describe the conditions restricting the use of all or parts of the property
 
 #PREMISES LICENCE
-##############################
-premisesLicense.heading = About the property
-label.premisesLicense = Does your premises licence have conditions restricting the use of all or parts of the property?
+#################
+premisesLicense.heading = Does your premises licence have conditions restricting the use of all or parts of the property?
 hint.premisesLicense = For example, no drinks outside after 22:00
 
 #TIED FOR GOODS
-##############################
-tiedForGoods.heading = About the property
-label.tiedForGoods = Are you tied for any goods?
+###############
+tiedForGoods.heading = Are you tied for any goods?
 hint.tiedForGoods = Are you required to sell certain goods as part of your lease or tenancy agreement?
 
 #TIED FOR GOODS DETAILS
-##############################
-tiedForGoodsDetails.heading = About the property
-label.tiedForGoodsDetails = What type of tie do you have?
+#######################
+tiedForGoodsDetails.heading = What type of tie do you have?
 tiedForGoodsDetails.fullTie = Full tie
 tiedForGoodsDetails.beerOnly = Beer only
 tiedForGoodsDetails.partialTie = Partial tie
@@ -416,14 +409,12 @@ error.rentActuallyAgreed.year.required = The date must include a year
 
 #ENFORCEMENT ACTION BEEN TAKEN
 ##############################
-enforcementActionHasBeenTaken.heading = About the property
-label.enforcementActionHasBeenTaken = Has any enforcement action been taken?
+enforcementActionHasBeenTaken.heading = Has any enforcement action been taken?
 hint.enforcementActionHasBeenTaken = This can be any suspensions, closure orders or temporary restrictions
 
 #ENFORCEMENT ACTION BEEN TAKEN DETAILS
 ##############################
-enforcementActionHasBeenTaken.heading = About the property
-label.enforcementActionHasBeenTaken = Describe the enforcement action taken
+enforcementActionHasBeenTakenDetails.heading = Describe the enforcement action taken
 
 ##CATERING OPERATION OR LETTING ACCOMMODATION DETAILS
 ##############################

@@ -16,28 +16,12 @@
 
 @import models.submissions.abouttheproperty.PremisesLicenseInformationDetails
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.button.Button
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.textarea.Textarea
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukErrorSummary
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukDateInput
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukTextarea
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukCharacterCount
-@import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Label
-
-
+@import uk.gov.hmrc.govukfrontend.views.html.components._
 
 @this(layout: Layout,
         govukButton: GovukButton,
-        govukRadios: GovukRadios,
-        govukInput: GovukInput,
         govukErrorSummary: GovukErrorSummary,
-        govukDateInput: GovukDateInput,
-        govukTextarea: GovukTextarea,
         govukCharacterCount: GovukCharacterCount,
         formWithCSRF: FormWithCSRF
 )
@@ -45,22 +29,26 @@
 @(theForm: Form[PremisesLicenseInformationDetails])(implicit request: Request[_], messages: Messages)
 
 @layout(
- pageHeading = messages("premisesLicenseConditions.heading"),
+ pageHeading = messages("premisesLicenseConditionsDetails.heading"),
+ showH1 = false,
+ showSection = true,
+ sectionName = messages("label.section.aboutTheProperty"),
  backLinkUrl = controllers.abouttheproperty.routes.PremisesLicenseController.show.url,
  theForm = theForm
 ) {
 
  @formWithCSRF(action = controllers.abouttheproperty.routes.PremisesLicenseConditionsController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
 
-  @govukTextarea(
-   Textarea(
+  <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+   <h1 class="govuk-fieldset__heading">@messages("premisesLicenseConditionsDetails.heading")</h1>
+  </legend>
+
+  @govukCharacterCount(
+   CharacterCount(
     id = "premisesLicenseConditions",
     name = "premisesLicenseConditions",
     rows = 5,
-    label = Label(
-     content = Text(messages("label.premisesLicenseConditions")),
-     classes = "govuk-!-font-weight-bold"
-    ),
+    maxLength = 2000,
     errorMessage = theForm.errors.asTextErrorMessageForField("premisesLicenseConditions")
    )
   )

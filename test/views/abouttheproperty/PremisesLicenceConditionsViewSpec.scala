@@ -26,7 +26,7 @@ class PremisesLicenceConditionsViewSpec extends QuestionViewBehaviours[PremisesL
 
   def premisesLicenceConditionsView = app.injector.instanceOf[views.html.abouttheproperty.premisesLicenseConditions]
 
-  val messageKeyPrefix = "premisesLicenseConditions"
+  val messageKeyPrefix = "premisesLicenseConditionsDetails"
 
   override val form = PremisesLicenseDetailsForm.premisesLicenceDetailsForm
 
@@ -38,8 +38,6 @@ class PremisesLicenceConditionsViewSpec extends QuestionViewBehaviours[PremisesL
   "Property licence conditions details view" must {
 
     behave like normalPage(createView, messageKeyPrefix)
-
-    behave like pageWithTextFields(createViewUsingForm, "premisesLicenseConditions")
 
     "has a link marked with back.link.label leading to the premises licence Page" in {
       val doc          = asDocument(createView())
