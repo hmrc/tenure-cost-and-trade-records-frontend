@@ -15,21 +15,11 @@
  *@
 
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.button.Button
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukErrorSummary
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukDateInput
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukTextarea
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukCharacterCount
-@import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
+@import uk.gov.hmrc.govukfrontend.views.html.components._
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Radios
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Label
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Hint
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Input
-@import akka.protobufv3.internal.DescriptorProtos.EnumOptions
 @import models.submissions.abouttheproperty.LicensableActivities
 @import uk.gov.hmrc.govukfrontend.views.Aliases.RadioItem
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Fieldset
@@ -38,11 +28,7 @@
 @this(layout: Layout,
         govukButton: GovukButton,
         govukRadios: GovukRadios,
-        govukInput: GovukInput,
         govukErrorSummary: GovukErrorSummary,
-        govukDateInput: GovukDateInput,
-        govukTextarea: GovukTextarea,
-        govukCharacterCount: GovukCharacterCount,
         formWithCSRF: FormWithCSRF
 )
 
@@ -51,6 +37,9 @@
 
 @layout(
  pageHeading = messages("licensableActivities.heading"),
+ showH1 = false,
+ showSection = true,
+ sectionName = messages("label.section.aboutTheProperty"),
  backLinkUrl = controllers.abouttheproperty.routes.WebsiteForPropertyController.show.url,
  theForm = theForm
 ) {
@@ -69,17 +58,19 @@
      value = Option(radioItem._1)
     )
     ),
+    classes = "govuk-radios--inline",
     fieldset = Option(
      Fieldset(
       legend = Option(
        Legend(
-        content = Text(messages("licensableActivities.option")),
-        classes = "govuk-!-font-weight-bold"
+        content = Text(messages("licensableActivities.heading")),
+        isPageHeading = true, classes = "govuk-fieldset__legend--l"
        )
       )
      )
     ),
     hint = Some(Hint(content = Text(messages("hint.licensableActivities")))),
+    errorMessage = theForm.errors.asTextErrorMessageForField("licensableActivities")
    )
   )
 

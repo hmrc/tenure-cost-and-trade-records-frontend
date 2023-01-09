@@ -27,7 +27,7 @@ class EnforcementActionBeenTakenViewSpec extends QuestionViewBehaviours[Enforcem
 
   def enforcementActionsTakenView = app.injector.instanceOf[views.html.abouttheproperty.enforcementActionBeenTaken]
 
-  val messageKeyPrefix = "enforcementAction"
+  val messageKeyPrefix = "enforcementActionHasBeenTaken"
 
   override val form = EnforcementActionForm.enforcementActionForm
 

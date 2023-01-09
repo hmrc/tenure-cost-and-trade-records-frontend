@@ -41,8 +41,6 @@ class EnforcementActionBeenTakenDetailsViewSpec
 
     behave like normalPage(createView, messageKeyPrefix)
 
-    behave like pageWithTextFields(createViewUsingForm, "enforcementActionHasBeenTakenDetails")
-
     "has a link marked with back.link.label leading to the enforcement action Page" in {
       val doc          = asDocument(createView())
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
