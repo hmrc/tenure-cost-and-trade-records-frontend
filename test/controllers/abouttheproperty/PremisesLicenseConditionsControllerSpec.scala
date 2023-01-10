@@ -20,29 +20,32 @@ import play.api.http.Status
 import play.api.test.Helpers._
 import play.twirl.api.HtmlFormat
 import utils.TestBaseSpec
-import views.html.abouttheproperty.{enforcementActionBeenTaken, premisesLicenseConditions}
+import views.html.abouttheproperty.{enforcementActionBeenTaken, premisesLicenseConditions, premisesLicenseConditionsDetails}
+import views.html.login
 
 class PremisesLicenseConditionsControllerSpec extends TestBaseSpec {
 
-  val mockPremisesLicenseConditionsView = mock[premisesLicenseConditions]
-  when(mockPremisesLicenseConditionsView.apply(any)(any, any)).thenReturn(HtmlFormat.empty)
+  val mockPremisesLicenseView = mock[premisesLicenseConditions]
+  when(mockPremisesLicenseView.apply(any)(any, any)).thenReturn(HtmlFormat.empty)
 
-  val premisesLicenseConditionsController = new PremisesLicenseConditionsController(
+  val premisesLicenseController = new PremisesLicenseConditionsController(
     stubMessagesControllerComponents(),
+    mock[login],
+    mockPremisesLicenseView,
+    mock[premisesLicenseConditionsDetails],
     mock[enforcementActionBeenTaken],
-    mockPremisesLicenseConditionsView,
     preFilledSession,
     mockSessionRepo
   )
 
   "GET /" should {
     "return 200" in {
-      val result = premisesLicenseConditionsController.show(fakeRequest)
+      val result = premisesLicenseController.show(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return HTML" in {
-      val result = premisesLicenseConditionsController.show(fakeRequest)
+      val result = premisesLicenseController.show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }

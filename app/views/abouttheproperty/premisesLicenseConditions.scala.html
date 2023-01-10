@@ -14,49 +14,72 @@
  * limitations under the License.
  *@
 
-@import models.submissions.abouttheproperty.PremisesLicenseInformationDetails
+@import models.submissions.abouttheproperty.PremisesLicenseConditions
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
-@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 @import uk.gov.hmrc.govukfrontend.views.html.components._
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Radios
+@import uk.gov.hmrc.govukfrontend.views.Aliases.RadioItem
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Fieldset
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Legend
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Hint
 
 @this(layout: Layout,
         govukButton: GovukButton,
+        govukRadios: GovukRadios,
         govukErrorSummary: GovukErrorSummary,
-        govukCharacterCount: GovukCharacterCount,
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[PremisesLicenseInformationDetails])(implicit request: Request[_], messages: Messages)
+@(theForm: Form[PremisesLicenseConditions])(implicit request: Request[_], messages: Messages)
 
 @layout(
- pageHeading = messages("premisesLicenseConditionsDetails.heading"),
+ pageHeading = messages("premisesLicenseConditions.heading"),
  showH1 = false,
  showSection = true,
  sectionName = messages("label.section.aboutTheProperty"),
- backLinkUrl = controllers.abouttheproperty.routes.PremisesLicenseController.show.url,
+ backLinkUrl = controllers.abouttheproperty.routes.LicensableActivitiesController.show.url,
  theForm = theForm
 ) {
 
  @formWithCSRF(action = controllers.abouttheproperty.routes.PremisesLicenseConditionsController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
 
-  <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-   <h1 class="govuk-fieldset__heading">@messages("premisesLicenseConditionsDetails.heading")</h1>
-  </legend>
-
-  @govukCharacterCount(
-   CharacterCount(
-    id = "premisesLicenseConditions",
+  @govukRadios(
+   Radios(
     name = "premisesLicenseConditions",
-    rows = 5,
-    maxLength = 2000,
-    errorMessage = theForm.errors.asTextErrorMessageForField("premisesLicenseConditions")
+    idPrefix = Option("premisesLicenseConditions"),
+    items = Seq(
+     "yes" -> messages("label.yes"),
+     "no" -> messages("label.no")
+    ).map(radioItem => RadioItem(
+     content = Text(radioItem._2),
+     checked = radioItem._1.equals(theForm("premisesLicenseConditions").value.getOrElse("")),
+     value = Option(radioItem._1)
+    )
+    ),
+    errorMessage =  theForm.errors.asTextErrorMessageForField("premisesLicenseConditions"),
+    classes = "govuk-radios--inline",
+    fieldset = Option(
+     Fieldset(
+      legend = Option(
+       Legend(
+        content = Text(messages("premisesLicenseConditions.heading")),
+        isPageHeading = true, classes = "govuk-fieldset__legend--l"
+       )
+      )
+     )
+    ),
+    hint = Some(Hint(content = Text(messages("hint.premisesLicenseConditions")))),
    )
   )
 
   @includes.continueButton(govukButton)
 
-  @includes.help_with_service_premisesLicenseConditions()
+  @includes.help_with_service_premisesLicense()
+
  }
 }
+
 
 

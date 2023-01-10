@@ -27,7 +27,7 @@ object EnforcementActionDetailsForm {
     mapping(
       "enforcementActionHasBeenTakenDetails" -> default(text, "").verifying(
         nonEmpty(errorMessage = "error.enforcementActionHasBeenTakenDetails.required"),
-        maxLength(1000, "error.enforcementActionHasBeenTakenDetails.maxLength")
+        maxLength(2000, "error.enforcementActionHasBeenTakenDetails.maxLength")
       )
     )(EnforcementActionHasBeenTakenInformationDetails.apply)(EnforcementActionHasBeenTakenInformationDetails.unapply)
   )

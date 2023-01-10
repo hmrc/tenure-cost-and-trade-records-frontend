@@ -19,7 +19,7 @@ package form
 import models._
 import models.submissions.Form6010._
 import models.submissions._
-import models.submissions.abouttheproperty.{BuildingOperationHaveAWebsite, CurrentPropertyUsed, EnforcementAction, LicensableActivities, PremisesLicense, TiedForGoods, TiedForGoodsInformation}
+import models.submissions.abouttheproperty._
 import models.submissions.connectiontoproperty.{AddressConnectionType, ConnectionToProperty}
 import play.api.data.FormError
 import play.api.data.format.Formatter
@@ -82,8 +82,8 @@ object Formats {
   implicit val licensableActivitiesFormat: Formatter[LicensableActivities]                                   =
     namedEnumFormatter(LicensableActivities, Errors.booleanMissing)
   implicit val tiedForGoodsFormat: Formatter[TiedForGoods]                                                   = namedEnumFormatter(TiedForGoods, Errors.booleanMissing)
-  implicit val premisesLicenseFormat: Formatter[PremisesLicense]                                             =
-    namedEnumFormatter(PremisesLicense, Errors.booleanMissing)
+  implicit val premisesLicenseConditionsFormat: Formatter[PremisesLicenseConditions]                         =
+    namedEnumFormatter(PremisesLicenseConditions, Errors.booleanMissing)
   implicit val enforcementActionFormat: Formatter[EnforcementAction]                                         =
     namedEnumFormatter(EnforcementAction, Errors.booleanMissing)
   implicit val franchiseOrLettingsTiedToPropertiesFormat: Formatter[FranchiseOrLettingsTiedToProperties]     =

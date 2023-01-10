@@ -16,24 +16,13 @@
 
 package models.submissions.abouttheproperty
 
-import models.{EnumFormat, NamedEnum, NamedEnumSupport}
-import play.api.libs.json.Format
+import play.api.libs.json.Json
 
-sealed trait PremisesLicense extends NamedEnum {
-  override def key = "premisesLicenses"
-}
-object PremisesLicensesYes extends PremisesLicense {
-  override def name = "yes"
-}
-object PremisesLicensesNo extends PremisesLicense {
-  override def name = "no"
-}
+case class PremisesLicenseConditionsDetails(
+  premisesLicenseInformationDetails: String
+)
 
-object PremisesLicense extends NamedEnumSupport[PremisesLicense] {
-  implicit val format: Format[PremisesLicense] = EnumFormat(PremisesLicense)
-
-  override def all = List(PremisesLicensesYes, PremisesLicensesNo)
-
-  val key = all.head.key
+object PremisesLicenseConditionsDetails {
+  implicit val format = Json.format[PremisesLicenseConditionsDetails]
 
 }

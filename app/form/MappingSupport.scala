@@ -21,7 +21,7 @@ import models.submissions._
 import form.Formats._
 import form.Formats.userTypeFormat
 import models.submissions.Form6010._
-import models.submissions.abouttheproperty.{BuildingOperationHaveAWebsite, CurrentPropertyUsed, EnforcementAction, LicensableActivities, PremisesLicense, TiedForGoods, TiedForGoodsInformation}
+import models.submissions.abouttheproperty._
 import models.submissions.common.{Address, ContactDetails}
 import models.submissions.connectiontoproperty.{AddressConnectionType, ConnectionToProperty}
 import models.{AnnualRent, NamedEnum, NamedEnumSupport}
@@ -50,7 +50,7 @@ object MappingSupport {
   val lettingOtherPartOfPropertiesType: Mapping[LettingOtherPartOfProperties]                         = Forms.of[LettingOtherPartOfProperties]
   val licensableActivitiesType: Mapping[LicensableActivities]                                         = Forms.of[LicensableActivities]
   val tiedForGoodsType: Mapping[TiedForGoods]                                                         = Forms.of[TiedForGoods]
-  val premisesLicenseType: Mapping[PremisesLicense]                                                   = Forms.of[PremisesLicense]
+  val premisesLicenseConditionsType: Mapping[PremisesLicenseConditions]                               = Forms.of[PremisesLicenseConditions]
   val tenancyLeaseAgreementType: Mapping[TenancyLeaseAgreements]                                      = Forms.of[TenancyLeaseAgreements]
   val enforcementActionType: Mapping[EnforcementAction]                                               = Forms.of[EnforcementAction]
   val franchiseOrLettingsTiedToPropertyType: Mapping[FranchiseOrLettingsTiedToProperties]             =

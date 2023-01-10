@@ -18,13 +18,13 @@ package controllers.abouttheproperty
 
 import actions.WithSessionRefiner
 import form.abouttheproperty.LicensableActivitiesInformationForm.licensableActivitiesDetailsForm
-import form.abouttheproperty.PremisesLicenseForm.premisesLicenseForm
+import form.abouttheproperty.PremisesLicenseConditionsForm.premisesLicenseConditionsForm
 import models.submissions.abouttheproperty.AboutTheProperty.updateAboutTheProperty
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.abouttheproperty.{licensableActivitiesDetails, premisesLicense}
+import views.html.abouttheproperty.{licensableActivitiesDetails, premisesLicenseConditions}
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
@@ -33,7 +33,7 @@ import scala.concurrent.Future
 class LicensableActivitiesDetailsController @Inject() (
   mcc: MessagesControllerComponents,
   licensableActivitiesDetailsView: licensableActivitiesDetails,
-  premisesLicenseView: premisesLicense,
+  premisesLicenseView: premisesLicenseConditions,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
 ) extends FrontendController(mcc)
@@ -60,7 +60,7 @@ class LicensableActivitiesDetailsController @Inject() (
         formWithErrors => Future.successful(BadRequest(licensableActivitiesDetailsView(formWithErrors))),
         data => {
           session.saveOrUpdate(updateAboutTheProperty(_.copy(licensableActivitiesInformationDetails = Some(data))))
-          Future.successful(Ok(premisesLicenseView(premisesLicenseForm)))
+          Future.successful(Ok(premisesLicenseView(premisesLicenseConditionsForm)))
         }
       )
   }

@@ -17,30 +17,23 @@
 package controllers.abouttheproperty
 
 import actions.WithSessionRefiner
-import controllers.LoginController.loginForm
 import form.abouttheproperty.EnforcementActionForm.enforcementActionForm
-import form.abouttheproperty.PremisesLicenseDetailsForm.premisesLicenceDetailsForm
-import form.abouttheproperty.PremisesLicenseForm.premisesLicenseForm
-import models.submissions.abouttheproperty.PremisesLicensesYes
+import form.abouttheproperty.PremisesLicenseConditionsDetailsForm.premisesLicenceDetailsForm
 import models.submissions.abouttheproperty.AboutTheProperty.updateAboutTheProperty
-import models.submissions.abouttheproperty.{PremisesLicensesNo, PremisesLicensesYes}
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.abouttheproperty.{enforcementActionBeenTaken, premisesLicense, premisesLicenseConditions}
-import views.html.login
+import views.html.abouttheproperty.{enforcementActionBeenTaken, premisesLicenseConditionsDetails}
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class PremisesLicenseController @Inject() (
+class PremisesLicenseConditionsDetailsController @Inject() (
   mcc: MessagesControllerComponents,
-  login: login,
-  premisesLicenseView: premisesLicense,
-  premisesLicenceDetailsView: premisesLicenseConditions,
   enforcementActionBeenTakenView: enforcementActionBeenTaken,
+  premisesLicenseConditionsView: premisesLicenseConditionsDetails,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
 ) extends FrontendController(mcc)
@@ -49,10 +42,11 @@ class PremisesLicenseController @Inject() (
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Future.successful(
       Ok(
-        premisesLicenseView(
-          request.sessionData.aboutTheProperty.flatMap(_.premisesLicense) match {
-            case Some(premisesLicense) => premisesLicenseForm.fillAndValidate(premisesLicense)
-            case _                     => premisesLicenseForm
+        premisesLicenseConditionsView(
+          request.sessionData.aboutTheProperty.flatMap(_.premisesLicenseConditionsDetails) match {
+            case Some(premisesLicenseInformation) =>
+              premisesLicenceDetailsForm.fillAndValidate(premisesLicenseInformation)
+            case _                                => premisesLicenceDetailsForm
           }
         )
       )
@@ -60,18 +54,13 @@ class PremisesLicenseController @Inject() (
   }
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
-    premisesLicenseForm
+    premisesLicenceDetailsForm
       .bindFromRequest()
       .fold(
-        formWithErrors => Future.successful(BadRequest(premisesLicenseView(formWithErrors))),
-        {
-          case data @ PremisesLicensesYes =>
-            session.saveOrUpdate(updateAboutTheProperty(_.copy(premisesLicense = Some(data))))
-            Future.successful(Ok(premisesLicenceDetailsView(premisesLicenceDetailsForm)))
-          case data @ PremisesLicensesNo  =>
-            session.saveOrUpdate(updateAboutTheProperty(_.copy(premisesLicense = Some(data))))
-            Future.successful(Ok(enforcementActionBeenTakenView(enforcementActionForm)))
-          case _                          => Future.successful(Ok(login(loginForm)))
+        formWithErrors => Future.successful(BadRequest(premisesLicenseConditionsView(formWithErrors))),
+        data => {
+          session.saveOrUpdate(updateAboutTheProperty(_.copy(premisesLicenseConditionsDetails = Some(data))))
+          Future.successful(Ok(enforcementActionBeenTakenView(enforcementActionForm)))
         }
       )
   }

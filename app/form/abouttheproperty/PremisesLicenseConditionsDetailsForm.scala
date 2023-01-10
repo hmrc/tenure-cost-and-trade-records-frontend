@@ -16,15 +16,15 @@
 
 package form.abouttheproperty
 
-import models.submissions.abouttheproperty.PremisesLicenseInformationDetails
+import models.submissions.abouttheproperty.PremisesLicenseConditionsDetails
 import play.api.data.Form
 import play.api.data.Forms.{mapping, nonEmptyText}
 
-object PremisesLicenseDetailsForm {
+object PremisesLicenseConditionsDetailsForm {
 
   val premisesLicenceDetailsForm = Form(
     mapping(
-      "premisesLicenseConditions" -> nonEmptyText(maxLength = 100)
-    )(PremisesLicenseInformationDetails.apply)(PremisesLicenseInformationDetails.unapply)
+      "premisesLicenseConditionsDetails" -> nonEmptyText(maxLength = 2000)
+    )(PremisesLicenseConditionsDetails.apply)(PremisesLicenseConditionsDetails.unapply)
   )
 }

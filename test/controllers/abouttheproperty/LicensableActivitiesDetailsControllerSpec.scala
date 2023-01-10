@@ -20,7 +20,7 @@ import play.api.http.Status
 import play.api.test.Helpers._
 import play.twirl.api.HtmlFormat
 import utils.TestBaseSpec
-import views.html.abouttheproperty.{licensableActivitiesDetails, premisesLicense}
+import views.html.abouttheproperty.{licensableActivitiesDetails, premisesLicenseConditions}
 
 class LicensableActivitiesDetailsControllerSpec extends TestBaseSpec {
 
@@ -30,7 +30,7 @@ class LicensableActivitiesDetailsControllerSpec extends TestBaseSpec {
   val licensableActivitiesDetailsController = new LicensableActivitiesDetailsController(
     stubMessagesControllerComponents(),
     mockLicensableActivitiesView,
-    mock[premisesLicense],
+    mock[premisesLicenseConditions],
     preFilledSession,
     mockSessionRepo
   )

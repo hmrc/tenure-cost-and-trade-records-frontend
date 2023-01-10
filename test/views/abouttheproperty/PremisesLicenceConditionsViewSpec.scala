@@ -16,35 +16,60 @@
 
 package views.abouttheproperty
 
-import form.abouttheproperty.PremisesLicenseDetailsForm
-import models.submissions.abouttheproperty.PremisesLicenseInformationDetails
+import form.abouttheproperty.PremisesLicenseConditionsForm
+import models.submissions.abouttheproperty.PremisesLicenseConditions
+import models.submissions.abouttheproperty.{PremisesLicenseConditions, PremisesLicensesConditionsNo, PremisesLicensesConditionsYes}
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class PremisesLicenceConditionsViewSpec extends QuestionViewBehaviours[PremisesLicenseInformationDetails] {
+class PremisesLicenceConditionsViewSpec extends QuestionViewBehaviours[PremisesLicenseConditions] {
 
-  def premisesLicenceConditionsView = app.injector.instanceOf[views.html.abouttheproperty.premisesLicenseConditions]
+  def premisesLicencableView = app.injector.instanceOf[views.html.abouttheproperty.premisesLicenseConditions]
 
-  val messageKeyPrefix = "premisesLicenseConditionsDetails"
+  val messageKeyPrefix = "premisesLicenseConditions"
 
-  override val form = PremisesLicenseDetailsForm.premisesLicenceDetailsForm
+  override val form = PremisesLicenseConditionsForm.premisesLicenseConditionsForm
 
-  def createView = () => premisesLicenceConditionsView(form)(fakeRequest, messages)
+  def createView = () => premisesLicencableView(form)(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[PremisesLicenseInformationDetails]) =>
-    premisesLicenceConditionsView(form)(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[PremisesLicenseConditions]) =>
+    premisesLicencableView(form)(fakeRequest, messages)
 
-  "Property licence conditions details view" must {
+  "Property licence conditions view" must {
 
     behave like normalPage(createView, messageKeyPrefix)
 
-    "has a link marked with back.link.label leading to the premises licence Page" in {
+    "has a link marked with back.link.label leading to the licencable activities Page" in {
       val doc          = asDocument(createView())
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText mustBe messages("back.link.label")
       val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.abouttheproperty.routes.PremisesLicenseController.show().url
+      backlinkUrl mustBe controllers.abouttheproperty.routes.LicensableActivitiesController.show().url
+    }
+
+    "contain radio buttons for the value yes" in {
+      val doc = asDocument(createViewUsingForm(form))
+      assertContainsRadioButton(
+        doc,
+        "premisesLicenseConditions",
+        "premisesLicenseConditions",
+        PremisesLicensesConditionsYes.name,
+        false
+      )
+      assertContainsText(doc, messages("label.yes"))
+    }
+
+    "contain radio buttons for the value no" in {
+      val doc = asDocument(createViewUsingForm(form))
+      assertContainsRadioButton(
+        doc,
+        "premisesLicenseConditions-2",
+        "premisesLicenseConditions",
+        PremisesLicensesConditionsNo.name,
+        false
+      )
+      assertContainsText(doc, messages("label.no"))
     }
 
     "contain save and continue button with the value Save and Continue" in {
@@ -53,15 +78,13 @@ class PremisesLicenceConditionsViewSpec extends QuestionViewBehaviours[PremisesL
       assert(loginButton == messages("button.label.continue"))
     }
 
-    "contain get help section use of licence activities details" in {
+    "contain get help section use of premises licence conditions details" in {
       val doc = asDocument(createView())
       assert(
         doc.toString.contains(messages("premisesLicenseConditions.helpWithServicePremisesLicenseConditionsHeader"))
       )
-      assert(doc.toString.contains(messages("premisesLicenseConditions.helpWithServicePremisesLicenseConditions")))
-      assert(doc.toString.contains(messages("premisesLicenseConditions.listBlock1.p1")))
-      assert(doc.toString.contains(messages("premisesLicenseConditions.listBlock1.p2")))
-      assert(doc.toString.contains(messages("premisesLicenseConditions.listBlock1.p3")))
+      assert(doc.toString.contains(messages("premisesLicenseConditions.helpWithServicePremisesLicenseConditions.p1")))
+      assert(doc.toString.contains(messages("premisesLicenseConditions.helpWithServicePremisesLicenseConditions.p2")))
     }
 
     "contain get help section basic details" in {
