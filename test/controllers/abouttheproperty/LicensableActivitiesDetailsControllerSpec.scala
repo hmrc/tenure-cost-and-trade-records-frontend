@@ -16,21 +16,23 @@
 
 package controllers.abouttheproperty
 
+import navigation.AboutThePropertyNavigator
 import play.api.http.Status
 import play.api.test.Helpers._
 import play.twirl.api.HtmlFormat
 import utils.TestBaseSpec
-import views.html.abouttheproperty.{licensableActivitiesDetails, premisesLicenseConditions}
+import views.html.abouttheproperty.licensableActivitiesDetails
 
 class LicensableActivitiesDetailsControllerSpec extends TestBaseSpec {
 
-  val mockLicensableActivitiesView = mock[licensableActivitiesDetails]
+  val mockAboutThePropertyNavigator = mock[AboutThePropertyNavigator]
+  val mockLicensableActivitiesView  = mock[licensableActivitiesDetails]
   when(mockLicensableActivitiesView.apply(any)(any, any)).thenReturn(HtmlFormat.empty)
 
   val licensableActivitiesDetailsController = new LicensableActivitiesDetailsController(
     stubMessagesControllerComponents(),
+    mockAboutThePropertyNavigator,
     mockLicensableActivitiesView,
-    mock[premisesLicenseConditions],
     preFilledSession,
     mockSessionRepo
   )

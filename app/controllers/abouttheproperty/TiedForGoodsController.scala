@@ -17,19 +17,15 @@
 package controllers.abouttheproperty
 
 import actions.WithSessionRefiner
-import controllers.LoginController.loginForm
-import form.Form6010.AboutYourTradingHistoryForm.aboutYourTradingHistoryForm
-import form.abouttheproperty.TiedForGoodsDetailsForm.tiedForGoodsDetailsForm
 import form.abouttheproperty.TiedForGoodsForm.tiedForGoodsForm
 import models.submissions.abouttheproperty.AboutTheProperty.updateAboutTheProperty
-import models.submissions.abouttheproperty.{TiedGoodsNo, TiedGoodsYes}
+import navigation.AboutThePropertyNavigator
+import navigation.identifiers.TiedForGoodsPageId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.form.aboutYourTradingHistory
-import views.html.abouttheproperty.{tiedForGoods, tiedForGoodsDetails}
-import views.html.login
+import views.html.abouttheproperty.tiedForGoods
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
@@ -37,10 +33,8 @@ import scala.concurrent.Future
 @Singleton
 class TiedForGoodsController @Inject() (
   mcc: MessagesControllerComponents,
-  login: login,
+  navigator: AboutThePropertyNavigator,
   tiedForGoodsView: tiedForGoods,
-  tiedForGoodsDetailsView: tiedForGoodsDetails,
-  aboutYourTradingHistoryView: aboutYourTradingHistory,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
 ) extends FrontendController(mcc)
@@ -64,14 +58,10 @@ class TiedForGoodsController @Inject() (
       .bindFromRequest()
       .fold(
         formWithErrors => Future.successful(BadRequest(tiedForGoodsView(formWithErrors))),
-        {
-          case data @ TiedGoodsYes =>
-            session.saveOrUpdate(updateAboutTheProperty(_.copy(tiedForGoods = Some(data))))
-            Future.successful(Ok(tiedForGoodsDetailsView(tiedForGoodsDetailsForm)))
-          case data @ TiedGoodsNo  =>
-            session.saveOrUpdate(updateAboutTheProperty(_.copy(tiedForGoods = Some(data))))
-            Future.successful(Ok(aboutYourTradingHistoryView(aboutYourTradingHistoryForm)))
-          case _                   => Future.successful(Ok(login(loginForm)))
+        data => {
+          val updatedData = updateAboutTheProperty(_.copy(tiedForGoods = Some(data)))
+          session.saveOrUpdate(updatedData)
+          Future.successful(Redirect(navigator.nextPage(TiedForGoodsPageId).apply(updatedData)))
         }
       )
   }

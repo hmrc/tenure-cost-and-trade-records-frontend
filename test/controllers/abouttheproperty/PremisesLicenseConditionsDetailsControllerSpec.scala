@@ -16,6 +16,7 @@
 
 package controllers.abouttheproperty
 
+import navigation.AboutThePropertyNavigator
 import play.api.http.Status
 import play.api.test.Helpers._
 import play.twirl.api.HtmlFormat
@@ -24,12 +25,13 @@ import views.html.abouttheproperty.{enforcementActionBeenTaken, premisesLicenseC
 
 class PremisesLicenseConditionsDetailsControllerSpec extends TestBaseSpec {
 
+  val mockAboutThePropertyNavigator     = mock[AboutThePropertyNavigator]
   val mockPremisesLicenseConditionsView = mock[premisesLicenseConditionsDetails]
   when(mockPremisesLicenseConditionsView.apply(any)(any, any)).thenReturn(HtmlFormat.empty)
 
   val premisesLicenseConditionsDetailsController = new PremisesLicenseConditionsDetailsController(
     stubMessagesControllerComponents(),
-    mock[enforcementActionBeenTaken],
+    mockAboutThePropertyNavigator,
     mockPremisesLicenseConditionsView,
     preFilledSession,
     mockSessionRepo

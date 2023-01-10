@@ -18,13 +18,14 @@ package controllers.abouttheproperty
 
 import actions.WithSessionRefiner
 import form.abouttheproperty.LicensableActivitiesInformationForm.licensableActivitiesDetailsForm
-import form.abouttheproperty.PremisesLicenseConditionsForm.premisesLicenseConditionsForm
 import models.submissions.abouttheproperty.AboutTheProperty.updateAboutTheProperty
+import navigation.AboutThePropertyNavigator
+import navigation.identifiers.LicensableActivityDetailsPageId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.abouttheproperty.{licensableActivitiesDetails, premisesLicenseConditions}
+import views.html.abouttheproperty.licensableActivitiesDetails
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
@@ -32,8 +33,8 @@ import scala.concurrent.Future
 @Singleton
 class LicensableActivitiesDetailsController @Inject() (
   mcc: MessagesControllerComponents,
+  navigator: AboutThePropertyNavigator,
   licensableActivitiesDetailsView: licensableActivitiesDetails,
-  premisesLicenseView: premisesLicenseConditions,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
 ) extends FrontendController(mcc)
@@ -59,8 +60,9 @@ class LicensableActivitiesDetailsController @Inject() (
       .fold(
         formWithErrors => Future.successful(BadRequest(licensableActivitiesDetailsView(formWithErrors))),
         data => {
-          session.saveOrUpdate(updateAboutTheProperty(_.copy(licensableActivitiesInformationDetails = Some(data))))
-          Future.successful(Ok(premisesLicenseView(premisesLicenseConditionsForm)))
+          val updatedData = updateAboutTheProperty(_.copy(licensableActivitiesInformationDetails = Some(data)))
+          session.saveOrUpdate(updatedData)
+          Future.successful(Redirect(navigator.nextPage(LicensableActivityDetailsPageId).apply(updatedData)))
         }
       )
   }

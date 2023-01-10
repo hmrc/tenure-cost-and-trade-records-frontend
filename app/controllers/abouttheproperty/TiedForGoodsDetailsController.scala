@@ -17,14 +17,14 @@
 package controllers.abouttheproperty
 
 import actions.WithSessionRefiner
-import form.Form6010.AboutYourTradingHistoryForm.aboutYourTradingHistoryForm
 import form.abouttheproperty.TiedForGoodsDetailsForm.tiedForGoodsDetailsForm
 import models.submissions.abouttheproperty.AboutTheProperty.updateAboutTheProperty
+import navigation.AboutThePropertyNavigator
+import navigation.identifiers.TiedForGoodsDetailsPageId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.form.aboutYourTradingHistory
 import views.html.abouttheproperty.tiedForGoodsDetails
 
 import javax.inject.{Inject, Named, Singleton}
@@ -33,7 +33,7 @@ import scala.concurrent.Future
 @Singleton
 class TiedForGoodsDetailsController @Inject() (
   mcc: MessagesControllerComponents,
-  aboutYourTradingHistoryView: aboutYourTradingHistory,
+  navigator: AboutThePropertyNavigator,
   tiedForGoodsDetailsView: tiedForGoodsDetails,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
@@ -59,8 +59,9 @@ class TiedForGoodsDetailsController @Inject() (
       .fold(
         formWithErrors => Future.successful(BadRequest(tiedForGoodsDetailsView(formWithErrors))),
         data => {
-          session.saveOrUpdate(updateAboutTheProperty(_.copy(tiedForGoodsDetails = Some(data))))
-          Future.successful(Ok(aboutYourTradingHistoryView(aboutYourTradingHistoryForm)))
+          val updatedData = updateAboutTheProperty(_.copy(tiedForGoodsDetails = Some(data)))
+          session.saveOrUpdate(updatedData)
+          Future.successful(Redirect(navigator.nextPage(TiedForGoodsDetailsPageId).apply(updatedData)))
         }
       )
   }

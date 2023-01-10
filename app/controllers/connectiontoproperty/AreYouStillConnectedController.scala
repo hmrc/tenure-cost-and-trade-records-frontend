@@ -29,7 +29,7 @@ import models.submissions.connectiontoproperty.StillConnectedDetails.updateStill
 import models.submissions.common.Address
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
 @Singleton
 class AreYouStillConnectedController @Inject() (
@@ -38,8 +38,7 @@ class AreYouStillConnectedController @Inject() (
   areYouStillConnectedView: areYouStillConnected,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext)
-    extends FrontendController(mcc)
+) extends FrontendController(mcc)
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>

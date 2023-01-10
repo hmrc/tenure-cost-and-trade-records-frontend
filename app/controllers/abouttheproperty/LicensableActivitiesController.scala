@@ -17,19 +17,15 @@
 package controllers.abouttheproperty
 
 import actions.WithSessionRefiner
-import controllers.LoginController.loginForm
 import form.abouttheproperty.LicensableActivitiesForm.licensableActivitiesForm
-import form.abouttheproperty.LicensableActivitiesInformationForm.licensableActivitiesDetailsForm
-import form.abouttheproperty.PremisesLicenseConditionsForm.premisesLicenseConditionsForm
-import models.submissions.abouttheproperty.LicensableActivitiesNo
 import models.submissions.abouttheproperty.AboutTheProperty.updateAboutTheProperty
-import models.submissions.abouttheproperty.LicensableActivitiesYes
+import navigation.AboutThePropertyNavigator
+import navigation.identifiers.LicensableActivityPageId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.abouttheproperty.{licensableActivities, licensableActivitiesDetails, premisesLicenseConditions}
-import views.html.login
+import views.html.abouttheproperty.licensableActivities
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
@@ -37,10 +33,8 @@ import scala.concurrent.Future
 @Singleton
 class LicensableActivitiesController @Inject() (
   mcc: MessagesControllerComponents,
-  login: login,
+  navigator: AboutThePropertyNavigator,
   licensableActivitiesView: licensableActivities,
-  licensableActivitiesDetailsView: licensableActivitiesDetails,
-  premisesLicenseView: premisesLicenseConditions,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
 ) extends FrontendController(mcc)
@@ -64,14 +58,10 @@ class LicensableActivitiesController @Inject() (
       .bindFromRequest()
       .fold(
         formWithErrors => Future.successful(BadRequest(licensableActivitiesView(formWithErrors))),
-        {
-          case data @ LicensableActivitiesYes =>
-            session.saveOrUpdate(updateAboutTheProperty(_.copy(licensableActivities = Some(data))))
-            Future.successful(Ok(licensableActivitiesDetailsView(licensableActivitiesDetailsForm)))
-          case data @ LicensableActivitiesNo  =>
-            session.saveOrUpdate(updateAboutTheProperty(_.copy(licensableActivities = Some(data))))
-            Future.successful(Ok(premisesLicenseView(premisesLicenseConditionsForm)))
-          case _                              => Future.successful(Ok(login(loginForm)))
+        data => {
+          val updatedData = updateAboutTheProperty(_.copy(licensableActivities = Some(data)))
+          session.saveOrUpdate(updatedData)
+          Future.successful(Redirect(navigator.nextPage(LicensableActivityPageId).apply(updatedData)))
         }
       )
   }

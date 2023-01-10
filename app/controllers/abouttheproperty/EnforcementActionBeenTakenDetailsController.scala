@@ -18,26 +18,26 @@ package controllers.abouttheproperty
 
 import actions.WithSessionRefiner
 import form.abouttheproperty.EnforcementActionDetailsForm.enforcementActionDetailsForm
-import form.abouttheproperty.TiedForGoodsForm.tiedForGoodsForm
 import models.submissions.abouttheproperty.AboutTheProperty.updateAboutTheProperty
+import navigation.AboutThePropertyNavigator
+import navigation.identifiers.EnforcementActionBeenTakenDetailsPageId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.abouttheproperty.{enforcementActionBeenTakenDetails, tiedForGoods}
+import views.html.abouttheproperty.enforcementActionBeenTakenDetails
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
 @Singleton
 class EnforcementActionBeenTakenDetailsController @Inject() (
   mcc: MessagesControllerComponents,
-  tiedForGoodsView: tiedForGoods,
+  navigator: AboutThePropertyNavigator,
   enforcementActionBeenTakenDetailsView: enforcementActionBeenTakenDetails,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext)
-    extends FrontendController(mcc)
+) extends FrontendController(mcc)
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
@@ -60,9 +60,9 @@ class EnforcementActionBeenTakenDetailsController @Inject() (
       .fold(
         formWithErrors => Future.successful(BadRequest(enforcementActionBeenTakenDetailsView(formWithErrors))),
         data => {
-          session
-            .saveOrUpdate(updateAboutTheProperty(_.copy(enforcementActionHasBeenTakenInformationDetails = Some(data))))
-          Future.successful(Ok(tiedForGoodsView(tiedForGoodsForm)))
+          val updatedData = updateAboutTheProperty(_.copy(enforcementActionHasBeenTakenInformationDetails = Some(data)))
+          session.saveOrUpdate(updatedData)
+          Future.successful(Redirect(navigator.nextPage(EnforcementActionBeenTakenDetailsPageId).apply(updatedData)))
         }
       )
   }
