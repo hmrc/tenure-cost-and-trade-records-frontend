@@ -17,14 +17,15 @@
 package controllers.abouttheproperty
 
 import actions.WithSessionRefiner
-import form.abouttheproperty.EnforcementActionForm.enforcementActionForm
 import form.abouttheproperty.PremisesLicenseConditionsDetailsForm.premisesLicenceDetailsForm
 import models.submissions.abouttheproperty.AboutTheProperty.updateAboutTheProperty
+import navigation.AboutThePropertyNavigator
+import navigation.identifiers.PremisesLicenceConditionsDetailsPageId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.abouttheproperty.{enforcementActionBeenTaken, premisesLicenseConditionsDetails}
+import views.html.abouttheproperty.premisesLicenseConditionsDetails
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
@@ -32,7 +33,7 @@ import scala.concurrent.Future
 @Singleton
 class PremisesLicenseConditionsDetailsController @Inject() (
   mcc: MessagesControllerComponents,
-  enforcementActionBeenTakenView: enforcementActionBeenTaken,
+  navigator: AboutThePropertyNavigator,
   premisesLicenseConditionsView: premisesLicenseConditionsDetails,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
@@ -59,8 +60,9 @@ class PremisesLicenseConditionsDetailsController @Inject() (
       .fold(
         formWithErrors => Future.successful(BadRequest(premisesLicenseConditionsView(formWithErrors))),
         data => {
-          session.saveOrUpdate(updateAboutTheProperty(_.copy(premisesLicenseConditionsDetails = Some(data))))
-          Future.successful(Ok(enforcementActionBeenTakenView(enforcementActionForm)))
+          val updatedData = updateAboutTheProperty(_.copy(premisesLicenseConditionsDetails = Some(data)))
+          session.saveOrUpdate(updatedData)
+          Future.successful(Redirect(navigator.nextPage(PremisesLicenceConditionsDetailsPageId).apply(updatedData)))
         }
       )
   }

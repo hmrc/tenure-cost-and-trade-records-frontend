@@ -16,6 +16,7 @@
 
 package controllers.abouttheproperty
 
+import navigation.AboutThePropertyNavigator
 import play.api.http.Status
 import play.api.test.Helpers._
 import play.twirl.api.HtmlFormat
@@ -25,12 +26,13 @@ import views.html.form.aboutYourTradingHistory
 
 class TiedForGoodsDetailsControllerSpec extends TestBaseSpec {
 
-  val mockTiedForGoodsDetailsView = mock[tiedForGoodsDetails]
+  val mockAboutThePropertyNavigator = mock[AboutThePropertyNavigator]
+  val mockTiedForGoodsDetailsView   = mock[tiedForGoodsDetails]
   when(mockTiedForGoodsDetailsView.apply(any)(any, any)).thenReturn(HtmlFormat.empty)
 
   val tiedForGoodsDetailsController = new TiedForGoodsDetailsController(
     stubMessagesControllerComponents(),
-    mock[aboutYourTradingHistory],
+    mockAboutThePropertyNavigator,
     mockTiedForGoodsDetailsView,
     preFilledSession,
     mockSessionRepo

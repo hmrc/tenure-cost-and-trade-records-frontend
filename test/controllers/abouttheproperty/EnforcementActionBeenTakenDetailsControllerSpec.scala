@@ -16,20 +16,22 @@
 
 package controllers.abouttheproperty
 
+import navigation.AboutThePropertyNavigator
 import play.api.http.Status
 import play.api.test.Helpers._
 import play.twirl.api.HtmlFormat
 import utils.TestBaseSpec
-import views.html.abouttheproperty.{enforcementActionBeenTakenDetails, tiedForGoods}
+import views.html.abouttheproperty.enforcementActionBeenTakenDetails
 
 class EnforcementActionBeenTakenDetailsControllerSpec extends TestBaseSpec {
 
+  val mockAboutThePropertyNavigator             = mock[AboutThePropertyNavigator]
   val mockEnforcementActionBeenTakenDetailsView = mock[enforcementActionBeenTakenDetails]
   when(mockEnforcementActionBeenTakenDetailsView.apply(any)(any, any)).thenReturn(HtmlFormat.empty)
 
   val enforcementActionBeenTakenDetailsController = new EnforcementActionBeenTakenDetailsController(
     stubMessagesControllerComponents(),
-    mock[tiedForGoods],
+    mockAboutThePropertyNavigator,
     mockEnforcementActionBeenTakenDetailsView,
     preFilledSession,
     mockSessionRepo

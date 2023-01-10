@@ -17,37 +17,27 @@
 package controllers.abouttheproperty
 
 import actions.WithSessionRefiner
-import controllers.LoginController.loginForm
-import form.Form6010.AboutYourTradingHistoryForm.aboutYourTradingHistoryForm
-import form.abouttheproperty.EnforcementActionDetailsForm.enforcementActionDetailsForm
 import form.abouttheproperty.EnforcementActionForm.enforcementActionForm
-import form.abouttheproperty.TiedForGoodsForm.tiedForGoodsForm
-import models.submissions.abouttheproperty.EnforcementActionsYes
 import models.submissions.abouttheproperty.AboutTheProperty.updateAboutTheProperty
-import models.submissions.abouttheproperty.EnforcementActionsNo
+import navigation.AboutThePropertyNavigator
+import navigation.identifiers.EnforcementActionBeenTakenPageId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.abouttheproperty.{enforcementActionBeenTaken, enforcementActionBeenTakenDetails, tiedForGoods}
-import views.html.form.aboutYourTradingHistory
-import views.html.login
+import views.html.abouttheproperty.enforcementActionBeenTaken
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
 @Singleton
 class EnforcementActionBeenTakenController @Inject() (
   mcc: MessagesControllerComponents,
-  enforcementActionBeenTakenDetailsView: enforcementActionBeenTakenDetails,
-  tiedForGoodsView: tiedForGoods,
-  login: login,
+  navigator: AboutThePropertyNavigator,
   enforcementActionBeenTakenView: enforcementActionBeenTaken,
-  aboutYourTradingHistoryView: aboutYourTradingHistory,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext)
-    extends FrontendController(mcc)
+) extends FrontendController(mcc)
     with I18nSupport {
 
   def show: Action[AnyContent] = Action.async { implicit request =>
@@ -59,20 +49,10 @@ class EnforcementActionBeenTakenController @Inject() (
       .bindFromRequest()
       .fold(
         formWithErrors => Future.successful(BadRequest(enforcementActionBeenTakenView(formWithErrors))),
-        {
-          case data @ EnforcementActionsYes =>
-            session.saveOrUpdate(updateAboutTheProperty(_.copy(enforcementAction = Some(data))))
-            Future.successful(Ok(enforcementActionBeenTakenDetailsView(enforcementActionDetailsForm)))
-          case data @ EnforcementActionsNo  =>
-            //TODO - this should map to a forType with a string name associated, not a string
-            if (request.sessionData.userLoginDetails.forNumber == "FOR6011") {
-              session.saveOrUpdate(updateAboutTheProperty(_.copy(enforcementAction = Some(data))))
-              Future.successful(Ok(aboutYourTradingHistoryView(aboutYourTradingHistoryForm)))
-            } else {
-              session.saveOrUpdate(updateAboutTheProperty(_.copy(enforcementAction = Some(data))))
-              Future.successful(Ok(tiedForGoodsView(tiedForGoodsForm)))
-            }
-          case _                            => Future.successful(Ok(login(loginForm)))
+        data => {
+          val updatedData = updateAboutTheProperty(_.copy(enforcementAction = Some(data)))
+          session.saveOrUpdate(updatedData)
+          Future.successful(Redirect(navigator.nextPage(EnforcementActionBeenTakenPageId).apply(updatedData)))
         }
       )
   }

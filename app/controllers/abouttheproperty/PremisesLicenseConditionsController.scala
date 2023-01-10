@@ -17,19 +17,15 @@
 package controllers.abouttheproperty
 
 import actions.WithSessionRefiner
-import controllers.LoginController.loginForm
-import form.abouttheproperty.EnforcementActionForm.enforcementActionForm
-import form.abouttheproperty.PremisesLicenseConditionsDetailsForm.premisesLicenceDetailsForm
 import form.abouttheproperty.PremisesLicenseConditionsForm.premisesLicenseConditionsForm
-import models.submissions.abouttheproperty.PremisesLicensesConditionsYes
 import models.submissions.abouttheproperty.AboutTheProperty.updateAboutTheProperty
-import models.submissions.abouttheproperty.{PremisesLicensesConditionsNo, PremisesLicensesConditionsYes}
+import navigation.AboutThePropertyNavigator
+import navigation.identifiers.PremisesLicenceConditionsPageId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.abouttheproperty.{enforcementActionBeenTaken, premisesLicenseConditions, premisesLicenseConditionsDetails}
-import views.html.login
+import views.html.abouttheproperty.premisesLicenseConditions
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
@@ -37,10 +33,8 @@ import scala.concurrent.Future
 @Singleton
 class PremisesLicenseConditionsController @Inject() (
   mcc: MessagesControllerComponents,
-  login: login,
+  navigator: AboutThePropertyNavigator,
   premisesLicenseView: premisesLicenseConditions,
-  premisesLicenceDetailsView: premisesLicenseConditionsDetails,
-  enforcementActionBeenTakenView: enforcementActionBeenTaken,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
 ) extends FrontendController(mcc)
@@ -64,14 +58,10 @@ class PremisesLicenseConditionsController @Inject() (
       .bindFromRequest()
       .fold(
         formWithErrors => Future.successful(BadRequest(premisesLicenseView(formWithErrors))),
-        {
-          case data @ PremisesLicensesConditionsYes =>
-            session.saveOrUpdate(updateAboutTheProperty(_.copy(premisesLicenseConditions = Some(data))))
-            Future.successful(Ok(premisesLicenceDetailsView(premisesLicenceDetailsForm)))
-          case data @ PremisesLicensesConditionsNo  =>
-            session.saveOrUpdate(updateAboutTheProperty(_.copy(premisesLicenseConditions = Some(data))))
-            Future.successful(Ok(enforcementActionBeenTakenView(enforcementActionForm)))
-          case _                                    => Future.successful(Ok(login(loginForm)))
+        data => {
+          val updatedData = updateAboutTheProperty(_.copy(premisesLicenseConditions = Some(data)))
+          session.saveOrUpdate(updatedData)
+          Future.successful(Redirect(navigator.nextPage(PremisesLicenceConditionsPageId).apply(updatedData)))
         }
       )
   }

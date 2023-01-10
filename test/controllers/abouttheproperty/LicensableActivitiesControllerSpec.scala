@@ -17,12 +17,12 @@
 package controllers.abouttheproperty
 
 import form.Errors
+import navigation.AboutThePropertyNavigator
 import play.api.http.Status
 import play.api.test.Helpers._
 import play.twirl.api.HtmlFormat
 import utils.TestBaseSpec
-import views.html.abouttheproperty.{licensableActivities, licensableActivitiesDetails, premisesLicenseConditions}
-import views.html.login
+import views.html.abouttheproperty.licensableActivities
 
 class LicensableActivitiesControllerSpec extends TestBaseSpec {
 
@@ -30,15 +30,14 @@ class LicensableActivitiesControllerSpec extends TestBaseSpec {
   import form.abouttheproperty.LicensableActivitiesForm._
   import utils.FormBindingTestAssertions._
 
-  val mockLicensableActivitiesView = mock[licensableActivities]
+  val mockAboutThePropertyNavigator = mock[AboutThePropertyNavigator]
+  val mockLicensableActivitiesView  = mock[licensableActivities]
   when(mockLicensableActivitiesView.apply(any)(any, any)).thenReturn(HtmlFormat.empty)
 
   val licensableActivitiesController = new LicensableActivitiesController(
     stubMessagesControllerComponents(),
-    mock[login],
+    mockAboutThePropertyNavigator,
     mockLicensableActivitiesView,
-    mock[licensableActivitiesDetails],
-    mock[premisesLicenseConditions],
     preFilledSession,
     mockSessionRepo
   )
