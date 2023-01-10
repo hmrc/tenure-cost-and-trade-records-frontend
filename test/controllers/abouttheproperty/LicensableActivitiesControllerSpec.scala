@@ -21,7 +21,7 @@ import play.api.http.Status
 import play.api.test.Helpers._
 import play.twirl.api.HtmlFormat
 import utils.TestBaseSpec
-import views.html.abouttheproperty.{licensableActivities, licensableActivitiesDetails, premisesLicense}
+import views.html.abouttheproperty.{licensableActivities, licensableActivitiesDetails, premisesLicenseConditions}
 import views.html.login
 
 class LicensableActivitiesControllerSpec extends TestBaseSpec {
@@ -38,7 +38,7 @@ class LicensableActivitiesControllerSpec extends TestBaseSpec {
     mock[login],
     mockLicensableActivitiesView,
     mock[licensableActivitiesDetails],
-    mock[premisesLicense],
+    mock[premisesLicenseConditions],
     preFilledSession,
     mockSessionRepo
   )

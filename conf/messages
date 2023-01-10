@@ -227,8 +227,8 @@ premisesLicenseConditionsDetails.heading = Describe the conditions restricting t
 
 #PREMISES LICENCE CONDITIONS
 ##############################
-premisesLicense.heading = Does your premises licence have conditions restricting the use of all or parts of the property?
-hint.premisesLicense = For example, no drinks outside after 22:00
+premisesLicenseConditions.heading = Does your premises licence have conditions restricting the use of all or parts of the property?
+hint.premisesLicenseConditions = For example, no drinks outside after 22:00
 
 #TIED FOR GOODS
 ###############
@@ -711,18 +711,18 @@ licensableActivitiesConditions.listBlock1.p2 = We have a DJ playing until 1am on
 licensableActivitiesConditions.listBlock1.p3 = Our hot-breakfast service starts at 4am every day
 
 #HELP WITH SERVICE PREMISES LICENSE
-##############################
-premisesLicense.helpWithServicePremisesLicenseHeader = Conditions restricting the use of your property
-premisesLicense.helpWithServicePremisesLicense.p1 = Premises licences can be granted on the condition the holder of the premises licence complies with any pre-defined terms. These can include restrictions on the use of certain parts of their property. For example, customers may not be allowed in the beer garden after a certain time to avoid disturbing the neighbours.
-premisesLicense.helpWithServicePremisesLicense.p2 = If you’re unsure, check your premises licence. Any special conditions will be clearly stated there.
+###################################
+premisesLicenseConditions.helpWithServicePremisesLicenseConditionsHeader = Conditions restricting the use of your property
+premisesLicenseConditions.helpWithServicePremisesLicenseConditions.p1 = Premises licences can be granted on the condition the holder of the premises licence complies with any pre-defined terms. These can include restrictions on the use of certain parts of their property. For example, customers may not be allowed in the beer garden after a certain time to avoid disturbing the neighbours.
+premisesLicenseConditions.helpWithServicePremisesLicenseConditions.p2 = If you’re unsure, check your premises licence. Any special conditions will be clearly stated there.
 
 #HELP WITH SERVICE PREMISES LICENSE CONDITIONS
-##############################
-premisesLicenseConditions.helpWithServicePremisesLicenseConditionsHeader = Describing restrictions on the use of the property
-premisesLicenseConditions.helpWithServicePremisesLicenseConditions = You’re only required to write a short description of the conditions we’re concerned with. Examples of acceptable descriptions include:
-premisesLicenseConditions.listBlock1.p1 = No drinks allowed on the terrace after 10pm
-premisesLicenseConditions.listBlock1.p2 = Only 200 people allowed in the function room at any time
-premisesLicenseConditions.listBlock1.p3 = No entry or re-entry allowed after 11.30pm on Fridays and Saturdays
+##############################################
+premisesLicenseConditionsDetails.helpWithServicePremisesLicenseConditionsDetailsHeader = Describing restrictions on the use of the property
+premisesLicenseConditionsDetails.helpWithServicePremisesLicenseConditionsDetails = You’re only required to write a short description of the conditions we’re concerned with. Examples of acceptable descriptions include:
+premisesLicenseConditionsDetails.listBlock1.p1 = No drinks allowed on the terrace after 10pm
+premisesLicenseConditionsDetails.listBlock1.p2 = Only 200 people allowed in the function room at any time
+premisesLicenseConditionsDetails.listBlock1.p3 = No entry or re-entry allowed after 11.30pm on Fridays and Saturdays
 
 #HELP WITH SERVICE ENFORCEMENT ACTION
 ##############################

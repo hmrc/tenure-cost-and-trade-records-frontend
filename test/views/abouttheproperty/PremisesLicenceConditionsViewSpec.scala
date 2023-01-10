@@ -16,24 +16,25 @@
 
 package views.abouttheproperty
 
-import form.abouttheproperty.PremisesLicenseForm
-import models.submissions.abouttheproperty.PremisesLicense
-import models.submissions.abouttheproperty.{PremisesLicense, PremisesLicensesNo, PremisesLicensesYes}
+import form.abouttheproperty.PremisesLicenseConditionsForm
+import models.submissions.abouttheproperty.PremisesLicenseConditions
+import models.submissions.abouttheproperty.{PremisesLicenseConditions, PremisesLicensesConditionsNo, PremisesLicensesConditionsYes}
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class PremisesLicenceViewSpec extends QuestionViewBehaviours[PremisesLicense] {
+class PremisesLicenceConditionsViewSpec extends QuestionViewBehaviours[PremisesLicenseConditions] {
 
-  def premisesLicencableView = app.injector.instanceOf[views.html.abouttheproperty.premisesLicense]
+  def premisesLicencableView = app.injector.instanceOf[views.html.abouttheproperty.premisesLicenseConditions]
 
-  val messageKeyPrefix = "premisesLicense"
+  val messageKeyPrefix = "premisesLicenseConditions"
 
-  override val form = PremisesLicenseForm.premisesLicenseForm
+  override val form = PremisesLicenseConditionsForm.premisesLicenseConditionsForm
 
   def createView = () => premisesLicencableView(form)(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[PremisesLicense]) => premisesLicencableView(form)(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[PremisesLicenseConditions]) =>
+    premisesLicencableView(form)(fakeRequest, messages)
 
   "Property licence conditions view" must {
 
@@ -51,9 +52,9 @@ class PremisesLicenceViewSpec extends QuestionViewBehaviours[PremisesLicense] {
       val doc = asDocument(createViewUsingForm(form))
       assertContainsRadioButton(
         doc,
-        "premisesLicense",
-        "premisesLicense",
-        PremisesLicensesYes.name,
+        "premisesLicenseConditions",
+        "premisesLicenseConditions",
+        PremisesLicensesConditionsYes.name,
         false
       )
       assertContainsText(doc, messages("label.yes"))
@@ -63,9 +64,9 @@ class PremisesLicenceViewSpec extends QuestionViewBehaviours[PremisesLicense] {
       val doc = asDocument(createViewUsingForm(form))
       assertContainsRadioButton(
         doc,
-        "premisesLicense-2",
-        "premisesLicense",
-        PremisesLicensesNo.name,
+        "premisesLicenseConditions-2",
+        "premisesLicenseConditions",
+        PremisesLicensesConditionsNo.name,
         false
       )
       assertContainsText(doc, messages("label.no"))
@@ -77,11 +78,13 @@ class PremisesLicenceViewSpec extends QuestionViewBehaviours[PremisesLicense] {
       assert(loginButton == messages("button.label.continue"))
     }
 
-    "contain get help section use of premises licence details" in {
+    "contain get help section use of premises licence conditions details" in {
       val doc = asDocument(createView())
-      assert(doc.toString.contains(messages("premisesLicense.helpWithServicePremisesLicenseHeader")))
-      assert(doc.toString.contains(messages("premisesLicense.helpWithServicePremisesLicense.p1")))
-      assert(doc.toString.contains(messages("premisesLicense.helpWithServicePremisesLicense.p2")))
+      assert(
+        doc.toString.contains(messages("premisesLicenseConditions.helpWithServicePremisesLicenseConditionsHeader"))
+      )
+      assert(doc.toString.contains(messages("premisesLicenseConditions.helpWithServicePremisesLicenseConditions.p1")))
+      assert(doc.toString.contains(messages("premisesLicenseConditions.helpWithServicePremisesLicenseConditions.p2")))
     }
 
     "contain get help section basic details" in {

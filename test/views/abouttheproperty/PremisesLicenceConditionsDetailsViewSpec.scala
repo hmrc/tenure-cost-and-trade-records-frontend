@@ -24,7 +24,8 @@ import views.behaviours.QuestionViewBehaviours
 
 class PremisesLicenceConditionsDetailsViewSpec extends QuestionViewBehaviours[PremisesLicenseConditionsDetails] {
 
-  def premisesLicenceConditionsView = app.injector.instanceOf[views.html.abouttheproperty.premisesLicenseConditionsDetails]
+  def premisesLicenceConditionsView =
+    app.injector.instanceOf[views.html.abouttheproperty.premisesLicenseConditionsDetails]
 
   val messageKeyPrefix = "premisesLicenseConditionsDetails"
 
@@ -44,7 +45,7 @@ class PremisesLicenceConditionsDetailsViewSpec extends QuestionViewBehaviours[Pr
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText mustBe messages("back.link.label")
       val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.abouttheproperty.routes.PremisesLicenseController.show().url
+      backlinkUrl mustBe controllers.abouttheproperty.routes.PremisesLicenseConditionsController.show().url
     }
 
     "contain save and continue button with the value Save and Continue" in {
@@ -56,12 +57,18 @@ class PremisesLicenceConditionsDetailsViewSpec extends QuestionViewBehaviours[Pr
     "contain get help section use of licence activities details" in {
       val doc = asDocument(createView())
       assert(
-        doc.toString.contains(messages("premisesLicenseConditions.helpWithServicePremisesLicenseConditionsHeader"))
+        doc.toString.contains(
+          messages("premisesLicenseConditionsDetails.helpWithServicePremisesLicenseConditionsDetailsHeader")
+        )
       )
-      assert(doc.toString.contains(messages("premisesLicenseConditions.helpWithServicePremisesLicenseConditions")))
-      assert(doc.toString.contains(messages("premisesLicenseConditions.listBlock1.p1")))
-      assert(doc.toString.contains(messages("premisesLicenseConditions.listBlock1.p2")))
-      assert(doc.toString.contains(messages("premisesLicenseConditions.listBlock1.p3")))
+      assert(
+        doc.toString.contains(
+          messages("premisesLicenseConditionsDetails.helpWithServicePremisesLicenseConditionsDetails")
+        )
+      )
+      assert(doc.toString.contains(messages("premisesLicenseConditionsDetails.listBlock1.p1")))
+      assert(doc.toString.contains(messages("premisesLicenseConditionsDetails.listBlock1.p2")))
+      assert(doc.toString.contains(messages("premisesLicenseConditionsDetails.listBlock1.p3")))
     }
 
     "contain get help section basic details" in {

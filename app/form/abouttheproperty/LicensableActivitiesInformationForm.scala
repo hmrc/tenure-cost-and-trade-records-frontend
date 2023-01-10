@@ -24,7 +24,7 @@ object LicensableActivitiesInformationForm {
 
   val licensableActivitiesDetailsForm = Form(
     mapping(
-      "licensableActivitiesDetails" -> nonEmptyText(maxLength = 100)
+      "licensableActivitiesDetails" -> nonEmptyText(maxLength = 2000)
     )(LicensableActivitiesInformationDetails.apply)(LicensableActivitiesInformationDetails.unapply)
   )
 }

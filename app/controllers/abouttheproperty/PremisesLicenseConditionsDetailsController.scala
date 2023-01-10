@@ -30,7 +30,7 @@ import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class PremisesLicenseConditionsDetailsController @Inject()(
+class PremisesLicenseConditionsDetailsController @Inject() (
   mcc: MessagesControllerComponents,
   enforcementActionBeenTakenView: enforcementActionBeenTaken,
   premisesLicenseConditionsView: premisesLicenseConditionsDetails,
@@ -43,7 +43,7 @@ class PremisesLicenseConditionsDetailsController @Inject()(
     Future.successful(
       Ok(
         premisesLicenseConditionsView(
-          request.sessionData.aboutTheProperty.flatMap(_.premisesLicenseInformationDetails) match {
+          request.sessionData.aboutTheProperty.flatMap(_.premisesLicenseConditionsDetails) match {
             case Some(premisesLicenseInformation) =>
               premisesLicenceDetailsForm.fillAndValidate(premisesLicenseInformation)
             case _                                => premisesLicenceDetailsForm
@@ -59,7 +59,7 @@ class PremisesLicenseConditionsDetailsController @Inject()(
       .fold(
         formWithErrors => Future.successful(BadRequest(premisesLicenseConditionsView(formWithErrors))),
         data => {
-          session.saveOrUpdate(updateAboutTheProperty(_.copy(premisesLicenseInformationDetails = Some(data))))
+          session.saveOrUpdate(updateAboutTheProperty(_.copy(premisesLicenseConditionsDetails = Some(data))))
           Future.successful(Ok(enforcementActionBeenTakenView(enforcementActionForm)))
         }
       )

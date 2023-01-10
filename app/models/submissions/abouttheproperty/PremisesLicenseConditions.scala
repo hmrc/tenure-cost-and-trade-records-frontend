@@ -19,20 +19,20 @@ package models.submissions.abouttheproperty
 import models.{EnumFormat, NamedEnum, NamedEnumSupport}
 import play.api.libs.json.Format
 
-sealed trait PremisesLicense extends NamedEnum {
+sealed trait PremisesLicenseConditions extends NamedEnum {
   override def key = "premisesLicenses"
 }
-object PremisesLicensesYes extends PremisesLicense {
+object PremisesLicensesConditionsYes extends PremisesLicenseConditions {
   override def name = "yes"
 }
-object PremisesLicensesNo extends PremisesLicense {
+object PremisesLicensesConditionsNo extends PremisesLicenseConditions {
   override def name = "no"
 }
 
-object PremisesLicense extends NamedEnumSupport[PremisesLicense] {
-  implicit val format: Format[PremisesLicense] = EnumFormat(PremisesLicense)
+object PremisesLicenseConditions extends NamedEnumSupport[PremisesLicenseConditions] {
+  implicit val format: Format[PremisesLicenseConditions] = EnumFormat(PremisesLicenseConditions)
 
-  override def all = List(PremisesLicensesYes, PremisesLicensesNo)
+  override def all = List(PremisesLicensesConditionsYes, PremisesLicensesConditionsNo)
 
   val key = all.head.key
 

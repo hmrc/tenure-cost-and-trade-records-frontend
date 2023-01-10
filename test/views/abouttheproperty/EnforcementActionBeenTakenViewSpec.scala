@@ -44,7 +44,7 @@ class EnforcementActionBeenTakenViewSpec extends QuestionViewBehaviours[Enforcem
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText mustBe messages("back.link.label")
       val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.abouttheproperty.routes.PremisesLicenseController.show().url
+      backlinkUrl mustBe controllers.abouttheproperty.routes.PremisesLicenseConditionsController.show().url
     }
 
     "contain radio buttons for the value yes" in {

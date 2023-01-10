@@ -20,15 +20,15 @@ import play.api.http.Status
 import play.api.test.Helpers._
 import play.twirl.api.HtmlFormat
 import utils.TestBaseSpec
-import views.html.abouttheproperty.{enforcementActionBeenTaken, premisesLicense, premisesLicenseConditionsDetails}
+import views.html.abouttheproperty.{enforcementActionBeenTaken, premisesLicenseConditions, premisesLicenseConditionsDetails}
 import views.html.login
 
-class PremisesLicenseControllerSpec extends TestBaseSpec {
+class PremisesLicenseConditionsControllerSpec extends TestBaseSpec {
 
-  val mockPremisesLicenseView = mock[premisesLicense]
+  val mockPremisesLicenseView = mock[premisesLicenseConditions]
   when(mockPremisesLicenseView.apply(any)(any, any)).thenReturn(HtmlFormat.empty)
 
-  val premisesLicenseController = new PremisesLicenseController(
+  val premisesLicenseController = new PremisesLicenseConditionsController(
     stubMessagesControllerComponents(),
     mock[login],
     mockPremisesLicenseView,

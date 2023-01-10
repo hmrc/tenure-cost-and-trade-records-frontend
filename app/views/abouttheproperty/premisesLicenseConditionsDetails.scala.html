@@ -33,7 +33,7 @@
  showH1 = false,
  showSection = true,
  sectionName = messages("label.section.aboutTheProperty"),
- backLinkUrl = controllers.abouttheproperty.routes.PremisesLicenseController.show.url,
+ backLinkUrl = controllers.abouttheproperty.routes.PremisesLicenseConditionsController.show.url,
  theForm = theForm
 ) {
 
@@ -45,17 +45,17 @@
 
   @govukCharacterCount(
    CharacterCount(
-    id = "premisesLicenseConditions",
-    name = "premisesLicenseConditions",
+    id = "premisesLicenseConditionsDetails",
+    name = "premisesLicenseConditionsDetails",
     rows = 5,
     maxLength = 2000,
-    errorMessage = theForm.errors.asTextErrorMessageForField("premisesLicenseConditions")
+    errorMessage = theForm.errors.asTextErrorMessageForField("premisesLicenseConditionsDetails")
    )
   )
 
   @includes.continueButton(govukButton)
 
-  @includes.help_with_service_premisesLicenseConditions()
+  @includes.help_with_service_premisesLicenseConditionsDetails()
  }
 }
 
