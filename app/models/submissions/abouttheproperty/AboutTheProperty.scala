@@ -18,7 +18,6 @@ package models.submissions.abouttheproperty
 
 import actions.SessionRequest
 import models.Session
-import models.submissions.Form6010._
 import play.api.libs.json.Json
 
 case class AboutTheProperty(

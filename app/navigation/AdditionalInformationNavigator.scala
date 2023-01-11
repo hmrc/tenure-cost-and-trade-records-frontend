@@ -14,23 +14,19 @@
  * limitations under the License.
  */
 
-package controllers
+package navigation
 
-import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.{taskListOwner}
+import connectors.Audit
+import models.Session
+import navigation.identifiers.{AdditionalInformationId, Identifier}
+import play.api.mvc.Call
 
-import javax.inject.{Inject, Singleton}
-import scala.concurrent.Future
+import javax.inject.Inject
+import scala.concurrent.ExecutionContext
 
-@Singleton
-class TaskListOwnerController @Inject() (
-  mcc: MessagesControllerComponents,
-  taskListOwnerView: taskListOwner
-) extends FrontendController(mcc) {
+class AdditionalInformationNavigator @Inject()(audit: Audit)(implicit ec: ExecutionContext) extends Navigator(audit) {
 
-  def show: Action[AnyContent] = Action.async { implicit request =>
-    Future.successful(Ok(taskListOwnerView()))
-  }
-
+  override val routeMap: Map[Identifier, Session => Call] = Map(
+    AdditionalInformationId -> (_ => controllers.Form6010.routes.FurtherInformationOrRemarksController.show())
+  )
 }

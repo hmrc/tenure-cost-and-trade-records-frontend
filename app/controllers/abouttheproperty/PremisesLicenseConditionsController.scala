@@ -21,7 +21,6 @@ import controllers.LoginController.loginForm
 import form.abouttheproperty.EnforcementActionForm.enforcementActionForm
 import form.abouttheproperty.PremisesLicenseConditionsDetailsForm.premisesLicenceDetailsForm
 import form.abouttheproperty.PremisesLicenseConditionsForm.premisesLicenseConditionsForm
-import models.submissions.abouttheproperty.PremisesLicensesConditionsYes
 import models.submissions.abouttheproperty.AboutTheProperty.updateAboutTheProperty
 import models.submissions.abouttheproperty.{PremisesLicensesConditionsNo, PremisesLicensesConditionsYes}
 import play.api.i18n.I18nSupport

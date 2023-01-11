@@ -14,23 +14,16 @@
  * limitations under the License.
  */
 
-package controllers
+package navigation.identifiers
 
-import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.{taskListOwner}
+import utils.TestBaseSpec
 
-import javax.inject.{Inject, Singleton}
-import scala.concurrent.Future
+class AdditionalInformationIdentifiersSpec extends TestBaseSpec {
 
-@Singleton
-class TaskListOwnerController @Inject() (
-  mcc: MessagesControllerComponents,
-  taskListOwnerView: taskListOwner
-) extends FrontendController(mcc) {
+  "About you identifiers" when {
 
-  def show: Action[AnyContent] = Action.async { implicit request =>
-    Future.successful(Ok(taskListOwnerView()))
+    "Identifier for about you page" in {
+      assert(AdditionalInformationId.toString.equals("additionalInformationPage"))
+    }
   }
-
 }
