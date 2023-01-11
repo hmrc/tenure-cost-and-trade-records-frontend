@@ -43,7 +43,7 @@ class AboutTheProperty6011NavigatorSpec extends TestBaseSpec {
   val aboutYou                 = Some(AboutYou(Some(CustomerDetails("Tobermory", ContactDetails("12345678909", "test@email.com")))))
   val aboutThePropertyNo       = Some(
     AboutTheProperty(
-      Some(PropertyDetails("OccupierName", CurrentPropertyHotel)),
+      Some(PropertyDetails("OccupierName", CurrentPropertyHotel, None)),
       Some(WebsiteForPropertyDetails(BuildingOperationHaveAWebsiteYes, Some("webAddress"))),
       Some(LicensableActivitiesNo),
       None,
@@ -94,7 +94,7 @@ class AboutTheProperty6011NavigatorSpec extends TestBaseSpec {
 
   val aboutThePropertyYes    = Some(
     AboutTheProperty(
-      Some(PropertyDetails("OccupierName", CurrentPropertyHotel)),
+      Some(PropertyDetails("OccupierName", CurrentPropertyHotel, None)),
       Some(WebsiteForPropertyDetails(BuildingOperationHaveAWebsiteYes, Some("webAddress"))),
       Some(LicensableActivitiesYes),
       Some(LicensableActivitiesInformationDetails("Licensable Activities Details")),
