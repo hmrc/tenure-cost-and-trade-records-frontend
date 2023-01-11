@@ -21,8 +21,7 @@ import play.api.http.Status
 import play.api.test.Helpers._
 import play.twirl.api.HtmlFormat
 import utils.TestBaseSpec
-import views.html.abouttheproperty.{enforcementActionBeenTaken, premisesLicenseConditions, premisesLicenseConditionsDetails}
-import views.html.login
+import views.html.abouttheproperty.premisesLicenseConditions
 
 class PremisesLicenseConditionsControllerSpec extends TestBaseSpec {
 

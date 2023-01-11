@@ -22,7 +22,6 @@ import play.api.test.Helpers._
 import play.twirl.api.HtmlFormat
 import utils.TestBaseSpec
 import views.html.abouttheproperty.tiedForGoodsDetails
-import views.html.form.aboutYourTradingHistory
 
 class TiedForGoodsDetailsControllerSpec extends TestBaseSpec {
 
