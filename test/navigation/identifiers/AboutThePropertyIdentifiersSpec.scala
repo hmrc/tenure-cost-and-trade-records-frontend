@@ -29,5 +29,37 @@ class AboutThePropertyIdentifiersSpec extends TestBaseSpec {
     "Identifier for website for property page" in {
       assert(WebsiteForPropertyPageId.toString.equals("websiteForPropertyPage"))
     }
+
+    "Identifier for licence activity page" in {
+      assert(LicensableActivityPageId.toString.equals("licensableActivityPage"))
+    }
+
+    "Identifier for licence activity details page" in {
+      assert(LicensableActivityDetailsPageId.toString.equals("licensableActivityDetailsPage"))
+    }
+
+    "Identifier for premise licence conditions page" in {
+      assert(PremisesLicenceConditionsPageId.toString.equals("premisesLicenceConditionsPage"))
+    }
+
+    "Identifier for premise licence conditions details page" in {
+      assert(PremisesLicenceConditionsDetailsPageId.toString.equals("premisesLicenceConditionsDetailsPage"))
+    }
+
+    "Identifier for enforcement action taken page" in {
+      assert(EnforcementActionBeenTakenPageId.toString.equals("enforcementActionBeenTakenPage"))
+    }
+
+    "Identifier for enforcement action taken details page" in {
+      assert(EnforcementActionBeenTakenDetailsPageId.toString.equals("enforcementActionBeenTakenDetailsPage"))
+    }
+
+    "Identifier for tied for goods page" in {
+      assert(TiedForGoodsPageId.toString.equals("tiedForGoodsPage"))
+    }
+
+    "Identifier for tied for goods details page" in {
+      assert(TiedForGoodsDetailsPageId.toString.equals("tiedForGoodsDetailsPage"))
+    }
   }
 }
