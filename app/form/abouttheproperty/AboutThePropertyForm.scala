@@ -19,7 +19,7 @@ package form.abouttheproperty
 import form.MappingSupport.aboutYourPropertyType
 import models.submissions.abouttheproperty._
 import play.api.data.Form
-import play.api.data.Forms.{mapping, nonEmptyText}
+import play.api.data.Forms.{mapping, nonEmptyText, optional, text}
 
 object AboutThePropertyForm {
 
@@ -34,8 +34,9 @@ object AboutThePropertyForm {
 
   val aboutThePropertyForm: Form[PropertyDetails] = Form(
     mapping(
-      "currentOccupierName"   -> nonEmptyText(maxLength = 100),
-      "propertyCurrentlyUsed" -> aboutYourPropertyType
+      "currentOccupierName"        -> nonEmptyText(maxLength = 100),
+      "propertyCurrentlyUsed"      -> aboutYourPropertyType,
+      "propertyCurrentlyUsedOther" -> optional(text)
     )(PropertyDetails.apply)(PropertyDetails.unapply)
   )
 
