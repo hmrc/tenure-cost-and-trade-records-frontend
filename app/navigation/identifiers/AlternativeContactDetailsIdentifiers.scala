@@ -14,17 +14,8 @@
  * limitations under the License.
  */
 
-package models.submissions.Form6010
+package navigation.identifiers
 
-import models.submissions.common.ContactDetails
-import play.api.libs.json.Json
-
-case class AlternativeContactDetail(
-  alternativeContactFullName: String,
-  alternativeContactDetails: ContactDetails,
-  alternativeContactAddress: AlternativeContactDetailsAddress
-)
-
-object AlternativeContactDetails {
-  implicit val format = Json.format[AlternativeContactDetail]
+case object AlternativeContactDetailsId extends Identifier {
+  override def toString: String = "alternativeContactDetailsPage"
 }

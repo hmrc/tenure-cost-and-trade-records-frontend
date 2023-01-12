@@ -14,17 +14,11 @@
  * limitations under the License.
  */
 
-package models.submissions.Form6010
+package models.submissions.additionalinformation
 
-import models.submissions.common.ContactDetails
-import play.api.libs.json.Json
+import models.submissions.Form6010.FurtherInformationOrRemarksDetails
 
-case class AlternativeContactDetail(
-  alternativeContactFullName: String,
-  alternativeContactDetails: ContactDetails,
-  alternativeContactAddress: AlternativeContactDetailsAddress
-)
+case class AlternativeContactDetails(
+                                  furtherInformationOrRemarksDetails: Option[FurtherInformationOrRemarksDetails] = None,
+                                )
 
-object AlternativeContactDetails {
-  implicit val format = Json.format[AlternativeContactDetail]
-}

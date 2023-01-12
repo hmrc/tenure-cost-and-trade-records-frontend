@@ -16,32 +16,53 @@
 
 package controllers.Form6010
 
+import actions.WithSessionRefiner
 import form.Form6010.AlternativeContactDetailsForm.alternativeContactDetailsForm
+import models.submissions.additionalinformation.AltContactDetails.updateAlternativeContactDetails
+import navigation.AlternativeContactDetailsNavigator
+import navigation.identifiers.AlternativeContactDetailsId
+import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.form.alternativeContactDetails
-import views.html.{checkYourAnswers, login}
 
-import javax.inject.{Inject, Singleton}
+import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
 
 @Singleton
 class AlternativeContactDetailsController @Inject() (
   mcc: MessagesControllerComponents,
-  checkYourAnswersView: checkYourAnswers,
-  alternativeContactDetailsView: alternativeContactDetails
-) extends FrontendController(mcc) {
+  alternativeContactDetailsView: alternativeContactDetails,
+  navigator: AlternativeContactDetailsNavigator,
+  withSessionRefiner: WithSessionRefiner,
+  @Named("session") val session: SessionRepo
 
-  def show: Action[AnyContent] = Action.async { implicit request =>
-    Future.successful(Ok(alternativeContactDetailsView(alternativeContactDetailsForm)))
+                                                    ) extends FrontendController(mcc) with I18nSupport {
+
+  def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    Future.successful(
+      Ok(
+        alternativeContactDetailsView(
+          request.sessionData.additionalContactDetails.flatMap(_.altContactDetails) match {
+            case Some(altContactDetails) => alternativeContactDetailsForm.fillAndValidate(altContactDetails)
+            case _ => alternativeContactDetailsForm
+          }
+        )
+      )
+    )
   }
 
-  def submit = Action.async { implicit request =>
+  def submit = (Action andThen withSessionRefiner).async { implicit request =>
     alternativeContactDetailsForm
       .bindFromRequest()
       .fold(
         formWithErrors => Future.successful(BadRequest(alternativeContactDetailsView(formWithErrors))),
-        data => Future.successful(Ok(checkYourAnswersView()))
+        data => {
+          val updatedData = updateAlternativeContactDetails(_.copy(altContactDetails = Some(data)))
+          session.saveOrUpdate(updatedData)
+          Future.successful(Redirect(navigator.nextPage(AlternativeContactDetailsId).apply(updatedData)))
+        }
       )
   }
 

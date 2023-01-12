@@ -18,7 +18,7 @@ package models
 
 import models.submissions.abouttheproperty.AboutTheProperty
 import models.submissions.aboutyou.AboutYou
-import models.submissions.additionalinformation.AdditionalInformation
+import models.submissions.additionalinformation.{AdditionalInformation, AltContactDetails}
 import models.submissions.connectiontoproperty.StillConnectedDetails
 import play.api.libs.json._
 
@@ -27,7 +27,8 @@ case class Session(
   stillConnectedDetails: Option[StillConnectedDetails] = None,
   aboutYou: Option[AboutYou] = None,
   aboutTheProperty: Option[AboutTheProperty] = None,
-  additionalInformation: Option[AdditionalInformation] = None
+  additionalInformation: Option[AdditionalInformation] = None,
+  additionalContactDetails: Option[AltContactDetails] = None
 )
 
 object Session {

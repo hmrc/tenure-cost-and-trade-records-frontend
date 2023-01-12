@@ -19,10 +19,12 @@ package navigation
 import connectors.Audit
 import models.Session
 import models.submissions.Form6010.FurtherInformationOrRemarksDetails
+import models.submissions.abouttheproperty.AboutTheProperty
+import models.submissions.aboutyou.{AboutYou, CustomerDetails}
 import models.submissions.additionalinformation.AdditionalInformation
 import models.submissions.common.ContactDetails
 import models.submissions.connectiontoproperty.{AddressConnectionTypeYes, StillConnectedDetails}
-import navigation.identifiers.{AboutYouPageId, Identifier}
+import navigation.identifiers.{AboutYouPageId, AdditionalInformationId, AlternativeContactDetailsId, Identifier}
 import org.scalatest.matchers.must.Matchers.convertToAnyMustWrapper
 import play.api.libs.json.JsObject
 import uk.gov.hmrc.http.HeaderCarrier
@@ -32,30 +34,28 @@ import scala.concurrent.ExecutionContext
 
 class AdditionalInformationNavigatorSpec extends TestBaseSpec {
 
-  //TODO Sort out this test!
+  val audit = mock[Audit]
+  doNothing.when(audit).sendExplicitAudit(any[String], any[JsObject])(any[HeaderCarrier], any[ExecutionContext])
 
-//  val audit = mock[Audit]
-//  doNothing.when(audit).sendExplicitAudit(any[String], any[JsObject])(any[HeaderCarrier], any[ExecutionContext])
-//
-//  val navigator = new AdditionalInformationNavigator(audit)
-//
-//  val stillConnectedDetailsYes = Some(StillConnectedDetails(Some(AddressConnectionTypeYes)))
-//  val additionalInformation    = Some(AdditionalInformation(Some(FurtherInformationOrRemarksDetails("Tobermory"))))
-//  val sessionAdditionalInformation         = Session(testUserLoginDetails, stillConnectedDetailsYes, additionalInformation)
-//
-//  implicit override val hc: HeaderCarrier = HeaderCarrier()
-//
-//  "Connection to property navigator" when {
-//
-//    "go to sign in from an identifier that doesn't exist in the route map" in {
-//      case object UnknownIdentifier extends Identifier
-//      navigator.nextPage(UnknownIdentifier).apply(sessionAboutYou) mustBe controllers.routes.LoginController.show()
-//    }
-//
-//    "return a function that goes to about the property page when about you has been completed" in {
-//      navigator
-//        .nextPage(AboutYouPageId)
-//        .apply(sessionAboutYou) mustBe controllers.abouttheproperty.routes.AboutThePropertyController.show()
-//    }
-//  }
+  val navigator = new AdditionalInformationNavigator(audit)
+
+  val aboutYou                      = Some(AboutYou(Some(CustomerDetails("Tobermory", ContactDetails("12345678909", "test@email.com")))))
+  val aboutTheProperty              = Some (AboutTheProperty(None))
+  val additionalInformation         = Some(AdditionalInformation(Some(FurtherInformationOrRemarksDetails("test"))))
+  val stillConnectedDetailsYes      = Some(StillConnectedDetails(Some(AddressConnectionTypeYes)))
+  val sessionAdditionalInformation  = Session(testUserLoginDetails, stillConnectedDetailsYes, aboutYou, aboutTheProperty, additionalInformation)
+
+  "Connection to property navigator" when {
+
+    "go to sign in from an identifier that doesn't exist in the route map" in {
+      case object UnknownIdentifier extends Identifier
+      navigator.nextPage(UnknownIdentifier).apply(sessionAdditionalInformation) mustBe controllers.routes.LoginController.show()
+    }
+
+    "return a function that goes to alternative contact details page when about you has been completed" in {
+      navigator
+        .nextPage(AdditionalInformationId)
+        .apply(sessionAdditionalInformation) mustBe controllers.Form6010.routes.AlternativeContactDetailsController.show()
+    }
+  }
 }

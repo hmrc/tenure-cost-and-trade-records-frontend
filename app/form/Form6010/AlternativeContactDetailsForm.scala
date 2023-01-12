@@ -17,19 +17,19 @@
 package form.Form6010
 
 import form.MappingSupport.{alternativeContactMapping, contactDetailsMapping}
-import models.submissions.Form6010.AlternativeContactDetails
+import models.submissions.Form6010.AlternativeContactDetail
 import play.api.data.Form
 import play.api.data.Forms.{default, mapping, text}
 import play.api.data.validation.Constraints.nonEmpty
 
 object AlternativeContactDetailsForm {
-  val alternativeContactDetailsForm: Form[AlternativeContactDetails] = Form(
+  val alternativeContactDetailsForm: Form[AlternativeContactDetail] = Form(
     mapping(
       "alternativeContactFullName" -> default(text, "").verifying(
         nonEmpty(errorMessage = "error.alternativeContactFullName.required")
       ),
       "alternativeContactDetails"  -> contactDetailsMapping,
       "alternativeContactAddress"  -> alternativeContactMapping
-    )(AlternativeContactDetails.apply)(AlternativeContactDetails.unapply)
+    )(AlternativeContactDetail.apply)(AlternativeContactDetail.unapply)
   )
 }
