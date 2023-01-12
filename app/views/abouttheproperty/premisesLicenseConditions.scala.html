@@ -32,14 +32,14 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[PremisesLicenseConditions])(implicit request: Request[_], messages: Messages)
+@(theForm: Form[PremisesLicenseConditions], backLink: String)(implicit request: Request[_], messages: Messages)
 
 @layout(
  pageHeading = messages("premisesLicenseConditions.heading"),
  showH1 = false,
  showSection = true,
  sectionName = messages("label.section.aboutTheProperty"),
- backLinkUrl = controllers.abouttheproperty.routes.LicensableActivitiesController.show.url,
+ backLinkUrl = backLink,
  theForm = theForm
 ) {
 

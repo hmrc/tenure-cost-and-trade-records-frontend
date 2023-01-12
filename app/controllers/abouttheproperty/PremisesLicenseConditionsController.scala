@@ -18,9 +18,11 @@ package controllers.abouttheproperty
 
 import actions.WithSessionRefiner
 import form.abouttheproperty.PremisesLicenseConditionsForm.premisesLicenseConditionsForm
+import models.Session
 import models.submissions.abouttheproperty.AboutTheProperty.updateAboutTheProperty
 import navigation.AboutThePropertyNavigator
 import navigation.identifiers.PremisesLicenceConditionsPageId
+import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
@@ -38,7 +40,8 @@ class PremisesLicenseConditionsController @Inject() (
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
 ) extends FrontendController(mcc)
-    with I18nSupport {
+    with I18nSupport
+    with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Future.successful(
@@ -47,6 +50,12 @@ class PremisesLicenseConditionsController @Inject() (
           request.sessionData.aboutTheProperty.flatMap(_.premisesLicenseConditions) match {
             case Some(premisesLicense) => premisesLicenseConditionsForm.fillAndValidate(premisesLicense)
             case _                     => premisesLicenseConditionsForm
+          },
+          getBackLink(request.sessionData) match {
+            case Right(link) => link
+            case Left(msg)   =>
+              logger.warn(s"Navigation for about the property page reached with error: $msg")
+              throw new RuntimeException(s"Navigation for about the property property page reached with error $msg")
           }
         )
       )
@@ -57,7 +66,15 @@ class PremisesLicenseConditionsController @Inject() (
     premisesLicenseConditionsForm
       .bindFromRequest()
       .fold(
-        formWithErrors => Future.successful(BadRequest(premisesLicenseView(formWithErrors))),
+        formWithErrors => Future.successful(BadRequest(premisesLicenseView(
+          formWithErrors,
+          getBackLink(request.sessionData) match {
+            case Right(link) => link
+            case Left(msg)   =>
+              logger.warn(s"Navigation for about the property page reached with error: $msg")
+              throw new RuntimeException(s"Navigation for about the property property page reached with error $msg")
+          }
+        ))),
         data => {
           val updatedData = updateAboutTheProperty(_.copy(premisesLicenseConditions = Some(data)))
           session.saveOrUpdate(updatedData)
@@ -66,4 +83,10 @@ class PremisesLicenseConditionsController @Inject() (
       )
   }
 
+  private def getBackLink(answers: Session): Either[String, String] =
+    answers.aboutTheProperty.flatMap(_.licensableActivities.map(_.name)) match {
+      case Some("yes") => Right(controllers.abouttheproperty.routes.LicensableActivitiesDetailsController.show().url)
+      case Some("no")  => Right(controllers.abouttheproperty.routes.LicensableActivitiesController.show().url)
+      case _           => Left(s"Unknown premises licence conditions back link")
+    }
 }
