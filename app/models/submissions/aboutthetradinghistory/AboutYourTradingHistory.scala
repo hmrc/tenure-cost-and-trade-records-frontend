@@ -14,11 +14,16 @@
  * limitations under the License.
  */
 
-package models.submissions.Form6010
+package models.submissions.aboutthetradinghistory
 
-import org.joda.time.LocalDate
+import play.api.libs.json.Json
+import java.time.LocalDate
 
 case class AboutYourTradingHistory(
   firstOccupy: LocalDate,
   financialYear: LocalDate
 )
+object AboutYourTradingHistory {
+  implicit val format = Json.format[AboutYourTradingHistory]
+
+}
