@@ -19,9 +19,6 @@ package navigation
 import connectors.Audit
 import models.Session
 import models.submissions.abouttheproperty._
-import models.submissions.aboutyou.{AboutYou, CustomerDetails}
-import models.submissions.common.ContactDetails
-import models.submissions.connectiontoproperty.{AddressConnectionTypeYes, StillConnectedDetails}
 import navigation.identifiers._
 import org.scalatest.matchers.must.Matchers.convertToAnyMustWrapper
 import play.api.libs.json.JsObject
@@ -37,7 +34,8 @@ class AboutTheProperty6010NavigatorSpec extends TestBaseSpec {
 
   val navigator = new AboutThePropertyNavigator(audit)
 
-  val sessionAboutYou6010No    = Session(testUserLoginDetails, Some(testStillConnectedDetailsYes), Some(testAboutYou), Some(testAboutThePropertyNo))
+  val sessionAboutYou6010No =
+    Session(testUserLoginDetails, Some(testStillConnectedDetailsYes), Some(testAboutYou), Some(testAboutThePropertyNo))
 
   "About to property navigator for no answers for 6010" when {
 
@@ -94,7 +92,8 @@ class AboutTheProperty6010NavigatorSpec extends TestBaseSpec {
       Some(TiedForGoodsInformationDetails(TiedForGoodsInformationDetailsFullTie))
     )
   )
-  val sessionAboutYou6010Yes    = Session(testUserLoginDetails, Some(testStillConnectedDetailsYes), Some(testAboutYou), aboutThePropertyYes)
+  val sessionAboutYou6010Yes =
+    Session(testUserLoginDetails, Some(testStillConnectedDetailsYes), Some(testAboutYou), aboutThePropertyYes)
 
   "About to property navigator for yes answers for 6010" when {
 

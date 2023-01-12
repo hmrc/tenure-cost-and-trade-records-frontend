@@ -66,15 +66,22 @@ class TiedForGoodsController @Inject() (
     tiedForGoodsForm
       .bindFromRequest()
       .fold(
-        formWithErrors => Future.successful(BadRequest(tiedForGoodsView(
-          formWithErrors,
-          getBackLink(request.sessionData) match {
-            case Right(link) => link
-            case Left(msg)   =>
-              logger.warn(s"Navigation for about the property page reached with error: $msg")
-              throw new RuntimeException(s"Navigation for about the property property page reached with error $msg")
-          }
-        ))),
+        formWithErrors =>
+          Future.successful(
+            BadRequest(
+              tiedForGoodsView(
+                formWithErrors,
+                getBackLink(request.sessionData) match {
+                  case Right(link) => link
+                  case Left(msg)   =>
+                    logger.warn(s"Navigation for about the property page reached with error: $msg")
+                    throw new RuntimeException(
+                      s"Navigation for about the property property page reached with error $msg"
+                    )
+                }
+              )
+            )
+          ),
         data => {
           val updatedData = updateAboutTheProperty(_.copy(tiedForGoods = Some(data)))
           session.saveOrUpdate(updatedData)
@@ -85,7 +92,8 @@ class TiedForGoodsController @Inject() (
 
   private def getBackLink(answers: Session): Either[String, String] =
     answers.aboutTheProperty.flatMap(_.enforcementAction.map(_.name)) match {
-      case Some("yes") => Right(controllers.abouttheproperty.routes.EnforcementActionBeenTakenDetailsController.show().url)
+      case Some("yes") =>
+        Right(controllers.abouttheproperty.routes.EnforcementActionBeenTakenDetailsController.show().url)
       case Some("no")  => Right(controllers.abouttheproperty.routes.EnforcementActionBeenTakenController.show().url)
       case _           => Left(s"Unknown tided for goods back link")
     }

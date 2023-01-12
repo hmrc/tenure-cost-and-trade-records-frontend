@@ -35,7 +35,8 @@ class EnforcementActionBeenTakenViewSpec extends QuestionViewBehaviours[Enforcem
 
   def createView = () => enforcementActionsTakenView(form, backLink)(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[EnforcementAction]) => enforcementActionsTakenView(form, backLink)(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[EnforcementAction]) =>
+    enforcementActionsTakenView(form, backLink)(fakeRequest, messages)
 
   "Enforcement Action view" must {
 

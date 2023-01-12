@@ -66,15 +66,22 @@ class PremisesLicenseConditionsController @Inject() (
     premisesLicenseConditionsForm
       .bindFromRequest()
       .fold(
-        formWithErrors => Future.successful(BadRequest(premisesLicenseView(
-          formWithErrors,
-          getBackLink(request.sessionData) match {
-            case Right(link) => link
-            case Left(msg)   =>
-              logger.warn(s"Navigation for about the property page reached with error: $msg")
-              throw new RuntimeException(s"Navigation for about the property property page reached with error $msg")
-          }
-        ))),
+        formWithErrors =>
+          Future.successful(
+            BadRequest(
+              premisesLicenseView(
+                formWithErrors,
+                getBackLink(request.sessionData) match {
+                  case Right(link) => link
+                  case Left(msg)   =>
+                    logger.warn(s"Navigation for about the property page reached with error: $msg")
+                    throw new RuntimeException(
+                      s"Navigation for about the property property page reached with error $msg"
+                    )
+                }
+              )
+            )
+          ),
         data => {
           val updatedData = updateAboutTheProperty(_.copy(premisesLicenseConditions = Some(data)))
           session.saveOrUpdate(updatedData)

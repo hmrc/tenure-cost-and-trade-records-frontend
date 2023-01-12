@@ -18,9 +18,7 @@ package navigation
 
 import connectors.Audit
 import models.submissions.abouttheproperty._
-import models.submissions.aboutyou.{AboutYou, CustomerDetails}
-import models.submissions.common.{Address, ContactDetails}
-import models.submissions.connectiontoproperty.{AddressConnectionTypeYes, StillConnectedDetails}
+import models.submissions.common.Address
 import models.{Session, UserLoginDetails}
 import navigation.identifiers._
 import org.scalatest.matchers.must.Matchers.convertToAnyMustWrapper
@@ -39,7 +37,12 @@ class AboutTheProperty6011NavigatorSpec extends TestBaseSpec {
 
   val testUserLoginDetails6011 =
     UserLoginDetails("jwtToken", "FOR6011", "123456", Address("13", Some("Street"), Some("City"), "AA11 1AA"))
-  val sessionAboutYou6011No    = Session(testUserLoginDetails6011, Some(testStillConnectedDetailsYes), Some(testAboutYou), Some(testAboutThePropertyNo))
+  val sessionAboutYou6011No    = Session(
+    testUserLoginDetails6011,
+    Some(testStillConnectedDetailsYes),
+    Some(testAboutYou),
+    Some(testAboutThePropertyNo)
+  )
 
   "About to property navigator for no answers for 6011" when {
 
@@ -90,7 +93,8 @@ class AboutTheProperty6011NavigatorSpec extends TestBaseSpec {
       Some(TiedForGoodsInformationDetails(TiedForGoodsInformationDetailsFullTie))
     )
   )
-  val sessionAboutYou6011Yes    = Session(testUserLoginDetails6011, Some(testStillConnectedDetailsYes), Some(testAboutYou), aboutThePropertyYes)
+  val sessionAboutYou6011Yes =
+    Session(testUserLoginDetails6011, Some(testStillConnectedDetailsYes), Some(testAboutYou), aboutThePropertyYes)
 
   "About to property navigator for yes answers for 6010" when {
 
