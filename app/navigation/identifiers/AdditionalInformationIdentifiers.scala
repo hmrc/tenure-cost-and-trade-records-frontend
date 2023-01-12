@@ -14,15 +14,8 @@
  * limitations under the License.
  */
 
-package models.submissions.Form6010
+package navigation.identifiers
 
-import play.api.libs.json.Json
-
-case class FurtherInformationOrRemarksDetails(
-  furtherInformationOrRemarksDetails: String
-)
-
-object FurtherInformationOrRemarksDetails {
-  implicit val format = Json.format[FurtherInformationOrRemarksDetails]
-
+case object AdditionalInformationId extends Identifier {
+  override def toString: String = "additionalInformationPage"
 }

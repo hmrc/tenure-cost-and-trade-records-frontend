@@ -14,15 +14,19 @@
  * limitations under the License.
  */
 
-package models.submissions.Form6010
+package navigation
 
-import play.api.libs.json.Json
+import connectors.Audit
+import models.Session
+import navigation.identifiers.{AdditionalInformationId, Identifier}
+import play.api.mvc.Call
 
-case class FurtherInformationOrRemarksDetails(
-  furtherInformationOrRemarksDetails: String
-)
+import javax.inject.Inject
+import scala.concurrent.ExecutionContext
 
-object FurtherInformationOrRemarksDetails {
-  implicit val format = Json.format[FurtherInformationOrRemarksDetails]
+class AdditionalInformationNavigator @Inject()(audit: Audit)(implicit ec: ExecutionContext) extends Navigator(audit) {
 
+  override val routeMap: Map[Identifier, Session => Call] = Map(
+    AdditionalInformationId -> (_ => controllers.Form6010.routes.AlternativeContactDetailsController.show())
+  )
 }
