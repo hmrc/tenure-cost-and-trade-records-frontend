@@ -16,6 +16,6 @@
 
 package models.submissions.Form6010
 
-import org.joda.time.LocalDate
+import java.time.LocalDate
 
 case class IntervalsOfRentReview(currentRentWithin12Months: String, intervalsOfRentReview: LocalDate)

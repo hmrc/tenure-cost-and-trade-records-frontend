@@ -18,20 +18,31 @@ package controllers.Form6010
 
 import play.api.http.Status
 import play.api.test.Helpers._
+import play.twirl.api.HtmlFormat
 import utils.TestBaseSpec
+import views.html.form.{aboutYourTradingHistory, turnover}
 
 class AboutYourTradingHistoryControllerSpec extends TestBaseSpec {
 
-  private val controller = app.injector.instanceOf[AboutYourTradingHistoryController]
+  val mockAboutYourTradingHistoryView = mock[aboutYourTradingHistory]
+  when(mockAboutYourTradingHistoryView.apply(any)(any, any)).thenReturn(HtmlFormat.empty)
+
+  val aboutYourTradingHistoryController = new AboutYourTradingHistoryController(
+    stubMessagesControllerComponents(),
+    mock[turnover],
+    mockAboutYourTradingHistoryView,
+    preFilledSession,
+    mockSessionRepo
+  )
 
   "GET /" should {
     "return 200" in {
-      val result = controller.show(fakeRequest)
+      val result = aboutYourTradingHistoryController.show(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return HTML" in {
-      val result = controller.show(fakeRequest)
+      val result = aboutYourTradingHistoryController.show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }

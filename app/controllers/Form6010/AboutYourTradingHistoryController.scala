@@ -16,31 +16,50 @@
 
 package controllers.Form6010
 
+import actions.WithSessionRefiner
 import form.Form6010.AboutYourTradingHistoryForm.aboutYourTradingHistoryForm
+import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.updateAboutTheTradingHistory
+
+import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.form.{aboutYourTradingHistory, turnover}
 
-import javax.inject.{Inject, Singleton}
+import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
 
 @Singleton
 class AboutYourTradingHistoryController @Inject() (
   mcc: MessagesControllerComponents,
   turnoverView: turnover,
-  aboutYourTradingHistoryView: aboutYourTradingHistory
-) extends FrontendController(mcc) {
+  aboutYourTradingHistoryView: aboutYourTradingHistory,
+  withSessionRefiner: WithSessionRefiner,
+  @Named("session") val session: SessionRepo
+) extends FrontendController(mcc)
+    with I18nSupport {
 
-  def show: Action[AnyContent] = Action { implicit request =>
-    Ok(aboutYourTradingHistoryView(aboutYourTradingHistoryForm))
+  def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
+    Ok(
+      aboutYourTradingHistoryView(
+        request.sessionData.aboutTheTradingHistory.flatMap(_.aboutYourTradingHistory) match {
+          case Some(tradingHistory) => aboutYourTradingHistoryForm.fillAndValidate(tradingHistory)
+          case _                    => aboutYourTradingHistoryForm
+        }
+      )
+    )
   }
 
-  def submit = Action.async { implicit request =>
+  def submit = (Action andThen withSessionRefiner).async { implicit request =>
     aboutYourTradingHistoryForm
       .bindFromRequest()
       .fold(
         formWithErrors => Future.successful(BadRequest(aboutYourTradingHistoryView(formWithErrors))),
-        data => Future.successful(Ok(turnoverView()))
+        data => {
+          val updatedData = updateAboutTheTradingHistory(_.copy(aboutYourTradingHistory = Some(data)))
+          session.saveOrUpdate(updatedData)
+          Future.successful(Ok(turnoverView()))
+        }
       )
   }
 
