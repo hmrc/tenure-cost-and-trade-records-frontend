@@ -71,18 +71,6 @@
   @govukInput(
    Input(
     classes = "govuk-input--width-20 ",
-    attributes = Map("maxlength" -> "20"),
-    label = Label(
-     content = Text(messages("label.phone") ),
-     classes = "govuk-!-font-weight-bold"
-    ),
-    errorMessage = theForm.errors.asTextErrorMessageForField("alternativeContactDetails.phone")
-   ).withFormField(theForm("alternativeContactDetails.phone"))
-  )
-
-  @govukInput(
-   Input(
-    classes = "govuk-input--width-20 ",
     attributes = Map("maxlength" -> "50"),
     label = Label(
      content = Text(messages("label.email1") ),
@@ -90,6 +78,18 @@
     ),
     errorMessage = theForm.errors.asTextErrorMessageForField("alternativeContactDetails.email1")
    ).withFormField(theForm("alternativeContactDetails.email1"))
+  )
+
+  @govukInput(
+   Input(
+    classes = "govuk-input--width-20 ",
+    attributes = Map("maxlength" -> "20"),
+    label = Label(
+     content = Text(messages("label.phone") ),
+     classes = "govuk-!-font-weight-bold"
+    ),
+    errorMessage = theForm.errors.asTextErrorMessageForField("alternativeContactDetails.phone")
+   ).withFormField(theForm("alternativeContactDetails.phone"))
   )
 
   <p class="govuk-body"><b>@messages("alternativeContactDetails.address.label")</b></p>

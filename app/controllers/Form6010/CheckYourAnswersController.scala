@@ -16,33 +16,22 @@
 
 package controllers.Form6010
 
-import form.Form6010.AlternativeContactDetailsForm.alternativeContactDetailsForm
+import form.Form6010.AboutYourTradingHistoryForm.aboutYourTradingHistoryForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.form.alternativeContactDetails
-import views.html.{checkYourAnswers, login}
+import views.html.checkYourAnswers
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class AlternativeContactDetailsController @Inject() (
+class CheckYourAnswersController @Inject()(
   mcc: MessagesControllerComponents,
   checkYourAnswersView: checkYourAnswers,
-  alternativeContactDetailsView: alternativeContactDetails
 ) extends FrontendController(mcc) {
 
   def show: Action[AnyContent] = Action.async { implicit request =>
-    Future.successful(Ok(alternativeContactDetailsView(alternativeContactDetailsForm)))
-  }
-
-  def submit = Action.async { implicit request =>
-    alternativeContactDetailsForm
-      .bindFromRequest()
-      .fold(
-        formWithErrors => Future.successful(BadRequest(alternativeContactDetailsView(formWithErrors))),
-        data => Future.successful(Ok(checkYourAnswersView()))
-      )
+    Future.successful(Ok(checkYourAnswersView()))
   }
 
 }
