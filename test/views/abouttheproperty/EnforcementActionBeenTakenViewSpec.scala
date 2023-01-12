@@ -31,9 +31,11 @@ class EnforcementActionBeenTakenViewSpec extends QuestionViewBehaviours[Enforcem
 
   override val form = EnforcementActionForm.enforcementActionForm
 
-  def createView = () => enforcementActionsTakenView(form)(fakeRequest, messages)
+  val backLink = controllers.abouttheproperty.routes.PremisesLicenseConditionsController.show().url
 
-  def createViewUsingForm = (form: Form[EnforcementAction]) => enforcementActionsTakenView(form)(fakeRequest, messages)
+  def createView = () => enforcementActionsTakenView(form, backLink)(fakeRequest, messages)
+
+  def createViewUsingForm = (form: Form[EnforcementAction]) => enforcementActionsTakenView(form, backLink)(fakeRequest, messages)
 
   "Enforcement Action view" must {
 

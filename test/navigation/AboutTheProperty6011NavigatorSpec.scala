@@ -39,23 +39,7 @@ class AboutTheProperty6011NavigatorSpec extends TestBaseSpec {
 
   val testUserLoginDetails6011 =
     UserLoginDetails("jwtToken", "FOR6011", "123456", Address("13", Some("Street"), Some("City"), "AA11 1AA"))
-  val stillConnectedDetailsYes = Some(StillConnectedDetails(Some(AddressConnectionTypeYes)))
-  val aboutYou                 = Some(AboutYou(Some(CustomerDetails("Tobermory", ContactDetails("12345678909", "test@email.com")))))
-  val aboutThePropertyNo       = Some(
-    AboutTheProperty(
-      Some(PropertyDetails("OccupierName", CurrentPropertyHotel, None)),
-      Some(WebsiteForPropertyDetails(BuildingOperationHaveAWebsiteYes, Some("webAddress"))),
-      Some(LicensableActivitiesNo),
-      None,
-      Some(PremisesLicensesConditionsNo),
-      None,
-      Some(EnforcementActionsNo),
-      None,
-      Some(TiedGoodsNo),
-      None
-    )
-  )
-  val sessionAboutYou6011No    = Session(testUserLoginDetails6011, stillConnectedDetailsYes, aboutYou, aboutThePropertyNo)
+  val sessionAboutYou6011No    = Session(testUserLoginDetails6011, Some(testStillConnectedDetailsYes), Some(testAboutYou), Some(testAboutThePropertyNo))
 
   "About to property navigator for no answers for 6011" when {
 
@@ -106,8 +90,7 @@ class AboutTheProperty6011NavigatorSpec extends TestBaseSpec {
       Some(TiedForGoodsInformationDetails(TiedForGoodsInformationDetailsFullTie))
     )
   )
-  val sessionAboutYou6011Yes =
-    Session(testUserLoginDetails6011, stillConnectedDetailsYes, aboutYou, aboutThePropertyYes)
+  val sessionAboutYou6011Yes    = Session(testUserLoginDetails6011, Some(testStillConnectedDetailsYes), Some(testAboutYou), aboutThePropertyYes)
 
   "About to property navigator for yes answers for 6010" when {
 
