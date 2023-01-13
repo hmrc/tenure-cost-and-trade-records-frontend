@@ -33,8 +33,8 @@ import scala.concurrent.Future
 @Singleton
 class FurtherInformationOrRemarksController @Inject() (
                                                         mcc: MessagesControllerComponents,
-                                                        furtherInformationOrRemarksView: furtherInformationOrRemarks,
                                                         navigator: AdditionalInformationNavigator,
+                                                        furtherInformationOrRemarksView: furtherInformationOrRemarks,
                                                         withSessionRefiner: WithSessionRefiner,
                                                         @Named("session") val session: SessionRepo
                                                       ) extends FrontendController(mcc) with I18nSupport {

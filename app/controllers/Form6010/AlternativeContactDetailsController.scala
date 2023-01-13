@@ -33,10 +33,9 @@ import scala.concurrent.Future
 @Singleton
 class AlternativeContactDetailsController @Inject() (
   mcc: MessagesControllerComponents,
-  checkYourAnswersView: checkYourAnswers,
   navigator: AlternativeContactDetailsNavigator,
-  withSessionRefiner: WithSessionRefiner,
   alternativeContactDetailsView: alternativeContactDetails,
+  withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
                                                     ) extends FrontendController(mcc) with I18nSupport {
 

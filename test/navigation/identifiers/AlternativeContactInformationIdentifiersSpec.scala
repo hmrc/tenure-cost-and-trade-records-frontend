@@ -16,6 +16,14 @@
 
 package navigation.identifiers
 
-case object AlternativeContactDetailsId extends Identifier {
-  override def toString: String = "alternativeContactDetailsPage"
+import utils.TestBaseSpec
+
+class AlternativeContactInformationIdentifiersSpec extends TestBaseSpec {
+
+  "Alternative contact details identifiers" when {
+
+    "Identifier for Alternative contact details page" in {
+      assert(AlternativeContactDetailsId.toString.equals("alternativeContactDetailsPage"))
+    }
+  }
 }
