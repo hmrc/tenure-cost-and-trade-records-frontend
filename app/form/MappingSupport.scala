@@ -144,6 +144,7 @@ object MappingSupport {
       ),
       "email" -> default(email, "").verifying(
         nonEmpty(errorMessage = Errors.contactEmailRequired),
+        //TODO Add Regex here
         maxLength(50, "contactDetails.email1.email.tooLong")
       )
     )(ContactDetails.apply)(ContactDetails.unapply)
