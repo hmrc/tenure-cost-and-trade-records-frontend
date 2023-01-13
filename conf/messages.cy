@@ -46,6 +46,7 @@ label.no.na = No
 label.section.checkBeforeStart = Check before you start
 label.section.aboutYou = About you
 label.section.aboutTheProperty = About the property
+label.section.aboutYourTradingHistory = About your trading history
 
 #DUMMY START PAGE FULL INFORMATION
 ##############################
@@ -524,9 +525,8 @@ error.legalOrPlanningRestrictionsDetails.maxLength = This must be 1000 character
 
 ##ABOUT YOUR TRADING HISTORY
 ##############################
-aboutYourTradingHistory.heading = About your trading history
-aboutYourTradingHistory.subheader = Occupation and accounting information
-aboutYourTradingHistory.subheader2 = The questions on this page will ensure we only ask you for relevant information about your trading history
+aboutYourTradingHistory.heading = Occupation and accounting information
+aboutYourTradingHistory.subheader = The questions on this page will ensure we only ask you for relevant information about your trading history
 label.firstOccupy = When did you first occupy the property?
 label.financialYear =When does your current financial year end?
 help.date.month.year = Please format in mm/yyyy
@@ -616,8 +616,8 @@ hint.aboutYou = If you’re renting or leasing the property, even as a charity o
 taskList.heading = Declaration summary
 
 #TURNOVER
-##############################
-turnover.heading = This is a holding page for the turnover page
+#########
+turnover.heading = Turnover
 
 #SHARED RESPONSIBILITIES
 ##############################

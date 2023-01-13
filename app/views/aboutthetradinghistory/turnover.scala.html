@@ -14,29 +14,11 @@
  * limitations under the License.
  *@
 
-@import models.submissions.aboutthetradinghistory.AboutYourTradingHistory
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.button.Button
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
-@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukErrorSummary
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukDateInput
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukTextarea
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukCharacterCount
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
-
-
 
 @this(layout: Layout,
         govukButton: GovukButton,
-        govukRadios: GovukRadios,
-        govukInput: GovukInput,
-        govukErrorSummary: GovukErrorSummary,
-        govukDateInput: GovukDateInput,
-        govukTextarea: GovukTextarea,
-        govukCharacterCount: GovukCharacterCount,
         formWithCSRF: FormWithCSRF
 )
 
@@ -44,20 +26,26 @@
 @()(implicit request: Request[_], messages: Messages)
 
 @layout(
- pageHeading = messages("turnover.heading"),
- backLinkUrl = controllers.aboutthetradinghistory.routes.AboutYourTradingHistoryController.show.url,
+  pageHeading = messages("turnover.heading"),
+  showH1 = false,
+  showSection = true,
+  sectionName = messages("label.section.aboutYourTradingHistory"),
+  backLinkUrl = controllers.aboutthetradinghistory.routes.AboutYourTradingHistoryController.show.url,
 ) {
 
+  @formWithCSRF(action = controllers.Form6010.routes.FranchiseOrLettingsTiedToPropertyController.show(), args = 'class -> "myForm", 'id -> "myFormId") {
 
- @govukButton(
-  Button(
-   content = Text(messages("button.label.continue")),
-   href = Some(controllers.Form6010.routes.FranchiseOrLettingsTiedToPropertyController.show().url)
-  )
- )
+      <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+          <h1 class="govuk-fieldset__heading">@messages("turnover.heading")</h1>
+      </legend>
 
- @includes.help_with_service_turnover()
- }
+      <p class="govuk-body">This is a holding page while the turnover page is developed</p>
+
+      @includes.continueButton(govukButton)
+
+      @includes.help_with_service_turnover()
+  }
+}
 
 
 

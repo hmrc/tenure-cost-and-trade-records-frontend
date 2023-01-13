@@ -27,10 +27,6 @@ import views.html.form.furtherInformationOrRemarks
 
 class FurtherInformationOrRemarksControllerSpec extends TestBaseSpec {
 
-  import TestData.{baseFormData, errorKey}
-  import form.Form6010.FurtherInformationOrRemarksForm.furtherInformationOrRemarksForm
-  import utils.FormBindingTestAssertions.mustContainRequiredErrorFor
-
   val mockAdditionalInformationNavigator  = mock[AdditionalInformationNavigator]
   val mockFurtherInformationOrRemarksView = mock[furtherInformationOrRemarks]
   when(mockFurtherInformationOrRemarksView.apply(any)(any, any)).thenReturn(HtmlFormat.empty)
