@@ -27,7 +27,7 @@ class PremisesLicenseConditionsControllerSpec extends TestBaseSpec {
 
   val mockAboutThePropertyNavigator = mock[AboutThePropertyNavigator]
   val mockPremisesLicenseView       = mock[premisesLicenseConditions]
-  when(mockPremisesLicenseView.apply(any)(any, any)).thenReturn(HtmlFormat.empty)
+  when(mockPremisesLicenseView.apply(any, any)(any, any)).thenReturn(HtmlFormat.empty)
 
   val premisesLicenseController = new PremisesLicenseConditionsController(
     stubMessagesControllerComponents(),

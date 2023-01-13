@@ -18,9 +18,11 @@ package controllers.abouttheproperty
 
 import actions.WithSessionRefiner
 import form.abouttheproperty.TiedForGoodsForm.tiedForGoodsForm
+import models.Session
 import models.submissions.abouttheproperty.AboutTheProperty.updateAboutTheProperty
 import navigation.AboutThePropertyNavigator
 import navigation.identifiers.TiedForGoodsPageId
+import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
@@ -38,7 +40,8 @@ class TiedForGoodsController @Inject() (
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
 ) extends FrontendController(mcc)
-    with I18nSupport {
+    with I18nSupport
+    with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Future.successful(
@@ -47,6 +50,12 @@ class TiedForGoodsController @Inject() (
           request.sessionData.aboutTheProperty.flatMap(_.tiedForGoods) match {
             case Some(tiedForGoods) => tiedForGoodsForm.fillAndValidate(tiedForGoods)
             case _                  => tiedForGoodsForm
+          },
+          getBackLink(request.sessionData) match {
+            case Right(link) => link
+            case Left(msg)   =>
+              logger.warn(s"Navigation for about the property page reached with error: $msg")
+              throw new RuntimeException(s"Navigation for about the property property page reached with error $msg")
           }
         )
       )
@@ -57,7 +66,22 @@ class TiedForGoodsController @Inject() (
     tiedForGoodsForm
       .bindFromRequest()
       .fold(
-        formWithErrors => Future.successful(BadRequest(tiedForGoodsView(formWithErrors))),
+        formWithErrors =>
+          Future.successful(
+            BadRequest(
+              tiedForGoodsView(
+                formWithErrors,
+                getBackLink(request.sessionData) match {
+                  case Right(link) => link
+                  case Left(msg)   =>
+                    logger.warn(s"Navigation for about the property page reached with error: $msg")
+                    throw new RuntimeException(
+                      s"Navigation for about the property property page reached with error $msg"
+                    )
+                }
+              )
+            )
+          ),
         data => {
           val updatedData = updateAboutTheProperty(_.copy(tiedForGoods = Some(data)))
           session.saveOrUpdate(updatedData)
@@ -66,4 +90,11 @@ class TiedForGoodsController @Inject() (
       )
   }
 
+  private def getBackLink(answers: Session): Either[String, String] =
+    answers.aboutTheProperty.flatMap(_.enforcementAction.map(_.name)) match {
+      case Some("yes") =>
+        Right(controllers.abouttheproperty.routes.EnforcementActionBeenTakenDetailsController.show().url)
+      case Some("no")  => Right(controllers.abouttheproperty.routes.EnforcementActionBeenTakenController.show().url)
+      case _           => Left(s"Unknown tided for goods back link")
+    }
 }

@@ -27,7 +27,7 @@ class EnforcementActionBeenTakenControllerSpec extends TestBaseSpec {
 
   val mockAboutThePropertyNavigator      = mock[AboutThePropertyNavigator]
   val mockEnforcementActionBeenTakenView = mock[enforcementActionBeenTaken]
-  when(mockEnforcementActionBeenTakenView.apply(any)(any, any)).thenReturn(HtmlFormat.empty)
+  when(mockEnforcementActionBeenTakenView.apply(any, any)(any, any)).thenReturn(HtmlFormat.empty)
 
   val enforcementActionBeenTakenController = new EnforcementActionBeenTakenController(
     stubMessagesControllerComponents(),

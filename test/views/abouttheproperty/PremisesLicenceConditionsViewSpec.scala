@@ -31,10 +31,12 @@ class PremisesLicenceConditionsViewSpec extends QuestionViewBehaviours[PremisesL
 
   override val form = PremisesLicenseConditionsForm.premisesLicenseConditionsForm
 
-  def createView = () => premisesLicencableView(form)(fakeRequest, messages)
+  val backLink = controllers.abouttheproperty.routes.LicensableActivitiesController.show().url
+
+  def createView = () => premisesLicencableView(form, backLink)(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[PremisesLicenseConditions]) =>
-    premisesLicencableView(form)(fakeRequest, messages)
+    premisesLicencableView(form, backLink)(fakeRequest, messages)
 
   "Property licence conditions view" must {
 
