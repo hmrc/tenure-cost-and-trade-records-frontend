@@ -661,6 +661,10 @@ helpWithService.title = Get help with this service
 common.helpWithServiceHeader = If you need more help
 common.helpWithService = Call the VOA team on 01234 567 890 for help using this service.
 
+#CHECK YOUR ANSWERS
+##############################
+checkYourAnswers.heading = This is a holding page for the check your answers page
+
 #HELP WITH SERVICE CONNECTION
 ##############################
 connection.helpWithServicePeopleCompletingFormHeader = People who should fill out the form

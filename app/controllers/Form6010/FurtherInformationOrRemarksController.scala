@@ -16,32 +16,54 @@
 
 package controllers.Form6010
 
+import actions.WithSessionRefiner
 import form.Form6010.FurtherInformationOrRemarksForm.furtherInformationOrRemarksForm
-import form.Form6010.AlternativeContactDetailsForm.alternativeContactDetailsForm
+import models.submissions.additionalinformation.AdditionalInformation.updateAdditionalInformation
+import navigation.AdditionalInformationNavigator
+import navigation.identifiers.AdditionalInformationId
+import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.form.{alternativeContactDetails, furtherInformationOrRemarks, howIsCurrentRentFixed}
+import views.html.form.furtherInformationOrRemarks
 
-import javax.inject.{Inject, Singleton}
+import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
 
 @Singleton
 class FurtherInformationOrRemarksController @Inject() (
   mcc: MessagesControllerComponents,
-  alternativeContactDetailsView: alternativeContactDetails,
-  furtherInformationOrRemarksView: furtherInformationOrRemarks
-) extends FrontendController(mcc) {
+  navigator: AdditionalInformationNavigator,
+  furtherInformationOrRemarksView: furtherInformationOrRemarks,
+  withSessionRefiner: WithSessionRefiner,
+  @Named("session") val session: SessionRepo
+) extends FrontendController(mcc)
+    with I18nSupport {
 
-  def show: Action[AnyContent] = Action.async { implicit request =>
-    Future.successful(Ok(furtherInformationOrRemarksView(furtherInformationOrRemarksForm)))
+  def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    Future.successful(
+      Ok(
+        furtherInformationOrRemarksView(
+          request.sessionData.additionalInformation.flatMap(_.furtherInformationOrRemarksDetails) match {
+            case Some(furtherInformationOrRemarksDetails) =>
+              furtherInformationOrRemarksForm.fillAndValidate(furtherInformationOrRemarksDetails)
+            case _                                        => furtherInformationOrRemarksForm
+          }
+        )
+      )
+    )
   }
 
-  def submit = Action.async { implicit request =>
+  def submit = (Action andThen withSessionRefiner).async { implicit request =>
     furtherInformationOrRemarksForm
       .bindFromRequest()
       .fold(
         formWithErrors => Future.successful(BadRequest(furtherInformationOrRemarksView(formWithErrors))),
-        data => Future.successful(Ok(alternativeContactDetailsView(alternativeContactDetailsForm)))
+        data => {
+          val updatedData = updateAdditionalInformation(_.copy(furtherInformationOrRemarksDetails = Some(data)))
+          session.saveOrUpdate(updatedData)
+          Future.successful(Redirect(navigator.nextPage(AdditionalInformationId).apply(updatedData)))
+        }
       )
   }
 

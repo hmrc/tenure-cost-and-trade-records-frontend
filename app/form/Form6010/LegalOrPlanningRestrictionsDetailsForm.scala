@@ -16,7 +16,7 @@
 
 package form.Form6010
 
-import models.submissions.Form6010.{LegalOrPlanningRestrictionsDetails, RentPayableVaryOnQuantityOfBeersInformationDetails}
+import models.submissions.Form6010.LegalOrPlanningRestrictionsDetails
 import play.api.data.Form
 import play.api.data.Forms.{default, mapping, text}
 import play.api.data.validation.Constraints.{maxLength, nonEmpty}

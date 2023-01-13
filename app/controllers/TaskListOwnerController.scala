@@ -18,7 +18,7 @@ package controllers
 
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.{taskList, taskListOwner}
+import views.html.taskListOwner
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future

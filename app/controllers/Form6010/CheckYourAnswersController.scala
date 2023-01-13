@@ -14,19 +14,23 @@
  * limitations under the License.
  */
 
-package models.submissions.Form6010
+package controllers.Form6010
 
-import models.submissions.common.ContactDetails
-import play.api.libs.json.Json
+import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
+import views.html.form.checkYourAnswers
 
-case class AlternativeContactDetails(
-  alternativeContactFullName: String,
-  alternativeContactDetails: ContactDetails,
-  alternativeContactAddress: AlternativeContactDetailsAddress
-)
+import javax.inject.{Inject, Singleton}
+import scala.concurrent.Future
 
-object AlternativeContactDetails {
-  implicit val format1 = Json.format[AlternativeContactDetails]
-  implicit val format2 = Json.format[AlternativeContactDetailsAddress]
+@Singleton
+class CheckYourAnswersController @Inject() (
+  mcc: MessagesControllerComponents,
+  checkYourAnswersView: checkYourAnswers
+) extends FrontendController(mcc) {
+
+  def show: Action[AnyContent] = Action.async { implicit request =>
+    Future.successful(Ok(checkYourAnswersView()))
+  }
 
 }

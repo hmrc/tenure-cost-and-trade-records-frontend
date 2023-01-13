@@ -16,24 +16,92 @@
 
 package controllers.Form6010
 
+import form.Errors
+import navigation.{AboutYouNavigator, AlternativeContactDetailsNavigator}
+import play.api.data.FormError
 import play.api.http.Status
 import play.api.test.Helpers._
+import play.twirl.api.HtmlFormat
 import utils.TestBaseSpec
+import views.html.form.alternativeContactDetails
 
 class AlternativeContactDetailsControllerSpec extends TestBaseSpec {
 
-  private val controller = app.injector.instanceOf[AlternativeContactDetailsController]
+  //private val controller = app.injector.instanceOf[AlternativeContactDetailsController]
+  import TestData.{baseFormData, errorKey}
+  import form.aboutyou.AboutYouForm.aboutYouForm
+  import utils.FormBindingTestAssertions.{mustContainError, mustContainRequiredErrorFor}
+
+  val mockAlternativeContactDetailsNavigator = mock[AlternativeContactDetailsNavigator]
+  val mockAlternativeContactDetailsView      = mock[alternativeContactDetails]
+  when(mockAlternativeContactDetailsView.apply(any)(any, any)).thenReturn(HtmlFormat.empty)
+
+  val alternativeContactDetailsController = new AlternativeContactDetailsController(
+    stubMessagesControllerComponents(),
+    mockAlternativeContactDetailsNavigator,
+    mockAlternativeContactDetailsView,
+    preFilledSession,
+    mockSessionRepo
+  )
 
   "GET /" should {
     "return 200" in {
-      val result = controller.show(fakeRequest)
+      val result = alternativeContactDetailsController.show(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return HTML" in {
-      val result = controller.show(fakeRequest)
+      val result = alternativeContactDetailsController.show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
   }
+
+  "About you form" should {
+    "error if fullName is missing " in {
+      val formData = baseFormData - errorKey.fullName
+      val form     = aboutYouForm.bind(formData)
+
+      mustContainRequiredErrorFor(errorKey.fullName, form)
+    }
+
+    "error if phone is missing" in {
+      val formData = baseFormData - errorKey.phone
+      val form     = aboutYouForm.bind(formData)
+
+      mustContainError(errorKey.phone, Errors.contactPhoneRequired, form)
+    }
+
+    "error if email is missing" in {
+      val formData = baseFormData - errorKey.email
+      val form     = aboutYouForm.bind(formData)
+
+      mustContainError(errorKey.email, Errors.contactEmailRequired, form)
+    }
+  }
+
+  object TestData {
+    val errorKey = new {
+      val fullName: String = "fullName"
+      val phone            = "contactDetails.phone"
+      val email            = "contactDetails.email"
+      val email1TooLong    = "contactDetails.email.email.tooLong"
+    }
+
+    val formErrors = new {
+      val required = new {
+        val fullName = FormError(errorKey.fullName, Errors.required)
+      }
+    }
+
+    val tooLongEmail                      = "email_too_long_for_validation_againt_business_rules_specify_but_DB_constraints@something.co.uk"
+    val baseFormData: Map[String, String] = Map(
+      "contactDetails.phone"  -> "12345678901",
+      "contactDetails.phone"  -> "01234 123123",
+      "contactDetails.email1" -> "blah.blah@test.com",
+      "fullName"              -> "Mr John Smith"
+    )
+
+  }
+
 }

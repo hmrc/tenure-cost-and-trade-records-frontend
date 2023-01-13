@@ -14,19 +14,16 @@
  * limitations under the License.
  */
 
-package models.submissions.Form6010
+package navigation.identifiers
 
-import models.submissions.common.ContactDetails
-import play.api.libs.json.Json
+import utils.TestBaseSpec
 
-case class AlternativeContactDetails(
-  alternativeContactFullName: String,
-  alternativeContactDetails: ContactDetails,
-  alternativeContactAddress: AlternativeContactDetailsAddress
-)
+class AdditionalInformationIdentifiersSpec extends TestBaseSpec {
 
-object AlternativeContactDetails {
-  implicit val format1 = Json.format[AlternativeContactDetails]
-  implicit val format2 = Json.format[AlternativeContactDetailsAddress]
+  "Additional information identifiers" when {
 
+    "Identifier for Additional information page" in {
+      assert(AdditionalInformationId.toString.equals("additionalInformationPage"))
+    }
+  }
 }

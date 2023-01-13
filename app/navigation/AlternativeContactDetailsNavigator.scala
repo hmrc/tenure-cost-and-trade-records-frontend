@@ -14,19 +14,20 @@
  * limitations under the License.
  */
 
-package models.submissions.Form6010
+package navigation
 
-import models.submissions.common.ContactDetails
-import play.api.libs.json.Json
+import connectors.Audit
+import models.Session
+import navigation.identifiers.{AlternativeContactDetailsId, Identifier}
+import play.api.mvc.Call
 
-case class AlternativeContactDetails(
-  alternativeContactFullName: String,
-  alternativeContactDetails: ContactDetails,
-  alternativeContactAddress: AlternativeContactDetailsAddress
-)
+import javax.inject.Inject
+import scala.concurrent.ExecutionContext
 
-object AlternativeContactDetails {
-  implicit val format1 = Json.format[AlternativeContactDetails]
-  implicit val format2 = Json.format[AlternativeContactDetailsAddress]
+class AlternativeContactDetailsNavigator @Inject() (audit: Audit)(implicit ec: ExecutionContext)
+    extends Navigator(audit) {
 
+  override val routeMap: Map[Identifier, Session => Call] = Map(
+    AlternativeContactDetailsId -> (_ => controllers.Form6010.routes.CheckYourAnswersController.show())
+  )
 }
