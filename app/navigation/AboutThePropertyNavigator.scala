@@ -102,6 +102,8 @@ class AboutThePropertyNavigator @Inject() (audit: Audit)(implicit ec: ExecutionC
     EnforcementActionBeenTakenPageId        -> enforcementActionTakenRouting,
     EnforcementActionBeenTakenDetailsPageId -> enforcementActionTakenDetailsRouting,
     TiedForGoodsPageId                      -> tiedGoodsRouting,
-    TiedForGoodsDetailsPageId               -> (_ => controllers.aboutthetradinghistory.routes.AboutYourTradingHistoryController.show())
+    TiedForGoodsDetailsPageId               -> (_ =>
+      controllers.aboutthetradinghistory.routes.AboutYourTradingHistoryController.show()
+    )
   )
 }
