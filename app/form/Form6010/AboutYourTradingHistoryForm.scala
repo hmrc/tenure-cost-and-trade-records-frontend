@@ -17,7 +17,7 @@
 package form.Form6010
 
 import form.DateMappings.dateFieldsMapping
-import models.submissions.Form6010.AboutYourTradingHistory
+import models.submissions.aboutthetradinghistory.AboutYourTradingHistory
 import play.api.data.Form
 import play.api.data.Forms.mapping
 

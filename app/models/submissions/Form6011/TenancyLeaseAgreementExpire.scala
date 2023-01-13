@@ -16,6 +16,6 @@
 
 package models.submissions.Form6011
 
-import org.joda.time.LocalDate
+import java.time.LocalDate
 
 case class TenancyLeaseAgreementExpire(tenancyLeaseAgreementExpire: LocalDate)
