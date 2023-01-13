@@ -26,6 +26,8 @@ case class AlternativeContactDetails(
 )
 
 object AlternativeContactDetails {
-  implicit val format = Json.format[AlternativeContactDetails]
+    implicit val format1 = Json.format[AlternativeContactDetails]
+    implicit val format2 = Json.format[AlternativeContactDetailsAddress]
 
 }
+

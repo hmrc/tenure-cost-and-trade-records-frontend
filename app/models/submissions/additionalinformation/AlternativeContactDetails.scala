@@ -18,7 +18,7 @@ package models.submissions.additionalinformation
 
 import actions.SessionRequest
 import models.Session
-import models.submissions.Form6010.{AlternativeContactDetails, FurtherInformationOrRemarksDetails}
+import models.submissions.Form6010.AlternativeContactDetails
 import play.api.libs.json.Json
 
 case class AltContactInformation(altContactInformation: Option[AlternativeContactDetails] = None)

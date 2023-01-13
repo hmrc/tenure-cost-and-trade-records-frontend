@@ -16,6 +16,8 @@
 
 package models.submissions.Form6010
 
+import play.api.libs.json.Json
+
 case class AlternativeContactDetailsAddress(
   buildingNameNumber: String,
   street1: Option[String],
@@ -40,4 +42,8 @@ case class AlternativeContactDetailsAddress(
       county,
       Some(postcode.replaceAll("^(\\S+?)\\s*?(\\d\\w\\w)$", "$1 $2"))
     ).flatten.mkString("<br/> ")
+}
+
+object AlternativeContactDetailsAddress {
+  implicit val format = Json.format[AlternativeContactDetailsAddress]
 }
