@@ -14,9 +14,8 @@
  * limitations under the License.
  */
 
-package controllers.Form6010
+package controllers.aboutthetradinghistory
 
-import controllers.aboutthetradinghistory.AboutYourTradingHistoryController
 import play.api.http.Status
 import play.api.test.Helpers._
 import play.twirl.api.HtmlFormat
