@@ -61,7 +61,10 @@ POST        /tied-for-goods                                         controllers.
 
 GET         /tied-for-goods-details                                 controllers.abouttheproperty.TiedForGoodsDetailsController.show()
 POST        /tied-for-goods-details                                 controllers.abouttheproperty.TiedForGoodsDetailsController.submit()
-
+# About the trading history
+GET         /about-your-trading-history                             controllers.aboutthetradinghistory.AboutYourTradingHistoryController.show()
+POST        /about-your-trading-history                             controllers.aboutthetradinghistory.AboutYourTradingHistoryController.submit()
+# About the francise or letting
 GET         /tenancy-lease-agreement                                controllers.Form6010.TenancyLeaseAgreementController.show()
 POST        /tenancy-lease-agreement                                controllers.Form6010.TenancyLeaseAgreementController.submit()
 
@@ -175,9 +178,6 @@ POST        /legal-or-planning-restrictions-details                 controllers.
 
 GET         /current-rent-first-paid                                controllers.Form6010.CurrentRentFirstPaidController.show()
 POST        /current-rent-first-paid                                controllers.Form6010.CurrentRentFirstPaidController.submit()
-
-GET         /about-your-trading-history                             controllers.Form6010.AboutYourTradingHistoryController.show()
-POST        /about-your-trading-history                             controllers.Form6010.AboutYourTradingHistoryController.submit()
 
 GET         /current-lease-or-agreement-begin                       controllers.Form6010.CurrentLeaseOrAgreementBeginController.show()
 POST        /current-lease-or-agreement-begin                       controllers.Form6010.CurrentLeaseOrAgreementBeginController.submit()

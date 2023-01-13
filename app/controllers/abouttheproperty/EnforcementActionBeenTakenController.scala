@@ -76,7 +76,7 @@ class EnforcementActionBeenTakenController @Inject() (
                   case Left(msg)   =>
                     logger.warn(s"Navigation for about the property page reached with error: $msg")
                     throw new RuntimeException(
-                      s"Navigation for about the property property page reached with error $msg"
+                      s"Navigation for about the property page reached with error $msg"
                     )
                 }
               )

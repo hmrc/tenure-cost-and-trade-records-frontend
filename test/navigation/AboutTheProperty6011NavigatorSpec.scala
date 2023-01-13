@@ -75,7 +75,8 @@ class AboutTheProperty6011NavigatorSpec extends TestBaseSpec {
     "return a function that goes to about the trading history page when enforcement action taken page has been completed with no" in {
       navigator
         .nextPage(EnforcementActionBeenTakenPageId)
-        .apply(sessionAboutYou6011No) mustBe controllers.Form6010.routes.AboutYourTradingHistoryController.show()
+        .apply(sessionAboutYou6011No) mustBe controllers.aboutthetradinghistory.routes.AboutYourTradingHistoryController
+        .show()
     }
   }
 
@@ -150,7 +151,9 @@ class AboutTheProperty6011NavigatorSpec extends TestBaseSpec {
     "return a function that goes to about the trading history page when enforcement action taken details page has been completed" in {
       navigator
         .nextPage(EnforcementActionBeenTakenDetailsPageId)
-        .apply(sessionAboutYou6011Yes) mustBe controllers.Form6010.routes.AboutYourTradingHistoryController.show()
+        .apply(
+          sessionAboutYou6011Yes
+        ) mustBe controllers.aboutthetradinghistory.routes.AboutYourTradingHistoryController.show()
     }
   }
 }

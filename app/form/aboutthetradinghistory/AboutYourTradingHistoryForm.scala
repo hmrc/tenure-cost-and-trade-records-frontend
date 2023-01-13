@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package form.Form6010
+package form.aboutthetradinghistory
 
 import form.DateMappings.dateFieldsMapping
 import models.submissions.aboutthetradinghistory.AboutYourTradingHistory

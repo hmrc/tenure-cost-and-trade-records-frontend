@@ -14,17 +14,16 @@
  * limitations under the License.
  */
 
-package controllers.Form6010
+package controllers.aboutthetradinghistory
 
 import actions.WithSessionRefiner
-import form.Form6010.AboutYourTradingHistoryForm.aboutYourTradingHistoryForm
+import form.aboutthetradinghistory.AboutYourTradingHistoryForm.aboutYourTradingHistoryForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.updateAboutTheTradingHistory
-
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.form.{aboutYourTradingHistory, turnover}
+import views.html.aboutthetradinghistory.{aboutYourTradingHistory, turnover}
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
