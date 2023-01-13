@@ -71,7 +71,7 @@
     ),
     hint = Some(Hint(content = Text(messages("hint.licensableActivities")))),
     errorMessage = theForm.errors.asTextErrorMessageForField("licensableActivities")
-   )
+   ).withFormField(theForm("licensableActivities"))
   )
 
   @includes.continueButton(govukButton)

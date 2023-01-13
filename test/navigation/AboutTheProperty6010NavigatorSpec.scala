@@ -19,9 +19,6 @@ package navigation
 import connectors.Audit
 import models.Session
 import models.submissions.abouttheproperty._
-import models.submissions.aboutyou.{AboutYou, CustomerDetails}
-import models.submissions.common.ContactDetails
-import models.submissions.connectiontoproperty.{AddressConnectionTypeYes, StillConnectedDetails}
 import navigation.identifiers._
 import org.scalatest.matchers.must.Matchers.convertToAnyMustWrapper
 import play.api.libs.json.JsObject
@@ -37,23 +34,8 @@ class AboutTheProperty6010NavigatorSpec extends TestBaseSpec {
 
   val navigator = new AboutThePropertyNavigator(audit)
 
-  val stillConnectedDetailsYes = Some(StillConnectedDetails(Some(AddressConnectionTypeYes)))
-  val aboutYou                 = Some(AboutYou(Some(CustomerDetails("Tobermory", ContactDetails("12345678909", "test@email.com")))))
-  val aboutThePropertyNo       = Some(
-    AboutTheProperty(
-      Some(PropertyDetails("OccupierName", CurrentPropertyHotel, None)),
-      Some(WebsiteForPropertyDetails(BuildingOperationHaveAWebsiteYes, Some("webAddress"))),
-      Some(LicensableActivitiesNo),
-      None,
-      Some(PremisesLicensesConditionsNo),
-      None,
-      Some(EnforcementActionsNo),
-      None,
-      Some(TiedGoodsNo),
-      None
-    )
-  )
-  val sessionAboutYou6010No    = Session(testUserLoginDetails, stillConnectedDetailsYes, aboutYou, aboutThePropertyNo)
+  val sessionAboutYou6010No =
+    Session(testUserLoginDetails, Some(testStillConnectedDetailsYes), Some(testAboutYou), Some(testAboutThePropertyNo))
 
   "About to property navigator for no answers for 6010" when {
 
@@ -92,7 +74,8 @@ class AboutTheProperty6010NavigatorSpec extends TestBaseSpec {
     "return a function that goes to about the trading history page when tied for goods page has been completed with no" in {
       navigator
         .nextPage(TiedForGoodsPageId)
-        .apply(sessionAboutYou6010No) mustBe controllers.Form6010.routes.AboutYourTradingHistoryController.show()
+        .apply(sessionAboutYou6010No) mustBe controllers.aboutthetradinghistory.routes.AboutYourTradingHistoryController
+        .show()
     }
   }
 
@@ -110,7 +93,8 @@ class AboutTheProperty6010NavigatorSpec extends TestBaseSpec {
       Some(TiedForGoodsInformationDetails(TiedForGoodsInformationDetailsFullTie))
     )
   )
-  val sessionAboutYou6010Yes = Session(testUserLoginDetails, stillConnectedDetailsYes, aboutYou, aboutThePropertyYes)
+  val sessionAboutYou6010Yes =
+    Session(testUserLoginDetails, Some(testStillConnectedDetailsYes), Some(testAboutYou), aboutThePropertyYes)
 
   "About to property navigator for yes answers for 6010" when {
 
@@ -179,7 +163,9 @@ class AboutTheProperty6010NavigatorSpec extends TestBaseSpec {
     "return a function that goes to about the trading history when tied for goods details page has been completed" in {
       navigator
         .nextPage(TiedForGoodsDetailsPageId)
-        .apply(sessionAboutYou6010Yes) mustBe controllers.Form6010.routes.AboutYourTradingHistoryController.show()
+        .apply(
+          sessionAboutYou6010Yes
+        ) mustBe controllers.aboutthetradinghistory.routes.AboutYourTradingHistoryController.show()
     }
   }
 

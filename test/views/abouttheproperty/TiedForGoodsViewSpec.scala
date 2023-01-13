@@ -31,9 +31,11 @@ class TiedForGoodsViewSpec extends QuestionViewBehaviours[TiedForGoods] {
 
   override val form = TiedForGoodsForm.tiedForGoodsForm
 
-  def createView = () => tiedForGoodsView(form)(fakeRequest, messages)
+  val backLink = controllers.abouttheproperty.routes.EnforcementActionBeenTakenController.show().url
 
-  def createViewUsingForm = (form: Form[TiedForGoods]) => tiedForGoodsView(form)(fakeRequest, messages)
+  def createView = () => tiedForGoodsView(form, backLink)(fakeRequest, messages)
+
+  def createViewUsingForm = (form: Form[TiedForGoods]) => tiedForGoodsView(form, backLink)(fakeRequest, messages)
 
   "Tied for goods view" must {
 

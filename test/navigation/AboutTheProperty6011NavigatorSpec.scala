@@ -18,9 +18,7 @@ package navigation
 
 import connectors.Audit
 import models.submissions.abouttheproperty._
-import models.submissions.aboutyou.{AboutYou, CustomerDetails}
-import models.submissions.common.{Address, ContactDetails}
-import models.submissions.connectiontoproperty.{AddressConnectionTypeYes, StillConnectedDetails}
+import models.submissions.common.Address
 import models.{Session, UserLoginDetails}
 import navigation.identifiers._
 import org.scalatest.matchers.must.Matchers.convertToAnyMustWrapper
@@ -39,23 +37,12 @@ class AboutTheProperty6011NavigatorSpec extends TestBaseSpec {
 
   val testUserLoginDetails6011 =
     UserLoginDetails("jwtToken", "FOR6011", "123456", Address("13", Some("Street"), Some("City"), "AA11 1AA"))
-  val stillConnectedDetailsYes = Some(StillConnectedDetails(Some(AddressConnectionTypeYes)))
-  val aboutYou                 = Some(AboutYou(Some(CustomerDetails("Tobermory", ContactDetails("12345678909", "test@email.com")))))
-  val aboutThePropertyNo       = Some(
-    AboutTheProperty(
-      Some(PropertyDetails("OccupierName", CurrentPropertyHotel, None)),
-      Some(WebsiteForPropertyDetails(BuildingOperationHaveAWebsiteYes, Some("webAddress"))),
-      Some(LicensableActivitiesNo),
-      None,
-      Some(PremisesLicensesConditionsNo),
-      None,
-      Some(EnforcementActionsNo),
-      None,
-      Some(TiedGoodsNo),
-      None
-    )
+  val sessionAboutYou6011No    = Session(
+    testUserLoginDetails6011,
+    Some(testStillConnectedDetailsYes),
+    Some(testAboutYou),
+    Some(testAboutThePropertyNo)
   )
-  val sessionAboutYou6011No    = Session(testUserLoginDetails6011, stillConnectedDetailsYes, aboutYou, aboutThePropertyNo)
 
   "About to property navigator for no answers for 6011" when {
 
@@ -88,7 +75,8 @@ class AboutTheProperty6011NavigatorSpec extends TestBaseSpec {
     "return a function that goes to about the trading history page when enforcement action taken page has been completed with no" in {
       navigator
         .nextPage(EnforcementActionBeenTakenPageId)
-        .apply(sessionAboutYou6011No) mustBe controllers.Form6010.routes.AboutYourTradingHistoryController.show()
+        .apply(sessionAboutYou6011No) mustBe controllers.aboutthetradinghistory.routes.AboutYourTradingHistoryController
+        .show()
     }
   }
 
@@ -107,7 +95,7 @@ class AboutTheProperty6011NavigatorSpec extends TestBaseSpec {
     )
   )
   val sessionAboutYou6011Yes =
-    Session(testUserLoginDetails6011, stillConnectedDetailsYes, aboutYou, aboutThePropertyYes)
+    Session(testUserLoginDetails6011, Some(testStillConnectedDetailsYes), Some(testAboutYou), aboutThePropertyYes)
 
   "About to property navigator for yes answers for 6010" when {
 
@@ -163,7 +151,9 @@ class AboutTheProperty6011NavigatorSpec extends TestBaseSpec {
     "return a function that goes to about the trading history page when enforcement action taken details page has been completed" in {
       navigator
         .nextPage(EnforcementActionBeenTakenDetailsPageId)
-        .apply(sessionAboutYou6011Yes) mustBe controllers.Form6010.routes.AboutYourTradingHistoryController.show()
+        .apply(
+          sessionAboutYou6011Yes
+        ) mustBe controllers.aboutthetradinghistory.routes.AboutYourTradingHistoryController.show()
     }
   }
 }

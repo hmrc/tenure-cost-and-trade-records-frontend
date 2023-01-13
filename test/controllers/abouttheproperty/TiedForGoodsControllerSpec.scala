@@ -27,7 +27,7 @@ class TiedForGoodsControllerSpec extends TestBaseSpec {
 
   val mockAboutThePropertyNavigator = mock[AboutThePropertyNavigator]
   val mockTiedForGoodsView          = mock[tiedForGoods]
-  when(mockTiedForGoodsView.apply(any)(any, any)).thenReturn(HtmlFormat.empty)
+  when(mockTiedForGoodsView.apply(any, any)(any, any)).thenReturn(HtmlFormat.empty)
 
   val tiedForGoodsController = new TiedForGoodsController(
     stubMessagesControllerComponents(),

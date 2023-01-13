@@ -33,14 +33,14 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[EnforcementAction])(implicit request: Request[_], messages: Messages)
+@(theForm: Form[EnforcementAction], backLink: String)(implicit request: Request[_], messages: Messages)
 
 @layout(
  pageHeading = messages("enforcementActionHasBeenTaken.heading"),
  showH1 = false,
  showSection = true,
  sectionName = messages("label.section.aboutTheProperty"),
- backLinkUrl = controllers.abouttheproperty.routes.PremisesLicenseConditionsController.show.url,
+ backLinkUrl = backLink,
  theForm = theForm
 ) {
 
@@ -72,7 +72,7 @@
     ),
     hint = Some(Hint(content = Text(messages("hint.enforcementAction")))),
     errorMessage = theForm.errors.asTextErrorMessageForField("enforcementAction")
-   )
+   ).withFormField(theForm("enforcementAction"))
   )
 
   @includes.continueButton(govukButton)

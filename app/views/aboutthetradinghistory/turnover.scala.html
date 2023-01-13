@@ -14,12 +14,11 @@
  * limitations under the License.
  *@
 
+@import models.submissions.aboutthetradinghistory.AboutYourTradingHistory
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.button.Button
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
-
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
-
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukErrorSummary
@@ -27,8 +26,6 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukTextarea
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukCharacterCount
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
-
-@import models.submissions.Form6010.AboutYourTradingHistory
 
 
 
@@ -48,7 +45,7 @@
 
 @layout(
  pageHeading = messages("turnover.heading"),
- backLinkUrl = controllers.Form6010.routes.AboutYourTradingHistoryController.show.url,
+ backLinkUrl = controllers.aboutthetradinghistory.routes.AboutYourTradingHistoryController.show.url,
 ) {
 
 

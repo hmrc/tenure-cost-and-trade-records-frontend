@@ -19,23 +19,23 @@ package form
 import form.Form6010.ConditionalMapping._
 import models.RoughDate
 import models.submissions.Form6010.MonthsYearDuration
-import org.joda.time.{DateTime, LocalDate}
 import play.api.data.Forms._
 import play.api.data.Mapping
 import play.api.data.validation.{Constraint, Invalid, Valid}
 
+import java.time.{LocalDate, LocalDateTime}
 import scala.util.Try
 
 object DateMappings {
 
-  private val nineteenHundred = new DateTime(1900, 1, 1, 0, 0)
+  private val nineteenHundred = LocalDateTime.of(1900, 1, 1, 0, 0)
 
   private def dateIsInPastAndAfter1900(fieldErrorPart: String): Constraint[(String, String)] =
     Constraint("dateInPastAndAfter1900") { x =>
       val month                   = x._1.trim.toInt
       val year                    = x._2.trim.toInt
-      val lastDayOfSpecifiedMonth = new DateTime(year, month, 1, 0, 0)
-      if (!lastDayOfSpecifiedMonth.isBeforeNow)
+      val lastDayOfSpecifiedMonth = LocalDateTime.of(year, month, 1, 0, 0)
+      if (!lastDayOfSpecifiedMonth.isBefore(LocalDateTime.now()))
         Invalid(Errors.dateMustBeInPast + fieldErrorPart)
       else if (lastDayOfSpecifiedMonth.isBefore(nineteenHundred))
         Invalid(Errors.dateBefore1900 + fieldErrorPart)
@@ -49,9 +49,9 @@ object DateMappings {
       val month = x._2.trim.toInt
       val year  = x._3.trim.toInt
 
-      if (Try(new DateTime(year, month, day, 23, 59)).isFailure)
+      if (Try(LocalDateTime.of(year, month, day, 23, 59)).isFailure)
         Invalid(Errors.invalidDate + fieldErrorPart)
-      else if (new DateTime(year, month, day, 23, 59).isBefore(nineteenHundred))
+      else if (LocalDateTime.of(year, month, day, 23, 59).isBefore(nineteenHundred))
         Invalid(Errors.dateBefore1900 + fieldErrorPart)
       else
         Valid
@@ -63,11 +63,11 @@ object DateMappings {
       val month = x._2.trim.toInt
       val year  = x._3.trim.toInt
 
-      if (Try(new DateTime(year, month, day, 23, 59)).isFailure)
+      if (Try(LocalDateTime.of(year, month, day, 23, 59)).isFailure)
         Invalid(Errors.invalidDate + fieldErrorPart)
       else {
-        val date = new DateTime(year, month, day, 23, 59)
-        if (date.isAfterNow)
+        val date = LocalDateTime.of(year, month, day, 23, 59)
+        if (date.isAfter(LocalDateTime.now()))
           Invalid(Errors.dateMustBeInPast + fieldErrorPart)
         else if (date.isBefore(nineteenHundred))
           Invalid(Errors.dateBefore1900 + fieldErrorPart)
@@ -130,8 +130,8 @@ object DateMappings {
     if (allowFutureDates) fullDateIsAfter1900(fieldErrorPart)
     else fullDateIsInPastAndAfter1900(fieldErrorPart)
   ).transform(
-    { case (day, month, year) => new LocalDate(year.trim.toInt, month.trim.toInt, day.trim.toInt) },
-    (date: LocalDate) => (date.getDayOfMonth.toString, date.getMonthOfYear.toString, date.getYear.toString)
+    { case (day, month, year) => LocalDate.of(year.trim.toInt, month.trim.toInt, day.trim.toInt) },
+    (date: LocalDate) => (date.getDayOfMonth.toString, date.getMonthValue.toString, date.getYear.toString)
   )
 
   def monthsYearDurationMapping(prefix: String, fieldErrorPart: String = ""): Mapping[MonthsYearDuration] = tuple(

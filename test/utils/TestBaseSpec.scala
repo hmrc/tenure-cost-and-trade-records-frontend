@@ -18,7 +18,9 @@ package utils
 
 import actions.{SessionRequest, WithSessionRefiner}
 import config.{AppConfig, ErrorHandler}
-import models.submissions.common.Address
+import models.submissions.abouttheproperty._
+import models.submissions.aboutyou.{AboutYou, CustomerDetails}
+import models.submissions.common.{Address, ContactDetails}
 import models.submissions.connectiontoproperty.{AddressConnectionTypeYes, StillConnectedDetails}
 import models.{Session, UserLoginDetails}
 import org.mockito.scalatest.MockitoSugar
@@ -89,11 +91,27 @@ trait TestBaseSpec
   val testUserLoginDetails                     =
     UserLoginDetails("jwtToken", "FOR6010", "123456", Address("13", Some("Street"), Some("City"), "AA11 1AA"))
   val testStillConnectedDetailsYes             = StillConnectedDetails(Some(AddressConnectionTypeYes))
-  val preFilledSession                         = preEnrichedActionRefiner(testUserLoginDetails, testStillConnectedDetailsYes)
+  val testAboutYou                             = AboutYou(Some(CustomerDetails("Tobermory", ContactDetails("12345678909", "test@email.com"))))
+  val testAboutThePropertyNo                   = AboutTheProperty(
+    Some(PropertyDetails("OccupierName", CurrentPropertyHotel, None)),
+    Some(WebsiteForPropertyDetails(BuildingOperationHaveAWebsiteYes, Some("webAddress"))),
+    Some(LicensableActivitiesNo),
+    None,
+    Some(PremisesLicensesConditionsNo),
+    None,
+    Some(EnforcementActionsNo),
+    None,
+    Some(TiedGoodsNo),
+    None
+  )
+  val preFilledSession                         =
+    preEnrichedActionRefiner(testUserLoginDetails, testStillConnectedDetailsYes, testAboutYou, testAboutThePropertyNo)
 
   def preEnrichedActionRefiner(
     userLoginDetails: UserLoginDetails,
-    stillConnectedDetailsYes: StillConnectedDetails
+    stillConnectedDetailsYes: StillConnectedDetails,
+    aboutYou: AboutYou,
+    aboutTheProperty: AboutTheProperty
   ): WithSessionRefiner =
     new WithSessionRefiner(mockCustomErrorHandler, mockSessionRepository) {
 
@@ -103,7 +121,9 @@ trait TestBaseSpec
             SessionRequest[A](
               Session(
                 userLoginDetails = userLoginDetails,
-                stillConnectedDetails = Some(stillConnectedDetailsYes)
+                stillConnectedDetails = Some(stillConnectedDetailsYes),
+                aboutYou = Some(aboutYou),
+                aboutTheProperty = Some(aboutTheProperty)
               ),
               request = request
             )

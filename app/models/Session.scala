@@ -17,6 +17,7 @@
 package models
 
 import models.submissions.abouttheproperty.AboutTheProperty
+import models.submissions.aboutthetradinghistory.AboutTheTradingHistory
 import models.submissions.aboutyou.AboutYou
 import models.submissions.additionalinformation.{AdditionalInformation, AltContactInformation}
 import models.submissions.connectiontoproperty.StillConnectedDetails
@@ -29,6 +30,7 @@ case class Session(
   aboutTheProperty: Option[AboutTheProperty] = None,
   additionalInformation: Option[AdditionalInformation] = None,
   altContactInformation: Option[AltContactInformation] = None
+  aboutTheTradingHistory: Option[AboutTheTradingHistory] = None
 )
 
 object Session {
