@@ -18,7 +18,7 @@ package navigation
 
 import connectors.Audit
 import models.Session
-import navigation.identifiers.{AdditionalInformationId, AlternativeContactDetailsId, Identifier}
+import navigation.identifiers.{AlternativeContactDetailsId, Identifier}
 import play.api.mvc.Call
 
 import javax.inject.Inject
