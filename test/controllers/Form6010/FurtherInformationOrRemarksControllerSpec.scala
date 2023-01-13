@@ -27,34 +27,34 @@ import views.html.form.furtherInformationOrRemarks
 
 class FurtherInformationOrRemarksControllerSpec extends TestBaseSpec {
 
-    import TestData.{baseFormData, errorKey}
-    import form.Form6010.FurtherInformationOrRemarksForm.furtherInformationOrRemarksForm
-    import utils.FormBindingTestAssertions.mustContainRequiredErrorFor
+  import TestData.{baseFormData, errorKey}
+  import form.Form6010.FurtherInformationOrRemarksForm.furtherInformationOrRemarksForm
+  import utils.FormBindingTestAssertions.mustContainRequiredErrorFor
 
-    val mockAdditionalInformationNavigator = mock[AdditionalInformationNavigator]
-    val mockFurtherInformationOrRemarksView = mock[furtherInformationOrRemarks]
-    when(mockFurtherInformationOrRemarksView.apply(any)(any, any)).thenReturn(HtmlFormat.empty)
+  val mockAdditionalInformationNavigator  = mock[AdditionalInformationNavigator]
+  val mockFurtherInformationOrRemarksView = mock[furtherInformationOrRemarks]
+  when(mockFurtherInformationOrRemarksView.apply(any)(any, any)).thenReturn(HtmlFormat.empty)
 
-    val furtherInformationOrRemarksController = new FurtherInformationOrRemarksController(
-      stubMessagesControllerComponents(),
-      mockAdditionalInformationNavigator,
-      mockFurtherInformationOrRemarksView,
-      preFilledSession,
-      mockSessionRepo
-    )
+  val furtherInformationOrRemarksController = new FurtherInformationOrRemarksController(
+    stubMessagesControllerComponents(),
+    mockAdditionalInformationNavigator,
+    mockFurtherInformationOrRemarksView,
+    preFilledSession,
+    mockSessionRepo
+  )
 
-    "GET /" should {
-      "return 200" in {
-        val result = furtherInformationOrRemarksController.show(fakeRequest)
-        status(result) shouldBe Status.OK
-      }
-
-      "return HTML" in {
-        val result = furtherInformationOrRemarksController.show(fakeRequest)
-        contentType(result) shouldBe Some("text/html")
-        charset(result)     shouldBe Some("utf-8")
-      }
+  "GET /" should {
+    "return 200" in {
+      val result = furtherInformationOrRemarksController.show(fakeRequest)
+      status(result) shouldBe Status.OK
     }
+
+    "return HTML" in {
+      val result = furtherInformationOrRemarksController.show(fakeRequest)
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
+    }
+  }
 
 //  "Further Information form" should {
 //      "error if additional information is missing " in {
@@ -65,20 +65,20 @@ class FurtherInformationOrRemarksControllerSpec extends TestBaseSpec {
 //    }
 //  }
 
-    object TestData {
-      val errorKey = new {
-        val additionalInfo: String = "c"
-      }
-
-      val formErrors = new {
-        val required = new {
-          val additionalInfo = FormError(errorKey.additionalInfo, Errors.required)
-        }
-      }
-      val baseFormData: Map[String, String] = Map(
-        "furtherInformationOrRemarks" -> "This is some test information",
-      )
-
+  object TestData {
+    val errorKey = new {
+      val additionalInfo: String = "c"
     }
+
+    val formErrors                        = new {
+      val required = new {
+        val additionalInfo = FormError(errorKey.additionalInfo, Errors.required)
+      }
+    }
+    val baseFormData: Map[String, String] = Map(
+      "furtherInformationOrRemarks" -> "This is some test information"
+    )
+
+  }
 
 }

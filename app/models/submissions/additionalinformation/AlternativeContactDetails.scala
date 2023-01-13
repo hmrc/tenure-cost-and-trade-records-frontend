@@ -27,8 +27,8 @@ object AltContactInformation {
   implicit val format = Json.format[AltContactInformation]
 
   def updateAltContactInformation(
-                                   copy: AltContactInformation => AltContactInformation
-                                 )(implicit sessionRequest: SessionRequest[_]): Session = {
+    copy: AltContactInformation => AltContactInformation
+  )(implicit sessionRequest: SessionRequest[_]): Session = {
 
     val currentAltContactInformation = sessionRequest.sessionData.altContactInformation
 

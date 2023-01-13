@@ -32,19 +32,21 @@ import scala.concurrent.Future
 
 @Singleton
 class FurtherInformationOrRemarksController @Inject() (
-                                                        mcc: MessagesControllerComponents,
-                                                        navigator: AdditionalInformationNavigator,
-                                                        furtherInformationOrRemarksView: furtherInformationOrRemarks,
-                                                        withSessionRefiner: WithSessionRefiner,
-                                                        @Named("session") val session: SessionRepo
-                                                      ) extends FrontendController(mcc) with I18nSupport {
+  mcc: MessagesControllerComponents,
+  navigator: AdditionalInformationNavigator,
+  furtherInformationOrRemarksView: furtherInformationOrRemarks,
+  withSessionRefiner: WithSessionRefiner,
+  @Named("session") val session: SessionRepo
+) extends FrontendController(mcc)
+    with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Future.successful(
       Ok(
         furtherInformationOrRemarksView(
           request.sessionData.additionalInformation.flatMap(_.furtherInformationOrRemarksDetails) match {
-            case Some(furtherInformationOrRemarksDetails) => furtherInformationOrRemarksForm.fillAndValidate(furtherInformationOrRemarksDetails)
+            case Some(furtherInformationOrRemarksDetails) =>
+              furtherInformationOrRemarksForm.fillAndValidate(furtherInformationOrRemarksDetails)
             case _                                        => furtherInformationOrRemarksForm
           }
         )

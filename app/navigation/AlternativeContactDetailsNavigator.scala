@@ -24,7 +24,8 @@ import play.api.mvc.Call
 import javax.inject.Inject
 import scala.concurrent.ExecutionContext
 
-class AlternativeContactDetailsNavigator @Inject()(audit: Audit)(implicit ec: ExecutionContext) extends Navigator(audit) {
+class AlternativeContactDetailsNavigator @Inject() (audit: Audit)(implicit ec: ExecutionContext)
+    extends Navigator(audit) {
 
   override val routeMap: Map[Identifier, Session => Call] = Map(
     AlternativeContactDetailsId -> (_ => controllers.Form6010.routes.CheckYourAnswersController.show())

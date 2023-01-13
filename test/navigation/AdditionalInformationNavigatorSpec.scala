@@ -39,23 +39,27 @@ class AdditionalInformationNavigatorSpec extends TestBaseSpec {
 
   val navigator = new AdditionalInformationNavigator(audit)
 
-  val aboutYou                      = Some(AboutYou(Some(CustomerDetails("Tobermory", ContactDetails("12345678909", "test@email.com")))))
-  val aboutTheProperty              = Some (AboutTheProperty(None))
-  val additionalInformation         = Some(AdditionalInformation(Some(FurtherInformationOrRemarksDetails("test"))))
-  val stillConnectedDetailsYes      = Some(StillConnectedDetails(Some(AddressConnectionTypeYes)))
-  val sessionAdditionalInformation  = Session(testUserLoginDetails, stillConnectedDetailsYes, aboutYou, aboutTheProperty, additionalInformation)
+  val aboutYou                     = Some(AboutYou(Some(CustomerDetails("Tobermory", ContactDetails("12345678909", "test@email.com")))))
+  val aboutTheProperty             = Some(AboutTheProperty(None))
+  val additionalInformation        = Some(AdditionalInformation(Some(FurtherInformationOrRemarksDetails("test"))))
+  val stillConnectedDetailsYes     = Some(StillConnectedDetails(Some(AddressConnectionTypeYes)))
+  val sessionAdditionalInformation =
+    Session(testUserLoginDetails, stillConnectedDetailsYes, aboutYou, aboutTheProperty, additionalInformation)
 
   "Connection to property navigator" when {
 
     "go to sign in from an identifier that doesn't exist in the route map" in {
       case object UnknownIdentifier extends Identifier
-      navigator.nextPage(UnknownIdentifier).apply(sessionAdditionalInformation) mustBe controllers.routes.LoginController.show()
+      navigator
+        .nextPage(UnknownIdentifier)
+        .apply(sessionAdditionalInformation) mustBe controllers.routes.LoginController.show()
     }
 
     "return a function that goes to alternative contact details page when about you has been completed" in {
       navigator
         .nextPage(AdditionalInformationId)
-        .apply(sessionAdditionalInformation) mustBe controllers.Form6010.routes.AlternativeContactDetailsController.show()
+        .apply(sessionAdditionalInformation) mustBe controllers.Form6010.routes.AlternativeContactDetailsController
+        .show()
     }
   }
 }

@@ -27,8 +27,8 @@ object AdditionalInformation {
   implicit val format = Json.format[AdditionalInformation]
 
   def updateAdditionalInformation(
-                                   copy: AdditionalInformation => AdditionalInformation
-                                 )(implicit sessionRequest: SessionRequest[_]): Session = {
+    copy: AdditionalInformation => AdditionalInformation
+  )(implicit sessionRequest: SessionRequest[_]): Session = {
 
     val currentAdditionalInformation = sessionRequest.sessionData.additionalInformation
 

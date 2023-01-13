@@ -24,10 +24,10 @@ import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class CheckYourAnswersController @Inject()(
-                                            mcc: MessagesControllerComponents,
-                                            checkYourAnswersView: checkYourAnswers,
-                                          ) extends FrontendController(mcc) {
+class CheckYourAnswersController @Inject() (
+  mcc: MessagesControllerComponents,
+  checkYourAnswersView: checkYourAnswers
+) extends FrontendController(mcc) {
 
   def show: Action[AnyContent] = Action.async { implicit request =>
     Future.successful(Ok(checkYourAnswersView()))
