@@ -17,7 +17,7 @@
 package controllers.Form6010
 
 import form.Errors
-import navigation.{AboutYouNavigator, AlternativeContactDetailsNavigator}
+import navigation.AlternativeContactDetailsNavigator
 import play.api.data.FormError
 import play.api.http.Status
 import play.api.test.Helpers._

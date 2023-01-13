@@ -24,7 +24,7 @@ import models.submissions.aboutyou.{AboutYou, CustomerDetails}
 import models.submissions.additionalinformation.AdditionalInformation
 import models.submissions.common.ContactDetails
 import models.submissions.connectiontoproperty.{AddressConnectionTypeYes, StillConnectedDetails}
-import navigation.identifiers.{AboutYouPageId, AdditionalInformationId, Identifier}
+import navigation.identifiers.{AdditionalInformationId, Identifier}
 import org.scalatest.matchers.must.Matchers.convertToAnyMustWrapper
 import play.api.libs.json.JsObject
 import uk.gov.hmrc.http.HeaderCarrier

@@ -33,15 +33,18 @@
   backLinkUrl = controllers.aboutthetradinghistory.routes.AboutYourTradingHistoryController.show.url,
 ) {
 
-  <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-    <h1 class="govuk-fieldset__heading">@messages("turnover.heading")</h1>
-  </legend>
+  @formWithCSRF(action = controllers.Form6010.routes.FranchiseOrLettingsTiedToPropertyController.show(), args = 'class -> "myForm", 'id -> "myFormId") {
 
-  <p class="govuk-body">This is a holding page while the turnover page is developed</p>
+      <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+          <h1 class="govuk-fieldset__heading">@messages("turnover.heading")</h1>
+      </legend>
 
-  @includes.continueButton(govukButton)
+      <p class="govuk-body">This is a holding page while the turnover page is developed</p>
 
-  @includes.help_with_service_turnover()
+      @includes.continueButton(govukButton)
+
+      @includes.help_with_service_turnover()
+  }
 }
 
 
