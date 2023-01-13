@@ -58,7 +58,7 @@ class AboutThePropertyNavigator @Inject() (audit: Audit)(implicit ec: ExecutionC
       case Some("yes") => controllers.abouttheproperty.routes.EnforcementActionBeenTakenDetailsController.show()
       case Some("no")  =>
         if (answers.userLoginDetails.forNumber == ForTypes.for6011)
-          controllers.Form6010.routes.AboutYourTradingHistoryController.show()
+          controllers.aboutthetradinghistory.routes.AboutYourTradingHistoryController.show()
         else
           controllers.abouttheproperty.routes.TiedForGoodsController.show()
       case _           =>
@@ -71,7 +71,7 @@ class AboutThePropertyNavigator @Inject() (audit: Audit)(implicit ec: ExecutionC
 
   private def enforcementActionTakenDetailsRouting: Session => Call = answers => {
     if (answers.userLoginDetails.forNumber == ForTypes.for6011)
-      controllers.Form6010.routes.AboutYourTradingHistoryController.show()
+      controllers.aboutthetradinghistory.routes.AboutYourTradingHistoryController.show()
     else
       controllers.abouttheproperty.routes.TiedForGoodsController.show()
   }
@@ -79,7 +79,7 @@ class AboutThePropertyNavigator @Inject() (audit: Audit)(implicit ec: ExecutionC
   private def tiedGoodsRouting: Session => Call = answers => {
     answers.aboutTheProperty.flatMap(_.tiedForGoods.map(_.name)) match {
       case Some("yes") => controllers.abouttheproperty.routes.TiedForGoodsDetailsController.show()
-      case Some("no")  => controllers.Form6010.routes.AboutYourTradingHistoryController.show()
+      case Some("no")  => controllers.aboutthetradinghistory.routes.AboutYourTradingHistoryController.show()
       case _           =>
         logger.warn(
           s"Navigation for about the property reached without correct selection of tied goods by controller"
@@ -102,6 +102,6 @@ class AboutThePropertyNavigator @Inject() (audit: Audit)(implicit ec: ExecutionC
     EnforcementActionBeenTakenPageId        -> enforcementActionTakenRouting,
     EnforcementActionBeenTakenDetailsPageId -> enforcementActionTakenDetailsRouting,
     TiedForGoodsPageId                      -> tiedGoodsRouting,
-    TiedForGoodsDetailsPageId               -> (_ => controllers.Form6010.routes.AboutYourTradingHistoryController.show())
+    TiedForGoodsDetailsPageId               -> (_ => controllers.aboutthetradinghistory.routes.AboutYourTradingHistoryController.show())
   )
 }
