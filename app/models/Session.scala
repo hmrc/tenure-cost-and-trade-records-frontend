@@ -29,7 +29,7 @@ case class Session(
   aboutYou: Option[AboutYou] = None,
   aboutTheProperty: Option[AboutTheProperty] = None,
   additionalInformation: Option[AdditionalInformation] = None,
-  altContactInformation: Option[AltContactInformation] = None
+  altContactInformation: Option[AltContactInformation] = None,
   aboutTheTradingHistory: Option[AboutTheTradingHistory] = None
 )
 
