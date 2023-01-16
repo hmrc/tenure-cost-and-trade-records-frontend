@@ -23,7 +23,8 @@ import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.form.{furtherInformationOrRemarks, tenancyLeaseAgreementExpire}
+import views.html.form.tenancyLeaseAgreementExpire
+import views.html.additionalinformation.furtherInformationOrRemarks
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
@@ -44,8 +45,6 @@ class TenancyLeaseAgreementExpireController @Inject() (
   }
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
-    val forNumberRequest = request.sessionData.userLoginDetails.forNumber
-
     tenancyLeaseAgreementExpireForm
       .bindFromRequest()
       .fold(

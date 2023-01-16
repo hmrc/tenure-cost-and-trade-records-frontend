@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package controllers.Form6010
+package controllers.additionalinformation
 
 import form.Errors
 import navigation.AdditionalInformationNavigator
@@ -23,7 +23,7 @@ import play.api.http.Status
 import play.api.test.Helpers._
 import play.twirl.api.HtmlFormat
 import utils.TestBaseSpec
-import views.html.form.furtherInformationOrRemarks
+import views.html.additionalinformation.furtherInformationOrRemarks
 
 class FurtherInformationOrRemarksControllerSpec extends TestBaseSpec {
 

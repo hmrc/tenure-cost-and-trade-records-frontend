@@ -27,6 +27,8 @@ import scala.concurrent.ExecutionContext
 class AdditionalInformationNavigator @Inject() (audit: Audit)(implicit ec: ExecutionContext) extends Navigator(audit) {
 
   override val routeMap: Map[Identifier, Session => Call] = Map(
-    AdditionalInformationId -> (_ => controllers.Form6010.routes.AlternativeContactDetailsController.show())
+    AdditionalInformationId -> (_ =>
+      controllers.additionalinformation.routes.AlternativeContactDetailsController.show()
+    )
   )
 }

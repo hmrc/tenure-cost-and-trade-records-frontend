@@ -58,7 +58,9 @@ class AdditionalInformationNavigatorSpec extends TestBaseSpec {
     "return a function that goes to alternative contact details page when about you has been completed" in {
       navigator
         .nextPage(AdditionalInformationId)
-        .apply(sessionAdditionalInformation) mustBe controllers.Form6010.routes.AlternativeContactDetailsController
+        .apply(
+          sessionAdditionalInformation
+        ) mustBe controllers.additionalinformation.routes.AlternativeContactDetailsController
         .show()
     }
   }
