@@ -204,11 +204,11 @@ POST        /shared-responsibilities                                controllers.
 
 GET         /task-list                                              controllers.TaskListController.show()
 
-GET         /further-information-or-remarks                         controllers.Form6010.FurtherInformationOrRemarksController.show()
-POST        /further-information-or-remarks                         controllers.Form6010.FurtherInformationOrRemarksController.submit()
+GET         /further-information-or-remarks                         controllers.additionalinformation.FurtherInformationOrRemarksController.show()
+POST        /further-information-or-remarks                         controllers.additionalinformation.FurtherInformationOrRemarksController.submit()
 
-GET         /alternate-contact-details                              controllers.Form6010.AlternativeContactDetailsController.show()
-POST        /alternate-contact-details                              controllers.Form6010.AlternativeContactDetailsController.submit()
+GET         /alternate-contact-details                              controllers.additionalinformation.AlternativeContactDetailsController.show()
+POST        /alternate-contact-details                              controllers.additionalinformation.AlternativeContactDetailsController.submit()
 
 GET         /check-your-answers                                     controllers.Form6010.CheckYourAnswersController.show()
 

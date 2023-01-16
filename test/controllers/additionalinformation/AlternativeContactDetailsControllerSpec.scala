@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package controllers.Form6010
+package controllers.additionalinformation
 
 import form.Errors
 import navigation.AlternativeContactDetailsNavigator
@@ -23,11 +23,10 @@ import play.api.http.Status
 import play.api.test.Helpers._
 import play.twirl.api.HtmlFormat
 import utils.TestBaseSpec
-import views.html.form.alternativeContactDetails
+import views.html.additionalinformation.alternativeContactDetails
 
 class AlternativeContactDetailsControllerSpec extends TestBaseSpec {
 
-  //private val controller = app.injector.instanceOf[AlternativeContactDetailsController]
   import TestData.{baseFormData, errorKey}
   import form.aboutyou.AboutYouForm.aboutYouForm
   import utils.FormBindingTestAssertions.{mustContainError, mustContainRequiredErrorFor}

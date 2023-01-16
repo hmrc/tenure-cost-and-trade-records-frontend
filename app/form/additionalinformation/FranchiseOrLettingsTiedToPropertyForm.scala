@@ -14,19 +14,18 @@
  * limitations under the License.
  */
 
-package models.submissions.Form6010
+package form.additionalinformation
 
-import models.submissions.common.ContactDetails
-import play.api.libs.json.Json
+import form.MappingSupport.franchiseOrLettingsTiedToPropertyType
+import models.submissions.additionalinformation.FranchiseOrLettingsTiedToPropertiesDetails
+import play.api.data.Form
+import play.api.data.Forms.mapping
 
-case class AlternativeContactDetails(
-  alternativeContactFullName: String,
-  alternativeContactDetails: ContactDetails,
-  alternativeContactAddress: AlternativeContactDetailsAddress
-)
+object FranchiseOrLettingsTiedToPropertyForm {
 
-object AlternativeContactDetails {
-  implicit val format1 = Json.format[AlternativeContactDetails]
-  implicit val format2 = Json.format[AlternativeContactDetailsAddress]
-
+  val franchiseOrLettingsTiedToPropertyForm = Form(
+    mapping(
+      "franchiseLettings" -> franchiseOrLettingsTiedToPropertyType
+    )(FranchiseOrLettingsTiedToPropertiesDetails.apply)(FranchiseOrLettingsTiedToPropertiesDetails.unapply)
+  )
 }

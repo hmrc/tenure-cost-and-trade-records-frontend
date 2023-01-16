@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package form.Form6010
+package form.additionalinformation
 
 import form.MappingSupport.{alternativeContactMapping, contactDetailsMapping}
-import models.submissions.Form6010.AlternativeContactDetails
+import models.submissions.additionalinformation.AlternativeContactDetails
 import play.api.data.Form
 import play.api.data.Forms.{default, mapping, text}
 import play.api.data.validation.Constraints.nonEmpty

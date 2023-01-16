@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package models.submissions.Form6010
+package models.submissions.additionalinformation
 
 import models.{NamedEnum, NamedEnumSupport}
 
