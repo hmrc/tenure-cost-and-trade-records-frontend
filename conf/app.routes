@@ -61,9 +61,14 @@ POST        /tied-for-goods                                         controllers.
 
 GET         /tied-for-goods-details                                 controllers.abouttheproperty.TiedForGoodsDetailsController.show()
 POST        /tied-for-goods-details                                 controllers.abouttheproperty.TiedForGoodsDetailsController.submit()
+
 # About the trading history
 GET         /about-your-trading-history                             controllers.aboutthetradinghistory.AboutYourTradingHistoryController.show()
 POST        /about-your-trading-history                             controllers.aboutthetradinghistory.AboutYourTradingHistoryController.submit()
+
+GET         /turnover                                               controllers.aboutthetradinghistory.TurnoverController.show()
+POST        /turnover                                               controllers.aboutthetradinghistory.TurnoverController.submit()
+
 # About the francise or letting
 GET         /tenancy-lease-agreement                                controllers.Form6010.TenancyLeaseAgreementController.show()
 POST        /tenancy-lease-agreement                                controllers.Form6010.TenancyLeaseAgreementController.submit()

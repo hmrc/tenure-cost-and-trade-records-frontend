@@ -34,7 +34,7 @@
 )
 
 
-@(theForm: Form[AboutYourTradingHistory])(implicit request: Request[_], messages: Messages)
+@(theForm: Form[AboutYourTradingHistory], backLink: String)(implicit request: Request[_], messages: Messages)
 
 @content = {
   <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
@@ -53,8 +53,7 @@
  showH1 = false,
  showSection = true,
  sectionName = messages("label.section.aboutYourTradingHistory"),
-//  TODO make dynamic with navigation (6010/6011 question page/details page)
- backLinkUrl = controllers.abouttheproperty.routes.TiedForGoodsController.show.url,
+ backLinkUrl = backLink,
  theForm = theForm
 ) {
   @formWithCSRF(action = controllers.aboutthetradinghistory.routes.AboutYourTradingHistoryController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {

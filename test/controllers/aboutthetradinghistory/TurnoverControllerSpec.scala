@@ -21,18 +21,18 @@ import play.api.http.Status
 import play.api.test.Helpers._
 import play.twirl.api.HtmlFormat
 import utils.TestBaseSpec
-import views.html.aboutthetradinghistory.aboutYourTradingHistory
+import views.html.aboutthetradinghistory.turnover
 
-class AboutYourTradingHistoryControllerSpec extends TestBaseSpec {
+class TurnoverControllerSpec extends TestBaseSpec {
 
-  val mockAboutYouNavigator           = mock[AboutTheTradingHistoryNavigator]
-  val mockAboutYourTradingHistoryView = mock[aboutYourTradingHistory]
-  when(mockAboutYourTradingHistoryView.apply(any, any)(any, any)).thenReturn(HtmlFormat.empty)
+  val mockAboutYouNavigator = mock[AboutTheTradingHistoryNavigator]
+  val mockTurnoverView      = mock[turnover]
+  when(mockTurnoverView.apply()(any, any)).thenReturn(HtmlFormat.empty)
 
-  val aboutYourTradingHistoryController = new AboutYourTradingHistoryController(
+  val aboutYourTradingHistoryController = new TurnoverController(
     stubMessagesControllerComponents(),
     mockAboutYouNavigator,
-    mockAboutYourTradingHistoryView,
+    mockTurnoverView,
     preFilledSession,
     mockSessionRepo
   )

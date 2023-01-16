@@ -18,6 +18,7 @@ package models
 
 object ForTypes {
 
+  val for6010 = "FOR6010"
   val for6011 = "FOR6011"
 
   def find(forType: String) = forTypes.get(forType.toUpperCase)
