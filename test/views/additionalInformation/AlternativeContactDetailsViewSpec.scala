@@ -16,15 +16,18 @@
 
 package views.additionalInformation
 
-import form.Form6010.{AlternativeContactDetailsForm, FurtherInformationOrRemarksForm}
-import models.submissions.Form6010.{AlternativeContactDetails, FurtherInformationOrRemarksDetails}
+import form.Form6010.FurtherInformationOrRemarksForm
+import form.additionalinformation.AlternativeContactDetailsForm
+import models.submissions.Form6010.FurtherInformationOrRemarksDetails
+import models.submissions.additionalinformation.AlternativeContactDetails
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
 class AlternativeContactDetailsViewSpec extends QuestionViewBehaviours[AlternativeContactDetails] {
 
-  def alternativeContactDetailsView = app.injector.instanceOf[views.html.form.alternativeContactDetails]
+  def alternativeContactDetailsView =
+    app.injector.instanceOf[views.html.additionalinformation.alternativeContactDetails]
 
   val messageKeyPrefix = "alternativeContactDetails"
 
@@ -44,7 +47,7 @@ class AlternativeContactDetailsViewSpec extends QuestionViewBehaviours[Alternati
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText mustBe messages("back.link.label")
       val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.Form6010.routes.FurtherInformationOrRemarksController.show().url
+      backlinkUrl mustBe controllers.additionalinformation.routes.FurtherInformationOrRemarksController.show().url
     }
 
     "contain save and continue button with the value Save and Continue" in {

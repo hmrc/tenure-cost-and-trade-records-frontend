@@ -22,7 +22,8 @@ import form.Form6010.FurtherInformationOrRemarksForm.furtherInformationOrRemarks
 import models.submissions.Form6010.{LegalPlanningRestrictionsNo, LegalPlanningRestrictionsYes}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.form.{furtherInformationOrRemarks, legalOrPlanningRestrictions, legalOrPlanningRestrictionsDetails}
+import views.html.form.{legalOrPlanningRestrictions, legalOrPlanningRestrictionsDetails}
+import views.html.additionalinformation.furtherInformationOrRemarks
 import views.html.login
 
 import javax.inject.{Inject, Singleton}

@@ -16,28 +16,17 @@
 
 package models.submissions.additionalinformation
 
-import actions.SessionRequest
-import models.Session
-import models.submissions.Form6010.AlternativeContactDetails
+import models.submissions.common.ContactDetails
 import play.api.libs.json.Json
 
-case class AltContactInformation(altContactInformation: Option[AlternativeContactDetails] = None)
+case class AlternativeContactDetails(
+  alternativeContactFullName: String,
+  alternativeContactDetails: ContactDetails,
+  alternativeContactAddress: AlternativeContactDetailsAddress
+)
 
-object AltContactInformation {
-  implicit val format = Json.format[AltContactInformation]
+object AlternativeContactDetails {
+  implicit val format1 = Json.format[AlternativeContactDetails]
+  implicit val format2 = Json.format[AlternativeContactDetailsAddress]
 
-  def updateAltContactInformation(
-    copy: AltContactInformation => AltContactInformation
-  )(implicit sessionRequest: SessionRequest[_]): Session = {
-
-    val currentAltContactInformation = sessionRequest.sessionData.altContactInformation
-
-    val updateAltContactInformation = currentAltContactInformation match {
-      case Some(_) => sessionRequest.sessionData.altContactInformation.map(copy)
-      case _       => Some(copy(AltContactInformation()))
-    }
-
-    sessionRequest.sessionData.copy(altContactInformation = updateAltContactInformation)
-
-  }
 }
