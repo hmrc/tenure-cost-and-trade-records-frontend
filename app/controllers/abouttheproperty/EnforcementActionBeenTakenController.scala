@@ -51,12 +51,7 @@ class EnforcementActionBeenTakenController @Inject() (
             case Some(enforcementAction) => enforcementActionForm.fillAndValidate(enforcementAction)
             case _                       => enforcementActionForm
           },
-          getBackLink(request.sessionData) match {
-            case Right(link) => link
-            case Left(msg)   =>
-              logger.warn(s"Navigation for about the property page reached with error: $msg")
-              throw new RuntimeException(s"Navigation for about the property property page reached with error $msg")
-          }
+          getBackLink(request.sessionData)
         )
       )
     )
@@ -68,19 +63,7 @@ class EnforcementActionBeenTakenController @Inject() (
       .fold(
         formWithErrors =>
           Future.successful(
-            BadRequest(
-              enforcementActionBeenTakenView(
-                formWithErrors,
-                getBackLink(request.sessionData) match {
-                  case Right(link) => link
-                  case Left(msg)   =>
-                    logger.warn(s"Navigation for about the property page reached with error: $msg")
-                    throw new RuntimeException(
-                      s"Navigation for about the property page reached with error $msg"
-                    )
-                }
-              )
-            )
+            BadRequest(enforcementActionBeenTakenView(formWithErrors, getBackLink(request.sessionData)))
           ),
         data => {
           val updatedData = updateAboutTheProperty(_.copy(enforcementAction = Some(data)))
@@ -90,11 +73,12 @@ class EnforcementActionBeenTakenController @Inject() (
       )
   }
 
-  private def getBackLink(answers: Session): Either[String, String] =
+  private def getBackLink(answers: Session): String =
     answers.aboutTheProperty.flatMap(_.premisesLicenseConditions.map(_.name)) match {
-      case Some("yes") =>
-        Right(controllers.abouttheproperty.routes.PremisesLicenseConditionsDetailsController.show().url)
-      case Some("no")  => Right(controllers.abouttheproperty.routes.PremisesLicenseConditionsController.show().url)
-      case _           => Left(s"Unknown enforcement action taken back link")
+      case Some("yes") => controllers.abouttheproperty.routes.PremisesLicenseConditionsDetailsController.show().url
+      case Some("no")  => controllers.abouttheproperty.routes.PremisesLicenseConditionsController.show().url
+      case _           =>
+        logger.warn(s"Back link for enforcement action page reached with unknown premises licence conditions value")
+        controllers.routes.TaskListController.show().url
     }
 }
