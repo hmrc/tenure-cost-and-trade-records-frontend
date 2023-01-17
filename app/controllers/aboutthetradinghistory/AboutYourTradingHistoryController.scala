@@ -94,14 +94,14 @@ class AboutYourTradingHistoryController @Inject() (
         answers.aboutTheProperty.flatMap(_.tiedForGoods.map(_.name)) match {
           case Some("yes") => Right(controllers.abouttheproperty.routes.TiedForGoodsDetailsController.show().url)
           case Some("no")  => Right(controllers.abouttheproperty.routes.TiedForGoodsController.show().url)
-          case _           => Left(s"Unknown 6010 about your trading history back link")
+          case _           => Right(controllers.routes.TaskListController.show().url)
         }
       case ForTypes.for6011 =>
         answers.aboutTheProperty.flatMap(_.enforcementAction.map(_.name)) match {
           case Some("yes") =>
             Right(controllers.abouttheproperty.routes.EnforcementActionBeenTakenDetailsController.show().url)
           case Some("no")  => Right(controllers.abouttheproperty.routes.EnforcementActionBeenTakenController.show().url)
-          case _           => Left(s"Unknown 6011 about your trading history back link")
+          case _           => Right(controllers.routes.TaskListController.show().url)
         }
       case _                => Left(s"Unknown about your trading history back link")
     }
