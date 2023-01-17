@@ -51,12 +51,7 @@ class TiedForGoodsController @Inject() (
             case Some(tiedForGoods) => tiedForGoodsForm.fillAndValidate(tiedForGoods)
             case _                  => tiedForGoodsForm
           },
-          getBackLink(request.sessionData) match {
-            case Right(link) => link
-            case Left(msg)   =>
-              logger.warn(s"Navigation for about the property page reached with error: $msg")
-              throw new RuntimeException(s"Navigation for about the property property page reached with error $msg")
-          }
+          getBackLink(request.sessionData)
         )
       )
     )
@@ -67,21 +62,7 @@ class TiedForGoodsController @Inject() (
       .bindFromRequest()
       .fold(
         formWithErrors =>
-          Future.successful(
-            BadRequest(
-              tiedForGoodsView(
-                formWithErrors,
-                getBackLink(request.sessionData) match {
-                  case Right(link) => link
-                  case Left(msg)   =>
-                    logger.warn(s"Navigation for about the property page reached with error: $msg")
-                    throw new RuntimeException(
-                      s"Navigation for about the property property page reached with error $msg"
-                    )
-                }
-              )
-            )
-          ),
+          Future.successful(BadRequest(tiedForGoodsView(formWithErrors, getBackLink(request.sessionData)))),
         data => {
           val updatedData = updateAboutTheProperty(_.copy(tiedForGoods = Some(data)))
           session.saveOrUpdate(updatedData)
@@ -90,11 +71,12 @@ class TiedForGoodsController @Inject() (
       )
   }
 
-  private def getBackLink(answers: Session): Either[String, String] =
+  private def getBackLink(answers: Session): String =
     answers.aboutTheProperty.flatMap(_.enforcementAction.map(_.name)) match {
-      case Some("yes") =>
-        Right(controllers.abouttheproperty.routes.EnforcementActionBeenTakenDetailsController.show().url)
-      case Some("no")  => Right(controllers.abouttheproperty.routes.EnforcementActionBeenTakenController.show().url)
-      case _           => Left(s"Unknown tided for goods back link")
+      case Some("yes") => controllers.abouttheproperty.routes.EnforcementActionBeenTakenDetailsController.show().url
+      case Some("no")  => controllers.abouttheproperty.routes.EnforcementActionBeenTakenController.show().url
+      case _           =>
+        logger.warn(s"Back link for tied goods page reached with unknown enforcement taken value")
+        controllers.routes.TaskListController.show().url
     }
 }

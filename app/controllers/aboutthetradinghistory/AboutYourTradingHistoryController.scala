@@ -103,6 +103,6 @@ class AboutYourTradingHistoryController @Inject() (
           case Some("no")  => Right(controllers.abouttheproperty.routes.EnforcementActionBeenTakenController.show().url)
           case _           => Right(controllers.routes.TaskListController.show().url)
         }
-      case _                => Left(s"Unknown about your trading history back link")
+      case _                => Left(s"Unknown form type with about your trading history back link")
     }
 }
