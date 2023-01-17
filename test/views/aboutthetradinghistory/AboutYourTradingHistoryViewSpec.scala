@@ -30,10 +30,12 @@ class AboutYourTradingHistoryViewSpec extends QuestionViewBehaviours[AboutYourTr
 
   override val form = AboutYourTradingHistoryForm.aboutYourTradingHistoryForm
 
-  def createView = () => aboutTheTradingHistoryView(form)(fakeRequest, messages)
+  val backLink = controllers.abouttheproperty.routes.TiedForGoodsController.show().url
+
+  def createView = () => aboutTheTradingHistoryView(form, backLink)(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[AboutYourTradingHistory]) =>
-    aboutTheTradingHistoryView(form)(fakeRequest, messages)
+    aboutTheTradingHistoryView(form, backLink)(fakeRequest, messages)
 
   "About the trading history view" must {
 

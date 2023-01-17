@@ -18,12 +18,16 @@ package controllers.aboutthetradinghistory
 
 import actions.WithSessionRefiner
 import form.aboutthetradinghistory.AboutYourTradingHistoryForm.aboutYourTradingHistoryForm
+import models.{ForTypes, Session}
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.updateAboutTheTradingHistory
+import navigation.AboutTheTradingHistoryNavigator
+import navigation.identifiers.AboutYourTradingHistoryPageId
+import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.aboutthetradinghistory.{aboutYourTradingHistory, turnover}
+import views.html.aboutthetradinghistory.aboutYourTradingHistory
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
@@ -31,12 +35,13 @@ import scala.concurrent.Future
 @Singleton
 class AboutYourTradingHistoryController @Inject() (
   mcc: MessagesControllerComponents,
-  turnoverView: turnover,
+  navigator: AboutTheTradingHistoryNavigator,
   aboutYourTradingHistoryView: aboutYourTradingHistory,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
 ) extends FrontendController(mcc)
-    with I18nSupport {
+    with I18nSupport
+    with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     Ok(
@@ -44,6 +49,12 @@ class AboutYourTradingHistoryController @Inject() (
         request.sessionData.aboutTheTradingHistory.flatMap(_.aboutYourTradingHistory) match {
           case Some(tradingHistory) => aboutYourTradingHistoryForm.fillAndValidate(tradingHistory)
           case _                    => aboutYourTradingHistoryForm
+        },
+        getBackLink(request.sessionData) match {
+          case Right(link) => link
+          case Left(msg)   =>
+            logger.warn(s"Navigation for about your trading history page reached with error: $msg")
+            throw new RuntimeException(s"Navigation for about your trading history page reached with error $msg")
         }
       )
     )
@@ -53,13 +64,45 @@ class AboutYourTradingHistoryController @Inject() (
     aboutYourTradingHistoryForm
       .bindFromRequest()
       .fold(
-        formWithErrors => Future.successful(BadRequest(aboutYourTradingHistoryView(formWithErrors))),
+        formWithErrors =>
+          Future.successful(
+            BadRequest(
+              aboutYourTradingHistoryView(
+                formWithErrors,
+                getBackLink(request.sessionData) match {
+                  case Right(link) => link
+                  case Left(msg)   =>
+                    logger.warn(s"Navigation for about your trading history page reached with error: $msg")
+                    throw new RuntimeException(
+                      s"Navigation for about your trading history page reached with error $msg"
+                    )
+                }
+              )
+            )
+          ),
         data => {
           val updatedData = updateAboutTheTradingHistory(_.copy(aboutYourTradingHistory = Some(data)))
           session.saveOrUpdate(updatedData)
-          Future.successful(Ok(turnoverView()))
+          Future.successful(Redirect(navigator.nextPage(AboutYourTradingHistoryPageId).apply(updatedData)))
         }
       )
   }
 
+  private def getBackLink(answers: Session): Either[String, String] =
+    answers.userLoginDetails.forNumber match {
+      case ForTypes.for6010 =>
+        answers.aboutTheProperty.flatMap(_.tiedForGoods.map(_.name)) match {
+          case Some("yes") => Right(controllers.abouttheproperty.routes.TiedForGoodsDetailsController.show().url)
+          case Some("no")  => Right(controllers.abouttheproperty.routes.TiedForGoodsController.show().url)
+          case _           => Left(s"Unknown 6010 about your trading history back link")
+        }
+      case ForTypes.for6011 =>
+        answers.aboutTheProperty.flatMap(_.enforcementAction.map(_.name)) match {
+          case Some("yes") =>
+            Right(controllers.abouttheproperty.routes.EnforcementActionBeenTakenDetailsController.show().url)
+          case Some("no")  => Right(controllers.abouttheproperty.routes.EnforcementActionBeenTakenController.show().url)
+          case _           => Left(s"Unknown 6011 about your trading history back link")
+        }
+      case _                => Left(s"Unknown about your trading history back link")
+    }
 }
