@@ -16,7 +16,7 @@
 
 package controllers.Form6010
 
-import form.Form6010.FurtherInformationOrRemarksForm.furtherInformationOrRemarksForm
+import form.additionalinformation.FurtherInformationOrRemarksForm.furtherInformationOrRemarksForm
 import form.Form6010.LegalOrPlanningRestrictionsDetailsForm.legalOrPlanningRestrictionsDetailsForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController

@@ -18,10 +18,9 @@ package navigation
 
 import connectors.Audit
 import models.Session
-import models.submissions.Form6010.FurtherInformationOrRemarksDetails
 import models.submissions.abouttheproperty.AboutTheProperty
 import models.submissions.aboutyou.{AboutYou, CustomerDetails}
-import models.submissions.additionalinformation.AdditionalInformation
+import models.submissions.additionalinformation.{AdditionalInformation, FurtherInformationOrRemarksDetails}
 import models.submissions.common.ContactDetails
 import models.submissions.connectiontoproperty.{AddressConnectionTypeYes, StillConnectedDetails}
 import navigation.identifiers.{AdditionalInformationId, Identifier}

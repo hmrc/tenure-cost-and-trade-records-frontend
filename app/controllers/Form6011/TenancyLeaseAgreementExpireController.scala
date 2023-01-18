@@ -17,7 +17,7 @@
 package controllers.Form6011
 
 import actions.WithSessionRefiner
-import form.Form6010.FurtherInformationOrRemarksForm.furtherInformationOrRemarksForm
+import form.additionalinformation.FurtherInformationOrRemarksForm.furtherInformationOrRemarksForm
 import form.Form6011.TenancyLeaseAgreementExpireForm.tenancyLeaseAgreementExpireForm
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}

@@ -16,9 +16,9 @@
 
 package views.additionalInformation
 
-import form.Form6010.FurtherInformationOrRemarksForm
-import models.submissions.Form6010.FurtherInformationOrRemarksDetails
+import form.additionalinformation.FurtherInformationOrRemarksForm
 import models.submissions.abouttheproperty.{BuildingOperationHaveAWebsiteNo, BuildingOperationHaveAWebsiteYes, WebsiteForPropertyDetails}
+import models.submissions.additionalinformation.FurtherInformationOrRemarksDetails
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
