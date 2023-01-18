@@ -47,6 +47,7 @@ label.section.checkBeforeStart = Check before you start
 label.section.aboutYou = About you
 label.section.aboutTheProperty = About the property
 label.section.aboutYourTradingHistory = About your trading history
+label.section.additionalInformation = Additional information
 
 #DUMMY START PAGE FULL INFORMATION
 ##############################
@@ -628,15 +629,14 @@ error.sharedResponsibilities.required = Please provide details if you are respon
 error.sharedResponsibilities.maxLength = This must be 1000 characters or fewer
 
 #FURTHER INFORMATION OR REMARKS
-##############################
-furtherInformationOrRemarks.heading = Additional information
-label.furtherInformationOrRemarks = Further information or remarks (if any)
+###############################
+furtherInformationOrRemarks.heading = Further information or remarks (if any)
 hint.furtherInformationOrRemarks = Please provide further details if there is insufficient room for you to complete your answers to any of the forgoing questions, or if any of the questions require further explanation or clarification
 error.furtherInformationOrRemarks.maxLength = This must be 1000 characters or fewer
 
 #ALTERNATIVE CONTACT DETAILS
-##############################
-alternativeContactDetails.heading = Additional information
+############################
+alternativeContactDetails.heading = Alternative contact details
 label.alternativeContactDetails = Contact details
 hint.alternativeContactDetails = If you like us to either contact you at at different address or  contact someone else if we have any queries about this form, please give details here
 alternativeContactFullName.label = Full name

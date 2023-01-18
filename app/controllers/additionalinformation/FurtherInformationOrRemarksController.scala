@@ -17,7 +17,7 @@
 package controllers.additionalinformation
 
 import actions.WithSessionRefiner
-import form.Form6010.FurtherInformationOrRemarksForm.furtherInformationOrRemarksForm
+import form.additionalinformation.FurtherInformationOrRemarksForm.furtherInformationOrRemarksForm
 import models.submissions.additionalinformation.AdditionalInformation.updateAdditionalInformation
 import navigation.AdditionalInformationNavigator
 import navigation.identifiers.AdditionalInformationId

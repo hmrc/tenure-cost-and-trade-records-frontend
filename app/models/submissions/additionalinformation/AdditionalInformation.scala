@@ -18,7 +18,6 @@ package models.submissions.additionalinformation
 
 import actions.SessionRequest
 import models.Session
-import models.submissions.Form6010.FurtherInformationOrRemarksDetails
 import play.api.libs.json.Json
 
 case class AdditionalInformation(furtherInformationOrRemarksDetails: Option[FurtherInformationOrRemarksDetails] = None)

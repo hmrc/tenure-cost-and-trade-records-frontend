@@ -14,7 +14,7 @@
  * limitations under the License.
  *@
 
-@import models.submissions.Form6010.FurtherInformationOrRemarksDetails
+@import models.submissions.additionalinformation.FurtherInformationOrRemarksDetails
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
@@ -45,23 +45,26 @@
 
 @layout(
  pageHeading = messages("furtherInformationOrRemarks.heading"),
+ showH1 = false,
+ showSection = true,
+ sectionName = messages("label.section.additionalInformation"),
  backLinkUrl = controllers.Form6010.routes.TenantsAdditionsDisregardedController.show.url,
  theForm = theForm
 ) {
 
  @formWithCSRF(action = controllers.additionalinformation.routes.FurtherInformationOrRemarksController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
 
+  <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+   <h1 class="govuk-fieldset__heading">@messages("furtherInformationOrRemarks.heading")</h1>
+  </legend>
+
   @govukCharacterCount(
    CharacterCount(
     id = "furtherInformationOrRemarks",
     name = "furtherInformationOrRemarks",
     rows = 5,
-    maxLength = 1000,
+    maxLength = 2000,
     value = theForm("furtherInformationOrRemarks").value,
-    label = Label(
-     content = Text(messages("label.furtherInformationOrRemarks")),
-     classes = "govuk-!-font-weight-bold"
-    ),
     errorMessage = theForm.errors.asTextErrorMessageForField("furtherInformationOrRemarks"),
     hint = Some(Hint(content = Text(messages("hint.furtherInformationOrRemarks")))),
    )

@@ -16,10 +16,8 @@
 
 package views.additionalInformation
 
-import form.Form6010.FurtherInformationOrRemarksForm
-import form.additionalinformation.AlternativeContactDetailsForm
-import models.submissions.Form6010.FurtherInformationOrRemarksDetails
-import models.submissions.additionalinformation.AlternativeContactDetails
+import form.additionalinformation.{AlternativeContactDetailsForm, FurtherInformationOrRemarksForm}
+import models.submissions.additionalinformation.{AlternativeContactDetails, FurtherInformationOrRemarksDetails}
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours

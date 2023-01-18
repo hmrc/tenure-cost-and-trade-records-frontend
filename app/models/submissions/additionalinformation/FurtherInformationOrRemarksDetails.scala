@@ -14,23 +14,15 @@
  * limitations under the License.
  */
 
-package form.Form6010
+package models.submissions.additionalinformation
 
-import models.submissions.Form6010.{FurtherInformationOrRemarksDetails}
-import play.api.data.Form
-import play.api.data.Forms.{default, mapping, text}
-import play.api.data.validation.Constraints.maxLength
+import play.api.libs.json.Json
 
-object FurtherInformationOrRemarksForm {
+case class FurtherInformationOrRemarksDetails(
+  furtherInformationOrRemarksDetails: String
+)
 
-  val furtherInformationOrRemarksForm = Form(
-    mapping(
-      "furtherInformationOrRemarks" ->
-        default(text, "").verifying(
-          maxLength(1000, "error.furtherInformationOrRemarks.maxLength")
-        )
-    )(FurtherInformationOrRemarksDetails.apply)(
-      FurtherInformationOrRemarksDetails.unapply
-    )
-  )
+object FurtherInformationOrRemarksDetails {
+  implicit val format = Json.format[FurtherInformationOrRemarksDetails]
+
 }
