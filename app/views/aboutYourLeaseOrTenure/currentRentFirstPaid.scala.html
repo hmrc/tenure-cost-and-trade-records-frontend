@@ -14,7 +14,7 @@
  * limitations under the License.
  *@
 
-@import models.submissions.Form6010.CurrentRentFirstPaid
+@import models.submissions.aboutYourLeaseOrTenure.CurrentRentFirstPaid
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.button.Button
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
@@ -48,11 +48,11 @@
 
 @layout(
  pageHeading = messages("currentRentFirstPaid.heading"),
- backLinkUrl = controllers.Form6010.routes.CurrentAnnualRentController.show.url,
+ backLinkUrl = controllers.aboutYourLeaseOrTenure.routes.CurrentAnnualRentController.show.url,
  theForm = theForm
 ) {
 
- @formWithCSRF(action = controllers.Form6010.routes.CurrentRentFirstPaidController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
+ @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.CurrentRentFirstPaidController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
 
   @includes.dateFields(form = theForm, field = "currentRentFirstPaid", govukDate = govukDateInput, showDays = true)
 

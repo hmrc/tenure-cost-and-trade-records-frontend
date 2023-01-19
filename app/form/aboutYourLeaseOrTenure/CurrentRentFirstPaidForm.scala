@@ -14,21 +14,18 @@
  * limitations under the License.
  */
 
-package form.Form6011
+package form.aboutYourLeaseOrTenure
 
 import form.DateMappings.dateFieldsMapping
-import models.submissions.Form6011.TenancyLeaseAgreementExpire
+import models.submissions.aboutYourLeaseOrTenure.CurrentRentFirstPaid
 import play.api.data.Form
 import play.api.data.Forms.mapping
 
-object TenancyLeaseAgreementExpireForm {
+object CurrentRentFirstPaidForm {
 
-  val tenancyLeaseAgreementExpireForm = Form(
+  val currentRentFirstPaidForm = Form(
     mapping(
-      "tenancyLeaseAgreementExpire" -> dateFieldsMapping(
-        "tenancyLeaseAgreementExpire",
-        fieldErrorPart = ".tenancyLeaseAgreementExpire"
-      )
-    )(TenancyLeaseAgreementExpire.apply)(TenancyLeaseAgreementExpire.unapply)
+      "currentRentFirstPaid" -> dateFieldsMapping("currentRentFirstPaid", fieldErrorPart = ".currentRentFirstPaid")
+    )(CurrentRentFirstPaid.apply)(CurrentRentFirstPaid.unapply)
   )
 }

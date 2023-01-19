@@ -14,9 +14,8 @@
  * limitations under the License.
  */
 
-package models.submissions.Form6010
+package models.submissions.aboutYourLeaseOrTenure
 
-case class AboutTheLandlord(
-  landlordFullName: String,
-  landlordAddress: LandlordAddress
-)
+import java.time.LocalDate
+
+case class TenancyLeaseAgreementExpire(tenancyLeaseAgreementExpire: LocalDate)

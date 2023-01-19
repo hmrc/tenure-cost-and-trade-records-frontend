@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-package controllers.Form6010
+package controllers.aboutYourLeaseOrTenure
 
-import form.Form6010.CurrentAnnualRentForm.currentAnnualRentForm
-import form.Form6010.CurrentRentFirstPaidForm.currentRentFirstPaidForm
+import form.aboutYourLeaseOrTenure.CurrentAnnualRentForm.currentAnnualRentForm
+import form.aboutYourLeaseOrTenure.CurrentRentFirstPaidForm.currentRentFirstPaidForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.form.{currentAnnualRent, currentRentFirstPaid}
+import views.html.aboutYourLeaseOrTenure.{currentAnnualRent, currentRentFirstPaid}
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future

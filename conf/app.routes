@@ -76,9 +76,6 @@ POST        /tenancy-lease-agreement                                controllers.
 GET         /franchise-or-lettings-tied-to-property                 controllers.Form6010.FranchiseOrLettingsTiedToPropertyController.show()
 POST        /franchise-or-lettings-tied-to-property                 controllers.Form6010.FranchiseOrLettingsTiedToPropertyController.submit()
 
-GET         /about-your-landlord                                    controllers.Form6010.AboutYourLandlordController.show()
-POST        /about-your-landlord                                    controllers.Form6010.AboutYourLandlordController.submit()
-
 GET         /included-in-your-rent                                  controllers.Form6010.IncludedInYourRentController.show()
 POST        /included-in-your-rent                                  controllers.Form6010.IncludedInYourRentController.submit()
 
@@ -94,8 +91,19 @@ POST        /letting-other-part-of-property                         controllers.
 GET         /rent-open-market-value                                 controllers.Form6010.RentOpenMarketValueController.show()
 POST        /rent-open-market-value                                 controllers.Form6010.RentOpenMarketValueController.submit()
 
-GET         /current-annual-rent                                    controllers.Form6010.CurrentAnnualRentController.show()
-POST        /current-annual-rent                                    controllers.Form6010.CurrentAnnualRentController.submit()
+# About your leace or tenure
+GET         /about-your-landlord                                    controllers.aboutYourLeaseOrTenure.AboutYourLandlordController.show()
+POST        /about-your-landlord                                    controllers.aboutYourLeaseOrTenure.AboutYourLandlordController.submit()
+
+GET         /current-annual-rent                                    controllers.aboutYourLeaseOrTenure.CurrentAnnualRentController.show()
+POST        /current-annual-rent                                    controllers.aboutYourLeaseOrTenure.CurrentAnnualRentController.submit()
+
+GET         /current-rent-first-paid                                controllers.aboutYourLeaseOrTenure.CurrentRentFirstPaidController.show()
+POST        /current-rent-first-paid                                controllers.aboutYourLeaseOrTenure.CurrentRentFirstPaidController.submit()
+
+# Form 6011 routing
+GET         /tenancy-lease-agreement-expire                         controllers.aboutYourLeaseOrTenure.TenancyLeaseAgreementExpireController.show()
+POST        /tenancy-lease-agreement-expire                         controllers.aboutYourLeaseOrTenure.TenancyLeaseAgreementExpireController.submit()
 
 GET         /does-the-rent-payable                                  controllers.Form6010.DoesTheRentPayableController.show()
 POST        /does-the-rent-payable                                  controllers.Form6010.DoesTheRentPayableController.submit()
@@ -181,9 +189,6 @@ POST        /legal-or-planning-restrictions                         controllers.
 GET         /legal-or-planning-restrictions-details                 controllers.Form6010.LegalOrPlanningRestrictionsDetailsController.show()
 POST        /legal-or-planning-restrictions-details                 controllers.Form6010.LegalOrPlanningRestrictionsDetailsController.submit()
 
-GET         /current-rent-first-paid                                controllers.Form6010.CurrentRentFirstPaidController.show()
-POST        /current-rent-first-paid                                controllers.Form6010.CurrentRentFirstPaidController.submit()
-
 GET         /current-lease-or-agreement-begin                       controllers.Form6010.CurrentLeaseOrAgreementBeginController.show()
 POST        /current-lease-or-agreement-begin                       controllers.Form6010.CurrentLeaseOrAgreementBeginController.submit()
 
@@ -211,8 +216,3 @@ GET         /alternate-contact-details                              controllers.
 POST        /alternate-contact-details                              controllers.additionalinformation.AlternativeContactDetailsController.submit()
 
 GET         /check-your-answers                                     controllers.Form6010.CheckYourAnswersController.show()
-
-#Form 6011 routing is below
-
-GET         /tenancy-lease-agreement-expire                         controllers.Form6011.TenancyLeaseAgreementExpireController.show()
-POST        /tenancy-lease-agreement-expire                         controllers.Form6011.TenancyLeaseAgreementExpireController.submit()

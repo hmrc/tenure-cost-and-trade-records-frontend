@@ -14,49 +14,42 @@
  * limitations under the License.
  */
 
-package controllers.Form6010
+package controllers.aboutYourLeaseOrTenure
 
 import actions.WithSessionRefiner
-import form.Form6010.CurrentRentFirstPaidForm.currentRentFirstPaidForm
-import form.Form6010.CurrentLeaseOrAgreementBeginForm.currentLeaseOrAgreementBeginForm
-import form.Form6011.TenancyLeaseAgreementExpireForm.tenancyLeaseAgreementExpireForm
+import form.aboutYourLeaseOrTenure.TenancyLeaseAgreementExpireForm.tenancyLeaseAgreementExpireForm
+import form.additionalinformation.FurtherInformationOrRemarksForm.furtherInformationOrRemarksForm
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.form.{currentLeaseOrAgreementBegin, currentRentFirstPaid, tenancyLeaseAgreementExpire}
+import views.html.aboutYourLeaseOrTenure.tenancyLeaseAgreementExpire
+import views.html.additionalinformation.furtherInformationOrRemarks
+
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
-class CurrentRentFirstPaidController @Inject() (
+class TenancyLeaseAgreementExpireController @Inject() (
   mcc: MessagesControllerComponents,
-  currentLeaseOrAgreementBeginView: currentLeaseOrAgreementBegin,
-  currentRentFirstPaidView: currentRentFirstPaid,
   tenancyLeaseAgreementExpireView: tenancyLeaseAgreementExpire,
   withSessionRefiner: WithSessionRefiner,
+  furtherInformationView: furtherInformationOrRemarks,
   @Named("session") val session: SessionRepo
 )(implicit ec: ExecutionContext)
     extends FrontendController(mcc)
     with I18nSupport {
 
   def show: Action[AnyContent] = Action { implicit request =>
-    Ok(currentRentFirstPaidView(currentRentFirstPaidForm))
+    Ok(tenancyLeaseAgreementExpireView(tenancyLeaseAgreementExpireForm))
   }
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
-    val forNumberRequest = request.sessionData.userLoginDetails.forNumber
-
-    currentRentFirstPaidForm
+    tenancyLeaseAgreementExpireForm
       .bindFromRequest()
       .fold(
-        formWithErrors => Future.successful(BadRequest(currentRentFirstPaidView(formWithErrors))),
-        data =>
-          if (forNumberRequest == "FOR6011") {
-            Future.successful(Ok(tenancyLeaseAgreementExpireView(tenancyLeaseAgreementExpireForm)))
-          } else {
-            Future.successful(Ok(currentLeaseOrAgreementBeginView(currentLeaseOrAgreementBeginForm)))
-          }
+        formWithErrors => Future.successful(BadRequest(tenancyLeaseAgreementExpireView(formWithErrors))),
+        data => Future.successful(Ok(furtherInformationView(furtherInformationOrRemarksForm)))
       )
   }
 }

@@ -14,18 +14,8 @@
  * limitations under the License.
  */
 
-package form.Form6010
+package models.submissions.aboutYourLeaseOrTenure
 
-import form.DateMappings.dateFieldsMapping
-import models.submissions.Form6010.CurrentRentFirstPaid
-import play.api.data.Form
-import play.api.data.Forms.mapping
+import java.time.LocalDate
 
-object CurrentRentFirstPaidForm {
-
-  val currentRentFirstPaidForm = Form(
-    mapping(
-      "currentRentFirstPaid" -> dateFieldsMapping("currentRentFirstPaid", fieldErrorPart = ".currentRentFirstPaid")
-    )(CurrentRentFirstPaid.apply)(CurrentRentFirstPaid.unapply)
-  )
-}
+case class CurrentRentFirstPaid(currentRentFirstPaid: LocalDate)
