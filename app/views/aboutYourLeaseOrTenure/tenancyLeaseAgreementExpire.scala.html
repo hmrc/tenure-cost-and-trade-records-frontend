@@ -14,9 +14,8 @@
  * limitations under the License.
  *@
 
+@import models.submissions.aboutYourLeaseOrTenure.TenancyLeaseAgreementExpire
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
-
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukErrorSummary
@@ -24,15 +23,6 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukTextarea
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukCharacterCount
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
-
-@import uk.gov.hmrc.hmrcfrontend.views.html.components._
-
-@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
-
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Label
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Hint
-@import uk.gov.hmrc.hmrcfrontend.views.Aliases.CurrencyInput
-
 
 @this(layout: Layout,
         govukButton: GovukButton,
@@ -42,41 +32,27 @@
         govukDateInput: GovukDateInput,
         govukTextarea: GovukTextarea,
         govukCharacterCount: GovukCharacterCount,
-        hmrcCurrencyInput : HmrcCurrencyInput,
         formWithCSRF: FormWithCSRF
 )
 
 
-@(theForm: Form[AnnualRent])(implicit request: Request[_], messages: Messages)
+@(theForm: Form[TenancyLeaseAgreementExpire])(implicit request: Request[_], messages: Messages)
 
 @layout(
- pageHeading = messages("currentAnnualRent.heading"),
- backLinkUrl = controllers.Form6010.routes.TenancyLeaseAgreementController.show.url,
+ pageHeading = messages("tenancyLeaseAgreementExpire.heading"),
+ backLinkUrl = controllers.aboutYourLeaseOrTenure.routes.CurrentRentFirstPaidController.show.url,
  theForm = theForm
 ) {
 
- @formWithCSRF(action = controllers.Form6010.routes.CurrentAnnualRentController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
+ @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.TenancyLeaseAgreementExpireController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
 
-  @hmrcCurrencyInput(
-   CurrencyInput(
-    id = "currentAnnualRent",
-    name = "currentAnnualRent",
-    value = theForm("currentAnnualRent").value,
-    classes = "govuk-input--width-10 total-annual-rent",
-    label = Label(
-     classes = "govuk-!-font-weight-bold"
-    ),
-    hint = Hint(content = Text(messages("hint.currentAnnualRent"))),
-    autocomplete = Some("off"),
-    errorMessage =  theForm.errors.asTextErrorMessageForField("currentAnnualRent"),
-   )
-  )
+  @includes.dateFields(form = theForm, field = "tenancyLeaseAgreementExpire", govukDate = govukDateInput, showDays = true)
 
   @includes.continueButton(govukButton)
 
-  @includes.help_with_service()
-
+  @includes.help_with_service_currentRentFirstPaid()
  }
 }
+
 
 

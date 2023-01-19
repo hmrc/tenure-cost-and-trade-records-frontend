@@ -14,22 +14,22 @@
  * limitations under the License.
  */
 
-package form.Form6010
+package form.aboutYourLeaseOrTenure
 
-import form.MappingSupport.landlordAddressMapping
-import models.submissions.Form6010.AboutTheLandlord
+import form.Errors
+import form.MappingSupport.currencyMapping
+import models.AnnualRent
 import play.api.data.Form
-import play.api.data.Forms.{default, mapping, text}
-import play.api.data.validation.Constraints.{maxLength, nonEmpty}
+import play.api.data.Forms.mapping
 
-object AboutTheLandlordForm {
-  val aboutTheLandlordForm: Form[AboutTheLandlord] = Form(
+object CurrentAnnualRentForm {
+
+  val cdbMaxCurrencyAmount = 9999999.99
+
+  val currentAnnualRentForm = Form(
     mapping(
-      "landlordFullName" -> default(text, "").verifying(
-        nonEmpty(errorMessage = "error.landlordFullName.required"),
-        maxLength(50, "error.landlordFullName.maxLength")
-      ),
-      "landlordAddress"  -> landlordAddressMapping
-    )(AboutTheLandlord.apply)(AboutTheLandlord.unapply)
+      "currentAnnualRent" -> currencyMapping(".currentAnnualRent")
+    )(AnnualRent.apply)(AnnualRent.unapply)
+      .verifying(Errors.maxCurrencyAmountExceeded, _.amount <= cdbMaxCurrencyAmount)
   )
 }

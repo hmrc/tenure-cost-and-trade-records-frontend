@@ -19,11 +19,12 @@ package controllers.Form6010
 import controllers.LoginController.loginForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.form.{aboutYourLandlord, lettingOtherPartOfProperty, lettingOtherPartOfPropertyDetails}
+import views.html.form.{lettingOtherPartOfProperty, lettingOtherPartOfPropertyDetails}
 import form.Form6010.LettingOtherPartOfPropertyForm.lettingOtherPartOfPropertyForm
-import form.Form6010.AboutTheLandlordForm.aboutTheLandlordForm
+import form.aboutYourLeaseOrTenure.AboutTheLandlordForm.aboutTheLandlordForm
 import form.Form6010.LettingOtherPartOfPropertiesForm.lettingOtherPartOfPropertiesForm
 import models.submissions.Form6010.{LettingOtherPartOfPropertiesNo, LettingOtherPartOfPropertiesYes}
+import views.html.aboutYourLeaseOrTenure.aboutYourLandlord
 import views.html.login
 
 import javax.inject.{Inject, Singleton}

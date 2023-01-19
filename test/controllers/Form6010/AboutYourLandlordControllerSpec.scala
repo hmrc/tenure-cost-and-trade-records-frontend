@@ -16,6 +16,7 @@
 
 package controllers.Form6010
 
+import controllers.aboutYourLeaseOrTenure.AboutYourLandlordController
 import play.api.http.Status
 import play.api.test.Helpers._
 import utils.TestBaseSpec

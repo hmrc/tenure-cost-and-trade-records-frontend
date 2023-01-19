@@ -14,8 +14,11 @@
  * limitations under the License.
  */
 
-package models.submissions.Form6010
+package models.submissions.aboutYourLeaseOrTenure
 
-import java.time.LocalDate
+import models.submissions.Form6010.LandlordAddress
 
-case class CurrentRentFirstPaid(currentRentFirstPaid: LocalDate)
+case class AboutTheLandlord(
+  landlordFullName: String,
+  landlordAddress: LandlordAddress
+)

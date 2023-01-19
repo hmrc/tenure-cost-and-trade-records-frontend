@@ -14,8 +14,9 @@
  * limitations under the License.
  *@
 
-@import models.submissions.Form6011.TenancyLeaseAgreementExpire
+@import models.submissions.aboutYourLeaseOrTenure.AboutTheLandlord
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukErrorSummary
@@ -23,6 +24,10 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukTextarea
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukCharacterCount
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Label
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Input
+
 
 @this(layout: Layout,
         govukButton: GovukButton,
@@ -36,23 +41,37 @@
 )
 
 
-@(theForm: Form[TenancyLeaseAgreementExpire])(implicit request: Request[_], messages: Messages)
+@(theForm: Form[AboutTheLandlord])(implicit request: Request[_], messages: Messages)
 
 @layout(
- pageHeading = messages("tenancyLeaseAgreementExpire.heading"),
- backLinkUrl = controllers.Form6010.routes.CurrentRentFirstPaidController.show.url,
+ pageHeading = messages("aboutYourLandlord.heading"),
+ backLinkUrl = controllers.Form6010.routes.FranchiseOrLettingsTiedToPropertyController.show.url,
  theForm = theForm
 ) {
 
- @formWithCSRF(action = controllers.Form6011.routes.TenancyLeaseAgreementExpireController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
+ @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.AboutYourLandlordController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
 
-  @includes.dateFields(form = theForm, field = "tenancyLeaseAgreementExpire", govukDate = govukDateInput, showDays = true)
+  @govukInput(
+   Input(
+    id = "landlordFullName",
+    name = "landlordFullName",
+    classes = "govuk-input--width-20",
+    label = Label(
+     content = Text(messages("landlordFullName.label")),
+     classes = "govuk-!-font-weight-bold"
+    ),
+    errorMessage = theForm.errors.asTextErrorMessageForField("landlordFullName")
+   )
+  )
+
+  <p class="govuk-body"><b>@messages("landlordAddress.address.label")</b></p>
+
+  @includes.lookupAddress(theForm, "landlordAddress", govukInput)
 
   @includes.continueButton(govukButton)
 
-  @includes.help_with_service_currentRentFirstPaid()
+  @includes.help_with_service()
  }
 }
-
 
 

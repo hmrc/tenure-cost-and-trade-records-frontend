@@ -14,8 +14,21 @@
  * limitations under the License.
  */
 
-package models.submissions.Form6011
+package form.aboutYourLeaseOrTenure
 
-import java.time.LocalDate
+import form.DateMappings.dateFieldsMapping
+import models.submissions.aboutYourLeaseOrTenure.TenancyLeaseAgreementExpire
+import play.api.data.Form
+import play.api.data.Forms.mapping
 
-case class TenancyLeaseAgreementExpire(tenancyLeaseAgreementExpire: LocalDate)
+object TenancyLeaseAgreementExpireForm {
+
+  val tenancyLeaseAgreementExpireForm = Form(
+    mapping(
+      "tenancyLeaseAgreementExpire" -> dateFieldsMapping(
+        "tenancyLeaseAgreementExpire",
+        fieldErrorPart = ".tenancyLeaseAgreementExpire"
+      )
+    )(TenancyLeaseAgreementExpire.apply)(TenancyLeaseAgreementExpire.unapply)
+  )
+}
