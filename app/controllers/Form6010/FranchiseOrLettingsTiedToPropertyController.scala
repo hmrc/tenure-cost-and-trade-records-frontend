@@ -23,7 +23,7 @@ import views.html.form.{aboutYourLandlord, cateringOperationOrLettingAccommodati
 import form.additionalinformation.FranchiseOrLettingsTiedToPropertyForm.franchiseOrLettingsTiedToPropertyForm
 import form.Form6010.CateringOperationForm.cateringOperationForm
 import form.Form6010.AboutTheLandlordForm.aboutTheLandlordForm
-import models.submissions.additionalinformation.{FranchiseOrLettingsTiedToPropertiesNo, FranchiseOrLettingsTiedToPropertiesYes}
+import models.submissions.Form6010.{FranchiseOrLettingsTiedToPropertiesNo, FranchiseOrLettingsTiedToPropertiesYes}
 import views.html.login
 
 import javax.inject.{Inject, Singleton}

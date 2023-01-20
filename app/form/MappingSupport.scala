@@ -22,7 +22,7 @@ import form.Formats._
 import form.Formats.userTypeFormat
 import models.submissions.Form6010._
 import models.submissions.abouttheproperty._
-import models.submissions.additionalinformation.{AlternativeContactDetailsAddress, FranchiseOrLettingsTiedToProperties}
+import models.submissions.additionalinformation.AlternativeContactDetailsAddress
 import models.submissions.common.{Address, ContactDetails}
 import models.submissions.connectiontoproperty.{AddressConnectionType, ConnectionToProperty}
 import models.{AnnualRent, NamedEnum, NamedEnumSupport}

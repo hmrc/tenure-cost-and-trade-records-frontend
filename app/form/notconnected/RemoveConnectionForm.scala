@@ -16,20 +16,19 @@
 
 package form.notconnected
 
-import form.MappingSupport.{alternativeContactMapping, contactDetailsMapping}
-import models.submissions.additionalinformation.AlternativeContactDetails
+import form.MappingSupport.contactDetailsMapping
+import models.submissions.notconnected.RemoveConnectionsDetails
 import play.api.data.Form
 import play.api.data.Forms.{default, mapping, text}
 import play.api.data.validation.Constraints.nonEmpty
 
-object NotConnectedForm {
-  val alternativeContactDetailsForm: Form[AlternativeContactDetails] = Form(
+object RemoveConnectionForm {
+  val removeConnectionForm: Form[RemoveConnectionsDetails] = Form(
     mapping(
-      "alternativeContactFullName" -> default(text, "").verifying(
+      "removeConnectionFullName" -> default(text, "").verifying(
         nonEmpty(errorMessage = "error.alternativeContactFullName.required")
       ),
-      "alternativeContactDetails"  -> contactDetailsMapping,
-      "alternativeContactAddress"  -> alternativeContactMapping
-    )(AlternativeContactDetails.apply)(AlternativeContactDetails.unapply)
+      "removeConnectionDetails"  -> contactDetailsMapping
+    )(RemoveConnectionsDetails.apply)(RemoveConnectionsDetails.unapply)
   )
 }

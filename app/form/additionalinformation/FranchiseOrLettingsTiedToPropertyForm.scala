@@ -17,7 +17,7 @@
 package form.additionalinformation
 
 import form.MappingSupport.franchiseOrLettingsTiedToPropertyType
-import models.submissions.additionalinformation.FranchiseOrLettingsTiedToPropertiesDetails
+import models.submissions.Form6010.FranchiseOrLettingsTiedToPropertiesDetails
 import play.api.data.Form
 import play.api.data.Forms.mapping
 

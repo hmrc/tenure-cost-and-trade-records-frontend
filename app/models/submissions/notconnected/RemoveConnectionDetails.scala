@@ -22,24 +22,24 @@ import models.submissions.common.{Address, ContactDetails}
 import models.submissions.PastConnectionType
 import play.api.libs.json.Json
 
-case class NotConnectedDetails(
-                                  notConnectedContact: Option[ContactDetails]
+case class RemoveConnectionDetails(
+                                    removeConnectionDetails: Option[RemoveConnectionsDetails] = None
                                 )
-object NotConnectedDetails {
-  implicit val format = Json.format[NotConnectedDetails]
+object RemoveConnectionDetails {
+  implicit val format = Json.format[RemoveConnectionDetails]
 
-  def updateNotConnectedDetails(
-                                   copy: NotConnectedDetails => NotConnectedDetails
+  def updateRemoveConnectionDetails(
+                                   copy: RemoveConnectionDetails => RemoveConnectionDetails
                                  )(implicit sessionRequest: SessionRequest[_]): Session = {
 
-    val currentNotConnectedDetails = sessionRequest.sessionData.notConnectedDetails
+    val currentRemoveConnectionDetails = sessionRequest.sessionData.removeConnectionDetails
 
-    val updatedNotConnectedDetails = currentNotConnectedDetails match {
-      case Some(_) => sessionRequest.sessionData.stillConnectedDetails.map(copy)
-      case _       => Some(copy(NotConnectedDetails()))
+    val updatedRemoveConnectionDetails = currentRemoveConnectionDetails match {
+      case Some(_) => sessionRequest.sessionData.removeConnectionDetails.map(copy)
+      case _       => Some(copy(RemoveConnectionDetails()))
     }
 
-    sessionRequest.sessionData.copy(notConnectedDetails = updatedNotConnectedDetails)
+    sessionRequest.sessionData.copy(removeConnectionDetails = updatedRemoveConnectionDetails)
 
   }
 }

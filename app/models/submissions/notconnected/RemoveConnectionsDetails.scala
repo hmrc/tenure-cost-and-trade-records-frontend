@@ -14,25 +14,19 @@
  * limitations under the License.
  */
 
-package controllers
+package models.submissions.notconnected
 
-import config.AppConfig
-import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.removeConnection
+import models.submissions.common.ContactDetails
+import play.api.libs.json.Json
 
-import javax.inject.{Inject, Singleton}
-import scala.concurrent.Future
+case class RemoveConnectionsDetails(
+                                removeConnectionFullName: String,
+                                removeConnectionDetails: ContactDetails
+)
 
-@Singleton
-class RemoveConnectionController @Inject() (
-  mcc: MessagesControllerComponents,
-  appConfig: AppConfig,
-  removeConnection: removeConnection
-) extends FrontendController(mcc) {
-
-  def show: Action[AnyContent] = Action.async { implicit request =>
-    Future.successful(Ok(removeConnection()))
-  }
+object RemoveConnectionsDetails {
+  implicit val format = Json.format[RemoveConnectionsDetails]
 
 }
+
+
