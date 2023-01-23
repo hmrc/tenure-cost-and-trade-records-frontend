@@ -41,12 +41,21 @@ label.no.nac.oedd=No
 label.yes.iawn = Yes
 label.no.na = No
 
+# Common labels
+###############
+help.date.day.month.year = Please format in dd/mm/yyyy
+help.date.month.year = Please format in mm/yyyy
+label.date.day = Day
+label.date.month = Month
+label.date.year = Year
+
 #Section names
 ##############
 label.section.checkBeforeStart = Check before you start
 label.section.aboutYou = About you
 label.section.aboutTheProperty = About the property
 label.section.aboutYourTradingHistory = About your trading history
+label.section.aboutYourLeaseOrTenure = About your lease or agreement
 label.section.additionalInformation = Additional information
 
 #DUMMY START PAGE FULL INFORMATION
@@ -189,13 +198,13 @@ label.no = No
 #ABOUT YOUR LANDLORD
 ##############################
 aboutYourLandlord.heading = About your landlord
-landlordFullName.label = Landlord’s name
-landlordAddress.address.label = Landlord’s address
-landlordAddress.buildingNameNumber.label = Address line 1
-landlordAddress.address2.label = Address line 2 (optional)
-landlordAddress.town.label = Town or city (optional)
-landlordAddress.county.label = County (optional)
-landlordAddress.postcode.label = Postcode
+label.landlordFullName = Landlord’s name
+label.landlordAddress.address = Landlord’s address
+label.landlordAddress.buildingNameNumber = Address line 1
+label.landlordAddress.street1 = Address line 2
+label.landlordAddress.town = Town or city
+label.landlordAddress.county = County
+label.landlordAddress.postcode = Postcode
 error.landlordFullName.required = Please enter the landlord's full name
 error.landlordFullName.maxLength = This must be 1000 characters or fewer
 
@@ -260,8 +269,6 @@ hint.LettingOtherPartOfProperties = Including advertising rights, stations or ho
 ##############################
 currentAnnualRent.heading = What is the current annual rent?
 hint.currentAnnualRent = For example, 32000
-error.required.currentAnnualRent = Please provide a value
-error.invalid_currency.currentAnnualRent = Please provide a number
 
 #RENT OPEN MARKET VALUE
 ##############################
@@ -531,26 +538,11 @@ aboutYourTradingHistory.heading = Occupation and accounting information
 aboutYourTradingHistory.subheader = The questions on this page will ensure we only ask you for relevant information about your trading history
 label.firstOccupy = When did you first occupy the property?
 label.financialYear =When does your current financial year end?
-help.date.month.year = Please format in mm/yyyy
-error.firstOccupy.day.required = The date must include a day
-error.firstOccupy.month.required = The date must include a month
-error.firstOccupy.year.required = The date must include a year
-error.financialYear.day.required = The date must include a day
-error.financialYear.month.required = The date must include a month
-error.financialYear.year.required = The date must include a year
 
 ##CURRENT RENT FIRST PAID
 ##############################
 currentRentFirstPaid.heading = When was the current rent first paid under the terms of the current lease or agreement?
 label.currentRentFirstPaid = Disregard alterations solely due to changes in the amount of rates or services payable
-help.date.day.month.year = Please format in dd/mm/yyyy
-label.date.day = Day
-label.date.month = Month
-label.date.year = Year
-error.currentRentFirstPaid.day.required = The date must include a day
-error.currentRentFirstPaid.month.required = The date must include a month
-error.currentRentFirstPaid.year.required = The date must include a year
-error.date_before_1900.currentRentFirstPaid = The date must be after December 1899
 
 ##CURRENT LEASE OR AGREEMENT BEGIN
 ##############################
@@ -652,19 +644,20 @@ alternativeContactAddress.postcode.label = Postcode
 error.alternativeContactFullName.required = Please enter the full name
 
 #TENANCY LEASE AGREEMENT EXPIRE (FORM 6011)
-##############################
-tenancyLeaseAgreementExpire.heading = About your lease or agreement
-label.tenancyLeaseAgreementExpire = When does your tenancy, lease or agreement expire, or if earlier, what is the date of your next review (excluding indexation)?
+###########################################
+tenancyLeaseAgreementExpire.heading = When does your tenancy, lease or agreement expire, or if earlier, what is the date of your next review (excluding indexation)?
 
+#CHECK YOUR ANSWERS
+###################
+checkYourAnswers.heading = This is a holding page for the check your answers page
+
+# Help section
+##############
 #HELP WITH SERVICE COMMON
-##############################
+#########################
 helpWithService.title = Get help with this service
 common.helpWithServiceHeader = If you need more help
 common.helpWithService = Call the VOA team on 01234 567 890 for help using this service.
-
-#CHECK YOUR ANSWERS
-##############################
-checkYourAnswers.heading = This is a holding page for the check your answers page
 
 #HELP WITH SERVICE CONNECTION
 ##############################
@@ -869,9 +862,9 @@ rentQuantityOfBeersDetails.helpWithServiceRentQuantityOfBeersDetails = Please gi
 alternativeContact.helpWithServiceAlternativeContactHeader = Alternative contact details
 alternativeContact.helpWithServiceAlternativeContact = If you don’t need to provide us with alternative contact details, please select ‘Save and continue’.
 
-#ERRORS
-##############################
-error.required=This must be filled in
+# Errors
+########
+error.required = Please provide a value
 error.boolean_missing=You must choose one
 error.no_value_selected=You must choose one
 contactDetails.email1.email.mismatch=Email addresses must match
@@ -887,7 +880,8 @@ error.contact.details.missing=At least one of phone, email, or address must be g
 error.maxLength=This must be {0} characters or fewer
 error.minLength=Minimum length is {0} characters
 error.invalid_postcode=Enter a valid UK postcode
-error.invalid_currency = This must be a number greater than 0
+error.invalid_currency = Please provide a number
+error.maxCurrencyAmountExceeded = Maximum amount exceeded - please contact the VOA
 error.invalid_phone=Enter a phone number, like 01632 960 001
 error.email=Enter an email in the correct format, like name@example.com
 error.isRelated=Select ‘Yes’ if you are still connected

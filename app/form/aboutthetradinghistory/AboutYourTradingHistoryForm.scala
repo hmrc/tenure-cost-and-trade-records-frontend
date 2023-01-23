@@ -25,8 +25,8 @@ object AboutYourTradingHistoryForm {
 
   val aboutYourTradingHistoryForm = Form(
     mapping(
-      "firstOccupy"   -> dateFieldsMapping("firstOccupy", fieldErrorPart = ".firstOccupy"),
-      "financialYear" -> dateFieldsMapping("financialYear", fieldErrorPart = ".financialYear")
+      "firstOccupy"   -> dateFieldsMapping("firstOccupy"),
+      "financialYear" -> dateFieldsMapping("financialYear")
     )(AboutYourTradingHistory.apply)(AboutYourTradingHistory.unapply)
   )
 }
