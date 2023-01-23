@@ -25,7 +25,7 @@ object CurrentRentFirstPaidForm {
 
   val currentRentFirstPaidForm = Form(
     mapping(
-      "currentRentFirstPaid" -> dateFieldsMapping("currentRentFirstPaid", fieldErrorPart = ".currentRentFirstPaid")
+      "currentRentFirstPaid" -> dateFieldsMapping("currentRentFirstPaid")
     )(CurrentRentFirstPaid.apply)(CurrentRentFirstPaid.unapply)
   )
 }

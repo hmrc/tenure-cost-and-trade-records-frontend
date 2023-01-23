@@ -16,7 +16,6 @@
 
 package form.aboutYourLeaseOrTenure
 
-import form.Errors
 import form.MappingSupport.currencyMapping
 import models.AnnualRent
 import play.api.data.Form
@@ -28,8 +27,7 @@ object CurrentAnnualRentForm {
 
   val currentAnnualRentForm = Form(
     mapping(
-      "currentAnnualRent" -> currencyMapping(".currentAnnualRent")
+      "currentAnnualRent" -> currencyMapping()
     )(AnnualRent.apply)(AnnualRent.unapply)
-      .verifying(Errors.maxCurrencyAmountExceeded, _.amount <= cdbMaxCurrencyAmount)
   )
 }

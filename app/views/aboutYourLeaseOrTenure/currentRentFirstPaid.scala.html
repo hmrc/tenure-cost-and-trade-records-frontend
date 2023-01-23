@@ -48,13 +48,22 @@
 
 @layout(
  pageHeading = messages("currentRentFirstPaid.heading"),
+ showH1 = false,
+ showSection = true,
+ sectionName = messages("label.section.aboutYourLeaseOrTenure"),
  backLinkUrl = controllers.aboutYourLeaseOrTenure.routes.CurrentAnnualRentController.show.url,
  theForm = theForm
 ) {
 
  @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.CurrentRentFirstPaidController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
 
-  @includes.dateFields(form = theForm, field = "currentRentFirstPaid", govukDate = govukDateInput, showDays = true)
+  <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+   <h1 class="govuk-fieldset__heading">@messages("currentRentFirstPaid.heading")</h1>
+  </legend>
+
+  <p class="govuk-body">@messages("label.currentRentFirstPaid")</p>
+
+  @includes.dateFields(form = theForm, field = "currentRentFirstPaid", govukDate = govukDateInput, showDays = true, showFieldSet = false)
 
   @includes.continueButton(govukButton)
 

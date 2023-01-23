@@ -25,10 +25,7 @@ object TenancyLeaseAgreementExpireForm {
 
   val tenancyLeaseAgreementExpireForm = Form(
     mapping(
-      "tenancyLeaseAgreementExpire" -> dateFieldsMapping(
-        "tenancyLeaseAgreementExpire",
-        fieldErrorPart = ".tenancyLeaseAgreementExpire"
-      )
+      "tenancyLeaseAgreementExpire" -> dateFieldsMapping("tenancyLeaseAgreementExpire")
     )(TenancyLeaseAgreementExpire.apply)(TenancyLeaseAgreementExpire.unapply)
   )
 }

@@ -16,7 +16,6 @@
 
 @import models.submissions.aboutYourLeaseOrTenure.AboutTheLandlord
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukErrorSummary
@@ -24,9 +23,6 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukTextarea
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukCharacterCount
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
-@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Label
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Input
 
 
 @this(layout: Layout,
@@ -45,28 +41,30 @@
 
 @layout(
  pageHeading = messages("aboutYourLandlord.heading"),
+ showH1 = false,
+ showSection = true,
+ sectionName = messages("label.section.aboutYourLeaseOrTenure"),
  backLinkUrl = controllers.Form6010.routes.FranchiseOrLettingsTiedToPropertyController.show.url,
  theForm = theForm
 ) {
 
  @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.AboutYourLandlordController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
 
-  @govukInput(
-   Input(
-    id = "landlordFullName",
-    name = "landlordFullName",
-    classes = "govuk-input--width-20",
-    label = Label(
-     content = Text(messages("landlordFullName.label")),
-     classes = "govuk-!-font-weight-bold"
-    ),
-    errorMessage = theForm.errors.asTextErrorMessageForField("landlordFullName")
-   )
-  )
+  <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+   <h1 class="govuk-fieldset__heading">@messages("aboutYourLandlord.heading")</h1>
+  </legend>
 
-  <p class="govuk-body"><b>@messages("landlordAddress.address.label")</b></p>
+  @includes.textInput(govukInput, theForm, "landlordFullName", "govuk-input--width-20", "landlordFullName", labelClasses = "govuk-!-font-weight-bold")
 
-  @includes.lookupAddress(theForm, "landlordAddress", govukInput)
+  <p class="govuk-body">
+   <b>@messages("label.landlordAddress.address")</b>
+  </p>
+
+  @includes.textInput(govukInput, theForm, "landlordAddress.buildingNameNumber", "govuk-input--width-20", "landlordAddress.buildingNameNumber", formGroupClasses = "address-field-one address-fields")
+  @includes.textInput(govukInput, theForm, "landlordAddress.street1", "govuk-input--width-20", "landlordAddress.street1", optional = true, formGroupClasses = "address-field-two address-fields")
+  @includes.textInput(govukInput, theForm, "landlordAddress.town", "govuk-input--width-20", "landlordAddress.town", optional = true, formGroupClasses = "address-field-three address-fields")
+  @includes.textInput(govukInput, theForm, "landlordAddress.county", "govuk-input--width-20", "landlordAddress.county", optional = true, formGroupClasses = "address-field-four address-fields")
+  @includes.textInput(govukInput, theForm, "landlordAddress.postcode", "govuk-input--width-10", "landlordAddress.postcode", formGroupClasses = "address-field-postcode")
 
   @includes.continueButton(govukButton)
 
