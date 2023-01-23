@@ -14,16 +14,15 @@
  * limitations under the License.
  */
 
-package controllers.Form6010
+package controllers.aboutYourLeaseOrTenure
 
-import controllers.aboutYourLeaseOrTenure.CurrentAnnualRentController
 import play.api.http.Status
 import play.api.test.Helpers._
 import utils.TestBaseSpec
 
-class CurrentAnnualRentControllerSpec extends TestBaseSpec {
+class AboutYourLandlordControllerSpec extends TestBaseSpec {
 
-  private val controller = app.injector.instanceOf[CurrentAnnualRentController]
+  private val controller = app.injector.instanceOf[AboutYourLandlordController]
 
   "GET /" should {
     "return 200" in {
