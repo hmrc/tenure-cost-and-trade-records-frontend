@@ -16,6 +16,7 @@
 
 package controllers
 
+import controllers.removeconnection.RemoveConnectionController
 import play.api.http.Status
 import play.api.test.Helpers._
 import utils.TestBaseSpec

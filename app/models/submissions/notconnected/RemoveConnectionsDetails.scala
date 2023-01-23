@@ -14,8 +14,17 @@
  * limitations under the License.
  */
 
-package models.submissions.additionalinformation
+package models.submissions.notconnected
 
-case class FranchiseOrLettingsTiedToPropertiesDetails(
-  franchiseOrLettingsTiedToProperty: FranchiseOrLettingsTiedToProperties
-)
+import models.submissions.common.ContactDetails
+import play.api.libs.json.Json
+
+case class RemoveConnectionsDetails(
+                                     removeConnectionFullName: String,
+                                     removeConnectionDetails: ContactDetails
+                                   )
+
+object RemoveConnectionsDetails {
+  implicit val format = Json.format[RemoveConnectionsDetails]
+
+}

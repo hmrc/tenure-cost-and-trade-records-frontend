@@ -51,7 +51,8 @@
 
 @layout(
  pageHeading = messages("areYouConnectedNo.heading"),
- theForm = theForm
+ theForm = theForm,
+ backLinkUrl = controllers.connectiontoproperty.routes.AreYouStillConnectedController.show.url,
 ) {
 
  @formWithCSRF(action = controllers.routes.PastConnectionController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {

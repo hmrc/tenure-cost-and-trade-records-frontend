@@ -14,6 +14,7 @@
  * limitations under the License.
  *@
 
+@import models.submissions.notconnected.RemoveConnectionsDetails
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.button.Button
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
@@ -43,8 +44,7 @@
         formWithCSRF: FormWithCSRF
 )
 
-
-@()(implicit request: Request[_], messages: Messages)
+@(theForm: Form[RemoveConnectionsDetails])(implicit request: Request[_], messages: Messages)
 
 @layout(
  pageHeading = messages("removeConnection.heading"),

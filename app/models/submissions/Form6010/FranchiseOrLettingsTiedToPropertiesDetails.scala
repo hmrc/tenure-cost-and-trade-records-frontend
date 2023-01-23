@@ -14,18 +14,8 @@
  * limitations under the License.
  */
 
-package form.additionalinformation
+package models.submissions.Form6010
 
-import form.MappingSupport.franchiseOrLettingsTiedToPropertyType
-import models.submissions.additionalinformation.FranchiseOrLettingsTiedToPropertiesDetails
-import play.api.data.Form
-import play.api.data.Forms.mapping
-
-object FranchiseOrLettingsTiedToPropertyForm {
-
-  val franchiseOrLettingsTiedToPropertyForm = Form(
-    mapping(
-      "franchiseLettings" -> franchiseOrLettingsTiedToPropertyType
-    )(FranchiseOrLettingsTiedToPropertiesDetails.apply)(FranchiseOrLettingsTiedToPropertiesDetails.unapply)
-  )
-}
+case class FranchiseOrLettingsTiedToPropertiesDetails(
+                                                       franchiseOrLettingsTiedToProperty: FranchiseOrLettingsTiedToProperties
+                                                     )
