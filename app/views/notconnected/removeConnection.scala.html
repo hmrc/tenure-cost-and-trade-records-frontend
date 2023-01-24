@@ -1,0 +1,119 @@
+@*
+ * Copyright 2023 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import models.submissions.notconnected.RemoveConnectionsDetails
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.textarea.Textarea
+
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukErrorSummary
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukTextarea
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukCharacterCount
+@import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Input
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Label
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.hint.Hint
+
+
+@this(layout: Layout,
+        govukButton: GovukButton,
+        govukRadios: GovukRadios,
+        govukInput: GovukInput,
+        govukErrorSummary: GovukErrorSummary,
+        govukTextarea: GovukTextarea,
+        govukCharacterCount: GovukCharacterCount,
+        formWithCSRF: FormWithCSRF
+)
+
+@(theForm: Form[RemoveConnectionsDetails])(implicit request: Request[_], messages: Messages)
+
+@layout(
+ pageHeading = messages("removeConnection.heading"),
+ backLinkUrl = controllers.routes.PastConnectionController.show.url,
+ theForm = theForm
+) {
+
+ @formWithCSRF(action = controllers.removeconnection.routes.RemoveConnectionController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
+
+  <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+   <h1 class="govuk-fieldset__heading">@messages("removeConnection.subheading")</h1>
+  </legend>
+
+  @govukInput(
+   Input(
+    id = "removeConnectionFullName",
+    name = "removeConnectionFullName",
+    classes = "govuk-input--width-20",
+    value = theForm("removeConnectionFullName").value,
+    label = Label(
+     content = Text(messages("label.removeConnectionFullName.fullName")),
+     classes = "govuk-!-font-weight-bold"
+    ),
+    errorMessage = theForm.errors.asTextErrorMessageForField("alternativeContactFullName")
+   )
+  )
+
+  @govukInput(
+   Input(
+    id = "removeConnectionDetails.email",
+    name = "removeConnectionDetails.email",
+    classes = "govuk-input--width-20",
+    label = Label(
+     content = Text(messages("label.email")),
+     classes = "govuk-!-font-weight-bold"
+    ),
+    errorMessage = theForm.errors.asTextErrorMessageForField("removeConnectionDetails.email")
+   ).withFormField(theForm("removeConnectionDetails.email"))
+  )
+
+  @govukInput(
+   Input(
+    id = "removeConnectionDetails.phone",
+    name = "removeConnectionDetails.phone",
+    classes = "govuk-input--width-20",
+    label = Label(
+     content = Text(messages("label.phone")),
+     classes = "govuk-!-font-weight-bold"
+    ),
+    errorMessage = theForm.errors.asTextErrorMessageForField("removeConnectionDetails.phone")
+   ).withFormField(theForm("removeConnectionDetails.phone"))
+  )
+
+  @govukTextarea(
+   Textarea(
+    id = "removeConnectionAdditionalInfo",
+    name = "removeConnectionAdditionalInfo",
+    rows = 5,
+    value = theForm("removeConnectionAdditionalInfo").value,
+    label = Label(
+     content = Text(messages("label.removeConnectionDetails.removeConnectionAdditionalInfo")),
+     classes = "govuk-!-font-weight-bold"
+    ),
+    hint = Some(Hint(content = Text(messages("hint.removeConnectionDetails.removeConnectionAdditionalInfo")))),
+   )
+  )
+
+  @includes.continueButton(govukButton)
+
+  @includes.help_with_service()
+
+ }
+}
+
+

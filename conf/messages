@@ -117,11 +117,12 @@ areYouConnectedNo.heading = Have you ever had a connection to the property?
 ##############################
 removeConnection.heading = Remove your connection to this property
 removeConnection.subheading = We’ll use these details if we need to contact you
-label.removeConnection.fullName = Full name
-label.removeConnection.emailAddress = Email address
-label.removeConnection.telephoneNumber = Telephone number
-label.removeConnection.additionalInformation = Additional information
-hint.removeConnection.additionalInformation = For example, the name of the current owner or occupier
+label.removeConnectionFullName.fullName = Full name
+label.removeConnectionDetails.email = Email address
+label.removeConnectionDetails.phone = Telephone number
+label.removeConnectionDetails.removeConnectionAdditionalInfo = Additional information
+hint.removeConnectionDetails.removeConnectionAdditionalInfo = For example, the name of the current owner or occupier
+error.removeConnectionFullName.required = Please provide your full name
 
 #6010 ABOUT YOU
 ##############################
@@ -642,7 +643,7 @@ label.alternativeContactDetails = Contact details
 hint.alternativeContactDetails = If you like us to either contact you at at different address or  contact someone else if we have any queries about this form, please give details here
 alternativeContactFullName.label = Full name
 label.phone = Telephone number
-label.email1 = Email address
+label.email = Email address
 alternativeContactDetails.address.label = Correspondence address
 alternativeContactAddress.buildingNameNumber.label = Address line 1
 alternativeContactAddress.address2.label = Address line 2 (optional)

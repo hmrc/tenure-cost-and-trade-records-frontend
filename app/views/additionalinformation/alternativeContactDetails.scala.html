@@ -87,8 +87,7 @@
    Input(
     classes = "govuk-input--width-20 ",
     attributes = Map("maxlength" -> "50"),
-    label = Label(content = Text(messages("label.email1"))),
-//    label = Label(content = Text(messages("alternativeContactAddress.buildingNameNumber.label") )),
+    label = Label(content = Text(messages("label.email"))),
     errorMessage = theForm.errors.asTextErrorMessageForField("alternativeContactDetails.email")
    ).withFormField(theForm("alternativeContactDetails.email"))
   )

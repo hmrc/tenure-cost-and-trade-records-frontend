@@ -25,6 +25,7 @@ GET         /previously-connected                                   controllers.
 POST        /previously-connected                                   controllers.PastConnectionController.submit()
 
 GET         /remove-connection                                      controllers.removeconnection.RemoveConnectionController.show()
+POST        /remove-connection                                      controllers.removeconnection.RemoveConnectionController.submit()
 
 GET         /connection-to-the-property                             controllers.connectiontoproperty.ConnectionToThePropertyController.show()
 POST        /connection-to-the-property                             controllers.connectiontoproperty.ConnectionToThePropertyController.submit()

@@ -19,16 +19,17 @@ package form.notconnected
 import form.MappingSupport.contactDetailsMapping
 import models.submissions.notconnected.RemoveConnectionsDetails
 import play.api.data.Form
-import play.api.data.Forms.{default, mapping, text}
+import play.api.data.Forms.{default, mapping, optional, text}
 import play.api.data.validation.Constraints.nonEmpty
 
 object RemoveConnectionForm {
   val removeConnectionForm: Form[RemoveConnectionsDetails] = Form(
     mapping(
       "removeConnectionFullName" -> default(text, "").verifying(
-        nonEmpty(errorMessage = "error.alternativeContactFullName.required")
+        nonEmpty(errorMessage = "error.removeConnectionFullName.required")
       ),
-      "removeConnectionDetails"  -> contactDetailsMapping
+      "removeConnectionDetails"  -> contactDetailsMapping,
+      "removeConnectionAdditionalInfo" -> optional(text)
     )(RemoveConnectionsDetails.apply)(RemoveConnectionsDetails.unapply)
   )
 }

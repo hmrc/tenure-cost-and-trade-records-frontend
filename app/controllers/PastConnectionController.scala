@@ -17,15 +17,15 @@
 package controllers
 
 import actions.WithSessionRefiner
-import controllers.LoginController.loginForm
 import form.notconnected.RemoveConnectionForm.removeConnectionForm
 import form.PastConnectionForm.pastConnectionForm
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.{login, pastConnection, removeConnection}
+import views.html.pastConnection
 import models.submissions.connectiontoproperty.StillConnectedDetails.updateStillConnectedDetails
+import views.html.notconnected.removeConnection
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
@@ -33,7 +33,6 @@ import scala.concurrent.Future
 @Singleton
 class PastConnectionController @Inject() (
   mcc: MessagesControllerComponents,
-  login: login,
   pastConnectionView: pastConnection,
   removeConnectionView: removeConnection,
   withSessionRefiner: WithSessionRefiner,

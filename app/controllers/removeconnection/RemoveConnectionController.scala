@@ -25,7 +25,7 @@ import navigation.identifiers.RemoveConnectionId
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.removeConnection
+import views.html.notconnected.removeConnection
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
@@ -44,8 +44,7 @@ class RemoveConnectionController @Inject() (
       Ok(
         removeConnectionView(
           request.sessionData.removeConnectionDetails.flatMap(_.removeConnectionDetails) match {
-            case Some(removeConnectionDetails) =>
-              removeConnectionForm.fillAndValidate(removeConnectionDetails)
+            case Some(removeConnectionDetails) => removeConnectionForm.fillAndValidate(removeConnectionDetails)
             case _ => removeConnectionForm
           }
         )))

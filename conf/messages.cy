@@ -117,11 +117,12 @@ areYouConnectedNo.heading = Have you ever had a connection to the property?
 ##############################
 removeConnection.heading = Remove your connection to this property
 removeConnection.subheading = We’ll use these details if we need to contact you
-label.removeConnection.fullName = Full name
-label.removeConnection.emailAddress = Email address
-label.removeConnection.telephoneNumber = Telephone number
-label.removeConnection.additionalInformation = Additional information
-hint.removeConnection.additionalInformation = For example, the name of the current owner or occupier
+label.removeConnectionFullName.fullName = Full name
+label.removeConnectionDetails.email = Email address
+label.removeConnectionDetails.phone = Telephone number
+label.removeConnectionDetails.removeConnectionAdditionalInfo = Additional information
+hint.removeConnectionDetails.removeConnectionAdditionalInfo = For example, the name of the current owner or occupier
+error.removeConnectionFullName.required = Please provide your full name
 
 #6010 ABOUT YOU
 ##############################

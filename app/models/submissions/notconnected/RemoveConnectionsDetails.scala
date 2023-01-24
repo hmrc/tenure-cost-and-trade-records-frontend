@@ -21,7 +21,8 @@ import play.api.libs.json.Json
 
 case class RemoveConnectionsDetails(
                                      removeConnectionFullName: String,
-                                     removeConnectionDetails: ContactDetails
+                                     removeConnectionDetails: ContactDetails,
+                                     removeConnectionAdditionalInfo: Option[String]
                                    )
 
 object RemoveConnectionsDetails {
