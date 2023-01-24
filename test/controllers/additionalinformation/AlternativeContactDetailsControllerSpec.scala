@@ -17,7 +17,7 @@
 package controllers.additionalinformation
 
 import form.Errors
-import navigation.AlternativeContactDetailsNavigator
+import navigation.AdditionalInformationNavigator
 import play.api.data.FormError
 import play.api.http.Status
 import play.api.test.Helpers._
@@ -31,7 +31,7 @@ class AlternativeContactDetailsControllerSpec extends TestBaseSpec {
   import form.aboutyou.AboutYouForm.aboutYouForm
   import utils.FormBindingTestAssertions.{mustContainError, mustContainRequiredErrorFor}
 
-  val mockAlternativeContactDetailsNavigator = mock[AlternativeContactDetailsNavigator]
+  val mockAlternativeContactDetailsNavigator = mock[AdditionalInformationNavigator]
   val mockAlternativeContactDetailsView      = mock[alternativeContactDetails]
   when(mockAlternativeContactDetailsView.apply(any)(any, any)).thenReturn(HtmlFormat.empty)
 

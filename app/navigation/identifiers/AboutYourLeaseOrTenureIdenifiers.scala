@@ -14,20 +14,21 @@
  * limitations under the License.
  */
 
-package navigation
+package navigation.identifiers
 
-import connectors.Audit
-import models.Session
-import navigation.identifiers.{AlternativeContactDetailsId, Identifier}
-import play.api.mvc.Call
+case object AboutTheLandlordPageId extends Identifier {
+  override def toString: String = "aboutTheLandlordPage"
+}
 
-import javax.inject.Inject
-import scala.concurrent.ExecutionContext
+case object CurrentAnnualRentPageId extends Identifier {
+  override def toString: String = "currentAnnualRentPage"
+}
 
-class AlternativeContactDetailsNavigator @Inject() (audit: Audit)(implicit ec: ExecutionContext)
-    extends Navigator(audit) {
+case object CurrentRentFirstPaidPageId extends Identifier {
+  override def toString: String = "currentRentFirstPaidPage"
+}
 
-  override val routeMap: Map[Identifier, Session => Call] = Map(
-    AlternativeContactDetailsId -> (_ => controllers.Form6010.routes.CheckYourAnswersController.show())
-  )
+// 6011 page only
+case object TenancyLeaseAgreementExpirePageId extends Identifier {
+  override def toString: String = "tenancyLeaseAgreementExpirePage"
 }

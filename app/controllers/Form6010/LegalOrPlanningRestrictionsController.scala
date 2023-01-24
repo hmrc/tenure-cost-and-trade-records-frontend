@@ -55,7 +55,12 @@ class LegalOrPlanningRestrictionsController @Inject() (
               )
             case LegalPlanningRestrictionsNo  =>
               Future.successful(
-                Ok(furtherInformationOrRemarksView(furtherInformationOrRemarksForm))
+                Ok(
+                  furtherInformationOrRemarksView(
+                    furtherInformationOrRemarksForm,
+                    controllers.Form6010.routes.TenantsAdditionsDisregardedController.show().url
+                  )
+                )
               )
           }
       )

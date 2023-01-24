@@ -47,14 +47,14 @@
 )
 
 
-@(theForm: Form[AnnualRent])(implicit request: Request[_], messages: Messages)
+@(theForm: Form[AnnualRent], backLink: String)(implicit request: Request[_], messages: Messages)
 
 @layout(
  pageHeading = messages("currentAnnualRent.heading"),
  showH1 = false,
  showSection = true,
  sectionName = messages("label.section.aboutYourLeaseOrTenure"),
- backLinkUrl = controllers.Form6010.routes.TenancyLeaseAgreementController.show.url,
+ backLinkUrl = backLink,
  theForm = theForm
 ) {
 

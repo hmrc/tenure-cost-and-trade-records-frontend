@@ -19,3 +19,7 @@ package navigation.identifiers
 case object AdditionalInformationId extends Identifier {
   override def toString: String = "additionalInformationPage"
 }
+
+case object AlternativeContactDetailsId extends Identifier {
+  override def toString: String = "alternativeContactDetailsPage"
+}

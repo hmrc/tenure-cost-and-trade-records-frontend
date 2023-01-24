@@ -16,22 +16,35 @@
 
 package controllers.aboutYourLeaseOrTenure
 
+import navigation.AboutYourLeaseOrTenureNavigator
 import play.api.http.Status
 import play.api.test.Helpers._
+import play.twirl.api.HtmlFormat
 import utils.TestBaseSpec
+import views.html.aboutYourLeaseOrTenure.currentAnnualRent
 
 class CurrentAnnualRentControllerSpec extends TestBaseSpec {
 
-  private val controller = app.injector.instanceOf[CurrentAnnualRentController]
+  val mockAboutYourLeaseOrTenureNavigator = mock[AboutYourLeaseOrTenureNavigator]
+  val mockCcurrentAnnualRentView          = mock[currentAnnualRent]
+  when(mockCcurrentAnnualRentView.apply(any, any)(any, any)).thenReturn(HtmlFormat.empty)
+
+  val connectionToThePropertyController = new CurrentAnnualRentController(
+    stubMessagesControllerComponents(),
+    mockAboutYourLeaseOrTenureNavigator,
+    mockCcurrentAnnualRentView,
+    preFilledSession,
+    mockSessionRepo
+  )
 
   "GET /" should {
     "return 200" in {
-      val result = controller.show(fakeRequest)
+      val result = connectionToThePropertyController.show(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return HTML" in {
-      val result = controller.show(fakeRequest)
+      val result = connectionToThePropertyController.show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }

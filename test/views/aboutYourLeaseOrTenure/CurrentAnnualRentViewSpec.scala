@@ -30,9 +30,11 @@ class CurrentAnnualRentViewSpec extends QuestionViewBehaviours[AnnualRent] {
 
   override val form = CurrentAnnualRentForm.currentAnnualRentForm
 
-  def createView = () => currentAnnualRentView(form)(fakeRequest, messages)
+  val backLink = controllers.Form6010.routes.TenancyLeaseAgreementController.show().url
 
-  def createViewUsingForm = (form: Form[AnnualRent]) => currentAnnualRentView(form)(fakeRequest, messages)
+  def createView = () => currentAnnualRentView(form, backLink)(fakeRequest, messages)
+
+  def createViewUsingForm = (form: Form[AnnualRent]) => currentAnnualRentView(form, backLink)(fakeRequest, messages)
 
   "Current annual rent view" must {
 

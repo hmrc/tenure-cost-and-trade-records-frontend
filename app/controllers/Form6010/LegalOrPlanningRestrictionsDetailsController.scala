@@ -42,7 +42,15 @@ class LegalOrPlanningRestrictionsDetailsController @Inject() (
       .bindFromRequest()
       .fold(
         formWithErrors => Future.successful(BadRequest(legalOrPlanningRestrictionsDetailsView(formWithErrors))),
-        data => Future.successful(Ok(furtherInformationOrRemarksView(furtherInformationOrRemarksForm)))
+        data =>
+          Future.successful(
+            Ok(
+              furtherInformationOrRemarksView(
+                furtherInformationOrRemarksForm,
+                controllers.Form6010.routes.TenantsAdditionsDisregardedController.show().url
+              )
+            )
+          )
       )
   }
 }

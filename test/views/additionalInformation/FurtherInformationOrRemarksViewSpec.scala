@@ -32,10 +32,12 @@ class FurtherInformationOrRemarksViewSpec extends QuestionViewBehaviours[Further
 
   override val form = FurtherInformationOrRemarksForm.furtherInformationOrRemarksForm
 
-  def createView = () => furtherInformationOrRemarksView(form)(fakeRequest, messages)
+  val backLink = controllers.Form6010.routes.TenantsAdditionsDisregardedController.show().url
+
+  def createView = () => furtherInformationOrRemarksView(form, backLink)(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[FurtherInformationOrRemarksDetails]) =>
-    furtherInformationOrRemarksView(form)(fakeRequest, messages)
+    furtherInformationOrRemarksView(form, backLink)(fakeRequest, messages)
 
   "Further Information or Remarks view" must {
 

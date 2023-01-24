@@ -19,7 +19,7 @@ package controllers.additionalinformation
 import actions.WithSessionRefiner
 import form.additionalinformation.AlternativeContactDetailsForm.alternativeContactDetailsForm
 import models.submissions.additionalinformation.AltContactInformation.updateAltContactInformation
-import navigation.AlternativeContactDetailsNavigator
+import navigation.AdditionalInformationNavigator
 import navigation.identifiers.AlternativeContactDetailsId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
@@ -33,7 +33,7 @@ import scala.concurrent.Future
 @Singleton
 class AlternativeContactDetailsController @Inject() (
   mcc: MessagesControllerComponents,
-  navigator: AlternativeContactDetailsNavigator,
+  navigator: AdditionalInformationNavigator,
   alternativeContactDetailsView: alternativeContactDetails,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo

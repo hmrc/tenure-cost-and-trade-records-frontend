@@ -16,33 +16,72 @@
 
 package controllers.aboutYourLeaseOrTenure
 
+import actions.WithSessionRefiner
 import form.aboutYourLeaseOrTenure.CurrentAnnualRentForm.currentAnnualRentForm
-import form.aboutYourLeaseOrTenure.CurrentRentFirstPaidForm.currentRentFirstPaidForm
+import models.{ForTypes, Session}
+import navigation.AboutYourLeaseOrTenureNavigator
+import navigation.identifiers.CurrentAnnualRentPageId
+import play.api.Logging
+import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.aboutYourLeaseOrTenure.{currentAnnualRent, currentRentFirstPaid}
+import views.html.aboutYourLeaseOrTenure.currentAnnualRent
 
-import javax.inject.{Inject, Singleton}
+import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
 
 @Singleton
 class CurrentAnnualRentController @Inject() (
   mcc: MessagesControllerComponents,
-  currentRentFirstPaidView: currentRentFirstPaid,
-  currentAnnualRentView: currentAnnualRent
-) extends FrontendController(mcc) {
+  navigator: AboutYourLeaseOrTenureNavigator,
+  currentAnnualRentView: currentAnnualRent,
+  withSessionRefiner: WithSessionRefiner,
+  @Named("session") val session: SessionRepo
+) extends FrontendController(mcc)
+    with I18nSupport
+    with Logging {
 
-  def show: Action[AnyContent] = Action.async { implicit request =>
-    Future.successful(Ok(currentAnnualRentView(currentAnnualRentForm)))
+  def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
+    Ok(
+      currentAnnualRentView(
+        currentAnnualRentForm,
+        getBackLink(request.sessionData) match {
+          case Right(link) => link
+          case Left(msg)   =>
+            logger.warn(s"Navigation for current annual rent page reached with error: $msg")
+            throw new RuntimeException(s"Navigation for current annual rent page reached with error $msg")
+        }
+      )
+    )
   }
 
-  def submit = Action.async { implicit request =>
+  def submit = (Action andThen withSessionRefiner).async { implicit request =>
     currentAnnualRentForm
       .bindFromRequest()
       .fold(
-        formWithErrors => Future.successful(BadRequest(currentAnnualRentView(formWithErrors))),
-        data => Future.successful(Ok(currentRentFirstPaidView(currentRentFirstPaidForm)))
+        formWithErrors =>
+          Future.successful(
+            BadRequest(
+              currentAnnualRentView(
+                formWithErrors,
+                getBackLink(request.sessionData) match {
+                  case Right(link) => link
+                  case Left(msg)   =>
+                    logger.warn(s"Navigation for current annual rent page reached with error: $msg")
+                    throw new RuntimeException(s"Navigation for current annual rent page reached with error $msg")
+                }
+              )
+            )
+          ),
+        data => Future.successful(Redirect(navigator.nextPage(CurrentAnnualRentPageId).apply(request.sessionData)))
       )
   }
 
+  private def getBackLink(answers: Session): Either[String, String] =
+    answers.userLoginDetails.forNumber match {
+      case ForTypes.for6010 => Right(controllers.Form6010.routes.LeaseOrAgreementYearsController.show().url)
+      case ForTypes.for6011 => Right(controllers.aboutYourLeaseOrTenure.routes.AboutYourLandlordController.show().url)
+      case _                => Left(s"Unknown form type with current annual rent back link")
+    }
 }
