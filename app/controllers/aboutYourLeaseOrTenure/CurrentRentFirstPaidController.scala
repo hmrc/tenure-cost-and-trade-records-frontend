@@ -17,29 +17,26 @@
 package controllers.aboutYourLeaseOrTenure
 
 import actions.WithSessionRefiner
-import form.Form6010.CurrentLeaseOrAgreementBeginForm.currentLeaseOrAgreementBeginForm
 import form.aboutYourLeaseOrTenure.CurrentRentFirstPaidForm.currentRentFirstPaidForm
-import form.aboutYourLeaseOrTenure.TenancyLeaseAgreementExpireForm.tenancyLeaseAgreementExpireForm
+import navigation.AboutYourLeaseOrTenureNavigator
+import navigation.identifiers.CurrentRentFirstPaidPageId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.aboutYourLeaseOrTenure.{currentRentFirstPaid, tenancyLeaseAgreementExpire}
-import views.html.form.currentLeaseOrAgreementBegin
+import views.html.aboutYourLeaseOrTenure.currentRentFirstPaid
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
 @Singleton
 class CurrentRentFirstPaidController @Inject() (
   mcc: MessagesControllerComponents,
-  currentLeaseOrAgreementBeginView: currentLeaseOrAgreementBegin,
+  navigator: AboutYourLeaseOrTenureNavigator,
   currentRentFirstPaidView: currentRentFirstPaid,
-  tenancyLeaseAgreementExpireView: tenancyLeaseAgreementExpire,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext)
-    extends FrontendController(mcc)
+) extends FrontendController(mcc)
     with I18nSupport {
 
   def show: Action[AnyContent] = Action { implicit request =>
@@ -47,18 +44,11 @@ class CurrentRentFirstPaidController @Inject() (
   }
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
-    val forNumberRequest = request.sessionData.userLoginDetails.forNumber
-
     currentRentFirstPaidForm
       .bindFromRequest()
       .fold(
         formWithErrors => Future.successful(BadRequest(currentRentFirstPaidView(formWithErrors))),
-        data =>
-          if (forNumberRequest == "FOR6011") {
-            Future.successful(Ok(tenancyLeaseAgreementExpireView(tenancyLeaseAgreementExpireForm)))
-          } else {
-            Future.successful(Ok(currentLeaseOrAgreementBeginView(currentLeaseOrAgreementBeginForm)))
-          }
+        data => Future.successful(Redirect(navigator.nextPage(CurrentRentFirstPaidPageId).apply(request.sessionData)))
       )
   }
 }

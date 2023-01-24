@@ -53,7 +53,14 @@ class LeaseOrAgreementYearsController @Inject() (
           ) {
             Future.successful(Ok(currentRentPayableWithin12MonthsView(currentRentPayableWithin12MonthsForm)))
           } else {
-            Future.successful(Ok(currentAnnualRentView(currentAnnualRentForm)))
+            Future.successful(
+              Ok(
+                currentAnnualRentView(
+                  currentAnnualRentForm,
+                  controllers.Form6010.routes.LeaseOrAgreementYearsController.show().url
+                )
+              )
+            )
           }
       )
   }

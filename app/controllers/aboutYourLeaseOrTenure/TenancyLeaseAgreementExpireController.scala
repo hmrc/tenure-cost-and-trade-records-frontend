@@ -18,26 +18,25 @@ package controllers.aboutYourLeaseOrTenure
 
 import actions.WithSessionRefiner
 import form.aboutYourLeaseOrTenure.TenancyLeaseAgreementExpireForm.tenancyLeaseAgreementExpireForm
-import form.additionalinformation.FurtherInformationOrRemarksForm.furtherInformationOrRemarksForm
+import navigation.AboutYourLeaseOrTenureNavigator
+import navigation.identifiers.TenancyLeaseAgreementExpirePageId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.aboutYourLeaseOrTenure.tenancyLeaseAgreementExpire
-import views.html.additionalinformation.furtherInformationOrRemarks
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
 @Singleton
 class TenancyLeaseAgreementExpireController @Inject() (
   mcc: MessagesControllerComponents,
+  navigator: AboutYourLeaseOrTenureNavigator,
   tenancyLeaseAgreementExpireView: tenancyLeaseAgreementExpire,
   withSessionRefiner: WithSessionRefiner,
-  furtherInformationView: furtherInformationOrRemarks,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext)
-    extends FrontendController(mcc)
+) extends FrontendController(mcc)
     with I18nSupport {
 
   def show: Action[AnyContent] = Action { implicit request =>
@@ -49,7 +48,8 @@ class TenancyLeaseAgreementExpireController @Inject() (
       .bindFromRequest()
       .fold(
         formWithErrors => Future.successful(BadRequest(tenancyLeaseAgreementExpireView(formWithErrors))),
-        data => Future.successful(Ok(furtherInformationView(furtherInformationOrRemarksForm)))
+        data =>
+          Future.successful(Redirect(navigator.nextPage(TenancyLeaseAgreementExpirePageId).apply(request.sessionData)))
       )
   }
 }

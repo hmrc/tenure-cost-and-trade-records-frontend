@@ -29,7 +29,7 @@ class FurtherInformationOrRemarksControllerSpec extends TestBaseSpec {
 
   val mockAdditionalInformationNavigator  = mock[AdditionalInformationNavigator]
   val mockFurtherInformationOrRemarksView = mock[furtherInformationOrRemarks]
-  when(mockFurtherInformationOrRemarksView.apply(any)(any, any)).thenReturn(HtmlFormat.empty)
+  when(mockFurtherInformationOrRemarksView.apply(any, any)(any, any)).thenReturn(HtmlFormat.empty)
 
   val furtherInformationOrRemarksController = new FurtherInformationOrRemarksController(
     stubMessagesControllerComponents(),
