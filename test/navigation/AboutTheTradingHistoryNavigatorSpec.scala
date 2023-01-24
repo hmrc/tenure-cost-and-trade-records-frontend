@@ -21,6 +21,7 @@ import models.Session
 import models.submissions.aboutyou.{AboutYou, CustomerDetails}
 import models.submissions.common.ContactDetails
 import models.submissions.connectiontoproperty.{AddressConnectionTypeYes, StillConnectedDetails}
+import models.submissions.notconnected.{RemoveConnectionDetails, RemoveConnectionsDetails}
 import navigation.identifiers.{AboutYourTradingHistoryPageId, Identifier, TurnoverPageId}
 import org.scalatest.matchers.must.Matchers.convertToAnyMustWrapper
 import play.api.libs.json.JsObject
@@ -37,8 +38,19 @@ class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec {
   val navigator = new AboutTheTradingHistoryNavigator(audit)
 
   val stillConnectedDetailsYes = Some(StillConnectedDetails(Some(AddressConnectionTypeYes)))
+  val removeConnection         = Some(
+    RemoveConnectionDetails(
+      Some(
+        RemoveConnectionsDetails(
+          "John Smith",
+          ContactDetails("12345678909", "test@email.com"),
+          Some("Additional Information is here")
+        )
+      )
+    )
+  )
   val aboutYou                 = Some(AboutYou(Some(CustomerDetails("Tobermory", ContactDetails("12345678909", "test@email.com")))))
-  val sessionAboutYou          = Session(testUserLoginDetails, stillConnectedDetailsYes, aboutYou)
+  val sessionAboutYou          = Session(testUserLoginDetails, stillConnectedDetailsYes, removeConnection, aboutYou)
 
   implicit override val hc: HeaderCarrier = HeaderCarrier()
 

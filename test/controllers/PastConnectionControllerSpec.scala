@@ -20,17 +20,21 @@ import play.api.http.Status
 import play.api.test.Helpers._
 import play.twirl.api.HtmlFormat
 import utils.TestBaseSpec
-import views.html.{login, pastConnection}
+import views.html.pastConnection
+import views.html.notconnected.removeConnection
 
 class PastConnectionControllerSpec extends TestBaseSpec {
 
   val mockPastConnectionView = mock[pastConnection]
   when(mockPastConnectionView.apply(any)(any, any)).thenReturn(HtmlFormat.empty)
 
+  val mockRemoveConnectionView = mock[removeConnection]
+  when(mockRemoveConnectionView.apply(any)(any, any)).thenReturn(HtmlFormat.empty)
+
   val pastConnectionController = new PastConnectionController(
     stubMessagesControllerComponents(),
-    mock[login],
     mockPastConnectionView,
+    mockRemoveConnectionView,
     preFilledSession,
     mockSessionRepo
   )

@@ -14,25 +14,19 @@
  * limitations under the License.
  */
 
-package controllers
+package navigation
 
-import config.AppConfig
-import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.removeConnection
+import connectors.Audit
+import models.Session
+import navigation.identifiers.{Identifier, RemoveConnectionId}
+import play.api.mvc.Call
 
-import javax.inject.{Inject, Singleton}
-import scala.concurrent.Future
+import javax.inject.Inject
+import scala.concurrent.ExecutionContext
 
-@Singleton
-class RemoveConnectionController @Inject() (
-  mcc: MessagesControllerComponents,
-  appConfig: AppConfig,
-  removeConnection: removeConnection
-) extends FrontendController(mcc) {
+class RemoveConnectionNavigator @Inject() (audit: Audit)(implicit ec: ExecutionContext) extends Navigator(audit) {
 
-  def show: Action[AnyContent] = Action.async { implicit request =>
-    Future.successful(Ok(removeConnection()))
-  }
-
+  override val routeMap: Map[Identifier, Session => Call] = Map(
+    RemoveConnectionId -> (_ => controllers.Form6010.routes.CheckYourAnswersController.show())
+  )
 }

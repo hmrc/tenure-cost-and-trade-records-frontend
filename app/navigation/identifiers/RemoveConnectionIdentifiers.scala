@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-package models.submissions.additionalinformation
+package navigation.identifiers
 
-case class FranchiseOrLettingsTiedToPropertiesDetails(
-  franchiseOrLettingsTiedToProperty: FranchiseOrLettingsTiedToProperties
-)
+case object RemoveConnectionId extends Identifier {
+  override def toString: String = "removeConnectionPage"
+}

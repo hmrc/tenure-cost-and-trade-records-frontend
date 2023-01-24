@@ -14,18 +14,18 @@
  * limitations under the License.
  */
 
-package form.additionalinformation
+package models.submissions.notconnected
 
-import form.MappingSupport.franchiseOrLettingsTiedToPropertyType
-import models.submissions.additionalinformation.FranchiseOrLettingsTiedToPropertiesDetails
-import play.api.data.Form
-import play.api.data.Forms.mapping
+import models.submissions.common.ContactDetails
+import play.api.libs.json.Json
 
-object FranchiseOrLettingsTiedToPropertyForm {
+case class RemoveConnectionsDetails(
+  removeConnectionFullName: String,
+  removeConnectionDetails: ContactDetails,
+  removeConnectionAdditionalInfo: Option[String]
+)
 
-  val franchiseOrLettingsTiedToPropertyForm = Form(
-    mapping(
-      "franchiseLettings" -> franchiseOrLettingsTiedToPropertyType
-    )(FranchiseOrLettingsTiedToPropertiesDetails.apply)(FranchiseOrLettingsTiedToPropertiesDetails.unapply)
-  )
+object RemoveConnectionsDetails {
+  implicit val format = Json.format[RemoveConnectionsDetails]
+
 }
