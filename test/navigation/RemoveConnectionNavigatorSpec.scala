@@ -24,7 +24,7 @@ import models.submissions.additionalinformation.{AdditionalInformation, FurtherI
 import models.submissions.common.ContactDetails
 import models.submissions.connectiontoproperty.{AddressConnectionTypeYes, StillConnectedDetails}
 import models.submissions.notconnected.{RemoveConnectionDetails, RemoveConnectionsDetails}
-import navigation.identifiers.{AdditionalInformationId, Identifier}
+import navigation.identifiers.{AdditionalInformationId, Identifier, RemoveConnectionId}
 import org.scalatest.matchers.must.Matchers.convertToAnyMustWrapper
 import play.api.libs.json.JsObject
 import uk.gov.hmrc.http.HeaderCarrier
@@ -32,12 +32,12 @@ import utils.TestBaseSpec
 
 import scala.concurrent.ExecutionContext
 
-class AdditionalInformationNavigatorSpec extends TestBaseSpec {
+class RemoveConnectionNavigatorSpec extends TestBaseSpec {
 
   val audit = mock[Audit]
   doNothing.when(audit).sendExplicitAudit(any[String], any[JsObject])(any[HeaderCarrier], any[ExecutionContext])
 
-  val navigator = new AdditionalInformationNavigator(audit)
+  val navigator = new RemoveConnectionNavigator(audit)
 
   val aboutYou                     = Some(AboutYou(Some(CustomerDetails("Tobermory", ContactDetails("12345678909", "test@email.com")))))
   val aboutTheProperty             = Some(AboutTheProperty(None))
@@ -64,7 +64,7 @@ class AdditionalInformationNavigatorSpec extends TestBaseSpec {
       additionalInformation
     )
 
-  "Connection to property navigator" when {
+  "Remove connection navigator" when {
 
     "go to sign in from an identifier that doesn't exist in the route map" in {
       case object UnknownIdentifier extends Identifier
@@ -73,12 +73,12 @@ class AdditionalInformationNavigatorSpec extends TestBaseSpec {
         .apply(sessionAdditionalInformation) mustBe controllers.routes.LoginController.show()
     }
 
-    "return a function that goes to alternative contact details page when about you has been completed" in {
+    "return a function that goes to remove connection page when about you has been completed" in {
       navigator
-        .nextPage(AdditionalInformationId)
+        .nextPage(RemoveConnectionId)
         .apply(
           sessionAdditionalInformation
-        ) mustBe controllers.additionalinformation.routes.AlternativeContactDetailsController
+        ) mustBe controllers.Form6010.routes.CheckYourAnswersController
         .show()
     }
   }

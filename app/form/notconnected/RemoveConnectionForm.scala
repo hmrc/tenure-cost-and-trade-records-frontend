@@ -25,10 +25,10 @@ import play.api.data.validation.Constraints.nonEmpty
 object RemoveConnectionForm {
   val removeConnectionForm: Form[RemoveConnectionsDetails] = Form(
     mapping(
-      "removeConnectionFullName" -> default(text, "").verifying(
+      "removeConnectionFullName"       -> default(text, "").verifying(
         nonEmpty(errorMessage = "error.removeConnectionFullName.required")
       ),
-      "removeConnectionDetails"  -> contactDetailsMapping,
+      "removeConnectionDetails"        -> contactDetailsMapping,
       "removeConnectionAdditionalInfo" -> optional(text)
     )(RemoveConnectionsDetails.apply)(RemoveConnectionsDetails.unapply)
   )

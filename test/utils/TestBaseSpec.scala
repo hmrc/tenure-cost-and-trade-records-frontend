@@ -22,6 +22,7 @@ import models.submissions.abouttheproperty._
 import models.submissions.aboutyou.{AboutYou, CustomerDetails}
 import models.submissions.common.{Address, ContactDetails}
 import models.submissions.connectiontoproperty.{AddressConnectionTypeYes, StillConnectedDetails}
+import models.submissions.notconnected.{RemoveConnectionDetails, RemoveConnectionsDetails}
 import models.{Session, UserLoginDetails}
 import org.mockito.scalatest.MockitoSugar
 import org.scalatest.{BeforeAndAfterEach, Inside}
@@ -91,6 +92,17 @@ trait TestBaseSpec
   val testUserLoginDetails                     =
     UserLoginDetails("jwtToken", "FOR6010", "123456", Address("13", Some("Street"), Some("City"), "AA11 1AA"))
   val testStillConnectedDetailsYes             = StillConnectedDetails(Some(AddressConnectionTypeYes))
+  val testRemoveConnection                     = Some(
+    RemoveConnectionDetails(
+      Some(
+        RemoveConnectionsDetails(
+          "John Smith",
+          ContactDetails("12345678909", "test@email.com"),
+          Some("Additional Information is here")
+        )
+      )
+    )
+  )
   val testAboutYou                             = AboutYou(Some(CustomerDetails("Tobermory", ContactDetails("12345678909", "test@email.com"))))
   val testAboutThePropertyNo                   = AboutTheProperty(
     Some(PropertyDetails("OccupierName", CurrentPropertyHotel, None)),

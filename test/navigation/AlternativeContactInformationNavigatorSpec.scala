@@ -23,6 +23,7 @@ import models.submissions.aboutyou.{AboutYou, CustomerDetails}
 import models.submissions.additionalinformation.{AdditionalInformation, FurtherInformationOrRemarksDetails}
 import models.submissions.common.ContactDetails
 import models.submissions.connectiontoproperty.{AddressConnectionTypeYes, StillConnectedDetails}
+import models.submissions.notconnected.{RemoveConnectionDetails, RemoveConnectionsDetails}
 import navigation.identifiers.{AdditionalInformationId, Identifier}
 import org.scalatest.matchers.must.Matchers.convertToAnyMustWrapper
 import play.api.libs.json.JsObject
@@ -40,10 +41,28 @@ class AlternativeContactInformationNavigatorSpec extends TestBaseSpec {
 
   val aboutYou                     = Some(AboutYou(Some(CustomerDetails("Tobermory", ContactDetails("12345678909", "test@email.com")))))
   val aboutTheProperty             = Some(AboutTheProperty(None))
+  val removeConnection             = Some(
+    RemoveConnectionDetails(
+      Some(
+        RemoveConnectionsDetails(
+          "John Smith",
+          ContactDetails("12345678909", "test@email.com"),
+          Some("Additional Information is here")
+        )
+      )
+    )
+  )
   val additionalInformation        = Some(AdditionalInformation(Some(FurtherInformationOrRemarksDetails("test"))))
   val stillConnectedDetailsYes     = Some(StillConnectedDetails(Some(AddressConnectionTypeYes)))
   val sessionAdditionalInformation =
-    Session(testUserLoginDetails, stillConnectedDetailsYes, aboutYou, aboutTheProperty, additionalInformation)
+    Session(
+      testUserLoginDetails,
+      stillConnectedDetailsYes,
+      removeConnection,
+      aboutYou,
+      aboutTheProperty,
+      additionalInformation
+    )
 
   "Connection to property navigator" when {
 

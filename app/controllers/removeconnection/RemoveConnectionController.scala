@@ -37,7 +37,8 @@ class RemoveConnectionController @Inject() (
   removeConnectionView: removeConnection,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FrontendController(mcc) with I18nSupport {
+) extends FrontendController(mcc)
+    with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Future.successful(
@@ -45,9 +46,11 @@ class RemoveConnectionController @Inject() (
         removeConnectionView(
           request.sessionData.removeConnectionDetails.flatMap(_.removeConnectionDetails) match {
             case Some(removeConnectionDetails) => removeConnectionForm.fillAndValidate(removeConnectionDetails)
-            case _ => removeConnectionForm
+            case _                             => removeConnectionForm
           }
-        )))
+        )
+      )
+    )
   }
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>

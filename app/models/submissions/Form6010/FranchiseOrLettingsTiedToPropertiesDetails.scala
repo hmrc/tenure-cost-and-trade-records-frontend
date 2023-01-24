@@ -17,5 +17,5 @@
 package models.submissions.Form6010
 
 case class FranchiseOrLettingsTiedToPropertiesDetails(
-                                                       franchiseOrLettingsTiedToProperty: FranchiseOrLettingsTiedToProperties
-                                                     )
+  franchiseOrLettingsTiedToProperty: FranchiseOrLettingsTiedToProperties
+)

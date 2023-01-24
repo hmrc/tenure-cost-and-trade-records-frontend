@@ -14,27 +14,16 @@
  * limitations under the License.
  */
 
-package controllers
+package navigation.identifiers
 
-import controllers.removeconnection.RemoveConnectionController
-import play.api.http.Status
-import play.api.test.Helpers._
 import utils.TestBaseSpec
 
-class RemoveConnectionControllerSpec extends TestBaseSpec {
+class RemoveConnectionIdentifiersSpec extends TestBaseSpec {
 
-  private val controller = app.injector.instanceOf[RemoveConnectionController]
+  "Remove connection identifiers" when {
 
-  "GET /" should {
-    "return 200" in {
-      val result = controller.show(fakeRequest)
-      status(result) shouldBe Status.OK
-    }
-
-    "return HTML" in {
-      val result = controller.show(fakeRequest)
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+    "Identifier for Remove connection page" in {
+      assert(RemoveConnectionId.toString.equals("removeConnectionPage"))
     }
   }
 }

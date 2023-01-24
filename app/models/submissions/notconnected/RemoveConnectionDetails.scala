@@ -26,8 +26,8 @@ object RemoveConnectionDetails {
   implicit val format = Json.format[RemoveConnectionDetails]
 
   def updateRemoveConnectionDetails(
-                                     copy: RemoveConnectionDetails => RemoveConnectionDetails
-                                   )(implicit sessionRequest: SessionRequest[_]): Session = {
+    copy: RemoveConnectionDetails => RemoveConnectionDetails
+  )(implicit sessionRequest: SessionRequest[_]): Session = {
 
     val currentRemoveConnectionDetails = sessionRequest.sessionData.removeConnectionDetails
 

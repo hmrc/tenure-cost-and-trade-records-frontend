@@ -40,6 +40,7 @@ class AboutTheProperty6011NavigatorSpec extends TestBaseSpec {
   val sessionAboutYou6011No    = Session(
     testUserLoginDetails6011,
     Some(testStillConnectedDetailsYes),
+    testRemoveConnection,
     Some(testAboutYou),
     Some(testAboutThePropertyNo)
   )
@@ -95,7 +96,13 @@ class AboutTheProperty6011NavigatorSpec extends TestBaseSpec {
     )
   )
   val sessionAboutYou6011Yes =
-    Session(testUserLoginDetails6011, Some(testStillConnectedDetailsYes), Some(testAboutYou), aboutThePropertyYes)
+    Session(
+      testUserLoginDetails6011,
+      Some(testStillConnectedDetailsYes),
+      testRemoveConnection,
+      Some(testAboutYou),
+      aboutThePropertyYes
+    )
 
   "About to property navigator for yes answers for 6010" when {
 

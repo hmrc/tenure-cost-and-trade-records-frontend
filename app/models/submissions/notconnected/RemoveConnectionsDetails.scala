@@ -20,10 +20,10 @@ import models.submissions.common.ContactDetails
 import play.api.libs.json.Json
 
 case class RemoveConnectionsDetails(
-                                     removeConnectionFullName: String,
-                                     removeConnectionDetails: ContactDetails,
-                                     removeConnectionAdditionalInfo: Option[String]
-                                   )
+  removeConnectionFullName: String,
+  removeConnectionDetails: ContactDetails,
+  removeConnectionAdditionalInfo: Option[String]
+)
 
 object RemoveConnectionsDetails {
   implicit val format = Json.format[RemoveConnectionsDetails]
