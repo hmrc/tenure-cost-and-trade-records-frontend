@@ -19,6 +19,7 @@ package form
 import models._
 import models.submissions.Form6010._
 import models.submissions._
+import models.submissions.aboutYourLeaseOrTenure._
 import models.submissions.abouttheproperty._
 import models.submissions.additionalinformation.{FranchiseOrLettingsTiedToProperties, FranchiseOrLettingsTiedToProperty}
 import models.submissions.connectiontoproperty.{AddressConnectionType, ConnectionToProperty}

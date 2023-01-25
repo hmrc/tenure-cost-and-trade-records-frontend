@@ -14,20 +14,26 @@
  * limitations under the License.
  */
 
-package form.Form6010
+package controllers.aboutYourLeaseOrTenure
 
-import form.MappingSupport._
-import models.submissions.Form6010.LeaseOrAgreementYearsDetails
-import play.api.data.Form
-import play.api.data.Forms.mapping
+import play.api.http.Status
+import play.api.test.Helpers._
+import utils.TestBaseSpec
 
-object LeaseOrAgreementYearsForm {
+class LeaseOrAgreementYearsControllerSpec extends TestBaseSpec {
 
-  val leaseOrAgreementYearsForm = Form(
-    mapping(
-      "commenceWithinThreeYears"        -> commenceWithinThreeYearsType,
-      "agreedReviewedAlteredThreeYears" -> agreedReviewedAlteredThreeYearsType,
-      "rentUnderReviewNegotiated"       -> rentUnderReviewNegotiatedType
-    )(LeaseOrAgreementYearsDetails.apply)(LeaseOrAgreementYearsDetails.unapply)
-  )
+  private val controller = app.injector.instanceOf[LeaseOrAgreementYearsController]
+
+  "GET /" should {
+    "return 200" in {
+      val result = controller.show(fakeRequest)
+      status(result) shouldBe Status.OK
+    }
+
+    "return HTML" in {
+      val result = controller.show(fakeRequest)
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
+    }
+  }
 }

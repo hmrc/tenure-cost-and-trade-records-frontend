@@ -14,20 +14,20 @@
  * limitations under the License.
  */
 
-package form.Form6010
+package form.aboutYourLeaseOrTenure
 
-import form.DateMappings.dateFieldsMapping
-import form.MappingSupport.currentRentPayableWithin12MonthsType
-import models.submissions.Form6010.CurrentRentPayableWithin12Months
+import form.MappingSupport.{agreedReviewedAlteredThreeYearsType, commenceWithinThreeYearsType, rentUnderReviewNegotiatedType}
+import models.submissions.aboutYourLeaseOrTenure.LeaseOrAgreementYearsDetails
 import play.api.data.Form
 import play.api.data.Forms.mapping
 
-object CurrentRentPayableWithin12MonthsForm {
+object LeaseOrAgreementYearsForm {
 
-  val currentRentPayableWithin12MonthsForm = Form(
+  val leaseOrAgreementYearsForm = Form(
     mapping(
-      "rentPayable" -> currentRentPayableWithin12MonthsType,
-      "dateReview"  -> dateFieldsMapping("dateReview", fieldErrorPart = ".dateReview")
-    )(CurrentRentPayableWithin12Months.apply)(CurrentRentPayableWithin12Months.unapply)
+      "commenceWithinThreeYears"        -> commenceWithinThreeYearsType,
+      "agreedReviewedAlteredThreeYears" -> agreedReviewedAlteredThreeYearsType,
+      "rentUnderReviewNegotiated"       -> rentUnderReviewNegotiatedType
+    )(LeaseOrAgreementYearsDetails.apply)(LeaseOrAgreementYearsDetails.unapply)
   )
 }

@@ -14,11 +14,10 @@
  * limitations under the License.
  */
 
-package models.submissions.Form6010
+package models.submissions.aboutYourLeaseOrTenure
 
-import java.time.LocalDate
-
-case class CurrentRentPayableWithin12Months(
-  currentRentWithin12Months: CurrentRentWithin12Months,
-  rentActuallyAgreed: LocalDate
+case class LeaseOrAgreementYearsDetails(
+  commenceWithinThreeYears: CommenceWithinThreeYears,
+  agreedReviewedAlteredThreeYears: AgreedReviewedAlteredThreeYears,
+  rentUnderReviewNegotiated: RentUnderReviewNegotiated
 )

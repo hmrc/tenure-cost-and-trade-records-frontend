@@ -14,18 +14,21 @@
  * limitations under the License.
  */
 
-package controllers.Form6010
+package controllers.aboutYourLeaseOrTenure
 
-import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.form.{currentRentPayableWithin12Months, leaseOrAgreementYears}
-import form.Form6010.LeaseOrAgreementYearsForm.leaseOrAgreementYearsForm
-import form.Form6010.CurrentRentPayableWithin12MonthsForm.currentRentPayableWithin12MonthsForm
+import actions.WithSessionRefiner
 import form.aboutYourLeaseOrTenure.CurrentAnnualRentForm.currentAnnualRentForm
-import models.submissions.Form6010.{AgreedReviewedAlteredThreeYearsNo, CommenceWithinThreeYearsNo, RentUnderReviewNegotiatedNo}
+import form.aboutYourLeaseOrTenure.CurrentRentPayableWithin12MonthsForm.currentRentPayableWithin12MonthsForm
+import form.aboutYourLeaseOrTenure.LeaseOrAgreementYearsForm.leaseOrAgreementYearsForm
+import models.submissions.aboutYourLeaseOrTenure.{AgreedReviewedAlteredThreeYearsNo, CommenceWithinThreeYearsNo, RentUnderReviewNegotiatedNo}
+import play.api.i18n.I18nSupport
+import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import repositories.SessionRepo
+import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.aboutYourLeaseOrTenure.currentAnnualRent
+import views.html.aboutYourLeaseOrTenure.{currentRentPayableWithin12Months, leaseOrAgreementYears}
 
-import javax.inject.{Inject, Singleton}
+import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
 
 @Singleton
@@ -33,14 +36,17 @@ class LeaseOrAgreementYearsController @Inject() (
   mcc: MessagesControllerComponents,
   currentRentPayableWithin12MonthsView: currentRentPayableWithin12Months,
   currentAnnualRentView: currentAnnualRent,
-  leaseOrAgreementYearsView: leaseOrAgreementYears
-) extends FrontendController(mcc) {
+  leaseOrAgreementYearsView: leaseOrAgreementYears,
+  withSessionRefiner: WithSessionRefiner,
+  @Named("session") val session: SessionRepo
+) extends FrontendController(mcc)
+    with I18nSupport {
 
   def show: Action[AnyContent] = Action.async { implicit request =>
     Future.successful(Ok(leaseOrAgreementYearsView(leaseOrAgreementYearsForm)))
   }
 
-  def submit = Action.async { implicit request =>
+  def submit = (Action andThen withSessionRefiner).async { implicit request =>
     leaseOrAgreementYearsForm
       .bindFromRequest()
       .fold(
@@ -57,7 +63,7 @@ class LeaseOrAgreementYearsController @Inject() (
               Ok(
                 currentAnnualRentView(
                   currentAnnualRentForm,
-                  controllers.Form6010.routes.LeaseOrAgreementYearsController.show().url
+                  controllers.aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.show().url
                 )
               )
             )
