@@ -20,8 +20,9 @@ import models._
 import models.submissions.Form6010._
 import models.submissions._
 import models.submissions.aboutYourLeaseOrTenure._
+import models.submissions.aboutfranchisesorlettings.CateringOperationOrLettingAccommodation
 import models.submissions.abouttheproperty._
-import models.submissions.Form6010.{FranchiseOrLettingsTiedToProperties, FranchiseOrLettingsTiedToProperty}
+import models.submissions.additionalinformation.FranchiseOrLettingsTiedToProperty
 import models.submissions.connectiontoproperty.{AddressConnectionType, ConnectionToProperty}
 import play.api.data.FormError
 import play.api.data.format.Formatter
@@ -88,7 +89,7 @@ object Formats {
     namedEnumFormatter(PremisesLicenseConditions, Errors.booleanMissing)
   implicit val enforcementActionFormat: Formatter[EnforcementAction]                                         =
     namedEnumFormatter(EnforcementAction, Errors.booleanMissing)
-  implicit val franchiseOrLettingsTiedToPropertiesFormat: Formatter[FranchiseOrLettingsTiedToProperties]     =
+  implicit val franchiseOrLettingsTiedToPropertiesFormat: Formatter[FranchiseOrLettingsTiedToProperty]     =
     namedEnumFormatter(FranchiseOrLettingsTiedToProperty, Errors.booleanMissing)
   implicit val rentIncreasedAnnuallyWithRPIsFormat: Formatter[RentIncreasedAnnuallyWithRPIs]                 =
     namedEnumFormatter(RentIncreasedAnnuallyWithRPI, Errors.booleanMissing)

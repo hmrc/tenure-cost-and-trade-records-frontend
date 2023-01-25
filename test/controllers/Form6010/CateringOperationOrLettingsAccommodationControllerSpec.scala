@@ -18,20 +18,33 @@ package controllers.Form6010
 
 import play.api.http.Status
 import play.api.test.Helpers._
+import play.twirl.api.HtmlFormat
 import utils.TestBaseSpec
+import views.html.form.{cateringOperationOrLettingAccommodation, cateringOperationOrLettingAccommodationDetails, lettingOtherPartOfProperty}
+import views.html.login
 
 class CateringOperationOrLettingsAccommodationControllerSpec extends TestBaseSpec {
 
-  private val controller = app.injector.instanceOf[CateringOperationOrLettingAccommodationController]
+  val mockCateringOperationOrLettingAccommodationDetailsView = mock[cateringOperationOrLettingAccommodation]
+  when(mockCateringOperationOrLettingAccommodationDetailsView.apply(any)(any, any)).thenReturn(HtmlFormat.empty)
 
+  val cateringOperationOrLettingAccommodationController = new CateringOperationOrLettingAccommodationController(
+    stubMessagesControllerComponents(),
+    mock[login],
+    mock[cateringOperationOrLettingAccommodationDetails],
+    mock[lettingOtherPartOfProperty],
+    mockCateringOperationOrLettingAccommodationDetailsView,
+    preFilledSession,
+    mockSessionRepo
+  )
   "GET /" should {
     "return 200" in {
-      val result = controller.show(fakeRequest)
+      val result = cateringOperationOrLettingAccommodationController.show(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return HTML" in {
-      val result = controller.show(fakeRequest)
+      val result = cateringOperationOrLettingAccommodationController.show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }

@@ -17,16 +17,20 @@
 package form.Form6010
 
 import form.MappingSupport.cateringOperationType
-import models.submissions.Form6010.CateringOperationDetails
+import models.submissions.aboutfranchisesorlettings.CateringOperationOrLettingAccommodation
 import play.api.data.Form
 import play.api.data.Forms.mapping
 
 object CateringOperationForm {
 
-  val cateringOperationForm = Form(
-    mapping(
-      "cateringOperationOrLettingAccommodation" -> cateringOperationType
-    )(CateringOperationDetails.apply)(CateringOperationDetails.unapply)
-  )
+  lazy val baseCateringOperationOrLettingAccommodationForm: Form[CateringOperationOrLettingAccommodation] = Form(baseCateringOperationOrLettingAccommodationMapping)
+
+  val baseCateringOperationOrLettingAccommodationMapping = mapping(
+    "cateringOperationOrLettingAccommodation" -> cateringOperationType
+  )(x => x)(b => Some(b))
+
+  val cateringOperationForm = Form(baseCateringOperationOrLettingAccommodationMapping)
+
+
 
 }

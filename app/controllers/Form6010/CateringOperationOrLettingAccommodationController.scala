@@ -16,6 +16,7 @@
 
 package controllers.Form6010
 
+import actions.WithSessionRefiner
 import controllers.LoginController.loginForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
@@ -23,10 +24,13 @@ import views.html.form.{cateringOperationOrLettingAccommodation, cateringOperati
 import form.Form6010.CateringOperationForm.cateringOperationForm
 import form.Form6010.CateringOperationOrLettingAccommodationForm.cateringOperationOrLettingAccommodationForm
 import form.Form6010.LettingOtherPartOfPropertiesForm.lettingOtherPartOfPropertiesForm
-import models.submissions.Form6010.{CateringOperationNo, CateringOperationYes}
+import play.api.i18n.I18nSupport
+import repositories.SessionRepo
 import views.html.login
+import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
+import models.submissions.aboutfranchisesorlettings.{CateringOperationNo, CateringOperationYes}
 
-import javax.inject.{Inject, Singleton}
+import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
 
 @Singleton
@@ -35,25 +39,40 @@ class CateringOperationOrLettingAccommodationController @Inject() (
   login: login,
   cateringOperationOrLettingAccommodationDetailsView: cateringOperationOrLettingAccommodationDetails,
   lettingOtherPartOfPropertyView: lettingOtherPartOfProperty,
-  cateringOperationOrLettingAccommodationView: cateringOperationOrLettingAccommodation
-) extends FrontendController(mcc) {
+  cateringOperationOrLettingAccommodationView: cateringOperationOrLettingAccommodation,
+  withSessionRefiner: WithSessionRefiner,
+  @Named("session") val session: SessionRepo
+) extends FrontendController(mcc) with I18nSupport{
 
-  def show: Action[AnyContent] = Action.async { implicit request =>
-    Future.successful(Ok(cateringOperationOrLettingAccommodationView(cateringOperationForm)))
+  def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    Future.successful(
+      Ok(
+        cateringOperationOrLettingAccommodationView(
+          request.sessionData.aboutFranchisesOrLettings.flatMap(_.cateringOperationOrLettingAccommodation) match {
+            case Some(cateringOperationOrLettingAccommodation) => cateringOperationForm.fillAndValidate(cateringOperationOrLettingAccommodation)
+            case _                                             => cateringOperationForm
+          }
+        )
+      )
+    )
   }
 
-  def submit = Action.async { implicit request =>
+  def submit = (Action andThen withSessionRefiner).async { implicit request =>
     cateringOperationForm
       .bindFromRequest()
       .fold(
         formWithErrors => Future.successful(BadRequest(cateringOperationOrLettingAccommodationView(formWithErrors))),
         data =>
-          data.cateringOperationOrLettingAccommodation match {
+          data match {
             case CateringOperationYes =>
+              val updatedData = updateAboutFranchisesOrLettings(_.copy(cateringOperationOrLettingAccommodation = Some(data)))
+              session.saveOrUpdate(updatedData)
               Future.successful(
                 Ok(cateringOperationOrLettingAccommodationDetailsView(cateringOperationOrLettingAccommodationForm))
               )
             case CateringOperationNo  =>
+              val updatedData = updateAboutFranchisesOrLettings(_.copy(cateringOperationOrLettingAccommodation = Some(data)))
+              session.saveOrUpdate(updatedData)
               Future.successful(Ok(lettingOtherPartOfPropertyView(lettingOtherPartOfPropertiesForm)))
             case _                    => Future.successful(Ok(login(loginForm)))
           }

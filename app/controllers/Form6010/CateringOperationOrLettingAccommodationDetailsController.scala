@@ -16,37 +16,49 @@
 
 package controllers.Form6010
 
+import actions.WithSessionRefiner
 import form.Form6010.CateringOperationOrLettingAccommodationForm.cateringOperationOrLettingAccommodationForm
 import form.Form6010.CateringOperationOrLettingAccommodationRentForm.cateringOperationOrLettingAccommodationRentForm
+import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.form.{cateringOperationOrLettingAccommodationDetails, cateringOperationOrLettingAccommodationRentDetails}
-import views.html.login
+import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
+import models.submissions.aboutfranchisesorlettings.CateringOperationOrLettingAccommodationSection
 
-import javax.inject.{Inject, Singleton}
-import scala.concurrent.Future
+import javax.inject.{Inject, Named, Singleton}
+import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class CateringOperationOrLettingAccommodationDetailController @Inject() (
   mcc: MessagesControllerComponents,
-  login: login,
   cateringOperationOrLettingAccommodationDetailsView: cateringOperationOrLettingAccommodationDetails,
-  cateringOperationOrLettingAccommodationRentDetailsView: cateringOperationOrLettingAccommodationRentDetails
-) extends FrontendController(mcc) {
+  cateringOperationOrLettingAccommodationRentDetailsView: cateringOperationOrLettingAccommodationRentDetails,
+  withSessionRefiner: WithSessionRefiner,
+  @Named("session") val session: SessionRepo
+) extends FrontendController(mcc) with I18nSupport{
 
-  def show: Action[AnyContent] = Action.async { implicit request =>
+  def show(index: Int): Action[AnyContent] = Action.async { implicit request =>
     Future.successful(
       Ok(cateringOperationOrLettingAccommodationDetailsView(cateringOperationOrLettingAccommodationForm))
     )
   }
 
-  def submit = Action.async { implicit request =>
+  def submit = (Action andThen withSessionRefiner).async { implicit request =>
     cateringOperationOrLettingAccommodationForm
       .bindFromRequest()
       .fold(
         formWithErrors =>
           Future.successful(BadRequest(cateringOperationOrLettingAccommodationDetailsView(formWithErrors))),
-        data =>
+        data =>{
+          val cateringOperationOrLettingAccommodationSection = request.sessionData.aboutFranchisesOrLettings.flatMap(_.cateringOperationOrLettingAccommodationSections)
+          val section = cateringOperationOrLettingAccommodationSection.size match {
+            case 0 => CateringOperationOrLettingAccommodationSection(1, data)
+            case 1 => CateringOperationOrLettingAccommodationSection(2, data)
+          }
+        }
+    updateAboutFranchisesOrLettings(_.copy(cateringOperationOrLettingAccommodationSections = ))
           Future.successful(
             Ok(cateringOperationOrLettingAccommodationRentDetailsView(cateringOperationOrLettingAccommodationRentForm))
           )

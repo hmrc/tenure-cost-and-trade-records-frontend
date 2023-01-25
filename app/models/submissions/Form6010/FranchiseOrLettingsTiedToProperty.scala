@@ -16,18 +16,23 @@
 
 package models.submissions.Form6010
 
-import models.{NamedEnum, NamedEnumSupport}
+import models.{EnumFormat, NamedEnum, NamedEnumSupport}
+import play.api.libs.json.Format
 
-sealed trait FranchiseOrLettingsTiedToProperties extends NamedEnum {
-  val key = "franchiseOrLettingsTiedToProperties"
+sealed trait FranchiseOrLettingsTiedToProperty extends NamedEnum {
+  override def key: String = "franchiseOrLettingsTiedToProperty"
 }
-object FranchiseOrLettingsTiedToPropertiesYes extends FranchiseOrLettingsTiedToProperties {
-  val name = "yes"
+object FranchiseOrLettingsTiedToPropertiesYes extends FranchiseOrLettingsTiedToProperty {
+  override def name: String  = "yes"
 }
-object FranchiseOrLettingsTiedToPropertiesNo extends FranchiseOrLettingsTiedToProperties {
-  val name = "no"
+object FranchiseOrLettingsTiedToPropertiesNo extends FranchiseOrLettingsTiedToProperty {
+  override def name: String = "no"
 }
 
-object FranchiseOrLettingsTiedToProperty extends NamedEnumSupport[FranchiseOrLettingsTiedToProperties] {
+object FranchiseOrLettingsTiedToProperty extends NamedEnumSupport[FranchiseOrLettingsTiedToProperty] {
+  implicit val format: Format[FranchiseOrLettingsTiedToProperty] = EnumFormat(FranchiseOrLettingsTiedToProperty)
+
   val all = List(FranchiseOrLettingsTiedToPropertiesYes, FranchiseOrLettingsTiedToPropertiesNo)
+
+  val key = all.head.key
 }
