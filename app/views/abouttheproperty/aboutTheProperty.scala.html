@@ -64,51 +64,58 @@
  )
 )
 
-@govukRadios(Radios(
- fieldset = Some(Fieldset(
-  legend = Some(Legend(
-   content = Text(messages("label.propertyCurrentlyUsed")),
-   classes = "govuk-fieldset__legend--m",
-  ))
- )),
- name = "propertyCurrentlyUsed",
- items = Seq(
-  RadioItem(
-   content = Text(messages("propertyCurrentlyUsed.publicHouse")),
-   value = Some("publicHouse")
-  ),
-  RadioItem(
-   content = Text(messages("propertyCurrentlyUsed.wineCafeBar")),
-   value = Some("wineCafeBar")
-  ),
-  RadioItem(
-   content = Text(messages("propertyCurrentlyUsed.otherBar")),
-   value = Some("otherBar")
-  ),
-  RadioItem(
-   content = Text(messages("propertyCurrentlyUsed.pubRestaurant")),
-   value = Some("pubRestaurant")
-  ),
-  RadioItem(
-   content = Text(messages("propertyCurrentlyUsed.licencedRestaurant")),
-   value = Some("licencedRestaurant")
-  ),
-  RadioItem(
-   content = Text(messages("propertyCurrentlyUsed.hotel")),
-   value = Some("hotel")
-  ),
-  RadioItem(
-   content = Text(messages("propertyCurrentlyUsed.discoNightclub")),
-   value = Some("discoNightclub")
-  ),
-  RadioItem(
-   content = Text(messages("propertyCurrentlyUsed.other")),
-   value = Some("other"),
-   conditionalHtml = Some(conditionalHTML)
-  )
- ),
- errorMessage = theForm.errors.asTextErrorMessageForField("propertyCurrentlyUsed")
-).withFormField(theForm("propertyCurrentlyUsed")))
+ <p class="govuk-body">
+  <b>@messages("label.propertyCurrentlyUsed")</b>
+ </p>
+
+@includes.radioButtons(govukRadios, theForm, "propertyCurrentlyUsed", "govuk-fieldset__legend--m",  "publicHouse", Seq(
+ RadioItem(
+  content = Text(messages("propertyCurrentlyUsed.publicHouse")),
+  value = Some("publicHouse")
+ )
+), None)
+@includes.radioButtons(govukRadios, theForm, "propertyCurrentlyUsed", "govuk-fieldset__legend--m",  "wineCafeBar", Seq(
+ RadioItem(
+  content = Text(messages("propertyCurrentlyUsed.wineCafeBar")),
+  value = Some("wineCafeBar")
+ )
+), None)
+@includes.radioButtons(govukRadios, theForm, "propertyCurrentlyUsed", "govuk-fieldset__legend--m",  "otherBar", Seq(
+ RadioItem(
+  content = Text(messages("propertyCurrentlyUsed.otherBar")),
+  value = Some("otherBar")
+ )
+), None)
+@includes.radioButtons(govukRadios, theForm, "propertyCurrentlyUsed", "govuk-fieldset__legend--m",  "pubRestaurant", Seq(
+ RadioItem(
+  content = Text(messages("propertyCurrentlyUsed.pubRestaurant")),
+  value = Some("pubRestaurant")
+ )
+), None)
+@includes.radioButtons(govukRadios, theForm, "propertyCurrentlyUsed", "govuk-fieldset__legend--m",  "licencedRestaurant", Seq(
+ RadioItem(
+  content = Text(messages("propertyCurrentlyUsed.licencedRestaurant")),
+  value = Some("licencedRestaurant")
+ )
+), None)
+@includes.radioButtons(govukRadios, theForm, "propertyCurrentlyUsed", "govuk-fieldset__legend--m",  "hotel", Seq(
+ RadioItem(
+  content = Text(messages("propertyCurrentlyUsed.hotel")),
+  value = Some("hotel")
+ )
+), None)
+@includes.radioButtons(govukRadios, theForm, "propertyCurrentlyUsed", "govuk-fieldset__legend--m",  "discoNightclub", Seq(
+ RadioItem(
+  content = Text(messages("propertyCurrentlyUsed.discoNightclub")),
+  value = Some("discoNightclub")
+ )
+), None)
+@includes.radioButtons(govukRadios, theForm, "propertyCurrentlyUsed", "govuk-fieldset__legend--m",  "other", Seq(
+ RadioItem(
+  content = Text(messages("propertyCurrentlyUsed.other")),
+  value = Some("other")
+ )
+), conditionalHTML)
 
 }
 
