@@ -33,6 +33,8 @@
 @import uk.gov.hmrc.govukfrontend.views.Aliases.RadioItem
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Fieldset
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Legend
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukCheckboxes
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.checkboxes.CheckboxItem
 
 @this(layout: Layout,
         govukButton: GovukButton,
@@ -43,10 +45,13 @@
         govukTextarea: GovukTextarea,
         govukCharacterCount: GovukCharacterCount,
         govukFieldset: GovukFieldset,
+        govukCheckboxes: GovukCheckboxes,
         formWithCSRF: FormWithCSRF
 )
 
+
 @(theForm: Form[PropertyDetails])(implicit request: Request[_], messages: Messages)
+
 
 @content = {
   <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
@@ -68,55 +73,75 @@
   <b>@messages("label.propertyCurrentlyUsed")</b>
  </p>
 
-@includes.radioButtons(govukRadios, theForm, "propertyCurrentlyUsed", "govuk-fieldset__legend--m",  "publicHouse", Seq(
- RadioItem(
-  content = Text(messages("propertyCurrentlyUsed.publicHouse")),
-  value = Some("publicHouse")
- )
-), None)
-@includes.radioButtons(govukRadios, theForm, "propertyCurrentlyUsed", "govuk-fieldset__legend--m",  "wineCafeBar", Seq(
- RadioItem(
-  content = Text(messages("propertyCurrentlyUsed.wineCafeBar")),
-  value = Some("wineCafeBar")
- )
-), None)
-@includes.radioButtons(govukRadios, theForm, "propertyCurrentlyUsed", "govuk-fieldset__legend--m",  "otherBar", Seq(
- RadioItem(
-  content = Text(messages("propertyCurrentlyUsed.otherBar")),
-  value = Some("otherBar")
- )
-), None)
-@includes.radioButtons(govukRadios, theForm, "propertyCurrentlyUsed", "govuk-fieldset__legend--m",  "pubRestaurant", Seq(
- RadioItem(
-  content = Text(messages("propertyCurrentlyUsed.pubRestaurant")),
-  value = Some("pubRestaurant")
- )
-), None)
-@includes.radioButtons(govukRadios, theForm, "propertyCurrentlyUsed", "govuk-fieldset__legend--m",  "licencedRestaurant", Seq(
- RadioItem(
-  content = Text(messages("propertyCurrentlyUsed.licencedRestaurant")),
-  value = Some("licencedRestaurant")
- )
-), None)
-@includes.radioButtons(govukRadios, theForm, "propertyCurrentlyUsed", "govuk-fieldset__legend--m",  "hotel", Seq(
- RadioItem(
-  content = Text(messages("propertyCurrentlyUsed.hotel")),
-  value = Some("hotel")
- )
-), None)
-@includes.radioButtons(govukRadios, theForm, "propertyCurrentlyUsed", "govuk-fieldset__legend--m",  "discoNightclub", Seq(
- RadioItem(
-  content = Text(messages("propertyCurrentlyUsed.discoNightclub")),
-  value = Some("discoNightclub")
- )
-), None)
-@includes.radioButtons(govukRadios, theForm, "propertyCurrentlyUsed", "govuk-fieldset__legend--m",  "other", Seq(
- RadioItem(
-  content = Text(messages("propertyCurrentlyUsed.other")),
-  value = Some("other")
- )
-), conditionalHTML)
+@includes.radioButtons(
+ govukRadios,
+ theForm,
+ "propertyCurrentlyUsed",
+ "govuk-fieldset__legend--m",
+ Seq(
+  RadioItem(
+   content = Text(messages("propertyCurrentlyUsed.publicHouse")),
+   value = Some("publicHouse")
+  ),
+  RadioItem(
+   content = Text(messages("propertyCurrentlyUsed.wineCafeBar")),
+   value = Some("wineCafeBar")
+  ),
+  RadioItem(
+   content = Text(messages("propertyCurrentlyUsed.otherBar")),
+   value = Some("otherBar")
+  ),
+  RadioItem(
+   content = Text(messages("propertyCurrentlyUsed.pubRestaurant")),
+   value = Some("pubRestaurant")
+  ),
+  RadioItem(
+   content = Text(messages("propertyCurrentlyUsed.licencedRestaurant")),
+   value = Some("licencedRestaurant")
+  ),
+  RadioItem(
+   content = Text(messages("propertyCurrentlyUsed.hotel")),
+   value = Some("hotel")
+  ),
+  RadioItem(
+   content = Text(messages("propertyCurrentlyUsed.discoNightclub")),
+   value = Some("discoNightclub")
+  ),
+  RadioItem(
+   content = Text(messages("propertyCurrentlyUsed.other")),
+   value = Some("other"),
+   conditionalHtml = Some(conditionalHTML)
+  )
+))
 
+ @includes.checkboxes(
+  govukCheckboxes,
+  theForm,
+  "propertyCurrentlyUsed",
+  "govuk-fieldset__legend--m",
+  Seq(
+   CheckboxItem(
+    content = Text(messages("propertyCurrentlyUsed.hotel")),
+    value = "hotel"
+   ),
+   CheckboxItem(
+    content = Text(messages("propertyCurrentlyUsed.healthFarm")),
+    value = "healthFarm"
+   ),
+   CheckboxItem(
+    content = Text(messages("propertyCurrentlyUsed.lodgeAndRestaurant")),
+    value = "lodgeAndRestaurant"
+   ),
+   CheckboxItem(
+    content = Text(messages("propertyCurrentlyUsed.conferenceCentre")),
+    value = "conferenceCentre"
+   ),
+   CheckboxItem(
+    content = Text(messages("propertyCurrentlyUsed.other")),
+    value = "other"
+   )
+  )
+ )
 }
 
 @conditionalHTML = {

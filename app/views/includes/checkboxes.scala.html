@@ -14,21 +14,22 @@
  * limitations under the License.
  *@
 
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Radios
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.radios.RadioItem
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Text
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukCheckboxes
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Checkboxes
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.checkboxes.CheckboxItem
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Legend
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Fieldset
 
-@(govukRadios: GovukRadios,
+@(govukCheckboxes: GovukCheckboxes,
         theForm: Form[_],
         name: String,
         classes: String,
-        items: Seq[RadioItem],
+        items: Seq[CheckboxItem],
 )(implicit request: Request[_], messages: Messages)
 
-@govukRadios(Radios(
+@govukCheckboxes(Checkboxes(
  fieldset =  Some(Fieldset(
    legend = Some(Legend(
     classes = classes
