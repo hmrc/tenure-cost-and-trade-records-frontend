@@ -210,7 +210,7 @@ error.landlordFullName.required = Please enter the landlord's full name
 error.landlordFullName.maxLength = This must be 1000 characters or fewer
 
 #LEASE OR AGREEMENT DETAILS COMMENCE WITHIN 3 YEARS
-##############################
+###################################################
 leaseOrAgreement.heading = Lease or agreement details
 label.commenceWithinThreeYears = Did the tenancy, lease or agreement commence within the last 3 years?
 label.agreedReviewedAlteredThreeYears  = Has the rent been agreed, reviewed or altered within the last 3 years?
@@ -570,14 +570,10 @@ error.currentLeaseOrAgreementBegin.required = Please provide at what intervals i
 error.currentLeaseOrAgreementBegin.maxLength = This must be 1000 characters or fewer
 
 ##CURRENT RENT PAYABLE WITHIN 12 MONTHS
-##############################
-currentRentPayableWithin12Months.heading = Lease or agreement details
-label.currentRentPayableWithin12Months = Is the current rent payable due to review within the next 12 months, either under the terms of the existing lease, or upon grant of a new lease?
-hint.currentRentPayableWithin12Months = Do not include any rent increases linked to turnover or the retail price index (RPI)
+#######################################
+currentRentPayableWithin12Months.heading = Is the current rent payable due to review within the next 12 months, either under the terms of the existing lease, or upon grant of a new lease?
+currentRentPayableWithin12Months.hint = Do not include any rent increases linked to turnover or the retail price index (RPI)
 label.dateReview = Date of next rent review or expiry of existing lease
-error.dateReview.day.required = The date must include a day
-error.dateReview.month.required = The date must include a month
-error.dateReview.year.required = The date must include a year
 
 ##WHAT IS YOUR RENT BASED ON
 ##############################

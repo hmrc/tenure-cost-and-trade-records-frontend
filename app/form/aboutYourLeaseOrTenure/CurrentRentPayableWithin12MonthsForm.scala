@@ -14,20 +14,20 @@
  * limitations under the License.
  */
 
-package models.submissions.Form6010
+package form.aboutYourLeaseOrTenure
 
-import models.{NamedEnum, NamedEnumSupport}
+import form.DateMappings.dateFieldsMapping
+import form.MappingSupport.currentRentPayableWithin12MonthsType
+import models.submissions.aboutYourLeaseOrTenure.CurrentRentPayableWithin12Months
+import play.api.data.Form
+import play.api.data.Forms.mapping
 
-sealed trait CurrentRentWithin12Months extends NamedEnum {
-  val key = "rentPayable"
-}
-object CurrentRentWithin12MonthsYes extends CurrentRentWithin12Months {
-  val name = "yes"
-}
-object CurrentRentWithin12MonthsNo extends CurrentRentWithin12Months {
-  val name = "no"
-}
+object CurrentRentPayableWithin12MonthsForm {
 
-object CurrentRentWithin12Month extends NamedEnumSupport[CurrentRentWithin12Months] {
-  val all = List(CurrentRentWithin12MonthsYes, CurrentRentWithin12MonthsNo)
+  val currentRentPayableWithin12MonthsForm = Form(
+    mapping(
+      "rentPayable" -> currentRentPayableWithin12MonthsType,
+      "dateReview"  -> dateFieldsMapping("dateReview")
+    )(CurrentRentPayableWithin12Months.apply)(CurrentRentPayableWithin12Months.unapply)
+  )
 }

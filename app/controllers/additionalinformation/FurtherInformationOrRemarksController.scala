@@ -97,4 +97,3 @@ class FurtherInformationOrRemarksController @Inject() (
       case _                => Left(s"Unknown form type with further information back link")
     }
 }
-

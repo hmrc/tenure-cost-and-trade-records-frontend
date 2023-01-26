@@ -30,6 +30,14 @@ class AboutYourLeaseOrTenureIdentifiersSpec extends TestBaseSpec {
       assert(CurrentAnnualRentPageId.toString.equals("currentAnnualRentPage"))
     }
 
+    "Identifier for lease agreement details page" in {
+      assert(LeaseOrAgreementDetailsPageId.toString.equals("leaseOrAgreementDetailsPage"))
+    }
+
+    "Identifier for current rent payable with 12 months page" in {
+      assert(CurrentRentPayableWithin12monthsPageId.toString.equals("currentRentPayableWithin12monthsPage"))
+    }
+
     "Identifier for current rent first paid page" in {
       assert(CurrentRentFirstPaidPageId.toString.equals("currentRentFirstPaidPage"))
     }

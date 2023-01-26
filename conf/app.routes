@@ -80,9 +80,6 @@ POST        /franchise-or-lettings-tied-to-property                 controllers.
 GET         /included-in-your-rent                                  controllers.Form6010.IncludedInYourRentController.show()
 POST        /included-in-your-rent                                  controllers.Form6010.IncludedInYourRentController.submit()
 
-GET         /lease-or-agreement-details                             controllers.Form6010.LeaseOrAgreementYearsController.show()
-POST        /lease-or-agreement-details                             controllers.Form6010.LeaseOrAgreementYearsController.submit()
-
 GET         /catering-operation-or-letting-accommodation            controllers.Form6010.CateringOperationOrLettingAccommodationController.show()
 POST        /catering-operation-or-letting-accommodation            controllers.Form6010.CateringOperationOrLettingAccommodationController.submit()
 
@@ -95,6 +92,9 @@ POST        /rent-open-market-value                                 controllers.
 # About your leace or tenure
 GET         /about-your-landlord                                    controllers.aboutYourLeaseOrTenure.AboutYourLandlordController.show()
 POST        /about-your-landlord                                    controllers.aboutYourLeaseOrTenure.AboutYourLandlordController.submit()
+
+GET         /lease-or-agreement-details                             controllers.aboutYourLeaseOrTenure.LeaseOrAgreementYearsController.show()
+POST        /lease-or-agreement-details                             controllers.aboutYourLeaseOrTenure.LeaseOrAgreementYearsController.submit()
 
 GET         /current-annual-rent                                    controllers.aboutYourLeaseOrTenure.CurrentAnnualRentController.show()
 POST        /current-annual-rent                                    controllers.aboutYourLeaseOrTenure.CurrentAnnualRentController.submit()
@@ -196,8 +196,8 @@ POST        /current-lease-or-agreement-begin                       controllers.
 GET         /intervals-of-rent-review                               controllers.Form6010.IntervalsOfRentReviewController.show()
 POST        /intervals-of-rent-review                               controllers.Form6010.IntervalsOfRentReviewController.submit()
 
-GET         /current-rent-payable-within-12-months                  controllers.Form6010.CurrentRentPayableWithin12MonthsController.show()
-POST        /current-rent-payable-within-12-months                  controllers.Form6010.CurrentRentPayableWithin12MonthsController.submit()
+GET         /current-rent-payable-within-12-months                  controllers.aboutYourLeaseOrTenure.CurrentRentPayableWithin12MonthsController.show()
+POST        /current-rent-payable-within-12-months                  controllers.aboutYourLeaseOrTenure.CurrentRentPayableWithin12MonthsController.submit()
 
 GET         /what-is-your-rent-based-on                             controllers.Form6010.WhatIsYourRentBasedOnController.show()
 POST        /what-is-your-rent-based-on                             controllers.Form6010.WhatIsYourRentBasedOnController.submit()
@@ -210,6 +210,7 @@ POST        /shared-responsibilities                                controllers.
 
 GET         /task-list                                              controllers.TaskListController.show()
 
+# Additional information
 GET         /further-information-or-remarks                         controllers.additionalinformation.FurtherInformationOrRemarksController.show()
 POST        /further-information-or-remarks                         controllers.additionalinformation.FurtherInformationOrRemarksController.submit()
 

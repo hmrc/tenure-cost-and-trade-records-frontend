@@ -14,15 +14,15 @@
  * limitations under the License.
  */
 
-package controllers.Form6010
+package controllers.aboutYourLeaseOrTenure
 
 import play.api.http.Status
 import play.api.test.Helpers._
 import utils.TestBaseSpec
 
-class LeaseOrAgreementYearsControllerSpec extends TestBaseSpec {
+class CurrentRentPayableWithin12MonthsControllerSpec extends TestBaseSpec {
 
-  private val controller = app.injector.instanceOf[LeaseOrAgreementYearsController]
+  private val controller = app.injector.instanceOf[CurrentRentPayableWithin12MonthsController]
 
   "GET /" should {
     "return 200" in {

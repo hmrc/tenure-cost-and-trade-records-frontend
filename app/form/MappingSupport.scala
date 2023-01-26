@@ -21,6 +21,7 @@ import models.submissions._
 import form.Formats._
 import form.Formats.userTypeFormat
 import models.submissions.Form6010._
+import models.submissions.aboutYourLeaseOrTenure._
 import models.submissions.abouttheproperty._
 import models.submissions.additionalinformation.AlternativeContactDetailsAddress
 import models.submissions.common.{Address, ContactDetails}

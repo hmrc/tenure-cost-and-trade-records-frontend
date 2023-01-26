@@ -20,6 +20,15 @@ case object AboutTheLandlordPageId extends Identifier {
   override def toString: String = "aboutTheLandlordPage"
 }
 
+// Revisit navigation when session is available
+case object LeaseOrAgreementDetailsPageId extends Identifier {
+  override def toString: String = "leaseOrAgreementDetailsPage"
+}
+
+case object CurrentRentPayableWithin12monthsPageId extends Identifier {
+  override def toString: String = "currentRentPayableWithin12monthsPage"
+}
+
 case object CurrentAnnualRentPageId extends Identifier {
   override def toString: String = "currentAnnualRentPage"
 }

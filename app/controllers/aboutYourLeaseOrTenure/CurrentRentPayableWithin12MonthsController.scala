@@ -14,35 +14,44 @@
  * limitations under the License.
  */
 
-package controllers.Form6010
+package controllers.aboutYourLeaseOrTenure
 
-import controllers.LoginController.loginForm
-import form.Form6010.CurrentRentPayableWithin12MonthsForm.currentRentPayableWithin12MonthsForm
+import actions.WithSessionRefiner
+import form.aboutYourLeaseOrTenure.CurrentRentPayableWithin12MonthsForm.currentRentPayableWithin12MonthsForm
+import navigation.AboutYourLeaseOrTenureNavigator
+import navigation.identifiers.CurrentRentPayableWithin12monthsPageId
+import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.form.currentRentPayableWithin12Months
-import views.html.login
+import views.html.aboutYourLeaseOrTenure.currentRentPayableWithin12Months
 
-import javax.inject.{Inject, Singleton}
+import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
 
 @Singleton
 class CurrentRentPayableWithin12MonthsController @Inject() (
   mcc: MessagesControllerComponents,
-  login: login,
-  currentRentPayableWithin12MonthsView: currentRentPayableWithin12Months
-) extends FrontendController(mcc) {
+  navigator: AboutYourLeaseOrTenureNavigator,
+  currentRentPayableWithin12MonthsView: currentRentPayableWithin12Months,
+  withSessionRefiner: WithSessionRefiner,
+  @Named("session") val session: SessionRepo
+) extends FrontendController(mcc)
+    with I18nSupport {
 
   def show: Action[AnyContent] = Action { implicit request =>
     Ok(currentRentPayableWithin12MonthsView(currentRentPayableWithin12MonthsForm))
   }
 
-  def submit = Action.async { implicit request =>
+  def submit = (Action andThen withSessionRefiner).async { implicit request =>
     currentRentPayableWithin12MonthsForm
       .bindFromRequest()
       .fold(
         formWithErrors => Future.successful(BadRequest(currentRentPayableWithin12MonthsView(formWithErrors))),
-        data => Future.successful(Ok(login(loginForm)))
+        data =>
+          Future.successful(
+            Redirect(navigator.nextPage(CurrentRentPayableWithin12monthsPageId).apply(request.sessionData))
+          )
       )
   }
 

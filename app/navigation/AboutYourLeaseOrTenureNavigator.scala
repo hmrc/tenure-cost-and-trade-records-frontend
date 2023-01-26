@@ -33,7 +33,7 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit)(implicit ec: Exec
     if (answers.userLoginDetails.forNumber == ForTypes.for6011)
       controllers.aboutYourLeaseOrTenure.routes.CurrentAnnualRentController.show()
     else
-      controllers.Form6010.routes.LeaseOrAgreementYearsController.show()
+      controllers.aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.show()
   }
 
   private def currentRentFirstPaidRouting: Session => Call = answers => {
@@ -44,10 +44,17 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit)(implicit ec: Exec
   }
 
   override val routeMap: Map[Identifier, Session => Call] = Map(
-    AboutTheLandlordPageId            -> aboutYourLandlordRouting,
-    CurrentAnnualRentPageId           -> (_ => controllers.aboutYourLeaseOrTenure.routes.CurrentRentFirstPaidController.show()),
-    CurrentRentFirstPaidPageId        -> currentRentFirstPaidRouting,
-    TenancyLeaseAgreementExpirePageId -> (_ =>
+    AboutTheLandlordPageId                 -> aboutYourLandlordRouting,
+    // Revisit navigation when session is available
+    LeaseOrAgreementDetailsPageId          -> (_ =>
+      controllers.aboutYourLeaseOrTenure.routes.CurrentRentPayableWithin12MonthsController.show()
+    ),
+    CurrentRentPayableWithin12monthsPageId -> (_ =>
+      controllers.additionalinformation.routes.FurtherInformationOrRemarksController.show()
+    ),
+    CurrentAnnualRentPageId                -> (_ => controllers.aboutYourLeaseOrTenure.routes.CurrentRentFirstPaidController.show()),
+    CurrentRentFirstPaidPageId             -> currentRentFirstPaidRouting,
+    TenancyLeaseAgreementExpirePageId      -> (_ =>
       controllers.additionalinformation.routes.FurtherInformationOrRemarksController.show()
     )
   )

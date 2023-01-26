@@ -14,10 +14,20 @@
  * limitations under the License.
  */
 
-package models.submissions.Form6010
+package models.submissions.aboutYourLeaseOrTenure
 
-case class LeaseOrAgreementYearsDetails(
-  commenceWithinThreeYears: CommenceWithinThreeYears,
-  agreedReviewedAlteredThreeYears: AgreedReviewedAlteredThreeYears,
-  rentUnderReviewNegotiated: RentUnderReviewNegotiated
-)
+import models.{NamedEnum, NamedEnumSupport}
+
+sealed trait CurrentRentWithin12Months extends NamedEnum {
+  val key = "rentPayable"
+}
+object CurrentRentWithin12MonthsYes extends CurrentRentWithin12Months {
+  val name = "yes"
+}
+object CurrentRentWithin12MonthsNo extends CurrentRentWithin12Months {
+  val name = "no"
+}
+
+object CurrentRentWithin12Month extends NamedEnumSupport[CurrentRentWithin12Months] {
+  val all = List(CurrentRentWithin12MonthsYes, CurrentRentWithin12MonthsNo)
+}
