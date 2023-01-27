@@ -35,6 +35,8 @@
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Legend
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukCheckboxes
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.checkboxes.CheckboxItem
+@import models.Session
+@import actions.SessionRequest
 
 @this(layout: Layout,
         govukButton: GovukButton,
@@ -50,8 +52,7 @@
 )
 
 
-@(theForm: Form[PropertyDetails])(implicit request: Request[_], messages: Messages)
-
+@(theForm: Form[PropertyDetails])(implicit request: Request[_], sessionRequest: SessionRequest[_], messages: Messages)
 
 @content = {
   <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
@@ -69,51 +70,56 @@
  )
 )
 
+
+
  <p class="govuk-body">
   <b>@messages("label.propertyCurrentlyUsed")</b>
  </p>
 
-@includes.radioButtons(
- govukRadios,
- theForm,
- "propertyCurrentlyUsed",
- "govuk-fieldset__legend--m",
- Seq(
-  RadioItem(
-   content = Text(messages("propertyCurrentlyUsed.publicHouse")),
-   value = Some("publicHouse")
-  ),
-  RadioItem(
-   content = Text(messages("propertyCurrentlyUsed.wineCafeBar")),
-   value = Some("wineCafeBar")
-  ),
-  RadioItem(
-   content = Text(messages("propertyCurrentlyUsed.otherBar")),
-   value = Some("otherBar")
-  ),
-  RadioItem(
-   content = Text(messages("propertyCurrentlyUsed.pubRestaurant")),
-   value = Some("pubRestaurant")
-  ),
-  RadioItem(
-   content = Text(messages("propertyCurrentlyUsed.licencedRestaurant")),
-   value = Some("licencedRestaurant")
-  ),
-  RadioItem(
-   content = Text(messages("propertyCurrentlyUsed.hotel")),
-   value = Some("hotel")
-  ),
-  RadioItem(
-   content = Text(messages("propertyCurrentlyUsed.discoNightclub")),
-   value = Some("discoNightclub")
-  ),
-  RadioItem(
-   content = Text(messages("propertyCurrentlyUsed.other")),
-   value = Some("other"),
-   conditionalHtml = Some(conditionalHTML)
-  )
-))
+@if(sessionRequest.sessionData.userLoginDetails.forNumber == "FOR6010") {
+ @includes.radioButtons(
+  govukRadios,
+  theForm,
+  "propertyCurrentlyUsed",
+  "govuk-fieldset__legend--m",
+  Seq(
+   RadioItem(
+    content = Text(messages("propertyCurrentlyUsed.publicHouse")),
+    value = Some("publicHouse")
+   ),
+   RadioItem(
+    content = Text(messages("propertyCurrentlyUsed.wineCafeBar")),
+    value = Some("wineCafeBar")
+   ),
+   RadioItem(
+    content = Text(messages("propertyCurrentlyUsed.otherBar")),
+    value = Some("otherBar")
+   ),
+   RadioItem(
+    content = Text(messages("propertyCurrentlyUsed.pubRestaurant")),
+    value = Some("pubRestaurant")
+   ),
+   RadioItem(
+    content = Text(messages("propertyCurrentlyUsed.licencedRestaurant")),
+    value = Some("licencedRestaurant")
+   ),
+   RadioItem(
+    content = Text(messages("propertyCurrentlyUsed.hotel")),
+    value = Some("hotel")
+   ),
+   RadioItem(
+    content = Text(messages("propertyCurrentlyUsed.discoNightclub")),
+    value = Some("discoNightclub")
+   ),
+   RadioItem(
+    content = Text(messages("propertyCurrentlyUsed.other")),
+    value = Some("other"),
+    conditionalHtml = Some(conditionalHTML)
+   )
+  ))
+}
 
+@if(sessionRequest.sessionData.userLoginDetails.forNumber == "FOR6011") {
  @includes.checkboxes(
   govukCheckboxes,
   theForm,
@@ -138,10 +144,13 @@
    ),
    CheckboxItem(
     content = Text(messages("propertyCurrentlyUsed.other")),
-    value = "other"
+    value = "other",
+    conditionalHtml = Some(conditionalHTML)
    )
   )
  )
+
+}
 }
 
 @conditionalHTML = {
