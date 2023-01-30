@@ -18,12 +18,11 @@ package models.submissions.abouttheproperty
 
 import play.api.libs.json.Json
 
-case class WebsiteForPropertyDetails(
-  buildingOperatingHaveAWebsite: BuildingOperationHaveAWebsite,
-  websiteAddressForProperty: Option[String]
-)
+case class PremisesLicenseGrantedDetails(
+                                      premisesLicenseGranted: PremisesLicenseGranted
+                                    )
 
-object WebsiteForPropertyDetails {
-  implicit val format = Json.format[WebsiteForPropertyDetails]
-
-}
+//object PremisesLicenseGrantedDetails {
+//  implicit val format = Json.format[PremisesLicenseGrantedDetails]
+//
+//}

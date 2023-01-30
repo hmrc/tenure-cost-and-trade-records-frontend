@@ -160,4 +160,8 @@ object Formats {
 
   implicit val whatIsYourRentBasedOnFormatter: Formatter[CurrentRentBasedOn] =
     namedEnumFormatter(CurrentRentBased, Errors.booleanMissing)
+
+  implicit val premisesLicenseGrantedFormatter: Formatter[PremisesLicenseGranted] =
+    namedEnumFormatter(PremisesLicenseGrants, Errors.booleanMissing)
+
 }

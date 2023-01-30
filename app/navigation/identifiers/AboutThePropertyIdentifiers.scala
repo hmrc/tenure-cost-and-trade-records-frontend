@@ -24,6 +24,11 @@ case object WebsiteForPropertyPageId extends Identifier {
   override def toString: String = "websiteForPropertyPage"
 }
 
+// 6015 page only
+case object PremisesLicenseGrantedId extends Identifier {
+  override def toString: String = "premisesLicenseGrantedPage"
+}
+
 case object LicensableActivityPageId extends Identifier {
   override def toString: String = "licensableActivityPage"
 }

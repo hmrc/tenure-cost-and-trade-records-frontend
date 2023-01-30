@@ -29,6 +29,13 @@ class AboutThePropertyNavigator @Inject() (audit: Audit)(implicit ec: ExecutionC
     extends Navigator(audit)
     with Logging {
 
+  private def websiteForPropertyRouting: Session => Call = answers => {
+    if (answers.userLoginDetails.forNumber == ForTypes.for6015)
+        controllers.abouttheproperty.routes.PremisesLicenseGrantedController.show()
+      else
+        controllers.abouttheproperty.routes.LicensableActivitiesController.show()
+  }
+
   private def licensableActivityRouting: Session => Call = answers => {
     answers.aboutTheProperty.flatMap(_.licensableActivities.map(_.name)) match {
       case Some("yes") => controllers.abouttheproperty.routes.LicensableActivitiesDetailsController.show()
@@ -90,7 +97,7 @@ class AboutThePropertyNavigator @Inject() (audit: Audit)(implicit ec: ExecutionC
 
   override val routeMap: Map[Identifier, Session => Call] = Map(
     AboutThePropertyPageId                  -> (_ => controllers.abouttheproperty.routes.WebsiteForPropertyController.show()),
-    WebsiteForPropertyPageId                -> (_ => controllers.abouttheproperty.routes.LicensableActivitiesController.show()),
+    WebsiteForPropertyPageId                -> websiteForPropertyRouting,
     LicensableActivityPageId                -> licensableActivityRouting,
     LicensableActivityDetailsPageId         -> (_ =>
       controllers.abouttheproperty.routes.PremisesLicenseConditionsController.show()

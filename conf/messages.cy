@@ -647,6 +647,10 @@ error.alternativeContactFullName.required = Please enter the full name
 ###########################################
 tenancyLeaseAgreementExpire.heading = When does your tenancy, lease or agreement expire, or if earlier, what is the date of your next review (excluding indexation)?
 
+#PREMISES LICENSE GRANTED (FORM 6015)
+###########################################
+premisesLicenseGranted.heading = Has the premises licence been granted for the property?
+
 #CHECK YOUR ANSWERS
 ###################
 checkYourAnswers.heading = This is a holding page for the check your answers page

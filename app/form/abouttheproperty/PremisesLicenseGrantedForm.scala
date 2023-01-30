@@ -14,16 +14,18 @@
  * limitations under the License.
  */
 
-package models.submissions.abouttheproperty
+package form.abouttheproperty
 
-import play.api.libs.json.Json
+import form.MappingSupport.premisesLicenseGrantedType
+import models.submissions.abouttheproperty.PremisesLicenseGrantedDetails
+import play.api.data.Form
+import play.api.data.Forms.mapping
 
-case class WebsiteForPropertyDetails(
-  buildingOperatingHaveAWebsite: BuildingOperationHaveAWebsite,
-  websiteAddressForProperty: Option[String]
-)
+object PremisesLicenseGrantedForm {
 
-object WebsiteForPropertyDetails {
-  implicit val format = Json.format[WebsiteForPropertyDetails]
-
+  val premisesLicenseGrantedForm = Form(
+    mapping(
+      "premisesLicenseGranted" -> premisesLicenseGrantedType,
+    )(PremisesLicenseGrantedDetails.apply)(PremisesLicenseGrantedDetails.unapply)
+  )
 }

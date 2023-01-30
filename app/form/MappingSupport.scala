@@ -107,6 +107,8 @@ object MappingSupport {
   val tiedForGoodsDetailsType: Mapping[TiedForGoodsInformation] = Forms.of[TiedForGoodsInformation]
   val postcode: Mapping[String]                                 = PostcodeMapping.postcode()
 
+  val premisesLicenseGrantedType: Mapping[PremisesLicenseGranted] = Forms.of[PremisesLicenseGranted]
+
   val decimalRegex         = """^[0-9]{1,10}\.?[0-9]{0,2}$"""
   val cdbMaxCurrencyAmount = 9999999.99
   val spacesIntRegex       = """^\-?\d{1,10}$""".r
