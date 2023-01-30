@@ -1,0 +1,68 @@
+@*
+ * Copyright 2023 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import models.submissions.abouttheproperty.PremisesLicenseGrantedInformationDetails
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
+@import uk.gov.hmrc.govukfrontend.views.html.components._
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
+
+
+@this(layout: Layout,
+        govukButton: GovukButton,
+        govukRadios: GovukRadios,
+        govukErrorSummary: GovukErrorSummary,
+        govukCharacterCount: GovukCharacterCount,
+        formWithCSRF: FormWithCSRF
+)
+
+@(theForm: Form[PremisesLicenseGrantedInformationDetails])(implicit request: Request[_], messages: Messages)
+
+@layout(
+ pageHeading = messages("premisesLicenseGrantedInformation.heading"),
+ showH1 = false,
+ showSection = true,
+ sectionName = messages("label.section.aboutTheProperty"),
+ backLinkUrl = controllers.abouttheproperty.routes.PremisesLicenseGrantedController.show.url,
+ theForm = theForm
+) {
+
+ @formWithCSRF(action = controllers.abouttheproperty.routes.PremisesLicenseGrantedDetailsController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
+
+  <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+   <h1 class="govuk-fieldset__heading">@messages("premisesLicenseGrantedInformation.heading")</h1>
+  </legend>
+
+
+  @govukCharacterCount(
+   CharacterCount(
+    id = "premisesLicenseGrantedInformation",
+    name = "premisesLicenseGrantedInformation",
+    rows = 5,
+    maxLength = 2000,
+    value = theForm("premisesLicenseGrantedInformation").value,
+    errorMessage = theForm.errors.asTextErrorMessageForField("premisesLicenseGrantedInformation")
+   )
+  )
+
+  @includes.continueButton(govukButton)
+
+  @includes.help_with_service_tiedForGoods()
+
+ }
+}
+
+
+

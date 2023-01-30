@@ -14,7 +14,7 @@
  * limitations under the License.
  *@
 
-@import models.submissions.abouttheproperty.PremisesLicenseGrantedDetails
+@import models.submissions.abouttheproperty.PremisesLicenseGranted
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 @import uk.gov.hmrc.govukfrontend.views.html.components._
@@ -32,7 +32,7 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[PremisesLicenseGrantedDetails])(implicit request: Request[_], messages: Messages)
+@(theForm: Form[PremisesLicenseGranted])(implicit request: Request[_], messages: Messages)
 
 @layout(
  pageHeading = messages("premisesLicenseGranted.heading"),

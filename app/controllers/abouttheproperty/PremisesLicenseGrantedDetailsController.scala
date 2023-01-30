@@ -17,24 +17,24 @@
 package controllers.abouttheproperty
 
 import actions.WithSessionRefiner
-import form.abouttheproperty.PremisesLicenseGrantedForm.premisesLicenseGrantedForm
+import form.abouttheproperty.PremisesLicenseGrantedDetailsForm.premisesLicenseGrantedInformationDetailsForm
 import models.submissions.abouttheproperty.AboutTheProperty.updateAboutTheProperty
 import navigation.AboutThePropertyNavigator
-import navigation.identifiers.PremisesLicenseGrantedId
+import navigation.identifiers.{PremisesLicenseGrantedDetailsId, PremisesLicenseGrantedId}
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.abouttheproperty.premisesLicenseGranted
+import views.html.abouttheproperty.premisesLicenseGrantedDetails
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class PremisesLicenseGrantedController @Inject()(
+class PremisesLicenseGrantedDetailsController @Inject()(
   mcc: MessagesControllerComponents,
   navigator: AboutThePropertyNavigator,
-  premisesLicenseGrantedView: premisesLicenseGranted,
+  premisesLicenseGrantedDetailsView: premisesLicenseGrantedDetails,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
 ) extends FrontendController(mcc)
@@ -43,10 +43,10 @@ class PremisesLicenseGrantedController @Inject()(
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Future.successful(
       Ok(
-        premisesLicenseGrantedView(
-          request.sessionData.aboutTheProperty.flatMap(_.premisesLicenseGrantedDetail) match {
-            case Some(premisesLicenseGrantedDetail) => premisesLicenseGrantedForm.fillAndValidate(premisesLicenseGrantedDetail)
-            case _                            => premisesLicenseGrantedForm
+        premisesLicenseGrantedDetailsView(
+          request.sessionData.aboutTheProperty.flatMap(_.premisesLicenseGrantedInformationDetails) match {
+            case Some(premisesLicenseGrantedInformationDetails) => premisesLicenseGrantedInformationDetailsForm.fillAndValidate(premisesLicenseGrantedInformationDetails)
+            case _                                              => premisesLicenseGrantedInformationDetailsForm
           }
         )
       )
@@ -54,15 +54,15 @@ class PremisesLicenseGrantedController @Inject()(
   }
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
-    premisesLicenseGrantedForm
+    premisesLicenseGrantedInformationDetailsForm
       .bindFromRequest()
       .fold(
-        formWithErrors => Future.successful(BadRequest(premisesLicenseGrantedView(formWithErrors))),
+        formWithErrors => Future.successful(BadRequest(premisesLicenseGrantedDetailsView(formWithErrors))),
         data => {
-          val updatedData = updateAboutTheProperty(_.copy(premisesLicenseGrantedDetail = Some(data)))
+          val updatedData = updateAboutTheProperty(_.copy(premisesLicenseGrantedInformationDetails = Some(data)))
           session.saveOrUpdate(updatedData)
-          Future.successful(Redirect(navigator.nextPage(PremisesLicenseGrantedId).apply(updatedData)))
+          Future.successful(Redirect(navigator.nextPage(PremisesLicenseGrantedDetailsId).apply(request.sessionData)))
         }
-          )
+      )
   }
 }

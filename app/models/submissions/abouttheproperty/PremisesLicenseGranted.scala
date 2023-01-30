@@ -29,9 +29,9 @@ object PremisesLicenseGrantedNo extends PremisesLicenseGranted {
   override def name = "no"
 }
 
-object PremisesLicenseGrants extends NamedEnumSupport[PremisesLicenseGranted] {
+object PremisesLicenseGranted extends NamedEnumSupport[PremisesLicenseGranted] {
 
-  implicit val format: Format[PremisesLicenseGranted] = EnumFormat(PremisesLicenseGrants)
+  implicit val format: Format[PremisesLicenseGranted] = EnumFormat(PremisesLicenseGranted)
 
   override def all = List(PremisesLicenseGrantedYes, PremisesLicenseGrantedNo)
 

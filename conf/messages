@@ -656,6 +656,10 @@ tenancyLeaseAgreementExpire.heading = When does your tenancy, lease or agreement
 ###########################################
 premisesLicenseGranted.heading = Has the premises licence been granted for the property?
 
+#PREMISES LICENSE GRANTED DETAILS (FORM 6015)
+###########################################
+premisesLicenseGrantedInformation.heading = Give details of your premises licence, including any conditions restricting the use of all or part of the property
+
 #CHECK YOUR ANSWERS
 ###################
 checkYourAnswers.heading = This is a holding page for the check your answers page

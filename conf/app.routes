@@ -110,6 +110,9 @@ POST        /tenancy-lease-agreement-expire                         controllers.
 GET         /premises-license-granted                               controllers.abouttheproperty.PremisesLicenseGrantedController.show()
 POST        /premises-license-granted                               controllers.abouttheproperty.PremisesLicenseGrantedController.submit()
 
+# Form 6015 routing
+GET         /premises-license-granted-details                       controllers.abouttheproperty.PremisesLicenseGrantedDetailsController.show()
+POST        /premises-license-granted-details                       controllers.abouttheproperty.PremisesLicenseGrantedDetailsController.submit()
 
 GET         /does-the-rent-payable                                  controllers.Form6010.DoesTheRentPayableController.show()
 POST        /does-the-rent-payable                                  controllers.Form6010.DoesTheRentPayableController.submit()

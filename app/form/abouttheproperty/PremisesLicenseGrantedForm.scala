@@ -17,15 +17,18 @@
 package form.abouttheproperty
 
 import form.MappingSupport.premisesLicenseGrantedType
-import models.submissions.abouttheproperty.PremisesLicenseGrantedDetails
+import models.submissions.abouttheproperty.PremisesLicenseGranted
 import play.api.data.Form
 import play.api.data.Forms.mapping
 
 object PremisesLicenseGrantedForm {
 
-  val premisesLicenseGrantedForm = Form(
-    mapping(
-      "premisesLicenseGranted" -> premisesLicenseGrantedType,
-    )(PremisesLicenseGrantedDetails.apply)(PremisesLicenseGrantedDetails.unapply)
-  )
+  lazy val basePremisesLicenseGrantedForm: Form[PremisesLicenseGranted] = Form(basePremisesLicenseGrantedMapping)
+
+  val basePremisesLicenseGrantedMapping = mapping(
+    "premisesLicenseGranted" -> premisesLicenseGrantedType
+  )(x => x)(b => Some(b))
+
+  val premisesLicenseGrantedForm = Form(basePremisesLicenseGrantedMapping)
+
 }
