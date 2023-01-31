@@ -50,7 +50,7 @@ object MappingSupport {
     Forms.of[AddAnotherLettingOtherPartOfProperties]
   val cateringOperationType: Mapping[CateringOperationOrLettingAccommodation]                         =
     Forms.of[CateringOperationOrLettingAccommodation]
-  val lettingOtherPartOfPropertiesType: Mapping[LettingOtherPartOfProperties]                         = Forms.of[LettingOtherPartOfProperties]
+  val lettingOtherPartOfPropertiesType: Mapping[LettingOtherPartOfProperty]                         = Forms.of[LettingOtherPartOfProperty]
   val licensableActivitiesType: Mapping[LicensableActivities]                                         = Forms.of[LicensableActivities]
   val tiedForGoodsType: Mapping[TiedForGoods]                                                         = Forms.of[TiedForGoods]
   val premisesLicenseConditionsType: Mapping[PremisesLicenseConditions]                               = Forms.of[PremisesLicenseConditions]

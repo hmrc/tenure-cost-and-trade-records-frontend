@@ -18,13 +18,16 @@ package models.submissions.aboutfranchisesorlettings
 
 import actions.SessionRequest
 import models.Session
+import models.submissions.Form6010.LettingOtherPartOfProperty
 import models.submissions.additionalinformation.FranchiseOrLettingsTiedToProperty
 import play.api.libs.json.Json
 
 case class AboutFranchisesOrLettings(
                                       franchisesOrLettingsTiedToProperty: Option[FranchiseOrLettingsTiedToProperty] = None,
                                       cateringOperationOrLettingAccommodation: Option[CateringOperationOrLettingAccommodation] = None,
-                                      cateringOperationOrLettingAccommodationSections: Seq[CateringOperationOrLettingAccommodationSection] = Seq.empty
+                                      cateringOperationOrLettingAccommodationSections: IndexedSeq[CateringOperationOrLettingAccommodationSection] = IndexedSeq.empty,
+                                      lettingOtherPartOfProperty: Option[LettingOtherPartOfProperty] = None,
+                                      lettingSections: IndexedSeq[LettingSection] = IndexedSeq.empty
                                     )
 
 object AboutFranchisesOrLettings {
@@ -43,14 +46,6 @@ object AboutFranchisesOrLettings {
 
     sessionRequest.sessionData.copy(aboutFranchisesOrLettings = updateAboutFranchisesOrLettings)
 
-  }
-
-  def updateCateringOperationOrLettingAccommodationSections(currentCateringOperationOrLettingAccommodationSections: CateringOperationOrLettingAccommodationSection => CateringOperationOrLettingAccommodationSection)(implicit sessionRequest: SessionRequest[_]): Session = {
-
-  }
-
-  def orderIdForCateringOperationOrLettingAccommodationSection(section: CateringOperationOrLettingAccommodationSection): Int = {
-    ???
   }
 
 }

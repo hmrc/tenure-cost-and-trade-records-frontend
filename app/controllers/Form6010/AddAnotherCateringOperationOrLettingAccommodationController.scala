@@ -16,17 +16,20 @@
 
 package controllers.Form6010
 
+import actions.WithSessionRefiner
 import controllers.LoginController.loginForm
 import form.Form6010.AddAnotherCateringOperationOrLettingAccommodationForm.addAnotherCateringOperationOrLettingAccommodationForm
 import form.Form6010.LettingOtherPartOfPropertiesForm.lettingOtherPartOfPropertiesForm
 import form.Form6010.CateringOperationOrLettingAccommodationForm.cateringOperationOrLettingAccommodationForm
 import models.submissions.Form6010.{AddAnotherCateringOperationOrLettingAccommodationNo, AddAnotherCateringOperationOrLettingAccommodationYes}
+import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.form.{addAnotherCateringOperationOrLettingAccommodation, cateringOperationOrLettingAccommodationDetails, lettingOtherPartOfProperty}
 import views.html.login
 
-import javax.inject.{Inject, Singleton}
+import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
 
 @Singleton
@@ -35,16 +38,18 @@ class AddAnotherCateringOperationOrLettingAccommodationController @Inject() (
   addAnotherCateringOperationOrLettingAccommodationView: addAnotherCateringOperationOrLettingAccommodation,
   login: login,
   cateringOperationOrLettingAccommodationDetailsView: cateringOperationOrLettingAccommodationDetails,
-  lettingOtherPartOfPropertyView: lettingOtherPartOfProperty
-) extends FrontendController(mcc) {
+  lettingOtherPartOfPropertyView: lettingOtherPartOfProperty,
+  withSessionRefiner: WithSessionRefiner,
+  @Named("session") val session: SessionRepo
+) extends FrontendController(mcc) with I18nSupport {
 
-  def show: Action[AnyContent] = Action.async { implicit request =>
+  def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Future.successful(
       Ok(addAnotherCateringOperationOrLettingAccommodationView(addAnotherCateringOperationOrLettingAccommodationForm))
     )
   }
 
-  def submit = Action.async { implicit request =>
+  def submit = (Action andThen withSessionRefiner).async { implicit request =>
     addAnotherCateringOperationOrLettingAccommodationForm
       .bindFromRequest()
       .fold(
@@ -54,7 +59,7 @@ class AddAnotherCateringOperationOrLettingAccommodationController @Inject() (
           data.addAnotherCateringOperationOrLettingAccommodationDetails match {
             case AddAnotherCateringOperationOrLettingAccommodationYes =>
               Future.successful(
-                Ok(cateringOperationOrLettingAccommodationDetailsView(cateringOperationOrLettingAccommodationForm))
+                Ok(cateringOperationOrLettingAccommodationDetailsView(cateringOperationOrLettingAccommodationForm, None))
               )
             case AddAnotherCateringOperationOrLettingAccommodationNo  =>
               Future.successful(Ok(lettingOtherPartOfPropertyView(lettingOtherPartOfPropertiesForm)))

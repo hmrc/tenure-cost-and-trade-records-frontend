@@ -68,7 +68,7 @@ class CateringOperationOrLettingAccommodationController @Inject() (
               val updatedData = updateAboutFranchisesOrLettings(_.copy(cateringOperationOrLettingAccommodation = Some(data)))
               session.saveOrUpdate(updatedData)
               Future.successful(
-                Ok(cateringOperationOrLettingAccommodationDetailsView(cateringOperationOrLettingAccommodationForm))
+                Ok(cateringOperationOrLettingAccommodationDetailsView(cateringOperationOrLettingAccommodationForm, None))
               )
             case CateringOperationNo  =>
               val updatedData = updateAboutFranchisesOrLettings(_.copy(cateringOperationOrLettingAccommodation = Some(data)))

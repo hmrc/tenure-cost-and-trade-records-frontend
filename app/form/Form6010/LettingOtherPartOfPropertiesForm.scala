@@ -17,15 +17,19 @@
 package form.Form6010
 
 import form.MappingSupport.lettingOtherPartOfPropertiesType
-import models.submissions.Form6010.LettingOtherPartOfPropertyDetails
+import models.submissions.Form6010.LettingOtherPartOfProperty
 import play.api.data.Form
 import play.api.data.Forms.mapping
 
 object LettingOtherPartOfPropertiesForm {
 
-  val lettingOtherPartOfPropertiesForm = Form(
-    mapping(
-      "LettingOtherPartOfProperties" -> lettingOtherPartOfPropertiesType
-    )(LettingOtherPartOfPropertyDetails.apply)(LettingOtherPartOfPropertyDetails.unapply)
-  )
+  lazy val baseLettingOtherPartOfPropertiesForm: Form[LettingOtherPartOfProperty] = Form(baseLettingOtherPartOfPropertiesMapping)
+
+  val baseLettingOtherPartOfPropertiesMapping = mapping(
+    "lettingOtherPartOfProperty" -> lettingOtherPartOfPropertiesType
+  )(x => x)(b => Some(b))
+
+  val lettingOtherPartOfPropertiesForm = Form(baseLettingOtherPartOfPropertiesMapping)
+
+
 }

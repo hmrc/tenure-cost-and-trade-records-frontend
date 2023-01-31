@@ -14,7 +14,6 @@
  * limitations under the License.
  *@
 
-@import models.submissions.Form6010.LettingOtherPartOfPropertyDetails
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
@@ -30,6 +29,7 @@
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Fieldset
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Legend
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Hint
+@import models.submissions.Form6010.LettingOtherPartOfProperty
 
 @this(layout: Layout,
         govukButton: GovukButton,
@@ -42,7 +42,7 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[LettingOtherPartOfPropertyDetails])(implicit request: Request[_], messages: Messages)
+@(theForm: Form[LettingOtherPartOfProperty])(implicit request: Request[_], messages: Messages)
 
 @layout(
  pageHeading = messages("LettingOtherPartOfProperties.heading"),
@@ -54,19 +54,19 @@
 
   @govukRadios(
    Radios(
-    name = "LettingOtherPartOfProperties",
-    idPrefix = Option("LettingOtherPartOfProperties"),
+    name = "lettingOtherPartOfProperty",
+    idPrefix = Option("lettingOtherPartOfProperty"),
     classes = "govuk-radios--inline",
     items = Seq(
      "yes" -> messages("label.yes"),
      "no" -> messages("label.no")
     ).map(radioItem => RadioItem(
      content = Text(radioItem._2),
-     checked = radioItem._1.equals(theForm("LettingOtherPartOfProperties").value.getOrElse("")),
+     checked = radioItem._1.equals(theForm("lettingOtherPartOfProperty").value.getOrElse("")),
      value = Option(radioItem._1)
     )
     ),
-    errorMessage =  theForm.errors.asTextErrorMessageForField("LettingOtherPartOfProperties"),
+    errorMessage =  theForm.errors.asTextErrorMessageForField("lettingOtherPartOfProperty"),
     fieldset = Option(
      Fieldset(
       legend = Option(

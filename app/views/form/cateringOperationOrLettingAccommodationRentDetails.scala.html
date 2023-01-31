@@ -48,7 +48,7 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[CateringOperationOrLettingAccommodationRentDetails])(implicit request: Request[_], messages: Messages)
+@(theForm: Form[CateringOperationOrLettingAccommodationRentDetails], index: Int)(implicit request: Request[_], messages: Messages)
 
 @layout(
  pageHeading = messages("cateringOperationOrLettingAccommodationRentDetails.heading"),
@@ -56,7 +56,7 @@
  theForm = theForm
 ) {
 
- @formWithCSRF(action = controllers.Form6010.routes.CateringOperationOrLettingAccommodationDetailsRentController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
+ @formWithCSRF(action = controllers.Form6010.routes.CateringOperationOrLettingAccommodationDetailsRentController.submit(index), args = 'class -> "myForm", 'id -> "myFormId") {
 
   @hmrcCurrencyInput(
    CurrencyInput(

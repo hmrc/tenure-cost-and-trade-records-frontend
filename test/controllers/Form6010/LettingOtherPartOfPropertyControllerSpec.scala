@@ -18,20 +18,35 @@ package controllers.Form6010
 
 import play.api.http.Status
 import play.api.test.Helpers._
+import play.twirl.api.HtmlFormat
 import utils.TestBaseSpec
+import views.html.form.{aboutYourLandlord, lettingOtherPartOfProperty, lettingOtherPartOfPropertyDetails}
+import views.html.login
 
 class LettingOtherPartOfPropertyControllerSpec extends TestBaseSpec {
 
-  private val controller = app.injector.instanceOf[LettingOtherPartOfPropertyController]
+  val mockLettingOtherPartOfProperty = mock[lettingOtherPartOfProperty]
+  when(mockLettingOtherPartOfProperty.apply(any)(any, any)).thenReturn(HtmlFormat.empty)
+
+
+  val lettingOtherPartOfPropertyController = new LettingOtherPartOfPropertyController(
+    stubMessagesControllerComponents(),
+    mock[login],
+    mock[lettingOtherPartOfPropertyDetails],
+    mockLettingOtherPartOfProperty,
+    mock[aboutYourLandlord],
+    preFilledSession,
+    mockSessionRepo
+  )
 
   "GET /" should {
     "return 200" in {
-      val result = controller.show(fakeRequest)
+      val result = lettingOtherPartOfPropertyController.show(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return HTML" in {
-      val result = controller.show(fakeRequest)
+      val result = lettingOtherPartOfPropertyController.show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }

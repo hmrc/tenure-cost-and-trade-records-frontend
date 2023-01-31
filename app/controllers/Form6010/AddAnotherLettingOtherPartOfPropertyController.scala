@@ -16,18 +16,21 @@
 
 package controllers.Form6010
 
+import actions.WithSessionRefiner
 import controllers.LoginController.loginForm
 import form.Form6010.LettingOtherPartOfPropertyForm.lettingOtherPartOfPropertyForm
 import form.Form6010.AddAnotherLettingOtherPartOfPropertyForm.addAnotherLettingOtherPartOfPropertyForm
 import form.aboutYourLeaseOrTenure.AboutTheLandlordForm.aboutTheLandlordForm
 import models.submissions.Form6010._
+import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.aboutYourLeaseOrTenure.aboutYourLandlord
 import views.html.form._
 import views.html.login
 
-import javax.inject.{Inject, Singleton}
+import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
 
 @Singleton
@@ -36,25 +39,27 @@ class AddAnotherLettingOtherPartOfPropertyController @Inject() (
   addAnotherLettingOtherPartOfPropertyView: addAnotherLettingOtherPartOfProperty,
   lettingOtherPartOfPropertyDetailsView: lettingOtherPartOfPropertyDetails,
   login: login,
-  aboutTheLandlordView: aboutYourLandlord
-) extends FrontendController(mcc) {
+  aboutTheLandlordView: aboutYourLandlord,
+  withSessionRefiner: WithSessionRefiner,
+  @Named("session") val session: SessionRepo
+) extends FrontendController(mcc) with I18nSupport{
 
-  def show: Action[AnyContent] = Action.async { implicit request =>
+  def show(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Future.successful(
-      Ok(addAnotherLettingOtherPartOfPropertyView(addAnotherLettingOtherPartOfPropertyForm))
+      Ok(addAnotherLettingOtherPartOfPropertyView(addAnotherLettingOtherPartOfPropertyForm, index))
     )
   }
 
-  def submit = Action.async { implicit request =>
+  def submit(index: Int) = (Action andThen withSessionRefiner).async { implicit request =>
     addAnotherLettingOtherPartOfPropertyForm
       .bindFromRequest()
       .fold(
-        formWithErrors => Future.successful(BadRequest(addAnotherLettingOtherPartOfPropertyView(formWithErrors))),
+        formWithErrors => Future.successful(BadRequest(addAnotherLettingOtherPartOfPropertyView(formWithErrors, index))),
         data =>
           data.addAnotherLettingOtherPartOfPropertyDetails match {
             case AddAnotherLettingOtherPartOfPropertiesYes =>
               Future.successful(
-                Ok(lettingOtherPartOfPropertyDetailsView(lettingOtherPartOfPropertyForm))
+                Ok(lettingOtherPartOfPropertyDetailsView(lettingOtherPartOfPropertyForm, None))
               )
             case AddAnotherLettingOtherPartOfPropertiesNo  =>
               Future.successful(Ok(aboutTheLandlordView(aboutTheLandlordForm)))
