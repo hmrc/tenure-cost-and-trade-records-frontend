@@ -27,12 +27,13 @@ class CateringOperationOrLettingsAccommodationDetailsControllerSpec extends Test
   val mockCateringOperationOrLettingAccommodationDetails = mock[cateringOperationOrLettingAccommodationDetails]
   when(mockCateringOperationOrLettingAccommodationDetails.apply(any, any)(any, any)).thenReturn(HtmlFormat.empty)
 
-  val cateringOperationOrLettingAccommodationDetailsController = new CateringOperationOrLettingAccommodationDetailsController(
-    stubMessagesControllerComponents(),
-    mockCateringOperationOrLettingAccommodationDetails,
-    preFilledSession,
-    mockSessionRepo
-  )
+  val cateringOperationOrLettingAccommodationDetailsController =
+    new CateringOperationOrLettingAccommodationDetailsController(
+      stubMessagesControllerComponents(),
+      mockCateringOperationOrLettingAccommodationDetails,
+      preFilledSession,
+      mockSessionRepo
+    )
 
   "GET /" should {
     "return 200" in {

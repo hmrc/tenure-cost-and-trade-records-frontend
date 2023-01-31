@@ -42,7 +42,8 @@ class AddAnotherLettingOtherPartOfPropertyController @Inject() (
   aboutTheLandlordView: aboutYourLandlord,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FrontendController(mcc) with I18nSupport{
+) extends FrontendController(mcc)
+    with I18nSupport {
 
   def show(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Future.successful(
@@ -54,7 +55,8 @@ class AddAnotherLettingOtherPartOfPropertyController @Inject() (
     addAnotherLettingOtherPartOfPropertyForm
       .bindFromRequest()
       .fold(
-        formWithErrors => Future.successful(BadRequest(addAnotherLettingOtherPartOfPropertyView(formWithErrors, index))),
+        formWithErrors =>
+          Future.successful(BadRequest(addAnotherLettingOtherPartOfPropertyView(formWithErrors, index))),
         data =>
           data.addAnotherLettingOtherPartOfPropertyDetails match {
             case AddAnotherLettingOtherPartOfPropertiesYes =>

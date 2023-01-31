@@ -23,13 +23,14 @@ import play.api.data.Forms.mapping
 
 object LettingOtherPartOfPropertiesForm {
 
-  lazy val baseLettingOtherPartOfPropertiesForm: Form[LettingOtherPartOfProperty] = Form(baseLettingOtherPartOfPropertiesMapping)
+  lazy val baseLettingOtherPartOfPropertiesForm: Form[LettingOtherPartOfProperty] = Form(
+    baseLettingOtherPartOfPropertiesMapping
+  )
 
   val baseLettingOtherPartOfPropertiesMapping = mapping(
     "lettingOtherPartOfProperty" -> lettingOtherPartOfPropertiesType
   )(x => x)(b => Some(b))
 
   val lettingOtherPartOfPropertiesForm = Form(baseLettingOtherPartOfPropertiesMapping)
-
 
 }

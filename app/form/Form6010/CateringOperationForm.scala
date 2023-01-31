@@ -23,14 +23,14 @@ import play.api.data.Forms.mapping
 
 object CateringOperationForm {
 
-  lazy val baseCateringOperationOrLettingAccommodationForm: Form[CateringOperationOrLettingAccommodation] = Form(baseCateringOperationOrLettingAccommodationMapping)
+  lazy val baseCateringOperationOrLettingAccommodationForm: Form[CateringOperationOrLettingAccommodation] = Form(
+    baseCateringOperationOrLettingAccommodationMapping
+  )
 
   val baseCateringOperationOrLettingAccommodationMapping = mapping(
     "cateringOperationOrLettingAccommodation" -> cateringOperationType
   )(x => x)(b => Some(b))
 
   val cateringOperationForm = Form(baseCateringOperationOrLettingAccommodationMapping)
-
-
 
 }

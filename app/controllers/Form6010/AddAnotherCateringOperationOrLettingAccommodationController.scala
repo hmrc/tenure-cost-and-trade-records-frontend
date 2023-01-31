@@ -41,7 +41,8 @@ class AddAnotherCateringOperationOrLettingAccommodationController @Inject() (
   lettingOtherPartOfPropertyView: lettingOtherPartOfProperty,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FrontendController(mcc) with I18nSupport {
+) extends FrontendController(mcc)
+    with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Future.successful(
@@ -59,7 +60,9 @@ class AddAnotherCateringOperationOrLettingAccommodationController @Inject() (
           data.addAnotherCateringOperationOrLettingAccommodationDetails match {
             case AddAnotherCateringOperationOrLettingAccommodationYes =>
               Future.successful(
-                Ok(cateringOperationOrLettingAccommodationDetailsView(cateringOperationOrLettingAccommodationForm, None))
+                Ok(
+                  cateringOperationOrLettingAccommodationDetailsView(cateringOperationOrLettingAccommodationForm, None)
+                )
               )
             case AddAnotherCateringOperationOrLettingAccommodationNo  =>
               Future.successful(Ok(lettingOtherPartOfPropertyView(lettingOtherPartOfPropertiesForm)))

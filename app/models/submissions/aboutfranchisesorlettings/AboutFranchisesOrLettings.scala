@@ -19,23 +19,24 @@ package models.submissions.aboutfranchisesorlettings
 import actions.SessionRequest
 import models.Session
 import models.submissions.Form6010.LettingOtherPartOfProperty
-import models.submissions.additionalinformation.FranchiseOrLettingsTiedToProperty
+import models.submissions.Form6010.FranchiseOrLettingsTiedToProperty
 import play.api.libs.json.Json
 
 case class AboutFranchisesOrLettings(
-                                      franchisesOrLettingsTiedToProperty: Option[FranchiseOrLettingsTiedToProperty] = None,
-                                      cateringOperationOrLettingAccommodation: Option[CateringOperationOrLettingAccommodation] = None,
-                                      cateringOperationOrLettingAccommodationSections: IndexedSeq[CateringOperationOrLettingAccommodationSection] = IndexedSeq.empty,
-                                      lettingOtherPartOfProperty: Option[LettingOtherPartOfProperty] = None,
-                                      lettingSections: IndexedSeq[LettingSection] = IndexedSeq.empty
-                                    )
+  franchisesOrLettingsTiedToProperty: Option[FranchiseOrLettingsTiedToProperty] = None,
+  cateringOperationOrLettingAccommodation: Option[CateringOperationOrLettingAccommodation] = None,
+  cateringOperationOrLettingAccommodationSections: IndexedSeq[CateringOperationOrLettingAccommodationSection] =
+    IndexedSeq.empty,
+  lettingOtherPartOfProperty: Option[LettingOtherPartOfProperty] = None,
+  lettingSections: IndexedSeq[LettingSection] = IndexedSeq.empty
+)
 
 object AboutFranchisesOrLettings {
   implicit val format = Json.format[AboutFranchisesOrLettings]
 
   def updateAboutFranchisesOrLettings(
-                                     copy: AboutFranchisesOrLettings => AboutFranchisesOrLettings
-                                     )(implicit sessionRequest: SessionRequest[_]): Session = {
+    copy: AboutFranchisesOrLettings => AboutFranchisesOrLettings
+  )(implicit sessionRequest: SessionRequest[_]): Session = {
 
     val currentAboutFranchisesOrLettings = sessionRequest.sessionData.aboutFranchisesOrLettings
 

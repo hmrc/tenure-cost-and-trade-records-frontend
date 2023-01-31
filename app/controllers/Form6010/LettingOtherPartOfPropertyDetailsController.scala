@@ -37,44 +37,56 @@ class LettingOtherPartOfPropertyDetailsController @Inject() (
   lettingOtherPartOfPropertyDetailsView: lettingOtherPartOfPropertyDetails,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext)  extends FrontendController(mcc) with I18nSupport{
+)(implicit ec: ExecutionContext)
+    extends FrontendController(mcc)
+    with I18nSupport {
 
   def show(index: Option[Int]): Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     val existingDetails: Option[LettingOtherPartOfPropertyInformationDetails] = for {
-      requestedIndex <- index
+      requestedIndex          <- index
       existingLettingSections <- request.sessionData.aboutFranchisesOrLettings.map(_.lettingSections)
       // lift turns exception-throwing access by index into an option-returning safe operation
       requestedLettingSection <- existingLettingSections.lift(requestedIndex)
     } yield requestedLettingSection.lettingOtherPartOfPropertyInformationDetails
 
-    Ok(lettingOtherPartOfPropertyDetailsView(existingDetails.fold(lettingOtherPartOfPropertyForm)(lettingOtherPartOfPropertyForm.fill), index))
+    Ok(
+      lettingOtherPartOfPropertyDetailsView(
+        existingDetails.fold(lettingOtherPartOfPropertyForm)(lettingOtherPartOfPropertyForm.fill),
+        index
+      )
+    )
   }
 
   def submit(index: Option[Int]) = (Action andThen withSessionRefiner).async { implicit request =>
     lettingOtherPartOfPropertyForm
       .bindFromRequest()
       .fold(
-        formWithErrors =>
-          Future.successful(BadRequest(lettingOtherPartOfPropertyDetailsView(formWithErrors, index))),
+        formWithErrors => Future.successful(BadRequest(lettingOtherPartOfPropertyDetailsView(formWithErrors, index))),
         data => {
-          val ifFranchisesOrLettingsEmpty = AboutFranchisesOrLettings(lettingSections = IndexedSeq(LettingSection(lettingOtherPartOfPropertyInformationDetails = data)))
-          val updatedAboutFranchisesOrLettings: (Int, AboutFranchisesOrLettings) = request.sessionData.aboutFranchisesOrLettings.fold(0 -> ifFranchisesOrLettingsEmpty) { franchiseOrLettings =>
-          val existingSections = franchiseOrLettings.lettingSections
-            val requestedSection = index.flatMap(existingSections.lift)
-            val updatedSections: (Int, IndexedSeq[LettingSection]) = requestedSection.fold {
-              val defaultSection = LettingSection(data)
-              val appendedSections = existingSections.appended(defaultSection)
-              appendedSections.indexOf(defaultSection) -> appendedSections
-            }{sectionToUpdate =>
-              val indexToUpdate = existingSections.indexOf(sectionToUpdate)
-              indexToUpdate -> existingSections.updated(indexToUpdate, sectionToUpdate.copy(lettingOtherPartOfPropertyInformationDetails = data))
+          val ifFranchisesOrLettingsEmpty                                        = AboutFranchisesOrLettings(lettingSections =
+            IndexedSeq(LettingSection(lettingOtherPartOfPropertyInformationDetails = data))
+          )
+          val updatedAboutFranchisesOrLettings: (Int, AboutFranchisesOrLettings) =
+            request.sessionData.aboutFranchisesOrLettings.fold(0 -> ifFranchisesOrLettingsEmpty) {
+              franchiseOrLettings =>
+                val existingSections                                   = franchiseOrLettings.lettingSections
+                val requestedSection                                   = index.flatMap(existingSections.lift)
+                val updatedSections: (Int, IndexedSeq[LettingSection]) = requestedSection.fold {
+                  val defaultSection   = LettingSection(data)
+                  val appendedSections = existingSections.appended(defaultSection)
+                  appendedSections.indexOf(defaultSection) -> appendedSections
+                } { sectionToUpdate =>
+                  val indexToUpdate = existingSections.indexOf(sectionToUpdate)
+                  indexToUpdate -> existingSections
+                    .updated(indexToUpdate, sectionToUpdate.copy(lettingOtherPartOfPropertyInformationDetails = data))
+                }
+                updatedSections._1 -> franchiseOrLettings.copy(lettingSections = updatedSections._2)
             }
-            updatedSections._1 -> franchiseOrLettings.copy(lettingSections = updatedSections._2)
-          }
           updatedAboutFranchisesOrLettings match {
-            case (currentIndex, aboutFranchisesOrLettings) => session.saveOrUpdate(updateAboutFranchisesOrLettings(_ => aboutFranchisesOrLettings)).map(_ =>
-            Redirect(Form6010.routes.LettingOtherPartOfPropertyDetailsRentController.show(currentIndex))
-            )
+            case (currentIndex, aboutFranchisesOrLettings) =>
+              session
+                .saveOrUpdate(updateAboutFranchisesOrLettings(_ => aboutFranchisesOrLettings))
+                .map(_ => Redirect(Form6010.routes.LettingOtherPartOfPropertyDetailsRentController.show(currentIndex)))
           }
         }
       )

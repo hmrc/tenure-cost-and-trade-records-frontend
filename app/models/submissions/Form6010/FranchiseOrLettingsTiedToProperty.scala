@@ -23,7 +23,7 @@ sealed trait FranchiseOrLettingsTiedToProperty extends NamedEnum {
   override def key: String = "franchiseOrLettingsTiedToProperty"
 }
 object FranchiseOrLettingsTiedToPropertiesYes extends FranchiseOrLettingsTiedToProperty {
-  override def name: String  = "yes"
+  override def name: String = "yes"
 }
 object FranchiseOrLettingsTiedToPropertiesNo extends FranchiseOrLettingsTiedToProperty {
   override def name: String = "no"

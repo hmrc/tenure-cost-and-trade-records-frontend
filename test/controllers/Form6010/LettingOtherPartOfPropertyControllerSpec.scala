@@ -20,14 +20,14 @@ import play.api.http.Status
 import play.api.test.Helpers._
 import play.twirl.api.HtmlFormat
 import utils.TestBaseSpec
-import views.html.form.{aboutYourLandlord, lettingOtherPartOfProperty, lettingOtherPartOfPropertyDetails}
+import views.html.form.{lettingOtherPartOfProperty, lettingOtherPartOfPropertyDetails}
+import views.html.aboutYourLeaseOrTenure.aboutYourLandlord
 import views.html.login
 
 class LettingOtherPartOfPropertyControllerSpec extends TestBaseSpec {
 
   val mockLettingOtherPartOfProperty = mock[lettingOtherPartOfProperty]
   when(mockLettingOtherPartOfProperty.apply(any)(any, any)).thenReturn(HtmlFormat.empty)
-
 
   val lettingOtherPartOfPropertyController = new LettingOtherPartOfPropertyController(
     stubMessagesControllerComponents(),

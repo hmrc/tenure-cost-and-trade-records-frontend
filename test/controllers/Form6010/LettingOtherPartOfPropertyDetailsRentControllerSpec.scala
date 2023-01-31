@@ -34,7 +34,6 @@ class LettingOtherPartOfPropertyDetailsRentControllerSpec extends TestBaseSpec {
     mockSessionRepo
   )
 
-
   "GET /" should {
     "return 200" in {
       val result = lettingOtherPartOfPropertyDetailsRentController.show(0)(fakeRequest)

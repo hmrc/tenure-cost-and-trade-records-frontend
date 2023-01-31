@@ -20,7 +20,8 @@ import play.api.http.Status
 import play.api.test.Helpers._
 import play.twirl.api.HtmlFormat
 import utils.TestBaseSpec
-import views.html.form.{aboutYourLandlord, cateringOperationOrLettingAccommodation, franchiseOrLettingsTiedToProperty}
+import views.html.form.{cateringOperationOrLettingAccommodation, franchiseOrLettingsTiedToProperty}
+import views.html.aboutYourLeaseOrTenure.aboutYourLandlord
 import views.html.login
 
 class FranchiseOrLettingsTiedToPropertyControllerSpec extends TestBaseSpec {

@@ -24,16 +24,18 @@ import views.html.form.{addAnotherCateringOperationOrLettingAccommodation, cater
 
 class CateringOperationOrLettingAccommodationDetailsCheckboxesControllerSpec extends TestBaseSpec {
 
-val mockCateringOperationOrLettingAccommodationCheckboxesDetails = mock[cateringOperationOrLettingAccommodationCheckboxesDetails]
+  val mockCateringOperationOrLettingAccommodationCheckboxesDetails =
+    mock[cateringOperationOrLettingAccommodationCheckboxesDetails]
   when(mockCateringOperationOrLettingAccommodationCheckboxesDetails.apply()(any, any)).thenReturn(HtmlFormat.empty)
 
-  val cateringOperationOrLettingAccommodationDetailsCheckboxesController = new CateringOperationOrLettingAccommodationDetailsCheckboxesController(
-    stubMessagesControllerComponents(),
-    mockCateringOperationOrLettingAccommodationCheckboxesDetails,
-    mock[addAnotherCateringOperationOrLettingAccommodation],
-    preFilledSession,
-    mockSessionRepo
-  )
+  val cateringOperationOrLettingAccommodationDetailsCheckboxesController =
+    new CateringOperationOrLettingAccommodationDetailsCheckboxesController(
+      stubMessagesControllerComponents(),
+      mockCateringOperationOrLettingAccommodationCheckboxesDetails,
+      mock[addAnotherCateringOperationOrLettingAccommodation],
+      preFilledSession,
+      mockSessionRepo
+    )
 
   "GET /" should {
     "return 200" in {

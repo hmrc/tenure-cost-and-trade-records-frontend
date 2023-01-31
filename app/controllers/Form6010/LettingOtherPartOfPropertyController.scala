@@ -43,14 +43,16 @@ class LettingOtherPartOfPropertyController @Inject() (
   aboutTheLandlordView: aboutYourLandlord,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FrontendController(mcc) with I18nSupport{
+) extends FrontendController(mcc)
+    with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Future.successful(
       Ok(
         lettingOtherPartOfPropertyView(
           request.sessionData.aboutFranchisesOrLettings.flatMap(_.lettingOtherPartOfProperty) match {
-            case Some(lettingOtherPartOfProperty) => lettingOtherPartOfPropertiesForm.fillAndValidate(lettingOtherPartOfProperty)
+            case Some(lettingOtherPartOfProperty) =>
+              lettingOtherPartOfPropertiesForm.fillAndValidate(lettingOtherPartOfProperty)
             case _                                => lettingOtherPartOfPropertiesForm
           }
         )
@@ -70,11 +72,11 @@ class LettingOtherPartOfPropertyController @Inject() (
               session.saveOrUpdate(updatedData)
               Future.successful(Ok(lettingOtherPartOfPropertyDetailsView(lettingOtherPartOfPropertyForm, None)))
 
-            case LettingOtherPartOfPropertiesNo  =>
+            case LettingOtherPartOfPropertiesNo =>
               val updatedData = updateAboutFranchisesOrLettings(_.copy(lettingOtherPartOfProperty = Some(data)))
               session.saveOrUpdate(updatedData)
               Future.successful(Ok(aboutTheLandlordView(aboutTheLandlordForm)))
-            case _                               => Future.successful(Ok(login(loginForm)))
+            case _                              => Future.successful(Ok(login(loginForm)))
           }
       )
   }

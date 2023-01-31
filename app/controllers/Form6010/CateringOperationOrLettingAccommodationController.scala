@@ -42,14 +42,16 @@ class CateringOperationOrLettingAccommodationController @Inject() (
   cateringOperationOrLettingAccommodationView: cateringOperationOrLettingAccommodation,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FrontendController(mcc) with I18nSupport{
+) extends FrontendController(mcc)
+    with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Future.successful(
       Ok(
         cateringOperationOrLettingAccommodationView(
           request.sessionData.aboutFranchisesOrLettings.flatMap(_.cateringOperationOrLettingAccommodation) match {
-            case Some(cateringOperationOrLettingAccommodation) => cateringOperationForm.fillAndValidate(cateringOperationOrLettingAccommodation)
+            case Some(cateringOperationOrLettingAccommodation) =>
+              cateringOperationForm.fillAndValidate(cateringOperationOrLettingAccommodation)
             case _                                             => cateringOperationForm
           }
         )
@@ -65,13 +67,17 @@ class CateringOperationOrLettingAccommodationController @Inject() (
         data =>
           data match {
             case CateringOperationYes =>
-              val updatedData = updateAboutFranchisesOrLettings(_.copy(cateringOperationOrLettingAccommodation = Some(data)))
+              val updatedData =
+                updateAboutFranchisesOrLettings(_.copy(cateringOperationOrLettingAccommodation = Some(data)))
               session.saveOrUpdate(updatedData)
               Future.successful(
-                Ok(cateringOperationOrLettingAccommodationDetailsView(cateringOperationOrLettingAccommodationForm, None))
+                Ok(
+                  cateringOperationOrLettingAccommodationDetailsView(cateringOperationOrLettingAccommodationForm, None)
+                )
               )
             case CateringOperationNo  =>
-              val updatedData = updateAboutFranchisesOrLettings(_.copy(cateringOperationOrLettingAccommodation = Some(data)))
+              val updatedData =
+                updateAboutFranchisesOrLettings(_.copy(cateringOperationOrLettingAccommodation = Some(data)))
               session.saveOrUpdate(updatedData)
               Future.successful(Ok(lettingOtherPartOfPropertyView(lettingOtherPartOfPropertiesForm)))
             case _                    => Future.successful(Ok(login(loginForm)))

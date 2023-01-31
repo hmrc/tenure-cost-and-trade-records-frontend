@@ -29,7 +29,6 @@ import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.up
 import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, CateringOperationOrLettingAccommodationSection}
 import controllers.Form6010
 
-
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -39,17 +38,27 @@ class CateringOperationOrLettingAccommodationDetailsController @Inject() (
   cateringOperationOrLettingAccommodationDetailsView: cateringOperationOrLettingAccommodationDetails,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext) extends FrontendController(mcc) with I18nSupport{
+)(implicit ec: ExecutionContext)
+    extends FrontendController(mcc)
+    with I18nSupport {
 
   def show(index: Option[Int]): Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     val existingDetails: Option[CateringOperationOrLettingAccommodationDetails] = for {
-      requestedIndex <- index
-      existingAccommodationSections <- request.sessionData.aboutFranchisesOrLettings.map(_.cateringOperationOrLettingAccommodationSections)
+      requestedIndex                <- index
+      existingAccommodationSections <-
+        request.sessionData.aboutFranchisesOrLettings.map(_.cateringOperationOrLettingAccommodationSections)
       // lift turns exception-throwing access by index into an option-returning safe operation
       requestedAccommodationSection <- existingAccommodationSections.lift(requestedIndex)
     } yield requestedAccommodationSection.cateringOperationOrLettingAccommodationDetails
 
-    Ok(cateringOperationOrLettingAccommodationDetailsView(existingDetails.fold(cateringOperationOrLettingAccommodationForm)(cateringOperationOrLettingAccommodationForm.fill), index))
+    Ok(
+      cateringOperationOrLettingAccommodationDetailsView(
+        existingDetails.fold(cateringOperationOrLettingAccommodationForm)(
+          cateringOperationOrLettingAccommodationForm.fill
+        ),
+        index
+      )
+    )
   }
 
   def submit(index: Option[Int]) = (Action andThen withSessionRefiner).async { implicit request =>
@@ -59,24 +68,40 @@ class CateringOperationOrLettingAccommodationDetailsController @Inject() (
         formWithErrors =>
           Future.successful(BadRequest(cateringOperationOrLettingAccommodationDetailsView(formWithErrors, index))),
         data => {
-          val ifFranchisesOrLettingsEmpty = AboutFranchisesOrLettings(cateringOperationOrLettingAccommodationSections = IndexedSeq(CateringOperationOrLettingAccommodationSection(cateringOperationOrLettingAccommodationDetails = data)))
-          val updatedAboutFranchisesOrLettings: (Int, AboutFranchisesOrLettings) = request.sessionData.aboutFranchisesOrLettings.fold(0 -> ifFranchisesOrLettingsEmpty){franchiseOrLettings =>
-          val existingSections = franchiseOrLettings.cateringOperationOrLettingAccommodationSections
-            val requestedSection = index.flatMap(existingSections.lift)
-            val updatedSections: (Int, IndexedSeq[CateringOperationOrLettingAccommodationSection]) = requestedSection.fold{
-              val defaultSection = CateringOperationOrLettingAccommodationSection(data)
-              val appendedSections = existingSections.appended(defaultSection)
-              appendedSections.indexOf(defaultSection) -> appendedSections
-            }{ sectionToUpdate =>
-              val indexToUpdate = existingSections.indexOf(sectionToUpdate)
-              indexToUpdate -> existingSections.updated(indexToUpdate, sectionToUpdate.copy(cateringOperationOrLettingAccommodationDetails = data))
-            }
-            updatedSections._1 -> franchiseOrLettings.copy(cateringOperationOrLettingAccommodationSections = updatedSections._2)
-          }
-          updatedAboutFranchisesOrLettings match {
-            case (currentIndex, aboutFranchisesOrLettings) => session.saveOrUpdate(updateAboutFranchisesOrLettings(_ => aboutFranchisesOrLettings)).map(_ =>
-              Redirect(Form6010.routes.CateringOperationOrLettingAccommodationDetailsRentController.show(currentIndex))
+          val ifFranchisesOrLettingsEmpty                                        = AboutFranchisesOrLettings(cateringOperationOrLettingAccommodationSections =
+            IndexedSeq(
+              CateringOperationOrLettingAccommodationSection(cateringOperationOrLettingAccommodationDetails = data)
             )
+          )
+          val updatedAboutFranchisesOrLettings: (Int, AboutFranchisesOrLettings) =
+            request.sessionData.aboutFranchisesOrLettings.fold(0 -> ifFranchisesOrLettingsEmpty) {
+              franchiseOrLettings =>
+                val existingSections                                                                   = franchiseOrLettings.cateringOperationOrLettingAccommodationSections
+                val requestedSection                                                                   = index.flatMap(existingSections.lift)
+                val updatedSections: (Int, IndexedSeq[CateringOperationOrLettingAccommodationSection]) =
+                  requestedSection.fold {
+                    val defaultSection   = CateringOperationOrLettingAccommodationSection(data)
+                    val appendedSections = existingSections.appended(defaultSection)
+                    appendedSections.indexOf(defaultSection) -> appendedSections
+                  } { sectionToUpdate =>
+                    val indexToUpdate = existingSections.indexOf(sectionToUpdate)
+                    indexToUpdate -> existingSections.updated(
+                      indexToUpdate,
+                      sectionToUpdate.copy(cateringOperationOrLettingAccommodationDetails = data)
+                    )
+                  }
+                updatedSections._1 -> franchiseOrLettings
+                  .copy(cateringOperationOrLettingAccommodationSections = updatedSections._2)
+            }
+          updatedAboutFranchisesOrLettings match {
+            case (currentIndex, aboutFranchisesOrLettings) =>
+              session
+                .saveOrUpdate(updateAboutFranchisesOrLettings(_ => aboutFranchisesOrLettings))
+                .map(_ =>
+                  Redirect(
+                    Form6010.routes.CateringOperationOrLettingAccommodationDetailsRentController.show(currentIndex)
+                  )
+                )
           }
 
         }

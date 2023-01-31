@@ -20,11 +20,11 @@ import models.submissions.Form6010.{LettingOtherPartOfPropertyInformationDetails
 import play.api.libs.json.Json
 
 case class LettingSection(
-                         lettingOtherPartOfPropertyInformationDetails: LettingOtherPartOfPropertyInformationDetails,
-                         lettingOtherPartOfPropertyRentDetails: Option[LettingOtherPartOfPropertyRentDetails] = None
-                         )
+  lettingOtherPartOfPropertyInformationDetails: LettingOtherPartOfPropertyInformationDetails,
+  lettingOtherPartOfPropertyRentDetails: Option[LettingOtherPartOfPropertyRentDetails] = None
+)
 
-object LettingSection{
+object LettingSection {
   implicit val format = Json.format[LettingSection]
 
 }

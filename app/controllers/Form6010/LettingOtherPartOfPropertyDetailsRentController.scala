@@ -36,13 +36,18 @@ class LettingOtherPartOfPropertyDetailsRentController @Inject() (
   lettingOtherPartOfPropertyDetailsRentView: lettingOtherPartOfPropertyRentDetails,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext) extends FrontendController(mcc) with I18nSupport {
+)(implicit ec: ExecutionContext)
+    extends FrontendController(mcc)
+    with I18nSupport {
 
   def show(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     val existingSection = request.sessionData.aboutFranchisesOrLettings.flatMap(_.lettingSections.lift(index))
-    existingSection.fold(Redirect(Form6010.routes.LettingOtherPartOfPropertyDetailsController.show(None))) { lettingSection =>
-      val lettingDetailsForm = lettingSection.lettingOtherPartOfPropertyRentDetails.fold(lettingOtherPartOfPropertyRentForm)(lettingOtherPartOfPropertyRentForm.fill)
-      Ok(lettingOtherPartOfPropertyDetailsRentView(lettingDetailsForm, index))
+    existingSection.fold(Redirect(Form6010.routes.LettingOtherPartOfPropertyDetailsController.show(None))) {
+      lettingSection =>
+        val lettingDetailsForm = lettingSection.lettingOtherPartOfPropertyRentDetails.fold(
+          lettingOtherPartOfPropertyRentForm
+        )(lettingOtherPartOfPropertyRentForm.fill)
+        Ok(lettingOtherPartOfPropertyDetailsRentView(lettingDetailsForm, index))
     }
   }
 
@@ -50,18 +55,20 @@ class LettingOtherPartOfPropertyDetailsRentController @Inject() (
     lettingOtherPartOfPropertyRentForm
       .bindFromRequest()
       .fold(
-        formWithErrors => Future.successful(BadRequest(lettingOtherPartOfPropertyDetailsRentView(formWithErrors, index))),
-        data => {
-          request.sessionData.aboutFranchisesOrLettings.fold(Future.successful(Redirect(Form6010.routes.LettingOtherPartOfPropertyDetailsController.show(None)))) {
-            aboutFranchiseOrLettings =>
-              val existingSections = aboutFranchiseOrLettings.lettingSections
-              val updatedSections = existingSections.updated(index, existingSections(index).copy(lettingOtherPartOfPropertyRentDetails = Some(data)))
-              val dataForSession = updateAboutFranchisesOrLettings(_.copy(lettingSections = updatedSections))
-              session.saveOrUpdate(dataForSession).map(
-                _ => Redirect(Form6010.routes.LettingOtherPartOfPropertyDetailsCheckboxesController.show(index))
-              )
+        formWithErrors =>
+          Future.successful(BadRequest(lettingOtherPartOfPropertyDetailsRentView(formWithErrors, index))),
+        data =>
+          request.sessionData.aboutFranchisesOrLettings.fold(
+            Future.successful(Redirect(Form6010.routes.LettingOtherPartOfPropertyDetailsController.show(None)))
+          ) { aboutFranchiseOrLettings =>
+            val existingSections = aboutFranchiseOrLettings.lettingSections
+            val updatedSections  = existingSections
+              .updated(index, existingSections(index).copy(lettingOtherPartOfPropertyRentDetails = Some(data)))
+            val dataForSession   = updateAboutFranchisesOrLettings(_.copy(lettingSections = updatedSections))
+            session
+              .saveOrUpdate(dataForSession)
+              .map(_ => Redirect(Form6010.routes.LettingOtherPartOfPropertyDetailsCheckboxesController.show(index)))
           }
-        }
       )
   }
 

@@ -30,7 +30,9 @@ object CateringOperationNo extends CateringOperationOrLettingAccommodation {
 }
 
 object CateringOperationOrLettingAccommodation extends NamedEnumSupport[CateringOperationOrLettingAccommodation] {
-  implicit val format: Format[CateringOperationOrLettingAccommodation] = EnumFormat(CateringOperationOrLettingAccommodation)
+  implicit val format: Format[CateringOperationOrLettingAccommodation] = EnumFormat(
+    CateringOperationOrLettingAccommodation
+  )
 
   val all = List(CateringOperationYes, CateringOperationNo)
 

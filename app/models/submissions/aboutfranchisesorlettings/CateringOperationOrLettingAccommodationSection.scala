@@ -20,9 +20,9 @@ import models.submissions.Form6010.{CateringOperationOrLettingAccommodationDetai
 import play.api.libs.json.Json
 
 case class CateringOperationOrLettingAccommodationSection(
-                                                           cateringOperationOrLettingAccommodationDetails: CateringOperationOrLettingAccommodationDetails,
-                                                           cateringOperationOrLettingAccommodationRentDetails: Option[CateringOperationOrLettingAccommodationRentDetails] = None
-                                                         )
+  cateringOperationOrLettingAccommodationDetails: CateringOperationOrLettingAccommodationDetails,
+  cateringOperationOrLettingAccommodationRentDetails: Option[CateringOperationOrLettingAccommodationRentDetails] = None
+)
 
 object CateringOperationOrLettingAccommodationSection {
   implicit val format = Json.format[CateringOperationOrLettingAccommodationSection]

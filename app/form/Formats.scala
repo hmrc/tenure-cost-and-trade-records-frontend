@@ -22,7 +22,7 @@ import models.submissions._
 import models.submissions.aboutYourLeaseOrTenure._
 import models.submissions.aboutfranchisesorlettings.CateringOperationOrLettingAccommodation
 import models.submissions.abouttheproperty._
-import models.submissions.additionalinformation.FranchiseOrLettingsTiedToProperty
+import models.submissions.Form6010.FranchiseOrLettingsTiedToProperty
 import models.submissions.connectiontoproperty.{AddressConnectionType, ConnectionToProperty}
 import play.api.data.FormError
 import play.api.data.format.Formatter
@@ -78,7 +78,7 @@ object Formats {
     namedEnumFormatter(AddAnotherLettingOtherPartOfProperty, Errors.booleanMissing)
   implicit val cateringOperationsFormat: Formatter[CateringOperationOrLettingAccommodation]                  =
     namedEnumFormatter(CateringOperationOrLettingAccommodation, Errors.booleanMissing)
-  implicit val lettingOtherPartOfPropertiesFormat: Formatter[LettingOtherPartOfProperty]                   =
+  implicit val lettingOtherPartOfPropertiesFormat: Formatter[LettingOtherPartOfProperty]                     =
     namedEnumFormatter(LettingOtherPartOfProperty, Errors.booleanMissing)
   implicit val tenancyLeaseAgreementsFormat: Formatter[TenancyLeaseAgreements]                               =
     namedEnumFormatter(TenancyLeaseAgreement, Errors.booleanMissing)
@@ -89,7 +89,7 @@ object Formats {
     namedEnumFormatter(PremisesLicenseConditions, Errors.booleanMissing)
   implicit val enforcementActionFormat: Formatter[EnforcementAction]                                         =
     namedEnumFormatter(EnforcementAction, Errors.booleanMissing)
-  implicit val franchiseOrLettingsTiedToPropertiesFormat: Formatter[FranchiseOrLettingsTiedToProperty]     =
+  implicit val franchiseOrLettingsTiedToPropertiesFormat: Formatter[FranchiseOrLettingsTiedToProperty]       =
     namedEnumFormatter(FranchiseOrLettingsTiedToProperty, Errors.booleanMissing)
   implicit val rentIncreasedAnnuallyWithRPIsFormat: Formatter[RentIncreasedAnnuallyWithRPIs]                 =
     namedEnumFormatter(RentIncreasedAnnuallyWithRPI, Errors.booleanMissing)

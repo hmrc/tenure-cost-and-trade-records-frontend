@@ -17,13 +17,15 @@
 package form.additionalinformation
 
 import form.MappingSupport.franchiseOrLettingsTiedToPropertyType
-import models.submissions.additionalinformation.FranchiseOrLettingsTiedToProperty
+import models.submissions.Form6010.FranchiseOrLettingsTiedToProperty
 import play.api.data.Form
 import play.api.data.Forms.mapping
 
 object FranchiseOrLettingsTiedToPropertyForm {
 
-  lazy val baseFranchiseOrLettingsTiedToPropertyForm: Form[FranchiseOrLettingsTiedToProperty] = Form(baseFranchiseOrLettingsTiedToPropertyMapping)
+  lazy val baseFranchiseOrLettingsTiedToPropertyForm: Form[FranchiseOrLettingsTiedToProperty] = Form(
+    baseFranchiseOrLettingsTiedToPropertyMapping
+  )
 
   val baseFranchiseOrLettingsTiedToPropertyMapping = mapping(
     "franchiseOrLettingsTiedToProperty" -> franchiseOrLettingsTiedToPropertyType

@@ -28,16 +28,16 @@ class AddAnotherCateringOperationOrLettingAccommodationControllerSpec extends Te
   val mockAddAnotherCateringOperationOrLettingAccommodation = mock[addAnotherCateringOperationOrLettingAccommodation]
   when(mockAddAnotherCateringOperationOrLettingAccommodation.apply(any)(any, any)).thenReturn(HtmlFormat.empty)
 
-  val addAnotherCateringOperationOrLettingAccommodationController = new AddAnotherCateringOperationOrLettingAccommodationController(
-    stubMessagesControllerComponents(),
-    mockAddAnotherCateringOperationOrLettingAccommodation,
-    mock[login],
-    mock[cateringOperationOrLettingAccommodationDetails],
-    mock[lettingOtherPartOfProperty],
-    preFilledSession,
-    mockSessionRepo
-  )
-
+  val addAnotherCateringOperationOrLettingAccommodationController =
+    new AddAnotherCateringOperationOrLettingAccommodationController(
+      stubMessagesControllerComponents(),
+      mockAddAnotherCateringOperationOrLettingAccommodation,
+      mock[login],
+      mock[cateringOperationOrLettingAccommodationDetails],
+      mock[lettingOtherPartOfProperty],
+      preFilledSession,
+      mockSessionRepo
+    )
 
   "GET /" should {
     "return 200" in {
