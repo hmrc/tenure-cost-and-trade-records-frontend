@@ -23,3 +23,27 @@ case object AboutYourTradingHistoryPageId extends Identifier {
 case object TurnoverPageId extends Identifier {
   override def toString: String = "turnoverPage"
 }
+
+case object CostOfSalesOrGrossProfitDetailsId extends Identifier {
+  override def toString: String = "costOfSalesOrGrossProfitDetails"
+}
+
+case object TotalPayrollCostId extends Identifier {
+  override def toString: String = "totalPayrollCost"
+}
+
+case object VariableOperatingExpensesId extends Identifier {
+  override def toString: String = "variableOperatingExpenses"
+}
+
+case object FixedOperatingExpensesId extends Identifier {
+  override def toString: String = "fixedOperatingExpenses"
+}
+
+case object OtherCostsId extends Identifier {
+  override def toString: String = "otherCosts"
+}
+
+case object NetProfitId extends Identifier {
+  override def toString: String = "netProfit"
+}

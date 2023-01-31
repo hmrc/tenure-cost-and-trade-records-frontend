@@ -613,6 +613,26 @@ taskList.heading = Declaration summary
 #########
 turnover.heading = Turnover
 
+#TOTAL PAYROLL COSTS (FORM 6015)
+#########
+totalPayrollCosts.heading = This is a holding page for the total payroll costs page
+
+#VARIABLE OPERATING EXPENSES (FORM 6015)
+#########
+variableOperatingExpenses.heading = This is a holding page for the variable operating expenses page
+
+#FIXED OPERATING EXPENSES (FORM 6015)
+#########
+fixedOperatingExpenses.heading = This is a holding page for the fixed operating expenses page
+
+#OTHER COSTS (FORM 6015)
+#########
+otherCosts.heading = This is a holding page for the other costs page
+
+#NET PROFITS (FORM 6015)
+#########
+netProfits.heading = This is a holding page for the net profits page
+
 #SHARED RESPONSIBILITIES
 ##############################
 sharedResponsibilities.heading = About your lease or agreement

@@ -30,6 +30,16 @@ class AboutThePropertyIdentifiersSpec extends TestBaseSpec {
       assert(WebsiteForPropertyPageId.toString.equals("websiteForPropertyPage"))
     }
 
+    // 6015 page only
+    "Identifier for premises licence granted page" in {
+      assert(PremisesLicenseGrantedId.toString.equals("premisesLicenseGrantedPage"))
+    }
+
+    // 6015 page only
+    "Identifier for premises licence granted details page" in {
+      assert(PremisesLicenseGrantedDetailsId.toString.equals("premisesLicenseGrantedDetailsPage"))
+    }
+
     "Identifier for licence activity page" in {
       assert(LicensableActivityPageId.toString.equals("licensableActivityPage"))
     }
