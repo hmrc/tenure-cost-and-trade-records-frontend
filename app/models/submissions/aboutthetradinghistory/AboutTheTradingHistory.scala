@@ -22,7 +22,7 @@ import play.api.libs.json.Json
 
 case class  AboutTheTradingHistory(
                                    aboutYourTradingHistory: Option[AboutYourTradingHistory] = None,
-                                   costOfSalesOrGrossProfitDetails: Option[CostOfSalesOrGrossProfitInformationDetails] = None
+                                   costOfSalesOrGrossProfitDetails: Option[CostOfSalesOrGrossProfitDetails] = None
                                  )
 
 object AboutTheTradingHistory {

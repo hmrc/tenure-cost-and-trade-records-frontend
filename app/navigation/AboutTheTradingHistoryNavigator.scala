@@ -20,11 +20,13 @@ import connectors.Audit
 import models.{ForTypes, Session}
 import navigation.identifiers._
 import play.api.mvc.Call
+import play.api.Logging
 
 import javax.inject.Inject
 import scala.concurrent.ExecutionContext
 
-class AboutTheTradingHistoryNavigator @Inject() (audit: Audit)(implicit ec: ExecutionContext) extends Navigator(audit) {
+class AboutTheTradingHistoryNavigator @Inject() (audit: Audit)(implicit ec: ExecutionContext) extends Navigator(audit)
+  with Logging {
 
   private def turnoverRouting: Session => Call = answers => {
     if (answers.userLoginDetails.forNumber == ForTypes.for6015)
@@ -35,8 +37,8 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit)(implicit ec: Exec
 
   private def costOfSalesOrGrossProfitDetailsRouting: Session => Call = answers => {
     answers.aboutTheTradingHistory.flatMap(_.costOfSalesOrGrossProfitDetails.map(_.name)) match {
-      case Some("yes") => controllers.abouttheproperty.routes.TiedForGoodsDetailsController.show()
-      case Some("no")  => controllers.aboutthetradinghistory.routes.AboutYourTradingHistoryController.show()
+      case Some("costOfSales") => controllers.aboutthetradinghistory.routes.CostOfSalesController.show()
+      case Some("grossProfit")  => controllers.aboutthetradinghistory.routes.GrossProfitsController.show()
       case _           =>
         logger.warn(
           s"Navigation for about the property reached without correct selection of tied goods by controller"
@@ -46,12 +48,13 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit)(implicit ec: Exec
   }
 
   override val routeMap: Map[Identifier, Session => Call] = Map(
-    AboutYourTradingHistoryPageId   -> (_ => controllers.aboutthetradinghistory.routes.TurnoverController.show()),
-    TurnoverPageId                  -> turnoverRouting,
-    TotalPayrollCostPageId          -> (_ => controllers.aboutthetradinghistory.routes.VariableOperatingExpensesController.show()),
-    VariableOperatingExpensesPageId -> (_ => controllers.aboutthetradinghistory.routes.FixedOperatingExpensesController.show()),
-    FixedOperatingExpensesPageId    -> (_ => controllers.aboutthetradinghistory.routes.OtherCostsController.show()),
-    OtherCostsPageId                -> (_ => controllers.aboutthetradinghistory.routes.NetProfitController.show()),
-    NetProfitPageId                 -> (_ => controllers.Form6010.routes.FranchiseOrLettingsTiedToPropertyController.show()),
+    AboutYourTradingHistoryPageId     -> (_ => controllers.aboutthetradinghistory.routes.TurnoverController.show()),
+    TurnoverPageId                    -> turnoverRouting,
+    CostOfSalesOrGrossProfitDetailsId -> costOfSalesOrGrossProfitDetailsRouting,
+    TotalPayrollCostId                -> (_ => controllers.aboutthetradinghistory.routes.VariableOperatingExpensesController.show()),
+    VariableOperatingExpensesId       -> (_ => controllers.aboutthetradinghistory.routes.FixedOperatingExpensesController.show()),
+    FixedOperatingExpensesId          -> (_ => controllers.aboutthetradinghistory.routes.OtherCostsController.show()),
+    OtherCostsId                      -> (_ => controllers.aboutthetradinghistory.routes.NetProfitController.show()),
+    NetProfitId                       -> (_ => controllers.Form6010.routes.FranchiseOrLettingsTiedToPropertyController.show())
   )
 }

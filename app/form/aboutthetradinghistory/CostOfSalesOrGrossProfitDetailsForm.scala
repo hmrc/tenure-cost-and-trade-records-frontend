@@ -17,12 +17,12 @@
 package form.aboutthetradinghistory
 
 import form.MappingSupport.costOfSalesOrGrossProfitDetailsType
-import models.submissions.aboutthetradinghistory.CostOfSalesOrGrossProfitDetails
+import models.submissions.aboutthetradinghistory.{CostOfSalesOrGrossProfitDetails, CostOfSalesOrGrossProfitInfo}
 import play.api.data.Form
 import play.api.data.Forms.mapping
 
 object CostOfSalesOrGrossProfitDetailsForm {
-  lazy val baseCostOfSalesOrGrossProfitDetailsForm: Form[CostOfSalesOrGrossProfitDetails] = Form(baseCostOfSalesOrGrossProfitDetailsMapping)
+  lazy val baseTiedForGoodsForm: Form[CostOfSalesOrGrossProfitDetails] = Form(baseCostOfSalesOrGrossProfitDetailsMapping)
 
   val baseCostOfSalesOrGrossProfitDetailsMapping = mapping(
     "costOfSalesOrGrossProfitDetails" -> costOfSalesOrGrossProfitDetailsType

@@ -49,9 +49,8 @@ class CostOfSalesOrGrossProfitDetailsController @Inject()(
         costOfSalesOrGrossProfitDetailsView(
           request.sessionData.aboutTheTradingHistory.flatMap(_.costOfSalesOrGrossProfitDetails) match {
             case Some(costOfSalesOrGrossProfitDetails) => costOfSalesOrGrossProfitDetailsForm.fillAndValidate(costOfSalesOrGrossProfitDetails)
-            case _                  => costOfSalesOrGrossProfitDetailsForm
-          },
-          getBackLink(request.sessionData)
+            case _ => costOfSalesOrGrossProfitDetailsForm
+          }
         )
       )
     )
@@ -62,7 +61,7 @@ class CostOfSalesOrGrossProfitDetailsController @Inject()(
       .bindFromRequest()
       .fold(
         formWithErrors =>
-          Future.successful(BadRequest(costOfSalesOrGrossProfitDetailsView(formWithErrors, getBackLink(request.sessionData)))),
+          Future.successful(BadRequest(costOfSalesOrGrossProfitDetailsView(formWithErrors))),
         data => {
           val updatedData = updateAboutTheTradingHistory(_.copy(costOfSalesOrGrossProfitDetails = Some(data)))
           session.saveOrUpdate(updatedData)
@@ -70,13 +69,4 @@ class CostOfSalesOrGrossProfitDetailsController @Inject()(
         }
       )
   }
-
-  private def getBackLink(answers: Session): String =
-    answers.aboutTheProperty.flatMap(_.enforcementAction.map(_.name)) match {
-      case Some("yes") => controllers.abouttheproperty.routes.EnforcementActionBeenTakenDetailsController.show().url
-      case Some("no")  => controllers.abouttheproperty.routes.EnforcementActionBeenTakenController.show().url
-      case _           =>
-        logger.warn(s"Back link for tied goods page reached with unknown enforcement taken value")
-        controllers.routes.TaskListController.show().url
-    }
 }

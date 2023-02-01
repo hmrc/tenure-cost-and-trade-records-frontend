@@ -18,14 +18,12 @@ package models.submissions.aboutthetradinghistory
 
 import play.api.libs.json.Json
 
-case class CostOfSalesOrGrossProfitInformationDetails(
-                                                       costOfSalesOrGrossProfitInformationDetails: CostOfSalesOrGrossProfitDetails,
+case class CostOfSalesOrGrossProfitInfo(
+                                         costOfSalesOrGrossProfits: CostOfSalesOrGrossProfitDetails
 )
 
-object CostOfSalesOrGrossProfitInformationDetails {
-  implicit val format = Json.format[CostOfSalesOrGrossProfitInformationDetails]
+object CostOfSalesOrGrossProfitInfo {
+  implicit val format = Json.format[CostOfSalesOrGrossProfitInfo]
 
 }
-
-
 

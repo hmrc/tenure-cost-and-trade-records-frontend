@@ -34,14 +34,14 @@
 )
 
 
-@(theForm: Form[CostOfSalesOrGrossProfitDetails], backLink: String)(implicit request: Request[_], messages: Messages)
+@(theForm: Form[CostOfSalesOrGrossProfitDetails])(implicit request: Request[_], messages: Messages)
 
 @layout(
  pageHeading = messages("tiedForGoods.heading"),
  showH1 = false,
  showSection = true,
  sectionName = messages("label.section.aboutTheProperty"),
- backLinkUrl = backLink,
+ backLinkUrl = controllers.abouttheproperty.routes.EnforcementActionBeenTakenDetailsController.show().url,
  theForm = theForm
 ) {
 
@@ -52,8 +52,8 @@
     name = "tiedForGoods",
     idPrefix = Option("tiedForGoods"),
     items = Seq(
-     "yes" -> messages("label.yes"),
-     "no" -> messages("label.no")
+     "costOfSales" -> messages("label.yes"),
+     "grossProfit" -> messages("label.no")
     ).map(radioItem => RadioItem(
      content = Text(radioItem._2),
      checked = radioItem._1.equals(theForm("tiedForGoods").value.getOrElse("")),
