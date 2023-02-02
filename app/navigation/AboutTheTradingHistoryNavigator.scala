@@ -30,7 +30,7 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit)(implicit ec: Exec
 
   private def turnoverRouting: Session => Call = answers => {
     if (answers.userLoginDetails.forNumber == ForTypes.for6015)
-      controllers.aboutthetradinghistory.routes.TotalPayrollCostsController.show()
+      controllers.aboutthetradinghistory.routes.CostOfSalesOrGrossProfitDetailsController.show()
     else
       controllers.Form6010.routes.FranchiseOrLettingsTiedToPropertyController.show()
 }
@@ -51,6 +51,8 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit)(implicit ec: Exec
     AboutYourTradingHistoryPageId     -> (_ => controllers.aboutthetradinghistory.routes.TurnoverController.show()),
     TurnoverPageId                    -> turnoverRouting,
     CostOfSalesOrGrossProfitId        -> costOfSalesOrGrossProfitDetailsRouting,
+    CostOfSalesId                     -> (_ => controllers.aboutthetradinghistory.routes.TotalPayrollCostsController.show()),
+    GrossProfitsId                    -> (_ => controllers.aboutthetradinghistory.routes.TotalPayrollCostsController.show()),
     TotalPayrollCostId                -> (_ => controllers.aboutthetradinghistory.routes.VariableOperatingExpensesController.show()),
     VariableOperatingExpensesId       -> (_ => controllers.aboutthetradinghistory.routes.FixedOperatingExpensesController.show()),
     FixedOperatingExpensesId          -> (_ => controllers.aboutthetradinghistory.routes.OtherCostsController.show()),

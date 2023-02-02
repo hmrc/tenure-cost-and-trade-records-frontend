@@ -609,9 +609,22 @@ hint.aboutYou = If you’re renting or leasing the property, even as a charity o
 ##############################
 taskList.heading = Declaration summary
 
+#COST OF SALES OR GROSS PROFIT
+#########
+costOfSalesOrGrossProfit.heading = Would you rather give details of your cost of sales, or  your gross profits?
+hint.costOfSalesOrGrossProfit = We need to see details of your turnover broken down by specific department. You can decide whether you'd like to provide these figures for your cost of sales, or gross profits.
+label.costOfSales = Cost of sales
+label.grossProfit = Gross profits
+
 #TURNOVER
 #########
-turnover.heading = Turnover
+turnover.heading = This is a holding page for the turnover page
+
+#COST OF SALES
+costOfSales.heading = This is a holding page for the cost of sales page
+
+#GROSS PROFIT
+grossProfit.heading = This is a holding page for the gross profits page
 
 #TOTAL PAYROLL COSTS (FORM 6015)
 #########

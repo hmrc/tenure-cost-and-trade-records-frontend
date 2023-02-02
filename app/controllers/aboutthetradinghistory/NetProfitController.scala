@@ -18,12 +18,12 @@ package controllers.aboutthetradinghistory
 
 import actions.WithSessionRefiner
 import navigation.AboutTheTradingHistoryNavigator
-import navigation.identifiers.TurnoverPageId
+import navigation.identifiers.NetProfitId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.aboutthetradinghistory.turnover
+import views.html.aboutthetradinghistory.netProfit
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
@@ -32,19 +32,19 @@ import scala.concurrent.Future
 class NetProfitController @Inject()(
   mcc: MessagesControllerComponents,
   navigator: AboutTheTradingHistoryNavigator,
-  turnoverView: turnover,
+  netProfitView: netProfit,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
 ) extends FrontendController(mcc)
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
-    Ok(turnoverView())
+    Ok(netProfitView())
   }
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
     val updatedData = request.sessionData
-    Future.successful(Redirect(navigator.nextPage(TurnoverPageId).apply(updatedData)))
+    Future.successful(Redirect(navigator.nextPage(NetProfitId).apply(updatedData)))
   }
 
 }

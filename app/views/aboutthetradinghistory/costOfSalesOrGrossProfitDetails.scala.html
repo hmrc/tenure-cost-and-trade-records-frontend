@@ -40,40 +40,34 @@
  showH1 = false,
  showSection = true,
  sectionName = messages("label.section.aboutTheProperty"),
- backLinkUrl = controllers.abouttheproperty.routes.EnforcementActionBeenTakenDetailsController.show().url,
+  backLinkUrl = controllers.aboutthetradinghistory.routes.TurnoverController .show().url,
  theForm = theForm
 ) {
 
  @formWithCSRF(action = controllers.aboutthetradinghistory.routes.CostOfSalesOrGrossProfitDetailsController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
 
-  @govukRadios(
-   Radios(
-    name = "costOfSalesOrGrossProfit",
-    idPrefix = Option("costOfSalesOrGrossProfit"),
-    items = Seq(
-     "costOfSales" -> messages("label.costOfSales"),
-     "grossProfit" -> messages("label.grossProfit")
-    ).map(radioItem => RadioItem(
-     content = Text(radioItem._2),
-     checked = radioItem._1.equals(theForm("costOfSalesOrGrossProfit").value.getOrElse("")),
-     value = Option(radioItem._1)
+  @govukRadios(Radios(
+   fieldset = Some(Fieldset(
+    legend = Some(Legend(
+     content = Text(messages("costOfSalesOrGrossProfit.heading")), isPageHeading = true,
+     classes = "govuk-fieldset__legend--l",
+    ))
+   )),
+   name = "costOfSalesOrGrossProfit",
+   items = Seq(
+    RadioItem(
+     content = Text(messages("label.costOfSales")),
+     value = Some("costOfSales")
+    ),
+    RadioItem(
+     content = Text(messages("label.grossProfit")),
+     value = Some("grossProfit")
     )
-    ),
-    errorMessage =  theForm.errors.asTextErrorMessageForField("costOfSalesOrGrossProfit"),
-    classes = "govuk-radios--inline",
-    fieldset = Option(
-     Fieldset(
-      legend = Option(
-       Legend(
-        content = Text(messages("costOfSalesOrGrossProfit.heading")),
-        isPageHeading = true, classes = "govuk-fieldset__legend--l"
-       )
-      )
-     )
-    ),
-    hint = Some(Hint(content = Text(messages("hint.costOfSalesOrGrossProfit")))),
-   ).withFormField(theForm("costOfSalesOrGrossProfit"))
-  )
+   ),
+   hint = Some(Hint(content = Text(messages("hint.costOfSalesOrGrossProfit")))),
+   errorMessage = theForm.errors.asTextErrorMessageForField("costOfSalesOrGrossProfit")
+  ).withFormField(theForm("costOfSalesOrGrossProfit")))
+
 
   @includes.continueButton(govukButton)
 
