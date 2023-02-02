@@ -26,20 +26,18 @@
 @()(implicit request: Request[_], messages: Messages)
 
 @layout(
-  pageHeading = messages("turnover.heading"),
+  pageHeading = messages("grossProfit.heading"),
   showH1 = false,
   showSection = true,
   sectionName = messages("label.section.aboutYourTradingHistory"),
-  backLinkUrl = controllers.aboutthetradinghistory.routes.AboutYourTradingHistoryController.show.url,
+  backLinkUrl = controllers.aboutthetradinghistory.routes.CostOfSalesOrGrossProfitDetailsController.show.url,
 ) {
 
-  @formWithCSRF(action = controllers.aboutthetradinghistory.routes.TurnoverController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
+  @formWithCSRF(action = controllers.aboutthetradinghistory.routes.GrossProfitsController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
 
       <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-          <h1 class="govuk-fieldset__heading">@messages("turnover.heading")</h1>
+          <h1 class="govuk-fieldset__heading">@messages("grossProfit.heading")</h1>
       </legend>
-
-      <p class="govuk-body">This is a holding page while the turnover page is developed</p>
 
       @includes.continueButton(govukButton)
 

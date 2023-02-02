@@ -14,16 +14,16 @@
  * limitations under the License.
  */
 
-package models.submissions.aboutthetradinghistory
-
-import play.api.libs.json.Json
-
-case class CostOfSalesOrGrossProfitInfo(
-                                         costOfSalesOrGrossProfits: CostOfSalesOrGrossProfitDetails
-)
-
-object CostOfSalesOrGrossProfitInfo {
-  implicit val format = Json.format[CostOfSalesOrGrossProfitInfo]
-
-}
+//package models.submissions.aboutthetradinghistory
+//
+//import play.api.libs.json.Json
+//
+//case class CostOfSalesOrGrossProfitInfo(
+//                                         costOfSalesOrGrossProfit: CostOfSalesOrGrossProfit
+//)
+//
+//object CostOfSalesOrGrossProfitInfo {
+//  implicit val format = Json.format[CostOfSalesOrGrossProfitInfo]
+//
+//}
 

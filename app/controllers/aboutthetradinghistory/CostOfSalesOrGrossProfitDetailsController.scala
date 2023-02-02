@@ -21,7 +21,7 @@ import form.aboutthetradinghistory.CostOfSalesOrGrossProfitDetailsForm.costOfSal
 import models.Session
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.updateAboutTheTradingHistory
 import navigation.AboutThePropertyNavigator
-import navigation.identifiers.{CostOfSalesOrGrossProfitDetailsId, TiedForGoodsPageId}
+import navigation.identifiers.CostOfSalesOrGrossProfitId
 import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
@@ -47,8 +47,8 @@ class CostOfSalesOrGrossProfitDetailsController @Inject()(
     Future.successful(
       Ok(
         costOfSalesOrGrossProfitDetailsView(
-          request.sessionData.aboutTheTradingHistory.flatMap(_.costOfSalesOrGrossProfitDetails) match {
-            case Some(costOfSalesOrGrossProfitDetails) => costOfSalesOrGrossProfitDetailsForm.fillAndValidate(costOfSalesOrGrossProfitDetails)
+          request.sessionData.aboutTheTradingHistory.flatMap(_.costOfSalesOrGrossProfit) match {
+            case Some(costOfSalesOrGrossProfit) => costOfSalesOrGrossProfitDetailsForm.fillAndValidate(costOfSalesOrGrossProfit)
             case _ => costOfSalesOrGrossProfitDetailsForm
           }
         )
@@ -63,9 +63,9 @@ class CostOfSalesOrGrossProfitDetailsController @Inject()(
         formWithErrors =>
           Future.successful(BadRequest(costOfSalesOrGrossProfitDetailsView(formWithErrors))),
         data => {
-          val updatedData = updateAboutTheTradingHistory(_.copy(costOfSalesOrGrossProfitDetails = Some(data)))
+          val updatedData = updateAboutTheTradingHistory(_.copy(costOfSalesOrGrossProfit = Some(data)))
           session.saveOrUpdate(updatedData)
-          Future.successful(Redirect(navigator.nextPage(CostOfSalesOrGrossProfitDetailsId).apply(updatedData)))
+          Future.successful(Redirect(navigator.nextPage(CostOfSalesOrGrossProfitId).apply(updatedData)))
         }
       )
   }

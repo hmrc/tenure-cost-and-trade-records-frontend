@@ -19,21 +19,21 @@ package models.submissions.aboutthetradinghistory
 import models.{EnumFormat, NamedEnum, NamedEnumSupport}
 import play.api.libs.json.Format
 
-sealed trait CostOfSalesOrGrossProfitDetails extends NamedEnum {
-  override def key = "costOfSalesOrGrossProfitDetails"
+sealed trait CostOfSalesOrGrossProfit extends NamedEnum {
+  override def key = "costOfSalesOrGrossProfit"
 }
-object CostOfSalesOrGrossProfitDetailsYes extends CostOfSalesOrGrossProfitDetails {
-  override def name = "yes"
+object CostOfSalesOrGrossProfitDetailsCostOfSales extends CostOfSalesOrGrossProfit {
+  override def name = "costOfSales"
 }
-object CostOfSalesOrGrossProfitDetailsNo extends CostOfSalesOrGrossProfitDetails {
-  override def name = "no"
+object CostOfSalesOrGrossProfitDetailsGrossProfit extends CostOfSalesOrGrossProfit {
+  override def name = "grossProfit"
 }
 
-object CostOfSalesOrGrossProfitDetail extends NamedEnumSupport[CostOfSalesOrGrossProfitDetails] {
+object CostOfSalesOrGrossProfit extends NamedEnumSupport[CostOfSalesOrGrossProfit] {
 
-  implicit val format: Format[CostOfSalesOrGrossProfitDetails] = EnumFormat(CostOfSalesOrGrossProfitDetail)
+  implicit val format: Format[CostOfSalesOrGrossProfit] = EnumFormat(CostOfSalesOrGrossProfit)
 
-  override def all = List(CostOfSalesOrGrossProfitDetailsYes, CostOfSalesOrGrossProfitDetailsNo)
+  override def all = List(CostOfSalesOrGrossProfitDetailsCostOfSales, CostOfSalesOrGrossProfitDetailsGrossProfit)
 
   val key = all.head.key
 }

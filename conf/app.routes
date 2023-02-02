@@ -106,6 +106,7 @@ POST        /current-rent-first-paid                                controllers.
 GET         /tenancy-lease-agreement-expire                         controllers.aboutYourLeaseOrTenure.TenancyLeaseAgreementExpireController.show()
 POST        /tenancy-lease-agreement-expire                         controllers.aboutYourLeaseOrTenure.TenancyLeaseAgreementExpireController.submit()
 
+
 # Form 6015 routing
 GET         /premises-license-granted                               controllers.abouttheproperty.PremisesLicenseGrantedController.show()
 POST        /premises-license-granted                               controllers.abouttheproperty.PremisesLicenseGrantedController.submit()
@@ -113,6 +114,18 @@ POST        /premises-license-granted                               controllers.
 # Form 6015 routing
 GET         /premises-license-granted-details                       controllers.abouttheproperty.PremisesLicenseGrantedDetailsController.show()
 POST        /premises-license-granted-details                       controllers.abouttheproperty.PremisesLicenseGrantedDetailsController.submit()
+
+# Form 6015 routing
+GET         /cost-of-sales-or-gross-profit                          controllers.aboutthetradinghistory.CostOfSalesOrGrossProfitDetailsController.show()
+POST        /cost-of-sales-or-gross-profit                          controllers.aboutthetradinghistory.CostOfSalesOrGrossProfitDetailsController.submit()
+
+# Form 6015 routing
+GET         /cost-of-sales                                          controllers.aboutthetradinghistory.CostOfSalesController.show()
+POST        /cost-of-sales                                          controllers.aboutthetradinghistory.CostOfSalesController.submit()
+
+# Form 6015 routing
+GET         /gross-profits                                          controllers.aboutthetradinghistory.GrossProfitsController.show()
+POST        /gross-profits                                          controllers.aboutthetradinghistory.GrossProfitsController.submit()
 
 # Form 6015 routing
 GET         /total-payroll-costs                                    controllers.aboutthetradinghistory.TotalPayrollCostsController.show()

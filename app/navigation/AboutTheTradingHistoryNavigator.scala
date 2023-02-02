@@ -36,7 +36,7 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit)(implicit ec: Exec
 }
 
   private def costOfSalesOrGrossProfitDetailsRouting: Session => Call = answers => {
-    answers.aboutTheTradingHistory.flatMap(_.costOfSalesOrGrossProfitDetails.map(_.name)) match {
+    answers.aboutTheTradingHistory.flatMap(_.costOfSalesOrGrossProfit.map(_.name)) match {
       case Some("costOfSales") => controllers.aboutthetradinghistory.routes.CostOfSalesController.show()
       case Some("grossProfit")  => controllers.aboutthetradinghistory.routes.GrossProfitsController.show()
       case _           =>
@@ -50,7 +50,7 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit)(implicit ec: Exec
   override val routeMap: Map[Identifier, Session => Call] = Map(
     AboutYourTradingHistoryPageId     -> (_ => controllers.aboutthetradinghistory.routes.TurnoverController.show()),
     TurnoverPageId                    -> turnoverRouting,
-    CostOfSalesOrGrossProfitDetailsId -> costOfSalesOrGrossProfitDetailsRouting,
+    CostOfSalesOrGrossProfitId        -> costOfSalesOrGrossProfitDetailsRouting,
     TotalPayrollCostId                -> (_ => controllers.aboutthetradinghistory.routes.VariableOperatingExpensesController.show()),
     VariableOperatingExpensesId       -> (_ => controllers.aboutthetradinghistory.routes.FixedOperatingExpensesController.show()),
     FixedOperatingExpensesId          -> (_ => controllers.aboutthetradinghistory.routes.OtherCostsController.show()),

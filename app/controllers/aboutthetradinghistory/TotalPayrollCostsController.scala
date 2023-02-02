@@ -18,7 +18,7 @@ package controllers.aboutthetradinghistory
 
 import actions.WithSessionRefiner
 import navigation.AboutTheTradingHistoryNavigator
-import navigation.identifiers.TotalPayrollCostPageId
+import navigation.identifiers.TotalPayrollCostId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
@@ -44,7 +44,7 @@ class TotalPayrollCostsController @Inject()(
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
     val updatedData = request.sessionData
-    Future.successful(Redirect(navigator.nextPage(TotalPayrollCostPageId).apply(updatedData)))
+    Future.successful(Redirect(navigator.nextPage(TotalPayrollCostId).apply(updatedData)))
   }
 
 }

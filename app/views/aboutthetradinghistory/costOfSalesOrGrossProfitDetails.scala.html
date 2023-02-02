@@ -14,7 +14,7 @@
  * limitations under the License.
  *@
 
-@import models.submissions.aboutthetradinghistory.CostOfSalesOrGrossProfitDetails
+@import models.submissions.aboutthetradinghistory.CostOfSalesOrGrossProfit
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 @import uk.gov.hmrc.govukfrontend.views.html.components._
@@ -33,11 +33,10 @@
         formWithCSRF: FormWithCSRF
 )
 
-
-@(theForm: Form[CostOfSalesOrGrossProfitDetails])(implicit request: Request[_], messages: Messages)
+@(theForm: Form[CostOfSalesOrGrossProfit])(implicit request: Request[_], messages: Messages)
 
 @layout(
- pageHeading = messages("tiedForGoods.heading"),
+ pageHeading = messages("costOfSalesOrGrossProfit.heading"),
  showH1 = false,
  showSection = true,
  sectionName = messages("label.section.aboutTheProperty"),
@@ -45,35 +44,35 @@
  theForm = theForm
 ) {
 
- @formWithCSRF(action = controllers.abouttheproperty.routes.TiedForGoodsController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
+ @formWithCSRF(action = controllers.aboutthetradinghistory.routes.CostOfSalesOrGrossProfitDetailsController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
 
   @govukRadios(
    Radios(
-    name = "tiedForGoods",
-    idPrefix = Option("tiedForGoods"),
+    name = "costOfSalesOrGrossProfit",
+    idPrefix = Option("costOfSalesOrGrossProfit"),
     items = Seq(
-     "costOfSales" -> messages("label.yes"),
-     "grossProfit" -> messages("label.no")
+     "costOfSales" -> messages("label.costOfSales"),
+     "grossProfit" -> messages("label.grossProfit")
     ).map(radioItem => RadioItem(
      content = Text(radioItem._2),
-     checked = radioItem._1.equals(theForm("tiedForGoods").value.getOrElse("")),
+     checked = radioItem._1.equals(theForm("costOfSalesOrGrossProfit").value.getOrElse("")),
      value = Option(radioItem._1)
     )
     ),
-    errorMessage =  theForm.errors.asTextErrorMessageForField("tiedForGoods"),
+    errorMessage =  theForm.errors.asTextErrorMessageForField("costOfSalesOrGrossProfit"),
     classes = "govuk-radios--inline",
     fieldset = Option(
      Fieldset(
       legend = Option(
        Legend(
-        content = Text(messages("tiedForGoods.heading")),
+        content = Text(messages("costOfSalesOrGrossProfit.heading")),
         isPageHeading = true, classes = "govuk-fieldset__legend--l"
        )
       )
      )
     ),
-    hint = Some(Hint(content = Text(messages("hint.tiedForGoods")))),
-   ).withFormField(theForm("tiedForGoods"))
+    hint = Some(Hint(content = Text(messages("hint.costOfSalesOrGrossProfit")))),
+   ).withFormField(theForm("costOfSalesOrGrossProfit"))
   )
 
   @includes.continueButton(govukButton)
