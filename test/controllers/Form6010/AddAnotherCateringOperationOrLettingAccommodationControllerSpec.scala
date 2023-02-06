@@ -18,20 +18,35 @@ package controllers.Form6010
 
 import play.api.http.Status
 import play.api.test.Helpers._
+import play.twirl.api.HtmlFormat
 import utils.TestBaseSpec
+import views.html.form.{addAnotherCateringOperationOrLettingAccommodation, cateringOperationOrLettingAccommodationDetails, lettingOtherPartOfProperty}
+import views.html.login
 
 class AddAnotherCateringOperationOrLettingAccommodationControllerSpec extends TestBaseSpec {
 
-  private val controller = app.injector.instanceOf[AddAnotherCateringOperationOrLettingAccommodationController]
+  val mockAddAnotherCateringOperationOrLettingAccommodation = mock[addAnotherCateringOperationOrLettingAccommodation]
+  when(mockAddAnotherCateringOperationOrLettingAccommodation.apply(any)(any, any)).thenReturn(HtmlFormat.empty)
+
+  val addAnotherCateringOperationOrLettingAccommodationController =
+    new AddAnotherCateringOperationOrLettingAccommodationController(
+      stubMessagesControllerComponents(),
+      mockAddAnotherCateringOperationOrLettingAccommodation,
+      mock[login],
+      mock[cateringOperationOrLettingAccommodationDetails],
+      mock[lettingOtherPartOfProperty],
+      preFilledSession,
+      mockSessionRepo
+    )
 
   "GET /" should {
     "return 200" in {
-      val result = controller.show(fakeRequest)
+      val result = addAnotherCateringOperationOrLettingAccommodationController.show(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return HTML" in {
-      val result = controller.show(fakeRequest)
+      val result = addAnotherCateringOperationOrLettingAccommodationController.show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }

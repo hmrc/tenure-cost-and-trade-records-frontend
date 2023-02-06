@@ -14,6 +14,17 @@
  * limitations under the License.
  */
 
-package models.submissions.Form6010
+package models.submissions.aboutfranchisesorlettings
 
-case class CateringOperationDetails(cateringOperationOrLettingAccommodation: CateringOperationOrLettingAccommodation)
+import models.submissions.Form6010.{LettingOtherPartOfPropertyInformationDetails, LettingOtherPartOfPropertyRentDetails}
+import play.api.libs.json.Json
+
+case class LettingSection(
+  lettingOtherPartOfPropertyInformationDetails: LettingOtherPartOfPropertyInformationDetails,
+  lettingOtherPartOfPropertyRentDetails: Option[LettingOtherPartOfPropertyRentDetails] = None
+)
+
+object LettingSection {
+  implicit val format = Json.format[LettingSection]
+
+}

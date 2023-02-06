@@ -33,7 +33,7 @@ class AboutYourLeaseOrTenure6011NavigatorSpec extends TestBaseSpec {
 
   val navigator = new AboutYourLeaseOrTenureNavigator(audit)
 
-  val test6011UserLoginDetails = UserLoginDetails("jwtToken", "FOR6011", "123456", testAddress)
+  val test6011UserLoginDetails = UserLoginDetails("jwtToken", "FOR6011", "123456", prefilledAddress)
   val session6011              = Session(test6011UserLoginDetails)
 
   implicit override val hc: HeaderCarrier = HeaderCarrier()

@@ -16,24 +16,46 @@
 
 package controllers.Form6010
 
+import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
 import play.api.http.Status
+import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import utils.TestBaseSpec
 
 class LettingOtherPartOfPropertyControllerSpec extends TestBaseSpec {
 
-  private val controller = app.injector.instanceOf[LettingOtherPartOfPropertyController]
+  def lettingOtherPartOfPropertyController(
+    aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = Some(prefilledAboutFranchiseOrLettings)
+  ) =
+    new LettingOtherPartOfPropertyController(
+      stubMessagesControllerComponents(),
+      loginView,
+      lettingOtherPartOfPropertyDetailsView,
+      lettingOtherPartOfPropertyView,
+      aboutYourLandlordView,
+      preEnrichedActionRefiner(aboutFranchisesOrLettings = aboutFranchisesOrLettings),
+      mockSessionRepo
+    )
 
   "GET /" should {
     "return 200" in {
-      val result = controller.show(fakeRequest)
+      val result = lettingOtherPartOfPropertyController().show(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return HTML" in {
-      val result = controller.show(fakeRequest)
+      val result = lettingOtherPartOfPropertyController().show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
+    }
+
+    "SUBMIT /" should {
+      "throw a BAD_REQUEST if an empty form is submitted" in {
+        val res = lettingOtherPartOfPropertyController().submit(
+          FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)
+        )
+        status(res) shouldBe BAD_REQUEST
+      }
     }
   }
 }

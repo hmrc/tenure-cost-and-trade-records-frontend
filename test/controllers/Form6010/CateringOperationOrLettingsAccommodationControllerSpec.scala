@@ -16,24 +16,49 @@
 
 package controllers.Form6010
 
+import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
 import play.api.http.Status
+import play.api.test.FakeRequest
 import play.api.test.Helpers._
+import play.twirl.api.HtmlFormat
 import utils.TestBaseSpec
+import views.html.form.{cateringOperationOrLettingAccommodation, cateringOperationOrLettingAccommodationDetails, lettingOtherPartOfProperty}
+import views.html.login
 
 class CateringOperationOrLettingsAccommodationControllerSpec extends TestBaseSpec {
 
-  private val controller = app.injector.instanceOf[CateringOperationOrLettingAccommodationController]
+  def cateringOperationOrLettingAccommodationController(
+    aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = Some(prefilledAboutFranchiseOrLettings)
+  ) =
+    new CateringOperationOrLettingAccommodationController(
+      stubMessagesControllerComponents(),
+      loginView,
+      cateringOperationOrLettingAccommodationDetailsView,
+      lettingOtherPartOfPropertyView,
+      cateringOperationOrLettingAccommodationView,
+      preEnrichedActionRefiner(aboutFranchisesOrLettings = aboutFranchisesOrLettings),
+      mockSessionRepo
+    )
 
   "GET /" should {
     "return 200" in {
-      val result = controller.show(fakeRequest)
+      val result = cateringOperationOrLettingAccommodationController().show(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return HTML" in {
-      val result = controller.show(fakeRequest)
+      val result = cateringOperationOrLettingAccommodationController().show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
+    }
+  }
+
+  "SUBMIT /" should {
+    "throw a BAD_REQUEST if an empty form is submitted" in {
+      val res = cateringOperationOrLettingAccommodationController().submit(
+        FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)
+      )
+      status(res) shouldBe BAD_REQUEST
     }
   }
 }

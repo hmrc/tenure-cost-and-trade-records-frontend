@@ -14,20 +14,27 @@
  * limitations under the License.
  */
 
-package models.submissions.Form6010
+package models.submissions.aboutfranchisesorlettings
 
-import models.{NamedEnum, NamedEnumSupport}
+import models.{EnumFormat, NamedEnum, NamedEnumSupport}
+import play.api.libs.json.Format
 
 sealed trait CateringOperationOrLettingAccommodation extends NamedEnum {
-  val key = "cateringOperationOrLettingAccommodation"
+  override def key: String = "cateringOperationOrLettingAccommodation"
 }
 object CateringOperationYes extends CateringOperationOrLettingAccommodation {
-  val name = "yes"
+  override def name: String = "yes"
 }
 object CateringOperationNo extends CateringOperationOrLettingAccommodation {
-  val name = "no"
+  override def name: String = "no"
 }
 
-object CateringOperation extends NamedEnumSupport[CateringOperationOrLettingAccommodation] {
+object CateringOperationOrLettingAccommodation extends NamedEnumSupport[CateringOperationOrLettingAccommodation] {
+  implicit val format: Format[CateringOperationOrLettingAccommodation] = EnumFormat(
+    CateringOperationOrLettingAccommodation
+  )
+
   val all = List(CateringOperationYes, CateringOperationNo)
+
+  val key = all.head.key
 }

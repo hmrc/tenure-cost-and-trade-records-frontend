@@ -34,10 +34,10 @@ class AreYouStillConnectedViewSpec extends QuestionViewBehaviours[AddressConnect
 
   override val form = AreYouStillConnectedForm.areYouStillConnectedForm
 
-  def createView = () => areYouStillConnectedView(form, testAddress)(fakeRequest, messages)
+  def createView = () => areYouStillConnectedView(form, prefilledAddress)(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[AddressConnectionType]) =>
-    areYouStillConnectedView(form, testAddress)(fakeRequest, messages)
+    areYouStillConnectedView(form, prefilledAddress)(fakeRequest, messages)
 
   "Are you still connected view" must {
     "behave like a normal page" when {
@@ -61,13 +61,13 @@ class AreYouStillConnectedViewSpec extends QuestionViewBehaviours[AddressConnect
           assertEqualsValue(
             doc,
             "title",
-            messages("service.title", messages(s"$messageKeyPrefix.heading", testAddress.singleLine))
+            messages("service.title", messages(s"$messageKeyPrefix.heading", prefilledAddress.singleLine))
           )
         }
 
         "display the correct page title" in {
           val doc = asDocument(createView())
-          assertPageTitleEqualsMessage(doc, s"$messageKeyPrefix.heading", testAddress.singleLine)
+          assertPageTitleEqualsMessage(doc, s"$messageKeyPrefix.heading", prefilledAddress.singleLine)
         }
 
         "display language toggles" in {

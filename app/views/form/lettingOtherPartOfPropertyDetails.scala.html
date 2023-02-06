@@ -50,7 +50,7 @@
 )
 
 
-@(theForm: Form[LettingOtherPartOfPropertyInformationDetails])(implicit request: Request[_], messages: Messages)
+@(theForm: Form[LettingOtherPartOfPropertyInformationDetails], index: Option[Int])(implicit request: Request[_], messages: Messages)
 
 @layout(
  pageHeading = messages("lettingOtherPartOfPropertyDetails.heading"),
@@ -58,7 +58,7 @@
  theForm = theForm
 ) {
 
- @formWithCSRF(action = controllers.Form6010.routes.LettingOtherPartOfPropertyDetailsController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
+ @formWithCSRF(action = controllers.Form6010.routes.LettingOtherPartOfPropertyDetailsController.submit(index), args = 'class -> "myForm", 'id -> "myFormId") {
 
   @govukInput(
    Input(

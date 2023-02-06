@@ -50,14 +50,14 @@
 )
 
 
-@()(implicit request: Request[_], messages: Messages)
+@(index: Int)(implicit request: Request[_], messages: Messages)
 
 @layout(
  pageHeading = messages("lettingOtherPartOfPropertyCheckboxesDetails.heading"),
- backLinkUrl = controllers.Form6010.routes.LettingOtherPartOfPropertyDetailsRentController.show.url
+ backLinkUrl = controllers.Form6010.routes.LettingOtherPartOfPropertyDetailsRentController.show(index).url
 ) {
 
- @formWithCSRF(action = controllers.Form6010.routes.LettingOtherPartOfPropertyDetailsCheckboxesController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
+ @formWithCSRF(action = controllers.Form6010.routes.LettingOtherPartOfPropertyDetailsCheckboxesController.submit(index), args = 'class -> "myForm", 'id -> "myFormId") {
 
   @govukCheckboxes(
    Checkboxes(

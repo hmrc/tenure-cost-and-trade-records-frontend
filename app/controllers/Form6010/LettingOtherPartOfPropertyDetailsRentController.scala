@@ -16,31 +16,59 @@
 
 package controllers.Form6010
 
+import actions.WithSessionRefiner
+import controllers.Form6010
 import form.Form6010.LettingOtherPartOfPropertyRentForm.lettingOtherPartOfPropertyRentForm
+import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.form.{lettingOtherPartOfPropertyCheckboxesDetails, lettingOtherPartOfPropertyRentDetails}
+import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
 
-import javax.inject.{Inject, Singleton}
-import scala.concurrent.Future
+import javax.inject.{Inject, Named, Singleton}
+import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class LettingOtherPartOfPropertyDetailsRentController @Inject() (
   mcc: MessagesControllerComponents,
   lettingOtherPartOfPropertyCheckboxesDetailsView: lettingOtherPartOfPropertyCheckboxesDetails,
-  lettingOtherPartOfPropertyDetailsRentView: lettingOtherPartOfPropertyRentDetails
-) extends FrontendController(mcc) {
+  lettingOtherPartOfPropertyDetailsRentView: lettingOtherPartOfPropertyRentDetails,
+  withSessionRefiner: WithSessionRefiner,
+  @Named("session") val session: SessionRepo
+)(implicit ec: ExecutionContext)
+    extends FrontendController(mcc)
+    with I18nSupport {
 
-  def show: Action[AnyContent] = Action.async { implicit request =>
-    Future.successful(Ok(lettingOtherPartOfPropertyDetailsRentView(lettingOtherPartOfPropertyRentForm)))
+  def show(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
+    val existingSection = request.sessionData.aboutFranchisesOrLettings.flatMap(_.lettingSections.lift(index))
+    existingSection.fold(Redirect(Form6010.routes.LettingOtherPartOfPropertyDetailsController.show(None))) {
+      lettingSection =>
+        val lettingDetailsForm = lettingSection.lettingOtherPartOfPropertyRentDetails.fold(
+          lettingOtherPartOfPropertyRentForm
+        )(lettingOtherPartOfPropertyRentForm.fill)
+        Ok(lettingOtherPartOfPropertyDetailsRentView(lettingDetailsForm, index))
+    }
   }
 
-  def submit = Action.async { implicit request =>
+  def submit(index: Int) = (Action andThen withSessionRefiner).async { implicit request =>
     lettingOtherPartOfPropertyRentForm
       .bindFromRequest()
       .fold(
-        formWithErrors => Future.successful(BadRequest(lettingOtherPartOfPropertyDetailsRentView(formWithErrors))),
-        data => Future.successful(Ok(lettingOtherPartOfPropertyCheckboxesDetailsView()))
+        formWithErrors =>
+          Future.successful(BadRequest(lettingOtherPartOfPropertyDetailsRentView(formWithErrors, index))),
+        data =>
+          request.sessionData.aboutFranchisesOrLettings.fold(
+            Future.successful(Redirect(Form6010.routes.LettingOtherPartOfPropertyDetailsController.show(None)))
+          ) { aboutFranchiseOrLettings =>
+            val existingSections = aboutFranchiseOrLettings.lettingSections
+            val updatedSections  = existingSections
+              .updated(index, existingSections(index).copy(lettingOtherPartOfPropertyRentDetails = Some(data)))
+            val dataForSession   = updateAboutFranchisesOrLettings(_.copy(lettingSections = updatedSections))
+            session
+              .saveOrUpdate(dataForSession)
+              .map(_ => Redirect(Form6010.routes.LettingOtherPartOfPropertyDetailsCheckboxesController.show(index)))
+          }
       )
   }
 

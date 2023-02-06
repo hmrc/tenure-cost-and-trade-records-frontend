@@ -16,18 +16,24 @@
 
 package models.submissions.Form6010
 
-import models.{NamedEnum, NamedEnumSupport}
+import models.{EnumFormat, NamedEnum, NamedEnumSupport}
+import play.api.libs.json.Format
 
-sealed trait LettingOtherPartOfProperties extends NamedEnum {
-  val key = "lettingOtherPartOfProperties"
+sealed trait LettingOtherPartOfProperty extends NamedEnum {
+  override def key: String = "lettingOtherPartOfProperty"
 }
-object LettingOtherPartOfPropertiesYes extends LettingOtherPartOfProperties {
-  val name = "yes"
+object LettingOtherPartOfPropertiesYes extends LettingOtherPartOfProperty {
+  override def name: String = "yes"
 }
-object LettingOtherPartOfPropertiesNo extends LettingOtherPartOfProperties {
-  val name = "no"
+object LettingOtherPartOfPropertiesNo extends LettingOtherPartOfProperty {
+  override def name: String = "no"
 }
 
-object LettingOtherPartOfProperty extends NamedEnumSupport[LettingOtherPartOfProperties] {
+object LettingOtherPartOfProperty extends NamedEnumSupport[LettingOtherPartOfProperty] {
+  implicit val format: Format[LettingOtherPartOfProperty] = EnumFormat(LettingOtherPartOfProperty)
+
   val all = List(LettingOtherPartOfPropertiesYes, LettingOtherPartOfPropertiesNo)
+
+  val key = all.head.key
+
 }
