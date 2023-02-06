@@ -42,7 +42,7 @@ class LoginControllerSpec extends TestBaseSpec {
 
       val loginToBackendFunction = (refNum: RefNumber, postcode: Postcode, start: StartTime) => {
         assert(refNum.equals("01234567000"))
-        Future.successful(NoExistingDocument("token", "forNum", testAddress))
+        Future.successful(NoExistingDocument("token", "forNum", prefilledAddress))
       }
 
       val loginToBackend = mock[LoginToBackendAction]
@@ -74,7 +74,7 @@ class LoginControllerSpec extends TestBaseSpec {
             Audit.referenceNumber -> "01234567000",
             "returningUser"       -> false,
             Audit.formOfReturn    -> "forNum",
-            "address"             -> testAddress
+            "address"             -> prefilledAddress
           )
         )
       )(any[HeaderCarrier], any[ExecutionContext])
@@ -104,7 +104,7 @@ class LoginControllerSpec extends TestBaseSpec {
 
       status(response) shouldBe SEE_OTHER
 
-      verify(audit).sendExplicitAudit(eqTo("Logout"), eqTo(Json.obj(Audit.referenceNumber -> "123456")))(
+      verify(audit).sendExplicitAudit(eqTo("Logout"), eqTo(Json.obj(Audit.referenceNumber -> "99996010004")))(
         any[HeaderCarrier],
         any[ExecutionContext]
       )

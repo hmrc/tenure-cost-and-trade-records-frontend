@@ -16,35 +16,73 @@
 
 package controllers.Form6010
 
+import controllers.Form6010
+import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
+import org.jsoup.Jsoup
 import play.api.http.Status
+import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import play.twirl.api.HtmlFormat
 import utils.TestBaseSpec
-import views.html.form.{lettingOtherPartOfPropertyCheckboxesDetails, lettingOtherPartOfPropertyRentDetails}
 
 class LettingOtherPartOfPropertyDetailsRentControllerSpec extends TestBaseSpec {
-  val mockLettingOtherPartOfPropertyRentDetails = mock[lettingOtherPartOfPropertyRentDetails]
-  when(mockLettingOtherPartOfPropertyRentDetails.apply(any, any)(any, any)).thenReturn(HtmlFormat.empty)
 
-  val lettingOtherPartOfPropertyDetailsRentController = new LettingOtherPartOfPropertyDetailsRentController(
-    stubMessagesControllerComponents(),
-    mock[lettingOtherPartOfPropertyCheckboxesDetails],
-    mockLettingOtherPartOfPropertyRentDetails,
-    preFilledSession,
-    mockSessionRepo
-  )
+  def lettingOtherPartOfPropertyDetailsRentController(
+    aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = Some(prefilledAboutFranchiseOrLettings)
+  ) =
+    new LettingOtherPartOfPropertyDetailsRentController(
+      stubMessagesControllerComponents(),
+      lettingOtherPartOfPropertyCheckboxesDetailsView,
+      lettingOtherPartOfPropertyRentDetailsView,
+      preEnrichedActionRefiner(aboutFranchisesOrLettings = aboutFranchisesOrLettings),
+      mockSessionRepo
+    )
 
-  "GET /" should {
+  "GET /"    should {
     "return 200" in {
-      val result = lettingOtherPartOfPropertyDetailsRentController.show(0)(fakeRequest)
-      status(result) shouldBe Status.SEE_OTHER
+      val result = lettingOtherPartOfPropertyDetailsRentController().show(0)(fakeRequest)
+      status(result) shouldBe Status.OK
     }
-    //TODO - need to find way to mock data to be returned after call is made with index
 
-//    "return HTML" in {
-//      val result = lettingOtherPartOfPropertyDetailsRentController.show(fakeRequest)
-//      contentType(result) shouldBe Some("text/html")
-//      charset(result)     shouldBe Some("utf-8")
-//    }
+    "return HTML" in {
+      val result = lettingOtherPartOfPropertyDetailsRentController().show(0)(fakeRequest)
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
+    }
+
+    "redirect the user to the other Letting Accommodation details page" when {
+      "given an index" which {
+        "does not exist within the session" in {
+          val result = lettingOtherPartOfPropertyDetailsRentController().show(2)(fakeRequest)
+          status(result) shouldBe SEE_OTHER
+
+          redirectLocation(result) shouldBe Some(
+            Form6010.routes.LettingOtherPartOfPropertyDetailsController.show(None).url
+          )
+        }
+      }
+    }
+
+    "display the page with the fields prefilled in" when {
+      "given an index" which {
+        "exists within the session" in {
+          val result = lettingOtherPartOfPropertyDetailsRentController().show(0)(fakeRequest)
+          val html   = Jsoup.parse(contentAsString(result))
+
+          Option(html.getElementById("annualRent").`val`()).value      shouldBe "1500"
+          Option(html.getElementById("dateInput.day").`val`()).value   shouldBe "1"
+          Option(html.getElementById("dateInput.month").`val`()).value shouldBe "6"
+          Option(html.getElementById("dateInput.year").`val`()).value  shouldBe "2022"
+
+        }
+      }
+    }
+  }
+  "SUBMIT /" should {
+    "throw a BAD_REQUEST if an empty form is submitted" in {
+      val res = lettingOtherPartOfPropertyDetailsRentController().submit(0)(
+        FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)
+      )
+      status(res) shouldBe BAD_REQUEST
+    }
   }
 }

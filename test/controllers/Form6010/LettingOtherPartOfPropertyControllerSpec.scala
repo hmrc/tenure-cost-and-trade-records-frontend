@@ -16,39 +16,46 @@
 
 package controllers.Form6010
 
+import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
 import play.api.http.Status
+import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import play.twirl.api.HtmlFormat
 import utils.TestBaseSpec
-import views.html.form.{lettingOtherPartOfProperty, lettingOtherPartOfPropertyDetails}
-import views.html.aboutYourLeaseOrTenure.aboutYourLandlord
-import views.html.login
 
 class LettingOtherPartOfPropertyControllerSpec extends TestBaseSpec {
 
-  val mockLettingOtherPartOfProperty = mock[lettingOtherPartOfProperty]
-  when(mockLettingOtherPartOfProperty.apply(any)(any, any)).thenReturn(HtmlFormat.empty)
-
-  val lettingOtherPartOfPropertyController = new LettingOtherPartOfPropertyController(
-    stubMessagesControllerComponents(),
-    mock[login],
-    mock[lettingOtherPartOfPropertyDetails],
-    mockLettingOtherPartOfProperty,
-    mock[aboutYourLandlord],
-    preFilledSession,
-    mockSessionRepo
-  )
+  def lettingOtherPartOfPropertyController(
+    aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = Some(prefilledAboutFranchiseOrLettings)
+  ) =
+    new LettingOtherPartOfPropertyController(
+      stubMessagesControllerComponents(),
+      loginView,
+      lettingOtherPartOfPropertyDetailsView,
+      lettingOtherPartOfPropertyView,
+      aboutYourLandlordView,
+      preEnrichedActionRefiner(aboutFranchisesOrLettings = aboutFranchisesOrLettings),
+      mockSessionRepo
+    )
 
   "GET /" should {
     "return 200" in {
-      val result = lettingOtherPartOfPropertyController.show(fakeRequest)
+      val result = lettingOtherPartOfPropertyController().show(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return HTML" in {
-      val result = lettingOtherPartOfPropertyController.show(fakeRequest)
+      val result = lettingOtherPartOfPropertyController().show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
+    }
+
+    "SUBMIT /" should {
+      "throw a BAD_REQUEST if an empty form is submitted" in {
+        val res = lettingOtherPartOfPropertyController().submit(
+          FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)
+        )
+        status(res) shouldBe BAD_REQUEST
+      }
     }
   }
 }

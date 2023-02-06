@@ -18,19 +18,22 @@ package utils
 
 import actions.{SessionRequest, WithSessionRefiner}
 import config.{AppConfig, ErrorHandler}
+import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
 import models.submissions.abouttheproperty._
+import models.submissions.aboutthetradinghistory.AboutTheTradingHistory
 import models.submissions.aboutyou.{AboutYou, CustomerDetails}
+import models.submissions.additionalinformation.{AdditionalInformation, AltContactInformation}
 import models.submissions.common.{Address, ContactDetails}
 import models.submissions.connectiontoproperty.{AddressConnectionTypeYes, StillConnectedDetails}
 import models.submissions.notconnected.{RemoveConnectionDetails, RemoveConnectionsDetails}
 import models.{Session, UserLoginDetails}
 import org.mockito.scalatest.MockitoSugar
-import org.scalatest.{BeforeAndAfterEach, Inside}
+import org.scalatest.{BeforeAndAfterEach, Inside, OptionValues}
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.time.{Millis, Seconds, Span}
 import org.scalatest.wordspec.AnyWordSpec
-import org.scalatestplus.play.guice.GuiceOneAppPerSuite
+import org.scalatestplus.play.guice.{GuiceOneAppPerSuite, GuiceOneAppPerTest}
 import play.api.Application
 import play.api.i18n.{Messages, MessagesApi}
 import play.api.inject.Injector
@@ -56,7 +59,10 @@ trait TestBaseSpec
     with Inside
     with GuiceOneAppPerSuite
     with GlobalExecutionContext
-    with RepositoryUtils {
+    with RepositoryUtils
+    with FakeObjects
+    with FakeViews
+    with OptionValues {
 
   override def fakeApplication(): Application =
     new GuiceApplicationBuilder()
@@ -88,42 +94,26 @@ trait TestBaseSpec
 
   val mockCustomErrorHandler: ErrorHandler     = mock[ErrorHandler]
   val mockSessionRepository: SessionRepository = mock[SessionRepository]
-  val testAddress                              = Address("001", Some("GORING ROAD"), Some("GORING-BY-SEA, WORTHING"), "BN12 4AX")
-  val testUserLoginDetails                     =
-    UserLoginDetails("jwtToken", "FOR6010", "123456", Address("13", Some("Street"), Some("City"), "AA11 1AA"))
-  val testStillConnectedDetailsYes             = StillConnectedDetails(Some(AddressConnectionTypeYes))
-  val testRemoveConnection                     = Some(
-    RemoveConnectionDetails(
-      Some(
-        RemoveConnectionsDetails(
-          "John Smith",
-          ContactDetails("12345678909", "test@email.com"),
-          Some("Additional Information is here")
-        )
-      )
+
+  val preFilledSession =
+    preEnrichedActionRefiner(
+      prefilledUserLoginDetails,
+      Some(prefilledStillConnectedDetailsYes),
+      Some(prefilledRemoveConnection),
+      Some(prefilledAboutYou),
+      Some(prefilledAboutThePropertyNo)
     )
-  )
-  val testAboutYou                             = AboutYou(Some(CustomerDetails("Tobermory", ContactDetails("12345678909", "test@email.com"))))
-  val testAboutThePropertyNo                   = AboutTheProperty(
-    Some(PropertyDetails("OccupierName", CurrentPropertyHotel, None)),
-    Some(WebsiteForPropertyDetails(BuildingOperationHaveAWebsiteYes, Some("webAddress"))),
-    Some(LicensableActivitiesNo),
-    None,
-    Some(PremisesLicensesConditionsNo),
-    None,
-    Some(EnforcementActionsNo),
-    None,
-    Some(TiedGoodsNo),
-    None
-  )
-  val preFilledSession                         =
-    preEnrichedActionRefiner(testUserLoginDetails, testStillConnectedDetailsYes, testAboutYou, testAboutThePropertyNo)
 
   def preEnrichedActionRefiner(
-    userLoginDetails: UserLoginDetails,
-    stillConnectedDetailsYes: StillConnectedDetails,
-    aboutYou: AboutYou,
-    aboutTheProperty: AboutTheProperty
+    userLoginDetails: UserLoginDetails = prefilledUserLoginDetails,
+    stillConnectedDetailsYes: Option[StillConnectedDetails] = Some(prefilledStillConnectedDetailsYes),
+    removeConnectionDetails: Option[RemoveConnectionDetails] = Some(prefilledRemoveConnection),
+    aboutYou: Option[AboutYou] = Some(prefilledAboutYou),
+    aboutTheProperty: Option[AboutTheProperty] = Some(prefilledAboutThePropertyNo),
+    additionalInformation: Option[AdditionalInformation] = Some(prefilledAdditionalInformation),
+    altContactInformation: Option[AltContactInformation] = Some(prefilledAltContactInformation),
+    aboutTheTradingHistory: Option[AboutTheTradingHistory] = Some(prefilledAboutTheTradingHistory),
+    aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = Some(prefilledAboutFranchiseOrLettings)
   ): WithSessionRefiner =
     new WithSessionRefiner(mockCustomErrorHandler, mockSessionRepository) {
 
@@ -133,9 +123,14 @@ trait TestBaseSpec
             SessionRequest[A](
               Session(
                 userLoginDetails = userLoginDetails,
-                stillConnectedDetails = Some(stillConnectedDetailsYes),
-                aboutYou = Some(aboutYou),
-                aboutTheProperty = Some(aboutTheProperty)
+                stillConnectedDetails = stillConnectedDetailsYes,
+                removeConnectionDetails = removeConnectionDetails,
+                aboutYou = aboutYou,
+                aboutTheProperty = aboutTheProperty,
+                additionalInformation = additionalInformation,
+                altContactInformation = altContactInformation,
+                aboutTheTradingHistory = aboutTheTradingHistory,
+                aboutFranchisesOrLettings = aboutFranchisesOrLettings
               ),
               request = request
             )

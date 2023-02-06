@@ -42,7 +42,8 @@ object AppDependencies {
     "org.mockito"            %  "mockito-core"            % "2.27.0"            % Test,
     "org.scalatestplus"      %% "mockito-3-4"             % "3.2.9.0"           % Test,
     "uk.gov.hmrc.mongo"      %% "hmrc-mongo-test-play-28" % mongoVersion        % Test,
-    "org.mockito"            %% "mockito-scala-scalatest" % mockitoScalaVersion % Test
+    "org.mockito"            %% "mockito-scala-scalatest" % mockitoScalaVersion % Test,
+    "org.jsoup"              %  "jsoup"                   % "1.15.3"        % Test,
   )
 
   private val integrationTestOnly = Seq(

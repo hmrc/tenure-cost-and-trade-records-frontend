@@ -16,36 +16,74 @@
 
 package controllers.Form6010
 
+import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
+import org.jsoup.Jsoup
 import play.api.http.Status
+import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import play.twirl.api.HtmlFormat
 import utils.TestBaseSpec
-import views.html.form.lettingOtherPartOfPropertyDetails
 
 class LettingOtherPartOfPropertyDetailsControllerSpec extends TestBaseSpec {
 
-  val mockLettingOtherPartOfPropertyDetails = mock[lettingOtherPartOfPropertyDetails]
-  when(mockLettingOtherPartOfPropertyDetails.apply(any, any)(any, any)).thenReturn(HtmlFormat.empty)
-
-  val lettingOtherPartOfPropertyDetailsController = new LettingOtherPartOfPropertyDetailsController(
-    stubMessagesControllerComponents(),
-    mockLettingOtherPartOfPropertyDetails,
-    preFilledSession,
-    mockSessionRepo
-  )
+  def lettingOtherPartOfPropertyDetailsController(
+    aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = Some(prefilledAboutFranchiseOrLettings)
+  ) =
+    new LettingOtherPartOfPropertyDetailsController(
+      stubMessagesControllerComponents(),
+      lettingOtherPartOfPropertyDetailsView,
+      preEnrichedActionRefiner(aboutFranchisesOrLettings = aboutFranchisesOrLettings),
+      mockSessionRepo
+    )
 
   "GET /" should {
     "return 200" in {
-      val result = lettingOtherPartOfPropertyDetailsController.show(None)(fakeRequest)
+      val result = lettingOtherPartOfPropertyDetailsController().show(None)(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
-    //TODO - need to find way to mock data to be returned after call is made with index
+    "return HTML" in {
+      val result = lettingOtherPartOfPropertyDetailsController().show(None)(fakeRequest)
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
+    }
 
-//    "return HTML" in {
-//      val result = controller.show(fakeRequest)
-//      contentType(result) shouldBe Some("text/html")
-//      charset(result)     shouldBe Some("utf-8")
-//    }
+    "render a page with an empty form" when {
+      "not given an index" in {
+        val result = lettingOtherPartOfPropertyDetailsController().show(None)(fakeRequest)
+        val html   = Jsoup.parse(contentAsString(result))
+
+        Option(html.getElementById("lettingOperatorName").`val`()).value               shouldBe ""
+        Option(html.getElementById("lettingTypeOfBusiness").`val`()).value             shouldBe ""
+        Option(html.getElementById("lettingAddress.buildingNameNumber").`val`()).value shouldBe ""
+        Option(html.getElementById("lettingAddress.street1").`val`()).value            shouldBe ""
+        Option(html.getElementById("lettingAddress.town").`val`()).value               shouldBe ""
+        Option(html.getElementById("lettingAddress.county").`val`()).value             shouldBe ""
+        Option(html.getElementById("lettingAddress.postcode").`val`()).value           shouldBe ""
+      }
+      "given an index" which {
+        "doesn't already exist in the session" in {
+          val result = lettingOtherPartOfPropertyDetailsController().show(Some(2))(fakeRequest)
+          val html   = Jsoup.parse(contentAsString(result))
+
+          Option(html.getElementById("lettingOperatorName").`val`()).value               shouldBe ""
+          Option(html.getElementById("lettingTypeOfBusiness").`val`()).value             shouldBe ""
+          Option(html.getElementById("lettingAddress.buildingNameNumber").`val`()).value shouldBe ""
+          Option(html.getElementById("lettingAddress.street1").`val`()).value            shouldBe ""
+          Option(html.getElementById("lettingAddress.town").`val`()).value               shouldBe ""
+          Option(html.getElementById("lettingAddress.county").`val`()).value             shouldBe ""
+          Option(html.getElementById("lettingAddress.postcode").`val`()).value           shouldBe ""
+        }
+      }
+    }
+  }
+
+  "SUBMIT /" should {
+    "throw a BAD_REQUEST if an empty form is submitted" in {
+
+      val res = lettingOtherPartOfPropertyDetailsController().submit(None)(
+        FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)
+      )
+      status(res) shouldBe BAD_REQUEST
+    }
   }
 }
