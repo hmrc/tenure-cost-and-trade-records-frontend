@@ -48,6 +48,11 @@ help.date.month.year = Please format in mm/yyyy
 label.date.day = Day
 label.date.month = Month
 label.date.year = Year
+label.buildingNameNumber=Address line 1
+label.street1=Address line 2
+label.townCity=Town or city
+label.county = County
+label.postcode=Postcode
 
 #Section names
 ##############
@@ -55,6 +60,7 @@ label.section.checkBeforeStart = Check before you start
 label.section.aboutYou = About you
 label.section.aboutTheProperty = About the property
 label.section.aboutYourTradingHistory = About your trading history
+label.section.aboutTheFranchiseLettings = Franchises or lettings tied to the property
 label.section.aboutYourLeaseOrTenure = About your lease or agreement
 label.section.additionalInformation = Additional information
 
@@ -187,25 +193,17 @@ label.yes = Yes
 label.no = No
 
 #FRANCHISE OR LETTINGS TIED TO PROPERTY
-##############################
+#######################################
 franchiseLettings.heading = Do you have any franchises or lettings tied to the property?
 franchiseLettings.subheading = These include:
 franchiseLettings.list1 = catering operation or letting accommodation run as a separate business if you’ve not included their turnover on the previous page
 franchiseLettings.list2 = rent received from letting other parts of the property including advertising rights, stations or hoardings
-label.franchiseLettings = Do you need to report anything listed on this page?
-label.yes = Yes
-label.no = No
 
 #ABOUT YOUR LANDLORD
 ##############################
 aboutYourLandlord.heading = About your landlord
 label.landlordFullName = Landlord’s name
 label.landlordAddress.address = Landlord’s address
-label.landlordAddress.buildingNameNumber = Address line 1
-label.landlordAddress.street1 = Address line 2
-label.landlordAddress.town = Town or city
-label.landlordAddress.county = County
-label.landlordAddress.postcode = Postcode
 error.landlordFullName.required = Please enter the landlord's full name
 error.landlordFullName.maxLength = This must be 1000 characters or fewer
 
@@ -255,13 +253,12 @@ tiedForGoodsDetails.beerOnly = Beer only
 tiedForGoodsDetails.partialTie = Partial tie
 
 #CATERING OPERATION OR LETTING ACCOMMODATION
-##############################
-cateringOperationOrLettingAccommodation.heading = Franchises or lettings tied to the property
-label.cateringOperationOrLettingAccommodation = Is any catering operation or letting accommodation run as a separate business from the property?
+############################################
+cateringOperationOrLettingAccommodation.heading = Is any catering operation or letting accommodation run as a separate business from the property?
 hint.cateringOperationOrLettingAccommodation = Choose ‘no’ if you’ve included turnover from these businesses on the previous page. You will have the opportunity to add more than one business if required.
 
 #LETTING OTHER PART OF PROPERTY
-##############################
+###############################
 LettingOtherPartOfProperties.heading = Lettings
 label.LettingOtherPartOfProperties = Is any rent received from letting other parts of the property?
 hint.LettingOtherPartOfProperties = Including advertising rights, stations or hoardings. Choose ‘no’ if you’ve already included the rental payments in your turnover.
@@ -426,34 +423,27 @@ hint.enforcementActionHasBeenTaken = This can be any suspensions, closure orders
 ##############################
 enforcementActionHasBeenTakenDetails.heading = Describe the enforcement action taken
 
-##CATERING OPERATION OR LETTING ACCOMMODATION DETAILS
-##############################
+##CATERING OPERATION OR LETTING DETAILS
+#######################################
 cateringOperationOrLettingAccommodationDetails.heading = Provide the business’s details
+lettingOtherPartOfPropertyDetails.heading = Provide the tenant’s details
 label.operatorName = Operator’s name
+label.lettingOperatorName = Tenant’s name
 label.typeOfBusiness = Describe the type of business
+label.lettingTypeOfBusiness = Description of letting
 hint.typeOfBusiness = For example, bed and breakfast, hotel, restaurant
-cateringAddress.correspondenceAddress = Correspondence address
-cateringAddress.buildingNameNumber.label = Address line 1
-cateringAddress.address2.label = Address line 2
-cateringAddress.town.label = Town or city
-cateringAddress.county.label = County (optional)
-cateringAddress.postcode.label = Postcode
+hint.lettingTypeOfBusiness = For example, a billboard, residential accommodation
+label.correspondenceAddress = Correspondence address
 
-##CATERING OPERATION OR LETTING ACCOMMODATION DETAILS RENT
-##############################
-cateringOperationOrLettingAccommodationRentDetails.heading = Annual rent for business
+##CATERING OPERATION OR LETTING ACCOMMODATION RENT DETAILS
+##########################################################
+cateringOperationOrLettingAccommodationRentDetails.heading = Annual rent for {0}
 label.annualRent = Annual rent payment (excluding VAT)
 label.dateInput = When was this sum fixed?
-error.required.annualRentExcludingVat = Please provide a number
-error.dateInput.day.required = The date must include a day
-error.dateInput.month.required = The date must include a month
-error.dateInput.year.required = The date must include a year
-error.required.annualRent = Please provide an annual rent amount
 
-##CATERING OPERATION OR LETTING ACCOMMODATION DETAILS CHECKBOXES
-##############################
-cateringOperationOrLettingAccommodationCheckboxesDetails.heading = Are any of the following included in your rent for business?
-label.cateringOperationOrLettingAccommodationCheckboxesDetails = Are any of the following included in your rent?
+##CATERING OPERATION OR LETTING ACCOMMODATION CHECKBOXES
+########################################################
+cateringOperationOrLettingAccommodationCheckboxesDetails.heading = Are any of the following included in your rent for {0}?
 hint.cateringOperationOrLettingAccommodationCheckboxesDetails = Select any that apply
 checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.rates = Rates
 checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.propertyInsurance = Property insurance
@@ -461,51 +451,11 @@ checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.outsideRepairs
 checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.insideRepairs = Inside repairs
 
 ##ADD ANOTHER CATERING OPERATION OR LETTING ACCOMMODATION DETAILS
-##############################
-addAnotherCateringOperationOrLettingAccommodation.heading = Franchises or lettings tied to the property
+#################################################################
+addAnotherCateringOperationOrLettingAccommodation.heading = You have added {0} separate business or franchise
+addAnotherLettingOtherPartOfProperty.heading = You have added {0} letting
 label.addAnotherCateringOperationOrLettingAccommodation = Do you need to add another separate business or franchise?
-label.yes = Yes
-label.no = No
-
-##LETTING OTHER PART OF PROPERTY DETAILS
-##############################
-lettingOtherPartOfPropertyDetails.heading = Provide the tenant’s details
-label.lettingOperatorName = Tenant’s name
-label.lettingTypeOfBusiness = Description of letting
-hint.lettingTypeOfBusiness = For example, a billboard, residential accommodation
-lettingAddress.correspondenceAddress = Correspondence address
-lettingAddress.buildingNameNumber.label = Address line 1
-lettingAddress.address2.label = Address line 2
-lettingAddress.town.label = Town or city
-lettingAddress.county.label = County (optional)
-lettingAddress.postcode.label = Postcode
-
-##LETTING OTHER PART OF PROPERTY DETAILS RENT
-##############################
-lettingOtherPartOfPropertyRentDetails.heading = Annual rent for letting
-label.annualRent = Annual rent payment (excluding VAT)
-label.dateInput = When was this sum fixed?
-error.required.annualRentExcludingVat = Please provide a number
-error.dateInput.day.required = The date must include a day
-error.dateInput.month.required = The date must include a month
-error.dateInput.year.required = The date must include a year
-error.required.annualRent = Please provide an annual rent amount
-
-##LETTING OTHER PART OF PROPERTY DETAILS CHECKBOXES
-##############################
-lettingOtherPartOfPropertyCheckboxesDetails.heading = Are any of the following included in your rent for letting?
-hint.lettingOtherPartOfPropertyCheckboxesDetails = Select any that apply
-checkbox.lettingOtherPartOfPropertyCheckboxesDetails.rates = Rates
-checkbox.lettingOtherPartOfPropertyCheckboxesDetails.propertyInsurance = Property insurance
-checkbox.lettingOtherPartOfPropertyCheckboxesDetails.outsideRepairs = Outside repairs
-checkbox.lettingOtherPartOfPropertyCheckboxesDetails.insideRepairs = Inside repairs
-
-##ADD ANOTHER LETTING OTHER PART OF PROPERTY DETAILS
-##############################
-addAnotherLettingOtherPartOfProperty.heading = Franchises or lettings tied to the property
 label.addAnotherLettingOtherPartOfProperty = Do you need to add another letting?
-label.yes = Yes
-label.no = No
 
 ##TENANTS ADDITIONS DISREGARDED
 ##############################
@@ -903,3 +853,5 @@ error.postcode.maxLength = Postcode must be 10 characters or fewer
 error.day.required = The date must include a day
 error.month.required = The date must include a month
 error.year.required = The date must include a year
+error.required.annualRent = Please provide an annual rent amount
+error.required.annualRentExcludingVat = Please provide a number

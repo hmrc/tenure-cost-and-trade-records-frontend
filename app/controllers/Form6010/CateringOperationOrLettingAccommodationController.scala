@@ -19,7 +19,7 @@ package controllers.Form6010
 import controllers.LoginController.loginForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.form.{cateringOperationOrLettingAccommodation, cateringOperationOrLettingAccommodationDetails, lettingOtherPartOfProperty}
+import views.html.form.{cateringOperationOrLettingAccommodation, cateringOperationOrLettingAccommodationDetails}
 import form.Form6010.CateringOperationForm.cateringOperationForm
 import form.Form6010.CateringOperationOrLettingAccommodationForm.cateringOperationOrLettingAccommodationForm
 import form.Form6010.LettingOtherPartOfPropertiesForm.lettingOtherPartOfPropertiesForm
@@ -34,27 +34,57 @@ class CateringOperationOrLettingAccommodationController @Inject() (
   mcc: MessagesControllerComponents,
   login: login,
   cateringOperationOrLettingAccommodationDetailsView: cateringOperationOrLettingAccommodationDetails,
-  lettingOtherPartOfPropertyView: lettingOtherPartOfProperty,
   cateringOperationOrLettingAccommodationView: cateringOperationOrLettingAccommodation
 ) extends FrontendController(mcc) {
 
   def show: Action[AnyContent] = Action.async { implicit request =>
-    Future.successful(Ok(cateringOperationOrLettingAccommodationView(cateringOperationForm)))
+    Future.successful(
+      Ok(
+        cateringOperationOrLettingAccommodationView(
+          cateringOperationForm,
+          "cateringOperationOrLettingAccommodation",
+          controllers.Form6010.routes.FranchiseOrLettingsTiedToPropertyController.show().url
+        )
+      )
+    )
   }
 
   def submit = Action.async { implicit request =>
     cateringOperationForm
       .bindFromRequest()
       .fold(
-        formWithErrors => Future.successful(BadRequest(cateringOperationOrLettingAccommodationView(formWithErrors))),
+        formWithErrors =>
+          Future.successful(
+            BadRequest(
+              cateringOperationOrLettingAccommodationView(
+                formWithErrors,
+                "cateringOperationOrLettingAccommodation",
+                controllers.Form6010.routes.FranchiseOrLettingsTiedToPropertyController.show().url
+              )
+            )
+          ),
         data =>
           data.cateringOperationOrLettingAccommodation match {
             case CateringOperationYes =>
               Future.successful(
-                Ok(cateringOperationOrLettingAccommodationDetailsView(cateringOperationOrLettingAccommodationForm))
+                Ok(
+                  cateringOperationOrLettingAccommodationDetailsView(
+                    cateringOperationOrLettingAccommodationForm,
+                    "cateringOperationOrLettingAccommodationDetails",
+                    controllers.Form6010.routes.CateringOperationOrLettingAccommodationController.show().url
+                  )
+                )
               )
             case CateringOperationNo  =>
-              Future.successful(Ok(lettingOtherPartOfPropertyView(lettingOtherPartOfPropertiesForm)))
+              Future.successful(
+                Ok(
+                  cateringOperationOrLettingAccommodationView(
+                    lettingOtherPartOfPropertiesForm,
+                    "LettingOtherPartOfProperties",
+                    controllers.Form6010.routes.CateringOperationOrLettingAccommodationController.show().url
+                  )
+                )
+              )
             case _                    => Future.successful(Ok(login(loginForm)))
           }
       )

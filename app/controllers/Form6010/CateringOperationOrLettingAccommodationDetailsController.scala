@@ -21,7 +21,6 @@ import form.Form6010.CateringOperationOrLettingAccommodationRentForm.cateringOpe
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.form.{cateringOperationOrLettingAccommodationDetails, cateringOperationOrLettingAccommodationRentDetails}
-import views.html.login
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
@@ -29,14 +28,19 @@ import scala.concurrent.Future
 @Singleton
 class CateringOperationOrLettingAccommodationDetailController @Inject() (
   mcc: MessagesControllerComponents,
-  login: login,
   cateringOperationOrLettingAccommodationDetailsView: cateringOperationOrLettingAccommodationDetails,
   cateringOperationOrLettingAccommodationRentDetailsView: cateringOperationOrLettingAccommodationRentDetails
 ) extends FrontendController(mcc) {
 
   def show: Action[AnyContent] = Action.async { implicit request =>
     Future.successful(
-      Ok(cateringOperationOrLettingAccommodationDetailsView(cateringOperationOrLettingAccommodationForm))
+      Ok(
+        cateringOperationOrLettingAccommodationDetailsView(
+          cateringOperationOrLettingAccommodationForm,
+          "cateringOperationOrLettingAccommodationDetails",
+          controllers.Form6010.routes.CateringOperationOrLettingAccommodationController.show().url
+        )
+      )
     )
   }
 
@@ -45,10 +49,24 @@ class CateringOperationOrLettingAccommodationDetailController @Inject() (
       .bindFromRequest()
       .fold(
         formWithErrors =>
-          Future.successful(BadRequest(cateringOperationOrLettingAccommodationDetailsView(formWithErrors))),
+          Future.successful(
+            BadRequest(
+              cateringOperationOrLettingAccommodationDetailsView(
+                formWithErrors,
+                "cateringOperationOrLettingAccommodationDetails",
+                controllers.Form6010.routes.CateringOperationOrLettingAccommodationController.show().url
+              )
+            )
+          ),
         data =>
           Future.successful(
-            Ok(cateringOperationOrLettingAccommodationRentDetailsView(cateringOperationOrLettingAccommodationRentForm))
+            Ok(
+              cateringOperationOrLettingAccommodationRentDetailsView(
+                cateringOperationOrLettingAccommodationRentForm,
+                "cateringOperationOrLettingAccommodationRentDetails",
+                controllers.Form6010.routes.CateringOperationOrLettingAccommodationDetailController.show().url
+              )
+            )
           )
       )
   }

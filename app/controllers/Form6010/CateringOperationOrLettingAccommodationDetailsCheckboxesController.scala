@@ -33,13 +33,24 @@ class CateringOperationOrLettingAccommodationDetailsCheckboxesController @Inject
 
   def show: Action[AnyContent] = Action.async { implicit request =>
     Future.successful(
-      Ok(cateringOperationOrLettingAccommodationDetailsCheckboxesView())
+      Ok(
+        cateringOperationOrLettingAccommodationDetailsCheckboxesView(
+          "cateringOperationOrLettingAccommodationCheckboxesDetails",
+          controllers.Form6010.routes.CateringOperationOrLettingAccommodationDetailsRentController.show().url
+        )
+      )
     )
   }
 
   def submit = Action.async { implicit request =>
     Future.successful(
-      Ok(addAnotherCateringOperationOrLettingAccommodationView(addAnotherCateringOperationOrLettingAccommodationForm))
+      Ok(
+        addAnotherCateringOperationOrLettingAccommodationView(
+          addAnotherCateringOperationOrLettingAccommodationForm,
+          "addAnotherCateringOperationOrLettingAccommodation",
+          controllers.Form6010.routes.CateringOperationOrLettingAccommodationDetailsCheckboxesController.show().url
+        )
+      )
     )
   }
 

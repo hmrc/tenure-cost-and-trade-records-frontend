@@ -33,7 +33,13 @@ class CateringOperationOrLettingAccommodationDetailsRentController @Inject() (
 
   def show: Action[AnyContent] = Action.async { implicit request =>
     Future.successful(
-      Ok(cateringOperationOrLettingAccommodationRentDetailsView(cateringOperationOrLettingAccommodationRentForm))
+      Ok(
+        cateringOperationOrLettingAccommodationRentDetailsView(
+          cateringOperationOrLettingAccommodationRentForm,
+          "cateringOperationOrLettingAccommodationRentDetails",
+          controllers.Form6010.routes.CateringOperationOrLettingAccommodationDetailController.show().url
+        )
+      )
     )
   }
 
@@ -42,8 +48,24 @@ class CateringOperationOrLettingAccommodationDetailsRentController @Inject() (
       .bindFromRequest()
       .fold(
         formWithErrors =>
-          Future.successful(BadRequest(cateringOperationOrLettingAccommodationRentDetailsView(formWithErrors))),
-        data => Future.successful(Ok(cateringOperationOrLettingAccommodationCheckboxesDetailsView()))
+          Future.successful(
+            BadRequest(
+              cateringOperationOrLettingAccommodationRentDetailsView(
+                formWithErrors,
+                "cateringOperationOrLettingAccommodationRentDetails",
+                controllers.Form6010.routes.CateringOperationOrLettingAccommodationDetailController.show().url
+              )
+            )
+          ),
+        data =>
+          Future.successful(
+            Ok(
+              cateringOperationOrLettingAccommodationCheckboxesDetailsView(
+                "cateringOperationOrLettingAccommodationCheckboxesDetails",
+                controllers.Form6010.routes.CateringOperationOrLettingAccommodationDetailsRentController.show().url
+              )
+            )
+          )
       )
   }
 

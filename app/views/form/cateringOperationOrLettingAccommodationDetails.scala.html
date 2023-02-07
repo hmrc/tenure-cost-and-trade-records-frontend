@@ -14,87 +14,74 @@
  * limitations under the License.
  *@
 
-@import models.submissions.Form6010.CateringOperationOrLettingAccommodationDetails
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.checkboxes.Checkboxes
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.checkboxes.CheckboxItem
-@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
-@import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcCurrencyInput
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukErrorSummary
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukDateInput
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukTextarea
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukCharacterCount
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukCheckboxes
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Label
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Fieldset
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Legend
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Hint
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Input
-@import uk.gov.hmrc.hmrcfrontend.views.viewmodels.currencyinput.CurrencyInput
 
 @this(layout: Layout,
         govukButton: GovukButton,
-        govukRadios: GovukRadios,
         govukInput: GovukInput,
-        govukErrorSummary: GovukErrorSummary,
-        govukDateInput: GovukDateInput,
-        govukTextarea: GovukTextarea,
-        govukCharacterCount: GovukCharacterCount,
-        govukCheckboxes: GovukCheckboxes,
-        hmrcCurrencyInput : HmrcCurrencyInput,
         formWithCSRF: FormWithCSRF
 )
 
 
-@(theForm: Form[CateringOperationOrLettingAccommodationDetails])(implicit request: Request[_], messages: Messages)
+@(theForm: Form[_], cateringOrLetting: String, backLink: String)(implicit request: Request[_], messages: Messages)
 
 @layout(
- pageHeading = messages("cateringOperationOrLettingAccommodationDetails.heading"),
- backLinkUrl = controllers.Form6010.routes.CateringOperationOrLettingAccommodationController.show.url,
+ pageHeading = messages(s"${cateringOrLetting}.heading"),
+ showH1 = false,
+ showSection = true,
+ sectionName = messages("label.section.aboutTheFranchiseLettings"),
+ backLinkUrl = backLink, // controllers.Form6010.routes.CateringOperationOrLettingAccommodationController.show.url,
  theForm = theForm
 ) {
+    @if(cateringOrLetting.equals("cateringOperationOrLettingAccommodationDetails")) {
+        @formWithCSRF(action = controllers.Form6010.routes.CateringOperationOrLettingAccommodationDetailController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
 
- @formWithCSRF(action = controllers.Form6010.routes.CateringOperationOrLettingAccommodationDetailController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
+            <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                <h1 class="govuk-fieldset__heading">@messages(s"${cateringOrLetting}.heading")</h1>
+            </legend>
 
-  @govukInput(
-   Input(
-    id = "operatorName",
-    name = "operatorName",
-    classes = "govuk-input--width-20",
-    label = Label(
-     content = Text(messages("label.operatorName")),
-     classes = "govuk-!-font-weight-bold"
-    ),
-    errorMessage = theForm.errors.asTextErrorMessageForField("operatorName"),
-   )
-  )
+            @includes.textInput(govukInput, theForm, "operatorName", "govuk-input--width-20", "operatorName", "operatorName", labelClasses = "govuk-!-font-weight-bold")
+            @includes.textInput(govukInput, theForm, "typeOfBusiness", "govuk-input--width-20", "typeOfBusiness", "typeOfBusiness", labelClasses = "govuk-!-font-weight-bold", hintMsg = "typeOfBusiness")
 
-  @govukInput(
-   Input(
-    id = "typeOfBusiness",
-    name = "typeOfBusiness",
-    classes = "govuk-input--width-20",
-    label = Label(
-     content = Text(messages("label.typeOfBusiness")),
-     classes = "govuk-!-font-weight-bold"
-    ),
-    errorMessage = theForm.errors.asTextErrorMessageForField("typeOfBusiness"),
-    hint = Some(Hint(content = Text(messages("hint.typeOfBusiness")))),
-   )
-  )
+            <p class="govuk-body">
+                <b>@messages("label.correspondenceAddress")</b>
+            </p>
 
-  <p class="govuk-body"><b>@messages("cateringAddress.correspondenceAddress")</b></p>
+            @includes.textInput(govukInput, theForm, "cateringAddress.buildingNameNumber", "govuk-input--width-20", "cateringAddress.buildingNameNumber", "buildingNameNumber", formGroupClasses = "address-field-one address-fields")
+            @includes.textInput(govukInput, theForm, "cateringAddress.street1", "govuk-input--width-20", "cateringAddress.street1", "street1", optional = true, formGroupClasses = "address-field-two address-fields")
+            @includes.textInput(govukInput, theForm, "cateringAddress.town", "govuk-input--width-20", "cateringAddress.town", "town", formGroupClasses = "address-field-three address-fields")
+            @includes.textInput(govukInput, theForm, "cateringAddress.county", "govuk-input--width-20", "cateringAddress.county", "county", optional = true, formGroupClasses = "address-field-four address-fields")
+            @includes.textInput(govukInput, theForm, "cateringAddress.postcode", "govuk-input--width-10", "cateringAddress.postcode", "postcode", formGroupClasses = "address-field-postcode")
 
-  @includes.lookupCateringAddress(theForm, "cateringAddress", govukInput)
+            @includes.continueButton(govukButton)
+        }
+    } else if(cateringOrLetting.equals("lettingOtherPartOfPropertyDetails")) {
+        @formWithCSRF(action = controllers.Form6010.routes.LettingOtherPartOfPropertyDetailsController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
 
-  @includes.continueButton(govukButton)
+            <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                <h1 class="govuk-fieldset__heading">@messages(s"${cateringOrLetting}.heading")</h1>
+            </legend>
 
-  @includes.help_with_service()
- }
+            @includes.textInput(govukInput, theForm, "lettingOperatorName", "govuk-input--width-20", "lettingOperatorName", "lettingOperatorName", labelClasses = "govuk-!-font-weight-bold")
+            @includes.textInput(govukInput, theForm, "lettingTypeOfBusiness", "govuk-input--width-20", "lettingTypeOfBusiness", "typeOfBusiness", labelClasses = "govuk-!-font-weight-bold", hintMsg = "lettingTypeOfBusiness")
+
+            <p class="govuk-body">
+                <b>@messages("label.correspondenceAddress")</b>
+            </p>
+
+            @includes.textInput(govukInput, theForm, "lettingAddress.buildingNameNumber", "govuk-input--width-20", "lettingAddress.buildingNameNumber", "buildingNameNumber", formGroupClasses = "address-field-one address-fields")
+            @includes.textInput(govukInput, theForm, "lettingAddress.street1", "govuk-input--width-20", "lettingAddress.street1", "street1", optional = true, formGroupClasses = "address-field-two address-fields")
+            @includes.textInput(govukInput, theForm, "lettingAddress.town", "govuk-input--width-20", "lettingAddress.town", "town", formGroupClasses = "address-field-three address-fields")
+            @includes.textInput(govukInput, theForm, "lettingAddress.county", "govuk-input--width-20", "lettingAddress.county", "county", optional = true, formGroupClasses = "address-field-four address-fields")
+            @includes.textInput(govukInput, theForm, "lettingAddress.postcode", "govuk-input--width-10", "lettingAddress.postcode", "postcode", formGroupClasses = "address-field-postcode")
+
+            @includes.continueButton(govukButton)
+        }
+    }
+
+    @includes.help_with_service()
 }
 
 

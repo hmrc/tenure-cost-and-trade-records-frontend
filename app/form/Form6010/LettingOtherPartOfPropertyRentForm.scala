@@ -27,7 +27,7 @@ object LettingOtherPartOfPropertyRentForm {
   val lettingOtherPartOfPropertyRentForm = Form(
     mapping(
       "annualRent" -> currencyMapping(".annualRent"),
-      "dateInput"  -> dateFieldsMapping("dateInput", fieldErrorPart = ".dateInput")
+      "dateInput"  -> dateFieldsMapping("dateInput")
     )(LettingOtherPartOfPropertyRentDetails.apply)(
       LettingOtherPartOfPropertyRentDetails.unapply
     )

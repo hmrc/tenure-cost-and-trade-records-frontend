@@ -14,15 +14,15 @@
  * limitations under the License.
  *@
 
-@import models.submissions.Form6010.AddAnotherCateringOperationOrLettingAccommodationDetails
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukErrorSummary
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukDateInput
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukTextarea
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukCharacterCount
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukSummaryList
+@import uk.gov.hmrc.govukfrontend.views.Aliases.SummaryList
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.Key
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Actions
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.ActionItem
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Radios
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
@@ -33,44 +33,79 @@
 @this(layout: Layout,
         govukButton: GovukButton,
         govukRadios: GovukRadios,
-        govukInput: GovukInput,
-        govukErrorSummary: GovukErrorSummary,
-        govukDateInput: GovukDateInput,
-        govukTextarea: GovukTextarea,
-        govukCharacterCount: GovukCharacterCount,
+        govukSummaryList: GovukSummaryList,
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[AddAnotherCateringOperationOrLettingAccommodationDetails])(implicit request: Request[_], messages: Messages)
+@(theForm: Form[_], cateringOrLetting: String, backLink: String)(implicit request: Request[_], messages: Messages)
 
 @layout(
- pageHeading = messages("addAnotherCateringOperationOrLettingAccommodation.heading"),
- backLinkUrl = controllers.Form6010.routes.CateringOperationOrLettingAccommodationDetailsCheckboxesController.show.url,
+ pageHeading = messages(s"${cateringOrLetting}.heading", 1),
+ showH1 = false,
+ showSection = true,
+ sectionName = messages("label.section.aboutTheFranchiseLettings"),
+ backLinkUrl = backLink,
  theForm = theForm
 ) {
 
- @formWithCSRF(action = controllers.Form6010.routes.AddAnotherCateringOperationOrLettingAccommodationController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
+ @formWithCSRF(action = {
+  if(cateringOrLetting.equals("addAnotherCateringOperationOrLettingAccommodation"))
+   controllers.Form6010.routes.AddAnotherCateringOperationOrLettingAccommodationController.submit()
+  else if(cateringOrLetting.equals("addAnotherLettingOtherPartOfProperty"))
+   controllers.Form6010.routes.AddAnotherLettingOtherPartOfPropertyController.submit()
+  else controllers.routes.TaskListController.show()},
+  args = 'class -> "myForm", 'id -> "myFormId") {
+
+  <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+   <h1 class="govuk-fieldset__heading">@messages(s"${cateringOrLetting}.heading", 1)</h1>
+  </legend>
+
+  @govukSummaryList(
+    SummaryList(
+     rows = Seq(
+      SummaryListRow(
+       key = Key(Text("Wombles Inc"), classes = "govuk-!-font-weight-regular"),
+       actions = Actions(
+        items = Seq(
+          ActionItem(
+            href = {if (cateringOrLetting.equals("addAnotherCateringOperationOrLettingAccommodation"))
+              controllers.Form6010.routes.CateringOperationOrLettingAccommodationDetailController.show.url
+            else if (cateringOrLetting.equals("addAnotherLettingOtherPartOfProperty"))
+              controllers.Form6010.routes.LettingOtherPartOfPropertyDetailsController.show().url
+             else controllers.routes.TaskListController.show().url},
+            content = Text("Change")),
+          ActionItem(
+            href = "",
+            content = Text("Remove"))
+        ),
+        classes = "hmrc-summary-list__actions"
+       )
+      )
+     ),
+     classes = "hmrc-list-with-actions hmrc-list-with-actions--short"
+    )
+  )
 
   @govukRadios(
    Radios(
-    name = "addAnotherCateringOperationOrLettingAccommodation",
-    idPrefix = Option("addAnotherCateringOperationOrLettingAccommodation"),
+    name = s"${cateringOrLetting}",
+    idPrefix = Option(s"${cateringOrLetting}"),
     classes = "govuk-radios--inline",
     items = Seq(
      "yes" -> messages("label.yes"),
      "no" -> messages("label.no")
     ).map(radioItem => RadioItem(
      content = Text(radioItem._2),
-     checked = radioItem._1.equals(theForm("addAnotherCateringOperationOrLettingAccommodation").value.getOrElse("")),
+     checked = radioItem._1.equals(theForm(s"${cateringOrLetting}").value.getOrElse("")),
      value = Option(radioItem._1)
     )
     ),
-    errorMessage =  theForm.errors.asTextErrorMessageForField("addAnotherCateringOperationOrLettingAccommodation"),
+    errorMessage =  theForm.errors.asTextErrorMessageForField(s"${cateringOrLetting}"),
     fieldset = Option(
      Fieldset(
       legend = Option(
        Legend(
-        content = Text(messages("label.addAnotherCateringOperationOrLettingAccommodation")),
+        content = Text(messages(s"label.${cateringOrLetting}")),
         classes = "govuk-!-font-weight-bold"
        )
       )

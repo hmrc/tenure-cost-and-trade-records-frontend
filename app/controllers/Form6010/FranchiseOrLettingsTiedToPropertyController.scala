@@ -51,7 +51,15 @@ class FranchiseOrLettingsTiedToPropertyController @Inject() (
         data =>
           data.franchiseOrLettingsTiedToProperty match {
             case FranchiseOrLettingsTiedToPropertiesYes =>
-              Future.successful(Ok(cateringOperationOrLettingAccommodationView(cateringOperationForm)))
+              Future.successful(
+                Ok(
+                  cateringOperationOrLettingAccommodationView(
+                    cateringOperationForm,
+                    "cateringOperationOrLettingAccommodation",
+                    controllers.Form6010.routes.FranchiseOrLettingsTiedToPropertyController.show().url
+                  )
+                )
+              )
             case FranchiseOrLettingsTiedToPropertiesNo  =>
               Future.successful(Ok(aboutYourLandlordView(aboutTheLandlordForm)))
             case _                                      => Future.successful(Ok(login(loginForm)))

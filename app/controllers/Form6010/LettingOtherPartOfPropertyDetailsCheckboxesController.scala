@@ -19,7 +19,7 @@ package controllers.Form6010
 import form.Form6010.AddAnotherLettingOtherPartOfPropertyForm.addAnotherLettingOtherPartOfPropertyForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.form.{addAnotherLettingOtherPartOfProperty, lettingOtherPartOfPropertyCheckboxesDetails}
+import views.html.form.{addAnotherCateringOperationOrLettingAccommodation, cateringOperationOrLettingAccommodationCheckboxesDetails}
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
@@ -27,17 +27,30 @@ import scala.concurrent.Future
 @Singleton
 class LettingOtherPartOfPropertyDetailsCheckboxesController @Inject() (
   mcc: MessagesControllerComponents,
-  lettingOtherPartOfPropertyDetailsCheckboxView: lettingOtherPartOfPropertyCheckboxesDetails,
-  addAnotherLettingOtherPartOfPropertyView: addAnotherLettingOtherPartOfProperty
+  cateringOperationOrLettingAccommodationCheckboxesDetailsView: cateringOperationOrLettingAccommodationCheckboxesDetails,
+  addAnotherCateringOperationOrLettingAccommodationView: addAnotherCateringOperationOrLettingAccommodation
 ) extends FrontendController(mcc) {
 
   def show: Action[AnyContent] = Action.async { implicit request =>
-    Future.successful(Ok(lettingOtherPartOfPropertyDetailsCheckboxView()))
+    Future.successful(
+      Ok(
+        cateringOperationOrLettingAccommodationCheckboxesDetailsView(
+          "lettingOtherPartOfPropertyCheckboxesDetails",
+          controllers.Form6010.routes.LettingOtherPartOfPropertyDetailsRentController.show().url
+        )
+      )
+    )
   }
 
   def submit = Action.async { implicit request =>
     Future.successful(
-      Ok(addAnotherLettingOtherPartOfPropertyView(addAnotherLettingOtherPartOfPropertyForm))
+      Ok(
+        addAnotherCateringOperationOrLettingAccommodationView(
+          addAnotherLettingOtherPartOfPropertyForm,
+          "addAnotherLettingOtherPartOfProperty",
+          controllers.Form6010.routes.LettingOtherPartOfPropertyDetailsCheckboxesController.show().url
+        )
+      )
     )
   }
 
