@@ -56,7 +56,7 @@ class AlternativeContactInformationNavigatorSpec extends TestBaseSpec {
   val stillConnectedDetailsYes     = Some(StillConnectedDetails(Some(AddressConnectionTypeYes)))
   val sessionAdditionalInformation =
     Session(
-      testUserLoginDetails,
+      prefilledUserLoginDetails,
       stillConnectedDetailsYes,
       removeConnection,
       aboutYou,

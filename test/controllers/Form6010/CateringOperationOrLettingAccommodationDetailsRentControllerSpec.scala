@@ -16,24 +16,74 @@
 
 package controllers.Form6010
 
+import controllers.Form6010
+import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
+import org.jsoup.Jsoup
 import play.api.http.Status
+import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import utils.TestBaseSpec
 
 class CateringOperationOrLettingAccommodationDetailsRentControllerSpec extends TestBaseSpec {
 
-  private val controller = app.injector.instanceOf[CateringOperationOrLettingAccommodationDetailsRentController]
+  def cateringOperationOrLettingAccommodationDetailsRentController(
+    aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = Some(prefilledAboutFranchiseOrLettings)
+  ) =
+    new CateringOperationOrLettingAccommodationDetailsRentController(
+      stubMessagesControllerComponents(),
+      cateringOperationOrLettingAccommodationRentDetailsView,
+      preEnrichedActionRefiner(aboutFranchisesOrLettings = aboutFranchisesOrLettings),
+      mockSessionRepo
+    )
 
   "GET /" should {
     "return 200" in {
-      val result = controller.show(fakeRequest)
+      val result = cateringOperationOrLettingAccommodationDetailsRentController().show(0)(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return HTML" in {
-      val result = controller.show(fakeRequest)
+      val result = cateringOperationOrLettingAccommodationDetailsRentController().show(0)(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
+    }
+
+    "redirect the user to the catering Op or Letting Accommodation details page" when {
+      "given an index" which {
+        "does not exist within the session" in {
+          val result = cateringOperationOrLettingAccommodationDetailsRentController().show(2)(fakeRequest)
+          status(result) shouldBe SEE_OTHER
+
+          redirectLocation(result) shouldBe Some(
+            Form6010.routes.CateringOperationOrLettingAccommodationDetailsController.show(None).url
+          )
+        }
+      }
+    }
+
+    "display the page with the fields prefilled in" when {
+      "given an index" which {
+        "exists within the session" in {
+          val result = cateringOperationOrLettingAccommodationDetailsRentController().show(0)(fakeRequest)
+          val html   = Jsoup.parse(contentAsString(result))
+
+          Option(html.getElementById("annualRent").`val`()).value      shouldBe "1500"
+          Option(html.getElementById("dateInput.day").`val`()).value   shouldBe "1"
+          Option(html.getElementById("dateInput.month").`val`()).value shouldBe "6"
+          Option(html.getElementById("dateInput.year").`val`()).value  shouldBe "2022"
+
+        }
+      }
+    }
+
+  }
+
+  "SUBMIT /" should {
+    "throw a BAD_REQUEST if an empty form is submitted" in {
+      val res = cateringOperationOrLettingAccommodationDetailsRentController().submit(0)(
+        FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)
+      )
+      status(res) shouldBe BAD_REQUEST
     }
   }
 }

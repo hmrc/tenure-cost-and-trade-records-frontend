@@ -25,18 +25,18 @@
 )
 
 
-@(theForm: Form[_], cateringOrLetting: String, backLink: String)(implicit request: Request[_], messages: Messages)
+@(theForm: Form[_], index: Option[Int], cateringOrLetting: String, backLink: String)(implicit request: Request[_], messages: Messages)
 
 @layout(
  pageHeading = messages(s"${cateringOrLetting}.heading"),
  showH1 = false,
  showSection = true,
  sectionName = messages("label.section.aboutTheFranchiseLettings"),
- backLinkUrl = backLink, // controllers.Form6010.routes.CateringOperationOrLettingAccommodationController.show.url,
+ backLinkUrl = backLink,
  theForm = theForm
 ) {
     @if(cateringOrLetting.equals("cateringOperationOrLettingAccommodationDetails")) {
-        @formWithCSRF(action = controllers.Form6010.routes.CateringOperationOrLettingAccommodationDetailController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
+        @formWithCSRF(action = controllers.Form6010.routes.CateringOperationOrLettingAccommodationDetailsController.submit(index), args = 'class -> "myForm", 'id -> "myFormId") {
 
             <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
                 <h1 class="govuk-fieldset__heading">@messages(s"${cateringOrLetting}.heading")</h1>
@@ -58,7 +58,7 @@
             @includes.continueButton(govukButton)
         }
     } else if(cateringOrLetting.equals("lettingOtherPartOfPropertyDetails")) {
-        @formWithCSRF(action = controllers.Form6010.routes.LettingOtherPartOfPropertyDetailsController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
+        @formWithCSRF(action = controllers.Form6010.routes.LettingOtherPartOfPropertyDetailsController.submit(index), args = 'class -> "myForm", 'id -> "myFormId") {
 
             <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
                 <h1 class="govuk-fieldset__heading">@messages(s"${cateringOrLetting}.heading")</h1>

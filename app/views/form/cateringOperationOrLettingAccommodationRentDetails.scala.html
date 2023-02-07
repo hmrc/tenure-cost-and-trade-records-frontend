@@ -30,7 +30,7 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[_], cateringOrLetting: String, backLink: String)(implicit request: Request[_], messages: Messages)
+@(theForm: Form[_], index: Int, cateringOrLetting: String, backLink: String)(implicit request: Request[_], messages: Messages)
 
 @layout(
  pageHeading = messages("cateringOperationOrLettingAccommodationRentDetails.heading", "Wombles Inc"),
@@ -42,9 +42,9 @@
 ) {
     @formWithCSRF(action = {
         if(cateringOrLetting.equals("cateringOperationOrLettingAccommodationRentDetails"))
-            controllers.Form6010.routes.CateringOperationOrLettingAccommodationDetailsRentController.submit()
+            controllers.Form6010.routes.CateringOperationOrLettingAccommodationDetailsRentController.submit(index)
         else if(cateringOrLetting.equals("lettingOtherPartOfPropertyRentDetails"))
-            controllers.Form6010.routes.LettingOtherPartOfPropertyDetailsRentController.submit()
+            controllers.Form6010.routes.LettingOtherPartOfPropertyDetailsRentController.submit(index)
         else controllers.routes.TaskListController.show()},
         args = 'class -> "myForm", 'id -> "myFormId") {
 

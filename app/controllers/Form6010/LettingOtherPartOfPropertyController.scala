@@ -16,6 +16,7 @@
 
 package controllers.Form6010
 
+import actions.WithSessionRefiner
 import controllers.LoginController.loginForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
@@ -26,8 +27,11 @@ import form.Form6010.LettingOtherPartOfPropertiesForm.lettingOtherPartOfProperti
 import models.submissions.Form6010.{LettingOtherPartOfPropertiesNo, LettingOtherPartOfPropertiesYes}
 import views.html.aboutYourLeaseOrTenure.aboutYourLandlord
 import views.html.login
+import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
+import play.api.i18n.I18nSupport
+import repositories.SessionRepo
 
-import javax.inject.{Inject, Singleton}
+import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
 
 @Singleton
@@ -36,22 +40,29 @@ class LettingOtherPartOfPropertyController @Inject() (
   login: login,
   cateringOperationOrLettingAccommodationDetailsView: cateringOperationOrLettingAccommodationDetails,
   cateringOperationOrLettingAccommodationView: cateringOperationOrLettingAccommodation,
-  aboutTheLandlordView: aboutYourLandlord
-) extends FrontendController(mcc) {
+  aboutTheLandlordView: aboutYourLandlord,
+  withSessionRefiner: WithSessionRefiner,
+  @Named("session") val session: SessionRepo
+  ) extends FrontendController(mcc)
+  with I18nSupport {
 
-  def show: Action[AnyContent] = Action.async { implicit request =>
+  def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Future.successful(
       Ok(
         cateringOperationOrLettingAccommodationView(
-          lettingOtherPartOfPropertiesForm,
-          "LettingOtherPartOfProperties",
+          request.sessionData.aboutFranchisesOrLettings.flatMap(_.lettingOtherPartOfProperty) match {
+            case Some(lettingOtherPartOfProperty) =>
+              lettingOtherPartOfPropertiesForm.fillAndValidate(lettingOtherPartOfProperty)
+            case _                                => lettingOtherPartOfPropertiesForm
+          },
+          "lettingOtherPartOfProperties",
           controllers.Form6010.routes.CateringOperationOrLettingAccommodationController.show().url
         )
       )
     )
   }
 
-  def submit = Action.async { implicit request =>
+  def submit = (Action andThen withSessionRefiner).async { implicit request =>
     lettingOtherPartOfPropertiesForm
       .bindFromRequest()
       .fold(
@@ -60,24 +71,31 @@ class LettingOtherPartOfPropertyController @Inject() (
             BadRequest(
               cateringOperationOrLettingAccommodationView(
                 formWithErrors,
-                "LettingOtherPartOfProperties",
+                "lettingOtherPartOfProperties",
                 controllers.Form6010.routes.CateringOperationOrLettingAccommodationController.show().url
               )
             )
           ),
         data =>
-          data.lettingOtherPartOfProperties match {
+          data match {
             case LettingOtherPartOfPropertiesYes =>
+              val updatedData = updateAboutFranchisesOrLettings(_.copy(lettingOtherPartOfProperty = Some(data)))
+              session.saveOrUpdate(updatedData)
+//              Futurture.successful(Ok(lettingOtherPartOfPropertyDetailsView(lettingOtherPartOfPropertyForm, None)))
               Future.successful(
                 Ok(
                   cateringOperationOrLettingAccommodationDetailsView(
                     lettingOtherPartOfPropertyForm,
+                    None,
                     "lettingOtherPartOfPropertyDetails",
                     controllers.Form6010.routes.LettingOtherPartOfPropertyController.show().url
                   )
                 )
               )
-            case LettingOtherPartOfPropertiesNo  => Future.successful(Ok(aboutTheLandlordView(aboutTheLandlordForm)))
+            case LettingOtherPartOfPropertiesNo  =>
+              val updatedData = updateAboutFranchisesOrLettings(_.copy(lettingOtherPartOfProperty = Some(data)))
+              session.saveOrUpdate(updatedData)
+              Future.successful(Ok(aboutTheLandlordView(aboutTheLandlordForm)))
             case _                               => Future.successful(Ok(login(loginForm)))
           }
       )

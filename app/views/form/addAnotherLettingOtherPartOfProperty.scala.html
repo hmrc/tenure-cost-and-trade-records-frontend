@@ -41,15 +41,15 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[AddAnotherLettingOtherPartOfPropertyDetails])(implicit request: Request[_], messages: Messages)
+@(theForm: Form[AddAnotherLettingOtherPartOfPropertyDetails], index: Int)(implicit request: Request[_], messages: Messages)
 
 @layout(
  pageHeading = messages("addAnotherCateringOperationOrLettingAccommodation.heading"),
- backLinkUrl = controllers.Form6010.routes.LettingOtherPartOfPropertyDetailsCheckboxesController.show.url,
+ backLinkUrl = controllers.Form6010.routes.LettingOtherPartOfPropertyDetailsCheckboxesController.show(index).url,
  theForm = theForm
 ) {
 
- @formWithCSRF(action = controllers.Form6010.routes.AddAnotherLettingOtherPartOfPropertyController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
+ @formWithCSRF(action = controllers.Form6010.routes.AddAnotherLettingOtherPartOfPropertyController.submit(index), args = 'class -> "myForm", 'id -> "myFormId") {
 
   @govukRadios(
    Radios(

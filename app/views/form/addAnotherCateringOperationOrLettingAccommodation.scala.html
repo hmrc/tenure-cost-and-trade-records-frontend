@@ -37,7 +37,7 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[_], cateringOrLetting: String, backLink: String)(implicit request: Request[_], messages: Messages)
+@(theForm: Form[_], index: Int, cateringOrLetting: String, backLink: String)(implicit request: Request[_], messages: Messages)
 
 @layout(
  pageHeading = messages(s"${cateringOrLetting}.heading", 1),
@@ -50,9 +50,9 @@
 
  @formWithCSRF(action = {
   if(cateringOrLetting.equals("addAnotherCateringOperationOrLettingAccommodation"))
-   controllers.Form6010.routes.AddAnotherCateringOperationOrLettingAccommodationController.submit()
+   controllers.Form6010.routes.AddAnotherCateringOperationOrLettingAccommodationController.submit(index)
   else if(cateringOrLetting.equals("addAnotherLettingOtherPartOfProperty"))
-   controllers.Form6010.routes.AddAnotherLettingOtherPartOfPropertyController.submit()
+   controllers.Form6010.routes.AddAnotherLettingOtherPartOfPropertyController.submit(index)
   else controllers.routes.TaskListController.show()},
   args = 'class -> "myForm", 'id -> "myFormId") {
 
@@ -69,7 +69,7 @@
         items = Seq(
           ActionItem(
             href = {if (cateringOrLetting.equals("addAnotherCateringOperationOrLettingAccommodation"))
-              controllers.Form6010.routes.CateringOperationOrLettingAccommodationDetailController.show.url
+              controllers.Form6010.routes.CateringOperationOrLettingAccommodationDetailsController.show().url
             else if (cateringOrLetting.equals("addAnotherLettingOtherPartOfProperty"))
               controllers.Form6010.routes.LettingOtherPartOfPropertyDetailsController.show().url
              else controllers.routes.TaskListController.show().url},

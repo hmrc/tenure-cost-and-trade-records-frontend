@@ -259,9 +259,9 @@ hint.cateringOperationOrLettingAccommodation = Choose ‘no’ if you’ve inclu
 
 #LETTING OTHER PART OF PROPERTY
 ##############################
-LettingOtherPartOfProperties.heading = Lettings
-label.LettingOtherPartOfProperties = Is any rent received from letting other parts of the property?
-hint.LettingOtherPartOfProperties = Including advertising rights, stations or hoardings. Choose ‘no’ if you’ve already included the rental payments in your turnover.
+lettingOtherPartOfProperties.heading = Lettings
+label.lettingOtherPartOfProperties = Is any rent received from letting other parts of the property?
+hint.lettingOtherPartOfProperties = Including advertising rights, stations or hoardings. Choose ‘no’ if you’ve already included the rental payments in your turnover.
 
 #CURRENT ANNUAL RENT
 ##############################

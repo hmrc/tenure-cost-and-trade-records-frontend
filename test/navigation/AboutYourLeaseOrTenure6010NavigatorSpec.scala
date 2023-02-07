@@ -33,7 +33,7 @@ class AboutYourLeaseOrTenure6010NavigatorSpec extends TestBaseSpec {
 
   val navigator = new AboutYourLeaseOrTenureNavigator(audit)
 
-  val session6010 = Session(testUserLoginDetails)
+  val session6010 = Session(prefilledUserLoginDetails)
 
   implicit override val hc: HeaderCarrier = HeaderCarrier()
 

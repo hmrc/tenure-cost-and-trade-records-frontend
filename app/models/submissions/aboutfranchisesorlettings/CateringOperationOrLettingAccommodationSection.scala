@@ -14,17 +14,17 @@
  * limitations under the License.
  */
 
-package models.submissions.Form6010
+package models.submissions.aboutfranchisesorlettings
 
+import models.submissions.Form6010.{CateringOperationOrLettingAccommodationDetails, CateringOperationOrLettingAccommodationRentDetails}
 import play.api.libs.json.Json
 
-import java.time.LocalDate
-
-case class LettingOtherPartOfPropertyRentDetails(
-  annualRent: BigDecimal,
-  dateInput: LocalDate
+case class CateringOperationOrLettingAccommodationSection(
+  cateringOperationOrLettingAccommodationDetails: CateringOperationOrLettingAccommodationDetails,
+  cateringOperationOrLettingAccommodationRentDetails: Option[CateringOperationOrLettingAccommodationRentDetails] = None
 )
-object LettingOtherPartOfPropertyRentDetails {
-  implicit val format = Json.format[LettingOtherPartOfPropertyRentDetails]
+
+object CateringOperationOrLettingAccommodationSection {
+  implicit val format = Json.format[CateringOperationOrLettingAccommodationSection]
 
 }

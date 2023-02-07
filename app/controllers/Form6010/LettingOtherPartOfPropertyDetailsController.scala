@@ -16,35 +16,54 @@
 
 package controllers.Form6010
 
+import actions.WithSessionRefiner
 import form.Form6010.LettingOtherPartOfPropertyForm.lettingOtherPartOfPropertyForm
 import form.Form6010.LettingOtherPartOfPropertyRentForm.lettingOtherPartOfPropertyRentForm
+import models.submissions.Form6010.LettingOtherPartOfPropertyInformationDetails
+import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, LettingSection}
+import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.form.{cateringOperationOrLettingAccommodationDetails, cateringOperationOrLettingAccommodationRentDetails}
-
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
+import views.html.form.{lettingOtherPartOfPropertyDetails, lettingOtherPartOfPropertyRentDetails}
+import controllers.Form6010
+import javax.inject.{Inject, Named, Singleton}
+import scala.concurrent.{ExecutionContext, Future}
+import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
 
 @Singleton
 class LettingOtherPartOfPropertyDetailsController @Inject() (
   mcc: MessagesControllerComponents,
   cateringOperationOrLettingAccommodationDetailsView: cateringOperationOrLettingAccommodationDetails,
-  cateringOperationOrLettingAccommodationRentDetailsView: cateringOperationOrLettingAccommodationRentDetails
-) extends FrontendController(mcc) {
+  cateringOperationOrLettingAccommodationRentDetailsView: cateringOperationOrLettingAccommodationRentDetails,
+  withSessionRefiner: WithSessionRefiner,
+  @Named("session") val session: SessionRepo
+)(implicit ec: ExecutionContext)
+  extends FrontendController(mcc)
+  with I18nSupport {
 
-  def show: Action[AnyContent] = Action.async { implicit request =>
-    Future.successful(
+  def show(index: Option[Int]): Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
+    val existingDetails: Option[LettingOtherPartOfPropertyInformationDetails] = for {
+      requestedIndex          <- index
+      existingLettingSections <- request.sessionData.aboutFranchisesOrLettings.map(_.lettingSections)
+      // lift turns exception-throwing access by index into an option-returning safe operation
+      requestedLettingSection <- existingLettingSections.lift(requestedIndex)
+    } yield requestedLettingSection.lettingOtherPartOfPropertyInformationDetails
+
       Ok(
         cateringOperationOrLettingAccommodationDetailsView(
-          lettingOtherPartOfPropertyForm,
+          existingDetails.fold(lettingOtherPartOfPropertyForm)(lettingOtherPartOfPropertyForm.fill),
+          index,
           "lettingOtherPartOfPropertyDetails",
           controllers.Form6010.routes.LettingOtherPartOfPropertyController.show().url
         )
-      )
     )
   }
 
-  def submit = Action.async { implicit request =>
+  def submit(index: Option[Int]) = (Action andThen withSessionRefiner).async { implicit request =>
     lettingOtherPartOfPropertyForm
       .bindFromRequest()
       .fold(
@@ -53,22 +72,50 @@ class LettingOtherPartOfPropertyDetailsController @Inject() (
             BadRequest(
               cateringOperationOrLettingAccommodationDetailsView(
                 formWithErrors,
+                index,
                 "lettingOtherPartOfPropertyDetails",
                 controllers.Form6010.routes.LettingOtherPartOfPropertyController.show().url
               )
             )
           ),
-        data =>
-          Future.successful(
-            Ok(
-              cateringOperationOrLettingAccommodationRentDetailsView(
-                lettingOtherPartOfPropertyRentForm,
-                "lettingOtherPartOfPropertyRentDetails",
-                controllers.Form6010.routes.LettingOtherPartOfPropertyDetailsController.show().url
-              )
-            )
+        data => {
+          val ifFranchisesOrLettingsEmpty                                        = AboutFranchisesOrLettings(lettingSections =
+            IndexedSeq(LettingSection(lettingOtherPartOfPropertyInformationDetails = data))
           )
+          val updatedAboutFranchisesOrLettings: (Int, AboutFranchisesOrLettings) =
+            request.sessionData.aboutFranchisesOrLettings.fold(0 -> ifFranchisesOrLettingsEmpty) {
+              franchiseOrLettings =>
+                val existingSections                                   = franchiseOrLettings.lettingSections
+                val requestedSection                                   = index.flatMap(existingSections.lift)
+                val updatedSections: (Int, IndexedSeq[LettingSection]) = requestedSection.fold {
+                  val defaultSection   = LettingSection(data)
+                  val appendedSections = existingSections.appended(defaultSection)
+                  appendedSections.indexOf(defaultSection) -> appendedSections
+                } { sectionToUpdate =>
+                  val indexToUpdate = existingSections.indexOf(sectionToUpdate)
+                  indexToUpdate -> existingSections
+                    .updated(indexToUpdate, sectionToUpdate.copy(lettingOtherPartOfPropertyInformationDetails = data))
+                }
+                updatedSections._1 -> franchiseOrLettings.copy(lettingSections = updatedSections._2)
+            }
+          updatedAboutFranchisesOrLettings match {
+            case (currentIndex, aboutFranchisesOrLettings) =>
+              session
+                .saveOrUpdate(updateAboutFranchisesOrLettings(_ => aboutFranchisesOrLettings))
+                .map(_ => Redirect(Form6010.routes.LettingOtherPartOfPropertyDetailsRentController.show(currentIndex)))
+          }
+        }
       )
   }
 
 }
+
+//Future.successful(
+//Ok(
+//cateringOperationOrLettingAccommodationRentDetailsView(
+//lettingOtherPartOfPropertyRentForm,
+//"lettingOtherPartOfPropertyRentDetails",
+//controllers.Form6010.routes.LettingOtherPartOfPropertyDetailsController.show().url
+//)
+//)
+//)

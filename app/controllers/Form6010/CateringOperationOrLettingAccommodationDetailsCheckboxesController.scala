@@ -16,39 +16,47 @@
 
 package controllers.Form6010
 
+import actions.WithSessionRefiner
 import form.Form6010.AddAnotherCateringOperationOrLettingAccommodationForm.addAnotherCateringOperationOrLettingAccommodationForm
+import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.form.{addAnotherCateringOperationOrLettingAccommodation, cateringOperationOrLettingAccommodationCheckboxesDetails}
 
-import javax.inject.{Inject, Singleton}
+import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
 
 @Singleton
 class CateringOperationOrLettingAccommodationDetailsCheckboxesController @Inject() (
   mcc: MessagesControllerComponents,
   cateringOperationOrLettingAccommodationDetailsCheckboxesView: cateringOperationOrLettingAccommodationCheckboxesDetails,
-  addAnotherCateringOperationOrLettingAccommodationView: addAnotherCateringOperationOrLettingAccommodation
-) extends FrontendController(mcc) {
+  addAnotherCateringOperationOrLettingAccommodationView: addAnotherCateringOperationOrLettingAccommodation,
+  withSessionRefiner: WithSessionRefiner,
+  @Named("session") val session: SessionRepo
+) extends FrontendController(mcc)
+    with I18nSupport {
 
-  def show: Action[AnyContent] = Action.async { implicit request =>
+  def show(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Future.successful(
       Ok(
         cateringOperationOrLettingAccommodationDetailsCheckboxesView(
+          index,
           "cateringOperationOrLettingAccommodationCheckboxesDetails",
-          controllers.Form6010.routes.CateringOperationOrLettingAccommodationDetailsRentController.show().url
+          controllers.Form6010.routes.CateringOperationOrLettingAccommodationDetailsRentController.show(index).url
         )
       )
     )
   }
 
-  def submit = Action.async { implicit request =>
+  def submit(index: Int) = (Action andThen withSessionRefiner).async { implicit request =>
     Future.successful(
       Ok(
         addAnotherCateringOperationOrLettingAccommodationView(
           addAnotherCateringOperationOrLettingAccommodationForm,
+          index,
           "addAnotherCateringOperationOrLettingAccommodation",
-          controllers.Form6010.routes.CateringOperationOrLettingAccommodationDetailsCheckboxesController.show().url
+          controllers.Form6010.routes.CateringOperationOrLettingAccommodationDetailsCheckboxesController.show(index).url
         )
       )
     )

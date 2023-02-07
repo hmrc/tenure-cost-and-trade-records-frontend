@@ -14,8 +14,3 @@
  * limitations under the License.
  */
 
-package models.submissions.Form6010
-
-case class FranchiseOrLettingsTiedToPropertiesDetails(
-  franchiseOrLettingsTiedToProperty: FranchiseOrLettingsTiedToProperties
-)
