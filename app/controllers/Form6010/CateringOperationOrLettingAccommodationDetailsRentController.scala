@@ -50,12 +50,14 @@ class CateringOperationOrLettingAccommodationDetailsRentController @Inject() (
         cateringOperationOrLettingAccommodationSection.cateringOperationOrLettingAccommodationRentDetails.fold(
           cateringOperationOrLettingAccommodationRentForm
         )(cateringOperationOrLettingAccommodationRentForm.fill)
-      Ok(cateringOperationOrLettingAccommodationRentDetailsView(
-        rentDetailsForm,
-        index,
-        "cateringOperationOrLettingAccommodationRentDetails",
-        controllers.Form6010.routes.CateringOperationOrLettingAccommodationDetailsController.show().url
-      ))
+      Ok(
+        cateringOperationOrLettingAccommodationRentDetailsView(
+          rentDetailsForm,
+          index,
+          "cateringOperationOrLettingAccommodationRentDetails",
+          controllers.Form6010.routes.CateringOperationOrLettingAccommodationDetailsController.show().url
+        )
+      )
     }
   }
 
@@ -96,24 +98,3 @@ class CateringOperationOrLettingAccommodationDetailsRentController @Inject() (
   }
 
 }
-
-//  def show: Action[AnyContent] = Action.async { implicit request =>
-//    Future.successful(
-//      Ok(
-//        cateringOperationOrLettingAccommodationRentDetailsView(
-//          cateringOperationOrLettingAccommodationRentForm,
-//          "cateringOperationOrLettingAccommodationRentDetails",
-//          controllers.Form6010.routes.CateringOperationOrLettingAccommodationDetailController.show().url
-//        )
-//      )
-//    )
-//  }
-
-//Future.successful(
-//Ok(
-//cateringOperationOrLettingAccommodationCheckboxesDetailsView(
-//"cateringOperationOrLettingAccommodationCheckboxesDetails",
-//controllers.Form6010.routes.CateringOperationOrLettingAccommodationDetailsRentController.show().url
-//)
-//)
-//)

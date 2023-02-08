@@ -21,11 +21,10 @@ import config.{AppConfig, ErrorHandler}
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
 import models.submissions.abouttheproperty._
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory
-import models.submissions.aboutyou.{AboutYou, CustomerDetails}
+import models.submissions.aboutyou.AboutYou
 import models.submissions.additionalinformation.{AdditionalInformation, AltContactInformation}
-import models.submissions.common.{Address, ContactDetails}
-import models.submissions.connectiontoproperty.{AddressConnectionTypeYes, StillConnectedDetails}
-import models.submissions.notconnected.{RemoveConnectionDetails, RemoveConnectionsDetails}
+import models.submissions.connectiontoproperty.StillConnectedDetails
+import models.submissions.notconnected.RemoveConnectionDetails
 import models.{Session, UserLoginDetails}
 import org.mockito.scalatest.MockitoSugar
 import org.scalatest.{BeforeAndAfterEach, Inside, OptionValues}
@@ -33,7 +32,7 @@ import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.time.{Millis, Seconds, Span}
 import org.scalatest.wordspec.AnyWordSpec
-import org.scalatestplus.play.guice.{GuiceOneAppPerSuite, GuiceOneAppPerTest}
+import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.Application
 import play.api.i18n.{Messages, MessagesApi}
 import play.api.inject.Injector

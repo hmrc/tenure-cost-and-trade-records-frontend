@@ -34,14 +34,14 @@ class LettingOtherPartOfPropertyRentIncludesViewSpec
 
   val messageKeyPrefix = "lettingOtherPartOfPropertyCheckboxesDetails"
 
-  val backLink      = controllers.Form6010.routes.LettingOtherPartOfPropertyDetailsRentController.show().url
+  val backLink      = controllers.Form6010.routes.LettingOtherPartOfPropertyDetailsRentController.show(0).url
   // No form for checkboxes TODO Add form
   override val form = CateringOperationOrLettingAccommodationForm.cateringOperationOrLettingAccommodationForm
 
-  def createView = () => cateringOperationRentIncludesView(messageKeyPrefix, backLink)(fakeRequest, messages)
+  def createView = () => cateringOperationRentIncludesView(0, messageKeyPrefix, backLink)(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[CateringOperationOrLettingAccommodationDetails]) =>
-    cateringOperationRentIncludesView(messageKeyPrefix, backLink)(fakeRequest, messages)
+    cateringOperationRentIncludesView(0, messageKeyPrefix, backLink)(fakeRequest, messages)
 
   "Catering operation rent includes view" must {
 

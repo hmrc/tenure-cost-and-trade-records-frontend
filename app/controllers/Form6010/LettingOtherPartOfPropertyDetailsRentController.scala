@@ -24,7 +24,6 @@ import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.form.{cateringOperationOrLettingAccommodationCheckboxesDetails, cateringOperationOrLettingAccommodationRentDetails}
-import views.html.form.{lettingOtherPartOfPropertyCheckboxesDetails, lettingOtherPartOfPropertyRentDetails}
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
@@ -37,7 +36,7 @@ class LettingOtherPartOfPropertyDetailsRentController @Inject() (
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
 )(implicit ec: ExecutionContext)
-  extends FrontendController(mcc)
+    extends FrontendController(mcc)
     with I18nSupport {
 
   def show(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
@@ -47,33 +46,16 @@ class LettingOtherPartOfPropertyDetailsRentController @Inject() (
         val lettingDetailsForm = lettingSection.lettingOtherPartOfPropertyRentDetails.fold(
           lettingOtherPartOfPropertyRentForm
         )(lettingOtherPartOfPropertyRentForm.fill)
-        Ok(cateringOperationOrLettingAccommodationRentDetailsView(lettingDetailsForm,
-          index,
-          "lettingOtherPartOfPropertyRentDetails",
-          controllers.Form6010.routes.LettingOtherPartOfPropertyDetailsController.show().url
-        ))
+        Ok(
+          cateringOperationOrLettingAccommodationRentDetailsView(
+            lettingDetailsForm,
+            index,
+            "lettingOtherPartOfPropertyRentDetails",
+            controllers.Form6010.routes.LettingOtherPartOfPropertyDetailsController.show().url
+          )
+        )
     }
   }
-//    Future.successful(
-//      Ok(
-//        cateringOperationOrLettingAccommodationRentDetailsView(
-//          lettingOtherPartOfPropertyRentForm,
-//          "lettingOtherPartOfPropertyRentDetails",
-//          controllers.Form6010.routes.LettingOtherPartOfPropertyDetailsController.show().url
-//        )
-//      )
-//    )
-
-//    val existingSection = request.sessionData.aboutFranchisesOrLettings.flatMap(_.lettingSections.lift(index))
-//    existingSection.fold(Redirect(Form6010.routes.LettingOtherPartOfPropertyDetailsController.show(None))) {
-//      lettingSection =>
-//        val lettingDetailsForm = lettingSection.lettingOtherPartOfPropertyRentDetails.fold(
-//          lettingOtherPartOfPropertyRentForm
-//        )(lettingOtherPartOfPropertyRentForm.fill)
-//        Ok(lettingOtherPartOfPropertyDetailsRentView(lettingDetailsForm, index))
-//    }
-//>>>>>>> 1443e196bad363922c58ff79b314784eae977010
-//  }
 
   def submit(index: Int) = (Action andThen withSessionRefiner).async { implicit request =>
     lettingOtherPartOfPropertyRentForm
@@ -106,12 +88,3 @@ class LettingOtherPartOfPropertyDetailsRentController @Inject() (
   }
 
 }
-
-//Future.successful(
-//Ok(
-//cateringOperationOrLettingAccommodationCheckboxesDetailsView(
-//"lettingOtherPartOfPropertyCheckboxesDetails",
-//controllers.Form6010.routes.LettingOtherPartOfPropertyDetailsRentController.show().url
-//)
-//)
-//)

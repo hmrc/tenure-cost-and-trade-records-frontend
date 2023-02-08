@@ -30,7 +30,7 @@ import views.html.notconnected.removeConnection
 class RemoveConnectionControllerSpec extends TestBaseSpec {
 
   import TestData.{baseFormData, errorKey}
-  import utils.FormBindingTestAssertions.{mustContainError, mustContainRequiredErrorFor}
+  import utils.FormBindingTestAssertions.mustContainError
 
   val mockRemoveConnectionNavigator = mock[RemoveConnectionNavigator]
   val mockRemoveConnectionView      = mock[removeConnection]

@@ -43,8 +43,8 @@ class LettingOtherPartOfPropertyController @Inject() (
   aboutTheLandlordView: aboutYourLandlord,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-  ) extends FrontendController(mcc)
-  with I18nSupport {
+) extends FrontendController(mcc)
+    with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Future.successful(
@@ -81,7 +81,6 @@ class LettingOtherPartOfPropertyController @Inject() (
             case LettingOtherPartOfPropertiesYes =>
               val updatedData = updateAboutFranchisesOrLettings(_.copy(lettingOtherPartOfProperty = Some(data)))
               session.saveOrUpdate(updatedData)
-//              Futurture.successful(Ok(lettingOtherPartOfPropertyDetailsView(lettingOtherPartOfPropertyForm, None)))
               Future.successful(
                 Ok(
                   cateringOperationOrLettingAccommodationDetailsView(

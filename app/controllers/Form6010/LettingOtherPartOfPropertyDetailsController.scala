@@ -18,7 +18,6 @@ package controllers.Form6010
 
 import actions.WithSessionRefiner
 import form.Form6010.LettingOtherPartOfPropertyForm.lettingOtherPartOfPropertyForm
-import form.Form6010.LettingOtherPartOfPropertyRentForm.lettingOtherPartOfPropertyRentForm
 import models.submissions.Form6010.LettingOtherPartOfPropertyInformationDetails
 import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, LettingSection}
 import play.api.i18n.I18nSupport
@@ -28,10 +27,9 @@ import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.form.{cateringOperationOrLettingAccommodationDetails, cateringOperationOrLettingAccommodationRentDetails}
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
-import views.html.form.{lettingOtherPartOfPropertyDetails, lettingOtherPartOfPropertyRentDetails}
 import controllers.Form6010
-import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import javax.inject.Named
+import scala.concurrent.ExecutionContext
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
 
 @Singleton
@@ -42,8 +40,8 @@ class LettingOtherPartOfPropertyDetailsController @Inject() (
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
 )(implicit ec: ExecutionContext)
-  extends FrontendController(mcc)
-  with I18nSupport {
+    extends FrontendController(mcc)
+    with I18nSupport {
 
   def show(index: Option[Int]): Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     val existingDetails: Option[LettingOtherPartOfPropertyInformationDetails] = for {
@@ -53,13 +51,13 @@ class LettingOtherPartOfPropertyDetailsController @Inject() (
       requestedLettingSection <- existingLettingSections.lift(requestedIndex)
     } yield requestedLettingSection.lettingOtherPartOfPropertyInformationDetails
 
-      Ok(
-        cateringOperationOrLettingAccommodationDetailsView(
-          existingDetails.fold(lettingOtherPartOfPropertyForm)(lettingOtherPartOfPropertyForm.fill),
-          index,
-          "lettingOtherPartOfPropertyDetails",
-          controllers.Form6010.routes.LettingOtherPartOfPropertyController.show().url
-        )
+    Ok(
+      cateringOperationOrLettingAccommodationDetailsView(
+        existingDetails.fold(lettingOtherPartOfPropertyForm)(lettingOtherPartOfPropertyForm.fill),
+        index,
+        "lettingOtherPartOfPropertyDetails",
+        controllers.Form6010.routes.LettingOtherPartOfPropertyController.show().url
+      )
     )
   }
 
@@ -109,13 +107,3 @@ class LettingOtherPartOfPropertyDetailsController @Inject() (
   }
 
 }
-
-//Future.successful(
-//Ok(
-//cateringOperationOrLettingAccommodationRentDetailsView(
-//lettingOtherPartOfPropertyRentForm,
-//"lettingOtherPartOfPropertyRentDetails",
-//controllers.Form6010.routes.LettingOtherPartOfPropertyDetailsController.show().url
-//)
-//)
-//)

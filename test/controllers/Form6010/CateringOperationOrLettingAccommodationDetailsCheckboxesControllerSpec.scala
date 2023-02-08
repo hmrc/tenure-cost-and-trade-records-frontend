@@ -26,7 +26,8 @@ class CateringOperationOrLettingAccommodationDetailsCheckboxesControllerSpec ext
 
   val mockCateringOperationOrLettingAccommodationCheckboxesDetails =
     mock[cateringOperationOrLettingAccommodationCheckboxesDetails]
-  when(mockCateringOperationOrLettingAccommodationCheckboxesDetails.apply()(any, any)).thenReturn(HtmlFormat.empty)
+  when(mockCateringOperationOrLettingAccommodationCheckboxesDetails.apply(any, any, any)(any, any))
+    .thenReturn(HtmlFormat.empty)
 
   val cateringOperationOrLettingAccommodationDetailsCheckboxesController =
     new CateringOperationOrLettingAccommodationDetailsCheckboxesController(
@@ -39,12 +40,12 @@ class CateringOperationOrLettingAccommodationDetailsCheckboxesControllerSpec ext
 
   "GET /" should {
     "return 200" in {
-      val result = cateringOperationOrLettingAccommodationDetailsCheckboxesController.show(fakeRequest)
+      val result = cateringOperationOrLettingAccommodationDetailsCheckboxesController.show(1)(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return HTML" in {
-      val result = cateringOperationOrLettingAccommodationDetailsCheckboxesController.show(fakeRequest)
+      val result = cateringOperationOrLettingAccommodationDetailsCheckboxesController.show(1)(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }

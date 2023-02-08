@@ -42,22 +42,20 @@ class CateringOperationOrLettingAccommodationController @Inject() (
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
 ) extends FrontendController(mcc)
-  with I18nSupport {
+    with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
-//    Future.successful(
-      Ok(
-        cateringOperationOrLettingAccommodationView(
-          request.sessionData.aboutFranchisesOrLettings.flatMap(_.cateringOperationOrLettingAccommodation) match {
-            case Some(cateringOperationOrLettingAccommodation) =>
-              cateringOperationForm.fillAndValidate(cateringOperationOrLettingAccommodation)
-            case _                                             => cateringOperationForm
-          },
-          "cateringOperationOrLettingAccommodation",
-          controllers.Form6010.routes.FranchiseOrLettingsTiedToPropertyController.show().url
-        )
+    Ok(
+      cateringOperationOrLettingAccommodationView(
+        request.sessionData.aboutFranchisesOrLettings.flatMap(_.cateringOperationOrLettingAccommodation) match {
+          case Some(cateringOperationOrLettingAccommodation) =>
+            cateringOperationForm.fillAndValidate(cateringOperationOrLettingAccommodation)
+          case _                                             => cateringOperationForm
+        },
+        "cateringOperationOrLettingAccommodation",
+        controllers.Form6010.routes.FranchiseOrLettingsTiedToPropertyController.show().url
       )
-//    )
+    )
   }
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>

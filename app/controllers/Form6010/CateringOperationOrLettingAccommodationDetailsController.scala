@@ -18,13 +18,12 @@ package controllers.Form6010
 
 import actions.WithSessionRefiner
 import form.Form6010.CateringOperationOrLettingAccommodationForm.cateringOperationOrLettingAccommodationForm
-import form.Form6010.CateringOperationOrLettingAccommodationRentForm.cateringOperationOrLettingAccommodationRentForm
 import models.submissions.Form6010.CateringOperationOrLettingAccommodationDetails
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.form.{cateringOperationOrLettingAccommodationDetails, cateringOperationOrLettingAccommodationRentDetails}
+import views.html.form.cateringOperationOrLettingAccommodationDetails
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
 import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, CateringOperationOrLettingAccommodationSection}
 import controllers.Form6010
@@ -42,7 +41,6 @@ class CateringOperationOrLettingAccommodationDetailsController @Inject() (
     with I18nSupport {
 
   def show(index: Option[Int]): Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
-//    Future.successful(
     val existingDetails: Option[CateringOperationOrLettingAccommodationDetails] = for {
       requestedIndex                <- index
       existingAccommodationSections <-
@@ -52,16 +50,15 @@ class CateringOperationOrLettingAccommodationDetailsController @Inject() (
     } yield requestedAccommodationSection.cateringOperationOrLettingAccommodationDetails
 
     Ok(
-        cateringOperationOrLettingAccommodationDetailsView(
-          existingDetails.fold(cateringOperationOrLettingAccommodationForm)(
-            cateringOperationOrLettingAccommodationForm.fill
-          ),
-          index,
-          "cateringOperationOrLettingAccommodationDetails",
-          controllers.Form6010.routes.CateringOperationOrLettingAccommodationController.show().url
-        )
+      cateringOperationOrLettingAccommodationDetailsView(
+        existingDetails.fold(cateringOperationOrLettingAccommodationForm)(
+          cateringOperationOrLettingAccommodationForm.fill
+        ),
+        index,
+        "cateringOperationOrLettingAccommodationDetails",
+        controllers.Form6010.routes.CateringOperationOrLettingAccommodationController.show().url
       )
-//    )
+    )
   }
 
   def submit(index: Option[Int]) = (Action andThen withSessionRefiner).async { implicit request =>
@@ -121,13 +118,3 @@ class CateringOperationOrLettingAccommodationDetailsController @Inject() (
   }
 
 }
-
-//Future.successful(
-//Ok(
-//cateringOperationOrLettingAccommodationRentDetailsView(
-//cateringOperationOrLettingAccommodationRentForm,
-//"cateringOperationOrLettingAccommodationRentDetails",
-//controllers.Form6010.routes.CateringOperationOrLettingAccommodationDetailController.show().url
-//)
-//)
-//)

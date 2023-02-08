@@ -16,14 +16,13 @@
 
 package views.aboutFranchisesOrLettings
 
-import form.Form6010.FranchiseOrLettingsTiedToPropertyForm
+import form.additionalinformation.FranchiseOrLettingsTiedToPropertyForm
 import models.submissions.Form6010._
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class FranchiseOrLettingsTiedToPropertyViewSpec
-    extends QuestionViewBehaviours[FranchiseOrLettingsTiedToPropertiesDetails] {
+class FranchiseOrLettingsTiedToPropertyViewSpec extends QuestionViewBehaviours[FranchiseOrLettingsTiedToProperty] {
 
   def franchiseOrLettingsTiedToPropertyView = app.injector.instanceOf[views.html.form.franchiseOrLettingsTiedToProperty]
 
@@ -33,7 +32,7 @@ class FranchiseOrLettingsTiedToPropertyViewSpec
 
   def createView = () => franchiseOrLettingsTiedToPropertyView(form)(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[FranchiseOrLettingsTiedToPropertiesDetails]) =>
+  def createViewUsingForm = (form: Form[FranchiseOrLettingsTiedToProperty]) =>
     franchiseOrLettingsTiedToPropertyView(form)(fakeRequest, messages)
 
   "Franchise or lettings tied to property view" must {
@@ -58,8 +57,8 @@ class FranchiseOrLettingsTiedToPropertyViewSpec
       val doc = asDocument(createViewUsingForm(form))
       assertContainsRadioButton(
         doc,
-        "franchiseLettings",
-        "franchiseLettings",
+        "franchiseOrLettingsTiedToProperty",
+        "franchiseOrLettingsTiedToProperty",
         FranchiseOrLettingsTiedToPropertiesYes.name,
         false
       )
@@ -70,8 +69,8 @@ class FranchiseOrLettingsTiedToPropertyViewSpec
       val doc = asDocument(createViewUsingForm(form))
       assertContainsRadioButton(
         doc,
-        "franchiseLettings-2",
-        "franchiseLettings",
+        "franchiseOrLettingsTiedToProperty-2",
+        "franchiseOrLettingsTiedToProperty",
         FranchiseOrLettingsTiedToPropertiesNo.name,
         false
       )

@@ -26,7 +26,7 @@ import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.form.{addAnotherCateringOperationOrLettingAccommodation, cateringOperationOrLettingAccommodation, cateringOperationOrLettingAccommodationDetails, lettingOtherPartOfProperty}
+import views.html.form.{addAnotherCateringOperationOrLettingAccommodation, cateringOperationOrLettingAccommodation, cateringOperationOrLettingAccommodationDetails}
 import views.html.login
 
 import javax.inject.{Inject, Named, Singleton}
@@ -68,7 +68,9 @@ class AddAnotherCateringOperationOrLettingAccommodationController @Inject() (
                 formWithErrors,
                 index,
                 "addAnotherCateringOperationOrLettingAccommodation",
-                controllers.Form6010.routes.CateringOperationOrLettingAccommodationDetailsCheckboxesController.show(index).url
+                controllers.Form6010.routes.CateringOperationOrLettingAccommodationDetailsCheckboxesController
+                  .show(index)
+                  .url
               )
             )
           ),
@@ -86,8 +88,8 @@ class AddAnotherCateringOperationOrLettingAccommodationController @Inject() (
                 )
               )
             case AddAnotherCateringOperationOrLettingAccommodationNo  =>
-              Future.successful(Ok(
-//              Future.successful(Ok(lettingOtherPartOfPropertyView(lettingOtherPartOfPropertiesForm))
+              Future.successful(
+                Ok(
                   cateringOperationOrLettingAccommodationView(
                     lettingOtherPartOfPropertiesForm,
                     "lettingOtherPartOfProperties",
@@ -101,61 +103,3 @@ class AddAnotherCateringOperationOrLettingAccommodationController @Inject() (
   }
 
 }
-
-
-
-//def submit = (Action andThen withSessionRefiner).async { implicit request =>
-//  addAnotherCateringOperationOrLettingAccommodationForm
-//  .bindFromRequest()
-//  .fold(
-//  formWithErrors =>
-//  Future.successful(BadRequest(addAnotherCateringOperationOrLettingAccommodationView(formWithErrors))),
-//  data =>
-//  data.addAnotherCateringOperationOrLettingAccommodationDetails match {
-//  case AddAnotherCateringOperationOrLettingAccommodationYes =>
-//  Future.successful(
-//  Ok(
-//  cateringOperationOrLettingAccommodationDetailsView(cateringOperationOrLettingAccommodationForm, None)
-//  )
-//  )
-//  case AddAnotherCateringOperationOrLettingAccommodationNo  =>
-//  Future.successful(Ok(lettingOtherPartOfPropertyView(lettingOtherPartOfPropertiesForm)))
-//  case _                                                    => Future.successful(Ok(login(loginForm)))
-//}
-//  )
-//}
-
-//  def submit = (Action andThen withSessionRefiner).async { implicit request =>
-//  addAnotherCateringOperationOrLettingAccommodationForm
-//    .bindFromRequest()
-//      .fold(
-//        formWithErrors => Future.successful(BadRequest(
-//          addAnotherCateringOperationOrLettingAccommodationView(
-//            formWithErrors,
-//            "addAnotherCateringOperationOrLettingAccommodation",
-//            controllers.Form6010.routes.CateringOperationOrLettingAccommodationDetailsCheckboxesController.show().url
-//          )
-//        )
-//      ),
-//      data =>
-//        data.addAnotherCateringOperationOrLettingAccommodationDetails match {
-//          case AddAnotherCateringOperationOrLettingAccommodationYes =>
-//            Future.successful(Ok(
-//              cateringOperationOrLettingAccommodationDetailsView(
-//                cateringOperationOrLettingAccommodationForm,
-//                "cateringOperationOrLettingAccommodationDetails",
-//                controllers.Form6010.routes.CateringOperationOrLettingAccommodationController.show().url
-//              )
-//            ))
-//          case AddAnotherCateringOperationOrLettingAccommodationNo  =>
-//            Future.successful(Ok(
-//              cateringOperationOrLettingAccommodationDetailsView(
-//                lettingOtherPartOfPropertiesForm,
-//                "addAnotherLettingOtherPartOfProperty",
-//                controllers.Form6010.routes.LettingOtherPartOfPropertyDetailsController.show().url
-//              )
-//            ))
-//          case _                                                    => Future.successful(Ok(login(loginForm)))
-//        }
-//      )
-//  }

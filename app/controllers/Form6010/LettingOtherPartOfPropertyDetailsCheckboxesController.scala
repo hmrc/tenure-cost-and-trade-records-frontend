@@ -34,8 +34,8 @@ class LettingOtherPartOfPropertyDetailsCheckboxesController @Inject() (
   addAnotherCateringOperationOrLettingAccommodationView: addAnotherCateringOperationOrLettingAccommodation,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-  ) extends FrontendController(mcc)
-  with I18nSupport {
+) extends FrontendController(mcc)
+    with I18nSupport {
 
   def show(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Future.successful(

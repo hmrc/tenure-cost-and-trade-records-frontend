@@ -35,6 +35,7 @@ class LettingOtherPartOfPropertyDetailsViewSpec
   def createView = () =>
     cateringOperationDetailsView(
       form,
+      Some(0),
       messageKeyPrefix,
       controllers.Form6010.routes.CateringOperationOrLettingAccommodationController.show().url
     )(fakeRequest, messages)
@@ -42,6 +43,7 @@ class LettingOtherPartOfPropertyDetailsViewSpec
   def createViewUsingForm = (form: Form[CateringOperationOrLettingAccommodationDetails]) =>
     cateringOperationDetailsView(
       form,
+      Some(0),
       messageKeyPrefix,
       controllers.Form6010.routes.CateringOperationOrLettingAccommodationController.show().url
     )(fakeRequest, messages)

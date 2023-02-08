@@ -20,19 +20,19 @@ import play.api.http.Status
 import play.api.test.Helpers._
 import play.twirl.api.HtmlFormat
 import utils.TestBaseSpec
-import views.html.form.{addAnotherLettingOtherPartOfProperty, lettingOtherPartOfPropertyDetails}
+import views.html.form.{addAnotherCateringOperationOrLettingAccommodation, cateringOperationOrLettingAccommodationDetails}
 import views.html.aboutYourLeaseOrTenure.aboutYourLandlord
 import views.html.login
 
 class AddAnotherLettingOtherPartOfPropertyControllerSpec extends TestBaseSpec {
 
-  val mockAddAnotherLettingOtherPartOfProperty = mock[addAnotherLettingOtherPartOfProperty]
-  when(mockAddAnotherLettingOtherPartOfProperty.apply(any, any)(any, any)).thenReturn(HtmlFormat.empty)
+  val mockAddAnotherLettingOtherPartOfProperty = mock[addAnotherCateringOperationOrLettingAccommodation]
+  when(mockAddAnotherLettingOtherPartOfProperty.apply(any, any, any, any)(any, any)).thenReturn(HtmlFormat.empty)
 
   val addAnotherLettingOtherPartOfPropertyController = new AddAnotherLettingOtherPartOfPropertyController(
     stubMessagesControllerComponents(),
     mockAddAnotherLettingOtherPartOfProperty,
-    mock[lettingOtherPartOfPropertyDetails],
+    mock[cateringOperationOrLettingAccommodationDetails],
     mock[login],
     mock[aboutYourLandlord],
     preFilledSession,
@@ -46,10 +46,10 @@ class AddAnotherLettingOtherPartOfPropertyControllerSpec extends TestBaseSpec {
     }
 
     //TODO - need to find way to mock data to be returned after call is made with index
-//    "return HTML" in {
-//      val result = controller.show(fakeRequest)
-//      contentType(result) shouldBe Some("text/html")
-//      charset(result)     shouldBe Some("utf-8")
-//    }
+    "return HTML" in {
+      val result = addAnotherLettingOtherPartOfPropertyController.show(0)(fakeRequest)
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
+    }
   }
 }

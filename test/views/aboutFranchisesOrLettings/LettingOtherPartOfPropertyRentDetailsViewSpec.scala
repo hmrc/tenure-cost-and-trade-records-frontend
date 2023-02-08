@@ -16,8 +16,8 @@
 
 package views.aboutFranchisesOrLettings
 
-import form.Form6010.{CateringOperationOrLettingAccommodationRentForm, LettingOtherPartOfPropertyRentForm}
-import models.submissions.Form6010.{CateringOperationOrLettingAccommodationRentDetails, LettingOtherPartOfPropertyRentDetails}
+import form.Form6010.LettingOtherPartOfPropertyRentForm
+import models.submissions.Form6010.LettingOtherPartOfPropertyRentDetails
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import play.api.i18n.Lang
@@ -29,19 +29,16 @@ import java.util.Locale
 class LettingOtherPartOfPropertyRentDetailsViewSpec
     extends QuestionViewBehaviours[LettingOtherPartOfPropertyRentDetails] {
 
-  def lettingOtherPartOfPropertyRentDetailsView =
-    app.injector.instanceOf[views.html.form.cateringOperationOrLettingAccommodationRentDetails]
-
   val messageKeyPrefix = "lettingOtherPartOfPropertyRentDetails"
 
   val backLink      = controllers.Form6010.routes.LettingOtherPartOfPropertyDetailsController.show().url
   override val form = LettingOtherPartOfPropertyRentForm.lettingOtherPartOfPropertyRentForm
 
   def createView = () =>
-    lettingOtherPartOfPropertyRentDetailsView(form, messageKeyPrefix, backLink)(fakeRequest, messages)
+    lettingOtherPartOfPropertyRentDetailsView(form, 0, messageKeyPrefix, backLink)(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[LettingOtherPartOfPropertyRentDetails]) =>
-    lettingOtherPartOfPropertyRentDetailsView(form, messageKeyPrefix, backLink)(fakeRequest, messages)
+    lettingOtherPartOfPropertyRentDetailsView(form, 0, messageKeyPrefix, backLink)(fakeRequest, messages)
 
   "Catering operation rent details view" must {
 

@@ -16,16 +16,13 @@
 
 package views.aboutFranchisesOrLettings
 
-import form.Form6010.{CateringOperationForm, LettingOtherPartOfPropertiesForm, LettingOtherPartOfPropertyForm}
-import models.submissions.Form6010.{CateringOperationDetails, CateringOperationNo, CateringOperationYes, LettingOtherPartOfPropertiesNo, LettingOtherPartOfPropertiesYes, LettingOtherPartOfPropertyDetails}
+import form.Form6010.LettingOtherPartOfPropertiesForm
+import models.submissions.Form6010.{LettingOtherPartOfPropertiesNo, LettingOtherPartOfPropertiesYes, LettingOtherPartOfProperty}
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class LettingOtherPartOfPropertyViewSpec extends QuestionViewBehaviours[LettingOtherPartOfPropertyDetails] {
-
-  def lettingOtherPartOfPropertyView =
-    app.injector.instanceOf[views.html.form.cateringOperationOrLettingAccommodation]
+class LettingOtherPartOfPropertyViewSpec extends QuestionViewBehaviours[LettingOtherPartOfProperty] {
 
   val messageKeyPrefix = "LettingOtherPartOfProperties"
 
@@ -38,7 +35,7 @@ class LettingOtherPartOfPropertyViewSpec extends QuestionViewBehaviours[LettingO
       controllers.Form6010.routes.CateringOperationOrLettingAccommodationController.show().url
     )(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[LettingOtherPartOfPropertyDetails]) =>
+  def createViewUsingForm = (form: Form[LettingOtherPartOfProperty]) =>
     lettingOtherPartOfPropertyView(
       form,
       messageKeyPrefix,

@@ -16,8 +16,8 @@
 
 package views.aboutFranchisesOrLettings
 
-import form.Form6010.{CateringOperationForm, CateringOperationOrLettingAccommodationForm}
-import models.submissions.Form6010.{CateringOperationDetails, CateringOperationNo, CateringOperationOrLettingAccommodationDetails, CateringOperationYes}
+import form.Form6010.CateringOperationOrLettingAccommodationForm
+import models.submissions.Form6010.CateringOperationOrLettingAccommodationDetails
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
@@ -34,6 +34,7 @@ class CateringOperationsDetailsViewSpec extends QuestionViewBehaviours[CateringO
   def createView = () =>
     cateringOperationDetailsView(
       form,
+      Some(0),
       messageKeyPrefix,
       controllers.Form6010.routes.CateringOperationOrLettingAccommodationController.show().url
     )(fakeRequest, messages)
@@ -41,6 +42,7 @@ class CateringOperationsDetailsViewSpec extends QuestionViewBehaviours[CateringO
   def createViewUsingForm = (form: Form[CateringOperationOrLettingAccommodationDetails]) =>
     cateringOperationDetailsView(
       form,
+      Some(0),
       messageKeyPrefix,
       controllers.Form6010.routes.CateringOperationOrLettingAccommodationController.show().url
     )(fakeRequest, messages)

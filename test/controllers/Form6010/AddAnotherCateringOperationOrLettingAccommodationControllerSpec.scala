@@ -20,13 +20,14 @@ import play.api.http.Status
 import play.api.test.Helpers._
 import play.twirl.api.HtmlFormat
 import utils.TestBaseSpec
-import views.html.form.{addAnotherCateringOperationOrLettingAccommodation, cateringOperationOrLettingAccommodationDetails, lettingOtherPartOfProperty}
+import views.html.form.{addAnotherCateringOperationOrLettingAccommodation, cateringOperationOrLettingAccommodation, cateringOperationOrLettingAccommodationDetails}
 import views.html.login
 
 class AddAnotherCateringOperationOrLettingAccommodationControllerSpec extends TestBaseSpec {
 
   val mockAddAnotherCateringOperationOrLettingAccommodation = mock[addAnotherCateringOperationOrLettingAccommodation]
-  when(mockAddAnotherCateringOperationOrLettingAccommodation.apply(any)(any, any)).thenReturn(HtmlFormat.empty)
+  when(mockAddAnotherCateringOperationOrLettingAccommodation.apply(any, any, any, any)(any, any))
+    .thenReturn(HtmlFormat.empty)
 
   val addAnotherCateringOperationOrLettingAccommodationController =
     new AddAnotherCateringOperationOrLettingAccommodationController(
@@ -34,19 +35,19 @@ class AddAnotherCateringOperationOrLettingAccommodationControllerSpec extends Te
       mockAddAnotherCateringOperationOrLettingAccommodation,
       mock[login],
       mock[cateringOperationOrLettingAccommodationDetails],
-      mock[lettingOtherPartOfProperty],
+      mock[cateringOperationOrLettingAccommodation],
       preFilledSession,
       mockSessionRepo
     )
 
   "GET /" should {
     "return 200" in {
-      val result = addAnotherCateringOperationOrLettingAccommodationController.show(fakeRequest)
+      val result = addAnotherCateringOperationOrLettingAccommodationController.show(1)(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return HTML" in {
-      val result = addAnotherCateringOperationOrLettingAccommodationController.show(fakeRequest)
+      val result = addAnotherCateringOperationOrLettingAccommodationController.show(1)(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
