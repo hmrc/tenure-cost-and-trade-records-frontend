@@ -18,7 +18,7 @@ package utils
 
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import views.html.aboutYourLeaseOrTenure.aboutYourLandlord
-import views.html.form.{cateringOperationOrLettingAccommodation, cateringOperationOrLettingAccommodationCheckboxesDetails, cateringOperationOrLettingAccommodationDetails, cateringOperationOrLettingAccommodationRentDetails, lettingOtherPartOfProperty, lettingOtherPartOfPropertyCheckboxesDetails, lettingOtherPartOfPropertyDetails, lettingOtherPartOfPropertyRentDetails}
+import views.html.form._
 import views.html.login
 
 trait FakeViews { this: GuiceOneAppPerSuite =>
@@ -36,12 +36,12 @@ trait FakeViews { this: GuiceOneAppPerSuite =>
   lazy val aboutYourLandlordView                                    =
     app.injector.instanceOf[aboutYourLandlord]
   lazy val lettingOtherPartOfPropertyView                           =
-    app.injector.instanceOf[lettingOtherPartOfProperty]
+    app.injector.instanceOf[cateringOperationOrLettingAccommodation]
   lazy val lettingOtherPartOfPropertyDetailsView                    =
-    app.injector.instanceOf[lettingOtherPartOfPropertyDetails]
+    app.injector.instanceOf[cateringOperationOrLettingAccommodationDetails]
   lazy val lettingOtherPartOfPropertyRentDetailsView                =
-    app.injector.instanceOf[lettingOtherPartOfPropertyRentDetails]
+    app.injector.instanceOf[cateringOperationOrLettingAccommodationRentDetails]
   lazy val lettingOtherPartOfPropertyCheckboxesDetailsView          =
-    app.injector.instanceOf[lettingOtherPartOfPropertyCheckboxesDetails]
+    app.injector.instanceOf[cateringOperationOrLettingAccommodationCheckboxesDetails]
 
 }

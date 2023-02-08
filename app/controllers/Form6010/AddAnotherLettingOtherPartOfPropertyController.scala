@@ -18,8 +18,8 @@ package controllers.Form6010
 
 import actions.WithSessionRefiner
 import controllers.LoginController.loginForm
-import form.Form6010.LettingOtherPartOfPropertyForm.lettingOtherPartOfPropertyForm
 import form.Form6010.AddAnotherLettingOtherPartOfPropertyForm.addAnotherLettingOtherPartOfPropertyForm
+import form.Form6010.CateringOperationOrLettingAccommodationForm.cateringOperationOrLettingAccommodationForm
 import form.aboutYourLeaseOrTenure.AboutTheLandlordForm.aboutTheLandlordForm
 import models.submissions.Form6010._
 import play.api.i18n.I18nSupport
@@ -36,8 +36,8 @@ import scala.concurrent.Future
 @Singleton
 class AddAnotherLettingOtherPartOfPropertyController @Inject() (
   mcc: MessagesControllerComponents,
-  addAnotherLettingOtherPartOfPropertyView: addAnotherLettingOtherPartOfProperty,
-  lettingOtherPartOfPropertyDetailsView: lettingOtherPartOfPropertyDetails,
+  addAnotherCateringOperationOrLettingAccommodationView: addAnotherCateringOperationOrLettingAccommodation,
+  cateringOperationOrLettingAccommodationDetailsView: cateringOperationOrLettingAccommodationDetails,
   login: login,
   aboutTheLandlordView: aboutYourLandlord,
   withSessionRefiner: WithSessionRefiner,
@@ -47,7 +47,14 @@ class AddAnotherLettingOtherPartOfPropertyController @Inject() (
 
   def show(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Future.successful(
-      Ok(addAnotherLettingOtherPartOfPropertyView(addAnotherLettingOtherPartOfPropertyForm, index))
+      Ok(
+        addAnotherCateringOperationOrLettingAccommodationView(
+          addAnotherLettingOtherPartOfPropertyForm,
+          index,
+          "addAnotherLettingOtherPartOfProperty",
+          controllers.Form6010.routes.LettingOtherPartOfPropertyDetailsCheckboxesController.show(index).url
+        )
+      )
     )
   }
 
@@ -56,12 +63,28 @@ class AddAnotherLettingOtherPartOfPropertyController @Inject() (
       .bindFromRequest()
       .fold(
         formWithErrors =>
-          Future.successful(BadRequest(addAnotherLettingOtherPartOfPropertyView(formWithErrors, index))),
+          Future.successful(
+            BadRequest(
+              addAnotherCateringOperationOrLettingAccommodationView(
+                formWithErrors,
+                index,
+                "addAnotherLettingOtherPartOfProperty",
+                controllers.Form6010.routes.LettingOtherPartOfPropertyDetailsCheckboxesController.show(index).url
+              )
+            )
+          ),
         data =>
           data.addAnotherLettingOtherPartOfPropertyDetails match {
             case AddAnotherLettingOtherPartOfPropertiesYes =>
               Future.successful(
-                Ok(lettingOtherPartOfPropertyDetailsView(lettingOtherPartOfPropertyForm, None))
+                Ok(
+                  cateringOperationOrLettingAccommodationDetailsView(
+                    cateringOperationOrLettingAccommodationForm,
+                    None,
+                    "lettingOtherPartOfProperties",
+                    controllers.Form6010.routes.LettingOtherPartOfPropertyDetailsController.show().url
+                  )
+                )
               )
             case AddAnotherLettingOtherPartOfPropertiesNo  =>
               Future.successful(Ok(aboutTheLandlordView(aboutTheLandlordForm)))

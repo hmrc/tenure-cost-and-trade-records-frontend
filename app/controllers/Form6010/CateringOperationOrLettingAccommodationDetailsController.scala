@@ -18,17 +18,15 @@ package controllers.Form6010
 
 import actions.WithSessionRefiner
 import form.Form6010.CateringOperationOrLettingAccommodationForm.cateringOperationOrLettingAccommodationForm
-import form.Form6010.CateringOperationOrLettingAccommodationRentForm.cateringOperationOrLettingAccommodationRentForm
 import models.submissions.Form6010.CateringOperationOrLettingAccommodationDetails
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.form.{cateringOperationOrLettingAccommodationDetails, cateringOperationOrLettingAccommodationRentDetails}
+import views.html.form.cateringOperationOrLettingAccommodationDetails
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
 import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, CateringOperationOrLettingAccommodationSection}
 import controllers.Form6010
-
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -56,7 +54,9 @@ class CateringOperationOrLettingAccommodationDetailsController @Inject() (
         existingDetails.fold(cateringOperationOrLettingAccommodationForm)(
           cateringOperationOrLettingAccommodationForm.fill
         ),
-        index
+        index,
+        "cateringOperationOrLettingAccommodationDetails",
+        controllers.Form6010.routes.CateringOperationOrLettingAccommodationController.show().url
       )
     )
   }
@@ -66,7 +66,16 @@ class CateringOperationOrLettingAccommodationDetailsController @Inject() (
       .bindFromRequest()
       .fold(
         formWithErrors =>
-          Future.successful(BadRequest(cateringOperationOrLettingAccommodationDetailsView(formWithErrors, index))),
+          Future.successful(
+            BadRequest(
+              cateringOperationOrLettingAccommodationDetailsView(
+                formWithErrors,
+                index,
+                "cateringOperationOrLettingAccommodationDetails",
+                controllers.Form6010.routes.CateringOperationOrLettingAccommodationController.show().url
+              )
+            )
+          ),
         data => {
           val ifFranchisesOrLettingsEmpty                                        = AboutFranchisesOrLettings(cateringOperationOrLettingAccommodationSections =
             IndexedSeq(

@@ -70,7 +70,15 @@ class FranchiseOrLettingsTiedToPropertyController @Inject() (
             case FranchiseOrLettingsTiedToPropertiesYes =>
               val updatedData = updateAboutFranchisesOrLettings(_.copy(franchisesOrLettingsTiedToProperty = Some(data)))
               session.saveOrUpdate(updatedData)
-              Future.successful(Ok(cateringOperationOrLettingAccommodationView(cateringOperationForm)))
+              Future.successful(
+                Ok(
+                  cateringOperationOrLettingAccommodationView(
+                    cateringOperationForm,
+                    "cateringOperationOrLettingAccommodation",
+                    controllers.Form6010.routes.FranchiseOrLettingsTiedToPropertyController.show().url
+                  )
+                )
+              )
             case FranchiseOrLettingsTiedToPropertiesNo  =>
               val updatedData = updateAboutFranchisesOrLettings(_.copy(franchisesOrLettingsTiedToProperty = Some(data)))
               session.saveOrUpdate(updatedData)

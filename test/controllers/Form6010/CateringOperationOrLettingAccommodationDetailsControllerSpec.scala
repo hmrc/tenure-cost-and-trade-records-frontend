@@ -16,22 +16,14 @@
 
 package controllers.Form6010
 
-import models.{Session, UserLoginDetails}
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
-import models.submissions.common.Address
-import org.eclipse.jetty.client.Origin.Address
 import org.jsoup.Jsoup
-import org.scalatest.OptionValues
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import play.twirl.api.HtmlFormat
 import utils.TestBaseSpec
-import views.html.form.cateringOperationOrLettingAccommodationDetails
 
-import scala.concurrent.Future
-
-class CateringOperationOrLettingsAccommodationDetailsControllerSpec extends TestBaseSpec {
+class CateringOperationOrLettingAccommodationDetailsControllerSpec extends TestBaseSpec {
 
   def cateringOperationOrLettingAccommodationDetailsController(
     aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = Some(prefilledAboutFranchiseOrLettings)

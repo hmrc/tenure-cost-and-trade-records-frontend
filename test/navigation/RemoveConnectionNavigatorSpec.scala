@@ -24,7 +24,7 @@ import models.submissions.additionalinformation.{AdditionalInformation, FurtherI
 import models.submissions.common.ContactDetails
 import models.submissions.connectiontoproperty.{AddressConnectionTypeYes, StillConnectedDetails}
 import models.submissions.notconnected.{RemoveConnectionDetails, RemoveConnectionsDetails}
-import navigation.identifiers.{AdditionalInformationId, Identifier, RemoveConnectionId}
+import navigation.identifiers.{Identifier, RemoveConnectionId}
 import org.scalatest.matchers.must.Matchers.convertToAnyMustWrapper
 import play.api.libs.json.JsObject
 import uk.gov.hmrc.http.HeaderCarrier

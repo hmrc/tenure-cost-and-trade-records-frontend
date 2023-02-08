@@ -20,16 +20,16 @@ import play.api.http.Status
 import play.api.test.Helpers._
 import play.twirl.api.HtmlFormat
 import utils.TestBaseSpec
-import views.html.form.{addAnotherLettingOtherPartOfProperty, lettingOtherPartOfPropertyCheckboxesDetails}
+import views.html.form.{addAnotherCateringOperationOrLettingAccommodation, cateringOperationOrLettingAccommodationCheckboxesDetails}
 
 class LettingOtherPartOfPropertyDetailsCheckboxesControllerSpec extends TestBaseSpec {
-  val mockLettingOtherPartOfPropertyCheckboxesDetails = mock[lettingOtherPartOfPropertyCheckboxesDetails]
-  when(mockLettingOtherPartOfPropertyCheckboxesDetails.apply(any)(any, any)).thenReturn(HtmlFormat.empty)
+  val mockLettingOtherPartOfPropertyCheckboxesDetails = mock[cateringOperationOrLettingAccommodationCheckboxesDetails]
+  when(mockLettingOtherPartOfPropertyCheckboxesDetails.apply(any, any, any)(any, any)).thenReturn(HtmlFormat.empty)
 
   val lettingOtherPartOfPropertyDetailsCheckboxesController = new LettingOtherPartOfPropertyDetailsCheckboxesController(
     stubMessagesControllerComponents(),
     mockLettingOtherPartOfPropertyCheckboxesDetails,
-    mock[addAnotherLettingOtherPartOfProperty],
+    mock[addAnotherCateringOperationOrLettingAccommodation],
     preFilledSession,
     mockSessionRepo
   )
@@ -40,10 +40,10 @@ class LettingOtherPartOfPropertyDetailsCheckboxesControllerSpec extends TestBase
       status(result) shouldBe Status.OK
     }
 
-//    "return HTML" in {
-//      val result = controller.show(fakeRequest)
-//      contentType(result) shouldBe Some("text/html")
-//      charset(result)     shouldBe Some("utf-8")
-//    }
+    "return HTML" in {
+      val result = lettingOtherPartOfPropertyDetailsCheckboxesController.show(0)(fakeRequest)
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
+    }
   }
 }

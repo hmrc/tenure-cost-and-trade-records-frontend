@@ -20,12 +20,9 @@ import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import play.twirl.api.HtmlFormat
 import utils.TestBaseSpec
-import views.html.form.{cateringOperationOrLettingAccommodation, cateringOperationOrLettingAccommodationDetails, lettingOtherPartOfProperty}
-import views.html.login
 
-class CateringOperationOrLettingsAccommodationControllerSpec extends TestBaseSpec {
+class CateringOperationOrLettingAccommodationControllerSpec extends TestBaseSpec {
 
   def cateringOperationOrLettingAccommodationController(
     aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = Some(prefilledAboutFranchiseOrLettings)
@@ -34,7 +31,6 @@ class CateringOperationOrLettingsAccommodationControllerSpec extends TestBaseSpe
       stubMessagesControllerComponents(),
       loginView,
       cateringOperationOrLettingAccommodationDetailsView,
-      lettingOtherPartOfPropertyView,
       cateringOperationOrLettingAccommodationView,
       preEnrichedActionRefiner(aboutFranchisesOrLettings = aboutFranchisesOrLettings),
       mockSessionRepo

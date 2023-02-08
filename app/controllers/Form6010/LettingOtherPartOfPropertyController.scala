@@ -20,7 +20,7 @@ import actions.WithSessionRefiner
 import controllers.LoginController.loginForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.form.{lettingOtherPartOfProperty, lettingOtherPartOfPropertyDetails}
+import views.html.form.{cateringOperationOrLettingAccommodation, cateringOperationOrLettingAccommodationDetails}
 import form.Form6010.LettingOtherPartOfPropertyForm.lettingOtherPartOfPropertyForm
 import form.aboutYourLeaseOrTenure.AboutTheLandlordForm.aboutTheLandlordForm
 import form.Form6010.LettingOtherPartOfPropertiesForm.lettingOtherPartOfPropertiesForm
@@ -38,8 +38,8 @@ import scala.concurrent.Future
 class LettingOtherPartOfPropertyController @Inject() (
   mcc: MessagesControllerComponents,
   login: login,
-  lettingOtherPartOfPropertyDetailsView: lettingOtherPartOfPropertyDetails,
-  lettingOtherPartOfPropertyView: lettingOtherPartOfProperty,
+  cateringOperationOrLettingAccommodationDetailsView: cateringOperationOrLettingAccommodationDetails,
+  cateringOperationOrLettingAccommodationView: cateringOperationOrLettingAccommodation,
   aboutTheLandlordView: aboutYourLandlord,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
@@ -49,12 +49,14 @@ class LettingOtherPartOfPropertyController @Inject() (
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Future.successful(
       Ok(
-        lettingOtherPartOfPropertyView(
+        cateringOperationOrLettingAccommodationView(
           request.sessionData.aboutFranchisesOrLettings.flatMap(_.lettingOtherPartOfProperty) match {
             case Some(lettingOtherPartOfProperty) =>
               lettingOtherPartOfPropertiesForm.fillAndValidate(lettingOtherPartOfProperty)
             case _                                => lettingOtherPartOfPropertiesForm
-          }
+          },
+          "lettingOtherPartOfProperties",
+          controllers.Form6010.routes.CateringOperationOrLettingAccommodationController.show().url
         )
       )
     )
@@ -64,19 +66,36 @@ class LettingOtherPartOfPropertyController @Inject() (
     lettingOtherPartOfPropertiesForm
       .bindFromRequest()
       .fold(
-        formWithErrors => Future.successful(BadRequest(lettingOtherPartOfPropertyView(formWithErrors))),
+        formWithErrors =>
+          Future.successful(
+            BadRequest(
+              cateringOperationOrLettingAccommodationView(
+                formWithErrors,
+                "lettingOtherPartOfProperties",
+                controllers.Form6010.routes.CateringOperationOrLettingAccommodationController.show().url
+              )
+            )
+          ),
         data =>
           data match {
             case LettingOtherPartOfPropertiesYes =>
               val updatedData = updateAboutFranchisesOrLettings(_.copy(lettingOtherPartOfProperty = Some(data)))
               session.saveOrUpdate(updatedData)
-              Future.successful(Ok(lettingOtherPartOfPropertyDetailsView(lettingOtherPartOfPropertyForm, None)))
-
-            case LettingOtherPartOfPropertiesNo =>
+              Future.successful(
+                Ok(
+                  cateringOperationOrLettingAccommodationDetailsView(
+                    lettingOtherPartOfPropertyForm,
+                    None,
+                    "lettingOtherPartOfPropertyDetails",
+                    controllers.Form6010.routes.LettingOtherPartOfPropertyController.show().url
+                  )
+                )
+              )
+            case LettingOtherPartOfPropertiesNo  =>
               val updatedData = updateAboutFranchisesOrLettings(_.copy(lettingOtherPartOfProperty = Some(data)))
               session.saveOrUpdate(updatedData)
               Future.successful(Ok(aboutTheLandlordView(aboutTheLandlordForm)))
-            case _                              => Future.successful(Ok(login(loginForm)))
+            case _                               => Future.successful(Ok(login(loginForm)))
           }
       )
   }

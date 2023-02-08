@@ -17,11 +17,6 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukErrorSummary
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukDateInput
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukTextarea
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukCharacterCount
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Radios
@@ -34,50 +29,55 @@
 @this(layout: Layout,
         govukButton: GovukButton,
         govukRadios: GovukRadios,
-        govukInput: GovukInput,
-        govukErrorSummary: GovukErrorSummary,
-        govukDateInput: GovukDateInput,
-        govukTextarea: GovukTextarea,
-        govukCharacterCount: GovukCharacterCount,
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[_])(implicit request: Request[_], messages: Messages)
+@(theForm: Form[_], cateringOrLetting: String, backLink: String)(implicit request: Request[_], messages: Messages)
 
 @layout(
- pageHeading = messages("cateringOperationOrLettingAccommodation.heading"),
- backLinkUrl = controllers.Form6010.routes.FranchiseOrLettingsTiedToPropertyController.show.url,
+ pageHeading = messages(s"${cateringOrLetting}.heading"),
+ showH1 = false,
+ showSection = true,
+ sectionName = messages("label.section.aboutTheFranchiseLettings"),
+ backLinkUrl = backLink,
  theForm = theForm
 ) {
 
- @formWithCSRF(action = controllers.Form6010.routes.CateringOperationOrLettingAccommodationController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
+ @formWithCSRF(action = {
+   if(cateringOrLetting.equals("cateringOperationOrLettingAccommodation"))
+    controllers.Form6010.routes.CateringOperationOrLettingAccommodationController.submit()
+   else if(cateringOrLetting.equals("lettingOtherPartOfProperties"))
+    controllers.Form6010.routes.LettingOtherPartOfPropertyController.submit()
+   else controllers.routes.TaskListController.show()},
+ args = 'class -> "myForm", 'id -> "myFormId") {
 
   @govukRadios(
    Radios(
-    name = "cateringOperationOrLettingAccommodation",
-    idPrefix = Option("cateringOperationOrLettingAccommodation"),
+    name = s"${cateringOrLetting}",
+    idPrefix = Option(s"${cateringOrLetting}"),
     classes = "govuk-radios--inline",
     items = Seq(
      "yes" -> messages("label.yes"),
      "no" -> messages("label.no")
     ).map(radioItem => RadioItem(
      content = Text(radioItem._2),
-     checked = radioItem._1.equals(theForm("cateringOperationOrLettingAccommodation").value.getOrElse("")),
+     checked = radioItem._1.equals(theForm(s"${cateringOrLetting}").value.getOrElse("")),
      value = Option(radioItem._1)
     )
     ),
-    errorMessage = theForm.errors.asTextErrorMessageForField("cateringOperationOrLettingAccommodation"),
+    errorMessage = theForm.errors.asTextErrorMessageForField(s"${cateringOrLetting}"),
     fieldset = Option(
      Fieldset(
       legend = Option(
        Legend(
-        content = Text(messages("label.cateringOperationOrLettingAccommodation")),
-        classes = "govuk-!-font-weight-bold"
+        content = Text(messages(s"${cateringOrLetting}.heading")),
+        isPageHeading = true,
+        classes = "govuk-fieldset__legend--l"
        )
       )
      )
     ),
-    hint = Some(Hint(content = Text(messages("hint.cateringOperationOrLettingAccommodation")))),
+    hint = Some(Hint(content = Text(messages(s"hint.${cateringOrLetting}")))),
    )
   )
 

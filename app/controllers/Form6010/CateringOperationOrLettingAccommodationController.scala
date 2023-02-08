@@ -20,7 +20,7 @@ import actions.WithSessionRefiner
 import controllers.LoginController.loginForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.form.{cateringOperationOrLettingAccommodation, cateringOperationOrLettingAccommodationDetails, lettingOtherPartOfProperty}
+import views.html.form.{cateringOperationOrLettingAccommodation, cateringOperationOrLettingAccommodationDetails}
 import form.Form6010.CateringOperationForm.cateringOperationForm
 import form.Form6010.CateringOperationOrLettingAccommodationForm.cateringOperationOrLettingAccommodationForm
 import form.Form6010.LettingOtherPartOfPropertiesForm.lettingOtherPartOfPropertiesForm
@@ -38,23 +38,22 @@ class CateringOperationOrLettingAccommodationController @Inject() (
   mcc: MessagesControllerComponents,
   login: login,
   cateringOperationOrLettingAccommodationDetailsView: cateringOperationOrLettingAccommodationDetails,
-  lettingOtherPartOfPropertyView: lettingOtherPartOfProperty,
   cateringOperationOrLettingAccommodationView: cateringOperationOrLettingAccommodation,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
 ) extends FrontendController(mcc)
     with I18nSupport {
 
-  def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    Future.successful(
-      Ok(
-        cateringOperationOrLettingAccommodationView(
-          request.sessionData.aboutFranchisesOrLettings.flatMap(_.cateringOperationOrLettingAccommodation) match {
-            case Some(cateringOperationOrLettingAccommodation) =>
-              cateringOperationForm.fillAndValidate(cateringOperationOrLettingAccommodation)
-            case _                                             => cateringOperationForm
-          }
-        )
+  def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
+    Ok(
+      cateringOperationOrLettingAccommodationView(
+        request.sessionData.aboutFranchisesOrLettings.flatMap(_.cateringOperationOrLettingAccommodation) match {
+          case Some(cateringOperationOrLettingAccommodation) =>
+            cateringOperationForm.fillAndValidate(cateringOperationOrLettingAccommodation)
+          case _                                             => cateringOperationForm
+        },
+        "cateringOperationOrLettingAccommodation",
+        controllers.Form6010.routes.FranchiseOrLettingsTiedToPropertyController.show().url
       )
     )
   }
@@ -63,7 +62,16 @@ class CateringOperationOrLettingAccommodationController @Inject() (
     cateringOperationForm
       .bindFromRequest()
       .fold(
-        formWithErrors => Future.successful(BadRequest(cateringOperationOrLettingAccommodationView(formWithErrors))),
+        formWithErrors =>
+          Future.successful(
+            BadRequest(
+              cateringOperationOrLettingAccommodationView(
+                formWithErrors,
+                "cateringOperationOrLettingAccommodation",
+                controllers.Form6010.routes.FranchiseOrLettingsTiedToPropertyController.show().url
+              )
+            )
+          ),
         data =>
           data match {
             case CateringOperationYes =>
@@ -72,14 +80,27 @@ class CateringOperationOrLettingAccommodationController @Inject() (
               session.saveOrUpdate(updatedData)
               Future.successful(
                 Ok(
-                  cateringOperationOrLettingAccommodationDetailsView(cateringOperationOrLettingAccommodationForm, None)
+                  cateringOperationOrLettingAccommodationDetailsView(
+                    cateringOperationOrLettingAccommodationForm,
+                    None,
+                    "cateringOperationOrLettingAccommodationDetails",
+                    controllers.Form6010.routes.CateringOperationOrLettingAccommodationController.show().url
+                  )
                 )
               )
             case CateringOperationNo  =>
               val updatedData =
                 updateAboutFranchisesOrLettings(_.copy(cateringOperationOrLettingAccommodation = Some(data)))
               session.saveOrUpdate(updatedData)
-              Future.successful(Ok(lettingOtherPartOfPropertyView(lettingOtherPartOfPropertiesForm)))
+              Future.successful(
+                Ok(
+                  cateringOperationOrLettingAccommodationView(
+                    lettingOtherPartOfPropertiesForm,
+                    "lettingOtherPartOfProperties",
+                    controllers.Form6010.routes.AddAnotherCateringOperationOrLettingAccommodationController.show(0).url
+                  )
+                )
+              )
             case _                    => Future.successful(Ok(login(loginForm)))
           }
       )

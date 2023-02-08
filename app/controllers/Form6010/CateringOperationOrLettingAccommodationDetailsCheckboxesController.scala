@@ -37,15 +37,28 @@ class CateringOperationOrLettingAccommodationDetailsCheckboxesController @Inject
 ) extends FrontendController(mcc)
     with I18nSupport {
 
-  def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+  def show(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Future.successful(
-      Ok(cateringOperationOrLettingAccommodationDetailsCheckboxesView())
+      Ok(
+        cateringOperationOrLettingAccommodationDetailsCheckboxesView(
+          index,
+          "cateringOperationOrLettingAccommodationCheckboxesDetails",
+          controllers.Form6010.routes.CateringOperationOrLettingAccommodationDetailsRentController.show(index).url
+        )
+      )
     )
   }
 
-  def submit = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit(index: Int) = (Action andThen withSessionRefiner).async { implicit request =>
     Future.successful(
-      Ok(addAnotherCateringOperationOrLettingAccommodationView(addAnotherCateringOperationOrLettingAccommodationForm))
+      Ok(
+        addAnotherCateringOperationOrLettingAccommodationView(
+          addAnotherCateringOperationOrLettingAccommodationForm,
+          index,
+          "addAnotherCateringOperationOrLettingAccommodation",
+          controllers.Form6010.routes.CateringOperationOrLettingAccommodationDetailsCheckboxesController.show(index).url
+        )
+      )
     )
   }
 

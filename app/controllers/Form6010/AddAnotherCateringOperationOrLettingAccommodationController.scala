@@ -26,7 +26,7 @@ import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.form.{addAnotherCateringOperationOrLettingAccommodation, cateringOperationOrLettingAccommodationDetails, lettingOtherPartOfProperty}
+import views.html.form.{addAnotherCateringOperationOrLettingAccommodation, cateringOperationOrLettingAccommodation, cateringOperationOrLettingAccommodationDetails}
 import views.html.login
 
 import javax.inject.{Inject, Named, Singleton}
@@ -38,34 +38,65 @@ class AddAnotherCateringOperationOrLettingAccommodationController @Inject() (
   addAnotherCateringOperationOrLettingAccommodationView: addAnotherCateringOperationOrLettingAccommodation,
   login: login,
   cateringOperationOrLettingAccommodationDetailsView: cateringOperationOrLettingAccommodationDetails,
-  lettingOtherPartOfPropertyView: lettingOtherPartOfProperty,
+  cateringOperationOrLettingAccommodationView: cateringOperationOrLettingAccommodation,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
 ) extends FrontendController(mcc)
     with I18nSupport {
 
-  def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+  def show(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Future.successful(
-      Ok(addAnotherCateringOperationOrLettingAccommodationView(addAnotherCateringOperationOrLettingAccommodationForm))
+      Ok(
+        addAnotherCateringOperationOrLettingAccommodationView(
+          addAnotherCateringOperationOrLettingAccommodationForm,
+          index,
+          "addAnotherCateringOperationOrLettingAccommodation",
+          controllers.Form6010.routes.CateringOperationOrLettingAccommodationDetailsCheckboxesController.show(index).url
+        )
+      )
     )
   }
 
-  def submit = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit(index: Int) = (Action andThen withSessionRefiner).async { implicit request =>
     addAnotherCateringOperationOrLettingAccommodationForm
       .bindFromRequest()
       .fold(
         formWithErrors =>
-          Future.successful(BadRequest(addAnotherCateringOperationOrLettingAccommodationView(formWithErrors))),
+          Future.successful(
+            BadRequest(
+              addAnotherCateringOperationOrLettingAccommodationView(
+                formWithErrors,
+                index,
+                "addAnotherCateringOperationOrLettingAccommodation",
+                controllers.Form6010.routes.CateringOperationOrLettingAccommodationDetailsCheckboxesController
+                  .show(index)
+                  .url
+              )
+            )
+          ),
         data =>
           data.addAnotherCateringOperationOrLettingAccommodationDetails match {
             case AddAnotherCateringOperationOrLettingAccommodationYes =>
               Future.successful(
                 Ok(
-                  cateringOperationOrLettingAccommodationDetailsView(cateringOperationOrLettingAccommodationForm, None)
+                  cateringOperationOrLettingAccommodationDetailsView(
+                    cateringOperationOrLettingAccommodationForm,
+                    None,
+                    "cateringOperationOrLettingAccommodationDetails",
+                    controllers.Form6010.routes.CateringOperationOrLettingAccommodationController.show().url
+                  )
                 )
               )
             case AddAnotherCateringOperationOrLettingAccommodationNo  =>
-              Future.successful(Ok(lettingOtherPartOfPropertyView(lettingOtherPartOfPropertiesForm)))
+              Future.successful(
+                Ok(
+                  cateringOperationOrLettingAccommodationView(
+                    lettingOtherPartOfPropertiesForm,
+                    "lettingOtherPartOfProperties",
+                    controllers.Form6010.routes.LettingOtherPartOfPropertyDetailsController.show(Some(index)).url
+                  )
+                )
+              )
             case _                                                    => Future.successful(Ok(login(loginForm)))
           }
       )

@@ -22,7 +22,7 @@ import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.form.{addAnotherLettingOtherPartOfProperty, lettingOtherPartOfPropertyCheckboxesDetails}
+import views.html.form.{addAnotherCateringOperationOrLettingAccommodation, cateringOperationOrLettingAccommodationCheckboxesDetails}
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
@@ -30,20 +30,35 @@ import scala.concurrent.Future
 @Singleton
 class LettingOtherPartOfPropertyDetailsCheckboxesController @Inject() (
   mcc: MessagesControllerComponents,
-  lettingOtherPartOfPropertyDetailsCheckboxView: lettingOtherPartOfPropertyCheckboxesDetails,
-  addAnotherLettingOtherPartOfPropertyView: addAnotherLettingOtherPartOfProperty,
+  cateringOperationOrLettingAccommodationCheckboxesDetailsView: cateringOperationOrLettingAccommodationCheckboxesDetails,
+  addAnotherCateringOperationOrLettingAccommodationView: addAnotherCateringOperationOrLettingAccommodation,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
 ) extends FrontendController(mcc)
     with I18nSupport {
 
   def show(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    Future.successful(Ok(lettingOtherPartOfPropertyDetailsCheckboxView(index)))
+    Future.successful(
+      Ok(
+        cateringOperationOrLettingAccommodationCheckboxesDetailsView(
+          index,
+          "lettingOtherPartOfPropertyCheckboxesDetails",
+          controllers.Form6010.routes.LettingOtherPartOfPropertyDetailsRentController.show(index).url
+        )
+      )
+    )
   }
 
   def submit(index: Int) = (Action andThen withSessionRefiner).async { implicit request =>
     Future.successful(
-      Ok(addAnotherLettingOtherPartOfPropertyView(addAnotherLettingOtherPartOfPropertyForm, index))
+      Ok(
+        addAnotherCateringOperationOrLettingAccommodationView(
+          addAnotherLettingOtherPartOfPropertyForm,
+          index,
+          "addAnotherLettingOtherPartOfProperty",
+          controllers.Form6010.routes.LettingOtherPartOfPropertyDetailsCheckboxesController.show(index).url
+        )
+      )
     )
   }
 

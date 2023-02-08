@@ -50,7 +50,14 @@ class CateringOperationOrLettingAccommodationDetailsRentController @Inject() (
         cateringOperationOrLettingAccommodationSection.cateringOperationOrLettingAccommodationRentDetails.fold(
           cateringOperationOrLettingAccommodationRentForm
         )(cateringOperationOrLettingAccommodationRentForm.fill)
-      Ok(cateringOperationOrLettingAccommodationRentDetailsView(rentDetailsForm, index))
+      Ok(
+        cateringOperationOrLettingAccommodationRentDetailsView(
+          rentDetailsForm,
+          index,
+          "cateringOperationOrLettingAccommodationRentDetails",
+          controllers.Form6010.routes.CateringOperationOrLettingAccommodationDetailsController.show().url
+        )
+      )
     }
   }
 
@@ -59,7 +66,16 @@ class CateringOperationOrLettingAccommodationDetailsRentController @Inject() (
       .bindFromRequest()
       .fold(
         formWithErrors =>
-          Future.successful(BadRequest(cateringOperationOrLettingAccommodationRentDetailsView(formWithErrors, index))),
+          Future.successful(
+            BadRequest(
+              cateringOperationOrLettingAccommodationRentDetailsView(
+                formWithErrors,
+                index,
+                "cateringOperationOrLettingAccommodationRentDetails",
+                controllers.Form6010.routes.CateringOperationOrLettingAccommodationDetailsController.show().url
+              )
+            )
+          ),
         data =>
           request.sessionData.aboutFranchisesOrLettings.fold(
             Future
@@ -75,7 +91,7 @@ class CateringOperationOrLettingAccommodationDetailsRentController @Inject() (
             session
               .saveOrUpdate(dataForSession)
               .map(_ =>
-                Redirect(Form6010.routes.CateringOperationOrLettingAccommodationDetailsCheckboxesController.show())
+                Redirect(Form6010.routes.CateringOperationOrLettingAccommodationDetailsCheckboxesController.show(index))
               )
           }
       )

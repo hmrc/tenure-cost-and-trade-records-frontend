@@ -14,71 +14,65 @@
  * limitations under the License.
  *@
 
-@import models.submissions.Form6010.CateringOperationOrLettingAccommodationRentDetails
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.checkboxes.Checkboxes
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.checkboxes.CheckboxItem
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
 @import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcCurrencyInput
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukErrorSummary
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukDateInput
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukTextarea
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukCharacterCount
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukCheckboxes
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Label
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Fieldset
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Legend
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Hint
 @import uk.gov.hmrc.hmrcfrontend.views.viewmodels.currencyinput.CurrencyInput
 
 @this(layout: Layout,
         govukButton: GovukButton,
-        govukRadios: GovukRadios,
-        govukInput: GovukInput,
-        govukErrorSummary: GovukErrorSummary,
         govukDateInput: GovukDateInput,
-        govukTextarea: GovukTextarea,
-        govukCharacterCount: GovukCharacterCount,
-        govukCheckboxes: GovukCheckboxes,
         hmrcCurrencyInput : HmrcCurrencyInput,
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[CateringOperationOrLettingAccommodationRentDetails], index: Int)(implicit request: Request[_], messages: Messages)
+@(theForm: Form[_], index: Int, cateringOrLetting: String, backLink: String)(implicit request: Request[_], messages: Messages)
 
 @layout(
- pageHeading = messages("cateringOperationOrLettingAccommodationRentDetails.heading"),
- backLinkUrl = controllers.Form6010.routes.CateringOperationOrLettingAccommodationController.show.url,
+ pageHeading = messages("cateringOperationOrLettingAccommodationRentDetails.heading", "Wombles Inc"),
+ showH1 = false,
+ showSection = true,
+ sectionName = messages("label.section.aboutTheFranchiseLettings"),
+ backLinkUrl = backLink,
  theForm = theForm
 ) {
+    @formWithCSRF(action = {
+        if(cateringOrLetting.equals("cateringOperationOrLettingAccommodationRentDetails"))
+            controllers.Form6010.routes.CateringOperationOrLettingAccommodationDetailsRentController.submit(index)
+        else if(cateringOrLetting.equals("lettingOtherPartOfPropertyRentDetails"))
+            controllers.Form6010.routes.LettingOtherPartOfPropertyDetailsRentController.submit(index)
+        else controllers.routes.TaskListController.show()},
+        args = 'class -> "myForm", 'id -> "myFormId") {
 
- @formWithCSRF(action = controllers.Form6010.routes.CateringOperationOrLettingAccommodationDetailsRentController.submit(index), args = 'class -> "myForm", 'id -> "myFormId") {
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+            <h1 class="govuk-fieldset__heading">@messages("cateringOperationOrLettingAccommodationRentDetails.heading", "Wombles Inc")</h1>
+        </legend>
 
-  @hmrcCurrencyInput(
-   CurrencyInput(
-    id = "annualRent",
-    name = "annualRent",
-    value = theForm("annualRent").value,
-    classes = "govuk-input--width-10 total-annual-rent",
-    label = Label(
-     content = Text(messages("label.annualRent")),
-     classes = "govuk-!-font-weight-bold"
-    ),
-    autocomplete = Some("off"),
-    errorMessage =  theForm.errors.asTextErrorMessageForField("annualRent"),
-   )
-  )
+        @hmrcCurrencyInput(
+            CurrencyInput(
+                id = "annualRent",
+                name = "annualRent",
+                value = theForm("annualRent").value,
+                classes = "govuk-input--width-10 total-annual-rent",
+                label = Label(
+                    content = Text(messages("label.annualRent")),
+                    classes = "govuk-!-font-weight-bold"
+                ),
+                autocomplete = Some("off"),
+                errorMessage = theForm.errors.asTextErrorMessageForField("annualRent"),
+            )
+        )
 
-  @includes.dateFields(form = theForm, field = "dateInput", govukDate = govukDateInput, showDays = true)
+        @includes.dateFields(form = theForm, field = "dateInput", govukDate = govukDateInput, showDays = true)
 
-  @includes.continueButton(govukButton)
+        @includes.continueButton(govukButton)
+    }
 
-  @includes.help_with_service()
- }
+    @includes.help_with_service()
 }
 
 

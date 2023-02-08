@@ -18,23 +18,25 @@ package controllers.Form6010
 
 import actions.WithSessionRefiner
 import form.Form6010.LettingOtherPartOfPropertyForm.lettingOtherPartOfPropertyForm
-import form.Form6010.LettingOtherPartOfPropertyRentForm.lettingOtherPartOfPropertyRentForm
 import models.submissions.Form6010.LettingOtherPartOfPropertyInformationDetails
 import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, LettingSection}
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.form.{lettingOtherPartOfPropertyDetails, lettingOtherPartOfPropertyRentDetails}
+import views.html.form.{cateringOperationOrLettingAccommodationDetails, cateringOperationOrLettingAccommodationRentDetails}
+import javax.inject.{Inject, Singleton}
+import scala.concurrent.Future
 import controllers.Form6010
-import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import javax.inject.Named
+import scala.concurrent.ExecutionContext
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
 
 @Singleton
 class LettingOtherPartOfPropertyDetailsController @Inject() (
   mcc: MessagesControllerComponents,
-  lettingOtherPartOfPropertyDetailsView: lettingOtherPartOfPropertyDetails,
+  cateringOperationOrLettingAccommodationDetailsView: cateringOperationOrLettingAccommodationDetails,
+  cateringOperationOrLettingAccommodationRentDetailsView: cateringOperationOrLettingAccommodationRentDetails,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
 )(implicit ec: ExecutionContext)
@@ -50,9 +52,11 @@ class LettingOtherPartOfPropertyDetailsController @Inject() (
     } yield requestedLettingSection.lettingOtherPartOfPropertyInformationDetails
 
     Ok(
-      lettingOtherPartOfPropertyDetailsView(
+      cateringOperationOrLettingAccommodationDetailsView(
         existingDetails.fold(lettingOtherPartOfPropertyForm)(lettingOtherPartOfPropertyForm.fill),
-        index
+        index,
+        "lettingOtherPartOfPropertyDetails",
+        controllers.Form6010.routes.LettingOtherPartOfPropertyController.show().url
       )
     )
   }
@@ -61,7 +65,17 @@ class LettingOtherPartOfPropertyDetailsController @Inject() (
     lettingOtherPartOfPropertyForm
       .bindFromRequest()
       .fold(
-        formWithErrors => Future.successful(BadRequest(lettingOtherPartOfPropertyDetailsView(formWithErrors, index))),
+        formWithErrors =>
+          Future.successful(
+            BadRequest(
+              cateringOperationOrLettingAccommodationDetailsView(
+                formWithErrors,
+                index,
+                "lettingOtherPartOfPropertyDetails",
+                controllers.Form6010.routes.LettingOtherPartOfPropertyController.show().url
+              )
+            )
+          ),
         data => {
           val ifFranchisesOrLettingsEmpty                                        = AboutFranchisesOrLettings(lettingSections =
             IndexedSeq(LettingSection(lettingOtherPartOfPropertyInformationDetails = data))

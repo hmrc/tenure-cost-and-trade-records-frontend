@@ -28,7 +28,7 @@ object LettingOtherPartOfPropertiesForm {
   )
 
   val baseLettingOtherPartOfPropertiesMapping = mapping(
-    "lettingOtherPartOfProperty" -> lettingOtherPartOfPropertiesType
+    "lettingOtherPartOfProperties" -> lettingOtherPartOfPropertiesType
   )(x => x)(b => Some(b))
 
   val lettingOtherPartOfPropertiesForm = Form(baseLettingOtherPartOfPropertiesMapping)

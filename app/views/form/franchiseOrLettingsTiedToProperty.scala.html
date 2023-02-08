@@ -45,33 +45,41 @@
 
 @layout(
  pageHeading = messages("franchiseLettings.heading"),
+ showH1 = false,
+ showSection = true,
+ sectionName = messages("label.section.aboutTheFranchiseLettings"),
  backLinkUrl = controllers.aboutthetradinghistory.routes.AboutYourTradingHistoryController.show.url,
  theForm = theForm
 ) {
 
  @formWithCSRF(action = controllers.Form6010.routes.FranchiseOrLettingsTiedToPropertyController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
 
+  <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+    <h1 class="govuk-fieldset__heading">@messages("franchiseLettings.heading")</h1>
+  </legend>
+
   <p class="govuk-body">@messages("franchiseLettings.subheading")</p>
 
-<p class="govuk-list">
-<li><span class="govuk-body">@messages("franchiseLettings.list1")</span></li><p>
-<li><span class="govuk-body">@messages("franchiseLettings.list2")</span></li>
-</p>
+  <p class="govuk-list">
+    <li><span class="govuk-body">@messages("franchiseLettings.list1")</span></li><p>
+    <li><span class="govuk-body">@messages("franchiseLettings.list2")</span></li>
+  </p>
 
  @govukRadios(
   Radios(
-   name = "franchiseLettings",
-   idPrefix = Option("franchiseLettings"),
+   name = "franchiseOrLettingsTiedToProperty",
+   idPrefix = Option("franchiseOrLettingsTiedToProperty"),
    items = Seq(
     "yes" -> messages("label.yes"),
     "no" -> messages("label.no")
    ).map( radioItem => RadioItem (
     content = Text(radioItem._2),
-    checked = radioItem._1.equals(theForm("franchiseLettings").value.getOrElse("")),
+    checked = radioItem._1.equals(theForm("franchiseOrLettingsTiedToProperty").value.getOrElse("")),
     value=Option(radioItem._1)
    )
    ),
-   errorMessage =  theForm.errors.asTextErrorMessageForField("franchiseLettings"),
+   classes = "govuk-radios--inline",
+   errorMessage =  theForm.errors.asTextErrorMessageForField("franchiseOrLettingsTiedToProperty"),
    fieldset = Option(
     Fieldset(
      legend = Option(
