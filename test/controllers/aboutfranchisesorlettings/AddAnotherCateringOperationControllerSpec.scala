@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package controllers.Form6010
+package controllers.aboutfranchisesorlettings
 
 import play.api.http.Status
 import play.api.test.Helpers._
@@ -23,14 +23,14 @@ import utils.TestBaseSpec
 import views.html.form.{addAnotherCateringOperationOrLettingAccommodation, cateringOperationOrLettingAccommodation, cateringOperationOrLettingAccommodationDetails}
 import views.html.login
 
-class AddAnotherCateringOperationOrLettingAccommodationControllerSpec extends TestBaseSpec {
+class AddAnotherCateringOperationControllerSpec extends TestBaseSpec {
 
   val mockAddAnotherCateringOperationOrLettingAccommodation = mock[addAnotherCateringOperationOrLettingAccommodation]
   when(mockAddAnotherCateringOperationOrLettingAccommodation.apply(any, any, any, any)(any, any))
     .thenReturn(HtmlFormat.empty)
 
   val addAnotherCateringOperationOrLettingAccommodationController =
-    new AddAnotherCateringOperationOrLettingAccommodationController(
+    new AddAnotherCateringOperationController(
       stubMessagesControllerComponents(),
       mockAddAnotherCateringOperationOrLettingAccommodation,
       mock[login],

@@ -70,7 +70,9 @@ class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec {
     "return a function that goes the franchises tied page when turnover has been completed" in {
       navigator
         .nextPage(TurnoverPageId)
-        .apply(sessionAboutYou) mustBe controllers.Form6010.routes.FranchiseOrLettingsTiedToPropertyController.show()
+        .apply(
+          sessionAboutYou
+        ) mustBe controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show()
     }
   }
 }

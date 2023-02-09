@@ -45,11 +45,11 @@
 
 @layout(
  pageHeading = messages("addAnotherCateringOperationOrLettingAccommodation.heading"),
- backLinkUrl = controllers.Form6010.routes.LettingOtherPartOfPropertyDetailsCheckboxesController.show(index).url,
+ backLinkUrl = controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyRentIncludesController.show(index).url,
  theForm = theForm
 ) {
 
- @formWithCSRF(action = controllers.Form6010.routes.AddAnotherLettingOtherPartOfPropertyController.submit(index), args = 'class -> "myForm", 'id -> "myFormId") {
+ @formWithCSRF(action = controllers.aboutfranchisesorlettings.routes.AddAnotherLettingOtherPartOfPropertyController.submit(index), args = 'class -> "myForm", 'id -> "myFormId") {
 
   @govukRadios(
    Radios(

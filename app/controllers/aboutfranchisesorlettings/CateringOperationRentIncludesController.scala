@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package controllers.Form6010
+package controllers.aboutfranchisesorlettings
 
 import actions.WithSessionRefiner
-import form.Form6010.AddAnotherLettingOtherPartOfPropertyForm.addAnotherLettingOtherPartOfPropertyForm
+import form.Form6010.AddAnotherCateringOperationOrLettingAccommodationForm.addAnotherCateringOperationOrLettingAccommodationForm
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
@@ -28,9 +28,9 @@ import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class LettingOtherPartOfPropertyDetailsCheckboxesController @Inject() (
+class CateringOperationRentIncludesController @Inject() (
   mcc: MessagesControllerComponents,
-  cateringOperationOrLettingAccommodationCheckboxesDetailsView: cateringOperationOrLettingAccommodationCheckboxesDetails,
+  cateringOperationOrLettingAccommodationDetailsCheckboxesView: cateringOperationOrLettingAccommodationCheckboxesDetails,
   addAnotherCateringOperationOrLettingAccommodationView: addAnotherCateringOperationOrLettingAccommodation,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
@@ -40,10 +40,10 @@ class LettingOtherPartOfPropertyDetailsCheckboxesController @Inject() (
   def show(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Future.successful(
       Ok(
-        cateringOperationOrLettingAccommodationCheckboxesDetailsView(
+        cateringOperationOrLettingAccommodationDetailsCheckboxesView(
           index,
-          "lettingOtherPartOfPropertyCheckboxesDetails",
-          controllers.Form6010.routes.LettingOtherPartOfPropertyDetailsRentController.show(index).url
+          "cateringOperationOrLettingAccommodationCheckboxesDetails",
+          controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsRentController.show(index).url
         )
       )
     )
@@ -53,10 +53,10 @@ class LettingOtherPartOfPropertyDetailsCheckboxesController @Inject() (
     Future.successful(
       Ok(
         addAnotherCateringOperationOrLettingAccommodationView(
-          addAnotherLettingOtherPartOfPropertyForm,
+          addAnotherCateringOperationOrLettingAccommodationForm,
           index,
-          "addAnotherLettingOtherPartOfProperty",
-          controllers.Form6010.routes.LettingOtherPartOfPropertyDetailsCheckboxesController.show(index).url
+          "addAnotherCateringOperationOrLettingAccommodation",
+          controllers.aboutfranchisesorlettings.routes.CateringOperationRentIncludesController.show(index).url
         )
       )
     )

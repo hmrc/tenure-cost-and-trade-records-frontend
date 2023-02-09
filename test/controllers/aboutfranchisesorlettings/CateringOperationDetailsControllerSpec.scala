@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package controllers.Form6010
+package controllers.aboutfranchisesorlettings
 
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
 import org.jsoup.Jsoup
@@ -23,12 +23,12 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import utils.TestBaseSpec
 
-class CateringOperationOrLettingAccommodationDetailsControllerSpec extends TestBaseSpec {
+class CateringOperationDetailsControllerSpec extends TestBaseSpec {
 
   def cateringOperationOrLettingAccommodationDetailsController(
     aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = Some(prefilledAboutFranchiseOrLettings)
   ) =
-    new CateringOperationOrLettingAccommodationDetailsController(
+    new CateringOperationDetailsController(
       stubMessagesControllerComponents(),
       cateringOperationOrLettingAccommodationDetailsView,
       preEnrichedActionRefiner(aboutFranchisesOrLettings = aboutFranchisesOrLettings),

@@ -14,17 +14,17 @@
  * limitations under the License.
  */
 
-package controllers.Form6010
+package controllers.aboutfranchisesorlettings
 
 import actions.WithSessionRefiner
-import controllers.Form6010
 import form.Form6010.LettingOtherPartOfPropertyRentForm.lettingOtherPartOfPropertyRentForm
+import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.form.{cateringOperationOrLettingAccommodationCheckboxesDetails, cateringOperationOrLettingAccommodationRentDetails}
-import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
+
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -41,19 +41,18 @@ class LettingOtherPartOfPropertyDetailsRentController @Inject() (
 
   def show(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     val existingSection = request.sessionData.aboutFranchisesOrLettings.flatMap(_.lettingSections.lift(index))
-    existingSection.fold(Redirect(Form6010.routes.LettingOtherPartOfPropertyDetailsController.show(None))) {
-      lettingSection =>
-        val lettingDetailsForm = lettingSection.lettingOtherPartOfPropertyRentDetails.fold(
-          lettingOtherPartOfPropertyRentForm
-        )(lettingOtherPartOfPropertyRentForm.fill)
-        Ok(
-          cateringOperationOrLettingAccommodationRentDetailsView(
-            lettingDetailsForm,
-            index,
-            "lettingOtherPartOfPropertyRentDetails",
-            controllers.Form6010.routes.LettingOtherPartOfPropertyDetailsController.show().url
-          )
+    existingSection.fold(Redirect(routes.LettingOtherPartOfPropertyDetailsController.show(None))) { lettingSection =>
+      val lettingDetailsForm = lettingSection.lettingOtherPartOfPropertyRentDetails.fold(
+        lettingOtherPartOfPropertyRentForm
+      )(lettingOtherPartOfPropertyRentForm.fill)
+      Ok(
+        cateringOperationOrLettingAccommodationRentDetailsView(
+          lettingDetailsForm,
+          index,
+          "lettingOtherPartOfPropertyRentDetails",
+          controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsController.show().url
         )
+      )
     }
   }
 
@@ -68,13 +67,13 @@ class LettingOtherPartOfPropertyDetailsRentController @Inject() (
                 formWithErrors,
                 index,
                 "lettingOtherPartOfPropertyRentDetails",
-                controllers.Form6010.routes.LettingOtherPartOfPropertyDetailsController.show().url
+                controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsController.show().url
               )
             )
           ),
         data =>
           request.sessionData.aboutFranchisesOrLettings.fold(
-            Future.successful(Redirect(Form6010.routes.LettingOtherPartOfPropertyDetailsController.show(None)))
+            Future.successful(Redirect(routes.LettingOtherPartOfPropertyDetailsController.show(None)))
           ) { aboutFranchiseOrLettings =>
             val existingSections = aboutFranchiseOrLettings.lettingSections
             val updatedSections  = existingSections
@@ -82,7 +81,7 @@ class LettingOtherPartOfPropertyDetailsRentController @Inject() (
             val dataForSession   = updateAboutFranchisesOrLettings(_.copy(lettingSections = updatedSections))
             session
               .saveOrUpdate(dataForSession)
-              .map(_ => Redirect(Form6010.routes.LettingOtherPartOfPropertyDetailsCheckboxesController.show(index)))
+              .map(_ => Redirect(routes.LettingOtherPartOfPropertyRentIncludesController.show(index)))
           }
       )
   }

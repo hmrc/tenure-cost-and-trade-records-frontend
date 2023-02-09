@@ -50,9 +50,9 @@
 
  @formWithCSRF(action = {
   if(cateringOrLetting.equals("addAnotherCateringOperationOrLettingAccommodation"))
-   controllers.Form6010.routes.AddAnotherCateringOperationOrLettingAccommodationController.submit(index)
+   controllers.aboutfranchisesorlettings.routes.AddAnotherCateringOperationController.submit(index)
   else if(cateringOrLetting.equals("addAnotherLettingOtherPartOfProperty"))
-   controllers.Form6010.routes.AddAnotherLettingOtherPartOfPropertyController.submit(index)
+   controllers.aboutfranchisesorlettings.routes.AddAnotherLettingOtherPartOfPropertyController.submit(index)
   else controllers.routes.TaskListController.show()},
   args = 'class -> "myForm", 'id -> "myFormId") {
 
@@ -69,9 +69,9 @@
         items = Seq(
           ActionItem(
             href = {if (cateringOrLetting.equals("addAnotherCateringOperationOrLettingAccommodation"))
-              controllers.Form6010.routes.CateringOperationOrLettingAccommodationDetailsController.show().url
+              controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController.show().url
             else if (cateringOrLetting.equals("addAnotherLettingOtherPartOfProperty"))
-              controllers.Form6010.routes.LettingOtherPartOfPropertyDetailsController.show().url
+              controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsController.show().url
              else controllers.routes.TaskListController.show().url},
             content = Text("Change")),
           ActionItem(

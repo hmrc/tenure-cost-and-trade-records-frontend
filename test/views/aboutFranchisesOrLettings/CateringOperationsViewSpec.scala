@@ -34,14 +34,14 @@ class CateringOperationsViewSpec extends QuestionViewBehaviours[CateringOperatio
     cateringOperationView(
       form,
       messageKeyPrefix,
-      controllers.Form6010.routes.FranchiseOrLettingsTiedToPropertyController.show().url
+      controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show().url
     )(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[CateringOperationOrLettingAccommodation]) =>
     cateringOperationView(
       form,
       messageKeyPrefix,
-      controllers.Form6010.routes.FranchiseOrLettingsTiedToPropertyController.show().url
+      controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show().url
     )(fakeRequest, messages)
 
   "Franchise or lettings tied to property view" must {
@@ -53,7 +53,7 @@ class CateringOperationsViewSpec extends QuestionViewBehaviours[CateringOperatio
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText mustBe messages("back.link.label")
       val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.Form6010.routes.FranchiseOrLettingsTiedToPropertyController.show.url
+      backlinkUrl mustBe controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show.url
     }
 
     "Section heading is visible" in {

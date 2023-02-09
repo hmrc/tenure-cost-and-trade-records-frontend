@@ -14,24 +14,24 @@
  * limitations under the License.
  */
 
-package controllers.Form6010
+package controllers.aboutfranchisesorlettings
 
 import actions.WithSessionRefiner
 import form.Form6010.CateringOperationOrLettingAccommodationForm.cateringOperationOrLettingAccommodationForm
 import models.submissions.Form6010.CateringOperationOrLettingAccommodationDetails
+import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
+import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, CateringOperationOrLettingAccommodationSection}
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.form.cateringOperationOrLettingAccommodationDetails
-import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
-import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, CateringOperationOrLettingAccommodationSection}
-import controllers.Form6010
+
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
-class CateringOperationOrLettingAccommodationDetailsController @Inject() (
+class CateringOperationDetailsController @Inject() (
   mcc: MessagesControllerComponents,
   cateringOperationOrLettingAccommodationDetailsView: cateringOperationOrLettingAccommodationDetails,
   withSessionRefiner: WithSessionRefiner,
@@ -56,7 +56,7 @@ class CateringOperationOrLettingAccommodationDetailsController @Inject() (
         ),
         index,
         "cateringOperationOrLettingAccommodationDetails",
-        controllers.Form6010.routes.CateringOperationOrLettingAccommodationController.show().url
+        controllers.aboutfranchisesorlettings.routes.CateringOperationController.show().url
       )
     )
   }
@@ -72,7 +72,7 @@ class CateringOperationOrLettingAccommodationDetailsController @Inject() (
                 formWithErrors,
                 index,
                 "cateringOperationOrLettingAccommodationDetails",
-                controllers.Form6010.routes.CateringOperationOrLettingAccommodationController.show().url
+                controllers.aboutfranchisesorlettings.routes.CateringOperationController.show().url
               )
             )
           ),
@@ -108,7 +108,7 @@ class CateringOperationOrLettingAccommodationDetailsController @Inject() (
                 .saveOrUpdate(updateAboutFranchisesOrLettings(_ => aboutFranchisesOrLettings))
                 .map(_ =>
                   Redirect(
-                    Form6010.routes.CateringOperationOrLettingAccommodationDetailsRentController.show(currentIndex)
+                    routes.CateringOperationDetailsRentController.show(currentIndex)
                   )
                 )
           }

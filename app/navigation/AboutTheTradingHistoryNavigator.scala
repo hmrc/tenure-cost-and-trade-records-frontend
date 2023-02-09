@@ -28,6 +28,8 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit)(implicit ec: Exec
 
   override val routeMap: Map[Identifier, Session => Call] = Map(
     AboutYourTradingHistoryPageId -> (_ => controllers.aboutthetradinghistory.routes.TurnoverController.show()),
-    TurnoverPageId                -> (_ => controllers.Form6010.routes.FranchiseOrLettingsTiedToPropertyController.show())
+    TurnoverPageId                -> (_ =>
+      controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show()
+    )
   )
 }

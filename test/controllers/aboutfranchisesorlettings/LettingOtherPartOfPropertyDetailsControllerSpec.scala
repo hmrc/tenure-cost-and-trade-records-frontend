@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package controllers.Form6010
+package controllers.aboutfranchisesorlettings
 
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
 import org.jsoup.Jsoup

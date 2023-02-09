@@ -34,7 +34,8 @@ class LettingOtherPartOfPropertyRentIncludesViewSpec
 
   val messageKeyPrefix = "lettingOtherPartOfPropertyCheckboxesDetails"
 
-  val backLink      = controllers.Form6010.routes.LettingOtherPartOfPropertyDetailsRentController.show(0).url
+  val backLink      =
+    controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsRentController.show(0).url
   // No form for checkboxes TODO Add form
   override val form = CateringOperationOrLettingAccommodationForm.cateringOperationOrLettingAccommodationForm
 

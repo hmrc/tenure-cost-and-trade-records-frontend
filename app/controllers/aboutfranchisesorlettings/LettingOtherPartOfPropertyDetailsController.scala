@@ -14,23 +14,21 @@
  * limitations under the License.
  */
 
-package controllers.Form6010
+package controllers.aboutfranchisesorlettings
 
 import actions.WithSessionRefiner
 import form.Form6010.LettingOtherPartOfPropertyForm.lettingOtherPartOfPropertyForm
 import models.submissions.Form6010.LettingOtherPartOfPropertyInformationDetails
+import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
 import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, LettingSection}
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.form.{cateringOperationOrLettingAccommodationDetails, cateringOperationOrLettingAccommodationRentDetails}
-import javax.inject.{Inject, Singleton}
-import scala.concurrent.Future
-import controllers.Form6010
-import javax.inject.Named
-import scala.concurrent.ExecutionContext
-import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
+
+import javax.inject.{Inject, Named, Singleton}
+import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class LettingOtherPartOfPropertyDetailsController @Inject() (
@@ -56,7 +54,7 @@ class LettingOtherPartOfPropertyDetailsController @Inject() (
         existingDetails.fold(lettingOtherPartOfPropertyForm)(lettingOtherPartOfPropertyForm.fill),
         index,
         "lettingOtherPartOfPropertyDetails",
-        controllers.Form6010.routes.LettingOtherPartOfPropertyController.show().url
+        controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show().url
       )
     )
   }
@@ -72,7 +70,7 @@ class LettingOtherPartOfPropertyDetailsController @Inject() (
                 formWithErrors,
                 index,
                 "lettingOtherPartOfPropertyDetails",
-                controllers.Form6010.routes.LettingOtherPartOfPropertyController.show().url
+                controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show().url
               )
             )
           ),
@@ -100,7 +98,7 @@ class LettingOtherPartOfPropertyDetailsController @Inject() (
             case (currentIndex, aboutFranchisesOrLettings) =>
               session
                 .saveOrUpdate(updateAboutFranchisesOrLettings(_ => aboutFranchisesOrLettings))
-                .map(_ => Redirect(Form6010.routes.LettingOtherPartOfPropertyDetailsRentController.show(currentIndex)))
+                .map(_ => Redirect(routes.LettingOtherPartOfPropertyDetailsRentController.show(currentIndex)))
           }
         }
       )

@@ -14,22 +14,22 @@
  * limitations under the License.
  */
 
-package controllers.Form6010
+package controllers.aboutfranchisesorlettings
 
 import actions.WithSessionRefiner
 import controllers.LoginController.loginForm
-import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.form.{cateringOperationOrLettingAccommodation, franchiseOrLettingsTiedToProperty}
-import views.html.aboutYourLeaseOrTenure.aboutYourLandlord
-import form.additionalinformation.FranchiseOrLettingsTiedToPropertyForm.franchiseOrLettingsTiedToPropertyForm
 import form.Form6010.CateringOperationForm.cateringOperationForm
 import form.aboutYourLeaseOrTenure.AboutTheLandlordForm.aboutTheLandlordForm
+import form.additionalinformation.FranchiseOrLettingsTiedToPropertyForm.franchiseOrLettingsTiedToPropertyForm
 import models.submissions.Form6010.{FranchiseOrLettingsTiedToPropertiesNo, FranchiseOrLettingsTiedToPropertiesYes}
-import play.api.i18n.I18nSupport
-import repositories.SessionRepo
-import views.html.login
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
+import play.api.i18n.I18nSupport
+import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import repositories.SessionRepo
+import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
+import views.html.aboutYourLeaseOrTenure.aboutYourLandlord
+import views.html.form.{cateringOperationOrLettingAccommodation, franchiseOrLettingsTiedToProperty}
+import views.html.login
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
@@ -75,7 +75,7 @@ class FranchiseOrLettingsTiedToPropertyController @Inject() (
                   cateringOperationOrLettingAccommodationView(
                     cateringOperationForm,
                     "cateringOperationOrLettingAccommodation",
-                    controllers.Form6010.routes.FranchiseOrLettingsTiedToPropertyController.show().url
+                    controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show().url
                   )
                 )
               )

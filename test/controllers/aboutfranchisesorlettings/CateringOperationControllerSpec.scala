@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package controllers.Form6010
+package controllers.aboutfranchisesorlettings
 
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
 import play.api.http.Status
@@ -22,40 +22,39 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import utils.TestBaseSpec
 
-class LettingOtherPartOfPropertyControllerSpec extends TestBaseSpec {
+class CateringOperationControllerSpec extends TestBaseSpec {
 
-  def lettingOtherPartOfPropertyController(
+  def cateringOperationOrLettingAccommodationController(
     aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = Some(prefilledAboutFranchiseOrLettings)
   ) =
-    new LettingOtherPartOfPropertyController(
+    new CateringOperationController(
       stubMessagesControllerComponents(),
       loginView,
       cateringOperationOrLettingAccommodationDetailsView,
       cateringOperationOrLettingAccommodationView,
-      aboutYourLandlordView,
       preEnrichedActionRefiner(aboutFranchisesOrLettings = aboutFranchisesOrLettings),
       mockSessionRepo
     )
 
   "GET /" should {
     "return 200" in {
-      val result = lettingOtherPartOfPropertyController().show(fakeRequest)
+      val result = cateringOperationOrLettingAccommodationController().show(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return HTML" in {
-      val result = lettingOtherPartOfPropertyController().show(fakeRequest)
+      val result = cateringOperationOrLettingAccommodationController().show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
+  }
 
-    "SUBMIT /" should {
-      "throw a BAD_REQUEST if an empty form is submitted" in {
-        val res = lettingOtherPartOfPropertyController().submit(
-          FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)
-        )
-        status(res) shouldBe BAD_REQUEST
-      }
+  "SUBMIT /" should {
+    "throw a BAD_REQUEST if an empty form is submitted" in {
+      val res = cateringOperationOrLettingAccommodationController().submit(
+        FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)
+      )
+      status(res) shouldBe BAD_REQUEST
     }
   }
 }
