@@ -14,28 +14,28 @@
  * limitations under the License.
  */
 
-package controllers.Form6010
+package controllers.aboutfranchisesorlettings
 
 import actions.WithSessionRefiner
 import controllers.LoginController.loginForm
-import form.Form6010.AddAnotherCateringOperationOrLettingAccommodationForm.addAnotherCateringOperationOrLettingAccommodationForm
-import form.Form6010.LettingOtherPartOfPropertiesForm.lettingOtherPartOfPropertiesForm
+import form.Form6010.CateringOperationForm.cateringOperationForm
 import form.Form6010.CateringOperationOrLettingAccommodationForm.cateringOperationOrLettingAccommodationForm
-import models.submissions.Form6010.{AddAnotherCateringOperationOrLettingAccommodationNo, AddAnotherCateringOperationOrLettingAccommodationYes}
+import form.Form6010.LettingOtherPartOfPropertiesForm.lettingOtherPartOfPropertiesForm
+import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
+import models.submissions.aboutfranchisesorlettings.{CateringOperationNo, CateringOperationYes}
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.form.{addAnotherCateringOperationOrLettingAccommodation, cateringOperationOrLettingAccommodation, cateringOperationOrLettingAccommodationDetails}
+import views.html.form.{cateringOperationOrLettingAccommodation, cateringOperationOrLettingAccommodationDetails}
 import views.html.login
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class AddAnotherCateringOperationOrLettingAccommodationController @Inject() (
+class CateringOperationController @Inject() (
   mcc: MessagesControllerComponents,
-  addAnotherCateringOperationOrLettingAccommodationView: addAnotherCateringOperationOrLettingAccommodation,
   login: login,
   cateringOperationOrLettingAccommodationDetailsView: cateringOperationOrLettingAccommodationDetails,
   cateringOperationOrLettingAccommodationView: cateringOperationOrLettingAccommodation,
@@ -44,60 +44,64 @@ class AddAnotherCateringOperationOrLettingAccommodationController @Inject() (
 ) extends FrontendController(mcc)
     with I18nSupport {
 
-  def show(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    Future.successful(
-      Ok(
-        addAnotherCateringOperationOrLettingAccommodationView(
-          addAnotherCateringOperationOrLettingAccommodationForm,
-          index,
-          "addAnotherCateringOperationOrLettingAccommodation",
-          controllers.Form6010.routes.CateringOperationOrLettingAccommodationDetailsCheckboxesController.show(index).url
-        )
+  def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
+    Ok(
+      cateringOperationOrLettingAccommodationView(
+        request.sessionData.aboutFranchisesOrLettings.flatMap(_.cateringOperationOrLettingAccommodation) match {
+          case Some(cateringOperationOrLettingAccommodation) =>
+            cateringOperationForm.fillAndValidate(cateringOperationOrLettingAccommodation)
+          case _                                             => cateringOperationForm
+        },
+        "cateringOperationOrLettingAccommodation",
+        controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show().url
       )
     )
   }
 
-  def submit(index: Int) = (Action andThen withSessionRefiner).async { implicit request =>
-    addAnotherCateringOperationOrLettingAccommodationForm
+  def submit = (Action andThen withSessionRefiner).async { implicit request =>
+    cateringOperationForm
       .bindFromRequest()
       .fold(
         formWithErrors =>
           Future.successful(
             BadRequest(
-              addAnotherCateringOperationOrLettingAccommodationView(
+              cateringOperationOrLettingAccommodationView(
                 formWithErrors,
-                index,
-                "addAnotherCateringOperationOrLettingAccommodation",
-                controllers.Form6010.routes.CateringOperationOrLettingAccommodationDetailsCheckboxesController
-                  .show(index)
-                  .url
+                "cateringOperationOrLettingAccommodation",
+                controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show().url
               )
             )
           ),
         data =>
-          data.addAnotherCateringOperationOrLettingAccommodationDetails match {
-            case AddAnotherCateringOperationOrLettingAccommodationYes =>
+          data match {
+            case CateringOperationYes =>
+              val updatedData =
+                updateAboutFranchisesOrLettings(_.copy(cateringOperationOrLettingAccommodation = Some(data)))
+              session.saveOrUpdate(updatedData)
               Future.successful(
                 Ok(
                   cateringOperationOrLettingAccommodationDetailsView(
                     cateringOperationOrLettingAccommodationForm,
                     None,
                     "cateringOperationOrLettingAccommodationDetails",
-                    controllers.Form6010.routes.CateringOperationOrLettingAccommodationController.show().url
+                    controllers.aboutfranchisesorlettings.routes.CateringOperationController.show().url
                   )
                 )
               )
-            case AddAnotherCateringOperationOrLettingAccommodationNo  =>
+            case CateringOperationNo  =>
+              val updatedData =
+                updateAboutFranchisesOrLettings(_.copy(cateringOperationOrLettingAccommodation = Some(data)))
+              session.saveOrUpdate(updatedData)
               Future.successful(
                 Ok(
                   cateringOperationOrLettingAccommodationView(
                     lettingOtherPartOfPropertiesForm,
                     "lettingOtherPartOfProperties",
-                    controllers.Form6010.routes.LettingOtherPartOfPropertyDetailsController.show(Some(index)).url
+                    controllers.aboutfranchisesorlettings.routes.AddAnotherCateringOperationController.show(0).url
                   )
                 )
               )
-            case _                                                    => Future.successful(Ok(login(loginForm)))
+            case _                    => Future.successful(Ok(login(loginForm)))
           }
       )
   }

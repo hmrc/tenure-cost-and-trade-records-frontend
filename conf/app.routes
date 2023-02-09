@@ -74,48 +74,44 @@ POST        /turnover                                               controllers.
 GET         /tenancy-lease-agreement                                controllers.Form6010.TenancyLeaseAgreementController.show()
 POST        /tenancy-lease-agreement                                controllers.Form6010.TenancyLeaseAgreementController.submit()
 
-GET         /franchise-or-lettings-tied-to-property                 controllers.Form6010.FranchiseOrLettingsTiedToPropertyController.show()
-POST        /franchise-or-lettings-tied-to-property                 controllers.Form6010.FranchiseOrLettingsTiedToPropertyController.submit()
+GET         /franchise-or-lettings-tied-to-property                 controllers.aboutfranchisesorlettings.FranchiseOrLettingsTiedToPropertyController.show()
+POST        /franchise-or-lettings-tied-to-property                 controllers.aboutfranchisesorlettings.FranchiseOrLettingsTiedToPropertyController.submit()
 
 GET         /included-in-your-rent                                  controllers.Form6010.IncludedInYourRentController.show()
 POST        /included-in-your-rent                                  controllers.Form6010.IncludedInYourRentController.submit()
 
-GET         /catering-operation-or-letting-accommodation            controllers.Form6010.CateringOperationOrLettingAccommodationController.show()
-POST        /catering-operation-or-letting-accommodation            controllers.Form6010.CateringOperationOrLettingAccommodationController.submit()
+GET         /catering-operation-or-letting-accommodation            controllers.aboutfranchisesorlettings.CateringOperationController.show()
+POST        /catering-operation-or-letting-accommodation            controllers.aboutfranchisesorlettings.CateringOperationController.submit()
 
-GET         /letting-other-part-of-property                         controllers.Form6010.LettingOtherPartOfPropertyController.show()
-POST        /letting-other-part-of-property                         controllers.Form6010.LettingOtherPartOfPropertyController.submit()
+GET         /letting-other-part-of-property                         controllers.aboutfranchisesorlettings.LettingOtherPartOfPropertyController.show()
+POST        /letting-other-part-of-property                         controllers.aboutfranchisesorlettings.LettingOtherPartOfPropertyController.submit()
 
 GET         /rent-open-market-value                                 controllers.Form6010.RentOpenMarketValueController.show()
 POST        /rent-open-market-value                                 controllers.Form6010.RentOpenMarketValueController.submit()
 
+GET         /catering-operation-details/                            controllers.aboutfranchisesorlettings.CateringOperationDetailsController.show(idx: Option[Int] ?= None)
+POST        /catering-operation-details/                            controllers.aboutfranchisesorlettings.CateringOperationDetailsController.submit(idx: Option[Int])
 
+GET         /catering-operation-rent                                controllers.aboutfranchisesorlettings.CateringOperationDetailsRentController.show(idx: Int)
+POST        /catering-operation-rent                                controllers.aboutfranchisesorlettings.CateringOperationDetailsRentController.submit(idx: Int)
 
-GET         /catering-operation-or-letting-accommodation-details/   controllers.Form6010.CateringOperationOrLettingAccommodationDetailsController.show(idx: Option[Int] ?= None)
-POST        /catering-operation-or-letting-accommodation-details/    controllers.Form6010.CateringOperationOrLettingAccommodationDetailsController.submit(idx: Option[Int])
+GET         /catering-operation-rent-includes                       controllers.aboutfranchisesorlettings.CateringOperationRentIncludesController.show(idx: Int)
+POST        /catering-operation-rent-includes                       controllers.aboutfranchisesorlettings.CateringOperationRentIncludesController.submit(idx: Int)
 
-GET         /catering-operation-or-letting-accommodation-rent       controllers.Form6010.CateringOperationOrLettingAccommodationDetailsRentController.show(idx: Int)
-POST        /catering-operation-or-letting-accommodation-rent       controllers.Form6010.CateringOperationOrLettingAccommodationDetailsRentController.submit(idx: Int)
+GET         /add-another-catering-operation                         controllers.aboutfranchisesorlettings.AddAnotherCateringOperationController.show(idx: Int)
+POST        /add-another-catering-operation                         controllers.aboutfranchisesorlettings.AddAnotherCateringOperationController.submit(idx: Int)
 
-GET         /catering-operation-or-letting-accommodation-checkbox   controllers.Form6010.CateringOperationOrLettingAccommodationDetailsCheckboxesController.show(idx: Int)
-POST        /catering-operation-or-letting-accommodation-checkbox   controllers.Form6010.CateringOperationOrLettingAccommodationDetailsCheckboxesController.submit(idx: Int)
+GET         /letting-other-part-of-property-details                 controllers.aboutfranchisesorlettings.LettingOtherPartOfPropertyDetailsController.show(idx: Option[Int] ?= None)
+POST        /letting-other-part-of-property-details                 controllers.aboutfranchisesorlettings.LettingOtherPartOfPropertyDetailsController.submit(idx: Option[Int])
 
-GET         /add-another-catering-operation-or-letting-accommodation controllers.Form6010.AddAnotherCateringOperationOrLettingAccommodationController.show(idx: Int)
-POST        /add-another-catering-operation-or-letting-accommodation controllers.Form6010.AddAnotherCateringOperationOrLettingAccommodationController.submit(idx: Int)
+GET         /letting-other-part-of-property-rent                    controllers.aboutfranchisesorlettings.LettingOtherPartOfPropertyDetailsRentController.show(idx: Int)
+POST        /letting-other-part-of-property-rent                    controllers.aboutfranchisesorlettings.LettingOtherPartOfPropertyDetailsRentController.submit(idx: Int)
 
-GET         /letting-other-part-of-property-details                 controllers.Form6010.LettingOtherPartOfPropertyDetailsController.show(idx: Option[Int] ?= None)
-POST        /letting-other-part-of-property-details                 controllers.Form6010.LettingOtherPartOfPropertyDetailsController.submit(idx: Option[Int])
+GET         /letting-other-part-of-property-checkbox                controllers.aboutfranchisesorlettings.LettingOtherPartOfPropertyRentIncludesController.show(idx: Int)
+POST        /letting-other-part-of-property-checkbox                controllers.aboutfranchisesorlettings.LettingOtherPartOfPropertyRentIncludesController.submit(idx: Int)
 
-GET         /letting-other-part-of-property-rent                    controllers.Form6010.LettingOtherPartOfPropertyDetailsRentController.show(idx: Int)
-POST        /letting-other-part-of-property-rent                    controllers.Form6010.LettingOtherPartOfPropertyDetailsRentController.submit(idx: Int)
-
-GET         /letting-other-part-of-property-checkbox                controllers.Form6010.LettingOtherPartOfPropertyDetailsCheckboxesController.show(idx: Int)
-POST        /letting-other-part-of-property-checkbox                controllers.Form6010.LettingOtherPartOfPropertyDetailsCheckboxesController.submit(idx: Int)
-
-GET         /add-another-letting-other-part-of-property             controllers.Form6010.AddAnotherLettingOtherPartOfPropertyController.show(idx: Int)
-POST        /add-another-letting-other-part-of-property             controllers.Form6010.AddAnotherLettingOtherPartOfPropertyController.submit(idx: Int)
-
-
+GET         /add-another-letting-other-part-of-property             controllers.aboutfranchisesorlettings.AddAnotherLettingOtherPartOfPropertyController.show(idx: Int)
+POST        /add-another-letting-other-part-of-property             controllers.aboutfranchisesorlettings.AddAnotherLettingOtherPartOfPropertyController.submit(idx: Int)
 
 
 # About your leace or tenure

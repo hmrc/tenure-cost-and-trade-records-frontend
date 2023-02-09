@@ -14,14 +14,14 @@
  * limitations under the License.
  */
 
-package controllers.Form6010
+package controllers.aboutfranchisesorlettings
 
 import play.api.http.Status
 import play.api.test.Helpers._
 import play.twirl.api.HtmlFormat
 import utils.TestBaseSpec
-import views.html.form.{addAnotherCateringOperationOrLettingAccommodation, cateringOperationOrLettingAccommodationDetails}
 import views.html.aboutYourLeaseOrTenure.aboutYourLandlord
+import views.html.form.{addAnotherCateringOperationOrLettingAccommodation, cateringOperationOrLettingAccommodationDetails}
 import views.html.login
 
 class AddAnotherLettingOtherPartOfPropertyControllerSpec extends TestBaseSpec {

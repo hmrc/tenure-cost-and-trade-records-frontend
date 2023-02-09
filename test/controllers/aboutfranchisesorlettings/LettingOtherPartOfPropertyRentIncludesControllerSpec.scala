@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package controllers.Form6010
+package controllers.aboutfranchisesorlettings
 
 import play.api.http.Status
 import play.api.test.Helpers._
@@ -22,11 +22,11 @@ import play.twirl.api.HtmlFormat
 import utils.TestBaseSpec
 import views.html.form.{addAnotherCateringOperationOrLettingAccommodation, cateringOperationOrLettingAccommodationCheckboxesDetails}
 
-class LettingOtherPartOfPropertyDetailsCheckboxesControllerSpec extends TestBaseSpec {
+class LettingOtherPartOfPropertyRentIncludesControllerSpec extends TestBaseSpec {
   val mockLettingOtherPartOfPropertyCheckboxesDetails = mock[cateringOperationOrLettingAccommodationCheckboxesDetails]
   when(mockLettingOtherPartOfPropertyCheckboxesDetails.apply(any, any, any)(any, any)).thenReturn(HtmlFormat.empty)
 
-  val lettingOtherPartOfPropertyDetailsCheckboxesController = new LettingOtherPartOfPropertyDetailsCheckboxesController(
+  val lettingOtherPartOfPropertyDetailsCheckboxesController = new LettingOtherPartOfPropertyRentIncludesController(
     stubMessagesControllerComponents(),
     mockLettingOtherPartOfPropertyCheckboxesDetails,
     mock[addAnotherCateringOperationOrLettingAccommodation],

@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package controllers.Form6010
+package controllers.aboutfranchisesorlettings
 
-import controllers.Form6010
+import controllers.aboutfranchisesorlettings
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
 import org.jsoup.Jsoup
 import play.api.http.Status
@@ -24,12 +24,12 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import utils.TestBaseSpec
 
-class CateringOperationOrLettingAccommodationDetailsRentControllerSpec extends TestBaseSpec {
+class CateringOperationDetailsRentControllerSpec extends TestBaseSpec {
 
   def cateringOperationOrLettingAccommodationDetailsRentController(
     aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = Some(prefilledAboutFranchiseOrLettings)
   ) =
-    new CateringOperationOrLettingAccommodationDetailsRentController(
+    new CateringOperationDetailsRentController(
       stubMessagesControllerComponents(),
       cateringOperationOrLettingAccommodationRentDetailsView,
       preEnrichedActionRefiner(aboutFranchisesOrLettings = aboutFranchisesOrLettings),
@@ -55,7 +55,7 @@ class CateringOperationOrLettingAccommodationDetailsRentControllerSpec extends T
           status(result) shouldBe SEE_OTHER
 
           redirectLocation(result) shouldBe Some(
-            Form6010.routes.CateringOperationOrLettingAccommodationDetailsController.show(None).url
+            aboutfranchisesorlettings.routes.CateringOperationDetailsController.show(None).url
           )
         }
       }

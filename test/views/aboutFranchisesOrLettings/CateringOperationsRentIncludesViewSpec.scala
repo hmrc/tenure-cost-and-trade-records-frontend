@@ -34,7 +34,7 @@ class CateringOperationsRentIncludesViewSpec
 
   val messageKeyPrefix = "cateringOperationOrLettingAccommodationCheckboxesDetails"
 
-  val backLink      = controllers.Form6010.routes.CateringOperationOrLettingAccommodationDetailsRentController.show(0).url
+  val backLink      = controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsRentController.show(0).url
   // No form for checkboxes TODO Add form
   override val form = CateringOperationOrLettingAccommodationForm.cateringOperationOrLettingAccommodationForm
 

@@ -14,22 +14,22 @@
  * limitations under the License.
  */
 
-package controllers.Form6010
+package controllers.aboutfranchisesorlettings
 
 import actions.WithSessionRefiner
 import controllers.LoginController.loginForm
-import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.form.{cateringOperationOrLettingAccommodation, cateringOperationOrLettingAccommodationDetails}
+import form.Form6010.LettingOtherPartOfPropertiesForm.lettingOtherPartOfPropertiesForm
 import form.Form6010.LettingOtherPartOfPropertyForm.lettingOtherPartOfPropertyForm
 import form.aboutYourLeaseOrTenure.AboutTheLandlordForm.aboutTheLandlordForm
-import form.Form6010.LettingOtherPartOfPropertiesForm.lettingOtherPartOfPropertiesForm
 import models.submissions.Form6010.{LettingOtherPartOfPropertiesNo, LettingOtherPartOfPropertiesYes}
-import views.html.aboutYourLeaseOrTenure.aboutYourLandlord
-import views.html.login
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
 import play.api.i18n.I18nSupport
+import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
+import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
+import views.html.aboutYourLeaseOrTenure.aboutYourLandlord
+import views.html.form.{cateringOperationOrLettingAccommodation, cateringOperationOrLettingAccommodationDetails}
+import views.html.login
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
@@ -56,7 +56,7 @@ class LettingOtherPartOfPropertyController @Inject() (
             case _                                => lettingOtherPartOfPropertiesForm
           },
           "lettingOtherPartOfProperties",
-          controllers.Form6010.routes.CateringOperationOrLettingAccommodationController.show().url
+          controllers.aboutfranchisesorlettings.routes.CateringOperationController.show().url
         )
       )
     )
@@ -72,7 +72,7 @@ class LettingOtherPartOfPropertyController @Inject() (
               cateringOperationOrLettingAccommodationView(
                 formWithErrors,
                 "lettingOtherPartOfProperties",
-                controllers.Form6010.routes.CateringOperationOrLettingAccommodationController.show().url
+                controllers.aboutfranchisesorlettings.routes.CateringOperationController.show().url
               )
             )
           ),
@@ -87,7 +87,7 @@ class LettingOtherPartOfPropertyController @Inject() (
                     lettingOtherPartOfPropertyForm,
                     None,
                     "lettingOtherPartOfPropertyDetails",
-                    controllers.Form6010.routes.LettingOtherPartOfPropertyController.show().url
+                    controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show().url
                   )
                 )
               )

@@ -46,9 +46,9 @@
  @formWithCSRF(action =
  {
   if(cateringOrLetting.equals("cateringOperationOrLettingAccommodationCheckboxesDetails"))
-   controllers.Form6010.routes.CateringOperationOrLettingAccommodationDetailsCheckboxesController.submit(index)
+   controllers.aboutfranchisesorlettings.routes.CateringOperationRentIncludesController.submit(index)
   else if(cateringOrLetting.equals("lettingOtherPartOfPropertyCheckboxesDetails"))
-   controllers.Form6010.routes.LettingOtherPartOfPropertyDetailsCheckboxesController.submit(index)
+   controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyRentIncludesController.submit(index)
   else controllers.routes.TaskListController.show()},
   args = 'class -> "myForm", 'id -> "myFormId") {
 

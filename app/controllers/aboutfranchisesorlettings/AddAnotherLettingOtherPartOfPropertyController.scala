@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package controllers.Form6010
+package controllers.aboutfranchisesorlettings
 
 import actions.WithSessionRefiner
 import controllers.LoginController.loginForm
@@ -52,7 +52,7 @@ class AddAnotherLettingOtherPartOfPropertyController @Inject() (
           addAnotherLettingOtherPartOfPropertyForm,
           index,
           "addAnotherLettingOtherPartOfProperty",
-          controllers.Form6010.routes.LettingOtherPartOfPropertyDetailsCheckboxesController.show(index).url
+          controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyRentIncludesController.show(index).url
         )
       )
     )
@@ -69,7 +69,9 @@ class AddAnotherLettingOtherPartOfPropertyController @Inject() (
                 formWithErrors,
                 index,
                 "addAnotherLettingOtherPartOfProperty",
-                controllers.Form6010.routes.LettingOtherPartOfPropertyDetailsCheckboxesController.show(index).url
+                controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyRentIncludesController
+                  .show(index)
+                  .url
               )
             )
           ),
@@ -82,7 +84,7 @@ class AddAnotherLettingOtherPartOfPropertyController @Inject() (
                     cateringOperationOrLettingAccommodationForm,
                     None,
                     "lettingOtherPartOfProperties",
-                    controllers.Form6010.routes.LettingOtherPartOfPropertyDetailsController.show().url
+                    controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsController.show().url
                   )
                 )
               )

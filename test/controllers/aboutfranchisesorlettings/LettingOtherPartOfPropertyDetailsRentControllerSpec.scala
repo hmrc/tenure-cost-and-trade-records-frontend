@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package controllers.Form6010
+package controllers.aboutfranchisesorlettings
 
-import controllers.Form6010
+import controllers.aboutfranchisesorlettings
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
 import org.jsoup.Jsoup
 import play.api.http.Status
@@ -56,7 +56,7 @@ class LettingOtherPartOfPropertyDetailsRentControllerSpec extends TestBaseSpec {
           status(result) shouldBe SEE_OTHER
 
           redirectLocation(result) shouldBe Some(
-            Form6010.routes.LettingOtherPartOfPropertyDetailsController.show(None).url
+            aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsController.show(None).url
           )
         }
       }
