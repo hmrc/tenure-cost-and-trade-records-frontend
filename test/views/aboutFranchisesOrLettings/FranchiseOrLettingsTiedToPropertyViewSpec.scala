@@ -42,7 +42,7 @@ class FranchiseOrLettingsTiedToPropertyViewSpec extends QuestionViewBehaviours[F
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText mustBe messages("back.link.label")
       val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.aboutthetradinghistory.routes.AboutYourTradingHistoryController.show().url
+      backlinkUrl mustBe controllers.routes.TaskListController.show().url
     }
 
     "Section heading is visible" in {

@@ -35,50 +35,64 @@ class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec {
 
   val sessionAboutFranchiseOrLettingYes =
     Session(prefilledUserLoginDetails, aboutFranchisesOrLettings = Some(prefilledAboutFranchiseOrLettings))
-  val sessionAboutFranchiseOrLettingNo =
+  val sessionAboutFranchiseOrLettingNo  =
     Session(prefilledUserLoginDetails, aboutFranchisesOrLettings = Some(prefilledAboutFranchiseOrLettingsNo))
 
   "About franchise or lettings navigator" when {
 
     "go to navigate from an identifier that doesn't exist in the route map" in {
       case object UnknownIdentifier extends Identifier
-      navigator.nextPage(UnknownIdentifier).apply(sessionAboutFranchiseOrLettingYes) mustBe controllers.routes.LoginController.show()
+      navigator
+        .nextPage(UnknownIdentifier)
+        .apply(sessionAboutFranchiseOrLettingYes) mustBe controllers.routes.LoginController.show()
     }
 
     "return a function that goes to catering operation page when franchise page has been completed yes" in {
       navigator
         .nextPage(FranchiseOrLettingsTiedToPropertyId)
-        .apply(sessionAboutFranchiseOrLettingYes) mustBe controllers.aboutfranchisesorlettings.routes.CateringOperationController.show()
+        .apply(
+          sessionAboutFranchiseOrLettingYes
+        ) mustBe controllers.aboutfranchisesorlettings.routes.CateringOperationController.show()
     }
 
     "return a function that goes to about the landlord page when franchise page has been completed no" in {
       navigator
         .nextPage(FranchiseOrLettingsTiedToPropertyId)
-        .apply(sessionAboutFranchiseOrLettingNo) mustBe controllers.aboutYourLeaseOrTenure.routes.AboutYourLandlordController.show()
+        .apply(
+          sessionAboutFranchiseOrLettingNo
+        ) mustBe controllers.aboutYourLeaseOrTenure.routes.AboutYourLandlordController.show()
     }
 
     "return a function that goes to catering operation details page when catering operation page has been completed yes" in {
       navigator
         .nextPage(CateringOperationPageId)
-        .apply(sessionAboutFranchiseOrLettingYes) mustBe controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController.show()
+        .apply(
+          sessionAboutFranchiseOrLettingYes
+        ) mustBe controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController.show()
     }
 
     "return a function that goes to letting page when catering operation page has been completed no" in {
       navigator
         .nextPage(CateringOperationPageId)
-        .apply(sessionAboutFranchiseOrLettingNo) mustBe controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show()
+        .apply(
+          sessionAboutFranchiseOrLettingNo
+        ) mustBe controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show()
     }
 
     "return a function that goes to lettings details page when letting page has been completed yes" in {
       navigator
         .nextPage(LettingAccommodationPageId)
-        .apply(sessionAboutFranchiseOrLettingYes) mustBe controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsController.show()
+        .apply(
+          sessionAboutFranchiseOrLettingYes
+        ) mustBe controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsController.show()
     }
 
     "return a function that goes to about the landlord page when letting page has been completed no" in {
       navigator
         .nextPage(LettingAccommodationPageId)
-        .apply(sessionAboutFranchiseOrLettingNo) mustBe controllers.aboutYourLeaseOrTenure.routes.AboutYourLandlordController.show()
+        .apply(
+          sessionAboutFranchiseOrLettingNo
+        ) mustBe controllers.aboutYourLeaseOrTenure.routes.AboutYourLandlordController.show()
     }
   }
 }
