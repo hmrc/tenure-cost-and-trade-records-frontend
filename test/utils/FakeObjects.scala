@@ -16,8 +16,8 @@
 
 package utils
 
-import models.submissions.Form6010.{CateringAddress, CateringOperationOrLettingAccommodationDetails, CateringOperationOrLettingAccommodationRentDetails, FranchiseOrLettingsTiedToPropertiesYes, LettingAddress, LettingOtherPartOfPropertiesYes, LettingOtherPartOfPropertyInformationDetails, LettingOtherPartOfPropertyRentDetails}
-import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, CateringOperationOrLettingAccommodationSection, CateringOperationYes, LettingSection}
+import models.submissions.Form6010.{CateringAddress, CateringOperationOrLettingAccommodationDetails, CateringOperationOrLettingAccommodationRentDetails, FranchiseOrLettingsTiedToPropertiesNo, FranchiseOrLettingsTiedToPropertiesYes, LettingAddress, LettingOtherPartOfPropertiesNo, LettingOtherPartOfPropertiesYes, LettingOtherPartOfPropertyInformationDetails, LettingOtherPartOfPropertyRentDetails}
+import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, CateringOperationNo, CateringOperationOrLettingAccommodationSection, CateringOperationYes, LettingSection}
 import models.submissions.abouttheproperty.{AboutTheProperty, BuildingOperationHaveAWebsiteYes, CurrentPropertyHotel, EnforcementActionsNo, LicensableActivitiesNo, PremisesLicensesConditionsNo, PropertyDetails, TiedGoodsNo, WebsiteForPropertyDetails}
 import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, AboutYourTradingHistory}
 import models.submissions.aboutyou.{AboutYou, CustomerDetails}
@@ -125,6 +125,14 @@ trait FakeObjects {
     Some(CateringOperationYes),
     IndexedSeq(prefilledCateringOperationOrLettingAccommodationSection),
     Some(LettingOtherPartOfPropertiesYes),
+    IndexedSeq(prefilledLettingSection)
+  )
+
+  val prefilledAboutFranchiseOrLettingsNo = AboutFranchisesOrLettings(
+    Some(FranchiseOrLettingsTiedToPropertiesNo),
+    Some(CateringOperationNo),
+    IndexedSeq(prefilledCateringOperationOrLettingAccommodationSection),
+    Some(LettingOtherPartOfPropertiesNo),
     IndexedSeq(prefilledLettingSection)
   )
 

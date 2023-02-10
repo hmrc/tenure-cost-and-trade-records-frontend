@@ -16,15 +16,13 @@
 
 package views.aboutFranchisesOrLettings
 
-import form.additionalinformation.FranchiseOrLettingsTiedToPropertyForm
+import form.aboutfranchisesorlettings.FranchiseOrLettingsTiedToPropertyForm
 import models.submissions.Form6010._
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
 class FranchiseOrLettingsTiedToPropertyViewSpec extends QuestionViewBehaviours[FranchiseOrLettingsTiedToProperty] {
-
-  def franchiseOrLettingsTiedToPropertyView = app.injector.instanceOf[views.html.form.franchiseOrLettingsTiedToProperty]
 
   val messageKeyPrefix = "franchiseLettings"
 
@@ -44,7 +42,7 @@ class FranchiseOrLettingsTiedToPropertyViewSpec extends QuestionViewBehaviours[F
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText mustBe messages("back.link.label")
       val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.aboutthetradinghistory.routes.AboutYourTradingHistoryController.show().url
+      backlinkUrl mustBe controllers.routes.TaskListController.show().url
     }
 
     "Section heading is visible" in {

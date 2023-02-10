@@ -30,7 +30,7 @@ class CateringOperationsRentIncludesViewSpec
     extends QuestionViewBehaviours[CateringOperationOrLettingAccommodationDetails] {
 
   def cateringOperationRentIncludesView =
-    app.injector.instanceOf[views.html.form.cateringOperationOrLettingAccommodationCheckboxesDetails]
+    app.injector.instanceOf[views.html.aboutfranchisesorlettings.cateringOperationOrLettingAccommodationRentIncludes]
 
   val messageKeyPrefix = "cateringOperationOrLettingAccommodationCheckboxesDetails"
 

@@ -24,7 +24,7 @@ import play.api.libs.json.Json
 
 case class AboutFranchisesOrLettings(
   franchisesOrLettingsTiedToProperty: Option[FranchiseOrLettingsTiedToProperty] = None,
-  cateringOperationOrLettingAccommodation: Option[CateringOperationOrLettingAccommodation] = None,
+  cateringOperationOrLettingAccommodation: Option[CateringOperation] = None,
   cateringOperationOrLettingAccommodationSections: IndexedSeq[CateringOperationOrLettingAccommodationSection] =
     IndexedSeq.empty,
   lettingOtherPartOfProperty: Option[LettingOtherPartOfProperty] = None,

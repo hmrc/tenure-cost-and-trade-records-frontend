@@ -27,7 +27,7 @@ import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.aboutYourLeaseOrTenure.aboutYourLandlord
-import views.html.form._
+import views.html.aboutfranchisesorlettings._
 import views.html.login
 
 import javax.inject.{Inject, Named, Singleton}

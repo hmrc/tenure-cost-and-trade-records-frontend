@@ -25,9 +25,6 @@ import views.behaviours.QuestionViewBehaviours
 class LettingOtherPartOfPropertyDetailsViewSpec
     extends QuestionViewBehaviours[CateringOperationOrLettingAccommodationDetails] {
 
-  def cateringOperationDetailsView =
-    app.injector.instanceOf[views.html.form.cateringOperationOrLettingAccommodationDetails]
-
   val messageKeyPrefix = "lettingOtherPartOfPropertyDetails"
 
   override val form = CateringOperationOrLettingAccommodationForm.cateringOperationOrLettingAccommodationForm

@@ -21,7 +21,7 @@ import play.api.test.Helpers._
 import play.twirl.api.HtmlFormat
 import utils.TestBaseSpec
 import views.html.aboutYourLeaseOrTenure.aboutYourLandlord
-import views.html.form.{addAnotherCateringOperationOrLettingAccommodation, cateringOperationOrLettingAccommodationDetails}
+import views.html.aboutfranchisesorlettings.{addAnotherCateringOperationOrLettingAccommodation, cateringOperationOrLettingAccommodationDetails}
 import views.html.login
 
 class AddAnotherLettingOtherPartOfPropertyControllerSpec extends TestBaseSpec {

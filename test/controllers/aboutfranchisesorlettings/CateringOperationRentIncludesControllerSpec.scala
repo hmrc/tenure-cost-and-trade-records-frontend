@@ -20,19 +20,19 @@ import play.api.http.Status
 import play.api.test.Helpers._
 import play.twirl.api.HtmlFormat
 import utils.TestBaseSpec
-import views.html.form.{addAnotherCateringOperationOrLettingAccommodation, cateringOperationOrLettingAccommodationCheckboxesDetails}
+import views.html.aboutfranchisesorlettings.{addAnotherCateringOperationOrLettingAccommodation, cateringOperationOrLettingAccommodationRentIncludes}
 
 class CateringOperationRentIncludesControllerSpec extends TestBaseSpec {
 
-  val mockCateringOperationOrLettingAccommodationCheckboxesDetails =
-    mock[cateringOperationOrLettingAccommodationCheckboxesDetails]
-  when(mockCateringOperationOrLettingAccommodationCheckboxesDetails.apply(any, any, any)(any, any))
+  val mockCateringOperationOrLettingAccommodationRentIncludes =
+    mock[cateringOperationOrLettingAccommodationRentIncludes]
+  when(mockCateringOperationOrLettingAccommodationRentIncludes.apply(any, any, any)(any, any))
     .thenReturn(HtmlFormat.empty)
 
   val cateringOperationOrLettingAccommodationDetailsCheckboxesController =
     new CateringOperationRentIncludesController(
       stubMessagesControllerComponents(),
-      mockCateringOperationOrLettingAccommodationCheckboxesDetails,
+      mockCateringOperationOrLettingAccommodationRentIncludes,
       mock[addAnotherCateringOperationOrLettingAccommodation],
       preFilledSession,
       mockSessionRepo

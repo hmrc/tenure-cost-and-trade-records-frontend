@@ -19,19 +19,19 @@ package models.submissions.aboutfranchisesorlettings
 import models.{EnumFormat, NamedEnum, NamedEnumSupport}
 import play.api.libs.json.Format
 
-sealed trait CateringOperationOrLettingAccommodation extends NamedEnum {
+sealed trait CateringOperation extends NamedEnum {
   override def key: String = "cateringOperationOrLettingAccommodation"
 }
-object CateringOperationYes extends CateringOperationOrLettingAccommodation {
+object CateringOperationYes extends CateringOperation {
   override def name: String = "yes"
 }
-object CateringOperationNo extends CateringOperationOrLettingAccommodation {
+object CateringOperationNo extends CateringOperation {
   override def name: String = "no"
 }
 
-object CateringOperationOrLettingAccommodation extends NamedEnumSupport[CateringOperationOrLettingAccommodation] {
-  implicit val format: Format[CateringOperationOrLettingAccommodation] = EnumFormat(
-    CateringOperationOrLettingAccommodation
+object CateringOperation extends NamedEnumSupport[CateringOperation] {
+  implicit val format: Format[CateringOperation] = EnumFormat(
+    CateringOperation
   )
 
   val all = List(CateringOperationYes, CateringOperationNo)

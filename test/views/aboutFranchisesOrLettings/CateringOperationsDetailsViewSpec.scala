@@ -24,9 +24,6 @@ import views.behaviours.QuestionViewBehaviours
 
 class CateringOperationsDetailsViewSpec extends QuestionViewBehaviours[CateringOperationOrLettingAccommodationDetails] {
 
-  def cateringOperationDetailsView =
-    app.injector.instanceOf[views.html.form.cateringOperationOrLettingAccommodationDetails]
-
   val messageKeyPrefix = "cateringOperationOrLettingAccommodationDetails"
 
   override val form = CateringOperationOrLettingAccommodationForm.cateringOperationOrLettingAccommodationForm

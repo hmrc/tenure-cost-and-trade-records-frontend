@@ -17,19 +17,15 @@
 package controllers.aboutfranchisesorlettings
 
 import actions.WithSessionRefiner
-import controllers.LoginController.loginForm
 import form.Form6010.LettingOtherPartOfPropertiesForm.lettingOtherPartOfPropertiesForm
-import form.Form6010.LettingOtherPartOfPropertyForm.lettingOtherPartOfPropertyForm
-import form.aboutYourLeaseOrTenure.AboutTheLandlordForm.aboutTheLandlordForm
-import models.submissions.Form6010.{LettingOtherPartOfPropertiesNo, LettingOtherPartOfPropertiesYes}
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
+import navigation.AboutFranchisesOrLettingsNavigator
+import navigation.identifiers.LettingAccommodationPageId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.aboutYourLeaseOrTenure.aboutYourLandlord
-import views.html.form.{cateringOperationOrLettingAccommodation, cateringOperationOrLettingAccommodationDetails}
-import views.html.login
+import views.html.aboutfranchisesorlettings.cateringOperationOrLettingAccommodation
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
@@ -37,10 +33,8 @@ import scala.concurrent.Future
 @Singleton
 class LettingOtherPartOfPropertyController @Inject() (
   mcc: MessagesControllerComponents,
-  login: login,
-  cateringOperationOrLettingAccommodationDetailsView: cateringOperationOrLettingAccommodationDetails,
+  navigator: AboutFranchisesOrLettingsNavigator,
   cateringOperationOrLettingAccommodationView: cateringOperationOrLettingAccommodation,
-  aboutTheLandlordView: aboutYourLandlord,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
 ) extends FrontendController(mcc)
@@ -76,27 +70,11 @@ class LettingOtherPartOfPropertyController @Inject() (
               )
             )
           ),
-        data =>
-          data match {
-            case LettingOtherPartOfPropertiesYes =>
-              val updatedData = updateAboutFranchisesOrLettings(_.copy(lettingOtherPartOfProperty = Some(data)))
-              session.saveOrUpdate(updatedData)
-              Future.successful(
-                Ok(
-                  cateringOperationOrLettingAccommodationDetailsView(
-                    lettingOtherPartOfPropertyForm,
-                    None,
-                    "lettingOtherPartOfPropertyDetails",
-                    controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show().url
-                  )
-                )
-              )
-            case LettingOtherPartOfPropertiesNo  =>
-              val updatedData = updateAboutFranchisesOrLettings(_.copy(lettingOtherPartOfProperty = Some(data)))
-              session.saveOrUpdate(updatedData)
-              Future.successful(Ok(aboutTheLandlordView(aboutTheLandlordForm)))
-            case _                               => Future.successful(Ok(login(loginForm)))
-          }
+        data => {
+          val updatedData = updateAboutFranchisesOrLettings(_.copy(lettingOtherPartOfProperty = Some(data)))
+          session.saveOrUpdate(updatedData)
+          Future.successful(Redirect(navigator.nextPage(LettingAccommodationPageId).apply(updatedData)))
+        }
       )
   }
 }
