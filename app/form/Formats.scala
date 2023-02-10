@@ -20,7 +20,7 @@ import models._
 import models.submissions.Form6010._
 import models.submissions._
 import models.submissions.aboutYourLeaseOrTenure._
-import models.submissions.aboutfranchisesorlettings.CateringOperationOrLettingAccommodation
+import models.submissions.aboutfranchisesorlettings.CateringOperation
 import models.submissions.abouttheproperty._
 import models.submissions.Form6010.FranchiseOrLettingsTiedToProperty
 import models.submissions.connectiontoproperty.{AddressConnectionType, ConnectionToProperty}
@@ -76,8 +76,8 @@ object Formats {
     namedEnumFormatter(AddAnotherCateringOperationOrLettingAccommodation, Errors.booleanMissing)
   implicit val addAnotherLettingOtherPartOfPropertyFormat: Formatter[AddAnotherLettingOtherPartOfProperties] =
     namedEnumFormatter(AddAnotherLettingOtherPartOfProperty, Errors.booleanMissing)
-  implicit val cateringOperationsFormat: Formatter[CateringOperationOrLettingAccommodation]                  =
-    namedEnumFormatter(CateringOperationOrLettingAccommodation, Errors.booleanMissing)
+  implicit val cateringOperationsFormat: Formatter[CateringOperation]                                        =
+    namedEnumFormatter(CateringOperation, Errors.booleanMissing)
   implicit val lettingOtherPartOfPropertiesFormat: Formatter[LettingOtherPartOfProperty]                     =
     namedEnumFormatter(LettingOtherPartOfProperty, Errors.booleanMissing)
   implicit val tenancyLeaseAgreementsFormat: Formatter[TenancyLeaseAgreements]                               =

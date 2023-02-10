@@ -22,7 +22,7 @@ import form.Formats._
 import form.Formats.userTypeFormat
 import models.submissions.Form6010._
 import models.submissions.aboutYourLeaseOrTenure._
-import models.submissions.aboutfranchisesorlettings.CateringOperationOrLettingAccommodation
+import models.submissions.aboutfranchisesorlettings.CateringOperation
 import models.submissions.abouttheproperty._
 import models.submissions.additionalinformation.AlternativeContactDetailsAddress
 import models.submissions.Form6010.FranchiseOrLettingsTiedToProperty
@@ -49,8 +49,7 @@ object MappingSupport {
     Forms.of[AddAnotherCateringOperationOrLettingAccommodations]
   val addAnotherLettingOtherPartOfPropertyType: Mapping[AddAnotherLettingOtherPartOfProperties]       =
     Forms.of[AddAnotherLettingOtherPartOfProperties]
-  val cateringOperationType: Mapping[CateringOperationOrLettingAccommodation]                         =
-    Forms.of[CateringOperationOrLettingAccommodation]
+  val cateringOperationType: Mapping[CateringOperation]                                               = Forms.of[CateringOperation]
   val lettingOtherPartOfPropertiesType: Mapping[LettingOtherPartOfProperty]                           = Forms.of[LettingOtherPartOfProperty]
   val licensableActivitiesType: Mapping[LicensableActivities]                                         = Forms.of[LicensableActivities]
   val tiedForGoodsType: Mapping[TiedForGoods]                                                         = Forms.of[TiedForGoods]

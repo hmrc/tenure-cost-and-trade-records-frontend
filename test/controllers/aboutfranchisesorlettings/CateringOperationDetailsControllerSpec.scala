@@ -30,7 +30,7 @@ class CateringOperationDetailsControllerSpec extends TestBaseSpec {
   ) =
     new CateringOperationDetailsController(
       stubMessagesControllerComponents(),
-      cateringOperationOrLettingAccommodationDetailsView,
+      cateringOperationDetailsView,
       preEnrichedActionRefiner(aboutFranchisesOrLettings = aboutFranchisesOrLettings),
       mockSessionRepo
     )

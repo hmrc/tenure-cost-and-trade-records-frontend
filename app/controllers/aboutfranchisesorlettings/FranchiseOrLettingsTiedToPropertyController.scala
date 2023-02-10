@@ -17,19 +17,15 @@
 package controllers.aboutfranchisesorlettings
 
 import actions.WithSessionRefiner
-import controllers.LoginController.loginForm
-import form.Form6010.CateringOperationForm.cateringOperationForm
-import form.aboutYourLeaseOrTenure.AboutTheLandlordForm.aboutTheLandlordForm
-import form.additionalinformation.FranchiseOrLettingsTiedToPropertyForm.franchiseOrLettingsTiedToPropertyForm
-import models.submissions.Form6010.{FranchiseOrLettingsTiedToPropertiesNo, FranchiseOrLettingsTiedToPropertiesYes}
+import form.aboutfranchisesorlettings.FranchiseOrLettingsTiedToPropertyForm.franchiseOrLettingsTiedToPropertyForm
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
+import navigation.AboutFranchisesOrLettingsNavigator
+import navigation.identifiers.FranchiseOrLettingsTiedToPropertyId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.aboutYourLeaseOrTenure.aboutYourLandlord
-import views.html.form.{cateringOperationOrLettingAccommodation, franchiseOrLettingsTiedToProperty}
-import views.html.login
+import views.html.aboutfranchisesorlettings.franchiseOrLettingsTiedToProperty
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
@@ -37,9 +33,7 @@ import scala.concurrent.Future
 @Singleton
 class FranchiseOrLettingsTiedToPropertyController @Inject() (
   mcc: MessagesControllerComponents,
-  login: login,
-  aboutYourLandlordView: aboutYourLandlord,
-  cateringOperationOrLettingAccommodationView: cateringOperationOrLettingAccommodation,
+  navigator: AboutFranchisesOrLettingsNavigator,
   franchiseOrLettingsTiedToPropertyView: franchiseOrLettingsTiedToProperty,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
@@ -65,26 +59,11 @@ class FranchiseOrLettingsTiedToPropertyController @Inject() (
       .bindFromRequest()
       .fold(
         formWithErrors => Future.successful(BadRequest(franchiseOrLettingsTiedToPropertyView(formWithErrors))),
-        data =>
-          data match {
-            case FranchiseOrLettingsTiedToPropertiesYes =>
-              val updatedData = updateAboutFranchisesOrLettings(_.copy(franchisesOrLettingsTiedToProperty = Some(data)))
-              session.saveOrUpdate(updatedData)
-              Future.successful(
-                Ok(
-                  cateringOperationOrLettingAccommodationView(
-                    cateringOperationForm,
-                    "cateringOperationOrLettingAccommodation",
-                    controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show().url
-                  )
-                )
-              )
-            case FranchiseOrLettingsTiedToPropertiesNo  =>
-              val updatedData = updateAboutFranchisesOrLettings(_.copy(franchisesOrLettingsTiedToProperty = Some(data)))
-              session.saveOrUpdate(updatedData)
-              Future.successful(Ok(aboutYourLandlordView(aboutTheLandlordForm)))
-            case _                                      => Future.successful(Ok(login(loginForm)))
-          }
+        data => {
+          val updatedData = updateAboutFranchisesOrLettings(_.copy(franchisesOrLettingsTiedToProperty = Some(data)))
+          session.saveOrUpdate(updatedData)
+          Future.successful(Redirect(navigator.nextPage(FranchiseOrLettingsTiedToPropertyId).apply(updatedData)))
+        }
       )
   }
 

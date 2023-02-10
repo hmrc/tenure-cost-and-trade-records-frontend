@@ -22,7 +22,7 @@ import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.form.{addAnotherCateringOperationOrLettingAccommodation, cateringOperationOrLettingAccommodationCheckboxesDetails}
+import views.html.aboutfranchisesorlettings.{addAnotherCateringOperationOrLettingAccommodation, cateringOperationOrLettingAccommodationRentIncludes}
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
@@ -30,7 +30,7 @@ import scala.concurrent.Future
 @Singleton
 class LettingOtherPartOfPropertyRentIncludesController @Inject() (
   mcc: MessagesControllerComponents,
-  cateringOperationOrLettingAccommodationCheckboxesDetailsView: cateringOperationOrLettingAccommodationCheckboxesDetails,
+  cateringOperationOrLettingAccommodationRentIncludesView: cateringOperationOrLettingAccommodationRentIncludes,
   addAnotherCateringOperationOrLettingAccommodationView: addAnotherCateringOperationOrLettingAccommodation,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
@@ -40,7 +40,7 @@ class LettingOtherPartOfPropertyRentIncludesController @Inject() (
   def show(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Future.successful(
       Ok(
-        cateringOperationOrLettingAccommodationCheckboxesDetailsView(
+        cateringOperationOrLettingAccommodationRentIncludesView(
           index,
           "lettingOtherPartOfPropertyCheckboxesDetails",
           controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsRentController.show(index).url

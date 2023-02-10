@@ -16,25 +16,20 @@
 
 package controllers.aboutfranchisesorlettings
 
+import navigation.AboutFranchisesOrLettingsNavigator
 import play.api.http.Status
+import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import play.twirl.api.HtmlFormat
 import utils.TestBaseSpec
-import views.html.aboutYourLeaseOrTenure.aboutYourLandlord
-import views.html.form.{cateringOperationOrLettingAccommodation, franchiseOrLettingsTiedToProperty}
-import views.html.login
 
 class FranchiseOrLettingsTiedToPropertyControllerSpec extends TestBaseSpec {
 
-  val mockFranchiseOrLettingsTiedToPropertyView = mock[franchiseOrLettingsTiedToProperty]
-  when(mockFranchiseOrLettingsTiedToPropertyView.apply(any)(any, any)).thenReturn(HtmlFormat.empty)
+  val mockAboutFranchisesOrLettingsNavigator = mock[AboutFranchisesOrLettingsNavigator]
 
   val franchiseOrLettingsTiedToPropertyController = new FranchiseOrLettingsTiedToPropertyController(
     stubMessagesControllerComponents(),
-    mock[login],
-    mock[aboutYourLandlord],
-    mock[cateringOperationOrLettingAccommodation],
-    mockFranchiseOrLettingsTiedToPropertyView,
+    mockAboutFranchisesOrLettingsNavigator,
+    franchiseOrLettingsTiedToPropertyView,
     preFilledSession,
     mockSessionRepo
   )
@@ -49,6 +44,13 @@ class FranchiseOrLettingsTiedToPropertyControllerSpec extends TestBaseSpec {
       val result = franchiseOrLettingsTiedToPropertyController.show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
+    }
+  }
+
+  "SUBMIT /" should {
+    "throw a BAD_REQUEST if an empty form is submitted" in {
+      val res = franchiseOrLettingsTiedToPropertyController.submit(FakeRequest().withFormUrlEncodedBody(Seq.empty: _*))
+      status(res) shouldBe BAD_REQUEST
     }
   }
 }

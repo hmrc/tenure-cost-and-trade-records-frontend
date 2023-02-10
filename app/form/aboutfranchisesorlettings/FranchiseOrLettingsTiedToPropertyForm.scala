@@ -14,23 +14,23 @@
  * limitations under the License.
  */
 
-package form.Form6010
+package form.aboutfranchisesorlettings
 
-import form.MappingSupport.cateringOperationType
-import models.submissions.aboutfranchisesorlettings.CateringOperationOrLettingAccommodation
+import form.MappingSupport.franchiseOrLettingsTiedToPropertyType
+import models.submissions.Form6010.FranchiseOrLettingsTiedToProperty
 import play.api.data.Form
 import play.api.data.Forms.mapping
 
-object CateringOperationForm {
+object FranchiseOrLettingsTiedToPropertyForm {
 
-  lazy val baseCateringOperationOrLettingAccommodationForm: Form[CateringOperationOrLettingAccommodation] = Form(
-    baseCateringOperationOrLettingAccommodationMapping
+  lazy val baseFranchiseOrLettingsTiedToPropertyForm: Form[FranchiseOrLettingsTiedToProperty] = Form(
+    baseFranchiseOrLettingsTiedToPropertyMapping
   )
 
-  val baseCateringOperationOrLettingAccommodationMapping = mapping(
-    "cateringOperationOrLettingAccommodation" -> cateringOperationType
+  val baseFranchiseOrLettingsTiedToPropertyMapping = mapping(
+    "franchiseOrLettingsTiedToProperty" -> franchiseOrLettingsTiedToPropertyType
   )(x => x)(b => Some(b))
 
-  val cateringOperationForm = Form(baseCateringOperationOrLettingAccommodationMapping)
+  val franchiseOrLettingsTiedToPropertyForm = Form(baseFranchiseOrLettingsTiedToPropertyMapping)
 
 }

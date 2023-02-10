@@ -18,30 +18,34 @@ package utils
 
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import views.html.aboutYourLeaseOrTenure.aboutYourLandlord
-import views.html.form._
+import views.html.aboutfranchisesorlettings._
 import views.html.login
 
 trait FakeViews { this: GuiceOneAppPerSuite =>
 
-  lazy val cateringOperationOrLettingAccommodationView              =
-    app.injector.instanceOf[cateringOperationOrLettingAccommodation]
-  lazy val cateringOperationOrLettingAccommodationDetailsView       =
-    app.injector.instanceOf[cateringOperationOrLettingAccommodationDetails]
-  lazy val cateringOperationOrLettingAccommodationRentDetailsView   =
-    app.injector.instanceOf[cateringOperationOrLettingAccommodationRentDetails]
-  lazy val cateringOperationOrLettingAccommodationCheckboxesDetails =
-    app.injector.instanceOf[cateringOperationOrLettingAccommodationCheckboxesDetails]
-  lazy val loginView                                                =
-    app.injector.instanceOf[login]
-  lazy val aboutYourLandlordView                                    =
-    app.injector.instanceOf[aboutYourLandlord]
-  lazy val lettingOtherPartOfPropertyView                           =
-    app.injector.instanceOf[cateringOperationOrLettingAccommodation]
-  lazy val lettingOtherPartOfPropertyDetailsView                    =
-    app.injector.instanceOf[cateringOperationOrLettingAccommodationDetails]
-  lazy val lettingOtherPartOfPropertyRentDetailsView                =
-    app.injector.instanceOf[cateringOperationOrLettingAccommodationRentDetails]
-  lazy val lettingOtherPartOfPropertyCheckboxesDetailsView          =
-    app.injector.instanceOf[cateringOperationOrLettingAccommodationCheckboxesDetails]
+  // Sign in
+  lazy val loginView = app.injector.instanceOf[login]
 
+  // About the franchise or letting
+  lazy val franchiseOrLettingsTiedToPropertyView      =
+    app.injector.instanceOf[franchiseOrLettingsTiedToProperty]
+  lazy val cateringOperationView                      =
+    app.injector.instanceOf[cateringOperationOrLettingAccommodation]
+  lazy val cateringOperationDetailsView               =
+    app.injector.instanceOf[cateringOperationOrLettingAccommodationDetails]
+  lazy val cateringOperationRentDetailsView           =
+    app.injector.instanceOf[cateringOperationOrLettingAccommodationRentDetails]
+  lazy val cateringOperationRentIncludes              =
+    app.injector.instanceOf[cateringOperationOrLettingAccommodationRentIncludes]
+  lazy val lettingOtherPartOfPropertyView             =
+    app.injector.instanceOf[cateringOperationOrLettingAccommodation]
+  lazy val lettingOtherPartOfPropertyDetailsView      =
+    app.injector.instanceOf[cateringOperationOrLettingAccommodationDetails]
+  lazy val lettingOtherPartOfPropertyRentDetailsView  =
+    app.injector.instanceOf[cateringOperationOrLettingAccommodationRentDetails]
+  lazy val lettingOtherPartOfPropertyRentIncludesView =
+    app.injector.instanceOf[cateringOperationOrLettingAccommodationRentIncludes]
+
+  // About the lease or tenure
+  lazy val aboutYourLandlordView = app.injector.instanceOf[aboutYourLandlord]
 }

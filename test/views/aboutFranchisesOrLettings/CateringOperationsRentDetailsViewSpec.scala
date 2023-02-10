@@ -29,9 +29,6 @@ import java.util.Locale
 class CateringOperationsRentDetailsViewSpec
     extends QuestionViewBehaviours[CateringOperationOrLettingAccommodationRentDetails] {
 
-  def cateringOperationRentDetailsView =
-    app.injector.instanceOf[views.html.form.cateringOperationOrLettingAccommodationRentDetails]
-
   val messageKeyPrefix = "cateringOperationOrLettingAccommodationRentDetails"
 
   override val form = CateringOperationOrLettingAccommodationRentForm.cateringOperationOrLettingAccommodationRentForm

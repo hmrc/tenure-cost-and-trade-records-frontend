@@ -16,15 +16,13 @@
 
 package views.aboutFranchisesOrLettings
 
-import form.additionalinformation.FranchiseOrLettingsTiedToPropertyForm
+import form.aboutfranchisesorlettings.FranchiseOrLettingsTiedToPropertyForm
 import models.submissions.Form6010._
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
 class FranchiseOrLettingsTiedToPropertyViewSpec extends QuestionViewBehaviours[FranchiseOrLettingsTiedToProperty] {
-
-  def franchiseOrLettingsTiedToPropertyView = app.injector.instanceOf[views.html.form.franchiseOrLettingsTiedToProperty]
 
   val messageKeyPrefix = "franchiseLettings"
 

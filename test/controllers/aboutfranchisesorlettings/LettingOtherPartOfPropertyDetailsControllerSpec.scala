@@ -30,8 +30,8 @@ class LettingOtherPartOfPropertyDetailsControllerSpec extends TestBaseSpec {
   ) =
     new LettingOtherPartOfPropertyDetailsController(
       stubMessagesControllerComponents(),
-      cateringOperationOrLettingAccommodationDetailsView,
-      cateringOperationOrLettingAccommodationRentDetailsView,
+      lettingOtherPartOfPropertyDetailsView,
+      lettingOtherPartOfPropertyRentDetailsView,
       preEnrichedActionRefiner(aboutFranchisesOrLettings = aboutFranchisesOrLettings),
       mockSessionRepo
     )

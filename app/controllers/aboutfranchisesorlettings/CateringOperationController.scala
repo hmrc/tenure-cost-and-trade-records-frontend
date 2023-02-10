@@ -17,18 +17,15 @@
 package controllers.aboutfranchisesorlettings
 
 import actions.WithSessionRefiner
-import controllers.LoginController.loginForm
-import form.Form6010.CateringOperationForm.cateringOperationForm
-import form.Form6010.CateringOperationOrLettingAccommodationForm.cateringOperationOrLettingAccommodationForm
-import form.Form6010.LettingOtherPartOfPropertiesForm.lettingOtherPartOfPropertiesForm
+import form.aboutfranchisesorlettings.CateringOperationForm.cateringOperationForm
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
-import models.submissions.aboutfranchisesorlettings.{CateringOperationNo, CateringOperationYes}
+import navigation.AboutFranchisesOrLettingsNavigator
+import navigation.identifiers.CateringOperationPageId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.form.{cateringOperationOrLettingAccommodation, cateringOperationOrLettingAccommodationDetails}
-import views.html.login
+import views.html.aboutfranchisesorlettings.cateringOperationOrLettingAccommodation
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
@@ -36,8 +33,7 @@ import scala.concurrent.Future
 @Singleton
 class CateringOperationController @Inject() (
   mcc: MessagesControllerComponents,
-  login: login,
-  cateringOperationOrLettingAccommodationDetailsView: cateringOperationOrLettingAccommodationDetails,
+  navigator: AboutFranchisesOrLettingsNavigator,
   cateringOperationOrLettingAccommodationView: cateringOperationOrLettingAccommodation,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
@@ -72,37 +68,12 @@ class CateringOperationController @Inject() (
               )
             )
           ),
-        data =>
-          data match {
-            case CateringOperationYes =>
-              val updatedData =
-                updateAboutFranchisesOrLettings(_.copy(cateringOperationOrLettingAccommodation = Some(data)))
-              session.saveOrUpdate(updatedData)
-              Future.successful(
-                Ok(
-                  cateringOperationOrLettingAccommodationDetailsView(
-                    cateringOperationOrLettingAccommodationForm,
-                    None,
-                    "cateringOperationOrLettingAccommodationDetails",
-                    controllers.aboutfranchisesorlettings.routes.CateringOperationController.show().url
-                  )
-                )
-              )
-            case CateringOperationNo  =>
-              val updatedData =
-                updateAboutFranchisesOrLettings(_.copy(cateringOperationOrLettingAccommodation = Some(data)))
-              session.saveOrUpdate(updatedData)
-              Future.successful(
-                Ok(
-                  cateringOperationOrLettingAccommodationView(
-                    lettingOtherPartOfPropertiesForm,
-                    "lettingOtherPartOfProperties",
-                    controllers.aboutfranchisesorlettings.routes.AddAnotherCateringOperationController.show(0).url
-                  )
-                )
-              )
-            case _                    => Future.successful(Ok(login(loginForm)))
-          }
+        data => {
+          val updatedData =
+            updateAboutFranchisesOrLettings(_.copy(cateringOperationOrLettingAccommodation = Some(data)))
+          session.saveOrUpdate(updatedData)
+          Future.successful(Redirect(navigator.nextPage(CateringOperationPageId).apply(updatedData)))
+        }
       )
   }
 

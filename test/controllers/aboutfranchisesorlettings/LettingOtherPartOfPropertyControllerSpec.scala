@@ -17,6 +17,7 @@
 package controllers.aboutfranchisesorlettings
 
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
+import navigation.AboutFranchisesOrLettingsNavigator
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
@@ -24,15 +25,15 @@ import utils.TestBaseSpec
 
 class LettingOtherPartOfPropertyControllerSpec extends TestBaseSpec {
 
+  val mockAboutFranchisesOrLettingsNavigator = mock[AboutFranchisesOrLettingsNavigator]
+
   def lettingOtherPartOfPropertyController(
     aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = Some(prefilledAboutFranchiseOrLettings)
   ) =
     new LettingOtherPartOfPropertyController(
       stubMessagesControllerComponents(),
-      loginView,
-      cateringOperationOrLettingAccommodationDetailsView,
-      cateringOperationOrLettingAccommodationView,
-      aboutYourLandlordView,
+      mockAboutFranchisesOrLettingsNavigator,
+      lettingOtherPartOfPropertyView,
       preEnrichedActionRefiner(aboutFranchisesOrLettings = aboutFranchisesOrLettings),
       mockSessionRepo
     )
