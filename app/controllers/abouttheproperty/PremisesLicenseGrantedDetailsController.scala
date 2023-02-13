@@ -20,7 +20,7 @@ import actions.WithSessionRefiner
 import form.abouttheproperty.PremisesLicenseGrantedDetailsForm.premisesLicenseGrantedInformationDetailsForm
 import models.submissions.abouttheproperty.AboutTheProperty.updateAboutTheProperty
 import navigation.AboutThePropertyNavigator
-import navigation.identifiers.{PremisesLicenseGrantedDetailsId, PremisesLicenseGrantedId}
+import navigation.identifiers.PremisesLicenseGrantedDetailsId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
@@ -31,7 +31,7 @@ import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class PremisesLicenseGrantedDetailsController @Inject()(
+class PremisesLicenseGrantedDetailsController @Inject() (
   mcc: MessagesControllerComponents,
   navigator: AboutThePropertyNavigator,
   premisesLicenseGrantedDetailsView: premisesLicenseGrantedDetails,
@@ -45,7 +45,8 @@ class PremisesLicenseGrantedDetailsController @Inject()(
       Ok(
         premisesLicenseGrantedDetailsView(
           request.sessionData.aboutTheProperty.flatMap(_.premisesLicenseGrantedInformationDetails) match {
-            case Some(premisesLicenseGrantedInformationDetails) => premisesLicenseGrantedInformationDetailsForm.fillAndValidate(premisesLicenseGrantedInformationDetails)
+            case Some(premisesLicenseGrantedInformationDetails) =>
+              premisesLicenseGrantedInformationDetailsForm.fillAndValidate(premisesLicenseGrantedInformationDetails)
             case _                                              => premisesLicenseGrantedInformationDetailsForm
           }
         )

@@ -29,7 +29,7 @@ import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class VariableOperatingExpensesController @Inject()(
+class VariableOperatingExpensesController @Inject() (
   mcc: MessagesControllerComponents,
   navigator: AboutTheTradingHistoryNavigator,
   variableOperativeExpensesView: variableOperatingExpenses,
@@ -44,7 +44,7 @@ class VariableOperatingExpensesController @Inject()(
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
     val updatedData = request.sessionData
-      Future.successful(Redirect(navigator.nextPage(VariableOperatingExpensesId).apply(updatedData)))
+    Future.successful(Redirect(navigator.nextPage(VariableOperatingExpensesId).apply(updatedData)))
   }
 
 }

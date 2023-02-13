@@ -18,9 +18,8 @@ package controllers.aboutthetradinghistory
 
 import actions.WithSessionRefiner
 import form.aboutthetradinghistory.CostOfSalesOrGrossProfitDetailsForm.costOfSalesOrGrossProfitDetailsForm
-import models.Session
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.updateAboutTheTradingHistory
-import navigation.AboutThePropertyNavigator
+import navigation.AboutTheTradingHistoryNavigator
 import navigation.identifiers.CostOfSalesOrGrossProfitId
 import play.api.Logging
 import play.api.i18n.I18nSupport
@@ -33,9 +32,9 @@ import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class CostOfSalesOrGrossProfitDetailsController @Inject()(
+class CostOfSalesOrGrossProfitDetailsController @Inject() (
   mcc: MessagesControllerComponents,
-  navigator: AboutThePropertyNavigator,
+  navigator: AboutTheTradingHistoryNavigator,
   costOfSalesOrGrossProfitDetailsView: costOfSalesOrGrossProfitDetails,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
@@ -48,8 +47,9 @@ class CostOfSalesOrGrossProfitDetailsController @Inject()(
       Ok(
         costOfSalesOrGrossProfitDetailsView(
           request.sessionData.aboutTheTradingHistory.flatMap(_.costOfSalesOrGrossProfit) match {
-            case Some(costOfSalesOrGrossProfit) => costOfSalesOrGrossProfitDetailsForm.fillAndValidate(costOfSalesOrGrossProfit)
-            case _ => costOfSalesOrGrossProfitDetailsForm
+            case Some(costOfSalesOrGrossProfit) =>
+              costOfSalesOrGrossProfitDetailsForm.fillAndValidate(costOfSalesOrGrossProfit)
+            case _                              => costOfSalesOrGrossProfitDetailsForm
           }
         )
       )
@@ -60,11 +60,11 @@ class CostOfSalesOrGrossProfitDetailsController @Inject()(
     costOfSalesOrGrossProfitDetailsForm
       .bindFromRequest()
       .fold(
-        formWithErrors =>
-          Future.successful(BadRequest(costOfSalesOrGrossProfitDetailsView(formWithErrors))),
+        formWithErrors => Future.successful(BadRequest(costOfSalesOrGrossProfitDetailsView(formWithErrors))),
         data => {
           val updatedData = updateAboutTheTradingHistory(_.copy(costOfSalesOrGrossProfit = Some(data)))
           session.saveOrUpdate(updatedData)
+          println(s"${updatedData.aboutTheTradingHistory.flatMap(_.costOfSalesOrGrossProfit.map(_.name))}*****check");
           Future.successful(Redirect(navigator.nextPage(CostOfSalesOrGrossProfitId).apply(updatedData)))
         }
       )

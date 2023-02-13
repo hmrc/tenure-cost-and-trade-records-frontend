@@ -18,18 +18,18 @@ package controllers.aboutthetradinghistory
 
 import actions.WithSessionRefiner
 import navigation.AboutTheTradingHistoryNavigator
-import navigation.identifiers.{GrossProfitsId, TurnoverPageId}
+import navigation.identifiers.GrossProfitsId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.aboutthetradinghistory.{grossProfits, turnover}
+import views.html.aboutthetradinghistory.grossProfits
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class GrossProfitsController @Inject()(
+class GrossProfitsController @Inject() (
   mcc: MessagesControllerComponents,
   navigator: AboutTheTradingHistoryNavigator,
   grossProfitsView: grossProfits,

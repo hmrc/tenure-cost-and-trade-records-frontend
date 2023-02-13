@@ -31,9 +31,9 @@ class AboutThePropertyNavigator @Inject() (audit: Audit)(implicit ec: ExecutionC
 
   private def websiteForPropertyRouting: Session => Call = answers => {
     if (answers.userLoginDetails.forNumber == ForTypes.for6015)
-        controllers.abouttheproperty.routes.PremisesLicenseGrantedController.show()
-      else
-        controllers.abouttheproperty.routes.LicensableActivitiesController.show()
+      controllers.abouttheproperty.routes.PremisesLicenseGrantedController.show()
+    else
+      controllers.abouttheproperty.routes.LicensableActivitiesController.show()
   }
 
   private def premisesLicenseGrantedRouting: Session => Call = answers => {

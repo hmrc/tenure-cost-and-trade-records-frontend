@@ -31,7 +31,7 @@ import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class PremisesLicenseGrantedController @Inject()(
+class PremisesLicenseGrantedController @Inject() (
   mcc: MessagesControllerComponents,
   navigator: AboutThePropertyNavigator,
   premisesLicenseGrantedView: premisesLicenseGranted,
@@ -45,8 +45,9 @@ class PremisesLicenseGrantedController @Inject()(
       Ok(
         premisesLicenseGrantedView(
           request.sessionData.aboutTheProperty.flatMap(_.premisesLicenseGrantedDetail) match {
-            case Some(premisesLicenseGrantedDetail) => premisesLicenseGrantedForm.fillAndValidate(premisesLicenseGrantedDetail)
-            case _                            => premisesLicenseGrantedForm
+            case Some(premisesLicenseGrantedDetail) =>
+              premisesLicenseGrantedForm.fillAndValidate(premisesLicenseGrantedDetail)
+            case _                                  => premisesLicenseGrantedForm
           }
         )
       )
@@ -63,6 +64,6 @@ class PremisesLicenseGrantedController @Inject()(
           session.saveOrUpdate(updatedData)
           Future.successful(Redirect(navigator.nextPage(PremisesLicenseGrantedId).apply(updatedData)))
         }
-          )
+      )
   }
 }

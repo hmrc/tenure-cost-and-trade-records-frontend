@@ -30,9 +30,10 @@ class AboutThePropertyViewSpec extends QuestionViewBehaviours[PropertyDetails] {
 
   override val form = AboutThePropertyForm.aboutThePropertyForm
 
-  def createView = () => aboutThePropertyView(form)(fakeRequest, messages)
+  def createView = () => aboutThePropertyView(form, "FOR6010")(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[PropertyDetails]) => aboutThePropertyView(form)(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[PropertyDetails]) =>
+    aboutThePropertyView(form, "FOR6010")(fakeRequest, messages)
 
   "About the property view" must {
 

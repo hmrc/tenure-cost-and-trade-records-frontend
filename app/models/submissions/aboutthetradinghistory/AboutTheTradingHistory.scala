@@ -20,10 +20,10 @@ import actions.SessionRequest
 import models.Session
 import play.api.libs.json.Json
 
-case class  AboutTheTradingHistory(
-                                   aboutYourTradingHistory: Option[AboutYourTradingHistory] = None,
-                                   costOfSalesOrGrossProfit: Option[CostOfSalesOrGrossProfit] = None
-                                 )
+case class AboutTheTradingHistory(
+  aboutYourTradingHistory: Option[AboutYourTradingHistory] = None,
+  costOfSalesOrGrossProfit: Option[CostOfSalesOrGrossProfit] = None
+)
 
 object AboutTheTradingHistory {
   implicit val format = Json.format[AboutTheTradingHistory]

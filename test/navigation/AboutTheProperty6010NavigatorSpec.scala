@@ -85,10 +85,12 @@ class AboutTheProperty6010NavigatorSpec extends TestBaseSpec {
     }
   }
 
-  val aboutThePropertyYes    = Some(
+  val aboutThePropertyYes = Some(
     AboutTheProperty(
       Some(PropertyDetails("OccupierName", CurrentPropertyHotel, None)),
       Some(WebsiteForPropertyDetails(BuildingOperationHaveAWebsiteYes, Some("webAddress"))),
+      Some(PremisesLicenseGrantedYes),
+      None,
       Some(LicensableActivitiesYes),
       Some(LicensableActivitiesInformationDetails("Licensable Activities Details")),
       Some(PremisesLicensesConditionsYes),
@@ -99,6 +101,7 @@ class AboutTheProperty6010NavigatorSpec extends TestBaseSpec {
       Some(TiedForGoodsInformationDetails(TiedForGoodsInformationDetailsFullTie))
     )
   )
+
   val sessionAboutYou6010Yes =
     Session(
       testUserLoginDetails,

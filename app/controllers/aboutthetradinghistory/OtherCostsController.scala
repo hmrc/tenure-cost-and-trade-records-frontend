@@ -29,7 +29,7 @@ import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class OtherCostsController @Inject()(
+class OtherCostsController @Inject() (
   mcc: MessagesControllerComponents,
   navigator: AboutTheTradingHistoryNavigator,
   otherCostsView: otherCosts,

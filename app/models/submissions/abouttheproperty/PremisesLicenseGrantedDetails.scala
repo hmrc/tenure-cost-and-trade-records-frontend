@@ -19,8 +19,8 @@ package models.submissions.abouttheproperty
 import play.api.libs.json.Json
 
 case class PremisesLicenseGrantedDetails(
-                                      premisesLicenseGranted: PremisesLicenseGranted
-                                    )
+  premisesLicenseGranted: PremisesLicenseGranted
+)
 
 object PremisesLicenseGrantedDetails {
   implicit val format = Json.format[PremisesLicenseGrantedDetails]

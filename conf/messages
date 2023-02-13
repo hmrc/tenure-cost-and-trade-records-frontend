@@ -289,6 +289,14 @@ checkbox.rentPayable.includeOtherProperty = include other property?
 checkbox.rentPayable.onlyPartOfProperty = relate to only part of the property?
 checkbox.rentPayable.onlyToLand = relate only to land (excluding buildings)?
 checkbox.rentPayable.shellUnit = relate to a ’shell’ unit (did you have to fit the property out yourself)?
+#6016 DOES THE RENT PAYABLE
+##############################
+checkbox.rentPayable.proprietor = Proprietor’s, manager’s or staff living accommodation
+checkbox.rentPayable.otherProperty = Other property
+checkbox.rentPayable.onlyPart = Only part of the property
+checkbox.rentPayable.onlyLand = Only to land (excluding buildings)
+checkbox.rentPayable.shellUnit = a ’shell’ unit (you had to fit the property out yourself)
+##############################
 label.detailsToQuestions = Give details if you selected any of the options
 hint.detailsToQuestions = For example, the rent includes an upstairs flat, or also includes the premises next door
 error.detailsToQuestions.required = Please provide further information
@@ -649,7 +657,12 @@ otherCosts.heading = This is a holding page for the other costs page
 
 #NET PROFITS (FORM 6015)
 #########
-netProfits.heading = This is a holding page for the net profits page
+netProfit.heading = This is a holding page for the net profits page
+
+#CONCESSIONS OR FRANCHISE (FORM 6015)
+#########
+concessionOrFranchise.heading = Is any concession or franchise run as a separate business from the property?
+hint.concessionOrFranchise = Choose 'no' if you've included turnover from these businesses in your turnover. You will have the opportunity to add more than one business if required.
 
 #SHARED RESPONSIBILITIES
 ##############################

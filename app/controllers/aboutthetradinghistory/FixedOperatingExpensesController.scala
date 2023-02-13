@@ -18,7 +18,7 @@ package controllers.aboutthetradinghistory
 
 import actions.WithSessionRefiner
 import navigation.AboutTheTradingHistoryNavigator
-import navigation.identifiers.{FixedOperatingExpensesId, TurnoverPageId}
+import navigation.identifiers.FixedOperatingExpensesId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
@@ -29,7 +29,7 @@ import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class FixedOperatingExpensesController @Inject()(
+class FixedOperatingExpensesController @Inject() (
   mcc: MessagesControllerComponents,
   navigator: AboutTheTradingHistoryNavigator,
   fixedOperatingExpensesView: fixedOperatingExpenses,

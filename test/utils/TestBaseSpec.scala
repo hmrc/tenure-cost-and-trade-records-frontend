@@ -107,6 +107,8 @@ trait TestBaseSpec
   val testAboutThePropertyNo                   = AboutTheProperty(
     Some(PropertyDetails("OccupierName", CurrentPropertyHotel, None)),
     Some(WebsiteForPropertyDetails(BuildingOperationHaveAWebsiteYes, Some("webAddress"))),
+    None,
+    None,
     Some(LicensableActivitiesNo),
     None,
     Some(PremisesLicensesConditionsNo),
@@ -116,7 +118,8 @@ trait TestBaseSpec
     Some(TiedGoodsNo),
     None
   )
-  val preFilledSession                         =
+
+  val preFilledSession =
     preEnrichedActionRefiner(testUserLoginDetails, testStillConnectedDetailsYes, testAboutYou, testAboutThePropertyNo)
 
   def preEnrichedActionRefiner(

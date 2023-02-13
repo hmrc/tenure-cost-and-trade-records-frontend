@@ -24,7 +24,7 @@ object PremisesLicenseGrantedDetailsForm {
 
   val premisesLicenseGrantedInformationDetailsForm = Form(
     mapping(
-      "premisesLicenseGrantedInformation" -> nonEmptyText(maxLength = 2000),
+      "premisesLicenseGrantedInformation" -> nonEmptyText(maxLength = 2000)
     )(PremisesLicenseGrantedInformationDetails.apply)(PremisesLicenseGrantedInformationDetails.unapply)
   )
 }

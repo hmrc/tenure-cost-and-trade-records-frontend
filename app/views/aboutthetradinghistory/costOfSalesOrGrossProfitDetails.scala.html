@@ -24,6 +24,8 @@
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Fieldset
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Legend
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Hint
+@import models.submissions.aboutthetradinghistory.CostOfSalesOrGrossProfitDetailsCostOfSales
+@import models.submissions.aboutthetradinghistory.CostOfSalesOrGrossProfitDetailsGrossProfit
 
 
 @this(layout: Layout,
@@ -57,11 +59,11 @@
    items = Seq(
     RadioItem(
      content = Text(messages("label.costOfSales")),
-     value = Some("costOfSales")
+     value = CostOfSalesOrGrossProfitDetailsCostOfSales.name
     ),
     RadioItem(
      content = Text(messages("label.grossProfit")),
-     value = Some("grossProfit")
+     value = CostOfSalesOrGrossProfitDetailsGrossProfit.name
     )
    ),
    hint = Some(Hint(content = Text(messages("hint.costOfSalesOrGrossProfit")))),

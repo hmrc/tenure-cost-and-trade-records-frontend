@@ -22,7 +22,9 @@ import play.api.data.Form
 import play.api.data.Forms.mapping
 
 object CostOfSalesOrGrossProfitDetailsForm {
-  lazy val baseCostOfSalesOrGrossProfitDetailsForm: Form[CostOfSalesOrGrossProfit] = Form(baseCostOfSalesOrGrossProfitDetailsMapping)
+  lazy val baseCostOfSalesOrGrossProfitDetailsForm: Form[CostOfSalesOrGrossProfit] = Form(
+    baseCostOfSalesOrGrossProfitDetailsMapping
+  )
 
   val baseCostOfSalesOrGrossProfitDetailsMapping = mapping(
     "costOfSalesOrGrossProfit" -> costOfSalesOrGrossProfitDetailsType

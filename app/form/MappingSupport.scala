@@ -112,6 +112,7 @@ object MappingSupport {
 
   val costOfSalesOrGrossProfitDetailsType: Mapping[CostOfSalesOrGrossProfit] = Forms.of[CostOfSalesOrGrossProfit]
 
+//  val concessionOrFranchiseType: Mapping[ConcessionOrFranchise] = Forms.of[ConcessionOrFranchise]
 
   val decimalRegex         = """^[0-9]{1,10}\.?[0-9]{0,2}$"""
   val cdbMaxCurrencyAmount = 9999999.99

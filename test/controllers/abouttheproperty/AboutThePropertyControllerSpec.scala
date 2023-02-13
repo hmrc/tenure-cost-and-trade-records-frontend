@@ -33,7 +33,7 @@ class AboutThePropertyControllerSpec extends TestBaseSpec {
 
   val mockAboutThePropertyNavigator              = mock[AboutThePropertyNavigator]
   val mockAboutThePropertyView: aboutTheProperty = mock[aboutTheProperty]
-  when(mockAboutThePropertyView.apply(any)(any, any)).thenReturn(HtmlFormat.empty)
+  when(mockAboutThePropertyView.apply(any, any)(any, any)).thenReturn(HtmlFormat.empty)
 
   val aboutThePropertyController = new AboutThePropertyController(
     stubMessagesControllerComponents(),

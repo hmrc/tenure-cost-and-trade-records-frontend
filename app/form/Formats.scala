@@ -168,4 +168,7 @@ object Formats {
   implicit val costOfSalesOrGrossProfitDetailsFormatter: Formatter[CostOfSalesOrGrossProfit] =
     namedEnumFormatter(CostOfSalesOrGrossProfit, Errors.booleanMissing)
 
+//  implicit val concessionOrFranchiseFormatter: Formatter[ConcessionOrFranchise] =
+//    namedEnumFormatter(ConcessionOrFranchise, Errors.booleanMissing)
+
 }

@@ -25,14 +25,12 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukCharacterCount
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukFieldset
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Radios
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Label
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Hint
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Input
 @import uk.gov.hmrc.govukfrontend.views.Aliases.RadioItem
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Fieldset
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Legend
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukCheckboxes
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.checkboxes.CheckboxItem
 @import models.Session
@@ -52,7 +50,7 @@
 )
 
 
-@(theForm: Form[PropertyDetails])(implicit request: Request[_], sessionRequest: SessionRequest[_], messages: Messages)
+@(theForm: Form[PropertyDetails], forType: String)(implicit request: Request[_], messages: Messages)
 
 @content = {
   <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
@@ -70,13 +68,11 @@
  )
 )
 
-
-
  <p class="govuk-body">
   <b>@messages("label.propertyCurrentlyUsed")</b>
  </p>
 
-@if(sessionRequest.sessionData.userLoginDetails.forNumber == "FOR6010") {
+@if(forType.equals("FOR6010")) {
  @includes.radioButtons(
   govukRadios,
   theForm,
@@ -119,7 +115,7 @@
   ))
 }
 
-@if(sessionRequest.sessionData.userLoginDetails.forNumber == "FOR6015") {
+@if(forType.equals("FOR6015")) {
  @includes.checkboxes(
   govukCheckboxes,
   theForm,
