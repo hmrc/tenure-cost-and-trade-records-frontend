@@ -19,14 +19,17 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.input.Input
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.label.Label
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Hint
 
 @(govukInput: GovukInput,
         theForm: Form[_],
         id: String,
         classes: String,
         autoCompleteLabel: String,
+        labelMsg: String,
         optional: Boolean = false,
         labelClasses: String = "",
+        hintMsg: String = "",
         formGroupClasses: String = "")(implicit request: Request[_], messages: Messages)
 
 @govukInput(Input(
@@ -38,9 +41,12 @@
     autocomplete=Some(autoCompleteLabel),
     formGroupClasses = formGroupClasses,
     label = if(optional)
-        Label(content = Text(s"${messages(s"label.${id}")} ${messages("hintText.optional")}"), classes = labelClasses)
-    else Label(content = Text(messages(s"label.${id}")), classes = labelClasses),
-    errorMessage = theForm.errors.asTextErrorMessageForField(id)
+        Label(content = Text(s"${messages(s"label.${labelMsg}")} ${messages("hintText.optional")}"), classes = labelClasses)
+    else Label(content = Text(messages(s"label.${labelMsg}")), classes = labelClasses),
+    errorMessage = theForm.errors.asTextErrorMessageForField(id),
+    hint = if(hintMsg.length > 0)
+        Some(Hint(content = Text(messages(s"hint.${hintMsg}"))))
+    else None,
 ))
 
 

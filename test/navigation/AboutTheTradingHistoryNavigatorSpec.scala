@@ -50,7 +50,7 @@ class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec {
     )
   )
   val aboutYou                 = Some(AboutYou(Some(CustomerDetails("Tobermory", ContactDetails("12345678909", "test@email.com")))))
-  val sessionAboutYou          = Session(testUserLoginDetails, stillConnectedDetailsYes, removeConnection, aboutYou)
+  val sessionAboutYou          = Session(prefilledUserLoginDetails, stillConnectedDetailsYes, removeConnection, aboutYou)
 
   implicit override val hc: HeaderCarrier = HeaderCarrier()
 
@@ -70,7 +70,9 @@ class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec {
     "return a function that goes the franchises tied page when turnover has been completed" in {
       navigator
         .nextPage(TurnoverPageId)
-        .apply(sessionAboutYou) mustBe controllers.Form6010.routes.FranchiseOrLettingsTiedToPropertyController.show()
+        .apply(
+          sessionAboutYou
+        ) mustBe controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show()
     }
   }
 }

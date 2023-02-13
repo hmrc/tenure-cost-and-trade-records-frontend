@@ -1,0 +1,78 @@
+@*
+ * Copyright 2023 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
+@import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcCurrencyInput
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukDateInput
+@import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Label
+@import uk.gov.hmrc.hmrcfrontend.views.viewmodels.currencyinput.CurrencyInput
+
+@this(layout: Layout,
+        govukButton: GovukButton,
+        govukDateInput: GovukDateInput,
+        hmrcCurrencyInput : HmrcCurrencyInput,
+        formWithCSRF: FormWithCSRF
+)
+
+@(theForm: Form[_], index: Int, cateringOrLetting: String, backLink: String)(implicit request: Request[_], messages: Messages)
+
+@layout(
+ pageHeading = messages("cateringOperationOrLettingAccommodationRentDetails.heading", "Wombles Inc"),
+ showH1 = false,
+ showSection = true,
+ sectionName = messages("label.section.aboutTheFranchiseLettings"),
+ backLinkUrl = backLink,
+ theForm = theForm
+) {
+    @formWithCSRF(action = {
+        if(cateringOrLetting.equals("cateringOperationOrLettingAccommodationRentDetails"))
+            controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsRentController.submit(index)
+        else if(cateringOrLetting.equals("lettingOtherPartOfPropertyRentDetails"))
+            controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsRentController.submit(index)
+        else controllers.routes.TaskListController.show()},
+        args = 'class -> "myForm", 'id -> "myFormId") {
+
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+            <h1 class="govuk-fieldset__heading">@messages("cateringOperationOrLettingAccommodationRentDetails.heading", "Wombles Inc")</h1>
+        </legend>
+
+        @hmrcCurrencyInput(
+            CurrencyInput(
+                id = "annualRent",
+                name = "annualRent",
+                value = theForm("annualRent").value,
+                classes = "govuk-input--width-10 total-annual-rent",
+                label = Label(
+                    content = Text(messages("label.annualRent")),
+                    classes = "govuk-!-font-weight-bold"
+                ),
+                autocomplete = Some("off"),
+                errorMessage = theForm.errors.asTextErrorMessageForField("annualRent"),
+            )
+        )
+
+        @includes.dateFields(form = theForm, field = "dateInput", govukDate = govukDateInput, showDays = true)
+
+        @includes.continueButton(govukButton)
+    }
+
+    @includes.help_with_service()
+}
+
+

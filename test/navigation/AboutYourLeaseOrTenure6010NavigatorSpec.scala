@@ -33,7 +33,7 @@ class AboutYourLeaseOrTenure6010NavigatorSpec extends TestBaseSpec {
 
   val navigator = new AboutYourLeaseOrTenureNavigator(audit)
 
-  val session6010 = Session(testUserLoginDetails)
+  val session6010 = Session(prefilledUserLoginDetails)
 
   implicit override val hc: HeaderCarrier = HeaderCarrier()
 
@@ -47,7 +47,13 @@ class AboutYourLeaseOrTenure6010NavigatorSpec extends TestBaseSpec {
     "return a function that goes to lease or agreement years page when about your landlord has been completed" in {
       navigator
         .nextPage(AboutTheLandlordPageId)
-        .apply(session6010) mustBe controllers.Form6010.routes.LeaseOrAgreementYearsController.show()
+        .apply(session6010) mustBe controllers.aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.show()
+    }
+
+    "return a function that goes to further information page when current rent payable within 12 months has been completed" in {
+      navigator
+        .nextPage(CurrentRentPayableWithin12monthsPageId)
+        .apply(session6010) mustBe controllers.additionalinformation.routes.FurtherInformationOrRemarksController.show()
     }
 
     "return a function that goes to current rent first paid page when current annual rent has been completed" in {

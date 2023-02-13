@@ -39,7 +39,7 @@ class ConnectionToPropertyNavigatorSpec extends TestBaseSpec {
   val stillConnectedDetailsEdit = Some(StillConnectedDetails(Some(AddressConnectionTypeYesChangeAddress)))
   val stillConnectedDetailsNo   = Some(StillConnectedDetails(Some(AddressConnectionTypeNo)))
 
-  val sessionYes = Session(testUserLoginDetails, stillConnectedDetailsYes)
+  val sessionYes = Session(prefilledUserLoginDetails, stillConnectedDetailsYes)
 
   implicit override val hc: HeaderCarrier = HeaderCarrier()
 
@@ -56,18 +56,18 @@ class ConnectionToPropertyNavigatorSpec extends TestBaseSpec {
     }
 
     "return a function that goes to the edit address page when still connected has been selected and the selection is edit address" in {
-      val sessionEdit = Session(testUserLoginDetails, stillConnectedDetailsEdit)
+      val sessionEdit = Session(prefilledUserLoginDetails, stillConnectedDetailsEdit)
       navigator.nextPage(AreYouStillConnectedPageId).apply(sessionEdit) mustBe routes.EditAddressController.show()
     }
 
     "return a function that goes to the not connected page when still connected has been selected and the selection is no" in {
-      val sessionNo = Session(testUserLoginDetails, stillConnectedDetailsNo)
+      val sessionNo = Session(prefilledUserLoginDetails, stillConnectedDetailsNo)
       navigator.nextPage(AreYouStillConnectedPageId).apply(sessionNo) mustBe controllers.routes.PastConnectionController
         .show()
     }
 
     "return a function that goes to the type of connection to the property page when edit address has been completed" in {
-      val sessionEdit = Session(testUserLoginDetails, stillConnectedDetailsEdit)
+      val sessionEdit = Session(prefilledUserLoginDetails, stillConnectedDetailsEdit)
       navigator.nextPage(EditAddressPageId).apply(sessionEdit) mustBe routes.ConnectionToThePropertyController.show()
     }
 

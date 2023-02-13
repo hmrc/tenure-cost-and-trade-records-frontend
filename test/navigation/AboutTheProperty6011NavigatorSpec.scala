@@ -39,10 +39,10 @@ class AboutTheProperty6011NavigatorSpec extends TestBaseSpec {
     UserLoginDetails("jwtToken", "FOR6011", "123456", Address("13", Some("Street"), Some("City"), "AA11 1AA"))
   val sessionAboutYou6011No    = Session(
     testUserLoginDetails6011,
-    Some(testStillConnectedDetailsYes),
-    testRemoveConnection,
-    Some(testAboutYou),
-    Some(testAboutThePropertyNo)
+    Some(prefilledStillConnectedDetailsYes),
+    Some(prefilledRemoveConnection),
+    Some(prefilledAboutYou),
+    Some(prefilledAboutThePropertyNo)
   )
 
   "About to property navigator for no answers for 6011" when {
@@ -100,9 +100,9 @@ class AboutTheProperty6011NavigatorSpec extends TestBaseSpec {
   val sessionAboutYou6011Yes =
     Session(
       testUserLoginDetails6011,
-      Some(testStillConnectedDetailsYes),
-      testRemoveConnection,
-      Some(testAboutYou),
+      Some(prefilledStillConnectedDetailsYes),
+      Some(prefilledRemoveConnection),
+      Some(prefilledAboutYou),
       aboutThePropertyYes
     )
 

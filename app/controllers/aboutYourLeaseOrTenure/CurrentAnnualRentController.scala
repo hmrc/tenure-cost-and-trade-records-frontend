@@ -80,7 +80,8 @@ class CurrentAnnualRentController @Inject() (
 
   private def getBackLink(answers: Session): Either[String, String] =
     answers.userLoginDetails.forNumber match {
-      case ForTypes.for6010 => Right(controllers.Form6010.routes.LeaseOrAgreementYearsController.show().url)
+      case ForTypes.for6010 =>
+        Right(controllers.aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.show().url)
       case ForTypes.for6011 => Right(controllers.aboutYourLeaseOrTenure.routes.AboutYourLandlordController.show().url)
       case _                => Left(s"Unknown form type with current annual rent back link")
     }

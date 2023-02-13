@@ -16,9 +16,16 @@
 
 package models.submissions.Form6010
 
+import play.api.libs.json.Json
+
 import java.time.LocalDate
 
 case class CateringOperationOrLettingAccommodationRentDetails(
   annualRent: BigDecimal,
   dateInput: LocalDate
 )
+
+object CateringOperationOrLettingAccommodationRentDetails {
+  implicit val format = Json.format[CateringOperationOrLettingAccommodationRentDetails]
+
+}

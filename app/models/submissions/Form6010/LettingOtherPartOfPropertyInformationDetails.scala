@@ -16,8 +16,15 @@
 
 package models.submissions.Form6010
 
+import play.api.libs.json.Json
+
 case class LettingOtherPartOfPropertyInformationDetails(
   operatorName: String,
   typeOfBusiness: String,
   lettingAddress: LettingAddress
 )
+
+object LettingOtherPartOfPropertyInformationDetails {
+  implicit val format = Json.format[LettingOtherPartOfPropertyInformationDetails]
+
+}

@@ -16,9 +16,15 @@
 
 package models.submissions.Form6010
 
+import play.api.libs.json.Json
+
 import java.time.LocalDate
 
 case class LettingOtherPartOfPropertyRentDetails(
   annualRent: BigDecimal,
   dateInput: LocalDate
 )
+object LettingOtherPartOfPropertyRentDetails {
+  implicit val format = Json.format[LettingOtherPartOfPropertyRentDetails]
+
+}
