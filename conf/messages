@@ -608,7 +608,7 @@ netProfit.heading = This is a holding page for the net profits page
 #CONCESSIONS OR FRANCHISE (FORM 6015)
 #########
 concessionOrFranchise.heading = Is any concession or franchise run as a separate business from the property?
-hint.concessionOrFranchise = Choose 'no' if you've included turnover from these businesses in your turnover. You will have the opportunity to add more than one business if required.
+concessionOrFranchise.subheading = Choose 'no' if you've included turnover from these businesses in your turnover. You will have the opportunity to add more than one business if required.
 
 #SHARED RESPONSIBILITIES
 ##############################

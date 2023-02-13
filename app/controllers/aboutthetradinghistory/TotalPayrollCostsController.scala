@@ -47,4 +47,14 @@ class TotalPayrollCostsController @Inject() (
     Future.successful(Redirect(navigator.nextPage(TotalPayrollCostId).apply(updatedData)))
   }
 
+//    private def getBackLink(answers: Session): Either[String, String] =
+//    answers.userLoginDetails.forNumber match {
+//      case ForTypes.for6015 | ForTypes.for6016 =>
+//        answers.aboutTheTradingHistory.flatMap(_.costOfSalesOrGrossProfit.map(_.name)) match {
+//          case Some("costOfSales") => Right(controllers.aboutthetradinghistory.routes.CostOfSalesController.show().url)
+//          case Some("grossProfit") => Right(controllers.aboutthetradinghistory.routes.GrossProfitsController.show().url)
+//          case _ => Right(controllers.routes.TaskListController.show().url)
+//        }
+//    }
+
 }

@@ -33,15 +33,13 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit)(implicit ec: Exec
     if (answers.userLoginDetails.forNumber == ForTypes.for6015)
       controllers.aboutthetradinghistory.routes.CostOfSalesOrGrossProfitDetailsController.show()
     else
-      controllers.Form6010.routes.FranchiseOrLettingsTiedToPropertyController.show()
+      controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show()
   }
 
   private def costOfSalesOrGrossProfitDetailsRouting: Session => Call = answers => {
     answers.aboutTheTradingHistory.flatMap(_.costOfSalesOrGrossProfit.map(_.name)) match {
-      case Some("costOfSales") =>
-        println("*****costOfSales"); controllers.aboutthetradinghistory.routes.CostOfSalesController.show()
-      case Some("grossProfit") =>
-        println("*****grossProfit"); controllers.aboutthetradinghistory.routes.GrossProfitsController.show()
+      case Some("costOfSales") => controllers.aboutthetradinghistory.routes.CostOfSalesController.show()
+      case Some("grossProfit") => controllers.aboutthetradinghistory.routes.GrossProfitsController.show()
       case _                   =>
         logger.warn(
           s"Navigation for about the property reached without correct selection of cost of sales or gross profit details by controller"
@@ -62,6 +60,6 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit)(implicit ec: Exec
     ),
     FixedOperatingExpensesId      -> (_ => controllers.aboutthetradinghistory.routes.OtherCostsController.show()),
     OtherCostsId                  -> (_ => controllers.aboutthetradinghistory.routes.NetProfitController.show()),
-    NetProfitId                   -> (_ => controllers.Form6010.routes.FranchiseOrLettingsTiedToPropertyController.show())
+    NetProfitId                   -> (_ => controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show())
   )
 }

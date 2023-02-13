@@ -14,6 +14,7 @@
  * limitations under the License.
  *@
 
+@import models.submissions.aboutfranchisesorlettings.ConcessionOrFranchise
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
@@ -29,7 +30,6 @@
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Fieldset
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Legend
 
-
 @this(layout: Layout,
         govukButton: GovukButton,
         govukRadios: GovukRadios,
@@ -41,29 +41,24 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[_], forType: String)(implicit request: Request[_], messages: Messages)
+@(theForm: Form[ConcessionOrFranchise])(implicit request: Request[_], messages: Messages)
 
 @layout(
- pageHeading = messages("franchiseLettings.heading"),
+ pageHeading = messages("concessionOrFranchise.heading"),
  showH1 = false,
  showSection = true,
  sectionName = messages("label.section.aboutTheFranchiseLettings"),
- backLinkUrl = controllers.routes.TaskListController.show.url,
+ backLinkUrl = controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show.url,
  theForm = theForm
 ) {
 
- @formWithCSRF(action = controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
+ @formWithCSRF(action = controllers.aboutfranchisesorlettings.routes.ConcessionOrFranchiseController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
 
   <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-    <h1 class="govuk-fieldset__heading">@messages("franchiseLettings.heading")</h1>
+    <h1 class="govuk-fieldset__heading">@messages("concessionOrFranchise.heading")</h1 >
   </legend>
 
-  <p class="govuk-body">@messages("franchiseLettings.subheading")</p>
-
-  <p class="govuk-list">
-    <li><span class="govuk-body">@messages("franchiseLettings.list1")</span></li><p>
-    <li><span class="govuk-body">@messages("franchiseLettings.list2")</span></li>
-  </p>
+  <p class="govuk-body">@messages("concessionOrFranchise.subheading")</p>
 
  @govukRadios(
   Radios(

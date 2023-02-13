@@ -26,7 +26,7 @@
 @()(implicit request: Request[_], messages: Messages)
 
 @layout(
-  pageHeading = messages("netProfits.heading"),
+  pageHeading = messages("netProfit.heading"),
   showH1 = false,
   showSection = true,
   sectionName = messages("label.section.aboutYourTradingHistory"),
@@ -36,7 +36,7 @@
   @formWithCSRF(action = controllers.aboutthetradinghistory.routes.NetProfitController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
 
       <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-          <h1 class="govuk-fieldset__heading">@messages("netProfits.heading")</h1>
+          <h1 class="govuk-fieldset__heading">@messages("netProfit.heading")</h1>
       </legend>
 
 

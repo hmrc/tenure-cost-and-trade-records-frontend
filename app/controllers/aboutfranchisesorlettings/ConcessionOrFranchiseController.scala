@@ -17,56 +17,56 @@
 package controllers.aboutfranchisesorlettings
 
 import actions.WithSessionRefiner
-import form.aboutfranchisesorlettings.FranchiseOrLettingsTiedToPropertyForm.franchiseOrLettingsTiedToPropertyForm
-import models.{ForTypes, Session}
+import form.aboutfranchisesorlettings.ConcessionOrFranchiseForm.concessionOrFranchiseForm
+import models.Session
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
-import navigation.AboutFranchisesOrLettingsNavigator
-import navigation.identifiers.FranchiseOrLettingsTiedToPropertyId
+import navigation.AboutThePropertyNavigator
+import navigation.identifiers.TiedForGoodsPageId
+import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.aboutfranchisesorlettings.franchiseOrLettingsTiedToProperty
+import views.html.aboutfranchisesorlettings.concessionOrFranchise
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class FranchiseOrLettingsTiedToPropertyController @Inject() (
+class ConcessionOrFranchiseController @Inject()(
   mcc: MessagesControllerComponents,
-  navigator: AboutFranchisesOrLettingsNavigator,
-  franchiseOrLettingsTiedToPropertyView: franchiseOrLettingsTiedToProperty,
+  navigator: AboutThePropertyNavigator,
+  concessionOrFranchiseView: concessionOrFranchise,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
 ) extends FrontendController(mcc)
-    with I18nSupport {
+    with I18nSupport
+    with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Future.successful(
       Ok(
-        franchiseOrLettingsTiedToPropertyView(
-          request.sessionData.aboutFranchisesOrLettings.flatMap(_.franchisesOrLettingsTiedToProperty) match {
-            case Some(franchisesOrLettingsTiedToProperty) =>
-              franchiseOrLettingsTiedToPropertyForm.fillAndValidate(franchisesOrLettingsTiedToProperty)
-            case _                                        => franchiseOrLettingsTiedToPropertyForm
-          },
-          request.sessionData.userLoginDetails.forNumber
+        concessionOrFranchiseView(
+          request.sessionData.aboutFranchisesOrLettings.flatMap(_.concessionOrFranchise) match {
+            case Some(concessionOrFranchise) => concessionOrFranchiseForm.fillAndValidate(concessionOrFranchise)
+            case _                           => concessionOrFranchiseForm
+          }
         )
       )
     )
   }
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
-    franchiseOrLettingsTiedToPropertyForm
+    concessionOrFranchiseForm
       .bindFromRequest()
       .fold(
-        formWithErrors => Future.successful(BadRequest(franchiseOrLettingsTiedToPropertyView(formWithErrors,request.sessionData.userLoginDetails.forNumber))),
+        formWithErrors =>
+          Future.successful(BadRequest(concessionOrFranchiseView(formWithErrors))),
         data => {
-          val updatedData = updateAboutFranchisesOrLettings(_.copy(franchisesOrLettingsTiedToProperty = Some(data)))
+          val updatedData = updateAboutFranchisesOrLettings(_.copy(concessionOrFranchise = Some(data)))
           session.saveOrUpdate(updatedData)
-          Future.successful(Redirect(navigator.nextPage(FranchiseOrLettingsTiedToPropertyId).apply(updatedData)))
+          Future.successful(Redirect(navigator.nextPage(TiedForGoodsPageId).apply(updatedData)))
         }
       )
   }
-
 }

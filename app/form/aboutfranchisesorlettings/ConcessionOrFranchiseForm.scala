@@ -14,19 +14,19 @@
  * limitations under the License.
  */
 
-//package form
-//
-//import form.MappingSupport.concessionOrFranchiseType
-//import models.submissions.abouttheproperty.ConcessionOrFranchise
-//import play.api.data.Form
-//import play.api.data.Forms.mapping
-//
-//object ConcessionOrFranchiseForm {
-//  lazy val baseConcessionOrFranchiseForm: Form[ConcessionOrFranchise] = Form(baseConcessionOrFranchiseMapping)
-//
-//  val baseConcessionOrFranchiseMapping = mapping(
-//    "concessionOrFranchise" -> concessionOrFranchiseType
-//  )(x => x)(b => Some(b))
-//
-//  val concessionOrFranchiseForm = Form(baseConcessionOrFranchiseMapping)
-//}
+package form.aboutfranchisesorlettings
+
+import form.MappingSupport.concessionOrFranchiseType
+import models.submissions.aboutfranchisesorlettings.ConcessionOrFranchise
+import play.api.data.Form
+import play.api.data.Forms.mapping
+
+object ConcessionOrFranchiseForm {
+  lazy val baseConcessionOrFranchiseForm: Form[ConcessionOrFranchise] = Form(baseConcessionOrFranchiseMapping)
+
+  val baseConcessionOrFranchiseMapping = mapping(
+    "concessionOrFranchise" -> concessionOrFranchiseType
+  )(x => x)(b => Some(b))
+
+  val concessionOrFranchiseForm = Form(baseConcessionOrFranchiseMapping)
+}

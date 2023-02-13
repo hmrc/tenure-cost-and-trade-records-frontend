@@ -590,7 +590,7 @@ otherCosts.heading = This is a holding page for the other costs page
 
 #NET PROFITS (FORM 6015)
 #########
-netProfits.heading = This is a holding page for the net profits page
+netProfit.heading = This is a holding page for the net profits page
 
 #SHARED RESPONSIBILITIES
 ##############################

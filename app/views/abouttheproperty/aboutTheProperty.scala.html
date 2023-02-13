@@ -72,7 +72,7 @@
   <b>@messages("label.propertyCurrentlyUsed")</b>
  </p>
 
-@if(forType.equals("FOR6010")) {
+@if(forType.equals("FOR6010") || forType.equals("FOR6011")) {
  @includes.radioButtons(
   govukRadios,
   theForm,
@@ -115,7 +115,7 @@
   ))
 }
 
-@if(forType.equals("FOR6015")) {
+@if(forType.equals("FOR6015") || forType.equals("FOR6016")) {
  @includes.checkboxes(
   govukCheckboxes,
   theForm,

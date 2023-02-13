@@ -17,7 +17,7 @@
 package navigation
 
 import connectors.Audit
-import models.Session
+import models.{ForTypes, Session}
 import navigation.identifiers._
 import play.api.Logging
 import play.api.mvc.Call
@@ -30,14 +30,26 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit)(implicit ec: E
     with Logging {
 
   private def franchiseOrLettingConditionsRouting: Session => Call = answers => {
-    answers.aboutFranchisesOrLettings.flatMap(_.franchisesOrLettingsTiedToProperty.map(_.name)) match {
-      case Some("yes") => controllers.aboutfranchisesorlettings.routes.CateringOperationController.show()
-      case Some("no")  => controllers.aboutYourLeaseOrTenure.routes.AboutYourLandlordController.show()
-      case _           =>
-        logger.warn(
-          s"Navigation for franchise or letting reached without correct selection of conditions by controller"
-        )
-        throw new RuntimeException("Invalid option exception for franchise or letting conditions routing")
+    if (answers.userLoginDetails.forNumber.equals(ForTypes.for6015) || answers.userLoginDetails.forNumber.equals(ForTypes.for6016)){
+      answers.aboutFranchisesOrLettings.flatMap(_.franchisesOrLettingsTiedToProperty.map(_.name)) match {
+        case Some("yes") => controllers.aboutfranchisesorlettings.routes.ConcessionOrFranchiseController.show()
+        case Some("no") => controllers.additionalinformation.routes.FurtherInformationOrRemarksController.show()
+        case _ =>
+          logger.warn(
+            s"Navigation for franchise or letting reached without correct selection of conditions by controller"
+          )
+          throw new RuntimeException("Invalid option exception for franchise or letting conditions routing")
+      }
+    } else {
+      answers.aboutFranchisesOrLettings.flatMap(_.franchisesOrLettingsTiedToProperty.map(_.name)) match {
+        case Some("yes") => controllers.aboutfranchisesorlettings.routes.CateringOperationController.show()
+        case Some("no") => controllers.aboutYourLeaseOrTenure.routes.AboutYourLandlordController.show()
+        case _ =>
+          logger.warn(
+            s"Navigation for franchise or letting reached without correct selection of conditions by controller"
+          )
+          throw new RuntimeException("Invalid option exception for franchise or letting conditions routing")
+      }
     }
   }
 

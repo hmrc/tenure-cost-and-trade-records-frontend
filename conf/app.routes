@@ -172,6 +172,10 @@ POST        /other-costs                                            controllers.
 GET         /net-profit                                             controllers.aboutthetradinghistory.NetProfitController.show()
 POST        /net-profit                                             controllers.aboutthetradinghistory.NetProfitController.submit()
 
+# Form 6015 routing
+GET         /concession-or-franchise                                controllers.aboutfranchisesorlettings.ConcessionOrFranchiseController.show()
+POST        /concession-or-franchise                                controllers.aboutfranchisesorlettings.ConcessionOrFranchiseController.submit()
+
 GET         /does-the-rent-payable                                  controllers.Form6010.DoesTheRentPayableController.show()
 POST        /does-the-rent-payable                                  controllers.Form6010.DoesTheRentPayableController.submit()
 
