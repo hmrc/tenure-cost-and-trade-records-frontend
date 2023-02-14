@@ -64,7 +64,6 @@ class CostOfSalesOrGrossProfitDetailsController @Inject() (
         data => {
           val updatedData = updateAboutTheTradingHistory(_.copy(costOfSalesOrGrossProfit = Some(data)))
           session.saveOrUpdate(updatedData)
-          println(s"${updatedData.aboutTheTradingHistory.flatMap(_.costOfSalesOrGrossProfit.map(_.name))}*****check");
           Future.successful(Redirect(navigator.nextPage(CostOfSalesOrGrossProfitId).apply(updatedData)))
         }
       )
