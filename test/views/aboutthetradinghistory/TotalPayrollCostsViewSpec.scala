@@ -16,23 +16,26 @@
 
 package views.aboutthetradinghistory
 
-import form.aboutthetradinghistory.AboutYourTradingHistoryForm
-import models.submissions.aboutthetradinghistory.AboutYourTradingHistory
+import form.abouttheproperty.TiedForGoodsForm
+import form.aboutthetradinghistory.{AboutYourTradingHistoryForm, TotalPayrollCostForm}
+import models.submissions.aboutthetradinghistory.{AboutYourTradingHistory, TotalPayrollCost}
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class TotalPayrollCostsViewSpec extends QuestionViewBehaviours[AboutYourTradingHistory] {
+class TotalPayrollCostsViewSpec extends QuestionViewBehaviours[TotalPayrollCost] {
   //NOTE: this is a holding view test until the total payroll costs page is implemented
   def totalPayrollCostsView = app.injector.instanceOf[views.html.aboutthetradinghistory.totalPayrollCosts]
 
   val messageKeyPrefix = "totalPayrollCosts"
 
-  override val form = AboutYourTradingHistoryForm.aboutYourTradingHistoryForm
+  override val form = TotalPayrollCostForm.totalPayrollCostForm
 
-  def createView = () => totalPayrollCostsView()(fakeRequest, messages)
+  val backLink = controllers.aboutthetradinghistory.routes.CostOfSalesController.show().url
 
-  def createViewUsingForm = (form: Form[AboutYourTradingHistory]) => totalPayrollCostsView()(fakeRequest, messages)
+  def createView = () => totalPayrollCostsView(form, backLink)(fakeRequest, messages)
+
+  def createViewUsingForm = (form: Form[TotalPayrollCost]) => totalPayrollCostsView(form, backLink)(fakeRequest, messages)
 
   "Total Payroll Costs view" must {
 
@@ -43,7 +46,7 @@ class TotalPayrollCostsViewSpec extends QuestionViewBehaviours[AboutYourTradingH
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText mustBe messages("back.link.label")
       val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.aboutthetradinghistory.routes.AboutYourTradingHistoryController.show.url
+      backlinkUrl mustBe controllers.aboutthetradinghistory.routes.CostOfSalesController.show.url
     }
 
     "contain save and continue button with the value Save and Continue" in {

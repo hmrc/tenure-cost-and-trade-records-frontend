@@ -14,8 +14,12 @@
  * limitations under the License.
  *@
 
+@import models.submissions.aboutthetradinghistory.TotalPayrollCost
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
+@import uk.gov.hmrc.govukfrontend.views.html.components._
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
+
 
 @this(layout: Layout,
         govukButton: GovukButton,
@@ -23,14 +27,15 @@
 )
 
 
-@()(implicit request: Request[_], messages: Messages)
+@(theForm: Form[TotalPayrollCost], backLink: String)(implicit request: Request[_], messages: Messages)
 
 @layout(
   pageHeading = messages("totalPayrollCosts.heading"),
   showH1 = false,
   showSection = true,
   sectionName = messages("label.section.aboutYourTradingHistory"),
-  backLinkUrl = controllers.aboutthetradinghistory.routes.AboutYourTradingHistoryController.show.url,
+  backLinkUrl = backLink,
+    theForm =  theForm
 ) {
 
   @formWithCSRF(action = controllers.aboutthetradinghistory.routes.TotalPayrollCostsController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {

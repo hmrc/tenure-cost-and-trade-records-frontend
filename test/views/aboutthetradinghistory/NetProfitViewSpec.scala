@@ -26,7 +26,7 @@ class NetProfitViewSpec extends QuestionViewBehaviours[AboutYourTradingHistory] 
   //NOTE: this is a holding view test until the net profit page is implemented
   def netProfitView = app.injector.instanceOf[views.html.aboutthetradinghistory.netProfit]
 
-  val messageKeyPrefix = "netProfits"
+  val messageKeyPrefix = "netProfit"
 
   override val form = AboutYourTradingHistoryForm.aboutYourTradingHistoryForm
 
