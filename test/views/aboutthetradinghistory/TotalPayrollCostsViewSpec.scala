@@ -35,7 +35,8 @@ class TotalPayrollCostsViewSpec extends QuestionViewBehaviours[TotalPayrollCost]
 
   def createView = () => totalPayrollCostsView(form, backLink)(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[TotalPayrollCost]) => totalPayrollCostsView(form, backLink)(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[TotalPayrollCost]) =>
+    totalPayrollCostsView(form, backLink)(fakeRequest, messages)
 
   "Total Payroll Costs view" must {
 
@@ -53,6 +54,11 @@ class TotalPayrollCostsViewSpec extends QuestionViewBehaviours[TotalPayrollCost]
       val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("continue").text()
       assert(loginButton == messages("button.label.continue"))
+    }
+
+    "contain get help section" in {
+      val doc = asDocument(createView())
+      assert(doc.toString.contains(messages("helpWithService.title")))
     }
 
     "contain get help section basic details" in {

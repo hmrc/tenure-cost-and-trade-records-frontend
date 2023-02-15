@@ -52,6 +52,11 @@ class NetProfitViewSpec extends QuestionViewBehaviours[AboutYourTradingHistory] 
       assert(loginButton == messages("button.label.continue"))
     }
 
+    "contain get help section" in {
+      val doc = asDocument(createView())
+      assert(doc.toString.contains(messages("helpWithService.title")))
+    }
+
     "contain get help section basic details" in {
       val doc = asDocument(createView())
       assert(doc.toString.contains(messages("common.helpWithServiceHeader")))

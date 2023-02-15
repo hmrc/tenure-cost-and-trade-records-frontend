@@ -570,7 +570,7 @@ taskList.heading = Declaration summary
 
 #COST OF SALES OR GROSS PROFIT
 #########
-costOfSalesOrGrossProfit.heading = Would you rather give details of your cost of sales, or  your gross profits?
+costOfSalesOrGrossProfit.heading = Would you rather give details of your cost of sales, or your gross profits?
 hint.costOfSalesOrGrossProfit = We need to see details of your turnover broken down by specific department. You can decide whether you'd like to provide these figures for your cost of sales, or gross profits.
 label.costOfSales = Cost of sales
 label.grossProfit = Gross profits

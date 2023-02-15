@@ -16,8 +16,7 @@
 
 package form.aboutthetradinghistory
 
-import form.MappingSupport.costOfSalesOrGrossProfitDetailsType
-import models.submissions.aboutthetradinghistory.{CostOfSalesOrGrossProfit, TotalPayrollCost}
+import models.submissions.aboutthetradinghistory.TotalPayrollCost
 import play.api.data.Form
 import play.api.data.Forms.{default, mapping, text}
 

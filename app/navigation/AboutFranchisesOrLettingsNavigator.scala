@@ -30,26 +30,21 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit)(implicit ec: E
     with Logging {
 
   private def franchiseOrLettingConditionsRouting: Session => Call = answers => {
-    if (answers.userLoginDetails.forNumber.equals(ForTypes.for6015) || answers.userLoginDetails.forNumber.equals(ForTypes.for6016))
-    {
+    if (
+      answers.userLoginDetails.forNumber
+        .equals(ForTypes.for6015) || answers.userLoginDetails.forNumber.equals(ForTypes.for6016)
+    ) {
       answers.aboutFranchisesOrLettings.flatMap(_.franchisesOrLettingsTiedToProperty.map(_.name)) match {
         case Some("yes") =>
-          if(answers.stillConnectedDetails.flatMap(_.connectionToProperty.map(_.name)).equals(Some("occupierTrustee")) ||
-          answers.stillConnectedDetails.flatMap(_.connectionToProperty.map(_.name)).equals(Some("ownerTrustee"))) {
-            controllers.aboutfranchisesorlettings.routes.CateringOperationController.show()
-          }
-          else {
-            controllers.aboutfranchisesorlettings.routes.ConcessionOrFranchiseController.show()
-          }
-        case Some("no") =>
-          if(answers.stillConnectedDetails.flatMap(_.connectionToProperty.map(_.name)).equals(Some("ownerTrustee"))) {
+          controllers.aboutfranchisesorlettings.routes.ConcessionOrFranchiseController.show()
+        case Some("no")  =>
+          if (answers.stillConnectedDetails.flatMap(_.connectionToProperty.map(_.name)).equals(Some("ownerTrustee"))) {
             controllers.additionalinformation.routes.FurtherInformationOrRemarksController.show()
-          }
-          else {
+          } else {
             answers.stillConnectedDetails.flatMap(_.connectionToProperty.map(_.name)).equals(Some("occupierTrustee"))
             controllers.aboutYourLeaseOrTenure.routes.AboutYourLandlordController.show()
           }
-        case _ =>
+        case _           =>
           logger.warn(
             s"Navigation for franchise or letting reached without correct selection of conditions by controller"
           )
@@ -58,8 +53,8 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit)(implicit ec: E
     } else {
       answers.aboutFranchisesOrLettings.flatMap(_.franchisesOrLettingsTiedToProperty.map(_.name)) match {
         case Some("yes") => controllers.aboutfranchisesorlettings.routes.CateringOperationController.show()
-        case Some("no") => controllers.aboutYourLeaseOrTenure.routes.AboutYourLandlordController.show()
-        case _ =>
+        case Some("no")  => controllers.aboutYourLeaseOrTenure.routes.AboutYourLandlordController.show()
+        case _           =>
           logger.warn(
             s"Navigation for franchise or letting reached without correct selection of conditions by controller"
           )

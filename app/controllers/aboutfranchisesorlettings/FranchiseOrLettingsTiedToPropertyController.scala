@@ -18,7 +18,6 @@ package controllers.aboutfranchisesorlettings
 
 import actions.WithSessionRefiner
 import form.aboutfranchisesorlettings.FranchiseOrLettingsTiedToPropertyForm.franchiseOrLettingsTiedToPropertyForm
-import models.{ForTypes, Session}
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
 import navigation.AboutFranchisesOrLettingsNavigator
 import navigation.identifiers.FranchiseOrLettingsTiedToPropertyId
@@ -60,7 +59,12 @@ class FranchiseOrLettingsTiedToPropertyController @Inject() (
     franchiseOrLettingsTiedToPropertyForm
       .bindFromRequest()
       .fold(
-        formWithErrors => Future.successful(BadRequest(franchiseOrLettingsTiedToPropertyView(formWithErrors,request.sessionData.userLoginDetails.forNumber))),
+        formWithErrors =>
+          Future.successful(
+            BadRequest(
+              franchiseOrLettingsTiedToPropertyView(formWithErrors, request.sessionData.userLoginDetails.forNumber)
+            )
+          ),
         data => {
           val updatedData = updateAboutFranchisesOrLettings(_.copy(franchisesOrLettingsTiedToProperty = Some(data)))
           session.saveOrUpdate(updatedData)

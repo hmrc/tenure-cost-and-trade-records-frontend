@@ -19,11 +19,10 @@ package models.submissions.aboutthetradinghistory
 import play.api.libs.json.Json
 
 case class TotalPayrollCost(
-                             totalPayrollCost: String
+  totalPayrollCost: String
 )
 
 object TotalPayrollCost {
   implicit val format = Json.format[TotalPayrollCost]
 
 }
-

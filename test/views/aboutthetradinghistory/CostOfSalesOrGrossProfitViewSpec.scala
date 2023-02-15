@@ -14,44 +14,29 @@
  * limitations under the License.
  */
 
-/*
- * Copyright 2023 HM Revenue & Customs
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http:www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package views.aboutthetradinghistory
 
-import form.aboutthetradinghistory.AboutYourTradingHistoryForm
-import models.submissions.aboutthetradinghistory.AboutYourTradingHistory
+import form.aboutthetradinghistory.CostOfSalesOrGrossProfitDetailsForm
+import models.submissions.aboutthetradinghistory.CostOfSalesOrGrossProfit
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class FixedOperatingExpensesViewSpec extends QuestionViewBehaviours[AboutYourTradingHistory] {
-  //NOTE: this is a holding view test until the fixed operating expenses page is implemented
+class CostOfSalesOrGrossProfitViewSpec extends QuestionViewBehaviours[CostOfSalesOrGrossProfit] {
+  // NOTE: this is a holding view test until the cost of sales page is implemented
+  def costOfSalesOrGrossProfitView =
+    app.injector.instanceOf[views.html.aboutthetradinghistory.costOfSalesOrGrossProfitDetails]
 
-  def fixedOperatingExpensesView = app.injector.instanceOf[views.html.aboutthetradinghistory.fixedOperatingExpenses]
+  val messageKeyPrefix = "costOfSalesOrGrossProfit"
 
-  val messageKeyPrefix = "fixedOperatingExpenses"
+  override val form = CostOfSalesOrGrossProfitDetailsForm.costOfSalesOrGrossProfitDetailsForm
 
-  override val form = AboutYourTradingHistoryForm.aboutYourTradingHistoryForm
+  def createView = () => costOfSalesOrGrossProfitView(form)(fakeRequest, messages)
 
-  def createView = () => fixedOperatingExpensesView()(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[CostOfSalesOrGrossProfit]) =>
+    costOfSalesOrGrossProfitView(form)(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[AboutYourTradingHistory]) => fixedOperatingExpensesView()(fakeRequest, messages)
-
-  "Fixed Operating Expenses view" must {
+  "costOfSales view" must {
 
     behave like normalPage(createView, messageKeyPrefix)
 
@@ -60,7 +45,7 @@ class FixedOperatingExpensesViewSpec extends QuestionViewBehaviours[AboutYourTra
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText mustBe messages("back.link.label")
       val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.aboutthetradinghistory.routes.VariableOperatingExpensesController.show.url
+      backlinkUrl mustBe controllers.aboutthetradinghistory.routes.TurnoverController.show.url
     }
 
     "contain save and continue button with the value Save and Continue" in {

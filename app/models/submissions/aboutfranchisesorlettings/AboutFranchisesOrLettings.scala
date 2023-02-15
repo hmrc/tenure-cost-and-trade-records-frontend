@@ -24,12 +24,12 @@ import play.api.libs.json.Json
 
 case class AboutFranchisesOrLettings(
   franchisesOrLettingsTiedToProperty: Option[FranchiseOrLettingsTiedToProperty] = None,
+  concessionOrFranchise: Option[ConcessionOrFranchise] = None,
   cateringOperationOrLettingAccommodation: Option[CateringOperation] = None,
   cateringOperationOrLettingAccommodationSections: IndexedSeq[CateringOperationOrLettingAccommodationSection] =
     IndexedSeq.empty,
   lettingOtherPartOfProperty: Option[LettingOtherPartOfProperty] = None,
-  lettingSections: IndexedSeq[LettingSection] = IndexedSeq.empty,
-  concessionOrFranchise: Option[ConcessionOrFranchise] = None
+  lettingSections: IndexedSeq[LettingSection] = IndexedSeq.empty
 )
 
 object AboutFranchisesOrLettings {

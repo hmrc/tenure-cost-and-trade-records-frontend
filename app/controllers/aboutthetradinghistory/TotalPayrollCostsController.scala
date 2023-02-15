@@ -19,7 +19,7 @@ package controllers.aboutthetradinghistory
 import actions.WithSessionRefiner
 import form.aboutthetradinghistory.TotalPayrollCostForm.totalPayrollCostForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.updateAboutTheTradingHistory
-import models.{ForTypes, Session}
+import models.Session
 import navigation.AboutTheTradingHistoryNavigator
 import navigation.identifiers.TotalPayrollCostId
 import play.api.i18n.I18nSupport
@@ -45,12 +45,13 @@ class TotalPayrollCostsController @Inject() (
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     Ok(
       totalPayrollCostsView(
-      request.sessionData.aboutTheTradingHistory.flatMap(_.totalPayrollCost) match {
-        case Some(totalPayrollCost) => totalPayrollCostForm.fillAndValidate(totalPayrollCost)
-        case _                     => totalPayrollCostForm
-      },
+        request.sessionData.aboutTheTradingHistory.flatMap(_.totalPayrollCost) match {
+          case Some(totalPayrollCost) => totalPayrollCostForm.fillAndValidate(totalPayrollCost)
+          case _                      => totalPayrollCostForm
+        },
         getBackLink(request.sessionData)
-    ))
+      )
+    )
   }
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
@@ -67,11 +68,11 @@ class TotalPayrollCostsController @Inject() (
   }
 
   private def getBackLink(answers: Session): String =
-        answers.aboutTheTradingHistory.flatMap(_.costOfSalesOrGrossProfit.map(_.name)) match {
-          case Some("costOfSales") => controllers.aboutthetradinghistory.routes.CostOfSalesController.show().url
-          case Some("grossProfit") => controllers.aboutthetradinghistory.routes.GrossProfitsController.show().url
-          case _ =>
-            logger.warn(s"Back link for tied goods page reached with unknown enforcement taken value")
-            controllers.routes.TaskListController.show().url
-        }
+    answers.aboutTheTradingHistory.flatMap(_.costOfSalesOrGrossProfit.map(_.name)) match {
+      case Some("costOfSales") => controllers.aboutthetradinghistory.routes.CostOfSalesController.show().url
+      case Some("grossProfit") => controllers.aboutthetradinghistory.routes.GrossProfitsController.show().url
+      case _                   =>
+        logger.warn(s"Back link for tied goods page reached with unknown enforcement taken value")
+        controllers.routes.TaskListController.show().url
+    }
 }

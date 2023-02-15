@@ -18,9 +18,8 @@ package controllers.aboutfranchisesorlettings
 
 import actions.WithSessionRefiner
 import form.aboutfranchisesorlettings.ConcessionOrFranchiseForm.concessionOrFranchiseForm
-import models.Session
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
-import navigation.AboutThePropertyNavigator
+import navigation.AboutFranchisesOrLettingsNavigator
 import navigation.identifiers.TiedForGoodsPageId
 import play.api.Logging
 import play.api.i18n.I18nSupport
@@ -33,9 +32,9 @@ import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class ConcessionOrFranchiseController @Inject()(
+class ConcessionOrFranchiseController @Inject() (
   mcc: MessagesControllerComponents,
-  navigator: AboutThePropertyNavigator,
+  navigator: AboutFranchisesOrLettingsNavigator,
   concessionOrFranchiseView: concessionOrFranchise,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
@@ -60,8 +59,7 @@ class ConcessionOrFranchiseController @Inject()(
     concessionOrFranchiseForm
       .bindFromRequest()
       .fold(
-        formWithErrors =>
-          Future.successful(BadRequest(concessionOrFranchiseView(formWithErrors))),
+        formWithErrors => Future.successful(BadRequest(concessionOrFranchiseView(formWithErrors))),
         data => {
           val updatedData = updateAboutFranchisesOrLettings(_.copy(concessionOrFranchise = Some(data)))
           session.saveOrUpdate(updatedData)

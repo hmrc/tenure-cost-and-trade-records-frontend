@@ -31,5 +31,3 @@ case object LettingAccommodationPageId extends Identifier {
 case object ConcessionOrFranchiseId extends Identifier {
   override def toString: String = "concessionOrFranchisePage"
 }
-
-
