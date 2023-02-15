@@ -24,8 +24,6 @@ import views.behaviours.QuestionViewBehaviours
 
 class CurrentAnnualRentViewSpec extends QuestionViewBehaviours[AnnualRent] {
 
-  def currentAnnualRentView = app.injector.instanceOf[views.html.aboutYourLeaseOrTenure.currentAnnualRent]
-
   val messageKeyPrefix = "currentAnnualRent"
 
   override val form = CurrentAnnualRentForm.currentAnnualRentForm

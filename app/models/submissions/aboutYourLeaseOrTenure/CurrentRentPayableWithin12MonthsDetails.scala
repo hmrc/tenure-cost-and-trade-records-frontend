@@ -16,18 +16,25 @@
 
 package models.submissions.aboutYourLeaseOrTenure
 
-import models.{NamedEnum, NamedEnumSupport}
+import models.submissions.aboutYourLeaseOrTenure.CommenceWithinThreeYears.all
+import models.{EnumFormat, NamedEnum, NamedEnumSupport}
+import play.api.libs.json.Format
 
 sealed trait CurrentRentWithin12Months extends NamedEnum {
-  val key = "rentPayable"
+  override def key: String = "rentPayable"
 }
 object CurrentRentWithin12MonthsYes extends CurrentRentWithin12Months {
-  val name = "yes"
+  override def name: String = "yes"
 }
 object CurrentRentWithin12MonthsNo extends CurrentRentWithin12Months {
-  val name = "no"
+  override def name: String = "no"
 }
 
-object CurrentRentWithin12Month extends NamedEnumSupport[CurrentRentWithin12Months] {
+object CurrentRentWithin12Months extends NamedEnumSupport[CurrentRentWithin12Months] {
+  implicit val format: Format[CurrentRentWithin12Months] = EnumFormat(CurrentRentWithin12Months)
+
   val all = List(CurrentRentWithin12MonthsYes, CurrentRentWithin12MonthsNo)
+
+  val key = all.head.key
+
 }

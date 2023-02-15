@@ -18,6 +18,7 @@ package controllers.aboutYourLeaseOrTenure
 
 import actions.WithSessionRefiner
 import form.aboutYourLeaseOrTenure.CurrentRentPayableWithin12MonthsForm.currentRentPayableWithin12MonthsForm
+import models.submissions.aboutLeaseOrAgreement.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne
 import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.CurrentRentPayableWithin12monthsPageId
 import play.api.i18n.I18nSupport
@@ -39,8 +40,16 @@ class CurrentRentPayableWithin12MonthsController @Inject() (
 ) extends FrontendController(mcc)
     with I18nSupport {
 
-  def show: Action[AnyContent] = Action { implicit request =>
-    Ok(currentRentPayableWithin12MonthsView(currentRentPayableWithin12MonthsForm))
+  def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
+    Ok(
+      currentRentPayableWithin12MonthsView(
+        request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.currentRentPayableWithin12Months) match {
+          case Some(currentRentPayableWithin12Months) =>
+            currentRentPayableWithin12MonthsForm.fillAndValidate(currentRentPayableWithin12Months)
+          case _                                      => currentRentPayableWithin12MonthsForm
+        }
+      )
+    )
   }
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
@@ -48,10 +57,13 @@ class CurrentRentPayableWithin12MonthsController @Inject() (
       .bindFromRequest()
       .fold(
         formWithErrors => Future.successful(BadRequest(currentRentPayableWithin12MonthsView(formWithErrors))),
-        data =>
+        data => {
+          val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(currentRentPayableWithin12Months = Some(data)))
+          session.saveOrUpdate(updatedData)
           Future.successful(
             Redirect(navigator.nextPage(CurrentRentPayableWithin12monthsPageId).apply(request.sessionData))
           )
+        }
       )
   }
 
