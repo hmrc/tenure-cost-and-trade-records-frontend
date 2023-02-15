@@ -18,6 +18,7 @@ package utils
 
 import actions.{SessionRequest, WithSessionRefiner}
 import config.{AppConfig, ErrorHandler}
+import models.submissions.aboutLeaseOrAgreement.AboutLeaseOrAgreementPartOne
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
 import models.submissions.abouttheproperty._
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory
@@ -112,7 +113,8 @@ trait TestBaseSpec
     additionalInformation: Option[AdditionalInformation] = Some(prefilledAdditionalInformation),
     altContactInformation: Option[AltContactInformation] = Some(prefilledAltContactInformation),
     aboutTheTradingHistory: Option[AboutTheTradingHistory] = Some(prefilledAboutTheTradingHistory),
-    aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = Some(prefilledAboutFranchiseOrLettings)
+    aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = Some(prefilledAboutFranchiseOrLettings),
+    aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
   ): WithSessionRefiner =
     new WithSessionRefiner(mockCustomErrorHandler, mockSessionRepository) {
 
