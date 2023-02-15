@@ -62,7 +62,6 @@ class FranchiseOrLettingsTiedToPropertyController @Inject() (
       .fold(
         formWithErrors => Future.successful(BadRequest(franchiseOrLettingsTiedToPropertyView(formWithErrors,request.sessionData.userLoginDetails.forNumber))),
         data => {
-          println("***********" + request.sessionData.stillConnectedDetails.flatMap(_.connectionToProperty.map(_.name)))
           val updatedData = updateAboutFranchisesOrLettings(_.copy(franchisesOrLettingsTiedToProperty = Some(data)))
           session.saveOrUpdate(updatedData)
           Future.successful(Redirect(navigator.nextPage(FranchiseOrLettingsTiedToPropertyId).apply(updatedData)))
