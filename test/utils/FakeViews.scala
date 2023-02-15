@@ -17,6 +17,8 @@
 package utils
 
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
+import views.html.aboutYourLeaseOrTenure.{aboutYourLandlord, currentAnnualRent, currentRentPayableWithin12Months, leaseOrAgreementYears}
+import views.html.form._
 import views.html.aboutYourLeaseOrTenure.aboutYourLandlord
 import views.html.aboutfranchisesorlettings._
 import views.html.login
@@ -31,21 +33,26 @@ trait FakeViews { this: GuiceOneAppPerSuite =>
     app.injector.instanceOf[franchiseOrLettingsTiedToProperty]
   lazy val cateringOperationView                      =
     app.injector.instanceOf[cateringOperationOrLettingAccommodation]
-  lazy val cateringOperationDetailsView               =
+  lazy val cateringOperationOrLettingAccommodationDetailsView       =
     app.injector.instanceOf[cateringOperationOrLettingAccommodationDetails]
-  lazy val cateringOperationRentDetailsView           =
+  lazy val cateringOperationOrLettingAccommodationRentDetailsView   =
     app.injector.instanceOf[cateringOperationOrLettingAccommodationRentDetails]
-  lazy val cateringOperationRentIncludes              =
-    app.injector.instanceOf[cateringOperationOrLettingAccommodationRentIncludes]
-  lazy val lettingOtherPartOfPropertyView             =
+  lazy val cateringOperationOrLettingAccommodationCheckboxesDetails =
+    app.injector.instanceOf[cateringOperationOrLettingAccommodationCheckboxesDetails]
+  lazy val aboutYourLandlordView                                    =
+    app.injector.instanceOf[aboutYourLandlord]
+  lazy val lettingOtherPartOfPropertyView                           =
     app.injector.instanceOf[cateringOperationOrLettingAccommodation]
-  lazy val lettingOtherPartOfPropertyDetailsView      =
+  lazy val lettingOtherPartOfPropertyDetailsView                    =
     app.injector.instanceOf[cateringOperationOrLettingAccommodationDetails]
-  lazy val lettingOtherPartOfPropertyRentDetailsView  =
+  lazy val lettingOtherPartOfPropertyRentDetailsView                =
     app.injector.instanceOf[cateringOperationOrLettingAccommodationRentDetails]
-  lazy val lettingOtherPartOfPropertyRentIncludesView =
-    app.injector.instanceOf[cateringOperationOrLettingAccommodationRentIncludes]
-
-  // About the lease or tenure
-  lazy val aboutYourLandlordView = app.injector.instanceOf[aboutYourLandlord]
+  lazy val lettingOtherPartOfPropertyCheckboxesDetailsView          =
+    app.injector.instanceOf[cateringOperationOrLettingAccommodationCheckboxesDetails]
+  lazy val currentRentPayableWithin12MonthsView                     =
+    app.injector.instanceOf[currentRentPayableWithin12Months]
+  lazy val currentAnnualRentView                                    =
+    app.injector.instanceOf[currentAnnualRent]
+  lazy val leaseOrAgreementYearsView                                =
+    app.injector.instanceOf[leaseOrAgreementYears]
 }

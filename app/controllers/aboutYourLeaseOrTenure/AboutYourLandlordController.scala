@@ -25,7 +25,7 @@ import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.aboutYourLeaseOrTenure.aboutYourLandlord
-
+import models.submissions.aboutLeaseOrAgreement.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
 
@@ -39,8 +39,17 @@ class AboutYourLandlordController @Inject() (
 ) extends FrontendController(mcc)
     with I18nSupport {
 
-  def show: Action[AnyContent] = Action.async { implicit request =>
-    Future.successful(Ok(aboutYourLandlordView(aboutTheLandlordForm)))
+  def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    Future.successful(
+      Ok(
+        aboutYourLandlordView(
+          request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.aboutTheLandlord) match {
+            case Some(aboutTheLandlord) => aboutTheLandlordForm.fillAndValidate(aboutTheLandlord)
+            case _                      => aboutTheLandlordForm
+          }
+        )
+      )
+    )
   }
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
@@ -48,7 +57,11 @@ class AboutYourLandlordController @Inject() (
       .bindFromRequest()
       .fold(
         formWithErrors => Future.successful(BadRequest(aboutYourLandlordView(formWithErrors))),
-        data => Future.successful(Redirect(navigator.nextPage(AboutTheLandlordPageId).apply(request.sessionData)))
+        data => {
+          val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(aboutTheLandlord = Some(data)))
+          session.saveOrUpdate(updatedData)
+          Future.successful(Redirect(navigator.nextPage(AboutTheLandlordPageId).apply(request.sessionData)))
+        }
       )
   }
 

@@ -24,8 +24,6 @@ import views.behaviours.QuestionViewBehaviours
 
 class LeaseOrAgreementYearsViewSpec extends QuestionViewBehaviours[LeaseOrAgreementYearsDetails] {
 
-  def leaseOrAgreementYearsView = app.injector.instanceOf[views.html.aboutYourLeaseOrTenure.leaseOrAgreementYears]
-
   val messageKeyPrefix = "leaseOrAgreement"
 
   override val form = LeaseOrAgreementYearsForm.leaseOrAgreementYearsForm
