@@ -20,6 +20,7 @@ import actions.WithSessionRefiner
 import form.aboutYourLeaseOrTenure.CurrentAnnualRentForm.currentAnnualRentForm
 import form.aboutYourLeaseOrTenure.CurrentRentPayableWithin12MonthsForm.currentRentPayableWithin12MonthsForm
 import form.aboutYourLeaseOrTenure.LeaseOrAgreementYearsForm.leaseOrAgreementYearsForm
+import models.submissions.aboutLeaseOrAgreement.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne
 import models.submissions.aboutYourLeaseOrTenure.{AgreedReviewedAlteredThreeYearsNo, CommenceWithinThreeYearsNo, RentUnderReviewNegotiatedNo}
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
@@ -42,8 +43,18 @@ class LeaseOrAgreementYearsController @Inject() (
 ) extends FrontendController(mcc)
     with I18nSupport {
 
-  def show: Action[AnyContent] = Action.async { implicit request =>
-    Future.successful(Ok(leaseOrAgreementYearsView(leaseOrAgreementYearsForm)))
+  def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    Future.successful(
+      Ok(
+        leaseOrAgreementYearsView(
+          request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.leaseOrAgreementYearsDetails) match {
+            case Some(leaseOrAgreementYearsDetails) =>
+              leaseOrAgreementYearsForm.fillAndValidate(leaseOrAgreementYearsDetails)
+            case _                                  => leaseOrAgreementYearsForm
+          }
+        )
+      )
+    )
   }
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
@@ -57,8 +68,12 @@ class LeaseOrAgreementYearsController @Inject() (
               .equals(AgreedReviewedAlteredThreeYearsNo) && data.rentUnderReviewNegotiated
               .equals(RentUnderReviewNegotiatedNo)
           ) {
+            val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(leaseOrAgreementYearsDetails = Some(data)))
+            session.saveOrUpdate(updatedData)
             Future.successful(Ok(currentRentPayableWithin12MonthsView(currentRentPayableWithin12MonthsForm)))
           } else {
+            val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(leaseOrAgreementYearsDetails = Some(data)))
+            session.saveOrUpdate(updatedData)
             Future.successful(
               Ok(
                 currentAnnualRentView(

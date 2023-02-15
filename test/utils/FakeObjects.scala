@@ -16,9 +16,13 @@
 
 package utils
 
-import models.submissions.Form6010.{CateringAddress, CateringOperationOrLettingAccommodationDetails, CateringOperationOrLettingAccommodationRentDetails, FranchiseOrLettingsTiedToPropertiesNo, FranchiseOrLettingsTiedToPropertiesYes, LettingAddress, LettingOtherPartOfPropertiesNo, LettingOtherPartOfPropertiesYes, LettingOtherPartOfPropertyInformationDetails, LettingOtherPartOfPropertyRentDetails}
-import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, CateringOperationNo, CateringOperationOrLettingAccommodationSection, CateringOperationYes, ConcessionOrFranchiseNo, ConcessionOrFranchiseYes, LettingSection}
-import models.submissions.abouttheproperty.{AboutTheProperty, BuildingOperationHaveAWebsiteYes, CurrentPropertyHotel, EnforcementActionsNo, LicensableActivitiesInformationDetails, LicensableActivitiesNo, PremisesLicenseGrantedNo, PremisesLicensesConditionsNo, PropertyDetails, TiedGoodsNo, WebsiteForPropertyDetails}
+import models.submissions.aboutfranchisesorlettings.{ConcessionOrFranchiseNo, ConcessionOrFranchiseYes}
+import models.submissions.abouttheproperty.PremisesLicenseGrantedNo
+import models.submissions.Form6010.{CateringAddress, CateringOperationOrLettingAccommodationDetails, CateringOperationOrLettingAccommodationRentDetails, FranchiseOrLettingsTiedToPropertiesNo, FranchiseOrLettingsTiedToPropertiesYes, LandlordAddress, LettingAddress, LettingOtherPartOfPropertiesNo, LettingOtherPartOfPropertiesYes, LettingOtherPartOfPropertyInformationDetails, LettingOtherPartOfPropertyRentDetails}
+import models.submissions.aboutLeaseOrAgreement.AboutLeaseOrAgreementPartOne
+import models.submissions.aboutYourLeaseOrTenure.{AboutTheLandlord, AgreedReviewedAlteredThreeYearsYes, CommenceWithinThreeYearsYes, LeaseOrAgreementYearsDetails, RentUnderReviewNegotiatedYes}
+import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, CateringOperationNo, CateringOperationOrLettingAccommodationSection, CateringOperationYes, LettingSection}
+import models.submissions.abouttheproperty.{AboutTheProperty, BuildingOperationHaveAWebsiteYes, CurrentPropertyHotel, EnforcementActionsNo, LicensableActivitiesNo, PremisesLicensesConditionsNo, PropertyDetails, TiedGoodsNo, WebsiteForPropertyDetails}
 import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, AboutYourTradingHistory}
 import models.submissions.aboutyou.{AboutYou, CustomerDetails}
 import models.submissions.additionalinformation.{AdditionalInformation, AltContactInformation, AlternativeContactDetails, AlternativeContactDetailsAddress, FurtherInformationOrRemarksDetails}
@@ -33,6 +37,7 @@ trait FakeObjects {
   val prefilledStillConnectedDetailsYes                       = StillConnectedDetails(Some(AddressConnectionTypeYes))
   val prefilledAddress                                        = Address("001", Some("GORING ROAD"), Some("GORING-BY-SEA, WORTHING"), "BN12 4AX")
   val prefilledContactDetails                                 = ContactDetails("1234567890", "TestEmail@gmail.com")
+  val prefilledFakeName                                       = "John Doe"
   val prefilledContactAddress                                 = AlternativeContactDetailsAddress(
     "004",
     Some("GORING ROAD"),
@@ -44,6 +49,8 @@ trait FakeObjects {
     CateringAddress("004", Some("GORING ROAD"), Some("GORING-BY-SEA, WORTHING"), Some("West sussex"), "BN12 4AX")
   val prefilledLettingAddress                                 =
     LettingAddress("004", Some("GORING ROAD"), Some("GORING-BY-SEA, WORTHING"), Some("West sussex"), "BN12 4AX")
+  val prefilledLandlordAddress                                =
+    LandlordAddress("004", Some("GORING ROAD"), Some("GORING-BY-SEA, WORTHING"), Some("West sussex"), "BN12 4AX")
   val prefilledFirstOccupy                                    = LocalDate.of(1996, 3, 15)
   val prefilledFinancialYear                                  = LocalDate.of(2022, 6, 1)
   val prefilledDateInput                                      = LocalDate.of(2022, 6, 1)
@@ -73,6 +80,17 @@ trait FakeObjects {
       )
     )
   )
+  val prefilledAboutTheLandlord                               =
+    AboutTheLandlord(
+      prefilledFakeName,
+      prefilledLandlordAddress
+    )
+  val prefilledLeaseOrAgreementYearsDetails                   =
+    LeaseOrAgreementYearsDetails(
+      CommenceWithinThreeYearsYes,
+      AgreedReviewedAlteredThreeYearsYes,
+      RentUnderReviewNegotiatedYes
+    )
   val prefilledUserLoginDetails                               =
     UserLoginDetails("Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=", "FOR6010", "99996010004", prefilledAddress)
   val prefilledUserLoginDetails6015                           =
@@ -160,4 +178,8 @@ trait FakeObjects {
     IndexedSeq(prefilledLettingSection)
   )
 
+  val prefilledAboutLeaseOrAgreementPartOne = AboutLeaseOrAgreementPartOne(
+    Some(prefilledAboutTheLandlord),
+    Some(prefilledLeaseOrAgreementYearsDetails)
+  )
 }

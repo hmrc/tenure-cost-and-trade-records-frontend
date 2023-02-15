@@ -24,9 +24,6 @@ import views.behaviours.QuestionViewBehaviours
 
 class CurrentRentPayableWithin12MonthsViewSpec extends QuestionViewBehaviours[CurrentRentPayableWithin12Months] {
 
-  def currentRentPayableWithin12MonthsView =
-    app.injector.instanceOf[views.html.aboutYourLeaseOrTenure.currentRentPayableWithin12Months]
-
   val messageKeyPrefix = "currentRentPayableWithin12Months"
 
   override val form = CurrentRentPayableWithin12MonthsForm.currentRentPayableWithin12MonthsForm

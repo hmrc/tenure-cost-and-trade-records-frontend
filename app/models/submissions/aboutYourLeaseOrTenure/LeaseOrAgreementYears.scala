@@ -16,46 +16,60 @@
 
 package models.submissions.aboutYourLeaseOrTenure
 
-import models.{NamedEnum, NamedEnumSupport}
+import models.{EnumFormat, NamedEnum, NamedEnumSupport}
+import play.api.libs.json.Format
 
 sealed trait CommenceWithinThreeYears extends NamedEnum {
-  val key = "commenceWithinThreeYears"
+  override def key: String = "commenceWithinThreeYears"
 }
 object CommenceWithinThreeYearsYes extends CommenceWithinThreeYears {
-  val name = "yes"
+  override def name: String = "yes"
 }
 object CommenceWithinThreeYearsNo extends CommenceWithinThreeYears {
-  val name = "no"
+  override def name: String = "no"
 }
 
-object CommenceWithinThreeYear extends NamedEnumSupport[CommenceWithinThreeYears] {
-  val all = List(CommenceWithinThreeYearsYes, CommenceWithinThreeYearsNo)
+object CommenceWithinThreeYears extends NamedEnumSupport[CommenceWithinThreeYears] {
+  implicit val format: Format[CommenceWithinThreeYears] = EnumFormat(CommenceWithinThreeYears)
+
+  override def all = List(CommenceWithinThreeYearsYes, CommenceWithinThreeYearsNo)
+
+  val key = all.head.key
 }
 
 sealed trait AgreedReviewedAlteredThreeYears extends NamedEnum {
-  val key = "agreedReviewedAlteredThreeYears"
+  override def key: String = "agreedReviewedAlteredThreeYears"
 }
 object AgreedReviewedAlteredThreeYearsYes extends AgreedReviewedAlteredThreeYears {
-  val name = "yes"
+  override def name: String = "yes"
 }
 object AgreedReviewedAlteredThreeYearsNo extends AgreedReviewedAlteredThreeYears {
-  val name = "no"
+  override def name: String = "no"
 }
 
-object AgreedReviewedAlteredThreeYear extends NamedEnumSupport[AgreedReviewedAlteredThreeYears] {
+object AgreedReviewedAlteredThreeYears extends NamedEnumSupport[AgreedReviewedAlteredThreeYears] {
+  implicit val format: Format[AgreedReviewedAlteredThreeYears] = EnumFormat(AgreedReviewedAlteredThreeYears)
+
   val all = List(AgreedReviewedAlteredThreeYearsYes, AgreedReviewedAlteredThreeYearsNo)
+
+  val key = all.head.key
 }
 
 sealed trait RentUnderReviewNegotiated extends NamedEnum {
-  val key = "rentUnderReviewNegotiated"
+  override def key: String = "rentUnderReviewNegotiated"
 }
 object RentUnderReviewNegotiatedYes extends RentUnderReviewNegotiated {
-  val name = "yes"
+  override def name: String = "yes"
 }
 object RentUnderReviewNegotiatedNo extends RentUnderReviewNegotiated {
-  val name = "no"
+  override def name: String = "no"
 }
 
-object RentUnderReviewNegotiate extends NamedEnumSupport[RentUnderReviewNegotiated] {
+object RentUnderReviewNegotiated extends NamedEnumSupport[RentUnderReviewNegotiated] {
+  implicit val format: Format[RentUnderReviewNegotiated] = EnumFormat(RentUnderReviewNegotiated)
+
   val all = List(RentUnderReviewNegotiatedYes, RentUnderReviewNegotiatedNo)
+
+  val key = all.head.key
+
 }

@@ -16,8 +16,15 @@
 
 package models.submissions.aboutYourLeaseOrTenure
 
+import play.api.libs.json.Json
+
 case class LeaseOrAgreementYearsDetails(
   commenceWithinThreeYears: CommenceWithinThreeYears,
   agreedReviewedAlteredThreeYears: AgreedReviewedAlteredThreeYears,
   rentUnderReviewNegotiated: RentUnderReviewNegotiated
 )
+
+object LeaseOrAgreementYearsDetails {
+  implicit val format = Json.format[LeaseOrAgreementYearsDetails]
+
+}
