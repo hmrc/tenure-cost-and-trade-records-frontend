@@ -33,26 +33,24 @@ trait FakeViews { this: GuiceOneAppPerSuite =>
     app.injector.instanceOf[franchiseOrLettingsTiedToProperty]
   lazy val cateringOperationView                      =
     app.injector.instanceOf[cateringOperationOrLettingAccommodation]
-  lazy val cateringOperationOrLettingAccommodationDetailsView       =
+  lazy val cateringOperationDetailsView               =
     app.injector.instanceOf[cateringOperationOrLettingAccommodationDetails]
-  lazy val cateringOperationOrLettingAccommodationRentDetailsView   =
+  lazy val cateringOperationRentDetailsView           =
     app.injector.instanceOf[cateringOperationOrLettingAccommodationRentDetails]
-  lazy val cateringOperationOrLettingAccommodationCheckboxesDetails =
-    app.injector.instanceOf[cateringOperationOrLettingAccommodationCheckboxesDetails]
-  lazy val aboutYourLandlordView                                    =
+  lazy val lettingOtherPartOfPropertyRentIncludesView =
+    app.injector.instanceOf[cateringOperationOrLettingAccommodationRentIncludes]
+  lazy val aboutYourLandlordView                      =
     app.injector.instanceOf[aboutYourLandlord]
-  lazy val lettingOtherPartOfPropertyView                           =
+  lazy val lettingOtherPartOfPropertyView             =
     app.injector.instanceOf[cateringOperationOrLettingAccommodation]
-  lazy val lettingOtherPartOfPropertyDetailsView                    =
+  lazy val lettingOtherPartOfPropertyDetailsView      =
     app.injector.instanceOf[cateringOperationOrLettingAccommodationDetails]
-  lazy val lettingOtherPartOfPropertyRentDetailsView                =
+  lazy val lettingOtherPartOfPropertyRentDetailsView  =
     app.injector.instanceOf[cateringOperationOrLettingAccommodationRentDetails]
-  lazy val lettingOtherPartOfPropertyCheckboxesDetailsView          =
-    app.injector.instanceOf[cateringOperationOrLettingAccommodationCheckboxesDetails]
-  lazy val currentRentPayableWithin12MonthsView                     =
+  lazy val currentRentPayableWithin12MonthsView       =
     app.injector.instanceOf[currentRentPayableWithin12Months]
-  lazy val currentAnnualRentView                                    =
+  lazy val currentAnnualRentView                      =
     app.injector.instanceOf[currentAnnualRent]
-  lazy val leaseOrAgreementYearsView                                =
+  lazy val leaseOrAgreementYearsView                  =
     app.injector.instanceOf[leaseOrAgreementYears]
 }
