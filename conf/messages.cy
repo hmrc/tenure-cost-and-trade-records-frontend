@@ -118,11 +118,11 @@ label.areYouConnected.addressUpdate = Yes, and the address needs to be updated
 ##############################
 editAddress.heading = How do you expect the connected address to be shown?
 label.buildingNameNumber=Address line 1
-label.street1=Address line 2 (optional)
-label.street2=Address line 3 (optional)
+label.street1=Address line 2
+label.street2=Address line 3
 label.townCity=Town or city
-label.address.townCity=Town or city
-label.address.postcode=Postcode (optional)
+#label.address.townCity=Town or city
+#label.address.postcode=Postcode (optional)
 
 #6010 ARE YOU STILL CONNECTED NO
 ##############################
@@ -142,7 +142,7 @@ error.removeConnectionFullName.required = Please provide your full name
 #6010 ABOUT YOU
 ##############################
 aboutYou.heading = Provide your contact details
-aboutYou.subheading2 = We will only use your contact details to update you about your enquiry.
+aboutYou.subheading = We will only use your contact details to update you about your enquiry.
 aboutYou.fullName = Full Name
 aboutYou.contactDetails.email = Email address
 aboutYou.contactDetails.phone = Telephone number
@@ -179,6 +179,10 @@ propertyCurrentlyUsed.pubRestaurant = Pub or restaurant
 propertyCurrentlyUsed.hotel = Hotel
 propertyCurrentlyUsed.other = Other
 propertyCurrentlyUsedOther.textbox = Please give details if the property has another use, or is vacant
+
+propertyCurrentlyUsed.healthFarm = Health Farm
+propertyCurrentlyUsed.lodgeAndRestaurant = Lodge and restaurant
+propertyCurrentlyUsed.conferenceCentre = Conference centre
 
 #WEBSITE FOR PROPERTY (USED ON 6010, 6011, 6015, 6016,6030, 6035, 6036, 6037, 6045)
 ##############################
@@ -235,8 +239,8 @@ licensableActivitiesDetails.heading = Describe the licensable activities regular
 ####################################
 premisesLicenseConditionsDetails.heading = Describe the conditions restricting the use of all or parts of the property
 
-#PREMISES LICENCE
-#################
+#PREMISES LICENCE CONDITIONS
+##############################
 premisesLicenseConditions.heading = Does your premises licence have conditions restricting the use of all or parts of the property?
 hint.premisesLicenseConditions = For example, no drinks outside after 22:00
 
@@ -258,7 +262,7 @@ cateringOperationOrLettingAccommodation.heading = Is any catering operation or l
 hint.cateringOperationOrLettingAccommodation = Choose ‘no’ if you’ve included turnover from these businesses on the previous page. You will have the opportunity to add more than one business if required.
 
 #LETTING OTHER PART OF PROPERTY
-###############################
+##############################
 lettingOtherPartOfProperties.heading = Lettings
 label.lettingOtherPartOfProperties = Is any rent received from letting other parts of the property?
 hint.lettingOtherPartOfProperties = Including advertising rights, stations or hoardings. Choose ‘no’ if you’ve already included the rental payments in your turnover.
@@ -282,6 +286,14 @@ checkbox.rentPayable.includeOtherProperty = include other property?
 checkbox.rentPayable.onlyPartOfProperty = relate to only part of the property?
 checkbox.rentPayable.onlyToLand = relate only to land (excluding buildings)?
 checkbox.rentPayable.shellUnit = relate to a ’shell’ unit (did you have to fit the property out yourself)?
+#6016 DOES THE RENT PAYABLE
+##############################
+checkbox.rentPayable.proprietor = Proprietor’s, manager’s or staff living accommodation
+checkbox.rentPayable.otherProperty = Other property
+checkbox.rentPayable.onlyPart = Only part of the property
+checkbox.rentPayable.onlyLand = Only to land (excluding buildings)
+checkbox.rentPayable.shellUnit = a ’shell’ unit (you had to fit the property out yourself)
+##############################
 label.detailsToQuestions = Give details if you selected any of the options
 hint.detailsToQuestions = For example, the rent includes an upstairs flat, or also includes the premises next door
 error.detailsToQuestions.required = Please provide further information
@@ -378,7 +390,7 @@ label.rentReducedOnReview = Can the rent be reduced on review under the terms of
 #PAY A CAPITAL SUM
 ##############################
 capitalSumOrPremium.heading = About your lease or agreement
-label.capitalSumOrPremium = Did you pay a capital sum or premium for your lease or agreement, ignoring tenants’ inventory?
+label.capitalSumOrPremium = Did you pay a capital sum or premium for your lease or agreement, ignoring tenant’s inventory?
 hint.capitalSumOrPremium = The sum could be paid to the landlord or a previous lessee
 
 #PAYMENT WHEN LEASE IS GRANTED
@@ -472,6 +484,7 @@ error.tenantsAdditionsDisregardedDetails.maxLength = This must be 1000 character
 
 ##LEGAL PLANNING RESTRICTIONS
 ##############################
+legalPlanningRestrictions.heading = About your lease or agreement
 label.legalPlanningRestrictions = Are there any legal or planning restrictions, unusual terms or conditions in the lease or agreement that may have affected the rent payable?
 hint.legalPlanningRestrictions = For example, a break clause, contracting out of the Landlord and Tenant Act, etc
 
@@ -555,9 +568,47 @@ hint.aboutYou = If you’re renting or leasing the property, even as a charity o
 ##############################
 taskList.heading = Declaration summary
 
+#COST OF SALES OR GROSS PROFIT
+#########
+costOfSalesOrGrossProfit.heading = Would you rather give details of your cost of sales, or your gross profits?
+hint.costOfSalesOrGrossProfit = We need to see details of your turnover broken down by specific department. You can decide whether you'd like to provide these figures for your cost of sales, or gross profits.
+label.costOfSales = Cost of sales
+label.grossProfit = Gross profits
+
 #TURNOVER
 #########
-turnover.heading = Turnover
+turnover.heading = This is a holding page for the turnover page
+
+#COST OF SALES
+costOfSales.heading = This is a holding page for the cost of sales page
+
+#GROSS PROFIT
+grossProfit.heading = This is a holding page for the gross profits page
+
+#TOTAL PAYROLL COSTS (FORM 6015)
+#########
+totalPayrollCosts.heading = This is a holding page for the total payroll costs page
+
+#VARIABLE OPERATING EXPENSES (FORM 6015)
+#########
+variableOperatingExpenses.heading = This is a holding page for the variable operating expenses page
+
+#FIXED OPERATING EXPENSES (FORM 6015)
+#########
+fixedOperatingExpenses.heading = This is a holding page for the fixed operating expenses page
+
+#OTHER COSTS (FORM 6015)
+#########
+otherCosts.heading = This is a holding page for the other costs page
+
+#NET PROFITS (FORM 6015)
+#########
+netProfit.heading = This is a holding page for the net profits page
+
+#CONCESSIONS OR FRANCHISE (FORM 6015)
+#########
+concessionOrFranchise.heading = Is any concession or franchise run as a separate business from the property?
+concessionOrFranchise.subheading = Choose 'no' if you've included turnover from these businesses in your turnover. You will have the opportunity to add more than one business if required.
 
 #SHARED RESPONSIBILITIES
 ##############################
@@ -580,7 +631,7 @@ label.alternativeContactDetails = Contact details
 hint.alternativeContactDetails = If you like us to either contact you at at different address or  contact someone else if we have any queries about this form, please give details here
 alternativeContactFullName.label = Full name
 label.phone = Telephone number
-label.email1 = Email address
+label.email = Email address
 alternativeContactDetails.address.label = Correspondence address
 alternativeContactAddress.buildingNameNumber.label = Address line 1
 alternativeContactAddress.address2.label = Address line 2 (optional)
@@ -592,6 +643,14 @@ error.alternativeContactFullName.required = Please enter the full name
 #TENANCY LEASE AGREEMENT EXPIRE (FORM 6011)
 ###########################################
 tenancyLeaseAgreementExpire.heading = When does your tenancy, lease or agreement expire, or if earlier, what is the date of your next review (excluding indexation)?
+
+#PREMISES LICENSE GRANTED (FORM 6015)
+###########################################
+premisesLicenseGranted.heading = Has the premises licence been granted for the property?
+
+#PREMISES LICENSE GRANTED DETAILS (FORM 6015)
+###########################################
+premisesLicenseGrantedInformation.heading = Give details of your premises licence, including any conditions restricting the use of all or part of the property
 
 #CHECK YOUR ANSWERS
 ###################
@@ -660,7 +719,7 @@ premisesLicenseConditions.helpWithServicePremisesLicenseConditions.p1 = Premises
 premisesLicenseConditions.helpWithServicePremisesLicenseConditions.p2 = If you’re unsure, check your premises licence. Any special conditions will be clearly stated there.
 
 #HELP WITH SERVICE PREMISES LICENSE CONDITIONS
-##############################
+##############################################
 premisesLicenseConditionsDetails.helpWithServicePremisesLicenseConditionsDetailsHeader = Describing restrictions on the use of the property
 premisesLicenseConditionsDetails.helpWithServicePremisesLicenseConditionsDetails = You’re only required to write a short description of the conditions we’re concerned with. Examples of acceptable descriptions include:
 premisesLicenseConditionsDetails.listBlock1.p1 = No drinks allowed on the terrace after 10pm
@@ -808,9 +867,9 @@ rentQuantityOfBeersDetails.helpWithServiceRentQuantityOfBeersDetails = Please gi
 alternativeContact.helpWithServiceAlternativeContactHeader = Alternative contact details
 alternativeContact.helpWithServiceAlternativeContact = If you don’t need to provide us with alternative contact details, please select ‘Save and continue’.
 
-#ERRORS
-#######
-error.required=Please provide a value
+# Errors
+########
+error.required = Please provide a value
 error.boolean_missing=You must choose one
 error.no_value_selected=You must choose one
 contactDetails.email1.email.mismatch=Email addresses must match

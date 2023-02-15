@@ -47,7 +47,8 @@ class AboutThePropertyController @Inject() (
           request.sessionData.aboutTheProperty.flatMap(_.propertyDetails) match {
             case Some(propertyDetails) => aboutThePropertyForm.fillAndValidate(propertyDetails)
             case _                     => aboutThePropertyForm
-          }
+          },
+          request.sessionData.userLoginDetails.forNumber
         )
       )
     )
@@ -57,7 +58,10 @@ class AboutThePropertyController @Inject() (
     aboutThePropertyForm
       .bindFromRequest()
       .fold(
-        formWithErrors => Future.successful(BadRequest(aboutThePropertyView(formWithErrors))),
+        formWithErrors =>
+          Future.successful(
+            BadRequest(aboutThePropertyView(formWithErrors, request.sessionData.userLoginDetails.forNumber))
+          ),
         data => {
           val updatedData = updateAboutTheProperty(_.copy(propertyDetails = Some(data)))
           session.saveOrUpdate(updatedData)

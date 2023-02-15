@@ -18,7 +18,7 @@ package navigation
 
 import connectors.Audit
 import models.Session
-import navigation.identifiers.{CateringOperationPageId, FranchiseOrLettingsTiedToPropertyId, Identifier, LettingAccommodationPageId}
+import navigation.identifiers.{CateringOperationPageId, ConcessionOrFranchiseId, FranchiseOrLettingsTiedToPropertyId, Identifier, LettingAccommodationPageId}
 import org.scalatest.matchers.must.Matchers.convertToAnyMustWrapper
 import play.api.libs.json.JsObject
 import uk.gov.hmrc.http.HeaderCarrier
@@ -37,6 +37,11 @@ class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec {
     Session(prefilledUserLoginDetails, aboutFranchisesOrLettings = Some(prefilledAboutFranchiseOrLettings))
   val sessionAboutFranchiseOrLettingNo  =
     Session(prefilledUserLoginDetails, aboutFranchisesOrLettings = Some(prefilledAboutFranchiseOrLettingsNo))
+
+  val sessionAboutFranchiseOrLettingYes6015 =
+    Session(prefilledUserLoginDetails6015, aboutFranchisesOrLettings = Some(prefilledAboutFranchiseOrLettings6015))
+  val sessionAboutFranchiseOrLettingNo6015  =
+    Session(prefilledUserLoginDetails6015, aboutFranchisesOrLettings = Some(prefilledAboutFranchiseOrLettingsNo6015))
 
   "About franchise or lettings navigator" when {
 
@@ -93,6 +98,22 @@ class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec {
         .apply(
           sessionAboutFranchiseOrLettingNo
         ) mustBe controllers.aboutYourLeaseOrTenure.routes.AboutYourLandlordController.show()
+    }
+
+    "return a function that goes to concession or franchise page when franchise page has been completed yes 6015" in {
+      navigator
+        .nextPage(ConcessionOrFranchiseId)
+        .apply(
+          sessionAboutFranchiseOrLettingYes6015
+        ) mustBe controllers.routes.LoginController.show()
+    }
+
+    "return a function that goes to concession or franchise page when franchise page has been completed no 6015" in {
+      navigator
+        .nextPage(ConcessionOrFranchiseId)
+        .apply(
+          sessionAboutFranchiseOrLettingNo6015
+        ) mustBe controllers.routes.LoginController.show()
     }
   }
 }

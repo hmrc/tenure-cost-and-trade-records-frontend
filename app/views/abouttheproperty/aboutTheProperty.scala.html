@@ -25,14 +25,16 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukCharacterCount
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukFieldset
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Radios
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Label
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Hint
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Input
 @import uk.gov.hmrc.govukfrontend.views.Aliases.RadioItem
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Fieldset
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Legend
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukCheckboxes
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.checkboxes.CheckboxItem
+@import models.Session
+@import actions.SessionRequest
 
 @this(layout: Layout,
         govukButton: GovukButton,
@@ -43,10 +45,12 @@
         govukTextarea: GovukTextarea,
         govukCharacterCount: GovukCharacterCount,
         govukFieldset: GovukFieldset,
+        govukCheckboxes: GovukCheckboxes,
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[PropertyDetails])(implicit request: Request[_], messages: Messages)
+
+@(theForm: Form[PropertyDetails], forType: String)(implicit request: Request[_], messages: Messages)
 
 @content = {
   <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
@@ -64,52 +68,85 @@
  )
 )
 
-@govukRadios(Radios(
- fieldset = Some(Fieldset(
-  legend = Some(Legend(
-   content = Text(messages("label.propertyCurrentlyUsed")),
-   classes = "govuk-fieldset__legend--m",
-  ))
- )),
- name = "propertyCurrentlyUsed",
- items = Seq(
-  RadioItem(
-   content = Text(messages("propertyCurrentlyUsed.publicHouse")),
-   value = Some("publicHouse")
-  ),
-  RadioItem(
-   content = Text(messages("propertyCurrentlyUsed.wineCafeBar")),
-   value = Some("wineCafeBar")
-  ),
-  RadioItem(
-   content = Text(messages("propertyCurrentlyUsed.otherBar")),
-   value = Some("otherBar")
-  ),
-  RadioItem(
-   content = Text(messages("propertyCurrentlyUsed.pubRestaurant")),
-   value = Some("pubRestaurant")
-  ),
-  RadioItem(
-   content = Text(messages("propertyCurrentlyUsed.licencedRestaurant")),
-   value = Some("licencedRestaurant")
-  ),
-  RadioItem(
-   content = Text(messages("propertyCurrentlyUsed.hotel")),
-   value = Some("hotel")
-  ),
-  RadioItem(
-   content = Text(messages("propertyCurrentlyUsed.discoNightclub")),
-   value = Some("discoNightclub")
-  ),
-  RadioItem(
-   content = Text(messages("propertyCurrentlyUsed.other")),
-   value = Some("other"),
-   conditionalHtml = Some(conditionalHTML)
-  )
- ),
- errorMessage = theForm.errors.asTextErrorMessageForField("propertyCurrentlyUsed")
-).withFormField(theForm("propertyCurrentlyUsed")))
+ <p class="govuk-body">
+  <b>@messages("label.propertyCurrentlyUsed")</b>
+ </p>
 
+@if(forType.equals("FOR6010") || forType.equals("FOR6011")) {
+ @includes.radioButtons(
+  govukRadios,
+  theForm,
+  "propertyCurrentlyUsed",
+  "govuk-fieldset__legend--m",
+  Seq(
+   RadioItem(
+    content = Text(messages("propertyCurrentlyUsed.publicHouse")),
+    value = Some("publicHouse")
+   ),
+   RadioItem(
+    content = Text(messages("propertyCurrentlyUsed.wineCafeBar")),
+    value = Some("wineCafeBar")
+   ),
+   RadioItem(
+    content = Text(messages("propertyCurrentlyUsed.otherBar")),
+    value = Some("otherBar")
+   ),
+   RadioItem(
+    content = Text(messages("propertyCurrentlyUsed.pubRestaurant")),
+    value = Some("pubRestaurant")
+   ),
+   RadioItem(
+    content = Text(messages("propertyCurrentlyUsed.licencedRestaurant")),
+    value = Some("licencedRestaurant")
+   ),
+   RadioItem(
+    content = Text(messages("propertyCurrentlyUsed.hotel")),
+    value = Some("hotel")
+   ),
+   RadioItem(
+    content = Text(messages("propertyCurrentlyUsed.discoNightclub")),
+    value = Some("discoNightclub")
+   ),
+   RadioItem(
+    content = Text(messages("propertyCurrentlyUsed.other")),
+    value = Some("other"),
+    conditionalHtml = Some(conditionalHTML)
+   )
+  ))
+}
+
+@if(forType.equals("FOR6015") || forType.equals("FOR6016")) {
+ @includes.checkboxes(
+  govukCheckboxes,
+  theForm,
+  "propertyCurrentlyUsed",
+  "govuk-fieldset__legend--m",
+  Seq(
+   CheckboxItem(
+    content = Text(messages("propertyCurrentlyUsed.hotel")),
+    value = "hotel"
+   ),
+   CheckboxItem(
+    content = Text(messages("propertyCurrentlyUsed.healthFarm")),
+    value = "healthFarm"
+   ),
+   CheckboxItem(
+    content = Text(messages("propertyCurrentlyUsed.lodgeAndRestaurant")),
+    value = "lodgeAndRestaurant"
+   ),
+   CheckboxItem(
+    content = Text(messages("propertyCurrentlyUsed.conferenceCentre")),
+    value = "conferenceCentre"
+   ),
+   CheckboxItem(
+    content = Text(messages("propertyCurrentlyUsed.other")),
+    value = "other",
+    conditionalHtml = Some(conditionalHTML)
+   )
+  )
+ )
+
+}
 }
 
 @conditionalHTML = {

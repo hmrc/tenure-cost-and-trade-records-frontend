@@ -180,6 +180,10 @@ propertyCurrentlyUsed.hotel = Hotel
 propertyCurrentlyUsed.other = Other
 propertyCurrentlyUsedOther.textbox = Please give details if the property has another use, or is vacant
 
+propertyCurrentlyUsed.healthFarm = Health Farm
+propertyCurrentlyUsed.lodgeAndRestaurant = Lodge and restaurant
+propertyCurrentlyUsed.conferenceCentre = Conference centre
+
 #WEBSITE FOR PROPERTY (USED ON 6010, 6011, 6015, 6016,6030, 6035, 6036, 6037, 6045)
 ##############################
 buildingOperatingHaveAWebsite.heading = Does the business operating from the property have a website?
@@ -282,6 +286,14 @@ checkbox.rentPayable.includeOtherProperty = include other property?
 checkbox.rentPayable.onlyPartOfProperty = relate to only part of the property?
 checkbox.rentPayable.onlyToLand = relate only to land (excluding buildings)?
 checkbox.rentPayable.shellUnit = relate to a ’shell’ unit (did you have to fit the property out yourself)?
+#6016 DOES THE RENT PAYABLE
+##############################
+checkbox.rentPayable.proprietor = Proprietor’s, manager’s or staff living accommodation
+checkbox.rentPayable.otherProperty = Other property
+checkbox.rentPayable.onlyPart = Only part of the property
+checkbox.rentPayable.onlyLand = Only to land (excluding buildings)
+checkbox.rentPayable.shellUnit = a ’shell’ unit (you had to fit the property out yourself)
+##############################
 label.detailsToQuestions = Give details if you selected any of the options
 hint.detailsToQuestions = For example, the rent includes an upstairs flat, or also includes the premises next door
 error.detailsToQuestions.required = Please provide further information
@@ -556,9 +568,47 @@ hint.aboutYou = If you’re renting or leasing the property, even as a charity o
 ##############################
 taskList.heading = Declaration summary
 
+#COST OF SALES OR GROSS PROFIT
+#########
+costOfSalesOrGrossProfit.heading = Would you rather give details of your cost of sales, or your gross profits?
+hint.costOfSalesOrGrossProfit = We need to see details of your turnover broken down by specific department. You can decide whether you'd like to provide these figures for your cost of sales, or gross profits.
+label.costOfSales = Cost of sales
+label.grossProfit = Gross profits
+
 #TURNOVER
 #########
-turnover.heading = Turnover
+turnover.heading = This is a holding page for the turnover page
+
+#COST OF SALES
+costOfSales.heading = This is a holding page for the cost of sales page
+
+#GROSS PROFIT
+grossProfit.heading = This is a holding page for the gross profits page
+
+#TOTAL PAYROLL COSTS (FORM 6015)
+#########
+totalPayrollCosts.heading = This is a holding page for the total payroll costs page
+
+#VARIABLE OPERATING EXPENSES (FORM 6015)
+#########
+variableOperatingExpenses.heading = This is a holding page for the variable operating expenses page
+
+#FIXED OPERATING EXPENSES (FORM 6015)
+#########
+fixedOperatingExpenses.heading = This is a holding page for the fixed operating expenses page
+
+#OTHER COSTS (FORM 6015)
+#########
+otherCosts.heading = This is a holding page for the other costs page
+
+#NET PROFITS (FORM 6015)
+#########
+netProfit.heading = This is a holding page for the net profits page
+
+#CONCESSIONS OR FRANCHISE (FORM 6015)
+#########
+concessionOrFranchise.heading = Is any concession or franchise run as a separate business from the property?
+concessionOrFranchise.subheading = Choose 'no' if you've included turnover from these businesses in your turnover. You will have the opportunity to add more than one business if required.
 
 #SHARED RESPONSIBILITIES
 ##############################
@@ -593,6 +643,14 @@ error.alternativeContactFullName.required = Please enter the full name
 #TENANCY LEASE AGREEMENT EXPIRE (FORM 6011)
 ###########################################
 tenancyLeaseAgreementExpire.heading = When does your tenancy, lease or agreement expire, or if earlier, what is the date of your next review (excluding indexation)?
+
+#PREMISES LICENSE GRANTED (FORM 6015)
+###########################################
+premisesLicenseGranted.heading = Has the premises licence been granted for the property?
+
+#PREMISES LICENSE GRANTED DETAILS (FORM 6015)
+###########################################
+premisesLicenseGrantedInformation.heading = Give details of your premises licence, including any conditions restricting the use of all or part of the property
 
 #CHECK YOUR ANSWERS
 ###################

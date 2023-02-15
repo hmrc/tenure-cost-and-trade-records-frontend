@@ -28,10 +28,10 @@ class FranchiseOrLettingsTiedToPropertyViewSpec extends QuestionViewBehaviours[F
 
   override val form = FranchiseOrLettingsTiedToPropertyForm.franchiseOrLettingsTiedToPropertyForm
 
-  def createView = () => franchiseOrLettingsTiedToPropertyView(form)(fakeRequest, messages)
+  def createView = () => franchiseOrLettingsTiedToPropertyView(form, "FOR6010")(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[FranchiseOrLettingsTiedToProperty]) =>
-    franchiseOrLettingsTiedToPropertyView(form)(fakeRequest, messages)
+    franchiseOrLettingsTiedToPropertyView(form, "FOR6010")(fakeRequest, messages)
 
   "Franchise or lettings tied to property view" must {
 

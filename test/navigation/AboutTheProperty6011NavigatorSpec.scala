@@ -85,6 +85,8 @@ class AboutTheProperty6011NavigatorSpec extends TestBaseSpec {
     AboutTheProperty(
       Some(PropertyDetails("OccupierName", CurrentPropertyHotel, None)),
       Some(WebsiteForPropertyDetails(BuildingOperationHaveAWebsiteYes, Some("webAddress"))),
+      Some(PremisesLicenseGrantedYes),
+      Some(PremisesLicenseGrantedInformationDetails("test")),
       Some(LicensableActivitiesYes),
       Some(LicensableActivitiesInformationDetails("Licensable Activities Details")),
       Some(PremisesLicensesConditionsYes),

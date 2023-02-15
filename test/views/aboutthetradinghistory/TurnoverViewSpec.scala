@@ -46,11 +46,6 @@ class TurnoverViewSpec extends QuestionViewBehaviours[AboutYourTradingHistory] {
       backlinkUrl mustBe controllers.aboutthetradinghistory.routes.AboutYourTradingHistoryController.show.url
     }
 
-    "contain an subhead for page" in {
-      val doc = asDocument(createViewUsingForm(form))
-      assertContainsText(doc, "This is a holding page while the turnover page is developed")
-    }
-
     "contain save and continue button with the value Save and Continue" in {
       val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("continue").text()

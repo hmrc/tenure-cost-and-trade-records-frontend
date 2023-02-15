@@ -103,6 +103,28 @@ trait TestBaseSpec
       Some(prefilledAboutYou),
       Some(prefilledAboutThePropertyNo)
     )
+//<<<<<<< HEAD
+//  )
+//  val testAboutYou                             = AboutYou(Some(CustomerDetails("Tobermory", ContactDetails("12345678909", "test@email.com"))))
+//  val testAboutThePropertyNo                   = AboutTheProperty(
+//    Some(PropertyDetails("OccupierName", CurrentPropertyHotel, None)),
+//    Some(WebsiteForPropertyDetails(BuildingOperationHaveAWebsiteYes, Some("webAddress"))),
+//    None,
+//    None,
+//    Some(LicensableActivitiesNo),
+//    None,
+//    Some(PremisesLicensesConditionsNo),
+//    None,
+//    Some(EnforcementActionsNo),
+//    None,
+//    Some(TiedGoodsNo),
+//    None
+//  )
+//
+//  val preFilledSession =
+//    preEnrichedActionRefiner(testUserLoginDetails, testStillConnectedDetailsYes, testAboutYou, testAboutThePropertyNo)
+//=======
+//>>>>>>> main
 
   def preEnrichedActionRefiner(
     userLoginDetails: UserLoginDetails = prefilledUserLoginDetails,

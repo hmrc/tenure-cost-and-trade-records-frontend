@@ -48,7 +48,8 @@ class FranchiseOrLettingsTiedToPropertyController @Inject() (
             case Some(franchisesOrLettingsTiedToProperty) =>
               franchiseOrLettingsTiedToPropertyForm.fillAndValidate(franchisesOrLettingsTiedToProperty)
             case _                                        => franchiseOrLettingsTiedToPropertyForm
-          }
+          },
+          request.sessionData.stillConnectedDetails.flatMap(_.connectionToProperty).toString
         )
       )
     )
@@ -58,7 +59,12 @@ class FranchiseOrLettingsTiedToPropertyController @Inject() (
     franchiseOrLettingsTiedToPropertyForm
       .bindFromRequest()
       .fold(
-        formWithErrors => Future.successful(BadRequest(franchiseOrLettingsTiedToPropertyView(formWithErrors))),
+        formWithErrors =>
+          Future.successful(
+            BadRequest(
+              franchiseOrLettingsTiedToPropertyView(formWithErrors, request.sessionData.userLoginDetails.forNumber)
+            )
+          ),
         data => {
           val updatedData = updateAboutFranchisesOrLettings(_.copy(franchisesOrLettingsTiedToProperty = Some(data)))
           session.saveOrUpdate(updatedData)
@@ -68,3 +74,5 @@ class FranchiseOrLettingsTiedToPropertyController @Inject() (
   }
 
 }
+
+//          request.sessionData.stillConnectedDetails.flatMap(_.connectionToProperty).toString

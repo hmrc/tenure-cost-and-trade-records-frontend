@@ -46,6 +46,15 @@ object CurrentPropertyDiscoOrNightclub extends CurrentPropertyUsed {
 object CurrentPropertyOther extends CurrentPropertyUsed {
   val name = "other"
 }
+object CurrentPropertyHealthFarm extends CurrentPropertyUsed {
+  val name = "healthFarm"
+}
+object CurrentPropertyLodgeAndRestaurant extends CurrentPropertyUsed {
+  val name = "lodgeAndRestaurant"
+}
+object CurrentPropertyConferenceCentre extends CurrentPropertyUsed {
+  val name = "conferenceCentre"
+}
 
 object CurrentPropertyUsed extends NamedEnumSupport[CurrentPropertyUsed] {
   implicit val format: Format[CurrentPropertyUsed] = EnumFormat(CurrentPropertyUsed)
@@ -58,7 +67,10 @@ object CurrentPropertyUsed extends NamedEnumSupport[CurrentPropertyUsed] {
     CurrentPropertyLicencedRestaurant,
     CurrentPropertyHotel,
     CurrentPropertyDiscoOrNightclub,
-    CurrentPropertyOther
+    CurrentPropertyOther,
+    CurrentPropertyHealthFarm,
+    CurrentPropertyLodgeAndRestaurant,
+    CurrentPropertyConferenceCentre
   )
 
   val key = all.head.key

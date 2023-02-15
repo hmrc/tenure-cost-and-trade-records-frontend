@@ -17,18 +17,50 @@
 package navigation
 
 import connectors.Audit
-import models.Session
-import navigation.identifiers.{AboutYourTradingHistoryPageId, Identifier, TurnoverPageId}
+import models.{ForTypes, Session}
+import navigation.identifiers._
 import play.api.mvc.Call
+import play.api.Logging
 
 import javax.inject.Inject
 import scala.concurrent.ExecutionContext
 
-class AboutTheTradingHistoryNavigator @Inject() (audit: Audit)(implicit ec: ExecutionContext) extends Navigator(audit) {
+class AboutTheTradingHistoryNavigator @Inject() (audit: Audit)(implicit ec: ExecutionContext)
+    extends Navigator(audit)
+    with Logging {
+
+  private def turnoverRouting: Session => Call = answers => {
+    if (answers.userLoginDetails.forNumber == ForTypes.for6015)
+      controllers.aboutthetradinghistory.routes.CostOfSalesOrGrossProfitDetailsController.show()
+    else
+      controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show()
+  }
+
+  private def costOfSalesOrGrossProfitDetailsRouting: Session => Call = answers => {
+    answers.aboutTheTradingHistory.flatMap(_.costOfSalesOrGrossProfit.map(_.name)) match {
+      case Some("costOfSales") => controllers.aboutthetradinghistory.routes.CostOfSalesController.show()
+      case Some("grossProfit") => controllers.aboutthetradinghistory.routes.GrossProfitsController.show()
+      case _                   =>
+        logger.warn(
+          s"Navigation for about the property reached without correct selection of cost of sales or gross profit details by controller"
+        )
+        throw new RuntimeException("Invalid option exception for cost of sales or gross profit details routing")
+    }
+  }
 
   override val routeMap: Map[Identifier, Session => Call] = Map(
     AboutYourTradingHistoryPageId -> (_ => controllers.aboutthetradinghistory.routes.TurnoverController.show()),
-    TurnoverPageId                -> (_ =>
+    TurnoverPageId                -> turnoverRouting,
+    CostOfSalesOrGrossProfitId    -> costOfSalesOrGrossProfitDetailsRouting,
+    CostOfSalesId                 -> (_ => controllers.aboutthetradinghistory.routes.TotalPayrollCostsController.show()),
+    GrossProfitsId                -> (_ => controllers.aboutthetradinghistory.routes.TotalPayrollCostsController.show()),
+    TotalPayrollCostId            -> (_ => controllers.aboutthetradinghistory.routes.VariableOperatingExpensesController.show()),
+    VariableOperatingExpensesId   -> (_ =>
+      controllers.aboutthetradinghistory.routes.FixedOperatingExpensesController.show()
+    ),
+    FixedOperatingExpensesId      -> (_ => controllers.aboutthetradinghistory.routes.OtherCostsController.show()),
+    OtherCostsId                  -> (_ => controllers.aboutthetradinghistory.routes.NetProfitController.show()),
+    NetProfitId                   -> (_ =>
       controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show()
     )
   )

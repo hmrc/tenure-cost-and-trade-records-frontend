@@ -29,6 +29,32 @@ class AboutThePropertyNavigator @Inject() (audit: Audit)(implicit ec: ExecutionC
     extends Navigator(audit)
     with Logging {
 
+  private def websiteForPropertyRouting: Session => Call = answers => {
+    if (answers.userLoginDetails.forNumber == ForTypes.for6015)
+      controllers.abouttheproperty.routes.PremisesLicenseGrantedController.show()
+    else
+      controllers.abouttheproperty.routes.LicensableActivitiesController.show()
+  }
+
+  private def premisesLicenseGrantedRouting: Session => Call = answers => {
+    answers.aboutTheProperty.flatMap(_.premisesLicenseGrantedDetail.map(_.name)) match {
+      case Some("yes") => controllers.abouttheproperty.routes.PremisesLicenseGrantedDetailsController.show()
+      case Some("no")  => controllers.aboutthetradinghistory.routes.AboutYourTradingHistoryController.show()
+      case _           =>
+        logger.warn(
+          s"Navigation for about the property reached without correct selection of premises licence granted by controller"
+        )
+        throw new RuntimeException("Invalid option exception for licence activity routing")
+    }
+  }
+
+  private def premisesLicenseGrantedDetailsRouting: Session => Call = answers => {
+    if (answers.userLoginDetails.forNumber == ForTypes.for6015)
+      controllers.aboutthetradinghistory.routes.AboutYourTradingHistoryController.show()
+    else
+      controllers.abouttheproperty.routes.LicensableActivitiesController.show()
+  }
+
   private def licensableActivityRouting: Session => Call = answers => {
     answers.aboutTheProperty.flatMap(_.licensableActivities.map(_.name)) match {
       case Some("yes") => controllers.abouttheproperty.routes.LicensableActivitiesDetailsController.show()
@@ -90,7 +116,9 @@ class AboutThePropertyNavigator @Inject() (audit: Audit)(implicit ec: ExecutionC
 
   override val routeMap: Map[Identifier, Session => Call] = Map(
     AboutThePropertyPageId                  -> (_ => controllers.abouttheproperty.routes.WebsiteForPropertyController.show()),
-    WebsiteForPropertyPageId                -> (_ => controllers.abouttheproperty.routes.LicensableActivitiesController.show()),
+    WebsiteForPropertyPageId                -> websiteForPropertyRouting,
+    PremisesLicenseGrantedId                -> premisesLicenseGrantedRouting,
+    PremisesLicenseGrantedDetailsId         -> premisesLicenseGrantedDetailsRouting,
     LicensableActivityPageId                -> licensableActivityRouting,
     LicensableActivityDetailsPageId         -> (_ =>
       controllers.abouttheproperty.routes.PremisesLicenseConditionsController.show()

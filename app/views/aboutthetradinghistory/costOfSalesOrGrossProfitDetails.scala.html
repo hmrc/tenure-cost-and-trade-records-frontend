@@ -1,0 +1,82 @@
+@*
+ * Copyright 2023 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import models.submissions.aboutthetradinghistory.CostOfSalesOrGrossProfit
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
+@import uk.gov.hmrc.govukfrontend.views.html.components._
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Radios
+@import uk.gov.hmrc.govukfrontend.views.Aliases.RadioItem
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Fieldset
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Legend
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Hint
+@import models.submissions.aboutthetradinghistory.CostOfSalesOrGrossProfitDetailsCostOfSales
+@import models.submissions.aboutthetradinghistory.CostOfSalesOrGrossProfitDetailsGrossProfit
+
+
+@this(layout: Layout,
+        govukButton: GovukButton,
+        govukRadios: GovukRadios,
+        govukErrorSummary: GovukErrorSummary,
+        formWithCSRF: FormWithCSRF
+)
+
+@(theForm: Form[CostOfSalesOrGrossProfit])(implicit request: Request[_], messages: Messages)
+
+@layout(
+ pageHeading = messages("costOfSalesOrGrossProfit.heading"),
+ showH1 = false,
+ showSection = true,
+ sectionName = messages("label.section.aboutTheProperty"),
+  backLinkUrl = controllers.aboutthetradinghistory.routes.TurnoverController.show().url,
+ theForm = theForm
+) {
+
+ @formWithCSRF(action = controllers.aboutthetradinghistory.routes.CostOfSalesOrGrossProfitDetailsController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
+
+  @govukRadios(Radios(
+   fieldset = Some(Fieldset(
+    legend = Some(Legend(
+     content = Text(messages("costOfSalesOrGrossProfit.heading")), isPageHeading = true,
+     classes = "govuk-fieldset__legend--l",
+    ))
+   )),
+   name = "costOfSalesOrGrossProfit",
+   items = Seq(
+    RadioItem(
+     content = Text(messages("label.costOfSales")),
+     value = CostOfSalesOrGrossProfitDetailsCostOfSales.name
+    ),
+    RadioItem(
+     content = Text(messages("label.grossProfit")),
+     value = CostOfSalesOrGrossProfitDetailsGrossProfit.name
+    )
+   ),
+   hint = Some(Hint(content = Text(messages("hint.costOfSalesOrGrossProfit")))),
+   errorMessage = theForm.errors.asTextErrorMessageForField("costOfSalesOrGrossProfit")
+  ).withFormField(theForm("costOfSalesOrGrossProfit")))
+
+
+  @includes.continueButton(govukButton)
+
+  @includes.help_with_service_tiedForGoods()
+
+ }
+}
+
+
+

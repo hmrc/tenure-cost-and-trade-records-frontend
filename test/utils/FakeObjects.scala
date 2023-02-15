@@ -16,6 +16,8 @@
 
 package utils
 
+import models.submissions.aboutfranchisesorlettings.{ConcessionOrFranchiseNo, ConcessionOrFranchiseYes}
+import models.submissions.abouttheproperty.PremisesLicenseGrantedNo
 import models.submissions.Form6010.{CateringAddress, CateringOperationOrLettingAccommodationDetails, CateringOperationOrLettingAccommodationRentDetails, FranchiseOrLettingsTiedToPropertiesNo, FranchiseOrLettingsTiedToPropertiesYes, LandlordAddress, LettingAddress, LettingOtherPartOfPropertiesNo, LettingOtherPartOfPropertiesYes, LettingOtherPartOfPropertyInformationDetails, LettingOtherPartOfPropertyRentDetails}
 import models.submissions.aboutLeaseOrAgreement.AboutLeaseOrAgreementPartOne
 import models.submissions.aboutYourLeaseOrTenure.{AboutTheLandlord, AgreedReviewedAlteredThreeYearsYes, CommenceWithinThreeYearsYes, LeaseOrAgreementYearsDetails, RentUnderReviewNegotiatedYes}
@@ -91,6 +93,8 @@ trait FakeObjects {
     )
   val prefilledUserLoginDetails                               =
     UserLoginDetails("Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=", "FOR6010", "99996010004", prefilledAddress)
+  val prefilledUserLoginDetails6015                           =
+    UserLoginDetails("Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=", "FOR6015", "99996015001", prefilledAddress)
   val prefilledBaseSession                                    = Session(prefilledUserLoginDetails)
   val prefilledRemoveConnection                               =
     RemoveConnectionDetails(
@@ -107,6 +111,8 @@ trait FakeObjects {
   val prefilledAboutThePropertyNo       = AboutTheProperty(
     Some(PropertyDetails("OccupierName", CurrentPropertyHotel, None)),
     Some(WebsiteForPropertyDetails(BuildingOperationHaveAWebsiteYes, Some("webAddress"))),
+    Some(PremisesLicenseGrantedNo),
+    None,
     Some(LicensableActivitiesNo),
     None,
     Some(PremisesLicensesConditionsNo),
@@ -138,6 +144,7 @@ trait FakeObjects {
   )
   val prefilledAboutFranchiseOrLettings = AboutFranchisesOrLettings(
     Some(FranchiseOrLettingsTiedToPropertiesYes),
+    None,
     Some(CateringOperationYes),
     IndexedSeq(prefilledCateringOperationOrLettingAccommodationSection),
     Some(LettingOtherPartOfPropertiesYes),
@@ -146,6 +153,25 @@ trait FakeObjects {
 
   val prefilledAboutFranchiseOrLettingsNo = AboutFranchisesOrLettings(
     Some(FranchiseOrLettingsTiedToPropertiesNo),
+    None,
+    Some(CateringOperationNo),
+    IndexedSeq(prefilledCateringOperationOrLettingAccommodationSection),
+    Some(LettingOtherPartOfPropertiesNo),
+    IndexedSeq(prefilledLettingSection)
+  )
+
+  val prefilledAboutFranchiseOrLettings6015 = AboutFranchisesOrLettings(
+    Some(FranchiseOrLettingsTiedToPropertiesYes),
+    Some(ConcessionOrFranchiseYes),
+    Some(CateringOperationYes),
+    IndexedSeq(prefilledCateringOperationOrLettingAccommodationSection),
+    Some(LettingOtherPartOfPropertiesYes),
+    IndexedSeq(prefilledLettingSection)
+  )
+
+  val prefilledAboutFranchiseOrLettingsNo6015 = AboutFranchisesOrLettings(
+    Some(FranchiseOrLettingsTiedToPropertiesNo),
+    Some(ConcessionOrFranchiseNo),
     Some(CateringOperationNo),
     IndexedSeq(prefilledCateringOperationOrLettingAccommodationSection),
     Some(LettingOtherPartOfPropertiesNo),

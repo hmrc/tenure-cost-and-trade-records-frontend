@@ -41,7 +41,7 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[_])(implicit request: Request[_], messages: Messages)
+@(theForm: Form[_], userType: String)(implicit request: Request[_], messages: Messages)
 
 @layout(
  pageHeading = messages("franchiseLettings.heading"),

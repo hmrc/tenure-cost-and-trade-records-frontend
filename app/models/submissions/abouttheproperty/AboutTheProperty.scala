@@ -23,6 +23,8 @@ import play.api.libs.json.Json
 case class AboutTheProperty(
   propertyDetails: Option[PropertyDetails] = None,
   websiteForPropertyDetails: Option[WebsiteForPropertyDetails] = None,
+  premisesLicenseGrantedDetail: Option[PremisesLicenseGranted] = None,
+  premisesLicenseGrantedInformationDetails: Option[PremisesLicenseGrantedInformationDetails] = None,
   licensableActivities: Option[LicensableActivities] = None,
   licensableActivitiesInformationDetails: Option[LicensableActivitiesInformationDetails] = None,
   premisesLicenseConditions: Option[PremisesLicenseConditions] = None,

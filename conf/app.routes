@@ -131,6 +131,51 @@ POST        /current-rent-first-paid                                controllers.
 GET         /tenancy-lease-agreement-expire                         controllers.aboutYourLeaseOrTenure.TenancyLeaseAgreementExpireController.show()
 POST        /tenancy-lease-agreement-expire                         controllers.aboutYourLeaseOrTenure.TenancyLeaseAgreementExpireController.submit()
 
+
+# Form 6015 routing
+GET         /premises-license-granted                               controllers.abouttheproperty.PremisesLicenseGrantedController.show()
+POST        /premises-license-granted                               controllers.abouttheproperty.PremisesLicenseGrantedController.submit()
+
+# Form 6015 routing
+GET         /premises-license-granted-details                       controllers.abouttheproperty.PremisesLicenseGrantedDetailsController.show()
+POST        /premises-license-granted-details                       controllers.abouttheproperty.PremisesLicenseGrantedDetailsController.submit()
+
+# Form 6015 routing
+GET         /cost-of-sales-or-gross-profit                          controllers.aboutthetradinghistory.CostOfSalesOrGrossProfitDetailsController.show()
+POST        /cost-of-sales-or-gross-profit                          controllers.aboutthetradinghistory.CostOfSalesOrGrossProfitDetailsController.submit()
+
+# Form 6015 routing
+GET         /cost-of-sales                                          controllers.aboutthetradinghistory.CostOfSalesController.show()
+POST        /cost-of-sales                                          controllers.aboutthetradinghistory.CostOfSalesController.submit()
+
+# Form 6015 routing
+GET         /gross-profits                                          controllers.aboutthetradinghistory.GrossProfitsController.show()
+POST        /gross-profits                                          controllers.aboutthetradinghistory.GrossProfitsController.submit()
+
+# Form 6015 routing
+GET         /total-payroll-costs                                    controllers.aboutthetradinghistory.TotalPayrollCostsController.show()
+POST        /total-payroll-costs                                    controllers.aboutthetradinghistory.TotalPayrollCostsController.submit()
+
+# Form 6015 routing
+GET         /variable-operating-expenses                            controllers.aboutthetradinghistory.VariableOperatingExpensesController.show()
+POST        /variable-operating-expenses                            controllers.aboutthetradinghistory.VariableOperatingExpensesController.submit()
+
+# Form 6015 routing
+GET         /fixed-operating-expenses                               controllers.aboutthetradinghistory.FixedOperatingExpensesController.show()
+POST        /fixed-operating-expenses                               controllers.aboutthetradinghistory.FixedOperatingExpensesController.submit()
+
+# Form 6015 routing
+GET         /other-costs                                            controllers.aboutthetradinghistory.OtherCostsController.show()
+POST        /other-costs                                            controllers.aboutthetradinghistory.OtherCostsController.submit()
+
+# Form 6015 routing
+GET         /net-profit                                             controllers.aboutthetradinghistory.NetProfitController.show()
+POST        /net-profit                                             controllers.aboutthetradinghistory.NetProfitController.submit()
+
+# Form 6015 routing
+GET         /concession-or-franchise                                controllers.aboutfranchisesorlettings.ConcessionOrFranchiseController.show()
+POST        /concession-or-franchise                                controllers.aboutfranchisesorlettings.ConcessionOrFranchiseController.submit()
+
 GET         /does-the-rent-payable                                  controllers.Form6010.DoesTheRentPayableController.show()
 POST        /does-the-rent-payable                                  controllers.Form6010.DoesTheRentPayableController.submit()
 
