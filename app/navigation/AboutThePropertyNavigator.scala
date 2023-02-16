@@ -54,8 +54,8 @@ class AboutThePropertyNavigator @Inject() (audit: Audit)(implicit ec: ExecutionC
       }
     } else {
       controllers.routes.LoginController.show()
-      }
     }
+  }
 
   private def premisesLicenseGrantedDetailsRouting: Session => Call = answers => {
     if (answers.userLoginDetails.forNumber == ForTypes.for6015)
