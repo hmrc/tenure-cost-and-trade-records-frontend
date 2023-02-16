@@ -281,21 +281,13 @@ label.rentOpenMarketValue = Is the rent based on the open market value?
 ##############################
 rentPayable.heading = Does the rent payable include or relate to any of the following?
 label.rentPayable = Select any that apply
-checkbox.rentPayable.includeLicensee = include licensee’s, manager’s or staff living accommodation?
-checkbox.rentPayable.includeOtherProperty = include other property?
-checkbox.rentPayable.onlyPartOfProperty = relate to only part of the property?
-checkbox.rentPayable.onlyToLand = relate only to land (excluding buildings)?
-checkbox.rentPayable.shellUnit = relate to a ’shell’ unit (did you have to fit the property out yourself)?
-#6016 DOES THE RENT PAYABLE
-##############################
 checkbox.rentPayable.proprietor = Proprietor’s, manager’s or staff living accommodation
 checkbox.rentPayable.otherProperty = Other property
 checkbox.rentPayable.onlyPart = Only part of the property
 checkbox.rentPayable.onlyLand = Only to land (excluding buildings)
-checkbox.rentPayable.shellUnit = a ’shell’ unit (you had to fit the property out yourself)
-##############################
+checkbox.rentPayable.shellUnit = A ’shell’ unit (you had to fit the property out yourself)
 label.detailsToQuestions = Give details if you selected any of the options
-hint.detailsToQuestions = For example, the rent includes an upstairs flat, or also includes the premises next door
+hint.detailsToQuestions = For example, the rent includes residential accommodation, or also includes the premises next door
 error.detailsToQuestions.required = Please provide further information
 error.detailsToQuestions.maxLength = This must be 1000 characters or fewer
 

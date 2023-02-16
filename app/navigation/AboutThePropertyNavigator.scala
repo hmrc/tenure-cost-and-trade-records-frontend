@@ -30,23 +30,32 @@ class AboutThePropertyNavigator @Inject() (audit: Audit)(implicit ec: ExecutionC
     with Logging {
 
   private def websiteForPropertyRouting: Session => Call = answers => {
-    if (answers.userLoginDetails.forNumber == ForTypes.for6015)
+    if (answers.userLoginDetails.forNumber.equals(ForTypes.for6015))
       controllers.abouttheproperty.routes.PremisesLicenseGrantedController.show()
     else
       controllers.abouttheproperty.routes.LicensableActivitiesController.show()
   }
 
   private def premisesLicenseGrantedRouting: Session => Call = answers => {
-    answers.aboutTheProperty.flatMap(_.premisesLicenseGrantedDetail.map(_.name)) match {
-      case Some("yes") => controllers.abouttheproperty.routes.PremisesLicenseGrantedDetailsController.show()
-      case Some("no")  => controllers.aboutthetradinghistory.routes.AboutYourTradingHistoryController.show()
-      case _           =>
-        logger.warn(
-          s"Navigation for about the property reached without correct selection of premises licence granted by controller"
-        )
-        throw new RuntimeException("Invalid option exception for licence activity routing")
+    if (
+      answers.userLoginDetails.forNumber
+        .equals(ForTypes.for6015) || answers.userLoginDetails.forNumber.equals(ForTypes.for6016)
+    ) {
+      answers.aboutTheProperty.flatMap(_.premisesLicenseGrantedDetail.map(_.name)) match {
+        case Some("yes") =>
+          controllers.abouttheproperty.routes.PremisesLicenseGrantedDetailsController.show()
+        case Some("no")  =>
+          controllers.aboutthetradinghistory.routes.AboutYourTradingHistoryController.show()
+        case _           =>
+          logger.warn(
+            s"Navigation for about the property reached without correct selection of premises licence granted by controller"
+          )
+          throw new RuntimeException("Invalid option exception for licence activity routing")
+      }
+    } else {
+      controllers.routes.LoginController.show()
+      }
     }
-  }
 
   private def premisesLicenseGrantedDetailsRouting: Session => Call = answers => {
     if (answers.userLoginDetails.forNumber == ForTypes.for6015)
