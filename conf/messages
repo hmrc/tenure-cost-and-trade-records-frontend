@@ -859,6 +859,20 @@ rentQuantityOfBeersDetails.helpWithServiceRentQuantityOfBeersDetails = Please gi
 alternativeContact.helpWithServiceAlternativeContactHeader = Alternative contact details
 alternativeContact.helpWithServiceAlternativeContact = If you don’t need to provide us with alternative contact details, please select ‘Save and continue’.
 
+#HELP WITH PREMISES LICENCE GRANTED
+##############################
+premisesLicenseGranted.helpWithServicePremisesLicenseGranted = We’re interested to know if you’re permitted to serve alcohol under the terms of a premises licence, a personal licence, or a club premises certificate.
+
+#HELP WITH PREMISES LICENCE GRANTED DETAILS
+##############################
+premisesLicenseGrantedInformation.helpWithServicePremisesLicenseGrantedInformationHeader = Describing your premises licence
+premisesLicenseGrantedInformation.helpWithServicePremisesLicenseGrantedInformation.p1 = Let us know if you have a premises licence, a personal licence, or a club premises certificate.
+premisesLicenseGrantedInformation.helpWithServicePremisesLicenseGrantedInformation.subHeader = Describing restrictions on the use of the property
+premisesLicenseGrantedInformation.helpWithServicePremisesLicenseGrantedInformation.p2 = You’re only required to write a short description of the conditions we’re concerned with
+premisesLicenseGrantedInformation.listBlock.p1 = No drinks allowed on the terrace after 10pm
+premisesLicenseGrantedInformation.listBlock.p2 = Only 200 people allowed in the function room at any time
+premisesLicenseGrantedInformation.listBlock.p3 = No entry or re-entry allowed after 11.30pm on Fridays or Saturdays
+
 # Errors
 ########
 error.required = Please provide a value
