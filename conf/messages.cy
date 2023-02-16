@@ -281,21 +281,13 @@ label.rentOpenMarketValue = Is the rent based on the open market value?
 ##############################
 rentPayable.heading = Does the rent payable include or relate to any of the following?
 label.rentPayable = Select any that apply
-checkbox.rentPayable.includeLicensee = include licensee’s, manager’s or staff living accommodation?
-checkbox.rentPayable.includeOtherProperty = include other property?
-checkbox.rentPayable.onlyPartOfProperty = relate to only part of the property?
-checkbox.rentPayable.onlyToLand = relate only to land (excluding buildings)?
-checkbox.rentPayable.shellUnit = relate to a ’shell’ unit (did you have to fit the property out yourself)?
-#6016 DOES THE RENT PAYABLE
-##############################
 checkbox.rentPayable.proprietor = Proprietor’s, manager’s or staff living accommodation
 checkbox.rentPayable.otherProperty = Other property
 checkbox.rentPayable.onlyPart = Only part of the property
 checkbox.rentPayable.onlyLand = Only to land (excluding buildings)
-checkbox.rentPayable.shellUnit = a ’shell’ unit (you had to fit the property out yourself)
-##############################
+checkbox.rentPayable.shellUnit = A ’shell’ unit (you had to fit the property out yourself)
 label.detailsToQuestions = Give details if you selected any of the options
-hint.detailsToQuestions = For example, the rent includes an upstairs flat, or also includes the premises next door
+hint.detailsToQuestions = For example, the rent includes residential accommodation, or also includes the premises next door
 error.detailsToQuestions.required = Please provide further information
 error.detailsToQuestions.maxLength = This must be 1000 characters or fewer
 
@@ -866,6 +858,20 @@ rentQuantityOfBeersDetails.helpWithServiceRentQuantityOfBeersDetails = Please gi
 ##############################
 alternativeContact.helpWithServiceAlternativeContactHeader = Alternative contact details
 alternativeContact.helpWithServiceAlternativeContact = If you don’t need to provide us with alternative contact details, please select ‘Save and continue’.
+
+#HELP WITH PREMISES LICENCE GRANTED
+##############################
+premisesLicenseGranted.helpWithServicePremisesLicenseGranted = We’re interested to know if you’re permitted to serve alcohol under the terms of a premises licence, a personal licence, or a club premises certificate.
+
+#HELP WITH PREMISES LICENCE GRANTED DETAILS
+##############################
+premisesLicenseGrantedInformation.helpWithServicePremisesLicenseGrantedInformationHeader = Describing your premises licence
+premisesLicenseGrantedInformation.helpWithServicePremisesLicenseGrantedInformation.p1 = Let us know if you have a premises licence, a personal licence, or a club premises certificate.
+premisesLicenseGrantedInformation.helpWithServicePremisesLicenseGrantedInformation.subHeader = Describing restrictions on the use of the property
+premisesLicenseGrantedInformation.helpWithServicePremisesLicenseGrantedInformation.p2 = You’re only required to write a short description of the conditions we’re concerned with
+premisesLicenseGrantedInformation.listBlock.p1 = No drinks allowed on the terrace after 10pm
+premisesLicenseGrantedInformation.listBlock.p2 = Only 200 people allowed in the function room at any time
+premisesLicenseGrantedInformation.listBlock.p3 = No entry or re-entry allowed after 11.30pm on Fridays or Saturdays
 
 # Errors
 ########
