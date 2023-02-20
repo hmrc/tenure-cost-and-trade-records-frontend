@@ -90,19 +90,26 @@ class AboutYourTradingHistoryController @Inject() (
 
   private def getBackLink(answers: Session): Either[String, String] =
     answers.userLoginDetails.forNumber match {
-      case ForTypes.for6010 =>
+      case ForTypes.for6010                    =>
         answers.aboutTheProperty.flatMap(_.tiedForGoods.map(_.name)) match {
           case Some("yes") => Right(controllers.abouttheproperty.routes.TiedForGoodsDetailsController.show().url)
           case Some("no")  => Right(controllers.abouttheproperty.routes.TiedForGoodsController.show().url)
           case _           => Right(controllers.routes.TaskListController.show().url)
         }
-      case ForTypes.for6011 =>
+      case ForTypes.for6011                    =>
         answers.aboutTheProperty.flatMap(_.enforcementAction.map(_.name)) match {
           case Some("yes") =>
             Right(controllers.abouttheproperty.routes.EnforcementActionBeenTakenDetailsController.show().url)
           case Some("no")  => Right(controllers.abouttheproperty.routes.EnforcementActionBeenTakenController.show().url)
           case _           => Right(controllers.routes.TaskListController.show().url)
         }
-      case _                => Left(s"Unknown form type with about your trading history back link")
+      case ForTypes.for6015 | ForTypes.for6016 =>
+        answers.aboutTheProperty.flatMap(_.premisesLicenseGrantedDetail.map(_.name)) match {
+          case Some("yes") =>
+            Right(controllers.abouttheproperty.routes.PremisesLicenseGrantedDetailsController.show().url)
+          case Some("no")  => Right(controllers.abouttheproperty.routes.PremisesLicenseGrantedController.show().url)
+          case _           => Right(controllers.routes.TaskListController.show().url)
+        }
+      case _                                   => Left(s"Unknown form type with about your trading history back link")
     }
 }
