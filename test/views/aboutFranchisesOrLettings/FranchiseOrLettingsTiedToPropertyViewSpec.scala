@@ -18,6 +18,7 @@ package views.aboutFranchisesOrLettings
 
 import form.aboutfranchisesorlettings.FranchiseOrLettingsTiedToPropertyForm
 import models.submissions.Form6010._
+import models.submissions.aboutfranchisesorlettings.{FranchiseOrLettingsTiedToPropertiesNo, FranchiseOrLettingsTiedToPropertiesYes, FranchiseOrLettingsTiedToProperty}
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours

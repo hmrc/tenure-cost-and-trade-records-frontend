@@ -16,7 +16,8 @@
 
 package models.submissions
 
-import models.submissions.Form6010.{CateringAddress, LandlordAddress, LettingAddress}
+import models.submissions.Form6010.{LandlordAddress, LettingAddress}
+import models.submissions.aboutfranchisesorlettings.CateringAddress
 import models.submissions.common.Address
 import utils.TestBaseSpec
 

@@ -17,7 +17,7 @@
 package views.aboutFranchisesOrLettings
 
 import form.Form6010.CateringOperationOrLettingAccommodationForm
-import models.submissions.Form6010.CateringOperationOrLettingAccommodationDetails
+import models.submissions.aboutfranchisesorlettings.CateringOperationDetails
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import play.api.i18n.Lang
@@ -26,8 +26,7 @@ import views.behaviours.QuestionViewBehaviours
 
 import java.util.Locale
 
-class CateringOperationsRentIncludesViewSpec
-    extends QuestionViewBehaviours[CateringOperationOrLettingAccommodationDetails] {
+class CateringOperationsRentIncludesViewSpec extends QuestionViewBehaviours[CateringOperationDetails] {
 
   def cateringOperationRentIncludesView =
     app.injector.instanceOf[views.html.aboutfranchisesorlettings.cateringOperationOrLettingAccommodationRentIncludes]
@@ -40,7 +39,7 @@ class CateringOperationsRentIncludesViewSpec
 
   def createView = () => cateringOperationRentIncludesView(0, messageKeyPrefix, backLink)(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[CateringOperationOrLettingAccommodationDetails]) =>
+  def createViewUsingForm = (form: Form[CateringOperationDetails]) =>
     cateringOperationRentIncludesView(0, messageKeyPrefix, backLink)(fakeRequest, messages)
 
   "Catering operation rent includes view" must {

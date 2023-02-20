@@ -18,9 +18,8 @@ package controllers.aboutfranchisesorlettings
 
 import actions.WithSessionRefiner
 import form.Form6010.CateringOperationOrLettingAccommodationForm.cateringOperationOrLettingAccommodationForm
-import models.submissions.Form6010.CateringOperationOrLettingAccommodationDetails
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
-import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, CateringOperationOrLettingAccommodationSection}
+import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, CateringOperationDetails, CateringOperationSection}
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
@@ -41,13 +40,13 @@ class CateringOperationDetailsController @Inject() (
     with I18nSupport {
 
   def show(index: Option[Int]): Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
-    val existingDetails: Option[CateringOperationOrLettingAccommodationDetails] = for {
+    val existingDetails: Option[CateringOperationDetails] = for {
       requestedIndex                <- index
       existingAccommodationSections <-
-        request.sessionData.aboutFranchisesOrLettings.map(_.cateringOperationOrLettingAccommodationSections)
+        request.sessionData.aboutFranchisesOrLettings.map(_.cateringOperationSections)
       // lift turns exception-throwing access by index into an option-returning safe operation
       requestedAccommodationSection <- existingAccommodationSections.lift(requestedIndex)
-    } yield requestedAccommodationSection.cateringOperationOrLettingAccommodationDetails
+    } yield requestedAccommodationSection.cateringOperationDetails
 
     Ok(
       cateringOperationOrLettingAccommodationDetailsView(
@@ -77,30 +76,28 @@ class CateringOperationDetailsController @Inject() (
             )
           ),
         data => {
-          val ifFranchisesOrLettingsEmpty                                        = AboutFranchisesOrLettings(cateringOperationOrLettingAccommodationSections =
-            IndexedSeq(
-              CateringOperationOrLettingAccommodationSection(cateringOperationOrLettingAccommodationDetails = data)
-            )
+          val ifFranchisesOrLettingsEmpty                                        = AboutFranchisesOrLettings(cateringOperationSections =
+            IndexedSeq(CateringOperationSection(cateringOperationDetails = data))
           )
           val updatedAboutFranchisesOrLettings: (Int, AboutFranchisesOrLettings) =
             request.sessionData.aboutFranchisesOrLettings.fold(0 -> ifFranchisesOrLettingsEmpty) {
               franchiseOrLettings =>
-                val existingSections                                                                   = franchiseOrLettings.cateringOperationOrLettingAccommodationSections
-                val requestedSection                                                                   = index.flatMap(existingSections.lift)
-                val updatedSections: (Int, IndexedSeq[CateringOperationOrLettingAccommodationSection]) =
+                val existingSections                                             = franchiseOrLettings.cateringOperationSections
+                val requestedSection                                             = index.flatMap(existingSections.lift)
+                val updatedSections: (Int, IndexedSeq[CateringOperationSection]) =
                   requestedSection.fold {
-                    val defaultSection   = CateringOperationOrLettingAccommodationSection(data)
+                    val defaultSection   = CateringOperationSection(data)
                     val appendedSections = existingSections.appended(defaultSection)
                     appendedSections.indexOf(defaultSection) -> appendedSections
                   } { sectionToUpdate =>
                     val indexToUpdate = existingSections.indexOf(sectionToUpdate)
                     indexToUpdate -> existingSections.updated(
                       indexToUpdate,
-                      sectionToUpdate.copy(cateringOperationOrLettingAccommodationDetails = data)
+                      sectionToUpdate.copy(cateringOperationDetails = data)
                     )
                   }
                 updatedSections._1 -> franchiseOrLettings
-                  .copy(cateringOperationOrLettingAccommodationSections = updatedSections._2)
+                  .copy(cateringOperationSections = updatedSections._2)
             }
           updatedAboutFranchisesOrLettings match {
             case (currentIndex, aboutFranchisesOrLettings) =>

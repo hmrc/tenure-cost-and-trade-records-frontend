@@ -16,15 +16,16 @@
 
 package models.submissions.aboutfranchisesorlettings
 
-import models.submissions.Form6010.{CateringOperationOrLettingAccommodationDetails, CateringOperationOrLettingAccommodationRentDetails}
 import play.api.libs.json.Json
 
-case class CateringOperationOrLettingAccommodationSection(
-  cateringOperationOrLettingAccommodationDetails: CateringOperationOrLettingAccommodationDetails,
-  cateringOperationOrLettingAccommodationRentDetails: Option[CateringOperationOrLettingAccommodationRentDetails] = None
+import java.time.LocalDate
+
+case class CateringOperationRentDetails(
+  annualRent: BigDecimal,
+  dateInput: LocalDate
 )
 
-object CateringOperationOrLettingAccommodationSection {
-  implicit val format = Json.format[CateringOperationOrLettingAccommodationSection]
+object CateringOperationRentDetails {
+  implicit val format = Json.format[CateringOperationRentDetails]
 
 }

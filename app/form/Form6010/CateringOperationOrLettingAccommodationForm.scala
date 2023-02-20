@@ -17,7 +17,7 @@
 package form.Form6010
 
 import form.MappingSupport.cateringAddressMapping
-import models.submissions.Form6010.CateringOperationOrLettingAccommodationDetails
+import models.submissions.aboutfranchisesorlettings.CateringOperationDetails
 import play.api.data.Form
 import play.api.data.Forms.{mapping, nonEmptyText}
 
@@ -28,6 +28,6 @@ object CateringOperationOrLettingAccommodationForm {
       "operatorName"    -> nonEmptyText(maxLength = 100),
       "typeOfBusiness"  -> nonEmptyText(maxLength = 100),
       "cateringAddress" -> cateringAddressMapping
-    )(CateringOperationOrLettingAccommodationDetails.apply)(CateringOperationOrLettingAccommodationDetails.unapply)
+    )(CateringOperationDetails.apply)(CateringOperationDetails.unapply)
   )
 }

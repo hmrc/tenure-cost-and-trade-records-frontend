@@ -16,12 +16,11 @@
 
 package utils
 
-import models.submissions.aboutfranchisesorlettings.{ConcessionOrFranchiseNo, ConcessionOrFranchiseYes}
+import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, CateringAddress, CateringOperationDetails, CateringOperationNo, CateringOperationRentDetails, CateringOperationSection, CateringOperationYes, ConcessionOrFranchiseNo, ConcessionOrFranchiseYes, FranchiseOrLettingsTiedToPropertiesNo, FranchiseOrLettingsTiedToPropertiesYes, LettingSection}
 import models.submissions.abouttheproperty.PremisesLicenseGrantedNo
-import models.submissions.Form6010.{CateringAddress, CateringOperationOrLettingAccommodationDetails, CateringOperationOrLettingAccommodationRentDetails, FranchiseOrLettingsTiedToPropertiesNo, FranchiseOrLettingsTiedToPropertiesYes, LandlordAddress, LettingAddress, LettingOtherPartOfPropertiesNo, LettingOtherPartOfPropertiesYes, LettingOtherPartOfPropertyInformationDetails, LettingOtherPartOfPropertyRentDetails}
+import models.submissions.Form6010.{LandlordAddress, LettingAddress, LettingOtherPartOfPropertiesNo, LettingOtherPartOfPropertiesYes, LettingOtherPartOfPropertyInformationDetails, LettingOtherPartOfPropertyRentDetails}
 import models.submissions.aboutLeaseOrAgreement.AboutLeaseOrAgreementPartOne
 import models.submissions.aboutYourLeaseOrTenure.{AboutTheLandlord, AgreedReviewedAlteredThreeYearsYes, CommenceWithinThreeYearsYes, LeaseOrAgreementYearsDetails, RentUnderReviewNegotiatedYes}
-import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, CateringOperationNo, CateringOperationOrLettingAccommodationSection, CateringOperationYes, LettingSection}
 import models.submissions.abouttheproperty.{AboutTheProperty, BuildingOperationHaveAWebsiteYes, CurrentPropertyHotel, EnforcementActionsNo, LicensableActivitiesNo, PremisesLicensesConditionsNo, PropertyDetails, TiedGoodsNo, WebsiteForPropertyDetails}
 import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, AboutYourTradingHistory}
 import models.submissions.aboutyou.{AboutYou, CustomerDetails}
@@ -34,40 +33,40 @@ import models.submissions.notconnected.{RemoveConnectionDetails, RemoveConnectio
 import java.time.LocalDate
 
 trait FakeObjects {
-  val prefilledStillConnectedDetailsYes                       = StillConnectedDetails(Some(AddressConnectionTypeYes))
-  val prefilledAddress                                        = Address("001", Some("GORING ROAD"), Some("GORING-BY-SEA, WORTHING"), "BN12 4AX")
-  val prefilledContactDetails                                 = ContactDetails("1234567890", "TestEmail@gmail.com")
-  val prefilledFakeName                                       = "John Doe"
-  val prefilledContactAddress                                 = AlternativeContactDetailsAddress(
+  val prefilledStillConnectedDetailsYes     = StillConnectedDetails(Some(AddressConnectionTypeYes))
+  val prefilledAddress                      = Address("001", Some("GORING ROAD"), Some("GORING-BY-SEA, WORTHING"), "BN12 4AX")
+  val prefilledContactDetails               = ContactDetails("1234567890", "TestEmail@gmail.com")
+  val prefilledFakeName                     = "John Doe"
+  val prefilledContactAddress               = AlternativeContactDetailsAddress(
     "004",
     Some("GORING ROAD"),
     Some("GORING-BY-SEA, WORTHING"),
     Some("West sussex"),
     "BN12 4AX"
   )
-  val prefilledCateringAddress                                =
+  val prefilledCateringAddress              =
     CateringAddress("004", Some("GORING ROAD"), Some("GORING-BY-SEA, WORTHING"), Some("West sussex"), "BN12 4AX")
-  val prefilledLettingAddress                                 =
+  val prefilledLettingAddress               =
     LettingAddress("004", Some("GORING ROAD"), Some("GORING-BY-SEA, WORTHING"), Some("West sussex"), "BN12 4AX")
-  val prefilledLandlordAddress                                =
+  val prefilledLandlordAddress              =
     LandlordAddress("004", Some("GORING ROAD"), Some("GORING-BY-SEA, WORTHING"), Some("West sussex"), "BN12 4AX")
-  val prefilledFirstOccupy                                    = LocalDate.of(1996, 3, 15)
-  val prefilledFinancialYear                                  = LocalDate.of(2022, 6, 1)
-  val prefilledDateInput                                      = LocalDate.of(2022, 6, 1)
-  val prefilledCateringOperationOrLettingAccommodationSection = CateringOperationOrLettingAccommodationSection(
-    CateringOperationOrLettingAccommodationDetails(
+  val prefilledFirstOccupy                  = LocalDate.of(1996, 3, 15)
+  val prefilledFinancialYear                = LocalDate.of(2022, 6, 1)
+  val prefilledDateInput                    = LocalDate.of(2022, 6, 1)
+  val prefilledCateringOperationSection     = CateringOperationSection(
+    CateringOperationDetails(
       "Operator Name",
       "Type of Business",
       prefilledCateringAddress
     ),
     Some(
-      CateringOperationOrLettingAccommodationRentDetails(
+      CateringOperationRentDetails(
         BigDecimal(1500),
         prefilledDateInput
       )
     )
   )
-  val prefilledLettingSection                                 = LettingSection(
+  val prefilledLettingSection               = LettingSection(
     LettingOtherPartOfPropertyInformationDetails(
       "Operator Name",
       "Type of Business",
@@ -80,23 +79,23 @@ trait FakeObjects {
       )
     )
   )
-  val prefilledAboutTheLandlord                               =
+  val prefilledAboutTheLandlord             =
     AboutTheLandlord(
       prefilledFakeName,
       prefilledLandlordAddress
     )
-  val prefilledLeaseOrAgreementYearsDetails                   =
+  val prefilledLeaseOrAgreementYearsDetails =
     LeaseOrAgreementYearsDetails(
       CommenceWithinThreeYearsYes,
       AgreedReviewedAlteredThreeYearsYes,
       RentUnderReviewNegotiatedYes
     )
-  val prefilledUserLoginDetails                               =
+  val prefilledUserLoginDetails             =
     UserLoginDetails("Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=", "FOR6010", "99996010004", prefilledAddress)
-  val prefilledUserLoginDetails6015                           =
+  val prefilledUserLoginDetails6015         =
     UserLoginDetails("Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=", "FOR6015", "99996015001", prefilledAddress)
-  val prefilledBaseSession                                    = Session(prefilledUserLoginDetails)
-  val prefilledRemoveConnection                               =
+  val prefilledBaseSession                  = Session(prefilledUserLoginDetails)
+  val prefilledRemoveConnection             =
     RemoveConnectionDetails(
       Some(
         RemoveConnectionsDetails(
@@ -146,8 +145,10 @@ trait FakeObjects {
     Some(FranchiseOrLettingsTiedToPropertiesYes),
     None,
     Some(CateringOperationYes),
-    IndexedSeq(prefilledCateringOperationOrLettingAccommodationSection),
+    0,
+    IndexedSeq(prefilledCateringOperationSection),
     Some(LettingOtherPartOfPropertiesYes),
+    0,
     IndexedSeq(prefilledLettingSection)
   )
 
@@ -155,8 +156,10 @@ trait FakeObjects {
     Some(FranchiseOrLettingsTiedToPropertiesNo),
     None,
     Some(CateringOperationNo),
-    IndexedSeq(prefilledCateringOperationOrLettingAccommodationSection),
+    0,
+    IndexedSeq(prefilledCateringOperationSection),
     Some(LettingOtherPartOfPropertiesNo),
+    0,
     IndexedSeq(prefilledLettingSection)
   )
 
@@ -164,8 +167,10 @@ trait FakeObjects {
     Some(FranchiseOrLettingsTiedToPropertiesYes),
     Some(ConcessionOrFranchiseYes),
     Some(CateringOperationYes),
-    IndexedSeq(prefilledCateringOperationOrLettingAccommodationSection),
+    0,
+    IndexedSeq(prefilledCateringOperationSection),
     Some(LettingOtherPartOfPropertiesYes),
+    0,
     IndexedSeq(prefilledLettingSection)
   )
 
@@ -173,8 +178,10 @@ trait FakeObjects {
     Some(FranchiseOrLettingsTiedToPropertiesNo),
     Some(ConcessionOrFranchiseNo),
     Some(CateringOperationNo),
-    IndexedSeq(prefilledCateringOperationOrLettingAccommodationSection),
+    0,
+    IndexedSeq(prefilledCateringOperationSection),
     Some(LettingOtherPartOfPropertiesNo),
+    0,
     IndexedSeq(prefilledLettingSection)
   )
 

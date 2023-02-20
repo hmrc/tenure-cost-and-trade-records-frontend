@@ -40,13 +40,13 @@ class CateringOperationDetailsRentController @Inject() (
 
   def show(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     val existingSection = request.sessionData.aboutFranchisesOrLettings.flatMap(
-      _.cateringOperationOrLettingAccommodationSections.lift(index)
+      _.cateringOperationSections.lift(index)
     )
     existingSection.fold(
       Redirect(routes.CateringOperationDetailsController.show(None))
     ) { cateringOperationOrLettingAccommodationSection =>
       val rentDetailsForm =
-        cateringOperationOrLettingAccommodationSection.cateringOperationOrLettingAccommodationRentDetails.fold(
+        cateringOperationOrLettingAccommodationSection.cateringOperationRentDetails.fold(
           cateringOperationOrLettingAccommodationRentForm
         )(cateringOperationOrLettingAccommodationRentForm.fill)
       Ok(
@@ -80,13 +80,13 @@ class CateringOperationDetailsRentController @Inject() (
             Future
               .successful(Redirect(routes.CateringOperationDetailsController.show(None)))
           ) { aboutFranchisesOrLettings =>
-            val existingSections = aboutFranchisesOrLettings.cateringOperationOrLettingAccommodationSections
+            val existingSections = aboutFranchisesOrLettings.cateringOperationSections
             val updatedSections  = existingSections.updated(
               index,
-              existingSections(index).copy(cateringOperationOrLettingAccommodationRentDetails = Some(data))
+              existingSections(index).copy(cateringOperationRentDetails = Some(data))
             )
             val dataForSession   =
-              updateAboutFranchisesOrLettings(_.copy(cateringOperationOrLettingAccommodationSections = updatedSections))
+              updateAboutFranchisesOrLettings(_.copy(cateringOperationSections = updatedSections))
             session
               .saveOrUpdate(dataForSession)
               .map(_ => Redirect(routes.CateringOperationRentIncludesController.show(index)))

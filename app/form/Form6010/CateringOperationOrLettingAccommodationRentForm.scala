@@ -18,7 +18,7 @@ package form.Form6010
 
 import form.DateMappings.dateFieldsMapping
 import form.MappingSupport.currencyMapping
-import models.submissions.Form6010.CateringOperationOrLettingAccommodationRentDetails
+import models.submissions.aboutfranchisesorlettings.CateringOperationRentDetails
 import play.api.data.Form
 import play.api.data.Forms.mapping
 
@@ -28,8 +28,8 @@ object CateringOperationOrLettingAccommodationRentForm {
     mapping(
       "annualRent" -> currencyMapping(".annualRent"),
       "dateInput"  -> dateFieldsMapping("dateInput")
-    )(CateringOperationOrLettingAccommodationRentDetails.apply)(
-      CateringOperationOrLettingAccommodationRentDetails.unapply
+    )(CateringOperationRentDetails.apply)(
+      CateringOperationRentDetails.unapply
     )
   )
 }

@@ -20,10 +20,9 @@ import models._
 import models.submissions.Form6010._
 import models.submissions._
 import models.submissions.aboutYourLeaseOrTenure._
-import models.submissions.aboutfranchisesorlettings.{CateringOperation, ConcessionOrFranchise}
+import models.submissions.aboutfranchisesorlettings.{CateringOperation, ConcessionOrFranchise, FranchiseOrLettingsTiedToProperty}
 import models.submissions.abouttheproperty._
 import models.submissions.aboutthetradinghistory.CostOfSalesOrGrossProfit
-import models.submissions.Form6010.FranchiseOrLettingsTiedToProperty
 import models.submissions.connectiontoproperty.{AddressConnectionType, ConnectionToProperty}
 import play.api.data.FormError
 import play.api.data.format.Formatter
