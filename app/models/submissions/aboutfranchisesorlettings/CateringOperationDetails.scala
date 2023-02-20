@@ -14,17 +14,17 @@
  * limitations under the License.
  */
 
-package models.submissions.Form6010
+package models.submissions.aboutfranchisesorlettings
 
 import play.api.libs.json.Json
 
-case class CateringOperationOrLettingAccommodationDetails(
+case class CateringOperationDetails(
   operatorName: String,
   typeOfBusiness: String,
   cateringAddress: CateringAddress
 )
 
-object CateringOperationOrLettingAccommodationDetails {
-  implicit val format = Json.format[CateringOperationOrLettingAccommodationDetails]
+object CateringOperationDetails {
+  implicit val format = Json.format[CateringOperationDetails]
 
 }

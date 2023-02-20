@@ -64,7 +64,7 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit)(implicit ec: E
   }
 
   private def cateringOperationsConditionsRouting: Session => Call = answers => {
-    answers.aboutFranchisesOrLettings.flatMap(_.cateringOperationOrLettingAccommodation.map(_.name)) match {
+    answers.aboutFranchisesOrLettings.flatMap(_.cateringOperation.map(_.name)) match {
       case Some("yes") => controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController.show()
       case Some("no")  => controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show()
       case _           =>

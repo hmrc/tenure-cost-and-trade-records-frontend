@@ -17,7 +17,7 @@
 package views.aboutFranchisesOrLettings
 
 import form.Form6010.CateringOperationOrLettingAccommodationRentForm
-import models.submissions.Form6010.CateringOperationOrLettingAccommodationRentDetails
+import models.submissions.aboutfranchisesorlettings.CateringOperationRentDetails
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import play.api.i18n.Lang
@@ -26,8 +26,7 @@ import views.behaviours.QuestionViewBehaviours
 
 import java.util.Locale
 
-class CateringOperationsRentDetailsViewSpec
-    extends QuestionViewBehaviours[CateringOperationOrLettingAccommodationRentDetails] {
+class CateringOperationsRentDetailsViewSpec extends QuestionViewBehaviours[CateringOperationRentDetails] {
 
   val messageKeyPrefix = "cateringOperationOrLettingAccommodationRentDetails"
 
@@ -41,7 +40,7 @@ class CateringOperationsRentDetailsViewSpec
       controllers.aboutfranchisesorlettings.routes.CateringOperationController.show().url
     )(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[CateringOperationOrLettingAccommodationRentDetails]) =>
+  def createViewUsingForm = (form: Form[CateringOperationRentDetails]) =>
     cateringOperationRentDetailsView(
       form,
       0,
