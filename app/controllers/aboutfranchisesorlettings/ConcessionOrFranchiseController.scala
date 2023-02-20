@@ -20,7 +20,7 @@ import actions.WithSessionRefiner
 import form.aboutfranchisesorlettings.ConcessionOrFranchiseForm.concessionOrFranchiseForm
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
 import navigation.AboutFranchisesOrLettingsNavigator
-import navigation.identifiers.TiedForGoodsPageId
+import navigation.identifiers.{ConcessionOrFranchiseId, FranchiseOrLettingsTiedToPropertyId}
 import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
@@ -63,7 +63,7 @@ class ConcessionOrFranchiseController @Inject() (
         data => {
           val updatedData = updateAboutFranchisesOrLettings(_.copy(concessionOrFranchise = Some(data)))
           session.saveOrUpdate(updatedData)
-          Future.successful(Redirect(navigator.nextPage(TiedForGoodsPageId).apply(updatedData)))
+          Future.successful(Redirect(navigator.nextPage(ConcessionOrFranchiseId).apply(updatedData)))
         }
       )
   }

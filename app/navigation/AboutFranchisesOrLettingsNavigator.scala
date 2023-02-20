@@ -88,9 +88,17 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit)(implicit ec: E
     }
   }
 
+  private def cateringOrFranchiseRouting: Session => Call = answers => {
+    answers.aboutFranchisesOrLettings.flatMap(_.concessionOrFranchise.map(_.name)) match {
+      case Some("yes") => controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController.show()
+      case Some("no")  => controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show()
+    }
+  }
+
   override val routeMap: Map[Identifier, Session => Call] = Map(
     FranchiseOrLettingsTiedToPropertyId -> franchiseOrLettingConditionsRouting,
     CateringOperationPageId             -> cateringOperationsConditionsRouting,
-    LettingAccommodationPageId          -> lettingAccommodationConditionsRouting
+    LettingAccommodationPageId          -> lettingAccommodationConditionsRouting,
+    ConcessionOrFranchiseId             -> cateringOrFranchiseRouting
   )
 }
