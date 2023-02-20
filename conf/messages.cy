@@ -90,7 +90,7 @@ label.referenceNumber = Cyfeirnod
 hint.referenceNumber = For example, 1000001/101
 label.postcode = Cod post
 hint.postcode = For example, AB12 3CD
-error.invalid_refnum = Rhowch y cyfeirnod fel y mae'n ymddangos ar eich llythyr
+error.invalid_refnum = Rhowch y cyfeirnod fel y mae’n ymddangos ar eich llythyr
 error.invalid_postcode_as_on_letter = Nodwch eich cod post fel mae’n ymddangos ar eich llythyr
 
 #TEST - Invalid Form Type
@@ -208,7 +208,7 @@ franchiseLettings.list2 = rent received from letting other parts of the property
 aboutYourLandlord.heading = About your landlord
 label.landlordFullName = Landlord’s name
 label.landlordAddress.address = Landlord’s address
-error.landlordFullName.required = Please enter the landlord's full name
+error.landlordFullName.required = Please enter the landlord’s full name
 error.landlordFullName.maxLength = This must be 1000 characters or fewer
 
 #LEASE OR AGREEMENT DETAILS COMMENCE WITHIN 3 YEARS
@@ -563,7 +563,7 @@ taskList.heading = Declaration summary
 #COST OF SALES OR GROSS PROFIT
 #########
 costOfSalesOrGrossProfit.heading = Would you rather give details of your cost of sales, or your gross profits?
-hint.costOfSalesOrGrossProfit = We need to see details of your turnover broken down by specific department. You can decide whether you'd like to provide these figures for your cost of sales, or gross profits.
+hint.costOfSalesOrGrossProfit = We need to see details of your turnover broken down by specific department. You can decide whether you’d like to provide these figures for your cost of sales, or gross profits.
 label.costOfSales = Cost of sales
 label.grossProfit = Gross profits
 
@@ -600,7 +600,7 @@ netProfit.heading = This is a holding page for the net profits page
 #CONCESSIONS OR FRANCHISE (FORM 6015)
 #########
 concessionOrFranchise.heading = Is any concession or franchise run as a separate business from the property?
-concessionOrFranchise.subheading = Choose 'no' if you've included turnover from these businesses in your turnover. You will have the opportunity to add more than one business if required.
+concessionOrFranchise.subheading = Choose ’no’ if you’ve included turnover from these businesses in your turnover. You will have the opportunity to add more than one business if required.
 
 #SHARED RESPONSIBILITIES
 ##############################

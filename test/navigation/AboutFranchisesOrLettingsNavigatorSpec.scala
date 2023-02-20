@@ -105,8 +105,7 @@ class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec {
         .nextPage(ConcessionOrFranchiseId)
         .apply(
           sessionAboutFranchiseOrLettingYes6015
-        ) mustBe controllers.routes.LoginController
-        .show() //should go to controllers.aboutfranchisesorlettings.routes.ConcessionOrFranchiseController.show()
+        ) mustBe controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController.show()
     }
 
     "return a function that goes to concession or franchise page when franchise page has been completed no 6015" in {
@@ -114,8 +113,7 @@ class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec {
         .nextPage(ConcessionOrFranchiseId)
         .apply(
           sessionAboutFranchiseOrLettingNo6015
-        ) mustBe controllers.routes.LoginController
-        .show() //should go to controllers.aboutYourLeaseOrTenure.routes.AboutYourLandlordController.show()
+        ) mustBe controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show()
     }
   }
 }
