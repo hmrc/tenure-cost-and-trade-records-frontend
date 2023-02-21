@@ -74,5 +74,3 @@ class FranchiseOrLettingsTiedToPropertyController @Inject() (
   }
 
 }
-
-//          request.sessionData.stillConnectedDetails.flatMap(_.connectionToProperty).toString

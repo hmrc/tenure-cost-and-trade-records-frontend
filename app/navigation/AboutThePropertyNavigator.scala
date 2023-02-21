@@ -30,7 +30,10 @@ class AboutThePropertyNavigator @Inject() (audit: Audit)(implicit ec: ExecutionC
     with Logging {
 
   private def websiteForPropertyRouting: Session => Call = answers => {
-    if (answers.userLoginDetails.forNumber.equals(ForTypes.for6015))
+    if (
+      answers.userLoginDetails.forNumber
+        .equals(ForTypes.for6015) || answers.userLoginDetails.forNumber.equals(ForTypes.for6016)
+    )
       controllers.abouttheproperty.routes.PremisesLicenseGrantedController.show()
     else
       controllers.abouttheproperty.routes.LicensableActivitiesController.show()
@@ -58,7 +61,9 @@ class AboutThePropertyNavigator @Inject() (audit: Audit)(implicit ec: ExecutionC
   }
 
   private def premisesLicenseGrantedDetailsRouting: Session => Call = answers => {
-    if (answers.userLoginDetails.forNumber == ForTypes.for6015)
+    if (
+      answers.userLoginDetails.forNumber == ForTypes.for6015 || answers.userLoginDetails.forNumber == ForTypes.for6016
+    )
       controllers.aboutthetradinghistory.routes.AboutYourTradingHistoryController.show()
     else
       controllers.abouttheproperty.routes.LicensableActivitiesController.show()
