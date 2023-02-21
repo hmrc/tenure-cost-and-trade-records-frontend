@@ -53,7 +53,7 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit)(implicit ec: E
     } else {
       answers.aboutFranchisesOrLettings.flatMap(_.franchisesOrLettingsTiedToProperty.map(_.name)) match {
         case Some("yes") => controllers.aboutfranchisesorlettings.routes.CateringOperationController.show()
-        case Some("no")  => controllers.aboutYourLeaseOrTenure.routes.AboutYourLandlordController.show()
+        case Some("no")  => controllers.routes.TaskListController.show() // TODO Insert CYA page.
         case _           =>
           logger.warn(
             s"Navigation for franchise or letting reached without correct selection of conditions by controller"
@@ -75,17 +75,66 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit)(implicit ec: E
     }
   }
 
+  private def getCateringOperationsIndex(session: Session): Int =
+    session.aboutFranchisesOrLettings.map(_.cateringOperationCurrentIndex).getOrElse(0)
+
+  private def cateringOperationsDetailsConditionsRouting: Session => Call = answers => {
+    controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsRentController
+      .show(getCateringOperationsIndex(answers))
+  }
+
+  private def cateringOperationsRentDetailsConditionsRouting: Session => Call = answers => {
+    controllers.aboutfranchisesorlettings.routes.CateringOperationRentIncludesController
+      .show(getCateringOperationsIndex(answers))
+  }
+
+  private def cateringOperationsRentIncludesConditionsRouting: Session => Call = answers => {
+    controllers.aboutfranchisesorlettings.routes.AddAnotherCateringOperationController
+      .show(getCateringOperationsIndex(answers))
+  }
+
+//  private def addAnotherCateringOperationsConditionsRouting: Session => Call = answers => {
+//    answers.aboutFranchisesOrLettings.flatMap(_..lettingOtherPartOfProperty.map(_.name)) match {
+//      case Some("yes") =>
+//        controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsController.show()
+//      case Some("no")  => controllers.aboutYourLeaseOrTenure.routes.AboutYourLandlordController.show()
+//      case _           =>
+//        logger.warn(
+//          s"Navigation for lettings reached without correct selection of conditions by controller"
+//        )
+//        throw new RuntimeException("Invalid option exception for lettings conditions routing")
+//    }
+//  }
+
   private def lettingAccommodationConditionsRouting: Session => Call = answers => {
     answers.aboutFranchisesOrLettings.flatMap(_.lettingOtherPartOfProperty.map(_.name)) match {
       case Some("yes") =>
         controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsController.show()
-      case Some("no")  => controllers.aboutYourLeaseOrTenure.routes.AboutYourLandlordController.show()
+      case Some("no")  => controllers.routes.TaskListController.show()
       case _           =>
         logger.warn(
           s"Navigation for lettings reached without correct selection of conditions by controller"
         )
         throw new RuntimeException("Invalid option exception for lettings conditions routing")
     }
+  }
+
+  private def getLettingsIndex(session: Session): Int =
+    session.aboutFranchisesOrLettings.map(_.lettingCurrentIndex).getOrElse(0)
+
+  private def lettingsDetailsConditionsRouting: Session => Call = answers => {
+    controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsRentController
+      .show(getLettingsIndex(answers))
+  }
+
+  private def lettingsRentDetailsConditionsRouting: Session => Call = answers => {
+    controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyRentIncludesController
+      .show(getLettingsIndex(answers))
+  }
+
+  private def lettingsRentIncludesConditionsRouting: Session => Call = answers => {
+    controllers.aboutfranchisesorlettings.routes.AddAnotherLettingOtherPartOfPropertyController
+      .show(getLettingsIndex(answers))
   }
 
   private def cateringOrFranchiseRouting: Session => Call = answers => {
@@ -96,9 +145,17 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit)(implicit ec: E
   }
 
   override val routeMap: Map[Identifier, Session => Call] = Map(
-    FranchiseOrLettingsTiedToPropertyId -> franchiseOrLettingConditionsRouting,
-    CateringOperationPageId             -> cateringOperationsConditionsRouting,
-    LettingAccommodationPageId          -> lettingAccommodationConditionsRouting,
-    ConcessionOrFranchiseId             -> cateringOrFranchiseRouting
+    FranchiseOrLettingsTiedToPropertyId    -> franchiseOrLettingConditionsRouting,
+    CateringOperationPageId                -> cateringOperationsConditionsRouting,
+    CateringOperationDetailsPageId         -> cateringOperationsDetailsConditionsRouting,
+    CateringOperationRentDetailsPageId     -> cateringOperationsRentDetailsConditionsRouting,
+    CateringOperationRentIncludesPageId    -> cateringOperationsRentIncludesConditionsRouting,
+//    AddAnotherCateringOperationPageId   -> addAnotherCateringOperationsConditionsRouting,
+    LettingAccommodationPageId             -> lettingAccommodationConditionsRouting,
+    LettingAccommodationDetailsPageId      -> lettingsDetailsConditionsRouting,
+    LettingAccommodationRentDetailsPageId  -> lettingsRentDetailsConditionsRouting,
+    LettingAccommodationRentIncludesPageId -> lettingsRentIncludesConditionsRouting,
+//    AddAnotherLettingAccommodationPageId   -> addAnotherLettingsConditionsRouting,
+    ConcessionOrFranchiseId                -> cateringOrFranchiseRouting
   )
 }

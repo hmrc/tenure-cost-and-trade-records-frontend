@@ -20,6 +20,8 @@ import actions.WithSessionRefiner
 import form.Form6010.CateringOperationOrLettingAccommodationForm.cateringOperationOrLettingAccommodationForm
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
 import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, CateringOperationDetails, CateringOperationSection}
+import navigation.AboutFranchisesOrLettingsNavigator
+import navigation.identifiers.CateringOperationDetailsPageId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
@@ -32,7 +34,8 @@ import scala.concurrent.{ExecutionContext, Future}
 @Singleton
 class CateringOperationDetailsController @Inject() (
   mcc: MessagesControllerComponents,
-  cateringOperationOrLettingAccommodationDetailsView: cateringOperationOrLettingAccommodationDetails,
+  navigator: AboutFranchisesOrLettingsNavigator,
+  cateringOperationDetailsView: cateringOperationOrLettingAccommodationDetails,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
 )(implicit ec: ExecutionContext)
@@ -49,7 +52,7 @@ class CateringOperationDetailsController @Inject() (
     } yield requestedAccommodationSection.cateringOperationDetails
 
     Ok(
-      cateringOperationOrLettingAccommodationDetailsView(
+      cateringOperationDetailsView(
         existingDetails.fold(cateringOperationOrLettingAccommodationForm)(
           cateringOperationOrLettingAccommodationForm.fill
         ),
@@ -67,7 +70,7 @@ class CateringOperationDetailsController @Inject() (
         formWithErrors =>
           Future.successful(
             BadRequest(
-              cateringOperationOrLettingAccommodationDetailsView(
+              cateringOperationDetailsView(
                 formWithErrors,
                 index,
                 "cateringOperationOrLettingAccommodationDetails",
@@ -101,13 +104,9 @@ class CateringOperationDetailsController @Inject() (
             }
           updatedAboutFranchisesOrLettings match {
             case (currentIndex, aboutFranchisesOrLettings) =>
-              session
-                .saveOrUpdate(updateAboutFranchisesOrLettings(_ => aboutFranchisesOrLettings))
-                .map(_ =>
-                  Redirect(
-                    routes.CateringOperationDetailsRentController.show(currentIndex)
-                  )
-                )
+              val updatedData = updateAboutFranchisesOrLettings(_ => aboutFranchisesOrLettings)
+              session.saveOrUpdate(updatedData)
+              Future.successful(Redirect(navigator.nextPage(CateringOperationDetailsPageId).apply(updatedData)))
           }
 
         }

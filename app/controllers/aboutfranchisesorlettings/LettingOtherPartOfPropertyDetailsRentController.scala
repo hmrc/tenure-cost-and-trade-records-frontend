@@ -19,11 +19,13 @@ package controllers.aboutfranchisesorlettings
 import actions.WithSessionRefiner
 import form.Form6010.LettingOtherPartOfPropertyRentForm.lettingOtherPartOfPropertyRentForm
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
+import navigation.AboutFranchisesOrLettingsNavigator
+import navigation.identifiers.LettingAccommodationRentDetailsPageId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.aboutfranchisesorlettings.{cateringOperationOrLettingAccommodationRentDetails, cateringOperationOrLettingAccommodationRentIncludes}
+import views.html.aboutfranchisesorlettings.cateringOperationOrLettingAccommodationRentDetails
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
@@ -31,7 +33,7 @@ import scala.concurrent.{ExecutionContext, Future}
 @Singleton
 class LettingOtherPartOfPropertyDetailsRentController @Inject() (
   mcc: MessagesControllerComponents,
-  cateringOperationOrLettingAccommodationRentIncludesView: cateringOperationOrLettingAccommodationRentIncludes,
+  navigator: AboutFranchisesOrLettingsNavigator,
   cateringOperationOrLettingAccommodationRentDetailsView: cateringOperationOrLettingAccommodationRentDetails,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
@@ -78,10 +80,9 @@ class LettingOtherPartOfPropertyDetailsRentController @Inject() (
             val existingSections = aboutFranchiseOrLettings.lettingSections
             val updatedSections  = existingSections
               .updated(index, existingSections(index).copy(lettingOtherPartOfPropertyRentDetails = Some(data)))
-            val dataForSession   = updateAboutFranchisesOrLettings(_.copy(lettingSections = updatedSections))
-            session
-              .saveOrUpdate(dataForSession)
-              .map(_ => Redirect(routes.LettingOtherPartOfPropertyRentIncludesController.show(index)))
+            val updatedData      = updateAboutFranchisesOrLettings(_.copy(lettingSections = updatedSections))
+            session.saveOrUpdate(updatedData)
+            Future.successful(Redirect(navigator.nextPage(LettingAccommodationRentDetailsPageId).apply(updatedData)))
           }
       )
   }

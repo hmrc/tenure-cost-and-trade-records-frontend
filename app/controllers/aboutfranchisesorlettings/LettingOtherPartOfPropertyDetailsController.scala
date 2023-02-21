@@ -21,11 +21,13 @@ import form.Form6010.LettingOtherPartOfPropertyForm.lettingOtherPartOfPropertyFo
 import models.submissions.Form6010.LettingOtherPartOfPropertyInformationDetails
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
 import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, LettingSection}
+import navigation.AboutFranchisesOrLettingsNavigator
+import navigation.identifiers.LettingAccommodationDetailsPageId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.aboutfranchisesorlettings.{cateringOperationOrLettingAccommodationDetails, cateringOperationOrLettingAccommodationRentDetails}
+import views.html.aboutfranchisesorlettings.cateringOperationOrLettingAccommodationDetails
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
@@ -33,8 +35,8 @@ import scala.concurrent.{ExecutionContext, Future}
 @Singleton
 class LettingOtherPartOfPropertyDetailsController @Inject() (
   mcc: MessagesControllerComponents,
+  navigator: AboutFranchisesOrLettingsNavigator,
   cateringOperationOrLettingAccommodationDetailsView: cateringOperationOrLettingAccommodationDetails,
-  cateringOperationOrLettingAccommodationRentDetailsView: cateringOperationOrLettingAccommodationRentDetails,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
 )(implicit ec: ExecutionContext)
@@ -96,9 +98,9 @@ class LettingOtherPartOfPropertyDetailsController @Inject() (
             }
           updatedAboutFranchisesOrLettings match {
             case (currentIndex, aboutFranchisesOrLettings) =>
-              session
-                .saveOrUpdate(updateAboutFranchisesOrLettings(_ => aboutFranchisesOrLettings))
-                .map(_ => Redirect(routes.LettingOtherPartOfPropertyDetailsRentController.show(currentIndex)))
+              val updatedData = updateAboutFranchisesOrLettings(_ => aboutFranchisesOrLettings)
+              session.saveOrUpdate(updatedData)
+              Future.successful(Redirect(navigator.nextPage(LettingAccommodationDetailsPageId).apply(updatedData)))
           }
         }
       )
