@@ -20,14 +20,43 @@ case object FranchiseOrLettingsTiedToPropertyId extends Identifier {
   override def toString: String = "franchiseOrLettingsTiedToPropertyPage"
 }
 
-case object CateringOperationPageId extends Identifier {
+case object CateringOperationPageId extends Identifier { // TODO remane CateringOrConcessionsDetailsPageId
   override def toString: String = "cateringOperationPage"
+}
+case object ConcessionOrFranchiseId extends Identifier { override def toString: String = "concessionOrFranchisePage" }
+
+case object CateringOperationDetailsPageId extends Identifier {
+  override def toString: String = "cateringOperationDetailsPage"
+}
+
+case object CateringOperationRentDetailsPageId extends Identifier {
+  override def toString: String = "cateringOperationRentDetailsPage"
+}
+
+case object CateringOperationRentIncludesPageId extends Identifier {
+  override def toString: String = "cateringOperationRentIncludesPage"
+}
+
+case object AddAnotherCateringOperationPageId extends Identifier {
+  override def toString: String = "addAnotherCateringOperationPage"
 }
 
 case object LettingAccommodationPageId extends Identifier {
   override def toString: String = "lettingAccommodationPage"
 }
 
-case object ConcessionOrFranchiseId extends Identifier {
-  override def toString: String = "concessionOrFranchisePage"
+case object LettingAccommodationDetailsPageId extends Identifier {
+  override def toString: String = "lettingAccommodationDetailsPage"
+}
+
+case object LettingAccommodationRentDetailsPageId extends Identifier {
+  override def toString: String = "lettingAccommodationRentDetailsPage"
+}
+
+case object LettingAccommodationRentIncludesPageId extends Identifier {
+  override def toString: String = "lettingAccommodationRentIncludesPage"
+}
+
+case object AddAnotherLettingAccommodationPageId extends Identifier {
+  override def toString: String = "addAnotherlettingAccommodationPage"
 }

@@ -17,12 +17,13 @@
 package controllers.aboutfranchisesorlettings
 
 import actions.WithSessionRefiner
-import form.Form6010.AddAnotherCateringOperationOrLettingAccommodationForm.addAnotherCateringOperationOrLettingAccommodationForm
+import navigation.AboutFranchisesOrLettingsNavigator
+import navigation.identifiers.CateringOperationRentIncludesPageId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.aboutfranchisesorlettings.{addAnotherCateringOperationOrLettingAccommodation, cateringOperationOrLettingAccommodationRentIncludes}
+import views.html.aboutfranchisesorlettings.cateringOperationOrLettingAccommodationRentIncludes
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
@@ -30,8 +31,8 @@ import scala.concurrent.Future
 @Singleton
 class CateringOperationRentIncludesController @Inject() (
   mcc: MessagesControllerComponents,
+  navigator: AboutFranchisesOrLettingsNavigator,
   cateringOperationOrLettingAccommodationDetailsCheckboxesView: cateringOperationOrLettingAccommodationRentIncludes,
-  addAnotherCateringOperationOrLettingAccommodationView: addAnotherCateringOperationOrLettingAccommodation,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
 ) extends FrontendController(mcc)
@@ -50,16 +51,7 @@ class CateringOperationRentIncludesController @Inject() (
   }
 
   def submit(index: Int) = (Action andThen withSessionRefiner).async { implicit request =>
-    Future.successful(
-      Ok(
-        addAnotherCateringOperationOrLettingAccommodationView(
-          addAnotherCateringOperationOrLettingAccommodationForm,
-          index,
-          "addAnotherCateringOperationOrLettingAccommodation",
-          controllers.aboutfranchisesorlettings.routes.CateringOperationRentIncludesController.show(index).url
-        )
-      )
-    )
+    Future.successful(Redirect(navigator.nextPage(CateringOperationRentIncludesPageId).apply(request.sessionData)))
   }
 
 }

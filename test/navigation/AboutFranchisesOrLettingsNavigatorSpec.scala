@@ -60,12 +60,12 @@ class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec {
         ) mustBe controllers.aboutfranchisesorlettings.routes.CateringOperationController.show()
     }
 
-    "return a function that goes to about the landlord page when franchise page has been completed no" in {
+    "return a function that goes to task list page when franchise page has been completed no" in {
       navigator
         .nextPage(FranchiseOrLettingsTiedToPropertyId)
         .apply(
           sessionAboutFranchiseOrLettingNo
-        ) mustBe controllers.aboutYourLeaseOrTenure.routes.AboutYourLandlordController.show()
+        ) mustBe controllers.routes.TaskListController.show()
     }
 
     "return a function that goes to catering operation details page when catering operation page has been completed yes" in {
@@ -92,12 +92,12 @@ class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec {
         ) mustBe controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsController.show()
     }
 
-    "return a function that goes to about the landlord page when letting page has been completed no" in {
+    "return a function that goes to task list page when letting page has been completed no" in {
       navigator
         .nextPage(LettingAccommodationPageId)
         .apply(
           sessionAboutFranchiseOrLettingNo
-        ) mustBe controllers.aboutYourLeaseOrTenure.routes.AboutYourLandlordController.show()
+        ) mustBe controllers.routes.TaskListController.show()
     }
 
     "return a function that goes to concession or franchise page when franchise page has been completed yes 6015" in {

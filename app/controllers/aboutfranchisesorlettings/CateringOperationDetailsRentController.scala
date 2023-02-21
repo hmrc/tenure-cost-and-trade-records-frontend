@@ -19,6 +19,8 @@ package controllers.aboutfranchisesorlettings
 import actions.WithSessionRefiner
 import form.Form6010.CateringOperationOrLettingAccommodationRentForm.cateringOperationOrLettingAccommodationRentForm
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
+import navigation.AboutFranchisesOrLettingsNavigator
+import navigation.identifiers.CateringOperationRentDetailsPageId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
@@ -31,6 +33,7 @@ import scala.concurrent.{ExecutionContext, Future}
 @Singleton
 class CateringOperationDetailsRentController @Inject() (
   mcc: MessagesControllerComponents,
+  navigator: AboutFranchisesOrLettingsNavigator,
   cateringOperationOrLettingAccommodationRentDetailsView: cateringOperationOrLettingAccommodationRentDetails,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
@@ -85,11 +88,9 @@ class CateringOperationDetailsRentController @Inject() (
               index,
               existingSections(index).copy(cateringOperationRentDetails = Some(data))
             )
-            val dataForSession   =
-              updateAboutFranchisesOrLettings(_.copy(cateringOperationSections = updatedSections))
-            session
-              .saveOrUpdate(dataForSession)
-              .map(_ => Redirect(routes.CateringOperationRentIncludesController.show(index)))
+            val updatedData      = updateAboutFranchisesOrLettings(_.copy(cateringOperationSections = updatedSections))
+            session.saveOrUpdate(updatedData)
+            Future.successful(Redirect(navigator.nextPage(CateringOperationRentDetailsPageId).apply(updatedData)))
           }
       )
   }

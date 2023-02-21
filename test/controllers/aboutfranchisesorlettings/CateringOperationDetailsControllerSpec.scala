@@ -17,6 +17,7 @@
 package controllers.aboutfranchisesorlettings
 
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
+import navigation.AboutFranchisesOrLettingsNavigator
 import org.jsoup.Jsoup
 import play.api.http.Status
 import play.api.test.FakeRequest
@@ -25,11 +26,14 @@ import utils.TestBaseSpec
 
 class CateringOperationDetailsControllerSpec extends TestBaseSpec {
 
+  val mockAboutFranchisesOrLettingsNavigator = mock[AboutFranchisesOrLettingsNavigator]
+
   def cateringOperationOrLettingAccommodationDetailsController(
     aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = Some(prefilledAboutFranchiseOrLettings)
   ) =
     new CateringOperationDetailsController(
       stubMessagesControllerComponents(),
+      mockAboutFranchisesOrLettingsNavigator,
       cateringOperationDetailsView,
       preEnrichedActionRefiner(aboutFranchisesOrLettings = aboutFranchisesOrLettings),
       mockSessionRepo

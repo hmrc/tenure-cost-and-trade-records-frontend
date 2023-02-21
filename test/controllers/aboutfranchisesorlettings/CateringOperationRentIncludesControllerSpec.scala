@@ -16,13 +16,16 @@
 
 package controllers.aboutfranchisesorlettings
 
+import navigation.AboutFranchisesOrLettingsNavigator
 import play.api.http.Status
 import play.api.test.Helpers._
 import play.twirl.api.HtmlFormat
 import utils.TestBaseSpec
-import views.html.aboutfranchisesorlettings.{addAnotherCateringOperationOrLettingAccommodation, cateringOperationOrLettingAccommodationRentIncludes}
+import views.html.aboutfranchisesorlettings.cateringOperationOrLettingAccommodationRentIncludes
 
 class CateringOperationRentIncludesControllerSpec extends TestBaseSpec {
+
+  val mockAboutFranchisesOrLettingsNavigator = mock[AboutFranchisesOrLettingsNavigator]
 
   val mockCateringOperationOrLettingAccommodationRentIncludes =
     mock[cateringOperationOrLettingAccommodationRentIncludes]
@@ -32,8 +35,8 @@ class CateringOperationRentIncludesControllerSpec extends TestBaseSpec {
   val cateringOperationOrLettingAccommodationDetailsCheckboxesController =
     new CateringOperationRentIncludesController(
       stubMessagesControllerComponents(),
+      mockAboutFranchisesOrLettingsNavigator,
       mockCateringOperationOrLettingAccommodationRentIncludes,
-      mock[addAnotherCateringOperationOrLettingAccommodation],
       preFilledSession,
       mockSessionRepo
     )
