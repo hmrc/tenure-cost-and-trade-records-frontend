@@ -16,12 +16,12 @@
 
 package models.submissions.aboutfranchisesorlettings
 
-//import models.submissions.Form6010.CateringOperationOrLettingAccommodationRentDetails
 import play.api.libs.json.Json
 
 case class CateringOperationSection(
   cateringOperationDetails: CateringOperationDetails,
-  cateringOperationRentDetails: Option[CateringOperationRentDetails] = None
+  cateringOperationRentDetails: Option[CateringOperationRentDetails] = None,
+  addAnotherOperationToProperty: Option[AddAnotherCateringOperationOrLettingAccommodations] = None
 )
 
 object CateringOperationSection {

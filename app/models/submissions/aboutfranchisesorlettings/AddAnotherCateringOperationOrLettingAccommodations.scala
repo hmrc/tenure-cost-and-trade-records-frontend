@@ -14,9 +14,10 @@
  * limitations under the License.
  */
 
-package models.submissions.Form6010
+package models.submissions.aboutfranchisesorlettings
 
-import models.{NamedEnum, NamedEnumSupport}
+import models.{EnumFormat, NamedEnum, NamedEnumSupport}
+import play.api.libs.json.Format
 
 sealed trait AddAnotherCateringOperationOrLettingAccommodations extends NamedEnum {
   val key = "addAnotherCateringOperationOrLettingAccommodation"
@@ -28,8 +29,15 @@ object AddAnotherCateringOperationOrLettingAccommodationNo extends AddAnotherCat
   val name = "no"
 }
 
-object AddAnotherCateringOperationOrLettingAccommodation
+object AddAnotherCateringOperationOrLettingAccommodations
     extends NamedEnumSupport[AddAnotherCateringOperationOrLettingAccommodations] {
+
+  implicit val format: Format[AddAnotherCateringOperationOrLettingAccommodations] = EnumFormat(
+    AddAnotherCateringOperationOrLettingAccommodations
+  )
+
   val all =
     List(AddAnotherCateringOperationOrLettingAccommodationYes, AddAnotherCateringOperationOrLettingAccommodationNo)
+
+  val key = all.head.key
 }

@@ -456,9 +456,9 @@ checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.insideRepairs 
 
 ##ADD ANOTHER CATERING OPERATION OR LETTING ACCOMMODATION DETAILS
 #################################################################
-addAnotherCateringOperationOrLettingAccommodation.heading = You have added {0} separate business or franchise
+addAnotherCateringOperationOrLettingAccommodations.heading = You have added {0} separate business or franchise
 addAnotherLettingOtherPartOfProperty.heading = You have added {0} letting
-label.addAnotherCateringOperationOrLettingAccommodation = Do you need to add another separate business or franchise?
+label.addAnotherCateringOperationOrLettingAccommodations = Do you need to add another separate business or franchise?
 label.addAnotherLettingOtherPartOfProperty = Do you need to add another letting?
 
 ##TENANTS ADDITIONS DISREGARDED

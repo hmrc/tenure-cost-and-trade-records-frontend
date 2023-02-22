@@ -20,7 +20,7 @@ import models._
 import models.submissions.Form6010._
 import models.submissions._
 import models.submissions.aboutYourLeaseOrTenure._
-import models.submissions.aboutfranchisesorlettings.{CateringOperation, ConcessionOrFranchise, FranchiseOrLettingsTiedToProperty}
+import models.submissions.aboutfranchisesorlettings._
 import models.submissions.abouttheproperty._
 import models.submissions.aboutthetradinghistory.CostOfSalesOrGrossProfit
 import models.submissions.connectiontoproperty.{AddressConnectionType, ConnectionToProperty}
@@ -73,7 +73,7 @@ object Formats {
     namedEnumFormatter(BuildingOperationHaveAWebsite, Errors.booleanMissing)
   implicit val addAnotherCateringOperationOrLettingAccommodationFormat
     : Formatter[AddAnotherCateringOperationOrLettingAccommodations]                                          =
-    namedEnumFormatter(AddAnotherCateringOperationOrLettingAccommodation, Errors.booleanMissing)
+    namedEnumFormatter(AddAnotherCateringOperationOrLettingAccommodations, Errors.booleanMissing)
   implicit val addAnotherLettingOtherPartOfPropertyFormat: Formatter[AddAnotherLettingOtherPartOfProperties] =
     namedEnumFormatter(AddAnotherLettingOtherPartOfProperty, Errors.booleanMissing)
   implicit val cateringOperationsFormat: Formatter[CateringOperation]                                        =
