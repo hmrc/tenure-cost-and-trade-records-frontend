@@ -16,25 +16,25 @@
 
 package views.aboutthetradinghistory
 
-import form.aboutthetradinghistory.AboutYourTradingHistoryForm
-import models.submissions.aboutthetradinghistory.AboutYourTradingHistory
+import form.aboutthetradinghistory.{AboutYourTradingHistoryForm, VariableOperatingExpensesForm}
+import models.submissions.aboutthetradinghistory.{AboutYourTradingHistory, VariableOperatingExpenses}
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class VariableOperatingExpensesViewSpec extends QuestionViewBehaviours[AboutYourTradingHistory] {
+class VariableOperatingExpensesViewSpec extends QuestionViewBehaviours[VariableOperatingExpenses] {
   // NOTE: this is a holding view test until the variable operating expenses page is implemented
   def variableOperatingExpensesView =
     app.injector.instanceOf[views.html.aboutthetradinghistory.variableOperatingExpenses]
 
   val messageKeyPrefix = "variableOperatingExpenses"
 
-  override val form = AboutYourTradingHistoryForm.aboutYourTradingHistoryForm
+  override val form = VariableOperatingExpensesForm.variableOperatingExpensesForm
 
-  def createView = () => variableOperatingExpensesView()(fakeRequest, messages)
+  def createView = () => variableOperatingExpensesView(form)(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[AboutYourTradingHistory]) =>
-    variableOperatingExpensesView()(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[VariableOperatingExpenses]) =>
+    variableOperatingExpensesView(form)(fakeRequest, messages)
 
   "Variable Operating Expenses view" must {
 

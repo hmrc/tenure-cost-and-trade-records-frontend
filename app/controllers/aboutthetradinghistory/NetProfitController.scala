@@ -17,6 +17,7 @@
 package controllers.aboutthetradinghistory
 
 import actions.WithSessionRefiner
+import form.aboutthetradinghistory.NetProfitForm.netProfitForm
 import navigation.AboutTheTradingHistoryNavigator
 import navigation.identifiers.NetProfitId
 import play.api.i18n.I18nSupport
@@ -39,10 +40,26 @@ class NetProfitController @Inject() (
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
-    Ok(netProfitView())
+    Ok(
+      netProfitView(
+        request.sessionData.aboutTheTradingHistory.flatMap(_.netProfit) match {
+          case Some(netProfit) => netProfitForm.fillAndValidate(netProfit)
+          case _               => netProfitForm
+        }
+      )
+    )
   }
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
+    netProfitForm
+      .bindFromRequest()
+      .fold(
+        formWithErrors => Future.successful(BadRequest(netProfitView(formWithErrors))),
+        data => {
+          val updatedData = request.sessionData
+          Future.successful(Redirect(navigator.nextPage(NetProfitId).apply(updatedData)))
+        }
+      )
     val updatedData = request.sessionData
     Future.successful(Redirect(navigator.nextPage(NetProfitId).apply(updatedData)))
   }

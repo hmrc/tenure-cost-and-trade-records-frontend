@@ -16,23 +16,23 @@
 
 package views.aboutthetradinghistory
 
-import form.aboutthetradinghistory.AboutYourTradingHistoryForm
-import models.submissions.aboutthetradinghistory.AboutYourTradingHistory
+import form.aboutthetradinghistory.{AboutYourTradingHistoryForm, NetProfitForm}
+import models.submissions.aboutthetradinghistory.{AboutYourTradingHistory, NetProfit}
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class NetProfitViewSpec extends QuestionViewBehaviours[AboutYourTradingHistory] {
+class NetProfitViewSpec extends QuestionViewBehaviours[NetProfit] {
   //NOTE: this is a holding view test until the net profit page is implemented
   def netProfitView = app.injector.instanceOf[views.html.aboutthetradinghistory.netProfit]
 
   val messageKeyPrefix = "netProfit"
 
-  override val form = AboutYourTradingHistoryForm.aboutYourTradingHistoryForm
+  override val form = NetProfitForm.netProfitForm
 
-  def createView = () => netProfitView()(fakeRequest, messages)
+  def createView = () => netProfitView(form)(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[AboutYourTradingHistory]) => netProfitView()(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[NetProfit]) => netProfitView(form)(fakeRequest, messages)
 
   "Net Profit view" must {
 

@@ -17,6 +17,7 @@
 package controllers.aboutthetradinghistory
 
 import actions.WithSessionRefiner
+import form.aboutthetradinghistory.VariableOperatingExpensesForm.variableOperatingExpensesForm
 import navigation.AboutTheTradingHistoryNavigator
 import navigation.identifiers.VariableOperatingExpensesId
 import play.api.i18n.I18nSupport
@@ -39,12 +40,26 @@ class VariableOperatingExpensesController @Inject() (
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
-    Ok(variableOperativeExpensesView())
+    Ok(
+      variableOperativeExpensesView(
+        request.sessionData.aboutTheTradingHistory.flatMap(_.variableOperatingExpenses) match {
+          case Some(variableOperatingExpenses) =>
+            variableOperatingExpensesForm.fillAndValidate(variableOperatingExpenses)
+          case _                               => variableOperatingExpensesForm
+        }
+      )
+    )
   }
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
-    val updatedData = request.sessionData
-    Future.successful(Redirect(navigator.nextPage(VariableOperatingExpensesId).apply(updatedData)))
+    variableOperatingExpensesForm
+      .bindFromRequest()
+      .fold(
+        formWithErrors => Future.successful(BadRequest(variableOperativeExpensesView(formWithErrors))),
+        data => {
+          val updatedData = request.sessionData
+          Future.successful(Redirect(navigator.nextPage(VariableOperatingExpensesId).apply(updatedData)))
+        }
+      )
   }
-
 }
