@@ -30,8 +30,40 @@ class AboutFranchisesOrLettingsIdentifiersSpec extends TestBaseSpec {
       assert(CateringOperationPageId.toString.equals("cateringOperationPage"))
     }
 
+    "Identifier for catering operations details page" in {
+      assert(CateringOperationDetailsPageId.toString.equals("cateringOperationDetailsPage"))
+    }
+
+    "Identifier for catering operations rent details page" in {
+      assert(CateringOperationRentDetailsPageId.toString.equals("cateringOperationRentDetailsPage"))
+    }
+
+    "Identifier for catering operations rent included page" in {
+      assert(CateringOperationRentIncludesPageId.toString.equals("cateringOperationRentIncludesPage"))
+    }
+
+    "Identifier for add another catering operations page" in {
+      assert(AddAnotherCateringOperationPageId.toString.equals("addAnotherCateringOperationPage"))
+    }
+
     "Identifier for lettings page" in {
       assert(LettingAccommodationPageId.toString.equals("lettingAccommodationPage"))
+    }
+
+    "Identifier for lettings details page" in {
+      assert(LettingAccommodationDetailsPageId.toString.equals("lettingAccommodationDetailsPage"))
+    }
+
+    "Identifier for lettings rent details page" in {
+      assert(LettingAccommodationRentDetailsPageId.toString.equals("lettingAccommodationRentDetailsPage"))
+    }
+
+    "Identifier for lettings rent included page" in {
+      assert(LettingAccommodationRentIncludesPageId.toString.equals("lettingAccommodationRentIncludesPage"))
+    }
+
+    "Identifier for add another lettings operations page" in {
+      assert(AddAnotherLettingAccommodationPageId.toString.equals("addAnotherLettingAccommodationPage"))
     }
 
     "Identifier for concession or franchise page" in {

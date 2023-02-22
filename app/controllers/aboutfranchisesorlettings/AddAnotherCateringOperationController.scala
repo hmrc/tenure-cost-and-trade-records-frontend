@@ -41,7 +41,6 @@ class AddAnotherCateringOperationController @Inject() (
     with I18nSupport {
 
   def show(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-
     val existingSection = request.sessionData.aboutFranchisesOrLettings.flatMap(_.cateringOperationSections.lift(index))
 
     Future.successful(
@@ -49,7 +48,7 @@ class AddAnotherCateringOperationController @Inject() (
         addAnotherCateringOperationOrLettingAccommodationView(
           existingSection.flatMap(_.addAnotherOperationToProperty) match {
             case Some(addAnotherOperation) => addAnotherCateringOperationForm.fillAndValidate(addAnotherOperation)
-            case _ => addAnotherCateringOperationForm
+            case _                         => addAnotherCateringOperationForm
           },
           index,
           "addAnotherCateringOperationOrLettingAccommodations",

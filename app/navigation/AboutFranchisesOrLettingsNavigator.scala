@@ -89,11 +89,12 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit)(implicit ec: E
   }
 
   private def addAnotherCateringOperationsConditionsRouting: Session => Call = answers => {
-    val existingSection = answers.aboutFranchisesOrLettings.flatMap(_.cateringOperationSections.lift(getCateringOperationsIndex(answers)))
+    val existingSection =
+      answers.aboutFranchisesOrLettings.flatMap(_.cateringOperationSections.lift(getCateringOperationsIndex(answers)))
     existingSection.flatMap(_.addAnotherOperationToProperty).get.name match {
       case "yes" => controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController.show()
-      case "no" => controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show()
-      case _           =>
+      case "no"  => controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show()
+      case _     =>
         logger.warn(
           s"Navigation for add another catering operation reached without correct selection of conditions by controller"
         )
@@ -145,7 +146,7 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit)(implicit ec: E
     CateringOperationDetailsPageId         -> cateringOperationsDetailsConditionsRouting,
     CateringOperationRentDetailsPageId     -> cateringOperationsRentDetailsConditionsRouting,
     CateringOperationRentIncludesPageId    -> cateringOperationsRentIncludesConditionsRouting,
-    AddAnotherCateringOperationPageId   -> addAnotherCateringOperationsConditionsRouting,
+    AddAnotherCateringOperationPageId      -> addAnotherCateringOperationsConditionsRouting,
     LettingAccommodationPageId             -> lettingAccommodationConditionsRouting,
     LettingAccommodationDetailsPageId      -> lettingsDetailsConditionsRouting,
     LettingAccommodationRentDetailsPageId  -> lettingsRentDetailsConditionsRouting,
