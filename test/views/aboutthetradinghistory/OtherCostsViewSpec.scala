@@ -16,23 +16,23 @@
 
 package views.aboutthetradinghistory
 
-import form.aboutthetradinghistory.AboutYourTradingHistoryForm
-import models.submissions.aboutthetradinghistory.AboutYourTradingHistory
+import form.aboutthetradinghistory.{AboutYourTradingHistoryForm, OtherCostsForm}
+import models.submissions.aboutthetradinghistory.{AboutYourTradingHistory, OtherCosts}
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class OtherCostsViewSpec extends QuestionViewBehaviours[AboutYourTradingHistory] {
+class OtherCostsViewSpec extends QuestionViewBehaviours[OtherCosts] {
   //NOTE: this is a holding view test until the other costs page is implemented
   def otherCostsView = app.injector.instanceOf[views.html.aboutthetradinghistory.otherCosts]
 
   val messageKeyPrefix = "otherCosts"
 
-  override val form = AboutYourTradingHistoryForm.aboutYourTradingHistoryForm
+  override val form = OtherCostsForm.otherCostsForm
 
-  def createView = () => otherCostsView()(fakeRequest, messages)
+  def createView = () => otherCostsView(form)(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[AboutYourTradingHistory]) => otherCostsView()(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[OtherCosts]) => otherCostsView(form)(fakeRequest, messages)
 
   "Other Costs view" must {
 

@@ -14,6 +14,7 @@
  * limitations under the License.
  *@
 
+@import models.submissions.aboutthetradinghistory.OtherCosts
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
 
@@ -22,8 +23,7 @@
         formWithCSRF: FormWithCSRF
 )
 
-
-@()(implicit request: Request[_], messages: Messages)
+@(theForm: Form[OtherCosts])(implicit request: Request[_], messages: Messages)
 
 @layout(
   pageHeading = messages("otherCosts.heading"),
