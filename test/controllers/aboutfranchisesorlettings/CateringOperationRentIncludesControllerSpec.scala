@@ -29,26 +29,25 @@ class CateringOperationRentIncludesControllerSpec extends TestBaseSpec {
 
   val mockCateringOperationOrLettingAccommodationRentIncludes =
     mock[cateringOperationOrLettingAccommodationRentIncludes]
-  when(mockCateringOperationOrLettingAccommodationRentIncludes.apply(any, any, any)(any, any))
+  when(mockCateringOperationOrLettingAccommodationRentIncludes.apply(any, any, any, any)(any, any))
     .thenReturn(HtmlFormat.empty)
 
-  val cateringOperationOrLettingAccommodationDetailsCheckboxesController =
-    new CateringOperationRentIncludesController(
-      stubMessagesControllerComponents(),
-      mockAboutFranchisesOrLettingsNavigator,
-      mockCateringOperationOrLettingAccommodationRentIncludes,
-      preFilledSession,
-      mockSessionRepo
-    )
+  val cateringOperationRentIncludesController = new CateringOperationRentIncludesController(
+    stubMessagesControllerComponents(),
+    mockAboutFranchisesOrLettingsNavigator,
+    mockCateringOperationOrLettingAccommodationRentIncludes,
+    preFilledSession,
+    mockSessionRepo
+  )
 
   "GET /" should {
     "return 200" in {
-      val result = cateringOperationOrLettingAccommodationDetailsCheckboxesController.show(1)(fakeRequest)
+      val result = cateringOperationRentIncludesController.show(0)(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return HTML" in {
-      val result = cateringOperationOrLettingAccommodationDetailsCheckboxesController.show(1)(fakeRequest)
+      val result = cateringOperationRentIncludesController.show(0)(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }

@@ -30,7 +30,7 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[_], index: Int, cateringOrLetting: String, backLink: String)(implicit request: Request[_], messages: Messages)
+@(theForm: Form[_], index: Int, cateringOrLetting: String, operatorName: String, backLink: String)(implicit request: Request[_], messages: Messages)
 
 @layout(
  pageHeading = messages("cateringOperationOrLettingAccommodationRentDetails.heading", "Wombles Inc"),
@@ -49,7 +49,7 @@
         args = 'class -> "myForm", 'id -> "myFormId") {
 
         <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-            <h1 class="govuk-fieldset__heading">@messages("cateringOperationOrLettingAccommodationRentDetails.heading", "Wombles Inc")</h1>
+            <h1 class="govuk-fieldset__heading">@messages("cateringOperationOrLettingAccommodationRentDetails.heading", operatorName)</h1>
         </legend>
 
         @hmrcCurrencyInput(

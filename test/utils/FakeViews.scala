@@ -17,9 +17,7 @@
 package utils
 
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
-import views.html.aboutYourLeaseOrTenure.{aboutYourLandlord, currentAnnualRent, currentRentPayableWithin12Months, leaseOrAgreementYears}
-import views.html.form._
-import views.html.aboutYourLeaseOrTenure.aboutYourLandlord
+import views.html.aboutYourLeaseOrTenure._
 import views.html.aboutfranchisesorlettings._
 import views.html.login
 
@@ -37,7 +35,7 @@ trait FakeViews { this: GuiceOneAppPerSuite =>
     app.injector.instanceOf[cateringOperationOrLettingAccommodationDetails]
   lazy val cateringOperationRentDetailsView           =
     app.injector.instanceOf[cateringOperationOrLettingAccommodationRentDetails]
-  lazy val lettingOtherPartOfPropertyRentIncludesView =
+  lazy val cateringOperationRentIncludesView          =
     app.injector.instanceOf[cateringOperationOrLettingAccommodationRentIncludes]
   lazy val lettingOtherPartOfPropertyView             =
     app.injector.instanceOf[cateringOperationOrLettingAccommodation]
@@ -45,6 +43,8 @@ trait FakeViews { this: GuiceOneAppPerSuite =>
     app.injector.instanceOf[cateringOperationOrLettingAccommodationDetails]
   lazy val lettingOtherPartOfPropertyRentDetailsView  =
     app.injector.instanceOf[cateringOperationOrLettingAccommodationRentDetails]
+  lazy val lettingOtherPartOfPropertyRentIncludesView =
+    app.injector.instanceOf[cateringOperationOrLettingAccommodationRentIncludes]
   lazy val concessionOrFranchiseView                  =
     app.injector.instanceOf[concessionOrFranchise]
 

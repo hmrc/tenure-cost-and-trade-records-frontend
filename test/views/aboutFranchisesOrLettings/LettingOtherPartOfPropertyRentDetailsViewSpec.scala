@@ -35,10 +35,10 @@ class LettingOtherPartOfPropertyRentDetailsViewSpec
   override val form = LettingOtherPartOfPropertyRentForm.lettingOtherPartOfPropertyRentForm
 
   def createView = () =>
-    lettingOtherPartOfPropertyRentDetailsView(form, 0, messageKeyPrefix, backLink)(fakeRequest, messages)
+    lettingOtherPartOfPropertyRentDetailsView(form, 0, messageKeyPrefix, "Wombles Inc", backLink)(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[LettingOtherPartOfPropertyRentDetails]) =>
-    lettingOtherPartOfPropertyRentDetailsView(form, 0, messageKeyPrefix, backLink)(fakeRequest, messages)
+    lettingOtherPartOfPropertyRentDetailsView(form, 0, messageKeyPrefix, "Wombles Inc", backLink)(fakeRequest, messages)
 
   "Catering operation rent details view" must {
 

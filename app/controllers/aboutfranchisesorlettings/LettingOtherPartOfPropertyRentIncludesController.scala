@@ -39,11 +39,13 @@ class LettingOtherPartOfPropertyRentIncludesController @Inject() (
     with I18nSupport {
 
   def show(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    val existingSection = request.sessionData.aboutFranchisesOrLettings.flatMap(_.lettingSections.lift(index))
     Future.successful(
       Ok(
         cateringOperationOrLettingAccommodationRentIncludesView(
           index,
           "lettingOtherPartOfPropertyCheckboxesDetails",
+          existingSection.get.lettingOtherPartOfPropertyInformationDetails.operatorName,
           controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsRentController.show(index).url
         )
       )
