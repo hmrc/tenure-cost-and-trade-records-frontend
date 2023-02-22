@@ -32,24 +32,25 @@
 
 package views.aboutthetradinghistory
 
-import form.aboutthetradinghistory.AboutYourTradingHistoryForm
-import models.submissions.aboutthetradinghistory.AboutYourTradingHistory
+import form.aboutthetradinghistory.FixedOperatingExpensesForm
+import models.submissions.aboutthetradinghistory.FixedOperatingExpenses
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class FixedOperatingExpensesViewSpec extends QuestionViewBehaviours[AboutYourTradingHistory] {
+class FixedOperatingExpensesViewSpec extends QuestionViewBehaviours[FixedOperatingExpenses] {
   //NOTE: this is a holding view test until the fixed operating expenses page is implemented
 
   def fixedOperatingExpensesView = app.injector.instanceOf[views.html.aboutthetradinghistory.fixedOperatingExpenses]
 
   val messageKeyPrefix = "fixedOperatingExpenses"
 
-  override val form = AboutYourTradingHistoryForm.aboutYourTradingHistoryForm
+  override val form = FixedOperatingExpensesForm.fixedOperatingExpensesForm
 
-  def createView = () => fixedOperatingExpensesView()(fakeRequest, messages)
+  def createView = () => fixedOperatingExpensesView(form)(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[AboutYourTradingHistory]) => fixedOperatingExpensesView()(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[FixedOperatingExpenses]) =>
+    fixedOperatingExpensesView(form)(fakeRequest, messages)
 
   "Fixed Operating Expenses view" must {
 

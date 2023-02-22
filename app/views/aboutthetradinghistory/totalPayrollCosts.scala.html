@@ -17,15 +17,11 @@
 @import models.submissions.aboutthetradinghistory.TotalPayrollCost
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
-@import uk.gov.hmrc.govukfrontend.views.html.components._
-@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
-
 
 @this(layout: Layout,
         govukButton: GovukButton,
         formWithCSRF: FormWithCSRF
 )
-
 
 @(theForm: Form[TotalPayrollCost], backLink: String)(implicit request: Request[_], messages: Messages)
 

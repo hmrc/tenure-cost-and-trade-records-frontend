@@ -16,23 +16,23 @@
 
 package views.aboutthetradinghistory
 
-import form.aboutthetradinghistory.AboutYourTradingHistoryForm
-import models.submissions.aboutthetradinghistory.AboutYourTradingHistory
+import form.aboutthetradinghistory.CostOfSalesForm
+import models.submissions.aboutthetradinghistory.CostOfSales
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class CostOfSalesViewSpec extends QuestionViewBehaviours[AboutYourTradingHistory] {
+class CostOfSalesViewSpec extends QuestionViewBehaviours[CostOfSales] {
   // NOTE: this is a holding view test until the cost of sales page is implemented
   def costOfSalesView = app.injector.instanceOf[views.html.aboutthetradinghistory.costOfSales]
 
   val messageKeyPrefix = "costOfSales"
 
-  override val form = AboutYourTradingHistoryForm.aboutYourTradingHistoryForm
+  override val form = CostOfSalesForm.costOfSalesForm
 
-  def createView = () => costOfSalesView()(fakeRequest, messages)
+  def createView = () => costOfSalesView(form)(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[AboutYourTradingHistory]) => costOfSalesView()(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[CostOfSales]) => costOfSalesView(form)(fakeRequest, messages)
 
   "costOfSales view" must {
 

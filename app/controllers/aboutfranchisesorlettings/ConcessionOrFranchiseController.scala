@@ -20,7 +20,7 @@ import actions.WithSessionRefiner
 import form.aboutfranchisesorlettings.ConcessionOrFranchiseForm.concessionOrFranchiseForm
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
 import navigation.AboutFranchisesOrLettingsNavigator
-import navigation.identifiers.{ConcessionOrFranchiseId, FranchiseOrLettingsTiedToPropertyId}
+import navigation.identifiers.ConcessionOrFranchiseId
 import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}

@@ -17,6 +17,7 @@
 package controllers.aboutthetradinghistory
 
 import actions.WithSessionRefiner
+import form.aboutthetradinghistory.FixedOperatingExpensesForm.fixedOperatingExpensesForm
 import navigation.AboutTheTradingHistoryNavigator
 import navigation.identifiers.FixedOperatingExpensesId
 import play.api.i18n.I18nSupport
@@ -39,12 +40,26 @@ class FixedOperatingExpensesController @Inject() (
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
-    Ok(fixedOperatingExpensesView())
+    Ok(
+      fixedOperatingExpensesView(
+        request.sessionData.aboutTheTradingHistory.flatMap(_.fixedOperatingExpenses) match {
+          case Some(fixedOperatingExpenses) => fixedOperatingExpensesForm.fillAndValidate(fixedOperatingExpenses)
+          case _                            => fixedOperatingExpensesForm
+        }
+      )
+    )
   }
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
-    val updatedData = request.sessionData
-    Future.successful(Redirect(navigator.nextPage(FixedOperatingExpensesId).apply(updatedData)))
+    fixedOperatingExpensesForm
+      .bindFromRequest()
+      .fold(
+        formWithErrors => Future.successful(BadRequest(fixedOperatingExpensesView(formWithErrors))),
+        data => {
+          val updatedData = request.sessionData
+          Future.successful(Redirect(navigator.nextPage(FixedOperatingExpensesId).apply(updatedData)))
+        }
+      )
   }
 
 }

@@ -16,7 +16,6 @@
 
 package models.submissions.aboutYourLeaseOrTenure
 
-import models.submissions.aboutYourLeaseOrTenure.CommenceWithinThreeYears.all
 import models.{EnumFormat, NamedEnum, NamedEnumSupport}
 import play.api.libs.json.Format
 

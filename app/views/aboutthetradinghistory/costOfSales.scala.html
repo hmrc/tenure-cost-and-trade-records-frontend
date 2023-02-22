@@ -14,6 +14,7 @@
  * limitations under the License.
  *@
 
+@import models.submissions.aboutthetradinghistory.CostOfSales
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
 
@@ -22,8 +23,7 @@
         formWithCSRF: FormWithCSRF
 )
 
-
-@()(implicit request: Request[_], messages: Messages)
+@(theForm: Form[CostOfSales])(implicit request: Request[_], messages: Messages)
 
 @layout(
   pageHeading = messages("costOfSales.heading"),
@@ -31,6 +31,7 @@
   showSection = true,
   sectionName = messages("label.section.aboutYourTradingHistory"),
   backLinkUrl = controllers.aboutthetradinghistory.routes.CostOfSalesOrGrossProfitDetailsController.show.url,
+    theForm = theForm
 ) {
 
   @formWithCSRF(action = controllers.aboutthetradinghistory.routes.CostOfSalesController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
