@@ -52,6 +52,7 @@ class LettingOtherPartOfPropertyDetailsRentController @Inject() (
           lettingDetailsForm,
           index,
           "lettingOtherPartOfPropertyRentDetails",
+          existingSection.get.lettingOtherPartOfPropertyInformationDetails.operatorName,
           controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsController.show().url
         )
       )
@@ -59,6 +60,8 @@ class LettingOtherPartOfPropertyDetailsRentController @Inject() (
   }
 
   def submit(index: Int) = (Action andThen withSessionRefiner).async { implicit request =>
+    val existingSection = request.sessionData.aboutFranchisesOrLettings.map(_.lettingSections).get(index)
+
     lettingOtherPartOfPropertyRentForm
       .bindFromRequest()
       .fold(
@@ -69,6 +72,7 @@ class LettingOtherPartOfPropertyDetailsRentController @Inject() (
                 formWithErrors,
                 index,
                 "lettingOtherPartOfPropertyRentDetails",
+                existingSection.lettingOtherPartOfPropertyInformationDetails.operatorName,
                 controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsController.show().url
               )
             )

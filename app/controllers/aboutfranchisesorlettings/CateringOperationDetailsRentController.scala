@@ -57,6 +57,7 @@ class CateringOperationDetailsRentController @Inject() (
           rentDetailsForm,
           index,
           "cateringOperationOrLettingAccommodationRentDetails",
+          existingSection.get.cateringOperationDetails.operatorName,
           controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController.show().url
         )
       )
@@ -64,6 +65,8 @@ class CateringOperationDetailsRentController @Inject() (
   }
 
   def submit(index: Int) = (Action andThen withSessionRefiner).async { implicit request =>
+    val existingSection = request.sessionData.aboutFranchisesOrLettings.map(_.cateringOperationSections).get(index)
+
     cateringOperationOrLettingAccommodationRentForm
       .bindFromRequest()
       .fold(
@@ -74,6 +77,7 @@ class CateringOperationDetailsRentController @Inject() (
                 formWithErrors,
                 index,
                 "cateringOperationOrLettingAccommodationRentDetails",
+                existingSection.cateringOperationDetails.operatorName,
                 controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController.show().url
               )
             )

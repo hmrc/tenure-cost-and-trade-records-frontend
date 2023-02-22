@@ -39,11 +39,15 @@ class CateringOperationRentIncludesController @Inject() (
     with I18nSupport {
 
   def show(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    val existingSection = request.sessionData.aboutFranchisesOrLettings.flatMap(
+      _.cateringOperationSections.lift(index)
+    )
     Future.successful(
       Ok(
         cateringOperationOrLettingAccommodationDetailsCheckboxesView(
           index,
           "cateringOperationOrLettingAccommodationCheckboxesDetails",
+          existingSection.get.cateringOperationDetails.operatorName,
           controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsRentController.show(index).url
         )
       )

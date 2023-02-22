@@ -33,7 +33,7 @@
 )
 
 
-@(index: Int, cateringOrLetting: String, backLink: String)(implicit request: Request[_], messages: Messages)
+@(index: Int, cateringOrLetting: String, operatorName: String, backLink: String)(implicit request: Request[_], messages: Messages)
 
 @layout(
  pageHeading = messages("cateringOperationOrLettingAccommodationCheckboxesDetails.heading", "Wombles Inc"),
@@ -53,7 +53,7 @@
   args = 'class -> "myForm", 'id -> "myFormId") {
 
   <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-   <h1 class="govuk-fieldset__heading">@messages("cateringOperationOrLettingAccommodationCheckboxesDetails.heading", "Wombles Inc")</h1>
+   <h1 class="govuk-fieldset__heading">@messages("cateringOperationOrLettingAccommodationCheckboxesDetails.heading", operatorName)</h1>
   </legend>
 
   @govukCheckboxes(
