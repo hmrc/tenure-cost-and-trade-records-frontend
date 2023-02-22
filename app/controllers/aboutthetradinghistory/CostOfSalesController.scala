@@ -17,6 +17,7 @@
 package controllers.aboutthetradinghistory
 
 import actions.WithSessionRefiner
+import form.aboutthetradinghistory.CostOfSalesForm.costOfSalesForm
 import navigation.AboutTheTradingHistoryNavigator
 import navigation.identifiers.CostOfSalesId
 import play.api.i18n.I18nSupport
@@ -39,12 +40,26 @@ class CostOfSalesController @Inject() (
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
-    Ok(costOfSalesView())
+    Ok(
+      costOfSalesView(
+        request.sessionData.aboutTheTradingHistory.flatMap(_.costOfSales) match {
+          case Some(costOfSales) => costOfSalesForm.fillAndValidate(costOfSales)
+          case _                 => costOfSalesForm
+        }
+      )
+    )
   }
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
-    val updatedData = request.sessionData
-    Future.successful(Redirect(navigator.nextPage(CostOfSalesId).apply(updatedData)))
+    costOfSalesForm
+      .bindFromRequest()
+      .fold(
+        formWithErrors => Future.successful(BadRequest(costOfSalesView(formWithErrors))),
+        data => {
+          val updatedData = request.sessionData
+          Future.successful(Redirect(navigator.nextPage(CostOfSalesId).apply(updatedData)))
+        }
+      )
   }
 
 }

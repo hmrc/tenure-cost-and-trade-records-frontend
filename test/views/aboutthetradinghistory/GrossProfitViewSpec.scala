@@ -16,23 +16,23 @@
 
 package views.aboutthetradinghistory
 
-import form.aboutthetradinghistory.AboutYourTradingHistoryForm
-import models.submissions.aboutthetradinghistory.AboutYourTradingHistory
+import form.aboutthetradinghistory.GrossProfitForm
+import models.submissions.aboutthetradinghistory.GrossProfit
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class GrossProfitsViewSpec extends QuestionViewBehaviours[AboutYourTradingHistory] {
+class GrossProfitsViewSpec extends QuestionViewBehaviours[GrossProfit] {
   // NOTE: this is a holding view test until the gross profit page is implemented
   def grossProfitView = app.injector.instanceOf[views.html.aboutthetradinghistory.grossProfits]
 
   val messageKeyPrefix = "grossProfit"
 
-  override val form = AboutYourTradingHistoryForm.aboutYourTradingHistoryForm
+  override val form = GrossProfitForm.grossProfitForm
 
-  def createView = () => grossProfitView()(fakeRequest, messages)
+  def createView = () => grossProfitView(form)(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[AboutYourTradingHistory]) => grossProfitView()(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[GrossProfit]) => grossProfitView(form)(fakeRequest, messages)
 
   "grossProfits view" must {
 

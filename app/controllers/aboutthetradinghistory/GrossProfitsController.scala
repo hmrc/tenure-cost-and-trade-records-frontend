@@ -17,6 +17,7 @@
 package controllers.aboutthetradinghistory
 
 import actions.WithSessionRefiner
+import form.aboutthetradinghistory.GrossProfitForm.grossProfitForm
 import navigation.AboutTheTradingHistoryNavigator
 import navigation.identifiers.GrossProfitsId
 import play.api.i18n.I18nSupport
@@ -39,12 +40,25 @@ class GrossProfitsController @Inject() (
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
-    Ok(grossProfitsView())
+    Ok(
+      grossProfitsView(
+        request.sessionData.aboutTheTradingHistory.flatMap(_.grossProfit) match {
+          case Some(grossProfit) => grossProfitForm.fillAndValidate(grossProfit)
+          case _                 => grossProfitForm
+        }
+      )
+    )
   }
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
-    val updatedData = request.sessionData
-    Future.successful(Redirect(navigator.nextPage(GrossProfitsId).apply(updatedData)))
+    grossProfitForm
+      .bindFromRequest()
+      .fold(
+        formWithErrors => Future.successful(BadRequest(grossProfitsView(formWithErrors))),
+        data => {
+          val updatedData = request.sessionData
+          Future.successful(Redirect(navigator.nextPage(GrossProfitsId).apply(updatedData)))
+        }
+      )
   }
-
 }
