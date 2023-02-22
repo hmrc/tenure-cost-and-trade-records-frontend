@@ -37,6 +37,7 @@ class CateringOperationsRentDetailsViewSpec extends QuestionViewBehaviours[Cater
       form,
       0,
       messageKeyPrefix,
+      "Wombles Inc",
       controllers.aboutfranchisesorlettings.routes.CateringOperationController.show().url
     )(fakeRequest, messages)
 
@@ -45,6 +46,7 @@ class CateringOperationsRentDetailsViewSpec extends QuestionViewBehaviours[Cater
       form,
       0,
       messageKeyPrefix,
+      "Wombles Inc",
       controllers.aboutfranchisesorlettings.routes.CateringOperationController.show().url
     )(fakeRequest, messages)
 

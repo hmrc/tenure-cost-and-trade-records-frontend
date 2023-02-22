@@ -28,19 +28,17 @@ import java.util.Locale
 
 class CateringOperationsRentIncludesViewSpec extends QuestionViewBehaviours[CateringOperationDetails] {
 
-  def cateringOperationRentIncludesView =
-    app.injector.instanceOf[views.html.aboutfranchisesorlettings.cateringOperationOrLettingAccommodationRentIncludes]
-
   val messageKeyPrefix = "cateringOperationOrLettingAccommodationCheckboxesDetails"
 
   val backLink      = controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsRentController.show(0).url
   // No form for checkboxes TODO Add form
   override val form = CateringOperationOrLettingAccommodationForm.cateringOperationOrLettingAccommodationForm
 
-  def createView = () => cateringOperationRentIncludesView(0, messageKeyPrefix, backLink)(fakeRequest, messages)
+  def createView = () =>
+    cateringOperationRentIncludesView(0, messageKeyPrefix, "Wombles Inc", backLink)(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[CateringOperationDetails]) =>
-    cateringOperationRentIncludesView(0, messageKeyPrefix, backLink)(fakeRequest, messages)
+    cateringOperationRentIncludesView(0, messageKeyPrefix, "Wombles Inc", backLink)(fakeRequest, messages)
 
   "Catering operation rent includes view" must {
 
