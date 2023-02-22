@@ -38,12 +38,7 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit)(implicit ec: E
         case Some("yes") =>
           controllers.aboutfranchisesorlettings.routes.ConcessionOrFranchiseController.show()
         case Some("no")  =>
-          if (answers.stillConnectedDetails.flatMap(_.connectionToProperty.map(_.name)).equals(Some("ownerTrustee"))) {
-            controllers.additionalinformation.routes.FurtherInformationOrRemarksController.show()
-          } else {
-            answers.stillConnectedDetails.flatMap(_.connectionToProperty.map(_.name)).equals(Some("occupierTrustee"))
-            controllers.aboutYourLeaseOrTenure.routes.AboutYourLandlordController.show()
-          }
+          controllers.routes.TaskListController.show()
         case _           =>
           logger.warn(
             s"Navigation for franchise or letting reached without correct selection of conditions by controller"
@@ -93,18 +88,18 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit)(implicit ec: E
       .show(getCateringOperationsIndex(answers))
   }
 
-//  private def addAnotherCateringOperationsConditionsRouting: Session => Call = answers => {
-//    answers.aboutFranchisesOrLettings.flatMap(_..lettingOtherPartOfProperty.map(_.name)) match {
-//      case Some("yes") =>
-//        controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsController.show()
-//      case Some("no")  => controllers.aboutYourLeaseOrTenure.routes.AboutYourLandlordController.show()
-//      case _           =>
-//        logger.warn(
-//          s"Navigation for lettings reached without correct selection of conditions by controller"
-//        )
-//        throw new RuntimeException("Invalid option exception for lettings conditions routing")
-//    }
-//  }
+  private def addAnotherCateringOperationsConditionsRouting: Session => Call = answers => {
+    val existingSection = answers.aboutFranchisesOrLettings.flatMap(_.cateringOperationSections.lift(getCateringOperationsIndex(answers)))
+    existingSection.flatMap(_.addAnotherOperationToProperty).get.name match {
+      case "yes" => controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController.show()
+      case "no" => controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show()
+      case _           =>
+        logger.warn(
+          s"Navigation for add another catering operation reached without correct selection of conditions by controller"
+        )
+        throw new RuntimeException("Invalid option exception for add another catering operation conditions routing")
+    }
+  }
 
   private def lettingAccommodationConditionsRouting: Session => Call = answers => {
     answers.aboutFranchisesOrLettings.flatMap(_.lettingOtherPartOfProperty.map(_.name)) match {
@@ -150,7 +145,7 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit)(implicit ec: E
     CateringOperationDetailsPageId         -> cateringOperationsDetailsConditionsRouting,
     CateringOperationRentDetailsPageId     -> cateringOperationsRentDetailsConditionsRouting,
     CateringOperationRentIncludesPageId    -> cateringOperationsRentIncludesConditionsRouting,
-//    AddAnotherCateringOperationPageId   -> addAnotherCateringOperationsConditionsRouting,
+    AddAnotherCateringOperationPageId   -> addAnotherCateringOperationsConditionsRouting,
     LettingAccommodationPageId             -> lettingAccommodationConditionsRouting,
     LettingAccommodationDetailsPageId      -> lettingsDetailsConditionsRouting,
     LettingAccommodationRentDetailsPageId  -> lettingsRentDetailsConditionsRouting,

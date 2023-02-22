@@ -22,7 +22,7 @@ import form.Formats._
 import form.Formats.userTypeFormat
 import models.submissions.Form6010._
 import models.submissions.aboutYourLeaseOrTenure._
-import models.submissions.aboutfranchisesorlettings.{CateringAddress, CateringOperation, ConcessionOrFranchise, FranchiseOrLettingsTiedToProperty}
+import models.submissions.aboutfranchisesorlettings._
 import models.submissions.abouttheproperty._
 import models.submissions.aboutthetradinghistory.CostOfSalesOrGrossProfit
 import models.submissions.additionalinformation.AlternativeContactDetailsAddress
