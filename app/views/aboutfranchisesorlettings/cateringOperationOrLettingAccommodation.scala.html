@@ -44,7 +44,8 @@
 ) {
 
  @formWithCSRF(action = {
-   if(cateringOrLetting.equals("cateringOperationOrLettingAccommodation"))
+   if(cateringOrLetting.equals("cateringOperationOrLettingAccommodation") ||
+           cateringOrLetting.equals("concessionOrFranchise"))
     controllers.aboutfranchisesorlettings.routes.CateringOperationController.submit()
    else if(cateringOrLetting.equals("lettingOtherPartOfProperties"))
     controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.submit()

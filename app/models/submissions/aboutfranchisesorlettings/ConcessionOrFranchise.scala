@@ -33,7 +33,7 @@ object ConcessionOrFranchise extends NamedEnumSupport[ConcessionOrFranchise] {
 
   implicit val format: Format[ConcessionOrFranchise] = EnumFormat(ConcessionOrFranchise)
 
-  override def all = List(ConcessionOrFranchiseYes, ConcessionOrFranchiseNo)
+  val all = List(ConcessionOrFranchiseYes, ConcessionOrFranchiseNo)
 
   val key = all.head.key
 }

@@ -22,7 +22,9 @@ import play.api.data.Form
 import play.api.data.Forms.mapping
 
 object ConcessionOrFranchiseForm {
-  lazy val baseConcessionOrFranchiseForm: Form[ConcessionOrFranchise] = Form(baseConcessionOrFranchiseMapping)
+
+  lazy val baseConcessionOrFranchiseForm: Form[ConcessionOrFranchise] = Form(
+    baseConcessionOrFranchiseMapping)
 
   val baseConcessionOrFranchiseMapping = mapping(
     "concessionOrFranchise" -> concessionOrFranchiseType

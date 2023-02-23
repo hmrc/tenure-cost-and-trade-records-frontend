@@ -90,8 +90,15 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit)(implicit ec: E
 
   private def cateringOrFranchiseRouting: Session => Call = answers => {
     answers.aboutFranchisesOrLettings.flatMap(_.concessionOrFranchise.map(_.name)) match {
-      case Some("yes") => controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController.show()
+      case Some("yes") =>
+        controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController.show()
       case Some("no")  => controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show()
+      case _           =>
+        logger.warn(
+          s"Navigation for catering or franchise reached without correct selection of conditions by controller"
+        )
+        throw new RuntimeException("Invalid option exception for catering or franchise routing")
+
     }
   }
 

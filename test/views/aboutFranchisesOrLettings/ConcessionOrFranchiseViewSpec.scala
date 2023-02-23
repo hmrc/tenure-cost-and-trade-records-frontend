@@ -16,23 +16,33 @@
 
 package views.aboutFranchisesOrLettings
 
+import form.Form6010.CateringOperationOrLettingAccommodationForm
 import form.aboutfranchisesorlettings.ConcessionOrFranchiseForm
 import models.submissions.Form6010._
-import models.submissions.aboutfranchisesorlettings.ConcessionOrFranchise
+import models.submissions.aboutfranchisesorlettings.{CateringOperationDetails, ConcessionOrFranchise}
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class ConcessionOrFranchiseViewSpec extends QuestionViewBehaviours[ConcessionOrFranchise] {
+class ConcessionOrFranchiseViewSpec extends QuestionViewBehaviours[CateringOperationDetails] {
 
   val messageKeyPrefix = "concessionOrFranchise"
 
-  override val form = ConcessionOrFranchiseForm.concessionOrFranchiseForm
+  override val form = CateringOperationOrLettingAccommodationForm.cateringOperationOrLettingAccommodationForm
 
-  def createView = () => concessionOrFranchiseView(form)(fakeRequest, messages)
+  def createView = () =>
+    concessionOrFranchiseView(
+      form,
+      messageKeyPrefix,
+      controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show().url
+    )(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[ConcessionOrFranchise]) =>
-    concessionOrFranchiseView(form)(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[CateringOperationDetails]) =>
+    concessionOrFranchiseView(
+      form,
+      messageKeyPrefix,
+      controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show().url
+    )(fakeRequest, messages)
 
   "Concession or franchise view" must {
 
