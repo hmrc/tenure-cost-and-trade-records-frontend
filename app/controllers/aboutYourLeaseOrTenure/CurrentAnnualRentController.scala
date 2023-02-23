@@ -18,6 +18,7 @@ package controllers.aboutYourLeaseOrTenure
 
 import actions.WithSessionRefiner
 import form.aboutYourLeaseOrTenure.CurrentAnnualRentForm.currentAnnualRentForm
+import models.submissions.aboutLeaseOrAgreement.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne
 import models.{ForTypes, Session}
 import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.CurrentAnnualRentPageId
@@ -45,7 +46,10 @@ class CurrentAnnualRentController @Inject() (
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     Ok(
       currentAnnualRentView(
-        currentAnnualRentForm,
+        request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.annualRent) match {
+          case Some(annualRent) => currentAnnualRentForm.fillAndValidate(annualRent)
+          case _                => currentAnnualRentForm
+        },
         getBackLink(request.sessionData) match {
           case Right(link) => link
           case Left(msg)   =>
@@ -74,7 +78,11 @@ class CurrentAnnualRentController @Inject() (
               )
             )
           ),
-        data => Future.successful(Redirect(navigator.nextPage(CurrentAnnualRentPageId).apply(request.sessionData)))
+        data => {
+          val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(annualRent = Some(data)))
+          session.saveOrUpdate(updatedData)
+          Future.successful(Redirect(navigator.nextPage(CurrentAnnualRentPageId).apply(request.sessionData)))
+        }
       )
   }
 

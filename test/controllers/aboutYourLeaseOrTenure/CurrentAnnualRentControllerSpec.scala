@@ -16,8 +16,10 @@
 
 package controllers.aboutYourLeaseOrTenure
 
+import models.submissions.aboutLeaseOrAgreement.AboutLeaseOrAgreementPartOne
 import navigation.AboutYourLeaseOrTenureNavigator
 import play.api.http.Status
+import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import play.twirl.api.HtmlFormat
 import utils.TestBaseSpec
@@ -26,27 +28,37 @@ import views.html.aboutYourLeaseOrTenure.currentAnnualRent
 class CurrentAnnualRentControllerSpec extends TestBaseSpec {
 
   val mockAboutYourLeaseOrTenureNavigator = mock[AboutYourLeaseOrTenureNavigator]
-  val mockCcurrentAnnualRentView          = mock[currentAnnualRent]
-  when(mockCcurrentAnnualRentView.apply(any, any)(any, any)).thenReturn(HtmlFormat.empty)
 
-  val connectionToThePropertyController = new CurrentAnnualRentController(
-    stubMessagesControllerComponents(),
-    mockAboutYourLeaseOrTenureNavigator,
-    mockCcurrentAnnualRentView,
-    preFilledSession,
-    mockSessionRepo
-  )
+  def connectionToThePropertyController(
+    aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
+  ) =
+    new CurrentAnnualRentController(
+      stubMessagesControllerComponents(),
+      mockAboutYourLeaseOrTenureNavigator,
+      mockCurrentAnnualRentView,
+      preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
+      mockSessionRepo
+    )
 
   "GET /" should {
     "return 200" in {
-      val result = connectionToThePropertyController.show(fakeRequest)
+      val result = connectionToThePropertyController().show(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return HTML" in {
-      val result = connectionToThePropertyController.show(fakeRequest)
+      val result = connectionToThePropertyController().show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
+    }
+  }
+
+  "SUBMIT /" should {
+    "throw a BAD_REQUEST if an empty form is submitted" in {
+      val res = connectionToThePropertyController().submit(
+        FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)
+      )
+      status(res) shouldBe BAD_REQUEST
     }
   }
 }
