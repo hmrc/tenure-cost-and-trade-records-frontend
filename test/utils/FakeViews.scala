@@ -58,4 +58,7 @@ trait FakeViews { this: GuiceOneAppPerSuite =>
   lazy val leaseOrAgreementYearsView            =
     app.injector.instanceOf[leaseOrAgreementYears]
 
+  val mockCurrentAnnualRentView =
+    app.injector.instanceOf[currentAnnualRent]
+
 }

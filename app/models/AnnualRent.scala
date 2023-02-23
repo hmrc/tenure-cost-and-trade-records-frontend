@@ -16,4 +16,10 @@
 
 package models
 
+import play.api.libs.json.Json
+
 case class AnnualRent(amount: BigDecimal)
+
+object AnnualRent {
+  implicit val format = Json.format[AnnualRent]
+}

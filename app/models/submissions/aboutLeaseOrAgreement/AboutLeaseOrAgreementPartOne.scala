@@ -17,14 +17,15 @@
 package models.submissions.aboutLeaseOrAgreement
 
 import actions.SessionRequest
-import models.Session
+import models.{AnnualRent, Session}
 import models.submissions.aboutYourLeaseOrTenure.{AboutTheLandlord, CurrentRentPayableWithin12Months, LeaseOrAgreementYearsDetails}
 import play.api.libs.json.Json
 
 case class AboutLeaseOrAgreementPartOne(
   aboutTheLandlord: Option[AboutTheLandlord] = None,
   leaseOrAgreementYearsDetails: Option[LeaseOrAgreementYearsDetails] = None,
-  currentRentPayableWithin12Months: Option[CurrentRentPayableWithin12Months] = None
+  currentRentPayableWithin12Months: Option[CurrentRentPayableWithin12Months] = None,
+  annualRent: Option[AnnualRent] = None
 )
 
 object AboutLeaseOrAgreementPartOne {
