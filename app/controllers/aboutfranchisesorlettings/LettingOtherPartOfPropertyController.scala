@@ -78,9 +78,9 @@ class LettingOtherPartOfPropertyController @Inject() (
                 getBackLink(request.sessionData) match {
                   case Right(link) => link
                   case Left(msg)   =>
-                    logger.warn(s"Navigation for catering operation details page reached with error: $msg")
+                    logger.warn(s"Navigation for letting other part of property page reached with error: $msg")
                     throw new RuntimeException(
-                      s"Navigation for catering operation details page reached with error $msg"
+                      s"Navigation for letting other part of property page reached with error $msg"
                     )
                 }
               )
@@ -97,7 +97,7 @@ class LettingOtherPartOfPropertyController @Inject() (
   private def getBackLink(answers: Session): Either[String, String] =
     answers.userLoginDetails.forNumber match {
       case ForTypes.for6010 |  ForTypes.for6011                  =>
-        answers.aboutFranchisesOrLettings.flatMap(_.lettingOtherPartOfProperty.map(_.name)) match {
+        answers.aboutFranchisesOrLettings.flatMap(_.cateringOperation.map(_.name)) match {
           case Some("yes") =>
             Right(controllers.aboutfranchisesorlettings.routes.CateringOperationController.show().url)
           case Some("no")  =>
@@ -115,6 +115,6 @@ class LettingOtherPartOfPropertyController @Inject() (
             Right(controllers.routes.TaskListController.show().url)
         }
       case _                                   =>
-        Left(s"Unknown form type with letting other part of property details back link")
+        Left(s"Unknown form type with letting other part of property back link")
     }
 }
