@@ -18,10 +18,12 @@ package controllers.aboutfranchisesorlettings
 
 import actions.WithSessionRefiner
 import form.Form6010.LettingOtherPartOfPropertiesForm.lettingOtherPartOfPropertiesForm
+import models.{ForTypes, Session}
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
 import navigation.AboutFranchisesOrLettingsNavigator
 import navigation.identifiers.LettingAccommodationPageId
 import play.api.i18n.I18nSupport
+import play.api.i18n.Lang.logger
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
@@ -50,7 +52,14 @@ class LettingOtherPartOfPropertyController @Inject() (
             case _                                => lettingOtherPartOfPropertiesForm
           },
           "lettingOtherPartOfProperties",
-          controllers.aboutfranchisesorlettings.routes.CateringOperationController.show().url
+          getBackLink(request.sessionData) match {
+            case Right(link) => link
+            case Left(msg)   =>
+              logger.warn(s"Navigation for catering operation details page reached with error: $msg")
+              throw new RuntimeException(
+                s"Navigation for catering operation details page reached with error $msg"
+              )
+          }
         )
       )
     )
@@ -66,7 +75,14 @@ class LettingOtherPartOfPropertyController @Inject() (
               cateringOperationOrLettingAccommodationView(
                 formWithErrors,
                 "lettingOtherPartOfProperties",
-                controllers.aboutfranchisesorlettings.routes.CateringOperationController.show().url
+                getBackLink(request.sessionData) match {
+                  case Right(link) => link
+                  case Left(msg)   =>
+                    logger.warn(s"Navigation for letting other part of property page reached with error: $msg")
+                    throw new RuntimeException(
+                      s"Navigation for letting other part of property page reached with error $msg"
+                    )
+                }
               )
             )
           ),
@@ -77,4 +93,28 @@ class LettingOtherPartOfPropertyController @Inject() (
         }
       )
   }
+
+  private def getBackLink(answers: Session): Either[String, String] =
+    answers.userLoginDetails.forNumber match {
+      case ForTypes.for6010 | ForTypes.for6011 =>
+        answers.aboutFranchisesOrLettings.flatMap(_.cateringOperation.map(_.name)) match {
+          case Some("yes") =>
+            Right(controllers.aboutfranchisesorlettings.routes.CateringOperationController.show().url)
+          case Some("no")  =>
+            Right(controllers.aboutfranchisesorlettings.routes.CateringOperationController.show().url)
+          case _           =>
+            Right(controllers.routes.TaskListController.show().url)
+        }
+      case ForTypes.for6015 | ForTypes.for6016 =>
+        answers.aboutFranchisesOrLettings.flatMap(_.concessionOrFranchise.map(_.name)) match {
+          case Some("yes") =>
+            Right(controllers.aboutfranchisesorlettings.routes.ConcessionOrFranchiseController.show().url)
+          case Some("no")  =>
+            Right(controllers.aboutfranchisesorlettings.routes.ConcessionOrFranchiseController.show().url)
+          case _           =>
+            Right(controllers.routes.TaskListController.show().url)
+        }
+      case _                                   =>
+        Left(s"Unknown form type with letting other part of property back link")
+    }
 }
