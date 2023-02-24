@@ -44,12 +44,13 @@
 ) {
 
  @formWithCSRF(action = {
-   if(cateringOrLetting.equals("cateringOperationOrLettingAccommodation") ||
-           cateringOrLetting.equals("concessionOrFranchise"))
+   if(cateringOrLetting.equals("cateringOperationOrLettingAccommodation"))
     controllers.aboutfranchisesorlettings.routes.CateringOperationController.submit()
    else if(cateringOrLetting.equals("lettingOtherPartOfProperties"))
     controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.submit()
-   else controllers.routes.TaskListController.show()},
+   else if(cateringOrLetting.equals("concessionOrFranchise"))
+     controllers.aboutfranchisesorlettings.routes.ConcessionOrFranchiseController.submit()
+    else controllers.routes.TaskListController.show()},
  args = 'class -> "myForm", 'id -> "myFormId") {
 
   @govukRadios(
