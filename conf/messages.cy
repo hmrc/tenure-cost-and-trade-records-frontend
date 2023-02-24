@@ -263,8 +263,7 @@ hint.cateringOperationOrLettingAccommodation = Choose ‘no’ if you’ve inclu
 
 #LETTING OTHER PART OF PROPERTY
 ##############################
-lettingOtherPartOfProperties.heading = Lettings
-label.lettingOtherPartOfProperties = Is any rent received from letting other parts of the property?
+lettingOtherPartOfProperties.heading = Is any rent received from letting other parts of the property?
 hint.lettingOtherPartOfProperties = Including advertising rights, stations or hoardings. Choose ‘no’ if you’ve already included the rental payments in your turnover.
 
 #CURRENT ANNUAL RENT
@@ -600,7 +599,7 @@ netProfit.heading = This is a holding page for the net profits page
 #CONCESSIONS OR FRANCHISE (FORM 6015)
 #########
 concessionOrFranchise.heading = Is any concession or franchise run as a separate business from the property?
-concessionOrFranchise.subheading = Choose ’no’ if you’ve included turnover from these businesses in your turnover. You will have the opportunity to add more than one business if required.
+hint.concessionOrFranchise = Choose ’no’ if you’ve included turnover from these businesses in your turnover. You will have the opportunity to add more than one business if required.
 
 #SHARED RESPONSIBILITIES
 ##############################
