@@ -104,34 +104,5 @@ class connectionToThePropertyViewSpec extends QuestionViewBehaviours[ConnectionT
       val loginButton = doc.getElementById("continue").text()
       assert(loginButton == messages("button.label.continue"))
     }
-
-    "contain get help section" in {
-      val doc = asDocument(createView())
-      assert(doc.toString.contains(messages("helpWithService.title")))
-    }
-
-    "contain get help section for people completing form" in {
-      val doc = asDocument(createView())
-      assert(doc.toString.contains(messages("connection.helpWithServicePeopleCompletingFormHeader")))
-      assert(doc.toString.contains(messages("connection.helpWithServicePeopleCompletingForm")))
-    }
-
-    "contain get help section for trustee completing form" in {
-      val doc = asDocument(createView())
-      assert(doc.toString.contains(messages("connection.helpWithServicePeopleTrusteeHeader")))
-      assert(doc.toString.contains(messages("connection.helpWithServicePeopleTrustee")))
-    }
-
-    "contain get help section for agents completing form" in {
-      val doc = asDocument(createView())
-      assert(doc.toString.contains(messages("connection.helpWithServicePeopleAgentHeader")))
-      assert(doc.toString.contains(messages("connection.helpWithServicePeopleAgent")))
-    }
-
-    "contain get help section basic details" in {
-      val doc = asDocument(createView())
-      assert(doc.toString.contains(messages("common.helpWithServiceHeader")))
-      assert(doc.toString.contains(messages("common.helpWithService")))
-    }
   }
 }

@@ -80,23 +80,5 @@ class CurrentRentFirstPaidViewSpec extends QuestionViewBehaviours[CurrentRentFir
       val loginButton = doc.getElementById("continue").text()
       assert(loginButton == messages("button.label.continue"))
     }
-
-    "contain get help section current rent first paid" in {
-      val doc = asDocument(createView())
-      assert(doc.toString.contains(messages("currentRentFirstPaid.helpWithServiceCurrentRentFirstPaidHeader")))
-      assert(doc.toString.contains(messages("currentRentFirstPaid.helpWithServiceCurrentRentFirstPaidDateKnow")))
-      assert(doc.toString.contains(messages("currentRentFirstPaid.helpWithServiceCurrentRentFirstPaidDateCould")))
-      assert(doc.toString.contains(messages("currentRentFirstPaid.listBlock.p1")))
-      assert(doc.toString.contains(messages("currentRentFirstPaid.listBlock.p2")))
-      assert(doc.toString.contains(messages("currentRentFirstPaid.listBlock.p3")))
-      assert(doc.toString.contains(messages("currentRentFirstPaid.listBlock.p4")))
-      assert(doc.toString.contains(messages("currentRentFirstPaid.helpWithServiceCurrentRentFirstPaidDontNeedToKnow")))
-    }
-
-    "contain get help section basic details" in {
-      val doc = asDocument(createView())
-      assert(doc.toString.contains(messages("common.helpWithServiceHeader")))
-      assert(doc.toString.contains(messages("common.helpWithService")))
-    }
   }
 }

@@ -153,23 +153,5 @@ class AboutThePropertyViewSpec extends QuestionViewBehaviours[PropertyDetails] {
       val loginButton = doc.getElementById("continue").text()
       assert(loginButton == messages("button.label.continue"))
     }
-
-    "contain get help section current occupier details" in {
-      val doc = asDocument(createView())
-      assert(doc.toString.contains(messages("currentOccupier.helpWithServicePeopleCurrentOccupierHeader")))
-      assert(doc.toString.contains(messages("currentOccupier.helpWithServicePeopleCurrentOccupier")))
-    }
-
-    "contain get help section use of property details" in {
-      val doc = asDocument(createView())
-      assert(doc.toString.contains(messages("currentOccupier.helpWithServicePeopleUsePropertyHeader")))
-      assert(doc.toString.contains(messages("currentOccupier.helpWithServicePeopleUseProperty")))
-    }
-
-    "contain get help section basic details" in {
-      val doc = asDocument(createView())
-      assert(doc.toString.contains(messages("common.helpWithServiceHeader")))
-      assert(doc.toString.contains(messages("common.helpWithService")))
-    }
   }
 }

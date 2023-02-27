@@ -16,7 +16,7 @@
 
 package utils
 
-import models.submissions.aboutfranchisesorlettings.{CateringAddress, CateringOperationDetails,  CateringOperationRentDetails, CateringOperationSection,  ConcessionOrFranchiseNo, ConcessionOrFranchiseYes, FranchiseOrLettingsTiedToPropertiesNo, FranchiseOrLettingsTiedToPropertiesYes, LettingSection}
+import models.submissions.aboutfranchisesorlettings.{CateringAddress, CateringOperationDetails, CateringOperationRentDetails, CateringOperationSection, ConcessionOrFranchiseNo, ConcessionOrFranchiseYes, FranchiseOrLettingsTiedToPropertiesNo, FranchiseOrLettingsTiedToPropertiesYes, LettingSection}
 import models.submissions.abouttheproperty.PremisesLicenseGrantedNo
 import models.submissions.Form6010.{LandlordAddress, LettingAddress, LettingOtherPartOfPropertiesNo, LettingOtherPartOfPropertiesYes, LettingOtherPartOfPropertyInformationDetails, LettingOtherPartOfPropertyRentDetails}
 import models.submissions.aboutLeaseOrAgreement.AboutLeaseOrAgreementPartOne
@@ -45,11 +45,11 @@ trait FakeObjects {
     Some("West sussex"),
     "BN12 4AX"
   )
-  val prefilledCateringAddress                                =
+  val prefilledCateringAddress                  =
     CateringAddress("004", Some("GORING ROAD"), Some("GORING-BY-SEA, WORTHING"), Some("West sussex"), "BN12 4AX")
-  val prefilledLettingAddress                                 =
+  val prefilledLettingAddress                   =
     LettingAddress("004", Some("GORING ROAD"), Some("GORING-BY-SEA, WORTHING"), Some("West sussex"), "BN12 4AX")
-  val prefilledLandlordAddress                                =
+  val prefilledLandlordAddress                  =
     LandlordAddress("004", Some("GORING ROAD"), Some("GORING-BY-SEA, WORTHING"), Some("West sussex"), "BN12 4AX")
   val prefilledFirstOccupy                      = LocalDate.of(1996, 3, 15)
   val prefilledFinancialYear                    = LocalDate.of(2022, 6, 1)
@@ -72,7 +72,7 @@ trait FakeObjects {
       )
     )
   )
-  val prefilledLettingSection                                 = LettingSection(
+  val prefilledLettingSection               = LettingSection(
     LettingOtherPartOfPropertyInformationDetails(
       "Operator Name",
       "Type of Business",
@@ -85,23 +85,23 @@ trait FakeObjects {
       )
     )
   )
-  val prefilledAboutTheLandlord                               =
+  val prefilledAboutTheLandlord             =
     AboutTheLandlord(
       prefilledFakeName,
       prefilledLandlordAddress
     )
-  val prefilledLeaseOrAgreementYearsDetails                   =
+  val prefilledLeaseOrAgreementYearsDetails =
     LeaseOrAgreementYearsDetails(
       CommenceWithinThreeYearsYes,
       AgreedReviewedAlteredThreeYearsYes,
       RentUnderReviewNegotiatedYes
     )
-  val prefilledUserLoginDetails                               =
+  val prefilledUserLoginDetails             =
     UserLoginDetails("Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=", "FOR6010", "99996010004", prefilledAddress)
-  val prefilledUserLoginDetails6015                           =
+  val prefilledUserLoginDetails6015         =
     UserLoginDetails("Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=", "FOR6015", "99996015001", prefilledAddress)
-  val prefilledBaseSession                                    = Session(prefilledUserLoginDetails)
-  val prefilledRemoveConnection                               =
+  val prefilledBaseSession                  = Session(prefilledUserLoginDetails)
+  val prefilledRemoveConnection             =
     RemoveConnectionDetails(
       Some(
         RemoveConnectionsDetails(

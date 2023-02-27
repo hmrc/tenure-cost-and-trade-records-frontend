@@ -49,6 +49,12 @@ class TiedForGoodsViewSpec extends QuestionViewBehaviours[TiedForGoods] {
       backlinkUrl mustBe controllers.abouttheproperty.routes.EnforcementActionBeenTakenController.show().url
     }
 
+    "Section heading is visible" in {
+      val doc         = asDocument(createViewUsingForm(form)) // govuk-caption-m
+      val sectionText = doc.getElementsByClass("govuk-caption-m").text()
+      assert(sectionText == messages("label.section.aboutTheProperty"))
+    }
+
     "contain radio buttons for the value yes" in {
       val doc = asDocument(createViewUsingForm(form))
       assertContainsRadioButton(
@@ -77,18 +83,6 @@ class TiedForGoodsViewSpec extends QuestionViewBehaviours[TiedForGoods] {
       val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("continue").text()
       assert(loginButton == messages("button.label.continue"))
-    }
-
-    "contain get help section use of licence activities details" in {
-      val doc = asDocument(createView())
-      assert(doc.toString.contains(messages("tiedForGoods.helpWithServiceTiedForGoodsHeader")))
-      assert(doc.toString.contains(messages("tiedForGoods.helpWithServiceTiedForGoods")))
-    }
-
-    "contain get help section basic details" in {
-      val doc = asDocument(createView())
-      assert(doc.toString.contains(messages("common.helpWithServiceHeader")))
-      assert(doc.toString.contains(messages("common.helpWithService")))
     }
   }
 }

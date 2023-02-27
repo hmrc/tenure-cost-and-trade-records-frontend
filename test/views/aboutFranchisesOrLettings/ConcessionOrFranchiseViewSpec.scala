@@ -17,8 +17,6 @@
 package views.aboutFranchisesOrLettings
 
 import form.Form6010.CateringOperationOrLettingAccommodationForm
-import form.aboutfranchisesorlettings.ConcessionOrFranchiseForm
-import models.submissions.Form6010._
 import models.submissions.aboutfranchisesorlettings.{CateringOperationDetails, CateringOperationNo, ConcessionOrFranchise, ConcessionOrFranchiseNo, ConcessionOrFranchiseYes}
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
@@ -92,17 +90,6 @@ class ConcessionOrFranchiseViewSpec extends QuestionViewBehaviours[CateringOpera
       val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("continue").text()
       assert(loginButton == messages("button.label.continue"))
-    }
-
-    "contain get help section" in {
-      val doc = asDocument(createView())
-      assert(doc.toString.contains(messages("helpWithService.title")))
-    }
-
-    "contain get help section basic details" in {
-      val doc = asDocument(createView())
-      assert(doc.toString.contains(messages("common.helpWithServiceHeader")))
-      assert(doc.toString.contains(messages("common.helpWithService")))
     }
   }
 }

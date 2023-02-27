@@ -782,14 +782,14 @@ addAnotherCatering.helpWithServiceAddAnotherCatering.p3 = If you remove a listin
 
 #HELP WITH SERVICE CURRENT RENT FIRST PAID
 ##############################
-currentRentFirstPaid.helpWithServiceCurrentRentFirstPaidHeader = What you need to tell us
+currentRentFirstPaid.title = If you are not sure what date to use
 currentRentFirstPaid.helpWithServiceCurrentRentFirstPaidDateKnow = The date we need to know is not necessarily the date when you first took occupation.
-currentRentFirstPaid.helpWithServiceCurrentRentFirstPaidDateCould = The date could be when you first paid rent following:
+currentRentFirstPaid.helpWithServiceCurrentRentFirstPaidDateCould = The date could be when the rent was first paid by you or a previous occupier following:
 currentRentFirstPaid.listBlock.p1 = a rent review
 currentRentFirstPaid.listBlock.p2 = a lease renewal or alteration
 currentRentFirstPaid.listBlock.p3 = the assignment of an existing lease from another party
 currentRentFirstPaid.listBlock.p4 = an initial rent-free period
-currentRentFirstPaid.helpWithServiceCurrentRentFirstPaidDontNeedToKnow = We don’t need to know about any changes in the rent which are part of your current agreement. These could include, but are not limited to, changes linked to your sales figures, or fluctuations in the retail price index.
+currentRentFirstPaid.helpWithServiceCurrentRentFirstPaidDontNeedToKnow = We don’t need to know about any changes in the rent which are part of your current agreement. These could include, but are not limited to, changes linked to your sales performance, or fluctuations in the retail price index.
 
 #HELP WITH SERVICE DOES THE RENT PAYABLE
 ##############################
@@ -860,10 +860,12 @@ alternativeContact.helpWithServiceAlternativeContact = If you don’t need to pr
 
 #HELP WITH PREMISES LICENCE GRANTED
 ##############################
+helpWithServicePremisesLicenseGranted.title = Help with your premises licence
 premisesLicenseGranted.helpWithServicePremisesLicenseGranted = We’re interested to know if you’re permitted to serve alcohol under the terms of a premises licence, a personal licence, or a club premises certificate.
 
 #HELP WITH PREMISES LICENCE GRANTED DETAILS
 ##############################
+premisesLicenseGrantedInformation.title = Help with your description
 premisesLicenseGrantedInformation.helpWithServicePremisesLicenseGrantedInformationHeader = Describing your premises licence
 premisesLicenseGrantedInformation.helpWithServicePremisesLicenseGrantedInformation.p1 = Let us know if you have a premises licence, a personal licence, or a club premises certificate.
 premisesLicenseGrantedInformation.helpWithServicePremisesLicenseGrantedInformation.subHeader = Describing restrictions on the use of the property

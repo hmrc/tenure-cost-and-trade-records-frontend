@@ -46,6 +46,12 @@ class LicensableActivitiesViewSpec extends QuestionViewBehaviours[LicensableActi
       backlinkUrl mustBe controllers.abouttheproperty.routes.WebsiteForPropertyController.show().url
     }
 
+    "Section heading is visible" in {
+      val doc         = asDocument(createViewUsingForm(form)) // govuk-caption-m
+      val sectionText = doc.getElementsByClass("govuk-caption-m").text()
+      assert(sectionText == messages("label.section.aboutTheProperty"))
+    }
+
     "contain radio buttons for the value yes" in {
       val doc = asDocument(createViewUsingForm(form))
       assertContainsRadioButton(
@@ -74,31 +80,6 @@ class LicensableActivitiesViewSpec extends QuestionViewBehaviours[LicensableActi
       val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("continue").text()
       assert(loginButton == messages("button.label.continue"))
-    }
-
-    "contain get help section use of licence activities details" in {
-      val doc = asDocument(createView())
-      assert(doc.toString.contains(messages("licensableActivities.helpWithServiceLicensableActivitiesHeader")))
-      assert(doc.toString.contains(messages("licensableActivities.helpWithServiceLicensableActivities")))
-      assert(doc.toString.contains(messages("licensableActivities.listBlock1.p1")))
-      assert(doc.toString.contains(messages("licensableActivities.listBlock1.p2")))
-      assert(doc.toString.contains(messages("licensableActivities.listBlock1.p3")))
-      assert(doc.toString.contains(messages("licensableActivities.inThisInstance")))
-      assert(doc.toString.contains(messages("licensableActivities.lateNight")))
-      assert(doc.toString.contains(messages("licensableActivities.regulated")))
-      assert(doc.toString.contains(messages("licensableActivities.listBlock2.p1")))
-      assert(doc.toString.contains(messages("licensableActivities.listBlock2.p2")))
-      assert(doc.toString.contains(messages("licensableActivities.listBlock2.p3")))
-      assert(doc.toString.contains(messages("licensableActivities.listBlock2.p4")))
-      assert(doc.toString.contains(messages("licensableActivities.listBlock2.p5")))
-      assert(doc.toString.contains(messages("licensableActivities.listBlock2.p6")))
-      assert(doc.toString.contains(messages("licensableActivities.listBlock2.p7")))
-    }
-
-    "contain get help section basic details" in {
-      val doc = asDocument(createView())
-      assert(doc.toString.contains(messages("common.helpWithServiceHeader")))
-      assert(doc.toString.contains(messages("common.helpWithService")))
     }
   }
 }

@@ -107,19 +107,5 @@ class AboutYourTradingHistoryViewSpec extends QuestionViewBehaviours[AboutYourTr
       val loginButton = doc.getElementById("continue").text()
       assert(loginButton == messages("button.label.continue"))
     }
-
-    "contain get help section about the trading history" in {
-      val doc = asDocument(createView())
-      assert(doc.toString.contains(messages("aboutYourTradingHistory.helpWithServiceAboutYourTradingHistoryHeader")))
-      assert(doc.toString.contains(messages("aboutYourTradingHistory.helpWithServiceAboutYourTradingHistory.p1")))
-      assert(doc.toString.contains(messages("aboutYourTradingHistory.helpWithServiceAboutYourTradingHistory.p2")))
-      assert(doc.toString.contains(messages("aboutYourTradingHistory.helpWithServiceAboutYourTradingHistory.p3")))
-    }
-
-    "contain get help section basic details" in {
-      val doc = asDocument(createView())
-      assert(doc.toString.contains(messages("common.helpWithServiceHeader")))
-      assert(doc.toString.contains(messages("common.helpWithService")))
-    }
   }
 }

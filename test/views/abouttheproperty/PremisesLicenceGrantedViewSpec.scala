@@ -17,7 +17,7 @@
 package views.abouttheproperty
 
 import form.abouttheproperty.PremisesLicenseGrantedForm
-import models.submissions.abouttheproperty.{PremisesLicenseConditions, PremisesLicenseGranted, PremisesLicensesConditionsNo, PremisesLicensesConditionsYes}
+import models.submissions.abouttheproperty.{PremisesLicenseConditions, PremisesLicenseGranted, PremisesLicenseGrantedNo, PremisesLicenseGrantedYes, PremisesLicensesConditionsNo, PremisesLicensesConditionsYes}
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
@@ -39,12 +39,42 @@ class PremisesLicenceGrantedViewSpec extends QuestionViewBehaviours[PremisesLice
 
     behave like normalPage(createView, messageKeyPrefix)
 
-    "has a link marked with back.link.label leading to the licencable activities Page" in {
+    "has a link marked with back.link.label leading to the licensable activities Page" in {
       val doc          = asDocument(createView())
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText mustBe messages("back.link.label")
       val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
       backlinkUrl mustBe controllers.abouttheproperty.routes.WebsiteForPropertyController.show().url
+    }
+
+    "Section heading is visible" in {
+      val doc         = asDocument(createViewUsingForm(form)) // govuk-caption-m
+      val sectionText = doc.getElementsByClass("govuk-caption-m").text()
+      assert(sectionText == messages("label.section.aboutTheProperty"))
+    }
+
+    "contain radio buttons for the value yes" in {
+      val doc = asDocument(createViewUsingForm(form))
+      assertContainsRadioButton(
+        doc,
+        "premisesLicenseGranted",
+        "premisesLicenseGranted",
+        PremisesLicenseGrantedYes.name,
+        false
+      )
+      assertContainsText(doc, messages("label.yes"))
+    }
+
+    "contain radio buttons for the value no" in {
+      val doc = asDocument(createViewUsingForm(form))
+      assertContainsRadioButton(
+        doc,
+        "premisesLicenseGranted-2",
+        "premisesLicenseGranted",
+        PremisesLicenseGrantedNo.name,
+        false
+      )
+      assertContainsText(doc, messages("label.no"))
     }
 
     "contain save and continue button with the value Save and Continue" in {
@@ -55,13 +85,7 @@ class PremisesLicenceGrantedViewSpec extends QuestionViewBehaviours[PremisesLice
 
     "contain get help section" in {
       val doc = asDocument(createView())
-      assert(doc.toString.contains(messages("helpWithService.title")))
-    }
-
-    "contain get help section basic details" in {
-      val doc = asDocument(createView())
-      assert(doc.toString.contains(messages("common.helpWithServiceHeader")))
-      assert(doc.toString.contains(messages("common.helpWithService")))
+      assert(doc.toString.contains(messages("helpWithServicePremisesLicenseGranted.title")))
     }
   }
 }
