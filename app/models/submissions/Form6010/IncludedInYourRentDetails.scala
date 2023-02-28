@@ -16,4 +16,10 @@
 
 package models.submissions.Form6010
 
+import play.api.libs.json.Json
+
 case class IncludedInYourRentDetails(vat: VATs, nonDomesticRates: NonDomesticRates, waterCharges: WaterCharges)
+
+object IncludedInYourRentDetails {
+  implicit val format = Json.format[IncludedInYourRentDetails]
+}

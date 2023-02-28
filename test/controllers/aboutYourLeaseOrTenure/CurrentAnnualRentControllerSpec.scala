@@ -35,7 +35,7 @@ class CurrentAnnualRentControllerSpec extends TestBaseSpec {
     new CurrentAnnualRentController(
       stubMessagesControllerComponents(),
       mockAboutYourLeaseOrTenureNavigator,
-      mockCurrentAnnualRentView,
+      currentAnnualRentView,
       preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
       mockSessionRepo
     )

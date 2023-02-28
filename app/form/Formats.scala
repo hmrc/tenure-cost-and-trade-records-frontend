@@ -129,16 +129,16 @@ object Formats {
     namedEnumFormatter(LegalPlanningRestriction, Errors.booleanMissing)
 
   implicit val outsideRepairsFormatter: Formatter[OutsideRepairs]        =
-    namedEnumFormatter(OutsideRepair, Errors.booleanMissing)
+    namedEnumFormatter(OutsideRepairs, Errors.booleanMissing)
   implicit val insideRepairsFormatter: Formatter[InsideRepairs]          =
-    namedEnumFormatter(InsideRepair, Errors.booleanMissing)
+    namedEnumFormatter(InsideRepairs, Errors.booleanMissing)
   implicit val buildingInsuranceFormatter: Formatter[BuildingInsurances] =
-    namedEnumFormatter(BuildingInsurance, Errors.booleanMissing)
+    namedEnumFormatter(BuildingInsurances, Errors.booleanMissing)
 
-  implicit val vatFormatter: Formatter[VATs]                          = namedEnumFormatter(VAT, Errors.booleanMissing)
+  implicit val vatFormatter: Formatter[VATs]                          = namedEnumFormatter(VATs, Errors.booleanMissing)
   implicit val nondomesticRatesFormatter: Formatter[NonDomesticRates] =
-    namedEnumFormatter(NonDomesticRate, Errors.booleanMissing)
-  implicit val waterChargesFormatter: Formatter[WaterCharges]         = namedEnumFormatter(WaterCharge, Errors.booleanMissing)
+    namedEnumFormatter(NonDomesticRates, Errors.booleanMissing)
+  implicit val waterChargesFormatter: Formatter[WaterCharges]         = namedEnumFormatter(WaterCharges, Errors.booleanMissing)
 
   implicit val commenceWithinThreeYearsFormatter: Formatter[CommenceWithinThreeYears]               =
     namedEnumFormatter(CommenceWithinThreeYears, Errors.booleanMissing)

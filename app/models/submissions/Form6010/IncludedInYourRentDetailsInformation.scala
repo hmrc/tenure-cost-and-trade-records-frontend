@@ -16,46 +16,60 @@
 
 package models.submissions.Form6010
 
-import models.{NamedEnum, NamedEnumSupport}
+import models.{EnumFormat, NamedEnum, NamedEnumSupport}
+import play.api.libs.json.Format
 
 sealed trait VATs extends NamedEnum {
-  val key = "vat"
+  override def key: String = "vat"
 }
 object VATsYes extends VATs {
-  val name = "yes"
+  override def name: String = "yes"
 }
 object VATsNo extends VATs {
-  val name = "no"
+  override def name: String = "no"
 }
 
-object VAT extends NamedEnumSupport[VATs] {
+object VATs extends NamedEnumSupport[VATs] {
+  implicit val format: Format[VATs] = EnumFormat(VATs)
+
   val all = List(VATsYes, VATsNo)
+
+  val key = all.head.key
 }
 
 sealed trait NonDomesticRates extends NamedEnum {
-  val key = "nondomesticRates"
+  override def key: String = "nondomesticRates"
 }
 object NonDomesticRatesYes extends NonDomesticRates {
-  val name = "yes"
+  override def name: String = "yes"
 }
 object NonDomesticRatesNo extends NonDomesticRates {
-  val name = "no"
+  override def name: String = "no"
 }
 
-object NonDomesticRate extends NamedEnumSupport[NonDomesticRates] {
+object NonDomesticRates extends NamedEnumSupport[NonDomesticRates] {
+  implicit val format: Format[NonDomesticRates] = EnumFormat(NonDomesticRates)
+
   val all = List(NonDomesticRatesYes, NonDomesticRatesNo)
+
+  val key = all.head.key
 }
 
 sealed trait WaterCharges extends NamedEnum {
-  val key = "waterCharges"
+  override def key: String = "waterCharges"
 }
 object WaterChargesYes extends WaterCharges {
-  val name = "yes"
+  override def name: String = "yes"
 }
 object WaterChargesNo extends WaterCharges {
-  val name = "no"
+  override def name: String = "no"
 }
 
-object WaterCharge extends NamedEnumSupport[WaterCharges] {
+object WaterCharges extends NamedEnumSupport[WaterCharges] {
+  implicit val format: Format[WaterCharges] = EnumFormat(WaterCharges)
+
   val all = List(WaterChargesYes, WaterChargesNo)
+
+  val key = all.head.key
+
 }
