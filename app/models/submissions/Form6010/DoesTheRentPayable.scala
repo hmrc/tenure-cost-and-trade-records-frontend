@@ -16,6 +16,12 @@
 
 package models.submissions.Form6010
 
+import play.api.libs.json.Json
+
 case class DoesTheRentPayable(
   detailsToQuestions: String
 )
+
+object DoesTheRentPayable {
+  implicit val format = Json.format[DoesTheRentPayable]
+}

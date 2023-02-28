@@ -19,6 +19,7 @@ package utils
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import views.html.aboutYourLeaseOrTenure._
 import views.html.aboutfranchisesorlettings._
+import views.html.form.{currentLeaseOrAgreementBegin, doesTheRentPayable, includedInYourRent, intervalsOfRentReview, rentIncludeTradeServices, sharedResponsibilities, ultimatelyResponsible}
 import views.html.login
 
 trait FakeViews { this: GuiceOneAppPerSuite =>
@@ -58,7 +59,20 @@ trait FakeViews { this: GuiceOneAppPerSuite =>
   lazy val leaseOrAgreementYearsView            =
     app.injector.instanceOf[leaseOrAgreementYears]
 
-  val mockCurrentAnnualRentView =
-    app.injector.instanceOf[currentAnnualRent]
-
+  lazy val rentIncludeTradeServicesView     =
+    app.injector.instanceOf[rentIncludeTradeServices]
+  lazy val doesTheRentPayableView           =
+    app.injector.instanceOf[doesTheRentPayable]
+  lazy val currentRentFirstPaidView         =
+    app.injector.instanceOf[currentRentFirstPaid]
+  lazy val ultimatelyResponsibleView        =
+    app.injector.instanceOf[ultimatelyResponsible]
+  lazy val sharedResponsibilitiesView       =
+    app.injector.instanceOf[sharedResponsibilities]
+  lazy val intervalsOfRentReviewView        =
+    app.injector.instanceOf[intervalsOfRentReview]
+  lazy val includedInYourRentView           =
+    app.injector.instanceOf[includedInYourRent]
+  lazy val currentLeaseOrAgreementBeginView =
+    app.injector.instanceOf[currentLeaseOrAgreementBegin]
 }

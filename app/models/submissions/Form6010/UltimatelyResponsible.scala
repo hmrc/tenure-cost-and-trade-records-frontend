@@ -16,8 +16,14 @@
 
 package models.submissions.Form6010
 
+import play.api.libs.json.Json
+
 case class UltimatelyResponsible(
   outsideRepairs: OutsideRepairs,
   insideRepairs: InsideRepairs,
   buildingInsurance: BuildingInsurances
 )
+
+object UltimatelyResponsible {
+  implicit val format = Json.format[UltimatelyResponsible]
+}
