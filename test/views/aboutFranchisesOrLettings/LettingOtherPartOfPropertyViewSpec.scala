@@ -16,7 +16,7 @@
 
 package views.aboutFranchisesOrLettings
 
-import form.Form6010.LettingOtherPartOfPropertiesForm
+import form.aboutfranchisesorlettings.LettingOtherPartOfPropertiesForm
 import models.submissions.Form6010.{LettingOtherPartOfPropertiesNo, LettingOtherPartOfPropertiesYes, LettingOtherPartOfProperty}
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form

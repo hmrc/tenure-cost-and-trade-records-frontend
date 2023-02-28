@@ -14,8 +14,17 @@
  * limitations under the License.
  */
 
-package models.submissions.Form6010
+package models.submissions.aboutfranchisesorlettings
 
-case class AddAnotherLettingOtherPartOfPropertyDetails(
-  addAnotherLettingOtherPartOfPropertyDetails: AddAnotherLettingOtherPartOfProperties
+import play.api.libs.json.Json
+
+import java.time.LocalDate
+
+case class LettingOtherPartOfPropertyRentDetails(
+  annualRent: BigDecimal,
+  dateInput: LocalDate
 )
+object LettingOtherPartOfPropertyRentDetails {
+  implicit val format = Json.format[LettingOtherPartOfPropertyRentDetails]
+
+}

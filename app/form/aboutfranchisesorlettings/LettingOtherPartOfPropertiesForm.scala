@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package form.Form6010
+package form.aboutfranchisesorlettings
 
 import form.MappingSupport.lettingOtherPartOfPropertiesType
 import models.submissions.Form6010.LettingOtherPartOfProperty
