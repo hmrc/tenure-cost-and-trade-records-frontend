@@ -16,25 +16,24 @@
 
 package controllers.aboutfranchisesorlettings
 
+import navigation.AboutFranchisesOrLettingsNavigator
 import play.api.http.Status
 import play.api.test.Helpers._
 import play.twirl.api.HtmlFormat
 import utils.TestBaseSpec
-import views.html.aboutYourLeaseOrTenure.aboutYourLandlord
-import views.html.aboutfranchisesorlettings.{addAnotherCateringOperationOrLettingAccommodation, cateringOperationOrLettingAccommodationDetails}
-import views.html.login
+import views.html.aboutfranchisesorlettings.addAnotherCateringOperationOrLettingAccommodation
 
 class AddAnotherLettingOtherPartOfPropertyControllerSpec extends TestBaseSpec {
+
+  val mockAboutFranchisesOrLettingsNavigator = mock[AboutFranchisesOrLettingsNavigator]
 
   val mockAddAnotherLettingOtherPartOfProperty = mock[addAnotherCateringOperationOrLettingAccommodation]
   when(mockAddAnotherLettingOtherPartOfProperty.apply(any, any, any, any)(any, any)).thenReturn(HtmlFormat.empty)
 
   val addAnotherLettingOtherPartOfPropertyController = new AddAnotherLettingOtherPartOfPropertyController(
     stubMessagesControllerComponents(),
+    mockAboutFranchisesOrLettingsNavigator,
     mockAddAnotherLettingOtherPartOfProperty,
-    mock[cateringOperationOrLettingAccommodationDetails],
-    mock[login],
-    mock[aboutYourLandlord],
     preFilledSession,
     mockSessionRepo
   )
