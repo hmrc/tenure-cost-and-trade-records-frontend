@@ -14,17 +14,22 @@
  * limitations under the License.
  */
 
-package models.submissions.Form6010
+package form.aboutfranchisesorlettings
 
-import play.api.libs.json.Json
+import form.DateMappings.dateFieldsMapping
+import form.MappingSupport.currencyMapping
+import models.submissions.aboutfranchisesorlettings.LettingOtherPartOfPropertyRentDetails
+import play.api.data.Form
+import play.api.data.Forms.mapping
 
-case class LettingOtherPartOfPropertyInformationDetails(
-  operatorName: String,
-  typeOfBusiness: String,
-  lettingAddress: LettingAddress
-)
+object LettingOtherPartOfPropertyRentForm {
 
-object LettingOtherPartOfPropertyInformationDetails {
-  implicit val format = Json.format[LettingOtherPartOfPropertyInformationDetails]
-
+  val lettingOtherPartOfPropertyRentForm = Form(
+    mapping(
+      "annualRent" -> currencyMapping(".annualRent"),
+      "dateInput"  -> dateFieldsMapping("dateInput")
+    )(LettingOtherPartOfPropertyRentDetails.apply)(
+      LettingOtherPartOfPropertyRentDetails.unapply
+    )
+  )
 }

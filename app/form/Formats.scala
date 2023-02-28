@@ -74,12 +74,14 @@ object Formats {
   implicit val addAnotherCateringOperationOrLettingAccommodationFormat
     : Formatter[AddAnotherCateringOperationOrLettingAccommodations]                                          =
     namedEnumFormatter(AddAnotherCateringOperationOrLettingAccommodations, Errors.booleanMissing)
-  implicit val addAnotherLettingOtherPartOfPropertyFormat: Formatter[AddAnotherLettingOtherPartOfProperties] =
+  implicit val addAnotherLettingOtherPartOfPropertyFormat: Formatter[AddAnotherLettingOtherPartOfProperty]   =
     namedEnumFormatter(AddAnotherLettingOtherPartOfProperty, Errors.booleanMissing)
   implicit val cateringOperationsFormat: Formatter[CateringOperation]                                        =
     namedEnumFormatter(CateringOperation, Errors.booleanMissing)
   implicit val lettingOtherPartOfPropertiesFormat: Formatter[LettingOtherPartOfProperty]                     =
     namedEnumFormatter(LettingOtherPartOfProperty, Errors.booleanMissing)
+  implicit val concessionOrFranchiseFormat: Formatter[ConcessionOrFranchise]                                 =
+    namedEnumFormatter(ConcessionOrFranchise, Errors.booleanMissing)
   implicit val tenancyLeaseAgreementsFormat: Formatter[TenancyLeaseAgreements]                               =
     namedEnumFormatter(TenancyLeaseAgreement, Errors.booleanMissing)
   implicit val licensableActivitiesFormat: Formatter[LicensableActivities]                                   =
@@ -168,8 +170,4 @@ object Formats {
 
   implicit val costOfSalesOrGrossProfitDetailsFormatter: Formatter[CostOfSalesOrGrossProfit] =
     namedEnumFormatter(CostOfSalesOrGrossProfit, Errors.booleanMissing)
-
-  implicit val concessionOrFranchiseFormatter: Formatter[ConcessionOrFranchise] =
-    namedEnumFormatter(ConcessionOrFranchise, Errors.booleanMissing)
-
 }

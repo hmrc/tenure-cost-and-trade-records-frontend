@@ -19,21 +19,23 @@ package models.submissions.aboutfranchisesorlettings
 import models.{EnumFormat, NamedEnum, NamedEnumSupport}
 import play.api.libs.json.Format
 
-sealed trait ConcessionOrFranchise extends NamedEnum {
-  override def key = "concessionOrFranchise"
+sealed trait AddAnotherLettingOtherPartOfProperty extends NamedEnum {
+  val key = "addAnotherLettingOtherPartOfProperty"
 }
-object ConcessionOrFranchiseYes extends ConcessionOrFranchise {
-  override def name = "yes"
+object AddAnotherLettingOtherPartOfPropertiesYes extends AddAnotherLettingOtherPartOfProperty {
+  val name = "yes"
 }
-object ConcessionOrFranchiseNo extends ConcessionOrFranchise {
-  override def name = "no"
+object AddAnotherLettingOtherPartOfPropertiesNo extends AddAnotherLettingOtherPartOfProperty {
+  val name = "no"
 }
 
-object ConcessionOrFranchise extends NamedEnumSupport[ConcessionOrFranchise] {
+object AddAnotherLettingOtherPartOfProperty extends NamedEnumSupport[AddAnotherLettingOtherPartOfProperty] {
 
-  implicit val format: Format[ConcessionOrFranchise] = EnumFormat(ConcessionOrFranchise)
+  implicit val format: Format[AddAnotherLettingOtherPartOfProperty] = EnumFormat(
+    AddAnotherLettingOtherPartOfProperty
+  )
 
-  val all = List(ConcessionOrFranchiseYes, ConcessionOrFranchiseNo)
+  val all = List(AddAnotherLettingOtherPartOfPropertiesYes, AddAnotherLettingOtherPartOfPropertiesNo)
 
   val key = all.head.key
 }

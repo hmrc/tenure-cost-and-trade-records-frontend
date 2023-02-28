@@ -21,12 +21,11 @@ import form.aboutfranchisesorlettings.ConcessionOrFranchiseForm.concessionOrFran
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
 import navigation.AboutFranchisesOrLettingsNavigator
 import navigation.identifiers.ConcessionOrFranchiseId
-import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.aboutfranchisesorlettings.concessionOrFranchise
+import views.html.aboutfranchisesorlettings.cateringOperationOrLettingAccommodation
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
@@ -35,21 +34,23 @@ import scala.concurrent.Future
 class ConcessionOrFranchiseController @Inject() (
   mcc: MessagesControllerComponents,
   navigator: AboutFranchisesOrLettingsNavigator,
-  concessionOrFranchiseView: concessionOrFranchise,
+  cateringOperationOrLettingAccommodationView: cateringOperationOrLettingAccommodation,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
 ) extends FrontendController(mcc)
-    with I18nSupport
-    with Logging {
+    with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Future.successful(
       Ok(
-        concessionOrFranchiseView(
+        cateringOperationOrLettingAccommodationView(
           request.sessionData.aboutFranchisesOrLettings.flatMap(_.concessionOrFranchise) match {
-            case Some(concessionOrFranchise) => concessionOrFranchiseForm.fillAndValidate(concessionOrFranchise)
+            case Some(concessionOrFranchise) =>
+              concessionOrFranchiseForm.fillAndValidate(concessionOrFranchise)
             case _                           => concessionOrFranchiseForm
-          }
+          },
+          "concessionOrFranchise",
+          controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show().url
         )
       )
     )
@@ -59,7 +60,16 @@ class ConcessionOrFranchiseController @Inject() (
     concessionOrFranchiseForm
       .bindFromRequest()
       .fold(
-        formWithErrors => Future.successful(BadRequest(concessionOrFranchiseView(formWithErrors))),
+        formWithErrors =>
+          Future.successful(
+            BadRequest(
+              cateringOperationOrLettingAccommodationView(
+                formWithErrors,
+                "concessionOrFranchise",
+                controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show().url
+              )
+            )
+          ),
         data => {
           val updatedData = updateAboutFranchisesOrLettings(_.copy(concessionOrFranchise = Some(data)))
           session.saveOrUpdate(updatedData)

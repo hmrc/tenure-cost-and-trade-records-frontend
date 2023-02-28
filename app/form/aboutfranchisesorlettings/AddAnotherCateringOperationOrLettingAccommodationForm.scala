@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package form.Form6010
+package form.aboutfranchisesorlettings
 
-import form.MappingSupport._
+import form.MappingSupport.addAnotherCateringOperationOrLettingAccommodationType
 import models.submissions.aboutfranchisesorlettings.AddAnotherCateringOperationOrLettingAccommodations
 import play.api.data.Form
 import play.api.data.Forms.mapping

@@ -16,11 +16,13 @@
 
 package utils
 
-import models.submissions.aboutfranchisesorlettings.{CateringAddress, CateringOperationDetails, CateringOperationRentDetails, CateringOperationSection, ConcessionOrFranchiseNo, ConcessionOrFranchiseYes, FranchiseOrLettingsTiedToPropertiesNo, FranchiseOrLettingsTiedToPropertiesYes, LettingSection}
+
+import models.submissions.aboutfranchisesorlettings._
 import models.submissions.abouttheproperty.PremisesLicenseGrantedNo
-import models.submissions.Form6010.{LandlordAddress, LettingAddress, LettingOtherPartOfPropertiesNo, LettingOtherPartOfPropertiesYes, LettingOtherPartOfPropertyInformationDetails, LettingOtherPartOfPropertyRentDetails}
+import models.submissions.Form6010.{LandlordAddress, LettingOtherPartOfPropertiesNo, LettingOtherPartOfPropertiesYes}
 import models.submissions.aboutLeaseOrAgreement.AboutLeaseOrAgreementPartOne
 import models.submissions.aboutYourLeaseOrTenure.{AboutTheLandlord, AgreedReviewedAlteredThreeYearsYes, CommenceWithinThreeYearsYes, CurrentRentPayableWithin12Months, CurrentRentWithin12MonthsYes, LeaseOrAgreementYearsDetails, RentUnderReviewNegotiatedYes}
+import models.submissions.aboutfranchisesorlettings
 import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, CateringOperationNo, CateringOperationYes, LettingSection}
 import models.submissions.abouttheproperty.{AboutTheProperty, BuildingOperationHaveAWebsiteYes, CurrentPropertyHotel, EnforcementActionsNo, LicensableActivitiesNo, PremisesLicensesConditionsNo, PropertyDetails, TiedGoodsNo, WebsiteForPropertyDetails}
 import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, AboutYourTradingHistory}
@@ -73,7 +75,7 @@ trait FakeObjects {
     )
   )
   val prefilledLettingSection               = LettingSection(
-    LettingOtherPartOfPropertyInformationDetails(
+    aboutfranchisesorlettings.LettingOtherPartOfPropertyInformationDetails(
       "Operator Name",
       "Type of Business",
       prefilledLettingAddress

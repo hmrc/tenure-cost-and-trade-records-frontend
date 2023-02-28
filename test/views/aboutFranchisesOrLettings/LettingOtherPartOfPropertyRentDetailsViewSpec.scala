@@ -16,8 +16,8 @@
 
 package views.aboutFranchisesOrLettings
 
-import form.Form6010.LettingOtherPartOfPropertyRentForm
-import models.submissions.Form6010.LettingOtherPartOfPropertyRentDetails
+import form.aboutfranchisesorlettings.LettingOtherPartOfPropertyRentForm
+import models.submissions.aboutfranchisesorlettings.LettingOtherPartOfPropertyRentDetails
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import play.api.i18n.Lang

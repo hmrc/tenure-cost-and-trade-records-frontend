@@ -16,23 +16,32 @@
 
 package views.aboutFranchisesOrLettings
 
-import form.aboutfranchisesorlettings.ConcessionOrFranchiseForm
+import form.aboutfranchisesorlettings.{CateringOperationOrLettingAccommodationForm, ConcessionOrFranchiseForm}
 import models.submissions.Form6010._
-import models.submissions.aboutfranchisesorlettings.ConcessionOrFranchise
+import models.submissions.aboutfranchisesorlettings.{CateringOperationDetails, CateringOperationNo, ConcessionOrFranchise, ConcessionOrFranchiseNo, ConcessionOrFranchiseYes}
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class ConcessionOrFranchiseViewSpec extends QuestionViewBehaviours[ConcessionOrFranchise] {
+class ConcessionOrFranchiseViewSpec extends QuestionViewBehaviours[CateringOperationDetails] {
 
   val messageKeyPrefix = "concessionOrFranchise"
 
-  override val form = ConcessionOrFranchiseForm.concessionOrFranchiseForm
+  override val form = CateringOperationOrLettingAccommodationForm.cateringOperationOrLettingAccommodationForm
 
-  def createView = () => concessionOrFranchiseView(form)(fakeRequest, messages)
+  def createView = () =>
+    concessionOrFranchiseView(
+      form,
+      messageKeyPrefix,
+      controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show().url
+    )(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[ConcessionOrFranchise]) =>
-    concessionOrFranchiseView(form)(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[CateringOperationDetails]) =>
+    concessionOrFranchiseView(
+      form,
+      messageKeyPrefix,
+      controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show().url
+    )(fakeRequest, messages)
 
   "Concession or franchise view" must {
 
@@ -46,6 +55,36 @@ class ConcessionOrFranchiseViewSpec extends QuestionViewBehaviours[ConcessionOrF
       backlinkUrl mustBe controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController
         .show()
         .url
+    }
+
+    "Section heading is visible" in {
+      val doc         = asDocument(createViewUsingForm(form)) // govuk-caption-m
+      val sectionText = doc.getElementsByClass("govuk-caption-m").text()
+      assert(sectionText == messages("label.section.aboutTheFranchiseLettings"))
+    }
+
+    "contain radio buttons for the value yes" in {
+      val doc = asDocument(createViewUsingForm(form))
+      assertContainsRadioButton(
+        doc,
+        "concessionOrFranchise",
+        "concessionOrFranchise",
+        ConcessionOrFranchiseYes.name,
+        false
+      )
+      assertContainsText(doc, messages("label.yes"))
+    }
+
+    "contain radio buttons for the value no" in {
+      val doc = asDocument(createViewUsingForm(form))
+      assertContainsRadioButton(
+        doc,
+        "concessionOrFranchise-2",
+        "concessionOrFranchise",
+        ConcessionOrFranchiseNo.name,
+        false
+      )
+      assertContainsText(doc, messages("label.no"))
     }
 
     "contain save and continue button with the value Save and Continue" in {

@@ -47,10 +47,11 @@ object MappingSupport {
   val addAnotherCateringOperationOrLettingAccommodationType
     : Mapping[AddAnotherCateringOperationOrLettingAccommodations]                                     =
     Forms.of[AddAnotherCateringOperationOrLettingAccommodations]
-  val addAnotherLettingOtherPartOfPropertyType: Mapping[AddAnotherLettingOtherPartOfProperties]       =
-    Forms.of[AddAnotherLettingOtherPartOfProperties]
+  val addAnotherLettingOtherPartOfPropertyType: Mapping[AddAnotherLettingOtherPartOfProperty]         =
+    Forms.of[AddAnotherLettingOtherPartOfProperty]
   val cateringOperationType: Mapping[CateringOperation]                                               = Forms.of[CateringOperation]
   val lettingOtherPartOfPropertiesType: Mapping[LettingOtherPartOfProperty]                           = Forms.of[LettingOtherPartOfProperty]
+  val concessionOrFranchiseType: Mapping[ConcessionOrFranchise]                                       = Forms.of[ConcessionOrFranchise]
   val licensableActivitiesType: Mapping[LicensableActivities]                                         = Forms.of[LicensableActivities]
   val tiedForGoodsType: Mapping[TiedForGoods]                                                         = Forms.of[TiedForGoods]
   val premisesLicenseConditionsType: Mapping[PremisesLicenseConditions]                               = Forms.of[PremisesLicenseConditions]
@@ -112,8 +113,6 @@ object MappingSupport {
   val premisesLicenseGrantedType: Mapping[PremisesLicenseGranted] = Forms.of[PremisesLicenseGranted]
 
   val costOfSalesOrGrossProfitDetailsType: Mapping[CostOfSalesOrGrossProfit] = Forms.of[CostOfSalesOrGrossProfit]
-
-  val concessionOrFranchiseType: Mapping[ConcessionOrFranchise] = Forms.of[ConcessionOrFranchise]
 
   val decimalRegex         = """^[0-9]{1,10}\.?[0-9]{0,2}$"""
   val cdbMaxCurrencyAmount = 9999999.99
