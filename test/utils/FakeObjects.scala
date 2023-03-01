@@ -19,17 +19,17 @@ package utils
 
 import models.submissions.aboutfranchisesorlettings._
 import models.submissions.abouttheproperty.PremisesLicenseGrantedNo
-import models.submissions.Form6010.{LandlordAddress, LettingOtherPartOfPropertiesNo, LettingOtherPartOfPropertiesYes}
+import models.submissions.Form6010.LandlordAddress
 import models.submissions.aboutLeaseOrAgreement.AboutLeaseOrAgreementPartOne
-import models.submissions.aboutYourLeaseOrTenure.{AboutTheLandlord, AgreedReviewedAlteredThreeYearsYes, CommenceWithinThreeYearsYes, CurrentRentPayableWithin12Months, CurrentRentWithin12MonthsYes, LeaseOrAgreementYearsDetails, RentUnderReviewNegotiatedYes}
+import models.submissions.aboutYourLeaseOrTenure._
 import models.submissions.aboutfranchisesorlettings
-import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, CateringOperationNo, CateringOperationYes, LettingSection}
-import models.submissions.abouttheproperty.{AboutTheProperty, BuildingOperationHaveAWebsiteYes, CurrentPropertyHotel, EnforcementActionsNo, LicensableActivitiesNo, PremisesLicensesConditionsNo, PropertyDetails, TiedGoodsNo, WebsiteForPropertyDetails}
+import models.submissions.aboutfranchisesorlettings.LettingSection
+import models.submissions.abouttheproperty._
 import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, AboutYourTradingHistory}
 import models.submissions.aboutyou.{AboutYou, CustomerDetails}
-import models.submissions.additionalinformation.{AdditionalInformation, AltContactInformation, AlternativeContactDetails, AlternativeContactDetailsAddress, FurtherInformationOrRemarksDetails}
+import models.submissions.additionalinformation._
 import models.{AnnualRent, Session, UserLoginDetails}
-import models.submissions.common.{Address, ContactDetails}
+import models.submissions.common.{Address, AnswerNo, AnswerYes, ContactDetails}
 import models.submissions.connectiontoproperty.{AddressConnectionTypeYes, StillConnectedDetails}
 import models.submissions.notconnected.{RemoveConnectionDetails, RemoveConnectionsDetails}
 
@@ -150,45 +150,41 @@ trait FakeObjects {
     )
   )
   val prefilledAboutFranchiseOrLettings = AboutFranchisesOrLettings(
-    Some(FranchiseOrLettingsTiedToPropertiesYes),
-    None,
-    Some(CateringOperationYes),
+    Some(AnswerYes),
+    Some(AnswerYes),
     0,
     IndexedSeq(prefilledCateringOperationSection),
-    Some(LettingOtherPartOfPropertiesYes),
+    Some(AnswerYes),
     0,
     IndexedSeq(prefilledLettingSection)
   )
 
   val prefilledAboutFranchiseOrLettingsNo = AboutFranchisesOrLettings(
-    Some(FranchiseOrLettingsTiedToPropertiesNo),
-    None,
-    Some(CateringOperationNo),
+    Some(AnswerNo),
+    Some(AnswerNo),
     0,
     IndexedSeq(prefilledCateringOperationSection),
-    Some(LettingOtherPartOfPropertiesNo),
+    Some(AnswerNo),
     0,
     IndexedSeq(prefilledLettingSection)
   )
 
   val prefilledAboutFranchiseOrLettings6015 = AboutFranchisesOrLettings(
-    Some(FranchiseOrLettingsTiedToPropertiesYes),
-    Some(ConcessionOrFranchiseYes),
-    Some(CateringOperationYes),
+    Some(AnswerYes),
+    Some(AnswerYes),
     0,
     IndexedSeq(prefilledCateringOperationSection),
-    Some(LettingOtherPartOfPropertiesYes),
+    Some(AnswerYes),
     0,
     IndexedSeq(prefilledLettingSection)
   )
 
   val prefilledAboutFranchiseOrLettingsNo6015 = AboutFranchisesOrLettings(
-    Some(FranchiseOrLettingsTiedToPropertiesNo),
-    Some(ConcessionOrFranchiseNo),
-    Some(CateringOperationNo),
+    Some(AnswerNo),
+    Some(AnswerNo),
     0,
     IndexedSeq(prefilledCateringOperationSection),
-    Some(LettingOtherPartOfPropertiesNo),
+    Some(AnswerNo),
     0,
     IndexedSeq(prefilledLettingSection)
   )

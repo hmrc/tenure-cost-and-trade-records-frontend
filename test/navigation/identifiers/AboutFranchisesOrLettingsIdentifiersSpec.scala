@@ -65,9 +65,5 @@ class AboutFranchisesOrLettingsIdentifiersSpec extends TestBaseSpec {
     "Identifier for add another lettings operations page" in {
       assert(AddAnotherLettingAccommodationPageId.toString.equals("addAnotherLettingAccommodationPage"))
     }
-
-    "Identifier for concession or franchise page" in {
-      assert(ConcessionOrFranchiseId.toString.equals("concessionOrFranchisePage"))
-    }
   }
 }

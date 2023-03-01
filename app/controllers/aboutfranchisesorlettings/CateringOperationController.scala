@@ -43,7 +43,7 @@ class CateringOperationController @Inject() (
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     Ok(
       cateringOperationOrLettingAccommodationView(
-        request.sessionData.aboutFranchisesOrLettings.flatMap(_.cateringOperation) match {
+        request.sessionData.aboutFranchisesOrLettings.flatMap(_.cateringConcessionOrFranchise) match {
           case Some(cateringOperationOrLettingAccommodation) =>
             cateringOperationForm.fillAndValidate(cateringOperationOrLettingAccommodation)
           case _                                             => cateringOperationForm
@@ -70,7 +70,7 @@ class CateringOperationController @Inject() (
           ),
         data => {
           val updatedData =
-            updateAboutFranchisesOrLettings(_.copy(cateringOperation = Some(data)))
+            updateAboutFranchisesOrLettings(_.copy(cateringConcessionOrFranchise = Some(data)))
           session.saveOrUpdate(updatedData)
           Future.successful(Redirect(navigator.nextPage(CateringOperationPageId).apply(updatedData)))
         }

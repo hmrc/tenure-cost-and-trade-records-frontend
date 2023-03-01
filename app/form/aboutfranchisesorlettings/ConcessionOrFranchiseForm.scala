@@ -16,17 +16,17 @@
 
 package form.aboutfranchisesorlettings
 
-import form.MappingSupport.concessionOrFranchiseType
-import models.submissions.aboutfranchisesorlettings.ConcessionOrFranchise
+import form.MappingSupport.yesNoType
+import models.submissions.common.AnswersYesNo
 import play.api.data.Form
 import play.api.data.Forms.mapping
 
 object ConcessionOrFranchiseForm {
 
-  lazy val baseConcessionOrFranchiseForm: Form[ConcessionOrFranchise] = Form(baseConcessionOrFranchiseMapping)
+  lazy val baseConcessionOrFranchiseForm: Form[AnswersYesNo] = Form(baseConcessionOrFranchiseMapping)
 
   val baseConcessionOrFranchiseMapping = mapping(
-    "concessionOrFranchise" -> concessionOrFranchiseType
+    "concessionOrFranchise" -> yesNoType
   )(x => x)(b => Some(b))
 
   val concessionOrFranchiseForm = Form(baseConcessionOrFranchiseMapping)
