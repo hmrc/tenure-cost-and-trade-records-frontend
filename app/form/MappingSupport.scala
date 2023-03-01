@@ -26,7 +26,7 @@ import models.submissions.aboutfranchisesorlettings._
 import models.submissions.abouttheproperty._
 import models.submissions.aboutthetradinghistory.CostOfSalesOrGrossProfit
 import models.submissions.additionalinformation.AlternativeContactDetailsAddress
-import models.submissions.common.{Address, ContactDetails}
+import models.submissions.common.{Address, AnswersYesNo, ContactDetails}
 import models.submissions.connectiontoproperty.{AddressConnectionType, ConnectionToProperty}
 import models.{AnnualRent, NamedEnum, NamedEnumSupport}
 import play.api.data.Forms.{boolean, default, email, mapping, optional, text}
@@ -44,21 +44,12 @@ object MappingSupport {
   val connectionToThePropertyType: Mapping[ConnectionToProperty]                                      = Forms.of[ConnectionToProperty]
   val buildingOperatingHaveAWebsiteType: Mapping[BuildingOperationHaveAWebsite]                       =
     Forms.of[BuildingOperationHaveAWebsite]
-  val addAnotherCateringOperationOrLettingAccommodationType
-    : Mapping[AddAnotherCateringOperationOrLettingAccommodations]                                     =
-    Forms.of[AddAnotherCateringOperationOrLettingAccommodations]
-  val addAnotherLettingOtherPartOfPropertyType: Mapping[AddAnotherLettingOtherPartOfProperty]         =
-    Forms.of[AddAnotherLettingOtherPartOfProperty]
-  val cateringOperationType: Mapping[CateringOperation]                                               = Forms.of[CateringOperation]
-  val lettingOtherPartOfPropertiesType: Mapping[LettingOtherPartOfProperty]                           = Forms.of[LettingOtherPartOfProperty]
-  val concessionOrFranchiseType: Mapping[ConcessionOrFranchise]                                       = Forms.of[ConcessionOrFranchise]
+  val yesNoType: Mapping[AnswersYesNo]                                               = Forms.of[AnswersYesNo]
   val licensableActivitiesType: Mapping[LicensableActivities]                                         = Forms.of[LicensableActivities]
   val tiedForGoodsType: Mapping[TiedForGoods]                                                         = Forms.of[TiedForGoods]
   val premisesLicenseConditionsType: Mapping[PremisesLicenseConditions]                               = Forms.of[PremisesLicenseConditions]
   val tenancyLeaseAgreementType: Mapping[TenancyLeaseAgreements]                                      = Forms.of[TenancyLeaseAgreements]
   val enforcementActionType: Mapping[EnforcementAction]                                               = Forms.of[EnforcementAction]
-  val franchiseOrLettingsTiedToPropertyType: Mapping[FranchiseOrLettingsTiedToProperty]               =
-    Forms.of[FranchiseOrLettingsTiedToProperty]
   val rentIncreasedAnnuallyWithRPIDetailsType: Mapping[RentIncreasedAnnuallyWithRPIs]                 =
     Forms.of[RentIncreasedAnnuallyWithRPIs]
   val rentPayableVaryAccordingToGrossOrNetDetailsType: Mapping[RentPayableVaryAccordingToGrossOrNets] =

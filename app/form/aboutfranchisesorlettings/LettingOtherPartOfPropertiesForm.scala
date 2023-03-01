@@ -16,19 +16,19 @@
 
 package form.aboutfranchisesorlettings
 
-import form.MappingSupport.lettingOtherPartOfPropertiesType
-import models.submissions.Form6010.LettingOtherPartOfProperty
+import form.MappingSupport.yesNoType
+import models.submissions.common.AnswersYesNo
 import play.api.data.Form
 import play.api.data.Forms.mapping
 
 object LettingOtherPartOfPropertiesForm {
 
-  lazy val baseLettingOtherPartOfPropertiesForm: Form[LettingOtherPartOfProperty] = Form(
+  lazy val baseLettingOtherPartOfPropertiesForm: Form[AnswersYesNo] = Form(
     baseLettingOtherPartOfPropertiesMapping
   )
 
   val baseLettingOtherPartOfPropertiesMapping = mapping(
-    "lettingOtherPartOfProperties" -> lettingOtherPartOfPropertiesType
+    "lettingOtherPartOfProperties" -> yesNoType
   )(x => x)(b => Some(b))
 
   val lettingOtherPartOfPropertiesForm = Form(baseLettingOtherPartOfPropertiesMapping)

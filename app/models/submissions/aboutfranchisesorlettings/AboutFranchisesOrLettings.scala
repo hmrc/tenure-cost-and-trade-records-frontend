@@ -18,16 +18,15 @@ package models.submissions.aboutfranchisesorlettings
 
 import actions.SessionRequest
 import models.Session
-import models.submissions.Form6010.LettingOtherPartOfProperty
+import models.submissions.common.AnswersYesNo
 import play.api.libs.json.Json
 
 case class AboutFranchisesOrLettings(
-  franchisesOrLettingsTiedToProperty: Option[FranchiseOrLettingsTiedToProperty] = None,
-  concessionOrFranchise: Option[ConcessionOrFranchise] = None,
-  cateringOperation: Option[CateringOperation] = None,
+  franchisesOrLettingsTiedToProperty: Option[AnswersYesNo] = None,
+  cateringConcessionOrFranchise: Option[AnswersYesNo] = None,
   cateringOperationCurrentIndex: Int = 0,
   cateringOperationSections: IndexedSeq[CateringOperationSection] = IndexedSeq.empty,
-  lettingOtherPartOfProperty: Option[LettingOtherPartOfProperty] = None,
+  lettingOtherPartOfProperty: Option[AnswersYesNo] = None,
   lettingCurrentIndex: Int = 0,
   lettingSections: IndexedSeq[LettingSection] = IndexedSeq.empty
 )

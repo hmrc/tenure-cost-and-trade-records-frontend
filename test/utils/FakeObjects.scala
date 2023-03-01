@@ -18,7 +18,7 @@ package utils
 
 import models.submissions.aboutfranchisesorlettings._
 import models.submissions.abouttheproperty.PremisesLicenseGrantedNo
-import models.submissions.Form6010.{LandlordAddress, LettingOtherPartOfPropertiesNo, LettingOtherPartOfPropertiesYes}
+import models.submissions.Form6010.LandlordAddress
 import models.submissions.aboutLeaseOrAgreement.AboutLeaseOrAgreementPartOne
 import models.submissions.aboutYourLeaseOrTenure.{AboutTheLandlord, AgreedReviewedAlteredThreeYearsYes, CommenceWithinThreeYearsYes, CurrentRentPayableWithin12Months, CurrentRentWithin12MonthsYes, LeaseOrAgreementYearsDetails, RentUnderReviewNegotiatedYes}
 import models.submissions.aboutfranchisesorlettings

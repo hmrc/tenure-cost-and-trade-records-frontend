@@ -16,19 +16,19 @@
 
 package form.aboutfranchisesorlettings
 
-import form.MappingSupport.cateringOperationType
-import models.submissions.aboutfranchisesorlettings.CateringOperation
+import form.MappingSupport.yesNoType
+import models.submissions.common.AnswersYesNo
 import play.api.data.Form
 import play.api.data.Forms.mapping
 
 object CateringOperationForm {
 
-  lazy val baseCateringOperationOrLettingAccommodationForm: Form[CateringOperation] = Form(
+  lazy val baseCateringOperationOrLettingAccommodationForm: Form[AnswersYesNo] = Form(
     baseCateringOperationOrLettingAccommodationMapping
   )
 
   val baseCateringOperationOrLettingAccommodationMapping = mapping(
-    "cateringOperationOrLettingAccommodation" -> cateringOperationType
+    "cateringOperationOrLettingAccommodation" -> yesNoType
   )(x => x)(b => Some(b))
 
   val cateringOperationForm = Form(baseCateringOperationOrLettingAccommodationMapping)
