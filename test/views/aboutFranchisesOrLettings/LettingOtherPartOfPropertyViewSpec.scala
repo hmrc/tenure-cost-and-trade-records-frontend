@@ -17,13 +17,12 @@
 package views.aboutFranchisesOrLettings
 
 import form.aboutfranchisesorlettings.LettingOtherPartOfPropertiesForm
-import models.submissions.Form6010.LettingOtherPartOfPropertiesNo
-import models.submissions.aboutfranchisesorlettings.{LettingOtherPartOfPropertiesNo, LettingOtherPartOfPropertiesYes, LettingOtherPartOfProperty}
+import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class LettingOtherPartOfPropertyViewSpec extends QuestionViewBehaviours[LettingOtherPartOfProperty] {
+class LettingOtherPartOfPropertyViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
 
   val messageKeyPrefix = "LettingOtherPartOfProperties"
 
@@ -36,7 +35,7 @@ class LettingOtherPartOfPropertyViewSpec extends QuestionViewBehaviours[LettingO
       controllers.aboutfranchisesorlettings.routes.CateringOperationController.show().url
     )(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[LettingOtherPartOfProperty]) =>
+  def createViewUsingForm = (form: Form[AnswersYesNo]) =>
     lettingOtherPartOfPropertyView(
       form,
       messageKeyPrefix,
@@ -67,7 +66,7 @@ class LettingOtherPartOfPropertyViewSpec extends QuestionViewBehaviours[LettingO
         doc,
         "LettingOtherPartOfProperties",
         "LettingOtherPartOfProperties",
-        LettingOtherPartOfPropertiesYes.name,
+        AnswerYes.name,
         false
       )
       assertContainsText(doc, messages("label.yes"))
@@ -79,7 +78,7 @@ class LettingOtherPartOfPropertyViewSpec extends QuestionViewBehaviours[LettingO
         doc,
         "LettingOtherPartOfProperties-2",
         "LettingOtherPartOfProperties",
-        LettingOtherPartOfPropertiesNo.name,
+        AnswerNo.name,
         false
       )
       assertContainsText(doc, messages("label.no"))

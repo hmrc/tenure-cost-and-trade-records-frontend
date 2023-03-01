@@ -71,8 +71,8 @@ object Formats {
     namedEnumFormatter(CurrentPropertyUsed, Errors.currentOccupierName)
   implicit val buildingOperatingHaveAWebsiteFormat: Formatter[BuildingOperationHaveAWebsite]                 =
     namedEnumFormatter(BuildingOperationHaveAWebsite, Errors.booleanMissing)
-  implicit val answerYesNoFormat: Formatter[AnswersYesNo]                                        =
-      namedEnumFormatter(AnswersYesNo, Errors.booleanMissing)
+  implicit val answerYesNoFormat: Formatter[AnswersYesNo]                                                    =
+    namedEnumFormatter(AnswersYesNo, Errors.booleanMissing)
   implicit val tenancyLeaseAgreementsFormat: Formatter[TenancyLeaseAgreements]                               =
     namedEnumFormatter(TenancyLeaseAgreement, Errors.booleanMissing)
   implicit val licensableActivitiesFormat: Formatter[LicensableActivities]                                   =

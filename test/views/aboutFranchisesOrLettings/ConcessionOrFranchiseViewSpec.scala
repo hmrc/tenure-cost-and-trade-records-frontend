@@ -16,9 +16,9 @@
 
 package views.aboutFranchisesOrLettings
 
-import form.aboutfranchisesorlettings.{CateringOperationOrLettingAccommodationForm, ConcessionOrFranchiseForm}
-import models.submissions.Form6010._
-import models.submissions.aboutfranchisesorlettings.{CateringOperationDetails, CateringOperationNo, ConcessionOrFranchise, ConcessionOrFranchiseNo, ConcessionOrFranchiseYes}
+import form.aboutfranchisesorlettings.CateringOperationOrLettingAccommodationForm
+import models.submissions.aboutfranchisesorlettings.CateringOperationDetails
+import models.submissions.common.{AnswerNo, AnswerYes}
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
@@ -69,7 +69,7 @@ class ConcessionOrFranchiseViewSpec extends QuestionViewBehaviours[CateringOpera
         doc,
         "concessionOrFranchise",
         "concessionOrFranchise",
-        ConcessionOrFranchiseYes.name,
+        AnswerYes.name,
         false
       )
       assertContainsText(doc, messages("label.yes"))
@@ -81,7 +81,7 @@ class ConcessionOrFranchiseViewSpec extends QuestionViewBehaviours[CateringOpera
         doc,
         "concessionOrFranchise-2",
         "concessionOrFranchise",
-        ConcessionOrFranchiseNo.name,
+        AnswerNo.name,
         false
       )
       assertContainsText(doc, messages("label.no"))

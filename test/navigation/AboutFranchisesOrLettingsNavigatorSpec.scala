@@ -18,7 +18,7 @@ package navigation
 
 import connectors.Audit
 import models.Session
-import navigation.identifiers.{CateringOperationPageId, ConcessionOrFranchiseId, FranchiseOrLettingsTiedToPropertyId, Identifier, LettingAccommodationPageId}
+import navigation.identifiers._
 import org.scalatest.matchers.must.Matchers.convertToAnyMustWrapper
 import play.api.libs.json.JsObject
 import uk.gov.hmrc.http.HeaderCarrier
@@ -84,6 +84,22 @@ class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec {
         ) mustBe controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show()
     }
 
+    "return a function that goes to concession or franchise page when franchise page has been completed yes 6015" in {
+      navigator
+        .nextPage(CateringOperationPageId)
+        .apply(
+          sessionAboutFranchiseOrLettingYes6015
+        ) mustBe controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController.show()
+    }
+
+    "return a function that goes to concession or franchise page when franchise page has been completed no 6015" in {
+      navigator
+        .nextPage(CateringOperationPageId)
+        .apply(
+          sessionAboutFranchiseOrLettingNo6015
+        ) mustBe controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show()
+    }
+
     "return a function that goes to lettings details page when letting page has been completed yes" in {
       navigator
         .nextPage(LettingAccommodationPageId)
@@ -100,20 +116,5 @@ class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec {
         ) mustBe controllers.routes.TaskListController.show()
     }
 
-    "return a function that goes to concession or franchise page when franchise page has been completed yes 6015" in {
-      navigator
-        .nextPage(ConcessionOrFranchiseId)
-        .apply(
-          sessionAboutFranchiseOrLettingYes6015
-        ) mustBe controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController.show()
-    }
-
-    "return a function that goes to concession or franchise page when franchise page has been completed no 6015" in {
-      navigator
-        .nextPage(ConcessionOrFranchiseId)
-        .apply(
-          sessionAboutFranchiseOrLettingNo6015
-        ) mustBe controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show()
-    }
   }
 }

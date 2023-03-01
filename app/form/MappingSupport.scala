@@ -44,7 +44,7 @@ object MappingSupport {
   val connectionToThePropertyType: Mapping[ConnectionToProperty]                                      = Forms.of[ConnectionToProperty]
   val buildingOperatingHaveAWebsiteType: Mapping[BuildingOperationHaveAWebsite]                       =
     Forms.of[BuildingOperationHaveAWebsite]
-  val yesNoType: Mapping[AnswersYesNo]                                               = Forms.of[AnswersYesNo]
+  val yesNoType: Mapping[AnswersYesNo]                                                                = Forms.of[AnswersYesNo]
   val licensableActivitiesType: Mapping[LicensableActivities]                                         = Forms.of[LicensableActivities]
   val tiedForGoodsType: Mapping[TiedForGoods]                                                         = Forms.of[TiedForGoods]
   val premisesLicenseConditionsType: Mapping[PremisesLicenseConditions]                               = Forms.of[PremisesLicenseConditions]

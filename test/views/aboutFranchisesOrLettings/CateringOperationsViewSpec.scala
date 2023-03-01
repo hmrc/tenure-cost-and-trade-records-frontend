@@ -17,12 +17,12 @@
 package views.aboutFranchisesOrLettings
 
 import form.aboutfranchisesorlettings.CateringOperationForm
-import models.submissions.aboutfranchisesorlettings.{CateringOperation, CateringOperationNo, CateringOperationYes}
+import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class CateringOperationsViewSpec extends QuestionViewBehaviours[CateringOperation] {
+class CateringOperationsViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
 
   val messageKeyPrefix = "cateringOperationOrLettingAccommodation"
 
@@ -35,7 +35,7 @@ class CateringOperationsViewSpec extends QuestionViewBehaviours[CateringOperatio
       controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show().url
     )(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[CateringOperation]) =>
+  def createViewUsingForm = (form: Form[AnswersYesNo]) =>
     cateringOperationView(
       form,
       messageKeyPrefix,
@@ -66,7 +66,7 @@ class CateringOperationsViewSpec extends QuestionViewBehaviours[CateringOperatio
         doc,
         "cateringOperationOrLettingAccommodation",
         "cateringOperationOrLettingAccommodation",
-        CateringOperationYes.name,
+        AnswerYes.name,
         false
       )
       assertContainsText(doc, messages("label.yes"))
@@ -78,7 +78,7 @@ class CateringOperationsViewSpec extends QuestionViewBehaviours[CateringOperatio
         doc,
         "cateringOperationOrLettingAccommodation-2",
         "cateringOperationOrLettingAccommodation",
-        CateringOperationNo.name,
+        AnswerNo.name,
         false
       )
       assertContainsText(doc, messages("label.no"))
