@@ -18,6 +18,7 @@ package controllers.aboutthetradinghistory
 
 import navigation.AboutTheTradingHistoryNavigator
 import play.api.http.Status
+import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import play.twirl.api.HtmlFormat
 import utils.TestBaseSpec
@@ -47,6 +48,13 @@ class CostOfSalesOrGrossProfitControllerSpec extends TestBaseSpec {
       val result = costOfSalesOrGrossProfitController.show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
+    }
+
+    "SUBMIT /" should {
+      "throw a BAD_REQUEST if an empty form is submitted" in {
+        val res = costOfSalesOrGrossProfitController.submit(FakeRequest().withFormUrlEncodedBody(Seq.empty: _*))
+        status(res) shouldBe BAD_REQUEST
+      }
     }
   }
 }

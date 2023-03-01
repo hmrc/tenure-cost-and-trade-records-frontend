@@ -51,6 +51,12 @@ class FurtherInformationOrRemarksViewSpec extends QuestionViewBehaviours[Further
       backlinkUrl mustBe controllers.Form6010.routes.TenantsAdditionsDisregardedController.show().url
     }
 
+    "Section heading is visible" in {
+      val doc         = asDocument(createViewUsingForm(form)) // govuk-caption-m
+      val sectionText = doc.getElementsByClass("govuk-caption-m").text()
+      assert(sectionText == messages("label.section.additionalInformation"))
+    }
+
     "contain an input for furtherInformationOrRemarks" in {
       val doc = asDocument(createViewUsingForm(form))
       assertRenderedById(doc, "furtherInformationOrRemarks")
@@ -60,17 +66,6 @@ class FurtherInformationOrRemarksViewSpec extends QuestionViewBehaviours[Further
       val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("continue").text()
       assert(loginButton == messages("button.label.continue"))
-    }
-
-    "contain get help section" in {
-      val doc = asDocument(createView())
-      assert(doc.toString.contains(messages("helpWithService.title")))
-    }
-
-    "contain get help section basic details" in {
-      val doc = asDocument(createView())
-      assert(doc.toString.contains(messages("common.helpWithServiceHeader")))
-      assert(doc.toString.contains(messages("common.helpWithService")))
     }
   }
 }

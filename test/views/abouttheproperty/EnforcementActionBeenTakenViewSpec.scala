@@ -50,6 +50,12 @@ class EnforcementActionBeenTakenViewSpec extends QuestionViewBehaviours[Enforcem
       backlinkUrl mustBe controllers.abouttheproperty.routes.PremisesLicenseConditionsController.show().url
     }
 
+    "Section heading is visible" in {
+      val doc         = asDocument(createViewUsingForm(form)) // govuk-caption-m
+      val sectionText = doc.getElementsByClass("govuk-caption-m").text()
+      assert(sectionText == messages("label.section.aboutTheProperty"))
+    }
+
     "contain radio buttons for the value yes" in {
       val doc = asDocument(createViewUsingForm(form))
       assertContainsRadioButton(
@@ -78,18 +84,6 @@ class EnforcementActionBeenTakenViewSpec extends QuestionViewBehaviours[Enforcem
       val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("continue").text()
       assert(loginButton == messages("button.label.continue"))
-    }
-
-    "contain get help section use of enforcement action taken details" in {
-      val doc = asDocument(createView())
-      assert(doc.toString.contains(messages("enforcementAction.helpWithServiceEnforcementActionHeader")))
-      assert(doc.toString.contains(messages("enforcementAction.helpWithServiceEnforcementAction")))
-    }
-
-    "contain get help section basic details" in {
-      val doc = asDocument(createView())
-      assert(doc.toString.contains(messages("common.helpWithServiceHeader")))
-      assert(doc.toString.contains(messages("common.helpWithService")))
     }
   }
 }

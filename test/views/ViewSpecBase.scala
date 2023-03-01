@@ -82,4 +82,16 @@ trait ViewSpecBase extends TestBaseSpec {
       case _    => assert(!radio.hasAttr("checked") && radio.attr("checked") != "checked", s"\n\nElement $id is checked")
     }
   }
+
+  def assertContainsCheckBox(doc: Document, id: String, name: String, value: String, isChecked: Boolean) = {
+    assertRenderedById(doc, id)
+    val checkbox = doc.getElementById(id)
+    assert(checkbox.attr("name") == name, s"\n\nElement $id does not have name $name")
+    assert(checkbox.attr("value") == value, s"\n\nElement $id does not have value $value")
+    if (isChecked) {
+      assert(checkbox.hasAttr("checked"), s"\n\nElement $id is not checked")
+    } else {
+      assert(!checkbox.hasAttr("checked"), s"\n\nElement $id is checked")
+    }
+  }
 }

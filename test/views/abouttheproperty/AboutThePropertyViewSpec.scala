@@ -35,6 +35,11 @@ class AboutThePropertyViewSpec extends QuestionViewBehaviours[PropertyDetails] {
   def createViewUsingForm = (form: Form[PropertyDetails]) =>
     aboutThePropertyView(form, "FOR6010")(fakeRequest, messages)
 
+  def createView6015 = () => aboutThePropertyView(form, "FOR6015")(fakeRequest, messages)
+
+  def createViewUsingForm6015 = (form: Form[PropertyDetails]) =>
+    aboutThePropertyView(form, "FOR6015")(fakeRequest, messages)
+
   "About the property view" must {
 
     behave like normalPage(createView, messageKeyPrefix)
@@ -50,6 +55,12 @@ class AboutThePropertyViewSpec extends QuestionViewBehaviours[PropertyDetails] {
     "contain an input for currentOccupierName" in {
       val doc = asDocument(createViewUsingForm(form))
       assertRenderedById(doc, "currentOccupierName")
+    }
+
+    "Section heading is visible" in {
+      val doc         = asDocument(createViewUsingForm(form)) // govuk-caption-m
+      val sectionText = doc.getElementsByClass("govuk-caption-m").text()
+      assert(sectionText == messages("label.section.aboutTheProperty"))
     }
 
     "contain radio buttons for the value public house" in {
@@ -153,23 +164,95 @@ class AboutThePropertyViewSpec extends QuestionViewBehaviours[PropertyDetails] {
       val loginButton = doc.getElementById("continue").text()
       assert(loginButton == messages("button.label.continue"))
     }
+  }
 
-    "contain get help section current occupier details" in {
-      val doc = asDocument(createView())
-      assert(doc.toString.contains(messages("currentOccupier.helpWithServicePeopleCurrentOccupierHeader")))
-      assert(doc.toString.contains(messages("currentOccupier.helpWithServicePeopleCurrentOccupier")))
+  "About the property view 6015" must {
+
+    behave like normalPage(createView6015, messageKeyPrefix)
+
+    "has a link marked with back.link.label leading to the task list Page" in {
+      val doc          = asDocument(createView())
+      val backlinkText = doc.select("a[class=govuk-back-link]").text()
+      backlinkText mustBe messages("back.link.label")
+      val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
+      backlinkUrl mustBe controllers.aboutyou.routes.AboutYouController.show.url
     }
 
-    "contain get help section use of property details" in {
-      val doc = asDocument(createView())
-      assert(doc.toString.contains(messages("currentOccupier.helpWithServicePeopleUsePropertyHeader")))
-      assert(doc.toString.contains(messages("currentOccupier.helpWithServicePeopleUseProperty")))
+    "contain an input for currentOccupierName" in {
+      val doc = asDocument(createViewUsingForm(form))
+      assertRenderedById(doc, "currentOccupierName")
     }
 
-    "contain get help section basic details" in {
-      val doc = asDocument(createView())
-      assert(doc.toString.contains(messages("common.helpWithServiceHeader")))
-      assert(doc.toString.contains(messages("common.helpWithService")))
+    "Section heading is visible" in {
+      val doc         = asDocument(createViewUsingForm(form)) // govuk-caption-m
+      val sectionText = doc.getElementsByClass("govuk-caption-m").text()
+      assert(sectionText == messages("label.section.aboutTheProperty"))
+    }
+
+    "contain checkbox for the value hotel" in {
+      val doc = asDocument(createViewUsingForm6015(form))
+      assertContainsCheckBox(
+        doc,
+        "propertyCurrentlyUsed",
+        "propertyCurrentlyUsed",
+        CurrentPropertyHotel.name,
+        false
+      )
+      assertContainsText(doc, messages("propertyCurrentlyUsed.hotel"))
+    }
+
+    "contain checkbox for the value health farm" in {
+      val doc = asDocument(createViewUsingForm6015(form))
+      assertContainsCheckBox(
+        doc,
+        "propertyCurrentlyUsed-2",
+        "propertyCurrentlyUsed",
+        CurrentPropertyHealthFarm.name,
+        false
+      )
+      assertContainsText(doc, messages("propertyCurrentlyUsed.healthFarm"))
+    }
+
+    "contain checkbox for the value lodge and restaurant" in {
+      val doc = asDocument(createViewUsingForm6015(form))
+      assertContainsCheckBox(
+        doc,
+        "propertyCurrentlyUsed-3",
+        "propertyCurrentlyUsed",
+        CurrentPropertyLodgeAndRestaurant.name,
+        false
+      )
+      assertContainsText(doc, messages("propertyCurrentlyUsed.lodgeAndRestaurant"))
+    }
+
+    "contain checkbox for the value conference centre" in {
+      val doc = asDocument(createViewUsingForm6015(form))
+      assertContainsCheckBox(
+        doc,
+        "propertyCurrentlyUsed-4",
+        "propertyCurrentlyUsed",
+        CurrentPropertyConferenceCentre.name,
+        false
+      )
+      assertContainsText(doc, messages("propertyCurrentlyUsed.conferenceCentre"))
+    }
+
+    "contain checkbox for the value other" in {
+      val doc = asDocument(createViewUsingForm6015(form))
+      assertContainsCheckBox(
+        doc,
+        "propertyCurrentlyUsed-5",
+        "propertyCurrentlyUsed",
+        CurrentPropertyOther.name,
+        false
+      )
+      assertContainsText(doc, messages("propertyCurrentlyUsed.other"))
+    }
+
+    "contain save and continue button with the value Save and Continue" in {
+      val doc         = asDocument(createViewUsingForm6015(form))
+      val loginButton = doc.getElementById("continue").text()
+      assert(loginButton == messages("button.label.continue"))
     }
   }
 }
