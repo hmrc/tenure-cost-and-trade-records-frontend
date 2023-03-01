@@ -60,31 +60,33 @@ trait FakeObjects {
   val prefilledCurrentRentPayableWithin12Months =
     CurrentRentPayableWithin12Months(CurrentRentWithin12MonthsYes, prefilledDateInput)
 
-  val prefilledCateringOperationSection     = CateringOperationSection(
-    CateringOperationDetails(
-      "Operator Name",
-      "Type of Business",
-      prefilledCateringAddress
-    ),
-    Some(
-      CateringOperationRentDetails(
-        BigDecimal(1500),
-        prefilledDateInput
-      )
-    )
+  val prefilledCateringOperationSectionYes  = CateringOperationSection(
+    CateringOperationDetails("Operator Name", "Type of Business", prefilledCateringAddress),
+    Some(CateringOperationRentDetails(BigDecimal(1500), prefilledDateInput)),
+    Some(AnswerYes)
   )
-  val prefilledLettingSection               = LettingSection(
+  val prefilledCateringOperationSectionNo   = CateringOperationSection(
+    CateringOperationDetails("Operator Name", "Type of Business", prefilledCateringAddress),
+    Some(CateringOperationRentDetails(BigDecimal(1500), prefilledDateInput)),
+    Some(AnswerNo)
+  )
+  val prefilledLettingSectionYes            = LettingSection(
     aboutfranchisesorlettings.LettingOtherPartOfPropertyInformationDetails(
       "Operator Name",
       "Type of Business",
       prefilledLettingAddress
     ),
-    Some(
-      LettingOtherPartOfPropertyRentDetails(
-        BigDecimal(1500),
-        prefilledDateInput
-      )
-    )
+    Some(LettingOtherPartOfPropertyRentDetails(BigDecimal(1500), prefilledDateInput)),
+    Some(AnswerYes)
+  )
+  val prefilledLettingSectionNo             = LettingSection(
+    aboutfranchisesorlettings.LettingOtherPartOfPropertyInformationDetails(
+      "Operator Name",
+      "Type of Business",
+      prefilledLettingAddress
+    ),
+    Some(LettingOtherPartOfPropertyRentDetails(BigDecimal(1500), prefilledDateInput)),
+    Some(AnswerNo)
   )
   val prefilledAboutTheLandlord             =
     AboutTheLandlord(
@@ -152,40 +154,40 @@ trait FakeObjects {
     Some(AnswerYes),
     Some(AnswerYes),
     0,
-    IndexedSeq(prefilledCateringOperationSection),
+    IndexedSeq(prefilledCateringOperationSectionYes),
     Some(AnswerYes),
     0,
-    IndexedSeq(prefilledLettingSection)
+    IndexedSeq(prefilledLettingSectionYes)
   )
 
   val prefilledAboutFranchiseOrLettingsNo = AboutFranchisesOrLettings(
     Some(AnswerNo),
     Some(AnswerNo),
     0,
-    IndexedSeq(prefilledCateringOperationSection),
+    IndexedSeq(prefilledCateringOperationSectionNo),
     Some(AnswerNo),
     0,
-    IndexedSeq(prefilledLettingSection)
+    IndexedSeq(prefilledLettingSectionNo)
   )
 
   val prefilledAboutFranchiseOrLettings6015 = AboutFranchisesOrLettings(
     Some(AnswerYes),
     Some(AnswerYes),
     0,
-    IndexedSeq(prefilledCateringOperationSection),
+    IndexedSeq(prefilledCateringOperationSectionYes),
     Some(AnswerYes),
     0,
-    IndexedSeq(prefilledLettingSection)
+    IndexedSeq(prefilledLettingSectionYes)
   )
 
   val prefilledAboutFranchiseOrLettingsNo6015 = AboutFranchisesOrLettings(
     Some(AnswerNo),
     Some(AnswerNo),
     0,
-    IndexedSeq(prefilledCateringOperationSection),
+    IndexedSeq(prefilledCateringOperationSectionNo),
     Some(AnswerNo),
     0,
-    IndexedSeq(prefilledLettingSection)
+    IndexedSeq(prefilledLettingSectionNo)
   )
 
   val prefilledAboutLeaseOrAgreementPartOne = AboutLeaseOrAgreementPartOne(
