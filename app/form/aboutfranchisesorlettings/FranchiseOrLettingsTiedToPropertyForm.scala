@@ -16,19 +16,19 @@
 
 package form.aboutfranchisesorlettings
 
-import form.MappingSupport.franchiseOrLettingsTiedToPropertyType
-import models.submissions.aboutfranchisesorlettings.FranchiseOrLettingsTiedToProperty
+import form.MappingSupport.yesNoType
+import models.submissions.common.AnswersYesNo
 import play.api.data.Form
 import play.api.data.Forms.mapping
 
 object FranchiseOrLettingsTiedToPropertyForm {
 
-  lazy val baseFranchiseOrLettingsTiedToPropertyForm: Form[FranchiseOrLettingsTiedToProperty] = Form(
+  lazy val baseFranchiseOrLettingsTiedToPropertyForm: Form[AnswersYesNo] = Form(
     baseFranchiseOrLettingsTiedToPropertyMapping
   )
 
   val baseFranchiseOrLettingsTiedToPropertyMapping = mapping(
-    "franchiseOrLettingsTiedToProperty" -> franchiseOrLettingsTiedToPropertyType
+    "franchiseOrLettingsTiedToProperty" -> yesNoType
   )(x => x)(b => Some(b))
 
   val franchiseOrLettingsTiedToPropertyForm = Form(baseFranchiseOrLettingsTiedToPropertyMapping)

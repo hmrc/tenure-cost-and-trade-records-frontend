@@ -96,25 +96,9 @@ class LettingOtherPartOfPropertyController @Inject() (
 
   private def getBackLink(answers: Session): Either[String, String] =
     answers.userLoginDetails.forNumber match {
-      case ForTypes.for6010 | ForTypes.for6011 =>
-        answers.aboutFranchisesOrLettings.flatMap(_.cateringOperation.map(_.name)) match {
-          case Some("yes") =>
-            Right(controllers.aboutfranchisesorlettings.routes.CateringOperationController.show().url)
-          case Some("no")  =>
-            Right(controllers.aboutfranchisesorlettings.routes.CateringOperationController.show().url)
-          case _           =>
-            Right(controllers.routes.TaskListController.show().url)
-        }
       case ForTypes.for6015 | ForTypes.for6016 =>
-        answers.aboutFranchisesOrLettings.flatMap(_.concessionOrFranchise.map(_.name)) match {
-          case Some("yes") =>
-            Right(controllers.aboutfranchisesorlettings.routes.ConcessionOrFranchiseController.show().url)
-          case Some("no")  =>
-            Right(controllers.aboutfranchisesorlettings.routes.ConcessionOrFranchiseController.show().url)
-          case _           =>
-            Right(controllers.routes.TaskListController.show().url)
-        }
+        Right(controllers.aboutfranchisesorlettings.routes.ConcessionOrFranchiseController.show().url)
       case _                                   =>
-        Left(s"Unknown form type with letting other part of property back link")
+        Right(controllers.aboutfranchisesorlettings.routes.CateringOperationController.show().url)
     }
 }

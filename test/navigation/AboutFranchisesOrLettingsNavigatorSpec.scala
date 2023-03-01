@@ -18,7 +18,7 @@ package navigation
 
 import connectors.Audit
 import models.Session
-import navigation.identifiers.{CateringOperationPageId, ConcessionOrFranchiseId, FranchiseOrLettingsTiedToPropertyId, Identifier, LettingAccommodationPageId}
+import navigation.identifiers._
 import org.scalatest.matchers.must.Matchers.convertToAnyMustWrapper
 import play.api.libs.json.JsObject
 import uk.gov.hmrc.http.HeaderCarrier
@@ -68,6 +68,22 @@ class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec {
         ) mustBe controllers.routes.TaskListController.show()
     }
 
+    "return a function that goes to catering operation page when franchise page has been completed yes 6015" in {
+      navigator
+        .nextPage(FranchiseOrLettingsTiedToPropertyId)
+        .apply(
+          sessionAboutFranchiseOrLettingYes6015
+        ) mustBe controllers.aboutfranchisesorlettings.routes.ConcessionOrFranchiseController.show()
+    }
+
+    "return a function that goes to task list page when franchise page has been completed no 6015" in {
+      navigator
+        .nextPage(FranchiseOrLettingsTiedToPropertyId)
+        .apply(
+          sessionAboutFranchiseOrLettingNo6015
+        ) mustBe controllers.routes.TaskListController.show()
+    }
+
     "return a function that goes to catering operation details page when catering operation page has been completed yes" in {
       navigator
         .nextPage(CateringOperationPageId)
@@ -79,6 +95,62 @@ class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec {
     "return a function that goes to letting page when catering operation page has been completed no" in {
       navigator
         .nextPage(CateringOperationPageId)
+        .apply(
+          sessionAboutFranchiseOrLettingNo
+        ) mustBe controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show()
+    }
+
+    "return a function that goes to concession or franchise page when franchise page has been completed yes 6015" in {
+      navigator
+        .nextPage(CateringOperationPageId)
+        .apply(
+          sessionAboutFranchiseOrLettingYes6015
+        ) mustBe controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController.show()
+    }
+
+    "return a function that goes to concession or franchise page when franchise page has been completed no 6015" in {
+      navigator
+        .nextPage(CateringOperationPageId)
+        .apply(
+          sessionAboutFranchiseOrLettingNo6015
+        ) mustBe controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show()
+    }
+
+    "return a function that goes to catering operation rent details page when catering operation details page has been completed" in {
+      navigator
+        .nextPage(CateringOperationDetailsPageId)
+        .apply(
+          sessionAboutFranchiseOrLettingYes
+        ) mustBe controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsRentController.show(0)
+    }
+
+    "return a function that goes to catering operation rent includes page when catering operation rent details page has been completed" in {
+      navigator
+        .nextPage(CateringOperationRentDetailsPageId)
+        .apply(
+          sessionAboutFranchiseOrLettingYes
+        ) mustBe controllers.aboutfranchisesorlettings.routes.CateringOperationRentIncludesController.show(0)
+    }
+
+    "return a function that goes to add another catering operation page when catering operation rent includes page has been completed" in {
+      navigator
+        .nextPage(CateringOperationRentIncludesPageId)
+        .apply(
+          sessionAboutFranchiseOrLettingYes
+        ) mustBe controllers.aboutfranchisesorlettings.routes.AddAnotherCateringOperationController.show(0)
+    }
+
+    "return a function that goes to franchise details page when franchise rent includes has been completed yes" in {
+      navigator
+        .nextPage(AddAnotherCateringOperationPageId)
+        .apply(
+          sessionAboutFranchiseOrLettingYes
+        ) mustBe controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController.show()
+    }
+
+    "return a function that goes to lettings page when letting page has been completed no" in {
+      navigator
+        .nextPage(AddAnotherCateringOperationPageId)
         .apply(
           sessionAboutFranchiseOrLettingNo
         ) mustBe controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show()
@@ -100,20 +172,44 @@ class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec {
         ) mustBe controllers.routes.TaskListController.show()
     }
 
-    "return a function that goes to concession or franchise page when franchise page has been completed yes 6015" in {
+    "return a function that goes to letting rent details page when lettings page has been completed" in {
       navigator
-        .nextPage(ConcessionOrFranchiseId)
+        .nextPage(LettingAccommodationDetailsPageId)
         .apply(
-          sessionAboutFranchiseOrLettingYes6015
-        ) mustBe controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController.show()
+          sessionAboutFranchiseOrLettingYes
+        ) mustBe controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsRentController.show(0)
     }
 
-    "return a function that goes to concession or franchise page when franchise page has been completed no 6015" in {
+    "return a function that goes to letting rent includes page when lettings rent details page has been completed" in {
       navigator
-        .nextPage(ConcessionOrFranchiseId)
+        .nextPage(LettingAccommodationRentDetailsPageId)
         .apply(
-          sessionAboutFranchiseOrLettingNo6015
-        ) mustBe controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show()
+          sessionAboutFranchiseOrLettingYes
+        ) mustBe controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyRentIncludesController.show(0)
+    }
+
+    "return a function that goes to add another letting page when lettings rent includes page has been completed" in {
+      navigator
+        .nextPage(LettingAccommodationRentIncludesPageId)
+        .apply(
+          sessionAboutFranchiseOrLettingYes
+        ) mustBe controllers.aboutfranchisesorlettings.routes.AddAnotherLettingOtherPartOfPropertyController.show(0)
+    }
+
+    "return a function that goes to lettings details page when lettings rent includes has been completed yes" in {
+      navigator
+        .nextPage(AddAnotherLettingAccommodationPageId)
+        .apply(
+          sessionAboutFranchiseOrLettingYes
+        ) mustBe controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsController.show()
+    }
+
+    "return a function that goes to task list page when add another letting page has been completed no" in {
+      navigator
+        .nextPage(AddAnotherLettingAccommodationPageId)
+        .apply(
+          sessionAboutFranchiseOrLettingNo
+        ) mustBe controllers.routes.TaskListController.show()
     }
   }
 }

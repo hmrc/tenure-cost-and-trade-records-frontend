@@ -20,7 +20,7 @@ import actions.WithSessionRefiner
 import form.aboutfranchisesorlettings.ConcessionOrFranchiseForm.concessionOrFranchiseForm
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
 import navigation.AboutFranchisesOrLettingsNavigator
-import navigation.identifiers.ConcessionOrFranchiseId
+import navigation.identifiers.CateringOperationPageId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
@@ -44,10 +44,10 @@ class ConcessionOrFranchiseController @Inject() (
     Future.successful(
       Ok(
         cateringOperationOrLettingAccommodationView(
-          request.sessionData.aboutFranchisesOrLettings.flatMap(_.concessionOrFranchise) match {
-            case Some(concessionOrFranchise) =>
-              concessionOrFranchiseForm.fillAndValidate(concessionOrFranchise)
-            case _                           => concessionOrFranchiseForm
+          request.sessionData.aboutFranchisesOrLettings.flatMap(_.cateringConcessionOrFranchise) match {
+            case Some(cateringConcessionOrFranchise) =>
+              concessionOrFranchiseForm.fillAndValidate(cateringConcessionOrFranchise)
+            case _                                   => concessionOrFranchiseForm
           },
           "concessionOrFranchise",
           controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show().url
@@ -71,9 +71,9 @@ class ConcessionOrFranchiseController @Inject() (
             )
           ),
         data => {
-          val updatedData = updateAboutFranchisesOrLettings(_.copy(concessionOrFranchise = Some(data)))
+          val updatedData = updateAboutFranchisesOrLettings(_.copy(cateringConcessionOrFranchise = Some(data)))
           session.saveOrUpdate(updatedData)
-          Future.successful(Redirect(navigator.nextPage(ConcessionOrFranchiseId).apply(updatedData)))
+          Future.successful(Redirect(navigator.nextPage(CateringOperationPageId).apply(updatedData)))
         }
       )
   }

@@ -17,13 +17,12 @@
 package views.aboutFranchisesOrLettings
 
 import form.aboutfranchisesorlettings.FranchiseOrLettingsTiedToPropertyForm
-import models.submissions.Form6010._
-import models.submissions.aboutfranchisesorlettings.{FranchiseOrLettingsTiedToPropertiesNo, FranchiseOrLettingsTiedToPropertiesYes, FranchiseOrLettingsTiedToProperty}
+import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class FranchiseOrLettingsTiedToPropertyViewSpec extends QuestionViewBehaviours[FranchiseOrLettingsTiedToProperty] {
+class FranchiseOrLettingsTiedToPropertyViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
 
   val messageKeyPrefix = "franchiseLettings"
 
@@ -31,7 +30,7 @@ class FranchiseOrLettingsTiedToPropertyViewSpec extends QuestionViewBehaviours[F
 
   def createView = () => franchiseOrLettingsTiedToPropertyView(form, "FOR6010")(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[FranchiseOrLettingsTiedToProperty]) =>
+  def createViewUsingForm = (form: Form[AnswersYesNo]) =>
     franchiseOrLettingsTiedToPropertyView(form, "FOR6010")(fakeRequest, messages)
 
   "Franchise or lettings tied to property view" must {
@@ -58,7 +57,7 @@ class FranchiseOrLettingsTiedToPropertyViewSpec extends QuestionViewBehaviours[F
         doc,
         "franchiseOrLettingsTiedToProperty",
         "franchiseOrLettingsTiedToProperty",
-        FranchiseOrLettingsTiedToPropertiesYes.name,
+        AnswerYes.name,
         false
       )
       assertContainsText(doc, messages("label.yes"))
@@ -70,7 +69,7 @@ class FranchiseOrLettingsTiedToPropertyViewSpec extends QuestionViewBehaviours[F
         doc,
         "franchiseOrLettingsTiedToProperty-2",
         "franchiseOrLettingsTiedToProperty",
-        FranchiseOrLettingsTiedToPropertiesNo.name,
+        AnswerNo.name,
         false
       )
       assertContainsText(doc, messages("label.no"))

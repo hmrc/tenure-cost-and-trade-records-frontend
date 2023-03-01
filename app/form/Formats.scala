@@ -20,9 +20,9 @@ import models._
 import models.submissions.Form6010._
 import models.submissions._
 import models.submissions.aboutYourLeaseOrTenure._
-import models.submissions.aboutfranchisesorlettings._
 import models.submissions.abouttheproperty._
 import models.submissions.aboutthetradinghistory.CostOfSalesOrGrossProfit
+import models.submissions.common.AnswersYesNo
 import models.submissions.connectiontoproperty.{AddressConnectionType, ConnectionToProperty}
 import play.api.data.FormError
 import play.api.data.format.Formatter
@@ -71,17 +71,8 @@ object Formats {
     namedEnumFormatter(CurrentPropertyUsed, Errors.currentOccupierName)
   implicit val buildingOperatingHaveAWebsiteFormat: Formatter[BuildingOperationHaveAWebsite]                 =
     namedEnumFormatter(BuildingOperationHaveAWebsite, Errors.booleanMissing)
-  implicit val addAnotherCateringOperationOrLettingAccommodationFormat
-    : Formatter[AddAnotherCateringOperationOrLettingAccommodations]                                          =
-    namedEnumFormatter(AddAnotherCateringOperationOrLettingAccommodations, Errors.booleanMissing)
-  implicit val addAnotherLettingOtherPartOfPropertyFormat: Formatter[AddAnotherLettingOtherPartOfProperty]   =
-    namedEnumFormatter(AddAnotherLettingOtherPartOfProperty, Errors.booleanMissing)
-  implicit val cateringOperationsFormat: Formatter[CateringOperation]                                        =
-    namedEnumFormatter(CateringOperation, Errors.booleanMissing)
-  implicit val lettingOtherPartOfPropertiesFormat: Formatter[LettingOtherPartOfProperty]                     =
-    namedEnumFormatter(LettingOtherPartOfProperty, Errors.booleanMissing)
-  implicit val concessionOrFranchiseFormat: Formatter[ConcessionOrFranchise]                                 =
-    namedEnumFormatter(ConcessionOrFranchise, Errors.booleanMissing)
+  implicit val answerYesNoFormat: Formatter[AnswersYesNo]                                                    =
+    namedEnumFormatter(AnswersYesNo, Errors.booleanMissing)
   implicit val tenancyLeaseAgreementsFormat: Formatter[TenancyLeaseAgreements]                               =
     namedEnumFormatter(TenancyLeaseAgreement, Errors.booleanMissing)
   implicit val licensableActivitiesFormat: Formatter[LicensableActivities]                                   =
@@ -91,8 +82,6 @@ object Formats {
     namedEnumFormatter(PremisesLicenseConditions, Errors.booleanMissing)
   implicit val enforcementActionFormat: Formatter[EnforcementAction]                                         =
     namedEnumFormatter(EnforcementAction, Errors.booleanMissing)
-  implicit val franchiseOrLettingsTiedToPropertiesFormat: Formatter[FranchiseOrLettingsTiedToProperty]       =
-    namedEnumFormatter(FranchiseOrLettingsTiedToProperty, Errors.booleanMissing)
   implicit val rentIncreasedAnnuallyWithRPIsFormat: Formatter[RentIncreasedAnnuallyWithRPIs]                 =
     namedEnumFormatter(RentIncreasedAnnuallyWithRPI, Errors.booleanMissing)
   implicit val rentPayableVaryAccordingToGrossOrNetsFormat: Formatter[RentPayableVaryAccordingToGrossOrNets] =

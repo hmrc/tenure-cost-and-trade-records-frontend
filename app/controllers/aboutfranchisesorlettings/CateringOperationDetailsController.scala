@@ -31,7 +31,7 @@ import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.aboutfranchisesorlettings.cateringOperationOrLettingAccommodationDetails
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
 @Singleton
 class CateringOperationDetailsController @Inject() (
@@ -40,8 +40,7 @@ class CateringOperationDetailsController @Inject() (
   cateringOperationDetailsView: cateringOperationOrLettingAccommodationDetails,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext)
-    extends FrontendController(mcc)
+) extends FrontendController(mcc)
     with I18nSupport {
 
   def show(index: Option[Int]): Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
@@ -131,25 +130,9 @@ class CateringOperationDetailsController @Inject() (
 
   private def getBackLink(answers: Session): Either[String, String] =
     answers.userLoginDetails.forNumber match {
-      case ForTypes.for6010 | ForTypes.for6011 =>
-        answers.aboutFranchisesOrLettings.flatMap(_.cateringOperation.map(_.name)) match {
-          case Some("yes") =>
-            Right(controllers.aboutfranchisesorlettings.routes.CateringOperationController.show().url)
-          case Some("no")  =>
-            Right(controllers.aboutfranchisesorlettings.routes.CateringOperationController.show().url)
-          case _           =>
-            Right(controllers.routes.TaskListController.show().url)
-        }
       case ForTypes.for6015 | ForTypes.for6016 =>
-        answers.aboutFranchisesOrLettings.flatMap(_.concessionOrFranchise.map(_.name)) match {
-          case Some("yes") =>
-            Right(controllers.aboutfranchisesorlettings.routes.ConcessionOrFranchiseController.show().url)
-          case Some("no")  =>
-            Right(controllers.aboutfranchisesorlettings.routes.ConcessionOrFranchiseController.show().url)
-          case _           =>
-            Right(controllers.routes.TaskListController.show().url)
-        }
+        Right(controllers.aboutfranchisesorlettings.routes.ConcessionOrFranchiseController.show().url)
       case _                                   =>
-        Left(s"Unknown form type with catering operation details back link")
+        Right(controllers.aboutfranchisesorlettings.routes.CateringOperationController.show().url)
     }
 }

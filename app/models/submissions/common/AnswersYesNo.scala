@@ -14,28 +14,28 @@
  * limitations under the License.
  */
 
-package models.submissions.aboutfranchisesorlettings
+package models.submissions.common
 
 import models.{EnumFormat, NamedEnum, NamedEnumSupport}
 import play.api.libs.json.Format
 
-sealed trait AddAnotherLettingOtherPartOfProperty extends NamedEnum {
-  val key = "addAnotherLettingOtherPartOfProperty"
+sealed trait AnswersYesNo extends NamedEnum {
+  val key = "answersYesNo"
 }
-object AddAnotherLettingOtherPartOfPropertiesYes extends AddAnotherLettingOtherPartOfProperty {
+object AnswerYes extends AnswersYesNo {
   val name = "yes"
 }
-object AddAnotherLettingOtherPartOfPropertiesNo extends AddAnotherLettingOtherPartOfProperty {
+object AnswerNo extends AnswersYesNo {
   val name = "no"
 }
 
-object AddAnotherLettingOtherPartOfProperty extends NamedEnumSupport[AddAnotherLettingOtherPartOfProperty] {
+object AnswersYesNo extends NamedEnumSupport[AnswersYesNo] {
 
-  implicit val format: Format[AddAnotherLettingOtherPartOfProperty] = EnumFormat(
-    AddAnotherLettingOtherPartOfProperty
+  implicit val format: Format[AnswersYesNo] = EnumFormat(
+    AnswersYesNo
   )
 
-  val all = List(AddAnotherLettingOtherPartOfPropertiesYes, AddAnotherLettingOtherPartOfPropertiesNo)
+  val all = List(AnswerYes, AnswerNo)
 
   val key = all.head.key
 }
