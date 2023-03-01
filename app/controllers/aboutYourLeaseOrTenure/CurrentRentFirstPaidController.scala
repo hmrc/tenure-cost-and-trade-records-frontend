@@ -18,6 +18,7 @@ package controllers.aboutYourLeaseOrTenure
 
 import actions.WithSessionRefiner
 import form.aboutYourLeaseOrTenure.CurrentRentFirstPaidForm.currentRentFirstPaidForm
+import models.submissions.aboutLeaseOrAgreement.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne
 import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.CurrentRentFirstPaidPageId
 import play.api.i18n.I18nSupport
@@ -39,8 +40,15 @@ class CurrentRentFirstPaidController @Inject() (
 ) extends FrontendController(mcc)
     with I18nSupport {
 
-  def show: Action[AnyContent] = Action { implicit request =>
-    Ok(currentRentFirstPaidView(currentRentFirstPaidForm))
+  def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
+    Ok(
+      currentRentFirstPaidView(
+        request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.currentRentFirstPaid) match {
+          case Some(currentRentFirstPaid) => currentRentFirstPaidForm.fillAndValidate(currentRentFirstPaid)
+          case _                          => currentRentFirstPaidForm
+        }
+      )
+    )
   }
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
@@ -48,7 +56,11 @@ class CurrentRentFirstPaidController @Inject() (
       .bindFromRequest()
       .fold(
         formWithErrors => Future.successful(BadRequest(currentRentFirstPaidView(formWithErrors))),
-        data => Future.successful(Redirect(navigator.nextPage(CurrentRentFirstPaidPageId).apply(request.sessionData)))
+        data => {
+          val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(currentRentFirstPaid = Some(data)))
+          session.saveOrUpdate(updatedData)
+          Future.successful(Redirect(navigator.nextPage(CurrentRentFirstPaidPageId).apply(request.sessionData)))
+        }
       )
   }
 }

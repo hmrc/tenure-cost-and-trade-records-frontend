@@ -24,8 +24,6 @@ import views.behaviours.QuestionViewBehaviours
 
 class CurrentRentFirstPaidViewSpec extends QuestionViewBehaviours[CurrentRentFirstPaid] {
 
-  def currentRentFirstPaidView = app.injector.instanceOf[views.html.aboutYourLeaseOrTenure.currentRentFirstPaid]
-
   val messageKeyPrefix = "currentRentFirstPaid"
 
   override val form = CurrentRentFirstPaidForm.currentRentFirstPaidForm

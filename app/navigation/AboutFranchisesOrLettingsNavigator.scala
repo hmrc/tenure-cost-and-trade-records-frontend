@@ -18,7 +18,7 @@ package navigation
 
 import connectors.Audit
 import models.{ForTypes, Session}
-import navigation.identifiers._
+import navigation.identifiers.{ConcessionOrFranchiseId, _}
 import play.api.Logging
 import play.api.mvc.Call
 
@@ -30,31 +30,20 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit)(implicit ec: E
     with Logging {
 
   private def franchiseOrLettingConditionsRouting: Session => Call = answers => {
-    if (
-      answers.userLoginDetails.forNumber
-        .equals(ForTypes.for6015) || answers.userLoginDetails.forNumber.equals(ForTypes.for6016)
-    ) {
-      answers.aboutFranchisesOrLettings.flatMap(_.franchisesOrLettingsTiedToProperty.map(_.name)) match {
-        case Some("yes") =>
+    answers.aboutFranchisesOrLettings.flatMap(_.franchisesOrLettingsTiedToProperty.map(_.name)) match {
+      case Some("yes") =>
+        val forType = answers.userLoginDetails.forNumber
+        if (forType.equals(ForTypes.for6015) || forType.equals(ForTypes.for6016)) {
           controllers.aboutfranchisesorlettings.routes.ConcessionOrFranchiseController.show()
-        case Some("no")  =>
-          controllers.routes.TaskListController.show()
-        case _           =>
-          logger.warn(
-            s"Navigation for franchise or letting reached without correct selection of conditions by controller"
-          )
-          throw new RuntimeException("Invalid option exception for franchise or letting conditions routing")
-      }
-    } else {
-      answers.aboutFranchisesOrLettings.flatMap(_.franchisesOrLettingsTiedToProperty.map(_.name)) match {
-        case Some("yes") => controllers.aboutfranchisesorlettings.routes.CateringOperationController.show()
-        case Some("no")  => controllers.routes.TaskListController.show() // TODO Insert CYA page.
-        case _           =>
-          logger.warn(
-            s"Navigation for franchise or letting reached without correct selection of conditions by controller"
-          )
-          throw new RuntimeException("Invalid option exception for franchise or letting conditions routing")
-      }
+        } else {
+          controllers.aboutfranchisesorlettings.routes.CateringOperationController.show()
+        }
+      case Some("no")  => controllers.routes.TaskListController.show() // TODO Insert CYA page.
+      case _           =>
+        logger.warn(
+          s"Navigation for franchise or letting reached without correct selection of conditions by controller"
+        )
+        throw new RuntimeException("Invalid option exception for franchise or letting conditions routing")
     }
   }
 
@@ -67,6 +56,20 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit)(implicit ec: E
           s"Navigation for catering operations reached without correct selection of conditions by controller"
         )
         throw new RuntimeException("Invalid option exception for catering operations conditions routing")
+    }
+  }
+
+  private def cateringOrFranchiseRouting: Session => Call = answers => {
+    answers.aboutFranchisesOrLettings.flatMap(_.concessionOrFranchise.map(_.name)) match {
+      case Some("yes") =>
+        controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController.show()
+      case Some("no")  => controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show()
+      case _           =>
+        logger.warn(
+          s"Navigation for catering or franchise reached without correct selection of conditions by controller"
+        )
+        throw new RuntimeException("Invalid option exception for catering or franchise routing")
+
     }
   }
 
@@ -133,23 +136,23 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit)(implicit ec: E
       .show(getLettingsIndex(answers))
   }
 
-  private def cateringOrFranchiseRouting: Session => Call = answers => {
-    answers.aboutFranchisesOrLettings.flatMap(_.concessionOrFranchise.map(_.name)) match {
-      case Some("yes") =>
-        controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController.show()
-      case Some("no")  => controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show()
-      case _           =>
+  private def addAnotherLettingsConditionsRouting: Session => Call = answers => {
+    val existingSection = answers.aboutFranchisesOrLettings.flatMap(_.lettingSections.lift(getLettingsIndex(answers)))
+    existingSection.flatMap(_.addAnotherLettingToProperty).get.name match {
+      case "yes" => controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsController.show()
+      case "no"  => controllers.routes.TaskListController.show() // TODO Insert CYA page.
+      case _     =>
         logger.warn(
-          s"Navigation for catering or franchise reached without correct selection of conditions by controller"
+          s"Navigation for add another letting reached without correct selection of conditions by controller"
         )
-        throw new RuntimeException("Invalid option exception for catering or franchise routing")
-
+        throw new RuntimeException("Invalid option exception for add another letting conditions routing")
     }
   }
 
   override val routeMap: Map[Identifier, Session => Call] = Map(
     FranchiseOrLettingsTiedToPropertyId    -> franchiseOrLettingConditionsRouting,
     CateringOperationPageId                -> cateringOperationsConditionsRouting,
+    ConcessionOrFranchiseId                -> cateringOrFranchiseRouting,
     CateringOperationDetailsPageId         -> cateringOperationsDetailsConditionsRouting,
     CateringOperationRentDetailsPageId     -> cateringOperationsRentDetailsConditionsRouting,
     CateringOperationRentIncludesPageId    -> cateringOperationsRentIncludesConditionsRouting,
@@ -158,7 +161,6 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit)(implicit ec: E
     LettingAccommodationDetailsPageId      -> lettingsDetailsConditionsRouting,
     LettingAccommodationRentDetailsPageId  -> lettingsRentDetailsConditionsRouting,
     LettingAccommodationRentIncludesPageId -> lettingsRentIncludesConditionsRouting,
-//    AddAnotherLettingAccommodationPageId   -> addAnotherLettingsConditionsRouting,
-    ConcessionOrFranchiseId                -> cateringOrFranchiseRouting
+    AddAnotherLettingAccommodationPageId   -> addAnotherLettingsConditionsRouting
   )
 }

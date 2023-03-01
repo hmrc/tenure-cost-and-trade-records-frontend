@@ -14,22 +14,22 @@
  * limitations under the License.
  */
 
-package form.Form6010
+package form.aboutfranchisesorlettings
 
-import form.DateMappings.dateFieldsMapping
-import form.MappingSupport.currencyMapping
-import models.submissions.aboutfranchisesorlettings.CateringOperationRentDetails
+import form.MappingSupport.addAnotherLettingOtherPartOfPropertyType
+import models.submissions.aboutfranchisesorlettings.AddAnotherLettingOtherPartOfProperty
 import play.api.data.Form
 import play.api.data.Forms.mapping
 
-object CateringOperationOrLettingAccommodationRentForm {
+object AddAnotherLettingOtherPartOfPropertyForm {
 
-  val cateringOperationOrLettingAccommodationRentForm = Form(
-    mapping(
-      "annualRent" -> currencyMapping(".annualRent"),
-      "dateInput"  -> dateFieldsMapping("dateInput")
-    )(CateringOperationRentDetails.apply)(
-      CateringOperationRentDetails.unapply
-    )
+  lazy val baseAddAnotherLettingForm: Form[AddAnotherLettingOtherPartOfProperty] = Form(
+    baseAddAnotherLettingMapping
   )
+
+  val baseAddAnotherLettingMapping = mapping(
+    "addAnotherLettingOtherPartOfProperty" -> addAnotherLettingOtherPartOfPropertyType
+  )(x => x)(b => Some(b))
+
+  val addAnotherLettingForm = Form(baseAddAnotherLettingMapping)
 }

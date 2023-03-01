@@ -16,8 +16,8 @@
 
 package views.aboutFranchisesOrLettings
 
-import form.Form6010.CateringOperationOrLettingAccommodationForm
-import models.submissions.aboutfranchisesorlettings.{CateringOperationDetails, CateringOperationNo, ConcessionOrFranchise, ConcessionOrFranchiseNo, ConcessionOrFranchiseYes}
+import form.aboutfranchisesorlettings.{CateringOperationOrLettingAccommodationForm}
+import models.submissions.aboutfranchisesorlettings.{CateringOperationDetails,  ConcessionOrFranchiseNo, ConcessionOrFranchiseYes}
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours

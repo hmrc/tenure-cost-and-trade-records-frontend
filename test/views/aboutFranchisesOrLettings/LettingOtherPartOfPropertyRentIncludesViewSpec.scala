@@ -16,7 +16,7 @@
 
 package views.aboutFranchisesOrLettings
 
-import form.Form6010.CateringOperationOrLettingAccommodationForm
+import form.aboutfranchisesorlettings.CateringOperationOrLettingAccommodationForm
 import models.submissions.aboutfranchisesorlettings.CateringOperationDetails
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form

@@ -16,12 +16,12 @@
 
 package models.submissions.aboutfranchisesorlettings
 
-import models.submissions.Form6010.{LettingOtherPartOfPropertyInformationDetails, LettingOtherPartOfPropertyRentDetails}
 import play.api.libs.json.Json
 
 case class LettingSection(
   lettingOtherPartOfPropertyInformationDetails: LettingOtherPartOfPropertyInformationDetails,
-  lettingOtherPartOfPropertyRentDetails: Option[LettingOtherPartOfPropertyRentDetails] = None
+  lettingOtherPartOfPropertyRentDetails: Option[LettingOtherPartOfPropertyRentDetails] = None,
+  addAnotherLettingToProperty: Option[AddAnotherLettingOtherPartOfProperty] = None
 )
 
 object LettingSection {

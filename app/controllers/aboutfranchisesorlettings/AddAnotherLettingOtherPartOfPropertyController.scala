@@ -17,18 +17,15 @@
 package controllers.aboutfranchisesorlettings
 
 import actions.WithSessionRefiner
-import controllers.LoginController.loginForm
-import form.Form6010.AddAnotherLettingOtherPartOfPropertyForm.addAnotherLettingOtherPartOfPropertyForm
-import form.Form6010.CateringOperationOrLettingAccommodationForm.cateringOperationOrLettingAccommodationForm
-import form.aboutYourLeaseOrTenure.AboutTheLandlordForm.aboutTheLandlordForm
-import models.submissions.Form6010._
+import form.aboutfranchisesorlettings.AddAnotherLettingOtherPartOfPropertyForm.addAnotherLettingForm
+import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
+import navigation.AboutFranchisesOrLettingsNavigator
+import navigation.identifiers.AddAnotherLettingAccommodationPageId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.aboutYourLeaseOrTenure.aboutYourLandlord
 import views.html.aboutfranchisesorlettings._
-import views.html.login
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
@@ -36,20 +33,23 @@ import scala.concurrent.Future
 @Singleton
 class AddAnotherLettingOtherPartOfPropertyController @Inject() (
   mcc: MessagesControllerComponents,
+  navigator: AboutFranchisesOrLettingsNavigator,
   addAnotherCateringOperationOrLettingAccommodationView: addAnotherCateringOperationOrLettingAccommodation,
-  cateringOperationOrLettingAccommodationDetailsView: cateringOperationOrLettingAccommodationDetails,
-  login: login,
-  aboutTheLandlordView: aboutYourLandlord,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
 ) extends FrontendController(mcc)
     with I18nSupport {
 
   def show(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    val existingSection = request.sessionData.aboutFranchisesOrLettings.flatMap(_.lettingSections.lift(index))
+
     Future.successful(
       Ok(
         addAnotherCateringOperationOrLettingAccommodationView(
-          addAnotherLettingOtherPartOfPropertyForm,
+          existingSection.flatMap(_.addAnotherLettingToProperty) match {
+            case Some(addAnotherLettings) => addAnotherLettingForm.fillAndValidate(addAnotherLettings)
+            case _                        => addAnotherLettingForm
+          },
           index,
           "addAnotherLettingOtherPartOfProperty",
           controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyRentIncludesController.show(index).url
@@ -59,7 +59,7 @@ class AddAnotherLettingOtherPartOfPropertyController @Inject() (
   }
 
   def submit(index: Int) = (Action andThen withSessionRefiner).async { implicit request =>
-    addAnotherLettingOtherPartOfPropertyForm
+    addAnotherLettingForm
       .bindFromRequest()
       .fold(
         formWithErrors =>
@@ -76,21 +76,18 @@ class AddAnotherLettingOtherPartOfPropertyController @Inject() (
             )
           ),
         data =>
-          data.addAnotherLettingOtherPartOfPropertyDetails match {
-            case AddAnotherLettingOtherPartOfPropertiesYes =>
-              Future.successful(
-                Ok(
-                  cateringOperationOrLettingAccommodationDetailsView(
-                    cateringOperationOrLettingAccommodationForm,
-                    None,
-                    "lettingOtherPartOfProperties",
-                    controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsController.show().url
-                  )
-                )
-              )
-            case AddAnotherLettingOtherPartOfPropertiesNo  =>
-              Future.successful(Ok(aboutTheLandlordView(aboutTheLandlordForm)))
-            case _                                         => Future.successful(Ok(login(loginForm)))
+          request.sessionData.aboutFranchisesOrLettings.fold(
+            Future
+              .successful(Redirect(routes.LettingOtherPartOfPropertyRentIncludesController.show(index)))
+          ) { aboutFranchisesOrLettings =>
+            val existingSections = aboutFranchisesOrLettings.lettingSections
+            val updatedSections  = existingSections.updated(
+              index,
+              existingSections(index).copy(addAnotherLettingToProperty = Some(data))
+            )
+            val updatedData      = updateAboutFranchisesOrLettings(_.copy(lettingSections = updatedSections))
+            session.saveOrUpdate(updatedData)
+            Future.successful(Redirect(navigator.nextPage(AddAnotherLettingAccommodationPageId).apply(updatedData)))
           }
       )
   }

@@ -14,17 +14,17 @@
  * limitations under the License.
  */
 
-package models.submissions.Form6010
+package models.submissions.aboutfranchisesorlettings
 
 import play.api.libs.json.Json
 
-import java.time.LocalDate
-
-case class LettingOtherPartOfPropertyRentDetails(
-  annualRent: BigDecimal,
-  dateInput: LocalDate
+case class LettingOtherPartOfPropertyInformationDetails(
+  operatorName: String,
+  typeOfBusiness: String,
+  lettingAddress: LettingAddress
 )
-object LettingOtherPartOfPropertyRentDetails {
-  implicit val format = Json.format[LettingOtherPartOfPropertyRentDetails]
+
+object LettingOtherPartOfPropertyInformationDetails {
+  implicit val format = Json.format[LettingOtherPartOfPropertyInformationDetails]
 
 }

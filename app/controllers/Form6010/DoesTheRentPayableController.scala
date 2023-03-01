@@ -16,32 +16,52 @@
 
 package controllers.Form6010
 
+import actions.WithSessionRefiner
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.form.{doesTheRentPayable, rentIncludeTradeServices}
 import form.Form6010.DoesTheRentPayableForm.doesTheRentPayableForm
 import form.Form6010.RentIncludeTradeServicesForm.rentIncludeTradeServicesForm
+import models.submissions.aboutLeaseOrAgreement.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne
+import play.api.i18n.I18nSupport
+import repositories.SessionRepo
 
-import javax.inject.{Inject, Singleton}
+import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
 
 @Singleton
 class DoesTheRentPayableController @Inject() (
   mcc: MessagesControllerComponents,
   rentIncludeTradeServicesView: rentIncludeTradeServices,
-  doesTheRentPayableView: doesTheRentPayable
-) extends FrontendController(mcc) {
+  doesTheRentPayableView: doesTheRentPayable,
+  withSessionRefiner: WithSessionRefiner,
+  @Named("session") val session: SessionRepo
+) extends FrontendController(mcc)
+    with I18nSupport {
 
-  def show: Action[AnyContent] = Action.async { implicit request =>
-    Future.successful(Ok(doesTheRentPayableView(doesTheRentPayableForm)))
+  def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    Future.successful(
+      Ok(
+        doesTheRentPayableView(
+          request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.doesTheRentPayable) match {
+            case Some(doesTheRentPayable) => doesTheRentPayableForm.fillAndValidate(doesTheRentPayable)
+            case _                        => doesTheRentPayableForm
+          }
+        )
+      )
+    )
   }
 
-  def submit = Action.async { implicit request =>
+  def submit = (Action andThen withSessionRefiner).async { implicit request =>
     doesTheRentPayableForm
       .bindFromRequest()
       .fold(
         formWithErrors => Future.successful(BadRequest(doesTheRentPayableView(formWithErrors))),
-        data => Future.successful(Ok(rentIncludeTradeServicesView(rentIncludeTradeServicesForm)))
+        data => {
+          val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(doesTheRentPayable = Some(data)))
+          session.saveOrUpdate(updatedData)
+          Future.successful(Ok(rentIncludeTradeServicesView(rentIncludeTradeServicesForm)))
+        }
       )
   }
 

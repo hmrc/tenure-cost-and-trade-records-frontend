@@ -14,20 +14,20 @@
  * limitations under the License.
  */
 
-package form.Form6010
+package form.aboutfranchisesorlettings
 
-import form.MappingSupport.cateringAddressMapping
-import models.submissions.aboutfranchisesorlettings.CateringOperationDetails
+import form.MappingSupport.lettingOtherPartAddressMapping
+import models.submissions.aboutfranchisesorlettings.LettingOtherPartOfPropertyInformationDetails
 import play.api.data.Form
 import play.api.data.Forms.{mapping, nonEmptyText}
 
-object CateringOperationOrLettingAccommodationForm {
+object LettingOtherPartOfPropertyForm {
 
-  val cateringOperationOrLettingAccommodationForm = Form(
+  val lettingOtherPartOfPropertyForm = Form(
     mapping(
-      "operatorName"    -> nonEmptyText(maxLength = 100),
-      "typeOfBusiness"  -> nonEmptyText(maxLength = 100),
-      "cateringAddress" -> cateringAddressMapping
-    )(CateringOperationDetails.apply)(CateringOperationDetails.unapply)
+      "lettingOperatorName"   -> nonEmptyText(maxLength = 100),
+      "lettingTypeOfBusiness" -> nonEmptyText(maxLength = 100),
+      "lettingAddress"        -> lettingOtherPartAddressMapping
+    )(LettingOtherPartOfPropertyInformationDetails.apply)(LettingOtherPartOfPropertyInformationDetails.unapply)
   )
 }
