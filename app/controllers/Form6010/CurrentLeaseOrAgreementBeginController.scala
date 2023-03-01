@@ -16,32 +16,51 @@
 
 package controllers.Form6010
 
+import actions.WithSessionRefiner
 import form.Form6010.CurrentLeaseOrAgreementBeginForm.currentLeaseOrAgreementBeginForm
 import form.Form6010.IncludedInYourRentForm.includedInYourRentForm
+import models.submissions.aboutLeaseOrAgreement.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne
+import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.form.{currentLeaseOrAgreementBegin, includedInYourRent}
 
-import javax.inject.{Inject, Singleton}
+import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
 
 @Singleton
 class CurrentLeaseOrAgreementBeginController @Inject() (
   mcc: MessagesControllerComponents,
   includedInYourRentView: includedInYourRent,
-  currentLeaseOrAgreementBeginView: currentLeaseOrAgreementBegin
-) extends FrontendController(mcc) {
+  currentLeaseOrAgreementBeginView: currentLeaseOrAgreementBegin,
+  withSessionRefiner: WithSessionRefiner,
+  @Named("session") val session: SessionRepo
+) extends FrontendController(mcc)
+    with I18nSupport {
 
-  def show: Action[AnyContent] = Action { implicit request =>
-    Ok(currentLeaseOrAgreementBeginView(currentLeaseOrAgreementBeginForm))
+  def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
+    Ok(
+      currentLeaseOrAgreementBeginView(
+        request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.currentLeaseOrAgreementBegin) match {
+          case Some(currentLeaseOrAgreementBegin) =>
+            currentLeaseOrAgreementBeginForm.fillAndValidate(currentLeaseOrAgreementBegin)
+          case _                                  => currentLeaseOrAgreementBeginForm
+        }
+      )
+    )
   }
 
-  def submit = Action.async { implicit request =>
+  def submit = (Action andThen withSessionRefiner).async { implicit request =>
     currentLeaseOrAgreementBeginForm
       .bindFromRequest()
       .fold(
         formWithErrors => Future.successful(BadRequest(currentLeaseOrAgreementBeginView(formWithErrors))),
-        data => Future.successful(Ok(includedInYourRentView(includedInYourRentForm)))
+        data => {
+          val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(currentLeaseOrAgreementBegin = Some(data)))
+          session.saveOrUpdate(updatedData)
+          Future.successful(Ok(includedInYourRentView(includedInYourRentForm)))
+        }
       )
   }
 

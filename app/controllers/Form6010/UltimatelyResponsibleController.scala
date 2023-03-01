@@ -16,15 +16,19 @@
 
 package controllers.Form6010
 
+import actions.WithSessionRefiner
 import form.Form6010.UltimatelyResponsibleForm.ultimatelyResponsibleForm
 import form.Form6010.SharedResponsibilitiesForm.sharedResponsibilitiesForm
 import form.Form6010.IntervalsOfRentReviewForm.intervalsOfRentReviewForm
 import models.submissions.Form6010.{BuildingInsurancesBoth, InsideRepairsBoth, OutsideRepairsBoth}
+import models.submissions.aboutLeaseOrAgreement.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne
+import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.form.{intervalsOfRentReview, sharedResponsibilities, ultimatelyResponsible}
 
-import javax.inject.{Inject, Singleton}
+import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
 
 @Singleton
@@ -32,14 +36,26 @@ class UltimatelyResponsibleController @Inject() (
   mcc: MessagesControllerComponents,
   ultimatelyResponsibleView: ultimatelyResponsible,
   sharedResponsibilitiesView: sharedResponsibilities,
-  intervalsOfRentReviewView: intervalsOfRentReview
-) extends FrontendController(mcc) {
+  intervalsOfRentReviewView: intervalsOfRentReview,
+  withSessionRefiner: WithSessionRefiner,
+  @Named("session") val session: SessionRepo
+) extends FrontendController(mcc)
+    with I18nSupport {
 
-  def show: Action[AnyContent] = Action.async { implicit request =>
-    Future.successful(Ok(ultimatelyResponsibleView(ultimatelyResponsibleForm)))
+  def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    Future.successful(
+      Ok(
+        ultimatelyResponsibleView(
+          request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.ultimatelyResponsible) match {
+            case Some(ultimatelyResponsible) => ultimatelyResponsibleForm.fillAndValidate(ultimatelyResponsible)
+            case _                           => ultimatelyResponsibleForm
+          }
+        )
+      )
+    )
   }
 
-  def submit = Action.async { implicit request =>
+  def submit = (Action andThen withSessionRefiner).async { implicit request =>
     ultimatelyResponsibleForm
       .bindFromRequest()
       .fold(
@@ -49,8 +65,12 @@ class UltimatelyResponsibleController @Inject() (
             data.insideRepairs.equals(InsideRepairsBoth) || data.outsideRepairs
               .equals(OutsideRepairsBoth) || data.buildingInsurance.equals(BuildingInsurancesBoth)
           ) {
+            val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(ultimatelyResponsible = Some(data)))
+            session.saveOrUpdate(updatedData)
             Future.successful(Ok(sharedResponsibilitiesView(sharedResponsibilitiesForm)))
           } else {
+            val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(ultimatelyResponsible = Some(data)))
+            session.saveOrUpdate(updatedData)
             Future.successful(Ok(intervalsOfRentReviewView(intervalsOfRentReviewForm)))
           }
       )
