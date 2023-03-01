@@ -16,7 +16,6 @@
 
 package utils
 
-
 import models.submissions.aboutfranchisesorlettings._
 import models.submissions.abouttheproperty.PremisesLicenseGrantedNo
 import models.submissions.Form6010.LandlordAddress
