@@ -23,17 +23,17 @@ import models.submissions.aboutYourLeaseOrTenure.{AboutTheLandlord, ConnectedToL
 import play.api.libs.json.Json
 
 case class AboutLeaseOrAgreementPartOne(
-                                         aboutTheLandlord: Option[AboutTheLandlord] = None,
-                                         connectedToLandlord: Option[ConnectedToLandlord] = None,
-                                         connectedToLandlordDetails: Option[ConnectedToLandlordInformationDetails] = None,
-                                         leaseOrAgreementYearsDetails: Option[LeaseOrAgreementYearsDetails] = None,
-                                         currentRentPayableWithin12Months: Option[CurrentRentPayableWithin12Months] = None,
-                                         annualRent: Option[AnnualRent] = None,
-                                         currentRentFirstPaid: Option[CurrentRentFirstPaid] = None,
-                                         currentLeaseOrAgreementBegin: Option[CurrentLeaseOrAgreementBegin] = None,
-                                         includedInYourRentDetails: Option[IncludedInYourRentDetails] = None,
-                                         doesTheRentPayable: Option[DoesTheRentPayable] = None,
-                                         ultimatelyResponsible: Option[UltimatelyResponsible] = None
+  aboutTheLandlord: Option[AboutTheLandlord] = None,
+  connectedToLandlord: Option[ConnectedToLandlord] = None,
+  connectedToLandlordDetails: Option[ConnectedToLandlordInformationDetails] = None,
+  leaseOrAgreementYearsDetails: Option[LeaseOrAgreementYearsDetails] = None,
+  currentRentPayableWithin12Months: Option[CurrentRentPayableWithin12Months] = None,
+  annualRent: Option[AnnualRent] = None,
+  currentRentFirstPaid: Option[CurrentRentFirstPaid] = None,
+  currentLeaseOrAgreementBegin: Option[CurrentLeaseOrAgreementBegin] = None,
+  includedInYourRentDetails: Option[IncludedInYourRentDetails] = None,
+  doesTheRentPayable: Option[DoesTheRentPayable] = None,
+  ultimatelyResponsible: Option[UltimatelyResponsible] = None
 )
 
 object AboutLeaseOrAgreementPartOne {

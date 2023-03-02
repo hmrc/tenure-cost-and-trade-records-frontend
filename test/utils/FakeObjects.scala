@@ -94,6 +94,20 @@ trait FakeObjects {
       prefilledFakeName,
       prefilledLandlordAddress
     )
+  //  val prefilledConnectedToLandlordYes = {
+//    ConnectedToLandlord(
+//      ConnectedToLandlordDetailsYes
+//    )
+//  }
+//  val prefilledConnectedToLandlordNo = {
+//    ConnectedToLandlord(
+//      ConnectedToLandlordDetailsNo
+//    )
+//  }
+  val prefilledConnectedToLandlordDetails   =
+    ConnectedToLandlordInformationDetails(
+      "This is some test information"
+    )
   val prefilledLeaseOrAgreementYearsDetails =
     LeaseOrAgreementYearsDetails(
       CommenceWithinThreeYearsYes,
@@ -193,6 +207,8 @@ trait FakeObjects {
 
   val prefilledAboutLeaseOrAgreementPartOne = AboutLeaseOrAgreementPartOne(
     Some(prefilledAboutTheLandlord),
+    None,
+    Some(prefilledConnectedToLandlordDetails),
     Some(prefilledLeaseOrAgreementYearsDetails),
     Some(prefilledCurrentRentPayableWithin12Months),
     Some(prefilledAnnualRent)

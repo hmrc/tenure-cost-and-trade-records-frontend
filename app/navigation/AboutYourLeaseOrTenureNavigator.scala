@@ -34,7 +34,8 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit)(implicit ec: Exec
       controllers.aboutYourLeaseOrTenure.routes.CurrentAnnualRentController.show()
     else if (
       answers.userLoginDetails.forNumber == ForTypes.for6015 ||
-      answers.userLoginDetails.forNumber == ForTypes.for6016)
+      answers.userLoginDetails.forNumber == ForTypes.for6016
+    )
       controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordController.show()
     else
       controllers.aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.show()
@@ -47,15 +48,25 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit)(implicit ec: Exec
       controllers.Form6010.routes.CurrentLeaseOrAgreementBeginController.show()
   }
 
+  private def connectedToLandlordRouting: Session => Call = answers => {
+    answers.aboutLeaseOrAgreementPartOne.flatMap(_.connectedToLandlord.map(_.name)) match {
+      case Some("yes") => controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordDetailsController.show()
+      case Some("no")  => controllers.aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.show()
+      case _           =>
+        logger.warn(
+          s"Navigation for connected to landlord reached without correct selection of conditions by controller"
+        )
+        throw new RuntimeException("Invalid option exception for connected to landlord routing")
+    }
+  }
+
   override val routeMap: Map[Identifier, Session => Call] = Map(
     AboutTheLandlordPageId                 -> aboutYourLandlordRouting,
     // Revisit navigation when session is available
-    ConnectedToLandlordPageId              -> (_ =>
-      controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordDetailsController.show()
-      ),
-    ConnectedToLandlordDetailsPageId              -> (_ =>
+    ConnectedToLandlordPageId              -> connectedToLandlordRouting,
+    ConnectedToLandlordDetailsPageId       -> (_ =>
       controllers.aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.show()
-      ),
+    ),
     LeaseOrAgreementDetailsPageId          -> (_ =>
       controllers.aboutYourLeaseOrTenure.routes.CurrentRentPayableWithin12MonthsController.show()
     ),

@@ -41,14 +41,14 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[LeaseOrAgreementYearsDetails])(implicit request: Request[_], messages: Messages)
+@(theForm: Form[LeaseOrAgreementYearsDetails], backLink: String)(implicit request: Request[_], messages: Messages)
 
 @layout(
  pageHeading = messages("leaseOrAgreement.heading"),
  showH1 = false,
  showSection = true,
  sectionName = messages("label.section.aboutYourLeaseOrTenure"),
- backLinkUrl = controllers.aboutYourLeaseOrTenure.routes.AboutYourLandlordController.show.url,
+ backLinkUrl = backLink,
  theForm = theForm
 ) {
 

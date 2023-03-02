@@ -32,7 +32,7 @@ import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class ConnectedToLandlordController @Inject()(
+class ConnectedToLandlordController @Inject() (
   mcc: MessagesControllerComponents,
   navigator: AboutYourLeaseOrTenureNavigator,
   connectedToLandlordView: connectedToLandlord,
@@ -49,7 +49,7 @@ class ConnectedToLandlordController @Inject()(
           request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.connectedToLandlord) match {
             case Some(connectedToLandlord) =>
               connectedToLandlordForm.fillAndValidate(connectedToLandlord)
-            case _                              => connectedToLandlordForm
+            case _                         => connectedToLandlordForm
           }
         )
       )
