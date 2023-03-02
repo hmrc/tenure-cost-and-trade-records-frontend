@@ -46,6 +46,9 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit)(implicit ec: Exec
   override val routeMap: Map[Identifier, Session => Call] = Map(
     AboutTheLandlordPageId                 -> aboutYourLandlordRouting,
     // Revisit navigation when session is available
+    ConnectedToLandlordPageId              -> (_ =>
+      controllers.aboutYourLeaseOrTenure.routes.CurrentRentPayableWithin12MonthsController.show()
+      ),
     LeaseOrAgreementDetailsPageId          -> (_ =>
       controllers.aboutYourLeaseOrTenure.routes.CurrentRentPayableWithin12MonthsController.show()
     ),

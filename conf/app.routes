@@ -254,6 +254,9 @@ POST        /ultimately-responsible                                 controllers.
 GET         /shared-responsibilities                                controllers.Form6010.SharedResponsibilitiesController.show()
 POST        /shared-responsibilities                                controllers.Form6010.SharedResponsibilitiesController.submit()
 
+GET         /connected-to-landlord                                  controllers.aboutYourLeaseOrTenure.ConnectedToLandlordController.show()
+POST        /connected-to-landlord                                  controllers.aboutYourLeaseOrTenure.ConnectedToLandlordController.submit()
+
 GET         /task-list                                              controllers.TaskListController.show()
 
 # Additional information
