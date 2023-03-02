@@ -257,6 +257,9 @@ POST        /shared-responsibilities                                controllers.
 GET         /connected-to-landlord                                  controllers.aboutYourLeaseOrTenure.ConnectedToLandlordController.show()
 POST        /connected-to-landlord                                  controllers.aboutYourLeaseOrTenure.ConnectedToLandlordController.submit()
 
+GET         /connected-to-landlord-details                          controllers.aboutYourLeaseOrTenure.ConnectedToLandlordDetailsController.show()
+POST        /connected-to-landlord-details                          controllers.aboutYourLeaseOrTenure.ConnectedToLandlordDetailsController.submit()
+
 GET         /task-list                                              controllers.TaskListController.show()
 
 # Additional information

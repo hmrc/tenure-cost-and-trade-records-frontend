@@ -643,6 +643,14 @@ premisesLicenseGranted.heading = Has the premises licence been granted for the p
 ###########################################
 premisesLicenseGrantedInformation.heading = Give details of your premises licence, including any conditions restricting the use of all or part of the property
 
+#CONNECTED TO LANDLORD
+###########################################
+connectedToLandlord.heading = Other than contractually, are you connected to the landlord in any way?
+
+#CONNECTED TO LANDLORD
+###########################################
+connectedToLandlordDetails.heading = Describe your relationship to the landlord
+
 #CHECK YOUR ANSWERS
 ###################
 checkYourAnswers.heading = This is a holding page for the check your answers page
@@ -655,131 +663,6 @@ helpWithService.title = Get help with this service
 common.helpWithServiceHeader = If you need more help
 common.helpWithService = Call the VOA team on 01234 567 890 for help using this service.
 
-#HELP WITH SERVICE CONNECTION
-##############################
-connection.helpWithServicePeopleCompletingFormHeader = People who should fill out the form
-connection.helpWithServicePeopleCompletingForm = We need the people who occupy the property to complete this form. In a non-domestic setting, the occupier could be a business, a charity, or a not-for-profit organisation. You must also fill out the form if you have a lease, tenancy, or agreement to occupy and the property is vacant.
-connection.helpWithServicePeopleTrusteeHeader = Trustees for owners or occupiers
-connection.helpWithServicePeopleTrustee = A trustee is a person an owner or occupier has asked to complete the form on their behalf. This could be an employee of their business, for example.
-connection.helpWithServicePeopleAgentHeader = Agents for owners or occupiers
-connection.helpWithServicePeopleAgent = This form can also be completed for you by a professional agent. Some people find it useful to enlist the services of an agent if they have complicated business arrangements.
-
-#HELP WITH SERVICE CURRENT OCCUPIER
-##############################
-currentOccupier.helpWithServicePeopleCurrentOccupierHeader = Current occupier
-currentOccupier.helpWithServicePeopleCurrentOccupier = If more than one business operates from the property, enter the name of the main business on this page. You’ll be asked for details of any separate businesses or franchises as you go through the form.
-currentOccupier.helpWithServicePeopleUsePropertyHeader = Use of the property
-currentOccupier.helpWithServicePeopleUseProperty = If you feel none of the examples shown match the use of the property, select ‘Other’ and give a brief description of its current use. If the property is vacant, demolished, or no longer has a business use, you should record it here.
-
-#HELP WITH SERVICE WEBSITE
-##############################
-website.helpWithServiceWebsiteHeader = Business website
-website.helpWithServiceWebsite = The information on business websites can sometimes help the VOA team with their work.
-
-#HELP WITH SERVICE LICENSABLE ACTIVITIES
-##############################
-licensableActivities.helpWithServiceLicensableActivitiesHeader = Licensable activities
-licensableActivities.helpWithServiceLicensableActivities = The Licensing Act, 2003 defines licensable activities as:
-licensableActivities.listBlock1.p1 = the retail sale of alcohol
-licensableActivities.listBlock1.p2 = the supply of alcohol in clubs
-licensableActivities.listBlock1.p3 = the provision of late-night refreshment
-licensableActivities.listBlock1.p4 = the provision of regulated entertainment
-licensableActivities.inThisInstance = In this instance, ‘clubs’ is a cover-all term encapsulating the establishment categories covered by this form.
-licensableActivities.lateNight = ‘Late-night refreshment’ is defined as the supply of hot food and drink to the public for consumption between 23:00 and 05:00.
-licensableActivities.regulated = ‘Regulated entertainment’ is defined as:
-licensableActivities.listBlock2.p1 = a performance of a play
-licensableActivities.listBlock2.p2 = showing a film
-licensableActivities.listBlock2.p3 = an indoor sporting event
-licensableActivities.listBlock2.p4 = a boxing or wrestling match
-licensableActivities.listBlock2.p5 = live music
-licensableActivities.listBlock2.p6 = any playing of recorded music
-licensableActivities.listBlock2.p7 = a dance performance
-
-#HELP WITH SERVICE LICENSABLE ACTIVITIES CONDITIONS
-##############################
-licensableActivitiesConditions.helpWithServiceLicensableActivitiesConditionsHeader = Describing your licensable activities
-licensableActivitiesConditions.helpWithServiceLicensableActivitiesConditions = You’re only required to write a short description of the licensable activities we’re concerned with. Examples of acceptable descriptions include:
-licensableActivitiesConditions.listBlock1.p1 = We start serving alcohol at 9am, Monday to Saturday
-licensableActivitiesConditions.listBlock1.p2 = We have a DJ playing until 1am on Fridays and Saturdays
-licensableActivitiesConditions.listBlock1.p3 = Our hot-breakfast service starts at 4am every day
-
-#HELP WITH SERVICE PREMISES LICENSE
-###################################
-premisesLicenseConditions.helpWithServicePremisesLicenseConditionsHeader = Conditions restricting the use of your property
-premisesLicenseConditions.helpWithServicePremisesLicenseConditions.p1 = Premises licences can be granted on the condition the holder of the premises licence complies with any pre-defined terms. These can include restrictions on the use of certain parts of their property. For example, customers may not be allowed in the beer garden after a certain time to avoid disturbing the neighbours.
-premisesLicenseConditions.helpWithServicePremisesLicenseConditions.p2 = If you’re unsure, check your premises licence. Any special conditions will be clearly stated there.
-
-#HELP WITH SERVICE PREMISES LICENSE CONDITIONS
-##############################################
-premisesLicenseConditionsDetails.helpWithServicePremisesLicenseConditionsDetailsHeader = Describing restrictions on the use of the property
-premisesLicenseConditionsDetails.helpWithServicePremisesLicenseConditionsDetails = You’re only required to write a short description of the conditions we’re concerned with. Examples of acceptable descriptions include:
-premisesLicenseConditionsDetails.listBlock1.p1 = No drinks allowed on the terrace after 10pm
-premisesLicenseConditionsDetails.listBlock1.p2 = Only 200 people allowed in the function room at any time
-premisesLicenseConditionsDetails.listBlock1.p3 = No entry or re-entry allowed after 11.30pm on Fridays and Saturdays
-
-#HELP WITH SERVICE ENFORCEMENT ACTION
-##############################
-enforcementAction.helpWithServiceEnforcementActionHeader = Enforcement action
-enforcementAction.helpWithServiceEnforcementAction = You must tell us if any enforcement action has been taken against you by your local licencing authority under your tenure. If a lease or agreement was assigned to you from another tenant, you must let us know if any enforcement action was taken against them under the current agreement.
-
-#HELP WITH SERVICE ENFORCEMENT ACTION TAKEN
-##############################
-enforcementActionTaken.helpWithServiceEnforcementActionTakenHeader = Describe the enforcement action taken
-enforcementActionTaken.helpWithServiceEnforcementActionTaken = You’re only required to write a short description of the enforcement action taken against you. Examples of acceptable descriptions include:
-enforcementActionTaken.listBlock1.p1 = Every retail sale or supply of alcohol made under the premises licence must be made or authorised by a person who holds a personal licence
-enforcementActionTaken.listBlock1.p2 = All customer exits must display signs asking customers to leave quietly and have consideration for residents
-enforcementActionTaken.listBlock1.p3 = We are required to keep an incident book
-
-#HELP WITH SERVICE TIED FOR GOODS
-##############################
-tiedForGoods.helpWithServiceTiedForGoodsHeader = Tied Goods
-tiedForGoods.helpWithServiceTiedForGoods = Choose ‘yes’ if you’re required to sell certain goods, such as beers, wines and mixers, as part of your lease or tenancy agreement. This is a common arrangement for public houses leased through a brewery, for example.
-
-#HELP WITH SERVICE FRANCHISE LETTINGS
-##############################
-franchiseLettings.helpWithServiceFranchiseLettingsHeader = Franchise or lettings
-franchiseLettings.helpWithServiceFranchiseLettings = You only need to select ‘yes’ if you’ve received an income from any separate businesses or lettings that you have not declared on the previous page.
-
-#HELP WITH SERVICE ABOUT YOUR TRADING HISTORY
-##############################
-aboutYourTradingHistory.helpWithServiceAboutYourTradingHistoryHeader = Why we need this information
-aboutYourTradingHistory.helpWithServiceAboutYourTradingHistory.p1 = The valuation office agency (VOA) uses the trading history of businesses to help with non-domestic property valuations.
-aboutYourTradingHistory.helpWithServiceAboutYourTradingHistory.p2 = If you’ve occupied your premises for 3 years or more, you’ll be asked for details from your last three years of completed accounts. You won’t be asked to provide details from the current financial year.
-aboutYourTradingHistory.helpWithServiceAboutYourTradingHistory.p3 = If you first occupied the property within the last 3 years, you’ll be asked for details of any full years’ completed accounts you have. You’ll also need to provide details from the current financial year.
-
-#HELP WITH SERVICE TURNOVER
-##############################
-turnover.helpWithServiceTurnoverGeneralHeader = General guidance
-turnover.helpWithServiceTurnoverGeneral = Do not include VAT in any of the figures you declare on this page. If you have not broken down your turnover into separate categories, or if you have recorded certain categories together – such as all food and drinks – you can declare them together in a single field.
-turnover.helpWithServiceTurnoverFinancialHeader = Financial year end
-turnover.helpWithServiceTurnoverFinancial = Your financial year end dates are pre-populated by the system. If your financial year end has changed during the period shown, you can edit these dates accordingly.
-turnover.helpWithServiceTurnoverTradingHeader = Trading period
-turnover.helpWithServiceTurnoverTrading = If your accounts do not relate to a whole year, or if you were not trading continuously – if you were closed for refurbishment, for example – state the number of weeks you were trading.
-turnover.helpWithServiceTurnoverAlcoholHeader = Alcoholic drinks
-turnover.helpWithServiceTurnoverAlcohol = Use this row to declare your annual turnover from the sales of all alcoholic drinks, soft drinks, and snacks like crisps or nuts.
-turnover.helpWithServiceTurnoverFoodHeader = Food
-turnover.helpWithServiceTurnoverFood = If you first occupied the property within the last 3 years, you’ll be asked for details of any full years’ completed accounts you have. You’ll also need to provide details from the current financial year.
-turnover.helpWithServiceTurnoverOtherReceiptsHeader = Other receipts
-turnover.helpWithServiceTurnoverOtherReceipts = Use this row to declare your annual turnover from all other sources not listed here. This could include, but is not limited to, admission charges, camping pitch fees or function room hire.
-turnover.helpWithServiceTurnoverAccommodationHeader = Accommodation
-turnover.helpWithServiceTurnoverAccommodation = Use this row to declare your annual turnover if you provide accommodation for guests.
-turnover.helpWithServiceTurnoverAverageOccupancyHeader = Average occupancy rate
-turnover.helpWithServiceTurnoverAverageOccupancy = You only need to provide your average occupancy rate if you operate a hotel or holiday lodges.
-
-#HELP WITH SERVICE ADD ANOTHER CATERING
-##############################
-addAnotherCatering.helpWithServiceAddAnotherCateringHeader = Separate business and franchise summary
-addAnotherCatering.helpWithServiceAddAnotherCatering.p1 = This page shows you any separate businesses or franchises you have successfully declared.
-addAnotherCatering.helpWithServiceAddAnotherCatering.p2 = Select the change link beside any listed business if you would like to review or update any information you’ve already entered.
-addAnotherCatering.helpWithServiceAddAnotherCatering.p3 = If you remove a listing, you’ll not be able to retrieve the entry later.
-
-#HELP WITH SERVICE ADD ANOTHER LETTING
-##############################
-addAnotherCatering.helpWithServiceAddAnotherCateringHeader = Separate lettings summary
-addAnotherCatering.helpWithServiceAddAnotherCatering.p1 = This page shows you any separate lettings you have successfully declared.
-addAnotherCatering.helpWithServiceAddAnotherCatering.p2 = Select the change link beside any listed business if you would like to review or update any information you’ve already entered.
-addAnotherCatering.helpWithServiceAddAnotherCatering.p3 = If you remove a listing, you’ll not be able to retrieve the entry later.
-
 #HELP WITH SERVICE CURRENT RENT FIRST PAID
 ##############################
 currentRentFirstPaid.title = If you are not sure what date to use
@@ -790,73 +673,6 @@ currentRentFirstPaid.listBlock.p2 = a lease renewal or alteration
 currentRentFirstPaid.listBlock.p3 = the assignment of an existing lease from another party
 currentRentFirstPaid.listBlock.p4 = an initial rent-free period
 currentRentFirstPaid.helpWithServiceCurrentRentFirstPaidDontNeedToKnow = We don’t need to know about any changes in the rent which are part of your current agreement. These could include, but are not limited to, changes linked to your sales performance, or fluctuations in the retail price index.
-
-#HELP WITH SERVICE DOES THE RENT PAYABLE
-##############################
-doesTheRentPayable.helpWithServiceDoesTheRentPayableHeader = What you need to tell us
-doesTheRentPayable.helpWithServiceDoesTheRentPayable.p1 = Please select any of the items that your rent covers. You can select multiple boxes. If none of the items are covered your rent, leave the boxes blank and select ‘Save and continue’.
-doesTheRentPayable.helpWithServiceDoesTheRentPayable.p2 = If you select any of the options, or multiple options, please use the text box to provide a brief description.
-doesTheRentPayable.helpWithServiceDoesTheRentPayable.p3 = If none of the items are covered your rent, leave the boxes blank and select ‘Save and continue’.
-
-#HELP WITH SERVICE ULTIMATELY RESPONSIBLE
-##############################
-ultimatelyResponsible.helpWithServiceUltimatelyResponsibleHeader = What you need to tell us
-ultimatelyResponsible.helpWithServiceUltimatelyResponsible.p1 = What you need to tell us We only need to know which party is responsible for the costs listed on the page.
-ultimatelyResponsible.helpWithServiceUltimatelyResponsible.p2 = For example, if a tenant normally arranges and pays for outside repairs, then is reimbursed by the landlord, you should select landlord.
-
-#HELP WITH SERVICE OPEN MARKET VALUE
-##############################
-openMarketValue.helpWithServiceOpenMarketValueHeader = Open market value
-openMarketValue.helpWithServiceOpenMarketValue = If your rent isn’t based on open market value, it may simply be a fixed amount agreed between both parties, or linked to another factor. If you’re unsure, it may be stipulated in your lease or agreement.
-
-#HELP WITH SERVICE CURRENT RENT FIXED
-##############################
-currentRentFixed.helpWithServiceCurrentRentFixedHeader = How the rent was fixed
-currentRentFixed.helpWithServiceCurrentRentFixed.p1 = You only need to choose one of the displayed options.
-currentRentFixed.helpWithServiceCurrentRentFixed.p2 = You don’t need to tell us about any variations to the rent which are part of your current agreement. These could include, but are not limited to, changes linked to your sales figures, or fluctuations in the retail price index.
-currentRentFixed.helpWithServiceCurrentRentFixed.subHeader = When the rent was agreed or set
-currentRentFixed.helpWithServiceCurrentRentFixed.p3 = The date when the rent was agreed, or set is normally the date when:
-currentRentFixed.listBlock.p1 = a new lease or agreement is signed
-currentRentFixed.listBlock.p2 = an interim rent is established
-currentRentFixed.listBlock.p3 = a new rent is established following a rent review
-currentRentFixed.listBlock.p4 = a lease is renewed
-currentRentFixed.listBlock.p5 = a sale and leaseback is agreed
-currentRentFixed.helpWithServiceCurrentRentFixed.p4 = It may not necessarily be the date of occupation, or the date a rent is first paid.
-
-#HELP WITH SERVICE OPEN MARKET VALUE
-##############################
-intervalsOfRentReview.helpWithServiceIntervalsOfRentReviewHeader = Rent reviews
-intervalsOfRentReview.helpWithServiceIntervalsOfRentReview = Please give a brief description of any rent-review schedule laid out in your lease or agreement. If your lease or agreement doesn’t include any rent reviews, select ‘Save and continue’ to move to the next page.
-
-#HELP WITH SERVICE RENT INCLUDE TRADE SERVICES DETAILS
-##############################
-rentIncludeTradeServicesDetails.helpWithServiceRentIncludeTradeServicesDetailsHeader = Services provided by the landlord
-rentIncludeTradeServicesDetails.helpWithServiceRentIncludeTradeServicesDetails = If your rent includes services provided by the landlord, but these aren’t specifically itemised, please leave the field blank.
-
-#HELP WITH SERVICE RENT INCLUDE FIXTURE FITTINGS DETAILS
-##############################
-rentIncludeFixtureFittingsDetails.helpWithServiceRentIncludeFixtureFittingsDetailsHeader = Equipment provided by the landlord
-rentIncludeFixtureFittingsDetails.helpWithServiceRentIncludeFixtureFittingsDetails = If your rent includes equipment provided by the landlord, but these aren’t specifically itemised, please leave the field blank.
-
-#HELP WITH SERVICE RENT GROSS OR NET DETAILS
-##############################
-rentGrossOrNetDetails.helpWithServiceRentGrossOrNetDetailsHeader = What we need to know
-rentGrossOrNetDetails.helpWithServiceRentGrossOrNetDetails = Please give a brief description of how your turnover affects your rent. For example, does your rent increase if your turnover exceeds a certain amount?
-
-#HELP WITH SERVICE RENT GROSS OR NET DETAILS
-##############################
-rentGrossOrNetDetails.helpWithServiceRentGrossOrNetDetailsHeader = What we need to know
-rentGrossOrNetDetails.helpWithServiceRentGrossOrNetDetails = Please give a brief description of how your turnover affects your rent. For example, does your rent increase if your turnover exceeds a certain amount?
-
-#HELP WITH SERVICE RENT QUANTITY OF BEERS DETAILS
-##############################
-rentQuantityOfBeersDetails.helpWithServiceRentQuantityOfBeersDetailsHeader = What we need to know
-rentQuantityOfBeersDetails.helpWithServiceRentQuantityOfBeersDetails = Please give a brief description of how the quantity of drinks supplied to your property affects your rent. For example, does your rent change if the amount exceeds a certain amount?
-
-#HELP WITH SERVICE ALTERNATIVE CONTACT
-##############################
-alternativeContact.helpWithServiceAlternativeContactHeader = Alternative contact details
-alternativeContact.helpWithServiceAlternativeContact = If you don’t need to provide us with alternative contact details, please select ‘Save and continue’.
 
 #HELP WITH PREMISES LICENCE GRANTED
 ##############################

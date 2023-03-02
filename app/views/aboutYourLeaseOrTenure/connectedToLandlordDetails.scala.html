@@ -14,7 +14,7 @@
  * limitations under the License.
  *@
 
-@import models.submissions.aboutYourLeaseOrTenure.ConnectedToLandlord
+@import models.submissions.aboutYourLeaseOrTenure.ConnectedToLandlordInformationDetails
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 @import uk.gov.hmrc.govukfrontend.views.html.components._
@@ -31,42 +31,37 @@
         govukButton: GovukButton,
         govukRadios: GovukRadios,
         govukErrorSummary: GovukErrorSummary,
+        govukCharacterCount: GovukCharacterCount,
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[ConnectedToLandlord])(implicit request: Request[_], messages: Messages)
+@(theForm: Form[ConnectedToLandlordInformationDetails])(implicit request: Request[_], messages: Messages)
 
 @layout(
- pageHeading = messages("connectedToLandlord.heading"),
+ pageHeading = messages("connectedToLandlordDetails.heading"),
  showH1 = false,
  showSection = true,
  sectionName = messages("label.section.aboutYourLeaseOrTenure"),
-  backLinkUrl = controllers.aboutYourLeaseOrTenure.routes.AboutYourLandlordController.show().url,
+  backLinkUrl = controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordController.show().url,
  theForm = theForm
 ) {
 
- @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
+ @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordDetailsController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
 
-  @govukRadios(Radios(
-   fieldset = Some(Fieldset(
-    legend = Some(Legend(
-     content = Text(messages("connectedToLandlord.heading")), isPageHeading = true,
-     classes = "govuk-fieldset__legend--l",
-    ))
-   )),
-   name = "connectedToLandlord",
-   items = Seq(
-    RadioItem(
-     content = Text(messages("label.yes")),
-     value = ConnectedToLandlordDetailsYes.name
-    ),
-    RadioItem(
-     content = Text(messages("label.no")),
-     value = ConnectedToLandlordDetailsNo.name
-    )
-   ),
-   errorMessage = theForm.errors.asTextErrorMessageForField("connectedToLandlord")
-  ).withFormField(theForm("connectedToLandlord")))
+  <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+   <h1 class="govuk-fieldset__heading">@messages("connectedToLandlordDetails.heading")</h1>
+  </legend>
+
+  @govukCharacterCount(
+   CharacterCount(
+    id = "connectedToLandlordDetails",
+    name = "connectedToLandlordDetails",
+    rows = 5,
+    maxLength = 2000,
+    value = theForm("connectedToLandlordDetails").value,
+    errorMessage = theForm.errors.asTextErrorMessageForField("connectedToLandlordDetails")
+   )
+  )
 
   @includes.continueButton(govukButton)
  }
