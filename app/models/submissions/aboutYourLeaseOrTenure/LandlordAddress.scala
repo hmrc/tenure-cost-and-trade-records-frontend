@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package models.submissions.Form6010
+package models.submissions.aboutYourLeaseOrTenure
 
 import play.api.libs.json.Json
 

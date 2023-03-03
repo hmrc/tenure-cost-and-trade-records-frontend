@@ -16,7 +16,6 @@
 
 package models.submissions.aboutYourLeaseOrTenure
 
-import models.submissions.Form6010.LandlordAddress
 import play.api.libs.json.Json
 
 case class AboutTheLandlord(

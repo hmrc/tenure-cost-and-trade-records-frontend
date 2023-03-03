@@ -17,17 +17,15 @@
 package controllers.aboutYourLeaseOrTenure
 
 import actions.WithSessionRefiner
-import form.aboutYourLeaseOrTenure.CurrentAnnualRentForm.currentAnnualRentForm
-import form.aboutYourLeaseOrTenure.CurrentRentPayableWithin12MonthsForm.currentRentPayableWithin12MonthsForm
 import form.aboutYourLeaseOrTenure.LeaseOrAgreementYearsForm.leaseOrAgreementYearsForm
 import models.submissions.aboutLeaseOrAgreement.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne
-import models.submissions.aboutYourLeaseOrTenure.{AgreedReviewedAlteredThreeYearsNo, CommenceWithinThreeYearsNo, RentUnderReviewNegotiatedNo}
+import navigation.AboutYourLeaseOrTenureNavigator
+import navigation.identifiers.LeaseOrAgreementDetailsPageId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.aboutYourLeaseOrTenure.currentAnnualRent
-import views.html.aboutYourLeaseOrTenure.{currentRentPayableWithin12Months, leaseOrAgreementYears}
+import views.html.aboutYourLeaseOrTenure.leaseOrAgreementYears
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
@@ -35,8 +33,7 @@ import scala.concurrent.Future
 @Singleton
 class LeaseOrAgreementYearsController @Inject() (
   mcc: MessagesControllerComponents,
-  currentRentPayableWithin12MonthsView: currentRentPayableWithin12Months,
-  currentAnnualRentView: currentAnnualRent,
+  navigator: AboutYourLeaseOrTenureNavigator,
   leaseOrAgreementYearsView: leaseOrAgreementYears,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
@@ -62,27 +59,11 @@ class LeaseOrAgreementYearsController @Inject() (
       .bindFromRequest()
       .fold(
         formWithErrors => Future.successful(BadRequest(leaseOrAgreementYearsView(formWithErrors))),
-        data =>
-          if (
-            data.commenceWithinThreeYears.equals(CommenceWithinThreeYearsNo) && data.agreedReviewedAlteredThreeYears
-              .equals(AgreedReviewedAlteredThreeYearsNo) && data.rentUnderReviewNegotiated
-              .equals(RentUnderReviewNegotiatedNo)
-          ) {
-            val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(leaseOrAgreementYearsDetails = Some(data)))
-            session.saveOrUpdate(updatedData)
-            Future.successful(Ok(currentRentPayableWithin12MonthsView(currentRentPayableWithin12MonthsForm)))
-          } else {
-            val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(leaseOrAgreementYearsDetails = Some(data)))
-            session.saveOrUpdate(updatedData)
-            Future.successful(
-              Ok(
-                currentAnnualRentView(
-                  currentAnnualRentForm,
-                  controllers.aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.show().url
-                )
-              )
-            )
-          }
+        data => {
+          val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(leaseOrAgreementYearsDetails = Some(data)))
+          session.saveOrUpdate(updatedData)
+          Future.successful(Redirect(navigator.nextPage(LeaseOrAgreementDetailsPageId).apply(updatedData)))
+        }
       )
   }
 

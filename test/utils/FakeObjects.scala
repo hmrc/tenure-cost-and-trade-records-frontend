@@ -18,7 +18,6 @@ package utils
 
 import models.submissions.aboutfranchisesorlettings._
 import models.submissions.abouttheproperty.PremisesLicenseGrantedNo
-import models.submissions.Form6010.LandlordAddress
 import models.submissions.aboutLeaseOrAgreement.AboutLeaseOrAgreementPartOne
 import models.submissions.aboutYourLeaseOrTenure._
 import models.submissions.aboutfranchisesorlettings
@@ -95,9 +94,9 @@ trait FakeObjects {
     )
   val prefilledLeaseOrAgreementYearsDetails =
     LeaseOrAgreementYearsDetails(
-      CommenceWithinThreeYearsYes,
-      AgreedReviewedAlteredThreeYearsYes,
-      RentUnderReviewNegotiatedYes
+      AnswerYes,
+      AnswerYes,
+      AnswerYes
     )
   val prefilledUserLoginDetails             =
     UserLoginDetails("Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=", "FOR6010", "99996010004", prefilledAddress)

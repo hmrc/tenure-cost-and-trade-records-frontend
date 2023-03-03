@@ -129,13 +129,6 @@ object Formats {
     namedEnumFormatter(NonDomesticRates, Errors.booleanMissing)
   implicit val waterChargesFormatter: Formatter[WaterCharges]         = namedEnumFormatter(WaterCharges, Errors.booleanMissing)
 
-  implicit val commenceWithinThreeYearsFormatter: Formatter[CommenceWithinThreeYears]               =
-    namedEnumFormatter(CommenceWithinThreeYears, Errors.booleanMissing)
-  implicit val agreedReviewedAlteredThreeYearsFormatter: Formatter[AgreedReviewedAlteredThreeYears] =
-    namedEnumFormatter(AgreedReviewedAlteredThreeYears, Errors.booleanMissing)
-  implicit val rentUnderReviewNegotiatedFormatter: Formatter[RentUnderReviewNegotiated]             =
-    namedEnumFormatter(RentUnderReviewNegotiated, Errors.booleanMissing)
-
   implicit val includeLicenseeFormatter: Formatter[IncludeLicensees]            =
     namedEnumFormatter(IncludeLicensee, Errors.booleanMissing)
   implicit val includeOtherPropertyFormatter: Formatter[IncludeOtherProperties] =
