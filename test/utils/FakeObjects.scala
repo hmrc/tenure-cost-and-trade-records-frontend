@@ -94,16 +94,6 @@ trait FakeObjects {
       prefilledFakeName,
       prefilledLandlordAddress
     )
-  //  val prefilledConnectedToLandlordYes = {
-//    ConnectedToLandlord(
-//      ConnectedToLandlordDetailsYes
-//    )
-//  }
-//  val prefilledConnectedToLandlordNo = {
-//    ConnectedToLandlord(
-//      ConnectedToLandlordDetailsNo
-//    )
-//  }
   val prefilledConnectedToLandlordDetails   =
     ConnectedToLandlordInformationDetails(
       "This is some test information"

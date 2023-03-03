@@ -30,15 +30,14 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit)(implicit ec: Exec
     with Logging {
 
   private def aboutYourLandlordRouting: Session => Call = answers => {
-    if (answers.userLoginDetails.forNumber == ForTypes.for6011)
-      controllers.aboutYourLeaseOrTenure.routes.CurrentAnnualRentController.show()
-    else if (
-      answers.userLoginDetails.forNumber == ForTypes.for6015 ||
-      answers.userLoginDetails.forNumber == ForTypes.for6016
-    )
-      controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordController.show()
-    else
-      controllers.aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.show()
+    answers.userLoginDetails.forNumber match {
+      case ForTypes.for6011                    =>
+        controllers.aboutYourLeaseOrTenure.routes.CurrentAnnualRentController.show()
+      case ForTypes.for6015 | ForTypes.for6016 =>
+        controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordController.show()
+      case _                                   =>
+        controllers.aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.show()
+    }
   }
 
   private def currentRentFirstPaidRouting: Session => Call = answers => {

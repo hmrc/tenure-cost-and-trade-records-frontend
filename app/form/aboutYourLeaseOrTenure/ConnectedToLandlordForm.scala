@@ -16,18 +16,18 @@
 
 package form.aboutYourLeaseOrTenure
 
-import form.MappingSupport.connectedToLandlordType
-import models.submissions.aboutYourLeaseOrTenure.ConnectedToLandlord
+import form.MappingSupport.yesNoType
+import models.submissions.common.AnswersYesNo
 import play.api.data.Form
 import play.api.data.Forms.mapping
 
 object ConnectedToLandlordForm {
-  lazy val baseConnectedToLandlordForm: Form[ConnectedToLandlord] = Form(
+  lazy val baseConnectedToLandlordForm: Form[AnswersYesNo] = Form(
     baseConnectedToLandlordMapping
   )
 
   val baseConnectedToLandlordMapping = mapping(
-    "connectedToLandlord" -> connectedToLandlordType
+    "connectedToLandlord" -> yesNoType
   )(x => x)(b => Some(b))
 
   val connectedToLandlordForm = Form(baseConnectedToLandlordMapping)
