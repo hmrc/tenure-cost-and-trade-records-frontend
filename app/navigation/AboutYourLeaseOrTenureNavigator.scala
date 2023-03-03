@@ -38,6 +38,14 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit)(implicit ec: Exec
       case _                                   =>
         controllers.aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.show()
     }
+
+  }
+
+  private def currentRentFirstPaidRouting: Session => Call = answers => {
+    if (answers.userLoginDetails.forNumber == ForTypes.for6011)
+      controllers.aboutYourLeaseOrTenure.routes.TenancyLeaseAgreementExpireController.show()
+    else
+      controllers.Form6010.routes.CurrentLeaseOrAgreementBeginController.show()
   }
 
   private def connectedToLandlordRouting: Session => Call = answers => {
@@ -63,15 +71,6 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit)(implicit ec: Exec
       case (Some("no"), Some("no"), Some("no")) =>
         controllers.aboutYourLeaseOrTenure.routes.CurrentRentPayableWithin12MonthsController.show()
       case _                                    => controllers.aboutYourLeaseOrTenure.routes.CurrentAnnualRentController.show()
-    }
-  }
-
-  private def currentRentFirstPaidRouting: Session => Call = answers => {
-    answers.userLoginDetails.forNumber match {
-      case ForTypes.for6011 =>
-        controllers.aboutYourLeaseOrTenure.routes.TenancyLeaseAgreementExpireController.show()
-      case _                =>
-        controllers.Form6010.routes.CurrentLeaseOrAgreementBeginController.show()
     }
   }
 
