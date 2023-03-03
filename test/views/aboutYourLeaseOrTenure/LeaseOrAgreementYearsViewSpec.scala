@@ -28,10 +28,12 @@ class LeaseOrAgreementYearsViewSpec extends QuestionViewBehaviours[LeaseOrAgreem
 
   override val form = LeaseOrAgreementYearsForm.leaseOrAgreementYearsForm
 
-  def createView = () => leaseOrAgreementYearsView(form)(fakeRequest, messages)
+  val backLink = controllers.aboutYourLeaseOrTenure.routes.AboutYourLandlordController.show().url
+
+  def createView = () => leaseOrAgreementYearsView(form, backLink)(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[LeaseOrAgreementYearsDetails]) =>
-    leaseOrAgreementYearsView(form)(fakeRequest, messages)
+    leaseOrAgreementYearsView(form, backLink)(fakeRequest, messages)
 
   "Lease or agreement years view" must {
 
