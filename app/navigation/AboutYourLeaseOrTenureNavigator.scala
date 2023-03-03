@@ -31,11 +31,11 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit)(implicit ec: Exec
 
   private def aboutYourLandlordRouting: Session => Call = answers => {
     answers.userLoginDetails.forNumber match {
-      case ForTypes.for6011 =>
+      case ForTypes.for6011                    =>
         controllers.aboutYourLeaseOrTenure.routes.CurrentAnnualRentController.show()
       case ForTypes.for6015 | ForTypes.for6016 =>
         controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordController.show()
-      case _ =>
+      case _                                   =>
         controllers.aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.show()
     }
   }

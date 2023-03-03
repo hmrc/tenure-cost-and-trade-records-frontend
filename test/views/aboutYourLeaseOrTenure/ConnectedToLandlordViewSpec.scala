@@ -55,7 +55,7 @@ class ConnectedToLandlordViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
         doc,
         "connectedToLandlord",
         "connectedToLandlord",
-        "true",
+        "yes",
         false
       )
       assertContainsText(doc, messages("label.yes"))
@@ -67,7 +67,7 @@ class ConnectedToLandlordViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
         doc,
         "connectedToLandlord-2",
         "connectedToLandlord",
-        "false",
+        "no",
         false
       )
       assertContainsText(doc, messages("label.no"))

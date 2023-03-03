@@ -51,6 +51,11 @@ class ConnectedToLandlordDetailsViewSpec extends QuestionViewBehaviours[Connecte
       assert(sectionText == messages("label.section.aboutYourLeaseOrTenure"))
     }
 
+    "contain an input for premisesLicenseGrantedInformation" in {
+      val doc = asDocument(createViewUsingForm(form))
+      assertRenderedById(doc, "connectedToLandlordDetails")
+    }
+
     "contain save and continue button with the value Save and Continue" in {
       val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("continue").text()
