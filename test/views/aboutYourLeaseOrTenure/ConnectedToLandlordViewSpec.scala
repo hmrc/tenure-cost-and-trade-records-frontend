@@ -16,20 +16,20 @@
 
 package views.aboutYourLeaseOrTenure
 
-import form.aboutYourLeaseOrTenure.{ConnectedToLandlordForm, LeaseOrAgreementYearsForm}
-import models.submissions.aboutYourLeaseOrTenure._
+import form.aboutYourLeaseOrTenure.ConnectedToLandlordForm
+import models.submissions.common.AnswersYesNo
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class ConnectedToLandlordViewSpec extends QuestionViewBehaviours[ConnectedToLandlord] {
+class ConnectedToLandlordViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
 
   val messageKeyPrefix = "connectedToLandlord"
 
   override val form = ConnectedToLandlordForm.connectedToLandlordForm
   def createView    = () => connectedToLandlordView(form)(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[ConnectedToLandlord]) => connectedToLandlordView(form)(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[AnswersYesNo]) => connectedToLandlordView(form)(fakeRequest, messages)
 
   "Connected to landlord view" must {
 
@@ -55,7 +55,7 @@ class ConnectedToLandlordViewSpec extends QuestionViewBehaviours[ConnectedToLand
         doc,
         "connectedToLandlord",
         "connectedToLandlord",
-        ConnectedToLandlordDetailsYes.name,
+        "true",
         false
       )
       assertContainsText(doc, messages("label.yes"))
@@ -67,7 +67,7 @@ class ConnectedToLandlordViewSpec extends QuestionViewBehaviours[ConnectedToLand
         doc,
         "connectedToLandlord-2",
         "connectedToLandlord",
-        ConnectedToLandlordDetailsNo.name,
+        "false",
         false
       )
       assertContainsText(doc, messages("label.no"))

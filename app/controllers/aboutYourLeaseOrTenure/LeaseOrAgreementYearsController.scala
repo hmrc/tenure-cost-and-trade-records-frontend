@@ -20,7 +20,7 @@ import actions.WithSessionRefiner
 import form.aboutYourLeaseOrTenure.CurrentAnnualRentForm.currentAnnualRentForm
 import form.aboutYourLeaseOrTenure.CurrentRentPayableWithin12MonthsForm.currentRentPayableWithin12MonthsForm
 import form.aboutYourLeaseOrTenure.LeaseOrAgreementYearsForm.leaseOrAgreementYearsForm
-import models.{ForTypes, Session}
+import models.Session
 import models.submissions.aboutLeaseOrAgreement.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne
 import models.submissions.aboutYourLeaseOrTenure.{AgreedReviewedAlteredThreeYearsNo, CommenceWithinThreeYearsNo, RentUnderReviewNegotiatedNo}
 import play.api.i18n.I18nSupport

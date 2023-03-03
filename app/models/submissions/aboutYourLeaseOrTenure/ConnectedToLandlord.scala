@@ -16,24 +16,14 @@
 
 package models.submissions.aboutYourLeaseOrTenure
 
-import models.{EnumFormat, NamedEnum, NamedEnumSupport}
-import play.api.libs.json.Format
+import models.submissions.common.AnswersYesNo
+import play.api.libs.json.Json
 
-sealed trait ConnectedToLandlord extends NamedEnum {
-  override def key = "connectedToLandlord"
-}
-object ConnectedToLandlordDetailsYes extends ConnectedToLandlord {
-  override def name = "yes"
-}
-object ConnectedToLandlordDetailsNo extends ConnectedToLandlord {
-  override def name = "no"
-}
+case class ConnectedToLandlord(
+  connectionToLandlord: Option[AnswersYesNo] = None
+)
 
-object ConnectedToLandlord extends NamedEnumSupport[ConnectedToLandlord] {
+object ConnectedToLandlord {
+  implicit val format = Json.format[ConnectedToLandlord]
 
-  implicit val format: Format[ConnectedToLandlord] = EnumFormat(ConnectedToLandlord)
-
-  override def all = List(ConnectedToLandlordDetailsYes, ConnectedToLandlordDetailsNo)
-
-  val key = all.head.key
 }

@@ -23,9 +23,6 @@
 @import uk.gov.hmrc.govukfrontend.views.Aliases.RadioItem
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Fieldset
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Legend
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Hint
-@import models.submissions.aboutYourLeaseOrTenure.ConnectedToLandlordDetailsYes
-@import models.submissions.aboutYourLeaseOrTenure.ConnectedToLandlordDetailsNo
 
 @this(layout: Layout,
         govukButton: GovukButton,
@@ -34,7 +31,7 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[ConnectedToLandlord])(implicit request: Request[_], messages: Messages)
+@(theForm: Form[_])(implicit request: Request[_], messages: Messages)
 
 @layout(
  pageHeading = messages("connectedToLandlord.heading"),
@@ -58,11 +55,11 @@
    items = Seq(
     RadioItem(
      content = Text(messages("label.yes")),
-     value = ConnectedToLandlordDetailsYes.name
+     value = Some("true")
     ),
     RadioItem(
      content = Text(messages("label.no")),
-     value = ConnectedToLandlordDetailsNo.name
+     value = Some("false")
     )
    ),
    errorMessage = theForm.errors.asTextErrorMessageForField("connectedToLandlord")

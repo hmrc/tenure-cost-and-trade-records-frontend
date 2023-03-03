@@ -160,6 +160,6 @@ object Formats {
   implicit val costOfSalesOrGrossProfitDetailsFormatter: Formatter[CostOfSalesOrGrossProfit] =
     namedEnumFormatter(CostOfSalesOrGrossProfit, Errors.booleanMissing)
 
-  implicit val connectedToLandlordFormatter: Formatter[ConnectedToLandlord] =
-    namedEnumFormatter(ConnectedToLandlord, Errors.booleanMissing)
+//  implicit val connectedToLandlordFormatter: Formatter[ConnectedToLandlord] =
+//    namedEnumFormatter(ConnectedToLandlord, Errors.booleanMissing)
 }
