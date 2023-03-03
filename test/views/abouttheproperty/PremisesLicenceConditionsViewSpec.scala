@@ -50,6 +50,12 @@ class PremisesLicenceConditionsViewSpec extends QuestionViewBehaviours[PremisesL
       backlinkUrl mustBe controllers.abouttheproperty.routes.LicensableActivitiesController.show().url
     }
 
+    "Section heading is visible" in {
+      val doc         = asDocument(createViewUsingForm(form)) // govuk-caption-m
+      val sectionText = doc.getElementsByClass("govuk-caption-m").text()
+      assert(sectionText == messages("label.section.aboutTheProperty"))
+    }
+
     "contain radio buttons for the value yes" in {
       val doc = asDocument(createViewUsingForm(form))
       assertContainsRadioButton(
@@ -78,21 +84,6 @@ class PremisesLicenceConditionsViewSpec extends QuestionViewBehaviours[PremisesL
       val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("continue").text()
       assert(loginButton == messages("button.label.continue"))
-    }
-
-    "contain get help section use of premises licence conditions details" in {
-      val doc = asDocument(createView())
-      assert(
-        doc.toString.contains(messages("premisesLicenseConditions.helpWithServicePremisesLicenseConditionsHeader"))
-      )
-      assert(doc.toString.contains(messages("premisesLicenseConditions.helpWithServicePremisesLicenseConditions.p1")))
-      assert(doc.toString.contains(messages("premisesLicenseConditions.helpWithServicePremisesLicenseConditions.p2")))
-    }
-
-    "contain get help section basic details" in {
-      val doc = asDocument(createView())
-      assert(doc.toString.contains(messages("common.helpWithServiceHeader")))
-      assert(doc.toString.contains(messages("common.helpWithService")))
     }
   }
 }

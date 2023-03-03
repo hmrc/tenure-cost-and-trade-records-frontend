@@ -31,10 +31,24 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit)(implicit ec: Exec
 
   private def aboutYourLandlordRouting: Session => Call = answers => {
     answers.userLoginDetails.forNumber match {
-      case ForTypes.for6011 =>
+      case ForTypes.for6011                    =>
         controllers.aboutYourLeaseOrTenure.routes.CurrentAnnualRentController.show()
-      case _                =>
+      case ForTypes.for6015 | ForTypes.for6016 =>
+        controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordController.show()
+      case _                                   =>
         controllers.aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.show()
+    }
+  }
+
+  private def connectedToLandlordRouting: Session => Call = answers => {
+    answers.aboutLeaseOrAgreementPartOne.flatMap(_.connectedToLandlord.map(_.name)) match {
+      case Some("yes") => controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordDetailsController.show()
+      case Some("no")  => controllers.aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.show()
+      case _           =>
+        logger.warn(
+          s"Navigation for connected to landlord reached without correct selection of conditions by controller"
+        )
+        throw new RuntimeException("Invalid option exception for connected to landlord routing")
     }
   }
 
@@ -63,6 +77,10 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit)(implicit ec: Exec
 
   override val routeMap: Map[Identifier, Session => Call] = Map(
     AboutTheLandlordPageId                 -> aboutYourLandlordRouting,
+    ConnectedToLandlordPageId              -> connectedToLandlordRouting,
+    ConnectedToLandlordDetailsPageId       -> (_ =>
+      controllers.aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.show()
+    ),
     LeaseOrAgreementDetailsPageId          -> leaseOrAgreementDetailsRouting,
     CurrentRentPayableWithin12monthsPageId -> (_ => controllers.routes.TaskListController.show()),
     CurrentAnnualRentPageId                -> (_ => controllers.aboutYourLeaseOrTenure.routes.CurrentRentFirstPaidController.show()),

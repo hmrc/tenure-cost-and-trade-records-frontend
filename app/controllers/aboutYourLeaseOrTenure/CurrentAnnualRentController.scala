@@ -50,12 +50,7 @@ class CurrentAnnualRentController @Inject() (
           case Some(annualRent) => currentAnnualRentForm.fillAndValidate(annualRent)
           case _                => currentAnnualRentForm
         },
-        getBackLink(request.sessionData) match {
-          case Right(link) => link
-          case Left(msg)   =>
-            logger.warn(s"Navigation for current annual rent page reached with error: $msg")
-            throw new RuntimeException(s"Navigation for current annual rent page reached with error $msg")
-        }
+        getBackLink(request.sessionData)
       )
     )
   }
@@ -69,12 +64,7 @@ class CurrentAnnualRentController @Inject() (
             BadRequest(
               currentAnnualRentView(
                 formWithErrors,
-                getBackLink(request.sessionData) match {
-                  case Right(link) => link
-                  case Left(msg)   =>
-                    logger.warn(s"Navigation for current annual rent page reached with error: $msg")
-                    throw new RuntimeException(s"Navigation for current annual rent page reached with error $msg")
-                }
+                getBackLink(request.sessionData)
               )
             )
           ),
@@ -86,11 +76,9 @@ class CurrentAnnualRentController @Inject() (
       )
   }
 
-  private def getBackLink(answers: Session): Either[String, String] =
+  private def getBackLink(answers: Session): String =
     answers.userLoginDetails.forNumber match {
-      case ForTypes.for6010 =>
-        Right(controllers.aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.show().url)
-      case ForTypes.for6011 => Right(controllers.aboutYourLeaseOrTenure.routes.AboutYourLandlordController.show().url)
-      case _                => Left(s"Unknown form type with current annual rent back link")
+      case ForTypes.for6011 => controllers.aboutYourLeaseOrTenure.routes.AboutYourLandlordController.show().url
+      case _                => controllers.aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.show().url
     }
 }

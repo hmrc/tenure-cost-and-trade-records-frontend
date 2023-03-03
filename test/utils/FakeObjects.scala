@@ -17,6 +17,7 @@
 package utils
 
 import models.submissions.aboutfranchisesorlettings._
+
 import models.submissions.abouttheproperty.PremisesLicenseGrantedNo
 import models.submissions.aboutLeaseOrAgreement.AboutLeaseOrAgreementPartOne
 import models.submissions.aboutYourLeaseOrTenure._
@@ -91,6 +92,20 @@ trait FakeObjects {
     AboutTheLandlord(
       prefilledFakeName,
       prefilledLandlordAddress
+    )
+  //  val prefilledConnectedToLandlordYes = {
+//    ConnectedToLandlord(
+//      ConnectedToLandlordDetailsYes
+//    )
+//  }
+//  val prefilledConnectedToLandlordNo = {
+//    ConnectedToLandlord(
+//      ConnectedToLandlordDetailsNo
+//    )
+//  }
+  val prefilledConnectedToLandlordDetails   =
+    ConnectedToLandlordInformationDetails(
+      "This is some test information"
     )
   val prefilledLeaseOrAgreementYearsDetails =
     LeaseOrAgreementYearsDetails(
@@ -191,6 +206,8 @@ trait FakeObjects {
 
   val prefilledAboutLeaseOrAgreementPartOne = AboutLeaseOrAgreementPartOne(
     Some(prefilledAboutTheLandlord),
+    None,
+    Some(prefilledConnectedToLandlordDetails),
     Some(prefilledLeaseOrAgreementYearsDetails),
     Some(prefilledCurrentRentPayableWithin12Months),
     Some(prefilledAnnualRent)

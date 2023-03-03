@@ -18,6 +18,7 @@ package controllers.abouttheproperty
 
 import navigation.AboutThePropertyNavigator
 import play.api.http.Status
+import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import play.twirl.api.HtmlFormat
 import utils.TestBaseSpec
@@ -47,6 +48,13 @@ class PremisesLicenseConditionsControllerSpec extends TestBaseSpec {
       val result = premisesLicenseController.show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
+    }
+  }
+
+  "SUBMIT /" should {
+    "throw a BAD_REQUEST if an empty form is submitted" in {
+      val res = premisesLicenseController.submit(FakeRequest().withFormUrlEncodedBody(Seq.empty: _*))
+      status(res) shouldBe BAD_REQUEST
     }
   }
 }

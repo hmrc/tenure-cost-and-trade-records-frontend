@@ -47,6 +47,12 @@ class WebsiteForPropertyViewSpec extends QuestionViewBehaviours[WebsiteForProper
       backlinkUrl mustBe controllers.abouttheproperty.routes.AboutThePropertyController.show().url
     }
 
+    "Section heading is visible" in {
+      val doc         = asDocument(createViewUsingForm(form)) // govuk-caption-m
+      val sectionText = doc.getElementsByClass("govuk-caption-m").text()
+      assert(sectionText == messages("label.section.aboutTheProperty"))
+    }
+
     "contain radio buttons for the value yes" in {
       val doc = asDocument(createViewUsingForm(form))
       assertContainsRadioButton(
@@ -80,18 +86,6 @@ class WebsiteForPropertyViewSpec extends QuestionViewBehaviours[WebsiteForProper
       val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("continue").text()
       assert(loginButton == messages("button.label.continue"))
-    }
-
-    "contain get help section use of website details" in {
-      val doc = asDocument(createView())
-      assert(doc.toString.contains(messages("website.helpWithServiceWebsiteHeader")))
-      assert(doc.toString.contains(messages("website.helpWithServiceWebsite")))
-    }
-
-    "contain get help section basic details" in {
-      val doc = asDocument(createView())
-      assert(doc.toString.contains(messages("common.helpWithServiceHeader")))
-      assert(doc.toString.contains(messages("common.helpWithService")))
     }
   }
 }

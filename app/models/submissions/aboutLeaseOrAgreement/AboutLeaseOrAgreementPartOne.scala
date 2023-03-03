@@ -19,11 +19,13 @@ package models.submissions.aboutLeaseOrAgreement
 import actions.SessionRequest
 import models.submissions.Form6010.{CurrentLeaseOrAgreementBegin, DoesTheRentPayable, IncludedInYourRentDetails, UltimatelyResponsible}
 import models.{AnnualRent, Session}
-import models.submissions.aboutYourLeaseOrTenure.{AboutTheLandlord, CurrentRentFirstPaid, CurrentRentPayableWithin12Months, LeaseOrAgreementYearsDetails}
+import models.submissions.aboutYourLeaseOrTenure.{AboutTheLandlord, ConnectedToLandlord, ConnectedToLandlordInformationDetails, CurrentRentFirstPaid, CurrentRentPayableWithin12Months, LeaseOrAgreementYearsDetails}
 import play.api.libs.json.Json
 
 case class AboutLeaseOrAgreementPartOne(
   aboutTheLandlord: Option[AboutTheLandlord] = None,
+  connectedToLandlord: Option[ConnectedToLandlord] = None,
+  connectedToLandlordDetails: Option[ConnectedToLandlordInformationDetails] = None,
   leaseOrAgreementYearsDetails: Option[LeaseOrAgreementYearsDetails] = None,
   currentRentPayableWithin12Months: Option[CurrentRentPayableWithin12Months] = None,
   annualRent: Option[AnnualRent] = None,

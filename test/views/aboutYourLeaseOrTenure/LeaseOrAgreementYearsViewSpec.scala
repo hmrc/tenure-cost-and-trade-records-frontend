@@ -29,10 +29,12 @@ class LeaseOrAgreementYearsViewSpec extends QuestionViewBehaviours[LeaseOrAgreem
 
   override val form = LeaseOrAgreementYearsForm.leaseOrAgreementYearsForm
 
-  def createView = () => leaseOrAgreementYearsView(form)(fakeRequest, messages)
+  val backLink = controllers.aboutYourLeaseOrTenure.routes.AboutYourLandlordController.show().url
+
+  def createView = () => leaseOrAgreementYearsView(form, backLink)(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[LeaseOrAgreementYearsDetails]) =>
-    leaseOrAgreementYearsView(form)(fakeRequest, messages)
+    leaseOrAgreementYearsView(form, backLink)(fakeRequest, messages)
 
   "Lease or agreement years view" must {
 
@@ -128,17 +130,6 @@ class LeaseOrAgreementYearsViewSpec extends QuestionViewBehaviours[LeaseOrAgreem
       val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("continue").text()
       assert(loginButton == messages("button.label.continue"))
-    }
-
-    "contain get help section" in {
-      val doc = asDocument(createView())
-      assert(doc.toString.contains(messages("helpWithService.title")))
-    }
-
-    "contain get help section basic details" in {
-      val doc = asDocument(createView())
-      assert(doc.toString.contains(messages("common.helpWithServiceHeader")))
-      assert(doc.toString.contains(messages("common.helpWithService")))
     }
   }
 }

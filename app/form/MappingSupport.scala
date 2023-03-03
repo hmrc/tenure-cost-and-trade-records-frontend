@@ -100,6 +100,8 @@ object MappingSupport {
 
   val costOfSalesOrGrossProfitDetailsType: Mapping[CostOfSalesOrGrossProfit] = Forms.of[CostOfSalesOrGrossProfit]
 
+  val connectedToLandlordType: Mapping[ConnectedToLandlord] = Forms.of[ConnectedToLandlord]
+
   val decimalRegex         = """^[0-9]{1,10}\.?[0-9]{0,2}$"""
   val cdbMaxCurrencyAmount = 9999999.99
   val spacesIntRegex       = """^\-?\d{1,10}$""".r

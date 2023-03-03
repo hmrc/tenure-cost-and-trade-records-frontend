@@ -17,7 +17,7 @@
 package views.aboutthetradinghistory
 
 import form.aboutthetradinghistory.CostOfSalesOrGrossProfitDetailsForm
-import models.submissions.aboutthetradinghistory.CostOfSalesOrGrossProfit
+import models.submissions.aboutthetradinghistory.{CostOfSalesOrGrossProfit, CostOfSalesOrGrossProfitDetailsCostOfSales, CostOfSalesOrGrossProfitDetailsGrossProfit}
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
@@ -48,21 +48,39 @@ class CostOfSalesOrGrossProfitViewSpec extends QuestionViewBehaviours[CostOfSale
       backlinkUrl mustBe controllers.aboutthetradinghistory.routes.TurnoverController.show.url
     }
 
+    "Section heading is visible" in {
+      val doc         = asDocument(createViewUsingForm(form)) // govuk-caption-m
+      val sectionText = doc.getElementsByClass("govuk-caption-m").text()
+      assert(sectionText == messages("label.section.aboutYourTradingHistory"))
+    }
+
+    "contain radio buttons for the value yes" in {
+      val doc = asDocument(createViewUsingForm(form))
+      assertContainsRadioButton(
+        doc,
+        "costOfSalesOrGrossProfit",
+        "costOfSalesOrGrossProfit",
+        CostOfSalesOrGrossProfitDetailsCostOfSales.name,
+        false
+      )
+      assertContainsText(doc, messages("label.costOfSales"))
+    }
+
+    "contain radio buttons for the value no" in {
+      val doc = asDocument(createViewUsingForm(form))
+      assertContainsRadioButton(
+        doc,
+        "costOfSalesOrGrossProfit-2",
+        "costOfSalesOrGrossProfit",
+        CostOfSalesOrGrossProfitDetailsGrossProfit.name,
+        false
+      )
+      assertContainsText(doc, messages("label.grossProfit"))
+    }
     "contain save and continue button with the value Save and Continue" in {
       val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("continue").text()
       assert(loginButton == messages("button.label.continue"))
-    }
-
-    "contain get help section" in {
-      val doc = asDocument(createView())
-      assert(doc.toString.contains(messages("helpWithService.title")))
-    }
-
-    "contain get help section basic details" in {
-      val doc = asDocument(createView())
-      assert(doc.toString.contains(messages("common.helpWithServiceHeader")))
-      assert(doc.toString.contains(messages("common.helpWithService")))
     }
   }
 }
