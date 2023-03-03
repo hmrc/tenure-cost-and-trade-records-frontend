@@ -50,16 +50,7 @@
    <h1 class="govuk-fieldset__heading">@messages("connectedToLandlordDetails.heading")</h1>
   </legend>
 
-  @govukCharacterCount(
-   CharacterCount(
-    id = "connectedToLandlordDetails",
-    name = "connectedToLandlordDetails",
-    rows = 5,
-    maxLength = 2000,
-    value = theForm("connectedToLandlordDetails").value,
-    errorMessage = theForm.errors.asTextErrorMessageForField("connectedToLandlordDetails")
-   )
-  )
+  @includes.characterCount(govukCharacterCount, theForm, "connectedToLandlordDetails", 2000)
 
   @includes.continueButton(govukButton)
  }
