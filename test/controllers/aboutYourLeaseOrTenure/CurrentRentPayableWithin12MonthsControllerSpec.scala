@@ -21,7 +21,6 @@ import navigation.AboutYourLeaseOrTenureNavigator
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import uk.gov.hmrc.play.bootstrap.controller
 import utils.TestBaseSpec
 
 class CurrentRentPayableWithin12MonthsControllerSpec extends TestBaseSpec {

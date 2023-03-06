@@ -38,6 +38,7 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit)(implicit ec: Exec
       case _                                   =>
         controllers.aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.show()
     }
+
   }
 
   private def currentRentFirstPaidRouting: Session => Call = answers => {
@@ -59,23 +60,30 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit)(implicit ec: Exec
     }
   }
 
+  private def leaseOrAgreementDetailsRouting: Session => Call = answers => {
+    (
+      answers.aboutLeaseOrAgreementPartOne.flatMap(_.leaseOrAgreementYearsDetails.map(_.commenceWithinThreeYears.name)),
+      answers.aboutLeaseOrAgreementPartOne.flatMap(
+        _.leaseOrAgreementYearsDetails.map(_.agreedReviewedAlteredThreeYears.name)
+      ),
+      answers.aboutLeaseOrAgreementPartOne.flatMap(_.leaseOrAgreementYearsDetails.map(_.rentUnderReviewNegotiated.name))
+    ) match {
+      case (Some("no"), Some("no"), Some("no")) =>
+        controllers.aboutYourLeaseOrTenure.routes.CurrentRentPayableWithin12MonthsController.show()
+      case _                                    => controllers.aboutYourLeaseOrTenure.routes.CurrentAnnualRentController.show()
+    }
+  }
+
   override val routeMap: Map[Identifier, Session => Call] = Map(
     AboutTheLandlordPageId                 -> aboutYourLandlordRouting,
-    // Revisit navigation when session is available
     ConnectedToLandlordPageId              -> connectedToLandlordRouting,
     ConnectedToLandlordDetailsPageId       -> (_ =>
       controllers.aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.show()
     ),
-    LeaseOrAgreementDetailsPageId          -> (_ =>
-      controllers.aboutYourLeaseOrTenure.routes.CurrentRentPayableWithin12MonthsController.show()
-    ),
-    CurrentRentPayableWithin12monthsPageId -> (_ =>
-      controllers.additionalinformation.routes.FurtherInformationOrRemarksController.show()
-    ),
+    LeaseOrAgreementDetailsPageId          -> leaseOrAgreementDetailsRouting,
+    CurrentRentPayableWithin12monthsPageId -> (_ => controllers.routes.TaskListController.show()),
     CurrentAnnualRentPageId                -> (_ => controllers.aboutYourLeaseOrTenure.routes.CurrentRentFirstPaidController.show()),
     CurrentRentFirstPaidPageId             -> currentRentFirstPaidRouting,
-    TenancyLeaseAgreementExpirePageId      -> (_ =>
-      controllers.additionalinformation.routes.FurtherInformationOrRemarksController.show()
-    )
+    TenancyLeaseAgreementExpirePageId      -> (_ => controllers.routes.TaskListController.show())
   )
 }

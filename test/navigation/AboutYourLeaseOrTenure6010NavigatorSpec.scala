@@ -50,10 +50,18 @@ class AboutYourLeaseOrTenure6010NavigatorSpec extends TestBaseSpec {
         .apply(session6010) mustBe controllers.aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.show()
     }
 
-    "return a function that goes to further information page when current rent payable within 12 months has been completed" in {
+    "return a function that goes to current annual rent page when lease or agreement details has been completed" in {
+      navigator
+        .nextPage(LeaseOrAgreementDetailsPageId)
+        .apply(session6010) mustBe controllers.aboutYourLeaseOrTenure.routes.CurrentAnnualRentController.show()
+    }
+
+    // LeaseOrAgreementDetailsPageId all no go to 12 months
+
+    "return a function that goes to task list page when current rent payable within 12 months has been completed" in {
       navigator
         .nextPage(CurrentRentPayableWithin12monthsPageId)
-        .apply(session6010) mustBe controllers.additionalinformation.routes.FurtherInformationOrRemarksController.show()
+        .apply(session6010) mustBe controllers.routes.TaskListController.show()
     }
 
     "return a function that goes to current rent first paid page when current annual rent has been completed" in {
@@ -67,5 +75,6 @@ class AboutYourLeaseOrTenure6010NavigatorSpec extends TestBaseSpec {
         .nextPage(CurrentRentFirstPaidPageId)
         .apply(session6010) mustBe controllers.Form6010.routes.CurrentLeaseOrAgreementBeginController.show()
     }
+
   }
 }

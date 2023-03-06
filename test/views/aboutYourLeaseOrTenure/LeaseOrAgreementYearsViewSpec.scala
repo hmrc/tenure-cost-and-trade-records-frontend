@@ -18,6 +18,7 @@ package views.aboutYourLeaseOrTenure
 
 import form.aboutYourLeaseOrTenure.LeaseOrAgreementYearsForm
 import models.submissions.aboutYourLeaseOrTenure._
+import models.submissions.common.{AnswerNo, AnswerYes}
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
@@ -59,7 +60,7 @@ class LeaseOrAgreementYearsViewSpec extends QuestionViewBehaviours[LeaseOrAgreem
         doc,
         "commenceWithinThreeYears",
         "commenceWithinThreeYears",
-        CommenceWithinThreeYearsYes.name,
+        AnswerYes.name,
         false
       )
       assertContainsText(doc, messages("label.yes"))
@@ -71,7 +72,7 @@ class LeaseOrAgreementYearsViewSpec extends QuestionViewBehaviours[LeaseOrAgreem
         doc,
         "commenceWithinThreeYears-2",
         "commenceWithinThreeYears",
-        CommenceWithinThreeYearsNo.name,
+        AnswerNo.name,
         false
       )
       assertContainsText(doc, messages("label.no"))
@@ -83,7 +84,7 @@ class LeaseOrAgreementYearsViewSpec extends QuestionViewBehaviours[LeaseOrAgreem
         doc,
         "agreedReviewedAlteredThreeYears",
         "agreedReviewedAlteredThreeYears",
-        AgreedReviewedAlteredThreeYearsYes.name,
+        AnswerYes.name,
         false
       )
       assertContainsText(doc, messages("label.yes"))
@@ -95,7 +96,7 @@ class LeaseOrAgreementYearsViewSpec extends QuestionViewBehaviours[LeaseOrAgreem
         doc,
         "agreedReviewedAlteredThreeYears-2",
         "agreedReviewedAlteredThreeYears",
-        AgreedReviewedAlteredThreeYearsNo.name,
+        AnswerNo.name,
         false
       )
       assertContainsText(doc, messages("label.no"))
@@ -107,7 +108,7 @@ class LeaseOrAgreementYearsViewSpec extends QuestionViewBehaviours[LeaseOrAgreem
         doc,
         "rentUnderReviewNegotiated",
         "rentUnderReviewNegotiated",
-        RentUnderReviewNegotiatedYes.name,
+        AnswerYes.name,
         false
       )
       assertContainsText(doc, messages("label.yes"))
@@ -119,7 +120,7 @@ class LeaseOrAgreementYearsViewSpec extends QuestionViewBehaviours[LeaseOrAgreem
         doc,
         "rentUnderReviewNegotiated-2",
         "rentUnderReviewNegotiated",
-        RentUnderReviewNegotiatedNo.name,
+        AnswerNo.name,
         false
       )
       assertContainsText(doc, messages("label.no"))
