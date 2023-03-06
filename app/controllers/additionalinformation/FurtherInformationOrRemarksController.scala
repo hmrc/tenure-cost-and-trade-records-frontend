@@ -94,6 +94,8 @@ class FurtherInformationOrRemarksController @Inject() (
       case ForTypes.for6010 => Right(controllers.Form6010.routes.TenantsAdditionsDisregardedController.show().url)
       case ForTypes.for6011 =>
         Right(controllers.aboutYourLeaseOrTenure.routes.TenancyLeaseAgreementExpireController.show().url)
+      case ForTypes.for6015 | ForTypes.for6016 =>
+        Right(controllers.Form6010.routes.LegalOrPlanningRestrictionsController.show().url)
       case _                => Left(s"Unknown form type with further information back link")
     }
 }

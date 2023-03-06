@@ -48,7 +48,7 @@ class AboutThePropertyNavigator @Inject() (audit: Audit)(implicit ec: ExecutionC
         case Some("yes") =>
           controllers.abouttheproperty.routes.PremisesLicenseGrantedDetailsController.show()
         case Some("no")  =>
-          controllers.aboutthetradinghistory.routes.AboutYourTradingHistoryController.show()
+          controllers.routes.TaskListController.show()
         case _           =>
           logger.warn(
             s"Navigation for about the property reached without correct selection of premises licence granted by controller"
@@ -64,7 +64,7 @@ class AboutThePropertyNavigator @Inject() (audit: Audit)(implicit ec: ExecutionC
     if (
       answers.userLoginDetails.forNumber == ForTypes.for6015 || answers.userLoginDetails.forNumber == ForTypes.for6016
     )
-      controllers.aboutthetradinghistory.routes.AboutYourTradingHistoryController.show()
+      controllers.routes.TaskListController.show()
     else
       controllers.abouttheproperty.routes.LicensableActivitiesController.show()
   }
