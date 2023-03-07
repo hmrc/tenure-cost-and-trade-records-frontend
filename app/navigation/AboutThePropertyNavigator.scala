@@ -48,7 +48,7 @@ class AboutThePropertyNavigator @Inject() (audit: Audit)(implicit ec: ExecutionC
         case Some("yes") =>
           controllers.abouttheproperty.routes.PremisesLicenseGrantedDetailsController.show()
         case Some("no")  =>
-          controllers.routes.TaskListController.show()
+          controllers.abouttheproperty.routes.CheckYourAnswersAboutThePropertyController.show()
         case _           =>
           logger.warn(
             s"Navigation for about the property reached without correct selection of premises licence granted by controller"
@@ -64,7 +64,7 @@ class AboutThePropertyNavigator @Inject() (audit: Audit)(implicit ec: ExecutionC
     if (
       answers.userLoginDetails.forNumber == ForTypes.for6015 || answers.userLoginDetails.forNumber == ForTypes.for6016
     )
-      controllers.routes.TaskListController.show()
+      controllers.abouttheproperty.routes.CheckYourAnswersAboutThePropertyController.show()
     else
       controllers.abouttheproperty.routes.LicensableActivitiesController.show()
   }
@@ -98,7 +98,7 @@ class AboutThePropertyNavigator @Inject() (audit: Audit)(implicit ec: ExecutionC
       case Some("yes") => controllers.abouttheproperty.routes.EnforcementActionBeenTakenDetailsController.show()
       case Some("no")  =>
         if (answers.userLoginDetails.forNumber == ForTypes.for6011)
-          controllers.aboutthetradinghistory.routes.AboutYourTradingHistoryController.show()
+          controllers.abouttheproperty.routes.CheckYourAnswersAboutThePropertyController.show()
         else
           controllers.abouttheproperty.routes.TiedForGoodsController.show()
       case _           =>
@@ -111,7 +111,7 @@ class AboutThePropertyNavigator @Inject() (audit: Audit)(implicit ec: ExecutionC
 
   private def enforcementActionTakenDetailsRouting: Session => Call = answers => {
     if (answers.userLoginDetails.forNumber == ForTypes.for6011)
-      controllers.aboutthetradinghistory.routes.AboutYourTradingHistoryController.show()
+      controllers.abouttheproperty.routes.CheckYourAnswersAboutThePropertyController.show()
     else
       controllers.abouttheproperty.routes.TiedForGoodsController.show()
   }
@@ -119,7 +119,7 @@ class AboutThePropertyNavigator @Inject() (audit: Audit)(implicit ec: ExecutionC
   private def tiedGoodsRouting: Session => Call = answers => {
     answers.aboutTheProperty.flatMap(_.tiedForGoods.map(_.name)) match {
       case Some("yes") => controllers.abouttheproperty.routes.TiedForGoodsDetailsController.show()
-      case Some("no")  => controllers.aboutthetradinghistory.routes.AboutYourTradingHistoryController.show()
+      case Some("no")  => controllers.abouttheproperty.routes.CheckYourAnswersAboutThePropertyController.show()
       case _           =>
         logger.warn(
           s"Navigation for about the property reached without correct selection of tied goods by controller"
@@ -146,6 +146,9 @@ class AboutThePropertyNavigator @Inject() (audit: Audit)(implicit ec: ExecutionC
     TiedForGoodsPageId                      -> tiedGoodsRouting,
     TiedForGoodsDetailsPageId               -> (_ =>
       controllers.aboutthetradinghistory.routes.AboutYourTradingHistoryController.show()
-    )
+    ),
+    CheckYourAnswersAboutThePropertyPageId  -> (_ =>
+      controllers.routes.TaskListController.show()
+      ),
   )
 }

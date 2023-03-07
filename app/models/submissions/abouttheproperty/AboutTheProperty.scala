@@ -32,7 +32,8 @@ case class AboutTheProperty(
   enforcementAction: Option[EnforcementAction] = None,
   enforcementActionHasBeenTakenInformationDetails: Option[EnforcementActionHasBeenTakenInformationDetails] = None,
   tiedForGoods: Option[TiedForGoods] = None,
-  tiedForGoodsDetails: Option[TiedForGoodsInformationDetails] = None
+  tiedForGoodsDetails: Option[TiedForGoodsInformationDetails] = None,
+  checkYourAnswersAboutTheProperty: Option[CheckYourAnswersAboutYourProperty] = None
 )
 
 object AboutTheProperty {
