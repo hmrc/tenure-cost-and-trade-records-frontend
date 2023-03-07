@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package form.Form6010
+package form.aboutYourLeaseOrTenure
 
 import form.MappingSupport.currencyMapping
-import models.submissions.Form6010.RentIncludeTradeServicesInformationDetails
+import models.submissions.aboutYourLeaseOrTenure.RentIncludeTradeServicesInformationDetails
 import play.api.data.Form
 import play.api.data.Forms.{default, mapping, text}
 import play.api.data.validation.Constraints.{maxLength, nonEmpty}

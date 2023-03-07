@@ -14,20 +14,22 @@
  * limitations under the License.
  */
 
-package form.Form6010
+package form.aboutYourLeaseOrTenure
 
-import form.MappingSupport._
-import models.submissions.Form6010.IncludedInYourRentDetails
+import models.submissions.aboutYourLeaseOrTenure.DoesTheRentPayable
 import play.api.data.Form
-import play.api.data.Forms.mapping
+import play.api.data.Forms.{default, mapping, text}
+import play.api.data.validation.Constraints.{maxLength, nonEmpty}
 
-object IncludedInYourRentForm {
+object DoesTheRentPayableForm {
 
-  val includedInYourRentForm = Form(
+  val doesTheRentPayableForm = Form(
     mapping(
-      "vat"              -> vatType,
-      "nondomesticRates" -> nondomesticRatesType,
-      "waterCharges"     -> waterChargesType
-    )(IncludedInYourRentDetails.apply)(IncludedInYourRentDetails.unapply)
+      "detailsToQuestions" ->
+        default(text, "").verifying(
+          nonEmpty(errorMessage = "error.detailsToQuestions.required"),
+          maxLength(1000, "error.detailsToQuestions.maxLength")
+        )
+    )(DoesTheRentPayable.apply)(DoesTheRentPayable.unapply)
   )
 }

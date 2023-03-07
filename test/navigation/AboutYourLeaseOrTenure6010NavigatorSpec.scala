@@ -73,7 +73,8 @@ class AboutYourLeaseOrTenure6010NavigatorSpec extends TestBaseSpec {
     "return a function that goes to current lease or agreement begin page when current rent first paid has been completed" in {
       navigator
         .nextPage(CurrentRentFirstPaidPageId)
-        .apply(session6010) mustBe controllers.Form6010.routes.CurrentLeaseOrAgreementBeginController.show()
+        .apply(session6010) mustBe controllers.aboutYourLeaseOrTenure.routes.CurrentLeaseOrAgreementBeginController
+        .show()
     }
 
   }

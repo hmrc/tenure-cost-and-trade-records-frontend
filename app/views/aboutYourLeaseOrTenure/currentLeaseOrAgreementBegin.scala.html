@@ -14,8 +14,9 @@
  * limitations under the License.
  *@
 
-@import models.submissions.Form6010.RentIncludeTradeServicesInformationDetails
+@import models.submissions.aboutYourLeaseOrTenure.CurrentLeaseOrAgreementBegin
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.button.Button
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
@@ -23,13 +24,12 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukDateInput
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukTextarea
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukCharacterCount
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukCheckboxes
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Label
-@import uk.gov.hmrc.govukfrontend.views.Aliases.CharacterCount
-@import uk.gov.hmrc.hmrcfrontend.views.Aliases.CurrencyInput
-@import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcCurrencyInput
-
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Input
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.input.PrefixOrSuffix
 
 @this(layout: Layout,
         govukButton: GovukButton,
@@ -39,47 +39,35 @@
         govukDateInput: GovukDateInput,
         govukTextarea: GovukTextarea,
         govukCharacterCount: GovukCharacterCount,
-        hmrcCurrencyInput : HmrcCurrencyInput,
+        govukCheckboxes: GovukCheckboxes,
         formWithCSRF: FormWithCSRF
 )
 
-
-@(theForm: Form[RentIncludeTradeServicesInformationDetails])(implicit request: Request[_], messages: Messages)
+@(theForm: Form[CurrentLeaseOrAgreementBegin])(implicit request: Request[_], messages: Messages)
 
 @layout(
- pageHeading = messages("rentIncludeTradeServicesDetails.heading"),
- backLinkUrl = controllers.Form6010.routes.RentIncludeTradeServicesController.show.url,
+ pageHeading = messages("currentLeaseOrAgreementBegin.heading"),
+ backLinkUrl = controllers.aboutYourLeaseOrTenure.routes.CurrentRentFirstPaidController.show.url,
  theForm = theForm
 ) {
 
- @formWithCSRF(action = controllers.Form6010.routes.RentIncludeTradeServicesDetailsController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
+ @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.CurrentLeaseOrAgreementBeginController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
 
-  @hmrcCurrencyInput(
-   CurrencyInput(
-    id = "sumIncludedInRent",
-    name = "sumIncludedInRent",
-    value = theForm("sumIncludedInRent").value,
-    classes = "govuk-input--width-10 total-annual-rent",
+  @includes.dateFields(form = theForm, field = "leaseBegin", govukDate = govukDateInput, showDays = true)
+
+  @govukInput(
+   Input(
+    id = "grantedFor",
+    name = "grantedFor",
+    value = theForm("grantedFor").value,
+    classes = "govuk-input--width-3",
+    errorMessage = theForm.errors.asTextErrorMessageForField("grantedFor"),
+    attributes = Map("maxLength" -> "3"),
     label = Label(
-     content = Text(messages("label.sumIncludedInRent")),
+     content = Text(messages("label.grantedFor")),
      classes = "govuk-!-font-weight-bold"
     ),
-    autocomplete = Some("off"),
-    errorMessage = theForm.errors.asTextErrorMessageForField("sumIncludedInRent")
-   )
-  )
-
-  @govukCharacterCount(
-   CharacterCount(
-    id = "describeServices",
-    name = "describeServices",
-    rows = 5,
-    maxLength = 1000,
-    label = Label(
-     content = Text(messages("label.describeServices")),
-     classes = "govuk-!-font-weight-bold"
-    ),
-    errorMessage = theForm.errors.asTextErrorMessageForField("describeServices")
+    suffix = Some(PrefixOrSuffix(content = Text(messages("suffix.grantedFor")))),
    )
   )
 

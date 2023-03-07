@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package controllers.Form6010
+package controllers.aboutYourLeaseOrTenure
 
 import models.submissions.aboutLeaseOrAgreement.AboutLeaseOrAgreementPartOne
 import play.api.http.Status

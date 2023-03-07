@@ -14,12 +14,14 @@
  * limitations under the License.
  */
 
-package models.submissions.Form6010
+package models.submissions.aboutYourLeaseOrTenure
 
 import play.api.libs.json.Json
 
-case class IncludedInYourRentDetails(vat: VATs, nonDomesticRates: NonDomesticRates, waterCharges: WaterCharges)
+import java.time.LocalDate
 
-object IncludedInYourRentDetails {
-  implicit val format = Json.format[IncludedInYourRentDetails]
+case class CurrentLeaseOrAgreementBegin(leaseBegin: LocalDate, grantedFor: Int)
+
+object CurrentLeaseOrAgreementBegin {
+  implicit val format = Json.format[CurrentLeaseOrAgreementBegin]
 }

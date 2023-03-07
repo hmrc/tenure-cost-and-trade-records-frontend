@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
-package models.submissions.Form6010
+package models.submissions.aboutYourLeaseOrTenure
 
-case class RentIncludeTradeServicesInformationDetails(sumIncludedInRent: BigDecimal, describeTheServices: String)
+import models.submissions.common.AnswersYesNo
+
+case class RentIncludeTradeServicesDetails(rentIncludeTradeServices: AnswersYesNo)

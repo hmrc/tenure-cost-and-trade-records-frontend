@@ -14,17 +14,17 @@
  * limitations under the License.
  */
 
-package controllers.Form6010
+package controllers.aboutYourLeaseOrTenure
 
 import actions.WithSessionRefiner
-import form.Form6010.CurrentLeaseOrAgreementBeginForm.currentLeaseOrAgreementBeginForm
-import form.Form6010.IncludedInYourRentForm.includedInYourRentForm
+import form.aboutYourLeaseOrTenure.CurrentLeaseOrAgreementBeginForm.currentLeaseOrAgreementBeginForm
+import form.aboutYourLeaseOrTenure.IncludedInYourRentForm.includedInYourRentForm
 import models.submissions.aboutLeaseOrAgreement.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.form.{currentLeaseOrAgreementBegin, includedInYourRent}
+import views.html.aboutYourLeaseOrTenure.{currentLeaseOrAgreementBegin, includedInYourRent}
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future

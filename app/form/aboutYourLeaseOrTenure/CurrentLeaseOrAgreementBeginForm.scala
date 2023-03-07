@@ -14,14 +14,20 @@
  * limitations under the License.
  */
 
-package models.submissions.Form6010
+package form.aboutYourLeaseOrTenure
 
-import play.api.libs.json.Json
+import form.DateMappings.dateFieldsMapping
+import form.MappingSupport.intMapping
+import models.submissions.aboutYourLeaseOrTenure.CurrentLeaseOrAgreementBegin
+import play.api.data.Form
+import play.api.data.Forms.mapping
 
-import java.time.LocalDate
+object CurrentLeaseOrAgreementBeginForm {
 
-case class CurrentLeaseOrAgreementBegin(leaseBegin: LocalDate, grantedFor: Int)
-
-object CurrentLeaseOrAgreementBegin {
-  implicit val format = Json.format[CurrentLeaseOrAgreementBegin]
+  val currentLeaseOrAgreementBeginForm = Form(
+    mapping(
+      "leaseBegin" -> dateFieldsMapping("leaseBegin", fieldErrorPart = ".leaseBegin"),
+      "grantedFor" -> intMapping()
+    )(CurrentLeaseOrAgreementBegin.apply)(CurrentLeaseOrAgreementBegin.unapply)
+  )
 }

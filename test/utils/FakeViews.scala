@@ -19,7 +19,7 @@ package utils
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import views.html.aboutYourLeaseOrTenure._
 import views.html.aboutfranchisesorlettings._
-import views.html.form.{currentLeaseOrAgreementBegin, doesTheRentPayable, includedInYourRent, intervalsOfRentReview, rentIncludeTradeServices, sharedResponsibilities, ultimatelyResponsible}
+import views.html.form._
 import views.html.login
 
 trait FakeViews { this: GuiceOneAppPerSuite =>

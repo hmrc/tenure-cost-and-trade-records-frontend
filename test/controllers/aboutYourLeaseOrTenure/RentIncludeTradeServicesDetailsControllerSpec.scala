@@ -14,22 +14,17 @@
  * limitations under the License.
  */
 
-package controllers.Form6010
+package controllers.aboutYourLeaseOrTenure
 
-import form.Errors
 import play.api.http.Status
 import play.api.test.Helpers._
 import utils.TestBaseSpec
 
-class RentIncludeTradeServicesControllerSpec extends TestBaseSpec {
+class RentIncludeTradeServicesDetailsControllerSpec extends TestBaseSpec {
 
-  import TestData._
-  import form.Form6010.RentIncludeTradeServicesForm._
-  import utils.FormBindingTestAssertions._
+  private val controller = app.injector.instanceOf[RentIncludeTradeServicesDetailsController]
 
-  private val controller = app.injector.instanceOf[RentIncludeTradeServicesController]
-
-  "RentIncludetradeServices controller" should {
+  "GET /" should {
     "return 200" in {
       val result = controller.show(fakeRequest)
       status(result) shouldBe Status.OK
@@ -40,20 +35,5 @@ class RentIncludeTradeServicesControllerSpec extends TestBaseSpec {
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
-
-    "error if rentIncludeTradeServices is missing" in {
-      val formData = baseFormData - errorKey.rentIncludeTradeServices
-      val form     = rentIncludeTradeServicesForm.bind(formData)
-
-      mustContainError(errorKey.rentIncludeTradeServices, Errors.booleanMissing, form)
-    }
-  }
-
-  object TestData {
-    val errorKey = new {
-      val rentIncludeTradeServices: String = "rentIncludeTradeServices"
-    }
-
-    val baseFormData: Map[String, String] = Map("rentIncludeTradeServices" -> "yes")
   }
 }

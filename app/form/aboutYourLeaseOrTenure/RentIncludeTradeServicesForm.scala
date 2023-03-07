@@ -14,26 +14,18 @@
  * limitations under the License.
  */
 
-package controllers.Form6010
+package form.aboutYourLeaseOrTenure
 
-import play.api.http.Status
-import play.api.test.Helpers._
-import utils.TestBaseSpec
+import form.MappingSupport.yesNoType
+import models.submissions.aboutYourLeaseOrTenure.RentIncludeTradeServicesDetails
+import play.api.data.Form
+import play.api.data.Forms.mapping
 
-class RentIncludeTradeServicesDetailsControllerSpec extends TestBaseSpec {
+object RentIncludeTradeServicesForm {
 
-  private val controller = app.injector.instanceOf[RentIncludeTradeServicesDetailsController]
-
-  "GET /" should {
-    "return 200" in {
-      val result = controller.show(fakeRequest)
-      status(result) shouldBe Status.OK
-    }
-
-    "return HTML" in {
-      val result = controller.show(fakeRequest)
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
-    }
-  }
+  val rentIncludeTradeServicesForm = Form(
+    mapping(
+      "rentIncludeTradeServices" -> yesNoType
+    )(RentIncludeTradeServicesDetails.apply)(RentIncludeTradeServicesDetails.unapply)
+  )
 }
