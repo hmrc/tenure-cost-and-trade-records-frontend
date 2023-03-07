@@ -14,20 +14,14 @@
  * limitations under the License.
  */
 
-package form.Form6010
+package models.submissions.aboutYourLeaseOrTenure
 
-import form.DateMappings.dateFieldsMapping
-import form.MappingSupport.intMapping
-import models.submissions.Form6010.CurrentLeaseOrAgreementBegin
-import play.api.data.Form
-import play.api.data.Forms.mapping
+import play.api.libs.json.Json
 
-object CurrentLeaseOrAgreementBeginForm {
+case class DoesTheRentPayable(
+  detailsToQuestions: String
+)
 
-  val currentLeaseOrAgreementBeginForm = Form(
-    mapping(
-      "leaseBegin" -> dateFieldsMapping("leaseBegin", fieldErrorPart = ".leaseBegin"),
-      "grantedFor" -> intMapping()
-    )(CurrentLeaseOrAgreementBegin.apply)(CurrentLeaseOrAgreementBegin.unapply)
-  )
+object DoesTheRentPayable {
+  implicit val format = Json.format[DoesTheRentPayable]
 }

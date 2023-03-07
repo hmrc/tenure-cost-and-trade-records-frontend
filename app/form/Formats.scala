@@ -88,8 +88,6 @@ object Formats {
     namedEnumFormatter(RentPayableVaryAccordingToGrossOrNet, Errors.booleanMissing)
   implicit val rentPayableVaryOnQuantityOfBeersFormat: Formatter[RentPayableVaryOnQuantityOfBeers]           =
     namedEnumFormatter(RentPayableVaryOnQuantityOfBeer, Errors.booleanMissing)
-  implicit val rentIncludeTradeServicesFormat: Formatter[RentIncludeTradesServices]                          =
-    namedEnumFormatter(RentIncludeTradesService, Errors.booleanMissing)
   implicit val rentIncludeFixturesAndFittingsFormat: Formatter[RentIncludeFixturesAndFittings]               =
     namedEnumFormatter(RentIncludeFixturesAndFitting, Errors.booleanMissing)
   implicit val rentOpenMarketValuesFormat: Formatter[RentOpenMarketValues]                                   =
@@ -123,11 +121,6 @@ object Formats {
     namedEnumFormatter(InsideRepairs, Errors.booleanMissing)
   implicit val buildingInsuranceFormatter: Formatter[BuildingInsurances] =
     namedEnumFormatter(BuildingInsurances, Errors.booleanMissing)
-
-  implicit val vatFormatter: Formatter[VATs]                          = namedEnumFormatter(VATs, Errors.booleanMissing)
-  implicit val nondomesticRatesFormatter: Formatter[NonDomesticRates] =
-    namedEnumFormatter(NonDomesticRates, Errors.booleanMissing)
-  implicit val waterChargesFormatter: Formatter[WaterCharges]         = namedEnumFormatter(WaterCharges, Errors.booleanMissing)
 
   implicit val includeLicenseeFormatter: Formatter[IncludeLicensees]            =
     namedEnumFormatter(IncludeLicensee, Errors.booleanMissing)

@@ -14,16 +14,17 @@
  * limitations under the License.
  */
 
-package controllers.Form6010
+package controllers.aboutYourLeaseOrTenure
 
 import controllers.LoginController.loginForm
+import form.Form6010.RentIncludeFixtureAndFittingsForm.rentIncludeFixturesAndFittingsForm
+import form.aboutYourLeaseOrTenure.RentIncludeTradeServicesDetailsForm.rentIncludeTradeServicesDetailsForm
+import form.aboutYourLeaseOrTenure.RentIncludeTradeServicesForm.rentIncludeTradeServicesForm
+import models.submissions.common.{AnswerNo, AnswerYes}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.form.{rentIncludeFixtureAndFittings, rentIncludeTradeServices, rentIncludeTradeServicesDetails}
-import form.Form6010.RentIncludeTradeServicesForm.rentIncludeTradeServicesForm
-import form.Form6010.RentIncludeTradeServicesDetailsForm.rentIncludeTradeServicesDetailsForm
-import form.Form6010.RentIncludeFixtureAndFittingsForm.rentIncludeFixturesAndFittingsForm
-import models.submissions.Form6010.{RentIncludeTradesServicesNo, RentIncludeTradesServicesYes}
+import views.html.aboutYourLeaseOrTenure.{rentIncludeTradeServices, rentIncludeTradeServicesDetails}
+import views.html.form.rentIncludeFixtureAndFittings
 import views.html.login
 
 import javax.inject.{Inject, Singleton}
@@ -49,11 +50,11 @@ class RentIncludeTradeServicesController @Inject() (
         formWithErrors => Future.successful(BadRequest(rentIncludeTradeServicesView(formWithErrors))),
         data =>
           data.rentIncludeTradeServices match {
-            case RentIncludeTradesServicesYes =>
+            case AnswerYes =>
               Future.successful(Ok(rentIncludeTradeServicesDetailsView(rentIncludeTradeServicesDetailsForm)))
-            case RentIncludeTradesServicesNo  =>
+            case AnswerNo  =>
               Future.successful(Ok(rentIncludeFixtureAndFittingsView(rentIncludeFixturesAndFittingsForm)))
-            case _                            => Future.successful(Ok(login(loginForm)))
+            case _         => Future.successful(Ok(login(loginForm)))
           }
       )
   }

@@ -14,13 +14,14 @@
  * limitations under the License.
  */
 
-package controllers.Form6010
+package controllers.aboutYourLeaseOrTenure
 
 import form.Form6010.RentIncludeFixtureAndFittingsForm.rentIncludeFixturesAndFittingsForm
-import form.Form6010.RentIncludeTradeServicesDetailsForm.rentIncludeTradeServicesDetailsForm
+import form.aboutYourLeaseOrTenure.RentIncludeTradeServicesDetailsForm.rentIncludeTradeServicesDetailsForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.form.{rentIncludeFixtureAndFittings, rentIncludeTradeServicesDetails}
+import views.html.form.rentIncludeFixtureAndFittings
+import views.html.aboutYourLeaseOrTenure.rentIncludeTradeServicesDetails
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future

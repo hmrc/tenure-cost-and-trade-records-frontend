@@ -45,7 +45,7 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit)(implicit ec: Exec
     if (answers.userLoginDetails.forNumber == ForTypes.for6011)
       controllers.aboutYourLeaseOrTenure.routes.TenancyLeaseAgreementExpireController.show()
     else
-      controllers.Form6010.routes.CurrentLeaseOrAgreementBeginController.show()
+      controllers.aboutYourLeaseOrTenure.routes.CurrentLeaseOrAgreementBeginController.show()
   }
 
   private def connectedToLandlordRouting: Session => Call = answers => {

@@ -14,26 +14,26 @@
  * limitations under the License.
  */
 
-package controllers.Form6010
+package controllers.aboutYourLeaseOrTenure
 
 import actions.WithSessionRefiner
-import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.form.{doesTheRentPayable, rentIncludeTradeServices}
-import form.Form6010.DoesTheRentPayableForm.doesTheRentPayableForm
-import form.Form6010.RentIncludeTradeServicesForm.rentIncludeTradeServicesForm
+import form.aboutYourLeaseOrTenure.DoesTheRentPayableForm.doesTheRentPayableForm
+import form.aboutYourLeaseOrTenure.IncludedInYourRentForm.includedInYourRentForm
 import models.submissions.aboutLeaseOrAgreement.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne
 import play.api.i18n.I18nSupport
+import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
+import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
+import views.html.aboutYourLeaseOrTenure.{doesTheRentPayable, includedInYourRent}
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class DoesTheRentPayableController @Inject() (
+class IncludedInYourRentController @Inject() (
   mcc: MessagesControllerComponents,
-  rentIncludeTradeServicesView: rentIncludeTradeServices,
   doesTheRentPayableView: doesTheRentPayable,
+  includedInYourRentView: includedInYourRent,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
 ) extends FrontendController(mcc)
@@ -42,10 +42,10 @@ class DoesTheRentPayableController @Inject() (
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Future.successful(
       Ok(
-        doesTheRentPayableView(
-          request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.doesTheRentPayable) match {
-            case Some(doesTheRentPayable) => doesTheRentPayableForm.fillAndValidate(doesTheRentPayable)
-            case _                        => doesTheRentPayableForm
+        includedInYourRentView(
+          request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.includedInYourRentDetails) match {
+            case Some(includedInYourRentDetails) => includedInYourRentForm.fillAndValidate(includedInYourRentDetails)
+            case _                               => includedInYourRentForm
           }
         )
       )
@@ -53,16 +53,15 @@ class DoesTheRentPayableController @Inject() (
   }
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
-    doesTheRentPayableForm
+    includedInYourRentForm
       .bindFromRequest()
       .fold(
-        formWithErrors => Future.successful(BadRequest(doesTheRentPayableView(formWithErrors))),
+        formWithErrors => Future.successful(BadRequest(includedInYourRentView(formWithErrors))),
         data => {
-          val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(doesTheRentPayable = Some(data)))
+          val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(includedInYourRentDetails = Some(data)))
           session.saveOrUpdate(updatedData)
-          Future.successful(Ok(rentIncludeTradeServicesView(rentIncludeTradeServicesForm)))
+          Future.successful(Ok(doesTheRentPayableView(doesTheRentPayableForm)))
         }
       )
   }
-
 }

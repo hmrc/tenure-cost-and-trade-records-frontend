@@ -17,9 +17,9 @@
 package models.submissions.aboutLeaseOrAgreement
 
 import actions.SessionRequest
-import models.submissions.Form6010.{CurrentLeaseOrAgreementBegin, DoesTheRentPayable, IncludedInYourRentDetails, UltimatelyResponsible}
+import models.submissions.Form6010.UltimatelyResponsible
 import models.{AnnualRent, Session}
-import models.submissions.aboutYourLeaseOrTenure.{AboutTheLandlord, ConnectedToLandlordInformationDetails, CurrentRentFirstPaid, CurrentRentPayableWithin12Months, LeaseOrAgreementYearsDetails}
+import models.submissions.aboutYourLeaseOrTenure._
 import models.submissions.common.AnswersYesNo
 import play.api.libs.json.Json
 

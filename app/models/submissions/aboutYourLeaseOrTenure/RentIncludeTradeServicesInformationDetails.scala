@@ -14,20 +14,6 @@
  * limitations under the License.
  */
 
-package models.submissions.Form6010
+package models.submissions.aboutYourLeaseOrTenure
 
-import models.{NamedEnum, NamedEnumSupport}
-
-sealed trait RentIncludeTradesServices extends NamedEnum {
-  val key = "rentIncludeTradeServices"
-}
-object RentIncludeTradesServicesYes extends RentIncludeTradesServices {
-  val name = "yes"
-}
-object RentIncludeTradesServicesNo extends RentIncludeTradesServices {
-  val name = "no"
-}
-
-object RentIncludeTradesService extends NamedEnumSupport[RentIncludeTradesServices] {
-  val all = List(RentIncludeTradesServicesYes, RentIncludeTradesServicesNo)
-}
+case class RentIncludeTradeServicesInformationDetails(sumIncludedInRent: BigDecimal, describeTheServices: String)

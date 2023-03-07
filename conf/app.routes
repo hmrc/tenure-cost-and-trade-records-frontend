@@ -70,15 +70,44 @@ POST        /about-your-trading-history                             controllers.
 GET         /turnover                                               controllers.aboutthetradinghistory.TurnoverController.show()
 POST        /turnover                                               controllers.aboutthetradinghistory.TurnoverController.submit()
 
+# Form 6015 routing
+GET         /cost-of-sales-or-gross-profit                          controllers.aboutthetradinghistory.CostOfSalesOrGrossProfitDetailsController.show()
+POST        /cost-of-sales-or-gross-profit                          controllers.aboutthetradinghistory.CostOfSalesOrGrossProfitDetailsController.submit()
+
+# Form 6015 routing
+GET         /cost-of-sales                                          controllers.aboutthetradinghistory.CostOfSalesController.show()
+POST        /cost-of-sales                                          controllers.aboutthetradinghistory.CostOfSalesController.submit()
+
+# Form 6015 routing
+GET         /gross-profits                                          controllers.aboutthetradinghistory.GrossProfitsController.show()
+POST        /gross-profits                                          controllers.aboutthetradinghistory.GrossProfitsController.submit()
+
+# Form 6015 routing
+GET         /total-payroll-costs                                    controllers.aboutthetradinghistory.TotalPayrollCostsController.show()
+POST        /total-payroll-costs                                    controllers.aboutthetradinghistory.TotalPayrollCostsController.submit()
+
+# Form 6015 routing
+GET         /variable-operating-expenses                            controllers.aboutthetradinghistory.VariableOperatingExpensesController.show()
+POST        /variable-operating-expenses                            controllers.aboutthetradinghistory.VariableOperatingExpensesController.submit()
+
+# Form 6015 routing
+GET         /fixed-operating-expenses                               controllers.aboutthetradinghistory.FixedOperatingExpensesController.show()
+POST        /fixed-operating-expenses                               controllers.aboutthetradinghistory.FixedOperatingExpensesController.submit()
+
+# Form 6015 routing
+GET         /other-costs                                            controllers.aboutthetradinghistory.OtherCostsController.show()
+POST        /other-costs                                            controllers.aboutthetradinghistory.OtherCostsController.submit()
+
+# Form 6015 routing
+GET         /net-profit                                             controllers.aboutthetradinghistory.NetProfitController.show()
+POST        /net-profit                                             controllers.aboutthetradinghistory.NetProfitController.submit()
+
 # About the francise or letting
 GET         /tenancy-lease-agreement                                controllers.Form6010.TenancyLeaseAgreementController.show()
 POST        /tenancy-lease-agreement                                controllers.Form6010.TenancyLeaseAgreementController.submit()
 
 GET         /franchise-or-lettings-tied-to-property                 controllers.aboutfranchisesorlettings.FranchiseOrLettingsTiedToPropertyController.show()
 POST        /franchise-or-lettings-tied-to-property                 controllers.aboutfranchisesorlettings.FranchiseOrLettingsTiedToPropertyController.submit()
-
-GET         /included-in-your-rent                                  controllers.Form6010.IncludedInYourRentController.show()
-POST        /included-in-your-rent                                  controllers.Form6010.IncludedInYourRentController.submit()
 
 GET         /catering-operation-or-letting-accommodation            controllers.aboutfranchisesorlettings.CateringOperationController.show()
 POST        /catering-operation-or-letting-accommodation            controllers.aboutfranchisesorlettings.CateringOperationController.submit()
@@ -113,7 +142,6 @@ POST        /letting-other-part-of-property-checkbox                controllers.
 GET         /add-another-letting-other-part-of-property             controllers.aboutfranchisesorlettings.AddAnotherLettingOtherPartOfPropertyController.show(idx: Int)
 POST        /add-another-letting-other-part-of-property             controllers.aboutfranchisesorlettings.AddAnotherLettingOtherPartOfPropertyController.submit(idx: Int)
 
-
 # About your leace or tenure
 GET         /about-your-landlord                                    controllers.aboutYourLeaseOrTenure.AboutYourLandlordController.show()
 POST        /about-your-landlord                                    controllers.aboutYourLeaseOrTenure.AboutYourLandlordController.submit()
@@ -131,6 +159,20 @@ POST        /current-rent-first-paid                                controllers.
 GET         /tenancy-lease-agreement-expire                         controllers.aboutYourLeaseOrTenure.TenancyLeaseAgreementExpireController.show()
 POST        /tenancy-lease-agreement-expire                         controllers.aboutYourLeaseOrTenure.TenancyLeaseAgreementExpireController.submit()
 
+GET         /current-lease-or-agreement-begin                       controllers.aboutYourLeaseOrTenure.CurrentLeaseOrAgreementBeginController.show()
+POST        /current-lease-or-agreement-begin                       controllers.aboutYourLeaseOrTenure.CurrentLeaseOrAgreementBeginController.submit()
+
+GET         /included-in-your-rent                                  controllers.aboutYourLeaseOrTenure.IncludedInYourRentController.show()
+POST        /included-in-your-rent                                  controllers.aboutYourLeaseOrTenure.IncludedInYourRentController.submit()
+
+GET         /does-the-rent-payable                                  controllers.aboutYourLeaseOrTenure.DoesTheRentPayableController.show()
+POST        /does-the-rent-payable                                  controllers.aboutYourLeaseOrTenure.DoesTheRentPayableController.submit()
+
+GET         /rent-include-trade-services                            controllers.aboutYourLeaseOrTenure.RentIncludeTradeServicesController.show()
+POST        /rent-include-trade-services                            controllers.aboutYourLeaseOrTenure.RentIncludeTradeServicesController.submit()
+
+GET         /rent-include-trade-services-details                    controllers.aboutYourLeaseOrTenure.RentIncludeTradeServicesDetailsController.show()
+POST        /rent-include-trade-services-details                    controllers.aboutYourLeaseOrTenure.RentIncludeTradeServicesDetailsController.submit()
 
 # Form 6015 routing
 GET         /premises-license-granted                               controllers.abouttheproperty.PremisesLicenseGrantedController.show()
@@ -141,43 +183,8 @@ GET         /premises-license-granted-details                       controllers.
 POST        /premises-license-granted-details                       controllers.abouttheproperty.PremisesLicenseGrantedDetailsController.submit()
 
 # Form 6015 routing
-GET         /cost-of-sales-or-gross-profit                          controllers.aboutthetradinghistory.CostOfSalesOrGrossProfitDetailsController.show()
-POST        /cost-of-sales-or-gross-profit                          controllers.aboutthetradinghistory.CostOfSalesOrGrossProfitDetailsController.submit()
-
-# Form 6015 routing
-GET         /cost-of-sales                                          controllers.aboutthetradinghistory.CostOfSalesController.show()
-POST        /cost-of-sales                                          controllers.aboutthetradinghistory.CostOfSalesController.submit()
-
-# Form 6015 routing
-GET         /gross-profits                                          controllers.aboutthetradinghistory.GrossProfitsController.show()
-POST        /gross-profits                                          controllers.aboutthetradinghistory.GrossProfitsController.submit()
-
-# Form 6015 routing
-GET         /total-payroll-costs                                    controllers.aboutthetradinghistory.TotalPayrollCostsController.show()
-POST        /total-payroll-costs                                    controllers.aboutthetradinghistory.TotalPayrollCostsController.submit()
-
-# Form 6015 routing
-GET         /variable-operating-expenses                            controllers.aboutthetradinghistory.VariableOperatingExpensesController.show()
-POST        /variable-operating-expenses                            controllers.aboutthetradinghistory.VariableOperatingExpensesController.submit()
-
-# Form 6015 routing
-GET         /fixed-operating-expenses                               controllers.aboutthetradinghistory.FixedOperatingExpensesController.show()
-POST        /fixed-operating-expenses                               controllers.aboutthetradinghistory.FixedOperatingExpensesController.submit()
-
-# Form 6015 routing
-GET         /other-costs                                            controllers.aboutthetradinghistory.OtherCostsController.show()
-POST        /other-costs                                            controllers.aboutthetradinghistory.OtherCostsController.submit()
-
-# Form 6015 routing
-GET         /net-profit                                             controllers.aboutthetradinghistory.NetProfitController.show()
-POST        /net-profit                                             controllers.aboutthetradinghistory.NetProfitController.submit()
-
-# Form 6015 routing
 GET         /concession-or-franchise                                controllers.aboutfranchisesorlettings.ConcessionOrFranchiseController.show()
 POST        /concession-or-franchise                                controllers.aboutfranchisesorlettings.ConcessionOrFranchiseController.submit()
-
-GET         /does-the-rent-payable                                  controllers.Form6010.DoesTheRentPayableController.show()
-POST        /does-the-rent-payable                                  controllers.Form6010.DoesTheRentPayableController.submit()
 
 GET         /rent-payable-vary-on-quantity-of-beers                 controllers.Form6010.RentPayableVaryOnQuantityOfBeersController.show()
 POST        /rent-payable-vary-on-quantity-of-beers                 controllers.Form6010.RentPayableVaryOnQuantityOfBeersController.submit()
@@ -190,12 +197,6 @@ POST        /rent-payable-vary-according-to-gross-or-net            controllers.
 
 GET         /rent-payable-vary-according-to-gross-or-net-details    controllers.Form6010.RentPayableVaryAccordingToGrossOrNetDetailsController.show()
 POST        /rent-payable-vary-according-to-gross-or-net-details    controllers.Form6010.RentPayableVaryAccordingToGrossOrNetDetailsController.submit()
-
-GET         /rent-include-trade-services                            controllers.Form6010.RentIncludeTradeServicesController.show()
-POST        /rent-include-trade-services                            controllers.Form6010.RentIncludeTradeServicesController.submit()
-
-GET         /rent-include-trade-services-details                    controllers.Form6010.RentIncludeTradeServicesDetailsController.show()
-POST        /rent-include-trade-services-details                    controllers.Form6010.RentIncludeTradeServicesDetailsController.submit()
 
 GET         /rent-include-fixtures-and-fittings                     controllers.Form6010.RentIncludeFixtureAndFittingsController.show()
 POST        /rent-include-fixtures-and-fittings                     controllers.Form6010.RentIncludeFixtureAndFittingsController.submit()
@@ -235,9 +236,6 @@ POST        /legal-or-planning-restrictions                         controllers.
 
 GET         /legal-or-planning-restrictions-details                 controllers.Form6010.LegalOrPlanningRestrictionsDetailsController.show()
 POST        /legal-or-planning-restrictions-details                 controllers.Form6010.LegalOrPlanningRestrictionsDetailsController.submit()
-
-GET         /current-lease-or-agreement-begin                       controllers.Form6010.CurrentLeaseOrAgreementBeginController.show()
-POST        /current-lease-or-agreement-begin                       controllers.Form6010.CurrentLeaseOrAgreementBeginController.submit()
 
 GET         /intervals-of-rent-review                               controllers.Form6010.IntervalsOfRentReviewController.show()
 POST        /intervals-of-rent-review                               controllers.Form6010.IntervalsOfRentReviewController.submit()

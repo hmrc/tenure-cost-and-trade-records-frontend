@@ -14,6 +14,13 @@
  * limitations under the License.
  */
 
-package models.submissions.Form6010
+package models.submissions.aboutYourLeaseOrTenure
 
-case class RentIncludeTradeServicesDetails(rentIncludeTradeServices: RentIncludeTradesServices)
+import models.submissions.common.AnswersYesNo
+import play.api.libs.json.Json
+
+case class IncludedInYourRentDetails(vat: AnswersYesNo, nonDomesticRates: AnswersYesNo, waterCharges: AnswersYesNo)
+
+object IncludedInYourRentDetails {
+  implicit val format = Json.format[IncludedInYourRentDetails]
+}

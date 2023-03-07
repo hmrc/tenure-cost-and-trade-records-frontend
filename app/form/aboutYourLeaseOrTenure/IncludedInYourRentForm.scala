@@ -14,14 +14,20 @@
  * limitations under the License.
  */
 
-package models.submissions.Form6010
+package form.aboutYourLeaseOrTenure
 
-import play.api.libs.json.Json
+import form.MappingSupport.yesNoType
+import models.submissions.aboutYourLeaseOrTenure.IncludedInYourRentDetails
+import play.api.data.Form
+import play.api.data.Forms.mapping
 
-case class DoesTheRentPayable(
-  detailsToQuestions: String
-)
+object IncludedInYourRentForm {
 
-object DoesTheRentPayable {
-  implicit val format = Json.format[DoesTheRentPayable]
+  val includedInYourRentForm = Form(
+    mapping(
+      "vat"              -> yesNoType,
+      "nondomesticRates" -> yesNoType,
+      "waterCharges"     -> yesNoType
+    )(IncludedInYourRentDetails.apply)(IncludedInYourRentDetails.unapply)
+  )
 }

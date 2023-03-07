@@ -56,7 +56,6 @@ object MappingSupport {
     Forms.of[RentPayableVaryAccordingToGrossOrNets]
   val rentPayableVaryOnQuantityOfBeersType: Mapping[RentPayableVaryOnQuantityOfBeers]                 =
     Forms.of[RentPayableVaryOnQuantityOfBeers]
-  val rentIncludeTradeServicesType: Mapping[RentIncludeTradesServices]                                = Forms.of[RentIncludeTradesServices]
   val addressConnectionType: Mapping[AddressConnectionType]                                           = Forms.of[AddressConnectionType]
   val rentIncludeFixturesAndFittingsType: Mapping[RentIncludeFixturesAndFittings]                     =
     Forms.of[RentIncludeFixturesAndFittings]
@@ -76,10 +75,6 @@ object MappingSupport {
   val outsideRepairsType: Mapping[OutsideRepairs]        = Forms.of[OutsideRepairs]
   val insideRepairsType: Mapping[InsideRepairs]          = Forms.of[InsideRepairs]
   val buildingInsuranceType: Mapping[BuildingInsurances] = Forms.of[BuildingInsurances]
-
-  val vatType: Mapping[VATs]                          = Forms.of[VATs]
-  val nondomesticRatesType: Mapping[NonDomesticRates] = Forms.of[NonDomesticRates]
-  val waterChargesType: Mapping[WaterCharges]         = Forms.of[WaterCharges]
 
   val includeLicenseeType: Mapping[IncludeLicensees]            = Forms.of[IncludeLicensees]
   val includeOtherPropertyType: Mapping[IncludeOtherProperties] = Forms.of[IncludeOtherProperties]
