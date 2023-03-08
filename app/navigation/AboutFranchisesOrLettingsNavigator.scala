@@ -126,7 +126,7 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit)(implicit ec: E
     val existingSection = answers.aboutFranchisesOrLettings.flatMap(_.lettingSections.lift(getLettingsIndex(answers)))
     existingSection.flatMap(_.addAnotherLettingToProperty).get.name match {
       case "yes" => controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsController.show()
-      case "no"  => controllers.routes.TaskListController.show() // TODO Insert CYA page.
+      case "no"  => controllers.Form6010.routes.CheckYourAnswersController.show() // TODO Insert CYA page.
       case _     =>
         logger.warn(
           s"Navigation for add another letting reached without correct selection of conditions by controller"
