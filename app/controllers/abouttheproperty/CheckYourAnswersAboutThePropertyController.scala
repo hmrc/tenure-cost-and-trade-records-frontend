@@ -21,6 +21,7 @@ import navigation.AboutThePropertyNavigator
 import models.submissions.abouttheproperty.AboutTheProperty.updateAboutTheProperty
 import navigation.identifiers.CheckYourAnswersAboutThePropertyPageId
 import form.abouttheproperty.CheckYourAnswersAboutThePropertyForm.checkYourAnswersAboutThePropertyForm
+import models.{ForTypes, Session}
 import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
@@ -52,7 +53,8 @@ class CheckYourAnswersAboutThePropertyController @Inject() (
             case Some(checkYourAnswersAboutTheProperty) =>
               checkYourAnswersAboutThePropertyForm.fillAndValidate(checkYourAnswersAboutTheProperty)
             case _                                      => checkYourAnswersAboutThePropertyForm
-          }
+          },
+          getBackLink(request.sessionData)
         )
       )
     )
@@ -61,4 +63,32 @@ class CheckYourAnswersAboutThePropertyController @Inject() (
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
     Future.successful(Ok(taskListView()))
   }
+
+  private def getBackLink(answers: Session): String =
+    answers.userLoginDetails.forNumber match {
+      case ForTypes.for6010                    =>
+        answers.aboutTheProperty.flatMap(_.tiedForGoods.map(_.name)) match {
+          case Some("yes") => controllers.abouttheproperty.routes.TiedForGoodsDetailsController.show().url
+          case Some("no")  => controllers.abouttheproperty.routes.TiedForGoodsController.show().url
+          case _           =>
+            logger.warn(s"Back link for enforcement action page reached with unknown enforcement taken value")
+            controllers.routes.TaskListController.show().url
+        }
+      case ForTypes.for6011                    =>
+        answers.aboutTheProperty.flatMap(_.enforcementAction.map(_.name)) match {
+          case Some("yes") => controllers.abouttheproperty.routes.EnforcementActionBeenTakenDetailsController.show().url
+          case Some("no")  => controllers.abouttheproperty.routes.EnforcementActionBeenTakenController.show().url
+          case _           =>
+            logger.warn(s"Back link for enforcement action details page reached with unknown enforcement taken value")
+            controllers.routes.TaskListController.show().url
+        }
+      case ForTypes.for6015 | ForTypes.for6016 =>
+        answers.aboutTheProperty.flatMap(_.premisesLicenseGrantedDetail.map(_.name)) match {
+          case Some("yes") => controllers.abouttheproperty.routes.PremisesLicenseGrantedDetailsController.show().url
+          case Some("no")  => controllers.abouttheproperty.routes.PremisesLicenseGrantedController.show().url
+          case _           =>
+            logger.warn(s"Back link for premises license page reached with unknown enforcement taken value")
+            controllers.routes.TaskListController.show().url
+        }
+    }
 }

@@ -36,11 +36,13 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[CheckYourAnswersAboutYourProperty])(implicit request: Request[_], messages: Messages)
+@(theForm: Form[CheckYourAnswersAboutYourProperty], backLink: String)(implicit request: Request[_], messages: Messages)
 
 @layout(
  pageHeading = messages("checkYourAnswersAboutTheProperty.heading"),
- backLinkUrl = controllers.abouttheproperty.routes.PremisesLicenseGrantedController.show.url,
+ backLinkUrl = backLink,
+ showSection = true,
+ sectionName = messages("label.section.aboutTheProperty"),
  theForm = theForm
 ) {
 
