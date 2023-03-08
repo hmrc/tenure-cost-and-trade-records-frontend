@@ -271,13 +271,5 @@ POST        /alternate-contact-details                              controllers.
 
 GET         /check-your-answers                                     controllers.Form6010.CheckYourAnswersController.show()
 
-GET         /check-your-answers-franchise-lettings                  controllers.aboutfranchisesorlettings.CheckYourAnswersAboutFranchiseOrLettingsController.show()
-
 GET         /check-your-answers-about-the-property                  controllers.abouttheproperty.CheckYourAnswersAboutThePropertyController.show()
 POST        /check-your-answers-about-the-property                  controllers.abouttheproperty.CheckYourAnswersAboutThePropertyController.submit()
-
-GET         /check-your-answers-about-trading-history               controllers.aboutthetradinghistory.CheckYourAnswersAboutTheTradingHistoryController.show()
-
-GET         /check-your-answers-lease-tenure                        controllers.aboutYourLeaseOrTenure.CheckYourAnswersAboutYourLeaseOrTenureController.show()
-
-GET         /check-your-answers-additional-information              controllers.additionalinformation.CheckYourAnswersAdditionalInformationController.show()

@@ -33,7 +33,7 @@ import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class CheckYourAnswersAboutThePropertyController @Inject()(
+class CheckYourAnswersAboutThePropertyController @Inject() (
   mcc: MessagesControllerComponents,
   navigator: AboutThePropertyNavigator,
   checkYourAnswersAboutThePropertyView: checkYourAnswersAboutTheProperty,
@@ -44,7 +44,6 @@ class CheckYourAnswersAboutThePropertyController @Inject()(
     with I18nSupport
     with Logging {
 
-
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Future.successful(
       Ok(
@@ -52,7 +51,7 @@ class CheckYourAnswersAboutThePropertyController @Inject()(
           request.sessionData.aboutTheProperty.flatMap(_.checkYourAnswersAboutTheProperty) match {
             case Some(checkYourAnswersAboutTheProperty) =>
               checkYourAnswersAboutThePropertyForm.fillAndValidate(checkYourAnswersAboutTheProperty)
-            case _ => checkYourAnswersAboutThePropertyForm
+            case _                                      => checkYourAnswersAboutThePropertyForm
           }
         )
       )
