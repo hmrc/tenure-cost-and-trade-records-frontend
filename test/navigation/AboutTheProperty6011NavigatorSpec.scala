@@ -159,7 +159,7 @@ class AboutTheProperty6011NavigatorSpec extends TestBaseSpec {
         ) mustBe controllers.abouttheproperty.routes.EnforcementActionBeenTakenDetailsController.show()
     }
 
-    "return a function that goes to about the trading history page when enforcement action taken details page has been completed" in {
+    "return a function that goes to about the check answers page when enforcement action taken details page has been completed" in {
       navigator
         .nextPage(EnforcementActionBeenTakenDetailsPageId)
         .apply(
