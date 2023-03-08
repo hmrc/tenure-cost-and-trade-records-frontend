@@ -182,7 +182,7 @@ class AboutTheProperty6010NavigatorSpec extends TestBaseSpec {
         .nextPage(TiedForGoodsDetailsPageId)
         .apply(
           sessionAboutYou6010Yes
-        ) mustBe controllers.aboutthetradinghistory.routes.AboutYourTradingHistoryController.show()
+        ) mustBe controllers.abouttheproperty.routes.CheckYourAnswersAboutThePropertyController.show()
     }
   }
 
