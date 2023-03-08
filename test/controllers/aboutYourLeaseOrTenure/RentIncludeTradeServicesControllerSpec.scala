@@ -16,44 +16,48 @@
 
 package controllers.aboutYourLeaseOrTenure
 
-import form.Errors
+import models.submissions.aboutLeaseOrAgreement.AboutLeaseOrAgreementPartOne
+import navigation.AboutYourLeaseOrTenureNavigator
 import play.api.http.Status
+import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import utils.TestBaseSpec
 
 class RentIncludeTradeServicesControllerSpec extends TestBaseSpec {
 
-  import TestData._
-  import form.aboutYourLeaseOrTenure.RentIncludeTradeServicesForm._
-  import utils.FormBindingTestAssertions._
-
-  private val controller = app.injector.instanceOf[RentIncludeTradeServicesController]
-
+  def rentIncludeTradeServicesController(
+                                         aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
+                                       ) =
+    new RentIncludeTradeServicesController(
+      stubMessagesControllerComponents(),
+      app.injector.instanceOf[AboutYourLeaseOrTenureNavigator],
+      loginView,
+      rentIncludeTradeServicesDetailsView,
+      rentIncludeFixtureAndFittingsView,
+      rentIncludeTradeServicesView,
+      preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
+      mockSessionRepo
+    )
   "RentIncludetradeServices controller" should {
     "return 200" in {
-      val result = controller.show(fakeRequest)
+      val result = rentIncludeTradeServicesController().show(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return HTML" in {
-      val result = controller.show(fakeRequest)
+      val result = rentIncludeTradeServicesController().show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
 
-    "error if rentIncludeTradeServices is missing" in {
-      val formData = baseFormData - errorKey.rentIncludeTradeServices
-      val form     = rentIncludeTradeServicesForm.bind(formData)
-
-      mustContainError(errorKey.rentIncludeTradeServices, Errors.booleanMissing, form)
-    }
   }
 
-  object TestData {
-    val errorKey = new {
-      val rentIncludeTradeServices: String = "rentIncludeTradeServices"
+  "SUBMIT /" should {
+    "throw a BAD_REQUEST if an empty form is submitted" in {
+      val res = rentIncludeTradeServicesController().submit(
+        FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)
+      )
+      status(res) shouldBe BAD_REQUEST
     }
-
-    val baseFormData: Map[String, String] = Map("rentIncludeTradeServices" -> "yes")
   }
 }

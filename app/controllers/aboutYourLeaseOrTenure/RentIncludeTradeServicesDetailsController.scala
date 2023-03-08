@@ -16,15 +16,19 @@
 
 package controllers.aboutYourLeaseOrTenure
 
+import actions.WithSessionRefiner
 import form.Form6010.RentIncludeFixtureAndFittingsForm.rentIncludeFixturesAndFittingsForm
 import form.aboutYourLeaseOrTenure.RentIncludeTradeServicesDetailsForm.rentIncludeTradeServicesDetailsForm
 import navigation.AboutYourLeaseOrTenureNavigator
+import models.submissions.aboutLeaseOrAgreement.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne
+import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.form.rentIncludeFixtureAndFittings
 import views.html.aboutYourLeaseOrTenure.rentIncludeTradeServicesDetails
 
-import javax.inject.{Inject, Singleton}
+import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
 
 @Singleton
@@ -32,21 +36,36 @@ class RentIncludeTradeServicesDetailsController @Inject() (
   mcc: MessagesControllerComponents,
   navigator: AboutYourLeaseOrTenureNavigator,
   rentIncludeFixturesAndFittingsView: rentIncludeFixtureAndFittings,
-  rentIncludeTradeServicesDetailsView: rentIncludeTradeServicesDetails
-) extends FrontendController(mcc) {
+  rentIncludeTradeServicesDetailsView: rentIncludeTradeServicesDetails,
+  withSessionRefiner: WithSessionRefiner,
+  @Named("session") val session: SessionRepo
+) extends FrontendController(mcc)  with I18nSupport{
 
-  def show: Action[AnyContent] = Action.async { implicit request =>
-    Future.successful(Ok(rentIncludeTradeServicesDetailsView(rentIncludeTradeServicesDetailsForm)))
+  def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    Future.successful(
+      Ok(
+        rentIncludeTradeServicesDetailsView(
+          request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.rentIncludeTradeServicesInformation) match {
+            case Some(rentIncludeTradeServicesInformation) => rentIncludeTradeServicesDetailsForm.fillAndValidate(rentIncludeTradeServicesInformation)
+            case _ => rentIncludeTradeServicesDetailsForm
+          }
+        )
+      )
+    )
   }
 
-  def submit = Action.async { implicit request =>
+  def submit = (Action andThen withSessionRefiner).async { implicit request =>
     rentIncludeTradeServicesDetailsForm
       .bindFromRequest()
       .fold(
         formWithErrors => Future.successful(BadRequest(rentIncludeTradeServicesDetailsView(formWithErrors))),
-        data => Future.successful(Ok(rentIncludeFixturesAndFittingsView(rentIncludeFixturesAndFittingsForm)))
+        data => {
+          val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(rentIncludeTradeServicesInformation = Some(data)))
+          session.saveOrUpdate(updatedData)
+          Future.successful(Ok(rentIncludeFixturesAndFittingsView(rentIncludeFixturesAndFittingsForm)))
+        }
         // TODO use this code when session added
-//          Future.successful(Redirect(navigator.nextPage(RentIncludeTradeServicesDetailsPageId).apply(updatedData)))
+        // Future.successful(Redirect(navigator.nextPage(RentIncludeTradeServicesDetailsPageId).apply(updatedData)))
       )
   }
 }

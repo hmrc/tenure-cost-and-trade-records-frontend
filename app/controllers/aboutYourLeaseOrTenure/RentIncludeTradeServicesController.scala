@@ -16,19 +16,23 @@
 
 package controllers.aboutYourLeaseOrTenure
 
+import actions.WithSessionRefiner
 import controllers.LoginController.loginForm
-import form.Form6010.RentIncludeFixtureAndFittingsForm.rentIncludeFixturesAndFittingsForm
 import form.aboutYourLeaseOrTenure.RentIncludeTradeServicesDetailsForm.rentIncludeTradeServicesDetailsForm
 import form.aboutYourLeaseOrTenure.RentIncludeTradeServicesForm.rentIncludeTradeServicesForm
 import models.submissions.common.{AnswerNo, AnswerYes}
 import navigation.AboutYourLeaseOrTenureNavigator
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
+import form.Form6010.RentIncludeFixtureAndFittingsForm.rentIncludeFixturesAndFittingsForm
+import models.submissions.aboutLeaseOrAgreement.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne
+import play.api.i18n.I18nSupport
+import repositories.SessionRepo
 import views.html.aboutYourLeaseOrTenure.{rentIncludeTradeServices, rentIncludeTradeServicesDetails}
 import views.html.form.rentIncludeFixtureAndFittings
 import views.html.login
 
-import javax.inject.{Inject, Singleton}
+import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
 
 @Singleton
@@ -38,14 +42,25 @@ class RentIncludeTradeServicesController @Inject() (
   login: login,
   rentIncludeTradeServicesDetailsView: rentIncludeTradeServicesDetails,
   rentIncludeFixtureAndFittingsView: rentIncludeFixtureAndFittings,
-  rentIncludeTradeServicesView: rentIncludeTradeServices
-) extends FrontendController(mcc) {
+  rentIncludeTradeServicesView: rentIncludeTradeServices,
+  withSessionRefiner: WithSessionRefiner,
+  @Named("session") val session: SessionRepo
+) extends FrontendController(mcc) with I18nSupport {
 
-  def show: Action[AnyContent] = Action.async { implicit request =>
-    Future.successful(Ok(rentIncludeTradeServicesView(rentIncludeTradeServicesForm)))
+  def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    Future.successful(
+      Ok(
+        rentIncludeTradeServicesView(
+          request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.rentIncludeTradeServicesDetails) match {
+            case Some(rentIncludeTradeServicesDetails) => rentIncludeTradeServicesForm.fillAndValidate(rentIncludeTradeServicesDetails)
+            case _ => rentIncludeTradeServicesForm
+          }
+        )
+      )
+    )
   }
 
-  def submit = Action.async { implicit request =>
+  def submit = (Action andThen withSessionRefiner).async { implicit request =>
     rentIncludeTradeServicesForm
       .bindFromRequest()
       .fold(
@@ -55,8 +70,12 @@ class RentIncludeTradeServicesController @Inject() (
           // Future.successful(Redirect(navigator.nextPage(RentIncludeTradeServicesPageId).apply(updatedData)))
           data.rentIncludeTradeServices match {
             case AnswerYes =>
+              val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(rentIncludeTradeServicesDetails = Some(data)))
+              session.saveOrUpdate(updatedData)
               Future.successful(Ok(rentIncludeTradeServicesDetailsView(rentIncludeTradeServicesDetailsForm)))
             case AnswerNo  =>
+              val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(rentIncludeTradeServicesDetails = Some(data)))
+              session.saveOrUpdate(updatedData)
               Future.successful(Ok(rentIncludeFixtureAndFittingsView(rentIncludeFixturesAndFittingsForm)))
             case _         => Future.successful(Ok(login(loginForm)))
           }

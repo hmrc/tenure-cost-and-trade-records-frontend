@@ -16,6 +16,7 @@
 
 package controllers.Form6010
 
+import actions.WithSessionRefiner
 import controllers.LoginController.loginForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
@@ -24,9 +25,12 @@ import form.Form6010.RentOpenMarketValueForm.rentOpenMarketValuesForm
 import form.Form6010.WhatIsYourCurrentRentBasedOnForm.whatIsYourCurrentRentBasedOnForm
 import form.Form6010.RentIncreasedAnnuallyWithRPIForm.rentIncreasedAnnuallyWithRPIDetailsForm
 import models.submissions.Form6010.{RentOpenMarketValuesNo, RentOpenMarketValuesYes}
+import models.submissions.aboutLeaseOrAgreement.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne
+import play.api.i18n.I18nSupport
+import repositories.SessionRepo
 import views.html.login
 
-import javax.inject.{Inject, Singleton}
+import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
 
 @Singleton
@@ -35,14 +39,25 @@ class RentOpenMarketValueController @Inject() (
   login: login,
   rentOpenMarketValueView: rentOpenMarketValue,
   whatIsYourRentBasedOnView: whatIsYourRentBasedOn,
-  rentIncreaseAnnuallyWithRPIView: rentIncreaseAnnuallyWithRPI
-) extends FrontendController(mcc) {
+  rentIncreaseAnnuallyWithRPIView: rentIncreaseAnnuallyWithRPI,
+  withSessionRefiner: WithSessionRefiner,
+  @Named("session") val session: SessionRepo
+) extends FrontendController(mcc)  with I18nSupport{
 
-  def show: Action[AnyContent] = Action.async { implicit request =>
-    Future.successful(Ok(rentOpenMarketValueView(rentOpenMarketValuesForm)))
+  def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    Future.successful(
+      Ok(
+        rentOpenMarketValueView(
+          request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.rentOpenMarketValueDetails) match {
+            case Some(rentOpenMarketValueDetails) => rentOpenMarketValuesForm.fillAndValidate(rentOpenMarketValueDetails)
+            case _ => rentOpenMarketValuesForm
+          }
+        )
+      )
+    )
   }
 
-  def submit = Action.async { implicit request =>
+  def submit = (Action andThen withSessionRefiner).async { implicit request =>
     rentOpenMarketValuesForm
       .bindFromRequest()
       .fold(
@@ -50,8 +65,12 @@ class RentOpenMarketValueController @Inject() (
         data =>
           data.rentOpenMarketValues match {
             case RentOpenMarketValuesYes =>
+              val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(rentOpenMarketValueDetails = Some(data)))
+              session.saveOrUpdate(updatedData)
               Future.successful(Ok(rentIncreaseAnnuallyWithRPIView(rentIncreasedAnnuallyWithRPIDetailsForm)))
             case RentOpenMarketValuesNo  =>
+              val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(rentOpenMarketValueDetails = Some(data)))
+              session.saveOrUpdate(updatedData)
               Future.successful(Ok(whatIsYourRentBasedOnView(whatIsYourCurrentRentBasedOnForm)))
             case _                       => Future.successful(Ok(login(loginForm)))
           }

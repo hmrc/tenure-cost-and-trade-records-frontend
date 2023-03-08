@@ -18,6 +18,7 @@ package controllers.abouttheproperty
 
 import navigation.AboutThePropertyNavigator
 import play.api.http.Status
+import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import play.twirl.api.HtmlFormat
 import utils.TestBaseSpec
@@ -26,9 +27,11 @@ import views.html.taskList
 
 class CheckYourAnswersAboutThePropertyControllerSpec extends TestBaseSpec {
 
+  val backLink = controllers.abouttheproperty.routes.PremisesLicenseGrantedController.show().url
+
   val mockAboutThePropertyNavigator            = mock[AboutThePropertyNavigator]
   val mockCheckYourAnswersAboutThePropertyView = mock[checkYourAnswersAboutTheProperty]
-  when(mockCheckYourAnswersAboutThePropertyView.apply(any)(any, any)).thenReturn(HtmlFormat.empty)
+  when(mockCheckYourAnswersAboutThePropertyView.apply(any, any)(any, any)).thenReturn(HtmlFormat.empty)
 
   val mockTaskListView = mock[taskList]
   when(mockTaskListView.apply()(any, any)).thenReturn(HtmlFormat.empty)

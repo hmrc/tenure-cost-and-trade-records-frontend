@@ -16,24 +16,47 @@
 
 package controllers.aboutYourLeaseOrTenure
 
+import models.submissions.aboutLeaseOrAgreement.AboutLeaseOrAgreementPartOne
+import navigation.AboutYourLeaseOrTenureNavigator
 import play.api.http.Status
+import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import utils.TestBaseSpec
 
 class RentIncludeTradeServicesDetailsControllerSpec extends TestBaseSpec {
 
-  private val controller = app.injector.instanceOf[RentIncludeTradeServicesDetailsController]
 
+
+  def rentIncludeTradeServicesDetailsController(
+                                         aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
+                                       ) =
+    new RentIncludeTradeServicesDetailsController(
+      stubMessagesControllerComponents(),
+      app.injector.instanceOf[AboutYourLeaseOrTenureNavigator],
+      rentIncludeFixtureAndFittingsView,
+      rentIncludeTradeServicesDetailsView,
+      preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
+      mockSessionRepo
+    )
   "GET /" should {
     "return 200" in {
-      val result = controller.show(fakeRequest)
+      val result = rentIncludeTradeServicesDetailsController().show(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return HTML" in {
-      val result = controller.show(fakeRequest)
+      val result = rentIncludeTradeServicesDetailsController().show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
+    }
+  }
+
+  "SUBMIT /" should {
+    "throw a BAD_REQUEST if an empty form is submitted" in {
+      val res = rentIncludeTradeServicesDetailsController().submit(
+        FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)
+      )
+      status(res) shouldBe BAD_REQUEST
     }
   }
 }
