@@ -26,7 +26,7 @@ object CurrentRentBasedOnPercentageOpenMarket extends CurrentRentBasedOn {
   override def name: String = "percentageOpenMarket"
 }
 object CurrentRentBasedOnFixedAmount extends CurrentRentBasedOn {
-  override def name: String= "fixed"
+  override def name: String = "fixed"
 }
 object CurrentRentBasedOnPercentageTurnover extends CurrentRentBasedOn {
   override def name: String = "percentageTurnover"

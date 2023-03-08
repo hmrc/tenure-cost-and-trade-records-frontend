@@ -202,7 +202,8 @@ trait FakeObjects {
     Some(prefilledConnectedToLandlordDetails),
     Some(prefilledLeaseOrAgreementYearsDetails),
     Some(prefilledCurrentRentPayableWithin12Months),
-    Some(prefilledAnnualRent)
+    Some(prefilledAnnualRent),
+    rentIncludeTradeServicesDetails = Some(RentIncludeTradeServicesDetails(AnswerYes))
   )
 
   val prefilledAboutLeaseOrAgreementPartOneNo = AboutLeaseOrAgreementPartOne(
@@ -211,6 +212,7 @@ trait FakeObjects {
     Some(prefilledConnectedToLandlordDetails),
     Some(prefilledLeaseOrAgreementYearsDetailsNo),
     Some(prefilledCurrentRentPayableWithin12Months),
-    Some(prefilledAnnualRent)
+    Some(prefilledAnnualRent),
+    rentIncludeTradeServicesDetails = Some(RentIncludeTradeServicesDetails(AnswerNo))
   )
 }

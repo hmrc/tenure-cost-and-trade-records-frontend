@@ -25,8 +25,8 @@ import utils.TestBaseSpec
 class RentIncludeFixtureAndFittingsDetailsControllerSpec extends TestBaseSpec {
 
   def rentIncludeFixtureAndFittingsDetailsController(
-                                         aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
-                                       ) =
+    aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
+  ) =
     new RentIncludeFixtureAndFittingsDetailsController(
       stubMessagesControllerComponents(),
       rentOpenMarketValueView,

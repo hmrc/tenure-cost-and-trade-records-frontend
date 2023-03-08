@@ -20,6 +20,6 @@ import play.api.libs.json.Json
 
 case class RentIncludeTradeServicesInformationDetails(sumIncludedInRent: BigDecimal, describeTheServices: String)
 
-object RentIncludeTradeServicesInformationDetails{
+object RentIncludeTradeServicesInformationDetails {
   implicit val format = Json.format[RentIncludeTradeServicesInformationDetails]
 }

@@ -37,15 +37,17 @@ class WhatIsYourRentBasedOnController @Inject() (
   whatIsYourRentBasedOnView: whatIsYourRentBasedOn,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FrontendController(mcc) with I18nSupport {
+) extends FrontendController(mcc)
+    with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Future.successful(
       Ok(
         whatIsYourRentBasedOnView(
           request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.whatIsYourCurrentRentBasedOnDetails) match {
-            case Some(whatIsYourCurrentRentBasedOnDetails) => whatIsYourCurrentRentBasedOnForm.fillAndValidate(whatIsYourCurrentRentBasedOnDetails)
-            case None => whatIsYourCurrentRentBasedOnForm
+            case Some(whatIsYourCurrentRentBasedOnDetails) =>
+              whatIsYourCurrentRentBasedOnForm.fillAndValidate(whatIsYourCurrentRentBasedOnDetails)
+            case None                                      => whatIsYourCurrentRentBasedOnForm
           }
         )
       )

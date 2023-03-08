@@ -25,8 +25,8 @@ import utils.TestBaseSpec
 class RentIncreaseAnnuallyWithRPIControllerSpec extends TestBaseSpec {
 
   def rentIncreaseAnnuallyWithRPIController(
-                                         aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
-                                       ) =
+    aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
+  ) =
     new RentIncreaseAnnuallyWithRPIController(
       stubMessagesControllerComponents(),
       rentPayableVaryAccordingToGrossOrNetView,

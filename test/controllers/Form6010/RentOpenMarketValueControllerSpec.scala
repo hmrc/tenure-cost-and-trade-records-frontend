@@ -25,8 +25,8 @@ import utils.TestBaseSpec
 class RentOpenMarketValueControllerSpec extends TestBaseSpec {
 
   def rentOpenMarketValueController(
-                                         aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
-                                       ) =
+    aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
+  ) =
     new RentOpenMarketValueController(
       stubMessagesControllerComponents(),
       loginView,

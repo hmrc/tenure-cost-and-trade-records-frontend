@@ -26,14 +26,11 @@ import utils.TestBaseSpec
 class RentIncludeTradeServicesControllerSpec extends TestBaseSpec {
 
   def rentIncludeTradeServicesController(
-                                         aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
-                                       ) =
+    aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
+  ) =
     new RentIncludeTradeServicesController(
       stubMessagesControllerComponents(),
       app.injector.instanceOf[AboutYourLeaseOrTenureNavigator],
-      loginView,
-      rentIncludeTradeServicesDetailsView,
-      rentIncludeFixtureAndFittingsView,
       rentIncludeTradeServicesView,
       preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
       mockSessionRepo

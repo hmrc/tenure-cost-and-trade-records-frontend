@@ -42,15 +42,17 @@ class RentIncludeFixtureAndFittingsController @Inject() (
   rentOpenMarketValueView: rentOpenMarketValue,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FrontendController(mcc) with I18nSupport {
+) extends FrontendController(mcc)
+    with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Future.successful(
       Ok(
         rentIncludeFixtureAndFittingsView(
           request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.rentIncludeFixturesAndFittingsDetails) match {
-            case Some(rentIncludeFixturesAndFittingsDetails) => rentIncludeFixturesAndFittingsForm.fillAndValidate(rentIncludeFixturesAndFittingsDetails)
-            case _ => rentIncludeFixturesAndFittingsForm
+            case Some(rentIncludeFixturesAndFittingsDetails) =>
+              rentIncludeFixturesAndFittingsForm.fillAndValidate(rentIncludeFixturesAndFittingsDetails)
+            case _                                           => rentIncludeFixturesAndFittingsForm
           }
         )
       )
@@ -65,11 +67,13 @@ class RentIncludeFixtureAndFittingsController @Inject() (
         data =>
           data.rentIncludeFixturesAndFittingsDetails match {
             case RentIncludeFixturesAndFittingsYes =>
-              val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(rentIncludeFixturesAndFittingsDetails = Some(data)))
+              val updatedData =
+                updateAboutLeaseOrAgreementPartOne(_.copy(rentIncludeFixturesAndFittingsDetails = Some(data)))
               session.saveOrUpdate(updatedData)
               Future.successful(Ok(rentIncludeFixtureAndFittingsDetailsView(rentIncludeFixtureAndFittingsDetailsForm)))
             case RentIncludeFixturesAndFittingsNo  =>
-              val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(rentIncludeFixturesAndFittingsDetails = Some(data)))
+              val updatedData =
+                updateAboutLeaseOrAgreementPartOne(_.copy(rentIncludeFixturesAndFittingsDetails = Some(data)))
               session.saveOrUpdate(updatedData)
               Future.successful(Ok(rentOpenMarketValueView(rentOpenMarketValuesForm)))
             case _                                 => Future.successful(Ok(login(loginForm)))
