@@ -33,7 +33,9 @@ class AboutYourLeaseOrTenure6010NavigatorSpec extends TestBaseSpec {
 
   val navigator = new AboutYourLeaseOrTenureNavigator(audit)
 
-  val session6010 = Session(prefilledUserLoginDetails)
+  val session6010   = Session(prefilledUserLoginDetails)
+  val session6010No =
+    Session(prefilledUserLoginDetails, aboutLeaseOrAgreementPartOne = Some(prefilledAboutLeaseOrAgreementPartOneNo))
 
   implicit override val hc: HeaderCarrier = HeaderCarrier()
 
@@ -50,13 +52,19 @@ class AboutYourLeaseOrTenure6010NavigatorSpec extends TestBaseSpec {
         .apply(session6010) mustBe controllers.aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.show()
     }
 
-    "return a function that goes to current annual rent page when lease or agreement details has been completed" in {
+    "return a function that goes to current annual rent page when lease or agreement details with yes has been completed" in {
       navigator
         .nextPage(LeaseOrAgreementDetailsPageId)
         .apply(session6010) mustBe controllers.aboutYourLeaseOrTenure.routes.CurrentAnnualRentController.show()
     }
 
-    // LeaseOrAgreementDetailsPageId all no go to 12 months
+    "return a function that goes to payable within 12 months page when lease or agreement details with no has been completed" in {
+      navigator
+        .nextPage(LeaseOrAgreementDetailsPageId)
+        .apply(
+          session6010No
+        ) mustBe controllers.aboutYourLeaseOrTenure.routes.CurrentRentPayableWithin12MonthsController.show()
+    }
 
     "return a function that goes to task list page when current rent payable within 12 months has been completed" in {
       navigator
@@ -76,6 +84,29 @@ class AboutYourLeaseOrTenure6010NavigatorSpec extends TestBaseSpec {
         .apply(session6010) mustBe controllers.aboutYourLeaseOrTenure.routes.CurrentLeaseOrAgreementBeginController
         .show()
     }
+
+    "return a function that goes to included in your rent page when current lease or agreement begin has been completed" in {
+      navigator
+        .nextPage(CurrentLeaseBeginPageId)
+        .apply(session6010) mustBe controllers.aboutYourLeaseOrTenure.routes.IncludedInYourRentController
+        .show()
+    }
+
+    "return a function that goes to does rent payable page when included in your rent has been completed" in {
+      navigator
+        .nextPage(IncludedInYourRentPageId)
+        .apply(session6010) mustBe controllers.aboutYourLeaseOrTenure.routes.DoesTheRentPayableController
+        .show()
+    }
+
+    "return a function that goes to rent include trade services page when does rent payable has been completed" in {
+      navigator
+        .nextPage(DoesRentPayablePageId)
+        .apply(session6010) mustBe controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesController
+        .show()
+    }
+
+    // TODO Add test for tent includes trade services when part of session
 
   }
 }

@@ -74,6 +74,11 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit)(implicit ec: Exec
     }
   }
 
+  private def rentIncludeTradeServicesRouting: Session => Call = answers => {
+    // TODO when session implemented for this page add logic. yes -> include details page, no -> include fix and fittings
+    controllers.Form6010.routes.RentIncludeFixtureAndFittingsController.show()
+  }
+
   override val routeMap: Map[Identifier, Session => Call] = Map(
     AboutTheLandlordPageId                 -> aboutYourLandlordRouting,
     ConnectedToLandlordPageId              -> connectedToLandlordRouting,
@@ -84,6 +89,13 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit)(implicit ec: Exec
     CurrentRentPayableWithin12monthsPageId -> (_ => controllers.routes.TaskListController.show()),
     CurrentAnnualRentPageId                -> (_ => controllers.aboutYourLeaseOrTenure.routes.CurrentRentFirstPaidController.show()),
     CurrentRentFirstPaidPageId             -> currentRentFirstPaidRouting,
-    TenancyLeaseAgreementExpirePageId      -> (_ => controllers.routes.TaskListController.show())
+    TenancyLeaseAgreementExpirePageId      -> (_ => controllers.routes.TaskListController.show()),
+    CurrentLeaseBeginPageId                -> (_ => controllers.aboutYourLeaseOrTenure.routes.IncludedInYourRentController.show()),
+    IncludedInYourRentPageId               -> (_ => controllers.aboutYourLeaseOrTenure.routes.DoesTheRentPayableController.show()),
+    DoesRentPayablePageId                  -> (_ => controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesController.show()),
+    RentIncludeTradeServicesPageId         -> rentIncludeTradeServicesRouting,
+    RentIncludeTradeServicesDetailsPageId  -> (_ =>
+      controllers.Form6010.routes.RentIncludeFixtureAndFittingsController.show()
+    )
   )
 }

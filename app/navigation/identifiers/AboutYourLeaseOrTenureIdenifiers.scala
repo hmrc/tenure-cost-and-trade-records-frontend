@@ -16,13 +16,9 @@
 
 package navigation.identifiers
 
-case object AboutTheLandlordPageId extends Identifier {
-  override def toString: String = "aboutTheLandlordPage"
-}
+case object AboutTheLandlordPageId extends Identifier { override def toString: String = "aboutTheLandlordPage" }
 
-case object ConnectedToLandlordPageId extends Identifier {
-  override def toString: String = "connectedToLandlordPage"
-}
+case object ConnectedToLandlordPageId extends Identifier { override def toString: String = "connectedToLandlordPage" }
 
 case object ConnectedToLandlordDetailsPageId extends Identifier {
   override def toString: String = "connectedToLandlordDetailsPage"
@@ -36,12 +32,22 @@ case object CurrentRentPayableWithin12monthsPageId extends Identifier {
   override def toString: String = "currentRentPayableWithin12monthsPage"
 }
 
-case object CurrentAnnualRentPageId extends Identifier {
-  override def toString: String = "currentAnnualRentPage"
+case object CurrentAnnualRentPageId extends Identifier { override def toString: String = "currentAnnualRentPage" }
+
+case object CurrentRentFirstPaidPageId extends Identifier { override def toString: String = "currentRentFirstPaidPage" }
+
+case object CurrentLeaseBeginPageId extends Identifier { override def toString: String = "currentLeaseBeginPage" }
+
+case object IncludedInYourRentPageId extends Identifier { override def toString: String = "includedInYourRentPage" }
+
+case object DoesRentPayablePageId extends Identifier { override def toString: String = "doesRentPayablePage" }
+
+case object RentIncludeTradeServicesPageId extends Identifier {
+  override def toString: String = "rentIncludeTradeServicesPage"
 }
 
-case object CurrentRentFirstPaidPageId extends Identifier {
-  override def toString: String = "currentRentFirstPaidPage"
+case object RentIncludeTradeServicesDetailsPageId extends Identifier {
+  override def toString: String = "rentIncludeTradeServicesDetailsPage"
 }
 
 // 6011 page only

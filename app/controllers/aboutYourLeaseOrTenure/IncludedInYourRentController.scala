@@ -17,14 +17,15 @@
 package controllers.aboutYourLeaseOrTenure
 
 import actions.WithSessionRefiner
-import form.aboutYourLeaseOrTenure.DoesTheRentPayableForm.doesTheRentPayableForm
 import form.aboutYourLeaseOrTenure.IncludedInYourRentForm.includedInYourRentForm
 import models.submissions.aboutLeaseOrAgreement.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne
+import navigation.AboutYourLeaseOrTenureNavigator
+import navigation.identifiers.IncludedInYourRentPageId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.aboutYourLeaseOrTenure.{doesTheRentPayable, includedInYourRent}
+import views.html.aboutYourLeaseOrTenure.includedInYourRent
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
@@ -32,7 +33,7 @@ import scala.concurrent.Future
 @Singleton
 class IncludedInYourRentController @Inject() (
   mcc: MessagesControllerComponents,
-  doesTheRentPayableView: doesTheRentPayable,
+  navigator: AboutYourLeaseOrTenureNavigator,
   includedInYourRentView: includedInYourRent,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
@@ -60,7 +61,7 @@ class IncludedInYourRentController @Inject() (
         data => {
           val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(includedInYourRentDetails = Some(data)))
           session.saveOrUpdate(updatedData)
-          Future.successful(Ok(doesTheRentPayableView(doesTheRentPayableForm)))
+          Future.successful(Redirect(navigator.nextPage(IncludedInYourRentPageId).apply(updatedData)))
         }
       )
   }

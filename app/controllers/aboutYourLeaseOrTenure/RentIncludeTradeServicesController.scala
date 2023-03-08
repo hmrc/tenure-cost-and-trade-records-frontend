@@ -21,6 +21,7 @@ import form.Form6010.RentIncludeFixtureAndFittingsForm.rentIncludeFixturesAndFit
 import form.aboutYourLeaseOrTenure.RentIncludeTradeServicesDetailsForm.rentIncludeTradeServicesDetailsForm
 import form.aboutYourLeaseOrTenure.RentIncludeTradeServicesForm.rentIncludeTradeServicesForm
 import models.submissions.common.{AnswerNo, AnswerYes}
+import navigation.AboutYourLeaseOrTenureNavigator
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.aboutYourLeaseOrTenure.{rentIncludeTradeServices, rentIncludeTradeServicesDetails}
@@ -33,6 +34,7 @@ import scala.concurrent.Future
 @Singleton
 class RentIncludeTradeServicesController @Inject() (
   mcc: MessagesControllerComponents,
+  navigator: AboutYourLeaseOrTenureNavigator,
   login: login,
   rentIncludeTradeServicesDetailsView: rentIncludeTradeServicesDetails,
   rentIncludeFixtureAndFittingsView: rentIncludeFixtureAndFittings,
@@ -49,6 +51,8 @@ class RentIncludeTradeServicesController @Inject() (
       .fold(
         formWithErrors => Future.successful(BadRequest(rentIncludeTradeServicesView(formWithErrors))),
         data =>
+          // TODO use this code when session added
+          // Future.successful(Redirect(navigator.nextPage(RentIncludeTradeServicesPageId).apply(updatedData)))
           data.rentIncludeTradeServices match {
             case AnswerYes =>
               Future.successful(Ok(rentIncludeTradeServicesDetailsView(rentIncludeTradeServicesDetailsForm)))

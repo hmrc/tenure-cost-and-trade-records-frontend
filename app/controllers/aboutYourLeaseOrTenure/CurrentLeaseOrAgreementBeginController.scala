@@ -18,13 +18,14 @@ package controllers.aboutYourLeaseOrTenure
 
 import actions.WithSessionRefiner
 import form.aboutYourLeaseOrTenure.CurrentLeaseOrAgreementBeginForm.currentLeaseOrAgreementBeginForm
-import form.aboutYourLeaseOrTenure.IncludedInYourRentForm.includedInYourRentForm
 import models.submissions.aboutLeaseOrAgreement.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne
+import navigation.AboutYourLeaseOrTenureNavigator
+import navigation.identifiers.CurrentLeaseBeginPageId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.aboutYourLeaseOrTenure.{currentLeaseOrAgreementBegin, includedInYourRent}
+import views.html.aboutYourLeaseOrTenure.currentLeaseOrAgreementBegin
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
@@ -32,7 +33,7 @@ import scala.concurrent.Future
 @Singleton
 class CurrentLeaseOrAgreementBeginController @Inject() (
   mcc: MessagesControllerComponents,
-  includedInYourRentView: includedInYourRent,
+  navigator: AboutYourLeaseOrTenureNavigator,
   currentLeaseOrAgreementBeginView: currentLeaseOrAgreementBegin,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
@@ -59,7 +60,7 @@ class CurrentLeaseOrAgreementBeginController @Inject() (
         data => {
           val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(currentLeaseOrAgreementBegin = Some(data)))
           session.saveOrUpdate(updatedData)
-          Future.successful(Ok(includedInYourRentView(includedInYourRentForm)))
+          Future.successful(Redirect(navigator.nextPage(CurrentLeaseBeginPageId).apply(updatedData)))
         }
       )
   }

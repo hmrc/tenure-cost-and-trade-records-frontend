@@ -60,17 +60,17 @@ trait FakeObjects {
   val prefilledCurrentRentPayableWithin12Months =
     CurrentRentPayableWithin12Months(CurrentRentWithin12MonthsYes, prefilledDateInput)
 
-  val prefilledCateringOperationSectionYes  = CateringOperationSection(
+  val prefilledCateringOperationSectionYes    = CateringOperationSection(
     CateringOperationDetails("Operator Name", "Type of Business", prefilledCateringAddress),
     Some(CateringOperationRentDetails(BigDecimal(1500), prefilledDateInput)),
     Some(AnswerYes)
   )
-  val prefilledCateringOperationSectionNo   = CateringOperationSection(
+  val prefilledCateringOperationSectionNo     = CateringOperationSection(
     CateringOperationDetails("Operator Name", "Type of Business", prefilledCateringAddress),
     Some(CateringOperationRentDetails(BigDecimal(1500), prefilledDateInput)),
     Some(AnswerNo)
   )
-  val prefilledLettingSectionYes            = LettingSection(
+  val prefilledLettingSectionYes              = LettingSection(
     aboutfranchisesorlettings.LettingOtherPartOfPropertyInformationDetails(
       "Operator Name",
       "Type of Business",
@@ -79,7 +79,7 @@ trait FakeObjects {
     Some(LettingOtherPartOfPropertyRentDetails(BigDecimal(1500), prefilledDateInput)),
     Some(AnswerYes)
   )
-  val prefilledLettingSectionNo             = LettingSection(
+  val prefilledLettingSectionNo               = LettingSection(
     aboutfranchisesorlettings.LettingOtherPartOfPropertyInformationDetails(
       "Operator Name",
       "Type of Business",
@@ -88,27 +88,29 @@ trait FakeObjects {
     Some(LettingOtherPartOfPropertyRentDetails(BigDecimal(1500), prefilledDateInput)),
     Some(AnswerNo)
   )
-  val prefilledAboutTheLandlord             =
+  val prefilledAboutTheLandlord               =
     AboutTheLandlord(
       prefilledFakeName,
       prefilledLandlordAddress
     )
-  val prefilledConnectedToLandlordDetails   =
+  val prefilledConnectedToLandlordDetails     =
     ConnectedToLandlordInformationDetails(
       "This is some test information"
     )
-  val prefilledLeaseOrAgreementYearsDetails =
+  val prefilledLeaseOrAgreementYearsDetails   =
     LeaseOrAgreementYearsDetails(
       AnswerYes,
       AnswerYes,
       AnswerYes
     )
-  val prefilledUserLoginDetails             =
+  val prefilledLeaseOrAgreementYearsDetailsNo =
+    LeaseOrAgreementYearsDetails(AnswerNo, AnswerNo, AnswerNo)
+  val prefilledUserLoginDetails               =
     UserLoginDetails("Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=", "FOR6010", "99996010004", prefilledAddress)
-  val prefilledUserLoginDetails6015         =
+  val prefilledUserLoginDetails6015           =
     UserLoginDetails("Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=", "FOR6015", "99996015001", prefilledAddress)
-  val prefilledBaseSession                  = Session(prefilledUserLoginDetails)
-  val prefilledRemoveConnection             =
+  val prefilledBaseSession                    = Session(prefilledUserLoginDetails)
+  val prefilledRemoveConnection               =
     RemoveConnectionDetails(
       Some(
         RemoveConnectionsDetails(
@@ -199,6 +201,15 @@ trait FakeObjects {
     None,
     Some(prefilledConnectedToLandlordDetails),
     Some(prefilledLeaseOrAgreementYearsDetails),
+    Some(prefilledCurrentRentPayableWithin12Months),
+    Some(prefilledAnnualRent)
+  )
+
+  val prefilledAboutLeaseOrAgreementPartOneNo = AboutLeaseOrAgreementPartOne(
+    Some(prefilledAboutTheLandlord),
+    None,
+    Some(prefilledConnectedToLandlordDetails),
+    Some(prefilledLeaseOrAgreementYearsDetailsNo),
     Some(prefilledCurrentRentPayableWithin12Months),
     Some(prefilledAnnualRent)
   )

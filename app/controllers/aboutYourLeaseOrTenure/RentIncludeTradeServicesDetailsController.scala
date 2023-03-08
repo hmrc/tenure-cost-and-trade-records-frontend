@@ -18,6 +18,7 @@ package controllers.aboutYourLeaseOrTenure
 
 import form.Form6010.RentIncludeFixtureAndFittingsForm.rentIncludeFixturesAndFittingsForm
 import form.aboutYourLeaseOrTenure.RentIncludeTradeServicesDetailsForm.rentIncludeTradeServicesDetailsForm
+import navigation.AboutYourLeaseOrTenureNavigator
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.form.rentIncludeFixtureAndFittings
@@ -29,6 +30,7 @@ import scala.concurrent.Future
 @Singleton
 class RentIncludeTradeServicesDetailsController @Inject() (
   mcc: MessagesControllerComponents,
+  navigator: AboutYourLeaseOrTenureNavigator,
   rentIncludeFixturesAndFittingsView: rentIncludeFixtureAndFittings,
   rentIncludeTradeServicesDetailsView: rentIncludeTradeServicesDetails
 ) extends FrontendController(mcc) {
@@ -43,6 +45,8 @@ class RentIncludeTradeServicesDetailsController @Inject() (
       .fold(
         formWithErrors => Future.successful(BadRequest(rentIncludeTradeServicesDetailsView(formWithErrors))),
         data => Future.successful(Ok(rentIncludeFixturesAndFittingsView(rentIncludeFixturesAndFittingsForm)))
+        // TODO use this code when session added
+//          Future.successful(Redirect(navigator.nextPage(RentIncludeTradeServicesDetailsPageId).apply(updatedData)))
       )
   }
 }
