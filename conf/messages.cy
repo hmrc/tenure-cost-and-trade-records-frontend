@@ -494,27 +494,22 @@ label.firstOccupy = When did you first occupy the property?
 label.financialYear =When does your current financial year end?
 
 ##CURRENT RENT FIRST PAID
-##############################
+#########################
 currentRentFirstPaid.heading = When was the current rent first paid under the terms of the current lease or agreement?
 label.currentRentFirstPaid = Disregard alterations solely due to changes in the amount of rates or services payable
 
 ##CURRENT LEASE OR AGREEMENT BEGIN
-##############################
-currentLeaseOrAgreementBegin.heading = About your lease or agreement
-label.leaseBegin = When did the current lease or agreement begin?
-hint.leaseBegin = If the current lease was granted to a previous occupier, tell us when it was started by them
+##################################
+currentLeaseOrAgreementBegin.heading = When did the current lease or agreement begin?
+label.currentLeaseOrAgreementBegin = If the current lease was originally assigned to another party, tell us when it was started by them
 label.grantedFor = How long was it granted for?
 suffix.grantedFor = months
-error.leaseBegin.day.required = The date must include a day
-error.leaseBegin.month.required = The date must include a month
-error.leaseBegin.year.required = The date must include a year
 error.empty.required = Please enter how long it was granted for
-error.maxValueRentFreeIsBlank.required = This must be a number
 
 ##INTERVALS OF RENT REVIEW
 ##############################
-currentLeaseOrAgreementBegin.heading = About your lease or agreement
-label.currentLeaseOrAgreementBegin = At what intervals is the rent reviewed under the terms of the lease or agreement?
+#currentLeaseOrAgreementBegin.heading = About your lease or agreement
+#label.currentLeaseOrAgreementBegin = At what intervals is the rent reviewed under the terms of the lease or agreement?
 hint.currentLeaseOrAgreementBegin = Do not include any changes to your rent linked to indexes such as the RPI, or your sales. For example, rent is reviewed annually, every two years, every three years.
 label.nextReview = When is the next rent review due?
 error.nextReview.day.required = The date must include a day
@@ -721,7 +716,6 @@ error.email=Enter an email in the correct format, like name@example.com
 error.isRelated=Select ‘Yes’ if you are still connected
 error.invalid_date = Enter a valid date
 error.date_must_be_in_past = Date must be in the past
-error.number = This must be a number
 error.invalid_number = This must be a number
 error.date_before_1900 = Date must be on or after 1 January 1900
 error.date_before_1900.firstOccupationDate = Date must be on or after 1 January 1900

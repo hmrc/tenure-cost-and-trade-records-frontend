@@ -36,15 +36,17 @@ class RentIncludeFixtureAndFittingsDetailsController @Inject() (
   rentIncludeFixtureAndFittingsDetailsView: rentIncludeFixtureAndFittingsDetails,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FrontendController(mcc)  with I18nSupport{
+) extends FrontendController(mcc)
+    with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Future.successful(
       Ok(
         rentIncludeFixtureAndFittingsDetailsView(
           request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.rentIncludeFixtureAndFittingsDetails) match {
-            case Some(rentIncludeFixtureAndFittingsDetails) => rentIncludeFixtureAndFittingsDetailsForm.fillAndValidate(rentIncludeFixtureAndFittingsDetails)
-            case _ => rentIncludeFixtureAndFittingsDetailsForm
+            case Some(rentIncludeFixtureAndFittingsDetails) =>
+              rentIncludeFixtureAndFittingsDetailsForm.fillAndValidate(rentIncludeFixtureAndFittingsDetails)
+            case _                                          => rentIncludeFixtureAndFittingsDetailsForm
           }
         )
       )
@@ -57,7 +59,8 @@ class RentIncludeFixtureAndFittingsDetailsController @Inject() (
       .fold(
         formWithErrors => Future.successful(BadRequest(rentIncludeFixtureAndFittingsDetailsView(formWithErrors))),
         data => {
-          val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(rentIncludeFixtureAndFittingsDetails = Some(data)))
+          val updatedData =
+            updateAboutLeaseOrAgreementPartOne(_.copy(rentIncludeFixtureAndFittingsDetails = Some(data)))
           session.saveOrUpdate(updatedData)
           Future.successful(Ok(rentOpenMarketValueView(rentOpenMarketValuesForm)))
         }

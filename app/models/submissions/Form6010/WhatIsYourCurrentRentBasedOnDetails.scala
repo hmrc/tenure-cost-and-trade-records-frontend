@@ -23,6 +23,6 @@ case class WhatIsYourCurrentRentBasedOnDetails(
   describe: String
 )
 
-object WhatIsYourCurrentRentBasedOnDetails{
+object WhatIsYourCurrentRentBasedOnDetails {
   implicit val format = Json.format[WhatIsYourCurrentRentBasedOnDetails]
 }

@@ -26,7 +26,7 @@ object CurrentLeaseOrAgreementBeginForm {
 
   val currentLeaseOrAgreementBeginForm = Form(
     mapping(
-      "leaseBegin" -> dateFieldsMapping("leaseBegin", fieldErrorPart = ".leaseBegin"),
+      "leaseBegin" -> dateFieldsMapping("leaseBegin"),
       "grantedFor" -> intMapping()
     )(CurrentLeaseOrAgreementBegin.apply)(CurrentLeaseOrAgreementBegin.unapply)
   )

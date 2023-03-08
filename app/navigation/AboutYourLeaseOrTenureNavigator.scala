@@ -75,8 +75,17 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit)(implicit ec: Exec
   }
 
   private def rentIncludeTradeServicesRouting: Session => Call = answers => {
-    // TODO when session implemented for this page add logic. yes -> include details page, no -> include fix and fittings
-    controllers.Form6010.routes.RentIncludeFixtureAndFittingsController.show()
+    answers.aboutLeaseOrAgreementPartOne.flatMap(
+      _.rentIncludeTradeServicesDetails.map(_.rentIncludeTradeServices.name)
+    ) match {
+      case Some("yes") => controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesDetailsController.show()
+      case Some("no")  => controllers.Form6010.routes.RentIncludeFixtureAndFittingsController.show()
+      case _           =>
+        logger.warn(
+          s"Navigation for rent include trade services reached without correct selection of conditions by controller"
+        )
+        throw new RuntimeException("Invalid option exception for rent include trade services routing")
+    }
   }
 
   override val routeMap: Map[Identifier, Session => Call] = Map(

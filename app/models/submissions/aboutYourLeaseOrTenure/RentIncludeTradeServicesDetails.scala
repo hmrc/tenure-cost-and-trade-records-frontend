@@ -21,7 +21,6 @@ import play.api.libs.json.Json
 
 case class RentIncludeTradeServicesDetails(rentIncludeTradeServices: AnswersYesNo)
 
-
-object RentIncludeTradeServicesDetails{
+object RentIncludeTradeServicesDetails {
   implicit val format = Json.format[RentIncludeTradeServicesDetails]
 }

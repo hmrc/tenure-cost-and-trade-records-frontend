@@ -25,8 +25,8 @@ import utils.TestBaseSpec
 class WhatIsYourRentBasedOnControllerSpec extends TestBaseSpec {
 
   def whatIsYourRentBasedOnController(
-                                         aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
-                                       ) =
+    aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
+  ) =
     new WhatIsYourRentBasedOnController(
       stubMessagesControllerComponents(),
       loginView,

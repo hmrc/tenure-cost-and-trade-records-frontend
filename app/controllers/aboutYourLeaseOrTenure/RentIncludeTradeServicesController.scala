@@ -17,20 +17,15 @@
 package controllers.aboutYourLeaseOrTenure
 
 import actions.WithSessionRefiner
-import controllers.LoginController.loginForm
-import form.aboutYourLeaseOrTenure.RentIncludeTradeServicesDetailsForm.rentIncludeTradeServicesDetailsForm
 import form.aboutYourLeaseOrTenure.RentIncludeTradeServicesForm.rentIncludeTradeServicesForm
-import models.submissions.common.{AnswerNo, AnswerYes}
 import navigation.AboutYourLeaseOrTenureNavigator
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import form.Form6010.RentIncludeFixtureAndFittingsForm.rentIncludeFixturesAndFittingsForm
 import models.submissions.aboutLeaseOrAgreement.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne
+import navigation.identifiers.RentIncludeTradeServicesPageId
 import play.api.i18n.I18nSupport
 import repositories.SessionRepo
-import views.html.aboutYourLeaseOrTenure.{rentIncludeTradeServices, rentIncludeTradeServicesDetails}
-import views.html.form.rentIncludeFixtureAndFittings
-import views.html.login
+import views.html.aboutYourLeaseOrTenure.rentIncludeTradeServices
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
@@ -39,21 +34,20 @@ import scala.concurrent.Future
 class RentIncludeTradeServicesController @Inject() (
   mcc: MessagesControllerComponents,
   navigator: AboutYourLeaseOrTenureNavigator,
-  login: login,
-  rentIncludeTradeServicesDetailsView: rentIncludeTradeServicesDetails,
-  rentIncludeFixtureAndFittingsView: rentIncludeFixtureAndFittings,
   rentIncludeTradeServicesView: rentIncludeTradeServices,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FrontendController(mcc) with I18nSupport {
+) extends FrontendController(mcc)
+    with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Future.successful(
       Ok(
         rentIncludeTradeServicesView(
           request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.rentIncludeTradeServicesDetails) match {
-            case Some(rentIncludeTradeServicesDetails) => rentIncludeTradeServicesForm.fillAndValidate(rentIncludeTradeServicesDetails)
-            case _ => rentIncludeTradeServicesForm
+            case Some(rentIncludeTradeServicesDetails) =>
+              rentIncludeTradeServicesForm.fillAndValidate(rentIncludeTradeServicesDetails)
+            case _                                     => rentIncludeTradeServicesForm
           }
         )
       )
@@ -65,20 +59,11 @@ class RentIncludeTradeServicesController @Inject() (
       .bindFromRequest()
       .fold(
         formWithErrors => Future.successful(BadRequest(rentIncludeTradeServicesView(formWithErrors))),
-        data =>
-          // TODO use this code when session added
-          // Future.successful(Redirect(navigator.nextPage(RentIncludeTradeServicesPageId).apply(updatedData)))
-          data.rentIncludeTradeServices match {
-            case AnswerYes =>
-              val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(rentIncludeTradeServicesDetails = Some(data)))
-              session.saveOrUpdate(updatedData)
-              Future.successful(Ok(rentIncludeTradeServicesDetailsView(rentIncludeTradeServicesDetailsForm)))
-            case AnswerNo  =>
-              val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(rentIncludeTradeServicesDetails = Some(data)))
-              session.saveOrUpdate(updatedData)
-              Future.successful(Ok(rentIncludeFixtureAndFittingsView(rentIncludeFixturesAndFittingsForm)))
-            case _         => Future.successful(Ok(login(loginForm)))
-          }
+        data => {
+          val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(rentIncludeTradeServicesDetails = Some(data)))
+          session.saveOrUpdate(updatedData)
+          Future.successful(Redirect(navigator.nextPage(RentIncludeTradeServicesPageId).apply(updatedData)))
+        }
       )
   }
 }

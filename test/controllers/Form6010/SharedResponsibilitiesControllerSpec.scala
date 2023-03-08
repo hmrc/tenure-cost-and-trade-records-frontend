@@ -25,8 +25,8 @@ import utils.TestBaseSpec
 class SharedResponsibilitiesControllerSpec extends TestBaseSpec {
 
   def sharedResponsibilitiesController(
-                                         aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
-                                       ) =
+    aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
+  ) =
     new SharedResponsibilitiesController(
       stubMessagesControllerComponents(),
       intervalsOfRentReviewView,

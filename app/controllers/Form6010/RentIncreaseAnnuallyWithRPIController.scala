@@ -36,15 +36,17 @@ class RentIncreaseAnnuallyWithRPIController @Inject() (
   rentIncreaseAnnuallyWithRPIView: rentIncreaseAnnuallyWithRPI,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FrontendController(mcc) with I18nSupport {
+) extends FrontendController(mcc)
+    with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Future.successful(
       Ok(
         rentIncreaseAnnuallyWithRPIView(
           request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.rentIncreasedAnnuallyWithRPIDetails) match {
-            case Some(rentIncreasedAnnuallyWithRPIDetails) => rentIncreasedAnnuallyWithRPIDetailsForm.fillAndValidate(rentIncreasedAnnuallyWithRPIDetails)
-            case None => rentIncreasedAnnuallyWithRPIDetailsForm
+            case Some(rentIncreasedAnnuallyWithRPIDetails) =>
+              rentIncreasedAnnuallyWithRPIDetailsForm.fillAndValidate(rentIncreasedAnnuallyWithRPIDetails)
+            case None                                      => rentIncreasedAnnuallyWithRPIDetailsForm
           }
         )
       )
@@ -60,7 +62,7 @@ class RentIncreaseAnnuallyWithRPIController @Inject() (
           val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(rentIncreasedAnnuallyWithRPIDetails = Some(data)))
           session.saveOrUpdate(updatedData)
           Future.successful(Ok(rentPayableVaryAccordingToGrossOrNetView(rentPayableVaryAccordingToGrossOrNetForm)))
-          }
+        }
       )
   }
 }
