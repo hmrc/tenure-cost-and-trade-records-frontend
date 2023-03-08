@@ -17,6 +17,7 @@
 package controllers.aboutYourLeaseOrTenure
 
 import models.submissions.aboutLeaseOrAgreement.AboutLeaseOrAgreementPartOne
+import navigation.AboutYourLeaseOrTenureNavigator
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
@@ -24,12 +25,14 @@ import utils.TestBaseSpec
 
 class IncludedInYourRentDetailsControllerSpec extends TestBaseSpec {
 
+  val mockAboutLeaseOrTenureNavigator = mock[AboutYourLeaseOrTenureNavigator]
+
   def IncludedInYourRentController(
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
   ) =
     new IncludedInYourRentController(
       stubMessagesControllerComponents(),
-      doesTheRentPayableView,
+      mockAboutLeaseOrTenureNavigator,
       includedInYourRentView,
       preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
       mockSessionRepo

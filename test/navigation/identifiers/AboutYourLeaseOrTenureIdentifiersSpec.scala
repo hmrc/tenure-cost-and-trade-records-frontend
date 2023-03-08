@@ -42,6 +42,26 @@ class AboutYourLeaseOrTenureIdentifiersSpec extends TestBaseSpec {
       assert(CurrentRentFirstPaidPageId.toString.equals("currentRentFirstPaidPage"))
     }
 
+    "Identifier for current rent begin page" in {
+      assert(CurrentLeaseBeginPageId.toString.equals("currentLeaseBeginPage"))
+    }
+
+    "Identifier for included in your rent page" in {
+      assert(IncludedInYourRentPageId.toString.equals("includedInYourRentPage"))
+    }
+
+    "Identifier for does rent payable include page" in {
+      assert(DoesRentPayablePageId.toString.equals("doesRentPayablePage"))
+    }
+
+    "Identifier for rent include trade services page" in {
+      assert(RentIncludeTradeServicesPageId.toString.equals("rentIncludeTradeServicesPage"))
+    }
+
+    "Identifier for rent include trade services details page" in {
+      assert(RentIncludeTradeServicesDetailsPageId.toString.equals("rentIncludeTradeServicesDetailsPage"))
+    }
+
     "Identifier for tenancy lease agreement expire page (6011 only)" in {
       assert(TenancyLeaseAgreementExpirePageId.toString.equals("tenancyLeaseAgreementExpirePage"))
     }
