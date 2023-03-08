@@ -209,7 +209,7 @@ class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec {
         .nextPage(AddAnotherLettingAccommodationPageId)
         .apply(
           sessionAboutFranchiseOrLettingNo
-        ) mustBe controllers.routes.TaskListController.show()
+        ) mustBe controllers.Form6010.routes.CheckYourAnswersController.show()
     }
   }
 }

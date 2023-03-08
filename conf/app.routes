@@ -268,3 +268,6 @@ GET         /alternate-contact-details                              controllers.
 POST        /alternate-contact-details                              controllers.additionalinformation.AlternativeContactDetailsController.submit()
 
 GET         /check-your-answers                                     controllers.Form6010.CheckYourAnswersController.show()
+
+GET         /check-your-answers-about-the-property                  controllers.abouttheproperty.CheckYourAnswersAboutThePropertyController.show()
+POST        /check-your-answers-about-the-property                  controllers.abouttheproperty.CheckYourAnswersAboutThePropertyController.submit()

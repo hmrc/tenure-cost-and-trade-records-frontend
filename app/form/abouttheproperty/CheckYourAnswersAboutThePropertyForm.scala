@@ -14,19 +14,17 @@
  * limitations under the License.
  */
 
-package navigation
+package form.abouttheproperty
 
-import connectors.Audit
-import models.Session
-import navigation.identifiers.{AboutYouPageId, Identifier}
-import play.api.mvc.Call
+import models.submissions.abouttheproperty.CheckYourAnswersAboutYourProperty
+import play.api.data.Form
+import play.api.data.Forms.{mapping, text}
 
-import javax.inject.Inject
-import scala.concurrent.ExecutionContext
+object CheckYourAnswersAboutThePropertyForm {
 
-class AboutYouNavigator @Inject() (audit: Audit)(implicit ec: ExecutionContext) extends Navigator(audit) {
-
-  override val routeMap: Map[Identifier, Session => Call] = Map(
-    AboutYouPageId -> (_ => controllers.routes.TaskListController.show())
+  val checkYourAnswersAboutThePropertyForm = Form(
+    mapping(
+      "checkYourAnswersAboutTheProperty" -> text
+    )(CheckYourAnswersAboutYourProperty.apply)(CheckYourAnswersAboutYourProperty.unapply)
   )
 }

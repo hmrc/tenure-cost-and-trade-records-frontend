@@ -91,9 +91,11 @@ class FurtherInformationOrRemarksController @Inject() (
 
   private def getBackLink(answers: Session): Either[String, String] =
     answers.userLoginDetails.forNumber match {
-      case ForTypes.for6010 => Right(controllers.Form6010.routes.TenantsAdditionsDisregardedController.show().url)
-      case ForTypes.for6011 =>
+      case ForTypes.for6010                    => Right(controllers.Form6010.routes.TenantsAdditionsDisregardedController.show().url)
+      case ForTypes.for6011                    =>
         Right(controllers.aboutYourLeaseOrTenure.routes.TenancyLeaseAgreementExpireController.show().url)
-      case _                => Left(s"Unknown form type with further information back link")
+      case ForTypes.for6015 | ForTypes.for6016 =>
+        Right(controllers.Form6010.routes.LegalOrPlanningRestrictionsController.show().url)
+      case _                                   => Left(s"Unknown form type with further information back link")
     }
 }

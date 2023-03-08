@@ -77,10 +77,12 @@ class AboutTheProperty6010NavigatorSpec extends TestBaseSpec {
         .apply(sessionAboutYou6010No) mustBe controllers.abouttheproperty.routes.TiedForGoodsController.show()
     }
 
-    "return a function that goes to about the trading history page when tied for goods page has been completed with no" in {
+    "return a function that goes to about the check answers page when tied for goods page has been completed with no" in {
       navigator
         .nextPage(TiedForGoodsPageId)
-        .apply(sessionAboutYou6010No) mustBe controllers.aboutthetradinghistory.routes.AboutYourTradingHistoryController
+        .apply(
+          sessionAboutYou6010No
+        ) mustBe controllers.abouttheproperty.routes.CheckYourAnswersAboutThePropertyController
         .show()
     }
   }

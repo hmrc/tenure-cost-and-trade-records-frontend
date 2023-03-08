@@ -654,6 +654,12 @@ connectedToLandlordDetails.heading = Describe your relationship to the landlord
 #CHECK YOUR ANSWERS
 ###################
 checkYourAnswers.heading = This is a holding page for the check your answers page
+checkYourAnswersFranchiseOrLettings.heading = This is a holding page for the franchise or lettings check your answers page
+checkYourAnswersAboutYourLeaseOrTenure.heading = This is a holding page for the about your lease or tenure check your answers page
+checkYourAnswersAboutTheProperty.heading = This is a holding page for the about the property check your answers page
+checkYourAnswersAboutTheTradingHistory.heading = This is a holding page for the about your trading history check your answers page
+checkYourAnswersAboutYou.heading = This is a holding page for the about you check your answers page
+checkYourAnswersAdditionalInformation.heading = This is a holding page for the additional information check your answers page
 
 # Help section
 ##############

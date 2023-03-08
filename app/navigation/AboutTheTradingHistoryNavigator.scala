@@ -60,8 +60,6 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit)(implicit ec: Exec
     ),
     FixedOperatingExpensesId      -> (_ => controllers.aboutthetradinghistory.routes.OtherCostsController.show()),
     OtherCostsId                  -> (_ => controllers.aboutthetradinghistory.routes.NetProfitController.show()),
-    NetProfitId                   -> (_ =>
-      controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show()
-    )
+    NetProfitId                   -> (_ => controllers.routes.TaskListController.show())
   )
 }

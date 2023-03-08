@@ -65,3 +65,7 @@ case object TiedForGoodsPageId extends Identifier {
 case object TiedForGoodsDetailsPageId extends Identifier {
   override def toString: String = "tiedForGoodsDetailsPage"
 }
+
+case object CheckYourAnswersAboutThePropertyPageId extends Identifier {
+  override def toString: String = "checkYourAnswersAboutThePropertyPage"
+}

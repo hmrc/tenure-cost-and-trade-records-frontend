@@ -14,19 +14,15 @@
  * limitations under the License.
  */
 
-package navigation
+package models.submissions.abouttheproperty
 
-import connectors.Audit
-import models.Session
-import navigation.identifiers.{AboutYouPageId, Identifier}
-import play.api.mvc.Call
+import play.api.libs.json.Json
 
-import javax.inject.Inject
-import scala.concurrent.ExecutionContext
+case class CheckYourAnswersAboutYourProperty(
+  checkYourAnswersAboutYourProperty: String
+)
 
-class AboutYouNavigator @Inject() (audit: Audit)(implicit ec: ExecutionContext) extends Navigator(audit) {
+object CheckYourAnswersAboutYourProperty {
+  implicit val format = Json.format[CheckYourAnswersAboutYourProperty]
 
-  override val routeMap: Map[Identifier, Session => Call] = Map(
-    AboutYouPageId -> (_ => controllers.routes.TaskListController.show())
-  )
 }
