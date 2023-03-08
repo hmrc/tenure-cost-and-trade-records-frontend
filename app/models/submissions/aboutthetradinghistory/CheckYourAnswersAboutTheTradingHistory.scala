@@ -14,13 +14,15 @@
  * limitations under the License.
  */
 
-package models.submissions.aboutYourLeaseOrTenure
+package models.submissions.aboutthetradinghistory
 
-import models.submissions.common.AnswersYesNo
 import play.api.libs.json.Json
 
-case class RentIncludeTradeServicesDetails(rentIncludeTradeServices: AnswersYesNo)
+case class CheckYourAnswersAboutTheTradingHistory(
+  checkYourAnswersAboutTheTradingHistory: String
+)
 
-object RentIncludeTradeServicesDetails {
-  implicit val format = Json.format[RentIncludeTradeServicesDetails]
+object CheckYourAnswersAboutTheTradingHistory {
+  implicit val format = Json.format[CheckYourAnswersAboutTheTradingHistory]
+
 }

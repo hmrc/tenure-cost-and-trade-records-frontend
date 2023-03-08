@@ -22,6 +22,6 @@ case class SharedResponsibilitiesDetails(
   sharedResponsibilities: String
 )
 
-object SharedResponsibilitiesDetails{
+object SharedResponsibilitiesDetails {
   implicit val format = Json.format[SharedResponsibilitiesDetails]
 }

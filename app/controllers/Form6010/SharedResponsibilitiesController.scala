@@ -36,15 +36,17 @@ class SharedResponsibilitiesController @Inject() (
   sharedResponsibilitiesView: sharedResponsibilities,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FrontendController(mcc) with I18nSupport {
+) extends FrontendController(mcc)
+    with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Future.successful(
       Ok(
         sharedResponsibilitiesView(
           request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.sharedResponsibilitiesDetails) match {
-            case Some(sharedResponsibilitiesDetails) => sharedResponsibilitiesForm.fillAndValidate(sharedResponsibilitiesDetails)
-            case _ => sharedResponsibilitiesForm
+            case Some(sharedResponsibilitiesDetails) =>
+              sharedResponsibilitiesForm.fillAndValidate(sharedResponsibilitiesDetails)
+            case _                                   => sharedResponsibilitiesForm
           }
         )
       )

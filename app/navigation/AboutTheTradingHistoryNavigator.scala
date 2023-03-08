@@ -49,17 +49,20 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit)(implicit ec: Exec
   }
 
   override val routeMap: Map[Identifier, Session => Call] = Map(
-    AboutYourTradingHistoryPageId -> (_ => controllers.aboutthetradinghistory.routes.TurnoverController.show()),
-    TurnoverPageId                -> turnoverRouting,
-    CostOfSalesOrGrossProfitId    -> costOfSalesOrGrossProfitDetailsRouting,
-    CostOfSalesId                 -> (_ => controllers.aboutthetradinghistory.routes.TotalPayrollCostsController.show()),
-    GrossProfitsId                -> (_ => controllers.aboutthetradinghistory.routes.TotalPayrollCostsController.show()),
-    TotalPayrollCostId            -> (_ => controllers.aboutthetradinghistory.routes.VariableOperatingExpensesController.show()),
-    VariableOperatingExpensesId   -> (_ =>
+    AboutYourTradingHistoryPageId            -> (_ => controllers.aboutthetradinghistory.routes.TurnoverController.show()),
+    TurnoverPageId                           -> turnoverRouting,
+    CostOfSalesOrGrossProfitId               -> costOfSalesOrGrossProfitDetailsRouting,
+    CostOfSalesId                            -> (_ => controllers.aboutthetradinghistory.routes.TotalPayrollCostsController.show()),
+    GrossProfitsId                           -> (_ => controllers.aboutthetradinghistory.routes.TotalPayrollCostsController.show()),
+    TotalPayrollCostId                       -> (_ => controllers.aboutthetradinghistory.routes.VariableOperatingExpensesController.show()),
+    VariableOperatingExpensesId              -> (_ =>
       controllers.aboutthetradinghistory.routes.FixedOperatingExpensesController.show()
     ),
-    FixedOperatingExpensesId      -> (_ => controllers.aboutthetradinghistory.routes.OtherCostsController.show()),
-    OtherCostsId                  -> (_ => controllers.aboutthetradinghistory.routes.NetProfitController.show()),
-    NetProfitId                   -> (_ => controllers.routes.TaskListController.show())
+    FixedOperatingExpensesId                 -> (_ => controllers.aboutthetradinghistory.routes.OtherCostsController.show()),
+    OtherCostsId                             -> (_ => controllers.aboutthetradinghistory.routes.NetProfitController.show()),
+    NetProfitId                              -> (_ =>
+      controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show()
+    ),
+    CheckYourAnswersAboutTheTradingHistoryId -> (_ => controllers.routes.TaskListController.show())
   )
 }

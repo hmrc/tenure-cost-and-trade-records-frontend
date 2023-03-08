@@ -20,6 +20,6 @@ import play.api.libs.json.Json
 
 case class RentIncreasedAnnuallyWithRPIDetails(rentIncreasedAnnuallyWithRPIDetails: RentIncreasedAnnuallyWithRPIs)
 
-object RentIncreasedAnnuallyWithRPIDetails{
+object RentIncreasedAnnuallyWithRPIDetails {
   implicit val format = Json.format[RentIncreasedAnnuallyWithRPIDetails]
 }

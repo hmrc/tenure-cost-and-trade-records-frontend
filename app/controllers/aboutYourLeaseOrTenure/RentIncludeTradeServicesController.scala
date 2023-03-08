@@ -45,15 +45,17 @@ class RentIncludeTradeServicesController @Inject() (
   rentIncludeTradeServicesView: rentIncludeTradeServices,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FrontendController(mcc) with I18nSupport {
+) extends FrontendController(mcc)
+    with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Future.successful(
       Ok(
         rentIncludeTradeServicesView(
           request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.rentIncludeTradeServicesDetails) match {
-            case Some(rentIncludeTradeServicesDetails) => rentIncludeTradeServicesForm.fillAndValidate(rentIncludeTradeServicesDetails)
-            case _ => rentIncludeTradeServicesForm
+            case Some(rentIncludeTradeServicesDetails) =>
+              rentIncludeTradeServicesForm.fillAndValidate(rentIncludeTradeServicesDetails)
+            case _                                     => rentIncludeTradeServicesForm
           }
         )
       )

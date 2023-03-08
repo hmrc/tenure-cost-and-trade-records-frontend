@@ -55,3 +55,7 @@ case object OtherCostsId extends Identifier {
 case object NetProfitId extends Identifier {
   override def toString: String = "netProfit"
 }
+
+case object CheckYourAnswersAboutTheTradingHistoryId extends Identifier {
+  override def toString: String = "checkYourAnswersAboutTheTradingHistory"
+}

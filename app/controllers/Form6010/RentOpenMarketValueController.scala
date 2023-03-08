@@ -42,15 +42,17 @@ class RentOpenMarketValueController @Inject() (
   rentIncreaseAnnuallyWithRPIView: rentIncreaseAnnuallyWithRPI,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FrontendController(mcc)  with I18nSupport{
+) extends FrontendController(mcc)
+    with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Future.successful(
       Ok(
         rentOpenMarketValueView(
           request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.rentOpenMarketValueDetails) match {
-            case Some(rentOpenMarketValueDetails) => rentOpenMarketValuesForm.fillAndValidate(rentOpenMarketValueDetails)
-            case _ => rentOpenMarketValuesForm
+            case Some(rentOpenMarketValueDetails) =>
+              rentOpenMarketValuesForm.fillAndValidate(rentOpenMarketValueDetails)
+            case _                                => rentOpenMarketValuesForm
           }
         )
       )

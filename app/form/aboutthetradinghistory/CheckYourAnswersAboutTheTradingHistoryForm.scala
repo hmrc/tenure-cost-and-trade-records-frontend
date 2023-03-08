@@ -14,13 +14,17 @@
  * limitations under the License.
  */
 
-package models.submissions.aboutYourLeaseOrTenure
+package form.aboutthetradinghistory
 
-import models.submissions.common.AnswersYesNo
-import play.api.libs.json.Json
+import models.submissions.aboutthetradinghistory.CheckYourAnswersAboutTheTradingHistory
+import play.api.data.Form
+import play.api.data.Forms.{mapping, text}
 
-case class RentIncludeTradeServicesDetails(rentIncludeTradeServices: AnswersYesNo)
+object CheckYourAnswersAboutTheTradingHistoryForm {
 
-object RentIncludeTradeServicesDetails {
-  implicit val format = Json.format[RentIncludeTradeServicesDetails]
+  val checkYourAnswersAboutTheTradingHistoryForm = Form(
+    mapping(
+      "checkYourAnswersAboutTheTradingHistory" -> text
+    )(CheckYourAnswersAboutTheTradingHistory.apply)(CheckYourAnswersAboutTheTradingHistory.unapply)
+  )
 }
