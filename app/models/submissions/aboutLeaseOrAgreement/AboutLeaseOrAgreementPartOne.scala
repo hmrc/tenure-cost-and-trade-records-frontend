@@ -17,7 +17,7 @@
 package models.submissions.aboutLeaseOrAgreement
 
 import actions.SessionRequest
-import models.submissions.Form6010.UltimatelyResponsible
+import models.submissions.Form6010._
 import models.{AnnualRent, Session}
 import models.submissions.aboutYourLeaseOrTenure._
 import models.submissions.common.AnswersYesNo
@@ -34,7 +34,15 @@ case class AboutLeaseOrAgreementPartOne(
   currentLeaseOrAgreementBegin: Option[CurrentLeaseOrAgreementBegin] = None,
   includedInYourRentDetails: Option[IncludedInYourRentDetails] = None,
   doesTheRentPayable: Option[DoesTheRentPayable] = None,
-  ultimatelyResponsible: Option[UltimatelyResponsible] = None
+  ultimatelyResponsible: Option[UltimatelyResponsible] = None,
+  sharedResponsibilitiesDetails: Option[SharedResponsibilitiesDetails] = None,
+  rentIncludeTradeServicesDetails: Option[RentIncludeTradeServicesDetails] = None,
+  rentIncludeTradeServicesInformation: Option[RentIncludeTradeServicesInformationDetails] = None,
+  rentIncludeFixturesAndFittingsDetails: Option[RentIncludeFixturesAndFittingsDetails] = None,
+  rentIncludeFixtureAndFittingsDetails: Option[AnnualRent] = None,
+  rentOpenMarketValueDetails: Option[RentOpenMarketValueDetails] = None,
+  whatIsYourCurrentRentBasedOnDetails: Option[WhatIsYourCurrentRentBasedOnDetails] = None,
+  rentIncreasedAnnuallyWithRPIDetails: Option[RentIncreasedAnnuallyWithRPIDetails] = None
 )
 
 object AboutLeaseOrAgreementPartOne {

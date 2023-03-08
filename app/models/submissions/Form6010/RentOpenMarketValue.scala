@@ -16,18 +16,23 @@
 
 package models.submissions.Form6010
 
-import models.{NamedEnum, NamedEnumSupport}
+import models.{EnumFormat, NamedEnum, NamedEnumSupport}
+import play.api.libs.json.Format
 
 sealed trait RentOpenMarketValues extends NamedEnum {
-  val key = "rentOpenMarketValue"
+  override def key: String = "rentOpenMarketValue"
 }
 object RentOpenMarketValuesYes extends RentOpenMarketValues {
-  val name = "yes"
+  override def name: String = "yes"
 }
 object RentOpenMarketValuesNo extends RentOpenMarketValues {
-  val name = "no"
+  override def name: String = "no"
 }
 
-object RentOpenMarketValue extends NamedEnumSupport[RentOpenMarketValues] {
+object RentOpenMarketValues extends NamedEnumSupport[RentOpenMarketValues] {
+  implicit val format: Format[RentOpenMarketValues] = EnumFormat(RentOpenMarketValues)
+
   val all = List(RentOpenMarketValuesYes, RentOpenMarketValuesNo)
+
+  val key = all.head.key
 }
