@@ -83,15 +83,15 @@ object Formats {
   implicit val enforcementActionFormat: Formatter[EnforcementAction]                                         =
     namedEnumFormatter(EnforcementAction, Errors.booleanMissing)
   implicit val rentIncreasedAnnuallyWithRPIsFormat: Formatter[RentIncreasedAnnuallyWithRPIs]                 =
-    namedEnumFormatter(RentIncreasedAnnuallyWithRPI, Errors.booleanMissing)
+    namedEnumFormatter(RentIncreasedAnnuallyWithRPIs, Errors.booleanMissing)
   implicit val rentPayableVaryAccordingToGrossOrNetsFormat: Formatter[RentPayableVaryAccordingToGrossOrNets] =
     namedEnumFormatter(RentPayableVaryAccordingToGrossOrNet, Errors.booleanMissing)
   implicit val rentPayableVaryOnQuantityOfBeersFormat: Formatter[RentPayableVaryOnQuantityOfBeers]           =
     namedEnumFormatter(RentPayableVaryOnQuantityOfBeer, Errors.booleanMissing)
   implicit val rentIncludeFixturesAndFittingsFormat: Formatter[RentIncludeFixturesAndFittings]               =
-    namedEnumFormatter(RentIncludeFixturesAndFitting, Errors.booleanMissing)
+    namedEnumFormatter(RentIncludeFixturesAndFittings, Errors.booleanMissing)
   implicit val rentOpenMarketValuesFormat: Formatter[RentOpenMarketValues]                                   =
-    namedEnumFormatter(RentOpenMarketValue, Errors.booleanMissing)
+    namedEnumFormatter(RentOpenMarketValues, Errors.booleanMissing)
   implicit val pastConnectionFormat: Formatter[PastConnectionType]                                           =
     namedEnumFormatter(PastConnectionType, Errors.booleanMissing)
   implicit val methodToFixCurrentRentDetailsFormat: Formatter[MethodToFixCurrentRents]                       =
@@ -138,7 +138,7 @@ object Formats {
     namedEnumFormatter(CurrentRentWithin12Months, Errors.booleanMissing)
 
   implicit val whatIsYourRentBasedOnFormatter: Formatter[CurrentRentBasedOn] =
-    namedEnumFormatter(CurrentRentBased, Errors.booleanMissing)
+    namedEnumFormatter(CurrentRentBasedOn, Errors.booleanMissing)
 
   implicit val premisesLicenseGrantedFormatter: Formatter[PremisesLicenseGranted] =
     namedEnumFormatter(PremisesLicenseGranted, Errors.booleanMissing)

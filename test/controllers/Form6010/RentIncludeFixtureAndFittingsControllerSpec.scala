@@ -16,54 +16,46 @@
 
 package controllers.Form6010
 
-import form.Errors
+import models.submissions.aboutLeaseOrAgreement.AboutLeaseOrAgreementPartOne
 import play.api.http.Status
+import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import utils.TestBaseSpec
 
 class RentIncludeFixtureAndFittingsControllerSpec extends TestBaseSpec {
 
-  import TestData._
-  import form.Form6010.RentIncludeFixtureAndFittingsForm._
-  import utils.FormBindingTestAssertions._
-
-//  override def fakeApplication(): Application =
-//    new GuiceApplicationBuilder()
-//      .configure(
-//        "metrics.jvm"     -> false,
-//        "metrics.enabled" -> false
-//      )
-//      .build()
-
-//  private val fakeRequest = FakeRequest("GET", "/")
-
-  private val controller = app.injector.instanceOf[RentIncludeFixtureAndFittingsController]
-
+  def rentIncludeFixtureAndFittingsController(
+                                         aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
+                                       ) =
+    new RentIncludeFixtureAndFittingsController(
+      stubMessagesControllerComponents(),
+      loginView,
+      rentIncludeFixtureAndFittingsView,
+      rentIncludeFixtureAndFittingsDetailsView,
+      rentOpenMarketValueView,
+      preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
+      mockSessionRepo
+    )
   "RentIncludeFixtureAndFittings controller" should {
     "return 200" in {
-      val result = controller.show(fakeRequest)
+      val result = rentIncludeFixtureAndFittingsController().show(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return HTML" in {
-      val result = controller.show(fakeRequest)
+      val result = rentIncludeFixtureAndFittingsController().show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
 
-    "error if rentIncludeFixturesAndFittings is missing" in {
-      val formData = baseFormData - errorKey.rentIncludeFixturesAndFittings
-      val form     = rentIncludeFixturesAndFittingsForm.bind(formData)
-
-      mustContainError(errorKey.rentIncludeFixturesAndFittings, Errors.booleanMissing, form)
-    }
   }
 
-  object TestData {
-    val errorKey = new {
-      val rentIncludeFixturesAndFittings: String = "rentIncludeFixturesAndFittings"
+  "SUBMIT /" should {
+    "throw a BAD_REQUEST if an empty form is submitted" in {
+      val res = rentIncludeFixtureAndFittingsController().submit(
+        FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)
+      )
+      status(res) shouldBe BAD_REQUEST
     }
-
-    val baseFormData: Map[String, String] = Map("rentIncludeFixturesAndFittings" -> "yes")
   }
 }

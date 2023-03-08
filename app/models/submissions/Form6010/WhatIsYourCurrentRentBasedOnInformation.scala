@@ -16,31 +16,35 @@
 
 package models.submissions.Form6010
 
-import models.{NamedEnum, NamedEnumSupport}
+import models.{EnumFormat, NamedEnum, NamedEnumSupport}
+import play.api.libs.json.Format
 
 sealed trait CurrentRentBasedOn extends NamedEnum {
-  val key = "whatIsYourRentBasedOn"
+  override def key: String = "whatIsYourRentBasedOn"
 }
 object CurrentRentBasedOnPercentageOpenMarket extends CurrentRentBasedOn {
-  val name = "percentageOpenMarket"
+  override def name: String = "percentageOpenMarket"
 }
 object CurrentRentBasedOnFixedAmount extends CurrentRentBasedOn {
-  val name = "fixed"
+  override def name: String= "fixed"
 }
 object CurrentRentBasedOnPercentageTurnover extends CurrentRentBasedOn {
-  val name = "percentageTurnover"
+  override def name: String = "percentageTurnover"
 }
 object CurrentRentBasedOnIndexedToRPI extends CurrentRentBasedOn {
-  val name = "indexed"
+  override def name: String = "indexed"
 }
 object CurrentRentBasedOnSteppedRent extends CurrentRentBasedOn {
-  val name = "stepped"
+  override def name: String = "stepped"
 }
 object CurrentRentBasedOnOther extends CurrentRentBasedOn {
-  val name = "other"
+  override def name: String = "other"
 }
 
-object CurrentRentBased extends NamedEnumSupport[CurrentRentBasedOn] {
+object CurrentRentBasedOn extends NamedEnumSupport[CurrentRentBasedOn] {
+
+  implicit val format: Format[CurrentRentBasedOn] = EnumFormat(CurrentRentBasedOn)
+
   val all = List(
     CurrentRentBasedOnPercentageOpenMarket,
     CurrentRentBasedOnFixedAmount,
@@ -49,4 +53,6 @@ object CurrentRentBased extends NamedEnumSupport[CurrentRentBasedOn] {
     CurrentRentBasedOnSteppedRent,
     CurrentRentBasedOnOther
   )
+
+  val key = all.head.key
 }

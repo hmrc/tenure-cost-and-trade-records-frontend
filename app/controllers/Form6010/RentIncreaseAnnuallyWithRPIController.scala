@@ -16,33 +16,51 @@
 
 package controllers.Form6010
 
+import actions.WithSessionRefiner
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.form.{rentIncreaseAnnuallyWithRPI, rentPayableVaryAccordingToGrossOrNet}
 import form.Form6010.RentIncreasedAnnuallyWithRPIForm.rentIncreasedAnnuallyWithRPIDetailsForm
 import form.Form6010.RentPayableVaryAccordingToGrossOrNetForm.rentPayableVaryAccordingToGrossOrNetForm
+import models.submissions.aboutLeaseOrAgreement.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne
+import play.api.i18n.I18nSupport
+import repositories.SessionRepo
 
-import javax.inject.{Inject, Singleton}
+import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
 
 @Singleton
 class RentIncreaseAnnuallyWithRPIController @Inject() (
   mcc: MessagesControllerComponents,
   rentPayableVaryAccordingToGrossOrNetView: rentPayableVaryAccordingToGrossOrNet,
-  rentIncreaseAnnuallyWithRPIView: rentIncreaseAnnuallyWithRPI
-) extends FrontendController(mcc) {
+  rentIncreaseAnnuallyWithRPIView: rentIncreaseAnnuallyWithRPI,
+  withSessionRefiner: WithSessionRefiner,
+  @Named("session") val session: SessionRepo
+) extends FrontendController(mcc) with I18nSupport {
 
-  def show: Action[AnyContent] = Action.async { implicit request =>
-    Future.successful(Ok(rentIncreaseAnnuallyWithRPIView(rentIncreasedAnnuallyWithRPIDetailsForm)))
+  def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    Future.successful(
+      Ok(
+        rentIncreaseAnnuallyWithRPIView(
+          request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.rentIncreasedAnnuallyWithRPIDetails) match {
+            case Some(rentIncreasedAnnuallyWithRPIDetails) => rentIncreasedAnnuallyWithRPIDetailsForm.fillAndValidate(rentIncreasedAnnuallyWithRPIDetails)
+            case None => rentIncreasedAnnuallyWithRPIDetailsForm
+          }
+        )
+      )
+    )
   }
 
-  def submit = Action.async { implicit request =>
+  def submit = (Action andThen withSessionRefiner).async { implicit request =>
     rentIncreasedAnnuallyWithRPIDetailsForm
       .bindFromRequest()
       .fold(
         formWithErrors => Future.successful(BadRequest(rentIncreaseAnnuallyWithRPIView(formWithErrors))),
-        data =>
+        data => {
+          val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(rentIncreasedAnnuallyWithRPIDetails = Some(data)))
+          session.saveOrUpdate(updatedData)
           Future.successful(Ok(rentPayableVaryAccordingToGrossOrNetView(rentPayableVaryAccordingToGrossOrNetForm)))
+          }
       )
   }
 }

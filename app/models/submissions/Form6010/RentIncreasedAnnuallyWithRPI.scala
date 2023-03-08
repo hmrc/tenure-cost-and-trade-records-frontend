@@ -16,18 +16,24 @@
 
 package models.submissions.Form6010
 
-import models.{NamedEnum, NamedEnumSupport}
+import models.{EnumFormat, NamedEnum, NamedEnumSupport}
+import play.api.libs.json.Format
 
 sealed trait RentIncreasedAnnuallyWithRPIs extends NamedEnum {
-  val key = "rentIncreasedAnnuallyWithRPIs"
+  override def key: String = "rentIncreasedAnnuallyWithRPIs"
 }
 object RentIncreasedAnnuallyWithRPIYes extends RentIncreasedAnnuallyWithRPIs {
-  val name = "yes"
+  override def name: String = "yes"
 }
 object RentIncreasedAnnuallyWithRPINo extends RentIncreasedAnnuallyWithRPIs {
-  val name = "no"
+  override def name: String = "no"
 }
 
-object RentIncreasedAnnuallyWithRPI extends NamedEnumSupport[RentIncreasedAnnuallyWithRPIs] {
+object RentIncreasedAnnuallyWithRPIs extends NamedEnumSupport[RentIncreasedAnnuallyWithRPIs] {
+  implicit val format: Format[RentIncreasedAnnuallyWithRPIs] = EnumFormat(RentIncreasedAnnuallyWithRPIs)
+
   val all = List(RentIncreasedAnnuallyWithRPIYes, RentIncreasedAnnuallyWithRPINo)
+
+  val key = all.head.key
+
 }

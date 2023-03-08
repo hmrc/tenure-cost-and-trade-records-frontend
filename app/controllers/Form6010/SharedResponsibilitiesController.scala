@@ -16,32 +16,51 @@
 
 package controllers.Form6010
 
+import actions.WithSessionRefiner
 import form.Form6010.IntervalsOfRentReviewForm.intervalsOfRentReviewForm
 import form.Form6010.SharedResponsibilitiesForm.sharedResponsibilitiesForm
+import models.submissions.aboutLeaseOrAgreement.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne
+import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.form.{intervalsOfRentReview, sharedResponsibilities}
 
-import javax.inject.{Inject, Singleton}
+import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
 
 @Singleton
 class SharedResponsibilitiesController @Inject() (
   mcc: MessagesControllerComponents,
   intervalsOfRentReviewView: intervalsOfRentReview,
-  sharedResponsibilitiesView: sharedResponsibilities
-) extends FrontendController(mcc) {
+  sharedResponsibilitiesView: sharedResponsibilities,
+  withSessionRefiner: WithSessionRefiner,
+  @Named("session") val session: SessionRepo
+) extends FrontendController(mcc) with I18nSupport {
 
-  def show: Action[AnyContent] = Action.async { implicit request =>
-    Future.successful(Ok(sharedResponsibilitiesView(sharedResponsibilitiesForm)))
+  def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    Future.successful(
+      Ok(
+        sharedResponsibilitiesView(
+          request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.sharedResponsibilitiesDetails) match {
+            case Some(sharedResponsibilitiesDetails) => sharedResponsibilitiesForm.fillAndValidate(sharedResponsibilitiesDetails)
+            case _ => sharedResponsibilitiesForm
+          }
+        )
+      )
+    )
   }
 
-  def submit = Action.async { implicit request =>
+  def submit = (Action andThen withSessionRefiner).async { implicit request =>
     sharedResponsibilitiesForm
       .bindFromRequest()
       .fold(
         formWithErrors => Future.successful(BadRequest(sharedResponsibilitiesView(formWithErrors))),
-        data => Future.successful(Ok(intervalsOfRentReviewView(intervalsOfRentReviewForm)))
+        data => {
+          val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(sharedResponsibilitiesDetails = Some(data)))
+          session.saveOrUpdate(updatedData)
+          Future.successful(Ok(intervalsOfRentReviewView(intervalsOfRentReviewForm)))
+        }
       )
   }
 

@@ -16,4 +16,10 @@
 
 package models.submissions.Form6010
 
+import play.api.libs.json.Json
+
 case class RentOpenMarketValueDetails(rentOpenMarketValues: RentOpenMarketValues)
+
+object RentOpenMarketValueDetails {
+  implicit val format = Json.format[RentOpenMarketValueDetails]
+}

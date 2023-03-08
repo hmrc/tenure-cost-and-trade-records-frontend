@@ -16,6 +16,12 @@
 
 package models.submissions.Form6010
 
+import play.api.libs.json.Json
+
 case class SharedResponsibilitiesDetails(
   sharedResponsibilities: String
 )
+
+object SharedResponsibilitiesDetails{
+  implicit val format = Json.format[SharedResponsibilitiesDetails]
+}
