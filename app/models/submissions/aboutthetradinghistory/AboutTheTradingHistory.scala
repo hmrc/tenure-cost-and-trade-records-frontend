@@ -29,7 +29,8 @@ case class AboutTheTradingHistory(
   netProfit: Option[NetProfit] = None,
   otherCosts: Option[OtherCosts] = None,
   totalPayrollCost: Option[TotalPayrollCost] = None,
-  variableOperatingExpenses: Option[VariableOperatingExpenses] = None
+  variableOperatingExpenses: Option[VariableOperatingExpenses] = None,
+  checkYourAnswersAboutTheTradingHistory: Option[CheckYourAnswersAboutTheTradingHistory] = None
 )
 
 object AboutTheTradingHistory {

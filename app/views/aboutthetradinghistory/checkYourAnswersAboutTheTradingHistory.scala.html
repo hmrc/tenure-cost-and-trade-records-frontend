@@ -16,24 +16,24 @@
 
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
-@import models.submissions.abouttheproperty.CheckYourAnswersAboutYourProperty
+@import models.submissions.aboutthetradinghistory.CheckYourAnswersAboutTheTradingHistory
 
 @this(layout: Layout,
         govukButton: GovukButton,
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[CheckYourAnswersAboutYourProperty], backLink: String)(implicit request: Request[_], messages: Messages)
+@(theForm: Form[CheckYourAnswersAboutTheTradingHistory], backLink: String)(implicit request: Request[_], messages: Messages)
 
 @layout(
- pageHeading = messages("checkYourAnswersAboutTheProperty.heading"),
+ pageHeading = messages("checkYourAnswersAboutTheTradingHistory.heading"),
  backLinkUrl = backLink,
  showSection = true,
- sectionName = messages("label.section.aboutTheProperty"),
+ sectionName = messages("label.section.aboutTheTradingHistory"),
  theForm = theForm
 ) {
 
- @formWithCSRF(action = controllers.abouttheproperty.routes.CheckYourAnswersAboutThePropertyController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
+ @formWithCSRF(action = controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
 
   <dl class="govuk-summary-list">
   <div id="fullName" class="govuk-summary-list__row">
