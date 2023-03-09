@@ -33,7 +33,8 @@ class AboutYourLeaseOrTenure6010NavigatorSpec extends TestBaseSpec {
 
   val navigator = new AboutYourLeaseOrTenureNavigator(audit)
 
-  val session6010   = Session(prefilledUserLoginDetails)
+  val session6010   =
+    Session(prefilledUserLoginDetails, aboutLeaseOrAgreementPartOne = Some(prefilledAboutLeaseOrAgreementPartOne))
   val session6010No =
     Session(prefilledUserLoginDetails, aboutLeaseOrAgreementPartOne = Some(prefilledAboutLeaseOrAgreementPartOneNo))
 
@@ -106,6 +107,26 @@ class AboutYourLeaseOrTenure6010NavigatorSpec extends TestBaseSpec {
         .show()
     }
 
+    "return a function that goes to rent include trade services details  page when rent include trade services with yes has been completed" in {
+      navigator
+        .nextPage(RentIncludeTradeServicesPageId)
+        .apply(session6010) mustBe controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesDetailsController
+        .show()
+    }
+
+    "return a function that goes to fixture and fittings page when include trade services with no has been completed" in {
+      navigator
+        .nextPage(RentIncludeTradeServicesPageId)
+        .apply(session6010No) mustBe controllers.Form6010.routes.RentIncludeFixtureAndFittingsController
+        .show()
+    }
+
+    "return a function that goes to fixture and fittings page when include trade services details has been completed" in {
+      navigator
+        .nextPage(RentIncludeTradeServicesDetailsPageId)
+        .apply(session6010) mustBe controllers.Form6010.routes.RentIncludeFixtureAndFittingsController
+        .show()
+    }
     // TODO Add test for tent includes trade services when part of session
 
   }

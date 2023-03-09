@@ -31,7 +31,6 @@ class RentIncludeTradeServicesDetailsControllerSpec extends TestBaseSpec {
     new RentIncludeTradeServicesDetailsController(
       stubMessagesControllerComponents(),
       app.injector.instanceOf[AboutYourLeaseOrTenureNavigator],
-      rentIncludeFixtureAndFittingsView,
       rentIncludeTradeServicesDetailsView,
       preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
       mockSessionRepo
