@@ -17,7 +17,7 @@
 package models
 
 import models.submissions.aboutLeaseOrAgreement.AboutLeaseOrAgreementPartOne
-import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
+import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, CheckYourAnswersAboutFranchiseOrLettings}
 import models.submissions.abouttheproperty.AboutTheProperty
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory
 import models.submissions.aboutyou.AboutYou

@@ -274,3 +274,6 @@ POST        /check-your-answers-about-the-property                  controllers.
 
 GET         /check-your-answers-about-the-trading-history           controllers.aboutthetradinghistory.CheckYourAnswersAboutTheTradingHistoryController.show()
 POST        /check-your-answers-about-the-trading-history           controllers.aboutthetradinghistory.CheckYourAnswersAboutTheTradingHistoryController.submit()
+
+GET         /check-your-answers-about-franchise-or-lettings         controllers.aboutfranchisesorlettings.CheckYourAnswersAboutFranchiseOrLettingsController.show()
+POST        /check-your-answers-about-franchise-or-lettings         controllers.aboutfranchisesorlettings.CheckYourAnswersAboutFranchiseOrLettingsController.submit()

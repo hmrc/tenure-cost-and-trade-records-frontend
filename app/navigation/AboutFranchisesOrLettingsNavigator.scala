@@ -38,7 +38,8 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit)(implicit ec: E
           case _                                   =>
             controllers.aboutfranchisesorlettings.routes.CateringOperationController.show()
         }
-      case Some("no")  => controllers.routes.TaskListController.show() // TODO Insert CYA page.
+      case Some("no")  =>
+        controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show()
       case _           =>
         logger.warn(
           s"Navigation for franchise or letting reached without correct selection of conditions by controller"
@@ -95,7 +96,8 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit)(implicit ec: E
     answers.aboutFranchisesOrLettings.flatMap(_.lettingOtherPartOfProperty.map(_.name)) match {
       case Some("yes") =>
         controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsController.show()
-      case Some("no")  => controllers.routes.TaskListController.show()
+      case Some("no")  =>
+        controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show()
       case _           =>
         logger.warn(
           s"Navigation for lettings reached without correct selection of conditions by controller"
@@ -126,7 +128,8 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit)(implicit ec: E
     val existingSection = answers.aboutFranchisesOrLettings.flatMap(_.lettingSections.lift(getLettingsIndex(answers)))
     existingSection.flatMap(_.addAnotherLettingToProperty).get.name match {
       case "yes" => controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsController.show()
-      case "no"  => controllers.Form6010.routes.CheckYourAnswersController.show() // TODO Insert CYA page.
+      case "no"  =>
+        controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show()
       case _     =>
         logger.warn(
           s"Navigation for add another letting reached without correct selection of conditions by controller"
@@ -136,16 +139,17 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit)(implicit ec: E
   }
 
   override val routeMap: Map[Identifier, Session => Call] = Map(
-    FranchiseOrLettingsTiedToPropertyId    -> franchiseOrLettingConditionsRouting,
-    CateringOperationPageId                -> cateringOperationsConditionsRouting,
-    CateringOperationDetailsPageId         -> cateringOperationsDetailsConditionsRouting,
-    CateringOperationRentDetailsPageId     -> cateringOperationsRentDetailsConditionsRouting,
-    CateringOperationRentIncludesPageId    -> cateringOperationsRentIncludesConditionsRouting,
-    AddAnotherCateringOperationPageId      -> addAnotherCateringOperationsConditionsRouting,
-    LettingAccommodationPageId             -> lettingAccommodationConditionsRouting,
-    LettingAccommodationDetailsPageId      -> lettingsDetailsConditionsRouting,
-    LettingAccommodationRentDetailsPageId  -> lettingsRentDetailsConditionsRouting,
-    LettingAccommodationRentIncludesPageId -> lettingsRentIncludesConditionsRouting,
-    AddAnotherLettingAccommodationPageId   -> addAnotherLettingsConditionsRouting
+    FranchiseOrLettingsTiedToPropertyId        -> franchiseOrLettingConditionsRouting,
+    CateringOperationPageId                    -> cateringOperationsConditionsRouting,
+    CateringOperationDetailsPageId             -> cateringOperationsDetailsConditionsRouting,
+    CateringOperationRentDetailsPageId         -> cateringOperationsRentDetailsConditionsRouting,
+    CateringOperationRentIncludesPageId        -> cateringOperationsRentIncludesConditionsRouting,
+    AddAnotherCateringOperationPageId          -> addAnotherCateringOperationsConditionsRouting,
+    LettingAccommodationPageId                 -> lettingAccommodationConditionsRouting,
+    LettingAccommodationDetailsPageId          -> lettingsDetailsConditionsRouting,
+    LettingAccommodationRentDetailsPageId      -> lettingsRentDetailsConditionsRouting,
+    LettingAccommodationRentIncludesPageId     -> lettingsRentIncludesConditionsRouting,
+    AddAnotherLettingAccommodationPageId       -> addAnotherLettingsConditionsRouting,
+    CheckYourAnswersAboutFranchiseOrLettingsId -> (_ => controllers.routes.TaskListController.show())
   )
 }

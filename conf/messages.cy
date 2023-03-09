@@ -60,7 +60,7 @@ label.section.checkBeforeStart = Check before you start
 label.section.aboutYou = About you
 label.section.aboutTheProperty = About the property
 label.section.aboutYourTradingHistory = About your trading history
-label.section.aboutTheFranchiseLettings = Franchises or lettings tied to the property
+label.section.aboutTheFranchiseOrLettings = Franchises or lettings tied to the property
 label.section.aboutYourLeaseOrTenure = About your lease or agreement
 label.section.additionalInformation = Additional information
 
@@ -649,7 +649,7 @@ connectedToLandlordDetails.heading = Describe your relationship to the landlord
 #CHECK YOUR ANSWERS
 ###################
 checkYourAnswers.heading = This is a holding page for the check your answers page
-checkYourAnswersFranchiseOrLettings.heading = This is a holding page for the franchise or lettings check your answers page
+checkYourAnswersAboutFranchiseOrLettings.heading = This is a holding page for the franchise or lettings check your answers page
 checkYourAnswersAboutYourLeaseOrTenure.heading = This is a holding page for the about your lease or tenure check your answers page
 checkYourAnswersAboutTheProperty.heading = This is a holding page for the about the property check your answers page
 checkYourAnswersAboutTheTradingHistory.heading = This is a holding page for the about your trading history check your answers page

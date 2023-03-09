@@ -20,6 +20,7 @@ import actions.SessionRequest
 import models.submissions.Form6010._
 import models.{AnnualRent, Session}
 import models.submissions.aboutYourLeaseOrTenure._
+import models.submissions.aboutfranchisesorlettings.CheckYourAnswersAboutFranchiseOrLettings
 import models.submissions.common.AnswersYesNo
 import play.api.libs.json.Json
 
