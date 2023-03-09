@@ -60,7 +60,7 @@ label.section.checkBeforeStart = Check before you start
 label.section.aboutYou = About you
 label.section.aboutTheProperty = About the property
 label.section.aboutYourTradingHistory = About your trading history
-label.section.aboutTheFranchiseOrLettings = Franchises or lettings tied to the property
+label.section.aboutTheFranchiseLettings = Franchises or lettings tied to the property
 label.section.aboutYourLeaseOrTenure = About your lease or agreement
 label.section.additionalInformation = Additional information
 

@@ -28,7 +28,7 @@ class CheckYourAnswersAboutFranchiseOrLettingsViewSpec
   def checkYourAnswersAboutFranchiseOrLettingsView =
     app.injector.instanceOf[views.html.aboutfranchisesorlettings.checkYourAnswersAboutFranchiseOrLettings]
 
-  val messageKeyPrefix = "checkYourAnswersFranchiseOrLettings"
+  val messageKeyPrefix = "checkYourAnswersAboutFranchiseOrLettings"
 
   override val form = CheckYourAnswersAboutFranchiseOrLettingsForm.checkYourAnswersAboutFranchiseOrLettingsForm
 
@@ -54,7 +54,7 @@ class CheckYourAnswersAboutFranchiseOrLettingsViewSpec
     "Section heading is visible" in {
       val doc         = asDocument(createViewUsingForm(form)) // govuk-caption-m
       val sectionText = doc.getElementsByClass("govuk-caption-m").text()
-      assert(sectionText == messages("label.section.aboutTheFranchiseOrLettings"))
+      assert(sectionText == messages("label.section.aboutTheFranchiseLettings"))
     }
 
     "contain save and continue button with the value Save and Continue" in {
