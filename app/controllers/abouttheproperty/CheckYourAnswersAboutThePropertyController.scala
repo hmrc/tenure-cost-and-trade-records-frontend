@@ -18,8 +18,6 @@ package controllers.abouttheproperty
 
 import actions.WithSessionRefiner
 import navigation.AboutThePropertyNavigator
-import models.submissions.abouttheproperty.AboutTheProperty.updateAboutTheProperty
-import navigation.identifiers.CheckYourAnswersAboutThePropertyPageId
 import form.abouttheproperty.CheckYourAnswersAboutThePropertyForm.checkYourAnswersAboutThePropertyForm
 import models.{ForTypes, Session}
 import play.api.Logging

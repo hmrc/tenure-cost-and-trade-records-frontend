@@ -19,7 +19,7 @@ package controllers.aboutthetradinghistory
 import actions.WithSessionRefiner
 import form.aboutthetradinghistory.CheckYourAnswersAboutTheTradingHistoryForm.checkYourAnswersAboutTheTradingHistoryForm
 import models.{ForTypes, Session}
-import navigation.AboutThePropertyNavigator
+import navigation.AboutTheTradingHistoryNavigator
 import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
@@ -34,7 +34,7 @@ import scala.concurrent.Future
 @Singleton
 class CheckYourAnswersAboutTheTradingHistoryController @Inject() (
   mcc: MessagesControllerComponents,
-  navigator: AboutThePropertyNavigator,
+  navigator: AboutTheTradingHistoryNavigator,
   checkYourAnswersAboutTheTradingHistoryView: checkYourAnswersAboutTheTradingHistory,
   taskListView: taskList,
   withSessionRefiner: WithSessionRefiner,
@@ -50,7 +50,7 @@ class CheckYourAnswersAboutTheTradingHistoryController @Inject() (
           request.sessionData.aboutTheTradingHistory.flatMap(_.checkYourAnswersAboutTheTradingHistory) match {
             case Some(checkYourAnswersAboutTheTradingHistory) =>
               checkYourAnswersAboutTheTradingHistoryForm.fillAndValidate(checkYourAnswersAboutTheTradingHistory)
-            case _                                      => checkYourAnswersAboutTheTradingHistoryForm
+            case _                                            => checkYourAnswersAboutTheTradingHistoryForm
           },
           getBackLink(request.sessionData)
         )
@@ -64,29 +64,11 @@ class CheckYourAnswersAboutTheTradingHistoryController @Inject() (
 
   private def getBackLink(answers: Session): String =
     answers.userLoginDetails.forNumber match {
-      case ForTypes.for6010                    =>
-        answers.aboutTheProperty.flatMap(_.tiedForGoods.map(_.name)) match {
-          case Some("yes") => controllers.abouttheproperty.routes.TiedForGoodsDetailsController.show().url
-          case Some("no")  => controllers.abouttheproperty.routes.TiedForGoodsController.show().url
-          case _           =>
-            logger.warn(s"Back link for enforcement action page reached with unknown enforcement taken value")
-            controllers.routes.TaskListController.show().url
-        }
-      case ForTypes.for6011                    =>
-        answers.aboutTheProperty.flatMap(_.enforcementAction.map(_.name)) match {
-          case Some("yes") => controllers.abouttheproperty.routes.EnforcementActionBeenTakenDetailsController.show().url
-          case Some("no")  => controllers.abouttheproperty.routes.EnforcementActionBeenTakenController.show().url
-          case _           =>
-            logger.warn(s"Back link for enforcement action details page reached with unknown enforcement taken value")
-            controllers.routes.TaskListController.show().url
-        }
-      case ForTypes.for6015 | ForTypes.for6016 =>
-        answers.aboutTheProperty.flatMap(_.premisesLicenseGrantedDetail.map(_.name)) match {
-          case Some("yes") => controllers.abouttheproperty.routes.PremisesLicenseGrantedDetailsController.show().url
-          case Some("no")  => controllers.abouttheproperty.routes.PremisesLicenseGrantedController.show().url
-          case _           =>
-            logger.warn(s"Back link for premises license page reached with unknown enforcement taken value")
-            controllers.routes.TaskListController.show().url
-        }
+      case ForTypes.for6010 | ForTypes.for6011 | ForTypes.for6016 =>
+        controllers.aboutthetradinghistory.routes.TurnoverController.show().url
+      case ForTypes.for6015                                       => controllers.aboutthetradinghistory.routes.NetProfitController.show().url
+      case _                                                      =>
+        logger.warn(s"Back link for enforcement action page reached with unknown enforcement taken value")
+        controllers.routes.TaskListController.show().url
     }
 }

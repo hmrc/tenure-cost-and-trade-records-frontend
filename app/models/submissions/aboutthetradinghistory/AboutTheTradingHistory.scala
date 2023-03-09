@@ -31,7 +31,7 @@ case class AboutTheTradingHistory(
   totalPayrollCost: Option[TotalPayrollCost] = None,
   variableOperatingExpenses: Option[VariableOperatingExpenses] = None,
   checkYourAnswersAboutTheTradingHistory: Option[CheckYourAnswersAboutTheTradingHistory] = None
-                                 )
+)
 
 object AboutTheTradingHistory {
   implicit val format = Json.format[AboutTheTradingHistory]

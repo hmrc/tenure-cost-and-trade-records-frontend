@@ -33,7 +33,7 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit)(implicit ec: Exec
     if (answers.userLoginDetails.forNumber == ForTypes.for6015)
       controllers.aboutthetradinghistory.routes.CostOfSalesOrGrossProfitDetailsController.show()
     else
-      controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show()
+      controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show()
   }
 
   private def costOfSalesOrGrossProfitDetailsRouting: Session => Call = answers => {

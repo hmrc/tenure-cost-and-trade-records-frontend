@@ -22,7 +22,7 @@ import models.submissions.aboutyou.{AboutYou, CustomerDetails}
 import models.submissions.common.ContactDetails
 import models.submissions.connectiontoproperty.{AddressConnectionTypeYes, StillConnectedDetails}
 import models.submissions.notconnected.{RemoveConnectionDetails, RemoveConnectionsDetails}
-import navigation.identifiers.{AboutYourTradingHistoryPageId, Identifier, TurnoverPageId}
+import navigation.identifiers.{AboutYourTradingHistoryPageId, CheckYourAnswersAboutTheTradingHistoryId, CostOfSalesId, CostOfSalesOrGrossProfitId, FixedOperatingExpensesId, GrossProfitsId, Identifier, OtherCostsId, TotalPayrollCostId, TurnoverPageId, VariableOperatingExpensesId}
 import org.scalatest.matchers.must.Matchers.convertToAnyMustWrapper
 import play.api.libs.json.JsObject
 import uk.gov.hmrc.http.HeaderCarrier
@@ -67,12 +67,43 @@ class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec {
         .apply(sessionAboutYou) mustBe controllers.aboutthetradinghistory.routes.TurnoverController.show()
     }
 
-    "return a function that goes the franchises tied page when turnover has been completed" in {
+    "return a function that goes the total payroll costs page when about your cost of sales has been completed" in {
       navigator
-        .nextPage(TurnoverPageId)
+        .nextPage(CostOfSalesId)
+        .apply(sessionAboutYou) mustBe controllers.aboutthetradinghistory.routes.TotalPayrollCostsController.show()
+    }
+
+    "return a function that goes the gross profit page when about your total payroll has been completed" in {
+      navigator
+        .nextPage(GrossProfitsId)
+        .apply(sessionAboutYou) mustBe controllers.aboutthetradinghistory.routes.TotalPayrollCostsController.show()
+    }
+
+    "return a function that goes the variable operating expenses page when total payroll page has been completed" in {
+      navigator
+        .nextPage(TotalPayrollCostId)
         .apply(
           sessionAboutYou
-        ) mustBe controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show()
+        ) mustBe controllers.aboutthetradinghistory.routes.VariableOperatingExpensesController.show()
     }
+
+    "return a function that goes the fixed operating expenses page when variable operating expenses has been completed" in {
+      navigator
+        .nextPage(VariableOperatingExpensesId)
+        .apply(sessionAboutYou) mustBe controllers.aboutthetradinghistory.routes.FixedOperatingExpensesController.show()
+    }
+
+    "return a function that goes other costs page when fixed operating expenses has been completed" in {
+      navigator
+        .nextPage(FixedOperatingExpensesId)
+        .apply(sessionAboutYou) mustBe controllers.aboutthetradinghistory.routes.OtherCostsController.show()
+    }
+
+    "return a function that goes the task lists page when total payroll cost has been completed" in {
+      navigator
+        .nextPage(CheckYourAnswersAboutTheTradingHistoryId)
+        .apply(sessionAboutYou) mustBe controllers.routes.TaskListController.show()
+    }
+
   }
 }
