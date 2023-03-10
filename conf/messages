@@ -7,7 +7,7 @@ phase.beta = BETA
 phase.text = This is a new service – your <a href="{0}" class="govuk-link" target="_blank" id="betaFeedback">feedback</a> will help us to improve it.
 button.label.continue = Save and continue
 back.link.label = Back
-button.label.save = Save
+button.label.save = Save as draft
 label.checkTheForm = There is a problem
 error.title = Error:
 hintText.optional = (optional)
