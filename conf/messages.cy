@@ -7,7 +7,7 @@ phase.beta = BETA
 phase.text = Mae hwn yn wasanaeth newydd – bydd eich <a href="{0}" class="govuk-link" target="_blank" id="betaFeedback">adborth</a> yn ein helpu i’w wella
 button.label.continue = Yn eich blaen
 back.link.label = Yn ôl
-button.label.save = Cadw ar gyfer nes ymlaen
+button.label.save = Cadw fel drafft
 label.checkTheForm = Mae problem wedi codi
 error.title = Gwall:
 hintText.optional = (opsiynol)
