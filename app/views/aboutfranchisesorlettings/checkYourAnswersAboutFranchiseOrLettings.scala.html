@@ -37,7 +37,7 @@
 
   <dl class="govuk-summary-list">
   <div id="fullName" class="govuk-summary-list__row">
-   <dt class="govuk-summary-list__key">Full name</dt>
+   <dt class="govuk-summary-list__key">Operator's Name</dt>
    <dd class="govuk-summary-list__value">
     John Smith
    </dd>
@@ -47,9 +47,9 @@
   </div>
 
   <div id="userType" class="govuk-summary-list__row">
-   <dt class="govuk-summary-list__key">Current Occupier</dt>
+   <dt class="govuk-summary-list__key">Type of business</dt>
    <dd class="govuk-summary-list__value">
-   Jane Smith
+   Hotel
    </dd>
    <dd class="govuk-summary-list__actions">
     <a href="/sending-rental-information/page/2?edit=userType#userType" class="govuk-link">Change <span class="govuk-visually-hidden">I am (or represent) the</span></a>
@@ -57,15 +57,19 @@
   </div>
 
   <div id="userType" class="govuk-summary-list__row">
-   <dt class="govuk-summary-list__key">Current use of property</dt>
-   <dd class="govuk-summary-list__value">Hotel
+   <dt class="govuk-summary-list__key">Correspondence address</dt>
+   <dd class="govuk-summary-list__value">
+    1 Jones Street
+    Townley
+    JO1 3NS
    </dd>
    <dd class="govuk-summary-list__actions">
     <a href="/sending-rental-information/page/2?edit=userType#userType" class="govuk-link">Change <span class="govuk-visually-hidden">I am (or represent) the</span></a>
    </dd>
   </div>
-}
+  </dl>
 
- @includes.continueButton(govukButton)
+  @includes.continueButton(govukButton)
 
+ }
 }

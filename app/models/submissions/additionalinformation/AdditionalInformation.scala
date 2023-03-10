@@ -20,7 +20,10 @@ import actions.SessionRequest
 import models.Session
 import play.api.libs.json.Json
 
-case class AdditionalInformation(furtherInformationOrRemarksDetails: Option[FurtherInformationOrRemarksDetails] = None)
+case class AdditionalInformation(
+  furtherInformationOrRemarksDetails: Option[FurtherInformationOrRemarksDetails] = None,
+  checkYourAnswersAdditionalInformation: Option[CheckYourAnswersAdditionalInformation] = None
+)
 
 object AdditionalInformation {
   implicit val format = Json.format[AdditionalInformation]

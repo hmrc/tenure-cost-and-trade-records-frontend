@@ -15,36 +15,64 @@
  *@
 
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
-
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukErrorSummary
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukDateInput
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukTextarea
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukCharacterCount
+@import models.submissions.additionalinformation.CheckYourAnswersAdditionalInformation
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
-
-
 
 @this(layout: Layout,
         govukButton: GovukButton,
-        govukRadios: GovukRadios,
-        govukInput: GovukInput,
-        govukErrorSummary: GovukErrorSummary,
-        govukDateInput: GovukDateInput,
-        govukTextarea: GovukTextarea,
-        govukCharacterCount: GovukCharacterCount,
         formWithCSRF: FormWithCSRF
 )
 
-
-@()(implicit request: Request[_], messages: Messages)
+@(theForm: Form[CheckYourAnswersAdditionalInformation])(implicit request: Request[_], messages: Messages)
 
 @layout(
  pageHeading = messages("checkYourAnswersAdditionalInformation.heading"),
+ showSection = true,
+ sectionName = messages("label.section.additionalInformation"),
  backLinkUrl = controllers.additionalinformation.routes.AlternativeContactDetailsController.show.url,
 ) {
 
+ @formWithCSRF(action = controllers.additionalinformation.routes.CheckYourAnswersAdditionalInformationController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
+
+
+  <dl class="govuk-summary-list">
+   <div id="fullName" class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">Full name</dt>
+    <dd class="govuk-summary-list__value">
+     John Smith
+    </dd>
+    <dd class="govuk-summary-list__actions">
+     <a href="/sending-rental-information/page/2?edit=fullName#fullName" class="govuk-link">
+      Change <span class="govuk-visually-hidden">Full name</span></a>
+    </dd>
+   </div>
+
+   <div id="userType" class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">Telephone Number</dt>
+    <dd class="govuk-summary-list__value">
+     0123456789
+    </dd>
+    <dd class="govuk-summary-list__actions">
+     <a href="/sending-rental-information/page/2?edit=userType#userType" class="govuk-link">
+      Change <span class="govuk-visually-hidden">I am (or represent) the</span></a>
+    </dd>
+   </div>
+
+   <div id="userType" class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">Email address</dt>
+    <dd class="govuk-summary-list__value">
+     thisisatest@@test.com
+    </dd>
+    <dd class="govuk-summary-list__actions">
+     <a href="/sending-rental-information/page/2?edit=userType#userType" class="govuk-link">
+      Change <span class="govuk-visually-hidden">I am (or represent) the</span></a>
+    </dd>
+   </div>
+  </dl>
+
+  @includes.continueButton(govukButton)
+
+ }
 }
 
 
