@@ -27,6 +27,6 @@ import scala.concurrent.ExecutionContext
 class AboutYouNavigator @Inject() (audit: Audit)(implicit ec: ExecutionContext) extends Navigator(audit) {
 
   override val routeMap: Map[Identifier, Session => Call] = Map(
-    AboutYouPageId -> (_ => controllers.routes.TaskListController.show())
+    AboutYouPageId -> (_ => controllers.abouttheproperty.routes.AboutThePropertyController.show())
   )
 }

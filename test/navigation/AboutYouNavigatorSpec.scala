@@ -64,7 +64,7 @@ class AboutYouNavigatorSpec extends TestBaseSpec {
     "return a function that goes to about the property page when about you has been completed" in {
       navigator
         .nextPage(AboutYouPageId)
-        .apply(sessionAboutYou) mustBe controllers.routes.TaskListController.show()
+        .apply(sessionAboutYou) mustBe controllers.abouttheproperty.routes.AboutThePropertyController.show()
     }
   }
 }

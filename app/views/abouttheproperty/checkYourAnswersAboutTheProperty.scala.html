@@ -36,36 +36,41 @@
  @formWithCSRF(action = controllers.abouttheproperty.routes.CheckYourAnswersAboutThePropertyController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
 
   <dl class="govuk-summary-list">
-  <div id="fullName" class="govuk-summary-list__row">
-   <dt class="govuk-summary-list__key">Full name</dt>
-   <dd class="govuk-summary-list__value">
-    John Smith
-   </dd>
-   <dd class="govuk-summary-list__actions">
-    <a href="/sending-rental-information/page/2?edit=fullName#fullName" class="govuk-link">Change <span class="govuk-visually-hidden">Full name</span></a>
-   </dd>
-  </div>
+   <div id="fullName" class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">Full name</dt>
+    <dd class="govuk-summary-list__value">
+     John Smith
+    </dd>
+    <dd class="govuk-summary-list__actions">
+     <a href="/sending-rental-information/page/2?edit=fullName#fullName" class="govuk-link">
+      Change <span class="govuk-visually-hidden">Full name</span></a>
+    </dd>
+   </div>
 
-  <div id="userType" class="govuk-summary-list__row">
-   <dt class="govuk-summary-list__key">Current Occupier</dt>
-   <dd class="govuk-summary-list__value">
-   Jane Smith
-   </dd>
-   <dd class="govuk-summary-list__actions">
-    <a href="/sending-rental-information/page/2?edit=userType#userType" class="govuk-link">Change <span class="govuk-visually-hidden">I am (or represent) the</span></a>
-   </dd>
-  </div>
+   <div id="userType" class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">Current Occupier</dt>
+    <dd class="govuk-summary-list__value">
+     Jane Smith
+    </dd>
+    <dd class="govuk-summary-list__actions">
+     <a href="/sending-rental-information/page/2?edit=userType#userType" class="govuk-link">
+      Change <span class="govuk-visually-hidden">I am (or represent) the</span></a>
+    </dd>
+   </div>
 
-  <div id="userType" class="govuk-summary-list__row">
-   <dt class="govuk-summary-list__key">Current use of property</dt>
-   <dd class="govuk-summary-list__value">Hotel
-   </dd>
-   <dd class="govuk-summary-list__actions">
-    <a href="/sending-rental-information/page/2?edit=userType#userType" class="govuk-link">Change <span class="govuk-visually-hidden">I am (or represent) the</span></a>
-   </dd>
-  </div>
-}
+   <div id="userType" class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">Current use of property</dt>
+    <dd class="govuk-summary-list__value">Hotel
+    </dd>
+    <dd class="govuk-summary-list__actions">
+     <a href="/sending-rental-information/page/2?edit=userType#userType" class="govuk-link">
+      Change <span class="govuk-visually-hidden">I am (or represent) the</span></a>
+    </dd>
+   </div>
+  </dl>
 
- @includes.continueButton(govukButton)
 
+  @includes.continueButton(govukButton)
+
+ }
 }

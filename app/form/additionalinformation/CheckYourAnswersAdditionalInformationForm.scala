@@ -14,16 +14,17 @@
  * limitations under the License.
  */
 
-package navigation.identifiers
+package form.additionalinformation
 
-case object AdditionalInformationId extends Identifier {
-  override def toString: String = "additionalInformationPage"
-}
+import models.submissions.additionalinformation.CheckYourAnswersAdditionalInformation
+import play.api.data.Form
+import play.api.data.Forms.{mapping, text}
 
-case object AlternativeContactDetailsId extends Identifier {
-  override def toString: String = "alternativeContactDetailsPage"
-}
+object CheckYourAnswersAdditionalInformationForm {
 
-case object CheckYourAnswersAdditionalInformationId extends Identifier {
-  override def toString: String = "checkYourAnswersAdditionalInformationPage"
+  val checkYourAnswersAdditionalInformationForm = Form(
+    mapping(
+      "checkYourAnswersAdditionalInformation" -> text
+    )(CheckYourAnswersAdditionalInformation.apply)(CheckYourAnswersAdditionalInformation.unapply)
+  )
 }
