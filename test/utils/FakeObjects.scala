@@ -17,7 +17,6 @@
 package utils
 
 import models.submissions.aboutfranchisesorlettings._
-
 import models.submissions.abouttheproperty.PremisesLicenseGrantedNo
 import models.submissions.aboutLeaseOrAgreement.AboutLeaseOrAgreementPartOne
 import models.submissions.aboutYourLeaseOrTenure._
@@ -27,7 +26,7 @@ import models.submissions.abouttheproperty._
 import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, AboutYourTradingHistory}
 import models.submissions.aboutyou.{AboutYou, CustomerDetails}
 import models.submissions.additionalinformation._
-import models.{AnnualRent, Session, UserLoginDetails}
+import models.{AnnualRent, Session, SubmissionDraft, UserLoginDetails}
 import models.submissions.common.{Address, AnswerNo, AnswerYes, ContactDetails}
 import models.submissions.connectiontoproperty.{AddressConnectionTypeYes, StillConnectedDetails}
 import models.submissions.notconnected.{RemoveConnectionDetails, RemoveConnectionsDetails}
@@ -110,6 +109,7 @@ trait FakeObjects {
   val prefilledUserLoginDetails6015           =
     UserLoginDetails("Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=", "FOR6015", "99996015001", prefilledAddress)
   val prefilledBaseSession                    = Session(prefilledUserLoginDetails)
+  val submissionDraft                         = SubmissionDraft("FOR6010", prefilledBaseSession, "password")
   val prefilledRemoveConnection               =
     RemoveConnectionDetails(
       Some(
