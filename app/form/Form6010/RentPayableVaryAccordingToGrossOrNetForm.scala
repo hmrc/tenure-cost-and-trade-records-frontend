@@ -16,7 +16,7 @@
 
 package form.Form6010
 
-import form.MappingSupport.rentPayableVaryAccordingToGrossOrNetDetailsType
+import form.MappingSupport.yesNoType
 import models.submissions.Form6010.RentPayableVaryAccordingToGrossOrNetDetails
 import play.api.data.Form
 import play.api.data.Forms.mapping
@@ -25,7 +25,7 @@ object RentPayableVaryAccordingToGrossOrNetForm {
 
   val rentPayableVaryAccordingToGrossOrNetForm = Form(
     mapping(
-      "rentPayableVaryAccordingToGrossOrNet" -> rentPayableVaryAccordingToGrossOrNetDetailsType
+      "rentPayableVaryAccordingToGrossOrNet" -> yesNoType
     )(RentPayableVaryAccordingToGrossOrNetDetails.apply)(RentPayableVaryAccordingToGrossOrNetDetails.unapply)
   )
 }

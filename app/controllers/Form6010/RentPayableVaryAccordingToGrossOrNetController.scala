@@ -23,7 +23,7 @@ import views.html.form.{rentPayableVaryAccordingToGrossOrNet, rentPayableVaryAcc
 import form.Form6010.RentPayableVaryAccordingToGrossOrNetForm.rentPayableVaryAccordingToGrossOrNetForm
 import form.Form6010.RentPayableVaryAccordingToGrossOrNetDetailsForm.rentPayableVaryAccordingToGrossOrNetInformationForm
 import form.Form6010.RentPayableVaryOnQuantityOfBeersForm.rentPayableVaryOnQuantityOfBeersForm
-import models.submissions.Form6010.{RentPayableVaryAccordingToGrossOrNetsNo, RentPayableVaryAccordingToGrossOrNetsYes}
+import models.submissions.common.{AnswerNo, AnswerYes}
 import views.html.login
 
 import javax.inject.{Inject, Singleton}
@@ -49,13 +49,13 @@ class RentPayableVaryAccordingToGrossOrNetController @Inject() (
         formWithErrors => Future.successful(BadRequest(rentPayableVaryAccordingToGrossOrNetView(formWithErrors))),
         data =>
           data.rentPayableVaryAccordingToGrossOrNets match {
-            case RentPayableVaryAccordingToGrossOrNetsYes =>
+            case AnswerYes =>
               Future.successful(
                 Ok(rentPayableVaryAccordingToGrossOrNetDetailsView(rentPayableVaryAccordingToGrossOrNetInformationForm))
               )
-            case RentPayableVaryAccordingToGrossOrNetsNo  =>
+            case AnswerNo  =>
               Future.successful(Ok(rentPayableVaryOnQuantityOfBeersView(rentPayableVaryOnQuantityOfBeersForm)))
-            case _                                        => Future.successful(Ok(login(loginForm)))
+            case _         => Future.successful(Ok(login(loginForm)))
           }
       )
   }

@@ -14,33 +14,32 @@
  * limitations under the License.
  *@
 
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Radios
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.radios.RadioItem
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Legend
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Fieldset
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.charactercount.CharacterCount
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.label.Label
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukCharacterCount
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.hint.Hint
 
-@(govukRadios: GovukRadios,
+@(govukCharacterCount: GovukCharacterCount,
         theForm: Form[_],
         name: String,
         legendContent: String = "",
         classes: String = "",
-        items: Seq[RadioItem],
-        isHeading: Boolean = false
+        charCount: Int = 1000,
+        hint: String = ""
 )(implicit request: Request[_], messages: Messages)
 
-@govukRadios(Radios(
- fieldset =  Some(Fieldset(
-   legend = Some(Legend(
-    content = Text(Messages(legendContent)),
-    isPageHeading = isHeading,
-    classes = classes
-   ))
- )),
- name = name,
- items = items,
- errorMessage = theForm.errors.asTextErrorMessageForField(name)
-).withFormField(theForm(name))
+@govukCharacterCount(
+ CharacterCount(
+  id = name,
+  name = name,
+  maxLength = charCount,
+  label = Label(
+   content = Text(messages(legendContent)),
+   classes = classes
+  ),
+  errorMessage = theForm.errors.asTextErrorMessageForField(name),
+  hint = Some(Hint(content = Text(messages(hint)))),
+ )
 )

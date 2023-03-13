@@ -16,6 +16,6 @@
 
 package models.submissions.Form6010
 
-case class RentPayableVaryAccordingToGrossOrNetDetails(
-  rentPayableVaryAccordingToGrossOrNets: RentPayableVaryAccordingToGrossOrNets
-)
+import models.submissions.common.AnswersYesNo
+
+case class RentPayableVaryAccordingToGrossOrNetDetails(rentPayableVaryAccordingToGrossOrNets: AnswersYesNo)

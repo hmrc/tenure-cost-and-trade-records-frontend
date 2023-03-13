@@ -53,6 +53,7 @@ label.street1=Address line 2
 label.townCity=Town or city
 label.county = County
 label.postcode=Postcode
+label.any.apply = Select any that apply
 
 #Section names
 ##############
@@ -272,14 +273,13 @@ currentAnnualRent.heading = What is the current annual rent?
 hint.currentAnnualRent = For example, 32000
 
 #RENT OPEN MARKET VALUE
-##############################
-rentOpenMarketValue.heading = About your lease or agreement
+#######################
+rentOpenMarketValue.heading = Is the rent based on the open market value?
 label.rentOpenMarketValue = Is the rent based on the open market value?
 
 #DOES THE RENT PAYABLE
-##############################
+######################
 rentPayable.heading = Does the rent payable include or relate to any of the following?
-label.rentPayable = Select any that apply
 checkbox.rentPayable.proprietor = Proprietor’s, manager’s or staff living accommodation
 checkbox.rentPayable.otherProperty = Other property
 checkbox.rentPayable.onlyPart = Only part of the property
@@ -291,26 +291,22 @@ error.detailsToQuestions.required = Please provide further information
 error.detailsToQuestions.maxLength = This must be 1000 characters or fewer
 
 #RENT PAYABLE VARY ON QUANTITY OF BEERS
-##############################
-rentPayableVaryOnQuantityOfBeers.heading = About your lease or agreement
-label.rentPayableVaryOnQuantityOfBeers = Does the rent payable vary according to the quantity of beers, wines or spirits supplied to the property?
+#######################################
+rentPayableVaryOnQuantityOfBeers.heading = Does the rent payable vary according to the quantity of beers, wines or spirits supplied to the property?
 
 #RENT PAYABLE VARY ON QUANTITY OF BEERS DETAILS
-##############################
-rentPayableVaryOnQuantityOfBeersDetails.heading = About your lease or agreement
-label.rentPayableVaryOnQuantityOfBeersDetails = How is the rent payable affected by the drinks supplied to your property?
+###############################################
+rentPayableVaryOnQuantityOfBeersDetails.heading = How is the rent payable affected by the drinks supplied to your property?
 error.rentPayableVaryOnQuantityOfBeersDetails.required = Tell us how the rent payable is affected by the drinks supplied to your property
 error.rentPayableVaryOnQuantityOfBeersDetails.maxLength  = This must be 1000 characters or fewer
 
 #RENT PAYABLE VARY ACCORDING TO GROSS OR NET
-##############################
-rentPayableVaryAccordingToGrossOrNet.heading = About the property
-label.rentPayableVaryAccordingToGrossOrNet = Does the rent payable vary according to the gross or net turnover of the business?
+############################################
+rentPayableVaryAccordingToGrossOrNet.heading = Does the rent payable vary according to the gross or net turnover of the business?
 
 #RENT PAYABLE VARY ACCORDING TO GROSS OR NET DETAILS
-##############################
-rentPayableVaryAccordingToGrossOrNetDetails.heading = About your lease or agreement
-label.rentPayableVaryAccordingToGrossOrNetDetails = Tell us how the rent payable is affected by your turnover
+####################################################
+rentPayableVaryAccordingToGrossOrNetDetails.heading = Tell us how the rent payable is affected by your turnover
 error.rentPayableVaryAccordingToGrossOrNetDetails.required = Tell us how the rent payable is affected by your turnover
 error.rentPayableVaryAccordingToGrossOrNetDetails.maxLength  = This must be 1000 characters or fewer
 
@@ -339,15 +335,14 @@ label.tenant = Tenant
 label.both = Both
 
 #RENT INCLUDE TRADE SERVICES
-##############################
-rentIncludeTradeServices.heading = About your lease or agreement (continued)
+############################
+rentIncludeTradeServices.heading = Does the rent include any trade services provided by the landlord?
 label.rentIncludeTradeServices = Does the rent include any trade services provided by the landlord?
 hint.rentIncludeTradeServices = For example, maintenance of trade fixtures and fittings, cellar services, marketing, staff training etc.
 
 #RENT INCLUDE TRADE SERVICES DETAILS
-##############################
-rentIncludeTradeServicesDetails.heading = About the services your landlord provides
-label.sumIncludedInRent = Where specifically itemised, what sum is included in the rent (excluding VAT) to cover services provided by the landlord?
+####################################
+rentIncludeTradeServicesDetails.heading = Where specifically itemised, what sum is included in the rent (excluding VAT) to cover services provided by the landlord?
 label.describeServices = Describe services provided
 error.required.sumIncludedInRent = Please provide a value
 error.invalid_currency.sumIncludedInRent= Please provide a number
@@ -355,16 +350,14 @@ error.describeServices.required = Please provide further information
 error.describeServices.maxLength = This must be 1000 characters or fewer
 
 #RENT INCLUDE FIXTURES AND FITTINGS
-##############################
-rentIncludeFixturesAndFittings.heading = About your lease or agreement
-label.rentIncludeFixturesAndFittings = Does the rent include any trade fixtures and fittings, plant and machinery, furniture and other equipment belonging to the landlord?
+###################################
+rentIncludeFixturesAndFittings.heading = Does the rent include any trade fixtures and fittings, plant and machinery, furniture and other equipment belonging to the landlord?
 error.required.rentIncludeFixturesAndFittings = Please provide a value
 error.invalid_currency.rentIncludeFixturesAndFittings = Please provide a number
 
 #RENT INCLUDE FIXTURES AND FITTINGS DETAILS
-##############################
-rentIncludeFixturesAndFittingsDetails.heading = About your fixtures and fittings
-label.rentIncludeFixturesAndFittingsDetails = Where specifically itemised, what sum is included in the rent (excluding VAT) to cover equipment provided by the landlord?
+###########################################
+rentIncludeFixturesAndFittingsDetails.heading = Where specifically itemised, what sum is included in the rent (excluding VAT) to cover equipment provided by the landlord?
 error.required.rentIncludeFixturesAndFittingsDetails = Please provide a value
 error.invalid_currency.rentIncludeFixturesAndFittingsDetails = Please provide a number
 
@@ -390,8 +383,8 @@ receivePaymentWhenLeaseGranted.heading = About your lease or agreement
 label.receivePaymentWhenLeaseGranted = Did you receive any payment when the lease was granted (if the rent has not been reviewed in the lease), or following assignment of the lease or agreement?
 
 #RENT INCREASE ANNUALLY WITH RPI
-##############################
-rentIncreasedAnnuallyWithRPIs.heading = About your lease or agreement
+################################
+rentIncreasedAnnuallyWithRPIs.heading = Does the rent increase annually in line with the retail price index (RPI)?
 label.rentIncreasedAnnuallyWithRPIs = Does the rent increase annually in line with the retail price index (RPI)?
 
 #METHOD USED TO FIX CURRENT RENT
@@ -525,9 +518,8 @@ currentRentPayableWithin12Months.hint = Do not include any rent increases linked
 label.dateReview = Date of next rent review or expiry of existing lease
 
 ##WHAT IS YOUR RENT BASED ON
-##############################
-currentRentBasedOn.heading = About your lease or agreement
-label.currentRentBasedOn = What is the rent based on?
+############################
+currentRentBasedOn.heading = What is the rent based on?
 hint.currentRentBasedOn = Select any that apply and give details
 label.percentageOpenMarket = A percentage of open market value
 label.fixed = A fixed amount

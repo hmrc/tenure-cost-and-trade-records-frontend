@@ -59,39 +59,45 @@ trait FakeViews { this: GuiceOneAppPerSuite =>
   lazy val leaseOrAgreementYearsView            =
     app.injector.instanceOf[leaseOrAgreementYears]
 
-  lazy val rentIncludeTradeServicesView             =
+  lazy val rentIncludeTradeServicesView                    =
     app.injector.instanceOf[rentIncludeTradeServices]
-  lazy val doesTheRentPayableView                   =
+  lazy val doesTheRentPayableView                          =
     app.injector.instanceOf[doesTheRentPayable]
-  lazy val currentRentFirstPaidView                 =
+  lazy val currentRentFirstPaidView                        =
     app.injector.instanceOf[currentRentFirstPaid]
-  lazy val ultimatelyResponsibleView                =
+  lazy val ultimatelyResponsibleView                       =
     app.injector.instanceOf[ultimatelyResponsible]
-  lazy val sharedResponsibilitiesView               =
+  lazy val sharedResponsibilitiesView                      =
     app.injector.instanceOf[sharedResponsibilities]
-  lazy val intervalsOfRentReviewView                =
+  lazy val intervalsOfRentReviewView                       =
     app.injector.instanceOf[intervalsOfRentReview]
-  lazy val includedInYourRentView                   =
+  lazy val includedInYourRentView                          =
     app.injector.instanceOf[includedInYourRent]
-  lazy val currentLeaseOrAgreementBeginView         =
+  lazy val currentLeaseOrAgreementBeginView                =
     app.injector.instanceOf[currentLeaseOrAgreementBegin]
-  lazy val connectedToLandlordView                  =
+  lazy val connectedToLandlordView                         =
     app.injector.instanceOf[connectedToLandlord]
-  lazy val connectedToLandlordDetailsView           =
+  lazy val connectedToLandlordDetailsView                  =
     app.injector.instanceOf[connectedToLandlordDetails]
-  lazy val rentOpenMarketValueView                  =
+  lazy val rentOpenMarketValueView                         =
     app.injector.instanceOf[rentOpenMarketValue]
-  lazy val whatIsYourRentBasedOnView                =
+  lazy val whatIsYourRentBasedOnView                       =
     app.injector.instanceOf[whatIsYourRentBasedOn]
-  lazy val rentIncreaseAnnuallyWithRPIView          =
+  lazy val rentIncreaseAnnuallyWithRPIView                 =
     app.injector.instanceOf[rentIncreaseAnnuallyWithRPI]
-  lazy val rentIncludeFixtureAndFittingsView        =
+  lazy val rentIncludeFixtureAndFittingsView               =
     app.injector.instanceOf[rentIncludeFixtureAndFittings]
-  lazy val rentIncludeFixtureAndFittingsDetailsView =
+  lazy val rentIncludeFixtureAndFittingsDetailsView        =
     app.injector.instanceOf[rentIncludeFixtureAndFittingsDetails]
-  lazy val rentIncludeTradeServicesDetailsView      =
+  lazy val rentIncludeTradeServicesDetailsView             =
     app.injector.instanceOf[rentIncludeTradeServicesDetails]
-  lazy val rentPayableVaryAccordingToGrossOrNetView =
+  lazy val rentPayableVaryAccordingToGrossOrNetView        =
     app.injector.instanceOf[rentPayableVaryAccordingToGrossOrNet]
+  lazy val rentPayableVaryAccordingToGrossOrNetDetailsView =
+    app.injector.instanceOf[rentPayableVaryAccordingToGrossOrNetDetails]
+  lazy val rentPayableVaryOnQuantityOfBeersView            =
+    app.injector.instanceOf[rentPayableVaryOnQuantityOfBeers]
+  lazy val rentPayableVaryOnQuantityOfBeersDetailsView     =
+    app.injector.instanceOf[rentPayableVaryOnQuantityOfBeersDetails]
 
 }

@@ -16,28 +16,12 @@
 
 @import models.submissions.aboutYourLeaseOrTenure.IncludedInYourRentDetails
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukErrorSummary
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukDateInput
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukTextarea
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukCharacterCount
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Radios
-@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
-@import uk.gov.hmrc.govukfrontend.views.Aliases.RadioItem
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Fieldset
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Legend
 
 @this(layout: Layout,
         govukButton: GovukButton,
         govukRadios: GovukRadios,
-        govukInput: GovukInput,
-        govukErrorSummary: GovukErrorSummary,
-        govukDateInput: GovukDateInput,
-        govukTextarea: GovukTextarea,
-        govukCharacterCount: GovukCharacterCount,
         formWithCSRF: FormWithCSRF
 )
 
@@ -46,95 +30,27 @@
 
 @layout(
  pageHeading = messages("includedInYourRent.heading"),
+ showH1 = false,
+ showSection = true,
+ sectionName = messages("label.section.aboutYourLeaseOrTenure"),
  backLinkUrl = controllers.aboutYourLeaseOrTenure.routes.CurrentLeaseOrAgreementBeginController.show.url,
  theForm = theForm
 ) {
 
- @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.IncludedInYourRentController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
+  @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.IncludedInYourRentController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
 
-  @govukRadios(
-  Radios(
-   name = "vat",
-   idPrefix = Option("vat"),
-   items = Seq(
-    "yes" -> messages("label.yes"),
-    "no" -> messages("label.no")
-   ).map(radioItem => RadioItem(
-    content = Text(radioItem._2),
-    checked = radioItem._1.equals(theForm("vat").value.getOrElse("")),
-    value = Option(radioItem._1)
-   )
-   ),
-   errorMessage =  theForm.errors.asTextErrorMessageForField("vat"),
-   fieldset = Option(
-    Fieldset(
-     legend = Option(
-      Legend(
-       content = Text(messages("label.vat")),
-       classes = "govuk-!-font-weight-bold"
-      )
-     )
-    )
-   )
-  )
- )
+    <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+     <h1 class="govuk-fieldset__heading">@messages("includedInYourRent.heading")</h1>
+    </legend>
 
- @govukRadios(
-  Radios(
-   name = "nondomesticRates",
-   idPrefix = Option("nondomesticRates"),
-   items = Seq(
-    "yes" -> messages("label.yes"),
-    "no" -> messages("label.no")
-   ).map(radioItem => RadioItem(
-    content = Text(radioItem._2),
-    checked = radioItem._1.equals(theForm("nondomesticRates").value.getOrElse("")),
-    value = Option(radioItem._1)
-   )
-   ),
-   errorMessage =  theForm.errors.asTextErrorMessageForField("nondomesticRates"),
-   fieldset = Option(
-    Fieldset(
-     legend = Option(
-      Legend(
-       content = Text(messages("label.nondomesticRates")),
-       classes = "govuk-!-font-weight-bold"
-      )
-     )
-    )
-   )
-  )
- )
+    @includes.radioButtonsYesNo(govukRadios, theForm, "vat", "label.vat", "govuk-!-font-weight-bold")
 
- @govukRadios(
-  Radios(
-   name = "waterCharges",
-   idPrefix = Option("waterCharges"),
-   items = Seq(
-    "yes" -> messages("label.yes"),
-    "no" -> messages("label.no")
-   ).map(radioItem => RadioItem(
-    content = Text(radioItem._2),
-    checked = radioItem._1.equals(theForm("waterCharges").value.getOrElse("")),
-    value = Option(radioItem._1)
-   )
-   ),
-   errorMessage =  theForm.errors.asTextErrorMessageForField("waterCharges"),
-   fieldset = Option(
-    Fieldset(
-     legend = Option(
-      Legend(
-       content = Text(messages("label.waterCharges")),
-       classes = "govuk-!-font-weight-bold"
-      )
-     )
-    )
-   )
-  )
- )
+    @includes.radioButtonsYesNo(govukRadios, theForm, "nondomesticRates", "label.nondomesticRates", "govuk-!-font-weight-bold")
 
- @includes.continueButton(govukButton)
-}
+    @includes.radioButtonsYesNo(govukRadios, theForm, "waterCharges", "label.waterCharges", "govuk-!-font-weight-bold")
+
+    @includes.continueButton(govukButton)
+  }
 }
 
 
