@@ -16,6 +16,6 @@
 
 package models.submissions.Form6010
 
-case class RentPayableVaryOnQuantityOfBeersDetails(
-  rentPayableVaryOnQuantityOfBeersDetails: RentPayableVaryOnQuantityOfBeers
-)
+import models.submissions.common.AnswersYesNo
+
+case class RentPayableVaryOnQuantityOfBeersDetails(rentPayableVaryOnQuantityOfBeersDetails: AnswersYesNo)

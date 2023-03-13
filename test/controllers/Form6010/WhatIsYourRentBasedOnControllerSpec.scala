@@ -29,7 +29,7 @@ class WhatIsYourRentBasedOnControllerSpec extends TestBaseSpec {
   ) =
     new WhatIsYourRentBasedOnController(
       stubMessagesControllerComponents(),
-      loginView,
+      rentIncreaseAnnuallyWithRPIView,
       whatIsYourRentBasedOnView,
       preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
       mockSessionRepo

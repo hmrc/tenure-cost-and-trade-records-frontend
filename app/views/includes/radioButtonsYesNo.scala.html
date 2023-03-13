@@ -21,26 +21,30 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Fieldset
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.hint.Hint
 
-@(govukRadios: GovukRadios,
-        theForm: Form[_],
-        name: String,
-        legendContent: String = "",
-        classes: String = "",
-        items: Seq[RadioItem],
-        isHeading: Boolean = false
-)(implicit request: Request[_], messages: Messages)
+@(govukRadios: GovukRadios, theForm: Form[_], name: String, label: String, classes: String, hint: String = "", isHeading: Boolean = false)(implicit request: Request[_], messages: Messages)
 
-@govukRadios(Radios(
- fieldset =  Some(Fieldset(
-   legend = Some(Legend(
-    content = Text(Messages(legendContent)),
-    isPageHeading = isHeading,
-    classes = classes
-   ))
- )),
- name = name,
- items = items,
- errorMessage = theForm.errors.asTextErrorMessageForField(name)
-).withFormField(theForm(name))
+@govukRadios(
+  Radios(
+    name = name,
+    idPrefix = Option(s"$name"),
+    items = Seq(
+      "yes" -> messages("label.yes"),
+      "no" -> messages("label.no")
+    ).map(radioItem => RadioItem(
+      content = Text(radioItem._2),
+      checked = radioItem._1.equals(theForm(s"$name").value.getOrElse("")),
+      value = Option(radioItem._1))
+    ),
+    errorMessage =  theForm.errors.asTextErrorMessageForField(s"$name"),
+    fieldset = Option(Fieldset(
+      legend = Option(Legend(
+        content = Text(messages(label)),
+        isPageHeading = isHeading,
+        classes = classes
+      ))
+    )),
+    hint = Some(Hint(content = Text(messages(hint)))),
+  )
 )

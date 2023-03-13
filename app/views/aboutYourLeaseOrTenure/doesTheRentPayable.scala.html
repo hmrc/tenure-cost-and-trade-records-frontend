@@ -17,32 +17,13 @@
 @import models.submissions.aboutYourLeaseOrTenure.DoesTheRentPayable
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukErrorSummary
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukDateInput
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukTextarea
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukCharacterCount
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
-@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Label
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Radios
-@import uk.gov.hmrc.govukfrontend.views.Aliases.RadioItem
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Fieldset
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Legend
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Hint
-@import uk.gov.hmrc.govukfrontend.views.Aliases.CharacterCount
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Checkboxes
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukCheckboxes
 @import uk.gov.hmrc.govukfrontend.views.Aliases.CheckboxItem
 
 @this(layout: Layout,
         govukButton: GovukButton,
-        govukRadios: GovukRadios,
-        govukInput: GovukInput,
-        govukErrorSummary: GovukErrorSummary,
-        govukDateInput: GovukDateInput,
-        govukTextarea: GovukTextarea,
         govukCharacterCount: GovukCharacterCount,
         govukCheckboxes: GovukCheckboxes,
         formWithCSRF: FormWithCSRF
@@ -53,65 +34,53 @@
 
 @layout(
  pageHeading = messages("rentPayable.heading"),
+ showH1 = false,
+ showSection = true,
+ sectionName = messages("label.section.aboutYourLeaseOrTenure"),
  backLinkUrl = controllers.aboutYourLeaseOrTenure.routes.IncludedInYourRentController.show.url,
  theForm = theForm
 ) {
 
- @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.DoesTheRentPayableController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
+  @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.DoesTheRentPayableController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
 
+    <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+     <h1 class="govuk-fieldset__heading">@messages("rentPayable.heading")</h1>
+    </legend>
 
-  @govukCheckboxes(
-   Checkboxes(
-    name = "rentPayable",
-    fieldset = Some(Fieldset(
-     legend = Some(Legend(
-      content = Text(Messages("label.rentPayable")),
-      classes = "govuk-fieldset__legend--s"
-     ))
-    )),
-    items = Seq(
-     CheckboxItem(
-      id = Some("rates"),
-      content = Text(messages("checkbox.rentPayable.proprietor"))
-     ),
-     CheckboxItem(
-      id = Some("propertyInsurance"),
-      content = Text(messages("checkbox.rentPayable.otherProperty"))
-     ),
-     CheckboxItem(
-      id = Some("outsideRepairs"),
-      content = Text(messages("checkbox.rentPayable.onlyPart"))
-     ),
-     CheckboxItem(
-      id = Some("insideRepairs"),
-      content = Text(messages("checkbox.rentPayable.onlyLand"))
-     ),
-     CheckboxItem(
-      id = Some("insideRepairs"),
-      content = Text(messages("checkbox.rentPayable.shellUnit"))
-     )
+    @includes.checkboxes(
+      govukCheckboxes,
+      theForm,
+      "rentPayable",
+      "label.any.apply",
+      "govuk-fieldset__legend--s",
+      items = Seq(
+        CheckboxItem(
+          id = Some("rates"),
+          content = Text(messages("checkbox.rentPayable.proprietor"))
+        ),
+        CheckboxItem(
+          id = Some("propertyInsurance"),
+          content = Text(messages("checkbox.rentPayable.otherProperty"))
+        ),
+        CheckboxItem(
+          id = Some("outsideRepairs"),
+          content = Text(messages("checkbox.rentPayable.onlyPart"))
+        ),
+        CheckboxItem(
+          id = Some("insideRepairs"),
+          content = Text(messages("checkbox.rentPayable.onlyLand"))
+        ),
+        CheckboxItem(
+          id = Some("insideRepairs"),
+          content = Text(messages("checkbox.rentPayable.shellUnit"))
+        )
+      )
     )
-   )
-  )
 
+    @includes.textInputCharCount(govukCharacterCount, theForm, "detailsToQuestions", "label.detailsToQuestions", "govuk-!-font-weight-bold", hint = "hint.detailsToQuestions")
 
-  @govukCharacterCount(
-   CharacterCount(
-    id = "detailsToQuestions",
-    name = "detailsToQuestions",
-    rows = 5,
-    maxLength = 1000,
-    label = Label(
-     content = Text(messages("label.detailsToQuestions")),
-     classes = "govuk-!-font-weight-bold"
-    ),
-    errorMessage = theForm.errors.asTextErrorMessageForField("detailsToQuestions"),
-    hint = Some(Hint(content = Text(messages("hint.detailsToQuestions")))),
-   )
-  )
-
-  @includes.continueButton(govukButton)
- }
+    @includes.continueButton(govukButton)
+  }
 }
 
 

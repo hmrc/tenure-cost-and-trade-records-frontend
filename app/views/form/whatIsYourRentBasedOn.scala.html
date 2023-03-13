@@ -18,92 +18,63 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukErrorSummary
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukDateInput
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukTextarea
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukCharacterCount
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
-@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Label
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Fieldset
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Legend
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Hint
-@import uk.gov.hmrc.govukfrontend.views.Aliases.CharacterCount
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Radios
 @import uk.gov.hmrc.govukfrontend.views.Aliases.RadioItem
 
 @this(layout: Layout,
         govukButton: GovukButton,
         govukRadios: GovukRadios,
-        govukInput: GovukInput,
-        govukErrorSummary: GovukErrorSummary,
-        govukDateInput: GovukDateInput,
-        govukTextarea: GovukTextarea,
         govukCharacterCount: GovukCharacterCount,
         formWithCSRF: FormWithCSRF
 )
-
 
 @(theForm: Form[WhatIsYourCurrentRentBasedOnDetails])(implicit request: Request[_], messages: Messages)
 
 @layout(
  pageHeading = messages("currentRentBasedOn.heading"),
+ showH1 = false,
+ showSection = true,
+ sectionName = messages("label.section.aboutYourLeaseOrTenure"),
  backLinkUrl = controllers.Form6010.routes.RentOpenMarketValueController.show.url,
  theForm = theForm
 ) {
 
- @formWithCSRF(action = controllers.Form6010.routes.WhatIsYourRentBasedOnController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
+  @formWithCSRF(action = controllers.Form6010.routes.WhatIsYourRentBasedOnController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
 
-  @govukRadios(
-   Radios(
-    name = "currentRentBasedOn",
-    idPrefix = Option("currentRentBasedOn"),
-    items = Seq(
-     "percentageOpenMarket" -> messages("label.percentageOpenMarket"),
-     "fixed" -> messages("label.fixed"),
-     "percentageTurnover" -> messages("label.percentageTurnover"),
-     "indexed" -> messages("label.indexed"),
-     "stepped" -> messages("label.stepped"),
-     "other" -> messages("label.other"),
-    ).map(radioItem => RadioItem(
-     content = Text(radioItem._2),
-     checked = radioItem._1.equals(theForm("currentRentBasedOn").value.getOrElse("")),
-     value = Option(radioItem._1)
+    @includes.radioButtons(
+      govukRadios,
+      theForm,
+      "currentRentBasedOn",
+      "currentRentBasedOn.heading",
+      "govuk-fieldset__legend--l",
+      items = Seq(
+        "percentageOpenMarket" -> messages("label.percentageOpenMarket"),
+        "fixed" -> messages("label.fixed"),
+        "percentageTurnover" -> messages("label.percentageTurnover"),
+        "indexed" -> messages("label.indexed"),
+        "stepped" -> messages("label.stepped"),
+        "other" -> messages("label.other"),
+      ).map(radioItem => RadioItem(
+        content = Text(radioItem._2),
+        checked = radioItem._1.equals(theForm("currentRentBasedOn").value.getOrElse("")),
+        value = Option(radioItem._1)
+      )),
+      true
     )
-    ),
-    errorMessage =  theForm.errors.asTextErrorMessageForField("currentRentBasedOn"),
-    fieldset = Option(
-     Fieldset(
-      legend = Option(
-       Legend(
-        content = Text(messages("label.currentRentBasedOn")),
-        classes = "govuk-!-font-weight-bold"
-       )
-      )
-     )
+
+    @includes.textInputCharCount(
+      govukCharacterCount,
+      theForm,
+      "whatIsYourRentBasedOn",
+      "label.whatIsYourRentBasedOn.describe",
+      "govuk-!-font-weight-bold",
+      hint = "hint.whatIsYourRentBasedOn.describe"
     )
-   )
-  )
 
- @govukCharacterCount(
-  CharacterCount(
-   id = "whatIsYourRentBasedOn",
-   name = "whatIsYourRentBasedOn",
-   rows = 5,
-   maxLength = Some(1000),
-   label = Label(
-    content = Text(messages("label.whatIsYourRentBasedOn.describe")),
-    classes = "govuk-!-font-weight-bold"
-   ),
-   errorMessage = theForm.errors.asTextErrorMessageForField("whatIsYourRentBasedOn"),
-   hint = Some(Hint(content = Text(messages("hint.whatIsYourRentBasedOn.describe")))),
-  )
- )
+    @includes.continueButton(govukButton)
 
- @includes.continueButton(govukButton)
-
- }
+  }
 }
 
 

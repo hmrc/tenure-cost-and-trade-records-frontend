@@ -64,41 +64,35 @@ object Formats {
     def unbind(key: String, value: T): Map[String, String] = Map(key -> value.name)
   }
 
-  implicit val userTypeFormat: Formatter[UserType]                                                           = namedEnumFormatter(UserType, Errors.userTypeRequired)
-  implicit val connectionToPropertyFormat: Formatter[ConnectionToProperty]                                   =
+  implicit val userTypeFormat: Formatter[UserType]                                             = namedEnumFormatter(UserType, Errors.userTypeRequired)
+  implicit val connectionToPropertyFormat: Formatter[ConnectionToProperty]                     =
     namedEnumFormatter(ConnectionToProperty, Errors.booleanMissing)
-  implicit val aboutYourPropertyFormat: Formatter[CurrentPropertyUsed]                                       =
+  implicit val aboutYourPropertyFormat: Formatter[CurrentPropertyUsed]                         =
     namedEnumFormatter(CurrentPropertyUsed, Errors.currentOccupierName)
-  implicit val buildingOperatingHaveAWebsiteFormat: Formatter[BuildingOperationHaveAWebsite]                 =
+  implicit val buildingOperatingHaveAWebsiteFormat: Formatter[BuildingOperationHaveAWebsite]   =
     namedEnumFormatter(BuildingOperationHaveAWebsite, Errors.booleanMissing)
-  implicit val answerYesNoFormat: Formatter[AnswersYesNo]                                                    =
+  implicit val answerYesNoFormat: Formatter[AnswersYesNo]                                      =
     namedEnumFormatter(AnswersYesNo, Errors.booleanMissing)
-  implicit val tenancyLeaseAgreementsFormat: Formatter[TenancyLeaseAgreements]                               =
+  implicit val tenancyLeaseAgreementsFormat: Formatter[TenancyLeaseAgreements]                 =
     namedEnumFormatter(TenancyLeaseAgreement, Errors.booleanMissing)
-  implicit val licensableActivitiesFormat: Formatter[LicensableActivities]                                   =
+  implicit val licensableActivitiesFormat: Formatter[LicensableActivities]                     =
     namedEnumFormatter(LicensableActivities, Errors.booleanMissing)
-  implicit val tiedForGoodsFormat: Formatter[TiedForGoods]                                                   = namedEnumFormatter(TiedForGoods, Errors.booleanMissing)
-  implicit val premisesLicenseConditionsFormat: Formatter[PremisesLicenseConditions]                         =
+  implicit val tiedForGoodsFormat: Formatter[TiedForGoods]                                     = namedEnumFormatter(TiedForGoods, Errors.booleanMissing)
+  implicit val premisesLicenseConditionsFormat: Formatter[PremisesLicenseConditions]           =
     namedEnumFormatter(PremisesLicenseConditions, Errors.booleanMissing)
-  implicit val enforcementActionFormat: Formatter[EnforcementAction]                                         =
+  implicit val enforcementActionFormat: Formatter[EnforcementAction]                           =
     namedEnumFormatter(EnforcementAction, Errors.booleanMissing)
-  implicit val rentIncreasedAnnuallyWithRPIsFormat: Formatter[RentIncreasedAnnuallyWithRPIs]                 =
-    namedEnumFormatter(RentIncreasedAnnuallyWithRPIs, Errors.booleanMissing)
-  implicit val rentPayableVaryAccordingToGrossOrNetsFormat: Formatter[RentPayableVaryAccordingToGrossOrNets] =
-    namedEnumFormatter(RentPayableVaryAccordingToGrossOrNet, Errors.booleanMissing)
-  implicit val rentPayableVaryOnQuantityOfBeersFormat: Formatter[RentPayableVaryOnQuantityOfBeers]           =
-    namedEnumFormatter(RentPayableVaryOnQuantityOfBeer, Errors.booleanMissing)
-  implicit val rentIncludeFixturesAndFittingsFormat: Formatter[RentIncludeFixturesAndFittings]               =
+  implicit val rentIncludeFixturesAndFittingsFormat: Formatter[RentIncludeFixturesAndFittings] =
     namedEnumFormatter(RentIncludeFixturesAndFittings, Errors.booleanMissing)
-  implicit val rentOpenMarketValuesFormat: Formatter[RentOpenMarketValues]                                   =
+  implicit val rentOpenMarketValuesFormat: Formatter[RentOpenMarketValues]                     =
     namedEnumFormatter(RentOpenMarketValues, Errors.booleanMissing)
-  implicit val pastConnectionFormat: Formatter[PastConnectionType]                                           =
+  implicit val pastConnectionFormat: Formatter[PastConnectionType]                             =
     namedEnumFormatter(PastConnectionType, Errors.booleanMissing)
-  implicit val methodToFixCurrentRentDetailsFormat: Formatter[MethodToFixCurrentRents]                       =
+  implicit val methodToFixCurrentRentDetailsFormat: Formatter[MethodToFixCurrentRents]         =
     namedEnumFormatter(MethodToFixCurrentRent, Errors.booleanMissing)
-  implicit val tiedForGoodsDetailsFormat: Formatter[TiedForGoodsInformation]                                 =
+  implicit val tiedForGoodsDetailsFormat: Formatter[TiedForGoodsInformation]                   =
     namedEnumFormatter(TiedForGoodsInformation, Errors.booleanMissing)
-  implicit val addressConnectionTypeFormatter: Formatter[AddressConnectionType]                              =
+  implicit val addressConnectionTypeFormatter: Formatter[AddressConnectionType]                =
     namedEnumFormatter(AddressConnectionType, Errors.isConnectedError)
 
   implicit val formerLeaseSurrenderedFormatter: Formatter[FormerLeaseSurrendered]                =

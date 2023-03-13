@@ -15,30 +15,13 @@
  *@
 
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
-
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukErrorSummary
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukDateInput
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukTextarea
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukCharacterCount
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
-
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
-
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Label
 @import uk.gov.hmrc.hmrcfrontend.views.Aliases.CurrencyInput
 @import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcCurrencyInput
 
 @this(layout: Layout,
         govukButton: GovukButton,
-        govukRadios: GovukRadios,
-        govukInput: GovukInput,
-        govukErrorSummary: GovukErrorSummary,
-        govukDateInput: GovukDateInput,
-        govukTextarea: GovukTextarea,
-        govukCharacterCount: GovukCharacterCount,
         hmrcCurrencyInput : HmrcCurrencyInput,
         formWithCSRF: FormWithCSRF
 )
@@ -47,11 +30,18 @@
 
 @layout(
  pageHeading = messages("rentIncludeFixturesAndFittingsDetails.heading"),
+ showH1 = false,
+ showSection = true,
+ sectionName = messages("label.section.aboutYourLeaseOrTenure"),
  backLinkUrl = controllers.Form6010.routes.RentIncludeFixtureAndFittingsController.show.url,
  theForm = theForm
 ) {
 
  @formWithCSRF(action = controllers.Form6010.routes.RentIncludeFixtureAndFittingsDetailsController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
+
+  <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+   <h1 class="govuk-fieldset__heading">@messages("rentIncludeFixturesAndFittingsDetails.heading")</h1>
+  </legend>
 
   @hmrcCurrencyInput(
    CurrencyInput(
@@ -59,10 +49,7 @@
     name = "rentIncludeFixturesAndFittingsDetails",
     value = theForm("rentIncludeFixturesAndFittingsDetails").value,
     classes = "govuk-input--width-10 total-annual-rent",
-    label = Label(
-     content = Text(messages("label.rentIncludeFixturesAndFittingsDetails")),
-     classes = "govuk-!-font-weight-bold"
-    ), autocomplete = Some("off"),
+    autocomplete = Some("off"),
     errorMessage = theForm.errors.asTextErrorMessageForField("rentIncludeFixturesAndFittingsDetails"),
    )
   )

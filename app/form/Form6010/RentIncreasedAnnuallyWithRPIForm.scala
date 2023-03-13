@@ -16,7 +16,7 @@
 
 package form.Form6010
 
-import form.MappingSupport.rentIncreasedAnnuallyWithRPIDetailsType
+import form.MappingSupport.yesNoType
 import models.submissions.Form6010.RentIncreasedAnnuallyWithRPIDetails
 import play.api.data.Form
 import play.api.data.Forms.mapping
@@ -25,7 +25,7 @@ object RentIncreasedAnnuallyWithRPIForm {
 
   val rentIncreasedAnnuallyWithRPIDetailsForm = Form(
     mapping(
-      "rentIncreasedAnnuallyWithRPIs" -> rentIncreasedAnnuallyWithRPIDetailsType
+      "rentIncreasedAnnuallyWithRPIs" -> yesNoType
     )(RentIncreasedAnnuallyWithRPIDetails.apply)(RentIncreasedAnnuallyWithRPIDetails.unapply)
   )
 }

@@ -25,13 +25,15 @@
 @(govukCheckboxes: GovukCheckboxes,
         theForm: Form[_],
         name: String,
-        classes: String,
+        legendContent: String = "",
+        classes: String = "",
         items: Seq[CheckboxItem],
 )(implicit request: Request[_], messages: Messages)
 
 @govukCheckboxes(Checkboxes(
  fieldset =  Some(Fieldset(
    legend = Some(Legend(
+    content = Text(Messages(legendContent)),
     classes = classes
    ))
  )),

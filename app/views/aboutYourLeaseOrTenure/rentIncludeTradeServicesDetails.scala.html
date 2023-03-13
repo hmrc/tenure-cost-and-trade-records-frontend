@@ -16,28 +16,14 @@
 
 @import models.submissions.aboutYourLeaseOrTenure.RentIncludeTradeServicesInformationDetails
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukErrorSummary
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukDateInput
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukTextarea
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukCharacterCount
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Label
-@import uk.gov.hmrc.govukfrontend.views.Aliases.CharacterCount
 @import uk.gov.hmrc.hmrcfrontend.views.Aliases.CurrencyInput
 @import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcCurrencyInput
 
-
 @this(layout: Layout,
         govukButton: GovukButton,
-        govukRadios: GovukRadios,
-        govukInput: GovukInput,
-        govukErrorSummary: GovukErrorSummary,
-        govukDateInput: GovukDateInput,
-        govukTextarea: GovukTextarea,
         govukCharacterCount: GovukCharacterCount,
         hmrcCurrencyInput : HmrcCurrencyInput,
         formWithCSRF: FormWithCSRF
@@ -48,11 +34,18 @@
 
 @layout(
  pageHeading = messages("rentIncludeTradeServicesDetails.heading"),
+ showH1 = false,
+ showSection = true,
+ sectionName = messages("label.section.aboutYourLeaseOrTenure"),
  backLinkUrl = controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesController.show.url,
  theForm = theForm
 ) {
 
  @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesDetailsController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
+
+  <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+   <h1 class="govuk-fieldset__heading">@messages("rentIncludeTradeServicesDetails.heading")</h1>
+  </legend>
 
   @hmrcCurrencyInput(
    CurrencyInput(
@@ -60,28 +53,12 @@
     name = "sumIncludedInRent",
     value = theForm("sumIncludedInRent").value,
     classes = "govuk-input--width-10 total-annual-rent",
-    label = Label(
-     content = Text(messages("label.sumIncludedInRent")),
-     classes = "govuk-!-font-weight-bold"
-    ),
     autocomplete = Some("off"),
     errorMessage = theForm.errors.asTextErrorMessageForField("sumIncludedInRent")
    )
   )
 
-  @govukCharacterCount(
-   CharacterCount(
-    id = "describeServices",
-    name = "describeServices",
-    rows = 5,
-    maxLength = 1000,
-    label = Label(
-     content = Text(messages("label.describeServices")),
-     classes = "govuk-!-font-weight-bold"
-    ),
-    errorMessage = theForm.errors.asTextErrorMessageForField("describeServices")
-   )
-  )
+  @includes.textInputCharCount(govukCharacterCount, theForm, "describeServices", "label.describeServices", "govuk-!-font-weight-bold")
 
   @includes.continueButton(govukButton)
  }

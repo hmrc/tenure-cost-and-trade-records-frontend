@@ -19,10 +19,6 @@
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukErrorSummary
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukDateInput
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukTextarea
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukCharacterCount
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukFieldset
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
@@ -33,17 +29,11 @@
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Fieldset
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukCheckboxes
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.checkboxes.CheckboxItem
-@import models.Session
-@import actions.SessionRequest
 
 @this(layout: Layout,
         govukButton: GovukButton,
         govukRadios: GovukRadios,
         govukInput: GovukInput,
-        govukErrorSummary: GovukErrorSummary,
-        govukDateInput: GovukDateInput,
-        govukTextarea: GovukTextarea,
-        govukCharacterCount: GovukCharacterCount,
         govukFieldset: GovukFieldset,
         govukCheckboxes: GovukCheckboxes,
         formWithCSRF: FormWithCSRF
@@ -68,15 +58,12 @@
  )
 )
 
- <p class="govuk-body">
-  <b>@messages("label.propertyCurrentlyUsed")</b>
- </p>
-
 @if(forType.equals("FOR6010") || forType.equals("FOR6011")) {
  @includes.radioButtons(
   govukRadios,
   theForm,
   "propertyCurrentlyUsed",
+  "label.propertyCurrentlyUsed",
   "govuk-fieldset__legend--m",
   Seq(
    RadioItem(
@@ -120,6 +107,7 @@
   govukCheckboxes,
   theForm,
   "propertyCurrentlyUsed",
+  "label.propertyCurrentlyUsed",
   "govuk-fieldset__legend--m",
   Seq(
    CheckboxItem(

@@ -16,7 +16,7 @@
 
 package form.Form6010
 
-import form.MappingSupport.rentPayableVaryOnQuantityOfBeersType
+import form.MappingSupport.yesNoType
 import models.submissions.Form6010.RentPayableVaryOnQuantityOfBeersDetails
 import play.api.data.Form
 import play.api.data.Forms.mapping
@@ -25,7 +25,7 @@ object RentPayableVaryOnQuantityOfBeersForm {
 
   val rentPayableVaryOnQuantityOfBeersForm = Form(
     mapping(
-      "rentPayableVaryOnQuantityOfBeers" -> rentPayableVaryOnQuantityOfBeersType
+      "rentPayableVaryOnQuantityOfBeers" -> yesNoType
     )(RentPayableVaryOnQuantityOfBeersDetails.apply)(RentPayableVaryOnQuantityOfBeersDetails.unapply)
   )
 }

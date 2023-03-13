@@ -23,7 +23,7 @@ import views.html.form.{rentPayableVaryOnQuantityOfBeers, rentPayableVaryOnQuant
 import form.Form6010.RentPayableVaryOnQuantityOfBeersForm.rentPayableVaryOnQuantityOfBeersForm
 import form.Form6010.RentPayableVaryOnQuantityOfBeersDetailsForm.rentPayableVaryOnQuantityOfBeersDetailsForm
 import form.Form6010.UltimatelyResponsibleForm.ultimatelyResponsibleForm
-import models.submissions.Form6010.{RentPayableVaryOnQuantityOfBeersNo, RentPayableVaryOnQuantityOfBeersYes}
+import models.submissions.common.{AnswerNo, AnswerYes}
 import views.html.login
 
 import javax.inject.{Inject, Singleton}
@@ -49,13 +49,13 @@ class RentPayableVaryOnQuantityOfBeersController @Inject() (
         formWithErrors => Future.successful(BadRequest(rentPayableVaryOnQuantityOfBeersView(formWithErrors))),
         data =>
           data.rentPayableVaryOnQuantityOfBeersDetails match {
-            case RentPayableVaryOnQuantityOfBeersYes =>
+            case AnswerYes =>
               Future.successful(
                 Ok(rentPayableVaryOnQuantityOfBeersDetailsView(rentPayableVaryOnQuantityOfBeersDetailsForm))
               )
-            case RentPayableVaryOnQuantityOfBeersNo  =>
+            case AnswerNo  =>
               Future.successful(Ok(ultimatelyResponsibleView(ultimatelyResponsibleForm)))
-            case _                                   => Future.successful(Ok(login(loginForm)))
+            case _         => Future.successful(Ok(login(loginForm)))
           }
       )
   }
