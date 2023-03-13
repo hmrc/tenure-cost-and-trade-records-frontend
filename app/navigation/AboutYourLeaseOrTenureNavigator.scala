@@ -105,6 +105,9 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit)(implicit ec: Exec
     RentIncludeTradeServicesPageId         -> rentIncludeTradeServicesRouting,
     RentIncludeTradeServicesDetailsPageId  -> (_ =>
       controllers.Form6010.routes.RentIncludeFixtureAndFittingsController.show()
-    )
+    ),
+    CheckYourAnswersAboutYourLeaseOrTenureId -> (_ =>
+      controllers.routes.TaskListController.show()
+      )
   )
 }

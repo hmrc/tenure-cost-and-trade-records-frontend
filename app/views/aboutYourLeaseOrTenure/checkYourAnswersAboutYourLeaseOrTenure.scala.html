@@ -1,0 +1,75 @@
+@*
+ * Copyright 2023 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
+@import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
+@import models.submissions.aboutYourLeaseOrTenure.CheckYourAnswersAboutYourLeaseOrTenure
+
+@this(layout: Layout,
+        govukButton: GovukButton,
+        formWithCSRF: FormWithCSRF
+)
+
+@(theForm: Form[CheckYourAnswersAboutYourLeaseOrTenure])(implicit request: Request[_], messages: Messages)
+
+@layout(
+ pageHeading = messages("checkYourAnswersAboutYourLeaseOrTenure.heading"),
+ backLinkUrl = controllers.Form6010.routes.LegalOrPlanningRestrictionsController.show().url,
+ showSection = true,
+ sectionName = messages("label.section.aboutYourLeaseOrTenure"),
+ theForm = theForm
+) {
+
+ @formWithCSRF(action = controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
+
+  <dl class="govuk-summary-list">
+  <div id="fullName" class="govuk-summary-list__row">
+   <dt class="govuk-summary-list__key">Operator's Name</dt>
+   <dd class="govuk-summary-list__value">
+    John Smith
+   </dd>
+   <dd class="govuk-summary-list__actions">
+    <a href="/sending-rental-information/page/2?edit=fullName#fullName" class="govuk-link">Change <span class="govuk-visually-hidden">Full name</span></a>
+   </dd>
+  </div>
+
+  <div id="userType" class="govuk-summary-list__row">
+   <dt class="govuk-summary-list__key">Type of business</dt>
+   <dd class="govuk-summary-list__value">
+   Hotel
+   </dd>
+   <dd class="govuk-summary-list__actions">
+    <a href="/sending-rental-information/page/2?edit=userType#userType" class="govuk-link">Change <span class="govuk-visually-hidden">I am (or represent) the</span></a>
+   </dd>
+  </div>
+
+  <div id="userType" class="govuk-summary-list__row">
+   <dt class="govuk-summary-list__key">Correspondence address</dt>
+   <dd class="govuk-summary-list__value">
+    1 Jones Street
+    Townley
+    JO1 3NS
+   </dd>
+   <dd class="govuk-summary-list__actions">
+    <a href="/sending-rental-information/page/2?edit=userType#userType" class="govuk-link">Change <span class="govuk-visually-hidden">I am (or represent) the</span></a>
+   </dd>
+  </div>
+  </dl>
+
+  @includes.continueButton(govukButton)
+
+ }
+}

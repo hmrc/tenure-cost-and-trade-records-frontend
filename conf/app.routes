@@ -280,3 +280,6 @@ POST        /check-your-answers-about-franchise-or-lettings         controllers.
 
 GET         /check-your-answers-additional-information              controllers.additionalinformation.CheckYourAnswersAdditionalInformationController.show()
 POST        /check-your-answers-additional-information              controllers.additionalinformation.CheckYourAnswersAdditionalInformationController.submit()
+
+GET         /check-your-answers-lease-or-tenure                     controllers.aboutYourLeaseOrTenure.CheckYourAnswersAboutYourLeaseOrTenureController.show()
+POST        /check-your-answers-lease-or-tenure                     controllers.aboutYourLeaseOrTenure.CheckYourAnswersAboutYourLeaseOrTenureController.submit()
