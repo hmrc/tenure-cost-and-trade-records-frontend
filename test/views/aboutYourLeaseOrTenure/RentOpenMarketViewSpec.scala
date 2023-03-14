@@ -23,7 +23,7 @@ import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class rentOpenMarketViewSpec extends QuestionViewBehaviours[RentOpenMarketValueDetails] {
+class RentOpenMarketViewSpec extends QuestionViewBehaviours[RentOpenMarketValueDetails] {
 
   val messageKeyPrefix = "rentOpenMarketValue"
 

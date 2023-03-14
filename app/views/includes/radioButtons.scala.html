@@ -28,8 +28,10 @@
         legendContent: String = "",
         classes: String = "",
         items: Seq[RadioItem],
-        isHeading: Boolean = false
+        isHeading: Boolean = false,
+        inline: Boolean = true
 )(implicit request: Request[_], messages: Messages)
+
 
 @govukRadios(Radios(
  fieldset =  Some(Fieldset(
@@ -39,6 +41,7 @@
     classes = classes
    ))
  )),
+ classes = if (inline) "govuk-radios--inline" else "",
  name = name,
  items = items,
  errorMessage = theForm.errors.asTextErrorMessageForField(name)

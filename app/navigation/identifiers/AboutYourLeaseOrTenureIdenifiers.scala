@@ -42,6 +42,10 @@ case object IncludedInYourRentPageId extends Identifier { override def toString:
 
 case object DoesRentPayablePageId extends Identifier { override def toString: String = "doesRentPayablePage" }
 
+case object UltimatelyResponsiblePageId extends Identifier {
+  override def toString: String = "ultimatelyResponsiblePage"
+}
+
 case object RentIncludeTradeServicesPageId extends Identifier {
   override def toString: String = "rentIncludeTradeServicesPage"
 }

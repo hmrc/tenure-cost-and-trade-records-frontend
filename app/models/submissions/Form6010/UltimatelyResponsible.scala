@@ -16,12 +16,14 @@
 
 package models.submissions.Form6010
 
+import models.submissions.common.AnswerResponsibleParty
 import play.api.libs.json.Json
 
 case class UltimatelyResponsible(
-  outsideRepairs: OutsideRepairs,
-  insideRepairs: InsideRepairs,
-  buildingInsurance: BuildingInsurances
+  outsideRepairs: AnswerResponsibleParty,
+  insideRepairs: AnswerResponsibleParty,
+  buildingInsurance: AnswerResponsibleParty,
+  sharedResponsibilities: String
 )
 
 object UltimatelyResponsible {

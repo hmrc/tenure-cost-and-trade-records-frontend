@@ -67,8 +67,6 @@ trait FakeViews { this: GuiceOneAppPerSuite =>
     app.injector.instanceOf[currentRentFirstPaid]
   lazy val ultimatelyResponsibleView                       =
     app.injector.instanceOf[ultimatelyResponsible]
-  lazy val sharedResponsibilitiesView                      =
-    app.injector.instanceOf[sharedResponsibilities]
   lazy val intervalsOfRentReviewView                       =
     app.injector.instanceOf[intervalsOfRentReview]
   lazy val includedInYourRentView                          =

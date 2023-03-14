@@ -22,7 +22,7 @@ import models.submissions._
 import models.submissions.aboutYourLeaseOrTenure._
 import models.submissions.abouttheproperty._
 import models.submissions.aboutthetradinghistory.CostOfSalesOrGrossProfit
-import models.submissions.common.AnswersYesNo
+import models.submissions.common.{AnswerResponsibleParty, AnswersYesNo}
 import models.submissions.connectiontoproperty.{AddressConnectionType, ConnectionToProperty}
 import play.api.data.FormError
 import play.api.data.format.Formatter
@@ -109,12 +109,8 @@ object Formats {
   implicit val legalPlanningRestrictionsFormatter: Formatter[LegalPlanningRestrictions]     =
     namedEnumFormatter(LegalPlanningRestriction, Errors.booleanMissing)
 
-  implicit val outsideRepairsFormatter: Formatter[OutsideRepairs]        =
-    namedEnumFormatter(OutsideRepairs, Errors.booleanMissing)
-  implicit val insideRepairsFormatter: Formatter[InsideRepairs]          =
-    namedEnumFormatter(InsideRepairs, Errors.booleanMissing)
-  implicit val buildingInsuranceFormatter: Formatter[BuildingInsurances] =
-    namedEnumFormatter(BuildingInsurances, Errors.booleanMissing)
+  implicit val answerResponsiblePartyFormatter: Formatter[AnswerResponsibleParty] =
+    namedEnumFormatter(AnswerResponsibleParty, Errors.booleanMissing)
 
   implicit val includeLicenseeFormatter: Formatter[IncludeLicensees]            =
     namedEnumFormatter(IncludeLicensee, Errors.booleanMissing)
@@ -139,7 +135,4 @@ object Formats {
 
   implicit val costOfSalesOrGrossProfitDetailsFormatter: Formatter[CostOfSalesOrGrossProfit] =
     namedEnumFormatter(CostOfSalesOrGrossProfit, Errors.booleanMissing)
-
-//  implicit val connectedToLandlordFormatter: Formatter[ConnectedToLandlord] =
-//    namedEnumFormatter(ConnectedToLandlord, Errors.booleanMissing)
 }

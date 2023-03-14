@@ -16,27 +16,27 @@
 
 package views.aboutYourLeaseOrTenure
 
-import form.aboutYourLeaseOrTenure.RentIncludeTradeServicesForm
-import models.submissions.aboutYourLeaseOrTenure._
+import form.Form6010.RentIncludeFixtureAndFittingsForm
+import models.submissions.Form6010.RentIncludeFixturesAndFittingsDetails
 import models.submissions.common.{AnswerNo, AnswerYes}
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class rentIncludeTradeServiceViewSpec extends QuestionViewBehaviours[RentIncludeTradeServicesDetails] {
+class RentIncludeFixtureAndFittingsViewSpec extends QuestionViewBehaviours[RentIncludeFixturesAndFittingsDetails] {
 
-  val messageKeyPrefix = "rentIncludeTradeServices"
+  val messageKeyPrefix = "rentIncludeFixturesAndFittings"
 
-  override val form = RentIncludeTradeServicesForm.rentIncludeTradeServicesForm
+  override val form = RentIncludeFixtureAndFittingsForm.rentIncludeFixturesAndFittingsForm
 
   val backLink = controllers.aboutYourLeaseOrTenure.routes.AboutYourLandlordController.show().url
 
-  def createView = () => rentIncludeTradeServicesView(form)(fakeRequest, messages)
+  def createView = () => rentIncludeFixtureAndFittingsView(form)(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[RentIncludeTradeServicesDetails]) =>
-    rentIncludeTradeServicesView(form)(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[RentIncludeFixturesAndFittingsDetails]) =>
+    rentIncludeFixtureAndFittingsView(form)(fakeRequest, messages)
 
-  "Rent include trade services view" must {
+  "Rent include fixture and fittings view" must {
 
     behave like normalPage(createView, messageKeyPrefix)
 
@@ -45,7 +45,7 @@ class rentIncludeTradeServiceViewSpec extends QuestionViewBehaviours[RentInclude
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText mustBe messages("back.link.label")
       val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.aboutYourLeaseOrTenure.routes.DoesTheRentPayableController.show().url
+      backlinkUrl mustBe controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesController.show().url
     }
 
     "Section heading is visible" in {
@@ -58,8 +58,8 @@ class rentIncludeTradeServiceViewSpec extends QuestionViewBehaviours[RentInclude
       val doc = asDocument(createViewUsingForm(form))
       assertContainsRadioButton(
         doc,
-        "rentIncludeTradeServices",
-        "rentIncludeTradeServices",
+        "rentIncludeFixturesAndFittings",
+        "rentIncludeFixturesAndFittings",
         AnswerYes.name,
         false
       )
@@ -70,8 +70,8 @@ class rentIncludeTradeServiceViewSpec extends QuestionViewBehaviours[RentInclude
       val doc = asDocument(createViewUsingForm(form))
       assertContainsRadioButton(
         doc,
-        "rentIncludeTradeServices-2",
-        "rentIncludeTradeServices",
+        "rentIncludeFixturesAndFittings-2",
+        "rentIncludeFixturesAndFittings",
         AnswerNo.name,
         false
       )

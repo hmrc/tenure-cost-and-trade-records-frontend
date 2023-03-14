@@ -23,7 +23,7 @@ import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class rentIncreaseAnnuallyWithRPIViewSpec extends QuestionViewBehaviours[RentIncreasedAnnuallyWithRPIDetails] {
+class RentIncreaseAnnuallyWithRPIViewSpec extends QuestionViewBehaviours[RentIncreasedAnnuallyWithRPIDetails] {
 
   val messageKeyPrefix = "rentIncreasedAnnuallyWithRPIs"
 

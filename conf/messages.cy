@@ -324,7 +324,7 @@ error.enforcementActionHasBeenTakenDetails.required = Please describe any enforc
 error.enforcementActionHasBeenTakenDetails.maxLength  = This must be 1000 characters or fewer
 
 #ULTIMATELY RESPONSIBLE
-##############################
+#######################
 ultimatelyResponsible.heading = Who is ultimately responsible for the following costs?
 ultimatelyResponsible.subheading = This could be either by direct payment, or by reimbursing the person who initially paid for the service
 label.outsideRepairs = Outside repairs
@@ -333,6 +333,9 @@ label.buildingInsurance = Building insurance
 label.landlord = Landlord
 label.tenant = Tenant
 label.both = Both
+label.sharedResponsibilities = Give details of the shared responsibilities
+hint.sharedResponsibilities = For example, costs are shared equally, landlord 75%, tenant 25%
+error.sharedResponsibilities.maxLength = This must be 2000 characters or fewer
 
 #RENT INCLUDE TRADE SERVICES
 ############################
@@ -587,14 +590,6 @@ netProfit.heading = This is a holding page for the net profits page
 #########
 concessionOrFranchise.heading = Is any concession or franchise run as a separate business from the property?
 hint.concessionOrFranchise = Choose ’no’ if you’ve included turnover from these businesses in your turnover. You will have the opportunity to add more than one business if required.
-
-#SHARED RESPONSIBILITIES
-##############################
-sharedResponsibilities.heading = About your lease or agreement
-label.sharedResponsibilities = Give details of the shared responsibilities
-hint.sharedResponsibilities = For example, costs are shared equally, landlord 75%, tenant 25%
-error.sharedResponsibilities.required = Please provide details if you are responsible for any area shared, if any
-error.sharedResponsibilities.maxLength = This must be 1000 characters or fewer
 
 #FURTHER INFORMATION OR REMARKS
 ###############################
