@@ -62,7 +62,12 @@ class CheckYourAnswersAboutFranchiseOrLettingsController @Inject() (
     Future.successful(Ok(taskListView()))
   }
 
-  private def getBackLink(answers: Session): String =
+  private def getLettingsIndex(session: Session): Int =
+    session.aboutFranchisesOrLettings.map(_.lettingCurrentIndex).getOrElse(0)
+
+  private def getBackLink(
+    answers: Session
+  ): String = //TODO Look at the back link logic. Got it loading but I'll come back to it! - Pete
     answers.userLoginDetails.forNumber match {
       case ForTypes.for6010 | ForTypes.for6011 =>
         answers.aboutFranchisesOrLettings.flatMap(_.franchisesOrLettingsTiedToProperty.map(_.name)) match {
@@ -82,30 +87,38 @@ class CheckYourAnswersAboutFranchiseOrLettingsController @Inject() (
             logger.warn(s"Back link for premises license page reached with unknown enforcement taken value")
             controllers.routes.TaskListController.show().url
         }
+
       case ForTypes.for6015 | ForTypes.for6016 =>
         answers.aboutFranchisesOrLettings.flatMap(_.franchisesOrLettingsTiedToProperty.map(_.name)) match {
-          case Some("yes") => controllers.aboutfranchisesorlettings.routes.ConcessionOrFranchiseController.show().url
+          case Some("yes") =>
+            controllers.aboutfranchisesorlettings.routes.AddAnotherLettingOtherPartOfPropertyController.show(0).url
           case Some("no")  =>
             controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show().url
           case _           =>
             logger.warn(s"Back link for premises license page reached with unknown enforcement taken value")
             controllers.routes.TaskListController.show().url
         }
+      case ForTypes.for6015 | ForTypes.for6016 =>
         answers.aboutFranchisesOrLettings.flatMap(_.lettingOtherPartOfProperty.map(_.name)) match {
           case Some("yes") =>
-            controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsController.show().url
+            controllers.aboutfranchisesorlettings.routes.AddAnotherLettingOtherPartOfPropertyController.show(0).url
           case Some("no")  =>
-            controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show().url
+            controllers.aboutfranchisesorlettings.routes.AddAnotherLettingOtherPartOfPropertyController.show(0).url
           case _           =>
             logger.warn(s"Back link for premises license page reached with unknown enforcement taken value")
             controllers.routes.TaskListController.show().url
         }
-//        answers.aboutFranchisesOrLettings.flatMap(_.lettingSections.map(_.addAnotherLettingToProperty)) match {
-//          case "yes" => controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show().url
-//          case "no" => controllers.aboutfranchisesorlettings.routes.AddAnotherLettingOtherPartOfPropertyController.show(0).url
-//          case _ =>
-//            logger.warn(s"Back link for premises license page reached with unknown enforcement taken value")
-//            controllers.routes.TaskListController.show().url
-//        }
+      case ForTypes.for6015 | ForTypes.for6016 =>
+        val existingSection =
+          answers.aboutFranchisesOrLettings.flatMap(_.lettingSections.lift(getLettingsIndex(answers)))
+        existingSection.flatMap(_.addAnotherLettingToProperty).get.name match {
+          case "yes" =>
+            controllers.aboutfranchisesorlettings.routes.AddAnotherLettingOtherPartOfPropertyController.show(0).url
+          case "no"  =>
+            controllers.aboutfranchisesorlettings.routes.AddAnotherLettingOtherPartOfPropertyController.show(0).url
+          case _     =>
+            logger.warn(s"Back link for premises license page reached with unknown enforcement taken value")
+            controllers.routes.TaskListController.show().url
+        }
     }
 }

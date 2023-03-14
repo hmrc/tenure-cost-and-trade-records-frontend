@@ -42,7 +42,8 @@ case class AboutLeaseOrAgreementPartOne(
   rentIncludeFixtureAndFittingsDetails: Option[AnnualRent] = None,
   rentOpenMarketValueDetails: Option[RentOpenMarketValueDetails] = None,
   whatIsYourCurrentRentBasedOnDetails: Option[WhatIsYourCurrentRentBasedOnDetails] = None,
-  rentIncreasedAnnuallyWithRPIDetails: Option[RentIncreasedAnnuallyWithRPIDetails] = None
+  rentIncreasedAnnuallyWithRPIDetails: Option[RentIncreasedAnnuallyWithRPIDetails] = None,
+  checkYourAnswersAboutYourLeaseOrTenure: Option[CheckYourAnswersAboutYourLeaseOrTenure] = None
 )
 
 object AboutLeaseOrAgreementPartOne {
