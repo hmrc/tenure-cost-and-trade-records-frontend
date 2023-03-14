@@ -35,7 +35,15 @@ import scala.concurrent.{ExecutionContext, Future}
 with HttpDelete with WSDelete  with AppName with RunMode
  */
 @ImplementedBy(classOf[ForHttpClient])
-trait ForHttp extends HttpGet with WSGet with HttpPut with WSPut with HttpPost with WSPost {}
+trait ForHttp
+    extends HttpGet
+    with WSGet
+    with HttpPut
+    with WSPut
+    with HttpPost
+    with WSPost
+    with HttpDelete
+    with WSDelete {}
 
 @Singleton
 class ForHttpClient @Inject() (

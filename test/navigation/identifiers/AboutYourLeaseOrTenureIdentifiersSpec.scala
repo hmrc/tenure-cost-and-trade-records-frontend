@@ -69,5 +69,9 @@ class AboutYourLeaseOrTenureIdentifiersSpec extends TestBaseSpec {
     "Identifier for tenancy lease agreement expire page (6011 only)" in {
       assert(TenancyLeaseAgreementExpirePageId.toString.equals("tenancyLeaseAgreementExpirePage"))
     }
+
+    "Identifier for check your answers about your lease or tenure" in {
+      assert(CheckYourAnswersAboutYourLeaseOrTenureId.toString.equals("checkYourAnswersAboutYourLeaseOrTenurePage"))
+    }
   }
 }

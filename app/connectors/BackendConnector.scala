@@ -17,7 +17,7 @@
 package connectors
 
 import com.google.inject.ImplementedBy
-import models.FORLoginResponse
+import models.{FORLoginResponse, SubmissionDraft}
 import uk.gov.hmrc.http.{BadRequestException, HeaderCarrier, HttpReads, HttpResponse, Upstream4xxResponse}
 import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
 import views.html.helper.urlEncode
@@ -26,10 +26,15 @@ import javax.inject.{Inject, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
-class DefaultBackendConnector @Inject() (config: ServicesConfig, http: ForHttp)(implicit ec: ExecutionContext)
+class DefaultBackendConnector @Inject() (servicesConfig: ServicesConfig, http: ForHttp)(implicit ec: ExecutionContext)
     extends BackendConnector {
 
-  lazy val serviceUrl           = config.baseUrl("tenure-cost-and-trade-records")
+  private val serviceUrl         = servicesConfig.baseUrl("tenure-cost-and-trade-records")
+  private val backendBaseUrl     = s"$serviceUrl/tenure-cost-and-trade-records"
+  private val saveAsDraftBaseUrl = s"$backendBaseUrl/saveAsDraft"
+
+  private def saveAsDraftUrl(referenceNumber: String) = s"$saveAsDraftBaseUrl/$referenceNumber"
+
   private def url(path: String) = s"$serviceUrl/tenure-cost-and-trade-records/$path"
 
 //  val backend = HttpClientSyncBackend()
@@ -69,9 +74,30 @@ class DefaultBackendConnector @Inject() (config: ServicesConfig, http: ForHttp)(
     http.GET[FORLoginResponse](url(s"${parts.mkString("/")}/verify"))(readsHack, hc, ec)
   }
 
+  override def saveAsDraft(referenceNumber: String, submissionDraft: SubmissionDraft)(implicit
+    hc: HeaderCarrier
+  ): Future[Unit] =
+    http.PUT(saveAsDraftUrl(referenceNumber), submissionDraft) map { _ => () }
+
+  override def loadSubmissionDraft(referenceNumber: String)(implicit
+    hc: HeaderCarrier
+  ): Future[Option[SubmissionDraft]] =
+    http.GET[Option[SubmissionDraft]](saveAsDraftUrl(referenceNumber))
+
+  override def deleteSubmissionDraft(referenceNumber: String)(implicit
+    hc: HeaderCarrier
+  ): Future[Int] =
+    http.DELETE(saveAsDraftUrl(referenceNumber)).map(res => (res.json \ "deletedCount").as[Int])
+
 }
 
 @ImplementedBy(classOf[DefaultBackendConnector])
 trait BackendConnector {
   def verifyCredentials(refNumber: String, postcode: String)(implicit hc: HeaderCarrier): Future[FORLoginResponse]
+
+  def saveAsDraft(referenceNumber: String, submissionDraft: SubmissionDraft)(implicit hc: HeaderCarrier): Future[Unit]
+
+  def loadSubmissionDraft(referenceNumber: String)(implicit hc: HeaderCarrier): Future[Option[SubmissionDraft]]
+
+  def deleteSubmissionDraft(referenceNumber: String)(implicit hc: HeaderCarrier): Future[Int]
 }
