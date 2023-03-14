@@ -17,6 +17,7 @@
 package controllers.Form6010
 
 import models.submissions.aboutLeaseOrAgreement.AboutLeaseOrAgreementPartOne
+import navigation.AboutYourLeaseOrTenureNavigator
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
@@ -24,14 +25,15 @@ import utils.TestBaseSpec
 
 class UltimatelyResponsibleControllerSpec extends TestBaseSpec {
 
+  val mockAboutYourLeaseOrTenureNavigator = mock[AboutYourLeaseOrTenureNavigator]
+
   def ultimatelyResponsibleController(
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
   ) =
     new UltimatelyResponsibleController(
       stubMessagesControllerComponents(),
+      mockAboutYourLeaseOrTenureNavigator,
       ultimatelyResponsibleView,
-      sharedResponsibilitiesView,
-      intervalsOfRentReviewView,
       preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
       mockSessionRepo
     )

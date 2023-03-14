@@ -26,9 +26,9 @@ object UltimatelyResponsibleForm {
 
   val ultimatelyResponsibleForm = Form(
     mapping(
-      "outsideRepairs"    -> responsiblePartyType,
-      "insideRepairs"     -> responsiblePartyType,
-      "buildingInsurance" -> responsiblePartyType,
+      "outsideRepairs"         -> responsiblePartyType,
+      "insideRepairs"          -> responsiblePartyType,
+      "buildingInsurance"      -> responsiblePartyType,
       "sharedResponsibilities" ->
         default(text, "").verifying(
           maxLength(2000, "error.sharedResponsibilities.maxLength")

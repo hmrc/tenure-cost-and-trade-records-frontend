@@ -102,8 +102,12 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit)(implicit ec: Exec
     CurrentLeaseBeginPageId                -> (_ => controllers.aboutYourLeaseOrTenure.routes.IncludedInYourRentController.show()),
     IncludedInYourRentPageId               -> (_ => controllers.aboutYourLeaseOrTenure.routes.DoesTheRentPayableController.show()),
     DoesRentPayablePageId                  -> (_ => controllers.Form6010.routes.UltimatelyResponsibleController.show()),
-    UltimatelyResponsiblePageId            -> (_ => controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesController.show()),
+    UltimatelyResponsiblePageId            -> (_ =>
+      controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesController.show()
+    ),
     RentIncludeTradeServicesPageId         -> rentIncludeTradeServicesRouting,
-    RentIncludeTradeServicesDetailsPageId  -> (_ => controllers.Form6010.routes.RentIncludeFixtureAndFittingsController.show())
+    RentIncludeTradeServicesDetailsPageId  -> (_ =>
+      controllers.Form6010.routes.RentIncludeFixtureAndFittingsController.show()
+    )
   )
 }
