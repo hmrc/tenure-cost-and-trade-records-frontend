@@ -26,7 +26,7 @@ import models.submissions.aboutfranchisesorlettings._
 import models.submissions.abouttheproperty._
 import models.submissions.aboutthetradinghistory.CostOfSalesOrGrossProfit
 import models.submissions.additionalinformation.AlternativeContactDetailsAddress
-import models.submissions.common.{Address, AnswersYesNo, ContactDetails}
+import models.submissions.common.{Address, AnswerResponsibleParty, AnswersYesNo, ContactDetails}
 import models.submissions.connectiontoproperty.{AddressConnectionType, ConnectionToProperty}
 import models.{AnnualRent, NamedEnum, NamedEnumSupport}
 import play.api.data.Forms.{boolean, default, email, mapping, optional, text}
@@ -66,9 +66,7 @@ object MappingSupport {
   val tenantsAdditionsDisregardedType: Mapping[TenantAdditionalDisregarded] = Forms.of[TenantAdditionalDisregarded]
   val legalPlanningRestrictionsType: Mapping[LegalPlanningRestrictions]     = Forms.of[LegalPlanningRestrictions]
 
-  val outsideRepairsType: Mapping[OutsideRepairs]        = Forms.of[OutsideRepairs]
-  val insideRepairsType: Mapping[InsideRepairs]          = Forms.of[InsideRepairs]
-  val buildingInsuranceType: Mapping[BuildingInsurances] = Forms.of[BuildingInsurances]
+  val responsiblePartyType: Mapping[AnswerResponsibleParty] = Forms.of[AnswerResponsibleParty]
 
   val includeLicenseeType: Mapping[IncludeLicensees]            = Forms.of[IncludeLicensees]
   val includeOtherPropertyType: Mapping[IncludeOtherProperties] = Forms.of[IncludeOtherProperties]

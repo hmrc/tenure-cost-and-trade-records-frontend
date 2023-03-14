@@ -18,28 +18,13 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukErrorSummary
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukDateInput
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukTextarea
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukCharacterCount
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
-@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Label
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Radios
 @import uk.gov.hmrc.govukfrontend.views.Aliases.RadioItem
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Fieldset
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Legend
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Hint
-@import uk.gov.hmrc.govukfrontend.views.Aliases.CharacterCount
 
 @this(layout: Layout,
         govukButton: GovukButton,
         govukRadios: GovukRadios,
-        govukInput: GovukInput,
-        govukErrorSummary: GovukErrorSummary,
-        govukDateInput: GovukDateInput,
-        govukTextarea: GovukTextarea,
         govukCharacterCount: GovukCharacterCount,
         formWithCSRF: FormWithCSRF
 )
@@ -49,101 +34,83 @@
 
 @layout(
  pageHeading = messages("ultimatelyResponsible.heading"),
+ showH1 = false,
+ showSection = true,
+ sectionName = messages("label.section.aboutYourLeaseOrTenure"),
  backLinkUrl = controllers.aboutYourLeaseOrTenure.routes.DoesTheRentPayableController.show.url,
  theForm = theForm
 ) {
 
- @formWithCSRF(action = controllers.Form6010.routes.UltimatelyResponsibleController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
+  @formWithCSRF(action = controllers.Form6010.routes.UltimatelyResponsibleController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
 
+    <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+      <h1 class="govuk-fieldset__heading">@messages("ultimatelyResponsible.heading")</h1>
+    </legend>
 
-  <p class="govuk-body">@messages("ultimatelyResponsible.subheading")</p>
+    <p class="govuk-body">@messages("ultimatelyResponsible.subheading")</p>
 
- @govukRadios(
-  Radios(
-   name = "outsideRepairs",
-   idPrefix = Option("outsideRepairs"),
-   items = Seq(
-    "landlord" -> messages("label.landlord"),
-    "tenant" -> messages("label.tenant"),
-    "both" -> messages("label.both")
-   ).map(radioItem => RadioItem(
-    content = Text(radioItem._2),
-    checked = radioItem._1.equals(theForm("rentReducedOnReview").value.getOrElse("")),
-    value = Option(radioItem._1)
-   )
-   ),
-   errorMessage =  theForm.errors.asTextErrorMessageForField("outsideRepairs"),
-   fieldset = Option(
-    Fieldset(
-     legend = Option(
-      Legend(
-       content = Text(messages("label.outsideRepairs")),
-       classes = "govuk-!-font-weight-bold"
-      )
-     )
+    @includes.radioButtons(
+      govukRadios,
+      theForm,
+      "outsideRepairs",
+      "label.outsideRepairs",
+      "govuk-!-font-weight-bold",
+      items = Seq(
+        "landlord" -> messages("label.landlord"),
+        "tenant" -> messages("label.tenant"),
+        "both" -> messages("label.both")
+      ).map(radioItem => RadioItem(
+        content = Text(radioItem._2),
+        checked = radioItem._1.equals(theForm("rentReducedOnReview").value.getOrElse("")),
+        value = Option(radioItem._1)
+      )),
     )
-   )
-  )
- )
 
- @govukRadios(
-  Radios(
-   name = "insideRepairs",
-   idPrefix = Option("insideRepairs"),
-   items = Seq(
-    "landlord" -> messages("label.landlord"),
-    "tenant" -> messages("label.tenant"),
-    "both" -> messages("label.both")
-   ).map(radioItem => RadioItem(
-    content = Text(radioItem._2),
-    checked = radioItem._1.equals(theForm("rentReducedOnReview").value.getOrElse("")),
-    value = Option(radioItem._1)
-   )
-   ),
-   errorMessage =  theForm.errors.asTextErrorMessageForField("insideRepairs"),
-   fieldset = Option(
-    Fieldset(
-     legend = Option(
-      Legend(
-       content = Text(messages("label.insideRepairs")),
-       classes = "govuk-!-font-weight-bold"
-      )
-     )
+    @includes.radioButtons(
+      govukRadios,
+      theForm,
+      "insideRepairs",
+      "label.insideRepairs",
+      "govuk-!-font-weight-bold",
+      items = Seq(
+        "landlord" -> messages("label.landlord"),
+        "tenant" -> messages("label.tenant"),
+        "both" -> messages("label.both")
+      ).map(radioItem => RadioItem(
+        content = Text(radioItem._2),
+        checked = radioItem._1.equals(theForm("rentReducedOnReview").value.getOrElse("")),
+        value = Option(radioItem._1)
+      )),
     )
-   )
-  )
- )
 
- @govukRadios(
-  Radios(
-   name = "buildingInsurance",
-   idPrefix = Option("buildingInsurance"),
-   items = Seq(
-    "landlord" -> messages("label.landlord"),
-    "tenant" -> messages("label.tenant"),
-    "both" -> messages("label.both")
-   ).map(radioItem => RadioItem(
-    content = Text(radioItem._2),
-    checked = radioItem._1.equals(theForm("rentReducedOnReview").value.getOrElse("")),
-    value = Option(radioItem._1)
-   )
-   ),
-   errorMessage =  theForm.errors.asTextErrorMessageForField("buildingInsurance"),
-   fieldset = Option(
-    Fieldset(
-     legend = Option(
-      Legend(
-       content = Text(messages("label.buildingInsurance")),
-       classes = "govuk-!-font-weight-bold"
-      )
-     )
+    @includes.radioButtons(
+      govukRadios,
+      theForm,
+      "buildingInsurance",
+      "label.buildingInsurance",
+      "govuk-!-font-weight-bold",
+      items = Seq(
+          "landlord" -> messages("label.landlord"),
+          "tenant" -> messages("label.tenant"),
+          "both" -> messages("label.both")
+      ).map(radioItem => RadioItem(
+          content = Text(radioItem._2),
+          checked = radioItem._1.equals(theForm("rentReducedOnReview").value.getOrElse("")),
+          value = Option(radioItem._1)
+      )),
     )
-   )
-  )
- )
 
- @includes.continueButton(govukButton)
-}
+    @includes.textInputCharCount(
+      govukCharacterCount,
+      theForm,
+      "sharedResponsibilities",
+      legendContent = "label.sharedResponsibilities",
+      classes = "govuk-!-font-weight-bold",
+      hint = "hint.sharedResponsibilities"
+    )
+
+    @includes.continueButton(govukButton)
+  }
 }
 
 

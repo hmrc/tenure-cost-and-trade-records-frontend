@@ -32,15 +32,17 @@ case object CurrentRentPayableWithin12monthsPageId extends Identifier {
   override def toString: String = "currentRentPayableWithin12monthsPage"
 }
 
-case object CurrentAnnualRentPageId extends Identifier { override def toString: String = "currentAnnualRentPage" }
+case object CurrentAnnualRentPageId extends Identifier {override def toString: String = "currentAnnualRentPage"}
 
-case object CurrentRentFirstPaidPageId extends Identifier { override def toString: String = "currentRentFirstPaidPage" }
+case object CurrentRentFirstPaidPageId extends Identifier {override def toString: String = "currentRentFirstPaidPage"}
 
-case object CurrentLeaseBeginPageId extends Identifier { override def toString: String = "currentLeaseBeginPage" }
+case object CurrentLeaseBeginPageId extends Identifier {override def toString: String = "currentLeaseBeginPage"}
 
-case object IncludedInYourRentPageId extends Identifier { override def toString: String = "includedInYourRentPage" }
+case object IncludedInYourRentPageId extends Identifier {override def toString: String = "includedInYourRentPage"}
 
-case object DoesRentPayablePageId extends Identifier { override def toString: String = "doesRentPayablePage" }
+case object DoesRentPayablePageId extends Identifier {override def toString: String = "doesRentPayablePage"}
+
+case object UltimatelyResponsiblePageId extends Identifier {override def toString: String = "ultimatelyResponsiblePage"}
 
 case object RentIncludeTradeServicesPageId extends Identifier {
   override def toString: String = "rentIncludeTradeServicesPage"

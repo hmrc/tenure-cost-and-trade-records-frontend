@@ -47,6 +47,6 @@
     hint = if(hintMsg.length > 0)
         Some(Hint(content = Text(messages(s"hint.${hintMsg}"))))
     else None,
-))
+).withFormField(theForm(id)))
 
 

@@ -41,13 +41,6 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit)(implicit ec: Exec
 
   }
 
-  private def currentRentFirstPaidRouting: Session => Call = answers => {
-    if (answers.userLoginDetails.forNumber == ForTypes.for6011)
-      controllers.aboutYourLeaseOrTenure.routes.TenancyLeaseAgreementExpireController.show()
-    else
-      controllers.aboutYourLeaseOrTenure.routes.CurrentLeaseOrAgreementBeginController.show()
-  }
-
   private def connectedToLandlordRouting: Session => Call = answers => {
     answers.aboutLeaseOrAgreementPartOne.flatMap(_.connectedToLandlord.map(_.name)) match {
       case Some("yes") => controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordDetailsController.show()
@@ -72,6 +65,13 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit)(implicit ec: Exec
         controllers.aboutYourLeaseOrTenure.routes.CurrentRentPayableWithin12MonthsController.show()
       case _                                    => controllers.aboutYourLeaseOrTenure.routes.CurrentAnnualRentController.show()
     }
+  }
+
+  private def currentRentFirstPaidRouting: Session => Call = answers => {
+    if (answers.userLoginDetails.forNumber == ForTypes.for6011)
+      controllers.aboutYourLeaseOrTenure.routes.TenancyLeaseAgreementExpireController.show()
+    else
+      controllers.aboutYourLeaseOrTenure.routes.CurrentLeaseOrAgreementBeginController.show()
   }
 
   private def rentIncludeTradeServicesRouting: Session => Call = answers => {
@@ -101,10 +101,9 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit)(implicit ec: Exec
     TenancyLeaseAgreementExpirePageId      -> (_ => controllers.routes.TaskListController.show()),
     CurrentLeaseBeginPageId                -> (_ => controllers.aboutYourLeaseOrTenure.routes.IncludedInYourRentController.show()),
     IncludedInYourRentPageId               -> (_ => controllers.aboutYourLeaseOrTenure.routes.DoesTheRentPayableController.show()),
-    DoesRentPayablePageId                  -> (_ => controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesController.show()),
+    DoesRentPayablePageId                  -> (_ => controllers.Form6010.routes.UltimatelyResponsibleController.show()),
+    UltimatelyResponsiblePageId            -> (_ => controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesController.show()),
     RentIncludeTradeServicesPageId         -> rentIncludeTradeServicesRouting,
-    RentIncludeTradeServicesDetailsPageId  -> (_ =>
-      controllers.Form6010.routes.RentIncludeFixtureAndFittingsController.show()
-    )
+    RentIncludeTradeServicesDetailsPageId  -> (_ => controllers.Form6010.routes.RentIncludeFixtureAndFittingsController.show())
   )
 }

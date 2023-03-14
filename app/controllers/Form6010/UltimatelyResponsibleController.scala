@@ -18,15 +18,14 @@ package controllers.Form6010
 
 import actions.WithSessionRefiner
 import form.Form6010.UltimatelyResponsibleForm.ultimatelyResponsibleForm
-import form.Form6010.SharedResponsibilitiesForm.sharedResponsibilitiesForm
-import form.Form6010.IntervalsOfRentReviewForm.intervalsOfRentReviewForm
-import models.submissions.Form6010.{BuildingInsurancesBoth, InsideRepairsBoth, OutsideRepairsBoth}
 import models.submissions.aboutLeaseOrAgreement.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne
+import navigation.AboutYourLeaseOrTenureNavigator
+import navigation.identifiers.UltimatelyResponsiblePageId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.form.{intervalsOfRentReview, sharedResponsibilities, ultimatelyResponsible}
+import views.html.form.ultimatelyResponsible
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
@@ -34,9 +33,8 @@ import scala.concurrent.Future
 @Singleton
 class UltimatelyResponsibleController @Inject() (
   mcc: MessagesControllerComponents,
+  navigator: AboutYourLeaseOrTenureNavigator,
   ultimatelyResponsibleView: ultimatelyResponsible,
-  sharedResponsibilitiesView: sharedResponsibilities,
-  intervalsOfRentReviewView: intervalsOfRentReview,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
 ) extends FrontendController(mcc)
@@ -60,19 +58,11 @@ class UltimatelyResponsibleController @Inject() (
       .bindFromRequest()
       .fold(
         formWithErrors => Future.successful(BadRequest(ultimatelyResponsibleView(formWithErrors))),
-        data =>
-          if (
-            data.insideRepairs.equals(InsideRepairsBoth) || data.outsideRepairs
-              .equals(OutsideRepairsBoth) || data.buildingInsurance.equals(BuildingInsurancesBoth)
-          ) {
-            val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(ultimatelyResponsible = Some(data)))
-            session.saveOrUpdate(updatedData)
-            Future.successful(Ok(sharedResponsibilitiesView(sharedResponsibilitiesForm)))
-          } else {
-            val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(ultimatelyResponsible = Some(data)))
-            session.saveOrUpdate(updatedData)
-            Future.successful(Ok(intervalsOfRentReviewView(intervalsOfRentReviewForm)))
-          }
+        data => {
+          val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(ultimatelyResponsible = Some(data)))
+          session.saveOrUpdate(updatedData)
+          Future.successful(Redirect(navigator.nextPage(UltimatelyResponsiblePageId).apply(updatedData)))
+        }
       )
   }
 
