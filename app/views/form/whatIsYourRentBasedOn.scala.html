@@ -60,7 +60,8 @@
         checked = radioItem._1.equals(theForm("currentRentBasedOn").value.getOrElse("")),
         value = Option(radioItem._1)
       )),
-      true
+      isHeading = true,
+      inline = false
     )
 
     @includes.textInputCharCount(

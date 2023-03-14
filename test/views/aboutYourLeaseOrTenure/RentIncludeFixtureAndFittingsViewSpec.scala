@@ -16,25 +16,27 @@
 
 package views.aboutYourLeaseOrTenure
 
-import form.Form6010.RentIncreasedAnnuallyWithRPIForm
-import models.submissions.Form6010.RentIncreasedAnnuallyWithRPIDetails
+import form.Form6010.RentIncludeFixtureAndFittingsForm
+import models.submissions.Form6010.RentIncludeFixturesAndFittingsDetails
 import models.submissions.common.{AnswerNo, AnswerYes}
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class rentIncreaseAnnuallyWithRPIViewSpec extends QuestionViewBehaviours[RentIncreasedAnnuallyWithRPIDetails] {
+class RentIncludeFixtureAndFittingsViewSpec extends QuestionViewBehaviours[RentIncludeFixturesAndFittingsDetails] {
 
-  val messageKeyPrefix = "rentIncreasedAnnuallyWithRPIs"
+  val messageKeyPrefix = "rentIncludeFixturesAndFittings"
 
-  override val form = RentIncreasedAnnuallyWithRPIForm.rentIncreasedAnnuallyWithRPIDetailsForm
+  override val form = RentIncludeFixtureAndFittingsForm.rentIncludeFixturesAndFittingsForm
 
-  def createView = () => rentIncreaseAnnuallyWithRPIView(form)(fakeRequest, messages)
+  val backLink = controllers.aboutYourLeaseOrTenure.routes.AboutYourLandlordController.show().url
 
-  def createViewUsingForm = (form: Form[RentIncreasedAnnuallyWithRPIDetails]) =>
-    rentIncreaseAnnuallyWithRPIView(form)(fakeRequest, messages)
+  def createView = () => rentIncludeFixtureAndFittingsView(form)(fakeRequest, messages)
 
-  "Rent Increase annually with RPI view" must {
+  def createViewUsingForm = (form: Form[RentIncludeFixturesAndFittingsDetails]) =>
+    rentIncludeFixtureAndFittingsView(form)(fakeRequest, messages)
+
+  "Rent include fixture and fittings view" must {
 
     behave like normalPage(createView, messageKeyPrefix)
 
@@ -43,7 +45,7 @@ class rentIncreaseAnnuallyWithRPIViewSpec extends QuestionViewBehaviours[RentInc
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText mustBe messages("back.link.label")
       val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.Form6010.routes.RentOpenMarketValueController.show().url
+      backlinkUrl mustBe controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesController.show().url
     }
 
     "Section heading is visible" in {
@@ -56,8 +58,8 @@ class rentIncreaseAnnuallyWithRPIViewSpec extends QuestionViewBehaviours[RentInc
       val doc = asDocument(createViewUsingForm(form))
       assertContainsRadioButton(
         doc,
-        "rentIncreasedAnnuallyWithRPIs",
-        "rentIncreasedAnnuallyWithRPIs",
+        "rentIncludeFixturesAndFittings",
+        "rentIncludeFixturesAndFittings",
         AnswerYes.name,
         false
       )
@@ -68,8 +70,8 @@ class rentIncreaseAnnuallyWithRPIViewSpec extends QuestionViewBehaviours[RentInc
       val doc = asDocument(createViewUsingForm(form))
       assertContainsRadioButton(
         doc,
-        "rentIncreasedAnnuallyWithRPIs-2",
-        "rentIncreasedAnnuallyWithRPIs",
+        "rentIncludeFixturesAndFittings-2",
+        "rentIncludeFixturesAndFittings",
         AnswerNo.name,
         false
       )

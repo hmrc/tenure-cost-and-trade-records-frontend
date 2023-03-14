@@ -100,10 +100,17 @@ class AboutYourLeaseOrTenure6010NavigatorSpec extends TestBaseSpec {
         .show()
     }
 
-    "return a function that goes to rent include trade services page when does rent payable has been completed" in {
+    "return a function that goes to ultimately responsible page when does rent payable has been completed" in {
       navigator
         .nextPage(DoesRentPayablePageId)
         .apply(session6010) mustBe controllers.Form6010.routes.UltimatelyResponsibleController
+        .show()
+    }
+
+    "return a function that goes to rent include trade services page when ultimately responsible has been completed" in {
+      navigator
+        .nextPage(UltimatelyResponsiblePageId)
+        .apply(session6010) mustBe controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesController
         .show()
     }
 
