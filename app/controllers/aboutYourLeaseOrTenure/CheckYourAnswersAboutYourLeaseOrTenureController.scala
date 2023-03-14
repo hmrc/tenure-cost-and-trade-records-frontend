@@ -32,7 +32,7 @@ import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class CheckYourAnswersAboutYourLeaseOrTenureController @Inject()(
+class CheckYourAnswersAboutYourLeaseOrTenureController @Inject() (
   mcc: MessagesControllerComponents,
   navigator: AboutYourLeaseOrTenureNavigator,
   checkYourAnswersAboutYourLeaseOrTenureView: checkYourAnswersAboutYourLeaseOrTenure,
@@ -50,7 +50,7 @@ class CheckYourAnswersAboutYourLeaseOrTenureController @Inject()(
           request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.checkYourAnswersAboutYourLeaseOrTenure) match {
             case Some(checkYourAnswersAboutYourLeaseOrTenureView) =>
               checkYourAnswersAboutFranchiseOrLettingsForm.fillAndValidate(checkYourAnswersAboutYourLeaseOrTenureView)
-            case _                                              => checkYourAnswersAboutFranchiseOrLettingsForm
+            case _                                                => checkYourAnswersAboutFranchiseOrLettingsForm
           }
         )
       )

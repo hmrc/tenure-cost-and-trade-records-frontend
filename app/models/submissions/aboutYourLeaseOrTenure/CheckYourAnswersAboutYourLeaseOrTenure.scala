@@ -19,11 +19,10 @@ package models.submissions.aboutYourLeaseOrTenure
 import play.api.libs.json.Json
 
 case class CheckYourAnswersAboutYourLeaseOrTenure(
-                                                   checkYourAnswersAboutYourLeaseOrTenure: String
+  checkYourAnswersAboutYourLeaseOrTenure: String
 )
 
 object CheckYourAnswersAboutYourLeaseOrTenure {
   implicit val format = Json.format[CheckYourAnswersAboutYourLeaseOrTenure]
 
 }
-

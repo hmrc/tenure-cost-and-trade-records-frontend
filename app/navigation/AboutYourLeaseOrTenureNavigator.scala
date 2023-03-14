@@ -89,25 +89,23 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit)(implicit ec: Exec
   }
 
   override val routeMap: Map[Identifier, Session => Call] = Map(
-    AboutTheLandlordPageId                 -> aboutYourLandlordRouting,
-    ConnectedToLandlordPageId              -> connectedToLandlordRouting,
-    ConnectedToLandlordDetailsPageId       -> (_ =>
+    AboutTheLandlordPageId                   -> aboutYourLandlordRouting,
+    ConnectedToLandlordPageId                -> connectedToLandlordRouting,
+    ConnectedToLandlordDetailsPageId         -> (_ =>
       controllers.aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.show()
     ),
-    LeaseOrAgreementDetailsPageId          -> leaseOrAgreementDetailsRouting,
-    CurrentRentPayableWithin12monthsPageId -> (_ => controllers.routes.TaskListController.show()),
-    CurrentAnnualRentPageId                -> (_ => controllers.aboutYourLeaseOrTenure.routes.CurrentRentFirstPaidController.show()),
-    CurrentRentFirstPaidPageId             -> currentRentFirstPaidRouting,
-    TenancyLeaseAgreementExpirePageId      -> (_ => controllers.routes.TaskListController.show()),
-    CurrentLeaseBeginPageId                -> (_ => controllers.aboutYourLeaseOrTenure.routes.IncludedInYourRentController.show()),
-    IncludedInYourRentPageId               -> (_ => controllers.aboutYourLeaseOrTenure.routes.DoesTheRentPayableController.show()),
-    DoesRentPayablePageId                  -> (_ => controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesController.show()),
-    RentIncludeTradeServicesPageId         -> rentIncludeTradeServicesRouting,
-    RentIncludeTradeServicesDetailsPageId  -> (_ =>
+    LeaseOrAgreementDetailsPageId            -> leaseOrAgreementDetailsRouting,
+    CurrentRentPayableWithin12monthsPageId   -> (_ => controllers.routes.TaskListController.show()),
+    CurrentAnnualRentPageId                  -> (_ => controllers.aboutYourLeaseOrTenure.routes.CurrentRentFirstPaidController.show()),
+    CurrentRentFirstPaidPageId               -> currentRentFirstPaidRouting,
+    TenancyLeaseAgreementExpirePageId        -> (_ => controllers.routes.TaskListController.show()),
+    CurrentLeaseBeginPageId                  -> (_ => controllers.aboutYourLeaseOrTenure.routes.IncludedInYourRentController.show()),
+    IncludedInYourRentPageId                 -> (_ => controllers.aboutYourLeaseOrTenure.routes.DoesTheRentPayableController.show()),
+    DoesRentPayablePageId                    -> (_ => controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesController.show()),
+    RentIncludeTradeServicesPageId           -> rentIncludeTradeServicesRouting,
+    RentIncludeTradeServicesDetailsPageId    -> (_ =>
       controllers.Form6010.routes.RentIncludeFixtureAndFittingsController.show()
     ),
-    CheckYourAnswersAboutYourLeaseOrTenureId -> (_ =>
-      controllers.routes.TaskListController.show()
-      )
+    CheckYourAnswersAboutYourLeaseOrTenureId -> (_ => controllers.routes.TaskListController.show())
   )
 }
