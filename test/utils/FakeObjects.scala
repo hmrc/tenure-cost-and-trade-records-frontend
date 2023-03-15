@@ -16,6 +16,7 @@
 
 package utils
 
+import models.submissions.Form6010.{RentIncludeFixturesAndFittingsDetails, RentOpenMarketValueDetails}
 import models.submissions.aboutfranchisesorlettings._
 import models.submissions.abouttheproperty.PremisesLicenseGrantedNo
 import models.submissions.aboutLeaseOrAgreement.AboutLeaseOrAgreementPartOne
@@ -203,7 +204,9 @@ trait FakeObjects {
     Some(prefilledLeaseOrAgreementYearsDetails),
     Some(prefilledCurrentRentPayableWithin12Months),
     Some(prefilledAnnualRent),
-    rentIncludeTradeServicesDetails = Some(RentIncludeTradeServicesDetails(AnswerYes))
+    rentIncludeTradeServicesDetails = Some(RentIncludeTradeServicesDetails(AnswerYes)),
+    rentIncludeFixturesAndFittingsDetails = Some(RentIncludeFixturesAndFittingsDetails(AnswerYes)),
+    rentOpenMarketValueDetails = Some(RentOpenMarketValueDetails(AnswerYes))
   )
 
   val prefilledAboutLeaseOrAgreementPartOneNo = AboutLeaseOrAgreementPartOne(
@@ -213,6 +216,8 @@ trait FakeObjects {
     Some(prefilledLeaseOrAgreementYearsDetailsNo),
     Some(prefilledCurrentRentPayableWithin12Months),
     Some(prefilledAnnualRent),
-    rentIncludeTradeServicesDetails = Some(RentIncludeTradeServicesDetails(AnswerNo))
+    rentIncludeTradeServicesDetails = Some(RentIncludeTradeServicesDetails(AnswerNo)),
+    rentIncludeFixturesAndFittingsDetails = Some(RentIncludeFixturesAndFittingsDetails(AnswerNo)),
+    rentOpenMarketValueDetails = Some(RentOpenMarketValueDetails(AnswerNo))
   )
 }

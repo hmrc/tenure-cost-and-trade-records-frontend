@@ -29,12 +29,12 @@ class RentOpenMarketViewSpec extends QuestionViewBehaviours[RentOpenMarketValueD
 
   override val form = RentOpenMarketValueForm.rentOpenMarketValuesForm
 
-  val backLink = controllers.aboutYourLeaseOrTenure.routes.AboutYourLandlordController.show().url
+  val backLink = controllers.Form6010.routes.RentIncludeFixtureAndFittingsController.show().url
 
-  def createView = () => rentOpenMarketValueView(form)(fakeRequest, messages)
+  def createView = () => rentOpenMarketValueView(form, backLink)(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[RentOpenMarketValueDetails]) =>
-    rentOpenMarketValueView(form)(fakeRequest, messages)
+    rentOpenMarketValueView(form, backLink)(fakeRequest, messages)
 
   "Rent open market view" must {
 

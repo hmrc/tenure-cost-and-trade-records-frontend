@@ -29,12 +29,12 @@ class RentIncludeFixtureAndFittingsViewSpec extends QuestionViewBehaviours[RentI
 
   override val form = RentIncludeFixtureAndFittingsForm.rentIncludeFixturesAndFittingsForm
 
-  val backLink = controllers.aboutYourLeaseOrTenure.routes.AboutYourLandlordController.show().url
+  val backLink = controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesController.show().url
 
-  def createView = () => rentIncludeFixtureAndFittingsView(form)(fakeRequest, messages)
+  def createView = () => rentIncludeFixtureAndFittingsView(form, backLink)(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[RentIncludeFixturesAndFittingsDetails]) =>
-    rentIncludeFixtureAndFittingsView(form)(fakeRequest, messages)
+    rentIncludeFixtureAndFittingsView(form, backLink)(fakeRequest, messages)
 
   "Rent include fixture and fittings view" must {
 

@@ -17,18 +17,17 @@
 package controllers.Form6010
 
 import actions.WithSessionRefiner
-import controllers.LoginController.loginForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.form.{rentIncreaseAnnuallyWithRPI, rentOpenMarketValue, whatIsYourRentBasedOn}
+import views.html.form.rentOpenMarketValue
 import form.Form6010.RentOpenMarketValueForm.rentOpenMarketValuesForm
-import form.Form6010.WhatIsYourCurrentRentBasedOnForm.whatIsYourCurrentRentBasedOnForm
-import form.Form6010.RentIncreasedAnnuallyWithRPIForm.rentIncreasedAnnuallyWithRPIDetailsForm
-import models.submissions.Form6010.{RentOpenMarketValuesNo, RentOpenMarketValuesYes}
+import models.Session
 import models.submissions.aboutLeaseOrAgreement.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne
+import navigation.AboutYourLeaseOrTenureNavigator
+import navigation.identifiers.RentOpenMarketPageId
+import play.api.Logging
 import play.api.i18n.I18nSupport
 import repositories.SessionRepo
-import views.html.login
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
@@ -36,14 +35,13 @@ import scala.concurrent.Future
 @Singleton
 class RentOpenMarketValueController @Inject() (
   mcc: MessagesControllerComponents,
-  login: login,
+  navigator: AboutYourLeaseOrTenureNavigator,
   rentOpenMarketValueView: rentOpenMarketValue,
-  whatIsYourRentBasedOnView: whatIsYourRentBasedOn,
-  rentIncreaseAnnuallyWithRPIView: rentIncreaseAnnuallyWithRPI,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
 ) extends FrontendController(mcc)
-    with I18nSupport {
+    with I18nSupport
+    with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Future.successful(
@@ -53,7 +51,8 @@ class RentOpenMarketValueController @Inject() (
             case Some(rentOpenMarketValueDetails) =>
               rentOpenMarketValuesForm.fillAndValidate(rentOpenMarketValueDetails)
             case _                                => rentOpenMarketValuesForm
-          }
+          },
+          getBackLink(request.sessionData)
         )
       )
     )
@@ -63,19 +62,24 @@ class RentOpenMarketValueController @Inject() (
     rentOpenMarketValuesForm
       .bindFromRequest()
       .fold(
-        formWithErrors => Future.successful(BadRequest(rentOpenMarketValueView(formWithErrors))),
-        data =>
-          data.rentOpenMarketValues match {
-            case RentOpenMarketValuesYes =>
-              val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(rentOpenMarketValueDetails = Some(data)))
-              session.saveOrUpdate(updatedData)
-              Future.successful(Ok(rentIncreaseAnnuallyWithRPIView(rentIncreasedAnnuallyWithRPIDetailsForm)))
-            case RentOpenMarketValuesNo  =>
-              val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(rentOpenMarketValueDetails = Some(data)))
-              session.saveOrUpdate(updatedData)
-              Future.successful(Ok(whatIsYourRentBasedOnView(whatIsYourCurrentRentBasedOnForm)))
-            case _                       => Future.successful(Ok(login(loginForm)))
-          }
+        formWithErrors =>
+          Future.successful(BadRequest(rentOpenMarketValueView(formWithErrors, getBackLink(request.sessionData)))),
+        data => {
+          val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(rentOpenMarketValueDetails = Some(data)))
+          session.saveOrUpdate(updatedData)
+          Future.successful(Redirect(navigator.nextPage(RentOpenMarketPageId).apply(updatedData)))
+        }
       )
   }
+
+  private def getBackLink(answers: Session): String =
+    answers.aboutLeaseOrAgreementPartOne.flatMap(
+      _.rentIncludeFixturesAndFittingsDetails.map(_.rentIncludeFixturesAndFittingsDetails.name)
+    ) match {
+      case Some("yes") => controllers.Form6010.routes.RentIncludeFixtureAndFittingsDetailsController.show().url
+      case Some("no")  => controllers.Form6010.routes.RentIncludeFixtureAndFittingsController.show().url
+      case _           =>
+        logger.warn(s"Back link for fixture and fittings page reached with unknown trade services value")
+        controllers.routes.TaskListController.show().url
+    }
 }
