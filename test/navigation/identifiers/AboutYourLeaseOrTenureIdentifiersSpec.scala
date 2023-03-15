@@ -66,6 +66,26 @@ class AboutYourLeaseOrTenureIdentifiersSpec extends TestBaseSpec {
       assert(RentIncludeTradeServicesDetailsPageId.toString.equals("rentIncludeTradeServicesDetailsPage"))
     }
 
+    "Identifier for rent fixture and fittings page" in {
+      assert(RentFixtureAndFittingsPageId.toString.equals("rentFixtureAndFittingsPage"))
+    }
+
+    "Identifier for rent fixture and fittings details page" in {
+      assert(RentFixtureAndFittingsDetailsPageId.toString.equals("rentFixtureAndFittingsDetailsPage"))
+    }
+
+    "Identifier for rent open market page" in {
+      assert(RentOpenMarketPageId.toString.equals("rentOpenMarketPage"))
+    }
+
+    "Identifier for what rent based on page" in {
+      assert(WhatRentBasedOnPageId.toString.equals("whatRentBasedOnPage"))
+    }
+
+    "Identifier for rent increase by RPI page" in {
+      assert(RentIncreaseByRPIPageId.toString.equals("rentIncreaseByRPIPage"))
+    }
+
     "Identifier for tenancy lease agreement expire page (6011 only)" in {
       assert(TenancyLeaseAgreementExpirePageId.toString.equals("tenancyLeaseAgreementExpirePage"))
     }

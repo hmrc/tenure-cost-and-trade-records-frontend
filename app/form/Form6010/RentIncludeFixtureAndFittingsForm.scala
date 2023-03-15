@@ -16,7 +16,7 @@
 
 package form.Form6010
 
-import form.MappingSupport.rentIncludeFixturesAndFittingsType
+import form.MappingSupport.yesNoType
 import models.submissions.Form6010.RentIncludeFixturesAndFittingsDetails
 import play.api.data.Form
 import play.api.data.Forms.mapping
@@ -25,7 +25,7 @@ object RentIncludeFixtureAndFittingsForm {
 
   val rentIncludeFixturesAndFittingsForm = Form(
     mapping(
-      "rentIncludeFixturesAndFittings" -> rentIncludeFixturesAndFittingsType
+      "rentIncludeFixturesAndFittings" -> yesNoType
     )(RentIncludeFixturesAndFittingsDetails.apply)(RentIncludeFixturesAndFittingsDetails.unapply)
   )
 }

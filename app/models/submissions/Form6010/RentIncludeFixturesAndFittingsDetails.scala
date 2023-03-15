@@ -16,9 +16,10 @@
 
 package models.submissions.Form6010
 
+import models.submissions.common.AnswersYesNo
 import play.api.libs.json.Json
 
-case class RentIncludeFixturesAndFittingsDetails(rentIncludeFixturesAndFittingsDetails: RentIncludeFixturesAndFittings)
+case class RentIncludeFixturesAndFittingsDetails(rentIncludeFixturesAndFittingsDetails: AnswersYesNo)
 
 object RentIncludeFixturesAndFittingsDetails {
   implicit val format = Json.format[RentIncludeFixturesAndFittingsDetails]

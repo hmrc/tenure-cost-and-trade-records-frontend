@@ -14,9 +14,11 @@
  * limitations under the License.
  */
 
-package controllers.Form6010
+package controllers.aboutYourLeaseOrTenure
 
+import controllers.Form6010.WhatIsYourRentBasedOnController
 import models.submissions.aboutLeaseOrAgreement.AboutLeaseOrAgreementPartOne
+import navigation.AboutYourLeaseOrTenureNavigator
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
@@ -24,16 +26,19 @@ import utils.TestBaseSpec
 
 class WhatIsYourRentBasedOnControllerSpec extends TestBaseSpec {
 
+  val mockAboutYourLeaseOrTenureNavigator = mock[AboutYourLeaseOrTenureNavigator]
+
   def whatIsYourRentBasedOnController(
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
   ) =
     new WhatIsYourRentBasedOnController(
       stubMessagesControllerComponents(),
-      rentIncreaseAnnuallyWithRPIView,
+      mockAboutYourLeaseOrTenureNavigator,
       whatIsYourRentBasedOnView,
       preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
       mockSessionRepo
     )
+
   "GET /" should {
     "return 200" in {
       val result = whatIsYourRentBasedOnController().show(fakeRequest)

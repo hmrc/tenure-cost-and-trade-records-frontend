@@ -29,10 +29,12 @@ class RentIncreaseAnnuallyWithRPIViewSpec extends QuestionViewBehaviours[RentInc
 
   override val form = RentIncreasedAnnuallyWithRPIForm.rentIncreasedAnnuallyWithRPIDetailsForm
 
-  def createView = () => rentIncreaseAnnuallyWithRPIView(form)(fakeRequest, messages)
+  val backLink = controllers.Form6010.routes.RentOpenMarketValueController.show().url
+
+  def createView = () => rentIncreaseAnnuallyWithRPIView(form, backLink)(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[RentIncreasedAnnuallyWithRPIDetails]) =>
-    rentIncreaseAnnuallyWithRPIView(form)(fakeRequest, messages)
+    rentIncreaseAnnuallyWithRPIView(form, backLink)(fakeRequest, messages)
 
   "Rent Increase annually with RPI view" must {
 

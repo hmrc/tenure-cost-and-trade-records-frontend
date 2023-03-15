@@ -14,9 +14,11 @@
  * limitations under the License.
  */
 
-package controllers.Form6010
+package controllers.aboutYourLeaseOrTenure
 
+import controllers.Form6010.RentOpenMarketValueController
 import models.submissions.aboutLeaseOrAgreement.AboutLeaseOrAgreementPartOne
+import navigation.AboutYourLeaseOrTenureNavigator
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
@@ -24,15 +26,15 @@ import utils.TestBaseSpec
 
 class RentOpenMarketValueControllerSpec extends TestBaseSpec {
 
+  val mockAboutYourLeaseOrTenureNavigator = mock[AboutYourLeaseOrTenureNavigator]
+
   def rentOpenMarketValueController(
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
   ) =
     new RentOpenMarketValueController(
       stubMessagesControllerComponents(),
-      loginView,
+      mockAboutYourLeaseOrTenureNavigator,
       rentOpenMarketValueView,
-      whatIsYourRentBasedOnView,
-      rentIncreaseAnnuallyWithRPIView,
       preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
       mockSessionRepo
     )

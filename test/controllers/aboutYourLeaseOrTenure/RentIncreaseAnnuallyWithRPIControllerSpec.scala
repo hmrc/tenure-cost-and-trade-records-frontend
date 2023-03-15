@@ -14,45 +14,46 @@
  * limitations under the License.
  */
 
-package controllers.Form6010
+package controllers.aboutYourLeaseOrTenure
 
+import controllers.Form6010.RentIncreaseAnnuallyWithRPIController
 import models.submissions.aboutLeaseOrAgreement.AboutLeaseOrAgreementPartOne
+import navigation.AboutYourLeaseOrTenureNavigator
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import utils.TestBaseSpec
 
-class RentIncludeFixtureAndFittingsControllerSpec extends TestBaseSpec {
+class RentIncreaseAnnuallyWithRPIControllerSpec extends TestBaseSpec {
 
-  def rentIncludeFixtureAndFittingsController(
+  val mockAboutYourLeaseOrTenureNavigator = mock[AboutYourLeaseOrTenureNavigator]
+
+  def rentIncreaseAnnuallyWithRPIController(
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
   ) =
-    new RentIncludeFixtureAndFittingsController(
+    new RentIncreaseAnnuallyWithRPIController(
       stubMessagesControllerComponents(),
-      loginView,
-      rentIncludeFixtureAndFittingsView,
-      rentIncludeFixtureAndFittingsDetailsView,
-      rentOpenMarketValueView,
+      mockAboutYourLeaseOrTenureNavigator,
+      rentIncreaseAnnuallyWithRPIView,
       preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
       mockSessionRepo
     )
-  "RentIncludeFixtureAndFittings controller" should {
+  "GET /" should {
     "return 200" in {
-      val result = rentIncludeFixtureAndFittingsController().show(fakeRequest)
+      val result = rentIncreaseAnnuallyWithRPIController().show(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return HTML" in {
-      val result = rentIncludeFixtureAndFittingsController().show(fakeRequest)
+      val result = rentIncreaseAnnuallyWithRPIController().show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
-
   }
 
   "SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
-      val res = rentIncludeFixtureAndFittingsController().submit(
+      val res = rentIncreaseAnnuallyWithRPIController().submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)
       )
       status(res) shouldBe BAD_REQUEST

@@ -14,42 +14,49 @@
  * limitations under the License.
  */
 
-package controllers.Form6010
+package controllers.aboutYourLeaseOrTenure
 
+import controllers.Form6010.RentIncludeFixtureAndFittingsController
 import models.submissions.aboutLeaseOrAgreement.AboutLeaseOrAgreementPartOne
+import navigation.AboutYourLeaseOrTenureNavigator
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import utils.TestBaseSpec
 
-class RentIncludeFixtureAndFittingsDetailsControllerSpec extends TestBaseSpec {
+class RentIncludeFixtureAndFittingsControllerSpec extends TestBaseSpec {
 
-  def rentIncludeFixtureAndFittingsDetailsController(
+  val mockAboutYourLeaseOrTenureNavigator = mock[AboutYourLeaseOrTenureNavigator]
+
+  def rentIncludeFixtureAndFittingsController(
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
   ) =
-    new RentIncludeFixtureAndFittingsDetailsController(
+    new RentIncludeFixtureAndFittingsController(
       stubMessagesControllerComponents(),
-      rentOpenMarketValueView,
-      rentIncludeFixtureAndFittingsDetailsView,
+      mockAboutYourLeaseOrTenureNavigator,
+      rentIncludeFixtureAndFittingsView,
       preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
       mockSessionRepo
     )
-  "GET /" should {
+
+  "RentIncludeFixtureAndFittings controller" should {
     "return 200" in {
-      val result = rentIncludeFixtureAndFittingsDetailsController().show(fakeRequest)
+      println(s"${prefilledAboutLeaseOrAgreementPartOne.rentIncludeFixturesAndFittingsDetails}")
+      val result = rentIncludeFixtureAndFittingsController().show(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return HTML" in {
-      val result = rentIncludeFixtureAndFittingsDetailsController().show(fakeRequest)
+      val result = rentIncludeFixtureAndFittingsController().show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
+
   }
 
   "SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
-      val res = rentIncludeFixtureAndFittingsDetailsController().submit(
+      val res = rentIncludeFixtureAndFittingsController().submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)
       )
       status(res) shouldBe BAD_REQUEST

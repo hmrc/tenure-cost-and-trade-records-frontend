@@ -17,15 +17,15 @@
 package controllers.Form6010
 
 import actions.WithSessionRefiner
-import form.Form6010.RentIncreasedAnnuallyWithRPIForm.rentIncreasedAnnuallyWithRPIDetailsForm
 import form.Form6010.WhatIsYourCurrentRentBasedOnForm.whatIsYourCurrentRentBasedOnForm
 import models.submissions.aboutLeaseOrAgreement.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne
+import navigation.AboutYourLeaseOrTenureNavigator
+import navigation.identifiers.WhatRentBasedOnPageId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.form.whatIsYourRentBasedOn
-import views.html.form.rentIncreaseAnnuallyWithRPI
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
@@ -33,7 +33,7 @@ import scala.concurrent.Future
 @Singleton
 class WhatIsYourRentBasedOnController @Inject() (
   mcc: MessagesControllerComponents,
-  rentIncreaseAnnuallyWithRPI: rentIncreaseAnnuallyWithRPI,
+  navigator: AboutYourLeaseOrTenureNavigator,
   whatIsYourRentBasedOnView: whatIsYourRentBasedOn,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
@@ -62,7 +62,7 @@ class WhatIsYourRentBasedOnController @Inject() (
         data => {
           val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(whatIsYourCurrentRentBasedOnDetails = Some(data)))
           session.saveOrUpdate(updatedData)
-          Future.successful(Ok(rentIncreaseAnnuallyWithRPI(rentIncreasedAnnuallyWithRPIDetailsForm)))
+          Future.successful(Redirect(navigator.nextPage(WhatRentBasedOnPageId).apply(updatedData)))
         }
       )
   }

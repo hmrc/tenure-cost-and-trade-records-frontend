@@ -26,14 +26,14 @@
 )
 
 
-@(theForm: Form[RentOpenMarketValueDetails])(implicit request: Request[_], messages: Messages)
+@(theForm: Form[RentOpenMarketValueDetails], backLink: String)(implicit request: Request[_], messages: Messages)
 
 @layout(
  pageHeading = messages("rentOpenMarketValue.heading"),
  showH1 = false,
  showSection = true,
  sectionName = messages("label.section.aboutYourLeaseOrTenure"),
- backLinkUrl = controllers.Form6010.routes.RentIncludeFixtureAndFittingsController.show.url,
+ backLinkUrl = backLink,
  theForm = theForm
 ) {
 
