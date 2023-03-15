@@ -16,6 +16,13 @@
 
 package models.submissions.Form6010
 
+import models.submissions.common.AnswersYesNo
+import play.api.libs.json.Json
+
 case class PayACapitalSumDetails(
-  capitalSumOrPremium: CapitalSumOrPremiums
+  capitalSumOrPremium: AnswersYesNo
 )
+
+object PayACapitalSumDetails{
+  implicit val format = Json.format[PayACapitalSumDetails]
+}

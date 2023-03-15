@@ -16,32 +16,51 @@
 
 package controllers.Form6010
 
-import form.Form6010.PayACapitalSumForm.payACapitalSumForm
+import actions.WithSessionRefiner
+import form.Form6010.IncentivesPaymentsConditionsForm.incentivesPaymentsConditionsForm
 import form.Form6010.CanRentBeReducedOnReviewForm.canRentBeReducedOnReviewForm
+import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo.updateAboutLeaseOrAgreementPartTwo
+import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.form.{canRentBeReducedOnReview, payACapitalSum}
+import views.html.form.{canRentBeReducedOnReview, incentivesPaymentsConditions}
 
-import javax.inject.{Inject, Singleton}
+import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
 
 @Singleton
 class CanRentBeReducedOnReviewController @Inject() (
   mcc: MessagesControllerComponents,
   canRentBeReducedOnReviewView: canRentBeReducedOnReview,
-  payACapitalSumView: payACapitalSum
-) extends FrontendController(mcc) {
+  incentivesPaymentsConditionsView: incentivesPaymentsConditions,
+  withSessionRefiner: WithSessionRefiner,
+  @Named("session") val session: SessionRepo
+) extends FrontendController(mcc) with I18nSupport {
 
-  def show: Action[AnyContent] = Action.async { implicit request =>
-    Future.successful(Ok(canRentBeReducedOnReviewView(canRentBeReducedOnReviewForm)))
+  def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    Future.successful(
+      Ok(
+        canRentBeReducedOnReviewView(
+          request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.canRentBeReducedOnReviewDetails) match {
+            case Some(data) => canRentBeReducedOnReviewForm.fillAndValidate(data)
+            case _ => canRentBeReducedOnReviewForm
+          }
+        )
+      )
+    )
   }
 
-  def submit = Action.async { implicit request =>
+  def submit = (Action andThen withSessionRefiner).async { implicit request =>
     canRentBeReducedOnReviewForm
       .bindFromRequest()
       .fold(
         formWithErrors => Future.successful(BadRequest(canRentBeReducedOnReviewView(formWithErrors))),
-        data => Future.successful(Ok(payACapitalSumView(payACapitalSumForm)))
+        data => {
+          val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(canRentBeReducedOnReviewDetails = Some(data)))
+          session.saveOrUpdate(updatedData)
+          Future.successful(Ok(incentivesPaymentsConditionsView(incentivesPaymentsConditionsForm)))
+        }
       )
   }
 }

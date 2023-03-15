@@ -16,24 +16,44 @@
 
 package controllers.Form6010
 
+import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
 import play.api.http.Status
+import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import utils.TestBaseSpec
 
 class TenantsAdditionsDisregardedControllerSpec extends TestBaseSpec {
 
-  private val controller = app.injector.instanceOf[TenantsAdditionsDisregardedController]
-
+  def tenantsAdditionsDisregardedController(
+                                               aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
+                                             ) =
+    new TenantsAdditionsDisregardedController(
+      stubMessagesControllerComponents(),
+      tenantsAdditionsDisregardedDetailsView,
+      tenantsAdditionsDisregardedView,
+      legalOrPlanningRestrictionsView,
+      loginView,
+      preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
+      mockSessionRepo
+    )
   "GET /" should {
     "return 200" in {
-      val result = controller.show(fakeRequest)
+      val result = tenantsAdditionsDisregardedController().show(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return HTML" in {
-      val result = controller.show(fakeRequest)
+      val result = tenantsAdditionsDisregardedController().show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
+    }
+  }
+  "SUBMIT /" should {
+    "throw a BAD_REQUEST if an empty form is submitted" in {
+      val res = tenantsAdditionsDisregardedController().submit(
+        FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)
+      )
+      status(res) shouldBe BAD_REQUEST
     }
   }
 }

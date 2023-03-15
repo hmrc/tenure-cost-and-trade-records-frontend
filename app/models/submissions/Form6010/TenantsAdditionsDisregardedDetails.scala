@@ -16,6 +16,12 @@
 
 package models.submissions.Form6010
 
+import play.api.libs.json.Json
+
 case class TenantsAdditionsDisregardedDetails(
   tenantsAdditionsDisregarded: String
 )
+
+object TenantsAdditionsDisregardedDetails{
+  implicit val format = Json.format[TenantsAdditionsDisregardedDetails]
+}

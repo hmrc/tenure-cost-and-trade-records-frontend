@@ -16,7 +16,7 @@
 
 package form.Form6010
 
-import form.MappingSupport.tenancyLeaseAgreementType
+import form.MappingSupport.yesNoType
 import models.submissions.Form6010.TenancyLeaseAgreementDetails
 import play.api.data.Form
 import play.api.data.Forms.mapping
@@ -25,7 +25,7 @@ object TenancyLeaseAgreementForm {
 
   val tenancyLeaseAgreementForm = Form(
     mapping(
-      "tenancyLeaseAgreement" -> tenancyLeaseAgreementType
+      "tenancyLeaseAgreement" -> yesNoType
     )(TenancyLeaseAgreementDetails.apply)(TenancyLeaseAgreementDetails.unapply)
   )
 }

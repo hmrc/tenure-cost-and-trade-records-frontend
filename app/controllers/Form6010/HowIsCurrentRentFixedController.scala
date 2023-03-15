@@ -16,32 +16,51 @@
 
 package controllers.Form6010
 
+import actions.WithSessionRefiner
 import form.Form6010.HowIsCurrentRentFixedForm.howIsCurrentRentFixedForm
 import form.Form6010.MethodToFixCurrentRentForm.methodToFixCurrentRentForm
+import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo.updateAboutLeaseOrAgreementPartTwo
+import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.form.{howIsCurrentRentFixed, methodToFixCurrentRent}
 
-import javax.inject.{Inject, Singleton}
+import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
 
 @Singleton
 class HowIsCurrentRentFixedController @Inject() (
   mcc: MessagesControllerComponents,
   methodToFixCurrentRentView: methodToFixCurrentRent,
-  howIsCurrentRentFixedView: howIsCurrentRentFixed
-) extends FrontendController(mcc) {
+  howIsCurrentRentFixedView: howIsCurrentRentFixed,
+  withSessionRefiner: WithSessionRefiner,
+  @Named("session") val session: SessionRepo
+) extends FrontendController(mcc) with I18nSupport {
 
-  def show: Action[AnyContent] = Action.async { implicit request =>
-    Future.successful(Ok(howIsCurrentRentFixedView(howIsCurrentRentFixedForm)))
+  def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    Future.successful(
+      Ok(
+        howIsCurrentRentFixedView(
+          request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.howIsCurrentRentFixed) match {
+            case Some(data) => howIsCurrentRentFixedForm.fill(data)
+            case _ => howIsCurrentRentFixedForm
+          }
+        )
+      )
+    )
   }
 
-  def submit = Action.async { implicit request =>
+  def submit = (Action andThen withSessionRefiner).async { implicit request =>
     howIsCurrentRentFixedForm
       .bindFromRequest()
       .fold(
         formWithErrors => Future.successful(BadRequest(howIsCurrentRentFixedView(formWithErrors))),
-        data => Future.successful(Ok(methodToFixCurrentRentView(methodToFixCurrentRentForm)))
+        data => {
+          val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(howIsCurrentRentFixed = Some(data)))
+          session.saveOrUpdate(updatedData)
+          Future.successful(Ok(methodToFixCurrentRentView(methodToFixCurrentRentForm)))
+        }
       )
   }
 

@@ -18,7 +18,7 @@ package controllers.aboutYourLeaseOrTenure
 
 import actions.WithSessionRefiner
 import form.aboutYourLeaseOrTenure.IncludedInYourRentForm.includedInYourRentForm
-import models.submissions.aboutLeaseOrAgreement.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne
+import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne
 import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.IncludedInYourRentPageId
 import play.api.i18n.I18nSupport
