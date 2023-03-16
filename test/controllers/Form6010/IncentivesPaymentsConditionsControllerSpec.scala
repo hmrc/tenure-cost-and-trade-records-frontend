@@ -25,8 +25,8 @@ import utils.TestBaseSpec
 class IncentivesPaymentsConditionsControllerSpec extends TestBaseSpec {
 
   def incentivesPaymentsConditionsController(
-                                               aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
-                                             ) =
+    aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
+  ) =
     new IncentivesPaymentsConditionsController(
       stubMessagesControllerComponents(),
       incentivesPaymentsConditionsView,

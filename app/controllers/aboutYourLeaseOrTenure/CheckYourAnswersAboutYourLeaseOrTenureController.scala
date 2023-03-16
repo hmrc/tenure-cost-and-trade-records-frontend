@@ -18,7 +18,6 @@ package controllers.aboutYourLeaseOrTenure
 
 import actions.WithSessionRefiner
 import form.aboutYourLeaseOrTenure.CheckYourAnswersAboutYourLeaseOrTenureForm.checkYourAnswersAboutFranchiseOrLettingsForm
-import models.{ForTypes, Session}
 import navigation.AboutYourLeaseOrTenureNavigator
 import play.api.Logging
 import play.api.i18n.I18nSupport

@@ -18,12 +18,12 @@ package controllers.Form6010
 
 import actions.WithSessionRefiner
 import controllers.LoginController.loginForm
+import form.Form6010.HowIsCurrentRentFixedForm.howIsCurrentRentFixedForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.form.{rentPayableVaryAccordingToGrossOrNet, rentPayableVaryAccordingToGrossOrNetDetails, rentPayableVaryOnQuantityOfBeers}
+import views.html.form.{howIsCurrentRentFixed, rentPayableVaryAccordingToGrossOrNet, rentPayableVaryAccordingToGrossOrNetDetails}
 import form.Form6010.RentPayableVaryAccordingToGrossOrNetForm.rentPayableVaryAccordingToGrossOrNetForm
 import form.Form6010.RentPayableVaryAccordingToGrossOrNetDetailsForm.rentPayableVaryAccordingToGrossOrNetInformationForm
-import form.Form6010.RentPayableVaryOnQuantityOfBeersForm.rentPayableVaryOnQuantityOfBeersForm
 import models.submissions.common.{AnswerNo, AnswerYes}
 import views.html.login
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo.updateAboutLeaseOrAgreementPartTwo
@@ -39,18 +39,21 @@ class RentPayableVaryAccordingToGrossOrNetController @Inject() (
   login: login,
   rentPayableVaryAccordingToGrossOrNetView: rentPayableVaryAccordingToGrossOrNet,
   rentPayableVaryAccordingToGrossOrNetDetailsView: rentPayableVaryAccordingToGrossOrNetDetails,
-  rentPayableVaryOnQuantityOfBeersView: rentPayableVaryOnQuantityOfBeers,
+  howIsCurrentRentFixedView: howIsCurrentRentFixed,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FrontendController(mcc) with I18nSupport {
+) extends FrontendController(mcc)
+    with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Future.successful(
       Ok(
         rentPayableVaryAccordingToGrossOrNetView(
-          request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.rentPayableVaryAccordingToGrossOrNetDetails) match {
-            case Some(rentPayableVaryAccordingToGrossOrNetDetails) => rentPayableVaryAccordingToGrossOrNetForm.fillAndValidate(rentPayableVaryAccordingToGrossOrNetDetails)
-            case _ => rentPayableVaryAccordingToGrossOrNetForm
+          request.sessionData.aboutLeaseOrAgreementPartTwo
+            .flatMap(_.rentPayableVaryAccordingToGrossOrNetDetails) match {
+            case Some(rentPayableVaryAccordingToGrossOrNetDetails) =>
+              rentPayableVaryAccordingToGrossOrNetForm.fillAndValidate(rentPayableVaryAccordingToGrossOrNetDetails)
+            case _                                                 => rentPayableVaryAccordingToGrossOrNetForm
           }
         )
       )
@@ -65,17 +68,18 @@ class RentPayableVaryAccordingToGrossOrNetController @Inject() (
         data =>
           data.rentPayableVaryAccordingToGrossOrNets match {
             case AnswerYes =>
-              val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(rentPayableVaryAccordingToGrossOrNetDetails = Some(data)))
+              val updatedData =
+                updateAboutLeaseOrAgreementPartTwo(_.copy(rentPayableVaryAccordingToGrossOrNetDetails = Some(data)))
               session.saveOrUpdate(updatedData)
               Future.successful(
                 Ok(rentPayableVaryAccordingToGrossOrNetDetailsView(rentPayableVaryAccordingToGrossOrNetInformationForm))
               )
             case AnswerNo  =>
-                val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(rentPayableVaryAccordingToGrossOrNetDetails = Some(data)))
-                session.saveOrUpdate(updatedData)
-                Future.successful(Ok(rentPayableVaryOnQuantityOfBeersView(rentPayableVaryOnQuantityOfBeersForm)))
-
-            case _                                        => Future.successful(Ok(login(loginForm)))
+              val updatedData =
+                updateAboutLeaseOrAgreementPartTwo(_.copy(rentPayableVaryAccordingToGrossOrNetDetails = Some(data)))
+              session.saveOrUpdate(updatedData)
+              Future.successful(Ok(howIsCurrentRentFixedView(howIsCurrentRentFixedForm)))
+            case _         => Future.successful(Ok(login(loginForm)))
           }
       )
   }

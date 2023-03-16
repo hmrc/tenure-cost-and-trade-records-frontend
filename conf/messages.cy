@@ -307,6 +307,7 @@ rentPayableVaryAccordingToGrossOrNet.heading = Does the rent payable vary accord
 #RENT PAYABLE VARY ACCORDING TO GROSS OR NET DETAILS
 ####################################################
 rentPayableVaryAccordingToGrossOrNetDetails.heading = Tell us how the rent payable is affected by your turnover
+label.rentPayableVaryAccordingToGrossOrNetDetails = For example, tell us if your rent increases if your turnover exceeds a certain amount
 error.rentPayableVaryAccordingToGrossOrNetDetails.required = Tell us how the rent payable is affected by your turnover
 error.rentPayableVaryAccordingToGrossOrNetDetails.maxLength  = This must be 1000 characters or fewer
 
@@ -365,14 +366,12 @@ error.required.rentIncludeFixturesAndFittingsDetails = Please provide a value
 error.invalid_currency.rentIncludeFixturesAndFittingsDetails = Please provide a number
 
 #INCENTIVES, PAYMENTS AND CONDITIONS
-##############################
-incentivesPaymentsConditions.heading = About your lease or agreement
-label.formerLeaseSurrendered = Was a former lease or agreement surrendered early as a condition of the present one being granted?
+####################################
+incentivesPaymentsConditions.heading = Was a former lease or agreement surrendered early as a condition of the present one being granted?
 
 #CAN RENT BE REDUCED ON REVIEW
 ##############################
-rentReducedOnReview.heading = About your lease or agreement
-label.rentReducedOnReview = Can the rent be reduced on review under the terms of the lease or agreement?
+rentReducedOnReview.heading = Can the rent be reduced on review under the terms of the lease or agreement?
 
 #PAY A CAPITAL SUM
 ##############################
@@ -391,18 +390,16 @@ rentIncreasedAnnuallyWithRPIs.heading = Does the rent increase annually in line 
 label.rentIncreasedAnnuallyWithRPIs = Does the rent increase annually in line with the retail price index (RPI)?
 
 #METHOD USED TO FIX CURRENT RENT
-##############################
-methodUsedToFixCurrentRent.heading = About your lease or agreement
-label.methodUsedToFixCurrentRent = How was the current rent agreed?
+################################
+methodUsedToFixCurrentRent.heading = How was the current rent agreed?
 label.methodUsedToFixCurrentRent.agreement = Agreement
 label.methodUsedToFixCurrentRent.arbitration = Arbitration
 label.methodUsedToFixCurrentRent.independentExpert = Independent expert
 label.methodUsedToFixCurrentRent.aCourt = A court
 
 #HOW IS CURRENT RENT FIXED
-##############################
-howIsCurrentRentFixed.heading = About your lease or agreement
-label.howIsCurrentRentFixed = How was the current rent fixed?
+##########################
+howIsCurrentRentFixed.heading = How was the current rent fixed?
 label.newLeaseAgreement = At the beginning of a new lease or agreement
 label.interimRent = As an interim rent under the Landlord and Tenants Acts
 label.rentReview = At a rent review
@@ -457,9 +454,8 @@ label.addAnotherCateringOperationOrLettingAccommodations = Do you need to add an
 label.addAnotherLettingOtherPartOfProperty = Do you need to add another letting?
 
 ##TENANTS ADDITIONS DISREGARDED
-##############################
-tenantsAdditionsDisregarded.heading = About your lease or agreement
-label.tenantsAdditionsDisregarded = Describe the tenants’ additions disregarded at the time the rent was agreed or determined
+###############################
+tenantsAdditionsDisregarded.heading = Describe the tenants’ additions disregarded at the time the rent was agreed or determined
 hint.tenantsAdditionsDisregarded = For example, is your rent based on the market value of the property before you made improvements like fitting out a shell, or adding parking
 
 ##TENANTS ADDITIONS DISREGARDED DETAILS
@@ -503,10 +499,9 @@ suffix.grantedFor = months
 error.empty.required = Please enter how long it was granted for
 
 ##INTERVALS OF RENT REVIEW
-##############################
-#currentLeaseOrAgreementBegin.heading = About your lease or agreement
-#label.currentLeaseOrAgreementBegin = At what intervals is the rent reviewed under the terms of the lease or agreement?
-hint.currentLeaseOrAgreementBegin = Do not include any changes to your rent linked to indexes such as the RPI, or your sales. For example, rent is reviewed annually, every two years, every three years.
+##########################
+intervalsOfRentReview.heading = At what intervals is the rent reviewed under the terms of the lease or agreement?
+hint.intervalsOfRentReview = Do not include any changes to your rent linked to indexes such as the RPI, or your sales. For example, rent is reviewed annually, every two years, every three years.
 label.nextReview = When is the next rent review due?
 error.nextReview.day.required = The date must include a day
 error.nextReview.month.required = The date must include a month

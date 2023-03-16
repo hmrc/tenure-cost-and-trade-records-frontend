@@ -23,6 +23,6 @@ case class PayACapitalSumDetails(
   capitalSumOrPremium: AnswersYesNo
 )
 
-object PayACapitalSumDetails{
+object PayACapitalSumDetails {
   implicit val format = Json.format[PayACapitalSumDetails]
 }

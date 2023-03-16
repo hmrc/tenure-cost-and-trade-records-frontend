@@ -22,6 +22,6 @@ case class LegalOrPlanningRestrictionsDetails(
   legalPlanningRestrictions: String
 )
 
-object LegalOrPlanningRestrictionsDetails{
+object LegalOrPlanningRestrictionsDetails {
   implicit val format = Json.format[LegalOrPlanningRestrictionsDetails]
 }

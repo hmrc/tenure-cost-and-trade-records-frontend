@@ -16,7 +16,6 @@
 
 package controllers.Form6010
 
-import form.Errors
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
 import play.api.http.Status
 import play.api.test.FakeRequest
@@ -25,19 +24,19 @@ import utils.TestBaseSpec
 
 class RentPayableVaryAccordingToGrossOrNetControllerSpec extends TestBaseSpec {
 
-
   def rentPayableVaryAccordingToGrossOrNetController(
-                                               aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
-                                             ) =
+    aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
+  ) =
     new RentPayableVaryAccordingToGrossOrNetController(
       stubMessagesControllerComponents(),
       loginView,
       rentPayableVaryAccordingToGrossOrNetView,
       rentPayableVaryAccordingToGrossOrNetDetailsView,
-      rentPayableVaryOnQuantityOfBeersView,
+      howIsCurrentRentFixedView,
       preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
       mockSessionRepo
     )
+
   "RentPayableVaryAccordingToGrossOrNet controller" should {
     "return 200" in {
       val result = rentPayableVaryAccordingToGrossOrNetController().show(fakeRequest)

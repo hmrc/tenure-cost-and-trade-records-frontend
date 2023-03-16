@@ -22,30 +22,32 @@ import models.submissions.Form6010.{CanRentBeReducedOnReviewDetails, HowIsCurren
 import play.api.libs.json.Json
 
 case class AboutLeaseOrAgreementPartTwo(
-                                         rentPayableVaryAccordingToGrossOrNetDetails: Option[RentPayableVaryAccordingToGrossOrNetDetails] = None,
-                                         rentPayableVaryAccordingToGrossOrNetInformationDetails: Option[RentPayableVaryAccordingToGrossOrNetInformationDetails] = None,
-                                         rentPayableVaryOnQuantityOfBeersDetails: Option[RentPayableVaryOnQuantityOfBeersDetails] = None,
-                                         rentPayableVaryOnQuantityOfBeersInformationDetails: Option[RentPayableVaryOnQuantityOfBeersInformationDetails] = None,
-                                         howIsCurrentRentFixed: Option[HowIsCurrentRentFixed] = None,
-                                         methodToFixCurrentRentDetails: Option[MethodToFixCurrentRentDetails] = None,
-                                         intervalsOfRentReview: Option[IntervalsOfRentReview] = None,
-                                         canRentBeReducedOnReviewDetails: Option[CanRentBeReducedOnReviewDetails] = None,
-                                         incentivesPaymentsConditionsDetails: Option[IncentivesPaymentsConditionsDetails] = None,
-                                         tenantAdditionsDisregardedDetails: Option[TenantAdditionsDisregardedDetails] = None,
-                                         tenantsAdditionsDisregardedDetails: Option[TenantsAdditionsDisregardedDetails] = None,
-                                         payACapitalSumDetails: Option[PayACapitalSumDetails] = None,
-                                         paymentWhenLeaseIsGrantedDetails: Option[PaymentWhenLeaseIsGrantedDetails] = None,
-                                         tenancyLeaseAgreementDetails: Option[TenancyLeaseAgreementDetails] = None,
-                                         legalOrPlanningRestrictions: Option[LegalOrPlanningRestrictions] = None,
-                                         legalOrPlanningRestrictionsDetails: Option[LegalOrPlanningRestrictionsDetails] = None
-                                       )
+  rentPayableVaryAccordingToGrossOrNetDetails: Option[RentPayableVaryAccordingToGrossOrNetDetails] = None,
+  rentPayableVaryAccordingToGrossOrNetInformationDetails: Option[
+    RentPayableVaryAccordingToGrossOrNetInformationDetails
+  ] = None,
+  rentPayableVaryOnQuantityOfBeersDetails: Option[RentPayableVaryOnQuantityOfBeersDetails] = None,
+  rentPayableVaryOnQuantityOfBeersInformationDetails: Option[RentPayableVaryOnQuantityOfBeersInformationDetails] = None,
+  howIsCurrentRentFixed: Option[HowIsCurrentRentFixed] = None,
+  methodToFixCurrentRentDetails: Option[MethodToFixCurrentRentDetails] = None,
+  intervalsOfRentReview: Option[IntervalsOfRentReview] = None,
+  canRentBeReducedOnReviewDetails: Option[CanRentBeReducedOnReviewDetails] = None,
+  incentivesPaymentsConditionsDetails: Option[IncentivesPaymentsConditionsDetails] = None,
+  tenantAdditionsDisregardedDetails: Option[TenantAdditionsDisregardedDetails] = None,
+  tenantsAdditionsDisregardedDetails: Option[TenantsAdditionsDisregardedDetails] = None,
+  payACapitalSumDetails: Option[PayACapitalSumDetails] = None,
+  paymentWhenLeaseIsGrantedDetails: Option[PaymentWhenLeaseIsGrantedDetails] = None,
+  tenancyLeaseAgreementDetails: Option[TenancyLeaseAgreementDetails] = None,
+  legalOrPlanningRestrictions: Option[LegalOrPlanningRestrictions] = None,
+  legalOrPlanningRestrictionsDetails: Option[LegalOrPlanningRestrictionsDetails] = None
+)
 
-object AboutLeaseOrAgreementPartTwo{
+object AboutLeaseOrAgreementPartTwo {
   implicit val format = Json.format[AboutLeaseOrAgreementPartTwo]
 
   def updateAboutLeaseOrAgreementPartTwo(
-                                          copy: AboutLeaseOrAgreementPartTwo => AboutLeaseOrAgreementPartTwo
-                                        )(implicit sessionRequest: SessionRequest[_]): Session = {
+    copy: AboutLeaseOrAgreementPartTwo => AboutLeaseOrAgreementPartTwo
+  )(implicit sessionRequest: SessionRequest[_]): Session = {
     val currentAboutLeaseOrAgreementPartTwo = sessionRequest.sessionData.aboutLeaseOrAgreementPartTwo
 
     val updatedAboutLeaseOrAgreementPartTwo = currentAboutLeaseOrAgreementPartTwo match {

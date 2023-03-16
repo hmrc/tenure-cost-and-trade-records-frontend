@@ -23,6 +23,6 @@ case class RentPayableVaryOnQuantityOfBeersDetails(
   rentPayableVaryOnQuantityOfBeersDetails: AnswersYesNo
 )
 
-object RentPayableVaryOnQuantityOfBeersDetails{
+object RentPayableVaryOnQuantityOfBeersDetails {
   implicit val format = Json.format[RentPayableVaryOnQuantityOfBeersDetails]
 }

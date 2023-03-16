@@ -36,15 +36,20 @@ class RentPayableVaryOnQuantityOfBeersDetailsController @Inject() (
   rentPayableVaryOnQuantityOfBeersDetailsView: rentPayableVaryOnQuantityOfBeersDetails,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FrontendController(mcc) with I18nSupport {
+) extends FrontendController(mcc)
+    with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Future.successful(
       Ok(
         rentPayableVaryOnQuantityOfBeersDetailsView(
-          request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.rentPayableVaryOnQuantityOfBeersInformationDetails) match {
-            case Some(rentPayableVaryOnQuantityOfBeersInformationDetails) => rentPayableVaryOnQuantityOfBeersDetailsForm.fillAndValidate(rentPayableVaryOnQuantityOfBeersInformationDetails)
-            case _ => rentPayableVaryOnQuantityOfBeersDetailsForm
+          request.sessionData.aboutLeaseOrAgreementPartTwo
+            .flatMap(_.rentPayableVaryOnQuantityOfBeersInformationDetails) match {
+            case Some(rentPayableVaryOnQuantityOfBeersInformationDetails) =>
+              rentPayableVaryOnQuantityOfBeersDetailsForm.fillAndValidate(
+                rentPayableVaryOnQuantityOfBeersInformationDetails
+              )
+            case _                                                        => rentPayableVaryOnQuantityOfBeersDetailsForm
           }
         )
       )
@@ -57,7 +62,8 @@ class RentPayableVaryOnQuantityOfBeersDetailsController @Inject() (
       .fold(
         formWithErrors => Future.successful(BadRequest(rentPayableVaryOnQuantityOfBeersDetailsView(formWithErrors))),
         data => {
-          val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(rentPayableVaryOnQuantityOfBeersInformationDetails = Some(data)))
+          val updatedData =
+            updateAboutLeaseOrAgreementPartTwo(_.copy(rentPayableVaryOnQuantityOfBeersInformationDetails = Some(data)))
           session.saveOrUpdate(updatedData)
           Future.successful(Ok(ultimatelyResponsibleView(ultimatelyResponsibleForm)))
         }

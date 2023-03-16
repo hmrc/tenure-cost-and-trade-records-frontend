@@ -25,15 +25,16 @@ import utils.TestBaseSpec
 class RentPayableVaryAccordingToGrossOrNetDetailsControllerSpec extends TestBaseSpec {
 
   def rentPayableVaryAccordingToGrossOrNetDetailsController(
-                                               aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
-                                             ) =
+    aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
+  ) =
     new RentPayableVaryAccordingToGrossOrNetDetailsController(
       stubMessagesControllerComponents(),
-      rentPayableVaryOnQuantityOfBeersView,
+      howIsCurrentRentFixedView,
       rentPayableVaryAccordingToGrossOrNetDetailsView,
       preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
       mockSessionRepo
     )
+
   "GET /" should {
     "return 200" in {
       val result = rentPayableVaryAccordingToGrossOrNetDetailsController().show(fakeRequest)

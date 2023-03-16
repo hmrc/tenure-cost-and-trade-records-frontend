@@ -25,8 +25,8 @@ import utils.TestBaseSpec
 class CanRentBeReducedOnReviewControllerSpec extends TestBaseSpec {
 
   def canRentBeReducedOnReviewController(
-                                               aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
-                                             ) =
+    aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
+  ) =
     new CanRentBeReducedOnReviewController(
       stubMessagesControllerComponents(),
       canRentBeReducedOnReviewView,
@@ -34,7 +34,7 @@ class CanRentBeReducedOnReviewControllerSpec extends TestBaseSpec {
       preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
       mockSessionRepo
     )
-  "GET /" should {
+  "GET /"    should {
     "return 200" in {
       val result = canRentBeReducedOnReviewController().show(fakeRequest)
       status(result) shouldBe Status.OK

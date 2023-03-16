@@ -42,14 +42,15 @@ class TenantsAdditionsDisregardedController @Inject() (
   login: login,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FrontendController(mcc) with I18nSupport {
+) extends FrontendController(mcc)
+    with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     Ok(
       tenantsAdditionsDisregardedView(
         request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.tenantAdditionsDisregardedDetails) match {
           case Some(data) => tenantsAdditionsDisregardedForm.fillAndValidate(data)
-          case _ => tenantsAdditionsDisregardedForm
+          case _          => tenantsAdditionsDisregardedForm
         }
       )
     )
@@ -63,16 +64,18 @@ class TenantsAdditionsDisregardedController @Inject() (
         data =>
           data.tenantAdditionalDisregarded match {
             case AnswerYes =>
-              val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(tenantAdditionsDisregardedDetails = Some(data)))
+              val updatedData =
+                updateAboutLeaseOrAgreementPartTwo(_.copy(tenantAdditionsDisregardedDetails = Some(data)))
               session.saveOrUpdate(updatedData)
               Future.successful(
                 Ok(tenantsAdditionsDisregardedDetailsView(tenantsAdditionsDisregardedDetailsForm))
               )
             case AnswerNo  =>
-              val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(tenantAdditionsDisregardedDetails = Some(data)))
+              val updatedData =
+                updateAboutLeaseOrAgreementPartTwo(_.copy(tenantAdditionsDisregardedDetails = Some(data)))
               session.saveOrUpdate(updatedData)
               Future.successful(Ok(legalOrPlanningRestrictionsView(legalPlanningRestrictionsForm)))
-            case _                              => Future.successful(Ok(login(loginForm)))
+            case _         => Future.successful(Ok(login(loginForm)))
 
           }
       )

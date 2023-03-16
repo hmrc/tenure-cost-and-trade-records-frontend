@@ -25,8 +25,8 @@ import utils.TestBaseSpec
 class LegalOrPlanningRestrictionsControllerSpec extends TestBaseSpec {
 
   def legalOrPlanningRestrictionsController(
-                                               aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
-                                             ) =
+    aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
+  ) =
     new LegalOrPlanningRestrictionsController(
       stubMessagesControllerComponents(),
       loginView,

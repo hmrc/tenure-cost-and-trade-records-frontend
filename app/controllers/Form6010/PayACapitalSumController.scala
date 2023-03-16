@@ -36,7 +36,8 @@ class PayACapitalSumController @Inject() (
   payACapitalSumView: payACapitalSum,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FrontendController(mcc) with I18nSupport {
+) extends FrontendController(mcc)
+    with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Future.successful(
@@ -44,7 +45,7 @@ class PayACapitalSumController @Inject() (
         payACapitalSumView(
           request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.payACapitalSumDetails) match {
             case Some(data) => payACapitalSumForm.fillAndValidate(data)
-            case _ => payACapitalSumForm
+            case _          => payACapitalSumForm
           }
         )
       )

@@ -25,8 +25,8 @@ import utils.TestBaseSpec
 class MethodToFixCurrentRentControllerSpec extends TestBaseSpec {
 
   def methodToFixCurrentRentController(
-                                               aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
-                                             ) =
+    aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
+  ) =
     new MethodToFixCurrentRentController(
       stubMessagesControllerComponents(),
       intervalsOfRentReviewView,

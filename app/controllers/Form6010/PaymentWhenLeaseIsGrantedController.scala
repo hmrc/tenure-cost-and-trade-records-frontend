@@ -36,7 +36,8 @@ class PaymentWhenLeaseIsGrantedController @Inject() (
   paymentWhenLeaseIsGrantedView: paymentWhenLeaseIsGranted,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FrontendController(mcc) with I18nSupport{
+) extends FrontendController(mcc)
+    with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Future.successful(
@@ -44,7 +45,7 @@ class PaymentWhenLeaseIsGrantedController @Inject() (
         paymentWhenLeaseIsGrantedView(
           request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.paymentWhenLeaseIsGrantedDetails) match {
             case Some(data) => paymentWhenLeaseIsGrantedForm.fillAndValidate(data)
-            case _ => paymentWhenLeaseIsGrantedForm
+            case _          => paymentWhenLeaseIsGrantedForm
           }
         )
       )

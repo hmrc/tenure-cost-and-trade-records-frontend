@@ -23,6 +23,6 @@ case class CanRentBeReducedOnReviewDetails(
   rentReducedOnReview: AnswersYesNo
 )
 
-object CanRentBeReducedOnReviewDetails{
+object CanRentBeReducedOnReviewDetails {
   implicit val format = Json.format[CanRentBeReducedOnReviewDetails]
 }

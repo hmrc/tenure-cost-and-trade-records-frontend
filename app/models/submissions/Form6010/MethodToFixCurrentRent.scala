@@ -16,7 +16,6 @@
 
 package models.submissions.Form6010
 
-import models.submissions.aboutYourLeaseOrTenure.CurrentRentWithin12Months.all
 import models.{EnumFormat, NamedEnum, NamedEnumSupport}
 import play.api.libs.json.Format
 

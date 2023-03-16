@@ -25,8 +25,8 @@ import utils.TestBaseSpec
 class TenantsAdditionsDisregardedDetailsControllerSpec extends TestBaseSpec {
 
   def tenantsAdditionsDisregardedDetailsController(
-                                               aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
-                                             ) =
+    aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
+  ) =
     new TenantsAdditionsDisregardedDetailsController(
       stubMessagesControllerComponents(),
       legalOrPlanningRestrictionsView,
