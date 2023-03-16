@@ -18,13 +18,13 @@ package controllers.Form6010
 
 import actions.WithSessionRefiner
 import form.Form6010.IntervalsOfRentReviewForm.intervalsOfRentReviewForm
-import form.Form6010.IncentivesPaymentsConditionsForm.incentivesPaymentsConditionsForm
+import form.Form6010.CanRentBeReducedOnReviewForm.canRentBeReducedOnReviewForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo.updateAboutLeaseOrAgreementPartTwo
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.form.{incentivesPaymentsConditions, intervalsOfRentReview}
+import views.html.form.{canRentBeReducedOnReview, intervalsOfRentReview}
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
@@ -32,7 +32,7 @@ import scala.concurrent.Future
 @Singleton
 class IntervalsOfRentReviewController @Inject() (
   mcc: MessagesControllerComponents,
-  incentivesPaymentsConditionsView: incentivesPaymentsConditions,
+  canRentBeReducedOnReview: canRentBeReducedOnReview,
   intervalsOfRentReviewView: intervalsOfRentReview,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
@@ -58,7 +58,7 @@ class IntervalsOfRentReviewController @Inject() (
         data => {
           val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(intervalsOfRentReview = Some(data)))
           session.saveOrUpdate(updatedData)
-          Future.successful(Ok(incentivesPaymentsConditionsView(incentivesPaymentsConditionsForm)))
+          Future.successful(Ok(canRentBeReducedOnReview(canRentBeReducedOnReviewForm)))
         }
       )
   }

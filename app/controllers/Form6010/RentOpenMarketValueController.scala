@@ -26,8 +26,6 @@ import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne.up
 import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.RentOpenMarketPageId
 import play.api.Logging
-import form.Form6010.WhatIsYourCurrentRentBasedOnForm.whatIsYourCurrentRentBasedOnForm
-import form.Form6010.RentIncreasedAnnuallyWithRPIForm.rentIncreasedAnnuallyWithRPIDetailsForm
 import play.api.i18n.I18nSupport
 import repositories.SessionRepo
 

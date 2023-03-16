@@ -17,9 +17,7 @@
 package views.aboutYourLeaseOrTenure
 
 import form.Form6010.RentPayableVaryAccordingToGrossOrNetDetailsForm
-import form.aboutYourLeaseOrTenure.RentIncludeTradeServicesDetailsForm
 import models.submissions.Form6010.RentPayableVaryAccordingToGrossOrNetInformationDetails
-import models.submissions.aboutYourLeaseOrTenure.RentIncludeTradeServicesInformationDetails
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
@@ -41,6 +39,8 @@ class RentPayableVaryAccordingToGrossOrNetDetailsViewSpec
 
     behave like normalPage(createView, messageKeyPrefix)
 
+    behave like pageWithTextFields(createViewUsingForm, "rentPayableVaryAccordingToGrossOrNetDetails")
+
     "has a link marked with back.link.label leading to the task list Page" in {
       val doc          = asDocument(createView())
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
@@ -53,11 +53,6 @@ class RentPayableVaryAccordingToGrossOrNetDetailsViewSpec
       val doc         = asDocument(createViewUsingForm(form))
       val sectionText = doc.getElementsByClass("govuk-caption-m").text()
       assert(sectionText == messages("label.section.aboutYourLeaseOrTenure"))
-    }
-
-    "contain char count box for rentPayableVaryAccordingToGrossOrNetDetails" in {
-      val doc = asDocument(createViewUsingForm(form))
-      assertContainsText(doc, "rentPayableVaryAccordingToGrossOrNetDetails")
     }
 
     "contain save and continue button with the value Save and Continue" in {

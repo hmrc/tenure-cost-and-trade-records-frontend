@@ -29,11 +29,12 @@ class RentPayableVaryAccordingToGrossOrNetDetailsControllerSpec extends TestBase
   ) =
     new RentPayableVaryAccordingToGrossOrNetDetailsController(
       stubMessagesControllerComponents(),
-      rentPayableVaryOnQuantityOfBeersView,
+      howIsCurrentRentFixedView,
       rentPayableVaryAccordingToGrossOrNetDetailsView,
       preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
       mockSessionRepo
     )
+
   "GET /" should {
     "return 200" in {
       val result = rentPayableVaryAccordingToGrossOrNetDetailsController().show(fakeRequest)

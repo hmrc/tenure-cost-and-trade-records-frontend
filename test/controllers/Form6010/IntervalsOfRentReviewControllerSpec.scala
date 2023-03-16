@@ -29,7 +29,7 @@ class IntervalsOfRentReviewControllerSpec extends TestBaseSpec {
   ) =
     new IntervalsOfRentReviewController(
       stubMessagesControllerComponents(),
-      incentivesPaymentsConditionsView,
+      canRentBeReducedOnReviewView,
       intervalsOfRentReviewView,
       preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
       mockSessionRepo
