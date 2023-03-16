@@ -25,7 +25,7 @@ object TenantsAdditionsDisregardedForm {
 
   val tenantsAdditionsDisregardedForm = Form(
     mapping(
-      "tenantsAdditionsDisregarded" -> tenantsAdditionsDisregardedType
+      "tenantsAdditionsDisregarded" -> yesNoType
     )(TenantAdditionsDisregardedDetails.apply)(TenantAdditionsDisregardedDetails.unapply)
   )
 }

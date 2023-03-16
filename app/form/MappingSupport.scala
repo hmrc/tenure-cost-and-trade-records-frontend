@@ -48,20 +48,10 @@ object MappingSupport {
   val licensableActivitiesType: Mapping[LicensableActivities]                   = Forms.of[LicensableActivities]
   val tiedForGoodsType: Mapping[TiedForGoods]                                   = Forms.of[TiedForGoods]
   val premisesLicenseConditionsType: Mapping[PremisesLicenseConditions]         = Forms.of[PremisesLicenseConditions]
-  val tenancyLeaseAgreementType: Mapping[TenancyLeaseAgreements]                = Forms.of[TenancyLeaseAgreements]
   val enforcementActionType: Mapping[EnforcementAction]                         = Forms.of[EnforcementAction]
   val addressConnectionType: Mapping[AddressConnectionType]                     = Forms.of[AddressConnectionType]
   val pastConnectionType: Mapping[PastConnectionType]                           = Forms.of[PastConnectionType]
   val methodToFixCurrentRentsType: Mapping[MethodToFixCurrentRents]             = Forms.of[MethodToFixCurrentRents]
-
-  val formerLeaseSurrenderedType: Mapping[FormerLeaseSurrendered]                = Forms.of[FormerLeaseSurrendered]
-  val rentReducedOnReviewsType: Mapping[RentReducedOnReviews]                    = Forms.of[RentReducedOnReviews]
-  val capitalSumOrPremiumType: Mapping[CapitalSumOrPremiums]                     = Forms.of[CapitalSumOrPremiums]
-  val receivePaymentWhenLeaseGrantedType: Mapping[ReceivePaymentWhenLeaseGrants] =
-    Forms.of[ReceivePaymentWhenLeaseGrants]
-
-  val tenantsAdditionsDisregardedType: Mapping[TenantAdditionalDisregarded] = Forms.of[TenantAdditionalDisregarded]
-  val legalPlanningRestrictionsType: Mapping[LegalPlanningRestrictions]     = Forms.of[LegalPlanningRestrictions]
 
   val responsiblePartyType: Mapping[AnswerResponsibleParty] = Forms.of[AnswerResponsibleParty]
 

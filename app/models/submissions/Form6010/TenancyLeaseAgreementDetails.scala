@@ -16,4 +16,11 @@
 
 package models.submissions.Form6010
 
-case class TenancyLeaseAgreementDetails(tenancyLeaseAgreements: TenancyLeaseAgreements)
+import models.submissions.common.AnswersYesNo
+import play.api.libs.json.Json
+
+case class TenancyLeaseAgreementDetails(tenancyLeaseAgreements: AnswersYesNo)
+
+object TenancyLeaseAgreementDetails{
+  implicit val format = Json.format[TenancyLeaseAgreementDetails]
+}

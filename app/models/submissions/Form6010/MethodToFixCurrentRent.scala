@@ -16,30 +16,35 @@
 
 package models.submissions.Form6010
 
-import models.{NamedEnum, NamedEnumSupport}
+import models.submissions.aboutYourLeaseOrTenure.CurrentRentWithin12Months.all
+import models.{EnumFormat, NamedEnum, NamedEnumSupport}
+import play.api.libs.json.Format
 
 sealed trait MethodToFixCurrentRents extends NamedEnum {
-  val key = "methodUsedToFixCurrentRent"
+  override def key: String = "methodUsedToFixCurrentRent"
 }
 object MethodToFixCurrentRentsAgreement extends MethodToFixCurrentRents {
-  val name = "agreement"
+  override def name: String = "agreement"
 }
 object MethodToFixCurrentRentsArbitration extends MethodToFixCurrentRents {
-  val name = "arbitration"
+  override def name: String = "arbitration"
 }
 
 object MethodToFixCurrentRentIndependentExpert extends MethodToFixCurrentRents {
-  val name = "independentExpert"
+  override def name: String = "independentExpert"
 }
 object MethodToFixCurrentRentsACourt extends MethodToFixCurrentRents {
-  val name = "aCourt"
+  override def name: String = "aCourt"
 }
 
-object MethodToFixCurrentRent extends NamedEnumSupport[MethodToFixCurrentRents] {
+object MethodToFixCurrentRents extends NamedEnumSupport[MethodToFixCurrentRents] {
+  implicit val format: Format[MethodToFixCurrentRents] = EnumFormat(MethodToFixCurrentRents)
+
   val all = List(
     MethodToFixCurrentRentsAgreement,
     MethodToFixCurrentRentsArbitration,
     MethodToFixCurrentRentIndependentExpert,
     MethodToFixCurrentRentsACourt
   )
+  val key = all.head.key
 }

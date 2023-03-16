@@ -16,32 +16,49 @@
 
 package controllers.Form6010
 
+import actions.WithSessionRefiner
 import form.Form6010.LegalOrPlanningRestrictionsForm.legalPlanningRestrictionsForm
 import form.Form6010.TenantsAdditionsDisregardedDetailsForm.tenantsAdditionsDisregardedDetailsForm
+import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo.updateAboutLeaseOrAgreementPartTwo
+import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.form.{legalOrPlanningRestrictions, tenantsAdditionsDisregardedDetails}
 
-import javax.inject.{Inject, Singleton}
+import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
 
 @Singleton
 class TenantsAdditionsDisregardedDetailsController @Inject() (
   mcc: MessagesControllerComponents,
   legalOrPlanningRestrictionsView: legalOrPlanningRestrictions,
-  tenantsAdditionsDisregardedDetailsView: tenantsAdditionsDisregardedDetails
-) extends FrontendController(mcc) {
+  tenantsAdditionsDisregardedDetailsView: tenantsAdditionsDisregardedDetails,
+  withSessionRefiner: WithSessionRefiner,
+  @Named("session") val session: SessionRepo
+) extends FrontendController(mcc) with I18nSupport {
 
-  def show: Action[AnyContent] = Action { implicit request =>
-    Ok(tenantsAdditionsDisregardedDetailsView(tenantsAdditionsDisregardedDetailsForm))
+  def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
+    Ok(
+      tenantsAdditionsDisregardedDetailsView(
+        request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.tenantsAdditionsDisregardedDetails) match {
+          case Some(data) => tenantsAdditionsDisregardedDetailsForm.fillAndValidate(data)
+          case _ => tenantsAdditionsDisregardedDetailsForm
+        }
+      )
+    )
   }
 
-  def submit = Action.async { implicit request =>
+  def submit = (Action andThen withSessionRefiner).async { implicit request =>
     tenantsAdditionsDisregardedDetailsForm
       .bindFromRequest()
       .fold(
         formWithErrors => Future.successful(BadRequest(tenantsAdditionsDisregardedDetailsView(formWithErrors))),
-        data => Future.successful(Ok(legalOrPlanningRestrictionsView(legalPlanningRestrictionsForm)))
+        data => {
+          val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(tenantsAdditionsDisregardedDetails = Some(data)))
+          session.saveOrUpdate(updatedData)
+          Future.successful(Ok(legalOrPlanningRestrictionsView(legalPlanningRestrictionsForm)))
+        }
       )
   }
 }

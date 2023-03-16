@@ -73,8 +73,6 @@ object Formats {
     namedEnumFormatter(BuildingOperationHaveAWebsite, Errors.booleanMissing)
   implicit val answerYesNoFormat: Formatter[AnswersYesNo]                                    =
     namedEnumFormatter(AnswersYesNo, Errors.booleanMissing)
-  implicit val tenancyLeaseAgreementsFormat: Formatter[TenancyLeaseAgreements]               =
-    namedEnumFormatter(TenancyLeaseAgreement, Errors.booleanMissing)
   implicit val licensableActivitiesFormat: Formatter[LicensableActivities]                   =
     namedEnumFormatter(LicensableActivities, Errors.booleanMissing)
   implicit val tiedForGoodsFormat: Formatter[TiedForGoods]                                   = namedEnumFormatter(TiedForGoods, Errors.booleanMissing)
@@ -85,25 +83,11 @@ object Formats {
   implicit val pastConnectionFormat: Formatter[PastConnectionType]                           =
     namedEnumFormatter(PastConnectionType, Errors.booleanMissing)
   implicit val methodToFixCurrentRentDetailsFormat: Formatter[MethodToFixCurrentRents]       =
-    namedEnumFormatter(MethodToFixCurrentRent, Errors.booleanMissing)
+    namedEnumFormatter(MethodToFixCurrentRents, Errors.booleanMissing)
   implicit val tiedForGoodsDetailsFormat: Formatter[TiedForGoodsInformation]                 =
     namedEnumFormatter(TiedForGoodsInformation, Errors.booleanMissing)
   implicit val addressConnectionTypeFormatter: Formatter[AddressConnectionType]              =
     namedEnumFormatter(AddressConnectionType, Errors.isConnectedError)
-
-  implicit val formerLeaseSurrenderedFormatter: Formatter[FormerLeaseSurrendered]                =
-    namedEnumFormatter(FormerLeaseSurrender, Errors.booleanMissing)
-  implicit val rentReducedOnReviewsFormatter: Formatter[RentReducedOnReviews]                    =
-    namedEnumFormatter(RentReducedOnReview, Errors.booleanMissing)
-  implicit val capitalSumOrPremiumFormatter: Formatter[CapitalSumOrPremiums]                     =
-    namedEnumFormatter(CapitalSumOrPremium, Errors.booleanMissing)
-  implicit val receivePaymentWhenLeaseGrantedFormatter: Formatter[ReceivePaymentWhenLeaseGrants] =
-    namedEnumFormatter(ReceivePaymentWhenLeaseGranted, Errors.booleanMissing)
-
-  implicit val tenantsAdditionsDisregardedFormatter: Formatter[TenantAdditionalDisregarded] =
-    namedEnumFormatter(TenantsAdditionsDisregard, Errors.booleanMissing)
-  implicit val legalPlanningRestrictionsFormatter: Formatter[LegalPlanningRestrictions]     =
-    namedEnumFormatter(LegalPlanningRestriction, Errors.booleanMissing)
 
   implicit val answerResponsiblePartyFormatter: Formatter[AnswerResponsibleParty] =
     namedEnumFormatter(AnswerResponsibleParty, Errors.booleanMissing)
@@ -118,7 +102,7 @@ object Formats {
   implicit val shellUnitFormatter: Formatter[ShellUnits]                        = namedEnumFormatter(ShellUnit, Errors.booleanMissing)
 
   implicit val howIsCurrentRentFixedFormatter: Formatter[CurrentRentFixed] =
-    namedEnumFormatter(CurrentRentFix, Errors.booleanMissing)
+    namedEnumFormatter(CurrentRentFixed, Errors.booleanMissing)
 
   implicit val currentRentPayableWithin12MonthsFormatter: Formatter[CurrentRentWithin12Months] =
     namedEnumFormatter(CurrentRentWithin12Months, Errors.booleanMissing)

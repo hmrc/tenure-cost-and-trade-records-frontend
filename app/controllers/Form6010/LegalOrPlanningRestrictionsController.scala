@@ -16,17 +16,21 @@
 
 package controllers.Form6010
 
+import actions.WithSessionRefiner
 import form.Form6010.LegalOrPlanningRestrictionsForm.legalPlanningRestrictionsForm
 import form.Form6010.LegalOrPlanningRestrictionsDetailsForm.legalOrPlanningRestrictionsDetailsForm
 import form.additionalinformation.FurtherInformationOrRemarksForm.furtherInformationOrRemarksForm
-import models.submissions.Form6010.{LegalPlanningRestrictionsNo, LegalPlanningRestrictionsYes}
+import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo.updateAboutLeaseOrAgreementPartTwo
+import models.submissions.common.{AnswerNo, AnswerYes}
+import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.form.{legalOrPlanningRestrictions, legalOrPlanningRestrictionsDetails}
 import views.html.additionalinformation.furtherInformationOrRemarks
 import views.html.login
 
-import javax.inject.{Inject, Singleton}
+import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
 
 @Singleton
@@ -35,25 +39,39 @@ class LegalOrPlanningRestrictionsController @Inject() (
   login: login,
   legalOrPlanningRestrictionsView: legalOrPlanningRestrictions,
   legalOrPlanningRestrictionsDetailsView: legalOrPlanningRestrictionsDetails,
-  furtherInformationOrRemarksView: furtherInformationOrRemarks
-) extends FrontendController(mcc) {
+  furtherInformationOrRemarksView: furtherInformationOrRemarks,
+  withSessionRefiner: WithSessionRefiner,
+  @Named("session") val session: SessionRepo
+) extends FrontendController(mcc) with I18nSupport {
 
-  def show: Action[AnyContent] = Action { implicit request =>
-    Ok(legalOrPlanningRestrictionsView(legalPlanningRestrictionsForm))
+  def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
+    Ok(
+      legalOrPlanningRestrictionsView(
+        request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.legalOrPlanningRestrictions) match {
+          case Some(data) => legalPlanningRestrictionsForm.fillAndValidate(data)
+          case _ => legalPlanningRestrictionsForm
+        }
+      )
+    )
   }
 
-  def submit = Action.async { implicit request =>
+  def submit = (Action andThen withSessionRefiner).async { implicit request =>
     legalPlanningRestrictionsForm
       .bindFromRequest()
       .fold(
         formWithErrors => Future.successful(BadRequest(legalOrPlanningRestrictionsView(formWithErrors))),
         data =>
           data.legalPlanningRestrictions match {
-            case LegalPlanningRestrictionsYes =>
+            case AnswerYes =>{
+              val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(legalOrPlanningRestrictions = Some(data)))
+              session.saveOrUpdate(updatedData)
               Future.successful(
                 Ok(legalOrPlanningRestrictionsDetailsView(legalOrPlanningRestrictionsDetailsForm))
               )
-            case LegalPlanningRestrictionsNo  =>
+            }
+            case AnswerNo  =>{
+              val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(legalOrPlanningRestrictions = Some(data)))
+              session.saveOrUpdate(updatedData)
               Future.successful(
                 Ok(
                   furtherInformationOrRemarksView(
@@ -62,6 +80,7 @@ class LegalOrPlanningRestrictionsController @Inject() (
                   )
                 )
               )
+            }
           }
       )
   }

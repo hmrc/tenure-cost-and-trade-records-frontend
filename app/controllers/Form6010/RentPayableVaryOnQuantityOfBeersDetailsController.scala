@@ -16,32 +16,51 @@
 
 package controllers.Form6010
 
+import actions.WithSessionRefiner
 import form.Form6010.UltimatelyResponsibleForm.ultimatelyResponsibleForm
 import form.Form6010.RentPayableVaryOnQuantityOfBeersDetailsForm.rentPayableVaryOnQuantityOfBeersDetailsForm
+import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo.updateAboutLeaseOrAgreementPartTwo
+import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.form.{rentPayableVaryOnQuantityOfBeersDetails, ultimatelyResponsible}
 
-import javax.inject.{Inject, Singleton}
+import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
 
 @Singleton
 class RentPayableVaryOnQuantityOfBeersDetailsController @Inject() (
   mcc: MessagesControllerComponents,
   ultimatelyResponsibleView: ultimatelyResponsible,
-  rentPayableVaryOnQuantityOfBeersDetailsView: rentPayableVaryOnQuantityOfBeersDetails
-) extends FrontendController(mcc) {
+  rentPayableVaryOnQuantityOfBeersDetailsView: rentPayableVaryOnQuantityOfBeersDetails,
+  withSessionRefiner: WithSessionRefiner,
+  @Named("session") val session: SessionRepo
+) extends FrontendController(mcc) with I18nSupport {
 
-  def show: Action[AnyContent] = Action.async { implicit request =>
-    Future.successful(Ok(rentPayableVaryOnQuantityOfBeersDetailsView(rentPayableVaryOnQuantityOfBeersDetailsForm)))
+  def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    Future.successful(
+      Ok(
+        rentPayableVaryOnQuantityOfBeersDetailsView(
+          request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.rentPayableVaryOnQuantityOfBeersInformationDetails) match {
+            case Some(rentPayableVaryOnQuantityOfBeersInformationDetails) => rentPayableVaryOnQuantityOfBeersDetailsForm.fillAndValidate(rentPayableVaryOnQuantityOfBeersInformationDetails)
+            case _ => rentPayableVaryOnQuantityOfBeersDetailsForm
+          }
+        )
+      )
+    )
   }
 
-  def submit = Action.async { implicit request =>
+  def submit = (Action andThen withSessionRefiner).async { implicit request =>
     rentPayableVaryOnQuantityOfBeersDetailsForm
       .bindFromRequest()
       .fold(
         formWithErrors => Future.successful(BadRequest(rentPayableVaryOnQuantityOfBeersDetailsView(formWithErrors))),
-        data => Future.successful(Ok(ultimatelyResponsibleView(ultimatelyResponsibleForm)))
+        data => {
+          val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(rentPayableVaryOnQuantityOfBeersInformationDetails = Some(data)))
+          session.saveOrUpdate(updatedData)
+          Future.successful(Ok(ultimatelyResponsibleView(ultimatelyResponsibleForm)))
+        }
       )
   }
 

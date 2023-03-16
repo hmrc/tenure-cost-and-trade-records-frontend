@@ -18,7 +18,7 @@ package controllers.Form6010
 
 import actions.WithSessionRefiner
 import form.Form6010.UltimatelyResponsibleForm.ultimatelyResponsibleForm
-import models.submissions.aboutLeaseOrAgreement.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne
+import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne
 import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.UltimatelyResponsiblePageId
 import play.api.i18n.I18nSupport

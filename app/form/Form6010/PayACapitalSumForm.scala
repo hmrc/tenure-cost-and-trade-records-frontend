@@ -25,7 +25,7 @@ object PayACapitalSumForm {
 
   val payACapitalSumForm = Form(
     mapping(
-      "capitalSumOrPremium" -> capitalSumOrPremiumType
+      "capitalSumOrPremium" -> yesNoType
     )(PayACapitalSumDetails.apply)(PayACapitalSumDetails.unapply)
   )
 }

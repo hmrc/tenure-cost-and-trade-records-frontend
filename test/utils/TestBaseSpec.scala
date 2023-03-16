@@ -18,7 +18,7 @@ package utils
 
 import actions.{SessionRequest, WithSessionRefiner}
 import config.{AppConfig, ErrorHandler}
-import models.submissions.aboutLeaseOrAgreement.AboutLeaseOrAgreementPartOne
+import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
 import models.submissions.abouttheproperty._
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory

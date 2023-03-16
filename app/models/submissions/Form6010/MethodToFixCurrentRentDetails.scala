@@ -16,4 +16,10 @@
 
 package models.submissions.Form6010
 
+import play.api.libs.json.Json
+
 case class MethodToFixCurrentRentDetails(methodToFixCurrentRent: MethodToFixCurrentRents)
+
+object MethodToFixCurrentRentDetails{
+  implicit val format = Json.format[MethodToFixCurrentRentDetails]
+}

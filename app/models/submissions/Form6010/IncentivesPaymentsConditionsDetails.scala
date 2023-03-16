@@ -16,6 +16,13 @@
 
 package models.submissions.Form6010
 
+import models.submissions.common.AnswersYesNo
+import play.api.libs.json.Json
+
 case class IncentivesPaymentsConditionsDetails(
-  formerLeaseSurrendered: FormerLeaseSurrendered
+  formerLeaseSurrendered: AnswersYesNo
 )
+
+object IncentivesPaymentsConditionsDetails{
+  implicit val format = Json.format[IncentivesPaymentsConditionsDetails]
+}

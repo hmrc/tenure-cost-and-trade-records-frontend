@@ -16,33 +16,52 @@
 
 package controllers.Form6010
 
+import actions.WithSessionRefiner
 import controllers.LoginController.loginForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.form.tenancyLeaseAgreement
 import form.Form6010.TenancyLeaseAgreementForm.tenancyLeaseAgreementForm
+import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo.updateAboutLeaseOrAgreementPartTwo
+import play.api.i18n.I18nSupport
+import repositories.SessionRepo
 import views.html.login
 
-import javax.inject.{Inject, Singleton}
+import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
 
 @Singleton
 class TenancyLeaseAgreementController @Inject() (
   mcc: MessagesControllerComponents,
   login: login,
-  tenancyLeaseAgreementView: tenancyLeaseAgreement
-) extends FrontendController(mcc) {
+  tenancyLeaseAgreementView: tenancyLeaseAgreement,
+  withSessionRefiner: WithSessionRefiner,
+  @Named("session") val session: SessionRepo
+) extends FrontendController(mcc) with I18nSupport {
 
-  def show: Action[AnyContent] = Action.async { implicit request =>
-    Future.successful(Ok(tenancyLeaseAgreementView(tenancyLeaseAgreementForm)))
+  def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    Future.successful(
+      Ok(
+        tenancyLeaseAgreementView(
+          request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.tenancyLeaseAgreementDetails) match {
+            case Some(data) => tenancyLeaseAgreementForm.fillAndValidate(data)
+            case _ => tenancyLeaseAgreementForm
+          }
+        )
+      )
+    )
   }
 
-  def submit = Action.async { implicit request =>
+  def submit = (Action andThen withSessionRefiner).async { implicit request =>
     tenancyLeaseAgreementForm
       .bindFromRequest()
       .fold(
         formWithErrors => Future.successful(BadRequest(tenancyLeaseAgreementView(formWithErrors))),
-        data => Future.successful(Ok(login(loginForm)))
+        data => {
+          val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(tenancyLeaseAgreementDetails = Some(data)))
+          session.saveOrUpdate(updatedData)
+          Future.successful(Ok(login(loginForm)))
+        }
       )
   }
 

@@ -17,5 +17,12 @@
 package models.submissions.Form6010
 
 import models.submissions.common.AnswersYesNo
+import play.api.libs.json.Json
 
-case class RentPayableVaryAccordingToGrossOrNetDetails(rentPayableVaryAccordingToGrossOrNets: AnswersYesNo)
+case class RentPayableVaryAccordingToGrossOrNetDetails(
+  rentPayableVaryAccordingToGrossOrNets: AnswersYesNo
+)
+
+object RentPayableVaryAccordingToGrossOrNetDetails {
+  implicit val format = Json.format[RentPayableVaryAccordingToGrossOrNetDetails]
+}

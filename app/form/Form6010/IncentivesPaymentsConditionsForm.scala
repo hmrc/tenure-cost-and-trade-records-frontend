@@ -25,7 +25,7 @@ object IncentivesPaymentsConditionsForm {
 
   val incentivesPaymentsConditionsForm = Form(
     mapping(
-      "formerLeaseSurrendered" -> formerLeaseSurrenderedType
+      "formerLeaseSurrendered" -> yesNoType
     )(IncentivesPaymentsConditionsDetails.apply)(IncentivesPaymentsConditionsDetails.unapply)
   )
 }
