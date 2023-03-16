@@ -22,7 +22,7 @@ import models.submissions.aboutyou.{AboutYou, CustomerDetails}
 import models.submissions.common.ContactDetails
 import models.submissions.connectiontoproperty.{AddressConnectionTypeYes, StillConnectedDetails}
 import models.submissions.notconnected.{RemoveConnectionDetails, RemoveConnectionsDetails}
-import navigation.identifiers.{AboutYourTradingHistoryPageId, CheckYourAnswersAboutTheTradingHistoryId, CostOfSalesId, CostOfSalesOrGrossProfitId, FixedOperatingExpensesId, GrossProfitsId, Identifier, OtherCostsId, TotalPayrollCostId, TurnoverPageId, VariableOperatingExpensesId}
+import navigation.identifiers._
 import org.scalatest.matchers.must.Matchers.convertToAnyMustWrapper
 import play.api.libs.json.JsObject
 import uk.gov.hmrc.http.HeaderCarrier

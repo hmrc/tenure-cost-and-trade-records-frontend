@@ -19,10 +19,11 @@ package controllers.Form6010
 import actions.WithSessionRefiner
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.form.{incentivesPaymentsConditions, tenantsAdditionsDisregarded}
+import views.html.form.incentivesPaymentsConditions
 import form.Form6010.IncentivesPaymentsConditionsForm.incentivesPaymentsConditionsForm
-import form.Form6010.TenantsAdditionsDisregardedForm.tenantsAdditionsDisregardedForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo.updateAboutLeaseOrAgreementPartTwo
+import navigation.AboutYourLeaseOrTenureNavigator
+import navigation.identifiers.IncentivesPaymentsConditionsId
 import play.api.i18n.I18nSupport
 import repositories.SessionRepo
 
@@ -32,8 +33,8 @@ import scala.concurrent.Future
 @Singleton
 class IncentivesPaymentsConditionsController @Inject() (
   mcc: MessagesControllerComponents,
+  navigator: AboutYourLeaseOrTenureNavigator,
   incentivesPaymentsConditionsView: incentivesPaymentsConditions,
-  tenantsAdditionsDisregardedView: tenantsAdditionsDisregarded,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
 ) extends FrontendController(mcc)
@@ -60,7 +61,7 @@ class IncentivesPaymentsConditionsController @Inject() (
         data => {
           val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(incentivesPaymentsConditionsDetails = Some(data)))
           session.saveOrUpdate(updatedData)
-          Future.successful(Ok(tenantsAdditionsDisregardedView(tenantsAdditionsDisregardedForm)))
+          Future.successful(Redirect(navigator.nextPage(IncentivesPaymentsConditionsId).apply(updatedData)))
         }
       )
   }

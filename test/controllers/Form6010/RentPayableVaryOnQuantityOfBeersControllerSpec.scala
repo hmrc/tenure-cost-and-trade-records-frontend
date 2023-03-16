@@ -16,7 +16,6 @@
 
 package controllers.Form6010
 
-import form.Errors
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
 import play.api.http.Status
 import play.api.test.FakeRequest

@@ -16,15 +16,16 @@
 
 package controllers.Form6010
 
-import form.Form6010.HowIsCurrentRentFixedForm.howIsCurrentRentFixedForm
 import form.Form6010.RentPayableVaryAccordingToGrossOrNetDetailsForm.rentPayableVaryAccordingToGrossOrNetInformationForm
 import actions.WithSessionRefiner
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo.updateAboutLeaseOrAgreementPartTwo
+import navigation.AboutYourLeaseOrTenureNavigator
+import navigation.identifiers.RentPayableVaryAccordingToGrossOrNetDetailsId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.form.{howIsCurrentRentFixed, rentPayableVaryAccordingToGrossOrNetDetails}
+import views.html.form.rentPayableVaryAccordingToGrossOrNetDetails
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
@@ -32,7 +33,7 @@ import scala.concurrent.Future
 @Singleton
 class RentPayableVaryAccordingToGrossOrNetDetailsController @Inject() (
   mcc: MessagesControllerComponents,
-  howIsCurrentRentFixedView: howIsCurrentRentFixed,
+  navigator: AboutYourLeaseOrTenureNavigator,
   rentPayableVaryAccordingToGrossOrNetDetailsView: rentPayableVaryAccordingToGrossOrNetDetails,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
@@ -67,7 +68,8 @@ class RentPayableVaryAccordingToGrossOrNetDetailsController @Inject() (
             _.copy(rentPayableVaryAccordingToGrossOrNetInformationDetails = Some(data))
           )
           session.saveOrUpdate(updatedData)
-          Future.successful(Ok(howIsCurrentRentFixedView(howIsCurrentRentFixedForm)))
+          Future
+            .successful(Redirect(navigator.nextPage(RentPayableVaryAccordingToGrossOrNetDetailsId).apply(updatedData)))
         }
       )
   }
