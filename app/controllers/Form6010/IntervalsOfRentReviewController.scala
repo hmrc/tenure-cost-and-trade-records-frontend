@@ -17,10 +17,10 @@
 package controllers.Form6010
 
 import form.Form6010.IntervalsOfRentReviewForm.intervalsOfRentReviewForm
-import form.Form6010.IncentivesPaymentsConditionsForm.incentivesPaymentsConditionsForm
+import form.Form6010.CanRentBeReducedOnReviewForm.canRentBeReducedOnReviewForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.form.{incentivesPaymentsConditions, intervalsOfRentReview}
+import views.html.form.{canRentBeReducedOnReview, intervalsOfRentReview}
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
@@ -28,7 +28,7 @@ import scala.concurrent.Future
 @Singleton
 class IntervalsOfRentReviewController @Inject() (
   mcc: MessagesControllerComponents,
-  incentivesPaymentsConditionsView: incentivesPaymentsConditions,
+  canRentBeReducedOnReview: canRentBeReducedOnReview,
   intervalsOfRentReviewView: intervalsOfRentReview
 ) extends FrontendController(mcc) {
 
@@ -41,7 +41,7 @@ class IntervalsOfRentReviewController @Inject() (
       .bindFromRequest()
       .fold(
         formWithErrors => Future.successful(BadRequest(intervalsOfRentReviewView(formWithErrors))),
-        data => Future.successful(Ok(incentivesPaymentsConditionsView(incentivesPaymentsConditionsForm)))
+        data => Future.successful(Ok(canRentBeReducedOnReview(canRentBeReducedOnReviewForm)))
       )
   }
 

@@ -16,6 +16,8 @@
 
 package models.submissions.Form6010
 
+import models.submissions.common.AnswersYesNo
+
 case class IncentivesPaymentsConditionsDetails(
-  formerLeaseSurrendered: FormerLeaseSurrendered
+  formerLeaseSurrendered: AnswersYesNo
 )

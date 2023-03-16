@@ -16,11 +16,11 @@
 
 package controllers.Form6010
 
+import form.Form6010.HowIsCurrentRentFixedForm.howIsCurrentRentFixedForm
 import form.Form6010.RentPayableVaryAccordingToGrossOrNetDetailsForm.rentPayableVaryAccordingToGrossOrNetInformationForm
-import form.Form6010.RentPayableVaryOnQuantityOfBeersForm.rentPayableVaryOnQuantityOfBeersForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.form.{rentPayableVaryAccordingToGrossOrNetDetails, rentPayableVaryOnQuantityOfBeers}
+import views.html.form.{howIsCurrentRentFixed, rentPayableVaryAccordingToGrossOrNetDetails}
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
@@ -28,7 +28,7 @@ import scala.concurrent.Future
 @Singleton
 class RentPayableVaryAccordingToGrossOrNetDetailsController @Inject() (
   mcc: MessagesControllerComponents,
-  rentPayableVaryOnQuantityOfBeersView: rentPayableVaryOnQuantityOfBeers,
+  howIsCurrentRentFixedView: howIsCurrentRentFixed,
   rentPayableVaryAccordingToGrossOrNetDetailsView: rentPayableVaryAccordingToGrossOrNetDetails
 ) extends FrontendController(mcc) {
 
@@ -44,7 +44,7 @@ class RentPayableVaryAccordingToGrossOrNetDetailsController @Inject() (
       .fold(
         formWithErrors =>
           Future.successful(BadRequest(rentPayableVaryAccordingToGrossOrNetDetailsView(formWithErrors))),
-        data => Future.successful(Ok(rentPayableVaryOnQuantityOfBeersView(rentPayableVaryOnQuantityOfBeersForm)))
+        data => Future.successful(Ok(howIsCurrentRentFixedView(howIsCurrentRentFixedForm)))
       )
   }
 

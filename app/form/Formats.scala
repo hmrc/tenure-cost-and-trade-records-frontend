@@ -91,10 +91,6 @@ object Formats {
   implicit val addressConnectionTypeFormatter: Formatter[AddressConnectionType]              =
     namedEnumFormatter(AddressConnectionType, Errors.isConnectedError)
 
-  implicit val formerLeaseSurrenderedFormatter: Formatter[FormerLeaseSurrendered]                =
-    namedEnumFormatter(FormerLeaseSurrender, Errors.booleanMissing)
-  implicit val rentReducedOnReviewsFormatter: Formatter[RentReducedOnReviews]                    =
-    namedEnumFormatter(RentReducedOnReview, Errors.booleanMissing)
   implicit val capitalSumOrPremiumFormatter: Formatter[CapitalSumOrPremiums]                     =
     namedEnumFormatter(CapitalSumOrPremium, Errors.booleanMissing)
   implicit val receivePaymentWhenLeaseGrantedFormatter: Formatter[ReceivePaymentWhenLeaseGrants] =

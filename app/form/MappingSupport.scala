@@ -54,8 +54,6 @@ object MappingSupport {
   val pastConnectionType: Mapping[PastConnectionType]                           = Forms.of[PastConnectionType]
   val methodToFixCurrentRentsType: Mapping[MethodToFixCurrentRents]             = Forms.of[MethodToFixCurrentRents]
 
-  val formerLeaseSurrenderedType: Mapping[FormerLeaseSurrendered]                = Forms.of[FormerLeaseSurrendered]
-  val rentReducedOnReviewsType: Mapping[RentReducedOnReviews]                    = Forms.of[RentReducedOnReviews]
   val capitalSumOrPremiumType: Mapping[CapitalSumOrPremiums]                     = Forms.of[CapitalSumOrPremiums]
   val receivePaymentWhenLeaseGrantedType: Mapping[ReceivePaymentWhenLeaseGrants] =
     Forms.of[ReceivePaymentWhenLeaseGrants]

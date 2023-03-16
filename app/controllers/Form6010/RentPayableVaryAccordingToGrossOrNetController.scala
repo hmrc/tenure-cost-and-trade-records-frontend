@@ -17,12 +17,12 @@
 package controllers.Form6010
 
 import controllers.LoginController.loginForm
+import form.Form6010.HowIsCurrentRentFixedForm.howIsCurrentRentFixedForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.form.{rentPayableVaryAccordingToGrossOrNet, rentPayableVaryAccordingToGrossOrNetDetails, rentPayableVaryOnQuantityOfBeers}
+import views.html.form.{howIsCurrentRentFixed, rentPayableVaryAccordingToGrossOrNet, rentPayableVaryAccordingToGrossOrNetDetails}
 import form.Form6010.RentPayableVaryAccordingToGrossOrNetForm.rentPayableVaryAccordingToGrossOrNetForm
 import form.Form6010.RentPayableVaryAccordingToGrossOrNetDetailsForm.rentPayableVaryAccordingToGrossOrNetInformationForm
-import form.Form6010.RentPayableVaryOnQuantityOfBeersForm.rentPayableVaryOnQuantityOfBeersForm
 import models.submissions.common.{AnswerNo, AnswerYes}
 import views.html.login
 
@@ -35,7 +35,7 @@ class RentPayableVaryAccordingToGrossOrNetController @Inject() (
   login: login,
   rentPayableVaryAccordingToGrossOrNetView: rentPayableVaryAccordingToGrossOrNet,
   rentPayableVaryAccordingToGrossOrNetDetailsView: rentPayableVaryAccordingToGrossOrNetDetails,
-  rentPayableVaryOnQuantityOfBeersView: rentPayableVaryOnQuantityOfBeers
+  howIsCurrentRentFixedView: howIsCurrentRentFixed
 ) extends FrontendController(mcc) {
 
   def show: Action[AnyContent] = Action.async { implicit request =>
@@ -54,7 +54,7 @@ class RentPayableVaryAccordingToGrossOrNetController @Inject() (
                 Ok(rentPayableVaryAccordingToGrossOrNetDetailsView(rentPayableVaryAccordingToGrossOrNetInformationForm))
               )
             case AnswerNo  =>
-              Future.successful(Ok(rentPayableVaryOnQuantityOfBeersView(rentPayableVaryOnQuantityOfBeersForm)))
+              Future.successful(Ok(howIsCurrentRentFixedView(howIsCurrentRentFixedForm)))
             case _         => Future.successful(Ok(login(loginForm)))
           }
       )

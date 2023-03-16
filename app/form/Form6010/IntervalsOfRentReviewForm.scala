@@ -26,11 +26,11 @@ object IntervalsOfRentReviewForm {
 
   val intervalsOfRentReviewForm = Form(
     mapping(
-      "currentLeaseOrAgreementBegin" -> default(text, "").verifying(
+      "intervalsOfRentReview" -> default(text, "").verifying(
         nonEmpty(errorMessage = "error.currentLeaseOrAgreementBegin.required"),
         maxLength(1000, "error.currentLeaseOrAgreementBegin.maxLength")
       ),
-      "nextReview"                   -> dateFieldsMapping("nextReview", fieldErrorPart = ".nextReview")
+      "nextReview"            -> dateFieldsMapping("nextReview", fieldErrorPart = ".nextReview")
     )(IntervalsOfRentReview.apply)(IntervalsOfRentReview.unapply)
   )
 }
