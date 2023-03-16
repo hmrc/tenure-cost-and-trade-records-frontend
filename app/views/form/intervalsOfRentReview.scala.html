@@ -16,27 +16,13 @@
 
 @import models.submissions.Form6010.IntervalsOfRentReview
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.textarea.Textarea
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukErrorSummary
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukDateInput
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukTextarea
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukCharacterCount
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
-@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Label
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Hint
-@import uk.gov.hmrc.govukfrontend.views.Aliases.CharacterCount
 
 @this(layout: Layout,
         govukButton: GovukButton,
-        govukRadios: GovukRadios,
-        govukInput: GovukInput,
-        govukErrorSummary: GovukErrorSummary,
         govukDateInput: GovukDateInput,
-        govukTextarea: GovukTextarea,
         govukCharacterCount: GovukCharacterCount,
         formWithCSRF: FormWithCSRF
 )
@@ -44,33 +30,32 @@
 @(theForm: Form[IntervalsOfRentReview])(implicit request: Request[_], messages: Messages)
 
 @layout(
- pageHeading = messages("currentLeaseOrAgreementBegin.heading"),
+ pageHeading = messages("intervalsOfRentReview.heading"),
+ showH1 = false,
+ showSection = true,
+ sectionName = messages("label.section.aboutYourLeaseOrTenure"),
  backLinkUrl = controllers.Form6010.routes.MethodToFixCurrentRentController.show.url,
  theForm = theForm
 ) {
 
- @formWithCSRF(action = controllers.Form6010.routes.IntervalsOfRentReviewController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
+  @formWithCSRF(action = controllers.Form6010.routes.IntervalsOfRentReviewController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
 
-  @govukCharacterCount(
-   CharacterCount(
-    id = "currentLeaseOrAgreementBegin",
-    name = "currentLeaseOrAgreementBegin",
-    rows = 5,
-    maxLength = 1000,
-    label = Label(
-     content = Text(messages("label.currentLeaseOrAgreementBegin")),
-     classes = "govuk-!-font-weight-bold"
-    ),
-    errorMessage = theForm.errors.asTextErrorMessageForField("currentLeaseOrAgreementBegin"),
-    hint = Some(Hint(content = Text(messages("hint.currentLeaseOrAgreementBegin")))),
-   )
-  )
+    <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+      <h1 class="govuk-fieldset__heading">@messages("intervalsOfRentReview.heading")</h1>
+    </legend>
 
-  @includes.dateFields(form = theForm, field = "nextReview", govukDate = govukDateInput, showDays = true)
+    @includes.textInputCharCount(
+      govukCharacterCount,
+      theForm,
+      "intervalsOfRentReview",
+      classes = "govuk-!-font-weight-bold",
+      hint = "hint.intervalsOfRentReview"
+    )
 
+    @includes.dateFields(form = theForm, field = "nextReview", govukDate = govukDateInput, showDays = true)
 
-  @includes.continueButton(govukButton)
- }
+    @includes.continueButton(govukButton)
+  }
 }
 
 

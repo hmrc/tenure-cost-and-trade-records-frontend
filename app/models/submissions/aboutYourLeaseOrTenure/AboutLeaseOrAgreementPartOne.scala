@@ -19,9 +19,7 @@ package models.submissions.aboutYourLeaseOrTenure
 import actions.SessionRequest
 import models.submissions.Form6010._
 import models.{AnnualRent, Session}
-import models.submissions.aboutYourLeaseOrTenure._
 import models.submissions.common.AnswersYesNo
-import models.{AnnualRent, Session}
 import play.api.libs.json.Json
 
 case class AboutLeaseOrAgreementPartOne(
