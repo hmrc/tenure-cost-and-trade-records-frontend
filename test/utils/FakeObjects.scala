@@ -19,8 +19,7 @@ package utils
 import models.submissions.Form6010.{RentIncludeFixturesAndFittingsDetails, RentOpenMarketValueDetails}
 import models.submissions.aboutfranchisesorlettings._
 import models.submissions.abouttheproperty.PremisesLicenseGrantedNo
-import models.submissions.aboutLeaseOrAgreement.AboutLeaseOrAgreementPartOne
-import models.submissions.aboutYourLeaseOrTenure._
+import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartOne, _}
 import models.submissions.aboutfranchisesorlettings
 import models.submissions.aboutfranchisesorlettings.LettingSection
 import models.submissions.abouttheproperty._

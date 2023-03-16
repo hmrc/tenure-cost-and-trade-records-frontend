@@ -16,6 +16,7 @@
 
 package controllers.Form6010
 
+import actions.WithSessionRefiner
 import controllers.LoginController.loginForm
 import form.Form6010.HowIsCurrentRentFixedForm.howIsCurrentRentFixedForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
@@ -25,8 +26,11 @@ import form.Form6010.RentPayableVaryAccordingToGrossOrNetForm.rentPayableVaryAcc
 import form.Form6010.RentPayableVaryAccordingToGrossOrNetDetailsForm.rentPayableVaryAccordingToGrossOrNetInformationForm
 import models.submissions.common.{AnswerNo, AnswerYes}
 import views.html.login
+import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo.updateAboutLeaseOrAgreementPartTwo
+import play.api.i18n.I18nSupport
+import repositories.SessionRepo
 
-import javax.inject.{Inject, Singleton}
+import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
 
 @Singleton
@@ -35,14 +39,28 @@ class RentPayableVaryAccordingToGrossOrNetController @Inject() (
   login: login,
   rentPayableVaryAccordingToGrossOrNetView: rentPayableVaryAccordingToGrossOrNet,
   rentPayableVaryAccordingToGrossOrNetDetailsView: rentPayableVaryAccordingToGrossOrNetDetails,
-  howIsCurrentRentFixedView: howIsCurrentRentFixed
-) extends FrontendController(mcc) {
+  howIsCurrentRentFixedView: howIsCurrentRentFixed,
+  withSessionRefiner: WithSessionRefiner,
+  @Named("session") val session: SessionRepo
+) extends FrontendController(mcc)
+    with I18nSupport {
 
-  def show: Action[AnyContent] = Action.async { implicit request =>
-    Future.successful(Ok(rentPayableVaryAccordingToGrossOrNetView(rentPayableVaryAccordingToGrossOrNetForm)))
+  def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    Future.successful(
+      Ok(
+        rentPayableVaryAccordingToGrossOrNetView(
+          request.sessionData.aboutLeaseOrAgreementPartTwo
+            .flatMap(_.rentPayableVaryAccordingToGrossOrNetDetails) match {
+            case Some(rentPayableVaryAccordingToGrossOrNetDetails) =>
+              rentPayableVaryAccordingToGrossOrNetForm.fillAndValidate(rentPayableVaryAccordingToGrossOrNetDetails)
+            case _                                                 => rentPayableVaryAccordingToGrossOrNetForm
+          }
+        )
+      )
+    )
   }
 
-  def submit = Action.async { implicit request =>
+  def submit = (Action andThen withSessionRefiner).async { implicit request =>
     rentPayableVaryAccordingToGrossOrNetForm
       .bindFromRequest()
       .fold(
@@ -50,10 +68,16 @@ class RentPayableVaryAccordingToGrossOrNetController @Inject() (
         data =>
           data.rentPayableVaryAccordingToGrossOrNets match {
             case AnswerYes =>
+              val updatedData =
+                updateAboutLeaseOrAgreementPartTwo(_.copy(rentPayableVaryAccordingToGrossOrNetDetails = Some(data)))
+              session.saveOrUpdate(updatedData)
               Future.successful(
                 Ok(rentPayableVaryAccordingToGrossOrNetDetailsView(rentPayableVaryAccordingToGrossOrNetInformationForm))
               )
             case AnswerNo  =>
+              val updatedData =
+                updateAboutLeaseOrAgreementPartTwo(_.copy(rentPayableVaryAccordingToGrossOrNetDetails = Some(data)))
+              session.saveOrUpdate(updatedData)
               Future.successful(Ok(howIsCurrentRentFixedView(howIsCurrentRentFixedForm)))
             case _         => Future.successful(Ok(login(loginForm)))
           }

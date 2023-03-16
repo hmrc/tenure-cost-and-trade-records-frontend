@@ -16,6 +16,12 @@
 
 package models.submissions.Form6010
 
+import play.api.libs.json.Json
+
 import java.time.LocalDate
 
 case class HowIsCurrentRentFixed(currentRentFixed: CurrentRentFixed, rentActuallyAgreed: LocalDate)
+
+object HowIsCurrentRentFixed {
+  implicit val format = Json.format[HowIsCurrentRentFixed]
+}

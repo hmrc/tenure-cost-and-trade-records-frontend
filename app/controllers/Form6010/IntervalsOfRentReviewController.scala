@@ -16,32 +16,50 @@
 
 package controllers.Form6010
 
+import actions.WithSessionRefiner
 import form.Form6010.IntervalsOfRentReviewForm.intervalsOfRentReviewForm
 import form.Form6010.CanRentBeReducedOnReviewForm.canRentBeReducedOnReviewForm
+import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo.updateAboutLeaseOrAgreementPartTwo
+import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.form.{canRentBeReducedOnReview, intervalsOfRentReview}
 
-import javax.inject.{Inject, Singleton}
+import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
 
 @Singleton
 class IntervalsOfRentReviewController @Inject() (
   mcc: MessagesControllerComponents,
   canRentBeReducedOnReview: canRentBeReducedOnReview,
-  intervalsOfRentReviewView: intervalsOfRentReview
-) extends FrontendController(mcc) {
+  intervalsOfRentReviewView: intervalsOfRentReview,
+  withSessionRefiner: WithSessionRefiner,
+  @Named("session") val session: SessionRepo
+) extends FrontendController(mcc)
+    with I18nSupport {
 
-  def show: Action[AnyContent] = Action { implicit request =>
-    Ok(intervalsOfRentReviewView(intervalsOfRentReviewForm))
+  def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
+    Ok(
+      intervalsOfRentReviewView(
+        request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.intervalsOfRentReview) match {
+          case Some(data) => intervalsOfRentReviewForm.fillAndValidate(data)
+          case _          => intervalsOfRentReviewForm
+        }
+      )
+    )
   }
 
-  def submit = Action.async { implicit request =>
+  def submit = (Action andThen withSessionRefiner).async { implicit request =>
     intervalsOfRentReviewForm
       .bindFromRequest()
       .fold(
         formWithErrors => Future.successful(BadRequest(intervalsOfRentReviewView(formWithErrors))),
-        data => Future.successful(Ok(canRentBeReducedOnReview(canRentBeReducedOnReviewForm)))
+        data => {
+          val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(intervalsOfRentReview = Some(data)))
+          session.saveOrUpdate(updatedData)
+          Future.successful(Ok(canRentBeReducedOnReview(canRentBeReducedOnReviewForm)))
+        }
       )
   }
 

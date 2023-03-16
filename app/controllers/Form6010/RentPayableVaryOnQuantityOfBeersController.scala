@@ -16,6 +16,7 @@
 
 package controllers.Form6010
 
+import actions.WithSessionRefiner
 import controllers.LoginController.loginForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
@@ -23,10 +24,13 @@ import views.html.form.{rentPayableVaryOnQuantityOfBeers, rentPayableVaryOnQuant
 import form.Form6010.RentPayableVaryOnQuantityOfBeersForm.rentPayableVaryOnQuantityOfBeersForm
 import form.Form6010.RentPayableVaryOnQuantityOfBeersDetailsForm.rentPayableVaryOnQuantityOfBeersDetailsForm
 import form.Form6010.UltimatelyResponsibleForm.ultimatelyResponsibleForm
+import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo.updateAboutLeaseOrAgreementPartTwo
 import models.submissions.common.{AnswerNo, AnswerYes}
+import play.api.i18n.I18nSupport
+import repositories.SessionRepo
 import views.html.login
 
-import javax.inject.{Inject, Singleton}
+import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
 
 @Singleton
@@ -35,14 +39,27 @@ class RentPayableVaryOnQuantityOfBeersController @Inject() (
   login: login,
   ultimatelyResponsibleView: ultimatelyResponsible,
   rentPayableVaryOnQuantityOfBeersDetailsView: rentPayableVaryOnQuantityOfBeersDetails,
-  rentPayableVaryOnQuantityOfBeersView: rentPayableVaryOnQuantityOfBeers
-) extends FrontendController(mcc) {
+  rentPayableVaryOnQuantityOfBeersView: rentPayableVaryOnQuantityOfBeers,
+  withSessionRefiner: WithSessionRefiner,
+  @Named("session") val session: SessionRepo
+) extends FrontendController(mcc)
+    with I18nSupport {
 
-  def show: Action[AnyContent] = Action.async { implicit request =>
-    Future.successful(Ok(rentPayableVaryOnQuantityOfBeersView(rentPayableVaryOnQuantityOfBeersForm)))
+  def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    Future.successful(
+      Ok(
+        rentPayableVaryOnQuantityOfBeersView(
+          request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.rentPayableVaryOnQuantityOfBeersDetails) match {
+            case Some(rentPayableVaryOnQuantityOfBeersDetails) =>
+              rentPayableVaryOnQuantityOfBeersForm.fillAndValidate(rentPayableVaryOnQuantityOfBeersDetails)
+            case _                                             => rentPayableVaryOnQuantityOfBeersForm
+          }
+        )
+      )
+    )
   }
 
-  def submit = Action.async { implicit request =>
+  def submit = (Action andThen withSessionRefiner).async { implicit request =>
     rentPayableVaryOnQuantityOfBeersForm
       .bindFromRequest()
       .fold(
@@ -50,10 +67,16 @@ class RentPayableVaryOnQuantityOfBeersController @Inject() (
         data =>
           data.rentPayableVaryOnQuantityOfBeersDetails match {
             case AnswerYes =>
+              val updatedData =
+                updateAboutLeaseOrAgreementPartTwo(_.copy(rentPayableVaryOnQuantityOfBeersDetails = Some(data)))
+              session.saveOrUpdate(updatedData)
               Future.successful(
                 Ok(rentPayableVaryOnQuantityOfBeersDetailsView(rentPayableVaryOnQuantityOfBeersDetailsForm))
               )
             case AnswerNo  =>
+              val updatedData =
+                updateAboutLeaseOrAgreementPartTwo(_.copy(rentPayableVaryOnQuantityOfBeersDetails = Some(data)))
+              session.saveOrUpdate(updatedData)
               Future.successful(Ok(ultimatelyResponsibleView(ultimatelyResponsibleForm)))
             case _         => Future.successful(Ok(login(loginForm)))
           }

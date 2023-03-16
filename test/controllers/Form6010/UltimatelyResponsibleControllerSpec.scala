@@ -16,7 +16,7 @@
 
 package controllers.Form6010
 
-import models.submissions.aboutLeaseOrAgreement.AboutLeaseOrAgreementPartOne
+import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
 import navigation.AboutYourLeaseOrTenureNavigator
 import play.api.http.Status
 import play.api.test.FakeRequest

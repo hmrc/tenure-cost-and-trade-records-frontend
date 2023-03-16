@@ -25,7 +25,7 @@ object PaymentWhenLeaseIsGrantedForm {
 
   val paymentWhenLeaseIsGrantedForm = Form(
     mapping(
-      "receivePaymentWhenLeaseGranted" -> receivePaymentWhenLeaseGrantedType
+      "receivePaymentWhenLeaseGranted" -> yesNoType
     )(PaymentWhenLeaseIsGrantedDetails.apply)(PaymentWhenLeaseIsGrantedDetails.unapply)
   )
 }

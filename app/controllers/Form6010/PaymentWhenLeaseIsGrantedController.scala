@@ -16,32 +16,52 @@
 
 package controllers.Form6010
 
+import actions.WithSessionRefiner
 import form.Form6010.TenantsAdditionsDisregardedForm.tenantsAdditionsDisregardedForm
 import form.Form6010.PaymentWhenLeaseIsGrantedForm.paymentWhenLeaseIsGrantedForm
+import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo.updateAboutLeaseOrAgreementPartTwo
+import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.form.{paymentWhenLeaseIsGranted, tenantsAdditionsDisregarded}
 
-import javax.inject.{Inject, Singleton}
+import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
 
 @Singleton
 class PaymentWhenLeaseIsGrantedController @Inject() (
   mcc: MessagesControllerComponents,
   tenantsAdditionsDisregardedView: tenantsAdditionsDisregarded,
-  paymentWhenLeaseIsGrantedView: paymentWhenLeaseIsGranted
-) extends FrontendController(mcc) {
+  paymentWhenLeaseIsGrantedView: paymentWhenLeaseIsGranted,
+  withSessionRefiner: WithSessionRefiner,
+  @Named("session") val session: SessionRepo
+) extends FrontendController(mcc)
+    with I18nSupport {
 
-  def show: Action[AnyContent] = Action.async { implicit request =>
-    Future.successful(Ok(paymentWhenLeaseIsGrantedView(paymentWhenLeaseIsGrantedForm)))
+  def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    Future.successful(
+      Ok(
+        paymentWhenLeaseIsGrantedView(
+          request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.paymentWhenLeaseIsGrantedDetails) match {
+            case Some(data) => paymentWhenLeaseIsGrantedForm.fillAndValidate(data)
+            case _          => paymentWhenLeaseIsGrantedForm
+          }
+        )
+      )
+    )
   }
 
-  def submit = Action.async { implicit request =>
+  def submit = (Action andThen withSessionRefiner).async { implicit request =>
     paymentWhenLeaseIsGrantedForm
       .bindFromRequest()
       .fold(
         formWithErrors => Future.successful(BadRequest(paymentWhenLeaseIsGrantedView(formWithErrors))),
-        data => Future.successful(Ok(tenantsAdditionsDisregardedView(tenantsAdditionsDisregardedForm)))
+        data => {
+          val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(paymentWhenLeaseIsGrantedDetails = Some(data)))
+          session.saveOrUpdate(updatedData)
+          Future.successful(Ok(tenantsAdditionsDisregardedView(tenantsAdditionsDisregardedForm)))
+        }
       )
   }
 }

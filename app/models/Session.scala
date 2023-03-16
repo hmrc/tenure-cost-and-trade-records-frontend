@@ -16,7 +16,7 @@
 
 package models
 
-import models.submissions.aboutLeaseOrAgreement.AboutLeaseOrAgreementPartOne
+import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartOne, AboutLeaseOrAgreementPartTwo}
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
 import models.submissions.abouttheproperty.AboutTheProperty
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory
@@ -36,7 +36,8 @@ case class Session(
   altContactInformation: Option[AltContactInformation] = None,
   aboutTheTradingHistory: Option[AboutTheTradingHistory] = None,
   aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = None,
-  aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = None
+  aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = None,
+  aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = None
 )
 
 object Session {
