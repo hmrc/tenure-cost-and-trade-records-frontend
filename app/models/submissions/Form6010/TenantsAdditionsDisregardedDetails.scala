@@ -22,6 +22,6 @@ case class TenantsAdditionsDisregardedDetails(
   tenantsAdditionsDisregarded: String
 )
 
-object TenantsAdditionsDisregardedDetails{
+object TenantsAdditionsDisregardedDetails {
   implicit val format = Json.format[TenantsAdditionsDisregardedDetails]
 }

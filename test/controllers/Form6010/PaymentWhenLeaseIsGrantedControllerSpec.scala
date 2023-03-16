@@ -25,8 +25,8 @@ import utils.TestBaseSpec
 class PaymentWhenLeaseIsGrantedControllerSpec extends TestBaseSpec {
 
   def paymentWhenLeaseIsGrantedController(
-                                               aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
-                                             ) =
+    aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
+  ) =
     new PaymentWhenLeaseIsGrantedController(
       stubMessagesControllerComponents(),
       tenantsAdditionsDisregardedView,

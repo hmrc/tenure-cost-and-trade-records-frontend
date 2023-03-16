@@ -36,7 +36,8 @@ class MethodToFixCurrentRentController @Inject() (
   methodToFixCurrentRentView: methodToFixCurrentRent,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FrontendController(mcc) with I18nSupport {
+) extends FrontendController(mcc)
+    with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Future.successful(
@@ -44,7 +45,7 @@ class MethodToFixCurrentRentController @Inject() (
         methodToFixCurrentRentView(
           request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.methodToFixCurrentRentDetails) match {
             case Some(data) => methodToFixCurrentRentForm.fillAndValidate(data)
-            case _ => methodToFixCurrentRentForm
+            case _          => methodToFixCurrentRentForm
           }
         )
       )

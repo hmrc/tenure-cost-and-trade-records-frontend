@@ -25,8 +25,8 @@ import utils.TestBaseSpec
 class IntervalsOfRentReviewControllerSpec extends TestBaseSpec {
 
   def intervalsOfRentReviewController(
-                                               aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
-                                             ) =
+    aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
+  ) =
     new IntervalsOfRentReviewController(
       stubMessagesControllerComponents(),
       incentivesPaymentsConditionsView,
@@ -34,7 +34,7 @@ class IntervalsOfRentReviewControllerSpec extends TestBaseSpec {
       preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
       mockSessionRepo
     )
-  "GET /" should {
+  "GET /"    should {
     "return 200" in {
       val result = intervalsOfRentReviewController().show(fakeRequest)
       status(result) shouldBe Status.OK

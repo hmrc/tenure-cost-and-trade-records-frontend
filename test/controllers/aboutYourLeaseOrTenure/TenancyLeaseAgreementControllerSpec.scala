@@ -26,8 +26,8 @@ import utils.TestBaseSpec
 class TenancyLeaseAgreementControllerSpec extends TestBaseSpec {
 
   def tenancyLeaseAgreementController(
-                                               aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
-                                             ) =
+    aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
+  ) =
     new TenancyLeaseAgreementController(
       stubMessagesControllerComponents(),
       loginView,
@@ -35,7 +35,7 @@ class TenancyLeaseAgreementControllerSpec extends TestBaseSpec {
       preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
       mockSessionRepo
     )
-  "GET /" should {
+  "GET /"    should {
     "return 200" in {
       val result = tenancyLeaseAgreementController().show(fakeRequest)
       status(result) shouldBe Status.OK

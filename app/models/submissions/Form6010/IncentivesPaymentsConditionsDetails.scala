@@ -23,6 +23,6 @@ case class IncentivesPaymentsConditionsDetails(
   formerLeaseSurrendered: AnswersYesNo
 )
 
-object IncentivesPaymentsConditionsDetails{
+object IncentivesPaymentsConditionsDetails {
   implicit val format = Json.format[IncentivesPaymentsConditionsDetails]
 }

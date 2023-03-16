@@ -42,14 +42,15 @@ class LegalOrPlanningRestrictionsController @Inject() (
   furtherInformationOrRemarksView: furtherInformationOrRemarks,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FrontendController(mcc) with I18nSupport {
+) extends FrontendController(mcc)
+    with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     Ok(
       legalOrPlanningRestrictionsView(
         request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.legalOrPlanningRestrictions) match {
           case Some(data) => legalPlanningRestrictionsForm.fillAndValidate(data)
-          case _ => legalPlanningRestrictionsForm
+          case _          => legalPlanningRestrictionsForm
         }
       )
     )
@@ -62,14 +63,13 @@ class LegalOrPlanningRestrictionsController @Inject() (
         formWithErrors => Future.successful(BadRequest(legalOrPlanningRestrictionsView(formWithErrors))),
         data =>
           data.legalPlanningRestrictions match {
-            case AnswerYes =>{
+            case AnswerYes =>
               val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(legalOrPlanningRestrictions = Some(data)))
               session.saveOrUpdate(updatedData)
               Future.successful(
                 Ok(legalOrPlanningRestrictionsDetailsView(legalOrPlanningRestrictionsDetailsForm))
               )
-            }
-            case AnswerNo  =>{
+            case AnswerNo  =>
               val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(legalOrPlanningRestrictions = Some(data)))
               session.saveOrUpdate(updatedData)
               Future.successful(
@@ -80,7 +80,6 @@ class LegalOrPlanningRestrictionsController @Inject() (
                   )
                 )
               )
-            }
           }
       )
   }

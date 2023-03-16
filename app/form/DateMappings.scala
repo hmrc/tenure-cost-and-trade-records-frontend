@@ -135,24 +135,24 @@ object DateMappings {
   )
 
   def monthsYearDurationMapping(prefix: String, fieldErrorPart: String = ""): Mapping[MonthsYearDuration] = tuple(
-    "years"  -> nonEmptyTextOr(
-      prefix + ".years",
-      text.verifying(
-        Errors.invalidDurationYears,
-        x => x.trim.forall(Character.isDigit) && x.trim.toInt >= 0 && x.trim.toInt <= 999
-      ),
-      s"error$fieldErrorPart.years.required"
-    ),
-    "months" -> nonEmptyTextOr(
-      prefix + ".months",
+    "month" -> nonEmptyTextOr(
+      prefix + ".month",
       text.verifying(
         Errors.invalidDurationMonths,
         x => x.trim.forall(Character.isDigit) && x.trim.toInt >= 0 && x.trim.toInt <= 12
       ),
-      s"error$fieldErrorPart.months.required"
+      s"error$fieldErrorPart.month.required"
+    ),
+    "year"  -> nonEmptyTextOr(
+      prefix + ".year",
+      text.verifying(
+        Errors.invalidDurationYears,
+        x => x.trim.forall(Character.isDigit) && x.trim.toInt >= 0 && x.trim.toInt <= 9999
+      ),
+      s"error$fieldErrorPart.year.required"
     )
   ).transform(
-    { case (years, months) =>
+    { case (months, years) =>
       MonthsYearDuration(months.trim.toInt, years.trim.toInt)
     },
     (my: MonthsYearDuration) => (my.months.toString, my.years.toString)

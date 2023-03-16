@@ -25,7 +25,6 @@ import views.behaviours.QuestionViewBehaviours
 
 class FurtherInformationOrRemarksViewSpec extends QuestionViewBehaviours[FurtherInformationOrRemarksDetails] {
 
-
   val messageKeyPrefix = "furtherInformationOrRemarks"
 
   override val form = FurtherInformationOrRemarksForm.furtherInformationOrRemarksForm

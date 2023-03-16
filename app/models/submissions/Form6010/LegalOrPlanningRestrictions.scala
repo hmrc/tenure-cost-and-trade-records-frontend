@@ -22,6 +22,6 @@ import play.api.libs.json.Json
 case class LegalOrPlanningRestrictions(
   legalPlanningRestrictions: AnswersYesNo
 )
-object LegalOrPlanningRestrictions{
+object LegalOrPlanningRestrictions {
   implicit val format = Json.format[LegalOrPlanningRestrictions]
 }

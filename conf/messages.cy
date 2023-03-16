@@ -488,6 +488,10 @@ aboutYourTradingHistory.heading = Occupation and accounting information
 aboutYourTradingHistory.subheader = The questions on this page will ensure we only ask you for relevant information about your trading history
 label.firstOccupy = When did you first occupy the property?
 label.financialYear =When does your current financial year end?
+error.firstOccupy.month.required = The date the property was first occupied must include a month
+error.firstOccupy.year.required = The date the property was first occupied must include a year
+error.financialYear.month.required = The date the financial years ends must include a month
+error.financialYear.year.required = The date the financial years ends must include a year
 
 ##CURRENT RENT FIRST PAID
 #########################

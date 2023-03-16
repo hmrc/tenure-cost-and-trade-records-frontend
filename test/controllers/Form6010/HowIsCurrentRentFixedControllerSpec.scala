@@ -25,8 +25,8 @@ import utils.TestBaseSpec
 class HowIsCurrentRentFixedControllerSpec extends TestBaseSpec {
 
   def howIsCurrentRentFixedController(
-                                               aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
-                                             ) =
+    aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
+  ) =
     new HowIsCurrentRentFixedController(
       stubMessagesControllerComponents(),
       methodToFixCurrentRentView,

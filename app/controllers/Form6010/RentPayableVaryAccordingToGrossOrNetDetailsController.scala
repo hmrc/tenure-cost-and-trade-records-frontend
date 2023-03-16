@@ -36,15 +36,20 @@ class RentPayableVaryAccordingToGrossOrNetDetailsController @Inject() (
   rentPayableVaryAccordingToGrossOrNetDetailsView: rentPayableVaryAccordingToGrossOrNetDetails,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FrontendController(mcc) with I18nSupport {
+) extends FrontendController(mcc)
+    with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Future.successful(
       Ok(
         rentPayableVaryAccordingToGrossOrNetDetailsView(
-          request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.rentPayableVaryAccordingToGrossOrNetInformationDetails) match {
-            case Some(rentPayableVaryAccordingToGrossOrNetInformationDetails) => rentPayableVaryAccordingToGrossOrNetInformationForm.fillAndValidate(rentPayableVaryAccordingToGrossOrNetInformationDetails)
-            case _ => rentPayableVaryAccordingToGrossOrNetInformationForm
+          request.sessionData.aboutLeaseOrAgreementPartTwo
+            .flatMap(_.rentPayableVaryAccordingToGrossOrNetInformationDetails) match {
+            case Some(rentPayableVaryAccordingToGrossOrNetInformationDetails) =>
+              rentPayableVaryAccordingToGrossOrNetInformationForm.fillAndValidate(
+                rentPayableVaryAccordingToGrossOrNetInformationDetails
+              )
+            case _                                                            => rentPayableVaryAccordingToGrossOrNetInformationForm
           }
         )
       )
@@ -57,8 +62,10 @@ class RentPayableVaryAccordingToGrossOrNetDetailsController @Inject() (
       .fold(
         formWithErrors =>
           Future.successful(BadRequest(rentPayableVaryAccordingToGrossOrNetDetailsView(formWithErrors))),
-        data =>{
-          val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(rentPayableVaryAccordingToGrossOrNetInformationDetails = Some(data)))
+        data => {
+          val updatedData = updateAboutLeaseOrAgreementPartTwo(
+            _.copy(rentPayableVaryAccordingToGrossOrNetInformationDetails = Some(data))
+          )
           session.saveOrUpdate(updatedData)
           Future.successful(Ok(rentPayableVaryOnQuantityOfBeersView(rentPayableVaryOnQuantityOfBeersForm)))
         }

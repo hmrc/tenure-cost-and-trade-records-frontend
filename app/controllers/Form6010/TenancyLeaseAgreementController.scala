@@ -37,7 +37,8 @@ class TenancyLeaseAgreementController @Inject() (
   tenancyLeaseAgreementView: tenancyLeaseAgreement,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FrontendController(mcc) with I18nSupport {
+) extends FrontendController(mcc)
+    with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Future.successful(
@@ -45,7 +46,7 @@ class TenancyLeaseAgreementController @Inject() (
         tenancyLeaseAgreementView(
           request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.tenancyLeaseAgreementDetails) match {
             case Some(data) => tenancyLeaseAgreementForm.fillAndValidate(data)
-            case _ => tenancyLeaseAgreementForm
+            case _          => tenancyLeaseAgreementForm
           }
         )
       )

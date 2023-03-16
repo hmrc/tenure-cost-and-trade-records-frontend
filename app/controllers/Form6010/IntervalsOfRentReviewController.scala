@@ -36,14 +36,15 @@ class IntervalsOfRentReviewController @Inject() (
   intervalsOfRentReviewView: intervalsOfRentReview,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FrontendController(mcc)with I18nSupport {
+) extends FrontendController(mcc)
+    with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     Ok(
       intervalsOfRentReviewView(
         request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.intervalsOfRentReview) match {
           case Some(data) => intervalsOfRentReviewForm.fillAndValidate(data)
-          case _ => intervalsOfRentReviewForm
+          case _          => intervalsOfRentReviewForm
         }
       )
     )

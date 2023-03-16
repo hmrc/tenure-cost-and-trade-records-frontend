@@ -36,7 +36,8 @@ class IncentivesPaymentsConditionsController @Inject() (
   tenantsAdditionsDisregardedView: tenantsAdditionsDisregarded,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FrontendController(mcc) with I18nSupport {
+) extends FrontendController(mcc)
+    with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Future.successful(
@@ -44,7 +45,7 @@ class IncentivesPaymentsConditionsController @Inject() (
         incentivesPaymentsConditionsView(
           request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.incentivesPaymentsConditionsDetails) match {
             case Some(data) => incentivesPaymentsConditionsForm.fillAndValidate(data)
-            case _ => incentivesPaymentsConditionsForm
+            case _          => incentivesPaymentsConditionsForm
           }
         )
       )

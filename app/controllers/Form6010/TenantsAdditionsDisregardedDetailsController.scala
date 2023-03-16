@@ -36,14 +36,15 @@ class TenantsAdditionsDisregardedDetailsController @Inject() (
   tenantsAdditionsDisregardedDetailsView: tenantsAdditionsDisregardedDetails,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FrontendController(mcc) with I18nSupport {
+) extends FrontendController(mcc)
+    with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     Ok(
       tenantsAdditionsDisregardedDetailsView(
         request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.tenantsAdditionsDisregardedDetails) match {
           case Some(data) => tenantsAdditionsDisregardedDetailsForm.fillAndValidate(data)
-          case _ => tenantsAdditionsDisregardedDetailsForm
+          case _          => tenantsAdditionsDisregardedDetailsForm
         }
       )
     )

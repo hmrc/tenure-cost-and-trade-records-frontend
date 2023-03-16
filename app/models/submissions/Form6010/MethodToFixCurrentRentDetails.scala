@@ -20,6 +20,6 @@ import play.api.libs.json.Json
 
 case class MethodToFixCurrentRentDetails(methodToFixCurrentRent: MethodToFixCurrentRents)
 
-object MethodToFixCurrentRentDetails{
+object MethodToFixCurrentRentDetails {
   implicit val format = Json.format[MethodToFixCurrentRentDetails]
 }

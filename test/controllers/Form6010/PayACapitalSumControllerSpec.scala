@@ -25,8 +25,8 @@ import utils.TestBaseSpec
 class PayACapitalSumControllerSpec extends TestBaseSpec {
 
   def payACapitalSumController(
-                                               aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
-                                             ) =
+    aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
+  ) =
     new PayACapitalSumController(
       stubMessagesControllerComponents(),
       paymentWhenLeaseIsGrantedView,

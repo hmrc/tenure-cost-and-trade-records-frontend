@@ -36,7 +36,8 @@ class CanRentBeReducedOnReviewController @Inject() (
   incentivesPaymentsConditionsView: incentivesPaymentsConditions,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FrontendController(mcc) with I18nSupport {
+) extends FrontendController(mcc)
+    with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Future.successful(
@@ -44,7 +45,7 @@ class CanRentBeReducedOnReviewController @Inject() (
         canRentBeReducedOnReviewView(
           request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.canRentBeReducedOnReviewDetails) match {
             case Some(data) => canRentBeReducedOnReviewForm.fillAndValidate(data)
-            case _ => canRentBeReducedOnReviewForm
+            case _          => canRentBeReducedOnReviewForm
           }
         )
       )

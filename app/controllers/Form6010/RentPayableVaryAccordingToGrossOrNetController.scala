@@ -42,15 +42,18 @@ class RentPayableVaryAccordingToGrossOrNetController @Inject() (
   rentPayableVaryOnQuantityOfBeersView: rentPayableVaryOnQuantityOfBeers,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FrontendController(mcc) with I18nSupport {
+) extends FrontendController(mcc)
+    with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Future.successful(
       Ok(
         rentPayableVaryAccordingToGrossOrNetView(
-          request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.rentPayableVaryAccordingToGrossOrNetDetails) match {
-            case Some(rentPayableVaryAccordingToGrossOrNetDetails) => rentPayableVaryAccordingToGrossOrNetForm.fillAndValidate(rentPayableVaryAccordingToGrossOrNetDetails)
-            case _ => rentPayableVaryAccordingToGrossOrNetForm
+          request.sessionData.aboutLeaseOrAgreementPartTwo
+            .flatMap(_.rentPayableVaryAccordingToGrossOrNetDetails) match {
+            case Some(rentPayableVaryAccordingToGrossOrNetDetails) =>
+              rentPayableVaryAccordingToGrossOrNetForm.fillAndValidate(rentPayableVaryAccordingToGrossOrNetDetails)
+            case _                                                 => rentPayableVaryAccordingToGrossOrNetForm
           }
         )
       )
@@ -65,17 +68,19 @@ class RentPayableVaryAccordingToGrossOrNetController @Inject() (
         data =>
           data.rentPayableVaryAccordingToGrossOrNets match {
             case AnswerYes =>
-              val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(rentPayableVaryAccordingToGrossOrNetDetails = Some(data)))
+              val updatedData =
+                updateAboutLeaseOrAgreementPartTwo(_.copy(rentPayableVaryAccordingToGrossOrNetDetails = Some(data)))
               session.saveOrUpdate(updatedData)
               Future.successful(
                 Ok(rentPayableVaryAccordingToGrossOrNetDetailsView(rentPayableVaryAccordingToGrossOrNetInformationForm))
               )
             case AnswerNo  =>
-                val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(rentPayableVaryAccordingToGrossOrNetDetails = Some(data)))
-                session.saveOrUpdate(updatedData)
-                Future.successful(Ok(rentPayableVaryOnQuantityOfBeersView(rentPayableVaryOnQuantityOfBeersForm)))
+              val updatedData =
+                updateAboutLeaseOrAgreementPartTwo(_.copy(rentPayableVaryAccordingToGrossOrNetDetails = Some(data)))
+              session.saveOrUpdate(updatedData)
+              Future.successful(Ok(rentPayableVaryOnQuantityOfBeersView(rentPayableVaryOnQuantityOfBeersForm)))
 
-            case _                                        => Future.successful(Ok(login(loginForm)))
+            case _ => Future.successful(Ok(login(loginForm)))
           }
       )
   }
