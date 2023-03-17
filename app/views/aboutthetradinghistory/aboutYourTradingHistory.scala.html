@@ -43,9 +43,9 @@
 
   <p class="govuk-body">@messages("aboutYourTradingHistory.subheader")</p>
 
-  @includes.dateFields(form = theForm, field = "firstOccupy", govukDate = govukDateInput, showDays = true)
+  @includes.dateFields(form = theForm, field = "firstOccupy", label = "label.firstOccupy", govukDate = govukDateInput)
 
-  @includes.dateFields(form = theForm, field = "financialYear", govukDate = govukDateInput, showDays = true)
+  @includes.dateFields(form = theForm, field = "financialYear", label = "label.financialYear", govukDate = govukDateInput)
 }
 
 @layout(

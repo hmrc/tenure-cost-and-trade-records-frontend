@@ -16,12 +16,12 @@
 
 package models.submissions.aboutthetradinghistory
 
+import models.submissions.Form6010.MonthsYearDuration
 import play.api.libs.json.Json
-import java.time.LocalDate
 
 case class AboutYourTradingHistory(
-  firstOccupy: LocalDate,
-  financialYear: LocalDate
+  firstOccupy: MonthsYearDuration,
+  financialYear: MonthsYearDuration
 )
 object AboutYourTradingHistory {
   implicit val format = Json.format[AboutYourTradingHistory]

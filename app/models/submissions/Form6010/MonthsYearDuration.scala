@@ -16,4 +16,11 @@
 
 package models.submissions.Form6010
 
+import play.api.libs.json.Json
+
 case class MonthsYearDuration(months: Int, years: Int)
+
+object MonthsYearDuration {
+  implicit val format = Json.format[MonthsYearDuration]
+
+}
