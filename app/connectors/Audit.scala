@@ -18,12 +18,15 @@ package connectors
 
 import com.google.inject.ImplementedBy
 import models.SubmissionDraft
+import play.api.i18n.Messages
+import play.api.libs.json.{JsObject, Json}
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.audit.AuditExtensions.auditHeaderCarrier
 import uk.gov.hmrc.play.audit.http.config.AuditingConfig
 import uk.gov.hmrc.play.audit.http.connector.{AuditChannel, AuditConnector, AuditResult, DatastreamMetrics}
-import uk.gov.hmrc.play.audit.model.DataEvent
+import uk.gov.hmrc.play.audit.model.{DataEvent, ExtendedDataEvent}
 
+import java.util.UUID
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -46,12 +49,31 @@ trait Audit extends AuditConnector {
     val de = DataEvent(auditSource = AUDIT_SOURCE, auditType = event, tags = tags, detail = detail)
     sendEvent(de)
   }
+
+  override def sendExplicitAudit(auditType: String, detail: JsObject)(implicit
+    hc: HeaderCarrier,
+    ec: ExecutionContext
+  ): Unit =
+    sendExtendedEvent(
+      ExtendedDataEvent(
+        auditSource = auditingConfig.auditSource,
+        auditType = auditType,
+        eventId = UUID.randomUUID().toString,
+        tags = hc.toAuditTags(),
+        detail = detail
+      )
+    )
 }
 
 object Audit {
   val referenceNumber = "referenceNumber"
   val address         = "address"
   val formOfReturn    = "for"
+  val language        = "language"
+
+  def languageJson(implicit messages: Messages): JsObject =
+    Json.obj(Audit.language -> messages.lang.language)
+
 }
 
 @Singleton

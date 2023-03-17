@@ -14,41 +14,44 @@
  * limitations under the License.
  */
 
-package controllers.Form6010
+package controllers.aboutYourLeaseOrTenure
 
+import controllers.Form6010.IncentivesPaymentsConditionsController
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import utils.TestBaseSpec
 
-class IntervalsOfRentReviewControllerSpec extends TestBaseSpec {
+class IncentivesPaymentsConditionsControllerSpec extends TestBaseSpec {
 
-  def intervalsOfRentReviewController(
+  def incentivesPaymentsConditionsController(
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
   ) =
-    new IntervalsOfRentReviewController(
+    new IncentivesPaymentsConditionsController(
       stubMessagesControllerComponents(),
-      canRentBeReducedOnReviewView,
-      intervalsOfRentReviewView,
+      aboutYourLeaseOrTenureNavigator,
+      incentivesPaymentsConditionsView,
       preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
       mockSessionRepo
     )
-  "GET /"    should {
+
+  "GET /" should {
     "return 200" in {
-      val result = intervalsOfRentReviewController().show(fakeRequest)
+      val result = incentivesPaymentsConditionsController().show(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return HTML" in {
-      val result = intervalsOfRentReviewController().show(fakeRequest)
+      val result = incentivesPaymentsConditionsController().show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
   }
+
   "SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
-      val res = intervalsOfRentReviewController().submit(
+      val res = incentivesPaymentsConditionsController().submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)
       )
       status(res) shouldBe BAD_REQUEST

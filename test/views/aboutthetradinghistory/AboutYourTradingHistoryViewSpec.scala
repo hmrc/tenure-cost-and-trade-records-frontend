@@ -46,7 +46,7 @@ class AboutYourTradingHistoryViewSpec extends QuestionViewBehaviours[AboutYourTr
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText mustBe messages("back.link.label")
       val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.abouttheproperty.routes.TiedForGoodsController.show.url
+      backlinkUrl mustBe controllers.routes.TaskListController.show.url
     }
 
     "contain an subhead for page" in {
@@ -75,7 +75,7 @@ class AboutYourTradingHistoryViewSpec extends QuestionViewBehaviours[AboutYourTr
     "contain date format hint for financialYear-hint" in {
       val doc               = asDocument(createViewUsingForm(form))
       val financialYearHint = doc.getElementById("financialYear-hint").text()
-      assert(financialYearHint == messages("help.date.month.year"))
+      assert(financialYearHint == messages("help.date.day.month"))
     }
 
     "contain date field for the value financialYear.month" in {
@@ -86,8 +86,8 @@ class AboutYourTradingHistoryViewSpec extends QuestionViewBehaviours[AboutYourTr
 
     "contain date field for the value financialYear.year" in {
       val doc = asDocument(createViewUsingForm(form))
-      assertContainsLabel(doc, "financialYear.year", "Year")
-      assertContainsText(doc, "financialYear.year")
+      assertContainsLabel(doc, "financialYear.day", "Day")
+      assertContainsText(doc, "financialYear.day")
     }
 
     "contain save and continue button with the value Save and Continue" in {

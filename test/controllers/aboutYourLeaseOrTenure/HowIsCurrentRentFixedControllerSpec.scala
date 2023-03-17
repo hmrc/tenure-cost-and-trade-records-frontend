@@ -14,8 +14,9 @@
  * limitations under the License.
  */
 
-package controllers.Form6010
+package controllers.aboutYourLeaseOrTenure
 
+import controllers.Form6010.HowIsCurrentRentFixedController
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
 import play.api.http.Status
 import play.api.test.FakeRequest
@@ -29,11 +30,12 @@ class HowIsCurrentRentFixedControllerSpec extends TestBaseSpec {
   ) =
     new HowIsCurrentRentFixedController(
       stubMessagesControllerComponents(),
-      methodToFixCurrentRentView,
+      aboutYourLeaseOrTenureNavigator,
       howIsCurrentRentFixedView,
       preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
       mockSessionRepo
     )
+
   "GET /" should {
     "return 200" in {
       val result = howIsCurrentRentFixedController().show(fakeRequest)

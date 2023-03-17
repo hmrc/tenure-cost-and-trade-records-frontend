@@ -14,16 +14,13 @@
  * limitations under the License.
  */
 
-package models.submissions.aboutthetradinghistory
+package utils
 
-import models.submissions.Form6010.{DayMonthsDuration, MonthsYearDuration}
-import play.api.libs.json.Json
+import navigation.AboutYourLeaseOrTenureNavigator
+import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 
-case class AboutYourTradingHistory(
-  firstOccupy: MonthsYearDuration,
-  financialYear: DayMonthsDuration
-)
-object AboutYourTradingHistory {
-  implicit val format = Json.format[AboutYourTradingHistory]
+trait FakeNavigation { this: GuiceOneAppPerSuite =>
+
+  lazy val aboutYourLeaseOrTenureNavigator = app.injector.instanceOf[AboutYourLeaseOrTenureNavigator]
 
 }

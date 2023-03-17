@@ -19,10 +19,11 @@ package controllers.Form6010
 import actions.WithSessionRefiner
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.form.{intervalsOfRentReview, methodToFixCurrentRent}
+import views.html.form.methodToFixCurrentRent
 import form.Form6010.MethodToFixCurrentRentForm.methodToFixCurrentRentForm
-import form.Form6010.IntervalsOfRentReviewForm.intervalsOfRentReviewForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo.updateAboutLeaseOrAgreementPartTwo
+import navigation.AboutYourLeaseOrTenureNavigator
+import navigation.identifiers.MethodToFixCurrentRentsId
 import play.api.i18n.I18nSupport
 import repositories.SessionRepo
 
@@ -32,7 +33,7 @@ import scala.concurrent.Future
 @Singleton
 class MethodToFixCurrentRentController @Inject() (
   mcc: MessagesControllerComponents,
-  intervalsOfRentReviewView: intervalsOfRentReview,
+  navigator: AboutYourLeaseOrTenureNavigator,
   methodToFixCurrentRentView: methodToFixCurrentRent,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
@@ -60,7 +61,7 @@ class MethodToFixCurrentRentController @Inject() (
         data => {
           val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(methodToFixCurrentRentDetails = Some(data)))
           session.saveOrUpdate(updatedData)
-          Future.successful(Ok(intervalsOfRentReviewView(intervalsOfRentReviewForm)))
+          Future.successful(Redirect(navigator.nextPage(MethodToFixCurrentRentsId).apply(updatedData)))
         }
       )
   }

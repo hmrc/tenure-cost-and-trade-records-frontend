@@ -50,18 +50,6 @@ class CurrentLeaseOrAgreementBeginViewSpec extends QuestionViewBehaviours[Curren
       assertContainsText(doc, messages("label.currentLeaseOrAgreementBegin"))
     }
 
-    "contain date format hint for leaseBegin-hint" in {
-      val doc             = asDocument(createViewUsingForm(form))
-      val firstOccupyHint = doc.getElementById("leaseBegin-hint").text()
-      assert(firstOccupyHint == messages("help.date.day.month.year"))
-    }
-
-    "contain date field for the value leaseBegin.day" in {
-      val doc = asDocument(createViewUsingForm(form))
-      assertContainsLabel(doc, "leaseBegin.day", "Day")
-      assertContainsText(doc, "leaseBegin.day")
-    }
-
     "contain date field for the value leaseBegin.month" in {
       val doc = asDocument(createViewUsingForm(form))
       assertContainsLabel(doc, "leaseBegin.month", "Month")

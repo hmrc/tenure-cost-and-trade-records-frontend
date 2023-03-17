@@ -18,7 +18,6 @@ package controllers.aboutYourLeaseOrTenure
 
 import controllers.Form6010.RentIncreaseAnnuallyWithRPIController
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
-import navigation.AboutYourLeaseOrTenureNavigator
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
@@ -26,18 +25,17 @@ import utils.TestBaseSpec
 
 class RentIncreaseAnnuallyWithRPIControllerSpec extends TestBaseSpec {
 
-  val mockAboutYourLeaseOrTenureNavigator = mock[AboutYourLeaseOrTenureNavigator]
-
   def rentIncreaseAnnuallyWithRPIController(
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
   ) =
     new RentIncreaseAnnuallyWithRPIController(
       stubMessagesControllerComponents(),
-      mockAboutYourLeaseOrTenureNavigator,
+      aboutYourLeaseOrTenureNavigator,
       rentIncreaseAnnuallyWithRPIView,
       preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
       mockSessionRepo
     )
+
   "GET /" should {
     "return 200" in {
       val result = rentIncreaseAnnuallyWithRPIController().show(fakeRequest)

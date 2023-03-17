@@ -1,4 +1,4 @@
-/*
+@*
  * Copyright 2023 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,18 +12,23 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */
+ *@
 
-package models.submissions.aboutthetradinghistory
+@this(layout: Layout)
 
-import models.submissions.Form6010.{DayMonthsDuration, MonthsYearDuration}
-import play.api.libs.json.Json
+@(referenceNumber: String)(implicit request: Request[_], messages: Messages)
 
-case class AboutYourTradingHistory(
-  firstOccupy: MonthsYearDuration,
-  financialYear: DayMonthsDuration
-)
-object AboutYourTradingHistory {
-  implicit val format = Json.format[AboutYourTradingHistory]
+@layout(
+    pageHeading = messages("label.confirm.heading"),
+    showH1 = false,
+) {
 
+    <div class="govuk-panel govuk-panel--confirmation no-print">
+        <h1 class="govuk-panel__title">@messages("label.confirm.heading", referenceNumber)</h1>
+    </div>
+
+    <p class="govuk-body">
+        <a href="@routes.LoginController.show">@messages("label.submitAnotherForm")</a>
+    </p>
 }
+

@@ -17,18 +17,15 @@
 package controllers.Form6010
 
 import actions.WithSessionRefiner
-import controllers.LoginController.loginForm
-import form.Form6010.TenantsAdditionsDisregardedDetailsForm.tenantsAdditionsDisregardedDetailsForm
 import form.Form6010.TenantsAdditionsDisregardedForm.tenantsAdditionsDisregardedForm
-import form.Form6010.LegalOrPlanningRestrictionsForm.legalPlanningRestrictionsForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo.updateAboutLeaseOrAgreementPartTwo
-import models.submissions.common.{AnswerNo, AnswerYes}
+import navigation.AboutYourLeaseOrTenureNavigator
+import navigation.identifiers.TenantsAdditionsDisregardedId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.form.{legalOrPlanningRestrictions, tenantsAdditionsDisregarded, tenantsAdditionsDisregardedDetails}
-import views.html.login
+import views.html.form.tenantsAdditionsDisregarded
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
@@ -36,10 +33,8 @@ import scala.concurrent.Future
 @Singleton
 class TenantsAdditionsDisregardedController @Inject() (
   mcc: MessagesControllerComponents,
-  tenantsAdditionsDisregardedDetailsView: tenantsAdditionsDisregardedDetails,
+  navigator: AboutYourLeaseOrTenureNavigator,
   tenantsAdditionsDisregardedView: tenantsAdditionsDisregarded,
-  legalOrPlanningRestrictionsView: legalOrPlanningRestrictions,
-  login: login,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
 ) extends FrontendController(mcc)
@@ -61,23 +56,11 @@ class TenantsAdditionsDisregardedController @Inject() (
       .bindFromRequest()
       .fold(
         formWithErrors => Future.successful(BadRequest(tenantsAdditionsDisregardedView(formWithErrors))),
-        data =>
-          data.tenantAdditionalDisregarded match {
-            case AnswerYes =>
-              val updatedData =
-                updateAboutLeaseOrAgreementPartTwo(_.copy(tenantAdditionsDisregardedDetails = Some(data)))
-              session.saveOrUpdate(updatedData)
-              Future.successful(
-                Ok(tenantsAdditionsDisregardedDetailsView(tenantsAdditionsDisregardedDetailsForm))
-              )
-            case AnswerNo  =>
-              val updatedData =
-                updateAboutLeaseOrAgreementPartTwo(_.copy(tenantAdditionsDisregardedDetails = Some(data)))
-              session.saveOrUpdate(updatedData)
-              Future.successful(Ok(legalOrPlanningRestrictionsView(legalPlanningRestrictionsForm)))
-            case _         => Future.successful(Ok(login(loginForm)))
-
-          }
+        data => {
+          val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(tenantAdditionsDisregardedDetails = Some(data)))
+          session.saveOrUpdate(updatedData)
+          Future.successful(Redirect(navigator.nextPage(TenantsAdditionsDisregardedId).apply(updatedData)))
+        }
       )
   }
 }

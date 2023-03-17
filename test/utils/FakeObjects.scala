@@ -16,7 +16,7 @@
 
 package utils
 
-import models.submissions.Form6010.{MonthsYearDuration, RentIncludeFixturesAndFittingsDetails, RentOpenMarketValueDetails}
+import models.submissions.Form6010._
 import models.submissions.aboutfranchisesorlettings._
 import models.submissions.abouttheproperty.PremisesLicenseGrantedNo
 import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartOne, _}
@@ -30,7 +30,6 @@ import models.{AnnualRent, Session, SubmissionDraft, UserLoginDetails}
 import models.submissions.common.{Address, AnswerNo, AnswerYes, ContactDetails}
 import models.submissions.connectiontoproperty.{AddressConnectionTypeYes, StillConnectedDetails}
 import models.submissions.notconnected.{RemoveConnectionDetails, RemoveConnectionsDetails}
-import form.DateMappings._
 
 import java.time.LocalDate
 
@@ -53,7 +52,7 @@ trait FakeObjects {
   val prefilledLandlordAddress                  =
     LandlordAddress("004", Some("GORING ROAD"), Some("GORING-BY-SEA, WORTHING"), Some("West sussex"), "BN12 4AX")
   val prefilledFirstOccupy                      = MonthsYearDuration(2000, 2)
-  val prefilledFinancialYear                    = MonthsYearDuration(2001, 2)
+  val prefilledFinancialYear                    = DayMonthsDuration(2, 12)
   val prefilledDateInput                        = LocalDate.of(2022, 6, 1)
   val prefilledBigDecimal                       = BigDecimal(9999999)
   val prefilledAnnualRent                       = AnnualRent(prefilledBigDecimal)
@@ -219,5 +218,15 @@ trait FakeObjects {
     rentIncludeTradeServicesDetails = Some(RentIncludeTradeServicesDetails(AnswerNo)),
     rentIncludeFixturesAndFittingsDetails = Some(RentIncludeFixturesAndFittingsDetails(AnswerNo)),
     rentOpenMarketValueDetails = Some(RentOpenMarketValueDetails(AnswerNo))
+  )
+
+  val prefilledAboutLeaseOrAgreementPartTwo = AboutLeaseOrAgreementPartTwo(
+    rentPayableVaryAccordingToGrossOrNetDetails = Some(RentPayableVaryAccordingToGrossOrNetDetails(AnswerYes)),
+    tenantAdditionsDisregardedDetails = Some(TenantAdditionsDisregardedDetails(AnswerYes))
+  )
+
+  val prefilledAboutLeaseOrAgreementPartTwoNo = AboutLeaseOrAgreementPartTwo(
+    rentPayableVaryAccordingToGrossOrNetDetails = Some(RentPayableVaryAccordingToGrossOrNetDetails(AnswerNo)),
+    tenantAdditionsDisregardedDetails = Some(TenantAdditionsDisregardedDetails(AnswerNo))
   )
 }
