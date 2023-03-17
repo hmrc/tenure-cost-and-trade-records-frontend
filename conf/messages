@@ -678,6 +678,20 @@ premisesLicenseGrantedInformation.listBlock.p1 = No drinks allowed on the terrac
 premisesLicenseGrantedInformation.listBlock.p2 = Only 200 people allowed in the function room at any time
 premisesLicenseGrantedInformation.listBlock.p3 = No entry or re-entry allowed after 11.30pm on Fridays or Saturdays
 
+# SAVE AS DRAFT
+###############################
+saveAsDraft.paragraph=We’ll delete unsubmitted information on
+saveAsDraft.info=Make a note of this password because you’ll need it to retrieve your saved information
+saveAsDraft.info.p.2=You’ll still need your reference number and the postcode shown on the letter to view and change your information.
+saveAsDraft.preHeader=Your information has been saved but not submitted.
+saveAsDraft.preHeaderTimeout=You have been logged out, but your information has been saved.
+saveAsDraft.password=Password
+saveAsDraft.confirmPassword=Confirm password
+saveAsDraft.validPassword=Password must be at least 7 characters.
+saveAsDraft.error.passwordsDontMatch=Passwords do not match
+saveAsDraft.createPassword.header=Create a password to retrieve your saved information
+saveAsDraft.next=Save password
+
 # Errors
 ########
 error.required = Please provide a value

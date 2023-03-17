@@ -678,6 +678,21 @@ premisesLicenseGrantedInformation.listBlock.p1 = No drinks allowed on the terrac
 premisesLicenseGrantedInformation.listBlock.p2 = Only 200 people allowed in the function room at any time
 premisesLicenseGrantedInformation.listBlock.p3 = No entry or re-entry allowed after 11.30pm on Fridays or Saturdays
 
+# SAVE AS DRAFT
+###############################
+saveAsDraft.paragraph=Byddwn yn dileu unrhyw wybodaeth sydd heb ei chyflwyno ar
+saveAsDraft.info=Gwnewch nodyn o’r cyfrinair hwn gan y bydd ei angen arnoch i adfer eich gwybodaeth sydd wedi’i chadw
+saveAsDraft.info.p.2=Bydd angen eich rhif cyfeirnod a’r cod post a ddangosir ar y llythyr o hyd i weld a newid eich gwybodaeth.
+saveAsDraft.preHeader=Mae eich gwybodaeth wedi cael ei chadw ond heb ei chyflwyno.
+saveAsDraft.preHeaderTimeout=At ddibenion diogelwch, rydych chi wedi cael eich allgofnodi, ond mae eich gwybodaeth wedi’i chadw.
+saveAsDraft.password=Cyfrinair
+saveAsDraft.confirmPassword=Cadarnhau’r cyfrinair
+saveAsDraft.validPassword=Rhaid i’r cyfrinair fod o leiaf 7 nod yn hir.
+saveAsDraft.error.passwordsDontMatch=Nid yw’r cyfrineiriau yn cyfateb.
+saveAsDraft.createPassword.header=Creu cyfrinair i adfer eich gwybodaeth
+saveAsDraft.next=Cadw cyfrinair
+
+
 # Errors
 ########
 error.required = Please provide a value
