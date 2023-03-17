@@ -16,41 +16,73 @@
 
 package controllers
 
+import actions.WithSessionRefiner
+import connectors.{Audit, BackendConnector}
 import form.CustomUserPasswordForm.customUserPasswordForm
-import play.api.i18n.Messages
-import play.api.mvc.MessagesControllerComponents
+import models.{Session, SubmissionDraft}
+import play.api.i18n.{I18nSupport, Messages}
+import play.api.mvc.{MessagesControllerComponents, Result}
+import repositories.SessionRepo
+import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import util.DateUtil
 import views.html.customPasswordSaveAsDraft
 
 import java.time.LocalDate
-import javax.inject.{Inject, Singleton}
+import javax.inject.{Inject, Named, Singleton}
+import scala.concurrent.{ExecutionContext, Future}
 
 /**
   * @author Yuriy Tumakha
   */
 @Singleton
 class SaveAsDraftController @Inject() (
-  cc: MessagesControllerComponents,
+  backendConnector: BackendConnector,
   customPasswordSaveAsDraftView: customPasswordSaveAsDraft,
-  dateUtil: DateUtil
-) extends FrontendController(cc) {
+  dateUtil: DateUtil,
+  withSessionRefiner: WithSessionRefiner,
+  @Named("session") sessionRepo: SessionRepo,
+  audit: Audit,
+  cc: MessagesControllerComponents
+)(implicit ec: ExecutionContext)
+    extends FrontendController(cc)
+    with I18nSupport {
 
   private val saveForDays = 90
 
-  def customPassword(exitPath: String) = Action { implicit request =>
-    Ok(customPasswordSaveAsDraftView(customUserPasswordForm, expiryDate, exitPath))
+  def customPassword(exitPath: String) = (Action andThen withSessionRefiner).async { implicit request =>
+    val session = request.sessionData
+    if (session.saveAsDraftPassword.isDefined) {
+      saveSubmissionDraft(session, exitPath)
+    } else {
+      Ok(customPasswordSaveAsDraftView(customUserPasswordForm, expiryDate, exitPath))
+    }
   }
 
-  def saveAsDraft(exitPath: String) = Action { implicit request =>
+  def saveAsDraft(exitPath: String) = (Action andThen withSessionRefiner).async { implicit request =>
     customUserPasswordForm
       .bindFromRequest()
       .fold(
         formWithErrors => Ok(customPasswordSaveAsDraftView(formWithErrors, expiryDate, exitPath)),
-        validData => NotImplemented
+        validData => {
+          val session = request.sessionData.copy(saveAsDraftPassword = validData.password)
+          sessionRepo.saveOrUpdate(session)
+          saveSubmissionDraft(session, exitPath)
+        }
       )
   }
 
-  private def expiryDate(implicit messages: Messages) = dateUtil formatDate LocalDate.now.plusDays(saveForDays)
+  private def expiryDate(implicit messages: Messages): String = dateUtil formatDate LocalDate.now.plusDays(saveForDays)
+
+  private def saveSubmissionDraft(session: Session, exitPath: String)(implicit hc: HeaderCarrier): Future[Result] = {
+    val forType         = session.userLoginDetails.forNumber
+    val referenceNumber = session.userLoginDetails.referenceNumber
+    val submissionDraft = SubmissionDraft(forType, session, exitPath)
+
+    backendConnector.saveAsDraft(referenceNumber, submissionDraft).map { _ =>
+      audit.sendSavedAsDraft(submissionDraft)
+      Ok(s"Draft saved. Password: ${session.saveAsDraftPassword.getOrElse("")}")
+    }
+  }
 
 }

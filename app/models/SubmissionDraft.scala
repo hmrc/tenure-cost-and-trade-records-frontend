@@ -24,7 +24,7 @@ import play.api.libs.json.{Json, OFormat}
 case class SubmissionDraft(
   forType: String,
   session: Session,
-  password: String
+  exitPath: String
 )
 
 object SubmissionDraft {

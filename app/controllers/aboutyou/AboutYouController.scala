@@ -61,7 +61,12 @@ class AboutYouController @Inject() (
         data => {
           val updatedData = updateAboutYou(_.copy(customerDetails = Some(data)))
           session.saveOrUpdate(updatedData)
-          Future.successful(Redirect(navigator.nextPage(AboutYouPageId).apply(updatedData)))
+
+          if (request.body.asFormUrlEncoded.flatMap(_.get("save_button")).isDefined) {
+            Future.successful(Redirect(controllers.routes.SaveAsDraftController.customPassword(request.path)))
+          } else {
+            Future.successful(Redirect(navigator.nextPage(AboutYouPageId).apply(updatedData)))
+          }
         }
       )
   }

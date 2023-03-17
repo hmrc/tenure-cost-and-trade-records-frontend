@@ -109,8 +109,8 @@ trait FakeObjects {
     UserLoginDetails("Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=", "FOR6010", "99996010004", prefilledAddress)
   val prefilledUserLoginDetails6015           =
     UserLoginDetails("Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=", "FOR6015", "99996015001", prefilledAddress)
-  val prefilledBaseSession                    = Session(prefilledUserLoginDetails)
-  val submissionDraft                         = SubmissionDraft("FOR6010", prefilledBaseSession, "password")
+  val prefilledBaseSession                    = Session(prefilledUserLoginDetails, saveAsDraftPassword = Some("pass"))
+  val submissionDraft                         = SubmissionDraft("FOR6010", prefilledBaseSession, "/send-trade-and-cost-information/about-you")
   val prefilledRemoveConnection               =
     RemoveConnectionDetails(
       Some(
