@@ -29,6 +29,7 @@ object DateUtil {
 
   private val dayMonthYearExampleFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("d M yyyy", Locale.UK)
   private val monthYearExampleFormatter: DateTimeFormatter    = DateTimeFormatter.ofPattern("M yyyy", Locale.UK)
+  private val dayMonthExampleFormatter: DateTimeFormatter     = DateTimeFormatter.ofPattern("d M", Locale.UK)
 
   def nowInUK: ZonedDateTime = ZonedDateTime.now(ukTimezone)
 
@@ -37,5 +38,8 @@ object DateUtil {
 
   def exampleMonthYear(minusYears: Int): String =
     nowInUK.minusYears(minusYears).format(monthYearExampleFormatter)
+
+  def exampleDayMonth(minusYears: Int): String =
+    nowInUK.minusYears(minusYears).format(dayMonthExampleFormatter)
 
 }

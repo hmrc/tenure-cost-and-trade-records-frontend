@@ -76,6 +76,7 @@ object Errors {
   val invalidDateMonth      = "error.month.required"
   val invalidDateYear       = "error.year.required"
   val dateMustBeInPast      = "error.date_must_be_in_past"
+  val invalidDurationDays   = "error.duration.days"
   val invalidDurationMonths = "error.duration.months"
   val invalidDurationYears  = "error.duration.years"
 }

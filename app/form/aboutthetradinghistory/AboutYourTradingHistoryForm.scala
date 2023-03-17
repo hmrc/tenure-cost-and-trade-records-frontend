@@ -16,7 +16,7 @@
 
 package form.aboutthetradinghistory
 
-import form.DateMappings.monthsYearDurationMapping
+import form.DateMappings.{dayMonthsDurationMapping, monthsYearDurationMapping}
 import models.submissions.aboutthetradinghistory.AboutYourTradingHistory
 import play.api.data.Form
 import play.api.data.Forms.mapping
@@ -26,7 +26,7 @@ object AboutYourTradingHistoryForm {
   val aboutYourTradingHistoryForm = Form(
     mapping(
       "firstOccupy"   -> monthsYearDurationMapping("firstOccupy", ".firstOccupy"),
-      "financialYear" -> monthsYearDurationMapping("financialYear", ".financialYear")
+      "financialYear" -> dayMonthsDurationMapping("financialYear", ".financialYear")
     )(AboutYourTradingHistory.apply)(AboutYourTradingHistory.unapply)
   )
 }

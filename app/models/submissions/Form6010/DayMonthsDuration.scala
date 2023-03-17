@@ -14,16 +14,13 @@
  * limitations under the License.
  */
 
-package models.submissions.aboutthetradinghistory
+package models.submissions.Form6010
 
-import models.submissions.Form6010.{DayMonthsDuration, MonthsYearDuration}
 import play.api.libs.json.Json
 
-case class AboutYourTradingHistory(
-  firstOccupy: MonthsYearDuration,
-  financialYear: DayMonthsDuration
-)
-object AboutYourTradingHistory {
-  implicit val format = Json.format[AboutYourTradingHistory]
+case class DayMonthsDuration(days: Int, months: Int)
+
+object DayMonthsDuration {
+  implicit val format = Json.format[DayMonthsDuration]
 
 }
