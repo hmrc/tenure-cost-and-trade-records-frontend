@@ -18,7 +18,7 @@ package form
 
 import form.Form6010.ConditionalMapping._
 import models.RoughDate
-import models.submissions.Form6010.MonthsYearDuration
+import models.submissions.Form6010.{DayMonthsDuration, MonthsYearDuration}
 import play.api.data.Forms._
 import play.api.data.Mapping
 import play.api.data.validation.{Constraint, Invalid, Valid}
@@ -156,6 +156,30 @@ object DateMappings {
       MonthsYearDuration(months.trim.toInt, years.trim.toInt)
     },
     (my: MonthsYearDuration) => (my.months.toString, my.years.toString)
+  )
+
+  def dayMonthsDurationMapping(prefix: String, fieldErrorPart: String = ""): Mapping[DayMonthsDuration] = tuple(
+    "day"   -> nonEmptyTextOr(
+      prefix + ".day",
+      text.verifying(
+        Errors.invalidDurationDays,
+        x => x.trim.forall(Character.isDigit) && x.trim.toInt >= 0 && x.trim.toInt <= 31
+      ),
+      s"error$fieldErrorPart.day.required"
+    ),
+    "month" -> nonEmptyTextOr(
+      prefix + ".month",
+      text.verifying(
+        Errors.invalidDurationMonths,
+        x => x.trim.forall(Character.isDigit) && x.trim.toInt >= 0 && x.trim.toInt <= 12
+      ),
+      s"error$fieldErrorPart.month.required"
+    )
+  ).transform(
+    { case (days, months) =>
+      DayMonthsDuration(days.trim.toInt, months.trim.toInt)
+    },
+    (my: DayMonthsDuration) => (my.days.toString, my.months.toString)
   )
 
 }

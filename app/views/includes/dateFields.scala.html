@@ -28,6 +28,7 @@
     labelSuffix: Option[String] = None,
     label: Option[String] = None,
     showDays : Boolean = false,
+        hideYear: Boolean= false,
     showFieldSet: Boolean = true,
     hiddenBy: Option[HiddenBy] = None)(implicit request: Request[_], messages: Messages)
 
@@ -77,7 +78,9 @@
 
         if(showDays){
             Seq(day, month, year)
-        }else{
+        }else if (hideYear) {
+            Seq(day,month)
+        } else {
             Seq(month, year)
         }
     }
@@ -91,6 +94,7 @@
             hint = Hint(
                 content = HtmlContent(helpText.getOrElse(
                     if(showDays) messages("help.date.day.month.year", DateUtil.exampleDayMonthYear(1))
+                    else if (hideYear) messages("help.date.day.month", DateUtil.exampleDayMonth(1))
                     else messages("help.date.month.year", DateUtil.exampleMonthYear(1))
                 ))
             ),
@@ -112,6 +116,7 @@
               hint = Hint(
                   content = HtmlContent(helpText.getOrElse(
                       if(showDays) messages("help.date.day.month.year", DateUtil.exampleDayMonthYear(1))
+                      else if (hideYear) messages("help.date.day.month", DateUtil.exampleDayMonth(1))
                       else messages("help.date.month.year", DateUtil.exampleMonthYear(1))
                   ))
               ),
