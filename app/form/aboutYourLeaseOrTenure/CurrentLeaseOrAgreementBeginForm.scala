@@ -16,7 +16,7 @@
 
 package form.aboutYourLeaseOrTenure
 
-import form.DateMappings.dateFieldsMapping
+import form.DateMappings.monthsYearDurationMapping
 import form.MappingSupport.intMapping
 import models.submissions.aboutYourLeaseOrTenure.CurrentLeaseOrAgreementBegin
 import play.api.data.Form
@@ -26,7 +26,7 @@ object CurrentLeaseOrAgreementBeginForm {
 
   val currentLeaseOrAgreementBeginForm = Form(
     mapping(
-      "leaseBegin" -> dateFieldsMapping("leaseBegin"),
+      "leaseBegin" -> monthsYearDurationMapping("leaseBegin", ".leaseBegin"),
       "grantedFor" -> intMapping()
     )(CurrentLeaseOrAgreementBegin.apply)(CurrentLeaseOrAgreementBegin.unapply)
   )

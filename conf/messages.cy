@@ -501,6 +501,8 @@ label.currentLeaseOrAgreementBegin = If the current lease was originally assigne
 label.grantedFor = How long was it granted for?
 suffix.grantedFor = months
 error.empty.required = Please enter how long it was granted for
+error.leaseBegin.month.required = The date the lease began must include a month
+error.leaseBegin.year.required = The date the lease began must include a year
 
 ##INTERVALS OF RENT REVIEW
 ##########################
