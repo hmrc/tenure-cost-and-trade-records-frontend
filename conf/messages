@@ -6,6 +6,7 @@ gov.name = GOV.UK
 phase.beta = BETA
 phase.text = This is a new service – your <a href="{0}" class="govuk-link" target="_blank" id="betaFeedback">feedback</a> will help us to improve it.
 button.label.continue = Save and continue
+button.label.send = Accept and send
 back.link.label = Back
 button.label.save = Save as draft
 label.checkTheForm = There is a problem
@@ -547,9 +548,13 @@ userType.owner = Owner’s agent
 label.userType = What is your relationship to the property?
 hint.aboutYou = If you’re renting or leasing the property, even as a charity or non-profit organisation, you’re considered the occupier. If you are both the owner and the occupier, select ’Owner or trustee for owner’.
 
-#TASK LIST
-##############################
+# TASK LIST
+###########
 taskList.heading = Declaration summary
+taskList.subHeading = You can save your declaration and come back later. You have 30 days from the first time you save to complete this declaration or your information will be deleted.
+declaration.heading = Now send your declaration
+declaration.information = By submitting this declaration you are confirming that, to the best of your knowledge, the details you are providing are correct.
+hint.declaration = You can be taken to court if you submit false information
 
 #COST OF SALES OR GROSS PROFIT
 #########
@@ -644,6 +649,11 @@ checkYourAnswersAboutTheProperty.heading = This is a holding page for the about 
 checkYourAnswersAboutTheTradingHistory.heading = This is a holding page for the about your trading history check your answers page
 checkYourAnswersAboutYou.heading = This is a holding page for the about you check your answers page
 checkYourAnswersAdditionalInformation.heading = This is a holding page for the additional information check your answers page
+
+# Confirmation Page
+###################
+label.confirm.heading = Declaration sent successfully for {0} (Audit only)
+label.submitAnotherForm = Submit another form
 
 # Help section
 ##############

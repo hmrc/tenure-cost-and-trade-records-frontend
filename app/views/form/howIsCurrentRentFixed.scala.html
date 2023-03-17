@@ -29,14 +29,14 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[HowIsCurrentRentFixed])(implicit request: Request[_], messages: Messages)
+@(theForm: Form[HowIsCurrentRentFixed], backLink: String)(implicit request: Request[_], messages: Messages)
 
 @layout(
  pageHeading = messages("howIsCurrentRentFixed.heading"),
  showH1 = false,
  showSection = true,
  sectionName = messages("label.section.aboutYourLeaseOrTenure"),
- backLinkUrl = controllers.Form6010.routes.RentPayableVaryAccordingToGrossOrNetController.show.url,
+ backLinkUrl = backLink,
  theForm = theForm
 ) {
 

@@ -16,7 +16,7 @@
 
 package utils
 
-import models.submissions.Form6010.{DayMonthsDuration, MonthsYearDuration, RentIncludeFixturesAndFittingsDetails, RentOpenMarketValueDetails}
+import models.submissions.Form6010._
 import models.submissions.aboutfranchisesorlettings._
 import models.submissions.abouttheproperty.PremisesLicenseGrantedNo
 import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartOne, _}
@@ -30,7 +30,6 @@ import models.{AnnualRent, Session, SubmissionDraft, UserLoginDetails}
 import models.submissions.common.{Address, AnswerNo, AnswerYes, ContactDetails}
 import models.submissions.connectiontoproperty.{AddressConnectionTypeYes, StillConnectedDetails}
 import models.submissions.notconnected.{RemoveConnectionDetails, RemoveConnectionsDetails}
-import form.DateMappings._
 
 import java.time.LocalDate
 
@@ -219,5 +218,15 @@ trait FakeObjects {
     rentIncludeTradeServicesDetails = Some(RentIncludeTradeServicesDetails(AnswerNo)),
     rentIncludeFixturesAndFittingsDetails = Some(RentIncludeFixturesAndFittingsDetails(AnswerNo)),
     rentOpenMarketValueDetails = Some(RentOpenMarketValueDetails(AnswerNo))
+  )
+
+  val prefilledAboutLeaseOrAgreementPartTwo = AboutLeaseOrAgreementPartTwo(
+    rentPayableVaryAccordingToGrossOrNetDetails = Some(RentPayableVaryAccordingToGrossOrNetDetails(AnswerYes)),
+    tenantAdditionsDisregardedDetails = Some(TenantAdditionsDisregardedDetails(AnswerYes))
+  )
+
+  val prefilledAboutLeaseOrAgreementPartTwoNo = AboutLeaseOrAgreementPartTwo(
+    rentPayableVaryAccordingToGrossOrNetDetails = Some(RentPayableVaryAccordingToGrossOrNetDetails(AnswerNo)),
+    tenantAdditionsDisregardedDetails = Some(TenantAdditionsDisregardedDetails(AnswerNo))
   )
 }

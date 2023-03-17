@@ -33,10 +33,16 @@ class AboutYourLeaseOrTenure6010NavigatorSpec extends TestBaseSpec {
 
   val navigator = new AboutYourLeaseOrTenureNavigator(audit)
 
-  val session6010   =
-    Session(prefilledUserLoginDetails, aboutLeaseOrAgreementPartOne = Some(prefilledAboutLeaseOrAgreementPartOne))
-  val session6010No =
-    Session(prefilledUserLoginDetails, aboutLeaseOrAgreementPartOne = Some(prefilledAboutLeaseOrAgreementPartOneNo))
+  val session6010   = Session(
+    prefilledUserLoginDetails,
+    aboutLeaseOrAgreementPartOne = Some(prefilledAboutLeaseOrAgreementPartOne),
+    aboutLeaseOrAgreementPartTwo = Some(prefilledAboutLeaseOrAgreementPartTwo)
+  )
+  val session6010No = Session(
+    prefilledUserLoginDetails,
+    aboutLeaseOrAgreementPartOne = Some(prefilledAboutLeaseOrAgreementPartOneNo),
+    aboutLeaseOrAgreementPartTwo = Some(prefilledAboutLeaseOrAgreementPartTwoNo)
+  )
 
   implicit override val hc: HeaderCarrier = HeaderCarrier()
 
@@ -170,10 +176,80 @@ class AboutYourLeaseOrTenure6010NavigatorSpec extends TestBaseSpec {
         .show()
     }
 
-    "return a function that goes rent by gross or net turnover when increase by RPI has been completed" in {
+    "return a function that goes to rent by gross or net turnover when increase by RPI has been completed" in {
       navigator
         .nextPage(RentIncreaseByRPIPageId)
         .apply(session6010) mustBe controllers.Form6010.routes.RentPayableVaryAccordingToGrossOrNetController
+        .show()
+    }
+
+    "return a function that goes to gross or net turnover details page when rent by gross or net turnover with yes has been completed" in {
+      navigator
+        .nextPage(RentPayableVaryAccordingToGrossOrNetId)
+        .apply(session6010) mustBe controllers.Form6010.routes.RentPayableVaryAccordingToGrossOrNetDetailsController
+        .show()
+    }
+
+    "return a function that goes to how is current rent fixed page when rent by gross or net turnover with no has been completed" in {
+      navigator
+        .nextPage(RentPayableVaryAccordingToGrossOrNetId)
+        .apply(session6010No) mustBe controllers.Form6010.routes.HowIsCurrentRentFixedController
+        .show()
+    }
+
+    "return a function that goes to how is current rent fixed on page when rent by gross or net turnover details has been completed" in {
+      navigator
+        .nextPage(RentPayableVaryAccordingToGrossOrNetDetailsId)
+        .apply(session6010) mustBe controllers.Form6010.routes.HowIsCurrentRentFixedController
+        .show()
+    }
+
+    "return a function that goes to method fix rent when how is rent fixed has been completed" in {
+      navigator
+        .nextPage(HowIsCurrentRentFixedId)
+        .apply(session6010) mustBe controllers.Form6010.routes.MethodToFixCurrentRentController
+        .show()
+    }
+
+    "return a function that goes to intervals rent review when method fix rent has been completed" in {
+      navigator
+        .nextPage(MethodToFixCurrentRentsId)
+        .apply(session6010) mustBe controllers.Form6010.routes.IntervalsOfRentReviewController
+        .show()
+    }
+
+    "return a function that goes to can rent be reduced when intervals rent review has been completed" in {
+      navigator
+        .nextPage(IntervalsOfRentReviewId)
+        .apply(session6010) mustBe controllers.Form6010.routes.CanRentBeReducedOnReviewController
+        .show()
+    }
+
+    "return a function that goes to incentives payment when can rent be reduced has been completed" in {
+      navigator
+        .nextPage(CanRentBeReducedOnReviewId)
+        .apply(session6010) mustBe controllers.Form6010.routes.IncentivesPaymentsConditionsController
+        .show()
+    }
+
+    "return a function that goes to tenants additional disregarded when incentives payment has been completed" in {
+      navigator
+        .nextPage(IncentivesPaymentsConditionsId)
+        .apply(session6010) mustBe controllers.Form6010.routes.TenantsAdditionsDisregardedController
+        .show()
+    }
+
+    "return a function that goes to tenants additional disregarded details page when tenants additional disregarded with yes has been completed" in {
+      navigator
+        .nextPage(TenantsAdditionsDisregardedId)
+        .apply(session6010) mustBe controllers.Form6010.routes.TenantsAdditionsDisregardedDetailsController
+        .show()
+    }
+
+    "return a function that goes to pay a capital sum page when tenants additional disregarded with no has been completed" in {
+      navigator
+        .nextPage(TenantsAdditionsDisregardedId)
+        .apply(session6010No) mustBe controllers.Form6010.routes.PayACapitalSumController
         .show()
     }
 

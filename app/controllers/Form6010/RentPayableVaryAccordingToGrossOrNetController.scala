@@ -17,16 +17,13 @@
 package controllers.Form6010
 
 import actions.WithSessionRefiner
-import controllers.LoginController.loginForm
-import form.Form6010.HowIsCurrentRentFixedForm.howIsCurrentRentFixedForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.form.{howIsCurrentRentFixed, rentPayableVaryAccordingToGrossOrNet, rentPayableVaryAccordingToGrossOrNetDetails}
+import views.html.form.rentPayableVaryAccordingToGrossOrNet
 import form.Form6010.RentPayableVaryAccordingToGrossOrNetForm.rentPayableVaryAccordingToGrossOrNetForm
-import form.Form6010.RentPayableVaryAccordingToGrossOrNetDetailsForm.rentPayableVaryAccordingToGrossOrNetInformationForm
-import models.submissions.common.{AnswerNo, AnswerYes}
-import views.html.login
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo.updateAboutLeaseOrAgreementPartTwo
+import navigation.AboutYourLeaseOrTenureNavigator
+import navigation.identifiers.RentPayableVaryAccordingToGrossOrNetId
 import play.api.i18n.I18nSupport
 import repositories.SessionRepo
 
@@ -36,10 +33,8 @@ import scala.concurrent.Future
 @Singleton
 class RentPayableVaryAccordingToGrossOrNetController @Inject() (
   mcc: MessagesControllerComponents,
-  login: login,
+  navigator: AboutYourLeaseOrTenureNavigator,
   rentPayableVaryAccordingToGrossOrNetView: rentPayableVaryAccordingToGrossOrNet,
-  rentPayableVaryAccordingToGrossOrNetDetailsView: rentPayableVaryAccordingToGrossOrNetDetails,
-  howIsCurrentRentFixedView: howIsCurrentRentFixed,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
 ) extends FrontendController(mcc)
@@ -65,22 +60,12 @@ class RentPayableVaryAccordingToGrossOrNetController @Inject() (
       .bindFromRequest()
       .fold(
         formWithErrors => Future.successful(BadRequest(rentPayableVaryAccordingToGrossOrNetView(formWithErrors))),
-        data =>
-          data.rentPayableVaryAccordingToGrossOrNets match {
-            case AnswerYes =>
-              val updatedData =
-                updateAboutLeaseOrAgreementPartTwo(_.copy(rentPayableVaryAccordingToGrossOrNetDetails = Some(data)))
-              session.saveOrUpdate(updatedData)
-              Future.successful(
-                Ok(rentPayableVaryAccordingToGrossOrNetDetailsView(rentPayableVaryAccordingToGrossOrNetInformationForm))
-              )
-            case AnswerNo  =>
-              val updatedData =
-                updateAboutLeaseOrAgreementPartTwo(_.copy(rentPayableVaryAccordingToGrossOrNetDetails = Some(data)))
-              session.saveOrUpdate(updatedData)
-              Future.successful(Ok(howIsCurrentRentFixedView(howIsCurrentRentFixedForm)))
-            case _         => Future.successful(Ok(login(loginForm)))
-          }
+        data => {
+          val updatedData =
+            updateAboutLeaseOrAgreementPartTwo(_.copy(rentPayableVaryAccordingToGrossOrNetDetails = Some(data)))
+          session.saveOrUpdate(updatedData)
+          Future.successful(Redirect(navigator.nextPage(RentPayableVaryAccordingToGrossOrNetId).apply(updatedData)))
+        }
       )
   }
 }

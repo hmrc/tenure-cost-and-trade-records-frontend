@@ -14,47 +14,46 @@
  * limitations under the License.
  */
 
-package controllers.Form6010
+package controllers.aboutYourLeaseOrTenure
 
+import controllers.Form6010.TenantsAdditionsDisregardedController
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import utils.TestBaseSpec
 
-class RentPayableVaryAccordingToGrossOrNetDetailsControllerSpec extends TestBaseSpec {
+class TenantsAdditionsDisregardedControllerSpec extends TestBaseSpec {
 
-  def rentPayableVaryAccordingToGrossOrNetDetailsController(
+  def tenantsAdditionsDisregardedController(
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
   ) =
-    new RentPayableVaryAccordingToGrossOrNetDetailsController(
+    new TenantsAdditionsDisregardedController(
       stubMessagesControllerComponents(),
-      howIsCurrentRentFixedView,
-      rentPayableVaryAccordingToGrossOrNetDetailsView,
+      aboutYourLeaseOrTenureNavigator,
+      tenantsAdditionsDisregardedView,
       preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
       mockSessionRepo
     )
 
-  "GET /" should {
+  "GET /"    should {
     "return 200" in {
-      val result = rentPayableVaryAccordingToGrossOrNetDetailsController().show(fakeRequest)
+      val result = tenantsAdditionsDisregardedController().show(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return HTML" in {
-      val result = rentPayableVaryAccordingToGrossOrNetDetailsController().show(fakeRequest)
+      val result = tenantsAdditionsDisregardedController().show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
   }
-
   "SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
-      val res = rentPayableVaryAccordingToGrossOrNetDetailsController().submit(
+      val res = tenantsAdditionsDisregardedController().submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)
       )
       status(res) shouldBe BAD_REQUEST
     }
   }
-
 }
