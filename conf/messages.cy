@@ -6,6 +6,7 @@ gov.name = GOV.UK
 phase.beta = BETA
 phase.text = Mae hwn yn wasanaeth newydd – bydd eich <a href="{0}" class="govuk-link" target="_blank" id="betaFeedback">adborth</a> yn ein helpu i’w wella
 button.label.continue = Yn eich blaen
+button.label.send = Accept and send
 back.link.label = Yn ôl
 button.label.save = Cadw fel drafft
 label.checkTheForm = Mae problem wedi codi
@@ -545,8 +546,11 @@ label.userType = What is your relationship to the property?
 hint.aboutYou = If you’re renting or leasing the property, even as a charity or non-profit organisation, you’re considered the occupier. If you are both the owner and the occupier, select ’Owner or trustee for owner’.
 
 #TASK LIST
-##############################
+##########
 taskList.heading = Declaration summary
+declaration.heading = Now send your declaration
+declaration.information = By submitting this declaration you are confirming that, to the best of your knowledge, the details you are providing are correct.
+hint.declaration = You can be taken to court if you submit false information
 
 #COST OF SALES OR GROSS PROFIT
 #########
@@ -641,6 +645,11 @@ checkYourAnswersAboutTheProperty.heading = This is a holding page for the about 
 checkYourAnswersAboutTheTradingHistory.heading = This is a holding page for the about your trading history check your answers page
 checkYourAnswersAboutYou.heading = This is a holding page for the about you check your answers page
 checkYourAnswersAdditionalInformation.heading = This is a holding page for the additional information check your answers page
+
+# Confirmation Page
+###################
+label.confirm.heading = Declaration sent successfully for {0} (Audit only)
+label.submitAnotherForm = Submit another form
 
 # Help section
 ##############

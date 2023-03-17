@@ -18,13 +18,13 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.button.Button
 
-@(govukButton: GovukButton)(implicit request: Request[_], messages: Messages)
+@(govukButton: GovukButton, isSend: Boolean = false)(implicit request: Request[_], messages: Messages)
 <p class="govuk-body" style="clear:both;">
 
     @govukButton(
         Button(
             attributes = Map("id" -> "continue", "novalidate" -> "novalidate"),
-            content = Text(messages("button.label.continue")),
+            content = if (isSend) Text(messages("button.label.send")) else Text(messages("button.label.continue")),
             name = Some("continue_button"),
             value = Some("continue_button"),
             inputType = Some("submit")
