@@ -17,6 +17,6 @@
 package models.submissions
 
 /**
- * @author Yuriy Tumakha
- */
+  * @author Yuriy Tumakha
+  */
 case class CustomUserPassword(password: String, confirmPassword: String)

@@ -45,7 +45,7 @@ object DateUtil {
 }
 
 @Singleton
-class DateUtil @Inject()(langUtil: LanguageUtils) {
+class DateUtil @Inject() (langUtil: LanguageUtils) {
 
   def formatDate(date: LocalDate)(implicit messages: Messages): String =
     langUtil.Dates.formatDate(date)
