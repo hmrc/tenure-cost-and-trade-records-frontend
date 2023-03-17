@@ -128,6 +128,55 @@ class AboutYourLeaseOrTenure6010NavigatorSpec extends TestBaseSpec {
         .show()
     }
 
+    "return a function that goes to fixture and fittings details page when fixture and fittings with yes has been completed" in {
+      navigator
+        .nextPage(RentFixtureAndFittingsPageId)
+        .apply(session6010) mustBe controllers.Form6010.routes.RentIncludeFixtureAndFittingsDetailsController
+        .show()
+    }
+
+    "return a function that goes to open market page when fixture and fittings with no has been completed" in {
+      navigator
+        .nextPage(RentFixtureAndFittingsPageId)
+        .apply(session6010No) mustBe controllers.Form6010.routes.RentOpenMarketValueController
+        .show()
+    }
+
+    "return a function that goes to open market page when fixture and fittings details has been completed" in {
+      navigator
+        .nextPage(RentFixtureAndFittingsDetailsPageId)
+        .apply(session6010) mustBe controllers.Form6010.routes.RentOpenMarketValueController
+        .show()
+    }
+
+    "return a function that goes to increase by RPI page when open market rent with yes has been completed" in {
+      navigator
+        .nextPage(RentOpenMarketPageId)
+        .apply(session6010) mustBe controllers.Form6010.routes.RentIncreaseAnnuallyWithRPIController
+        .show()
+    }
+
+    "return a function that goes to what rent based on page when open market rent with no has been completed" in {
+      navigator
+        .nextPage(RentOpenMarketPageId)
+        .apply(session6010No) mustBe controllers.Form6010.routes.WhatIsYourRentBasedOnController
+        .show()
+    }
+
+    "return a function that goes to increase by RPI when what rent based on has been completed" in {
+      navigator
+        .nextPage(WhatRentBasedOnPageId)
+        .apply(session6010) mustBe controllers.Form6010.routes.RentIncreaseAnnuallyWithRPIController
+        .show()
+    }
+
+    "return a function that goes rent by gross or net turnover when increase by RPI has been completed" in {
+      navigator
+        .nextPage(RentIncreaseByRPIPageId)
+        .apply(session6010) mustBe controllers.Form6010.routes.RentPayableVaryAccordingToGrossOrNetController
+        .show()
+    }
+
     "return a function that goes to fixture and fittings page when include trade services details has been completed" in {
       navigator
         .nextPage(RentIncludeTradeServicesDetailsPageId)

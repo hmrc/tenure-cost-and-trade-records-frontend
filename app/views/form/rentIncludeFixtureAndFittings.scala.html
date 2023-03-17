@@ -25,15 +25,14 @@
         formWithCSRF: FormWithCSRF
 )
 
-
-@(theForm: Form[RentIncludeFixturesAndFittingsDetails])(implicit request: Request[_], messages: Messages)
+@(theForm: Form[RentIncludeFixturesAndFittingsDetails], backLink: String)(implicit request: Request[_], messages: Messages)
 
 @layout(
  pageHeading = messages("rentIncludeFixturesAndFittings.heading"),
  showH1 = false,
  showSection = true,
  sectionName = messages("label.section.aboutYourLeaseOrTenure"),
- backLinkUrl = controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesController.show.url,
+ backLinkUrl = backLink,
  theForm = theForm
 ) {
 

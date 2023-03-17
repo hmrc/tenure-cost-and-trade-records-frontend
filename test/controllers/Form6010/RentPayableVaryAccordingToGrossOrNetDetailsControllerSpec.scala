@@ -16,24 +16,45 @@
 
 package controllers.Form6010
 
+import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
 import play.api.http.Status
+import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import utils.TestBaseSpec
 
 class RentPayableVaryAccordingToGrossOrNetDetailsControllerSpec extends TestBaseSpec {
 
-  private val controller = app.injector.instanceOf[RentPayableVaryAccordingToGrossOrNetDetailsController]
+  def rentPayableVaryAccordingToGrossOrNetDetailsController(
+    aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
+  ) =
+    new RentPayableVaryAccordingToGrossOrNetDetailsController(
+      stubMessagesControllerComponents(),
+      howIsCurrentRentFixedView,
+      rentPayableVaryAccordingToGrossOrNetDetailsView,
+      preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
+      mockSessionRepo
+    )
 
   "GET /" should {
     "return 200" in {
-      val result = controller.show(fakeRequest)
+      val result = rentPayableVaryAccordingToGrossOrNetDetailsController().show(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return HTML" in {
-      val result = controller.show(fakeRequest)
+      val result = rentPayableVaryAccordingToGrossOrNetDetailsController().show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
   }
+
+  "SUBMIT /" should {
+    "throw a BAD_REQUEST if an empty form is submitted" in {
+      val res = rentPayableVaryAccordingToGrossOrNetDetailsController().submit(
+        FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)
+      )
+      status(res) shouldBe BAD_REQUEST
+    }
+  }
+
 }

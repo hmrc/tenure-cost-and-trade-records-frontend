@@ -57,13 +57,7 @@ class AboutYourTradingHistoryViewSpec extends QuestionViewBehaviours[AboutYourTr
     "contain date format hint for firstOccupy-hint" in {
       val doc             = asDocument(createViewUsingForm(form))
       val firstOccupyHint = doc.getElementById("firstOccupy-hint").text()
-      assert(firstOccupyHint == messages("help.date.day.month.year"))
-    }
-
-    "contain date field for the value firstOccupy.day" in {
-      val doc = asDocument(createViewUsingForm(form))
-      assertContainsLabel(doc, "firstOccupy.day", "Day")
-      assertContainsText(doc, "firstOccupy.day")
+      assert(firstOccupyHint == messages("help.date.month.year"))
     }
 
     "contain date field for the value firstOccupy.month" in {
@@ -81,13 +75,7 @@ class AboutYourTradingHistoryViewSpec extends QuestionViewBehaviours[AboutYourTr
     "contain date format hint for financialYear-hint" in {
       val doc               = asDocument(createViewUsingForm(form))
       val financialYearHint = doc.getElementById("financialYear-hint").text()
-      assert(financialYearHint == messages("help.date.day.month.year"))
-    }
-
-    "contain date field for the value financialYear.day" in {
-      val doc = asDocument(createViewUsingForm(form))
-      assertContainsLabel(doc, "financialYear.day", "Day")
-      assertContainsText(doc, "financialYear.day")
+      assert(financialYearHint == messages("help.date.month.year"))
     }
 
     "contain date field for the value financialYear.month" in {

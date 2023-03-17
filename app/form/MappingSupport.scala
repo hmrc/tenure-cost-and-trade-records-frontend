@@ -36,35 +36,22 @@ import play.api.data.{FormError, Forms, Mapping}
 
 object MappingSupport {
 
-  val postcodeRegex                                                               =
+  val postcodeRegex                                                             =
     """(GIR ?0AA)|((([A-Z-[QVX]][0-9][0-9]?)|(([A-Z-[QVX]][A-Z-[IJZ]][0-9][0-9]?)|(([A-Z-[QVX]][0-9][A-HJKPSTUW])|([A-Z-[QVX]][A-Z-[IJZ]][0-9][ABEHMNPRVWXY])))) ?[0-9][A-Z-[CIKMOV]]{2})""" //scalastyle:ignore
-  val phoneRegex                                                                  = """^^[0-9\s\+()-]+$"""
-  val userType: Mapping[UserType]                                                 = Forms.of[UserType]
-  val aboutYourPropertyType: Mapping[CurrentPropertyUsed]                         = Forms.of[CurrentPropertyUsed]
-  val connectionToThePropertyType: Mapping[ConnectionToProperty]                  = Forms.of[ConnectionToProperty]
-  val buildingOperatingHaveAWebsiteType: Mapping[BuildingOperationHaveAWebsite]   =
+  val phoneRegex                                                                = """^^[0-9\s\+()-]+$"""
+  val userType: Mapping[UserType]                                               = Forms.of[UserType]
+  val aboutYourPropertyType: Mapping[CurrentPropertyUsed]                       = Forms.of[CurrentPropertyUsed]
+  val connectionToThePropertyType: Mapping[ConnectionToProperty]                = Forms.of[ConnectionToProperty]
+  val buildingOperatingHaveAWebsiteType: Mapping[BuildingOperationHaveAWebsite] =
     Forms.of[BuildingOperationHaveAWebsite]
-  val yesNoType: Mapping[AnswersYesNo]                                            = Forms.of[AnswersYesNo]
-  val licensableActivitiesType: Mapping[LicensableActivities]                     = Forms.of[LicensableActivities]
-  val tiedForGoodsType: Mapping[TiedForGoods]                                     = Forms.of[TiedForGoods]
-  val premisesLicenseConditionsType: Mapping[PremisesLicenseConditions]           = Forms.of[PremisesLicenseConditions]
-  val tenancyLeaseAgreementType: Mapping[TenancyLeaseAgreements]                  = Forms.of[TenancyLeaseAgreements]
-  val enforcementActionType: Mapping[EnforcementAction]                           = Forms.of[EnforcementAction]
-  val addressConnectionType: Mapping[AddressConnectionType]                       = Forms.of[AddressConnectionType]
-  val rentIncludeFixturesAndFittingsType: Mapping[RentIncludeFixturesAndFittings] =
-    Forms.of[RentIncludeFixturesAndFittings]
-  val rentOpenMarketValuesType: Mapping[RentOpenMarketValues]                     = Forms.of[RentOpenMarketValues]
-  val pastConnectionType: Mapping[PastConnectionType]                             = Forms.of[PastConnectionType]
-  val methodToFixCurrentRentsType: Mapping[MethodToFixCurrentRents]               = Forms.of[MethodToFixCurrentRents]
-
-  val formerLeaseSurrenderedType: Mapping[FormerLeaseSurrendered]                = Forms.of[FormerLeaseSurrendered]
-  val rentReducedOnReviewsType: Mapping[RentReducedOnReviews]                    = Forms.of[RentReducedOnReviews]
-  val capitalSumOrPremiumType: Mapping[CapitalSumOrPremiums]                     = Forms.of[CapitalSumOrPremiums]
-  val receivePaymentWhenLeaseGrantedType: Mapping[ReceivePaymentWhenLeaseGrants] =
-    Forms.of[ReceivePaymentWhenLeaseGrants]
-
-  val tenantsAdditionsDisregardedType: Mapping[TenantAdditionalDisregarded] = Forms.of[TenantAdditionalDisregarded]
-  val legalPlanningRestrictionsType: Mapping[LegalPlanningRestrictions]     = Forms.of[LegalPlanningRestrictions]
+  val yesNoType: Mapping[AnswersYesNo]                                          = Forms.of[AnswersYesNo]
+  val licensableActivitiesType: Mapping[LicensableActivities]                   = Forms.of[LicensableActivities]
+  val tiedForGoodsType: Mapping[TiedForGoods]                                   = Forms.of[TiedForGoods]
+  val premisesLicenseConditionsType: Mapping[PremisesLicenseConditions]         = Forms.of[PremisesLicenseConditions]
+  val enforcementActionType: Mapping[EnforcementAction]                         = Forms.of[EnforcementAction]
+  val addressConnectionType: Mapping[AddressConnectionType]                     = Forms.of[AddressConnectionType]
+  val pastConnectionType: Mapping[PastConnectionType]                           = Forms.of[PastConnectionType]
+  val methodToFixCurrentRentsType: Mapping[MethodToFixCurrentRents]             = Forms.of[MethodToFixCurrentRents]
 
   val responsiblePartyType: Mapping[AnswerResponsibleParty] = Forms.of[AnswerResponsibleParty]
 
@@ -86,8 +73,6 @@ object MappingSupport {
   val premisesLicenseGrantedType: Mapping[PremisesLicenseGranted] = Forms.of[PremisesLicenseGranted]
 
   val costOfSalesOrGrossProfitDetailsType: Mapping[CostOfSalesOrGrossProfit] = Forms.of[CostOfSalesOrGrossProfit]
-
-//  val connectedToLandlordType: Mapping[ConnectedToLandlord] = Forms.of[ConnectedToLandlord]
 
   val decimalRegex         = """^[0-9]{1,10}\.?[0-9]{0,2}$"""
   val cdbMaxCurrencyAmount = 9999999.99

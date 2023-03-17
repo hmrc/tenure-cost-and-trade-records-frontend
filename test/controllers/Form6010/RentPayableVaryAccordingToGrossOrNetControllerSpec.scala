@@ -16,44 +16,47 @@
 
 package controllers.Form6010
 
-import form.Errors
+import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
 import play.api.http.Status
+import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import utils.TestBaseSpec
 
 class RentPayableVaryAccordingToGrossOrNetControllerSpec extends TestBaseSpec {
 
-  import TestData._
-  import form.Form6010.RentPayableVaryAccordingToGrossOrNetForm._
-  import utils.FormBindingTestAssertions._
-
-  private val controller = app.injector.instanceOf[RentPayableVaryAccordingToGrossOrNetController]
+  def rentPayableVaryAccordingToGrossOrNetController(
+    aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
+  ) =
+    new RentPayableVaryAccordingToGrossOrNetController(
+      stubMessagesControllerComponents(),
+      loginView,
+      rentPayableVaryAccordingToGrossOrNetView,
+      rentPayableVaryAccordingToGrossOrNetDetailsView,
+      howIsCurrentRentFixedView,
+      preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
+      mockSessionRepo
+    )
 
   "RentPayableVaryAccordingToGrossOrNet controller" should {
     "return 200" in {
-      val result = controller.show(fakeRequest)
+      val result = rentPayableVaryAccordingToGrossOrNetController().show(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return HTML" in {
-      val result = controller.show(fakeRequest)
+      val result = rentPayableVaryAccordingToGrossOrNetController().show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
 
-    "error if rentPayableVaryAccordingToGrossOrNet is missing" in {
-      val formData = baseFormData - errorKey.rentPayableVaryAccordingToGrossOrNet
-      val form     = rentPayableVaryAccordingToGrossOrNetForm.bind(formData)
-
-      mustContainError(errorKey.rentPayableVaryAccordingToGrossOrNet, Errors.booleanMissing, form)
-    }
   }
 
-  object TestData {
-    val errorKey = new {
-      val rentPayableVaryAccordingToGrossOrNet: String = "rentPayableVaryAccordingToGrossOrNet"
+  "SUBMIT /" should {
+    "throw a BAD_REQUEST if an empty form is submitted" in {
+      val res = rentPayableVaryAccordingToGrossOrNetController().submit(
+        FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)
+      )
+      status(res) shouldBe BAD_REQUEST
     }
-
-    val baseFormData: Map[String, String] = Map("rentPayableVaryAccordingToGrossOrNet" -> "yes")
   }
 }

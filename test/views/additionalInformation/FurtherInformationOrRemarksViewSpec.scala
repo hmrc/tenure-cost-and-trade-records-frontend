@@ -25,9 +25,6 @@ import views.behaviours.QuestionViewBehaviours
 
 class FurtherInformationOrRemarksViewSpec extends QuestionViewBehaviours[FurtherInformationOrRemarksDetails] {
 
-  def furtherInformationOrRemarksView =
-    app.injector.instanceOf[views.html.additionalinformation.furtherInformationOrRemarks]
-
   val messageKeyPrefix = "furtherInformationOrRemarks"
 
   override val form = FurtherInformationOrRemarksForm.furtherInformationOrRemarksForm

@@ -19,7 +19,8 @@ package utils
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import views.html.aboutYourLeaseOrTenure._
 import views.html.aboutfranchisesorlettings._
-import views.html.form._
+import views.html.additionalinformation.furtherInformationOrRemarks
+import views.html.form.{canRentBeReducedOnReview, howIsCurrentRentFixed, incentivesPaymentsConditions, methodToFixCurrentRent, payACapitalSum, paymentWhenLeaseIsGranted, rentPayableVaryAccordingToGrossOrNetDetails, rentPayableVaryOnQuantityOfBeers, rentPayableVaryOnQuantityOfBeersDetails, tenancyLeaseAgreement, tenantsAdditionsDisregarded, tenantsAdditionsDisregardedDetails, _}
 import views.html.login
 
 trait FakeViews { this: GuiceOneAppPerSuite =>
@@ -91,11 +92,35 @@ trait FakeViews { this: GuiceOneAppPerSuite =>
     app.injector.instanceOf[rentIncludeTradeServicesDetails]
   lazy val rentPayableVaryAccordingToGrossOrNetView        =
     app.injector.instanceOf[rentPayableVaryAccordingToGrossOrNet]
+  lazy val legalOrPlanningRestrictionsView                 =
+    app.injector.instanceOf[legalOrPlanningRestrictions]
+  lazy val legalOrPlanningRestrictionsDetailsView          =
+    app.injector.instanceOf[legalOrPlanningRestrictionsDetails]
+  lazy val furtherInformationOrRemarksView                 =
+    app.injector.instanceOf[furtherInformationOrRemarks]
+  lazy val tenantsAdditionsDisregardedDetailsView          =
+    app.injector.instanceOf[tenantsAdditionsDisregardedDetails]
+  lazy val tenantsAdditionsDisregardedView                 =
+    app.injector.instanceOf[tenantsAdditionsDisregarded]
+  lazy val methodToFixCurrentRentView                      =
+    app.injector.instanceOf[methodToFixCurrentRent]
   lazy val rentPayableVaryAccordingToGrossOrNetDetailsView =
     app.injector.instanceOf[rentPayableVaryAccordingToGrossOrNetDetails]
   lazy val rentPayableVaryOnQuantityOfBeersView            =
     app.injector.instanceOf[rentPayableVaryOnQuantityOfBeers]
+  lazy val incentivesPaymentsConditionsView                =
+    app.injector.instanceOf[incentivesPaymentsConditions]
+  lazy val tenancyLeaseAgreementView                       =
+    app.injector.instanceOf[tenancyLeaseAgreement]
+  lazy val paymentWhenLeaseIsGrantedView                   =
+    app.injector.instanceOf[paymentWhenLeaseIsGranted]
+  lazy val payACapitalSumView                              =
+    app.injector.instanceOf[payACapitalSum]
+  lazy val canRentBeReducedOnReviewView                    =
+    app.injector.instanceOf[canRentBeReducedOnReview]
   lazy val rentPayableVaryOnQuantityOfBeersDetailsView     =
     app.injector.instanceOf[rentPayableVaryOnQuantityOfBeersDetails]
+  lazy val howIsCurrentRentFixedView                       =
+    app.injector.instanceOf[howIsCurrentRentFixed]
 
 }

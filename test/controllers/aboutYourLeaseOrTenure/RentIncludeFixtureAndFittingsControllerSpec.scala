@@ -14,9 +14,11 @@
  * limitations under the License.
  */
 
-package controllers.Form6010
+package controllers.aboutYourLeaseOrTenure
 
-import models.submissions.aboutLeaseOrAgreement.AboutLeaseOrAgreementPartOne
+import controllers.Form6010.RentIncludeFixtureAndFittingsController
+import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
+import navigation.AboutYourLeaseOrTenureNavigator
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
@@ -24,20 +26,22 @@ import utils.TestBaseSpec
 
 class RentIncludeFixtureAndFittingsControllerSpec extends TestBaseSpec {
 
+  val mockAboutYourLeaseOrTenureNavigator = mock[AboutYourLeaseOrTenureNavigator]
+
   def rentIncludeFixtureAndFittingsController(
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
   ) =
     new RentIncludeFixtureAndFittingsController(
       stubMessagesControllerComponents(),
-      loginView,
+      mockAboutYourLeaseOrTenureNavigator,
       rentIncludeFixtureAndFittingsView,
-      rentIncludeFixtureAndFittingsDetailsView,
-      rentOpenMarketValueView,
       preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
       mockSessionRepo
     )
+
   "RentIncludeFixtureAndFittings controller" should {
     "return 200" in {
+      println(s"${prefilledAboutLeaseOrAgreementPartOne.rentIncludeFixturesAndFittingsDetails}")
       val result = rentIncludeFixtureAndFittingsController().show(fakeRequest)
       status(result) shouldBe Status.OK
     }

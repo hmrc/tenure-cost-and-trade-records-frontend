@@ -16,7 +16,7 @@
 
 package form.Form6010
 
-import form.MappingSupport.rentOpenMarketValuesType
+import form.MappingSupport.yesNoType
 import models.submissions.Form6010.RentOpenMarketValueDetails
 import play.api.data.Form
 import play.api.data.Forms.mapping
@@ -25,7 +25,7 @@ object RentOpenMarketValueForm {
 
   val rentOpenMarketValuesForm = Form(
     mapping(
-      "rentOpenMarketValue" -> rentOpenMarketValuesType
+      "rentOpenMarketValue" -> yesNoType
     )(RentOpenMarketValueDetails.apply)(RentOpenMarketValueDetails.unapply)
   )
 }

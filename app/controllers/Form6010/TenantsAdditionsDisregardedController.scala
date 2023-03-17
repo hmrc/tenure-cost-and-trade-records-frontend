@@ -16,17 +16,21 @@
 
 package controllers.Form6010
 
+import actions.WithSessionRefiner
 import controllers.LoginController.loginForm
 import form.Form6010.TenantsAdditionsDisregardedDetailsForm.tenantsAdditionsDisregardedDetailsForm
 import form.Form6010.TenantsAdditionsDisregardedForm.tenantsAdditionsDisregardedForm
 import form.Form6010.LegalOrPlanningRestrictionsForm.legalPlanningRestrictionsForm
-import models.submissions.Form6010.{TenantsAdditionsDisregardedNo, TenantsAdditionsDisregardedYes}
+import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo.updateAboutLeaseOrAgreementPartTwo
+import models.submissions.common.{AnswerNo, AnswerYes}
+import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.form.{legalOrPlanningRestrictions, tenantsAdditionsDisregarded, tenantsAdditionsDisregardedDetails}
 import views.html.login
 
-import javax.inject.{Inject, Singleton}
+import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
 
 @Singleton
@@ -35,27 +39,43 @@ class TenantsAdditionsDisregardedController @Inject() (
   tenantsAdditionsDisregardedDetailsView: tenantsAdditionsDisregardedDetails,
   tenantsAdditionsDisregardedView: tenantsAdditionsDisregarded,
   legalOrPlanningRestrictionsView: legalOrPlanningRestrictions,
-  login: login
-) extends FrontendController(mcc) {
+  login: login,
+  withSessionRefiner: WithSessionRefiner,
+  @Named("session") val session: SessionRepo
+) extends FrontendController(mcc)
+    with I18nSupport {
 
-  def show: Action[AnyContent] = Action { implicit request =>
-    Ok(tenantsAdditionsDisregardedView(tenantsAdditionsDisregardedForm))
+  def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
+    Ok(
+      tenantsAdditionsDisregardedView(
+        request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.tenantAdditionsDisregardedDetails) match {
+          case Some(data) => tenantsAdditionsDisregardedForm.fillAndValidate(data)
+          case _          => tenantsAdditionsDisregardedForm
+        }
+      )
+    )
   }
 
-  def submit = Action.async { implicit request =>
+  def submit = (Action andThen withSessionRefiner).async { implicit request =>
     tenantsAdditionsDisregardedForm
       .bindFromRequest()
       .fold(
         formWithErrors => Future.successful(BadRequest(tenantsAdditionsDisregardedView(formWithErrors))),
         data =>
           data.tenantAdditionalDisregarded match {
-            case TenantsAdditionsDisregardedYes =>
+            case AnswerYes =>
+              val updatedData =
+                updateAboutLeaseOrAgreementPartTwo(_.copy(tenantAdditionsDisregardedDetails = Some(data)))
+              session.saveOrUpdate(updatedData)
               Future.successful(
                 Ok(tenantsAdditionsDisregardedDetailsView(tenantsAdditionsDisregardedDetailsForm))
               )
-            case TenantsAdditionsDisregardedNo  =>
+            case AnswerNo  =>
+              val updatedData =
+                updateAboutLeaseOrAgreementPartTwo(_.copy(tenantAdditionsDisregardedDetails = Some(data)))
+              session.saveOrUpdate(updatedData)
               Future.successful(Ok(legalOrPlanningRestrictionsView(legalPlanningRestrictionsForm)))
-            case _                              => Future.successful(Ok(login(loginForm)))
+            case _         => Future.successful(Ok(login(loginForm)))
 
           }
       )

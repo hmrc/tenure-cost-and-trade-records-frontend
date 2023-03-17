@@ -19,10 +19,13 @@ package controllers.Form6010
 import actions.WithSessionRefiner
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.form.{rentIncreaseAnnuallyWithRPI, rentPayableVaryAccordingToGrossOrNet}
+import views.html.form.rentIncreaseAnnuallyWithRPI
 import form.Form6010.RentIncreasedAnnuallyWithRPIForm.rentIncreasedAnnuallyWithRPIDetailsForm
-import form.Form6010.RentPayableVaryAccordingToGrossOrNetForm.rentPayableVaryAccordingToGrossOrNetForm
-import models.submissions.aboutLeaseOrAgreement.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne
+import models.Session
+import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne
+import navigation.AboutYourLeaseOrTenureNavigator
+import navigation.identifiers.RentIncreaseByRPIPageId
+import play.api.Logging
 import play.api.i18n.I18nSupport
 import repositories.SessionRepo
 
@@ -32,12 +35,13 @@ import scala.concurrent.Future
 @Singleton
 class RentIncreaseAnnuallyWithRPIController @Inject() (
   mcc: MessagesControllerComponents,
-  rentPayableVaryAccordingToGrossOrNetView: rentPayableVaryAccordingToGrossOrNet,
+  navigator: AboutYourLeaseOrTenureNavigator,
   rentIncreaseAnnuallyWithRPIView: rentIncreaseAnnuallyWithRPI,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
 ) extends FrontendController(mcc)
-    with I18nSupport {
+    with I18nSupport
+    with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Future.successful(
@@ -47,7 +51,8 @@ class RentIncreaseAnnuallyWithRPIController @Inject() (
             case Some(rentIncreasedAnnuallyWithRPIDetails) =>
               rentIncreasedAnnuallyWithRPIDetailsForm.fillAndValidate(rentIncreasedAnnuallyWithRPIDetails)
             case None                                      => rentIncreasedAnnuallyWithRPIDetailsForm
-          }
+          },
+          getBackLink(request.sessionData)
         )
       )
     )
@@ -57,12 +62,23 @@ class RentIncreaseAnnuallyWithRPIController @Inject() (
     rentIncreasedAnnuallyWithRPIDetailsForm
       .bindFromRequest()
       .fold(
-        formWithErrors => Future.successful(BadRequest(rentIncreaseAnnuallyWithRPIView(formWithErrors))),
+        formWithErrors =>
+          Future
+            .successful(BadRequest(rentIncreaseAnnuallyWithRPIView(formWithErrors, getBackLink(request.sessionData)))),
         data => {
           val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(rentIncreasedAnnuallyWithRPIDetails = Some(data)))
           session.saveOrUpdate(updatedData)
-          Future.successful(Ok(rentPayableVaryAccordingToGrossOrNetView(rentPayableVaryAccordingToGrossOrNetForm)))
+          Future.successful(Redirect(navigator.nextPage(RentIncreaseByRPIPageId).apply(updatedData)))
         }
       )
   }
+
+  private def getBackLink(answers: Session): String =
+    answers.aboutLeaseOrAgreementPartOne.flatMap(_.rentOpenMarketValueDetails.map(_.rentOpenMarketValues.name)) match {
+      case Some("yes") => controllers.Form6010.routes.RentOpenMarketValueController.show().url
+      case Some("no")  => controllers.Form6010.routes.WhatIsYourRentBasedOnController.show().url
+      case _           =>
+        logger.warn(s"Back link for rent increase by RPI page reached with unknown open market value")
+        controllers.routes.TaskListController.show().url
+    }
 }

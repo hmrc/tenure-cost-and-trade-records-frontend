@@ -16,10 +16,10 @@
 
 package utils
 
+import models.submissions.Form6010.{MonthsYearDuration, RentIncludeFixturesAndFittingsDetails, RentOpenMarketValueDetails}
 import models.submissions.aboutfranchisesorlettings._
 import models.submissions.abouttheproperty.PremisesLicenseGrantedNo
-import models.submissions.aboutLeaseOrAgreement.AboutLeaseOrAgreementPartOne
-import models.submissions.aboutYourLeaseOrTenure._
+import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartOne, _}
 import models.submissions.aboutfranchisesorlettings
 import models.submissions.aboutfranchisesorlettings.LettingSection
 import models.submissions.abouttheproperty._
@@ -30,6 +30,7 @@ import models.{AnnualRent, Session, SubmissionDraft, UserLoginDetails}
 import models.submissions.common.{Address, AnswerNo, AnswerYes, ContactDetails}
 import models.submissions.connectiontoproperty.{AddressConnectionTypeYes, StillConnectedDetails}
 import models.submissions.notconnected.{RemoveConnectionDetails, RemoveConnectionsDetails}
+import form.DateMappings._
 
 import java.time.LocalDate
 
@@ -51,8 +52,8 @@ trait FakeObjects {
     LettingAddress("004", Some("GORING ROAD"), Some("GORING-BY-SEA, WORTHING"), Some("West sussex"), "BN12 4AX")
   val prefilledLandlordAddress                  =
     LandlordAddress("004", Some("GORING ROAD"), Some("GORING-BY-SEA, WORTHING"), Some("West sussex"), "BN12 4AX")
-  val prefilledFirstOccupy                      = LocalDate.of(1996, 3, 15)
-  val prefilledFinancialYear                    = LocalDate.of(2022, 6, 1)
+  val prefilledFirstOccupy                      = MonthsYearDuration(2000, 2)
+  val prefilledFinancialYear                    = MonthsYearDuration(2001, 2)
   val prefilledDateInput                        = LocalDate.of(2022, 6, 1)
   val prefilledBigDecimal                       = BigDecimal(9999999)
   val prefilledAnnualRent                       = AnnualRent(prefilledBigDecimal)
@@ -203,7 +204,9 @@ trait FakeObjects {
     Some(prefilledLeaseOrAgreementYearsDetails),
     Some(prefilledCurrentRentPayableWithin12Months),
     Some(prefilledAnnualRent),
-    rentIncludeTradeServicesDetails = Some(RentIncludeTradeServicesDetails(AnswerYes))
+    rentIncludeTradeServicesDetails = Some(RentIncludeTradeServicesDetails(AnswerYes)),
+    rentIncludeFixturesAndFittingsDetails = Some(RentIncludeFixturesAndFittingsDetails(AnswerYes)),
+    rentOpenMarketValueDetails = Some(RentOpenMarketValueDetails(AnswerYes))
   )
 
   val prefilledAboutLeaseOrAgreementPartOneNo = AboutLeaseOrAgreementPartOne(
@@ -213,6 +216,8 @@ trait FakeObjects {
     Some(prefilledLeaseOrAgreementYearsDetailsNo),
     Some(prefilledCurrentRentPayableWithin12Months),
     Some(prefilledAnnualRent),
-    rentIncludeTradeServicesDetails = Some(RentIncludeTradeServicesDetails(AnswerNo))
+    rentIncludeTradeServicesDetails = Some(RentIncludeTradeServicesDetails(AnswerNo)),
+    rentIncludeFixturesAndFittingsDetails = Some(RentIncludeFixturesAndFittingsDetails(AnswerNo)),
+    rentOpenMarketValueDetails = Some(RentOpenMarketValueDetails(AnswerNo))
   )
 }

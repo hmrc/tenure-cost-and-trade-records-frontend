@@ -16,6 +16,13 @@
 
 package models.submissions.Form6010
 
+import models.submissions.common.AnswersYesNo
+import play.api.libs.json.Json
+
 case class CanRentBeReducedOnReviewDetails(
-  rentReducedOnReview: RentReducedOnReviews
+  rentReducedOnReview: AnswersYesNo
 )
+
+object CanRentBeReducedOnReviewDetails {
+  implicit val format = Json.format[CanRentBeReducedOnReviewDetails]
+}

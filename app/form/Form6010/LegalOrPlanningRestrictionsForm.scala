@@ -25,7 +25,7 @@ object LegalOrPlanningRestrictionsForm {
 
   val legalPlanningRestrictionsForm = Form(
     mapping(
-      "legalPlanningRestrictions" -> legalPlanningRestrictionsType
+      "legalPlanningRestrictions" -> yesNoType
     )(LegalOrPlanningRestrictions.apply)(LegalOrPlanningRestrictions.unapply)
   )
 }

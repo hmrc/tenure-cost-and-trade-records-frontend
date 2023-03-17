@@ -21,7 +21,7 @@ import form.aboutYourLeaseOrTenure.RentIncludeTradeServicesForm.rentIncludeTrade
 import navigation.AboutYourLeaseOrTenureNavigator
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import models.submissions.aboutLeaseOrAgreement.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne
+import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne
 import navigation.identifiers.RentIncludeTradeServicesPageId
 import play.api.i18n.I18nSupport
 import repositories.SessionRepo

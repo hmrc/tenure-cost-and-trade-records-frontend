@@ -16,35 +16,59 @@
 
 package controllers.Form6010
 
+import form.Form6010.HowIsCurrentRentFixedForm.howIsCurrentRentFixedForm
 import form.Form6010.RentPayableVaryAccordingToGrossOrNetDetailsForm.rentPayableVaryAccordingToGrossOrNetInformationForm
-import form.Form6010.RentPayableVaryOnQuantityOfBeersForm.rentPayableVaryOnQuantityOfBeersForm
+import actions.WithSessionRefiner
+import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo.updateAboutLeaseOrAgreementPartTwo
+import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.form.{rentPayableVaryAccordingToGrossOrNetDetails, rentPayableVaryOnQuantityOfBeers}
+import views.html.form.{howIsCurrentRentFixed, rentPayableVaryAccordingToGrossOrNetDetails}
 
-import javax.inject.{Inject, Singleton}
+import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
 
 @Singleton
 class RentPayableVaryAccordingToGrossOrNetDetailsController @Inject() (
   mcc: MessagesControllerComponents,
-  rentPayableVaryOnQuantityOfBeersView: rentPayableVaryOnQuantityOfBeers,
-  rentPayableVaryAccordingToGrossOrNetDetailsView: rentPayableVaryAccordingToGrossOrNetDetails
-) extends FrontendController(mcc) {
+  howIsCurrentRentFixedView: howIsCurrentRentFixed,
+  rentPayableVaryAccordingToGrossOrNetDetailsView: rentPayableVaryAccordingToGrossOrNetDetails,
+  withSessionRefiner: WithSessionRefiner,
+  @Named("session") val session: SessionRepo
+) extends FrontendController(mcc)
+    with I18nSupport {
 
-  def show: Action[AnyContent] = Action.async { implicit request =>
+  def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Future.successful(
-      Ok(rentPayableVaryAccordingToGrossOrNetDetailsView(rentPayableVaryAccordingToGrossOrNetInformationForm))
+      Ok(
+        rentPayableVaryAccordingToGrossOrNetDetailsView(
+          request.sessionData.aboutLeaseOrAgreementPartTwo
+            .flatMap(_.rentPayableVaryAccordingToGrossOrNetInformationDetails) match {
+            case Some(rentPayableVaryAccordingToGrossOrNetInformationDetails) =>
+              rentPayableVaryAccordingToGrossOrNetInformationForm.fillAndValidate(
+                rentPayableVaryAccordingToGrossOrNetInformationDetails
+              )
+            case _                                                            => rentPayableVaryAccordingToGrossOrNetInformationForm
+          }
+        )
+      )
     )
   }
 
-  def submit = Action.async { implicit request =>
+  def submit = (Action andThen withSessionRefiner).async { implicit request =>
     rentPayableVaryAccordingToGrossOrNetInformationForm
       .bindFromRequest()
       .fold(
         formWithErrors =>
           Future.successful(BadRequest(rentPayableVaryAccordingToGrossOrNetDetailsView(formWithErrors))),
-        data => Future.successful(Ok(rentPayableVaryOnQuantityOfBeersView(rentPayableVaryOnQuantityOfBeersForm)))
+        data => {
+          val updatedData = updateAboutLeaseOrAgreementPartTwo(
+            _.copy(rentPayableVaryAccordingToGrossOrNetInformationDetails = Some(data))
+          )
+          session.saveOrUpdate(updatedData)
+          Future.successful(Ok(howIsCurrentRentFixedView(howIsCurrentRentFixedForm)))
+        }
       )
   }
 

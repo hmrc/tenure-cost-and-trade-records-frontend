@@ -38,7 +38,6 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit)(implicit ec: Exec
       case _                                   =>
         controllers.aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.show()
     }
-
   }
 
   private def connectedToLandlordRouting: Session => Call = answers => {
@@ -88,6 +87,32 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit)(implicit ec: Exec
     }
   }
 
+  private def rentFixtureAndFittingsRouting: Session => Call = answers => {
+    answers.aboutLeaseOrAgreementPartOne.flatMap(
+      _.rentIncludeFixturesAndFittingsDetails.map(_.rentIncludeFixturesAndFittingsDetails.name)
+    ) match {
+      case Some("yes") => controllers.Form6010.routes.RentIncludeFixtureAndFittingsDetailsController.show()
+      case Some("no")  => controllers.Form6010.routes.RentOpenMarketValueController.show()
+      case _           =>
+        logger.warn(
+          s"Navigation for fixture and fittings reached without correct selection of conditions by controller"
+        )
+        throw new RuntimeException("Invalid option exception for fixture and fittings routing")
+    }
+  }
+
+  private def rentRentOpenMarketRouting: Session => Call = answers => {
+    answers.aboutLeaseOrAgreementPartOne.flatMap(_.rentOpenMarketValueDetails.map(_.rentOpenMarketValues.name)) match {
+      case Some("yes") => controllers.Form6010.routes.RentIncreaseAnnuallyWithRPIController.show()
+      case Some("no")  => controllers.Form6010.routes.WhatIsYourRentBasedOnController.show()
+      case _           =>
+        logger.warn(
+          s"Navigation for rent open market reached without correct selection of conditions by controller"
+        )
+        throw new RuntimeException("Invalid option exception for open market reached routing")
+    }
+  }
+
   override val routeMap: Map[Identifier, Session => Call] = Map(
     AboutTheLandlordPageId                   -> aboutYourLandlordRouting,
     ConnectedToLandlordPageId                -> connectedToLandlordRouting,
@@ -109,6 +134,11 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit)(implicit ec: Exec
     RentIncludeTradeServicesDetailsPageId    -> (_ =>
       controllers.Form6010.routes.RentIncludeFixtureAndFittingsController.show()
     ),
+    RentFixtureAndFittingsPageId             -> rentFixtureAndFittingsRouting,
+    RentFixtureAndFittingsDetailsPageId      -> (_ => controllers.Form6010.routes.RentOpenMarketValueController.show()),
+    RentOpenMarketPageId                     -> rentRentOpenMarketRouting,
+    WhatRentBasedOnPageId                    -> (_ => controllers.Form6010.routes.RentIncreaseAnnuallyWithRPIController.show()),
+    RentIncreaseByRPIPageId                  -> (_ => controllers.Form6010.routes.RentPayableVaryAccordingToGrossOrNetController.show()),
     CheckYourAnswersAboutYourLeaseOrTenureId -> (_ => controllers.routes.TaskListController.show())
   )
 }

@@ -18,13 +18,14 @@ package controllers.Form6010
 
 import actions.WithSessionRefiner
 import form.Form6010.RentIncludeFixtureAndFittingDetailsForm.rentIncludeFixtureAndFittingsDetailsForm
-import form.Form6010.RentOpenMarketValueForm.rentOpenMarketValuesForm
-import models.submissions.aboutLeaseOrAgreement.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne
+import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne
+import navigation.AboutYourLeaseOrTenureNavigator
+import navigation.identifiers.RentFixtureAndFittingsDetailsPageId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.form.{rentIncludeFixtureAndFittingsDetails, rentOpenMarketValue}
+import views.html.form.rentIncludeFixtureAndFittingsDetails
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
@@ -32,7 +33,7 @@ import scala.concurrent.Future
 @Singleton
 class RentIncludeFixtureAndFittingsDetailsController @Inject() (
   mcc: MessagesControllerComponents,
-  rentOpenMarketValueView: rentOpenMarketValue,
+  navigator: AboutYourLeaseOrTenureNavigator,
   rentIncludeFixtureAndFittingsDetailsView: rentIncludeFixtureAndFittingsDetails,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
@@ -62,7 +63,7 @@ class RentIncludeFixtureAndFittingsDetailsController @Inject() (
           val updatedData =
             updateAboutLeaseOrAgreementPartOne(_.copy(rentIncludeFixtureAndFittingsDetails = Some(data)))
           session.saveOrUpdate(updatedData)
-          Future.successful(Ok(rentOpenMarketValueView(rentOpenMarketValuesForm)))
+          Future.successful(Redirect(navigator.nextPage(RentFixtureAndFittingsDetailsPageId).apply(updatedData)))
         }
       )
   }

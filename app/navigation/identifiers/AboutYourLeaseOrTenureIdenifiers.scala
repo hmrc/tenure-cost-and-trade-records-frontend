@@ -54,6 +54,20 @@ case object RentIncludeTradeServicesDetailsPageId extends Identifier {
   override def toString: String = "rentIncludeTradeServicesDetailsPage"
 }
 
+case object RentFixtureAndFittingsPageId extends Identifier {
+  override def toString: String = "rentFixtureAndFittingsPage"
+}
+
+case object RentFixtureAndFittingsDetailsPageId extends Identifier {
+  override def toString: String = "rentFixtureAndFittingsDetailsPage"
+}
+
+case object RentOpenMarketPageId extends Identifier { override def toString: String = "rentOpenMarketPage" }
+
+case object WhatRentBasedOnPageId extends Identifier { override def toString: String = "whatRentBasedOnPage" }
+
+case object RentIncreaseByRPIPageId extends Identifier { override def toString: String = "rentIncreaseByRPIPage" }
+
 // 6011 page only
 case object TenancyLeaseAgreementExpirePageId extends Identifier {
   override def toString: String = "tenancyLeaseAgreementExpirePage"

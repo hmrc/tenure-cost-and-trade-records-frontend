@@ -16,28 +16,31 @@
 
 package models.submissions.Form6010
 
-import models.{NamedEnum, NamedEnumSupport}
+import models.{EnumFormat, NamedEnum, NamedEnumSupport}
+import play.api.libs.json.Format
 
 sealed trait CurrentRentFixed extends NamedEnum {
-  val key = "outsideRepairs"
+  override def key: String = "outsideRepairs"
 }
 object CurrentRentFixedNewLeaseAgreement extends CurrentRentFixed {
-  val name = "newLeaseAgreement"
+  override def name: String = "newLeaseAgreement"
 }
 object CurrentRentFixedInterimRent extends CurrentRentFixed {
-  val name = "interimRent"
+  override def name: String = "interimRent"
 }
 object CurrentRentFixedRentReview extends CurrentRentFixed {
-  val name = "rentReview"
+  override def name: String = "rentReview"
 }
 object CurrentRentFixedRenewalLeaseTenancy extends CurrentRentFixed {
-  val name = "renewalLeaseTenancy"
+  override def name: String = "renewalLeaseTenancy"
 }
 object CurrentRentFixedSaleLeaseback extends CurrentRentFixed {
-  val name = "saleLeaseback"
+  override def name: String = "saleLeaseback"
 }
 
-object CurrentRentFix extends NamedEnumSupport[CurrentRentFixed] {
+object CurrentRentFixed extends NamedEnumSupport[CurrentRentFixed] {
+  implicit val format: Format[CurrentRentFixed] = EnumFormat(CurrentRentFixed)
+
   val all = List(
     CurrentRentFixedNewLeaseAgreement,
     CurrentRentFixedInterimRent,
@@ -45,4 +48,6 @@ object CurrentRentFix extends NamedEnumSupport[CurrentRentFixed] {
     CurrentRentFixedRenewalLeaseTenancy,
     CurrentRentFixedSaleLeaseback
   )
+
+  val key = all.head.key
 }
