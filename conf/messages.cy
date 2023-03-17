@@ -45,16 +45,16 @@ label.no.na = No
 ###############
 help.date.day.month.year = Please format in dd/mm/yyyy
 help.date.month.year = Please format in mm/yyyy
+help.date.day.month = Please format in dd/mm
 label.date.day = Day
 label.date.month = Month
 label.date.year = Year
-label.buildingNameNumber=Address line 1
-label.street1=Address line 2
-label.townCity=Town or city
+label.buildingNameNumber = Address line 1
+label.street1 = Address line 2
+label.town = Town or city
 label.county = County
-label.postcode=Postcode
+label.postcode = Postcode
 label.any.apply = Select any that apply
-
 #Section names
 ##############
 label.section.checkBeforeStart = Check before you start
@@ -709,6 +709,7 @@ error.date_before_1900 = Date must be on or after 1 January 1900
 error.date_before_1900.firstOccupationDate = Date must be on or after 1 January 1900
 error.duration.years = Years must be a number between 0 and 999
 error.duration.months = Months must be a number between 0 and 12
+error.duration.days = Days must be a number between 0 and 31
 error.months.required = Enter months amount
 error.years.required = Enter years amount
 error.currentOccupierName.required = Please select how the the property is currently used
