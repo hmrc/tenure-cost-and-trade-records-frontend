@@ -55,7 +55,7 @@
 ) {
 
  @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.CurrentRentPayableWithin12MonthsController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
-
+  
   @govukRadios(
    Radios(
     name = "rentPayable",

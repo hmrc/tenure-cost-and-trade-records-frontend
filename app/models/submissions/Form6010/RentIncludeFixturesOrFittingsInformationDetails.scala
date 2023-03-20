@@ -18,10 +18,10 @@ package models.submissions.Form6010
 
 import play.api.libs.json.Json
 
-import java.time.LocalDate
+case class RentIncludeFixturesOrFittingsInformationDetails(
+  sumIncludedInRent: Option[BigDecimal]
+)
 
-case class IntervalsOfRentReview(currentRentWithin12Months: String, intervalsOfRentReview: Option[LocalDate])
-
-object IntervalsOfRentReview {
-  implicit val format = Json.format[IntervalsOfRentReview]
+object RentIncludeFixturesOrFittingsInformationDetails {
+  implicit val format = Json.format[RentIncludeFixturesOrFittingsInformationDetails]
 }

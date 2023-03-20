@@ -182,7 +182,6 @@ propertyCurrentlyUsed.pubRestaurant = Pub or restaurant
 propertyCurrentlyUsed.hotel = Hotel
 propertyCurrentlyUsed.other = Other
 propertyCurrentlyUsedOther.textbox = Please give details if the property has another use, or is vacant
-
 propertyCurrentlyUsed.healthFarm = Health Farm
 propertyCurrentlyUsed.lodgeAndRestaurant = Lodge and restaurant
 propertyCurrentlyUsed.conferenceCentre = Conference centre
@@ -277,7 +276,6 @@ hint.currentAnnualRent = For example, 32000
 #RENT OPEN MARKET VALUE
 #######################
 rentOpenMarketValue.heading = Is the rent based on the open market value?
-label.rentOpenMarketValue = Is the rent based on the open market value?
 
 #DOES THE RENT PAYABLE
 ######################
@@ -343,12 +341,12 @@ error.sharedResponsibilities.maxLength = This must be 2000 characters or fewer
 #RENT INCLUDE TRADE SERVICES
 ############################
 rentIncludeTradeServices.heading = Does the rent include any trade services provided by the landlord?
-label.rentIncludeTradeServices = Does the rent include any trade services provided by the landlord?
 hint.rentIncludeTradeServices = For example, maintenance of trade fixtures and fittings, cellar services, marketing, staff training etc.
 
 #RENT INCLUDE TRADE SERVICES DETAILS
 ####################################
 rentIncludeTradeServicesDetails.heading = Where specifically itemised, what sum is included in the rent (excluding VAT) to cover services provided by the landlord?
+rentIncludeTradeServicesDetails.hint = Leave blank if this is not specifically itemised
 label.describeServices = Describe services provided
 error.required.sumIncludedInRent = Please provide a value
 error.invalid_currency.sumIncludedInRent= Please provide a number
@@ -364,12 +362,13 @@ error.invalid_currency.rentIncludeFixturesAndFittings = Please provide a number
 #RENT INCLUDE FIXTURES AND FITTINGS DETAILS
 ###########################################
 rentIncludeFixturesAndFittingsDetails.heading = Where specifically itemised, what sum is included in the rent (excluding VAT) to cover equipment provided by the landlord?
+rentIncludeFixturesAndFittingsDetails.hint = Leave blank if this is not specifically itemised
 error.required.rentIncludeFixturesAndFittingsDetails = Please provide a value
 error.invalid_currency.rentIncludeFixturesAndFittingsDetails = Please provide a number
 
 #INCENTIVES, PAYMENTS AND CONDITIONS
 ####################################
-incentivesPaymentsConditions.heading = Was a former lease or agreement surrendered early as a condition of the present one being granted?
+formerLeaseSurrendered.heading = Was a former lease or agreement surrendered early as a condition of the present one being granted?
 
 #CAN RENT BE REDUCED ON REVIEW
 ##############################
@@ -382,7 +381,7 @@ hint.capitalSumOrPremium = The sum could be paid to the landlord or a previous l
 
 #PAYMENT WHEN LEASE IS GRANTED
 ##############################
-receivePaymentWhenLeaseGranted.heading = Did you receive any payment when the lease was granted, or following assignment of the lease or agreement?
+receivePaymentWhenLeaseGranted.heading = Did you receive any payment when the lease was granted (if the rent has not been reviewed in the lease), or following assignment of the lease or agreement?
 
 #RENT INCREASE ANNUALLY WITH RPI
 ################################
@@ -406,6 +405,7 @@ label.rentReview = At a rent review
 label.renewalLeaseTenancy = On a renewal of a lease or tenancy
 label.saleLeaseback = As part of a sale and leaseback transaction
 label.rentActuallyAgreed = When was the rent actually agreed or set?
+label.rentActuallyAgreed.help = For example, 27 9 2017
 error.rentActuallyAgreed.day.required = The date must include a day
 error.rentActuallyAgreed.month.required = The date must include a month
 error.rentActuallyAgreed.year.required = The date must include a year
@@ -467,9 +467,8 @@ error.tenantsAdditionsDisregardedDetails.maxLength = This must be 2000 character
 
 ##LEGAL PLANNING RESTRICTIONS
 #############################
-legalPlanningRestrictions.heading = About your lease or agreement
-label.legalPlanningRestrictions = Are there any legal or planning restrictions, unusual terms or conditions in the lease or agreement that may have affected the rent payable?
-hint.legalPlanningRestrictions = For example, a break clause, contracting out of the Landlord and Tenant Act, etc
+legalPlanningRestrictions.heading = Are there any legal or planning restrictions, unusual terms or conditions in the lease or agreement that may have affected the rent payable?
+hint.legalPlanningRestrictions = For example, a break clause, contracting out of the Landlord and Tenant Act
 
 ##LEGAL PLANNING RESTRICTIONS DETAILS
 ##############################
@@ -485,13 +484,17 @@ label.firstOccupy = When did you first occupy the property?
 label.financialYear =When does your current financial year end?
 error.firstOccupy.month.required = The date the property was first occupied must include a month
 error.firstOccupy.year.required = The date the property was first occupied must include a year
+error.financialYear.day.required = The date the financial years ends must include a day
 error.financialYear.month.required = The date the financial years ends must include a month
 error.financialYear.year.required = The date the financial years ends must include a year
+label.firstOccupy.help = For example, 6 2015
+label.financialYear.help = If your financial year end changed within the last 3 years, you can declare the former dates on the next page
 
 ##CURRENT RENT FIRST PAID
 #########################
 currentRentFirstPaid.heading = When was the current rent first paid under the terms of the current lease or agreement?
 label.currentRentFirstPaid = Disregard alterations solely due to changes in the amount of rates or services payable
+label.currentRentFirstPaid.help = For example, 27 9 2017
 
 ##CURRENT LEASE OR AGREEMENT BEGIN
 ##################################
@@ -502,12 +505,14 @@ suffix.grantedFor = months
 error.empty.required = Please enter how long it was granted for
 error.leaseBegin.month.required = The date the lease began must include a month
 error.leaseBegin.year.required = The date the lease began must include a year
+label.currentRentFirstPaid.help = For example, 9 2017
 
 ##INTERVALS OF RENT REVIEW
 ##########################
 intervalsOfRentReview.heading = At what intervals is the rent reviewed under the terms of the lease or agreement?
 hint.intervalsOfRentReview = Do not include any changes to your rent linked to indexes such as the RPI, or your sales. For example, rent is reviewed annually, every two years, every three years.
 label.nextReview = When is the next rent review due?
+label.nextReview.help = For example, 27 9 2017 - leave blank if not applicable
 error.nextReview.day.required = The date must include a day
 error.nextReview.month.required = The date must include a month
 error.nextReview.year.required = The date must include a year
@@ -548,6 +553,7 @@ hint.aboutYou = If you’re renting or leasing the property, even as a charity o
 #TASK LIST
 ##########
 taskList.heading = Declaration summary
+taskList.subHeading = You can save your declaration and come back later. You have 30 days from the first time you save to complete this declaration or your information will be deleted.
 declaration.heading = Now send your declaration
 declaration.information = By submitting this declaration you are confirming that, to the best of your knowledge, the details you are providing are correct.
 hint.declaration = You can be taken to court if you submit false information
@@ -632,8 +638,8 @@ premisesLicenseGrantedInformation.heading = Give details of your premises licenc
 ###########################################
 connectedToLandlord.heading = Other than contractually, are you connected to the landlord in any way?
 
-#CONNECTED TO LANDLORD DETAILS
-###########################################
+# Connected To Landlord Details
+###############################
 connectedToLandlordDetails.heading = Describe your relationship to the landlord
 
 #CHECK YOUR ANSWERS

@@ -21,6 +21,8 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
 @import uk.gov.hmrc.hmrcfrontend.views.Aliases.CurrencyInput
 @import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcCurrencyInput
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Hint
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Text
 
 @this(layout: Layout,
         govukButton: GovukButton,
@@ -54,7 +56,7 @@
     value = theForm("sumIncludedInRent").value,
     classes = "govuk-input--width-10 total-annual-rent",
     autocomplete = Some("off"),
-    errorMessage = theForm.errors.asTextErrorMessageForField("sumIncludedInRent")
+    hint = Some(Hint(content = Text(messages("rentIncludeTradeServicesDetails.hint")))),
    )
   )
 
