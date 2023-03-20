@@ -16,9 +16,6 @@
 
 package form.Form6010
 
-import form.Errors
-import form.MappingSupport.currencyMapping
-import models.AnnualRent
 import models.submissions.Form6010.RentIncludeFixturesOrFittingsInformationDetails
 import play.api.data.Form
 import play.api.data.Forms.{bigDecimal, mapping, optional}
