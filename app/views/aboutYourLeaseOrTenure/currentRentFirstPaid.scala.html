@@ -63,7 +63,14 @@
 
   <p class="govuk-body">@messages("label.currentRentFirstPaid")</p>
 
-  @includes.dateFields(form = theForm, field = "currentRentFirstPaid", govukDate = govukDateInput, showDays = true, showFieldSet = false)
+  @includes.dateFields(
+   form = theForm,
+   field = "currentRentFirstPaid",
+   govukDate = govukDateInput,
+   showDays = true,
+   showFieldSet = false,
+   helpText = messages("label.currentRentFirstPaid.help")
+  )
 
   @includes.continueButton(govukButton)
 

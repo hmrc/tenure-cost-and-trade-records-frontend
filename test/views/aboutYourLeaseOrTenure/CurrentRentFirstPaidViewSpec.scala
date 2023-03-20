@@ -52,7 +52,7 @@ class CurrentRentFirstPaidViewSpec extends QuestionViewBehaviours[CurrentRentFir
     "contain date format hint for currentRentFirstPaid-hint" in {
       val doc             = asDocument(createViewUsingForm(form))
       val firstOccupyHint = doc.getElementById("currentRentFirstPaid-hint").text()
-      assert(firstOccupyHint == messages("help.date.day.month.year"))
+      assert(firstOccupyHint == messages("label.currentRentFirstPaid.help"))
     }
 
     "contain date field for the value currentRentFirstPaid.day" in {

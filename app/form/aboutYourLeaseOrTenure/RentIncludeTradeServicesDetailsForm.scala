@@ -16,17 +16,16 @@
 
 package form.aboutYourLeaseOrTenure
 
-import form.MappingSupport.currencyMapping
 import models.submissions.aboutYourLeaseOrTenure.RentIncludeTradeServicesInformationDetails
 import play.api.data.Form
-import play.api.data.Forms.{default, mapping, text}
+import play.api.data.Forms.{bigDecimal, default, mapping, optional, text}
 import play.api.data.validation.Constraints.{maxLength, nonEmpty}
 
 object RentIncludeTradeServicesDetailsForm {
 
-  val rentIncludeTradeServicesDetailsForm = Form(
+  val rentIncludeTradeServicesDetailsForm: Form[RentIncludeTradeServicesInformationDetails] = Form(
     mapping(
-      "sumIncludedInRent" -> currencyMapping(".rentIncludeFixturesAndFittingsDetails"),
+      "sumIncludedInRent" -> optional(bigDecimal),
       "describeServices"  ->
         default(text, "").verifying(
           nonEmpty(errorMessage = "error.describeServices.required"),

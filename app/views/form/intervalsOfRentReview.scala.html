@@ -52,7 +52,13 @@
       hint = "hint.intervalsOfRentReview"
     )
 
-    @includes.dateFields(form = theForm, field = "nextReview", govukDate = govukDateInput, showDays = true)
+    @includes.dateFields(
+        form = theForm,
+        field = "nextReview",
+        govukDate = govukDateInput,
+        showDays = true,
+        helpText = messages("label.nextReview.help")
+    )
 
     @includes.continueButton(govukButton)
   }

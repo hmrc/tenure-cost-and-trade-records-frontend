@@ -16,9 +16,11 @@
 
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
-@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
 @import uk.gov.hmrc.hmrcfrontend.views.Aliases.CurrencyInput
 @import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcCurrencyInput
+@import models.submissions.Form6010.RentIncludeFixturesOrFittingsInformationDetails
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Hint
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Text
 
 @this(layout: Layout,
         govukButton: GovukButton,
@@ -26,7 +28,7 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[AnnualRent])(implicit request: Request[_], messages: Messages)
+@(theForm: Form[RentIncludeFixturesOrFittingsInformationDetails])(implicit request: Request[_], messages: Messages)
 
 @layout(
  pageHeading = messages("rentIncludeFixturesAndFittingsDetails.heading"),
@@ -50,7 +52,7 @@
     value = theForm("rentIncludeFixturesAndFittingsDetails").value,
     classes = "govuk-input--width-10 total-annual-rent",
     autocomplete = Some("off"),
-    errorMessage = theForm.errors.asTextErrorMessageForField("rentIncludeFixturesAndFittingsDetails"),
+    hint = Some(Hint(content = Text(messages("rentIncludeFixturesAndFittingsDetails.hint"))))
    )
   )
 

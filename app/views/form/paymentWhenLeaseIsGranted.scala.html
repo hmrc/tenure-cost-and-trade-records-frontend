@@ -29,6 +29,8 @@
 @import uk.gov.hmrc.govukfrontend.views.Aliases.RadioItem
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Fieldset
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Legend
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Hint
+
 
 @this(layout: Layout,
         govukButton: GovukButton,
@@ -40,7 +42,6 @@
         govukCharacterCount: GovukCharacterCount,
         formWithCSRF: FormWithCSRF
 )
-
 
 @(theForm: Form[PaymentWhenLeaseIsGrantedDetails])(implicit request: Request[_], messages: Messages)
 
@@ -66,6 +67,7 @@
     )
     ),
     errorMessage =  theForm.errors.asTextErrorMessageForField("receivePaymentWhenLeaseGranted"),
+    hint = Some(Hint(content = Text(messages("receivePaymentWhenLeaseGranted.hint")))),
     fieldset = Option(
      Fieldset(
       legend = Option(

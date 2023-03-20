@@ -38,7 +38,7 @@ case class AboutLeaseOrAgreementPartOne(
   rentIncludeTradeServicesDetails: Option[RentIncludeTradeServicesDetails] = None,
   rentIncludeTradeServicesInformation: Option[RentIncludeTradeServicesInformationDetails] = None,
   rentIncludeFixturesAndFittingsDetails: Option[RentIncludeFixturesAndFittingsDetails] = None,
-  rentIncludeFixtureAndFittingsDetails: Option[AnnualRent] = None,
+  rentIncludeFixtureAndFittingsDetails: Option[RentIncludeFixturesOrFittingsInformationDetails] = None,
   rentOpenMarketValueDetails: Option[RentOpenMarketValueDetails] = None,
   whatIsYourCurrentRentBasedOnDetails: Option[WhatIsYourCurrentRentBasedOnDetails] = None,
   rentIncreasedAnnuallyWithRPIDetails: Option[RentIncreasedAnnuallyWithRPIDetails] = None,

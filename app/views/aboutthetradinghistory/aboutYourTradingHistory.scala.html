@@ -22,8 +22,7 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukFieldset
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
-
-
+@import util.DateUtil
 
 @this(layout: Layout,
         govukButton: GovukButton,
@@ -32,7 +31,6 @@
         govukFieldset: GovukFieldset,
         formWithCSRF: FormWithCSRF
 )
-
 
 @(theForm: Form[AboutYourTradingHistory], backLink: String)(implicit request: Request[_], messages: Messages)
 
@@ -43,9 +41,21 @@
 
   <p class="govuk-body">@messages("aboutYourTradingHistory.subheader")</p>
 
-  @includes.dateFields(form = theForm, field = "firstOccupy", label = "label.firstOccupy", govukDate = govukDateInput)
+  @includes.dateFields(
+      form = theForm,
+      field = "firstOccupy",
+      label = "label.firstOccupy",
+      govukDate = govukDateInput,
+      helpText = messages("label.firstOccupy.help")
+  )
 
-  @includes.dateFields(form = theForm, field = "financialYear", label = "label.financialYear", govukDate = govukDateInput, hideYear = true)
+  @includes.dateFields(
+      form = theForm,
+      field = "financialYear",
+      label = "label.financialYear",
+      govukDate = govukDateInput,
+      hideYear = true,
+      helpText = messages("label.financialYear.help"))
 }
 
 @layout(
