@@ -14,67 +14,63 @@
  * limitations under the License.
  */
 
-package views.abouttheproperty
+package views.aboutYourLeaseOrTenure
 
-import form.abouttheproperty.EnforcementActionForm
-import models.submissions.abouttheproperty.EnforcementActionsYes
-import models.submissions.abouttheproperty.{EnforcementAction, EnforcementActionsNo, EnforcementActionsYes}
+import form.Form6010.LegalOrPlanningRestrictionsForm
+import models.submissions.Form6010.LegalOrPlanningRestrictions
+import models.submissions.common.{AnswerNo, AnswerYes}
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class EnforcementActionBeenTakenViewSpec extends QuestionViewBehaviours[EnforcementAction] {
+class LegalOrPlanningRestrictionsViewSpec extends QuestionViewBehaviours[LegalOrPlanningRestrictions] {
 
-  def enforcementActionsTakenView = app.injector.instanceOf[views.html.abouttheproperty.enforcementActionBeenTaken]
+  val messageKeyPrefix = "legalPlanningRestrictions"
 
-  val messageKeyPrefix = "enforcementActionHasBeenTaken"
+  override val form = LegalOrPlanningRestrictionsForm.legalPlanningRestrictionsForm
 
-  override val form = EnforcementActionForm.enforcementActionForm
+  def createView = () => legalOrPlanningRestrictionsView(form)(fakeRequest, messages)
 
-  val backLink = controllers.abouttheproperty.routes.PremisesLicenseConditionsController.show().url
+  def createViewUsingForm = (form: Form[LegalOrPlanningRestrictions]) =>
+    legalOrPlanningRestrictionsView(form)(fakeRequest, messages)
 
-  def createView = () => enforcementActionsTakenView(form, backLink)(fakeRequest, messages)
-
-  def createViewUsingForm = (form: Form[EnforcementAction]) =>
-    enforcementActionsTakenView(form, backLink)(fakeRequest, messages)
-
-  "Enforcement Action view" must {
+  "Legal or planning restrictions view" must {
 
     behave like normalPage(createView, messageKeyPrefix)
 
-    "has a link marked with back.link.label leading to the website for property Page" in {
+    "has a link marked with back.link.label leading to payment when lease granted Page" in {
       val doc          = asDocument(createView())
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText mustBe messages("back.link.label")
       val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.abouttheproperty.routes.PremisesLicenseConditionsController.show().url
+      backlinkUrl mustBe controllers.Form6010.routes.PaymentWhenLeaseIsGrantedController.show.url
     }
 
     "Section heading is visible" in {
-      val doc         = asDocument(createViewUsingForm(form)) // govuk-caption-m
+      val doc         = asDocument(createViewUsingForm(form))
       val sectionText = doc.getElementsByClass("govuk-caption-m").text()
-      assert(sectionText == messages("label.section.aboutTheProperty"))
+      assert(sectionText == messages("label.section.aboutYourLeaseOrTenure"))
     }
 
-    "contain radio buttons for the value yes" in {
+    "contain radio buttons for legal or planning restrictions with the value yes" in {
       val doc = asDocument(createViewUsingForm(form))
       assertContainsRadioButton(
         doc,
-        "enforcementAction",
-        "enforcementAction",
-        EnforcementActionsYes.name,
+        "legalPlanningRestrictions",
+        "legalPlanningRestrictions",
+        AnswerYes.name,
         false
       )
       assertContainsText(doc, messages("label.yes"))
     }
 
-    "contain radio buttons for the value no" in {
+    "contain radio buttons for legal or planning restrictions with the value no" in {
       val doc = asDocument(createViewUsingForm(form))
       assertContainsRadioButton(
         doc,
-        "enforcementAction-2",
-        "enforcementAction",
-        EnforcementActionsNo.name,
+        "legalPlanningRestrictions-2",
+        "legalPlanningRestrictions",
+        AnswerNo.name,
         false
       )
       assertContainsText(doc, messages("label.no"))

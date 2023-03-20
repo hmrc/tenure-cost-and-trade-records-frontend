@@ -23,7 +23,7 @@ import play.api.test.Helpers._
 import play.twirl.api.HtmlFormat
 import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
-import views.html.abouttheproperty.aboutTheProperty
+import views.html.aboutyouandtheproperty.aboutTheProperty
 import form.abouttheproperty.AboutThePropertyForm.aboutThePropertyForm
 import models.submissions.abouttheproperty.CurrentPropertyPublicHouse
 

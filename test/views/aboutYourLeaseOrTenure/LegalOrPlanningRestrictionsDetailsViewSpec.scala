@@ -14,43 +14,46 @@
  * limitations under the License.
  */
 
-package views.abouttheproperty
+package views.aboutYourLeaseOrTenure
 
-import form.abouttheproperty.LicensableActivitiesInformationForm
-import models.submissions.abouttheproperty.LicensableActivitiesInformationDetails
+import form.Form6010.LegalOrPlanningRestrictionsDetailsForm.legalOrPlanningRestrictionsDetailsForm
+import models.submissions.Form6010.LegalOrPlanningRestrictionsDetails
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class LicenceActivitiesDetailsViewSpec extends QuestionViewBehaviours[LicensableActivitiesInformationDetails] {
+class LegalOrPlanningRestrictionsDetailsViewSpec extends QuestionViewBehaviours[LegalOrPlanningRestrictionsDetails] {
 
-  def licensableActivitiesDetailsView = app.injector.instanceOf[views.html.abouttheproperty.licensableActivitiesDetails]
+  val messageKeyPrefix = "legalOrPlanningRestrictionsDetails"
 
-  val messageKeyPrefix = "licensableActivitiesDetails"
+  override val form = legalOrPlanningRestrictionsDetailsForm
 
-  override val form = LicensableActivitiesInformationForm.licensableActivitiesDetailsForm
+  def createView = () => legalOrPlanningRestrictionsDetailsView(form)(fakeRequest, messages)
 
-  def createView = () => licensableActivitiesDetailsView(form)(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[LegalOrPlanningRestrictionsDetails]) =>
+    legalOrPlanningRestrictionsDetailsView(form)(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[LicensableActivitiesInformationDetails]) =>
-    licensableActivitiesDetailsView(form)(fakeRequest, messages)
-
-  "Licence Activities details view" must {
+  "Legal or planning restrictions view" must {
 
     behave like normalPage(createView, messageKeyPrefix)
 
-    "has a link marked with back.link.label leading to the licence activities Page" in {
+    "has a link marked with back.link.label leading to the tenants additions disregarded Page" in {
       val doc          = asDocument(createView())
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText mustBe messages("back.link.label")
       val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.abouttheproperty.routes.LicensableActivitiesController.show().url
+      backlinkUrl mustBe controllers.Form6010.routes.LegalOrPlanningRestrictionsController.show.url
     }
 
     "Section heading is visible" in {
-      val doc         = asDocument(createViewUsingForm(form)) // govuk-caption-m
+      val doc         = asDocument(createViewUsingForm(form))
       val sectionText = doc.getElementsByClass("govuk-caption-m").text()
-      assert(sectionText == messages("label.section.aboutTheProperty"))
+      assert(sectionText == messages("label.section.aboutYourLeaseOrTenure"))
+    }
+
+    "contain an input for legal or planning restriction details" in {
+      val doc = asDocument(createViewUsingForm(form))
+      assertRenderedById(doc, "legalOrPlanningRestrictionsDetails")
     }
 
     "contain save and continue button with the value Save and Continue" in {

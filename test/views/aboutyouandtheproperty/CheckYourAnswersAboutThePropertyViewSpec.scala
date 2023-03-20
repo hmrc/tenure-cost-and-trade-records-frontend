@@ -14,27 +14,31 @@
  * limitations under the License.
  */
 
-package views.abouttheproperty
+package views.aboutyouandtheproperty
 
-import form.abouttheproperty.LicensableActivitiesForm
-import models.submissions.abouttheproperty.{BuildingOperationHaveAWebsiteNo, BuildingOperationHaveAWebsiteYes, LicensableActivities}
+import form.abouttheproperty.CheckYourAnswersAboutThePropertyForm
+import models.submissions.abouttheproperty.CheckYourAnswersAboutYourProperty
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class LicensableActivitiesViewSpec extends QuestionViewBehaviours[LicensableActivities] {
+class CheckYourAnswersAboutThePropertyViewSpec extends QuestionViewBehaviours[CheckYourAnswersAboutYourProperty] {
 
-  def licencableActivitiesView = app.injector.instanceOf[views.html.abouttheproperty.licensableActivities]
+  def checkYourAnswersAboutThePropertyView =
+    app.injector.instanceOf[views.html.aboutyouandtheproperty.checkYourAnswersAboutTheProperty]
 
-  val messageKeyPrefix = "licensableActivities"
+  val messageKeyPrefix = "checkYourAnswersAboutTheProperty"
 
-  override val form = LicensableActivitiesForm.licensableActivitiesForm
+  override val form = CheckYourAnswersAboutThePropertyForm.checkYourAnswersAboutThePropertyForm
 
-  def createView = () => licencableActivitiesView(form)(fakeRequest, messages)
+  val backLink = controllers.abouttheproperty.routes.PremisesLicenseGrantedController.show().url
 
-  def createViewUsingForm = (form: Form[LicensableActivities]) => licencableActivitiesView(form)(fakeRequest, messages)
+  def createView = () => checkYourAnswersAboutThePropertyView(form, backLink)(fakeRequest, messages)
 
-  "Property licence activities view" must {
+  def createViewUsingForm = (form: Form[CheckYourAnswersAboutYourProperty]) =>
+    checkYourAnswersAboutThePropertyView(form, backLink)(fakeRequest, messages)
+
+  "Check Your Answers About The Property view" must {
 
     behave like normalPage(createView, messageKeyPrefix)
 
@@ -43,37 +47,13 @@ class LicensableActivitiesViewSpec extends QuestionViewBehaviours[LicensableActi
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText mustBe messages("back.link.label")
       val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.abouttheproperty.routes.WebsiteForPropertyController.show().url
+      backlinkUrl mustBe controllers.abouttheproperty.routes.PremisesLicenseGrantedController.show().url
     }
 
     "Section heading is visible" in {
       val doc         = asDocument(createViewUsingForm(form)) // govuk-caption-m
       val sectionText = doc.getElementsByClass("govuk-caption-m").text()
       assert(sectionText == messages("label.section.aboutTheProperty"))
-    }
-
-    "contain radio buttons for the value yes" in {
-      val doc = asDocument(createViewUsingForm(form))
-      assertContainsRadioButton(
-        doc,
-        "licensableActivities",
-        "licensableActivities",
-        BuildingOperationHaveAWebsiteYes.name,
-        false
-      )
-      assertContainsText(doc, messages("label.yes"))
-    }
-
-    "contain radio buttons for the value no" in {
-      val doc = asDocument(createViewUsingForm(form))
-      assertContainsRadioButton(
-        doc,
-        "licensableActivities-2",
-        "licensableActivities",
-        BuildingOperationHaveAWebsiteNo.name,
-        false
-      )
-      assertContainsText(doc, messages("label.no"))
     }
 
     "contain save and continue button with the value Save and Continue" in {

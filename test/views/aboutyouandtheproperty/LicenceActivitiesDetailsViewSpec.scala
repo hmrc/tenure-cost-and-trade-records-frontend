@@ -14,39 +14,38 @@
  * limitations under the License.
  */
 
-package views.abouttheproperty
+package views.aboutyouandtheproperty
 
-import form.abouttheproperty.EnforcementActionDetailsForm
-import models.submissions.abouttheproperty.EnforcementActionHasBeenTakenInformationDetails
+import form.abouttheproperty.LicensableActivitiesInformationForm
+import models.submissions.abouttheproperty.LicensableActivitiesInformationDetails
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class EnforcementActionBeenTakenDetailsViewSpec
-    extends QuestionViewBehaviours[EnforcementActionHasBeenTakenInformationDetails] {
+class LicenceActivitiesDetailsViewSpec extends QuestionViewBehaviours[LicensableActivitiesInformationDetails] {
 
-  def enforcemenntActionBeenTakenDetails =
-    app.injector.instanceOf[views.html.abouttheproperty.enforcementActionBeenTakenDetails]
+  def licensableActivitiesDetailsView =
+    app.injector.instanceOf[views.html.aboutyouandtheproperty.licensableActivitiesDetails]
 
-  val messageKeyPrefix = "enforcementActionHasBeenTakenDetails"
+  val messageKeyPrefix = "licensableActivitiesDetails"
 
-  override val form = EnforcementActionDetailsForm.enforcementActionDetailsForm
+  override val form = LicensableActivitiesInformationForm.licensableActivitiesDetailsForm
 
-  def createView = () => enforcemenntActionBeenTakenDetails(form)(fakeRequest, messages)
+  def createView = () => licensableActivitiesDetailsView(form)(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[EnforcementActionHasBeenTakenInformationDetails]) =>
-    enforcemenntActionBeenTakenDetails(form)(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[LicensableActivitiesInformationDetails]) =>
+    licensableActivitiesDetailsView(form)(fakeRequest, messages)
 
-  "Enforcement action taken details view" must {
+  "Licence Activities details view" must {
 
     behave like normalPage(createView, messageKeyPrefix)
 
-    "has a link marked with back.link.label leading to the enforcement action Page" in {
+    "has a link marked with back.link.label leading to the licence activities Page" in {
       val doc          = asDocument(createView())
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText mustBe messages("back.link.label")
       val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.abouttheproperty.routes.EnforcementActionBeenTakenController.show().url
+      backlinkUrl mustBe controllers.abouttheproperty.routes.LicensableActivitiesController.show().url
     }
 
     "Section heading is visible" in {

@@ -56,6 +56,7 @@ label.town = Town or city
 label.county = County
 label.postcode = Postcode
 label.any.apply = Select any that apply
+
 #Section names
 ##############
 label.section.checkBeforeStart = Check before you start
@@ -181,7 +182,6 @@ propertyCurrentlyUsed.pubRestaurant = Pub or restaurant
 propertyCurrentlyUsed.hotel = Hotel
 propertyCurrentlyUsed.other = Other
 propertyCurrentlyUsedOther.textbox = Please give details if the property has another use, or is vacant
-
 propertyCurrentlyUsed.healthFarm = Health Farm
 propertyCurrentlyUsed.lodgeAndRestaurant = Lodge and restaurant
 propertyCurrentlyUsed.conferenceCentre = Conference centre
@@ -276,7 +276,6 @@ hint.currentAnnualRent = For example, 32000
 #RENT OPEN MARKET VALUE
 #######################
 rentOpenMarketValue.heading = Is the rent based on the open market value?
-#label.rentOpenMarketValue = Is the rent based on the open market value?
 
 #DOES THE RENT PAYABLE
 ######################
@@ -342,7 +341,6 @@ error.sharedResponsibilities.maxLength = This must be 2000 characters or fewer
 #RENT INCLUDE TRADE SERVICES
 ############################
 rentIncludeTradeServices.heading = Does the rent include any trade services provided by the landlord?
-#label.rentIncludeTradeServices = Does the rent include any trade services provided by the landlord?
 hint.rentIncludeTradeServices = For example, maintenance of trade fixtures and fittings, cellar services, marketing, staff training etc.
 
 #RENT INCLUDE TRADE SERVICES DETAILS
@@ -377,16 +375,13 @@ formerLeaseSurrendered.heading = Was a former lease or agreement surrendered ear
 rentReducedOnReview.heading = Can the rent be reduced on review under the terms of the lease or agreement?
 
 #PAY A CAPITAL SUM
-##############################
-capitalSumOrPremium.heading = About your lease or agreement
-label.capitalSumOrPremium = Did you pay a capital sum or premium for your lease or agreement, ignoring tenant’s inventory?
+##################
+capitalSumOrPremium.heading = Did you pay a capital sum or premium for your lease or agreement, ignoring tenant’s inventory?
 hint.capitalSumOrPremium = The sum could be paid to the landlord or a previous lessee
 
 #PAYMENT WHEN LEASE IS GRANTED
 ##############################
-receivePaymentWhenLeaseGranted.heading = About your lease or agreement
-receivePaymentWhenLeaseGranted.hint = Select ’no’ if the rent has been reviewed since you received the payment
-label.receivePaymentWhenLeaseGranted = Did you receive any payment when the lease was granted (if the rent has not been reviewed in the lease), or following assignment of the lease or agreement?
+receivePaymentWhenLeaseGranted.heading = Did you receive any payment when the lease was granted (if the rent has not been reviewed in the lease), or following assignment of the lease or agreement?
 
 #RENT INCREASE ANNUALLY WITH RPI
 ################################
@@ -460,28 +455,26 @@ label.addAnotherLettingOtherPartOfProperty = Do you need to add another letting?
 
 ##TENANTS ADDITIONS DISREGARDED
 ###############################
-tenantsAdditionsDisregarded.heading = Describe the tenants’ additions disregarded at the time the rent was agreed or determined
+tenantsAdditionsDisregarded.heading = Were any tenants’ additions disregarded at the time the rent was agreed or determined
 hint.tenantsAdditionsDisregarded = For example, is your rent based on the market value of the property before you made improvements like fitting out a shell, or adding parking
 
 ##TENANTS ADDITIONS DISREGARDED DETAILS
-##############################
-tenantsAdditionsDisregardedDetails.heading = About your lease or agreement
-label.tenantsAdditionsDisregardedDetails = Describe the tenant’s additions disregarded at the time the rent was agreed or determined
+#######################################
+tenantsAdditionsDisregardedDetails.heading = Describe the tenant’s additions disregarded at the time the rent was agreed or determined
+hint.tenantsAdditionsDisregardedDetails = Give a brief description of the work carried out and how much it cost
 error.tenantsAdditionsDisregardedDetails.required = Please describe the tenant’s additions disregarded at the time the rent was agreed or determined
-error.tenantsAdditionsDisregardedDetails.maxLength = This must be 1000 characters or fewer
+error.tenantsAdditionsDisregardedDetails.maxLength = This must be 2000 characters or fewer
 
 ##LEGAL PLANNING RESTRICTIONS
-##############################
-legalPlanningRestrictions.heading = About your lease or agreement
-label.legalPlanningRestrictions = Are there any legal or planning restrictions, unusual terms or conditions in the lease or agreement that may have affected the rent payable?
+#############################
+legalPlanningRestrictions.heading = Are there any legal or planning restrictions, unusual terms or conditions in the lease or agreement that may have affected the rent payable?
 hint.legalPlanningRestrictions = For example, a break clause, contracting out of the Landlord and Tenant Act
 
 ##LEGAL PLANNING RESTRICTIONS DETAILS
 ##############################
-legalOrPlanningRestrictionsDetails.heading = About your lease or agreement
-label.legalOrPlanningRestrictionsDetails = Describe the legal or planning restrictions, unusual terms or conditions in the lease or agreement that may have affected the rent payable
+legalOrPlanningRestrictionsDetails.heading = Describe the legal or planning restrictions, unusual terms or conditions in the lease or agreement that may have affected the rent payable
 error.legalOrPlanningRestrictionsDetails.required = Please describe the legal or planning restrictions, unusual terms or conditions in the lease or agreement that may have affected the rent payable
-error.legalOrPlanningRestrictionsDetails.maxLength = This must be 1000 characters or fewer
+error.legalOrPlanningRestrictionsDetails.maxLength = This must be 2000 characters or fewer
 
 ##ABOUT YOUR TRADING HISTORY
 ##############################
@@ -560,6 +553,7 @@ hint.aboutYou = If you’re renting or leasing the property, even as a charity o
 #TASK LIST
 ##########
 taskList.heading = Declaration summary
+taskList.subHeading = You can save your declaration and come back later. You have 30 days from the first time you save to complete this declaration or your information will be deleted.
 declaration.heading = Now send your declaration
 declaration.information = By submitting this declaration you are confirming that, to the best of your knowledge, the details you are providing are correct.
 hint.declaration = You can be taken to court if you submit false information
@@ -644,8 +638,8 @@ premisesLicenseGrantedInformation.heading = Give details of your premises licenc
 ###########################################
 connectedToLandlord.heading = Other than contractually, are you connected to the landlord in any way?
 
-#CONNECTED TO LANDLORD
-###########################################
+# Connected To Landlord Details
+###############################
 connectedToLandlordDetails.heading = Describe your relationship to the landlord
 
 #CHECK YOUR ANSWERS

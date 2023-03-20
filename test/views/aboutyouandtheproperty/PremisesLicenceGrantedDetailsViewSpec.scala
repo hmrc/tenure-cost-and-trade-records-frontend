@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package views.abouttheproperty
+package views.aboutyouandtheproperty
 
 import form.abouttheproperty.PremisesLicenseGrantedDetailsForm
 import models.submissions.abouttheproperty.PremisesLicenseGrantedInformationDetails
@@ -25,7 +25,7 @@ import views.behaviours.QuestionViewBehaviours
 class PremisesLicenceGrantedDetailsViewSpec extends QuestionViewBehaviours[PremisesLicenseGrantedInformationDetails] {
 
   def premisesLicenceGrantedDetailsView =
-    app.injector.instanceOf[views.html.abouttheproperty.premisesLicenseGrantedDetails]
+    app.injector.instanceOf[views.html.aboutyouandtheproperty.premisesLicenseGrantedDetails]
 
   val messageKeyPrefix = "premisesLicenseGrantedInformation"
 

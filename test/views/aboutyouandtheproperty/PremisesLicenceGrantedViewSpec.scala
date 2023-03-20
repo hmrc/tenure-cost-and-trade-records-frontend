@@ -14,37 +14,37 @@
  * limitations under the License.
  */
 
-package views.abouttheproperty
+package views.aboutyouandtheproperty
 
-import form.abouttheproperty.WebsiteForPropertyForm
-import models.submissions.abouttheproperty.{BuildingOperationHaveAWebsiteNo, BuildingOperationHaveAWebsiteYes, WebsiteForPropertyDetails}
+import form.abouttheproperty.PremisesLicenseGrantedForm
+import models.submissions.abouttheproperty.{PremisesLicenseGranted, PremisesLicenseGrantedNo, PremisesLicenseGrantedYes}
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class WebsiteForPropertyViewSpec extends QuestionViewBehaviours[WebsiteForPropertyDetails] {
+class PremisesLicenceGrantedViewSpec extends QuestionViewBehaviours[PremisesLicenseGranted] {
 
-  def websiteForPropertyView = app.injector.instanceOf[views.html.abouttheproperty.websiteForProperty]
+  def premisesLicenceGrantedView = app.injector.instanceOf[views.html.aboutyouandtheproperty.premisesLicenseGranted]
 
-  val messageKeyPrefix = "buildingOperatingHaveAWebsite"
+  val messageKeyPrefix = "premisesLicenseGranted"
 
-  override val form = WebsiteForPropertyForm.websiteForPropertyForm
+  override val form = PremisesLicenseGrantedForm.premisesLicenseGrantedForm
 
-  def createView = () => websiteForPropertyView(form)(fakeRequest, messages)
+  def createView = () => premisesLicenceGrantedView(form)(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[WebsiteForPropertyDetails]) =>
-    websiteForPropertyView(form)(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[PremisesLicenseGranted]) =>
+    premisesLicenceGrantedView(form)(fakeRequest, messages)
 
-  "Property website view" must {
+  "Property licence conditions view" must {
 
     behave like normalPage(createView, messageKeyPrefix)
 
-    "has a link marked with back.link.label leading to the task Page" in {
+    "has a link marked with back.link.label leading to the licensable activities Page" in {
       val doc          = asDocument(createView())
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText mustBe messages("back.link.label")
       val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.abouttheproperty.routes.AboutThePropertyController.show().url
+      backlinkUrl mustBe controllers.abouttheproperty.routes.WebsiteForPropertyController.show().url
     }
 
     "Section heading is visible" in {
@@ -57,9 +57,9 @@ class WebsiteForPropertyViewSpec extends QuestionViewBehaviours[WebsiteForProper
       val doc = asDocument(createViewUsingForm(form))
       assertContainsRadioButton(
         doc,
-        "buildingOperatingHaveAWebsite",
-        "buildingOperatingHaveAWebsite",
-        BuildingOperationHaveAWebsiteYes.name,
+        "premisesLicenseGranted",
+        "premisesLicenseGranted",
+        PremisesLicenseGrantedYes.name,
         false
       )
       assertContainsText(doc, messages("label.yes"))
@@ -69,23 +69,23 @@ class WebsiteForPropertyViewSpec extends QuestionViewBehaviours[WebsiteForProper
       val doc = asDocument(createViewUsingForm(form))
       assertContainsRadioButton(
         doc,
-        "buildingOperatingHaveAWebsite-2",
-        "buildingOperatingHaveAWebsite",
-        BuildingOperationHaveAWebsiteNo.name,
+        "premisesLicenseGranted-2",
+        "premisesLicenseGranted",
+        PremisesLicenseGrantedNo.name,
         false
       )
       assertContainsText(doc, messages("label.no"))
-    }
-
-    "contain an input for websiteAddressForProperty" in {
-      val doc = asDocument(createViewUsingForm(form))
-      assertRenderedById(doc, "websiteAddressForProperty")
     }
 
     "contain save and continue button with the value Save and Continue" in {
       val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("continue").text()
       assert(loginButton == messages("button.label.continue"))
+    }
+
+    "contain get help section" in {
+      val doc = asDocument(createView())
+      assert(doc.toString.contains(messages("helpWithServicePremisesLicenseGranted.title")))
     }
   }
 }
