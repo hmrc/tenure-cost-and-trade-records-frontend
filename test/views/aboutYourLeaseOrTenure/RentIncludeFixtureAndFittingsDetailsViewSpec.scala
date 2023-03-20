@@ -18,11 +18,13 @@ package views.aboutYourLeaseOrTenure
 
 import form.Form6010.RentIncludeFixtureAndFittingDetailsForm
 import models.AnnualRent
+import models.submissions.Form6010.RentIncludeFixturesOrFittingsInformationDetails
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class RentIncludeFixtureAndFittingsDetailsViewSpec extends QuestionViewBehaviours[AnnualRent] {
+class RentIncludeFixtureAndFittingsDetailsViewSpec
+    extends QuestionViewBehaviours[RentIncludeFixturesOrFittingsInformationDetails] {
 
   val messageKeyPrefix = "rentIncludeFixturesAndFittingsDetails"
 
@@ -30,7 +32,7 @@ class RentIncludeFixtureAndFittingsDetailsViewSpec extends QuestionViewBehaviour
 
   def createView = () => rentIncludeFixtureAndFittingsDetailsView(form)(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[AnnualRent]) =>
+  def createViewUsingForm = (form: Form[RentIncludeFixturesOrFittingsInformationDetails]) =>
     rentIncludeFixtureAndFittingsDetailsView(form)(fakeRequest, messages)
 
   "Rent include fixture and fittings details view" must {

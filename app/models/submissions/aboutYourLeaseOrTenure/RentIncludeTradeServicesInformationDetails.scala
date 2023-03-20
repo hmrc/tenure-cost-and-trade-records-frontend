@@ -18,7 +18,10 @@ package models.submissions.aboutYourLeaseOrTenure
 
 import play.api.libs.json.Json
 
-case class RentIncludeTradeServicesInformationDetails(sumIncludedInRent: BigDecimal, describeTheServices: String)
+case class RentIncludeTradeServicesInformationDetails(
+  sumIncludedInRent: Option[BigDecimal],
+  describeTheServices: String
+)
 
 object RentIncludeTradeServicesInformationDetails {
   implicit val format = Json.format[RentIncludeTradeServicesInformationDetails]

@@ -19,7 +19,7 @@ package form.Form6010
 import form.DateMappings.dateFieldsMapping
 import models.submissions.Form6010.IntervalsOfRentReview
 import play.api.data.Form
-import play.api.data.Forms.{default, mapping, text}
+import play.api.data.Forms.{default, mapping, optional, text}
 import play.api.data.validation.Constraints.{maxLength, nonEmpty}
 
 object IntervalsOfRentReviewForm {
@@ -30,7 +30,7 @@ object IntervalsOfRentReviewForm {
         nonEmpty(errorMessage = "error.currentLeaseOrAgreementBegin.required"),
         maxLength(1000, "error.currentLeaseOrAgreementBegin.maxLength")
       ),
-      "nextReview"            -> dateFieldsMapping("nextReview", fieldErrorPart = ".nextReview")
+      "nextReview"            -> optional(dateFieldsMapping("nextReview", fieldErrorPart = ".nextReview"))
     )(IntervalsOfRentReview.apply)(IntervalsOfRentReview.unapply)
   )
 }

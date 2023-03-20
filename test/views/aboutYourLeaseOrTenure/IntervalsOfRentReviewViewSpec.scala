@@ -64,7 +64,7 @@ class IntervalsOfRentReviewViewSpec extends QuestionViewBehaviours[IntervalsOfRe
     "contain date format hint for leaseBegin-hint" in {
       val doc             = asDocument(createViewUsingForm(form))
       val firstOccupyHint = doc.getElementById("nextReview-hint").text()
-      assert(firstOccupyHint == messages("help.date.day.month.year"))
+      assert(firstOccupyHint == messages("label.nextReview.help"))
     }
 
     "contain date field for the value leaseBegin.day" in {

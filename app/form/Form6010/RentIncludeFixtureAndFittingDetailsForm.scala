@@ -16,20 +16,15 @@
 
 package form.Form6010
 
-import form.Errors
-import form.MappingSupport.currencyMapping
-import models.AnnualRent
+import models.submissions.Form6010.RentIncludeFixturesOrFittingsInformationDetails
 import play.api.data.Form
-import play.api.data.Forms.mapping
+import play.api.data.Forms.{bigDecimal, mapping, optional}
 
 object RentIncludeFixtureAndFittingDetailsForm {
 
-  val cdbMaxCurrencyAmount = 9999999.99
-
-  val rentIncludeFixtureAndFittingsDetailsForm = Form(
+  val rentIncludeFixtureAndFittingsDetailsForm: Form[RentIncludeFixturesOrFittingsInformationDetails] = Form(
     mapping(
-      "rentIncludeFixturesAndFittingsDetails" -> currencyMapping(".rentIncludeFixturesAndFittingsDetails")
-    )(AnnualRent.apply)(AnnualRent.unapply)
-      .verifying(Errors.maxCurrencyAmountExceeded, _.amount <= cdbMaxCurrencyAmount)
+      "rentIncludeFixturesAndFittingsDetails" -> optional(bigDecimal)
+    )(RentIncludeFixturesOrFittingsInformationDetails.apply)(RentIncludeFixturesOrFittingsInformationDetails.unapply)
   )
 }
