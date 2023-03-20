@@ -19,7 +19,7 @@ package controllers.Form6010
 import actions.WithSessionRefiner
 import form.Form6010.LegalOrPlanningRestrictionsForm.legalPlanningRestrictionsForm
 import form.Form6010.LegalOrPlanningRestrictionsDetailsForm.legalOrPlanningRestrictionsDetailsForm
-import form.additionalinformation.FurtherInformationOrRemarksForm.furtherInformationOrRemarksForm
+import form.aboutYourLeaseOrTenure.CheckYourAnswersAboutYourLeaseOrTenureForm.checkYourAnswersAboutFranchiseOrLettingsForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo.updateAboutLeaseOrAgreementPartTwo
 import models.submissions.common.{AnswerNo, AnswerYes}
 import play.api.i18n.I18nSupport
@@ -27,8 +27,7 @@ import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.form.{legalOrPlanningRestrictions, legalOrPlanningRestrictionsDetails}
-import views.html.additionalinformation.furtherInformationOrRemarks
-import views.html.login
+import views.html.aboutYourLeaseOrTenure.checkYourAnswersAboutYourLeaseOrTenure
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
@@ -36,10 +35,9 @@ import scala.concurrent.Future
 @Singleton
 class LegalOrPlanningRestrictionsController @Inject() (
   mcc: MessagesControllerComponents,
-  login: login,
   legalOrPlanningRestrictionsView: legalOrPlanningRestrictions,
   legalOrPlanningRestrictionsDetailsView: legalOrPlanningRestrictionsDetails,
-  furtherInformationOrRemarksView: furtherInformationOrRemarks,
+  checkYourAnswersAboutYourLeaseOrTenure: checkYourAnswersAboutYourLeaseOrTenure,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
 ) extends FrontendController(mcc)
@@ -72,14 +70,8 @@ class LegalOrPlanningRestrictionsController @Inject() (
             case AnswerNo  =>
               val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(legalOrPlanningRestrictions = Some(data)))
               session.saveOrUpdate(updatedData)
-              Future.successful(
-                Ok(
-                  furtherInformationOrRemarksView(
-                    furtherInformationOrRemarksForm,
-                    controllers.Form6010.routes.TenantsAdditionsDisregardedController.show().url
-                  )
-                )
-              )
+              Future
+                .successful(Ok(checkYourAnswersAboutYourLeaseOrTenure(checkYourAnswersAboutFranchiseOrLettingsForm)))
           }
       )
   }

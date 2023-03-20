@@ -14,40 +14,38 @@
  * limitations under the License.
  */
 
-package views.abouttheproperty
+package views.aboutyouandtheproperty
 
-import form.abouttheproperty.CheckYourAnswersAboutThePropertyForm
-import models.submissions.abouttheproperty.CheckYourAnswersAboutYourProperty
+import form.abouttheproperty.PremisesLicenseConditionsDetailsForm
+import models.submissions.abouttheproperty.PremisesLicenseConditionsDetails
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class CheckYourAnswersAboutThePropertyViewSpec extends QuestionViewBehaviours[CheckYourAnswersAboutYourProperty] {
+class PremisesLicenceConditionsDetailsViewSpec extends QuestionViewBehaviours[PremisesLicenseConditionsDetails] {
 
-  def checkYourAnswersAboutThePropertyView =
-    app.injector.instanceOf[views.html.abouttheproperty.checkYourAnswersAboutTheProperty]
+  def premisesLicenceConditionsView =
+    app.injector.instanceOf[views.html.aboutyouandtheproperty.premisesLicenseConditionsDetails]
 
-  val messageKeyPrefix = "checkYourAnswersAboutTheProperty"
+  val messageKeyPrefix = "premisesLicenseConditionsDetails"
 
-  override val form = CheckYourAnswersAboutThePropertyForm.checkYourAnswersAboutThePropertyForm
+  override val form = PremisesLicenseConditionsDetailsForm.premisesLicenceDetailsForm
 
-  val backLink = controllers.abouttheproperty.routes.PremisesLicenseGrantedController.show().url
+  def createView = () => premisesLicenceConditionsView(form)(fakeRequest, messages)
 
-  def createView = () => checkYourAnswersAboutThePropertyView(form, backLink)(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[PremisesLicenseConditionsDetails]) =>
+    premisesLicenceConditionsView(form)(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[CheckYourAnswersAboutYourProperty]) =>
-    checkYourAnswersAboutThePropertyView(form, backLink)(fakeRequest, messages)
-
-  "Check Your Answers About The Property view" must {
+  "Property licence conditions details view" must {
 
     behave like normalPage(createView, messageKeyPrefix)
 
-    "has a link marked with back.link.label leading to the website for property Page" in {
+    "has a link marked with back.link.label leading to the premises licence Page" in {
       val doc          = asDocument(createView())
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText mustBe messages("back.link.label")
       val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.abouttheproperty.routes.PremisesLicenseGrantedController.show().url
+      backlinkUrl mustBe controllers.abouttheproperty.routes.PremisesLicenseConditionsController.show().url
     }
 
     "Section heading is visible" in {

@@ -22,7 +22,7 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import play.twirl.api.HtmlFormat
 import utils.TestBaseSpec
-import views.html.abouttheproperty.premisesLicenseConditions
+import views.html.aboutyouandtheproperty.premisesLicenseConditions
 
 class PremisesLicenseConditionsControllerSpec extends TestBaseSpec {
 

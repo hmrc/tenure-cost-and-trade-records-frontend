@@ -14,36 +14,35 @@
  * limitations under the License.
  */
 
-package controllers.Form6010
+package controllers.aboutYourLeaseOrTenure
 
+import controllers.Form6010.TenantsAdditionsDisregardedDetailsController
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import utils.TestBaseSpec
 
-class LegalOrPlanningRestrictionsControllerSpec extends TestBaseSpec {
+class TenantsAdditionsDisregardedDetailsControllerSpec extends TestBaseSpec {
 
-  def legalOrPlanningRestrictionsController(
+  def tenantsAdditionsDisregardedDetailsController(
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
   ) =
-    new LegalOrPlanningRestrictionsController(
+    new TenantsAdditionsDisregardedDetailsController(
       stubMessagesControllerComponents(),
-      loginView,
-      legalOrPlanningRestrictionsView,
-      legalOrPlanningRestrictionsDetailsView,
-      furtherInformationOrRemarksView,
+      payACapitalSumView,
+      tenantsAdditionsDisregardedDetailsView,
       preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
       mockSessionRepo
     )
   "GET /" should {
     "return 200" in {
-      val result = legalOrPlanningRestrictionsController().show(fakeRequest)
+      val result = tenantsAdditionsDisregardedDetailsController().show(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return HTML" in {
-      val result = legalOrPlanningRestrictionsController().show(fakeRequest)
+      val result = tenantsAdditionsDisregardedDetailsController().show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
@@ -51,7 +50,7 @@ class LegalOrPlanningRestrictionsControllerSpec extends TestBaseSpec {
 
   "SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
-      val res = legalOrPlanningRestrictionsController().submit(
+      val res = tenantsAdditionsDisregardedDetailsController().submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)
       )
       status(res) shouldBe BAD_REQUEST

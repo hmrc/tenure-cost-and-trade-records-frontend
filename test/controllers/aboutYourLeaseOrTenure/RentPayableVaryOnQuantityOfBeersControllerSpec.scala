@@ -14,34 +14,37 @@
  * limitations under the License.
  */
 
-package controllers.Form6010
+package controllers.aboutYourLeaseOrTenure
 
+import controllers.Form6010.RentPayableVaryOnQuantityOfBeersController
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import utils.TestBaseSpec
 
-class PayACapitalSumControllerSpec extends TestBaseSpec {
+class RentPayableVaryOnQuantityOfBeersControllerSpec extends TestBaseSpec {
 
-  def payACapitalSumController(
+  def rentPayableVaryOnQuantityOfBeersController(
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
   ) =
-    new PayACapitalSumController(
+    new RentPayableVaryOnQuantityOfBeersController(
       stubMessagesControllerComponents(),
-      paymentWhenLeaseIsGrantedView,
-      payACapitalSumView,
+      loginView,
+      ultimatelyResponsibleView,
+      rentPayableVaryOnQuantityOfBeersDetailsView,
+      rentPayableVaryOnQuantityOfBeersView,
       preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
       mockSessionRepo
     )
-  "GET /" should {
+  "RentPayableVaryOnQuantityOfBeers controller" should {
     "return 200" in {
-      val result = payACapitalSumController().show(fakeRequest)
+      val result = rentPayableVaryOnQuantityOfBeersController().show(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return HTML" in {
-      val result = payACapitalSumController().show(fakeRequest)
+      val result = rentPayableVaryOnQuantityOfBeersController().show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
@@ -49,7 +52,7 @@ class PayACapitalSumControllerSpec extends TestBaseSpec {
 
   "SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
-      val res = payACapitalSumController().submit(
+      val res = rentPayableVaryOnQuantityOfBeersController().submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)
       )
       status(res) shouldBe BAD_REQUEST

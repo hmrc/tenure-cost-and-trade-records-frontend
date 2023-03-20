@@ -21,7 +21,7 @@ import play.api.http.Status
 import play.api.test.Helpers._
 import play.twirl.api.HtmlFormat
 import utils.TestBaseSpec
-import views.html.abouttheproperty.licensableActivitiesDetails
+import views.html.aboutyouandtheproperty.licensableActivitiesDetails
 
 class LicensableActivitiesDetailsControllerSpec extends TestBaseSpec {
 

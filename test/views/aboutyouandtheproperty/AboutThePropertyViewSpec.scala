@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package views.abouttheproperty
+package views.aboutyouandtheproperty
 
 import form.abouttheproperty.AboutThePropertyForm
 import models.submissions.abouttheproperty._
@@ -24,7 +24,7 @@ import views.behaviours.QuestionViewBehaviours
 
 class AboutThePropertyViewSpec extends QuestionViewBehaviours[PropertyDetails] {
 
-  def aboutThePropertyView = app.injector.instanceOf[views.html.abouttheproperty.aboutTheProperty]
+  def aboutThePropertyView = app.injector.instanceOf[views.html.aboutyouandtheproperty.aboutTheProperty]
 
   val messageKeyPrefix = "aboutProperty"
 

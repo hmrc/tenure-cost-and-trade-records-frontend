@@ -14,44 +14,43 @@
  * limitations under the License.
  */
 
-package views.abouttheproperty
+package views.aboutyouandtheproperty
 
-import form.abouttheproperty.PremisesLicenseConditionsDetailsForm
-import models.submissions.abouttheproperty.PremisesLicenseConditionsDetails
+import form.aboutyou.AboutYouForm
+import models.submissions.aboutyou.CustomerDetails
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class PremisesLicenceConditionsDetailsViewSpec extends QuestionViewBehaviours[PremisesLicenseConditionsDetails] {
+class AboutYouViewSpec extends QuestionViewBehaviours[CustomerDetails] {
 
-  def premisesLicenceConditionsView =
-    app.injector.instanceOf[views.html.abouttheproperty.premisesLicenseConditionsDetails]
+  def aboutYouView = app.injector.instanceOf[views.html.aboutyouandtheproperty.aboutYou]
 
-  val messageKeyPrefix = "premisesLicenseConditionsDetails"
+  val messageKeyPrefix = "aboutYou"
 
-  override val form = PremisesLicenseConditionsDetailsForm.premisesLicenceDetailsForm
+  override val form = AboutYouForm.aboutYouForm
 
-  def createView = () => premisesLicenceConditionsView(form)(fakeRequest, messages)
+  def createView = () => aboutYouView(form)(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[PremisesLicenseConditionsDetails]) =>
-    premisesLicenceConditionsView(form)(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[CustomerDetails]) => aboutYouView(form)(fakeRequest, messages)
 
-  "Property licence conditions details view" must {
+  "About you view" must {
 
     behave like normalPage(createView, messageKeyPrefix)
 
-    "has a link marked with back.link.label leading to the premises licence Page" in {
+    behave like pageWithTextFields(createViewUsingForm, "fullName", "contactDetails.email", "contactDetails.phone")
+
+    "has a link marked with back.link.label leading to the Are still connected Page" in {
       val doc          = asDocument(createView())
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText mustBe messages("back.link.label")
       val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.abouttheproperty.routes.PremisesLicenseConditionsController.show().url
+      backlinkUrl mustBe controllers.routes.TaskListController.show().url
     }
 
-    "Section heading is visible" in {
-      val doc         = asDocument(createViewUsingForm(form)) // govuk-caption-m
-      val sectionText = doc.getElementsByClass("govuk-caption-m").text()
-      assert(sectionText == messages("label.section.aboutTheProperty"))
+    "contain aboutYou.subheading paragraph" in {
+      val doc = asDocument(createView())
+      assert(doc.toString.contains(messages("aboutYou.subheading")))
     }
 
     "contain save and continue button with the value Save and Continue" in {

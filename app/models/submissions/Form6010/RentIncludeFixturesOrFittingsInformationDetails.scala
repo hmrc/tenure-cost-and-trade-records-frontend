@@ -14,3 +14,14 @@
  * limitations under the License.
  */
 
+package models.submissions.Form6010
+
+import play.api.libs.json.Json
+
+case class RentIncludeFixturesOrFittingsInformationDetails(
+  sumIncludedInRent: Option[BigDecimal]
+)
+
+object RentIncludeFixturesOrFittingsInformationDetails {
+  implicit val format = Json.format[RentIncludeFixturesOrFittingsInformationDetails]
+}

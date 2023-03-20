@@ -22,7 +22,7 @@ import play.api.http.Status
 import play.api.test.Helpers._
 import play.twirl.api.HtmlFormat
 import utils.TestBaseSpec
-import views.html.abouttheproperty.websiteForProperty
+import views.html.aboutyouandtheproperty.websiteForProperty
 
 class WebsiteForPropertyControllerSpec extends TestBaseSpec {
 

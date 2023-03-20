@@ -116,7 +116,7 @@ class HowIsCurrentRentFixedViewSpec extends QuestionViewBehaviours[HowIsCurrentR
     "contain date format hint for rentActuallyAgreed-hint" in {
       val doc             = asDocument(createViewUsingForm(form))
       val firstOccupyHint = doc.getElementById("rentActuallyAgreed-hint").text()
-      assert(firstOccupyHint == messages("help.date.day.month.year"))
+      assert(firstOccupyHint == messages("label.rentActuallyAgreed.help"))
     }
 
     "contain date field for the value rentActuallyAgreed.day" in {

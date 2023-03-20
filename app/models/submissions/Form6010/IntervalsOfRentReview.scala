@@ -20,7 +20,7 @@ import play.api.libs.json.Json
 
 import java.time.LocalDate
 
-case class IntervalsOfRentReview(currentRentWithin12Months: String, intervalsOfRentReview: LocalDate)
+case class IntervalsOfRentReview(currentRentWithin12Months: String, intervalsOfRentReview: Option[LocalDate])
 
 object IntervalsOfRentReview {
   implicit val format = Json.format[IntervalsOfRentReview]

@@ -16,46 +16,63 @@
 
 package views.aboutYourLeaseOrTenure
 
-import form.Form6010.RentIncludeFixtureAndFittingDetailsForm
-import models.AnnualRent
-import models.submissions.Form6010.RentIncludeFixturesOrFittingsInformationDetails
+import form.Form6010.PayACapitalSumForm
+import models.submissions.Form6010.PayACapitalSumDetails
+import models.submissions.common.{AnswerNo, AnswerYes}
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class RentIncludeFixtureAndFittingsDetailsViewSpec
-    extends QuestionViewBehaviours[RentIncludeFixturesOrFittingsInformationDetails] {
+class PayACapitalSumViewSpec extends QuestionViewBehaviours[PayACapitalSumDetails] {
 
-  val messageKeyPrefix = "rentIncludeFixturesAndFittingsDetails"
+  val messageKeyPrefix = "capitalSumOrPremium"
 
-  override val form = RentIncludeFixtureAndFittingDetailsForm.rentIncludeFixtureAndFittingsDetailsForm
+  override val form = PayACapitalSumForm.payACapitalSumForm
 
-  def createView = () => rentIncludeFixtureAndFittingsDetailsView(form)(fakeRequest, messages)
+  def createView = () => payACapitalSumView(form)(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[RentIncludeFixturesOrFittingsInformationDetails]) =>
-    rentIncludeFixtureAndFittingsDetailsView(form)(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[PayACapitalSumDetails]) => payACapitalSumView(form)(fakeRequest, messages)
 
-  "Rent include fixture and fittings details view" must {
+  "capital sum or premium view" must {
 
     behave like normalPage(createView, messageKeyPrefix)
 
-    "has a link marked with back.link.label leading to the task list Page" in {
+    "has a link marked with back.link.label leading to tenants additions disregarded Page" in {
       val doc          = asDocument(createView())
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText mustBe messages("back.link.label")
       val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.Form6010.routes.RentIncludeFixtureAndFittingsController.show.url
+      backlinkUrl mustBe controllers.Form6010.routes.TenantsAdditionsDisregardedController.show.url
     }
 
     "Section heading is visible" in {
-      val doc         = asDocument(createViewUsingForm(form)) // govuk-caption-m
+      val doc         = asDocument(createViewUsingForm(form))
       val sectionText = doc.getElementsByClass("govuk-caption-m").text()
       assert(sectionText == messages("label.section.aboutYourLeaseOrTenure"))
     }
 
-    "contain currency field for the value rentIncludeFixturesAndFittingsDetails" in {
+    "contain radio buttons for capital sum with the value yes" in {
       val doc = asDocument(createViewUsingForm(form))
-      assertRenderedById(doc, "rentIncludeFixturesAndFittingsDetails")
+      assertContainsRadioButton(
+        doc,
+        "capitalSumOrPremium",
+        "capitalSumOrPremium",
+        AnswerYes.name,
+        false
+      )
+      assertContainsText(doc, messages("label.yes"))
+    }
+
+    "contain radio buttons for capital sum with the value no" in {
+      val doc = asDocument(createViewUsingForm(form))
+      assertContainsRadioButton(
+        doc,
+        "capitalSumOrPremium-2",
+        "capitalSumOrPremium",
+        AnswerNo.name,
+        false
+      )
+      assertContainsText(doc, messages("label.no"))
     }
 
     "contain save and continue button with the value Save and Continue" in {

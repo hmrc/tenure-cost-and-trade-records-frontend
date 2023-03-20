@@ -14,43 +14,43 @@
  * limitations under the License.
  */
 
-package views.aboutyou
+package views.aboutYourLeaseOrTenure
 
-import form.aboutyou.AboutYouForm
-import models.submissions.aboutyou.CustomerDetails
+import form.Form6010.TenantsAdditionsDisregardedDetailsForm.tenantsAdditionsDisregardedDetailsForm
+import models.submissions.Form6010.TenantsAdditionsDisregardedDetails
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class AboutYouViewSpec extends QuestionViewBehaviours[CustomerDetails] {
+class TenantsAdditionsDisregardedDetailsViewSpec extends QuestionViewBehaviours[TenantsAdditionsDisregardedDetails] {
 
-  def aboutYouView = app.injector.instanceOf[views.html.aboutyou.aboutYou]
+  val messageKeyPrefix = "tenantsAdditionsDisregardedDetails"
 
-  val messageKeyPrefix = "aboutYou"
+  override val form = tenantsAdditionsDisregardedDetailsForm
 
-  override val form = AboutYouForm.aboutYouForm
+  def createView = () => tenantsAdditionsDisregardedDetailsView(form)(fakeRequest, messages)
 
-  def createView = () => aboutYouView(form)(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[TenantsAdditionsDisregardedDetails]) =>
+    tenantsAdditionsDisregardedDetailsView(form)(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[CustomerDetails]) => aboutYouView(form)(fakeRequest, messages)
-
-  "About you view" must {
+  "Tenants additions disregarded details view" must {
 
     behave like normalPage(createView, messageKeyPrefix)
 
-    behave like pageWithTextFields(createViewUsingForm, "fullName", "contactDetails.email", "contactDetails.phone")
+    behave like pageWithTextFields(createViewUsingForm, "tenantsAdditionsDisregardedDetails")
 
-    "has a link marked with back.link.label leading to the Are still connected Page" in {
+    "has a link marked with back.link.label leading to the tenants additions disregarded Page" in {
       val doc          = asDocument(createView())
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText mustBe messages("back.link.label")
       val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.routes.TaskListController.show().url
+      backlinkUrl mustBe controllers.Form6010.routes.TenantsAdditionsDisregardedController.show.url
     }
 
-    "contain aboutYou.subheading paragraph" in {
-      val doc = asDocument(createView())
-      assert(doc.toString.contains(messages("aboutYou.subheading")))
+    "Section heading is visible" in {
+      val doc         = asDocument(createViewUsingForm(form))
+      val sectionText = doc.getElementsByClass("govuk-caption-m").text()
+      assert(sectionText == messages("label.section.aboutYourLeaseOrTenure"))
     }
 
     "contain save and continue button with the value Save and Continue" in {
