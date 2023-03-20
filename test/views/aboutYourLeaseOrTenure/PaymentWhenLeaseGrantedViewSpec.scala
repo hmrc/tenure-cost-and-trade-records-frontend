@@ -14,66 +14,63 @@
  * limitations under the License.
  */
 
-package views.abouttheproperty
+package views.aboutYourLeaseOrTenure
 
-import form.abouttheproperty.TiedForGoodsForm
-import models.submissions.abouttheproperty.TiedForGoods
-import models.submissions.abouttheproperty.{TiedForGoods, TiedGoodsNo, TiedGoodsYes}
+import form.Form6010.PaymentWhenLeaseIsGrantedForm.paymentWhenLeaseIsGrantedForm
+import models.submissions.Form6010.PaymentWhenLeaseIsGrantedDetails
+import models.submissions.common.{AnswerNo, AnswerYes}
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class TiedForGoodsViewSpec extends QuestionViewBehaviours[TiedForGoods] {
+class PaymentWhenLeaseGrantedViewSpec extends QuestionViewBehaviours[PaymentWhenLeaseIsGrantedDetails] {
 
-  def tiedForGoodsView = app.injector.instanceOf[views.html.abouttheproperty.tiedForGoods]
+  val messageKeyPrefix = "receivePaymentWhenLeaseGranted"
 
-  val messageKeyPrefix = "tiedForGoods"
+  override val form = paymentWhenLeaseIsGrantedForm
 
-  override val form = TiedForGoodsForm.tiedForGoodsForm
+  def createView = () => paymentWhenLeaseIsGrantedView(form)(fakeRequest, messages)
 
-  val backLink = controllers.abouttheproperty.routes.EnforcementActionBeenTakenController.show().url
+  def createViewUsingForm = (form: Form[PaymentWhenLeaseIsGrantedDetails]) =>
+    paymentWhenLeaseIsGrantedView(form)(fakeRequest, messages)
 
-  def createView = () => tiedForGoodsView(form, backLink)(fakeRequest, messages)
-
-  def createViewUsingForm = (form: Form[TiedForGoods]) => tiedForGoodsView(form, backLink)(fakeRequest, messages)
-
-  "Tied for goods view" must {
+  "Payment when lease is granted view" must {
 
     behave like normalPage(createView, messageKeyPrefix)
 
-    "has a link marked with back.link.label leading to the premises licence Page" in {
+    "has a link marked with back.link.label leading to pay capital sum Page" in {
       val doc          = asDocument(createView())
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText mustBe messages("back.link.label")
       val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.abouttheproperty.routes.EnforcementActionBeenTakenController.show().url
+      backlinkUrl mustBe controllers.Form6010.routes.PayACapitalSumController.show.url
     }
 
     "Section heading is visible" in {
-      val doc         = asDocument(createViewUsingForm(form)) // govuk-caption-m
+      val doc         = asDocument(createViewUsingForm(form))
       val sectionText = doc.getElementsByClass("govuk-caption-m").text()
-      assert(sectionText == messages("label.section.aboutTheProperty"))
+      assert(sectionText == messages("label.section.aboutYourLeaseOrTenure"))
     }
 
-    "contain radio buttons for the value yes" in {
+    "contain radio buttons for payment when lease granted with the value yes" in {
       val doc = asDocument(createViewUsingForm(form))
       assertContainsRadioButton(
         doc,
-        "tiedForGoods",
-        "tiedForGoods",
-        TiedGoodsYes.name,
+        "receivePaymentWhenLeaseGranted",
+        "receivePaymentWhenLeaseGranted",
+        AnswerYes.name,
         false
       )
       assertContainsText(doc, messages("label.yes"))
     }
 
-    "contain radio buttons for the value no" in {
+    "contain radio buttons for payment when lease granted with the value no" in {
       val doc = asDocument(createViewUsingForm(form))
       assertContainsRadioButton(
         doc,
-        "tiedForGoods-2",
-        "tiedForGoods",
-        TiedGoodsNo.name,
+        "receivePaymentWhenLeaseGranted-2",
+        "receivePaymentWhenLeaseGranted",
+        AnswerNo.name,
         false
       )
       assertContainsText(doc, messages("label.no"))

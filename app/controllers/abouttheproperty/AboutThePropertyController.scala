@@ -25,7 +25,7 @@ import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.abouttheproperty.aboutTheProperty
+import views.html.aboutyouandtheproperty.aboutTheProperty
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future

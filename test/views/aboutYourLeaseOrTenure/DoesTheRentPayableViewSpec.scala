@@ -24,8 +24,6 @@ import views.behaviours.QuestionViewBehaviours
 
 class DoesTheRentPayableViewSpec extends QuestionViewBehaviours[DoesTheRentPayable] {
 
-  def aboutThePropertyView = app.injector.instanceOf[views.html.abouttheproperty.aboutTheProperty]
-
   val messageKeyPrefix = "rentPayable"
 
   override val form = DoesTheRentPayableForm.doesTheRentPayableForm

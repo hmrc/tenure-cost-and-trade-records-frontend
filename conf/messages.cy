@@ -56,6 +56,7 @@ label.town = Town or city
 label.county = County
 label.postcode = Postcode
 label.any.apply = Select any that apply
+
 #Section names
 ##############
 label.section.checkBeforeStart = Check before you start
@@ -375,15 +376,13 @@ incentivesPaymentsConditions.heading = Was a former lease or agreement surrender
 rentReducedOnReview.heading = Can the rent be reduced on review under the terms of the lease or agreement?
 
 #PAY A CAPITAL SUM
-##############################
-capitalSumOrPremium.heading = About your lease or agreement
-label.capitalSumOrPremium = Did you pay a capital sum or premium for your lease or agreement, ignoring tenant’s inventory?
+##################
+capitalSumOrPremium.heading = Did you pay a capital sum or premium for your lease or agreement, ignoring tenant’s inventory?
 hint.capitalSumOrPremium = The sum could be paid to the landlord or a previous lessee
 
 #PAYMENT WHEN LEASE IS GRANTED
 ##############################
-receivePaymentWhenLeaseGranted.heading = About your lease or agreement
-label.receivePaymentWhenLeaseGranted = Did you receive any payment when the lease was granted (if the rent has not been reviewed in the lease), or following assignment of the lease or agreement?
+receivePaymentWhenLeaseGranted.heading = Did you receive any payment when the lease was granted, or following assignment of the lease or agreement?
 
 #RENT INCREASE ANNUALLY WITH RPI
 ################################
@@ -456,28 +455,27 @@ label.addAnotherLettingOtherPartOfProperty = Do you need to add another letting?
 
 ##TENANTS ADDITIONS DISREGARDED
 ###############################
-tenantsAdditionsDisregarded.heading = Describe the tenants’ additions disregarded at the time the rent was agreed or determined
+tenantsAdditionsDisregarded.heading = Were any tenants’ additions disregarded at the time the rent was agreed or determined
 hint.tenantsAdditionsDisregarded = For example, is your rent based on the market value of the property before you made improvements like fitting out a shell, or adding parking
 
 ##TENANTS ADDITIONS DISREGARDED DETAILS
-##############################
-tenantsAdditionsDisregardedDetails.heading = About your lease or agreement
-label.tenantsAdditionsDisregardedDetails = Describe the tenant’s additions disregarded at the time the rent was agreed or determined
+#######################################
+tenantsAdditionsDisregardedDetails.heading = Describe the tenant’s additions disregarded at the time the rent was agreed or determined
+hint.tenantsAdditionsDisregardedDetails = Give a brief description of the work carried out and how much it cost
 error.tenantsAdditionsDisregardedDetails.required = Please describe the tenant’s additions disregarded at the time the rent was agreed or determined
-error.tenantsAdditionsDisregardedDetails.maxLength = This must be 1000 characters or fewer
+error.tenantsAdditionsDisregardedDetails.maxLength = This must be 2000 characters or fewer
 
 ##LEGAL PLANNING RESTRICTIONS
-##############################
+#############################
 legalPlanningRestrictions.heading = About your lease or agreement
 label.legalPlanningRestrictions = Are there any legal or planning restrictions, unusual terms or conditions in the lease or agreement that may have affected the rent payable?
 hint.legalPlanningRestrictions = For example, a break clause, contracting out of the Landlord and Tenant Act, etc
 
 ##LEGAL PLANNING RESTRICTIONS DETAILS
 ##############################
-legalOrPlanningRestrictionsDetails.heading = About your lease or agreement
-label.legalOrPlanningRestrictionsDetails = Describe the legal or planning restrictions, unusual terms or conditions in the lease or agreement that may have affected the rent payable
+legalOrPlanningRestrictionsDetails.heading = Describe the legal or planning restrictions, unusual terms or conditions in the lease or agreement that may have affected the rent payable
 error.legalOrPlanningRestrictionsDetails.required = Please describe the legal or planning restrictions, unusual terms or conditions in the lease or agreement that may have affected the rent payable
-error.legalOrPlanningRestrictionsDetails.maxLength = This must be 1000 characters or fewer
+error.legalOrPlanningRestrictionsDetails.maxLength = This must be 2000 characters or fewer
 
 ##ABOUT YOUR TRADING HISTORY
 ##############################

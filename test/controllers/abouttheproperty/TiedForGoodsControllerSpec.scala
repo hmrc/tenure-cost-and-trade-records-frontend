@@ -22,7 +22,7 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import play.twirl.api.HtmlFormat
 import utils.TestBaseSpec
-import views.html.abouttheproperty.tiedForGoods
+import views.html.aboutyouandtheproperty.tiedForGoods
 
 class TiedForGoodsControllerSpec extends TestBaseSpec {
 

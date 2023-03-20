@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package views.abouttheproperty
+package views.aboutyouandtheproperty
 
 import form.abouttheproperty.TiedForGoodsDetailsForm
 import models.submissions.abouttheproperty.{TiedForGoodsInformationDetails, TiedForGoodsInformationDetailsBeerOnly, TiedForGoodsInformationDetailsFullTie, TiedForGoodsInformationDetailsPartialTie}
@@ -24,7 +24,7 @@ import views.behaviours.QuestionViewBehaviours
 
 class TiedForGoodsDetailsViewSpec extends QuestionViewBehaviours[TiedForGoodsInformationDetails] {
 
-  def tiedForGoodsDetailsView = app.injector.instanceOf[views.html.abouttheproperty.tiedForGoodsDetails]
+  def tiedForGoodsDetailsView = app.injector.instanceOf[views.html.aboutyouandtheproperty.tiedForGoodsDetails]
 
   val messageKeyPrefix = "tiedForGoodsDetails"
 
