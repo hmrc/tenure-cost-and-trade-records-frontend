@@ -17,14 +17,15 @@
 package controllers.Form6010
 
 import actions.WithSessionRefiner
-import form.Form6010.IncentivesPaymentsConditionsForm.incentivesPaymentsConditionsForm
 import form.Form6010.CanRentBeReducedOnReviewForm.canRentBeReducedOnReviewForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo.updateAboutLeaseOrAgreementPartTwo
+import navigation.AboutYourLeaseOrTenureNavigator
+import navigation.identifiers.CanRentBeReducedOnReviewId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.form.{canRentBeReducedOnReview, incentivesPaymentsConditions}
+import views.html.form.canRentBeReducedOnReview
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
@@ -32,8 +33,8 @@ import scala.concurrent.Future
 @Singleton
 class CanRentBeReducedOnReviewController @Inject() (
   mcc: MessagesControllerComponents,
+  navigator: AboutYourLeaseOrTenureNavigator,
   canRentBeReducedOnReviewView: canRentBeReducedOnReview,
-  incentivesPaymentsConditionsView: incentivesPaymentsConditions,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
 ) extends FrontendController(mcc)
@@ -60,7 +61,7 @@ class CanRentBeReducedOnReviewController @Inject() (
         data => {
           val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(canRentBeReducedOnReviewDetails = Some(data)))
           session.saveOrUpdate(updatedData)
-          Future.successful(Ok(incentivesPaymentsConditionsView(incentivesPaymentsConditionsForm)))
+          Future.successful(Redirect(navigator.nextPage(CanRentBeReducedOnReviewId).apply(updatedData)))
         }
       )
   }

@@ -20,7 +20,7 @@ import models.{EnumFormat, NamedEnum, NamedEnumSupport}
 import play.api.libs.json.Format
 
 sealed trait CurrentRentFixed extends NamedEnum {
-  override def key: String = "outsideRepairs"
+  override def key: String = "currentRentFixed"
 }
 object CurrentRentFixedNewLeaseAgreement extends CurrentRentFixed {
   override def name: String = "newLeaseAgreement"

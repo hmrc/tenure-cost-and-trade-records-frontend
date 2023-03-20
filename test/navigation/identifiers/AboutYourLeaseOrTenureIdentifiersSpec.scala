@@ -86,6 +86,38 @@ class AboutYourLeaseOrTenureIdentifiersSpec extends TestBaseSpec {
       assert(RentIncreaseByRPIPageId.toString.equals("rentIncreaseByRPIPage"))
     }
 
+    "Identifier for rent payable vary by gross or net turnover page" in {
+      assert(RentPayableVaryAccordingToGrossOrNetId.toString.equals("rentPayableByGrossOrNetPage"))
+    }
+
+    "Identifier for rent payable vary by gross or net turnover details page" in {
+      assert(RentPayableVaryAccordingToGrossOrNetDetailsId.toString.equals("rentPayableByGrossOrNetDetailsPage"))
+    }
+
+    "Identifier for how current rent fixed page" in {
+      assert(HowIsCurrentRentFixedId.toString.equals("howIsCurrentRentFixedPage"))
+    }
+
+    "Identifier for method fix current rent page" in {
+      assert(MethodToFixCurrentRentsId.toString.equals("methodFixCurrentRentPage"))
+    }
+
+    "Identifier for intervals of rent reviews page" in {
+      assert(IntervalsOfRentReviewId.toString.equals("IntervalRentReviewPage"))
+    }
+
+    "Identifier for can rent be reduced on review page" in {
+      assert(CanRentBeReducedOnReviewId.toString.equals("CanRentBeReducedPage"))
+    }
+
+    "Identifier for conditions payments and conditions page" in {
+      assert(IncentivesPaymentsConditionsId.toString.equals("IncentivesPaymentsConditionsPage"))
+    }
+
+    "Identifier for tenants additions disregarded page" in {
+      assert(TenantsAdditionsDisregardedId.toString.equals("TenantsAdditionsDisregardedPage"))
+    }
+
     "Identifier for tenancy lease agreement expire page (6011 only)" in {
       assert(TenancyLeaseAgreementExpirePageId.toString.equals("tenancyLeaseAgreementExpirePage"))
     }

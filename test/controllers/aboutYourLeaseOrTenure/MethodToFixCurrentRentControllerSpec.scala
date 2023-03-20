@@ -14,46 +14,44 @@
  * limitations under the License.
  */
 
-package controllers.Form6010
+package controllers.aboutYourLeaseOrTenure
 
+import controllers.Form6010.MethodToFixCurrentRentController
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import utils.TestBaseSpec
 
-class RentPayableVaryAccordingToGrossOrNetControllerSpec extends TestBaseSpec {
+class MethodToFixCurrentRentControllerSpec extends TestBaseSpec {
 
-  def rentPayableVaryAccordingToGrossOrNetController(
+  def methodToFixCurrentRentController(
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
   ) =
-    new RentPayableVaryAccordingToGrossOrNetController(
+    new MethodToFixCurrentRentController(
       stubMessagesControllerComponents(),
-      loginView,
-      rentPayableVaryAccordingToGrossOrNetView,
-      rentPayableVaryAccordingToGrossOrNetDetailsView,
-      howIsCurrentRentFixedView,
+      aboutYourLeaseOrTenureNavigator,
+      methodToFixCurrentRentView,
       preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
       mockSessionRepo
     )
 
-  "RentPayableVaryAccordingToGrossOrNet controller" should {
+  "GET /" should {
     "return 200" in {
-      val result = rentPayableVaryAccordingToGrossOrNetController().show(fakeRequest)
+      val result = methodToFixCurrentRentController().show(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return HTML" in {
-      val result = rentPayableVaryAccordingToGrossOrNetController().show(fakeRequest)
+      val result = methodToFixCurrentRentController().show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
-
   }
 
   "SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
-      val res = rentPayableVaryAccordingToGrossOrNetController().submit(
+      val res = methodToFixCurrentRentController().submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)
       )
       status(res) shouldBe BAD_REQUEST
