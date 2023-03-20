@@ -105,6 +105,7 @@ class SaveAsDraftControllerSpec extends TestBaseSpec {
     content should include("saveAsDraft.createPassword.header")
     content should include("""name="password"""")
     content should include("""name="confirmPassword"""")
+    content should include(exitPath)
     expectedErrors.foreach { expectedError =>
       content should include(expectedError)
     }
