@@ -113,32 +113,70 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit)(implicit ec: Exec
     }
   }
 
+  private def payableGrossOrNetRouting: Session => Call = answers => {
+    answers.aboutLeaseOrAgreementPartTwo.flatMap(
+      _.rentPayableVaryAccordingToGrossOrNetDetails.map(_.rentPayableVaryAccordingToGrossOrNets.name)
+    ) match {
+      case Some("yes") => controllers.Form6010.routes.RentPayableVaryAccordingToGrossOrNetDetailsController.show()
+      case Some("no")  => controllers.Form6010.routes.HowIsCurrentRentFixedController.show()
+      case _           =>
+        logger.warn(
+          s"Navigation for rent payable by gross or net turnover without correct selection of conditions by controller"
+        )
+        throw new RuntimeException("Invalid option exception for rent payable by gross or net turnover routing")
+    }
+  }
+
+  private def tenantsAdditionsDisregardedRouting: Session => Call = answers => {
+    answers.aboutLeaseOrAgreementPartTwo.flatMap(
+      _.tenantAdditionsDisregardedDetails.map(_.tenantAdditionalDisregarded.name)
+    ) match {
+      case Some("yes") => controllers.Form6010.routes.TenantsAdditionsDisregardedDetailsController.show()
+      case Some("no")  => controllers.Form6010.routes.PayACapitalSumController.show()
+      case _           =>
+        logger.warn(
+          s"Navigation for tenants additions disregarded reached without correct selection of conditions by controller"
+        )
+        throw new RuntimeException("Invalid option exception for tenants additions disregarded routing")
+    }
+  }
+
   override val routeMap: Map[Identifier, Session => Call] = Map(
-    AboutTheLandlordPageId                   -> aboutYourLandlordRouting,
-    ConnectedToLandlordPageId                -> connectedToLandlordRouting,
-    ConnectedToLandlordDetailsPageId         -> (_ =>
+    AboutTheLandlordPageId                        -> aboutYourLandlordRouting,
+    ConnectedToLandlordPageId                     -> connectedToLandlordRouting,
+    ConnectedToLandlordDetailsPageId              -> (_ =>
       controllers.aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.show()
     ),
-    LeaseOrAgreementDetailsPageId            -> leaseOrAgreementDetailsRouting,
-    CurrentRentPayableWithin12monthsPageId   -> (_ => controllers.routes.TaskListController.show()),
-    CurrentAnnualRentPageId                  -> (_ => controllers.aboutYourLeaseOrTenure.routes.CurrentRentFirstPaidController.show()),
-    CurrentRentFirstPaidPageId               -> currentRentFirstPaidRouting,
-    TenancyLeaseAgreementExpirePageId        -> (_ => controllers.routes.TaskListController.show()),
-    CurrentLeaseBeginPageId                  -> (_ => controllers.aboutYourLeaseOrTenure.routes.IncludedInYourRentController.show()),
-    IncludedInYourRentPageId                 -> (_ => controllers.aboutYourLeaseOrTenure.routes.DoesTheRentPayableController.show()),
-    DoesRentPayablePageId                    -> (_ => controllers.Form6010.routes.UltimatelyResponsibleController.show()),
-    UltimatelyResponsiblePageId              -> (_ =>
+    LeaseOrAgreementDetailsPageId                 -> leaseOrAgreementDetailsRouting,
+    CurrentRentPayableWithin12monthsPageId        -> (_ => controllers.routes.TaskListController.show()),
+    CurrentAnnualRentPageId                       -> (_ => controllers.aboutYourLeaseOrTenure.routes.CurrentRentFirstPaidController.show()),
+    CurrentRentFirstPaidPageId                    -> currentRentFirstPaidRouting,
+    TenancyLeaseAgreementExpirePageId             -> (_ => controllers.routes.TaskListController.show()),
+    CurrentLeaseBeginPageId                       -> (_ => controllers.aboutYourLeaseOrTenure.routes.IncludedInYourRentController.show()),
+    IncludedInYourRentPageId                      -> (_ => controllers.aboutYourLeaseOrTenure.routes.DoesTheRentPayableController.show()),
+    DoesRentPayablePageId                         -> (_ => controllers.Form6010.routes.UltimatelyResponsibleController.show()),
+    UltimatelyResponsiblePageId                   -> (_ =>
       controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesController.show()
     ),
-    RentIncludeTradeServicesPageId           -> rentIncludeTradeServicesRouting,
-    RentIncludeTradeServicesDetailsPageId    -> (_ =>
+    RentIncludeTradeServicesPageId                -> rentIncludeTradeServicesRouting,
+    RentIncludeTradeServicesDetailsPageId         -> (_ =>
       controllers.Form6010.routes.RentIncludeFixtureAndFittingsController.show()
     ),
-    RentFixtureAndFittingsPageId             -> rentFixtureAndFittingsRouting,
-    RentFixtureAndFittingsDetailsPageId      -> (_ => controllers.Form6010.routes.RentOpenMarketValueController.show()),
-    RentOpenMarketPageId                     -> rentRentOpenMarketRouting,
-    WhatRentBasedOnPageId                    -> (_ => controllers.Form6010.routes.RentIncreaseAnnuallyWithRPIController.show()),
-    RentIncreaseByRPIPageId                  -> (_ => controllers.Form6010.routes.RentPayableVaryAccordingToGrossOrNetController.show()),
-    CheckYourAnswersAboutYourLeaseOrTenureId -> (_ => controllers.routes.TaskListController.show())
+    RentFixtureAndFittingsPageId                  -> rentFixtureAndFittingsRouting,
+    RentFixtureAndFittingsDetailsPageId           -> (_ => controllers.Form6010.routes.RentOpenMarketValueController.show()),
+    RentOpenMarketPageId                          -> rentRentOpenMarketRouting,
+    WhatRentBasedOnPageId                         -> (_ => controllers.Form6010.routes.RentIncreaseAnnuallyWithRPIController.show()),
+    RentIncreaseByRPIPageId                       -> (_ => controllers.Form6010.routes.RentPayableVaryAccordingToGrossOrNetController.show()),
+    RentPayableVaryAccordingToGrossOrNetId        -> payableGrossOrNetRouting,
+    RentPayableVaryAccordingToGrossOrNetDetailsId -> (_ =>
+      controllers.Form6010.routes.HowIsCurrentRentFixedController.show()
+    ),
+    HowIsCurrentRentFixedId                       -> (_ => controllers.Form6010.routes.MethodToFixCurrentRentController.show()),
+    MethodToFixCurrentRentsId                     -> (_ => controllers.Form6010.routes.IntervalsOfRentReviewController.show()),
+    IntervalsOfRentReviewId                       -> (_ => controllers.Form6010.routes.CanRentBeReducedOnReviewController.show()),
+    CanRentBeReducedOnReviewId                    -> (_ => controllers.Form6010.routes.IncentivesPaymentsConditionsController.show()),
+    IncentivesPaymentsConditionsId                -> (_ => controllers.Form6010.routes.TenantsAdditionsDisregardedController.show()),
+    TenantsAdditionsDisregardedId                 -> tenantsAdditionsDisregardedRouting,
+    CheckYourAnswersAboutYourLeaseOrTenureId      -> (_ => controllers.routes.TaskListController.show())
   )
 }

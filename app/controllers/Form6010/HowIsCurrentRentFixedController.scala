@@ -18,13 +18,16 @@ package controllers.Form6010
 
 import actions.WithSessionRefiner
 import form.Form6010.HowIsCurrentRentFixedForm.howIsCurrentRentFixedForm
-import form.Form6010.MethodToFixCurrentRentForm.methodToFixCurrentRentForm
+import models.Session
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo.updateAboutLeaseOrAgreementPartTwo
+import navigation.AboutYourLeaseOrTenureNavigator
+import navigation.identifiers.HowIsCurrentRentFixedId
+import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.form.{howIsCurrentRentFixed, methodToFixCurrentRent}
+import views.html.form.howIsCurrentRentFixed
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
@@ -32,12 +35,13 @@ import scala.concurrent.Future
 @Singleton
 class HowIsCurrentRentFixedController @Inject() (
   mcc: MessagesControllerComponents,
-  methodToFixCurrentRentView: methodToFixCurrentRent,
+  navigator: AboutYourLeaseOrTenureNavigator,
   howIsCurrentRentFixedView: howIsCurrentRentFixed,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
 ) extends FrontendController(mcc)
-    with I18nSupport {
+    with I18nSupport
+    with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Future.successful(
@@ -46,7 +50,8 @@ class HowIsCurrentRentFixedController @Inject() (
           request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.howIsCurrentRentFixed) match {
             case Some(data) => howIsCurrentRentFixedForm.fill(data)
             case _          => howIsCurrentRentFixedForm
-          }
+          },
+          getBackLink(request.sessionData)
         )
       )
     )
@@ -56,13 +61,24 @@ class HowIsCurrentRentFixedController @Inject() (
     howIsCurrentRentFixedForm
       .bindFromRequest()
       .fold(
-        formWithErrors => Future.successful(BadRequest(howIsCurrentRentFixedView(formWithErrors))),
+        formWithErrors =>
+          Future.successful(BadRequest(howIsCurrentRentFixedView(formWithErrors, getBackLink(request.sessionData)))),
         data => {
           val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(howIsCurrentRentFixed = Some(data)))
           session.saveOrUpdate(updatedData)
-          Future.successful(Ok(methodToFixCurrentRentView(methodToFixCurrentRentForm)))
+          Future.successful(Redirect(navigator.nextPage(HowIsCurrentRentFixedId).apply(updatedData)))
         }
       )
   }
 
+  private def getBackLink(answers: Session): String =
+    answers.aboutLeaseOrAgreementPartTwo.flatMap(
+      _.rentPayableVaryAccordingToGrossOrNetDetails.map(_.rentPayableVaryAccordingToGrossOrNets.name)
+    ) match {
+      case Some("yes") => controllers.Form6010.routes.RentPayableVaryAccordingToGrossOrNetDetailsController.show().url
+      case Some("no")  => controllers.Form6010.routes.RentPayableVaryAccordingToGrossOrNetController.show().url
+      case _           =>
+        logger.warn(s"Back link for rent increase by RPI page reached with unknown open market value")
+        controllers.routes.TaskListController.show().url
+    }
 }

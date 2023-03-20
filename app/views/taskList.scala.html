@@ -15,27 +15,17 @@
  *@
 
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
-
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukErrorSummary
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukDateInput
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukTextarea
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukCharacterCount
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukWarningText
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.warningtext.WarningText
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
 
 
 @this(layout: Layout,
         govukButton: GovukButton,
-        govukRadios: GovukRadios,
-        govukInput: GovukInput,
-        govukErrorSummary: GovukErrorSummary,
-        govukDateInput: GovukDateInput,
-        govukTextarea: GovukTextarea,
-        govukCharacterCount: GovukCharacterCount,
+        govukWarningText: GovukWarningText,
         formWithCSRF: FormWithCSRF
 )
-
 
 @()(implicit request: Request[_], messages: Messages)
 
@@ -44,43 +34,28 @@
  backLinkUrl = controllers.connectiontoproperty.routes.ConnectionToThePropertyController.show.url
 ) {
 
-  <div class="govuk-grid-row">
-   <div class="govuk-grid-column-two-thirds">
-
-    <p class="govuk-body">You can save your declaration and come back later. You have 30 days from the first time you save to complete this declaration or your information will be deleted. </p>
-
-    <ol class="app-task-list">
-     <li>
-      <h2 class="app-task-list__section">
-       1. About you
-      </h2>
-      <ul class="app-task-list__items">
-       <li class="app-task-list__item">
-        <span class="app-task-list__task-name">
-         <a href="about-you">Provide your contact details</a></span>
-        <span class="govuk-tag app-task-list__tag govuk-tag--grey" id="trader-details-not-started">Not started</span>
-       </li>
-
-
-      </ul></li></ol>
-
+    <p class="govuk-body">@messages("taskList.subHeading")</p>
 
     <ol class="app-task-list">
 
      <li>
       <h2 class="app-task-list__section">
-       2. About the property
+       1. About you and the property
       </h2>
 
       <ul class="app-task-list__items">
 
         <!-- Movement details -->
-
+       <li class="app-task-list__item">
+        <span class="app-task-list__task-name">
+         <a href="about-you">Your contact details</a></span>
+        <span class="govuk-tag app-task-list__tag govuk-tag--grey" id="trader-details-not-started">Not started</span>
+       </li>
 
        <li class="app-task-list__item">
         <span class="app-task-list__task-name">
 
-         <a href="about-the-property">Describe how the property is used</a></span>
+         <a href="about-the-property">How the property is used</a></span>
 
         </span>
         <span class="govuk-tag app-task-list__tag govuk-tag--grey" id="goods-summary-not-started">
@@ -90,7 +65,7 @@
 
        <li class="app-task-list__item">
         <span class="app-task-list__task-name">
-         <a href="website-for-property">Provide details of your licence</a></span>
+         <a href="website-for-property">Your licence</a></span>
         </span>
         <span class="govuk-tag app-task-list__tag govuk-tag--grey" id="goods-summary-not-started">
          Not started
@@ -105,7 +80,7 @@
     <ol class="app-task-list">
      <li>
       <h2 class="app-task-list__section">
-       3. About your trading history
+       2. About your trading history
       </h2>
       <ul class="app-task-list__items">
        <li class="app-task-list__item">
@@ -124,7 +99,7 @@
     <ol class="app-task-list">
      <li>
       <h2 class="app-task-list__section">
-       4. About any franchises or lettings
+       3. About any franchises or lettings
       </h2>
       <ul class="app-task-list__items">
        <li class="app-task-list__item">
@@ -155,7 +130,7 @@
     <ol class="app-task-list">
      <li>
       <h2 class="app-task-list__section">
-       5. About your lease or agreement
+       4. About your lease or agreement
       </h2>
       <ul class="app-task-list__items">
 
@@ -173,7 +148,7 @@
     <ol class="app-task-list">
      <li>
       <h2 class="app-task-list__section">
-       6. Additional information
+       5. Additional information
       </h2>
       <ul class="app-task-list__items">
        <li class="app-task-list__item">
@@ -186,10 +161,21 @@
       </ul></li></ol>
 
 
-   </div>
-  </div>
+  @formWithCSRF(action = controllers.routes.FormSubmissionController.submit()) {
 
+    <legend class="govuk-fieldset__legend govuk-!-font-weight-bold">
+      @messages("declaration.heading")
+    </legend>
+
+    <p class="govuk-body">@messages("declaration.information")</p>
+
+    @govukWarningText(WarningText(
+      content = Text(messages("hint.declaration")),
+      classes = "govuk-!-margin-bottom-2"
+    ))
+
+    @includes.continueButton(govukButton, isSend = true)
+  }
 }
-
 
 

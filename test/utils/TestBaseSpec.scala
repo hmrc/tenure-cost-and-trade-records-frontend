@@ -62,6 +62,7 @@ trait TestBaseSpec
     with RepositoryUtils
     with FakeObjects
     with FakeViews
+    with FakeNavigation
     with OptionValues {
 
   override def fakeApplication(): Application =
