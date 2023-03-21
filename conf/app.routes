@@ -14,6 +14,11 @@ GET         /lockedout                                              controllers.
 GET         /invalid-form-type                                      controllers.LoginController.notValidFORType()
 
 GET         /sessiontimeout                                         controllers.Application.sessionTimeout()
+
+# SAVE AS DRAFT
+GET         /saved                                                  controllers.SaveAsDraftController.customPassword(path)
+POST        /saved                                                  controllers.SaveAsDraftController.saveAsDraft(path)
+
 # Connection to the property
 GET         /are-you-still-connected                                controllers.connectiontoproperty.AreYouStillConnectedController.show()
 POST        /are-you-still-connected                                controllers.connectiontoproperty.AreYouStillConnectedController.submit()

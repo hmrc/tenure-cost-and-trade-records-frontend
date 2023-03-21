@@ -14,19 +14,9 @@
  * limitations under the License.
  */
 
-package models
-
-import play.api.libs.json.{Json, OFormat}
+package models.submissions
 
 /**
   * @author Yuriy Tumakha
   */
-case class SubmissionDraft(
-  forType: String,
-  session: Session,
-  exitPath: String
-)
-
-object SubmissionDraft {
-  implicit val format: OFormat[SubmissionDraft] = Json.format[SubmissionDraft]
-}
+case class CustomUserPassword(password: String, confirmPassword: String)

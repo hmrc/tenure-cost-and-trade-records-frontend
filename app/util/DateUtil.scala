@@ -16,9 +16,13 @@
 
 package util
 
+import play.api.i18n.Messages
+import uk.gov.hmrc.play.language.LanguageUtils
+
 import java.time.format.DateTimeFormatter
-import java.time.{ZoneId, ZonedDateTime}
+import java.time.{LocalDate, ZoneId, ZonedDateTime}
 import java.util.Locale
+import javax.inject.{Inject, Singleton}
 
 /**
   * @author Yuriy Tumakha
@@ -41,5 +45,16 @@ object DateUtil {
 
   def exampleDayMonth(minusYears: Int): String =
     nowInUK.minusYears(minusYears).format(dayMonthExampleFormatter)
+
+}
+
+@Singleton
+class DateUtil @Inject() (langUtil: LanguageUtils) {
+
+  def formatDate(date: LocalDate)(implicit messages: Messages): String =
+    langUtil.Dates.formatDate(date)
+
+  def formatDate(date: ZonedDateTime)(implicit messages: Messages): String =
+    formatDate(date.toLocalDate)
 
 }

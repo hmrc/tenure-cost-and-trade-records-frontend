@@ -14,19 +14,23 @@
  * limitations under the License.
  */
 
-package models
+package form
 
-import play.api.libs.json.{Json, OFormat}
+import models.submissions.CustomUserPassword
+import play.api.data.Form
+import play.api.data.Forms.{mapping, nonEmptyText}
 
 /**
   * @author Yuriy Tumakha
   */
-case class SubmissionDraft(
-  forType: String,
-  session: Session,
-  exitPath: String
-)
+object CustomUserPasswordForm {
 
-object SubmissionDraft {
-  implicit val format: OFormat[SubmissionDraft] = Json.format[SubmissionDraft]
+  val customUserPasswordForm: Form[CustomUserPassword] = Form(
+    mapping(
+      "password"        -> nonEmptyText(minLength = 7),
+      "confirmPassword" -> nonEmptyText
+    )(CustomUserPassword.apply)(CustomUserPassword.unapply)
+      .verifying("saveAsDraft.error.passwordsDontMatch", data => data.confirmPassword == data.password)
+  )
+
 }
