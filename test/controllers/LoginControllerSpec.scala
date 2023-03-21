@@ -19,10 +19,13 @@ package controllers
 import config.LoginToBackendAction
 import connectors.Audit
 import org.joda.time.DateTime
+import play.api.i18n.Lang
+import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.libs.json.{JsObject, Json}
 import play.api.test.Helpers._
 import security.LoginToBackend.{Postcode, RefNumber, StartTime}
 import security.NoExistingDocument
+import stub.StubSessionRepo
 import uk.gov.hmrc.http.HeaderCarrier
 import utils.Helpers.fakeRequest2MessageRequest
 import views.html.login
@@ -34,7 +37,40 @@ class LoginControllerSpec extends TestBaseSpec {
 
   val loginToBackend = mock[LoginToBackendAction]
 
-  "login controller" should {
+  override def fakeApplication(): play.api.Application =
+    new GuiceApplicationBuilder()
+      .configure(
+        "metrics.jvm"          -> false,
+        "metrics.enabled"      -> false,
+        "bannerNotice.enabled" -> false
+      )
+      .build()
+
+  "LoginController" should {
+    "show login form" in {
+      val loginController = new LoginController(
+        inject[Audit],
+        stubMessagesControllerComponents(),
+        inject[login],
+        loginToBackend,
+        inject[views.html.ErrorTemplate],
+        inject[views.html.loginFailed],
+        inject[views.html.lockedOut],
+        preFilledSession,
+        StubSessionRepo(),
+        inject[views.html.testSign]
+      )
+
+      val result = loginController.show(fakeRequest.withTransientLang(Lang("en")))
+
+      status(result) shouldBe OK
+
+      val content = contentAsString(result)
+      content should include("login.heading")
+      content should include("""name="referenceNumber"""")
+      content should include("""name="postcode"""")
+    }
+
     "Audit successful login" in {
 
       val audit = mock[Audit]
@@ -98,11 +134,10 @@ class LoginControllerSpec extends TestBaseSpec {
         mock[views.html.testSign]
       )
 
-//      val fakeRequest = FakeRequest()
+      val result = loginController.logout(fakeRequest)
 
-      val response = loginController.logout.apply(fakeRequest)
-
-      status(response) shouldBe SEE_OTHER
+      status(result)           shouldBe SEE_OTHER
+      redirectLocation(result) shouldBe Some(routes.LoginController.show().url)
 
       verify(audit).sendExplicitAudit(eqTo("Logout"), eqTo(Json.obj(Audit.referenceNumber -> "99996010004")))(
         any[HeaderCarrier],
