@@ -39,7 +39,7 @@ import play.api.i18n.{Messages, MessagesApi}
 import play.api.inject.Injector
 import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.mvc.{AnyContentAsEmpty, Request, Result}
-import play.api.test.{DefaultAwaitTimeout, FakeRequest, FutureAwaits}
+import play.api.test.{DefaultAwaitTimeout, FakeRequest, FutureAwaits, Injecting}
 import repositories.SessionRepository
 import repository.RepositoryUtils
 import uk.gov.hmrc.http.{HeaderCarrier, SessionId}
@@ -58,6 +58,7 @@ trait TestBaseSpec
     with ScalaFutures
     with Inside
     with GuiceOneAppPerSuite
+    with Injecting
     with GlobalExecutionContext
     with RepositoryUtils
     with FakeObjects

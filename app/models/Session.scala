@@ -37,7 +37,8 @@ case class Session(
   aboutTheTradingHistory: Option[AboutTheTradingHistory] = None,
   aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = None,
   aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = None,
-  aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = None
+  aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = None,
+  saveAsDraftPassword: Option[String] = None
 )
 
 object Session {

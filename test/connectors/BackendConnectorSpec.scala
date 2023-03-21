@@ -34,7 +34,7 @@ import utils.TestBaseSpec
 /**
   * @author Yuriy Tumakha
   */
-class BackendConnectorSpec extends TestBaseSpec with Injecting {
+class BackendConnectorSpec extends TestBaseSpec {
 
   private val config      = inject[Configuration]
   private val appConfig   = inject[AppConfig]
