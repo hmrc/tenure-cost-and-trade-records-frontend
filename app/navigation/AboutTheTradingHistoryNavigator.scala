@@ -30,7 +30,7 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit)(implicit ec: Exec
     with Logging {
 
   private def turnoverRouting: Session => Call = answers => {
-    if (answers.userLoginDetails.forNumber == ForTypes.for6015)
+    if (answers.userLoginDetails.forType == ForTypes.for6015)
       controllers.aboutthetradinghistory.routes.CostOfSalesOrGrossProfitDetailsController.show()
     else
       controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show()

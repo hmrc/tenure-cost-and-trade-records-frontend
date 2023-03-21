@@ -19,7 +19,7 @@ package models
 import models.submissions.common.Address
 import play.api.libs.json.Json
 
-case class UserLoginDetails(token: String, forNumber: String, referenceNumber: String, address: Address)
+case class UserLoginDetails(token: String, forType: String, referenceNumber: String, address: Address)
 
 object UserLoginDetails {
   implicit val format = Json.format[UserLoginDetails]

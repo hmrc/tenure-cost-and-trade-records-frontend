@@ -63,7 +63,7 @@ class CheckYourAnswersAboutThePropertyController @Inject() (
   }
 
   private def getBackLink(answers: Session): String =
-    answers.userLoginDetails.forNumber match {
+    answers.userLoginDetails.forType match {
       case ForTypes.for6010                    =>
         answers.aboutTheProperty.flatMap(_.tiedForGoods.map(_.name)) match {
           case Some("yes") => controllers.abouttheproperty.routes.TiedForGoodsDetailsController.show().url

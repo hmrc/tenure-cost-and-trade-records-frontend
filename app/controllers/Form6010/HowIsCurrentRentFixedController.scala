@@ -72,7 +72,7 @@ class HowIsCurrentRentFixedController @Inject() (
   }
 
   private def getBackLink(answers: Session): String =
-    answers.userLoginDetails.forNumber match {
+    answers.userLoginDetails.forType match {
       case ForTypes.for6010 =>
         answers.aboutLeaseOrAgreementPartTwo.flatMap(
           _.rentPayableVaryOnQuantityOfBeersDetails.map(_.rentPayableVaryOnQuantityOfBeersDetails.name)

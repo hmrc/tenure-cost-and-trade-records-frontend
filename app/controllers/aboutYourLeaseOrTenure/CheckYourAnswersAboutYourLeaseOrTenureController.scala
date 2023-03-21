@@ -82,7 +82,7 @@ class CheckYourAnswersAboutYourLeaseOrTenureController @Inject() (
           case (Some("no"), Some("no"), Some("no")) =>
             controllers.aboutYourLeaseOrTenure.routes.CurrentRentPayableWithin12MonthsController.show().url
           case _                                    =>
-            answers.userLoginDetails.forNumber match {
+            answers.userLoginDetails.forType match {
               case ForTypes.for6011 =>
                 controllers.aboutYourLeaseOrTenure.routes.TenancyLeaseAgreementExpireController.show().url
               case _                =>

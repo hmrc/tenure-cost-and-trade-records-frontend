@@ -30,7 +30,7 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit)(implicit ec: Exec
     with Logging {
 
   private def aboutYourLandlordRouting: Session => Call = answers => {
-    answers.userLoginDetails.forNumber match {
+    answers.userLoginDetails.forType match {
       case ForTypes.for6011                    =>
         controllers.aboutYourLeaseOrTenure.routes.CurrentAnnualRentController.show()
       case ForTypes.for6015 | ForTypes.for6016 =>
@@ -67,7 +67,7 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit)(implicit ec: Exec
   }
 
   private def currentRentFirstPaidRouting: Session => Call = answers => {
-    if (answers.userLoginDetails.forNumber == ForTypes.for6011)
+    if (answers.userLoginDetails.forType == ForTypes.for6011)
       controllers.aboutYourLeaseOrTenure.routes.TenancyLeaseAgreementExpireController.show()
     else
       controllers.aboutYourLeaseOrTenure.routes.CurrentLeaseOrAgreementBeginController.show()
@@ -119,7 +119,7 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit)(implicit ec: Exec
     ) match {
       case Some("yes") => controllers.Form6010.routes.RentPayableVaryAccordingToGrossOrNetDetailsController.show()
       case Some("no")  =>
-        answers.userLoginDetails.forNumber match {
+        answers.userLoginDetails.forType match {
           case ForTypes.for6010 => controllers.Form6010.routes.RentPayableVaryOnQuantityOfBeersController.show()
           case _                => controllers.Form6010.routes.HowIsCurrentRentFixedController.show()
         }

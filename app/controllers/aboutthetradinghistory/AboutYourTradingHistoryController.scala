@@ -89,7 +89,7 @@ class AboutYourTradingHistoryController @Inject() (
   }
 
   private def getBackLink(answers: Session): Either[String, String] =
-    answers.userLoginDetails.forNumber match {
+    answers.userLoginDetails.forType match {
       case ForTypes.for6010                    =>
         answers.aboutTheProperty.flatMap(_.tiedForGoods.map(_.name)) match {
           case Some("yes") => Right(controllers.abouttheproperty.routes.TiedForGoodsDetailsController.show().url)
