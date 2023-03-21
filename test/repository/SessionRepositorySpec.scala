@@ -26,10 +26,10 @@ class SessionRepositorySpec extends TestBaseSpec {
 
   lazy val repository = app.injector.instanceOf[SessionRepo]
   val token           = "testToken"
-  val forNumber       = "FOR6010"
+  val forType         = "FOR6010"
   val referenceNumber = "123456"
   val session         = Session(
-    UserLoginDetails(token, forNumber, referenceNumber, Address("13", Some("Street"), Some("City"), "AA11 1AA"))
+    UserLoginDetails(token, forType, referenceNumber, Address("13", Some("Street"), Some("City"), "AA11 1AA"))
   )
   "session repository" should {
 

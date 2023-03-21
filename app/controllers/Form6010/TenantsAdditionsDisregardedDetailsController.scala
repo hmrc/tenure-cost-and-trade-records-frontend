@@ -17,14 +17,15 @@
 package controllers.Form6010
 
 import actions.WithSessionRefiner
-import form.Form6010.PayACapitalSumForm.payACapitalSumForm
 import form.Form6010.TenantsAdditionsDisregardedDetailsForm.tenantsAdditionsDisregardedDetailsForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo.updateAboutLeaseOrAgreementPartTwo
+import navigation.AboutYourLeaseOrTenureNavigator
+import navigation.identifiers.TenantsAdditionsDisregardedDetailsId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.form.{payACapitalSum, tenantsAdditionsDisregardedDetails}
+import views.html.form.tenantsAdditionsDisregardedDetails
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
@@ -32,7 +33,7 @@ import scala.concurrent.Future
 @Singleton
 class TenantsAdditionsDisregardedDetailsController @Inject() (
   mcc: MessagesControllerComponents,
-  payACapitalSum: payACapitalSum,
+  navigator: AboutYourLeaseOrTenureNavigator,
   tenantsAdditionsDisregardedDetailsView: tenantsAdditionsDisregardedDetails,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
@@ -58,7 +59,7 @@ class TenantsAdditionsDisregardedDetailsController @Inject() (
         data => {
           val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(tenantsAdditionsDisregardedDetails = Some(data)))
           session.saveOrUpdate(updatedData)
-          Future.successful(Ok(payACapitalSum(payACapitalSumForm)))
+          Future.successful(Redirect(navigator.nextPage(TenantsAdditionsDisregardedDetailsId).apply(updatedData)))
         }
       )
   }

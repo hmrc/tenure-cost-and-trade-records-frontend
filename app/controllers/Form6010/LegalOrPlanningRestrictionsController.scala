@@ -18,16 +18,14 @@ package controllers.Form6010
 
 import actions.WithSessionRefiner
 import form.Form6010.LegalOrPlanningRestrictionsForm.legalPlanningRestrictionsForm
-import form.Form6010.LegalOrPlanningRestrictionsDetailsForm.legalOrPlanningRestrictionsDetailsForm
-import form.aboutYourLeaseOrTenure.CheckYourAnswersAboutYourLeaseOrTenureForm.checkYourAnswersAboutFranchiseOrLettingsForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo.updateAboutLeaseOrAgreementPartTwo
-import models.submissions.common.{AnswerNo, AnswerYes}
+import navigation.AboutYourLeaseOrTenureNavigator
+import navigation.identifiers.LegalOrPlanningRestrictionId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.form.{legalOrPlanningRestrictions, legalOrPlanningRestrictionsDetails}
-import views.html.aboutYourLeaseOrTenure.checkYourAnswersAboutYourLeaseOrTenure
+import views.html.form.legalOrPlanningRestrictions
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
@@ -35,9 +33,8 @@ import scala.concurrent.Future
 @Singleton
 class LegalOrPlanningRestrictionsController @Inject() (
   mcc: MessagesControllerComponents,
+  navigator: AboutYourLeaseOrTenureNavigator,
   legalOrPlanningRestrictionsView: legalOrPlanningRestrictions,
-  legalOrPlanningRestrictionsDetailsView: legalOrPlanningRestrictionsDetails,
-  checkYourAnswersAboutYourLeaseOrTenure: checkYourAnswersAboutYourLeaseOrTenure,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
 ) extends FrontendController(mcc)
@@ -59,20 +56,11 @@ class LegalOrPlanningRestrictionsController @Inject() (
       .bindFromRequest()
       .fold(
         formWithErrors => Future.successful(BadRequest(legalOrPlanningRestrictionsView(formWithErrors))),
-        data =>
-          data.legalPlanningRestrictions match {
-            case AnswerYes =>
-              val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(legalOrPlanningRestrictions = Some(data)))
-              session.saveOrUpdate(updatedData)
-              Future.successful(
-                Ok(legalOrPlanningRestrictionsDetailsView(legalOrPlanningRestrictionsDetailsForm))
-              )
-            case AnswerNo  =>
-              val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(legalOrPlanningRestrictions = Some(data)))
-              session.saveOrUpdate(updatedData)
-              Future
-                .successful(Ok(checkYourAnswersAboutYourLeaseOrTenure(checkYourAnswersAboutFranchiseOrLettingsForm)))
-          }
+        data => {
+          val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(legalOrPlanningRestrictions = Some(data)))
+          session.saveOrUpdate(updatedData)
+          Future.successful(Redirect(navigator.nextPage(LegalOrPlanningRestrictionId).apply(updatedData)))
+        }
       )
   }
 }

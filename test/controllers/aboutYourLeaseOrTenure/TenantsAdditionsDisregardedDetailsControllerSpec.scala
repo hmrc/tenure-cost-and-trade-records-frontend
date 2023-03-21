@@ -30,11 +30,12 @@ class TenantsAdditionsDisregardedDetailsControllerSpec extends TestBaseSpec {
   ) =
     new TenantsAdditionsDisregardedDetailsController(
       stubMessagesControllerComponents(),
-      payACapitalSumView,
+      aboutYourLeaseOrTenureNavigator,
       tenantsAdditionsDisregardedDetailsView,
       preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
       mockSessionRepo
     )
+
   "GET /" should {
     "return 200" in {
       val result = tenantsAdditionsDisregardedDetailsController().show(fakeRequest)

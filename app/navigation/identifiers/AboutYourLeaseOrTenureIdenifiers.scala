@@ -76,20 +76,44 @@ case object RentPayableVaryAccordingToGrossOrNetDetailsId extends Identifier {
   override def toString: String = "rentPayableByGrossOrNetDetailsPage"
 }
 
+case object rentVaryQuantityOfBeersId extends Identifier {
+  override def toString: String = "rentVaryQuantityOfBeersPage"
+}
+
+case object rentVaryQuantityOfBeersDetailsId extends Identifier {
+  override def toString: String = "rentVaryQuantityOfBeersDetailsPage"
+}
+
 case object HowIsCurrentRentFixedId extends Identifier { override def toString: String = "howIsCurrentRentFixedPage" }
 
 case object MethodToFixCurrentRentsId extends Identifier { override def toString: String = "methodFixCurrentRentPage" }
 
-case object IntervalsOfRentReviewId extends Identifier { override def toString: String = "IntervalRentReviewPage" }
+case object IntervalsOfRentReviewId extends Identifier { override def toString: String = "intervalRentReviewPage" }
 
-case object CanRentBeReducedOnReviewId extends Identifier { override def toString: String = "CanRentBeReducedPage" }
+case object CanRentBeReducedOnReviewId extends Identifier { override def toString: String = "canRentBeReducedPage" }
 
 case object IncentivesPaymentsConditionsId extends Identifier {
-  override def toString: String = "IncentivesPaymentsConditionsPage"
+  override def toString: String = "incentivesPaymentsConditionsPage"
 }
 
 case object TenantsAdditionsDisregardedId extends Identifier {
-  override def toString: String = "TenantsAdditionsDisregardedPage"
+  override def toString: String = "tenantsAdditionsDisregardedPage"
+}
+
+case object TenantsAdditionsDisregardedDetailsId extends Identifier {
+  override def toString: String = "tenantsAdditionsDisregardedDetailsPage"
+}
+
+case object PayCapitalSumId extends Identifier { override def toString: String = "payCapitalSumPage" }
+
+case object PayWhenLeaseGrantedId extends Identifier { override def toString: String = "payWhenLeaseGrantedPage" }
+
+case object LegalOrPlanningRestrictionId extends Identifier {
+  override def toString: String = "legalOrPlanningRestrictionPage"
+}
+
+case object LegalOrPlanningRestrictionDetailsId extends Identifier {
+  override def toString: String = "legalOrPlanningRestrictionDetailsPage"
 }
 
 // 6011 page only

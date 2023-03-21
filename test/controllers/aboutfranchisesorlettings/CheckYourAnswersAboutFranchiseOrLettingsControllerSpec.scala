@@ -16,28 +16,25 @@
 
 package controllers.aboutfranchisesorlettings
 
-import controllers.aboutYourLeaseOrTenure.CheckYourAnswersAboutYourLeaseOrTenureController
-import navigation.AboutYourLeaseOrTenureNavigator
 import play.api.http.Status
 import play.api.test.Helpers._
 import play.twirl.api.HtmlFormat
 import utils.TestBaseSpec
-import views.html.aboutYourLeaseOrTenure.checkYourAnswersAboutYourLeaseOrTenure
+import views.html.aboutfranchisesorlettings.checkYourAnswersAboutFranchiseOrLettings
 import views.html.taskList
 
-class CheckYourAnswersAboutYourLeaseOrTenureControllerSpec extends TestBaseSpec {
+class CheckYourAnswersAboutFranchiseOrLettingsControllerSpec extends TestBaseSpec {
 
-  val mockAboutYourLeaseOrTenureNavigator            = mock[AboutYourLeaseOrTenureNavigator]
-  val mockCheckYourAnswersAboutYourLeaseOrTenureView = mock[checkYourAnswersAboutYourLeaseOrTenure]
-  when(mockCheckYourAnswersAboutYourLeaseOrTenureView.apply(any)(any, any)).thenReturn(HtmlFormat.empty)
+  val mockCheckYourAnswersAboutFranchiseOrLettingsView = mock[checkYourAnswersAboutFranchiseOrLettings]
+  when(mockCheckYourAnswersAboutFranchiseOrLettingsView.apply(any, any)(any, any)).thenReturn(HtmlFormat.empty)
 
   val mockTaskListView = mock[taskList]
   when(mockTaskListView.apply()(any, any)).thenReturn(HtmlFormat.empty)
 
-  val checkYourAnswersAboutYourLeaseOrTenureController = new CheckYourAnswersAboutYourLeaseOrTenureController(
+  val checkYourAnswersAboutFranchiseOrLettingsController = new CheckYourAnswersAboutFranchiseOrLettingsController(
     stubMessagesControllerComponents(),
-    mockAboutYourLeaseOrTenureNavigator,
-    mockCheckYourAnswersAboutYourLeaseOrTenureView,
+    aboutFranchisesOrLettingsNavigator,
+    mockCheckYourAnswersAboutFranchiseOrLettingsView,
     mockTaskListView,
     preFilledSession,
     mockSessionRepo
@@ -45,12 +42,12 @@ class CheckYourAnswersAboutYourLeaseOrTenureControllerSpec extends TestBaseSpec 
 
   "GET /" should {
     "return 200" in {
-      val result = checkYourAnswersAboutYourLeaseOrTenureController.show(fakeRequest)
+      val result = checkYourAnswersAboutFranchiseOrLettingsController.show(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return HTML" in {
-      val result = checkYourAnswersAboutYourLeaseOrTenureController.show(fakeRequest)
+      val result = checkYourAnswersAboutFranchiseOrLettingsController.show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }

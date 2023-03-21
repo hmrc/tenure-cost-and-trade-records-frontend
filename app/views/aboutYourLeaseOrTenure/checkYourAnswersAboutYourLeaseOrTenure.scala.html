@@ -23,11 +23,11 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[CheckYourAnswersAboutYourLeaseOrTenure])(implicit request: Request[_], messages: Messages)
+@(theForm: Form[CheckYourAnswersAboutYourLeaseOrTenure], backLink: String)(implicit request: Request[_], messages: Messages)
 
 @layout(
  pageHeading = messages("checkYourAnswersAboutYourLeaseOrTenure.heading"),
- backLinkUrl = controllers.Form6010.routes.LegalOrPlanningRestrictionsController.show().url,
+ backLinkUrl = backLink,
  showSection = true,
  sectionName = messages("label.section.aboutYourLeaseOrTenure"),
  theForm = theForm

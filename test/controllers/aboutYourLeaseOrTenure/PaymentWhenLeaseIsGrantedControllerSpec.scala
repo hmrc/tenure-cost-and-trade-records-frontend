@@ -30,11 +30,12 @@ class PaymentWhenLeaseIsGrantedControllerSpec extends TestBaseSpec {
   ) =
     new PaymentWhenLeaseIsGrantedController(
       stubMessagesControllerComponents(),
-      legalOrPlanningRestrictionsView,
+      aboutYourLeaseOrTenureNavigator,
       paymentWhenLeaseIsGrantedView,
       preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
       mockSessionRepo
     )
+
   "GET /" should {
     "return 200" in {
       val result = paymentWhenLeaseIsGrantedController().show(fakeRequest)

@@ -30,7 +30,7 @@ class RentPayableVaryOnQuantityOfBeersDetailsControllerSpec extends TestBaseSpec
   ) =
     new RentPayableVaryOnQuantityOfBeersDetailsController(
       stubMessagesControllerComponents(),
-      ultimatelyResponsibleView,
+      aboutYourLeaseOrTenureNavigator,
       rentPayableVaryOnQuantityOfBeersDetailsView,
       preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
       mockSessionRepo

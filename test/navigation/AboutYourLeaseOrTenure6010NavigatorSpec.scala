@@ -76,7 +76,9 @@ class AboutYourLeaseOrTenure6010NavigatorSpec extends TestBaseSpec {
     "return a function that goes to task list page when current rent payable within 12 months has been completed" in {
       navigator
         .nextPage(CurrentRentPayableWithin12monthsPageId)
-        .apply(session6010) mustBe controllers.routes.TaskListController.show()
+        .apply(
+          session6010
+        ) mustBe controllers.aboutYourLeaseOrTenure.routes.CheckYourAnswersAboutYourLeaseOrTenureController.show()
     }
 
     "return a function that goes to current rent first paid page when current annual rent has been completed" in {
@@ -131,6 +133,13 @@ class AboutYourLeaseOrTenure6010NavigatorSpec extends TestBaseSpec {
       navigator
         .nextPage(RentIncludeTradeServicesPageId)
         .apply(session6010No) mustBe controllers.Form6010.routes.RentIncludeFixtureAndFittingsController
+        .show()
+    }
+
+    "return a function that goes to fixture and fittings page when include trade services details has been completed" in {
+      navigator
+        .nextPage(RentIncludeTradeServicesDetailsPageId)
+        .apply(session6010) mustBe controllers.Form6010.routes.RentIncludeFixtureAndFittingsController
         .show()
     }
 
@@ -190,16 +199,37 @@ class AboutYourLeaseOrTenure6010NavigatorSpec extends TestBaseSpec {
         .show()
     }
 
-    "return a function that goes to how is current rent fixed page when rent by gross or net turnover with no has been completed" in {
+    "return a function that goes to rent vary on quantity of beer page when rent by gross or net turnover with no has been completed" in {
       navigator
         .nextPage(RentPayableVaryAccordingToGrossOrNetId)
-        .apply(session6010No) mustBe controllers.Form6010.routes.HowIsCurrentRentFixedController
+        .apply(session6010No) mustBe controllers.Form6010.routes.RentPayableVaryOnQuantityOfBeersController
         .show()
     }
 
     "return a function that goes to how is current rent fixed on page when rent by gross or net turnover details has been completed" in {
       navigator
         .nextPage(RentPayableVaryAccordingToGrossOrNetDetailsId)
+        .apply(session6010) mustBe controllers.Form6010.routes.HowIsCurrentRentFixedController
+        .show()
+    }
+
+    "return a function that goes to rent vary quantity of beer details when rent vary quantity of beer with yes has been completed" in {
+      navigator
+        .nextPage(rentVaryQuantityOfBeersId)
+        .apply(session6010) mustBe controllers.Form6010.routes.RentPayableVaryOnQuantityOfBeersDetailsController
+        .show()
+    }
+
+    "return a function that goes to how is rent fixed page page when rent vary quantity of beer with no has been completed" in {
+      navigator
+        .nextPage(rentVaryQuantityOfBeersId)
+        .apply(session6010No) mustBe controllers.Form6010.routes.HowIsCurrentRentFixedController
+        .show()
+    }
+
+    "return a function that goes to how is rent fixed page when rent vary quantity of beer has been completed" in {
+      navigator
+        .nextPage(rentVaryQuantityOfBeersDetailsId)
         .apply(session6010) mustBe controllers.Form6010.routes.HowIsCurrentRentFixedController
         .show()
     }
@@ -253,13 +283,51 @@ class AboutYourLeaseOrTenure6010NavigatorSpec extends TestBaseSpec {
         .show()
     }
 
-    "return a function that goes to fixture and fittings page when include trade services details has been completed" in {
+    "return a function that goes to pay a capital sum page when tenants additional disregarded details has been completed" in {
       navigator
-        .nextPage(RentIncludeTradeServicesDetailsPageId)
-        .apply(session6010) mustBe controllers.Form6010.routes.RentIncludeFixtureAndFittingsController
-        .show()
+        .nextPage(TenantsAdditionsDisregardedDetailsId)
+        .apply(session6010) mustBe controllers.Form6010.routes.PayACapitalSumController.show()
     }
-    // TODO Add test for tent includes trade services when part of session
+
+    "return a function that goes to pay when lease granted page when pay a capital sum has been completed" in {
+      navigator
+        .nextPage(PayCapitalSumId)
+        .apply(session6010) mustBe controllers.Form6010.routes.PaymentWhenLeaseIsGrantedController.show()
+    }
+
+    "return a function that goes to legal or planning restrictions page when pay when lease granted has been completed" in {
+      navigator
+        .nextPage(PayWhenLeaseGrantedId)
+        .apply(session6010) mustBe controllers.Form6010.routes.LegalOrPlanningRestrictionsController.show()
+    }
+
+    "return a function that goes to legal or planning restrictions details page when legal or planning restrictions with yes has been completed" in {
+      navigator
+        .nextPage(LegalOrPlanningRestrictionId)
+        .apply(session6010) mustBe controllers.Form6010.routes.LegalOrPlanningRestrictionsDetailsController.show()
+    }
+
+    "return a function that goes to CYA page when legal or planning restrictions with no has been completed" in {
+      navigator
+        .nextPage(LegalOrPlanningRestrictionId)
+        .apply(
+          session6010No
+        ) mustBe controllers.aboutYourLeaseOrTenure.routes.CheckYourAnswersAboutYourLeaseOrTenureController.show()
+    }
+
+    "return a function that goes to CYA page when legal or planning restrictions details has been completed" in {
+      navigator
+        .nextPage(LegalOrPlanningRestrictionDetailsId)
+        .apply(
+          session6010
+        ) mustBe controllers.aboutYourLeaseOrTenure.routes.CheckYourAnswersAboutYourLeaseOrTenureController.show()
+    }
+
+    "return a function that goes to task list page when CYA has been completed" in {
+      navigator
+        .nextPage(CheckYourAnswersAboutYourLeaseOrTenureId)
+        .apply(session6010) mustBe controllers.routes.TaskListController.show()
+    }
 
   }
 }

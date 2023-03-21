@@ -95,7 +95,7 @@ class LettingOtherPartOfPropertyController @Inject() (
   }
 
   private def getBackLink(answers: Session): Either[String, String] =
-    answers.userLoginDetails.forNumber match {
+    answers.userLoginDetails.forType match {
       case ForTypes.for6015 | ForTypes.for6016 =>
         Right(controllers.aboutfranchisesorlettings.routes.ConcessionOrFranchiseController.show().url)
       case _                                   =>

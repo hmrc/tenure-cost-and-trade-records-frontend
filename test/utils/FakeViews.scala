@@ -19,14 +19,18 @@ package utils
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import views.html.aboutYourLeaseOrTenure._
 import views.html.aboutfranchisesorlettings._
+import views.html.aboutyouandtheproperty.checkYourAnswersAboutTheProperty
 import views.html.additionalinformation.furtherInformationOrRemarks
-import views.html.form.{canRentBeReducedOnReview, howIsCurrentRentFixed, incentivesPaymentsConditions, methodToFixCurrentRent, payACapitalSum, paymentWhenLeaseIsGranted, rentPayableVaryAccordingToGrossOrNetDetails, rentPayableVaryOnQuantityOfBeers, rentPayableVaryOnQuantityOfBeersDetails, tenancyLeaseAgreement, tenantsAdditionsDisregarded, tenantsAdditionsDisregardedDetails, _}
+import views.html.form._
 import views.html.login
 
 trait FakeViews { this: GuiceOneAppPerSuite =>
 
   // Sign in
   lazy val loginView = app.injector.instanceOf[login]
+
+  lazy val checkYourAnswersAboutThePropertyView =
+    app.injector.instanceOf[checkYourAnswersAboutTheProperty]
 
   // About the franchise or letting
   lazy val franchiseOrLettingsTiedToPropertyView      =
@@ -124,5 +128,7 @@ trait FakeViews { this: GuiceOneAppPerSuite =>
     app.injector.instanceOf[rentPayableVaryOnQuantityOfBeersDetails]
   lazy val howIsCurrentRentFixedView                       =
     app.injector.instanceOf[howIsCurrentRentFixed]
+  lazy val checkYourAnswersAboutLeaseAndTenureView         =
+    app.injector.instanceOf[checkYourAnswersAboutYourLeaseOrTenure]
 
 }

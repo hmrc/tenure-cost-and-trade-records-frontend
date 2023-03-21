@@ -17,18 +17,15 @@
 package controllers.Form6010
 
 import actions.WithSessionRefiner
-import controllers.LoginController.loginForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.form.{rentPayableVaryOnQuantityOfBeers, rentPayableVaryOnQuantityOfBeersDetails, ultimatelyResponsible}
+import views.html.form.rentPayableVaryOnQuantityOfBeers
 import form.Form6010.RentPayableVaryOnQuantityOfBeersForm.rentPayableVaryOnQuantityOfBeersForm
-import form.Form6010.RentPayableVaryOnQuantityOfBeersDetailsForm.rentPayableVaryOnQuantityOfBeersDetailsForm
-import form.Form6010.UltimatelyResponsibleForm.ultimatelyResponsibleForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo.updateAboutLeaseOrAgreementPartTwo
-import models.submissions.common.{AnswerNo, AnswerYes}
+import navigation.AboutYourLeaseOrTenureNavigator
+import navigation.identifiers.rentVaryQuantityOfBeersId
 import play.api.i18n.I18nSupport
 import repositories.SessionRepo
-import views.html.login
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
@@ -36,9 +33,7 @@ import scala.concurrent.Future
 @Singleton
 class RentPayableVaryOnQuantityOfBeersController @Inject() (
   mcc: MessagesControllerComponents,
-  login: login,
-  ultimatelyResponsibleView: ultimatelyResponsible,
-  rentPayableVaryOnQuantityOfBeersDetailsView: rentPayableVaryOnQuantityOfBeersDetails,
+  navigator: AboutYourLeaseOrTenureNavigator,
   rentPayableVaryOnQuantityOfBeersView: rentPayableVaryOnQuantityOfBeers,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
@@ -64,22 +59,12 @@ class RentPayableVaryOnQuantityOfBeersController @Inject() (
       .bindFromRequest()
       .fold(
         formWithErrors => Future.successful(BadRequest(rentPayableVaryOnQuantityOfBeersView(formWithErrors))),
-        data =>
-          data.rentPayableVaryOnQuantityOfBeersDetails match {
-            case AnswerYes =>
-              val updatedData =
-                updateAboutLeaseOrAgreementPartTwo(_.copy(rentPayableVaryOnQuantityOfBeersDetails = Some(data)))
-              session.saveOrUpdate(updatedData)
-              Future.successful(
-                Ok(rentPayableVaryOnQuantityOfBeersDetailsView(rentPayableVaryOnQuantityOfBeersDetailsForm))
-              )
-            case AnswerNo  =>
-              val updatedData =
-                updateAboutLeaseOrAgreementPartTwo(_.copy(rentPayableVaryOnQuantityOfBeersDetails = Some(data)))
-              session.saveOrUpdate(updatedData)
-              Future.successful(Ok(ultimatelyResponsibleView(ultimatelyResponsibleForm)))
-            case _         => Future.successful(Ok(login(loginForm)))
-          }
+        data => {
+          val updatedData =
+            updateAboutLeaseOrAgreementPartTwo(_.copy(rentPayableVaryOnQuantityOfBeersDetails = Some(data)))
+          session.saveOrUpdate(updatedData)
+          Future.successful(Redirect(navigator.nextPage(rentVaryQuantityOfBeersId).apply(updatedData)))
+        }
       )
   }
 }

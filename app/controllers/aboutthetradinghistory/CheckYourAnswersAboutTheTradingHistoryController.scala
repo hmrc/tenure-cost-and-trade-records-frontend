@@ -63,7 +63,7 @@ class CheckYourAnswersAboutTheTradingHistoryController @Inject() (
   }
 
   private def getBackLink(answers: Session): String =
-    answers.userLoginDetails.forNumber match {
+    answers.userLoginDetails.forType match {
       case ForTypes.for6010 | ForTypes.for6011 | ForTypes.for6016 =>
         controllers.aboutthetradinghistory.routes.TurnoverController.show().url
       case ForTypes.for6015                                       => controllers.aboutthetradinghistory.routes.NetProfitController.show().url
