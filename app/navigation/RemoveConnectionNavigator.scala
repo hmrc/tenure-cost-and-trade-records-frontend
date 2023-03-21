@@ -22,9 +22,8 @@ import navigation.identifiers.{Identifier, RemoveConnectionId}
 import play.api.mvc.Call
 
 import javax.inject.Inject
-import scala.concurrent.ExecutionContext
 
-class RemoveConnectionNavigator @Inject() (audit: Audit)(implicit ec: ExecutionContext) extends Navigator(audit) {
+class RemoveConnectionNavigator @Inject() (audit: Audit) extends Navigator(audit) {
 
   override val routeMap: Map[Identifier, Session => Call] = Map(
     RemoveConnectionId -> (_ => controllers.Form6010.routes.CheckYourAnswersController.show())

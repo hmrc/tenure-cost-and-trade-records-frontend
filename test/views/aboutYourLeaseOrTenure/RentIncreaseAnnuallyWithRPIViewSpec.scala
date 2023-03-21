@@ -16,8 +16,8 @@
 
 package views.aboutYourLeaseOrTenure
 
-import form.Form6010.RentIncreasedAnnuallyWithRPIForm
-import models.submissions.Form6010.RentIncreasedAnnuallyWithRPIDetails
+import form.aboutYourLeaseOrTenure.RentIncreasedAnnuallyWithRPIForm
+import models.submissions.aboutYourLeaseOrTenure.RentIncreasedAnnuallyWithRPIDetails
 import models.submissions.common.{AnswerNo, AnswerYes}
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
@@ -29,7 +29,7 @@ class RentIncreaseAnnuallyWithRPIViewSpec extends QuestionViewBehaviours[RentInc
 
   override val form = RentIncreasedAnnuallyWithRPIForm.rentIncreasedAnnuallyWithRPIDetailsForm
 
-  val backLink = controllers.Form6010.routes.RentOpenMarketValueController.show().url
+  val backLink = controllers.aboutYourLeaseOrTenure.routes.RentOpenMarketValueController.show().url
 
   def createView = () => rentIncreaseAnnuallyWithRPIView(form, backLink)(fakeRequest, messages)
 
@@ -45,7 +45,7 @@ class RentIncreaseAnnuallyWithRPIViewSpec extends QuestionViewBehaviours[RentInc
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText mustBe messages("back.link.label")
       val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.Form6010.routes.RentOpenMarketValueController.show().url
+      backlinkUrl mustBe controllers.aboutYourLeaseOrTenure.routes.RentOpenMarketValueController.show().url
     }
 
     "Section heading is visible" in {

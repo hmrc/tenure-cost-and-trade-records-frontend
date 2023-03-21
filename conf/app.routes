@@ -120,9 +120,6 @@ POST        /catering-operation-or-letting-accommodation            controllers.
 GET         /letting-other-part-of-property                         controllers.aboutfranchisesorlettings.LettingOtherPartOfPropertyController.show()
 POST        /letting-other-part-of-property                         controllers.aboutfranchisesorlettings.LettingOtherPartOfPropertyController.submit()
 
-GET         /rent-open-market-value                                 controllers.Form6010.RentOpenMarketValueController.show()
-POST        /rent-open-market-value                                 controllers.Form6010.RentOpenMarketValueController.submit()
-
 GET         /catering-operation-details/                            controllers.aboutfranchisesorlettings.CateringOperationDetailsController.show(idx: Option[Int] ?= None)
 POST        /catering-operation-details/                            controllers.aboutfranchisesorlettings.CateringOperationDetailsController.submit(idx: Option[Int])
 
@@ -160,6 +157,9 @@ POST        /current-annual-rent                                    controllers.
 GET         /current-rent-first-paid                                controllers.aboutYourLeaseOrTenure.CurrentRentFirstPaidController.show()
 POST        /current-rent-first-paid                                controllers.aboutYourLeaseOrTenure.CurrentRentFirstPaidController.submit()
 
+GET         /rent-open-market-value                                 controllers.aboutYourLeaseOrTenure.RentOpenMarketValueController.show()
+POST        /rent-open-market-value                                 controllers.aboutYourLeaseOrTenure.RentOpenMarketValueController.submit()
+
 # Form 6011 routing
 GET         /tenancy-lease-agreement-expire                         controllers.aboutYourLeaseOrTenure.TenancyLeaseAgreementExpireController.show()
 POST        /tenancy-lease-agreement-expire                         controllers.aboutYourLeaseOrTenure.TenancyLeaseAgreementExpireController.submit()
@@ -191,68 +191,68 @@ POST        /premises-license-granted-details                       controllers.
 GET         /concession-or-franchise                                controllers.aboutfranchisesorlettings.ConcessionOrFranchiseController.show()
 POST        /concession-or-franchise                                controllers.aboutfranchisesorlettings.ConcessionOrFranchiseController.submit()
 
-GET         /rent-payable-vary-on-quantity-of-beers                 controllers.Form6010.RentPayableVaryOnQuantityOfBeersController.show()
-POST        /rent-payable-vary-on-quantity-of-beers                 controllers.Form6010.RentPayableVaryOnQuantityOfBeersController.submit()
+GET         /rent-payable-vary-on-quantity-of-beers                 controllers.aboutYourLeaseOrTenure.RentPayableVaryOnQuantityOfBeersController.show()
+POST        /rent-payable-vary-on-quantity-of-beers                 controllers.aboutYourLeaseOrTenure.RentPayableVaryOnQuantityOfBeersController.submit()
 
-GET         /rent-payable-vary-on-quantity-of-beers-details         controllers.Form6010.RentPayableVaryOnQuantityOfBeersDetailsController.show()
-POST        /rent-payable-vary-on-quantity-of-beers-details         controllers.Form6010.RentPayableVaryOnQuantityOfBeersDetailsController.submit()
+GET         /rent-payable-vary-on-quantity-of-beers-details         controllers.aboutYourLeaseOrTenure.RentPayableVaryOnQuantityOfBeersDetailsController.show()
+POST        /rent-payable-vary-on-quantity-of-beers-details         controllers.aboutYourLeaseOrTenure.RentPayableVaryOnQuantityOfBeersDetailsController.submit()
 
-GET         /rent-payable-vary-according-to-gross-or-net            controllers.Form6010.RentPayableVaryAccordingToGrossOrNetController.show()
-POST        /rent-payable-vary-according-to-gross-or-net            controllers.Form6010.RentPayableVaryAccordingToGrossOrNetController.submit()
+GET         /rent-payable-vary-according-to-gross-or-net            controllers.aboutYourLeaseOrTenure.RentPayableVaryAccordingToGrossOrNetController.show()
+POST        /rent-payable-vary-according-to-gross-or-net            controllers.aboutYourLeaseOrTenure.RentPayableVaryAccordingToGrossOrNetController.submit()
 
-GET         /rent-payable-vary-according-to-gross-or-net-details    controllers.Form6010.RentPayableVaryAccordingToGrossOrNetDetailsController.show()
-POST        /rent-payable-vary-according-to-gross-or-net-details    controllers.Form6010.RentPayableVaryAccordingToGrossOrNetDetailsController.submit()
+GET         /rent-payable-vary-according-to-gross-or-net-details    controllers.aboutYourLeaseOrTenure.RentPayableVaryAccordingToGrossOrNetDetailsController.show()
+POST        /rent-payable-vary-according-to-gross-or-net-details    controllers.aboutYourLeaseOrTenure.RentPayableVaryAccordingToGrossOrNetDetailsController.submit()
 
-GET         /rent-include-fixtures-and-fittings                     controllers.Form6010.RentIncludeFixtureAndFittingsController.show()
-POST        /rent-include-fixtures-and-fittings                     controllers.Form6010.RentIncludeFixtureAndFittingsController.submit()
+GET         /rent-include-fixtures-and-fittings                     controllers.aboutYourLeaseOrTenure.RentIncludeFixtureAndFittingsController.show()
+POST        /rent-include-fixtures-and-fittings                     controllers.aboutYourLeaseOrTenure.RentIncludeFixtureAndFittingsController.submit()
 
-GET         /rent-include-fixtures-and-fittings-details             controllers.Form6010.RentIncludeFixtureAndFittingsDetailsController.show()
-POST        /rent-include-fixtures-and-fittings-details             controllers.Form6010.RentIncludeFixtureAndFittingsDetailsController.submit()
+GET         /rent-include-fixtures-and-fittings-details             controllers.aboutYourLeaseOrTenure.RentIncludeFixtureAndFittingsDetailsController.show()
+POST        /rent-include-fixtures-and-fittings-details             controllers.aboutYourLeaseOrTenure.RentIncludeFixtureAndFittingsDetailsController.submit()
 
-GET         /incentives-payments-conditions                         controllers.Form6010.IncentivesPaymentsConditionsController.show()
-POST        /incentives-payments-conditions                         controllers.Form6010.IncentivesPaymentsConditionsController.submit()
+GET         /incentives-payments-conditions                         controllers.aboutYourLeaseOrTenure.IncentivesPaymentsConditionsController.show()
+POST        /incentives-payments-conditions                         controllers.aboutYourLeaseOrTenure.IncentivesPaymentsConditionsController.submit()
 
-GET         /pay-a-capital-sum                                      controllers.Form6010.PayACapitalSumController.show()
-POST        /pay-a-capital-sum                                      controllers.Form6010.PayACapitalSumController.submit()
+GET         /pay-a-capital-sum                                      controllers.aboutYourLeaseOrTenure.PayACapitalSumController.show()
+POST        /pay-a-capital-sum                                      controllers.aboutYourLeaseOrTenure.PayACapitalSumController.submit()
 
-GET         /payment-when-lease-is-granted                          controllers.Form6010.PaymentWhenLeaseIsGrantedController.show()
-POST        /payment-when-lease-is-granted                          controllers.Form6010.PaymentWhenLeaseIsGrantedController.submit()
+GET         /payment-when-lease-is-granted                          controllers.aboutYourLeaseOrTenure.PaymentWhenLeaseIsGrantedController.show()
+POST        /payment-when-lease-is-granted                          controllers.aboutYourLeaseOrTenure.PaymentWhenLeaseIsGrantedController.submit()
 
-GET         /can-rent-be-reduced-on-review                          controllers.Form6010.CanRentBeReducedOnReviewController.show()
-POST        /can-rent-be-reduced-on-review                          controllers.Form6010.CanRentBeReducedOnReviewController.submit()
+GET         /can-rent-be-reduced-on-review                          controllers.aboutYourLeaseOrTenure.CanRentBeReducedOnReviewController.show()
+POST        /can-rent-be-reduced-on-review                          controllers.aboutYourLeaseOrTenure.CanRentBeReducedOnReviewController.submit()
 
-GET         /rent-increase-annually-with-rpi                        controllers.Form6010.RentIncreaseAnnuallyWithRPIController.show()
-POST        /rent-increase-annually-with-rpi                        controllers.Form6010.RentIncreaseAnnuallyWithRPIController.submit()
+GET         /rent-increase-annually-with-rpi                        controllers.aboutYourLeaseOrTenure.RentIncreaseAnnuallyWithRPIController.show()
+POST        /rent-increase-annually-with-rpi                        controllers.aboutYourLeaseOrTenure.RentIncreaseAnnuallyWithRPIController.submit()
 
-GET         /method-to-fix-current-rent                             controllers.Form6010.MethodToFixCurrentRentController.show()
-POST        /method-to-fix-current-rent                             controllers.Form6010.MethodToFixCurrentRentController.submit()
+GET         /method-to-fix-current-rent                             controllers.aboutYourLeaseOrTenure.MethodToFixCurrentRentController.show()
+POST        /method-to-fix-current-rent                             controllers.aboutYourLeaseOrTenure.MethodToFixCurrentRentController.submit()
 
-GET         /how-is-current-rent-fixed                              controllers.Form6010.HowIsCurrentRentFixedController.show()
-POST        /how-is-current-rent-fixed                              controllers.Form6010.HowIsCurrentRentFixedController.submit()
+GET         /how-is-current-rent-fixed                              controllers.aboutYourLeaseOrTenure.HowIsCurrentRentFixedController.show()
+POST        /how-is-current-rent-fixed                              controllers.aboutYourLeaseOrTenure.HowIsCurrentRentFixedController.submit()
 
-GET         /tenants-additions-disregarded                          controllers.Form6010.TenantsAdditionsDisregardedController.show()
-POST        /tenants-additions-disregarded                          controllers.Form6010.TenantsAdditionsDisregardedController.submit()
+GET         /tenants-additions-disregarded                          controllers.aboutYourLeaseOrTenure.TenantsAdditionsDisregardedController.show()
+POST        /tenants-additions-disregarded                          controllers.aboutYourLeaseOrTenure.TenantsAdditionsDisregardedController.submit()
 
-GET         /tenants-additions-disregarded-details                  controllers.Form6010.TenantsAdditionsDisregardedDetailsController.show()
-POST        /tenants-additions-disregarded-details                  controllers.Form6010.TenantsAdditionsDisregardedDetailsController.submit()
+GET         /tenants-additions-disregarded-details                  controllers.aboutYourLeaseOrTenure.TenantsAdditionsDisregardedDetailsController.show()
+POST        /tenants-additions-disregarded-details                  controllers.aboutYourLeaseOrTenure.TenantsAdditionsDisregardedDetailsController.submit()
 
-GET         /legal-or-planning-restrictions                         controllers.Form6010.LegalOrPlanningRestrictionsController.show()
-POST        /legal-or-planning-restrictions                         controllers.Form6010.LegalOrPlanningRestrictionsController.submit()
+GET         /legal-or-planning-restrictions                         controllers.aboutYourLeaseOrTenure.LegalOrPlanningRestrictionsController.show()
+POST        /legal-or-planning-restrictions                         controllers.aboutYourLeaseOrTenure.LegalOrPlanningRestrictionsController.submit()
 
-GET         /legal-or-planning-restrictions-details                 controllers.Form6010.LegalOrPlanningRestrictionsDetailsController.show()
-POST        /legal-or-planning-restrictions-details                 controllers.Form6010.LegalOrPlanningRestrictionsDetailsController.submit()
+GET         /legal-or-planning-restrictions-details                 controllers.aboutYourLeaseOrTenure.LegalOrPlanningRestrictionsDetailsController.show()
+POST        /legal-or-planning-restrictions-details                 controllers.aboutYourLeaseOrTenure.LegalOrPlanningRestrictionsDetailsController.submit()
 
-GET         /intervals-of-rent-review                               controllers.Form6010.IntervalsOfRentReviewController.show()
-POST        /intervals-of-rent-review                               controllers.Form6010.IntervalsOfRentReviewController.submit()
+GET         /intervals-of-rent-review                               controllers.aboutYourLeaseOrTenure.IntervalsOfRentReviewController.show()
+POST        /intervals-of-rent-review                               controllers.aboutYourLeaseOrTenure.IntervalsOfRentReviewController.submit()
 
 GET         /current-rent-payable-within-12-months                  controllers.aboutYourLeaseOrTenure.CurrentRentPayableWithin12MonthsController.show()
 POST        /current-rent-payable-within-12-months                  controllers.aboutYourLeaseOrTenure.CurrentRentPayableWithin12MonthsController.submit()
 
-GET         /what-is-your-rent-based-on                             controllers.Form6010.WhatIsYourRentBasedOnController.show()
-POST        /what-is-your-rent-based-on                             controllers.Form6010.WhatIsYourRentBasedOnController.submit()
+GET         /what-is-your-rent-based-on                             controllers.aboutYourLeaseOrTenure.WhatIsYourRentBasedOnController.show()
+POST        /what-is-your-rent-based-on                             controllers.aboutYourLeaseOrTenure.WhatIsYourRentBasedOnController.submit()
 
-GET         /ultimately-responsible                                 controllers.Form6010.UltimatelyResponsibleController.show()
-POST        /ultimately-responsible                                 controllers.Form6010.UltimatelyResponsibleController.submit()
+GET         /ultimately-responsible                                 controllers.aboutYourLeaseOrTenure.UltimatelyResponsibleController.show()
+POST        /ultimately-responsible                                 controllers.aboutYourLeaseOrTenure.UltimatelyResponsibleController.submit()
 
 GET         /connected-to-landlord                                  controllers.aboutYourLeaseOrTenure.ConnectedToLandlordController.show()
 POST        /connected-to-landlord                                  controllers.aboutYourLeaseOrTenure.ConnectedToLandlordController.submit()

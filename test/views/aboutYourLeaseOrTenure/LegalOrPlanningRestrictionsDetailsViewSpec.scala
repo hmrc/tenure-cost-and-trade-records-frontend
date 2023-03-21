@@ -16,8 +16,8 @@
 
 package views.aboutYourLeaseOrTenure
 
-import form.Form6010.LegalOrPlanningRestrictionsDetailsForm.legalOrPlanningRestrictionsDetailsForm
-import models.submissions.Form6010.LegalOrPlanningRestrictionsDetails
+import form.aboutYourLeaseOrTenure.LegalOrPlanningRestrictionsDetailsForm.legalOrPlanningRestrictionsDetailsForm
+import models.submissions.aboutYourLeaseOrTenure.LegalOrPlanningRestrictionsDetails
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
@@ -42,7 +42,7 @@ class LegalOrPlanningRestrictionsDetailsViewSpec extends QuestionViewBehaviours[
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText mustBe messages("back.link.label")
       val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.Form6010.routes.LegalOrPlanningRestrictionsController.show.url
+      backlinkUrl mustBe controllers.aboutYourLeaseOrTenure.routes.LegalOrPlanningRestrictionsController.show.url
     }
 
     "Section heading is visible" in {

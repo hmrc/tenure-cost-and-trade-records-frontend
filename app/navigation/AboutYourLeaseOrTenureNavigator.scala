@@ -23,11 +23,8 @@ import play.api.Logging
 import play.api.mvc.Call
 
 import javax.inject.Inject
-import scala.concurrent.ExecutionContext
 
-class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit)(implicit ec: ExecutionContext)
-    extends Navigator(audit)
-    with Logging {
+class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator(audit) with Logging {
 
   private def aboutYourLandlordRouting: Session => Call = answers => {
     answers.userLoginDetails.forType match {
@@ -78,7 +75,7 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit)(implicit ec: Exec
       _.rentIncludeTradeServicesDetails.map(_.rentIncludeTradeServices.name)
     ) match {
       case Some("yes") => controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesDetailsController.show()
-      case Some("no")  => controllers.Form6010.routes.RentIncludeFixtureAndFittingsController.show()
+      case Some("no")  => controllers.aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsController.show()
       case _           =>
         logger.warn(
           s"Navigation for rent include trade services reached without correct selection of conditions by controller"
@@ -91,8 +88,9 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit)(implicit ec: Exec
     answers.aboutLeaseOrAgreementPartOne.flatMap(
       _.rentIncludeFixturesAndFittingsDetails.map(_.rentIncludeFixturesAndFittingsDetails.name)
     ) match {
-      case Some("yes") => controllers.Form6010.routes.RentIncludeFixtureAndFittingsDetailsController.show()
-      case Some("no")  => controllers.Form6010.routes.RentOpenMarketValueController.show()
+      case Some("yes") =>
+        controllers.aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsDetailsController.show()
+      case Some("no")  => controllers.aboutYourLeaseOrTenure.routes.RentOpenMarketValueController.show()
       case _           =>
         logger.warn(
           s"Navigation for fixture and fittings reached without correct selection of conditions by controller"
@@ -103,8 +101,8 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit)(implicit ec: Exec
 
   private def rentRentOpenMarketRouting: Session => Call = answers => {
     answers.aboutLeaseOrAgreementPartOne.flatMap(_.rentOpenMarketValueDetails.map(_.rentOpenMarketValues.name)) match {
-      case Some("yes") => controllers.Form6010.routes.RentIncreaseAnnuallyWithRPIController.show()
-      case Some("no")  => controllers.Form6010.routes.WhatIsYourRentBasedOnController.show()
+      case Some("yes") => controllers.aboutYourLeaseOrTenure.routes.RentIncreaseAnnuallyWithRPIController.show()
+      case Some("no")  => controllers.aboutYourLeaseOrTenure.routes.WhatIsYourRentBasedOnController.show()
       case _           =>
         logger.warn(
           s"Navigation for rent open market reached without correct selection of conditions by controller"
@@ -117,11 +115,13 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit)(implicit ec: Exec
     answers.aboutLeaseOrAgreementPartTwo.flatMap(
       _.rentPayableVaryAccordingToGrossOrNetDetails.map(_.rentPayableVaryAccordingToGrossOrNets.name)
     ) match {
-      case Some("yes") => controllers.Form6010.routes.RentPayableVaryAccordingToGrossOrNetDetailsController.show()
+      case Some("yes") =>
+        controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryAccordingToGrossOrNetDetailsController.show()
       case Some("no")  =>
         answers.userLoginDetails.forType match {
-          case ForTypes.for6010 => controllers.Form6010.routes.RentPayableVaryOnQuantityOfBeersController.show()
-          case _                => controllers.Form6010.routes.HowIsCurrentRentFixedController.show()
+          case ForTypes.for6010 =>
+            controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryOnQuantityOfBeersController.show()
+          case _                => controllers.aboutYourLeaseOrTenure.routes.HowIsCurrentRentFixedController.show()
         }
       case _           =>
         logger.warn(
@@ -135,8 +135,9 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit)(implicit ec: Exec
     answers.aboutLeaseOrAgreementPartTwo.flatMap(
       _.rentPayableVaryOnQuantityOfBeersDetails.map(_.rentPayableVaryOnQuantityOfBeersDetails.name)
     ) match {
-      case Some("yes") => controllers.Form6010.routes.RentPayableVaryOnQuantityOfBeersDetailsController.show()
-      case Some("no")  => controllers.Form6010.routes.HowIsCurrentRentFixedController.show()
+      case Some("yes") =>
+        controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryOnQuantityOfBeersDetailsController.show()
+      case Some("no")  => controllers.aboutYourLeaseOrTenure.routes.HowIsCurrentRentFixedController.show()
       case _           =>
         logger.warn(
           s"Navigation for rent payable vary quantity of beer without correct selection of conditions by controller"
@@ -149,8 +150,8 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit)(implicit ec: Exec
     answers.aboutLeaseOrAgreementPartTwo.flatMap(
       _.tenantAdditionsDisregardedDetails.map(_.tenantAdditionalDisregarded.name)
     ) match {
-      case Some("yes") => controllers.Form6010.routes.TenantsAdditionsDisregardedDetailsController.show()
-      case Some("no")  => controllers.Form6010.routes.PayACapitalSumController.show()
+      case Some("yes") => controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedDetailsController.show()
+      case Some("no")  => controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumController.show()
       case _           =>
         logger.warn(
           s"Navigation for tenants additions disregarded reached without correct selection of conditions by controller"
@@ -163,7 +164,7 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit)(implicit ec: Exec
     answers.aboutLeaseOrAgreementPartTwo.flatMap(
       _.legalOrPlanningRestrictions.map(_.legalPlanningRestrictions.name)
     ) match {
-      case Some("yes") => controllers.Form6010.routes.LegalOrPlanningRestrictionsDetailsController.show()
+      case Some("yes") => controllers.aboutYourLeaseOrTenure.routes.LegalOrPlanningRestrictionsDetailsController.show()
       case Some("no")  =>
         controllers.aboutYourLeaseOrTenure.routes.CheckYourAnswersAboutYourLeaseOrTenureController.show()
       case _           =>
@@ -191,34 +192,54 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit)(implicit ec: Exec
     ),
     CurrentLeaseBeginPageId                       -> (_ => controllers.aboutYourLeaseOrTenure.routes.IncludedInYourRentController.show()),
     IncludedInYourRentPageId                      -> (_ => controllers.aboutYourLeaseOrTenure.routes.DoesTheRentPayableController.show()),
-    DoesRentPayablePageId                         -> (_ => controllers.Form6010.routes.UltimatelyResponsibleController.show()),
+    DoesRentPayablePageId                         -> (_ => controllers.aboutYourLeaseOrTenure.routes.UltimatelyResponsibleController.show()),
     UltimatelyResponsiblePageId                   -> (_ =>
       controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesController.show()
     ),
     RentIncludeTradeServicesPageId                -> rentIncludeTradeServicesRouting,
     RentIncludeTradeServicesDetailsPageId         -> (_ =>
-      controllers.Form6010.routes.RentIncludeFixtureAndFittingsController.show()
+      controllers.aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsController.show()
     ),
     RentFixtureAndFittingsPageId                  -> rentFixtureAndFittingsRouting,
-    RentFixtureAndFittingsDetailsPageId           -> (_ => controllers.Form6010.routes.RentOpenMarketValueController.show()),
+    RentFixtureAndFittingsDetailsPageId           -> (_ =>
+      controllers.aboutYourLeaseOrTenure.routes.RentOpenMarketValueController.show()
+    ),
     RentOpenMarketPageId                          -> rentRentOpenMarketRouting,
-    WhatRentBasedOnPageId                         -> (_ => controllers.Form6010.routes.RentIncreaseAnnuallyWithRPIController.show()),
-    RentIncreaseByRPIPageId                       -> (_ => controllers.Form6010.routes.RentPayableVaryAccordingToGrossOrNetController.show()),
+    WhatRentBasedOnPageId                         -> (_ =>
+      controllers.aboutYourLeaseOrTenure.routes.RentIncreaseAnnuallyWithRPIController.show()
+    ),
+    RentIncreaseByRPIPageId                       -> (_ =>
+      controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryAccordingToGrossOrNetController.show()
+    ),
     RentPayableVaryAccordingToGrossOrNetId        -> payableGrossOrNetRouting,
     RentPayableVaryAccordingToGrossOrNetDetailsId -> (_ =>
-      controllers.Form6010.routes.HowIsCurrentRentFixedController.show()
+      controllers.aboutYourLeaseOrTenure.routes.HowIsCurrentRentFixedController.show()
     ),
     rentVaryQuantityOfBeersId                     -> rentVaryQuantityOfBeersRouting,
-    rentVaryQuantityOfBeersDetailsId              -> (_ => controllers.Form6010.routes.HowIsCurrentRentFixedController.show()),
-    HowIsCurrentRentFixedId                       -> (_ => controllers.Form6010.routes.MethodToFixCurrentRentController.show()),
-    MethodToFixCurrentRentsId                     -> (_ => controllers.Form6010.routes.IntervalsOfRentReviewController.show()),
-    IntervalsOfRentReviewId                       -> (_ => controllers.Form6010.routes.CanRentBeReducedOnReviewController.show()),
-    CanRentBeReducedOnReviewId                    -> (_ => controllers.Form6010.routes.IncentivesPaymentsConditionsController.show()),
-    IncentivesPaymentsConditionsId                -> (_ => controllers.Form6010.routes.TenantsAdditionsDisregardedController.show()),
+    rentVaryQuantityOfBeersDetailsId              -> (_ =>
+      controllers.aboutYourLeaseOrTenure.routes.HowIsCurrentRentFixedController.show()
+    ),
+    HowIsCurrentRentFixedId                       -> (_ => controllers.aboutYourLeaseOrTenure.routes.MethodToFixCurrentRentController.show()),
+    MethodToFixCurrentRentsId                     -> (_ =>
+      controllers.aboutYourLeaseOrTenure.routes.IntervalsOfRentReviewController.show()
+    ),
+    IntervalsOfRentReviewId                       -> (_ =>
+      controllers.aboutYourLeaseOrTenure.routes.CanRentBeReducedOnReviewController.show()
+    ),
+    CanRentBeReducedOnReviewId                    -> (_ =>
+      controllers.aboutYourLeaseOrTenure.routes.IncentivesPaymentsConditionsController.show()
+    ),
+    IncentivesPaymentsConditionsId                -> (_ =>
+      controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController.show()
+    ),
     TenantsAdditionsDisregardedId                 -> tenantsAdditionsDisregardedRouting,
-    TenantsAdditionsDisregardedDetailsId          -> (_ => controllers.Form6010.routes.PayACapitalSumController.show()),
-    PayCapitalSumId                               -> (_ => controllers.Form6010.routes.PaymentWhenLeaseIsGrantedController.show()),
-    PayWhenLeaseGrantedId                         -> (_ => controllers.Form6010.routes.LegalOrPlanningRestrictionsController.show()),
+    TenantsAdditionsDisregardedDetailsId          -> (_ =>
+      controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumController.show()
+    ),
+    PayCapitalSumId                               -> (_ => controllers.aboutYourLeaseOrTenure.routes.PaymentWhenLeaseIsGrantedController.show()),
+    PayWhenLeaseGrantedId                         -> (_ =>
+      controllers.aboutYourLeaseOrTenure.routes.LegalOrPlanningRestrictionsController.show()
+    ),
     LegalOrPlanningRestrictionId                  -> legalOrPlanningRestrictionRouting,
     LegalOrPlanningRestrictionDetailsId           -> (_ =>
       controllers.aboutYourLeaseOrTenure.routes.CheckYourAnswersAboutYourLeaseOrTenureController.show()

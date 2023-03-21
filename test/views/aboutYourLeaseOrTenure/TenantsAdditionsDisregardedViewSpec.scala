@@ -16,8 +16,8 @@
 
 package views.aboutYourLeaseOrTenure
 
-import form.Form6010.TenantsAdditionsDisregardedForm
-import models.submissions.Form6010.TenantAdditionsDisregardedDetails
+import form.aboutYourLeaseOrTenure.TenantsAdditionsDisregardedForm
+import models.submissions.aboutYourLeaseOrTenure.TenantAdditionsDisregardedDetails
 import models.submissions.common.{AnswerNo, AnswerYes}
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
@@ -43,7 +43,7 @@ class TenantsAdditionsDisregardedViewSpec extends QuestionViewBehaviours[TenantA
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText mustBe messages("back.link.label")
       val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.Form6010.routes.IncentivesPaymentsConditionsController.show.url
+      backlinkUrl mustBe controllers.aboutYourLeaseOrTenure.routes.IncentivesPaymentsConditionsController.show.url
     }
 
     "Section heading is visible" in {

@@ -16,9 +16,9 @@
 
 package views.aboutYourLeaseOrTenure
 
-import form.Form6010.RentIncludeFixtureAndFittingDetailsForm
+import form.aboutYourLeaseOrTenure.RentIncludeFixtureAndFittingDetailsForm
 import models.AnnualRent
-import models.submissions.Form6010.RentIncludeFixturesOrFittingsInformationDetails
+import models.submissions.aboutYourLeaseOrTenure.RentIncludeFixturesOrFittingsInformationDetails
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
@@ -44,7 +44,7 @@ class RentIncludeFixtureAndFittingsDetailsViewSpec
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText mustBe messages("back.link.label")
       val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.Form6010.routes.RentIncludeFixtureAndFittingsController.show.url
+      backlinkUrl mustBe controllers.aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsController.show.url
     }
 
     "Section heading is visible" in {

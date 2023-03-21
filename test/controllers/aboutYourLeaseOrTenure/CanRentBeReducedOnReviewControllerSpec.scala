@@ -16,7 +16,6 @@
 
 package controllers.aboutYourLeaseOrTenure
 
-import controllers.Form6010.CanRentBeReducedOnReviewController
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
 import play.api.http.Status
 import play.api.test.FakeRequest

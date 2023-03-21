@@ -16,8 +16,8 @@
 
 package views.aboutYourLeaseOrTenure
 
-import form.Form6010.UltimatelyResponsibleForm
-import models.submissions.Form6010.UltimatelyResponsible
+import form.aboutYourLeaseOrTenure.UltimatelyResponsibleForm
+import models.submissions.aboutYourLeaseOrTenure.UltimatelyResponsible
 import models.submissions.common._
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form

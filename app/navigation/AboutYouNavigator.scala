@@ -22,9 +22,8 @@ import navigation.identifiers.{AboutYouPageId, Identifier}
 import play.api.mvc.Call
 
 import javax.inject.Inject
-import scala.concurrent.ExecutionContext
 
-class AboutYouNavigator @Inject() (audit: Audit)(implicit ec: ExecutionContext) extends Navigator(audit) {
+class AboutYouNavigator @Inject() (audit: Audit) extends Navigator(audit) {
 
   override val routeMap: Map[Identifier, Session => Call] = Map(
     AboutYouPageId -> (_ => controllers.abouttheproperty.routes.AboutThePropertyController.show())

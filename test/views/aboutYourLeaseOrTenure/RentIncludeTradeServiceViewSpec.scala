@@ -45,7 +45,7 @@ class RentIncludeTradeServiceViewSpec extends QuestionViewBehaviours[RentInclude
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText mustBe messages("back.link.label")
       val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.Form6010.routes.UltimatelyResponsibleController.show().url
+      backlinkUrl mustBe controllers.aboutYourLeaseOrTenure.routes.UltimatelyResponsibleController.show().url
     }
 
     "Section heading is visible" in {

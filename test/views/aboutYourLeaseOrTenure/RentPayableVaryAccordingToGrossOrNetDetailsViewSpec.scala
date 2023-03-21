@@ -16,8 +16,8 @@
 
 package views.aboutYourLeaseOrTenure
 
-import form.Form6010.RentPayableVaryAccordingToGrossOrNetDetailsForm
-import models.submissions.Form6010.RentPayableVaryAccordingToGrossOrNetInformationDetails
+import form.aboutYourLeaseOrTenure.RentPayableVaryAccordingToGrossOrNetDetailsForm
+import models.submissions.aboutYourLeaseOrTenure.RentPayableVaryAccordingToGrossOrNetInformationDetails
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
@@ -46,7 +46,7 @@ class RentPayableVaryAccordingToGrossOrNetDetailsViewSpec
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText mustBe messages("back.link.label")
       val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.Form6010.routes.RentPayableVaryAccordingToGrossOrNetController.show.url
+      backlinkUrl mustBe controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryAccordingToGrossOrNetController.show.url
     }
 
     "Section heading is visible" in {

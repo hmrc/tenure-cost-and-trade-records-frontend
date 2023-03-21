@@ -16,8 +16,8 @@
 
 package views.aboutYourLeaseOrTenure
 
-import form.Form6010.PaymentWhenLeaseIsGrantedForm.paymentWhenLeaseIsGrantedForm
-import models.submissions.Form6010.PaymentWhenLeaseIsGrantedDetails
+import form.aboutYourLeaseOrTenure.PaymentWhenLeaseIsGrantedForm.paymentWhenLeaseIsGrantedForm
+import models.submissions.aboutYourLeaseOrTenure.PaymentWhenLeaseIsGrantedDetails
 import models.submissions.common.{AnswerNo, AnswerYes}
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
@@ -43,7 +43,7 @@ class PaymentWhenLeaseGrantedViewSpec extends QuestionViewBehaviours[PaymentWhen
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText mustBe messages("back.link.label")
       val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.Form6010.routes.PayACapitalSumController.show.url
+      backlinkUrl mustBe controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumController.show.url
     }
 
     "Section heading is visible" in {

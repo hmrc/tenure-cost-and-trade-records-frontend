@@ -23,11 +23,8 @@ import play.api.mvc.Call
 import play.api.Logging
 
 import javax.inject.Inject
-import scala.concurrent.ExecutionContext
 
-class AboutTheTradingHistoryNavigator @Inject() (audit: Audit)(implicit ec: ExecutionContext)
-    extends Navigator(audit)
-    with Logging {
+class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator(audit) with Logging {
 
   private def turnoverRouting: Session => Call = answers => {
     if (answers.userLoginDetails.forType == ForTypes.for6015)

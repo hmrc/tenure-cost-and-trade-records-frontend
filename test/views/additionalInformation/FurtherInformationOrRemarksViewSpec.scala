@@ -29,7 +29,7 @@ class FurtherInformationOrRemarksViewSpec extends QuestionViewBehaviours[Further
 
   override val form = FurtherInformationOrRemarksForm.furtherInformationOrRemarksForm
 
-  val backLink = controllers.Form6010.routes.TenantsAdditionsDisregardedController.show().url
+  val backLink = controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController.show().url
 
   def createView = () => furtherInformationOrRemarksView(form, backLink)(fakeRequest, messages)
 
@@ -45,7 +45,7 @@ class FurtherInformationOrRemarksViewSpec extends QuestionViewBehaviours[Further
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText mustBe messages("back.link.label")
       val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.Form6010.routes.TenantsAdditionsDisregardedController.show().url
+      backlinkUrl mustBe controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController.show().url
     }
 
     "Section heading is visible" in {

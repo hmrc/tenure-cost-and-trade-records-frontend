@@ -23,11 +23,8 @@ import play.api.Logging
 import play.api.mvc.Call
 
 import javax.inject.Inject
-import scala.concurrent.ExecutionContext
 
-class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit)(implicit ec: ExecutionContext)
-    extends Navigator(audit)
-    with Logging {
+class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit) extends Navigator(audit) with Logging {
 
   private def franchiseOrLettingConditionsRouting: Session => Call = answers => {
     answers.aboutFranchisesOrLettings.flatMap(_.franchisesOrLettingsTiedToProperty.map(_.name)) match {
