@@ -17,7 +17,7 @@ hintText.optional = (opsiynol)
 ##############################
 heading.sessionTimeout=Session timed out
 sessionTimeout.copy=You have been logged out as you have not used this form for the last 24 hours.
-sessionTimeout.button=Please log in again
+sessionTimeout.button=Mewngofnodwch eto
 
 #WELSH YES/NO
 #############
@@ -705,7 +705,8 @@ saveAsDraft.validPassword=Rhaid i’r cyfrinair fod o leiaf 7 nod yn hir.
 saveAsDraft.error.passwordsDontMatch=Nid yw’r cyfrineiriau yn cyfateb.
 saveAsDraft.createPassword.header=Creu cyfrinair i adfer eich gwybodaeth
 saveAsDraft.next=Cadw cyfrinair
-
+saveAsDraft.continue=Parhewch i lenwi'r ffurflen hon
+saveAsDraft.logout=Allgofnodi
 
 # Errors
 ########

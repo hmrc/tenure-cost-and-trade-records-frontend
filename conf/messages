@@ -705,6 +705,8 @@ saveAsDraft.validPassword=Password must be at least 7 characters.
 saveAsDraft.error.passwordsDontMatch=Passwords do not match
 saveAsDraft.createPassword.header=Create a password to retrieve your saved information
 saveAsDraft.next=Save password
+saveAsDraft.continue=Continue completing this form
+saveAsDraft.logout=Log out
 
 # Errors
 ########

@@ -91,14 +91,13 @@ class LoginController @Inject() (
     Future.successful(Ok(login(loginForm)))
   }
 
-  def logout(implicit hc: HeaderCarrier) = (Action andThen withSessionRefiner).async { implicit request =>
+  def logout = (Action andThen withSessionRefiner).async { implicit request =>
     val refNumJson = Json.obj(Audit.referenceNumber -> request.sessionData.userLoginDetails.referenceNumber)
 
     session.remove().map { _ =>
       audit.sendExplicitAudit("Logout", refNumJson)
       Redirect(routes.LoginController.show())
     }
-
   }
 
   def submit = Action.async { implicit request =>

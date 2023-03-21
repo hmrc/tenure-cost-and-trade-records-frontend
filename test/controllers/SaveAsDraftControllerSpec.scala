@@ -19,12 +19,13 @@ package controllers
 import actions.WithSessionRefiner
 import config.ErrorHandler
 import connectors.Audit
-import play.api.http.Status.OK
+import play.api.http.Status.{NOT_FOUND, OK}
 import play.api.test.Helpers.{POST, contentAsString, status, stubMessagesControllerComponents}
 import stub.{StubBackendConnector, StubSessionRepo}
 import util.DateUtil
 import utils.TestBaseSpec
 import views.html.customPasswordSaveAsDraft
+import views.html.submissionDraftSaved
 
 /**
   * @author Yuriy Tumakha
@@ -39,6 +40,7 @@ class SaveAsDraftControllerSpec extends TestBaseSpec {
   private def saveAsDraftController = new SaveAsDraftController(
     backendConnector,
     inject[customPasswordSaveAsDraft],
+    inject[submissionDraftSaved],
     inject[DateUtil],
     WithSessionRefiner(inject[ErrorHandler], sessionRepo),
     sessionRepo,
@@ -47,6 +49,13 @@ class SaveAsDraftControllerSpec extends TestBaseSpec {
   )
 
   "SaveAsDraftController.customPassword" should {
+    "return 404 if session is empty" in {
+      sessionRepo.remove()
+
+      val result = saveAsDraftController.customPassword(exitPath)(fakeRequest)
+      status(result) shouldBe NOT_FOUND
+    }
+
     "return customUserPasswordForm if session.saveAsDraftPassword is empty" in {
       sessionRepo.saveOrUpdate(prefilledBaseSession.copy(saveAsDraftPassword = None))
 
