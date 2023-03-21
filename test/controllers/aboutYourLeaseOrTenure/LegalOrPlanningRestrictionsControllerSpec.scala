@@ -30,9 +30,8 @@ class LegalOrPlanningRestrictionsControllerSpec extends TestBaseSpec {
   ) =
     new LegalOrPlanningRestrictionsController(
       stubMessagesControllerComponents(),
+      aboutYourLeaseOrTenureNavigator,
       legalOrPlanningRestrictionsView,
-      legalOrPlanningRestrictionsDetailsView,
-      checkYourAnswersAboutYourLeaseOrTenureView,
       preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
       mockSessionRepo
     )

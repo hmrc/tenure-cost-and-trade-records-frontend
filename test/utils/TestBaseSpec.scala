@@ -18,7 +18,7 @@ package utils
 
 import actions.{SessionRequest, WithSessionRefiner}
 import config.{AppConfig, ErrorHandler}
-import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
+import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartOne, AboutLeaseOrAgreementPartTwo}
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
 import models.submissions.abouttheproperty._
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory
@@ -137,7 +137,8 @@ trait TestBaseSpec
     altContactInformation: Option[AltContactInformation] = Some(prefilledAltContactInformation),
     aboutTheTradingHistory: Option[AboutTheTradingHistory] = Some(prefilledAboutTheTradingHistory),
     aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = Some(prefilledAboutFranchiseOrLettings),
-    aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
+    aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne),
+    aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwo)
   ): WithSessionRefiner =
     new WithSessionRefiner(mockCustomErrorHandler, mockSessionRepository) {
 
@@ -154,7 +155,9 @@ trait TestBaseSpec
                 additionalInformation = additionalInformation,
                 altContactInformation = altContactInformation,
                 aboutTheTradingHistory = aboutTheTradingHistory,
-                aboutFranchisesOrLettings = aboutFranchisesOrLettings
+                aboutFranchisesOrLettings = aboutFranchisesOrLettings,
+                aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne,
+                aboutLeaseOrAgreementPartTwo = aboutLeaseOrAgreementPartTwo
               ),
               request = request
             )

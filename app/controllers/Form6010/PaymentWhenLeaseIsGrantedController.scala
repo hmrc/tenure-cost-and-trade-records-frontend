@@ -17,14 +17,15 @@
 package controllers.Form6010
 
 import actions.WithSessionRefiner
-import form.Form6010.LegalOrPlanningRestrictionsForm.legalPlanningRestrictionsForm
 import form.Form6010.PaymentWhenLeaseIsGrantedForm.paymentWhenLeaseIsGrantedForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo.updateAboutLeaseOrAgreementPartTwo
+import navigation.AboutYourLeaseOrTenureNavigator
+import navigation.identifiers.PayWhenLeaseGrantedId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.form.{legalOrPlanningRestrictions, paymentWhenLeaseIsGranted}
+import views.html.form.paymentWhenLeaseIsGranted
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
@@ -32,7 +33,7 @@ import scala.concurrent.Future
 @Singleton
 class PaymentWhenLeaseIsGrantedController @Inject() (
   mcc: MessagesControllerComponents,
-  legalOrPlanningRestrictions: legalOrPlanningRestrictions,
+  navigator: AboutYourLeaseOrTenureNavigator,
   paymentWhenLeaseIsGrantedView: paymentWhenLeaseIsGranted,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
@@ -60,7 +61,7 @@ class PaymentWhenLeaseIsGrantedController @Inject() (
         data => {
           val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(paymentWhenLeaseIsGrantedDetails = Some(data)))
           session.saveOrUpdate(updatedData)
-          Future.successful(Ok(legalOrPlanningRestrictions(legalPlanningRestrictionsForm)))
+          Future.successful(Redirect(navigator.nextPage(PayWhenLeaseGrantedId).apply(updatedData)))
         }
       )
   }

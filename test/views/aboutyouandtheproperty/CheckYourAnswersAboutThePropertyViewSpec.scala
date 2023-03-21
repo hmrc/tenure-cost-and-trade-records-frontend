@@ -24,9 +24,6 @@ import views.behaviours.QuestionViewBehaviours
 
 class CheckYourAnswersAboutThePropertyViewSpec extends QuestionViewBehaviours[CheckYourAnswersAboutYourProperty] {
 
-  def checkYourAnswersAboutThePropertyView =
-    app.injector.instanceOf[views.html.aboutyouandtheproperty.checkYourAnswersAboutTheProperty]
-
   val messageKeyPrefix = "checkYourAnswersAboutTheProperty"
 
   override val form = CheckYourAnswersAboutThePropertyForm.checkYourAnswersAboutThePropertyForm

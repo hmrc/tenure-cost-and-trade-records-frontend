@@ -16,40 +16,32 @@
 
 package controllers.aboutYourLeaseOrTenure
 
-import navigation.AboutYourLeaseOrTenureNavigator
+import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo
 import play.api.http.Status
 import play.api.test.Helpers._
-import play.twirl.api.HtmlFormat
 import utils.TestBaseSpec
-import views.html.aboutYourLeaseOrTenure.checkYourAnswersAboutYourLeaseOrTenure
-import views.html.taskList
 
 class CheckYourAnswersAboutYourLeaseOrTenureControllerSpec extends TestBaseSpec {
 
-  val mockAboutYourLeaseOrTenureNavigatorNavigator   = mock[AboutYourLeaseOrTenureNavigator]
-  val mockCheckYourAnswersAboutYourLeaseOrTenureView = mock[checkYourAnswersAboutYourLeaseOrTenure]
-  when(mockCheckYourAnswersAboutYourLeaseOrTenureView.apply(any)(any, any)).thenReturn(HtmlFormat.empty)
-
-  val mockTaskListView = mock[taskList]
-  when(mockTaskListView.apply()(any, any)).thenReturn(HtmlFormat.empty)
-
-  val checkYourAnswersAboutYourLeaseOrTenureController = new CheckYourAnswersAboutYourLeaseOrTenureController(
-    stubMessagesControllerComponents(),
-    mockAboutYourLeaseOrTenureNavigatorNavigator,
-    mockCheckYourAnswersAboutYourLeaseOrTenureView,
-    mockTaskListView,
-    preFilledSession,
-    mockSessionRepo
-  )
+  def checkYourAnswersAboutYourLeaseOrTenureController(
+    aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwo)
+  ) =
+    new CheckYourAnswersAboutYourLeaseOrTenureController(
+      stubMessagesControllerComponents(),
+      aboutYourLeaseOrTenureNavigator,
+      checkYourAnswersAboutLeaseAndTenureView,
+      preEnrichedActionRefiner(aboutLeaseOrAgreementPartTwo = aboutLeaseOrAgreementPartTwo),
+      mockSessionRepo
+    )
 
   "GET /" should {
     "return 200" in {
-      val result = checkYourAnswersAboutYourLeaseOrTenureController.show(fakeRequest)
+      val result = checkYourAnswersAboutYourLeaseOrTenureController().show(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return HTML" in {
-      val result = checkYourAnswersAboutYourLeaseOrTenureController.show(fakeRequest)
+      val result = checkYourAnswersAboutYourLeaseOrTenureController().show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }

@@ -16,11 +16,12 @@
 
 package utils
 
-import navigation.AboutYourLeaseOrTenureNavigator
+import navigation._
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 
 trait FakeNavigation { this: GuiceOneAppPerSuite =>
 
-  lazy val aboutYourLeaseOrTenureNavigator = app.injector.instanceOf[AboutYourLeaseOrTenureNavigator]
+  lazy val aboutFranchisesOrLettingsNavigator = app.injector.instanceOf[AboutFranchisesOrLettingsNavigator]
+  lazy val aboutYourLeaseOrTenureNavigator    = app.injector.instanceOf[AboutYourLeaseOrTenureNavigator]
 
 }

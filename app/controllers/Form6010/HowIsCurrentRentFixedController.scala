@@ -18,7 +18,7 @@ package controllers.Form6010
 
 import actions.WithSessionRefiner
 import form.Form6010.HowIsCurrentRentFixedForm.howIsCurrentRentFixedForm
-import models.Session
+import models.{ForTypes, Session}
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo.updateAboutLeaseOrAgreementPartTwo
 import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.HowIsCurrentRentFixedId
@@ -72,13 +72,27 @@ class HowIsCurrentRentFixedController @Inject() (
   }
 
   private def getBackLink(answers: Session): String =
-    answers.aboutLeaseOrAgreementPartTwo.flatMap(
-      _.rentPayableVaryAccordingToGrossOrNetDetails.map(_.rentPayableVaryAccordingToGrossOrNets.name)
-    ) match {
-      case Some("yes") => controllers.Form6010.routes.RentPayableVaryAccordingToGrossOrNetDetailsController.show().url
-      case Some("no")  => controllers.Form6010.routes.RentPayableVaryAccordingToGrossOrNetController.show().url
-      case _           =>
-        logger.warn(s"Back link for rent increase by RPI page reached with unknown open market value")
-        controllers.routes.TaskListController.show().url
+    answers.userLoginDetails.forNumber match {
+      case ForTypes.for6010 =>
+        answers.aboutLeaseOrAgreementPartTwo.flatMap(
+          _.rentPayableVaryOnQuantityOfBeersDetails.map(_.rentPayableVaryOnQuantityOfBeersDetails.name)
+        ) match {
+          case Some("yes") => controllers.Form6010.routes.RentPayableVaryOnQuantityOfBeersDetailsController.show().url
+          case Some("no")  => controllers.Form6010.routes.RentPayableVaryOnQuantityOfBeersController.show().url
+          case _           =>
+            logger.warn(s"Back link for 6010 rent payable vary beer page reached with unknown value")
+            controllers.routes.TaskListController.show().url
+        }
+      case _                =>
+        answers.aboutLeaseOrAgreementPartTwo.flatMap(
+          _.rentPayableVaryAccordingToGrossOrNetDetails.map(_.rentPayableVaryAccordingToGrossOrNets.name)
+        ) match {
+          case Some("yes") =>
+            controllers.Form6010.routes.RentPayableVaryAccordingToGrossOrNetDetailsController.show().url
+          case Some("no")  => controllers.Form6010.routes.RentPayableVaryAccordingToGrossOrNetController.show().url
+          case _           =>
+            logger.warn(s"Back link for rent increase by RPI page reached with unknown open market value")
+            controllers.routes.TaskListController.show().url
+        }
     }
 }

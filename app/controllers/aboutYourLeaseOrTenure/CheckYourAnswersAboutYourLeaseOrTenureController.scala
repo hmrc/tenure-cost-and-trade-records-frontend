@@ -18,14 +18,15 @@ package controllers.aboutYourLeaseOrTenure
 
 import actions.WithSessionRefiner
 import form.aboutYourLeaseOrTenure.CheckYourAnswersAboutYourLeaseOrTenureForm.checkYourAnswersAboutFranchiseOrLettingsForm
+import models.{ForTypes, Session}
 import navigation.AboutYourLeaseOrTenureNavigator
+import navigation.identifiers.CheckYourAnswersAboutYourLeaseOrTenureId
 import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.aboutYourLeaseOrTenure.checkYourAnswersAboutYourLeaseOrTenure
-import views.html.taskList
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
@@ -35,7 +36,6 @@ class CheckYourAnswersAboutYourLeaseOrTenureController @Inject() (
   mcc: MessagesControllerComponents,
   navigator: AboutYourLeaseOrTenureNavigator,
   checkYourAnswersAboutYourLeaseOrTenureView: checkYourAnswersAboutYourLeaseOrTenure,
-  taskListView: taskList,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
 ) extends FrontendController(mcc)
@@ -50,13 +50,45 @@ class CheckYourAnswersAboutYourLeaseOrTenureController @Inject() (
             case Some(checkYourAnswersAboutYourLeaseOrTenureView) =>
               checkYourAnswersAboutFranchiseOrLettingsForm.fillAndValidate(checkYourAnswersAboutYourLeaseOrTenureView)
             case _                                                => checkYourAnswersAboutFranchiseOrLettingsForm
-          }
+          },
+          getBackLink(request.sessionData)
         )
       )
     )
   }
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
-    Future.successful(Ok(taskListView()))
+    Future.successful(Redirect(navigator.nextPage(CheckYourAnswersAboutYourLeaseOrTenureId).apply(request.sessionData)))
   }
+
+  private def getBackLink(answers: Session): String =
+    answers.aboutLeaseOrAgreementPartTwo.flatMap(
+      _.legalOrPlanningRestrictions.map(_.legalPlanningRestrictions.name)
+    ) match {
+      case Some("yes") => controllers.Form6010.routes.LegalOrPlanningRestrictionsDetailsController.show().url
+      case Some("no")  => controllers.Form6010.routes.LegalOrPlanningRestrictionsController.show().url
+      case _           =>
+        (
+          answers.aboutLeaseOrAgreementPartOne.flatMap(
+            _.leaseOrAgreementYearsDetails.map(_.commenceWithinThreeYears.name)
+          ),
+          answers.aboutLeaseOrAgreementPartOne.flatMap(
+            _.leaseOrAgreementYearsDetails.map(_.agreedReviewedAlteredThreeYears.name)
+          ),
+          answers.aboutLeaseOrAgreementPartOne.flatMap(
+            _.leaseOrAgreementYearsDetails.map(_.rentUnderReviewNegotiated.name)
+          )
+        ) match {
+          case (Some("no"), Some("no"), Some("no")) =>
+            controllers.aboutYourLeaseOrTenure.routes.CurrentRentPayableWithin12MonthsController.show().url
+          case _                                    =>
+            answers.userLoginDetails.forNumber match {
+              case ForTypes.for6011 =>
+                controllers.aboutYourLeaseOrTenure.routes.TenancyLeaseAgreementExpireController.show().url
+              case _                =>
+                logger.warn(s"Navigation for CYA about lease without correct selection of conditions by controller")
+                throw new RuntimeException("Invalid option exception for CYA about lease back link")
+            }
+        }
+    }
 }

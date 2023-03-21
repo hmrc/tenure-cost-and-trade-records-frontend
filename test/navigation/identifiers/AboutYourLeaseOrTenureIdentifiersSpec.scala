@@ -94,6 +94,14 @@ class AboutYourLeaseOrTenureIdentifiersSpec extends TestBaseSpec {
       assert(RentPayableVaryAccordingToGrossOrNetDetailsId.toString.equals("rentPayableByGrossOrNetDetailsPage"))
     }
 
+    "Identifier for rent payable vary by beer page" in {
+      assert(rentVaryQuantityOfBeersId.toString.equals("rentVaryQuantityOfBeersPage"))
+    }
+
+    "Identifier for rent payable vary by beer details page" in {
+      assert(rentVaryQuantityOfBeersDetailsId.toString.equals("rentVaryQuantityOfBeersDetailsPage"))
+    }
+
     "Identifier for how current rent fixed page" in {
       assert(HowIsCurrentRentFixedId.toString.equals("howIsCurrentRentFixedPage"))
     }
@@ -103,19 +111,39 @@ class AboutYourLeaseOrTenureIdentifiersSpec extends TestBaseSpec {
     }
 
     "Identifier for intervals of rent reviews page" in {
-      assert(IntervalsOfRentReviewId.toString.equals("IntervalRentReviewPage"))
+      assert(IntervalsOfRentReviewId.toString.equals("intervalRentReviewPage"))
     }
 
     "Identifier for can rent be reduced on review page" in {
-      assert(CanRentBeReducedOnReviewId.toString.equals("CanRentBeReducedPage"))
+      assert(CanRentBeReducedOnReviewId.toString.equals("canRentBeReducedPage"))
     }
 
     "Identifier for conditions payments and conditions page" in {
-      assert(IncentivesPaymentsConditionsId.toString.equals("IncentivesPaymentsConditionsPage"))
+      assert(IncentivesPaymentsConditionsId.toString.equals("incentivesPaymentsConditionsPage"))
     }
 
     "Identifier for tenants additions disregarded page" in {
-      assert(TenantsAdditionsDisregardedId.toString.equals("TenantsAdditionsDisregardedPage"))
+      assert(TenantsAdditionsDisregardedId.toString.equals("tenantsAdditionsDisregardedPage"))
+    }
+
+    "Identifier for tenants additions disregarded details page" in {
+      assert(TenantsAdditionsDisregardedDetailsId.toString.equals("tenantsAdditionsDisregardedDetailsPage"))
+    }
+
+    "Identifier for pay capital sum page" in {
+      assert(PayCapitalSumId.toString.equals("payCapitalSumPage"))
+    }
+
+    "Identifier for pay when lease granted page" in {
+      assert(PayWhenLeaseGrantedId.toString.equals("payWhenLeaseGrantedPage"))
+    }
+
+    "Identifier for legal or planning restrictions page" in {
+      assert(LegalOrPlanningRestrictionId.toString.equals("legalOrPlanningRestrictionPage"))
+    }
+
+    "Identifier for legal or planning restrictions details page" in {
+      assert(LegalOrPlanningRestrictionDetailsId.toString.equals("legalOrPlanningRestrictionDetailsPage"))
     }
 
     "Identifier for tenancy lease agreement expire page (6011 only)" in {

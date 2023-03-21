@@ -25,17 +25,16 @@ import views.behaviours.QuestionViewBehaviours
 class CheckYourAnswersAboutYourLeaseOrTenureViewSpec
     extends QuestionViewBehaviours[CheckYourAnswersAboutYourLeaseOrTenure] {
 
-  def checkYourAnswersAboutThePropertyView =
-    app.injector.instanceOf[views.html.aboutYourLeaseOrTenure.checkYourAnswersAboutYourLeaseOrTenure]
-
   val messageKeyPrefix = "checkYourAnswersAboutYourLeaseOrTenure"
 
   override val form = CheckYourAnswersAboutYourLeaseOrTenureForm.checkYourAnswersAboutFranchiseOrLettingsForm
 
-  def createView = () => checkYourAnswersAboutThePropertyView(form)(fakeRequest, messages)
+  val backLink = controllers.Form6010.routes.LegalOrPlanningRestrictionsController.show().url
+
+  def createView = () => checkYourAnswersAboutLeaseAndTenureView(form, backLink)(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[CheckYourAnswersAboutYourLeaseOrTenure]) =>
-    checkYourAnswersAboutThePropertyView(form)(fakeRequest, messages)
+    checkYourAnswersAboutLeaseAndTenureView(form, backLink)(fakeRequest, messages)
 
   "Check Your Answers About The Property view" must {
 

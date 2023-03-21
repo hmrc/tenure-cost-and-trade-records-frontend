@@ -118,12 +118,30 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit)(implicit ec: Exec
       _.rentPayableVaryAccordingToGrossOrNetDetails.map(_.rentPayableVaryAccordingToGrossOrNets.name)
     ) match {
       case Some("yes") => controllers.Form6010.routes.RentPayableVaryAccordingToGrossOrNetDetailsController.show()
-      case Some("no")  => controllers.Form6010.routes.HowIsCurrentRentFixedController.show()
+      case Some("no")  =>
+        answers.userLoginDetails.forNumber match {
+          case ForTypes.for6010 => controllers.Form6010.routes.RentPayableVaryOnQuantityOfBeersController.show()
+          case _                => controllers.Form6010.routes.HowIsCurrentRentFixedController.show()
+        }
       case _           =>
         logger.warn(
           s"Navigation for rent payable by gross or net turnover without correct selection of conditions by controller"
         )
         throw new RuntimeException("Invalid option exception for rent payable by gross or net turnover routing")
+    }
+  }
+
+  private def rentVaryQuantityOfBeersRouting: Session => Call = answers => {
+    answers.aboutLeaseOrAgreementPartTwo.flatMap(
+      _.rentPayableVaryOnQuantityOfBeersDetails.map(_.rentPayableVaryOnQuantityOfBeersDetails.name)
+    ) match {
+      case Some("yes") => controllers.Form6010.routes.RentPayableVaryOnQuantityOfBeersDetailsController.show()
+      case Some("no")  => controllers.Form6010.routes.HowIsCurrentRentFixedController.show()
+      case _           =>
+        logger.warn(
+          s"Navigation for rent payable vary quantity of beer without correct selection of conditions by controller"
+        )
+        throw new RuntimeException("Invalid option exception for rent payable vary quantity of beer routing")
     }
   }
 
@@ -141,6 +159,21 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit)(implicit ec: Exec
     }
   }
 
+  private def legalOrPlanningRestrictionRouting: Session => Call = answers => {
+    answers.aboutLeaseOrAgreementPartTwo.flatMap(
+      _.legalOrPlanningRestrictions.map(_.legalPlanningRestrictions.name)
+    ) match {
+      case Some("yes") => controllers.Form6010.routes.LegalOrPlanningRestrictionsDetailsController.show()
+      case Some("no")  =>
+        controllers.aboutYourLeaseOrTenure.routes.CheckYourAnswersAboutYourLeaseOrTenureController.show()
+      case _           =>
+        logger.warn(
+          s"Navigation for legal or planning restriction without correct selection of conditions by controller"
+        )
+        throw new RuntimeException("Invalid option exception for legal or planning restriction routing")
+    }
+  }
+
   override val routeMap: Map[Identifier, Session => Call] = Map(
     AboutTheLandlordPageId                        -> aboutYourLandlordRouting,
     ConnectedToLandlordPageId                     -> connectedToLandlordRouting,
@@ -148,10 +181,14 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit)(implicit ec: Exec
       controllers.aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.show()
     ),
     LeaseOrAgreementDetailsPageId                 -> leaseOrAgreementDetailsRouting,
-    CurrentRentPayableWithin12monthsPageId        -> (_ => controllers.routes.TaskListController.show()),
+    CurrentRentPayableWithin12monthsPageId        -> (_ =>
+      controllers.aboutYourLeaseOrTenure.routes.CheckYourAnswersAboutYourLeaseOrTenureController.show()
+    ),
     CurrentAnnualRentPageId                       -> (_ => controllers.aboutYourLeaseOrTenure.routes.CurrentRentFirstPaidController.show()),
     CurrentRentFirstPaidPageId                    -> currentRentFirstPaidRouting,
-    TenancyLeaseAgreementExpirePageId             -> (_ => controllers.routes.TaskListController.show()),
+    TenancyLeaseAgreementExpirePageId             -> (_ =>
+      controllers.aboutYourLeaseOrTenure.routes.CheckYourAnswersAboutYourLeaseOrTenureController.show()
+    ),
     CurrentLeaseBeginPageId                       -> (_ => controllers.aboutYourLeaseOrTenure.routes.IncludedInYourRentController.show()),
     IncludedInYourRentPageId                      -> (_ => controllers.aboutYourLeaseOrTenure.routes.DoesTheRentPayableController.show()),
     DoesRentPayablePageId                         -> (_ => controllers.Form6010.routes.UltimatelyResponsibleController.show()),
@@ -171,12 +208,21 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit)(implicit ec: Exec
     RentPayableVaryAccordingToGrossOrNetDetailsId -> (_ =>
       controllers.Form6010.routes.HowIsCurrentRentFixedController.show()
     ),
+    rentVaryQuantityOfBeersId                     -> rentVaryQuantityOfBeersRouting,
+    rentVaryQuantityOfBeersDetailsId              -> (_ => controllers.Form6010.routes.HowIsCurrentRentFixedController.show()),
     HowIsCurrentRentFixedId                       -> (_ => controllers.Form6010.routes.MethodToFixCurrentRentController.show()),
     MethodToFixCurrentRentsId                     -> (_ => controllers.Form6010.routes.IntervalsOfRentReviewController.show()),
     IntervalsOfRentReviewId                       -> (_ => controllers.Form6010.routes.CanRentBeReducedOnReviewController.show()),
     CanRentBeReducedOnReviewId                    -> (_ => controllers.Form6010.routes.IncentivesPaymentsConditionsController.show()),
     IncentivesPaymentsConditionsId                -> (_ => controllers.Form6010.routes.TenantsAdditionsDisregardedController.show()),
     TenantsAdditionsDisregardedId                 -> tenantsAdditionsDisregardedRouting,
+    TenantsAdditionsDisregardedDetailsId          -> (_ => controllers.Form6010.routes.PayACapitalSumController.show()),
+    PayCapitalSumId                               -> (_ => controllers.Form6010.routes.PaymentWhenLeaseIsGrantedController.show()),
+    PayWhenLeaseGrantedId                         -> (_ => controllers.Form6010.routes.LegalOrPlanningRestrictionsController.show()),
+    LegalOrPlanningRestrictionId                  -> legalOrPlanningRestrictionRouting,
+    LegalOrPlanningRestrictionDetailsId           -> (_ =>
+      controllers.aboutYourLeaseOrTenure.routes.CheckYourAnswersAboutYourLeaseOrTenureController.show()
+    ),
     CheckYourAnswersAboutYourLeaseOrTenureId      -> (_ => controllers.routes.TaskListController.show())
   )
 }

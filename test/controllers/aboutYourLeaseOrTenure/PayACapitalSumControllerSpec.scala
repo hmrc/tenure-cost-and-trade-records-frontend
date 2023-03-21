@@ -30,11 +30,12 @@ class PayACapitalSumControllerSpec extends TestBaseSpec {
   ) =
     new PayACapitalSumController(
       stubMessagesControllerComponents(),
-      paymentWhenLeaseIsGrantedView,
+      aboutYourLeaseOrTenureNavigator,
       payACapitalSumView,
       preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
       mockSessionRepo
     )
+
   "GET /" should {
     "return 200" in {
       val result = payACapitalSumController().show(fakeRequest)

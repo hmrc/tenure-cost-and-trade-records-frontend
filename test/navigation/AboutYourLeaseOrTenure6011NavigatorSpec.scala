@@ -67,7 +67,9 @@ class AboutYourLeaseOrTenure6011NavigatorSpec extends TestBaseSpec {
     "return a function that goes to further information page when tenancy lease agreement expire has been completed" in {
       navigator
         .nextPage(TenancyLeaseAgreementExpirePageId)
-        .apply(session6011) mustBe controllers.routes.TaskListController.show()
+        .apply(
+          session6011
+        ) mustBe controllers.aboutYourLeaseOrTenure.routes.CheckYourAnswersAboutYourLeaseOrTenureController.show()
     }
   }
 }
