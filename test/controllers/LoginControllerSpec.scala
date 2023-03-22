@@ -61,7 +61,7 @@ class LoginControllerSpec extends TestBaseSpec {
         inject[views.html.testSign]
       )
 
-      val result = loginController.show(fakeRequest.withTransientLang(Lang("en")))
+      val result = loginController.show(fakeRequest)
 
       status(result) shouldBe OK
 
