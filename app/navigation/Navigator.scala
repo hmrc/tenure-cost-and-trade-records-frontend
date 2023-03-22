@@ -24,11 +24,10 @@ import play.api.mvc.Call
 import uk.gov.hmrc.http.HeaderCarrier
 
 import javax.inject.Inject
-import scala.concurrent.ExecutionContext
 
 abstract class Navigator @Inject() (
   audit: Audit
-)(implicit ec: ExecutionContext) {
+) {
 
   val routeMap: Map[Identifier, Session => Call]
 

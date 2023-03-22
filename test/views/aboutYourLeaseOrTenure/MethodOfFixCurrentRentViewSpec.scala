@@ -16,8 +16,9 @@
 
 package views.aboutYourLeaseOrTenure
 
-import form.Form6010.MethodToFixCurrentRentForm
+import form.aboutYourLeaseOrTenure.MethodToFixCurrentRentForm
 import models.submissions.Form6010._
+import models.submissions.aboutYourLeaseOrTenure.{MethodToFixCurrentRentDetails, MethodToFixCurrentRentIndependentExpert, MethodToFixCurrentRentsACourt, MethodToFixCurrentRentsAgreement, MethodToFixCurrentRentsArbitration}
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
@@ -42,7 +43,7 @@ class MethodOfFixCurrentRentViewSpec extends QuestionViewBehaviours[MethodToFixC
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText mustBe messages("back.link.label")
       val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.Form6010.routes.HowIsCurrentRentFixedController.show.url
+      backlinkUrl mustBe controllers.aboutYourLeaseOrTenure.routes.HowIsCurrentRentFixedController.show.url
     }
 
     "Section heading is visible" in {

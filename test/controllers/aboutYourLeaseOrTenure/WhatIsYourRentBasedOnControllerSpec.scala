@@ -16,7 +16,6 @@
 
 package controllers.aboutYourLeaseOrTenure
 
-import controllers.Form6010.WhatIsYourRentBasedOnController
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
 import navigation.AboutYourLeaseOrTenureNavigator
 import play.api.http.Status

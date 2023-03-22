@@ -16,8 +16,8 @@
 
 package views.aboutYourLeaseOrTenure
 
-import form.Form6010.IncentivesPaymentsConditionsForm
-import models.submissions.Form6010.IncentivesPaymentsConditionsDetails
+import form.aboutYourLeaseOrTenure.IncentivesPaymentsConditionsForm
+import models.submissions.aboutYourLeaseOrTenure.IncentivesPaymentsConditionsDetails
 import models.submissions.common.{AnswerNo, AnswerYes}
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
@@ -43,7 +43,7 @@ class IncentivesPaymentsConditionsViewSpec extends QuestionViewBehaviours[Incent
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText mustBe messages("back.link.label")
       val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.Form6010.routes.CanRentBeReducedOnReviewController.show.url
+      backlinkUrl mustBe controllers.aboutYourLeaseOrTenure.routes.CanRentBeReducedOnReviewController.show.url
     }
 
     "Section heading is visible" in {

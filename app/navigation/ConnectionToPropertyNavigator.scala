@@ -23,11 +23,8 @@ import models.Session
 import play.api.Logging
 
 import javax.inject.Inject
-import scala.concurrent.ExecutionContext
 
-class ConnectionToPropertyNavigator @Inject() (audit: Audit)(implicit ec: ExecutionContext)
-    extends Navigator(audit)
-    with Logging {
+class ConnectionToPropertyNavigator @Inject() (audit: Audit) extends Navigator(audit) with Logging {
 
   private def areYouStillConnectedRouting: Session => Call = answers => {
     answers.stillConnectedDetails.flatMap(_.addressConnectionType.map(_.name)) match {

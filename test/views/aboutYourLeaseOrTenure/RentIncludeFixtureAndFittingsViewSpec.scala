@@ -16,8 +16,8 @@
 
 package views.aboutYourLeaseOrTenure
 
-import form.Form6010.RentIncludeFixtureAndFittingsForm
-import models.submissions.Form6010.RentIncludeFixturesAndFittingsDetails
+import form.aboutYourLeaseOrTenure.RentIncludeFixtureAndFittingsForm
+import models.submissions.aboutYourLeaseOrTenure.RentIncludeFixturesAndFittingsDetails
 import models.submissions.common.{AnswerNo, AnswerYes}
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form

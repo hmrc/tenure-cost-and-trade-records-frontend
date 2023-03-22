@@ -16,8 +16,8 @@
 
 package views.aboutYourLeaseOrTenure
 
-import form.Form6010.PayACapitalSumForm
-import models.submissions.Form6010.PayACapitalSumDetails
+import form.aboutYourLeaseOrTenure.PayACapitalSumForm
+import models.submissions.aboutYourLeaseOrTenure.PayACapitalSumDetails
 import models.submissions.common.{AnswerNo, AnswerYes}
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
@@ -29,7 +29,7 @@ class PayACapitalSumViewSpec extends QuestionViewBehaviours[PayACapitalSumDetail
 
   override val form = PayACapitalSumForm.payACapitalSumForm
 
-  val backLink = controllers.Form6010.routes.TenantsAdditionsDisregardedController.show.url
+  val backLink = controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController.show.url
 
   def createView = () => payACapitalSumView(form, backLink)(fakeRequest, messages)
 
@@ -45,7 +45,7 @@ class PayACapitalSumViewSpec extends QuestionViewBehaviours[PayACapitalSumDetail
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText mustBe messages("back.link.label")
       val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.Form6010.routes.TenantsAdditionsDisregardedController.show.url
+      backlinkUrl mustBe controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController.show.url
     }
 
     "Section heading is visible" in {

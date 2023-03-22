@@ -22,9 +22,8 @@ import navigation.identifiers.{AdditionalInformationId, AlternativeContactDetail
 import play.api.mvc.Call
 
 import javax.inject.Inject
-import scala.concurrent.ExecutionContext
 
-class AdditionalInformationNavigator @Inject() (audit: Audit)(implicit ec: ExecutionContext) extends Navigator(audit) {
+class AdditionalInformationNavigator @Inject() (audit: Audit) extends Navigator(audit) {
 
   override val routeMap: Map[Identifier, Session => Call] = Map(
     AdditionalInformationId                 -> (_ =>

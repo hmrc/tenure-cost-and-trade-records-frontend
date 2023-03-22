@@ -23,11 +23,8 @@ import play.api.Logging
 import play.api.mvc.Call
 
 import javax.inject.Inject
-import scala.concurrent.ExecutionContext
 
-class AboutThePropertyNavigator @Inject() (audit: Audit)(implicit ec: ExecutionContext)
-    extends Navigator(audit)
-    with Logging {
+class AboutThePropertyNavigator @Inject() (audit: Audit) extends Navigator(audit) with Logging {
 
   private def websiteForPropertyRouting: Session => Call = answers => {
     if (

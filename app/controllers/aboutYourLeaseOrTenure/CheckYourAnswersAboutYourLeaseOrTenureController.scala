@@ -65,8 +65,9 @@ class CheckYourAnswersAboutYourLeaseOrTenureController @Inject() (
     answers.aboutLeaseOrAgreementPartTwo.flatMap(
       _.legalOrPlanningRestrictions.map(_.legalPlanningRestrictions.name)
     ) match {
-      case Some("yes") => controllers.Form6010.routes.LegalOrPlanningRestrictionsDetailsController.show().url
-      case Some("no")  => controllers.Form6010.routes.LegalOrPlanningRestrictionsController.show().url
+      case Some("yes") =>
+        controllers.aboutYourLeaseOrTenure.routes.LegalOrPlanningRestrictionsDetailsController.show().url
+      case Some("no")  => controllers.aboutYourLeaseOrTenure.routes.LegalOrPlanningRestrictionsController.show().url
       case _           =>
         (
           answers.aboutLeaseOrAgreementPartOne.flatMap(
