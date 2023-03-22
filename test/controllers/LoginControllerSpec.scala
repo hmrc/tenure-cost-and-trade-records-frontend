@@ -19,7 +19,6 @@ package controllers
 import config.LoginToBackendAction
 import connectors.Audit
 import org.joda.time.DateTime
-import play.api.i18n.Lang
 import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.libs.json.{JsObject, Json}
 import play.api.test.Helpers._
