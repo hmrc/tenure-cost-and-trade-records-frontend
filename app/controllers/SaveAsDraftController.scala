@@ -21,12 +21,13 @@ import connectors.{Audit, BackendConnector}
 import form.CustomUserPasswordForm.customUserPasswordForm
 import models.{Session, SubmissionDraft}
 import play.api.i18n.{I18nSupport, Messages}
-import play.api.mvc.{MessagesControllerComponents, Result}
+import play.api.mvc.{MessagesControllerComponents, Request, Result}
 import repositories.SessionRepo
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import util.DateUtil
 import views.html.customPasswordSaveAsDraft
+import views.html.submissionDraftSaved
 
 import java.time.LocalDate
 import javax.inject.{Inject, Named, Singleton}
@@ -39,6 +40,7 @@ import scala.concurrent.{ExecutionContext, Future}
 class SaveAsDraftController @Inject() (
   backendConnector: BackendConnector,
   customPasswordSaveAsDraftView: customPasswordSaveAsDraft,
+  submissionDraftSavedView: submissionDraftSaved,
   dateUtil: DateUtil,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") sessionRepo: SessionRepo,
@@ -74,14 +76,17 @@ class SaveAsDraftController @Inject() (
 
   private def expiryDate(implicit messages: Messages): String = dateUtil formatDate LocalDate.now.plusDays(saveForDays)
 
-  private def saveSubmissionDraft(session: Session, exitPath: String)(implicit hc: HeaderCarrier): Future[Result] = {
+  private def saveSubmissionDraft(session: Session, exitPath: String)(implicit
+    hc: HeaderCarrier,
+    request: Request[_]
+  ): Future[Result] = {
     val forType         = session.userLoginDetails.forType
     val referenceNumber = session.userLoginDetails.referenceNumber
     val submissionDraft = SubmissionDraft(forType, session, exitPath)
 
     backendConnector.saveAsDraft(referenceNumber, submissionDraft).map { _ =>
       audit.sendSavedAsDraft(submissionDraft)
-      Ok(s"Draft saved. Password: ${session.saveAsDraftPassword.getOrElse("")}")
+      Ok(submissionDraftSavedView(session.saveAsDraftPassword.getOrElse(""), expiryDate, exitPath))
     }
   }
 

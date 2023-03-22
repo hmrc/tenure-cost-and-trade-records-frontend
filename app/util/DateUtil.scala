@@ -54,7 +54,4 @@ class DateUtil @Inject() (langUtil: LanguageUtils) {
   def formatDate(date: LocalDate)(implicit messages: Messages): String =
     langUtil.Dates.formatDate(date)
 
-  def formatDate(date: ZonedDateTime)(implicit messages: Messages): String =
-    formatDate(date.toLocalDate)
-
 }
