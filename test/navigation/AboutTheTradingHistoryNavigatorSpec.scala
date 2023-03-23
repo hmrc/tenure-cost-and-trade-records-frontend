@@ -73,12 +73,6 @@ class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec {
         .apply(sessionAboutYou) mustBe controllers.aboutthetradinghistory.routes.TotalPayrollCostsController.show()
     }
 
-    "return a function that goes the gross profit page when about your total payroll has been completed" in {
-      navigator
-        .nextPage(GrossProfitsId)
-        .apply(sessionAboutYou) mustBe controllers.aboutthetradinghistory.routes.TotalPayrollCostsController.show()
-    }
-
     "return a function that goes the variable operating expenses page when total payroll page has been completed" in {
       navigator
         .nextPage(TotalPayrollCostId)

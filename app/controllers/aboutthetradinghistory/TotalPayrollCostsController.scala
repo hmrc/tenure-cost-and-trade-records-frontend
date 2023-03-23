@@ -19,11 +19,9 @@ package controllers.aboutthetradinghistory
 import actions.WithSessionRefiner
 import form.aboutthetradinghistory.TotalPayrollCostForm.totalPayrollCostForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.updateAboutTheTradingHistory
-import models.Session
 import navigation.AboutTheTradingHistoryNavigator
 import navigation.identifiers.TotalPayrollCostId
 import play.api.i18n.I18nSupport
-import play.api.i18n.Lang.logger
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
@@ -48,8 +46,7 @@ class TotalPayrollCostsController @Inject() (
         request.sessionData.aboutTheTradingHistory.flatMap(_.totalPayrollCost) match {
           case Some(totalPayrollCost) => totalPayrollCostForm.fillAndValidate(totalPayrollCost)
           case _                      => totalPayrollCostForm
-        },
-        getBackLink(request.sessionData)
+        }
       )
     )
   }
@@ -58,8 +55,7 @@ class TotalPayrollCostsController @Inject() (
     totalPayrollCostForm
       .bindFromRequest()
       .fold(
-        formWithErrors =>
-          Future.successful(BadRequest(totalPayrollCostsView(formWithErrors, getBackLink(request.sessionData)))),
+        formWithErrors => Future.successful(BadRequest(totalPayrollCostsView(formWithErrors))),
         data => {
           val updatedData = updateAboutTheTradingHistory(_.copy(totalPayrollCost = Some(data)))
           Future.successful(Redirect(navigator.nextPage(TotalPayrollCostId).apply(updatedData)))
@@ -67,12 +63,4 @@ class TotalPayrollCostsController @Inject() (
       )
   }
 
-  private def getBackLink(answers: Session): String =
-    answers.aboutTheTradingHistory.flatMap(_.costOfSalesOrGrossProfit.map(_.name)) match {
-      case Some("costOfSales") => controllers.aboutthetradinghistory.routes.CostOfSalesController.show().url
-      case Some("grossProfit") => controllers.aboutthetradinghistory.routes.GrossProfitsController.show().url
-      case _                   =>
-        logger.warn(s"Back link for tied goods page reached with unknown enforcement taken value")
-        controllers.routes.TaskListController.show().url
-    }
 }

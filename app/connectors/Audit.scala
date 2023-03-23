@@ -54,7 +54,7 @@ trait Audit extends AuditConnector {
 object Audit {
   val referenceNumber = "referenceNumber"
   val address         = "address"
-  val formOfReturn    = "for"
+  val formOfReturn    = "forType"
   val language        = "language"
 
   def languageJson(implicit messages: Messages): JsObject =

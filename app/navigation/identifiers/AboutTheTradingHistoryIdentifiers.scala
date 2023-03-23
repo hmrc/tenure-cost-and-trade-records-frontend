@@ -24,10 +24,6 @@ case object TurnoverPageId extends Identifier {
   override def toString: String = "turnoverPage"
 }
 
-case object CostOfSalesOrGrossProfitId extends Identifier {
-  override def toString: String = "costOfSalesOrGrossProfit"
-}
-
 case object CostOfSalesId extends Identifier {
   override def toString: String = "costOfSales"
 }
