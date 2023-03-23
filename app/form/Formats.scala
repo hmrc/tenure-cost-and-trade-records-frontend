@@ -21,7 +21,6 @@ import models.submissions.Form6010._
 import models.submissions._
 import models.submissions.aboutYourLeaseOrTenure._
 import models.submissions.abouttheproperty._
-import models.submissions.aboutthetradinghistory.CostOfSalesOrGrossProfit
 import models.submissions.common.{AnswerResponsibleParty, AnswersYesNo}
 import models.submissions.connectiontoproperty.{AddressConnectionType, ConnectionToProperty}
 import play.api.data.FormError
@@ -113,6 +112,4 @@ object Formats {
   implicit val premisesLicenseGrantedFormatter: Formatter[PremisesLicenseGranted] =
     namedEnumFormatter(PremisesLicenseGranted, Errors.booleanMissing)
 
-  implicit val costOfSalesOrGrossProfitDetailsFormatter: Formatter[CostOfSalesOrGrossProfit] =
-    namedEnumFormatter(CostOfSalesOrGrossProfit, Errors.booleanMissing)
 }

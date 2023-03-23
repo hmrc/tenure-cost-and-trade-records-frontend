@@ -77,10 +77,6 @@ GET         /turnover                                               controllers.
 POST        /turnover                                               controllers.aboutthetradinghistory.TurnoverController.submit()
 
 # Form 6015 routing
-GET         /cost-of-sales-or-gross-profit                          controllers.aboutthetradinghistory.CostOfSalesOrGrossProfitDetailsController.show()
-POST        /cost-of-sales-or-gross-profit                          controllers.aboutthetradinghistory.CostOfSalesOrGrossProfitDetailsController.submit()
-
-# Form 6015 routing
 GET         /cost-of-sales                                          controllers.aboutthetradinghistory.CostOfSalesController.show()
 POST        /cost-of-sales                                          controllers.aboutthetradinghistory.CostOfSalesController.submit()
 

@@ -16,9 +16,8 @@
 
 package views.aboutthetradinghistory
 
-import form.abouttheproperty.TiedForGoodsForm
-import form.aboutthetradinghistory.{AboutYourTradingHistoryForm, TotalPayrollCostForm}
-import models.submissions.aboutthetradinghistory.{AboutYourTradingHistory, TotalPayrollCost}
+import form.aboutthetradinghistory.TotalPayrollCostForm
+import models.submissions.aboutthetradinghistory.TotalPayrollCost
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
@@ -31,12 +30,9 @@ class TotalPayrollCostsViewSpec extends QuestionViewBehaviours[TotalPayrollCost]
 
   override val form = TotalPayrollCostForm.totalPayrollCostForm
 
-  val backLink = controllers.aboutthetradinghistory.routes.CostOfSalesController.show().url
+  def createView = () => totalPayrollCostsView(form)(fakeRequest, messages)
 
-  def createView = () => totalPayrollCostsView(form, backLink)(fakeRequest, messages)
-
-  def createViewUsingForm = (form: Form[TotalPayrollCost]) =>
-    totalPayrollCostsView(form, backLink)(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[TotalPayrollCost]) => totalPayrollCostsView(form)(fakeRequest, messages)
 
   "Total Payroll Costs view" must {
 

@@ -28,29 +28,15 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
 
   private def turnoverRouting: Session => Call = answers => {
     if (answers.userLoginDetails.forType == ForTypes.for6015)
-      controllers.aboutthetradinghistory.routes.CostOfSalesOrGrossProfitDetailsController.show()
+      controllers.aboutthetradinghistory.routes.CostOfSalesController.show()
     else
       controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show()
-  }
-
-  private def costOfSalesOrGrossProfitDetailsRouting: Session => Call = answers => {
-    answers.aboutTheTradingHistory.flatMap(_.costOfSalesOrGrossProfit.map(_.name)) match {
-      case Some("costOfSales") => controllers.aboutthetradinghistory.routes.CostOfSalesController.show()
-      case Some("grossProfit") => controllers.aboutthetradinghistory.routes.GrossProfitsController.show()
-      case _                   =>
-        logger.warn(
-          s"Navigation for about the property reached without correct selection of cost of sales or gross profit details by controller"
-        )
-        throw new RuntimeException("Invalid option exception for cost of sales or gross profit details routing")
-    }
   }
 
   override val routeMap: Map[Identifier, Session => Call] = Map(
     AboutYourTradingHistoryPageId            -> (_ => controllers.aboutthetradinghistory.routes.TurnoverController.show()),
     TurnoverPageId                           -> turnoverRouting,
-    CostOfSalesOrGrossProfitId               -> costOfSalesOrGrossProfitDetailsRouting,
     CostOfSalesId                            -> (_ => controllers.aboutthetradinghistory.routes.TotalPayrollCostsController.show()),
-    GrossProfitsId                           -> (_ => controllers.aboutthetradinghistory.routes.TotalPayrollCostsController.show()),
     TotalPayrollCostId                       -> (_ => controllers.aboutthetradinghistory.routes.VariableOperatingExpensesController.show()),
     VariableOperatingExpensesId              -> (_ =>
       controllers.aboutthetradinghistory.routes.FixedOperatingExpensesController.show()

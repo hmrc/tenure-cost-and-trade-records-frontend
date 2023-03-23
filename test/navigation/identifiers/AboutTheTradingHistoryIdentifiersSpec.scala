@@ -30,10 +30,6 @@ class AboutTheTradingHistoryIdentifiersSpec extends TestBaseSpec {
       assert(TurnoverPageId.toString.equals("turnoverPage"))
     }
 
-    "Identifier for cost of sales or gross profit page" in {
-      assert(CostOfSalesOrGrossProfitId.toString.equals("costOfSalesOrGrossProfit"))
-    }
-
     "Identifier for cost of sales page" in {
       assert(CostOfSalesId.toString.equals("costOfSales"))
     }

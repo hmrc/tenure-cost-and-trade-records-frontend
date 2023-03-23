@@ -23,14 +23,14 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[TotalPayrollCost], backLink: String)(implicit request: Request[_], messages: Messages)
+@(theForm: Form[TotalPayrollCost])(implicit request: Request[_], messages: Messages)
 
 @layout(
   pageHeading = messages("totalPayrollCosts.heading"),
   showH1 = false,
   showSection = true,
   sectionName = messages("label.section.aboutYourTradingHistory"),
-  backLinkUrl = backLink,
+  backLinkUrl = controllers.aboutthetradinghistory.routes.CostOfSalesController.show().url,
     theForm =  theForm
 ) {
 

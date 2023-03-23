@@ -24,7 +24,6 @@ import models.submissions.Form6010._
 import models.submissions.aboutYourLeaseOrTenure._
 import models.submissions.aboutfranchisesorlettings._
 import models.submissions.abouttheproperty._
-import models.submissions.aboutthetradinghistory.CostOfSalesOrGrossProfit
 import models.submissions.additionalinformation.AlternativeContactDetailsAddress
 import models.submissions.common.{Address, AnswerResponsibleParty, AnswersYesNo, ContactDetails}
 import models.submissions.connectiontoproperty.{AddressConnectionType, ConnectionToProperty}
@@ -71,8 +70,6 @@ object MappingSupport {
   val postcode: Mapping[String]                                 = PostcodeMapping.postcode()
 
   val premisesLicenseGrantedType: Mapping[PremisesLicenseGranted] = Forms.of[PremisesLicenseGranted]
-
-  val costOfSalesOrGrossProfitDetailsType: Mapping[CostOfSalesOrGrossProfit] = Forms.of[CostOfSalesOrGrossProfit]
 
   val decimalRegex         = """^[0-9]{1,10}\.?[0-9]{0,2}$"""
   val cdbMaxCurrencyAmount = 9999999.99
