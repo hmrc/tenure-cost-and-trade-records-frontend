@@ -68,7 +68,7 @@ class CheckYourAnswersAboutFranchiseOrLettingsController @Inject() (
   private def getBackLink(
     answers: Session
   ): String = //TODO Look at the back link logic. Got it loading but I'll come back to it! - Pete
-    answers.userLoginDetails.forType match {
+    answers.forType match {
       case ForTypes.for6010 | ForTypes.for6011 =>
         answers.aboutFranchisesOrLettings.flatMap(_.franchisesOrLettingsTiedToProperty.map(_.name)) match {
           case Some("yes") => controllers.aboutfranchisesorlettings.routes.CateringOperationController.show().url

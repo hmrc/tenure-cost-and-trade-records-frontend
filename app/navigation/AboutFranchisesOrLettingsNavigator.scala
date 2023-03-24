@@ -29,7 +29,7 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit) extends Naviga
   private def franchiseOrLettingConditionsRouting: Session => Call = answers => {
     answers.aboutFranchisesOrLettings.flatMap(_.franchisesOrLettingsTiedToProperty.map(_.name)) match {
       case Some("yes") =>
-        answers.userLoginDetails.forType match {
+        answers.forType match {
           case ForTypes.for6015 | ForTypes.for6016 =>
             controllers.aboutfranchisesorlettings.routes.ConcessionOrFranchiseController.show()
           case _                                   =>

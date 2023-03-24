@@ -27,7 +27,9 @@ import models.submissions.notconnected.RemoveConnectionDetails
 import play.api.libs.json._
 
 case class Session(
-  userLoginDetails: UserLoginDetails,
+  referenceNumber: String,
+  forType: String,
+  userDetails: UserDetails,
   stillConnectedDetails: Option[StillConnectedDetails] = None,
   removeConnectionDetails: Option[RemoveConnectionDetails] = None,
   aboutYou: Option[AboutYou] = None,

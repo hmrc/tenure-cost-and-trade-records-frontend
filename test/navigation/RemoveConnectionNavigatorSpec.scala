@@ -56,6 +56,8 @@ class RemoveConnectionNavigatorSpec extends TestBaseSpec {
   val stillConnectedDetailsYes     = Some(StillConnectedDetails(Some(AddressConnectionTypeYes)))
   val sessionAdditionalInformation =
     Session(
+      "99996010004",
+      "FOR6010",
       prefilledUserLoginDetails,
       stillConnectedDetailsYes,
       removeConnection,

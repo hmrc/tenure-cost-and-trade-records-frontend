@@ -129,7 +129,7 @@ class CateringOperationDetailsController @Inject() (
   }
 
   private def getBackLink(answers: Session): Either[String, String] =
-    answers.userLoginDetails.forType match {
+    answers.forType match {
       case ForTypes.for6015 | ForTypes.for6016 =>
         Right(controllers.aboutfranchisesorlettings.routes.ConcessionOrFranchiseController.show().url)
       case _                                   =>

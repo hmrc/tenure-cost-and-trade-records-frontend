@@ -62,7 +62,7 @@ class FranchiseOrLettingsTiedToPropertyController @Inject() (
         formWithErrors =>
           Future.successful(
             BadRequest(
-              franchiseOrLettingsTiedToPropertyView(formWithErrors, request.sessionData.userLoginDetails.forType)
+              franchiseOrLettingsTiedToPropertyView(formWithErrors, request.sessionData.forType)
             )
           ),
         data => {

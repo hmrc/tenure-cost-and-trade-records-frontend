@@ -28,8 +28,8 @@ class AboutThePropertyNavigator @Inject() (audit: Audit) extends Navigator(audit
 
   private def websiteForPropertyRouting: Session => Call = answers => {
     if (
-      answers.userLoginDetails.forType
-        .equals(ForTypes.for6015) || answers.userLoginDetails.forType.equals(ForTypes.for6016)
+      answers.forType
+        .equals(ForTypes.for6015) || answers.forType.equals(ForTypes.for6016)
     )
       controllers.abouttheproperty.routes.PremisesLicenseGrantedController.show()
     else
@@ -37,10 +37,7 @@ class AboutThePropertyNavigator @Inject() (audit: Audit) extends Navigator(audit
   }
 
   private def premisesLicenseGrantedRouting: Session => Call = answers => {
-    if (
-      answers.userLoginDetails.forType
-        .equals(ForTypes.for6015) || answers.userLoginDetails.forType.equals(ForTypes.for6016)
-    ) {
+    if (answers.forType.equals(ForTypes.for6015) || answers.forType.equals(ForTypes.for6016)) {
       answers.aboutTheProperty.flatMap(_.premisesLicenseGrantedDetail.map(_.name)) match {
         case Some("yes") =>
           controllers.abouttheproperty.routes.PremisesLicenseGrantedDetailsController.show()
@@ -58,7 +55,7 @@ class AboutThePropertyNavigator @Inject() (audit: Audit) extends Navigator(audit
   }
 
   private def premisesLicenseGrantedDetailsRouting: Session => Call = answers => {
-    if (answers.userLoginDetails.forType == ForTypes.for6015 || answers.userLoginDetails.forType == ForTypes.for6016)
+    if (answers.forType == ForTypes.for6015 || answers.forType == ForTypes.for6016)
       controllers.abouttheproperty.routes.CheckYourAnswersAboutThePropertyController.show()
     else
       controllers.abouttheproperty.routes.LicensableActivitiesController.show()
@@ -92,7 +89,7 @@ class AboutThePropertyNavigator @Inject() (audit: Audit) extends Navigator(audit
     answers.aboutTheProperty.flatMap(_.enforcementAction.map(_.name)) match {
       case Some("yes") => controllers.abouttheproperty.routes.EnforcementActionBeenTakenDetailsController.show()
       case Some("no")  =>
-        if (answers.userLoginDetails.forType == ForTypes.for6011)
+        if (answers.forType == ForTypes.for6011)
           controllers.abouttheproperty.routes.CheckYourAnswersAboutThePropertyController.show()
         else
           controllers.abouttheproperty.routes.TiedForGoodsController.show()
@@ -105,7 +102,7 @@ class AboutThePropertyNavigator @Inject() (audit: Audit) extends Navigator(audit
   }
 
   private def enforcementActionTakenDetailsRouting: Session => Call = answers => {
-    if (answers.userLoginDetails.forType == ForTypes.for6011)
+    if (answers.forType == ForTypes.for6011)
       controllers.abouttheproperty.routes.CheckYourAnswersAboutThePropertyController.show()
     else
       controllers.abouttheproperty.routes.TiedForGoodsController.show()

@@ -27,7 +27,7 @@ import javax.inject.Inject
 class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator(audit) with Logging {
 
   private def turnoverRouting: Session => Call = answers => {
-    if (answers.userLoginDetails.forType == ForTypes.for6015)
+    if (answers.forType == ForTypes.for6015)
       controllers.aboutthetradinghistory.routes.CostOfSalesController.show()
     else
       controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show()

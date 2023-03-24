@@ -48,7 +48,7 @@ class AboutThePropertyController @Inject() (
             case Some(propertyDetails) => aboutThePropertyForm.fillAndValidate(propertyDetails)
             case _                     => aboutThePropertyForm
           },
-          request.sessionData.userLoginDetails.forType
+          request.sessionData.forType
         )
       )
     )
@@ -60,7 +60,7 @@ class AboutThePropertyController @Inject() (
       .fold(
         formWithErrors =>
           Future.successful(
-            BadRequest(aboutThePropertyView(formWithErrors, request.sessionData.userLoginDetails.forType))
+            BadRequest(aboutThePropertyView(formWithErrors, request.sessionData.forType))
           ),
         data => {
           val updatedData = updateAboutTheProperty(_.copy(propertyDetails = Some(data)))

@@ -34,11 +34,15 @@ class AboutYourLeaseOrTenure6010NavigatorSpec extends TestBaseSpec {
   val navigator = new AboutYourLeaseOrTenureNavigator(audit)
 
   val session6010   = Session(
+    "99996010004",
+    "FOR6010",
     prefilledUserLoginDetails,
     aboutLeaseOrAgreementPartOne = Some(prefilledAboutLeaseOrAgreementPartOne),
     aboutLeaseOrAgreementPartTwo = Some(prefilledAboutLeaseOrAgreementPartTwo)
   )
   val session6010No = Session(
+    "99996010004",
+    "FOR6010",
     prefilledUserLoginDetails,
     aboutLeaseOrAgreementPartOne = Some(prefilledAboutLeaseOrAgreementPartOneNo),
     aboutLeaseOrAgreementPartTwo = Some(prefilledAboutLeaseOrAgreementPartTwoNo)

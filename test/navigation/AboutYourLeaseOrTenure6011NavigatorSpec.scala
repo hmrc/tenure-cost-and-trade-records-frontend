@@ -17,7 +17,7 @@
 package navigation
 
 import connectors.Audit
-import models.{Session, UserLoginDetails}
+import models.{Session, UserDetails}
 import navigation.identifiers._
 import org.scalatest.matchers.must.Matchers.convertToAnyMustWrapper
 import play.api.libs.json.JsObject
@@ -33,8 +33,8 @@ class AboutYourLeaseOrTenure6011NavigatorSpec extends TestBaseSpec {
 
   val navigator = new AboutYourLeaseOrTenureNavigator(audit)
 
-  val test6011UserLoginDetails = UserLoginDetails("jwtToken", "FOR6011", "123456", prefilledAddress)
-  val session6011              = Session(test6011UserLoginDetails)
+  val test6011UserLoginDetails = UserDetails("jwtToken", prefilledAddress)
+  val session6011              = Session("99996010004", "FOR6011", test6011UserLoginDetails)
 
   implicit override val hc: HeaderCarrier = HeaderCarrier()
 

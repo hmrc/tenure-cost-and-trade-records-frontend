@@ -90,7 +90,7 @@ class FurtherInformationOrRemarksController @Inject() (
   }
 
   private def getBackLink(answers: Session): Either[String, String] =
-    answers.userLoginDetails.forType match {
+    answers.forType match {
       case ForTypes.for6010                    =>
         Right(controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController.show().url)
       case ForTypes.for6011                    =>

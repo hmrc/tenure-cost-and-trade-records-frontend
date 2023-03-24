@@ -36,6 +36,8 @@ class AboutTheProperty6010NavigatorSpec extends TestBaseSpec {
 
   val sessionAboutYou6010No =
     Session(
+      "99996010004",
+      "FOR6010",
       prefilledUserLoginDetails,
       Some(prefilledStillConnectedDetailsYes),
       Some(prefilledRemoveConnection),
@@ -106,6 +108,8 @@ class AboutTheProperty6010NavigatorSpec extends TestBaseSpec {
 
   val sessionAboutYou6010Yes =
     Session(
+      "99996010004",
+      "FOR6010",
       prefilledUserLoginDetails,
       Some(prefilledStillConnectedDetailsYes),
       Some(prefilledRemoveConnection),

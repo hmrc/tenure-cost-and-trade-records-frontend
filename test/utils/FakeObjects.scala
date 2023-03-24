@@ -26,7 +26,7 @@ import models.submissions.abouttheproperty._
 import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, AboutYourTradingHistory}
 import models.submissions.aboutyou.{AboutYou, CustomerDetails}
 import models.submissions.additionalinformation._
-import models.{AnnualRent, Session, SubmissionDraft, UserLoginDetails}
+import models.{AnnualRent, Session, SubmissionDraft, UserDetails}
 import models.submissions.common.{Address, AnswerNo, AnswerYes, ContactDetails}
 import models.submissions.connectiontoproperty.{AddressConnectionTypeYes, StillConnectedDetails}
 import models.submissions.notconnected.{RemoveConnectionDetails, RemoveConnectionsDetails}
@@ -105,10 +105,14 @@ trait FakeObjects {
   val prefilledLeaseOrAgreementYearsDetailsNo =
     LeaseOrAgreementYearsDetails(AnswerNo, AnswerNo, AnswerNo)
   val prefilledUserLoginDetails               =
-    UserLoginDetails("Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=", "FOR6010", "99996010004", prefilledAddress)
+    UserDetails(
+      "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=",
+      prefilledAddress
+    ) // , "99996010004", "FOR6010", "99996010004"
   val prefilledUserLoginDetails6015           =
-    UserLoginDetails("Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=", "FOR6015", "99996015001", prefilledAddress)
-  val prefilledBaseSession                    = Session(prefilledUserLoginDetails, saveAsDraftPassword = Some("pass"))
+    UserDetails("Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=", prefilledAddress)
+  val prefilledBaseSession                    =
+    Session("99996010004", "FOR6010", prefilledUserLoginDetails, saveAsDraftPassword = Some("pass"))
   val submissionDraft                         = SubmissionDraft("FOR6010", prefilledBaseSession, "/send-trade-and-cost-information/about-you")
   val prefilledRemoveConnection               =
     RemoveConnectionDetails(

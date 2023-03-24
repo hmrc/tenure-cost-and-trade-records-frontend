@@ -44,7 +44,7 @@ class FormSubmissionController @Inject() (
   lazy val confirmationUrl = controllers.routes.FormSubmissionController.confirmation().url
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    submit(request.sessionData.userLoginDetails.referenceNumber)
+    submit(request.sessionData.referenceNumber)
   }
 
   private def submit[T](refNum: String)(implicit request: SessionRequest[T]): Future[Result] = {
@@ -66,6 +66,6 @@ class FormSubmissionController @Inject() (
   }
 
   def confirmation: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    Ok(confirmationView(request.sessionData.userLoginDetails.referenceNumber))
+    Ok(confirmationView(request.sessionData.referenceNumber))
   }
 }

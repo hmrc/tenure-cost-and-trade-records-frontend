@@ -34,14 +34,34 @@ class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec {
   val navigator = new AboutFranchisesOrLettingsNavigator(audit)
 
   val sessionAboutFranchiseOrLettingYes =
-    Session(prefilledUserLoginDetails, aboutFranchisesOrLettings = Some(prefilledAboutFranchiseOrLettings))
+    Session(
+      "99996010004",
+      "FOR6010",
+      prefilledUserLoginDetails,
+      aboutFranchisesOrLettings = Some(prefilledAboutFranchiseOrLettings)
+    )
   val sessionAboutFranchiseOrLettingNo  =
-    Session(prefilledUserLoginDetails, aboutFranchisesOrLettings = Some(prefilledAboutFranchiseOrLettingsNo))
+    Session(
+      "99996010004",
+      "FOR6010",
+      prefilledUserLoginDetails,
+      aboutFranchisesOrLettings = Some(prefilledAboutFranchiseOrLettingsNo)
+    )
 
   val sessionAboutFranchiseOrLettingYes6015 =
-    Session(prefilledUserLoginDetails6015, aboutFranchisesOrLettings = Some(prefilledAboutFranchiseOrLettings6015))
+    Session(
+      "99996010004",
+      "FOR6015",
+      prefilledUserLoginDetails6015,
+      aboutFranchisesOrLettings = Some(prefilledAboutFranchiseOrLettings6015)
+    )
   val sessionAboutFranchiseOrLettingNo6015  =
-    Session(prefilledUserLoginDetails6015, aboutFranchisesOrLettings = Some(prefilledAboutFranchiseOrLettingsNo6015))
+    Session(
+      "99996010004",
+      "FOR6015",
+      prefilledUserLoginDetails6015,
+      aboutFranchisesOrLettings = Some(prefilledAboutFranchiseOrLettingsNo6015)
+    )
 
   "About franchise or lettings navigator" when {
 
