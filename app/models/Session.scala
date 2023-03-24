@@ -22,6 +22,7 @@ import models.submissions.abouttheproperty.AboutTheProperty
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory
 import models.submissions.aboutyou.AboutYou
 import models.submissions.additionalinformation.{AdditionalInformation, AltContactInformation}
+import models.submissions.common.Address
 import models.submissions.connectiontoproperty.StillConnectedDetails
 import models.submissions.notconnected.RemoveConnectionDetails
 import play.api.libs.json._
@@ -29,7 +30,8 @@ import play.api.libs.json._
 case class Session(
   referenceNumber: String,
   forType: String,
-  userDetails: UserDetails,
+  address: Address,
+  token: String,
   stillConnectedDetails: Option[StillConnectedDetails] = None,
   removeConnectionDetails: Option[RemoveConnectionDetails] = None,
   aboutYou: Option[AboutYou] = None,

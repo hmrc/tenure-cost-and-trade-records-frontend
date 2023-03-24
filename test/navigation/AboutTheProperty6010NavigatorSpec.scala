@@ -38,7 +38,8 @@ class AboutTheProperty6010NavigatorSpec extends TestBaseSpec {
     Session(
       "99996010004",
       "FOR6010",
-      prefilledUserLoginDetails,
+      prefilledAddress,
+      "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=",
       Some(prefilledStillConnectedDetailsYes),
       Some(prefilledRemoveConnection),
       Some(prefilledAboutYou),
@@ -110,7 +111,8 @@ class AboutTheProperty6010NavigatorSpec extends TestBaseSpec {
     Session(
       "99996010004",
       "FOR6010",
-      prefilledUserLoginDetails,
+      prefilledAddress,
+      "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=",
       Some(prefilledStillConnectedDetailsYes),
       Some(prefilledRemoveConnection),
       Some(prefilledAboutYou),

@@ -16,8 +16,7 @@
 
 package repository
 
-import models.submissions.common.Address
-import models.{Session, UserDetails}
+import models.Session
 import repositories.SessionData
 import repositories.{Session => SessionRepo}
 import utils.TestBaseSpec
@@ -31,8 +30,10 @@ class SessionRepositorySpec extends TestBaseSpec {
   val session         = Session(
     "99996010004",
     "FOR6010",
-    UserDetails(token, Address("13", Some("Street"), Some("City"), "AA11 1AA"))
+    prefilledAddress,
+    "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik="
   )
+
   "session repository" should {
 
     "start by saving or updating data" in {

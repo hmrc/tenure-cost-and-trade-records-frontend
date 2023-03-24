@@ -18,8 +18,7 @@ package navigation
 
 import connectors.Audit
 import models.submissions.abouttheproperty._
-import models.submissions.common.Address
-import models.{Session, UserDetails}
+import models.{Session}
 import navigation.identifiers._
 import org.scalatest.matchers.must.Matchers.convertToAnyMustWrapper
 import play.api.libs.json.JsObject
@@ -35,12 +34,11 @@ class AboutTheProperty6011NavigatorSpec extends TestBaseSpec {
 
   val navigator = new AboutThePropertyNavigator(audit)
 
-  val testUserLoginDetails6011 =
-    UserDetails("jwtToken", Address("13", Some("Street"), Some("City"), "AA11 1AA"))
-  val sessionAboutYou6011No    = Session(
+  val sessionAboutYou6011No = Session(
     "99996010004",
     "FOR6011",
-    testUserLoginDetails6011,
+    prefilledAddress,
+    "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=",
     Some(prefilledStillConnectedDetailsYes),
     Some(prefilledRemoveConnection),
     Some(prefilledAboutYou),
@@ -105,7 +103,8 @@ class AboutTheProperty6011NavigatorSpec extends TestBaseSpec {
     Session(
       "99996010004",
       "FOR6011",
-      testUserLoginDetails6011,
+      prefilledAddress,
+      "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=",
       Some(prefilledStillConnectedDetailsYes),
       Some(prefilledRemoveConnection),
       Some(prefilledAboutYou),
