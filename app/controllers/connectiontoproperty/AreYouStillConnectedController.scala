@@ -49,14 +49,14 @@ class AreYouStillConnectedController @Inject() (
             case Some(addressConnectionType) => areYouStillConnectedForm.fillAndValidate(addressConnectionType)
             case _                           => areYouStillConnectedForm
           },
-          request.sessionData.userDetails.address
+          request.sessionData.address
         )
       )
     )
   }
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
-    val address: Address = request.sessionData.userDetails.address
+    val address: Address = request.sessionData.address
     areYouStillConnectedForm
       .bindFromRequest()
       .fold(

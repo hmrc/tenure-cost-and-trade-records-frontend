@@ -36,14 +36,16 @@ class AboutYourLeaseOrTenure6010NavigatorSpec extends TestBaseSpec {
   val session6010   = Session(
     "99996010004",
     "FOR6010",
-    prefilledUserLoginDetails,
+    prefilledAddress,
+    "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=",
     aboutLeaseOrAgreementPartOne = Some(prefilledAboutLeaseOrAgreementPartOne),
     aboutLeaseOrAgreementPartTwo = Some(prefilledAboutLeaseOrAgreementPartTwo)
   )
   val session6010No = Session(
     "99996010004",
     "FOR6010",
-    prefilledUserLoginDetails,
+    prefilledAddress,
+    "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=",
     aboutLeaseOrAgreementPartOne = Some(prefilledAboutLeaseOrAgreementPartOneNo),
     aboutLeaseOrAgreementPartTwo = Some(prefilledAboutLeaseOrAgreementPartTwoNo)
   )

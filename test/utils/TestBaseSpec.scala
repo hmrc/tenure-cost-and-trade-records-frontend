@@ -26,7 +26,7 @@ import models.submissions.aboutyou.AboutYou
 import models.submissions.additionalinformation.{AdditionalInformation, AltContactInformation}
 import models.submissions.connectiontoproperty.StillConnectedDetails
 import models.submissions.notconnected.RemoveConnectionDetails
-import models.{Session, UserDetails}
+import models.Session
 import org.mockito.scalatest.MockitoSugar
 import org.scalatest.{BeforeAndAfterEach, Inside, OptionValues}
 import org.scalatest.concurrent.ScalaFutures
@@ -99,7 +99,6 @@ trait TestBaseSpec
 
   val preFilledSession =
     preEnrichedActionRefiner(
-      prefilledUserLoginDetails,
       Some(prefilledStillConnectedDetailsYes),
       Some(prefilledRemoveConnection),
       Some(prefilledAboutYou),
@@ -129,7 +128,6 @@ trait TestBaseSpec
 //>>>>>>> main
 
   def preEnrichedActionRefiner(
-    userDetails: UserDetails = prefilledUserLoginDetails,
     stillConnectedDetailsYes: Option[StillConnectedDetails] = Some(prefilledStillConnectedDetailsYes),
     removeConnectionDetails: Option[RemoveConnectionDetails] = Some(prefilledRemoveConnection),
     aboutYou: Option[AboutYou] = Some(prefilledAboutYou),
@@ -150,7 +148,8 @@ trait TestBaseSpec
               Session(
                 "99996010004",
                 "FOR6010",
-                userDetails = userDetails,
+                prefilledAddress,
+                "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=",
                 stillConnectedDetails = stillConnectedDetailsYes,
                 removeConnectionDetails = removeConnectionDetails,
                 aboutYou = aboutYou,

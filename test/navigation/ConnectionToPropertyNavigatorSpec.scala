@@ -39,7 +39,13 @@ class ConnectionToPropertyNavigatorSpec extends TestBaseSpec {
   val stillConnectedDetailsEdit = Some(StillConnectedDetails(Some(AddressConnectionTypeYesChangeAddress)))
   val stillConnectedDetailsNo   = Some(StillConnectedDetails(Some(AddressConnectionTypeNo)))
 
-  val sessionYes = Session("99996010004", "FOR6010", prefilledUserLoginDetails, stillConnectedDetailsYes)
+  val sessionYes = Session(
+    "99996010004",
+    "FOR6010",
+    prefilledAddress,
+    "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=",
+    stillConnectedDetailsYes
+  )
 
   implicit override val hc: HeaderCarrier = HeaderCarrier()
 
@@ -56,18 +62,36 @@ class ConnectionToPropertyNavigatorSpec extends TestBaseSpec {
     }
 
     "return a function that goes to the edit address page when still connected has been selected and the selection is edit address" in {
-      val sessionEdit = Session("99996010004", "FOR6010", prefilledUserLoginDetails, stillConnectedDetailsEdit)
+      val sessionEdit = Session(
+        "99996010004",
+        "FOR6010",
+        prefilledAddress,
+        "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=",
+        stillConnectedDetailsEdit
+      )
       navigator.nextPage(AreYouStillConnectedPageId).apply(sessionEdit) mustBe routes.EditAddressController.show()
     }
 
     "return a function that goes to the not connected page when still connected has been selected and the selection is no" in {
-      val sessionNo = Session("99996010004", "FOR6010", prefilledUserLoginDetails, stillConnectedDetailsNo)
+      val sessionNo = Session(
+        "99996010004",
+        "FOR6010",
+        prefilledAddress,
+        "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=",
+        stillConnectedDetailsNo
+      )
       navigator.nextPage(AreYouStillConnectedPageId).apply(sessionNo) mustBe controllers.routes.PastConnectionController
         .show()
     }
 
     "return a function that goes to the type of connection to the property page when edit address has been completed" in {
-      val sessionEdit = Session("99996010004", "FOR6010", prefilledUserLoginDetails, stillConnectedDetailsEdit)
+      val sessionEdit = Session(
+        "99996010004",
+        "FOR6010",
+        prefilledAddress,
+        "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=",
+        stillConnectedDetailsEdit
+      )
       navigator.nextPage(EditAddressPageId).apply(sessionEdit) mustBe routes.ConnectionToThePropertyController.show()
     }
 

@@ -37,14 +37,16 @@ class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec {
     Session(
       "99996010004",
       "FOR6010",
-      prefilledUserLoginDetails,
+      prefilledAddress,
+      "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=",
       aboutFranchisesOrLettings = Some(prefilledAboutFranchiseOrLettings)
     )
   val sessionAboutFranchiseOrLettingNo  =
     Session(
       "99996010004",
       "FOR6010",
-      prefilledUserLoginDetails,
+      prefilledAddress,
+      "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=",
       aboutFranchisesOrLettings = Some(prefilledAboutFranchiseOrLettingsNo)
     )
 
@@ -52,14 +54,16 @@ class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec {
     Session(
       "99996010004",
       "FOR6015",
-      prefilledUserLoginDetails6015,
+      prefilledAddress,
+      "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=",
       aboutFranchisesOrLettings = Some(prefilledAboutFranchiseOrLettings6015)
     )
   val sessionAboutFranchiseOrLettingNo6015  =
     Session(
       "99996010004",
       "FOR6015",
-      prefilledUserLoginDetails6015,
+      prefilledAddress,
+      "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=",
       aboutFranchisesOrLettings = Some(prefilledAboutFranchiseOrLettingsNo6015)
     )
 

@@ -58,7 +58,8 @@ class RemoveConnectionNavigatorSpec extends TestBaseSpec {
     Session(
       "99996010004",
       "FOR6010",
-      prefilledUserLoginDetails,
+      prefilledAddress,
+      "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=",
       stillConnectedDetailsYes,
       removeConnection,
       aboutYou,

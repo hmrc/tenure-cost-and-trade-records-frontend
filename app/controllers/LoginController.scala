@@ -21,7 +21,7 @@ import config.LoginToBackendAction
 import connectors.Audit
 import form.{Errors, MappingSupport}
 import models.submissions.common.Address
-import models.{ForTypes, Session, UserDetails}
+import models.{ForTypes, Session}
 import org.joda.time.DateTime
 import play.api.Logging
 import play.api.data.Form
@@ -129,11 +129,11 @@ class LoginController @Inject() (
         ForTypes.find(forNum) match {
           case Some(_) =>
             session
-              .start(Session(referenceNumber, forNum, UserDetails(token, address)))
+              .start(Session(referenceNumber, forNum, address, token))
               .map(_ => Redirect(controllers.connectiontoproperty.routes.AreYouStillConnectedController.show()))
           case None    =>
             session
-              .start(Session(referenceNumber, forNum, UserDetails(token, address)))
+              .start(Session(referenceNumber, forNum, address, token))
               .map(_ => Redirect(routes.LoginController.notValidFORType()))
         }
       }
