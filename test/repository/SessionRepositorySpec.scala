@@ -17,7 +17,7 @@
 package repository
 
 import models.submissions.common.Address
-import models.{Session, UserLoginDetails}
+import models.{Session, UserDetails}
 import repositories.SessionData
 import repositories.{Session => SessionRepo}
 import utils.TestBaseSpec
@@ -27,9 +27,11 @@ class SessionRepositorySpec extends TestBaseSpec {
   lazy val repository = app.injector.instanceOf[SessionRepo]
   val token           = "testToken"
   val forType         = "FOR6010"
-  val referenceNumber = "123456"
+  val referenceNumber = "99996010004"
   val session         = Session(
-    UserLoginDetails(token, forType, referenceNumber, Address("13", Some("Street"), Some("City"), "AA11 1AA"))
+    "99996010004",
+    "FOR6010",
+    UserDetails(token, Address("13", Some("Street"), Some("City"), "AA11 1AA"))
   )
   "session repository" should {
 
@@ -40,8 +42,8 @@ class SessionRepositorySpec extends TestBaseSpec {
       val returnedSessionData: SessionData = repository.findFirst.futureValue // shouldBe session
 
       inside(returnedSessionData) { case SessionData(_, data, createdAt) =>
-        (data \ "session" \ "userLoginDetails" \ "referenceNumber")
-          .as[String] shouldBe session.userLoginDetails.referenceNumber
+        (data \ "session" \ "referenceNumber")
+          .as[String] shouldBe session.referenceNumber
       }
     }
 
@@ -51,7 +53,7 @@ class SessionRepositorySpec extends TestBaseSpec {
       val returnedSessionData: Option[Session] = repository.get[Session].futureValue
 
       inside(returnedSessionData) { case Some(session) =>
-        session.userLoginDetails.referenceNumber shouldBe referenceNumber
+        session.referenceNumber shouldBe referenceNumber
       }
 
     }

@@ -21,7 +21,7 @@ import config.LoginToBackendAction
 import connectors.Audit
 import form.{Errors, MappingSupport}
 import models.submissions.common.Address
-import models.{ForTypes, Session, UserLoginDetails}
+import models.{ForTypes, Session, UserDetails}
 import org.joda.time.DateTime
 import play.api.Logging
 import play.api.data.Form
@@ -92,7 +92,7 @@ class LoginController @Inject() (
   }
 
   def logout = (Action andThen withSessionRefiner).async { implicit request =>
-    val refNumJson = Json.obj(Audit.referenceNumber -> request.sessionData.userLoginDetails.referenceNumber)
+    val refNumJson = Json.obj(Audit.referenceNumber -> request.sessionData.referenceNumber)
 
     session.remove().map { _ =>
       audit.sendExplicitAudit("Logout", refNumJson)
@@ -129,11 +129,11 @@ class LoginController @Inject() (
         ForTypes.find(forNum) match {
           case Some(_) =>
             session
-              .start(Session(UserLoginDetails(token, forNum, referenceNumber, address)))
+              .start(Session(referenceNumber, forNum, UserDetails(token, address)))
               .map(_ => Redirect(controllers.connectiontoproperty.routes.AreYouStillConnectedController.show()))
           case None    =>
             session
-              .start(Session(UserLoginDetails(token, forNum, referenceNumber, address)))
+              .start(Session(referenceNumber, forNum, UserDetails(token, address)))
               .map(_ => Redirect(routes.LoginController.notValidFORType()))
         }
       }

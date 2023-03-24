@@ -50,7 +50,8 @@ class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec {
     )
   )
   val aboutYou                 = Some(AboutYou(Some(CustomerDetails("Tobermory", ContactDetails("12345678909", "test@email.com")))))
-  val sessionAboutYou          = Session(prefilledUserLoginDetails, stillConnectedDetailsYes, removeConnection, aboutYou)
+  val sessionAboutYou          =
+    Session("99996010004", "FOR6010", prefilledUserLoginDetails, stillConnectedDetailsYes, removeConnection, aboutYou)
 
   implicit override val hc: HeaderCarrier = HeaderCarrier()
 

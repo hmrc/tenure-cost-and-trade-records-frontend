@@ -14,23 +14,13 @@
  * limitations under the License.
  */
 
-package controllers
+package models
 
-import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.taskListOwner
+import models.submissions.common.Address
+import play.api.libs.json.Json
 
-import javax.inject.{Inject, Singleton}
-import scala.concurrent.Future
+case class UserDetails(token: String, address: Address)
 
-@Singleton
-class TaskListOwnerController @Inject() (
-  mcc: MessagesControllerComponents,
-  taskListOwnerView: taskListOwner
-) extends FrontendController(mcc) {
-
-  def show: Action[AnyContent] = Action.async { implicit request =>
-    Future.successful(Ok(taskListOwnerView()))
-  }
-
+object UserDetails {
+  implicit val format = Json.format[UserDetails]
 }

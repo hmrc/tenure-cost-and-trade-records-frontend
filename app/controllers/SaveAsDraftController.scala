@@ -80,8 +80,8 @@ class SaveAsDraftController @Inject() (
     hc: HeaderCarrier,
     request: Request[_]
   ): Future[Result] = {
-    val forType         = session.userLoginDetails.forType
-    val referenceNumber = session.userLoginDetails.referenceNumber
+    val forType         = session.forType
+    val referenceNumber = session.referenceNumber
     val submissionDraft = SubmissionDraft(forType, session, exitPath)
 
     backendConnector.saveAsDraft(referenceNumber, submissionDraft).map { _ =>

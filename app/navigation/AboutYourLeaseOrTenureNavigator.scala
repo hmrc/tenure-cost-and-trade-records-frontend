@@ -27,7 +27,7 @@ import javax.inject.Inject
 class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator(audit) with Logging {
 
   private def aboutYourLandlordRouting: Session => Call = answers => {
-    answers.userLoginDetails.forType match {
+    answers.forType match {
       case ForTypes.for6011                    =>
         controllers.aboutYourLeaseOrTenure.routes.CurrentAnnualRentController.show()
       case ForTypes.for6015 | ForTypes.for6016 =>
@@ -64,7 +64,7 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
   }
 
   private def currentRentFirstPaidRouting: Session => Call = answers => {
-    if (answers.userLoginDetails.forType == ForTypes.for6011)
+    if (answers.forType == ForTypes.for6011)
       controllers.aboutYourLeaseOrTenure.routes.TenancyLeaseAgreementExpireController.show()
     else
       controllers.aboutYourLeaseOrTenure.routes.CurrentLeaseOrAgreementBeginController.show()
@@ -118,7 +118,7 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
       case Some("yes") =>
         controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryAccordingToGrossOrNetDetailsController.show()
       case Some("no")  =>
-        answers.userLoginDetails.forType match {
+        answers.forType match {
           case ForTypes.for6010 =>
             controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryOnQuantityOfBeersController.show()
           case _                => controllers.aboutYourLeaseOrTenure.routes.HowIsCurrentRentFixedController.show()
