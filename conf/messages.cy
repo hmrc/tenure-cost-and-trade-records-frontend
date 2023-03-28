@@ -42,7 +42,7 @@ label.no.nac.oedd=No
 label.yes.iawn = Yes
 label.no.na = No
 
-# Common labels
+# COMMON LABELS
 ###############
 help.date.day.month.year = Please format in dd/mm/yyyy
 help.date.month.year = Please format in mm/yyyy
@@ -52,13 +52,14 @@ label.date.month = Month
 label.date.year = Year
 label.buildingNameNumber = Address line 1
 label.street1 = Address line 2
+label.street2= Address line 3
 label.town = Town or city
 label.county = County
 label.postcode = Postcode
 label.any.apply = Select any that apply
 
-#Section names
-##############
+# SECTION NAMES
+###############
 label.section.checkBeforeStart = Check before you start
 label.section.aboutYou = About you
 label.section.aboutTheProperty = About the property
@@ -111,21 +112,28 @@ heading.login.lockedOut=Rydych wedi eich cloi allan nawr
 error.login.lockedOut=Rydych wedi eich cloi allan nawr. Gallwch roi cynnig arall arni ar ôl 2 awr.
 label.retryLogin=Rhowch gynnig arall ar fewngofnodi
 
-#6010 ARE YOU STILL CONNECTED
-##############################
+# ARE YOU STILL CONNECTED SECTION
+#################################
+
+# ARE YOU STILL CONNECTED
+#########################
 areYouConnected.heading = Are you still connected to {0}?
 label.areYouConnected.addressUpdate = Yes, and the address needs to be updated
-#label.yes.change.address=Yes - I want to edit the address
 
-#6010 EDIT ADDRESS
-##############################
+# EDIT ADDRESS
+##############
 editAddress.heading = How do you expect the connected address to be shown?
-label.buildingNameNumber=Address line 1
-label.street1=Address line 2
-label.street2=Address line 3
-label.townCity=Town or city
-#label.address.townCity=Town or city
-#label.address.postcode=Postcode (optional)
+
+# CONNECTION TO THE PROPERTY
+############################
+connectionToTheProperty.heading = What is your connection to the property?
+label.occupierTrustee = Occupier or trustee for occupier
+label.ownerTrustee = Owner or trustee for owner
+label.occupierAgent = Occupier’s agent
+label.ownerAgent = Owner’s agent
+hint.occupierTrustee = Select this if you’re renting or leasing the property, even through a Leaseback arrangement
+hint.ownerTrustee = Select this if you own and occupy the property - you’re considered an occupier if you own the property and lease it back to a business you operate from the property
+error.no.connection.selected=Select your connection to the property
 
 #6010 ARE YOU STILL CONNECTED NO
 ##############################
@@ -155,17 +163,6 @@ hint.aboutYou = If you’re renting or leasing the property, even as a charity o
 #relationshipToProperty.ownerTrustee = Owner or trustee for owner
 #relationshipToProperty.occupier = Occupier’s agent
 #relationshipToProperty.owner = Owner’s agent
-
-#6010 CONNECTION TO THE PROPERTY
-##############################
-connectionToTheProperty.heading = What is your connection to the property?
-connectionToTheProperty.hint = If you’re renting or leasing the property, even as a charity or non-profit organisation, you’re considered the occupier. If you are both the owner and the occupier, select ’Owner or trustee for owner’.
-label.occupierTrustee = Occupier or trustee for occupier
-label.ownerTrustee = Owner or trustee for owner
-label.occupierAgent = Occupier’s agent
-label.ownerAgent = Owner’s agent
-hint.occupierTrustee = Select this if you’re renting or leasing the property, even through a Leaseback arrangement
-hint.ownerTrustee = Select this if you own and occupy the property-you’re considered an occupier if you own the property and lease it back to a business you operate from the property
 
 #6010 ABOUT THE PROPERTY
 ##############################

@@ -64,14 +64,18 @@ object Formats {
   }
 
   implicit val userTypeFormat: Formatter[UserType]                                           = namedEnumFormatter(UserType, Errors.userTypeRequired)
+  implicit val answerYesNoFormat: Formatter[AnswersYesNo]                                    =
+    namedEnumFormatter(AnswersYesNo, Errors.booleanMissing)
+  // Still connected to property
+  implicit val addressConnectionTypeFormatter: Formatter[AddressConnectionType]              =
+    namedEnumFormatter(AddressConnectionType, Errors.isConnectedError)
   implicit val connectionToPropertyFormat: Formatter[ConnectionToProperty]                   =
-    namedEnumFormatter(ConnectionToProperty, Errors.booleanMissing)
+    namedEnumFormatter(ConnectionToProperty, Errors.connectionToPropertyError)
+  // About the property
   implicit val aboutYourPropertyFormat: Formatter[CurrentPropertyUsed]                       =
     namedEnumFormatter(CurrentPropertyUsed, Errors.currentOccupierName)
   implicit val buildingOperatingHaveAWebsiteFormat: Formatter[BuildingOperationHaveAWebsite] =
     namedEnumFormatter(BuildingOperationHaveAWebsite, Errors.booleanMissing)
-  implicit val answerYesNoFormat: Formatter[AnswersYesNo]                                    =
-    namedEnumFormatter(AnswersYesNo, Errors.booleanMissing)
   implicit val licensableActivitiesFormat: Formatter[LicensableActivities]                   =
     namedEnumFormatter(LicensableActivities, Errors.booleanMissing)
   implicit val tiedForGoodsFormat: Formatter[TiedForGoods]                                   = namedEnumFormatter(TiedForGoods, Errors.booleanMissing)
@@ -85,8 +89,6 @@ object Formats {
     namedEnumFormatter(MethodToFixCurrentRents, Errors.booleanMissing)
   implicit val tiedForGoodsDetailsFormat: Formatter[TiedForGoodsInformation]                 =
     namedEnumFormatter(TiedForGoodsInformation, Errors.booleanMissing)
-  implicit val addressConnectionTypeFormatter: Formatter[AddressConnectionType]              =
-    namedEnumFormatter(AddressConnectionType, Errors.isConnectedError)
 
   implicit val answerResponsiblePartyFormatter: Formatter[AnswerResponsibleParty] =
     namedEnumFormatter(AnswerResponsibleParty, Errors.booleanMissing)

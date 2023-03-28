@@ -80,7 +80,9 @@ class ConnectionToPropertyNavigatorSpec extends TestBaseSpec {
         "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=",
         stillConnectedDetailsNo
       )
-      navigator.nextPage(AreYouStillConnectedPageId).apply(sessionNo) mustBe controllers.routes.PastConnectionController
+      navigator
+        .nextPage(AreYouStillConnectedPageId)
+        .apply(sessionNo) mustBe controllers.notconnected.routes.PastConnectionController
         .show()
     }
 

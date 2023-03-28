@@ -34,23 +34,25 @@ import models.submissions.notconnected.{RemoveConnectionDetails, RemoveConnectio
 import java.time.LocalDate
 
 trait FakeObjects {
-  val prefilledStillConnectedDetailsYes         = StillConnectedDetails(Some(AddressConnectionTypeYes))
-  val prefilledAddress                          = Address("001", Some("GORING ROAD"), Some("GORING-BY-SEA, WORTHING"), "BN12 4AX")
-  val prefilledContactDetails                   = ContactDetails("1234567890", "TestEmail@gmail.com")
-  val prefilledFakeName                         = "John Doe"
-  val prefilledContactAddress                   = AlternativeContactDetailsAddress(
+  val prefilledAddress         = Address("001", Some("GORING ROAD"), Some("GORING-BY-SEA, WORTHING"), "BN12 4AX")
+  val prefilledContactDetails  = ContactDetails("1234567890", "TestEmail@gmail.com")
+  val prefilledFakeName        = "John Doe"
+  val prefilledContactAddress  = AlternativeContactDetailsAddress(
     "004",
     Some("GORING ROAD"),
     Some("GORING-BY-SEA, WORTHING"),
     Some("West sussex"),
     "BN12 4AX"
   )
-  val prefilledCateringAddress                  =
+  val prefilledCateringAddress =
     CateringAddress("004", Some("GORING ROAD"), Some("GORING-BY-SEA, WORTHING"), Some("West sussex"), "BN12 4AX")
-  val prefilledLettingAddress                   =
+  val prefilledLettingAddress  =
     LettingAddress("004", Some("GORING ROAD"), Some("GORING-BY-SEA, WORTHING"), Some("West sussex"), "BN12 4AX")
-  val prefilledLandlordAddress                  =
+  val prefilledLandlordAddress =
     LandlordAddress("004", Some("GORING ROAD"), Some("GORING-BY-SEA, WORTHING"), Some("West sussex"), "BN12 4AX")
+
+  val prefilledStillConnectedDetailsYes = StillConnectedDetails(Some(AddressConnectionTypeYes))
+
   val prefilledFirstOccupy                      = MonthsYearDuration(2000, 2)
   val prefilledFinancialYear                    = DayMonthsDuration(2, 12)
   val prefilledDateInput                        = LocalDate.of(2022, 6, 1)

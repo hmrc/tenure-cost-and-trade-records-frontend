@@ -19,7 +19,6 @@
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.button.Button
 
 @(govukButton: GovukButton, isSend: Boolean = false)(implicit request: Request[_], messages: Messages)
-<p class="govuk-body" style="clear:both;">
 
     @govukButton(
         Button(
@@ -30,6 +29,3 @@
             inputType = Some("submit")
         )
     )
-</p>
-
-

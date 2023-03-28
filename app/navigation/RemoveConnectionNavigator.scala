@@ -18,7 +18,7 @@ package navigation
 
 import connectors.Audit
 import models.Session
-import navigation.identifiers.{Identifier, RemoveConnectionId}
+import navigation.identifiers.{Identifier, PastConnectionId, RemoveConnectionId}
 import play.api.mvc.Call
 
 import javax.inject.Inject
@@ -26,6 +26,7 @@ import javax.inject.Inject
 class RemoveConnectionNavigator @Inject() (audit: Audit) extends Navigator(audit) {
 
   override val routeMap: Map[Identifier, Session => Call] = Map(
+    PastConnectionId   -> (_ => controllers.notconnected.routes.RemoveConnectionController.show()),
     RemoveConnectionId -> (_ => controllers.Form6010.routes.CheckYourAnswersController.show())
   )
 }

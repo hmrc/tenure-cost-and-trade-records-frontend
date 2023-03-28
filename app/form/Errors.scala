@@ -34,7 +34,8 @@ object Errors {
   val invalidPostcodeOnLetter   = "error.invalid_postcode_as_on_letter"
 
   //Are you still connected Error
-  val isConnectedError = "error.isRelated"
+  val isConnectedError          = "error.isRelated"
+  val connectionToPropertyError = "error.no.connection.selected"
 
   //About You Errors
   val userTypeRequired          = "error.userType.required"

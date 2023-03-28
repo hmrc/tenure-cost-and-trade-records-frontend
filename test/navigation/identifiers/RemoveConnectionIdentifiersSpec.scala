@@ -22,8 +22,12 @@ class RemoveConnectionIdentifiersSpec extends TestBaseSpec {
 
   "Remove connection identifiers" when {
 
+    "Identifier for past connection page" in {
+      assert(PastConnectionId.toString.equals("PastConnectionId"))
+    }
+
     "Identifier for Remove connection page" in {
-      assert(RemoveConnectionId.toString.equals("removeConnectionPage"))
+      assert(RemoveConnectionId.toString.equals("removeConnectionPageId"))
     }
   }
 }

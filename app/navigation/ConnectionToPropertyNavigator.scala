@@ -30,7 +30,7 @@ class ConnectionToPropertyNavigator @Inject() (audit: Audit) extends Navigator(a
     answers.stillConnectedDetails.flatMap(_.addressConnectionType.map(_.name)) match {
       case Some("yes")                => controllers.connectiontoproperty.routes.ConnectionToThePropertyController.show()
       case Some("yes-change-address") => controllers.connectiontoproperty.routes.EditAddressController.show()
-      case Some("no")                 => controllers.routes.PastConnectionController.show()
+      case Some("no")                 => controllers.notconnected.routes.PastConnectionController.show()
       case _                          =>
         logger.warn(
           s"Navigation for are you still connected reached without correct selection of are you connected by controller"

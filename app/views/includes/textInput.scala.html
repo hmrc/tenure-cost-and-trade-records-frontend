@@ -25,8 +25,8 @@
         theForm: Form[_],
         id: String,
         classes: String,
-        autoCompleteLabel: String,
-        labelMsg: String,
+        labelMsg: String = "", // Remove when pages updated to new param list
+        autoCompleteLabel: String = "",
         optional: Boolean = false,
         labelClasses: String = "",
         hintMsg: String = "",
@@ -41,8 +41,8 @@
     autocomplete=Some(autoCompleteLabel),
     formGroupClasses = formGroupClasses,
     label = if(optional)
-        Label(content = Text(s"${messages(s"label.${labelMsg}")} ${messages("hintText.optional")}"), classes = labelClasses)
-    else Label(content = Text(messages(s"label.${labelMsg}")), classes = labelClasses),
+        Label(content = Text(s"${messages(s"label.${id}")} ${messages("hintText.optional")}"), classes = labelClasses)
+    else Label(content = Text(messages(s"label.${id}")), classes = labelClasses),
     errorMessage = theForm.errors.asTextErrorMessageForField(id),
     hint = if(hintMsg.length > 0)
         Some(Hint(content = Text(messages(s"hint.${hintMsg}"))))

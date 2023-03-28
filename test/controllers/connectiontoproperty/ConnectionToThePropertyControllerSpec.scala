@@ -16,37 +16,66 @@
 
 package controllers.connectiontoproperty
 
-import navigation.ConnectionToPropertyNavigator
+import form.Errors
+import form.connectiontoproperty.ConnectionToThePropertyForm.connectionToThePropertyForm
+import models.submissions.connectiontoproperty.StillConnectedDetails
 import play.api.http.Status
 import play.api.test.Helpers._
-import play.twirl.api.HtmlFormat
 import utils.TestBaseSpec
-import views.html.connectiontoproperty.connectionToTheProperty
 
 class ConnectionToThePropertyControllerSpec extends TestBaseSpec {
 
-  val mockConnectedToPropertyNavigator = mock[ConnectionToPropertyNavigator]
-  val mockConnectionToThePropertyView  = mock[connectionToTheProperty]
-  when(mockConnectionToThePropertyView.apply(any, any)(any, any)).thenReturn(HtmlFormat.empty)
+  import TestData.{baseFormData, errorKey}
+  import utils.FormBindingTestAssertions.mustContainError
 
-  val connectionToThePropertyController = new ConnectionToThePropertyController(
+  def connectionToThePropertyController(
+    stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledStillConnectedDetailsYes)
+  ) = new ConnectionToThePropertyController(
     stubMessagesControllerComponents(),
-    mockConnectedToPropertyNavigator,
-    mockConnectionToThePropertyView,
-    preFilledSession,
+    connectedToPropertyNavigator,
+    connectionToThePropertyView,
+    preEnrichedActionRefiner(stillConnectedDetails = stillConnectedDetails),
     mockSessionRepo
   )
 
   "GET /" should {
     "return 200" in {
-      val result = connectionToThePropertyController.show(fakeRequest)
+      val result = connectionToThePropertyController().show(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return HTML" in {
-      val result = connectionToThePropertyController.show(fakeRequest)
+      val result = connectionToThePropertyController().show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
+  }
+
+  "SUBMIT /" should {
+    "throw a BAD_REQUEST if an empty form is submitted" in {
+      val res = connectionToThePropertyController().submit(
+        fakeRequest.withFormUrlEncodedBody(Seq.empty: _*)
+      )
+      status(res) shouldBe BAD_REQUEST
+    }
+  }
+
+  "connection to property form" should {
+    "error if isRelated is missing" in {
+      val formData = baseFormData - errorKey.connectionToTheProperty
+      val form     = connectionToThePropertyForm.bind(formData)
+
+      mustContainError(errorKey.connectionToTheProperty, Errors.connectionToPropertyError, form)
+    }
+  }
+
+  object TestData {
+    val errorKey = new {
+      val connectionToTheProperty = "connectionToTheProperty"
+    }
+
+    val baseFormData: Map[String, String] = Map(
+      "connectionToTheProperty" -> "ownerTrustee"
+    )
   }
 }

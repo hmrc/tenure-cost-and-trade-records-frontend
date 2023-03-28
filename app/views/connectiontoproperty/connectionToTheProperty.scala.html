@@ -16,35 +16,14 @@
 
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
-
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukErrorSummary
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukDateInput
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukTextarea
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukCharacterCount
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Radios
-
-@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
-
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Label
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Hint
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Input
 @import uk.gov.hmrc.govukfrontend.views.Aliases.RadioItem
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Fieldset
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Legend
-@import models.Session
-@import models.submissions._
 
 @this(layout: Layout,
         govukButton: GovukButton,
         govukRadios: GovukRadios,
-        govukInput: GovukInput,
-        govukErrorSummary: GovukErrorSummary,
-        govukDateInput: GovukDateInput,
-        govukTextarea: GovukTextarea,
-        govukCharacterCount: GovukCharacterCount,
         formWithCSRF: FormWithCSRF,
 )
 
@@ -59,40 +38,40 @@
   theForm = theForm
 ) {
 
- @formWithCSRF(action = controllers.connectiontoproperty.routes.ConnectionToThePropertyController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
+  @formWithCSRF(action = controllers.connectiontoproperty.routes.ConnectionToThePropertyController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
 
-  @govukRadios(Radios(
-   fieldset = Some(Fieldset(
-    legend = Some(Legend(content = Text(messages("connectionToTheProperty.heading")), isPageHeading = true, classes = "govuk-fieldset__legend--l"))
-   )),
-   hint = Some(Hint(content = Text(messages("connectionToTheProperty.hint")))),
-   name = "connectionToTheProperty",
-   items = Seq(
-    RadioItem(
-     content = Text(messages("label.occupierTrustee")),
-     value = Some("occupierTrustee"),
-     hint = Some(Hint(content = Text(messages("hint.occupierTrustee")))),
-    ),
-    RadioItem(
-     content = Text(messages("label.ownerTrustee")),
-     value = Some("ownerTrustee"),
-     hint = Some(Hint(content = Text(messages("hint.ownerTrustee")))),
-    ),
-    RadioItem(
-     content = Text(messages("label.occupierAgent")),
-     value = Some("occupierAgent")
-    ),
-    RadioItem(
-     content = Text(messages("label.ownerAgent")),
-     value = Some("ownerAgent")
+    @includes.radioButtons(
+      govukRadios,
+      theForm,
+      "connectionToTheProperty",
+      messages("connectionToTheProperty.heading"),
+      "govuk-fieldset__legend--l",
+      isHeading = true,
+      items = Seq(
+        RadioItem(
+          content = Text(messages("label.occupierTrustee")),
+          value = Some("occupierTrustee"),
+          hint = Some(Hint(content = Text(messages("hint.occupierTrustee")))),
+        ),
+        RadioItem(
+          content = Text(messages("label.ownerTrustee")),
+          value = Some("ownerTrustee"),
+          hint = Some(Hint(content = Text(messages("hint.ownerTrustee")))),
+        ),
+        RadioItem(
+          content = Text(messages("label.occupierAgent")),
+          value = Some("occupierAgent")
+        ),
+        RadioItem(
+          content = Text(messages("label.ownerAgent")),
+          value = Some("ownerAgent")
+        )
+      ),
+      inline = false
     )
-   ),
-   errorMessage = theForm.errors.asTextErrorMessageForField("connectionToTheProperty")
-  ).withFormField(theForm("connectionToTheProperty")))
 
-  @includes.continueButton(govukButton)
- }
-
+    @includes.continueButton(govukButton)
+  }
 }
 
 

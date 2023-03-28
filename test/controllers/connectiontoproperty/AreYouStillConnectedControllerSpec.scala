@@ -16,37 +16,66 @@
 
 package controllers.connectiontoproperty
 
-import navigation.ConnectionToPropertyNavigator
+import form.Errors
+import form.connectiontoproperty.AreYouStillConnectedForm.areYouStillConnectedForm
+import models.submissions.connectiontoproperty.StillConnectedDetails
 import play.api.http.Status
 import play.api.test.Helpers._
-import play.twirl.api.HtmlFormat
 import utils.TestBaseSpec
-import views.html.connectiontoproperty.areYouStillConnected
 
 class AreYouStillConnectedControllerSpec extends TestBaseSpec {
 
-  val mockConnectedToPropertyNavigator = mock[ConnectionToPropertyNavigator]
-  val mockAreYouStillConnectedView     = mock[areYouStillConnected]
-  when(mockAreYouStillConnectedView.apply(any, any)(any, any)).thenReturn(HtmlFormat.empty)
+  import TestData.{baseFormData, errorKey}
+  import utils.FormBindingTestAssertions.mustContainError
 
-  val areYouStillConnectedController = new AreYouStillConnectedController(
+  def areYouStillConnectedController(
+    stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledStillConnectedDetailsYes)
+  ) = new AreYouStillConnectedController(
     stubMessagesControllerComponents(),
-    mockConnectedToPropertyNavigator,
-    mockAreYouStillConnectedView,
-    preFilledSession,
+    connectedToPropertyNavigator,
+    areYouStillConnectedView,
+    preEnrichedActionRefiner(stillConnectedDetails = stillConnectedDetails),
     mockSessionRepo
   )
 
   "GET /" should {
     "return 200" in {
-      val result = areYouStillConnectedController.show(fakeRequest)
+      val result = areYouStillConnectedController().show(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return HTML" in {
-      val result = areYouStillConnectedController.show(fakeRequest)
+      val result = areYouStillConnectedController().show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
+  }
+
+  "SUBMIT /" should {
+    "throw a BAD_REQUEST if an empty form is submitted" in {
+      val res = areYouStillConnectedController().submit(
+        fakeRequest.withFormUrlEncodedBody(Seq.empty: _*)
+      )
+      status(res) shouldBe BAD_REQUEST
+    }
+  }
+
+  "Are you still connected form" should {
+    "error if isRelated is missing" in {
+      val formData = baseFormData - errorKey.isRelated
+      val form     = areYouStillConnectedForm.bind(formData)
+
+      mustContainError(errorKey.isRelated, Errors.isConnectedError, form)
+    }
+  }
+
+  object TestData {
+    val errorKey = new {
+      val isRelated = "isRelated"
+    }
+
+    val baseFormData: Map[String, String] = Map(
+      "isRelated" -> "yes-change-address"
+    )
   }
 }
