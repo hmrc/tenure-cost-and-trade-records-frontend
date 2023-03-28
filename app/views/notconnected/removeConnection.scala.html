@@ -45,11 +45,11 @@
 
 @layout(
  pageHeading = messages("removeConnection.heading"),
- backLinkUrl = controllers.routes.PastConnectionController.show.url,
+ backLinkUrl = controllers.notconnected.routes.PastConnectionController.show.url,
  theForm = theForm
 ) {
 
- @formWithCSRF(action = controllers.removeconnection.routes.RemoveConnectionController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
+ @formWithCSRF(action = controllers.notconnected.routes.RemoveConnectionController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
 
   <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
    <h1 class="govuk-fieldset__heading">@messages("removeConnection.subheading")</h1>

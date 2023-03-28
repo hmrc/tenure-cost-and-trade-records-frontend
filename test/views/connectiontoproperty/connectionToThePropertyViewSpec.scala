@@ -24,22 +24,34 @@ import views.behaviours.QuestionViewBehaviours
 
 class connectionToThePropertyViewSpec extends QuestionViewBehaviours[ConnectionToProperty] {
 
-  def connectionToPropertyView = app.injector.instanceOf[views.html.connectiontoproperty.connectionToTheProperty]
-
   val messageKeyPrefix = "connectionToTheProperty"
 
   override val form = ConnectionToThePropertyForm.connectionToThePropertyForm
 
   val backLink = controllers.connectiontoproperty.routes.AreYouStillConnectedController.show().url
 
-  def createView = () => connectionToPropertyView(form, backLink)(fakeRequest, messages)
+  def createView = () => connectionToThePropertyView(form, backLink)(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[ConnectionToProperty]) =>
-    connectionToPropertyView(form, backLink)(fakeRequest, messages)
+    connectionToThePropertyView(form, backLink)(fakeRequest, messages)
 
-  "Edit Address view" must {
+  "Connection to property view" must {
 
-    behave like normalPage(createView, messageKeyPrefix, "hint")
+    behave like normalPage(createView, messageKeyPrefix)
+
+    "has a link marked with back.link.label leading to payment when lease granted Page" in {
+      val doc          = asDocument(createView())
+      val backlinkText = doc.select("a[class=govuk-back-link]").text()
+      backlinkText mustBe messages("back.link.label")
+      val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
+      backlinkUrl mustBe controllers.connectiontoproperty.routes.AreYouStillConnectedController.show().url
+    }
+
+    "Section heading is visible" in {
+      val doc         = asDocument(createViewUsingForm(form))
+      val sectionText = doc.getElementsByClass("govuk-caption-m").text()
+      assert(sectionText == messages("label.section.checkBeforeStart"))
+    }
 
     "contain radio buttons for the value occupier/trustee" in {
       val doc = asDocument(createViewUsingForm(form))
@@ -89,14 +101,6 @@ class connectionToThePropertyViewSpec extends QuestionViewBehaviours[ConnectionT
         false
       )
       assertContainsText(doc, messages("label.ownerAgent"))
-    }
-
-    "has a link marked with back.link.label leading to the Are still connected Page" in {
-      val doc          = asDocument(createView())
-      val backlinkText = doc.select("a[class=govuk-back-link]").text()
-      backlinkText mustBe messages("back.link.label")
-      val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.connectiontoproperty.routes.AreYouStillConnectedController.show().url
     }
 
     "contain save and continue button with the value Save and Continue" in {

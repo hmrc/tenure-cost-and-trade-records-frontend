@@ -17,8 +17,6 @@
 package controllers.notconnected
 
 import form.Errors
-import navigation.RemoveConnectionNavigator
-import controllers.removeconnection.RemoveConnectionController
 import form.notconnected.RemoveConnectionForm.removeConnectionForm
 import play.api.data.FormError
 import play.api.http.Status
@@ -32,13 +30,12 @@ class RemoveConnectionControllerSpec extends TestBaseSpec {
   import TestData.{baseFormData, errorKey}
   import utils.FormBindingTestAssertions.mustContainError
 
-  val mockRemoveConnectionNavigator = mock[RemoveConnectionNavigator]
-  val mockRemoveConnectionView      = mock[removeConnection]
+  val mockRemoveConnectionView = mock[removeConnection]
   when(mockRemoveConnectionView.apply(any)(any, any)).thenReturn(HtmlFormat.empty)
 
   val removeConnectionController = new RemoveConnectionController(
     stubMessagesControllerComponents(),
-    mockRemoveConnectionNavigator,
+    removeConnectionNavigator,
     mockRemoveConnectionView,
     preFilledSession,
     mockSessionRepo

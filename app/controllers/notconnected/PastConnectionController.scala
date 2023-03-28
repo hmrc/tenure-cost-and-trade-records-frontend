@@ -14,27 +14,27 @@
  * limitations under the License.
  */
 
-package controllers.removeconnection
+package controllers.notconnected
 
 import actions.WithSessionRefiner
-import form.notconnected.RemoveConnectionForm.removeConnectionForm
+import form.notconnected.PastConnectionForm.pastConnectionForm
 import models.submissions.notconnected.RemoveConnectionDetails.updateRemoveConnectionDetails
-import play.api.i18n.I18nSupport
 import navigation.RemoveConnectionNavigator
-import navigation.identifiers.RemoveConnectionId
+import navigation.identifiers.PastConnectionId
+import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.notconnected.removeConnection
+import views.html.notconnected.pastConnection
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class RemoveConnectionController @Inject() (
+class PastConnectionController @Inject() (
   mcc: MessagesControllerComponents,
   navigator: RemoveConnectionNavigator,
-  removeConnectionView: removeConnection,
+  pastConnectionView: pastConnection,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
 ) extends FrontendController(mcc)
@@ -43,10 +43,14 @@ class RemoveConnectionController @Inject() (
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Future.successful(
       Ok(
-        removeConnectionView(
-          request.sessionData.removeConnectionDetails.flatMap(_.removeConnectionDetails) match {
-            case Some(removeConnectionDetails) => removeConnectionForm.fillAndValidate(removeConnectionDetails)
-            case _                             => removeConnectionForm
+        pastConnectionView(
+          request.sessionData.removeConnectionDetails match {
+            case Some(removeConnectionDetails) =>
+              removeConnectionDetails.pastConnectionType match {
+                case Some(pastConnection) => pastConnectionForm.fillAndValidate(pastConnection)
+                case _                    => pastConnectionForm
+              }
+            case _                             => pastConnectionForm
           }
         )
       )
@@ -54,14 +58,14 @@ class RemoveConnectionController @Inject() (
   }
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
-    removeConnectionForm
+    pastConnectionForm
       .bindFromRequest()
       .fold(
-        formWithErrors => Future.successful(BadRequest(removeConnectionView(formWithErrors))),
+        formWithErrors => Future.successful(BadRequest(pastConnectionView(formWithErrors))),
         data => {
-          val updatedData = updateRemoveConnectionDetails(_.copy(removeConnectionDetails = Some(data)))
+          val updatedData = updateRemoveConnectionDetails(_.copy(pastConnectionType = Some(data)))
           session.saveOrUpdate(updatedData)
-          Future.successful(Redirect(navigator.nextPage(RemoveConnectionId).apply(updatedData)))
+          Future.successful(Redirect(navigator.nextPage(PastConnectionId).apply(updatedData)))
         }
       )
   }

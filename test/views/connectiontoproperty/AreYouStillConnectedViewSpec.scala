@@ -28,8 +28,6 @@ import java.util.Locale
 
 class AreYouStillConnectedViewSpec extends QuestionViewBehaviours[AddressConnectionType] {
 
-  def areYouStillConnectedView = app.injector.instanceOf[views.html.connectiontoproperty.areYouStillConnected]
-
   val messageKeyPrefix = "areYouConnected"
 
   override val form = AreYouStillConnectedForm.areYouStillConnectedForm
@@ -40,6 +38,7 @@ class AreYouStillConnectedViewSpec extends QuestionViewBehaviours[AddressConnect
     areYouStillConnectedView(form, prefilledAddress)(fakeRequest, messages)
 
   "Are you still connected view" must {
+
     "behave like a normal page" when {
       "rendered" must {
         "have the correct banner title" in {
@@ -77,6 +76,12 @@ class AreYouStillConnectedViewSpec extends QuestionViewBehaviours[AddressConnect
             .isEmpty
         }
       }
+    }
+
+    "Section heading is visible" in {
+      val doc         = asDocument(createViewUsingForm(form))
+      val sectionText = doc.getElementsByClass("govuk-caption-m").text()
+      assert(sectionText == messages("label.section.checkBeforeStart"))
     }
 
     "contain radio buttons for the value yes" in {

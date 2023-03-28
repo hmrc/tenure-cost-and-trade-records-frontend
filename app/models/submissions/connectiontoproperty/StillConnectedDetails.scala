@@ -19,15 +19,14 @@ package models.submissions.connectiontoproperty
 import actions.SessionRequest
 import models.Session
 import models.submissions.common.Address
-import models.submissions.PastConnectionType
 import play.api.libs.json.Json
 
 case class StillConnectedDetails(
   addressConnectionType: Option[AddressConnectionType] = None,
   connectionToProperty: Option[ConnectionToProperty] = None,
-  pastConnectionType: Option[PastConnectionType] = None,
   editAddress: Option[Address] = None
 )
+
 object StillConnectedDetails {
   implicit val format = Json.format[StillConnectedDetails]
 

@@ -27,14 +27,14 @@ POST        /are-you-still-connected                                controllers.
 GET         /edit-address                                           controllers.connectiontoproperty.EditAddressController.show()
 POST        /edit-address                                           controllers.connectiontoproperty.EditAddressController.submit()
 
-GET         /previously-connected                                   controllers.PastConnectionController.show()
-POST        /previously-connected                                   controllers.PastConnectionController.submit()
-
-GET         /remove-connection                                      controllers.removeconnection.RemoveConnectionController.show()
-POST        /remove-connection                                      controllers.removeconnection.RemoveConnectionController.submit()
-
 GET         /connection-to-the-property                             controllers.connectiontoproperty.ConnectionToThePropertyController.show()
 POST        /connection-to-the-property                             controllers.connectiontoproperty.ConnectionToThePropertyController.submit()
+# Not connected
+GET         /previously-connected                                   controllers.notconnected.PastConnectionController.show()
+POST        /previously-connected                                   controllers.notconnected.PastConnectionController.submit()
+
+GET         /remove-connection                                      controllers.notconnected.RemoveConnectionController.show()
+POST        /remove-connection                                      controllers.notconnected.RemoveConnectionController.submit()
 # About you
 GET         /about-you                                              controllers.aboutyou.AboutYouController.show()
 POST        /about-you                                              controllers.aboutyou.AboutYouController.submit()

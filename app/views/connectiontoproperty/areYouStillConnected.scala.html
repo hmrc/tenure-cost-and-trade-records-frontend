@@ -17,69 +17,51 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukErrorSummary
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukDateInput
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukTextarea
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukCharacterCount
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Radios
-@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
 @import uk.gov.hmrc.govukfrontend.views.Aliases.RadioItem
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Fieldset
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Legend
 @import models.submissions.connectiontoproperty.{AddressConnectionTypeYes, AddressConnectionTypeNo, AddressConnectionTypeYesChangeAddress}
 @import models.submissions.common.Address
 
 @this(layout: Layout,
-        govukButton: GovukButton,
-        govukRadios: GovukRadios,
-        govukInput: GovukInput,
-        govukErrorSummary: GovukErrorSummary,
-        govukDateInput: GovukDateInput,
-        govukTextarea: GovukTextarea,
-        govukCharacterCount: GovukCharacterCount,
-        formWithCSRF: FormWithCSRF
+  govukButton: GovukButton,
+  govukRadios: GovukRadios,
+  formWithCSRF: FormWithCSRF
 )
 
 @(theForm: Form[_], address: Address)(implicit request: Request[_], messages: Messages)
 
-@heading = @{messages("areYouConnected.heading", address.singleLine)}
-
 @layout(
- pageHeading = messages("areYouConnected.heading", address.singleLine),
- showH1 = false,
- showSection = true,
- sectionName = messages("label.section.checkBeforeStart"),
- theForm = theForm
+  pageHeading = messages("areYouConnected.heading", address.singleLine),
+  showH1 = false,
+  showSection = true,
+  sectionName = messages("label.section.checkBeforeStart"),
+  theForm = theForm
 ) {
 
- @formWithCSRF(action = controllers.connectiontoproperty.routes.AreYouStillConnectedController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
-  @govukRadios(
-   Radios(
-    name = "isRelated",
-    idPrefix = Option("isRelated"),
-    items = Seq(
-     AddressConnectionTypeYes.name -> messages("label.yes.oes"),
-     AddressConnectionTypeYesChangeAddress.name -> Messages("label.areYouConnected.addressUpdate"),
-     AddressConnectionTypeNo.name -> messages("label.no.nac.oes")
-    ).map(i => RadioItem (
-     content = Text(i._2),
-     checked = i._1.equals(theForm("isRelated").value.getOrElse("")),
-     value=Option(i._1)
+  @formWithCSRF(action = controllers.connectiontoproperty.routes.AreYouStillConnectedController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
+
+    @includes.radioButtons(
+      govukRadios,
+      theForm,
+      "isRelated",
+      messages("areYouConnected.heading", address.singleLine),
+      "govuk-fieldset__legend--l",
+      isHeading = true,
+      items = Seq(
+        AddressConnectionTypeYes.name -> messages("label.yes.oes"),
+        AddressConnectionTypeYesChangeAddress.name -> Messages("label.areYouConnected.addressUpdate"),
+        AddressConnectionTypeNo.name -> messages("label.no.nac.oes")
+      ).map(i => RadioItem (
+        content = Text(i._2),
+        checked = i._1.equals(theForm("isRelated").value.getOrElse("")),
+        value=Option(i._1)
+      )),
+      inline = false
     )
-    ),
-    errorMessage = theForm.errors.asTextErrorMessageForField("isRelated"),
-    fieldset = Option(
-     Fieldset(legend = Option(
-       Legend(Text(heading), isPageHeading = true, classes = "govuk-fieldset__legend--l")
-      ))
-    )
-   )
-  )
-  @includes.continueButton(govukButton)
- }
- }
+
+    @includes.continueButton(govukButton)
+  }
+}
 
 
 

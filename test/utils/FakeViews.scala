@@ -17,6 +17,7 @@
 package utils
 
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
+import views.html.connectiontoproperty._
 import views.html.aboutYourLeaseOrTenure._
 import views.html.aboutfranchisesorlettings._
 import views.html.aboutyouandtheproperty.checkYourAnswersAboutTheProperty
@@ -29,8 +30,12 @@ trait FakeViews { this: GuiceOneAppPerSuite =>
   // Sign in
   lazy val loginView = app.injector.instanceOf[login]
 
-  lazy val checkYourAnswersAboutThePropertyView =
-    app.injector.instanceOf[checkYourAnswersAboutTheProperty]
+  // Connection to the property
+  lazy val areYouStillConnectedView    = app.injector.instanceOf[areYouStillConnected]
+  lazy val connectionToThePropertyView = app.injector.instanceOf[connectionToTheProperty]
+  lazy val editAddressView             = app.injector.instanceOf[editAddress]
+
+  lazy val checkYourAnswersAboutThePropertyView = app.injector.instanceOf[checkYourAnswersAboutTheProperty]
 
   // About the franchise or letting
   lazy val franchiseOrLettingsTiedToPropertyView      =

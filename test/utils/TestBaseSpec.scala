@@ -128,7 +128,7 @@ trait TestBaseSpec
 //>>>>>>> main
 
   def preEnrichedActionRefiner(
-    stillConnectedDetailsYes: Option[StillConnectedDetails] = Some(prefilledStillConnectedDetailsYes),
+    stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledStillConnectedDetailsYes),
     removeConnectionDetails: Option[RemoveConnectionDetails] = Some(prefilledRemoveConnection),
     aboutYou: Option[AboutYou] = Some(prefilledAboutYou),
     aboutTheProperty: Option[AboutTheProperty] = Some(prefilledAboutThePropertyNo),
@@ -150,7 +150,7 @@ trait TestBaseSpec
                 "FOR6010",
                 prefilledAddress,
                 "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=",
-                stillConnectedDetails = stillConnectedDetailsYes,
+                stillConnectedDetails = stillConnectedDetails,
                 removeConnectionDetails = removeConnectionDetails,
                 aboutYou = aboutYou,
                 aboutTheProperty = aboutTheProperty,

@@ -37,9 +37,5 @@ class ConnectedToPropertyIdentifiersSpec extends TestBaseSpec {
     "Identifier for connection to the property page" in {
       assert(ConnectionToPropertyPageId.toString.equals("ConnectionToPropertyPage"))
     }
-
-    "Identifier for task list page" in {
-      assert(TaskListPageId.toString.equals("taskListPage"))
-    }
   }
 }

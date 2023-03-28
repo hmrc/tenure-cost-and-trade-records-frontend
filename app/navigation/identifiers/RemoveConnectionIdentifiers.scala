@@ -16,6 +16,6 @@
 
 package navigation.identifiers
 
-case object RemoveConnectionId extends Identifier {
-  override def toString: String = "removeConnectionPage"
-}
+case object PastConnectionId extends Identifier { override def toString: String = "PastConnectionId" }
+
+case object RemoveConnectionId extends Identifier { override def toString: String = "removeConnectionPageId" }

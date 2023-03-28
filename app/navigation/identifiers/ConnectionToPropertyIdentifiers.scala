@@ -16,23 +16,10 @@
 
 package navigation.identifiers
 
-// Are you connected to the property page identifiers
-case object SignInPageId extends Identifier {
-  override def toString: String = "signInPage"
-}
+case object SignInPageId extends Identifier { override def toString: String = "signInPage" }
 
-case object AreYouStillConnectedPageId extends Identifier {
-  override def toString: String = "areYouStillConnectedPage"
-}
+case object AreYouStillConnectedPageId extends Identifier { override def toString: String = "areYouStillConnectedPage" }
 
-case object EditAddressPageId extends Identifier {
-  override def toString: String = "editAddressPage"
-}
+case object EditAddressPageId extends Identifier { override def toString: String = "editAddressPage" }
 
-case object ConnectionToPropertyPageId extends Identifier {
-  override def toString: String = "ConnectionToPropertyPage"
-}
-
-case object TaskListPageId extends Identifier {
-  override def toString: String = "taskListPage"
-}
+case object ConnectionToPropertyPageId extends Identifier { override def toString: String = "ConnectionToPropertyPage" }
