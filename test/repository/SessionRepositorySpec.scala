@@ -24,32 +24,23 @@ import utils.TestBaseSpec
 class SessionRepositorySpec extends TestBaseSpec {
 
   lazy val repository = app.injector.instanceOf[SessionRepo]
-  val token           = "testToken"
-  val forType         = "FOR6010"
-  val referenceNumber = "99996010004"
-  val session         = Session(
-    "99996010004",
-    "FOR6010",
-    prefilledAddress,
-    "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik="
-  )
 
   "session repository" should {
 
     "start by saving or updating data" in {
 
-      repository.start(session).futureValue
+      repository.start(baseFilled6010Session).futureValue
 
       val returnedSessionData: SessionData = repository.findFirst.futureValue // shouldBe session
 
       inside(returnedSessionData) { case SessionData(_, data, createdAt) =>
         (data \ "session" \ "referenceNumber")
-          .as[String] shouldBe session.referenceNumber
+          .as[String] shouldBe baseFilled6010Session.referenceNumber
       }
     }
 
     "get data from current session" in {
-      repository.start(session).futureValue
+      repository.start(baseFilled6010Session).futureValue
 
       val returnedSessionData: Option[Session] = repository.get[Session].futureValue
 
@@ -60,7 +51,7 @@ class SessionRepositorySpec extends TestBaseSpec {
     }
 
     "remove data from current session" in {
-      repository.start(session).futureValue
+      repository.start(baseFilled6010Session).futureValue
       repository.remove().futureValue
 
       val returnedSessionData: Option[Session] = repository.get[Session].futureValue
