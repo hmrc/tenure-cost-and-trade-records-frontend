@@ -28,13 +28,17 @@ import models.submissions.aboutyou.{AboutYou, CustomerDetails}
 import models.submissions.additionalinformation._
 import models.{AnnualRent, Session, SubmissionDraft}
 import models.submissions.common.{Address, AnswerNo, AnswerYes, ContactDetails}
-import models.submissions.connectiontoproperty.{AddressConnectionTypeYes, StillConnectedDetails}
+import models.submissions.connectiontoproperty._
 import models.submissions.notconnected.{RemoveConnectionDetails, RemoveConnectionsDetails}
 
 import java.time.LocalDate
 
 trait FakeObjects {
-  val prefilledAddress         = Address("001", Some("GORING ROAD"), Some("GORING-BY-SEA, WORTHING"), "BN12 4AX")
+  val referenceNumber  = "99996010004"
+  val forType6010      = "FOR6010"
+  val prefilledAddress = Address("001", Some("GORING ROAD"), Some("GORING-BY-SEA, WORTHING"), "BN12 4AX")
+  val token            = "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik="
+
   val prefilledContactDetails  = ContactDetails("1234567890", "TestEmail@gmail.com")
   val prefilledFakeName        = "John Doe"
   val prefilledContactAddress  = AlternativeContactDetailsAddress(
@@ -51,7 +55,26 @@ trait FakeObjects {
   val prefilledLandlordAddress =
     LandlordAddress("004", Some("GORING ROAD"), Some("GORING-BY-SEA, WORTHING"), Some("West sussex"), "BN12 4AX")
 
-  val prefilledStillConnectedDetailsYes = StillConnectedDetails(Some(AddressConnectionTypeYes))
+  val baseFilled6010Session = Session(referenceNumber, forType6010, prefilledAddress, token)
+
+  // Are your still connected sessions
+  val prefilledStillConnectedDetailsYes  = StillConnectedDetails(
+    Some(AddressConnectionTypeYes),
+    Some(ConnectionToThePropertyOccupierTrustee)
+  )
+  val prefilledStillConnectedDetailsEdit = StillConnectedDetails(
+    Some(AddressConnectionTypeYesChangeAddress),
+    Some(ConnectionToThePropertyOccupierTrustee),
+    Some(prefilledAddress)
+  )
+  val prefilledStillConnectedDetailsNo   = StillConnectedDetails(Some(AddressConnectionTypeNo))
+
+  val stillConnectedDetailsYesSession  =
+    baseFilled6010Session.copy(stillConnectedDetails = Some(prefilledStillConnectedDetailsYes))
+  val stillConnectedDetailsEditSession =
+    baseFilled6010Session.copy(stillConnectedDetails = Some(prefilledStillConnectedDetailsEdit))
+  val stillConnectedDetailsNoSession   =
+    baseFilled6010Session.copy(stillConnectedDetails = Some(prefilledStillConnectedDetailsNo))
 
   val prefilledFirstOccupy                      = MonthsYearDuration(2000, 2)
   val prefilledFinancialYear                    = DayMonthsDuration(2, 12)

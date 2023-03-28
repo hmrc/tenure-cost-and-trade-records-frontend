@@ -17,14 +17,12 @@
 package navigation
 
 import connectors.Audit
-import models.Session
 import navigation.identifiers.{AreYouStillConnectedPageId, ConnectionToPropertyPageId, EditAddressPageId, Identifier}
 import org.scalatest.matchers.must.Matchers.convertToAnyMustWrapper
 import play.api.libs.json.JsObject
 import uk.gov.hmrc.http.HeaderCarrier
 import utils.TestBaseSpec
 import controllers.connectiontoproperty.routes
-import models.submissions.connectiontoproperty.{AddressConnectionTypeNo, AddressConnectionTypeYes, AddressConnectionTypeYesChangeAddress, StillConnectedDetails}
 
 import scala.concurrent.ExecutionContext
 
@@ -35,70 +33,47 @@ class ConnectionToPropertyNavigatorSpec extends TestBaseSpec {
 
   val navigator = new ConnectionToPropertyNavigator(audit)
 
-  val stillConnectedDetailsYes  = Some(StillConnectedDetails(Some(AddressConnectionTypeYes)))
-  val stillConnectedDetailsEdit = Some(StillConnectedDetails(Some(AddressConnectionTypeYesChangeAddress)))
-  val stillConnectedDetailsNo   = Some(StillConnectedDetails(Some(AddressConnectionTypeNo)))
-
-  val sessionYes = Session(
-    "99996010004",
-    "FOR6010",
-    prefilledAddress,
-    "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=",
-    stillConnectedDetailsYes
-  )
-
   implicit override val hc: HeaderCarrier = HeaderCarrier()
 
   "Connection to property navigator" when {
 
     "go to sign in from an identifier that doesn't exist in the route map" in {
       case object UnknownIdentifier extends Identifier
-      navigator.nextPage(UnknownIdentifier).apply(sessionYes) mustBe controllers.routes.LoginController.show()
+      navigator
+        .nextPage(UnknownIdentifier)
+        .apply(stillConnectedDetailsYesSession) mustBe controllers.routes.LoginController.show()
     }
 
     "return a function that goes to the type of connection to the property page when still connected has been selected and the selection is yes" in {
-      navigator.nextPage(AreYouStillConnectedPageId).apply(sessionYes) mustBe routes.ConnectionToThePropertyController
+      navigator
+        .nextPage(AreYouStillConnectedPageId)
+        .apply(stillConnectedDetailsYesSession) mustBe routes.ConnectionToThePropertyController
         .show()
     }
 
     "return a function that goes to the edit address page when still connected has been selected and the selection is edit address" in {
-      val sessionEdit = Session(
-        "99996010004",
-        "FOR6010",
-        prefilledAddress,
-        "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=",
-        stillConnectedDetailsEdit
-      )
-      navigator.nextPage(AreYouStillConnectedPageId).apply(sessionEdit) mustBe routes.EditAddressController.show()
+      navigator
+        .nextPage(AreYouStillConnectedPageId)
+        .apply(stillConnectedDetailsEditSession) mustBe routes.EditAddressController.show()
     }
 
     "return a function that goes to the not connected page when still connected has been selected and the selection is no" in {
-      val sessionNo = Session(
-        "99996010004",
-        "FOR6010",
-        prefilledAddress,
-        "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=",
-        stillConnectedDetailsNo
-      )
       navigator
         .nextPage(AreYouStillConnectedPageId)
-        .apply(sessionNo) mustBe controllers.notconnected.routes.PastConnectionController
+        .apply(stillConnectedDetailsNoSession) mustBe controllers.notconnected.routes.PastConnectionController
         .show()
     }
 
     "return a function that goes to the type of connection to the property page when edit address has been completed" in {
-      val sessionEdit = Session(
-        "99996010004",
-        "FOR6010",
-        prefilledAddress,
-        "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=",
-        stillConnectedDetailsEdit
-      )
-      navigator.nextPage(EditAddressPageId).apply(sessionEdit) mustBe routes.ConnectionToThePropertyController.show()
+      navigator
+        .nextPage(EditAddressPageId)
+        .apply(stillConnectedDetailsEditSession) mustBe routes.ConnectionToThePropertyController.show()
     }
 
     "return a function that goes to the task list page when connection to the property has been selected" in {
-      navigator.nextPage(ConnectionToPropertyPageId).apply(sessionYes) mustBe controllers.routes.TaskListController
+      navigator
+        .nextPage(ConnectionToPropertyPageId)
+        .apply(stillConnectedDetailsYesSession) mustBe controllers.routes.TaskListController
         .show()
     }
   }
