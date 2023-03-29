@@ -17,14 +17,7 @@
 package navigation
 
 import connectors.Audit
-import models.Session
-import models.submissions.abouttheproperty.AboutTheProperty
-import models.submissions.aboutyou.{AboutYou, CustomerDetails}
-import models.submissions.additionalinformation.{AdditionalInformation, FurtherInformationOrRemarksDetails}
-import models.submissions.common.ContactDetails
-import models.submissions.connectiontoproperty.{AddressConnectionTypeYes, StillConnectedDetails}
-import models.submissions.notconnected.{RemoveConnectionDetails, RemoveConnectionsDetails}
-import navigation.identifiers.{AdditionalInformationId, Identifier}
+import navigation.identifiers._
 import org.scalatest.matchers.must.Matchers.convertToAnyMustWrapper
 import play.api.libs.json.JsObject
 import uk.gov.hmrc.http.HeaderCarrier
@@ -39,49 +32,39 @@ class AdditionalInformationNavigatorSpec extends TestBaseSpec {
 
   val navigator = new AdditionalInformationNavigator(audit)
 
-  val aboutYou                     = Some(AboutYou(Some(CustomerDetails("Tobermory", ContactDetails("12345678909", "test@email.com")))))
-  val aboutTheProperty             = Some(AboutTheProperty(None))
-  val removeConnection             = Some(
-    RemoveConnectionDetails(
-      Some(
-        RemoveConnectionsDetails(
-          "John Smith",
-          ContactDetails("12345678909", "test@email.com"),
-          Some("Additional Information is here")
-        )
-      )
-    )
-  )
-  val additionalInformation        = Some(AdditionalInformation(Some(FurtherInformationOrRemarksDetails("test"))))
-  val stillConnectedDetailsYes     = Some(StillConnectedDetails(Some(AddressConnectionTypeYes)))
-  val sessionAdditionalInformation =
-    Session(
-      "99996010004",
-      "FOR6010",
-      prefilledAddress,
-      "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=",
-      stillConnectedDetailsYes,
-      removeConnection,
-      aboutYou,
-      aboutTheProperty,
-      additionalInformation
-    )
-
-  "Connection to property navigator" when {
+  "Additional information navigator" when {
 
     "go to sign in from an identifier that doesn't exist in the route map" in {
       case object UnknownIdentifier extends Identifier
       navigator
         .nextPage(UnknownIdentifier)
-        .apply(sessionAdditionalInformation) mustBe controllers.routes.LoginController.show()
+        .apply(additionalInformationSession) mustBe controllers.routes.LoginController.show()
     }
 
-    "return a function that goes to alternative contact details page when about you has been completed" in {
+    "return a function that goes to alternative contact details page when further information has been completed" in {
       navigator
-        .nextPage(AdditionalInformationId)
+        .nextPage(FurtherInformationId)
         .apply(
-          sessionAdditionalInformation
+          additionalInformationSession
         ) mustBe controllers.additionalinformation.routes.AlternativeContactDetailsController
+        .show()
+    }
+
+    "return a function that goes to CYA page when alternative contact details has been completed" in {
+      navigator
+        .nextPage(AlternativeContactDetailsId)
+        .apply(
+          additionalInformationSession
+        ) mustBe controllers.additionalinformation.routes.CheckYourAnswersAdditionalInformationController
+        .show()
+    }
+
+    "return a function that goes to task list page when CYA has been completed" in {
+      navigator
+        .nextPage(CheckYourAnswersAdditionalInformationId)
+        .apply(
+          additionalInformationSession
+        ) mustBe controllers.routes.TaskListController
         .show()
     }
   }

@@ -76,6 +76,14 @@ trait FakeObjects {
   val stillConnectedDetailsNoSession   =
     baseFilled6010Session.copy(stillConnectedDetails = Some(prefilledStillConnectedDetailsNo))
 
+  //  Additional information
+  val prefilledAdditionalInformation = AdditionalInformation(
+    Some(FurtherInformationOrRemarksDetails("Further information or remarks details string")),
+    Some(CheckYourAnswersAdditionalInformation("CYA string"))
+  )
+  val additionalInformationSession   =
+    stillConnectedDetailsYesSession.copy(additionalInformation = Some(prefilledAdditionalInformation))
+
   val prefilledFirstOccupy                      = MonthsYearDuration(2000, 2)
   val prefilledFinancialYear                    = DayMonthsDuration(2, 12)
   val prefilledDateInput                        = LocalDate.of(2022, 6, 1)
@@ -149,8 +157,8 @@ trait FakeObjects {
       )
     )
 
-  val prefilledAboutYou                 = AboutYou(Some(CustomerDetails("Tobermory", ContactDetails("12345678909", "test@email.com"))))
-  val prefilledAboutThePropertyNo       = AboutTheProperty(
+  val prefilledAboutYou           = AboutYou(Some(CustomerDetails("Tobermory", ContactDetails("12345678909", "test@email.com"))))
+  val prefilledAboutThePropertyNo = AboutTheProperty(
     Some(PropertyDetails("OccupierName", CurrentPropertyHotel, None)),
     Some(WebsiteForPropertyDetails(BuildingOperationHaveAWebsiteYes, Some("webAddress"))),
     Some(PremisesLicenseGrantedNo),
@@ -164,9 +172,7 @@ trait FakeObjects {
     Some(TiedGoodsNo),
     None
   )
-  val prefilledAdditionalInformation    = AdditionalInformation(
-    Some(FurtherInformationOrRemarksDetails("Further information or remarks details string"))
-  )
+
   val prefilledAltContactInformation    = AltContactInformation(
     Some(
       AlternativeContactDetails(

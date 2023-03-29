@@ -597,11 +597,13 @@ netProfit.heading = This is a holding page for the net profits page
 concessionOrFranchise.heading = Is any concession or franchise run as a separate business from the property?
 hint.concessionOrFranchise = Choose ’no’ if you’ve included turnover from these businesses in your turnover. You will have the opportunity to add more than one business if required.
 
-#FURTHER INFORMATION OR REMARKS
-###############################
+# ADDITIONAL INFORMATION
+########################
+
+# FURTHER INFORMATION OR REMARKS
+################################
 furtherInformationOrRemarks.heading = Further information or remarks (if any)
 hint.furtherInformationOrRemarks = Please provide further details if there is insufficient room for you to complete your answers to any of the forgoing questions, or if any of the questions require further explanation or clarification
-error.furtherInformationOrRemarks.maxLength = This must be 1000 characters or fewer
 
 #ALTERNATIVE CONTACT DETAILS
 ############################
@@ -752,3 +754,4 @@ error.month.required = The date must include a month
 error.year.required = The date must include a year
 error.required.annualRent = Please provide an annual rent amount
 error.required.annualRentExcludingVat = Please provide a number
+error.char.count.maxLength = This must be 2000 characters or fewer

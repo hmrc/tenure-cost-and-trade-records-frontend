@@ -41,10 +41,10 @@
       <h1 class="govuk-fieldset__heading">@messages("editAddress.heading")</h1>
     </legend>
 
-    @includes.textInput(govukInput, theForm, "buildingNameNumber", "govuk-!-width-two-thirds")
-    @includes.textInput(govukInput, theForm, "street1", "govuk-!-width-two-thirds", optional = true)
-    @includes.textInput(govukInput, theForm, "street2", "govuk-!-width-one-half", optional = true)
-    @includes.textInput(govukInput, theForm, "postcode", "govuk-!-width-one-quarter")
+    @includes.textInput(govukInput, theForm, "buildingNameNumber", "govuk-!-width-two-thirds", "buildingNameNumber")
+    @includes.textInput(govukInput, theForm, "street1", "govuk-!-width-two-thirds", "street1", optional = true)
+    @includes.textInput(govukInput, theForm, "street2", "govuk-!-width-one-half", "street2", optional = true)
+    @includes.textInput(govukInput, theForm, "postcode", "govuk-!-width-one-quarter", "postcode")
 
     @includes.continueButton(govukButton)
   }

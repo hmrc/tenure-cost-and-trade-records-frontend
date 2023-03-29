@@ -16,62 +16,40 @@
 
 @import models.submissions.additionalinformation.FurtherInformationOrRemarksDetails
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukErrorSummary
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukDateInput
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukTextarea
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukCharacterCount
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
-@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Label
-@import uk.gov.hmrc.govukfrontend.views.Aliases.CharacterCount
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Hint
-
 
 @this(layout: Layout,
-        govukButton: GovukButton,
-        govukRadios: GovukRadios,
-        govukInput: GovukInput,
-        govukErrorSummary: GovukErrorSummary,
-        govukDateInput: GovukDateInput,
-        govukTextarea: GovukTextarea,
-        govukCharacterCount: GovukCharacterCount,
-        formWithCSRF: FormWithCSRF
+  govukButton: GovukButton,
+  govukCharacterCount: GovukCharacterCount,
+  formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[FurtherInformationOrRemarksDetails], backLink: String)(implicit request: Request[_], messages: Messages)
+@(theForm: Form[FurtherInformationOrRemarksDetails])(implicit request: Request[_], messages: Messages)
 
 @layout(
- pageHeading = messages("furtherInformationOrRemarks.heading"),
- showH1 = false,
- showSection = true,
- sectionName = messages("label.section.additionalInformation"),
- backLinkUrl = backLink,
- theForm = theForm
+  pageHeading = messages("furtherInformationOrRemarks.heading"),
+  showH1 = false,
+  showSection = true,
+  sectionName = messages("label.section.additionalInformation"),
+  backLinkUrl = controllers.routes.TaskListController.show().url,
+  theForm = theForm
 ) {
 
- @formWithCSRF(action = controllers.additionalinformation.routes.FurtherInformationOrRemarksController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
+  @formWithCSRF(action = controllers.additionalinformation.routes.FurtherInformationOrRemarksController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
 
-  <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-   <h1 class="govuk-fieldset__heading">@messages("furtherInformationOrRemarks.heading")</h1>
-  </legend>
+    @includes.textInputCharCount(
+      govukCharacterCount,
+      theForm,
+      "furtherInformationOrRemarks",
+      labelContent = "furtherInformationOrRemarks.heading",
+      classes = "govuk-label--l",
+      hint = "hint.furtherInformationOrRemarks",
+      isPageHeading = true
+    )
 
-  @govukCharacterCount(
-   CharacterCount(
-    id = "furtherInformationOrRemarks",
-    name = "furtherInformationOrRemarks",
-    rows = 5,
-    maxLength = 2000,
-    value = theForm("furtherInformationOrRemarks").value,
-    errorMessage = theForm.errors.asTextErrorMessageForField("furtherInformationOrRemarks"),
-    hint = Some(Hint(content = Text(messages("hint.furtherInformationOrRemarks")))),
-   )
-  )
-
-  @includes.continueButton(govukButton)
- }
+    @includes.continueButton(govukButton)
+  }
 }
 
 

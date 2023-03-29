@@ -107,8 +107,6 @@ trait FakeViews { this: GuiceOneAppPerSuite =>
     app.injector.instanceOf[legalOrPlanningRestrictionsDetails]
   lazy val checkYourAnswersAboutYourLeaseOrTenureView      =
     app.injector.instanceOf[checkYourAnswersAboutYourLeaseOrTenure]
-  lazy val furtherInformationOrRemarksView                 =
-    app.injector.instanceOf[furtherInformationOrRemarks]
   lazy val tenantsAdditionsDisregardedDetailsView          =
     app.injector.instanceOf[tenantsAdditionsDisregardedDetails]
   lazy val tenantsAdditionsDisregardedView                 =
@@ -135,5 +133,6 @@ trait FakeViews { this: GuiceOneAppPerSuite =>
     app.injector.instanceOf[howIsCurrentRentFixed]
   lazy val checkYourAnswersAboutLeaseAndTenureView         =
     app.injector.instanceOf[checkYourAnswersAboutYourLeaseOrTenure]
-
+  // Additional information
+  lazy val furtherInformationOrRemarksView                 = app.injector.instanceOf[furtherInformationOrRemarks]
 }
