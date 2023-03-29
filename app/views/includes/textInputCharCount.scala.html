@@ -22,24 +22,26 @@
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.hint.Hint
 
 @(govukCharacterCount: GovukCharacterCount,
-        theForm: Form[_],
-        name: String,
-        legendContent: String = "",
-        classes: String = "",
-        charCount: Int = 2000,
-        hint: String = ""
+  theForm: Form[_],
+  name: String,
+  labelContent: String = "",
+  classes: String = "",
+  charCount: Int = 2000,
+  hint: String = "",
+  isPageHeading: Boolean = false
 )(implicit request: Request[_], messages: Messages)
 
 @govukCharacterCount(
- CharacterCount(
-  id = name,
-  name = name,
-  maxLength = charCount,
-  label = Label(
-   content = Text(messages(legendContent)),
-   classes = classes
-  ),
-  errorMessage = theForm.errors.asTextErrorMessageForField(name),
-  hint = Some(Hint(content = Text(messages(hint)))),
- ).withFormField(theForm(name))
+  CharacterCount(
+    id = name,
+    name = name,
+    maxLength = charCount,
+    label = Label(
+      content = Text(messages(labelContent)),
+      classes = classes,
+      isPageHeading = isPageHeading
+    ),
+    errorMessage = theForm.errors.asTextErrorMessageForField(name),
+    hint = Some(Hint(content = Text(messages(hint)))),
+  ).withFormField(theForm(name))
 )

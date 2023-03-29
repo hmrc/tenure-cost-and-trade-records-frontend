@@ -18,11 +18,6 @@ package models.submissions.additionalinformation
 
 import play.api.libs.json.Json
 
-case class FurtherInformationOrRemarksDetails(
-  furtherInformationOrRemarksDetails: String
-)
+case class FurtherInformationOrRemarksDetails(furtherInformationOrRemarksDetails: String)
 
-object FurtherInformationOrRemarksDetails {
-  implicit val format = Json.format[FurtherInformationOrRemarksDetails]
-
-}
+object FurtherInformationOrRemarksDetails { implicit val format = Json.format[FurtherInformationOrRemarksDetails] }

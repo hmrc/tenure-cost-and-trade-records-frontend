@@ -18,11 +18,9 @@ package controllers.additionalinformation
 
 import actions.WithSessionRefiner
 import form.additionalinformation.FurtherInformationOrRemarksForm.furtherInformationOrRemarksForm
-import models.{ForTypes, Session}
 import models.submissions.additionalinformation.AdditionalInformation.updateAdditionalInformation
 import navigation.AdditionalInformationNavigator
-import navigation.identifiers.AdditionalInformationId
-import play.api.Logging
+import navigation.identifiers.FurtherInformationId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
@@ -40,8 +38,7 @@ class FurtherInformationOrRemarksController @Inject() (
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
 ) extends FrontendController(mcc)
-    with I18nSupport
-    with Logging {
+    with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Future.successful(
@@ -51,12 +48,6 @@ class FurtherInformationOrRemarksController @Inject() (
             case Some(furtherInformationOrRemarksDetails) =>
               furtherInformationOrRemarksForm.fillAndValidate(furtherInformationOrRemarksDetails)
             case _                                        => furtherInformationOrRemarksForm
-          },
-          getBackLink(request.sessionData) match {
-            case Right(link) => link
-            case Left(msg)   =>
-              logger.warn(s"Navigation for further information page reached with error: $msg")
-              throw new RuntimeException(s"Navigation for further information page reached with error $msg")
           }
         )
       )
@@ -67,36 +58,12 @@ class FurtherInformationOrRemarksController @Inject() (
     furtherInformationOrRemarksForm
       .bindFromRequest()
       .fold(
-        formWithErrors =>
-          Future.successful(
-            BadRequest(
-              furtherInformationOrRemarksView(
-                formWithErrors,
-                getBackLink(request.sessionData) match {
-                  case Right(link) => link
-                  case Left(msg)   =>
-                    logger.warn(s"Navigation for further information page reached with error: $msg")
-                    throw new RuntimeException(s"Navigation for further information page reached with error $msg")
-                }
-              )
-            )
-          ),
+        formWithErrors => Future.successful(BadRequest(furtherInformationOrRemarksView(formWithErrors))),
         data => {
           val updatedData = updateAdditionalInformation(_.copy(furtherInformationOrRemarksDetails = Some(data)))
           session.saveOrUpdate(updatedData)
-          Future.successful(Redirect(navigator.nextPage(AdditionalInformationId).apply(updatedData)))
+          Future.successful(Redirect(navigator.nextPage(FurtherInformationId).apply(updatedData)))
         }
       )
   }
-
-  private def getBackLink(answers: Session): Either[String, String] =
-    answers.forType match {
-      case ForTypes.for6010                    =>
-        Right(controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController.show().url)
-      case ForTypes.for6011                    =>
-        Right(controllers.aboutYourLeaseOrTenure.routes.TenancyLeaseAgreementExpireController.show().url)
-      case ForTypes.for6015 | ForTypes.for6016 =>
-        Right(controllers.aboutYourLeaseOrTenure.routes.LegalOrPlanningRestrictionsController.show().url)
-      case _                                   => Left(s"Unknown form type with further information back link")
-    }
 }

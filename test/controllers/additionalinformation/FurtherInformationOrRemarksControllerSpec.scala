@@ -16,65 +16,33 @@
 
 package controllers.additionalinformation
 
-import form.Errors
-import navigation.AdditionalInformationNavigator
-import play.api.data.FormError
+import models.submissions.additionalinformation.AdditionalInformation
 import play.api.http.Status
 import play.api.test.Helpers._
-import play.twirl.api.HtmlFormat
 import utils.TestBaseSpec
-import views.html.additionalinformation.furtherInformationOrRemarks
 
 class FurtherInformationOrRemarksControllerSpec extends TestBaseSpec {
 
-  val mockAdditionalInformationNavigator  = mock[AdditionalInformationNavigator]
-  val mockFurtherInformationOrRemarksView = mock[furtherInformationOrRemarks]
-  when(mockFurtherInformationOrRemarksView.apply(any, any)(any, any)).thenReturn(HtmlFormat.empty)
-
-  val furtherInformationOrRemarksController = new FurtherInformationOrRemarksController(
+  def furtherInformationOrRemarksController(
+    additionalInformation: Option[AdditionalInformation] = Some(prefilledAdditionalInformation)
+  ) = new FurtherInformationOrRemarksController(
     stubMessagesControllerComponents(),
-    mockAdditionalInformationNavigator,
-    mockFurtherInformationOrRemarksView,
-    preFilledSession,
+    additionalInformationNavigator,
+    furtherInformationOrRemarksView,
+    preEnrichedActionRefiner(additionalInformation = additionalInformation),
     mockSessionRepo
   )
 
   "GET /" should {
     "return 200" in {
-      val result = furtherInformationOrRemarksController.show(fakeRequest)
+      val result = furtherInformationOrRemarksController().show(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return HTML" in {
-      val result = furtherInformationOrRemarksController.show(fakeRequest)
+      val result = furtherInformationOrRemarksController().show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
   }
-
-//  "Further Information form" should {
-//      "error if additional information is missing " in {
-//      val formData = baseFormData - errorKey.additionalInfo
-//      val form = furtherInformationOrRemarksForm.bind(formData)
-//
-//      mustContainRequiredErrorFor(errorKey.additionalInfo, form)
-//    }
-//  }
-
-  object TestData {
-    val errorKey = new {
-      val additionalInfo: String = "c"
-    }
-
-    val formErrors                        = new {
-      val required = new {
-        val additionalInfo = FormError(errorKey.additionalInfo, Errors.required)
-      }
-    }
-    val baseFormData: Map[String, String] = Map(
-      "furtherInformationOrRemarks" -> "This is some test information"
-    )
-
-  }
-
 }
