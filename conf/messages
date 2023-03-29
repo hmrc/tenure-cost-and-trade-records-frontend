@@ -752,8 +752,3 @@ error.month.required = The date must include a month
 error.year.required = The date must include a year
 error.required.annualRent = Please provide an annual rent amount
 error.required.annualRentExcludingVat = Please provide a number
-
-
-
-
-
