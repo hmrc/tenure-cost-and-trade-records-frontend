@@ -17,6 +17,7 @@
 package controllers.aboutthetradinghistory
 
 import actions.WithSessionRefiner
+import models.submissions.aboutthetradinghistory.TurnoverSection
 import navigation.AboutTheTradingHistoryNavigator
 import navigation.identifiers.TurnoverPageId
 import play.api.i18n.I18nSupport
@@ -25,6 +26,7 @@ import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.aboutthetradinghistory.turnover
 
+import java.time.{LocalDate, Year}
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
 
@@ -39,7 +41,28 @@ class TurnoverController @Inject() (
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
-    Ok(turnoverView())
+    request.sessionData.aboutTheTradingHistory.fold(Redirect(routes.AboutYourTradingHistoryController.show())){
+      aboutTheTradingHistory => if(aboutTheTradingHistory.turnoverSection.isEmpty){
+        (for {
+          financialYearEnd <- aboutTheTradingHistory.aboutYourTradingHistory.map(_.financialYear)
+          now = LocalDate.now()
+          currentFinancialYear = if(now.isBefore(LocalDate.of(now.getYear, financialYearEnd.months, financialYearEnd.days))){
+            now.getYear
+          } else now.getYear + 1
+          firstOccupy <- aboutTheTradingHistory.aboutYourTradingHistory.map(_.firstOccupy)
+          yearDifference = currentFinancialYear - firstOccupy.years
+          numberOfSections = 1 to (if(yearDifference > 3) 3 else yearDifference)
+        } yield Ok(turnoverView(
+          numberOfSections.map{ yearsAgo =>
+            TurnoverSection(
+              financialYearEnd = LocalDate.of(currentFinancialYear - yearsAgo, financialYearEnd.months, financialYearEnd.days),
+              tradingPeriod = 52
+            )
+          }
+        )
+        )).getOrElse(Redirect(routes.AboutYourTradingHistoryController.show()))
+      } else Ok(turnoverView(aboutTheTradingHistory.turnoverSection))
+    }
   }
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>

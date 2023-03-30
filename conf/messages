@@ -568,7 +568,20 @@ label.grossProfit = Gross profits
 
 #TURNOVER
 #########
-turnover.heading = This is a holding page for the turnover page
+turnover.heading = Turnover
+turnover.p1 = Provide us with details of your turnover. If the accounts do not relate to a whole year, or if you are not trading continuously, state the relevant number of weeks. If your accounts are held in a spreadsheet that mirrors this form, you can copy and paste them.
+turnover.inset = All fields on this page are mandatory. If none of the categories are applicable, enter the number 0.
+turnover.financialYearEnd = Financial year end
+turnover.tradingPeriod = Trading period
+turnover.alcoholicDrinks = Alcoholic drinks (exc VAT)
+turnover.alcoholicDrinksCaption = Including soft drinks, crisps, nuts
+turnover.weeks = weeks
+turnover.details = Help with completing turnover
+turnover.details.h1 = General guidance
+turnover.details.p1 = Do not include VAT in any of the figures you declare on this page.
+turnover.details.p2 = If you have not broken down your turnover into separate categories, or if you have recorded certain categories together - such as all food and drinks - you can declare them together in a single field.
+turnover.details.h2 = Financial year end
+turnover.details.p3 = Your financial year end dates are pre-populated by the system. If your financial year end has changed during the period shown, you can edit these dates accordingly.
 
 #COST OF SALES
 costOfSales.heading = This is a holding page for the cost of sales page
