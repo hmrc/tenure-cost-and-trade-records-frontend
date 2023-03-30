@@ -14,16 +14,37 @@
  * limitations under the License.
  *@
 
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
-@import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
+@import models.submissions.aboutthetradinghistory.TurnoverSection
+@import uk.gov.hmrc.govukfrontend.views.html.components._
+@import java.time.format.DateTimeFormatter
+@import java.time.format.FormatStyle
 
 @this(layout: Layout,
         govukButton: GovukButton,
-        formWithCSRF: FormWithCSRF
+        formWithCSRF: FormWithCSRF,
+        govukInput: GovukInput,
+        govukTable: GovukTable,
+        govukInsetText: GovukInsetText,
+        govukDetails: GovukDetails
 )
 
 
-@()(implicit request: Request[_], messages: Messages)
+@(turnoverSections: Seq[TurnoverSection])(implicit request: Request[_], messages: Messages)
+
+@detailsContent = {
+    <p class="govuk-body govuk-!-font-weight-bold">@messages("turnover.details.h1")</p>
+    <p class="govuk-body">@messages("turnover.details.p1")</p>
+    <p class="govuk-body">@messages("turnover.details.p2")</p>
+    <p class="govuk-body govuk-!-font-weight-bold">@messages("turnover.details.h2")</p>
+    <p class="govuk-body">@messages("turnover.details.p3")</p>
+
+}
+
+@alcoholicDrinksHeading = {
+    <p class="govuk-body">@messages("turnover.alcoholicDrinks")</p>
+    <span class="govuk-caption-m">@messages("turnover.alcoholicDrinksCaption")</span>
+}
+
 
 @layout(
   pageHeading = messages("turnover.heading"),
@@ -38,6 +59,70 @@
       <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
           <h1 class="govuk-fieldset__heading">@messages("turnover.heading")</h1>
       </legend>
+      <p class="govuk-body">@messages("turnover.p1")</p>
+      @govukInsetText(InsetText(
+          content = Text(messages("turnover.inset"))
+      ))
+      @govukDetails(Details(
+          summary = Text(messages("turnover.details")),
+          content = HtmlContent(detailsContent)
+      ))
+      @govukTable(Table(
+          rows = Seq(
+
+                  TableRow(
+                      content = Text(messages("turnover.financialYearEnd"))
+                  ) +:
+                  turnoverSections.zipWithIndex.map { case (section, index)  =>
+                      TableRow(
+                          content = HtmlContent(
+                              govukInput(Input(
+                                  id = s"financial-year-end-$index",
+                                  name = s"financial-year-end-$index",
+                                  value = section.financialYearEnd.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT))
+                              ))
+                          )
+                      )
+                  },
+              TableRow(
+                  content = Text(messages("turnover.tradingPeriod"))
+              ) +:
+                      turnoverSections.zipWithIndex.map { case (section, index)  =>
+                          TableRow(
+                              content = HtmlContent(
+                                  govukInput(Input(
+                                      id = s"weeks-$index",
+                                      name = s"weeks-$index",
+                                      value = "52",
+                                      suffix = Some(PrefixOrSuffix(
+                                          content = Text(messages("turnover.weeks"))
+                                      ))
+                                  ))
+                              )
+                          )
+                      },
+              TableRow(
+                  content = HtmlContent(alcoholicDrinksHeading)
+              ) +:
+                      turnoverSections.zipWithIndex.map { case (section, index)  =>
+                          TableRow(
+                              content = HtmlContent(
+                                  govukInput(Input(
+                                      id = s"alcoholic-drinks-$index",
+                                      name = s"alcoholic-drinks-$index",
+                                      value = "0",
+                                      prefix = Some(PrefixOrSuffix(
+                                          content = Text("£")
+                                      ))
+                                  ))
+                              )
+                          )
+                      },
+          ),
+
+          captionClasses = "govuk-table__caption--m",
+          firstCellIsHeader = false
+      ))
 
       @includes.continueButton(govukButton)
   }
