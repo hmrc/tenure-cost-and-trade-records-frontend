@@ -18,7 +18,7 @@ package controllers.additionalinformation
 
 import actions.WithSessionRefiner
 import form.additionalinformation.AlternativeContactDetailsForm.alternativeContactDetailsForm
-import models.submissions.additionalinformation.AltContactInformation.updateAltContactInformation
+import models.submissions.additionalinformation.AdditionalInformation.updateAdditionalInformation
 import navigation.AdditionalInformationNavigator
 import navigation.identifiers.AlternativeContactDetailsId
 import play.api.i18n.I18nSupport
@@ -44,7 +44,7 @@ class AlternativeContactDetailsController @Inject() (
     Future.successful(
       Ok(
         alternativeContactDetailsView(
-          request.sessionData.altContactInformation.flatMap(_.altContactInformation) match {
+          request.sessionData.additionalInformation.flatMap(_.altContactInformation) match {
             case Some(altContactInformation) => alternativeContactDetailsForm.fillAndValidate(altContactInformation)
             case _                           => alternativeContactDetailsForm
           }
@@ -59,7 +59,7 @@ class AlternativeContactDetailsController @Inject() (
       .fold(
         formWithErrors => Future.successful(BadRequest(alternativeContactDetailsView(formWithErrors))),
         data => {
-          val updatedData = updateAltContactInformation(_.copy(altContactInformation = Some(data)))
+          val updatedData = updateAdditionalInformation(_.copy(altContactInformation = Some(data)))
           session.saveOrUpdate(updatedData)
           Future.successful(Redirect(navigator.nextPage(AlternativeContactDetailsId).apply(updatedData)))
         }

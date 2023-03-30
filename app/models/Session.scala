@@ -21,7 +21,7 @@ import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
 import models.submissions.abouttheproperty.AboutTheProperty
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory
 import models.submissions.aboutyou.AboutYou
-import models.submissions.additionalinformation.{AdditionalInformation, AltContactInformation}
+import models.submissions.additionalinformation.AdditionalInformation
 import models.submissions.common.Address
 import models.submissions.connectiontoproperty.StillConnectedDetails
 import models.submissions.notconnected.RemoveConnectionDetails
@@ -37,7 +37,6 @@ case class Session(
   aboutYou: Option[AboutYou] = None,
   aboutTheProperty: Option[AboutTheProperty] = None,
   additionalInformation: Option[AdditionalInformation] = None,
-  altContactInformation: Option[AltContactInformation] = None,
   aboutTheTradingHistory: Option[AboutTheTradingHistory] = None,
   aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = None,
   aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = None,

@@ -24,8 +24,7 @@ import models.submissions.Form6010._
 import models.submissions.aboutYourLeaseOrTenure._
 import models.submissions.aboutfranchisesorlettings._
 import models.submissions.abouttheproperty._
-import models.submissions.additionalinformation.AlternativeContactDetailsAddress
-import models.submissions.common.{Address, AnswerResponsibleParty, AnswersYesNo, ContactDetails}
+import models.submissions.common.{Address, AnswerResponsibleParty, AnswersYesNo, ContactDetails, ContactDetailsAddress}
 import models.submissions.connectiontoproperty.{AddressConnectionType, ConnectionToProperty}
 import models.{AnnualRent, NamedEnum, NamedEnumSupport}
 import play.api.data.Forms.{boolean, default, email, mapping, optional, text}
@@ -157,16 +156,19 @@ object MappingSupport {
     "postcode"           -> nonEmptyTextOr("lettingAddress.postcode", postcode, "error.postcode.required")
   )(LettingAddress.apply)(LettingAddress.unapply)
 
-  def alternativeContactMapping: Mapping[AlternativeContactDetailsAddress] = mapping(
+  def contactAddressMapping: Mapping[ContactDetailsAddress] = mapping(
     "buildingNameNumber" -> default(text, "").verifying(
       nonEmpty(errorMessage = "error.buildingNameNumber.required"),
       maxLength(50, "error.buildingNameNumber.maxLength")
     ),
     "street1"            -> optional(text(maxLength = 50)),
-    "town"               -> optional(text(maxLength = 50)),
+    "town"               -> default(text, "").verifying(
+      nonEmpty(errorMessage = "error.town.required"),
+      maxLength(50, "error.town.maxLength")
+    ),
     "county"             -> optional(text(maxLength = 50)),
     "postcode"           -> nonEmptyTextOr("alternativeContactAddress.postcode", postcode, "error.postcode.required")
-  )(AlternativeContactDetailsAddress.apply)(AlternativeContactDetailsAddress.unapply)
+  )(ContactDetailsAddress.apply)(ContactDetailsAddress.unapply)
 
   def mandatoryBooleanWithError(message: String) =
     optional(boolean)
