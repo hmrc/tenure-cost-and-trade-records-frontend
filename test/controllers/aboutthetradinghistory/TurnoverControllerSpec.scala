@@ -27,7 +27,7 @@ class TurnoverControllerSpec extends TestBaseSpec {
 
   val mockAboutYouNavigator = mock[AboutTheTradingHistoryNavigator]
   val mockTurnoverView      = mock[turnover]
-  when(mockTurnoverView.apply()(any, any)).thenReturn(HtmlFormat.empty)
+  when(mockTurnoverView.apply(any)(any, any)).thenReturn(HtmlFormat.empty)
 
   val aboutYourTradingHistoryController = new TurnoverController(
     stubMessagesControllerComponents(),

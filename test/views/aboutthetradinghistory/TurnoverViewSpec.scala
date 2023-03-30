@@ -30,9 +30,9 @@ class TurnoverViewSpec extends QuestionViewBehaviours[AboutYourTradingHistory] {
 
   override val form = AboutYourTradingHistoryForm.aboutYourTradingHistoryForm
 
-  def createView = () => turnoverView()(fakeRequest, messages)
+  def createView = () => turnoverView(Seq.empty)(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[AboutYourTradingHistory]) => turnoverView()(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[AboutYourTradingHistory]) => turnoverView(Seq.empty)(fakeRequest, messages)
 
   "Turnover view" must {
 
@@ -48,7 +48,7 @@ class TurnoverViewSpec extends QuestionViewBehaviours[AboutYourTradingHistory] {
 
     "Section heading is visible" in {
       val doc         = asDocument(createViewUsingForm(form)) // govuk-caption-m
-      val sectionText = doc.getElementsByClass("govuk-caption-m").text()
+      val sectionText = doc.getElementsByClass("govuk-caption-m").first().text()
       assert(sectionText == messages("label.section.aboutYourTradingHistory"))
     }
 
