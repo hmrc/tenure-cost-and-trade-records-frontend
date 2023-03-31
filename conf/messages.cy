@@ -57,6 +57,10 @@ label.town = Town or city
 label.county = County
 label.postcode = Postcode
 label.any.apply = Select any that apply
+label.contact.full.name = Full name
+label.contact.details = Contact details
+label.phone = Telephone number
+label.email = Email address
 
 # SECTION NAMES
 ###############
@@ -608,18 +612,8 @@ hint.furtherInformationOrRemarks = Please provide further details if there is in
 #ALTERNATIVE CONTACT DETAILS
 ############################
 alternativeContactDetails.heading = Alternative contact details
-label.alternativeContactDetails = Contact details
 hint.alternativeContactDetails = If you like us to either contact you at at different address or  contact someone else if we have any queries about this form, please give details here
-alternativeContactFullName.label = Full name
-label.phone = Telephone number
-label.email = Email address
-alternativeContactDetails.address.label = Correspondence address
-alternativeContactAddress.buildingNameNumber.label = Address line 1
-alternativeContactAddress.address2.label = Address line 2 (optional)
-alternativeContactAddress.town.label = Town or city (optional)
-alternativeContactAddress.county.label = County (optional)
-alternativeContactAddress.postcode.label = Postcode
-error.alternativeContactFullName.required = Please enter the full name
+label.alternativeContactDetails = Correspondence address
 
 #TENANCY LEASE AGREEMENT EXPIRE (FORM 6011)
 ###########################################
@@ -692,7 +686,7 @@ premisesLicenseGrantedInformation.listBlock.p2 = Only 200 people allowed in the 
 premisesLicenseGrantedInformation.listBlock.p3 = No entry or re-entry allowed after 11.30pm on Fridays or Saturdays
 
 # SAVE AS DRAFT
-###############################
+###############
 saveAsDraft.paragraph=Byddwn yn dileu unrhyw wybodaeth sydd heb ei chyflwyno ar
 saveAsDraft.info=Gwnewch nodyn o’r cyfrinair hwn gan y bydd ei angen arnoch i adfer eich gwybodaeth sydd wedi’i chadw
 saveAsDraft.info.p.2=Bydd angen eich rhif cyfeirnod a’r cod post a ddangosir ar y llythyr o hyd i weld a newid eich gwybodaeth.
@@ -716,6 +710,7 @@ contactDetails.email1.email.mismatch=Email addresses must match
 alternativeContact.contactDetails.email1.email.mismatch=Email addresses must match
 contactDetails.email1.email.tooLong=Email address must be 50 characters or fewer
 alternativeContact.contactDetails.email1.email.tooLong=Email address must be 50 characters or fewer
+error.contact.full.name.required = Please enter the full name
 error.contact.email.required = Enter your email address
 error.contact.phone.required = Enter your phone number
 error.contact.phone.minLength = Phone number must be between 11 and 20 characters
@@ -745,6 +740,8 @@ error.propertyCurrentlyUsed.required=Select your connection to the property
 
 error.buildingNameNumber.required = Enter the first line of the address
 error.buildingNameNumber.maxLength = First line of the address must be 50 characters or fewer
+error.town.required = Enter the town or city of the address
+error.town.maxLength = Town or city of address must be 50 characters or fewer
 error.line2.maxLength = Second line of address must be 50 characters or fewer
 error.line3.maxLength = Third line of address must be 50 characters or fewer
 error.postcode.required = Enter the postcode

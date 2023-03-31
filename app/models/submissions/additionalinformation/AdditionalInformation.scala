@@ -22,6 +22,7 @@ import play.api.libs.json.Json
 
 case class AdditionalInformation(
   furtherInformationOrRemarksDetails: Option[FurtherInformationOrRemarksDetails] = None,
+  altContactInformation: Option[AlternativeContactDetails] = None,
   checkYourAnswersAdditionalInformation: Option[CheckYourAnswersAdditionalInformation] = None
 )
 

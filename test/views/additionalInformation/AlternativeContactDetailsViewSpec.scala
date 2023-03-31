@@ -16,29 +16,37 @@
 
 package views.additionalInformation
 
-import form.additionalinformation.{AlternativeContactDetailsForm, FurtherInformationOrRemarksForm}
-import models.submissions.additionalinformation.{AlternativeContactDetails, FurtherInformationOrRemarksDetails}
+import form.additionalinformation.AlternativeContactDetailsForm
+import models.submissions.additionalinformation.AlternativeContactDetails
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
+import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
 
 class AlternativeContactDetailsViewSpec extends QuestionViewBehaviours[AlternativeContactDetails] {
 
-  def alternativeContactDetailsView =
-    app.injector.instanceOf[views.html.additionalinformation.alternativeContactDetails]
-
   val messageKeyPrefix = "alternativeContactDetails"
 
-  override val form = AlternativeContactDetailsForm.alternativeContactDetailsForm
+  override val form: Form[AlternativeContactDetails] = AlternativeContactDetailsForm.alternativeContactDetailsForm
 
-  def createView = () => alternativeContactDetailsView(form)(fakeRequest, messages)
+  def createView: () => Html = () => alternativeContactDetailsView(form)(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[AlternativeContactDetails]) =>
+  def createViewUsingForm: Form[AlternativeContactDetails] => Html = (form: Form[AlternativeContactDetails]) =>
     alternativeContactDetailsView(form)(fakeRequest, messages)
 
   "Alternative Contact Details view" must {
 
     behave like normalPage(createView, messageKeyPrefix)
+
+    behave like pageWithTextFields(
+      createViewUsingForm,
+      "alternativeContactFullName",
+      "alternativeContactDetails.phone",
+      "alternativeContactDetails.email",
+      "alternativeContactAddress.buildingNameNumber",
+      "alternativeContactAddress.town",
+      "alternativeContactAddress.postcode"
+    )
 
     "has a link marked with back.link.label leading to the task Page" in {
       val doc          = asDocument(createView())
@@ -49,9 +57,19 @@ class AlternativeContactDetailsViewSpec extends QuestionViewBehaviours[Alternati
     }
 
     "Section heading is visible" in {
-      val doc         = asDocument(createViewUsingForm(form)) // govuk-caption-m
+      val doc         = asDocument(createViewUsingForm(form))
       val sectionText = doc.getElementsByClass("govuk-caption-m").text()
       assert(sectionText == messages("label.section.additionalInformation"))
+    }
+
+    "contain an input for alternativeContactAddress.street1" in {
+      val doc = asDocument(createViewUsingForm(form))
+      assertRenderedById(doc, "alternativeContactAddress.street1")
+    }
+
+    "contain an input for alternativeContactAddress.county" in {
+      val doc = asDocument(createViewUsingForm(form))
+      assertRenderedById(doc, "alternativeContactAddress.county")
     }
 
     "contain save and continue button with the value Save and Continue" in {

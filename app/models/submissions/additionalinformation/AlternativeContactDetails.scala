@@ -16,17 +16,17 @@
 
 package models.submissions.additionalinformation
 
-import models.submissions.common.ContactDetails
+import models.submissions.common.{ContactDetails, ContactDetailsAddress}
 import play.api.libs.json.Json
 
 case class AlternativeContactDetails(
   alternativeContactFullName: String,
   alternativeContactDetails: ContactDetails,
-  alternativeContactAddress: AlternativeContactDetailsAddress
+  alternativeContactAddress: ContactDetailsAddress
 )
 
 object AlternativeContactDetails {
   implicit val format1 = Json.format[AlternativeContactDetails]
-  implicit val format2 = Json.format[AlternativeContactDetailsAddress]
+  implicit val format2 = Json.format[ContactDetailsAddress]
 
 }

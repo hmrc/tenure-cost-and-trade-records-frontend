@@ -17,90 +17,104 @@
 package controllers.additionalinformation
 
 import form.Errors
-import navigation.AdditionalInformationNavigator
-import play.api.data.FormError
 import play.api.http.Status
 import play.api.test.Helpers._
-import play.twirl.api.HtmlFormat
 import utils.TestBaseSpec
-import views.html.additionalinformation.alternativeContactDetails
+import form.additionalinformation.AlternativeContactDetailsForm.alternativeContactDetailsForm
+import models.submissions.additionalinformation.AdditionalInformation
 
 class AlternativeContactDetailsControllerSpec extends TestBaseSpec {
 
   import TestData.{baseFormData, errorKey}
-  import form.aboutyou.AboutYouForm.aboutYouForm
-  import utils.FormBindingTestAssertions.{mustContainError, mustContainRequiredErrorFor}
+  import utils.FormBindingTestAssertions.mustContainError
 
-  val mockAlternativeContactDetailsNavigator = mock[AdditionalInformationNavigator]
-  val mockAlternativeContactDetailsView      = mock[alternativeContactDetails]
-  when(mockAlternativeContactDetailsView.apply(any)(any, any)).thenReturn(HtmlFormat.empty)
-
-  val alternativeContactDetailsController = new AlternativeContactDetailsController(
+  def alternativeContactDetailsController(
+    additionalInformation: Option[AdditionalInformation] = Some(prefilledAdditionalInformation)
+  ) = new AlternativeContactDetailsController(
     stubMessagesControllerComponents(),
-    mockAlternativeContactDetailsNavigator,
-    mockAlternativeContactDetailsView,
-    preFilledSession,
+    additionalInformationNavigator,
+    alternativeContactDetailsView,
+    preEnrichedActionRefiner(additionalInformation = additionalInformation),
     mockSessionRepo
   )
 
   "GET /" should {
     "return 200" in {
-      val result = alternativeContactDetailsController.show(fakeRequest)
+      val result = alternativeContactDetailsController().show(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return HTML" in {
-      val result = alternativeContactDetailsController.show(fakeRequest)
+      val result = alternativeContactDetailsController().show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
   }
 
-  "About you form" should {
+  "Additional information form" should {
     "error if fullName is missing " in {
       val formData = baseFormData - errorKey.fullName
-      val form     = aboutYouForm.bind(formData)
+      val form     = alternativeContactDetailsForm.bind(formData)
 
-      mustContainRequiredErrorFor(errorKey.fullName, form)
+      mustContainError(errorKey.fullName, "error.contact.full.name.required", form)
     }
 
     "error if phone is missing" in {
       val formData = baseFormData - errorKey.phone
-      val form     = aboutYouForm.bind(formData)
+      val form     = alternativeContactDetailsForm.bind(formData)
 
       mustContainError(errorKey.phone, Errors.contactPhoneRequired, form)
     }
 
     "error if email is missing" in {
       val formData = baseFormData - errorKey.email
-      val form     = aboutYouForm.bind(formData)
+      val form     = alternativeContactDetailsForm.bind(formData)
 
       mustContainError(errorKey.email, Errors.contactEmailRequired, form)
+    }
+
+    "error if buildingNameNumber is missing" in {
+      val formData = baseFormData - errorKey.buildingNameNumber
+      val form     = alternativeContactDetailsForm.bind(formData)
+
+      mustContainError(errorKey.buildingNameNumber, "error.buildingNameNumber.required", form)
+    }
+
+    "error if town or city is missing" in {
+      val formData = baseFormData - errorKey.town
+      val form     = alternativeContactDetailsForm.bind(formData)
+
+      mustContainError(errorKey.town, "error.town.required", form)
+    }
+
+    "error if postcode is missing" in {
+      val formData = baseFormData - errorKey.postcode
+      val form     = alternativeContactDetailsForm.bind(formData)
+
+      mustContainError(errorKey.postcode, "error.postcode.required", form)
     }
   }
 
   object TestData {
     val errorKey = new {
-      val fullName: String = "fullName"
-      val phone            = "contactDetails.phone"
-      val email            = "contactDetails.email"
-      val email1TooLong    = "contactDetails.email.email.tooLong"
-    }
-
-    val formErrors = new {
-      val required = new {
-        val fullName = FormError(errorKey.fullName, Errors.required)
-      }
+      val fullName: String   = "alternativeContactFullName"
+      val phone              = "alternativeContactDetails.phone"
+      val email              = "alternativeContactDetails.email"
+      val email1TooLong      = "contactDetails.email.email.tooLong"
+      val buildingNameNumber = "alternativeContactAddress.buildingNameNumber"
+      val town               = "alternativeContactAddress.town"
+      val postcode           = "alternativeContactAddress.postcode"
     }
 
     val tooLongEmail                      = "email_too_long_for_validation_againt_business_rules_specify_but_DB_constraints@something.co.uk"
     val baseFormData: Map[String, String] = Map(
-      "contactDetails.phone"  -> "12345678901",
-      "contactDetails.phone"  -> "01234 123123",
-      "contactDetails.email1" -> "blah.blah@test.com",
-      "fullName"              -> "Mr John Smith"
+      "contactDetails.phone"                         -> "12345678901",
+      "contactDetails.phone"                         -> "01234 123123",
+      "contactDetails.email1"                        -> "blah.blah@test.com",
+      "alternativeContactFullName"                   -> "Mr John Smith",
+      "alternativeContactAddress.buildingNameNumber" -> "001",
+      "alternativeContactAddress.postcode"           -> "BN12 4AX"
     )
-
   }
 
 }

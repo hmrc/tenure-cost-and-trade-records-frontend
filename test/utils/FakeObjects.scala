@@ -27,27 +27,28 @@ import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, AboutY
 import models.submissions.aboutyou.{AboutYou, CustomerDetails}
 import models.submissions.additionalinformation._
 import models.{AnnualRent, Session, SubmissionDraft}
-import models.submissions.common.{Address, AnswerNo, AnswerYes, ContactDetails}
+import models.submissions.common.{Address, AnswerNo, AnswerYes, ContactDetails, ContactDetailsAddress}
 import models.submissions.connectiontoproperty._
 import models.submissions.notconnected.{RemoveConnectionDetails, RemoveConnectionsDetails}
 
 import java.time.LocalDate
 
 trait FakeObjects {
-  val referenceNumber  = "99996010004"
-  val forType6010      = "FOR6010"
-  val prefilledAddress = Address("001", Some("GORING ROAD"), Some("GORING-BY-SEA, WORTHING"), "BN12 4AX")
-  val token            = "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik="
+  val referenceNumber: String   = "99996010004"
+  val forType6010: String       = "FOR6010"
+  val prefilledAddress: Address = Address("001", Some("GORING ROAD"), Some("GORING-BY-SEA, WORTHING"), "BN12 4AX")
+  val token: String             = "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik="
 
-  val prefilledContactDetails  = ContactDetails("1234567890", "TestEmail@gmail.com")
-  val prefilledFakeName        = "John Doe"
-  val prefilledContactAddress  = AlternativeContactDetailsAddress(
+  val prefilledContactDetails: ContactDetails        = ContactDetails("1234567890", "TestEmail@gmail.com")
+  val prefilledContactAddress: ContactDetailsAddress = ContactDetailsAddress(
     "004",
     Some("GORING ROAD"),
-    Some("GORING-BY-SEA, WORTHING"),
+    "WORTHING",
     Some("West sussex"),
     "BN12 4AX"
   )
+
+  val prefilledFakeName        = "John Doe"
   val prefilledCateringAddress =
     CateringAddress("004", Some("GORING ROAD"), Some("GORING-BY-SEA, WORTHING"), Some("West sussex"), "BN12 4AX")
   val prefilledLettingAddress  =
@@ -58,30 +59,32 @@ trait FakeObjects {
   val baseFilled6010Session = Session(referenceNumber, forType6010, prefilledAddress, token)
 
   // Are your still connected sessions
-  val prefilledStillConnectedDetailsYes  = StillConnectedDetails(
+  val prefilledStillConnectedDetailsYes: StillConnectedDetails  = StillConnectedDetails(
     Some(AddressConnectionTypeYes),
     Some(ConnectionToThePropertyOccupierTrustee)
   )
-  val prefilledStillConnectedDetailsEdit = StillConnectedDetails(
+  val prefilledStillConnectedDetailsEdit: StillConnectedDetails = StillConnectedDetails(
     Some(AddressConnectionTypeYesChangeAddress),
     Some(ConnectionToThePropertyOccupierTrustee),
     Some(prefilledAddress)
   )
-  val prefilledStillConnectedDetailsNo   = StillConnectedDetails(Some(AddressConnectionTypeNo))
+  val prefilledStillConnectedDetailsNo: StillConnectedDetails   = StillConnectedDetails(Some(AddressConnectionTypeNo))
 
-  val stillConnectedDetailsYesSession  =
+  val stillConnectedDetailsYesSession: Session  =
     baseFilled6010Session.copy(stillConnectedDetails = Some(prefilledStillConnectedDetailsYes))
-  val stillConnectedDetailsEditSession =
+  val stillConnectedDetailsEditSession: Session =
     baseFilled6010Session.copy(stillConnectedDetails = Some(prefilledStillConnectedDetailsEdit))
-  val stillConnectedDetailsNoSession   =
+  val stillConnectedDetailsNoSession: Session   =
     baseFilled6010Session.copy(stillConnectedDetails = Some(prefilledStillConnectedDetailsNo))
 
   //  Additional information
-  val prefilledAdditionalInformation = AdditionalInformation(
-    Some(FurtherInformationOrRemarksDetails("Further information or remarks details string")),
-    Some(CheckYourAnswersAdditionalInformation("CYA string"))
+  val prefilledAdditionalInformation: AdditionalInformation = AdditionalInformation(
+    Some(FurtherInformationOrRemarksDetails("Further information or remarks details")),
+    Some(AlternativeContactDetails("Full name", prefilledContactDetails, prefilledContactAddress)),
+    Some(CheckYourAnswersAdditionalInformation("CYA"))
   )
-  val additionalInformationSession   =
+
+  val additionalInformationSession: Session =
     stillConnectedDetailsYesSession.copy(additionalInformation = Some(prefilledAdditionalInformation))
 
   val prefilledFirstOccupy                      = MonthsYearDuration(2000, 2)
@@ -173,15 +176,6 @@ trait FakeObjects {
     None
   )
 
-  val prefilledAltContactInformation    = AltContactInformation(
-    Some(
-      AlternativeContactDetails(
-        "Full Alternative Contact Name",
-        prefilledContactDetails,
-        prefilledContactAddress
-      )
-    )
-  )
   val prefilledAboutTheTradingHistory   = AboutTheTradingHistory(
     aboutYourTradingHistory = Some(
       AboutYourTradingHistory(

@@ -16,88 +16,82 @@
 
 @import models.submissions.additionalinformation.AlternativeContactDetails
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukErrorSummary
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukDateInput
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukTextarea
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukCharacterCount
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
-@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Label
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Input
 
 @this(layout: Layout,
-        govukButton: GovukButton,
-        govukRadios: GovukRadios,
-        govukInput: GovukInput,
-        govukErrorSummary: GovukErrorSummary,
-        govukDateInput: GovukDateInput,
-        govukTextarea: GovukTextarea,
-        govukCharacterCount: GovukCharacterCount,
-        formWithCSRF: FormWithCSRF
+  govukButton: GovukButton,
+  govukInput: GovukInput,
+  formWithCSRF: FormWithCSRF
 )
 
 @(theForm: Form[AlternativeContactDetails])(implicit request: Request[_], messages: Messages)
 
 @layout(
- pageHeading = messages("alternativeContactDetails.heading"),
- showH1 = false,
- showSection = true,
- sectionName = messages("label.section.additionalInformation"),
- backLinkUrl = controllers.additionalinformation.routes.FurtherInformationOrRemarksController.show.url,
- theForm = theForm
+  pageHeading = messages("alternativeContactDetails.heading"),
+  showH1 = false,
+  showSection = true,
+  sectionName = messages("label.section.additionalInformation"),
+  backLinkUrl = controllers.additionalinformation.routes.FurtherInformationOrRemarksController.show.url,
+  theForm = theForm
 ) {
 
- @formWithCSRF(action = controllers.additionalinformation.routes.AlternativeContactDetailsController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
+  @formWithCSRF(action = controllers.additionalinformation.routes.AlternativeContactDetailsController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
 
-  <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-   <h1 class="govuk-fieldset__heading">@messages("alternativeContactDetails.heading")</h1>
-  </legend>
+    <h1 class="govuk-heading-l">@messages("alternativeContactDetails.heading")</h1>
 
-  <p class="govuk-body">@messages("hint.alternativeContactDetails")</p>
+    <p class="govuk-body">@messages("hint.alternativeContactDetails")</p>
 
-  @govukInput(
-   Input(
-    id = "alternativeContactFullName",
-    name = "alternativeContactFullName",
-    classes = "govuk-input--width-20",
-    value = theForm("alternativeContactFullName").value,
-    label = Label(
-     content = Text(messages("alternativeContactFullName.label")),
-     classes = "govuk-!-font-weight-bold"
-    ),
-    errorMessage = theForm.errors.asTextErrorMessageForField("alternativeContactFullName")
-   )
-  )
+    @includes.textInput(
+      govukInput,
+      theForm,
+      "alternativeContactFullName",
+      "govuk-!-width-two-thirds",
+      "contact.full.name",
+      labelClasses = "govuk-!-font-weight-bold"
+    )
 
-  <p class="govuk-body"><b>@messages("label.alternativeContactDetails")</b></p>
+    <p class="govuk-body"><b>@messages("label.contact.details")</b></p>
 
-  @govukInput(
-   Input(
-    classes = "govuk-input--width-20 ",
-    attributes = Map("maxlength" -> "20"),
-    label = Label(content = Text(messages("label.phone"))),
-    errorMessage = theForm.errors.asTextErrorMessageForField("alternativeContactDetails.phone")
-   ).withFormField(theForm("alternativeContactDetails.phone"))
-  )
+    @includes.textInput(govukInput, theForm, "alternativeContactDetails.phone", "govuk-!-width-two-thirds", "phone")
+    @includes.textInput(govukInput, theForm, "alternativeContactDetails.email", "govuk-!-width-two-thirds", "email")
 
-  @govukInput(
-   Input(
-    classes = "govuk-input--width-20 ",
-    attributes = Map("maxlength" -> "50"),
-    label = Label(content = Text(messages("label.email"))),
-    errorMessage = theForm.errors.asTextErrorMessageForField("alternativeContactDetails.email")
-   ).withFormField(theForm("alternativeContactDetails.email"))
-  )
+    <p class="govuk-body"><b>@messages("label.alternativeContactDetails.address")</b></p>
 
-  <p class="govuk-body"><b>@messages("alternativeContactDetails.address.label")</b></p>
+    @includes.textInput(
+      govukInput,
+      theForm,
+      "alternativeContactAddress.buildingNameNumber",
+      "govuk-!-width-two-thirds",
+      "buildingNameNumber"
+    )
+    @includes.textInput(
+      govukInput,
+      theForm,
+      "alternativeContactAddress.street1",
+      "govuk-!-width-two-thirds",
+      "street1",
+      optional = true
+    )
+    @includes.textInput(govukInput, theForm, "alternativeContactAddress.town", "govuk-!-width-one-half", "town")
+    @includes.textInput(
+      govukInput,
+      theForm,
+      "alternativeContactAddress.county",
+      "govuk-!-width-one-half",
+      "county",
+      optional = true
+    )
+    @includes.textInput(
+      govukInput,
+      theForm,
+      "alternativeContactAddress.postcode",
+      "govuk-input--width-10",
+      "postcode"
+    )
 
-  @includes.lookupAlternativeContactAddress(theForm, "alternativeContactDetails", govukInput)
-
-  @includes.continueButton(govukButton)
- }
+    @includes.continueButton(govukButton)
+  }
 }
 
 

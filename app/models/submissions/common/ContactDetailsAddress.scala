@@ -14,14 +14,14 @@
  * limitations under the License.
  */
 
-package models.submissions.additionalinformation
+package models.submissions.common
 
 import play.api.libs.json.Json
 
-case class AlternativeContactDetailsAddress(
+case class ContactDetailsAddress(
   buildingNameNumber: String,
   street1: Option[String],
-  town: Option[String],
+  town: String,
   county: Option[String],
   postcode: String
 ) {
@@ -29,7 +29,7 @@ case class AlternativeContactDetailsAddress(
     List(
       Some(buildingNameNumber),
       street1,
-      town,
+      Some(town),
       county,
       Some(postcode.replaceAll("^(\\S+?)\\s*?(\\d\\w\\w)$", "$1 $2"))
     ).flatten.mkString(", ")
@@ -38,12 +38,12 @@ case class AlternativeContactDetailsAddress(
     List(
       Some(buildingNameNumber),
       street1,
-      town,
+      Some(town),
       county,
       Some(postcode.replaceAll("^(\\S+?)\\s*?(\\d\\w\\w)$", "$1 $2"))
     ).flatten.mkString("<br/> ")
 }
 
-object AlternativeContactDetailsAddress {
-  implicit val format = Json.format[AlternativeContactDetailsAddress]
+object ContactDetailsAddress {
+  implicit val format = Json.format[ContactDetailsAddress]
 }
