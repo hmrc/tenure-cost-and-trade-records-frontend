@@ -16,6 +16,7 @@
 
 package models
 
+import models.audit.UserData
 import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartOne, AboutLeaseOrAgreementPartTwo}
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
 import models.submissions.abouttheproperty.AboutTheProperty
@@ -27,6 +28,7 @@ import models.submissions.connectiontoproperty.StillConnectedDetails
 import models.submissions.notconnected.RemoveConnectionDetails
 import play.api.libs.json._
 
+// New session properties must be also added to class `UserData` and method `toUserData`
 case class Session(
   referenceNumber: String,
   forType: String,
@@ -42,7 +44,25 @@ case class Session(
   aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = None,
   aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = None,
   saveAsDraftPassword: Option[String] = None
-)
+  // New session properties must be also added to class `UserData` and method `toUserData`
+) {
+
+  def toUserData: UserData = UserData(
+    referenceNumber,
+    forType,
+    address,
+    stillConnectedDetails,
+    removeConnectionDetails,
+    aboutYou,
+    aboutTheProperty,
+    additionalInformation,
+    aboutTheTradingHistory,
+    aboutFranchisesOrLettings,
+    aboutLeaseOrAgreementPartOne,
+    aboutLeaseOrAgreementPartTwo
+  )
+
+}
 
 object Session {
   implicit val format = Json.format[Session]

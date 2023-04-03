@@ -17,7 +17,7 @@
 package connectors
 
 import com.google.inject.ImplementedBy
-import models.SubmissionDraft
+import models.audit.SavedAsDraftEvent
 import play.api.i18n.Messages
 import play.api.libs.json.{JsObject, Json}
 import uk.gov.hmrc.http.HeaderCarrier
@@ -36,11 +36,11 @@ trait Audit extends AuditConnector {
 
   private val AUDIT_SOURCE = "tenure-cost-and-trade-records-frontend"
 
-  def sendContinueNextPage(url: String)(implicit hc: HeaderCarrier): Unit                  =
+  def sendContinueNextPage(url: String)(implicit hc: HeaderCarrier): Unit                      =
     sendEventMap("ContinueNextPage", Map("url" -> url), hc.toAuditTags())
 
-  def sendSavedAsDraft(submissionDraft: SubmissionDraft)(implicit hc: HeaderCarrier): Unit =
-    sendExplicitAudit("SavedAsDraft", submissionDraft)
+  def sendSavedAsDraft(savedAsDraftEvent: SavedAsDraftEvent)(implicit hc: HeaderCarrier): Unit =
+    sendExplicitAudit("SavedAsDraft", savedAsDraftEvent)
 
   private def sendEventMap(event: String, detail: Map[String, String], tags: Map[String, String])(implicit
     hc: HeaderCarrier
