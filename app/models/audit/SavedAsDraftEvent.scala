@@ -14,24 +14,19 @@
  * limitations under the License.
  */
 
-package models
+package models.audit
 
-import models.audit.SavedAsDraftEvent
 import play.api.libs.json.{Json, OFormat}
 
 /**
   * @author Yuriy Tumakha
   */
-case class SubmissionDraft(
+case class SavedAsDraftEvent(
   forType: String,
-  session: Session,
+  userData: UserData,
   exitPath: String
-) {
+)
 
-  def toSavedAsDraftEvent: SavedAsDraftEvent = SavedAsDraftEvent(forType, session.toUserData, exitPath)
-
-}
-
-object SubmissionDraft {
-  implicit val format: OFormat[SubmissionDraft] = Json.format[SubmissionDraft]
+object SavedAsDraftEvent {
+  implicit val format: OFormat[SavedAsDraftEvent] = Json.format[SavedAsDraftEvent]
 }

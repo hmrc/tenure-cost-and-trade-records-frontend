@@ -85,7 +85,7 @@ class SaveAsDraftController @Inject() (
     val submissionDraft = SubmissionDraft(forType, session, exitPath)
 
     backendConnector.saveAsDraft(referenceNumber, submissionDraft).map { _ =>
-      audit.sendSavedAsDraft(submissionDraft)
+      audit.sendSavedAsDraft(submissionDraft.toSavedAsDraftEvent)
       Ok(submissionDraftSavedView(session.saveAsDraftPassword.getOrElse(""), expiryDate, exitPath))
     }
   }
