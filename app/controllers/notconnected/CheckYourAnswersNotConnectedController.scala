@@ -25,7 +25,7 @@ import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class CheckYourAnswersNotConnectedController @Inject()(
+class CheckYourAnswersNotConnectedController @Inject() (
   mcc: MessagesControllerComponents,
   checkYourAnswersNotConnectedView: checkYourAnswersNotConnected
 ) extends FrontendController(mcc) {

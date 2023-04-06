@@ -90,7 +90,7 @@ class RemoveConnectionNavigatorSpec extends TestBaseSpec {
         .nextPage(RemoveConnectionId)
         .apply(
           sessionAdditionalInformation
-        ) mustBe controllers.Form6010.routes.CheckYourAnswersController
+        ) mustBe controllers.notconnected.routes.CheckYourAnswersNotConnectedController
         .show()
     }
   }

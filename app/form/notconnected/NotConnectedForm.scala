@@ -25,9 +25,9 @@ object NotConnectedForm {
 
   val notConnectedForm = Form(
     mapping(
-      "fullName"       -> nonEmptyText(maxLength = 50),
-      "contactDetails" -> contactDetailsMapping,
-      "additionalInformation" ->  optional(text)
+      "fullName"              -> nonEmptyText(maxLength = 50),
+      "contactDetails"        -> contactDetailsMapping,
+      "additionalInformation" -> optional(text)
     )(NotConnectedContactDetails.apply)(NotConnectedContactDetails.unapply)
   )
 }
