@@ -38,7 +38,7 @@ class AboutThePropertyNavigator @Inject() (audit: Audit) extends Navigator(audit
 
   private def premisesLicenseGrantedRouting: Session => Call = answers => {
     if (answers.forType.equals(ForTypes.for6015) || answers.forType.equals(ForTypes.for6016)) {
-      answers.aboutTheProperty.flatMap(_.premisesLicenseGrantedDetail.map(_.name)) match {
+      answers.aboutYouAndTheProperty.flatMap(_.premisesLicenseGrantedDetail.map(_.name)) match {
         case Some("yes") =>
           controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedDetailsController.show()
         case Some("no")  =>
@@ -62,7 +62,7 @@ class AboutThePropertyNavigator @Inject() (audit: Audit) extends Navigator(audit
   }
 
   private def licensableActivityRouting: Session => Call = answers => {
-    answers.aboutTheProperty.flatMap(_.licensableActivities.map(_.name)) match {
+    answers.aboutYouAndTheProperty.flatMap(_.licensableActivities.map(_.name)) match {
       case Some("yes") => controllers.aboutyouandtheproperty.routes.LicensableActivitiesDetailsController.show()
       case Some("no")  => controllers.aboutyouandtheproperty.routes.PremisesLicenseConditionsController.show()
       case _           =>
@@ -74,7 +74,7 @@ class AboutThePropertyNavigator @Inject() (audit: Audit) extends Navigator(audit
   }
 
   private def premisesLicenceConditionsRouting: Session => Call = answers => {
-    answers.aboutTheProperty.flatMap(_.premisesLicenseConditions.map(_.name)) match {
+    answers.aboutYouAndTheProperty.flatMap(_.premisesLicenseConditions.map(_.name)) match {
       case Some("yes") => controllers.aboutyouandtheproperty.routes.PremisesLicenseConditionsDetailsController.show()
       case Some("no")  => controllers.aboutyouandtheproperty.routes.EnforcementActionBeenTakenController.show()
       case _           =>
@@ -86,7 +86,7 @@ class AboutThePropertyNavigator @Inject() (audit: Audit) extends Navigator(audit
   }
 
   private def enforcementActionTakenRouting: Session => Call = answers => {
-    answers.aboutTheProperty.flatMap(_.enforcementAction.map(_.name)) match {
+    answers.aboutYouAndTheProperty.flatMap(_.enforcementAction.map(_.name)) match {
       case Some("yes") => controllers.aboutyouandtheproperty.routes.EnforcementActionBeenTakenDetailsController.show()
       case Some("no")  =>
         if (answers.forType == ForTypes.for6011)
@@ -109,7 +109,7 @@ class AboutThePropertyNavigator @Inject() (audit: Audit) extends Navigator(audit
   }
 
   private def tiedGoodsRouting: Session => Call = answers => {
-    answers.aboutTheProperty.flatMap(_.tiedForGoods.map(_.name)) match {
+    answers.aboutYouAndTheProperty.flatMap(_.tiedForGoods.map(_.name)) match {
       case Some("yes") => controllers.aboutyouandtheproperty.routes.TiedForGoodsDetailsController.show()
       case Some("no")  => controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show()
       case _           =>

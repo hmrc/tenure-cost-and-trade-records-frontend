@@ -19,7 +19,7 @@ package controllers.aboutyouandtheproperty
 import actions.WithSessionRefiner
 import form.aboutyouandtheproperty.TiedForGoodsForm.tiedForGoodsForm
 import models.Session
-import models.submissions.aboutyouandtheproperty.AboutTheProperty.updateAboutTheProperty
+import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty.updateAboutYouAndTheProperty
 import navigation.AboutThePropertyNavigator
 import navigation.identifiers.TiedForGoodsPageId
 import play.api.Logging
@@ -47,7 +47,7 @@ class TiedForGoodsController @Inject() (
     Future.successful(
       Ok(
         tiedForGoodsView(
-          request.sessionData.aboutTheProperty.flatMap(_.tiedForGoods) match {
+          request.sessionData.aboutYouAndTheProperty.flatMap(_.tiedForGoods) match {
             case Some(tiedForGoods) => tiedForGoodsForm.fillAndValidate(tiedForGoods)
             case _                  => tiedForGoodsForm
           },
@@ -57,14 +57,14 @@ class TiedForGoodsController @Inject() (
     )
   }
 
-  def submit = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     tiedForGoodsForm
       .bindFromRequest()
       .fold(
         formWithErrors =>
           Future.successful(BadRequest(tiedForGoodsView(formWithErrors, getBackLink(request.sessionData)))),
         data => {
-          val updatedData = updateAboutTheProperty(_.copy(tiedForGoods = Some(data)))
+          val updatedData = updateAboutYouAndTheProperty(_.copy(tiedForGoods = Some(data)))
           session.saveOrUpdate(updatedData)
           Future.successful(Redirect(navigator.nextPage(TiedForGoodsPageId).apply(updatedData)))
         }
@@ -72,7 +72,7 @@ class TiedForGoodsController @Inject() (
   }
 
   private def getBackLink(answers: Session): String =
-    answers.aboutTheProperty.flatMap(_.enforcementAction.map(_.name)) match {
+    answers.aboutYouAndTheProperty.flatMap(_.enforcementAction.map(_.name)) match {
       case Some("yes") =>
         controllers.aboutyouandtheproperty.routes.EnforcementActionBeenTakenDetailsController.show().url
       case Some("no")  => controllers.aboutyouandtheproperty.routes.EnforcementActionBeenTakenController.show().url

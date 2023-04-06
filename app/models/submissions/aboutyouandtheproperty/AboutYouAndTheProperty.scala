@@ -20,7 +20,8 @@ import actions.SessionRequest
 import models.Session
 import play.api.libs.json.Json
 
-case class AboutTheProperty(
+case class AboutYouAndTheProperty(
+  customerDetails: Option[CustomerDetails] = None,
   propertyDetails: Option[PropertyDetails] = None,
   websiteForPropertyDetails: Option[WebsiteForPropertyDetails] = None,
   premisesLicenseGrantedDetail: Option[PremisesLicenseGranted] = None,
@@ -36,21 +37,21 @@ case class AboutTheProperty(
   checkYourAnswersAboutTheProperty: Option[CheckYourAnswersAboutYourProperty] = None
 )
 
-object AboutTheProperty {
-  implicit val format = Json.format[AboutTheProperty]
+object AboutYouAndTheProperty {
+  implicit val format = Json.format[AboutYouAndTheProperty]
 
-  def updateAboutTheProperty(
-    copy: AboutTheProperty => AboutTheProperty
+  def updateAboutYouAndTheProperty(
+    copy: AboutYouAndTheProperty => AboutYouAndTheProperty
   )(implicit sessionRequest: SessionRequest[_]): Session = {
 
-    val currentAboutTheProperty = sessionRequest.sessionData.aboutTheProperty
+    val currentAboutTheProperty = sessionRequest.sessionData.aboutYouAndTheProperty
 
     val updateAboutTheProperty = currentAboutTheProperty match {
-      case Some(_) => sessionRequest.sessionData.aboutTheProperty.map(copy)
-      case _       => Some(copy(AboutTheProperty()))
+      case Some(_) => sessionRequest.sessionData.aboutYouAndTheProperty.map(copy)
+      case _       => Some(copy(AboutYouAndTheProperty()))
     }
 
-    sessionRequest.sessionData.copy(aboutTheProperty = updateAboutTheProperty)
+    sessionRequest.sessionData.copy(aboutYouAndTheProperty = updateAboutTheProperty)
 
   }
 }

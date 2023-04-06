@@ -19,7 +19,7 @@ package models
 import models.audit.UserData
 import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartOne, AboutLeaseOrAgreementPartTwo}
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
-import models.submissions.aboutyouandtheproperty.{AboutTheProperty, AboutYou}
+import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory
 import models.submissions.additionalinformation.AdditionalInformation
 import models.submissions.common.Address
@@ -35,8 +35,7 @@ case class Session(
   token: String,
   stillConnectedDetails: Option[StillConnectedDetails] = None,
   removeConnectionDetails: Option[RemoveConnectionDetails] = None,
-  aboutYou: Option[AboutYou] = None,
-  aboutTheProperty: Option[AboutTheProperty] = None,
+  aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = None,
   additionalInformation: Option[AdditionalInformation] = None,
   aboutTheTradingHistory: Option[AboutTheTradingHistory] = None,
   aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = None,
@@ -52,8 +51,7 @@ case class Session(
     address,
     stillConnectedDetails,
     removeConnectionDetails,
-    aboutYou,
-    aboutTheProperty,
+    aboutYouAndTheProperty,
     additionalInformation,
     aboutTheTradingHistory,
     aboutFranchisesOrLettings,

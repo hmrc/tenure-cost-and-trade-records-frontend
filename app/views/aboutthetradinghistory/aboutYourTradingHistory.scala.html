@@ -28,7 +28,7 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[AboutYourTradingHistory], backLink: String)(implicit request: Request[_], messages: Messages)
+@(theForm: Form[AboutYourTradingHistory])(implicit request: Request[_], messages: Messages)
 
 @content = {
   <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
@@ -59,7 +59,7 @@
  showH1 = false,
  showSection = true,
  sectionName = messages("label.section.aboutYourTradingHistory"),
- backLinkUrl = controllers.routes.TaskListController.show().url, // backLink,
+ backLinkUrl = controllers.routes.TaskListController.show().url,
  theForm = theForm
 ) {
   @formWithCSRF(action = controllers.aboutthetradinghistory.routes.AboutYourTradingHistoryController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {

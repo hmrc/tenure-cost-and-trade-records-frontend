@@ -18,7 +18,7 @@ package navigation
 
 import connectors.Audit
 import models.Session
-import models.submissions.aboutyouandtheproperty.{AboutTheProperty, AboutYou, CustomerDetails}
+import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
 import models.submissions.additionalinformation.{AdditionalInformation, FurtherInformationOrRemarksDetails}
 import models.submissions.common.ContactDetails
 import models.submissions.connectiontoproperty.{AddressConnectionTypeYes, StillConnectedDetails}
@@ -33,14 +33,13 @@ import scala.concurrent.ExecutionContext
 
 class RemoveConnectionNavigatorSpec extends TestBaseSpec {
 
-  val audit = mock[Audit]
+  val audit: Audit = mock[Audit]
   doNothing.when(audit).sendExplicitAudit(any[String], any[JsObject])(any[HeaderCarrier], any[ExecutionContext])
 
   val navigator = new RemoveConnectionNavigator(audit)
 
-  val aboutYou                     = Some(AboutYou(Some(CustomerDetails("Tobermory", ContactDetails("12345678909", "test@email.com")))))
-  val aboutTheProperty             = Some(AboutTheProperty(None))
-  val removeConnection             = Some(
+  val aboutTheProperty: Option[AboutYouAndTheProperty]        = Some(AboutYouAndTheProperty(None))
+  val removeConnection: Option[RemoveConnectionDetails]       = Some(
     RemoveConnectionDetails(
       Some(
         RemoveConnectionsDetails(
@@ -51,9 +50,13 @@ class RemoveConnectionNavigatorSpec extends TestBaseSpec {
       )
     )
   )
-  val additionalInformation        = Some(AdditionalInformation(Some(FurtherInformationOrRemarksDetails("test"))))
-  val stillConnectedDetailsYes     = Some(StillConnectedDetails(Some(AddressConnectionTypeYes)))
-  val sessionAdditionalInformation =
+  val additionalInformation: Option[AdditionalInformation]    = Some(
+    AdditionalInformation(Some(FurtherInformationOrRemarksDetails("test")))
+  )
+  val stillConnectedDetailsYes: Option[StillConnectedDetails] = Some(
+    StillConnectedDetails(Some(AddressConnectionTypeYes))
+  )
+  val sessionAdditionalInformation: Session                   =
     Session(
       "99996010004",
       "FOR6010",
@@ -61,7 +64,6 @@ class RemoveConnectionNavigatorSpec extends TestBaseSpec {
       "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=",
       stillConnectedDetailsYes,
       removeConnection,
-      aboutYou,
       aboutTheProperty,
       additionalInformation
     )

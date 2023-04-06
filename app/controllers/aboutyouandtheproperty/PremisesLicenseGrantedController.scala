@@ -18,7 +18,7 @@ package controllers.aboutyouandtheproperty
 
 import actions.WithSessionRefiner
 import form.aboutyouandtheproperty.PremisesLicenseGrantedForm.premisesLicenseGrantedForm
-import models.submissions.aboutyouandtheproperty.AboutTheProperty.updateAboutTheProperty
+import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty.updateAboutYouAndTheProperty
 import navigation.AboutThePropertyNavigator
 import navigation.identifiers.PremisesLicenseGrantedId
 import play.api.i18n.I18nSupport
@@ -44,7 +44,7 @@ class PremisesLicenseGrantedController @Inject() (
     Future.successful(
       Ok(
         premisesLicenseGrantedView(
-          request.sessionData.aboutTheProperty.flatMap(_.premisesLicenseGrantedDetail) match {
+          request.sessionData.aboutYouAndTheProperty.flatMap(_.premisesLicenseGrantedDetail) match {
             case Some(premisesLicenseGrantedDetail) =>
               premisesLicenseGrantedForm.fillAndValidate(premisesLicenseGrantedDetail)
             case _                                  => premisesLicenseGrantedForm
@@ -54,13 +54,13 @@ class PremisesLicenseGrantedController @Inject() (
     )
   }
 
-  def submit = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     premisesLicenseGrantedForm
       .bindFromRequest()
       .fold(
         formWithErrors => Future.successful(BadRequest(premisesLicenseGrantedView(formWithErrors))),
         data => {
-          val updatedData = updateAboutTheProperty(_.copy(premisesLicenseGrantedDetail = Some(data)))
+          val updatedData = updateAboutYouAndTheProperty(_.copy(premisesLicenseGrantedDetail = Some(data)))
           session.saveOrUpdate(updatedData)
           Future.successful(Redirect(navigator.nextPage(PremisesLicenseGrantedId).apply(updatedData)))
         }

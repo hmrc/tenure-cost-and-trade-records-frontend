@@ -26,18 +26,18 @@ import views.html.taskList
 
 class CheckYourAnswersAboutThePropertyControllerSpec extends TestBaseSpec {
 
-  val backLink = controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedController.show().url
+  val backLink: String = controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedController.show().url
 
-  val mockAboutThePropertyNavigator            = mock[AboutThePropertyNavigator]
-  val mockCheckYourAnswersAboutThePropertyView = mock[checkYourAnswersAboutTheProperty]
+  val mockAboutThePropertyNavigator: AboutThePropertyNavigator                   = mock[AboutThePropertyNavigator]
+  val mockCheckYourAnswersAboutThePropertyView: checkYourAnswersAboutTheProperty =
+    mock[checkYourAnswersAboutTheProperty]
   when(mockCheckYourAnswersAboutThePropertyView.apply(any, any)(any, any)).thenReturn(HtmlFormat.empty)
 
-  val mockTaskListView = mock[taskList]
+  val mockTaskListView: taskList = mock[taskList]
   when(mockTaskListView.apply()(any, any)).thenReturn(HtmlFormat.empty)
 
   val checkYourAnswersAboutThePropertyController = new CheckYourAnswersAboutThePropertyController(
     stubMessagesControllerComponents(),
-    mockAboutThePropertyNavigator,
     mockCheckYourAnswersAboutThePropertyView,
     mockTaskListView,
     preFilledSession,

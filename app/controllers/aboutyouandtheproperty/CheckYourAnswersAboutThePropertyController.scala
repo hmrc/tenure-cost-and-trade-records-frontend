@@ -17,7 +17,6 @@
 package controllers.aboutyouandtheproperty
 
 import actions.WithSessionRefiner
-import navigation.AboutThePropertyNavigator
 import form.aboutyouandtheproperty.CheckYourAnswersAboutThePropertyForm.checkYourAnswersAboutThePropertyForm
 import models.{ForTypes, Session}
 import play.api.Logging
@@ -34,7 +33,6 @@ import scala.concurrent.Future
 @Singleton
 class CheckYourAnswersAboutThePropertyController @Inject() (
   mcc: MessagesControllerComponents,
-  navigator: AboutThePropertyNavigator,
   checkYourAnswersAboutThePropertyView: checkYourAnswersAboutTheProperty,
   taskListView: taskList,
   withSessionRefiner: WithSessionRefiner,
@@ -47,7 +45,7 @@ class CheckYourAnswersAboutThePropertyController @Inject() (
     Future.successful(
       Ok(
         checkYourAnswersAboutThePropertyView(
-          request.sessionData.aboutTheProperty.flatMap(_.checkYourAnswersAboutTheProperty) match {
+          request.sessionData.aboutYouAndTheProperty.flatMap(_.checkYourAnswersAboutTheProperty) match {
             case Some(checkYourAnswersAboutTheProperty) =>
               checkYourAnswersAboutThePropertyForm.fillAndValidate(checkYourAnswersAboutTheProperty)
             case _                                      => checkYourAnswersAboutThePropertyForm
@@ -58,14 +56,14 @@ class CheckYourAnswersAboutThePropertyController @Inject() (
     )
   }
 
-  def submit = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Future.successful(Ok(taskListView()))
   }
 
   private def getBackLink(answers: Session): String =
     answers.forType match {
       case ForTypes.for6010                    =>
-        answers.aboutTheProperty.flatMap(_.tiedForGoods.map(_.name)) match {
+        answers.aboutYouAndTheProperty.flatMap(_.tiedForGoods.map(_.name)) match {
           case Some("yes") => controllers.aboutyouandtheproperty.routes.TiedForGoodsDetailsController.show().url
           case Some("no")  => controllers.aboutyouandtheproperty.routes.TiedForGoodsController.show().url
           case _           =>
@@ -73,7 +71,7 @@ class CheckYourAnswersAboutThePropertyController @Inject() (
             controllers.routes.TaskListController.show().url
         }
       case ForTypes.for6011                    =>
-        answers.aboutTheProperty.flatMap(_.enforcementAction.map(_.name)) match {
+        answers.aboutYouAndTheProperty.flatMap(_.enforcementAction.map(_.name)) match {
           case Some("yes") =>
             controllers.aboutyouandtheproperty.routes.EnforcementActionBeenTakenDetailsController.show().url
           case Some("no")  => controllers.aboutyouandtheproperty.routes.EnforcementActionBeenTakenController.show().url
@@ -82,7 +80,7 @@ class CheckYourAnswersAboutThePropertyController @Inject() (
             controllers.routes.TaskListController.show().url
         }
       case ForTypes.for6015 | ForTypes.for6016 =>
-        answers.aboutTheProperty.flatMap(_.premisesLicenseGrantedDetail.map(_.name)) match {
+        answers.aboutYouAndTheProperty.flatMap(_.premisesLicenseGrantedDetail.map(_.name)) match {
           case Some("yes") =>
             controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedDetailsController.show().url
           case Some("no")  => controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedController.show().url
