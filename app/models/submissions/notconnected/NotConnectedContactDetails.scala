@@ -14,19 +14,18 @@
  * limitations under the License.
  */
 
-package navigation
+package models.submissions.notconnected
 
-import connectors.Audit
-import models.Session
-import navigation.identifiers.{Identifier, PastConnectionId, RemoveConnectionId}
-import play.api.mvc.Call
+import models.submissions.common.ContactDetails
+import play.api.libs.json.Json
 
-import javax.inject.Inject
+case class NotConnectedContactDetails(
+  fullName: String,
+  contactDetails: ContactDetails,
+  additionalInformation: Option[String]
+)
 
-class RemoveConnectionNavigator @Inject() (audit: Audit) extends Navigator(audit) {
+object NotConnectedContactDetails {
+  implicit val format = Json.format[NotConnectedContactDetails]
 
-  override val routeMap: Map[Identifier, Session => Call] = Map(
-    PastConnectionId   -> (_ => controllers.notconnected.routes.RemoveConnectionController.show()),
-    RemoveConnectionId -> (_ => controllers.notconnected.routes.CheckYourAnswersNotConnectedController.show())
-  )
 }

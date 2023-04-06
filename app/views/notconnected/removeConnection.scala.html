@@ -51,9 +51,9 @@
 
  @formWithCSRF(action = controllers.notconnected.routes.RemoveConnectionController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
 
-  <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-   <h1 class="govuk-fieldset__heading">@messages("removeConnection.subheading")</h1>
-  </legend>
+@*  <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">*@
+@*   <h1 class="govuk-fieldset__heading">@messages("removeConnection.subheading")</h1>*@
+@*  </legend>*@
 
   @govukInput(
    Input(

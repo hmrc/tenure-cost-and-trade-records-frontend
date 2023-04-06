@@ -24,11 +24,19 @@
 ) {
 
     <div class="govuk-panel govuk-panel--confirmation no-print">
-        <h1 class="govuk-panel__title">@messages("label.confirm.heading", referenceNumber)</h1>
+        <h1 class="govuk-panel__title">@messages("label.confirm.heading")</h1>
     </div>
 
-    <p class="govuk-body">
-        <a href="@routes.LoginController.show">@messages("label.submitAnotherForm")</a>
-    </p>
+    <p class="govuk-body">@messages("label.emailConfirm")</p>
+    <p class="govuk-body">@messages("label.saveCopyOfAnswers")</p>
+    <p class="govuk-body">@messages("label.unableToRetrieveAnswers")</p>
+
+    <h2 class="govuk-heading-m">@messages("label.whatNext")</h2>
+    <p class="govuk-body">@messages("confirm.copy.list.1")</p>
+    <p class="govuk-body">@messages("confirm.copy.list.2")</p>
+
+@*    <p class="govuk-body">*@
+@*        <a href="@routes.LoginController.show">@messages("label.submitAnotherForm")</a>*@
+@*    </p>*@
 }
 
