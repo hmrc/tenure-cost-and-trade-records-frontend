@@ -14,19 +14,20 @@
  * limitations under the License.
  */
 
-package navigation
+package form.notconnected
 
-import connectors.Audit
-import models.Session
-import navigation.identifiers.{Identifier, PastConnectionId, RemoveConnectionId}
-import play.api.mvc.Call
+import form.MappingSupport.contactDetailsMapping
+import models.submissions.notconnected.NotConnectedContactDetails
+import play.api.data.Form
+import play.api.data.Forms.{mapping, nonEmptyText, optional, text}
 
-import javax.inject.Inject
+object NotConnectedForm {
 
-class RemoveConnectionNavigator @Inject() (audit: Audit) extends Navigator(audit) {
-
-  override val routeMap: Map[Identifier, Session => Call] = Map(
-    PastConnectionId   -> (_ => controllers.notconnected.routes.RemoveConnectionController.show()),
-    RemoveConnectionId -> (_ => controllers.notconnected.routes.CheckYourAnswersNotConnectedController.show())
+  val notConnectedForm = Form(
+    mapping(
+      "fullName"       -> nonEmptyText(maxLength = 50),
+      "contactDetails" -> contactDetailsMapping,
+      "additionalInformation" ->  optional(text)
+    )(NotConnectedContactDetails.apply)(NotConnectedContactDetails.unapply)
   )
 }
