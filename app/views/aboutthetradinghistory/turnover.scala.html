@@ -45,13 +45,32 @@
     <span class="govuk-caption-m">@messages("turnover.alcoholicDrinksCaption")</span>
 }
 
+@foodHeading = {
+        <p class="govuk-body">@messages("turnover.food")</p>
+        <span class="govuk-caption-m">@messages("turnover.foodCaption")</span>
+    }
 
+@otherReceiptsHeading = {
+        <p class="govuk-body">@messages("turnover.otherReceipts")</p>
+        <span class="govuk-caption-m">@messages("turnover.otherReceiptsCaption")</span>
+    }
+
+@accommodationHeading = {
+        <p class="govuk-body">@messages("turnover.accommodation")</p>
+        <span class="govuk-caption-m">@messages("turnover.accommodationCaption")</span>
+    }
+
+@averageOccupancyRateHeading = {
+        <p class="govuk-body">@messages("turnover.averageOccupancyRate")</p>
+        <span class="govuk-caption-m">@messages("turnover.averageOccupancyRateCaption")</span>
+    }
 @layout(
   pageHeading = messages("turnover.heading"),
   showH1 = false,
   showSection = true,
   sectionName = messages("label.section.aboutYourTradingHistory"),
   backLinkUrl = controllers.aboutthetradinghistory.routes.AboutYourTradingHistoryController.show.url,
+  fullWidth = true
 ) {
 
   @formWithCSRF(action = controllers.aboutthetradinghistory.routes.TurnoverController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
@@ -113,6 +132,73 @@
                                       value = "0",
                                       prefix = Some(PrefixOrSuffix(
                                           content = Text("£")
+                                      ))
+                                  ))
+                              )
+                          )
+                      },
+              TableRow(
+                  content = HtmlContent(foodHeading)
+              ) +:
+                      turnoverSections.zipWithIndex.map { case (section, index)  =>
+                          TableRow(
+                              content = HtmlContent(
+                                  govukInput(Input(
+                                      id = s"food-$index",
+                                      name = s"food-$index",
+                                      value = "0",
+                                      prefix = Some(PrefixOrSuffix(
+                                          content = Text("£")
+                                      ))
+                                  ))
+                              )
+                          )
+                      },
+              TableRow(
+                  content = HtmlContent(otherReceiptsHeading)
+              ) +:
+                      turnoverSections.zipWithIndex.map { case (section, index)  =>
+                          TableRow(
+                              content = HtmlContent(
+                                  govukInput(Input(
+                                      id = s"other-receipts-$index",
+                                      name = s"other-receipts-$index",
+                                      value = "0",
+                                      prefix = Some(PrefixOrSuffix(
+                                          content = Text("£")
+                                      ))
+                                  ))
+                              )
+                          )
+                      },
+              TableRow(
+                  content = HtmlContent(accommodationHeading)
+              ) +:
+                      turnoverSections.zipWithIndex.map { case (section, index)  =>
+                          TableRow(
+                              content = HtmlContent(
+                                  govukInput(Input(
+                                      id = s"accommodation-$index",
+                                      name = s"accommodation-$index",
+                                      value = "0",
+                                      prefix = Some(PrefixOrSuffix(
+                                          content = Text("£")
+                                      ))
+                                  ))
+                              )
+                          )
+                      },
+              TableRow(
+                  content = HtmlContent(averageOccupancyRateHeading)
+              ) +:
+                      turnoverSections.zipWithIndex.map { case (section, index)  =>
+                          TableRow(
+                              content = HtmlContent(
+                                  govukInput(Input(
+                                      id = s"average-occupancy-rate-$index",
+                                      name = s"average-occupancy-rate-$index",
+                                      suffix = Some(PrefixOrSuffix(
+                                          content = Text("%")
                                       ))
                                   ))
                               )
