@@ -16,7 +16,7 @@
 
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
-@import models.submissions.abouttheproperty.CheckYourAnswersAboutYourProperty
+@import models.submissions.aboutyouandtheproperty.CheckYourAnswersAboutYourProperty
 
 @this(layout: Layout,
         govukButton: GovukButton,
@@ -33,7 +33,7 @@
  theForm = theForm
 ) {
 
- @formWithCSRF(action = controllers.abouttheproperty.routes.CheckYourAnswersAboutThePropertyController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
+ @formWithCSRF(action = controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
 
   <dl class="govuk-summary-list">
    <div id="fullName" class="govuk-summary-list__row">

@@ -23,16 +23,16 @@ import play.api.libs.json.Json
 import java.time.LocalDate
 
 case class AboutTheTradingHistory(
-                                   aboutYourTradingHistory: Option[AboutYourTradingHistory] = None,
-                                   turnoverSection: Seq[TurnoverSection] = Seq.empty,
-                                   costOfSales: Option[CostOfSales] = None,
-                                   fixedOperatingExpenses: Option[FixedOperatingExpenses] = None,
-                                   grossProfit: Option[GrossProfit] = None,
-                                   netProfit: Option[NetProfit] = None,
-                                   otherCosts: Option[OtherCosts] = None,
-                                   totalPayrollCost: Option[TotalPayrollCost] = None,
-                                   variableOperatingExpenses: Option[VariableOperatingExpenses] = None,
-                                   checkYourAnswersAboutTheTradingHistory: Option[CheckYourAnswersAboutTheTradingHistory] = None
+  aboutYourTradingHistory: Option[AboutYourTradingHistory] = None,
+  turnoverSection: Seq[TurnoverSection] = Seq.empty,
+  costOfSales: Option[CostOfSales] = None,
+  fixedOperatingExpenses: Option[FixedOperatingExpenses] = None,
+  grossProfit: Option[GrossProfit] = None,
+  netProfit: Option[NetProfit] = None,
+  otherCosts: Option[OtherCosts] = None,
+  totalPayrollCost: Option[TotalPayrollCost] = None,
+  variableOperatingExpenses: Option[VariableOperatingExpenses] = None,
+  checkYourAnswersAboutTheTradingHistory: Option[CheckYourAnswersAboutTheTradingHistory] = None
 )
 
 object AboutTheTradingHistory {

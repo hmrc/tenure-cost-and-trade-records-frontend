@@ -16,9 +16,9 @@
 
 package views.aboutyouandtheproperty
 
-import form.abouttheproperty.EnforcementActionForm
-import models.submissions.abouttheproperty.EnforcementActionsYes
-import models.submissions.abouttheproperty.{EnforcementAction, EnforcementActionsNo}
+import form.aboutyouandtheproperty.EnforcementActionForm
+import models.submissions.aboutyouandtheproperty.EnforcementActionsYes
+import models.submissions.aboutyouandtheproperty.{EnforcementAction, EnforcementActionsNo}
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
@@ -32,7 +32,7 @@ class EnforcementActionBeenTakenViewSpec extends QuestionViewBehaviours[Enforcem
 
   override val form = EnforcementActionForm.enforcementActionForm
 
-  val backLink = controllers.abouttheproperty.routes.PremisesLicenseConditionsController.show().url
+  val backLink = controllers.aboutyouandtheproperty.routes.PremisesLicenseConditionsController.show().url
 
   def createView = () => enforcementActionsTakenView(form, backLink)(fakeRequest, messages)
 
@@ -48,7 +48,7 @@ class EnforcementActionBeenTakenViewSpec extends QuestionViewBehaviours[Enforcem
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText mustBe messages("back.link.label")
       val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.abouttheproperty.routes.PremisesLicenseConditionsController.show().url
+      backlinkUrl mustBe controllers.aboutyouandtheproperty.routes.PremisesLicenseConditionsController.show().url
     }
 
     "Section heading is visible" in {

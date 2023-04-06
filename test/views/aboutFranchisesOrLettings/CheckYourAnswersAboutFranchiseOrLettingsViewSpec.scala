@@ -32,7 +32,7 @@ class CheckYourAnswersAboutFranchiseOrLettingsViewSpec
 
   override val form = CheckYourAnswersAboutFranchiseOrLettingsForm.checkYourAnswersAboutFranchiseOrLettingsForm
 
-  val backLink = controllers.abouttheproperty.routes.PremisesLicenseGrantedController.show().url
+  val backLink = controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedController.show().url
 
   def createView = () => checkYourAnswersAboutFranchiseOrLettingsView(form, backLink)(fakeRequest, messages)
 
@@ -48,7 +48,7 @@ class CheckYourAnswersAboutFranchiseOrLettingsViewSpec
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText mustBe messages("back.link.label")
       val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.abouttheproperty.routes.PremisesLicenseGrantedController.show().url
+      backlinkUrl mustBe controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedController.show().url
     }
 
     "Section heading is visible" in {

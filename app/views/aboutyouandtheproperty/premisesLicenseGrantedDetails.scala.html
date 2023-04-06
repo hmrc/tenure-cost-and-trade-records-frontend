@@ -14,7 +14,7 @@
  * limitations under the License.
  *@
 
-@import models.submissions.abouttheproperty.PremisesLicenseGrantedInformationDetails
+@import models.submissions.aboutyouandtheproperty.PremisesLicenseGrantedInformationDetails
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
@@ -35,11 +35,11 @@
  showH1 = false,
  showSection = true,
  sectionName = messages("label.section.aboutTheProperty"),
- backLinkUrl = controllers.abouttheproperty.routes.PremisesLicenseGrantedController.show.url,
+ backLinkUrl = controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedController.show.url,
  theForm = theForm
 ) {
 
- @formWithCSRF(action = controllers.abouttheproperty.routes.PremisesLicenseGrantedDetailsController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
+ @formWithCSRF(action = controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedDetailsController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
 
   <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
    <h1 class="govuk-fieldset__heading">@messages("premisesLicenseGrantedInformation.heading")</h1>

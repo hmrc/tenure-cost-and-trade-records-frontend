@@ -14,7 +14,7 @@
  * limitations under the License.
  *@
 
-@import models.submissions.abouttheproperty.EnforcementActionHasBeenTakenInformationDetails
+@import models.submissions.aboutyouandtheproperty.EnforcementActionHasBeenTakenInformationDetails
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
@@ -35,11 +35,11 @@
  showH1 = false,
  showSection = true,
  sectionName = messages("label.section.aboutTheProperty"),
- backLinkUrl = controllers.abouttheproperty.routes.EnforcementActionBeenTakenController.show.url,
+ backLinkUrl = controllers.aboutyouandtheproperty.routes.EnforcementActionBeenTakenController.show.url,
  theForm = theForm
 ) {
 
- @formWithCSRF(action = controllers.abouttheproperty.routes.EnforcementActionBeenTakenDetailsController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
+ @formWithCSRF(action = controllers.aboutyouandtheproperty.routes.EnforcementActionBeenTakenDetailsController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
 
   <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
    <h1 class="govuk-fieldset__heading">@messages("enforcementActionHasBeenTakenDetails.heading")</h1>

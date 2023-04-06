@@ -16,9 +16,9 @@
 
 package views.aboutyouandtheproperty
 
-import form.abouttheproperty.TiedForGoodsForm
-import models.submissions.abouttheproperty.TiedForGoods
-import models.submissions.abouttheproperty.{TiedGoodsNo, TiedGoodsYes}
+import form.aboutyouandtheproperty.TiedForGoodsForm
+import models.submissions.aboutyouandtheproperty.TiedForGoods
+import models.submissions.aboutyouandtheproperty.{TiedGoodsNo, TiedGoodsYes}
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
@@ -31,7 +31,7 @@ class TiedForGoodsViewSpec extends QuestionViewBehaviours[TiedForGoods] {
 
   override val form = TiedForGoodsForm.tiedForGoodsForm
 
-  val backLink = controllers.abouttheproperty.routes.EnforcementActionBeenTakenController.show().url
+  val backLink = controllers.aboutyouandtheproperty.routes.EnforcementActionBeenTakenController.show().url
 
   def createView = () => tiedForGoodsView(form, backLink)(fakeRequest, messages)
 
@@ -46,7 +46,7 @@ class TiedForGoodsViewSpec extends QuestionViewBehaviours[TiedForGoods] {
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText mustBe messages("back.link.label")
       val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.abouttheproperty.routes.EnforcementActionBeenTakenController.show().url
+      backlinkUrl mustBe controllers.aboutyouandtheproperty.routes.EnforcementActionBeenTakenController.show().url
     }
 
     "Section heading is visible" in {

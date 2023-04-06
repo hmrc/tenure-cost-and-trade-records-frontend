@@ -16,8 +16,8 @@
 
 package views.aboutyouandtheproperty
 
-import form.abouttheproperty.TiedForGoodsDetailsForm
-import models.submissions.abouttheproperty.{TiedForGoodsInformationDetails, TiedForGoodsInformationDetailsBeerOnly, TiedForGoodsInformationDetailsFullTie, TiedForGoodsInformationDetailsPartialTie}
+import form.aboutyouandtheproperty.TiedForGoodsDetailsForm
+import models.submissions.aboutyouandtheproperty.{TiedForGoodsInformationDetails, TiedForGoodsInformationDetailsBeerOnly, TiedForGoodsInformationDetailsFullTie, TiedForGoodsInformationDetailsPartialTie}
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
@@ -44,7 +44,7 @@ class TiedForGoodsDetailsViewSpec extends QuestionViewBehaviours[TiedForGoodsInf
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText mustBe messages("back.link.label")
       val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.abouttheproperty.routes.TiedForGoodsController.show().url
+      backlinkUrl mustBe controllers.aboutyouandtheproperty.routes.TiedForGoodsController.show().url
     }
 
     "Section heading is visible" in {

@@ -20,9 +20,8 @@ import actions.{SessionRequest, WithSessionRefiner}
 import config.{AppConfig, ErrorHandler}
 import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartOne, AboutLeaseOrAgreementPartTwo}
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
-import models.submissions.abouttheproperty._
+import models.submissions.aboutyouandtheproperty._
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory
-import models.submissions.aboutyou.AboutYou
 import models.submissions.additionalinformation.AdditionalInformation
 import models.submissions.connectiontoproperty.StillConnectedDetails
 import models.submissions.notconnected.RemoveConnectionDetails

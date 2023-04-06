@@ -16,8 +16,8 @@
 
 package views.aboutyouandtheproperty
 
-import form.abouttheproperty.CheckYourAnswersAboutThePropertyForm
-import models.submissions.abouttheproperty.CheckYourAnswersAboutYourProperty
+import form.aboutyouandtheproperty.CheckYourAnswersAboutThePropertyForm
+import models.submissions.aboutyouandtheproperty.CheckYourAnswersAboutYourProperty
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
@@ -28,7 +28,7 @@ class CheckYourAnswersAboutThePropertyViewSpec extends QuestionViewBehaviours[Ch
 
   override val form = CheckYourAnswersAboutThePropertyForm.checkYourAnswersAboutThePropertyForm
 
-  val backLink = controllers.abouttheproperty.routes.PremisesLicenseGrantedController.show().url
+  val backLink = controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedController.show().url
 
   def createView = () => checkYourAnswersAboutThePropertyView(form, backLink)(fakeRequest, messages)
 
@@ -44,7 +44,7 @@ class CheckYourAnswersAboutThePropertyViewSpec extends QuestionViewBehaviours[Ch
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText mustBe messages("back.link.label")
       val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.abouttheproperty.routes.PremisesLicenseGrantedController.show().url
+      backlinkUrl mustBe controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedController.show().url
     }
 
     "Section heading is visible" in {

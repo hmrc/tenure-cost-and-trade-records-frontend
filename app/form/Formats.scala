@@ -20,7 +20,7 @@ import models._
 import models.submissions.Form6010._
 import models.submissions._
 import models.submissions.aboutYourLeaseOrTenure._
-import models.submissions.abouttheproperty._
+import models.submissions.aboutyouandtheproperty._
 import models.submissions.common.{AnswerResponsibleParty, AnswersYesNo}
 import models.submissions.connectiontoproperty.{AddressConnectionType, ConnectionToProperty}
 import play.api.data.FormError

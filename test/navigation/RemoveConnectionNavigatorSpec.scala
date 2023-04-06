@@ -18,8 +18,7 @@ package navigation
 
 import connectors.Audit
 import models.Session
-import models.submissions.abouttheproperty.AboutTheProperty
-import models.submissions.aboutyou.{AboutYou, CustomerDetails}
+import models.submissions.aboutyouandtheproperty.{AboutTheProperty, AboutYou, CustomerDetails}
 import models.submissions.additionalinformation.{AdditionalInformation, FurtherInformationOrRemarksDetails}
 import models.submissions.common.ContactDetails
 import models.submissions.connectiontoproperty.{AddressConnectionTypeYes, StillConnectedDetails}

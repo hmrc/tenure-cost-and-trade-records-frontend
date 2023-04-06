@@ -16,8 +16,8 @@
 
 package views.aboutyouandtheproperty
 
-import form.aboutyou.AboutYouForm
-import models.submissions.aboutyou.CustomerDetails
+import form.aboutyouandtheproperty.AboutYouForm
+import models.submissions.aboutyouandtheproperty.CustomerDetails
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours

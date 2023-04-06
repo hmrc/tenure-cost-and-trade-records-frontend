@@ -16,8 +16,8 @@
 
 package views.aboutyouandtheproperty
 
-import form.abouttheproperty.WebsiteForPropertyForm
-import models.submissions.abouttheproperty.{BuildingOperationHaveAWebsiteNo, BuildingOperationHaveAWebsiteYes, WebsiteForPropertyDetails}
+import form.aboutyouandtheproperty.WebsiteForPropertyForm
+import models.submissions.aboutyouandtheproperty.{BuildingOperationHaveAWebsiteNo, BuildingOperationHaveAWebsiteYes, WebsiteForPropertyDetails}
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
@@ -44,7 +44,7 @@ class WebsiteForPropertyViewSpec extends QuestionViewBehaviours[WebsiteForProper
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText mustBe messages("back.link.label")
       val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.abouttheproperty.routes.AboutThePropertyController.show().url
+      backlinkUrl mustBe controllers.aboutyouandtheproperty.routes.AboutThePropertyController.show().url
     }
 
     "Section heading is visible" in {
