@@ -24,8 +24,7 @@ import play.api.test.Helpers.{POST, contentAsString, status, stubMessagesControl
 import stub.{StubBackendConnector, StubSessionRepo}
 import util.DateUtil
 import utils.TestBaseSpec
-import views.html.customPasswordSaveAsDraft
-import views.html.submissionDraftSaved
+import views.html.{customPasswordSaveAsDraft, saveAsDraftLogin, submissionDraftSaved}
 
 /**
   * @author Yuriy Tumakha
@@ -41,9 +40,11 @@ class SaveAsDraftControllerSpec extends TestBaseSpec {
     backendConnector,
     inject[customPasswordSaveAsDraft],
     inject[submissionDraftSaved],
+    inject[saveAsDraftLogin],
     inject[DateUtil],
     WithSessionRefiner(inject[ErrorHandler], sessionRepo),
     sessionRepo,
+    inject[ErrorHandler],
     inject[Audit],
     stubMessagesControllerComponents()
   )

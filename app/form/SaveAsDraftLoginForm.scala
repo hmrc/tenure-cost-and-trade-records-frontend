@@ -16,21 +16,18 @@
 
 package form
 
-import models.submissions.CustomUserPassword
 import play.api.data.Form
-import play.api.data.Forms.{mapping, text}
+import play.api.data.Forms.{single, text}
 
 /**
   * @author Yuriy Tumakha
   */
-object CustomUserPasswordForm {
+object SaveAsDraftLoginForm {
 
-  val customUserPasswordForm: Form[CustomUserPassword] = Form(
-    mapping(
-      "password"        -> text(minLength = 7),
-      "confirmPassword" -> text
-    )(CustomUserPassword.apply)(CustomUserPassword.unapply)
-      .verifying("saveAsDraft.error.passwordsDontMatch", data => data.confirmPassword == data.password)
+  val saveAsDraftLoginForm: Form[String] = Form(
+    single(
+      "password" -> text(minLength = 7)
+    )
   )
 
 }

@@ -17,8 +17,10 @@
 package controllers
 
 import actions.WithSessionRefiner
+import config.ErrorHandler
 import connectors.{Audit, BackendConnector}
 import form.CustomUserPasswordForm.customUserPasswordForm
+import form.SaveAsDraftLoginForm.saveAsDraftLoginForm
 import models.{Session, SubmissionDraft}
 import play.api.i18n.{I18nSupport, Messages}
 import play.api.mvc.{MessagesControllerComponents, Request, Result}
@@ -26,8 +28,7 @@ import repositories.SessionRepo
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import util.DateUtil
-import views.html.customPasswordSaveAsDraft
-import views.html.submissionDraftSaved
+import views.html.{customPasswordSaveAsDraft, saveAsDraftLogin, submissionDraftSaved}
 
 import java.time.LocalDate
 import javax.inject.{Inject, Named, Singleton}
@@ -41,9 +42,11 @@ class SaveAsDraftController @Inject() (
   backendConnector: BackendConnector,
   customPasswordSaveAsDraftView: customPasswordSaveAsDraft,
   submissionDraftSavedView: submissionDraftSaved,
+  saveAsDraftLoginView: saveAsDraftLogin,
   dateUtil: DateUtil,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") sessionRepo: SessionRepo,
+  errorHandler: ErrorHandler,
   audit: Audit,
   cc: MessagesControllerComponents
 )(implicit ec: ExecutionContext)
@@ -88,6 +91,38 @@ class SaveAsDraftController @Inject() (
       audit.sendSavedAsDraft(submissionDraft.toSavedAsDraftEvent)
       Ok(submissionDraftSavedView(session.saveAsDraftPassword.getOrElse(""), expiryDate, exitPath))
     }
+  }
+
+  def loginToResume = (Action andThen withSessionRefiner).async { implicit request =>
+    Ok(saveAsDraftLoginView(saveAsDraftLoginForm))
+  }
+
+  def resume = (Action andThen withSessionRefiner).async { implicit request =>
+    val session = request.sessionData
+
+    saveAsDraftLoginForm
+      .bindFromRequest()
+      .fold(
+        formWithErrors => BadRequest(saveAsDraftLoginView(formWithErrors)),
+        password =>
+          backendConnector.loadSubmissionDraft(session.referenceNumber).map {
+            case Some(draft) if draft.session.saveAsDraftPassword.contains(password) =>
+              val restoredSession = draft.session.copy(token = session.token, saveAsDraftPassword = None)
+              sessionRepo.saveOrUpdate(restoredSession)
+
+              Redirect(draft.exitPath)
+            case None                                                                =>
+              NotFound(errorHandler.notFoundTemplate(request))
+            case _                                                                   =>
+              val formWithLoginError = saveAsDraftLoginForm.withError("password", "saveAsDraft.error.invalidPassword")
+              BadRequest(saveAsDraftLoginView(formWithLoginError))
+          }
+      )
+  }
+
+  def startAgain = (Action andThen withSessionRefiner).async { implicit request =>
+    backendConnector.deleteSubmissionDraft(request.sessionData.referenceNumber)
+    Redirect(LoginController.startPage)
   }
 
 }
