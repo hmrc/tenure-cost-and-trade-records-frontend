@@ -14,7 +14,7 @@
  * limitations under the License.
  *@
 
-@import models.submissions.abouttheproperty.WebsiteForPropertyDetails
+@import models.submissions.aboutyouandtheproperty.WebsiteForPropertyDetails
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.input.Input
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
@@ -68,12 +68,12 @@
  showH1 = false,
  showSection = true,
  sectionName = messages("label.section.aboutTheProperty"),
- backLinkUrl = controllers.abouttheproperty.routes.AboutThePropertyController.show.url,
+ backLinkUrl = controllers.aboutyouandtheproperty.routes.AboutThePropertyController.show.url,
  theForm = theForm
 ) {
 
 
- @formWithCSRF(action = controllers.abouttheproperty.routes.WebsiteForPropertyController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
+ @formWithCSRF(action = controllers.aboutyouandtheproperty.routes.WebsiteForPropertyController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
 
   @govukRadios(Radios(
    fieldset = Some(Fieldset(

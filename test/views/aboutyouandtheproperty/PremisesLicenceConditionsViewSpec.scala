@@ -16,9 +16,9 @@
 
 package views.aboutyouandtheproperty
 
-import form.abouttheproperty.PremisesLicenseConditionsForm
-import models.submissions.abouttheproperty.PremisesLicenseConditions
-import models.submissions.abouttheproperty.{PremisesLicensesConditionsNo, PremisesLicensesConditionsYes}
+import form.aboutyouandtheproperty.PremisesLicenseConditionsForm
+import models.submissions.aboutyouandtheproperty.PremisesLicenseConditions
+import models.submissions.aboutyouandtheproperty.{PremisesLicensesConditionsNo, PremisesLicensesConditionsYes}
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
@@ -31,7 +31,7 @@ class PremisesLicenceConditionsViewSpec extends QuestionViewBehaviours[PremisesL
 
   override val form = PremisesLicenseConditionsForm.premisesLicenseConditionsForm
 
-  val backLink = controllers.abouttheproperty.routes.LicensableActivitiesController.show().url
+  val backLink = controllers.aboutyouandtheproperty.routes.LicensableActivitiesController.show().url
 
   def createView = () => premisesLicencableView(form, backLink)(fakeRequest, messages)
 
@@ -47,7 +47,7 @@ class PremisesLicenceConditionsViewSpec extends QuestionViewBehaviours[PremisesL
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText mustBe messages("back.link.label")
       val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.abouttheproperty.routes.LicensableActivitiesController.show().url
+      backlinkUrl mustBe controllers.aboutyouandtheproperty.routes.LicensableActivitiesController.show().url
     }
 
     "Section heading is visible" in {

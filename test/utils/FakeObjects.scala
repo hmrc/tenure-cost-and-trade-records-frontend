@@ -18,13 +18,13 @@ package utils
 
 import models.submissions.Form6010._
 import models.submissions.aboutfranchisesorlettings._
-import models.submissions.abouttheproperty.PremisesLicenseGrantedNo
+import models.submissions.aboutyouandtheproperty.PremisesLicenseGrantedNo
 import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartOne, _}
 import models.submissions.aboutfranchisesorlettings
 import models.submissions.aboutfranchisesorlettings.LettingSection
-import models.submissions.abouttheproperty._
+import models.submissions.aboutyouandtheproperty._
 import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, AboutYourTradingHistory}
-import models.submissions.aboutyou.{AboutYou, CustomerDetails}
+import models.submissions.aboutyouandtheproperty.AboutYou
 import models.submissions.additionalinformation._
 import models.{AnnualRent, Session, SubmissionDraft}
 import models.submissions.common.{Address, AnswerNo, AnswerYes, ContactDetails, ContactDetailsAddress}

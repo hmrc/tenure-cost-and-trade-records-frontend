@@ -26,6 +26,6 @@ import javax.inject.Inject
 class AboutYouNavigator @Inject() (audit: Audit) extends Navigator(audit) {
 
   override val routeMap: Map[Identifier, Session => Call] = Map(
-    AboutYouPageId -> (_ => controllers.abouttheproperty.routes.AboutThePropertyController.show())
+    AboutYouPageId -> (_ => controllers.aboutyouandtheproperty.routes.AboutThePropertyController.show())
   )
 }

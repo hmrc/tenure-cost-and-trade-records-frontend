@@ -19,9 +19,8 @@ package models
 import models.audit.UserData
 import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartOne, AboutLeaseOrAgreementPartTwo}
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
-import models.submissions.abouttheproperty.AboutTheProperty
+import models.submissions.aboutyouandtheproperty.{AboutTheProperty, AboutYou}
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory
-import models.submissions.aboutyou.AboutYou
 import models.submissions.additionalinformation.AdditionalInformation
 import models.submissions.common.Address
 import models.submissions.connectiontoproperty.StillConnectedDetails

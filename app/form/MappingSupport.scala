@@ -23,7 +23,7 @@ import form.Formats.userTypeFormat
 import models.submissions.Form6010._
 import models.submissions.aboutYourLeaseOrTenure._
 import models.submissions.aboutfranchisesorlettings._
-import models.submissions.abouttheproperty._
+import models.submissions.aboutyouandtheproperty._
 import models.submissions.common.{Address, AnswerResponsibleParty, AnswersYesNo, ContactDetails, ContactDetailsAddress}
 import models.submissions.connectiontoproperty.{AddressConnectionType, ConnectionToProperty}
 import models.{AnnualRent, NamedEnum, NamedEnumSupport}

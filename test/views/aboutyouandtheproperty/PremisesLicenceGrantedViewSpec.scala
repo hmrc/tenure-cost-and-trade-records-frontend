@@ -16,8 +16,8 @@
 
 package views.aboutyouandtheproperty
 
-import form.abouttheproperty.PremisesLicenseGrantedForm
-import models.submissions.abouttheproperty.{PremisesLicenseGranted, PremisesLicenseGrantedNo, PremisesLicenseGrantedYes}
+import form.aboutyouandtheproperty.PremisesLicenseGrantedForm
+import models.submissions.aboutyouandtheproperty.{PremisesLicenseGranted, PremisesLicenseGrantedNo, PremisesLicenseGrantedYes}
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
@@ -44,7 +44,7 @@ class PremisesLicenceGrantedViewSpec extends QuestionViewBehaviours[PremisesLice
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText mustBe messages("back.link.label")
       val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.abouttheproperty.routes.WebsiteForPropertyController.show().url
+      backlinkUrl mustBe controllers.aboutyouandtheproperty.routes.WebsiteForPropertyController.show().url
     }
 
     "Section heading is visible" in {

@@ -14,7 +14,7 @@
  * limitations under the License.
  *@
 
-@import models.submissions.aboutyou.CustomerDetails
+@import models.submissions.aboutyouandtheproperty.CustomerDetails
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.fieldset.Fieldset
@@ -80,7 +80,7 @@
   theForm = theForm
 ) {
 
- @formWithCSRF(action = controllers.aboutyou.routes.AboutYouController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
+ @formWithCSRF(action = controllers.aboutyouandtheproperty.routes.AboutYouController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
 
   @govukFieldset(Fieldset(html = content))
 

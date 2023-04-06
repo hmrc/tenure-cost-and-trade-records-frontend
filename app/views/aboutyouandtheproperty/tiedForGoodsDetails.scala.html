@@ -14,7 +14,7 @@
  * limitations under the License.
  *@
 
-@import models.submissions.abouttheproperty.TiedForGoodsInformationDetails
+@import models.submissions.aboutyouandtheproperty.TiedForGoodsInformationDetails
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 @import uk.gov.hmrc.govukfrontend.views.html.components._
@@ -39,11 +39,11 @@
  showH1 = false,
  showSection = true,
  sectionName = messages("label.section.aboutTheProperty"),
- backLinkUrl = controllers.abouttheproperty.routes.TiedForGoodsController.show.url,
+ backLinkUrl = controllers.aboutyouandtheproperty.routes.TiedForGoodsController.show.url,
  theForm = theForm
 ) {
 
- @formWithCSRF(action = controllers.abouttheproperty.routes.TiedForGoodsDetailsController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
+ @formWithCSRF(action = controllers.aboutyouandtheproperty.routes.TiedForGoodsDetailsController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
 
   @govukRadios(
    Radios(

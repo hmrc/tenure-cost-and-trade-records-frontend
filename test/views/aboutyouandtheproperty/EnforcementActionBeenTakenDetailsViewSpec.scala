@@ -16,8 +16,8 @@
 
 package views.aboutyouandtheproperty
 
-import form.abouttheproperty.EnforcementActionDetailsForm
-import models.submissions.abouttheproperty.EnforcementActionHasBeenTakenInformationDetails
+import form.aboutyouandtheproperty.EnforcementActionDetailsForm
+import models.submissions.aboutyouandtheproperty.EnforcementActionHasBeenTakenInformationDetails
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
@@ -46,7 +46,7 @@ class EnforcementActionBeenTakenDetailsViewSpec
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText mustBe messages("back.link.label")
       val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.abouttheproperty.routes.EnforcementActionBeenTakenController.show().url
+      backlinkUrl mustBe controllers.aboutyouandtheproperty.routes.EnforcementActionBeenTakenController.show().url
     }
 
     "Section heading is visible" in {

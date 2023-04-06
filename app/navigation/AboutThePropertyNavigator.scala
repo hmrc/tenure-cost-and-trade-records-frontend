@@ -31,18 +31,18 @@ class AboutThePropertyNavigator @Inject() (audit: Audit) extends Navigator(audit
       answers.forType
         .equals(ForTypes.for6015) || answers.forType.equals(ForTypes.for6016)
     )
-      controllers.abouttheproperty.routes.PremisesLicenseGrantedController.show()
+      controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedController.show()
     else
-      controllers.abouttheproperty.routes.LicensableActivitiesController.show()
+      controllers.aboutyouandtheproperty.routes.LicensableActivitiesController.show()
   }
 
   private def premisesLicenseGrantedRouting: Session => Call = answers => {
     if (answers.forType.equals(ForTypes.for6015) || answers.forType.equals(ForTypes.for6016)) {
       answers.aboutTheProperty.flatMap(_.premisesLicenseGrantedDetail.map(_.name)) match {
         case Some("yes") =>
-          controllers.abouttheproperty.routes.PremisesLicenseGrantedDetailsController.show()
+          controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedDetailsController.show()
         case Some("no")  =>
-          controllers.abouttheproperty.routes.CheckYourAnswersAboutThePropertyController.show()
+          controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show()
         case _           =>
           logger.warn(
             s"Navigation for about the property reached without correct selection of premises licence granted by controller"
@@ -56,15 +56,15 @@ class AboutThePropertyNavigator @Inject() (audit: Audit) extends Navigator(audit
 
   private def premisesLicenseGrantedDetailsRouting: Session => Call = answers => {
     if (answers.forType == ForTypes.for6015 || answers.forType == ForTypes.for6016)
-      controllers.abouttheproperty.routes.CheckYourAnswersAboutThePropertyController.show()
+      controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show()
     else
-      controllers.abouttheproperty.routes.LicensableActivitiesController.show()
+      controllers.aboutyouandtheproperty.routes.LicensableActivitiesController.show()
   }
 
   private def licensableActivityRouting: Session => Call = answers => {
     answers.aboutTheProperty.flatMap(_.licensableActivities.map(_.name)) match {
-      case Some("yes") => controllers.abouttheproperty.routes.LicensableActivitiesDetailsController.show()
-      case Some("no")  => controllers.abouttheproperty.routes.PremisesLicenseConditionsController.show()
+      case Some("yes") => controllers.aboutyouandtheproperty.routes.LicensableActivitiesDetailsController.show()
+      case Some("no")  => controllers.aboutyouandtheproperty.routes.PremisesLicenseConditionsController.show()
       case _           =>
         logger.warn(
           s"Navigation for about the property reached without correct selection of licence activity by controller"
@@ -75,8 +75,8 @@ class AboutThePropertyNavigator @Inject() (audit: Audit) extends Navigator(audit
 
   private def premisesLicenceConditionsRouting: Session => Call = answers => {
     answers.aboutTheProperty.flatMap(_.premisesLicenseConditions.map(_.name)) match {
-      case Some("yes") => controllers.abouttheproperty.routes.PremisesLicenseConditionsDetailsController.show()
-      case Some("no")  => controllers.abouttheproperty.routes.EnforcementActionBeenTakenController.show()
+      case Some("yes") => controllers.aboutyouandtheproperty.routes.PremisesLicenseConditionsDetailsController.show()
+      case Some("no")  => controllers.aboutyouandtheproperty.routes.EnforcementActionBeenTakenController.show()
       case _           =>
         logger.warn(
           s"Navigation for about the property reached without correct selection of premises licence conditions by controller"
@@ -87,12 +87,12 @@ class AboutThePropertyNavigator @Inject() (audit: Audit) extends Navigator(audit
 
   private def enforcementActionTakenRouting: Session => Call = answers => {
     answers.aboutTheProperty.flatMap(_.enforcementAction.map(_.name)) match {
-      case Some("yes") => controllers.abouttheproperty.routes.EnforcementActionBeenTakenDetailsController.show()
+      case Some("yes") => controllers.aboutyouandtheproperty.routes.EnforcementActionBeenTakenDetailsController.show()
       case Some("no")  =>
         if (answers.forType == ForTypes.for6011)
-          controllers.abouttheproperty.routes.CheckYourAnswersAboutThePropertyController.show()
+          controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show()
         else
-          controllers.abouttheproperty.routes.TiedForGoodsController.show()
+          controllers.aboutyouandtheproperty.routes.TiedForGoodsController.show()
       case _           =>
         logger.warn(
           s"Navigation for about the property reached without correct selection of enforcement action taken by controller"
@@ -103,15 +103,15 @@ class AboutThePropertyNavigator @Inject() (audit: Audit) extends Navigator(audit
 
   private def enforcementActionTakenDetailsRouting: Session => Call = answers => {
     if (answers.forType == ForTypes.for6011)
-      controllers.abouttheproperty.routes.CheckYourAnswersAboutThePropertyController.show()
+      controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show()
     else
-      controllers.abouttheproperty.routes.TiedForGoodsController.show()
+      controllers.aboutyouandtheproperty.routes.TiedForGoodsController.show()
   }
 
   private def tiedGoodsRouting: Session => Call = answers => {
     answers.aboutTheProperty.flatMap(_.tiedForGoods.map(_.name)) match {
-      case Some("yes") => controllers.abouttheproperty.routes.TiedForGoodsDetailsController.show()
-      case Some("no")  => controllers.abouttheproperty.routes.CheckYourAnswersAboutThePropertyController.show()
+      case Some("yes") => controllers.aboutyouandtheproperty.routes.TiedForGoodsDetailsController.show()
+      case Some("no")  => controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show()
       case _           =>
         logger.warn(
           s"Navigation for about the property reached without correct selection of tied goods by controller"
@@ -121,23 +121,23 @@ class AboutThePropertyNavigator @Inject() (audit: Audit) extends Navigator(audit
   }
 
   override val routeMap: Map[Identifier, Session => Call] = Map(
-    AboutThePropertyPageId                  -> (_ => controllers.abouttheproperty.routes.WebsiteForPropertyController.show()),
+    AboutThePropertyPageId                  -> (_ => controllers.aboutyouandtheproperty.routes.WebsiteForPropertyController.show()),
     WebsiteForPropertyPageId                -> websiteForPropertyRouting,
     PremisesLicenseGrantedId                -> premisesLicenseGrantedRouting,
     PremisesLicenseGrantedDetailsId         -> premisesLicenseGrantedDetailsRouting,
     LicensableActivityPageId                -> licensableActivityRouting,
     LicensableActivityDetailsPageId         -> (_ =>
-      controllers.abouttheproperty.routes.PremisesLicenseConditionsController.show()
+      controllers.aboutyouandtheproperty.routes.PremisesLicenseConditionsController.show()
     ),
     PremisesLicenceConditionsPageId         -> premisesLicenceConditionsRouting,
     PremisesLicenceConditionsDetailsPageId  -> (_ =>
-      controllers.abouttheproperty.routes.EnforcementActionBeenTakenController.show()
+      controllers.aboutyouandtheproperty.routes.EnforcementActionBeenTakenController.show()
     ),
     EnforcementActionBeenTakenPageId        -> enforcementActionTakenRouting,
     EnforcementActionBeenTakenDetailsPageId -> enforcementActionTakenDetailsRouting,
     TiedForGoodsPageId                      -> tiedGoodsRouting,
     TiedForGoodsDetailsPageId               -> (_ =>
-      controllers.abouttheproperty.routes.CheckYourAnswersAboutThePropertyController.show()
+      controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show()
     ),
     CheckYourAnswersAboutThePropertyPageId  -> (_ => controllers.routes.TaskListController.show())
   )
