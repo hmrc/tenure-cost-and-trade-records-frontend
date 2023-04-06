@@ -18,7 +18,6 @@ package navigation
 
 import connectors.Audit
 import models.Session
-import models.submissions.aboutyouandtheproperty.{AboutYou, CustomerDetails}
 import models.submissions.common.ContactDetails
 import models.submissions.connectiontoproperty.{AddressConnectionTypeYes, StillConnectedDetails}
 import models.submissions.notconnected.{RemoveConnectionDetails, RemoveConnectionsDetails}
@@ -32,13 +31,15 @@ import scala.concurrent.ExecutionContext
 
 class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec {
 
-  val audit = mock[Audit]
+  val audit: Audit = mock[Audit]
   doNothing.when(audit).sendExplicitAudit(any[String], any[JsObject])(any[HeaderCarrier], any[ExecutionContext])
 
   val navigator = new AboutTheTradingHistoryNavigator(audit)
 
-  val stillConnectedDetailsYes = Some(StillConnectedDetails(Some(AddressConnectionTypeYes)))
-  val removeConnection         = Some(
+  val stillConnectedDetailsYes: Option[StillConnectedDetails] = Some(
+    StillConnectedDetails(Some(AddressConnectionTypeYes))
+  )
+  val removeConnection: Option[RemoveConnectionDetails]       = Some(
     RemoveConnectionDetails(
       Some(
         RemoveConnectionsDetails(
@@ -49,16 +50,15 @@ class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec {
       )
     )
   )
-  val aboutYou                 = Some(AboutYou(Some(CustomerDetails("Tobermory", ContactDetails("12345678909", "test@email.com")))))
-  val sessionAboutYou          =
+
+  val sessionAboutYou: Session =
     Session(
       "99996010004",
       "FOR6010",
       prefilledAddress,
       "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=",
       stillConnectedDetailsYes,
-      removeConnection,
-      aboutYou
+      removeConnection
     )
 
   implicit override val hc: HeaderCarrier = HeaderCarrier()

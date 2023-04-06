@@ -18,7 +18,7 @@ package controllers.aboutyouandtheproperty
 
 import actions.WithSessionRefiner
 import form.aboutyouandtheproperty.PremisesLicenseConditionsDetailsForm.premisesLicenceDetailsForm
-import models.submissions.aboutyouandtheproperty.AboutTheProperty.updateAboutTheProperty
+import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty.updateAboutYouAndTheProperty
 import navigation.AboutThePropertyNavigator
 import navigation.identifiers.PremisesLicenceConditionsDetailsPageId
 import play.api.i18n.I18nSupport
@@ -44,7 +44,7 @@ class PremisesLicenseConditionsDetailsController @Inject() (
     Future.successful(
       Ok(
         premisesLicenseConditionsView(
-          request.sessionData.aboutTheProperty.flatMap(_.premisesLicenseConditionsDetails) match {
+          request.sessionData.aboutYouAndTheProperty.flatMap(_.premisesLicenseConditionsDetails) match {
             case Some(premisesLicenseInformation) =>
               premisesLicenceDetailsForm.fillAndValidate(premisesLicenseInformation)
             case _                                => premisesLicenceDetailsForm
@@ -54,13 +54,13 @@ class PremisesLicenseConditionsDetailsController @Inject() (
     )
   }
 
-  def submit = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     premisesLicenceDetailsForm
       .bindFromRequest()
       .fold(
         formWithErrors => Future.successful(BadRequest(premisesLicenseConditionsView(formWithErrors))),
         data => {
-          val updatedData = updateAboutTheProperty(_.copy(premisesLicenseConditionsDetails = Some(data)))
+          val updatedData = updateAboutYouAndTheProperty(_.copy(premisesLicenseConditionsDetails = Some(data)))
           session.saveOrUpdate(updatedData)
           Future.successful(Redirect(navigator.nextPage(PremisesLicenceConditionsDetailsPageId).apply(updatedData)))
         }

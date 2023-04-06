@@ -49,12 +49,6 @@ class AboutYourTradingHistoryController @Inject() (
         request.sessionData.aboutTheTradingHistory.flatMap(_.aboutYourTradingHistory) match {
           case Some(tradingHistory) => aboutYourTradingHistoryForm.fillAndValidate(tradingHistory)
           case _                    => aboutYourTradingHistoryForm
-        },
-        getBackLink(request.sessionData) match {
-          case Right(link) => link
-          case Left(msg)   =>
-            logger.warn(s"Navigation for about your trading history page reached with error: $msg")
-            throw new RuntimeException(s"Navigation for about your trading history page reached with error $msg")
         }
       )
     )
@@ -64,22 +58,7 @@ class AboutYourTradingHistoryController @Inject() (
     aboutYourTradingHistoryForm
       .bindFromRequest()
       .fold(
-        formWithErrors =>
-          Future.successful(
-            BadRequest(
-              aboutYourTradingHistoryView(
-                formWithErrors,
-                getBackLink(request.sessionData) match {
-                  case Right(link) => link
-                  case Left(msg)   =>
-                    logger.warn(s"Navigation for about your trading history page reached with error: $msg")
-                    throw new RuntimeException(
-                      s"Navigation for about your trading history page reached with error $msg"
-                    )
-                }
-              )
-            )
-          ),
+        formWithErrors => Future.successful(BadRequest(aboutYourTradingHistoryView(formWithErrors))),
         data => {
           val updatedData = updateAboutTheTradingHistory(_.copy(aboutYourTradingHistory = Some(data)))
           session.saveOrUpdate(updatedData)
@@ -87,31 +66,4 @@ class AboutYourTradingHistoryController @Inject() (
         }
       )
   }
-
-  private def getBackLink(answers: Session): Either[String, String] =
-    answers.forType match {
-      case ForTypes.for6010                    =>
-        answers.aboutTheProperty.flatMap(_.tiedForGoods.map(_.name)) match {
-          case Some("yes") => Right(controllers.aboutyouandtheproperty.routes.TiedForGoodsDetailsController.show().url)
-          case Some("no")  => Right(controllers.aboutyouandtheproperty.routes.TiedForGoodsController.show().url)
-          case _           => Right(controllers.routes.TaskListController.show().url)
-        }
-      case ForTypes.for6011                    =>
-        answers.aboutTheProperty.flatMap(_.enforcementAction.map(_.name)) match {
-          case Some("yes") =>
-            Right(controllers.aboutyouandtheproperty.routes.EnforcementActionBeenTakenDetailsController.show().url)
-          case Some("no")  =>
-            Right(controllers.aboutyouandtheproperty.routes.EnforcementActionBeenTakenController.show().url)
-          case _           => Right(controllers.routes.TaskListController.show().url)
-        }
-      case ForTypes.for6015 | ForTypes.for6016 =>
-        answers.aboutTheProperty.flatMap(_.premisesLicenseGrantedDetail.map(_.name)) match {
-          case Some("yes") =>
-            Right(controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedDetailsController.show().url)
-          case Some("no")  =>
-            Right(controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedController.show().url)
-          case _           => Right(controllers.routes.TaskListController.show().url)
-        }
-      case _                                   => Left(s"Unknown form type with about your trading history back link")
-    }
 }

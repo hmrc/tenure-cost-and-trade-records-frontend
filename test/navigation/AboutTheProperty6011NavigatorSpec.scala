@@ -18,7 +18,8 @@ package navigation
 
 import connectors.Audit
 import models.submissions.aboutyouandtheproperty._
-import models.{Session}
+import models.Session
+import models.submissions.common.ContactDetails
 import navigation.identifiers._
 import org.scalatest.matchers.must.Matchers.convertToAnyMustWrapper
 import play.api.libs.json.JsObject
@@ -29,20 +30,19 @@ import scala.concurrent.ExecutionContext
 
 class AboutTheProperty6011NavigatorSpec extends TestBaseSpec {
 
-  val audit = mock[Audit]
+  val audit: Audit = mock[Audit]
   doNothing.when(audit).sendExplicitAudit(any[String], any[JsObject])(any[HeaderCarrier], any[ExecutionContext])
 
   val navigator = new AboutThePropertyNavigator(audit)
 
-  val sessionAboutYou6011No = Session(
+  val sessionAboutYou6011No: Session = Session(
     "99996010004",
     "FOR6011",
     prefilledAddress,
     "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=",
     Some(prefilledStillConnectedDetailsYes),
     Some(prefilledRemoveConnection),
-    Some(prefilledAboutYou),
-    Some(prefilledAboutThePropertyNo)
+    Some(prefilledAboutYouAndThePropertyNo)
   )
 
   "About to property navigator for no answers for 6011" when {
@@ -89,8 +89,9 @@ class AboutTheProperty6011NavigatorSpec extends TestBaseSpec {
     }
   }
 
-  val aboutThePropertyYes    = Some(
-    AboutTheProperty(
+  val aboutYouAndThePropertyYes: Option[AboutYouAndTheProperty] = Some(
+    AboutYouAndTheProperty(
+      Some(CustomerDetails("Tobermory", ContactDetails("12345678909", "test@email.com"))),
       Some(PropertyDetails("OccupierName", CurrentPropertyHotel, None)),
       Some(WebsiteForPropertyDetails(BuildingOperationHaveAWebsiteYes, Some("webAddress"))),
       Some(PremisesLicenseGrantedYes),
@@ -105,7 +106,7 @@ class AboutTheProperty6011NavigatorSpec extends TestBaseSpec {
       Some(TiedForGoodsInformationDetails(TiedForGoodsInformationDetailsFullTie))
     )
   )
-  val sessionAboutYou6011Yes =
+  val sessionAboutYou6011Yes: Session                           =
     Session(
       "99996010004",
       "FOR6011",
@@ -113,8 +114,7 @@ class AboutTheProperty6011NavigatorSpec extends TestBaseSpec {
       "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=",
       Some(prefilledStillConnectedDetailsYes),
       Some(prefilledRemoveConnection),
-      Some(prefilledAboutYou),
-      aboutThePropertyYes
+      aboutYouAndThePropertyYes
     )
 
   "About to property navigator for yes answers for 6010" when {

@@ -96,19 +96,17 @@ trait TestBaseSpec
   val mockCustomErrorHandler: ErrorHandler     = mock[ErrorHandler]
   val mockSessionRepository: SessionRepository = mock[SessionRepository]
 
-  val preFilledSession =
+  val preFilledSession: WithSessionRefiner =
     preEnrichedActionRefiner(
       Some(prefilledStillConnectedDetailsYes),
       Some(prefilledRemoveConnection),
-      Some(prefilledAboutYou),
-      Some(prefilledAboutThePropertyNo)
+      Some(prefilledAboutYouAndThePropertyNo)
     )
 
   def preEnrichedActionRefiner(
     stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledStillConnectedDetailsYes),
     removeConnectionDetails: Option[RemoveConnectionDetails] = Some(prefilledRemoveConnection),
-    aboutYou: Option[AboutYou] = Some(prefilledAboutYou),
-    aboutTheProperty: Option[AboutTheProperty] = Some(prefilledAboutThePropertyNo),
+    aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyNo),
     additionalInformation: Option[AdditionalInformation] = Some(prefilledAdditionalInformation),
     aboutTheTradingHistory: Option[AboutTheTradingHistory] = Some(prefilledAboutTheTradingHistory),
     aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = Some(prefilledAboutFranchiseOrLettings),
@@ -128,8 +126,7 @@ trait TestBaseSpec
                 "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=",
                 stillConnectedDetails = stillConnectedDetails,
                 removeConnectionDetails = removeConnectionDetails,
-                aboutYou = aboutYou,
-                aboutTheProperty = aboutTheProperty,
+                aboutYouAndTheProperty = aboutYouAndTheProperty,
                 additionalInformation = additionalInformation,
                 aboutTheTradingHistory = aboutTheTradingHistory,
                 aboutFranchisesOrLettings = aboutFranchisesOrLettings,

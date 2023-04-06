@@ -18,7 +18,7 @@ package controllers.aboutyouandtheproperty
 
 import actions.WithSessionRefiner
 import form.aboutyouandtheproperty.PremisesLicenseGrantedDetailsForm.premisesLicenseGrantedInformationDetailsForm
-import models.submissions.aboutyouandtheproperty.AboutTheProperty.updateAboutTheProperty
+import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty.updateAboutYouAndTheProperty
 import navigation.AboutThePropertyNavigator
 import navigation.identifiers.PremisesLicenseGrantedDetailsId
 import play.api.i18n.I18nSupport
@@ -44,7 +44,7 @@ class PremisesLicenseGrantedDetailsController @Inject() (
     Future.successful(
       Ok(
         premisesLicenseGrantedDetailsView(
-          request.sessionData.aboutTheProperty.flatMap(_.premisesLicenseGrantedInformationDetails) match {
+          request.sessionData.aboutYouAndTheProperty.flatMap(_.premisesLicenseGrantedInformationDetails) match {
             case Some(premisesLicenseGrantedInformationDetails) =>
               premisesLicenseGrantedInformationDetailsForm.fillAndValidate(premisesLicenseGrantedInformationDetails)
             case _                                              => premisesLicenseGrantedInformationDetailsForm
@@ -54,13 +54,13 @@ class PremisesLicenseGrantedDetailsController @Inject() (
     )
   }
 
-  def submit = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     premisesLicenseGrantedInformationDetailsForm
       .bindFromRequest()
       .fold(
         formWithErrors => Future.successful(BadRequest(premisesLicenseGrantedDetailsView(formWithErrors))),
         data => {
-          val updatedData = updateAboutTheProperty(_.copy(premisesLicenseGrantedInformationDetails = Some(data)))
+          val updatedData = updateAboutYouAndTheProperty(_.copy(premisesLicenseGrantedInformationDetails = Some(data)))
           session.saveOrUpdate(updatedData)
           Future.successful(Redirect(navigator.nextPage(PremisesLicenseGrantedDetailsId).apply(request.sessionData)))
         }

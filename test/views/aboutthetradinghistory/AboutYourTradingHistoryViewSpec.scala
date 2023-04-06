@@ -20,22 +20,23 @@ import form.aboutthetradinghistory.AboutYourTradingHistoryForm
 import models.submissions.aboutthetradinghistory.AboutYourTradingHistory
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
+import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
+import views.html.aboutthetradinghistory.aboutYourTradingHistory
 
 class AboutYourTradingHistoryViewSpec extends QuestionViewBehaviours[AboutYourTradingHistory] {
 
-  def aboutTheTradingHistoryView = app.injector.instanceOf[views.html.aboutthetradinghistory.aboutYourTradingHistory]
+  def aboutTheTradingHistoryView: aboutYourTradingHistory =
+    app.injector.instanceOf[views.html.aboutthetradinghistory.aboutYourTradingHistory]
 
   val messageKeyPrefix = "aboutYourTradingHistory"
 
-  override val form = AboutYourTradingHistoryForm.aboutYourTradingHistoryForm
+  override val form: Form[AboutYourTradingHistory] = AboutYourTradingHistoryForm.aboutYourTradingHistoryForm
 
-  val backLink = controllers.aboutyouandtheproperty.routes.TiedForGoodsController.show().url
+  def createView: () => Html = () => aboutTheTradingHistoryView(form)(fakeRequest, messages)
 
-  def createView = () => aboutTheTradingHistoryView(form, backLink)(fakeRequest, messages)
-
-  def createViewUsingForm = (form: Form[AboutYourTradingHistory]) =>
-    aboutTheTradingHistoryView(form, backLink)(fakeRequest, messages)
+  def createViewUsingForm: Form[AboutYourTradingHistory] => Html = (form: Form[AboutYourTradingHistory]) =>
+    aboutTheTradingHistoryView(form)(fakeRequest, messages)
 
   "About the trading history view" must {
 
@@ -46,7 +47,7 @@ class AboutYourTradingHistoryViewSpec extends QuestionViewBehaviours[AboutYourTr
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText mustBe messages("back.link.label")
       val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.routes.TaskListController.show.url
+      backlinkUrl mustBe controllers.routes.TaskListController.show().url
     }
 
     "contain an subhead for page" in {

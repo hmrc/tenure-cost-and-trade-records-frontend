@@ -18,7 +18,7 @@ package controllers.aboutyouandtheproperty
 
 import actions.WithSessionRefiner
 import form.aboutyouandtheproperty.LicensableActivitiesInformationForm.licensableActivitiesDetailsForm
-import models.submissions.aboutyouandtheproperty.AboutTheProperty.updateAboutTheProperty
+import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty.updateAboutYouAndTheProperty
 import navigation.AboutThePropertyNavigator
 import navigation.identifiers.LicensableActivityDetailsPageId
 import play.api.i18n.I18nSupport
@@ -44,7 +44,7 @@ class LicensableActivitiesDetailsController @Inject() (
     Future.successful(
       Ok(
         licensableActivitiesDetailsView(
-          request.sessionData.aboutTheProperty.flatMap(_.licensableActivitiesInformationDetails) match {
+          request.sessionData.aboutYouAndTheProperty.flatMap(_.licensableActivitiesInformationDetails) match {
             case Some(licensableActivitiesInformation) =>
               licensableActivitiesDetailsForm.fillAndValidate(licensableActivitiesInformation)
             case _                                     => licensableActivitiesDetailsForm
@@ -54,13 +54,13 @@ class LicensableActivitiesDetailsController @Inject() (
     )
   }
 
-  def submit = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     licensableActivitiesDetailsForm
       .bindFromRequest()
       .fold(
         formWithErrors => Future.successful(BadRequest(licensableActivitiesDetailsView(formWithErrors))),
         data => {
-          val updatedData = updateAboutTheProperty(_.copy(licensableActivitiesInformationDetails = Some(data)))
+          val updatedData = updateAboutYouAndTheProperty(_.copy(licensableActivitiesInformationDetails = Some(data)))
           session.saveOrUpdate(updatedData)
           Future.successful(Redirect(navigator.nextPage(LicensableActivityDetailsPageId).apply(updatedData)))
         }

@@ -19,7 +19,7 @@ package controllers.aboutyouandtheproperty
 import actions.WithSessionRefiner
 import form.aboutyouandtheproperty.PremisesLicenseConditionsForm.premisesLicenseConditionsForm
 import models.Session
-import models.submissions.aboutyouandtheproperty.AboutTheProperty.updateAboutTheProperty
+import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty.updateAboutYouAndTheProperty
 import navigation.AboutThePropertyNavigator
 import navigation.identifiers.PremisesLicenceConditionsPageId
 import play.api.Logging
@@ -47,7 +47,7 @@ class PremisesLicenseConditionsController @Inject() (
     Future.successful(
       Ok(
         premisesLicenseView(
-          request.sessionData.aboutTheProperty.flatMap(_.premisesLicenseConditions) match {
+          request.sessionData.aboutYouAndTheProperty.flatMap(_.premisesLicenseConditions) match {
             case Some(premisesLicense) => premisesLicenseConditionsForm.fillAndValidate(premisesLicense)
             case _                     => premisesLicenseConditionsForm
           },
@@ -57,14 +57,14 @@ class PremisesLicenseConditionsController @Inject() (
     )
   }
 
-  def submit = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     premisesLicenseConditionsForm
       .bindFromRequest()
       .fold(
         formWithErrors =>
           Future.successful(BadRequest(premisesLicenseView(formWithErrors, getBackLink(request.sessionData)))),
         data => {
-          val updatedData = updateAboutTheProperty(_.copy(premisesLicenseConditions = Some(data)))
+          val updatedData = updateAboutYouAndTheProperty(_.copy(premisesLicenseConditions = Some(data)))
           session.saveOrUpdate(updatedData)
           Future.successful(Redirect(navigator.nextPage(PremisesLicenceConditionsPageId).apply(updatedData)))
         }
@@ -72,7 +72,7 @@ class PremisesLicenseConditionsController @Inject() (
   }
 
   private def getBackLink(answers: Session): String =
-    answers.aboutTheProperty.flatMap(_.licensableActivities.map(_.name)) match {
+    answers.aboutYouAndTheProperty.flatMap(_.licensableActivities.map(_.name)) match {
       case Some("yes") => controllers.aboutyouandtheproperty.routes.LicensableActivitiesDetailsController.show().url
       case Some("no")  => controllers.aboutyouandtheproperty.routes.LicensableActivitiesController.show().url
       case _           =>

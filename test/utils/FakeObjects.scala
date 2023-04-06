@@ -24,7 +24,6 @@ import models.submissions.aboutfranchisesorlettings
 import models.submissions.aboutfranchisesorlettings.LettingSection
 import models.submissions.aboutyouandtheproperty._
 import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, AboutYourTradingHistory}
-import models.submissions.aboutyouandtheproperty.AboutYou
 import models.submissions.additionalinformation._
 import models.{AnnualRent, Session, SubmissionDraft}
 import models.submissions.common.{Address, AnswerNo, AnswerYes, ContactDetails, ContactDetailsAddress}
@@ -160,8 +159,8 @@ trait FakeObjects {
       )
     )
 
-  val prefilledAboutYou           = AboutYou(Some(CustomerDetails("Tobermory", ContactDetails("12345678909", "test@email.com"))))
-  val prefilledAboutThePropertyNo = AboutTheProperty(
+  val prefilledAboutYouAndThePropertyNo = AboutYouAndTheProperty(
+    Some(CustomerDetails("Tobermory", ContactDetails("12345678909", "test@email.com"))),
     Some(PropertyDetails("OccupierName", CurrentPropertyHotel, None)),
     Some(WebsiteForPropertyDetails(BuildingOperationHaveAWebsiteYes, Some("webAddress"))),
     Some(PremisesLicenseGrantedNo),

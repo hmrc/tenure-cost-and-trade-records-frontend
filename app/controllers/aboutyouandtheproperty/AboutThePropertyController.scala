@@ -18,7 +18,7 @@ package controllers.aboutyouandtheproperty
 
 import actions.WithSessionRefiner
 import form.aboutyouandtheproperty.AboutThePropertyForm.aboutThePropertyForm
-import models.submissions.aboutyouandtheproperty.AboutTheProperty.updateAboutTheProperty
+import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty.updateAboutYouAndTheProperty
 import navigation.AboutThePropertyNavigator
 import navigation.identifiers.AboutThePropertyPageId
 import play.api.i18n.I18nSupport
@@ -44,7 +44,7 @@ class AboutThePropertyController @Inject() (
     Future.successful(
       Ok(
         aboutThePropertyView(
-          request.sessionData.aboutTheProperty.flatMap(_.propertyDetails) match {
+          request.sessionData.aboutYouAndTheProperty.flatMap(_.propertyDetails) match {
             case Some(propertyDetails) => aboutThePropertyForm.fillAndValidate(propertyDetails)
             case _                     => aboutThePropertyForm
           },
@@ -54,7 +54,7 @@ class AboutThePropertyController @Inject() (
     )
   }
 
-  def submit = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     aboutThePropertyForm
       .bindFromRequest()
       .fold(
@@ -63,7 +63,7 @@ class AboutThePropertyController @Inject() (
             BadRequest(aboutThePropertyView(formWithErrors, request.sessionData.forType))
           ),
         data => {
-          val updatedData = updateAboutTheProperty(_.copy(propertyDetails = Some(data)))
+          val updatedData = updateAboutYouAndTheProperty(_.copy(propertyDetails = Some(data)))
           session.saveOrUpdate(updatedData)
           Future.successful(Redirect(navigator.nextPage(AboutThePropertyPageId).apply(updatedData)))
         }

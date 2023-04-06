@@ -18,7 +18,7 @@ package controllers.aboutyouandtheproperty
 
 import actions.WithSessionRefiner
 import form.aboutyouandtheproperty.AboutYouForm.aboutYouForm
-import models.submissions.aboutyouandtheproperty.AboutYou.updateAboutYou
+import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty.updateAboutYouAndTheProperty
 import navigation.AboutYouNavigator
 import navigation.identifiers.AboutYouPageId
 import play.api.i18n.I18nSupport
@@ -44,7 +44,7 @@ class AboutYouController @Inject() (
     Future.successful(
       Ok(
         aboutYouView(
-          request.sessionData.aboutYou.flatMap(_.customerDetails) match {
+          request.sessionData.aboutYouAndTheProperty.flatMap(_.customerDetails) match {
             case Some(customerDetails) => aboutYouForm.fillAndValidate(customerDetails)
             case _                     => aboutYouForm
           }
@@ -59,7 +59,7 @@ class AboutYouController @Inject() (
       .fold(
         formWithErrors => Future.successful(BadRequest(aboutYouView(formWithErrors))),
         data => {
-          val updatedData = updateAboutYou(_.copy(customerDetails = Some(data)))
+          val updatedData = updateAboutYouAndTheProperty(_.copy(customerDetails = Some(data)))
           session.saveOrUpdate(updatedData)
 
           if (request.body.asFormUrlEncoded.flatMap(_.get("save_button")).isDefined) {

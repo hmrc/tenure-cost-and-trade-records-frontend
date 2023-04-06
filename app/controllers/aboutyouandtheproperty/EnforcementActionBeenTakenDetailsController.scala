@@ -18,7 +18,7 @@ package controllers.aboutyouandtheproperty
 
 import actions.WithSessionRefiner
 import form.aboutyouandtheproperty.EnforcementActionDetailsForm.enforcementActionDetailsForm
-import models.submissions.aboutyouandtheproperty.AboutTheProperty.updateAboutTheProperty
+import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty.updateAboutYouAndTheProperty
 import navigation.AboutThePropertyNavigator
 import navigation.identifiers.EnforcementActionBeenTakenDetailsPageId
 import play.api.i18n.I18nSupport
@@ -44,7 +44,7 @@ class EnforcementActionBeenTakenDetailsController @Inject() (
     Future.successful(
       Ok(
         enforcementActionBeenTakenDetailsView(
-          request.sessionData.aboutTheProperty.flatMap(_.enforcementActionHasBeenTakenInformationDetails) match {
+          request.sessionData.aboutYouAndTheProperty.flatMap(_.enforcementActionHasBeenTakenInformationDetails) match {
             case Some(enforcementActionInformation) =>
               enforcementActionDetailsForm.fillAndValidate(enforcementActionInformation)
             case _                                  => enforcementActionDetailsForm
@@ -54,13 +54,14 @@ class EnforcementActionBeenTakenDetailsController @Inject() (
     )
   }
 
-  def submit = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     enforcementActionDetailsForm
       .bindFromRequest()
       .fold(
         formWithErrors => Future.successful(BadRequest(enforcementActionBeenTakenDetailsView(formWithErrors))),
         data => {
-          val updatedData = updateAboutTheProperty(_.copy(enforcementActionHasBeenTakenInformationDetails = Some(data)))
+          val updatedData =
+            updateAboutYouAndTheProperty(_.copy(enforcementActionHasBeenTakenInformationDetails = Some(data)))
           session.saveOrUpdate(updatedData)
           Future.successful(Redirect(navigator.nextPage(EnforcementActionBeenTakenDetailsPageId).apply(updatedData)))
         }

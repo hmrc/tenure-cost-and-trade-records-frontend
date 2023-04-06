@@ -18,7 +18,7 @@ package controllers.aboutyouandtheproperty
 
 import actions.WithSessionRefiner
 import form.aboutyouandtheproperty.WebsiteForPropertyForm.websiteForPropertyForm
-import models.submissions.aboutyouandtheproperty.AboutTheProperty.updateAboutTheProperty
+import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty.updateAboutYouAndTheProperty
 import navigation.AboutThePropertyNavigator
 import navigation.identifiers.WebsiteForPropertyPageId
 import play.api.i18n.I18nSupport
@@ -44,7 +44,7 @@ class WebsiteForPropertyController @Inject() (
     Future.successful(
       Ok(
         websiteForPropertyView(
-          request.sessionData.aboutTheProperty.flatMap(_.websiteForPropertyDetails) match {
+          request.sessionData.aboutYouAndTheProperty.flatMap(_.websiteForPropertyDetails) match {
             case Some(websiteForPropertyDetails) => websiteForPropertyForm.fillAndValidate(websiteForPropertyDetails)
             case _                               => websiteForPropertyForm
           }
@@ -54,13 +54,13 @@ class WebsiteForPropertyController @Inject() (
   }
 
   //TODO - the view needs to be updated so that if the user selects 'yes' the text field is mandatory. It is currently possible for a user to click 'yes' and enter no data.
-  def submit = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     websiteForPropertyForm
       .bindFromRequest()
       .fold(
         formWithErrors => Future.successful(BadRequest(websiteForPropertyView(formWithErrors))),
         data => {
-          val updatedData = updateAboutTheProperty(_.copy(websiteForPropertyDetails = Some(data)))
+          val updatedData = updateAboutYouAndTheProperty(_.copy(websiteForPropertyDetails = Some(data)))
           session.saveOrUpdate(updatedData)
           Future.successful(Redirect(navigator.nextPage(WebsiteForPropertyPageId).apply(updatedData)))
         }
