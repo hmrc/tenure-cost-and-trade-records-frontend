@@ -17,7 +17,6 @@
 package controllers.aboutyouandtheproperty
 
 import form.Errors
-import navigation.AboutYouNavigator
 import play.api.data.FormError
 import play.api.http.Status
 import play.api.test.Helpers._
@@ -31,13 +30,12 @@ class AboutYouControllerSpec extends TestBaseSpec {
   import form.aboutyouandtheproperty.AboutYouForm.aboutYouForm
   import utils.FormBindingTestAssertions.{mustContainError, mustContainRequiredErrorFor}
 
-  val mockAboutYouNavigator = mock[AboutYouNavigator]
-  val mockAboutYouView      = mock[aboutYou]
+  val mockAboutYouView = mock[aboutYou]
   when(mockAboutYouView.apply(any)(any, any)).thenReturn(HtmlFormat.empty)
 
   val aboutYouController = new AboutYouController(
     stubMessagesControllerComponents(),
-    mockAboutYouNavigator,
+    aboutYouAndThePropertyNavigator,
     mockAboutYouView,
     preFilledSession,
     mockSessionRepo

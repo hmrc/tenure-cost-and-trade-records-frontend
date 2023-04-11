@@ -16,7 +16,7 @@
 
 package controllers.aboutyouandtheproperty
 
-import navigation.AboutThePropertyNavigator
+import navigation.AboutYouAndThePropertyNavigator
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
@@ -26,7 +26,7 @@ import views.html.aboutyouandtheproperty.enforcementActionBeenTaken
 
 class EnforcementActionBeenTakenControllerSpec extends TestBaseSpec {
 
-  val mockAboutThePropertyNavigator      = mock[AboutThePropertyNavigator]
+  val mockAboutThePropertyNavigator      = mock[AboutYouAndThePropertyNavigator]
   val mockEnforcementActionBeenTakenView = mock[enforcementActionBeenTaken]
   when(mockEnforcementActionBeenTakenView.apply(any, any)(any, any)).thenReturn(HtmlFormat.empty)
 

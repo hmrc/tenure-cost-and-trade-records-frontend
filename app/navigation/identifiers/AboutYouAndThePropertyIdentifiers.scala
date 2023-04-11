@@ -16,27 +16,21 @@
 
 package navigation.identifiers
 
-case object AboutThePropertyPageId extends Identifier {
-  override def toString: String = "aboutThePropertyPage"
-}
+case object AboutYouPageId extends Identifier { override def toString: String = "aboutYouPage" }
 
-case object WebsiteForPropertyPageId extends Identifier {
-  override def toString: String = "websiteForPropertyPage"
-}
+case object AboutThePropertyPageId extends Identifier { override def toString: String = "aboutThePropertyPage" }
+
+case object WebsiteForPropertyPageId extends Identifier { override def toString: String = "websiteForPropertyPage" }
 
 // 6015 page only
-case object PremisesLicenseGrantedId extends Identifier {
-  override def toString: String = "premisesLicenseGrantedPage"
-}
+case object PremisesLicenseGrantedId extends Identifier { override def toString: String = "premisesLicenseGrantedPage" }
 
 // 6015 page only
 case object PremisesLicenseGrantedDetailsId extends Identifier {
   override def toString: String = "premisesLicenseGrantedDetailsPage"
 }
 
-case object LicensableActivityPageId extends Identifier {
-  override def toString: String = "licensableActivityPage"
-}
+case object LicensableActivityPageId extends Identifier { override def toString: String = "licensableActivityPage" }
 
 case object LicensableActivityDetailsPageId extends Identifier {
   override def toString: String = "licensableActivityDetailsPage"
@@ -58,13 +52,9 @@ case object EnforcementActionBeenTakenDetailsPageId extends Identifier {
   override def toString: String = "enforcementActionBeenTakenDetailsPage"
 }
 
-case object TiedForGoodsPageId extends Identifier {
-  override def toString: String = "tiedForGoodsPage"
-}
+case object TiedForGoodsPageId extends Identifier { override def toString: String = "tiedForGoodsPage" }
 
-case object TiedForGoodsDetailsPageId extends Identifier {
-  override def toString: String = "tiedForGoodsDetailsPage"
-}
+case object TiedForGoodsDetailsPageId extends Identifier { override def toString: String = "tiedForGoodsDetailsPage" }
 
 case object CheckYourAnswersAboutThePropertyPageId extends Identifier {
   override def toString: String = "checkYourAnswersAboutThePropertyPage"

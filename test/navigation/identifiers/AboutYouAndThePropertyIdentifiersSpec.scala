@@ -18,9 +18,13 @@ package navigation.identifiers
 
 import utils.TestBaseSpec
 
-class AboutThePropertyIdentifiersSpec extends TestBaseSpec {
+class AboutYouAndThePropertyIdentifiersSpec extends TestBaseSpec {
 
   "About the property identifiers" when {
+
+    "Identifier for about you page" in {
+      assert(AboutYouPageId.toString.equals("aboutYouPage"))
+    }
 
     "Identifier for about the property page" in {
       assert(AboutThePropertyPageId.toString.equals("aboutThePropertyPage"))

@@ -19,7 +19,7 @@ package controllers.aboutyouandtheproperty
 import actions.WithSessionRefiner
 import form.aboutyouandtheproperty.AboutYouForm.aboutYouForm
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty.updateAboutYouAndTheProperty
-import navigation.AboutYouNavigator
+import navigation.AboutYouAndThePropertyNavigator
 import navigation.identifiers.AboutYouPageId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
@@ -33,7 +33,7 @@ import scala.concurrent.Future
 @Singleton
 class AboutYouController @Inject() (
   mcc: MessagesControllerComponents,
-  navigator: AboutYouNavigator,
+  navigator: AboutYouAndThePropertyNavigator,
   aboutYouView: aboutYou,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo

@@ -24,7 +24,7 @@ import play.api.mvc.Call
 
 import javax.inject.Inject
 
-class AboutThePropertyNavigator @Inject() (audit: Audit) extends Navigator(audit) with Logging {
+class AboutYouAndThePropertyNavigator @Inject() (audit: Audit) extends Navigator(audit) with Logging {
 
   private def websiteForPropertyRouting: Session => Call = answers => {
     if (
@@ -121,6 +121,7 @@ class AboutThePropertyNavigator @Inject() (audit: Audit) extends Navigator(audit
   }
 
   override val routeMap: Map[Identifier, Session => Call] = Map(
+    AboutYouPageId                          -> (_ => controllers.aboutyouandtheproperty.routes.AboutThePropertyController.show()),
     AboutThePropertyPageId                  -> (_ => controllers.aboutyouandtheproperty.routes.WebsiteForPropertyController.show()),
     WebsiteForPropertyPageId                -> websiteForPropertyRouting,
     PremisesLicenseGrantedId                -> premisesLicenseGrantedRouting,
