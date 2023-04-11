@@ -28,12 +28,12 @@ import utils.TestBaseSpec
 
 import scala.concurrent.ExecutionContext
 
-class AboutTheProperty6010NavigatorSpec extends TestBaseSpec {
+class AboutYouAndTheProperty6010NavigatorSpec extends TestBaseSpec {
 
   val audit: Audit = mock[Audit]
   doNothing.when(audit).sendExplicitAudit(any[String], any[JsObject])(any[HeaderCarrier], any[ExecutionContext])
 
-  val navigator = new AboutThePropertyNavigator(audit)
+  val navigator = new AboutYouAndThePropertyNavigator(audit)
 
   val sessionAboutYou6010No: Session =
     Session(
@@ -125,7 +125,14 @@ class AboutTheProperty6010NavigatorSpec extends TestBaseSpec {
       aboutThePropertyYes
     )
 
-  "About to property navigator for yes answers for 6010" when {
+  "About you and the property navigator for yes answers for 6010" when {
+
+    "return a function that goes to about the property page when about you has been completed" in {
+      navigator
+        .nextPage(AboutYouPageId)
+        .apply(sessionAboutYou6010Yes) mustBe controllers.aboutyouandtheproperty.routes.AboutThePropertyController
+        .show()
+    }
 
     "return a function that goes to about the property website page when about the property page has been completed" in {
       navigator

@@ -19,7 +19,7 @@ package controllers.aboutyouandtheproperty
 import actions.WithSessionRefiner
 import form.aboutyouandtheproperty.PremisesLicenseGrantedDetailsForm.premisesLicenseGrantedInformationDetailsForm
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty.updateAboutYouAndTheProperty
-import navigation.AboutThePropertyNavigator
+import navigation.AboutYouAndThePropertyNavigator
 import navigation.identifiers.PremisesLicenseGrantedDetailsId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
@@ -33,7 +33,7 @@ import scala.concurrent.Future
 @Singleton
 class PremisesLicenseGrantedDetailsController @Inject() (
   mcc: MessagesControllerComponents,
-  navigator: AboutThePropertyNavigator,
+  navigator: AboutYouAndThePropertyNavigator,
   premisesLicenseGrantedDetailsView: premisesLicenseGrantedDetails,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo

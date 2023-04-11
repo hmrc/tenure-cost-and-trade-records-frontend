@@ -17,7 +17,7 @@
 package controllers.aboutyouandtheproperty
 
 import form.Errors
-import navigation.AboutThePropertyNavigator
+import navigation.AboutYouAndThePropertyNavigator
 import play.api.http.Status
 import play.api.test.Helpers._
 import play.twirl.api.HtmlFormat
@@ -30,7 +30,7 @@ class WebsiteForPropertyControllerSpec extends TestBaseSpec {
   import form.aboutyouandtheproperty.WebsiteForPropertyForm._
   import utils.FormBindingTestAssertions._
 
-  val mockAboutThePropertyNavigator                  = mock[AboutThePropertyNavigator]
+  val mockAboutThePropertyNavigator                  = mock[AboutYouAndThePropertyNavigator]
   val mockWebsiteForPropertyView: websiteForProperty = mock[websiteForProperty]
   when(mockWebsiteForPropertyView.apply(any)(any, any)).thenReturn(HtmlFormat.empty)
 

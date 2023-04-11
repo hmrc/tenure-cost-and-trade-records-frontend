@@ -16,7 +16,7 @@
 
 package controllers.aboutyouandtheproperty
 
-import navigation.AboutThePropertyNavigator
+import navigation.AboutYouAndThePropertyNavigator
 import play.api.http.Status
 import play.api.test.Helpers._
 import play.twirl.api.HtmlFormat
@@ -25,7 +25,7 @@ import views.html.aboutyouandtheproperty.licensableActivitiesDetails
 
 class LicensableActivitiesDetailsControllerSpec extends TestBaseSpec {
 
-  val mockAboutThePropertyNavigator = mock[AboutThePropertyNavigator]
+  val mockAboutThePropertyNavigator = mock[AboutYouAndThePropertyNavigator]
   val mockLicensableActivitiesView  = mock[licensableActivitiesDetails]
   when(mockLicensableActivitiesView.apply(any)(any, any)).thenReturn(HtmlFormat.empty)
 

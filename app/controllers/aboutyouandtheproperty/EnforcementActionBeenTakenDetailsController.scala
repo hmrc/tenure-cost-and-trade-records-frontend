@@ -19,7 +19,7 @@ package controllers.aboutyouandtheproperty
 import actions.WithSessionRefiner
 import form.aboutyouandtheproperty.EnforcementActionDetailsForm.enforcementActionDetailsForm
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty.updateAboutYouAndTheProperty
-import navigation.AboutThePropertyNavigator
+import navigation.AboutYouAndThePropertyNavigator
 import navigation.identifiers.EnforcementActionBeenTakenDetailsPageId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
@@ -33,7 +33,7 @@ import scala.concurrent.Future
 @Singleton
 class EnforcementActionBeenTakenDetailsController @Inject() (
   mcc: MessagesControllerComponents,
-  navigator: AboutThePropertyNavigator,
+  navigator: AboutYouAndThePropertyNavigator,
   enforcementActionBeenTakenDetailsView: enforcementActionBeenTakenDetails,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo

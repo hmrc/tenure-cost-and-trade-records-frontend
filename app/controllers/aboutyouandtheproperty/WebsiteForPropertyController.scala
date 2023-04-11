@@ -19,7 +19,7 @@ package controllers.aboutyouandtheproperty
 import actions.WithSessionRefiner
 import form.aboutyouandtheproperty.WebsiteForPropertyForm.websiteForPropertyForm
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty.updateAboutYouAndTheProperty
-import navigation.AboutThePropertyNavigator
+import navigation.AboutYouAndThePropertyNavigator
 import navigation.identifiers.WebsiteForPropertyPageId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
@@ -33,7 +33,7 @@ import scala.concurrent.Future
 @Singleton
 class WebsiteForPropertyController @Inject() (
   mcc: MessagesControllerComponents,
-  navigator: AboutThePropertyNavigator,
+  navigator: AboutYouAndThePropertyNavigator,
   websiteForPropertyView: websiteForProperty,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
