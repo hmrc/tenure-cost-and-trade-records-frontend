@@ -5,6 +5,7 @@ service.title = {0} - Declare your business trade and cost information - GOV.UK
 gov.name = GOV.UK
 phase.beta = BETA
 phase.text = Mae hwn yn wasanaeth newydd – bydd eich <a href="{0}" class="govuk-link" target="_blank" id="betaFeedback">adborth</a> yn ein helpu i’w wella
+label.continue=Parhewch
 button.label.continue = Yn eich blaen
 button.label.send = Accept and send
 back.link.label = Yn ôl
@@ -704,8 +705,12 @@ saveAsDraft.validPassword=Rhaid i’r cyfrinair fod o leiaf 7 nod yn hir.
 saveAsDraft.error.passwordsDontMatch=Nid yw’r cyfrineiriau yn cyfateb.
 saveAsDraft.createPassword.header=Creu cyfrinair i adfer eich gwybodaeth
 saveAsDraft.next=Cadw cyfrinair
-saveAsDraft.continue=Parhewch i lenwi'r ffurflen hon
+saveAsDraft.continue=Parhewch i lenwi’r ffurflen hon
 saveAsDraft.logout=Allgofnodi
+saveAsDraft.pleaseEnterPassword=Rhowch eich cyfrinair
+saveAsDraft.passwordHint=Hwn fydd y cyfrinair a grëwyd gennych neu’r un a roddwyd ichi pan gawsoch eich amseru o’r gwasanaeth.
+saveAsDraft.error.invalidPassword=Nid yw’r cyfrinair a roddwyd gennych yn gywir
+saveAsDraft.startAgain=Dechrau’r ffurflen eto
 
 # Errors
 ########
@@ -723,8 +728,8 @@ error.contact.phone.minLength = Phone number must be between 11 and 20 character
 error.contact.phone.maxLength = Phone number must be between 11 and 20 characters
 error.userType.required=Select your connection to the property
 error.contact.details.missing=At least one of phone, email, or address must be given
-error.maxLength=This must be {0} characters or fewer
-error.minLength=Minimum length is {0} characters
+error.maxLength=Rhaid i fod yn {0} nod neu lai
+error.minLength=Hyd lleiaf yw {0}
 error.invalid_postcode=Enter a valid UK postcode
 error.invalid_currency = Please provide a number
 error.maxCurrencyAmountExceeded = Maximum amount exceeded - please contact the VOA

@@ -5,6 +5,7 @@ service.title = {0} - Declare your business trade and cost information - GOV.UK
 gov.name = GOV.UK
 phase.beta = BETA
 phase.text = This is a new service – your <a href="{0}" class="govuk-link" target="_blank" id="betaFeedback">feedback</a> will help us to improve it.
+label.continue=Continue
 button.label.continue = Save and continue
 button.label.send = Accept and send
 back.link.label = Back
@@ -728,6 +729,10 @@ saveAsDraft.createPassword.header=Create a password to retrieve your saved infor
 saveAsDraft.next=Save password
 saveAsDraft.continue=Continue completing this form
 saveAsDraft.logout=Log out
+saveAsDraft.pleaseEnterPassword=Enter your password
+saveAsDraft.passwordHint=This will either be the password you created or the one given to you when you were timed out of the service.
+saveAsDraft.error.invalidPassword=The password you entered is not correct
+saveAsDraft.startAgain=Start form again
 
 # Errors
 ########
