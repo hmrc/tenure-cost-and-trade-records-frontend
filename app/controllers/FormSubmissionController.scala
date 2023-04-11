@@ -66,6 +66,6 @@ class FormSubmissionController @Inject() (
   }
 
   def confirmation: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    Ok(confirmationView(request.sessionData.referenceNumber))
+    Ok(confirmationView())
   }
 }

@@ -45,7 +45,10 @@
  backLinkUrl = controllers.additionalinformation.routes.AlternativeContactDetailsController.show.url,
 ) {
 
- <dl class="govuk-summary-list">
+ @formWithCSRF(action = controllers.notconnected.routes.CheckYourAnswersNotConnectedController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
+
+
+  <dl class="govuk-summary-list">
   <div id="fullName" class="govuk-summary-list__row">
    <dt class="govuk-summary-list__key">Operator's Name</dt>
    <dd class="govuk-summary-list__value">
@@ -78,6 +81,10 @@
    </dd>
   </div>
  </dl>
+
+  @includes.continueButton(govukButton)
+
+ }
 
 }
 
