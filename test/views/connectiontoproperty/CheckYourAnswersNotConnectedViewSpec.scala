@@ -48,12 +48,6 @@ class CheckYourAnswersNotConnectedViewSpec extends QuestionViewBehaviours[NotCon
       backlinkUrl mustBe controllers.additionalinformation.routes.AlternativeContactDetailsController.show().url
     }
 
-//    "Section heading is visible" in {
-//      val doc         = asDocument(createViewUsingForm(form)) // govuk-caption-m
-//      val sectionText = doc.getElementsByClass("govuk-caption-m").text()
-//      assert(sectionText == messages("label.section.additionalInformation"))
-//    }
-//
 //    "contain save and continue button with the value Save and Continue" in {
 //      val doc         = asDocument(createViewUsingForm(form))
 //      val loginButton = doc.getElementById("continue").text()

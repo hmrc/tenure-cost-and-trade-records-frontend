@@ -1,5 +1,5 @@
 # COMMON
-##############################
+########
 site.service_name = Declare your business trade and cost information
 service.title = {0} - Declare your business trade and cost information - GOV.UK
 gov.name = GOV.UK
@@ -13,14 +13,14 @@ label.checkTheForm = There is a problem
 error.title = Error:
 hintText.optional = (optional)
 
-#SESSION TIMEOUT
-##############################
+# SESSION TIMEOUT
+#################
 heading.sessionTimeout=Session timed out
 sessionTimeout.copy=You have been logged out as you have not used this form for the last 24 hours.
 sessionTimeout.button=Please log in again
 
-#WELSH YES/NO
-#############
+# WELSH YES/NO
+##############
 label.yes.oes=Yes
 label.no.nac.oes=No
 label.yes.ie=Yes
@@ -64,7 +64,6 @@ label.email = Email address
 
 # SECTION NAMES
 ###############
-label.section.checkBeforeStart = Check before you start
 label.section.aboutYou = About you
 label.section.aboutTheProperty = About the property
 label.section.aboutYourTradingHistory = About your trading history

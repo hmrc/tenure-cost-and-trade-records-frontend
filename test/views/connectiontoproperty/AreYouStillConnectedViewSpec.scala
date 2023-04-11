@@ -78,12 +78,6 @@ class AreYouStillConnectedViewSpec extends QuestionViewBehaviours[AddressConnect
       }
     }
 
-    "Section heading is visible" in {
-      val doc         = asDocument(createViewUsingForm(form))
-      val sectionText = doc.getElementsByClass("govuk-caption-m").text()
-      assert(sectionText == messages("label.section.checkBeforeStart"))
-    }
-
     "contain radio buttons for the value yes" in {
       val doc = asDocument(createViewUsingForm(form))
       assertContainsRadioButton(doc, "isRelated", "isRelated", AddressConnectionTypeYes.name, false)
