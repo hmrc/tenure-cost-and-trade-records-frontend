@@ -26,8 +26,11 @@
 @import views.html.govuk.{head, scripts}
 @import uk.gov.hmrc.hmrcfrontend.views.html.helpers.HmrcInternalHead
 @import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcInternalHeader
-@import uk.gov.hmrc.hmrcfrontend.views.viewmodels.internalheader.InternalHeader
 @import views.html.helper.CSPNonce
+@import uk.gov.hmrc.govukfrontend.views.html.components.TwoThirdsMainContent
+@import views.html.govuk.FullWidthMainContent
+
+
 
 
 @this(
@@ -42,7 +45,9 @@
         govukBackLink: GovukBackLink,
         govukErrorSummary: GovukErrorSummary,
         govukNotificationBanner: GovukNotificationBanner,
-        configuration: Configuration
+        configuration: Configuration,
+        twoThirdsMainContent: TwoThirdsMainContent,
+        fullWidthMainContent: FullWidthMainContent
 )
 
 @(
@@ -56,7 +61,8 @@
         sectionName: Option[String] = None,
         backLinkUrl: Option[String] = None,
         beforeContentBlock: Option[Html] = None,
-        withTimeoutDialog: Boolean = true
+        withTimeoutDialog: Boolean = true,
+        fullWidth: Boolean = false
 )(contentBlock: Html)(implicit request: Request[_], messages: Messages)
 
 @beforeBLock = {
@@ -129,6 +135,7 @@
     nonce = CSPNonce.get,
     additionalHeadBlock = Some(headTemplate(withTimeoutDialog)),
     additionalScriptsBlock = Some(scriptsTemplate()),
-    beforeContentBlock = Option(beforeBLock)
- )(contentWithHeading)
+    beforeContentBlock = Option(beforeBLock),
+    mainContentLayout = Some(if (fullWidth) fullWidthMainContent(_) else twoThirdsMainContent(_))
+)(contentWithHeading)
 

@@ -18,7 +18,8 @@ package controllers
 
 import actions.WithSessionRefiner
 import config.LoginToBackendAction
-import connectors.Audit
+import connectors.{Audit, BackendConnector}
+import controllers.LoginController.startPage
 import form.{Errors, MappingSupport}
 import models.submissions.common.Address
 import models.{ForTypes, Session}
@@ -66,10 +67,14 @@ object LoginController {
       "start-time"      -> jodaDate("yyyy-MM-dd'T'HH:mm:ss.SSSZ")
     )(LoginDetails.apply)(LoginDetails.unapply)
   )
+
+  val startPage: Call = controllers.connectiontoproperty.routes.AreYouStillConnectedController.show()
+
 }
 
 @Singleton
 class LoginController @Inject() (
+  backendConnector: BackendConnector,
   audit: Audit,
   mcc: MessagesControllerComponents,
   login: login,
@@ -130,7 +135,12 @@ class LoginController @Inject() (
           case Some(_) =>
             session
               .start(Session(referenceNumber, forNum, address, token))
-              .map(_ => Redirect(controllers.connectiontoproperty.routes.AreYouStillConnectedController.show()))
+              .flatMap(_ =>
+                backendConnector.loadSubmissionDraft(referenceNumber).map {
+                  case Some(_) => Redirect(controllers.routes.SaveAsDraftController.loginToResume)
+                  case _       => Redirect(startPage)
+                }
+              )
           case None    =>
             session
               .start(Session(referenceNumber, forNum, address, token))

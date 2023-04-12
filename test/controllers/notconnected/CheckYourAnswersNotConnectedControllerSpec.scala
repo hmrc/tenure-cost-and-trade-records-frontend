@@ -22,6 +22,7 @@ import play.api.test.Helpers._
 import play.twirl.api.HtmlFormat
 import utils.TestBaseSpec
 import views.html.notconnected.checkYourAnswersNotConnected
+import views.html.confirmation
 import views.html.taskList
 
 class CheckYourAnswersNotConnectedControllerSpec extends TestBaseSpec {
@@ -31,13 +32,16 @@ class CheckYourAnswersNotConnectedControllerSpec extends TestBaseSpec {
   val mockNotConnectedNavigator            = mock[RemoveConnectionNavigator]
   val mockCheckYourAnswersNotConnectedView = mock[checkYourAnswersNotConnected]
   when(mockCheckYourAnswersNotConnectedView.apply()(any, any)).thenReturn(HtmlFormat.empty)
+  val mockConfirmationView                 = mock[confirmation]
+  when(mockConfirmationView.apply()(any, any)).thenReturn(HtmlFormat.empty)
 
   val mockTaskListView = mock[taskList]
   when(mockTaskListView.apply()(any, any)).thenReturn(HtmlFormat.empty)
 
   val checkYourAdditionalInformationController = new CheckYourAnswersNotConnectedController(
     stubMessagesControllerComponents(),
-    mockCheckYourAnswersNotConnectedView
+    mockCheckYourAnswersNotConnectedView,
+    mockConfirmationView
   )
 
   "GET /" should {

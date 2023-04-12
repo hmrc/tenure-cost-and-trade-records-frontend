@@ -18,8 +18,8 @@ package controllers.notconnected
 
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.form.checkYourAnswers
 import views.html.notconnected.checkYourAnswersNotConnected
+import views.html.confirmation
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
@@ -27,11 +27,16 @@ import scala.concurrent.Future
 @Singleton
 class CheckYourAnswersNotConnectedController @Inject() (
   mcc: MessagesControllerComponents,
-  checkYourAnswersNotConnectedView: checkYourAnswersNotConnected
+  checkYourAnswersNotConnectedView: checkYourAnswersNotConnected,
+  confirmationView: confirmation
 ) extends FrontendController(mcc) {
 
   def show: Action[AnyContent] = Action.async { implicit request =>
     Future.successful(Ok(checkYourAnswersNotConnectedView()))
+  }
+
+  def submit = Action.async { implicit request =>
+    Future.successful(Ok(confirmationView()))
   }
 
 }

@@ -19,13 +19,13 @@ package controllers
 import actions.WithSessionRefiner
 import config.ErrorHandler
 import connectors.Audit
-import play.api.http.Status.{NOT_FOUND, OK}
-import play.api.test.Helpers.{POST, contentAsString, status, stubMessagesControllerComponents}
+import models.Session
+import play.api.http.Status.{BAD_REQUEST, NOT_FOUND, OK, SEE_OTHER}
+import play.api.test.Helpers.{POST, contentAsString, redirectLocation, status, stubMessagesControllerComponents}
 import stub.{StubBackendConnector, StubSessionRepo}
 import util.DateUtil
 import utils.TestBaseSpec
-import views.html.customPasswordSaveAsDraft
-import views.html.submissionDraftSaved
+import views.html.{customPasswordSaveAsDraft, saveAsDraftLogin, submissionDraftSaved}
 
 /**
   * @author Yuriy Tumakha
@@ -41,9 +41,11 @@ class SaveAsDraftControllerSpec extends TestBaseSpec {
     backendConnector,
     inject[customPasswordSaveAsDraft],
     inject[submissionDraftSaved],
+    inject[saveAsDraftLogin],
     inject[DateUtil],
     WithSessionRefiner(inject[ErrorHandler], sessionRepo),
     sessionRepo,
+    inject[ErrorHandler],
     inject[Audit],
     stubMessagesControllerComponents()
   )
@@ -110,6 +112,102 @@ class SaveAsDraftControllerSpec extends TestBaseSpec {
     }
   }
 
+  "SaveAsDraftController.loginToResume" should {
+    "return saveAsDraftLoginForm" in {
+      val result = saveAsDraftController.loginToResume(fakeRequest)
+      status(result) shouldBe OK
+      checkSaveAsDraftLoginForm(contentAsString(result))
+    }
+  }
+
+  "SaveAsDraftController.resume" should {
+    "return saveAsDraftLoginForm with error on submit empty from" in {
+      val result = saveAsDraftController.resume(fakeRequest)
+
+      status(result) shouldBe BAD_REQUEST
+      checkSaveAsDraftLoginForm(
+        contentAsString(result),
+        Seq("<a href=\"#password\">error.required</a>")
+      )
+    }
+
+    "return 404 if SubmissionDraft doesn't exist" in {
+      val refNum = prefilledBaseSession.referenceNumber
+      sessionRepo.saveOrUpdate(prefilledBaseSession)
+      backendConnector.deleteSubmissionDraft(refNum)
+      backendConnector.loadSubmissionDraft(refNum).futureValue shouldBe None // SubmissionDraft deleted
+
+      val result = saveAsDraftController.resume(
+        fakeRequest
+          .withMethod(POST)
+          .withFormUrlEncodedBody("password" -> "Pa$$word1234567890")
+      )
+      status(result) shouldBe NOT_FOUND
+    }
+
+    "return saveAsDraftLoginForm with error `saveAsDraft.error.invalidPassword`" in {
+      val refNum = submissionDraft.session.referenceNumber
+      sessionRepo.saveOrUpdate(submissionDraft.session)
+      backendConnector.saveAsDraft(refNum, submissionDraft)
+      backendConnector.loadSubmissionDraft(refNum).futureValue shouldBe Some(submissionDraft) // SubmissionDraft exists
+
+      val result = saveAsDraftController.resume(
+        fakeRequest
+          .withMethod(POST)
+          .withFormUrlEncodedBody("password" -> "Pa$$word1234567890")
+      )
+
+      status(result) shouldBe BAD_REQUEST
+      checkSaveAsDraftLoginForm(
+        contentAsString(result),
+        Seq("<a href=\"#password\">saveAsDraft.error.invalidPassword</a>")
+      )
+    }
+
+    "load SubmissionDraft to user session and redirect to exitPath" in {
+      val session = prefilledBaseSession.copy(saveAsDraftPassword = Some(password))
+      val refNum = session.referenceNumber
+      val draft = submissionDraft.copy(session = session)
+      backendConnector.saveAsDraft(refNum, draft)
+      backendConnector.loadSubmissionDraft(refNum).futureValue shouldBe Some(draft) // SubmissionDraft exists
+      sessionRepo.saveOrUpdate(session.copy(token = "NEW_TOKEN", forType = "TMP_VALUE"))
+
+      val sessionBefore = sessionRepo.get[Session].futureValue.value
+      sessionBefore.saveAsDraftPassword shouldBe Some(password)
+      sessionBefore.token shouldBe "NEW_TOKEN"
+      sessionBefore.forType shouldBe "TMP_VALUE"
+
+      val result = saveAsDraftController.resume(
+        fakeRequest
+          .withMethod(POST)
+          .withFormUrlEncodedBody("password" -> password)
+      )
+
+      status(result) shouldBe SEE_OTHER
+      redirectLocation(result) shouldBe Some(draft.exitPath)
+
+      val sessionAfter = sessionRepo.get[Session].futureValue.value
+      sessionAfter.saveAsDraftPassword shouldBe None
+      sessionAfter.token shouldBe "NEW_TOKEN"
+      sessionAfter.forType shouldBe "FOR6010"
+    }
+  }
+
+  "SaveAsDraftController.startAgain" should {
+    "delete SubmissionDraft and redirect to start page" in {
+      val refNum = submissionDraft.session.referenceNumber
+      backendConnector.saveAsDraft(refNum, submissionDraft)
+
+      backendConnector.loadSubmissionDraft(refNum).futureValue shouldBe Some(submissionDraft) // SubmissionDraft exists
+
+      val result = saveAsDraftController.startAgain(fakeRequest)
+      status(result) shouldBe SEE_OTHER
+      redirectLocation(result) shouldBe Some(LoginController.startPage.url)
+
+      backendConnector.loadSubmissionDraft(refNum).futureValue shouldBe None  // SubmissionDraft deleted
+    }
+  }
+
   private def checkCustomUserPasswordForm(content: String, expectedErrors: Seq[String] = Seq.empty): Unit = {
     content should include("saveAsDraft.createPassword.header")
     content should include("""name="password"""")
@@ -124,6 +222,15 @@ class SaveAsDraftControllerSpec extends TestBaseSpec {
     content    should include(password)
     content shouldNot include("saveAsDraft.createPassword.header")
     content shouldNot include("""name="password"""")
+  }
+
+  private def checkSaveAsDraftLoginForm(content: String, expectedErrors: Seq[String] = Seq.empty): Unit = {
+    content should include("saveAsDraft.pleaseEnterPassword")
+    content should include("""name="password"""")
+    content should include("saveAsDraft.startAgain")
+    expectedErrors.foreach { expectedError =>
+      content should include(expectedError)
+    }
   }
 
 }

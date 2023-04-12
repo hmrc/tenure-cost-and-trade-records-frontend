@@ -1,4 +1,4 @@
-/*
+@*
  * Copyright 2023 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,25 +12,14 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */
+ *@
 
-package form
+@this()
 
-import models.submissions.CustomUserPassword
-import play.api.data.Form
-import play.api.data.Forms.{mapping, text}
+@(contentBlock: Html)
 
-/**
-  * @author Yuriy Tumakha
-  */
-object CustomUserPasswordForm {
-
-  val customUserPasswordForm: Form[CustomUserPassword] = Form(
-    mapping(
-      "password"        -> text(minLength = 7),
-      "confirmPassword" -> text
-    )(CustomUserPassword.apply)(CustomUserPassword.unapply)
-      .verifying("saveAsDraft.error.passwordsDontMatch", data => data.confirmPassword == data.password)
-  )
-
-}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+        @contentBlock
+    </div>
+</div>

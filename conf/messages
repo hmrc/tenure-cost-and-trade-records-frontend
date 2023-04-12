@@ -5,6 +5,7 @@ service.title = {0} - Declare your business trade and cost information - GOV.UK
 gov.name = GOV.UK
 phase.beta = BETA
 phase.text = This is a new service – your <a href="{0}" class="govuk-link" target="_blank" id="betaFeedback">feedback</a> will help us to improve it.
+label.continue=Continue
 button.label.continue = Save and continue
 button.label.send = Accept and send
 back.link.label = Back
@@ -573,6 +574,14 @@ turnover.financialYearEnd = Financial year end
 turnover.tradingPeriod = Trading period
 turnover.alcoholicDrinks = Alcoholic drinks (exc VAT)
 turnover.alcoholicDrinksCaption = Including soft drinks, crisps, nuts
+turnover.food = Food (exc VAT)
+turnover.foodCaption = Excluding alcoholic drinks
+turnover.otherReceipts = Other receipts (exc VAT)
+turnover.otherReceiptsCaption = For example, admission charges or camping pitches
+turnover.accommodation = Accommodation (exc VAT)
+turnover.accommodationCaption = Excluding meals
+turnover.averageOccupancyRate = Average occupancy rate
+turnover.averageOccupancyRateCaption = Lodges and hotels only
 turnover.weeks = weeks
 turnover.details = Help with completing turnover
 turnover.details.h1 = General guidance
@@ -718,6 +727,10 @@ saveAsDraft.createPassword.header=Create a password to retrieve your saved infor
 saveAsDraft.next=Save password
 saveAsDraft.continue=Continue completing this form
 saveAsDraft.logout=Log out
+saveAsDraft.pleaseEnterPassword=Enter your password
+saveAsDraft.passwordHint=This will either be the password you created or the one given to you when you were timed out of the service.
+saveAsDraft.error.invalidPassword=The password you entered is not correct
+saveAsDraft.startAgain=Start form again
 
 # Errors
 ########

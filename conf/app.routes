@@ -19,6 +19,9 @@ GET         /sessiontimeout                                         controllers.
 # SAVE AS DRAFT
 GET         /saved                                                  controllers.SaveAsDraftController.customPassword(path)
 POST        /saved                                                  controllers.SaveAsDraftController.saveAsDraft(path)
+GET         /saved/resume                                           controllers.SaveAsDraftController.loginToResume
+POST        /saved/resume                                           controllers.SaveAsDraftController.resume
+GET         /saved/startagain                                       controllers.SaveAsDraftController.startAgain
 
 # Connection to the property
 GET         /are-you-still-connected                                controllers.connectiontoproperty.AreYouStillConnectedController.show()
@@ -284,7 +287,7 @@ GET         /check-your-answers-lease-or-tenure                     controllers.
 POST        /check-your-answers-lease-or-tenure                     controllers.aboutYourLeaseOrTenure.CheckYourAnswersAboutYourLeaseOrTenureController.submit()
 
 GET         /check-your-answers-not-connected                       controllers.notconnected.CheckYourAnswersNotConnectedController.show()
-#POST        /check-your-answers-not-connected                       controllers.notconnected.CheckYourAnswersNotConnectedController.submit()
+POST        /check-your-answers-not-connected                       controllers.notconnected.CheckYourAnswersNotConnectedController.submit()
 
 POST        /declaration                                            controllers.FormSubmissionController.submit()
 GET         /confirmation                                           controllers.FormSubmissionController.confirmation()

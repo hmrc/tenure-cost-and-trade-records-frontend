@@ -17,7 +17,7 @@
 package controllers
 
 import config.LoginToBackendAction
-import connectors.Audit
+import connectors.{Audit, BackendConnector}
 import org.joda.time.DateTime
 import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.libs.json.{JsObject, Json}
@@ -48,6 +48,7 @@ class LoginControllerSpec extends TestBaseSpec {
   "LoginController" should {
     "show login form" in {
       val loginController = new LoginController(
+        inject[BackendConnector],
         inject[Audit],
         stubMessagesControllerComponents(),
         inject[login],
@@ -85,6 +86,7 @@ class LoginControllerSpec extends TestBaseSpec {
       when(loginToBackend.apply(any[HeaderCarrier], any[ExecutionContext])).thenReturn(loginToBackendFunction)
 
       val loginController = new LoginController(
+        inject[BackendConnector],
         audit,
         stubMessagesControllerComponents(),
         mock[login],
@@ -121,6 +123,7 @@ class LoginControllerSpec extends TestBaseSpec {
       doNothing.when(audit).sendExplicitAudit(any[String], any[JsObject])(any[HeaderCarrier], any[ExecutionContext])
 
       val loginController = new LoginController(
+        inject[BackendConnector],
         audit,
         stubMessagesControllerComponents(),
         mock[login],
