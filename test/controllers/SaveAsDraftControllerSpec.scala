@@ -166,16 +166,16 @@ class SaveAsDraftControllerSpec extends TestBaseSpec {
 
     "load SubmissionDraft to user session and redirect to exitPath" in {
       val session = prefilledBaseSession.copy(saveAsDraftPassword = Some(password))
-      val refNum = session.referenceNumber
-      val draft = submissionDraft.copy(session = session)
+      val refNum  = session.referenceNumber
+      val draft   = submissionDraft.copy(session = session)
       backendConnector.saveAsDraft(refNum, draft)
       backendConnector.loadSubmissionDraft(refNum).futureValue shouldBe Some(draft) // SubmissionDraft exists
       sessionRepo.saveOrUpdate(session.copy(token = "NEW_TOKEN", forType = "TMP_VALUE"))
 
       val sessionBefore = sessionRepo.get[Session].futureValue.value
       sessionBefore.saveAsDraftPassword shouldBe Some(password)
-      sessionBefore.token shouldBe "NEW_TOKEN"
-      sessionBefore.forType shouldBe "TMP_VALUE"
+      sessionBefore.token               shouldBe "NEW_TOKEN"
+      sessionBefore.forType             shouldBe "TMP_VALUE"
 
       val result = saveAsDraftController.resume(
         fakeRequest
@@ -183,13 +183,13 @@ class SaveAsDraftControllerSpec extends TestBaseSpec {
           .withFormUrlEncodedBody("password" -> password)
       )
 
-      status(result) shouldBe SEE_OTHER
+      status(result)           shouldBe SEE_OTHER
       redirectLocation(result) shouldBe Some(draft.exitPath)
 
       val sessionAfter = sessionRepo.get[Session].futureValue.value
       sessionAfter.saveAsDraftPassword shouldBe None
-      sessionAfter.token shouldBe "NEW_TOKEN"
-      sessionAfter.forType shouldBe "FOR6010"
+      sessionAfter.token               shouldBe "NEW_TOKEN"
+      sessionAfter.forType             shouldBe "FOR6010"
     }
   }
 
@@ -201,10 +201,10 @@ class SaveAsDraftControllerSpec extends TestBaseSpec {
       backendConnector.loadSubmissionDraft(refNum).futureValue shouldBe Some(submissionDraft) // SubmissionDraft exists
 
       val result = saveAsDraftController.startAgain(fakeRequest)
-      status(result) shouldBe SEE_OTHER
+      status(result)           shouldBe SEE_OTHER
       redirectLocation(result) shouldBe Some(LoginController.startPage.url)
 
-      backendConnector.loadSubmissionDraft(refNum).futureValue shouldBe None  // SubmissionDraft deleted
+      backendConnector.loadSubmissionDraft(refNum).futureValue shouldBe None // SubmissionDraft deleted
     }
   }
 

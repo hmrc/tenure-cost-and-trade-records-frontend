@@ -50,7 +50,7 @@ case class StubBackendConnector() extends BackendConnector {
       case Some((`referenceNumber`, _)) =>
         draft = None
         1
-      case _ => 0
+      case _                            => 0
     }
     Future.successful(deletedCount)
   }

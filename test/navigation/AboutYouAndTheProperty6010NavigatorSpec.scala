@@ -16,200 +16,140 @@
 
 package navigation
 
-import connectors.Audit
-import models.Session
-import models.submissions.aboutyouandtheproperty._
-import models.submissions.common.ContactDetails
 import navigation.identifiers._
 import org.scalatest.matchers.must.Matchers.convertToAnyMustWrapper
-import play.api.libs.json.JsObject
-import uk.gov.hmrc.http.HeaderCarrier
 import utils.TestBaseSpec
-
-import scala.concurrent.ExecutionContext
 
 class AboutYouAndTheProperty6010NavigatorSpec extends TestBaseSpec {
 
-  val audit: Audit = mock[Audit]
-  doNothing.when(audit).sendExplicitAudit(any[String], any[JsObject])(any[HeaderCarrier], any[ExecutionContext])
+  "About you and the property navigator for no answers for 6010" when {
 
-  val navigator = new AboutYouAndThePropertyNavigator(audit)
-
-  val sessionAboutYou6010No: Session =
-    Session(
-      "99996010004",
-      "FOR6010",
-      prefilledAddress,
-      "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=",
-      Some(prefilledStillConnectedDetailsYes),
-      Some(prefilledRemoveConnection),
-      Some(prefilledAboutYouAndThePropertyNo)
-    )
-
-  "About to property navigator for no answers for 6010" when {
-
-    "return a function that goes to about the property website page when about the property page has been completed" in {
-      navigator
-        .nextPage(AboutThePropertyPageId)
-        .apply(sessionAboutYou6010No) mustBe controllers.aboutyouandtheproperty.routes.WebsiteForPropertyController
-        .show()
-    }
+    // See AboutYouAndThePropertyNavigatorSpec for generic parts of the journey
 
     "return a function that goes to licence activity page when about the property website page has been completed" in {
-      navigator
+      aboutYouAndThePropertyNavigator
         .nextPage(WebsiteForPropertyPageId)
-        .apply(sessionAboutYou6010No) mustBe controllers.aboutyouandtheproperty.routes.LicensableActivitiesController
+        .apply(
+          aboutYouAndTheProperty6010NoSession
+        ) mustBe controllers.aboutyouandtheproperty.routes.LicensableActivitiesController
         .show()
     }
 
     "return a function that goes to property licence conditions page when licence activity page has been completed no" in {
-      navigator
+      aboutYouAndThePropertyNavigator
         .nextPage(LicensableActivityPageId)
         .apply(
-          sessionAboutYou6010No
+          aboutYouAndTheProperty6010NoSession
         ) mustBe controllers.aboutyouandtheproperty.routes.PremisesLicenseConditionsController
         .show()
     }
 
     "return a function that goes to enforcement action taken page when property licence conditions page has been completed no" in {
-      navigator
+      aboutYouAndThePropertyNavigator
         .nextPage(PremisesLicenceConditionsPageId)
         .apply(
-          sessionAboutYou6010No
+          aboutYouAndTheProperty6010NoSession
         ) mustBe controllers.aboutyouandtheproperty.routes.EnforcementActionBeenTakenController
         .show()
     }
 
     "return a function that goes to tied for goods page when enforcement action taken page has been completed with no" in {
-      navigator
+      aboutYouAndThePropertyNavigator
         .nextPage(EnforcementActionBeenTakenPageId)
-        .apply(sessionAboutYou6010No) mustBe controllers.aboutyouandtheproperty.routes.TiedForGoodsController.show()
+        .apply(
+          aboutYouAndTheProperty6010NoSession
+        ) mustBe controllers.aboutyouandtheproperty.routes.TiedForGoodsController
+        .show()
     }
 
     "return a function that goes to about the check answers page when tied for goods page has been completed with no" in {
-      navigator
+      aboutYouAndThePropertyNavigator
         .nextPage(TiedForGoodsPageId)
         .apply(
-          sessionAboutYou6010No
+          aboutYouAndTheProperty6010NoSession
         ) mustBe controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController
         .show()
     }
   }
 
-  val aboutThePropertyYes: Option[AboutYouAndTheProperty] = Some(
-    AboutYouAndTheProperty(
-      Some(CustomerDetails("Tobermory", ContactDetails("12345678909", "test@email.com"))),
-      Some(PropertyDetails("OccupierName", CurrentPropertyHotel, None)),
-      Some(WebsiteForPropertyDetails(BuildingOperationHaveAWebsiteYes, Some("webAddress"))),
-      Some(PremisesLicenseGrantedYes),
-      None,
-      Some(LicensableActivitiesYes),
-      Some(LicensableActivitiesInformationDetails("Licensable Activities Details")),
-      Some(PremisesLicensesConditionsYes),
-      Some(PremisesLicenseConditionsDetails("Premises license conditions Details")),
-      Some(EnforcementActionsYes),
-      Some(EnforcementActionHasBeenTakenInformationDetails("Enforcement action taken  Details")),
-      Some(TiedGoodsYes),
-      Some(TiedForGoodsInformationDetails(TiedForGoodsInformationDetailsFullTie))
-    )
-  )
-
-  val sessionAboutYou6010Yes: Session =
-    Session(
-      "99996010004",
-      "FOR6010",
-      prefilledAddress,
-      "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=",
-      Some(prefilledStillConnectedDetailsYes),
-      Some(prefilledRemoveConnection),
-      aboutThePropertyYes
-    )
-
   "About you and the property navigator for yes answers for 6010" when {
 
-    "return a function that goes to about the property page when about you has been completed" in {
-      navigator
-        .nextPage(AboutYouPageId)
-        .apply(sessionAboutYou6010Yes) mustBe controllers.aboutyouandtheproperty.routes.AboutThePropertyController
-        .show()
-    }
-
-    "return a function that goes to about the property website page when about the property page has been completed" in {
-      navigator
-        .nextPage(AboutThePropertyPageId)
-        .apply(sessionAboutYou6010Yes) mustBe controllers.aboutyouandtheproperty.routes.WebsiteForPropertyController
-        .show()
-    }
-
     "return a function that goes to licence activity page when about the property website page has been completed" in {
-      navigator
+      aboutYouAndThePropertyNavigator
         .nextPage(WebsiteForPropertyPageId)
-        .apply(sessionAboutYou6010Yes) mustBe controllers.aboutyouandtheproperty.routes.LicensableActivitiesController
+        .apply(
+          aboutYouAndTheProperty6010YesSession
+        ) mustBe controllers.aboutyouandtheproperty.routes.LicensableActivitiesController
         .show()
     }
 
     "return a function that goes to licence activity details page when licence activity page has been completed yes" in {
-      navigator
+      aboutYouAndThePropertyNavigator
         .nextPage(LicensableActivityPageId)
         .apply(
-          sessionAboutYou6010Yes
+          aboutYouAndTheProperty6010YesSession
         ) mustBe controllers.aboutyouandtheproperty.routes.LicensableActivitiesDetailsController
         .show()
     }
 
     "return a function that goes to premises license conditions conditions page when licence activity details page has been completed" in {
-      navigator
+      aboutYouAndThePropertyNavigator
         .nextPage(LicensableActivityDetailsPageId)
         .apply(
-          sessionAboutYou6010Yes
+          aboutYouAndTheProperty6010YesSession
         ) mustBe controllers.aboutyouandtheproperty.routes.PremisesLicenseConditionsController
         .show()
     }
 
     "return a function that goes to premises license conditions details page when property licence conditions page has been completed yes" in {
-      navigator
+      aboutYouAndThePropertyNavigator
         .nextPage(PremisesLicenceConditionsPageId)
         .apply(
-          sessionAboutYou6010Yes
+          aboutYouAndTheProperty6010YesSession
         ) mustBe controllers.aboutyouandtheproperty.routes.PremisesLicenseConditionsDetailsController
         .show()
     }
 
-    "return a function that goes to enforcement action taken details page when premises license conditions details page has been completed" in {
-      navigator
+    "return a function that goes to enforcement action taken page when premises license conditions details page has been completed" in {
+      aboutYouAndThePropertyNavigator
         .nextPage(PremisesLicenceConditionsDetailsPageId)
         .apply(
-          sessionAboutYou6010Yes
+          aboutYouAndTheProperty6010YesSession
         ) mustBe controllers.aboutyouandtheproperty.routes.EnforcementActionBeenTakenController
         .show()
     }
 
     "return a function that goes to enforcement action taken details page when enforcement action taken page has been completed with yes" in {
-      navigator
+      aboutYouAndThePropertyNavigator
         .nextPage(EnforcementActionBeenTakenPageId)
         .apply(
-          sessionAboutYou6010Yes
+          aboutYouAndTheProperty6010YesSession
         ) mustBe controllers.aboutyouandtheproperty.routes.EnforcementActionBeenTakenDetailsController.show()
     }
 
     "return a function that goes to tied for goods page when enforcement action taken details page has been completed" in {
-      navigator
+      aboutYouAndThePropertyNavigator
         .nextPage(EnforcementActionBeenTakenDetailsPageId)
-        .apply(sessionAboutYou6010Yes) mustBe controllers.aboutyouandtheproperty.routes.TiedForGoodsController.show()
-    }
-
-    "return a function that goes to tied for goods details page when tied for goods page has been completed with yes" in {
-      navigator
-        .nextPage(TiedForGoodsPageId)
-        .apply(sessionAboutYou6010Yes) mustBe controllers.aboutyouandtheproperty.routes.TiedForGoodsDetailsController
+        .apply(
+          aboutYouAndTheProperty6010YesSession
+        ) mustBe controllers.aboutyouandtheproperty.routes.TiedForGoodsController
         .show()
     }
 
-    "return a function that goes to about the trading history when tied for goods details page has been completed" in {
-      navigator
+    "return a function that goes to tied for goods details page when tied for goods page has been completed with yes" in {
+      aboutYouAndThePropertyNavigator
+        .nextPage(TiedForGoodsPageId)
+        .apply(
+          aboutYouAndTheProperty6010YesSession
+        ) mustBe controllers.aboutyouandtheproperty.routes.TiedForGoodsDetailsController
+        .show()
+    }
+
+    "return a function that goes to CYA page when tied for goods details page has been completed" in {
+      aboutYouAndThePropertyNavigator
         .nextPage(TiedForGoodsDetailsPageId)
         .apply(
-          sessionAboutYou6010Yes
+          aboutYouAndTheProperty6010YesSession
         ) mustBe controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show()
     }
   }
