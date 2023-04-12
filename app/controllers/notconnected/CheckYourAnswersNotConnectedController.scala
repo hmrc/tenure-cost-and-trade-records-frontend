@@ -70,7 +70,7 @@ class CheckYourAnswersNotConnectedController @Inject() (
 //    val auditType = "FormSubmission"
     // Dummy data from session to able creation of audit dashboards
 //    val submissionJson = Json.toJson(request.sessionData).as[JsObject]
-    println("Hello there!")
+    println("*******")
 //    audit.sendExplicitAudit(auditType, submissionJson ++ Audit.languageJson)
     Future.unit
   }
