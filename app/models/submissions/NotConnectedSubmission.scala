@@ -21,18 +21,19 @@ import play.api.libs.json._
 
 import java.time.Instant
 
-case class NotConnectedSubmission( id: String,
-                                   address: Address,
-                                   fullName: String,
-                                   emailAddress: Option[String],
-                                   phoneNumber: Option[String],
-                                   additionalInformation: Option[String],
-                                   createdAt: Instant,
-                                   previouslyConnected: Boolean,
-                                   lang: Option[String] = None
-                                 )
+case class NotConnectedSubmission(
+  id: String,
+  address: Address,
+  fullName: String,
+  emailAddress: Option[String],
+  phoneNumber: Option[String],
+  additionalInformation: Option[String],
+  createdAt: Instant,
+  previouslyConnected: Boolean,
+  lang: Option[String] = None
+)
 object NotConnectedSubmission {
 
-  implicit  val format = Json.format[NotConnectedSubmission]
+  implicit val format = Json.format[NotConnectedSubmission]
 
 }

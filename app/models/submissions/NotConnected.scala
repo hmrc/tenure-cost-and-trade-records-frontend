@@ -18,10 +18,15 @@ package models.submissions
 
 import play.api.libs.json._
 
-case class NotConnected(fullName: String, emailAddress: Option[String], phoneNumber: Option[String], additionalInformation: Option[String])
+case class NotConnected(
+  fullName: String,
+  emailAddress: Option[String],
+  phoneNumber: Option[String],
+  additionalInformation: Option[String]
+)
 
 object NotConnected {
 
-  implicit  val format = Json.format[NotConnected]
+  implicit val format = Json.format[NotConnected]
 
 }

@@ -36,12 +36,12 @@ class CheckYourAnswersNotConnectedController @Inject() (
   mcc: MessagesControllerComponents,
   checkYourAnswersNotConnectedView: checkYourAnswersNotConnected,
   confirmationNotConnectedView: confirmationNotConnected,
-  audit: Audit,
+//  audit: Audit,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
 )(implicit ec: ExecutionContext)
-  extends FrontendController(mcc)
-  with I18nSupport {
+    extends FrontendController(mcc)
+    with I18nSupport {
 
   lazy val confirmationUrl = controllers.routes.FormSubmissionController.confirmation().url
 
@@ -52,7 +52,6 @@ class CheckYourAnswersNotConnectedController @Inject() (
 //  def submit = Action.async { implicit request =>
 //    Future.successful(Ok(confirmationNotConnectedView()))
 //  }
-
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     submit(request.sessionData.referenceNumber)
@@ -66,12 +65,12 @@ class CheckYourAnswersNotConnectedController @Inject() (
   }
 
   def submitNotConnectedTInformation(
-                                     refNum: String
-                                   )(implicit hc: HeaderCarrier, request: SessionRequest[_]): Future[Unit] = {
+    refNum: String
+  )(implicit hc: HeaderCarrier, request: SessionRequest[_]): Future[Unit] = {
 //    val auditType = "FormSubmission"
     // Dummy data from session to able creation of audit dashboards
 //    val submissionJson = Json.toJson(request.sessionData).as[JsObject]
-      println("Hello there!")
+    println("Hello there!")
 //    audit.sendExplicitAudit(auditType, submissionJson ++ Audit.languageJson)
     Future.unit
   }
