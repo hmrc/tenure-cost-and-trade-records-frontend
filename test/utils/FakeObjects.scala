@@ -76,7 +76,44 @@ trait FakeObjects {
   val stillConnectedDetailsNoSession: Session   =
     baseFilled6010Session.copy(stillConnectedDetails = Some(prefilledStillConnectedDetailsNo))
 
-  //  Additional information
+  // About you and the property sessions
+  val prefilledAboutYouAndThePropertyYes: AboutYouAndTheProperty = AboutYouAndTheProperty(
+    Some(CustomerDetails("Tobermory", ContactDetails("12345678909", "test@email.com"))),
+    Some(PropertyDetails("OccupierName", CurrentPropertyHotel, None)),
+    Some(WebsiteForPropertyDetails(BuildingOperationHaveAWebsiteYes, Some("webAddress"))),
+    Some(PremisesLicenseGrantedYes),
+    Some(PremisesLicenseGrantedInformationDetails("Premises licence granted details")),
+    Some(LicensableActivitiesYes),
+    Some(LicensableActivitiesInformationDetails("Licensable activities details")),
+    Some(PremisesLicensesConditionsYes),
+    Some(PremisesLicenseConditionsDetails("Premises license conditions details")),
+    Some(EnforcementActionsYes),
+    Some(EnforcementActionHasBeenTakenInformationDetails("Enforcement action taken details")),
+    Some(TiedGoodsYes),
+    Some(TiedForGoodsInformationDetails(TiedForGoodsInformationDetailsFullTie))
+  )
+  val prefilledAboutYouAndThePropertyNo: AboutYouAndTheProperty  = AboutYouAndTheProperty(
+    Some(CustomerDetails("Tobermory", ContactDetails("12345678909", "test@email.com"))),
+    Some(PropertyDetails("OccupierName", CurrentPropertyHotel, None)),
+    Some(WebsiteForPropertyDetails(BuildingOperationHaveAWebsiteYes, Some("webAddress"))),
+    Some(PremisesLicenseGrantedNo),
+    None,
+    Some(LicensableActivitiesNo),
+    None,
+    Some(PremisesLicensesConditionsNo),
+    None,
+    Some(EnforcementActionsNo),
+    None,
+    Some(TiedGoodsNo),
+    None
+  )
+
+  val aboutYouAndThePropertyYesSession: Session =
+    stillConnectedDetailsYesSession.copy(aboutYouAndTheProperty = Some(prefilledAboutYouAndThePropertyYes))
+  val aboutYouAndThePropertyNoSession: Session  =
+    stillConnectedDetailsYesSession.copy(aboutYouAndTheProperty = Some(prefilledAboutYouAndThePropertyNo))
+
+  // Additional information sessions
   val prefilledAdditionalInformation: AdditionalInformation = AdditionalInformation(
     Some(FurtherInformationOrRemarksDetails("Further information or remarks details")),
     Some(AlternativeContactDetails("Full name", prefilledContactDetails, prefilledContactAddress)),
@@ -158,22 +195,6 @@ trait FakeObjects {
         )
       )
     )
-
-  val prefilledAboutYouAndThePropertyNo = AboutYouAndTheProperty(
-    Some(CustomerDetails("Tobermory", ContactDetails("12345678909", "test@email.com"))),
-    Some(PropertyDetails("OccupierName", CurrentPropertyHotel, None)),
-    Some(WebsiteForPropertyDetails(BuildingOperationHaveAWebsiteYes, Some("webAddress"))),
-    Some(PremisesLicenseGrantedNo),
-    None,
-    Some(LicensableActivitiesNo),
-    None,
-    Some(PremisesLicensesConditionsNo),
-    None,
-    Some(EnforcementActionsNo),
-    None,
-    Some(TiedGoodsNo),
-    None
-  )
 
   val prefilledAboutTheTradingHistory   = AboutTheTradingHistory(
     aboutYourTradingHistory = Some(

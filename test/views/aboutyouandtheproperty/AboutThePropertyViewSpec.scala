@@ -20,41 +20,37 @@ import form.aboutyouandtheproperty.AboutThePropertyForm
 import models.submissions.aboutyouandtheproperty._
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
+import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
 
 class AboutThePropertyViewSpec extends QuestionViewBehaviours[PropertyDetails] {
 
-  def aboutThePropertyView = app.injector.instanceOf[views.html.aboutyouandtheproperty.aboutTheProperty]
-
   val messageKeyPrefix = "aboutProperty"
 
-  override val form = AboutThePropertyForm.aboutThePropertyForm
+  override val form: Form[PropertyDetails] = AboutThePropertyForm.aboutThePropertyForm
 
-  def createView = () => aboutThePropertyView(form, "FOR6010")(fakeRequest, messages)
+  def createView: () => Html = () => aboutThePropertyView(form, "FOR6010")(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[PropertyDetails]) =>
+  def createViewUsingForm: Form[PropertyDetails] => Html = (form: Form[PropertyDetails]) =>
     aboutThePropertyView(form, "FOR6010")(fakeRequest, messages)
 
-  def createView6015 = () => aboutThePropertyView(form, "FOR6015")(fakeRequest, messages)
+  def createView6015: () => Html = () => aboutThePropertyView(form, "FOR6015")(fakeRequest, messages)
 
-  def createViewUsingForm6015 = (form: Form[PropertyDetails]) =>
+  def createViewUsingForm6015: Form[PropertyDetails] => Html = (form: Form[PropertyDetails]) =>
     aboutThePropertyView(form, "FOR6015")(fakeRequest, messages)
 
   "About the property view" must {
 
     behave like normalPage(createView, messageKeyPrefix)
 
+    behave like pageWithTextFields(createViewUsingForm, "currentOccupierName")
+
     "has a link marked with back.link.label leading to the task list Page" in {
       val doc          = asDocument(createView())
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText mustBe messages("back.link.label")
       val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.aboutyouandtheproperty.routes.AboutYouController.show.url
-    }
-
-    "contain an input for currentOccupierName" in {
-      val doc = asDocument(createViewUsingForm(form))
-      assertRenderedById(doc, "currentOccupierName")
+      backlinkUrl mustBe controllers.aboutyouandtheproperty.routes.AboutYouController.show().url
     }
 
     "Section heading is visible" in {
@@ -70,7 +66,7 @@ class AboutThePropertyViewSpec extends QuestionViewBehaviours[PropertyDetails] {
         "propertyCurrentlyUsed",
         "propertyCurrentlyUsed",
         CurrentPropertyPublicHouse.name,
-        false
+        isChecked = false
       )
       assertContainsText(doc, messages("propertyCurrentlyUsed.publicHouse"))
     }
@@ -82,7 +78,7 @@ class AboutThePropertyViewSpec extends QuestionViewBehaviours[PropertyDetails] {
         "propertyCurrentlyUsed-2",
         "propertyCurrentlyUsed",
         CurrentPropertyWineBarOrCafe.name,
-        false
+        isChecked = false
       )
       assertContainsText(doc, messages("propertyCurrentlyUsed.wineCafeBar"))
     }
@@ -94,7 +90,7 @@ class AboutThePropertyViewSpec extends QuestionViewBehaviours[PropertyDetails] {
         "propertyCurrentlyUsed-3",
         "propertyCurrentlyUsed",
         CurrentPropertyOtherBar.name,
-        false
+        isChecked = false
       )
       assertContainsText(doc, messages("propertyCurrentlyUsed.otherBar"))
     }
@@ -106,7 +102,7 @@ class AboutThePropertyViewSpec extends QuestionViewBehaviours[PropertyDetails] {
         "propertyCurrentlyUsed-4",
         "propertyCurrentlyUsed",
         CurrentPropertyPubAndRestaurant.name,
-        false
+        isChecked = false
       )
       assertContainsText(doc, messages("propertyCurrentlyUsed.pubRestaurant"))
     }
@@ -118,7 +114,7 @@ class AboutThePropertyViewSpec extends QuestionViewBehaviours[PropertyDetails] {
         "propertyCurrentlyUsed-5",
         "propertyCurrentlyUsed",
         CurrentPropertyLicencedRestaurant.name,
-        false
+        isChecked = false
       )
       assertContainsText(doc, messages("propertyCurrentlyUsed.licencedRestaurant"))
     }
@@ -130,7 +126,7 @@ class AboutThePropertyViewSpec extends QuestionViewBehaviours[PropertyDetails] {
         "propertyCurrentlyUsed-6",
         "propertyCurrentlyUsed",
         CurrentPropertyHotel.name,
-        false
+        isChecked = false
       )
       assertContainsText(doc, messages("propertyCurrentlyUsed.hotel"))
     }
@@ -142,7 +138,7 @@ class AboutThePropertyViewSpec extends QuestionViewBehaviours[PropertyDetails] {
         "propertyCurrentlyUsed-7",
         "propertyCurrentlyUsed",
         CurrentPropertyDiscoOrNightclub.name,
-        false
+        isChecked = false
       )
       assertContainsText(doc, messages("propertyCurrentlyUsed.discoNightclub"))
     }
@@ -154,7 +150,7 @@ class AboutThePropertyViewSpec extends QuestionViewBehaviours[PropertyDetails] {
         "propertyCurrentlyUsed-8",
         "propertyCurrentlyUsed",
         CurrentPropertyOther.name,
-        false
+        isChecked = false
       )
       assertContainsText(doc, messages("propertyCurrentlyUsed.other"))
     }
@@ -170,17 +166,14 @@ class AboutThePropertyViewSpec extends QuestionViewBehaviours[PropertyDetails] {
 
     behave like normalPage(createView6015, messageKeyPrefix)
 
+    behave like pageWithTextFields(createViewUsingForm, "currentOccupierName")
+
     "has a link marked with back.link.label leading to the task list Page" in {
       val doc          = asDocument(createView())
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText mustBe messages("back.link.label")
       val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.aboutyouandtheproperty.routes.AboutYouController.show.url
-    }
-
-    "contain an input for currentOccupierName" in {
-      val doc = asDocument(createViewUsingForm(form))
-      assertRenderedById(doc, "currentOccupierName")
+      backlinkUrl mustBe controllers.aboutyouandtheproperty.routes.AboutYouController.show().url
     }
 
     "Section heading is visible" in {
@@ -196,21 +189,21 @@ class AboutThePropertyViewSpec extends QuestionViewBehaviours[PropertyDetails] {
         "propertyCurrentlyUsed",
         "propertyCurrentlyUsed",
         CurrentPropertyHotel.name,
-        false
+        isChecked = false
       )
       assertContainsText(doc, messages("propertyCurrentlyUsed.hotel"))
     }
 
-    "contain checkbox for the value health farm" in {
+    "contain checkbox for the value health Spa" in {
       val doc = asDocument(createViewUsingForm6015(form))
       assertContainsCheckBox(
         doc,
         "propertyCurrentlyUsed-2",
         "propertyCurrentlyUsed",
-        CurrentPropertyHealthFarm.name,
-        false
+        CurrentPropertyHealthSpa.name,
+        isChecked = false
       )
-      assertContainsText(doc, messages("propertyCurrentlyUsed.healthFarm"))
+      assertContainsText(doc, messages("propertyCurrentlyUsed.healthSpa"))
     }
 
     "contain checkbox for the value lodge and restaurant" in {
@@ -220,7 +213,7 @@ class AboutThePropertyViewSpec extends QuestionViewBehaviours[PropertyDetails] {
         "propertyCurrentlyUsed-3",
         "propertyCurrentlyUsed",
         CurrentPropertyLodgeAndRestaurant.name,
-        false
+        isChecked = false
       )
       assertContainsText(doc, messages("propertyCurrentlyUsed.lodgeAndRestaurant"))
     }
@@ -232,7 +225,7 @@ class AboutThePropertyViewSpec extends QuestionViewBehaviours[PropertyDetails] {
         "propertyCurrentlyUsed-4",
         "propertyCurrentlyUsed",
         CurrentPropertyConferenceCentre.name,
-        false
+        isChecked = false
       )
       assertContainsText(doc, messages("propertyCurrentlyUsed.conferenceCentre"))
     }
@@ -244,7 +237,7 @@ class AboutThePropertyViewSpec extends QuestionViewBehaviours[PropertyDetails] {
         "propertyCurrentlyUsed-5",
         "propertyCurrentlyUsed",
         CurrentPropertyOther.name,
-        false
+        isChecked = false
       )
       assertContainsText(doc, messages("propertyCurrentlyUsed.other"))
     }

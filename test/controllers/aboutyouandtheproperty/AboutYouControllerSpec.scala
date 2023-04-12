@@ -17,12 +17,10 @@
 package controllers.aboutyouandtheproperty
 
 import form.Errors
-import play.api.data.FormError
+import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
 import play.api.http.Status
 import play.api.test.Helpers._
-import play.twirl.api.HtmlFormat
 import utils.TestBaseSpec
-import views.html.aboutyouandtheproperty.aboutYou
 
 class AboutYouControllerSpec extends TestBaseSpec {
 
@@ -30,25 +28,24 @@ class AboutYouControllerSpec extends TestBaseSpec {
   import form.aboutyouandtheproperty.AboutYouForm.aboutYouForm
   import utils.FormBindingTestAssertions.{mustContainError, mustContainRequiredErrorFor}
 
-  val mockAboutYouView = mock[aboutYou]
-  when(mockAboutYouView.apply(any)(any, any)).thenReturn(HtmlFormat.empty)
-
-  val aboutYouController = new AboutYouController(
+  def aboutYouController(
+    aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes)
+  ) = new AboutYouController(
     stubMessagesControllerComponents(),
     aboutYouAndThePropertyNavigator,
-    mockAboutYouView,
-    preFilledSession,
+    aboutYouView,
+    preEnrichedActionRefiner(aboutYouAndTheProperty = aboutYouAndTheProperty),
     mockSessionRepo
   )
 
   "GET /" should {
     "return 200" in {
-      val result = aboutYouController.show(fakeRequest)
+      val result = aboutYouController().show(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return HTML" in {
-      val result = aboutYouController.show(fakeRequest)
+      val result = aboutYouController().show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
@@ -78,17 +75,16 @@ class AboutYouControllerSpec extends TestBaseSpec {
   }
 
   object TestData {
-    val errorKey = new {
+    val errorKey: Object {
+      val fullName: String
+      val phone: String
+      val email: String
+      val email1TooLong: String
+    } = new {
       val fullName: String = "fullName"
       val phone            = "contactDetails.phone"
       val email            = "contactDetails.email"
       val email1TooLong    = "contactDetails.email.email.tooLong"
-    }
-
-    val formErrors = new {
-      val required = new {
-        val fullName = FormError(errorKey.fullName, Errors.required)
-      }
     }
 
     val tooLongEmail                      = "email_too_long_for_validation_againt_business_rules_specify_but_DB_constraints@something.co.uk"

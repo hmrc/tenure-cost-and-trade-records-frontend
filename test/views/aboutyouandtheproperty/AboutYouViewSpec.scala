@@ -24,8 +24,6 @@ import views.behaviours.QuestionViewBehaviours
 
 class AboutYouViewSpec extends QuestionViewBehaviours[CustomerDetails] {
 
-  def aboutYouView = app.injector.instanceOf[views.html.aboutyouandtheproperty.aboutYou]
-
   val messageKeyPrefix = "aboutYou"
 
   override val form = AboutYouForm.aboutYouForm

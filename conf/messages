@@ -57,10 +57,14 @@ label.town = Town or city
 label.county = County
 label.postcode = Postcode
 label.any.apply = Select any that apply
-label.contact.full.name = Full name
+label.fullName = Full name
 label.contact.details = Contact details
 label.phone = Telephone number
 label.email = Email address
+
+# COMMON HINTS
+##############
+hint.select.all = Select all that apply
 
 # SECTION NAMES
 ###############
@@ -153,43 +157,38 @@ label.removeConnectionDetails.removeConnectionAdditionalInfo = Additional inform
 hint.removeConnectionDetails.removeConnectionAdditionalInfo = For example, the name of the current owner or occupier
 error.removeConnectionFullName.required = Please provide your full name
 
-#6010 ABOUT YOU
-##############################
-aboutYou.heading = Provide your contact details
-aboutYou.subheading = We will only use your contact details to update you about your enquiry.
-aboutYou.fullName = Full Name
-aboutYou.contactDetails.email = Email address
-aboutYou.contactDetails.phone = Telephone number
-label.aboutYou = What is your relationship to the property?
-hint.aboutYou = If you’re renting or leasing the property, even as a charity or non-profit organisation, you’re considered the occupier. If you are both the owner and the occupier, select ’Owner or trustee for owner’.
-#relationshipToProperty.occupierTrustee = Occupier or trustee for occupier
-#relationshipToProperty.ownerTrustee = Owner or trustee for owner
-#relationshipToProperty.occupier = Occupier’s agent
-#relationshipToProperty.owner = Owner’s agent
+# ABOUT YOU AND PROPERTY SECTION
+################################
 
-#6010 ABOUT THE PROPERTY
-##############################
+# ABOUT YOU
+###########
+aboutYou.heading = Provide your contact details
+aboutYou.subheading = These should be the contact details of the person completing this form. We will only use them to update you about your declaration.
+
+# ABOUT THE PROPERTY
+####################
 aboutProperty.heading = What is the name of the current occupier?
-hint.currentOccupierName = This should be the trading name of the business operating from the property
-aboutProperty.desc1 = This should be the trading name of the business operating from the property
+label.currentOccupierName = This should be the trading name of the business operating from the property
 label.propertyCurrentlyUsed = How is the property currently used?
+hint.select.main = If your property has more than one use, select the main function
 propertyCurrentlyUsed.publicHouse = Public house
-propertyCurrentlyUsed.otherBar = Other bar
-propertyCurrentlyUsed.licencedRestaurant = Licenced restaurant
-propertyCurrentlyUsed.discoNightclub = Disco or nightclub
 propertyCurrentlyUsed.wineCafeBar = Wine bar or cafe bar
+propertyCurrentlyUsed.otherBar = Other bar
 propertyCurrentlyUsed.pubRestaurant = Pub or restaurant
+propertyCurrentlyUsed.licencedRestaurant = Licenced restaurant
 propertyCurrentlyUsed.hotel = Hotel
-propertyCurrentlyUsed.other = Other
-propertyCurrentlyUsedOther.textbox = Please give details if the property has another use, or is vacant
-propertyCurrentlyUsed.healthFarm = Health Farm
+propertyCurrentlyUsed.discoNightclub = Disco or nightclub
+propertyCurrentlyUsed.healthSpa = Health Spa
 propertyCurrentlyUsed.lodgeAndRestaurant = Lodge and restaurant
 propertyCurrentlyUsed.conferenceCentre = Conference centre
+propertyCurrentlyUsed.other = Other
+hint.other.use.propertyCurrentlyUsedOther = Describe the use of your property is not listed
+hint.other.vacant.propertyCurrentlyUsedOther = Please give details if the property has another use, or is vacant
 
-#WEBSITE FOR PROPERTY (USED ON 6010, 6011, 6015, 6016,6030, 6035, 6036, 6037, 6045)
-##############################
+# WEBSITE FOR PROPERTY
+######################
 buildingOperatingHaveAWebsite.heading = Does the business operating from the property have a website?
-websiteAddressForProperty.textbox = Enter website address
+websiteAddressForProperty.textbox = What is the business website address?
 
 #TENANCY LEASE AGREEMENT(USED ON 6010, 6015, 6016, 6030, 6032, 6033, 6034, 6035, 6036, 6037, 6038, 6043, 6049, 6056, 6057, 6066)
 ##############################

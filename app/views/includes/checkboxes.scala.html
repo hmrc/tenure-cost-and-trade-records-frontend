@@ -21,24 +21,27 @@
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Legend
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Fieldset
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.hint.Hint
+@import uk.gov.hmrc.govukfrontend.views.Aliases.HtmlContent
 
 @(govukCheckboxes: GovukCheckboxes,
-        theForm: Form[_],
-        name: String,
-        legendContent: String = "",
-        classes: String = "",
-        items: Seq[CheckboxItem],
+  theForm: Form[_],
+  name: String,
+  legendContent: String = "",
+  classes: String = "",
+  items: Seq[CheckboxItem],
+  hint: String = ""
 )(implicit request: Request[_], messages: Messages)
 
 @govukCheckboxes(Checkboxes(
- fieldset =  Some(Fieldset(
-   legend = Some(Legend(
-    content = Text(Messages(legendContent)),
-    classes = classes
-   ))
- )),
- name = name,
- items = items,
- errorMessage = theForm.errors.asTextErrorMessageForField(name)
-).withFormField(theForm(name))
-)
+  fieldset =  Some(Fieldset(
+    legend = Some(Legend(
+      content = Text(Messages(legendContent)),
+      classes = classes
+    ))
+  )),
+  name = name,
+  items = items,
+  hint = Hint(content = HtmlContent(hint)),
+  errorMessage = theForm.errors.asTextErrorMessageForField(name)
+).withFormField(theForm(name)))

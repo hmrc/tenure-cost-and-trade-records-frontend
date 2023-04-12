@@ -20,19 +20,18 @@ import form.aboutyouandtheproperty.WebsiteForPropertyForm
 import models.submissions.aboutyouandtheproperty.{BuildingOperationHaveAWebsiteNo, BuildingOperationHaveAWebsiteYes, WebsiteForPropertyDetails}
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
+import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
 
 class WebsiteForPropertyViewSpec extends QuestionViewBehaviours[WebsiteForPropertyDetails] {
 
-  def websiteForPropertyView = app.injector.instanceOf[views.html.aboutyouandtheproperty.websiteForProperty]
-
   val messageKeyPrefix = "buildingOperatingHaveAWebsite"
 
-  override val form = WebsiteForPropertyForm.websiteForPropertyForm
+  override val form: Form[WebsiteForPropertyDetails] = WebsiteForPropertyForm.websiteForPropertyForm
 
-  def createView = () => websiteForPropertyView(form)(fakeRequest, messages)
+  def createView: () => Html = () => websiteForPropertyView(form)(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[WebsiteForPropertyDetails]) =>
+  def createViewUsingForm: Form[WebsiteForPropertyDetails] => Html = (form: Form[WebsiteForPropertyDetails]) =>
     websiteForPropertyView(form)(fakeRequest, messages)
 
   "Property website view" must {
@@ -48,7 +47,7 @@ class WebsiteForPropertyViewSpec extends QuestionViewBehaviours[WebsiteForProper
     }
 
     "Section heading is visible" in {
-      val doc         = asDocument(createViewUsingForm(form)) // govuk-caption-m
+      val doc         = asDocument(createViewUsingForm(form))
       val sectionText = doc.getElementsByClass("govuk-caption-m").text()
       assert(sectionText == messages("label.section.aboutTheProperty"))
     }
@@ -60,7 +59,7 @@ class WebsiteForPropertyViewSpec extends QuestionViewBehaviours[WebsiteForProper
         "buildingOperatingHaveAWebsite",
         "buildingOperatingHaveAWebsite",
         BuildingOperationHaveAWebsiteYes.name,
-        false
+        isChecked = false
       )
       assertContainsText(doc, messages("label.yes"))
     }
@@ -72,7 +71,7 @@ class WebsiteForPropertyViewSpec extends QuestionViewBehaviours[WebsiteForProper
         "buildingOperatingHaveAWebsite-2",
         "buildingOperatingHaveAWebsite",
         BuildingOperationHaveAWebsiteNo.name,
-        false
+        isChecked = false
       )
       assertContainsText(doc, messages("label.no"))
     }

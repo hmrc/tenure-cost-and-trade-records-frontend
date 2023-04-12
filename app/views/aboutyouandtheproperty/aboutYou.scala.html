@@ -15,61 +15,21 @@
  *@
 
 @import models.submissions.aboutyouandtheproperty.CustomerDetails
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.fieldset.Fieldset
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukErrorSummary
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukDateInput
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukTextarea
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukCharacterCount
-@import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukFieldset
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Label
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Input
-
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
+@import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.input.Input
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.label.Label
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 
 @this(layout: Layout,
-        govukButton: GovukButton,
-        govukRadios: GovukRadios,
-        govukInput: GovukInput,
-        govukErrorSummary: GovukErrorSummary,
-        govukDateInput: GovukDateInput,
-        govukTextarea: GovukTextarea,
-        govukCharacterCount: GovukCharacterCount,
-        govukFieldset: GovukFieldset,
-        formWithCSRF: FormWithCSRF
+  govukButton: GovukButton,
+  govukInput: GovukInput,
+  formWithCSRF: FormWithCSRF
 )
 
 @(theForm: Form[CustomerDetails])(implicit request: Request[_], messages: Messages)
-
- @textInput(id: String, optional: Boolean, classes: String, autoCompleteLabel: String) = {
- @govukInput(Input(
-  id=id,
-  name=id,
-  inputType = "text",
-  value = theForm(id).value,
-  classes=classes,
-  autocomplete=Some(autoCompleteLabel),
-  label = if(optional) Label(content = Text(s"${messages(s"aboutYou.${id}")} ${messages("hintText.optional")}"), classes = "govuk-!-font-weight-bold")
-  else Label(content = Text(messages(s"aboutYou.${id}")), classes = "govuk-!-font-weight-bold"),
-  errorMessage = theForm.errors.asTextErrorMessageForField(id)
- ))
- }
-
- @content = {
-  <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-   <h1 class="govuk-fieldset__heading">@messages("aboutYou.heading")</h1>
-  </legend>
-
-  <p class="govuk-body">@messages("aboutYou.subheading")</p>
-
- @textInput("fullName", false, "govuk-input govuk-input--width-20", "fullName")
- @textInput("contactDetails.email", false, "govuk-input govuk-input--width-20", "contactDetails.email")
- @textInput("contactDetails.phone", false, "govuk-input govuk-input--width-20", "contactDetails.phone")
- }
 
 @layout(
   pageHeading = messages("aboutYou.heading"),
@@ -80,13 +40,30 @@
   theForm = theForm
 ) {
 
- @formWithCSRF(action = controllers.aboutyouandtheproperty.routes.AboutYouController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
+  @formWithCSRF(action = controllers.aboutyouandtheproperty.routes.AboutYouController.submit(), args = Symbol("class") -> "myForm", Symbol("id") -> "myFormId") {
 
-  @govukFieldset(Fieldset(html = content))
+    <h1 class="govuk-heading-l">@messages("aboutYou.heading")</h1>
 
-  @includes.continueSaveAsDraftButtons(govukButton)
- }
+    <p class="govuk-body">@messages("aboutYou.subheading")</p>
 
+    @govukInput(
+      Input(
+        id = "fullName",
+        name = "fullName",
+        classes = "govuk-!-width-two-thirds",
+        value = theForm("fullName").value,
+        label = Label(
+          content = Text(messages("label.fullName"))
+        ),
+        errorMessage = theForm.errors.asTextErrorMessageForField("fullName"),
+      ).withFormField(theForm("fullName"))
+    )
+
+    @includes.textInput(govukInput, theForm, "contactDetails.email", "govuk-!-width-two-thirds", "email")
+    @includes.textInput(govukInput, theForm, "contactDetails.phone", "govuk-!-width-two-thirds", "phone")
+
+    @includes.continueSaveAsDraftButtons(govukButton)
+  }
 }
 
 
