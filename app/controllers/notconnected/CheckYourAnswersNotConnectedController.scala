@@ -33,15 +33,15 @@ import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class CheckYourAnswersNotConnectedController @Inject() (
-                                                         mcc: MessagesControllerComponents,
-                                                         //  repository: FormDocumentRepository,
-                                                         checkYourAnswersNotConnectedView: checkYourAnswersNotConnected,
-                                                         confirmationNotConnectedView: confirmationNotConnected,
-                                                         //  audit: Audit,
-                                                         withSessionRefiner: WithSessionRefiner,
-                                                         @Named("session") val session: SessionRepo
-                                                       )(implicit ec: ExecutionContext)
-  extends FrontendController(mcc)
+  mcc: MessagesControllerComponents,
+  //  repository: FormDocumentRepository,
+  checkYourAnswersNotConnectedView: checkYourAnswersNotConnected,
+  confirmationNotConnectedView: confirmationNotConnected,
+  //  audit: Audit,
+  withSessionRefiner: WithSessionRefiner,
+  @Named("session") val session: SessionRepo
+)(implicit ec: ExecutionContext)
+    extends FrontendController(mcc)
     with I18nSupport {
 
   lazy val confirmationUrl = controllers.routes.FormSubmissionController.confirmation().url
@@ -64,8 +64,8 @@ class CheckYourAnswersNotConnectedController @Inject() (
   }
 
   def submitNotConnectedTInformation(
-                                      refNum: String
-                                    )(implicit hc: HeaderCarrier, request: SessionRequest[_]): Future[Unit] = {
+    refNum: String
+  )(implicit hc: HeaderCarrier, request: SessionRequest[_]): Future[Unit] = {
     //    val auditType = "FormSubmission"
     // Dummy data from session to able creation of audit dashboards
     //    val submissionJson = Json.toJson(request.sessionData).as[JsObject]
