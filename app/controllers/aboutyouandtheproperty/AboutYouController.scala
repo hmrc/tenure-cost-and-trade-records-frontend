@@ -17,14 +17,15 @@
 package controllers.aboutyouandtheproperty
 
 import actions.WithSessionRefiner
+import controllers.FORDataCaptureController
 import form.aboutyouandtheproperty.AboutYouForm.aboutYouForm
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty.updateAboutYouAndTheProperty
+import models.submissions.aboutyouandtheproperty.CustomerDetails
 import navigation.AboutYouAndThePropertyNavigator
 import navigation.identifiers.AboutYouPageId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.aboutyouandtheproperty.aboutYou
 
 import javax.inject.{Inject, Named, Singleton}
@@ -37,7 +38,7 @@ class AboutYouController @Inject() (
   aboutYouView: aboutYou,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FrontendController(mcc)
+) extends FORDataCaptureController(mcc)
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
@@ -54,20 +55,14 @@ class AboutYouController @Inject() (
   }
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    aboutYouForm
-      .bindFromRequest()
-      .fold(
-        formWithErrors => Future.successful(BadRequest(aboutYouView(formWithErrors))),
-        data => {
-          val updatedData = updateAboutYouAndTheProperty(_.copy(customerDetails = Some(data)))
-          session.saveOrUpdate(updatedData)
-
-          if (request.body.asFormUrlEncoded.flatMap(_.get("save_button")).isDefined) {
-            Future.successful(Redirect(controllers.routes.SaveAsDraftController.customPassword(request.path)))
-          } else {
-            Future.successful(Redirect(navigator.nextPage(AboutYouPageId).apply(updatedData)))
-          }
-        }
-      )
+    continueOrSaveAsDraft[CustomerDetails](
+      aboutYouForm,
+      formWithErrors => BadRequest(aboutYouView(formWithErrors)),
+      data => {
+        val updatedData = updateAboutYouAndTheProperty(_.copy(customerDetails = Some(data)))
+        session.saveOrUpdate(updatedData)
+        Redirect(navigator.nextPage(AboutYouPageId).apply(updatedData))
+      }
+    )
   }
 }

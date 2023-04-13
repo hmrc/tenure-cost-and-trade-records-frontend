@@ -41,6 +41,8 @@ trait FakeViews { this: GuiceOneAppPerSuite =>
   lazy val aboutYouView                         = app.injector.instanceOf[aboutYou]
   lazy val aboutThePropertyView                 = app.injector.instanceOf[aboutTheProperty]
   lazy val websiteForPropertyView               = app.injector.instanceOf[websiteForProperty]
+  lazy val premisesLicenceGrantedView           = app.injector.instanceOf[premisesLicenseGranted]
+  lazy val premisesLicenceGrantedDetailsView    = app.injector.instanceOf[premisesLicenseGrantedDetails]
 
   // About the franchise or letting
   lazy val franchiseOrLettingsTiedToPropertyView      =

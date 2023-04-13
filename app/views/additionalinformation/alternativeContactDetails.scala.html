@@ -47,7 +47,7 @@
       theForm,
       "alternativeContactFullName",
       "govuk-!-width-two-thirds",
-      "contact.full.name",
+      "fullName",
       labelClasses = "govuk-!-font-weight-bold"
     )
 
@@ -56,7 +56,7 @@
     @includes.textInput(govukInput, theForm, "alternativeContactDetails.phone", "govuk-!-width-two-thirds", "phone")
     @includes.textInput(govukInput, theForm, "alternativeContactDetails.email", "govuk-!-width-two-thirds", "email")
 
-    <p class="govuk-body"><b>@messages("label.alternativeContactDetails.address")</b></p>
+    <p class="govuk-body"><b>@messages("label.alternativeContactDetails")</b></p>
 
     @includes.textInput(
       govukInput,
