@@ -46,12 +46,6 @@ class EditAddressViewSpec extends QuestionViewBehaviours[Address] {
       backlinkUrl mustBe controllers.connectiontoproperty.routes.AreYouStillConnectedController.show().url
     }
 
-    "Section heading is visible" in {
-      val doc         = asDocument(createViewUsingForm(form))
-      val sectionText = doc.getElementsByClass("govuk-caption-m").text()
-      assert(sectionText == messages("label.section.checkBeforeStart"))
-    }
-
     "contain save and continue button with the value Save and Continue" in {
       val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("continue").text()

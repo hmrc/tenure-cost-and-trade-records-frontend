@@ -17,12 +17,10 @@
 package controllers.aboutyouandtheproperty
 
 import form.Errors
-import navigation.AboutYouAndThePropertyNavigator
+import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
 import play.api.http.Status
 import play.api.test.Helpers._
-import play.twirl.api.HtmlFormat
 import utils.TestBaseSpec
-import views.html.aboutyouandtheproperty.websiteForProperty
 
 class WebsiteForPropertyControllerSpec extends TestBaseSpec {
 
@@ -30,26 +28,24 @@ class WebsiteForPropertyControllerSpec extends TestBaseSpec {
   import form.aboutyouandtheproperty.WebsiteForPropertyForm._
   import utils.FormBindingTestAssertions._
 
-  val mockAboutThePropertyNavigator                  = mock[AboutYouAndThePropertyNavigator]
-  val mockWebsiteForPropertyView: websiteForProperty = mock[websiteForProperty]
-  when(mockWebsiteForPropertyView.apply(any)(any, any)).thenReturn(HtmlFormat.empty)
-
-  val websiteForPropertyController = new WebsiteForPropertyController(
+  def websiteForPropertyController(
+    aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes)
+  ) = new WebsiteForPropertyController(
     stubMessagesControllerComponents(),
-    mockAboutThePropertyNavigator,
-    mockWebsiteForPropertyView,
-    preFilledSession,
+    aboutYouAndThePropertyNavigator,
+    websiteForPropertyView,
+    preEnrichedActionRefiner(aboutYouAndTheProperty = aboutYouAndTheProperty),
     mockSessionRepo
   )
 
   "WebsiteForProperty controller" should {
     "return 200" in {
-      val result = websiteForPropertyController.show(fakeRequest)
+      val result = websiteForPropertyController().show(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return HTML" in {
-      val result = websiteForPropertyController.show(fakeRequest)
+      val result = websiteForPropertyController().show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
@@ -63,7 +59,9 @@ class WebsiteForPropertyControllerSpec extends TestBaseSpec {
   }
 
   object TestData {
-    val errorKey = new {
+    val errorKey: Object {
+      val buildingOperatingHaveAWebsite: String
+    } = new {
       val buildingOperatingHaveAWebsite: String = "buildingOperatingHaveAWebsite"
     }
 

@@ -47,56 +47,52 @@
 @(theForm: Form[WebsiteForPropertyDetails])(implicit request: Request[_], messages: Messages)
 
 @conditionalHTML = {
-
-@govukInput(
- Input(
-  id = "websiteAddressForProperty",
-  name = "websiteAddressForProperty",
-  classes = "govuk-input--width-20",
-  value = theForm("websiteAddressForProperty").value,
-  label = Label(
-   content = Text(messages("websiteAddressForProperty.textbox")),
-   classes = "govuk-!-font-weight-bold"
+  @govukInput(
+    Input(
+      id = "websiteAddressForProperty",
+      name = "websiteAddressForProperty",
+      classes = "govuk-input--width-20",
+      value = theForm("websiteAddressForProperty").value,
+      label = Label(
+        content = Text(messages("websiteAddressForProperty.textbox")),
+      )
+    )
   )
- )
-)
-
 }
 
 @layout(
- pageHeading = messages("buildingOperatingHaveAWebsite.heading"),
- showH1 = false,
- showSection = true,
- sectionName = messages("label.section.aboutTheProperty"),
- backLinkUrl = controllers.aboutyouandtheproperty.routes.AboutThePropertyController.show.url,
- theForm = theForm
+  pageHeading = messages("buildingOperatingHaveAWebsite.heading"),
+  showH1 = false,
+  showSection = true,
+  sectionName = messages("label.section.aboutTheProperty"),
+  backLinkUrl = controllers.aboutyouandtheproperty.routes.AboutThePropertyController.show.url,
+  theForm = theForm
 ) {
 
+  @formWithCSRF(action = controllers.aboutyouandtheproperty.routes.WebsiteForPropertyController.submit(), args = Symbol("class") -> "myForm", Symbol("id") -> "myFormId") {
 
- @formWithCSRF(action = controllers.aboutyouandtheproperty.routes.WebsiteForPropertyController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
+    @govukRadios(Radios(
+      fieldset = Some(Fieldset(
+        legend = Some(Legend(
+          content = Text(messages("buildingOperatingHaveAWebsite.heading")), isPageHeading = true,
+          classes = "govuk-fieldset__legend--l",
+        ))
+      )),
+      name = "buildingOperatingHaveAWebsite",
+      items = Seq(
+        RadioItem(
+          content = Text(messages("label.yes")),
+          value = Some("yes"),
+          conditionalHtml = Some(conditionalHTML)
+        ),
+        RadioItem(
+          content = Text(messages("label.no")),
+          value = Some("no")
+        )
+      ),
+      errorMessage = theForm.errors.asTextErrorMessageForField("buildingOperatingHaveAWebsite")
+    ).withFormField(theForm("buildingOperatingHaveAWebsite")))
 
-  @govukRadios(Radios(
-   fieldset = Some(Fieldset(
-    legend = Some(Legend(
-     content = Text(messages("buildingOperatingHaveAWebsite.heading")), isPageHeading = true,
-     classes = "govuk-fieldset__legend--l",
-    ))
-   )),
-   name = "buildingOperatingHaveAWebsite",
-   items = Seq(
-    RadioItem(
-     content = Text(messages("label.yes")),
-     value = Some("yes"),
-     conditionalHtml = Some(conditionalHTML)
-    ),
-    RadioItem(
-     content = Text(messages("label.no")),
-     value = Some("no")
-    )
-   ),
-   errorMessage = theForm.errors.asTextErrorMessageForField("buildingOperatingHaveAWebsite")
-  ).withFormField(theForm("buildingOperatingHaveAWebsite")))
-
-  @includes.continueButton(govukButton)
- }
+    @includes.continueButton(govukButton)
+  }
 }

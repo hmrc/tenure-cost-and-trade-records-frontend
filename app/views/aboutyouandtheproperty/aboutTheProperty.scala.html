@@ -15,161 +15,170 @@
  *@
 
 @import models.submissions.aboutyouandtheproperty.PropertyDetails
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukFieldset
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
-@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Label
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Hint
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Input
-@import uk.gov.hmrc.govukfrontend.views.Aliases.RadioItem
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Radios
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.radios.RadioItem
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Legend
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Fieldset
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Hint
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Text
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukCheckboxes
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Checkboxes
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.checkboxes.CheckboxItem
+@import uk.gov.hmrc.govukfrontend.views.Aliases.HtmlContent
 
 @this(layout: Layout,
-        govukButton: GovukButton,
-        govukRadios: GovukRadios,
-        govukInput: GovukInput,
-        govukFieldset: GovukFieldset,
-        govukCheckboxes: GovukCheckboxes,
-        formWithCSRF: FormWithCSRF
+  govukButton: GovukButton,
+  govukRadios: GovukRadios,
+  govukInput: GovukInput,
+  govukFieldset: GovukFieldset,
+  govukCheckboxes: GovukCheckboxes,
+  formWithCSRF: FormWithCSRF
 )
-
 
 @(theForm: Form[PropertyDetails], forType: String)(implicit request: Request[_], messages: Messages)
 
 @content = {
-  <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-    <h1 class="govuk-fieldset__heading">@messages("aboutProperty.heading")</h1>
-  </legend>
+  @if(forType.equals(ForTypes.for6010) || forType.equals(ForTypes.for6011)) {
+    @govukRadios(Radios(
+      fieldset =  Some(Fieldset(
+        legend = Some(Legend(
+          content = Text(Messages("label.propertyCurrentlyUsed")),
+          classes = "govuk-fieldset__legend--m"
+        ))
+      )),
+      hint = Hint(content = HtmlContent(messages("hint.select.main"))),
+      name = "propertyCurrentlyUsed",
+      items = Seq(
+        RadioItem(
+          content = Text(messages("propertyCurrentlyUsed.publicHouse")),
+          value = Some("publicHouse")
+        ),
+        RadioItem(
+          content = Text(messages("propertyCurrentlyUsed.wineCafeBar")),
+          value = Some("wineCafeBar")
+        ),
+        RadioItem(
+          content = Text(messages("propertyCurrentlyUsed.otherBar")),
+          value = Some("otherBar")
+        ),
+        RadioItem(
+          content = Text(messages("propertyCurrentlyUsed.pubRestaurant")),
+          value = Some("pubRestaurant")
+        ),
+        RadioItem(
+          content = Text(messages("propertyCurrentlyUsed.licencedRestaurant")),
+          value = Some("licencedRestaurant")
+        ),
+        RadioItem(
+          content = Text(messages("propertyCurrentlyUsed.hotel")),
+          value = Some("hotel")
+        ),
+        RadioItem(
+          content = Text(messages("propertyCurrentlyUsed.discoNightclub")),
+          value = Some("discoNightclub")
+        ),
+        RadioItem(
+          content = Text(messages("propertyCurrentlyUsed.other")),
+          value = Some("other"),
+          conditionalHtml = Some(conditionalHTML(messages("hint.other.vacant.propertyCurrentlyUsedOther")))
+        )
+      ),
+      errorMessage = theForm.errors.asTextErrorMessageForField("propertyCurrentlyUsed")
+      ).withFormField(theForm("propertyCurrentlyUsed"))
+    )
+  }
 
-@govukInput(
- Input(
-  id = "currentOccupierName",
-  name = "currentOccupierName",
-  value = theForm("currentOccupierName").value,
-  classes = "govuk-input--width-20",
-  hint = Some(Hint(content = Text(messages("hint.currentOccupierName")))),
-  errorMessage =  theForm.errors.asTextErrorMessageForField("currentOccupierName")
- )
-)
-
-@if(forType.equals("FOR6010") || forType.equals("FOR6011")) {
- @includes.radioButtons(
-  govukRadios,
-  theForm,
-  "propertyCurrentlyUsed",
-  "label.propertyCurrentlyUsed",
-  "govuk-fieldset__legend--m",
-  Seq(
-   RadioItem(
-    content = Text(messages("propertyCurrentlyUsed.publicHouse")),
-    value = Some("publicHouse")
-   ),
-   RadioItem(
-    content = Text(messages("propertyCurrentlyUsed.wineCafeBar")),
-    value = Some("wineCafeBar")
-   ),
-   RadioItem(
-    content = Text(messages("propertyCurrentlyUsed.otherBar")),
-    value = Some("otherBar")
-   ),
-   RadioItem(
-    content = Text(messages("propertyCurrentlyUsed.pubRestaurant")),
-    value = Some("pubRestaurant")
-   ),
-   RadioItem(
-    content = Text(messages("propertyCurrentlyUsed.licencedRestaurant")),
-    value = Some("licencedRestaurant")
-   ),
-   RadioItem(
-    content = Text(messages("propertyCurrentlyUsed.hotel")),
-    value = Some("hotel")
-   ),
-   RadioItem(
-    content = Text(messages("propertyCurrentlyUsed.discoNightclub")),
-    value = Some("discoNightclub")
-   ),
-   RadioItem(
-    content = Text(messages("propertyCurrentlyUsed.other")),
-    value = Some("other"),
-    conditionalHtml = Some(conditionalHTML)
-   )
-  ),
-  false,
-  false)
+  @if(forType.equals(ForTypes.for6015) || forType.equals(ForTypes.for6016)) {
+    @govukCheckboxes(
+      Checkboxes(
+        fieldset =  Some(Fieldset(
+          legend = Some(Legend(
+            content = Text(Messages("label.propertyCurrentlyUsed")),
+            classes = "govuk-fieldset__legend--m"
+          ))
+        )),
+        name = "propertyCurrentlyUsed",
+        items = Seq(
+          CheckboxItem(
+            content = Text(messages("propertyCurrentlyUsed.hotel")),
+            value = "hotel"
+          ),
+          CheckboxItem(
+            content = Text(messages("propertyCurrentlyUsed.healthSpa")),
+            value = "healthSpa"
+          ),
+          CheckboxItem(
+            content = Text(messages("propertyCurrentlyUsed.lodgeAndRestaurant")),
+            value = "lodgeAndRestaurant"
+          ),
+          CheckboxItem(
+            content = Text(messages("propertyCurrentlyUsed.conferenceCentre")),
+            value = "conferenceCentre"
+          ),
+          CheckboxItem(
+            content = Text(messages("propertyCurrentlyUsed.other")),
+            value = "other",
+            conditionalHtml = Some(conditionalHTML(messages("hint.other.use.propertyCurrentlyUsedOther")))
+          )
+        ),
+        hint = Hint(content = HtmlContent(messages("hint.select.all"))),
+        errorMessage = theForm.errors.asTextErrorMessageForField("propertyCurrentlyUsed")
+      ).withFormField(theForm("propertyCurrentlyUsed"))
+    )
+  }
 }
 
-@if(forType.equals("FOR6015") || forType.equals("FOR6016")) {
- @includes.checkboxes(
-  govukCheckboxes,
-  theForm,
-  "propertyCurrentlyUsed",
-  "label.propertyCurrentlyUsed",
-  "govuk-fieldset__legend--m",
-  Seq(
-   CheckboxItem(
-    content = Text(messages("propertyCurrentlyUsed.hotel")),
-    value = "hotel"
-   ),
-   CheckboxItem(
-    content = Text(messages("propertyCurrentlyUsed.healthFarm")),
-    value = "healthFarm"
-   ),
-   CheckboxItem(
-    content = Text(messages("propertyCurrentlyUsed.lodgeAndRestaurant")),
-    value = "lodgeAndRestaurant"
-   ),
-   CheckboxItem(
-    content = Text(messages("propertyCurrentlyUsed.conferenceCentre")),
-    value = "conferenceCentre"
-   ),
-   CheckboxItem(
-    content = Text(messages("propertyCurrentlyUsed.other")),
-    value = "other",
-    conditionalHtml = Some(conditionalHTML)
-   )
+@conditionalHTML(hintText: String) = {
+  @govukInput(
+    Input(
+      id = "propertyCurrentlyUsedOther",
+      name = "propertyCurrentlyUsedOther",
+      classes = "govuk-input--width-20",
+      value = theForm("propertyCurrentlyUsedOther").value,
+      label = Label(
+       content = Text(messages(hintText))
+      )
+    )
   )
- )
-
-}
-}
-
-@conditionalHTML = {
-
-@govukInput(
- Input(
-  id = "propertyCurrentlyUsedOther",
-  name = "propertyCurrentlyUsedOther",
-  classes = "govuk-input--width-20",
-  value = theForm("propertyCurrentlyUsedOther").value,
-  label = Label(
-   content = Text(messages("propertyCurrentlyUsedOther.textbox")),
-   classes = "govuk-!-font-weight-bold"
-  )
- )
-)
-
 }
 
 @layout(
- pageHeading = messages("aboutProperty.heading"),
- showH1 = false,
- showSection = true,
- sectionName = messages("label.section.aboutTheProperty"),
- backLinkUrl = controllers.aboutyouandtheproperty.routes.AboutYouController.show.url,
- theForm = theForm
+  pageHeading = messages("aboutProperty.heading"),
+  showH1 = false,
+  showSection = true,
+  sectionName = messages("label.section.aboutTheProperty"),
+  backLinkUrl = controllers.aboutyouandtheproperty.routes.AboutYouController.show.url,
+  theForm = theForm
 ) {
 
- @formWithCSRF(action = controllers.aboutyouandtheproperty.routes.AboutThePropertyController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
+  @formWithCSRF(action = controllers.aboutyouandtheproperty.routes.AboutThePropertyController.submit(), args = Symbol("class") -> "myForm", Symbol("id") -> "myFormId") {
 
-  @govukFieldset(Fieldset(html = content))
+    <h1 class="govuk-heading-l">@messages("aboutProperty.heading")</h1>
 
-  @includes.continueButton(govukButton)
- }
+    @govukInput(
+      Input(
+        id = "currentOccupierName",
+        name = "currentOccupierName",
+        classes = "govuk-!-width-two-thirds",
+        value = theForm("propertyCurrentlyUsedOther").value,
+        label = Label(
+          content = Text(messages("label.currentOccupierName"))
+        ),
+        errorMessage = theForm.errors.asTextErrorMessageForField("currentOccupierName"),
+      ).withFormField(theForm("currentOccupierName"))
+    )
+
+    @govukFieldset(Fieldset(html = content))
+
+    @includes.continueButton(govukButton)
+  }
 }
 

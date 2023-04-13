@@ -21,29 +21,32 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Fieldset
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Hint
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
 
 @(govukRadios: GovukRadios,
-        theForm: Form[_],
-        name: String,
-        legendContent: String = "",
-        classes: String = "",
-        items: Seq[RadioItem],
-        isHeading: Boolean = false,
-        inline: Boolean = true
+  theForm: Form[_],
+  name: String,
+  legendContent: String = "",
+  classes: String = "",
+  items: Seq[RadioItem],
+  hint: String = "",
+  isHeading: Boolean = false,
+  inline: Boolean = true
 )(implicit request: Request[_], messages: Messages)
 
-
 @govukRadios(Radios(
- fieldset =  Some(Fieldset(
-   legend = Some(Legend(
-    content = Text(Messages(legendContent)),
-    isPageHeading = isHeading,
-    classes = classes
-   ))
- )),
- classes = if (inline) "govuk-radios--inline" else "",
- name = name,
- items = items,
- errorMessage = theForm.errors.asTextErrorMessageForField(name)
+  fieldset =  Some(Fieldset(
+    legend = Some(Legend(
+      content = Text(Messages(legendContent)),
+      isPageHeading = isHeading,
+      classes = classes
+    ))
+  )),
+  hint = Hint(content = HtmlContent(hint)),
+  classes = if (inline) "govuk-radios--inline" else "",
+  name = name,
+  items = items,
+  errorMessage = theForm.errors.asTextErrorMessageForField(name)
 ).withFormField(theForm(name))
 )

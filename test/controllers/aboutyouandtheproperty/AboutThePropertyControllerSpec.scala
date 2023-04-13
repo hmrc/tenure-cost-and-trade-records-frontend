@@ -17,40 +17,35 @@
 package controllers.aboutyouandtheproperty
 
 import form.Errors
-import navigation.AboutYouAndThePropertyNavigator
 import play.api.http.Status
 import play.api.test.Helpers._
-import play.twirl.api.HtmlFormat
 import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
-import views.html.aboutyouandtheproperty.aboutTheProperty
 import form.aboutyouandtheproperty.AboutThePropertyForm.aboutThePropertyForm
-import models.submissions.aboutyouandtheproperty.CurrentPropertyPublicHouse
+import models.submissions.aboutyouandtheproperty.{AboutYouAndTheProperty, CurrentPropertyPublicHouse}
 
 class AboutThePropertyControllerSpec extends TestBaseSpec {
 
   import TestData._
 
-  val mockAboutThePropertyNavigator              = mock[AboutYouAndThePropertyNavigator]
-  val mockAboutThePropertyView: aboutTheProperty = mock[aboutTheProperty]
-  when(mockAboutThePropertyView.apply(any, any)(any, any)).thenReturn(HtmlFormat.empty)
-
-  val aboutThePropertyController = new AboutThePropertyController(
+  def aboutThePropertyController(
+    aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes)
+  ) = new AboutThePropertyController(
     stubMessagesControllerComponents(),
-    mockAboutThePropertyNavigator,
-    mockAboutThePropertyView,
-    preFilledSession,
+    aboutYouAndThePropertyNavigator,
+    aboutThePropertyView,
+    preEnrichedActionRefiner(aboutYouAndTheProperty = aboutYouAndTheProperty),
     mockSessionRepo
   )
 
   "GET /" should {
     "return 200" in {
-      val result = aboutThePropertyController.show(fakeRequest)
+      val result = aboutThePropertyController().show(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return HTML" in {
-      val result = aboutThePropertyController.show(fakeRequest)
+      val result = aboutThePropertyController().show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
@@ -71,7 +66,10 @@ class AboutThePropertyControllerSpec extends TestBaseSpec {
   }
 
   object TestData {
-    val errorKey = new {
+    val errorKey: Object {
+      val currentOccupierName: String
+      val propertyCurrentlyUsed: String
+    } = new {
       val currentOccupierName: String   = "currentOccupierName"
       val propertyCurrentlyUsed: String = "propertyCurrentlyUsed"
     }
