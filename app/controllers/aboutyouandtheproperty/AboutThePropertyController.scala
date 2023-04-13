@@ -17,14 +17,15 @@
 package controllers.aboutyouandtheproperty
 
 import actions.WithSessionRefiner
+import controllers.FORDataCaptureController
 import form.aboutyouandtheproperty.AboutThePropertyForm.aboutThePropertyForm
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty.updateAboutYouAndTheProperty
+import models.submissions.aboutyouandtheproperty.PropertyDetails
 import navigation.AboutYouAndThePropertyNavigator
 import navigation.identifiers.AboutThePropertyPageId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.aboutyouandtheproperty.aboutTheProperty
 
 import javax.inject.{Inject, Named, Singleton}
@@ -37,7 +38,7 @@ class AboutThePropertyController @Inject() (
   aboutThePropertyView: aboutTheProperty,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FrontendController(mcc)
+) extends FORDataCaptureController(mcc)
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
@@ -55,19 +56,15 @@ class AboutThePropertyController @Inject() (
   }
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    aboutThePropertyForm
-      .bindFromRequest()
-      .fold(
-        formWithErrors =>
-          Future.successful(
-            BadRequest(aboutThePropertyView(formWithErrors, request.sessionData.forType))
-          ),
-        data => {
-          val updatedData = updateAboutYouAndTheProperty(_.copy(propertyDetails = Some(data)))
-          session.saveOrUpdate(updatedData)
-          Future.successful(Redirect(navigator.nextPage(AboutThePropertyPageId).apply(updatedData)))
-        }
-      )
+    continueOrSaveAsDraft[PropertyDetails](
+      aboutThePropertyForm,
+      formWithErrors => BadRequest(aboutThePropertyView(formWithErrors, request.sessionData.forType)),
+      data => {
+        val updatedData = updateAboutYouAndTheProperty(_.copy(propertyDetails = Some(data)))
+        session.saveOrUpdate(updatedData)
+        Redirect(navigator.nextPage(AboutThePropertyPageId).apply(updatedData))
+      }
+    )
   }
 
 }
