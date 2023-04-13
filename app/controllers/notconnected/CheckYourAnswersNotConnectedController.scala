@@ -46,7 +46,7 @@ class CheckYourAnswersNotConnectedController @Inject() (
 
   lazy val confirmationUrl = controllers.routes.FormSubmissionController.confirmation().url
 
-  val log = Logger(classOf[CheckYourAnswersNotConnectedController])
+  val log                      = Logger(classOf[CheckYourAnswersNotConnectedController])
   def show: Action[AnyContent] = Action.async { implicit request =>
     Future.successful(Ok(checkYourAnswersNotConnectedView()))
   }
