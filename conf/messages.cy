@@ -69,8 +69,7 @@ hint.select.all = Select all that apply
 
 # SECTION NAMES
 ###############
-label.section.aboutYou = About you
-label.section.aboutTheProperty = About the property
+label.section.aboutTheProperty = About you and the property
 label.section.aboutYourTradingHistory = About your trading history
 label.section.aboutTheFranchiseLettings = Franchises or lettings tied to the property
 label.section.aboutYourLeaseOrTenure = About your lease or agreement
@@ -190,6 +189,24 @@ hint.other.vacant.propertyCurrentlyUsedOther = Please give details if the proper
 ######################
 buildingOperatingHaveAWebsite.heading = Does the business operating from the property have a website?
 websiteAddressForProperty.textbox = What is the business website address?
+
+# PREMISES LICENSE GRANTED (6015,6016)
+######################################
+premisesLicenseGranted.heading = Has the premises licence been granted for the property?
+help.premisesLicenseGranted.title = Help with your premises licence
+help.premisesLicenseGranted.text = We’re interested to know if you’re permitted to serve alcohol under the terms of a premises licence, a personal licence, or a club premises certificate.
+
+# PREMISES LICENSE GRANTED DETAILS (6015,6016)
+##############################################
+premisesLicenseGrantedInformation.heading = Give details of your premises licence, including any conditions restricting the use of all or part of the property
+help.premisesLicenseGrantedInformation.title = Help with your description
+help.premisesLicenseGrantedInformation.heading1 = Describing your premises licence
+help.premisesLicenseGrantedInformation.p1 = Let us know if you have a premises licence, a personal licence, or a club premises certificate.
+help.premisesLicenseGrantedInformation.heading2 = Describing restrictions on the use of the property
+help.premisesLicenseGrantedInformation.p2 = You’re only required to write a short description of the conditions we’re concerned with. Examples of acceptable descriptions include:
+help.premisesLicenseGrantedInformation.list.p1 = No drinks allowed on the terrace after 10pm
+help.premisesLicenseGrantedInformation.list.p2 = Only 200 people allowed in the function room at any time
+help.premisesLicenseGrantedInformation.list.p3 = No entry or re-entry allowed after 11.30pm on Fridays or Saturdays
 
 #TENANCY LEASE AGREEMENT(USED ON 6010, 6015, 6016, 6030, 6032, 6033, 6034, 6035, 6036, 6037, 6038, 6043, 6049, 6056, 6057, 6066)
 ##############################
@@ -567,7 +584,28 @@ label.grossProfit = Gross profits
 
 #TURNOVER
 #########
-turnover.heading = This is a holding page for the turnover page
+turnover.heading = Turnover
+turnover.p1 = Provide us with details of your turnover. If the accounts do not relate to a whole year, or if you are not trading continuously, state the relevant number of weeks. If your accounts are held in a spreadsheet that mirrors this form, you can copy and paste them.
+turnover.inset = All fields on this page are mandatory. If none of the categories are applicable, enter the number 0.
+turnover.financialYearEnd = Financial year end
+turnover.tradingPeriod = Trading period
+turnover.alcoholicDrinks = Alcoholic drinks (exc VAT)
+turnover.alcoholicDrinksCaption = Including soft drinks, crisps, nuts
+turnover.food = Food (exc VAT)
+turnover.foodCaption = Excluding alcoholic drinks
+turnover.otherReceipts = Other receipts (exc VAT)
+turnover.otherReceiptsCaption = For example, admission charges or camping pitches
+turnover.accommodation = Accommodation (exc VAT)
+turnover.accommodationCaption = Excluding meals
+turnover.averageOccupancyRate = Average occupancy rate
+turnover.averageOccupancyRateCaption = Lodges and hotels only
+turnover.weeks = weeks
+turnover.details = Help with completing turnover
+turnover.details.h1 = General guidance
+turnover.details.p1 = Do not include VAT in any of the figures you declare on this page.
+turnover.details.p2 = If you have not broken down your turnover into separate categories, or if you have recorded certain categories together - such as all food and drinks - you can declare them together in a single field.
+turnover.details.h2 = Financial year end
+turnover.details.p3 = Your financial year end dates are pre-populated by the system. If your financial year end has changed during the period shown, you can edit these dates accordingly.
 
 #COST OF SALES
 costOfSales.heading = This is a holding page for the cost of sales page
@@ -618,14 +656,6 @@ label.alternativeContactDetails = Correspondence address
 ###########################################
 tenancyLeaseAgreementExpire.heading = When does your tenancy, lease or agreement expire, or if earlier, what is the date of your next review (excluding indexation)?
 
-#PREMISES LICENSE GRANTED (FORM 6015)
-###########################################
-premisesLicenseGranted.heading = Has the premises licence been granted for the property?
-
-#PREMISES LICENSE GRANTED DETAILS (FORM 6015)
-###########################################
-premisesLicenseGrantedInformation.heading = Give details of your premises licence, including any conditions restricting the use of all or part of the property
-
 #CONNECTED TO LANDLORD
 ###########################################
 connectedToLandlord.heading = Other than contractually, are you connected to the landlord in any way?
@@ -673,22 +703,6 @@ currentRentFirstPaid.listBlock.p2 = a lease renewal or alteration
 currentRentFirstPaid.listBlock.p3 = the assignment of an existing lease from another party
 currentRentFirstPaid.listBlock.p4 = an initial rent-free period
 currentRentFirstPaid.helpWithServiceCurrentRentFirstPaidDontNeedToKnow = We don’t need to know about any changes in the rent which are part of your current agreement. These could include, but are not limited to, changes linked to your sales performance, or fluctuations in the retail price index.
-
-#HELP WITH PREMISES LICENCE GRANTED
-##############################
-helpWithServicePremisesLicenseGranted.title = Help with your premises licence
-premisesLicenseGranted.helpWithServicePremisesLicenseGranted = We’re interested to know if you’re permitted to serve alcohol under the terms of a premises licence, a personal licence, or a club premises certificate.
-
-#HELP WITH PREMISES LICENCE GRANTED DETAILS
-##############################
-premisesLicenseGrantedInformation.title = Help with your description
-premisesLicenseGrantedInformation.helpWithServicePremisesLicenseGrantedInformationHeader = Describing your premises licence
-premisesLicenseGrantedInformation.helpWithServicePremisesLicenseGrantedInformation.p1 = Let us know if you have a premises licence, a personal licence, or a club premises certificate.
-premisesLicenseGrantedInformation.helpWithServicePremisesLicenseGrantedInformation.subHeader = Describing restrictions on the use of the property
-premisesLicenseGrantedInformation.helpWithServicePremisesLicenseGrantedInformation.p2 = You’re only required to write a short description of the conditions we’re concerned with
-premisesLicenseGrantedInformation.listBlock.p1 = No drinks allowed on the terrace after 10pm
-premisesLicenseGrantedInformation.listBlock.p2 = Only 200 people allowed in the function room at any time
-premisesLicenseGrantedInformation.listBlock.p3 = No entry or re-entry allowed after 11.30pm on Fridays or Saturdays
 
 # SAVE AS DRAFT
 ###############

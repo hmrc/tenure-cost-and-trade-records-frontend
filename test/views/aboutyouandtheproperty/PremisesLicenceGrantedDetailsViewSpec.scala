@@ -24,9 +24,6 @@ import views.behaviours.QuestionViewBehaviours
 
 class PremisesLicenceGrantedDetailsViewSpec extends QuestionViewBehaviours[PremisesLicenseGrantedInformationDetails] {
 
-  def premisesLicenceGrantedDetailsView =
-    app.injector.instanceOf[views.html.aboutyouandtheproperty.premisesLicenseGrantedDetails]
-
   val messageKeyPrefix = "premisesLicenseGrantedInformation"
 
   override val form = PremisesLicenseGrantedDetailsForm.premisesLicenseGrantedInformationDetailsForm
@@ -49,7 +46,7 @@ class PremisesLicenceGrantedDetailsViewSpec extends QuestionViewBehaviours[Premi
     }
 
     "Section heading is visible" in {
-      val doc         = asDocument(createViewUsingForm(form)) // govuk-caption-m
+      val doc         = asDocument(createViewUsingForm(form))
       val sectionText = doc.getElementsByClass("govuk-caption-m").text()
       assert(sectionText == messages("label.section.aboutTheProperty"))
     }
@@ -67,7 +64,14 @@ class PremisesLicenceGrantedDetailsViewSpec extends QuestionViewBehaviours[Premi
 
     "contain get help section" in {
       val doc = asDocument(createView())
-      assert(doc.toString.contains(messages("premisesLicenseGrantedInformation.title")))
+      assert(doc.toString.contains(messages("help.premisesLicenseGrantedInformation.title")))
+      assert(doc.toString.contains(messages("help.premisesLicenseGrantedInformation.heading1")))
+      assert(doc.toString.contains(messages("help.premisesLicenseGrantedInformation.p1")))
+      assert(doc.toString.contains(messages("help.premisesLicenseGrantedInformation.heading1")))
+      assert(doc.toString.contains(messages("help.premisesLicenseGrantedInformation.p2")))
+      assert(doc.toString.contains(messages("help.premisesLicenseGrantedInformation.list.p1")))
+      assert(doc.toString.contains(messages("help.premisesLicenseGrantedInformation.list.p2")))
+      assert(doc.toString.contains(messages("help.premisesLicenseGrantedInformation.list.p3")))
     }
   }
 }

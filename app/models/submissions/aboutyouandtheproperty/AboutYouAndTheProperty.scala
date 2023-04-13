@@ -18,13 +18,14 @@ package models.submissions.aboutyouandtheproperty
 
 import actions.SessionRequest
 import models.Session
+import models.submissions.common.AnswersYesNo
 import play.api.libs.json.Json
 
 case class AboutYouAndTheProperty(
   customerDetails: Option[CustomerDetails] = None,
   propertyDetails: Option[PropertyDetails] = None,
   websiteForPropertyDetails: Option[WebsiteForPropertyDetails] = None,
-  premisesLicenseGrantedDetail: Option[PremisesLicenseGranted] = None,
+  premisesLicenseGrantedDetail: Option[AnswersYesNo] = None,
   premisesLicenseGrantedInformationDetails: Option[PremisesLicenseGrantedInformationDetails] = None,
   licensableActivities: Option[LicensableActivities] = None,
   licensableActivitiesInformationDetails: Option[LicensableActivitiesInformationDetails] = None,

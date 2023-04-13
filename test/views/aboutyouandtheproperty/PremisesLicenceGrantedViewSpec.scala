@@ -17,22 +17,21 @@
 package views.aboutyouandtheproperty
 
 import form.aboutyouandtheproperty.PremisesLicenseGrantedForm
-import models.submissions.aboutyouandtheproperty.{PremisesLicenseGranted, PremisesLicenseGrantedNo, PremisesLicenseGrantedYes}
+import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
+import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
 
-class PremisesLicenceGrantedViewSpec extends QuestionViewBehaviours[PremisesLicenseGranted] {
-
-  def premisesLicenceGrantedView = app.injector.instanceOf[views.html.aboutyouandtheproperty.premisesLicenseGranted]
+class PremisesLicenceGrantedViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
 
   val messageKeyPrefix = "premisesLicenseGranted"
 
-  override val form = PremisesLicenseGrantedForm.premisesLicenseGrantedForm
+  override val form: Form[AnswersYesNo] = PremisesLicenseGrantedForm.premisesLicenseGrantedForm
 
-  def createView = () => premisesLicenceGrantedView(form)(fakeRequest, messages)
+  def createView: () => Html = () => premisesLicenceGrantedView(form)(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[PremisesLicenseGranted]) =>
+  def createViewUsingForm: Form[AnswersYesNo] => Html = (form: Form[AnswersYesNo]) =>
     premisesLicenceGrantedView(form)(fakeRequest, messages)
 
   "Property licence conditions view" must {
@@ -48,7 +47,7 @@ class PremisesLicenceGrantedViewSpec extends QuestionViewBehaviours[PremisesLice
     }
 
     "Section heading is visible" in {
-      val doc         = asDocument(createViewUsingForm(form)) // govuk-caption-m
+      val doc         = asDocument(createViewUsingForm(form))
       val sectionText = doc.getElementsByClass("govuk-caption-m").text()
       assert(sectionText == messages("label.section.aboutTheProperty"))
     }
@@ -59,8 +58,8 @@ class PremisesLicenceGrantedViewSpec extends QuestionViewBehaviours[PremisesLice
         doc,
         "premisesLicenseGranted",
         "premisesLicenseGranted",
-        PremisesLicenseGrantedYes.name,
-        false
+        AnswerYes.name,
+        isChecked = false
       )
       assertContainsText(doc, messages("label.yes"))
     }
@@ -71,8 +70,8 @@ class PremisesLicenceGrantedViewSpec extends QuestionViewBehaviours[PremisesLice
         doc,
         "premisesLicenseGranted-2",
         "premisesLicenseGranted",
-        PremisesLicenseGrantedNo.name,
-        false
+        AnswerNo.name,
+        isChecked = false
       )
       assertContainsText(doc, messages("label.no"))
     }
@@ -85,7 +84,8 @@ class PremisesLicenceGrantedViewSpec extends QuestionViewBehaviours[PremisesLice
 
     "contain get help section" in {
       val doc = asDocument(createView())
-      assert(doc.toString.contains(messages("helpWithServicePremisesLicenseGranted.title")))
+      assert(doc.toString.contains(messages("help.premisesLicenseGranted.title")))
+      assert(doc.toString.contains(messages("help.premisesLicenseGranted.text")))
     }
   }
 }
