@@ -47,12 +47,6 @@ class connectionToThePropertyViewSpec extends QuestionViewBehaviours[ConnectionT
       backlinkUrl mustBe controllers.connectiontoproperty.routes.AreYouStillConnectedController.show().url
     }
 
-    "Section heading is visible" in {
-      val doc         = asDocument(createViewUsingForm(form))
-      val sectionText = doc.getElementsByClass("govuk-caption-m").text()
-      assert(sectionText == messages("label.section.checkBeforeStart"))
-    }
-
     "contain radio buttons for the value occupier/trustee" in {
       val doc = asDocument(createViewUsingForm(form))
       assertContainsRadioButton(

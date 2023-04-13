@@ -31,7 +31,7 @@ object AboutThePropertyForm {
   val hotel              = CurrentPropertyHotel.name
   val discoOrNightclub   = CurrentPropertyDiscoOrNightclub.name
   val other              = CurrentPropertyOther.name
-  val healthFarm         = CurrentPropertyHealthFarm.name
+  val healthSpa          = CurrentPropertyHealthSpa.name
   val lodgeAndRestaurant = CurrentPropertyLodgeAndRestaurant.name
   val conferenceCentre   = CurrentPropertyConferenceCentre.name
 
