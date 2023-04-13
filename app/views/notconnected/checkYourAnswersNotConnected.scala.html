@@ -23,8 +23,9 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukTextarea
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukCharacterCount
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
-
-
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukWarningText
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.warningtext.WarningText
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 
 @this(layout: Layout,
         govukButton: GovukButton,
@@ -34,6 +35,7 @@
         govukDateInput: GovukDateInput,
         govukTextarea: GovukTextarea,
         govukCharacterCount: GovukCharacterCount,
+        govukWarningText: GovukWarningText,
         formWithCSRF: FormWithCSRF
 )
 
@@ -82,7 +84,18 @@
   </div>
  </dl>
 
-  @includes.continueButton(govukButton)
+  <legend class="govuk-fieldset__legend govuk-!-font-weight-bold">
+  @messages("declaration.heading")
+  </legend>
+
+  <p class="govuk-body">@messages("declaration.information")</p>
+
+  @govukWarningText(WarningText(
+   content = Text(messages("hint.declaration")),
+   classes = "govuk-!-margin-bottom-2"
+  ))
+
+  @includes.submitButton(govukButton)
 
  }
 

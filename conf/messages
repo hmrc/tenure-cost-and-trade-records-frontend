@@ -7,6 +7,7 @@ phase.beta = BETA
 phase.text = This is a new service – your <a href="{0}" class="govuk-link" target="_blank" id="betaFeedback">feedback</a> will help us to improve it.
 label.continue=Continue
 button.label.continue = Save and continue
+button.label.submit = Submit
 button.label.send = Accept and send
 back.link.label = Back
 button.label.save = Save as draft
