@@ -17,8 +17,10 @@
 package controllers.connectiontoproperty
 
 import actions.WithSessionRefiner
+import controllers.FORDataCaptureController
 import form.connectiontoproperty.ConnectionToThePropertyForm.connectionToThePropertyForm
 import models.Session
+import models.submissions.connectiontoproperty.ConnectionToProperty
 import navigation.ConnectionToPropertyNavigator
 import navigation.identifiers.ConnectionToPropertyPageId
 import play.api.Logging
@@ -26,8 +28,8 @@ import models.submissions.connectiontoproperty.StillConnectedDetails.updateStill
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.connectiontoproperty.connectionToTheProperty
+
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
 
@@ -38,7 +40,7 @@ class ConnectionToThePropertyController @Inject() (
   connectionToThePropertyView: connectionToTheProperty,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FrontendController(mcc)
+) extends FORDataCaptureController(mcc)
     with I18nSupport
     with Logging {
 
@@ -62,24 +64,21 @@ class ConnectionToThePropertyController @Inject() (
   }
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
-    connectionToThePropertyForm
-      .bindFromRequest()
-      .fold(
-        formWithErrors =>
-          Future.successful(
-            BadRequest(
-              connectionToThePropertyView(
-                formWithErrors,
-                controllers.connectiontoproperty.routes.AreYouStillConnectedController.show().url
-              )
-            )
-          ),
-        data => {
-          val updatedData = updateStillConnectedDetails(_.copy(connectionToProperty = Some(data)))
-          session.saveOrUpdate(updatedData)
-          Future.successful(Redirect(navigator.nextPage(ConnectionToPropertyPageId).apply(updatedData)))
-        }
-      )
+    continueOrSaveAsDraft[ConnectionToProperty](
+      connectionToThePropertyForm,
+      formWithErrors =>
+        BadRequest(
+          connectionToThePropertyView(
+            formWithErrors,
+            controllers.connectiontoproperty.routes.AreYouStillConnectedController.show().url
+          )
+        ),
+      data => {
+        val updatedData = updateStillConnectedDetails(_.copy(connectionToProperty = Some(data)))
+        session.saveOrUpdate(updatedData)
+        Redirect(navigator.nextPage(ConnectionToPropertyPageId).apply(updatedData))
+      }
+    )
   }
 
   private def getBackLink(answers: Session): Either[String, String] =

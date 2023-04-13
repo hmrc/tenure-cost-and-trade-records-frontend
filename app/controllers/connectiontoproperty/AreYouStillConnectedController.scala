@@ -17,16 +17,17 @@
 package controllers.connectiontoproperty
 
 import actions.WithSessionRefiner
+import controllers.FORDataCaptureController
 import form.connectiontoproperty.AreYouStillConnectedForm.areYouStillConnectedForm
 import navigation.ConnectionToPropertyNavigator
 import navigation.identifiers.AreYouStillConnectedPageId
 import play.api.i18n.I18nSupport
 import play.api.mvc._
 import repositories.SessionRepo
-import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.connectiontoproperty.areYouStillConnected
 import models.submissions.connectiontoproperty.StillConnectedDetails.updateStillConnectedDetails
 import models.submissions.common.Address
+import models.submissions.connectiontoproperty.AddressConnectionType
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
@@ -38,7 +39,7 @@ class AreYouStillConnectedController @Inject() (
   areYouStillConnectedView: areYouStillConnected,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FrontendController(mcc)
+) extends FORDataCaptureController(mcc)
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
@@ -57,16 +58,16 @@ class AreYouStillConnectedController @Inject() (
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
     val address: Address = request.sessionData.address
-    areYouStillConnectedForm
-      .bindFromRequest()
-      .fold(
-        formWithErrors => Future.successful(BadRequest(areYouStillConnectedView(formWithErrors, address))),
-        data => {
-          val updatedData = updateStillConnectedDetails(_.copy(addressConnectionType = Some(data)))
-          session.saveOrUpdate(updatedData)
-          Future.successful(Redirect(navigator.nextPage(AreYouStillConnectedPageId).apply(updatedData)))
-        }
-      )
+
+    continueOrSaveAsDraft[AddressConnectionType](
+      areYouStillConnectedForm,
+      formWithErrors => BadRequest(areYouStillConnectedView(formWithErrors, address)),
+      data => {
+        val updatedData = updateStillConnectedDetails(_.copy(addressConnectionType = Some(data)))
+        session.saveOrUpdate(updatedData)
+        Redirect(navigator.nextPage(AreYouStillConnectedPageId).apply(updatedData))
+      }
+    )
   }
 
 }
