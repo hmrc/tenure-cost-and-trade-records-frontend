@@ -93,6 +93,6 @@
       errorMessage = theForm.errors.asTextErrorMessageForField("buildingOperatingHaveAWebsite")
     ).withFormField(theForm("buildingOperatingHaveAWebsite")))
 
-    @includes.continueButton(govukButton)
+    @includes.continueSaveAsDraftButtons(govukButton)
   }
 }
