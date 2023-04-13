@@ -18,6 +18,7 @@ package controllers.notconnected
 
 import actions.{SessionRequest, WithSessionRefiner}
 import connectors.Audit
+import play.api.Logger
 import play.api.i18n.I18nSupport
 import play.api.libs.json.{JsObject, Json}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Result}
@@ -45,6 +46,7 @@ class CheckYourAnswersNotConnectedController @Inject() (
 
   lazy val confirmationUrl = controllers.routes.FormSubmissionController.confirmation().url
 
+  val log = Logger(classOf[CheckYourAnswersNotConnectedController])
   def show: Action[AnyContent] = Action.async { implicit request =>
     Future.successful(Ok(checkYourAnswersNotConnectedView()))
   }
@@ -70,7 +72,7 @@ class CheckYourAnswersNotConnectedController @Inject() (
 //    val auditType = "FormSubmission"
     // Dummy data from session to able creation of audit dashboards
 //    val submissionJson = Json.toJson(request.sessionData).as[JsObject]
-    println("*******")
+    log.warn("*****---*****")
 //    audit.sendExplicitAudit(auditType, submissionJson ++ Audit.languageJson)
     Future.unit
   }
