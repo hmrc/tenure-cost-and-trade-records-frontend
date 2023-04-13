@@ -17,22 +17,23 @@
 package views.additionalInformation
 
 import form.additionalinformation.FurtherInformationOrRemarksForm
-import models.submissions.aboutyouandtheproperty.{BuildingOperationHaveAWebsiteNo, BuildingOperationHaveAWebsiteYes, WebsiteForPropertyDetails}
 import models.submissions.additionalinformation.FurtherInformationOrRemarksDetails
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
+import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
 
 class FurtherInformationOrRemarksViewSpec extends QuestionViewBehaviours[FurtherInformationOrRemarksDetails] {
 
   val messageKeyPrefix = "furtherInformationOrRemarks"
 
-  override val form = FurtherInformationOrRemarksForm.furtherInformationOrRemarksForm
+  override val form: Form[FurtherInformationOrRemarksDetails] =
+    FurtherInformationOrRemarksForm.furtherInformationOrRemarksForm
 
-  def createView = () => furtherInformationOrRemarksView(form)(fakeRequest, messages)
+  def createView: () => Html = () => furtherInformationOrRemarksView(form)(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[FurtherInformationOrRemarksDetails]) =>
-    furtherInformationOrRemarksView(form)(fakeRequest, messages)
+  def createViewUsingForm: Form[FurtherInformationOrRemarksDetails] => Html =
+    (form: Form[FurtherInformationOrRemarksDetails]) => furtherInformationOrRemarksView(form)(fakeRequest, messages)
 
   "Further Information or Remarks view" must {
 

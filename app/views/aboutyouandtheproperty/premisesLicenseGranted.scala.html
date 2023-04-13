@@ -14,7 +14,7 @@
  * limitations under the License.
  *@
 
-@import models.submissions.aboutyouandtheproperty.PremisesLicenseGranted
+@import models.submissions.common.AnswersYesNo
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 @import uk.gov.hmrc.govukfrontend.views.html.components._
@@ -24,60 +24,61 @@
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Fieldset
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Legend
 
-
 @this(layout: Layout,
-        govukButton: GovukButton,
-        govukRadios: GovukRadios,
-        govukErrorSummary: GovukErrorSummary,
-        formWithCSRF: FormWithCSRF
+  govukButton: GovukButton,
+  govukRadios: GovukRadios,
+  govukDetails: GovukDetails,
+  formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[PremisesLicenseGranted])(implicit request: Request[_], messages: Messages)
+@(theForm: Form[AnswersYesNo])(implicit request: Request[_], messages: Messages)
 
 @layout(
- pageHeading = messages("premisesLicenseGranted.heading"),
- showH1 = false,
- showSection = true,
- sectionName = messages("label.section.aboutTheProperty"),
- backLinkUrl = controllers.aboutyouandtheproperty.routes.WebsiteForPropertyController.show.url,
- theForm = theForm
+  pageHeading = messages("premisesLicenseGranted.heading"),
+  showH1 = false,
+  showSection = true,
+  sectionName = messages("label.section.aboutTheProperty"),
+  backLinkUrl = controllers.aboutyouandtheproperty.routes.WebsiteForPropertyController.show.url,
+  theForm = theForm
 ) {
 
- @formWithCSRF(action = controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
+  @formWithCSRF(action = controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedController.submit(), args = Symbol("class") -> "myForm", Symbol("id") -> "myFormId") {
 
-  @govukRadios(
-   Radios(
-    name = "premisesLicenseGranted",
-    idPrefix = Option("premisesLicenseGranted"),
-    items = Seq(
-     "yes" -> messages("label.yes"),
-     "no" -> messages("label.no")
-    ).map(radioItem => RadioItem(
-     content = Text(radioItem._2),
-     checked = radioItem._1.equals(theForm("premisesLicenseGranted").value.getOrElse("")),
-     value = Option(radioItem._1)
+    @govukRadios(
+      Radios(
+        name = "premisesLicenseGranted",
+        idPrefix = Option("premisesLicenseGranted"),
+        items = Seq(
+          "yes" -> messages("label.yes"),
+          "no" -> messages("label.no")
+        ).map(radioItem => RadioItem(
+          content = Text(radioItem._2),
+          checked = radioItem._1.equals(theForm("premisesLicenseGranted").value.getOrElse("")),
+          value = Option(radioItem._1)
+        )),
+        errorMessage =  theForm.errors.asTextErrorMessageForField("premisesLicenseGranted"),
+        classes = "govuk-radios--inline",
+        fieldset = Option(
+          Fieldset(
+            legend = Option(
+              Legend(
+                content = Text(messages("premisesLicenseGranted.heading")),
+                isPageHeading = true, classes = "govuk-fieldset__legend--l"
+              )
+            )
+          )
+        )
+      ).withFormField(theForm("premisesLicenseGranted"))
     )
-    ),
-    errorMessage =  theForm.errors.asTextErrorMessageForField("premisesLicenseGranted"),
-    classes = "govuk-radios--inline",
-    fieldset = Option(
-     Fieldset(
-      legend = Option(
-       Legend(
-        content = Text(messages("premisesLicenseGranted.heading")),
-        isPageHeading = true, classes = "govuk-fieldset__legend--l"
-       )
+
+    @includes.continueButton(govukButton)
+
+    @govukDetails(Details(
+        summary = Text(messages("help.premisesLicenseGranted.title")),
+        content = Text(messages("help.premisesLicenseGranted.text"))
       )
-     )
     )
-   ).withFormField(theForm("premisesLicenseGranted"))
-  )
-
-  @includes.continueButton(govukButton)
-
-  @includes.help_with_service_premisesLicenceGranted()
-
- }
+  }
 }
 
 

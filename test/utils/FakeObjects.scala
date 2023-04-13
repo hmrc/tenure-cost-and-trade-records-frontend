@@ -18,7 +18,6 @@ package utils
 
 import models.submissions.Form6010._
 import models.submissions.aboutfranchisesorlettings._
-import models.submissions.aboutyouandtheproperty.PremisesLicenseGrantedNo
 import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartOne, _}
 import models.submissions.aboutfranchisesorlettings
 import models.submissions.aboutfranchisesorlettings.LettingSection
@@ -99,7 +98,7 @@ trait FakeObjects {
     Some(CustomerDetails("Tobermory", ContactDetails("12345678909", "test@email.com"))),
     Some(PropertyDetails("OccupierName", CurrentPropertyHotel, None)),
     Some(WebsiteForPropertyDetails(BuildingOperationHaveAWebsiteYes, Some("webAddress"))),
-    Some(PremisesLicenseGrantedYes),
+    Some(AnswerYes),
     Some(PremisesLicenseGrantedInformationDetails("Premises licence granted details")),
     Some(LicensableActivitiesYes),
     Some(LicensableActivitiesInformationDetails("Licensable activities details")),
@@ -114,7 +113,7 @@ trait FakeObjects {
     Some(CustomerDetails("Tobermory", ContactDetails("12345678909", "test@email.com"))),
     Some(PropertyDetails("OccupierName", CurrentPropertyHotel, None)),
     Some(WebsiteForPropertyDetails(BuildingOperationHaveAWebsiteYes, Some("webAddress"))),
-    Some(PremisesLicenseGrantedNo),
+    Some(AnswerNo),
     None,
     Some(LicensableActivitiesNo),
     None,

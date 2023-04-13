@@ -18,50 +18,58 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
-
+@import uk.gov.hmrc.govukfrontend.views.Aliases.HtmlContent
 
 @this(layout: Layout,
-        govukButton: GovukButton,
-        govukRadios: GovukRadios,
-        govukErrorSummary: GovukErrorSummary,
-        govukCharacterCount: GovukCharacterCount,
-        formWithCSRF: FormWithCSRF
+  govukButton: GovukButton,
+  govukCharacterCount: GovukCharacterCount,
+  govukDetails: GovukDetails,
+  formWithCSRF: FormWithCSRF
 )
 
 @(theForm: Form[PremisesLicenseGrantedInformationDetails])(implicit request: Request[_], messages: Messages)
 
 @layout(
- pageHeading = messages("premisesLicenseGrantedInformation.heading"),
- showH1 = false,
- showSection = true,
- sectionName = messages("label.section.aboutTheProperty"),
- backLinkUrl = controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedController.show.url,
- theForm = theForm
+  pageHeading = messages("premisesLicenseGrantedInformation.heading"),
+  showH1 = false,
+  showSection = true,
+  sectionName = messages("label.section.aboutTheProperty"),
+  backLinkUrl = controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedController.show.url,
+  theForm = theForm
 ) {
 
- @formWithCSRF(action = controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedDetailsController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
+  @formWithCSRF(action = controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedDetailsController.submit(), args = Symbol("class") -> "myForm", Symbol("id") -> "myFormId") {
 
-  <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-   <h1 class="govuk-fieldset__heading">@messages("premisesLicenseGrantedInformation.heading")</h1>
-  </legend>
+    @govukCharacterCount(
+      CharacterCount(
+        id = "premisesLicenseGrantedInformation",
+        name = "premisesLicenseGrantedInformation",
+        maxLength = 2000,
+        label = Label(
+          content = Text(messages("premisesLicenseGrantedInformation.heading")),
+          classes = "govuk-label--l",
+          isPageHeading = true
+        ),
+        errorMessage = theForm.errors.asTextErrorMessageForField("premisesLicenseGrantedInformation"),
+      ).withFormField(theForm("premisesLicenseGrantedInformation"))
+    )
 
+    @includes.continueButton(govukButton)
 
-  @govukCharacterCount(
-   CharacterCount(
-    id = "premisesLicenseGrantedInformation",
-    name = "premisesLicenseGrantedInformation",
-    rows = 5,
-    maxLength = 2000,
-    value = theForm("premisesLicenseGrantedInformation").value,
-    errorMessage = theForm.errors.asTextErrorMessageForField("premisesLicenseGrantedInformation")
-   )
-  )
-
-  @includes.continueButton(govukButton)
-
-  @includes.help_with_service_premisesLicenceGrantedInformation()
-
- }
+    @govukDetails(Details(
+      summary = Text(messages("help.premisesLicenseGrantedInformation.title")),
+      content = HtmlContent(
+        s"<p class='govuk-!-font-weight-bold'>${messages("help.premisesLicenseGrantedInformation.heading1")}</p>" +
+        s"<p>${messages("help.premisesLicenseGrantedInformation.p1")}</p>" +
+        s"<p class='govuk-!-font-weight-bold'>${messages("help.premisesLicenseGrantedInformation.heading2")}</p>" +
+        s"<p>${messages("help.premisesLicenseGrantedInformation.p2")}</p>" +
+        s"<ul class='list-bullet'>" +
+        s"<li>${messages("help.premisesLicenseGrantedInformation.list.p1")}</li>" +
+        s"<li>${messages("help.premisesLicenseGrantedInformation.list.p2")}</li>" +
+        s"<li>${messages("help.premisesLicenseGrantedInformation.list.p3")}</li>" +
+        s"</ul>")
+    ))
+  }
 }
 
 
