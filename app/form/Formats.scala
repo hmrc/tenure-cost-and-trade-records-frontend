@@ -76,18 +76,12 @@ object Formats {
     namedEnumFormatter(CurrentPropertyUsed, Errors.currentOccupierName)
   implicit val buildingOperatingHaveAWebsiteFormat: Formatter[BuildingOperationHaveAWebsite] =
     namedEnumFormatter(BuildingOperationHaveAWebsite, Errors.booleanMissing)
-  implicit val licensableActivitiesFormat: Formatter[LicensableActivities]                   =
-    namedEnumFormatter(LicensableActivities, Errors.booleanMissing)
-  implicit val tiedForGoodsFormat: Formatter[TiedForGoods]                                   = namedEnumFormatter(TiedForGoods, Errors.booleanMissing)
-  implicit val premisesLicenseConditionsFormat: Formatter[PremisesLicenseConditions]         =
-    namedEnumFormatter(PremisesLicenseConditions, Errors.booleanMissing)
-  implicit val enforcementActionFormat: Formatter[EnforcementAction]                         =
-    namedEnumFormatter(EnforcementAction, Errors.booleanMissing)
-  implicit val pastConnectionFormat: Formatter[PastConnectionType]                           =
+
+  implicit val pastConnectionFormat: Formatter[PastConnectionType]                     =
     namedEnumFormatter(PastConnectionType, Errors.booleanMissing)
-  implicit val methodToFixCurrentRentDetailsFormat: Formatter[MethodToFixCurrentRents]       =
+  implicit val methodToFixCurrentRentDetailsFormat: Formatter[MethodToFixCurrentRents] =
     namedEnumFormatter(MethodToFixCurrentRents, Errors.booleanMissing)
-  implicit val tiedForGoodsDetailsFormat: Formatter[TiedForGoodsInformation]                 =
+  implicit val tiedForGoodsDetailsFormat: Formatter[TiedForGoodsInformation]           =
     namedEnumFormatter(TiedForGoodsInformation, Errors.booleanMissing)
 
   implicit val answerResponsiblePartyFormatter: Formatter[AnswerResponsibleParty] =
