@@ -286,7 +286,7 @@ POST        /check-your-answers-additional-information              controllers.
 GET         /check-your-answers-lease-or-tenure                     controllers.aboutYourLeaseOrTenure.CheckYourAnswersAboutYourLeaseOrTenureController.show()
 POST        /check-your-answers-lease-or-tenure                     controllers.aboutYourLeaseOrTenure.CheckYourAnswersAboutYourLeaseOrTenureController.submit()
 
-GET         /check-your-answers-not-connected                       controllers.notconnected.CheckYourAnswersNotConnectedController.show()
+GET         /check-your-answers-not-connected                       controllers.notconnected.CheckYourAnswersNotConnectedController.confirmation()
 POST        /check-your-answers-not-connected                       controllers.notconnected.CheckYourAnswersNotConnectedController.submit()
 
 POST        /declaration                                            controllers.FormSubmissionController.submit()
