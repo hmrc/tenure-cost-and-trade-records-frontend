@@ -17,9 +17,10 @@
 package controllers.notconnected
 
 import actions.{RefNumRequest, SessionRequest, WithSessionRefiner}
+import connectors.Audit
 import play.api.Logger
 import play.api.i18n.I18nSupport
-import play.api.libs.json.{JsObject, Json}
+import play.api.libs.json.{JsObject, JsValue, Json}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Result}
 import repositories.SessionRepo
 import uk.gov.hmrc.http.HeaderCarrier
@@ -37,14 +38,14 @@ class CheckYourAnswersNotConnectedController @Inject() (
   //  repository: FormDocumentRepository,
   checkYourAnswersNotConnectedView: checkYourAnswersNotConnected,
   confirmationNotConnectedView: confirmationNotConnected,
-  //  audit: Audit,
+  audit: Audit,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
 )(implicit ec: ExecutionContext)
     extends FrontendController(mcc)
     with I18nSupport {
 
-  lazy val confirmationUrl = controllers.routes.FormSubmissionController.confirmation().url
+  lazy val confirmationUrl = controllers.notconnected.routes.CheckYourAnswersNotConnectedController.confirmation().url
 
   val log = Logger(classOf[CheckYourAnswersNotConnectedController])
 
@@ -66,11 +67,11 @@ class CheckYourAnswersNotConnectedController @Inject() (
   def submitNotConnectedTInformation(
     refNum: String
   )(implicit hc: HeaderCarrier, request: SessionRequest[_]): Future[Unit] = {
-    //    val auditType = "FormSubmission"
+    val auditType      = "NotConnectedSubmission"
     // Dummy data from session to able creation of audit dashboards
-    //    val submissionJson = Json.toJson(request.sessionData).as[JsObject]
+    val submissionJson = Json.toJson(request.sessionData).as[JsObject]
     submitToBackend()
-    //    audit.sendExplicitAudit(auditType, submissionJson ++ Audit.languageJson)
+    audit.sendExplicitAudit(auditType, submissionJson ++ Audit.languageJson)
     Future.unit
   }
 
@@ -78,62 +79,8 @@ class CheckYourAnswersNotConnectedController @Inject() (
     Future.successful(Ok(confirmationNotConnectedView()))
   }
 
-  private def submitToBackend()(implicit hc: HeaderCarrier, request: SessionRequest[_]): Future[Unit] = {
-    log.warn(s"**&&** ${request.sessionData.removeConnectionDetails.flatMap(_.removeConnectionDetails)}")
+  private def submitToBackend()(implicit hc: HeaderCarrier, request: SessionRequest[_]): Future[Unit] =
+//    log.warn(s"**&&** ${request.sessionData.removeConnectionDetails.flatMap(_.removeConnectionDetails)}")
     Future.unit
-  }
-
-  //  def onPageSubmit = refNumAction.async { implicit request =>
-  //    findSummary.flatMap {
-  //      case Some(summary) =>
-  //        val json = Json.obj(Audit.referenceNumber -> summary.referenceNumber) ++
-  //          Addresses.addressJson(summary) ++
-  //          Audit.languageJson
-  //        submitToHod(summary).map { _ =>
-  //          audit.sendExplicitAudit("NotConnectedSubmission", json)
-  //          Redirect(routes.NotConnectedCheckYourAnswersController.onConfirmationView)
-  //        }.recover {
-  //          case e: Exception =>
-  //            logger.error(s"Could not send data to HOD - ${request.refNum} - ${hc.sessionId}")
-  //            audit.sendExplicitAudit("NotConnectedSubmissionFailed", json)
-  //            InternalServerError(errorView(500))
-  //        }
-  //      case None => NotFound(errorView(404))
-  //    }
-  //  }
-
-  //  def getPreviouslyConnectedFromCache()(implicit hc: HeaderCarrier) = {
-  //    cache.fetchAndGetEntry[PreviouslyConnected](SessionId(hc), PreviouslyConnectedController.cacheKey).flatMap {
-  //      case Some(x) => Future.successful(x)
-  //      case None => Future.failed(new RuntimeException("Unable to find record in cache for previously connected"))
-  //    }
-  //  }
-  //
-  //  def getNotConnectedFromCache()(implicit hc: HeaderCarrier): Future[NotConnected] = {
-  //    cache.fetchAndGetEntry[NotConnected](SessionId(hc), NotConnectedController.cacheKey).flatMap {
-  //      case Some(x) => Future.successful(x)
-  //      case None => Future.failed(new RuntimeException("Unable to find record in cache for not connected"))
-  //    }
-  //  }
-
-  //  private def submitToHod(summary: Summary)(implicit hc: HeaderCarrier, messages: Messages) = {
-  //    getNotConnectedFromCache().flatMap { notConnected =>
-  //      getPreviouslyConnectedFromCache().flatMap { previouslyConnected =>
-  //        val submission = NotConnectedSubmission(
-  //          summary.referenceNumber,
-  //          summary.address.get,
-  //          notConnected.fullName,
-  //          notConnected.emailAddress,
-  //          notConnected.phoneNumber,
-  //          notConnected.additionalInformation,
-  //          Instant.now(),
-  //          previouslyConnected.previouslyConnected,
-  //          messages.lang.language
-  //        )
-  //
-  //        submissionConnector.submitNotConnected(summary.referenceNumber, submission)
-  //      }
-  //    }
-  //  }
 
 }
