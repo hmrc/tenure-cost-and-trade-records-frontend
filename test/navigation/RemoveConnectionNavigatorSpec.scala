@@ -92,7 +92,7 @@ class RemoveConnectionNavigatorSpec extends TestBaseSpec {
         .apply(
           sessionAdditionalInformation
         ) mustBe controllers.notconnected.routes.CheckYourAnswersNotConnectedController
-        .show()
+        .confirmation()
     }
   }
 }
