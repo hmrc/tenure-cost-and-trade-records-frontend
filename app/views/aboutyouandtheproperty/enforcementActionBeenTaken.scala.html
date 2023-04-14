@@ -14,69 +14,41 @@
  * limitations under the License.
  *@
 
-@import models.submissions.aboutyouandtheproperty.EnforcementAction
+@import models.submissions.common.AnswersYesNo
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 @import uk.gov.hmrc.govukfrontend.views.html.components._
-@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Radios
-@import uk.gov.hmrc.govukfrontend.views.Aliases.RadioItem
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Fieldset
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Legend
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Hint
-
 
 @this(layout: Layout,
-        govukButton: GovukButton,
-        govukRadios: GovukRadios,
-        govukErrorSummary: GovukErrorSummary,
-        formWithCSRF: FormWithCSRF
+  govukButton: GovukButton,
+  govukRadios: GovukRadios,
+  formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[EnforcementAction], backLink: String)(implicit request: Request[_], messages: Messages)
+@(theForm: Form[AnswersYesNo], backLink: String)(implicit request: Request[_], messages: Messages)
 
 @layout(
- pageHeading = messages("enforcementActionHasBeenTaken.heading"),
- showH1 = false,
- showSection = true,
- sectionName = messages("label.section.aboutTheProperty"),
- backLinkUrl = backLink,
- theForm = theForm
+  pageHeading = messages("enforcementActionHasBeenTaken.heading"),
+  showH1 = false,
+  showSection = true,
+  sectionName = messages("label.section.aboutTheProperty"),
+  backLinkUrl = backLink,
+  theForm = theForm
 ) {
 
- @formWithCSRF(action = controllers.aboutyouandtheproperty.routes.EnforcementActionBeenTakenController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
+  @formWithCSRF(action = controllers.aboutyouandtheproperty.routes.EnforcementActionBeenTakenController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
 
-  @govukRadios(
-   Radios(
-    name = "enforcementAction",
-    idPrefix = Option("enforcementAction"),
-    items = Seq(
-     "yes" -> messages("label.yes"),
-     "no" -> messages("label.no")
-    ).map(radioItem => RadioItem(
-     content = Text(radioItem._2),
-     checked = radioItem._1.equals(theForm("enforcementAction").value.getOrElse("")),
-     value = Option(radioItem._1)
+    @includes.radioButtonsYesNo(
+      govukRadios,
+      theForm,
+      "enforcementAction",
+      "enforcementActionHasBeenTaken.heading",
+      "govuk-fieldset__legend--l",
+      isHeading = true,
+      hint = "hint.enforcementActionHasBeenTaken"
     )
-    ),
-    classes = "govuk-radios--inline",
-    fieldset = Option(
-     Fieldset(
-      legend = Option(
-       Legend(
-        content = Text(messages("enforcementActionHasBeenTaken.heading")),
-        isPageHeading = true, classes = "govuk-fieldset__legend--l"
-       )
-      )
-     )
-    ),
-    hint = Some(Hint(content = Text(messages("hint.enforcementAction")))),
-    errorMessage = theForm.errors.asTextErrorMessageForField("enforcementAction")
-   ).withFormField(theForm("enforcementAction"))
-  )
 
-  @includes.continueButton(govukButton)
- }
+    @includes.continueSaveAsDraftButtons(govukButton)
+  }
 }
 
 

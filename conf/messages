@@ -209,6 +209,47 @@ help.premisesLicenseGrantedInformation.list.p1 = No drinks allowed on the terrac
 help.premisesLicenseGrantedInformation.list.p2 = Only 200 people allowed in the function room at any time
 help.premisesLicenseGrantedInformation.list.p3 = No entry or re-entry allowed after 11.30pm on Fridays or Saturdays
 
+# LICENSABLE ACTIVITIES
+#######################
+licensableActivities.heading = Do licensable activities regularly commence before 10:00 or after 23:30 on any day of the week?
+hint.licensableActivities= Licensable activities could include, selling alcohol, selling food and refreshments, or providing live entertainment
+
+# LICENSABLE ACTIVITIES DETAILS
+###############################
+licensableActivitiesDetails.heading = Describe the licensable activities regularly commending before 10:00 or after 23:30
+
+# PREMISES LICENCE CONDITIONS
+#############################
+premisesLicenseConditions.heading = Does your premises licence have conditions restricting the use of all or parts of the property?
+hint.premisesLicenseConditions = For example, no drinks outside after 22:00
+
+# PREMISES LICENCE CONDITIONS DETAILS
+#####################################
+premisesLicenseConditionsDetails.heading = Describe the conditions restricting the use of all or parts of the property
+
+# ENFORCEMENT ACTION BEEN TAKEN
+##############################£
+enforcementActionHasBeenTaken.heading = Has any enforcement action been taken?
+hint.enforcementActionHasBeenTaken = This can be any suspensions, closure orders or temporary restrictions
+
+# ENFORCEMENT ACTION BEEN TAKEN DETAILS
+#######################################
+enforcementActionHasBeenTakenDetails.heading = Describe any enforcement action taken
+error.enforcementActionHasBeenTakenDetails.required = Please describe any enforcement action taken
+error.enforcementActionHasBeenTakenDetails.maxLength  = This must be 1000 characters or fewer
+
+# TIED FOR GOODS
+################
+tiedForGoods.heading = Are you tied for any goods?
+hint.tiedForGoods = Are you required to sell certain goods as part of your lease or tenancy agreement?
+
+# TIED FOR GOODS DETAILS
+########################
+tiedForGoodsDetails.heading = What type of tie do you have?
+tiedForGoodsDetails.fullTie = Full tie
+tiedForGoodsDetails.beerOnly = Beer only
+tiedForGoodsDetails.partialTie = Partial tie
+
 #TENANCY LEASE AGREEMENT(USED ON 6010, 6015, 6016, 6030, 6032, 6033, 6034, 6035, 6036, 6037, 6038, 6043, 6049, 6056, 6057, 6066)
 ##############################
 tenancyLeaseAgreement.heading = About the property
@@ -245,36 +286,6 @@ includedInYourRentApply.subheading = Select any that apply
 label.vat = VAT
 label.nondomesticRates = Non-domestic rates
 label.waterCharges = Water charges
-
-#LICENSABLE ACTIVITIES
-##############################
-licensableActivities.heading = Do licensable activities regularly commence before 10:00 or after 23:30 on any day of the week?
-hint.licensableActivities= Licensable activities could include, selling alcohol, selling food and refreshments, or providing live entertainment
-
-#LICENSABLE ACTIVITIES DETAILS
-##############################
-licensableActivitiesDetails.heading = Describe the licensable activities regularly commending before 10:00 or after 23:30
-
-#PREMISES LICENCE CONDITIONS Details
-####################################
-premisesLicenseConditionsDetails.heading = Describe the conditions restricting the use of all or parts of the property
-
-#PREMISES LICENCE CONDITIONS
-##############################
-premisesLicenseConditions.heading = Does your premises licence have conditions restricting the use of all or parts of the property?
-hint.premisesLicenseConditions = For example, no drinks outside after 22:00
-
-#TIED FOR GOODS
-###############
-tiedForGoods.heading = Are you tied for any goods?
-hint.tiedForGoods = Are you required to sell certain goods as part of your lease or tenancy agreement?
-
-#TIED FOR GOODS DETAILS
-#######################
-tiedForGoodsDetails.heading = What type of tie do you have?
-tiedForGoodsDetails.fullTie = Full tie
-tiedForGoodsDetails.beerOnly = Beer only
-tiedForGoodsDetails.partialTie = Partial tie
 
 #CATERING OPERATION OR LETTING ACCOMMODATION
 ############################################
@@ -328,19 +339,6 @@ rentPayableVaryAccordingToGrossOrNetDetails.heading = Tell us how the rent payab
 label.rentPayableVaryAccordingToGrossOrNetDetails = For example, tell us if your rent increases if your turnover exceeds a certain amount
 error.rentPayableVaryAccordingToGrossOrNetDetails.required = Tell us how the rent payable is affected by your turnover
 error.rentPayableVaryAccordingToGrossOrNetDetails.maxLength  = This must be 1000 characters or fewer
-
-#ENFORCEMENT ACTION BEEN TAKEN
-##############################
-enforcementAction.heading = About the property
-label.enforcementAction = Has any enforcement action been taken?
-hint.enforcementAction = This can be any suspensions, closure orders or temporary restrictions
-
-#ENFORCEMENT ACTION BEEN TAKEN DETAILS
-##############################
-enforcementActionHasBeenTakenDetails.heading = About the property
-label.enforcementActionHasBeenTakenDetails = Describe any enforcement action taken
-error.enforcementActionHasBeenTakenDetails.required = Please describe any enforcement action taken
-error.enforcementActionHasBeenTakenDetails.maxLength  = This must be 1000 characters or fewer
 
 #ULTIMATELY RESPONSIBLE
 #######################
@@ -427,15 +425,6 @@ label.rentActuallyAgreed.help = For example, 27 9 2017
 error.rentActuallyAgreed.day.required = The date must include a day
 error.rentActuallyAgreed.month.required = The date must include a month
 error.rentActuallyAgreed.year.required = The date must include a year
-
-#ENFORCEMENT ACTION BEEN TAKEN
-##############################
-enforcementActionHasBeenTaken.heading = Has any enforcement action been taken?
-hint.enforcementActionHasBeenTaken = This can be any suspensions, closure orders or temporary restrictions
-
-#ENFORCEMENT ACTION BEEN TAKEN DETAILS
-##############################
-enforcementActionHasBeenTakenDetails.heading = Describe the enforcement action taken
 
 ##CATERING OPERATION OR LETTING DETAILS
 #######################################

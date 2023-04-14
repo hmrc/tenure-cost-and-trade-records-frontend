@@ -17,16 +17,17 @@
 package controllers.aboutyouandtheproperty
 
 import actions.WithSessionRefiner
+import controllers.FORDataCaptureController
 import form.aboutyouandtheproperty.EnforcementActionForm.enforcementActionForm
 import models.Session
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty.updateAboutYouAndTheProperty
+import models.submissions.common.AnswersYesNo
 import navigation.AboutYouAndThePropertyNavigator
 import navigation.identifiers.EnforcementActionBeenTakenPageId
 import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.aboutyouandtheproperty.enforcementActionBeenTaken
 
 import javax.inject.{Inject, Named, Singleton}
@@ -39,7 +40,7 @@ class EnforcementActionBeenTakenController @Inject() (
   enforcementActionBeenTakenView: enforcementActionBeenTaken,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FrontendController(mcc)
+) extends FORDataCaptureController(mcc)
     with I18nSupport
     with Logging {
 
@@ -58,19 +59,15 @@ class EnforcementActionBeenTakenController @Inject() (
   }
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    enforcementActionForm
-      .bindFromRequest()
-      .fold(
-        formWithErrors =>
-          Future.successful(
-            BadRequest(enforcementActionBeenTakenView(formWithErrors, getBackLink(request.sessionData)))
-          ),
-        data => {
-          val updatedData = updateAboutYouAndTheProperty(_.copy(enforcementAction = Some(data)))
-          session.saveOrUpdate(updatedData)
-          Future.successful(Redirect(navigator.nextPage(EnforcementActionBeenTakenPageId).apply(updatedData)))
-        }
-      )
+    continueOrSaveAsDraft[AnswersYesNo](
+      enforcementActionForm,
+      formWithErrors => BadRequest(enforcementActionBeenTakenView(formWithErrors, getBackLink(request.sessionData))),
+      data => {
+        val updatedData = updateAboutYouAndTheProperty(_.copy(enforcementAction = Some(data)))
+        session.saveOrUpdate(updatedData)
+        Future.successful(Redirect(navigator.nextPage(EnforcementActionBeenTakenPageId).apply(updatedData)))
+      }
+    )
   }
 
   private def getBackLink(answers: Session): String =

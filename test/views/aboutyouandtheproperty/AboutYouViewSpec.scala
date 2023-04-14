@@ -46,6 +46,12 @@ class AboutYouViewSpec extends QuestionViewBehaviours[CustomerDetails] {
       backlinkUrl mustBe controllers.routes.TaskListController.show().url
     }
 
+    "Section heading is visible" in {
+      val doc         = asDocument(createViewUsingForm(form))
+      val sectionText = doc.getElementsByClass("govuk-caption-m").text()
+      assert(sectionText == messages("label.section.aboutTheProperty"))
+    }
+
     "contain aboutYou.subheading paragraph" in {
       val doc = asDocument(createView())
       assert(doc.toString.contains(messages("aboutYou.subheading")))
@@ -55,6 +61,12 @@ class AboutYouViewSpec extends QuestionViewBehaviours[CustomerDetails] {
       val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("continue").text()
       assert(loginButton == messages("button.label.continue"))
+    }
+
+    "contain save as draft button with the value Save as draft" in {
+      val doc         = asDocument(createViewUsingForm(form))
+      val loginButton = doc.getElementById("save").text()
+      assert(loginButton == messages("button.label.save"))
     }
   }
 }
