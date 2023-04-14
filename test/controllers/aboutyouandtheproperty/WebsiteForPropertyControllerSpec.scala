@@ -19,6 +19,7 @@ package controllers.aboutyouandtheproperty
 import form.Errors
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
 import play.api.http.Status
+import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import utils.TestBaseSpec
 
@@ -50,6 +51,15 @@ class WebsiteForPropertyControllerSpec extends TestBaseSpec {
       charset(result)     shouldBe Some("utf-8")
     }
 
+    "SUBMIT /" should {
+      "throw a BAD_REQUEST if an empty form is submitted" in {
+        val res = websiteForPropertyController().submit(FakeRequest().withFormUrlEncodedBody(Seq.empty: _*))
+        status(res) shouldBe BAD_REQUEST
+      }
+    }
+  }
+
+  "Website for property form" should {
     "error if buildingOperatingHaveAWebsite is missing" in {
       val formData = baseFormData - errorKey.buildingOperatingHaveAWebsite
       val form     = websiteForPropertyForm.bind(formData)

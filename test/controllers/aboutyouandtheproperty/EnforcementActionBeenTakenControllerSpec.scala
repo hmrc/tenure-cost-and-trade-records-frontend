@@ -16,45 +16,65 @@
 
 package controllers.aboutyouandtheproperty
 
-import navigation.AboutYouAndThePropertyNavigator
+import form.Errors
+import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import play.twirl.api.HtmlFormat
 import utils.TestBaseSpec
-import views.html.aboutyouandtheproperty.enforcementActionBeenTaken
 
 class EnforcementActionBeenTakenControllerSpec extends TestBaseSpec {
 
-  val mockAboutThePropertyNavigator      = mock[AboutYouAndThePropertyNavigator]
-  val mockEnforcementActionBeenTakenView = mock[enforcementActionBeenTaken]
-  when(mockEnforcementActionBeenTakenView.apply(any, any)(any, any)).thenReturn(HtmlFormat.empty)
+  import TestData._
+  import form.aboutyouandtheproperty.EnforcementActionForm._
+  import utils.FormBindingTestAssertions._
 
-  val enforcementActionBeenTakenController = new EnforcementActionBeenTakenController(
+  def enforcementActionBeenTakenController(
+    aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes)
+  ) = new EnforcementActionBeenTakenController(
     stubMessagesControllerComponents(),
-    mockAboutThePropertyNavigator,
-    mockEnforcementActionBeenTakenView,
-    preFilledSession,
+    aboutYouAndThePropertyNavigator,
+    enforcementActionsTakenView,
+    preEnrichedActionRefiner(aboutYouAndTheProperty = aboutYouAndTheProperty),
     mockSessionRepo
   )
 
-  "GET /" should {
+  "Enforcement action been taken controller" should {
     "return 200" in {
-      val result = enforcementActionBeenTakenController.show(fakeRequest)
+      val result = enforcementActionBeenTakenController().show(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return HTML" in {
-      val result = enforcementActionBeenTakenController.show(fakeRequest)
+      val result = enforcementActionBeenTakenController().show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
+
+    "SUBMIT /" should {
+      "throw a BAD_REQUEST if an empty form is submitted" in {
+        val res = enforcementActionBeenTakenController().submit(FakeRequest().withFormUrlEncodedBody(Seq.empty: _*))
+        status(res) shouldBe BAD_REQUEST
+      }
+    }
   }
 
-  "SUBMIT /" should {
-    "throw a BAD_REQUEST if an empty form is submitted" in {
-      val res = enforcementActionBeenTakenController.submit(FakeRequest().withFormUrlEncodedBody(Seq.empty: _*))
-      status(res) shouldBe BAD_REQUEST
+  "Enforcement Action Taken form" should {
+    "error if enforcementActionHasBeenTakenDetails is missing" in {
+      val formData = baseFormData - errorKey.enforcementAction
+      val form     = enforcementActionForm.bind(formData)
+
+      mustContainError(errorKey.enforcementAction, Errors.booleanMissing, form)
     }
+  }
+
+  object TestData {
+    val errorKey: Object {
+      val enforcementAction: String
+    } = new {
+      val enforcementAction: String = "enforcementAction"
+    }
+
+    val baseFormData: Map[String, String] = Map("enforcementAction" -> "yes")
   }
 }
