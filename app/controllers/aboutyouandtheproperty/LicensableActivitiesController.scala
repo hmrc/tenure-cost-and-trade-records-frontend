@@ -61,7 +61,7 @@ class LicensableActivitiesController @Inject() (
       data => {
         val updatedData = updateAboutYouAndTheProperty(_.copy(licensableActivities = Some(data)))
         session.saveOrUpdate(updatedData)
-        Future.successful(Redirect(navigator.nextPage(LicensableActivityPageId).apply(updatedData)))
+        Redirect(navigator.nextPage(LicensableActivityPageId).apply(updatedData))
       }
     )
   }
