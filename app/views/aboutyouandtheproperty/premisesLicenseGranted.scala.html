@@ -71,7 +71,7 @@
       ).withFormField(theForm("premisesLicenseGranted"))
     )
 
-    @includes.continueButton(govukButton)
+    @includes.continueSaveAsDraftButtons(govukButton)
 
     @govukDetails(Details(
         summary = Text(messages("help.premisesLicenseGranted.title")),

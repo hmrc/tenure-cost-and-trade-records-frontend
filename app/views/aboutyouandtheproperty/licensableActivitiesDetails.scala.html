@@ -15,48 +15,46 @@
  *@
 
 @import models.submissions.aboutyouandtheproperty.LicensableActivitiesInformationDetails
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.charactercount.CharacterCount
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
 
 @this(layout: Layout,
-        govukButton: GovukButton,
-        govukErrorSummary: GovukErrorSummary,
-        govukCharacterCount: GovukCharacterCount,
-        formWithCSRF: FormWithCSRF
+  govukButton: GovukButton,
+  govukCharacterCount: GovukCharacterCount,
+  formWithCSRF: FormWithCSRF
 )
-
 
 @(theForm: Form[LicensableActivitiesInformationDetails])(implicit request: Request[_], messages: Messages)
 
 @layout(
- pageHeading = messages("licensableActivitiesDetails.heading"),
- showH1 = false,
- showSection = true,
- sectionName = messages("label.section.aboutTheProperty"),
- backLinkUrl = controllers.aboutyouandtheproperty.routes.LicensableActivitiesController.show.url,
- theForm = theForm
+  pageHeading = messages("licensableActivitiesDetails.heading"),
+  showH1 = false,
+  showSection = true,
+  sectionName = messages("label.section.aboutTheProperty"),
+  backLinkUrl = controllers.aboutyouandtheproperty.routes.LicensableActivitiesController.show.url,
+  theForm = theForm
 ) {
 
- @formWithCSRF(action = controllers.aboutyouandtheproperty.routes.LicensableActivitiesDetailsController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
+  @formWithCSRF(action = controllers.aboutyouandtheproperty.routes.LicensableActivitiesDetailsController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
 
-  <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-   <h1 class="govuk-fieldset__heading">@messages("licensableActivitiesDetails.heading")</h1>
-  </legend>
+    @govukCharacterCount(
+      CharacterCount(
+        id = "licensableActivitiesDetails",
+        name = "licensableActivitiesDetails",
+        maxLength = 2000,
+        label = Label(
+          content = Text(messages("licensableActivitiesDetails.heading")),
+          classes = "govuk-label--l",
+          isPageHeading = true
+        ),
+        errorMessage = theForm.errors.asTextErrorMessageForField("licensableActivitiesDetails"),
+      ).withFormField(theForm("licensableActivitiesDetails"))
+    )
 
-  @govukCharacterCount(
-   CharacterCount(
-    id = "licensableActivitiesDetails",
-    name = "licensableActivitiesDetails",
-    rows = 5,
-    maxLength = 2000,
-    value = theForm("licensableActivitiesDetails").value,
-    errorMessage = theForm.errors.asTextErrorMessageForField("licensableActivitiesDetails")
-   )
-  )
-
-  @includes.continueButton(govukButton)
- }
+    @includes.continueSaveAsDraftButtons(govukButton)
+  }
 }
 
 

@@ -17,14 +17,15 @@
 package controllers.aboutyouandtheproperty
 
 import actions.WithSessionRefiner
+import controllers.FORDataCaptureController
 import form.aboutyouandtheproperty.EnforcementActionDetailsForm.enforcementActionDetailsForm
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty.updateAboutYouAndTheProperty
+import models.submissions.aboutyouandtheproperty.EnforcementActionHasBeenTakenInformationDetails
 import navigation.AboutYouAndThePropertyNavigator
 import navigation.identifiers.EnforcementActionBeenTakenDetailsPageId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.aboutyouandtheproperty.enforcementActionBeenTakenDetails
 
 import javax.inject.{Inject, Named, Singleton}
@@ -37,7 +38,7 @@ class EnforcementActionBeenTakenDetailsController @Inject() (
   enforcementActionBeenTakenDetailsView: enforcementActionBeenTakenDetails,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FrontendController(mcc)
+) extends FORDataCaptureController(mcc)
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
@@ -55,17 +56,16 @@ class EnforcementActionBeenTakenDetailsController @Inject() (
   }
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    enforcementActionDetailsForm
-      .bindFromRequest()
-      .fold(
-        formWithErrors => Future.successful(BadRequest(enforcementActionBeenTakenDetailsView(formWithErrors))),
-        data => {
-          val updatedData =
-            updateAboutYouAndTheProperty(_.copy(enforcementActionHasBeenTakenInformationDetails = Some(data)))
-          session.saveOrUpdate(updatedData)
-          Future.successful(Redirect(navigator.nextPage(EnforcementActionBeenTakenDetailsPageId).apply(updatedData)))
-        }
-      )
+    continueOrSaveAsDraft[EnforcementActionHasBeenTakenInformationDetails](
+      enforcementActionDetailsForm,
+      formWithErrors => BadRequest(enforcementActionBeenTakenDetailsView(formWithErrors)),
+      data => {
+        val updatedData =
+          updateAboutYouAndTheProperty(_.copy(enforcementActionHasBeenTakenInformationDetails = Some(data)))
+        session.saveOrUpdate(updatedData)
+        Redirect(navigator.nextPage(EnforcementActionBeenTakenDetailsPageId).apply(updatedData))
+      }
+    )
   }
 
 }

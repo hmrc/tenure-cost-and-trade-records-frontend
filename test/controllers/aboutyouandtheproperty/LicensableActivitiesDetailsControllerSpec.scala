@@ -16,37 +16,66 @@
 
 package controllers.aboutyouandtheproperty
 
-import navigation.AboutYouAndThePropertyNavigator
+import form.aboutyouandtheproperty.LicensableActivitiesInformationForm.licensableActivitiesDetailsForm
+import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
 import play.api.http.Status
+import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import play.twirl.api.HtmlFormat
+import utils.FormBindingTestAssertions.mustContainRequiredErrorFor
 import utils.TestBaseSpec
-import views.html.aboutyouandtheproperty.licensableActivitiesDetails
 
 class LicensableActivitiesDetailsControllerSpec extends TestBaseSpec {
 
-  val mockAboutThePropertyNavigator = mock[AboutYouAndThePropertyNavigator]
-  val mockLicensableActivitiesView  = mock[licensableActivitiesDetails]
-  when(mockLicensableActivitiesView.apply(any)(any, any)).thenReturn(HtmlFormat.empty)
+  import TestData.{baseFormData, errorKey}
 
-  val licensableActivitiesDetailsController = new LicensableActivitiesDetailsController(
+  def licensableActivitiesDetailsController(
+    aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes)
+  ) = new LicensableActivitiesDetailsController(
     stubMessagesControllerComponents(),
-    mockAboutThePropertyNavigator,
-    mockLicensableActivitiesView,
-    preFilledSession,
+    aboutYouAndThePropertyNavigator,
+    licensableActivitiesDetailsView,
+    preEnrichedActionRefiner(aboutYouAndTheProperty = aboutYouAndTheProperty),
     mockSessionRepo
   )
 
-  "GET /" should {
+  "Licensable activities details controller" should {
     "return 200" in {
-      val result = licensableActivitiesDetailsController.show(fakeRequest)
+      val result = licensableActivitiesDetailsController().show(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return HTML" in {
-      val result = licensableActivitiesDetailsController.show(fakeRequest)
+      val result = licensableActivitiesDetailsController().show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
+
+    "SUBMIT /" should {
+      "throw a BAD_REQUEST if an empty form is submitted" in {
+        val res = licensableActivitiesDetailsController().submit(FakeRequest().withFormUrlEncodedBody(Seq.empty: _*))
+        status(res) shouldBe BAD_REQUEST
+      }
+    }
+  }
+
+  "Licensable activities details form" should {
+    "error if choice is missing " in {
+      val formData = baseFormData - errorKey.licensableActivitiesDetails
+      val form     = licensableActivitiesDetailsForm.bind(formData)
+
+      mustContainRequiredErrorFor(errorKey.licensableActivitiesDetails, form)
+    }
+  }
+
+  object TestData {
+    val errorKey: Object {
+      val licensableActivitiesDetails: String
+    } = new {
+      val licensableActivitiesDetails: String = "licensableActivitiesDetails"
+    }
+
+    val baseFormData: Map[String, String] = Map(
+      "licensableActivitiesDetails" -> "Test content"
+    )
   }
 }

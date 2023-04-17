@@ -16,37 +16,67 @@
 
 package controllers.aboutyouandtheproperty
 
-import navigation.AboutYouAndThePropertyNavigator
+import form.aboutyouandtheproperty.PremisesLicenseConditionsDetailsForm.premisesLicenceDetailsForm
+import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
 import play.api.http.Status
+import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import play.twirl.api.HtmlFormat
+import utils.FormBindingTestAssertions.mustContainRequiredErrorFor
 import utils.TestBaseSpec
-import views.html.aboutyouandtheproperty.premisesLicenseConditionsDetails
 
 class PremisesLicenseConditionsDetailsControllerSpec extends TestBaseSpec {
 
-  val mockAboutThePropertyNavigator     = mock[AboutYouAndThePropertyNavigator]
-  val mockPremisesLicenseConditionsView = mock[premisesLicenseConditionsDetails]
-  when(mockPremisesLicenseConditionsView.apply(any)(any, any)).thenReturn(HtmlFormat.empty)
+  import TestData.{baseFormData, errorKey}
 
-  val premisesLicenseConditionsDetailsController = new PremisesLicenseConditionsDetailsController(
+  def premisesLicenseConditionsDetailsController(
+    aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes)
+  ) = new PremisesLicenseConditionsDetailsController(
     stubMessagesControllerComponents(),
-    mockAboutThePropertyNavigator,
-    mockPremisesLicenseConditionsView,
-    preFilledSession,
+    aboutYouAndThePropertyNavigator,
+    premisesLicenceConditionsDetailsView,
+    preEnrichedActionRefiner(aboutYouAndTheProperty = aboutYouAndTheProperty),
     mockSessionRepo
   )
 
-  "GET /" should {
+  "Premises License conditions details controller" should {
     "return 200" in {
-      val result = premisesLicenseConditionsDetailsController.show(fakeRequest)
+      val result = premisesLicenseConditionsDetailsController().show(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return HTML" in {
-      val result = premisesLicenseConditionsDetailsController.show(fakeRequest)
+      val result = premisesLicenseConditionsDetailsController().show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
+
+    "SUBMIT /" should {
+      "throw a BAD_REQUEST if an empty form is submitted" in {
+        val res =
+          premisesLicenseConditionsDetailsController().submit(FakeRequest().withFormUrlEncodedBody(Seq.empty: _*))
+        status(res) shouldBe BAD_REQUEST
+      }
+    }
+  }
+
+  "Premises License conditions details form" should {
+    "error if choice is missing " in {
+      val formData = baseFormData - errorKey.premisesLicenseConditionsDetails
+      val form     = premisesLicenceDetailsForm.bind(formData)
+
+      mustContainRequiredErrorFor(errorKey.premisesLicenseConditionsDetails, form)
+    }
+  }
+
+  object TestData {
+    val errorKey: Object {
+      val premisesLicenseConditionsDetails: String
+    } = new {
+      val premisesLicenseConditionsDetails: String = "premisesLicenseConditionsDetails"
+    }
+
+    val baseFormData: Map[String, String] = Map(
+      "premisesLicenseConditionsDetails" -> "Test content"
+    )
   }
 }

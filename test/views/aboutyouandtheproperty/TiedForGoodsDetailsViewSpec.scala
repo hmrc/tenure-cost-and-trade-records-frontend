@@ -17,23 +17,22 @@
 package views.aboutyouandtheproperty
 
 import form.aboutyouandtheproperty.TiedForGoodsDetailsForm
-import models.submissions.aboutyouandtheproperty.{TiedForGoodsInformationDetails, TiedForGoodsInformationDetailsBeerOnly, TiedForGoodsInformationDetailsFullTie, TiedForGoodsInformationDetailsPartialTie}
+import models.submissions.aboutyouandtheproperty._
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
+import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
 
 class TiedForGoodsDetailsViewSpec extends QuestionViewBehaviours[TiedForGoodsInformationDetails] {
 
-  def tiedForGoodsDetailsView = app.injector.instanceOf[views.html.aboutyouandtheproperty.tiedForGoodsDetails]
-
   val messageKeyPrefix = "tiedForGoodsDetails"
 
-  override val form = TiedForGoodsDetailsForm.tiedForGoodsDetailsForm
+  override val form: Form[TiedForGoodsInformationDetails] = TiedForGoodsDetailsForm.tiedForGoodsDetailsForm
 
-  def createView = () => tiedForGoodsDetailsView(form)(fakeRequest, messages)
+  def createView: () => Html = () => tiedForGoodsDetailsView(form)(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[TiedForGoodsInformationDetails]) =>
-    tiedForGoodsDetailsView(form)(fakeRequest, messages)
+  def createViewUsingForm: Form[TiedForGoodsInformationDetails] => Html =
+    (form: Form[TiedForGoodsInformationDetails]) => tiedForGoodsDetailsView(form)(fakeRequest, messages)
 
   "Tied for goods details view" must {
 
@@ -48,7 +47,7 @@ class TiedForGoodsDetailsViewSpec extends QuestionViewBehaviours[TiedForGoodsInf
     }
 
     "Section heading is visible" in {
-      val doc         = asDocument(createViewUsingForm(form)) // govuk-caption-m
+      val doc         = asDocument(createViewUsingForm(form))
       val sectionText = doc.getElementsByClass("govuk-caption-m").text()
       assert(sectionText == messages("label.section.aboutTheProperty"))
     }
@@ -60,7 +59,7 @@ class TiedForGoodsDetailsViewSpec extends QuestionViewBehaviours[TiedForGoodsInf
         "tiedForGoodsDetails",
         "tiedForGoodsDetails",
         TiedForGoodsInformationDetailsFullTie.name,
-        false
+        isChecked = false
       )
       assertContainsText(doc, messages("tiedForGoodsDetails.fullTie"))
     }
@@ -72,7 +71,7 @@ class TiedForGoodsDetailsViewSpec extends QuestionViewBehaviours[TiedForGoodsInf
         "tiedForGoodsDetails-2",
         "tiedForGoodsDetails",
         TiedForGoodsInformationDetailsBeerOnly.name,
-        false
+        isChecked = false
       )
       assertContainsText(doc, messages("tiedForGoodsDetails.beerOnly"))
     }
@@ -84,7 +83,7 @@ class TiedForGoodsDetailsViewSpec extends QuestionViewBehaviours[TiedForGoodsInf
         "tiedForGoodsDetails-3",
         "tiedForGoodsDetails",
         TiedForGoodsInformationDetailsPartialTie.name,
-        false
+        isChecked = false
       )
       assertContainsText(doc, messages("tiedForGoodsDetails.partialTie"))
     }
@@ -93,6 +92,12 @@ class TiedForGoodsDetailsViewSpec extends QuestionViewBehaviours[TiedForGoodsInf
       val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("continue").text()
       assert(loginButton == messages("button.label.continue"))
+    }
+
+    "contain save as draft button with the value Save as draft" in {
+      val doc         = asDocument(createViewUsingForm(form))
+      val loginButton = doc.getElementById("save").text()
+      assert(loginButton == messages("button.label.save"))
     }
   }
 }
