@@ -17,18 +17,18 @@
 package controllers.aboutYourLeaseOrTenure
 
 import actions.WithSessionRefiner
+import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.CurrentLeaseOrAgreementBeginForm.currentLeaseOrAgreementBeginForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne
+import models.submissions.aboutYourLeaseOrTenure.CurrentLeaseOrAgreementBegin
 import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.CurrentLeaseBeginPageId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.aboutYourLeaseOrTenure.currentLeaseOrAgreementBegin
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.Future
 
 @Singleton
 class CurrentLeaseOrAgreementBeginController @Inject() (
@@ -37,7 +37,7 @@ class CurrentLeaseOrAgreementBeginController @Inject() (
   currentLeaseOrAgreementBeginView: currentLeaseOrAgreementBegin,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FrontendController(mcc)
+) extends FORDataCaptureController(mcc)
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
@@ -53,16 +53,15 @@ class CurrentLeaseOrAgreementBeginController @Inject() (
   }
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
-    currentLeaseOrAgreementBeginForm
-      .bindFromRequest()
-      .fold(
-        formWithErrors => Future.successful(BadRequest(currentLeaseOrAgreementBeginView(formWithErrors))),
-        data => {
-          val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(currentLeaseOrAgreementBegin = Some(data)))
-          session.saveOrUpdate(updatedData)
-          Future.successful(Redirect(navigator.nextPage(CurrentLeaseBeginPageId).apply(updatedData)))
-        }
-      )
+    continueOrSaveAsDraft[CurrentLeaseOrAgreementBegin](
+      currentLeaseOrAgreementBeginForm,
+      formWithErrors => BadRequest(currentLeaseOrAgreementBeginView(formWithErrors)),
+      data => {
+        val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(currentLeaseOrAgreementBegin = Some(data)))
+        session.saveOrUpdate(updatedData)
+        Redirect(navigator.nextPage(CurrentLeaseBeginPageId).apply(updatedData))
+      }
+    )
   }
 
 }

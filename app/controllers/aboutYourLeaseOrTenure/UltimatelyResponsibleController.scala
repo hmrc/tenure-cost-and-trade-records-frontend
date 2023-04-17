@@ -17,14 +17,15 @@
 package controllers.aboutYourLeaseOrTenure
 
 import actions.WithSessionRefiner
+import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.UltimatelyResponsibleForm.ultimatelyResponsibleForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne
+import models.submissions.aboutYourLeaseOrTenure.UltimatelyResponsible
 import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.UltimatelyResponsiblePageId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.aboutYourLeaseOrTenure.ultimatelyResponsible
 
 import javax.inject.{Inject, Named, Singleton}
@@ -37,7 +38,7 @@ class UltimatelyResponsibleController @Inject() (
   ultimatelyResponsibleView: ultimatelyResponsible,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FrontendController(mcc)
+) extends FORDataCaptureController(mcc)
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
@@ -54,16 +55,15 @@ class UltimatelyResponsibleController @Inject() (
   }
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
-    ultimatelyResponsibleForm
-      .bindFromRequest()
-      .fold(
-        formWithErrors => Future.successful(BadRequest(ultimatelyResponsibleView(formWithErrors))),
-        data => {
-          val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(ultimatelyResponsible = Some(data)))
-          session.saveOrUpdate(updatedData)
-          Future.successful(Redirect(navigator.nextPage(UltimatelyResponsiblePageId).apply(updatedData)))
-        }
-      )
+    continueOrSaveAsDraft[UltimatelyResponsible](
+      ultimatelyResponsibleForm,
+      formWithErrors => BadRequest(ultimatelyResponsibleView(formWithErrors)),
+      data => {
+        val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(ultimatelyResponsible = Some(data)))
+        session.saveOrUpdate(updatedData)
+        Redirect(navigator.nextPage(UltimatelyResponsiblePageId).apply(updatedData))
+      }
+    )
   }
 
 }

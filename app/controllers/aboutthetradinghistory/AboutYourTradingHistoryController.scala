@@ -17,20 +17,19 @@
 package controllers.aboutthetradinghistory
 
 import actions.WithSessionRefiner
+import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.AboutYourTradingHistoryForm.aboutYourTradingHistoryForm
-import models.{ForTypes, Session}
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.updateAboutTheTradingHistory
+import models.submissions.aboutthetradinghistory.AboutYourTradingHistory
 import navigation.AboutTheTradingHistoryNavigator
 import navigation.identifiers.AboutYourTradingHistoryPageId
 import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.aboutthetradinghistory.aboutYourTradingHistory
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.Future
 
 @Singleton
 class AboutYourTradingHistoryController @Inject() (
@@ -39,7 +38,7 @@ class AboutYourTradingHistoryController @Inject() (
   aboutYourTradingHistoryView: aboutYourTradingHistory,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FrontendController(mcc)
+) extends FORDataCaptureController(mcc)
     with I18nSupport
     with Logging {
 
@@ -55,15 +54,14 @@ class AboutYourTradingHistoryController @Inject() (
   }
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
-    aboutYourTradingHistoryForm
-      .bindFromRequest()
-      .fold(
-        formWithErrors => Future.successful(BadRequest(aboutYourTradingHistoryView(formWithErrors))),
-        data => {
-          val updatedData = updateAboutTheTradingHistory(_.copy(aboutYourTradingHistory = Some(data)))
-          session.saveOrUpdate(updatedData)
-          Future.successful(Redirect(navigator.nextPage(AboutYourTradingHistoryPageId).apply(updatedData)))
-        }
-      )
+    continueOrSaveAsDraft[AboutYourTradingHistory](
+      aboutYourTradingHistoryForm,
+      formWithErrors => BadRequest(aboutYourTradingHistoryView(formWithErrors)),
+      data => {
+        val updatedData = updateAboutTheTradingHistory(_.copy(aboutYourTradingHistory = Some(data)))
+        session.saveOrUpdate(updatedData)
+        Redirect(navigator.nextPage(AboutYourTradingHistoryPageId).apply(updatedData))
+      }
+    )
   }
 }

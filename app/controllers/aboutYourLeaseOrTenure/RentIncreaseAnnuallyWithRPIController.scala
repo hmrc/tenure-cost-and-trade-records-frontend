@@ -17,16 +17,17 @@
 package controllers.aboutYourLeaseOrTenure
 
 import actions.WithSessionRefiner
+import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.RentIncreasedAnnuallyWithRPIForm.rentIncreasedAnnuallyWithRPIDetailsForm
 import models.Session
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne
+import models.submissions.aboutYourLeaseOrTenure.RentIncreasedAnnuallyWithRPIDetails
 import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.RentIncreaseByRPIPageId
 import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.aboutYourLeaseOrTenure.rentIncreaseAnnuallyWithRPI
 
 import javax.inject.{Inject, Named, Singleton}
@@ -39,7 +40,7 @@ class RentIncreaseAnnuallyWithRPIController @Inject() (
   rentIncreaseAnnuallyWithRPIView: rentIncreaseAnnuallyWithRPI,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FrontendController(mcc)
+) extends FORDataCaptureController(mcc)
     with I18nSupport
     with Logging {
 
@@ -59,18 +60,15 @@ class RentIncreaseAnnuallyWithRPIController @Inject() (
   }
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
-    rentIncreasedAnnuallyWithRPIDetailsForm
-      .bindFromRequest()
-      .fold(
-        formWithErrors =>
-          Future
-            .successful(BadRequest(rentIncreaseAnnuallyWithRPIView(formWithErrors, getBackLink(request.sessionData)))),
-        data => {
-          val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(rentIncreasedAnnuallyWithRPIDetails = Some(data)))
-          session.saveOrUpdate(updatedData)
-          Future.successful(Redirect(navigator.nextPage(RentIncreaseByRPIPageId).apply(updatedData)))
-        }
-      )
+    continueOrSaveAsDraft[RentIncreasedAnnuallyWithRPIDetails](
+      rentIncreasedAnnuallyWithRPIDetailsForm,
+      formWithErrors => BadRequest(rentIncreaseAnnuallyWithRPIView(formWithErrors, getBackLink(request.sessionData))),
+      data => {
+        val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(rentIncreasedAnnuallyWithRPIDetails = Some(data)))
+        session.saveOrUpdate(updatedData)
+        Redirect(navigator.nextPage(RentIncreaseByRPIPageId).apply(updatedData))
+      }
+    )
   }
 
   private def getBackLink(answers: Session): String =

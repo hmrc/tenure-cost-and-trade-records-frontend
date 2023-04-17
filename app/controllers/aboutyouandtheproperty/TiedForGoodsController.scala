@@ -65,7 +65,7 @@ class TiedForGoodsController @Inject() (
       data => {
         val updatedData = updateAboutYouAndTheProperty(_.copy(tiedForGoods = Some(data)))
         session.saveOrUpdate(updatedData)
-        Future.successful(Redirect(navigator.nextPage(TiedForGoodsPageId).apply(updatedData)))
+        Redirect(navigator.nextPage(TiedForGoodsPageId).apply(updatedData))
       }
     )
   }

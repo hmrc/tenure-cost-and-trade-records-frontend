@@ -35,7 +35,7 @@
   theForm = theForm
 ) {
 
-  @formWithCSRF(action = controllers.aboutyouandtheproperty.routes.PremisesLicenseConditionsController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
+  @formWithCSRF(action = controllers.aboutyouandtheproperty.routes.PremisesLicenseConditionsController.submit(), args = Symbol("class") -> "myForm", Symbol("id") -> "myFormId") {
 
     @includes.radioButtonsYesNo(
       govukRadios,

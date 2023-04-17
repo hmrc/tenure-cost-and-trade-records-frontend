@@ -17,17 +17,17 @@
 package controllers.aboutthetradinghistory
 
 import actions.WithSessionRefiner
+import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.NetProfitForm.netProfitForm
+import models.submissions.aboutthetradinghistory.NetProfit
 import navigation.AboutTheTradingHistoryNavigator
 import navigation.identifiers.NetProfitId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.aboutthetradinghistory.netProfit
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.Future
 
 @Singleton
 class NetProfitController @Inject() (
@@ -36,7 +36,7 @@ class NetProfitController @Inject() (
   netProfitView: netProfit,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FrontendController(mcc)
+) extends FORDataCaptureController(mcc)
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
@@ -51,17 +51,14 @@ class NetProfitController @Inject() (
   }
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
-    netProfitForm
-      .bindFromRequest()
-      .fold(
-        formWithErrors => Future.successful(BadRequest(netProfitView(formWithErrors))),
-        data => {
-          val updatedData = request.sessionData
-          Future.successful(Redirect(navigator.nextPage(NetProfitId).apply(updatedData)))
-        }
-      )
-    val updatedData = request.sessionData
-    Future.successful(Redirect(navigator.nextPage(NetProfitId).apply(updatedData)))
+    continueOrSaveAsDraft[NetProfit](
+      netProfitForm,
+      formWithErrors => BadRequest(netProfitView(formWithErrors)),
+      data => {
+        val updatedData = request.sessionData
+        Redirect(navigator.nextPage(NetProfitId).apply(updatedData))
+      }
+    )
   }
 
 }

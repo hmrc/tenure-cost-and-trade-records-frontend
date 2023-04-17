@@ -17,14 +17,15 @@
 package controllers.aboutYourLeaseOrTenure
 
 import actions.WithSessionRefiner
+import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.DoesTheRentPayableForm.doesTheRentPayableForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne
+import models.submissions.aboutYourLeaseOrTenure.DoesTheRentPayable
 import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.DoesRentPayablePageId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.aboutYourLeaseOrTenure.doesTheRentPayable
 
 import javax.inject.{Inject, Named, Singleton}
@@ -37,7 +38,7 @@ class DoesTheRentPayableController @Inject() (
   doesTheRentPayableView: doesTheRentPayable,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FrontendController(mcc)
+) extends FORDataCaptureController(mcc)
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
@@ -54,17 +55,16 @@ class DoesTheRentPayableController @Inject() (
   }
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
-    doesTheRentPayableForm
-      .bindFromRequest()
-      .fold(
-        formWithErrors => Future.successful(BadRequest(doesTheRentPayableView(formWithErrors))),
-        data => {
-          val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(doesTheRentPayable = Some(data)))
-          session.saveOrUpdate(updatedData)
-          Future.successful(Redirect(navigator.nextPage(DoesRentPayablePageId).apply(updatedData)))
-//          Future.successful(Ok(rentIncludeTradeServicesView(rentIncludeTradeServicesForm)))
-        }
-      )
+    continueOrSaveAsDraft[DoesTheRentPayable](
+      doesTheRentPayableForm,
+      formWithErrors => BadRequest(doesTheRentPayableView(formWithErrors)),
+      data => {
+        val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(doesTheRentPayable = Some(data)))
+        session.saveOrUpdate(updatedData)
+        Redirect(navigator.nextPage(DoesRentPayablePageId).apply(updatedData))
+        // Ok(rentIncludeTradeServicesView(rentIncludeTradeServicesForm))
+      }
+    )
   }
 
 }
