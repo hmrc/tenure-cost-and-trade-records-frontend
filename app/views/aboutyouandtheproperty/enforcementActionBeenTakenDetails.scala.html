@@ -15,49 +15,46 @@
  *@
 
 @import models.submissions.aboutyouandtheproperty.EnforcementActionHasBeenTakenInformationDetails
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.charactercount.CharacterCount
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
-@import uk.gov.hmrc.govukfrontend.views.Aliases.CharacterCount
 
 @this(layout: Layout,
-        govukButton: GovukButton,
-        govukErrorSummary: GovukErrorSummary,
-        govukCharacterCount: GovukCharacterCount,
-        formWithCSRF: FormWithCSRF
+  govukButton: GovukButton,
+  govukCharacterCount: GovukCharacterCount,
+  formWithCSRF: FormWithCSRF
 )
-
 
 @(theForm: Form[EnforcementActionHasBeenTakenInformationDetails])(implicit request: Request[_], messages: Messages)
 
 @layout(
- pageHeading = messages("enforcementActionHasBeenTakenDetails.heading"),
- showH1 = false,
- showSection = true,
- sectionName = messages("label.section.aboutTheProperty"),
- backLinkUrl = controllers.aboutyouandtheproperty.routes.EnforcementActionBeenTakenController.show.url,
- theForm = theForm
+  pageHeading = messages("enforcementActionHasBeenTakenDetails.heading"),
+  showH1 = false,
+  showSection = true,
+  sectionName = messages("label.section.aboutTheProperty"),
+  backLinkUrl = controllers.aboutyouandtheproperty.routes.EnforcementActionBeenTakenController.show.url,
+  theForm = theForm
 ) {
 
- @formWithCSRF(action = controllers.aboutyouandtheproperty.routes.EnforcementActionBeenTakenDetailsController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
+  @formWithCSRF(action = controllers.aboutyouandtheproperty.routes.EnforcementActionBeenTakenDetailsController.submit(), args = Symbol("class") -> "myForm", Symbol("class") -> "myFormId") {
 
-  <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-   <h1 class="govuk-fieldset__heading">@messages("enforcementActionHasBeenTakenDetails.heading")</h1>
-  </legend>
+    @govukCharacterCount(
+      CharacterCount(
+        id = "enforcementActionHasBeenTakenDetails",
+        name = "enforcementActionHasBeenTakenDetails",
+        maxLength = 2000,
+        label = Label(
+          content = Text(messages("enforcementActionHasBeenTakenDetails.heading")),
+          classes = "govuk-label--l",
+          isPageHeading = true
+        ),
+        errorMessage = theForm.errors.asTextErrorMessageForField("enforcementActionHasBeenTakenDetails"),
+      ).withFormField(theForm("enforcementActionHasBeenTakenDetails"))
+    )
 
-  @govukCharacterCount(
-   CharacterCount(
-    id = "enforcementActionHasBeenTakenDetails",
-    name = "enforcementActionHasBeenTakenDetails",
-    rows = 5,
-    maxLength = 2000,
-    value = theForm("enforcementActionHasBeenTakenDetails").value,
-    errorMessage = theForm.errors.asTextErrorMessageForField("enforcementActionHasBeenTakenDetails")
-   )
-  )
-
-  @includes.continueSaveAsDraftButtons(govukButton)
- }
+    @includes.continueSaveAsDraftButtons(govukButton)
+  }
 }
 
 

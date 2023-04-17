@@ -33,7 +33,7 @@ class PremisesLicenceGrantedDetailsViewSpec extends QuestionViewBehaviours[Premi
   def createViewUsingForm = (form: Form[PremisesLicenseGrantedInformationDetails]) =>
     premisesLicenceGrantedDetailsView(form)(fakeRequest, messages)
 
-  "Property licence conditions view" must {
+  "Property licence granted view" must {
 
     behave like normalPage(createView, messageKeyPrefix)
 
@@ -60,6 +60,12 @@ class PremisesLicenceGrantedDetailsViewSpec extends QuestionViewBehaviours[Premi
       val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("continue").text()
       assert(loginButton == messages("button.label.continue"))
+    }
+
+    "contain save as draft button with the value Save as draft" in {
+      val doc         = asDocument(createViewUsingForm(form))
+      val loginButton = doc.getElementById("save").text()
+      assert(loginButton == messages("button.label.save"))
     }
 
     "contain get help section" in {

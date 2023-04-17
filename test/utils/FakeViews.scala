@@ -37,17 +37,24 @@ trait FakeViews { this: GuiceOneAppPerSuite =>
   lazy val editAddressView: editAddress                         = app.injector.instanceOf[editAddress]
 
   // About you and the property
-  lazy val aboutYouView: aboutYou                                                 = app.injector.instanceOf[aboutYou]
-  lazy val aboutThePropertyView: aboutTheProperty                                 = app.injector.instanceOf[aboutTheProperty]
-  lazy val websiteForPropertyView: websiteForProperty                             = app.injector.instanceOf[websiteForProperty]
-  lazy val premisesLicenceGrantedView: premisesLicenseGranted                     = app.injector.instanceOf[premisesLicenseGranted]
-  lazy val premisesLicenceGrantedDetailsView: premisesLicenseGrantedDetails       =
+  lazy val aboutYouView: aboutYou                                                    = app.injector.instanceOf[aboutYou]
+  lazy val aboutThePropertyView: aboutTheProperty                                    = app.injector.instanceOf[aboutTheProperty]
+  lazy val websiteForPropertyView: websiteForProperty                                = app.injector.instanceOf[websiteForProperty]
+  lazy val premisesLicenceGrantedView: premisesLicenseGranted                        = app.injector.instanceOf[premisesLicenseGranted]
+  lazy val premisesLicenceGrantedDetailsView: premisesLicenseGrantedDetails          =
     app.injector.instanceOf[premisesLicenseGrantedDetails]
-  lazy val licensableActivitiesView: licensableActivities                         = app.injector.instanceOf[licensableActivities]
-  lazy val premisesLicensableView: premisesLicenseConditions                      = app.injector.instanceOf[premisesLicenseConditions]
-  lazy val enforcementActionsTakenView: enforcementActionBeenTaken                = app.injector.instanceOf[enforcementActionBeenTaken]
-  lazy val tiedForGoodsView: tiedForGoods                                         = app.injector.instanceOf[tiedForGoods]
-  lazy val checkYourAnswersAboutThePropertyView: checkYourAnswersAboutTheProperty =
+  lazy val licensableActivitiesView: licensableActivities                            = app.injector.instanceOf[licensableActivities]
+  lazy val licensableActivitiesDetailsView: licensableActivitiesDetails              =
+    app.injector.instanceOf[licensableActivitiesDetails]
+  lazy val premisesLicensableView: premisesLicenseConditions                         = app.injector.instanceOf[premisesLicenseConditions]
+  lazy val premisesLicenceConditionsDetailsView: premisesLicenseConditionsDetails    =
+    app.injector.instanceOf[premisesLicenseConditionsDetails]
+  lazy val enforcementActionsTakenView: enforcementActionBeenTaken                   = app.injector.instanceOf[enforcementActionBeenTaken]
+  lazy val enforcemenntActionBeenTakenDetailsView: enforcementActionBeenTakenDetails =
+    app.injector.instanceOf[enforcementActionBeenTakenDetails]
+  lazy val tiedForGoodsView: tiedForGoods                                            = app.injector.instanceOf[tiedForGoods]
+  lazy val tiedForGoodsDetailsView: tiedForGoodsDetails                              = app.injector.instanceOf[tiedForGoodsDetails]
+  lazy val checkYourAnswersAboutThePropertyView: checkYourAnswersAboutTheProperty    =
     app.injector.instanceOf[checkYourAnswersAboutTheProperty]
 
   // About the franchise or letting
