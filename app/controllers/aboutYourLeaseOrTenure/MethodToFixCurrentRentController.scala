@@ -17,14 +17,15 @@
 package controllers.aboutYourLeaseOrTenure
 
 import actions.WithSessionRefiner
+import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.MethodToFixCurrentRentForm.methodToFixCurrentRentForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo.updateAboutLeaseOrAgreementPartTwo
+import models.submissions.aboutYourLeaseOrTenure.MethodToFixCurrentRentDetails
 import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.MethodToFixCurrentRentsId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.aboutYourLeaseOrTenure.methodToFixCurrentRent
 
 import javax.inject.{Inject, Named, Singleton}
@@ -37,7 +38,7 @@ class MethodToFixCurrentRentController @Inject() (
   methodToFixCurrentRentView: methodToFixCurrentRent,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FrontendController(mcc)
+) extends FORDataCaptureController(mcc)
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
@@ -54,15 +55,15 @@ class MethodToFixCurrentRentController @Inject() (
   }
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
-    methodToFixCurrentRentForm
-      .bindFromRequest()
-      .fold(
-        formWithErrors => Future.successful(BadRequest(methodToFixCurrentRentView(formWithErrors))),
-        data => {
-          val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(methodToFixCurrentRentDetails = Some(data)))
-          session.saveOrUpdate(updatedData)
-          Future.successful(Redirect(navigator.nextPage(MethodToFixCurrentRentsId).apply(updatedData)))
-        }
-      )
+    continueOrSaveAsDraft[MethodToFixCurrentRentDetails](
+      methodToFixCurrentRentForm,
+      formWithErrors => BadRequest(methodToFixCurrentRentView(formWithErrors)),
+      data => {
+        val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(methodToFixCurrentRentDetails = Some(data)))
+        session.saveOrUpdate(updatedData)
+        Redirect(navigator.nextPage(MethodToFixCurrentRentsId).apply(updatedData))
+      }
+    )
   }
+
 }

@@ -18,13 +18,13 @@ package controllers.notconnected
 
 import actions.{RefNumRequest, SessionRequest, WithSessionRefiner}
 import connectors.Audit
+import controllers.FORDataCaptureController
 import play.api.Logger
 import play.api.i18n.I18nSupport
 import play.api.libs.json.{JsObject, JsValue, Json}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Result}
 import repositories.SessionRepo
 import uk.gov.hmrc.http.HeaderCarrier
-import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import uk.gov.hmrc.play.http.HeaderCarrierConverter
 import views.html.notconnected.checkYourAnswersNotConnected
 import views.html.confirmationNotConnected
@@ -42,7 +42,7 @@ class CheckYourAnswersNotConnectedController @Inject() (
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
 )(implicit ec: ExecutionContext)
-    extends FrontendController(mcc)
+    extends FORDataCaptureController(mcc)
     with I18nSupport {
 
   lazy val confirmationUrl = controllers.notconnected.routes.CheckYourAnswersNotConnectedController.confirmation().url

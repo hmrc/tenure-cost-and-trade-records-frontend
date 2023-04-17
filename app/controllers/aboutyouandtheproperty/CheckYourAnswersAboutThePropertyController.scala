@@ -17,13 +17,13 @@
 package controllers.aboutyouandtheproperty
 
 import actions.WithSessionRefiner
+import controllers.FORDataCaptureController
 import form.aboutyouandtheproperty.CheckYourAnswersAboutThePropertyForm.checkYourAnswersAboutThePropertyForm
 import models.{ForTypes, Session}
 import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.aboutyouandtheproperty.checkYourAnswersAboutTheProperty
 import views.html.taskList
 
@@ -37,7 +37,7 @@ class CheckYourAnswersAboutThePropertyController @Inject() (
   taskListView: taskList,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FrontendController(mcc)
+) extends FORDataCaptureController(mcc)
     with I18nSupport
     with Logging {
 
@@ -57,7 +57,9 @@ class CheckYourAnswersAboutThePropertyController @Inject() (
   }
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    Future.successful(Ok(taskListView()))
+    continueOrSaveAsDraft(
+      Ok(taskListView())
+    )
   }
 
   private def getBackLink(answers: Session): String =

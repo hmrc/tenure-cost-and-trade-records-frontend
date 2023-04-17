@@ -16,21 +16,20 @@
 
 package controllers.Form6010
 
+import controllers.FORDataCaptureController
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.form.checkYourAnswers
 
 import javax.inject.{Inject, Singleton}
-import scala.concurrent.Future
 
 @Singleton
 class CheckYourAnswersController @Inject() (
   mcc: MessagesControllerComponents,
   checkYourAnswersView: checkYourAnswers
-) extends FrontendController(mcc) {
+) extends FORDataCaptureController(mcc) {
 
   def show: Action[AnyContent] = Action.async { implicit request =>
-    Future.successful(Ok(checkYourAnswersView()))
+    Ok(checkYourAnswersView())
   }
 
 }

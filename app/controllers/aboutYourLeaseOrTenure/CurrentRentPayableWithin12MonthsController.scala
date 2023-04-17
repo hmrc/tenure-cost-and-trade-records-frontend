@@ -17,18 +17,18 @@
 package controllers.aboutYourLeaseOrTenure
 
 import actions.WithSessionRefiner
+import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.CurrentRentPayableWithin12MonthsForm.currentRentPayableWithin12MonthsForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne
+import models.submissions.aboutYourLeaseOrTenure.CurrentRentPayableWithin12Months
 import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.CurrentRentPayableWithin12monthsPageId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.aboutYourLeaseOrTenure.currentRentPayableWithin12Months
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.Future
 
 @Singleton
 class CurrentRentPayableWithin12MonthsController @Inject() (
@@ -37,7 +37,7 @@ class CurrentRentPayableWithin12MonthsController @Inject() (
   currentRentPayableWithin12MonthsView: currentRentPayableWithin12Months,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FrontendController(mcc)
+) extends FORDataCaptureController(mcc)
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
@@ -53,18 +53,15 @@ class CurrentRentPayableWithin12MonthsController @Inject() (
   }
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
-    currentRentPayableWithin12MonthsForm
-      .bindFromRequest()
-      .fold(
-        formWithErrors => Future.successful(BadRequest(currentRentPayableWithin12MonthsView(formWithErrors))),
-        data => {
-          val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(currentRentPayableWithin12Months = Some(data)))
-          session.saveOrUpdate(updatedData)
-          Future.successful(
-            Redirect(navigator.nextPage(CurrentRentPayableWithin12monthsPageId).apply(request.sessionData))
-          )
-        }
-      )
+    continueOrSaveAsDraft[CurrentRentPayableWithin12Months](
+      currentRentPayableWithin12MonthsForm,
+      formWithErrors => BadRequest(currentRentPayableWithin12MonthsView(formWithErrors)),
+      data => {
+        val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(currentRentPayableWithin12Months = Some(data)))
+        session.saveOrUpdate(updatedData)
+        Redirect(navigator.nextPage(CurrentRentPayableWithin12monthsPageId).apply(request.sessionData))
+      }
+    )
   }
 
 }

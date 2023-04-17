@@ -17,18 +17,17 @@
 package controllers.aboutthetradinghistory
 
 import actions.WithSessionRefiner
+import controllers.FORDataCaptureController
 import models.submissions.aboutthetradinghistory.TurnoverSection
 import navigation.AboutTheTradingHistoryNavigator
 import navigation.identifiers.TurnoverPageId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.aboutthetradinghistory.turnover
 
-import java.time.{LocalDate, Year}
+import java.time.LocalDate
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.Future
 
 @Singleton
 class TurnoverController @Inject() (
@@ -37,7 +36,7 @@ class TurnoverController @Inject() (
   turnoverView: turnover,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FrontendController(mcc)
+) extends FORDataCaptureController(mcc)
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
@@ -70,8 +69,10 @@ class TurnoverController @Inject() (
   }
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
-    val updatedData = request.sessionData
-    Future.successful(Redirect(navigator.nextPage(TurnoverPageId).apply(updatedData)))
+    continueOrSaveAsDraft {
+      val updatedData = request.sessionData
+      Redirect(navigator.nextPage(TurnoverPageId).apply(updatedData))
+    }
   }
 
 }

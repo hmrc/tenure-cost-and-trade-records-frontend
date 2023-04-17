@@ -17,18 +17,18 @@
 package controllers.aboutYourLeaseOrTenure
 
 import actions.WithSessionRefiner
+import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.LegalOrPlanningRestrictionsDetailsForm.legalOrPlanningRestrictionsDetailsForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo.updateAboutLeaseOrAgreementPartTwo
+import models.submissions.aboutYourLeaseOrTenure.LegalOrPlanningRestrictionsDetails
 import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.LegalOrPlanningRestrictionDetailsId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.aboutYourLeaseOrTenure.legalOrPlanningRestrictionsDetails
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.Future
 
 @Singleton
 class LegalOrPlanningRestrictionsDetailsController @Inject() (
@@ -37,7 +37,7 @@ class LegalOrPlanningRestrictionsDetailsController @Inject() (
   legalOrPlanningRestrictionsDetailsView: legalOrPlanningRestrictionsDetails,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FrontendController(mcc)
+) extends FORDataCaptureController(mcc)
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
@@ -52,15 +52,15 @@ class LegalOrPlanningRestrictionsDetailsController @Inject() (
   }
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
-    legalOrPlanningRestrictionsDetailsForm
-      .bindFromRequest()
-      .fold(
-        formWithErrors => Future.successful(BadRequest(legalOrPlanningRestrictionsDetailsView(formWithErrors))),
-        data => {
-          val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(legalOrPlanningRestrictionsDetails = Some(data)))
-          session.saveOrUpdate(updatedData)
-          Future.successful(Redirect(navigator.nextPage(LegalOrPlanningRestrictionDetailsId).apply(updatedData)))
-        }
-      )
+    continueOrSaveAsDraft[LegalOrPlanningRestrictionsDetails](
+      legalOrPlanningRestrictionsDetailsForm,
+      formWithErrors => BadRequest(legalOrPlanningRestrictionsDetailsView(formWithErrors)),
+      data => {
+        val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(legalOrPlanningRestrictionsDetails = Some(data)))
+        session.saveOrUpdate(updatedData)
+        Redirect(navigator.nextPage(LegalOrPlanningRestrictionDetailsId).apply(updatedData))
+      }
+    )
   }
+
 }

@@ -17,18 +17,18 @@
 package controllers.aboutYourLeaseOrTenure
 
 import actions.WithSessionRefiner
+import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.IntervalsOfRentReviewForm.intervalsOfRentReviewForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo.updateAboutLeaseOrAgreementPartTwo
+import models.submissions.aboutYourLeaseOrTenure.IntervalsOfRentReview
 import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.IntervalsOfRentReviewId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.aboutYourLeaseOrTenure.intervalsOfRentReview
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.Future
 
 @Singleton
 class IntervalsOfRentReviewController @Inject() (
@@ -37,7 +37,7 @@ class IntervalsOfRentReviewController @Inject() (
   intervalsOfRentReviewView: intervalsOfRentReview,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FrontendController(mcc)
+) extends FORDataCaptureController(mcc)
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
@@ -52,16 +52,15 @@ class IntervalsOfRentReviewController @Inject() (
   }
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
-    intervalsOfRentReviewForm
-      .bindFromRequest()
-      .fold(
-        formWithErrors => Future.successful(BadRequest(intervalsOfRentReviewView(formWithErrors))),
-        data => {
-          val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(intervalsOfRentReview = Some(data)))
-          session.saveOrUpdate(updatedData)
-          Future.successful(Redirect(navigator.nextPage(IntervalsOfRentReviewId).apply(updatedData)))
-        }
-      )
+    continueOrSaveAsDraft[IntervalsOfRentReview](
+      intervalsOfRentReviewForm,
+      formWithErrors => BadRequest(intervalsOfRentReviewView(formWithErrors)),
+      data => {
+        val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(intervalsOfRentReview = Some(data)))
+        session.saveOrUpdate(updatedData)
+        Redirect(navigator.nextPage(IntervalsOfRentReviewId).apply(updatedData))
+      }
+    )
   }
 
 }

@@ -17,17 +17,17 @@
 package controllers.aboutYourLeaseOrTenure
 
 import actions.WithSessionRefiner
+import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.TenancyLeaseAgreementExpireForm.tenancyLeaseAgreementExpireForm
+import models.submissions.aboutYourLeaseOrTenure.TenancyLeaseAgreementExpire
 import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.TenancyLeaseAgreementExpirePageId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.aboutYourLeaseOrTenure.tenancyLeaseAgreementExpire
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.Future
 
 @Singleton
 class TenancyLeaseAgreementExpireController @Inject() (
@@ -36,7 +36,7 @@ class TenancyLeaseAgreementExpireController @Inject() (
   tenancyLeaseAgreementExpireView: tenancyLeaseAgreementExpire,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FrontendController(mcc)
+) extends FORDataCaptureController(mcc)
     with I18nSupport {
 
   def show: Action[AnyContent] = Action { implicit request =>
@@ -44,12 +44,11 @@ class TenancyLeaseAgreementExpireController @Inject() (
   }
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
-    tenancyLeaseAgreementExpireForm
-      .bindFromRequest()
-      .fold(
-        formWithErrors => Future.successful(BadRequest(tenancyLeaseAgreementExpireView(formWithErrors))),
-        data =>
-          Future.successful(Redirect(navigator.nextPage(TenancyLeaseAgreementExpirePageId).apply(request.sessionData)))
-      )
+    continueOrSaveAsDraft[TenancyLeaseAgreementExpire](
+      tenancyLeaseAgreementExpireForm,
+      formWithErrors => BadRequest(tenancyLeaseAgreementExpireView(formWithErrors)),
+      data => Redirect(navigator.nextPage(TenancyLeaseAgreementExpirePageId).apply(request.sessionData))
+    )
   }
+
 }
