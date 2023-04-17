@@ -17,17 +17,17 @@
 package controllers.aboutthetradinghistory
 
 import actions.WithSessionRefiner
+import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.GrossProfitForm.grossProfitForm
+import models.submissions.aboutthetradinghistory.GrossProfit
 import navigation.AboutTheTradingHistoryNavigator
 import navigation.identifiers.GrossProfitsId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.aboutthetradinghistory.grossProfits
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.Future
 
 @Singleton
 class GrossProfitsController @Inject() (
@@ -36,7 +36,7 @@ class GrossProfitsController @Inject() (
   grossProfitsView: grossProfits,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FrontendController(mcc)
+) extends FORDataCaptureController(mcc)
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
@@ -51,14 +51,14 @@ class GrossProfitsController @Inject() (
   }
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
-    grossProfitForm
-      .bindFromRequest()
-      .fold(
-        formWithErrors => Future.successful(BadRequest(grossProfitsView(formWithErrors))),
-        data => {
-          val updatedData = request.sessionData
-          Future.successful(Redirect(navigator.nextPage(GrossProfitsId).apply(updatedData)))
-        }
-      )
+    continueOrSaveAsDraft[GrossProfit](
+      grossProfitForm,
+      formWithErrors => BadRequest(grossProfitsView(formWithErrors)),
+      data => {
+        val updatedData = request.sessionData
+        Redirect(navigator.nextPage(GrossProfitsId).apply(updatedData))
+      }
+    )
   }
+
 }

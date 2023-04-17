@@ -17,6 +17,7 @@
 package controllers.aboutYourLeaseOrTenure
 
 import actions.WithSessionRefiner
+import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.CheckYourAnswersAboutYourLeaseOrTenureForm.checkYourAnswersAboutFranchiseOrLettingsForm
 import models.{ForTypes, Session}
 import navigation.AboutYourLeaseOrTenureNavigator
@@ -25,7 +26,6 @@ import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.aboutYourLeaseOrTenure.checkYourAnswersAboutYourLeaseOrTenure
 
 import javax.inject.{Inject, Named, Singleton}
@@ -38,7 +38,7 @@ class CheckYourAnswersAboutYourLeaseOrTenureController @Inject() (
   checkYourAnswersAboutYourLeaseOrTenureView: checkYourAnswersAboutYourLeaseOrTenure,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FrontendController(mcc)
+) extends FORDataCaptureController(mcc)
     with I18nSupport
     with Logging {
 
@@ -58,7 +58,9 @@ class CheckYourAnswersAboutYourLeaseOrTenureController @Inject() (
   }
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
-    Future.successful(Redirect(navigator.nextPage(CheckYourAnswersAboutYourLeaseOrTenureId).apply(request.sessionData)))
+    continueOrSaveAsDraft(
+      Redirect(navigator.nextPage(CheckYourAnswersAboutYourLeaseOrTenureId).apply(request.sessionData))
+    )
   }
 
   private def getBackLink(answers: Session): String =

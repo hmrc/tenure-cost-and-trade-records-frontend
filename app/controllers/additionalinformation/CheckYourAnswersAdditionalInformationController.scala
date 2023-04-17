@@ -17,13 +17,13 @@
 package controllers.additionalinformation
 
 import actions.WithSessionRefiner
+import controllers.FORDataCaptureController
 import form.additionalinformation.CheckYourAnswersAdditionalInformationForm.checkYourAnswersAdditionalInformationForm
 import navigation.AdditionalInformationNavigator
 import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.additionalinformation.checkYourAnswersAdditionalInformation
 import views.html.taskList
 
@@ -38,7 +38,7 @@ class CheckYourAnswersAdditionalInformationController @Inject() (
   taskListView: taskList,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FrontendController(mcc)
+) extends FORDataCaptureController(mcc)
     with I18nSupport
     with Logging {
 
@@ -57,7 +57,9 @@ class CheckYourAnswersAdditionalInformationController @Inject() (
   }
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
-    Future.successful(Ok(taskListView()))
+    continueOrSaveAsDraft(
+      Ok(taskListView())
+    )
   }
 
 }

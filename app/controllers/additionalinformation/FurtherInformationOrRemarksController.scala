@@ -17,14 +17,15 @@
 package controllers.additionalinformation
 
 import actions.WithSessionRefiner
+import controllers.FORDataCaptureController
 import form.additionalinformation.FurtherInformationOrRemarksForm.furtherInformationOrRemarksForm
 import models.submissions.additionalinformation.AdditionalInformation.updateAdditionalInformation
+import models.submissions.additionalinformation.FurtherInformationOrRemarksDetails
 import navigation.AdditionalInformationNavigator
 import navigation.identifiers.FurtherInformationId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.additionalinformation.furtherInformationOrRemarks
 
 import javax.inject.{Inject, Named, Singleton}
@@ -37,7 +38,7 @@ class FurtherInformationOrRemarksController @Inject() (
   furtherInformationOrRemarksView: furtherInformationOrRemarks,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FrontendController(mcc)
+) extends FORDataCaptureController(mcc)
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
@@ -55,15 +56,15 @@ class FurtherInformationOrRemarksController @Inject() (
   }
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
-    furtherInformationOrRemarksForm
-      .bindFromRequest()
-      .fold(
-        formWithErrors => Future.successful(BadRequest(furtherInformationOrRemarksView(formWithErrors))),
-        data => {
-          val updatedData = updateAdditionalInformation(_.copy(furtherInformationOrRemarksDetails = Some(data)))
-          session.saveOrUpdate(updatedData)
-          Future.successful(Redirect(navigator.nextPage(FurtherInformationId).apply(updatedData)))
-        }
-      )
+    continueOrSaveAsDraft[FurtherInformationOrRemarksDetails](
+      furtherInformationOrRemarksForm,
+      formWithErrors => BadRequest(furtherInformationOrRemarksView(formWithErrors)),
+      data => {
+        val updatedData = updateAdditionalInformation(_.copy(furtherInformationOrRemarksDetails = Some(data)))
+        session.saveOrUpdate(updatedData)
+        Redirect(navigator.nextPage(FurtherInformationId).apply(updatedData))
+      }
+    )
   }
+
 }

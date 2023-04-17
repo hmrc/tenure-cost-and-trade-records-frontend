@@ -17,8 +17,10 @@
 package controllers.aboutYourLeaseOrTenure
 
 import actions.WithSessionRefiner
+import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.HowIsCurrentRentFixedForm.howIsCurrentRentFixedForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo.updateAboutLeaseOrAgreementPartTwo
+import models.submissions.aboutYourLeaseOrTenure.HowIsCurrentRentFixed
 import models.{ForTypes, Session}
 import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.HowIsCurrentRentFixedId
@@ -26,7 +28,6 @@ import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.aboutYourLeaseOrTenure.howIsCurrentRentFixed
 
 import javax.inject.{Inject, Named, Singleton}
@@ -39,7 +40,7 @@ class HowIsCurrentRentFixedController @Inject() (
   howIsCurrentRentFixedView: howIsCurrentRentFixed,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FrontendController(mcc)
+) extends FORDataCaptureController(mcc)
     with I18nSupport
     with Logging {
 
@@ -58,17 +59,15 @@ class HowIsCurrentRentFixedController @Inject() (
   }
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
-    howIsCurrentRentFixedForm
-      .bindFromRequest()
-      .fold(
-        formWithErrors =>
-          Future.successful(BadRequest(howIsCurrentRentFixedView(formWithErrors, getBackLink(request.sessionData)))),
-        data => {
-          val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(howIsCurrentRentFixed = Some(data)))
-          session.saveOrUpdate(updatedData)
-          Future.successful(Redirect(navigator.nextPage(HowIsCurrentRentFixedId).apply(updatedData)))
-        }
-      )
+    continueOrSaveAsDraft[HowIsCurrentRentFixed](
+      howIsCurrentRentFixedForm,
+      formWithErrors => BadRequest(howIsCurrentRentFixedView(formWithErrors, getBackLink(request.sessionData))),
+      data => {
+        val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(howIsCurrentRentFixed = Some(data)))
+        session.saveOrUpdate(updatedData)
+        Redirect(navigator.nextPage(HowIsCurrentRentFixedId).apply(updatedData))
+      }
+    )
   }
 
   private def getBackLink(answers: Session): String =

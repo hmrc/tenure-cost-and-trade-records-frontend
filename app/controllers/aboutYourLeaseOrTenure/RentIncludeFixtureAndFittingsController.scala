@@ -17,16 +17,17 @@
 package controllers.aboutYourLeaseOrTenure
 
 import actions.WithSessionRefiner
+import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.RentIncludeFixtureAndFittingsForm.rentIncludeFixturesAndFittingsForm
 import models.Session
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne
+import models.submissions.aboutYourLeaseOrTenure.RentIncludeFixturesAndFittingsDetails
 import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.RentFixtureAndFittingsPageId
 import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.aboutYourLeaseOrTenure.rentIncludeFixtureAndFittings
 
 import javax.inject.{Inject, Named, Singleton}
@@ -39,7 +40,7 @@ class RentIncludeFixtureAndFittingsController @Inject() (
   rentIncludeFixtureAndFittingsView: rentIncludeFixtureAndFittings,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FrontendController(mcc)
+) extends FORDataCaptureController(mcc)
     with I18nSupport
     with Logging {
 
@@ -59,20 +60,16 @@ class RentIncludeFixtureAndFittingsController @Inject() (
   }
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
-    rentIncludeFixturesAndFittingsForm
-      .bindFromRequest()
-      .fold(
-        formWithErrors =>
-          Future.successful(
-            BadRequest(rentIncludeFixtureAndFittingsView(formWithErrors, getBackLink(request.sessionData)))
-          ),
-        data => {
-          val updatedData =
-            updateAboutLeaseOrAgreementPartOne(_.copy(rentIncludeFixturesAndFittingsDetails = Some(data)))
-          session.saveOrUpdate(updatedData)
-          Future.successful(Redirect(navigator.nextPage(RentFixtureAndFittingsPageId).apply(updatedData)))
-        }
-      )
+    continueOrSaveAsDraft[RentIncludeFixturesAndFittingsDetails](
+      rentIncludeFixturesAndFittingsForm,
+      formWithErrors => BadRequest(rentIncludeFixtureAndFittingsView(formWithErrors, getBackLink(request.sessionData))),
+      data => {
+        val updatedData =
+          updateAboutLeaseOrAgreementPartOne(_.copy(rentIncludeFixturesAndFittingsDetails = Some(data)))
+        session.saveOrUpdate(updatedData)
+        Redirect(navigator.nextPage(RentFixtureAndFittingsPageId).apply(updatedData))
+      }
+    )
   }
 
   private def getBackLink(answers: Session): String =

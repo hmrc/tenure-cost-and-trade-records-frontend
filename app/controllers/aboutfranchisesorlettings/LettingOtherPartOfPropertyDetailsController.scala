@@ -17,6 +17,7 @@
 package controllers.aboutfranchisesorlettings
 
 import actions.WithSessionRefiner
+import controllers.FORDataCaptureController
 import form.aboutfranchisesorlettings.LettingOtherPartOfPropertyForm.lettingOtherPartOfPropertyForm
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
 import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, LettingOtherPartOfPropertyInformationDetails, LettingSection}
@@ -25,11 +26,9 @@ import navigation.identifiers.LettingAccommodationDetailsPageId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.aboutfranchisesorlettings.cateringOperationOrLettingAccommodationDetails
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.Future
 
 @Singleton
 class LettingOtherPartOfPropertyDetailsController @Inject() (
@@ -38,7 +37,7 @@ class LettingOtherPartOfPropertyDetailsController @Inject() (
   cateringOperationOrLettingAccommodationDetailsView: cateringOperationOrLettingAccommodationDetails,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FrontendController(mcc)
+) extends FORDataCaptureController(mcc)
     with I18nSupport {
 
   def show(index: Option[Int]): Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
@@ -60,48 +59,44 @@ class LettingOtherPartOfPropertyDetailsController @Inject() (
   }
 
   def submit(index: Option[Int]) = (Action andThen withSessionRefiner).async { implicit request =>
-    lettingOtherPartOfPropertyForm
-      .bindFromRequest()
-      .fold(
-        formWithErrors =>
-          Future.successful(
-            BadRequest(
-              cateringOperationOrLettingAccommodationDetailsView(
-                formWithErrors,
-                index,
-                "lettingOtherPartOfPropertyDetails",
-                controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show().url
-              )
-            )
-          ),
-        data => {
-          val ifFranchisesOrLettingsEmpty                                        = AboutFranchisesOrLettings(lettingSections =
-            IndexedSeq(LettingSection(lettingOtherPartOfPropertyInformationDetails = data))
+    continueOrSaveAsDraft[LettingOtherPartOfPropertyInformationDetails](
+      lettingOtherPartOfPropertyForm,
+      formWithErrors =>
+        BadRequest(
+          cateringOperationOrLettingAccommodationDetailsView(
+            formWithErrors,
+            index,
+            "lettingOtherPartOfPropertyDetails",
+            controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show().url
           )
-          val updatedAboutFranchisesOrLettings: (Int, AboutFranchisesOrLettings) =
-            request.sessionData.aboutFranchisesOrLettings.fold(0 -> ifFranchisesOrLettingsEmpty) {
-              franchiseOrLettings =>
-                val existingSections                                   = franchiseOrLettings.lettingSections
-                val requestedSection                                   = index.flatMap(existingSections.lift)
-                val updatedSections: (Int, IndexedSeq[LettingSection]) = requestedSection.fold {
-                  val defaultSection   = LettingSection(data)
-                  val appendedSections = existingSections.appended(defaultSection)
-                  appendedSections.indexOf(defaultSection) -> appendedSections
-                } { sectionToUpdate =>
-                  val indexToUpdate = existingSections.indexOf(sectionToUpdate)
-                  indexToUpdate -> existingSections
-                    .updated(indexToUpdate, sectionToUpdate.copy(lettingOtherPartOfPropertyInformationDetails = data))
-                }
-                updatedSections._1 -> franchiseOrLettings.copy(lettingSections = updatedSections._2)
+        ),
+      data => {
+        val ifFranchisesOrLettingsEmpty                                        = AboutFranchisesOrLettings(lettingSections =
+          IndexedSeq(LettingSection(lettingOtherPartOfPropertyInformationDetails = data))
+        )
+        val updatedAboutFranchisesOrLettings: (Int, AboutFranchisesOrLettings) =
+          request.sessionData.aboutFranchisesOrLettings.fold(0 -> ifFranchisesOrLettingsEmpty) { franchiseOrLettings =>
+            val existingSections                                   = franchiseOrLettings.lettingSections
+            val requestedSection                                   = index.flatMap(existingSections.lift)
+            val updatedSections: (Int, IndexedSeq[LettingSection]) = requestedSection.fold {
+              val defaultSection   = LettingSection(data)
+              val appendedSections = existingSections.appended(defaultSection)
+              appendedSections.indexOf(defaultSection) -> appendedSections
+            } { sectionToUpdate =>
+              val indexToUpdate = existingSections.indexOf(sectionToUpdate)
+              indexToUpdate -> existingSections
+                .updated(indexToUpdate, sectionToUpdate.copy(lettingOtherPartOfPropertyInformationDetails = data))
             }
-          updatedAboutFranchisesOrLettings match {
-            case (currentIndex, aboutFranchisesOrLettings) =>
-              val updatedData = updateAboutFranchisesOrLettings(_ => aboutFranchisesOrLettings)
-              session.saveOrUpdate(updatedData)
-              Future.successful(Redirect(navigator.nextPage(LettingAccommodationDetailsPageId).apply(updatedData)))
+            updatedSections._1 -> franchiseOrLettings.copy(lettingSections = updatedSections._2)
           }
+        updatedAboutFranchisesOrLettings match {
+          case (currentIndex, aboutFranchisesOrLettings) =>
+            val updatedData = updateAboutFranchisesOrLettings(_ => aboutFranchisesOrLettings)
+            session.saveOrUpdate(updatedData)
+            Redirect(navigator.nextPage(LettingAccommodationDetailsPageId).apply(updatedData))
         }
-      )
+      }
+    )
   }
 
 }

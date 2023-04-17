@@ -17,14 +17,15 @@
 package controllers.aboutfranchisesorlettings
 
 import actions.WithSessionRefiner
+import controllers.FORDataCaptureController
 import form.aboutfranchisesorlettings.AddAnotherCateringOperationOrLettingAccommodationForm.addAnotherCateringOperationForm
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
+import models.submissions.common.AnswersYesNo
 import navigation.AboutFranchisesOrLettingsNavigator
 import navigation.identifiers.AddAnotherCateringOperationPageId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.aboutfranchisesorlettings.addAnotherCateringOperationOrLettingAccommodation
 
 import javax.inject.{Inject, Named, Singleton}
@@ -37,7 +38,7 @@ class AddAnotherCateringOperationController @Inject() (
   addAnotherCateringOperationOrLettingAccommodationView: addAnotherCateringOperationOrLettingAccommodation,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FrontendController(mcc)
+) extends FORDataCaptureController(mcc)
     with I18nSupport {
 
   def show(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
@@ -59,35 +60,31 @@ class AddAnotherCateringOperationController @Inject() (
   }
 
   def submit(index: Int) = (Action andThen withSessionRefiner).async { implicit request =>
-    addAnotherCateringOperationForm
-      .bindFromRequest()
-      .fold(
-        formWithErrors =>
-          Future.successful(
-            BadRequest(
-              addAnotherCateringOperationOrLettingAccommodationView(
-                formWithErrors,
-                index,
-                "addAnotherCateringOperationOrLettingAccommodations",
-                controllers.aboutfranchisesorlettings.routes.CateringOperationRentIncludesController.show(index).url
-              )
-            )
-          ),
-        data =>
-          request.sessionData.aboutFranchisesOrLettings.fold(
-            Future
-              .successful(Redirect(routes.CateringOperationRentIncludesController.show(index)))
-          ) { aboutFranchisesOrLettings =>
-            val existingSections = aboutFranchisesOrLettings.cateringOperationSections
-            val updatedSections  = existingSections.updated(
-              index,
-              existingSections(index).copy(addAnotherOperationToProperty = Some(data))
-            )
-            val updatedData      = updateAboutFranchisesOrLettings(_.copy(cateringOperationSections = updatedSections))
-            session.saveOrUpdate(updatedData)
-            Future.successful(Redirect(navigator.nextPage(AddAnotherCateringOperationPageId).apply(updatedData)))
-          }
-      )
+    continueOrSaveAsDraft[AnswersYesNo](
+      addAnotherCateringOperationForm,
+      formWithErrors =>
+        BadRequest(
+          addAnotherCateringOperationOrLettingAccommodationView(
+            formWithErrors,
+            index,
+            "addAnotherCateringOperationOrLettingAccommodations",
+            controllers.aboutfranchisesorlettings.routes.CateringOperationRentIncludesController.show(index).url
+          )
+        ),
+      data =>
+        request.sessionData.aboutFranchisesOrLettings.fold(
+          Redirect(routes.CateringOperationRentIncludesController.show(index))
+        ) { aboutFranchisesOrLettings =>
+          val existingSections = aboutFranchisesOrLettings.cateringOperationSections
+          val updatedSections  = existingSections.updated(
+            index,
+            existingSections(index).copy(addAnotherOperationToProperty = Some(data))
+          )
+          val updatedData      = updateAboutFranchisesOrLettings(_.copy(cateringOperationSections = updatedSections))
+          session.saveOrUpdate(updatedData)
+          Redirect(navigator.nextPage(AddAnotherCateringOperationPageId).apply(updatedData))
+        }
+    )
   }
 
 }

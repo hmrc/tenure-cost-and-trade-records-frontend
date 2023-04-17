@@ -17,16 +17,17 @@
 package controllers.aboutYourLeaseOrTenure
 
 import actions.WithSessionRefiner
+import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.LeaseOrAgreementYearsForm.leaseOrAgreementYearsForm
 import models.Session
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne
+import models.submissions.aboutYourLeaseOrTenure.LeaseOrAgreementYearsDetails
 import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.LeaseOrAgreementDetailsPageId
 import play.api.i18n.I18nSupport
 import play.api.Logging
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.aboutYourLeaseOrTenure.leaseOrAgreementYears
 
 import javax.inject.{Inject, Named, Singleton}
@@ -39,7 +40,7 @@ class LeaseOrAgreementYearsController @Inject() (
   leaseOrAgreementYearsView: leaseOrAgreementYears,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FrontendController(mcc)
+) extends FORDataCaptureController(mcc)
     with I18nSupport
     with Logging {
 
@@ -59,17 +60,15 @@ class LeaseOrAgreementYearsController @Inject() (
   }
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
-    leaseOrAgreementYearsForm
-      .bindFromRequest()
-      .fold(
-        formWithErrors =>
-          Future.successful(BadRequest(leaseOrAgreementYearsView(formWithErrors, getBackLink(request.sessionData)))),
-        data => {
-          val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(leaseOrAgreementYearsDetails = Some(data)))
-          session.saveOrUpdate(updatedData)
-          Future.successful(Redirect(navigator.nextPage(LeaseOrAgreementDetailsPageId).apply(updatedData)))
-        }
-      )
+    continueOrSaveAsDraft[LeaseOrAgreementYearsDetails](
+      leaseOrAgreementYearsForm,
+      formWithErrors => BadRequest(leaseOrAgreementYearsView(formWithErrors, getBackLink(request.sessionData))),
+      data => {
+        val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(leaseOrAgreementYearsDetails = Some(data)))
+        session.saveOrUpdate(updatedData)
+        Redirect(navigator.nextPage(LeaseOrAgreementDetailsPageId).apply(updatedData))
+      }
+    )
   }
 
   private def getBackLink(answers: Session): String =

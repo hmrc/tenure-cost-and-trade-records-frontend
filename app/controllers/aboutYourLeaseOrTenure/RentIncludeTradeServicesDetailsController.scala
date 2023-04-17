@@ -17,14 +17,15 @@
 package controllers.aboutYourLeaseOrTenure
 
 import actions.WithSessionRefiner
+import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.RentIncludeTradeServicesDetailsForm.rentIncludeTradeServicesDetailsForm
 import navigation.AboutYourLeaseOrTenureNavigator
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne
+import models.submissions.aboutYourLeaseOrTenure.RentIncludeTradeServicesInformationDetails
 import navigation.identifiers.RentIncludeTradeServicesDetailsPageId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.aboutYourLeaseOrTenure.rentIncludeTradeServicesDetails
 
 import javax.inject.{Inject, Named, Singleton}
@@ -37,7 +38,7 @@ class RentIncludeTradeServicesDetailsController @Inject() (
   rentIncludeTradeServicesDetailsView: rentIncludeTradeServicesDetails,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FrontendController(mcc)
+) extends FORDataCaptureController(mcc)
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
@@ -55,15 +56,15 @@ class RentIncludeTradeServicesDetailsController @Inject() (
   }
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
-    rentIncludeTradeServicesDetailsForm
-      .bindFromRequest()
-      .fold(
-        formWithErrors => Future.successful(BadRequest(rentIncludeTradeServicesDetailsView(formWithErrors))),
-        data => {
-          val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(rentIncludeTradeServicesInformation = Some(data)))
-          session.saveOrUpdate(updatedData)
-          Future.successful(Redirect(navigator.nextPage(RentIncludeTradeServicesDetailsPageId).apply(updatedData)))
-        }
-      )
+    continueOrSaveAsDraft[RentIncludeTradeServicesInformationDetails](
+      rentIncludeTradeServicesDetailsForm,
+      formWithErrors => BadRequest(rentIncludeTradeServicesDetailsView(formWithErrors)),
+      data => {
+        val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(rentIncludeTradeServicesInformation = Some(data)))
+        session.saveOrUpdate(updatedData)
+        Redirect(navigator.nextPage(RentIncludeTradeServicesDetailsPageId).apply(updatedData))
+      }
+    )
   }
+
 }

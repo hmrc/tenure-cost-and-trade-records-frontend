@@ -17,14 +17,15 @@
 package controllers.connectiontoproperty
 
 import actions.WithSessionRefiner
+import controllers.FORDataCaptureController
 import form.connectiontoproperty.EditAddressForm.editAddressForm
+import models.submissions.common.Address
 import navigation.ConnectionToPropertyNavigator
 import navigation.identifiers.EditAddressPageId
 import models.submissions.connectiontoproperty.StillConnectedDetails.updateStillConnectedDetails
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.connectiontoproperty.editAddress
 
 import javax.inject.{Inject, Named, Singleton}
@@ -37,7 +38,7 @@ class EditAddressController @Inject() (
   editAddressView: editAddress,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FrontendController(mcc)
+) extends FORDataCaptureController(mcc)
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
@@ -54,16 +55,15 @@ class EditAddressController @Inject() (
   }
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
-    editAddressForm
-      .bindFromRequest()
-      .fold(
-        formWithErrors => Future.successful(BadRequest(editAddressView(formWithErrors))),
-        data => {
-          val updatedData = updateStillConnectedDetails(_.copy(editAddress = Some(data)))
-          session.saveOrUpdate(updatedData)
-          Future.successful(Redirect(navigator.nextPage(EditAddressPageId).apply(updatedData)))
-        }
-      )
+    continueOrSaveAsDraft[Address](
+      editAddressForm,
+      formWithErrors => BadRequest(editAddressView(formWithErrors)),
+      data => {
+        val updatedData = updateStillConnectedDetails(_.copy(editAddress = Some(data)))
+        session.saveOrUpdate(updatedData)
+        Redirect(navigator.nextPage(EditAddressPageId).apply(updatedData))
+      }
+    )
   }
 
 }

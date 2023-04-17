@@ -17,14 +17,15 @@
 package controllers.notconnected
 
 import actions.WithSessionRefiner
+import controllers.FORDataCaptureController
 import form.notconnected.PastConnectionForm.pastConnectionForm
+import models.submissions.PastConnectionType
 import models.submissions.notconnected.RemoveConnectionDetails.updateRemoveConnectionDetails
 import navigation.RemoveConnectionNavigator
 import navigation.identifiers.PastConnectionId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.notconnected.pastConnection
 
 import javax.inject.{Inject, Named, Singleton}
@@ -37,7 +38,7 @@ class PastConnectionController @Inject() (
   pastConnectionView: pastConnection,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FrontendController(mcc)
+) extends FORDataCaptureController(mcc)
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
@@ -58,16 +59,15 @@ class PastConnectionController @Inject() (
   }
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
-    pastConnectionForm
-      .bindFromRequest()
-      .fold(
-        formWithErrors => Future.successful(BadRequest(pastConnectionView(formWithErrors))),
-        data => {
-          val updatedData = updateRemoveConnectionDetails(_.copy(pastConnectionType = Some(data)))
-          session.saveOrUpdate(updatedData)
-          Future.successful(Redirect(navigator.nextPage(PastConnectionId).apply(updatedData)))
-        }
-      )
+    continueOrSaveAsDraft[PastConnectionType](
+      pastConnectionForm,
+      formWithErrors => BadRequest(pastConnectionView(formWithErrors)),
+      data => {
+        val updatedData = updateRemoveConnectionDetails(_.copy(pastConnectionType = Some(data)))
+        session.saveOrUpdate(updatedData)
+        Redirect(navigator.nextPage(PastConnectionId).apply(updatedData))
+      }
+    )
   }
 
 }

@@ -17,20 +17,18 @@
 package controllers
 
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.taskList
 
 import javax.inject.{Inject, Singleton}
-import scala.concurrent.Future
 
 @Singleton
 class TaskListController @Inject() (
   mcc: MessagesControllerComponents,
   taskListView: taskList
-) extends FrontendController(mcc) {
+) extends FORDataCaptureController(mcc) {
 
   def show: Action[AnyContent] = Action.async { implicit request =>
-    Future.successful(Ok(taskListView()))
+    Ok(taskListView())
   }
 
 }
