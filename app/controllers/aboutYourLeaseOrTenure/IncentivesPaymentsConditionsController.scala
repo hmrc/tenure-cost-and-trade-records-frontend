@@ -17,14 +17,15 @@
 package controllers.aboutYourLeaseOrTenure
 
 import actions.WithSessionRefiner
+import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.IncentivesPaymentsConditionsForm.incentivesPaymentsConditionsForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo.updateAboutLeaseOrAgreementPartTwo
+import models.submissions.aboutYourLeaseOrTenure.IncentivesPaymentsConditionsDetails
 import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.IncentivesPaymentsConditionsId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.aboutYourLeaseOrTenure.incentivesPaymentsConditions
 
 import javax.inject.{Inject, Named, Singleton}
@@ -37,7 +38,7 @@ class IncentivesPaymentsConditionsController @Inject() (
   incentivesPaymentsConditionsView: incentivesPaymentsConditions,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FrontendController(mcc)
+) extends FORDataCaptureController(mcc)
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
@@ -54,15 +55,15 @@ class IncentivesPaymentsConditionsController @Inject() (
   }
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
-    incentivesPaymentsConditionsForm
-      .bindFromRequest()
-      .fold(
-        formWithErrors => Future.successful(BadRequest(incentivesPaymentsConditionsView(formWithErrors))),
-        data => {
-          val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(incentivesPaymentsConditionsDetails = Some(data)))
-          session.saveOrUpdate(updatedData)
-          Future.successful(Redirect(navigator.nextPage(IncentivesPaymentsConditionsId).apply(updatedData)))
-        }
-      )
+    continueOrSaveAsDraft[IncentivesPaymentsConditionsDetails](
+      incentivesPaymentsConditionsForm,
+      formWithErrors => BadRequest(incentivesPaymentsConditionsView(formWithErrors)),
+      data => {
+        val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(incentivesPaymentsConditionsDetails = Some(data)))
+        session.saveOrUpdate(updatedData)
+        Redirect(navigator.nextPage(IncentivesPaymentsConditionsId).apply(updatedData))
+      }
+    )
   }
+
 }

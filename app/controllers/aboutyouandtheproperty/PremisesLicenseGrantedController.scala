@@ -17,14 +17,15 @@
 package controllers.aboutyouandtheproperty
 
 import actions.WithSessionRefiner
+import controllers.FORDataCaptureController
 import form.aboutyouandtheproperty.PremisesLicenseGrantedForm.premisesLicenseGrantedForm
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty.updateAboutYouAndTheProperty
+import models.submissions.common.AnswersYesNo
 import navigation.AboutYouAndThePropertyNavigator
 import navigation.identifiers.PremisesLicenseGrantedId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.aboutyouandtheproperty.premisesLicenseGranted
 
 import javax.inject.{Inject, Named, Singleton}
@@ -37,7 +38,7 @@ class PremisesLicenseGrantedController @Inject() (
   premisesLicenseGrantedView: premisesLicenseGranted,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FrontendController(mcc)
+) extends FORDataCaptureController(mcc)
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
@@ -55,15 +56,15 @@ class PremisesLicenseGrantedController @Inject() (
   }
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    premisesLicenseGrantedForm
-      .bindFromRequest()
-      .fold(
-        formWithErrors => Future.successful(BadRequest(premisesLicenseGrantedView(formWithErrors))),
-        data => {
-          val updatedData = updateAboutYouAndTheProperty(_.copy(premisesLicenseGrantedDetail = Some(data)))
-          session.saveOrUpdate(updatedData)
-          Future.successful(Redirect(navigator.nextPage(PremisesLicenseGrantedId).apply(updatedData)))
-        }
-      )
+    continueOrSaveAsDraft[AnswersYesNo](
+      premisesLicenseGrantedForm,
+      formWithErrors => BadRequest(premisesLicenseGrantedView(formWithErrors)),
+      data => {
+        val updatedData = updateAboutYouAndTheProperty(_.copy(premisesLicenseGrantedDetail = Some(data)))
+        session.saveOrUpdate(updatedData)
+        Redirect(navigator.nextPage(PremisesLicenseGrantedId).apply(updatedData))
+      }
+    )
   }
+
 }

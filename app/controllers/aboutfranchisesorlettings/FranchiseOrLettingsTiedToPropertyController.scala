@@ -17,14 +17,15 @@
 package controllers.aboutfranchisesorlettings
 
 import actions.WithSessionRefiner
+import controllers.FORDataCaptureController
 import form.aboutfranchisesorlettings.FranchiseOrLettingsTiedToPropertyForm.franchiseOrLettingsTiedToPropertyForm
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
+import models.submissions.common.AnswersYesNo
 import navigation.AboutFranchisesOrLettingsNavigator
 import navigation.identifiers.FranchiseOrLettingsTiedToPropertyId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.aboutfranchisesorlettings.franchiseOrLettingsTiedToProperty
 
 import javax.inject.{Inject, Named, Singleton}
@@ -37,7 +38,7 @@ class FranchiseOrLettingsTiedToPropertyController @Inject() (
   franchiseOrLettingsTiedToPropertyView: franchiseOrLettingsTiedToProperty,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FrontendController(mcc)
+) extends FORDataCaptureController(mcc)
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
@@ -56,21 +57,18 @@ class FranchiseOrLettingsTiedToPropertyController @Inject() (
   }
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
-    franchiseOrLettingsTiedToPropertyForm
-      .bindFromRequest()
-      .fold(
-        formWithErrors =>
-          Future.successful(
-            BadRequest(
-              franchiseOrLettingsTiedToPropertyView(formWithErrors, request.sessionData.forType)
-            )
-          ),
-        data => {
-          val updatedData = updateAboutFranchisesOrLettings(_.copy(franchisesOrLettingsTiedToProperty = Some(data)))
-          session.saveOrUpdate(updatedData)
-          Future.successful(Redirect(navigator.nextPage(FranchiseOrLettingsTiedToPropertyId).apply(updatedData)))
-        }
-      )
+    continueOrSaveAsDraft[AnswersYesNo](
+      franchiseOrLettingsTiedToPropertyForm,
+      formWithErrors =>
+        BadRequest(
+          franchiseOrLettingsTiedToPropertyView(formWithErrors, request.sessionData.forType)
+        ),
+      data => {
+        val updatedData = updateAboutFranchisesOrLettings(_.copy(franchisesOrLettingsTiedToProperty = Some(data)))
+        session.saveOrUpdate(updatedData)
+        Redirect(navigator.nextPage(FranchiseOrLettingsTiedToPropertyId).apply(updatedData))
+      }
+    )
   }
 
 }

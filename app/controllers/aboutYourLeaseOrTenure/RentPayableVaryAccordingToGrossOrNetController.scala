@@ -17,14 +17,15 @@
 package controllers.aboutYourLeaseOrTenure
 
 import actions.WithSessionRefiner
+import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.RentPayableVaryAccordingToGrossOrNetForm.rentPayableVaryAccordingToGrossOrNetForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo.updateAboutLeaseOrAgreementPartTwo
+import models.submissions.aboutYourLeaseOrTenure.RentPayableVaryAccordingToGrossOrNetDetails
 import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.RentPayableVaryAccordingToGrossOrNetId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.aboutYourLeaseOrTenure.rentPayableVaryAccordingToGrossOrNet
 
 import javax.inject.{Inject, Named, Singleton}
@@ -37,7 +38,7 @@ class RentPayableVaryAccordingToGrossOrNetController @Inject() (
   rentPayableVaryAccordingToGrossOrNetView: rentPayableVaryAccordingToGrossOrNet,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FrontendController(mcc)
+) extends FORDataCaptureController(mcc)
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
@@ -56,16 +57,16 @@ class RentPayableVaryAccordingToGrossOrNetController @Inject() (
   }
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
-    rentPayableVaryAccordingToGrossOrNetForm
-      .bindFromRequest()
-      .fold(
-        formWithErrors => Future.successful(BadRequest(rentPayableVaryAccordingToGrossOrNetView(formWithErrors))),
-        data => {
-          val updatedData =
-            updateAboutLeaseOrAgreementPartTwo(_.copy(rentPayableVaryAccordingToGrossOrNetDetails = Some(data)))
-          session.saveOrUpdate(updatedData)
-          Future.successful(Redirect(navigator.nextPage(RentPayableVaryAccordingToGrossOrNetId).apply(updatedData)))
-        }
-      )
+    continueOrSaveAsDraft[RentPayableVaryAccordingToGrossOrNetDetails](
+      rentPayableVaryAccordingToGrossOrNetForm,
+      formWithErrors => BadRequest(rentPayableVaryAccordingToGrossOrNetView(formWithErrors)),
+      data => {
+        val updatedData =
+          updateAboutLeaseOrAgreementPartTwo(_.copy(rentPayableVaryAccordingToGrossOrNetDetails = Some(data)))
+        session.saveOrUpdate(updatedData)
+        Redirect(navigator.nextPage(RentPayableVaryAccordingToGrossOrNetId).apply(updatedData))
+      }
+    )
   }
+
 }

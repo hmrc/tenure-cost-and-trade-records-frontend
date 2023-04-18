@@ -17,18 +17,18 @@
 package controllers.aboutfranchisesorlettings
 
 import actions.WithSessionRefiner
+import controllers.FORDataCaptureController
 import form.aboutfranchisesorlettings.CateringOperationForm.cateringOperationForm
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
+import models.submissions.common.AnswersYesNo
 import navigation.AboutFranchisesOrLettingsNavigator
 import navigation.identifiers.CateringOperationPageId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.aboutfranchisesorlettings.cateringOperationOrLettingAccommodation
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.Future
 
 @Singleton
 class CateringOperationController @Inject() (
@@ -37,7 +37,7 @@ class CateringOperationController @Inject() (
   cateringOperationOrLettingAccommodationView: cateringOperationOrLettingAccommodation,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FrontendController(mcc)
+) extends FORDataCaptureController(mcc)
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
@@ -55,26 +55,23 @@ class CateringOperationController @Inject() (
   }
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
-    cateringOperationForm
-      .bindFromRequest()
-      .fold(
-        formWithErrors =>
-          Future.successful(
-            BadRequest(
-              cateringOperationOrLettingAccommodationView(
-                formWithErrors,
-                "cateringOperationOrLettingAccommodation",
-                controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show().url
-              )
-            )
-          ),
-        data => {
-          val updatedData =
-            updateAboutFranchisesOrLettings(_.copy(cateringConcessionOrFranchise = Some(data)))
-          session.saveOrUpdate(updatedData)
-          Future.successful(Redirect(navigator.nextPage(CateringOperationPageId).apply(updatedData)))
-        }
-      )
+    continueOrSaveAsDraft[AnswersYesNo](
+      cateringOperationForm,
+      formWithErrors =>
+        BadRequest(
+          cateringOperationOrLettingAccommodationView(
+            formWithErrors,
+            "cateringOperationOrLettingAccommodation",
+            controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show().url
+          )
+        ),
+      data => {
+        val updatedData =
+          updateAboutFranchisesOrLettings(_.copy(cateringConcessionOrFranchise = Some(data)))
+        session.saveOrUpdate(updatedData)
+        Redirect(navigator.nextPage(CateringOperationPageId).apply(updatedData))
+      }
+    )
   }
 
 }

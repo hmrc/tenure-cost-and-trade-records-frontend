@@ -20,22 +20,22 @@ import form.aboutyouandtheproperty.EnforcementActionDetailsForm
 import models.submissions.aboutyouandtheproperty.EnforcementActionHasBeenTakenInformationDetails
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
+import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
 
 class EnforcementActionBeenTakenDetailsViewSpec
     extends QuestionViewBehaviours[EnforcementActionHasBeenTakenInformationDetails] {
 
-  def enforcemenntActionBeenTakenDetails =
-    app.injector.instanceOf[views.html.aboutyouandtheproperty.enforcementActionBeenTakenDetails]
-
   val messageKeyPrefix = "enforcementActionHasBeenTakenDetails"
 
-  override val form = EnforcementActionDetailsForm.enforcementActionDetailsForm
+  override val form: Form[EnforcementActionHasBeenTakenInformationDetails] =
+    EnforcementActionDetailsForm.enforcementActionDetailsForm
 
-  def createView = () => enforcemenntActionBeenTakenDetails(form)(fakeRequest, messages)
+  def createView: () => Html = () => enforcemenntActionBeenTakenDetailsView(form)(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[EnforcementActionHasBeenTakenInformationDetails]) =>
-    enforcemenntActionBeenTakenDetails(form)(fakeRequest, messages)
+  def createViewUsingForm: Form[EnforcementActionHasBeenTakenInformationDetails] => Html =
+    (form: Form[EnforcementActionHasBeenTakenInformationDetails]) =>
+      enforcemenntActionBeenTakenDetailsView(form)(fakeRequest, messages)
 
   "Enforcement action taken details view" must {
 
@@ -50,15 +50,36 @@ class EnforcementActionBeenTakenDetailsViewSpec
     }
 
     "Section heading is visible" in {
-      val doc         = asDocument(createViewUsingForm(form)) // govuk-caption-m
+      val doc         = asDocument(createViewUsingForm(form))
       val sectionText = doc.getElementsByClass("govuk-caption-m").text()
       assert(sectionText == messages("label.section.aboutTheProperty"))
+    }
+
+    "contain an input for enforcementActionHasBeenTakenDetails" in {
+      val doc = asDocument(createViewUsingForm(form))
+      assertRenderedById(doc, "enforcementActionHasBeenTakenDetails")
     }
 
     "contain save and continue button with the value Save and Continue" in {
       val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("continue").text()
       assert(loginButton == messages("button.label.continue"))
+    }
+
+    "contain save as draft button with the value Save as draft" in {
+      val doc         = asDocument(createViewUsingForm(form))
+      val loginButton = doc.getElementById("save").text()
+      assert(loginButton == messages("button.label.save"))
+    }
+
+    "contain get help section" in {
+      val doc = asDocument(createView())
+      assert(doc.toString.contains(messages("help.enforcementActionHasBeenTakenDetails.title")))
+      assert(doc.toString.contains(messages("help.enforcementActionHasBeenTakenDetails.heading")))
+      assert(doc.toString.contains(messages("help.enforcementActionHasBeenTakenDetails.p1")))
+      assert(doc.toString.contains(messages("help.enforcementActionHasBeenTakenDetails.list.p1")))
+      assert(doc.toString.contains(messages("help.enforcementActionHasBeenTakenDetails.list.p2")))
+      assert(doc.toString.contains(messages("help.enforcementActionHasBeenTakenDetails.list.p3")))
     }
   }
 }

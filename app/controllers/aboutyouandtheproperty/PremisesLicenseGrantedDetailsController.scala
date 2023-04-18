@@ -17,14 +17,15 @@
 package controllers.aboutyouandtheproperty
 
 import actions.WithSessionRefiner
+import controllers.FORDataCaptureController
 import form.aboutyouandtheproperty.PremisesLicenseGrantedDetailsForm.premisesLicenseGrantedInformationDetailsForm
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty.updateAboutYouAndTheProperty
+import models.submissions.aboutyouandtheproperty.PremisesLicenseGrantedInformationDetails
 import navigation.AboutYouAndThePropertyNavigator
 import navigation.identifiers.PremisesLicenseGrantedDetailsId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.aboutyouandtheproperty.premisesLicenseGrantedDetails
 
 import javax.inject.{Inject, Named, Singleton}
@@ -37,7 +38,7 @@ class PremisesLicenseGrantedDetailsController @Inject() (
   premisesLicenseGrantedDetailsView: premisesLicenseGrantedDetails,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FrontendController(mcc)
+) extends FORDataCaptureController(mcc)
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
@@ -55,15 +56,15 @@ class PremisesLicenseGrantedDetailsController @Inject() (
   }
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    premisesLicenseGrantedInformationDetailsForm
-      .bindFromRequest()
-      .fold(
-        formWithErrors => Future.successful(BadRequest(premisesLicenseGrantedDetailsView(formWithErrors))),
-        data => {
-          val updatedData = updateAboutYouAndTheProperty(_.copy(premisesLicenseGrantedInformationDetails = Some(data)))
-          session.saveOrUpdate(updatedData)
-          Future.successful(Redirect(navigator.nextPage(PremisesLicenseGrantedDetailsId).apply(request.sessionData)))
-        }
-      )
+    continueOrSaveAsDraft[PremisesLicenseGrantedInformationDetails](
+      premisesLicenseGrantedInformationDetailsForm,
+      formWithErrors => BadRequest(premisesLicenseGrantedDetailsView(formWithErrors)),
+      data => {
+        val updatedData = updateAboutYouAndTheProperty(_.copy(premisesLicenseGrantedInformationDetails = Some(data)))
+        session.saveOrUpdate(updatedData)
+        Redirect(navigator.nextPage(PremisesLicenseGrantedDetailsId).apply(updatedData))
+      }
+    )
   }
+
 }

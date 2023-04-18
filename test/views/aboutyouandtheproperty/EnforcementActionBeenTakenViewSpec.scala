@@ -17,33 +17,30 @@
 package views.aboutyouandtheproperty
 
 import form.aboutyouandtheproperty.EnforcementActionForm
-import models.submissions.aboutyouandtheproperty.EnforcementActionsYes
-import models.submissions.aboutyouandtheproperty.{EnforcementAction, EnforcementActionsNo}
+import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
+import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
 
-class EnforcementActionBeenTakenViewSpec extends QuestionViewBehaviours[EnforcementAction] {
-
-  def enforcementActionsTakenView =
-    app.injector.instanceOf[views.html.aboutyouandtheproperty.enforcementActionBeenTaken]
+class EnforcementActionBeenTakenViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
 
   val messageKeyPrefix = "enforcementActionHasBeenTaken"
 
-  override val form = EnforcementActionForm.enforcementActionForm
+  override val form: Form[AnswersYesNo] = EnforcementActionForm.enforcementActionForm
 
-  val backLink = controllers.aboutyouandtheproperty.routes.PremisesLicenseConditionsController.show().url
+  val backLink: String = controllers.aboutyouandtheproperty.routes.PremisesLicenseConditionsController.show().url
 
-  def createView = () => enforcementActionsTakenView(form, backLink)(fakeRequest, messages)
+  def createView: () => Html = () => enforcementActionsTakenView(form, backLink)(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[EnforcementAction]) =>
+  def createViewUsingForm: Form[AnswersYesNo] => Html = (form: Form[AnswersYesNo]) =>
     enforcementActionsTakenView(form, backLink)(fakeRequest, messages)
 
   "Enforcement Action view" must {
 
     behave like normalPage(createView, messageKeyPrefix)
 
-    "has a link marked with back.link.label leading to the website for property Page" in {
+    "has a link marked with back.link.label leading to premises license conditions Page" in {
       val doc          = asDocument(createView())
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText mustBe messages("back.link.label")
@@ -52,7 +49,7 @@ class EnforcementActionBeenTakenViewSpec extends QuestionViewBehaviours[Enforcem
     }
 
     "Section heading is visible" in {
-      val doc         = asDocument(createViewUsingForm(form)) // govuk-caption-m
+      val doc         = asDocument(createViewUsingForm(form))
       val sectionText = doc.getElementsByClass("govuk-caption-m").text()
       assert(sectionText == messages("label.section.aboutTheProperty"))
     }
@@ -63,8 +60,8 @@ class EnforcementActionBeenTakenViewSpec extends QuestionViewBehaviours[Enforcem
         doc,
         "enforcementAction",
         "enforcementAction",
-        EnforcementActionsYes.name,
-        false
+        AnswerYes.name,
+        isChecked = false
       )
       assertContainsText(doc, messages("label.yes"))
     }
@@ -75,8 +72,8 @@ class EnforcementActionBeenTakenViewSpec extends QuestionViewBehaviours[Enforcem
         doc,
         "enforcementAction-2",
         "enforcementAction",
-        EnforcementActionsNo.name,
-        false
+        AnswerNo.name,
+        isChecked = false
       )
       assertContainsText(doc, messages("label.no"))
     }
@@ -85,6 +82,19 @@ class EnforcementActionBeenTakenViewSpec extends QuestionViewBehaviours[Enforcem
       val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("continue").text()
       assert(loginButton == messages("button.label.continue"))
+    }
+
+    "contain save as draft button with the value Save as draft" in {
+      val doc         = asDocument(createViewUsingForm(form))
+      val loginButton = doc.getElementById("save").text()
+      assert(loginButton == messages("button.label.save"))
+    }
+
+    "contain get help section" in {
+      val doc = asDocument(createView())
+      assert(doc.toString.contains(messages("help.enforcementActionHasBeenTaken.title")))
+      assert(doc.toString.contains(messages("help.enforcementActionHasBeenTaken.heading")))
+      assert(doc.toString.contains(messages("help.enforcementActionHasBeenTaken.p1")))
     }
   }
 }

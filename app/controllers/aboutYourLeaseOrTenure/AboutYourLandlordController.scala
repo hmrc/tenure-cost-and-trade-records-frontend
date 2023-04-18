@@ -17,15 +17,17 @@
 package controllers.aboutYourLeaseOrTenure
 
 import actions.WithSessionRefiner
+import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.AboutTheLandlordForm.aboutTheLandlordForm
 import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.AboutTheLandlordPageId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.aboutYourLeaseOrTenure.aboutYourLandlord
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne
+import models.submissions.aboutYourLeaseOrTenure.AboutTheLandlord
+
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
 
@@ -36,7 +38,7 @@ class AboutYourLandlordController @Inject() (
   aboutYourLandlordView: aboutYourLandlord,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FrontendController(mcc)
+) extends FORDataCaptureController(mcc)
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
@@ -53,16 +55,15 @@ class AboutYourLandlordController @Inject() (
   }
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
-    aboutTheLandlordForm
-      .bindFromRequest()
-      .fold(
-        formWithErrors => Future.successful(BadRequest(aboutYourLandlordView(formWithErrors))),
-        data => {
-          val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(aboutTheLandlord = Some(data)))
-          session.saveOrUpdate(updatedData)
-          Future.successful(Redirect(navigator.nextPage(AboutTheLandlordPageId).apply(request.sessionData)))
-        }
-      )
+    continueOrSaveAsDraft[AboutTheLandlord](
+      aboutTheLandlordForm,
+      formWithErrors => BadRequest(aboutYourLandlordView(formWithErrors)),
+      data => {
+        val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(aboutTheLandlord = Some(data)))
+        session.saveOrUpdate(updatedData)
+        Redirect(navigator.nextPage(AboutTheLandlordPageId).apply(request.sessionData))
+      }
+    )
   }
 
 }

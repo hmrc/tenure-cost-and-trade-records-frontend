@@ -20,21 +20,20 @@ import form.aboutyouandtheproperty.LicensableActivitiesInformationForm
 import models.submissions.aboutyouandtheproperty.LicensableActivitiesInformationDetails
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
+import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
 
 class LicenceActivitiesDetailsViewSpec extends QuestionViewBehaviours[LicensableActivitiesInformationDetails] {
 
-  def licensableActivitiesDetailsView =
-    app.injector.instanceOf[views.html.aboutyouandtheproperty.licensableActivitiesDetails]
-
   val messageKeyPrefix = "licensableActivitiesDetails"
 
-  override val form = LicensableActivitiesInformationForm.licensableActivitiesDetailsForm
+  override val form: Form[LicensableActivitiesInformationDetails] =
+    LicensableActivitiesInformationForm.licensableActivitiesDetailsForm
 
-  def createView = () => licensableActivitiesDetailsView(form)(fakeRequest, messages)
+  def createView: () => Html = () => licensableActivitiesDetailsView(form)(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[LicensableActivitiesInformationDetails]) =>
-    licensableActivitiesDetailsView(form)(fakeRequest, messages)
+  def createViewUsingForm: Form[LicensableActivitiesInformationDetails] => Html =
+    (form: Form[LicensableActivitiesInformationDetails]) => licensableActivitiesDetailsView(form)(fakeRequest, messages)
 
   "Licence Activities details view" must {
 
@@ -49,15 +48,36 @@ class LicenceActivitiesDetailsViewSpec extends QuestionViewBehaviours[Licensable
     }
 
     "Section heading is visible" in {
-      val doc         = asDocument(createViewUsingForm(form)) // govuk-caption-m
+      val doc         = asDocument(createViewUsingForm(form))
       val sectionText = doc.getElementsByClass("govuk-caption-m").text()
       assert(sectionText == messages("label.section.aboutTheProperty"))
+    }
+
+    "contain an input for licensableActivitiesDetails" in {
+      val doc = asDocument(createViewUsingForm(form))
+      assertRenderedById(doc, "licensableActivitiesDetails")
     }
 
     "contain save and continue button with the value Save and Continue" in {
       val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("continue").text()
       assert(loginButton == messages("button.label.continue"))
+    }
+
+    "contain save as draft button with the value Save as draft" in {
+      val doc         = asDocument(createViewUsingForm(form))
+      val loginButton = doc.getElementById("save").text()
+      assert(loginButton == messages("button.label.save"))
+    }
+
+    "contain get help section" in {
+      val doc = asDocument(createView())
+      assert(doc.toString.contains(messages("help.licensableActivitiesDetails.title")))
+      assert(doc.toString.contains(messages("help.licensableActivitiesDetails.heading")))
+      assert(doc.toString.contains(messages("help.licensableActivitiesDetails.p1")))
+      assert(doc.toString.contains(messages("help.licensableActivitiesDetails.list.p1")))
+      assert(doc.toString.contains(messages("help.licensableActivitiesDetails.list.p2")))
+      assert(doc.toString.contains(messages("help.licensableActivitiesDetails.list.p3")))
     }
   }
 }

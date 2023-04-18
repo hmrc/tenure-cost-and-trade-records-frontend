@@ -17,11 +17,12 @@
 package controllers.Form6010
 
 import actions.WithSessionRefiner
+import controllers.FORDataCaptureController
 import controllers.LoginController.loginForm
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.form.tenancyLeaseAgreement
 import form.Form6010.TenancyLeaseAgreementForm.tenancyLeaseAgreementForm
+import models.submissions.Form6010.TenancyLeaseAgreementDetails
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo.updateAboutLeaseOrAgreementPartTwo
 import play.api.i18n.I18nSupport
 import repositories.SessionRepo
@@ -37,7 +38,7 @@ class TenancyLeaseAgreementController @Inject() (
   tenancyLeaseAgreementView: tenancyLeaseAgreement,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FrontendController(mcc)
+) extends FORDataCaptureController(mcc)
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
@@ -54,16 +55,15 @@ class TenancyLeaseAgreementController @Inject() (
   }
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
-    tenancyLeaseAgreementForm
-      .bindFromRequest()
-      .fold(
-        formWithErrors => Future.successful(BadRequest(tenancyLeaseAgreementView(formWithErrors))),
-        data => {
-          val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(tenancyLeaseAgreementDetails = Some(data)))
-          session.saveOrUpdate(updatedData)
-          Future.successful(Ok(login(loginForm)))
-        }
-      )
+    continueOrSaveAsDraft[TenancyLeaseAgreementDetails](
+      tenancyLeaseAgreementForm,
+      formWithErrors => BadRequest(tenancyLeaseAgreementView(formWithErrors)),
+      data => {
+        val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(tenancyLeaseAgreementDetails = Some(data)))
+        session.saveOrUpdate(updatedData)
+        Ok(login(loginForm))
+      }
+    )
   }
 
 }

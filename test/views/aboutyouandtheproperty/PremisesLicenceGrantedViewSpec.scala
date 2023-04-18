@@ -82,6 +82,12 @@ class PremisesLicenceGrantedViewSpec extends QuestionViewBehaviours[AnswersYesNo
       assert(loginButton == messages("button.label.continue"))
     }
 
+    "contain save as draft button with the value Save as draft" in {
+      val doc         = asDocument(createViewUsingForm(form))
+      val loginButton = doc.getElementById("save").text()
+      assert(loginButton == messages("button.label.save"))
+    }
+
     "contain get help section" in {
       val doc = asDocument(createView())
       assert(doc.toString.contains(messages("help.premisesLicenseGranted.title")))

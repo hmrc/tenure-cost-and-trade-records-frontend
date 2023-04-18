@@ -17,17 +17,17 @@
 package controllers.aboutthetradinghistory
 
 import actions.WithSessionRefiner
+import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.OtherCostsForm.otherCostsForm
+import models.submissions.aboutthetradinghistory.OtherCosts
 import navigation.AboutTheTradingHistoryNavigator
 import navigation.identifiers.OtherCostsId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.aboutthetradinghistory.otherCosts
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.Future
 
 @Singleton
 class OtherCostsController @Inject() (
@@ -36,7 +36,7 @@ class OtherCostsController @Inject() (
   otherCostsView: otherCosts,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FrontendController(mcc)
+) extends FORDataCaptureController(mcc)
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
@@ -51,15 +51,14 @@ class OtherCostsController @Inject() (
   }
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
-    otherCostsForm
-      .bindFromRequest()
-      .fold(
-        formWithErrors => Future.successful(BadRequest(otherCostsView(formWithErrors))),
-        data => {
-          val updatedData = request.sessionData
-          Future.successful(Redirect(navigator.nextPage(OtherCostsId).apply(updatedData)))
-        }
-      )
+    continueOrSaveAsDraft[OtherCosts](
+      otherCostsForm,
+      formWithErrors => BadRequest(otherCostsView(formWithErrors)),
+      data => {
+        val updatedData = request.sessionData
+        Redirect(navigator.nextPage(OtherCostsId).apply(updatedData))
+      }
+    )
   }
 
 }

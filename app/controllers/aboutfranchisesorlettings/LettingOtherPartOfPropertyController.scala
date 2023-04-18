@@ -17,16 +17,17 @@
 package controllers.aboutfranchisesorlettings
 
 import actions.WithSessionRefiner
+import controllers.FORDataCaptureController
 import form.aboutfranchisesorlettings.LettingOtherPartOfPropertiesForm.lettingOtherPartOfPropertiesForm
 import models.{ForTypes, Session}
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
+import models.submissions.common.AnswersYesNo
 import navigation.AboutFranchisesOrLettingsNavigator
 import navigation.identifiers.LettingAccommodationPageId
 import play.api.i18n.I18nSupport
 import play.api.i18n.Lang.logger
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.aboutfranchisesorlettings.cateringOperationOrLettingAccommodation
 
 import javax.inject.{Inject, Named, Singleton}
@@ -39,7 +40,7 @@ class LettingOtherPartOfPropertyController @Inject() (
   cateringOperationOrLettingAccommodationView: cateringOperationOrLettingAccommodation,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FrontendController(mcc)
+) extends FORDataCaptureController(mcc)
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
@@ -66,32 +67,29 @@ class LettingOtherPartOfPropertyController @Inject() (
   }
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
-    lettingOtherPartOfPropertiesForm
-      .bindFromRequest()
-      .fold(
-        formWithErrors =>
-          Future.successful(
-            BadRequest(
-              cateringOperationOrLettingAccommodationView(
-                formWithErrors,
-                "lettingOtherPartOfProperties",
-                getBackLink(request.sessionData) match {
-                  case Right(link) => link
-                  case Left(msg)   =>
-                    logger.warn(s"Navigation for letting other part of property page reached with error: $msg")
-                    throw new RuntimeException(
-                      s"Navigation for letting other part of property page reached with error $msg"
-                    )
-                }
-              )
-            )
-          ),
-        data => {
-          val updatedData = updateAboutFranchisesOrLettings(_.copy(lettingOtherPartOfProperty = Some(data)))
-          session.saveOrUpdate(updatedData)
-          Future.successful(Redirect(navigator.nextPage(LettingAccommodationPageId).apply(updatedData)))
-        }
-      )
+    continueOrSaveAsDraft[AnswersYesNo](
+      lettingOtherPartOfPropertiesForm,
+      formWithErrors =>
+        BadRequest(
+          cateringOperationOrLettingAccommodationView(
+            formWithErrors,
+            "lettingOtherPartOfProperties",
+            getBackLink(request.sessionData) match {
+              case Right(link) => link
+              case Left(msg)   =>
+                logger.warn(s"Navigation for letting other part of property page reached with error: $msg")
+                throw new RuntimeException(
+                  s"Navigation for letting other part of property page reached with error $msg"
+                )
+            }
+          )
+        ),
+      data => {
+        val updatedData = updateAboutFranchisesOrLettings(_.copy(lettingOtherPartOfProperty = Some(data)))
+        session.saveOrUpdate(updatedData)
+        Redirect(navigator.nextPage(LettingAccommodationPageId).apply(updatedData))
+      }
+    )
   }
 
   private def getBackLink(answers: Session): Either[String, String] =

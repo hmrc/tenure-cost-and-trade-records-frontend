@@ -27,13 +27,13 @@ case class AboutYouAndTheProperty(
   websiteForPropertyDetails: Option[WebsiteForPropertyDetails] = None,
   premisesLicenseGrantedDetail: Option[AnswersYesNo] = None,
   premisesLicenseGrantedInformationDetails: Option[PremisesLicenseGrantedInformationDetails] = None,
-  licensableActivities: Option[LicensableActivities] = None,
+  licensableActivities: Option[AnswersYesNo] = None,
   licensableActivitiesInformationDetails: Option[LicensableActivitiesInformationDetails] = None,
-  premisesLicenseConditions: Option[PremisesLicenseConditions] = None,
+  premisesLicenseConditions: Option[AnswersYesNo] = None,
   premisesLicenseConditionsDetails: Option[PremisesLicenseConditionsDetails] = None,
-  enforcementAction: Option[EnforcementAction] = None,
+  enforcementAction: Option[AnswersYesNo] = None,
   enforcementActionHasBeenTakenInformationDetails: Option[EnforcementActionHasBeenTakenInformationDetails] = None,
-  tiedForGoods: Option[TiedForGoods] = None,
+  tiedForGoods: Option[AnswersYesNo] = None,
   tiedForGoodsDetails: Option[TiedForGoodsInformationDetails] = None,
   checkYourAnswersAboutTheProperty: Option[CheckYourAnswersAboutYourProperty] = None
 )

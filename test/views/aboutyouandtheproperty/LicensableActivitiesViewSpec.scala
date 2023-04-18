@@ -17,22 +17,22 @@
 package views.aboutyouandtheproperty
 
 import form.aboutyouandtheproperty.LicensableActivitiesForm
-import models.submissions.aboutyouandtheproperty.{BuildingOperationHaveAWebsiteNo, BuildingOperationHaveAWebsiteYes, LicensableActivities}
+import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
+import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
 
-class LicensableActivitiesViewSpec extends QuestionViewBehaviours[LicensableActivities] {
-
-  def licencableActivitiesView = app.injector.instanceOf[views.html.aboutyouandtheproperty.licensableActivities]
+class LicensableActivitiesViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
 
   val messageKeyPrefix = "licensableActivities"
 
-  override val form = LicensableActivitiesForm.licensableActivitiesForm
+  override val form: Form[AnswersYesNo] = LicensableActivitiesForm.licensableActivitiesForm
 
-  def createView = () => licencableActivitiesView(form)(fakeRequest, messages)
+  def createView: () => Html = () => licensableActivitiesView(form)(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[LicensableActivities]) => licencableActivitiesView(form)(fakeRequest, messages)
+  def createViewUsingForm: Form[AnswersYesNo] => Html = (form: Form[AnswersYesNo]) =>
+    licensableActivitiesView(form)(fakeRequest, messages)
 
   "Property licence activities view" must {
 
@@ -47,7 +47,7 @@ class LicensableActivitiesViewSpec extends QuestionViewBehaviours[LicensableActi
     }
 
     "Section heading is visible" in {
-      val doc         = asDocument(createViewUsingForm(form)) // govuk-caption-m
+      val doc         = asDocument(createViewUsingForm(form))
       val sectionText = doc.getElementsByClass("govuk-caption-m").text()
       assert(sectionText == messages("label.section.aboutTheProperty"))
     }
@@ -58,8 +58,8 @@ class LicensableActivitiesViewSpec extends QuestionViewBehaviours[LicensableActi
         doc,
         "licensableActivities",
         "licensableActivities",
-        BuildingOperationHaveAWebsiteYes.name,
-        false
+        AnswerYes.name,
+        isChecked = false
       )
       assertContainsText(doc, messages("label.yes"))
     }
@@ -70,8 +70,8 @@ class LicensableActivitiesViewSpec extends QuestionViewBehaviours[LicensableActi
         doc,
         "licensableActivities-2",
         "licensableActivities",
-        BuildingOperationHaveAWebsiteNo.name,
-        false
+        AnswerNo.name,
+        isChecked = false
       )
       assertContainsText(doc, messages("label.no"))
     }
@@ -80,6 +80,33 @@ class LicensableActivitiesViewSpec extends QuestionViewBehaviours[LicensableActi
       val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("continue").text()
       assert(loginButton == messages("button.label.continue"))
+    }
+
+    "contain save as draft button with the value Save as draft" in {
+      val doc         = asDocument(createViewUsingForm(form))
+      val loginButton = doc.getElementById("save").text()
+      assert(loginButton == messages("button.label.save"))
+    }
+
+    "contain get help section" in {
+      val doc = asDocument(createView())
+      assert(doc.toString.contains(messages("help.licensableActivities.title")))
+      assert(doc.toString.contains(messages("help.licensableActivities.heading")))
+      assert(doc.toString.contains(messages("help.licensableActivities.p1")))
+      assert(doc.toString.contains(messages("help.licensableActivities.list1.p1")))
+      assert(doc.toString.contains(messages("help.licensableActivities.list1.p2")))
+      assert(doc.toString.contains(messages("help.licensableActivities.list1.p3")))
+      assert(doc.toString.contains(messages("help.licensableActivities.list1.p4")))
+      assert(doc.toString.contains(messages("help.licensableActivities.p2")))
+      assert(doc.toString.contains(messages("help.licensableActivities.p3")))
+      assert(doc.toString.contains(messages("help.licensableActivities.p4")))
+      assert(doc.toString.contains(messages("help.licensableActivities.list2.p1")))
+      assert(doc.toString.contains(messages("help.licensableActivities.list2.p2")))
+      assert(doc.toString.contains(messages("help.licensableActivities.list2.p3")))
+      assert(doc.toString.contains(messages("help.licensableActivities.list2.p4")))
+      assert(doc.toString.contains(messages("help.licensableActivities.list2.p5")))
+      assert(doc.toString.contains(messages("help.licensableActivities.list2.p6")))
+      assert(doc.toString.contains(messages("help.licensableActivities.list2.p7")))
     }
   }
 }

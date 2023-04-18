@@ -17,14 +17,15 @@
 package controllers.notconnected
 
 import actions.WithSessionRefiner
+import controllers.FORDataCaptureController
 import form.notconnected.RemoveConnectionForm.removeConnectionForm
 import models.submissions.notconnected.RemoveConnectionDetails.updateRemoveConnectionDetails
+import models.submissions.notconnected.RemoveConnectionsDetails
 import play.api.i18n.I18nSupport
 import navigation.RemoveConnectionNavigator
 import navigation.identifiers.RemoveConnectionId
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.notconnected.removeConnection
 
 import javax.inject.{Inject, Named, Singleton}
@@ -37,7 +38,7 @@ class RemoveConnectionController @Inject() (
   removeConnectionView: removeConnection,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FrontendController(mcc)
+) extends FORDataCaptureController(mcc)
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
@@ -54,16 +55,15 @@ class RemoveConnectionController @Inject() (
   }
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
-    removeConnectionForm
-      .bindFromRequest()
-      .fold(
-        formWithErrors => Future.successful(BadRequest(removeConnectionView(formWithErrors))),
-        data => {
-          val updatedData = updateRemoveConnectionDetails(_.copy(removeConnectionDetails = Some(data)))
-          session.saveOrUpdate(updatedData)
-          Future.successful(Redirect(navigator.nextPage(RemoveConnectionId).apply(updatedData)))
-        }
-      )
+    continueOrSaveAsDraft[RemoveConnectionsDetails](
+      removeConnectionForm,
+      formWithErrors => BadRequest(removeConnectionView(formWithErrors)),
+      data => {
+        val updatedData = updateRemoveConnectionDetails(_.copy(removeConnectionDetails = Some(data)))
+        session.saveOrUpdate(updatedData)
+        Redirect(navigator.nextPage(RemoveConnectionId).apply(updatedData))
+      }
+    )
   }
 
 }

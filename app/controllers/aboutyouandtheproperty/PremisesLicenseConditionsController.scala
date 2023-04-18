@@ -17,16 +17,17 @@
 package controllers.aboutyouandtheproperty
 
 import actions.WithSessionRefiner
+import controllers.FORDataCaptureController
 import form.aboutyouandtheproperty.PremisesLicenseConditionsForm.premisesLicenseConditionsForm
 import models.Session
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty.updateAboutYouAndTheProperty
+import models.submissions.common.AnswersYesNo
 import navigation.AboutYouAndThePropertyNavigator
 import navigation.identifiers.PremisesLicenceConditionsPageId
 import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.aboutyouandtheproperty.premisesLicenseConditions
 
 import javax.inject.{Inject, Named, Singleton}
@@ -39,7 +40,7 @@ class PremisesLicenseConditionsController @Inject() (
   premisesLicenseView: premisesLicenseConditions,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FrontendController(mcc)
+) extends FORDataCaptureController(mcc)
     with I18nSupport
     with Logging {
 
@@ -58,17 +59,15 @@ class PremisesLicenseConditionsController @Inject() (
   }
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    premisesLicenseConditionsForm
-      .bindFromRequest()
-      .fold(
-        formWithErrors =>
-          Future.successful(BadRequest(premisesLicenseView(formWithErrors, getBackLink(request.sessionData)))),
-        data => {
-          val updatedData = updateAboutYouAndTheProperty(_.copy(premisesLicenseConditions = Some(data)))
-          session.saveOrUpdate(updatedData)
-          Future.successful(Redirect(navigator.nextPage(PremisesLicenceConditionsPageId).apply(updatedData)))
-        }
-      )
+    continueOrSaveAsDraft[AnswersYesNo](
+      premisesLicenseConditionsForm,
+      formWithErrors => BadRequest(premisesLicenseView(formWithErrors, getBackLink(request.sessionData))),
+      data => {
+        val updatedData = updateAboutYouAndTheProperty(_.copy(premisesLicenseConditions = Some(data)))
+        session.saveOrUpdate(updatedData)
+        Redirect(navigator.nextPage(PremisesLicenceConditionsPageId).apply(updatedData))
+      }
+    )
   }
 
   private def getBackLink(answers: Session): String =

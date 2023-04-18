@@ -17,14 +17,15 @@
 package controllers.aboutfranchisesorlettings
 
 import actions.WithSessionRefiner
+import controllers.FORDataCaptureController
 import form.aboutfranchisesorlettings.AddAnotherLettingOtherPartOfPropertyForm.addAnotherLettingForm
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
+import models.submissions.common.AnswersYesNo
 import navigation.AboutFranchisesOrLettingsNavigator
 import navigation.identifiers.AddAnotherLettingAccommodationPageId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.aboutfranchisesorlettings._
 
 import javax.inject.{Inject, Named, Singleton}
@@ -37,7 +38,7 @@ class AddAnotherLettingOtherPartOfPropertyController @Inject() (
   addAnotherCateringOperationOrLettingAccommodationView: addAnotherCateringOperationOrLettingAccommodation,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FrontendController(mcc)
+) extends FORDataCaptureController(mcc)
     with I18nSupport {
 
   def show(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
@@ -59,37 +60,33 @@ class AddAnotherLettingOtherPartOfPropertyController @Inject() (
   }
 
   def submit(index: Int) = (Action andThen withSessionRefiner).async { implicit request =>
-    addAnotherLettingForm
-      .bindFromRequest()
-      .fold(
-        formWithErrors =>
-          Future.successful(
-            BadRequest(
-              addAnotherCateringOperationOrLettingAccommodationView(
-                formWithErrors,
-                index,
-                "addAnotherLettingOtherPartOfProperty",
-                controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyRentIncludesController
-                  .show(index)
-                  .url
-              )
-            )
-          ),
-        data =>
-          request.sessionData.aboutFranchisesOrLettings.fold(
-            Future
-              .successful(Redirect(routes.LettingOtherPartOfPropertyRentIncludesController.show(index)))
-          ) { aboutFranchisesOrLettings =>
-            val existingSections = aboutFranchisesOrLettings.lettingSections
-            val updatedSections  = existingSections.updated(
-              index,
-              existingSections(index).copy(addAnotherLettingToProperty = Some(data))
-            )
-            val updatedData      = updateAboutFranchisesOrLettings(_.copy(lettingSections = updatedSections))
-            session.saveOrUpdate(updatedData)
-            Future.successful(Redirect(navigator.nextPage(AddAnotherLettingAccommodationPageId).apply(updatedData)))
-          }
-      )
+    continueOrSaveAsDraft[AnswersYesNo](
+      addAnotherLettingForm,
+      formWithErrors =>
+        BadRequest(
+          addAnotherCateringOperationOrLettingAccommodationView(
+            formWithErrors,
+            index,
+            "addAnotherLettingOtherPartOfProperty",
+            controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyRentIncludesController
+              .show(index)
+              .url
+          )
+        ),
+      data =>
+        request.sessionData.aboutFranchisesOrLettings.fold(
+          Redirect(routes.LettingOtherPartOfPropertyRentIncludesController.show(index))
+        ) { aboutFranchisesOrLettings =>
+          val existingSections = aboutFranchisesOrLettings.lettingSections
+          val updatedSections  = existingSections.updated(
+            index,
+            existingSections(index).copy(addAnotherLettingToProperty = Some(data))
+          )
+          val updatedData      = updateAboutFranchisesOrLettings(_.copy(lettingSections = updatedSections))
+          session.saveOrUpdate(updatedData)
+          Redirect(navigator.nextPage(AddAnotherLettingAccommodationPageId).apply(updatedData))
+        }
+    )
   }
 
 }

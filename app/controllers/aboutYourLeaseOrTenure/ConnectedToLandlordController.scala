@@ -17,15 +17,16 @@
 package controllers.aboutYourLeaseOrTenure
 
 import actions.WithSessionRefiner
+import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.ConnectedToLandlordForm.connectedToLandlordForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne
+import models.submissions.common.AnswersYesNo
 import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.ConnectedToLandlordPageId
 import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.aboutYourLeaseOrTenure.connectedToLandlord
 
 import javax.inject.{Inject, Named, Singleton}
@@ -38,7 +39,7 @@ class ConnectedToLandlordController @Inject() (
   connectedToLandlordView: connectedToLandlord,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FrontendController(mcc)
+) extends FORDataCaptureController(mcc)
     with I18nSupport
     with Logging {
 
@@ -57,15 +58,15 @@ class ConnectedToLandlordController @Inject() (
   }
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
-    connectedToLandlordForm
-      .bindFromRequest()
-      .fold(
-        formWithErrors => Future.successful(BadRequest(connectedToLandlordView(formWithErrors))),
-        data => {
-          val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(connectedToLandlord = Some(data)))
-          session.saveOrUpdate(updatedData)
-          Future.successful(Redirect(navigator.nextPage(ConnectedToLandlordPageId).apply(updatedData)))
-        }
-      )
+    continueOrSaveAsDraft[AnswersYesNo](
+      connectedToLandlordForm,
+      formWithErrors => BadRequest(connectedToLandlordView(formWithErrors)),
+      data => {
+        val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(connectedToLandlord = Some(data)))
+        session.saveOrUpdate(updatedData)
+        Redirect(navigator.nextPage(ConnectedToLandlordPageId).apply(updatedData))
+      }
+    )
   }
+
 }

@@ -49,16 +49,16 @@ class PremisesLicenseGrantedDetailsControllerSpec extends TestBaseSpec {
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
-  }
 
-  "SUBMIT /" should {
-    "throw a BAD_REQUEST if an empty form is submitted" in {
-      val res = premisesLicenseGrantedDetailsController().submit(FakeRequest().withFormUrlEncodedBody(Seq.empty: _*))
-      status(res) shouldBe BAD_REQUEST
+    "SUBMIT /" should {
+      "throw a BAD_REQUEST if an empty form is submitted" in {
+        val res = premisesLicenseGrantedDetailsController().submit(FakeRequest().withFormUrlEncodedBody(Seq.empty: _*))
+        status(res) shouldBe BAD_REQUEST
+      }
     }
   }
 
-  "Premises licence granted form" should {
+  "Premises licence granted details form" should {
     "error if choice is missing " in {
       val formData = baseFormData - errorKey.premisesLicenseGrantedInformation
       val form     = premisesLicenseGrantedInformationDetailsForm.bind(formData)

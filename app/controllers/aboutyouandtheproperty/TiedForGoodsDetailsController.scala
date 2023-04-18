@@ -17,14 +17,15 @@
 package controllers.aboutyouandtheproperty
 
 import actions.WithSessionRefiner
+import controllers.FORDataCaptureController
 import form.aboutyouandtheproperty.TiedForGoodsDetailsForm.tiedForGoodsDetailsForm
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty.updateAboutYouAndTheProperty
+import models.submissions.aboutyouandtheproperty.TiedForGoodsInformationDetails
 import navigation.AboutYouAndThePropertyNavigator
 import navigation.identifiers.TiedForGoodsDetailsPageId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.aboutyouandtheproperty.tiedForGoodsDetails
 
 import javax.inject.{Inject, Named, Singleton}
@@ -37,7 +38,7 @@ class TiedForGoodsDetailsController @Inject() (
   tiedForGoodsDetailsView: tiedForGoodsDetails,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FrontendController(mcc)
+) extends FORDataCaptureController(mcc)
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
@@ -54,16 +55,15 @@ class TiedForGoodsDetailsController @Inject() (
   }
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    tiedForGoodsDetailsForm
-      .bindFromRequest()
-      .fold(
-        formWithErrors => Future.successful(BadRequest(tiedForGoodsDetailsView(formWithErrors))),
-        data => {
-          val updatedData = updateAboutYouAndTheProperty(_.copy(tiedForGoodsDetails = Some(data)))
-          session.saveOrUpdate(updatedData)
-          Future.successful(Redirect(navigator.nextPage(TiedForGoodsDetailsPageId).apply(updatedData)))
-        }
-      )
+    continueOrSaveAsDraft[TiedForGoodsInformationDetails](
+      tiedForGoodsDetailsForm,
+      formWithErrors => BadRequest(tiedForGoodsDetailsView(formWithErrors)),
+      data => {
+        val updatedData = updateAboutYouAndTheProperty(_.copy(tiedForGoodsDetails = Some(data)))
+        session.saveOrUpdate(updatedData)
+        Redirect(navigator.nextPage(TiedForGoodsDetailsPageId).apply(updatedData))
+      }
+    )
   }
 
 }

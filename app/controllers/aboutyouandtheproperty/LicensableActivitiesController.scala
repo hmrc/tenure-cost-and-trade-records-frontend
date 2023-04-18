@@ -17,14 +17,15 @@
 package controllers.aboutyouandtheproperty
 
 import actions.WithSessionRefiner
+import controllers.FORDataCaptureController
 import form.aboutyouandtheproperty.LicensableActivitiesForm.licensableActivitiesForm
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty.updateAboutYouAndTheProperty
+import models.submissions.common.AnswersYesNo
 import navigation.AboutYouAndThePropertyNavigator
 import navigation.identifiers.LicensableActivityPageId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.aboutyouandtheproperty.licensableActivities
 
 import javax.inject.{Inject, Named, Singleton}
@@ -37,7 +38,7 @@ class LicensableActivitiesController @Inject() (
   licensableActivitiesView: licensableActivities,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FrontendController(mcc)
+) extends FORDataCaptureController(mcc)
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
@@ -54,16 +55,15 @@ class LicensableActivitiesController @Inject() (
   }
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    licensableActivitiesForm
-      .bindFromRequest()
-      .fold(
-        formWithErrors => Future.successful(BadRequest(licensableActivitiesView(formWithErrors))),
-        data => {
-          val updatedData = updateAboutYouAndTheProperty(_.copy(licensableActivities = Some(data)))
-          session.saveOrUpdate(updatedData)
-          Future.successful(Redirect(navigator.nextPage(LicensableActivityPageId).apply(updatedData)))
-        }
-      )
+    continueOrSaveAsDraft[AnswersYesNo](
+      licensableActivitiesForm,
+      formWithErrors => BadRequest(licensableActivitiesView(formWithErrors)),
+      data => {
+        val updatedData = updateAboutYouAndTheProperty(_.copy(licensableActivities = Some(data)))
+        session.saveOrUpdate(updatedData)
+        Redirect(navigator.nextPage(LicensableActivityPageId).apply(updatedData))
+      }
+    )
   }
 
 }

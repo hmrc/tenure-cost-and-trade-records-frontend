@@ -209,6 +209,96 @@ help.premisesLicenseGrantedInformation.list.p1 = No drinks allowed on the terrac
 help.premisesLicenseGrantedInformation.list.p2 = Only 200 people allowed in the function room at any time
 help.premisesLicenseGrantedInformation.list.p3 = No entry or re-entry allowed after 11.30pm on Fridays or Saturdays
 
+# LICENSABLE ACTIVITIES
+#######################
+licensableActivities.heading = Do licensable activities regularly commence before 10:00 or after 23:30 on any day of the week?
+hint.licensableActivities= Licensable activities could include, selling alcohol, selling food and refreshments, or providing live entertainment
+help.licensableActivities.title = Help with licensable activities
+help.licensableActivities.heading = Licensable activities
+help.licensableActivities.p1 = The Licensing Act, 2003 defines licensable activities as:
+help.licensableActivities.list1.p1 = the retail sale of alcohol
+help.licensableActivities.list1.p2 = the supply of alcohol in clubs
+help.licensableActivities.list1.p3 = the provision of lat-night refreshment
+help.licensableActivities.list1.p4 = the provision of regulated entertainment
+help.licensableActivities.p2 = In this instancee, ’clubs’ is a cover-all term covering establishment categories covered by this form.
+help.licensableActivities.p3 = ’Late-night refreshment’ is defined as the supply of hot food and drink to the public for consumption between 23:00 and 05:00.
+help.licensableActivities.p4 = ’Regulated entertainment’ is defined as:
+help.licensableActivities.list2.p1 = a performance of a play
+help.licensableActivities.list2.p2 = showing a film
+help.licensableActivities.list2.p3 = an indoor sporting event
+help.licensableActivities.list2.p4 = a boxing or wrestling match
+help.licensableActivities.list2.p5 = live music
+help.licensableActivities.list2.p6 = any playing of recorded music
+help.licensableActivities.list2.p7 = a dance performance
+
+# LICENSABLE ACTIVITIES DETAILS
+###############################
+licensableActivitiesDetails.heading = Describe the licensable activities regularly commending before 10:00 or after 23:30
+help.licensableActivitiesDetails.title = Help with describing your licensable activities
+help.licensableActivitiesDetails.heading = Describing your licensable activities
+help.licensableActivitiesDetails.p1 = You’re only required to write a short description of the licensable activities we’re concerned with. Example of acceptable descriptions include:
+help.licensableActivitiesDetails.list.p1 = We start serving alcohol at 9am, Monday to Saturday
+help.licensableActivitiesDetails.list.p2 = We have a DJ playing until 1am on Fridays and Saturdays
+help.licensableActivitiesDetails.list.p3 = Our hot-breakfast service starts at 4am every day
+
+# PREMISES LICENCE CONDITIONS
+#############################
+premisesLicenseConditions.heading = Does your premises licence have conditions restricting the use of all or parts of the property?
+hint.premisesLicenseConditions = For example, no drinks outside after 22:00
+help.premisesLicenseConditions.title = Help with conditions restricting the use of your property
+help.premisesLicenseConditions.heading = Conditions restricting the use of your property
+help.premisesLicenseConditions.p1 = Premises licences can be granted on the condition the holder of the premises licence complies with the pre-defined terms. These can include restrictions on the use of certain parts of the property.
+help.premisesLicenseConditions.p2 = Check your premises licence if you’re not sure. Any special conditions will be clearly stated there.
+
+# PREMISES LICENCE CONDITIONS DETAILS
+#####################################
+premisesLicenseConditionsDetails.heading = Describe the conditions restricting the use of all or parts of the property
+help.premisesLicenseConditionsDetails.title = Help with describing restricting on the use of the property
+help.premisesLicenseConditionsDetails.heading = Describing restricting on the use of the property
+help.premisesLicenseConditionsDetails.p1 = You’re only required to write a short description of the conditions we’re concerned with. Example of acceptable descriptions include:
+help.premisesLicenseConditionsDetails.list.p1 = No drinks allowed on the terrace after 10pm
+help.premisesLicenseConditionsDetails.list.p2 = Only 200 people allowed in the function room at any time
+help.premisesLicenseConditionsDetails.list.p3 = No entry or re-entry allowed after 11:30pm on Fridays and Saturdays
+
+# ENFORCEMENT ACTION BEEN TAKEN
+##############################£
+enforcementActionHasBeenTaken.heading = Has any enforcement action been taken?
+hint.enforcementActionHasBeenTaken = This can be any suspensions, closure orders or temporary restrictions
+help.enforcementActionHasBeenTaken.title = Help with enforcement action
+help.enforcementActionHasBeenTaken.heading = Enforcement action
+help.enforcementActionHasBeenTaken.p1 = You must tell us if any enforcement action has been taken against your premises by your local licensing authority under your tenure. If a lease or agreement was assigned to you from another tenant, you must let us know if any enforcement action was taken against them under the current agreement.
+
+# ENFORCEMENT ACTION BEEN TAKEN DETAILS
+#######################################
+enforcementActionHasBeenTakenDetails.heading = Describe any enforcement action taken
+help.enforcementActionHasBeenTakenDetails.title = Help with describing restricting on the use of the property
+help.enforcementActionHasBeenTakenDetails.heading = Describing restricting on the use of the property
+help.enforcementActionHasBeenTakenDetails.p1 = You’re only required to write a short description of the conditions we’re concerned with. Example of acceptable descriptions include:
+help.enforcementActionHasBeenTakenDetails.list.p1 = Every retail sale or supply of alcohol made under the premises licence must be made or authorised by a person who holds a personal licence
+help.enforcementActionHasBeenTakenDetails.list.p2 = All customer exits must display signs asking customers to leave quietly and have consideration for residents
+help.enforcementActionHasBeenTakenDetails.list.p3 = We are required to keep an incident book
+error.enforcementActionHasBeenTakenDetails.required = Please describe any enforcement action taken
+error.enforcementActionHasBeenTakenDetails.maxLength  = This must be 1000 characters or fewer
+
+# TIED FOR GOODS
+################
+tiedForGoods.heading = Are you tied for any goods?
+hint.tiedForGoods = Are you required to sell certain goods as part of your lease or tenancy agreement?
+help.tiedForGoods.title = Help with tied goods
+help.tiedForGoods.heading1 = Full tie
+help.tiedForGoods.p1 = People with a full tie are required to buy all the goods they sell from their landlord.
+help.tiedForGoods.heading2 = Beer only
+help.tiedForGoods.p2 = As the name suggests, people with a beer only tie buy beer from their landlord but can source other items independently.
+help.tiedForGoods.heading3 = Partial tie
+help.tiedForGoods.p3 = Partial ties are normally negotiated to give the tenant some flexibility to sell certain items independently, for example guest ales or fine wines
+
+# TIED FOR GOODS DETAILS
+########################
+tiedForGoodsDetails.heading = What type of tie do you have?
+tiedForGoodsDetails.fullTie = Full tie
+tiedForGoodsDetails.beerOnly = Beer only
+tiedForGoodsDetails.partialTie = Partial tie
+
 #TENANCY LEASE AGREEMENT(USED ON 6010, 6015, 6016, 6030, 6032, 6033, 6034, 6035, 6036, 6037, 6038, 6043, 6049, 6056, 6057, 6066)
 ##############################
 tenancyLeaseAgreement.heading = About the property
@@ -245,36 +335,6 @@ includedInYourRentApply.subheading = Select any that apply
 label.vat = VAT
 label.nondomesticRates = Non-domestic rates
 label.waterCharges = Water charges
-
-#LICENSABLE ACTIVITIES
-##############################
-licensableActivities.heading = Do licensable activities regularly commence before 10:00 or after 23:30 on any day of the week?
-hint.licensableActivities= Licensable activities could include, selling alcohol, selling food and refreshments, or providing live entertainment
-
-#LICENSABLE ACTIVITIES DETAILS
-##############################
-licensableActivitiesDetails.heading = Describe the licensable activities regularly commending before 10:00 or after 23:30
-
-#PREMISES LICENCE CONDITIONS Details
-####################################
-premisesLicenseConditionsDetails.heading = Describe the conditions restricting the use of all or parts of the property
-
-#PREMISES LICENCE CONDITIONS
-##############################
-premisesLicenseConditions.heading = Does your premises licence have conditions restricting the use of all or parts of the property?
-hint.premisesLicenseConditions = For example, no drinks outside after 22:00
-
-#TIED FOR GOODS
-###############
-tiedForGoods.heading = Are you tied for any goods?
-hint.tiedForGoods = Are you required to sell certain goods as part of your lease or tenancy agreement?
-
-#TIED FOR GOODS DETAILS
-#######################
-tiedForGoodsDetails.heading = What type of tie do you have?
-tiedForGoodsDetails.fullTie = Full tie
-tiedForGoodsDetails.beerOnly = Beer only
-tiedForGoodsDetails.partialTie = Partial tie
 
 #CATERING OPERATION OR LETTING ACCOMMODATION
 ############################################
@@ -328,19 +388,6 @@ rentPayableVaryAccordingToGrossOrNetDetails.heading = Tell us how the rent payab
 label.rentPayableVaryAccordingToGrossOrNetDetails = For example, tell us if your rent increases if your turnover exceeds a certain amount
 error.rentPayableVaryAccordingToGrossOrNetDetails.required = Tell us how the rent payable is affected by your turnover
 error.rentPayableVaryAccordingToGrossOrNetDetails.maxLength  = This must be 1000 characters or fewer
-
-#ENFORCEMENT ACTION BEEN TAKEN
-##############################
-enforcementAction.heading = About the property
-label.enforcementAction = Has any enforcement action been taken?
-hint.enforcementAction = This can be any suspensions, closure orders or temporary restrictions
-
-#ENFORCEMENT ACTION BEEN TAKEN DETAILS
-##############################
-enforcementActionHasBeenTakenDetails.heading = About the property
-label.enforcementActionHasBeenTakenDetails = Describe any enforcement action taken
-error.enforcementActionHasBeenTakenDetails.required = Please describe any enforcement action taken
-error.enforcementActionHasBeenTakenDetails.maxLength  = This must be 1000 characters or fewer
 
 #ULTIMATELY RESPONSIBLE
 #######################
@@ -427,15 +474,6 @@ label.rentActuallyAgreed.help = For example, 27 9 2017
 error.rentActuallyAgreed.day.required = The date must include a day
 error.rentActuallyAgreed.month.required = The date must include a month
 error.rentActuallyAgreed.year.required = The date must include a year
-
-#ENFORCEMENT ACTION BEEN TAKEN
-##############################
-enforcementActionHasBeenTaken.heading = Has any enforcement action been taken?
-hint.enforcementActionHasBeenTaken = This can be any suspensions, closure orders or temporary restrictions
-
-#ENFORCEMENT ACTION BEEN TAKEN DETAILS
-##############################
-enforcementActionHasBeenTakenDetails.heading = Describe the enforcement action taken
 
 ##CATERING OPERATION OR LETTING DETAILS
 #######################################

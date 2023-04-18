@@ -19,6 +19,7 @@ package controllers.aboutyouandtheproperty
 import form.Errors
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
 import play.api.http.Status
+import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import utils.TestBaseSpec
 
@@ -38,7 +39,7 @@ class AboutYouControllerSpec extends TestBaseSpec {
     mockSessionRepo
   )
 
-  "GET /" should {
+  "About you controller" should {
     "return 200" in {
       val result = aboutYouController().show(fakeRequest)
       status(result) shouldBe Status.OK
@@ -48,6 +49,13 @@ class AboutYouControllerSpec extends TestBaseSpec {
       val result = aboutYouController().show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
+    }
+
+    "SUBMIT /" should {
+      "throw a BAD_REQUEST if an empty form is submitted" in {
+        val res = aboutYouController().submit(FakeRequest().withFormUrlEncodedBody(Seq.empty: _*))
+        status(res) shouldBe BAD_REQUEST
+      }
     }
   }
 
