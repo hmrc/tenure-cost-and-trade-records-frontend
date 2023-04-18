@@ -17,6 +17,7 @@
 package controllers.aboutthetradinghistory
 
 import actions.WithSessionRefiner
+import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.CheckYourAnswersAboutTheTradingHistoryForm.checkYourAnswersAboutTheTradingHistoryForm
 import models.{ForTypes, Session}
 import navigation.AboutTheTradingHistoryNavigator
@@ -24,7 +25,6 @@ import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.aboutthetradinghistory.checkYourAnswersAboutTheTradingHistory
 import views.html.taskList
 
@@ -39,7 +39,7 @@ class CheckYourAnswersAboutTheTradingHistoryController @Inject() (
   taskListView: taskList,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FrontendController(mcc)
+) extends FORDataCaptureController(mcc)
     with I18nSupport
     with Logging {
 
@@ -59,7 +59,9 @@ class CheckYourAnswersAboutTheTradingHistoryController @Inject() (
   }
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
-    Future.successful(Ok(taskListView()))
+    continueOrSaveAsDraft(
+      Ok(taskListView())
+    )
   }
 
   private def getBackLink(answers: Session): String =

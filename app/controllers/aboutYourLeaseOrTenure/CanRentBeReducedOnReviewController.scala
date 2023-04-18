@@ -17,14 +17,15 @@
 package controllers.aboutYourLeaseOrTenure
 
 import actions.WithSessionRefiner
+import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.CanRentBeReducedOnReviewForm.canRentBeReducedOnReviewForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo.updateAboutLeaseOrAgreementPartTwo
+import models.submissions.aboutYourLeaseOrTenure.CanRentBeReducedOnReviewDetails
 import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.CanRentBeReducedOnReviewId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.aboutYourLeaseOrTenure.canRentBeReducedOnReview
 
 import javax.inject.{Inject, Named, Singleton}
@@ -37,7 +38,7 @@ class CanRentBeReducedOnReviewController @Inject() (
   canRentBeReducedOnReviewView: canRentBeReducedOnReview,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FrontendController(mcc)
+) extends FORDataCaptureController(mcc)
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
@@ -54,15 +55,15 @@ class CanRentBeReducedOnReviewController @Inject() (
   }
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
-    canRentBeReducedOnReviewForm
-      .bindFromRequest()
-      .fold(
-        formWithErrors => Future.successful(BadRequest(canRentBeReducedOnReviewView(formWithErrors))),
-        data => {
-          val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(canRentBeReducedOnReviewDetails = Some(data)))
-          session.saveOrUpdate(updatedData)
-          Future.successful(Redirect(navigator.nextPage(CanRentBeReducedOnReviewId).apply(updatedData)))
-        }
-      )
+    continueOrSaveAsDraft[CanRentBeReducedOnReviewDetails](
+      canRentBeReducedOnReviewForm,
+      formWithErrors => BadRequest(canRentBeReducedOnReviewView(formWithErrors)),
+      data => {
+        val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(canRentBeReducedOnReviewDetails = Some(data)))
+        session.saveOrUpdate(updatedData)
+        Redirect(navigator.nextPage(CanRentBeReducedOnReviewId).apply(updatedData))
+      }
+    )
   }
+
 }

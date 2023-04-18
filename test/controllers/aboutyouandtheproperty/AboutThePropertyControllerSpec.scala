@@ -23,6 +23,7 @@ import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
 import form.aboutyouandtheproperty.AboutThePropertyForm.aboutThePropertyForm
 import models.submissions.aboutyouandtheproperty.{AboutYouAndTheProperty, CurrentPropertyPublicHouse}
+import play.api.test.FakeRequest
 
 class AboutThePropertyControllerSpec extends TestBaseSpec {
 
@@ -38,7 +39,7 @@ class AboutThePropertyControllerSpec extends TestBaseSpec {
     mockSessionRepo
   )
 
-  "GET /" should {
+  "About the property controller" should {
     "return 200" in {
       val result = aboutThePropertyController().show(fakeRequest)
       status(result) shouldBe Status.OK
@@ -50,6 +51,15 @@ class AboutThePropertyControllerSpec extends TestBaseSpec {
       charset(result)     shouldBe Some("utf-8")
     }
 
+    "SUBMIT /" should {
+      "throw a BAD_REQUEST if an empty form is submitted" in {
+        val res = aboutThePropertyController().submit(FakeRequest().withFormUrlEncodedBody(Seq.empty: _*))
+        status(res) shouldBe BAD_REQUEST
+      }
+    }
+  }
+
+  "About the property form" should {
     "error if currentOccupierName is missing" in {
       val formData = baseFormData - errorKey.currentOccupierName
       val form     = aboutThePropertyForm.bind(formData)

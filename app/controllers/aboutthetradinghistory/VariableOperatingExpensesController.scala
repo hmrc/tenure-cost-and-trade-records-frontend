@@ -17,17 +17,17 @@
 package controllers.aboutthetradinghistory
 
 import actions.WithSessionRefiner
+import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.VariableOperatingExpensesForm.variableOperatingExpensesForm
+import models.submissions.aboutthetradinghistory.VariableOperatingExpenses
 import navigation.AboutTheTradingHistoryNavigator
 import navigation.identifiers.VariableOperatingExpensesId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.aboutthetradinghistory.variableOperatingExpenses
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.Future
 
 @Singleton
 class VariableOperatingExpensesController @Inject() (
@@ -36,7 +36,7 @@ class VariableOperatingExpensesController @Inject() (
   variableOperativeExpensesView: variableOperatingExpenses,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FrontendController(mcc)
+) extends FORDataCaptureController(mcc)
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
@@ -52,14 +52,14 @@ class VariableOperatingExpensesController @Inject() (
   }
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
-    variableOperatingExpensesForm
-      .bindFromRequest()
-      .fold(
-        formWithErrors => Future.successful(BadRequest(variableOperativeExpensesView(formWithErrors))),
-        data => {
-          val updatedData = request.sessionData
-          Future.successful(Redirect(navigator.nextPage(VariableOperatingExpensesId).apply(updatedData)))
-        }
-      )
+    continueOrSaveAsDraft[VariableOperatingExpenses](
+      variableOperatingExpensesForm,
+      formWithErrors => BadRequest(variableOperativeExpensesView(formWithErrors)),
+      data => {
+        val updatedData = request.sessionData
+        Redirect(navigator.nextPage(VariableOperatingExpensesId).apply(updatedData))
+      }
+    )
   }
+
 }

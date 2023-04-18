@@ -17,18 +17,18 @@
 package controllers.aboutthetradinghistory
 
 import actions.WithSessionRefiner
+import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.TotalPayrollCostForm.totalPayrollCostForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.updateAboutTheTradingHistory
+import models.submissions.aboutthetradinghistory.TotalPayrollCost
 import navigation.AboutTheTradingHistoryNavigator
 import navigation.identifiers.TotalPayrollCostId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.aboutthetradinghistory.totalPayrollCosts
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.Future
 
 @Singleton
 class TotalPayrollCostsController @Inject() (
@@ -37,7 +37,7 @@ class TotalPayrollCostsController @Inject() (
   totalPayrollCostsView: totalPayrollCosts,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FrontendController(mcc)
+) extends FORDataCaptureController(mcc)
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
@@ -52,15 +52,14 @@ class TotalPayrollCostsController @Inject() (
   }
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
-    totalPayrollCostForm
-      .bindFromRequest()
-      .fold(
-        formWithErrors => Future.successful(BadRequest(totalPayrollCostsView(formWithErrors))),
-        data => {
-          val updatedData = updateAboutTheTradingHistory(_.copy(totalPayrollCost = Some(data)))
-          Future.successful(Redirect(navigator.nextPage(TotalPayrollCostId).apply(updatedData)))
-        }
-      )
+    continueOrSaveAsDraft[TotalPayrollCost](
+      totalPayrollCostForm,
+      formWithErrors => BadRequest(totalPayrollCostsView(formWithErrors)),
+      data => {
+        val updatedData = updateAboutTheTradingHistory(_.copy(totalPayrollCost = Some(data)))
+        Redirect(navigator.nextPage(TotalPayrollCostId).apply(updatedData))
+      }
+    )
   }
 
 }

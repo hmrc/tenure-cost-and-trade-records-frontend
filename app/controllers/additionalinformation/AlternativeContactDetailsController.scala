@@ -17,14 +17,15 @@
 package controllers.additionalinformation
 
 import actions.WithSessionRefiner
+import controllers.FORDataCaptureController
 import form.additionalinformation.AlternativeContactDetailsForm.alternativeContactDetailsForm
 import models.submissions.additionalinformation.AdditionalInformation.updateAdditionalInformation
+import models.submissions.additionalinformation.AlternativeContactDetails
 import navigation.AdditionalInformationNavigator
 import navigation.identifiers.AlternativeContactDetailsId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.additionalinformation.alternativeContactDetails
 
 import javax.inject.{Inject, Named, Singleton}
@@ -37,7 +38,7 @@ class AlternativeContactDetailsController @Inject() (
   alternativeContactDetailsView: alternativeContactDetails,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FrontendController(mcc)
+) extends FORDataCaptureController(mcc)
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
@@ -54,16 +55,15 @@ class AlternativeContactDetailsController @Inject() (
   }
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
-    alternativeContactDetailsForm
-      .bindFromRequest()
-      .fold(
-        formWithErrors => Future.successful(BadRequest(alternativeContactDetailsView(formWithErrors))),
-        data => {
-          val updatedData = updateAdditionalInformation(_.copy(altContactInformation = Some(data)))
-          session.saveOrUpdate(updatedData)
-          Future.successful(Redirect(navigator.nextPage(AlternativeContactDetailsId).apply(updatedData)))
-        }
-      )
+    continueOrSaveAsDraft[AlternativeContactDetails](
+      alternativeContactDetailsForm,
+      formWithErrors => BadRequest(alternativeContactDetailsView(formWithErrors)),
+      data => {
+        val updatedData = updateAdditionalInformation(_.copy(altContactInformation = Some(data)))
+        session.saveOrUpdate(updatedData)
+        Redirect(navigator.nextPage(AlternativeContactDetailsId).apply(updatedData))
+      }
+    )
   }
 
 }

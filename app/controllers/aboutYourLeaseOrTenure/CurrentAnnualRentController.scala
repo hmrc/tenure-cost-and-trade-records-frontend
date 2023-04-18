@@ -17,20 +17,19 @@
 package controllers.aboutYourLeaseOrTenure
 
 import actions.WithSessionRefiner
+import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.CurrentAnnualRentForm.currentAnnualRentForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne
-import models.{ForTypes, Session}
+import models.{AnnualRent, ForTypes, Session}
 import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.CurrentAnnualRentPageId
 import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.aboutYourLeaseOrTenure.currentAnnualRent
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.Future
 
 @Singleton
 class CurrentAnnualRentController @Inject() (
@@ -39,7 +38,7 @@ class CurrentAnnualRentController @Inject() (
   currentAnnualRentView: currentAnnualRent,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FrontendController(mcc)
+) extends FORDataCaptureController(mcc)
     with I18nSupport
     with Logging {
 
@@ -56,24 +55,21 @@ class CurrentAnnualRentController @Inject() (
   }
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
-    currentAnnualRentForm
-      .bindFromRequest()
-      .fold(
-        formWithErrors =>
-          Future.successful(
-            BadRequest(
-              currentAnnualRentView(
-                formWithErrors,
-                getBackLink(request.sessionData)
-              )
-            )
-          ),
-        data => {
-          val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(annualRent = Some(data)))
-          session.saveOrUpdate(updatedData)
-          Future.successful(Redirect(navigator.nextPage(CurrentAnnualRentPageId).apply(updatedData)))
-        }
-      )
+    continueOrSaveAsDraft[AnnualRent](
+      currentAnnualRentForm,
+      formWithErrors =>
+        BadRequest(
+          currentAnnualRentView(
+            formWithErrors,
+            getBackLink(request.sessionData)
+          )
+        ),
+      data => {
+        val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(annualRent = Some(data)))
+        session.saveOrUpdate(updatedData)
+        Redirect(navigator.nextPage(CurrentAnnualRentPageId).apply(updatedData))
+      }
+    )
   }
 
   private def getBackLink(answers: Session): String =

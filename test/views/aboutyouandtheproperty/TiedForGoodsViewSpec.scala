@@ -17,31 +17,30 @@
 package views.aboutyouandtheproperty
 
 import form.aboutyouandtheproperty.TiedForGoodsForm
-import models.submissions.aboutyouandtheproperty.TiedForGoods
-import models.submissions.aboutyouandtheproperty.{TiedGoodsNo, TiedGoodsYes}
+import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
+import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
 
-class TiedForGoodsViewSpec extends QuestionViewBehaviours[TiedForGoods] {
-
-  def tiedForGoodsView = app.injector.instanceOf[views.html.aboutyouandtheproperty.tiedForGoods]
+class TiedForGoodsViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
 
   val messageKeyPrefix = "tiedForGoods"
 
-  override val form = TiedForGoodsForm.tiedForGoodsForm
+  override val form: Form[AnswersYesNo] = TiedForGoodsForm.tiedForGoodsForm
 
-  val backLink = controllers.aboutyouandtheproperty.routes.EnforcementActionBeenTakenController.show().url
+  val backLink: String = controllers.aboutyouandtheproperty.routes.EnforcementActionBeenTakenController.show().url
 
-  def createView = () => tiedForGoodsView(form, backLink)(fakeRequest, messages)
+  def createView: () => Html = () => tiedForGoodsView(form, backLink)(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[TiedForGoods]) => tiedForGoodsView(form, backLink)(fakeRequest, messages)
+  def createViewUsingForm: Form[AnswersYesNo] => Html = (form: Form[AnswersYesNo]) =>
+    tiedForGoodsView(form, backLink)(fakeRequest, messages)
 
   "Tied for goods view" must {
 
     behave like normalPage(createView, messageKeyPrefix)
 
-    "has a link marked with back.link.label leading to the premises licence Page" in {
+    "has a link marked with back.link.label leading to has enforcement action been taken Page" in {
       val doc          = asDocument(createView())
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText mustBe messages("back.link.label")
@@ -50,7 +49,7 @@ class TiedForGoodsViewSpec extends QuestionViewBehaviours[TiedForGoods] {
     }
 
     "Section heading is visible" in {
-      val doc         = asDocument(createViewUsingForm(form)) // govuk-caption-m
+      val doc         = asDocument(createViewUsingForm(form))
       val sectionText = doc.getElementsByClass("govuk-caption-m").text()
       assert(sectionText == messages("label.section.aboutTheProperty"))
     }
@@ -61,8 +60,8 @@ class TiedForGoodsViewSpec extends QuestionViewBehaviours[TiedForGoods] {
         doc,
         "tiedForGoods",
         "tiedForGoods",
-        TiedGoodsYes.name,
-        false
+        AnswerYes.name,
+        isChecked = false
       )
       assertContainsText(doc, messages("label.yes"))
     }
@@ -73,8 +72,8 @@ class TiedForGoodsViewSpec extends QuestionViewBehaviours[TiedForGoods] {
         doc,
         "tiedForGoods-2",
         "tiedForGoods",
-        TiedGoodsNo.name,
-        false
+        AnswerNo.name,
+        isChecked = false
       )
       assertContainsText(doc, messages("label.no"))
     }
@@ -83,6 +82,23 @@ class TiedForGoodsViewSpec extends QuestionViewBehaviours[TiedForGoods] {
       val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("continue").text()
       assert(loginButton == messages("button.label.continue"))
+    }
+
+    "contain save as draft button with the value Save as draft" in {
+      val doc         = asDocument(createViewUsingForm(form))
+      val loginButton = doc.getElementById("save").text()
+      assert(loginButton == messages("button.label.save"))
+    }
+
+    "contain get help section" in {
+      val doc = asDocument(createView())
+      assert(doc.toString.contains(messages("help.tiedForGoods.title")))
+      assert(doc.toString.contains(messages("help.tiedForGoods.heading1")))
+      assert(doc.toString.contains(messages("help.tiedForGoods.p1")))
+      assert(doc.toString.contains(messages("help.tiedForGoods.heading2")))
+      assert(doc.toString.contains(messages("help.tiedForGoods.p2")))
+      assert(doc.toString.contains(messages("help.tiedForGoods.heading3")))
+      assert(doc.toString.contains(messages("help.tiedForGoods.p3")))
     }
   }
 }

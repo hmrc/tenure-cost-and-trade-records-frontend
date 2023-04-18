@@ -17,14 +17,15 @@
 package controllers.aboutYourLeaseOrTenure
 
 import actions.WithSessionRefiner
+import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.PaymentWhenLeaseIsGrantedForm.paymentWhenLeaseIsGrantedForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo.updateAboutLeaseOrAgreementPartTwo
+import models.submissions.aboutYourLeaseOrTenure.PaymentWhenLeaseIsGrantedDetails
 import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.PayWhenLeaseGrantedId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.aboutYourLeaseOrTenure.paymentWhenLeaseIsGranted
 
 import javax.inject.{Inject, Named, Singleton}
@@ -37,7 +38,7 @@ class PaymentWhenLeaseIsGrantedController @Inject() (
   paymentWhenLeaseIsGrantedView: paymentWhenLeaseIsGranted,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FrontendController(mcc)
+) extends FORDataCaptureController(mcc)
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
@@ -54,15 +55,15 @@ class PaymentWhenLeaseIsGrantedController @Inject() (
   }
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
-    paymentWhenLeaseIsGrantedForm
-      .bindFromRequest()
-      .fold(
-        formWithErrors => Future.successful(BadRequest(paymentWhenLeaseIsGrantedView(formWithErrors))),
-        data => {
-          val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(paymentWhenLeaseIsGrantedDetails = Some(data)))
-          session.saveOrUpdate(updatedData)
-          Future.successful(Redirect(navigator.nextPage(PayWhenLeaseGrantedId).apply(updatedData)))
-        }
-      )
+    continueOrSaveAsDraft[PaymentWhenLeaseIsGrantedDetails](
+      paymentWhenLeaseIsGrantedForm,
+      formWithErrors => BadRequest(paymentWhenLeaseIsGrantedView(formWithErrors)),
+      data => {
+        val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(paymentWhenLeaseIsGrantedDetails = Some(data)))
+        session.saveOrUpdate(updatedData)
+        Redirect(navigator.nextPage(PayWhenLeaseGrantedId).apply(updatedData))
+      }
+    )
   }
+
 }

@@ -17,18 +17,18 @@
 package controllers.aboutYourLeaseOrTenure
 
 import actions.WithSessionRefiner
+import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.TenantsAdditionsDisregardedForm.tenantsAdditionsDisregardedForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo.updateAboutLeaseOrAgreementPartTwo
+import models.submissions.aboutYourLeaseOrTenure.TenantAdditionsDisregardedDetails
 import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.TenantsAdditionsDisregardedId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.aboutYourLeaseOrTenure.tenantsAdditionsDisregarded
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.Future
 
 @Singleton
 class TenantsAdditionsDisregardedController @Inject() (
@@ -37,7 +37,7 @@ class TenantsAdditionsDisregardedController @Inject() (
   tenantsAdditionsDisregardedView: tenantsAdditionsDisregarded,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FrontendController(mcc)
+) extends FORDataCaptureController(mcc)
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
@@ -52,15 +52,15 @@ class TenantsAdditionsDisregardedController @Inject() (
   }
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
-    tenantsAdditionsDisregardedForm
-      .bindFromRequest()
-      .fold(
-        formWithErrors => Future.successful(BadRequest(tenantsAdditionsDisregardedView(formWithErrors))),
-        data => {
-          val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(tenantAdditionsDisregardedDetails = Some(data)))
-          session.saveOrUpdate(updatedData)
-          Future.successful(Redirect(navigator.nextPage(TenantsAdditionsDisregardedId).apply(updatedData)))
-        }
-      )
+    continueOrSaveAsDraft[TenantAdditionsDisregardedDetails](
+      tenantsAdditionsDisregardedForm,
+      formWithErrors => BadRequest(tenantsAdditionsDisregardedView(formWithErrors)),
+      data => {
+        val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(tenantAdditionsDisregardedDetails = Some(data)))
+        session.saveOrUpdate(updatedData)
+        Redirect(navigator.nextPage(TenantsAdditionsDisregardedId).apply(updatedData))
+      }
+    )
   }
+
 }

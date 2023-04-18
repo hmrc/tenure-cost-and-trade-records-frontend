@@ -65,7 +65,7 @@
    errorMessage = theForm.errors.asTextErrorMessageForField("connectedToLandlord")
   ).withFormField(theForm("connectedToLandlord")))
 
-  @includes.continueButton(govukButton)
+  @includes.continueSaveAsDraftButtons(govukButton)
  }
 }
 

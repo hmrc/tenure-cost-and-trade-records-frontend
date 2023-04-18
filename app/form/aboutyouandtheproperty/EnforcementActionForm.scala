@@ -16,16 +16,16 @@
 
 package form.aboutyouandtheproperty
 
-import form.MappingSupport.enforcementActionType
-import models.submissions.aboutyouandtheproperty.EnforcementAction
+import form.MappingSupport.yesNoType
+import models.submissions.common.AnswersYesNo
 import play.api.data.Form
 import play.api.data.Forms.mapping
 
 object EnforcementActionForm {
-  lazy val baseEnforcementActionForm: Form[EnforcementAction] = Form(baseEnforcementActionMapping)
+  lazy val baseEnforcementActionForm: Form[AnswersYesNo] = Form(baseEnforcementActionMapping)
 
   val baseEnforcementActionMapping = mapping(
-    "enforcementAction" -> enforcementActionType
+    "enforcementAction" -> yesNoType
   )(x => x)(b => Some(b))
 
   val enforcementActionForm = Form(baseEnforcementActionMapping)

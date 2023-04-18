@@ -17,32 +17,30 @@
 package views.aboutyouandtheproperty
 
 import form.aboutyouandtheproperty.PremisesLicenseConditionsForm
-import models.submissions.aboutyouandtheproperty.PremisesLicenseConditions
-import models.submissions.aboutyouandtheproperty.{PremisesLicensesConditionsNo, PremisesLicensesConditionsYes}
+import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
+import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
 
-class PremisesLicenceConditionsViewSpec extends QuestionViewBehaviours[PremisesLicenseConditions] {
-
-  def premisesLicencableView = app.injector.instanceOf[views.html.aboutyouandtheproperty.premisesLicenseConditions]
+class PremisesLicenceConditionsViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
 
   val messageKeyPrefix = "premisesLicenseConditions"
 
-  override val form = PremisesLicenseConditionsForm.premisesLicenseConditionsForm
+  override val form: Form[AnswersYesNo] = PremisesLicenseConditionsForm.premisesLicenseConditionsForm
 
-  val backLink = controllers.aboutyouandtheproperty.routes.LicensableActivitiesController.show().url
+  val backLink: String = controllers.aboutyouandtheproperty.routes.LicensableActivitiesController.show().url
 
-  def createView = () => premisesLicencableView(form, backLink)(fakeRequest, messages)
+  def createView: () => Html = () => premisesLicensableView(form, backLink)(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[PremisesLicenseConditions]) =>
-    premisesLicencableView(form, backLink)(fakeRequest, messages)
+  def createViewUsingForm: Form[AnswersYesNo] => Html = (form: Form[AnswersYesNo]) =>
+    premisesLicensableView(form, backLink)(fakeRequest, messages)
 
   "Property licence conditions view" must {
 
     behave like normalPage(createView, messageKeyPrefix)
 
-    "has a link marked with back.link.label leading to the licencable activities Page" in {
+    "has a link marked with back.link.label leading to the licensable activities Page" in {
       val doc          = asDocument(createView())
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText mustBe messages("back.link.label")
@@ -51,7 +49,7 @@ class PremisesLicenceConditionsViewSpec extends QuestionViewBehaviours[PremisesL
     }
 
     "Section heading is visible" in {
-      val doc         = asDocument(createViewUsingForm(form)) // govuk-caption-m
+      val doc         = asDocument(createViewUsingForm(form))
       val sectionText = doc.getElementsByClass("govuk-caption-m").text()
       assert(sectionText == messages("label.section.aboutTheProperty"))
     }
@@ -62,8 +60,8 @@ class PremisesLicenceConditionsViewSpec extends QuestionViewBehaviours[PremisesL
         doc,
         "premisesLicenseConditions",
         "premisesLicenseConditions",
-        PremisesLicensesConditionsYes.name,
-        false
+        AnswerYes.name,
+        isChecked = false
       )
       assertContainsText(doc, messages("label.yes"))
     }
@@ -74,8 +72,8 @@ class PremisesLicenceConditionsViewSpec extends QuestionViewBehaviours[PremisesL
         doc,
         "premisesLicenseConditions-2",
         "premisesLicenseConditions",
-        PremisesLicensesConditionsNo.name,
-        false
+        AnswerNo.name,
+        isChecked = false
       )
       assertContainsText(doc, messages("label.no"))
     }
@@ -84,6 +82,20 @@ class PremisesLicenceConditionsViewSpec extends QuestionViewBehaviours[PremisesL
       val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("continue").text()
       assert(loginButton == messages("button.label.continue"))
+    }
+
+    "contain save as draft button with the value Save as draft" in {
+      val doc         = asDocument(createViewUsingForm(form))
+      val loginButton = doc.getElementById("save").text()
+      assert(loginButton == messages("button.label.save"))
+    }
+
+    "contain get help section" in {
+      val doc = asDocument(createView())
+      assert(doc.toString.contains(messages("help.premisesLicenseConditions.title")))
+      assert(doc.toString.contains(messages("help.premisesLicenseConditions.heading")))
+      assert(doc.toString.contains(messages("help.premisesLicenseConditions.p1")))
+      assert(doc.toString.contains(messages("help.premisesLicenseConditions.p2")))
     }
   }
 }

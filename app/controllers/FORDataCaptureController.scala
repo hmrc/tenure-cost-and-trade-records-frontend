@@ -34,16 +34,21 @@ abstract class FORDataCaptureController(cc: MessagesControllerComponents) extend
 
   def continueOrSaveAsDraft[T](form: Form[T], hasErrors: Form[T] => Future[Result], success: T => Future[Result])(
     implicit request: SessionRequest[AnyContent]
-  ): Future[Result] = {
-    val isSaveAsDraft = request.body.asFormUrlEncoded.flatMap(_.get("save_button")).isDefined
-
+  ): Future[Result] =
     form
       .bindFromRequest()
       .fold(
         if (isSaveAsDraft) _ => saveAsDraftRedirect else hasErrors,
         success.andThen(if (isSaveAsDraft) saveAsDraftRedirect else _)
       )
-  }
+
+  def continueOrSaveAsDraft(successResult: Future[Result])(implicit
+    request: SessionRequest[AnyContent]
+  ): Future[Result] =
+    if (isSaveAsDraft) saveAsDraftRedirect else successResult
+
+  private def isSaveAsDraft(implicit request: SessionRequest[AnyContent]) =
+    request.body.asFormUrlEncoded.flatMap(_.get("save_button")).isDefined
 
   private def saveAsDraftRedirect(implicit request: Request[_]): Result = Redirect(
     controllers.routes.SaveAsDraftController.customPassword(request.path)

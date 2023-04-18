@@ -100,13 +100,13 @@ trait FakeObjects {
     Some(WebsiteForPropertyDetails(BuildingOperationHaveAWebsiteYes, Some("webAddress"))),
     Some(AnswerYes),
     Some(PremisesLicenseGrantedInformationDetails("Premises licence granted details")),
-    Some(LicensableActivitiesYes),
+    Some(AnswerYes),
     Some(LicensableActivitiesInformationDetails("Licensable activities details")),
-    Some(PremisesLicensesConditionsYes),
+    Some(AnswerYes),
     Some(PremisesLicenseConditionsDetails("Premises license conditions details")),
-    Some(EnforcementActionsYes),
+    Some(AnswerYes),
     Some(EnforcementActionHasBeenTakenInformationDetails("Enforcement action taken details")),
-    Some(TiedGoodsYes),
+    Some(AnswerYes),
     Some(TiedForGoodsInformationDetails(TiedForGoodsInformationDetailsFullTie))
   )
   val prefilledAboutYouAndThePropertyNo: AboutYouAndTheProperty  = AboutYouAndTheProperty(
@@ -115,13 +115,13 @@ trait FakeObjects {
     Some(WebsiteForPropertyDetails(BuildingOperationHaveAWebsiteYes, Some("webAddress"))),
     Some(AnswerNo),
     None,
-    Some(LicensableActivitiesNo),
+    Some(AnswerNo),
     None,
-    Some(PremisesLicensesConditionsNo),
+    Some(AnswerNo),
     None,
-    Some(EnforcementActionsNo),
+    Some(AnswerNo),
     None,
-    Some(TiedGoodsNo),
+    Some(AnswerNo),
     None
   )
 

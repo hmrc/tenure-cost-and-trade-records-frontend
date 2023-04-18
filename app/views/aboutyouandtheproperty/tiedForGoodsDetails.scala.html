@@ -25,56 +25,53 @@
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Legend
 
 @this(layout: Layout,
-        govukButton: GovukButton,
-        govukRadios: GovukRadios,
-        govukErrorSummary: GovukErrorSummary,
-        formWithCSRF: FormWithCSRF
+  govukButton: GovukButton,
+  govukRadios: GovukRadios,
+  formWithCSRF: FormWithCSRF
 )
-
 
 @(theForm: Form[TiedForGoodsInformationDetails])(implicit request: Request[_], messages: Messages)
 
 @layout(
- pageHeading = messages("tiedForGoodsDetails.heading"),
- showH1 = false,
- showSection = true,
- sectionName = messages("label.section.aboutTheProperty"),
- backLinkUrl = controllers.aboutyouandtheproperty.routes.TiedForGoodsController.show.url,
- theForm = theForm
+  pageHeading = messages("tiedForGoodsDetails.heading"),
+  showH1 = false,
+  showSection = true,
+  sectionName = messages("label.section.aboutTheProperty"),
+  backLinkUrl = controllers.aboutyouandtheproperty.routes.TiedForGoodsController.show.url,
+  theForm = theForm
 ) {
 
- @formWithCSRF(action = controllers.aboutyouandtheproperty.routes.TiedForGoodsDetailsController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
+  @formWithCSRF(action = controllers.aboutyouandtheproperty.routes.TiedForGoodsDetailsController.submit(), args = Symbol("class") -> "myForm", Symbol("id") -> "myFormId") {
 
-  @govukRadios(
-   Radios(
-    name = "tiedForGoodsDetails",
-    idPrefix = Option("tiedForGoodsDetails"),
-    items = Seq(
-     "fullTie" -> messages("tiedForGoodsDetails.fullTie"),
-     "beerOnly" -> messages("tiedForGoodsDetails.beerOnly"),
-     "partialTie" -> messages("tiedForGoodsDetails.partialTie")
-    ).map(radioItem => RadioItem(
-     content = Text(radioItem._2),
-     checked = radioItem._1.equals(theForm("tiedForGoodsDetails").value.getOrElse("")),
-     value = Option(radioItem._1)
+    @govukRadios(
+      Radios(
+        name = "tiedForGoodsDetails",
+        idPrefix = Option("tiedForGoodsDetails"),
+        items = Seq(
+          "fullTie" -> messages("tiedForGoodsDetails.fullTie"),
+          "beerOnly" -> messages("tiedForGoodsDetails.beerOnly"),
+          "partialTie" -> messages("tiedForGoodsDetails.partialTie")
+        ).map(radioItem => RadioItem(
+          content = Text(radioItem._2),
+          checked = radioItem._1.equals(theForm("tiedForGoodsDetails").value.getOrElse("")),
+          value = Option(radioItem._1)
+        )),
+        errorMessage =  theForm.errors.asTextErrorMessageForField("tiedForGoodsDetails"),
+        fieldset = Option(
+          Fieldset(
+            legend = Option(
+              Legend(
+                content = Text(messages("tiedForGoodsDetails.heading")),
+                isPageHeading = true, classes = "govuk-fieldset__legend--l"
+              )
+            )
+          )
+        )
+      ).withFormField(theForm("tiedForGoodsDetails"))
     )
-    ),
-    errorMessage =  theForm.errors.asTextErrorMessageForField("tiedForGoodsDetails"),
-    fieldset = Option(
-     Fieldset(
-      legend = Option(
-       Legend(
-        content = Text(messages("tiedForGoodsDetails.heading")),
-        isPageHeading = true, classes = "govuk-fieldset__legend--l"
-       )
-      )
-     )
-    )
-   ).withFormField(theForm("tiedForGoodsDetails"))
-  )
 
-  @includes.continueButton(govukButton)
- }
+    @includes.continueSaveAsDraftButtons(govukButton)
+  }
 }
 
 

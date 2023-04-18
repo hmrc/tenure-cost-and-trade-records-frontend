@@ -17,14 +17,15 @@
 package controllers.aboutYourLeaseOrTenure
 
 import actions.WithSessionRefiner
+import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.RentIncludeFixtureAndFittingDetailsForm.rentIncludeFixtureAndFittingsDetailsForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne
+import models.submissions.aboutYourLeaseOrTenure.RentIncludeFixturesOrFittingsInformationDetails
 import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.RentFixtureAndFittingsDetailsPageId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.aboutYourLeaseOrTenure.rentIncludeFixtureAndFittingsDetails
 
 import javax.inject.{Inject, Named, Singleton}
@@ -37,7 +38,7 @@ class RentIncludeFixtureAndFittingsDetailsController @Inject() (
   rentIncludeFixtureAndFittingsDetailsView: rentIncludeFixtureAndFittingsDetails,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FrontendController(mcc)
+) extends FORDataCaptureController(mcc)
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
@@ -55,16 +56,16 @@ class RentIncludeFixtureAndFittingsDetailsController @Inject() (
   }
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
-    rentIncludeFixtureAndFittingsDetailsForm
-      .bindFromRequest()
-      .fold(
-        formWithErrors => Future.successful(BadRequest(rentIncludeFixtureAndFittingsDetailsView(formWithErrors))),
-        data => {
-          val updatedData =
-            updateAboutLeaseOrAgreementPartOne(_.copy(rentIncludeFixtureAndFittingsDetails = Some(data)))
-          session.saveOrUpdate(updatedData)
-          Future.successful(Redirect(navigator.nextPage(RentFixtureAndFittingsDetailsPageId).apply(updatedData)))
-        }
-      )
+    continueOrSaveAsDraft[RentIncludeFixturesOrFittingsInformationDetails](
+      rentIncludeFixtureAndFittingsDetailsForm,
+      formWithErrors => BadRequest(rentIncludeFixtureAndFittingsDetailsView(formWithErrors)),
+      data => {
+        val updatedData =
+          updateAboutLeaseOrAgreementPartOne(_.copy(rentIncludeFixtureAndFittingsDetails = Some(data)))
+        session.saveOrUpdate(updatedData)
+        Redirect(navigator.nextPage(RentFixtureAndFittingsDetailsPageId).apply(updatedData))
+      }
+    )
   }
+
 }

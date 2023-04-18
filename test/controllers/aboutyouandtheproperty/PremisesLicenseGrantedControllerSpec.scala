@@ -38,7 +38,7 @@ class PremisesLicenseGrantedControllerSpec extends TestBaseSpec {
     mockSessionRepo
   )
 
-  "GET /" should {
+  "Premises licence granted controller" should {
     "return 200" in {
       val result = premisesLicenseGrantedController().show(fakeRequest)
       status(result) shouldBe Status.OK
@@ -49,12 +49,12 @@ class PremisesLicenseGrantedControllerSpec extends TestBaseSpec {
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
-  }
 
-  "SUBMIT /" should {
-    "throw a BAD_REQUEST if an empty form is submitted" in {
-      val res = premisesLicenseGrantedController().submit(FakeRequest().withFormUrlEncodedBody(Seq.empty: _*))
-      status(res) shouldBe BAD_REQUEST
+    "SUBMIT /" should {
+      "throw a BAD_REQUEST if an empty form is submitted" in {
+        val res = premisesLicenseGrantedController().submit(FakeRequest().withFormUrlEncodedBody(Seq.empty: _*))
+        status(res) shouldBe BAD_REQUEST
+      }
     }
   }
 

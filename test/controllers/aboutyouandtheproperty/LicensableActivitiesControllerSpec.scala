@@ -17,12 +17,10 @@
 package controllers.aboutyouandtheproperty
 
 import form.Errors
-import navigation.AboutYouAndThePropertyNavigator
+import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
 import play.api.http.Status
 import play.api.test.Helpers._
-import play.twirl.api.HtmlFormat
 import utils.TestBaseSpec
-import views.html.aboutyouandtheproperty.licensableActivities
 
 class LicensableActivitiesControllerSpec extends TestBaseSpec {
 
@@ -30,28 +28,39 @@ class LicensableActivitiesControllerSpec extends TestBaseSpec {
   import form.aboutyouandtheproperty.LicensableActivitiesForm._
   import utils.FormBindingTestAssertions._
 
-  val mockAboutThePropertyNavigator = mock[AboutYouAndThePropertyNavigator]
-  val mockLicensableActivitiesView  = mock[licensableActivities]
-  when(mockLicensableActivitiesView.apply(any)(any, any)).thenReturn(HtmlFormat.empty)
-
-  val licensableActivitiesController = new LicensableActivitiesController(
+  def licensableActivitiesController(
+    aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes)
+  ) = new LicensableActivitiesController(
     stubMessagesControllerComponents(),
-    mockAboutThePropertyNavigator,
-    mockLicensableActivitiesView,
-    preFilledSession,
+    aboutYouAndThePropertyNavigator,
+    licensableActivitiesView,
+    preEnrichedActionRefiner(aboutYouAndTheProperty = aboutYouAndTheProperty),
     mockSessionRepo
   )
 
-  "Controller" should {
+  "License Activities Controller" should {
     "return 200" in {
-      val result = licensableActivitiesController.show(fakeRequest)
+      val result = licensableActivitiesController().show(fakeRequest)
       status(result) shouldBe Status.OK
     }
+
     "return HTML" in {
-      val result = licensableActivitiesController.show(fakeRequest)
+      val result = licensableActivitiesController().show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
+
+    "SUBMIT /" should {
+      "throw a BAD_REQUEST if an empty form is submitted" in {
+        val res = licensableActivitiesController().submit(
+          fakeRequest.withFormUrlEncodedBody(Seq.empty: _*)
+        )
+        status(res) shouldBe BAD_REQUEST
+      }
+    }
+  }
+
+  "Licensable activities form" should {
     "error if licensableActivities is missing" in {
       val formData = baseFormData - errorKey.licensableActivities
       val form     = licensableActivitiesForm.bind(formData)
@@ -61,7 +70,9 @@ class LicensableActivitiesControllerSpec extends TestBaseSpec {
   }
 
   object TestData {
-    val errorKey = new {
+    val errorKey: Object {
+      val licensableActivities: String
+    } = new {
       val licensableActivities: String = "licensableActivities"
     }
 

@@ -15,67 +15,64 @@
  *@
 
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 @import uk.gov.hmrc.govukfrontend.views.html.components._
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Radios
-@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Hint
-@import models.submissions.aboutyouandtheproperty.LicensableActivities
-@import uk.gov.hmrc.govukfrontend.views.Aliases.RadioItem
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Fieldset
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Legend
+@import models.submissions.common.AnswersYesNo
 
 @this(layout: Layout,
-        govukButton: GovukButton,
-        govukRadios: GovukRadios,
-        govukErrorSummary: GovukErrorSummary,
-        formWithCSRF: FormWithCSRF
+  govukButton: GovukButton,
+  govukRadios: GovukRadios,
+  govukDetails: GovukDetails,
+  formWithCSRF: FormWithCSRF
 )
 
-
-@(theForm: Form[LicensableActivities])(implicit request: Request[_], messages: Messages)
+@(theForm: Form[AnswersYesNo])(implicit request: Request[_], messages: Messages)
 
 @layout(
- pageHeading = messages("licensableActivities.heading"),
- showH1 = false,
- showSection = true,
- sectionName = messages("label.section.aboutTheProperty"),
- backLinkUrl = controllers.aboutyouandtheproperty.routes.WebsiteForPropertyController.show.url,
- theForm = theForm
+  pageHeading = messages("licensableActivities.heading"),
+  showH1 = false,
+  showSection = true,
+  sectionName = messages("label.section.aboutTheProperty"),
+  backLinkUrl = controllers.aboutyouandtheproperty.routes.WebsiteForPropertyController.show.url,
+  theForm = theForm
 ) {
 
- @formWithCSRF(action = controllers.aboutyouandtheproperty.routes.LicensableActivitiesController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
+  @formWithCSRF(action = controllers.aboutyouandtheproperty.routes.LicensableActivitiesController.submit(), args = Symbol("class") -> "myForm", Symbol("class") -> "myFormId") {
 
-  @govukRadios(
-   Radios(
-    name = "licensableActivities",
-    idPrefix = Option("licensableActivities"),
-    items = Seq(
-     "yes" -> messages("label.yes"),
-     "no" -> messages("label.no")
-    ).map(radioItem => RadioItem(
-     content = Text(radioItem._2),
-     value = Option(radioItem._1)
+    @includes.radioButtonsYesNo(
+      govukRadios,
+      theForm,
+      "licensableActivities",
+      "licensableActivities.heading",
+      "govuk-fieldset__legend--l",
+      isHeading = true,
+      hint = "hint.licensableActivities"
     )
-    ),
-    classes = "govuk-radios--inline",
-    fieldset = Option(
-     Fieldset(
-      legend = Option(
-       Legend(
-        content = Text(messages("licensableActivities.heading")),
-        isPageHeading = true, classes = "govuk-fieldset__legend--l"
-       )
-      )
-     )
-    ),
-    hint = Some(Hint(content = Text(messages("hint.licensableActivities")))),
-    errorMessage = theForm.errors.asTextErrorMessageForField("licensableActivities")
-   ).withFormField(theForm("licensableActivities"))
-  )
 
-  @includes.continueButton(govukButton)
- }
+    @govukDetails(Details(
+      summary = Text(messages("help.licensableActivities.title")),
+      content = HtmlContent(
+        s"<p class='govuk-!-font-weight-bold'>${messages("help.licensableActivities.heading")}</p>" +
+          s"<p>${messages("help.licensableActivities.p1")}</p>" +
+          s"<ul class='list-bullet'>" +
+            s"<li>${messages("help.licensableActivities.list1.p1")}</li>" +
+            s"<li>${messages("help.licensableActivities.list1.p2")}</li>" +
+            s"<li>${messages("help.licensableActivities.list1.p3")}</li>" +
+            s"<li>${messages("help.licensableActivities.list1.p4")}</li>" +
+          s"</ul>" +
+          s"<p>${messages("help.licensableActivities.p2")}</p>" +
+          s"<p>${messages("help.licensableActivities.p3")}</p>" +
+          s"<p>${messages("help.licensableActivities.p4")}</p>" +
+          s"<ul class='list-bullet'>" +
+            s"<li>${messages("help.licensableActivities.list2.p1")}</li>" +
+            s"<li>${messages("help.licensableActivities.list2.p2")}</li>" +
+            s"<li>${messages("help.licensableActivities.list2.p3")}</li>" +
+            s"<li>${messages("help.licensableActivities.list2.p4")}</li>" +
+            s"<li>${messages("help.licensableActivities.list2.p5")}</li>" +
+            s"<li>${messages("help.licensableActivities.list2.p6")}</li>" +
+            s"<li>${messages("help.licensableActivities.list2.p7")}</li>" +
+          s"</ul>")
+    ))
+
+    @includes.continueSaveAsDraftButtons(govukButton)
+  }
 }
-
-

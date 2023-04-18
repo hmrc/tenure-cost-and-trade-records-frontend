@@ -16,37 +16,65 @@
 
 package controllers.aboutyouandtheproperty
 
-import navigation.AboutYouAndThePropertyNavigator
+import form.Errors
+import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
+import form.aboutyouandtheproperty.TiedForGoodsDetailsForm.tiedForGoodsDetailsForm
 import play.api.http.Status
+import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import play.twirl.api.HtmlFormat
+import utils.FormBindingTestAssertions._
 import utils.TestBaseSpec
-import views.html.aboutyouandtheproperty.tiedForGoodsDetails
 
 class TiedForGoodsDetailsControllerSpec extends TestBaseSpec {
 
-  val mockAboutThePropertyNavigator = mock[AboutYouAndThePropertyNavigator]
-  val mockTiedForGoodsDetailsView   = mock[tiedForGoodsDetails]
-  when(mockTiedForGoodsDetailsView.apply(any)(any, any)).thenReturn(HtmlFormat.empty)
+  import TestData.{baseFormData, errorKey}
 
-  val tiedForGoodsDetailsController = new TiedForGoodsDetailsController(
+  def tiedForGoodsDetailsController(
+    aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes)
+  ) = new TiedForGoodsDetailsController(
     stubMessagesControllerComponents(),
-    mockAboutThePropertyNavigator,
-    mockTiedForGoodsDetailsView,
-    preFilledSession,
+    aboutYouAndThePropertyNavigator,
+    tiedForGoodsDetailsView,
+    preEnrichedActionRefiner(aboutYouAndTheProperty = aboutYouAndTheProperty),
     mockSessionRepo
   )
 
-  "GET /" should {
+  "Tied for goods details controller" should {
     "return 200" in {
-      val result = tiedForGoodsDetailsController.show(fakeRequest)
+      val result = tiedForGoodsDetailsController().show(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return HTML" in {
-      val result = tiedForGoodsDetailsController.show(fakeRequest)
+      val result = tiedForGoodsDetailsController().show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
+
+    "SUBMIT /" should {
+      "throw a BAD_REQUEST if an empty form is submitted" in {
+        val res = tiedForGoodsDetailsController().submit(FakeRequest().withFormUrlEncodedBody(Seq.empty: _*))
+        status(res) shouldBe BAD_REQUEST
+      }
+    }
+  }
+
+  "Tied for goods form" should {
+    "error if tiedForGoods is missing" in {
+      val formData = baseFormData - errorKey.tiedForGoodsDetails
+      val form     = tiedForGoodsDetailsForm.bind(formData)
+
+      mustContainError(errorKey.tiedForGoodsDetails, Errors.booleanMissing, form)
+    }
+  }
+
+  object TestData {
+    val errorKey: Object {
+      val tiedForGoodsDetails: String
+    } = new {
+      val tiedForGoodsDetails: String = "tiedForGoodsDetails"
+    }
+
+    val baseFormData: Map[String, String] = Map("tiedForGoodsDetails" -> "fullTie")
   }
 }

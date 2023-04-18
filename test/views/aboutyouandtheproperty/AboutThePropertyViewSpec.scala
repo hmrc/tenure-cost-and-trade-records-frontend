@@ -54,7 +54,7 @@ class AboutThePropertyViewSpec extends QuestionViewBehaviours[PropertyDetails] {
     }
 
     "Section heading is visible" in {
-      val doc         = asDocument(createViewUsingForm(form)) // govuk-caption-m
+      val doc         = asDocument(createViewUsingForm(form))
       val sectionText = doc.getElementsByClass("govuk-caption-m").text()
       assert(sectionText == messages("label.section.aboutTheProperty"))
     }
@@ -160,6 +160,12 @@ class AboutThePropertyViewSpec extends QuestionViewBehaviours[PropertyDetails] {
       val loginButton = doc.getElementById("continue").text()
       assert(loginButton == messages("button.label.continue"))
     }
+
+    "contain save as draft button with the value Save as draft" in {
+      val doc         = asDocument(createViewUsingForm(form))
+      val loginButton = doc.getElementById("save").text()
+      assert(loginButton == messages("button.label.save"))
+    }
   }
 
   "About the property view 6015" must {
@@ -177,7 +183,7 @@ class AboutThePropertyViewSpec extends QuestionViewBehaviours[PropertyDetails] {
     }
 
     "Section heading is visible" in {
-      val doc         = asDocument(createViewUsingForm(form)) // govuk-caption-m
+      val doc         = asDocument(createViewUsingForm(form))
       val sectionText = doc.getElementsByClass("govuk-caption-m").text()
       assert(sectionText == messages("label.section.aboutTheProperty"))
     }
@@ -246,6 +252,12 @@ class AboutThePropertyViewSpec extends QuestionViewBehaviours[PropertyDetails] {
       val doc         = asDocument(createViewUsingForm6015(form))
       val loginButton = doc.getElementById("continue").text()
       assert(loginButton == messages("button.label.continue"))
+    }
+
+    "contain save as draft button with the value Save as draft" in {
+      val doc         = asDocument(createViewUsingForm(form))
+      val loginButton = doc.getElementById("save").text()
+      assert(loginButton == messages("button.label.save"))
     }
   }
 }

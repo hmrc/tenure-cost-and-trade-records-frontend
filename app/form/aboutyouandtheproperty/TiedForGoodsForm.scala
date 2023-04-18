@@ -16,16 +16,16 @@
 
 package form.aboutyouandtheproperty
 
-import form.MappingSupport.tiedForGoodsType
-import models.submissions.aboutyouandtheproperty.TiedForGoods
+import form.MappingSupport.yesNoType
+import models.submissions.common.AnswersYesNo
 import play.api.data.Form
 import play.api.data.Forms.mapping
 
 object TiedForGoodsForm {
-  lazy val baseTiedForGoodsForm: Form[TiedForGoods] = Form(baseTiedForGoodsMapping)
+  lazy val baseTiedForGoodsForm: Form[AnswersYesNo] = Form(baseTiedForGoodsMapping)
 
   val baseTiedForGoodsMapping = mapping(
-    "tiedForGoods" -> tiedForGoodsType
+    "tiedForGoods" -> yesNoType
   )(x => x)(b => Some(b))
 
   val tiedForGoodsForm = Form(baseTiedForGoodsMapping)

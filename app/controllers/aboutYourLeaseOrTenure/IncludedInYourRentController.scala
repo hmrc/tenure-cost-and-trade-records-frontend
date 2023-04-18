@@ -17,14 +17,15 @@
 package controllers.aboutYourLeaseOrTenure
 
 import actions.WithSessionRefiner
+import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.IncludedInYourRentForm.includedInYourRentForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne
+import models.submissions.aboutYourLeaseOrTenure.IncludedInYourRentDetails
 import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.IncludedInYourRentPageId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.aboutYourLeaseOrTenure.includedInYourRent
 
 import javax.inject.{Inject, Named, Singleton}
@@ -37,7 +38,7 @@ class IncludedInYourRentController @Inject() (
   includedInYourRentView: includedInYourRent,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FrontendController(mcc)
+) extends FORDataCaptureController(mcc)
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
@@ -54,15 +55,15 @@ class IncludedInYourRentController @Inject() (
   }
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
-    includedInYourRentForm
-      .bindFromRequest()
-      .fold(
-        formWithErrors => Future.successful(BadRequest(includedInYourRentView(formWithErrors))),
-        data => {
-          val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(includedInYourRentDetails = Some(data)))
-          session.saveOrUpdate(updatedData)
-          Future.successful(Redirect(navigator.nextPage(IncludedInYourRentPageId).apply(updatedData)))
-        }
-      )
+    continueOrSaveAsDraft[IncludedInYourRentDetails](
+      includedInYourRentForm,
+      formWithErrors => BadRequest(includedInYourRentView(formWithErrors)),
+      data => {
+        val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(includedInYourRentDetails = Some(data)))
+        session.saveOrUpdate(updatedData)
+        Redirect(navigator.nextPage(IncludedInYourRentPageId).apply(updatedData))
+      }
+    )
   }
+
 }
