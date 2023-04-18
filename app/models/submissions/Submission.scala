@@ -16,24 +16,20 @@
 
 package models.submissions
 
-import models.submissions.common.Address
-import play.api.libs.json._
-
-import java.time.Instant
-
-case class NotConnectedSubmission(
-  referenceNumber: String,
-  address: Address,
-  fullName: String,
-  emailAddress: Option[String],
-  phoneNumber: Option[String],
-  additionalInformation: Option[String],
-  createdAt: Instant,
-  previouslyConnected: String,
-  lang: Option[String] = None
+case class Submission(
+//  propertyAddress: Option[Address],
+//  customerDetails: Option[CustomerDetails],
+//  theProperty: Option[TheProperty],
+//  sublet: Option[Sublet],
+//  landlord: Option[Landlord],
+//  lease: Option[LeaseOrAgreement],
+//  rentReviews: Option[RentReviews],
+//  rentAgreement: Option[RentAgreement],
+//  rent: Option[Rent],
+//  rentIncludes: Option[WhatRentIncludes],
+//  incentives: Option[IncentivesAndPayments],
+//  responsibilities: Option[Responsibilities],
+//  alterations: Option[PropertyAlterations],
+//  otherFactors: Option[OtherFactors],
+  referenceNumber: Option[String] = None
 )
-object NotConnectedSubmission {
-
-  implicit val format = Json.format[NotConnectedSubmission]
-
-}

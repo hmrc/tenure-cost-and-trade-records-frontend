@@ -16,7 +16,7 @@
 
 package controllers.notconnected
 
-import connectors.Audit
+import connectors.{Audit, SubmissionConnector}
 import navigation.RemoveConnectionNavigator
 import play.api.http.Status
 import play.api.test.Helpers._
@@ -39,13 +39,15 @@ class CheckYourAnswersNotConnectedControllerSpec extends TestBaseSpec {
   val mockTaskListView = mock[taskList]
   when(mockTaskListView.apply()(any, any)).thenReturn(HtmlFormat.empty)
 
-  val audit = mock[Audit]
+  val mockAudit               = mock[Audit]
+  val mockSubmissionConnector = mock[SubmissionConnector]
 
   val checkYourAdditionalInformationController = new CheckYourAnswersNotConnectedController(
     stubMessagesControllerComponents(),
+    mockSubmissionConnector,
     mockCheckYourAnswersNotConnectedView,
     mockConfirmationView,
-    audit,
+    mockAudit,
     preFilledSession,
     mockSessionRepo
   )
