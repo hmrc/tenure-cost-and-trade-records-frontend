@@ -89,5 +89,16 @@ class TiedForGoodsViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
       val loginButton = doc.getElementById("save").text()
       assert(loginButton == messages("button.label.save"))
     }
+
+    "contain get help section" in {
+      val doc = asDocument(createView())
+      assert(doc.toString.contains(messages("help.tiedForGoods.title")))
+      assert(doc.toString.contains(messages("help.tiedForGoods.heading1")))
+      assert(doc.toString.contains(messages("help.tiedForGoods.p1")))
+      assert(doc.toString.contains(messages("help.tiedForGoods.heading2")))
+      assert(doc.toString.contains(messages("help.tiedForGoods.p2")))
+      assert(doc.toString.contains(messages("help.tiedForGoods.heading3")))
+      assert(doc.toString.contains(messages("help.tiedForGoods.p3")))
+    }
   }
 }

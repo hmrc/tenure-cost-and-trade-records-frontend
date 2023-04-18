@@ -71,5 +71,15 @@ class EnforcementActionBeenTakenDetailsViewSpec
       val loginButton = doc.getElementById("save").text()
       assert(loginButton == messages("button.label.save"))
     }
+
+    "contain get help section" in {
+      val doc = asDocument(createView())
+      assert(doc.toString.contains(messages("help.enforcementActionHasBeenTakenDetails.title")))
+      assert(doc.toString.contains(messages("help.enforcementActionHasBeenTakenDetails.heading")))
+      assert(doc.toString.contains(messages("help.enforcementActionHasBeenTakenDetails.p1")))
+      assert(doc.toString.contains(messages("help.enforcementActionHasBeenTakenDetails.list.p1")))
+      assert(doc.toString.contains(messages("help.enforcementActionHasBeenTakenDetails.list.p2")))
+      assert(doc.toString.contains(messages("help.enforcementActionHasBeenTakenDetails.list.p3")))
+    }
   }
 }

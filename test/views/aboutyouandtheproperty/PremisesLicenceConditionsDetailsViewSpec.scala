@@ -69,5 +69,15 @@ class PremisesLicenceConditionsDetailsViewSpec extends QuestionViewBehaviours[Pr
       val loginButton = doc.getElementById("save").text()
       assert(loginButton == messages("button.label.save"))
     }
+
+    "contain get help section" in {
+      val doc = asDocument(createView())
+      assert(doc.toString.contains(messages("help.premisesLicenseConditionsDetails.title")))
+      assert(doc.toString.contains(messages("help.premisesLicenseConditionsDetails.heading")))
+      assert(doc.toString.contains(messages("help.premisesLicenseConditionsDetails.p1")))
+      assert(doc.toString.contains(messages("help.premisesLicenseConditionsDetails.list.p1")))
+      assert(doc.toString.contains(messages("help.premisesLicenseConditionsDetails.list.p2")))
+      assert(doc.toString.contains(messages("help.premisesLicenseConditionsDetails.list.p3")))
+    }
   }
 }

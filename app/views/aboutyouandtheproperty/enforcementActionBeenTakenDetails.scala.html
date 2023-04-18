@@ -23,6 +23,7 @@
 @this(layout: Layout,
   govukButton: GovukButton,
   govukCharacterCount: GovukCharacterCount,
+  govukDetails: GovukDetails,
   formWithCSRF: FormWithCSRF
 )
 
@@ -53,9 +54,18 @@
       ).withFormField(theForm("enforcementActionHasBeenTakenDetails"))
     )
 
+    @govukDetails(Details(
+      summary = Text(messages("help.enforcementActionHasBeenTakenDetails.title")),
+      content = HtmlContent(
+        s"<p class='govuk-!-font-weight-bold'>${messages("help.enforcementActionHasBeenTakenDetails.heading")}</p>" +
+        s"<p>${messages("help.enforcementActionHasBeenTakenDetails.p1")}</p>" +
+        s"<ul class='list-bullet'>" +
+          s"<li>${messages("help.enforcementActionHasBeenTakenDetails.list.p1")}</li>" +
+          s"<li>${messages("help.enforcementActionHasBeenTakenDetails.list.p2")}</li>" +
+          s"<li>${messages("help.enforcementActionHasBeenTakenDetails.list.p3")}</li>" +
+        s"</ul>")
+    ))
+
     @includes.continueSaveAsDraftButtons(govukButton)
   }
 }
-
-
-

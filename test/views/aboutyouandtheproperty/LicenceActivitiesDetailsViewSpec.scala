@@ -69,5 +69,15 @@ class LicenceActivitiesDetailsViewSpec extends QuestionViewBehaviours[Licensable
       val loginButton = doc.getElementById("save").text()
       assert(loginButton == messages("button.label.save"))
     }
+
+    "contain get help section" in {
+      val doc = asDocument(createView())
+      assert(doc.toString.contains(messages("help.licensableActivitiesDetails.title")))
+      assert(doc.toString.contains(messages("help.licensableActivitiesDetails.heading")))
+      assert(doc.toString.contains(messages("help.licensableActivitiesDetails.p1")))
+      assert(doc.toString.contains(messages("help.licensableActivitiesDetails.list.p1")))
+      assert(doc.toString.contains(messages("help.licensableActivitiesDetails.list.p2")))
+      assert(doc.toString.contains(messages("help.licensableActivitiesDetails.list.p3")))
+    }
   }
 }
