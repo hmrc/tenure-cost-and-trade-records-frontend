@@ -21,6 +21,7 @@
 @this(layout: Layout,
   govukButton: GovukButton,
   govukRadios: GovukRadios,
+  govukDetails: GovukDetails,
   formWithCSRF: FormWithCSRF
 )
 
@@ -47,9 +48,14 @@
       hint = "hint.premisesLicenseConditions"
     )
 
+    @govukDetails(Details(
+      summary = Text(messages("help.premisesLicenseConditions.title")),
+      content = HtmlContent(
+        s"<p class='govuk-!-font-weight-bold'>${messages("help.premisesLicenseConditions.heading")}</p>" +
+        s"<p>${messages("help.premisesLicenseConditions.p1")}</p>" +
+        s"<p>${messages("help.premisesLicenseConditions.p2")}</p>")
+    ))
+
     @includes.continueSaveAsDraftButtons(govukButton)
   }
 }
-
-
-
