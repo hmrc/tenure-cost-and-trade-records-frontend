@@ -20,8 +20,6 @@ import actions.SessionRequest
 import models.Session
 import play.api.libs.json.Json
 
-import java.time.LocalDate
-
 case class AboutTheTradingHistory(
   aboutYourTradingHistory: Option[AboutYourTradingHistory] = None,
   turnoverSection: Seq[TurnoverSection] = Seq.empty,

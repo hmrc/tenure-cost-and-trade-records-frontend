@@ -26,7 +26,7 @@ import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.aboutthetradinghistory.turnover
 
-import java.time.{LocalDate, Year}
+import java.time.LocalDate
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
 

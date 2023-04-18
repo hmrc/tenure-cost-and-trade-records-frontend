@@ -16,12 +16,12 @@
 
 package controllers.notconnected
 
-import actions.{RefNumRequest, SessionRequest, WithSessionRefiner}
+import actions.{SessionRequest, WithSessionRefiner}
 import connectors.{Audit, SubmissionConnector}
 import models.submissions.NotConnectedSubmission
 import play.api.Logger
 import play.api.i18n.I18nSupport
-import play.api.libs.json.{JsObject, JsValue, Json}
+import play.api.libs.json.{JsObject, Json}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Result}
 import repositories.SessionRepo
 import uk.gov.hmrc.http.HeaderCarrier

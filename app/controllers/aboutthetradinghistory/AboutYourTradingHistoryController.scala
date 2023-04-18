@@ -18,7 +18,6 @@ package controllers.aboutthetradinghistory
 
 import actions.WithSessionRefiner
 import form.aboutthetradinghistory.AboutYourTradingHistoryForm.aboutYourTradingHistoryForm
-import models.{ForTypes, Session}
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.updateAboutTheTradingHistory
 import navigation.AboutTheTradingHistoryNavigator
 import navigation.identifiers.AboutYourTradingHistoryPageId
