@@ -141,7 +141,16 @@ class LoginControllerSpec extends TestBaseSpec {
       status(result)           shouldBe SEE_OTHER
       redirectLocation(result) shouldBe Some(routes.LoginController.show().url)
 
-      verify(audit).sendExplicitAudit(eqTo("Logout"), eqTo(Json.obj(Audit.referenceNumber -> "99996010004")))(
+      verify(audit).sendExplicitAudit(
+        eqTo("Logout"),
+        eqTo(
+          Json.obj(
+            Audit.referenceNumber -> "99996010004",
+            Audit.formOfReturn    -> "FOR6010",
+            Audit.address         -> prefilledAddress
+          )
+        )
+      )(
         any[HeaderCarrier],
         any[ExecutionContext]
       )

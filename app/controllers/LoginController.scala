@@ -99,8 +99,8 @@ class LoginController @Inject() (
   def logout = (Action andThen withSessionRefiner).async { implicit request =>
     val json = Json.obj(
       Audit.referenceNumber -> request.sessionData.referenceNumber,
-      Audit.formOfReturn    -> request.sessionData.address,
-      Audit.address         -> request.sessionData.forType
+      Audit.formOfReturn    -> request.sessionData.forType,
+      Audit.address         -> request.sessionData.address
     )
 
     session.remove().map { _ =>
