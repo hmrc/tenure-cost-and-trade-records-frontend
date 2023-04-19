@@ -97,11 +97,14 @@ class LoginController @Inject() (
   }
 
   def logout = (Action andThen withSessionRefiner).async { implicit request =>
-    val refNumJson = Json.obj(Audit.referenceNumber -> request.sessionData.referenceNumber)
+    val json = Json.obj(
+      Audit.referenceNumber -> request.sessionData.referenceNumber,
+      Audit.formOfReturn    -> request.sessionData.address,
+      Audit.address         -> request.sessionData.forType
+    )
 
     session.remove().map { _ =>
-      auditLogout(request.sessionData.referenceNumber, request.sessionData.address, request.sessionData.forType)
-      audit.sendExplicitAudit("Logout", refNumJson)
+      audit.sendExplicitAudit("Logout", json)
       Redirect(routes.LoginController.show())
     }
   }
@@ -179,15 +182,6 @@ class LoginController @Inject() (
       Audit.address         -> address
     )
     audit.sendExplicitAudit("UserLogin", json)
-  }
-
-  private def auditLogout(refNumber: String, address: Address, formOfReturn: String)(implicit hc: HeaderCarrier): Unit = {
-    val json = Json.obj(
-      Audit.referenceNumber -> refNumber,
-      Audit.formOfReturn    -> formOfReturn,
-      Audit.address         -> address
-    )
-    audit.sendExplicitAudit("Logout", json)
   }
 
   private def auditLockedOut(refNumber: String, postcode: String, postcodeCleaned: String, lockedIP: String)(implicit
