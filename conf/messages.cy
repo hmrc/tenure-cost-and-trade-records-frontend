@@ -63,6 +63,7 @@ label.fullName = Full name
 label.contact.details = Contact details
 label.phone = Telephone number
 label.email = Email address
+label.submitAnotherForm = Submit another form
 
 # COMMON HINTS
 ##############

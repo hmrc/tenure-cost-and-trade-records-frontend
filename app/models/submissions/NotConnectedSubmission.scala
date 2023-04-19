@@ -22,14 +22,14 @@ import play.api.libs.json._
 import java.time.Instant
 
 case class NotConnectedSubmission(
-  referenceNumber: String,
+  id: String,
   address: Address,
   fullName: String,
   emailAddress: Option[String],
   phoneNumber: Option[String],
   additionalInformation: Option[String],
   createdAt: Instant,
-  previouslyConnected: String,
+  previouslyConnected: Boolean,
   lang: Option[String] = None
 )
 object NotConnectedSubmission {
