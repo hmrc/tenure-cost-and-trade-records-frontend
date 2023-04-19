@@ -17,7 +17,8 @@
 package controllers.notconnected
 
 import actions.{RefNumRequest, SessionRequest, WithSessionRefiner}
-import connectors.Audit
+import connectors.{Audit, SubmissionConnector}
+import models.submissions.NotConnectedSubmission
 import controllers.FORDataCaptureController
 import play.api.Logger
 import play.api.i18n.I18nSupport
@@ -29,6 +30,7 @@ import uk.gov.hmrc.play.http.HeaderCarrierConverter
 import views.html.notconnected.checkYourAnswersNotConnected
 import views.html.confirmationNotConnected
 
+import java.time.Instant
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -36,6 +38,7 @@ import scala.concurrent.{ExecutionContext, Future}
 class CheckYourAnswersNotConnectedController @Inject() (
   mcc: MessagesControllerComponents,
   //  repository: FormDocumentRepository,
+  submissionConnector: SubmissionConnector,
   checkYourAnswersNotConnectedView: checkYourAnswersNotConnected,
   confirmationNotConnectedView: confirmationNotConnected,
   audit: Audit,
@@ -79,8 +82,22 @@ class CheckYourAnswersNotConnectedController @Inject() (
     Future.successful(Ok(confirmationNotConnectedView()))
   }
 
-  private def submitToBackend()(implicit hc: HeaderCarrier, request: SessionRequest[_]): Future[Unit] =
-//    log.warn(s"**&&** ${request.sessionData.removeConnectionDetails.flatMap(_.removeConnectionDetails)}")
-    Future.unit
+  private def submitToBackend()(implicit hc: HeaderCarrier, request: SessionRequest[_]): Future[Unit] = {
+    val session                 = request.sessionData
+    val sessionRemoveConnection = session.removeConnectionDetails
+
+    val submission = NotConnectedSubmission(
+      session.referenceNumber,
+      session.address,
+      sessionRemoveConnection.flatMap(_.removeConnectionDetails.map(_.removeConnectionFullName)).toString,
+      sessionRemoveConnection.flatMap(_.removeConnectionDetails.map(_.removeConnectionDetails.email)),
+      sessionRemoveConnection.flatMap(_.removeConnectionDetails.map(_.removeConnectionDetails.phone)),
+      sessionRemoveConnection.flatMap(_.removeConnectionDetails.map(_.removeConnectionAdditionalInfo)).getOrElse(null),
+      Instant.now(),
+      sessionRemoveConnection.flatMap(_.pastConnectionType.map(_.name)).toString
+    )
+
+    submissionConnector.submitNotConnected(session.referenceNumber, submission)
+  }
 
 }
