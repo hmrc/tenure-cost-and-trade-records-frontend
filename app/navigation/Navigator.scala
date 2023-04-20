@@ -19,6 +19,7 @@ package navigation
 import connectors.Audit
 import controllers.routes
 import models.Session
+import models.audit.ContinueNextPageData
 import navigation.identifiers.Identifier
 import play.api.mvc.Call
 import uk.gov.hmrc.http.HeaderCarrier
@@ -47,7 +48,7 @@ abstract class Navigator @Inject() (
   ) andThen auditNextUrl(session)
 
   private def auditNextUrl(session: Session)(call: Call)(implicit hc: HeaderCarrier): Call = {
-    audit.sendContinueNextPage("ContinueNextPage", session.toUserData)
+    audit.sendContinueNextPage("ContinueNextPage", ContinueNextPageData(session.toUserData, call.url))
     call
   }
 }
