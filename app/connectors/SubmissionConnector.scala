@@ -16,16 +16,9 @@
 
 package connectors
 
-import akka.stream.scaladsl.Source
-import akka.util.ByteString
 import com.google.inject.ImplementedBy
-
 import javax.inject.{Inject, Singleton}
 import models.submissions.NotConnectedSubmission
-import play.api.http.HttpEntity
-import play.api.libs.json.JsValue
-import play.api.mvc.{ResponseHeader, Result}
-
 import scala.concurrent.{ExecutionContext, Future}
 import uk.gov.hmrc.http.{BadRequestException, HeaderCarrier, HttpReads, HttpResponse, Upstream4xxResponse}
 import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
@@ -33,7 +26,9 @@ import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
 @Singleton
 class HodSubmissionConnector @Inject() (config: ServicesConfig, http: ForHttp)(implicit ec: ExecutionContext)
     extends SubmissionConnector {
-  lazy val serviceUrl = config.baseUrl("tenure-cost-and-trades-records")
+  lazy val serviceUrl = config.baseUrl("tenure-cost-and-trade-records")
+
+  private def url(path: String) = s"$serviceUrl/tenure-cost-and-trade-records/$path"
 
   implicit def httpReads = new HttpReads[HttpResponse] {
     override def read(method: String, url: String, response: HttpResponse): HttpResponse =
@@ -45,26 +40,14 @@ class HodSubmissionConnector @Inject() (config: ServicesConfig, http: ForHttp)(i
       }
   }
 
-  //  def submit(refNum: String, submission: Submission)(implicit hc: HeaderCarrier): Future[Unit] = {
-  //    http.PUT(s"$serviceUrl/tctr/submissions/$refNum", submission).map(_ => ())
-  //  }
-  //
-  //  def submit(refNum: String, submission: JsValue)(implicit hc: HeaderCarrier): Future[Result] = {
-  //    http.PUT(s"$serviceUrl/tctr/submissions/$refNum", submission) map { r =>
-  //      Result(ResponseHeader(r.status), HttpEntity.Streamed(Source.single(ByteString(Option(r.body).getOrElse(""))), None, None))
-  //    }
-  //  }
-
   override def submitNotConnected(refNumber: String, submission: NotConnectedSubmission)(implicit
     hc: HeaderCarrier
   ): Future[Unit] =
-    http.PUT(s"$serviceUrl/tctr/submissions/notConnected/${submission.referenceNumber}", submission).map(_ => ())
-
+    http.PUT(s"${url(s"submissions/notConnected/$refNumber")}", submission).map(_ => ())
 }
 
 @ImplementedBy(classOf[HodSubmissionConnector])
 trait SubmissionConnector {
-  //  def submit(refNum: String, submisson: Submission)(implicit hc: HeaderCarrier): Future[Unit]
   def submitNotConnected(refNumber: String, submission: NotConnectedSubmission)(implicit
     hc: HeaderCarrier
   ): Future[Unit]

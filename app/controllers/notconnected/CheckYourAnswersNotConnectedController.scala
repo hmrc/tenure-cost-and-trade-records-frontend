@@ -70,11 +70,18 @@ class CheckYourAnswersNotConnectedController @Inject() (
   def submitNotConnectedTInformation(
     refNum: String
   )(implicit hc: HeaderCarrier, request: SessionRequest[_]): Future[Unit] = {
-    val auditType      = "NotConnectedSubmission"
-    // Dummy data from session to able creation of audit dashboards
-    val submissionJson = Json.toJson(request.sessionData).as[JsObject]
-    submitToBackend()
-    audit.sendExplicitAudit(auditType, submissionJson ++ Audit.languageJson)
+    try {
+      val auditType      = "NotConnectedSubmission"
+      // Dummy data from session to able creation of audit dashboards
+      val submissionJson = Json.toJson(request.sessionData).as[JsObject]
+      submitToBackend()
+      audit.sendExplicitAudit(auditType, submissionJson ++ Audit.languageJson)
+    } catch {
+      case e: Exception =>
+        val submissionJson = Json.toJson(request.sessionData).as[JsObject]
+        log.error(s"Could not send data to TCTR Backend - ${request.sessionData.referenceNumber} - ${hc.sessionId}")
+        audit.sendExplicitAudit("NotConnectedSubmissionFailed", submissionJson)
+    }
     Future.unit
   }
 
@@ -92,9 +99,15 @@ class CheckYourAnswersNotConnectedController @Inject() (
       sessionRemoveConnection.flatMap(_.removeConnectionDetails.map(_.removeConnectionFullName)).toString,
       sessionRemoveConnection.flatMap(_.removeConnectionDetails.map(_.removeConnectionDetails.email)),
       sessionRemoveConnection.flatMap(_.removeConnectionDetails.map(_.removeConnectionDetails.phone)),
-      sessionRemoveConnection.flatMap(_.removeConnectionDetails.map(_.removeConnectionAdditionalInfo)).getOrElse(null),
+      sessionRemoveConnection
+        .flatMap(_.removeConnectionDetails.map(_.removeConnectionAdditionalInfo))
+        .getOrElse(Some("")),
       Instant.now(),
-      sessionRemoveConnection.flatMap(_.pastConnectionType.map(_.name)).toString
+      sessionRemoveConnection.flatMap(_.pastConnectionType.map(_.name)) match {
+        case Some(_) => true
+        case None    => false
+      },
+      Some(request.messages.lang.language)
     )
 
     submissionConnector.submitNotConnected(session.referenceNumber, submission)

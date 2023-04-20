@@ -27,6 +27,6 @@ class RemoveConnectionNavigator @Inject() (audit: Audit) extends Navigator(audit
 
   override val routeMap: Map[Identifier, Session => Call] = Map(
     PastConnectionId   -> (_ => controllers.notconnected.routes.RemoveConnectionController.show()),
-    RemoveConnectionId -> (_ => controllers.notconnected.routes.CheckYourAnswersNotConnectedController.confirmation())
+    RemoveConnectionId -> (_ => controllers.notconnected.routes.CheckYourAnswersNotConnectedController.show())
   )
 }
