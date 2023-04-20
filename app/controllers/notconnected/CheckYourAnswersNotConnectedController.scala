@@ -67,21 +67,12 @@ class CheckYourAnswersNotConnectedController @Inject() (
     } yield Found(confirmationUrl)
   }
 
-  def submitNotConnectedTInformation(
-    refNum: String
-  )(implicit hc: HeaderCarrier, request: SessionRequest[_]): Future[Unit] = {
-    try {
-      val auditType      = "NotConnectedSubmission"
-      // Dummy data from session to able creation of audit dashboards
-      val submissionJson = Json.toJson(request.sessionData).as[JsObject]
+  def submitNotConnectedTInformation(refNum: String)(implicit hc: HeaderCarrier, request: SessionRequest[_]): Future[Unit] = {
+//      val auditType      = "NotConnectedSubmission"
+//      // Dummy data from session to able creation of audit dashboards
+//      val submissionJson = Json.toJson(request.sessionData).as[JsObject]
       submitToBackend()
-      audit.sendExplicitAudit(auditType, submissionJson ++ Audit.languageJson)
-    } catch {
-      case e: Exception =>
-        val submissionJson = Json.toJson(request.sessionData).as[JsObject]
-        log.error(s"Could not send data to TCTR Backend - ${request.sessionData.referenceNumber} - ${hc.sessionId}")
-        audit.sendExplicitAudit("NotConnectedSubmissionFailed", submissionJson)
-    }
+//      audit.sendExplicitAudit(auditType, submissionJson ++ Audit.languageJson)
     Future.unit
   }
 
@@ -93,7 +84,7 @@ class CheckYourAnswersNotConnectedController @Inject() (
     val session                 = request.sessionData
     val sessionRemoveConnection = session.removeConnectionDetails
 
-    val submission = NotConnectedSubmission(
+    val submission = NotConnectedSubmission (
       session.referenceNumber,
       session.address,
       sessionRemoveConnection.flatMap(_.removeConnectionDetails.map(_.removeConnectionFullName)).toString,
@@ -109,6 +100,27 @@ class CheckYourAnswersNotConnectedController @Inject() (
       },
       Some(request.messages.lang.language)
     )
+
+    submission match {
+      case NotConnectedSubmission(
+      submission.id,
+      submission.address,
+      submission.fullName,
+      submission.emailAddress,
+      submission.phoneNumber,
+      submission.additionalInformation,
+      submission.createdAt,
+      submission.previouslyConnected,
+      submission.lang) =>
+        val auditType = "NotConnectedSubmission"
+        // Dummy data from session to able creation of audit dashboards
+        val submissionJson = Json.toJson(request.sessionData).as[JsObject]
+        audit.sendExplicitAudit(auditType, submissionJson ++ Audit.languageJson)
+      case _ =>
+        val submissionJson = Json.toJson(request.sessionData).as[JsObject]
+        log.error(s"Could not send data to TCTR Backend - ${request.sessionData.referenceNumber} - ${hc.sessionId}")
+        audit.sendExplicitAudit("NotConnectedSubmissionFailed", submissionJson)
+    }
 
     submissionConnector.submitNotConnected(session.referenceNumber, submission)
   }
