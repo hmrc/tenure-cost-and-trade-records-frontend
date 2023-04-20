@@ -39,4 +39,15 @@ abstract class Navigator @Inject() (
     audit.sendContinueNextPage(call.url)
     call
   }
+
+  // Development only
+
+  def nextPage(id: Identifier, session: Session)(implicit hc: HeaderCarrier): Session => Call = (
+    routeMap.getOrElse(id, (_: Session) => routes.LoginController.show())
+  ) andThen auditNextUrl(session)
+
+  private def auditNextUrl(session: Session)(call: Call)(implicit hc: HeaderCarrier): Call = {
+    audit.sendContinueNextPage("ContinueNextPage", session.toUserData)
+    call
+  }
 }

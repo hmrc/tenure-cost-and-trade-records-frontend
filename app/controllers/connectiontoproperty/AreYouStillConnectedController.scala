@@ -65,7 +65,7 @@ class AreYouStillConnectedController @Inject() (
       data => {
         val updatedData = updateStillConnectedDetails(_.copy(addressConnectionType = Some(data)))
         session.saveOrUpdate(updatedData)
-        Redirect(navigator.nextPage(AreYouStillConnectedPageId).apply(updatedData))
+        Redirect(navigator.nextPage(AreYouStillConnectedPageId, updatedData).apply(updatedData))
       }
     )
   }
