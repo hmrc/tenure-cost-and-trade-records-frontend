@@ -43,6 +43,7 @@ class CheckYourAnswersNotConnectedController @Inject() (
   confirmationNotConnectedView: confirmationNotConnected,
   audit: Audit,
   withSessionRefiner: WithSessionRefiner,
+  errorView: views.html.error.error,
   @Named("session") val session: SessionRepo
 )(implicit ec: ExecutionContext)
     extends FORDataCaptureController(mcc)
@@ -63,17 +64,22 @@ class CheckYourAnswersNotConnectedController @Inject() (
   private def submit[T](refNum: String)(implicit request: SessionRequest[T]): Future[Result] = {
     val hc = HeaderCarrierConverter.fromRequestAndSession(request, request.session)
     for {
-      _ <- submitNotConnectedTInformation(refNum)(hc, request)
+      _ <- submitNotConnectedInformation(refNum)(hc, request)
     } yield Found(confirmationUrl)
   }
 
-  def submitNotConnectedTInformation(refNum: String)(implicit hc: HeaderCarrier, request: SessionRequest[_]): Future[Unit] = {
-//      val auditType      = "NotConnectedSubmission"
-//      // Dummy data from session to able creation of audit dashboards
-//      val submissionJson = Json.toJson(request.sessionData).as[JsObject]
-      submitToBackend()
-//      audit.sendExplicitAudit(auditType, submissionJson ++ Audit.languageJson)
-    Future.unit
+  def submitNotConnectedInformation(refNum: String)(implicit request: SessionRequest[_]): Future[Unit] = {
+    val auditType = "NotConnectedSubmission"
+    val submissionJson = Json.toJson(request.sessionData).as[JsObject]
+    submitToBackend() {
+      audit.sendExplicitAudit(auditType, submissionJson ++ Audit.languageJson)
+      Redirect(controllers.notconnected.routes.CheckYourAnswersNotConnectedController.confirmation())
+    }.recover {
+      case e: Exception =>
+      log.error(s"Could not send data to TCTR backend - ${request.sessionData.referenceNumber} - ${hc.sessionId}")
+      audit.sendExplicitAudit("NotConnectedSubmissionFailed", submissionJson)
+      InternalServerError(errorView(500))
+    }
   }
 
   def confirmation: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
@@ -100,27 +106,6 @@ class CheckYourAnswersNotConnectedController @Inject() (
       },
       Some(request.messages.lang.language)
     )
-
-    submission match {
-      case NotConnectedSubmission(
-      submission.id,
-      submission.address,
-      submission.fullName,
-      submission.emailAddress,
-      submission.phoneNumber,
-      submission.additionalInformation,
-      submission.createdAt,
-      submission.previouslyConnected,
-      submission.lang) =>
-        val auditType = "NotConnectedSubmission"
-        // Dummy data from session to able creation of audit dashboards
-        val submissionJson = Json.toJson(request.sessionData).as[JsObject]
-        audit.sendExplicitAudit(auditType, submissionJson ++ Audit.languageJson)
-      case _ =>
-        val submissionJson = Json.toJson(request.sessionData).as[JsObject]
-        log.error(s"Could not send data to TCTR Backend - ${request.sessionData.referenceNumber} - ${hc.sessionId}")
-        audit.sendExplicitAudit("NotConnectedSubmissionFailed", submissionJson)
-    }
 
     submissionConnector.submitNotConnected(session.referenceNumber, submission)
   }
