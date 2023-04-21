@@ -26,23 +26,15 @@
         govukWarningText: GovukWarningText
 )
 
-@(password: String, expiryDate: String, exitPath: String, isTimedOut: Boolean = false)(implicit request: Request[_], messages: Messages)
-
-@title = @{
-    if(isTimedOut) {
-        messages("saveAsDraft.preHeaderTimeout")
-    } else {
-        messages("saveAsDraft.preHeader")
-    }
-}
+@(password: String, expiryDate: String, exitPath: String)(implicit request: Request[_], messages: Messages)
 
 @layout(
-    pageHeading = title,
+    pageHeading = messages("saveAsDraft.preHeader"),
     showH1 = false,
     withTimeoutDialog = false
 ) {
 
-    <h1 class="govuk-heading-l">@title</h1>
+    <h1 class="govuk-heading-l">@messages("saveAsDraft.preHeader")</h1>
 
     @govukWarningText(
         WarningText(
@@ -63,12 +55,8 @@
     </p>
 
     <p class="govuk-body">
-    @if(isTimedOut) {
-        <a class="govuk-button" href=@routes.LoginController.show>@messages("sessionTimeout.button")</a>
-    } else {
         <a href="@exitPath" class="govuk-button">@messages("saveAsDraft.continue")</a>
         <a href="@routes.LoginController.logout" class="govuk-button">@messages("saveAsDraft.logout")</a>
-    }
     </p>
 
 }
