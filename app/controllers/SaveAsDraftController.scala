@@ -125,4 +125,11 @@ class SaveAsDraftController @Inject() (
     Redirect(LoginController.startPage)
   }
 
+  def timeout = (Action andThen withSessionRefiner).async { implicit request =>
+    sessionRepo.remove().map { _ =>
+      audit.sendExplicitAudit("UserTimeout", request.sessionData.toUserData)
+      Redirect(routes.Application.sessionTimeout()).withNewSession
+    }
+  }
+
 }
