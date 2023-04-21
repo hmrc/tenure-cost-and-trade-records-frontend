@@ -83,9 +83,9 @@ class CheckYourAnswersNotConnectedController @Inject() (
 //  }
 
   def submitNotConnectedInformation(
-                                      refNum: String
-                                    )(implicit hc: HeaderCarrier, request: SessionRequest[_]): Future[Unit] = {
-    val auditType = "NotConnectedSubmission"
+    refNum: String
+  )(implicit hc: HeaderCarrier, request: SessionRequest[_]): Future[Unit] = {
+    val auditType      = "NotConnectedSubmission"
     // Dummy data from session to able creation of audit dashboards
     val submissionJson = Json.toJson(request.sessionData).as[JsObject]
     submitToBackend()
@@ -101,7 +101,7 @@ class CheckYourAnswersNotConnectedController @Inject() (
     val session                 = request.sessionData
     val sessionRemoveConnection = session.removeConnectionDetails
 
-    val submission = NotConnectedSubmission (
+    val submission = NotConnectedSubmission(
       session.referenceNumber,
       session.address,
       sessionRemoveConnection.flatMap(_.removeConnectionDetails.map(_.removeConnectionFullName)).toString,
