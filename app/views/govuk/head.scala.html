@@ -29,6 +29,6 @@
 @if(enableTimeoutDialog) {
     @hmrcTimeoutDialogHelper(
         signOutUrl = routes.LoginController.logout.url,
-        timeoutUrl = routes.SaveAsDraftController.timeout.url
+        timeoutUrl = routes.SaveAsDraftController.timeout(request.path).url
     )
 }

@@ -14,7 +14,7 @@ GET         /logout                                                 controllers.
 
 GET         /invalid-form-type                                      controllers.LoginController.notValidFORType()
 
-GET         /timeout                                                controllers.SaveAsDraftController.timeout
+GET         /timeout                                                controllers.SaveAsDraftController.timeout(path)
 GET         /sessiontimeout                                         controllers.Application.sessionTimeout()
 
 # SAVE AS DRAFT
