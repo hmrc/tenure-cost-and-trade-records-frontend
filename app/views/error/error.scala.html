@@ -14,12 +14,12 @@
  * limitations under the License.
  *@
 
-@this(layout: pageLayout)
+@this(layout: Layout)
 
 @(errorCode: Int)(implicit request: Request[_],  messages: Messages)
 
 @layout(
-    backLinkUrl = routes.ApplicationController.index.url,
+//    backLinkUrl = routes.ApplicationController.index.url,
     pageHeading = messages(s"error.${errorCode}.heading")
 ){
   @if(errorCode == 409){

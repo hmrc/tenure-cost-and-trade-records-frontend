@@ -43,7 +43,7 @@ class CheckYourAnswersNotConnectedController @Inject() (
   confirmationNotConnectedView: confirmationNotConnected,
   audit: Audit,
   withSessionRefiner: WithSessionRefiner,
-  errorView: views.html.error.error,
+//  errorView: views.html.error.error,
   @Named("session") val session: SessionRepo
 )(implicit ec: ExecutionContext)
     extends FORDataCaptureController(mcc)
@@ -68,18 +68,29 @@ class CheckYourAnswersNotConnectedController @Inject() (
     } yield Found(confirmationUrl)
   }
 
-  def submitNotConnectedInformation(refNum: String)(implicit request: SessionRequest[_]): Future[Unit] = {
+//  def submitNotConnectedInformation(refNum: String)(implicit hc: HeaderCarrier, request: SessionRequest[_]): Future[Unit] = {
+//    val auditType = "NotConnectedSubmission"
+//    val submissionJson = Json.toJson(request.sessionData).as[JsObject]
+//    submitToBackend() {
+//      audit.sendExplicitAudit(auditType, submissionJson ++ Audit.languageJson)
+//      Redirect(controllers.notconnected.routes.CheckYourAnswersNotConnectedController.confirmation())
+//    }.recover {
+//      case e: Exception =>
+//      log.error(s"Could not send data to TCTR backend - ${request.sessionData.referenceNumber} - ${hc.sessionId}")
+//      audit.sendExplicitAudit("NotConnectedSubmissionFailed", submissionJson)
+//      InternalServerError(errorView(500))
+//    }
+//  }
+
+  def submitNotConnectedInformation(
+                                      refNum: String
+                                    )(implicit hc: HeaderCarrier, request: SessionRequest[_]): Future[Unit] = {
     val auditType = "NotConnectedSubmission"
+    // Dummy data from session to able creation of audit dashboards
     val submissionJson = Json.toJson(request.sessionData).as[JsObject]
-    submitToBackend() {
-      audit.sendExplicitAudit(auditType, submissionJson ++ Audit.languageJson)
-      Redirect(controllers.notconnected.routes.CheckYourAnswersNotConnectedController.confirmation())
-    }.recover {
-      case e: Exception =>
-      log.error(s"Could not send data to TCTR backend - ${request.sessionData.referenceNumber} - ${hc.sessionId}")
-      audit.sendExplicitAudit("NotConnectedSubmissionFailed", submissionJson)
-      InternalServerError(errorView(500))
-    }
+    submitToBackend()
+    audit.sendExplicitAudit(auditType, submissionJson ++ Audit.languageJson)
+    Future.unit
   }
 
   def confirmation: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
