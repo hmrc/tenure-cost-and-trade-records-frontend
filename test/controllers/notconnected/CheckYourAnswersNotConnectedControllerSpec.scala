@@ -16,6 +16,7 @@
 
 package controllers.notconnected
 
+import config.ErrorHandler
 import connectors.{Audit, SubmissionConnector}
 import navigation.RemoveConnectionNavigator
 import play.api.http.Status
@@ -47,6 +48,7 @@ class CheckYourAnswersNotConnectedControllerSpec extends TestBaseSpec {
     mockSubmissionConnector,
     mockCheckYourAnswersNotConnectedView,
     mockConfirmationView,
+    inject[ErrorHandler],
     mockAudit,
     preFilledSession,
     mockSessionRepo

@@ -42,9 +42,8 @@ class HodSubmissionConnector @Inject() (config: ServicesConfig, http: ForHttp)(i
 
   override def submitNotConnected(refNumber: String, submission: NotConnectedSubmission)(implicit
     hc: HeaderCarrier
-  ): Future[Unit] = {
-    http.PUT(s"${url(s"submissions/notConnected/${refNumber}")}", submission).map(_ => ())
-  }
+  ): Future[Unit] =
+    http.PUT(s"${url(s"submissions/notConnected/$refNumber")}", submission).map(_ => ())
 }
 
 @ImplementedBy(classOf[HodSubmissionConnector])

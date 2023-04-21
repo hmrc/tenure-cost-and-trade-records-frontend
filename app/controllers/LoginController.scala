@@ -97,14 +97,9 @@ class LoginController @Inject() (
   }
 
   def logout = (Action andThen withSessionRefiner).async { implicit request =>
-    val json = Json.obj(
-      Audit.referenceNumber -> request.sessionData.referenceNumber,
-      Audit.formOfReturn    -> request.sessionData.forType,
-      Audit.address         -> request.sessionData.address
-    )
-
+    val userData = Json.toJson(request.sessionData.toUserData)
     session.remove().map { _ =>
-      audit.sendExplicitAudit("Logout", json)
+      audit.sendExplicitAudit("Logout", userData)
       Redirect(routes.LoginController.show())
     }
   }
