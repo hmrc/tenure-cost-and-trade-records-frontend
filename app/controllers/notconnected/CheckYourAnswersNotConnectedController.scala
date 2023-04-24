@@ -16,14 +16,16 @@
 
 package controllers.notconnected
 
-import actions.{RefNumRequest, SessionRequest, WithSessionRefiner}
+import actions.{SessionRequest, WithSessionRefiner}
+import config.ErrorHandler
 import connectors.{Audit, SubmissionConnector}
 import models.submissions.NotConnectedSubmission
 import controllers.FORDataCaptureController
-import play.api.Logger
+import models.Session
+import play.api.{Logger, Logging}
 import play.api.i18n.I18nSupport
-import play.api.libs.json.{JsObject, JsValue, Json}
-import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Result}
+import play.api.libs.json.{JsObject, Json}
+import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.http.HeaderCarrierConverter
@@ -37,17 +39,17 @@ import scala.concurrent.{ExecutionContext, Future}
 @Singleton
 class CheckYourAnswersNotConnectedController @Inject() (
   mcc: MessagesControllerComponents,
-  //  repository: FormDocumentRepository,
   submissionConnector: SubmissionConnector,
   checkYourAnswersNotConnectedView: checkYourAnswersNotConnected,
   confirmationNotConnectedView: confirmationNotConnected,
+  errorHandler: ErrorHandler,
   audit: Audit,
   withSessionRefiner: WithSessionRefiner,
-//  errorView: views.html.error.error,
   @Named("session") val session: SessionRepo
 )(implicit ec: ExecutionContext)
     extends FORDataCaptureController(mcc)
-    with I18nSupport {
+    with I18nSupport
+    with Logging {
 
   lazy val confirmationUrl = controllers.notconnected.routes.CheckYourAnswersNotConnectedController.confirmation().url
 
@@ -58,64 +60,43 @@ class CheckYourAnswersNotConnectedController @Inject() (
   }
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    submit(request.sessionData.referenceNumber)
-  }
-
-  private def submit[T](refNum: String)(implicit request: SessionRequest[T]): Future[Result] = {
-    val hc = HeaderCarrierConverter.fromRequestAndSession(request, request.session)
-    for {
-      _ <- submitNotConnectedInformation(refNum)(hc, request)
-    } yield Found(confirmationUrl)
-  }
-
-//  def submitNotConnectedInformation(refNum: String)(implicit hc: HeaderCarrier, request: SessionRequest[_]): Future[Unit] = {
-//    val auditType = "NotConnectedSubmission"
-//    val submissionJson = Json.toJson(request.sessionData).as[JsObject]
-//    submitToBackend() {
-//      audit.sendExplicitAudit(auditType, submissionJson ++ Audit.languageJson)
-//      Redirect(controllers.notconnected.routes.CheckYourAnswersNotConnectedController.confirmation())
-//    }.recover {
-//      case e: Exception =>
-//      log.error(s"Could not send data to TCTR backend - ${request.sessionData.referenceNumber} - ${hc.sessionId}")
-//      audit.sendExplicitAudit("NotConnectedSubmissionFailed", submissionJson)
-//      InternalServerError(errorView(500))
-//    }
-//  }
-
-  def submitNotConnectedInformation(
-    refNum: String
-  )(implicit hc: HeaderCarrier, request: SessionRequest[_]): Future[Unit] = {
+    implicit val hc    = HeaderCarrierConverter.fromRequestAndSession(request, request.session)
     val auditType      = "NotConnectedSubmission"
-    // Dummy data from session to able creation of audit dashboards
     val submissionJson = Json.toJson(request.sessionData).as[JsObject]
-    submitToBackend()
-    audit.sendExplicitAudit(auditType, submissionJson ++ Audit.languageJson)
-    Future.unit
+    val session        = request.sessionData
+
+    submitToBackend(session).map { _ =>
+      audit.sendExplicitAudit(auditType, submissionJson ++ Audit.languageJson)
+      Redirect(controllers.notconnected.routes.CheckYourAnswersNotConnectedController.confirmation())
+    } recover { case e: Exception =>
+      logger.error(s"Could not send data to HOD - ${session.referenceNumber} - ${hc.sessionId}")
+      audit.sendExplicitAudit("NotConnectedSubmissionFailed", submissionJson)
+      InternalServerError(errorHandler.internalServerErrorTemplate(request))
+    }
   }
 
   def confirmation: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Future.successful(Ok(confirmationNotConnectedView()))
   }
 
-  private def submitToBackend()(implicit hc: HeaderCarrier, request: SessionRequest[_]): Future[Unit] = {
-    val session                 = request.sessionData
-    val sessionRemoveConnection = session.removeConnectionDetails
+  private def submitToBackend(
+    session: Session
+  )(implicit hc: HeaderCarrier, request: SessionRequest[_]): Future[Unit] = {
+    val sessionRemoveConnection = session.removeConnectionDetails.flatMap(_.removeConnectionDetails)
 
     val submission = NotConnectedSubmission(
       session.referenceNumber,
       session.address,
-      sessionRemoveConnection.flatMap(_.removeConnectionDetails.map(_.removeConnectionFullName)).toString,
-      sessionRemoveConnection.flatMap(_.removeConnectionDetails.map(_.removeConnectionDetails.email)),
-      sessionRemoveConnection.flatMap(_.removeConnectionDetails.map(_.removeConnectionDetails.phone)),
-      sessionRemoveConnection
-        .flatMap(_.removeConnectionDetails.map(_.removeConnectionAdditionalInfo))
-        .getOrElse(Some("")),
+      sessionRemoveConnection.map(_.removeConnectionFullName).getOrElse(""),
+      sessionRemoveConnection.map(_.removeConnectionDetails.email),
+      sessionRemoveConnection.map(_.removeConnectionDetails.phone),
+      sessionRemoveConnection.map(_.removeConnectionAdditionalInfo).getOrElse(Some("")),
       Instant.now(),
-      sessionRemoveConnection.flatMap(_.pastConnectionType.map(_.name)) match {
+      session.removeConnectionDetails.map(_.pastConnectionType.map(_.name)) match {
         case Some(_) => true
         case None    => false
       },
-      Some(request.messages.lang.language)
+      Some(Audit.language)
     )
 
     submissionConnector.submitNotConnected(session.referenceNumber, submission)
