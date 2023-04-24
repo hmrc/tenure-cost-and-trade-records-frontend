@@ -208,6 +208,21 @@ class SaveAsDraftControllerSpec extends TestBaseSpec {
     }
   }
 
+  "SaveAsDraftController.timeout" should {
+    "save SubmissionDraft with generated password and redirect to session timeout page" in {
+      val refNum = submissionDraft.session.referenceNumber
+      sessionRepo.saveOrUpdate(submissionDraft.session)
+
+      val result = saveAsDraftController.timeout(exitPath)(fakeRequest)
+      status(result) shouldBe SEE_OTHER
+      redirectLocation(result) shouldBe Some(routes.Application.sessionTimeout().url)
+
+      val session = backendConnector.loadSubmissionDraft(refNum).futureValue.get.session
+      session.address shouldBe submissionDraft.session.address
+      session.saveAsDraftPassword.getOrElse("") should have length 7
+    }
+  }
+
   private def checkCustomUserPasswordForm(content: String, expectedErrors: Seq[String] = Seq.empty): Unit = {
     content should include("saveAsDraft.createPassword.header")
     content should include("""name="password"""")

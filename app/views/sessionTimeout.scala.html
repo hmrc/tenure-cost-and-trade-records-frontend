@@ -14,11 +14,26 @@
  * limitations under the License.
  *@
 
-@this()
+@this(layout: Layout)
 
 @()(implicit request: Request[_],  messages: Messages)
 
+@layout(
+  pageHeading = messages("saveAsDraft.preHeaderTimeout"),
+  showH1 = false,
+  withTimeoutDialog = false
+) {
 
-<p class="govuk-body">@messages("sessionTimeout.copy")</p>
+  <h1 class="govuk-heading-l">@messages("saveAsDraft.preHeaderTimeout")</h1>
 
-<p class="govuk-body"><a class="govuk-link" href="@routes.LoginController.show().url">@messages("sessionTimeout.button")</a></p>
+  <p class="govuk-body">@messages("sessionTimeout.copy")</p>
+
+  @if(request.session.get("generatedPassword").isDefined) {
+   <p class="govuk-body">Password: <b>@request.session("generatedPassword")</b></p>
+  }
+
+  <p class="govuk-body">
+    <a class="govuk-button" href=@routes.LoginController.show>@messages("sessionTimeout.button")</a>
+  </p>
+
+}

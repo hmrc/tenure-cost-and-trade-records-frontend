@@ -27,7 +27,7 @@ import play.api.mvc.{MessagesControllerComponents, Request, Result}
 import repositories.SessionRepo
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import util.DateUtil
+import util.{AlphanumericPasswordGenerator, DateUtil}
 import views.html.{customPasswordSaveAsDraft, saveAsDraftLogin, submissionDraftSaved}
 
 import java.time.LocalDate
@@ -123,6 +123,19 @@ class SaveAsDraftController @Inject() (
   def startAgain = (Action andThen withSessionRefiner).async { implicit request =>
     backendConnector.deleteSubmissionDraft(request.sessionData.referenceNumber)
     Redirect(LoginController.startPage)
+  }
+
+  def timeout(exitPath: String) = (Action andThen withSessionRefiner).async { implicit request =>
+    val generatedPassword = AlphanumericPasswordGenerator.generatePassword
+    val session           = request.sessionData.copy(saveAsDraftPassword = generatedPassword)
+
+    for {
+      _ <- saveSubmissionDraft(session, exitPath)
+      _ <- sessionRepo.remove()
+    } yield {
+      audit.sendExplicitAudit("UserTimeout", session.toUserData)
+      Redirect(routes.Application.sessionTimeout()).withSession("generatedPassword" -> generatedPassword)
+    }
   }
 
 }

@@ -17,7 +17,7 @@
 package connectors
 
 import com.google.inject.ImplementedBy
-import models.audit.{ContinueNextPageData, SavedAsDraftEvent, UserData}
+import models.audit.{ContinueNextPageData, SavedAsDraftEvent}
 import play.api.i18n.Messages
 import play.api.libs.json.{JsObject, Json}
 import uk.gov.hmrc.http.HeaderCarrier
