@@ -759,10 +759,11 @@ saveAsDraft.createPassword.header=Creu cyfrinair i adfer eich gwybodaeth
 saveAsDraft.next=Cadw cyfrinair
 saveAsDraft.continue=Parhewch i lenwi’r ffurflen hon
 saveAsDraft.logout=Allgofnodi
-saveAsDraft.pleaseEnterPassword=Rhowch eich cyfrinair
+saveAsDraft.retrieveYourDraft=Adalw eich drafft
 saveAsDraft.passwordHint=Hwn fydd y cyfrinair a grëwyd gennych neu’r un a roddwyd ichi pan gawsoch eich amseru o’r gwasanaeth.
 saveAsDraft.error.invalidPassword=Nid yw’r cyfrinair a roddwyd gennych yn gywir
 saveAsDraft.startAgain=Dechrau’r ffurflen eto
+saveAsDraft.timeout.login=Mewngofnodwch eto
 
 # Errors
 ########

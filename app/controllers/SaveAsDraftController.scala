@@ -28,7 +28,7 @@ import repositories.SessionRepo
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import util.{AlphanumericPasswordGenerator, DateUtil}
-import views.html.{customPasswordSaveAsDraft, saveAsDraftLogin, submissionDraftSaved}
+import views.html.{customPasswordSaveAsDraft, saveAsDraftLogin, sessionTimeout, submissionDraftSaved}
 
 import java.time.LocalDate
 import javax.inject.{Inject, Named, Singleton}
@@ -43,6 +43,7 @@ class SaveAsDraftController @Inject() (
   customPasswordSaveAsDraftView: customPasswordSaveAsDraft,
   submissionDraftSavedView: submissionDraftSaved,
   saveAsDraftLoginView: saveAsDraftLogin,
+  sessionTimeoutView: sessionTimeout,
   dateUtil: DateUtil,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") sessionRepo: SessionRepo,
@@ -134,8 +135,13 @@ class SaveAsDraftController @Inject() (
       _ <- sessionRepo.remove()
     } yield {
       audit.sendExplicitAudit("UserTimeout", session.toUserData)
-      Redirect(routes.Application.sessionTimeout()).withSession("generatedPassword" -> generatedPassword)
+      Redirect(routes.SaveAsDraftController.sessionTimeout).withSession("generatedPassword" -> generatedPassword)
     }
+  }
+
+  def sessionTimeout = Action { implicit request =>
+    val generatedPassword = request.session.get("generatedPassword").getOrElse("")
+    Ok(sessionTimeoutView(generatedPassword, expiryDate))
   }
 
 }
