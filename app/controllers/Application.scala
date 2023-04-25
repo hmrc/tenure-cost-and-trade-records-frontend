@@ -19,7 +19,7 @@ package controllers
 import config.AppConfig
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.{sessionTimeout, start}
+import views.html.start
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
 
@@ -27,8 +27,7 @@ import scala.concurrent.Future
 class Application @Inject() (
   mcc: MessagesControllerComponents,
   appConfig: AppConfig,
-  start: start,
-  sessionTimeoutView: sessionTimeout
+  start: start
 ) extends FrontendController(mcc) {
 
   val index: Action[AnyContent] = Action.async { implicit request =>
@@ -38,7 +37,5 @@ class Application @Inject() (
       Future.successful(Ok(start()))
     }
   }
-
-  def sessionTimeout = Action(implicit request => Ok(sessionTimeoutView()))
 
 }

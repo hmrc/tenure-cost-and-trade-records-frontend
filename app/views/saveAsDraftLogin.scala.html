@@ -33,13 +33,13 @@
 @(form: Form[String])(implicit request: Request[_], messages: Messages)
 
 @layout(
-    pageHeading = messages("saveAsDraft.pleaseEnterPassword"),
+    pageHeading = messages("saveAsDraft.retrieveYourDraft"),
     showH1 = false,
     theForm = form,
     withTimeoutDialog = false
 ) {
 
-    <h1 class="govuk-heading-l">@messages("saveAsDraft.pleaseEnterPassword")</h1>
+    <h1 class="govuk-heading-l">@messages("saveAsDraft.retrieveYourDraft")</h1>
 
     @formWithCSRF(action = routes.SaveAsDraftController.resume) {
         @govukInput(
