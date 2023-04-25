@@ -14,6 +14,9 @@ button.label.save = Save as draft
 label.checkTheForm = There is a problem
 error.title = Error:
 hintText.optional = (optional)
+label.account.ref=Reference
+label.account.property=Property
+label.underReview=(under review)
 
 # SESSION TIMEOUT
 #################

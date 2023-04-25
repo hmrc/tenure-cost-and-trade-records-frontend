@@ -14,6 +14,9 @@ button.label.save = Cadw fel drafft
 label.checkTheForm = Mae problem wedi codi
 error.title = Gwall:
 hintText.optional = (opsiynol)
+label.account.ref=Reference
+label.account.property=Property
+label.underReview=(under review)
 
 # SESSION TIMEOUT
 #################

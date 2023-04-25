@@ -29,8 +29,7 @@
 @import views.html.helper.CSPNonce
 @import uk.gov.hmrc.govukfrontend.views.html.components.TwoThirdsMainContent
 @import views.html.govuk.FullWidthMainContent
-
-
+@import models.pages.Summary
 
 
 @this(
@@ -58,6 +57,8 @@
         showFeedback: Boolean = true,
         showH1: Boolean = true,
         showSection: Boolean = false,
+        showAccountInfo: Boolean = false,
+        summary: Option[Summary] = None,
         sectionName: Option[String] = None,
         backLinkUrl: Option[String] = None,
         beforeContentBlock: Option[Html] = None,
@@ -74,6 +75,10 @@
                 content = HtmlContent(messages("phase.text", s"dummy.url"))
             )
             )
+    }
+
+    @if(showAccountInfo && summary.isDefined){
+        @views.html.includes.account_info_header(summary.get)
     }
 
     @hmrcLanguageSelectHelper()

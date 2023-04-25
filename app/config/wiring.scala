@@ -24,10 +24,17 @@ import uk.gov.hmrc.http._
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.ExecutionContext
 
+object SessionId {
+  def apply(implicit hc: HeaderCarrier): String = hc.sessionId.map(_.value).getOrElse(throw SessionIdMissing())
+}
+
+case class SessionIdMissing() extends Exception
+
 /**
   * Temporal solution before we move all login logic to separate service class.
   * This allow us to test login controller without starting google guice.
   */
+
 @ImplementedBy(classOf[DefaultLoginToBackendAction])
 trait LoginToBackendAction {
   def apply(implicit hc: HeaderCarrier, ec: ExecutionContext): LoginToBackend
