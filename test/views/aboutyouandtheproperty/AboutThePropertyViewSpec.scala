@@ -17,6 +17,7 @@
 package views.aboutyouandtheproperty
 
 import form.aboutyouandtheproperty.AboutThePropertyForm
+import models.pages.Summary
 import models.submissions.aboutyouandtheproperty._
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
@@ -29,15 +30,17 @@ class AboutThePropertyViewSpec extends QuestionViewBehaviours[PropertyDetails] {
 
   override val form: Form[PropertyDetails] = AboutThePropertyForm.aboutThePropertyForm
 
-  def createView: () => Html = () => aboutThePropertyView(form, "FOR6010")(fakeRequest, messages)
+  def createView: () => Html = () =>
+    aboutThePropertyView(form, "FOR6010", Summary("99996010001"))(fakeRequest, messages)
 
   def createViewUsingForm: Form[PropertyDetails] => Html = (form: Form[PropertyDetails]) =>
-    aboutThePropertyView(form, "FOR6010")(fakeRequest, messages)
+    aboutThePropertyView(form, "FOR6010", Summary("99996010001"))(fakeRequest, messages)
 
-  def createView6015: () => Html = () => aboutThePropertyView(form, "FOR6015")(fakeRequest, messages)
+  def createView6015: () => Html = () =>
+    aboutThePropertyView(form, "FOR6015", Summary("99996010001"))(fakeRequest, messages)
 
   def createViewUsingForm6015: Form[PropertyDetails] => Html = (form: Form[PropertyDetails]) =>
-    aboutThePropertyView(form, "FOR6015")(fakeRequest, messages)
+    aboutThePropertyView(form, "FOR6015", Summary("99996010001"))(fakeRequest, messages)
 
   "About the property view" must {
 

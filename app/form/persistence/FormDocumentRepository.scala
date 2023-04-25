@@ -36,59 +36,55 @@ trait FormDocumentRepository {
 
 @Singleton
 class SessionScopedFormDocumentRepository @Inject() (cache: MongoSessionRepository)(implicit ec: ExecutionContext)
-  extends FormDocumentRepository {
+    extends FormDocumentRepository {
 
-  override def findById(documentId: String, referenceNumber: String): Future[Option[Document]] = {
+  override def findById(documentId: String, referenceNumber: String): Future[Option[Document]] =
     cache.fetchAndGetEntry[DocumentWrapper](documentId, referenceNumber).flatMap {
       case Some(dw) =>
         val doc = Json.parse(Base64.getDecoder.decode(dw.b64JsonBlob.getBytes("UTF-8"))).as[Document]
         Some(addBackDotsIntoKeyNames(doc))
-      case None => None
-    } recoverWith {
-      case _ =>
-        cache.fetchAndGetEntry[Document](documentId, referenceNumber).map {
-          case Some(doc) => Some(addBackDotsIntoKeyNames(doc))
-          case None => None
-        }
+      case None     => None
+    } recoverWith { case _ =>
+      cache.fetchAndGetEntry[Document](documentId, referenceNumber).map {
+        case Some(doc) => Some(addBackDotsIntoKeyNames(doc))
+        case None      => None
+      }
     }
-  }
 
   private def addBackDotsIntoKeyNames(doc: Document) = doc.copy(
-    pages = doc.pages.map { p =>  p.copy(fields = p.fields.map(kv => (kv._1.replace("___", "."), kv._2)))  }
+    pages = doc.pages.map(p => p.copy(fields = p.fields.map(kv => (kv._1.replace("___", "."), kv._2))))
   )
 
-  override def updatePage(documentId: String, referenceNumber: String, page: Page): Future[Unit] = {
+  override def updatePage(documentId: String, referenceNumber: String, page: Page): Future[Unit] =
     findById(documentId, referenceNumber) flatMap {
       case Some(doc) => store(documentId, referenceNumber, doc.add(page))
-      case None => ()
+      case None      => ()
     }
-  }
 
   private def stripDotsOutOfKeyNamesToAppeaseMongo(doc: Document) = doc.copy(
-    pages = doc.pages.map { p =>  p.copy(fields = p.fields.map(kv => (kv._1.replace(".", "___"), kv._2)))  }
+    pages = doc.pages.map(p => p.copy(fields = p.fields.map(kv => (kv._1.replace(".", "___"), kv._2))))
   )
 
   override def store(documentId: String, referenceNumber: String, doc: Document): Future[Unit] = {
     val dw = DocumentWrapper(toB64Blob(stripDotsOutOfKeyNamesToAppeaseMongo(doc)))
-    cache.cache[DocumentWrapper](documentId, referenceNumber, dw) recoverWith {
-      case e: Exception =>
-        Future.failed(e)
+    cache.cache[DocumentWrapper](documentId, referenceNumber, dw) recoverWith { case e: Exception =>
+      Future.failed(e)
     } map { _ => () }
   }
 
   // Important: B64 the json string because the json encryptor dramatically multiplies the document size when containing UTF-8 causing 413 in caching client
-  private def toB64Blob(doc: Document) = new String(Base64.getEncoder.encode(Json.stringify(Json.toJson(doc)).getBytes("UTF-8")))
+  private def toB64Blob(doc: Document) = new String(
+    Base64.getEncoder.encode(Json.stringify(Json.toJson(doc)).getBytes("UTF-8"))
+  )
 
-  override def clear(documentId: String, referenceNumber: String): Future[Unit] = {
+  override def clear(documentId: String, referenceNumber: String): Future[Unit] =
     findById(documentId, referenceNumber) flatMap {
       case Some(doc) => store(documentId, referenceNumber, doc.copy(pages = Seq.empty))
-      case None => ()
+      case None      => ()
     }
-  }
 
-  override def remove(documentId: String): Future[Unit] = {
+  override def remove(documentId: String): Future[Unit] =
     cache.removeCache(documentId)
-  }
 }
 
 object DocumentWrapper {

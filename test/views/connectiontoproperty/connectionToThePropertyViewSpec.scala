@@ -17,6 +17,7 @@
 package views.connectiontoproperty
 
 import form.connectiontoproperty.ConnectionToThePropertyForm
+import models.pages.Summary
 import models.submissions.connectiontoproperty.{ConnectionToProperty, ConnectionToThePropertyOccupierAgent, ConnectionToThePropertyOccupierTrustee, ConnectionToThePropertyOwnerAgent, ConnectionToThePropertyOwnerTrustee}
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
@@ -30,10 +31,10 @@ class connectionToThePropertyViewSpec extends QuestionViewBehaviours[ConnectionT
 
   val backLink = controllers.connectiontoproperty.routes.AreYouStillConnectedController.show().url
 
-  def createView = () => connectionToThePropertyView(form, backLink)(fakeRequest, messages)
+  def createView = () => connectionToThePropertyView(form, backLink, Summary("99996010001"))(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[ConnectionToProperty]) =>
-    connectionToThePropertyView(form, backLink)(fakeRequest, messages)
+    connectionToThePropertyView(form, backLink, Summary("99996010001"))(fakeRequest, messages)
 
   "Connection to property view" must {
 

@@ -19,6 +19,7 @@ package views.aboutyouandtheproperty
 import form.aboutyouandtheproperty.AboutYouForm
 import models.submissions.aboutyouandtheproperty.CustomerDetails
 import org.scalatest.matchers.must.Matchers._
+import models.pages.Summary
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
@@ -28,9 +29,10 @@ class AboutYouViewSpec extends QuestionViewBehaviours[CustomerDetails] {
 
   override val form = AboutYouForm.aboutYouForm
 
-  def createView = () => aboutYouView(form)(fakeRequest, messages)
+  def createView = () => aboutYouView(form, Summary("99996010001"))(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[CustomerDetails]) => aboutYouView(form)(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[CustomerDetails]) =>
+    aboutYouView(form, Summary("99996010001"))(fakeRequest, messages)
 
   "About you view" must {
 

@@ -20,5 +20,5 @@ import models.submissions.common.Address
 
 case class Summary(
   referenceNumber: String,
-  address: Option[Address] = None,
-  )
+  address: Option[Address] = None
+)

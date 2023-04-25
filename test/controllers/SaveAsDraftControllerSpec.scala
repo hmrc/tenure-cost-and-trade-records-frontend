@@ -214,11 +214,11 @@ class SaveAsDraftControllerSpec extends TestBaseSpec {
       sessionRepo.saveOrUpdate(submissionDraft.session)
 
       val result = saveAsDraftController.timeout(exitPath)(fakeRequest)
-      status(result) shouldBe SEE_OTHER
+      status(result)           shouldBe SEE_OTHER
       redirectLocation(result) shouldBe Some(routes.Application.sessionTimeout().url)
 
       val session = backendConnector.loadSubmissionDraft(refNum).futureValue.get.session
-      session.address shouldBe submissionDraft.session.address
+      session.address                         shouldBe submissionDraft.session.address
       session.saveAsDraftPassword.getOrElse("") should have length 7
     }
   }

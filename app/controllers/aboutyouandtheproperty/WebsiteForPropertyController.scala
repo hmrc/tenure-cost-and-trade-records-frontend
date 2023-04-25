@@ -27,7 +27,7 @@ import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import views.html.aboutyouandtheproperty.websiteForProperty
-
+import models.pages.Summary
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
 
@@ -48,7 +48,8 @@ class WebsiteForPropertyController @Inject() (
           request.sessionData.aboutYouAndTheProperty.flatMap(_.websiteForPropertyDetails) match {
             case Some(websiteForPropertyDetails) => websiteForPropertyForm.fillAndValidate(websiteForPropertyDetails)
             case _                               => websiteForPropertyForm
-          }
+          },
+          Summary(request.sessionData.referenceNumber, Some(request.sessionData.address))
         )
       )
     )
@@ -58,7 +59,13 @@ class WebsiteForPropertyController @Inject() (
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[WebsiteForPropertyDetails](
       websiteForPropertyForm,
-      formWithErrors => BadRequest(websiteForPropertyView(formWithErrors)),
+      formWithErrors =>
+        BadRequest(
+          websiteForPropertyView(
+            formWithErrors,
+            Summary(request.sessionData.referenceNumber, Some(request.sessionData.address))
+          )
+        ),
       data => {
         val updatedData = updateAboutYouAndTheProperty(_.copy(websiteForPropertyDetails = Some(data)))
         session.saveOrUpdate(updatedData)

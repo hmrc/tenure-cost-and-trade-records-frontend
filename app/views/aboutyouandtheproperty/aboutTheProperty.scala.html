@@ -33,6 +33,7 @@
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Checkboxes
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.checkboxes.CheckboxItem
 @import uk.gov.hmrc.govukfrontend.views.Aliases.HtmlContent
+@import models.pages.Summary
 
 @this(layout: Layout,
   govukButton: GovukButton,
@@ -43,7 +44,7 @@
   formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[PropertyDetails], forType: String)(implicit request: Request[_], messages: Messages)
+@(theForm: Form[PropertyDetails], forType: String, summary: Summary)(implicit request: Request[_], messages: Messages)
 
 @content = {
   @if(forType.equals(ForTypes.for6010) || forType.equals(ForTypes.for6011)) {
@@ -154,6 +155,8 @@
   pageHeading = messages("aboutProperty.heading"),
   showH1 = false,
   showSection = true,
+  summary = Some(summary),
+  showAccountInfo = true,
   sectionName = messages("label.section.aboutTheProperty"),
   backLinkUrl = controllers.aboutyouandtheproperty.routes.AboutYouController.show.url,
   theForm = theForm

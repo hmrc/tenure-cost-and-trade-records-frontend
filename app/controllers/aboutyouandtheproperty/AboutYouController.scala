@@ -38,16 +38,13 @@ import scala.concurrent.Future
 
 @Singleton
 class AboutYouController @Inject() (
-                                     repository: FormDocumentRepository,
-                                     mcc: MessagesControllerComponents,
-                                     navigator: AboutYouAndThePropertyNavigator,
-                                     aboutYouView: aboutYou,
-                                     withSessionRefiner: WithSessionRefiner,
-                                     @Named("session") val session: SessionRepo
+  mcc: MessagesControllerComponents,
+  navigator: AboutYouAndThePropertyNavigator,
+  aboutYouView: aboutYou,
+  withSessionRefiner: WithSessionRefiner,
+  @Named("session") val session: SessionRepo
 ) extends FORDataCaptureController(mcc)
     with I18nSupport {
-
-
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Future.successful(
@@ -57,18 +54,19 @@ class AboutYouController @Inject() (
             case Some(customerDetails) => aboutYouForm.fillAndValidate(customerDetails)
             case _                     => aboutYouForm
           },
-          Summary(request.sessionData.referenceNumber, Some(request.sessionData.address)
+          Summary(request.sessionData.referenceNumber, Some(request.sessionData.address))
         )
       )
-    )
     )
   }
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[CustomerDetails](
       aboutYouForm,
-      formWithErrors => BadRequest(aboutYouView(formWithErrors, Summary(request.sessionData.referenceNumber, Some(request.sessionData.address))
-      )),
+      formWithErrors =>
+        BadRequest(
+          aboutYouView(formWithErrors, Summary(request.sessionData.referenceNumber, Some(request.sessionData.address)))
+        ),
       data => {
         val updatedData = updateAboutYouAndTheProperty(_.copy(customerDetails = Some(data)))
         session.saveOrUpdate(updatedData)

@@ -21,6 +21,7 @@ import controllers.FORDataCaptureController
 import form.aboutyouandtheproperty.AboutThePropertyForm.aboutThePropertyForm
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty.updateAboutYouAndTheProperty
 import models.submissions.aboutyouandtheproperty.PropertyDetails
+import models.pages.Summary
 import navigation.AboutYouAndThePropertyNavigator
 import navigation.identifiers.AboutThePropertyPageId
 import play.api.i18n.I18nSupport
@@ -49,7 +50,8 @@ class AboutThePropertyController @Inject() (
             case Some(propertyDetails) => aboutThePropertyForm.fillAndValidate(propertyDetails)
             case _                     => aboutThePropertyForm
           },
-          request.sessionData.forType
+          request.sessionData.forType,
+          Summary(request.sessionData.referenceNumber, Some(request.sessionData.address))
         )
       )
     )
@@ -58,7 +60,14 @@ class AboutThePropertyController @Inject() (
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[PropertyDetails](
       aboutThePropertyForm,
-      formWithErrors => BadRequest(aboutThePropertyView(formWithErrors, request.sessionData.forType)),
+      formWithErrors =>
+        BadRequest(
+          aboutThePropertyView(
+            formWithErrors,
+            request.sessionData.forType,
+            Summary(request.sessionData.referenceNumber, Some(request.sessionData.address))
+          )
+        ),
       data => {
         val updatedData = updateAboutYouAndTheProperty(_.copy(propertyDetails = Some(data)))
         session.saveOrUpdate(updatedData)
