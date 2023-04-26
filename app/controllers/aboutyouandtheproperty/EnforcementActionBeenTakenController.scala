@@ -29,7 +29,6 @@ import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import views.html.aboutyouandtheproperty.enforcementActionBeenTaken
-import models.pages.Summary
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
@@ -54,7 +53,7 @@ class EnforcementActionBeenTakenController @Inject() (
             case _                       => enforcementActionForm
           },
           getBackLink(request.sessionData),
-          Summary(request.sessionData.referenceNumber, Some(request.sessionData.address))
+          request.sessionData.toSummary
         )
       )
     )
@@ -68,7 +67,7 @@ class EnforcementActionBeenTakenController @Inject() (
           enforcementActionBeenTakenView(
             formWithErrors,
             getBackLink(request.sessionData),
-            Summary(request.sessionData.referenceNumber, Some(request.sessionData.address))
+            request.sessionData.toSummary
           )
         ),
       data => {

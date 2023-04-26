@@ -27,7 +27,6 @@ import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import views.html.aboutfranchisesorlettings.cateringOperationOrLettingAccommodationRentDetails
-import models.pages.Summary
 
 import javax.inject.{Inject, Named, Singleton}
 
@@ -54,7 +53,7 @@ class LettingOtherPartOfPropertyDetailsRentController @Inject() (
           "lettingOtherPartOfPropertyRentDetails",
           existingSection.get.lettingOtherPartOfPropertyInformationDetails.operatorName,
           controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsController.show().url,
-          Summary(request.sessionData.referenceNumber, Some(request.sessionData.address))
+          request.sessionData.toSummary
         )
       )
     }
@@ -73,7 +72,7 @@ class LettingOtherPartOfPropertyDetailsRentController @Inject() (
             "lettingOtherPartOfPropertyRentDetails",
             existingSection.lettingOtherPartOfPropertyInformationDetails.operatorName,
             controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsController.show().url,
-            Summary(request.sessionData.referenceNumber, Some(request.sessionData.address))
+            request.sessionData.toSummary
           )
         ),
       data =>

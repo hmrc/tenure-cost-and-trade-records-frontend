@@ -27,7 +27,6 @@ import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import views.html.aboutyouandtheproperty.tiedForGoodsDetails
-import models.pages.Summary
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
@@ -50,7 +49,7 @@ class TiedForGoodsDetailsController @Inject() (
             case Some(tiedForGoodsDetails) => tiedForGoodsDetailsForm.fillAndValidate(tiedForGoodsDetails)
             case _                         => tiedForGoodsDetailsForm
           },
-          Summary(request.sessionData.referenceNumber, Some(request.sessionData.address))
+          request.sessionData.toSummary
         )
       )
     )
@@ -63,7 +62,7 @@ class TiedForGoodsDetailsController @Inject() (
         BadRequest(
           tiedForGoodsDetailsView(
             formWithErrors,
-            Summary(request.sessionData.referenceNumber, Some(request.sessionData.address))
+            request.sessionData.toSummary
           )
         ),
       data => {

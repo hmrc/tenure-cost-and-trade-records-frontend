@@ -20,7 +20,6 @@ import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
 import form.aboutyouandtheproperty.PremisesLicenseConditionsForm.premisesLicenseConditionsForm
 import models.Session
-import models.pages.Summary
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty.updateAboutYouAndTheProperty
 import models.submissions.common.AnswersYesNo
 import navigation.AboutYouAndThePropertyNavigator
@@ -54,7 +53,7 @@ class PremisesLicenseConditionsController @Inject() (
             case _                     => premisesLicenseConditionsForm
           },
           getBackLink(request.sessionData),
-          Summary(request.sessionData.referenceNumber, Some(request.sessionData.address))
+          request.sessionData.toSummary
         )
       )
     )
@@ -68,7 +67,7 @@ class PremisesLicenseConditionsController @Inject() (
           premisesLicenseView(
             formWithErrors,
             getBackLink(request.sessionData),
-            Summary(request.sessionData.referenceNumber, Some(request.sessionData.address))
+            request.sessionData.toSummary
           )
         ),
       data => {

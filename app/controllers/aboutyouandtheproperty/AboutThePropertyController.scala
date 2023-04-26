@@ -21,7 +21,6 @@ import controllers.FORDataCaptureController
 import form.aboutyouandtheproperty.AboutThePropertyForm.aboutThePropertyForm
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty.updateAboutYouAndTheProperty
 import models.submissions.aboutyouandtheproperty.PropertyDetails
-import models.pages.Summary
 import navigation.AboutYouAndThePropertyNavigator
 import navigation.identifiers.AboutThePropertyPageId
 import play.api.i18n.I18nSupport
@@ -51,7 +50,7 @@ class AboutThePropertyController @Inject() (
             case _                     => aboutThePropertyForm
           },
           request.sessionData.forType,
-          Summary(request.sessionData.referenceNumber, Some(request.sessionData.address))
+          request.sessionData.toSummary
         )
       )
     )
@@ -65,7 +64,7 @@ class AboutThePropertyController @Inject() (
           aboutThePropertyView(
             formWithErrors,
             request.sessionData.forType,
-            Summary(request.sessionData.referenceNumber, Some(request.sessionData.address))
+            request.sessionData.toSummary
           )
         ),
       data => {

@@ -24,7 +24,6 @@ import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import views.html.aboutfranchisesorlettings.cateringOperationOrLettingAccommodationRentIncludes
-import models.pages.Summary
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
@@ -48,7 +47,7 @@ class LettingOtherPartOfPropertyRentIncludesController @Inject() (
           "lettingOtherPartOfPropertyCheckboxesDetails",
           existingSection.get.lettingOtherPartOfPropertyInformationDetails.operatorName,
           controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsRentController.show(index).url,
-          Summary(request.sessionData.referenceNumber, Some(request.sessionData.address))
+          request.sessionData.toSummary
         )
       )
     )

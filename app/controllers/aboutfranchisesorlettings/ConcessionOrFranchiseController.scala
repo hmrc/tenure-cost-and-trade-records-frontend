@@ -27,7 +27,6 @@ import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import views.html.aboutfranchisesorlettings.cateringOperationOrLettingAccommodation
-import models.pages.Summary
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
@@ -53,7 +52,7 @@ class ConcessionOrFranchiseController @Inject() (
           },
           "concessionOrFranchise",
           controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show().url,
-          Summary(request.sessionData.referenceNumber, Some(request.sessionData.address))
+          request.sessionData.toSummary
         )
       )
     )
@@ -68,7 +67,7 @@ class ConcessionOrFranchiseController @Inject() (
             formWithErrors,
             "concessionOrFranchise",
             controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show().url,
-            Summary(request.sessionData.referenceNumber, Some(request.sessionData.address))
+            request.sessionData.toSummary
           )
         ),
       data => {

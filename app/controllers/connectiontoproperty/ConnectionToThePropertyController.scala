@@ -20,7 +20,6 @@ import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
 import form.connectiontoproperty.ConnectionToThePropertyForm.connectionToThePropertyForm
 import models.Session
-import models.pages.Summary
 import models.submissions.connectiontoproperty.ConnectionToProperty
 import navigation.ConnectionToPropertyNavigator
 import navigation.identifiers.ConnectionToPropertyPageId
@@ -59,7 +58,7 @@ class ConnectionToThePropertyController @Inject() (
               logger.warn(s"Navigation for connection to property page reached with error: $msg")
               throw new RuntimeException(s"Navigation for connection to property page reached with error $msg")
           },
-          Summary(request.sessionData.referenceNumber, Some(request.sessionData.address))
+          request.sessionData.toSummary
         )
       )
     )
@@ -73,7 +72,7 @@ class ConnectionToThePropertyController @Inject() (
           connectionToThePropertyView(
             formWithErrors,
             controllers.connectiontoproperty.routes.AreYouStillConnectedController.show().url,
-            Summary(request.sessionData.referenceNumber, Some(request.sessionData.address))
+            request.sessionData.toSummary
           )
         ),
       data => {

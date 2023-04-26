@@ -29,7 +29,6 @@ import play.api.i18n.Lang.logger
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import views.html.aboutfranchisesorlettings.cateringOperationOrLettingAccommodationDetails
-import models.pages.Summary
 
 import javax.inject.{Inject, Named, Singleton}
 
@@ -67,7 +66,7 @@ class CateringOperationDetailsController @Inject() (
               s"Navigation for catering operation details page reached with error $msg"
             )
         },
-        Summary(request.sessionData.referenceNumber, Some(request.sessionData.address))
+        request.sessionData.toSummary
       )
     )
   }
@@ -89,7 +88,7 @@ class CateringOperationDetailsController @Inject() (
                   s"Navigation for catering operation details page reached with error $msg"
                 )
             },
-            Summary(request.sessionData.referenceNumber, Some(request.sessionData.address))
+            request.sessionData.toSummary
           )
         ),
       data => {

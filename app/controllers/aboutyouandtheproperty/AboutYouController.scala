@@ -19,7 +19,6 @@ package controllers.aboutyouandtheproperty
 import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
 import form.aboutyouandtheproperty.AboutYouForm.aboutYouForm
-import models.pages.Summary
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty.updateAboutYouAndTheProperty
 import models.submissions.aboutyouandtheproperty.CustomerDetails
 import navigation.AboutYouAndThePropertyNavigator
@@ -50,7 +49,7 @@ class AboutYouController @Inject() (
             case Some(customerDetails) => aboutYouForm.fillAndValidate(customerDetails)
             case _                     => aboutYouForm
           },
-          Summary(request.sessionData.referenceNumber, Some(request.sessionData.address))
+          request.sessionData.toSummary
         )
       )
     )
@@ -61,7 +60,7 @@ class AboutYouController @Inject() (
       aboutYouForm,
       formWithErrors =>
         BadRequest(
-          aboutYouView(formWithErrors, Summary(request.sessionData.referenceNumber, Some(request.sessionData.address)))
+          aboutYouView(formWithErrors, request.sessionData.toSummary)
         ),
       data => {
         val updatedData = updateAboutYouAndTheProperty(_.copy(customerDetails = Some(data)))

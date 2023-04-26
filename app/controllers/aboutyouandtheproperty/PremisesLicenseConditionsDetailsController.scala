@@ -27,7 +27,6 @@ import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import views.html.aboutyouandtheproperty.premisesLicenseConditionsDetails
-import models.pages.Summary
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
@@ -51,7 +50,7 @@ class PremisesLicenseConditionsDetailsController @Inject() (
               premisesLicenceDetailsForm.fillAndValidate(premisesLicenseInformation)
             case _                                => premisesLicenceDetailsForm
           },
-          Summary(request.sessionData.referenceNumber, Some(request.sessionData.address))
+          request.sessionData.toSummary
         )
       )
     )
@@ -64,7 +63,7 @@ class PremisesLicenseConditionsDetailsController @Inject() (
         BadRequest(
           premisesLicenseConditionsView(
             formWithErrors,
-            Summary(request.sessionData.referenceNumber, Some(request.sessionData.address))
+            request.sessionData.toSummary
           )
         ),
       data => {

@@ -27,7 +27,6 @@ import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import views.html.aboutyouandtheproperty.licensableActivities
-import models.pages.Summary
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
@@ -50,7 +49,7 @@ class LicensableActivitiesController @Inject() (
             case Some(licensableActivities) => licensableActivitiesForm.fillAndValidate(licensableActivities)
             case _                          => licensableActivitiesForm
           },
-          Summary(request.sessionData.referenceNumber, Some(request.sessionData.address))
+          request.sessionData.toSummary
         )
       )
     )
@@ -63,7 +62,7 @@ class LicensableActivitiesController @Inject() (
         BadRequest(
           licensableActivitiesView(
             formWithErrors,
-            Summary(request.sessionData.referenceNumber, Some(request.sessionData.address))
+            request.sessionData.toSummary
           )
         ),
       data => {

@@ -27,7 +27,6 @@ import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import views.html.aboutfranchisesorlettings.franchiseOrLettingsTiedToProperty
-import models.pages.Summary
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
@@ -52,7 +51,7 @@ class FranchiseOrLettingsTiedToPropertyController @Inject() (
             case _                                        => franchiseOrLettingsTiedToPropertyForm
           },
           request.sessionData.stillConnectedDetails.flatMap(_.connectionToProperty).toString,
-          Summary(request.sessionData.referenceNumber, Some(request.sessionData.address))
+          request.sessionData.toSummary
         )
       )
     )
@@ -66,7 +65,7 @@ class FranchiseOrLettingsTiedToPropertyController @Inject() (
           franchiseOrLettingsTiedToPropertyView(
             formWithErrors,
             request.sessionData.forType,
-            Summary(request.sessionData.referenceNumber, Some(request.sessionData.address))
+            request.sessionData.toSummary
           )
         ),
       data => {
