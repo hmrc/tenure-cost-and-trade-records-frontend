@@ -26,6 +26,7 @@ import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import views.html.aboutyouandtheproperty.checkYourAnswersAboutTheProperty
 import views.html.taskList
+import models.pages.Summary
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
@@ -50,7 +51,8 @@ class CheckYourAnswersAboutThePropertyController @Inject() (
               checkYourAnswersAboutThePropertyForm.fillAndValidate(checkYourAnswersAboutTheProperty)
             case _                                      => checkYourAnswersAboutThePropertyForm
           },
-          getBackLink(request.sessionData)
+          getBackLink(request.sessionData),
+          Summary(request.sessionData.referenceNumber, Some(request.sessionData.address))
         )
       )
     )

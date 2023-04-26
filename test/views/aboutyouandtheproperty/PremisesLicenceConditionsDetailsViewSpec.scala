@@ -17,6 +17,7 @@
 package views.aboutyouandtheproperty
 
 import form.aboutyouandtheproperty.PremisesLicenseConditionsDetailsForm
+import models.pages.Summary
 import models.submissions.aboutyouandtheproperty.PremisesLicenseConditionsDetails
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
@@ -30,10 +31,12 @@ class PremisesLicenceConditionsDetailsViewSpec extends QuestionViewBehaviours[Pr
   override val form: Form[PremisesLicenseConditionsDetails] =
     PremisesLicenseConditionsDetailsForm.premisesLicenceDetailsForm
 
-  def createView: () => Html = () => premisesLicenceConditionsDetailsView(form)(fakeRequest, messages)
+  def createView: () => Html = () =>
+    premisesLicenceConditionsDetailsView(form, Summary("99996010001"))(fakeRequest, messages)
 
   def createViewUsingForm: Form[PremisesLicenseConditionsDetails] => Html =
-    (form: Form[PremisesLicenseConditionsDetails]) => premisesLicenceConditionsDetailsView(form)(fakeRequest, messages)
+    (form: Form[PremisesLicenseConditionsDetails]) =>
+      premisesLicenceConditionsDetailsView(form, Summary("99996010001"))(fakeRequest, messages)
 
   "Property licence conditions details view" must {
 

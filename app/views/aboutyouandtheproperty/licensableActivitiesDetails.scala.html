@@ -19,6 +19,7 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
+@import models.pages.Summary
 
 @this(layout: Layout,
   govukButton: GovukButton,
@@ -27,13 +28,14 @@
   formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[LicensableActivitiesInformationDetails])(implicit request: Request[_], messages: Messages)
+@(theForm: Form[LicensableActivitiesInformationDetails], summary: Summary)(implicit request: Request[_], messages: Messages)
 
 @layout(
   pageHeading = messages("licensableActivitiesDetails.heading"),
   showH1 = false,
   showSection = true,
   sectionName = messages("label.section.aboutTheProperty"),
+    summary = Some(summary),
   backLinkUrl = controllers.aboutyouandtheproperty.routes.LicensableActivitiesController.show.url,
   theForm = theForm
 ) {

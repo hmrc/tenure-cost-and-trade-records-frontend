@@ -17,6 +17,7 @@
 package views.aboutyouandtheproperty
 
 import form.aboutyouandtheproperty.LicensableActivitiesInformationForm
+import models.pages.Summary
 import models.submissions.aboutyouandtheproperty.LicensableActivitiesInformationDetails
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
@@ -30,10 +31,12 @@ class LicenceActivitiesDetailsViewSpec extends QuestionViewBehaviours[Licensable
   override val form: Form[LicensableActivitiesInformationDetails] =
     LicensableActivitiesInformationForm.licensableActivitiesDetailsForm
 
-  def createView: () => Html = () => licensableActivitiesDetailsView(form)(fakeRequest, messages)
+  def createView: () => Html = () =>
+    licensableActivitiesDetailsView(form, Summary("99996010001"))(fakeRequest, messages)
 
   def createViewUsingForm: Form[LicensableActivitiesInformationDetails] => Html =
-    (form: Form[LicensableActivitiesInformationDetails]) => licensableActivitiesDetailsView(form)(fakeRequest, messages)
+    (form: Form[LicensableActivitiesInformationDetails]) =>
+      licensableActivitiesDetailsView(form, Summary("99996010001"))(fakeRequest, messages)
 
   "Licence Activities details view" must {
 

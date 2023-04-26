@@ -17,6 +17,7 @@
 package views.aboutyouandtheproperty
 
 import form.aboutyouandtheproperty.EnforcementActionForm
+import models.pages.Summary
 import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
@@ -31,10 +32,11 @@ class EnforcementActionBeenTakenViewSpec extends QuestionViewBehaviours[AnswersY
 
   val backLink: String = controllers.aboutyouandtheproperty.routes.PremisesLicenseConditionsController.show().url
 
-  def createView: () => Html = () => enforcementActionsTakenView(form, backLink)(fakeRequest, messages)
+  def createView: () => Html = () =>
+    enforcementActionsTakenView(form, backLink, Summary("99996010001"))(fakeRequest, messages)
 
   def createViewUsingForm: Form[AnswersYesNo] => Html = (form: Form[AnswersYesNo]) =>
-    enforcementActionsTakenView(form, backLink)(fakeRequest, messages)
+    enforcementActionsTakenView(form, backLink, Summary("99996010001"))(fakeRequest, messages)
 
   "Enforcement Action view" must {
 

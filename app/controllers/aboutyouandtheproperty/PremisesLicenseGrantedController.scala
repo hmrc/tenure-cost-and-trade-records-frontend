@@ -27,6 +27,7 @@ import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import views.html.aboutyouandtheproperty.premisesLicenseGranted
+import models.pages.Summary
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
@@ -49,7 +50,8 @@ class PremisesLicenseGrantedController @Inject() (
             case Some(premisesLicenseGrantedDetail) =>
               premisesLicenseGrantedForm.fillAndValidate(premisesLicenseGrantedDetail)
             case _                                  => premisesLicenseGrantedForm
-          }
+          },
+          Summary(request.sessionData.referenceNumber, Some(request.sessionData.address))
         )
       )
     )
@@ -58,7 +60,13 @@ class PremisesLicenseGrantedController @Inject() (
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[AnswersYesNo](
       premisesLicenseGrantedForm,
-      formWithErrors => BadRequest(premisesLicenseGrantedView(formWithErrors)),
+      formWithErrors =>
+        BadRequest(
+          premisesLicenseGrantedView(
+            formWithErrors,
+            Summary(request.sessionData.referenceNumber, Some(request.sessionData.address))
+          )
+        ),
       data => {
         val updatedData = updateAboutYouAndTheProperty(_.copy(premisesLicenseGrantedDetail = Some(data)))
         session.saveOrUpdate(updatedData)

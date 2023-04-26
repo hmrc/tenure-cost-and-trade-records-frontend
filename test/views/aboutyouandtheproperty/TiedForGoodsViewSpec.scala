@@ -17,6 +17,7 @@
 package views.aboutyouandtheproperty
 
 import form.aboutyouandtheproperty.TiedForGoodsForm
+import models.pages.Summary
 import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
@@ -31,10 +32,10 @@ class TiedForGoodsViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
 
   val backLink: String = controllers.aboutyouandtheproperty.routes.EnforcementActionBeenTakenController.show().url
 
-  def createView: () => Html = () => tiedForGoodsView(form, backLink)(fakeRequest, messages)
+  def createView: () => Html = () => tiedForGoodsView(form, backLink, Summary("99996010001"))(fakeRequest, messages)
 
   def createViewUsingForm: Form[AnswersYesNo] => Html = (form: Form[AnswersYesNo]) =>
-    tiedForGoodsView(form, backLink)(fakeRequest, messages)
+    tiedForGoodsView(form, backLink, Summary("99996010001"))(fakeRequest, messages)
 
   "Tied for goods view" must {
 

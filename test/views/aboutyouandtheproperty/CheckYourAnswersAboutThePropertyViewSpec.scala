@@ -17,6 +17,7 @@
 package views.aboutyouandtheproperty
 
 import form.aboutyouandtheproperty.CheckYourAnswersAboutThePropertyForm
+import models.pages.Summary
 import models.submissions.aboutyouandtheproperty.CheckYourAnswersAboutYourProperty
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
@@ -30,10 +31,11 @@ class CheckYourAnswersAboutThePropertyViewSpec extends QuestionViewBehaviours[Ch
 
   val backLink = controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedController.show().url
 
-  def createView = () => checkYourAnswersAboutThePropertyView(form, backLink)(fakeRequest, messages)
+  def createView = () =>
+    checkYourAnswersAboutThePropertyView(form, backLink, Summary("99996010001"))(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[CheckYourAnswersAboutYourProperty]) =>
-    checkYourAnswersAboutThePropertyView(form, backLink)(fakeRequest, messages)
+    checkYourAnswersAboutThePropertyView(form, backLink, Summary("99996010001"))(fakeRequest, messages)
 
   "Check Your Answers About The Property view" must {
 

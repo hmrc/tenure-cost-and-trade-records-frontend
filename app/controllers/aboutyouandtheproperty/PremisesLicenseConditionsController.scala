@@ -20,6 +20,7 @@ import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
 import form.aboutyouandtheproperty.PremisesLicenseConditionsForm.premisesLicenseConditionsForm
 import models.Session
+import models.pages.Summary
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty.updateAboutYouAndTheProperty
 import models.submissions.common.AnswersYesNo
 import navigation.AboutYouAndThePropertyNavigator
@@ -52,7 +53,8 @@ class PremisesLicenseConditionsController @Inject() (
             case Some(premisesLicense) => premisesLicenseConditionsForm.fillAndValidate(premisesLicense)
             case _                     => premisesLicenseConditionsForm
           },
-          getBackLink(request.sessionData)
+          getBackLink(request.sessionData),
+          Summary(request.sessionData.referenceNumber, Some(request.sessionData.address))
         )
       )
     )
@@ -61,7 +63,14 @@ class PremisesLicenseConditionsController @Inject() (
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[AnswersYesNo](
       premisesLicenseConditionsForm,
-      formWithErrors => BadRequest(premisesLicenseView(formWithErrors, getBackLink(request.sessionData))),
+      formWithErrors =>
+        BadRequest(
+          premisesLicenseView(
+            formWithErrors,
+            getBackLink(request.sessionData),
+            Summary(request.sessionData.referenceNumber, Some(request.sessionData.address))
+          )
+        ),
       data => {
         val updatedData = updateAboutYouAndTheProperty(_.copy(premisesLicenseConditions = Some(data)))
         session.saveOrUpdate(updatedData)

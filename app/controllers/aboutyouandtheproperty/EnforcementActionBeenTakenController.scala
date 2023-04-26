@@ -29,6 +29,7 @@ import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import views.html.aboutyouandtheproperty.enforcementActionBeenTaken
+import models.pages.Summary
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
@@ -52,7 +53,8 @@ class EnforcementActionBeenTakenController @Inject() (
             case Some(enforcementAction) => enforcementActionForm.fillAndValidate(enforcementAction)
             case _                       => enforcementActionForm
           },
-          getBackLink(request.sessionData)
+          getBackLink(request.sessionData),
+          Summary(request.sessionData.referenceNumber, Some(request.sessionData.address))
         )
       )
     )
@@ -61,7 +63,14 @@ class EnforcementActionBeenTakenController @Inject() (
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[AnswersYesNo](
       enforcementActionForm,
-      formWithErrors => BadRequest(enforcementActionBeenTakenView(formWithErrors, getBackLink(request.sessionData))),
+      formWithErrors =>
+        BadRequest(
+          enforcementActionBeenTakenView(
+            formWithErrors,
+            getBackLink(request.sessionData),
+            Summary(request.sessionData.referenceNumber, Some(request.sessionData.address))
+          )
+        ),
       data => {
         val updatedData = updateAboutYouAndTheProperty(_.copy(enforcementAction = Some(data)))
         session.saveOrUpdate(updatedData)

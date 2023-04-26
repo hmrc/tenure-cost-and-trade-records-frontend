@@ -17,6 +17,7 @@
 package views.aboutyouandtheproperty
 
 import form.aboutyouandtheproperty.EnforcementActionDetailsForm
+import models.pages.Summary
 import models.submissions.aboutyouandtheproperty.EnforcementActionHasBeenTakenInformationDetails
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
@@ -31,11 +32,12 @@ class EnforcementActionBeenTakenDetailsViewSpec
   override val form: Form[EnforcementActionHasBeenTakenInformationDetails] =
     EnforcementActionDetailsForm.enforcementActionDetailsForm
 
-  def createView: () => Html = () => enforcemenntActionBeenTakenDetailsView(form)(fakeRequest, messages)
+  def createView: () => Html = () =>
+    enforcemenntActionBeenTakenDetailsView(form, Summary("99996010001"))(fakeRequest, messages)
 
   def createViewUsingForm: Form[EnforcementActionHasBeenTakenInformationDetails] => Html =
     (form: Form[EnforcementActionHasBeenTakenInformationDetails]) =>
-      enforcemenntActionBeenTakenDetailsView(form)(fakeRequest, messages)
+      enforcemenntActionBeenTakenDetailsView(form, Summary("99996010001"))(fakeRequest, messages)
 
   "Enforcement action taken details view" must {
 

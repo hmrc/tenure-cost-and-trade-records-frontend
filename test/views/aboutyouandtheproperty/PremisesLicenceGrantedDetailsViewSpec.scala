@@ -17,6 +17,7 @@
 package views.aboutyouandtheproperty
 
 import form.aboutyouandtheproperty.PremisesLicenseGrantedDetailsForm
+import models.pages.Summary
 import models.submissions.aboutyouandtheproperty.PremisesLicenseGrantedInformationDetails
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
@@ -28,10 +29,10 @@ class PremisesLicenceGrantedDetailsViewSpec extends QuestionViewBehaviours[Premi
 
   override val form = PremisesLicenseGrantedDetailsForm.premisesLicenseGrantedInformationDetailsForm
 
-  def createView = () => premisesLicenceGrantedDetailsView(form)(fakeRequest, messages)
+  def createView = () => premisesLicenceGrantedDetailsView(form, Summary("99996010001"))(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[PremisesLicenseGrantedInformationDetails]) =>
-    premisesLicenceGrantedDetailsView(form)(fakeRequest, messages)
+    premisesLicenceGrantedDetailsView(form, Summary("99996010001"))(fakeRequest, messages)
 
   "Property licence granted view" must {
 

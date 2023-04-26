@@ -29,6 +29,7 @@ import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import views.html.aboutyouandtheproperty.tiedForGoods
+import models.pages.Summary
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
@@ -52,7 +53,8 @@ class TiedForGoodsController @Inject() (
             case Some(tiedForGoods) => tiedForGoodsForm.fillAndValidate(tiedForGoods)
             case _                  => tiedForGoodsForm
           },
-          getBackLink(request.sessionData)
+          getBackLink(request.sessionData),
+          Summary(request.sessionData.referenceNumber, Some(request.sessionData.address))
         )
       )
     )
@@ -61,7 +63,14 @@ class TiedForGoodsController @Inject() (
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[AnswersYesNo](
       tiedForGoodsForm,
-      formWithErrors => BadRequest(tiedForGoodsView(formWithErrors, getBackLink(request.sessionData))),
+      formWithErrors =>
+        BadRequest(
+          tiedForGoodsView(
+            formWithErrors,
+            getBackLink(request.sessionData),
+            Summary(request.sessionData.referenceNumber, Some(request.sessionData.address))
+          )
+        ),
       data => {
         val updatedData = updateAboutYouAndTheProperty(_.copy(tiedForGoods = Some(data)))
         session.saveOrUpdate(updatedData)
