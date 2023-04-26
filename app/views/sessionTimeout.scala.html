@@ -14,9 +14,16 @@
  * limitations under the License.
  *@
 
-@this(layout: Layout)
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Text
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukWarningText
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.warningtext.WarningText
 
-@()(implicit request: Request[_],  messages: Messages)
+@this(
+        layout: Layout,
+        govukWarningText: GovukWarningText
+)
+
+@(password: String, expiryDate: String)(implicit request: Request[_],  messages: Messages)
 
 @layout(
   pageHeading = messages("saveAsDraft.preHeaderTimeout"),
@@ -24,16 +31,32 @@
   withTimeoutDialog = false
 ) {
 
-  <h1 class="govuk-heading-l">@messages("saveAsDraft.preHeaderTimeout")</h1>
+    <h1 class="govuk-heading-l">@messages("saveAsDraft.preHeaderTimeout")</h1>
 
-  <p class="govuk-body">@messages("sessionTimeout.copy")</p>
+    @if(password.nonEmpty) {
+        @govukWarningText(
+            WarningText(
+                content = Text(messages("saveAsDraft.info"))
+            )
+        )
+    }
 
-  @if(request.session.get("generatedPassword").isDefined) {
-   <p class="govuk-body">Password: <b>@request.session("generatedPassword")</b></p>
-  }
+    <p class="govuk-body">@messages("saveAsDraft.info.p.2")</p>
 
-  <p class="govuk-body">
-    <a class="govuk-button" href=@routes.LoginController.show>@messages("sessionTimeout.button")</a>
-  </p>
+    @if(password.nonEmpty) {
+        <div class="govuk-panel govuk-panel--confirmation">
+            <div class="govuk-panel__body">
+                <span>@messages("saveAsDraft.password"):</span> <strong>@password</strong>
+            </div>
+        </div>
+
+        <p class="govuk-body">
+            @messages("saveAsDraft.paragraph") @expiryDate
+        </p>
+    }
+
+    <p class="govuk-body">
+        <a class="govuk-button" href=@routes.LoginController.show>@messages("saveAsDraft.timeout.login")</a>
+    </p>
 
 }

@@ -25,7 +25,7 @@ import play.api.test.Helpers.{POST, contentAsString, redirectLocation, status, s
 import stub.{StubBackendConnector, StubSessionRepo}
 import util.DateUtil
 import utils.TestBaseSpec
-import views.html.{customPasswordSaveAsDraft, saveAsDraftLogin, submissionDraftSaved}
+import views.html.{customPasswordSaveAsDraft, saveAsDraftLogin, sessionTimeout, submissionDraftSaved}
 
 /**
   * @author Yuriy Tumakha
@@ -42,6 +42,7 @@ class SaveAsDraftControllerSpec extends TestBaseSpec {
     inject[customPasswordSaveAsDraft],
     inject[submissionDraftSaved],
     inject[saveAsDraftLogin],
+    inject[sessionTimeout],
     inject[DateUtil],
     WithSessionRefiner(inject[ErrorHandler], sessionRepo),
     sessionRepo,
@@ -215,11 +216,25 @@ class SaveAsDraftControllerSpec extends TestBaseSpec {
 
       val result = saveAsDraftController.timeout(exitPath)(fakeRequest)
       status(result)           shouldBe SEE_OTHER
-      redirectLocation(result) shouldBe Some(routes.Application.sessionTimeout().url)
-
+      redirectLocation(result) shouldBe Some(routes.SaveAsDraftController.sessionTimeout.url)
+      
       val session = backendConnector.loadSubmissionDraft(refNum).futureValue.get.session
       session.address                         shouldBe submissionDraft.session.address
       session.saveAsDraftPassword.getOrElse("") should have length 7
+    }
+  }
+
+  "SaveAsDraftController.sessionTimeout" should {
+    "show session timeout page with generated password and draft expiration date" in {
+      val generatedPassword = "2345xyz"
+
+      val result =
+        saveAsDraftController.sessionTimeout(fakeRequest.withSession("generatedPassword" -> generatedPassword))
+      status(result) shouldBe OK
+
+      val content = contentAsString(result)
+      content should include("saveAsDraft.preHeaderTimeout")
+      content should include(generatedPassword)
     }
   }
 
@@ -240,7 +255,7 @@ class SaveAsDraftControllerSpec extends TestBaseSpec {
   }
 
   private def checkSaveAsDraftLoginForm(content: String, expectedErrors: Seq[String] = Seq.empty): Unit = {
-    content should include("saveAsDraft.pleaseEnterPassword")
+    content should include("saveAsDraft.retrieveYourDraft")
     content should include("""name="password"""")
     content should include("saveAsDraft.startAgain")
     expectedErrors.foreach { expectedError =>

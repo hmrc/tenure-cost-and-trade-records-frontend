@@ -20,13 +20,9 @@
 @this(layout: Layout)
 @(pageTitle: String, heading: String, message: String)(implicit request: Request[_], messages: Messages)
 
-    @title = @{
-        messages("service.name")
-    }
-
     @layout(
-        pageHeading = pageTitle,
-        pageTitle = Some(title)
+        pageTitle = Some(pageTitle),
+        pageHeading = heading
     ) {
         <p class="govuk-body">@{
             Text(message).asHtml
