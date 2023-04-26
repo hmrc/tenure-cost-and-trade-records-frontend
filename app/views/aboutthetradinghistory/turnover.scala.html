@@ -16,8 +16,7 @@
 
 @import models.submissions.aboutthetradinghistory.TurnoverSection
 @import uk.gov.hmrc.govukfrontend.views.html.components._
-@import java.time.format.DateTimeFormatter
-@import java.time.format.FormatStyle
+@import uk.gov.hmrc.govukfrontend.views.Implicits.RichInput
 
 @this(layout: Layout,
         govukButton: GovukButton,
@@ -29,7 +28,7 @@
 )
 
 
-@(turnoverSections: Seq[TurnoverSection])(implicit request: Request[_], messages: Messages)
+@(form: Form[Seq[TurnoverSection]], numOfColumns: Int)(implicit request: Request[_], messages: Messages)
 
 @detailsContent = {
     <p class="govuk-body govuk-!-font-weight-bold">@messages("turnover.details.h1")</p>
@@ -64,16 +63,24 @@
         <p class="govuk-body">@messages("turnover.averageOccupancyRate")</p>
         <span class="govuk-caption-m">@messages("turnover.averageOccupancyRateCaption")</span>
     }
+
+@filterForm = {
+    @form.value.getOrElse(Seq.empty)
+}
+
+@columns = @{0 until numOfColumns}
+
 @layout(
   pageHeading = messages("turnover.heading"),
   showH1 = false,
   showSection = true,
   sectionName = messages("label.section.aboutYourTradingHistory"),
   backLinkUrl = controllers.aboutthetradinghistory.routes.AboutYourTradingHistoryController.show.url,
-  fullWidth = true
+  fullWidth = true,
+  theForm = form
 ) {
 
-  @formWithCSRF(action = controllers.aboutthetradinghistory.routes.TurnoverController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
+  @formWithCSRF(action = controllers.aboutthetradinghistory.routes.TurnoverController.submit, args = 'class -> "myForm", 'id -> "myFormId") {
 
       <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
           <h1 class="govuk-fieldset__heading">@messages("turnover.heading")</h1>
@@ -89,121 +96,117 @@
       @govukTable(Table(
           rows = Seq(
 
+              TableRow(
+                  content = Text(messages("turnover.financialYearEnd"))
+              ) +:
+                  columns.map { idx  =>
                   TableRow(
-                      content = Text(messages("turnover.financialYearEnd"))
-                  ) +:
-                  turnoverSections.zipWithIndex.map { case (section, index)  =>
-                      TableRow(
-                          content = HtmlContent(
-                              govukInput(Input(
-                                  id = s"financial-year-end-$index",
-                                  name = s"financial-year-end-$index",
-                                  value = section.financialYearEnd.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT))
-                              ))
-                          )
+                      content = HtmlContent(
+                          govukInput(Input(
+                              id = s"$idx-financial-year-end",
+                              name = s"$idx-financial-year-end",
+                              value = form(s"$idx-financial-year-end").value
+                          ).withFormField(form(s"$idx-financial-year-end")))
                       )
-                  },
+                  )
+              },
               TableRow(
                   content = Text(messages("turnover.tradingPeriod"))
               ) +:
-                      turnoverSections.zipWithIndex.map { case (section, index)  =>
+                      columns.map { idx =>
                           TableRow(
                               content = HtmlContent(
                                   govukInput(Input(
-                                      id = s"weeks-$index",
-                                      name = s"weeks-$index",
-                                      value = "52",
+                                      id = s"$idx-weeks",
+                                      name = s"$idx-weeks",
+                                      value = form(s"$idx-weeks").value,
                                       suffix = Some(PrefixOrSuffix(
                                           content = Text(messages("turnover.weeks"))
                                       ))
-                                  ))
+                                  ).withFormField(form(s"$idx-weeks")))
                               )
                           )
                       },
               TableRow(
                   content = HtmlContent(alcoholicDrinksHeading)
-              ) +:
-                      turnoverSections.zipWithIndex.map { case (section, index)  =>
-                          TableRow(
-                              content = HtmlContent(
-                                  govukInput(Input(
-                                      id = s"alcoholic-drinks-$index",
-                                      name = s"alcoholic-drinks-$index",
-                                      value = "0",
-                                      prefix = Some(PrefixOrSuffix(
-                                          content = Text("£")
-                                      ))
+              ) +: columns.map { idx =>
+                      TableRow(
+                          content = HtmlContent(
+                              govukInput(Input(
+                                  id = s"$idx-alcoholic-drinks",
+                                  name = s"$idx-alcoholic-drinks",
+                                  value = form(s"$idx-alcoholic-drinks").value,
+                                  prefix = Some(PrefixOrSuffix(
+                                      content = Text("£")
                                   ))
-                              )
+                              ).withFormField(form(s"$idx-alcoholic-drinks")))
                           )
-                      },
+                      )
+                  },
               TableRow(
                   content = HtmlContent(foodHeading)
-              ) +:
-                      turnoverSections.zipWithIndex.map { case (section, index)  =>
+              ) +: columns.map { idx  =>
                           TableRow(
                               content = HtmlContent(
                                   govukInput(Input(
-                                      id = s"food-$index",
-                                      name = s"food-$index",
-                                      value = "0",
+                                      id = s"$idx-food",
+                                      name = s"$idx-food",
+                                      value = form(s"$idx-food").value,
                                       prefix = Some(PrefixOrSuffix(
                                           content = Text("£")
                                       ))
-                                  ))
+                                  ).withFormField(form(s"$idx-food")))
                               )
                           )
                       },
               TableRow(
                   content = HtmlContent(otherReceiptsHeading)
-              ) +:
-                      turnoverSections.zipWithIndex.map { case (section, index)  =>
+              ) +: columns.map { idx  =>
                           TableRow(
                               content = HtmlContent(
                                   govukInput(Input(
-                                      id = s"other-receipts-$index",
-                                      name = s"other-receipts-$index",
-                                      value = "0",
+                                      id = s"$idx-other-receipts",
+                                      name = s"$idx-other-receipts",
+                                      value = form(s"$idx-other-receipts").value,
                                       prefix = Some(PrefixOrSuffix(
                                           content = Text("£")
                                       ))
-                                  ))
+                                  ).withFormField(form(s"$idx-other-receipts")))
                               )
                           )
                       },
               TableRow(
                   content = HtmlContent(accommodationHeading)
-              ) +:
-                      turnoverSections.zipWithIndex.map { case (section, index)  =>
+              ) +: columns.map { idx  =>
                           TableRow(
                               content = HtmlContent(
                                   govukInput(Input(
-                                      id = s"accommodation-$index",
-                                      name = s"accommodation-$index",
-                                      value = "0",
+                                      id = s"$idx-accommodation",
+                                      name = s"$idx-accommodation",
+                                      value = form(s"$idx-accommodation").value,
                                       prefix = Some(PrefixOrSuffix(
                                           content = Text("£")
                                       ))
-                                  ))
+                                  ).withFormField(form(s"$idx-accommodation")))
                               )
                           )
                       },
               TableRow(
                   content = HtmlContent(averageOccupancyRateHeading)
-              ) +:
-                      turnoverSections.zipWithIndex.map { case (section, index)  =>
+              ) +: columns.map { idx  =>
                           TableRow(
                               content = HtmlContent(
                                   govukInput(Input(
-                                      id = s"average-occupancy-rate-$index",
-                                      name = s"average-occupancy-rate-$index",
+                                      id = s"$idx-average-occupancy-rate",
+                                      name = s"$idx-average-occupancy-rate",
+                                      value = form(s"$idx-average-occupancy-rate").value,
                                       suffix = Some(PrefixOrSuffix(
                                           content = Text("%")
                                       ))
-                                  ))
+                                  ).withFormField(form(s"$idx-average-occupancy-rate")))
                               )
                           )
-                      },
+                      }
           ),
 
           captionClasses = "govuk-table__caption--m",

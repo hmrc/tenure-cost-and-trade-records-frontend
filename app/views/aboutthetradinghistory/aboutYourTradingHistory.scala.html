@@ -14,7 +14,7 @@
  * limitations under the License.
  *@
 
-@import models.submissions.aboutthetradinghistory.AboutYourTradingHistory
+@import models.submissions.aboutthetradinghistory.OccupationalAndAccountingInformation
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.fieldset.Fieldset
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukDateInput
@@ -28,7 +28,7 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[AboutYourTradingHistory])(implicit request: Request[_], messages: Messages)
+@(theForm: Form[OccupationalAndAccountingInformation])(implicit request: Request[_], messages: Messages)
 
 @content = {
   <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">

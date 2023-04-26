@@ -23,7 +23,7 @@ import play.twirl.api.HtmlFormat
 import utils.TestBaseSpec
 import views.html.aboutthetradinghistory.aboutYourTradingHistory
 
-class AboutYourTradingHistoryControllerSpec extends TestBaseSpec {
+class occupationalAndAccountingInformationControllerSpec extends TestBaseSpec {
 
   val mockAboutYouNavigator: AboutTheTradingHistoryNavigator   = mock[AboutTheTradingHistoryNavigator]
   val mockAboutYourTradingHistoryView: aboutYourTradingHistory = mock[aboutYourTradingHistory]

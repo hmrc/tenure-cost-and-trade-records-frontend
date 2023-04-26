@@ -16,26 +16,26 @@
 
 package views.aboutthetradinghistory
 
-import form.aboutthetradinghistory.AboutYourTradingHistoryForm
-import models.submissions.aboutthetradinghistory.AboutYourTradingHistory
+import form.aboutthetradinghistory.OccupationalAndAccountingInformationForm
+import models.submissions.aboutthetradinghistory.OccupationalAndAccountingInformation
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
 import views.html.aboutthetradinghistory.aboutYourTradingHistory
 
-class AboutYourTradingHistoryViewSpec extends QuestionViewBehaviours[AboutYourTradingHistory] {
+class AboutYourTradingHistoryViewSpec extends QuestionViewBehaviours[OccupationalAndAccountingInformation] {
 
   def aboutTheTradingHistoryView: aboutYourTradingHistory =
     app.injector.instanceOf[views.html.aboutthetradinghistory.aboutYourTradingHistory]
 
   val messageKeyPrefix = "aboutYourTradingHistory"
 
-  override val form: Form[AboutYourTradingHistory] = AboutYourTradingHistoryForm.aboutYourTradingHistoryForm
+  override val form: Form[OccupationalAndAccountingInformation] = OccupationalAndAccountingInformationForm.occupationalAndAccountingInformationForm
 
   def createView: () => Html = () => aboutTheTradingHistoryView(form)(fakeRequest, messages)
 
-  def createViewUsingForm: Form[AboutYourTradingHistory] => Html = (form: Form[AboutYourTradingHistory]) =>
+  def createViewUsingForm: Form[OccupationalAndAccountingInformation] => Html = (form: Form[OccupationalAndAccountingInformation]) =>
     aboutTheTradingHistoryView(form)(fakeRequest, messages)
 
   "About the trading history view" must {

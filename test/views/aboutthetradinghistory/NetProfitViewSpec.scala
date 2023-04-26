@@ -16,8 +16,8 @@
 
 package views.aboutthetradinghistory
 
-import form.aboutthetradinghistory.{AboutYourTradingHistoryForm, NetProfitForm}
-import models.submissions.aboutthetradinghistory.{AboutYourTradingHistory, NetProfit}
+import form.aboutthetradinghistory.NetProfitForm
+import models.submissions.aboutthetradinghistory.NetProfit
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours

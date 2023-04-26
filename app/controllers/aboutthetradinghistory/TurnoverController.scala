@@ -18,16 +18,18 @@ package controllers.aboutthetradinghistory
 
 import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
+import form.aboutthetradinghistory.TurnoverForm.turnoverForm
+import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.updateAboutTheTradingHistory
 import models.submissions.aboutthetradinghistory.TurnoverSection
 import navigation.AboutTheTradingHistoryNavigator
-import navigation.identifiers.TurnoverPageId
+import navigation.identifiers.CheckYourAnswersAboutTheTradingHistoryId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import views.html.aboutthetradinghistory.turnover
 
-import java.time.LocalDate
 import javax.inject.{Inject, Named, Singleton}
+import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class TurnoverController @Inject() (
@@ -36,42 +38,31 @@ class TurnoverController @Inject() (
   turnoverView: turnover,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FORDataCaptureController(mcc)
+)(implicit ec: ExecutionContext) extends FORDataCaptureController(mcc)
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
-    request.sessionData.aboutTheTradingHistory.fold(Redirect(routes.AboutYourTradingHistoryController.show())) {
-      aboutTheTradingHistory =>
-        if (aboutTheTradingHistory.turnoverSection.isEmpty) {
-          (for {
-            financialYearEnd    <- aboutTheTradingHistory.aboutYourTradingHistory.map(_.financialYear)
-            now                  = LocalDate.now()
-            currentFinancialYear =
-              if (now.isBefore(LocalDate.of(now.getYear, financialYearEnd.months, financialYearEnd.days))) {
-                now.getYear
-              } else now.getYear + 1
-            firstOccupy         <- aboutTheTradingHistory.aboutYourTradingHistory.map(_.firstOccupy)
-            yearDifference       = currentFinancialYear - firstOccupy.years
-            numberOfSections     = 1 to (if (yearDifference > 3) 3 else yearDifference)
-          } yield Ok(
-            turnoverView(
-              numberOfSections.map { yearsAgo =>
-                TurnoverSection(
-                  financialYearEnd =
-                    LocalDate.of(currentFinancialYear - yearsAgo, financialYearEnd.months, financialYearEnd.days),
-                  tradingPeriod = 52
-                )
-              }
-            )
-          )).getOrElse(Redirect(routes.AboutYourTradingHistoryController.show()))
-        } else Ok(turnoverView(aboutTheTradingHistory.turnoverSection))
+    request.sessionData.aboutTheTradingHistory.filter(_.occupationAndAccountingInformation.isDefined).fold(Redirect(routes.AboutYourTradingHistoryController.show())) { aboutTheTradingHistory => {
+      val numberOfColumns = aboutTheTradingHistory.turnoverSections.size
+      Ok(turnoverView(turnoverForm(numberOfColumns).fillAndValidate(aboutTheTradingHistory.turnoverSections), numberOfColumns))
+    }
     }
   }
 
-  def submit = (Action andThen withSessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft {
-      val updatedData = request.sessionData
-      Redirect(navigator.nextPage(TurnoverPageId).apply(updatedData))
+  def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    request.sessionData.aboutTheTradingHistory.filter(_.occupationAndAccountingInformation.isDefined).fold(Future.successful(Redirect(routes.AboutYourTradingHistoryController.show()))) { aboutTheTradingHistory => {
+      val numberOfColumns = aboutTheTradingHistory.turnoverSections.size
+      continueOrSaveAsDraft[Seq[TurnoverSection]](
+        turnoverForm(numberOfColumns),
+        formWithErrors => {
+          BadRequest(turnoverView(formWithErrors, numberOfColumns))
+        },
+        success => {
+          val updatedData = updateAboutTheTradingHistory(_.copy(turnoverSections = success))
+          session.saveOrUpdate(updatedData).map(_ => Redirect(navigator.nextPage(CheckYourAnswersAboutTheTradingHistoryId).apply(updatedData)))
+        }
+      )
+    }
     }
   }
 
