@@ -763,10 +763,11 @@ saveAsDraft.createPassword.header=Create a password to retrieve your saved infor
 saveAsDraft.next=Save password
 saveAsDraft.continue=Continue completing this form
 saveAsDraft.logout=Log out
-saveAsDraft.pleaseEnterPassword=Enter your password
+saveAsDraft.retrieveYourDraft=Retrieve your draft
 saveAsDraft.passwordHint=This will either be the password you created or the one given to you when you were timed out of the service.
 saveAsDraft.error.invalidPassword=The password you entered is not correct
 saveAsDraft.startAgain=Start form again
+saveAsDraft.timeout.login=Log in again
 
 # Errors
 ########

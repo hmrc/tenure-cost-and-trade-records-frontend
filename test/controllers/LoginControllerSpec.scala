@@ -18,9 +18,12 @@ package controllers
 
 import config.LoginToBackendAction
 import connectors.{Audit, BackendConnector}
+import models.audit.UserData
+import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
+import models.submissions.notconnected.RemoveConnectionDetails
 import org.joda.time.DateTime
 import play.api.inject.guice.GuiceApplicationBuilder
-import play.api.libs.json.{JsObject, Json}
+import play.api.libs.json.{JsObject, Json, Writes}
 import play.api.test.Helpers._
 import security.LoginToBackend.{Postcode, RefNumber, StartTime}
 import security.NoExistingDocument
@@ -120,7 +123,7 @@ class LoginControllerSpec extends TestBaseSpec {
 
     "Audit logout event" in {
       val audit = mock[Audit]
-//      doNothing.when(audit).sendExplicitAudit(any[String], any[JsObject])(any[HeaderCarrier], any[ExecutionContext])
+      doNothing.when(audit).sendExplicitAudit(any[String], any[UserData])(any[HeaderCarrier], any[ExecutionContext], any[Writes[UserData]])
 
       val loginController = new LoginController(
         inject[BackendConnector],
@@ -138,22 +141,31 @@ class LoginControllerSpec extends TestBaseSpec {
 
       val result = loginController.logout(fakeRequest)
 
-//      status(result)           shouldBe SEE_OTHER
-//      redirectLocation(result) shouldBe Some(routes.LoginController.show().url)
-//
-//      verify(audit).sendExplicitAudit(
-//        eqTo("Logout"),
-//        eqTo(
-//          Json.obj(
-//            Audit.referenceNumber -> "99996010004",
-//            Audit.formOfReturn    -> "FOR6010",
-//            Audit.address         -> prefilledAddress
-//          )
-//        )
-//      )(
-//        any[HeaderCarrier],
-//        any[ExecutionContext]
-//      )
+      status(result) shouldBe SEE_OTHER
+      redirectLocation(result) shouldBe Some(routes.LoginController.show().url)
+
+      verify(audit).sendExplicitAudit(
+        eqTo("Logout"),
+        eqTo(
+          UserData(
+            referenceNumber,
+            forType6010,
+            prefilledAddress,
+            stillConnectedDetails = Some(prefilledStillConnectedDetailsYes),
+            removeConnectionDetails = Some(prefilledRemoveConnection),
+            aboutYouAndTheProperty = Some(prefilledAboutYouAndThePropertyNo),
+            additionalInformation = Some(prefilledAdditionalInformation),
+            aboutTheTradingHistory = Some(prefilledAboutTheTradingHistory),
+            aboutFranchisesOrLettings = Some(prefilledAboutFranchiseOrLettings),
+            aboutLeaseOrAgreementPartOne = Some(prefilledAboutLeaseOrAgreementPartOne),
+            aboutLeaseOrAgreementPartTwo = Some(prefilledAboutLeaseOrAgreementPartTwo)
+          )
+        )
+      )(
+          any[HeaderCarrier],
+          any[ExecutionContext],
+          any[Writes[UserData]]
+      )
 
     }
 
