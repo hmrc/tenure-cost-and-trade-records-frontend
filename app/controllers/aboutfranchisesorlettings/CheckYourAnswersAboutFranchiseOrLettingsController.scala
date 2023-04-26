@@ -27,6 +27,7 @@ import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import views.html.aboutfranchisesorlettings.checkYourAnswersAboutFranchiseOrLettings
 import views.html.taskList
+import models.pages.Summary
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
@@ -52,7 +53,8 @@ class CheckYourAnswersAboutFranchiseOrLettingsController @Inject() (
               checkYourAnswersAboutFranchiseOrLettingsForm.fillAndValidate(checkYourAnswersAboutFranchiseOrLettings)
             case _                                              => checkYourAnswersAboutFranchiseOrLettingsForm
           },
-          getBackLink(request.sessionData)
+          getBackLink(request.sessionData),
+          Summary(request.sessionData.referenceNumber, Some(request.sessionData.address))
         )
       )
     )

@@ -24,6 +24,7 @@ import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import views.html.aboutfranchisesorlettings.cateringOperationOrLettingAccommodationRentIncludes
+import models.pages.Summary
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
@@ -48,7 +49,8 @@ class CateringOperationRentIncludesController @Inject() (
           index,
           "cateringOperationOrLettingAccommodationCheckboxesDetails",
           existingSection.get.cateringOperationDetails.operatorName,
-          controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsRentController.show(index).url
+          controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsRentController.show(index).url,
+          Summary(request.sessionData.referenceNumber, Some(request.sessionData.address))
         )
       )
     )

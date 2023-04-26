@@ -27,6 +27,7 @@ import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import views.html.aboutfranchisesorlettings.cateringOperationOrLettingAccommodationRentDetails
+import models.pages.Summary
 
 import javax.inject.{Inject, Named, Singleton}
 
@@ -57,7 +58,8 @@ class CateringOperationDetailsRentController @Inject() (
           index,
           "cateringOperationOrLettingAccommodationRentDetails",
           existingSection.get.cateringOperationDetails.operatorName,
-          controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController.show().url
+          controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController.show().url,
+          Summary(request.sessionData.referenceNumber, Some(request.sessionData.address))
         )
       )
     }
@@ -75,7 +77,8 @@ class CateringOperationDetailsRentController @Inject() (
             index,
             "cateringOperationOrLettingAccommodationRentDetails",
             existingSection.cateringOperationDetails.operatorName,
-            controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController.show().url
+            controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController.show().url,
+            Summary(request.sessionData.referenceNumber, Some(request.sessionData.address))
           )
         ),
       data =>

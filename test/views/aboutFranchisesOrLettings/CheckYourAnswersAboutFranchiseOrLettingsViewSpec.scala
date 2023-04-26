@@ -21,6 +21,7 @@ import models.submissions.aboutfranchisesorlettings.CheckYourAnswersAboutFranchi
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
+import models.pages.Summary
 
 class CheckYourAnswersAboutFranchiseOrLettingsViewSpec
     extends QuestionViewBehaviours[CheckYourAnswersAboutFranchiseOrLettings] {
@@ -34,10 +35,11 @@ class CheckYourAnswersAboutFranchiseOrLettingsViewSpec
 
   val backLink = controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedController.show().url
 
-  def createView = () => checkYourAnswersAboutFranchiseOrLettingsView(form, backLink)(fakeRequest, messages)
+  def createView = () =>
+    checkYourAnswersAboutFranchiseOrLettingsView(form, backLink, Summary("99996010001"))(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[CheckYourAnswersAboutFranchiseOrLettings]) =>
-    checkYourAnswersAboutFranchiseOrLettingsView(form, backLink)(fakeRequest, messages)
+    checkYourAnswersAboutFranchiseOrLettingsView(form, backLink, Summary("99996010001"))(fakeRequest, messages)
 
   "Check Your Answers About Franchise Or Lettings view" must {
 

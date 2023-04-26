@@ -17,6 +17,7 @@
 package views.aboutFranchisesOrLettings
 
 import form.aboutfranchisesorlettings.CateringOperationOrLettingAccommodationForm
+import models.pages.Summary
 import models.submissions.aboutfranchisesorlettings.CateringOperationDetails
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
@@ -33,7 +34,8 @@ class CateringOperationsDetailsViewSpec extends QuestionViewBehaviours[CateringO
       form,
       Some(0),
       messageKeyPrefix,
-      controllers.aboutfranchisesorlettings.routes.CateringOperationController.show().url
+      controllers.aboutfranchisesorlettings.routes.CateringOperationController.show().url,
+      Summary("99996010001")
     )(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[CateringOperationDetails]) =>
@@ -41,7 +43,8 @@ class CateringOperationsDetailsViewSpec extends QuestionViewBehaviours[CateringO
       form,
       Some(0),
       messageKeyPrefix,
-      controllers.aboutfranchisesorlettings.routes.CateringOperationController.show().url
+      controllers.aboutfranchisesorlettings.routes.CateringOperationController.show().url,
+      Summary("99996010001")
     )(fakeRequest, messages)
 
   "Catering operation details view" must {

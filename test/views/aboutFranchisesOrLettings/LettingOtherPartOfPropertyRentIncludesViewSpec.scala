@@ -23,6 +23,7 @@ import play.api.data.Form
 import play.api.i18n.Lang
 import play.twirl.api.HtmlFormat
 import views.behaviours.QuestionViewBehaviours
+import models.pages.Summary
 
 import java.util.Locale
 
@@ -36,10 +37,16 @@ class LettingOtherPartOfPropertyRentIncludesViewSpec extends QuestionViewBehavio
   override val form = CateringOperationOrLettingAccommodationForm.cateringOperationOrLettingAccommodationForm
 
   def createView = () =>
-    cateringOperationRentIncludesView(0, messageKeyPrefix, "Wombles Inc", backLink)(fakeRequest, messages)
+    cateringOperationRentIncludesView(0, messageKeyPrefix, "Wombles Inc", backLink, Summary("99996010001"))(
+      fakeRequest,
+      messages
+    )
 
   def createViewUsingForm = (form: Form[CateringOperationDetails]) =>
-    cateringOperationRentIncludesView(0, messageKeyPrefix, "Wombles Inc", backLink)(fakeRequest, messages)
+    cateringOperationRentIncludesView(0, messageKeyPrefix, "Wombles Inc", backLink, Summary("99996010001"))(
+      fakeRequest,
+      messages
+    )
 
   "Catering operation rent includes view" must {
 

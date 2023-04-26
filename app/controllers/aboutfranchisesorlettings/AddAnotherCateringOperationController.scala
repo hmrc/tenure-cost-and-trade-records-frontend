@@ -27,6 +27,7 @@ import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import views.html.aboutfranchisesorlettings.addAnotherCateringOperationOrLettingAccommodation
+import models.pages.Summary
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
@@ -53,7 +54,8 @@ class AddAnotherCateringOperationController @Inject() (
           },
           index,
           "addAnotherCateringOperationOrLettingAccommodations",
-          controllers.aboutfranchisesorlettings.routes.CateringOperationRentIncludesController.show(index).url
+          controllers.aboutfranchisesorlettings.routes.CateringOperationRentIncludesController.show(index).url,
+          Summary(request.sessionData.referenceNumber, Some(request.sessionData.address))
         )
       )
     )
@@ -68,7 +70,8 @@ class AddAnotherCateringOperationController @Inject() (
             formWithErrors,
             index,
             "addAnotherCateringOperationOrLettingAccommodations",
-            controllers.aboutfranchisesorlettings.routes.CateringOperationRentIncludesController.show(index).url
+            controllers.aboutfranchisesorlettings.routes.CateringOperationRentIncludesController.show(index).url,
+            Summary(request.sessionData.referenceNumber, Some(request.sessionData.address))
           )
         ),
       data =>

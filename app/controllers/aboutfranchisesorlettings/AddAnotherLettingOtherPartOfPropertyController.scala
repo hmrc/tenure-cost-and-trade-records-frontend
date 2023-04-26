@@ -27,6 +27,7 @@ import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import views.html.aboutfranchisesorlettings._
+import models.pages.Summary
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
@@ -53,7 +54,8 @@ class AddAnotherLettingOtherPartOfPropertyController @Inject() (
           },
           index,
           "addAnotherLettingOtherPartOfProperty",
-          controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyRentIncludesController.show(index).url
+          controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyRentIncludesController.show(index).url,
+          Summary(request.sessionData.referenceNumber, Some(request.sessionData.address))
         )
       )
     )
@@ -70,7 +72,8 @@ class AddAnotherLettingOtherPartOfPropertyController @Inject() (
             "addAnotherLettingOtherPartOfProperty",
             controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyRentIncludesController
               .show(index)
-              .url
+              .url,
+            Summary(request.sessionData.referenceNumber, Some(request.sessionData.address))
           )
         ),
       data =>

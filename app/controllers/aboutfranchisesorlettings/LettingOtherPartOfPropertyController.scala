@@ -29,6 +29,7 @@ import play.api.i18n.Lang.logger
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import views.html.aboutfranchisesorlettings.cateringOperationOrLettingAccommodation
+import models.pages.Summary
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
@@ -60,7 +61,8 @@ class LettingOtherPartOfPropertyController @Inject() (
               throw new RuntimeException(
                 s"Navigation for catering operation details page reached with error $msg"
               )
-          }
+          },
+          Summary(request.sessionData.referenceNumber, Some(request.sessionData.address))
         )
       )
     )
@@ -81,7 +83,8 @@ class LettingOtherPartOfPropertyController @Inject() (
                 throw new RuntimeException(
                   s"Navigation for letting other part of property page reached with error $msg"
                 )
-            }
+            },
+            Summary(request.sessionData.referenceNumber, Some(request.sessionData.address))
           )
         ),
       data => {

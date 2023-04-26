@@ -16,21 +16,17 @@
 
 package controllers.aboutyouandtheproperty
 
-import actions.{RefNumRequest, WithSessionRefiner}
-import config.SessionId
+import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
 import form.aboutyouandtheproperty.AboutYouForm.aboutYouForm
-import form.persistence.FormDocumentRepository
 import models.pages.Summary
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty.updateAboutYouAndTheProperty
 import models.submissions.aboutyouandtheproperty.CustomerDetails
 import navigation.AboutYouAndThePropertyNavigator
 import navigation.identifiers.AboutYouPageId
-import org.graalvm.compiler.nodes.memory.address.AddressNode.Address
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import useCases.ReferenceNumber
 import views.html.aboutyouandtheproperty.aboutYou
 
 import javax.inject.{Inject, Named, Singleton}

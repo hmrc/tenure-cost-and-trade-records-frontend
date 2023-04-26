@@ -21,7 +21,7 @@ import models.submissions.aboutfranchisesorlettings.CateringOperationDetails
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
-
+import models.pages.Summary
 class LettingOtherPartOfPropertyDetailsViewSpec extends QuestionViewBehaviours[CateringOperationDetails] {
 
   val messageKeyPrefix = "lettingOtherPartOfPropertyDetails"
@@ -33,7 +33,8 @@ class LettingOtherPartOfPropertyDetailsViewSpec extends QuestionViewBehaviours[C
       form,
       Some(0),
       messageKeyPrefix,
-      controllers.aboutfranchisesorlettings.routes.CateringOperationController.show().url
+      controllers.aboutfranchisesorlettings.routes.CateringOperationController.show().url,
+      Summary("99996010001")
     )(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[CateringOperationDetails]) =>
@@ -41,7 +42,8 @@ class LettingOtherPartOfPropertyDetailsViewSpec extends QuestionViewBehaviours[C
       form,
       Some(0),
       messageKeyPrefix,
-      controllers.aboutfranchisesorlettings.routes.CateringOperationController.show().url
+      controllers.aboutfranchisesorlettings.routes.CateringOperationController.show().url,
+      Summary("99996010001")
     )(fakeRequest, messages)
 
   "Catering operation details view" must {
