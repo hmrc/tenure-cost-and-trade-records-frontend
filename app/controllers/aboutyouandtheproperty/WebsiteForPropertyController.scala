@@ -48,7 +48,8 @@ class WebsiteForPropertyController @Inject() (
           request.sessionData.aboutYouAndTheProperty.flatMap(_.websiteForPropertyDetails) match {
             case Some(websiteForPropertyDetails) => websiteForPropertyForm.fillAndValidate(websiteForPropertyDetails)
             case _                               => websiteForPropertyForm
-          }
+          },
+          request.sessionData.toSummary
         )
       )
     )
@@ -58,7 +59,13 @@ class WebsiteForPropertyController @Inject() (
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[WebsiteForPropertyDetails](
       websiteForPropertyForm,
-      formWithErrors => BadRequest(websiteForPropertyView(formWithErrors)),
+      formWithErrors =>
+        BadRequest(
+          websiteForPropertyView(
+            formWithErrors,
+            request.sessionData.toSummary
+          )
+        ),
       data => {
         val updatedData = updateAboutYouAndTheProperty(_.copy(websiteForPropertyDetails = Some(data)))
         session.saveOrUpdate(updatedData)

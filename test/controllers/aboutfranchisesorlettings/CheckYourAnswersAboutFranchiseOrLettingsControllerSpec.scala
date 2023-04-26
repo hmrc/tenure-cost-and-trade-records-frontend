@@ -26,7 +26,7 @@ import views.html.taskList
 class CheckYourAnswersAboutFranchiseOrLettingsControllerSpec extends TestBaseSpec {
 
   val mockCheckYourAnswersAboutFranchiseOrLettingsView = mock[checkYourAnswersAboutFranchiseOrLettings]
-  when(mockCheckYourAnswersAboutFranchiseOrLettingsView.apply(any, any)(any, any)).thenReturn(HtmlFormat.empty)
+  when(mockCheckYourAnswersAboutFranchiseOrLettingsView.apply(any, any, any)(any, any)).thenReturn(HtmlFormat.empty)
 
   val mockTaskListView = mock[taskList]
   when(mockTaskListView.apply()(any, any)).thenReturn(HtmlFormat.empty)

@@ -65,7 +65,8 @@ class CateringOperationDetailsController @Inject() (
             throw new RuntimeException(
               s"Navigation for catering operation details page reached with error $msg"
             )
-        }
+        },
+        request.sessionData.toSummary
       )
     )
   }
@@ -86,7 +87,8 @@ class CateringOperationDetailsController @Inject() (
                 throw new RuntimeException(
                   s"Navigation for catering operation details page reached with error $msg"
                 )
-            }
+            },
+            request.sessionData.toSummary
           )
         ),
       data => {

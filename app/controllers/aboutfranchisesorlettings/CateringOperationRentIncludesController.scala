@@ -48,7 +48,8 @@ class CateringOperationRentIncludesController @Inject() (
           index,
           "cateringOperationOrLettingAccommodationCheckboxesDetails",
           existingSection.get.cateringOperationDetails.operatorName,
-          controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsRentController.show(index).url
+          controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsRentController.show(index).url,
+          request.sessionData.toSummary
         )
       )
     )

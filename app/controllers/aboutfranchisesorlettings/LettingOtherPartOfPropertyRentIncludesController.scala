@@ -46,7 +46,8 @@ class LettingOtherPartOfPropertyRentIncludesController @Inject() (
           index,
           "lettingOtherPartOfPropertyCheckboxesDetails",
           existingSection.get.lettingOtherPartOfPropertyInformationDetails.operatorName,
-          controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsRentController.show(index).url
+          controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsRentController.show(index).url,
+          request.sessionData.toSummary
         )
       )
     )

@@ -52,7 +52,8 @@ class EnforcementActionBeenTakenController @Inject() (
             case Some(enforcementAction) => enforcementActionForm.fillAndValidate(enforcementAction)
             case _                       => enforcementActionForm
           },
-          getBackLink(request.sessionData)
+          getBackLink(request.sessionData),
+          request.sessionData.toSummary
         )
       )
     )
@@ -61,7 +62,14 @@ class EnforcementActionBeenTakenController @Inject() (
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[AnswersYesNo](
       enforcementActionForm,
-      formWithErrors => BadRequest(enforcementActionBeenTakenView(formWithErrors, getBackLink(request.sessionData))),
+      formWithErrors =>
+        BadRequest(
+          enforcementActionBeenTakenView(
+            formWithErrors,
+            getBackLink(request.sessionData),
+            request.sessionData.toSummary
+          )
+        ),
       data => {
         val updatedData = updateAboutYouAndTheProperty(_.copy(enforcementAction = Some(data)))
         session.saveOrUpdate(updatedData)

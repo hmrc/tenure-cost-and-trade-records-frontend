@@ -17,6 +17,7 @@
 package views.aboutFranchisesOrLettings
 
 import form.aboutfranchisesorlettings.FranchiseOrLettingsTiedToPropertyForm
+import models.pages.Summary
 import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
@@ -28,10 +29,11 @@ class FranchiseOrLettingsTiedToPropertyViewSpec extends QuestionViewBehaviours[A
 
   override val form = FranchiseOrLettingsTiedToPropertyForm.franchiseOrLettingsTiedToPropertyForm
 
-  def createView = () => franchiseOrLettingsTiedToPropertyView(form, "FOR6010")(fakeRequest, messages)
+  def createView = () =>
+    franchiseOrLettingsTiedToPropertyView(form, "FOR6010", Summary("99996010001"))(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[AnswersYesNo]) =>
-    franchiseOrLettingsTiedToPropertyView(form, "FOR6010")(fakeRequest, messages)
+    franchiseOrLettingsTiedToPropertyView(form, "FOR6010", Summary("99996010001"))(fakeRequest, messages)
 
   "Franchise or lettings tied to property view" must {
 

@@ -57,7 +57,8 @@ class ConnectionToThePropertyController @Inject() (
             case Left(msg)   =>
               logger.warn(s"Navigation for connection to property page reached with error: $msg")
               throw new RuntimeException(s"Navigation for connection to property page reached with error $msg")
-          }
+          },
+          request.sessionData.toSummary
         )
       )
     )
@@ -70,7 +71,8 @@ class ConnectionToThePropertyController @Inject() (
         BadRequest(
           connectionToThePropertyView(
             formWithErrors,
-            controllers.connectiontoproperty.routes.AreYouStillConnectedController.show().url
+            controllers.connectiontoproperty.routes.AreYouStillConnectedController.show().url,
+            request.sessionData.toSummary
           )
         ),
       data => {

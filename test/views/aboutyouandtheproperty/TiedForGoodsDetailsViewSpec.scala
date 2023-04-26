@@ -17,6 +17,7 @@
 package views.aboutyouandtheproperty
 
 import form.aboutyouandtheproperty.TiedForGoodsDetailsForm
+import models.pages.Summary
 import models.submissions.aboutyouandtheproperty._
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
@@ -29,10 +30,11 @@ class TiedForGoodsDetailsViewSpec extends QuestionViewBehaviours[TiedForGoodsInf
 
   override val form: Form[TiedForGoodsInformationDetails] = TiedForGoodsDetailsForm.tiedForGoodsDetailsForm
 
-  def createView: () => Html = () => tiedForGoodsDetailsView(form)(fakeRequest, messages)
+  def createView: () => Html = () => tiedForGoodsDetailsView(form, Summary("99996010001"))(fakeRequest, messages)
 
   def createViewUsingForm: Form[TiedForGoodsInformationDetails] => Html =
-    (form: Form[TiedForGoodsInformationDetails]) => tiedForGoodsDetailsView(form)(fakeRequest, messages)
+    (form: Form[TiedForGoodsInformationDetails]) =>
+      tiedForGoodsDetailsView(form, Summary("99996010001"))(fakeRequest, messages)
 
   "Tied for goods details view" must {
 

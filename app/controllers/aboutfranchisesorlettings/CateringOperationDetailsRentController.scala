@@ -57,7 +57,8 @@ class CateringOperationDetailsRentController @Inject() (
           index,
           "cateringOperationOrLettingAccommodationRentDetails",
           existingSection.get.cateringOperationDetails.operatorName,
-          controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController.show().url
+          controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController.show().url,
+          request.sessionData.toSummary
         )
       )
     }
@@ -75,7 +76,8 @@ class CateringOperationDetailsRentController @Inject() (
             index,
             "cateringOperationOrLettingAccommodationRentDetails",
             existingSection.cateringOperationDetails.operatorName,
-            controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController.show().url
+            controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController.show().url,
+            request.sessionData.toSummary
           )
         ),
       data =>

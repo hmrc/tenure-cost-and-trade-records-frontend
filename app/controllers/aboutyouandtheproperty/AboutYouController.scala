@@ -48,7 +48,8 @@ class AboutYouController @Inject() (
           request.sessionData.aboutYouAndTheProperty.flatMap(_.customerDetails) match {
             case Some(customerDetails) => aboutYouForm.fillAndValidate(customerDetails)
             case _                     => aboutYouForm
-          }
+          },
+          request.sessionData.toSummary
         )
       )
     )
@@ -57,7 +58,10 @@ class AboutYouController @Inject() (
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[CustomerDetails](
       aboutYouForm,
-      formWithErrors => BadRequest(aboutYouView(formWithErrors)),
+      formWithErrors =>
+        BadRequest(
+          aboutYouView(formWithErrors, request.sessionData.toSummary)
+        ),
       data => {
         val updatedData = updateAboutYouAndTheProperty(_.copy(customerDetails = Some(data)))
         session.saveOrUpdate(updatedData)

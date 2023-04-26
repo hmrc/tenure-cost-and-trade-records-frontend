@@ -28,7 +28,7 @@ class AddAnotherLettingOtherPartOfPropertyControllerSpec extends TestBaseSpec {
   val mockAboutFranchisesOrLettingsNavigator = mock[AboutFranchisesOrLettingsNavigator]
 
   val mockAddAnotherLettingOtherPartOfProperty = mock[addAnotherCateringOperationOrLettingAccommodation]
-  when(mockAddAnotherLettingOtherPartOfProperty.apply(any, any, any, any)(any, any)).thenReturn(HtmlFormat.empty)
+  when(mockAddAnotherLettingOtherPartOfProperty.apply(any, any, any, any, any)(any, any)).thenReturn(HtmlFormat.empty)
 
   val addAnotherLettingOtherPartOfPropertyController = new AddAnotherLettingOtherPartOfPropertyController(
     stubMessagesControllerComponents(),

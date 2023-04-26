@@ -22,6 +22,7 @@
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.input.Input
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.label.Label
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
+@import models.pages.Summary
 
 @this(layout: Layout,
   govukButton: GovukButton,
@@ -29,13 +30,14 @@
   formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[CustomerDetails])(implicit request: Request[_], messages: Messages)
+@(theForm: Form[CustomerDetails], summary: Summary)(implicit request: Request[_], messages: Messages)
 
 @layout(
   pageHeading = messages("aboutYou.heading"),
   showH1 = false,
   backLinkUrl = controllers.routes.TaskListController.show.url,
   showSection = true,
+    summary = Some(summary),
   sectionName = messages("label.section.aboutTheProperty"),
   theForm = theForm
 ) {

@@ -31,7 +31,7 @@ class CheckYourAnswersAboutThePropertyControllerSpec extends TestBaseSpec {
   val mockAboutThePropertyNavigator: AboutYouAndThePropertyNavigator             = mock[AboutYouAndThePropertyNavigator]
   val mockCheckYourAnswersAboutThePropertyView: checkYourAnswersAboutTheProperty =
     mock[checkYourAnswersAboutTheProperty]
-  when(mockCheckYourAnswersAboutThePropertyView.apply(any, any)(any, any)).thenReturn(HtmlFormat.empty)
+  when(mockCheckYourAnswersAboutThePropertyView.apply(any, any, any)(any, any)).thenReturn(HtmlFormat.empty)
 
   val mockTaskListView: taskList = mock[taskList]
   when(mockTaskListView.apply()(any, any)).thenReturn(HtmlFormat.empty)

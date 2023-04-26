@@ -53,7 +53,8 @@ class LettingOtherPartOfPropertyDetailsController @Inject() (
         existingDetails.fold(lettingOtherPartOfPropertyForm)(lettingOtherPartOfPropertyForm.fill),
         index,
         "lettingOtherPartOfPropertyDetails",
-        controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show().url
+        controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show().url,
+        request.sessionData.toSummary
       )
     )
   }
@@ -67,7 +68,8 @@ class LettingOtherPartOfPropertyDetailsController @Inject() (
             formWithErrors,
             index,
             "lettingOtherPartOfPropertyDetails",
-            controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show().url
+            controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show().url,
+            request.sessionData.toSummary
           )
         ),
       data => {

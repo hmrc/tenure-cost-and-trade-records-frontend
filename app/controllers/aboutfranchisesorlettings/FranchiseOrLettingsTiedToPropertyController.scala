@@ -50,7 +50,8 @@ class FranchiseOrLettingsTiedToPropertyController @Inject() (
               franchiseOrLettingsTiedToPropertyForm.fillAndValidate(franchisesOrLettingsTiedToProperty)
             case _                                        => franchiseOrLettingsTiedToPropertyForm
           },
-          request.sessionData.stillConnectedDetails.flatMap(_.connectionToProperty).toString
+          request.sessionData.stillConnectedDetails.flatMap(_.connectionToProperty).toString,
+          request.sessionData.toSummary
         )
       )
     )
@@ -61,7 +62,11 @@ class FranchiseOrLettingsTiedToPropertyController @Inject() (
       franchiseOrLettingsTiedToPropertyForm,
       formWithErrors =>
         BadRequest(
-          franchiseOrLettingsTiedToPropertyView(formWithErrors, request.sessionData.forType)
+          franchiseOrLettingsTiedToPropertyView(
+            formWithErrors,
+            request.sessionData.forType,
+            request.sessionData.toSummary
+          )
         ),
       data => {
         val updatedData = updateAboutFranchisesOrLettings(_.copy(franchisesOrLettingsTiedToProperty = Some(data)))

@@ -53,7 +53,8 @@ class AddAnotherLettingOtherPartOfPropertyController @Inject() (
           },
           index,
           "addAnotherLettingOtherPartOfProperty",
-          controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyRentIncludesController.show(index).url
+          controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyRentIncludesController.show(index).url,
+          request.sessionData.toSummary
         )
       )
     )
@@ -70,7 +71,8 @@ class AddAnotherLettingOtherPartOfPropertyController @Inject() (
             "addAnotherLettingOtherPartOfProperty",
             controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyRentIncludesController
               .show(index)
-              .url
+              .url,
+            request.sessionData.toSummary
           )
         ),
       data =>

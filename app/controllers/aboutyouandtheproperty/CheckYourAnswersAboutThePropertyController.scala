@@ -50,7 +50,8 @@ class CheckYourAnswersAboutThePropertyController @Inject() (
               checkYourAnswersAboutThePropertyForm.fillAndValidate(checkYourAnswersAboutTheProperty)
             case _                                      => checkYourAnswersAboutThePropertyForm
           },
-          getBackLink(request.sessionData)
+          getBackLink(request.sessionData),
+          request.sessionData.toSummary
         )
       )
     )

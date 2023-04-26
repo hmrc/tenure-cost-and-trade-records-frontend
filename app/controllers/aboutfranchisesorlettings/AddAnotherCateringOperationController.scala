@@ -53,7 +53,8 @@ class AddAnotherCateringOperationController @Inject() (
           },
           index,
           "addAnotherCateringOperationOrLettingAccommodations",
-          controllers.aboutfranchisesorlettings.routes.CateringOperationRentIncludesController.show(index).url
+          controllers.aboutfranchisesorlettings.routes.CateringOperationRentIncludesController.show(index).url,
+          request.sessionData.toSummary
         )
       )
     )
@@ -68,7 +69,8 @@ class AddAnotherCateringOperationController @Inject() (
             formWithErrors,
             index,
             "addAnotherCateringOperationOrLettingAccommodations",
-            controllers.aboutfranchisesorlettings.routes.CateringOperationRentIncludesController.show(index).url
+            controllers.aboutfranchisesorlettings.routes.CateringOperationRentIncludesController.show(index).url,
+            request.sessionData.toSummary
           )
         ),
       data =>

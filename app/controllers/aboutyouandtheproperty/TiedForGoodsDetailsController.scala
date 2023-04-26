@@ -48,7 +48,8 @@ class TiedForGoodsDetailsController @Inject() (
           request.sessionData.aboutYouAndTheProperty.flatMap(_.tiedForGoodsDetails) match {
             case Some(tiedForGoodsDetails) => tiedForGoodsDetailsForm.fillAndValidate(tiedForGoodsDetails)
             case _                         => tiedForGoodsDetailsForm
-          }
+          },
+          request.sessionData.toSummary
         )
       )
     )
@@ -57,7 +58,13 @@ class TiedForGoodsDetailsController @Inject() (
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[TiedForGoodsInformationDetails](
       tiedForGoodsDetailsForm,
-      formWithErrors => BadRequest(tiedForGoodsDetailsView(formWithErrors)),
+      formWithErrors =>
+        BadRequest(
+          tiedForGoodsDetailsView(
+            formWithErrors,
+            request.sessionData.toSummary
+          )
+        ),
       data => {
         val updatedData = updateAboutYouAndTheProperty(_.copy(tiedForGoodsDetails = Some(data)))
         session.saveOrUpdate(updatedData)

@@ -123,7 +123,9 @@ class LoginControllerSpec extends TestBaseSpec {
 
     "Audit logout event" in {
       val audit = mock[Audit]
-      doNothing.when(audit).sendExplicitAudit(any[String], any[UserData])(any[HeaderCarrier], any[ExecutionContext], any[Writes[UserData]])
+      doNothing
+        .when(audit)
+        .sendExplicitAudit(any[String], any[UserData])(any[HeaderCarrier], any[ExecutionContext], any[Writes[UserData]])
 
       val loginController = new LoginController(
         inject[BackendConnector],
@@ -141,7 +143,7 @@ class LoginControllerSpec extends TestBaseSpec {
 
       val result = loginController.logout(fakeRequest)
 
-      status(result) shouldBe SEE_OTHER
+      status(result)           shouldBe SEE_OTHER
       redirectLocation(result) shouldBe Some(routes.LoginController.show().url)
 
       verify(audit).sendExplicitAudit(
@@ -162,9 +164,9 @@ class LoginControllerSpec extends TestBaseSpec {
           )
         )
       )(
-          any[HeaderCarrier],
-          any[ExecutionContext],
-          any[Writes[UserData]]
+        any[HeaderCarrier],
+        any[ExecutionContext],
+        any[Writes[UserData]]
       )
 
     }

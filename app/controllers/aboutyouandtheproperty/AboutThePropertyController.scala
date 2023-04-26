@@ -49,7 +49,8 @@ class AboutThePropertyController @Inject() (
             case Some(propertyDetails) => aboutThePropertyForm.fillAndValidate(propertyDetails)
             case _                     => aboutThePropertyForm
           },
-          request.sessionData.forType
+          request.sessionData.forType,
+          request.sessionData.toSummary
         )
       )
     )
@@ -58,7 +59,14 @@ class AboutThePropertyController @Inject() (
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[PropertyDetails](
       aboutThePropertyForm,
-      formWithErrors => BadRequest(aboutThePropertyView(formWithErrors, request.sessionData.forType)),
+      formWithErrors =>
+        BadRequest(
+          aboutThePropertyView(
+            formWithErrors,
+            request.sessionData.forType,
+            request.sessionData.toSummary
+          )
+        ),
       data => {
         val updatedData = updateAboutYouAndTheProperty(_.copy(propertyDetails = Some(data)))
         session.saveOrUpdate(updatedData)

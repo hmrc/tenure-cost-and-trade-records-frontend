@@ -52,7 +52,8 @@ class PremisesLicenseConditionsController @Inject() (
             case Some(premisesLicense) => premisesLicenseConditionsForm.fillAndValidate(premisesLicense)
             case _                     => premisesLicenseConditionsForm
           },
-          getBackLink(request.sessionData)
+          getBackLink(request.sessionData),
+          request.sessionData.toSummary
         )
       )
     )
@@ -61,7 +62,14 @@ class PremisesLicenseConditionsController @Inject() (
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[AnswersYesNo](
       premisesLicenseConditionsForm,
-      formWithErrors => BadRequest(premisesLicenseView(formWithErrors, getBackLink(request.sessionData))),
+      formWithErrors =>
+        BadRequest(
+          premisesLicenseView(
+            formWithErrors,
+            getBackLink(request.sessionData),
+            request.sessionData.toSummary
+          )
+        ),
       data => {
         val updatedData = updateAboutYouAndTheProperty(_.copy(premisesLicenseConditions = Some(data)))
         session.saveOrUpdate(updatedData)

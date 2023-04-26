@@ -28,7 +28,8 @@ class LettingOtherPartOfPropertyRentIncludesControllerSpec extends TestBaseSpec 
   val mockAboutFranchisesOrLettingsNavigator = mock[AboutFranchisesOrLettingsNavigator]
 
   val mockLettingOtherPartOfPropertyCheckboxesDetails = mock[cateringOperationOrLettingAccommodationRentIncludes]
-  when(mockLettingOtherPartOfPropertyCheckboxesDetails.apply(any, any, any, any)(any, any)).thenReturn(HtmlFormat.empty)
+  when(mockLettingOtherPartOfPropertyCheckboxesDetails.apply(any, any, any, any, any)(any, any))
+    .thenReturn(HtmlFormat.empty)
 
   val lettingOtherPartOfPropertyDetailsCheckboxesController = new LettingOtherPartOfPropertyRentIncludesController(
     stubMessagesControllerComponents(),

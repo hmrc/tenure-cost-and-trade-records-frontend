@@ -17,6 +17,7 @@
 package views.aboutyouandtheproperty
 
 import form.aboutyouandtheproperty.PremisesLicenseGrantedForm
+import models.pages.Summary
 import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
@@ -29,10 +30,10 @@ class PremisesLicenceGrantedViewSpec extends QuestionViewBehaviours[AnswersYesNo
 
   override val form: Form[AnswersYesNo] = PremisesLicenseGrantedForm.premisesLicenseGrantedForm
 
-  def createView: () => Html = () => premisesLicenceGrantedView(form)(fakeRequest, messages)
+  def createView: () => Html = () => premisesLicenceGrantedView(form, Summary("99996010001"))(fakeRequest, messages)
 
   def createViewUsingForm: Form[AnswersYesNo] => Html = (form: Form[AnswersYesNo]) =>
-    premisesLicenceGrantedView(form)(fakeRequest, messages)
+    premisesLicenceGrantedView(form, Summary("99996010001"))(fakeRequest, messages)
 
   "Property licence conditions view" must {
 

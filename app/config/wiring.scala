@@ -28,6 +28,7 @@ import scala.concurrent.ExecutionContext
   * Temporal solution before we move all login logic to separate service class.
   * This allow us to test login controller without starting google guice.
   */
+
 @ImplementedBy(classOf[DefaultLoginToBackendAction])
 trait LoginToBackendAction {
   def apply(implicit hc: HeaderCarrier, ec: ExecutionContext): LoginToBackend

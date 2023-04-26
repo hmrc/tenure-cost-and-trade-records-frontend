@@ -23,6 +23,7 @@ import play.api.data.Form
 import play.api.i18n.Lang
 import play.twirl.api.HtmlFormat
 import views.behaviours.QuestionViewBehaviours
+import models.pages.Summary
 
 import java.util.Locale
 
@@ -35,10 +36,24 @@ class LettingOtherPartOfPropertyRentDetailsViewSpec
   override val form = LettingOtherPartOfPropertyRentForm.lettingOtherPartOfPropertyRentForm
 
   def createView = () =>
-    lettingOtherPartOfPropertyRentDetailsView(form, 0, messageKeyPrefix, "Wombles Inc", backLink)(fakeRequest, messages)
+    lettingOtherPartOfPropertyRentDetailsView(
+      form,
+      0,
+      messageKeyPrefix,
+      "Wombles Inc",
+      backLink,
+      Summary("99996010001")
+    )(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[LettingOtherPartOfPropertyRentDetails]) =>
-    lettingOtherPartOfPropertyRentDetailsView(form, 0, messageKeyPrefix, "Wombles Inc", backLink)(fakeRequest, messages)
+    lettingOtherPartOfPropertyRentDetailsView(
+      form,
+      0,
+      messageKeyPrefix,
+      "Wombles Inc",
+      backLink,
+      Summary("99996010001")
+    )(fakeRequest, messages)
 
   "Catering operation rent details view" must {
 

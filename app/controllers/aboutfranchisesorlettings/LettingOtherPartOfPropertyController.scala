@@ -60,7 +60,8 @@ class LettingOtherPartOfPropertyController @Inject() (
               throw new RuntimeException(
                 s"Navigation for catering operation details page reached with error $msg"
               )
-          }
+          },
+          request.sessionData.toSummary
         )
       )
     )
@@ -81,7 +82,8 @@ class LettingOtherPartOfPropertyController @Inject() (
                 throw new RuntimeException(
                   s"Navigation for letting other part of property page reached with error $msg"
                 )
-            }
+            },
+            request.sessionData.toSummary
           )
         ),
       data => {

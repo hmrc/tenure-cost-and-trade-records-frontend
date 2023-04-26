@@ -52,7 +52,8 @@ class TiedForGoodsController @Inject() (
             case Some(tiedForGoods) => tiedForGoodsForm.fillAndValidate(tiedForGoods)
             case _                  => tiedForGoodsForm
           },
-          getBackLink(request.sessionData)
+          getBackLink(request.sessionData),
+          request.sessionData.toSummary
         )
       )
     )
@@ -61,7 +62,14 @@ class TiedForGoodsController @Inject() (
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[AnswersYesNo](
       tiedForGoodsForm,
-      formWithErrors => BadRequest(tiedForGoodsView(formWithErrors, getBackLink(request.sessionData))),
+      formWithErrors =>
+        BadRequest(
+          tiedForGoodsView(
+            formWithErrors,
+            getBackLink(request.sessionData),
+            request.sessionData.toSummary
+          )
+        ),
       data => {
         val updatedData = updateAboutYouAndTheProperty(_.copy(tiedForGoods = Some(data)))
         session.saveOrUpdate(updatedData)

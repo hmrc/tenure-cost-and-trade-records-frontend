@@ -51,7 +51,8 @@ class ConcessionOrFranchiseController @Inject() (
             case _                                   => concessionOrFranchiseForm
           },
           "concessionOrFranchise",
-          controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show().url
+          controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show().url,
+          request.sessionData.toSummary
         )
       )
     )
@@ -65,7 +66,8 @@ class ConcessionOrFranchiseController @Inject() (
           cateringOperationOrLettingAccommodationView(
             formWithErrors,
             "concessionOrFranchise",
-            controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show().url
+            controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show().url,
+            request.sessionData.toSummary
           )
         ),
       data => {

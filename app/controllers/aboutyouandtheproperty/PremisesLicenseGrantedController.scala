@@ -49,7 +49,8 @@ class PremisesLicenseGrantedController @Inject() (
             case Some(premisesLicenseGrantedDetail) =>
               premisesLicenseGrantedForm.fillAndValidate(premisesLicenseGrantedDetail)
             case _                                  => premisesLicenseGrantedForm
-          }
+          },
+          request.sessionData.toSummary
         )
       )
     )
@@ -58,7 +59,13 @@ class PremisesLicenseGrantedController @Inject() (
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[AnswersYesNo](
       premisesLicenseGrantedForm,
-      formWithErrors => BadRequest(premisesLicenseGrantedView(formWithErrors)),
+      formWithErrors =>
+        BadRequest(
+          premisesLicenseGrantedView(
+            formWithErrors,
+            request.sessionData.toSummary
+          )
+        ),
       data => {
         val updatedData = updateAboutYouAndTheProperty(_.copy(premisesLicenseGrantedDetail = Some(data)))
         session.saveOrUpdate(updatedData)

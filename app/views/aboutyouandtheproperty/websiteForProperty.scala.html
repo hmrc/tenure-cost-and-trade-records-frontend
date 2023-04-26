@@ -27,6 +27,7 @@
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Fieldset
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Legend
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Label
+@import models.pages.Summary
 
 @this(layout: Layout,
   govukButton: GovukButton,
@@ -35,8 +36,7 @@
   formWithCSRF: FormWithCSRF
 )
 
-
-@(theForm: Form[WebsiteForPropertyDetails])(implicit request: Request[_], messages: Messages)
+@(theForm: Form[WebsiteForPropertyDetails], summary: Summary)(implicit request: Request[_], messages: Messages)
 
 @conditionalHTML = {
   @govukInput(
@@ -56,6 +56,8 @@
   pageHeading = messages("buildingOperatingHaveAWebsite.heading"),
   showH1 = false,
   showSection = true,
+    summary = Some(summary),
+    showAccountInfo = true,
   sectionName = messages("label.section.aboutTheProperty"),
   backLinkUrl = controllers.aboutyouandtheproperty.routes.AboutThePropertyController.show.url,
   theForm = theForm

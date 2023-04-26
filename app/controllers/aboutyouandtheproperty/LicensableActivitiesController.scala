@@ -48,7 +48,8 @@ class LicensableActivitiesController @Inject() (
           request.sessionData.aboutYouAndTheProperty.flatMap(_.licensableActivities) match {
             case Some(licensableActivities) => licensableActivitiesForm.fillAndValidate(licensableActivities)
             case _                          => licensableActivitiesForm
-          }
+          },
+          request.sessionData.toSummary
         )
       )
     )
@@ -57,7 +58,13 @@ class LicensableActivitiesController @Inject() (
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[AnswersYesNo](
       licensableActivitiesForm,
-      formWithErrors => BadRequest(licensableActivitiesView(formWithErrors)),
+      formWithErrors =>
+        BadRequest(
+          licensableActivitiesView(
+            formWithErrors,
+            request.sessionData.toSummary
+          )
+        ),
       data => {
         val updatedData = updateAboutYouAndTheProperty(_.copy(licensableActivities = Some(data)))
         session.saveOrUpdate(updatedData)

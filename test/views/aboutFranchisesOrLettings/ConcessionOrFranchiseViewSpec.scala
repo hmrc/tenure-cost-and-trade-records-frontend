@@ -22,6 +22,7 @@ import models.submissions.common.{AnswerNo, AnswerYes}
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
+import models.pages.Summary
 
 class ConcessionOrFranchiseViewSpec extends QuestionViewBehaviours[CateringOperationDetails] {
 
@@ -33,14 +34,16 @@ class ConcessionOrFranchiseViewSpec extends QuestionViewBehaviours[CateringOpera
     concessionOrFranchiseView(
       form,
       messageKeyPrefix,
-      controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show().url
+      controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show().url,
+      Summary("99996010001")
     )(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[CateringOperationDetails]) =>
     concessionOrFranchiseView(
       form,
       messageKeyPrefix,
-      controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show().url
+      controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show().url,
+      Summary("99996010001")
     )(fakeRequest, messages)
 
   "Concession or franchise view" must {

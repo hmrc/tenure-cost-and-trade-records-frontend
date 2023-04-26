@@ -17,6 +17,7 @@
 package models
 
 import models.audit.UserData
+import models.pages.Summary
 import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartOne, AboutLeaseOrAgreementPartTwo}
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
@@ -57,6 +58,11 @@ case class Session(
     aboutFranchisesOrLettings,
     aboutLeaseOrAgreementPartOne,
     aboutLeaseOrAgreementPartTwo
+  )
+
+  def toSummary: Summary = Summary(
+    referenceNumber,
+    Option(address)
   )
 
 }

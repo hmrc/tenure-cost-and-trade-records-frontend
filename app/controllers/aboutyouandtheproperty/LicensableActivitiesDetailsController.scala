@@ -49,7 +49,8 @@ class LicensableActivitiesDetailsController @Inject() (
             case Some(licensableActivitiesInformation) =>
               licensableActivitiesDetailsForm.fillAndValidate(licensableActivitiesInformation)
             case _                                     => licensableActivitiesDetailsForm
-          }
+          },
+          request.sessionData.toSummary
         )
       )
     )
@@ -58,7 +59,13 @@ class LicensableActivitiesDetailsController @Inject() (
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[LicensableActivitiesInformationDetails](
       licensableActivitiesDetailsForm,
-      formWithErrors => BadRequest(licensableActivitiesDetailsView(formWithErrors)),
+      formWithErrors =>
+        BadRequest(
+          licensableActivitiesDetailsView(
+            formWithErrors,
+            request.sessionData.toSummary
+          )
+        ),
       data => {
         val updatedData = updateAboutYouAndTheProperty(_.copy(licensableActivitiesInformationDetails = Some(data)))
         session.saveOrUpdate(updatedData)

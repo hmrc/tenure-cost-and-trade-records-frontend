@@ -52,7 +52,8 @@ class CheckYourAnswersAboutFranchiseOrLettingsController @Inject() (
               checkYourAnswersAboutFranchiseOrLettingsForm.fillAndValidate(checkYourAnswersAboutFranchiseOrLettings)
             case _                                              => checkYourAnswersAboutFranchiseOrLettingsForm
           },
-          getBackLink(request.sessionData)
+          getBackLink(request.sessionData),
+          request.sessionData.toSummary
         )
       )
     )

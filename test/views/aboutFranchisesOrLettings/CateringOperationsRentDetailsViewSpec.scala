@@ -23,6 +23,7 @@ import play.api.data.Form
 import play.api.i18n.Lang
 import play.twirl.api.HtmlFormat
 import views.behaviours.QuestionViewBehaviours
+import models.pages.Summary
 
 import java.util.Locale
 
@@ -38,7 +39,8 @@ class CateringOperationsRentDetailsViewSpec extends QuestionViewBehaviours[Cater
       0,
       messageKeyPrefix,
       "Wombles Inc",
-      controllers.aboutfranchisesorlettings.routes.CateringOperationController.show().url
+      controllers.aboutfranchisesorlettings.routes.CateringOperationController.show().url,
+      Summary("99996010001")
     )(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[CateringOperationRentDetails]) =>
@@ -47,7 +49,8 @@ class CateringOperationsRentDetailsViewSpec extends QuestionViewBehaviours[Cater
       0,
       messageKeyPrefix,
       "Wombles Inc",
-      controllers.aboutfranchisesorlettings.routes.CateringOperationController.show().url
+      controllers.aboutfranchisesorlettings.routes.CateringOperationController.show().url,
+      Summary("99996010001")
     )(fakeRequest, messages)
 
   "Catering operation rent details view" must {
