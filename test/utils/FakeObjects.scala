@@ -22,7 +22,7 @@ import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartOne, 
 import models.submissions.aboutfranchisesorlettings
 import models.submissions.aboutfranchisesorlettings.LettingSection
 import models.submissions.aboutyouandtheproperty._
-import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, AboutYourTradingHistory}
+import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, OccupationalAndAccountingInformation}
 import models.submissions.additionalinformation._
 import models.{AnnualRent, Session, SubmissionDraft}
 import models.submissions.common.{Address, AnswerNo, AnswerYes, ContactDetails, ContactDetailsAddress}
@@ -226,8 +226,8 @@ trait FakeObjects {
     )
 
   val prefilledAboutTheTradingHistory   = AboutTheTradingHistory(
-    aboutYourTradingHistory = Some(
-      AboutYourTradingHistory(
+    occupationAndAccountingInformation = Some(
+      OccupationalAndAccountingInformation(
         prefilledFirstOccupy,
         prefilledFinancialYear
       )

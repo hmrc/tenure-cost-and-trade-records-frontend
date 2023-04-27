@@ -18,12 +18,13 @@ package controllers.aboutthetradinghistory
 
 import navigation.AboutTheTradingHistoryNavigator
 import play.api.http.Status
+import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import play.twirl.api.HtmlFormat
 import utils.TestBaseSpec
 import views.html.aboutthetradinghistory.aboutYourTradingHistory
 
-class AboutYourTradingHistoryControllerSpec extends TestBaseSpec {
+class occupationalAndAccountingInformationControllerSpec extends TestBaseSpec {
 
   val mockAboutYouNavigator: AboutTheTradingHistoryNavigator   = mock[AboutTheTradingHistoryNavigator]
   val mockAboutYourTradingHistoryView: aboutYourTradingHistory = mock[aboutYourTradingHistory]
@@ -47,6 +48,15 @@ class AboutYourTradingHistoryControllerSpec extends TestBaseSpec {
       val result = aboutYourTradingHistoryController.show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
+    }
+  }
+
+  "SUBMIT /" should {
+    "throw a BAD_REQUEST if an empty form is submitted" in {
+      val res = aboutYourTradingHistoryController.submit(
+        FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)
+      )
+      status(res) shouldBe BAD_REQUEST
     }
   }
 }

@@ -31,7 +31,7 @@ import repositories.SessionRepo
 import views.html.connectiontoproperty.connectionToTheProperty
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class ConnectionToThePropertyController @Inject() (
@@ -40,7 +40,8 @@ class ConnectionToThePropertyController @Inject() (
   connectionToThePropertyView: connectionToTheProperty,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FORDataCaptureController(mcc)
+)(implicit val ec: ExecutionContext)
+    extends FORDataCaptureController(mcc)
     with I18nSupport
     with Logging {
 

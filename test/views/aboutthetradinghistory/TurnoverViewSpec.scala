@@ -16,23 +16,23 @@
 
 package views.aboutthetradinghistory
 
-import form.aboutthetradinghistory.AboutYourTradingHistoryForm
-import models.submissions.aboutthetradinghistory.AboutYourTradingHistory
+import form.aboutthetradinghistory.{OccupationalAndAccountingInformationForm, TurnoverForm}
+import models.submissions.aboutthetradinghistory.{OccupationalAndAccountingInformation, TurnoverSection}
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class TurnoverViewSpec extends QuestionViewBehaviours[AboutYourTradingHistory] {
+class TurnoverViewSpec extends QuestionViewBehaviours[Seq[TurnoverSection]] {
   // NOTE: this is a holding view test until the turnover page is implemented
   def turnoverView = app.injector.instanceOf[views.html.aboutthetradinghistory.turnover]
 
   val messageKeyPrefix = "turnover"
 
-  override val form = AboutYourTradingHistoryForm.aboutYourTradingHistoryForm
+  override val form = TurnoverForm.turnoverForm(3)
 
-  def createView = () => turnoverView(Seq.empty)(fakeRequest, messages)
+  def createView = () => turnoverView(form, 3)(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[AboutYourTradingHistory]) => turnoverView(Seq.empty)(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[Seq[TurnoverSection]]) => turnoverView(form, 3)(fakeRequest, messages)
 
   "Turnover view" must {
 

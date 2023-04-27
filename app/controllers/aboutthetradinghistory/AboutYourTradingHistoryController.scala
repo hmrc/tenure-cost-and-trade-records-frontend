@@ -18,9 +18,9 @@ package controllers.aboutthetradinghistory
 
 import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
-import form.aboutthetradinghistory.AboutYourTradingHistoryForm.aboutYourTradingHistoryForm
+import form.aboutthetradinghistory.OccupationalAndAccountingInformationForm.occupationalAndAccountingInformationForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.updateAboutTheTradingHistory
-import models.submissions.aboutthetradinghistory.AboutYourTradingHistory
+import models.submissions.aboutthetradinghistory.{OccupationalAndAccountingInformation, TurnoverSection}
 import navigation.AboutTheTradingHistoryNavigator
 import navigation.identifiers.AboutYourTradingHistoryPageId
 import play.api.Logging
@@ -29,7 +29,9 @@ import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import views.html.aboutthetradinghistory.aboutYourTradingHistory
 
+import java.time.LocalDate
 import javax.inject.{Inject, Named, Singleton}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class AboutYourTradingHistoryController @Inject() (
@@ -38,30 +40,65 @@ class AboutYourTradingHistoryController @Inject() (
   aboutYourTradingHistoryView: aboutYourTradingHistory,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FORDataCaptureController(mcc)
+)(implicit val ec: ExecutionContext)
+    extends FORDataCaptureController(mcc)
     with I18nSupport
     with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     Ok(
       aboutYourTradingHistoryView(
-        request.sessionData.aboutTheTradingHistory.flatMap(_.aboutYourTradingHistory) match {
-          case Some(tradingHistory) => aboutYourTradingHistoryForm.fillAndValidate(tradingHistory)
-          case _                    => aboutYourTradingHistoryForm
+        request.sessionData.aboutTheTradingHistory.flatMap(_.occupationAndAccountingInformation) match {
+          case Some(tradingHistory) => occupationalAndAccountingInformationForm.fillAndValidate(tradingHistory)
+          case _                    => occupationalAndAccountingInformationForm
         }
       )
     )
   }
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft[AboutYourTradingHistory](
-      aboutYourTradingHistoryForm,
+    continueOrSaveAsDraft[OccupationalAndAccountingInformation](
+      occupationalAndAccountingInformationForm,
       formWithErrors => BadRequest(aboutYourTradingHistoryView(formWithErrors)),
-      data => {
-        val updatedData = updateAboutTheTradingHistory(_.copy(aboutYourTradingHistory = Some(data)))
-        session.saveOrUpdate(updatedData)
-        Redirect(navigator.nextPage(AboutYourTradingHistoryPageId).apply(updatedData))
-      }
+      data =>
+        if (request.sessionData.aboutTheTradingHistory.flatMap(_.occupationAndAccountingInformation).contains(data)) {
+          Redirect(navigator.nextPage(AboutYourTradingHistoryPageId).apply(request.sessionData))
+        } else {
+          val updatedData = updateAboutTheTradingHistory(
+            _.copy(
+              occupationAndAccountingInformation = Some(data),
+              turnoverSections = financialYearsRequired(data).map { finYearEnd =>
+                TurnoverSection(
+                  financialYearEnd = finYearEnd,
+                  tradingPeriod = 52,
+                  alcoholicDrinks = 0,
+                  food = 0,
+                  otherReceipts = 0,
+                  accommodation = 0,
+                  averageOccupancyRate = 0
+                )
+              }
+            )
+          )
+          session
+            .saveOrUpdate(updatedData)
+            .map(_ => Redirect(navigator.nextPage(AboutYourTradingHistoryPageId).apply(updatedData)))
+        }
+    )
+  }
+
+  private def financialYearsRequired(accountingInfo: OccupationalAndAccountingInformation): Seq[LocalDate] = {
+    val now: LocalDate            = LocalDate.now
+    val currentFinancialYear: Int =
+      if (
+        now.isBefore(LocalDate.of(now.getYear, accountingInfo.financialYear.months, accountingInfo.financialYear.days))
+      ) {
+        now.getYear
+      } else now.getYear + 1
+    val yearDifference            = currentFinancialYear - accountingInfo.firstOccupy.years
+    (1 to yearDifference.min(3)).map(yearsAgo =>
+      LocalDate
+        .of(currentFinancialYear - yearsAgo, accountingInfo.financialYear.months, accountingInfo.financialYear.days)
     )
   }
 }

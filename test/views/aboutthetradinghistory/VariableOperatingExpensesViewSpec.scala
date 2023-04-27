@@ -16,8 +16,8 @@
 
 package views.aboutthetradinghistory
 
-import form.aboutthetradinghistory.{AboutYourTradingHistoryForm, VariableOperatingExpensesForm}
-import models.submissions.aboutthetradinghistory.{AboutYourTradingHistory, VariableOperatingExpenses}
+import form.aboutthetradinghistory.{OccupationalAndAccountingInformationForm, VariableOperatingExpensesForm}
+import models.submissions.aboutthetradinghistory.{OccupationalAndAccountingInformation, VariableOperatingExpenses}
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours

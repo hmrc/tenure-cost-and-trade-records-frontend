@@ -16,8 +16,8 @@
 
 package views.aboutthetradinghistory
 
-import form.aboutthetradinghistory.{AboutYourTradingHistoryForm, OtherCostsForm}
-import models.submissions.aboutthetradinghistory.{AboutYourTradingHistory, OtherCosts}
+import form.aboutthetradinghistory.OtherCostsForm
+import models.submissions.aboutthetradinghistory.OtherCosts
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
