@@ -17,6 +17,7 @@
 package views.additionalInformation
 
 import form.additionalinformation.AlternativeContactDetailsForm
+import models.pages.Summary
 import models.submissions.additionalinformation.AlternativeContactDetails
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
@@ -29,10 +30,10 @@ class AlternativeContactDetailsViewSpec extends QuestionViewBehaviours[Alternati
 
   override val form: Form[AlternativeContactDetails] = AlternativeContactDetailsForm.alternativeContactDetailsForm
 
-  def createView: () => Html = () => alternativeContactDetailsView(form)(fakeRequest, messages)
+  def createView: () => Html = () => alternativeContactDetailsView(form, Summary("99996010001"))(fakeRequest, messages)
 
   def createViewUsingForm: Form[AlternativeContactDetails] => Html = (form: Form[AlternativeContactDetails]) =>
-    alternativeContactDetailsView(form)(fakeRequest, messages)
+    alternativeContactDetailsView(form, Summary("99996010001"))(fakeRequest, messages)
 
   "Alternative Contact Details view" must {
 

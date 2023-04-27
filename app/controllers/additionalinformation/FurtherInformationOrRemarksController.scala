@@ -49,7 +49,8 @@ class FurtherInformationOrRemarksController @Inject() (
             case Some(furtherInformationOrRemarksDetails) =>
               furtherInformationOrRemarksForm.fillAndValidate(furtherInformationOrRemarksDetails)
             case _                                        => furtherInformationOrRemarksForm
-          }
+          },
+          request.sessionData.toSummary
         )
       )
     )
@@ -58,7 +59,7 @@ class FurtherInformationOrRemarksController @Inject() (
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[FurtherInformationOrRemarksDetails](
       furtherInformationOrRemarksForm,
-      formWithErrors => BadRequest(furtherInformationOrRemarksView(formWithErrors)),
+      formWithErrors => BadRequest(furtherInformationOrRemarksView(formWithErrors, request.sessionData.toSummary)),
       data => {
         val updatedData = updateAdditionalInformation(_.copy(furtherInformationOrRemarksDetails = Some(data)))
         session.saveOrUpdate(updatedData)

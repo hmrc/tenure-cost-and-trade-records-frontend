@@ -17,17 +17,19 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import models.submissions.additionalinformation.CheckYourAnswersAdditionalInformation
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
+@import models.pages.Summary
 
 @this(layout: Layout,
         govukButton: GovukButton,
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[CheckYourAnswersAdditionalInformation])(implicit request: Request[_], messages: Messages)
+@(theForm: Form[CheckYourAnswersAdditionalInformation], summary: Summary)(implicit request: Request[_], messages: Messages)
 
 @layout(
  pageHeading = messages("checkYourAnswersAdditionalInformation.heading"),
  showSection = true,
+ summary = Some(summary),
  sectionName = messages("label.section.additionalInformation"),
  backLinkUrl = controllers.additionalinformation.routes.AlternativeContactDetailsController.show.url,
 ) {
