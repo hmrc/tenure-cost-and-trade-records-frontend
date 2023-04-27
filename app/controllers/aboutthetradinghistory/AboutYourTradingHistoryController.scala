@@ -40,7 +40,8 @@ class AboutYourTradingHistoryController @Inject() (
   aboutYourTradingHistoryView: aboutYourTradingHistory,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit val ec: ExecutionContext)extends FORDataCaptureController(mcc)
+)(implicit val ec: ExecutionContext)
+    extends FORDataCaptureController(mcc)
     with I18nSupport
     with Logging {
 
@@ -59,35 +60,45 @@ class AboutYourTradingHistoryController @Inject() (
     continueOrSaveAsDraft[OccupationalAndAccountingInformation](
       occupationalAndAccountingInformationForm,
       formWithErrors => BadRequest(aboutYourTradingHistoryView(formWithErrors)),
-      data => {
-        if(request.sessionData.aboutTheTradingHistory.flatMap(_.occupationAndAccountingInformation).contains(data)){
+      data =>
+        if (request.sessionData.aboutTheTradingHistory.flatMap(_.occupationAndAccountingInformation).contains(data)) {
           Redirect(navigator.nextPage(AboutYourTradingHistoryPageId).apply(request.sessionData))
         } else {
-          val updatedData = updateAboutTheTradingHistory(_.copy(
-            occupationAndAccountingInformation = Some(data),
-            turnoverSections = financialYearsRequired(data).map { finYearEnd =>
-              TurnoverSection(
-                financialYearEnd = finYearEnd,
-                tradingPeriod = 52,
-                alcoholicDrinks = 0,
-                food = 0,
-                otherReceipts = 0,
-                accommodation = 0,
-                averageOccupancyRate = 0
-              )
-            }))
-          session.saveOrUpdate(updatedData).map(_ => Redirect(navigator.nextPage(AboutYourTradingHistoryPageId).apply(updatedData)))
+          val updatedData = updateAboutTheTradingHistory(
+            _.copy(
+              occupationAndAccountingInformation = Some(data),
+              turnoverSections = financialYearsRequired(data).map { finYearEnd =>
+                TurnoverSection(
+                  financialYearEnd = finYearEnd,
+                  tradingPeriod = 52,
+                  alcoholicDrinks = 0,
+                  food = 0,
+                  otherReceipts = 0,
+                  accommodation = 0,
+                  averageOccupancyRate = 0
+                )
+              }
+            )
+          )
+          session
+            .saveOrUpdate(updatedData)
+            .map(_ => Redirect(navigator.nextPage(AboutYourTradingHistoryPageId).apply(updatedData)))
         }
-      }
     )
   }
 
   private def financialYearsRequired(accountingInfo: OccupationalAndAccountingInformation): Seq[LocalDate] = {
-    val now: LocalDate = LocalDate.now
-    val currentFinancialYear: Int = if (now.isBefore(LocalDate.of(now.getYear, accountingInfo.financialYear.months, accountingInfo.financialYear.days))) {
-      now.getYear
-    } else now.getYear + 1
-    val yearDifference = currentFinancialYear - accountingInfo.firstOccupy.years
-    (1 to yearDifference.min(3)).map(yearsAgo => LocalDate.of(currentFinancialYear - yearsAgo, accountingInfo.financialYear.months, accountingInfo.financialYear.days))
+    val now: LocalDate            = LocalDate.now
+    val currentFinancialYear: Int =
+      if (
+        now.isBefore(LocalDate.of(now.getYear, accountingInfo.financialYear.months, accountingInfo.financialYear.days))
+      ) {
+        now.getYear
+      } else now.getYear + 1
+    val yearDifference            = currentFinancialYear - accountingInfo.firstOccupy.years
+    (1 to yearDifference.min(3)).map(yearsAgo =>
+      LocalDate
+        .of(currentFinancialYear - yearsAgo, accountingInfo.financialYear.months, accountingInfo.financialYear.days)
+    )
   }
 }

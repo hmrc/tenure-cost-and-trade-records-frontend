@@ -38,32 +38,40 @@ class TurnoverController @Inject() (
   turnoverView: turnover,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext) extends FORDataCaptureController(mcc)
+)(implicit ec: ExecutionContext)
+    extends FORDataCaptureController(mcc)
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
-    request.sessionData.aboutTheTradingHistory.filter(_.occupationAndAccountingInformation.isDefined).fold(Redirect(routes.AboutYourTradingHistoryController.show())) { aboutTheTradingHistory => {
-      val numberOfColumns = aboutTheTradingHistory.turnoverSections.size
-      Ok(turnoverView(turnoverForm(numberOfColumns).fillAndValidate(aboutTheTradingHistory.turnoverSections), numberOfColumns))
-    }
-    }
+    request.sessionData.aboutTheTradingHistory
+      .filter(_.occupationAndAccountingInformation.isDefined)
+      .fold(Redirect(routes.AboutYourTradingHistoryController.show())) { aboutTheTradingHistory =>
+        val numberOfColumns = aboutTheTradingHistory.turnoverSections.size
+        Ok(
+          turnoverView(
+            turnoverForm(numberOfColumns).fillAndValidate(aboutTheTradingHistory.turnoverSections),
+            numberOfColumns
+          )
+        )
+      }
   }
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    request.sessionData.aboutTheTradingHistory.filter(_.occupationAndAccountingInformation.isDefined).fold(Future.successful(Redirect(routes.AboutYourTradingHistoryController.show()))) { aboutTheTradingHistory => {
-      val numberOfColumns = aboutTheTradingHistory.turnoverSections.size
-      continueOrSaveAsDraft[Seq[TurnoverSection]](
-        turnoverForm(numberOfColumns),
-        formWithErrors => {
-          BadRequest(turnoverView(formWithErrors, numberOfColumns))
-        },
-        success => {
-          val updatedData = updateAboutTheTradingHistory(_.copy(turnoverSections = success))
-          session.saveOrUpdate(updatedData).map(_ => Redirect(navigator.nextPage(CheckYourAnswersAboutTheTradingHistoryId).apply(updatedData)))
-        }
-      )
-    }
-    }
+    request.sessionData.aboutTheTradingHistory
+      .filter(_.occupationAndAccountingInformation.isDefined)
+      .fold(Future.successful(Redirect(routes.AboutYourTradingHistoryController.show()))) { aboutTheTradingHistory =>
+        val numberOfColumns = aboutTheTradingHistory.turnoverSections.size
+        continueOrSaveAsDraft[Seq[TurnoverSection]](
+          turnoverForm(numberOfColumns),
+          formWithErrors => BadRequest(turnoverView(formWithErrors, numberOfColumns)),
+          success => {
+            val updatedData = updateAboutTheTradingHistory(_.copy(turnoverSections = success))
+            session
+              .saveOrUpdate(updatedData)
+              .map(_ => Redirect(navigator.nextPage(CheckYourAnswersAboutTheTradingHistoryId).apply(updatedData)))
+          }
+        )
+      }
   }
 
 }

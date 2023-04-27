@@ -31,12 +31,13 @@ class AboutYourTradingHistoryViewSpec extends QuestionViewBehaviours[Occupationa
 
   val messageKeyPrefix = "aboutYourTradingHistory"
 
-  override val form: Form[OccupationalAndAccountingInformation] = OccupationalAndAccountingInformationForm.occupationalAndAccountingInformationForm
+  override val form: Form[OccupationalAndAccountingInformation] =
+    OccupationalAndAccountingInformationForm.occupationalAndAccountingInformationForm
 
   def createView: () => Html = () => aboutTheTradingHistoryView(form)(fakeRequest, messages)
 
-  def createViewUsingForm: Form[OccupationalAndAccountingInformation] => Html = (form: Form[OccupationalAndAccountingInformation]) =>
-    aboutTheTradingHistoryView(form)(fakeRequest, messages)
+  def createViewUsingForm: Form[OccupationalAndAccountingInformation] => Html =
+    (form: Form[OccupationalAndAccountingInformation]) => aboutTheTradingHistoryView(form)(fakeRequest, messages)
 
   "About the trading history view" must {
 
