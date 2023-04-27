@@ -28,6 +28,7 @@ import repositories.SessionRepo
 import views.html.aboutYourLeaseOrTenure.tenancyLeaseAgreementExpire
 
 import javax.inject.{Inject, Named, Singleton}
+import scala.concurrent.Future
 
 @Singleton
 class TenancyLeaseAgreementExpireController @Inject() (
@@ -39,14 +40,25 @@ class TenancyLeaseAgreementExpireController @Inject() (
 ) extends FORDataCaptureController(mcc)
     with I18nSupport {
 
-  def show: Action[AnyContent] = Action { implicit request =>
-    Ok(tenancyLeaseAgreementExpireView(tenancyLeaseAgreementExpireForm))
+  def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    Future.successful(
+      Ok(
+        tenancyLeaseAgreementExpireView(
+          request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.tenancyLeaseAgreementExpire) match {
+            case Some(tenancyLeaseAgreementExpire) =>
+              tenancyLeaseAgreementExpireForm.fillAndValidate(tenancyLeaseAgreementExpire)
+            case _                                 => tenancyLeaseAgreementExpireForm
+          },
+          request.sessionData.toSummary
+        )
+      )
+    )
   }
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[TenancyLeaseAgreementExpire](
       tenancyLeaseAgreementExpireForm,
-      formWithErrors => BadRequest(tenancyLeaseAgreementExpireView(formWithErrors)),
+      formWithErrors => BadRequest(tenancyLeaseAgreementExpireView(formWithErrors, request.sessionData.toSummary)),
       data => Redirect(navigator.nextPage(TenancyLeaseAgreementExpirePageId).apply(request.sessionData))
     )
   }

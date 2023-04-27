@@ -16,6 +16,12 @@
 
 package models.submissions.aboutYourLeaseOrTenure
 
+import play.api.libs.json.Json
+
 import java.time.LocalDate
 
 case class TenancyLeaseAgreementExpire(tenancyLeaseAgreementExpire: LocalDate)
+
+object TenancyLeaseAgreementExpire {
+  implicit val format = Json.format[TenancyLeaseAgreementExpire]
+}
