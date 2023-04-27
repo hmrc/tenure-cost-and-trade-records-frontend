@@ -23,6 +23,7 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukTextarea
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukCharacterCount
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
+@import models.pages.Summary
 
 @this(layout: Layout,
         govukButton: GovukButton,
@@ -36,12 +37,13 @@
 )
 
 
-@(theForm: Form[TenancyLeaseAgreementExpire])(implicit request: Request[_], messages: Messages)
+@(theForm: Form[TenancyLeaseAgreementExpire], summary: Summary)(implicit request: Request[_], messages: Messages)
 
 @layout(
  pageHeading = messages("tenancyLeaseAgreementExpire.heading"),
  showH1 = false,
  showSection = true,
+ summary = Some(summary),
  sectionName = messages("label.section.aboutYourLeaseOrTenure"),
  backLinkUrl = controllers.aboutYourLeaseOrTenure.routes.CurrentRentFirstPaidController.show.url,
  theForm = theForm

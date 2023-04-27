@@ -16,22 +16,33 @@
 
 package controllers.aboutYourLeaseOrTenure
 
+import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartOne, AboutLeaseOrAgreementPartTwo}
 import play.api.http.Status
 import play.api.test.Helpers._
+import uk.gov.hmrc.play.bootstrap.controller
 import utils.TestBaseSpec
 
 class TenancyLeaseAgreementExpireControllerSpec extends TestBaseSpec {
 
-  private val controller = app.injector.instanceOf[TenancyLeaseAgreementExpireController]
+  def tenancyLeaseAgreementExpireController(
+    aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwo)
+  ) =
+    new TenancyLeaseAgreementExpireController(
+      stubMessagesControllerComponents(),
+      aboutYourLeaseOrTenureNavigator,
+      tenantsLeaseAgreementExpireView,
+      preEnrichedActionRefiner(aboutLeaseOrAgreementPartTwo = aboutLeaseOrAgreementPartTwo),
+      mockSessionRepo
+    )
 
   "GET /" should {
     "return 200" in {
-      val result = controller.show(fakeRequest)
+      val result = tenancyLeaseAgreementExpireController().show(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return HTML" in {
-      val result = controller.show(fakeRequest)
+      val result = tenancyLeaseAgreementExpireController().show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
