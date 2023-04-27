@@ -17,6 +17,7 @@
 package views.additionalInformation
 
 import form.additionalinformation.FurtherInformationOrRemarksForm
+import models.pages.Summary
 import models.submissions.additionalinformation.FurtherInformationOrRemarksDetails
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
@@ -30,10 +31,12 @@ class FurtherInformationOrRemarksViewSpec extends QuestionViewBehaviours[Further
   override val form: Form[FurtherInformationOrRemarksDetails] =
     FurtherInformationOrRemarksForm.furtherInformationOrRemarksForm
 
-  def createView: () => Html = () => furtherInformationOrRemarksView(form)(fakeRequest, messages)
+  def createView: () => Html = () =>
+    furtherInformationOrRemarksView(form, Summary("99996010001"))(fakeRequest, messages)
 
   def createViewUsingForm: Form[FurtherInformationOrRemarksDetails] => Html =
-    (form: Form[FurtherInformationOrRemarksDetails]) => furtherInformationOrRemarksView(form)(fakeRequest, messages)
+    (form: Form[FurtherInformationOrRemarksDetails]) =>
+      furtherInformationOrRemarksView(form, Summary("99996010001"))(fakeRequest, messages)
 
   "Further Information or Remarks view" must {
 

@@ -48,7 +48,8 @@ class AlternativeContactDetailsController @Inject() (
           request.sessionData.additionalInformation.flatMap(_.altContactInformation) match {
             case Some(altContactInformation) => alternativeContactDetailsForm.fillAndValidate(altContactInformation)
             case _                           => alternativeContactDetailsForm
-          }
+          },
+          request.sessionData.toSummary
         )
       )
     )
@@ -57,7 +58,7 @@ class AlternativeContactDetailsController @Inject() (
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[AlternativeContactDetails](
       alternativeContactDetailsForm,
-      formWithErrors => BadRequest(alternativeContactDetailsView(formWithErrors)),
+      formWithErrors => BadRequest(alternativeContactDetailsView(formWithErrors, request.sessionData.toSummary)),
       data => {
         val updatedData = updateAdditionalInformation(_.copy(altContactInformation = Some(data)))
         session.saveOrUpdate(updatedData)

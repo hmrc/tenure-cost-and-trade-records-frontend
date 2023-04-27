@@ -30,7 +30,7 @@ class CheckYourAnswersAdditionalInformationControllerSpec extends TestBaseSpec {
 
   val mockAdditionalInformationNavigator            = mock[AdditionalInformationNavigator]
   val mockCheckYourAnswersAdditionalInformationView = mock[checkYourAnswersAdditionalInformation]
-  when(mockCheckYourAnswersAdditionalInformationView.apply(any)(any, any)).thenReturn(HtmlFormat.empty)
+  when(mockCheckYourAnswersAdditionalInformationView.apply(any, any)(any, any)).thenReturn(HtmlFormat.empty)
 
   val mockTaskListView = mock[taskList]
   when(mockTaskListView.apply()(any, any)).thenReturn(HtmlFormat.empty)

@@ -17,6 +17,7 @@
 package views.additionalInformation
 
 import form.additionalinformation.CheckYourAnswersAdditionalInformationForm
+import models.pages.Summary
 import models.submissions.additionalinformation.CheckYourAnswersAdditionalInformation
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
@@ -32,10 +33,10 @@ class CheckYourAnswersAdditionalInformationViewSpec
 
   override val form = CheckYourAnswersAdditionalInformationForm.checkYourAnswersAdditionalInformationForm
 
-  def createView = () => checkYourAnswersAdditionalInformationView(form)(fakeRequest, messages)
+  def createView = () => checkYourAnswersAdditionalInformationView(form, Summary("99996010001"))(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[CheckYourAnswersAdditionalInformation]) =>
-    checkYourAnswersAdditionalInformationView(form)(fakeRequest, messages)
+    checkYourAnswersAdditionalInformationView(form, Summary("99996010001"))(fakeRequest, messages)
 
   "Check Your Answers Additional Information view" must {
 
