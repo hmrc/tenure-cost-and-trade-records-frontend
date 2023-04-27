@@ -17,6 +17,7 @@
 package views.aboutYourLeaseOrTenure
 
 import form.aboutYourLeaseOrTenure.RentOpenMarketValueForm
+import models.pages.Summary
 import models.submissions.aboutYourLeaseOrTenure.RentOpenMarketValueDetails
 import models.submissions.common.{AnswerNo, AnswerYes}
 import org.scalatest.matchers.must.Matchers._
@@ -31,10 +32,10 @@ class RentOpenMarketViewSpec extends QuestionViewBehaviours[RentOpenMarketValueD
 
   val backLink = controllers.aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsController.show().url
 
-  def createView = () => rentOpenMarketValueView(form, backLink)(fakeRequest, messages)
+  def createView = () => rentOpenMarketValueView(form, backLink, Summary("99996010001"))(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[RentOpenMarketValueDetails]) =>
-    rentOpenMarketValueView(form, backLink)(fakeRequest, messages)
+    rentOpenMarketValueView(form, backLink, Summary("99996010001"))(fakeRequest, messages)
 
   "Rent open market view" must {
 

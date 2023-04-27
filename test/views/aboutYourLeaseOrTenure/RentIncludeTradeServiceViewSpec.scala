@@ -17,6 +17,7 @@
 package views.aboutYourLeaseOrTenure
 
 import form.aboutYourLeaseOrTenure.RentIncludeTradeServicesForm
+import models.pages.Summary
 import models.submissions.aboutYourLeaseOrTenure._
 import models.submissions.common.{AnswerNo, AnswerYes}
 import org.scalatest.matchers.must.Matchers._
@@ -31,10 +32,10 @@ class RentIncludeTradeServiceViewSpec extends QuestionViewBehaviours[RentInclude
 
   val backLink = controllers.aboutYourLeaseOrTenure.routes.AboutYourLandlordController.show().url
 
-  def createView = () => rentIncludeTradeServicesView(form)(fakeRequest, messages)
+  def createView = () => rentIncludeTradeServicesView(form, Summary("99996010001"))(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[RentIncludeTradeServicesDetails]) =>
-    rentIncludeTradeServicesView(form)(fakeRequest, messages)
+    rentIncludeTradeServicesView(form, Summary("99996010001"))(fakeRequest, messages)
 
   "Rent include trade services view" must {
 

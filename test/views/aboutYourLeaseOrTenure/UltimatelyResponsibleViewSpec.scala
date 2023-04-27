@@ -17,6 +17,7 @@
 package views.aboutYourLeaseOrTenure
 
 import form.aboutYourLeaseOrTenure.UltimatelyResponsibleForm
+import models.pages.Summary
 import models.submissions.aboutYourLeaseOrTenure.UltimatelyResponsible
 import models.submissions.common._
 import org.scalatest.matchers.must.Matchers._
@@ -29,10 +30,10 @@ class UltimatelyResponsibleViewSpec extends QuestionViewBehaviours[UltimatelyRes
 
   override val form = UltimatelyResponsibleForm.ultimatelyResponsibleForm
 
-  def createView = () => ultimatelyResponsibleView(form)(fakeRequest, messages)
+  def createView = () => ultimatelyResponsibleView(form, Summary("99996010001"))(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[UltimatelyResponsible]) =>
-    ultimatelyResponsibleView(form)(fakeRequest, messages)
+    ultimatelyResponsibleView(form, Summary("99996010001"))(fakeRequest, messages)
 
   "Ultimately responsible view" must {
 

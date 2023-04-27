@@ -17,6 +17,7 @@
 package views.aboutYourLeaseOrTenure
 
 import form.aboutYourLeaseOrTenure.RentPayableVaryOnQuantityOfBeersForm
+import models.pages.Summary
 import models.submissions.aboutYourLeaseOrTenure.RentPayableVaryOnQuantityOfBeersDetails
 import models.submissions.common.{AnswerNo, AnswerYes}
 import org.scalatest.matchers.must.Matchers._
@@ -29,10 +30,10 @@ class RentPayableVaryonQuantityOfBeersViewSpec extends QuestionViewBehaviours[Re
 
   override val form = RentPayableVaryOnQuantityOfBeersForm.rentPayableVaryOnQuantityOfBeersForm
 
-  def createView = () => rentPayableVaryOnQuantityOfBeersView(form)(fakeRequest, messages)
+  def createView = () => rentPayableVaryOnQuantityOfBeersView(form, Summary("99996010001"))(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[RentPayableVaryOnQuantityOfBeersDetails]) =>
-    rentPayableVaryOnQuantityOfBeersView(form)(fakeRequest, messages)
+    rentPayableVaryOnQuantityOfBeersView(form, Summary("99996010001"))(fakeRequest, messages)
 
   "Rent payable vary on quantity beers view" must {
 

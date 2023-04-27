@@ -17,6 +17,7 @@
 package views.aboutYourLeaseOrTenure
 
 import form.aboutYourLeaseOrTenure.CanRentBeReducedOnReviewForm
+import models.pages.Summary
 import models.submissions.aboutYourLeaseOrTenure.CanRentBeReducedOnReviewDetails
 import models.submissions.common.{AnswerNo, AnswerYes}
 import org.scalatest.matchers.must.Matchers._
@@ -29,10 +30,10 @@ class CanRentBeReducedOnReviewViewSpec extends QuestionViewBehaviours[CanRentBeR
 
   override val form = CanRentBeReducedOnReviewForm.canRentBeReducedOnReviewForm
 
-  def createView = () => canRentBeReducedOnReviewView(form)(fakeRequest, messages)
+  def createView = () => canRentBeReducedOnReviewView(form, Summary("99996010001"))(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[CanRentBeReducedOnReviewDetails]) =>
-    canRentBeReducedOnReviewView(form)(fakeRequest, messages)
+    canRentBeReducedOnReviewView(form, Summary("99996010001"))(fakeRequest, messages)
 
   "Can rent be reduced on review view" must {
 

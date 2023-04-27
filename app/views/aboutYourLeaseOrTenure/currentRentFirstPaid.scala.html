@@ -16,8 +16,6 @@
 
 @import models.submissions.aboutYourLeaseOrTenure.CurrentRentFirstPaid
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.button.Button
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukErrorSummary
@@ -25,11 +23,7 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukTextarea
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukCharacterCount
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
-@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Fieldset
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Legend
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Hint
-@import uk.gov.hmrc.govukfrontend.views.Aliases.DateInput
+@import models.pages.Summary
 
 
 @this(layout: Layout,
@@ -44,12 +38,13 @@
 )
 
 
-@(theForm: Form[CurrentRentFirstPaid])(implicit request: Request[_], messages: Messages)
+@(theForm: Form[CurrentRentFirstPaid], summary: Summary)(implicit request: Request[_], messages: Messages)
 
 @layout(
  pageHeading = messages("currentRentFirstPaid.heading"),
  showH1 = false,
  showSection = true,
+ summary = Some(summary),
  sectionName = messages("label.section.aboutYourLeaseOrTenure"),
  backLinkUrl = controllers.aboutYourLeaseOrTenure.routes.CurrentAnnualRentController.show.url,
  theForm = theForm

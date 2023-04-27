@@ -17,6 +17,7 @@
 package views.aboutYourLeaseOrTenure
 
 import form.aboutYourLeaseOrTenure.RentIncreasedAnnuallyWithRPIForm
+import models.pages.Summary
 import models.submissions.aboutYourLeaseOrTenure.RentIncreasedAnnuallyWithRPIDetails
 import models.submissions.common.{AnswerNo, AnswerYes}
 import org.scalatest.matchers.must.Matchers._
@@ -31,10 +32,10 @@ class RentIncreaseAnnuallyWithRPIViewSpec extends QuestionViewBehaviours[RentInc
 
   val backLink = controllers.aboutYourLeaseOrTenure.routes.RentOpenMarketValueController.show().url
 
-  def createView = () => rentIncreaseAnnuallyWithRPIView(form, backLink)(fakeRequest, messages)
+  def createView = () => rentIncreaseAnnuallyWithRPIView(form, backLink, Summary("99996010001"))(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[RentIncreasedAnnuallyWithRPIDetails]) =>
-    rentIncreaseAnnuallyWithRPIView(form, backLink)(fakeRequest, messages)
+    rentIncreaseAnnuallyWithRPIView(form, backLink, Summary("99996010001"))(fakeRequest, messages)
 
   "Rent Increase annually with RPI view" must {
 

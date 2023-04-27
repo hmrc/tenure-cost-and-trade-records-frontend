@@ -49,7 +49,8 @@ class CurrentAnnualRentController @Inject() (
           case Some(annualRent) => currentAnnualRentForm.fillAndValidate(annualRent)
           case _                => currentAnnualRentForm
         },
-        getBackLink(request.sessionData)
+        getBackLink(request.sessionData),
+        request.sessionData.toSummary
       )
     )
   }
@@ -61,7 +62,8 @@ class CurrentAnnualRentController @Inject() (
         BadRequest(
           currentAnnualRentView(
             formWithErrors,
-            getBackLink(request.sessionData)
+            getBackLink(request.sessionData),
+            request.sessionData.toSummary
           )
         ),
       data => {

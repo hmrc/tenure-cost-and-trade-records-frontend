@@ -17,6 +17,7 @@
 package views.aboutYourLeaseOrTenure
 
 import form.aboutYourLeaseOrTenure.IntervalsOfRentReviewForm
+import models.pages.Summary
 import models.submissions.aboutYourLeaseOrTenure.IntervalsOfRentReview
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
@@ -28,10 +29,10 @@ class IntervalsOfRentReviewViewSpec extends QuestionViewBehaviours[IntervalsOfRe
 
   override val form = IntervalsOfRentReviewForm.intervalsOfRentReviewForm
 
-  def createView = () => intervalsOfRentReviewView(form)(fakeRequest, messages)
+  def createView = () => intervalsOfRentReviewView(form, Summary("99996010001"))(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[IntervalsOfRentReview]) =>
-    intervalsOfRentReviewView(form)(fakeRequest, messages)
+    intervalsOfRentReviewView(form, Summary("99996010001"))(fakeRequest, messages)
 
   "Intervals of rent reviews view" must {
 

@@ -17,6 +17,7 @@
 package views.aboutYourLeaseOrTenure
 
 import form.aboutYourLeaseOrTenure.PaymentWhenLeaseIsGrantedForm.paymentWhenLeaseIsGrantedForm
+import models.pages.Summary
 import models.submissions.aboutYourLeaseOrTenure.PaymentWhenLeaseIsGrantedDetails
 import models.submissions.common.{AnswerNo, AnswerYes}
 import org.scalatest.matchers.must.Matchers._
@@ -29,10 +30,10 @@ class PaymentWhenLeaseGrantedViewSpec extends QuestionViewBehaviours[PaymentWhen
 
   override val form = paymentWhenLeaseIsGrantedForm
 
-  def createView = () => paymentWhenLeaseIsGrantedView(form)(fakeRequest, messages)
+  def createView = () => paymentWhenLeaseIsGrantedView(form, Summary("99996010001"))(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[PaymentWhenLeaseIsGrantedDetails]) =>
-    paymentWhenLeaseIsGrantedView(form)(fakeRequest, messages)
+    paymentWhenLeaseIsGrantedView(form, Summary("99996010001"))(fakeRequest, messages)
 
   "Payment when lease is granted view" must {
 

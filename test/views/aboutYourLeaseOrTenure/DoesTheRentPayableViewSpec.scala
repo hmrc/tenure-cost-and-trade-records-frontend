@@ -17,6 +17,7 @@
 package views.aboutYourLeaseOrTenure
 
 import form.aboutYourLeaseOrTenure.DoesTheRentPayableForm
+import models.pages.Summary
 import models.submissions.aboutYourLeaseOrTenure.DoesTheRentPayable
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
@@ -28,9 +29,10 @@ class DoesTheRentPayableViewSpec extends QuestionViewBehaviours[DoesTheRentPayab
 
   override val form = DoesTheRentPayableForm.doesTheRentPayableForm
 
-  def createView = () => doesTheRentPayableView(form)(fakeRequest, messages)
+  def createView = () => doesTheRentPayableView(form, Summary("99996010001"))(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[DoesTheRentPayable]) => doesTheRentPayableView(form)(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[DoesTheRentPayable]) =>
+    doesTheRentPayableView(form, Summary("99996010001"))(fakeRequest, messages)
 
   "Rent payable view" must {
 

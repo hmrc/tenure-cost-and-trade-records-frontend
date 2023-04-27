@@ -17,6 +17,7 @@
 package views.aboutYourLeaseOrTenure
 
 import form.aboutYourLeaseOrTenure.CheckYourAnswersAboutYourLeaseOrTenureForm
+import models.pages.Summary
 import models.submissions.aboutYourLeaseOrTenure.CheckYourAnswersAboutYourLeaseOrTenure
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
@@ -31,10 +32,11 @@ class CheckYourAnswersAboutYourLeaseOrTenureViewSpec
 
   val backLink = controllers.aboutYourLeaseOrTenure.routes.LegalOrPlanningRestrictionsController.show().url
 
-  def createView = () => checkYourAnswersAboutLeaseAndTenureView(form, backLink)(fakeRequest, messages)
+  def createView = () =>
+    checkYourAnswersAboutLeaseAndTenureView(form, backLink, Summary("99996010001"))(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[CheckYourAnswersAboutYourLeaseOrTenure]) =>
-    checkYourAnswersAboutLeaseAndTenureView(form, backLink)(fakeRequest, messages)
+    checkYourAnswersAboutLeaseAndTenureView(form, backLink, Summary("99996010001"))(fakeRequest, messages)
 
   "Check Your Answers About The Property view" must {
 

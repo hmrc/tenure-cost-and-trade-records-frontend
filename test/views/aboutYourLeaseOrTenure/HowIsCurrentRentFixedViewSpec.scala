@@ -17,6 +17,7 @@
 package views.aboutYourLeaseOrTenure
 
 import form.aboutYourLeaseOrTenure.HowIsCurrentRentFixedForm
+import models.pages.Summary
 import models.submissions.Form6010._
 import models.submissions.aboutYourLeaseOrTenure.{CurrentRentFixedInterimRent, CurrentRentFixedNewLeaseAgreement, CurrentRentFixedRenewalLeaseTenancy, CurrentRentFixedRentReview, CurrentRentFixedSaleLeaseback, HowIsCurrentRentFixed}
 import org.scalatest.matchers.must.Matchers._
@@ -31,10 +32,10 @@ class HowIsCurrentRentFixedViewSpec extends QuestionViewBehaviours[HowIsCurrentR
 
   val backLink = controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryAccordingToGrossOrNetController.show().url
 
-  def createView = () => howIsCurrentRentFixedView(form, backLink)(fakeRequest, messages)
+  def createView = () => howIsCurrentRentFixedView(form, backLink, Summary("99996010001"))(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[HowIsCurrentRentFixed]) =>
-    howIsCurrentRentFixedView(form, backLink)(fakeRequest, messages)
+    howIsCurrentRentFixedView(form, backLink, Summary("99996010001"))(fakeRequest, messages)
 
   "How is current rennt fixed view" must {
 

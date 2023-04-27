@@ -17,6 +17,7 @@
 package views.aboutYourLeaseOrTenure
 
 import form.aboutYourLeaseOrTenure.RentPayableVaryOnQuantityOfBeersDetailsForm
+import models.pages.Summary
 import models.submissions.aboutYourLeaseOrTenure.RentPayableVaryOnQuantityOfBeersInformationDetails
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
@@ -29,10 +30,11 @@ class RentPayableVaryOnQuantityOfBeersDetailsViewSpec
 
   override val form = RentPayableVaryOnQuantityOfBeersDetailsForm.rentPayableVaryOnQuantityOfBeersDetailsForm
 
-  def createView = () => rentPayableVaryOnQuantityOfBeersDetailsView(form)(fakeRequest, messages)
+  def createView = () =>
+    rentPayableVaryOnQuantityOfBeersDetailsView(form, Summary("99996010001"))(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[RentPayableVaryOnQuantityOfBeersInformationDetails]) =>
-    rentPayableVaryOnQuantityOfBeersDetailsView(form)(fakeRequest, messages)
+    rentPayableVaryOnQuantityOfBeersDetailsView(form, Summary("99996010001"))(fakeRequest, messages)
 
   "Rent payable vary on quantity of beer detail view" must {
 

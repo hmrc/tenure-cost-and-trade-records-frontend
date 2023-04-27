@@ -52,7 +52,8 @@ class RentPayableVaryAccordingToGrossOrNetDetailsController @Inject() (
                 rentPayableVaryAccordingToGrossOrNetInformationDetails
               )
             case _                                                            => rentPayableVaryAccordingToGrossOrNetInformationForm
-          }
+          },
+          request.sessionData.toSummary
         )
       )
     )
@@ -61,7 +62,8 @@ class RentPayableVaryAccordingToGrossOrNetDetailsController @Inject() (
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[RentPayableVaryAccordingToGrossOrNetInformationDetails](
       rentPayableVaryAccordingToGrossOrNetInformationForm,
-      formWithErrors => BadRequest(rentPayableVaryAccordingToGrossOrNetDetailsView(formWithErrors)),
+      formWithErrors =>
+        BadRequest(rentPayableVaryAccordingToGrossOrNetDetailsView(formWithErrors, request.sessionData.toSummary)),
       data => {
         val updatedData = updateAboutLeaseOrAgreementPartTwo(
           _.copy(rentPayableVaryAccordingToGrossOrNetInformationDetails = Some(data))

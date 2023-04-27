@@ -18,6 +18,7 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
+@import models.pages.Summary
 
 @this(layout: Layout,
         govukButton: GovukButton,
@@ -25,12 +26,13 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[LegalOrPlanningRestrictions])(implicit request: Request[_], messages: Messages)
+@(theForm: Form[LegalOrPlanningRestrictions], summary: Summary)(implicit request: Request[_], messages: Messages)
 
 @layout(
   pageHeading = messages("legalPlanningRestrictions.heading"),
   showH1 = false,
   showSection = true,
+    summary = Some(summary),
   sectionName = messages("label.section.aboutYourLeaseOrTenure"),
   backLinkUrl = controllers.aboutYourLeaseOrTenure.routes.PaymentWhenLeaseIsGrantedController.show.url,
   theForm = theForm

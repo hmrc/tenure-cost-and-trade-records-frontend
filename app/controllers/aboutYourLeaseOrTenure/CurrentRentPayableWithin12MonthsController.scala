@@ -47,7 +47,8 @@ class CurrentRentPayableWithin12MonthsController @Inject() (
           case Some(currentRentPayableWithin12Months) =>
             currentRentPayableWithin12MonthsForm.fillAndValidate(currentRentPayableWithin12Months)
           case _                                      => currentRentPayableWithin12MonthsForm
-        }
+        },
+        request.sessionData.toSummary
       )
     )
   }
@@ -55,7 +56,7 @@ class CurrentRentPayableWithin12MonthsController @Inject() (
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[CurrentRentPayableWithin12Months](
       currentRentPayableWithin12MonthsForm,
-      formWithErrors => BadRequest(currentRentPayableWithin12MonthsView(formWithErrors)),
+      formWithErrors => BadRequest(currentRentPayableWithin12MonthsView(formWithErrors, request.sessionData.toSummary)),
       data => {
         val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(currentRentPayableWithin12Months = Some(data)))
         session.saveOrUpdate(updatedData)

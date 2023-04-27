@@ -48,7 +48,8 @@ class MethodToFixCurrentRentController @Inject() (
           request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.methodToFixCurrentRentDetails) match {
             case Some(data) => methodToFixCurrentRentForm.fillAndValidate(data)
             case _          => methodToFixCurrentRentForm
-          }
+          },
+          request.sessionData.toSummary
         )
       )
     )
@@ -57,7 +58,7 @@ class MethodToFixCurrentRentController @Inject() (
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[MethodToFixCurrentRentDetails](
       methodToFixCurrentRentForm,
-      formWithErrors => BadRequest(methodToFixCurrentRentView(formWithErrors)),
+      formWithErrors => BadRequest(methodToFixCurrentRentView(formWithErrors, request.sessionData.toSummary)),
       data => {
         val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(methodToFixCurrentRentDetails = Some(data)))
         session.saveOrUpdate(updatedData)

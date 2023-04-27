@@ -21,6 +21,7 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukDateInput
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
 @import uk.gov.hmrc.govukfrontend.views.Aliases.RadioItem
+@import models.pages.Summary
 
 @this(layout: Layout,
         govukButton: GovukButton,
@@ -29,12 +30,13 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[HowIsCurrentRentFixed], backLink: String)(implicit request: Request[_], messages: Messages)
+@(theForm: Form[HowIsCurrentRentFixed], backLink: String, summary: Summary)(implicit request: Request[_], messages: Messages)
 
 @layout(
  pageHeading = messages("howIsCurrentRentFixed.heading"),
  showH1 = false,
  showSection = true,
+    summary = Some(summary),
  sectionName = messages("label.section.aboutYourLeaseOrTenure"),
  backLinkUrl = backLink,
  theForm = theForm

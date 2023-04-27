@@ -52,7 +52,8 @@ class HowIsCurrentRentFixedController @Inject() (
             case Some(data) => howIsCurrentRentFixedForm.fill(data)
             case _          => howIsCurrentRentFixedForm
           },
-          getBackLink(request.sessionData)
+          getBackLink(request.sessionData),
+          request.sessionData.toSummary
         )
       )
     )
@@ -61,7 +62,10 @@ class HowIsCurrentRentFixedController @Inject() (
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[HowIsCurrentRentFixed](
       howIsCurrentRentFixedForm,
-      formWithErrors => BadRequest(howIsCurrentRentFixedView(formWithErrors, getBackLink(request.sessionData))),
+      formWithErrors =>
+        BadRequest(
+          howIsCurrentRentFixedView(formWithErrors, getBackLink(request.sessionData), request.sessionData.toSummary)
+        ),
       data => {
         val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(howIsCurrentRentFixed = Some(data)))
         session.saveOrUpdate(updatedData)

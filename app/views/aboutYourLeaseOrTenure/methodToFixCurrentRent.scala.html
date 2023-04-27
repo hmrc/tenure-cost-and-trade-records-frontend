@@ -20,6 +20,7 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
 @import uk.gov.hmrc.govukfrontend.views.Aliases.RadioItem
+@import models.pages.Summary
 
 @this(layout: Layout,
         govukButton: GovukButton,
@@ -27,12 +28,13 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[MethodToFixCurrentRentDetails])(implicit request: Request[_], messages: Messages)
+@(theForm: Form[MethodToFixCurrentRentDetails], summary: Summary)(implicit request: Request[_], messages: Messages)
 
 @layout(
  pageHeading = messages("methodUsedToFixCurrentRent.heading"),
  showH1 = false,
  showSection = true,
+    summary = Some(summary),
  sectionName = messages("label.section.aboutYourLeaseOrTenure"),
  backLinkUrl = controllers.aboutYourLeaseOrTenure.routes.HowIsCurrentRentFixedController.show.url,
  theForm = theForm

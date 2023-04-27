@@ -46,7 +46,8 @@ class TenantsAdditionsDisregardedDetailsController @Inject() (
         request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.tenantsAdditionsDisregardedDetails) match {
           case Some(data) => tenantsAdditionsDisregardedDetailsForm.fillAndValidate(data)
           case _          => tenantsAdditionsDisregardedDetailsForm
-        }
+        },
+        request.sessionData.toSummary
       )
     )
   }
@@ -54,7 +55,8 @@ class TenantsAdditionsDisregardedDetailsController @Inject() (
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[TenantsAdditionsDisregardedDetails](
       tenantsAdditionsDisregardedDetailsForm,
-      formWithErrors => BadRequest(tenantsAdditionsDisregardedDetailsView(formWithErrors)),
+      formWithErrors =>
+        BadRequest(tenantsAdditionsDisregardedDetailsView(formWithErrors, request.sessionData.toSummary)),
       data => {
         val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(tenantsAdditionsDisregardedDetails = Some(data)))
         session.saveOrUpdate(updatedData)

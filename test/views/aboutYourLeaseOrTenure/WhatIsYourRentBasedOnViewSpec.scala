@@ -17,6 +17,7 @@
 package views.aboutYourLeaseOrTenure
 
 import form.aboutYourLeaseOrTenure.WhatIsYourCurrentRentBasedOnForm
+import models.pages.Summary
 import models.submissions.Form6010._
 import models.submissions.aboutYourLeaseOrTenure.{CurrentRentBasedOnFixedAmount, CurrentRentBasedOnIndexedToRPI, CurrentRentBasedOnOther, CurrentRentBasedOnPercentageOpenMarket, CurrentRentBasedOnPercentageTurnover, CurrentRentBasedOnSteppedRent, WhatIsYourCurrentRentBasedOnDetails}
 import org.scalatest.matchers.must.Matchers._
@@ -29,10 +30,10 @@ class WhatIsYourRentBasedOnViewSpec extends QuestionViewBehaviours[WhatIsYourCur
 
   override val form = WhatIsYourCurrentRentBasedOnForm.whatIsYourCurrentRentBasedOnForm
 
-  def createView = () => whatIsYourRentBasedOnView(form)(fakeRequest, messages)
+  def createView = () => whatIsYourRentBasedOnView(form, Summary("99996010001"))(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[WhatIsYourCurrentRentBasedOnDetails]) =>
-    whatIsYourRentBasedOnView(form)(fakeRequest, messages)
+    whatIsYourRentBasedOnView(form, Summary("99996010001"))(fakeRequest, messages)
 
   "Current rent based on details view" must {
 

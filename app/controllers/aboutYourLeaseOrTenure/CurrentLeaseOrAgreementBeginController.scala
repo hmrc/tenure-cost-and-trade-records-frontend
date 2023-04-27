@@ -47,7 +47,8 @@ class CurrentLeaseOrAgreementBeginController @Inject() (
           case Some(currentLeaseOrAgreementBegin) =>
             currentLeaseOrAgreementBeginForm.fillAndValidate(currentLeaseOrAgreementBegin)
           case _                                  => currentLeaseOrAgreementBeginForm
-        }
+        },
+        request.sessionData.toSummary
       )
     )
   }
@@ -55,7 +56,7 @@ class CurrentLeaseOrAgreementBeginController @Inject() (
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[CurrentLeaseOrAgreementBegin](
       currentLeaseOrAgreementBeginForm,
-      formWithErrors => BadRequest(currentLeaseOrAgreementBeginView(formWithErrors)),
+      formWithErrors => BadRequest(currentLeaseOrAgreementBeginView(formWithErrors, request.sessionData.toSummary)),
       data => {
         val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(currentLeaseOrAgreementBegin = Some(data)))
         session.saveOrUpdate(updatedData)

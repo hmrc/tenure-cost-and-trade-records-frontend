@@ -30,6 +30,7 @@
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Fieldset
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Legend
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Hint
+@import models.pages.Summary
 
 
 @this(layout: Layout,
@@ -43,12 +44,13 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[CurrentRentPayableWithin12Months])(implicit request: Request[_], messages: Messages)
+@(theForm: Form[CurrentRentPayableWithin12Months], summary: Summary)(implicit request: Request[_], messages: Messages)
 
 @layout(
  pageHeading = messages("currentRentPayableWithin12Months.heading"),
  showH1 = false,
  showSection = true,
+ summary = Some(summary),
  sectionName = messages("label.section.aboutYourLeaseOrTenure"),
  backLinkUrl = controllers.aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.show.url,
  theForm = theForm

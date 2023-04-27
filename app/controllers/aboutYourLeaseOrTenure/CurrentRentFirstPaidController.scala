@@ -46,7 +46,8 @@ class CurrentRentFirstPaidController @Inject() (
         request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.currentRentFirstPaid) match {
           case Some(currentRentFirstPaid) => currentRentFirstPaidForm.fillAndValidate(currentRentFirstPaid)
           case _                          => currentRentFirstPaidForm
-        }
+        },
+        request.sessionData.toSummary
       )
     )
   }
@@ -54,7 +55,7 @@ class CurrentRentFirstPaidController @Inject() (
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[CurrentRentFirstPaid](
       currentRentFirstPaidForm,
-      formWithErrors => BadRequest(currentRentFirstPaidView(formWithErrors)),
+      formWithErrors => BadRequest(currentRentFirstPaidView(formWithErrors, request.sessionData.toSummary)),
       data => {
         val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(currentRentFirstPaid = Some(data)))
         session.saveOrUpdate(updatedData)

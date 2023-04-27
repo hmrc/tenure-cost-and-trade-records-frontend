@@ -18,6 +18,7 @@ package views.aboutYourLeaseOrTenure
 
 import form.aboutYourLeaseOrTenure.RentIncludeFixtureAndFittingDetailsForm
 import models.AnnualRent
+import models.pages.Summary
 import models.submissions.aboutYourLeaseOrTenure.RentIncludeFixturesOrFittingsInformationDetails
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
@@ -30,10 +31,10 @@ class RentIncludeFixtureAndFittingsDetailsViewSpec
 
   override val form = RentIncludeFixtureAndFittingDetailsForm.rentIncludeFixtureAndFittingsDetailsForm
 
-  def createView = () => rentIncludeFixtureAndFittingsDetailsView(form)(fakeRequest, messages)
+  def createView = () => rentIncludeFixtureAndFittingsDetailsView(form, Summary("99996010001"))(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[RentIncludeFixturesOrFittingsInformationDetails]) =>
-    rentIncludeFixtureAndFittingsDetailsView(form)(fakeRequest, messages)
+    rentIncludeFixtureAndFittingsDetailsView(form, Summary("99996010001"))(fakeRequest, messages)
 
   "Rent include fixture and fittings details view" must {
 

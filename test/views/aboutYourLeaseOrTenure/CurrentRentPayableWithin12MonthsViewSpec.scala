@@ -17,6 +17,7 @@
 package views.aboutYourLeaseOrTenure
 
 import form.aboutYourLeaseOrTenure.CurrentRentPayableWithin12MonthsForm
+import models.pages.Summary
 import models.submissions.aboutYourLeaseOrTenure.{CurrentRentPayableWithin12Months, CurrentRentWithin12MonthsNo, CurrentRentWithin12MonthsYes}
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
@@ -28,10 +29,10 @@ class CurrentRentPayableWithin12MonthsViewSpec extends QuestionViewBehaviours[Cu
 
   override val form = CurrentRentPayableWithin12MonthsForm.currentRentPayableWithin12MonthsForm
 
-  def createView = () => currentRentPayableWithin12MonthsView(form)(fakeRequest, messages)
+  def createView = () => currentRentPayableWithin12MonthsView(form, Summary("99996010001"))(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[CurrentRentPayableWithin12Months]) =>
-    currentRentPayableWithin12MonthsView(form)(fakeRequest, messages)
+    currentRentPayableWithin12MonthsView(form, Summary("99996010001"))(fakeRequest, messages)
 
   "Lease or agreement years view" must {
 

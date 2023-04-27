@@ -53,7 +53,8 @@ class RentOpenMarketValueController @Inject() (
               rentOpenMarketValuesForm.fillAndValidate(rentOpenMarketValueDetails)
             case _                                => rentOpenMarketValuesForm
           },
-          getBackLink(request.sessionData)
+          getBackLink(request.sessionData),
+          request.sessionData.toSummary
         )
       )
     )
@@ -62,7 +63,10 @@ class RentOpenMarketValueController @Inject() (
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[RentOpenMarketValueDetails](
       rentOpenMarketValuesForm,
-      formWithErrors => BadRequest(rentOpenMarketValueView(formWithErrors, getBackLink(request.sessionData))),
+      formWithErrors =>
+        BadRequest(
+          rentOpenMarketValueView(formWithErrors, getBackLink(request.sessionData), request.sessionData.toSummary)
+        ),
       data => {
         val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(rentOpenMarketValueDetails = Some(data)))
         session.saveOrUpdate(updatedData)

@@ -49,7 +49,8 @@ class RentIncludeFixtureAndFittingsDetailsController @Inject() (
             case Some(rentIncludeFixtureAndFittingsDetails) =>
               rentIncludeFixtureAndFittingsDetailsForm.fillAndValidate(rentIncludeFixtureAndFittingsDetails)
             case _                                          => rentIncludeFixtureAndFittingsDetailsForm
-          }
+          },
+          request.sessionData.toSummary
         )
       )
     )
@@ -58,7 +59,8 @@ class RentIncludeFixtureAndFittingsDetailsController @Inject() (
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[RentIncludeFixturesOrFittingsInformationDetails](
       rentIncludeFixtureAndFittingsDetailsForm,
-      formWithErrors => BadRequest(rentIncludeFixtureAndFittingsDetailsView(formWithErrors)),
+      formWithErrors =>
+        BadRequest(rentIncludeFixtureAndFittingsDetailsView(formWithErrors, request.sessionData.toSummary)),
       data => {
         val updatedData =
           updateAboutLeaseOrAgreementPartOne(_.copy(rentIncludeFixtureAndFittingsDetails = Some(data)))

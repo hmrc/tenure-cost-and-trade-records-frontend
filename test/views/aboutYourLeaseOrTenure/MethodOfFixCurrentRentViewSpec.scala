@@ -17,6 +17,7 @@
 package views.aboutYourLeaseOrTenure
 
 import form.aboutYourLeaseOrTenure.MethodToFixCurrentRentForm
+import models.pages.Summary
 import models.submissions.Form6010._
 import models.submissions.aboutYourLeaseOrTenure.{MethodToFixCurrentRentDetails, MethodToFixCurrentRentIndependentExpert, MethodToFixCurrentRentsACourt, MethodToFixCurrentRentsAgreement, MethodToFixCurrentRentsArbitration}
 import org.scalatest.matchers.must.Matchers._
@@ -29,10 +30,10 @@ class MethodOfFixCurrentRentViewSpec extends QuestionViewBehaviours[MethodToFixC
 
   override val form = MethodToFixCurrentRentForm.methodToFixCurrentRentForm
 
-  def createView = () => methodToFixCurrentRentView(form)(fakeRequest, messages)
+  def createView = () => methodToFixCurrentRentView(form, Summary("99996010001"))(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[MethodToFixCurrentRentDetails]) =>
-    methodToFixCurrentRentView(form)(fakeRequest, messages)
+    methodToFixCurrentRentView(form, Summary("99996010001"))(fakeRequest, messages)
 
   "Method of fix current rent view" must {
 

@@ -17,18 +17,20 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
 @import models.submissions.aboutYourLeaseOrTenure.CheckYourAnswersAboutYourLeaseOrTenure
+@import models.pages.Summary
 
 @this(layout: Layout,
         govukButton: GovukButton,
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[CheckYourAnswersAboutYourLeaseOrTenure], backLink: String)(implicit request: Request[_], messages: Messages)
+@(theForm: Form[CheckYourAnswersAboutYourLeaseOrTenure], backLink: String, summary: Summary)(implicit request: Request[_], messages: Messages)
 
 @layout(
  pageHeading = messages("checkYourAnswersAboutYourLeaseOrTenure.heading"),
  backLinkUrl = backLink,
  showSection = true,
+ summary = Some(summary),
  sectionName = messages("label.section.aboutYourLeaseOrTenure"),
  theForm = theForm
 ) {

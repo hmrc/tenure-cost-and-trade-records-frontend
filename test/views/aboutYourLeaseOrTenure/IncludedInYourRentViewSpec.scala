@@ -17,6 +17,7 @@
 package views.aboutYourLeaseOrTenure
 
 import form.aboutYourLeaseOrTenure.IncludedInYourRentForm
+import models.pages.Summary
 import models.submissions.aboutYourLeaseOrTenure._
 import models.submissions.common.{AnswerNo, AnswerYes}
 import org.scalatest.matchers.must.Matchers._
@@ -29,10 +30,10 @@ class IncludedInYourRentViewSpec extends QuestionViewBehaviours[IncludedInYourRe
 
   override val form = IncludedInYourRentForm.includedInYourRentForm
 
-  def createView = () => includedInYourRentView(form)(fakeRequest, messages)
+  def createView = () => includedInYourRentView(form, Summary("99996010001"))(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[IncludedInYourRentDetails]) =>
-    includedInYourRentView(form)(fakeRequest, messages)
+    includedInYourRentView(form, Summary("99996010001"))(fakeRequest, messages)
 
   "Included in rent view" must {
 

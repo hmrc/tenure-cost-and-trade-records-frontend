@@ -16,7 +16,6 @@
 
 @import models.submissions.aboutYourLeaseOrTenure.CurrentLeaseOrAgreementBegin
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.button.Button
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
@@ -30,6 +29,7 @@
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Label
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Input
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.input.PrefixOrSuffix
+@import models.pages.Summary
 
 @this(layout: Layout,
         govukButton: GovukButton,
@@ -43,12 +43,13 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[CurrentLeaseOrAgreementBegin])(implicit request: Request[_], messages: Messages)
+@(theForm: Form[CurrentLeaseOrAgreementBegin], summary: Summary)(implicit request: Request[_], messages: Messages)
 
 @layout(
  pageHeading = messages("currentLeaseOrAgreementBegin.heading"),
  showH1 = false,
  showSection = true,
+ summary = Some(summary),
  sectionName = messages("label.section.aboutYourLeaseOrTenure"),
  backLinkUrl = controllers.aboutYourLeaseOrTenure.routes.CurrentRentFirstPaidController.show.url,
  theForm = theForm

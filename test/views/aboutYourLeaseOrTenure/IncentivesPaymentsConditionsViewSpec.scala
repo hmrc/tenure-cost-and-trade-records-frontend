@@ -17,6 +17,7 @@
 package views.aboutYourLeaseOrTenure
 
 import form.aboutYourLeaseOrTenure.IncentivesPaymentsConditionsForm
+import models.pages.Summary
 import models.submissions.aboutYourLeaseOrTenure.IncentivesPaymentsConditionsDetails
 import models.submissions.common.{AnswerNo, AnswerYes}
 import org.scalatest.matchers.must.Matchers._
@@ -29,10 +30,10 @@ class IncentivesPaymentsConditionsViewSpec extends QuestionViewBehaviours[Incent
 
   override val form = IncentivesPaymentsConditionsForm.incentivesPaymentsConditionsForm
 
-  def createView = () => incentivesPaymentsConditionsView(form)(fakeRequest, messages)
+  def createView = () => incentivesPaymentsConditionsView(form, Summary("99996010001"))(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[IncentivesPaymentsConditionsDetails]) =>
-    incentivesPaymentsConditionsView(form)(fakeRequest, messages)
+    incentivesPaymentsConditionsView(form, Summary("99996010001"))(fakeRequest, messages)
 
   "Incentives payment conditions view" must {
 

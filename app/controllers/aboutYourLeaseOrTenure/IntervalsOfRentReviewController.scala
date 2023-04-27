@@ -46,7 +46,8 @@ class IntervalsOfRentReviewController @Inject() (
         request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.intervalsOfRentReview) match {
           case Some(data) => intervalsOfRentReviewForm.fillAndValidate(data)
           case _          => intervalsOfRentReviewForm
-        }
+        },
+        request.sessionData.toSummary
       )
     )
   }
@@ -54,7 +55,7 @@ class IntervalsOfRentReviewController @Inject() (
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[IntervalsOfRentReview](
       intervalsOfRentReviewForm,
-      formWithErrors => BadRequest(intervalsOfRentReviewView(formWithErrors)),
+      formWithErrors => BadRequest(intervalsOfRentReviewView(formWithErrors, request.sessionData.toSummary)),
       data => {
         val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(intervalsOfRentReview = Some(data)))
         session.saveOrUpdate(updatedData)

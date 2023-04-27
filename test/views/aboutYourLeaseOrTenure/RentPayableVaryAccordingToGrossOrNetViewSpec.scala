@@ -17,6 +17,7 @@
 package views.aboutYourLeaseOrTenure
 
 import form.aboutYourLeaseOrTenure.RentPayableVaryAccordingToGrossOrNetForm
+import models.pages.Summary
 import models.submissions.aboutYourLeaseOrTenure.RentPayableVaryAccordingToGrossOrNetDetails
 import models.submissions.common.{AnswerNo, AnswerYes}
 import org.scalatest.matchers.must.Matchers._
@@ -30,10 +31,10 @@ class RentPayableVaryAccordingToGrossOrNetViewSpec
 
   override val form = RentPayableVaryAccordingToGrossOrNetForm.rentPayableVaryAccordingToGrossOrNetForm
 
-  def createView = () => rentPayableVaryAccordingToGrossOrNetView(form)(fakeRequest, messages)
+  def createView = () => rentPayableVaryAccordingToGrossOrNetView(form, Summary("99996010001"))(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[RentPayableVaryAccordingToGrossOrNetDetails]) =>
-    rentPayableVaryAccordingToGrossOrNetView(form)(fakeRequest, messages)
+    rentPayableVaryAccordingToGrossOrNetView(form, Summary("99996010001"))(fakeRequest, messages)
 
   "Rent payable vary on gross or net turnover view" must {
 
