@@ -46,7 +46,8 @@ class LegalOrPlanningRestrictionsDetailsController @Inject() (
         request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.legalOrPlanningRestrictionsDetails) match {
           case Some(data) => legalOrPlanningRestrictionsDetailsForm.fillAndValidate(data)
           case _          => legalOrPlanningRestrictionsDetailsForm
-        }
+        },
+        request.sessionData.toSummary
       )
     )
   }
@@ -54,7 +55,8 @@ class LegalOrPlanningRestrictionsDetailsController @Inject() (
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[LegalOrPlanningRestrictionsDetails](
       legalOrPlanningRestrictionsDetailsForm,
-      formWithErrors => BadRequest(legalOrPlanningRestrictionsDetailsView(formWithErrors)),
+      formWithErrors =>
+        BadRequest(legalOrPlanningRestrictionsDetailsView(formWithErrors, request.sessionData.toSummary)),
       data => {
         val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(legalOrPlanningRestrictionsDetails = Some(data)))
         session.saveOrUpdate(updatedData)

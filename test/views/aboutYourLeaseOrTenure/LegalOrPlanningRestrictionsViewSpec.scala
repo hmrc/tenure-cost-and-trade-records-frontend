@@ -17,6 +17,7 @@
 package views.aboutYourLeaseOrTenure
 
 import form.aboutYourLeaseOrTenure.LegalOrPlanningRestrictionsForm
+import models.pages.Summary
 import models.submissions.aboutYourLeaseOrTenure.LegalOrPlanningRestrictions
 import models.submissions.common.{AnswerNo, AnswerYes}
 import org.scalatest.matchers.must.Matchers._
@@ -29,10 +30,10 @@ class LegalOrPlanningRestrictionsViewSpec extends QuestionViewBehaviours[LegalOr
 
   override val form = LegalOrPlanningRestrictionsForm.legalPlanningRestrictionsForm
 
-  def createView = () => legalOrPlanningRestrictionsView(form)(fakeRequest, messages)
+  def createView = () => legalOrPlanningRestrictionsView(form, Summary("99996010001"))(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[LegalOrPlanningRestrictions]) =>
-    legalOrPlanningRestrictionsView(form)(fakeRequest, messages)
+    legalOrPlanningRestrictionsView(form, Summary("99996010001"))(fakeRequest, messages)
 
   "Legal or planning restrictions view" must {
 

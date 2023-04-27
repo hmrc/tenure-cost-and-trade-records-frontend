@@ -17,6 +17,7 @@
 package views.aboutYourLeaseOrTenure
 
 import form.aboutYourLeaseOrTenure.LeaseOrAgreementYearsForm
+import models.pages.Summary
 import models.submissions.aboutYourLeaseOrTenure._
 import models.submissions.common.{AnswerNo, AnswerYes}
 import org.scalatest.matchers.must.Matchers._
@@ -31,10 +32,10 @@ class LeaseOrAgreementYearsViewSpec extends QuestionViewBehaviours[LeaseOrAgreem
 
   val backLink = controllers.aboutYourLeaseOrTenure.routes.AboutYourLandlordController.show().url
 
-  def createView = () => leaseOrAgreementYearsView(form, backLink)(fakeRequest, messages)
+  def createView = () => leaseOrAgreementYearsView(form, backLink, Summary("99996010001"))(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[LeaseOrAgreementYearsDetails]) =>
-    leaseOrAgreementYearsView(form, backLink)(fakeRequest, messages)
+    leaseOrAgreementYearsView(form, backLink, Summary("99996010001"))(fakeRequest, messages)
 
   "Lease or agreement years view" must {
 

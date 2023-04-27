@@ -48,7 +48,8 @@ class DoesTheRentPayableController @Inject() (
           request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.doesTheRentPayable) match {
             case Some(doesTheRentPayable) => doesTheRentPayableForm.fillAndValidate(doesTheRentPayable)
             case _                        => doesTheRentPayableForm
-          }
+          },
+          request.sessionData.toSummary
         )
       )
     )
@@ -57,7 +58,7 @@ class DoesTheRentPayableController @Inject() (
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[DoesTheRentPayable](
       doesTheRentPayableForm,
-      formWithErrors => BadRequest(doesTheRentPayableView(formWithErrors)),
+      formWithErrors => BadRequest(doesTheRentPayableView(formWithErrors, request.sessionData.toSummary)),
       data => {
         val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(doesTheRentPayable = Some(data)))
         session.saveOrUpdate(updatedData)

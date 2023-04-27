@@ -48,7 +48,8 @@ class IncentivesPaymentsConditionsController @Inject() (
           request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.incentivesPaymentsConditionsDetails) match {
             case Some(data) => incentivesPaymentsConditionsForm.fillAndValidate(data)
             case _          => incentivesPaymentsConditionsForm
-          }
+          },
+          request.sessionData.toSummary
         )
       )
     )
@@ -57,7 +58,7 @@ class IncentivesPaymentsConditionsController @Inject() (
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[IncentivesPaymentsConditionsDetails](
       incentivesPaymentsConditionsForm,
-      formWithErrors => BadRequest(incentivesPaymentsConditionsView(formWithErrors)),
+      formWithErrors => BadRequest(incentivesPaymentsConditionsView(formWithErrors, request.sessionData.toSummary)),
       data => {
         val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(incentivesPaymentsConditionsDetails = Some(data)))
         session.saveOrUpdate(updatedData)

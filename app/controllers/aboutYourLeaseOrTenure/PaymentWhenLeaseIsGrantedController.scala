@@ -48,7 +48,8 @@ class PaymentWhenLeaseIsGrantedController @Inject() (
           request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.paymentWhenLeaseIsGrantedDetails) match {
             case Some(data) => paymentWhenLeaseIsGrantedForm.fillAndValidate(data)
             case _          => paymentWhenLeaseIsGrantedForm
-          }
+          },
+          request.sessionData.toSummary
         )
       )
     )
@@ -57,7 +58,7 @@ class PaymentWhenLeaseIsGrantedController @Inject() (
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[PaymentWhenLeaseIsGrantedDetails](
       paymentWhenLeaseIsGrantedForm,
-      formWithErrors => BadRequest(paymentWhenLeaseIsGrantedView(formWithErrors)),
+      formWithErrors => BadRequest(paymentWhenLeaseIsGrantedView(formWithErrors, request.sessionData.toSummary)),
       data => {
         val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(paymentWhenLeaseIsGrantedDetails = Some(data)))
         session.saveOrUpdate(updatedData)

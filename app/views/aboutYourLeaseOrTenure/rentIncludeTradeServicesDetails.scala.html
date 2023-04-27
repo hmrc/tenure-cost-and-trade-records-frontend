@@ -18,11 +18,11 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukCharacterCount
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
-@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
 @import uk.gov.hmrc.hmrcfrontend.views.Aliases.CurrencyInput
 @import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcCurrencyInput
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Hint
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Text
+@import models.pages.Summary
 
 @this(layout: Layout,
         govukButton: GovukButton,
@@ -32,12 +32,13 @@
 )
 
 
-@(theForm: Form[RentIncludeTradeServicesInformationDetails])(implicit request: Request[_], messages: Messages)
+@(theForm: Form[RentIncludeTradeServicesInformationDetails], summary: Summary)(implicit request: Request[_], messages: Messages)
 
 @layout(
  pageHeading = messages("rentIncludeTradeServicesDetails.heading"),
  showH1 = false,
  showSection = true,
+ summary = Some(summary),
  sectionName = messages("label.section.aboutYourLeaseOrTenure"),
  backLinkUrl = controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesController.show.url,
  theForm = theForm

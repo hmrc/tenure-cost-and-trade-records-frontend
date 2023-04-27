@@ -17,6 +17,7 @@
 package views.aboutYourLeaseOrTenure
 
 import form.aboutYourLeaseOrTenure.ConnectedToLandlordDetailsForm
+import models.pages.Summary
 import models.submissions.aboutYourLeaseOrTenure.ConnectedToLandlordInformationDetails
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
@@ -28,10 +29,10 @@ class ConnectedToLandlordDetailsViewSpec extends QuestionViewBehaviours[Connecte
 
   override val form = ConnectedToLandlordDetailsForm.connectedToLandlordDetailsForm
 
-  def createView = () => connectedToLandlordDetailsView(form)(fakeRequest, messages)
+  def createView = () => connectedToLandlordDetailsView(form, Summary("99996010001"))(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[ConnectedToLandlordInformationDetails]) =>
-    connectedToLandlordDetailsView(form)(fakeRequest, messages)
+    connectedToLandlordDetailsView(form, Summary("99996010001"))(fakeRequest, messages)
 
   "Connected to landlord details view" must {
 

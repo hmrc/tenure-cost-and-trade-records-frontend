@@ -51,7 +51,8 @@ class ConnectedToLandlordDetailsController @Inject() (
             case Some(connectedToLandlordDetails) =>
               connectedToLandlordDetailsForm.fillAndValidate(connectedToLandlordDetails)
             case _                                => connectedToLandlordDetailsForm
-          }
+          },
+          request.sessionData.toSummary
         )
       )
     )
@@ -60,7 +61,7 @@ class ConnectedToLandlordDetailsController @Inject() (
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[ConnectedToLandlordInformationDetails](
       connectedToLandlordDetailsForm,
-      formWithErrors => BadRequest(connectedToLandlordDetailsView(formWithErrors)),
+      formWithErrors => BadRequest(connectedToLandlordDetailsView(formWithErrors, request.sessionData.toSummary)),
       data => {
         val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(connectedToLandlordDetails = Some(data)))
         session.saveOrUpdate(updatedData)

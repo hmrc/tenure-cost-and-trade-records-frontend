@@ -52,7 +52,8 @@ class RentPayableVaryOnQuantityOfBeersDetailsController @Inject() (
                 rentPayableVaryOnQuantityOfBeersInformationDetails
               )
             case _                                                        => rentPayableVaryOnQuantityOfBeersDetailsForm
-          }
+          },
+          request.sessionData.toSummary
         )
       )
     )
@@ -61,7 +62,8 @@ class RentPayableVaryOnQuantityOfBeersDetailsController @Inject() (
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[RentPayableVaryOnQuantityOfBeersInformationDetails](
       rentPayableVaryOnQuantityOfBeersDetailsForm,
-      formWithErrors => BadRequest(rentPayableVaryOnQuantityOfBeersDetailsView(formWithErrors)),
+      formWithErrors =>
+        BadRequest(rentPayableVaryOnQuantityOfBeersDetailsView(formWithErrors, request.sessionData.toSummary)),
       data => {
         val updatedData =
           updateAboutLeaseOrAgreementPartTwo(_.copy(rentPayableVaryOnQuantityOfBeersInformationDetails = Some(data)))

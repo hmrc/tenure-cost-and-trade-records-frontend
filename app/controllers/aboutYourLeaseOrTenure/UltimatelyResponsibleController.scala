@@ -48,7 +48,8 @@ class UltimatelyResponsibleController @Inject() (
           request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.ultimatelyResponsible) match {
             case Some(ultimatelyResponsible) => ultimatelyResponsibleForm.fillAndValidate(ultimatelyResponsible)
             case _                           => ultimatelyResponsibleForm
-          }
+          },
+          request.sessionData.toSummary
         )
       )
     )
@@ -57,7 +58,7 @@ class UltimatelyResponsibleController @Inject() (
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[UltimatelyResponsible](
       ultimatelyResponsibleForm,
-      formWithErrors => BadRequest(ultimatelyResponsibleView(formWithErrors)),
+      formWithErrors => BadRequest(ultimatelyResponsibleView(formWithErrors, request.sessionData.toSummary)),
       data => {
         val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(ultimatelyResponsible = Some(data)))
         session.saveOrUpdate(updatedData)

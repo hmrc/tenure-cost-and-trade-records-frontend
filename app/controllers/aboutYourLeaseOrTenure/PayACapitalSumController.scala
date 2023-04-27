@@ -52,7 +52,8 @@ class PayACapitalSumController @Inject() (
             case Some(data) => payACapitalSumForm.fillAndValidate(data)
             case _          => payACapitalSumForm
           },
-          getBackLink(request.sessionData)
+          getBackLink(request.sessionData),
+          request.sessionData.toSummary
         )
       )
     )
@@ -61,7 +62,8 @@ class PayACapitalSumController @Inject() (
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[PayACapitalSumDetails](
       payACapitalSumForm,
-      formWithErrors => BadRequest(payACapitalSumView(formWithErrors, getBackLink(request.sessionData))),
+      formWithErrors =>
+        BadRequest(payACapitalSumView(formWithErrors, getBackLink(request.sessionData), request.sessionData.toSummary)),
       data => {
         val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(payACapitalSumDetails = Some(data)))
         session.saveOrUpdate(updatedData)

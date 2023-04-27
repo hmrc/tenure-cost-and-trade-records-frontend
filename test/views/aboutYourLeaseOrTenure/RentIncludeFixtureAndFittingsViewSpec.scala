@@ -17,6 +17,7 @@
 package views.aboutYourLeaseOrTenure
 
 import form.aboutYourLeaseOrTenure.RentIncludeFixtureAndFittingsForm
+import models.pages.Summary
 import models.submissions.aboutYourLeaseOrTenure.RentIncludeFixturesAndFittingsDetails
 import models.submissions.common.{AnswerNo, AnswerYes}
 import org.scalatest.matchers.must.Matchers._
@@ -31,10 +32,11 @@ class RentIncludeFixtureAndFittingsViewSpec extends QuestionViewBehaviours[RentI
 
   val backLink = controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesController.show().url
 
-  def createView = () => rentIncludeFixtureAndFittingsView(form, backLink)(fakeRequest, messages)
+  def createView = () =>
+    rentIncludeFixtureAndFittingsView(form, backLink, Summary("99996010001"))(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[RentIncludeFixturesAndFittingsDetails]) =>
-    rentIncludeFixtureAndFittingsView(form, backLink)(fakeRequest, messages)
+    rentIncludeFixtureAndFittingsView(form, backLink, Summary("99996010001"))(fakeRequest, messages)
 
   "Rent include fixture and fittings view" must {
 

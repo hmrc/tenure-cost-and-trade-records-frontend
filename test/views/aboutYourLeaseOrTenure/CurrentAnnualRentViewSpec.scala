@@ -18,6 +18,7 @@ package views.aboutYourLeaseOrTenure
 
 import form.aboutYourLeaseOrTenure.CurrentAnnualRentForm
 import models.AnnualRent
+import models.pages.Summary
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
@@ -30,9 +31,10 @@ class CurrentAnnualRentViewSpec extends QuestionViewBehaviours[AnnualRent] {
 
   val backLink = controllers.Form6010.routes.TenancyLeaseAgreementController.show().url
 
-  def createView = () => currentAnnualRentView(form, backLink)(fakeRequest, messages)
+  def createView = () => currentAnnualRentView(form, backLink, Summary("99996010001"))(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[AnnualRent]) => currentAnnualRentView(form, backLink)(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[AnnualRent]) =>
+    currentAnnualRentView(form, backLink, Summary("99996010001"))(fakeRequest, messages)
 
   "Current annual rent view" must {
 

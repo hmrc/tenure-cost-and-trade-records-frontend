@@ -49,7 +49,8 @@ class WhatIsYourRentBasedOnController @Inject() (
             case Some(whatIsYourCurrentRentBasedOnDetails) =>
               whatIsYourCurrentRentBasedOnForm.fillAndValidate(whatIsYourCurrentRentBasedOnDetails)
             case None                                      => whatIsYourCurrentRentBasedOnForm
-          }
+          },
+          request.sessionData.toSummary
         )
       )
     )
@@ -58,7 +59,7 @@ class WhatIsYourRentBasedOnController @Inject() (
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[WhatIsYourCurrentRentBasedOnDetails](
       whatIsYourCurrentRentBasedOnForm,
-      formWithErrors => BadRequest(whatIsYourRentBasedOnView(formWithErrors)),
+      formWithErrors => BadRequest(whatIsYourRentBasedOnView(formWithErrors, request.sessionData.toSummary)),
       data => {
         val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(whatIsYourCurrentRentBasedOnDetails = Some(data)))
         session.saveOrUpdate(updatedData)

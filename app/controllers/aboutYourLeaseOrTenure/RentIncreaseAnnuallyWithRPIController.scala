@@ -53,7 +53,8 @@ class RentIncreaseAnnuallyWithRPIController @Inject() (
               rentIncreasedAnnuallyWithRPIDetailsForm.fillAndValidate(rentIncreasedAnnuallyWithRPIDetails)
             case None                                      => rentIncreasedAnnuallyWithRPIDetailsForm
           },
-          getBackLink(request.sessionData)
+          getBackLink(request.sessionData),
+          request.sessionData.toSummary
         )
       )
     )
@@ -62,7 +63,14 @@ class RentIncreaseAnnuallyWithRPIController @Inject() (
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[RentIncreasedAnnuallyWithRPIDetails](
       rentIncreasedAnnuallyWithRPIDetailsForm,
-      formWithErrors => BadRequest(rentIncreaseAnnuallyWithRPIView(formWithErrors, getBackLink(request.sessionData))),
+      formWithErrors =>
+        BadRequest(
+          rentIncreaseAnnuallyWithRPIView(
+            formWithErrors,
+            getBackLink(request.sessionData),
+            request.sessionData.toSummary
+          )
+        ),
       data => {
         val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(rentIncreasedAnnuallyWithRPIDetails = Some(data)))
         session.saveOrUpdate(updatedData)

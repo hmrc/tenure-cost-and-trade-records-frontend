@@ -53,7 +53,8 @@ class LeaseOrAgreementYearsController @Inject() (
               leaseOrAgreementYearsForm.fillAndValidate(leaseOrAgreementYearsDetails)
             case _                                  => leaseOrAgreementYearsForm
           },
-          getBackLink(request.sessionData)
+          getBackLink(request.sessionData),
+          request.sessionData.toSummary
         )
       )
     )
@@ -62,7 +63,10 @@ class LeaseOrAgreementYearsController @Inject() (
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[LeaseOrAgreementYearsDetails](
       leaseOrAgreementYearsForm,
-      formWithErrors => BadRequest(leaseOrAgreementYearsView(formWithErrors, getBackLink(request.sessionData))),
+      formWithErrors =>
+        BadRequest(
+          leaseOrAgreementYearsView(formWithErrors, getBackLink(request.sessionData), request.sessionData.toSummary)
+        ),
       data => {
         val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(leaseOrAgreementYearsDetails = Some(data)))
         session.saveOrUpdate(updatedData)

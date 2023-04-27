@@ -17,6 +17,7 @@
 package views.aboutYourLeaseOrTenure
 
 import form.aboutYourLeaseOrTenure.CurrentRentFirstPaidForm
+import models.pages.Summary
 import models.submissions.aboutYourLeaseOrTenure.CurrentRentFirstPaid
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
@@ -28,9 +29,10 @@ class CurrentRentFirstPaidViewSpec extends QuestionViewBehaviours[CurrentRentFir
 
   override val form = CurrentRentFirstPaidForm.currentRentFirstPaidForm
 
-  def createView = () => currentRentFirstPaidView(form)(fakeRequest, messages)
+  def createView = () => currentRentFirstPaidView(form, Summary("99996010001"))(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[CurrentRentFirstPaid]) => currentRentFirstPaidView(form)(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[CurrentRentFirstPaid]) =>
+    currentRentFirstPaidView(form, Summary("99996010001"))(fakeRequest, messages)
 
   "Current rent first paid view" must {
 

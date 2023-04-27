@@ -48,7 +48,8 @@ class CanRentBeReducedOnReviewController @Inject() (
           request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.canRentBeReducedOnReviewDetails) match {
             case Some(data) => canRentBeReducedOnReviewForm.fillAndValidate(data)
             case _          => canRentBeReducedOnReviewForm
-          }
+          },
+          request.sessionData.toSummary
         )
       )
     )
@@ -57,7 +58,7 @@ class CanRentBeReducedOnReviewController @Inject() (
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[CanRentBeReducedOnReviewDetails](
       canRentBeReducedOnReviewForm,
-      formWithErrors => BadRequest(canRentBeReducedOnReviewView(formWithErrors)),
+      formWithErrors => BadRequest(canRentBeReducedOnReviewView(formWithErrors, request.sessionData.toSummary)),
       data => {
         val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(canRentBeReducedOnReviewDetails = Some(data)))
         session.saveOrUpdate(updatedData)

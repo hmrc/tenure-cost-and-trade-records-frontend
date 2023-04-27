@@ -17,6 +17,7 @@
 package views.aboutYourLeaseOrTenure
 
 import form.aboutYourLeaseOrTenure.RentIncludeTradeServicesDetailsForm
+import models.pages.Summary
 import models.submissions.aboutYourLeaseOrTenure.RentIncludeTradeServicesInformationDetails
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
@@ -29,10 +30,10 @@ class RentIncludeTradeServicesDetailsViewSpec
 
   override val form = RentIncludeTradeServicesDetailsForm.rentIncludeTradeServicesDetailsForm
 
-  def createView = () => rentIncludeTradeServicesDetailsView(form)(fakeRequest, messages)
+  def createView = () => rentIncludeTradeServicesDetailsView(form, Summary("99996010001"))(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[RentIncludeTradeServicesInformationDetails]) =>
-    rentIncludeTradeServicesDetailsView(form)(fakeRequest, messages)
+    rentIncludeTradeServicesDetailsView(form, Summary("99996010001"))(fakeRequest, messages)
 
   "Rent include trade services details" must {
 

@@ -51,7 +51,8 @@ class CheckYourAnswersAboutYourLeaseOrTenureController @Inject() (
               checkYourAnswersAboutFranchiseOrLettingsForm.fillAndValidate(checkYourAnswersAboutYourLeaseOrTenureView)
             case _                                                => checkYourAnswersAboutFranchiseOrLettingsForm
           },
-          getBackLink(request.sessionData)
+          getBackLink(request.sessionData),
+          request.sessionData.toSummary
         )
       )
     )

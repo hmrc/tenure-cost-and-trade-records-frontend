@@ -49,7 +49,8 @@ class RentIncludeTradeServicesController @Inject() (
             case Some(rentIncludeTradeServicesDetails) =>
               rentIncludeTradeServicesForm.fillAndValidate(rentIncludeTradeServicesDetails)
             case _                                     => rentIncludeTradeServicesForm
-          }
+          },
+          request.sessionData.toSummary
         )
       )
     )
@@ -58,7 +59,7 @@ class RentIncludeTradeServicesController @Inject() (
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[RentIncludeTradeServicesDetails](
       rentIncludeTradeServicesForm,
-      formWithErrors => BadRequest(rentIncludeTradeServicesView(formWithErrors)),
+      formWithErrors => BadRequest(rentIncludeTradeServicesView(formWithErrors, request.sessionData.toSummary)),
       data => {
         val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(rentIncludeTradeServicesDetails = Some(data)))
         session.saveOrUpdate(updatedData)

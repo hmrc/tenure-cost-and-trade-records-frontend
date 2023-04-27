@@ -17,6 +17,7 @@
 package views.aboutYourLeaseOrTenure
 
 import form.aboutYourLeaseOrTenure.TenantsAdditionsDisregardedForm
+import models.pages.Summary
 import models.submissions.aboutYourLeaseOrTenure.TenantAdditionsDisregardedDetails
 import models.submissions.common.{AnswerNo, AnswerYes}
 import org.scalatest.matchers.must.Matchers._
@@ -29,10 +30,10 @@ class TenantsAdditionsDisregardedViewSpec extends QuestionViewBehaviours[TenantA
 
   override val form = TenantsAdditionsDisregardedForm.tenantsAdditionsDisregardedForm
 
-  def createView = () => tenantsAdditionsDisregardedView(form)(fakeRequest, messages)
+  def createView = () => tenantsAdditionsDisregardedView(form, Summary("99996010001"))(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[TenantAdditionsDisregardedDetails]) =>
-    tenantsAdditionsDisregardedView(form)(fakeRequest, messages)
+    tenantsAdditionsDisregardedView(form, Summary("99996010001"))(fakeRequest, messages)
 
   "Tenants additions disregarded view" must {
 
