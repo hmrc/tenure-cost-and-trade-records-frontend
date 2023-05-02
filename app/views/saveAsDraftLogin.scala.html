@@ -41,6 +41,8 @@
 
     <h1 class="govuk-heading-l">@messages("saveAsDraft.retrieveYourDraft")</h1>
 
+    <p class="govuk-body">@messages("saveAsDraft.passwordReminder")</p>
+
     @formWithCSRF(action = routes.SaveAsDraftController.resume) {
         @govukInput(
             Input(
@@ -51,9 +53,13 @@
                     content = Text(messages("saveAsDraft.password")),
                     classes = "govuk-!-font-weight-bold"
                 ),
-                hint = Hint(
-                    content = Text(messages("saveAsDraft.passwordHint"))
-                ),
+                suffix = Some(PrefixOrSuffix(
+                    content = HtmlContent(
+                        """<a id="showHide" href="#" onclick="javascript:event.stopPropagation();document.getElementById('password').type = 'text';document.getElementById('showHide').text = 'Hide';">Show</a>"""
+                    )
+                )),
+                spellcheck = Some(false),
+                hint = None
             ).withFormField(form("password"))
         )
         @govukButton(
@@ -69,5 +75,7 @@
     <p class="govuk-body">
         <a href="@routes.SaveAsDraftController.startAgain" class="govuk-link" >@messages("saveAsDraft.startAgain")</a>
     </p>
+
+    <p class="govuk-body">@messages("saveAsDraft.forgotPassword")</p>
 
 }
