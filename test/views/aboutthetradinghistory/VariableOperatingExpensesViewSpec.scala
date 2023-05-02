@@ -17,6 +17,7 @@
 package views.aboutthetradinghistory
 
 import form.aboutthetradinghistory.{OccupationalAndAccountingInformationForm, VariableOperatingExpensesForm}
+import models.pages.Summary
 import models.submissions.aboutthetradinghistory.{OccupationalAndAccountingInformation, VariableOperatingExpenses}
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
@@ -31,10 +32,10 @@ class VariableOperatingExpensesViewSpec extends QuestionViewBehaviours[VariableO
 
   override val form = VariableOperatingExpensesForm.variableOperatingExpensesForm
 
-  def createView = () => variableOperatingExpensesView(form)(fakeRequest, messages)
+  def createView = () => variableOperatingExpensesView(form, Summary("99996010001"))(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[VariableOperatingExpenses]) =>
-    variableOperatingExpensesView(form)(fakeRequest, messages)
+    variableOperatingExpensesView(form, Summary("99996010001"))(fakeRequest, messages)
 
   "Variable Operating Expenses view" must {
 

@@ -30,7 +30,7 @@ class CheckYourAnswersAboutTheTradingHistoryControllerSpec extends TestBaseSpec 
 
   val mockAboutTheTradingHistoryNavigator            = mock[AboutTheTradingHistoryNavigator]
   val mockCheckYourAnswersAboutTheTradingHistoryView = mock[checkYourAnswersAboutTheTradingHistory]
-  when(mockCheckYourAnswersAboutTheTradingHistoryView.apply(any, any)(any, any)).thenReturn(HtmlFormat.empty)
+  when(mockCheckYourAnswersAboutTheTradingHistoryView.apply(any, any, any)(any, any)).thenReturn(HtmlFormat.empty)
 
   val mockTaskListView = mock[taskList]
   when(mockTaskListView.apply()(any, any)).thenReturn(HtmlFormat.empty)

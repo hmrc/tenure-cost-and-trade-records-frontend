@@ -51,7 +51,8 @@ class AboutYourTradingHistoryController @Inject() (
         request.sessionData.aboutTheTradingHistory.flatMap(_.occupationAndAccountingInformation) match {
           case Some(tradingHistory) => occupationalAndAccountingInformationForm.fillAndValidate(tradingHistory)
           case _                    => occupationalAndAccountingInformationForm
-        }
+        },
+        request.sessionData.toSummary
       )
     )
   }
@@ -59,7 +60,7 @@ class AboutYourTradingHistoryController @Inject() (
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[OccupationalAndAccountingInformation](
       occupationalAndAccountingInformationForm,
-      formWithErrors => BadRequest(aboutYourTradingHistoryView(formWithErrors)),
+      formWithErrors => BadRequest(aboutYourTradingHistoryView(formWithErrors, request.sessionData.toSummary)),
       data =>
         if (request.sessionData.aboutTheTradingHistory.flatMap(_.occupationAndAccountingInformation).contains(data)) {
           Redirect(navigator.nextPage(AboutYourTradingHistoryPageId).apply(request.sessionData))

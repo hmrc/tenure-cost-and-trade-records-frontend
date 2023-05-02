@@ -46,7 +46,8 @@ class VariableOperatingExpensesController @Inject() (
           case Some(variableOperatingExpenses) =>
             variableOperatingExpensesForm.fillAndValidate(variableOperatingExpenses)
           case _                               => variableOperatingExpensesForm
-        }
+        },
+        request.sessionData.toSummary
       )
     )
   }
@@ -54,7 +55,7 @@ class VariableOperatingExpensesController @Inject() (
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[VariableOperatingExpenses](
       variableOperatingExpensesForm,
-      formWithErrors => BadRequest(variableOperativeExpensesView(formWithErrors)),
+      formWithErrors => BadRequest(variableOperativeExpensesView(formWithErrors, request.sessionData.toSummary)),
       data => {
         val updatedData = request.sessionData
         Redirect(navigator.nextPage(VariableOperatingExpensesId).apply(updatedData))

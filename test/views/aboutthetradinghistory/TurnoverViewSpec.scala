@@ -17,6 +17,7 @@
 package views.aboutthetradinghistory
 
 import form.aboutthetradinghistory.{OccupationalAndAccountingInformationForm, TurnoverForm}
+import models.pages.Summary
 import models.submissions.aboutthetradinghistory.{OccupationalAndAccountingInformation, TurnoverSection}
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
@@ -30,9 +31,10 @@ class TurnoverViewSpec extends QuestionViewBehaviours[Seq[TurnoverSection]] {
 
   override val form = TurnoverForm.turnoverForm(3)
 
-  def createView = () => turnoverView(form, 3)(fakeRequest, messages)
+  def createView = () => turnoverView(form, 3, Summary("99996010001"))(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[Seq[TurnoverSection]]) => turnoverView(form, 3)(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[Seq[TurnoverSection]]) =>
+    turnoverView(form, 3, Summary("99996010001"))(fakeRequest, messages)
 
   "Turnover view" must {
 

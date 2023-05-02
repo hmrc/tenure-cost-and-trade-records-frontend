@@ -27,7 +27,7 @@ class NetProfitControllerSpec extends TestBaseSpec {
 
   val mockTradingHistoryNavigator = mock[AboutTheTradingHistoryNavigator]
   val mockNetProfitView           = mock[netProfit]
-  when(mockNetProfitView.apply(any)(any, any)).thenReturn(HtmlFormat.empty)
+  when(mockNetProfitView.apply(any, any)(any, any)).thenReturn(HtmlFormat.empty)
 
   val netProfitController = new NetProfitController(
     stubMessagesControllerComponents(),

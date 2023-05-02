@@ -17,6 +17,7 @@
 package views.aboutthetradinghistory
 
 import form.aboutthetradinghistory.OccupationalAndAccountingInformationForm
+import models.pages.Summary
 import models.submissions.aboutthetradinghistory.OccupationalAndAccountingInformation
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
@@ -34,10 +35,11 @@ class AboutYourTradingHistoryViewSpec extends QuestionViewBehaviours[Occupationa
   override val form: Form[OccupationalAndAccountingInformation] =
     OccupationalAndAccountingInformationForm.occupationalAndAccountingInformationForm
 
-  def createView: () => Html = () => aboutTheTradingHistoryView(form)(fakeRequest, messages)
+  def createView: () => Html = () => aboutTheTradingHistoryView(form, Summary("99996010001"))(fakeRequest, messages)
 
   def createViewUsingForm: Form[OccupationalAndAccountingInformation] => Html =
-    (form: Form[OccupationalAndAccountingInformation]) => aboutTheTradingHistoryView(form)(fakeRequest, messages)
+    (form: Form[OccupationalAndAccountingInformation]) =>
+      aboutTheTradingHistoryView(form, Summary("99996010001"))(fakeRequest, messages)
 
   "About the trading history view" must {
 

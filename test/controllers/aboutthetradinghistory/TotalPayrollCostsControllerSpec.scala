@@ -27,7 +27,7 @@ class TotalPayrollCostsControllerSpec extends TestBaseSpec {
 
   val mockAboutYouNavigator     = mock[AboutTheTradingHistoryNavigator]
   val mockTotalPayrollCostsView = mock[totalPayrollCosts]
-  when(mockTotalPayrollCostsView.apply(any)(any, any)).thenReturn(HtmlFormat.empty)
+  when(mockTotalPayrollCostsView.apply(any, any)(any, any)).thenReturn(HtmlFormat.empty)
 
   val aboutYourTradingHistoryController = new TotalPayrollCostsController(
     stubMessagesControllerComponents(),

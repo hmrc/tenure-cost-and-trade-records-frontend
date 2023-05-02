@@ -45,7 +45,8 @@ class FixedOperatingExpensesController @Inject() (
         request.sessionData.aboutTheTradingHistory.flatMap(_.fixedOperatingExpenses) match {
           case Some(fixedOperatingExpenses) => fixedOperatingExpensesForm.fillAndValidate(fixedOperatingExpenses)
           case _                            => fixedOperatingExpensesForm
-        }
+        },
+        request.sessionData.toSummary
       )
     )
   }
@@ -53,7 +54,7 @@ class FixedOperatingExpensesController @Inject() (
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[FixedOperatingExpenses](
       fixedOperatingExpensesForm,
-      formWithErrors => BadRequest(fixedOperatingExpensesView(formWithErrors)),
+      formWithErrors => BadRequest(fixedOperatingExpensesView(formWithErrors, request.sessionData.toSummary)),
       data => {
         val updatedData = request.sessionData
         Redirect(navigator.nextPage(FixedOperatingExpensesId).apply(updatedData))

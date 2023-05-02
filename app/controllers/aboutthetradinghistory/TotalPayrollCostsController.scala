@@ -46,7 +46,8 @@ class TotalPayrollCostsController @Inject() (
         request.sessionData.aboutTheTradingHistory.flatMap(_.totalPayrollCost) match {
           case Some(totalPayrollCost) => totalPayrollCostForm.fillAndValidate(totalPayrollCost)
           case _                      => totalPayrollCostForm
-        }
+        },
+        request.sessionData.toSummary
       )
     )
   }
@@ -54,7 +55,7 @@ class TotalPayrollCostsController @Inject() (
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[TotalPayrollCost](
       totalPayrollCostForm,
-      formWithErrors => BadRequest(totalPayrollCostsView(formWithErrors)),
+      formWithErrors => BadRequest(totalPayrollCostsView(formWithErrors, request.sessionData.toSummary)),
       data => {
         val updatedData = updateAboutTheTradingHistory(_.copy(totalPayrollCost = Some(data)))
         Redirect(navigator.nextPage(TotalPayrollCostId).apply(updatedData))

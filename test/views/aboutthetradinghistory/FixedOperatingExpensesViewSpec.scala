@@ -33,6 +33,7 @@
 package views.aboutthetradinghistory
 
 import form.aboutthetradinghistory.FixedOperatingExpensesForm
+import models.pages.Summary
 import models.submissions.aboutthetradinghistory.FixedOperatingExpenses
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
@@ -47,10 +48,10 @@ class FixedOperatingExpensesViewSpec extends QuestionViewBehaviours[FixedOperati
 
   override val form = FixedOperatingExpensesForm.fixedOperatingExpensesForm
 
-  def createView = () => fixedOperatingExpensesView(form)(fakeRequest, messages)
+  def createView = () => fixedOperatingExpensesView(form, Summary("99996010001"))(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[FixedOperatingExpenses]) =>
-    fixedOperatingExpensesView(form)(fakeRequest, messages)
+    fixedOperatingExpensesView(form, Summary("99996010001"))(fakeRequest, messages)
 
   "Fixed Operating Expenses view" must {
 
