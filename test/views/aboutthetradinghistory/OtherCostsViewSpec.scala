@@ -17,6 +17,7 @@
 package views.aboutthetradinghistory
 
 import form.aboutthetradinghistory.OtherCostsForm
+import models.pages.Summary
 import models.submissions.aboutthetradinghistory.OtherCosts
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
@@ -30,9 +31,10 @@ class OtherCostsViewSpec extends QuestionViewBehaviours[OtherCosts] {
 
   override val form = OtherCostsForm.otherCostsForm
 
-  def createView = () => otherCostsView(form)(fakeRequest, messages)
+  def createView = () => otherCostsView(form, Summary("99996010001"))(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[OtherCosts]) => otherCostsView(form)(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[OtherCosts]) =>
+    otherCostsView(form, Summary("99996010001"))(fakeRequest, messages)
 
   "Other Costs view" must {
 

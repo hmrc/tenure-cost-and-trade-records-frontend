@@ -52,7 +52,8 @@ class CheckYourAnswersAboutTheTradingHistoryController @Inject() (
               checkYourAnswersAboutTheTradingHistoryForm.fillAndValidate(checkYourAnswersAboutTheTradingHistory)
             case _                                            => checkYourAnswersAboutTheTradingHistoryForm
           },
-          getBackLink(request.sessionData)
+          getBackLink(request.sessionData),
+          request.sessionData.toSummary
         )
       )
     )

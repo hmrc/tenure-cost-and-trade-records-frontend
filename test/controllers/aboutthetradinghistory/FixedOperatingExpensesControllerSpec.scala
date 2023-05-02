@@ -27,7 +27,7 @@ class FixedOperatingExpensesControllerSpec extends TestBaseSpec {
 
   val mockFixedOperatingExpensesNavigator = mock[AboutTheTradingHistoryNavigator]
   val mockFixedOperatingExpensesView      = mock[fixedOperatingExpenses]
-  when(mockFixedOperatingExpensesView.apply(any)(any, any)).thenReturn(HtmlFormat.empty)
+  when(mockFixedOperatingExpensesView.apply(any, any)(any, any)).thenReturn(HtmlFormat.empty)
 
   val fixedOperatingExpensesController = new FixedOperatingExpensesController(
     stubMessagesControllerComponents(),

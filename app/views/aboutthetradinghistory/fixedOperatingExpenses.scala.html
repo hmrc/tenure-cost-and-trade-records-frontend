@@ -17,18 +17,20 @@
 @import models.submissions.aboutthetradinghistory.FixedOperatingExpenses
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
+@import models.pages.Summary
 
 @this(layout: Layout,
         govukButton: GovukButton,
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[FixedOperatingExpenses])(implicit request: Request[_], messages: Messages)
+@(theForm: Form[FixedOperatingExpenses], summary: Summary)(implicit request: Request[_], messages: Messages)
 
 @layout(
   pageHeading = messages("fixedOperatingExpenses.heading"),
   showH1 = false,
   showSection = true,
+    summary = Some(summary),
   sectionName = messages("label.section.aboutYourTradingHistory"),
   backLinkUrl = controllers.aboutthetradinghistory.routes.VariableOperatingExpensesController.show.url,
     theForm = theForm

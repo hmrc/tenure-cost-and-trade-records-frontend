@@ -45,7 +45,8 @@ class NetProfitController @Inject() (
         request.sessionData.aboutTheTradingHistory.flatMap(_.netProfit) match {
           case Some(netProfit) => netProfitForm.fillAndValidate(netProfit)
           case _               => netProfitForm
-        }
+        },
+        request.sessionData.toSummary
       )
     )
   }
@@ -53,7 +54,7 @@ class NetProfitController @Inject() (
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[NetProfit](
       netProfitForm,
-      formWithErrors => BadRequest(netProfitView(formWithErrors)),
+      formWithErrors => BadRequest(netProfitView(formWithErrors, request.sessionData.toSummary)),
       data => {
         val updatedData = request.sessionData
         Redirect(navigator.nextPage(NetProfitId).apply(updatedData))

@@ -26,7 +26,7 @@ class GrossProfitControllerSpec extends TestBaseSpec {
 
   val mockTradingHistoryNavigator = mock[AboutTheTradingHistoryNavigator]
   val mockGrossProfitView         = mock[grossProfits]
-  when(mockGrossProfitView.apply(any)(any, any)).thenReturn(HtmlFormat.empty)
+  when(mockGrossProfitView.apply(any, any)(any, any)).thenReturn(HtmlFormat.empty)
 
   val grossProfitsController = new GrossProfitsController(
     stubMessagesControllerComponents(),

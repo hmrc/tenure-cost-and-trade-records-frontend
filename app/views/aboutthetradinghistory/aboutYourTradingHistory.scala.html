@@ -20,6 +20,8 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukDateInput
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukFieldset
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
+@import models.pages.Summary
+
 
 @this(layout: Layout,
         govukButton: GovukButton,
@@ -28,7 +30,7 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[OccupationalAndAccountingInformation])(implicit request: Request[_], messages: Messages)
+@(theForm: Form[OccupationalAndAccountingInformation], summary: Summary)(implicit request: Request[_], messages: Messages)
 
 @content = {
   <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
@@ -58,6 +60,7 @@
  pageHeading = messages("aboutYourTradingHistory.heading"),
  showH1 = false,
  showSection = true,
+    summary = Some(summary),
  sectionName = messages("label.section.aboutYourTradingHistory"),
  backLinkUrl = controllers.routes.TaskListController.show().url,
  theForm = theForm

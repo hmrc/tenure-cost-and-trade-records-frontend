@@ -27,7 +27,7 @@ class VariableOperatingExpensesControllerSpec extends TestBaseSpec {
 
   val mockVariableOperatingExpensesNavigator = mock[AboutTheTradingHistoryNavigator]
   val mockVariableOperatingExpensesView      = mock[variableOperatingExpenses]
-  when(mockVariableOperatingExpensesView.apply(any)(any, any)).thenReturn(HtmlFormat.empty)
+  when(mockVariableOperatingExpensesView.apply(any, any)(any, any)).thenReturn(HtmlFormat.empty)
 
   val variableOperatingExpensesController = new VariableOperatingExpensesController(
     stubMessagesControllerComponents(),

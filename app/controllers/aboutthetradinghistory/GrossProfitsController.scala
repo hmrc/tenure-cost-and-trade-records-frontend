@@ -45,7 +45,8 @@ class GrossProfitsController @Inject() (
         request.sessionData.aboutTheTradingHistory.flatMap(_.grossProfit) match {
           case Some(grossProfit) => grossProfitForm.fillAndValidate(grossProfit)
           case _                 => grossProfitForm
-        }
+        },
+        request.sessionData.toSummary
       )
     )
   }
@@ -53,7 +54,7 @@ class GrossProfitsController @Inject() (
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[GrossProfit](
       grossProfitForm,
-      formWithErrors => BadRequest(grossProfitsView(formWithErrors)),
+      formWithErrors => BadRequest(grossProfitsView(formWithErrors, request.sessionData.toSummary)),
       data => {
         val updatedData = request.sessionData
         Redirect(navigator.nextPage(GrossProfitsId).apply(updatedData))

@@ -45,7 +45,8 @@ class CostOfSalesController @Inject() (
         request.sessionData.aboutTheTradingHistory.flatMap(_.costOfSales) match {
           case Some(costOfSales) => costOfSalesForm.fillAndValidate(costOfSales)
           case _                 => costOfSalesForm
-        }
+        },
+        request.sessionData.toSummary
       )
     )
   }
@@ -53,7 +54,7 @@ class CostOfSalesController @Inject() (
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[CostOfSales](
       costOfSalesForm,
-      formWithErrors => BadRequest(costOfSalesView(formWithErrors)),
+      formWithErrors => BadRequest(costOfSalesView(formWithErrors, request.sessionData.toSummary)),
       data => {
         val updatedData = request.sessionData
         Redirect(navigator.nextPage(CostOfSalesId).apply(updatedData))

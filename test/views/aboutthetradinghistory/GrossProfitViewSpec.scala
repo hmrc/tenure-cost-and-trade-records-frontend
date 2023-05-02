@@ -17,6 +17,7 @@
 package views.aboutthetradinghistory
 
 import form.aboutthetradinghistory.GrossProfitForm
+import models.pages.Summary
 import models.submissions.aboutthetradinghistory.GrossProfit
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
@@ -30,9 +31,10 @@ class GrossProfitsViewSpec extends QuestionViewBehaviours[GrossProfit] {
 
   override val form = GrossProfitForm.grossProfitForm
 
-  def createView = () => grossProfitView(form)(fakeRequest, messages)
+  def createView = () => grossProfitView(form, Summary("99996010001"))(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[GrossProfit]) => grossProfitView(form)(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[GrossProfit]) =>
+    grossProfitView(form, Summary("99996010001"))(fakeRequest, messages)
 
   "grossProfits view" must {
 
