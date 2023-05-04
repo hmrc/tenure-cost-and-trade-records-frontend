@@ -295,6 +295,7 @@ help.tiedForGoods.heading2 = Beer only
 help.tiedForGoods.p2 = As the name suggests, people with a beer only tie buy beer from their landlord but can source other items independently.
 help.tiedForGoods.heading3 = Partial tie
 help.tiedForGoods.p3 = Partial ties are normally negotiated to give the tenant some flexibility to sell certain items independently, for example guest ales or fine wines
+partialTieConditional.textbox = Give details of your partial tie
 
 # TIED FOR GOODS DETAILS
 ########################
