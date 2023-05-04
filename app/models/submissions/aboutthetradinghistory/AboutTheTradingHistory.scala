@@ -19,7 +19,6 @@ package models.submissions.aboutthetradinghistory
 import actions.SessionRequest
 import models.Session
 import play.api.libs.json.Json
-import java.time.LocalDate
 
 case class AboutTheTradingHistory(
   occupationAndAccountingInformation: Option[OccupationalAndAccountingInformation] = None,
