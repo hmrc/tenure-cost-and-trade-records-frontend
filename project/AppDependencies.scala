@@ -3,8 +3,8 @@ import sbt._
 
 object AppDependencies {
 
-  val bootstrapVersion = "7.14.0"
-  val playFrontendVersion = "6.8.0-play-28"
+  val bootstrapVersion = "7.15.0"
+  val playFrontendVersion = "7.7.0-play-28"
   val mongoVersion = "1.1.0"
   val jodaVersion = "2.9.3"
   val cachingClientVersion = "10.0.0-play-28"
@@ -15,7 +15,7 @@ object AppDependencies {
   val mockitoScalaVersion = "1.17.7"
   val flexMarkVersion = "0.64.0"
 
-  val compile = Seq(
+  private val compile = Seq(
     "uk.gov.hmrc"       %% "bootstrap-frontend-play-28"   % bootstrapVersion,
     "uk.gov.hmrc"       %% "play-frontend-hmrc"           % playFrontendVersion,
     "com.typesafe.play" %% "play-joda-forms"              % PlayVersion.current,

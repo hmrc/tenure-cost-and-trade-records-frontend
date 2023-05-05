@@ -39,7 +39,11 @@
     withTimeoutDialog = false
 ) {
 
+    <script src="@routes.Assets.versioned("javascripts/show-password.js")" type="text/javascript"></script>
+
     <h1 class="govuk-heading-l">@messages("saveAsDraft.retrieveYourDraft")</h1>
+
+    <p class="govuk-body">@messages("saveAsDraft.passwordReminder")</p>
 
     @formWithCSRF(action = routes.SaveAsDraftController.resume) {
         @govukInput(
@@ -51,9 +55,14 @@
                     content = Text(messages("saveAsDraft.password")),
                     classes = "govuk-!-font-weight-bold"
                 ),
-                hint = Hint(
-                    content = Text(messages("saveAsDraft.passwordHint"))
-                ),
+                suffix = Some(PrefixOrSuffix(
+                    content = HtmlContent(
+                        """<a href="#" onclick="togglePassword('password', this, event)">Show</a>"""
+                    ),
+                    classes = "hmrc-show-password__suffix"
+                )),
+                spellcheck = Some(false),
+                hint = None
             ).withFormField(form("password"))
         )
         @govukButton(
@@ -69,5 +78,7 @@
     <p class="govuk-body">
         <a href="@routes.SaveAsDraftController.startAgain" class="govuk-link" >@messages("saveAsDraft.startAgain")</a>
     </p>
+
+    <p class="govuk-body">@messages("saveAsDraft.forgotPassword")</p>
 
 }

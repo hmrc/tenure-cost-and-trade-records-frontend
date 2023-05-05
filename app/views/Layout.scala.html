@@ -137,10 +137,8 @@
     serviceName = Some(messages("site.service_name")),
     serviceUrl= Some(routes.LoginController.show.url),
     isWelshTranslationAvailable = true,
-    nonce = CSPNonce.get,
     additionalHeadBlock = Some(headTemplate(withTimeoutDialog)),
     additionalScriptsBlock = Some(scriptsTemplate()),
     beforeContentBlock = Option(beforeBLock),
     mainContentLayout = Some(if (fullWidth) fullWidthMainContent(_) else twoThirdsMainContent(_))
 )(contentWithHeading)
-

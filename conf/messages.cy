@@ -764,9 +764,11 @@ saveAsDraft.next=Cadw cyfrinair
 saveAsDraft.continue=Parhewch i lenwi’r ffurflen hon
 saveAsDraft.logout=Allgofnodi
 saveAsDraft.retrieveYourDraft=Adalw eich drafft
+saveAsDraft.passwordReminder=Welsh TBC: Provide the password when you saved your draft or the one given to you when you were timed out of the service.
 saveAsDraft.passwordHint=Hwn fydd y cyfrinair a grëwyd gennych neu’r un a roddwyd ichi pan gawsoch eich amseru o’r gwasanaeth.
 saveAsDraft.error.invalidPassword=Nid yw’r cyfrinair a roddwyd gennych yn gywir
 saveAsDraft.startAgain=Dechrau’r ffurflen eto
+saveAsDraft.forgotPassword=Welsh TBC: If you’ve forgotten your password, you’ll have to start the form again.
 saveAsDraft.timeout.login=Mewngofnodwch eto
 
 # Errors
