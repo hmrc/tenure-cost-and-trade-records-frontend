@@ -59,6 +59,7 @@ class LoginControllerSpec extends TestBaseSpec {
         inject[views.html.ErrorTemplate],
         inject[views.html.loginFailed],
         inject[views.html.lockedOut],
+        inject[views.html.loggedOut],
         preFilledSession,
         StubSessionRepo(),
         inject[views.html.testSign]
@@ -72,6 +73,32 @@ class LoginControllerSpec extends TestBaseSpec {
       content should include("login.heading")
       content should include("""name="referenceNumber"""")
       content should include("""name="postcode"""")
+    }
+
+    "show logged out page" in {
+      val loginController = new LoginController(
+        inject[BackendConnector],
+        inject[Audit],
+        stubMessagesControllerComponents(),
+        inject[login],
+        loginToBackend,
+        inject[views.html.ErrorTemplate],
+        inject[views.html.loginFailed],
+        inject[views.html.lockedOut],
+        inject[views.html.loggedOut],
+        preFilledSession,
+        StubSessionRepo(),
+        inject[views.html.testSign]
+      )
+
+      val result = loginController.loggedOut(fakeRequest)
+
+      status(result) shouldBe OK
+
+      val content = contentAsString(result)
+      content should include("logout.header")
+      content should include("""logout.paragraph""")
+      content should include("""logout.loginAgain""")
     }
 
     "Audit successful login" in {
@@ -97,6 +124,7 @@ class LoginControllerSpec extends TestBaseSpec {
         mock[views.html.ErrorTemplate],
         mock[views.html.loginFailed],
         mock[views.html.lockedOut],
+        inject[views.html.loggedOut],
         preFilledSession,
         mockSessionRepo,
         mock[views.html.testSign]
@@ -136,6 +164,7 @@ class LoginControllerSpec extends TestBaseSpec {
         mock[views.html.ErrorTemplate],
         mock[views.html.loginFailed],
         mock[views.html.lockedOut],
+        inject[views.html.loggedOut],
         preFilledSession,
         mockSessionRepo,
         mock[views.html.testSign]
@@ -144,7 +173,7 @@ class LoginControllerSpec extends TestBaseSpec {
       val result = loginController.logout(fakeRequest)
 
       status(result)           shouldBe SEE_OTHER
-      redirectLocation(result) shouldBe Some(routes.LoginController.show().url)
+      redirectLocation(result) shouldBe Some(routes.LoginController.loggedOut.url)
 
       verify(audit).sendExplicitAudit(
         eqTo("Logout"),
