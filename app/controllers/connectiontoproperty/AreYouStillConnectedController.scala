@@ -50,7 +50,8 @@ class AreYouStillConnectedController @Inject() (
             case Some(addressConnectionType) => areYouStillConnectedForm.fillAndValidate(addressConnectionType)
             case _                           => areYouStillConnectedForm
           },
-          request.sessionData.address
+          request.sessionData.address,
+          request.sessionData.toSummary
         )
       )
     )
@@ -61,7 +62,8 @@ class AreYouStillConnectedController @Inject() (
 
     continueOrSaveAsDraft[AddressConnectionType](
       areYouStillConnectedForm,
-      formWithErrors => BadRequest(areYouStillConnectedView(formWithErrors, address)),
+      formWithErrors => BadRequest(areYouStillConnectedView(formWithErrors, address,
+        request.sessionData.toSummary)),
       data => {
         val updatedData = updateStillConnectedDetails(_.copy(addressConnectionType = Some(data)))
         session.saveOrUpdate(updatedData)

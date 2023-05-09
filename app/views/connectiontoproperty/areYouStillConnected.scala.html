@@ -21,6 +21,7 @@
 @import uk.gov.hmrc.govukfrontend.views.Aliases.RadioItem
 @import models.submissions.connectiontoproperty.{AddressConnectionTypeYes, AddressConnectionTypeNo, AddressConnectionTypeYesChangeAddress}
 @import models.submissions.common.Address
+@import models.pages.Summary
 
 @this(layout: Layout,
   govukButton: GovukButton,
@@ -28,12 +29,13 @@
   formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[_], address: Address)(implicit request: Request[_], messages: Messages)
+@(theForm: Form[_], address: Address, summary: Summary)(implicit request: Request[_], messages: Messages)
 
 @layout(
   pageHeading = messages("areYouConnected.heading", address.singleLine),
   showH1 = false,
   showSection = false,
+    summary = Some(summary),
     showAccountInfo = false,
   theForm = theForm
 ) {
