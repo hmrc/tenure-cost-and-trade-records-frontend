@@ -36,7 +36,8 @@ object Errors {
   //Are you still connected Error
   val isConnectedError          = "error.isRelated"
   val connectionToPropertyError = "error.no.connection.selected"
-
+  // Not connected
+  val isPastConnected           = "error.pastConnectionType"
   //About You Errors
   val userTypeRequired          = "error.userType.required"
   val contactDetailsMissing     = "error.contact.details.missing"

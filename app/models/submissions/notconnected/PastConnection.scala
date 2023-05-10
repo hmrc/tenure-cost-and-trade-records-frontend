@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package models.submissions
+package models.submissions.notconnected
 
 import models.{EnumFormat, NamedEnum, NamedEnumSupport}
 import play.api.libs.json.Format
@@ -34,5 +34,5 @@ object PastConnectionType extends NamedEnumSupport[PastConnectionType] {
 
   val all = List(PastConnectionTypeYes, PastConnectionTypeNo)
 
-  val key = all.head.key
+  val key: String = all.head.key
 }

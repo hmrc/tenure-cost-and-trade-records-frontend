@@ -19,7 +19,7 @@ package controllers.notconnected
 import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
 import form.notconnected.PastConnectionForm.pastConnectionForm
-import models.submissions.PastConnectionType
+import models.submissions.notconnected.PastConnectionType
 import models.submissions.notconnected.RemoveConnectionDetails.updateRemoveConnectionDetails
 import navigation.RemoveConnectionNavigator
 import navigation.identifiers.PastConnectionId
@@ -52,16 +52,17 @@ class PastConnectionController @Inject() (
                 case _                    => pastConnectionForm
               }
             case _                             => pastConnectionForm
-          }
+          },
+          request.sessionData.toSummary
         )
       )
     )
   }
 
-  def submit = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[PastConnectionType](
       pastConnectionForm,
-      formWithErrors => BadRequest(pastConnectionView(formWithErrors)),
+      formWithErrors => BadRequest(pastConnectionView(formWithErrors, request.sessionData.toSummary)),
       data => {
         val updatedData = updateRemoveConnectionDetails(_.copy(pastConnectionType = Some(data)))
         session.saveOrUpdate(updatedData)

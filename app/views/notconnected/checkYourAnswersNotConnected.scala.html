@@ -44,7 +44,7 @@
 
 @layout(
  pageHeading = messages("checkYourAnswersNotConnected.heading"),
- backLinkUrl = controllers.additionalinformation.routes.AlternativeContactDetailsController.show.url,
+ backLinkUrl = controllers.notconnected.routes.RemoveConnectionController.show.url,
 ) {
 
  @formWithCSRF(action = controllers.notconnected.routes.CheckYourAnswersNotConnectedController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {

@@ -18,8 +18,7 @@ package models.submissions.notconnected
 
 import actions.SessionRequest
 import models.Session
-import models.submissions.PastConnectionType
-import play.api.libs.json.Json
+import play.api.libs.json.{Json, OFormat}
 
 case class RemoveConnectionDetails(
   removeConnectionDetails: Option[RemoveConnectionsDetails] = None,
@@ -27,7 +26,7 @@ case class RemoveConnectionDetails(
 )
 
 object RemoveConnectionDetails {
-  implicit val format = Json.format[RemoveConnectionDetails]
+  implicit val format: OFormat[RemoveConnectionDetails] = Json.format[RemoveConnectionDetails]
 
   def updateRemoveConnectionDetails(
     copy: RemoveConnectionDetails => RemoveConnectionDetails

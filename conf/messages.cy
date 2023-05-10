@@ -147,9 +147,13 @@ hint.occupierTrustee = Select this if you’re renting or leasing the property, 
 hint.ownerTrustee = Select this if you own and occupy the property - you’re considered an occupier if you own the property and lease it back to a business you operate from the property
 error.no.connection.selected=Select your connection to the property
 
-#6010 ARE YOU STILL CONNECTED NO
-##############################
-areYouConnectedNo.heading = Have you ever had a connection to the property?
+# NOT CONNECTED SECTION
+#################################
+
+# ARE YOU STILL CONNECTED
+#########################
+pastConnectionType.heading = Have you ever had a connection to the property?
+error.pastConnectionType = select ‘Yes’ if you were previously connected
 
 #6010 REMOVE CONNECTION
 ##############################

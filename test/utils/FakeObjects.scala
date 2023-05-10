@@ -27,7 +27,7 @@ import models.submissions.additionalinformation._
 import models.{AnnualRent, Session, SubmissionDraft}
 import models.submissions.common.{Address, AnswerNo, AnswerYes, ContactDetails, ContactDetailsAddress}
 import models.submissions.connectiontoproperty._
-import models.submissions.notconnected.{RemoveConnectionDetails, RemoveConnectionsDetails}
+import models.submissions.notconnected.{PastConnectionTypeYes, RemoveConnectionDetails, RemoveConnectionsDetails}
 
 import java.time.LocalDate
 
@@ -50,6 +50,8 @@ trait FakeObjects {
   )
 
   val prefilledFakeName        = "John Doe"
+  val prefilledFakePhoneNo     = "12345678901"
+  val prefilledFakeEmail       = "test@email.com"
   val prefilledCateringAddress =
     CateringAddress("004", Some("GORING ROAD"), Some("GORING-BY-SEA, WORTHING"), Some("West sussex"), "BN12 4AX")
   val prefilledLettingAddress  =
@@ -93,9 +95,21 @@ trait FakeObjects {
   val stillConnectedDetails6016NoSession: Session  =
     baseFilled6016Session.copy(stillConnectedDetails = Some(prefilledStillConnectedDetailsNo))
 
+  // Not connected sessions
+  val prefilledNotConnectedYes: RemoveConnectionDetails = RemoveConnectionDetails(
+    Some(
+      RemoveConnectionsDetails(
+        prefilledFakeName,
+        ContactDetails(prefilledFakePhoneNo, prefilledFakeEmail),
+        Some("Additional Info")
+      )
+    ),
+    Some(PastConnectionTypeYes)
+  )
+
   // About you and the property sessions
   val prefilledAboutYouAndThePropertyYes: AboutYouAndTheProperty = AboutYouAndTheProperty(
-    Some(CustomerDetails("Tobermory", ContactDetails("12345678909", "test@email.com"))),
+    Some(CustomerDetails("Tobermory", ContactDetails(prefilledFakePhoneNo, prefilledFakeEmail))),
     Some(PropertyDetails("OccupierName", CurrentPropertyHotel, None)),
     Some(WebsiteForPropertyDetails(BuildingOperationHaveAWebsiteYes, Some("webAddress"))),
     Some(AnswerYes),
@@ -110,7 +124,7 @@ trait FakeObjects {
     Some(TiedForGoodsInformationDetails(TiedForGoodsInformationDetailsFullTie))
   )
   val prefilledAboutYouAndThePropertyNo: AboutYouAndTheProperty  = AboutYouAndTheProperty(
-    Some(CustomerDetails("Tobermory", ContactDetails("12345678909", "test@email.com"))),
+    Some(CustomerDetails("Tobermory", ContactDetails(prefilledFakePhoneNo, prefilledFakeEmail))),
     Some(PropertyDetails("OccupierName", CurrentPropertyHotel, None)),
     Some(WebsiteForPropertyDetails(BuildingOperationHaveAWebsiteYes, Some("webAddress"))),
     Some(AnswerNo),

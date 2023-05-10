@@ -26,11 +26,14 @@ import models.submissions.aboutfranchisesorlettings._
 import models.submissions.aboutyouandtheproperty._
 import models.submissions.common.{Address, AnswerResponsibleParty, AnswersYesNo, ContactDetails, ContactDetailsAddress}
 import models.submissions.connectiontoproperty.{AddressConnectionType, ConnectionToProperty}
+import models.submissions.notconnected.PastConnectionType
 import models.{AnnualRent, NamedEnum, NamedEnumSupport}
 import play.api.data.Forms.{boolean, default, email, mapping, optional, text}
 import play.api.data.format.Formatter
 import play.api.data.validation.Constraints.{maxLength, minLength, nonEmpty, pattern}
 import play.api.data.{FormError, Forms, Mapping}
+
+import scala.util.matching.Regex
 
 object MappingSupport {
 
@@ -64,10 +67,10 @@ object MappingSupport {
   val tiedForGoodsDetailsType: Mapping[TiedForGoodsInformation] = Forms.of[TiedForGoodsInformation]
   val postcode: Mapping[String]                                 = PostcodeMapping.postcode()
 
-  val decimalRegex         = """^[0-9]{1,10}\.?[0-9]{0,2}$"""
-  val cdbMaxCurrencyAmount = 9999999.99
-  val spacesIntRegex       = """^\-?\d{1,10}$""".r
-  val intRegex             = """^\d{1,3}$""".r
+  val decimalRegex          = """^[0-9]{1,10}\.?[0-9]{0,2}$"""
+  val cdbMaxCurrencyAmount  = 9999999.99
+  val spacesIntRegex: Regex = """^\-?\d{1,10}$""".r
+  val intRegex: Regex       = """^\d{1,3}$""".r
 
   lazy val annualRent: Mapping[AnnualRent] = mapping(
     "annualRentExcludingVat" -> currencyMapping(".annualRentExcludingVat")
