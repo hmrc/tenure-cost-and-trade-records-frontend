@@ -18,39 +18,45 @@ package controllers.notconnected
 
 import form.Errors
 import form.notconnected.RemoveConnectionForm.removeConnectionForm
+import models.submissions.notconnected.RemoveConnectionDetails
 import play.api.data.FormError
 import play.api.http.Status
+import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import play.twirl.api.HtmlFormat
 import utils.TestBaseSpec
-import views.html.notconnected.removeConnection
 
 class RemoveConnectionControllerSpec extends TestBaseSpec {
 
   import TestData.{baseFormData, errorKey}
   import utils.FormBindingTestAssertions.mustContainError
 
-  val mockRemoveConnectionView = mock[removeConnection]
-  when(mockRemoveConnectionView.apply(any)(any, any)).thenReturn(HtmlFormat.empty)
-
-  val removeConnectionController = new RemoveConnectionController(
+  def removeConnectionController(
+    removeConnectionDetails: Option[RemoveConnectionDetails] = Some(prefilledNotConnectedYes)
+  ) = new RemoveConnectionController(
     stubMessagesControllerComponents(),
     removeConnectionNavigator,
-    mockRemoveConnectionView,
-    preFilledSession,
+    removeConnectionView,
+    preEnrichedActionRefiner(removeConnectionDetails = removeConnectionDetails),
     mockSessionRepo
   )
 
-  "GET /" should {
+  "Remove connection controller" should {
     "return 200" in {
-      val result = removeConnectionController.show(fakeRequest)
+      val result = removeConnectionController().show(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return HTML" in {
-      val result = removeConnectionController.show(fakeRequest)
+      val result = removeConnectionController().show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
+    }
+
+    "SUBMIT /" should {
+      "throw a BAD_REQUEST if an empty form is submitted" in {
+        val res = removeConnectionController().submit(FakeRequest().withFormUrlEncodedBody(Seq.empty: _*))
+        status(res) shouldBe BAD_REQUEST
+      }
     }
   }
 
@@ -71,15 +77,27 @@ class RemoveConnectionControllerSpec extends TestBaseSpec {
   }
 
   object TestData {
-    val errorKey = new {
+    val errorKey: Object {
+      val fullName: String
+
+      val phone: String
+
+      val email: String
+    } = new {
       val fullName: String = "removeConnectionFullName"
       val phone            = "removeConnectionDetails.phone"
       val email            = "removeConnectionDetails.email"
     }
 
-    val formErrors = new {
-      val required = new {
-        val fullName = FormError(errorKey.fullName, Errors.required)
+    val formErrors: Object {
+      val required: Object {
+        val fullName: FormError
+      }
+    } = new {
+      val required: Object {
+        val fullName: FormError
+      } = new {
+        val fullName: FormError = FormError(errorKey.fullName, Errors.required)
       }
     }
 

@@ -154,21 +154,18 @@ hint.ownerTrustee = Select this if you own and occupy the property - you’re co
 error.no.connection.selected=Select your connection to the property
 
 # NOT CONNECTED SECTION
-#################################
+#######################
 
 # ARE YOU STILL CONNECTED
 #########################
 pastConnectionType.heading = Have you ever had a connection to the property?
 error.pastConnectionType = select ‘Yes’ if you were previously connected
 
-#6010 REMOVE CONNECTION
-##############################
+# REMOVE CONNECTION
+###################
 removeConnection.heading = Remove your connection to this property
-removeConnection.subheading = We’ll use these details if we need to contact you
-label.removeConnectionFullName.fullName = Full name
-label.removeConnectionDetails.email = Email address
-label.removeConnectionDetails.phone = Telephone number
-label.removeConnectionDetails.removeConnectionAdditionalInfo = Additional information
+removeConnection.subheading = We’ll use these details if we need to contact you before removing your connection to this property
+label.removeConnectionAdditionalInfo = Additional information
 hint.removeConnectionDetails.removeConnectionAdditionalInfo = For example, the name of the current owner or occupier
 error.removeConnectionFullName.required = Please provide your full name
 
