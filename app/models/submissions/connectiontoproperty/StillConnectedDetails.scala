@@ -22,7 +22,7 @@ import models.submissions.common.Address
 import play.api.libs.json.Json
 
 case class StillConnectedDetails(
-  addressConnectionType: Option[AddressConnectionType] = None,
+  addressConnectionType: Option[AddressConnections] = None,
   connectionToProperty: Option[ConnectionToProperty] = None,
   editAddress: Option[Address] = None
 )

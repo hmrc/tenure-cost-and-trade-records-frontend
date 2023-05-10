@@ -14,18 +14,15 @@
  * limitations under the License.
  */
 
-package form.connectiontoproperty
+package models.submissions.connectiontoproperty
 
-import form.MappingSupport.addressConnectionType
-import models.submissions.connectiontoproperty.{AddressConnectionType, AddressConnections}
-import play.api.data.Form
-import play.api.data.Forms.mapping
+import play.api.libs.json.Json
 
-object AreYouStillConnectedForm {
+//TODO - this does not seem to have been set up to store the Partial tie text field, nor is there seemingly any validation to ensure the user has to set this.
 
-  val areYouStillConnectedForm = Form(
-    mapping(
-      "isRelated" -> addressConnectionType
-    )(AddressConnections.apply)(AddressConnections.unapply)
-  )
+case class AddressConnections(addressConnections: AddressConnectionType)
+
+object AddressConnections {
+  implicit val format = Json.format[AddressConnections]
+
 }

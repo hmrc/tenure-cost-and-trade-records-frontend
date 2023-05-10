@@ -20,7 +20,7 @@ import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
 import form.connectiontoproperty.ConnectionToThePropertyForm.connectionToThePropertyForm
 import models.Session
-import models.submissions.connectiontoproperty.ConnectionToProperty
+import models.submissions.connectiontoproperty.{AddressConnectionTypeYes, AddressConnectionTypeYesChangeAddress, ConnectionToProperty}
 import navigation.ConnectionToPropertyNavigator
 import navigation.identifiers.ConnectionToPropertyPageId
 import play.api.Logging
@@ -85,9 +85,9 @@ class ConnectionToThePropertyController @Inject() (
   }
 
   private def getBackLink(answers: Session): Either[String, String] =
-    answers.stillConnectedDetails.flatMap(_.addressConnectionType.map(_.name)) match {
-      case Some("yes-change-address") => Right(controllers.connectiontoproperty.routes.EditAddressController.show().url)
-      case Some("yes")                => Right(controllers.connectiontoproperty.routes.AreYouStillConnectedController.show().url)
+    answers.stillConnectedDetails.flatMap(_.addressConnectionType.map(_.addressConnections)) match {
+      case Some(AddressConnectionTypeYesChangeAddress) => Right(controllers.connectiontoproperty.routes.EditAddressController.show().url)
+      case Some(AddressConnectionTypeYes)                => Right(controllers.connectiontoproperty.routes.AreYouStillConnectedController.show().url)
       case _                          => Left(s"Unknown connection to property back link")
     }
 }

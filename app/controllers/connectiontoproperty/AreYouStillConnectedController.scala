@@ -27,7 +27,7 @@ import repositories.SessionRepo
 import views.html.connectiontoproperty.areYouStillConnected
 import models.submissions.connectiontoproperty.StillConnectedDetails.updateStillConnectedDetails
 import models.submissions.common.Address
-import models.submissions.connectiontoproperty.AddressConnectionType
+import models.submissions.connectiontoproperty.{AddressConnectionType, AddressConnections}
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
@@ -60,7 +60,7 @@ class AreYouStillConnectedController @Inject() (
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
     val address: Address = request.sessionData.address
 
-    continueOrSaveAsDraft[AddressConnectionType](
+    continueOrSaveAsDraft[AddressConnections](
       areYouStillConnectedForm,
       formWithErrors => BadRequest(areYouStillConnectedView(formWithErrors, address,
         request.sessionData.toSummary)),

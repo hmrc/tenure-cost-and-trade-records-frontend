@@ -20,6 +20,7 @@ import connectors.Audit
 import identifiers.{AreYouStillConnectedPageId, ConnectionToPropertyPageId, EditAddressPageId, Identifier}
 import play.api.mvc.Call
 import models.Session
+import models.submissions.connectiontoproperty.{AddressConnectionTypeNo, AddressConnectionTypeYes, AddressConnectionTypeYesChangeAddress}
 import play.api.Logging
 
 import javax.inject.Inject
@@ -27,10 +28,10 @@ import javax.inject.Inject
 class ConnectionToPropertyNavigator @Inject() (audit: Audit) extends Navigator(audit) with Logging {
 
   private def areYouStillConnectedRouting: Session => Call = answers => {
-    answers.stillConnectedDetails.flatMap(_.addressConnectionType.map(_.name)) match {
-      case Some("yes")                => controllers.connectiontoproperty.routes.ConnectionToThePropertyController.show()
-      case Some("yes-change-address") => controllers.connectiontoproperty.routes.EditAddressController.show()
-      case Some("no")                 => controllers.notconnected.routes.PastConnectionController.show()
+    answers.stillConnectedDetails.flatMap(_.addressConnectionType.map(_.addressConnections)) match {
+      case Some(AddressConnectionTypeYes)                => controllers.connectiontoproperty.routes.ConnectionToThePropertyController.show()
+      case Some(AddressConnectionTypeYesChangeAddress) => controllers.connectiontoproperty.routes.EditAddressController.show()
+      case Some(AddressConnectionTypeNo)                 => controllers.notconnected.routes.PastConnectionController.show()
       case _                          =>
         logger.warn(
           s"Navigation for are you still connected reached without correct selection of are you connected by controller"
