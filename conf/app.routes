@@ -11,6 +11,7 @@ POST        /login                                                  controllers.
 GET         /$count<\d>-sign-in-attempts-remaining                  controllers.LoginController.loginFailed(count: Int)
 GET         /lockedout                                              controllers.LoginController.lockedOut
 GET         /logout                                                 controllers.LoginController.logout
+GET         /loggedout                                              controllers.LoginController.loggedOut
 
 GET         /invalid-form-type                                      controllers.LoginController.notValidFORType()
 

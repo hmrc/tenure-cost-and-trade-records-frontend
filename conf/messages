@@ -124,6 +124,12 @@ heading.login.lockedOut=You are now locked out
 error.login.lockedOut=You are now locked out. You can try again after 2 hours.
 label.retryLogin=Try again
 
+#LOGOUT
+##############################
+logout.header=You have been logged out
+logout.paragraph=You can close this window now
+logout.loginAgain=Log in again
+
 # ARE YOU STILL CONNECTED SECTION
 #################################
 

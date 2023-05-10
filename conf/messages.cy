@@ -124,6 +124,12 @@ heading.login.lockedOut=Rydych wedi eich cloi allan nawr
 error.login.lockedOut=Rydych wedi eich cloi allan nawr. Gallwch roi cynnig arall arni ar ôl 2 awr.
 label.retryLogin=Rhowch gynnig arall ar fewngofnodi
 
+#LOGOUT
+##############################
+logout.header=Rydych chi wedi cael eich allgofnodi
+logout.paragraph=Welsh TBC: Gallwch chi gau’r ffenestr hon nawr.
+logout.loginAgain=Mewngofnodwch eto
+
 # ARE YOU STILL CONNECTED SECTION
 #################################
 
