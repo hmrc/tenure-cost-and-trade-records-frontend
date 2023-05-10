@@ -82,6 +82,7 @@ class LoginController @Inject() (
   errorView: ErrorTemplate,
   loginFailedView: loginFailed,
   lockedOutView: lockedOut,
+  loggedOutView: loggedOut,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo,
   test: testSign // setup proper error page
@@ -99,8 +100,12 @@ class LoginController @Inject() (
   def logout = (Action andThen withSessionRefiner).async { implicit request =>
     session.remove().map { _ =>
       audit.sendExplicitAudit("Logout", request.sessionData.toUserData)
-      Redirect(routes.LoginController.show()).withNewSession
+      Redirect(routes.LoginController.loggedOut).withNewSession
     }
+  }
+
+  def loggedOut = Action.async { implicit request =>
+    Ok(loggedOutView())
   }
 
   def submit = Action.async { implicit request =>
