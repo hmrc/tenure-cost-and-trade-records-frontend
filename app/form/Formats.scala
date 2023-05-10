@@ -23,6 +23,7 @@ import models.submissions.aboutYourLeaseOrTenure._
 import models.submissions.aboutyouandtheproperty._
 import models.submissions.common.{AnswerResponsibleParty, AnswersYesNo}
 import models.submissions.connectiontoproperty.{AddressConnectionType, ConnectionToProperty}
+import models.submissions.notconnected.PastConnectionType
 import play.api.data.FormError
 import play.api.data.format.Formatter
 
@@ -49,7 +50,7 @@ object Formats {
     missingCodes: Map[String, String]
   ): Formatter[T] = new Formatter[T] {
 
-    override val format = Some((Errors.required, Nil))
+    override val format: Option[(String, Nil.type)] = Some((Errors.required, Nil))
 
     def bind(key: String, data: Map[String, String]): Either[Seq[FormError], T] = {
       val resOpt      = for {
@@ -66,19 +67,19 @@ object Formats {
   implicit val userTypeFormat: Formatter[UserType]                                           = namedEnumFormatter(UserType, Errors.userTypeRequired)
   implicit val answerYesNoFormat: Formatter[AnswersYesNo]                                    =
     namedEnumFormatter(AnswersYesNo, Errors.booleanMissing)
-  // Still connected to property
   implicit val addressConnectionTypeFormatter: Formatter[AddressConnectionType]              =
     namedEnumFormatter(AddressConnectionType, Errors.isConnectedError)
   implicit val connectionToPropertyFormat: Formatter[ConnectionToProperty]                   =
     namedEnumFormatter(ConnectionToProperty, Errors.connectionToPropertyError)
+  // Not connected
+  implicit val pastConnectionFormat: Formatter[PastConnectionType]                           =
+    namedEnumFormatter(PastConnectionType, Errors.isPastConnected)
   // About the property
   implicit val aboutYourPropertyFormat: Formatter[CurrentPropertyUsed]                       =
     namedEnumFormatter(CurrentPropertyUsed, Errors.currentOccupierName)
   implicit val buildingOperatingHaveAWebsiteFormat: Formatter[BuildingOperationHaveAWebsite] =
     namedEnumFormatter(BuildingOperationHaveAWebsite, Errors.booleanMissing)
 
-  implicit val pastConnectionFormat: Formatter[PastConnectionType]                     =
-    namedEnumFormatter(PastConnectionType, Errors.booleanMissing)
   implicit val methodToFixCurrentRentDetailsFormat: Formatter[MethodToFixCurrentRents] =
     namedEnumFormatter(MethodToFixCurrentRents, Errors.booleanMissing)
   implicit val tiedForGoodsDetailsFormat: Formatter[TiedForGoodsInformation]           =

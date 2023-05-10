@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package views.connectiontoproperty
+package views.notconnected
 
 import form.notconnected.NotConnectedForm
 import models.submissions.notconnected.NotConnectedContactDetails
@@ -45,7 +45,7 @@ class CheckYourAnswersNotConnectedViewSpec extends QuestionViewBehaviours[NotCon
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText mustBe messages("back.link.label")
       val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.additionalinformation.routes.AlternativeContactDetailsController.show().url
+      backlinkUrl mustBe controllers.notconnected.routes.RemoveConnectionController.show().url
     }
 
 //    "contain save and continue button with the value Save and Continue" in {

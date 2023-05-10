@@ -18,6 +18,7 @@ package utils
 
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import views.html.connectiontoproperty._
+import views.html.notconnected._
 import views.html.aboutyouandtheproperty._
 import views.html.aboutYourLeaseOrTenure._
 import views.html.aboutfranchisesorlettings._
@@ -35,6 +36,9 @@ trait FakeViews { this: GuiceOneAppPerSuite =>
   lazy val areYouStillConnectedView: areYouStillConnected       = app.injector.instanceOf[areYouStillConnected]
   lazy val connectionToThePropertyView: connectionToTheProperty = app.injector.instanceOf[connectionToTheProperty]
   lazy val editAddressView: editAddress                         = app.injector.instanceOf[editAddress]
+
+  // Not connected
+  val pastConnectionView: pastConnection = app.injector.instanceOf[pastConnection]
 
   // About you and the property
   lazy val aboutYouView: aboutYou                                                    = app.injector.instanceOf[aboutYou]

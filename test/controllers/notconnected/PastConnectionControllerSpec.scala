@@ -16,35 +16,65 @@
 
 package controllers.notconnected
 
+import form.Errors
+import models.submissions.notconnected.RemoveConnectionDetails
+import form.notconnected.PastConnectionForm._
 import play.api.http.Status
+import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import play.twirl.api.HtmlFormat
 import utils.TestBaseSpec
-import views.html.notconnected.pastConnection
 
 class PastConnectionControllerSpec extends TestBaseSpec {
 
-  val mockPastConnectionView = mock[pastConnection]
-  when(mockPastConnectionView.apply(any)(any, any)).thenReturn(HtmlFormat.empty)
+  import TestData._
+  import utils.FormBindingTestAssertions._
 
-  val pastConnectionController = new PastConnectionController(
+  def pastConnectionController(
+    removeConnectionDetails: Option[RemoveConnectionDetails] = Some(prefilledNotConnectedYes)
+  ) = new PastConnectionController(
     stubMessagesControllerComponents(),
     removeConnectionNavigator,
-    mockPastConnectionView,
-    preFilledSession,
+    pastConnectionView,
+    preEnrichedActionRefiner(removeConnectionDetails = removeConnectionDetails),
     mockSessionRepo
   )
 
-  "GET /" should {
+  "Premises licence conditions controller" should {
     "return 200" in {
-      val result = pastConnectionController.show(fakeRequest)
+      val result = pastConnectionController().show(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return HTML" in {
-      val result = pastConnectionController.show(fakeRequest)
+      val result = pastConnectionController().show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
+
+    "SUBMIT /" should {
+      "throw a BAD_REQUEST if an empty form is submitted" in {
+        val res = pastConnectionController().submit(FakeRequest().withFormUrlEncodedBody(Seq.empty: _*))
+        status(res) shouldBe BAD_REQUEST
+      }
+    }
+  }
+
+  "Premises license conditions form" should {
+    "error if premisesLicenseConditions is missing" in {
+      val formData = baseFormData - errorKey.pastConnectionType
+      val form     = pastConnectionForm.bind(formData)
+
+      mustContainError(errorKey.pastConnectionType, Errors.isPastConnected, form)
+    }
+  }
+
+  object TestData {
+    val errorKey: Object {
+      val pastConnectionType: String
+    } = new {
+      val pastConnectionType: String = "pastConnectionType"
+    }
+
+    val baseFormData: Map[String, String] = Map("premisesLicenseConditions" -> "yes")
   }
 }

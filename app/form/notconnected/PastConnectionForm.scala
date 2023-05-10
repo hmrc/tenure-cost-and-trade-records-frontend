@@ -17,18 +17,18 @@
 package form.notconnected
 
 import form.MappingSupport.pastConnectionType
-import models.submissions.PastConnectionType
-import play.api.data.Form
+import models.submissions.notconnected.PastConnectionType
+import play.api.data.{Form, Mapping}
 import play.api.data.Forms.mapping
 
 object PastConnectionForm {
 
   lazy val basePastConnectionForm: Form[PastConnectionType] = Form(basePastConnectionMapping)
 
-  val basePastConnectionMapping = mapping(
+  val basePastConnectionMapping: Mapping[PastConnectionType] = mapping(
     "pastConnectionType" -> pastConnectionType
   )(x => x)(b => Some(b))
 
-  val pastConnectionForm = Form(basePastConnectionMapping)
+  val pastConnectionForm: Form[PastConnectionType] = Form(basePastConnectionMapping)
 
 }

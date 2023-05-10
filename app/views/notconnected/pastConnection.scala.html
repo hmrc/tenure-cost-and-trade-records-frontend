@@ -15,76 +15,40 @@
  *@
 
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.button.Button
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
-
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukErrorSummary
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukDateInput
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukTextarea
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukCharacterCount
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Radios
 
-@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
-
-@import uk.gov.hmrc.govukfrontend.views.Aliases.RadioItem
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Fieldset
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Legend
-
-@import models.submissions.PastConnectionType
+@import models.pages.Summary
 
 @this(layout: Layout,
-        govukButton: GovukButton,
-        govukRadios: GovukRadios,
-        govukInput: GovukInput,
-        govukErrorSummary: GovukErrorSummary,
-        govukDateInput: GovukDateInput,
-        govukTextarea: GovukTextarea,
-        govukCharacterCount: GovukCharacterCount,
-        formWithCSRF: FormWithCSRF
+  govukButton: GovukButton,
+  govukRadios: GovukRadios,
+  formWithCSRF: FormWithCSRF
 )
 
-
-@(theForm: Form[_])(implicit request: Request[_], messages: Messages)
+@(theForm: Form[_], summary: Summary)(implicit request: Request[_], messages: Messages)
 
 @layout(
- pageHeading = messages("areYouConnectedNo.heading"),
- theForm = theForm,
- backLinkUrl = controllers.connectiontoproperty.routes.AreYouStillConnectedController.show.url,
+  pageHeading = messages("pastConnectionType.heading"),
+  showH1 = false,
+  theForm = theForm,
+  summary = Some(summary),
+  backLinkUrl = controllers.connectiontoproperty.routes.AreYouStillConnectedController.show.url,
 ) {
 
- @formWithCSRF(action = controllers.notconnected.routes.PastConnectionController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
+  @formWithCSRF(action = controllers.notconnected.routes.PastConnectionController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
 
-  @govukRadios(
-   Radios(
-    name = "pastConnectionType",
-    idPrefix = Option("pastConnectionType"),
-    items = Seq(
-     "yes" -> messages("label.yes"),
-     "no" -> messages("label.no")
-    ).map(radioItem => RadioItem(
-     content = Text(radioItem._2),
-     checked = radioItem._1.equals(theForm("pastConnectionType").value.getOrElse("")),
-     value = Option(radioItem._1)
+    @includes.radioButtonsYesNo(
+      govukRadios,
+      theForm,
+      "pastConnectionType",
+      "pastConnectionType.heading",
+      "govuk-fieldset__legend--l",
+      isHeading = true
     )
-    ),
-    errorMessage = theForm.errors.asTextErrorMessageForField("pastConnectionType"),
-    fieldset = Option(
-     Fieldset(
-      legend = Option(
-       Legend(
-        classes = "govuk-!-font-weight-bold"
-       )
-      )
-     )
-    )
-   )
-  )
 
-  @includes.continueButton(govukButton)
- }
+    @includes.continueButton(govukButton)
+  }
 }
 
 
