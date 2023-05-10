@@ -17,6 +17,7 @@
 package views.connectiontoproperty
 
 import form.connectiontoproperty.{AreYouStillConnectedForm, EditAddressForm}
+import models.pages.Summary
 import models.submissions.common.Address
 import models.submissions.connectiontoproperty.{AddressConnectionType, AddressConnectionTypeNo, AddressConnectionTypeYes, AddressConnectionTypeYesChangeAddress}
 import org.scalatest.matchers.must.Matchers._
@@ -32,10 +33,10 @@ class AreYouStillConnectedViewSpec extends QuestionViewBehaviours[AddressConnect
 
   override val form = AreYouStillConnectedForm.areYouStillConnectedForm
 
-  def createView = () => areYouStillConnectedView(form, prefilledAddress)(fakeRequest, messages)
+  def createView = () => areYouStillConnectedView(form, prefilledAddress, Summary("99996010001"))(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[AddressConnectionType]) =>
-    areYouStillConnectedView(form, prefilledAddress)(fakeRequest, messages)
+    areYouStillConnectedView(form, prefilledAddress, Summary("99996010001"))(fakeRequest, messages)
 
   "Are you still connected view" must {
 
