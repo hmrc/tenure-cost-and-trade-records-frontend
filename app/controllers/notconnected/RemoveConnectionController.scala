@@ -48,7 +48,8 @@ class RemoveConnectionController @Inject() (
           request.sessionData.removeConnectionDetails.flatMap(_.removeConnectionDetails) match {
             case Some(removeConnectionDetails) => removeConnectionForm.fillAndValidate(removeConnectionDetails)
             case _                             => removeConnectionForm
-          }
+          },
+          request.sessionData.toSummary
         )
       )
     )
@@ -57,7 +58,7 @@ class RemoveConnectionController @Inject() (
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[RemoveConnectionsDetails](
       removeConnectionForm,
-      formWithErrors => BadRequest(removeConnectionView(formWithErrors)),
+      formWithErrors => BadRequest(removeConnectionView(formWithErrors, request.sessionData.toSummary)),
       data => {
         val updatedData = updateRemoveConnectionDetails(_.copy(removeConnectionDetails = Some(data)))
         session.saveOrUpdate(updatedData)

@@ -38,7 +38,8 @@ trait FakeViews { this: GuiceOneAppPerSuite =>
   lazy val editAddressView: editAddress                         = app.injector.instanceOf[editAddress]
 
   // Not connected
-  val pastConnectionView: pastConnection = app.injector.instanceOf[pastConnection]
+  val pastConnectionView: pastConnection     = app.injector.instanceOf[pastConnection]
+  val removeConnectionView: removeConnection = app.injector.instanceOf[removeConnection]
 
   // About you and the property
   lazy val aboutYouView: aboutYou                                                    = app.injector.instanceOf[aboutYou]

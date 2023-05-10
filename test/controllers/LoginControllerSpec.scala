@@ -19,8 +19,6 @@ package controllers
 import config.LoginToBackendAction
 import connectors.{Audit, BackendConnector}
 import models.audit.UserData
-import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
-import models.submissions.notconnected.RemoveConnectionDetails
 import org.joda.time.DateTime
 import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.libs.json.{JsObject, Json, Writes}
