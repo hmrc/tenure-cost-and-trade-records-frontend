@@ -18,11 +18,14 @@
 
 @()(implicit request: Request[_], messages: Messages)
 
-@layout(pageHeading = messages("logout.header")) {
+@layout(
+    pageHeading = messages("logout.header"),
+    withTimeoutDialog = false
+) {
 
     <p class="govuk-body">@messages("logout.paragraph")</p>
 
-    <p class="govuk-body govuk-!-padding-top-6">
+    <p class="govuk-body">
         <a href="@routes.LoginController.show()" class="govuk-button">@messages("logout.loginAgain")</a>
     </p>
 

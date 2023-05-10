@@ -14,10 +14,13 @@
  * limitations under the License.
  *@
 
-@this( layout: Layout)
+@this(layout: Layout)
 
 @()(implicit request: Request[_],  messages: Messages)
 
-@layout(pageHeading = messages("heading.login.lockedOut")){
+@layout(
+    pageHeading = messages("heading.login.lockedOut"),
+    withTimeoutDialog = false
+) {
     <p class="govuk-body">@messages("error.login.lockedOut")</p>
 }

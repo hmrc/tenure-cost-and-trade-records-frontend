@@ -34,29 +34,21 @@
     withTimeoutDialog = false
 ) {
 
-    <h1 class="govuk-heading-l">@messages("saveAsDraft.preHeader")</h1>
+    <div class="govuk-panel govuk-panel--confirmation">
+        <div class="govuk-panel__body"><strong>@messages("saveAsDraft.preHeader")</strong></div>
+    </div>
 
-    @govukWarningText(
-        WarningText(
-            content = Text(messages("saveAsDraft.info"))
-        )
-    )
+    <p class="govuk-body">@messages("saveAsDraft.info.p.1")</p>
 
     <p class="govuk-body">@messages("saveAsDraft.info.p.2")</p>
-
-    <div class="govuk-panel govuk-panel--confirmation">
-        <div class="govuk-panel__body">
-            <span>@messages("saveAsDraft.password"):</span> <strong>@password</strong>
-        </div>
-    </div>
 
     <p class="govuk-body">
         @messages("saveAsDraft.paragraph") @expiryDate
     </p>
 
-    <p class="govuk-body">
-        <a href="@exitPath" class="govuk-button">@messages("saveAsDraft.continue")</a>
+    <div class="govuk-button-group">
         <a href="@routes.LoginController.logout" class="govuk-button">@messages("saveAsDraft.logout")</a>
-    </p>
+        <a href="@exitPath" class="govuk-button govuk-button--secondary">@messages("saveAsDraft.continue")</a>
+    </div>
 
 }
