@@ -33,7 +33,7 @@ class CheckYourAnswersNotConnectedControllerSpec extends TestBaseSpec {
 
   val mockNotConnectedNavigator            = mock[RemoveConnectionNavigator]
   val mockCheckYourAnswersNotConnectedView = mock[checkYourAnswersNotConnected]
-  when(mockCheckYourAnswersNotConnectedView.apply()(any, any)).thenReturn(HtmlFormat.empty)
+  when(mockCheckYourAnswersNotConnectedView.apply(any, any, any, any, any, any)(any, any)).thenReturn(HtmlFormat.empty)
   val mockConfirmationView                 = mock[confirmationNotConnected]
   when(mockConfirmationView.apply()(any, any)).thenReturn(HtmlFormat.empty)
 
