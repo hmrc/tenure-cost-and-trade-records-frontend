@@ -757,11 +757,12 @@ currentRentFirstPaid.helpWithServiceCurrentRentFirstPaidDontNeedToKnow = We don�
 
 # SAVE AS DRAFT
 ###############
-saveAsDraft.paragraph=We’ll delete unsubmitted information on
-saveAsDraft.info=Make a note of this password because you’ll need it to retrieve your saved information
-saveAsDraft.info.p.2=You’ll still need your reference number and the postcode shown on the letter to view and change your information.
-saveAsDraft.preHeader=Your information has been saved but not submitted.
+saveAsDraft.preHeader=Draft saved successfully
 saveAsDraft.preHeaderTimeout=You have been logged out, but your information has been saved.
+saveAsDraft.info=Make a note of this password because you’ll need it to retrieve your saved information
+saveAsDraft.info.p.1=Your information has been saved but not yet been sent. You’ll need to come back later to declare your business’s details.
+saveAsDraft.info.p.2=You’ll still need your reference number and the postcode shown on the letter to view and change your information, as well as your password.
+saveAsDraft.paragraph=We’ll remove unsent information on
 saveAsDraft.password=Password
 saveAsDraft.confirmPassword=Confirm password
 saveAsDraft.validPassword=Password must be at least 7 characters.

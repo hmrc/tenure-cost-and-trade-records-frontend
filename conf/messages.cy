@@ -757,11 +757,12 @@ currentRentFirstPaid.helpWithServiceCurrentRentFirstPaidDontNeedToKnow = We don�
 
 # SAVE AS DRAFT
 ###############
-saveAsDraft.paragraph=Byddwn yn dileu unrhyw wybodaeth sydd heb ei chyflwyno ar
-saveAsDraft.info=Gwnewch nodyn o’r cyfrinair hwn gan y bydd ei angen arnoch i adfer eich gwybodaeth sydd wedi’i chadw
-saveAsDraft.info.p.2=Bydd angen eich rhif cyfeirnod a’r cod post a ddangosir ar y llythyr o hyd i weld a newid eich gwybodaeth.
-saveAsDraft.preHeader=Mae eich gwybodaeth wedi cael ei chadw ond heb ei chyflwyno.
+saveAsDraft.preHeader=Welsh TBC: Draft saved successfully
 saveAsDraft.preHeaderTimeout=At ddibenion diogelwch, rydych chi wedi cael eich allgofnodi, ond mae eich gwybodaeth wedi’i chadw.
+saveAsDraft.info=Gwnewch nodyn o’r cyfrinair hwn gan y bydd ei angen arnoch i adfer eich gwybodaeth sydd wedi’i chadw
+saveAsDraft.info.p.1=Welsh TBC: Your information has been saved but not yet been sent. You’ll need to come back later to declare your business’s details.
+saveAsDraft.info.p.2=Welsh TBC: You’ll still need your reference number and the postcode shown on the letter to view and change your information, as well as your password.
+saveAsDraft.paragraph=Welsh TBC: We’ll remove unsent information on
 saveAsDraft.password=Cyfrinair
 saveAsDraft.confirmPassword=Cadarnhau’r cyfrinair
 saveAsDraft.validPassword=Rhaid i’r cyfrinair fod o leiaf 7 nod yn hir.

@@ -72,7 +72,7 @@ class SaveAsDraftControllerSpec extends TestBaseSpec {
 
       val result = saveAsDraftController.customPassword(exitPath)(fakeRequest)
       status(result) shouldBe OK
-      checkFinalPageWithPassword(contentAsString(result))
+      checkFinalPageDraftSaved(contentAsString(result))
     }
   }
 
@@ -109,7 +109,7 @@ class SaveAsDraftControllerSpec extends TestBaseSpec {
       )
 
       status(result) shouldBe OK
-      checkFinalPageWithPassword(contentAsString(result))
+      checkFinalPageDraftSaved(contentAsString(result))
     }
   }
 
@@ -248,8 +248,10 @@ class SaveAsDraftControllerSpec extends TestBaseSpec {
     }
   }
 
-  private def checkFinalPageWithPassword(content: String): Unit = {
-    content    should include(password)
+  private def checkFinalPageDraftSaved(content: String): Unit = {
+    content should include("saveAsDraft.preHeader")
+    content should include("saveAsDraft.logout")
+    content shouldNot include(password)
     content shouldNot include("saveAsDraft.createPassword.header")
     content shouldNot include("""name="password"""")
   }
