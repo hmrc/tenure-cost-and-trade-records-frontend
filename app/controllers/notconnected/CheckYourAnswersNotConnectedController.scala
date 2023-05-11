@@ -55,8 +55,8 @@ class CheckYourAnswersNotConnectedController @Inject() (
 
   val log = Logger(classOf[CheckYourAnswersNotConnectedController])
 
-  def show: Action[AnyContent] = Action.async { implicit request =>
-    Future.successful(Ok(checkYourAnswersNotConnectedView()))
+  def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    Future.successful(Ok(checkYourAnswersNotConnectedView(request.sessionData.toSummary)))
   }
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
@@ -76,7 +76,7 @@ class CheckYourAnswersNotConnectedController @Inject() (
   }
 
   def confirmation: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    Future.successful(Ok(confirmationNotConnectedView()))
+    Future.successful(Ok(confirmationNotConnectedView(request.sessionData)))
   }
 
   private def submitToBackend(

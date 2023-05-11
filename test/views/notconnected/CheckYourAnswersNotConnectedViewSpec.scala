@@ -17,28 +17,36 @@
 package views.notconnected
 
 import form.notconnected.NotConnectedForm
+import models.pages.Summary
 import models.submissions.notconnected.NotConnectedContactDetails
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
+import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
 
 class CheckYourAnswersNotConnectedViewSpec extends QuestionViewBehaviours[NotConnectedContactDetails] {
 
-  def checkYourAnswersNotConnectedView =
-    app.injector.instanceOf[views.html.notconnected.checkYourAnswersNotConnected]
-
   val messageKeyPrefix = "checkYourAnswersNotConnected"
 
-  override val form = NotConnectedForm.notConnectedForm
+  override val form: Form[NotConnectedContactDetails] = NotConnectedForm.notConnectedForm
 
-  def createView = () => checkYourAnswersNotConnectedView()(fakeRequest, messages)
+  def createView: () => Html = () =>
+    checkYourAnswersNotConnectedView(Summary("99996010001", Some(prefilledAddress)))(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[NotConnectedContactDetails]) =>
-    checkYourAnswersNotConnectedView()(fakeRequest, messages)
+  def createViewUsingForm: Form[NotConnectedContactDetails] => Html = (form: Form[NotConnectedContactDetails]) =>
+    checkYourAnswersNotConnectedView(Summary("99996010001", Some(prefilledAddress)))(fakeRequest, messages)
 
   "Check Your Answers Additional Information view" must {
 
     behave like normalPage(createView, messageKeyPrefix)
+
+    "has a reference number and address banner" in {
+      val doc = asDocument(createView())
+      assertContainsText(doc, "Reference:")
+      assertContainsText(doc, "99996010/001")
+      assertContainsText(doc, "Property:")
+      assertContainsText(doc, "001, GORING ROAD, GORING-BY-SEA, WORTHING, BN12 4AX")
+    }
 
     "has a link marked with back.link.label leading to the further information Page" in {
       val doc          = asDocument(createView())

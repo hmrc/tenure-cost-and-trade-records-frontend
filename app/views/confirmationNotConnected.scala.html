@@ -14,26 +14,29 @@
  * limitations under the License.
  *@
 
+@import models.Session
+
 @this(layout: Layout)
 
-@()(implicit request: Request[_], messages: Messages)
+@(session: Session)(implicit request: Request[_], messages: Messages)
 
 @layout(
-    pageHeading = messages("label.confirm.heading"),
+    pageHeading = messages("confirmation.heading"),
+    summary = Some(session.toSummary),
     showH1 = false,
 ) {
 
     <div class="govuk-panel govuk-panel--confirmation no-print">
-        <h1 class="govuk-panel__title">@messages(s"label.confirm.heading")</h1>
+        <h1 class="govuk-panel__title">@messages(s"confirmation.heading")</h1>
     </div>
 
-    <p class="govuk-body">@messages("label.emailConfirm")</p>
-    <p class="govuk-body">@messages("label.saveCopyOfAnswers")</p>
-    <p class="govuk-body">@messages("label.unableToRetrieveAnswers")</p>
+    <p class="govuk-body">@messages("confirmation.emailConfirm")</p>
+    <p class="govuk-body">@messages("confirmation.saveCopyOfAnswers")</p>
+    <p class="govuk-body">@messages("confirmation.unableToRetrieveAnswers")</p>
 
-    <h2 class="govuk-heading-m">@messages("label.whatNext")</h2>
-    <p class="govuk-body">@messages("confirm.copy.list.1")</p>
-    <p class="govuk-body">@messages("confirm.copy.list.2")</p>
+    <h2 class="govuk-heading-m">@messages("confirmation.whatNext")</h2>
+    <p class="govuk-body">@messages("confirmation.list.1")</p>
+    <p class="govuk-body">@messages("confirmation.list.2")</p>
 
     <p class="govuk-body">
         <a href="@routes.LoginController.show">@messages("label.submitAnotherForm")</a>

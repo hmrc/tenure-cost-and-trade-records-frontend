@@ -15,7 +15,6 @@
  *@
 
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
-
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukErrorSummary
@@ -26,6 +25,7 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukWarningText
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.warningtext.WarningText
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
+@import models.pages.Summary
 
 @this(layout: Layout,
         govukButton: GovukButton,
@@ -40,11 +40,12 @@
 )
 
 
-@()(implicit request: Request[_], messages: Messages)
+@(summary: Summary)(implicit request: Request[_], messages: Messages)
 
 @layout(
  pageHeading = messages("checkYourAnswersNotConnected.heading"),
- backLinkUrl = controllers.notconnected.routes.RemoveConnectionController.show.url,
+ summary = Some(summary),
+ backLinkUrl = controllers.notconnected.routes.RemoveConnectionController.show.url
 ) {
 
  @formWithCSRF(action = controllers.notconnected.routes.CheckYourAnswersNotConnectedController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {

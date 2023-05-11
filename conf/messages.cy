@@ -149,7 +149,7 @@ label.occupierTrustee = Occupier or trustee for occupier
 label.ownerTrustee = Owner or trustee for owner
 label.occupierAgent = Occupier’s agent
 label.ownerAgent = Owner’s agent
-hint.occupierTrustee = Select this if you’re renting or leasing the property, even through a Leaseback arrangement
+hint.occupierTrustee = Select this if you’re renting or leasing the property, even through a leaseback arrangement
 hint.ownerTrustee = Select this if you own and occupy the property - you’re considered an occupier if you own the property and lease it back to a business you operate from the property
 error.no.connection.selected=Select your connection to the property
 
@@ -724,17 +724,17 @@ checkYourAnswersAboutTheProperty.heading = This is a holding page for the about 
 checkYourAnswersAboutTheTradingHistory.heading = This is a holding page for the about your trading history check your answers page
 checkYourAnswersAboutYou.heading = This is a holding page for the about you check your answers page
 checkYourAnswersAdditionalInformation.heading = This is a holding page for the additional information check your answers page
+checkYourAnswersNotConnected.heading = Check your answers - not connected journey
 
 # Confirmation Page
 ###################
 label.confirm.heading = Declaration sent successfully
-label.emailConfirm = We have sent you a confirmation email
-label.saveCopyOfAnswers = Save a copy of your answers (print or PDF download)
-label.unableToRetrieveAnswers = You will be unable to retrieve your answers beyond this point
-label.whatNext = What happens next
-confirm.copy.list.1=We have sent your application to the Valuation Office Agency.
-confirm.copy.list.2=They will contact you either to confirm your declaration is correct, or ask for more information.
-label.serviceThoughts = What did you think of this service? (takes 30 seconds)
+confirmation.emailConfirm = We have sent you a confirmation email
+confirmation.saveCopyOfAnswers = Save a copy of your answers (print or PDF download)
+confirmation.unableToRetrieveAnswers = You will be unable to retrieve your answers beyond this point
+confirmation.whatNext = What happens next
+confirmation.list.1 = We have sent your application to the Valuation Office Agency.
+confirmation.list.2 = They may need to contact you for further information.
 
 # Help section
 ##############

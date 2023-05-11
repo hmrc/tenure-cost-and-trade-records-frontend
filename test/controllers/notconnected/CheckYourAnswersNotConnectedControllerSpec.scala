@@ -18,50 +18,38 @@ package controllers.notconnected
 
 import config.ErrorHandler
 import connectors.{Audit, SubmissionConnector}
-import navigation.RemoveConnectionNavigator
+import models.submissions.notconnected.RemoveConnectionDetails
 import play.api.http.Status
 import play.api.test.Helpers._
-import play.twirl.api.HtmlFormat
 import utils.TestBaseSpec
-import views.html.notconnected.checkYourAnswersNotConnected
-import views.html.confirmationNotConnected
-import views.html.taskList
 
 class CheckYourAnswersNotConnectedControllerSpec extends TestBaseSpec {
 
-  val backLink = controllers.additionalinformation.routes.AlternativeContactDetailsController.show().url
+  val mockAudit: Audit                             = mock[Audit]
+  val mockSubmissionConnector: SubmissionConnector = mock[SubmissionConnector]
+  val errorHandler: ErrorHandler                   = inject[ErrorHandler]
 
-  val mockNotConnectedNavigator            = mock[RemoveConnectionNavigator]
-  val mockCheckYourAnswersNotConnectedView = mock[checkYourAnswersNotConnected]
-  when(mockCheckYourAnswersNotConnectedView.apply()(any, any)).thenReturn(HtmlFormat.empty)
-  val mockConfirmationView                 = mock[confirmationNotConnected]
-  when(mockConfirmationView.apply()(any, any)).thenReturn(HtmlFormat.empty)
-
-  val mockTaskListView = mock[taskList]
-  when(mockTaskListView.apply()(any, any)).thenReturn(HtmlFormat.empty)
-
-  val mockAudit               = mock[Audit]
-  val mockSubmissionConnector = mock[SubmissionConnector]
-
-  val checkYourAdditionalInformationController = new CheckYourAnswersNotConnectedController(
+  def checkYourAdditionalInformationController(
+    removeConnectionDetails: Option[RemoveConnectionDetails] = Some(prefilledNotConnectedYes)
+  ) = new CheckYourAnswersNotConnectedController(
     stubMessagesControllerComponents(),
     mockSubmissionConnector,
-    mockCheckYourAnswersNotConnectedView,
-    mockConfirmationView,
-    inject[ErrorHandler],
+    checkYourAnswersNotConnectedView,
+    confirmationNotConnectedView,
+    errorHandler,
     mockAudit,
-    preFilledSession,
+    preEnrichedActionRefiner(removeConnectionDetails = removeConnectionDetails),
     mockSessionRepo
   )
 
   "GET /" should {
     "return 200" in {
-      val result = checkYourAdditionalInformationController.show(fakeRequest)
+      val result = checkYourAdditionalInformationController().show(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return HTML" in {
-      val result = checkYourAdditionalInformationController.show(fakeRequest)
+      val result = checkYourAdditionalInformationController().show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
