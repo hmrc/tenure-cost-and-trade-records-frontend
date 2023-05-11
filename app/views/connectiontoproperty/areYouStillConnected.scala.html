@@ -20,48 +20,45 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
 @import uk.gov.hmrc.govukfrontend.views.Aliases.RadioItem
 @import models.submissions.connectiontoproperty.{AddressConnectionTypeYes, AddressConnectionTypeNo, AddressConnectionTypeYesChangeAddress}
-@import models.submissions.common.Address
+@import models.pages.Summary
 
 @this(layout: Layout,
-  govukButton: GovukButton,
-  govukRadios: GovukRadios,
-  formWithCSRF: FormWithCSRF
+        govukButton: GovukButton,
+        govukRadios: GovukRadios,
+        formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[_], address: Address)(implicit request: Request[_], messages: Messages)
+@(theForm: Form[_], summary: Summary)(implicit request: Request[_], messages: Messages)
 
 @layout(
-  pageHeading = messages("areYouConnected.heading", address.singleLine),
-  showH1 = false,
-  showSection = false,
-    showAccountInfo = false,
-  theForm = theForm
+    pageHeading = messages("areYouConnected.heading", summary.address.map(_.singleLine).getOrElse("")),
+    showH1 = false,
+    showSection = false,
+    summary = Some(summary),
+    theForm = theForm
 ) {
 
-  @formWithCSRF(action = controllers.connectiontoproperty.routes.AreYouStillConnectedController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
+    @formWithCSRF(action = controllers.connectiontoproperty.routes.AreYouStillConnectedController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
 
-    @includes.radioButtons(
-      govukRadios,
-      theForm,
-      "isRelated",
-      messages("areYouConnected.heading", address.singleLine),
-      "govuk-fieldset__legend--l",
-      isHeading = true,
-      items = Seq(
-        AddressConnectionTypeYes.name -> messages("label.yes.oes"),
-        AddressConnectionTypeYesChangeAddress.name -> Messages("label.areYouConnected.addressUpdate"),
-        AddressConnectionTypeNo.name -> messages("label.no.nac.oes")
-      ).map(i => RadioItem (
-        content = Text(i._2),
-        checked = i._1.equals(theForm("isRelated").value.getOrElse("")),
-        value=Option(i._1)
-      )),
-      inline = false
-    )
+        @includes.radioButtons(
+            govukRadios,
+            theForm,
+            "isRelated",
+            messages("areYouConnected.heading", summary.address.map(_.singleLine).getOrElse("")),
+            "govuk-fieldset__legend--l",
+            isHeading = true,
+            items = Seq(
+                AddressConnectionTypeYes.name -> messages("label.yes.oes"),
+                AddressConnectionTypeYesChangeAddress.name -> Messages("label.areYouConnected.addressUpdate"),
+                AddressConnectionTypeNo.name -> messages("label.no.nac.oes")
+            ).map(i => RadioItem (
+                content = Text(i._2),
+                checked = i._1.equals(theForm("isRelated").value.getOrElse("")),
+                value=Option(i._1)
+            )),
+            inline = false
+        )
 
-    @includes.continueButton(govukButton)
-  }
+        @includes.continueButton(govukButton)
+    }
 }
-
-
-

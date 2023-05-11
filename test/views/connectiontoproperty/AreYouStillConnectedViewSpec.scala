@@ -16,8 +16,8 @@
 
 package views.connectiontoproperty
 
-import form.connectiontoproperty.{AreYouStillConnectedForm, EditAddressForm}
-import models.submissions.common.Address
+import form.connectiontoproperty.AreYouStillConnectedForm
+import models.pages.Summary
 import models.submissions.connectiontoproperty.{AddressConnectionType, AddressConnectionTypeNo, AddressConnectionTypeYes, AddressConnectionTypeYesChangeAddress}
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
@@ -32,10 +32,10 @@ class AreYouStillConnectedViewSpec extends QuestionViewBehaviours[AddressConnect
 
   override val form = AreYouStillConnectedForm.areYouStillConnectedForm
 
-  def createView = () => areYouStillConnectedView(form, prefilledAddress)(fakeRequest, messages)
+  def createView = () => areYouStillConnectedView(form, Summary("99996010001"))(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[AddressConnectionType]) =>
-    areYouStillConnectedView(form, prefilledAddress)(fakeRequest, messages)
+    areYouStillConnectedView(form, Summary("99996010001"))(fakeRequest, messages)
 
   "Are you still connected view" must {
 
@@ -60,13 +60,13 @@ class AreYouStillConnectedViewSpec extends QuestionViewBehaviours[AddressConnect
           assertEqualsValue(
             doc,
             "title",
-            messages("service.title", messages(s"$messageKeyPrefix.heading", prefilledAddress.singleLine))
+            messages("service.title", messages(s"$messageKeyPrefix.heading", ""))
           )
         }
 
         "display the correct page title" in {
           val doc = asDocument(createView())
-          assertPageTitleEqualsMessage(doc, s"$messageKeyPrefix.heading", prefilledAddress.singleLine)
+          assertPageTitleEqualsMessage(doc, s"$messageKeyPrefix.heading", "")
         }
 
         "display language toggles" in {

@@ -50,18 +50,16 @@ class AreYouStillConnectedController @Inject() (
             case Some(addressConnectionType) => areYouStillConnectedForm.fillAndValidate(addressConnectionType)
             case _                           => areYouStillConnectedForm
           },
-          request.sessionData.address
+          request.sessionData.toSummary
         )
       )
     )
   }
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
-    val address: Address = request.sessionData.address
-
     continueOrSaveAsDraft[AddressConnectionType](
       areYouStillConnectedForm,
-      formWithErrors => BadRequest(areYouStillConnectedView(formWithErrors, address)),
+      formWithErrors => BadRequest(areYouStillConnectedView(formWithErrors, request.sessionData.toSummary)),
       data => {
         val updatedData = updateStillConnectedDetails(_.copy(addressConnectionType = Some(data)))
         session.saveOrUpdate(updatedData)
