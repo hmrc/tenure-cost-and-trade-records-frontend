@@ -29,7 +29,10 @@
     }
 }
 
-@layout(pageHeading = warningMessage) {
+@layout(
+    pageHeading = warningMessage,
+    withTimeoutDialog = false
+) {
 
     <p class="govuk-body">@messages("heading.login.loginFailed")</p>
     <p class="govuk-body">@messages("error.login.failed")</p>
