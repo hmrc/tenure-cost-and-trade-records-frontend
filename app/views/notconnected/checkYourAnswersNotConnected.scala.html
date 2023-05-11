@@ -26,6 +26,7 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukWarningText
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.warningtext.WarningText
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
+@import models.pages.Summary
 
 @this(layout: Layout,
         govukButton: GovukButton,
@@ -39,8 +40,7 @@
         formWithCSRF: FormWithCSRF
 )
 
-
-@()(implicit request: Request[_], messages: Messages)
+@(stillConnected: Option[String], everConnected: Option[String], fullName: String, telephone: String, email: String, addInfo: Option[String])(implicit request: Request[_], messages: Messages)
 
 @layout(
  pageHeading = messages("checkYourAnswersNotConnected.heading"),
@@ -52,9 +52,9 @@
 
   <dl class="govuk-summary-list">
   <div id="fullName" class="govuk-summary-list__row">
-   <dt class="govuk-summary-list__key">Operator's Name</dt>
+   <dt class="govuk-summary-list__key">Still Connected to the property?</dt>
    <dd class="govuk-summary-list__value">
-    John Smith
+    @stillConnected
    </dd>
    <dd class="govuk-summary-list__actions">
     <a href="/sending-rental-information/page/2?edit=fullName#fullName" class="govuk-link">Change <span class="govuk-visually-hidden">Full name</span></a>
@@ -62,9 +62,9 @@
   </div>
 
   <div id="userType" class="govuk-summary-list__row">
-   <dt class="govuk-summary-list__key">Type of business</dt>
+   <dt class="govuk-summary-list__key">Ever connected to the property?</dt>
    <dd class="govuk-summary-list__value">
-    Hotel
+    @everConnected
    </dd>
    <dd class="govuk-summary-list__actions">
     <a href="/sending-rental-information/page/2?edit=userType#userType" class="govuk-link">Change <span class="govuk-visually-hidden">I am (or represent) the</span></a>
@@ -72,16 +72,41 @@
   </div>
 
   <div id="userType" class="govuk-summary-list__row">
-   <dt class="govuk-summary-list__key">Correspondence address</dt>
+   <dt class="govuk-summary-list__key">Full name</dt>
    <dd class="govuk-summary-list__value">
-    1 Jones Street
-    Townley
-    JO1 3NS
+    @fullName
    </dd>
    <dd class="govuk-summary-list__actions">
-    <a href="/sending-rental-information/page/2?edit=userType#userType" class="govuk-link">Change <span class="govuk-visually-hidden">I am (or represent) the</span></a>
+    <a href="/remove-connection" class="govuk-link">Change <span class="govuk-visually-hidden">I am (or represent) the</span></a>
    </dd>
   </div>
+   <div id="userType" class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">Telephone number</dt>
+    <dd class="govuk-summary-list__value">
+     @telephone
+    </dd>
+    <dd class="govuk-summary-list__actions">
+     <a href="/remove-connection" class="govuk-link">Change <span class="govuk-visually-hidden">I am (or represent) the</span></a>
+    </dd>
+   </div>
+   <div id="userType" class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">Email address</dt>
+    <dd class="govuk-summary-list__value">
+     @email
+    </dd>
+    <dd class="govuk-summary-list__actions">
+     <a href="/remove-connection" class="govuk-link">Change <span class="govuk-visually-hidden">I am (or represent) the</span></a>
+    </dd>
+   </div>
+   <div id="userType" class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">Additional information</dt>
+    <dd class="govuk-summary-list__value">
+    @addInfo
+    </dd>
+    <dd class="govuk-summary-list__actions">
+     <a href="/remove-connection" class="govuk-link">Change <span class="govuk-visually-hidden">I am (or represent) the</span></a>
+    </dd>
+   </div>
  </dl>
 
   <legend class="govuk-fieldset__legend govuk-!-font-weight-bold">

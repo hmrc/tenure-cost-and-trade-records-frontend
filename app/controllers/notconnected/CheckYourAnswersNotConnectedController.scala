@@ -55,8 +55,28 @@ class CheckYourAnswersNotConnectedController @Inject() (
 
   val log = Logger(classOf[CheckYourAnswersNotConnectedController])
 
-  def show: Action[AnyContent] = Action.async { implicit request =>
-    Future.successful(Ok(checkYourAnswersNotConnectedView()))
+  def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    val session = request.sessionData
+    Future.successful(
+      Ok(
+        checkYourAnswersNotConnectedView(
+          session.stillConnectedDetails.flatMap(_.addressConnectionType.map(_.name.capitalize)),
+          session.removeConnectionDetails.flatMap(_.pastConnectionType.map(_.name.capitalize)),
+          session.removeConnectionDetails
+            .flatMap(_.removeConnectionDetails.map(_.removeConnectionFullName))
+            .getOrElse(""),
+          session.removeConnectionDetails
+            .flatMap(_.removeConnectionDetails.map(_.removeConnectionDetails.phone))
+            .getOrElse(""),
+          session.removeConnectionDetails
+            .flatMap(_.removeConnectionDetails.map(_.removeConnectionDetails.email))
+            .getOrElse(""),
+          session.removeConnectionDetails.flatMap(
+            _.removeConnectionDetails.map(_.removeConnectionAdditionalInfo).getOrElse(Some(""))
+          )
+        )
+      )
+    )
   }
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>

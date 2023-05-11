@@ -31,10 +31,25 @@ class CheckYourAnswersNotConnectedViewSpec extends QuestionViewBehaviours[NotCon
 
   override val form = NotConnectedForm.notConnectedForm
 
-  def createView = () => checkYourAnswersNotConnectedView()(fakeRequest, messages)
+  def createView = () =>
+    checkYourAnswersNotConnectedView(
+      Some("no"),
+      Some("no"),
+      "John Smith",
+      "0123456789123",
+      "test@test.com",
+      Some("Some additional info")
+    )(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[NotConnectedContactDetails]) =>
-    checkYourAnswersNotConnectedView()(fakeRequest, messages)
+    checkYourAnswersNotConnectedView(
+      Some("no"),
+      Some("no"),
+      "John Smith",
+      "0123456789123",
+      "test@test.com",
+      Some("Some additional info")
+    )(fakeRequest, messages)
 
   "Check Your Answers Additional Information view" must {
 
@@ -47,11 +62,5 @@ class CheckYourAnswersNotConnectedViewSpec extends QuestionViewBehaviours[NotCon
       val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
       backlinkUrl mustBe controllers.notconnected.routes.RemoveConnectionController.show().url
     }
-
-//    "contain save and continue button with the value Save and Continue" in {
-//      val doc         = asDocument(createViewUsingForm(form))
-//      val loginButton = doc.getElementById("continue").text()
-//      assert(loginButton == messages("button.label.continue"))
-//    }
   }
 }

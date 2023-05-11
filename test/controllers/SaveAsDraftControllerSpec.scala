@@ -249,8 +249,8 @@ class SaveAsDraftControllerSpec extends TestBaseSpec {
   }
 
   private def checkFinalPageDraftSaved(content: String): Unit = {
-    content should include("saveAsDraft.preHeader")
-    content should include("saveAsDraft.logout")
+    content    should include("saveAsDraft.preHeader")
+    content    should include("saveAsDraft.logout")
     content shouldNot include(password)
     content shouldNot include("saveAsDraft.createPassword.header")
     content shouldNot include("""name="password"""")
