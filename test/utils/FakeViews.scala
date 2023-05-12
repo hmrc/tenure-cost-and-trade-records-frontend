@@ -25,7 +25,7 @@ import views.html.aboutfranchisesorlettings._
 import views.html.aboutyouandtheproperty.checkYourAnswersAboutTheProperty
 import views.html.additionalinformation.{alternativeContactDetails, furtherInformationOrRemarks}
 import views.html.form._
-import views.html.login
+import views.html.{confirmationNotConnected, login}
 
 trait FakeViews { this: GuiceOneAppPerSuite =>
 
@@ -40,6 +40,8 @@ trait FakeViews { this: GuiceOneAppPerSuite =>
   // Not connected
   val pastConnectionView: pastConnection     = app.injector.instanceOf[pastConnection]
   val removeConnectionView: removeConnection = app.injector.instanceOf[removeConnection]
+  val checkYourAnswersNotConnectedView       = app.injector.instanceOf[checkYourAnswersNotConnected]
+  val confirmationNotConnectedView           = app.injector.instanceOf[confirmationNotConnected]
 
   // About you and the property
   lazy val aboutYouView: aboutYou                                                    = app.injector.instanceOf[aboutYou]

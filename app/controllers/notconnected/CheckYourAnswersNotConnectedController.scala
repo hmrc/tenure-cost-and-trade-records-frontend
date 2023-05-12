@@ -51,39 +51,20 @@ class CheckYourAnswersNotConnectedController @Inject() (
     with I18nSupport
     with Logging {
 
-  lazy val confirmationUrl = controllers.notconnected.routes.CheckYourAnswersNotConnectedController.confirmation().url
+  lazy val confirmationUrl: String =
+    controllers.notconnected.routes.CheckYourAnswersNotConnectedController.confirmation().url
 
-  val log = Logger(classOf[CheckYourAnswersNotConnectedController])
+  val log: Logger = Logger(classOf[CheckYourAnswersNotConnectedController])
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    val session = request.sessionData
-    Future.successful(
-      Ok(
-        checkYourAnswersNotConnectedView(
-          session.stillConnectedDetails.flatMap(_.addressConnectionType.map(_.name.capitalize)),
-          session.removeConnectionDetails.flatMap(_.pastConnectionType.map(_.name.capitalize)),
-          session.removeConnectionDetails
-            .flatMap(_.removeConnectionDetails.map(_.removeConnectionFullName))
-            .getOrElse(""),
-          session.removeConnectionDetails
-            .flatMap(_.removeConnectionDetails.map(_.removeConnectionDetails.phone))
-            .getOrElse(""),
-          session.removeConnectionDetails
-            .flatMap(_.removeConnectionDetails.map(_.removeConnectionDetails.email))
-            .getOrElse(""),
-          session.removeConnectionDetails.flatMap(
-            _.removeConnectionDetails.map(_.removeConnectionAdditionalInfo).getOrElse(Some(""))
-          )
-        )
-      )
-    )
+    Future.successful(Ok(checkYourAnswersNotConnectedView(request.sessionData)))
   }
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    implicit val hc    = HeaderCarrierConverter.fromRequestAndSession(request, request.session)
-    val auditType      = "NotConnectedSubmission"
-    val submissionJson = Json.toJson(request.sessionData).as[JsObject]
-    val session        = request.sessionData
+    implicit val hc: HeaderCarrier = HeaderCarrierConverter.fromRequestAndSession(request, request.session)
+    val auditType                  = "NotConnectedSubmission"
+    val submissionJson             = Json.toJson(request.sessionData).as[JsObject]
+    val session                    = request.sessionData
 
     submitToBackend(session).map { _ =>
       audit.sendExplicitAudit(auditType, submissionJson ++ Audit.languageJson)
@@ -96,7 +77,7 @@ class CheckYourAnswersNotConnectedController @Inject() (
   }
 
   def confirmation: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    Future.successful(Ok(confirmationNotConnectedView()))
+    Future.successful(Ok(confirmationNotConnectedView(request.sessionData)))
   }
 
   private def submitToBackend(

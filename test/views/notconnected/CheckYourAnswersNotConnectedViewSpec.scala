@@ -20,40 +20,31 @@ import form.notconnected.NotConnectedForm
 import models.submissions.notconnected.NotConnectedContactDetails
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
+import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
 
 class CheckYourAnswersNotConnectedViewSpec extends QuestionViewBehaviours[NotConnectedContactDetails] {
 
-  def checkYourAnswersNotConnectedView =
-    app.injector.instanceOf[views.html.notconnected.checkYourAnswersNotConnected]
-
   val messageKeyPrefix = "checkYourAnswersNotConnected"
 
-  override val form = NotConnectedForm.notConnectedForm
+  override val form: Form[NotConnectedContactDetails] = NotConnectedForm.notConnectedForm
 
-  def createView = () =>
-    checkYourAnswersNotConnectedView(
-      Some("no"),
-      Some("no"),
-      "John Smith",
-      "0123456789123",
-      "test@test.com",
-      Some("Some additional info")
-    )(fakeRequest, messages)
+  def createView: () => Html = () => checkYourAnswersNotConnectedView(notConnected6010NoSession)(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[NotConnectedContactDetails]) =>
-    checkYourAnswersNotConnectedView(
-      Some("no"),
-      Some("no"),
-      "John Smith",
-      "0123456789123",
-      "test@test.com",
-      Some("Some additional info")
-    )(fakeRequest, messages)
+  def createViewUsingForm: Form[NotConnectedContactDetails] => Html = (form: Form[NotConnectedContactDetails]) =>
+    checkYourAnswersNotConnectedView(notConnected6010NoSession)(fakeRequest, messages)
 
   "Check Your Answers Additional Information view" must {
 
     behave like normalPage(createView, messageKeyPrefix)
+
+    "has a reference number and address banner" in {
+      val doc = asDocument(createView())
+      assertContainsText(doc, "Reference:")
+      assertContainsText(doc, "99996010/004")
+      assertContainsText(doc, "Property:")
+      assertContainsText(doc, "001, GORING ROAD, GORING-BY-SEA, WORTHING, BN12 4AX")
+    }
 
     "has a link marked with back.link.label leading to the further information Page" in {
       val doc          = asDocument(createView())
@@ -61,6 +52,61 @@ class CheckYourAnswersNotConnectedViewSpec extends QuestionViewBehaviours[NotCon
       backlinkText mustBe messages("back.link.label")
       val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
       backlinkUrl mustBe controllers.notconnected.routes.RemoveConnectionController.show().url
+    }
+
+    "contain are you still connected field" in {
+      val doc = asDocument(createView())
+      assertContainsText(doc, "Still Connected to the property?")
+    }
+
+    "contain still connected string boolean" in {
+      val doc = asDocument(createView())
+      assertContainsText(doc, "No")
+    }
+
+    "contain have you ever been connected field" in {
+      val doc = asDocument(createView())
+      assertContainsText(doc, "Ever connected to the property?")
+    }
+
+    "contain ever been connected string boolean" in {
+      val doc = asDocument(createView())
+      assertContainsText(doc, "Yes")
+    }
+
+    "contain full name field" in {
+      val doc = asDocument(createView())
+      assertContainsText(doc, "Full name")
+    }
+
+    "contain full name string" in {
+      val doc = asDocument(createView())
+      assertContainsText(doc, "John Doe")
+    }
+
+    "contain contact details field" in {
+      val doc = asDocument(createView())
+      assertContainsText(doc, "Contact Details")
+    }
+
+    "contain contact details phone string" in {
+      val doc = asDocument(createView())
+      assertContainsText(doc, "12345678901")
+    }
+
+    "contain contact details email string" in {
+      val doc = asDocument(createView())
+      assertContainsText(doc, "test@email.com")
+    }
+
+    "contain additional information field" in {
+      val doc = asDocument(createView())
+      assertContainsText(doc, "Additional information")
+    }
+
+    "contain additional information string" in {
+      val doc = asDocument(createView())
+      assertContainsText(doc, "Additional Info")
     }
   }
 }
