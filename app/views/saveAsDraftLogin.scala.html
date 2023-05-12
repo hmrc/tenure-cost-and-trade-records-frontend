@@ -52,19 +52,19 @@
                     content = Text(messages("saveAsDraft.password")),
                     classes = "govuk-!-font-weight-bold"
                 ),
-                suffix = Some(PrefixOrSuffix(
+                suffix = PrefixOrSuffix(
                     content = HtmlContent(
                         """<a href="#" onclick="togglePassword('password', this, event)">Show</a>"""
                     ),
                     classes = "hmrc-show-password__suffix"
-                )),
-                spellcheck = Some(false),
+                ),
+                spellcheck = false,
                 hint = None
             ).withFormField(form("password"))
         )
         @govukButton(
             Button(
-                name = Some("continue"),
+                name = "continue",
                 inputType = "submit",
                 attributes = Map("novalidate" -> "novalidate"),
                 content = Text(messages("label.continue"))
