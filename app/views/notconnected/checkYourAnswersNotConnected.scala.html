@@ -15,74 +15,78 @@
  *@
 
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukErrorSummary
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukDateInput
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukTextarea
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukCharacterCount
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukWarningText
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.warningtext.WarningText
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
-@import models.pages.Summary
+@import models.Session
 
 @this(layout: Layout,
         govukButton: GovukButton,
-        govukRadios: GovukRadios,
-        govukInput: GovukInput,
-        govukErrorSummary: GovukErrorSummary,
-        govukDateInput: GovukDateInput,
-        govukTextarea: GovukTextarea,
-        govukCharacterCount: GovukCharacterCount,
         govukWarningText: GovukWarningText,
         formWithCSRF: FormWithCSRF
 )
 
-
-@(summary: Summary)(implicit request: Request[_], messages: Messages)
+@(session: Session)(implicit request: Request[_], messages: Messages)
 
 @layout(
  pageHeading = messages("checkYourAnswersNotConnected.heading"),
- summary = Some(summary),
+ summary = Some(session.toSummary),
  backLinkUrl = controllers.notconnected.routes.RemoveConnectionController.show.url
 ) {
 
- @formWithCSRF(action = controllers.notconnected.routes.CheckYourAnswersNotConnectedController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
+ @formWithCSRF(action = controllers.notconnected.routes.CheckYourAnswersNotConnectedController.submit(), args = Symbol("class") -> "myForm", Symbol("id") -> "myFormId") {
 
 
   <dl class="govuk-summary-list">
   <div id="fullName" class="govuk-summary-list__row">
-   <dt class="govuk-summary-list__key">Operator's Name</dt>
+   <dt class="govuk-summary-list__key">Still Connected to the property?</dt>
    <dd class="govuk-summary-list__value">
-    John Smith
+    @session.stillConnectedDetails.flatMap(_.addressConnectionType.map(_.name.capitalize))
    </dd>
    <dd class="govuk-summary-list__actions">
-    <a href="/sending-rental-information/page/2?edit=fullName#fullName" class="govuk-link">Change <span class="govuk-visually-hidden">Full name</span></a>
+    <a href="/send-trade-and-cost-information/are-you-still-connected" class="govuk-link">Change <span class="govuk-visually-hidden">Still Connected to the property?</span></a>
    </dd>
   </div>
 
   <div id="userType" class="govuk-summary-list__row">
-   <dt class="govuk-summary-list__key">Type of business</dt>
+   <dt class="govuk-summary-list__key">Ever connected to the property?</dt>
    <dd class="govuk-summary-list__value">
-    Hotel
+    @session.removeConnectionDetails.flatMap(_.pastConnectionType.map(_.name.capitalize))
    </dd>
    <dd class="govuk-summary-list__actions">
-    <a href="/sending-rental-information/page/2?edit=userType#userType" class="govuk-link">Change <span class="govuk-visually-hidden">I am (or represent) the</span></a>
+    <a href="/send-trade-and-cost-information/previously-connected" class="govuk-link">Change <span class="govuk-visually-hidden">Ever connected to the property?</span></a>
    </dd>
   </div>
 
   <div id="userType" class="govuk-summary-list__row">
-   <dt class="govuk-summary-list__key">Correspondence address</dt>
+   <dt class="govuk-summary-list__key">Full name</dt>
    <dd class="govuk-summary-list__value">
-    1 Jones Street
-    Townley
-    JO1 3NS
+    @session.removeConnectionDetails.flatMap(_.removeConnectionDetails.map(_.removeConnectionFullName)).getOrElse("")
    </dd>
    <dd class="govuk-summary-list__actions">
-    <a href="/sending-rental-information/page/2?edit=userType#userType" class="govuk-link">Change <span class="govuk-visually-hidden">I am (or represent) the</span></a>
+    <a href="/send-trade-and-cost-information/remove-connection" class="govuk-link">Change <span class="govuk-visually-hidden">Full name</span></a>
    </dd>
   </div>
+   <div id="userType" class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">Contact Details</dt>
+    <dd class="govuk-summary-list__value">
+      <p class="govuk-body">@session.removeConnectionDetails.flatMap(_.removeConnectionDetails.map(_.removeConnectionDetails.phone)).getOrElse("")</p>
+     <p class="govuk-body">@session.removeConnectionDetails.flatMap(_.removeConnectionDetails.map(_.removeConnectionDetails.email)).getOrElse("")</p>
+    </dd>
+    <dd class="govuk-summary-list__actions">
+     <a href="/send-trade-and-cost-information/remove-connection" class="govuk-link">Change <span class="govuk-visually-hidden">Contact Details</span></a>
+    </dd>
+   </div>
+   <div id="userType" class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">Additional information</dt>
+    <dd class="govuk-summary-list__value">
+      @session.removeConnectionDetails.flatMap(_.removeConnectionDetails.map(_.removeConnectionAdditionalInfo).getOrElse(Some("")))
+    </dd>
+    <dd class="govuk-summary-list__actions">
+     <a href="/send-trade-and-cost-information/remove-connection" class="govuk-link">Change <span class="govuk-visually-hidden">Additional information</span></a>
+    </dd>
+   </div>
  </dl>
 
   <legend class="govuk-fieldset__legend govuk-!-font-weight-bold">

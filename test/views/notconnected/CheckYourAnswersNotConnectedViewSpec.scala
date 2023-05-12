@@ -17,7 +17,6 @@
 package views.notconnected
 
 import form.notconnected.NotConnectedForm
-import models.pages.Summary
 import models.submissions.notconnected.NotConnectedContactDetails
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
@@ -30,11 +29,10 @@ class CheckYourAnswersNotConnectedViewSpec extends QuestionViewBehaviours[NotCon
 
   override val form: Form[NotConnectedContactDetails] = NotConnectedForm.notConnectedForm
 
-  def createView: () => Html = () =>
-    checkYourAnswersNotConnectedView(Summary("99996010001", Some(prefilledAddress)))(fakeRequest, messages)
+  def createView: () => Html = () => checkYourAnswersNotConnectedView(notConnected6010NoSession)(fakeRequest, messages)
 
   def createViewUsingForm: Form[NotConnectedContactDetails] => Html = (form: Form[NotConnectedContactDetails]) =>
-    checkYourAnswersNotConnectedView(Summary("99996010001", Some(prefilledAddress)))(fakeRequest, messages)
+    checkYourAnswersNotConnectedView(notConnected6010NoSession)(fakeRequest, messages)
 
   "Check Your Answers Additional Information view" must {
 
@@ -43,7 +41,7 @@ class CheckYourAnswersNotConnectedViewSpec extends QuestionViewBehaviours[NotCon
     "has a reference number and address banner" in {
       val doc = asDocument(createView())
       assertContainsText(doc, "Reference:")
-      assertContainsText(doc, "99996010/001")
+      assertContainsText(doc, "99996010/004")
       assertContainsText(doc, "Property:")
       assertContainsText(doc, "001, GORING ROAD, GORING-BY-SEA, WORTHING, BN12 4AX")
     }
@@ -56,10 +54,59 @@ class CheckYourAnswersNotConnectedViewSpec extends QuestionViewBehaviours[NotCon
       backlinkUrl mustBe controllers.notconnected.routes.RemoveConnectionController.show().url
     }
 
-//    "contain save and continue button with the value Save and Continue" in {
-//      val doc         = asDocument(createViewUsingForm(form))
-//      val loginButton = doc.getElementById("continue").text()
-//      assert(loginButton == messages("button.label.continue"))
-//    }
+    "contain are you still connected field" in {
+      val doc = asDocument(createView())
+      assertContainsText(doc, "Still Connected to the property?")
+    }
+
+    "contain still connected string boolean" in {
+      val doc = asDocument(createView())
+      assertContainsText(doc, "No")
+    }
+
+    "contain have you ever been connected field" in {
+      val doc = asDocument(createView())
+      assertContainsText(doc, "Ever connected to the property?")
+    }
+
+    "contain ever been connected string boolean" in {
+      val doc = asDocument(createView())
+      assertContainsText(doc, "Yes")
+    }
+
+    "contain full name field" in {
+      val doc = asDocument(createView())
+      assertContainsText(doc, "Full name")
+    }
+
+    "contain full name string" in {
+      val doc = asDocument(createView())
+      assertContainsText(doc, "John Doe")
+    }
+
+    "contain contact details field" in {
+      val doc = asDocument(createView())
+      assertContainsText(doc, "Contact Details")
+    }
+
+    "contain contact details phone string" in {
+      val doc = asDocument(createView())
+      assertContainsText(doc, "12345678901")
+    }
+
+    "contain contact details email string" in {
+      val doc = asDocument(createView())
+      assertContainsText(doc, "test@email.com")
+    }
+
+    "contain additional information field" in {
+      val doc = asDocument(createView())
+      assertContainsText(doc, "Additional information")
+    }
+
+    "contain additional information string" in {
+      val doc = asDocument(createView())
+      assertContainsText(doc, "Additional Info")
+    }
   }
 }

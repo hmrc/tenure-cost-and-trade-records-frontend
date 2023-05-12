@@ -76,24 +76,26 @@ trait FakeObjects {
   )
   val prefilledStillConnectedDetailsNo: StillConnectedDetails   = StillConnectedDetails(Some(AddressConnectionTypeNo))
 
-  val stillConnectedDetailsYesSession: Session     =
+  val stillConnectedDetailsYesSession: Session       =
     baseFilled6010Session.copy(stillConnectedDetails = Some(prefilledStillConnectedDetailsYes))
-  val stillConnectedDetailsEditSession: Session    =
+  val stillConnectedDetailsEditSession: Session      =
     baseFilled6010Session.copy(stillConnectedDetails = Some(prefilledStillConnectedDetailsEdit))
-  val stillConnectedDetailsNoSession: Session      =
+  val stillConnectedDetailsNoSession: Session        =
     baseFilled6010Session.copy(stillConnectedDetails = Some(prefilledStillConnectedDetailsNo))
-  val stillConnectedDetails6011YesSession: Session =
+  val stillConnectedDetails6011YesSession: Session   =
     baseFilled6011Session.copy(stillConnectedDetails = Some(prefilledStillConnectedDetailsYes))
-  val stillConnectedDetails6011NoSession: Session  =
+  val stillConnectedDetails6011NoSession: Session    =
     baseFilled6011Session.copy(stillConnectedDetails = Some(prefilledStillConnectedDetailsNo))
-  val stillConnectedDetails6015YesSession: Session =
+  val stillConnectedDetails6015YesSession: Session   =
     baseFilled6015Session.copy(stillConnectedDetails = Some(prefilledStillConnectedDetailsYes))
-  val stillConnectedDetails6015NoSession: Session  =
+  val stillConnectedDetails6015NoSession: Session    =
     baseFilled6015Session.copy(stillConnectedDetails = Some(prefilledStillConnectedDetailsNo))
-  val stillConnectedDetails6016YesSession: Session =
+  val stillConnectedDetails6016YesSession: Session   =
     baseFilled6016Session.copy(stillConnectedDetails = Some(prefilledStillConnectedDetailsYes))
-  val stillConnectedDetails6016NoSession: Session  =
+  val stillConnectedDetails6016NoSession: Session    =
     baseFilled6016Session.copy(stillConnectedDetails = Some(prefilledStillConnectedDetailsNo))
+  val stillConnectedDetailsConnectedDetailsNoSession =
+    baseFilled6010Session.copy(stillConnectedDetails = Some(prefilledStillConnectedDetailsNo))
 
   // Not connected sessions
   val prefilledNotConnectedYes: RemoveConnectionDetails = RemoveConnectionDetails(
@@ -106,6 +108,9 @@ trait FakeObjects {
     ),
     Some(PastConnectionTypeYes)
   )
+
+  val notConnected6010NoSession: Session =
+    stillConnectedDetailsConnectedDetailsNoSession.copy(removeConnectionDetails = Some(prefilledNotConnectedYes))
 
   // About you and the property sessions
   val prefilledAboutYouAndThePropertyYes: AboutYouAndTheProperty = AboutYouAndTheProperty(

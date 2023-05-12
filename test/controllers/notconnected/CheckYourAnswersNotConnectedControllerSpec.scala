@@ -42,7 +42,7 @@ class CheckYourAnswersNotConnectedControllerSpec extends TestBaseSpec {
     mockSessionRepo
   )
 
-  "GET /" should {
+  "Not connected CYA controller" should {
     "return 200" in {
       val result = checkYourAdditionalInformationController().show(fakeRequest)
       status(result) shouldBe Status.OK

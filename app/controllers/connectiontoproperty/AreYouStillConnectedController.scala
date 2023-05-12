@@ -26,7 +26,6 @@ import play.api.mvc._
 import repositories.SessionRepo
 import views.html.connectiontoproperty.areYouStillConnected
 import models.submissions.connectiontoproperty.StillConnectedDetails.updateStillConnectedDetails
-import models.submissions.common.Address
 import models.submissions.connectiontoproperty.AddressConnectionType
 
 import javax.inject.{Inject, Named, Singleton}
