@@ -20,13 +20,14 @@ import models.submissions.CustomUserPassword
 import play.api.data.Form
 import play.api.data.Forms.{mapping, text}
 import play.api.data.validation.Constraints.{minLength, pattern}
+import util.AlphanumericPasswordGenerator
 
 /**
   * @author Yuriy Tumakha
   */
 object CustomUserPasswordForm {
 
-  private val passwordMinLength = 8
+  private val passwordMinLength = AlphanumericPasswordGenerator.passwordLength
 
   val customUserPasswordForm: Form[CustomUserPassword] = Form(
     mapping(
