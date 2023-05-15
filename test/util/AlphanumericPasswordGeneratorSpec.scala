@@ -18,18 +18,19 @@ package util
 
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should
+import util.AlphanumericPasswordGenerator.passwordLength
 
 /**
   * @author Yuriy Tumakha
   */
 class AlphanumericPasswordGeneratorSpec extends AnyFlatSpec with should.Matchers {
 
-  "AlphanumericPasswordGenerator" should "generate passwords with length 7" in {
-    AlphanumericPasswordGenerator.generatePassword should have length 7
+  "AlphanumericPasswordGenerator" should s"generate passwords with length $passwordLength" in {
+    AlphanumericPasswordGenerator.generatePassword should have length passwordLength
   }
 
   it                              should "generate password using only allowed digits and chars" in {
-    AlphanumericPasswordGenerator.generatePassword should fullyMatch regex """^[abcdefghjkmnpqrstuvwxyz23456789]{7}$"""
+    AlphanumericPasswordGenerator.generatePassword should fullyMatch regex s"^[abcdefghjkmnpqrstuvwxyz23456789]{$passwordLength}$$"
   }
 
   it                              should "generate different password each time" in {

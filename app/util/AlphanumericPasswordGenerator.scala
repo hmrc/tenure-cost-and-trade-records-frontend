@@ -25,7 +25,7 @@ import java.security.SecureRandom
   */
 object AlphanumericPasswordGenerator {
 
-  private val passwordLength            = 7
+  val passwordLength: Int               = 8
   private val validDigits               = (2 to 9).map(_.toString.head)
   private val validChars                = "abcdefghjkmnpqrstuvwxyz".toCharArray
   private val allowedChars: Array[Char] = validChars ++ validDigits
