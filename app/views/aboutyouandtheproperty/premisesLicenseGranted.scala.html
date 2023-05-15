@@ -50,13 +50,12 @@
       isHeading = true
     )
 
-    @includes.continueSaveAsDraftButtons(govukButton)
-
     @govukDetails(Details(
-        summary = Text(messages("help.premisesLicenseGranted.title")),
-        content = Text(messages("help.premisesLicenseGranted.text"))
-      )
-    )
+      summary = Text(messages("help.premisesLicenseGranted.title")),
+      content = Text(messages("help.premisesLicenseGranted.text"))
+    ))
+
+    @includes.continueSaveAsDraftButtons(govukButton)
   }
 }
 
