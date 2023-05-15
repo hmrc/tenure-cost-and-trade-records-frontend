@@ -31,7 +31,7 @@ import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class CheckYourAnswersAdditionalInformationController @Inject() (
+class   CheckYourAnswersAdditionalInformationController @Inject() (
   mcc: MessagesControllerComponents,
   navigator: AdditionalInformationNavigator,
   checkYourAnswersAdditionalInformationView: checkYourAnswersAdditionalInformation,
@@ -51,7 +51,7 @@ class CheckYourAnswersAdditionalInformationController @Inject() (
               checkYourAnswersAdditionalInformationForm.fillAndValidate(checkYourAnswersAdditionalInformation)
             case _                                           => checkYourAnswersAdditionalInformationForm
           },
-          request.sessionData.toSummary
+          request.sessionData
         )
       )
     )
