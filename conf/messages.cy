@@ -67,6 +67,7 @@ label.contact.details = Contact details
 label.phone = Telephone number
 label.email = Email address
 label.submitAnotherForm = Submit another form
+label.change = Change
 
 # COMMON HINTS
 ##############
@@ -715,8 +716,16 @@ connectedToLandlord.heading = Other than contractually, are you connected to the
 ###############################
 connectedToLandlordDetails.heading = Describe your relationship to the landlord
 
-#CHECK YOUR ANSWERS
-###################
+# CHECK YOUR ANSWERS
+####################
+
+# NOT CONNECTED
+###############
+checkYourAnswersNotConnected.heading = Check your answers - not connected journey
+key.still.connected = Still Connected to the property?
+key.ever.connected = Ever connected to the property?
+key.contact.details = Contact Details
+
 checkYourAnswers.heading = This is a holding page for the check your answers page
 checkYourAnswersAboutFranchiseOrLettings.heading = This is a holding page for the franchise or lettings check your answers page
 checkYourAnswersAboutYourLeaseOrTenure.heading = This is a holding page for the about your lease or tenure check your answers page
@@ -724,7 +733,6 @@ checkYourAnswersAboutTheProperty.heading = This is a holding page for the about 
 checkYourAnswersAboutTheTradingHistory.heading = This is a holding page for the about your trading history check your answers page
 checkYourAnswersAboutYou.heading = This is a holding page for the about you check your answers page
 checkYourAnswersAdditionalInformation.heading = This is a holding page for the additional information check your answers page
-checkYourAnswersNotConnected.heading = Check your answers - not connected journey
 
 # Confirmation Page
 ###################

@@ -56,8 +56,6 @@
       ).withFormField(theForm("premisesLicenseGrantedInformation"))
     )
 
-    @includes.continueSaveAsDraftButtons(govukButton)
-
     @govukDetails(Details(
       summary = Text(messages("help.premisesLicenseGrantedInformation.title")),
       content = HtmlContent(
@@ -71,6 +69,8 @@
         s"<li>${messages("help.premisesLicenseGrantedInformation.list.p3")}</li>" +
         s"</ul>")
     ))
+
+    @includes.continueSaveAsDraftButtons(govukButton)
   }
 }
 

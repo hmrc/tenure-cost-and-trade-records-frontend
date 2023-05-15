@@ -108,5 +108,18 @@ class CheckYourAnswersNotConnectedViewSpec extends QuestionViewBehaviours[NotCon
       val doc = asDocument(createView())
       assertContainsText(doc, "Additional Info")
     }
+
+    "contain legal declaration" in {
+      val doc = asDocument(createView())
+      assertContainsText(doc, messages("declaration.heading"))
+      assertContainsText(doc, messages("declaration.information"))
+      assertContainsText(doc, messages("hint.declaration"))
+    }
+
+    "contain submit button with the value Submit" in {
+      val doc         = asDocument(createViewUsingForm(form))
+      val loginButton = doc.getElementById("continue").text()
+      assert(loginButton == messages("button.label.submit"))
+    }
   }
 }
