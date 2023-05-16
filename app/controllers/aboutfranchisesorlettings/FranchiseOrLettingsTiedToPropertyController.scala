@@ -71,7 +71,7 @@ class FranchiseOrLettingsTiedToPropertyController @Inject() (
       data => {
         val updatedData = updateAboutFranchisesOrLettings(_.copy(franchisesOrLettingsTiedToProperty = Some(data)))
         session.saveOrUpdate(updatedData)
-        Redirect(navigator.nextPage(FranchiseOrLettingsTiedToPropertyId).apply(updatedData))
+        Redirect(navigator.nextPage(FranchiseOrLettingsTiedToPropertyId, updatedData).apply(updatedData))
       }
     )
   }

@@ -65,7 +65,7 @@ class AboutYouController @Inject() (
       data => {
         val updatedData = updateAboutYouAndTheProperty(_.copy(customerDetails = Some(data)))
         session.saveOrUpdate(updatedData)
-        Redirect(navigator.nextPage(AboutYouPageId).apply(updatedData))
+        Redirect(navigator.nextPage(AboutYouPageId, updatedData).apply(updatedData))
       }
     )
   }

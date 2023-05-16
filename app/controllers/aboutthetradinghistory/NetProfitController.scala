@@ -57,7 +57,7 @@ class NetProfitController @Inject() (
       formWithErrors => BadRequest(netProfitView(formWithErrors, request.sessionData.toSummary)),
       data => {
         val updatedData = request.sessionData
-        Redirect(navigator.nextPage(NetProfitId).apply(updatedData))
+        Redirect(navigator.nextPage(NetProfitId, updatedData).apply(updatedData))
       }
     )
   }

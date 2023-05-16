@@ -69,7 +69,7 @@ class HowIsCurrentRentFixedController @Inject() (
       data => {
         val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(howIsCurrentRentFixed = Some(data)))
         session.saveOrUpdate(updatedData)
-        Redirect(navigator.nextPage(HowIsCurrentRentFixedId).apply(updatedData))
+        Redirect(navigator.nextPage(HowIsCurrentRentFixedId, updatedData).apply(updatedData))
       }
     )
   }

@@ -68,7 +68,7 @@ class RentPayableVaryOnQuantityOfBeersDetailsController @Inject() (
         val updatedData =
           updateAboutLeaseOrAgreementPartTwo(_.copy(rentPayableVaryOnQuantityOfBeersInformationDetails = Some(data)))
         session.saveOrUpdate(updatedData)
-        Redirect(navigator.nextPage(rentVaryQuantityOfBeersDetailsId).apply(updatedData))
+        Redirect(navigator.nextPage(rentVaryQuantityOfBeersDetailsId, updatedData).apply(updatedData))
       }
     )
   }

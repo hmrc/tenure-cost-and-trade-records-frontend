@@ -57,7 +57,7 @@ class GrossProfitsController @Inject() (
       formWithErrors => BadRequest(grossProfitsView(formWithErrors, request.sessionData.toSummary)),
       data => {
         val updatedData = request.sessionData
-        Redirect(navigator.nextPage(GrossProfitsId).apply(updatedData))
+        Redirect(navigator.nextPage(GrossProfitsId, updatedData).apply(updatedData))
       }
     )
   }

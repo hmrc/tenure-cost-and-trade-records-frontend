@@ -61,7 +61,7 @@ class EditAddressController @Inject() (
       data => {
         val updatedData = updateStillConnectedDetails(_.copy(editAddress = Some(data)))
         session.saveOrUpdate(updatedData)
-        Redirect(navigator.nextPage(EditAddressPageId).apply(updatedData))
+        Redirect(navigator.nextPage(EditAddressPageId, updatedData).apply(updatedData))
       }
     )
   }

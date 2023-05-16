@@ -62,7 +62,7 @@ class UltimatelyResponsibleController @Inject() (
       data => {
         val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(ultimatelyResponsible = Some(data)))
         session.saveOrUpdate(updatedData)
-        Redirect(navigator.nextPage(UltimatelyResponsiblePageId).apply(updatedData))
+        Redirect(navigator.nextPage(UltimatelyResponsiblePageId, updatedData).apply(updatedData))
       }
     )
   }

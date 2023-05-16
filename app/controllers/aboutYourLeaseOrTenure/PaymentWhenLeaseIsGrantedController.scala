@@ -62,7 +62,7 @@ class PaymentWhenLeaseIsGrantedController @Inject() (
       data => {
         val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(paymentWhenLeaseIsGrantedDetails = Some(data)))
         session.saveOrUpdate(updatedData)
-        Redirect(navigator.nextPage(PayWhenLeaseGrantedId).apply(updatedData))
+        Redirect(navigator.nextPage(PayWhenLeaseGrantedId, updatedData).apply(updatedData))
       }
     )
   }

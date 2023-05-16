@@ -95,7 +95,7 @@ class LettingOtherPartOfPropertyDetailsController @Inject() (
           case (currentIndex, aboutFranchisesOrLettings) =>
             val updatedData = updateAboutFranchisesOrLettings(_ => aboutFranchisesOrLettings)
             session.saveOrUpdate(updatedData)
-            Redirect(navigator.nextPage(LettingAccommodationDetailsPageId).apply(updatedData))
+            Redirect(navigator.nextPage(LettingAccommodationDetailsPageId, updatedData).apply(updatedData))
         }
       }
     )

@@ -70,7 +70,7 @@ class AboutThePropertyController @Inject() (
       data => {
         val updatedData = updateAboutYouAndTheProperty(_.copy(propertyDetails = Some(data)))
         session.saveOrUpdate(updatedData)
-        Redirect(navigator.nextPage(AboutThePropertyPageId).apply(updatedData))
+        Redirect(navigator.nextPage(AboutThePropertyPageId, updatedData).apply(updatedData))
       }
     )
   }

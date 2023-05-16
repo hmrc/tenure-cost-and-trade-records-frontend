@@ -57,7 +57,7 @@ class CateringOperationRentIncludesController @Inject() (
 
   def submit(index: Int) = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft(
-      Redirect(navigator.nextPage(CateringOperationRentIncludesPageId).apply(request.sessionData))
+      Redirect(navigator.nextPage(CateringOperationRentIncludesPageId, request.sessionData).apply(request.sessionData))
     )
   }
 

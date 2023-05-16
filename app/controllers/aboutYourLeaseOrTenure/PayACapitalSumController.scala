@@ -67,7 +67,7 @@ class PayACapitalSumController @Inject() (
       data => {
         val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(payACapitalSumDetails = Some(data)))
         session.saveOrUpdate(updatedData)
-        Redirect(navigator.nextPage(PayCapitalSumId).apply(updatedData))
+        Redirect(navigator.nextPage(PayCapitalSumId, updatedData).apply(updatedData))
       }
     )
   }

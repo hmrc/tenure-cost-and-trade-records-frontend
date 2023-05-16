@@ -79,7 +79,7 @@ class ConnectionToThePropertyController @Inject() (
       data => {
         val updatedData = updateStillConnectedDetails(_.copy(connectionToProperty = Some(data)))
         session.saveOrUpdate(updatedData)
-        Redirect(navigator.nextPage(ConnectionToPropertyPageId).apply(updatedData))
+        Redirect(navigator.nextPage(ConnectionToPropertyPageId, updatedData).apply(updatedData))
       }
     )
   }

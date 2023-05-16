@@ -62,7 +62,7 @@ class CanRentBeReducedOnReviewController @Inject() (
       data => {
         val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(canRentBeReducedOnReviewDetails = Some(data)))
         session.saveOrUpdate(updatedData)
-        Redirect(navigator.nextPage(CanRentBeReducedOnReviewId).apply(updatedData))
+        Redirect(navigator.nextPage(CanRentBeReducedOnReviewId, updatedData).apply(updatedData))
       }
     )
   }

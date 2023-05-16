@@ -57,7 +57,7 @@ class CostOfSalesController @Inject() (
       formWithErrors => BadRequest(costOfSalesView(formWithErrors, request.sessionData.toSummary)),
       data => {
         val updatedData = request.sessionData
-        Redirect(navigator.nextPage(CostOfSalesId).apply(updatedData))
+        Redirect(navigator.nextPage(CostOfSalesId, updatedData).apply(updatedData))
       }
     )
   }

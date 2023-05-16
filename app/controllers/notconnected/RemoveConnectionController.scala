@@ -62,7 +62,7 @@ class RemoveConnectionController @Inject() (
       data => {
         val updatedData = updateRemoveConnectionDetails(_.copy(removeConnectionDetails = Some(data)))
         session.saveOrUpdate(updatedData)
-        Redirect(navigator.nextPage(RemoveConnectionId).apply(updatedData))
+        Redirect(navigator.nextPage(RemoveConnectionId, updatedData).apply(updatedData))
       }
     )
   }

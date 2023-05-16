@@ -62,7 +62,7 @@ class MethodToFixCurrentRentController @Inject() (
       data => {
         val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(methodToFixCurrentRentDetails = Some(data)))
         session.saveOrUpdate(updatedData)
-        Redirect(navigator.nextPage(MethodToFixCurrentRentsId).apply(updatedData))
+        Redirect(navigator.nextPage(MethodToFixCurrentRentsId, updatedData).apply(updatedData))
       }
     )
   }
