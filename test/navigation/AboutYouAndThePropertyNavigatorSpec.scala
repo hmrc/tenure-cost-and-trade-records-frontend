@@ -26,7 +26,7 @@ class AboutYouAndThePropertyNavigatorSpec extends TestBaseSpec {
 
     "return a function that goes to about the property when about you page has been completed" in {
       aboutYouAndThePropertyNavigator
-        .nextPage(AboutYouPageId)
+        .nextPage(AboutYouPageId, aboutYouAndTheProperty6010YesSession)
         .apply(
           aboutYouAndTheProperty6010YesSession
         ) mustBe controllers.aboutyouandtheproperty.routes.AboutThePropertyController
@@ -35,7 +35,7 @@ class AboutYouAndThePropertyNavigatorSpec extends TestBaseSpec {
 
     "return a function that goes to about the property website page when about the property page has been completed" in {
       aboutYouAndThePropertyNavigator
-        .nextPage(AboutThePropertyPageId)
+        .nextPage(AboutThePropertyPageId, aboutYouAndTheProperty6010YesSession)
         .apply(
           aboutYouAndTheProperty6010YesSession
         ) mustBe controllers.aboutyouandtheproperty.routes.WebsiteForPropertyController
@@ -44,7 +44,7 @@ class AboutYouAndThePropertyNavigatorSpec extends TestBaseSpec {
 
     "return a function that goes to task list page when CYA page has been completed" in {
       aboutYouAndThePropertyNavigator
-        .nextPage(CheckYourAnswersAboutThePropertyPageId)
+        .nextPage(CheckYourAnswersAboutThePropertyPageId, aboutYouAndTheProperty6010YesSession)
         .apply(
           aboutYouAndTheProperty6010YesSession
         ) mustBe controllers.routes.TaskListController

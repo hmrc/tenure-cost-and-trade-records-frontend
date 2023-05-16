@@ -40,39 +40,39 @@ class ConnectionToPropertyNavigatorSpec extends TestBaseSpec {
     "go to sign in from an identifier that doesn't exist in the route map" in {
       case object UnknownIdentifier extends Identifier
       navigator
-        .nextPage(UnknownIdentifier)
+        .nextPage(UnknownIdentifier, stillConnectedDetailsYesSession)
         .apply(stillConnectedDetailsYesSession) mustBe controllers.routes.LoginController.show()
     }
 
     "return a function that goes to the type of connection to the property page when still connected has been selected and the selection is yes" in {
       navigator
-        .nextPage(AreYouStillConnectedPageId)
+        .nextPage(AreYouStillConnectedPageId, stillConnectedDetailsYesSession)
         .apply(stillConnectedDetailsYesSession) mustBe routes.ConnectionToThePropertyController
         .show()
     }
 
     "return a function that goes to the edit address page when still connected has been selected and the selection is edit address" in {
       navigator
-        .nextPage(AreYouStillConnectedPageId)
+        .nextPage(AreYouStillConnectedPageId, stillConnectedDetailsEditSession)
         .apply(stillConnectedDetailsEditSession) mustBe routes.EditAddressController.show()
     }
 
     "return a function that goes to the not connected page when still connected has been selected and the selection is no" in {
       navigator
-        .nextPage(AreYouStillConnectedPageId)
+        .nextPage(AreYouStillConnectedPageId, stillConnectedDetailsNoSession)
         .apply(stillConnectedDetailsNoSession) mustBe controllers.notconnected.routes.PastConnectionController
         .show()
     }
 
     "return a function that goes to the type of connection to the property page when edit address has been completed" in {
       navigator
-        .nextPage(EditAddressPageId)
+        .nextPage(EditAddressPageId, stillConnectedDetailsEditSession)
         .apply(stillConnectedDetailsEditSession) mustBe routes.ConnectionToThePropertyController.show()
     }
 
     "return a function that goes to the task list page when connection to the property has been selected" in {
       navigator
-        .nextPage(ConnectionToPropertyPageId)
+        .nextPage(ConnectionToPropertyPageId, stillConnectedDetailsYesSession)
         .apply(stillConnectedDetailsYesSession) mustBe controllers.routes.TaskListController
         .show()
     }

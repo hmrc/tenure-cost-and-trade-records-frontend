@@ -69,7 +69,9 @@ class TurnoverController @Inject() (
             val updatedData = updateAboutTheTradingHistory(_.copy(turnoverSections = success))
             session
               .saveOrUpdate(updatedData)
-              .map(_ => Redirect(navigator.nextPage(CheckYourAnswersAboutTheTradingHistoryId, updatedData).apply(updatedData)))
+              .map(_ =>
+                Redirect(navigator.nextPage(CheckYourAnswersAboutTheTradingHistoryId, updatedData).apply(updatedData))
+              )
           }
         )
       }

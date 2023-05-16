@@ -41,31 +41,32 @@ class AboutYourLeaseOrTenure6011NavigatorSpec extends TestBaseSpec {
 
     "go to sign in from an identifier that doesn't exist in the route map" in {
       case object UnknownIdentifier extends Identifier
-      navigator.nextPage(UnknownIdentifier).apply(session6011) mustBe controllers.routes.LoginController.show()
+      navigator.nextPage(UnknownIdentifier, session6011).apply(session6011) mustBe controllers.routes.LoginController
+        .show()
     }
 
     "return a function that goes to current annual rent page when about your landlord has been completed" in {
       navigator
-        .nextPage(AboutTheLandlordPageId)
+        .nextPage(AboutTheLandlordPageId, session6011)
         .apply(session6011) mustBe controllers.aboutYourLeaseOrTenure.routes.CurrentAnnualRentController.show()
     }
 
     "return a function that goes to current rent first paid page when current annual rent has been completed" in {
       navigator
-        .nextPage(CurrentAnnualRentPageId)
+        .nextPage(CurrentAnnualRentPageId, session6011)
         .apply(session6011) mustBe controllers.aboutYourLeaseOrTenure.routes.CurrentRentFirstPaidController.show()
     }
 
     "return a function that goes to tenancy lease agreement expire page when current rent first paid has been completed" in {
       navigator
-        .nextPage(CurrentRentFirstPaidPageId)
+        .nextPage(CurrentRentFirstPaidPageId, session6011)
         .apply(session6011) mustBe controllers.aboutYourLeaseOrTenure.routes.TenancyLeaseAgreementExpireController
         .show()
     }
 
     "return a function that goes to further information page when tenancy lease agreement expire has been completed" in {
       navigator
-        .nextPage(TenancyLeaseAgreementExpirePageId)
+        .nextPage(TenancyLeaseAgreementExpirePageId, session6011)
         .apply(
           session6011
         ) mustBe controllers.aboutYourLeaseOrTenure.routes.CheckYourAnswersAboutYourLeaseOrTenureController.show()

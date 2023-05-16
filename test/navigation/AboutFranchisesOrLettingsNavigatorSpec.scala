@@ -72,13 +72,13 @@ class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec {
     "go to navigate from an identifier that doesn't exist in the route map" in {
       case object UnknownIdentifier extends Identifier
       navigator
-        .nextPage(UnknownIdentifier)
+        .nextPage(UnknownIdentifier, sessionAboutFranchiseOrLettingYes)
         .apply(sessionAboutFranchiseOrLettingYes) mustBe controllers.routes.LoginController.show()
     }
 
     "return a function that goes to catering operation page when franchise page has been completed yes" in {
       navigator
-        .nextPage(FranchiseOrLettingsTiedToPropertyId)
+        .nextPage(FranchiseOrLettingsTiedToPropertyId, sessionAboutFranchiseOrLettingYes)
         .apply(
           sessionAboutFranchiseOrLettingYes
         ) mustBe controllers.aboutfranchisesorlettings.routes.CateringOperationController.show()
@@ -86,7 +86,7 @@ class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec {
 
     "return a function that goes to task list page when franchise page has been completed no" in {
       navigator
-        .nextPage(FranchiseOrLettingsTiedToPropertyId)
+        .nextPage(FranchiseOrLettingsTiedToPropertyId, sessionAboutFranchiseOrLettingNo)
         .apply(
           sessionAboutFranchiseOrLettingNo
         ) mustBe controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show()
@@ -94,7 +94,7 @@ class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec {
 
     "return a function that goes to catering operation page when franchise page has been completed yes 6015" in {
       navigator
-        .nextPage(FranchiseOrLettingsTiedToPropertyId)
+        .nextPage(FranchiseOrLettingsTiedToPropertyId, sessionAboutFranchiseOrLettingYes6015)
         .apply(
           sessionAboutFranchiseOrLettingYes6015
         ) mustBe controllers.aboutfranchisesorlettings.routes.ConcessionOrFranchiseController.show()
@@ -102,7 +102,7 @@ class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec {
 
     "return a function that goes to task list page when franchise page has been completed no 6015" in {
       navigator
-        .nextPage(FranchiseOrLettingsTiedToPropertyId)
+        .nextPage(FranchiseOrLettingsTiedToPropertyId, sessionAboutFranchiseOrLettingNo6015)
         .apply(
           sessionAboutFranchiseOrLettingNo6015
         ) mustBe controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show()
@@ -110,7 +110,7 @@ class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec {
 
     "return a function that goes to catering operation details page when catering operation page has been completed yes" in {
       navigator
-        .nextPage(CateringOperationPageId)
+        .nextPage(CateringOperationPageId, sessionAboutFranchiseOrLettingYes)
         .apply(
           sessionAboutFranchiseOrLettingYes
         ) mustBe controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController.show()
@@ -118,7 +118,7 @@ class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec {
 
     "return a function that goes to letting page when catering operation page has been completed no" in {
       navigator
-        .nextPage(CateringOperationPageId)
+        .nextPage(CateringOperationPageId, sessionAboutFranchiseOrLettingNo)
         .apply(
           sessionAboutFranchiseOrLettingNo
         ) mustBe controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show()
@@ -126,7 +126,7 @@ class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec {
 
     "return a function that goes to concession or franchise page when franchise page has been completed yes 6015" in {
       navigator
-        .nextPage(CateringOperationPageId)
+        .nextPage(CateringOperationPageId, sessionAboutFranchiseOrLettingYes6015)
         .apply(
           sessionAboutFranchiseOrLettingYes6015
         ) mustBe controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController.show()
@@ -134,7 +134,7 @@ class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec {
 
     "return a function that goes to concession or franchise page when franchise page has been completed no 6015" in {
       navigator
-        .nextPage(CateringOperationPageId)
+        .nextPage(CateringOperationPageId, sessionAboutFranchiseOrLettingNo6015)
         .apply(
           sessionAboutFranchiseOrLettingNo6015
         ) mustBe controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show()
@@ -142,7 +142,7 @@ class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec {
 
     "return a function that goes to catering operation rent details page when catering operation details page has been completed" in {
       navigator
-        .nextPage(CateringOperationDetailsPageId)
+        .nextPage(CateringOperationDetailsPageId, sessionAboutFranchiseOrLettingYes)
         .apply(
           sessionAboutFranchiseOrLettingYes
         ) mustBe controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsRentController.show(0)
@@ -150,7 +150,7 @@ class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec {
 
     "return a function that goes to catering operation rent includes page when catering operation rent details page has been completed" in {
       navigator
-        .nextPage(CateringOperationRentDetailsPageId)
+        .nextPage(CateringOperationRentDetailsPageId, sessionAboutFranchiseOrLettingYes)
         .apply(
           sessionAboutFranchiseOrLettingYes
         ) mustBe controllers.aboutfranchisesorlettings.routes.CateringOperationRentIncludesController.show(0)
@@ -158,7 +158,7 @@ class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec {
 
     "return a function that goes to add another catering operation page when catering operation rent includes page has been completed" in {
       navigator
-        .nextPage(CateringOperationRentIncludesPageId)
+        .nextPage(CateringOperationRentIncludesPageId, sessionAboutFranchiseOrLettingYes)
         .apply(
           sessionAboutFranchiseOrLettingYes
         ) mustBe controllers.aboutfranchisesorlettings.routes.AddAnotherCateringOperationController.show(0)
@@ -166,7 +166,7 @@ class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec {
 
     "return a function that goes to franchise details page when franchise rent includes has been completed yes" in {
       navigator
-        .nextPage(AddAnotherCateringOperationPageId)
+        .nextPage(AddAnotherCateringOperationPageId, sessionAboutFranchiseOrLettingYes)
         .apply(
           sessionAboutFranchiseOrLettingYes
         ) mustBe controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController.show()
@@ -174,7 +174,7 @@ class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec {
 
     "return a function that goes to lettings page when letting page has been completed no" in {
       navigator
-        .nextPage(AddAnotherCateringOperationPageId)
+        .nextPage(AddAnotherCateringOperationPageId, sessionAboutFranchiseOrLettingNo)
         .apply(
           sessionAboutFranchiseOrLettingNo
         ) mustBe controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show()
@@ -182,7 +182,7 @@ class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec {
 
     "return a function that goes to lettings details page when letting page has been completed yes" in {
       navigator
-        .nextPage(LettingAccommodationPageId)
+        .nextPage(LettingAccommodationPageId, sessionAboutFranchiseOrLettingYes)
         .apply(
           sessionAboutFranchiseOrLettingYes
         ) mustBe controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsController.show()
@@ -190,7 +190,7 @@ class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec {
 
     "return a function that goes to task list page when letting page has been completed no" in {
       navigator
-        .nextPage(LettingAccommodationPageId)
+        .nextPage(LettingAccommodationPageId, sessionAboutFranchiseOrLettingNo)
         .apply(
           sessionAboutFranchiseOrLettingNo
         ) mustBe controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show()
@@ -198,7 +198,7 @@ class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec {
 
     "return a function that goes to letting rent details page when lettings page has been completed" in {
       navigator
-        .nextPage(LettingAccommodationDetailsPageId)
+        .nextPage(LettingAccommodationDetailsPageId, sessionAboutFranchiseOrLettingYes)
         .apply(
           sessionAboutFranchiseOrLettingYes
         ) mustBe controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsRentController.show(0)
@@ -206,7 +206,7 @@ class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec {
 
     "return a function that goes to letting rent includes page when lettings rent details page has been completed" in {
       navigator
-        .nextPage(LettingAccommodationRentDetailsPageId)
+        .nextPage(LettingAccommodationRentDetailsPageId, sessionAboutFranchiseOrLettingYes)
         .apply(
           sessionAboutFranchiseOrLettingYes
         ) mustBe controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyRentIncludesController.show(0)
@@ -214,7 +214,7 @@ class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec {
 
     "return a function that goes to add another letting page when lettings rent includes page has been completed" in {
       navigator
-        .nextPage(LettingAccommodationRentIncludesPageId)
+        .nextPage(LettingAccommodationRentIncludesPageId, sessionAboutFranchiseOrLettingYes)
         .apply(
           sessionAboutFranchiseOrLettingYes
         ) mustBe controllers.aboutfranchisesorlettings.routes.AddAnotherLettingOtherPartOfPropertyController.show(0)
@@ -222,7 +222,7 @@ class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec {
 
     "return a function that goes to lettings details page when lettings rent includes has been completed yes" in {
       navigator
-        .nextPage(AddAnotherLettingAccommodationPageId)
+        .nextPage(AddAnotherLettingAccommodationPageId, sessionAboutFranchiseOrLettingYes)
         .apply(
           sessionAboutFranchiseOrLettingYes
         ) mustBe controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsController.show()
@@ -230,7 +230,7 @@ class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec {
 
     "return a function that goes to task list page when add another letting page has been completed no" in {
       navigator
-        .nextPage(AddAnotherLettingAccommodationPageId)
+        .nextPage(AddAnotherLettingAccommodationPageId, sessionAboutFranchiseOrLettingNo)
         .apply(
           sessionAboutFranchiseOrLettingNo
         ) mustBe controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show()

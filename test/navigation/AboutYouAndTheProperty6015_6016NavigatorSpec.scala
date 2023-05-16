@@ -28,7 +28,7 @@ class AboutYouAndTheProperty6015_6016NavigatorSpec extends TestBaseSpec {
 
     "return a function that goes to licence granted page when about the property website page has been completed" in {
       aboutYouAndThePropertyNavigator
-        .nextPage(WebsiteForPropertyPageId)
+        .nextPage(WebsiteForPropertyPageId, aboutYouAndTheProperty6015NoSession)
         .apply(
           aboutYouAndTheProperty6015NoSession
         ) mustBe controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedController
@@ -37,7 +37,7 @@ class AboutYouAndTheProperty6015_6016NavigatorSpec extends TestBaseSpec {
 
     "return a function that goes to CYA page when licence granted page has been completed no" in {
       aboutYouAndThePropertyNavigator
-        .nextPage(PremisesLicenseGrantedId)
+        .nextPage(PremisesLicenseGrantedId, aboutYouAndTheProperty6015NoSession)
         .apply(
           aboutYouAndTheProperty6015NoSession
         ) mustBe controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController
@@ -49,7 +49,7 @@ class AboutYouAndTheProperty6015_6016NavigatorSpec extends TestBaseSpec {
 
     "return a function that goes to licence granted page when about the property website page has been completed" in {
       aboutYouAndThePropertyNavigator
-        .nextPage(WebsiteForPropertyPageId)
+        .nextPage(WebsiteForPropertyPageId, aboutYouAndTheProperty6015YesSession)
         .apply(
           aboutYouAndTheProperty6015YesSession
         ) mustBe controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedController
@@ -58,7 +58,7 @@ class AboutYouAndTheProperty6015_6016NavigatorSpec extends TestBaseSpec {
 
     "return a function that goes to licence granted details page when licence granted page has been completed yes" in {
       aboutYouAndThePropertyNavigator
-        .nextPage(PremisesLicenseGrantedId)
+        .nextPage(PremisesLicenseGrantedId, aboutYouAndTheProperty6015YesSession)
         .apply(
           aboutYouAndTheProperty6015YesSession
         ) mustBe controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedDetailsController
@@ -67,7 +67,7 @@ class AboutYouAndTheProperty6015_6016NavigatorSpec extends TestBaseSpec {
 
     "return a function that goes to CYA page when licence granted details page has been completed" in {
       aboutYouAndThePropertyNavigator
-        .nextPage(PremisesLicenseGrantedDetailsId)
+        .nextPage(PremisesLicenseGrantedDetailsId, aboutYouAndTheProperty6015YesSession)
         .apply(
           aboutYouAndTheProperty6015YesSession
         ) mustBe controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController
@@ -81,7 +81,7 @@ class AboutYouAndTheProperty6015_6016NavigatorSpec extends TestBaseSpec {
 
     "return a function that goes to licence granted page when about the property website page has been completed" in {
       aboutYouAndThePropertyNavigator
-        .nextPage(WebsiteForPropertyPageId)
+        .nextPage(WebsiteForPropertyPageId, aboutYouAndTheProperty6016NoSession)
         .apply(
           aboutYouAndTheProperty6016NoSession
         ) mustBe controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedController
@@ -90,7 +90,7 @@ class AboutYouAndTheProperty6015_6016NavigatorSpec extends TestBaseSpec {
 
     "return a function that goes to CYA page when licence granted page has been completed no" in {
       aboutYouAndThePropertyNavigator
-        .nextPage(PremisesLicenseGrantedId)
+        .nextPage(PremisesLicenseGrantedId, aboutYouAndTheProperty6016NoSession)
         .apply(
           aboutYouAndTheProperty6016NoSession
         ) mustBe controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController
@@ -102,7 +102,7 @@ class AboutYouAndTheProperty6015_6016NavigatorSpec extends TestBaseSpec {
 
     "return a function that goes to licence granted page when about the property website page has been completed" in {
       aboutYouAndThePropertyNavigator
-        .nextPage(WebsiteForPropertyPageId)
+        .nextPage(WebsiteForPropertyPageId, aboutYouAndTheProperty6016NoSession)
         .apply(
           aboutYouAndTheProperty6016YesSession
         ) mustBe controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedController
@@ -111,7 +111,7 @@ class AboutYouAndTheProperty6015_6016NavigatorSpec extends TestBaseSpec {
 
     "return a function that goes to licence granted details page when licence granted page has been completed yes" in {
       aboutYouAndThePropertyNavigator
-        .nextPage(PremisesLicenseGrantedId)
+        .nextPage(PremisesLicenseGrantedId, aboutYouAndTheProperty6016NoSession)
         .apply(
           aboutYouAndTheProperty6016YesSession
         ) mustBe controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedDetailsController
@@ -120,7 +120,7 @@ class AboutYouAndTheProperty6015_6016NavigatorSpec extends TestBaseSpec {
 
     "return a function that goes to CYA page when licence granted details page has been completed" in {
       aboutYouAndThePropertyNavigator
-        .nextPage(PremisesLicenseGrantedDetailsId)
+        .nextPage(PremisesLicenseGrantedDetailsId, aboutYouAndTheProperty6016NoSession)
         .apply(
           aboutYouAndTheProperty6016YesSession
         ) mustBe controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController

@@ -55,7 +55,9 @@ class LettingOtherPartOfPropertyRentIncludesController @Inject() (
 
   def submit(index: Int) = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft(
-      Redirect(navigator.nextPage(LettingAccommodationRentIncludesPageId, request.sessionData).apply(request.sessionData))
+      Redirect(
+        navigator.nextPage(LettingAccommodationRentIncludesPageId, request.sessionData).apply(request.sessionData)
+      )
     )
   }
 
