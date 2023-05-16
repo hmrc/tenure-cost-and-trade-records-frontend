@@ -17,11 +17,11 @@
 package connectors
 
 import com.google.inject.ImplementedBy
-import models.audit.{ContinueNextPageData, SavedAsDraftEvent}
+import models.Session
+import models.audit.SavedAsDraftEvent
 import play.api.i18n.Messages
 import play.api.libs.json.{JsObject, Json}
 import uk.gov.hmrc.http.HeaderCarrier
-import uk.gov.hmrc.play.audit.AuditExtensions.auditHeaderCarrier
 import uk.gov.hmrc.play.audit.http.config.AuditingConfig
 import uk.gov.hmrc.play.audit.http.connector.{AuditChannel, AuditConnector, AuditResult, DatastreamMetrics}
 import uk.gov.hmrc.play.audit.model.DataEvent
@@ -36,11 +36,10 @@ trait Audit extends AuditConnector {
 
   private val AUDIT_SOURCE = "tenure-cost-and-trade-records-frontend"
 
-  def sendContinueNextPage(url: String)(implicit hc: HeaderCarrier): Unit                                             =
-    sendEventMap("ContinueNextPage", Map("url" -> url), hc.toAuditTags())
-
-  def sendContinueNextPage(url: String, continueNextPageData: ContinueNextPageData)(implicit hc: HeaderCarrier): Unit =
-    sendExplicitAudit("ContinueNextPage", continueNextPageData)
+  def sendContinueNextPage(session: Session, url: String)(implicit hc: HeaderCarrier): Unit = {
+    val continueNextPageJson = Json.toJson(session).as[JsObject] + ("nextPageURL" -> Json.toJson(url))
+    sendExplicitAudit("ContinueNextPage", continueNextPageJson)
+  }
 
   def sendSavedAsDraft(savedAsDraftEvent: SavedAsDraftEvent)(implicit hc: HeaderCarrier): Unit =
     sendExplicitAudit("SavedAsDraft", savedAsDraftEvent)

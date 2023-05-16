@@ -62,7 +62,7 @@ class IncentivesPaymentsConditionsController @Inject() (
       data => {
         val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(incentivesPaymentsConditionsDetails = Some(data)))
         session.saveOrUpdate(updatedData)
-        Redirect(navigator.nextPage(IncentivesPaymentsConditionsId).apply(updatedData))
+        Redirect(navigator.nextPage(IncentivesPaymentsConditionsId, updatedData).apply(updatedData))
       }
     )
   }

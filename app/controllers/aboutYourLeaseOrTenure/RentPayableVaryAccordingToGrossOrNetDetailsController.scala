@@ -69,7 +69,7 @@ class RentPayableVaryAccordingToGrossOrNetDetailsController @Inject() (
           _.copy(rentPayableVaryAccordingToGrossOrNetInformationDetails = Some(data))
         )
         session.saveOrUpdate(updatedData)
-        Redirect(navigator.nextPage(RentPayableVaryAccordingToGrossOrNetDetailsId).apply(updatedData))
+        Redirect(navigator.nextPage(RentPayableVaryAccordingToGrossOrNetDetailsId, updatedData).apply(updatedData))
       }
     )
   }

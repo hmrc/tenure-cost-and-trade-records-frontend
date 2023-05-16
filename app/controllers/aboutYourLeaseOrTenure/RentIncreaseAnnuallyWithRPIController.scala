@@ -74,7 +74,7 @@ class RentIncreaseAnnuallyWithRPIController @Inject() (
       data => {
         val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(rentIncreasedAnnuallyWithRPIDetails = Some(data)))
         session.saveOrUpdate(updatedData)
-        Redirect(navigator.nextPage(RentIncreaseByRPIPageId).apply(updatedData))
+        Redirect(navigator.nextPage(RentIncreaseByRPIPageId, updatedData).apply(updatedData))
       }
     )
   }

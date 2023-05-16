@@ -69,7 +69,7 @@ class PremisesLicenseGrantedDetailsController @Inject() (
       data => {
         val updatedData = updateAboutYouAndTheProperty(_.copy(premisesLicenseGrantedInformationDetails = Some(data)))
         session.saveOrUpdate(updatedData)
-        Redirect(navigator.nextPage(PremisesLicenseGrantedDetailsId).apply(updatedData))
+        Redirect(navigator.nextPage(PremisesLicenseGrantedDetailsId, updatedData).apply(updatedData))
       }
     )
   }

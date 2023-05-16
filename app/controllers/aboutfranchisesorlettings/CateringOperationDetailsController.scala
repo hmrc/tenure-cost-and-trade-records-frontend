@@ -118,7 +118,7 @@ class CateringOperationDetailsController @Inject() (
           case (currentIndex, aboutFranchisesOrLettings) =>
             val updatedData = updateAboutFranchisesOrLettings(_ => aboutFranchisesOrLettings)
             session.saveOrUpdate(updatedData)
-            Redirect(navigator.nextPage(CateringOperationDetailsPageId).apply(updatedData))
+            Redirect(navigator.nextPage(CateringOperationDetailsPageId, updatedData).apply(updatedData))
         }
       }
     )

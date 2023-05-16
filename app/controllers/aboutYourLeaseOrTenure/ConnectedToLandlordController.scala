@@ -65,7 +65,7 @@ class ConnectedToLandlordController @Inject() (
       data => {
         val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(connectedToLandlord = Some(data)))
         session.saveOrUpdate(updatedData)
-        Redirect(navigator.nextPage(ConnectedToLandlordPageId).apply(updatedData))
+        Redirect(navigator.nextPage(ConnectedToLandlordPageId, updatedData).apply(updatedData))
       }
     )
   }

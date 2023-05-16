@@ -89,7 +89,7 @@ class LettingOtherPartOfPropertyController @Inject() (
       data => {
         val updatedData = updateAboutFranchisesOrLettings(_.copy(lettingOtherPartOfProperty = Some(data)))
         session.saveOrUpdate(updatedData)
-        Redirect(navigator.nextPage(LettingAccommodationPageId).apply(updatedData))
+        Redirect(navigator.nextPage(LettingAccommodationPageId, updatedData).apply(updatedData))
       }
     )
   }

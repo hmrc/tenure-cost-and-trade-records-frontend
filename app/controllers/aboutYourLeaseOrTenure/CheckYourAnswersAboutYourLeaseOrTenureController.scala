@@ -60,7 +60,9 @@ class CheckYourAnswersAboutYourLeaseOrTenureController @Inject() (
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft(
-      Redirect(navigator.nextPage(CheckYourAnswersAboutYourLeaseOrTenureId).apply(request.sessionData))
+      Redirect(
+        navigator.nextPage(CheckYourAnswersAboutYourLeaseOrTenureId, request.sessionData).apply(request.sessionData)
+      )
     )
   }
 

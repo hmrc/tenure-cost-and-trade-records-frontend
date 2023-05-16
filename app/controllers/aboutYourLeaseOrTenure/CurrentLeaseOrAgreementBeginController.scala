@@ -60,7 +60,7 @@ class CurrentLeaseOrAgreementBeginController @Inject() (
       data => {
         val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(currentLeaseOrAgreementBegin = Some(data)))
         session.saveOrUpdate(updatedData)
-        Redirect(navigator.nextPage(CurrentLeaseBeginPageId).apply(updatedData))
+        Redirect(navigator.nextPage(CurrentLeaseBeginPageId, updatedData).apply(updatedData))
       }
     )
   }

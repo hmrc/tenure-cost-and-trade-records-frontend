@@ -70,7 +70,7 @@ class EnforcementActionBeenTakenDetailsController @Inject() (
         val updatedData =
           updateAboutYouAndTheProperty(_.copy(enforcementActionHasBeenTakenInformationDetails = Some(data)))
         session.saveOrUpdate(updatedData)
-        Redirect(navigator.nextPage(EnforcementActionBeenTakenDetailsPageId).apply(updatedData))
+        Redirect(navigator.nextPage(EnforcementActionBeenTakenDetailsPageId, updatedData).apply(updatedData))
       }
     )
   }

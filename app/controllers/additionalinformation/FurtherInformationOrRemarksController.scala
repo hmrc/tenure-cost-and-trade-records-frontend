@@ -63,7 +63,7 @@ class FurtherInformationOrRemarksController @Inject() (
       data => {
         val updatedData = updateAdditionalInformation(_.copy(furtherInformationOrRemarksDetails = Some(data)))
         session.saveOrUpdate(updatedData)
-        Redirect(navigator.nextPage(FurtherInformationId).apply(updatedData))
+        Redirect(navigator.nextPage(FurtherInformationId, updatedData).apply(updatedData))
       }
     )
   }

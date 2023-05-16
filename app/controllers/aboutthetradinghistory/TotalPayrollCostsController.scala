@@ -58,7 +58,7 @@ class TotalPayrollCostsController @Inject() (
       formWithErrors => BadRequest(totalPayrollCostsView(formWithErrors, request.sessionData.toSummary)),
       data => {
         val updatedData = updateAboutTheTradingHistory(_.copy(totalPayrollCost = Some(data)))
-        Redirect(navigator.nextPage(TotalPayrollCostId).apply(updatedData))
+        Redirect(navigator.nextPage(TotalPayrollCostId, updatedData).apply(updatedData))
       }
     )
   }

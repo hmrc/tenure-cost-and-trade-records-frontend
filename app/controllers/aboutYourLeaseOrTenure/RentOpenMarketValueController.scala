@@ -70,7 +70,7 @@ class RentOpenMarketValueController @Inject() (
       data => {
         val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(rentOpenMarketValueDetails = Some(data)))
         session.saveOrUpdate(updatedData)
-        Redirect(navigator.nextPage(RentOpenMarketPageId).apply(updatedData))
+        Redirect(navigator.nextPage(RentOpenMarketPageId, updatedData).apply(updatedData))
       }
     )
   }

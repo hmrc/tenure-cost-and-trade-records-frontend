@@ -73,13 +73,13 @@ class RemoveConnectionNavigatorSpec extends TestBaseSpec {
     "go to sign in from an identifier that doesn't exist in the route map" in {
       case object UnknownIdentifier extends Identifier
       navigator
-        .nextPage(UnknownIdentifier)
+        .nextPage(UnknownIdentifier, sessionAdditionalInformation)
         .apply(sessionAdditionalInformation) mustBe controllers.routes.LoginController.show()
     }
 
     "return a function that goes to remove connection page when past connection has been completed" in {
       navigator
-        .nextPage(PastConnectionId)
+        .nextPage(PastConnectionId, sessionAdditionalInformation)
         .apply(
           sessionAdditionalInformation
         ) mustBe controllers.notconnected.routes.RemoveConnectionController
@@ -88,7 +88,7 @@ class RemoveConnectionNavigatorSpec extends TestBaseSpec {
 
     "return a function that goes to CYA page when remove connection has been completed" in {
       navigator
-        .nextPage(RemoveConnectionId)
+        .nextPage(RemoveConnectionId, sessionAdditionalInformation)
         .apply(
           sessionAdditionalInformation
         ) mustBe controllers.notconnected.routes.CheckYourAnswersNotConnectedController

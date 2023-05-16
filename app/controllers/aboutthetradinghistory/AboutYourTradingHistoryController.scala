@@ -63,7 +63,7 @@ class AboutYourTradingHistoryController @Inject() (
       formWithErrors => BadRequest(aboutYourTradingHistoryView(formWithErrors, request.sessionData.toSummary)),
       data =>
         if (request.sessionData.aboutTheTradingHistory.flatMap(_.occupationAndAccountingInformation).contains(data)) {
-          Redirect(navigator.nextPage(AboutYourTradingHistoryPageId).apply(request.sessionData))
+          Redirect(navigator.nextPage(AboutYourTradingHistoryPageId, request.sessionData).apply(request.sessionData))
         } else {
           val updatedData = updateAboutTheTradingHistory(
             _.copy(
@@ -83,7 +83,7 @@ class AboutYourTradingHistoryController @Inject() (
           )
           session
             .saveOrUpdate(updatedData)
-            .map(_ => Redirect(navigator.nextPage(AboutYourTradingHistoryPageId).apply(updatedData)))
+            .map(_ => Redirect(navigator.nextPage(AboutYourTradingHistoryPageId, updatedData).apply(updatedData)))
         }
     )
   }

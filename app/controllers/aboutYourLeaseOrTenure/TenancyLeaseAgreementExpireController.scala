@@ -59,7 +59,8 @@ class TenancyLeaseAgreementExpireController @Inject() (
     continueOrSaveAsDraft[TenancyLeaseAgreementExpire](
       tenancyLeaseAgreementExpireForm,
       formWithErrors => BadRequest(tenancyLeaseAgreementExpireView(formWithErrors, request.sessionData.toSummary)),
-      data => Redirect(navigator.nextPage(TenancyLeaseAgreementExpirePageId).apply(request.sessionData))
+      data =>
+        Redirect(navigator.nextPage(TenancyLeaseAgreementExpirePageId, request.sessionData).apply(request.sessionData))
     )
   }
 

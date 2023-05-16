@@ -69,7 +69,7 @@ class CurrentAnnualRentController @Inject() (
       data => {
         val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(annualRent = Some(data)))
         session.saveOrUpdate(updatedData)
-        Redirect(navigator.nextPage(CurrentAnnualRentPageId).apply(updatedData))
+        Redirect(navigator.nextPage(CurrentAnnualRentPageId, updatedData).apply(updatedData))
       }
     )
   }

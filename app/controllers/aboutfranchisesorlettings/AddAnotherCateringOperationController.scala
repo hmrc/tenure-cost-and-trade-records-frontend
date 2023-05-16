@@ -84,7 +84,7 @@ class AddAnotherCateringOperationController @Inject() (
           )
           val updatedData      = updateAboutFranchisesOrLettings(_.copy(cateringOperationSections = updatedSections))
           session.saveOrUpdate(updatedData)
-          Redirect(navigator.nextPage(AddAnotherCateringOperationPageId).apply(updatedData))
+          Redirect(navigator.nextPage(AddAnotherCateringOperationPageId, updatedData).apply(updatedData))
         }
     )
   }

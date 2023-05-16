@@ -62,7 +62,7 @@ class AlternativeContactDetailsController @Inject() (
       data => {
         val updatedData = updateAdditionalInformation(_.copy(altContactInformation = Some(data)))
         session.saveOrUpdate(updatedData)
-        Redirect(navigator.nextPage(AlternativeContactDetailsId).apply(updatedData))
+        Redirect(navigator.nextPage(AlternativeContactDetailsId, updatedData).apply(updatedData))
       }
     )
   }

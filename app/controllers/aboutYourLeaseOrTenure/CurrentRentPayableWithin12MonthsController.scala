@@ -60,7 +60,7 @@ class CurrentRentPayableWithin12MonthsController @Inject() (
       data => {
         val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(currentRentPayableWithin12Months = Some(data)))
         session.saveOrUpdate(updatedData)
-        Redirect(navigator.nextPage(CurrentRentPayableWithin12monthsPageId).apply(request.sessionData))
+        Redirect(navigator.nextPage(CurrentRentPayableWithin12monthsPageId, updatedData).apply(updatedData))
       }
     )
   }

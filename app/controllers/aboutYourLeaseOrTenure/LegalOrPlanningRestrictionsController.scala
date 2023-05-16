@@ -59,7 +59,7 @@ class LegalOrPlanningRestrictionsController @Inject() (
       data => {
         val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(legalOrPlanningRestrictions = Some(data)))
         session.saveOrUpdate(updatedData)
-        Redirect(navigator.nextPage(LegalOrPlanningRestrictionId).apply(updatedData))
+        Redirect(navigator.nextPage(LegalOrPlanningRestrictionId, updatedData).apply(updatedData))
       }
     )
   }

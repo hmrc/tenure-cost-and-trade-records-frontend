@@ -59,7 +59,7 @@ class TenantsAdditionsDisregardedController @Inject() (
       data => {
         val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(tenantAdditionsDisregardedDetails = Some(data)))
         session.saveOrUpdate(updatedData)
-        Redirect(navigator.nextPage(TenantsAdditionsDisregardedId).apply(updatedData))
+        Redirect(navigator.nextPage(TenantsAdditionsDisregardedId, updatedData).apply(updatedData))
       }
     )
   }

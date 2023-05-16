@@ -37,13 +37,13 @@ class AdditionalInformationNavigatorSpec extends TestBaseSpec {
     "go to sign in from an identifier that doesn't exist in the route map" in {
       case object UnknownIdentifier extends Identifier
       navigator
-        .nextPage(UnknownIdentifier)
+        .nextPage(UnknownIdentifier, additionalInformationSession)
         .apply(additionalInformationSession) mustBe controllers.routes.LoginController.show()
     }
 
     "return a function that goes to alternative contact details page when further information has been completed" in {
       navigator
-        .nextPage(FurtherInformationId)
+        .nextPage(FurtherInformationId, additionalInformationSession)
         .apply(
           additionalInformationSession
         ) mustBe controllers.additionalinformation.routes.AlternativeContactDetailsController
@@ -52,7 +52,7 @@ class AdditionalInformationNavigatorSpec extends TestBaseSpec {
 
     "return a function that goes to CYA page when alternative contact details has been completed" in {
       navigator
-        .nextPage(AlternativeContactDetailsId)
+        .nextPage(AlternativeContactDetailsId, additionalInformationSession)
         .apply(
           additionalInformationSession
         ) mustBe controllers.additionalinformation.routes.CheckYourAnswersAdditionalInformationController
@@ -61,7 +61,7 @@ class AdditionalInformationNavigatorSpec extends TestBaseSpec {
 
     "return a function that goes to task list page when CYA has been completed" in {
       navigator
-        .nextPage(CheckYourAnswersAdditionalInformationId)
+        .nextPage(CheckYourAnswersAdditionalInformationId, additionalInformationSession)
         .apply(
           additionalInformationSession
         ) mustBe controllers.routes.TaskListController

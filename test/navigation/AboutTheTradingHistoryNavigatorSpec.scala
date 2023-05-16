@@ -67,24 +67,26 @@ class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec {
 
     "go to sign in from an identifier that doesn't exist in the route map" in {
       case object UnknownIdentifier extends Identifier
-      navigator.nextPage(UnknownIdentifier).apply(sessionAboutYou) mustBe controllers.routes.LoginController.show()
+      navigator
+        .nextPage(UnknownIdentifier, sessionAboutYou)
+        .apply(sessionAboutYou) mustBe controllers.routes.LoginController.show()
     }
 
     "return a function that goes the turnover page when about your trading history has been completed" in {
       navigator
-        .nextPage(AboutYourTradingHistoryPageId)
+        .nextPage(AboutYourTradingHistoryPageId, sessionAboutYou)
         .apply(sessionAboutYou) mustBe controllers.aboutthetradinghistory.routes.TurnoverController.show()
     }
 
     "return a function that goes the total payroll costs page when about your cost of sales has been completed" in {
       navigator
-        .nextPage(CostOfSalesId)
+        .nextPage(CostOfSalesId, sessionAboutYou)
         .apply(sessionAboutYou) mustBe controllers.aboutthetradinghistory.routes.TotalPayrollCostsController.show()
     }
 
     "return a function that goes the variable operating expenses page when total payroll page has been completed" in {
       navigator
-        .nextPage(TotalPayrollCostId)
+        .nextPage(TotalPayrollCostId, sessionAboutYou)
         .apply(
           sessionAboutYou
         ) mustBe controllers.aboutthetradinghistory.routes.VariableOperatingExpensesController.show()
@@ -92,19 +94,19 @@ class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec {
 
     "return a function that goes the fixed operating expenses page when variable operating expenses has been completed" in {
       navigator
-        .nextPage(VariableOperatingExpensesId)
+        .nextPage(VariableOperatingExpensesId, sessionAboutYou)
         .apply(sessionAboutYou) mustBe controllers.aboutthetradinghistory.routes.FixedOperatingExpensesController.show()
     }
 
     "return a function that goes other costs page when fixed operating expenses has been completed" in {
       navigator
-        .nextPage(FixedOperatingExpensesId)
+        .nextPage(FixedOperatingExpensesId, sessionAboutYou)
         .apply(sessionAboutYou) mustBe controllers.aboutthetradinghistory.routes.OtherCostsController.show()
     }
 
     "return a function that goes the task lists page when total payroll cost has been completed" in {
       navigator
-        .nextPage(CheckYourAnswersAboutTheTradingHistoryId)
+        .nextPage(CheckYourAnswersAboutTheTradingHistoryId, sessionAboutYou)
         .apply(sessionAboutYou) mustBe controllers.routes.TaskListController.show()
     }
 

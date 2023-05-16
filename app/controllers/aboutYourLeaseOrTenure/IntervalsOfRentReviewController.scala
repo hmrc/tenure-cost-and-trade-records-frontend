@@ -59,7 +59,7 @@ class IntervalsOfRentReviewController @Inject() (
       data => {
         val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(intervalsOfRentReview = Some(data)))
         session.saveOrUpdate(updatedData)
-        Redirect(navigator.nextPage(IntervalsOfRentReviewId).apply(updatedData))
+        Redirect(navigator.nextPage(IntervalsOfRentReviewId, updatedData).apply(updatedData))
       }
     )
   }

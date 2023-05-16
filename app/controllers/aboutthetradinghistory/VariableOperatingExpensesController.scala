@@ -58,7 +58,7 @@ class VariableOperatingExpensesController @Inject() (
       formWithErrors => BadRequest(variableOperativeExpensesView(formWithErrors, request.sessionData.toSummary)),
       data => {
         val updatedData = request.sessionData
-        Redirect(navigator.nextPage(VariableOperatingExpensesId).apply(updatedData))
+        Redirect(navigator.nextPage(VariableOperatingExpensesId, updatedData).apply(updatedData))
       }
     )
   }
