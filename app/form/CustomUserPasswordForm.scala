@@ -19,15 +19,24 @@ package form
 import models.submissions.CustomUserPassword
 import play.api.data.Form
 import play.api.data.Forms.{mapping, text}
+import play.api.data.validation.Constraints.{minLength, pattern}
+import util.AlphanumericPasswordGenerator
 
 /**
   * @author Yuriy Tumakha
   */
 object CustomUserPasswordForm {
 
+  private val passwordMinLength = AlphanumericPasswordGenerator.passwordLength
+
   val customUserPasswordForm: Form[CustomUserPassword] = Form(
     mapping(
-      "password"        -> text(minLength = 7),
+      "password"        -> text
+        .verifying(
+          minLength(passwordMinLength, "error.password.minLength"),
+          pattern(".*\\d.*".r, error = "error.password.atLeastOneNumber"),
+          pattern(".*[a-zA-Z]+.*".r, error = "error.password.atLeastOneLetter")
+        ),
       "confirmPassword" -> text
     )(CustomUserPassword.apply)(CustomUserPassword.unapply)
       .verifying("saveAsDraft.error.passwordsDontMatch", data => data.confirmPassword == data.password)

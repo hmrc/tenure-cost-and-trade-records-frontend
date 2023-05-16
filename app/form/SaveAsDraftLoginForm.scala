@@ -18,6 +18,8 @@ package form
 
 import play.api.data.Form
 import play.api.data.Forms.{single, text}
+import play.api.data.validation.Constraints.minLength
+import util.AlphanumericPasswordGenerator.passwordLength
 
 /**
   * @author Yuriy Tumakha
@@ -26,7 +28,10 @@ object SaveAsDraftLoginForm {
 
   val saveAsDraftLoginForm: Form[String] = Form(
     single(
-      "password" -> text(minLength = 7)
+      "password" -> text
+        .verifying(
+          minLength(passwordLength, "error.password.minLength")
+        )
     )
   )
 

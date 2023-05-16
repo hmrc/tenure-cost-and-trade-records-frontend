@@ -23,6 +23,7 @@ import models.Session
 import play.api.http.Status.{BAD_REQUEST, NOT_FOUND, OK, SEE_OTHER}
 import play.api.test.Helpers.{POST, contentAsString, redirectLocation, status, stubMessagesControllerComponents}
 import stub.{StubBackendConnector, StubSessionRepo}
+import util.AlphanumericPasswordGenerator.passwordLength
 import util.DateUtil
 import utils.TestBaseSpec
 import views.html.{customPasswordSaveAsDraft, saveAsDraftLogin, sessionTimeout, submissionDraftSaved}
@@ -34,7 +35,7 @@ class SaveAsDraftControllerSpec extends TestBaseSpec {
 
   private val sessionRepo      = StubSessionRepo()
   private val backendConnector = StubBackendConnector()
-  private val password         = "P@$$word"
+  private val password         = "P@$$word1"
   private val exitPath         = "/exit/path"
 
   private def saveAsDraftController = new SaveAsDraftController(
@@ -91,7 +92,7 @@ class SaveAsDraftControllerSpec extends TestBaseSpec {
       val result = saveAsDraftController.saveAsDraft(exitPath)(
         fakeRequest
           .withMethod(POST)
-          .withFormUrlEncodedBody("password" -> "pass135", "confirmPassword" -> "pass2468")
+          .withFormUrlEncodedBody("password" -> "pass1357", "confirmPassword" -> "pass2468")
       )
 
       status(result) shouldBe OK
@@ -220,7 +221,7 @@ class SaveAsDraftControllerSpec extends TestBaseSpec {
 
       val session = backendConnector.loadSubmissionDraft(refNum).futureValue.get.session
       session.address                         shouldBe submissionDraft.session.address
-      session.saveAsDraftPassword.getOrElse("") should have length 7
+      session.saveAsDraftPassword.getOrElse("") should have length passwordLength
     }
   }
 
