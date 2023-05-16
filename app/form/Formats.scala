@@ -21,7 +21,7 @@ import models.submissions.Form6010._
 import models.submissions._
 import models.submissions.aboutYourLeaseOrTenure._
 import models.submissions.aboutyouandtheproperty._
-import models.submissions.common.{AnswerResponsibleParty, AnswersYesNo}
+import models.submissions.common.{AnswerResponsibleParty, AnswersYesNo, CYAYesNo}
 import models.submissions.connectiontoproperty.{AddressConnectionType, ConnectionToProperty}
 import models.submissions.notconnected.PastConnectionType
 import play.api.data.FormError
@@ -67,6 +67,9 @@ object Formats {
   implicit val userTypeFormat: Formatter[UserType]                                           = namedEnumFormatter(UserType, Errors.userTypeRequired)
   implicit val answerYesNoFormat: Formatter[AnswersYesNo]                                    =
     namedEnumFormatter(AnswersYesNo, Errors.booleanMissing)
+  implicit val cyaYesNoFormat: Formatter[CYAYesNo] =
+    namedEnumFormatter(CYAYesNo, Errors.booleanMissing)
+
   implicit val addressConnectionTypeFormatter: Formatter[AddressConnectionType]              =
     namedEnumFormatter(AddressConnectionType, Errors.isConnectedError)
   implicit val connectionToPropertyFormat: Formatter[ConnectionToProperty]                   =

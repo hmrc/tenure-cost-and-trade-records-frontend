@@ -17,6 +17,7 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import models.submissions.additionalinformation.CheckYourAnswersAdditionalInformation
 @import uk.gov.hmrc.govukfrontend.views.html.components._
+@import models.submissions.common.CYAYesNo
 
 @import models.Session
 
@@ -27,7 +28,7 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[CheckYourAnswersAdditionalInformation], session: Session)(implicit request: Request[_], messages: Messages)
+@(theForm: Form[CYAYesNo], session: Session)(implicit request: Request[_], messages: Messages)
 
 @layout(
  pageHeading = messages("checkYourAnswersAdditionalInformation.heading"),
@@ -90,7 +91,7 @@
   @includes.checkYourAnswersRadioButtons(
    govukRadios,
    theForm,
-   "checkYourAnswersRadio",
+   "checkYourAnswersAdditionalInformation",
    "checkYourAnswersRadio.heading",
    "govuk-fieldset__legend--m"
   )
