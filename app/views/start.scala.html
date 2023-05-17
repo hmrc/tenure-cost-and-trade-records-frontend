@@ -37,31 +37,44 @@
  showAccountInfo = false,
  withTimeoutDialog = false
 ) {
- <p class="govuk-body">@{messages("start.desc")}</p>
- <p class="govuk-body">@{messages("start.desc1")}</p>
+ <p class="govuk-body">@{messages("start.header")}</p>
 
- @govukInsetText(InsetText(
-  content = Text(messages("start.inset"))
- ))
+ <p class="govuk-heading-m">@{messages("start.title")}</p>
 
- @govukWarningText(WarningText(
-  iconFallbackText = "Warning",
-  content = Text(messages("start.warning"))
- ))
+ <p class="govuk-body">@{messages("start.block1")}</p>
+ <p class="govuk-body">@{messages("start.block2")}</p>
 
  <p class="govuk-heading-m">@{messages("start.subheading")}</p>
- <p class="govuk-body">@{messages("start.headingList")}</p>
 
  <ul class="govuk-list govuk-list--bullet">
   <li>@{messages("start.item1")}</li>
   <li>@{messages("start.item2")}</li>
   <li>@{messages("start.item3")}</li>
+ </ul>
+
+ <p class="govuk-heading-s">@{messages("start.subheading2")}</p>
+
+ <ul class="govuk-list govuk-list--bullet">
   <li>@{messages("start.item4")}</li>
   <li>@{messages("start.item5")}</li>
   <li>@{messages("start.item6")}</li>
  </ul>
 
- <p class="govuk-body">@{messages("start.headingFooter")}</p>
+ <p class="govuk-heading-s">@{messages("start.subheading3")}</p>
+
+ <p class="govuk-body">@{messages("start.desc3")}</p>
+ <p class="govuk-body">@{messages("start.desc4")}</p>
+
+ <p class="govuk-heading-m">@{messages("start.title2")}</p>
+
+ <p class="govuk-body">@{messages("start.desc5")}</p>
+ <p class="govuk-body">@{messages("start.desc6")}</p>
+
+
+ @govukWarningText(WarningText(
+  iconFallbackText = "Warning",
+  content = Text(messages("start.warning"))
+ ))
 
  @govukButton(
   Button(
@@ -70,5 +83,23 @@
    href = Some(routes.LoginController.show().url)
   )
  )
+
+
+ @govukInsetText(InsetText(
+  content = Text(messages("start.welsh"))
+ ))
+
+ <p class="govuk-heading-s">@{messages("start.subheading4")}</p>
+
+ <p class="govuk-body">@{messages("start.desc7")}</p>
+
+ <p class="govuk-heading-s">@{messages("start.subheading5")}</p>
+
+ <p class="govuk-body">@{messages("start.desc8")}</p>
+
+ <p class="govuk-heading-m">@{messages("start.subheading6")}</p>
+
+ <p class="govuk-body">@{messages("start.desc9")}</p>
+
 }
 
