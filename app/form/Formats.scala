@@ -64,10 +64,10 @@ object Formats {
     def unbind(key: String, value: T): Map[String, String] = Map(key -> value.name)
   }
 
-  implicit val userTypeFormat: Formatter[UserType]                                           = namedEnumFormatter(UserType, Errors.userTypeRequired)
-  implicit val answerYesNoFormat: Formatter[AnswersYesNo]                                    =
+  implicit val userTypeFormat: Formatter[UserType]        = namedEnumFormatter(UserType, Errors.userTypeRequired)
+  implicit val answerYesNoFormat: Formatter[AnswersYesNo] =
     namedEnumFormatter(AnswersYesNo, Errors.booleanMissing)
-  implicit val cyaYesNoFormat: Formatter[CYAYesNo] =
+  implicit val cyaYesNoFormat: Formatter[CYAYesNo]        =
     namedEnumFormatter(CYAYesNo, Errors.booleanMissing)
 
   implicit val addressConnectionTypeFormatter: Formatter[AddressConnectionType]              =

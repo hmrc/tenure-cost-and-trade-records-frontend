@@ -16,19 +16,15 @@
 
 package form.additionalinformation
 
-import form.MappingSupport.cyaYesNo
 import models.submissions.additionalinformation.CheckYourAnswersAdditionalInformation
-import models.submissions.common.CYAYesNo
 import play.api.data.Form
 import play.api.data.Forms.{mapping, text}
 
 object CheckYourAnswersAdditionalInformationForm {
 
-  lazy val baseCheckYourAnswersAdditionalInformationForm: Form[CYAYesNo] = Form(baseCheckYourAnswersAdditionalInformationMapping)
-
-  val baseCheckYourAnswersAdditionalInformationMapping = mapping(
-    "checkYourAnswersAdditionalInformation" -> cyaYesNo
-  )(x => x)(b => Some(b))
-
-  val checkYourAnswersAdditionalInformationForm = Form(baseCheckYourAnswersAdditionalInformationMapping)
+  val checkYourAnswersAdditionalInformationForm = Form(
+    mapping(
+      "checkYourAnswersAdditionalInformation" -> text
+    )(CheckYourAnswersAdditionalInformation.apply)(CheckYourAnswersAdditionalInformation.unapply)
+  )
 }

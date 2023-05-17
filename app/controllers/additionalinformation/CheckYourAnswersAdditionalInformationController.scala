@@ -19,7 +19,6 @@ package controllers.additionalinformation
 import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
 import form.additionalinformation.CheckYourAnswersAdditionalInformationForm.checkYourAnswersAdditionalInformationForm
-import models.submissions.common.CYAYesNo
 import navigation.AdditionalInformationNavigator
 import play.api.Logging
 import play.api.i18n.I18nSupport
@@ -27,14 +26,12 @@ import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import views.html.additionalinformation.checkYourAnswersAdditionalInformation
 import views.html.taskList
-import models.submissions.additionalinformation.AdditionalInformation.updateAdditionalInformation
-import navigation.identifiers.CheckYourAnswersAdditionalInformationId
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class   CheckYourAnswersAdditionalInformationController @Inject() (
+class CheckYourAnswersAdditionalInformationController @Inject() (
   mcc: MessagesControllerComponents,
   navigator: AdditionalInformationNavigator,
   checkYourAnswersAdditionalInformationView: checkYourAnswersAdditionalInformation,
@@ -61,20 +58,8 @@ class   CheckYourAnswersAdditionalInformationController @Inject() (
   }
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft[CYAYesNo](
-      checkYourAnswersAdditionalInformationForm,
-      formWithErrors =>
-        BadRequest(
-          checkYourAnswersAdditionalInformationView(
-            formWithErrors,
-            request.sessionData
-          )
-        ),
-      data => {
-        val updatedData = updateAdditionalInformation(_.copy(checkYourAnswersAdditionalInformation = Some(data)))
-        session.saveOrUpdate(updatedData)
-        Redirect(navigator.nextPage(CheckYourAnswersAdditionalInformationId).apply(updatedData))
-      }
+    continueOrSaveAsDraft(
+      Ok(taskListView())
     )
   }
 
