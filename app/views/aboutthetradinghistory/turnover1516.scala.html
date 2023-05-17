@@ -1,0 +1,245 @@
+@*
+ * Copyright 2023 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import models.submissions.aboutthetradinghistory.TurnoverSection1516
+@import uk.gov.hmrc.govukfrontend.views.html.components._
+@import uk.gov.hmrc.govukfrontend.views.Implicits.RichInput
+@import models.pages.Summary
+
+@this(layout: Layout,
+        govukButton: GovukButton,
+        formWithCSRF: FormWithCSRF,
+        govukInput: GovukInput,
+        govukTable: GovukTable,
+        govukInsetText: GovukInsetText,
+        govukDetails: GovukDetails
+)
+
+@(form: Form[Seq[TurnoverSection1516]], numOfColumns: Int, summary: Summary)(implicit request: Request[_], messages: Messages)
+
+@detailsContent = {
+    <p class="govuk-body govuk-!-font-weight-bold">@messages("turnover.details.h1.6016")</p>
+    <p class="govuk-body">@messages("turnover.details.p1.6016")</p>
+    <p class="govuk-body govuk-!-font-weight-bold">@messages("turnover.details.h2.6016")</p>
+    <p class="govuk-body">@messages("turnover.details.p2.6016")</p>
+    <p class="govuk-body govuk-!-font-weight-bold">@messages("turnover.details.h3.6016")</p>
+    <p class="govuk-body">@messages("turnover.details.p3.6016")</p>
+
+
+}
+
+@drinksHeading = {
+    <p class="govuk-body">@messages("turnover.drinks.6016")</p>
+    <span class="govuk-caption-m">@messages("turnover.drinksCaption.6016")</span>
+}
+
+@foodHeading = {
+    <p class="govuk-body">@messages("turnover.food")</p>
+    <span class="govuk-caption-m">@messages("turnover.foodCaption.6016")</span>
+}
+
+@otherHeading = {
+    <p class="govuk-body">@messages("turnover.other.6016")</p>
+    <span class="govuk-caption-m">@messages("turnover.otherCaption.6016")</span>
+}
+
+@accommodationHeading = {
+    <p class="govuk-body">@messages("turnover.accommodation")</p>
+    <span class="govuk-caption-m">@messages("turnover.accommodationCaption")</span>
+}
+
+@averageOccupancyRateHeading = {
+    <p class="govuk-body">@messages("turnover.averageOccupancyRate")</p>
+}
+
+@totalSalesHeading = {
+        <p class="govuk-body">@messages("turnover.totalSales.6016")</p>
+        <span class="govuk-caption-m">@messages("turnover.totalSales.6016")</span>
+}
+
+@filterForm = {
+@form.value.getOrElse(Seq.empty)
+}
+
+@columns = @{0 until numOfColumns}
+
+@layout(
+    pageHeading = messages("turnover.heading"),
+    showH1 = false,
+    showSection = true,
+    summary = Some(summary),
+    sectionName = messages("label.section.aboutYourTradingHistory"),
+    backLinkUrl = controllers.aboutthetradinghistory.routes.AboutYourTradingHistoryController.show.url,
+    fullWidth = true,
+    theForm = form
+) {
+
+    @formWithCSRF(action = controllers.aboutthetradinghistory.routes.TurnoverController.submit, args = 'class -> "myForm", 'id -> "myFormId") {
+
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+            <h1 class="govuk-fieldset__heading">@messages("turnover.heading")</h1>
+        </legend>
+        <p class="govuk-body">@messages("turnover.p1")</p>
+        @govukInsetText(InsetText(
+            content = Text(messages("turnover.inset"))
+        ))
+        @govukDetails(Details(
+            summary = Text(messages("turnover.details.6016")),
+            content = HtmlContent(detailsContent)
+        ))
+        @govukTable(Table(
+            rows = Seq(
+
+                TableRow(
+                    content = Text(messages("turnover.financialYearEnd"))
+                ) +:
+                        columns.map { idx  =>
+                            TableRow(
+                                content = HtmlContent(
+                                    govukInput(Input(
+                                        id = s"$idx-financial-year-end",
+                                        name = s"$idx-financial-year-end",
+                                        value = form(s"$idx-financial-year-end").value
+                                    ).withFormField(form(s"$idx-financial-year-end")))
+                                )
+                            )
+                        },
+                TableRow(
+                    content = Text(messages("turnover.tradingPeriod"))
+                ) +:
+                        columns.map { idx =>
+                            TableRow(
+                                content = HtmlContent(
+                                    govukInput(Input(
+                                        id = s"$idx-weeks",
+                                        name = s"$idx-weeks",
+                                        value = form(s"$idx-weeks").value,
+                                        suffix = Some(PrefixOrSuffix(
+                                            content = Text(messages("turnover.weeks"))
+                                        ))
+                                    ).withFormField(form(s"$idx-weeks")))
+                                )
+                            )
+                        },
+                TableRow(
+                    content = HtmlContent(accommodationHeading)
+                ) +: columns.map { idx =>
+                    TableRow(
+                        content = HtmlContent(
+                            govukInput(Input(
+                                id = s"$idx-accommodation",
+                                name = s"$idx-accommodation",
+                                value = form(s"$idx-accommodation").value,
+                                prefix = Some(PrefixOrSuffix(
+                                    content = Text("£")
+                                ))
+                            ).withFormField(form(s"$idx-accommodation")))
+                        )
+                    )
+                },
+                TableRow(
+                    content = HtmlContent(averageOccupancyRateHeading)
+                ) +: columns.map { idx  =>
+                    TableRow(
+                        content = HtmlContent(
+                            govukInput(Input(
+                                id = s"$idx-average-occupancy-rate",
+                                name = s"$idx-average-occupancy-rate",
+                                value = form(s"$idx-average-occupancy-rate").value,
+                                suffix = Some(PrefixOrSuffix(
+                                    content = Text("%")
+                                ))
+                            ).withFormField(form(s"$idx-average-occupancy-rate")))
+                        )
+                    )
+                },
+                TableRow(
+                    content = HtmlContent(foodHeading)
+                ) +: columns.map { idx  =>
+                    TableRow(
+                        content = HtmlContent(
+                            govukInput(Input(
+                                id = s"$idx-food",
+                                name = s"$idx-food",
+                                value = form(s"$idx-food").value,
+                                prefix = Some(PrefixOrSuffix(
+                                    content = Text("£")
+                                ))
+                            ).withFormField(form(s"$idx-food")))
+                        )
+                    )
+                },
+                TableRow(
+                    content = HtmlContent(drinksHeading)
+                ) +: columns.map { idx  =>
+                    TableRow(
+                        content = HtmlContent(
+                            govukInput(Input(
+                                id = s"$idx-drinks",
+                                name = s"$idx-drinks",
+                                value = form(s"$idx-drinks").value,
+                                prefix = Some(PrefixOrSuffix(
+                                    content = Text("£")
+                                ))
+                            ).withFormField(form(s"$idx-drinks")))
+                        )
+                    )
+                },
+                TableRow(
+                    content = HtmlContent(otherHeading)
+                ) +: columns.map { idx  =>
+                    TableRow(
+                        content = HtmlContent(
+                            govukInput(Input(
+                                id = s"$idx-other",
+                                name = s"$idx-other",
+                                value = form(s"$idx-other").value,
+                                prefix = Some(PrefixOrSuffix(
+                                    content = Text("£")
+                                ))
+                            ).withFormField(form(s"$idx-other")))
+                        )
+                    )
+                },
+                TableRow(
+                    content = HtmlContent(totalSalesHeading)
+                ) +: columns.map { idx  =>
+                    TableRow(
+                        content = HtmlContent(
+                            govukInput(Input(
+                                id = s"$idx-total-sales-revenue",
+                                name = s"$idx-total-sales-revenue",
+                                value = form(s"$idx-total-sales-revenue").value,
+                                prefix = Some(PrefixOrSuffix(
+                                    content = Text("£")
+                                ))
+                            ).withFormField(form(s"$idx-total-sales-revenue")))
+                        )
+                    )
+                }
+            ),
+
+            captionClasses = "govuk-table__caption--m",
+            firstCellIsHeader = false
+        ))
+
+        @includes.continueSaveAsDraftButtons(govukButton)
+    }
+}
+
+
+
+
