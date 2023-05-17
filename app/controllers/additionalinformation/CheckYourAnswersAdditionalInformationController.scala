@@ -51,7 +51,7 @@ class CheckYourAnswersAdditionalInformationController @Inject() (
               checkYourAnswersAdditionalInformationForm.fillAndValidate(checkYourAnswersAdditionalInformation)
             case _                                           => checkYourAnswersAdditionalInformationForm
           },
-          request.sessionData.toSummary
+          request.sessionData
         )
       )
     )

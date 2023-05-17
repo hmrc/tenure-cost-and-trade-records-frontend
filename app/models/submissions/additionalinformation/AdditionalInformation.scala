@@ -18,6 +18,7 @@ package models.submissions.additionalinformation
 
 import actions.SessionRequest
 import models.Session
+import models.submissions.common.CYAYesNo
 import play.api.libs.json.Json
 
 case class AdditionalInformation(

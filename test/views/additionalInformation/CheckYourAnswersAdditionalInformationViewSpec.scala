@@ -33,10 +33,11 @@ class CheckYourAnswersAdditionalInformationViewSpec
 
   override val form = CheckYourAnswersAdditionalInformationForm.checkYourAnswersAdditionalInformationForm
 
-  def createView = () => checkYourAnswersAdditionalInformationView(form, Summary("99996010001"))(fakeRequest, messages)
+  def createView = () =>
+    checkYourAnswersAdditionalInformationView(form, notConnected6010NoSession)(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[CheckYourAnswersAdditionalInformation]) =>
-    checkYourAnswersAdditionalInformationView(form, Summary("99996010001"))(fakeRequest, messages)
+    checkYourAnswersAdditionalInformationView(form, notConnected6010NoSession)(fakeRequest, messages)
 
   "Check Your Answers Additional Information view" must {
 

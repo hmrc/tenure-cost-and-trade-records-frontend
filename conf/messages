@@ -47,6 +47,12 @@ label.no.nac.oedd=No
 label.yes.iawn = Yes
 label.no.na = No
 
+#CYA RADIO BUTTONS
+##############
+checkYourAnswersRadio.heading = Have you completed this section?
+checkYourAnswersRadio.yes = Yes, I’ve completed this section
+checkYourAnswersRadio.no = No, I’ll come back to it later
+
 # COMMON LABELS
 ###############
 help.date.day.month.year = Please format in dd/mm/yyyy
@@ -711,6 +717,13 @@ hint.concessionOrFranchise = Choose ’no’ if you’ve included turnover from 
 
 # ADDITIONAL INFORMATION
 ########################
+checkYourAnswersAdditionalInformation.heading = Check your answers - additional information journey
+label.furtherInformation = Further information or remarks (if any)
+key.altContact.details = Alternative contact details
+label.fullName = Full name
+label.telephoneNumber = Telephone number
+label.emailAddress = Email address
+label.correspondenceAddress = Correspondence Address
 
 # FURTHER INFORMATION OR REMARKS
 ################################
@@ -751,7 +764,6 @@ checkYourAnswersAboutYourLeaseOrTenure.heading = This is a holding page for the 
 checkYourAnswersAboutTheProperty.heading = This is a holding page for the about the property check your answers page
 checkYourAnswersAboutTheTradingHistory.heading = This is a holding page for the about your trading history check your answers page
 checkYourAnswersAboutYou.heading = This is a holding page for the about you check your answers page
-checkYourAnswersAdditionalInformation.heading = This is a holding page for the additional information check your answers page
 
 # Confirmation Page
 ###################
