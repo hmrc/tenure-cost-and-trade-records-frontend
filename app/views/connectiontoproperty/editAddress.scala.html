@@ -42,7 +42,8 @@
 
     @includes.textInput(govukInput, theForm, "buildingNameNumber", "govuk-!-width-two-thirds", "buildingNameNumber")
     @includes.textInput(govukInput, theForm, "street1", "govuk-!-width-two-thirds", "street1", optional = true)
-    @includes.textInput(govukInput, theForm, "street2", "govuk-!-width-one-half", "street2", optional = true)
+    @includes.textInput(govukInput, theForm, "town", "govuk-!-width-one-half", "town")
+    @includes.textInput(govukInput, theForm, "county", "govuk-!-width-one-half", "county")
     @includes.textInput(govukInput, theForm, "postcode", "govuk-!-width-one-quarter", "postcode")
 
     @includes.continueButton(govukButton)

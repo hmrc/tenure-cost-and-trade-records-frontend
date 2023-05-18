@@ -36,7 +36,7 @@ class EditAddressViewSpec extends QuestionViewBehaviours[Address] {
 
     behave like normalPage(createView, messageKeyPrefix)
 
-    behave like pageWithTextFields(createViewUsingForm, "buildingNameNumber", "street1", "street2", "postcode")
+    behave like pageWithTextFields(createViewUsingForm, "buildingNameNumber", "street1", "town", "county", "postcode")
 
     "has a link marked with back.link.label leading to the Are still connected Page" in {
       val doc          = asDocument(createView())
