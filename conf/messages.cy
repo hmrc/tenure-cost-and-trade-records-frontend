@@ -188,7 +188,7 @@ error.pastConnectionType = select ‘Yes’ if you were previously connected
 
 # REMOVE CONNECTION
 ###################
-removeConnection.heading = Remove your connection to this property
+removeConnection.heading = Provide your contact details
 removeConnection.subheading = We’ll use these details if we need to contact you before removing your connection to this property
 label.removeConnectionAdditionalInfo = Additional information
 hint.removeConnectionDetails.removeConnectionAdditionalInfo = For example, the name of the current owner or occupier
