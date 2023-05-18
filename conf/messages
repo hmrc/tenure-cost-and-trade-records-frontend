@@ -125,7 +125,7 @@ start.desc9 = If you would like information in an alternative format such as lar
 #LOGIN
 ##############################
 login.heading = What is your reference number and postcode?
-label.letter = You’ll find your reference number and postcode in your letter from the Valuation Office Agency
+label.letter = You’ll find your reference number and postcode in the letter you received from the VOA
 label.referenceNumber = Reference number
 hint.referenceNumber = For example, 1000001/101
 label.postcode = Postcode
