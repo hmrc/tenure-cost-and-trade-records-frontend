@@ -225,7 +225,7 @@ class AboutYourLeaseOrTenure6010NavigatorSpec extends TestBaseSpec {
     "return a function that goes to how is current rent fixed on page when rent by gross or net turnover details has been completed" in {
       navigator
         .nextPage(RentPayableVaryAccordingToGrossOrNetDetailsId, session6010)
-        .apply(session6010) mustBe controllers.aboutYourLeaseOrTenure.routes.HowIsCurrentRentFixedController
+        .apply(session6010) mustBe controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryOnQuantityOfBeersController
         .show()
     }
 
