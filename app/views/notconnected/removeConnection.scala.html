@@ -57,6 +57,14 @@
       "fullName",
     )
 
+      @includes.textInput(
+          govukInput,
+          theForm,
+          "removeConnectionDetails.phone",
+          "govuk-input--width-20",
+          "phone",
+      )
+
     @includes.textInput(
       govukInput,
       theForm,
@@ -64,15 +72,7 @@
       "govuk-input--width-20",
       "email",
     )
-
-    @includes.textInput(
-      govukInput,
-      theForm,
-      "removeConnectionDetails.phone",
-      "govuk-input--width-20",
-      "phone",
-    )
-
+      
     @govukCharacterCount(
       CharacterCount(
         id = "removeConnectionAdditionalInfo",
