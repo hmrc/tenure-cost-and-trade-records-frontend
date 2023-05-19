@@ -79,6 +79,7 @@ label.change = Change
 ##############
 hint.select.all = Select all that apply
 hint.date.example = For example, 10 2 1999
+hint.select.applicable = Select any that apply – leave blank if not applicable
 
 # SECTION NAMES
 ###############
@@ -390,7 +391,9 @@ hint.currentAnnualRent = For example, 32000
 
 #RENT OPEN MARKET VALUE
 #######################
-rentOpenMarketValue.heading = Is the rent based on the open market value?
+rentOpenMarketValue.heading = When the current rent was agreed, was it based on the open market value at that time?
+help.rentOpenMarketValue.title = If you’re not sure
+help.rentOpenMarketValue.p1 = If your rent isn’t based on open market value, it may simply be a fixed amount agreed between both parties, or linked to another factor. If you are unsure, it may be stipulated in your lease or agreement.
 
 #DOES THE RENT PAYABLE
 ######################
@@ -399,7 +402,7 @@ checkbox.rentPayable.proprietor = Proprietor’s, manager’s or staff living ac
 checkbox.rentPayable.otherProperty = Other property
 checkbox.rentPayable.onlyPart = Only part of the property
 checkbox.rentPayable.onlyLand = Only to land (excluding buildings)
-checkbox.rentPayable.shellUnit = A ’shell’ unit
+checkbox.rentPayable.shellUnit = A 'shell' unit you had to fit out yourself
 label.detailsToQuestions = Give details if you selected any of the options
 hint.detailsToQuestions = For example, the rent includes residential accommodation, or also includes the premises next door
 error.detailsToQuestions.required = Please provide further information
@@ -412,6 +415,7 @@ rentPayableVaryOnQuantityOfBeers.heading = Does the rent payable vary according 
 #RENT PAYABLE VARY ON QUANTITY OF BEERS DETAILS
 ###############################################
 rentPayableVaryOnQuantityOfBeersDetails.heading = How is the rent payable affected by the drinks supplied to your property?
+hint.rentPayableVaryOnQuantityOfBeersDetails = For example, tell us if your rent changes if the quantity supplied exceeds a certain amount
 error.rentPayableVaryOnQuantityOfBeersDetails.required = Tell us how the rent payable is affected by the drinks supplied to your property
 error.rentPayableVaryOnQuantityOfBeersDetails.maxLength  = This must be 1000 characters or fewer
 
@@ -447,9 +451,10 @@ hint.rentIncludeTradeServices = For example, maintenance of trade fixtures and f
 
 #RENT INCLUDE TRADE SERVICES DETAILS
 ####################################
-rentIncludeTradeServicesDetails.heading = Where specifically itemised, what sum is included in the rent to cover equipment provided by the landlord, excluding VAT?
+rentIncludeTradeServicesDetails.heading = Where specifically itemised, what sum is included in the rent to cover services provided by the landlord, excluding VAT?
 rentIncludeTradeServicesDetails.hint = Leave blank if this is not specifically itemised
 label.describeServices = Describe services provided
+rentIncludeTradeServicesDetailsTextBox.hint = For example, maintenance of fires, annual gas checks and cellar services
 error.required.sumIncludedInRent = Please provide a value
 error.invalid_currency.sumIncludedInRent= Please provide a number
 error.describeServices.required = Please provide further information
@@ -463,7 +468,7 @@ error.invalid_currency.rentIncludeFixturesAndFittings = Please provide a number
 
 #RENT INCLUDE FIXTURES AND FITTINGS DETAILS
 ###########################################
-rentIncludeFixturesAndFittingsDetails.heading = Where specifically itemised, what sum is included in the rent (excluding VAT) to cover equipment provided by the landlord?
+rentIncludeFixturesAndFittingsDetails.heading = Where specifically itemised, what sum is included in the rent to cover equipment provided by the landlord, excluding VAT?
 rentIncludeFixturesAndFittingsDetails.hint = Leave blank if this is not specifically itemised
 error.required.rentIncludeFixturesAndFittingsDetails = Please provide a value
 error.invalid_currency.rentIncludeFixturesAndFittingsDetails = Please provide a number

@@ -78,13 +78,14 @@ label.change = Change
 # COMMON HINTS
 ##############
 hint.select.all = Select all that apply
+hint.date.example = For example, 10 2 1999
 
 # SECTION NAMES
 ###############
 label.section.aboutTheProperty = About you and the property
 label.section.aboutYourTradingHistory = Your trading history
 label.section.aboutTheFranchiseLettings = Franchises or lettings
-label.section.aboutYourLeaseOrTenure = About your lease or agreement
+label.section.aboutYourLeaseOrTenure = Your lease or agreement
 label.section.additionalInformation = Additional information
 
 #DUMMY START PAGE FULL INFORMATION
@@ -390,7 +391,9 @@ hint.currentAnnualRent = For example, 32000
 
 #RENT OPEN MARKET VALUE
 #######################
-rentOpenMarketValue.heading = Is the rent based on the open market value?
+rentOpenMarketValue.heading = When the current rent was agreed, was it based on the open market value at that time?
+help.rentOpenMarketValue.title = If you’re not sure
+help.rentOpenMarketValue.p1 = If your rent isn’t based on open market value, it may simply be a fixed amount agreed between both parties, or linked to another factor. If you are unsure, it may be stipulated in your lease or agreement.
 
 #DOES THE RENT PAYABLE
 ######################
@@ -399,7 +402,7 @@ checkbox.rentPayable.proprietor = Proprietor’s, manager’s or staff living ac
 checkbox.rentPayable.otherProperty = Other property
 checkbox.rentPayable.onlyPart = Only part of the property
 checkbox.rentPayable.onlyLand = Only to land (excluding buildings)
-checkbox.rentPayable.shellUnit = A ’shell’ unit (you had to fit the property out yourself)
+checkbox.rentPayable.shellUnit = A 'shell' unit you had to fit out yourself
 label.detailsToQuestions = Give details if you selected any of the options
 hint.detailsToQuestions = For example, the rent includes residential accommodation, or also includes the premises next door
 error.detailsToQuestions.required = Please provide further information
@@ -447,9 +450,10 @@ hint.rentIncludeTradeServices = For example, maintenance of trade fixtures and f
 
 #RENT INCLUDE TRADE SERVICES DETAILS
 ####################################
-rentIncludeTradeServicesDetails.heading = Where specifically itemised, what sum is included in the rent (excluding VAT) to cover services provided by the landlord?
+rentIncludeTradeServicesDetails.heading = Where specifically itemised, what sum is included in the rent to cover services provided by the landlord, excluding VAT?
 rentIncludeTradeServicesDetails.hint = Leave blank if this is not specifically itemised
 label.describeServices = Describe services provided
+rentIncludeTradeServicesDetailsTextBox.hint = For example, maintenance of fires, annual gas checks and cellar services
 error.required.sumIncludedInRent = Please provide a value
 error.invalid_currency.sumIncludedInRent= Please provide a number
 error.describeServices.required = Please provide further information
