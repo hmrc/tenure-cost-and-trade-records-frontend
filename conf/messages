@@ -253,9 +253,9 @@ help.licensableActivities.heading = Licensable activities
 help.licensableActivities.p1 = The Licensing Act, 2003 defines licensable activities as:
 help.licensableActivities.list1.p1 = the retail sale of alcohol
 help.licensableActivities.list1.p2 = the supply of alcohol in clubs
-help.licensableActivities.list1.p3 = the provision of lat-night refreshment
+help.licensableActivities.list1.p3 = the provision of late-night refreshment
 help.licensableActivities.list1.p4 = the provision of regulated entertainment
-help.licensableActivities.p2 = In this instancee, ’clubs’ is a cover-all term covering establishment categories covered by this form.
+help.licensableActivities.p2 = In this instance, ’clubs’ is a cover-all term covering establishment categories covered by this form.
 help.licensableActivities.p3 = ’Late-night refreshment’ is defined as the supply of hot food and drink to the public for consumption between 23:00 and 05:00.
 help.licensableActivities.p4 = ’Regulated entertainment’ is defined as:
 help.licensableActivities.list2.p1 = a performance of a play
@@ -268,10 +268,10 @@ help.licensableActivities.list2.p7 = a dance performance
 
 # LICENSABLE ACTIVITIES DETAILS
 ###############################
-licensableActivitiesDetails.heading = Describe the licensable activities regularly commending before 10:00 or after 23:30
+licensableActivitiesDetails.heading = Describe the licensable activities regularly commencing before 10:00 or after 23:30
 help.licensableActivitiesDetails.title = Help with describing your licensable activities
 help.licensableActivitiesDetails.heading = Describing your licensable activities
-help.licensableActivitiesDetails.p1 = You’re only required to write a short description of the licensable activities we’re concerned with. Example of acceptable descriptions include:
+help.licensableActivitiesDetails.p1 = You’re only required to write a short description of the licensable activities we’re concerned with. Examples of acceptable descriptions include:
 help.licensableActivitiesDetails.list.p1 = We start serving alcohol at 9am, Monday to Saturday
 help.licensableActivitiesDetails.list.p2 = We have a DJ playing until 1am on Fridays and Saturdays
 help.licensableActivitiesDetails.list.p3 = Our hot-breakfast service starts at 4am every day
@@ -288,7 +288,7 @@ help.premisesLicenseConditions.p2 = Check your premises licence if you’re not 
 # PREMISES LICENCE CONDITIONS DETAILS
 #####################################
 premisesLicenseConditionsDetails.heading = Describe the conditions restricting the use of all or parts of the property
-help.premisesLicenseConditionsDetails.title = Help with describing restricting on the use of the property
+help.premisesLicenseConditionsDetails.title = Help with describing restrictions on the use of the property
 help.premisesLicenseConditionsDetails.heading = Describing restricting on the use of the property
 help.premisesLicenseConditionsDetails.p1 = You’re only required to write a short description of the conditions we’re concerned with. Example of acceptable descriptions include:
 help.premisesLicenseConditionsDetails.list.p1 = No drinks allowed on the terrace after 10pm
@@ -305,7 +305,7 @@ help.enforcementActionHasBeenTaken.p1 = You must tell us if any enforcement acti
 
 # ENFORCEMENT ACTION BEEN TAKEN DETAILS
 #######################################
-enforcementActionHasBeenTakenDetails.heading = Describe any enforcement action taken
+enforcementActionHasBeenTakenDetails.heading = Describe the enforcement action taken
 help.enforcementActionHasBeenTakenDetails.title = Help with describing restricting on the use of the property
 help.enforcementActionHasBeenTakenDetails.heading = Describing restricting on the use of the property
 help.enforcementActionHasBeenTakenDetails.p1 = You’re only required to write a short description of the conditions we’re concerned with. Example of acceptable descriptions include:
