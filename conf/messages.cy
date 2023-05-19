@@ -483,7 +483,8 @@ hint.capitalSumOrPremium = The sum could be paid to the landlord or a previous l
 
 #PAYMENT WHEN LEASE IS GRANTED
 ##############################
-receivePaymentWhenLeaseGranted.heading = Did you receive any payment when the lease was granted (if the rent has not been reviewed in the lease), or following assignment of the lease or agreement?
+receivePaymentWhenLeaseGranted.heading = Did you receive any payment when the lease was granted, or following assignment of the lease or agreement?
+hint.receivePaymentWhenLeaseGranted = Select ‘no’ if your rent has been reviewed since you received the payment
 
 #RENT INCREASE ANNUALLY WITH RPI
 ################################
