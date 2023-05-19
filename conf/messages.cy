@@ -760,9 +760,14 @@ key.contact.details = Contact Details
 checkYourAnswers.heading = This is a holding page for the check your answers page
 checkYourAnswersAboutFranchiseOrLettings.heading = This is a holding page for the franchise or lettings check your answers page
 checkYourAnswersAboutYourLeaseOrTenure.heading = This is a holding page for the about your lease or tenure check your answers page
-checkYourAnswersAboutTheProperty.heading = This is a holding page for the about the property check your answers page
+checkYourAnswersAboutTheProperty.heading = Welsh TBC: Check your answers - about you and the property
+checkYourAnswersAboutTheProperty.aboutYou.heading = Welsh TBC: About You
+checkYourAnswersAboutTheProperty.aboutProperty.heading = Welsh TBC: About the property
+checkYourAnswersAboutTheProperty.currentOccupier = Welsh TBC: Current Occupier
+checkYourAnswersAboutTheProperty.propertyUsage = Welsh TBC: How is the property currently used?
+checkYourAnswersAboutTheProperty.hasWebsite = Welsh TBC: Website?
+checkYourAnswersAboutTheProperty.websiteAddress = Welsh TBC: Website address
 checkYourAnswersAboutTheTradingHistory.heading = This is a holding page for the about your trading history check your answers page
-checkYourAnswersAboutYou.heading = This is a holding page for the about you check your answers page
 checkYourAnswersAdditionalInformation.heading = This is a holding page for the additional information check your answers page
 
 # Confirmation Page

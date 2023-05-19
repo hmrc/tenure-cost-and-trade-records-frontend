@@ -23,7 +23,7 @@
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.hint.Hint
 
-@(govukRadios: GovukRadios, theForm: Form[_], name: String, label: String, classes: String, hint: String = "", isHeading: Boolean = false)(implicit request: Request[_], messages: Messages)
+@(govukRadios: GovukRadios, theForm: Form[_], name: String, hint: String = "", isHeading: Boolean = false)(implicit request: Request[_], messages: Messages)
 
 @govukRadios(
   Radios(
@@ -41,9 +41,9 @@
     errorMessage =  theForm.errors.asTextErrorMessageForField(s"$name"),
     fieldset = Option(Fieldset(
       legend = Option(Legend(
-        content = Text(messages(label)),
+        content = Text(messages("checkYourAnswersRadio.heading")),
         isPageHeading = isHeading,
-        classes = classes
+        classes = "govuk-fieldset__legend--m"
       ))
     )),
     hint = Some(Hint(content = Text(messages(hint)))),

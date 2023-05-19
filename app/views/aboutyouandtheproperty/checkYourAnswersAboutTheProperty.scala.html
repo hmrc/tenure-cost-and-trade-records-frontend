@@ -14,17 +14,24 @@
  * limitations under the License.
  *@
 
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
-@import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
+@import actions.SessionRequest
+@import uk.gov.hmrc.govukfrontend.views.html.components._
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
 @import models.submissions.aboutyouandtheproperty.CheckYourAnswersAboutYourProperty
 @import models.pages.Summary
 
 @this(layout: Layout,
         govukButton: GovukButton,
+        govukSummaryList: GovukSummaryList,
+        govukRadios: GovukRadios,
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[CheckYourAnswersAboutYourProperty], backLink: String, summary: Summary)(implicit request: Request[_], messages: Messages)
+@(theForm: Form[CheckYourAnswersAboutYourProperty], backLink: String, summary: Summary)(implicit request: SessionRequest[_], messages: Messages)
+
+@aboutYouAndTheProperty = @{
+    request.sessionData.aboutYouAndTheProperty
+}
 
 @layout(
  pageHeading = messages("checkYourAnswersAboutTheProperty.heading"),
@@ -35,44 +42,88 @@
  theForm = theForm
 ) {
 
- @formWithCSRF(action = controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
+    @formWithCSRF(action = controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.submit()) {
 
-  <dl class="govuk-summary-list">
-   <div id="fullName" class="govuk-summary-list__row">
-    <dt class="govuk-summary-list__key">Full name</dt>
-    <dd class="govuk-summary-list__value">
-     John Smith
-    </dd>
-    <dd class="govuk-summary-list__actions">
-     <a href="/sending-rental-information/page/2?edit=fullName#fullName" class="govuk-link">
-      Change <span class="govuk-visually-hidden">Full name</span></a>
-    </dd>
-   </div>
+        <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutTheProperty.aboutYou.heading")</h2>
 
-   <div id="userType" class="govuk-summary-list__row">
-    <dt class="govuk-summary-list__key">Current Occupier</dt>
-    <dd class="govuk-summary-list__value">
-     Jane Smith
-    </dd>
-    <dd class="govuk-summary-list__actions">
-     <a href="/sending-rental-information/page/2?edit=userType#userType" class="govuk-link">
-      Change <span class="govuk-visually-hidden">I am (or represent) the</span></a>
-    </dd>
-   </div>
+        @govukSummaryList(SummaryList(rows = Seq(
+            SummaryListRow(
+                key = Key(Text(messages("label.fullName"))),
+                value = Value(Text(aboutYouAndTheProperty.flatMap(_.customerDetails.map(_.fullName)).getOrElse(""))),
+                actions = Option(Actions(items = Seq(ActionItem(href = "/send-trade-and-cost-information/about-you#fullName",
+                    visuallyHiddenText = Some(messages("label.fullName")),
+                    content = Text(messages("label.change")))))
+                )
+            ),
+            SummaryListRow(
+                key = Key(Text(messages("label.emailAddress"))),
+                value = Value(Text(aboutYouAndTheProperty.flatMap(_.customerDetails.map(_.contactDetails.email)).getOrElse(""))),
+                actions = Option(Actions(items = Seq(ActionItem(href = "/send-trade-and-cost-information/about-you#contactDetails.email",
+                    visuallyHiddenText = Some(messages("label.emailAddress")),
+                    content = Text(messages("label.change")))))
+                )
+            ),
+            SummaryListRow(
+                key = Key(Text(messages("label.telephoneNumber"))),
+                value = Value(Text(aboutYouAndTheProperty.flatMap(_.customerDetails.map(_.contactDetails.phone)).getOrElse(""))),
+                actions = Option(Actions(items = Seq(ActionItem(href = "/send-trade-and-cost-information/about-you#contactDetails.phone",
+                    visuallyHiddenText = Some(messages("label.telephoneNumber")),
+                    content = Text(messages("label.change")))))
+                )
+            )
+        )))
 
-   <div id="userType" class="govuk-summary-list__row">
-    <dt class="govuk-summary-list__key">Current use of property</dt>
-    <dd class="govuk-summary-list__value">Hotel
-    </dd>
-    <dd class="govuk-summary-list__actions">
-     <a href="/sending-rental-information/page/2?edit=userType#userType" class="govuk-link">
-      Change <span class="govuk-visually-hidden">I am (or represent) the</span></a>
-    </dd>
-   </div>
-  </dl>
+        <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutTheProperty.aboutProperty.heading")</h2>
 
+        @govukSummaryList(SummaryList(rows =
+            Seq(
+                SummaryListRow(
+                    key = Key(Text(messages("checkYourAnswersAboutTheProperty.currentOccupier"))),
+                    value = Value(Text(aboutYouAndTheProperty.flatMap(_.propertyDetails.map(_.currentOccupierName)).getOrElse(""))),
+                    actions = Option(Actions(items = Seq(ActionItem(href = "/send-trade-and-cost-information/about-the-property#currentOccupierName",
+                        visuallyHiddenText = Some(messages("checkYourAnswersAboutTheProperty.currentOccupier")),
+                        content = Text(messages("label.change")))))
+                    )
+                ),
+                SummaryListRow(
+                    key = Key(Text(messages("checkYourAnswersAboutTheProperty.propertyUsage"))),
+                    value = Value(HtmlContent(
+                        aboutYouAndTheProperty.flatMap(_.propertyDetails.map(_.propertyCurrentlyUsed).map(usage => messages(s"${usage.key}.${usage.name}"))).getOrElse("") +
+                                (if(aboutYouAndTheProperty.flatMap(_.propertyDetails.map(_.propertyCurrentlyUsed.name)).contains("other"))
+                                    aboutYouAndTheProperty.flatMap(_.propertyDetails.flatMap(_.currentlyUsedOtherField).map(other => s"<br/>${Text(other).asHtml}")).getOrElse("")
+                                else "")
+                    )),
+                    actions = Option(Actions(items = Seq(ActionItem(href = "/send-trade-and-cost-information/about-the-property#propertyCurrentlyUsed",
+                        visuallyHiddenText = Some(messages("checkYourAnswersAboutTheProperty.propertyUsage")),
+                        content = Text(messages("label.change")))))
+                    )
+                ),
+                SummaryListRow(
+                    key = Key(Text(messages("checkYourAnswersAboutTheProperty.hasWebsite"))),
+                    value = Value(Text(aboutYouAndTheProperty.flatMap(_.websiteForPropertyDetails.map(_.buildingOperatingHaveAWebsite).map(hasWebsite => messages(s"label.${hasWebsite.name}"))).getOrElse(""))),
+                    actions = Option(Actions(items = Seq(ActionItem(href = "/send-trade-and-cost-information/website-for-property#buildingOperatingHaveAWebsite",
+                        visuallyHiddenText = Some(messages("checkYourAnswersAboutTheProperty.hasWebsite")),
+                        content = Text(messages("label.change")))))
+                    )
+                )
+            ) ++ (if (aboutYouAndTheProperty.flatMap(_.websiteForPropertyDetails.map(_.buildingOperatingHaveAWebsite.name)).contains("yes")) Seq(
+            SummaryListRow(
+                key = Key(Text(messages("checkYourAnswersAboutTheProperty.websiteAddress"))),
+                value = Value(Text(aboutYouAndTheProperty.flatMap(_.websiteForPropertyDetails.flatMap(_.websiteAddressForProperty)).getOrElse(""))),
+                actions = Option(Actions(items = Seq(ActionItem(href = "/send-trade-and-cost-information/website-for-property#websiteAddressForProperty",
+                    visuallyHiddenText = Some(messages("checkYourAnswersAboutTheProperty.websiteAddress")),
+                    content = Text(messages("label.change")))))
+                )
+            )) else Seq())
+        ))
 
-  @includes.continueSaveAsDraftButtons(govukButton)
+        @includes.checkYourAnswersRadioButtons(
+            govukRadios,
+            theForm,
+            "checkYourAnswersAboutTheProperty"
+        )
 
- }
+        @includes.continueSaveAsDraftButtons(govukButton)
+
+    }
 }
