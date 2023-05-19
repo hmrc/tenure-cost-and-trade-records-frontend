@@ -19,7 +19,7 @@ package models.submissions.aboutyouandtheproperty
 import models.{EnumFormat, NamedEnum, NamedEnumSupport}
 import play.api.libs.json.Format
 
-sealed trait CurrentPropertyUsed extends NamedEnum { val key = "currentPropertyUsed" }
+sealed trait CurrentPropertyUsed extends NamedEnum { val key = "propertyCurrentlyUsed" }
 
 object CurrentPropertyPublicHouse extends CurrentPropertyUsed { val name = "publicHouse" }
 
