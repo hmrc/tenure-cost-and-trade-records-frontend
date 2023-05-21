@@ -19,13 +19,14 @@ package form.aboutyouandtheproperty
 import form.MappingSupport.tiedForGoodsDetailsType
 import models.submissions.aboutyouandtheproperty.TiedForGoodsInformationDetails
 import play.api.data.Form
-import play.api.data.Forms.mapping
+import play.api.data.Forms.{mapping, optional, text}
 
 object TiedForGoodsDetailsForm {
 
   val tiedForGoodsDetailsForm = Form(
     mapping(
-      "tiedForGoodsDetails" -> tiedForGoodsDetailsType
+      "tiedForGoodsDetails" -> tiedForGoodsDetailsType,
+      "partialTieConditional" -> optional(text)
     )(TiedForGoodsInformationDetails.apply)(TiedForGoodsInformationDetails.unapply)
   )
 }

@@ -50,7 +50,7 @@
             SummaryListRow(
                 key = Key(Text(messages("label.fullName"))),
                 value = Value(Text(aboutYouAndTheProperty.flatMap(_.customerDetails.map(_.fullName)).getOrElse(""))),
-                actions = Option(Actions(items = Seq(ActionItem(href = "/send-trade-and-cost-information/about-you#fullName",
+                actions = Option(Actions(items = Seq(ActionItem(href = controllers.aboutyouandtheproperty.routes.AboutYouController.show().url + "#fullName",
                     visuallyHiddenText = Some(messages("label.fullName")),
                     content = Text(messages("label.change")))))
                 )
@@ -58,7 +58,7 @@
             SummaryListRow(
                 key = Key(Text(messages("label.emailAddress"))),
                 value = Value(Text(aboutYouAndTheProperty.flatMap(_.customerDetails.map(_.contactDetails.email)).getOrElse(""))),
-                actions = Option(Actions(items = Seq(ActionItem(href = "/send-trade-and-cost-information/about-you#contactDetails.email",
+                actions = Option(Actions(items = Seq(ActionItem(href = controllers.aboutyouandtheproperty.routes.AboutYouController.show().url + "#contactDetails.email",
                     visuallyHiddenText = Some(messages("label.emailAddress")),
                     content = Text(messages("label.change")))))
                 )
@@ -66,7 +66,7 @@
             SummaryListRow(
                 key = Key(Text(messages("label.telephoneNumber"))),
                 value = Value(Text(aboutYouAndTheProperty.flatMap(_.customerDetails.map(_.contactDetails.phone)).getOrElse(""))),
-                actions = Option(Actions(items = Seq(ActionItem(href = "/send-trade-and-cost-information/about-you#contactDetails.phone",
+                actions = Option(Actions(items = Seq(ActionItem(href = controllers.aboutyouandtheproperty.routes.AboutYouController.show().url + "#contactDetails.phone",
                     visuallyHiddenText = Some(messages("label.telephoneNumber")),
                     content = Text(messages("label.change")))))
                 )
@@ -80,7 +80,7 @@
                 SummaryListRow(
                     key = Key(Text(messages("checkYourAnswersAboutTheProperty.currentOccupier"))),
                     value = Value(Text(aboutYouAndTheProperty.flatMap(_.propertyDetails.map(_.currentOccupierName)).getOrElse(""))),
-                    actions = Option(Actions(items = Seq(ActionItem(href = "/send-trade-and-cost-information/about-the-property#currentOccupierName",
+                    actions = Option(Actions(items = Seq(ActionItem(href = controllers.aboutyouandtheproperty.routes.AboutThePropertyController.show().url + "#currentOccupierName",
                         visuallyHiddenText = Some(messages("checkYourAnswersAboutTheProperty.currentOccupier")),
                         content = Text(messages("label.change")))))
                     )
@@ -93,34 +93,139 @@
                                     aboutYouAndTheProperty.flatMap(_.propertyDetails.flatMap(_.currentlyUsedOtherField).map(other => s"<br/>${Text(other).asHtml}")).getOrElse("")
                                 else "")
                     )),
-                    actions = Option(Actions(items = Seq(ActionItem(href = "/send-trade-and-cost-information/about-the-property#propertyCurrentlyUsed",
+                    actions = Option(Actions(items = Seq(ActionItem(href = controllers.aboutyouandtheproperty.routes.AboutThePropertyController.show().url + "#propertyCurrentlyUsed",
                         visuallyHiddenText = Some(messages("checkYourAnswersAboutTheProperty.propertyUsage")),
                         content = Text(messages("label.change")))))
                     )
-                ),
+                )
+            ) ++
+            (if (aboutYouAndTheProperty.flatMap(_.websiteForPropertyDetails.map(_.buildingOperatingHaveAWebsite)).isDefined) Seq(
                 SummaryListRow(
                     key = Key(Text(messages("checkYourAnswersAboutTheProperty.hasWebsite"))),
                     value = Value(Text(aboutYouAndTheProperty.flatMap(_.websiteForPropertyDetails.map(_.buildingOperatingHaveAWebsite).map(hasWebsite => messages(s"label.${hasWebsite.name}"))).getOrElse(""))),
-                    actions = Option(Actions(items = Seq(ActionItem(href = "/send-trade-and-cost-information/website-for-property#buildingOperatingHaveAWebsite",
+                    actions = Option(Actions(items = Seq(ActionItem(href = controllers.aboutyouandtheproperty.routes.WebsiteForPropertyController.show().url + "#buildingOperatingHaveAWebsite",
                         visuallyHiddenText = Some(messages("checkYourAnswersAboutTheProperty.hasWebsite")),
                         content = Text(messages("label.change")))))
                     )
-                )
-            ) ++ (if (aboutYouAndTheProperty.flatMap(_.websiteForPropertyDetails.map(_.buildingOperatingHaveAWebsite.name)).contains("yes")) Seq(
-            SummaryListRow(
-                key = Key(Text(messages("checkYourAnswersAboutTheProperty.websiteAddress"))),
-                value = Value(Text(aboutYouAndTheProperty.flatMap(_.websiteForPropertyDetails.flatMap(_.websiteAddressForProperty)).getOrElse(""))),
-                actions = Option(Actions(items = Seq(ActionItem(href = "/send-trade-and-cost-information/website-for-property#websiteAddressForProperty",
-                    visuallyHiddenText = Some(messages("checkYourAnswersAboutTheProperty.websiteAddress")),
-                    content = Text(messages("label.change")))))
-                )
-            )) else Seq())
+                )) else Seq()
+            ) ++
+            (if (aboutYouAndTheProperty.flatMap(_.websiteForPropertyDetails.map(_.buildingOperatingHaveAWebsite.name)).contains("yes")) Seq(
+                SummaryListRow(
+                    key = Key(Text(messages("checkYourAnswersAboutTheProperty.websiteAddress"))),
+                    value = Value(Text(aboutYouAndTheProperty.flatMap(_.websiteForPropertyDetails.flatMap(_.websiteAddressForProperty)).getOrElse(""))),
+                    actions = Option(Actions(items = Seq(ActionItem(href = controllers.aboutyouandtheproperty.routes.WebsiteForPropertyController.show().url + "#websiteAddressForProperty",
+                        visuallyHiddenText = Some(messages("checkYourAnswersAboutTheProperty.websiteAddress")),
+                        content = Text(messages("label.change")))))
+                    )
+                )) else Seq()
+            )
         ))
+
+        @if(aboutYouAndTheProperty.flatMap(p => p.premisesLicenseGrantedDetail.orElse(p.licensableActivities).orElse(p.premisesLicenseConditions)).isDefined) {
+            <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutTheProperty.license.heading")</h2>
+
+            @govukSummaryList(SummaryList(rows =
+                (if(aboutYouAndTheProperty.flatMap(_.premisesLicenseGrantedDetail).isDefined) {
+                    Seq(SummaryListRow(
+                        key = Key(Text(messages("checkYourAnswersAboutTheProperty.premisesLicenseGrantedDetail"))),
+                        value = Value(Text(aboutYouAndTheProperty.flatMap(_.premisesLicenseGrantedDetail.map(yesNo => messages(s"label.${yesNo.name}"))).getOrElse(""))),
+                        actions = Option(Actions(items = Seq(ActionItem(href = controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedController.show().url + "#premisesLicenseGranted",
+                            visuallyHiddenText = Some(messages("checkYourAnswersAboutTheProperty.premisesLicenseGrantedDetail")),
+                            content = Text(messages("label.change")))))
+                        )
+                    )) ++ (if (aboutYouAndTheProperty.flatMap(_.premisesLicenseGrantedDetail.map(_.name)).contains("yes")) Seq(
+                        SummaryListRow(
+                            key = Key(Text(messages("checkYourAnswersAboutTheProperty.premisesLicenseGrantedInformationDetails"))),
+                            value = Value(Text(aboutYouAndTheProperty.flatMap(_.premisesLicenseGrantedInformationDetails.map(_.premisesLicenseGrantedInformationDetails)).getOrElse(""))),
+                            actions = Option(Actions(items = Seq(ActionItem(href = controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedDetailsController.show().url + "#premisesLicenseGrantedInformation",
+                                visuallyHiddenText = Some(messages("checkYourAnswersAboutTheProperty.premisesLicenseGrantedInformationDetails")),
+                                content = Text(messages("label.change")))))
+                            )
+                        )) else Seq.empty[SummaryListRow])
+                } else Seq.empty[SummaryListRow]) ++
+                        (if(aboutYouAndTheProperty.flatMap(_.licensableActivities).isDefined) {
+                            Seq(SummaryListRow(
+                                key = Key(Text(messages("checkYourAnswersAboutTheProperty.licensableActivities"))),
+                                value = Value(Text(aboutYouAndTheProperty.flatMap(_.licensableActivities.map(yesNo => messages(s"label.${yesNo.name}"))).getOrElse(""))),
+                                actions = Option(Actions(items = Seq(ActionItem(href = controllers.aboutyouandtheproperty.routes.LicensableActivitiesController.show().url + "#licensableActivities",
+                                    visuallyHiddenText = Some(messages("checkYourAnswersAboutTheProperty.licensableActivities")),
+                                    content = Text(messages("label.change")))))
+                                )
+                            )) ++ (if (aboutYouAndTheProperty.flatMap(_.licensableActivities.map(_.name)).contains("yes")) Seq(
+                                SummaryListRow(
+                                    key = Key(Text(messages("checkYourAnswersAboutTheProperty.licensableActivitiesDetails"))),
+                                    value = Value(Text(aboutYouAndTheProperty.flatMap(_.licensableActivitiesInformationDetails.map(_.licensableActivitiesDetails)).getOrElse(""))),
+                                    actions = Option(Actions(items = Seq(ActionItem(href = controllers.aboutyouandtheproperty.routes.LicensableActivitiesDetailsController.show().url + "#licensableActivitiesDetails",
+                                        visuallyHiddenText = Some(messages("checkYourAnswersAboutTheProperty.licensableActivitiesDetails")),
+                                        content = Text(messages("label.change")))))
+                                    )
+                                )) else Seq.empty[SummaryListRow])
+                        } else Seq.empty[SummaryListRow]) ++
+                        (if(aboutYouAndTheProperty.flatMap(_.premisesLicenseConditions).isDefined) {
+                            Seq(SummaryListRow(
+                                key = Key(Text(messages("checkYourAnswersAboutTheProperty.premisesLicenseConditions"))),
+                                value = Value(Text(aboutYouAndTheProperty.flatMap(_.premisesLicenseConditions.map(yesNo => messages(s"label.${yesNo.name}"))).getOrElse(""))),
+                                actions = Option(Actions(items = Seq(ActionItem(href = controllers.aboutyouandtheproperty.routes.PremisesLicenseConditionsController.show().url + "#premisesLicenseConditions",
+                                    visuallyHiddenText = Some(messages("checkYourAnswersAboutTheProperty.premisesLicenseConditions")),
+                                    content = Text(messages("label.change")))))
+                                )
+                            )) ++ (if (aboutYouAndTheProperty.flatMap(_.premisesLicenseConditions.map(_.name)).contains("yes")) Seq(
+                                SummaryListRow(
+                                    key = Key(Text(messages("checkYourAnswersAboutTheProperty.premisesLicenseConditionsDetails"))),
+                                    value = Value(Text(aboutYouAndTheProperty.flatMap(_.premisesLicenseConditionsDetails.map(_.premisesLicenseConditionsDetails)).getOrElse(""))),
+                                    actions = Option(Actions(items = Seq(ActionItem(href = controllers.aboutyouandtheproperty.routes.PremisesLicenseConditionsDetailsController.show().url + "#premisesLicenseConditionsDetails",
+                                        visuallyHiddenText = Some(messages("checkYourAnswersAboutTheProperty.premisesLicenseConditionsDetails")),
+                                        content = Text(messages("label.change")))))
+                                    )
+                                )) else Seq.empty[SummaryListRow])
+                        } else Seq()) ++
+                        (if(aboutYouAndTheProperty.flatMap(_.enforcementAction).isDefined) {
+                            Seq(SummaryListRow(
+                                key = Key(Text(messages("checkYourAnswersAboutTheProperty.enforcementAction"))),
+                                value = Value(Text(aboutYouAndTheProperty.flatMap(_.enforcementAction.map(yesNo => messages(s"label.${yesNo.name}"))).getOrElse(""))),
+                                actions = Option(Actions(items = Seq(ActionItem(href = controllers.aboutyouandtheproperty.routes.EnforcementActionBeenTakenController.show().url + "#enforcementAction",
+                                    visuallyHiddenText = Some(messages("checkYourAnswersAboutTheProperty.enforcementAction")),
+                                    content = Text(messages("label.change")))))
+                                )
+                            )) ++ (if (aboutYouAndTheProperty.flatMap(_.enforcementAction.map(_.name)).contains("yes")) Seq(
+                                SummaryListRow(
+                                    key = Key(Text(messages("checkYourAnswersAboutTheProperty.enforcementActionHasBeenTakenInformationDetails"))),
+                                    value = Value(Text(aboutYouAndTheProperty.flatMap(_.enforcementActionHasBeenTakenInformationDetails.map(_.enforcementActionHasBeenTakenDetails)).getOrElse(""))),
+                                    actions = Option(Actions(items = Seq(ActionItem(href = controllers.aboutyouandtheproperty.routes.EnforcementActionBeenTakenDetailsController.show().url + "#enforcementActionHasBeenTakenDetails",
+                                        visuallyHiddenText = Some(messages("checkYourAnswersAboutTheProperty.enforcementActionHasBeenTakenInformationDetails")),
+                                        content = Text(messages("label.change")))))
+                                    )
+                                )) else Seq.empty[SummaryListRow])
+                        } else Seq()) ++
+                        (if(aboutYouAndTheProperty.flatMap(_.tiedForGoods).isDefined) {
+                            Seq(SummaryListRow(
+                                key = Key(Text(messages("checkYourAnswersAboutTheProperty.tiedForGoods"))),
+                                value = Value(Text(aboutYouAndTheProperty.flatMap(_.tiedForGoods.map(yesNo => messages(s"label.${yesNo.name}"))).getOrElse(""))),
+                                actions = Option(Actions(items = Seq(ActionItem(href = controllers.aboutyouandtheproperty.routes.TiedForGoodsController.show().url + "#tiedForGoods",
+                                    visuallyHiddenText = Some(messages("checkYourAnswersAboutTheProperty.tiedForGoods")),
+                                    content = Text(messages("label.change")))))
+                                )
+                            )) ++ (if (aboutYouAndTheProperty.flatMap(_.tiedForGoods.map(_.name)).contains("yes")) Seq(
+                                SummaryListRow(
+                                    key = Key(Text(messages("checkYourAnswersAboutTheProperty.tiedForGoodsDetails"))),
+                                    value = Value(HtmlContent(aboutYouAndTheProperty.flatMap(_.tiedForGoodsDetails.map(_.tiedGoodsDetails)).map(details => messages(s"${details.key}.${details.name}")).getOrElse("") +
+                                            (if(aboutYouAndTheProperty.flatMap(_.tiedForGoodsDetails.map(_.tiedGoodsDetails.name)).contains("partialTie"))
+                                                aboutYouAndTheProperty.flatMap(_.tiedForGoodsDetails.flatMap(_.partialTieConditional).map(partialTieText => s"<br/>${Text(partialTieText).asHtml}")).getOrElse("")
+                                            else "")
+                                    )),
+                                    actions = Option(Actions(items = Seq(ActionItem(href = controllers.aboutyouandtheproperty.routes.TiedForGoodsDetailsController.show().url + "#tiedForGoodsDetails",
+                                        visuallyHiddenText = Some(messages("checkYourAnswersAboutTheProperty.tiedForGoodsDetails")),
+                                        content = Text(messages("label.change")))))
+                                    )
+                                )) else Seq.empty[SummaryListRow])
+                        } else Seq.empty[SummaryListRow])
+            ))
+        }
 
         @includes.checkYourAnswersRadioButtons(
             govukRadios,
             theForm,
-            "checkYourAnswersAboutTheProperty"
+            "checkYourAnswersAboutYourProperty"
         )
 
         @includes.continueSaveAsDraftButtons(govukButton)
