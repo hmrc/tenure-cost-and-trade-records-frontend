@@ -31,10 +31,6 @@
 
 @(theForm: Form[CheckYourAnswersAboutYourProperty], backLink: String, summary: Summary)(implicit request: SessionRequest[_], messages: Messages)
 
-@aboutYouAndTheProperty = @{
-    request.sessionData.aboutYouAndTheProperty
-}
-
 @sectionAnswers = @{
     SectionAnswers(request.sessionData.aboutYouAndTheProperty)
 }
@@ -75,7 +71,7 @@
                     "websiteAddressForProperty")
         ))
 
-        @if(aboutYouAndTheProperty.flatMap(p => p.premisesLicenseGrantedDetail.orElse(p.licensableActivities).orElse(p.premisesLicenseConditions)).isDefined) {
+        @if(sectionAnswers.answers.flatMap(p => p.premisesLicenseGrantedDetail.orElse(p.licensableActivities).orElse(p.premisesLicenseConditions)).isDefined) {
             <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutTheProperty.license.heading")</h2>
 
             @govukSummaryList(SummaryList(rows = sectionAnswers.optionalRow("checkYourAnswersAboutTheProperty.premisesLicenseGrantedDetail", _.premisesLicenseGrantedDetail.map(yesNo => messages(s"label.${yesNo.name}")), aboutyouandtheproperty.routes.PremisesLicenseGrantedController.show(), "premisesLicenseGranted") ++
