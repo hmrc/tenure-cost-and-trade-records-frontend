@@ -22,7 +22,7 @@ import play.api.libs.json.Json
 
 case class TiedForGoodsInformationDetails(
   tiedGoodsDetails: TiedForGoodsInformation,
-  partialTieConditional: Option[String]
+  partialTieConditional: Option[String] = None
 )
 
 object TiedForGoodsInformationDetails {

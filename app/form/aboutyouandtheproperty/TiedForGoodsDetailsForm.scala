@@ -25,7 +25,7 @@ object TiedForGoodsDetailsForm {
 
   val tiedForGoodsDetailsForm = Form(
     mapping(
-      "tiedForGoodsDetails" -> tiedForGoodsDetailsType,
+      "tiedForGoodsDetails"   -> tiedForGoodsDetailsType,
       "partialTieConditional" -> optional(text)
     )(TiedForGoodsInformationDetails.apply)(TiedForGoodsInformationDetails.unapply)
   )
