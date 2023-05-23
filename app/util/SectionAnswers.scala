@@ -55,7 +55,7 @@ case class SectionAnswers[T](answers: Option[T])(implicit messages: Messages) {
           Actions(items =
             Seq(
               ActionItem(
-                href = s"${editPage.url}#$editField",
+                href = s"${editPage.url}?from=CYA#$editField",
                 content = Text(messages("label.change")),
                 visuallyHiddenText = Some(messages(messageKey))
               )
