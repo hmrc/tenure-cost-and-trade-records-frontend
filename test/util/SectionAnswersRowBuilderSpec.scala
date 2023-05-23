@@ -26,9 +26,9 @@ import utils.TestBaseSpec
 /**
   * @author Yuriy Tumakha
   */
-class SectionAnswersSpec extends TestBaseSpec {
+class SectionAnswersRowBuilderSpec extends TestBaseSpec {
 
-  private def sectionAnswers = SectionAnswers(aboutYouAndTheProperty6010YesSession.aboutYouAndTheProperty)(messages)
+  private def sectionAnswers = SectionAnswersRowBuilder(aboutYouAndTheProperty6010YesSession.aboutYouAndTheProperty)(messages)
 
   private val expectedRow = Seq(
     SummaryListRow(
@@ -77,7 +77,7 @@ class SectionAnswersSpec extends TestBaseSpec {
     }
 
     "return answer value with conditional text field value `Other<br/>Details for other option` if selected option `Other`" in {
-      val answers = SectionAnswers(
+      val answers = SectionAnswersRowBuilder(
         aboutYouAndTheProperty6010YesSession.aboutYouAndTheProperty.map(
           _.copy(propertyDetails =
             Some(PropertyDetails("currentOccupierName", CurrentPropertyOther, Some("Details for other option")))
