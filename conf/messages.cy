@@ -226,6 +226,8 @@ hint.other.vacant.propertyCurrentlyUsedOther = Please give details if the proper
 ######################
 buildingOperatingHaveAWebsite.heading = Does the business operating from the property have a website?
 websiteAddressForProperty.textbox = What is the business website address?
+error.websiteAddressForProperty.required = Enter your web address
+error.webAddressFormat = Enter an address in the correct format, like www.example.com
 
 # PREMISES LICENSE GRANTED (6015,6016)
 ######################################
