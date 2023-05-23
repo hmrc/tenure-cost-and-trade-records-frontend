@@ -767,6 +767,17 @@ checkYourAnswersAboutTheProperty.currentOccupier = Welsh TBC: Current Occupier
 checkYourAnswersAboutTheProperty.propertyUsage = Welsh TBC: How is the property currently used?
 checkYourAnswersAboutTheProperty.hasWebsite = Welsh TBC: Website?
 checkYourAnswersAboutTheProperty.websiteAddress = Welsh TBC: Website address
+checkYourAnswersAboutTheProperty.license.heading = Welsh TBC: Your license
+checkYourAnswersAboutTheProperty.premisesLicenseGrantedDetail = Welsh TBC: Premises licence has been granted
+checkYourAnswersAboutTheProperty.premisesLicenseGrantedInformationDetails = Welsh TBC: Details of premises licence
+checkYourAnswersAboutTheProperty.licensableActivities = Welsh TBC: Licensable activities before 10:00 or after 23:30?
+checkYourAnswersAboutTheProperty.licensableActivitiesDetails = Welsh TBC: Description of licensable activities
+checkYourAnswersAboutTheProperty.premisesLicenseConditions = Welsh TBC: Premises license restriction on property use?
+checkYourAnswersAboutTheProperty.premisesLicenseConditionsDetails = Welsh TBC: Description of license restriction
+checkYourAnswersAboutTheProperty.enforcementAction = Welsh TBC: Enforcement action taken?
+checkYourAnswersAboutTheProperty.enforcementActionHasBeenTakenInformationDetails = Welsh TBC: Description of enforcement action
+checkYourAnswersAboutTheProperty.tiedForGoods = Welsh TBC: Tied for any goods?
+checkYourAnswersAboutTheProperty.tiedForGoodsDetails = Welsh TBC: Type of tie
 checkYourAnswersAboutTheTradingHistory.heading = This is a holding page for the about your trading history check your answers page
 checkYourAnswersAdditionalInformation.heading = This is a holding page for the additional information check your answers page
 

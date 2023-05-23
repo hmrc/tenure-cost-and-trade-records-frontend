@@ -20,7 +20,10 @@ import play.api.libs.json.Json
 
 //TODO - this does not seem to have been set up to store the Partial tie text field, nor is there seemingly any validation to ensure the user has to set this.
 
-case class TiedForGoodsInformationDetails(tiedGoodsDetails: TiedForGoodsInformation)
+case class TiedForGoodsInformationDetails(
+  tiedGoodsDetails: TiedForGoodsInformation,
+  partialTieConditional: Option[String] = None
+)
 
 object TiedForGoodsInformationDetails {
   implicit val format = Json.format[TiedForGoodsInformationDetails]

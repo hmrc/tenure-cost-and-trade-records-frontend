@@ -38,7 +38,7 @@ abstract class FORDataCaptureController(cc: MessagesControllerComponents) extend
     form
       .bindFromRequest()
       .fold(
-        if (isSaveAsDraft) _ => saveAsDraftRedirect else hasErrors,
+        hasErrors,
         success.andThen(if (isSaveAsDraft) saveAsDraftRedirect else _)
       )
 
