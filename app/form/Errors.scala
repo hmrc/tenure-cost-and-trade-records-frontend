@@ -81,4 +81,5 @@ object Errors {
   val invalidDurationDays   = "error.duration.days"
   val invalidDurationMonths = "error.duration.months"
   val invalidDurationYears  = "error.duration.years"
+
 }
