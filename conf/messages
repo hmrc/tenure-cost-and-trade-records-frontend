@@ -919,3 +919,4 @@ error.year.required = The date must include a year
 error.required.annualRent = Please provide an annual rent amount
 error.required.annualRentExcludingVat = Please provide a number
 error.char.count.maxLength = This must be 2000 characters or fewer
+error.townCity.required = Enter the town or city

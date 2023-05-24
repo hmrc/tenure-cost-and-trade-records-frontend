@@ -138,7 +138,10 @@ object MappingSupport {
       maxLength(50, "error.buildingNameNumber.maxLength")
     ),
     "street1"            -> optional(text(maxLength = 50)),
-    "town"               -> optional(text(maxLength = 50)),
+    "town"               -> default(text, "").verifying(
+      nonEmpty(errorMessage = "error.townCity.required"),
+      maxLength(50, "error.buildingNameNumber.maxLength")
+    ),
     "county"             -> optional(text(maxLength = 50)),
     "postcode"           -> nonEmptyTextOr("cateringAddress.postcode", postcode, "error.postcode.required")
   )(CateringAddress.apply)(CateringAddress.unapply)
@@ -149,7 +152,10 @@ object MappingSupport {
       maxLength(50, "error.buildingNameNumber.maxLength")
     ),
     "street1"            -> optional(text(maxLength = 50)),
-    "town"               -> optional(text(maxLength = 50)),
+    "town"               -> default(text, "").verifying(
+      nonEmpty(errorMessage = "error.townCity.required"),
+      maxLength(50, "error.buildingNameNumber.maxLength")
+    ),
     "county"             -> optional(text(maxLength = 50)),
     "postcode"           -> nonEmptyTextOr("lettingAddress.postcode", postcode, "error.postcode.required")
   )(LettingAddress.apply)(LettingAddress.unapply)

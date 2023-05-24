@@ -38,7 +38,7 @@ class AddressesSpec extends TestBaseSpec {
 
   // Test Catering Address
   val cateringAddress =
-    CateringAddress("001", Some("GORING ROAD"), Some("GORING-BY-SEA, WORTHING"), Some("SUSSEX"), "BN12 4AX")
+    CateringAddress("001", Some("GORING ROAD"), "GORING-BY-SEA, WORTHING", Some("SUSSEX"), "BN12 4AX")
 
   "CateringAddress" should {
     "return the address as a single line" in {
@@ -68,7 +68,7 @@ class AddressesSpec extends TestBaseSpec {
 
   // Test Letting Address
   val lettingAddress =
-    LettingAddress("001", Some("GORING ROAD"), Some("GORING-BY-SEA, WORTHING"), Some("SUSSEX"), "BN12 4AX")
+    LettingAddress("001", Some("GORING ROAD"), "GORING-BY-SEA, WORTHING", Some("SUSSEX"), "BN12 4AX")
 
   "LettingAddress" should {
     "return the address as a single line" in {
