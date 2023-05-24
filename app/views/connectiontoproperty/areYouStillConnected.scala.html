@@ -19,6 +19,7 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
 @import uk.gov.hmrc.govukfrontend.views.Aliases.RadioItem
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Hint
 @import models.submissions.connectiontoproperty.{AddressConnectionTypeYes, AddressConnectionTypeNo, AddressConnectionTypeYesChangeAddress}
 @import models.pages.Summary
 
@@ -48,14 +49,19 @@
             "govuk-fieldset__legend--l",
             isHeading = true,
             items = Seq(
-                AddressConnectionTypeYes.name -> messages("label.yes.oes"),
-                AddressConnectionTypeYesChangeAddress.name -> Messages("label.areYouConnected.addressUpdate"),
-                AddressConnectionTypeNo.name -> messages("label.no.nac.oes")
-            ).map(i => RadioItem (
-                content = Text(i._2),
-                checked = i._1.equals(theForm("isRelated").value.getOrElse("")),
-                value=Option(i._1)
-            )),
+                RadioItem(
+                    content = Text(messages("label.yes.oes")),
+                    value = Some("yes")
+                ),
+                RadioItem(
+                    content = Text(messages("label.areYouConnected.addressUpdate")),
+                    value = Some("yes-change-address")
+                ),
+                RadioItem(
+                    content = Text(messages("label.no.nac.oes")),
+                    value = Some("no"),
+                    hint = Some(Hint(content = Text(messages("hint.noConnection")))),
+                )),
             inline = false
         )
 

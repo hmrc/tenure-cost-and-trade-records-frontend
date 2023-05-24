@@ -88,7 +88,8 @@ class SectionAnswersSpec extends TestBaseSpec {
       val row = answers.row(
         "checkYourAnswersAboutTheProperty.propertyUsage",
         _.propertyDetails.map(_.propertyCurrentlyUsed).map(usage => s"${usage.key}.${usage.name}"),
-        aboutyouandtheproperty.routes.AboutThePropertyController.show(), "propertyCurrentlyUsed",
+        aboutyouandtheproperty.routes.AboutThePropertyController.show(),
+        "propertyCurrentlyUsed",
         ("propertyCurrentlyUsed.other", _.propertyDetails.flatMap(_.currentlyUsedOtherField))
       )
 
