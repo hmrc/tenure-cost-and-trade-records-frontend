@@ -21,7 +21,7 @@
 @(govukButton: GovukButton)(implicit request: Request[_], messages: Messages)
 
 @from = @{
- request.asInstanceOf[Request[AnyContent]].queryString.get("from").flatMap(_.headOption)
+ request.queryString.get("from").flatMap(_.headOption)
          .orElse(request.asInstanceOf[Request[AnyContent]].body.asFormUrlEncoded.flatMap(_.get("from").flatMap(_.headOption)))
          .getOrElse("")
 }
