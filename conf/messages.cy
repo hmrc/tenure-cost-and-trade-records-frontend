@@ -162,6 +162,7 @@ logout.loginAgain=Mewngofnodwch eto
 #########################
 areYouConnected.heading = Are you still connected to {0}?
 label.areYouConnected.addressUpdate = Yes, and the address needs to be updated
+hint.noConnection = Choose this if you’re no longer connected to the property, or have never had a connection to the property
 
 # EDIT ADDRESS
 ##############
