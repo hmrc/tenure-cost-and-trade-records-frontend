@@ -23,10 +23,15 @@ import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.{ActionItem, Actions, Key, SummaryListRow}
 
 /**
+  * Rows builder for CYA section answers.
+  *
   * @author Yuriy Tumakha
   */
-case class SectionAnswers[T](answers: Option[T])(implicit messages: Messages) {
+case class SectionAnswersRowBuilder[T](answers: Option[T])(implicit messages: Messages) {
 
+  /**
+    * Render {@link uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow SummaryListRow} with action to edit answer value.
+    */
   def row(
     messageKey: String,
     getAnswerValue: T => Option[String],
@@ -65,6 +70,9 @@ case class SectionAnswers[T](answers: Option[T])(implicit messages: Messages) {
       )
     )
 
+  /**
+    * Render {@link uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow SummaryListRow} if `condition` returns true.
+    */
   def conditionRow(
     condition: T => Boolean,
     messageKey: String,
@@ -79,6 +87,9 @@ case class SectionAnswers[T](answers: Option[T])(implicit messages: Messages) {
       Seq.empty[SummaryListRow]
     }
 
+  /**
+    * Render {@link uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow SummaryListRow} if answer value is defined.
+    */
   def optionalRow(
     messageKey: String,
     getAnswerValue: T => Option[String],

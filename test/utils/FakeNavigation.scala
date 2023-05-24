@@ -18,8 +18,12 @@ package utils
 
 import navigation._
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
+import play.api.mvc.AnyContentAsEmpty
+import play.api.test.FakeRequest
 
 trait FakeNavigation { this: GuiceOneAppPerSuite =>
+
+  implicit def implicitRequest: FakeRequest[AnyContentAsEmpty.type] = FakeRequest("GET", "/")
 
   lazy val connectedToPropertyNavigator       = app.injector.instanceOf[ConnectionToPropertyNavigator]
   lazy val removeConnectionNavigator          = app.injector.instanceOf[RemoveConnectionNavigator]
