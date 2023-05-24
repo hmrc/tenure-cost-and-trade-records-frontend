@@ -184,7 +184,7 @@ error.no.connection.selected = Select your connection to the property
 # ARE YOU STILL CONNECTED
 #########################
 pastConnectionType.heading = Have you ever had a connection to the property?
-error.pastConnectionType = select ‘Yes’ if you were previously connected
+error.pastConnectionType = Select ‘Yes’ if you ever had a connection to the property
 
 # REMOVE CONNECTION
 ###################
@@ -192,7 +192,7 @@ removeConnection.heading = Provide your contact details
 removeConnection.subheading = We’ll use these details if we need to contact you before removing your connection to this property
 label.removeConnectionAdditionalInfo = Additional information
 hint.removeConnectionDetails.removeConnectionAdditionalInfo = For example, the name of the current owner or occupier
-error.removeConnectionFullName.required = Please provide your full name
+error.fullName.required = Enter your name
 
 # ABOUT YOU AND PROPERTY SECTION
 ################################
@@ -221,6 +221,8 @@ propertyCurrentlyUsed.conferenceCentre = Conference centre
 propertyCurrentlyUsed.other = Other
 hint.other.use.propertyCurrentlyUsedOther = Describe the use of your property is not listed
 hint.other.vacant.propertyCurrentlyUsedOther = Please give details if the property has another use, or is vacant
+error.currentOccupierName.required = Enter the current occupier’s name
+error.currentOccupierName.maxLength = The current occupier’s name must be 50 characters or less
 
 # WEBSITE FOR PROPERTY
 ######################
@@ -921,3 +923,4 @@ error.required.annualRent = Please provide an annual rent amount
 error.required.annualRentExcludingVat = Please provide a number
 error.char.count.maxLength = This must be 2000 characters or fewer
 error.townCity.required = Enter the town or city
+error.fullName.required = Enter your name
