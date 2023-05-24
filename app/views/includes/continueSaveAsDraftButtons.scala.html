@@ -20,7 +20,13 @@
 
 @(govukButton: GovukButton)(implicit request: Request[_], messages: Messages)
 
-<input type="hidden" name="from" value="@request.queryString.get("from").flatMap(_.headOption).getOrElse("")" />
+@from = @{
+ request.asInstanceOf[Request[AnyContent]].queryString.get("from").flatMap(_.headOption)
+         .orElse(request.asInstanceOf[Request[AnyContent]].body.asFormUrlEncoded.flatMap(_.get("from").flatMap(_.headOption)))
+         .getOrElse("")
+}
+
+<input type="hidden" name="from" value="@from" />
 
 <div class="govuk-button-group">
  @govukButton(
