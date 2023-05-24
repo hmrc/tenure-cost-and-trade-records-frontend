@@ -162,6 +162,7 @@ logout.loginAgain=Mewngofnodwch eto
 #########################
 areYouConnected.heading = Are you still connected to {0}?
 label.areYouConnected.addressUpdate = Yes, and the address needs to be updated
+hint.noConnection = Choose this if you’re no longer connected to the property, or have never had a connection to the property
 
 # EDIT ADDRESS
 ##############
@@ -902,3 +903,4 @@ error.year.required = The date must include a year
 error.required.annualRent = Please provide an annual rent amount
 error.required.annualRentExcludingVat = Please provide a number
 error.char.count.maxLength = This must be 2000 characters or fewer
+error.townCity.required = Enter the town or city
