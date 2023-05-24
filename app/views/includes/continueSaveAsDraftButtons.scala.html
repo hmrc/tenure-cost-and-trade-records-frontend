@@ -20,6 +20,8 @@
 
 @(govukButton: GovukButton)(implicit request: Request[_], messages: Messages)
 
+<input type="hidden" name="from" value="@request.queryString.get("from").flatMap(_.headOption).getOrElse("")" />
+
 <div class="govuk-button-group">
  @govukButton(
   Button(

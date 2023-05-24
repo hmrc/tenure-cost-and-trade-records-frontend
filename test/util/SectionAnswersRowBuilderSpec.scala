@@ -28,7 +28,8 @@ import utils.TestBaseSpec
   */
 class SectionAnswersRowBuilderSpec extends TestBaseSpec {
 
-  private def sectionAnswers = SectionAnswersRowBuilder(aboutYouAndTheProperty6010YesSession.aboutYouAndTheProperty)(messages)
+  private def sectionAnswers =
+    SectionAnswersRowBuilder(aboutYouAndTheProperty6010YesSession.aboutYouAndTheProperty)(messages)
 
   private val expectedRow = Seq(
     SummaryListRow(
@@ -88,7 +89,8 @@ class SectionAnswersRowBuilderSpec extends TestBaseSpec {
       val row = answers.row(
         "checkYourAnswersAboutTheProperty.propertyUsage",
         _.propertyDetails.map(_.propertyCurrentlyUsed).map(usage => s"${usage.key}.${usage.name}"),
-        aboutyouandtheproperty.routes.AboutThePropertyController.show(), "propertyCurrentlyUsed",
+        aboutyouandtheproperty.routes.AboutThePropertyController.show(),
+        "propertyCurrentlyUsed",
         ("propertyCurrentlyUsed.other", _.propertyDetails.flatMap(_.currentlyUsedOtherField))
       )
 
