@@ -19,13 +19,16 @@ package controllers.aboutyouandtheproperty
 import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
 import form.aboutyouandtheproperty.CheckYourAnswersAboutThePropertyForm.checkYourAnswersAboutThePropertyForm
+import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty.updateAboutYouAndTheProperty
+import models.submissions.aboutyouandtheproperty.CheckYourAnswersAboutYourProperty
 import models.{ForTypes, Session}
+import navigation.AboutYouAndThePropertyNavigator
+import navigation.identifiers.CheckYourAnswersAboutThePropertyPageId
 import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import views.html.aboutyouandtheproperty.checkYourAnswersAboutTheProperty
-import views.html.taskList
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
@@ -33,8 +36,8 @@ import scala.concurrent.Future
 @Singleton
 class CheckYourAnswersAboutThePropertyController @Inject() (
   mcc: MessagesControllerComponents,
+  navigator: AboutYouAndThePropertyNavigator,
   checkYourAnswersAboutThePropertyView: checkYourAnswersAboutTheProperty,
-  taskListView: taskList,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
 ) extends FORDataCaptureController(mcc)
@@ -58,8 +61,21 @@ class CheckYourAnswersAboutThePropertyController @Inject() (
   }
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft(
-      Ok(taskListView())
+    continueOrSaveAsDraft[CheckYourAnswersAboutYourProperty](
+      checkYourAnswersAboutThePropertyForm,
+      formWithErrors =>
+        BadRequest(
+          checkYourAnswersAboutThePropertyView(
+            formWithErrors,
+            getBackLink(request.sessionData),
+            request.sessionData.toSummary
+          )
+        ),
+      data => {
+        val updatedData = updateAboutYouAndTheProperty(_.copy(checkYourAnswersAboutTheProperty = Some(data)))
+        session.saveOrUpdate(updatedData)
+        Redirect(navigator.nextPage(CheckYourAnswersAboutThePropertyPageId, updatedData).apply(updatedData))
+      }
     )
   }
 

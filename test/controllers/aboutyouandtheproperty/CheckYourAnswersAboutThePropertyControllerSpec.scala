@@ -22,7 +22,6 @@ import play.api.test.Helpers._
 import play.twirl.api.HtmlFormat
 import utils.TestBaseSpec
 import views.html.aboutyouandtheproperty.checkYourAnswersAboutTheProperty
-import views.html.taskList
 
 class CheckYourAnswersAboutThePropertyControllerSpec extends TestBaseSpec {
 
@@ -33,13 +32,10 @@ class CheckYourAnswersAboutThePropertyControllerSpec extends TestBaseSpec {
     mock[checkYourAnswersAboutTheProperty]
   when(mockCheckYourAnswersAboutThePropertyView.apply(any, any, any)(any, any)).thenReturn(HtmlFormat.empty)
 
-  val mockTaskListView: taskList = mock[taskList]
-  when(mockTaskListView.apply()(any, any)).thenReturn(HtmlFormat.empty)
-
   val checkYourAnswersAboutThePropertyController = new CheckYourAnswersAboutThePropertyController(
     stubMessagesControllerComponents(),
+    aboutYouAndThePropertyNavigator,
     mockCheckYourAnswersAboutThePropertyView,
-    mockTaskListView,
     preFilledSession,
     mockSessionRepo
   )
