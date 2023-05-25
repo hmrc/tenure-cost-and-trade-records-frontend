@@ -45,6 +45,8 @@ case class SectionAnswersRowBuilder[T](answers: Option[T])(implicit messages: Me
         value = Value(
           if (conditionalTextMapping.isEmpty) {
             Text(answers.flatMap(getAnswerValue).getOrElse(""))
+          } else if (conditionalTextMapping.head._1 == "valueAsHtml") {
+            HtmlContent(answers.flatMap(getAnswerValue).getOrElse(""))
           } else {
             val answerMsgKey       = answers.flatMap(getAnswerValue).getOrElse("")
             val conditionalTextMap = conditionalTextMapping.toMap

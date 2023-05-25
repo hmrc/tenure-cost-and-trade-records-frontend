@@ -39,7 +39,6 @@ class CheckYourAnswersAdditionalInformationControllerSpec extends TestBaseSpec {
     stubMessagesControllerComponents(),
     mockAdditionalInformationNavigator,
     mockCheckYourAnswersAdditionalInformationView,
-    mockTaskListView,
     preFilledSession,
     mockSessionRepo
   )

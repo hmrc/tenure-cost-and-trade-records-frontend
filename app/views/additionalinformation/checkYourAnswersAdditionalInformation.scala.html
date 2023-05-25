@@ -14,12 +14,13 @@
  * limitations under the License.
  *@
 
+@import actions.SessionRequest
+@import controllers.additionalinformation
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import models.submissions.additionalinformation.CheckYourAnswersAdditionalInformation
 @import uk.gov.hmrc.govukfrontend.views.html.components._
-@import models.submissions.common.CYAYesNo
-
 @import models.Session
+@import util.SectionAnswersRowBuilder
 
 @this(layout: Layout,
         govukButton: GovukButton,
@@ -28,65 +29,39 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[CheckYourAnswersAdditionalInformation], session: Session)(implicit request: Request[_], messages: Messages)
+@(theForm: Form[CheckYourAnswersAdditionalInformation], session: Session)(implicit request: SessionRequest[_], messages: Messages)
+
+@sectionAnswers = @{
+ SectionAnswersRowBuilder(request.sessionData.additionalInformation)
+}
 
 @layout(
  pageHeading = messages("checkYourAnswersAdditionalInformation.heading"),
  showSection = true,
  summary = Some(session.toSummary),
  sectionName = messages("label.section.additionalInformation"),
- backLinkUrl = controllers.additionalinformation.routes.AlternativeContactDetailsController.show.url,
+ backLinkUrl = additionalinformation.routes.AlternativeContactDetailsController.show.url,
+ theForm = theForm
 ) {
 
- @formWithCSRF(action = controllers.additionalinformation.routes.CheckYourAnswersAdditionalInformationController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
+ @formWithCSRF(action = additionalinformation.routes.CheckYourAnswersAdditionalInformationController.submit()) {
 
-  @govukSummaryList(SummaryList(rows = Seq(
-   SummaryListRow(
-    key = Key(Text(messages("label.furtherInformation"))),
-    value = Value(Text(session.additionalInformation.flatMap(_.furtherInformationOrRemarksDetails.map(_.furtherInformationOrRemarksDetails)).getOrElse("").getOrElse(""))),
-    actions = Option(Actions(items = Seq(ActionItem(href="/send-trade-and-cost-information/further-information-or-remarks",
-     visuallyHiddenText = Some(messages("label.furtherInformation")),
-     content = Text(messages("label.change")))))
-    )
-    ))))
+  @govukSummaryList(SummaryList(rows =
+   sectionAnswers.row("label.furtherInformation",
+    _.furtherInformationOrRemarksDetails.map(_.furtherInformationOrRemarksDetails).filter(_.trim != "").orElse(Some("No")),
+    additionalinformation.routes.FurtherInformationOrRemarksController.show(), "furtherInformationOrRemarks")
+  ))
 
   <h2 class="govuk-heading-m">@messages("key.altContact.details")</h2>
 
-  @govukSummaryList(SummaryList(rows = Seq(
-   SummaryListRow(
-    key = Key(Text(messages("label.fullName"))),
-    value = Value(Text(session.additionalInformation.flatMap(_.altContactInformation.map(_.alternativeContactFullName)).getOrElse(""))),
-    actions = Option(Actions(items = Seq(ActionItem(href="/send-trade-and-cost-information/further-information-or-remarks",
-     visuallyHiddenText = Some(messages("label.fullName")),
-     content = Text(messages("label.change")))))
-    )
-    ),
-   SummaryListRow(
-    key = Key(Text(messages("label.telephoneNumber"))),
-    value = Value(Text(session.additionalInformation.flatMap(_.altContactInformation.map(_.alternativeContactDetails.phone)).getOrElse(""))),
-    actions = Option(Actions(items = Seq(ActionItem(href="/send-trade-and-cost-information/further-information-or-remarks",
-     visuallyHiddenText = Some(messages("label.telephoneNumber")),
-     content = Text(messages("label.change")))))
-    )
-    ),
-   SummaryListRow(
-    key = Key(Text(messages("label.emailAddress"))),
-    value = Value(Text(session.additionalInformation.flatMap(_.altContactInformation.map(_.alternativeContactDetails.email)).getOrElse(""))),
-    actions = Option(Actions(items = Seq(ActionItem(href="/send-trade-and-cost-information/further-information-or-remarks",
-     visuallyHiddenText = Some(messages("label.emailAddress")),
-     content = Text(messages("label.change")))))
-    )
-    ),
-   SummaryListRow(
-    key = Key(Text(messages("label.correspondenceAddress"))),
-    value = Value(HtmlContent(
-             s"<p class=\"govuk-body\">${session.additionalInformation.flatMap(_.altContactInformation.map(_.alternativeContactAddress.multiLine)).getOrElse("")}</p>")),
-    actions = Option(Actions(items = Seq(ActionItem(href="/send-trade-and-cost-information/further-information-or-remarks", //TODO Change to a route
-     visuallyHiddenText = Some(messages("label.correspondenceAddress")),
-     content = Text(messages("label.change")))))
-    )
-    )
-   )))
+  @govukSummaryList(SummaryList(rows = sectionAnswers.row("label.fullName", _.altContactInformation.map(_.alternativeContactFullName), additionalinformation.routes.AlternativeContactDetailsController.show(), "alternativeContactFullName") ++
+          sectionAnswers.row("label.telephoneNumber", _.altContactInformation.map(_.alternativeContactDetails.phone), additionalinformation.routes.AlternativeContactDetailsController.show(), "alternativeContactDetails.phone") ++
+          sectionAnswers.row("label.emailAddress", _.altContactInformation.map(_.alternativeContactDetails.email), additionalinformation.routes.AlternativeContactDetailsController.show(), "alternativeContactDetails.email") ++
+          sectionAnswers.row("label.correspondenceAddress",
+           _.altContactInformation.map(_.alternativeContactAddress.addressLines.map(Text(_).asHtml).mkString("""<p class="govuk-body">""", "<br/> ", "</p>")),
+           additionalinformation.routes.AlternativeContactDetailsController.show(), "alternativeContactAddress.buildingNameNumber",
+           ("valueAsHtml", _ => None))
+  ))
 
   @includes.checkYourAnswersRadioButtons(
    govukRadios,
@@ -97,7 +72,5 @@
   @includes.continueSaveAsDraftButtons(govukButton)
 
  }
+
 }
-
-
-
