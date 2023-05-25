@@ -78,13 +78,14 @@ label.change = Change
 # COMMON HINTS
 ##############
 hint.select.all = Select all that apply
+hint.date.example = For example, 10 2 1999
 
 # SECTION NAMES
 ###############
 label.section.aboutTheProperty = About you and the property
-label.section.aboutYourTradingHistory = About your trading history
-label.section.aboutTheFranchiseLettings = Franchises or lettings tied to the property
-label.section.aboutYourLeaseOrTenure = About your lease or agreement
+label.section.aboutYourTradingHistory = Your trading history
+label.section.aboutTheFranchiseLettings = Franchises or lettings
+label.section.aboutYourLeaseOrTenure = Your lease or agreement
 label.section.additionalInformation = Additional information
 
 #DUMMY START PAGE FULL INFORMATION
@@ -257,7 +258,7 @@ help.licensableActivities.heading = Licensable activities
 help.licensableActivities.p1 = The Licensing Act, 2003 defines licensable activities as:
 help.licensableActivities.list1.p1 = the retail sale of alcohol
 help.licensableActivities.list1.p2 = the supply of alcohol in clubs
-help.licensableActivities.list1.p3 = the provision of lat-night refreshment
+help.licensableActivities.list1.p3 = the provision of late-night refreshment
 help.licensableActivities.list1.p4 = the provision of regulated entertainment
 help.licensableActivities.p2 = In this instance, ’clubs’ is a cover-all term covering establishment categories covered by this form.
 help.licensableActivities.p3 = ’Late-night refreshment’ is defined as the supply of hot food and drink to the public for consumption between 23:00 and 05:00.
@@ -272,10 +273,10 @@ help.licensableActivities.list2.p7 = a dance performance
 
 # LICENSABLE ACTIVITIES DETAILS
 ###############################
-licensableActivitiesDetails.heading = Describe the licensable activities regularly commending before 10:00 or after 23:30
+licensableActivitiesDetails.heading = Describe the licensable activities regularly commencing before 10:00 or after 23:30
 help.licensableActivitiesDetails.title = Help with describing your licensable activities
 help.licensableActivitiesDetails.heading = Describing your licensable activities
-help.licensableActivitiesDetails.p1 = You’re only required to write a short description of the licensable activities we’re concerned with. Example of acceptable descriptions include:
+help.licensableActivitiesDetails.p1 = You’re only required to write a short description of the licensable activities we’re concerned with. Examples of acceptable descriptions include:
 help.licensableActivitiesDetails.list.p1 = We start serving alcohol at 9am, Monday to Saturday
 help.licensableActivitiesDetails.list.p2 = We have a DJ playing until 1am on Friday and Saturday
 help.licensableActivitiesDetails.list.p3 = Our hot-breakfast service starts at 4am every day
@@ -292,8 +293,8 @@ help.premisesLicenseConditions.p2 = Check your premises licence if you’re not 
 # PREMISES LICENCE CONDITIONS DETAILS
 #####################################
 premisesLicenseConditionsDetails.heading = Describe the conditions restricting the use of all or parts of the property
-help.premisesLicenseConditionsDetails.title = Help with describing restricting on the use of the property
-help.premisesLicenseConditionsDetails.heading = Describing restricting on the use of the property
+help.premisesLicenseConditionsDetails.title = Help with describing restrictions on the use of the property
+help.premisesLicenseConditionsDetails.heading = Describing restrictions on the use of the property
 help.premisesLicenseConditionsDetails.p1 = You’re only required to write a short description of the conditions we’re concerned with. Example of acceptable descriptions include:
 help.premisesLicenseConditionsDetails.list.p1 = No drinks allowed on the terrace after 10pm
 help.premisesLicenseConditionsDetails.list.p2 = Only 200 people allowed in the function room at any time
@@ -327,9 +328,9 @@ help.tiedForGoods.title = Help with tied goods
 help.tiedForGoods.heading1 = Full tie
 help.tiedForGoods.p1 = People with a full tie are required to buy all the goods they sell from their landlord.
 help.tiedForGoods.heading2 = Beer only
-help.tiedForGoods.p2 = As the name suggests, people with a beer only tie buy beer from their landlord but can source other items independently.
+help.tiedForGoods.p2 = As the name suggests, people with a beer-only tie buy beer from their landlord but can source other items independently.
 help.tiedForGoods.heading3 = Partial tie
-help.tiedForGoods.p3 = Partial ties are normally negotiated to give the tenant some flexibility to sell certain items independently, for example guest ales or fine wines
+help.tiedForGoods.p3 = Partial ties are normally negotiated to give the tenant some flexibility to sell certain items independently, for example guest ales or fine wines.
 partialTieConditional.textbox = Give details of your partial tie
 
 # TIED FOR GOODS DETAILS
@@ -349,9 +350,9 @@ label.no = No
 #FRANCHISE OR LETTINGS TIED TO PROPERTY
 #######################################
 franchiseLettings.heading = Do you have any franchises or lettings tied to the property?
-franchiseLettings.subheading = These include:
+franchiseLettings.subheading = You should declare any:
 franchiseLettings.list1 = catering operation or letting accommodation run as a separate business if you’ve not included their turnover on the previous page
-franchiseLettings.list2 = rent received from letting other parts of the property including advertising rights, stations or hoardings
+franchiseLettings.list2 = rent received from letting other parts of the property including advertising billboards, car parking or telephone masts
 
 #ABOUT YOUR LANDLORD
 ##############################
@@ -370,7 +371,7 @@ label.rentUnderReviewNegotiated  = Is the rent currently under review, or is a n
 
 #LEASE OR AGREEMENT DETAILS VAT
 ##############################
-includedInYourRent.heading = Which of the following are included in your rent?
+includedInYourRent.heading = Are any of the following are included in your rent?
 includedInYourRentApply.subheading = Select any that apply
 label.vat = VAT
 label.nondomesticRates = Non-domestic rates
@@ -379,12 +380,12 @@ label.waterCharges = Water charges
 #CATERING OPERATION OR LETTING ACCOMMODATION
 ############################################
 cateringOperationOrLettingAccommodation.heading = Is any catering operation or letting accommodation run as a separate business from the property?
-hint.cateringOperationOrLettingAccommodation = Choose ‘no’ if you’ve included turnover from these businesses on the previous page. You will have the opportunity to add more than one business if required.
+hint.cateringOperationOrLettingAccommodation = You will have the opportunity to add more than one business if required.
 
 #LETTING OTHER PART OF PROPERTY
 ##############################
 lettingOtherPartOfProperties.heading = Is any rent received from letting other parts of the property?
-hint.lettingOtherPartOfProperties = Including advertising rights, stations or hoardings. Choose ‘no’ if you’ve already included the rental payments in your turnover.
+hint.lettingOtherPartOfProperties = Including advertising rights, stations or hoardings
 
 #CURRENT ANNUAL RENT
 ##############################
@@ -393,7 +394,9 @@ hint.currentAnnualRent = For example, 32000
 
 #RENT OPEN MARKET VALUE
 #######################
-rentOpenMarketValue.heading = Is the rent based on the open market value?
+rentOpenMarketValue.heading = When the current rent was agreed, was it based on the open market value at that time?
+help.rentOpenMarketValue.title = If you’re not sure
+help.rentOpenMarketValue.p1 = If your rent isn’t based on open market value, it may simply be a fixed amount agreed between both parties, or linked to another factor. If you are unsure, it may be stipulated in your lease or agreement.
 
 #DOES THE RENT PAYABLE
 ######################
@@ -402,7 +405,7 @@ checkbox.rentPayable.proprietor = Proprietor’s, manager’s or staff living ac
 checkbox.rentPayable.otherProperty = Other property
 checkbox.rentPayable.onlyPart = Only part of the property
 checkbox.rentPayable.onlyLand = Only to land (excluding buildings)
-checkbox.rentPayable.shellUnit = A ’shell’ unit (you had to fit the property out yourself)
+checkbox.rentPayable.shellUnit = A 'shell' unit you had to fit out yourself
 label.detailsToQuestions = Give details if you selected any of the options
 hint.detailsToQuestions = For example, the rent includes residential accommodation, or also includes the premises next door
 error.detailsToQuestions.required = Please provide further information
@@ -446,13 +449,14 @@ error.sharedResponsibilities.maxLength = This must be 2000 characters or fewer
 #RENT INCLUDE TRADE SERVICES
 ############################
 rentIncludeTradeServices.heading = Does the rent include any trade services provided by the landlord?
-hint.rentIncludeTradeServices = For example, maintenance of trade fixtures and fittings, cellar services, marketing, staff training etc.
+hint.rentIncludeTradeServices = For example, maintenance of trade fixtures and fittings, cellar services, marketing, staff training
 
 #RENT INCLUDE TRADE SERVICES DETAILS
 ####################################
-rentIncludeTradeServicesDetails.heading = Where specifically itemised, what sum is included in the rent (excluding VAT) to cover services provided by the landlord?
+rentIncludeTradeServicesDetails.heading = Where specifically itemised, what sum is included in the rent to cover services provided by the landlord, excluding VAT?
 rentIncludeTradeServicesDetails.hint = Leave blank if this is not specifically itemised
 label.describeServices = Describe services provided
+rentIncludeTradeServicesDetailsTextBox.hint = For example, maintenance of fires, annual gas checks and cellar services
 error.required.sumIncludedInRent = Please provide a value
 error.invalid_currency.sumIncludedInRent= Please provide a number
 error.describeServices.required = Please provide further information
@@ -466,7 +470,7 @@ error.invalid_currency.rentIncludeFixturesAndFittings = Please provide a number
 
 #RENT INCLUDE FIXTURES AND FITTINGS DETAILS
 ###########################################
-rentIncludeFixturesAndFittingsDetails.heading = Where specifically itemised, what sum is included in the rent (excluding VAT) to cover equipment provided by the landlord?
+rentIncludeFixturesAndFittingsDetails.heading = Where specifically itemised, what sum is included in the rent to cover equipment provided by the landlord, excluding VAT?
 rentIncludeFixturesAndFittingsDetails.hint = Leave blank if this is not specifically itemised
 error.required.rentIncludeFixturesAndFittingsDetails = Please provide a value
 error.invalid_currency.rentIncludeFixturesAndFittingsDetails = Please provide a number
@@ -486,7 +490,8 @@ hint.capitalSumOrPremium = The sum could be paid to the landlord or a previous l
 
 #PAYMENT WHEN LEASE IS GRANTED
 ##############################
-receivePaymentWhenLeaseGranted.heading = Did you receive any payment when the lease was granted (if the rent has not been reviewed in the lease), or following assignment of the lease or agreement?
+receivePaymentWhenLeaseGranted.heading = Did you receive any payment when the lease was granted, or following assignment of the lease or agreement?
+hint.receivePaymentWhenLeaseGranted = Select ‘no’ if your rent has been reviewed since you received the payment
 
 #RENT INCREASE ANNUALLY WITH RPI
 ################################
@@ -505,7 +510,7 @@ label.methodUsedToFixCurrentRent.aCourt = A court
 ##########################
 howIsCurrentRentFixed.heading = How was the current rent fixed?
 label.newLeaseAgreement = At the beginning of a new lease or agreement
-label.interimRent = As an interim rent under the Landlord and Tenants Acts
+label.interimRent = As an interim rent under the Landlord and Tenant Act
 label.rentReview = At a rent review
 label.renewalLeaseTenancy = On a renewal of a lease or tenancy
 label.saleLeaseback = As part of a sale and leaseback transaction
@@ -551,12 +556,12 @@ label.addAnotherLettingOtherPartOfProperty = Do you need to add another letting?
 
 ##TENANTS ADDITIONS DISREGARDED
 ###############################
-tenantsAdditionsDisregarded.heading = Were any tenants’ additions disregarded at the time the rent was agreed or determined
+tenantsAdditionsDisregarded.heading = Were any tenants’ additions or improvements disregarded at the time the rent was agreed or determined
 hint.tenantsAdditionsDisregarded = For example, is your rent based on the market value of the property before you made improvements like fitting out a shell, or adding parking
 
 ##TENANTS ADDITIONS DISREGARDED DETAILS
 #######################################
-tenantsAdditionsDisregardedDetails.heading = Describe the tenant’s additions disregarded at the time the rent was agreed or determined
+tenantsAdditionsDisregardedDetails.heading = Describe the tenant’s additions or improvements disregarded at the time the rent was agreed or determined
 hint.tenantsAdditionsDisregardedDetails = Give a brief description of the work carried out and how much it cost
 error.tenantsAdditionsDisregardedDetails.required = Please describe the tenant’s additions disregarded at the time the rent was agreed or determined
 error.tenantsAdditionsDisregardedDetails.maxLength = This must be 2000 characters or fewer
@@ -606,7 +611,7 @@ label.currentRentFirstPaid.help = For example, 9 2017
 ##INTERVALS OF RENT REVIEW
 ##########################
 intervalsOfRentReview.heading = At what intervals is the rent reviewed under the terms of the lease or agreement?
-hint.intervalsOfRentReview = Do not include any changes to your rent linked to indexes such as the RPI, or your sales. For example, rent is reviewed annually, every two years, every three years.
+hint.intervalsOfRentReview = Do not include any changes to your rent linked to indexes such as the RPI, or your sales. For example, rent is reviewed annually, every two years, every three years - leave blank if not applicable
 label.nextReview = When is the next rent review due?
 label.nextReview.help = For example, 27 9 2017 - leave blank if not applicable
 error.nextReview.day.required = The date must include a day
@@ -729,13 +734,13 @@ label.correspondenceAddress = Correspondence Address
 
 # FURTHER INFORMATION OR REMARKS
 ################################
-furtherInformationOrRemarks.heading = Further information or remarks (if any)
-hint.furtherInformationOrRemarks = Please provide further details if there is insufficient room for you to complete your answers to any of the forgoing questions, or if any of the questions require further explanation or clarification
+furtherInformationOrRemarks.heading = Further information or remarks
+hint.furtherInformationOrRemarks = Provide further details if there was not enough room for you to complete your answers to any of the previous questions, or if any questions need further explanation or clarification
 
 #ALTERNATIVE CONTACT DETAILS
 ############################
 alternativeContactDetails.heading = Alternative contact details
-hint.alternativeContactDetails = If you like us to either contact you at at different address or  contact someone else if we have any queries about this form, please give details here
+hint.alternativeContactDetails = If you would like us to either contact you at at different address or  contact someone else if we have any queries about this form, please give details here
 label.alternativeContactDetails = Correspondence address
 
 #TENANCY LEASE AGREEMENT EXPIRE (FORM 6011)
@@ -806,7 +811,6 @@ common.helpWithService = Call the VOA team on 01234 567 890 for help using this 
 #HELP WITH SERVICE CURRENT RENT FIRST PAID
 ##############################
 currentRentFirstPaid.title = If you are not sure what date to use
-currentRentFirstPaid.helpWithServiceCurrentRentFirstPaidDateKnow = The date we need to know is not necessarily the date when you first took occupation.
 currentRentFirstPaid.helpWithServiceCurrentRentFirstPaidDateCould = The date could be when the rent was first paid by you or a previous occupier following:
 currentRentFirstPaid.listBlock.p1 = a rent review
 currentRentFirstPaid.listBlock.p2 = a lease renewal or alteration

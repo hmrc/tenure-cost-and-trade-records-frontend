@@ -19,13 +19,18 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
 @import models.pages.Summary
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukDetails
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Details
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Text
+@import uk.gov.hmrc.govukfrontend.views.Aliases.HtmlContent
+
 
 @this(layout: Layout,
         govukButton: GovukButton,
         govukRadios: GovukRadios,
+        govukDetails: GovukDetails,
         formWithCSRF: FormWithCSRF
 )
-
 
 @(theForm: Form[RentOpenMarketValueDetails], backLink: String, summary: Summary)(implicit request: Request[_], messages: Messages)
 
@@ -42,6 +47,12 @@
   @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.RentOpenMarketValueController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
 
     @includes.radioButtonsYesNo(govukRadios, theForm, "rentOpenMarketValue", "rentOpenMarketValue.heading", "govuk-fieldset__legend--l", isHeading = true)
+
+   @govukDetails(Details(
+    summary = Text(messages("help.rentOpenMarketValue.title")),
+    content = HtmlContent(
+             s"<p>${messages("help.rentOpenMarketValue.p1")}</p>"
+    )))
 
     @includes.continueSaveAsDraftButtons(govukButton)
   }

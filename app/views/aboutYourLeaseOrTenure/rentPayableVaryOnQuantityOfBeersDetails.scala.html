@@ -44,7 +44,7 @@
    <h1 class="govuk-fieldset__heading">@messages("rentPayableVaryOnQuantityOfBeersDetails.heading")</h1>
   </legend>
 
-  @includes.textInputCharCount(govukCharacterCount, theForm, "rentPayableVaryOnQuantityOfBeersDetails", "", "govuk-!-font-weight-bold")
+  @includes.textInputCharCount(govukCharacterCount, theForm, "rentPayableVaryOnQuantityOfBeersDetails", "", "govuk-!-font-weight-bold", hint = "hint.rentPayableVaryOnQuantityOfBeersDetails")
 
   @includes.continueSaveAsDraftButtons(govukButton)
  }

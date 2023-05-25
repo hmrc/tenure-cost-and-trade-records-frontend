@@ -52,7 +52,7 @@ class TenancyLeaseAgreementExpireViewSpec extends QuestionViewBehaviours[Tenancy
     "contain date format hint for tenancyLeaseAgreementExpire-hint" in {
       val doc             = asDocument(createViewUsingForm(form))
       val firstOccupyHint = doc.getElementById("tenancyLeaseAgreementExpire-hint").text()
-      assert(firstOccupyHint == messages("help.date.day.month.year"))
+      assert(firstOccupyHint == messages("hint.date.example"))
     }
 
     "contain date field for the value tenancyLeaseAgreementExpire.day" in {
