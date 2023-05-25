@@ -14,6 +14,7 @@
  * limitations under the License.
  *@
 
+@import actions.SessionRequest
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukWarningText
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.warningtext.WarningText
@@ -27,7 +28,12 @@
         formWithCSRF: FormWithCSRF
 )
 
-@()(implicit request: Request[_], messages: Messages)
+
+@()(implicit request: SessionRequest[_], messages: Messages)
+
+@session = @{
+ request.sessionData
+}
 
 @layout(
  pageHeading = messages("taskList.heading"),
@@ -40,39 +46,29 @@
 
      <li>
       <h2 class="app-task-list__section">
-       1. About you and the property
+       <span class="app-task-list__section-number">1. </span> About you and the property
       </h2>
 
       <ul class="app-task-list__items">
+       @includes.taskListItem("about-you", "Your contact details",
+        controllers.aboutyouandtheproperty.routes.AboutYouController.show(),
+        session.aboutYouAndTheProperty.flatMap(_.checkYourAnswersAboutTheProperty.map(_.checkYourAnswersAboutYourProperty)),
+        session.aboutYouAndTheProperty.flatMap(_.customerDetails)
+       )
 
-        <!-- Movement details -->
-       <li class="app-task-list__item">
-        <span class="app-task-list__task-name">
-         <a href="about-you">Your contact details</a></span>
-        <span class="govuk-tag app-task-list__tag govuk-tag--grey" id="trader-details-not-started">Not started</span>
-       </li>
+       @includes.taskListItem("about-the-property", "How the property is used",
+        controllers.aboutyouandtheproperty.routes.AboutThePropertyController.show(),
+        session.aboutYouAndTheProperty.flatMap(_.checkYourAnswersAboutTheProperty.map(_.checkYourAnswersAboutYourProperty)),
+        session.aboutYouAndTheProperty.flatMap(_.propertyDetails),
+        session.aboutYouAndTheProperty.flatMap(_.customerDetails).isEmpty
+       )
 
-       <li class="app-task-list__item">
-        <span class="app-task-list__task-name">
-
-         <a href="about-the-property">How the property is used</a></span>
-
-        </span>
-        <span class="govuk-tag app-task-list__tag govuk-tag--grey" id="goods-summary-not-started">
-         Not started
-        </span>
-       </li>
-
-       <li class="app-task-list__item">
-        <span class="app-task-list__task-name">
-         <a href="website-for-property">Your licence</a></span>
-        </span>
-        <span class="govuk-tag app-task-list__tag govuk-tag--grey" id="goods-summary-not-started">
-         Not started
-        </span>
-       </li>
-
-
+       @includes.taskListItem("licensable-activities", "Your licence",
+        controllers.aboutyouandtheproperty.routes.LicensableActivitiesController.show(),
+        session.aboutYouAndTheProperty.flatMap(_.checkYourAnswersAboutTheProperty.map(_.checkYourAnswersAboutYourProperty)),
+        session.aboutYouAndTheProperty.flatMap(_.licensableActivities),
+        session.aboutYouAndTheProperty.flatMap(_.propertyDetails).isEmpty
+       )
       </ul>
      </li>
     </ol>
@@ -80,7 +76,7 @@
     <ol class="app-task-list">
      <li>
       <h2 class="app-task-list__section">
-       2. About your trading history
+       <span class="app-task-list__section-number">2. </span>About your trading history
       </h2>
       <ul class="app-task-list__items">
        <li class="app-task-list__item">
@@ -99,7 +95,7 @@
     <ol class="app-task-list">
      <li>
       <h2 class="app-task-list__section">
-       3. About any franchises or lettings
+       <span class="app-task-list__section-number">3. </span> About any franchises or lettings
       </h2>
       <ul class="app-task-list__items">
        <li class="app-task-list__item">
@@ -130,7 +126,7 @@
     <ol class="app-task-list">
      <li>
       <h2 class="app-task-list__section">
-       4. About your lease or agreement
+       <span class="app-task-list__section-number">4. </span> About your lease or agreement
       </h2>
       <ul class="app-task-list__items">
 
@@ -148,7 +144,7 @@
     <ol class="app-task-list">
      <li>
       <h2 class="app-task-list__section">
-       5. Additional information
+       <span class="app-task-list__section-number">5. </span> Additional information
       </h2>
       <ul class="app-task-list__items">
        <li class="app-task-list__item">
