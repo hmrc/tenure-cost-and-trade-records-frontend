@@ -86,7 +86,7 @@ object Formats {
   implicit val methodToFixCurrentRentDetailsFormat: Formatter[MethodToFixCurrentRents] =
     namedEnumFormatter(MethodToFixCurrentRents, Errors.booleanMissing)
   implicit val tiedForGoodsDetailsFormat: Formatter[TiedForGoodsInformation]           =
-    namedEnumFormatter(TiedForGoodsInformation, Errors.booleanMissing)
+    namedEnumFormatter(TiedForGoodsInformation, Errors.tiedTypeRequired)
 
   implicit val answerResponsiblePartyFormatter: Formatter[AnswerResponsibleParty] =
     namedEnumFormatter(AnswerResponsibleParty, Errors.booleanMissing)

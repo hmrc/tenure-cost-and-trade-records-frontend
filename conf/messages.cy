@@ -339,6 +339,7 @@ tiedForGoodsDetails.heading = What type of tie do you have?
 tiedForGoodsDetails.fullTie = Full tie
 tiedForGoodsDetails.beerOnly = Beer only
 tiedForGoodsDetails.partialTie = Partial tie
+error.tiedForGoodsDetails.required = Enter details of your partial tie
 
 #TENANCY LEASE AGREEMENT(USED ON 6010, 6015, 6016, 6030, 6032, 6033, 6034, 6035, 6036, 6037, 6038, 6043, 6049, 6056, 6057, 6066)
 ##############################
@@ -563,7 +564,7 @@ hint.tenantsAdditionsDisregarded = For example, is your rent based on the market
 #######################################
 tenantsAdditionsDisregardedDetails.heading = Describe the tenant’s additions or improvements disregarded at the time the rent was agreed or determined
 hint.tenantsAdditionsDisregardedDetails = Give a brief description of the work carried out and how much it cost
-error.tenantsAdditionsDisregardedDetails.required = Please describe the tenant’s additions disregarded at the time the rent was agreed or determined
+error.tenantsAdditionsDisregardedDetails.required = Tell us about the tenants‘ additions that were disregarded when your rent was agreed
 error.tenantsAdditionsDisregardedDetails.maxLength = This must be 2000 characters or fewer
 
 ##LEGAL PLANNING RESTRICTIONS

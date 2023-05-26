@@ -49,6 +49,7 @@ object Errors {
   //About The Property Errors
   val currentOccupierName = "error.currentOccupierName.required"
   val currentPropertyUse  = "error.currentPropertyUse.required"
+  val tiedTypeRequired = "error.tiedType.required"
 
   val test = "error.currentPropertyUse.required"
 
