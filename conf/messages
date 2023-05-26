@@ -84,10 +84,10 @@ label.section.additionalInformation = Additional information
 #DUMMY START PAGE FULL INFORMATION
 ##############################
 start.page.heading = Send your business trade and cost information to the Valuation Office Agency
-start.header = Use this service if the Valuation Office Agency (VOA) has asked you information about your business premises.
+start.header = Use this service if the Valuation Office Agency (VOA) has asked you for information about your business premises.
 start.title = Why you must provide this information
-start.block1 = The VOA collects this information from all businesses in England and Wales on behalf of the Valuation Office. It’s used to set fair, up-to-date rateable values for non-domestic properties
-start.block2 = These values are used to determine business rates in England and Wales. You can check the rateable value of your property using our business rates valuation service.
+start.block1 = The VOA collects this information from all businesses in England and Wales on behalf of the Valuation Officer. It’s used to set fair, up-to-date rateable values for non-domestic properties
+start.block2 = These values are used to determine business rates in England and Wales. You can check the rateable value of your property using our <a href="https://www.gov.uk" class="govuk-link" target="_blank">business rates valuation service</a>.
 start.desc = You must send the Valuation Office Agency (VOA) information about your business property if they’ve asked you to. You need to do this even if you no longer own or rent the property.
 start.desc1 = The information you provide will be used by the local authority to help calculate business rates in your area.
 start.inset = If you do not send the information within 56 days of getting the letter the VOA sent to you, you may have to pay a penalty.
@@ -96,7 +96,7 @@ start.subheading = What you’ll need
 start.item1 = the reference number from the letter you were sent by the VOA
 start.item2 = trading information for the last 3 financial years, or since you occupied the property
 start.item3 = details of any franchises or lettings run from the property as a separate business (if applicable)
-start.subheading2 = If you do not own the property, you’ll also need
+start.subheading2 = If you do not own the property, you’ll also need:
 start.item4 = your lease or agreement, including the current rent you pay
 start.item5 = information about any recent changes to your rent or any rent-free periods
 start.item6 = information about any changes you’ve made to the property that could affect its value
@@ -104,7 +104,7 @@ start.subheading3 = If you no longer occupy, or have never occupied the property
 start.desc3 = You must still use this service to notify us if you no longer occupy, or have never occupied the property. This should take less than 2 minutes
 start.desc4 = If you’d like to learn more about business rates before starting your form, visit our introduction to business rates section. It explains things like how your rates are calculated, how to pay, and whether you qualify for business rates relief.
 start.title2 = Before you begin
-start.desc5 = Completing this online form takes anywhere between 20 minutes and an hour, depending on your business. You do not have to complete the form in one go. You can save what you’ve done and return to it later.
+start.desc5 = Completing this online form takes anywhere between 20 minutes and an hour, depending on your business. <strong>You do not have to complete the form in one go</strong>. You can save what you’ve done and return to finish it later.
 start.desc6 = You have 56 days from the date printed on your letter from the VOA to return the form. You may have to pay a penalty if you fail to submit the form in time.
 start.headingFooter = You do not have to complete the form in one go. You can save what you’ve done and return to finish it later on.
 start.button = Start now
