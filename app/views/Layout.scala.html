@@ -135,7 +135,7 @@
 @hmrcLayout(
     pageTitle = Some(title),
     serviceName = Some(messages("site.service_name")),
-    serviceUrl= Some(routes.LoginController.show.url),
+    serviceUrl= Some(routes.Application.index().url),
     isWelshTranslationAvailable = true,
     additionalHeadBlock = Some(headTemplate(withTimeoutDialog)),
     additionalScriptsBlock = Some(scriptsTemplate()),

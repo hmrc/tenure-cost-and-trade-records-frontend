@@ -162,6 +162,7 @@ logout.loginAgain=Mewngofnodwch eto
 #########################
 areYouConnected.heading = Are you still connected to {0}?
 label.areYouConnected.addressUpdate = Yes, and the address needs to be updated
+hint.noConnection = Choose this if you’re no longer connected to the property, or have never had a connection to the property
 
 # EDIT ADDRESS
 ##############
@@ -226,6 +227,8 @@ hint.other.vacant.propertyCurrentlyUsedOther = Please give details if the proper
 ######################
 buildingOperatingHaveAWebsite.heading = Does the business operating from the property have a website?
 websiteAddressForProperty.textbox = What is the business website address?
+error.websiteAddressForProperty.required = Enter your web address
+error.webAddressFormat = Enter an address in the correct format, like www.example.com
 
 # PREMISES LICENSE GRANTED (6015,6016)
 ######################################
@@ -760,9 +763,25 @@ key.contact.details = Contact Details
 checkYourAnswers.heading = This is a holding page for the check your answers page
 checkYourAnswersAboutFranchiseOrLettings.heading = This is a holding page for the franchise or lettings check your answers page
 checkYourAnswersAboutYourLeaseOrTenure.heading = This is a holding page for the about your lease or tenure check your answers page
-checkYourAnswersAboutTheProperty.heading = This is a holding page for the about the property check your answers page
+checkYourAnswersAboutTheProperty.heading = Welsh TBC: Check your answers - about you and the property
+checkYourAnswersAboutTheProperty.aboutYou.heading = Welsh TBC: About You
+checkYourAnswersAboutTheProperty.aboutProperty.heading = Welsh TBC: About the property
+checkYourAnswersAboutTheProperty.currentOccupier = Welsh TBC: Current Occupier
+checkYourAnswersAboutTheProperty.propertyUsage = Welsh TBC: How is the property currently used?
+checkYourAnswersAboutTheProperty.hasWebsite = Welsh TBC: Website?
+checkYourAnswersAboutTheProperty.websiteAddress = Welsh TBC: Website address
+checkYourAnswersAboutTheProperty.license.heading = Welsh TBC: Your license
+checkYourAnswersAboutTheProperty.premisesLicenseGrantedDetail = Welsh TBC: Premises licence has been granted
+checkYourAnswersAboutTheProperty.premisesLicenseGrantedInformationDetails = Welsh TBC: Details of premises licence
+checkYourAnswersAboutTheProperty.licensableActivities = Welsh TBC: Licensable activities before 10:00 or after 23:30?
+checkYourAnswersAboutTheProperty.licensableActivitiesDetails = Welsh TBC: Description of licensable activities
+checkYourAnswersAboutTheProperty.premisesLicenseConditions = Welsh TBC: Premises license restriction on property use?
+checkYourAnswersAboutTheProperty.premisesLicenseConditionsDetails = Welsh TBC: Description of license restriction
+checkYourAnswersAboutTheProperty.enforcementAction = Welsh TBC: Enforcement action taken?
+checkYourAnswersAboutTheProperty.enforcementActionHasBeenTakenInformationDetails = Welsh TBC: Description of enforcement action
+checkYourAnswersAboutTheProperty.tiedForGoods = Welsh TBC: Tied for any goods?
+checkYourAnswersAboutTheProperty.tiedForGoodsDetails = Welsh TBC: Type of tie
 checkYourAnswersAboutTheTradingHistory.heading = This is a holding page for the about your trading history check your answers page
-checkYourAnswersAboutYou.heading = This is a holding page for the about you check your answers page
 checkYourAnswersAdditionalInformation.heading = This is a holding page for the additional information check your answers page
 
 # Confirmation Page
@@ -774,6 +793,7 @@ confirmation.unableToRetrieveAnswers = You will be unable to retrieve your answe
 confirmation.whatNext = What happens next
 confirmation.list.1 = We have sent your application to the Valuation Office Agency.
 confirmation.list.2 = They may need to contact you for further information.
+confirmation.service = What did you think of this service? (takes 30 seconds)
 
 # Help section
 ##############
@@ -883,3 +903,4 @@ error.year.required = The date must include a year
 error.required.annualRent = Please provide an annual rent amount
 error.required.annualRentExcludingVat = Please provide a number
 error.char.count.maxLength = This must be 2000 characters or fewer
+error.townCity.required = Enter the town or city

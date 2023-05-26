@@ -1,5 +1,5 @@
 function togglePassword(passwordId, toggle, event) {
-    event.stopPropagation();
+    event.preventDefault();
 
     const passwordField = document.getElementById(passwordId)
     const doShow = passwordField.type === 'password';

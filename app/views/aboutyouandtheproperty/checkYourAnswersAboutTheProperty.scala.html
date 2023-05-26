@@ -14,17 +14,26 @@
  * limitations under the License.
  *@
 
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
-@import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
+@import actions.SessionRequest
+@import uk.gov.hmrc.govukfrontend.views.html.components._
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
 @import models.submissions.aboutyouandtheproperty.CheckYourAnswersAboutYourProperty
 @import models.pages.Summary
+@import controllers.aboutyouandtheproperty
+@import util.SectionAnswers
 
 @this(layout: Layout,
         govukButton: GovukButton,
+        govukSummaryList: GovukSummaryList,
+        govukRadios: GovukRadios,
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[CheckYourAnswersAboutYourProperty], backLink: String, summary: Summary)(implicit request: Request[_], messages: Messages)
+@(theForm: Form[CheckYourAnswersAboutYourProperty], backLink: String, summary: Summary)(implicit request: SessionRequest[_], messages: Messages)
+
+@sectionAnswers = @{
+    SectionAnswers(request.sessionData.aboutYouAndTheProperty)
+}
 
 @layout(
  pageHeading = messages("checkYourAnswersAboutTheProperty.heading"),
@@ -35,44 +44,80 @@
  theForm = theForm
 ) {
 
- @formWithCSRF(action = controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
+    @formWithCSRF(action = controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.submit()) {
 
-  <dl class="govuk-summary-list">
-   <div id="fullName" class="govuk-summary-list__row">
-    <dt class="govuk-summary-list__key">Full name</dt>
-    <dd class="govuk-summary-list__value">
-     John Smith
-    </dd>
-    <dd class="govuk-summary-list__actions">
-     <a href="/sending-rental-information/page/2?edit=fullName#fullName" class="govuk-link">
-      Change <span class="govuk-visually-hidden">Full name</span></a>
-    </dd>
-   </div>
+        <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutTheProperty.aboutYou.heading")</h2>
 
-   <div id="userType" class="govuk-summary-list__row">
-    <dt class="govuk-summary-list__key">Current Occupier</dt>
-    <dd class="govuk-summary-list__value">
-     Jane Smith
-    </dd>
-    <dd class="govuk-summary-list__actions">
-     <a href="/sending-rental-information/page/2?edit=userType#userType" class="govuk-link">
-      Change <span class="govuk-visually-hidden">I am (or represent) the</span></a>
-    </dd>
-   </div>
+        @govukSummaryList(SummaryList(rows = sectionAnswers.row("label.fullName", _.customerDetails.map(_.fullName), aboutyouandtheproperty.routes.AboutYouController.show(), "fullName") ++
+                sectionAnswers.row("label.emailAddress", _.customerDetails.map(_.contactDetails.email), aboutyouandtheproperty.routes.AboutYouController.show(), "contactDetails.email") ++
+                sectionAnswers.row("label.telephoneNumber", _.customerDetails.map(_.contactDetails.phone), aboutyouandtheproperty.routes.AboutYouController.show(), "contactDetails.phone")
+        ))
 
-   <div id="userType" class="govuk-summary-list__row">
-    <dt class="govuk-summary-list__key">Current use of property</dt>
-    <dd class="govuk-summary-list__value">Hotel
-    </dd>
-    <dd class="govuk-summary-list__actions">
-     <a href="/sending-rental-information/page/2?edit=userType#userType" class="govuk-link">
-      Change <span class="govuk-visually-hidden">I am (or represent) the</span></a>
-    </dd>
-   </div>
-  </dl>
+        <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutTheProperty.aboutProperty.heading")</h2>
 
+        @govukSummaryList(SummaryList(rows = sectionAnswers.row("checkYourAnswersAboutTheProperty.currentOccupier", _.propertyDetails.map(_.currentOccupierName), aboutyouandtheproperty.routes.AboutThePropertyController.show(), "currentOccupierName") ++
+                sectionAnswers.row("checkYourAnswersAboutTheProperty.propertyUsage",
+                    _.propertyDetails.map(_.propertyCurrentlyUsed).map(usage => s"${usage.key}.${usage.name}"),
+                    aboutyouandtheproperty.routes.AboutThePropertyController.show(), "propertyCurrentlyUsed",
+                    ("propertyCurrentlyUsed.other", _.propertyDetails.flatMap(_.currentlyUsedOtherField))) ++
+                sectionAnswers.optionalRow("checkYourAnswersAboutTheProperty.hasWebsite",
+                    _.websiteForPropertyDetails.map(_.buildingOperatingHaveAWebsite).map(hasWebsite => messages(s"label.${hasWebsite.name}")),
+                    aboutyouandtheproperty.routes.WebsiteForPropertyController.show(), "buildingOperatingHaveAWebsite") ++
+                sectionAnswers.conditionRow(
+                    _.websiteForPropertyDetails.map(_.buildingOperatingHaveAWebsite.name).contains("yes"),
+                    "checkYourAnswersAboutTheProperty.websiteAddress",
+                    _.websiteForPropertyDetails.flatMap(_.websiteAddressForProperty),
+                    aboutyouandtheproperty.routes.WebsiteForPropertyController.show(),
+                    "websiteAddressForProperty")
+        ))
 
-  @includes.continueSaveAsDraftButtons(govukButton)
+        @if(sectionAnswers.answers.flatMap(p => p.premisesLicenseGrantedDetail.orElse(p.licensableActivities).orElse(p.premisesLicenseConditions)).isDefined) {
+            <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutTheProperty.license.heading")</h2>
 
- }
+            @govukSummaryList(SummaryList(rows = sectionAnswers.optionalRow("checkYourAnswersAboutTheProperty.premisesLicenseGrantedDetail", _.premisesLicenseGrantedDetail.map(yesNo => messages(s"label.${yesNo.name}")), aboutyouandtheproperty.routes.PremisesLicenseGrantedController.show(), "premisesLicenseGranted") ++
+                    sectionAnswers.conditionRow(_.premisesLicenseGrantedDetail.map(_.name).contains("yes"),
+                        "checkYourAnswersAboutTheProperty.premisesLicenseGrantedInformationDetails",
+                        _.premisesLicenseGrantedInformationDetails.map(_.premisesLicenseGrantedInformationDetails),
+                        aboutyouandtheproperty.routes.PremisesLicenseGrantedDetailsController.show(), "premisesLicenseGrantedInformation") ++
+                    sectionAnswers.row("checkYourAnswersAboutTheProperty.licensableActivities",
+                        _.licensableActivities.map(yesNo => messages(s"label.${yesNo.name}")),
+                        aboutyouandtheproperty.routes.LicensableActivitiesController.show(), "licensableActivities") ++
+                    sectionAnswers.conditionRow(_.licensableActivities.map(_.name).contains("yes"),
+                        "checkYourAnswersAboutTheProperty.licensableActivitiesDetails",
+                        _.licensableActivitiesInformationDetails.map(_.licensableActivitiesDetails),
+                        aboutyouandtheproperty.routes.LicensableActivitiesDetailsController.show(), "licensableActivitiesDetails") ++
+                    sectionAnswers.row("checkYourAnswersAboutTheProperty.premisesLicenseConditions",
+                        _.premisesLicenseConditions.map(yesNo => messages(s"label.${yesNo.name}")),
+                        aboutyouandtheproperty.routes.PremisesLicenseConditionsController.show(), "premisesLicenseConditions") ++
+                    sectionAnswers.conditionRow(_.premisesLicenseConditions.map(_.name).contains("yes"),
+                        "checkYourAnswersAboutTheProperty.premisesLicenseConditionsDetails",
+                        _.premisesLicenseConditionsDetails.map(_.premisesLicenseConditionsDetails),
+                        aboutyouandtheproperty.routes.PremisesLicenseConditionsDetailsController.show(), "premisesLicenseConditionsDetails") ++
+                    sectionAnswers.row("checkYourAnswersAboutTheProperty.enforcementAction",
+                        _.enforcementAction.map(yesNo => messages(s"label.${yesNo.name}")),
+                        aboutyouandtheproperty.routes.EnforcementActionBeenTakenController.show(), "enforcementAction") ++
+                    sectionAnswers.conditionRow(_.enforcementAction.map(_.name).contains("yes"),
+                        "checkYourAnswersAboutTheProperty.enforcementActionHasBeenTakenInformationDetails",
+                        _.enforcementActionHasBeenTakenInformationDetails.map(_.enforcementActionHasBeenTakenDetails),
+                        aboutyouandtheproperty.routes.EnforcementActionBeenTakenDetailsController.show(), "enforcementActionHasBeenTakenDetails") ++
+                    sectionAnswers.row("checkYourAnswersAboutTheProperty.tiedForGoods",
+                        _.tiedForGoods.map(yesNo => messages(s"label.${yesNo.name}")),
+                        aboutyouandtheproperty.routes.TiedForGoodsController.show(), "tiedForGoods") ++
+                    sectionAnswers.conditionRow(_.tiedForGoods.map(_.name).contains("yes"),
+                        "checkYourAnswersAboutTheProperty.tiedForGoodsDetails",
+                        _.tiedForGoodsDetails.map(_.tiedGoodsDetails).map(details => s"${details.key}.${details.name}"),
+                        aboutyouandtheproperty.routes.TiedForGoodsDetailsController.show(), "tiedForGoodsDetails",
+                        ("tiedForGoodsDetails.partialTie", _.tiedForGoodsDetails.flatMap(_.partialTieConditional)))
+            ))
+        }
+
+        @includes.checkYourAnswersRadioButtons(
+            govukRadios,
+            theForm,
+            "checkYourAnswersAboutYourProperty"
+        )
+
+        @includes.continueSaveAsDraftButtons(govukButton)
+
+    }
 }
