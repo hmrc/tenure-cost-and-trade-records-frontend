@@ -26,22 +26,20 @@ case class ContactDetailsAddress(
   postcode: String
 ) {
   def singleLine: String =
-    List(
-      Some(buildingNameNumber),
-      street1,
-      Some(town),
-      county,
-      Some(postcode.replaceAll("^(\\S+?)\\s*?(\\d\\w\\w)$", "$1 $2"))
-    ).flatten.mkString(", ")
+    addressLines.mkString(", ")
 
   def multiLine: String =
+    addressLines.mkString("<br/> ")
+
+  def addressLines: List[String] =
     List(
       Some(buildingNameNumber),
       street1,
       Some(town),
       county,
       Some(postcode.replaceAll("^(\\S+?)\\s*?(\\d\\w\\w)$", "$1 $2"))
-    ).flatten.mkString("<br/> ")
+    ).flatten
+
 }
 
 object ContactDetailsAddress {

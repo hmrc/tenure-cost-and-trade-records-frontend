@@ -16,8 +16,8 @@
 
 package views.additionalInformation
 
+import actions.SessionRequest
 import form.additionalinformation.CheckYourAnswersAdditionalInformationForm
-import models.pages.Summary
 import models.submissions.additionalinformation.CheckYourAnswersAdditionalInformation
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
@@ -33,11 +33,13 @@ class CheckYourAnswersAdditionalInformationViewSpec
 
   override val form = CheckYourAnswersAdditionalInformationForm.checkYourAnswersAdditionalInformationForm
 
+  val sessionRequest = SessionRequest(baseFilled6010Session, fakeRequest)
+
   def createView = () =>
-    checkYourAnswersAdditionalInformationView(form, notConnected6010NoSession)(fakeRequest, messages)
+    checkYourAnswersAdditionalInformationView(form, notConnected6010NoSession)(sessionRequest, messages)
 
   def createViewUsingForm = (form: Form[CheckYourAnswersAdditionalInformation]) =>
-    checkYourAnswersAdditionalInformationView(form, notConnected6010NoSession)(fakeRequest, messages)
+    checkYourAnswersAdditionalInformationView(form, notConnected6010NoSession)(sessionRequest, messages)
 
   "Check Your Answers Additional Information view" must {
 
