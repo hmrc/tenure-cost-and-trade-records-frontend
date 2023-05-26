@@ -16,24 +16,39 @@
 
 package controllers
 
+import actions.WithSessionRefiner
+import config.ErrorHandler
 import play.api.http.Status
 import play.api.test.Helpers._
+import stub.StubSessionRepo
 import utils.TestBaseSpec
+import views.html.taskList
 
 class TaskListSpec extends TestBaseSpec {
 
-  private val controller = app.injector.instanceOf[TaskListController]
+  private val sessionRepo = StubSessionRepo()
+
+  private def taskListController = new TaskListController(
+    stubMessagesControllerComponents(),
+    inject[taskList],
+    WithSessionRefiner(inject[ErrorHandler], sessionRepo)
+  )
 
   "GET /" should {
     "return 200" in {
-      val result = controller.show(fakeRequest)
+      sessionRepo.saveOrUpdate(prefilledBaseSession)
+
+      val result = taskListController.show(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return HTML" in {
-      val result = controller.show(fakeRequest)
+      sessionRepo.saveOrUpdate(prefilledBaseSession)
+
+      val result = taskListController.show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
   }
+
 }

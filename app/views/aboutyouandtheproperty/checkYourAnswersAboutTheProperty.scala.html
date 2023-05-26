@@ -20,7 +20,7 @@
 @import models.submissions.aboutyouandtheproperty.CheckYourAnswersAboutYourProperty
 @import models.pages.Summary
 @import controllers.aboutyouandtheproperty
-@import util.SectionAnswers
+@import util.SectionAnswersRowBuilder
 
 @this(layout: Layout,
         govukButton: GovukButton,
@@ -32,7 +32,7 @@
 @(theForm: Form[CheckYourAnswersAboutYourProperty], backLink: String, summary: Summary)(implicit request: SessionRequest[_], messages: Messages)
 
 @sectionAnswers = @{
-    SectionAnswers(request.sessionData.aboutYouAndTheProperty)
+    SectionAnswersRowBuilder(request.sessionData.aboutYouAndTheProperty)
 }
 
 @layout(
@@ -79,28 +79,28 @@
                         "checkYourAnswersAboutTheProperty.premisesLicenseGrantedInformationDetails",
                         _.premisesLicenseGrantedInformationDetails.map(_.premisesLicenseGrantedInformationDetails),
                         aboutyouandtheproperty.routes.PremisesLicenseGrantedDetailsController.show(), "premisesLicenseGrantedInformation") ++
-                    sectionAnswers.row("checkYourAnswersAboutTheProperty.licensableActivities",
+                    sectionAnswers.optionalRow("checkYourAnswersAboutTheProperty.licensableActivities",
                         _.licensableActivities.map(yesNo => messages(s"label.${yesNo.name}")),
                         aboutyouandtheproperty.routes.LicensableActivitiesController.show(), "licensableActivities") ++
                     sectionAnswers.conditionRow(_.licensableActivities.map(_.name).contains("yes"),
                         "checkYourAnswersAboutTheProperty.licensableActivitiesDetails",
                         _.licensableActivitiesInformationDetails.map(_.licensableActivitiesDetails),
                         aboutyouandtheproperty.routes.LicensableActivitiesDetailsController.show(), "licensableActivitiesDetails") ++
-                    sectionAnswers.row("checkYourAnswersAboutTheProperty.premisesLicenseConditions",
+                    sectionAnswers.optionalRow("checkYourAnswersAboutTheProperty.premisesLicenseConditions",
                         _.premisesLicenseConditions.map(yesNo => messages(s"label.${yesNo.name}")),
                         aboutyouandtheproperty.routes.PremisesLicenseConditionsController.show(), "premisesLicenseConditions") ++
                     sectionAnswers.conditionRow(_.premisesLicenseConditions.map(_.name).contains("yes"),
                         "checkYourAnswersAboutTheProperty.premisesLicenseConditionsDetails",
                         _.premisesLicenseConditionsDetails.map(_.premisesLicenseConditionsDetails),
                         aboutyouandtheproperty.routes.PremisesLicenseConditionsDetailsController.show(), "premisesLicenseConditionsDetails") ++
-                    sectionAnswers.row("checkYourAnswersAboutTheProperty.enforcementAction",
+                    sectionAnswers.optionalRow("checkYourAnswersAboutTheProperty.enforcementAction",
                         _.enforcementAction.map(yesNo => messages(s"label.${yesNo.name}")),
                         aboutyouandtheproperty.routes.EnforcementActionBeenTakenController.show(), "enforcementAction") ++
                     sectionAnswers.conditionRow(_.enforcementAction.map(_.name).contains("yes"),
                         "checkYourAnswersAboutTheProperty.enforcementActionHasBeenTakenInformationDetails",
                         _.enforcementActionHasBeenTakenInformationDetails.map(_.enforcementActionHasBeenTakenDetails),
                         aboutyouandtheproperty.routes.EnforcementActionBeenTakenDetailsController.show(), "enforcementActionHasBeenTakenDetails") ++
-                    sectionAnswers.row("checkYourAnswersAboutTheProperty.tiedForGoods",
+                    sectionAnswers.optionalRow("checkYourAnswersAboutTheProperty.tiedForGoods",
                         _.tiedForGoods.map(yesNo => messages(s"label.${yesNo.name}")),
                         aboutyouandtheproperty.routes.TiedForGoodsController.show(), "tiedForGoods") ++
                     sectionAnswers.conditionRow(_.tiedForGoods.map(_.name).contains("yes"),

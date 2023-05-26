@@ -16,6 +16,8 @@
 
 package controllers
 
+import actions.WithSessionRefiner
+import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import views.html.taskList
 
@@ -24,10 +26,12 @@ import javax.inject.{Inject, Singleton}
 @Singleton
 class TaskListController @Inject() (
   mcc: MessagesControllerComponents,
-  taskListView: taskList
-) extends FORDataCaptureController(mcc) {
+  taskListView: taskList,
+  withSessionRefiner: WithSessionRefiner
+) extends FORDataCaptureController(mcc)
+    with I18nSupport {
 
-  def show: Action[AnyContent] = Action.async { implicit request =>
+  def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Ok(taskListView())
   }
 

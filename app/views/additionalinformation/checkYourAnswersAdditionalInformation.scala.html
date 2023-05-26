@@ -81,7 +81,7 @@
     key = Key(Text(messages("label.correspondenceAddress"))),
     value = Value(HtmlContent(
              s"<p class=\"govuk-body\">${session.additionalInformation.flatMap(_.altContactInformation.map(_.alternativeContactAddress.multiLine)).getOrElse("")}</p>")),
-    actions = Option(Actions(items = Seq(ActionItem(href="/send-trade-and-cost-information/further-information-or-remarks",
+    actions = Option(Actions(items = Seq(ActionItem(href="/send-trade-and-cost-information/further-information-or-remarks", //TODO Change to a route
      visuallyHiddenText = Some(messages("label.correspondenceAddress")),
      content = Text(messages("label.change")))))
     )

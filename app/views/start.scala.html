@@ -21,13 +21,14 @@
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.insettext.InsetText
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukWarningText
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukInsetText
+@import uk.gov.hmrc.govukfrontend.views.Aliases.HtmlContent
+
 
 @this(layout: Layout,
         govukButton: GovukButton,
         govukWarningText: GovukWarningText,
         govukInsetText: GovukInsetText,
 )
-
 
 @()(implicit request: Request[_], messages: Messages)
 
@@ -42,7 +43,7 @@
  <p class="govuk-heading-m">@{messages("start.title")}</p>
 
  <p class="govuk-body">@{messages("start.block1")}</p>
- <p class="govuk-body">@{messages("start.block2")}</p>
+ <p class="govuk-body">@{HtmlContent(messages("start.block2")).asHtml}</p>
 
  <p class="govuk-heading-m">@{messages("start.subheading")}</p>
 
@@ -63,11 +64,11 @@
  <p class="govuk-heading-s">@{messages("start.subheading3")}</p>
 
  <p class="govuk-body">@{messages("start.desc3")}</p>
- <p class="govuk-body">@{messages("start.desc4")}</p>
+ <p class="govuk-body">@{HtmlContent(messages("start.desc4")).asHtml}</p>
 
  <p class="govuk-heading-m">@{messages("start.title2")}</p>
 
- <p class="govuk-body">@{messages("start.desc5")}</p>
+ <p class="govuk-body">@{HtmlContent(messages("start.desc5")).asHtml}</p>
  <p class="govuk-body">@{messages("start.desc6")}</p>
 
 
@@ -86,16 +87,16 @@
 
 
  @govukInsetText(InsetText(
-  content = Text(messages("start.welsh"))
+  content = HtmlContent(messages("start.welsh"))
  ))
 
  <p class="govuk-heading-s">@{messages("start.subheading4")}</p>
 
- <p class="govuk-body">@{messages("start.desc7")}</p>
+ <p class="govuk-body">@{HtmlContent(messages("start.desc7")).asHtml}</p>
 
  <p class="govuk-heading-s">@{messages("start.subheading5")}</p>
 
- <p class="govuk-body">@{messages("start.desc8")}</p>
+ <p class="govuk-body">@{HtmlContent(messages("start.desc8")).asHtml}</p>
 
  <p class="govuk-heading-m">@{messages("start.subheading6")}</p>
 
