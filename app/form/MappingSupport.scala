@@ -24,7 +24,7 @@ import models.submissions.Form6010._
 import models.submissions.aboutYourLeaseOrTenure._
 import models.submissions.aboutfranchisesorlettings._
 import models.submissions.aboutyouandtheproperty._
-import models.submissions.common.{Address, AnswerResponsibleParty, AnswersYesNo, ContactDetails, ContactDetailsAddress}
+import models.submissions.common.{Address, AnswerResponsibleParty, AnswersYesNo, CYAYesNo, ContactDetails, ContactDetailsAddress}
 import models.submissions.connectiontoproperty.{AddressConnectionType, ConnectionToProperty}
 import models.submissions.notconnected.PastConnectionType
 import models.{AnnualRent, NamedEnum, NamedEnumSupport}
@@ -46,6 +46,7 @@ object MappingSupport {
   val buildingOperatingHaveAWebsiteType: Mapping[BuildingOperationHaveAWebsite] =
     Forms.of[BuildingOperationHaveAWebsite]
   val yesNoType: Mapping[AnswersYesNo]                                          = Forms.of[AnswersYesNo]
+  val cyaYesNo: Mapping[CYAYesNo]                                               = Forms.of[CYAYesNo]
   val addressConnectionType: Mapping[AddressConnectionType]                     = Forms.of[AddressConnectionType]
   val pastConnectionType: Mapping[PastConnectionType]                           = Forms.of[PastConnectionType]
   val methodToFixCurrentRentsType: Mapping[MethodToFixCurrentRents]             = Forms.of[MethodToFixCurrentRents]
@@ -137,7 +138,10 @@ object MappingSupport {
       maxLength(50, "error.buildingNameNumber.maxLength")
     ),
     "street1"            -> optional(text(maxLength = 50)),
-    "town"               -> optional(text(maxLength = 50)),
+    "town"               -> default(text, "").verifying(
+      nonEmpty(errorMessage = "error.townCity.required"),
+      maxLength(50, "error.buildingNameNumber.maxLength")
+    ),
     "county"             -> optional(text(maxLength = 50)),
     "postcode"           -> nonEmptyTextOr("cateringAddress.postcode", postcode, "error.postcode.required")
   )(CateringAddress.apply)(CateringAddress.unapply)
@@ -148,7 +152,10 @@ object MappingSupport {
       maxLength(50, "error.buildingNameNumber.maxLength")
     ),
     "street1"            -> optional(text(maxLength = 50)),
-    "town"               -> optional(text(maxLength = 50)),
+    "town"               -> default(text, "").verifying(
+      nonEmpty(errorMessage = "error.townCity.required"),
+      maxLength(50, "error.buildingNameNumber.maxLength")
+    ),
     "county"             -> optional(text(maxLength = 50)),
     "postcode"           -> nonEmptyTextOr("lettingAddress.postcode", postcode, "error.postcode.required")
   )(LettingAddress.apply)(LettingAddress.unapply)

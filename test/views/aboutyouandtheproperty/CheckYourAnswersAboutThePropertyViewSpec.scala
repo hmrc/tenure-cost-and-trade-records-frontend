@@ -16,7 +16,9 @@
 
 package views.aboutyouandtheproperty
 
+import actions.SessionRequest
 import form.aboutyouandtheproperty.CheckYourAnswersAboutThePropertyForm
+import models.Session
 import models.pages.Summary
 import models.submissions.aboutyouandtheproperty.CheckYourAnswersAboutYourProperty
 import org.scalatest.matchers.must.Matchers._
@@ -31,11 +33,13 @@ class CheckYourAnswersAboutThePropertyViewSpec extends QuestionViewBehaviours[Ch
 
   val backLink = controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedController.show().url
 
+  val sessionRequest = SessionRequest(baseFilled6010Session, fakeRequest)
+
   def createView = () =>
-    checkYourAnswersAboutThePropertyView(form, backLink, Summary("99996010001"))(fakeRequest, messages)
+    checkYourAnswersAboutThePropertyView(form, backLink, Summary("99996010001"))(sessionRequest, messages)
 
   def createViewUsingForm = (form: Form[CheckYourAnswersAboutYourProperty]) =>
-    checkYourAnswersAboutThePropertyView(form, backLink, Summary("99996010001"))(fakeRequest, messages)
+    checkYourAnswersAboutThePropertyView(form, backLink, Summary("99996010001"))(sessionRequest, messages)
 
   "Check Your Answers About The Property view" must {
 

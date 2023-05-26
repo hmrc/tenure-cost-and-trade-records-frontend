@@ -20,7 +20,7 @@ import connectors.Audit
 import controllers.routes
 import models.Session
 import navigation.identifiers.Identifier
-import play.api.mvc.Call
+import play.api.mvc.{AnyContent, Call, Request}
 import uk.gov.hmrc.http.HeaderCarrier
 
 import javax.inject.Inject
@@ -31,11 +31,33 @@ abstract class Navigator @Inject() (
 
   val routeMap: Map[Identifier, Session => Call]
 
-  def nextPage(id: Identifier, session: Session)(implicit hc: HeaderCarrier): Session => Call =
-    routeMap.getOrElse(id, (_: Session) => routes.LoginController.show()) andThen auditNextUrl(session)
+  def cyaPage: Option[Call] = None
+
+  def postponeCYARedirectPages: Set[String] = Set.empty
+
+  private val defaultPage: Session => Call = _ => routes.LoginController.show()
+
+  def nextPage(id: Identifier, session: Session)(implicit
+    hc: HeaderCarrier,
+    request: Request[AnyContent]
+  ): Session => Call =
+    routeMap.getOrElse(id, defaultPage) andThen possibleCYARedirect andThen auditNextUrl(session)
 
   private def auditNextUrl(session: Session)(call: Call)(implicit hc: HeaderCarrier): Call = {
     audit.sendContinueNextPage(session, call.url)
     call
   }
+
+  private def possibleCYARedirect(nextCall: Call)(implicit request: Request[AnyContent]): Call =
+    cyaPage match {
+      case Some(cyaCall) if from == "CYA" =>
+        postponeCYARedirectPages
+          .find(nextCall.url.contains)
+          .fold(cyaCall)(_ => nextCall.copy(url = nextCall.url + "?from=CYA"))
+      case _                              => nextCall
+    }
+
+  private def from(implicit request: Request[AnyContent]): String =
+    request.body.asFormUrlEncoded.flatMap(_.get("from").flatMap(_.headOption)).getOrElse("")
+
 }

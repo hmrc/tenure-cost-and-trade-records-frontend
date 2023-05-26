@@ -16,61 +16,83 @@
 
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import models.submissions.additionalinformation.CheckYourAnswersAdditionalInformation
-@import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
-@import models.pages.Summary
+@import uk.gov.hmrc.govukfrontend.views.html.components._
+@import models.submissions.common.CYAYesNo
+
+@import models.Session
 
 @this(layout: Layout,
         govukButton: GovukButton,
+        govukSummaryList: GovukSummaryList,
+        govukRadios: GovukRadios,
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[CheckYourAnswersAdditionalInformation], summary: Summary)(implicit request: Request[_], messages: Messages)
+@(theForm: Form[CheckYourAnswersAdditionalInformation], session: Session)(implicit request: Request[_], messages: Messages)
 
 @layout(
  pageHeading = messages("checkYourAnswersAdditionalInformation.heading"),
  showSection = true,
- summary = Some(summary),
+ summary = Some(session.toSummary),
  sectionName = messages("label.section.additionalInformation"),
  backLinkUrl = controllers.additionalinformation.routes.AlternativeContactDetailsController.show.url,
 ) {
 
  @formWithCSRF(action = controllers.additionalinformation.routes.CheckYourAnswersAdditionalInformationController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
 
+  @govukSummaryList(SummaryList(rows = Seq(
+   SummaryListRow(
+    key = Key(Text(messages("label.furtherInformation"))),
+    value = Value(Text(session.additionalInformation.flatMap(_.furtherInformationOrRemarksDetails.map(_.furtherInformationOrRemarksDetails)).getOrElse("").getOrElse(""))),
+    actions = Option(Actions(items = Seq(ActionItem(href="/send-trade-and-cost-information/further-information-or-remarks",
+     visuallyHiddenText = Some(messages("label.furtherInformation")),
+     content = Text(messages("label.change")))))
+    )
+    ))))
 
-  <dl class="govuk-summary-list">
-   <div id="fullName" class="govuk-summary-list__row">
-    <dt class="govuk-summary-list__key">Full name</dt>
-    <dd class="govuk-summary-list__value">
-     John Smith
-    </dd>
-    <dd class="govuk-summary-list__actions">
-     <a href="/sending-rental-information/page/2?edit=fullName#fullName" class="govuk-link">
-      Change <span class="govuk-visually-hidden">Full name</span></a>
-    </dd>
-   </div>
+  <h2 class="govuk-heading-m">@messages("key.altContact.details")</h2>
 
-   <div id="userType" class="govuk-summary-list__row">
-    <dt class="govuk-summary-list__key">Telephone Number</dt>
-    <dd class="govuk-summary-list__value">
-     0123456789
-    </dd>
-    <dd class="govuk-summary-list__actions">
-     <a href="/sending-rental-information/page/2?edit=userType#userType" class="govuk-link">
-      Change <span class="govuk-visually-hidden">I am (or represent) the</span></a>
-    </dd>
-   </div>
+  @govukSummaryList(SummaryList(rows = Seq(
+   SummaryListRow(
+    key = Key(Text(messages("label.fullName"))),
+    value = Value(Text(session.additionalInformation.flatMap(_.altContactInformation.map(_.alternativeContactFullName)).getOrElse(""))),
+    actions = Option(Actions(items = Seq(ActionItem(href="/send-trade-and-cost-information/further-information-or-remarks",
+     visuallyHiddenText = Some(messages("label.fullName")),
+     content = Text(messages("label.change")))))
+    )
+    ),
+   SummaryListRow(
+    key = Key(Text(messages("label.telephoneNumber"))),
+    value = Value(Text(session.additionalInformation.flatMap(_.altContactInformation.map(_.alternativeContactDetails.phone)).getOrElse(""))),
+    actions = Option(Actions(items = Seq(ActionItem(href="/send-trade-and-cost-information/further-information-or-remarks",
+     visuallyHiddenText = Some(messages("label.telephoneNumber")),
+     content = Text(messages("label.change")))))
+    )
+    ),
+   SummaryListRow(
+    key = Key(Text(messages("label.emailAddress"))),
+    value = Value(Text(session.additionalInformation.flatMap(_.altContactInformation.map(_.alternativeContactDetails.email)).getOrElse(""))),
+    actions = Option(Actions(items = Seq(ActionItem(href="/send-trade-and-cost-information/further-information-or-remarks",
+     visuallyHiddenText = Some(messages("label.emailAddress")),
+     content = Text(messages("label.change")))))
+    )
+    ),
+   SummaryListRow(
+    key = Key(Text(messages("label.correspondenceAddress"))),
+    value = Value(HtmlContent(
+             s"<p class=\"govuk-body\">${session.additionalInformation.flatMap(_.altContactInformation.map(_.alternativeContactAddress.multiLine)).getOrElse("")}</p>")),
+    actions = Option(Actions(items = Seq(ActionItem(href="/send-trade-and-cost-information/further-information-or-remarks", //TODO Change to a route
+     visuallyHiddenText = Some(messages("label.correspondenceAddress")),
+     content = Text(messages("label.change")))))
+    )
+    )
+   )))
 
-   <div id="userType" class="govuk-summary-list__row">
-    <dt class="govuk-summary-list__key">Email address</dt>
-    <dd class="govuk-summary-list__value">
-     thisisatest@@test.com
-    </dd>
-    <dd class="govuk-summary-list__actions">
-     <a href="/sending-rental-information/page/2?edit=userType#userType" class="govuk-link">
-      Change <span class="govuk-visually-hidden">I am (or represent) the</span></a>
-    </dd>
-   </div>
-  </dl>
+  @includes.checkYourAnswersRadioButtons(
+   govukRadios,
+   theForm,
+   "checkYourAnswersAdditionalInformation"
+  )
 
   @includes.continueSaveAsDraftButtons(govukButton)
 

@@ -14,20 +14,22 @@
  * limitations under the License.
  */
 
-package form.aboutyouandtheproperty
+package models.submissions.aboutthetradinghistory
 
-import models.submissions.aboutyouandtheproperty.CheckYourAnswersAboutYourProperty
-import play.api.data.Form
-import play.api.data.Forms.{default, mapping, text}
-import play.api.data.validation.Constraints.nonEmpty
+import play.api.libs.json.Json
 
-object CheckYourAnswersAboutThePropertyForm {
+import java.time.LocalDate
 
-  val checkYourAnswersAboutThePropertyForm = Form(
-    mapping(
-      "checkYourAnswersAboutYourProperty" -> default(text, "").verifying(
-        nonEmpty(errorMessage = "error.checkYourAnswersRadio.required")
-      )
-    )(CheckYourAnswersAboutYourProperty.apply)(CheckYourAnswersAboutYourProperty.unapply)
-  )
+case class TurnoverSection1516(
+  financialYearEnd: LocalDate,
+  tradingPeriod: Int,
+  accommodation: BigDecimal,
+  averageOccupancyRate: BigDecimal,
+  food: BigDecimal,
+  drinks: BigDecimal,
+  other: BigDecimal,
+  totalSalesRevenue: BigDecimal
+)
+object TurnoverSection1516 {
+  implicit val format = Json.format[TurnoverSection1516]
 }

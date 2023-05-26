@@ -19,7 +19,7 @@ package models.submissions.aboutyouandtheproperty
 import play.api.libs.json.Json
 
 case class PremisesLicenseConditionsDetails(
-  premisesLicenseInformationDetails: String
+  premisesLicenseConditionsDetails: String
 )
 
 object PremisesLicenseConditionsDetails {

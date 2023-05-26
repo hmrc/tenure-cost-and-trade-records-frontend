@@ -213,7 +213,7 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
     ),
     RentPayableVaryAccordingToGrossOrNetId        -> payableGrossOrNetRouting,
     RentPayableVaryAccordingToGrossOrNetDetailsId -> (_ =>
-      controllers.aboutYourLeaseOrTenure.routes.HowIsCurrentRentFixedController.show()
+      controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryOnQuantityOfBeersController.show()
     ),
     rentVaryQuantityOfBeersId                     -> rentVaryQuantityOfBeersRouting,
     rentVaryQuantityOfBeersDetailsId              -> (_ =>

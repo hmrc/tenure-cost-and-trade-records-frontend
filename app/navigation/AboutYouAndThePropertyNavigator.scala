@@ -26,6 +26,17 @@ import javax.inject.Inject
 
 class AboutYouAndThePropertyNavigator @Inject() (audit: Audit) extends Navigator(audit) with Logging {
 
+  override def cyaPage: Option[Call] =
+    Some(controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show())
+
+  override val postponeCYARedirectPages: Set[String] = Set(
+    controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedDetailsController.show(),
+    controllers.aboutyouandtheproperty.routes.LicensableActivitiesDetailsController.show(),
+    controllers.aboutyouandtheproperty.routes.PremisesLicenseConditionsDetailsController.show(),
+    controllers.aboutyouandtheproperty.routes.EnforcementActionBeenTakenDetailsController.show(),
+    controllers.aboutyouandtheproperty.routes.TiedForGoodsDetailsController.show()
+  ).map(_.url)
+
   private def websiteForPropertyRouting: Session => Call = answers => {
     if (
       answers.forType

@@ -60,9 +60,9 @@
         errorMessage = theForm.errors.asTextErrorMessageForField("fullName"),
       ).withFormField(theForm("fullName"))
     )
-
-    @includes.textInput(govukInput, theForm, "contactDetails.email", "govuk-!-width-two-thirds", "email")
-    @includes.textInput(govukInput, theForm, "contactDetails.phone", "govuk-!-width-two-thirds", "phone")
+      
+      @includes.textInput(govukInput, theForm, "contactDetails.phone", "govuk-!-width-two-thirds", "phone")
+      @includes.textInput(govukInput, theForm, "contactDetails.email", "govuk-!-width-two-thirds", "email")
 
     @includes.continueSaveAsDraftButtons(govukButton)
   }

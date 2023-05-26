@@ -14,20 +14,28 @@
  * limitations under the License.
  */
 
-package form.aboutyouandtheproperty
+package models.submissions.common
 
-import models.submissions.aboutyouandtheproperty.CheckYourAnswersAboutYourProperty
-import play.api.data.Form
-import play.api.data.Forms.{default, mapping, text}
-import play.api.data.validation.Constraints.nonEmpty
+import models.{EnumFormat, NamedEnum, NamedEnumSupport}
+import play.api.libs.json.Format
 
-object CheckYourAnswersAboutThePropertyForm {
+sealed trait CYAYesNo extends NamedEnum {
+  val key = "cyaYesNo"
+}
+object CYAYes extends CYAYesNo {
+  val name = "yes"
+}
+object CYANo extends CYAYesNo {
+  val name = "no"
+}
 
-  val checkYourAnswersAboutThePropertyForm = Form(
-    mapping(
-      "checkYourAnswersAboutYourProperty" -> default(text, "").verifying(
-        nonEmpty(errorMessage = "error.checkYourAnswersRadio.required")
-      )
-    )(CheckYourAnswersAboutYourProperty.apply)(CheckYourAnswersAboutYourProperty.unapply)
+object CYAYesNo extends NamedEnumSupport[CYAYesNo] {
+
+  implicit val format: Format[CYAYesNo] = EnumFormat(
+    CYAYesNo
   )
+
+  val all = List(CYAYes, CYANo)
+
+  val key = all.head.key
 }
