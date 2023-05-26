@@ -751,7 +751,7 @@ key.altContact.details = Alternative contact details
 label.fullName = Full name
 label.telephoneNumber = Telephone number
 label.emailAddress = Email address
-label.correspondenceAddress = Correspondence Address
+label.correspondenceAddress = Correspondence address
 
 # FURTHER INFORMATION OR REMARKS
 ################################
