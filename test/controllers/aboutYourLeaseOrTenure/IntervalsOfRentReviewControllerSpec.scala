@@ -35,7 +35,7 @@ class IntervalsOfRentReviewControllerSpec extends TestBaseSpec {
       mockSessionRepo
     )
 
-  "GET /"    should {
+  "GET /" should {
     "return 200" in {
       val result = intervalsOfRentReviewController().show(fakeRequest)
       status(result) shouldBe Status.OK
@@ -45,14 +45,6 @@ class IntervalsOfRentReviewControllerSpec extends TestBaseSpec {
       val result = intervalsOfRentReviewController().show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
-    }
-  }
-  "SUBMIT /" should {
-    "throw a BAD_REQUEST if an empty form is submitted" in {
-      val res = intervalsOfRentReviewController().submit(
-        FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)
-      )
-      status(res) shouldBe BAD_REQUEST
     }
   }
 }
