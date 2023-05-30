@@ -14,17 +14,17 @@
  * limitations under the License.
  *@
 
-@(taskId: String, taskName: String, taskPage: Call, sectionCompletedRadioValue: Option[String], pageAnswer: Option[_], cannotStartYet: Boolean = false)
+@(taskId: String, taskNameKey: String, taskPage: Call, sectionCompletedRadioValue: Option[String], pageAnswer: Option[_], cannotStartYet: Boolean = false)(implicit messages: Messages)
 
 @statusText = @{
     if (sectionCompletedRadioValue.contains("yes")) {
-      "Completed"
+        messages("taskList.status.completed")
     } else if (pageAnswer.isDefined) {
-      "In progress"
+        messages("taskList.status.inProgress")
     } else if (cannotStartYet) {
-      "Cannot start yet"
+        messages("taskList.status.cannotStart")
     } else {
-      "Not started"
+        messages("taskList.status.notStarted")
     }
 }
 
@@ -40,7 +40,11 @@
 
 <li class="app-task-list__item">
     <span class="app-task-list__task-name">
-        <a href="@taskPage.url" aria-describedby="@taskId">@taskName</a>
+        @if(cannotStartYet) {
+            @messages(taskNameKey)
+        } else {
+            <a href="@taskPage.url" aria-describedby="@taskId">@messages(taskNameKey)</a>
+        }
     </span>
     <strong class="govuk-tag @itemTagClass app-task-list__tag" id="@taskId">@statusText</strong>
 </li>
