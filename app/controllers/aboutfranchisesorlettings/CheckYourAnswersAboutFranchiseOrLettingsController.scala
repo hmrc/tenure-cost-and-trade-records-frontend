@@ -19,14 +19,16 @@ package controllers.aboutfranchisesorlettings
 import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
 import form.aboutfranchisesorlettings.CheckYourAnswersAboutFranchiseOrLettingsForm.checkYourAnswersAboutFranchiseOrLettingsForm
+import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
+import models.submissions.aboutfranchisesorlettings.CheckYourAnswersAboutFranchiseOrLettings
 import models.{ForTypes, Session}
 import navigation.AboutFranchisesOrLettingsNavigator
+import navigation.identifiers.CheckYourAnswersAboutFranchiseOrLettingsId
 import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import views.html.aboutfranchisesorlettings.checkYourAnswersAboutFranchiseOrLettings
-import views.html.taskList
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
@@ -36,7 +38,6 @@ class CheckYourAnswersAboutFranchiseOrLettingsController @Inject() (
   mcc: MessagesControllerComponents,
   navigator: AboutFranchisesOrLettingsNavigator,
   checkYourAnswersAboutFranchiseOrLettingsView: checkYourAnswersAboutFranchiseOrLettings,
-  taskListView: taskList,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
 ) extends FORDataCaptureController(mcc)
@@ -60,8 +61,21 @@ class CheckYourAnswersAboutFranchiseOrLettingsController @Inject() (
   }
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft(
-      Ok(taskListView())
+    continueOrSaveAsDraft[CheckYourAnswersAboutFranchiseOrLettings](
+      checkYourAnswersAboutFranchiseOrLettingsForm,
+      formWithErrors =>
+        BadRequest(
+          checkYourAnswersAboutFranchiseOrLettingsView(
+            formWithErrors,
+            getBackLink(request.sessionData),
+            request.sessionData.toSummary
+          )
+        ),
+      data => {
+        val updatedData = updateAboutFranchisesOrLettings(_.copy(checkYourAnswersAboutFranchiseOrLettings = Some(data)))
+        session.saveOrUpdate(updatedData)
+        Redirect(navigator.nextPage(CheckYourAnswersAboutFranchiseOrLettingsId, updatedData).apply(updatedData))
+      }
     )
   }
 
@@ -124,4 +138,5 @@ class CheckYourAnswersAboutFranchiseOrLettingsController @Inject() (
             controllers.routes.TaskListController.show().url
         }
     }
+
 }

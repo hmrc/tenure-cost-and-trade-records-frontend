@@ -37,7 +37,6 @@
       checked = radioItem._1.equals(theForm(s"$name").value.getOrElse("")),
       value = Option(radioItem._1))
     ),
-    classes = "govuk-radios--inline",
     errorMessage =  theForm.errors.asTextErrorMessageForField(s"$name"),
     fieldset = Option(Fieldset(
       legend = Option(Legend(
