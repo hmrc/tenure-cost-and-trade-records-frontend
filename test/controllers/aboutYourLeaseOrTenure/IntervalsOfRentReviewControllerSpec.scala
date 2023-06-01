@@ -18,7 +18,6 @@ package controllers.aboutYourLeaseOrTenure
 
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
 import play.api.http.Status
-import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import utils.TestBaseSpec
 

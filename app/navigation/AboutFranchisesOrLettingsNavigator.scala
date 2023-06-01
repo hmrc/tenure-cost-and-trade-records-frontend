@@ -29,6 +29,25 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit) extends Naviga
   override def cyaPage: Option[Call] =
     Some(controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show())
 
+  override val postponeCYARedirectPages: Set[String] = Set(
+    controllers.aboutfranchisesorlettings.routes.ConcessionOrFranchiseController.show().url,
+    controllers.aboutfranchisesorlettings.routes.CateringOperationController.show().url,
+    controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController.show().url,
+    controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsRentController.show(99).urlWithoutIndex99,
+    controllers.aboutfranchisesorlettings.routes.CateringOperationRentIncludesController.show(99).urlWithoutIndex99,
+    controllers.aboutfranchisesorlettings.routes.AddAnotherCateringOperationController.show(99).urlWithoutIndex99,
+    controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsController.show().url,
+    controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsRentController
+      .show(99)
+      .urlWithoutIndex99,
+    controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyRentIncludesController
+      .show(99)
+      .urlWithoutIndex99,
+    controllers.aboutfranchisesorlettings.routes.AddAnotherLettingOtherPartOfPropertyController
+      .show(99)
+      .urlWithoutIndex99
+  )
+
   private def franchiseOrLettingConditionsRouting: Session => Call = answers => {
     answers.aboutFranchisesOrLettings.flatMap(_.franchisesOrLettingsTiedToProperty.map(_.name)) match {
       case Some("yes") =>

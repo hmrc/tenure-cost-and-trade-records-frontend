@@ -18,12 +18,17 @@
 @import controllers.aboutfranchisesorlettings
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import models.submissions.aboutfranchisesorlettings.CheckYourAnswersAboutFranchiseOrLettings
+@import models.submissions.common.AnswerYes
 @import models.pages.Summary
+@import navigation.AboutFranchisesOrLettingsNavigator
+@import navigation.identifiers.FranchiseOrLettingsTiedToPropertyId
 @import util.SectionAnswersRowBuilder
 
 @this(layout: Layout,
         govukButton: GovukButton,
         govukRadios: GovukRadios,
+        govukSummaryList: GovukSummaryList,
+        navigator: AboutFranchisesOrLettingsNavigator,
         formWithCSRF: FormWithCSRF
 )
 
@@ -44,6 +49,35 @@
 ) {
 
  @formWithCSRF(action = aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.submit()) {
+
+  @govukSummaryList(SummaryList(rows =
+   sectionAnswers.row("checkYourAnswersAboutFranchiseOrLettings.franchiseLettings",
+    _.franchisesOrLettingsTiedToProperty.map(yesNo => messages(s"label.${yesNo.name}")).orElse(Some(messages(s"label.no"))),
+    aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show(), "franchiseOrLettingsTiedToProperty")
+  ))
+
+  @if(sectionAnswers.answers.flatMap(_.franchisesOrLettingsTiedToProperty).contains(AnswerYes)) {
+   @if(sectionAnswers.answers.flatMap(_.cateringConcessionOrFranchise).isDefined) {
+    <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutFranchiseOrLettings.separateBusinesses.heading")</h2>
+
+    @govukSummaryList(SummaryList(rows =
+     sectionAnswers.optionalRow("checkYourAnswersAboutFranchiseOrLettings.separateBusiness",
+      _.cateringConcessionOrFranchise.map(yesNo => messages(s"label.${yesNo.name}")),
+      navigator.routeMap(FranchiseOrLettingsTiedToPropertyId)(request.sessionData), "cateringOperationOrLettingAccommodation")
+    ))
+   }
+
+   @if(sectionAnswers.answers.flatMap(_.lettingOtherPartOfProperty).isDefined) {
+    <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutFranchiseOrLettings.lettingsOtherPartOfProperties.heading")</h2>
+
+    @govukSummaryList(SummaryList(rows =
+     sectionAnswers.optionalRow("checkYourAnswersAboutFranchiseOrLettings.rentFromPartOfProperties",
+      _.lettingOtherPartOfProperty.map(yesNo => messages(s"label.${yesNo.name}")),
+      aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show(), "lettingOtherPartOfProperties")
+    ))
+   }
+  }
+
 
   <dl class="govuk-summary-list">
   <div id="fullName" class="govuk-summary-list__row">

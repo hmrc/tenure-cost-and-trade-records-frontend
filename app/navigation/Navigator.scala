@@ -29,6 +29,11 @@ abstract class Navigator @Inject() (
   audit: Audit
 ) {
 
+  implicit class callHelpers(call: Call) {
+    def urlWithoutIndex99: String            = call.url.replace("/99", "")
+    def callWithSuffix(suffix: String): Call = call.copy(url = call.url + suffix)
+  }
+
   val routeMap: Map[Identifier, Session => Call]
 
   def cyaPage: Option[Call] = None
@@ -53,7 +58,7 @@ abstract class Navigator @Inject() (
       case Some(cyaCall) if from == "CYA" =>
         postponeCYARedirectPages
           .find(nextCall.url.contains)
-          .fold(cyaCall)(_ => nextCall.copy(url = nextCall.url + "?from=CYA"))
+          .fold(cyaCall)(_ => nextCall.callWithSuffix("?from=CYA"))
       case _                              => nextCall
     }
 

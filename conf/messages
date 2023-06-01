@@ -792,6 +792,11 @@ key.contact.details = Contact Details
 
 checkYourAnswers.heading = This is a holding page for the check your answers page
 checkYourAnswersAboutFranchiseOrLettings.heading = Check your answers - franchises or lettings
+checkYourAnswersAboutFranchiseOrLettings.franchiseLettings = Franchises or lettings tied to the property?
+checkYourAnswersAboutFranchiseOrLettings.separateBusinesses.heading = Separate businesses operating from the property
+checkYourAnswersAboutFranchiseOrLettings.separateBusiness = Separate business run from the property?
+checkYourAnswersAboutFranchiseOrLettings.lettingsOtherPartOfProperties.heading = Lettings
+checkYourAnswersAboutFranchiseOrLettings.rentFromPartOfProperties = Rent received from lettings?
 checkYourAnswersAboutYourLeaseOrTenure.heading = This is a holding page for the about your lease or tenure check your answers page
 checkYourAnswersAboutTheProperty.heading = Check your answers - about you and the property
 checkYourAnswersAboutTheProperty.aboutYou.heading = About you
