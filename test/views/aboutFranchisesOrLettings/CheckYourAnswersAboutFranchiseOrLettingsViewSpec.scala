@@ -16,6 +16,7 @@
 
 package views.aboutFranchisesOrLettings
 
+import actions.SessionRequest
 import form.aboutfranchisesorlettings.CheckYourAnswersAboutFranchiseOrLettingsForm
 import models.submissions.aboutfranchisesorlettings.CheckYourAnswersAboutFranchiseOrLettings
 import org.scalatest.matchers.must.Matchers._
@@ -35,11 +36,13 @@ class CheckYourAnswersAboutFranchiseOrLettingsViewSpec
 
   val backLink = controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedController.show().url
 
+  val sessionRequest = SessionRequest(baseFilled6010Session, fakeRequest)
+
   def createView = () =>
-    checkYourAnswersAboutFranchiseOrLettingsView(form, backLink, Summary("99996010001"))(fakeRequest, messages)
+    checkYourAnswersAboutFranchiseOrLettingsView(form, backLink, Summary("99996010001"))(sessionRequest, messages)
 
   def createViewUsingForm = (form: Form[CheckYourAnswersAboutFranchiseOrLettings]) =>
-    checkYourAnswersAboutFranchiseOrLettingsView(form, backLink, Summary("99996010001"))(fakeRequest, messages)
+    checkYourAnswersAboutFranchiseOrLettingsView(form, backLink, Summary("99996010001"))(sessionRequest, messages)
 
   "Check Your Answers About Franchise Or Lettings view" must {
 
