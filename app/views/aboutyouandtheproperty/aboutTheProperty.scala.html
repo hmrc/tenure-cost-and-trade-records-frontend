@@ -56,39 +56,47 @@
         ))
       )),
       hint = Hint(content = HtmlContent(messages("hint.select.main"))),
-      name = "propertyCurrentlyUsed",
+      name = "propertyCurrentlyUsed[]",
       items = Seq(
         RadioItem(
           content = Text(messages("propertyCurrentlyUsed.publicHouse")),
-          value = Some("publicHouse")
+          value = Some("publicHouse"),
+          checked = theForm("propertyCurrentlyUsed[0]").value.contains("publicHouse")
         ),
         RadioItem(
           content = Text(messages("propertyCurrentlyUsed.wineCafeBar")),
-          value = Some("wineCafeBar")
+          value = Some("wineCafeBar"),
+          checked = theForm("propertyCurrentlyUsed[0]").value.contains("wineCafeBar")
         ),
         RadioItem(
           content = Text(messages("propertyCurrentlyUsed.otherBar")),
-          value = Some("otherBar")
+          value = Some("otherBar"),
+          checked = theForm("propertyCurrentlyUsed[0]").value.contains("otherBar")
         ),
         RadioItem(
           content = Text(messages("propertyCurrentlyUsed.pubRestaurant")),
-          value = Some("pubRestaurant")
+          value = Some("pubRestaurant"),
+          checked = theForm("propertyCurrentlyUsed[0]").value.contains("pubRestaurant")
         ),
         RadioItem(
           content = Text(messages("propertyCurrentlyUsed.licencedRestaurant")),
-          value = Some("licencedRestaurant")
+          value = Some("licencedRestaurant"),
+          checked = theForm("propertyCurrentlyUsed[0]").value.contains("licencedRestaurant")
         ),
         RadioItem(
           content = Text(messages("propertyCurrentlyUsed.hotel")),
-          value = Some("hotel")
+          value = Some("hotel"),
+          checked = theForm("propertyCurrentlyUsed[0]").value.contains("hotel")
         ),
         RadioItem(
           content = Text(messages("propertyCurrentlyUsed.discoNightclub")),
-          value = Some("discoNightclub")
+          value = Some("discoNightclub"),
+          checked = theForm("propertyCurrentlyUsed[0]").value.contains("discoNightclub")
         ),
         RadioItem(
           content = Text(messages("propertyCurrentlyUsed.other")),
           value = Some("other"),
+          checked = theForm("propertyCurrentlyUsed[0]").value.contains("other"),
           conditionalHtml = Some(conditionalHTML(messages("hint.other.vacant.propertyCurrentlyUsedOther")))
         )
       ),
@@ -106,27 +114,32 @@
             classes = "govuk-fieldset__legend--m"
           ))
         )),
-        name = "propertyCurrentlyUsed",
+        name = "propertyCurrentlyUsed[]",
         items = Seq(
           CheckboxItem(
             content = Text(messages("propertyCurrentlyUsed.hotel")),
-            value = "hotel"
+            value = "hotel",
+            checked = theForm("propertyCurrentlyUsed[]").value.contains("hotel")
           ),
           CheckboxItem(
             content = Text(messages("propertyCurrentlyUsed.healthSpa")),
-            value = "healthSpa"
+            value = "healthSpa",
+            checked = theForm("propertyCurrentlyUsed[]").value.contains("healthSpa")
           ),
           CheckboxItem(
             content = Text(messages("propertyCurrentlyUsed.lodgeAndRestaurant")),
-            value = "lodgeAndRestaurant"
+            value = "lodgeAndRestaurant",
+            checked = theForm("propertyCurrentlyUsed[]").value.contains("lodgeAndRestaurant")
           ),
           CheckboxItem(
             content = Text(messages("propertyCurrentlyUsed.conferenceCentre")),
-            value = "conferenceCentre"
+            value = "conferenceCentre",
+            checked = theForm("propertyCurrentlyUsed[]").value.contains("conferenceCentre")
           ),
           CheckboxItem(
             content = Text(messages("propertyCurrentlyUsed.other")),
             value = "other",
+            checked = theForm("propertyCurrentlyUsed[]").value.contains("other"),
             conditionalHtml = Some(conditionalHTML(messages("hint.other.use.propertyCurrentlyUsedOther")))
           )
         ),

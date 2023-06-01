@@ -66,6 +66,7 @@
         fullWidth: Boolean = false
 )(contentBlock: Html)(implicit request: Request[_], messages: Messages)
 
+@import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcFooter
 @beforeBLock = {
     @if(showFeedback) {
         @govukPhaseBanner(

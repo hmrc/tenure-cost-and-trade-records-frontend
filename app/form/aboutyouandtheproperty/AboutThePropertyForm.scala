@@ -16,31 +16,31 @@
 
 package form.aboutyouandtheproperty
 
-import form.MappingSupport.aboutYourPropertyType
+import form.MappingSupport.multipleCurrentPropertyUsedMapping
 import models.submissions.aboutyouandtheproperty._
 import play.api.data.Form
 import play.api.data.Forms.{mapping, nonEmptyText, optional, text}
 
 object AboutThePropertyForm {
 
-  val publicHouse        = CurrentPropertyPublicHouse.name
-  val wineBarOrCafe      = CurrentPropertyWineBarOrCafe.name
-  val otherBar           = CurrentPropertyOtherBar.name
-  val pubAndRestaurant   = CurrentPropertyPubAndRestaurant.name
+  val publicHouse = CurrentPropertyPublicHouse.name
+  val wineBarOrCafe = CurrentPropertyWineBarOrCafe.name
+  val otherBar = CurrentPropertyOtherBar.name
+  val pubAndRestaurant = CurrentPropertyPubAndRestaurant.name
   val licencedRestaurant = CurrentPropertyLicencedRestaurant.name
-  val hotel              = CurrentPropertyHotel.name
-  val discoOrNightclub   = CurrentPropertyDiscoOrNightclub.name
-  val other              = CurrentPropertyOther.name
-  val healthSpa          = CurrentPropertyHealthSpa.name
+  val hotel = CurrentPropertyHotel.name
+  val discoOrNightclub = CurrentPropertyDiscoOrNightclub.name
+  val other = CurrentPropertyOther.name
+  val healthSpa = CurrentPropertyHealthSpa.name
   val lodgeAndRestaurant = CurrentPropertyLodgeAndRestaurant.name
-  val conferenceCentre   = CurrentPropertyConferenceCentre.name
+  val conferenceCentre = CurrentPropertyConferenceCentre.name
 
   val aboutThePropertyForm: Form[PropertyDetails] = Form(
     mapping(
-      "currentOccupierName"        -> nonEmptyText(maxLength = 100),
-      "propertyCurrentlyUsed"      -> aboutYourPropertyType,
+      "currentOccupierName" -> nonEmptyText(maxLength = 100),
+      "propertyCurrentlyUsed" -> multipleCurrentPropertyUsedMapping,
       "propertyCurrentlyUsedOther" -> optional(text)
     )(PropertyDetails.apply)(PropertyDetails.unapply)
   )
-
 }
+

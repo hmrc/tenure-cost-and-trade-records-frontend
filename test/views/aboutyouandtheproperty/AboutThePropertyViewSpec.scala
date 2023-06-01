@@ -67,7 +67,7 @@ class AboutThePropertyViewSpec extends QuestionViewBehaviours[PropertyDetails] {
       assertContainsRadioButton(
         doc,
         "propertyCurrentlyUsed",
-        "propertyCurrentlyUsed",
+        "propertyCurrentlyUsed[]",
         CurrentPropertyPublicHouse.name,
         isChecked = false
       )
@@ -79,7 +79,7 @@ class AboutThePropertyViewSpec extends QuestionViewBehaviours[PropertyDetails] {
       assertContainsRadioButton(
         doc,
         "propertyCurrentlyUsed-2",
-        "propertyCurrentlyUsed",
+        "propertyCurrentlyUsed[]",
         CurrentPropertyWineBarOrCafe.name,
         isChecked = false
       )
@@ -91,7 +91,7 @@ class AboutThePropertyViewSpec extends QuestionViewBehaviours[PropertyDetails] {
       assertContainsRadioButton(
         doc,
         "propertyCurrentlyUsed-3",
-        "propertyCurrentlyUsed",
+        "propertyCurrentlyUsed[]",
         CurrentPropertyOtherBar.name,
         isChecked = false
       )
@@ -103,7 +103,7 @@ class AboutThePropertyViewSpec extends QuestionViewBehaviours[PropertyDetails] {
       assertContainsRadioButton(
         doc,
         "propertyCurrentlyUsed-4",
-        "propertyCurrentlyUsed",
+        "propertyCurrentlyUsed[]",
         CurrentPropertyPubAndRestaurant.name,
         isChecked = false
       )
@@ -115,7 +115,7 @@ class AboutThePropertyViewSpec extends QuestionViewBehaviours[PropertyDetails] {
       assertContainsRadioButton(
         doc,
         "propertyCurrentlyUsed-5",
-        "propertyCurrentlyUsed",
+        "propertyCurrentlyUsed[]",
         CurrentPropertyLicencedRestaurant.name,
         isChecked = false
       )
@@ -127,7 +127,7 @@ class AboutThePropertyViewSpec extends QuestionViewBehaviours[PropertyDetails] {
       assertContainsRadioButton(
         doc,
         "propertyCurrentlyUsed-6",
-        "propertyCurrentlyUsed",
+        "propertyCurrentlyUsed[]",
         CurrentPropertyHotel.name,
         isChecked = false
       )
@@ -139,7 +139,7 @@ class AboutThePropertyViewSpec extends QuestionViewBehaviours[PropertyDetails] {
       assertContainsRadioButton(
         doc,
         "propertyCurrentlyUsed-7",
-        "propertyCurrentlyUsed",
+        "propertyCurrentlyUsed[]",
         CurrentPropertyDiscoOrNightclub.name,
         isChecked = false
       )
@@ -151,7 +151,7 @@ class AboutThePropertyViewSpec extends QuestionViewBehaviours[PropertyDetails] {
       assertContainsRadioButton(
         doc,
         "propertyCurrentlyUsed-8",
-        "propertyCurrentlyUsed",
+        "propertyCurrentlyUsed[]",
         CurrentPropertyOther.name,
         isChecked = false
       )
@@ -196,7 +196,7 @@ class AboutThePropertyViewSpec extends QuestionViewBehaviours[PropertyDetails] {
       assertContainsCheckBox(
         doc,
         "propertyCurrentlyUsed",
-        "propertyCurrentlyUsed",
+        "propertyCurrentlyUsed[]",
         CurrentPropertyHotel.name,
         isChecked = false
       )
@@ -208,7 +208,7 @@ class AboutThePropertyViewSpec extends QuestionViewBehaviours[PropertyDetails] {
       assertContainsCheckBox(
         doc,
         "propertyCurrentlyUsed-2",
-        "propertyCurrentlyUsed",
+        "propertyCurrentlyUsed[]",
         CurrentPropertyHealthSpa.name,
         isChecked = false
       )
@@ -220,7 +220,7 @@ class AboutThePropertyViewSpec extends QuestionViewBehaviours[PropertyDetails] {
       assertContainsCheckBox(
         doc,
         "propertyCurrentlyUsed-3",
-        "propertyCurrentlyUsed",
+        "propertyCurrentlyUsed[]",
         CurrentPropertyLodgeAndRestaurant.name,
         isChecked = false
       )
@@ -232,7 +232,7 @@ class AboutThePropertyViewSpec extends QuestionViewBehaviours[PropertyDetails] {
       assertContainsCheckBox(
         doc,
         "propertyCurrentlyUsed-4",
-        "propertyCurrentlyUsed",
+        "propertyCurrentlyUsed[]",
         CurrentPropertyConferenceCentre.name,
         isChecked = false
       )
@@ -244,7 +244,7 @@ class AboutThePropertyViewSpec extends QuestionViewBehaviours[PropertyDetails] {
       assertContainsCheckBox(
         doc,
         "propertyCurrentlyUsed-5",
-        "propertyCurrentlyUsed",
+        "propertyCurrentlyUsed[]",
         CurrentPropertyOther.name,
         isChecked = false
       )

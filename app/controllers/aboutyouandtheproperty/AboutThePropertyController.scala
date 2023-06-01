@@ -46,7 +46,8 @@ class AboutThePropertyController @Inject() (
       Ok(
         aboutThePropertyView(
           request.sessionData.aboutYouAndTheProperty.flatMap(_.propertyDetails) match {
-            case Some(propertyDetails) => aboutThePropertyForm.fillAndValidate(propertyDetails)
+            case Some(propertyDetails) => {
+              aboutThePropertyForm.fillAndValidate(propertyDetails)}
             case _                     => aboutThePropertyForm
           },
           request.sessionData.forType,

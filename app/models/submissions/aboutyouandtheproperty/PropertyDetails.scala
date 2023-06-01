@@ -15,16 +15,13 @@
  */
 
 package models.submissions.aboutyouandtheproperty
-
-import play.api.libs.json.Json
-
+import play.api.libs.json._
 case class PropertyDetails(
-  currentOccupierName: String,
-  propertyCurrentlyUsed: CurrentPropertyUsed,
-  currentlyUsedOtherField: Option[String]
-)
+                            currentOccupierName: String,
+                            propertyCurrentlyUsed: List[CurrentPropertyUsed],
+                            propertyCurrentlyUsedOther: Option[String]
+                          )
 
 object PropertyDetails {
-  implicit val format = Json.format[PropertyDetails]
-
+  implicit val propertyDetailsFormat: OFormat[PropertyDetails] = Json.format[PropertyDetails]
 }

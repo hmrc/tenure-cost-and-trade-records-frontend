@@ -85,6 +85,6 @@ class AboutThePropertyControllerSpec extends TestBaseSpec {
     }
 
     val baseFormData: Map[String, String] =
-      Map("currentOccupierName" -> "Tobermory", "propertyCurrentlyUsed" -> CurrentPropertyPublicHouse.name)
+      Map("currentOccupierName" -> "Tobermory", "propertyCurrentlyUsed[0]" -> CurrentPropertyPublicHouse.name)
   }
 }
