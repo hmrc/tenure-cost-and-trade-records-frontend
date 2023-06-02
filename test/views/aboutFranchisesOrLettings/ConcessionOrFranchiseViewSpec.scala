@@ -23,14 +23,16 @@ import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 import models.pages.Summary
+import play.twirl.api.Html
 
 class ConcessionOrFranchiseViewSpec extends QuestionViewBehaviours[CateringOperationDetails] {
 
   val messageKeyPrefix = "concessionOrFranchise"
 
-  override val form = CateringOperationOrLettingAccommodationForm.cateringOperationOrLettingAccommodationForm
+  override val form: Form[CateringOperationDetails] =
+    CateringOperationOrLettingAccommodationForm.cateringOperationOrLettingAccommodationForm
 
-  def createView = () =>
+  def createView: () => Html = () =>
     concessionOrFranchiseView(
       form,
       messageKeyPrefix,
@@ -38,7 +40,7 @@ class ConcessionOrFranchiseViewSpec extends QuestionViewBehaviours[CateringOpera
       Summary("99996010001")
     )(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[CateringOperationDetails]) =>
+  def createViewUsingForm: Form[CateringOperationDetails] => Html = (form: Form[CateringOperationDetails]) =>
     concessionOrFranchiseView(
       form,
       messageKeyPrefix,
@@ -61,9 +63,14 @@ class ConcessionOrFranchiseViewSpec extends QuestionViewBehaviours[CateringOpera
     }
 
     "Section heading is visible" in {
-      val doc         = asDocument(createViewUsingForm(form)) // govuk-caption-m
+      val doc         = asDocument(createViewUsingForm(form))
       val sectionText = doc.getElementsByClass("govuk-caption-m").text()
       assert(sectionText == messages("label.section.aboutTheFranchiseLettings"))
+    }
+
+    "Hint text is visible" in {
+      val doc = asDocument(createViewUsingForm(form))
+      assertContainsText(doc, messages("hint.concessionOrFranchise"))
     }
 
     "contain radio buttons for the value yes" in {
@@ -73,7 +80,7 @@ class ConcessionOrFranchiseViewSpec extends QuestionViewBehaviours[CateringOpera
         "concessionOrFranchise",
         "concessionOrFranchise",
         AnswerYes.name,
-        false
+        isChecked = false
       )
       assertContainsText(doc, messages("label.yes"))
     }
@@ -85,7 +92,7 @@ class ConcessionOrFranchiseViewSpec extends QuestionViewBehaviours[CateringOpera
         "concessionOrFranchise-2",
         "concessionOrFranchise",
         AnswerNo.name,
-        false
+        isChecked = false
       )
       assertContainsText(doc, messages("label.no"))
     }

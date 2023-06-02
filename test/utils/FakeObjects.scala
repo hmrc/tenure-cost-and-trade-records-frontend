@@ -49,20 +49,22 @@ trait FakeObjects {
     "BN12 4AX"
   )
 
-  val prefilledFakeName        = "John Doe"
-  val prefilledFakePhoneNo     = "12345678901"
-  val prefilledFakeEmail       = "test@email.com"
-  val prefilledCateringAddress =
+  val prefilledFakeName                         = "John Doe"
+  val prefilledFakePhoneNo                      = "12345678901"
+  val prefilledFakeEmail                        = "test@email.com"
+  val prefilledCateringAddress: CateringAddress =
     CateringAddress("004", Some("GORING ROAD"), "GORING-BY-SEA, WORTHING", Some("West sussex"), "BN12 4AX")
-  val prefilledLettingAddress  =
+  val prefilledLettingAddress: LettingAddress   =
     LettingAddress("004", Some("GORING ROAD"), "GORING-BY-SEA, WORTHING", Some("West sussex"), "BN12 4AX")
-  val prefilledLandlordAddress =
+  val prefilledLandlordAddress: LandlordAddress =
     LandlordAddress("004", Some("GORING ROAD"), Some("GORING-BY-SEA, WORTHING"), Some("West sussex"), "BN12 4AX")
 
-  val baseFilled6010Session = Session(referenceNumber, forType6010, prefilledAddress, token)
-  val baseFilled6011Session = Session(referenceNumber, forType6011, prefilledAddress, token)
-  val baseFilled6015Session = Session(referenceNumber, forType6015, prefilledAddress, token)
-  val baseFilled6016Session = Session(referenceNumber, forType6016, prefilledAddress, token)
+  val prefilledDateInput: LocalDate = LocalDate.of(2022, 6, 1)
+
+  val baseFilled6010Session: Session = Session(referenceNumber, forType6010, prefilledAddress, token)
+  val baseFilled6011Session: Session = Session(referenceNumber, forType6011, prefilledAddress, token)
+  val baseFilled6015Session: Session = Session(referenceNumber, forType6015, prefilledAddress, token)
+  val baseFilled6016Session: Session = Session(referenceNumber, forType6016, prefilledAddress, token)
 
   // Are your still connected sessions
   val prefilledStillConnectedDetailsYes: StillConnectedDetails  = StillConnectedDetails(
@@ -76,25 +78,25 @@ trait FakeObjects {
   )
   val prefilledStillConnectedDetailsNo: StillConnectedDetails   = StillConnectedDetails(Some(AddressConnectionTypeNo))
 
-  val stillConnectedDetailsYesSession: Session       =
+  val stillConnectedDetailsYesSession: Session                =
     baseFilled6010Session.copy(stillConnectedDetails = Some(prefilledStillConnectedDetailsYes))
-  val stillConnectedDetailsEditSession: Session      =
+  val stillConnectedDetailsEditSession: Session               =
     baseFilled6010Session.copy(stillConnectedDetails = Some(prefilledStillConnectedDetailsEdit))
-  val stillConnectedDetailsNoSession: Session        =
+  val stillConnectedDetailsNoSession: Session                 =
     baseFilled6010Session.copy(stillConnectedDetails = Some(prefilledStillConnectedDetailsNo))
-  val stillConnectedDetails6011YesSession: Session   =
+  val stillConnectedDetails6011YesSession: Session            =
     baseFilled6011Session.copy(stillConnectedDetails = Some(prefilledStillConnectedDetailsYes))
-  val stillConnectedDetails6011NoSession: Session    =
+  val stillConnectedDetails6011NoSession: Session             =
     baseFilled6011Session.copy(stillConnectedDetails = Some(prefilledStillConnectedDetailsNo))
-  val stillConnectedDetails6015YesSession: Session   =
+  val stillConnectedDetails6015YesSession: Session            =
     baseFilled6015Session.copy(stillConnectedDetails = Some(prefilledStillConnectedDetailsYes))
-  val stillConnectedDetails6015NoSession: Session    =
+  val stillConnectedDetails6015NoSession: Session             =
     baseFilled6015Session.copy(stillConnectedDetails = Some(prefilledStillConnectedDetailsNo))
-  val stillConnectedDetails6016YesSession: Session   =
+  val stillConnectedDetails6016YesSession: Session            =
     baseFilled6016Session.copy(stillConnectedDetails = Some(prefilledStillConnectedDetailsYes))
-  val stillConnectedDetails6016NoSession: Session    =
+  val stillConnectedDetails6016NoSession: Session             =
     baseFilled6016Session.copy(stillConnectedDetails = Some(prefilledStillConnectedDetailsNo))
-  val stillConnectedDetailsConnectedDetailsNoSession =
+  val stillConnectedDetailsConnectedDetailsNoSession: Session =
     baseFilled6010Session.copy(stillConnectedDetails = Some(prefilledStillConnectedDetailsNo))
 
   // Not connected sessions
@@ -161,6 +163,84 @@ trait FakeObjects {
   val aboutYouAndTheProperty6016NoSession: Session  =
     stillConnectedDetails6016NoSession.copy(aboutYouAndTheProperty = Some(prefilledAboutYouAndThePropertyNo))
 
+  // Trading history
+
+  // Franchises or lettings
+  val prefilledCateringOperationSectionYes: CateringOperationSection = CateringOperationSection(
+    CateringOperationDetails("Operator Name", "Type of Business", prefilledCateringAddress),
+    Some(CateringOperationRentDetails(BigDecimal(1500), prefilledDateInput)),
+    Some(AnswerYes)
+  )
+  val prefilledCateringOperationSectionNo: CateringOperationSection  = CateringOperationSection(
+    CateringOperationDetails("Operator Name", "Type of Business", prefilledCateringAddress),
+    Some(CateringOperationRentDetails(BigDecimal(1500), prefilledDateInput)),
+    Some(AnswerNo)
+  )
+  val prefilledLettingSectionYes: LettingSection                     = LettingSection(
+    aboutfranchisesorlettings.LettingOtherPartOfPropertyInformationDetails(
+      "Operator Name",
+      "Type of Business",
+      prefilledLettingAddress
+    ),
+    Some(LettingOtherPartOfPropertyRentDetails(BigDecimal(1500), prefilledDateInput)),
+    Some(AnswerYes)
+  )
+  val prefilledLettingSectionNo: LettingSection                      = LettingSection(
+    aboutfranchisesorlettings.LettingOtherPartOfPropertyInformationDetails(
+      "Operator Name",
+      "Type of Business",
+      prefilledLettingAddress
+    ),
+    Some(LettingOtherPartOfPropertyRentDetails(BigDecimal(1500), prefilledDateInput)),
+    Some(AnswerNo)
+  )
+
+  val prefilledAboutFranchiseOrLettings: AboutFranchisesOrLettings       = AboutFranchisesOrLettings(
+    Some(AnswerYes),
+    Some(AnswerYes),
+    0,
+    IndexedSeq(prefilledCateringOperationSectionYes),
+    Some(AnswerYes),
+    0,
+    IndexedSeq(prefilledLettingSectionYes)
+  )
+  val prefilledAboutFranchiseOrLettingsNo: AboutFranchisesOrLettings     = AboutFranchisesOrLettings(
+    Some(AnswerNo),
+    Some(AnswerNo),
+    0,
+    IndexedSeq(prefilledCateringOperationSectionNo),
+    Some(AnswerNo),
+    0,
+    IndexedSeq(prefilledLettingSectionNo)
+  )
+  val prefilledAboutFranchiseOrLettings6015: AboutFranchisesOrLettings   = AboutFranchisesOrLettings(
+    Some(AnswerYes),
+    Some(AnswerYes),
+    0,
+    IndexedSeq(prefilledCateringOperationSectionYes),
+    Some(AnswerYes),
+    0,
+    IndexedSeq(prefilledLettingSectionYes)
+  )
+  val prefilledAboutFranchiseOrLettingsNo6015: AboutFranchisesOrLettings = AboutFranchisesOrLettings(
+    Some(AnswerNo),
+    Some(AnswerNo),
+    0,
+    IndexedSeq(prefilledCateringOperationSectionNo),
+    Some(AnswerNo),
+    0,
+    IndexedSeq(prefilledLettingSectionNo)
+  )
+
+  val sessionAboutFranchiseOrLetting6010YesSession: Session =
+    aboutYouAndTheProperty6010YesSession.copy(aboutFranchisesOrLettings = Some(prefilledAboutFranchiseOrLettings))
+  val sessionAboutFranchiseOrLetting6010NoSession: Session  =
+    aboutYouAndTheProperty6010NoSession.copy(aboutFranchisesOrLettings = Some(prefilledAboutFranchiseOrLettingsNo))
+  val sessionAboutFranchiseOrLetting6015YesSession: Session =
+    aboutYouAndTheProperty6015YesSession.copy(aboutFranchisesOrLettings = Some(prefilledAboutFranchiseOrLettings6015))
+  val sessionAboutFranchiseOrLetting6015NoSession: Session  =
+    aboutYouAndTheProperty6015NoSession.copy(aboutFranchisesOrLettings = Some(prefilledAboutFranchiseOrLettingsNo6015))
+
   // Additional information sessions
   val prefilledAdditionalInformation: AdditionalInformation = AdditionalInformation(
     Some(FurtherInformationOrRemarksDetails("Further information or remarks details")),
@@ -173,40 +253,11 @@ trait FakeObjects {
 
   val prefilledFirstOccupy                      = MonthsYearDuration(2000, 2)
   val prefilledFinancialYear                    = DayMonthsDuration(2, 12)
-  val prefilledDateInput                        = LocalDate.of(2022, 6, 1)
   val prefilledBigDecimal                       = BigDecimal(9999999)
   val prefilledAnnualRent                       = AnnualRent(prefilledBigDecimal)
   val prefilledCurrentRentPayableWithin12Months =
     CurrentRentPayableWithin12Months(CurrentRentWithin12MonthsYes, prefilledDateInput)
 
-  val prefilledCateringOperationSectionYes    = CateringOperationSection(
-    CateringOperationDetails("Operator Name", "Type of Business", prefilledCateringAddress),
-    Some(CateringOperationRentDetails(BigDecimal(1500), prefilledDateInput)),
-    Some(AnswerYes)
-  )
-  val prefilledCateringOperationSectionNo     = CateringOperationSection(
-    CateringOperationDetails("Operator Name", "Type of Business", prefilledCateringAddress),
-    Some(CateringOperationRentDetails(BigDecimal(1500), prefilledDateInput)),
-    Some(AnswerNo)
-  )
-  val prefilledLettingSectionYes              = LettingSection(
-    aboutfranchisesorlettings.LettingOtherPartOfPropertyInformationDetails(
-      "Operator Name",
-      "Type of Business",
-      prefilledLettingAddress
-    ),
-    Some(LettingOtherPartOfPropertyRentDetails(BigDecimal(1500), prefilledDateInput)),
-    Some(AnswerYes)
-  )
-  val prefilledLettingSectionNo               = LettingSection(
-    aboutfranchisesorlettings.LettingOtherPartOfPropertyInformationDetails(
-      "Operator Name",
-      "Type of Business",
-      prefilledLettingAddress
-    ),
-    Some(LettingOtherPartOfPropertyRentDetails(BigDecimal(1500), prefilledDateInput)),
-    Some(AnswerNo)
-  )
   val prefilledAboutTheLandlord               =
     AboutTheLandlord(
       prefilledFakeName,
@@ -244,52 +295,13 @@ trait FakeObjects {
       )
     )
 
-  val prefilledAboutTheTradingHistory   = AboutTheTradingHistory(
+  val prefilledAboutTheTradingHistory = AboutTheTradingHistory(
     occupationAndAccountingInformation = Some(
       OccupationalAndAccountingInformation(
         prefilledFirstOccupy,
         prefilledFinancialYear
       )
     )
-  )
-  val prefilledAboutFranchiseOrLettings = AboutFranchisesOrLettings(
-    Some(AnswerYes),
-    Some(AnswerYes),
-    0,
-    IndexedSeq(prefilledCateringOperationSectionYes),
-    Some(AnswerYes),
-    0,
-    IndexedSeq(prefilledLettingSectionYes)
-  )
-
-  val prefilledAboutFranchiseOrLettingsNo = AboutFranchisesOrLettings(
-    Some(AnswerNo),
-    Some(AnswerNo),
-    0,
-    IndexedSeq(prefilledCateringOperationSectionNo),
-    Some(AnswerNo),
-    0,
-    IndexedSeq(prefilledLettingSectionNo)
-  )
-
-  val prefilledAboutFranchiseOrLettings6015 = AboutFranchisesOrLettings(
-    Some(AnswerYes),
-    Some(AnswerYes),
-    0,
-    IndexedSeq(prefilledCateringOperationSectionYes),
-    Some(AnswerYes),
-    0,
-    IndexedSeq(prefilledLettingSectionYes)
-  )
-
-  val prefilledAboutFranchiseOrLettingsNo6015 = AboutFranchisesOrLettings(
-    Some(AnswerNo),
-    Some(AnswerNo),
-    0,
-    IndexedSeq(prefilledCateringOperationSectionNo),
-    Some(AnswerNo),
-    0,
-    IndexedSeq(prefilledLettingSectionNo)
   )
 
   val prefilledAboutLeaseOrAgreementPartOne = AboutLeaseOrAgreementPartOne(
