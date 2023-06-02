@@ -19,6 +19,7 @@ package navigation
 import connectors.Audit
 import controllers.routes
 import models.Session
+import navigation.UrlHelpers.urlPlusParamPrefix
 import navigation.identifiers.Identifier
 import play.api.mvc.{AnyContent, Call, Request}
 import uk.gov.hmrc.http.HeaderCarrier
@@ -30,8 +31,7 @@ abstract class Navigator @Inject() (
 ) {
 
   implicit class callHelpers(call: Call) {
-    def urlWithoutIndex99: String            = call.url.replace("/99", "")
-    def callWithSuffix(suffix: String): Call = call.copy(url = call.url + suffix)
+    def callWithParam(paramAndValue: String): Call = call.copy(url = urlPlusParamPrefix(call.url) + paramAndValue)
   }
 
   val routeMap: Map[Identifier, Session => Call]
@@ -58,7 +58,7 @@ abstract class Navigator @Inject() (
       case Some(cyaCall) if from == "CYA" =>
         postponeCYARedirectPages
           .find(nextCall.url.contains)
-          .fold(cyaCall)(_ => nextCall.callWithSuffix("?from=CYA"))
+          .fold(cyaCall)(_ => nextCall.callWithParam("from=CYA"))
       case _                              => nextCall
     }
 
