@@ -60,7 +60,7 @@
                 sectionAnswers.row("checkYourAnswersAboutTheProperty.propertyUsage",
                     _.propertyDetails.map(_.propertyCurrentlyUsed).map(usage => s"${usage.head.key}.${usage.head.name}"),
                     aboutyouandtheproperty.routes.AboutThePropertyController.show(), "propertyCurrentlyUsed",
-                    ("propertyCurrentlyUsed.other", _.propertyDetails.flatMap(_.propertyCurrentlyUsedOther))) ++
+                    ("propertyCurrentlyUsed.other", _.propertyDetails.flatMap(_.currentlyUsedOtherField))) ++
                 sectionAnswers.optionalRow("checkYourAnswersAboutTheProperty.hasWebsite",
                     _.websiteForPropertyDetails.map(_.buildingOperatingHaveAWebsite).map(hasWebsite => messages(s"label.${hasWebsite.name}")),
                     aboutyouandtheproperty.routes.WebsiteForPropertyController.show(), "buildingOperatingHaveAWebsite") ++

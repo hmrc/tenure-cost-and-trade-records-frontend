@@ -16,6 +16,7 @@
 
 package form
 
+import controllers.toOpt
 import form.Form6010.ConditionalMapping.nonEmptyTextOr
 import models.submissions._
 import form.Formats._
@@ -30,6 +31,7 @@ import models.submissions.notconnected.PastConnectionType
 import models.{AnnualRent, NamedEnum, NamedEnumSupport}
 import play.api.data.Forms.{boolean, default, email, list, mapping, nonEmptyText, optional, text}
 import play.api.data.format.Formatter
+import play.api.data.validation.{Constraint, Invalid, Valid, ValidationError}
 import play.api.data.validation.Constraints.{maxLength, minLength, nonEmpty, pattern}
 import play.api.data.{FormError, Forms, Mapping}
 
@@ -73,13 +75,20 @@ object MappingSupport {
   val spacesIntRegex: Regex = """^\-?\d{1,10}$""".r
   val intRegex: Regex       = """^\d{1,3}$""".r
 
-  val multipleCurrentPropertyUsedMapping: Mapping[List[CurrentPropertyUsed]] = {
-    list(nonEmptyText).verifying("Invalid property used", strs => strs.forall(str => CurrentPropertyUsed.withName(str).isDefined))
+  lazy val multipleCurrentPropertyUsedMapping: Mapping[List[CurrentPropertyUsed]] =
+    list(nonEmptyText).verifying(
+        Constraint[List[String]]("constraint.required") { propertyUsages =>
+          if (propertyUsages.nonEmpty) Valid
+          else Invalid(ValidationError("error.required.propertyUsages"))
+        }
+      )
+      .verifying("Invalid property used", propertyUsages =>
+        propertyUsages.forall(str => CurrentPropertyUsed.withName(str).isDefined)
+      )
       .transform[List[CurrentPropertyUsed]](
-        strs => strs.flatMap(str => CurrentPropertyUsed.withName(str)),
+        propertyUsages => propertyUsages.flatMap(str => CurrentPropertyUsed.withName(str)),
         currentPropertyUseds => currentPropertyUseds.map(_.name)
       )
-  }
   lazy val annualRent: Mapping[AnnualRent] = mapping(
     "annualRentExcludingVat" -> currencyMapping(".annualRentExcludingVat")
   )(AnnualRent.apply)(AnnualRent.unapply).verifying(Errors.maxCurrencyAmountExceeded, _.amount <= cdbMaxCurrencyAmount)

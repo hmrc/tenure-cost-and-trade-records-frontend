@@ -91,7 +91,7 @@ class SectionAnswersRowBuilderSpec extends TestBaseSpec {
         _.propertyDetails.map(_.propertyCurrentlyUsed).map(usage => s"${usage.head.key}.${usage.head.name}"),
         aboutyouandtheproperty.routes.AboutThePropertyController.show(),
         "propertyCurrentlyUsed",
-        ("propertyCurrentlyUsed.other", _.propertyDetails.flatMap(_.propertyCurrentlyUsedOther))
+        ("propertyCurrentlyUsed.other", _.propertyDetails.flatMap(_.currentlyUsedOtherField))
       )
 
       row shouldBe Seq(
