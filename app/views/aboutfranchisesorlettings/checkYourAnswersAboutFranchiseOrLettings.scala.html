@@ -22,6 +22,8 @@
 @import models.pages.Summary
 @import navigation.AboutFranchisesOrLettingsNavigator
 @import navigation.identifiers.FranchiseOrLettingsTiedToPropertyId
+@import util.DateUtil._
+@import util.NumberUtil._
 @import util.SectionAnswersRowBuilder
 
 @this(layout: Layout,
@@ -78,6 +80,16 @@
                                     sectionAnswers.row("checkYourAnswersAboutFranchiseOrLettings.correspondenceAddress",
                                         _ => Option(cateringOperation.cateringOperationDetails.cateringAddress.addressLines.map(Text(_).asHtml).mkString("""<p class="govuk-body">""", "<br/> ", "</p>")),
                                         aboutfranchisesorlettings.routes.CateringOperationDetailsController.show(Some(idx)), "cateringAddress.buildingNameNumber",
+                                        ("valueAsHtml", _ => None)) ++
+                                    sectionAnswers.row("checkYourAnswersAboutFranchiseOrLettings.annualRent",
+                                        _ => cateringOperation.cateringOperationRentDetails.map(_.annualRent.asMoney),
+                                        aboutfranchisesorlettings.routes.CateringOperationDetailsRentController.show(idx), "annualRent") ++
+                                    sectionAnswers.row("checkYourAnswersAboutFranchiseOrLettings.dateSumFixed",
+                                        _ => cateringOperation.cateringOperationRentDetails.map(_.dateInput.shortDate),
+                                        aboutfranchisesorlettings.routes.CateringOperationDetailsRentController.show(idx), "dateInput.day") ++
+                                    sectionAnswers.row("checkYourAnswersAboutFranchiseOrLettings.itemsInRent",
+                                        _ => Option(cateringOperation.cateringOperationDetails.cateringAddress.addressLines.map(Text(_).asHtml).mkString("""<p class="govuk-body">""", "<br/> ", "</p>")),// TODO: saving itemsInRent is not implemented in CateringOperationRentIncludesController
+                                        aboutfranchisesorlettings.routes.CateringOperationRentIncludesController.show(idx), "xxxxxxxxxxxx",
                                         ("valueAsHtml", _ => None))
                         ))
                     }
@@ -105,7 +117,13 @@
                                     sectionAnswers.row("checkYourAnswersAboutFranchiseOrLettings.correspondenceAddress",
                                         _ => Option(letting.lettingOtherPartOfPropertyInformationDetails.lettingAddress.addressLines.map(Text(_).asHtml).mkString("""<p class="govuk-body">""", "<br/> ", "</p>")),
                                         aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsController.show(Some(idx)), "lettingAddress.buildingNameNumber",
-                                        ("valueAsHtml", _ => None))
+                                        ("valueAsHtml", _ => None)) ++
+                                    sectionAnswers.row("checkYourAnswersAboutFranchiseOrLettings.annualRent",
+                                        _ => letting.lettingOtherPartOfPropertyRentDetails.map(_.annualRent.asMoney),
+                                        aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsRentController.show(idx), "annualRent") ++
+                                    sectionAnswers.row("checkYourAnswersAboutFranchiseOrLettings.dateSumFixed",
+                                        _ => letting.lettingOtherPartOfPropertyRentDetails.map(_.dateInput.shortDate),
+                                        aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsRentController.show(idx), "dateInput.day")
                         ))
                     }
                 }
