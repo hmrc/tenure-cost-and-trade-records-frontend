@@ -367,7 +367,7 @@ franchiseLettings.list2 = rent received from letting other parts of the property
 aboutYourLandlord.heading = About your landlord
 label.landlordFullName = Landlord’s name
 label.landlordAddress.address = Landlord’s address
-error.landlordFullName.required = Please enter the landlord’s full name
+error.landlordFullName.required = If the landlord’s name is not known, please input unknown
 error.landlordFullName.maxLength = This must be 1000 characters or fewer
 
 #LEASE OR AGREEMENT DETAILS COMMENCE WITHIN 3 YEARS
@@ -540,6 +540,13 @@ label.lettingTypeOfBusiness = Description of letting
 hint.typeOfBusiness = For example, bed and breakfast, hotel, restaurant
 hint.lettingTypeOfBusiness = For example, a billboard, residential accommodation
 label.correspondenceAddress = Correspondence address
+error.operatorName.required = Enter the name of the person or company operating the business
+error.operatorName.maxLength = Operator‘s name must be 100 characters or fewer
+error.typeOfBusiness.required = Enter a description of the separate business
+error.typeOfBusiness.maxLength = Type of business must be 100 characters or fewer
+error.lettingTypeOfBusiness.required = Enter a description of the separate letting
+error.lettingOperatorName.maxLength = Tenant‘s name must be 100 characters or fewer
+error.lettingTypeOfBusiness.maxLength = Description of letting must be 100 characters or fewer
 
 ##CATERING OPERATION OR LETTING ACCOMMODATION RENT DETAILS
 ##########################################################
@@ -931,10 +938,13 @@ error.postcode.maxLength = Postcode must be 10 characters or fewer
 error.day.required = The date must include a day
 error.month.required = The date must include a month
 error.year.required = The date must include a year
-error.required.annualRent = Please provide an annual rent amount
-error.required.annualRentExcludingVat = Please provide a number
+error.required.annualRent = Enter the annual rent excluding VAT
+error.invalid_currency.annualRent = The annual rent figure must be a number
+error.required.annualRentExcludingVat = Enter the annual rent excluding VAT
 error.char.count.maxLength = This must be 2000 characters or fewer
 error.townCity.required = Enter the town or city
 error.fullName.required = Enter your full name
 error.tiedType.required = Select which type of tie you have
+error.addressLineTwo.maxLength = Address line 2 must be 50 characters or fewer
+error.county.maxLength = County must be 50 characters or fewer
 

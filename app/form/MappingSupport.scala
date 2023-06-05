@@ -126,9 +126,20 @@ object MappingSupport {
       nonEmpty(errorMessage = "error.buildingNameNumber.required"),
       maxLength(50, "error.buildingNameNumber.maxLength")
     ),
-    "street1"            -> optional(text(maxLength = 50)),
-    "town"               -> optional(text(maxLength = 50)),
-    "county"             -> optional(text(maxLength = 50)),
+    "street1"            -> optional(
+      default(text, "").verifying(
+        maxLength(50, "error.addressLineTwo.maxLength")
+      )
+    ),
+    "town"               -> default(text, "").verifying(
+      nonEmpty(errorMessage = "error.townCity.required"),
+      maxLength(50, "error.buildingNameNumber.maxLength")
+    ),
+    "county"             -> optional(
+      default(text, "").verifying(
+        maxLength(50, "error.county.maxLength")
+      )
+    ),
     "postcode"           -> nonEmptyTextOr("landlordAddress.postcode", postcode, "error.postcode.required")
   )(LandlordAddress.apply)(LandlordAddress.unapply)
 
@@ -137,12 +148,20 @@ object MappingSupport {
       nonEmpty(errorMessage = "error.buildingNameNumber.required"),
       maxLength(50, "error.buildingNameNumber.maxLength")
     ),
-    "street1"            -> optional(text(maxLength = 50)),
+    "street1"            -> optional(
+      default(text, "").verifying(
+        maxLength(50, "error.addressLineTwo.maxLength")
+      )
+    ),
     "town"               -> default(text, "").verifying(
       nonEmpty(errorMessage = "error.townCity.required"),
       maxLength(50, "error.buildingNameNumber.maxLength")
     ),
-    "county"             -> optional(text(maxLength = 50)),
+    "county"             -> optional(
+      default(text, "").verifying(
+        maxLength(50, "error.county.maxLength")
+      )
+    ),
     "postcode"           -> nonEmptyTextOr("cateringAddress.postcode", postcode, "error.postcode.required")
   )(CateringAddress.apply)(CateringAddress.unapply)
 
@@ -151,12 +170,20 @@ object MappingSupport {
       nonEmpty(errorMessage = "error.buildingNameNumber.required"),
       maxLength(50, "error.buildingNameNumber.maxLength")
     ),
-    "street1"            -> optional(text(maxLength = 50)),
+    "street1"            -> optional(
+      default(text, "").verifying(
+        maxLength(50, "error.addressLineTwo.maxLength")
+      )
+    ),
     "town"               -> default(text, "").verifying(
       nonEmpty(errorMessage = "error.townCity.required"),
       maxLength(50, "error.buildingNameNumber.maxLength")
     ),
-    "county"             -> optional(text(maxLength = 50)),
+    "county"             -> optional(
+      default(text, "").verifying(
+        maxLength(50, "error.county.maxLength")
+      )
+    ),
     "postcode"           -> nonEmptyTextOr("lettingAddress.postcode", postcode, "error.postcode.required")
   )(LettingAddress.apply)(LettingAddress.unapply)
 

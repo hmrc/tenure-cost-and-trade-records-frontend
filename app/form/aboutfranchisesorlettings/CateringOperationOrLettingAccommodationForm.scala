@@ -19,14 +19,21 @@ package form.aboutfranchisesorlettings
 import form.MappingSupport.cateringAddressMapping
 import models.submissions.aboutfranchisesorlettings.CateringOperationDetails
 import play.api.data.Form
-import play.api.data.Forms.{mapping, nonEmptyText}
+import play.api.data.Forms.{default, mapping, nonEmptyText, text}
+import play.api.data.validation.Constraints.{maxLength, nonEmpty}
 
 object CateringOperationOrLettingAccommodationForm {
 
   val cateringOperationOrLettingAccommodationForm = Form(
     mapping(
-      "operatorName"    -> nonEmptyText(maxLength = 100),
-      "typeOfBusiness"  -> nonEmptyText(maxLength = 100),
+      "operatorName"    -> default(text, "").verifying(
+        nonEmpty(errorMessage = "error.operatorName.required"),
+        maxLength(100, "error.operatorName.maxLength")
+      ),
+      "typeOfBusiness"  -> default(text, "").verifying(
+        nonEmpty(errorMessage = "error.typeOfBusiness.required"),
+        maxLength(100, "error.typeOfBusiness.maxLength")
+      ),
       "cateringAddress" -> cateringAddressMapping
     )(CateringOperationDetails.apply)(CateringOperationDetails.unapply)
   )
