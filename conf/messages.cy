@@ -95,7 +95,7 @@ start.page.heading = Send your business trade and cost information to the Valuat
 start.header = Use this service if the Valuation Office Agency (VOA) has asked you for information about your business premises.
 start.title = Why you must provide this information
 start.block1 = The VOA collects this information from all businesses in England and Wales on behalf of the Valuation Officer. It’s used to set fair, up-to-date rateable values for non-domestic properties
-start.block2 = These values are used to determine business rates in England and Wales. You can check the rateable value of your property using our <a href="https://www.gov.uk" class="govuk-link" target="_blank">business rates valuation service</a>.
+start.block2 = These values are used to determine business rates in England and Wales. You can check the rateable value of your property using our <a href="https://www.gov.uk/find-business-rates" class="govuk-link" target="_blank">business rates valuation service</a>.
 start.desc = You must send the Valuation Office Agency (VOA) information about your business property if they’ve asked you to. You need to do this even if you no longer own or rent the property.
 start.desc1 = The information you provide will be used by the local authority to help calculate business rates in your area.
 start.inset = If you do not send the information within 56 days of getting the letter the VOA sent to you, you may have to pay a penalty.
@@ -110,7 +110,7 @@ start.item5 = information about any recent changes to your rent or any rent-free
 start.item6 = information about any changes you’ve made to the property that could affect its value
 start.subheading3 = If you no longer occupy, or have never occupied the property
 start.desc3 = You must still use this service to notify us if you no longer occupy, or have never occupied the property. This should take less than 2 minutes
-start.desc4 = If you’d like to learn more about business rates before starting your form, <a href="https://www.gov.uk" class="govuk-link" target="_blank">visit our introduction to business rates</a> section. It explains things like how your rates are calculated, how to pay, and whether you qualify for business rates relief.
+start.desc4 = If you’d like to learn more about business rates before starting your form, <a href="https://www.gov.uk/find-business-rates" class="govuk-link" target="_blank">visit our introduction to business rates</a> section. It explains things like how your rates are calculated, how to pay, and whether you qualify for business rates relief.
 start.title2 = Before you begin
 start.desc5 = Completing this online form takes anywhere between 20 minutes and an hour, depending on your business. <strong>You do not have to complete the form in one go</strong>. You can save what you’ve done and return to finish it later.
 start.desc6 = You have 56 days from the date printed on your letter from the VOA to return the form. You may have to pay a penalty if you fail to submit the form in time.
@@ -118,7 +118,7 @@ start.headingFooter = You do not have to complete the form in one go. You can sa
 start.button = Start now
 start.welsh = This service is also available in <a href="https://www.gov.uk" class="govuk-link" target="_blank">Welsh (Cymraeg)</a>
 start.subheading4 = If you need more information on business rates
-start.desc7 = Our <a href="https://www.gov.uk" class="govuk-link" target="_blank">business premises and business rates page</a> can direct you to a broad range of information and services. It covers many topics, including estimating your business rates, getting support for your business, and contacting your council about a business rates bill.
+start.desc7 = Our <a href="https://www.gov.uk/browse/business/premises-rates" class="govuk-link" target="_blank">business premises and business rates page</a> can direct you to a broad range of information and services. It covers many topics, including estimating your business rates, getting support for your business, and contacting your council about a business rates bill.
 start.subheading5 = If you need help
 start.desc8 = If you have any questions, or need support in completing the form, please call us on 03000 501 262 weekdays between 9:00am and 4:30pm. Alternatively, you can email us on <a href="mailto:formhelp@voa.gov.uk?subject=Ex-owners/occupiers form&body=Please email us your reference number, email address and/or telephone number only. If we require any further information we will contact you in due course. " target="_blank" id="mailto" onclick="gasend()">formhelp@voa.gov.uk</a> and one of our customer service team will get back to you.
 start.subheading6 = Alternative formats
@@ -660,6 +660,10 @@ hint.aboutYou = If you’re renting or leasing the property, even as a charity o
 ##########
 taskList.heading = Declaration summary
 taskList.subHeading = You can save your declaration and come back later. You have 30 days from the first time you save to complete this declaration or your information will be deleted.
+taskList.status.completed = Completed
+taskList.status.inProgress = In progress
+taskList.status.cannotStart = Cannot start yet
+taskList.status.notStarted = Not started
 declaration.heading = Now send your declaration
 declaration.information = By submitting this declaration you are confirming that, to the best of your knowledge, the details you are providing are correct.
 hint.declaration = You can be taken to court if you submit false information
@@ -735,7 +739,7 @@ key.altContact.details = Alternative contact details
 label.fullName = Full name
 label.telephoneNumber = Telephone number
 label.emailAddress = Email address
-label.correspondenceAddress = Correspondence Address
+label.correspondenceAddress = Correspondence address
 
 # FURTHER INFORMATION OR REMARKS
 ################################
@@ -771,7 +775,7 @@ key.ever.connected = Ever connected to the property?
 key.contact.details = Contact Details
 
 checkYourAnswers.heading = This is a holding page for the check your answers page
-checkYourAnswersAboutFranchiseOrLettings.heading = This is a holding page for the franchise or lettings check your answers page
+checkYourAnswersAboutFranchiseOrLettings.heading = Check your answers - franchises or lettings
 checkYourAnswersAboutYourLeaseOrTenure.heading = This is a holding page for the about your lease or tenure check your answers page
 checkYourAnswersAboutTheProperty.heading = Welsh TBC: Check your answers - about you and the property
 checkYourAnswersAboutTheProperty.aboutYou.heading = Welsh TBC: About You

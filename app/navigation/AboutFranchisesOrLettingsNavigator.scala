@@ -26,6 +26,9 @@ import javax.inject.Inject
 
 class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit) extends Navigator(audit) with Logging {
 
+  override def cyaPage: Option[Call] =
+    Some(controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show())
+
   private def franchiseOrLettingConditionsRouting: Session => Call = answers => {
     answers.aboutFranchisesOrLettings.flatMap(_.franchisesOrLettingsTiedToProperty.map(_.name)) match {
       case Some("yes") =>

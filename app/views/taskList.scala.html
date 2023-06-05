@@ -46,24 +46,24 @@
 
      <li>
       <h2 class="app-task-list__section">
-       <span class="app-task-list__section-number">1. </span> About you and the property
+       <span class="app-task-list__section-number">1. </span> @messages("label.section.aboutTheProperty")
       </h2>
 
       <ul class="app-task-list__items">
-       @includes.taskListItem("about-you", "Your contact details",
+       @includes.taskListItem("about-you", "checkYourAnswersAboutTheProperty.aboutYou.heading",
         controllers.aboutyouandtheproperty.routes.AboutYouController.show(),
         session.aboutYouAndTheProperty.flatMap(_.checkYourAnswersAboutTheProperty.map(_.checkYourAnswersAboutYourProperty)),
         session.aboutYouAndTheProperty.flatMap(_.customerDetails)
        )
 
-       @includes.taskListItem("about-the-property", "How the property is used",
+       @includes.taskListItem("about-the-property", "checkYourAnswersAboutTheProperty.aboutProperty.heading",
         controllers.aboutyouandtheproperty.routes.AboutThePropertyController.show(),
         session.aboutYouAndTheProperty.flatMap(_.checkYourAnswersAboutTheProperty.map(_.checkYourAnswersAboutYourProperty)),
         session.aboutYouAndTheProperty.flatMap(_.propertyDetails),
         session.aboutYouAndTheProperty.flatMap(_.customerDetails).isEmpty
        )
 
-       @includes.taskListItem("licensable-activities", "Your licence",
+       @includes.taskListItem("licensable-activities", "checkYourAnswersAboutTheProperty.license.heading",
         controllers.aboutyouandtheproperty.routes.LicensableActivitiesController.show(),
         session.aboutYouAndTheProperty.flatMap(_.checkYourAnswersAboutTheProperty.map(_.checkYourAnswersAboutYourProperty)),
         session.aboutYouAndTheProperty.flatMap(_.licensableActivities),
@@ -83,7 +83,7 @@
         <span class="app-task-list__task-name">
          <a href="about-your-trading-history">Enter your trading details</a></span>
         <span class="govuk-tag app-task-list__tag govuk-tag--grey" id="goods-summary-not-started">
-         Cannot start yet
+         Not started
         </span>
        </li>
 
@@ -102,21 +102,21 @@
         <span class="app-task-list__task-name">
          <a href="franchise-or-lettings-tied-to-property">Franchise or sub-lets tied to the property</a></span>
         <span class="govuk-tag app-task-list__tag govuk-tag--grey" id="goods-summary-not-started">
-         Cannot start yet
+         Not started
         </span>
        </li>
        <li class="app-task-list__item">
         <span class="app-task-list__task-name">
          <a href="catering-operation-or-letting-accommodation">Catering operation or letting accommodation run as separate business from the property</a></span>
         <span class="govuk-tag app-task-list__tag govuk-tag--grey" id="goods-summary-not-started">
-         Cannot start yet
+         Not started
         </span>
        </li>
        <li class="app-task-list__item">
         <span class="app-task-list__task-name">
          <a href="letting-other-part-of-property">Rent received from letting other part of property</a></span>
         <span class="govuk-tag app-task-list__tag govuk-tag--grey" id="goods-summary-not-started">
-         Cannot start yet
+         Not started
         </span>
        </li>
       </ul>
@@ -134,7 +134,7 @@
         <span class="app-task-list__task-name">
          <a href="about-your-landlord">Tell us about your landlord</a></span>
         <span class="govuk-tag app-task-list__tag govuk-tag--grey" id="goods-summary-not-started">
-         Cannot start yet
+         Not started
         </span>
        </li>
       </ul>
@@ -144,16 +144,21 @@
     <ol class="app-task-list">
      <li>
       <h2 class="app-task-list__section">
-       <span class="app-task-list__section-number">5. </span> Additional information
+       <span class="app-task-list__section-number">5. </span> @messages("label.section.additionalInformation")
       </h2>
       <ul class="app-task-list__items">
-       <li class="app-task-list__item">
-        <span class="app-task-list__task-name">
-         <a href="further-information-or-remarks">Further remarks or information</a></span>
-        <span class="govuk-tag app-task-list__tag govuk-tag--grey" id="goods-summary-not-started">
-         Cannot start yet
-        </span>
-       </li>
+       @includes.taskListItem("further-information-or-remarks", "furtherInformationOrRemarks.heading",
+        controllers.additionalinformation.routes.FurtherInformationOrRemarksController.show(),
+        session.additionalInformation.flatMap(_.checkYourAnswersAdditionalInformation.map(_.checkYourAnswersAdditionalInformation)),
+        session.additionalInformation.flatMap(_.furtherInformationOrRemarksDetails)
+       )
+
+       @includes.taskListItem("alternate-contact-details", "alternativeContactDetails.heading",
+        controllers.additionalinformation.routes.AlternativeContactDetailsController.show(),
+        session.additionalInformation.flatMap(_.checkYourAnswersAdditionalInformation.map(_.checkYourAnswersAdditionalInformation)),
+        session.additionalInformation.flatMap(_.altContactInformation),
+        session.additionalInformation.flatMap(_.furtherInformationOrRemarksDetails).isEmpty
+       )
       </ul></li></ol>
 
 

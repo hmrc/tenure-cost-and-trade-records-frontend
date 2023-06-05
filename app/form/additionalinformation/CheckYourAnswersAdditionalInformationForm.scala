@@ -18,13 +18,16 @@ package form.additionalinformation
 
 import models.submissions.additionalinformation.CheckYourAnswersAdditionalInformation
 import play.api.data.Form
-import play.api.data.Forms.{mapping, text}
+import play.api.data.Forms.{default, mapping, text}
+import play.api.data.validation.Constraints.nonEmpty
 
 object CheckYourAnswersAdditionalInformationForm {
 
   val checkYourAnswersAdditionalInformationForm = Form(
     mapping(
-      "checkYourAnswersAdditionalInformation" -> text
+      "checkYourAnswersAdditionalInformation" -> default(text, "").verifying(
+        nonEmpty(errorMessage = "error.checkYourAnswersRadio.required")
+      )
     )(CheckYourAnswersAdditionalInformation.apply)(CheckYourAnswersAdditionalInformation.unapply)
   )
 }

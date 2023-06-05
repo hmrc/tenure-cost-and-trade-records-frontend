@@ -21,21 +21,16 @@ import play.api.test.Helpers._
 import play.twirl.api.HtmlFormat
 import utils.TestBaseSpec
 import views.html.aboutfranchisesorlettings.checkYourAnswersAboutFranchiseOrLettings
-import views.html.taskList
 
 class CheckYourAnswersAboutFranchiseOrLettingsControllerSpec extends TestBaseSpec {
 
   val mockCheckYourAnswersAboutFranchiseOrLettingsView = mock[checkYourAnswersAboutFranchiseOrLettings]
   when(mockCheckYourAnswersAboutFranchiseOrLettingsView.apply(any, any, any)(any, any)).thenReturn(HtmlFormat.empty)
 
-  val mockTaskListView = mock[taskList]
-  when(mockTaskListView.apply()(any, any)).thenReturn(HtmlFormat.empty)
-
   val checkYourAnswersAboutFranchiseOrLettingsController = new CheckYourAnswersAboutFranchiseOrLettingsController(
     stubMessagesControllerComponents(),
     aboutFranchisesOrLettingsNavigator,
     mockCheckYourAnswersAboutFranchiseOrLettingsView,
-    mockTaskListView,
     preFilledSession,
     mockSessionRepo
   )
@@ -52,4 +47,5 @@ class CheckYourAnswersAboutFranchiseOrLettingsControllerSpec extends TestBaseSpe
       charset(result)     shouldBe Some("utf-8")
     }
   }
+
 }
