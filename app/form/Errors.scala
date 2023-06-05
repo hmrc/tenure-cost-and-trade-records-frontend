@@ -47,17 +47,18 @@ object Errors {
   val alternativeContactMissing = "error.alternative.contact.missing"
 
   //About The Property Errors
-  val currentOccupierName = "error.currentOccupierName.required"
-  val currentPropertyUse  = "error.currentPropertyUse.required"
-  val tiedTypeRequired = "error.tiedType.required"
-
-  val test = "error.currentPropertyUse.required"
+  val currentOccupierName   = "error.currentOccupierName.required"
+  val propertyCurrentlyUsed = "error.currentPropertyUse.required"
 
   //Incentives, Payments and Conditions
   val formerLeaseAgreementSurrendered = "error.formerLeaseAgreementSurrendered.required"
   val rentReducedOnReview             = "error.rentReducedOnReview.required"
   val capitalSumOrPremium             = "error.capitalSumOrPremium.required"
   val receivePaymentWhenLeaseGranted  = "error.receivePaymentWhenLeaseGranted.required"
+
+  //Tied For Goods details
+  val tiedTypeRequired    = "error.tiedType.required"
+  val tiedForGoodsDetails = "error.tiedForGoodsDetails.required"
 
   //generic errors
   val required        = "error.required"

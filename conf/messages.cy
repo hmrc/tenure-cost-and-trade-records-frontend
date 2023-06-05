@@ -280,6 +280,8 @@ help.licensableActivitiesDetails.p1 = You’re only required to write a short de
 help.licensableActivitiesDetails.list.p1 = We start serving alcohol at 9am, Monday to Saturday
 help.licensableActivitiesDetails.list.p2 = We have a DJ playing until 1am on Friday and Saturday
 help.licensableActivitiesDetails.list.p3 = Our hot-breakfast service starts at 4am every day
+error.licensableActivitiesDetails.required = Tell us about the licensable activities regularly commencing before 10:00 or after 23:30
+error.premisesLicenseConditionsDetails.maxLength = This must be 2000 characters or fewer
 
 # PREMISES LICENCE CONDITIONS
 #############################
@@ -299,6 +301,8 @@ help.premisesLicenseConditionsDetails.p1 = You’re only required to write a sho
 help.premisesLicenseConditionsDetails.list.p1 = No drinks allowed on the terrace after 10pm
 help.premisesLicenseConditionsDetails.list.p2 = Only 200 people allowed in the function room at any time
 help.premisesLicenseConditionsDetails.list.p3 = No entry or re-entry allowed after 11:30pm on Fridays and Saturdays
+error.premisesLicenseConditionsDetails.required = Tell us about the conditions restricting the use of the property
+error.premisesLicenseConditionsDetails.maxLength  = This must be 2000 characters or fewer
 
 # ENFORCEMENT ACTION BEEN TAKEN
 ###############################
@@ -317,7 +321,7 @@ help.enforcementActionHasBeenTakenDetails.p1 = You’re only required to write a
 help.enforcementActionHasBeenTakenDetails.list.p1 = Every retail sale or supply of alcohol made under the premises licence must be made or authorised by a person who holds a personal licence
 help.enforcementActionHasBeenTakenDetails.list.p2 = All customer exits must display signs asking customers to leave quietly and have consideration for residents
 help.enforcementActionHasBeenTakenDetails.list.p3 = We are required to keep an incident book
-error.enforcementActionHasBeenTakenDetails.required = Please describe any enforcement action taken
+error.enforcementActionHasBeenTakenDetails.required = Tell us about the enforcement action
 error.enforcementActionHasBeenTakenDetails.maxLength  = This must be 2000 characters or fewer
 
 # TIED FOR GOODS
@@ -909,3 +913,5 @@ error.required.annualRent = Please provide an annual rent amount
 error.required.annualRentExcludingVat = Please provide a number
 error.char.count.maxLength = This must be 2000 characters or fewer
 error.townCity.required = Enter the town or city
+error.fullName.requiredZ = Enter your full name
+error.tiedType.required = Select which type of tie you have

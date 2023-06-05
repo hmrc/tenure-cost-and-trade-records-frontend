@@ -28,7 +28,7 @@ object AboutYouForm {
   val aboutYouForm: Form[CustomerDetails] = Form(
     mapping(
       "fullName"       -> default(text, "").verifying(
-        nonEmpty(errorMessage = "error.fullName.requiredZ")
+        nonEmpty(errorMessage = "error.fullName.required")
       ),
       "contactDetails" -> contactDetailsMapping
     )(CustomerDetails.apply)(CustomerDetails.unapply)
