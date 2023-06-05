@@ -37,7 +37,7 @@ class NumberUtilSpec extends AnyFlatSpec with should.Matchers {
     BigDecimal(2777000.10).asMoney shouldBe "£2,777,000.10"
   }
 
-  "NumberUtil.asMoneyFull" should "return pences amount even in case `.00`" in {
+  "NumberUtil.asMoneyFull" should "return pence amount even in case `.00`" in {
     BigDecimal(3222000.33).asMoneyFull shouldBe "£3,222,000.33"
     BigDecimal(777).asMoneyFull        shouldBe "£777.00"
     BigDecimal(8888).asMoneyFull       shouldBe "£8,888.00"
