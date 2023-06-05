@@ -88,9 +88,9 @@ object MappingSupport {
   val currency: Mapping[BigDecimal] = currencyMapping()
 
   def currencyMapping(fieldErrorPart: String = ""): Mapping[BigDecimal] = default(text, "")
-    .verifying(nonEmpty(errorMessage = Errors.required + fieldErrorPart))
+    .verifying(nonEmpty(errorMessage = Errors.annualRentExcludingVAT + fieldErrorPart))
     .verifying(
-      Errors.invalidCurrency + fieldErrorPart,
+      Errors.annualRentExcludingVATCurrency + fieldErrorPart,
       x => x == "" || ((x.replace(",", "") matches decimalRegex) && BigDecimal(x.replace(",", "")) >= 0.000)
     )
     .transform({ s: String => BigDecimal(s.replace(",", "")) }, { v: BigDecimal => v.toString })
@@ -192,12 +192,20 @@ object MappingSupport {
       nonEmpty(errorMessage = "error.buildingNameNumber.required"),
       maxLength(50, "error.buildingNameNumber.maxLength")
     ),
-    "street1"            -> optional(text(maxLength = 50)),
+    "street1"            -> optional(
+      default(text, "").verifying(
+        maxLength(50, "error.addressLineTwo.maxLength")
+      )
+    ),
     "town"               -> default(text, "").verifying(
       nonEmpty(errorMessage = "error.town.required"),
       maxLength(50, "error.town.maxLength")
     ),
-    "county"             -> optional(text(maxLength = 50)),
+    "county"             -> optional(
+      default(text, "").verifying(
+        maxLength(50, "error.county.maxLength")
+      )
+    ),
     "postcode"           -> nonEmptyTextOr("alternativeContactAddress.postcode", postcode, "error.postcode.required")
   )(ContactDetailsAddress.apply)(ContactDetailsAddress.unapply)
 

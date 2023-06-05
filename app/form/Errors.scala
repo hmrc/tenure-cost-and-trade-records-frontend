@@ -18,6 +18,10 @@ package form
 
 object Errors {
 
+  //annual rent
+  val annualRentExcludingVAT         = "error.required.annualRentExcludingVat"
+  val annualRentExcludingVATCurrency = "error.invalid_currency.annualRent"
+
   //address
   val addressRequired                   = "address.required"
   val addressBuildingNameNumberRequired = "error.address.buildingName.required"
