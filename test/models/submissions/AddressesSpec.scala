@@ -53,7 +53,7 @@ class AddressesSpec extends TestBaseSpec {
 
   // Test Land Address
   val landAddress =
-    LandlordAddress("001", Some("GORING ROAD"), Some("GORING-BY-SEA, WORTHING"), Some("SUSSEX"), "BN12 4AX")
+    LandlordAddress("001", Some("GORING ROAD"), "GORING-BY-SEA, WORTHING", Some("SUSSEX"), "BN12 4AX")
 
   "LandlordAddress" should {
     "return the address as a single line" in {

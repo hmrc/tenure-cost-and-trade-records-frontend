@@ -56,7 +56,7 @@ class AlternativeContactDetailsControllerSpec extends TestBaseSpec {
       val formData = baseFormData - errorKey.fullName
       val form     = alternativeContactDetailsForm.bind(formData)
 
-      mustContainError(errorKey.fullName, "error.contact.full.name.required", form)
+      mustContainError(errorKey.fullName, "error.alternativeContactName.required", form)
     }
 
     "error if phone is missing" in {

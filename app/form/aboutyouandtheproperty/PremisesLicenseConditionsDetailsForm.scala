@@ -18,13 +18,17 @@ package form.aboutyouandtheproperty
 
 import models.submissions.aboutyouandtheproperty.PremisesLicenseConditionsDetails
 import play.api.data.Form
-import play.api.data.Forms.{mapping, nonEmptyText}
+import play.api.data.Forms.{default, mapping, nonEmptyText, text}
+import play.api.data.validation.Constraints.{maxLength, nonEmpty}
 
 object PremisesLicenseConditionsDetailsForm {
 
   val premisesLicenceDetailsForm = Form(
     mapping(
-      "premisesLicenseConditionsDetails" -> nonEmptyText(maxLength = 2000)
+      "premisesLicenseConditionsDetails" -> default(text, "").verifying(
+        nonEmpty(errorMessage = "error.premisesLicenseConditionsDetails.required"),
+        maxLength(2000, "error.premisesLicenseConditionsDetails.maxLength")
+      )
     )(PremisesLicenseConditionsDetails.apply)(PremisesLicenseConditionsDetails.unapply)
   )
 }

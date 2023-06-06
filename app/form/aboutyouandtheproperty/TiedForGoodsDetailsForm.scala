@@ -17,16 +17,24 @@
 package form.aboutyouandtheproperty
 
 import form.MappingSupport.tiedForGoodsDetailsType
-import models.submissions.aboutyouandtheproperty.TiedForGoodsInformationDetails
+import models.submissions.aboutyouandtheproperty.{TiedForGoodsInformationDetails, TiedForGoodsInformationDetailsPartialTie}
 import play.api.data.Form
-import play.api.data.Forms.{mapping, optional, text}
+import play.api.data.Forms.{default, mapping, optional, text}
+import play.api.data.validation.Constraints.nonEmpty
+import uk.gov.voa.play.form.ConditionalMappings.mandatoryIfEqual
 
 object TiedForGoodsDetailsForm {
 
   val tiedForGoodsDetailsForm = Form(
     mapping(
       "tiedForGoodsDetails"   -> tiedForGoodsDetailsType,
-      "partialTieConditional" -> optional(text)
+      "partialTieConditional" -> mandatoryIfEqual(
+        "tiedForGoodsDetails",
+        TiedForGoodsInformationDetailsPartialTie.name,
+        default(text, "").verifying(
+          nonEmpty(errorMessage = "error.tiedForGoodsDetails.required")
+        )
+      )
     )(TiedForGoodsInformationDetails.apply)(TiedForGoodsInformationDetails.unapply)
   )
 }

@@ -21,7 +21,7 @@ import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import utils.FormBindingTestAssertions.mustContainRequiredErrorFor
+import utils.FormBindingTestAssertions.{mustContainError, mustContainRequiredErrorFor}
 import utils.TestBaseSpec
 
 class LicensableActivitiesDetailsControllerSpec extends TestBaseSpec {
@@ -63,7 +63,7 @@ class LicensableActivitiesDetailsControllerSpec extends TestBaseSpec {
       val formData = baseFormData - errorKey.licensableActivitiesDetails
       val form     = licensableActivitiesDetailsForm.bind(formData)
 
-      mustContainRequiredErrorFor(errorKey.licensableActivitiesDetails, form)
+      mustContainError(errorKey.licensableActivitiesDetails, "error.licensableActivitiesDetails.required", form)
     }
   }
 
