@@ -64,7 +64,7 @@ class AboutYouControllerSpec extends TestBaseSpec {
       val formData = baseFormData - errorKey.fullName
       val form     = aboutYouForm.bind(formData)
 
-      mustContainRequiredErrorFor(errorKey.fullName, form)
+      mustContainError(errorKey.fullName, "error.fullName.required", form)
     }
 
     "error if phone is missing" in {

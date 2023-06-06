@@ -79,14 +79,14 @@ object Formats {
     namedEnumFormatter(PastConnectionType, Errors.isPastConnected)
   // About the property
   implicit val aboutYourPropertyFormat: Formatter[CurrentPropertyUsed]                       =
-    namedEnumFormatter(CurrentPropertyUsed, Errors.currentOccupierName)
+    namedEnumFormatter(CurrentPropertyUsed, Errors.propertyCurrentlyUsed)
   implicit val buildingOperatingHaveAWebsiteFormat: Formatter[BuildingOperationHaveAWebsite] =
     namedEnumFormatter(BuildingOperationHaveAWebsite, Errors.booleanMissing)
 
   implicit val methodToFixCurrentRentDetailsFormat: Formatter[MethodToFixCurrentRents] =
     namedEnumFormatter(MethodToFixCurrentRents, Errors.booleanMissing)
   implicit val tiedForGoodsDetailsFormat: Formatter[TiedForGoodsInformation]           =
-    namedEnumFormatter(TiedForGoodsInformation, Errors.booleanMissing)
+    namedEnumFormatter(TiedForGoodsInformation, Errors.tiedForGoodsDetails)
 
   implicit val answerResponsiblePartyFormatter: Formatter[AnswerResponsibleParty] =
     namedEnumFormatter(AnswerResponsibleParty, Errors.booleanMissing)

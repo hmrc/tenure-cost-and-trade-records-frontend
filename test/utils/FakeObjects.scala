@@ -57,7 +57,7 @@ trait FakeObjects {
   val prefilledLettingAddress  =
     LettingAddress("004", Some("GORING ROAD"), "GORING-BY-SEA, WORTHING", Some("West sussex"), "BN12 4AX")
   val prefilledLandlordAddress =
-    LandlordAddress("004", Some("GORING ROAD"), Some("GORING-BY-SEA, WORTHING"), Some("West sussex"), "BN12 4AX")
+    LandlordAddress("004", Some("GORING ROAD"), "GORING-BY-SEA, WORTHING", Some("West sussex"), "BN12 4AX")
 
   val baseFilled6010Session = Session(referenceNumber, forType6010, prefilledAddress, token)
   val baseFilled6011Session = Session(referenceNumber, forType6011, prefilledAddress, token)

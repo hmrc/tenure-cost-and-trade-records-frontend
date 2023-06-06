@@ -178,7 +178,7 @@ label.occupierAgent = Occupier’s agent
 label.ownerAgent = Owner’s agent
 hint.occupierTrustee = Select this if you’re renting or leasing the property, even through a leaseback arrangement
 hint.ownerTrustee = Select this if you own and occupy the property - you’re considered an occupier if you own the property and lease it back to a business you operate from the property
-error.no.connection.selected=Select your connection to the property
+error.no.connection.selected = Select your connection to the property
 
 # NOT CONNECTED SECTION
 #######################
@@ -186,7 +186,7 @@ error.no.connection.selected=Select your connection to the property
 # ARE YOU STILL CONNECTED
 #########################
 pastConnectionType.heading = Have you ever had a connection to the property?
-error.pastConnectionType = select ‘Yes’ if you were previously connected
+error.pastConnectionType = Select ‘Yes’ if you ever had a connection to the property
 
 # REMOVE CONNECTION
 ###################
@@ -194,7 +194,7 @@ removeConnection.heading = Provide your contact details
 removeConnection.subheading = We’ll use these details if we need to contact you before removing your connection to this property
 label.removeConnectionAdditionalInfo = Additional information
 hint.removeConnectionDetails.removeConnectionAdditionalInfo = For example, the name of the current owner or occupier
-error.removeConnectionFullName.required = Please provide your full name
+error.fullName.required = Enter your name
 
 # ABOUT YOU AND PROPERTY SECTION
 ################################
@@ -223,6 +223,8 @@ propertyCurrentlyUsed.conferenceCentre = Conference centre
 propertyCurrentlyUsed.other = Other
 hint.other.use.propertyCurrentlyUsedOther = Describe the use of your property is not listed
 hint.other.vacant.propertyCurrentlyUsedOther = Please give details if the property has another use, or is vacant
+error.currentOccupierName.required = Enter the current occupier’s name
+error.currentOccupierName.maxLength = The current occupier’s name must be 50 characters or less
 
 # WEBSITE FOR PROPERTY
 ######################
@@ -278,8 +280,10 @@ help.licensableActivitiesDetails.title = Help with describing your licensable ac
 help.licensableActivitiesDetails.heading = Describing your licensable activities
 help.licensableActivitiesDetails.p1 = You’re only required to write a short description of the licensable activities we’re concerned with. Examples of acceptable descriptions include:
 help.licensableActivitiesDetails.list.p1 = We start serving alcohol at 9am, Monday to Saturday
-help.licensableActivitiesDetails.list.p2 = We have a DJ playing until 1am on Friday and Saturday
+help.licensableActivitiesDetails.list.p2 = We have a DJ playing until 1am on Fridays and Saturdays
 help.licensableActivitiesDetails.list.p3 = Our hot-breakfast service starts at 4am every day
+error.licensableActivitiesDetails.required = Tell us about the licensable activities regularly commencing before 10:00 or after 23:30
+error.premisesLicenseConditionsDetails.maxLength = This must be 2000 characters or fewer
 
 # PREMISES LICENCE CONDITIONS
 #############################
@@ -294,14 +298,16 @@ help.premisesLicenseConditions.p2 = Check your premises licence if you’re not 
 #####################################
 premisesLicenseConditionsDetails.heading = Describe the conditions restricting the use of all or parts of the property
 help.premisesLicenseConditionsDetails.title = Help with describing restrictions on the use of the property
-help.premisesLicenseConditionsDetails.heading = Describing restrictions on the use of the property
+help.premisesLicenseConditionsDetails.heading = Describing restricting on the use of the property
 help.premisesLicenseConditionsDetails.p1 = You’re only required to write a short description of the conditions we’re concerned with. Example of acceptable descriptions include:
 help.premisesLicenseConditionsDetails.list.p1 = No drinks allowed on the terrace after 10pm
 help.premisesLicenseConditionsDetails.list.p2 = Only 200 people allowed in the function room at any time
 help.premisesLicenseConditionsDetails.list.p3 = No entry or re-entry allowed after 11:30pm on Fridays and Saturdays
+error.premisesLicenseConditionsDetails.required = Tell us about the conditions restricting the use of the property
+error.premisesLicenseConditionsDetails.maxLength  = This must be 2000 characters or fewer
 
 # ENFORCEMENT ACTION BEEN TAKEN
-###############################
+##############################£
 enforcementActionHasBeenTaken.heading = Has any enforcement action been taken?
 hint.enforcementActionHasBeenTaken = This can be any suspensions, closure orders or temporary restrictions
 help.enforcementActionHasBeenTaken.title = Help with enforcement action
@@ -317,7 +323,7 @@ help.enforcementActionHasBeenTakenDetails.p1 = You’re only required to write a
 help.enforcementActionHasBeenTakenDetails.list.p1 = Every retail sale or supply of alcohol made under the premises licence must be made or authorised by a person who holds a personal licence
 help.enforcementActionHasBeenTakenDetails.list.p2 = All customer exits must display signs asking customers to leave quietly and have consideration for residents
 help.enforcementActionHasBeenTakenDetails.list.p3 = We are required to keep an incident book
-error.enforcementActionHasBeenTakenDetails.required = Please describe any enforcement action taken
+error.enforcementActionHasBeenTakenDetails.required = Tell us about the enforcement action
 error.enforcementActionHasBeenTakenDetails.maxLength  = This must be 2000 characters or fewer
 
 # TIED FOR GOODS
@@ -339,6 +345,7 @@ tiedForGoodsDetails.heading = What type of tie do you have?
 tiedForGoodsDetails.fullTie = Full tie
 tiedForGoodsDetails.beerOnly = Beer only
 tiedForGoodsDetails.partialTie = Partial tie
+error.tiedForGoodsDetails.required = Enter details of your partial tie
 
 #TENANCY LEASE AGREEMENT(USED ON 6010, 6015, 6016, 6030, 6032, 6033, 6034, 6035, 6036, 6037, 6038, 6043, 6049, 6056, 6057, 6066)
 ##############################
@@ -359,7 +366,7 @@ franchiseLettings.list2 = rent received from letting other parts of the property
 aboutYourLandlord.heading = About your landlord
 label.landlordFullName = Landlord’s name
 label.landlordAddress.address = Landlord’s address
-error.landlordFullName.required = Please enter the landlord’s full name
+error.landlordFullName.required = If the landlord’s name is not known, please input unknown
 error.landlordFullName.maxLength = This must be 1000 characters or fewer
 
 #LEASE OR AGREEMENT DETAILS COMMENCE WITHIN 3 YEARS
@@ -380,7 +387,7 @@ label.waterCharges = Water charges
 #CATERING OPERATION OR LETTING ACCOMMODATION
 ############################################
 cateringOperationOrLettingAccommodation.heading = Is any catering operation or letting accommodation run as a separate business from the property?
-hint.cateringOperationOrLettingAccommodation = You will have the opportunity to add more than one business if required.
+hint.cateringOperationOrLettingAccommodation = You will have the opportunity to add more than one business if required
 
 #LETTING OTHER PART OF PROPERTY
 ##############################
@@ -418,7 +425,8 @@ rentPayableVaryOnQuantityOfBeers.heading = Does the rent payable vary according 
 #RENT PAYABLE VARY ON QUANTITY OF BEERS DETAILS
 ###############################################
 rentPayableVaryOnQuantityOfBeersDetails.heading = How is the rent payable affected by the drinks supplied to your property?
-error.rentPayableVaryOnQuantityOfBeersDetails.required = Tell us how the rent payable is affected by the drinks supplied to your property
+hint.rentPayableVaryOnQuantityOfBeersDetails = For example, tell us if your rent changes if the quantity supplied exceeds a certain amount
+error.rentPayableVaryOnQuantityOfBeersDetails.required = Describe how the drinks supplied to your property affect your rent
 error.rentPayableVaryOnQuantityOfBeersDetails.maxLength  = This must be 1000 characters or fewer
 
 #RENT PAYABLE VARY ACCORDING TO GROSS OR NET
@@ -429,7 +437,7 @@ rentPayableVaryAccordingToGrossOrNet.heading = Does the rent payable vary accord
 ####################################################
 rentPayableVaryAccordingToGrossOrNetDetails.heading = Tell us how the rent payable is affected by your turnover
 label.rentPayableVaryAccordingToGrossOrNetDetails = For example, tell us if your rent increases if your turnover exceeds a certain amount
-error.rentPayableVaryAccordingToGrossOrNetDetails.required = Tell us how the rent payable is affected by your turnover
+error.rentPayableVaryAccordingToGrossOrNetDetails.required = Describe how your rent is affected by your turnover
 error.rentPayableVaryAccordingToGrossOrNetDetails.maxLength  = This must be 1000 characters or fewer
 
 #ULTIMATELY RESPONSIBLE
@@ -459,7 +467,7 @@ label.describeServices = Describe services provided
 rentIncludeTradeServicesDetailsTextBox.hint = For example, maintenance of fires, annual gas checks and cellar services
 error.required.sumIncludedInRent = Please provide a value
 error.invalid_currency.sumIncludedInRent= Please provide a number
-error.describeServices.required = Please provide further information
+error.describeServices.required = Describe the services supplied by the landlord
 error.describeServices.maxLength = This must be 1000 characters or fewer
 
 #RENT INCLUDE FIXTURES AND FITTINGS
@@ -531,6 +539,13 @@ label.lettingTypeOfBusiness = Description of letting
 hint.typeOfBusiness = For example, bed and breakfast, hotel, restaurant
 hint.lettingTypeOfBusiness = For example, a billboard, residential accommodation
 label.correspondenceAddress = Correspondence address
+error.operatorName.required = Enter the name of the person or company operating the business
+error.operatorName.maxLength = Operator‘s name must be 100 characters or fewer
+error.typeOfBusiness.required = Enter a description of the separate business
+error.typeOfBusiness.maxLength = Type of business must be 100 characters or fewer
+error.lettingTypeOfBusiness.required = Enter a description of the separate letting
+error.lettingOperatorName.maxLength = Tenant‘s name must be 100 characters or fewer
+error.lettingTypeOfBusiness.maxLength = Description of letting must be 100 characters or fewer
 
 ##CATERING OPERATION OR LETTING ACCOMMODATION RENT DETAILS
 ##########################################################
@@ -563,7 +578,7 @@ hint.tenantsAdditionsDisregarded = For example, is your rent based on the market
 #######################################
 tenantsAdditionsDisregardedDetails.heading = Describe the tenant’s additions or improvements disregarded at the time the rent was agreed or determined
 hint.tenantsAdditionsDisregardedDetails = Give a brief description of the work carried out and how much it cost
-error.tenantsAdditionsDisregardedDetails.required = Please describe the tenant’s additions disregarded at the time the rent was agreed or determined
+error.tenantsAdditionsDisregardedDetails.required = Tell us about the tenants‘ additions that were disregarded when your rent was agreed
 error.tenantsAdditionsDisregardedDetails.maxLength = This must be 2000 characters or fewer
 
 ##LEGAL PLANNING RESTRICTIONS
@@ -572,7 +587,7 @@ legalPlanningRestrictions.heading = Are there any legal or planning restrictions
 hint.legalPlanningRestrictions = For example, a break clause, contracting out of the Landlord and Tenant Act
 
 ##LEGAL PLANNING RESTRICTIONS DETAILS
-##############################
+#####################################
 legalOrPlanningRestrictionsDetails.heading = Describe the legal or planning restrictions, unusual terms or conditions in the lease or agreement that may have affected the rent payable
 error.legalOrPlanningRestrictionsDetails.required = Please describe the legal or planning restrictions, unusual terms or conditions in the lease or agreement that may have affected the rent payable
 error.legalOrPlanningRestrictionsDetails.maxLength = This must be 2000 characters or fewer
@@ -604,8 +619,8 @@ label.currentLeaseOrAgreementBegin = If the current lease was originally assigne
 label.grantedFor = How long was it granted for?
 suffix.grantedFor = months
 error.empty.required = Please enter how long it was granted for
-error.leaseBegin.month.required = The date the lease began must include a month
-error.leaseBegin.year.required = The date the lease began must include a year
+error.leaseBegin.month.required = The date the current lease began must include a month
+error.leaseBegin.year.required = The date the current lease began must include a year
 label.currentRentFirstPaid.help = For example, 9 2017
 
 ##INTERVALS OF RENT REVIEW
@@ -651,8 +666,8 @@ userType.owner = Owner’s agent
 label.userType = What is your relationship to the property?
 hint.aboutYou = If you’re renting or leasing the property, even as a charity or non-profit organisation, you’re considered the occupier. If you are both the owner and the occupier, select ’Owner or trustee for owner’.
 
-#TASK LIST
-##########
+# TASK LIST
+###########
 taskList.heading = Declaration summary
 taskList.subHeading = You can save your declaration and come back later. You have 30 days from the first time you save to complete this declaration or your information will be deleted.
 taskList.status.completed = Completed
@@ -694,6 +709,25 @@ turnover.details.p1 = Do not include VAT in any of the figures you declare on th
 turnover.details.p2 = If you have not broken down your turnover into separate categories, or if you have recorded certain categories together - such as all food and drinks - you can declare them together in a single field.
 turnover.details.h2 = Financial year end
 turnover.details.p3 = Your financial year end dates are pre-populated by the system. If your financial year end has changed during the period shown, you can edit these dates accordingly.
+
+###TURNOVER 6016
+turnover.p1.6016 = Provide us with details of your turnover. If the accounts do not relate to a whole year, or if you were not trading continuously, state the relevant number of weeks.
+turnover.p2.6016 = If your accounts are held in a spreadsheet that mirrors this form, you can copy and paste them into this form. Copy the relevant figures in your spreadsheet and paste them into the first corresponding field on this page.
+turnover.details.6016 = Help with completing this page
+turnover.details.h1.6016 = General guidance
+turnover.details.p1.6016 = Do not include VAT in any of the figures you declare on this page. If you have not broken down your turnover into separate categories, or if you have recorded certain categories together - such as all food and drinks - you can declare them together in a single field.
+turnover.details.h2.6016 = Financial year end
+turnover.details.p2.6016 = Your financial year end dates are pre-populated by the system. If your financial year end has changed during the period shown, you can declare them together in a single field.
+turnover.details.h3.6016 = Franchises and concessions
+turnover.details.p3.6016 = Do not include any form of rental income from concession agreements where a third-party enterprise operates from part of the property.
+turnover.foodCaption.6016 = Excluding drinks
+turnover.drinks.6016 = Drinks (exc VAT)
+turnover.drinksCaption.6016 = Including alcoholic and soft drinks, crisps, nuts
+turnover.other.6016 = Other (exc VAT)
+turnover.otherCaption.6016 = Including hire of function rooms, conference rooms and telephones
+turnover.totalSales.6016 = Total sales revenue
+turnover.totalSalesCaption.6016 = Excluding VAT
+
 
 #COST OF SALES
 costOfSales.heading = This is a holding page for the cost of sales page
@@ -739,10 +773,10 @@ label.correspondenceAddress = Correspondence address
 # FURTHER INFORMATION OR REMARKS
 ################################
 furtherInformationOrRemarks.heading = Further information or remarks
-hint.furtherInformationOrRemarks = Provide further details if there was not enough room for you to complete your answers to any of the previous questions, or if any questions need further explanation or clarification
+hint.furtherInformationOrRemarks = Please provide further details if there is insufficient room for you to complete your answers to any of the forgoing questions, or if any of the questions require further explanation or clarification
 
-#ALTERNATIVE CONTACT DETAILS
-############################
+# ALTERNATIVE CONTACT DETAILS
+#############################
 alternativeContactDetails.heading = Alternative contact details
 hint.alternativeContactDetails = If you would like us to either contact you at at different address or  contact someone else if we have any queries about this form, please give details here
 label.alternativeContactDetails = Correspondence address
@@ -785,30 +819,29 @@ checkYourAnswersAboutFranchiseOrLettings.annualRent = Annual rent payment
 checkYourAnswersAboutFranchiseOrLettings.dateSumFixed = When sum was fixed?
 checkYourAnswersAboutFranchiseOrLettings.itemsInRent = Items included in rent
 checkYourAnswersAboutYourLeaseOrTenure.heading = This is a holding page for the about your lease or tenure check your answers page
-checkYourAnswersAboutTheProperty.heading = Welsh TBC: Check your answers - about you and the property
-checkYourAnswersAboutTheProperty.aboutYou.heading = Welsh TBC: About You
-checkYourAnswersAboutTheProperty.aboutProperty.heading = Welsh TBC: About the property
-checkYourAnswersAboutTheProperty.currentOccupier = Welsh TBC: Current Occupier
-checkYourAnswersAboutTheProperty.propertyUsage = Welsh TBC: How is the property currently used?
-checkYourAnswersAboutTheProperty.hasWebsite = Welsh TBC: Website?
-checkYourAnswersAboutTheProperty.websiteAddress = Welsh TBC: Website address
-checkYourAnswersAboutTheProperty.license.heading = Welsh TBC: Your license
-checkYourAnswersAboutTheProperty.premisesLicenseGrantedDetail = Welsh TBC: Premises licence has been granted
-checkYourAnswersAboutTheProperty.premisesLicenseGrantedInformationDetails = Welsh TBC: Details of premises licence
-checkYourAnswersAboutTheProperty.licensableActivities = Welsh TBC: Licensable activities before 10:00 or after 23:30?
-checkYourAnswersAboutTheProperty.licensableActivitiesDetails = Welsh TBC: Description of licensable activities
-checkYourAnswersAboutTheProperty.premisesLicenseConditions = Welsh TBC: Premises license restriction on property use?
-checkYourAnswersAboutTheProperty.premisesLicenseConditionsDetails = Welsh TBC: Description of license restriction
-checkYourAnswersAboutTheProperty.enforcementAction = Welsh TBC: Enforcement action taken?
-checkYourAnswersAboutTheProperty.enforcementActionHasBeenTakenInformationDetails = Welsh TBC: Description of enforcement action
-checkYourAnswersAboutTheProperty.tiedForGoods = Welsh TBC: Tied for any goods?
-checkYourAnswersAboutTheProperty.tiedForGoodsDetails = Welsh TBC: Type of tie
+checkYourAnswersAboutTheProperty.heading = Check your answers - about you and the property
+checkYourAnswersAboutTheProperty.aboutYou.heading = About you
+checkYourAnswersAboutTheProperty.aboutProperty.heading = About the property
+checkYourAnswersAboutTheProperty.currentOccupier = Current Occupier
+checkYourAnswersAboutTheProperty.propertyUsage = How is the property currently used?
+checkYourAnswersAboutTheProperty.hasWebsite = Website?
+checkYourAnswersAboutTheProperty.websiteAddress = Website address
+checkYourAnswersAboutTheProperty.license.heading = Your license
+checkYourAnswersAboutTheProperty.premisesLicenseGrantedDetail = Premises licence has been granted
+checkYourAnswersAboutTheProperty.premisesLicenseGrantedInformationDetails = Details of premises licence
+checkYourAnswersAboutTheProperty.licensableActivities = Licensable activities before 10:00 or after 23:30?
+checkYourAnswersAboutTheProperty.licensableActivitiesDetails = Description of licensable activities
+checkYourAnswersAboutTheProperty.premisesLicenseConditions = Premises license restriction on property use?
+checkYourAnswersAboutTheProperty.premisesLicenseConditionsDetails = Description of license restriction
+checkYourAnswersAboutTheProperty.enforcementAction = Enforcement action taken?
+checkYourAnswersAboutTheProperty.enforcementActionHasBeenTakenInformationDetails = Description of enforcement action
+checkYourAnswersAboutTheProperty.tiedForGoods = Tied for any goods?
+checkYourAnswersAboutTheProperty.tiedForGoodsDetails = Type of tie
 checkYourAnswersAboutTheTradingHistory.heading = This is a holding page for the about your trading history check your answers page
-checkYourAnswersAdditionalInformation.heading = This is a holding page for the additional information check your answers page
 
 # Confirmation Page
 ###################
-label.confirm.heading = Declaration sent successfully
+confirmation.heading = Declaration sent successfully
 confirmation.emailConfirm = We have sent you a confirmation email
 confirmation.saveCopyOfAnswers = Save a copy of your answers (print or PDF download)
 confirmation.unableToRetrieveAnswers = You will be unable to retrieve your answers beyond this point
@@ -837,41 +870,41 @@ currentRentFirstPaid.helpWithServiceCurrentRentFirstPaidDontNeedToKnow = We don�
 
 # SAVE AS DRAFT
 ###############
-saveAsDraft.preHeader=Welsh TBC: Draft saved successfully
-saveAsDraft.preHeaderTimeout=At ddibenion diogelwch, rydych chi wedi cael eich allgofnodi, ond mae eich gwybodaeth wedi’i chadw.
-saveAsDraft.info=Gwnewch nodyn o’r cyfrinair hwn gan y bydd ei angen arnoch i adfer eich gwybodaeth sydd wedi’i chadw
-saveAsDraft.info.chooseMemorablePassword=Welsh TBC: Choose a memorable password. You will not be able to retrieve it if you forget it.
-saveAsDraft.info.willBeSaved=Welsh TBC: Your draft will be saved but will not be sent now. You can continue completing the form when you return.
-saveAsDraft.password.rules.header=Welsh TBC: Your password must:
-saveAsDraft.password.rule1=Welsh TBC: contain at least 8 characters
-saveAsDraft.password.rule2=Welsh TBC: have at least one number (0-9)
-saveAsDraft.password.rule3=Welsh TBC: have at least one letter (a-z)
-saveAsDraft.password.rule4=Welsh TBC: not contain any common words like ’password’, for example
-error.password.minLength=Welsh TBC: Password must contain at least {0} characters
-error.password.atLeastOneNumber=Welsh TBC: Password must have at least one number
-error.password.atLeastOneLetter=Welsh TBC: Password must have at least one letter
-saveAsDraft.info.p.1=Welsh TBC: Your information has been saved but not yet been sent. You’ll need to come back later to declare your business’s details.
-saveAsDraft.info.p.2=Welsh TBC: You’ll still need your reference number and the postcode shown on the letter to view and change your information, as well as your password.
-saveAsDraft.paragraph=Welsh TBC: We’ll remove unsent information on
-saveAsDraft.paragraph.unsentInfo=Welsh TBC: Any unsent information will be removed on
-saveAsDraft.password=Cyfrinair
-saveAsDraft.confirmPassword=Cadarnhau’r cyfrinair
-saveAsDraft.validPassword=Rhaid i’r cyfrinair fod o leiaf 7 nod yn hir.
-saveAsDraft.error.passwordsDontMatch=Nid yw’r cyfrineiriau yn cyfateb.
-saveAsDraft.createPassword.header=Welsh TBC: Create a password to retrieve the information you’ve already added
-saveAsDraft.login.parameters.header=Welsh TBC: When you return to complete the form you’ll need:
-saveAsDraft.login.parameter1=Welsh TBC: your password
-saveAsDraft.login.parameter2=Welsh TBC: the reference number shown on the letter you received
-saveAsDraft.login.parameter3=Welsh TBC: the postcode shown on the letter you received
-saveAsDraft.continue=Parhewch i lenwi’r ffurflen hon
-saveAsDraft.logout=Allgofnodi
-saveAsDraft.retrieveYourDraft=Adalw eich drafft
-saveAsDraft.passwordReminder=Welsh TBC: Provide the password when you saved your draft or the one given to you when you were timed out of the service.
-saveAsDraft.passwordHint=Hwn fydd y cyfrinair a grëwyd gennych neu’r un a roddwyd ichi pan gawsoch eich amseru o’r gwasanaeth.
-saveAsDraft.error.invalidPassword=Nid yw’r cyfrinair a roddwyd gennych yn gywir
-saveAsDraft.startAgain=Dechrau’r ffurflen eto
-saveAsDraft.forgotPassword=Welsh TBC: If you’ve forgotten your password, you’ll have to start the form again.
-saveAsDraft.timeout.login=Mewngofnodwch eto
+saveAsDraft.preHeader=Draft saved successfully
+saveAsDraft.preHeaderTimeout=You have been logged out, but your information has been saved.
+saveAsDraft.info=Make a note of this password because you’ll need it to retrieve your saved information
+saveAsDraft.info.chooseMemorablePassword=Choose a memorable password. You will not be able to retrieve it if you forget it.
+saveAsDraft.info.willBeSaved=Your draft will be saved but will not be sent now. You can continue completing the form when you return.
+saveAsDraft.password.rules.header=Your password must:
+saveAsDraft.password.rule1=contain at least 8 characters
+saveAsDraft.password.rule2=have at least one number (0-9)
+saveAsDraft.password.rule3=have at least one letter (a-z)
+saveAsDraft.password.rule4=not contain any common words like ’password’, for example
+error.password.minLength=Password must contain at least {0} characters
+error.password.atLeastOneNumber=Password must have at least one number
+error.password.atLeastOneLetter=Password must have at least one letter
+saveAsDraft.info.p.1=Your information has been saved but not yet been sent. You’ll need to come back later to declare your business’s details.
+saveAsDraft.info.p.2=You’ll still need your reference number and the postcode shown on the letter to view and change your information, as well as your password.
+saveAsDraft.paragraph=We’ll remove unsent information on
+saveAsDraft.paragraph.unsentInfo=Any unsent information will be removed on
+saveAsDraft.password=Password
+saveAsDraft.confirmPassword=Confirm password
+saveAsDraft.validPassword=Password must be at least 8 characters.
+saveAsDraft.error.passwordsDontMatch=Passwords do not match
+saveAsDraft.createPassword.header=Create a password to retrieve the information you’ve already added
+saveAsDraft.login.parameters.header=When you return to complete the form you’ll need:
+saveAsDraft.login.parameter1=your password
+saveAsDraft.login.parameter2=the reference number shown on the letter you received
+saveAsDraft.login.parameter3=the postcode shown on the letter you received
+saveAsDraft.continue=Continue completing this form
+saveAsDraft.logout=Log out
+saveAsDraft.retrieveYourDraft=Retrieve your draft
+saveAsDraft.passwordReminder=Provide the password when you saved your draft or the one given to you when you were timed out of the service.
+saveAsDraft.passwordHint=This will either be the password you created or the one given to you when you were timed out of the service.
+saveAsDraft.error.invalidPassword=The password you entered is not correct
+saveAsDraft.startAgain=Start form again
+saveAsDraft.forgotPassword=If you’ve forgotten your password, you’ll have to start the form again.
+saveAsDraft.timeout.login=Log in again
 
 # Errors
 ########
@@ -883,14 +916,15 @@ alternativeContact.contactDetails.email1.email.mismatch=Email addresses must mat
 contactDetails.email1.email.tooLong=Email address must be 50 characters or fewer
 alternativeContact.contactDetails.email1.email.tooLong=Email address must be 50 characters or fewer
 error.contact.full.name.required = Please enter the full name
+error.alternativeContactName.required = Enter the alternative name
 error.contact.email.required = Enter your email address
 error.contact.phone.required = Enter your phone number
 error.contact.phone.minLength = Phone number must be between 11 and 20 characters
 error.contact.phone.maxLength = Phone number must be between 11 and 20 characters
 error.userType.required=Select your connection to the property
 error.contact.details.missing=At least one of phone, email, or address must be given
-error.maxLength=Rhaid i fod yn {0} nod neu lai
-error.minLength=Hyd lleiaf yw {0}
+error.maxLength=This must be {0} characters or fewer
+error.minLength=Minimum length is {0} characters
 error.invalid_postcode=Enter a valid UK postcode
 error.invalid_currency = Please provide a number
 error.maxCurrencyAmountExceeded = Maximum amount exceeded - please contact the VOA
@@ -902,9 +936,9 @@ error.date_must_be_in_past = Date must be in the past
 error.invalid_number = This must be a number
 error.date_before_1900 = Date must be on or after 1 January 1900
 error.date_before_1900.firstOccupationDate = Date must be on or after 1 January 1900
-error.duration.years = Years must be a number between 0 and 999
-error.duration.months = Months must be a number between 0 and 12
-error.duration.days = Days must be a number between 0 and 31
+error.duration.years = The year figure must be a number between 1 and 999
+error.duration.months = The month figure must be a number between 1 and 12
+error.duration.days = Days must be a number between 1 and 31
 error.months.required = Enter months amount
 error.years.required = Enter years amount
 error.currentOccupierName.required = Please select how the the property is currently used
@@ -921,7 +955,12 @@ error.postcode.maxLength = Postcode must be 10 characters or fewer
 error.day.required = The date must include a day
 error.month.required = The date must include a month
 error.year.required = The date must include a year
-error.required.annualRent = Please provide an annual rent amount
-error.required.annualRentExcludingVat = Please provide a number
+error.required.annualRent = Enter the annual rent excluding VAT
+error.invalid_currency.annualRent = The annual rent figure must be a number
+error.required.annualRentExcludingVat = Enter the annual rent excluding VAT
 error.char.count.maxLength = This must be 2000 characters or fewer
 error.townCity.required = Enter the town or city
+error.fullName.required = Enter your full name
+error.tiedType.required = Select which type of tie you have
+error.addressLineTwo.maxLength = Address line 2 must be 50 characters or fewer
+error.county.maxLength = County must be 50 characters or fewer

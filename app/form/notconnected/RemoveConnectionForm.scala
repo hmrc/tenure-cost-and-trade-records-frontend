@@ -26,7 +26,7 @@ object RemoveConnectionForm {
   val removeConnectionForm: Form[RemoveConnectionsDetails] = Form(
     mapping(
       "removeConnectionFullName"       -> default(text, "").verifying(
-        nonEmpty(errorMessage = "error.removeConnectionFullName.required")
+        nonEmpty(errorMessage = "error.fullName.required")
       ),
       "removeConnectionDetails"        -> contactDetailsMapping,
       "removeConnectionAdditionalInfo" -> optional(text)
