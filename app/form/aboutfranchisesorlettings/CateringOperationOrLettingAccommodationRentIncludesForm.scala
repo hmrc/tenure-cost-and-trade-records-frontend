@@ -20,8 +20,8 @@ import play.api.data.Form
 import play.api.data.Forms.{list, single, text}
 
 /**
- * @author Yuriy Tumakha
- */
+  * @author Yuriy Tumakha
+  */
 object CateringOperationOrLettingAccommodationRentIncludesForm {
 
   val cateringOperationOrLettingAccommodationRentIncludesForm: Form[List[String]] = Form(

@@ -20,8 +20,8 @@ import play.api.data.Form
 import play.api.data.Forms.{list, single, text}
 
 /**
- * @author Yuriy Tumakha
- */
+  * @author Yuriy Tumakha
+  */
 object LettingOtherPartOfPropertyRentIncludesForm {
 
   val lettingOtherPartOfPropertyRentIncludesForm: Form[List[String]] = Form(
