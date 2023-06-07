@@ -56,52 +56,44 @@
         ))
       )),
       hint = Hint(content = HtmlContent(messages("hint.select.main"))),
-      name = "propertyCurrentlyUsed[]",
+      name = "propertyCurrentlyUsed[0]",
       items = Seq(
         RadioItem(
           content = Text(messages("propertyCurrentlyUsed.publicHouse")),
-          value = Some("publicHouse"),
-          checked = theForm("propertyCurrentlyUsed[0]").value.contains("publicHouse")
+          value = Some("publicHouse")
         ),
         RadioItem(
           content = Text(messages("propertyCurrentlyUsed.wineCafeBar")),
-          value = Some("wineCafeBar"),
-          checked = theForm("propertyCurrentlyUsed[0]").value.contains("wineCafeBar")
+          value = Some("wineCafeBar")
         ),
         RadioItem(
           content = Text(messages("propertyCurrentlyUsed.otherBar")),
-          value = Some("otherBar"),
-          checked = theForm("propertyCurrentlyUsed[0]").value.contains("otherBar")
+          value = Some("otherBar")
         ),
         RadioItem(
           content = Text(messages("propertyCurrentlyUsed.pubRestaurant")),
-          value = Some("pubRestaurant"),
-          checked = theForm("propertyCurrentlyUsed[0]").value.contains("pubRestaurant")
+          value = Some("pubRestaurant")
         ),
         RadioItem(
           content = Text(messages("propertyCurrentlyUsed.licencedRestaurant")),
-          value = Some("licencedRestaurant"),
-          checked = theForm("propertyCurrentlyUsed[0]").value.contains("licencedRestaurant")
+          value = Some("licencedRestaurant")
         ),
         RadioItem(
           content = Text(messages("propertyCurrentlyUsed.hotel")),
-          value = Some("hotel"),
-          checked = theForm("propertyCurrentlyUsed[0]").value.contains("hotel")
+          value = Some("hotel")
         ),
         RadioItem(
           content = Text(messages("propertyCurrentlyUsed.discoNightclub")),
-          value = Some("discoNightclub"),
-          checked = theForm("propertyCurrentlyUsed[0]").value.contains("discoNightclub")
+          value = Some("discoNightclub")
         ),
         RadioItem(
           content = Text(messages("propertyCurrentlyUsed.other")),
           value = Some("other"),
-          checked = theForm("propertyCurrentlyUsed[0]").value.contains("other"),
           conditionalHtml = Some(conditionalHTML(messages("hint.other.vacant.propertyCurrentlyUsedOther")))
         )
       ),
       errorMessage = theForm.errors.asTextErrorMessageForField("propertyCurrentlyUsed")
-      ).withFormField(theForm("propertyCurrentlyUsed"))
+      ).withFormField(theForm("propertyCurrentlyUsed[0]"))
     )
   }
 
@@ -119,27 +111,22 @@
           CheckboxItem(
             content = Text(messages("propertyCurrentlyUsed.hotel")),
             value = "hotel",
-            checked = theForm("propertyCurrentlyUsed[]").value.contains("hotel")
           ),
           CheckboxItem(
             content = Text(messages("propertyCurrentlyUsed.healthSpa")),
             value = "healthSpa",
-            checked = theForm("propertyCurrentlyUsed[]").value.contains("healthSpa")
           ),
           CheckboxItem(
             content = Text(messages("propertyCurrentlyUsed.lodgeAndRestaurant")),
             value = "lodgeAndRestaurant",
-            checked = theForm("propertyCurrentlyUsed[]").value.contains("lodgeAndRestaurant")
           ),
           CheckboxItem(
             content = Text(messages("propertyCurrentlyUsed.conferenceCentre")),
             value = "conferenceCentre",
-            checked = theForm("propertyCurrentlyUsed[]").value.contains("conferenceCentre")
           ),
           CheckboxItem(
             content = Text(messages("propertyCurrentlyUsed.other")),
             value = "other",
-            checked = theForm("propertyCurrentlyUsed[]").value.contains("other"),
             conditionalHtml = Some(conditionalHTML(messages("hint.other.use.propertyCurrentlyUsedOther")))
           )
         ),
