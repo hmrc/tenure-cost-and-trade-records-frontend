@@ -40,29 +40,38 @@ abstract class Navigator @Inject() (
 
   def postponeCYARedirectPages: Set[String] = Set.empty
 
+  def overrideRedirectIfFromCYA: Map[String, Session => Call] = Map.empty
+
   private val defaultPage: Session => Call = _ => routes.LoginController.show()
 
   def nextPage(id: Identifier, session: Session)(implicit
     hc: HeaderCarrier,
     request: Request[AnyContent]
   ): Session => Call =
-    routeMap.getOrElse(id, defaultPage) andThen possibleCYARedirect andThen auditNextUrl(session)
+    routeMap.getOrElse(id, defaultPage) andThen possibleCYARedirect(session: Session) andThen auditNextUrl(session)
 
   private def auditNextUrl(session: Session)(call: Call)(implicit hc: HeaderCarrier): Call = {
     audit.sendContinueNextPage(session, call.url)
     call
   }
 
-  private def possibleCYARedirect(nextCall: Call)(implicit request: Request[AnyContent]): Call =
-    cyaPage match {
-      case Some(cyaCall) if from == "CYA" =>
-        postponeCYARedirectPages
-          .find(nextCall.url.contains)
-          .fold(cyaCall)(_ => nextCall.callWithParam("from=CYA"))
-      case _                              => nextCall
+  private def possibleCYARedirect(session: Session)(nextCall: Call)(implicit request: Request[AnyContent]): Call =
+    if (from == "CYA") {
+      overrideRedirectIfFromCYA
+        .find(entry => nextCall.url.contains(entry._1))
+        .map(_._2(session))
+        .orElse(
+          postponeCYARedirectPages
+            .find(nextCall.url.contains)
+            .map(_ => nextCall.callWithParam("from=CYA"))
+        )
+        .orElse(cyaPage)
+        .getOrElse(nextCall)
+    } else {
+      nextCall
     }
 
-  private def from(implicit request: Request[AnyContent]): String =
+  def from(implicit request: Request[AnyContent]): String =
     request.body.asFormUrlEncoded.flatMap(_.get("from").flatMap(_.headOption)).getOrElse("")
 
 }
