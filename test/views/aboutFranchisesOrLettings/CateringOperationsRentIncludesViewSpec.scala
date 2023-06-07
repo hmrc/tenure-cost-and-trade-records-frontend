@@ -63,7 +63,7 @@ class CateringOperationsRentIncludesViewSpec extends QuestionViewBehaviours[List
       assert(sectionText == messages("label.section.aboutTheFranchiseLettings"))
     }
 
-// Tests commented as they have wrong asserts and elements with these ids doesn't exist
+// Tests excluded as they created for wrong checkboxes implementation
 
 //    "contain date format hint for cateringOperationOrLettingAccommodationCheckboxesDetails-hint" in {
 //      val doc             = asDocument(createViewUsingForm(form))
@@ -95,7 +95,6 @@ class CateringOperationsRentIncludesViewSpec extends QuestionViewBehaviours[List
 //      assert(checkbox.attr("name") == messageKeyPrefix)
 //      assertContainsText(doc, messages(s"checkbox.$messageKeyPrefix.outsideRepairs"))
 //    }
-
 
 //    "contain checkbox for the value Inside repairs" in {
 //      val doc      = asDocument(createViewUsingForm(form))

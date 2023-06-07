@@ -69,7 +69,7 @@ class LettingOtherPartOfPropertyRentIncludesViewSpec extends QuestionViewBehavio
       assert(sectionText == messages("label.section.aboutTheFranchiseLettings"))
     }
 
-// Tests commented as they have wrong asserts and elements with these ids doesn't exist
+// Tests excluded as they created for wrong checkboxes implementation
 
 //    "contain checkbox for the value Rates" in {
 //      val doc      = asDocument(createViewUsingForm(form))
