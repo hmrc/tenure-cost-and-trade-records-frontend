@@ -27,7 +27,7 @@ class AboutYouControllerSpec extends TestBaseSpec {
 
   import TestData.{baseFormData, errorKey}
   import form.aboutyouandtheproperty.AboutYouForm.aboutYouForm
-  import utils.FormBindingTestAssertions.{mustContainError, mustContainRequiredErrorFor}
+  import utils.FormBindingTestAssertions.mustContainError
 
   def aboutYouController(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes)

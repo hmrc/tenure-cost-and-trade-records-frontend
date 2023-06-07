@@ -21,18 +21,19 @@ import models.pages.Summary
 import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
+import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
 
 class FranchiseOrLettingsTiedToPropertyViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
 
   val messageKeyPrefix = "franchiseLettings"
 
-  override val form = FranchiseOrLettingsTiedToPropertyForm.franchiseOrLettingsTiedToPropertyForm
+  override val form: Form[AnswersYesNo] = FranchiseOrLettingsTiedToPropertyForm.franchiseOrLettingsTiedToPropertyForm
 
-  def createView = () =>
+  def createView: () => Html = () =>
     franchiseOrLettingsTiedToPropertyView(form, "FOR6010", Summary("99996010001"))(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[AnswersYesNo]) =>
+  def createViewUsingForm: Form[AnswersYesNo] => Html = (form: Form[AnswersYesNo]) =>
     franchiseOrLettingsTiedToPropertyView(form, "FOR6010", Summary("99996010001"))(fakeRequest, messages)
 
   "Franchise or lettings tied to property view" must {
@@ -48,9 +49,16 @@ class FranchiseOrLettingsTiedToPropertyViewSpec extends QuestionViewBehaviours[A
     }
 
     "Section heading is visible" in {
-      val doc         = asDocument(createViewUsingForm(form)) // govuk-caption-m
+      val doc         = asDocument(createViewUsingForm(form))
       val sectionText = doc.getElementsByClass("govuk-caption-m").text()
       assert(sectionText == messages("label.section.aboutTheFranchiseLettings"))
+    }
+
+    "Hint text is visible" in {
+      val doc = asDocument(createViewUsingForm(form))
+      assertContainsText(doc, messages("franchiseLettings.subheading"))
+      assertContainsText(doc, messages("franchiseLettings.list1"))
+      assertContainsText(doc, messages("franchiseLettings.list2"))
     }
 
     "contain radio buttons for the value yes" in {
@@ -60,7 +68,7 @@ class FranchiseOrLettingsTiedToPropertyViewSpec extends QuestionViewBehaviours[A
         "franchiseOrLettingsTiedToProperty",
         "franchiseOrLettingsTiedToProperty",
         AnswerYes.name,
-        false
+        isChecked = false
       )
       assertContainsText(doc, messages("label.yes"))
     }
@@ -72,7 +80,7 @@ class FranchiseOrLettingsTiedToPropertyViewSpec extends QuestionViewBehaviours[A
         "franchiseOrLettingsTiedToProperty-2",
         "franchiseOrLettingsTiedToProperty",
         AnswerNo.name,
-        false
+        isChecked = false
       )
       assertContainsText(doc, messages("label.no"))
     }
@@ -81,6 +89,12 @@ class FranchiseOrLettingsTiedToPropertyViewSpec extends QuestionViewBehaviours[A
       val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("continue").text()
       assert(loginButton == messages("button.label.continue"))
+    }
+
+    "contain save as draft button with the value Save as draft" in {
+      val doc         = asDocument(createViewUsingForm(form))
+      val loginButton = doc.getElementById("save").text()
+      assert(loginButton == messages("button.label.save"))
     }
   }
 }

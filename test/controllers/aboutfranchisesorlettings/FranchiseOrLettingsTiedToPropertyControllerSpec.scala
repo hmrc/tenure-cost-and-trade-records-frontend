@@ -16,32 +16,38 @@
 
 package controllers.aboutfranchisesorlettings
 
-import navigation.AboutFranchisesOrLettingsNavigator
+import form.Errors
+import form.aboutfranchisesorlettings.FranchiseOrLettingsTiedToPropertyForm.franchiseOrLettingsTiedToPropertyForm
+import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
+import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
 
 class FranchiseOrLettingsTiedToPropertyControllerSpec extends TestBaseSpec {
 
-  val mockAboutFranchisesOrLettingsNavigator = mock[AboutFranchisesOrLettingsNavigator]
+  import TestData._
 
-  val franchiseOrLettingsTiedToPropertyController = new FranchiseOrLettingsTiedToPropertyController(
-    stubMessagesControllerComponents(),
-    mockAboutFranchisesOrLettingsNavigator,
-    franchiseOrLettingsTiedToPropertyView,
-    preFilledSession,
-    mockSessionRepo
-  )
+  def franchiseOrLettingsTiedToPropertyController(
+    aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = Some(prefilledAboutFranchiseOrLettings)
+  ) =
+    new FranchiseOrLettingsTiedToPropertyController(
+      stubMessagesControllerComponents(),
+      aboutFranchisesOrLettingsNavigator,
+      franchiseOrLettingsTiedToPropertyView,
+      preEnrichedActionRefiner(aboutFranchisesOrLettings = aboutFranchisesOrLettings),
+      mockSessionRepo
+    )
 
   "GET /" should {
     "return 200" in {
-      val result = franchiseOrLettingsTiedToPropertyController.show(fakeRequest)
+      val result = franchiseOrLettingsTiedToPropertyController().show(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return HTML" in {
-      val result = franchiseOrLettingsTiedToPropertyController.show(fakeRequest)
+      val result = franchiseOrLettingsTiedToPropertyController().show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
@@ -49,8 +55,28 @@ class FranchiseOrLettingsTiedToPropertyControllerSpec extends TestBaseSpec {
 
   "SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
-      val res = franchiseOrLettingsTiedToPropertyController.submit(FakeRequest().withFormUrlEncodedBody(Seq.empty: _*))
+      val res =
+        franchiseOrLettingsTiedToPropertyController().submit(FakeRequest().withFormUrlEncodedBody(Seq.empty: _*))
       status(res) shouldBe BAD_REQUEST
     }
+  }
+
+  "Franchise or lettings tied to property form" should {
+    "error if franchiseOrLettingsTiedToProperty is missing" in {
+      val formData = baseFormData - errorKey.franchiseOrLettingsTiedToProperty
+      val form     = franchiseOrLettingsTiedToPropertyForm.bind(formData)
+
+      mustContainError(errorKey.franchiseOrLettingsTiedToProperty, Errors.booleanMissing, form)
+    }
+  }
+
+  object TestData {
+    val errorKey: Object {
+      val franchiseOrLettingsTiedToProperty: String
+    } = new {
+      val franchiseOrLettingsTiedToProperty: String = "franchiseOrLettingsTiedToProperty"
+    }
+
+    val baseFormData: Map[String, String] = Map("franchiseOrLettingsTiedToProperty" -> "yes")
   }
 }

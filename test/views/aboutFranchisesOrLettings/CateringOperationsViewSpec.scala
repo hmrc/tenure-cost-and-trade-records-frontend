@@ -22,14 +22,15 @@ import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 import models.pages.Summary
+import play.twirl.api.Html
 
 class CateringOperationsViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
 
   val messageKeyPrefix = "cateringOperationOrLettingAccommodation"
 
-  override val form = CateringOperationForm.cateringOperationForm
+  override val form: Form[AnswersYesNo] = CateringOperationForm.cateringOperationForm
 
-  def createView = () =>
+  def createView: () => Html = () =>
     cateringOperationView(
       form,
       messageKeyPrefix,
@@ -37,7 +38,7 @@ class CateringOperationsViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
       Summary("99996010001")
     )(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[AnswersYesNo]) =>
+  def createViewUsingForm: Form[AnswersYesNo] => Html = (form: Form[AnswersYesNo]) =>
     cateringOperationView(
       form,
       messageKeyPrefix,
@@ -54,13 +55,20 @@ class CateringOperationsViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText mustBe messages("back.link.label")
       val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show.url
+      backlinkUrl mustBe controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController
+        .show()
+        .url
     }
 
     "Section heading is visible" in {
-      val doc         = asDocument(createViewUsingForm(form)) // govuk-caption-m
+      val doc         = asDocument(createViewUsingForm(form))
       val sectionText = doc.getElementsByClass("govuk-caption-m").text()
       assert(sectionText == messages("label.section.aboutTheFranchiseLettings"))
+    }
+
+    "Hint text is visible" in {
+      val doc = asDocument(createViewUsingForm(form))
+      assertContainsText(doc, messages("hint.cateringOperationOrLettingAccommodation"))
     }
 
     "contain radio buttons for the value yes" in {
@@ -70,7 +78,7 @@ class CateringOperationsViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
         "cateringOperationOrLettingAccommodation",
         "cateringOperationOrLettingAccommodation",
         AnswerYes.name,
-        false
+        isChecked = false
       )
       assertContainsText(doc, messages("label.yes"))
     }
@@ -82,7 +90,7 @@ class CateringOperationsViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
         "cateringOperationOrLettingAccommodation-2",
         "cateringOperationOrLettingAccommodation",
         AnswerNo.name,
-        false
+        isChecked = false
       )
       assertContainsText(doc, messages("label.no"))
     }
@@ -91,6 +99,12 @@ class CateringOperationsViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
       val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("continue").text()
       assert(loginButton == messages("button.label.continue"))
+    }
+
+    "contain save as draft button with the value Save as draft" in {
+      val doc         = asDocument(createViewUsingForm(form))
+      val loginButton = doc.getElementById("save").text()
+      assert(loginButton == messages("button.label.save"))
     }
   }
 }

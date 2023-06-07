@@ -16,14 +16,12 @@
 
 package controllers.aboutyouandtheproperty
 
-import form.Errors
 import form.aboutyouandtheproperty.PremisesLicenseConditionsDetailsForm.premisesLicenceDetailsForm
-import form.aboutyouandtheproperty.WebsiteForPropertyForm.websiteForPropertyForm
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import utils.FormBindingTestAssertions.{mustContainError, mustContainRequiredErrorFor}
+import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
 
 class PremisesLicenseConditionsDetailsControllerSpec extends TestBaseSpec {

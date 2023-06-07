@@ -16,49 +16,55 @@
 
 package views.aboutFranchisesOrLettings
 
-import form.aboutfranchisesorlettings.LettingOtherPartOfPropertiesForm
+import form.aboutfranchisesorlettings.AddAnotherCateringOperationOrLettingAccommodationForm
+import models.pages.Summary
 import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
+import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
-import models.pages.Summary
 
-class LettingOtherPartOfPropertyViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
+class AddAnotherLettingOtherPartOfPropertySpec extends QuestionViewBehaviours[AnswersYesNo] {
 
-  val messageKeyPrefix = "LettingOtherPartOfProperties"
+  val messageKeyPrefix = "addAnotherLettingOtherPartOfProperty"
 
-  override val form = LettingOtherPartOfPropertiesForm.lettingOtherPartOfPropertiesForm
+  override val form: Form[AnswersYesNo] =
+    AddAnotherCateringOperationOrLettingAccommodationForm.addAnotherCateringOperationForm
 
-  def createView = () =>
-    lettingOtherPartOfPropertyView(
+  def createView: () => Html = () =>
+    addAnotherOperationConcessionFranchise(
       form,
+      0,
       messageKeyPrefix,
-      controllers.aboutfranchisesorlettings.routes.CateringOperationController.show().url,
+      controllers.aboutfranchisesorlettings.routes.CateringOperationRentIncludesController.show(0).url,
       Summary("99996010001")
     )(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[AnswersYesNo]) =>
-    lettingOtherPartOfPropertyView(
+  def createViewUsingForm: Form[AnswersYesNo] => Html = (form: Form[AnswersYesNo]) =>
+    addAnotherOperationConcessionFranchise(
       form,
+      0,
       messageKeyPrefix,
-      controllers.aboutfranchisesorlettings.routes.CateringOperationController.show().url,
+      controllers.aboutfranchisesorlettings.routes.CateringOperationRentIncludesController.show(0).url,
       Summary("99996010001")
     )(fakeRequest, messages)
 
-  "Letting other parts of property view" must {
+  "Add another letting part of property view" must {
 
-    behave like normalPage(createView, messageKeyPrefix)
+    behave like normalPageWithMessageExtra(createView, messageKeyPrefix, "1")
 
     "has a link marked with back.link.label leading to the franchise or letting tied to property Page" in {
       val doc          = asDocument(createView())
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText mustBe messages("back.link.label")
       val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.aboutfranchisesorlettings.routes.CateringOperationController.show().url
+      backlinkUrl mustBe controllers.aboutfranchisesorlettings.routes.CateringOperationRentIncludesController
+        .show(0)
+        .url
     }
 
     "Section heading is visible" in {
-      val doc         = asDocument(createViewUsingForm(form)) // govuk-caption-m
+      val doc         = asDocument(createViewUsingForm(form))
       val sectionText = doc.getElementsByClass("govuk-caption-m").text()
       assert(sectionText == messages("label.section.aboutTheFranchiseLettings"))
     }
@@ -67,10 +73,10 @@ class LettingOtherPartOfPropertyViewSpec extends QuestionViewBehaviours[AnswersY
       val doc = asDocument(createViewUsingForm(form))
       assertContainsRadioButton(
         doc,
-        "LettingOtherPartOfProperties",
-        "LettingOtherPartOfProperties",
+        messageKeyPrefix,
+        messageKeyPrefix,
         AnswerYes.name,
-        false
+        isChecked = false
       )
       assertContainsText(doc, messages("label.yes"))
     }
@@ -79,18 +85,18 @@ class LettingOtherPartOfPropertyViewSpec extends QuestionViewBehaviours[AnswersY
       val doc = asDocument(createViewUsingForm(form))
       assertContainsRadioButton(
         doc,
-        "LettingOtherPartOfProperties-2",
-        "LettingOtherPartOfProperties",
+        s"$messageKeyPrefix-2",
+        messageKeyPrefix,
         AnswerNo.name,
-        false
+        isChecked = false
       )
       assertContainsText(doc, messages("label.no"))
     }
 
     "contain save and continue button with the value Save and Continue" in {
-      val doc         = asDocument(createViewUsingForm(form))
-      val loginButton = doc.getElementById("continue").text()
-      assert(loginButton == messages("button.label.continue"))
+      val doc            = asDocument(createViewUsingForm(form))
+      val continueButton = doc.getElementById("continue").text()
+      assert(continueButton == messages("button.label.continue"))
     }
 
     "contain save as draft button with the value Save as draft" in {

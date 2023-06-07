@@ -18,12 +18,11 @@ package controllers.aboutyouandtheproperty
 
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
 import form.aboutyouandtheproperty.EnforcementActionDetailsForm.enforcementActionDetailsForm
-import form.aboutyouandtheproperty.PremisesLicenseConditionsDetailsForm.premisesLicenceDetailsForm
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import utils.TestBaseSpec
-import utils.FormBindingTestAssertions.{mustContainError, mustContainRequiredErrorFor}
+import utils.FormBindingTestAssertions.mustContainError
 
 class EnforcementActionBeenTakenDetailsControllerSpec extends TestBaseSpec {
 

@@ -22,7 +22,7 @@ import play.api.test.Helpers._
 import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
 import form.aboutyouandtheproperty.AboutThePropertyForm.aboutThePropertyForm
-import models.submissions.aboutyouandtheproperty.{AboutYouAndTheProperty, CurrentPropertyHotel, CurrentPropertyPublicHouse}
+import models.submissions.aboutyouandtheproperty.{AboutYouAndTheProperty, CurrentPropertyHotel}
 import play.api.test.FakeRequest
 
 class AboutThePropertyControllerSpec extends TestBaseSpec {
