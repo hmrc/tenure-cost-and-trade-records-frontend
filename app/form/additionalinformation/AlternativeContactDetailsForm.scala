@@ -26,7 +26,7 @@ object AlternativeContactDetailsForm {
   val alternativeContactDetailsForm: Form[AlternativeContactDetails] = Form(
     mapping(
       "alternativeContactFullName" -> default(text, "").verifying(
-        nonEmpty(errorMessage = "error.contact.full.name.required")
+        nonEmpty(errorMessage = "error.alternativeContactName.required")
       ),
       "alternativeContactDetails"  -> contactDetailsMapping,
       "alternativeContactAddress"  -> contactAddressMapping

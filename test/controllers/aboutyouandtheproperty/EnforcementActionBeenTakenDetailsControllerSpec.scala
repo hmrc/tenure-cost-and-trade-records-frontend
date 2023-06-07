@@ -22,7 +22,7 @@ import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import utils.TestBaseSpec
-import utils.FormBindingTestAssertions.mustContainRequiredErrorFor
+import utils.FormBindingTestAssertions.mustContainError
 
 class EnforcementActionBeenTakenDetailsControllerSpec extends TestBaseSpec {
 
@@ -60,11 +60,15 @@ class EnforcementActionBeenTakenDetailsControllerSpec extends TestBaseSpec {
   }
 
   "Enforcement action been taken details form" should {
-    "error if choice is missing " in {
+    "error if choice is missing" in {
       val formData = baseFormData - errorKey.enforcementActionHasBeenTakenDetails
       val form     = enforcementActionDetailsForm.bind(formData)
 
-      mustContainRequiredErrorFor(errorKey.enforcementActionHasBeenTakenDetails, form)
+      mustContainError(
+        errorKey.enforcementActionHasBeenTakenDetails,
+        "error.enforcementActionHasBeenTakenDetails.required",
+        form
+      )
     }
   }
 

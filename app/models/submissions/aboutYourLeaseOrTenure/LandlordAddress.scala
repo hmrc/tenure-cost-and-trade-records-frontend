@@ -21,7 +21,7 @@ import play.api.libs.json.Json
 case class LandlordAddress(
   buildingNameNumber: String,
   street1: Option[String],
-  town: Option[String],
+  town: String,
   county: Option[String],
   postcode: String
 ) {
@@ -29,7 +29,7 @@ case class LandlordAddress(
     List(
       Some(buildingNameNumber),
       street1,
-      town,
+      Some(town),
       county,
       Some(postcode.replaceAll("^(\\S+?)\\s*?(\\d\\w\\w)$", "$1 $2"))
     ).flatten.mkString(", ")
@@ -38,7 +38,7 @@ case class LandlordAddress(
     List(
       Some(buildingNameNumber),
       street1,
-      town,
+      Some(town),
       county,
       Some(postcode.replaceAll("^(\\S+?)\\s*?(\\d\\w\\w)$", "$1 $2"))
     ).flatten.mkString("<br/> ")

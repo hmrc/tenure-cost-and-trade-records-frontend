@@ -21,7 +21,7 @@ import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import utils.FormBindingTestAssertions.mustContainRequiredErrorFor
+import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
 
 class PremisesLicenseConditionsDetailsControllerSpec extends TestBaseSpec {
@@ -60,11 +60,15 @@ class PremisesLicenseConditionsDetailsControllerSpec extends TestBaseSpec {
   }
 
   "Premises License conditions details form" should {
-    "error if choice is missing " in {
+    "error if choice is missing" in {
       val formData = baseFormData - errorKey.premisesLicenseConditionsDetails
       val form     = premisesLicenceDetailsForm.bind(formData)
 
-      mustContainRequiredErrorFor(errorKey.premisesLicenseConditionsDetails, form)
+      mustContainError(
+        errorKey.premisesLicenseConditionsDetails,
+        "error.premisesLicenseConditionsDetails.required",
+        form
+      )
     }
   }
 

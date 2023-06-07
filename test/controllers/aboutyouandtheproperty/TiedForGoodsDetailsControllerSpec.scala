@@ -64,7 +64,7 @@ class TiedForGoodsDetailsControllerSpec extends TestBaseSpec {
       val formData = baseFormData - errorKey.tiedForGoodsDetails
       val form     = tiedForGoodsDetailsForm.bind(formData)
 
-      mustContainError(errorKey.tiedForGoodsDetails, Errors.booleanMissing, form)
+      mustContainError(errorKey.tiedForGoodsDetails, Errors.tiedForGoodsDetails, form)
     }
   }
 

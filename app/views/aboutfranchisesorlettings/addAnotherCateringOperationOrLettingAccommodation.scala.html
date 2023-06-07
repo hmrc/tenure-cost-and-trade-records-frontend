@@ -42,7 +42,6 @@
 
 @layout(
  pageHeading = messages(s"${cateringOrLetting}.heading", 1),
- showH1 = false,
  showSection = true,
  summary = Some(summary),
  sectionName = messages("label.section.aboutTheFranchiseLettings"),
@@ -56,11 +55,7 @@
   else if(cateringOrLetting.equals("addAnotherLettingOtherPartOfProperty"))
    controllers.aboutfranchisesorlettings.routes.AddAnotherLettingOtherPartOfPropertyController.submit(index)
   else controllers.routes.TaskListController.show()},
-  args = 'class -> "myForm", 'id -> "myFormId") {
-
-  <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-   <h1 class="govuk-fieldset__heading">@messages(s"${cateringOrLetting}.heading", 1)</h1>
-  </legend>
+  args = Symbol("class") -> "myForm", Symbol("id") -> "myFormId") {
 
   @govukSummaryList(
     SummaryList(

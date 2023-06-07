@@ -52,37 +52,40 @@ object TurnoverForm6016 {
     }
 
     val columnMapping: Mapping[TurnoverSection1516] = mapping(
-        "financial-year-end" -> ukDateMappings.verifying(dateTooEarlyConstraint, dateTooEarlyConstraint),
-        "weeks" -> number(min = 0, max = 52),
-        "accommodation" -> bigDecimal,
-        "average-occupancy-rate" -> bigDecimal.verifying(averageOccupancyConstraint),
-        "food" -> bigDecimal,
-        "drinks" -> bigDecimal,
-        "other" -> bigDecimal,
-        "total-sales-revenue" -> bigDecimal
+      "financial-year-end"     -> ukDateMappings.verifying(dateTooEarlyConstraint, dateTooEarlyConstraint),
+      "weeks"                  -> number(min = 0, max = 52),
+      "accommodation"          -> bigDecimal,
+      "average-occupancy-rate" -> bigDecimal.verifying(averageOccupancyConstraint),
+      "food"                   -> bigDecimal,
+      "drinks"                 -> bigDecimal,
+      "other"                  -> bigDecimal,
+      "total-sales-revenue"    -> bigDecimal
     )(TurnoverSection1516.apply)(TurnoverSection1516.unapply)
 
     Form {
       expectedNumberOfFinancialYears match {
-        case 1 => mapping("0" -> columnMapping)(section => Seq(section)) {
-          case Seq(section) => Some(section)
-          case _ => None
-        }
-        case 2 => mapping(
-          "0" -> columnMapping,
-          "1" -> columnMapping
-        ) { case (first, second) => Seq(first, second) } {
-          case Seq(first, second) => Some((first, second))
-          case _ => None
-        }
-        case 3 => mapping(
-          "0" -> columnMapping,
-          "1" -> columnMapping,
-          "2" -> columnMapping
-        ) { case (first, second, third) => Seq(first, second, third) } {
-          case Seq(first, second, third) => Some((first, second, third))
-          case _ => None
-        }
+        case 1                               =>
+          mapping("0" -> columnMapping)(section => Seq(section)) {
+            case Seq(section) => Some(section)
+            case _            => None
+          }
+        case 2                               =>
+          mapping(
+            "0" -> columnMapping,
+            "1" -> columnMapping
+          ) { case (first, second) => Seq(first, second) } {
+            case Seq(first, second) => Some((first, second))
+            case _                  => None
+          }
+        case 3                               =>
+          mapping(
+            "0" -> columnMapping,
+            "1" -> columnMapping,
+            "2" -> columnMapping
+          ) { case (first, second, third) => Seq(first, second, third) } {
+            case Seq(first, second, third) => Some((first, second, third))
+            case _                         => None
+          }
         case incorrectNumberOfFinancialYears =>
           throw new IllegalArgumentException(
             s"$expectedNumberOfFinancialYears must be between 1 and 3, was: $incorrectNumberOfFinancialYears"

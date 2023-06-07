@@ -17,11 +17,6 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukErrorSummary
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukDateInput
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukTextarea
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukCharacterCount
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Radios
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
@@ -33,68 +28,55 @@
 @this(layout: Layout,
         govukButton: GovukButton,
         govukRadios: GovukRadios,
-        govukInput: GovukInput,
-        govukErrorSummary: GovukErrorSummary,
-        govukDateInput: GovukDateInput,
-        govukTextarea: GovukTextarea,
-        govukCharacterCount: GovukCharacterCount,
         formWithCSRF: FormWithCSRF
 )
 
 @(theForm: Form[_], userType: String, summary: Summary)(implicit request: Request[_], messages: Messages)
 
 @layout(
- pageHeading = messages("franchiseLettings.heading"),
- showH1 = false,
- showSection = true,
- summary = Some(summary),
- sectionName = messages("label.section.aboutTheFranchiseLettings"),
- backLinkUrl = controllers.routes.TaskListController.show.url,
- theForm = theForm
+  pageHeading = messages("franchiseLettings.heading"),
+  showSection = true,
+  summary = Some(summary),
+  sectionName = messages("label.section.aboutTheFranchiseLettings"),
+  backLinkUrl = controllers.routes.TaskListController.show.url,
+  theForm = theForm
 ) {
 
- @formWithCSRF(action = controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
+  @formWithCSRF(action = controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.submit(), args = Symbol("class") -> "myForm", Symbol("id") -> "myFormId") {
 
-  <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-    <h1 class="govuk-fieldset__heading">@messages("franchiseLettings.heading")</h1>
-  </legend>
+    <p class="govuk-body">@messages("franchiseLettings.subheading")</p>
 
-  <p class="govuk-body">@messages("franchiseLettings.subheading")</p>
+    <ul class='list-bullet'>
+      <li><span class="govuk-body">@messages("franchiseLettings.list1")</span></li>
+      <li><span class="govuk-body">@messages("franchiseLettings.list2")</span></li>
+    </ul>
 
-  <ul class='list-bullet'>
-   <li><span class="govuk-body">@messages("franchiseLettings.list1")</span></li><p>
-  <li><span class="govuk-body">@messages("franchiseLettings.list2")</span></li>
-  </ul>
-
- @govukRadios(
-  Radios(
-   name = "franchiseOrLettingsTiedToProperty",
-   idPrefix = Option("franchiseOrLettingsTiedToProperty"),
-   items = Seq(
-    "yes" -> messages("label.yes"),
-    "no" -> messages("label.no")
-   ).map( radioItem => RadioItem (
-    content = Text(radioItem._2),
-    checked = radioItem._1.equals(theForm("franchiseOrLettingsTiedToProperty").value.getOrElse("")),
-    value=Option(radioItem._1)
-   )
-   ),
-   classes = "govuk-radios--inline",
-   errorMessage =  theForm.errors.asTextErrorMessageForField("franchiseOrLettingsTiedToProperty"),
-   fieldset = Option(
-    Fieldset(
-     legend = Option(
-      Legend(
-       classes = "govuk-!-font-weight-bold"
+    @govukRadios(
+    Radios(
+      name = "franchiseOrLettingsTiedToProperty",
+      idPrefix = Option("franchiseOrLettingsTiedToProperty"),
+      items = Seq(
+        "yes" -> messages("label.yes"),
+        "no" -> messages("label.no")
+      ).map( radioItem => RadioItem (
+        content = Text(radioItem._2),
+        checked = radioItem._1.equals(theForm("franchiseOrLettingsTiedToProperty").value.getOrElse("")),
+        value=Option(radioItem._1)
+      )),
+      classes = "govuk-radios--inline",
+      errorMessage =  theForm.errors.asTextErrorMessageForField("franchiseOrLettingsTiedToProperty"),
+      fieldset = Option(
+        Fieldset(
+          legend = Option(
+          Legend(
+            classes = "govuk-!-font-weight-bold"
+          ))
+        )
       )
-     )
-    )
-   )
-  )
- )
+    ))
 
-  @includes.continueSaveAsDraftButtons(govukButton)
- }
+    @includes.continueSaveAsDraftButtons(govukButton)
+  }
 }
 
 
