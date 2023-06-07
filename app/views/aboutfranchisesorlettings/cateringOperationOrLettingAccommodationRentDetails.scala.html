@@ -35,9 +35,8 @@
 
 @layout(
  pageHeading = messages("cateringOperationOrLettingAccommodationRentDetails.heading", "Wombles Inc"),
- showH1 = false,
  showSection = true,
-    summary = Some(summary),
+ summary = Some(summary),
  sectionName = messages("label.section.aboutTheFranchiseLettings"),
  backLinkUrl = backLink,
  theForm = theForm
@@ -48,11 +47,7 @@
         else if(cateringOrLetting.equals("lettingOtherPartOfPropertyRentDetails"))
             controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsRentController.submit(index)
         else controllers.routes.TaskListController.show()},
-        args = 'class -> "myForm", 'id -> "myFormId") {
-
-        <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-            <h1 class="govuk-fieldset__heading">@messages("cateringOperationOrLettingAccommodationRentDetails.heading", operatorName)</h1>
-        </legend>
+        args = Symbol("class") -> "myForm", Symbol("id") -> "myFormId") {
 
         @hmrcCurrencyInput(
             CurrencyInput(
