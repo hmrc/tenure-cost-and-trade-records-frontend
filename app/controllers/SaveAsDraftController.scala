@@ -69,7 +69,8 @@ class SaveAsDraftController @Inject() (
     customUserPasswordForm
       .bindFromRequest()
       .fold(
-        formWithErrors => Ok(customPasswordSaveAsDraftView(formWithErrors, expiryDate, exitPath, request.sessionData.toSummary)),
+        formWithErrors =>
+          Ok(customPasswordSaveAsDraftView(formWithErrors, expiryDate, exitPath, request.sessionData.toSummary)),
         validData => {
           val session = request.sessionData.copy(saveAsDraftPassword = validData.password)
           sessionRepo.saveOrUpdate(session)

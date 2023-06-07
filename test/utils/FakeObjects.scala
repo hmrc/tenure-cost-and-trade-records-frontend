@@ -72,7 +72,7 @@ trait FakeObjects {
   val prefilledStillConnectedDetailsEdit: StillConnectedDetails = StillConnectedDetails(
     Some(AddressConnectionTypeYesChangeAddress),
     Some(ConnectionToThePropertyOccupierTrustee),
-    Some(prefilledAddress)
+    Some(prefilledContactAddress)
   )
   val prefilledStillConnectedDetailsNo: StillConnectedDetails   = StillConnectedDetails(Some(AddressConnectionTypeNo))
 
@@ -218,12 +218,12 @@ trait FakeObjects {
     )
   val prefilledLeaseOrAgreementYearsDetails   =
     LeaseOrAgreementYearsDetails(
-      AnswerYes,
-      AnswerYes,
-      AnswerYes
+      TenancyThreeYearsYes,
+      RentThreeYearsYes,
+      UnderReviewYes
     )
   val prefilledLeaseOrAgreementYearsDetailsNo =
-    LeaseOrAgreementYearsDetails(AnswerNo, AnswerNo, AnswerNo)
+    LeaseOrAgreementYearsDetails(TenancyThreeYearsNo, RentThreeYearsNo, UnderReviewNo)
   val prefilledBaseSession                    =
     Session(
       "99996010004",

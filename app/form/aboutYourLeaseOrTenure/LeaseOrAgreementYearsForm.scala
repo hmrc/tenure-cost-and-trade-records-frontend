@@ -16,7 +16,7 @@
 
 package form.aboutYourLeaseOrTenure
 
-import form.MappingSupport.yesNoType
+import form.MappingSupport.{rent3Years, tenancy3Years, underReview, yesNoType}
 import models.submissions.aboutYourLeaseOrTenure.LeaseOrAgreementYearsDetails
 import play.api.data.Form
 import play.api.data.Forms.mapping
@@ -25,9 +25,9 @@ object LeaseOrAgreementYearsForm {
 
   val leaseOrAgreementYearsForm = Form(
     mapping(
-      "commenceWithinThreeYears"        -> yesNoType,
-      "agreedReviewedAlteredThreeYears" -> yesNoType,
-      "rentUnderReviewNegotiated"       -> yesNoType
+      "commenceWithinThreeYears"        -> tenancy3Years,
+      "agreedReviewedAlteredThreeYears" -> rent3Years,
+      "rentUnderReviewNegotiated"       -> underReview
     )(LeaseOrAgreementYearsDetails.apply)(LeaseOrAgreementYearsDetails.unapply)
   )
 }
