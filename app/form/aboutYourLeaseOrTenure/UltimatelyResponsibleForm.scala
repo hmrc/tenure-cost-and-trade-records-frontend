@@ -16,23 +16,28 @@
 
 package form.aboutYourLeaseOrTenure
 
-import form.MappingSupport.responsiblePartyType
+import form.MappingSupport.{buildingInsuranceType, insideRepairsType, outsideRepairsType}
 import models.submissions.aboutYourLeaseOrTenure.UltimatelyResponsible
+import models.submissions.common.OutsideRepairsBoth
 import play.api.data.Form
 import play.api.data.Forms.{default, mapping, text}
 import play.api.data.validation.Constraints.maxLength
+import uk.gov.voa.play.form.ConditionalMappings.mandatoryIfEqual
 
 object UltimatelyResponsibleForm {
 
   val ultimatelyResponsibleForm = Form(
     mapping(
-      "outsideRepairs"         -> responsiblePartyType,
-      "insideRepairs"          -> responsiblePartyType,
-      "buildingInsurance"      -> responsiblePartyType,
-      "sharedResponsibilities" ->
+      "outsideRepairs"         -> outsideRepairsType,
+      "insideRepairs"          -> insideRepairsType,
+      "buildingInsurance"      -> buildingInsuranceType,
+      "sharedResponsibilities" -> mandatoryIfEqual(
+        "outsideRepairs",
+        OutsideRepairsBoth.name,
         default(text, "").verifying(
           maxLength(2000, "error.sharedResponsibilities.maxLength")
         )
+      )
     )(UltimatelyResponsible.apply)(UltimatelyResponsible.unapply)
   )
 }

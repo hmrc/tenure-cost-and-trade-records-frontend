@@ -61,7 +61,7 @@ class UltimatelyResponsibleViewSpec extends QuestionViewBehaviours[UltimatelyRes
         doc,
         "outsideRepairs",
         "outsideRepairs",
-        AnswerResponsiblePartyLandlord.name,
+        OutsideRepairsLandlord.name,
         false
       )
       assertContainsText(doc, messages("label.landlord"))
@@ -73,7 +73,7 @@ class UltimatelyResponsibleViewSpec extends QuestionViewBehaviours[UltimatelyRes
         doc,
         "outsideRepairs-2",
         "outsideRepairs",
-        AnswerResponsiblePartyTenant.name,
+        OutsideRepairsTenant.name,
         false
       )
       assertContainsText(doc, messages("label.tenant"))
@@ -85,7 +85,7 @@ class UltimatelyResponsibleViewSpec extends QuestionViewBehaviours[UltimatelyRes
         doc,
         "outsideRepairs-3",
         "outsideRepairs",
-        AnswerResponsiblePartyBoth.name,
+        OutsideRepairsBoth.name,
         false
       )
       assertContainsText(doc, messages("label.both"))
@@ -97,7 +97,7 @@ class UltimatelyResponsibleViewSpec extends QuestionViewBehaviours[UltimatelyRes
         doc,
         "insideRepairs",
         "insideRepairs",
-        AnswerResponsiblePartyLandlord.name,
+        InsideRepairsLandlord.name,
         false
       )
       assertContainsText(doc, messages("label.landlord"))
@@ -109,7 +109,7 @@ class UltimatelyResponsibleViewSpec extends QuestionViewBehaviours[UltimatelyRes
         doc,
         "insideRepairs-2",
         "insideRepairs",
-        AnswerResponsiblePartyTenant.name,
+        InsideRepairsTenant.name,
         false
       )
       assertContainsText(doc, messages("label.tenant"))
@@ -121,7 +121,7 @@ class UltimatelyResponsibleViewSpec extends QuestionViewBehaviours[UltimatelyRes
         doc,
         "insideRepairs-3",
         "insideRepairs",
-        AnswerResponsiblePartyBoth.name,
+        InsideRepairsBoth.name,
         false
       )
       assertContainsText(doc, messages("label.both"))
@@ -133,7 +133,7 @@ class UltimatelyResponsibleViewSpec extends QuestionViewBehaviours[UltimatelyRes
         doc,
         "buildingInsurance",
         "buildingInsurance",
-        AnswerResponsiblePartyLandlord.name,
+        BuildingInsuranceLandlord.name,
         false
       )
       assertContainsText(doc, messages("label.landlord"))
@@ -145,7 +145,7 @@ class UltimatelyResponsibleViewSpec extends QuestionViewBehaviours[UltimatelyRes
         doc,
         "buildingInsurance-2",
         "buildingInsurance",
-        AnswerResponsiblePartyTenant.name,
+        BuildingInsuranceTenant.name,
         false
       )
       assertContainsText(doc, messages("label.tenant"))
@@ -157,7 +157,7 @@ class UltimatelyResponsibleViewSpec extends QuestionViewBehaviours[UltimatelyRes
         doc,
         "buildingInsurance-3",
         "buildingInsurance",
-        AnswerResponsiblePartyBoth.name,
+        BuildingInsuranceBoth.name,
         false
       )
       assertContainsText(doc, messages("label.both"))

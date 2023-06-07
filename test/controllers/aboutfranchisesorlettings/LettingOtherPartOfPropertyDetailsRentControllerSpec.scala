@@ -72,7 +72,6 @@ class LettingOtherPartOfPropertyDetailsRentControllerSpec extends TestBaseSpec {
           val html   = Jsoup.parse(contentAsString(result))
 
           Option(html.getElementById("annualRent").`val`()).value      shouldBe "1500"
-          Option(html.getElementById("dateInput.day").`val`()).value   shouldBe "1"
           Option(html.getElementById("dateInput.month").`val`()).value shouldBe "6"
           Option(html.getElementById("dateInput.year").`val`()).value  shouldBe "2022"
 

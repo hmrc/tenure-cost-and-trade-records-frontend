@@ -59,7 +59,8 @@ trait FakeObjects {
   val prefilledLandlordAddress: LandlordAddress =
     LandlordAddress("004", Some("GORING ROAD"), "GORING-BY-SEA, WORTHING", Some("West sussex"), "BN12 4AX")
 
-  val prefilledDateInput: LocalDate = LocalDate.of(2022, 6, 1)
+  val prefilledDateInput: LocalDate               = LocalDate.of(2022, 6, 1)
+  val prefilledMonthYearInput: MonthsYearDuration = MonthsYearDuration(6, 2000)
 
   val baseFilled6010Session: Session = Session(referenceNumber, forType6010, prefilledAddress, token)
   val baseFilled6011Session: Session = Session(referenceNumber, forType6011, prefilledAddress, token)
@@ -168,12 +169,12 @@ trait FakeObjects {
   // Franchises or lettings
   val prefilledCateringOperationSectionYes: CateringOperationSection = CateringOperationSection(
     CateringOperationDetails("Operator Name", "Type of Business", prefilledCateringAddress),
-    Some(CateringOperationRentDetails(BigDecimal(1500), prefilledDateInput)),
+    Some(CateringOperationRentDetails(BigDecimal(1500), prefilledMonthYearInput)),
     Some(AnswerYes)
   )
   val prefilledCateringOperationSectionNo: CateringOperationSection  = CateringOperationSection(
     CateringOperationDetails("Operator Name", "Type of Business", prefilledCateringAddress),
-    Some(CateringOperationRentDetails(BigDecimal(1500), prefilledDateInput)),
+    Some(CateringOperationRentDetails(BigDecimal(1500), prefilledMonthYearInput)),
     Some(AnswerNo)
   )
   val prefilledLettingSectionYes: LettingSection                     = LettingSection(

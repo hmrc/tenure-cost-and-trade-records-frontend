@@ -16,7 +16,7 @@
 
 package form.aboutfranchisesorlettings
 
-import form.DateMappings.dateFieldsMapping
+import form.DateMappings.{dateFieldsMapping, monthsYearDurationMapping}
 import form.MappingSupport.currencyMapping
 import models.submissions.aboutfranchisesorlettings.CateringOperationRentDetails
 import play.api.data.Form
@@ -27,7 +27,7 @@ object CateringOperationOrLettingAccommodationRentForm {
   val cateringOperationOrLettingAccommodationRentForm = Form(
     mapping(
       "annualRent" -> currencyMapping(".annualRent"),
-      "dateInput"  -> dateFieldsMapping("dateInput")
+      "dateInput"  -> monthsYearDurationMapping("dateInput")
     )(CateringOperationRentDetails.apply)(
       CateringOperationRentDetails.unapply
     )

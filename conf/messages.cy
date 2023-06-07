@@ -456,6 +456,9 @@ label.both = Both
 label.sharedResponsibilities = Give details of the shared responsibilities
 hint.sharedResponsibilities = For example, costs are shared equally, landlord 75%, tenant 25%
 error.sharedResponsibilities.maxLength = This must be 2000 characters or fewer
+error.outsideRepairs.required = Tell us who is responsible for the outside repairs
+error.insideRepairs.required = Tell us who is responsible for the inside repairs
+error.buildingInsurance.required = Tell us who is responsible for the building insurance
 
 #RENT INCLUDE TRADE SERVICES
 ############################
@@ -516,6 +519,7 @@ label.methodUsedToFixCurrentRent.agreement = Agreement
 label.methodUsedToFixCurrentRent.arbitration = Arbitration
 label.methodUsedToFixCurrentRent.independentExpert = Independent expert
 label.methodUsedToFixCurrentRent.aCourt = A court
+error.methodToFixCurrentRents.required = Tell us how the rent was agreed
 
 #HOW IS CURRENT RENT FIXED
 ##########################
@@ -530,6 +534,7 @@ label.rentActuallyAgreed.help = For example, 27 9 2017
 error.rentActuallyAgreed.day.required = The date must include a day
 error.rentActuallyAgreed.month.required = The date must include a month
 error.rentActuallyAgreed.year.required = The date must include a year
+error.howIsCurrentRentFixed.required = Tell us how the rent was fixed
 
 ##CATERING OPERATION OR LETTING DETAILS
 #######################################
