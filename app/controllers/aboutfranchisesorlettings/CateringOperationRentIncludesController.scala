@@ -18,15 +18,16 @@ package controllers.aboutfranchisesorlettings
 
 import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
+import form.aboutfranchisesorlettings.CateringOperationOrLettingAccommodationRentIncludesForm.cateringOperationOrLettingAccommodationRentIncludesForm
+import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
 import navigation.AboutFranchisesOrLettingsNavigator
 import navigation.identifiers.CateringOperationRentIncludesPageId
 import play.api.i18n.I18nSupport
-import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Result}
 import repositories.SessionRepo
 import views.html.aboutfranchisesorlettings.cateringOperationOrLettingAccommodationRentIncludes
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.Future
 
 @Singleton
 class CateringOperationRentIncludesController @Inject() (
@@ -39,26 +40,55 @@ class CateringOperationRentIncludesController @Inject() (
     with I18nSupport {
 
   def show(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    val existingSection = request.sessionData.aboutFranchisesOrLettings.flatMap(
-      _.cateringOperationSections.lift(index)
-    )
-    Future.successful(
-      Ok(
-        cateringOperationOrLettingAccommodationDetailsCheckboxesView(
-          index,
-          "cateringOperationOrLettingAccommodationCheckboxesDetails",
-          existingSection.get.cateringOperationDetails.operatorName,
-          controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsRentController.show(index).url,
-          request.sessionData.toSummary
+    request.sessionData.aboutFranchisesOrLettings
+      .flatMap(_.cateringOperationSections.lift(index))
+      .fold(
+        startRedirect
+      ) { currentSection =>
+        val rentIncludesForm = cateringOperationOrLettingAccommodationRentIncludesForm.fill(currentSection.itemsInRent)
+
+        Ok(
+          cateringOperationOrLettingAccommodationDetailsCheckboxesView(
+            rentIncludesForm,
+            index,
+            "cateringOperationOrLettingAccommodationCheckboxesDetails",
+            currentSection.cateringOperationDetails.operatorName,
+            controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsRentController.show(index).url,
+            request.sessionData.toSummary
+          )
         )
-      )
-    )
+      }
   }
 
   def submit(index: Int) = (Action andThen withSessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft(
-      Redirect(navigator.nextPage(CateringOperationRentIncludesPageId, request.sessionData).apply(request.sessionData))
-    )
+    (for {
+      existingSections <- request.sessionData.aboutFranchisesOrLettings.map(_.cateringOperationSections)
+      currentSection   <- existingSections.lift(index)
+    } yield continueOrSaveAsDraft[List[String]](
+      cateringOperationOrLettingAccommodationRentIncludesForm,
+      formWithErrors =>
+        BadRequest(
+          cateringOperationOrLettingAccommodationDetailsCheckboxesView(
+            formWithErrors,
+            index,
+            "cateringOperationOrLettingAccommodationCheckboxesDetails",
+            currentSection.cateringOperationDetails.operatorName,
+            controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsRentController.show(index).url,
+            request.sessionData.toSummary
+          )
+        ),
+      data => {
+        val updatedSections = existingSections.updated(
+          index,
+          currentSection.copy(itemsInRent = data)
+        )
+        val updatedSession  = updateAboutFranchisesOrLettings(_.copy(cateringOperationSections = updatedSections))
+        session.saveOrUpdate(updatedSession)
+        Redirect(navigator.nextPage(CateringOperationRentIncludesPageId, updatedSession).apply(updatedSession))
+      }
+    )).getOrElse(startRedirect)
   }
+
+  private def startRedirect: Result = Redirect(routes.CateringOperationDetailsController.show(None))
 
 }

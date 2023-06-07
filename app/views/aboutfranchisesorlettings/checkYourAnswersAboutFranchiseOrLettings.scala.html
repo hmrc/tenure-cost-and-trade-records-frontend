@@ -88,8 +88,9 @@
                                         _ => cateringOperation.cateringOperationRentDetails.map(_.dateInput.shortDate),
                                         aboutfranchisesorlettings.routes.CateringOperationDetailsRentController.show(idx), "dateInput.day") ++
                                     sectionAnswers.row("checkYourAnswersAboutFranchiseOrLettings.itemsInRent",
-                                        _ => Option(cateringOperation.cateringOperationDetails.cateringAddress.addressLines.map(Text(_).asHtml).mkString("""<p class="govuk-body">""", "<br/> ", "</p>")),// TODO: saving itemsInRent is not implemented in CateringOperationRentIncludesController
-                                        aboutfranchisesorlettings.routes.CateringOperationRentIncludesController.show(idx), "xxxxxxxxxxxx",
+                                        _ => Option(cateringOperation.itemsInRent
+                                                .map(item => messages(s"checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.$item")).mkString("""<p class="govuk-body">""", "<br/> ", "</p>")),
+                                        aboutfranchisesorlettings.routes.CateringOperationRentIncludesController.show(idx), "itemsInRent",
                                         ("valueAsHtml", _ => None))
                         ))
                     }
@@ -123,7 +124,12 @@
                                         aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsRentController.show(idx), "annualRent") ++
                                     sectionAnswers.row("checkYourAnswersAboutFranchiseOrLettings.dateSumFixed",
                                         _ => letting.lettingOtherPartOfPropertyRentDetails.map(_.dateInput.shortDate),
-                                        aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsRentController.show(idx), "dateInput.day")
+                                        aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsRentController.show(idx), "dateInput.day") ++
+                                    sectionAnswers.row("checkYourAnswersAboutFranchiseOrLettings.itemsInRent",
+                                        _ => Option(letting.itemsInRent
+                                                .map(item => messages(s"checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.$item")).mkString("""<p class="govuk-body">""", "<br/> ", "</p>")),
+                                        aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyRentIncludesController.show(idx), "itemsInRent",
+                                        ("valueAsHtml", _ => None))
                         ))
                     }
                 }

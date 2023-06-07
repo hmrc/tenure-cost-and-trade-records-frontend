@@ -14,6 +14,7 @@
  * limitations under the License.
  *@
 
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.checkboxes.Checkboxes
@@ -34,7 +35,7 @@
 )
 
 
-@(index: Int, cateringOrLetting: String, operatorName: String, backLink: String, summary: Summary)(implicit request: Request[_], messages: Messages)
+@(form: Form[_], index: Int, cateringOrLetting: String, operatorName: String, backLink: String, summary: Summary)(implicit request: Request[_], messages: Messages)
 
 @layout(
  pageHeading = messages("cateringOperationOrLettingAccommodationCheckboxesDetails.heading", "Wombles Inc"),
@@ -42,7 +43,8 @@
  showSection = true,
  summary = Some(summary),
  sectionName = messages("label.section.aboutTheFranchiseLettings"),
- backLinkUrl = backLink
+ backLinkUrl = backLink,
+ theForm = form
 ) {
 
  @formWithCSRF(action =
@@ -60,7 +62,7 @@
 
   @govukCheckboxes(
    Checkboxes(
-    name = s"${cateringOrLetting}",
+    name = "itemsInRent[]",
     fieldset = Some(Fieldset(
      legend = Some(Legend(
       classes = "govuk-fieldset__legend--s"
@@ -68,24 +70,24 @@
     )),
     items = Seq(
      CheckboxItem(
-      id = Some("rates"),
+      value = "rates",
       content = Text(messages("checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.rates"))
      ),
      CheckboxItem(
-      id = Some("propertyInsurance"),
+      value = "propertyInsurance",
       content = Text(messages("checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.propertyInsurance"))
      ),
      CheckboxItem(
-      id = Some("outsideRepairs"),
+      value = "outsideRepairs",
       content = Text(messages("checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.outsideRepairs"))
      ),
      CheckboxItem(
-      id = Some("insideRepairs"),
+      value = "insideRepairs",
       content = Text(messages("checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.insideRepairs"))
      )
     ),
     hint = Some(Hint(content = Text(messages("hint.cateringOperationOrLettingAccommodationCheckboxesDetails"))))
-   )
+   ).withFormField(form("itemsInRent"))
   )
 
   @includes.continueSaveAsDraftButtons(govukButton)

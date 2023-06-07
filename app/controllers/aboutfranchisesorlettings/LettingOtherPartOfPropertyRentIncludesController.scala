@@ -18,15 +18,16 @@ package controllers.aboutfranchisesorlettings
 
 import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
+import form.aboutfranchisesorlettings.LettingOtherPartOfPropertyRentIncludesForm.lettingOtherPartOfPropertyRentIncludesForm
+import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
 import navigation.AboutFranchisesOrLettingsNavigator
 import navigation.identifiers.LettingAccommodationRentIncludesPageId
 import play.api.i18n.I18nSupport
-import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Result}
 import repositories.SessionRepo
 import views.html.aboutfranchisesorlettings.cateringOperationOrLettingAccommodationRentIncludes
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.Future
 
 @Singleton
 class LettingOtherPartOfPropertyRentIncludesController @Inject() (
@@ -39,26 +40,59 @@ class LettingOtherPartOfPropertyRentIncludesController @Inject() (
     with I18nSupport {
 
   def show(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    val existingSection = request.sessionData.aboutFranchisesOrLettings.flatMap(_.lettingSections.lift(index))
-    Future.successful(
-      Ok(
-        cateringOperationOrLettingAccommodationRentIncludesView(
-          index,
-          "lettingOtherPartOfPropertyCheckboxesDetails",
-          existingSection.get.lettingOtherPartOfPropertyInformationDetails.operatorName,
-          controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsRentController.show(index).url,
-          request.sessionData.toSummary
+    request.sessionData.aboutFranchisesOrLettings
+      .flatMap(_.lettingSections.lift(index))
+      .fold(
+        startRedirect
+      ) { currentSection =>
+        val rentIncludesForm = lettingOtherPartOfPropertyRentIncludesForm.fill(currentSection.itemsInRent)
+
+        Ok(
+          cateringOperationOrLettingAccommodationRentIncludesView(
+            rentIncludesForm,
+            index,
+            "lettingOtherPartOfPropertyCheckboxesDetails",
+            currentSection.lettingOtherPartOfPropertyInformationDetails.operatorName,
+            controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsRentController
+              .show(index)
+              .url,
+            request.sessionData.toSummary
+          )
         )
-      )
-    )
+      }
   }
 
   def submit(index: Int) = (Action andThen withSessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft(
-      Redirect(
-        navigator.nextPage(LettingAccommodationRentIncludesPageId, request.sessionData).apply(request.sessionData)
-      )
-    )
+    (for {
+      existingSections <- request.sessionData.aboutFranchisesOrLettings.map(_.lettingSections)
+      currentSection   <- existingSections.lift(index)
+    } yield continueOrSaveAsDraft[List[String]](
+      lettingOtherPartOfPropertyRentIncludesForm,
+      formWithErrors =>
+        BadRequest(
+          cateringOperationOrLettingAccommodationRentIncludesView(
+            formWithErrors,
+            index,
+            "lettingOtherPartOfPropertyCheckboxesDetails",
+            currentSection.lettingOtherPartOfPropertyInformationDetails.operatorName,
+            controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsRentController
+              .show(index)
+              .url,
+            request.sessionData.toSummary
+          )
+        ),
+      data => {
+        val updatedSections = existingSections.updated(
+          index,
+          currentSection.copy(itemsInRent = data)
+        )
+        val updatedSession  = updateAboutFranchisesOrLettings(_.copy(lettingSections = updatedSections))
+        session.saveOrUpdate(updatedSession)
+        Redirect(navigator.nextPage(LettingAccommodationRentIncludesPageId, updatedSession).apply(updatedSession))
+      }
+    )).getOrElse(startRedirect)
   }
+
+  private def startRedirect: Result = Redirect(routes.CateringOperationDetailsController.show(None))
 
 }
