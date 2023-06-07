@@ -57,7 +57,7 @@ trait FakeObjects {
   val prefilledLettingAddress: LettingAddress   =
     LettingAddress("004", Some("GORING ROAD"), "GORING-BY-SEA, WORTHING", Some("West sussex"), "BN12 4AX")
   val prefilledLandlordAddress: LandlordAddress =
-    LandlordAddress("004", Some("GORING ROAD"), Some("GORING-BY-SEA, WORTHING"), Some("West sussex"), "BN12 4AX")
+    LandlordAddress("004", Some("GORING ROAD"), "GORING-BY-SEA, WORTHING", Some("West sussex"), "BN12 4AX")
 
   val prefilledDateInput: LocalDate = LocalDate.of(2022, 6, 1)
 

@@ -22,7 +22,7 @@ import play.api.test.Helpers._
 import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
 import form.aboutyouandtheproperty.AboutThePropertyForm.aboutThePropertyForm
-import models.submissions.aboutyouandtheproperty.{AboutYouAndTheProperty, CurrentPropertyPublicHouse}
+import models.submissions.aboutyouandtheproperty.{AboutYouAndTheProperty, CurrentPropertyHotel}
 import play.api.test.FakeRequest
 
 class AboutThePropertyControllerSpec extends TestBaseSpec {
@@ -64,14 +64,14 @@ class AboutThePropertyControllerSpec extends TestBaseSpec {
       val formData = baseFormData - errorKey.currentOccupierName
       val form     = aboutThePropertyForm.bind(formData)
 
-      mustContainError(errorKey.currentOccupierName, Errors.required, form)
+      mustContainError(errorKey.currentOccupierName, Errors.currentOccupierName, form)
     }
 
     "error if propertyCurrentlyUsed is missing" in {
       val formData = baseFormData - errorKey.propertyCurrentlyUsed
       val form     = aboutThePropertyForm.bind(formData)
 
-      mustContainError(errorKey.propertyCurrentlyUsed, Errors.currentOccupierName, form)
+      mustContainError(errorKey.propertyCurrentlyUsed, Errors.propertyCurrentlyUsed, form)
     }
   }
 
@@ -85,6 +85,6 @@ class AboutThePropertyControllerSpec extends TestBaseSpec {
     }
 
     val baseFormData: Map[String, String] =
-      Map("currentOccupierName" -> "Tobermory", "propertyCurrentlyUsed" -> CurrentPropertyPublicHouse.name)
+      Map("currentOccupierName" -> "Tobermory", "propertyCurrentlyUsed" -> CurrentPropertyHotel.name)
   }
 }

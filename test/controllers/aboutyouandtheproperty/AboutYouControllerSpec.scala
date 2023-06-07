@@ -27,7 +27,7 @@ class AboutYouControllerSpec extends TestBaseSpec {
 
   import TestData.{baseFormData, errorKey}
   import form.aboutyouandtheproperty.AboutYouForm.aboutYouForm
-  import utils.FormBindingTestAssertions.{mustContainError, mustContainRequiredErrorFor}
+  import utils.FormBindingTestAssertions.mustContainError
 
   def aboutYouController(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes)
@@ -64,7 +64,7 @@ class AboutYouControllerSpec extends TestBaseSpec {
       val formData = baseFormData - errorKey.fullName
       val form     = aboutYouForm.bind(formData)
 
-      mustContainRequiredErrorFor(errorKey.fullName, form)
+      mustContainError(errorKey.fullName, "error.fullName.required", form)
     }
 
     "error if phone is missing" in {
