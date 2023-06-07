@@ -16,23 +16,25 @@
 
 package controllers.aboutfranchisesorlettings
 
+import form.Errors
+import form.aboutfranchisesorlettings.LettingOtherPartOfPropertiesForm.lettingOtherPartOfPropertiesForm
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
-import navigation.AboutFranchisesOrLettingsNavigator
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
+import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
 
 class LettingOtherPartOfPropertyControllerSpec extends TestBaseSpec {
 
-  val mockAboutFranchisesOrLettingsNavigator = mock[AboutFranchisesOrLettingsNavigator]
+  import TestData._
 
   def lettingOtherPartOfPropertyController(
     aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = Some(prefilledAboutFranchiseOrLettings)
   ) =
     new LettingOtherPartOfPropertyController(
       stubMessagesControllerComponents(),
-      mockAboutFranchisesOrLettingsNavigator,
+      aboutFranchisesOrLettingsNavigator,
       lettingOtherPartOfPropertyView,
       preEnrichedActionRefiner(aboutFranchisesOrLettings = aboutFranchisesOrLettings),
       mockSessionRepo
@@ -58,5 +60,24 @@ class LettingOtherPartOfPropertyControllerSpec extends TestBaseSpec {
         status(res) shouldBe BAD_REQUEST
       }
     }
+  }
+
+  "Letting other part of properties form" should {
+    "error if lettingOtherPartOfProperties is missing" in {
+      val formData = baseFormData - errorKey.lettingOtherPartOfProperties
+      val form     = lettingOtherPartOfPropertiesForm.bind(formData)
+
+      mustContainError(errorKey.lettingOtherPartOfProperties, Errors.booleanMissing, form)
+    }
+  }
+
+  object TestData {
+    val errorKey: Object {
+      val lettingOtherPartOfProperties: String
+    } = new {
+      val lettingOtherPartOfProperties: String = "lettingOtherPartOfProperties"
+    }
+
+    val baseFormData: Map[String, String] = Map("lettingOtherPartOfProperties" -> "yes")
   }
 }

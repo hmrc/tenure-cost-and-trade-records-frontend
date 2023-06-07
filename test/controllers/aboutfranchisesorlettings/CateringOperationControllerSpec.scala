@@ -16,23 +16,25 @@
 
 package controllers.aboutfranchisesorlettings
 
+import form.Errors
+import form.aboutfranchisesorlettings.CateringOperationForm.cateringOperationForm
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
-import navigation.AboutFranchisesOrLettingsNavigator
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
+import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
 
 class CateringOperationControllerSpec extends TestBaseSpec {
 
-  val mockAboutFranchisesOrLettingsNavigator = mock[AboutFranchisesOrLettingsNavigator]
+  import TestData._
 
   def cateringOperationOrLettingAccommodationController(
     aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = Some(prefilledAboutFranchiseOrLettings)
   ) =
     new CateringOperationController(
       stubMessagesControllerComponents(),
-      mockAboutFranchisesOrLettingsNavigator,
+      aboutFranchisesOrLettingsNavigator,
       cateringOperationView,
       preEnrichedActionRefiner(aboutFranchisesOrLettings = aboutFranchisesOrLettings),
       mockSessionRepo
@@ -58,5 +60,24 @@ class CateringOperationControllerSpec extends TestBaseSpec {
       )
       status(res) shouldBe BAD_REQUEST
     }
+  }
+
+  "Catering operation or letting accommodation form" should {
+    "error if cateringOperationOrLettingAccommodation is missing" in {
+      val formData = baseFormData - errorKey.cateringOperationOrLettingAccommodation
+      val form     = cateringOperationForm.bind(formData)
+
+      mustContainError(errorKey.cateringOperationOrLettingAccommodation, Errors.booleanMissing, form)
+    }
+  }
+
+  object TestData {
+    val errorKey: Object {
+      val cateringOperationOrLettingAccommodation: String
+    } = new {
+      val cateringOperationOrLettingAccommodation: String = "cateringOperationOrLettingAccommodation"
+    }
+
+    val baseFormData: Map[String, String] = Map("cateringOperationOrLettingAccommodation" -> "yes")
   }
 }

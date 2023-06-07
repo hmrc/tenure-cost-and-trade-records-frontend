@@ -29,20 +29,15 @@
 @(theForm: Form[_], index: Option[Int], cateringOrLetting: String, backLink: String, summary: Summary)(implicit request: Request[_], messages: Messages)
 
 @layout(
- pageHeading = messages(s"${cateringOrLetting}.heading"),
- showH1 = false,
- showSection = true,
+    pageHeading = messages(s"${cateringOrLetting}.heading"),
+    showSection = true,
     summary = Some(summary),
- sectionName = messages("label.section.aboutTheFranchiseLettings"),
- backLinkUrl = backLink,
- theForm = theForm
+    sectionName = messages("label.section.aboutTheFranchiseLettings"),
+    backLinkUrl = backLink,
+    theForm = theForm
 ) {
     @if(cateringOrLetting.equals("cateringOperationOrLettingAccommodationDetails")) {
-        @formWithCSRF(action = controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController.submit(index), args = 'class -> "myForm", 'id -> "myFormId") {
-
-            <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                <h1 class="govuk-fieldset__heading">@messages(s"${cateringOrLetting}.heading")</h1>
-            </legend>
+        @formWithCSRF(action = controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController.submit(index), args = Symbol("class") -> "myForm", Symbol("id") -> "myFormId") {
 
             @includes.textInput(govukInput, theForm, "operatorName", "govuk-input--width-20", "operatorName", "operatorName", labelClasses = "govuk-!-font-weight-bold")
             @includes.textInput(govukInput, theForm, "typeOfBusiness", "govuk-input--width-20", "typeOfBusiness", "typeOfBusiness", labelClasses = "govuk-!-font-weight-bold", hintMsg = "typeOfBusiness")
@@ -60,11 +55,7 @@
             @includes.continueSaveAsDraftButtons(govukButton)
         }
     } else if(cateringOrLetting.equals("lettingOtherPartOfPropertyDetails")) {
-        @formWithCSRF(action = controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsController.submit(index), args = 'class -> "myForm", 'id -> "myFormId") {
-
-            <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                <h1 class="govuk-fieldset__heading">@messages(s"${cateringOrLetting}.heading")</h1>
-            </legend>
+        @formWithCSRF(action = controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsController.submit(index), args = Symbol("class") -> "myForm", Symbol("id") -> "myFormId") {
 
             @includes.textInput(govukInput, theForm, "lettingOperatorName", "govuk-input--width-20", "lettingOperatorName", "lettingOperatorName", labelClasses = "govuk-!-font-weight-bold")
             @includes.textInput(govukInput, theForm, "lettingTypeOfBusiness", "govuk-input--width-20", "lettingTypeOfBusiness", "typeOfBusiness", labelClasses = "govuk-!-font-weight-bold", hintMsg = "lettingTypeOfBusiness")

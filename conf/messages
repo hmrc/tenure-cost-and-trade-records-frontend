@@ -376,6 +376,9 @@ leaseOrAgreement.heading = Lease or agreement details
 label.commenceWithinThreeYears = Did the tenancy, lease or agreement commence within the last 3 years?
 label.agreedReviewedAlteredThreeYears  = Has the rent been agreed, reviewed or altered within the last 3 years?
 label.rentUnderReviewNegotiated  = Is the rent currently under review, or is a new lease or agreement being negotiated?
+error.tenancy3Years.required = Select yes if the tenancy, lease or agreement commenced in the last 3 years
+error.rent3Years.required = Select yes if the rent has been agreed, reviews or altered in the last 3 years
+error.underReview.required = Select yes if the rent is currently under review, or a new lease or agreement is being negotiated
 
 #LEASE OR AGREEMENT DETAILS VAT
 ##############################
@@ -641,6 +644,7 @@ error.currentLeaseOrAgreementBegin.maxLength = This must be 1000 characters or f
 currentRentPayableWithin12Months.heading = Is the current rent payable due to review within the next 12 months, either under the terms of the existing lease, or upon grant of a new lease?
 currentRentPayableWithin12Months.hint = Do not include any rent increases linked to turnover or the retail price index (RPI)
 label.dateReview = Date of next rent review or expiry of existing lease
+error.currentRentPayableWithin12Months.required = Select yes if the current rent will be reviewed in the next 12 months
 
 ##WHAT IS YOUR RENT BASED ON
 ############################

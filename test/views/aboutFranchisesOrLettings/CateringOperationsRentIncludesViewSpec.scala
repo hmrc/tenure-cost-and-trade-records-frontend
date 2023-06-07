@@ -23,7 +23,6 @@ import play.api.i18n.Lang
 import play.twirl.api.HtmlFormat
 import views.behaviours.QuestionViewBehaviours
 import models.pages.Summary
-
 import java.util.Locale
 
 class CateringOperationsRentIncludesViewSpec extends QuestionViewBehaviours[List[String]] {
@@ -48,52 +47,7 @@ class CateringOperationsRentIncludesViewSpec extends QuestionViewBehaviours[List
 
   "Catering operation rent includes view" must {
 
-    behave like normalPageLocal(createView, messageKeyPrefix)
-
-    def normalPageLocal(view: () => HtmlFormat.Appendable, messageKeyPrefix: String, expectedGuidanceKeys: String*) =
-      "behave like a normal page" when {
-        "rendered" must {
-          "have the correct banner title" in {
-            val doc  = asDocument(view())
-            val nav  = Option {
-              doc.getElementById("proposition-menu")
-            }.getOrElse(
-              doc
-                .getElementsByAttributeValue("class", "hmrc-header__service-name hmrc-header__service-name--linked")
-                .first()
-                .parent()
-            )
-            val span = nav.children.first
-            span.text mustBe messagesApi("site.service_name")(Lang(Locale.UK))
-          }
-
-          "display the correct browser title" in {
-            val doc = asDocument(view())
-            assertEqualsValue(
-              doc,
-              "title",
-              messages("service.title", messages(s"$messageKeyPrefix.heading", "Wombles Inc"))
-            )
-          }
-
-          "display the correct page title" in {
-            val doc = asDocument(view())
-            assertPageTitleEqualsMessage(doc, s"$messageKeyPrefix.heading", "Wombles Inc")
-          }
-
-          "display the correct guidance" in {
-            val doc = asDocument(view())
-            for (key <- expectedGuidanceKeys) assertContainsText(doc, messages(s"$messageKeyPrefix.$key"))
-          }
-
-          "display language toggles" in {
-            val doc = asDocument(view())
-            doc.getElementById("cymraeg-switch") != null || !doc
-              .getElementsByAttributeValue("href", "/valuation-office-agency-contact-frontend/language/cymraeg")
-              .isEmpty
-          }
-        }
-      }
+    behave like normalPageWithMessageExtra(createView, messageKeyPrefix, "Wombles Inc")
 
     "has a link marked with back.link.label leading to the franchise or letting tied to property Page" in {
       val doc          = asDocument(createView())
@@ -131,7 +85,6 @@ class CateringOperationsRentIncludesViewSpec extends QuestionViewBehaviours[List
 //      val checkbox = doc.getElementById("propertyInsurance")
 //      assert(checkbox != null)
 //      assert(checkbox.attr("name") == messageKeyPrefix)
-//      //      assert(checkbox.attr("value") == value)
 //      assertContainsText(doc, messages(s"checkbox.$messageKeyPrefix.propertyInsurance"))
 //    }
 
@@ -140,16 +93,15 @@ class CateringOperationsRentIncludesViewSpec extends QuestionViewBehaviours[List
 //      val checkbox = doc.getElementById("outsideRepairs")
 //      assert(checkbox != null)
 //      assert(checkbox.attr("name") == messageKeyPrefix)
-//      //      assert(checkbox.attr("value") == value)
 //      assertContainsText(doc, messages(s"checkbox.$messageKeyPrefix.outsideRepairs"))
 //    }
+
 
 //    "contain checkbox for the value Inside repairs" in {
 //      val doc      = asDocument(createViewUsingForm(form))
 //      val checkbox = doc.getElementById("insideRepairs")
 //      assert(checkbox != null)
 //      assert(checkbox.attr("name") == messageKeyPrefix)
-//      //      assert(checkbox.attr("value") == value)
 //      assertContainsText(doc, messages(s"checkbox.$messageKeyPrefix.insideRepairs"))
 //    }
 
@@ -157,6 +109,12 @@ class CateringOperationsRentIncludesViewSpec extends QuestionViewBehaviours[List
       val doc            = asDocument(createViewUsingForm(form))
       val continueButton = doc.getElementById("continue").text()
       assert(continueButton == messages("button.label.continue"))
+    }
+
+    "contain save as draft button with the value Save as draft" in {
+      val doc         = asDocument(createViewUsingForm(form))
+      val loginButton = doc.getElementById("save").text()
+      assert(loginButton == messages("button.label.save"))
     }
   }
 }

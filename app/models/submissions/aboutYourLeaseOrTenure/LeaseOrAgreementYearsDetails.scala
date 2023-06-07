@@ -20,9 +20,9 @@ import models.submissions.common.AnswersYesNo
 import play.api.libs.json.Json
 
 case class LeaseOrAgreementYearsDetails(
-  commenceWithinThreeYears: AnswersYesNo,
-  agreedReviewedAlteredThreeYears: AnswersYesNo,
-  rentUnderReviewNegotiated: AnswersYesNo
+  commenceWithinThreeYears: TenancyThreeYears,
+  agreedReviewedAlteredThreeYears: RentThreeYears,
+  rentUnderReviewNegotiated: UnderReview
 )
 
 object LeaseOrAgreementYearsDetails {

@@ -66,7 +66,13 @@ object MappingSupport {
   val currentRentPayableWithin12MonthsType: Mapping[CurrentRentWithin12Months] = Forms.of[CurrentRentWithin12Months]
 
   val tiedForGoodsDetailsType: Mapping[TiedForGoodsInformation] = Forms.of[TiedForGoodsInformation]
-  val postcode: Mapping[String]                                 = PostcodeMapping.postcode()
+
+  //Lease or Agreement Details - Three Radio buttons on one page
+  val tenancy3Years: Mapping[TenancyThreeYears] = Forms.of[TenancyThreeYears]
+  val rent3Years: Mapping[RentThreeYears]       = Forms.of[RentThreeYears]
+  val underReview: Mapping[UnderReview]         = Forms.of[UnderReview]
+
+  val postcode: Mapping[String] = PostcodeMapping.postcode()
 
   val decimalRegex          = """^[0-9]{1,10}\.?[0-9]{0,2}$"""
   val cdbMaxCurrencyAmount  = 9999999.99

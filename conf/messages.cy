@@ -375,6 +375,9 @@ leaseOrAgreement.heading = Lease or agreement details
 label.commenceWithinThreeYears = Did the tenancy, lease or agreement commence within the last 3 years?
 label.agreedReviewedAlteredThreeYears  = Has the rent been agreed, reviewed or altered within the last 3 years?
 label.rentUnderReviewNegotiated  = Is the rent currently under review, or is a new lease or agreement being negotiated?
+error.tenancy3Years.required = Select yes if the tenancy, lease or agreement commenced in the last 3 years
+error.rent3Years.required = Select yes if the rent has been agreed, reviews or altered in the last 3 years
+error.underReview.required = Select yes if the rent is currently under review, or a new lease or agreement is being negotiated
 
 #LEASE OR AGREEMENT DETAILS VAT
 ##############################

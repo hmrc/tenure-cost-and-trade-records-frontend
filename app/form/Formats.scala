@@ -104,7 +104,14 @@ object Formats {
     namedEnumFormatter(CurrentRentFixed, Errors.booleanMissing)
 
   implicit val currentRentPayableWithin12MonthsFormatter: Formatter[CurrentRentWithin12Months] =
-    namedEnumFormatter(CurrentRentWithin12Months, Errors.booleanMissing)
+    namedEnumFormatter(CurrentRentWithin12Months, Errors.currentRentPayableWithin12Months)
+
+  implicit val tenancy3YearsFormatter: Formatter[TenancyThreeYears] =
+    namedEnumFormatter(TenancyThreeYears, Errors.tenancy3Years)
+  implicit val rent3YearsFormatter: Formatter[RentThreeYears]       =
+    namedEnumFormatter(RentThreeYears, Errors.rent3Years)
+  implicit val underReviewFormatter: Formatter[UnderReview]         =
+    namedEnumFormatter(UnderReview, Errors.underReview)
 
   implicit val whatIsYourRentBasedOnFormatter: Formatter[CurrentRentBasedOn] =
     namedEnumFormatter(CurrentRentBasedOn, Errors.booleanMissing)

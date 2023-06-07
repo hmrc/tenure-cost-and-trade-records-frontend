@@ -38,8 +38,7 @@
 @(form: Form[_], index: Int, cateringOrLetting: String, operatorName: String, backLink: String, summary: Summary)(implicit request: Request[_], messages: Messages)
 
 @layout(
- pageHeading = messages("cateringOperationOrLettingAccommodationCheckboxesDetails.heading", "Wombles Inc"),
- showH1 = false,
+ pageHeading = messages("cateringOperationOrLettingAccommodationCheckboxesDetails.heading", operatorName),
  showSection = true,
  summary = Some(summary),
  sectionName = messages("label.section.aboutTheFranchiseLettings"),
@@ -54,11 +53,7 @@
   else if(cateringOrLetting.equals("lettingOtherPartOfPropertyCheckboxesDetails"))
    controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyRentIncludesController.submit(index)
   else controllers.routes.TaskListController.show()},
-  args = 'class -> "myForm", 'id -> "myFormId") {
-
-  <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-   <h1 class="govuk-fieldset__heading">@messages("cateringOperationOrLettingAccommodationCheckboxesDetails.heading", operatorName)</h1>
-  </legend>
+  args = Symbol("class") -> "myForm", Symbol("id") -> "myFormId") {
 
   @govukCheckboxes(
    Checkboxes(

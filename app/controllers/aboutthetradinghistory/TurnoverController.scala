@@ -22,7 +22,7 @@ import form.aboutthetradinghistory.TurnoverForm.turnoverForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.updateAboutTheTradingHistory
 import models.submissions.aboutthetradinghistory.TurnoverSection
 import navigation.AboutTheTradingHistoryNavigator
-import navigation.identifiers.CheckYourAnswersAboutTheTradingHistoryId
+import navigation.identifiers.TurnoverPageId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
@@ -69,9 +69,7 @@ class TurnoverController @Inject() (
             val updatedData = updateAboutTheTradingHistory(_.copy(turnoverSections = success))
             session
               .saveOrUpdate(updatedData)
-              .map(_ =>
-                Redirect(navigator.nextPage(CheckYourAnswersAboutTheTradingHistoryId, updatedData).apply(updatedData))
-              )
+              .map(_ => Redirect(navigator.nextPage(TurnoverPageId, updatedData).apply(updatedData)))
           }
         )
       }
