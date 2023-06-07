@@ -17,12 +17,12 @@
 package views.connectiontoproperty
 
 import form.connectiontoproperty.EditAddressForm
-import models.submissions.common.Address
+import models.submissions.common.{Address, ContactDetailsAddress}
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class EditAddressViewSpec extends QuestionViewBehaviours[Address] {
+class EditAddressViewSpec extends QuestionViewBehaviours[ContactDetailsAddress] {
 
   val messageKeyPrefix = "editAddress"
 
@@ -30,7 +30,7 @@ class EditAddressViewSpec extends QuestionViewBehaviours[Address] {
 
   def createView = () => editAddressView(form)(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[Address]) => editAddressView(form)(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[ContactDetailsAddress]) => editAddressView(form)(fakeRequest, messages)
 
   "Edit Address view" must {
 

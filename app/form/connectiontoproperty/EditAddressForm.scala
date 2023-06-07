@@ -16,15 +16,15 @@
 
 package form.connectiontoproperty
 
-import form.MappingSupport.addressMapping
-import models.submissions.common.Address
+import form.MappingSupport.contactAddressMapping
+import models.submissions.common.ContactDetailsAddress
 import play.api.data.Form
 
 object EditAddressForm {
 
-  lazy val baseEditAddressForm: Form[Address] = Form(baseEditAddressMapping)
+  lazy val baseEditAddressForm: Form[ContactDetailsAddress] = Form(baseEditAddressMapping)
 
-  val baseEditAddressMapping = addressMapping
+  val baseEditAddressMapping = contactAddressMapping
 
   val editAddressForm = Form(baseEditAddressMapping)
 

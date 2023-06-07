@@ -64,6 +64,14 @@ object Errors {
   val tiedTypeRequired    = "error.tiedType.required"
   val tiedForGoodsDetails = "error.tiedForGoodsDetails.required"
 
+  //Current Rent Payable Within 12 Months
+  val currentRentPayableWithin12Months = "error.currentRentPayableWithin12Months.required"
+
+  //Lease or Agreement Details - Three Radio buttons on one page
+  val tenancy3Years = "error.tenancy3Years.required"
+  val rent3Years    = "error.rent3Years.required"
+  val underReview   = "error.underReview.required"
+
   //generic errors
   val required        = "error.required"
   val booleanMissing  = "error.boolean_missing"
