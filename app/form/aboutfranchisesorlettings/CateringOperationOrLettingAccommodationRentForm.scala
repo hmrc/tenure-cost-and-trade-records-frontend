@@ -27,7 +27,7 @@ object CateringOperationOrLettingAccommodationRentForm {
   val cateringOperationOrLettingAccommodationRentForm = Form(
     mapping(
       "annualRent" -> currencyMapping(".annualRent"),
-      "dateInput"  -> monthsYearDurationMapping("dateInput")
+      "dateInput"  -> monthsYearDurationMapping("dateInput", fieldErrorPart = ".dateInput")
     )(CateringOperationRentDetails.apply)(
       CateringOperationRentDetails.unapply
     )

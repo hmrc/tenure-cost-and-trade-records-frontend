@@ -17,19 +17,24 @@
 package form.aboutYourLeaseOrTenure
 
 import form.MappingSupport.whatIsYourRentBasedOnType
-import models.submissions.aboutYourLeaseOrTenure.WhatIsYourCurrentRentBasedOnDetails
+import models.submissions.aboutYourLeaseOrTenure.{CurrentRentBasedOnOther, WhatIsYourCurrentRentBasedOnDetails}
 import play.api.data.Form
 import play.api.data.Forms.{default, mapping, text}
 import play.api.data.validation.Constraints.{maxLength, nonEmpty}
+import uk.gov.voa.play.form.ConditionalMappings.mandatoryIfEqual
 
 object WhatIsYourCurrentRentBasedOnForm {
 
   val whatIsYourCurrentRentBasedOnForm = Form(
     mapping(
       "currentRentBasedOn"    -> whatIsYourRentBasedOnType,
-      "whatIsYourRentBasedOn" -> default(text, "").verifying(
-        nonEmpty(errorMessage = "error.whatIsYourRentBasedOn.required"),
-        maxLength(1000, "error.whatIsYourRentBasedOn.maxLength")
+      "whatIsYourRentBasedOn" -> mandatoryIfEqual(
+        "currentRentBasedOn",
+        CurrentRentBasedOnOther.name,
+        default(text, "").verifying(
+          nonEmpty(errorMessage = "error.whatIsYourRentBasedOn.required"),
+          maxLength(1000, "error.whatIsYourRentBasedOn.maxLength")
+        )
       )
     )(WhatIsYourCurrentRentBasedOnDetails.apply)(WhatIsYourCurrentRentBasedOnDetails.unapply)
   )

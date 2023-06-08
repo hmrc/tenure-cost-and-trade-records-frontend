@@ -533,8 +533,8 @@ label.saleLeaseback = As part of a sale and leaseback transaction
 label.rentActuallyAgreed = When was the rent actually agreed or set?
 label.rentActuallyAgreed.help = For example, 27 9 2017
 error.rentActuallyAgreed.day.required = The date must include a day
-error.rentActuallyAgreed.month.required = The date must include a month
-error.rentActuallyAgreed.year.required = The date must include a year
+error.rentActuallyAgreed.month.required = The date when the rent was agreed must include a month
+error.rentActuallyAgreed.year.required = The date when the rent was agreed must include a year
 error.howIsCurrentRentFixed.required = Tell us how the rent was fixed
 
 ##CATERING OPERATION OR LETTING DETAILS
@@ -563,6 +563,8 @@ label.annualRent = Annual rent payment (excluding VAT)
 label.dateInput = When was this sum fixed?
 error.required.annualRentExcludingVat.annualRent = Enter the annual rent excluding VAT
 error.invalid_currency.annualRent.annualRent = The annual rent figure must be a number
+error.dateInput.month.required = The date the rent was fixed must include a month
+error.dateInput.year.required = The date the rent was fixed must include a year
 
 ##CATERING OPERATION OR LETTING ACCOMMODATION CHECKBOXES
 ########################################################
@@ -622,6 +624,8 @@ label.financialYear.help = If your financial year end changed within the last 3 
 currentRentFirstPaid.heading = When was the current rent first paid under the terms of the current lease or agreement?
 label.currentRentFirstPaid = Disregard alterations solely due to changes in the amount of rates or services payable
 label.currentRentFirstPaid.help = For example, 27 9 2017
+error.currentRentFirstPaid.month.required = The date when the current rent was first paid must include a month
+error.currentRentFirstPaid.year.required = The date when the current rent was first paid must include a year
 
 ##CURRENT LEASE OR AGREEMENT BEGIN
 ##################################
@@ -652,6 +656,8 @@ currentRentPayableWithin12Months.heading = Is the current rent payable due to re
 currentRentPayableWithin12Months.hint = Do not include any rent increases linked to turnover or the retail price index (RPI)
 label.dateReview = Date of next rent review or expiry of existing lease
 error.currentRentPayableWithin12Months.required = Select yes if the current rent will be reviewed in the next 12 months
+error.dateReview.month.required = The date of review or expiry must include a month
+error.dateReview.year.required = The date of review or expiry must include a year
 
 ##WHAT IS YOUR RENT BASED ON
 ############################
@@ -665,7 +671,8 @@ label.stepped = Stepped rent arrangement
 label.other = Other (for example, combination of the above)
 label.whatIsYourRentBasedOn.describe = Describe
 hint.whatIsYourRentBasedOn.describe = For example, 75% of the open market value, or indexed to the consumer price index
-error.whatIsYourRentBasedOn.required = Please provide further information
+error.whatIsYourRentBasedOn.required = Describe how your rent is calculated
+error.currentRentBasedOn.required = Tell us what the rent is based on
 
 #6010 TYPES
 ##############################

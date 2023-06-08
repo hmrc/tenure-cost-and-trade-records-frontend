@@ -88,7 +88,7 @@ class CateringOperationsRentDetailsViewSpec extends QuestionViewBehaviours[Cater
     "contain date format hint for dateInput-hint" in {
       val doc             = asDocument(createViewUsingForm(form))
       val firstOccupyHint = doc.getElementById("dateInput-hint").text()
-      assert(firstOccupyHint == messages("hint.date.example"))
+      assert(firstOccupyHint == messages("help.date.month.year"))
     }
 
     "contain date field for the value dateInput.month" in {

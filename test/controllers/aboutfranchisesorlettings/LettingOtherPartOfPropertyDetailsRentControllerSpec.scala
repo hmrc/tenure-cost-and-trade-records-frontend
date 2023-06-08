@@ -40,7 +40,7 @@ class LettingOtherPartOfPropertyDetailsRentControllerSpec extends TestBaseSpec {
       mockSessionRepo
     )
 
-  "GET /"    should {
+  "GET /" should {
     "return 200" in {
       val result = lettingOtherPartOfPropertyDetailsRentController().show(0)(fakeRequest)
       status(result) shouldBe Status.OK
@@ -73,12 +73,13 @@ class LettingOtherPartOfPropertyDetailsRentControllerSpec extends TestBaseSpec {
 
           Option(html.getElementById("annualRent").`val`()).value      shouldBe "1500"
           Option(html.getElementById("dateInput.month").`val`()).value shouldBe "6"
-          Option(html.getElementById("dateInput.year").`val`()).value  shouldBe "2022"
+          Option(html.getElementById("dateInput.year").`val`()).value  shouldBe "2000"
 
         }
       }
     }
   }
+
   "SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
       val res = lettingOtherPartOfPropertyDetailsRentController().submit(0)(
@@ -87,4 +88,5 @@ class LettingOtherPartOfPropertyDetailsRentControllerSpec extends TestBaseSpec {
       status(res) shouldBe BAD_REQUEST
     }
   }
+
 }

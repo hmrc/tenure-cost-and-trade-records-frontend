@@ -18,11 +18,11 @@ package form.aboutYourLeaseOrTenure
 
 import form.MappingSupport.{buildingInsuranceType, insideRepairsType, outsideRepairsType}
 import models.submissions.aboutYourLeaseOrTenure.UltimatelyResponsible
-import models.submissions.common.OutsideRepairsBoth
+import models.submissions.common.{BuildingInsuranceBoth, BuildingInsuranceLandlord, InsideRepairsBoth, InsideRepairsLandlord, InsideRepairsTenant, OutsideRepairsBoth, OutsideRepairsLandlord, OutsideRepairsTenant}
 import play.api.data.Form
-import play.api.data.Forms.{default, mapping, text}
-import play.api.data.validation.Constraints.maxLength
-import uk.gov.voa.play.form.ConditionalMappings.mandatoryIfEqual
+import play.api.data.Forms.{default, mapping, optional, text}
+import play.api.data.validation.Constraints.{maxLength, nonEmpty}
+import uk.gov.voa.play.form.ConditionalMappings.{isEqual, mandatoryIf, mandatoryIfAnyAreTrue, mandatoryIfEqual, mandatoryIfEqualToAny, mandatoryIfTrue}
 
 object UltimatelyResponsibleForm {
 
@@ -31,13 +31,57 @@ object UltimatelyResponsibleForm {
       "outsideRepairs"         -> outsideRepairsType,
       "insideRepairs"          -> insideRepairsType,
       "buildingInsurance"      -> buildingInsuranceType,
-      "sharedResponsibilities" -> mandatoryIfEqual(
-        "outsideRepairs",
-        OutsideRepairsBoth.name,
+      "sharedResponsibilities" -> mandatoryIfAnyAreTrue(
+        Seq("true"),
         default(text, "").verifying(
+          nonEmpty(errorMessage = "error.sharedResponsibilities.required"),
           maxLength(2000, "error.sharedResponsibilities.maxLength")
         )
       )
     )(UltimatelyResponsible.apply)(UltimatelyResponsible.unapply)
   )
+
 }
+//optional(
+//  default(text, "").verifying(
+//    maxLength(2000, "error.sharedResponsibilities.maxLength")
+//  ))
+
+//if(OutsideRepairsBoth.name == "both" || InsideRepairsBoth.name == "both" || BuildingInsuranceBoth.name == "both")
+
+//optional(
+//  if(OutsideRepairsBoth.name.equals("both") || InsideRepairsBoth.name.equals("both") || BuildingInsuranceBoth.name.equals("both"))
+//    default(text, "").verifying(
+//      nonEmpty(errorMessage = "error.sharedResponsibilities.required"),
+//      maxLength(2000, "error.sharedResponsibilities.maxLength")
+//    ) else
+//    default(text, "").verifying(
+//      maxLength(2000, "error.sharedResponsibilities.maxLength")
+//    )
+//)
+
+//mandatoryIfEqualToAny(
+//  "sharedResponsibilities",
+//  Seq(OutsideRepairsBoth.name, InsideRepairsBoth.name, BuildingInsuranceBoth.name),
+//  default(text, "").verifying(
+//    nonEmpty(errorMessage = "error.sharedResponsibilities.required"),
+//    maxLength(2000, "error.sharedResponsibilities.maxLength")
+//  )
+//)
+
+//mandatoryIf(
+//  isEqual("outsideRepairs", "both"),
+//  default(text, "").verifying(
+//    nonEmpty(errorMessage = "error.sharedResponsibilities.required"),
+//    maxLength(2000, "error.sharedResponsibilities.maxLength"))
+//)
+
+//mandatoryIfAnyAreTrue(
+//  Seq(OutsideRepairsBoth.name, InsideRepairsBoth.name,  BuildingInsuranceBoth.name),
+//  default(text, "").verifying(
+//    nonEmpty(errorMessage = "error.sharedResponsibilities.required"),
+//    maxLength(2000, "error.sharedResponsibilities.maxLength")
+//  )
+//)
+
+//fieldsToExclude = Seq(OutsideRepairsLandlord.name, OutsideRepairsTenant.name, InsideRepairsLandlord.name, InsideRepairsTenant.name, BuildingInsuranceLandlord.name, BuildingInsuranceLandlord.name)

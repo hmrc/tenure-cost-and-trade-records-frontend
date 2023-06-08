@@ -532,8 +532,8 @@ label.saleLeaseback = As part of a sale and leaseback transaction
 label.rentActuallyAgreed = When was the rent actually agreed or set?
 label.rentActuallyAgreed.help = For example, 27 9 2017
 error.rentActuallyAgreed.day.required = The date must include a day
-error.rentActuallyAgreed.month.required = The date must include a month
-error.rentActuallyAgreed.year.required = The date must include a year
+error.rentActuallyAgreed.month.required = The date when the rent was agreed must include a month
+error.rentActuallyAgreed.year.required = The date when the rent was agreed must include a year
 error.howIsCurrentRentFixed.required = Tell us how the rent was fixed
 
 ##CATERING OPERATION OR LETTING DETAILS
@@ -560,6 +560,10 @@ error.lettingTypeOfBusiness.maxLength = Description of letting must be 100 chara
 cateringOperationOrLettingAccommodationRentDetails.heading = Annual rent for {0}
 label.annualRent = Annual rent payment (excluding VAT)
 label.dateInput = When was this sum fixed?
+error.required.annualRentExcludingVat.annualRent = Enter the annual rent excluding VAT
+error.invalid_currency.annualRent.annualRent = The annual rent figure must be a number
+error.dateInput.month.required = The date the rent was fixed must include a month
+error.dateInput.year.required = The date the rent was fixed must include a year
 
 ##CATERING OPERATION OR LETTING ACCOMMODATION CHECKBOXES
 ########################################################
@@ -619,6 +623,8 @@ label.financialYear.help = If your financial year end changed within the last 3 
 currentRentFirstPaid.heading = When was the current rent first paid under the terms of the current lease or agreement?
 label.currentRentFirstPaid = Disregard alterations solely due to changes in the amount of rates or services payable
 label.currentRentFirstPaid.help = For example, 27 9 2017
+error.currentRentFirstPaid.month.required = The date when the current rent was first paid must include a month
+error.currentRentFirstPaid.year.required = The date when the current rent was first paid must include a year
 
 ##CURRENT LEASE OR AGREEMENT BEGIN
 ##################################

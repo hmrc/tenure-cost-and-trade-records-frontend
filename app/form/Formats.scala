@@ -121,6 +121,6 @@ object Formats {
     namedEnumFormatter(UnderReview, Errors.underReview)
 
   implicit val whatIsYourRentBasedOnFormatter: Formatter[CurrentRentBasedOn] =
-    namedEnumFormatter(CurrentRentBasedOn, Errors.booleanMissing)
+    namedEnumFormatter(CurrentRentBasedOn, Errors.currentRentBasedOn)
 
 }

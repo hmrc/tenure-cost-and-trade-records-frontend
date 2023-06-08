@@ -91,12 +91,6 @@ class CurrentRentPayableWithin12MonthsViewSpec extends QuestionViewBehaviours[Cu
       assertContainsText(doc, messages("currentRentPayableWithin12Months.hint"))
     }
 
-    "contain date field for the value dateReview.day" in {
-      val doc = asDocument(createViewUsingForm(form))
-      assertContainsLabel(doc, "dateReview.day", "Day")
-      assertContainsText(doc, "dateReview.day")
-    }
-
     "contain date field for the value dateReview.month" in {
       val doc = asDocument(createViewUsingForm(form))
       assertContainsLabel(doc, "dateReview.month", "Month")

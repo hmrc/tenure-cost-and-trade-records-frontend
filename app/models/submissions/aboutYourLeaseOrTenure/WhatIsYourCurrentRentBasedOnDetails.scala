@@ -20,7 +20,7 @@ import play.api.libs.json.Json
 
 case class WhatIsYourCurrentRentBasedOnDetails(
   currentRentBasedOn: CurrentRentBasedOn,
-  describe: String
+  describe: Option[String]
 )
 
 object WhatIsYourCurrentRentBasedOnDetails {

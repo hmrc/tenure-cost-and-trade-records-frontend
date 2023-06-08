@@ -16,7 +16,7 @@
 
 package form.aboutYourLeaseOrTenure
 
-import form.DateMappings.dateFieldsMapping
+import form.DateMappings.{dateFieldsMapping, monthsYearDurationMapping}
 import models.submissions.aboutYourLeaseOrTenure.CurrentRentFirstPaid
 import play.api.data.Form
 import play.api.data.Forms.mapping
@@ -25,7 +25,10 @@ object CurrentRentFirstPaidForm {
 
   val currentRentFirstPaidForm = Form(
     mapping(
-      "currentRentFirstPaid" -> dateFieldsMapping("currentRentFirstPaid")
+      "currentRentFirstPaid" -> monthsYearDurationMapping(
+        "currentRentFirstPaid",
+        fieldErrorPart = ".currentRentFirstPaid"
+      )
     )(CurrentRentFirstPaid.apply)(CurrentRentFirstPaid.unapply)
   )
 }

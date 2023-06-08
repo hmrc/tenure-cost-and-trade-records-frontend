@@ -183,7 +183,7 @@ trait FakeObjects {
       "Type of Business",
       prefilledLettingAddress
     ),
-    Some(LettingOtherPartOfPropertyRentDetails(BigDecimal(1500), prefilledDateInput)),
+    Some(LettingOtherPartOfPropertyRentDetails(BigDecimal(1500), prefilledMonthYearInput)),
     Some(AnswerYes)
   )
   val prefilledLettingSectionNo: LettingSection                      = LettingSection(
@@ -192,7 +192,7 @@ trait FakeObjects {
       "Type of Business",
       prefilledLettingAddress
     ),
-    Some(LettingOtherPartOfPropertyRentDetails(BigDecimal(1500), prefilledDateInput)),
+    Some(LettingOtherPartOfPropertyRentDetails(BigDecimal(1500), prefilledMonthYearInput)),
     Some(AnswerNo)
   )
 
@@ -257,7 +257,7 @@ trait FakeObjects {
   val prefilledBigDecimal                       = BigDecimal(9999999)
   val prefilledAnnualRent                       = AnnualRent(prefilledBigDecimal)
   val prefilledCurrentRentPayableWithin12Months =
-    CurrentRentPayableWithin12Months(CurrentRentWithin12MonthsYes, prefilledDateInput)
+    CurrentRentPayableWithin12Months(CurrentRentWithin12MonthsYes, prefilledMonthYearInput)
 
   val prefilledAboutTheLandlord               =
     AboutTheLandlord(

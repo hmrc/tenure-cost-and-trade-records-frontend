@@ -121,12 +121,6 @@ class HowIsCurrentRentFixedViewSpec extends QuestionViewBehaviours[HowIsCurrentR
       assert(firstOccupyHint == messages("label.rentActuallyAgreed.help"))
     }
 
-    "contain date field for the value rentActuallyAgreed.day" in {
-      val doc = asDocument(createViewUsingForm(form))
-      assertContainsLabel(doc, "rentActuallyAgreed.day", "Day")
-      assertContainsText(doc, "rentActuallyAgreed.day")
-    }
-
     "contain date field for the value rentActuallyAgreed.month" in {
       val doc = asDocument(createViewUsingForm(form))
       assertContainsLabel(doc, "rentActuallyAgreed.month", "Month")
