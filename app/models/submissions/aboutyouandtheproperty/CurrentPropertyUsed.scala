@@ -61,4 +61,6 @@ object CurrentPropertyUsed extends NamedEnumSupport[CurrentPropertyUsed] {
   )
 
   val key = all.head.key
+
+  def withName(name: String): Option[CurrentPropertyUsed] = all.find(_.name == name)
 }

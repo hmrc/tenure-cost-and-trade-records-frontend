@@ -58,7 +58,7 @@
 
             @govukSummaryList(SummaryList(rows = sectionAnswers.row("checkYourAnswersAboutTheProperty.currentOccupier", _.propertyDetails.map(_.currentOccupierName), aboutyouandtheproperty.routes.AboutThePropertyController.show(), "currentOccupierName") ++
                     sectionAnswers.row("checkYourAnswersAboutTheProperty.propertyUsage",
-                        _.propertyDetails.map(_.propertyCurrentlyUsed).map(usage => s"${usage.key}.${usage.name}"),
+                        _.propertyDetails.map(_.propertyCurrentlyUsed).map(usage => s"${usage.head.key}.${usage.head.name}"),
                         aboutyouandtheproperty.routes.AboutThePropertyController.show(), "propertyCurrentlyUsed",
                         ("propertyCurrentlyUsed.other", _.propertyDetails.flatMap(_.currentlyUsedOtherField))) ++
                     sectionAnswers.optionalRow("checkYourAnswersAboutTheProperty.hasWebsite",

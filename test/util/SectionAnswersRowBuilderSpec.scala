@@ -81,14 +81,14 @@ class SectionAnswersRowBuilderSpec extends TestBaseSpec {
       val answers = SectionAnswersRowBuilder(
         aboutYouAndTheProperty6010YesSession.aboutYouAndTheProperty.map(
           _.copy(propertyDetails =
-            Some(PropertyDetails("currentOccupierName", CurrentPropertyOther, Some("Details for other option")))
+            Some(PropertyDetails("currentOccupierName", List(CurrentPropertyOther), Some("Details for other option")))
           )
         )
       )(messages)
 
       val row = answers.row(
         "checkYourAnswersAboutTheProperty.propertyUsage",
-        _.propertyDetails.map(_.propertyCurrentlyUsed).map(usage => s"${usage.key}.${usage.name}"),
+        _.propertyDetails.map(_.propertyCurrentlyUsed).map(usage => s"${usage.head.key}.${usage.head.name}"),
         aboutyouandtheproperty.routes.AboutThePropertyController.show(),
         "propertyCurrentlyUsed",
         ("propertyCurrentlyUsed.other", _.propertyDetails.flatMap(_.currentlyUsedOtherField))

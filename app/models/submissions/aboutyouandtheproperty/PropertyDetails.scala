@@ -20,7 +20,7 @@ import play.api.libs.json.Json
 
 case class PropertyDetails(
   currentOccupierName: String,
-  propertyCurrentlyUsed: CurrentPropertyUsed,
+  propertyCurrentlyUsed: List[CurrentPropertyUsed],
   currentlyUsedOtherField: Option[String]
 )
 
