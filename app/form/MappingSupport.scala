@@ -28,8 +28,9 @@ import models.submissions.common.{Address, AnswerResponsibleParty, AnswersYesNo,
 import models.submissions.connectiontoproperty.{AddressConnectionType, ConnectionToProperty}
 import models.submissions.notconnected.PastConnectionType
 import models.{AnnualRent, NamedEnum, NamedEnumSupport}
-import play.api.data.Forms.{boolean, default, email, mapping, optional, text}
+import play.api.data.Forms.{boolean, default, email, list, mapping, nonEmptyText, optional, text}
 import play.api.data.format.Formatter
+import play.api.data.validation.{Constraint, Invalid, Valid, ValidationError}
 import play.api.data.validation.Constraints.{maxLength, minLength, nonEmpty, pattern}
 import play.api.data.{FormError, Forms, Mapping}
 
@@ -82,6 +83,21 @@ object MappingSupport {
   lazy val annualRent: Mapping[AnnualRent] = mapping(
     "annualRentExcludingVat" -> currencyMapping(".annualRentExcludingVat")
   )(AnnualRent.apply)(AnnualRent.unapply).verifying(Errors.maxCurrencyAmountExceeded, _.amount <= cdbMaxCurrencyAmount)
+
+  lazy val multipleCurrentPropertyUsedMapping: Mapping[List[CurrentPropertyUsed]] =
+    list(nonEmptyText).verifying(
+      Constraint[List[String]]("constraint.required") { propertyUsages =>
+        if (propertyUsages.nonEmpty) Valid
+        else Invalid(ValidationError("error.required.propertyUsages"))
+      }
+    )
+      .verifying("Invalid property used", propertyUsages =>
+        propertyUsages.forall(str => CurrentPropertyUsed.withName(str).isDefined)
+      )
+      .transform[List[CurrentPropertyUsed]](
+        propertyUsages => propertyUsages.flatMap(str => CurrentPropertyUsed.withName(str)),
+        currentPropertyUseds => currentPropertyUseds.map(_.name)
+      )
 
   lazy val rentIncludeFixturesAndFittingsDetails: Mapping[AnnualRent] = mapping(
     "rentIncludeFixturesAndFittingsDetails" -> currencyMapping(".rentIncludeFixturesAndFittingsDetails")

@@ -36,119 +36,119 @@
 @import models.pages.Summary
 
 @this(layout: Layout,
-  govukButton: GovukButton,
-  govukRadios: GovukRadios,
-  govukInput: GovukInput,
-  govukFieldset: GovukFieldset,
-  govukCheckboxes: GovukCheckboxes,
-  formWithCSRF: FormWithCSRF
+        govukButton: GovukButton,
+        govukRadios: GovukRadios,
+        govukInput: GovukInput,
+        govukFieldset: GovukFieldset,
+        govukCheckboxes: GovukCheckboxes,
+        formWithCSRF: FormWithCSRF
 )
 
 @(theForm: Form[PropertyDetails], forType: String, summary: Summary)(implicit request: Request[_], messages: Messages)
 
 @content = {
-  @if(forType.equals(ForTypes.for6010) || forType.equals(ForTypes.for6011)) {
-    @govukRadios(Radios(
+@if(forType.equals(ForTypes.for6010) || forType.equals(ForTypes.for6011)) {
+  @govukRadios(Radios(
+    fieldset =  Some(Fieldset(
+      legend = Some(Legend(
+        content = Text(Messages("label.propertyCurrentlyUsed")),
+        classes = "govuk-fieldset__legend--m"
+      ))
+    )),
+    hint = Hint(content = HtmlContent(messages("hint.select.main"))),
+    name = "propertyCurrentlyUsed[0]",
+    items = Seq(
+      RadioItem(
+        content = Text(messages("propertyCurrentlyUsed.publicHouse")),
+        value = Some("publicHouse")
+      ),
+      RadioItem(
+        content = Text(messages("propertyCurrentlyUsed.wineCafeBar")),
+        value = Some("wineCafeBar")
+      ),
+      RadioItem(
+        content = Text(messages("propertyCurrentlyUsed.otherBar")),
+        value = Some("otherBar")
+      ),
+      RadioItem(
+        content = Text(messages("propertyCurrentlyUsed.pubRestaurant")),
+        value = Some("pubRestaurant")
+      ),
+      RadioItem(
+        content = Text(messages("propertyCurrentlyUsed.licencedRestaurant")),
+        value = Some("licencedRestaurant")
+      ),
+      RadioItem(
+        content = Text(messages("propertyCurrentlyUsed.hotel")),
+        value = Some("hotel")
+      ),
+      RadioItem(
+        content = Text(messages("propertyCurrentlyUsed.discoNightclub")),
+        value = Some("discoNightclub")
+      ),
+      RadioItem(
+        content = Text(messages("propertyCurrentlyUsed.other")),
+        value = Some("other"),
+        conditionalHtml = Some(conditionalHTML(messages("hint.other.vacant.propertyCurrentlyUsedOther")))
+      )
+    ),
+    errorMessage = theForm.errors.asTextErrorMessageForField("propertyCurrentlyUsed")
+  ).withFormField(theForm("propertyCurrentlyUsed[0]"))
+  )
+}
+
+@if(forType.equals(ForTypes.for6015) || forType.equals(ForTypes.for6016)) {
+  @govukCheckboxes(
+    Checkboxes(
       fieldset =  Some(Fieldset(
         legend = Some(Legend(
           content = Text(Messages("label.propertyCurrentlyUsed")),
           classes = "govuk-fieldset__legend--m"
         ))
       )),
-      hint = Hint(content = HtmlContent(messages("hint.select.main"))),
-      name = "propertyCurrentlyUsed",
+      name = "propertyCurrentlyUsed[]",
       items = Seq(
-        RadioItem(
-          content = Text(messages("propertyCurrentlyUsed.publicHouse")),
-          value = Some("publicHouse")
-        ),
-        RadioItem(
-          content = Text(messages("propertyCurrentlyUsed.wineCafeBar")),
-          value = Some("wineCafeBar")
-        ),
-        RadioItem(
-          content = Text(messages("propertyCurrentlyUsed.otherBar")),
-          value = Some("otherBar")
-        ),
-        RadioItem(
-          content = Text(messages("propertyCurrentlyUsed.pubRestaurant")),
-          value = Some("pubRestaurant")
-        ),
-        RadioItem(
-          content = Text(messages("propertyCurrentlyUsed.licencedRestaurant")),
-          value = Some("licencedRestaurant")
-        ),
-        RadioItem(
+        CheckboxItem(
           content = Text(messages("propertyCurrentlyUsed.hotel")),
-          value = Some("hotel")
+          value = "hotel",
         ),
-        RadioItem(
-          content = Text(messages("propertyCurrentlyUsed.discoNightclub")),
-          value = Some("discoNightclub")
+        CheckboxItem(
+          content = Text(messages("propertyCurrentlyUsed.healthSpa")),
+          value = "healthSpa",
         ),
-        RadioItem(
+        CheckboxItem(
+          content = Text(messages("propertyCurrentlyUsed.lodgeAndRestaurant")),
+          value = "lodgeAndRestaurant",
+        ),
+        CheckboxItem(
+          content = Text(messages("propertyCurrentlyUsed.conferenceCentre")),
+          value = "conferenceCentre",
+        ),
+        CheckboxItem(
           content = Text(messages("propertyCurrentlyUsed.other")),
-          value = Some("other"),
-          conditionalHtml = Some(conditionalHTML(messages("hint.other.vacant.propertyCurrentlyUsedOther")))
+          value = "other",
+          conditionalHtml = Some(conditionalHTML(messages("hint.other.use.propertyCurrentlyUsedOther")))
         )
       ),
+      hint = Hint(content = HtmlContent(messages("hint.select.all"))),
       errorMessage = theForm.errors.asTextErrorMessageForField("propertyCurrentlyUsed")
-      ).withFormField(theForm("propertyCurrentlyUsed"))
-    )
-  }
-
-  @if(forType.equals(ForTypes.for6015) || forType.equals(ForTypes.for6016)) {
-    @govukCheckboxes(
-      Checkboxes(
-        fieldset =  Some(Fieldset(
-          legend = Some(Legend(
-            content = Text(Messages("label.propertyCurrentlyUsed")),
-            classes = "govuk-fieldset__legend--m"
-          ))
-        )),
-        name = "propertyCurrentlyUsed",
-        items = Seq(
-          CheckboxItem(
-            content = Text(messages("propertyCurrentlyUsed.hotel")),
-            value = "hotel"
-          ),
-          CheckboxItem(
-            content = Text(messages("propertyCurrentlyUsed.healthSpa")),
-            value = "healthSpa"
-          ),
-          CheckboxItem(
-            content = Text(messages("propertyCurrentlyUsed.lodgeAndRestaurant")),
-            value = "lodgeAndRestaurant"
-          ),
-          CheckboxItem(
-            content = Text(messages("propertyCurrentlyUsed.conferenceCentre")),
-            value = "conferenceCentre"
-          ),
-          CheckboxItem(
-            content = Text(messages("propertyCurrentlyUsed.other")),
-            value = "other",
-            conditionalHtml = Some(conditionalHTML(messages("hint.other.use.propertyCurrentlyUsedOther")))
-          )
-        ),
-        hint = Hint(content = HtmlContent(messages("hint.select.all"))),
-        errorMessage = theForm.errors.asTextErrorMessageForField("propertyCurrentlyUsed")
-      ).withFormField(theForm("propertyCurrentlyUsed"))
-    )
-  }
+    ).withFormField(theForm("propertyCurrentlyUsed"))
+  )
+}
 }
 
 @conditionalHTML(hintText: String) = {
-  @govukInput(
-    Input(
-      id = "propertyCurrentlyUsedOther",
-      name = "propertyCurrentlyUsedOther",
-      classes = "govuk-input--width-20",
-      value = theForm("propertyCurrentlyUsedOther").value,
-      label = Label(
-       content = Text(messages(hintText))
-      )
+@govukInput(
+  Input(
+    id = "propertyCurrentlyUsedOther",
+    name = "propertyCurrentlyUsedOther",
+    classes = "govuk-input--width-20",
+    value = theForm("propertyCurrentlyUsedOther").value,
+    label = Label(
+      content = Text(messages(hintText))
     )
   )
+)
 }
 
 @layout(
@@ -183,4 +183,3 @@
     @includes.continueSaveAsDraftButtons(govukButton)
   }
 }
-

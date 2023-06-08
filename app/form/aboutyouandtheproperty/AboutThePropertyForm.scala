@@ -16,7 +16,7 @@
 
 package form.aboutyouandtheproperty
 
-import form.MappingSupport.aboutYourPropertyType
+import form.MappingSupport.{aboutYourPropertyType, multipleCurrentPropertyUsedMapping}
 import models.submissions.aboutyouandtheproperty._
 import play.api.data.Form
 import play.api.data.Forms.{default, mapping, nonEmptyText, optional, text}
@@ -42,7 +42,7 @@ object AboutThePropertyForm {
         nonEmpty(errorMessage = "error.currentOccupierName.required"),
         maxLength(50, "error.currentOccupierName.maxLength")
       ),
-      "propertyCurrentlyUsed"      -> aboutYourPropertyType,
+      "propertyCurrentlyUsed"      -> multipleCurrentPropertyUsedMapping,
       "propertyCurrentlyUsedOther" -> optional(text)
     )(PropertyDetails.apply)(PropertyDetails.unapply)
   )
