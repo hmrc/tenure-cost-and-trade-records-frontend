@@ -104,10 +104,10 @@
                   TableRow(
                       content = HtmlContent(
                           govukInput(Input(
-                              id = s"$idx-financial-year-end",
-                              name = s"$idx-financial-year-end",
-                              value = form(s"$idx-financial-year-end").value
-                          ).withFormField(form(s"$idx-financial-year-end")))
+                              id = s"$idx.financial-year-end",
+                              name = s"$idx.financial-year-end",
+                              value = form(s"$idx.financial-year-end").value
+                          ).withFormField(form(s"$idx.financial-year-end")))
                       )
                   )
               },
@@ -118,13 +118,13 @@
                           TableRow(
                               content = HtmlContent(
                                   govukInput(Input(
-                                      id = s"$idx-weeks",
-                                      name = s"$idx-weeks",
-                                      value = form(s"$idx-weeks").value,
+                                      id = s"$idx.weeks",
+                                      name = s"$idx.weeks",
+                                      value = form(s"$idx.weeks").value,
                                       suffix = Some(PrefixOrSuffix(
                                           content = Text(messages("turnover.weeks"))
                                       ))
-                                  ).withFormField(form(s"$idx-weeks")))
+                                  ).withFormField(form(s"$idx.weeks")))
                               )
                           )
                       },
@@ -134,13 +134,13 @@
                       TableRow(
                           content = HtmlContent(
                               govukInput(Input(
-                                  id = s"$idx-alcoholic-drinks",
-                                  name = s"$idx-alcoholic-drinks",
-                                  value = form(s"$idx-alcoholic-drinks").value,
+                                  id = s"$idx.alcoholic-drinks",
+                                  name = s"$idx.alcoholic-drinks",
+                                  value = form(s"$idx.alcoholic-drinks").value,
                                   prefix = Some(PrefixOrSuffix(
                                       content = Text("£")
                                   ))
-                              ).withFormField(form(s"$idx-alcoholic-drinks")))
+                              ).withFormField(form(s"$idx.alcoholic-drinks")))
                           )
                       )
                   },
@@ -150,13 +150,13 @@
                           TableRow(
                               content = HtmlContent(
                                   govukInput(Input(
-                                      id = s"$idx-food",
-                                      name = s"$idx-food",
-                                      value = form(s"$idx-food").value,
+                                      id = s"$idx.food",
+                                      name = s"$idx.food",
+                                      value = form(s"$idx.food").value,
                                       prefix = Some(PrefixOrSuffix(
                                           content = Text("£")
                                       ))
-                                  ).withFormField(form(s"$idx-food")))
+                                  ).withFormField(form(s"$idx.food")))
                               )
                           )
                       },
@@ -166,13 +166,13 @@
                           TableRow(
                               content = HtmlContent(
                                   govukInput(Input(
-                                      id = s"$idx-other-receipts",
-                                      name = s"$idx-other-receipts",
-                                      value = form(s"$idx-other-receipts").value,
+                                      id = s"$idx.other-receipts",
+                                      name = s"$idx.other-receipts",
+                                      value = form(s"$idx.other-receipts").value,
                                       prefix = Some(PrefixOrSuffix(
                                           content = Text("£")
                                       ))
-                                  ).withFormField(form(s"$idx-other-receipts")))
+                                  ).withFormField(form(s"$idx.other-receipts")))
                               )
                           )
                       },
@@ -182,13 +182,13 @@
                           TableRow(
                               content = HtmlContent(
                                   govukInput(Input(
-                                      id = s"$idx-accommodation",
-                                      name = s"$idx-accommodation",
-                                      value = form(s"$idx-accommodation").value,
+                                      id = s"$idx.accommodation",
+                                      name = s"$idx.accommodation",
+                                      value = form(s"$idx.accommodation").value,
                                       prefix = Some(PrefixOrSuffix(
                                           content = Text("£")
                                       ))
-                                  ).withFormField(form(s"$idx-accommodation")))
+                                  ).withFormField(form(s"$idx.accommodation")))
                               )
                           )
                       },
@@ -198,13 +198,13 @@
                           TableRow(
                               content = HtmlContent(
                                   govukInput(Input(
-                                      id = s"$idx-average-occupancy-rate",
-                                      name = s"$idx-average-occupancy-rate",
-                                      value = form(s"$idx-average-occupancy-rate").value,
+                                      id = s"$idx.average-occupancy-rate",
+                                      name = s"$idx.average-occupancy-rate",
+                                      value = form(s"$idx.average-occupancy-rate").value,
                                       suffix = Some(PrefixOrSuffix(
                                           content = Text("%")
                                       ))
-                                  ).withFormField(form(s"$idx-average-occupancy-rate")))
+                                  ).withFormField(form(s"$idx.average-occupancy-rate")))
                               )
                           )
                       }

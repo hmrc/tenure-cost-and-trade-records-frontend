@@ -17,7 +17,7 @@
 package form.aboutthetradinghistory
 
 import models.submissions.aboutthetradinghistory.TurnoverSection
-import play.api.data.Form
+import play.api.data.{Form, Mapping}
 import play.api.data.Forms.{bigDecimal, localDate, mapping, number}
 import play.api.data.validation.{Constraint, Invalid, Valid}
 
@@ -34,189 +34,45 @@ object TurnoverForm {
     val dateTooEarlyConstraint: Constraint[LocalDate]      = Constraint[LocalDate]("dateTooEarlyConstraint") { date =>
       if (date.isAfter(LocalDate.of(1900, 1, 1))) Valid else Invalid("errorName")
     }
+    val columnMapping: Mapping[TurnoverSection]            = mapping(
+      "financial-year-end"     -> ukDateMappings.verifying(dateTooEarlyConstraint, dateTooEarlyConstraint),
+      "weeks"                  -> number(min = 0, max = 52),
+      "alcoholic-drinks"       -> bigDecimal,
+      "food"                   -> bigDecimal.verifying(averageOccupancyConstraint),
+      "other-receipts"         -> bigDecimal,
+      "accommodation"          -> bigDecimal,
+      "average-occupancy-rate" -> bigDecimal
+    )(TurnoverSection.apply)(TurnoverSection.unapply)
 
-    Form(
+    Form {
       expectedNumberOfFinancialYears match {
         case 1                               =>
-          mapping(
-            "0-financial-year-end"     -> ukDateMappings.verifying(dateTooEarlyConstraint, dateTooEarlyConstraint),
-            "0-weeks"                  -> number(min = 0, max = 52),
-            "0-alcoholic-drinks"       -> bigDecimal,
-            "0-food"                   -> bigDecimal,
-            "0-other-receipts"         -> bigDecimal,
-            "0-accommodation"          -> bigDecimal,
-            "0-average-occupancy-rate" -> bigDecimal.verifying(averageOccupancyConstraint)
-          ) { case (yearEnd, weeks, alcohol, food, otherReceipts, accommodation, occupancy) =>
-            Seq(
-              TurnoverSection(
-                yearEnd,
-                weeks,
-                alcohol,
-                food,
-                otherReceipts,
-                accommodation,
-                occupancy
-              )
-            )
-          } {
-            case Seq(TurnoverSection(yearEnd, weeks, alcohol, food, otherReceipts, accommodation, occupancy)) =>
-              Some((yearEnd, weeks, alcohol, food, otherReceipts, accommodation, occupancy))
-            case _                                                                                            => None
+          mapping("0" -> columnMapping)(section => Seq(section)) {
+            case Seq(section) => Some(section)
+            case _            => None
           }
         case 2                               =>
           mapping(
-            "0-financial-year-end"     -> ukDateMappings,
-            "0-weeks"                  -> number(min = 0, max = 52),
-            "0-alcoholic-drinks"       -> bigDecimal,
-            "0-food"                   -> bigDecimal,
-            "0-other-receipts"         -> bigDecimal,
-            "0-accommodation"          -> bigDecimal,
-            "0-average-occupancy-rate" -> bigDecimal.verifying(averageOccupancyConstraint),
-            "1-financial-year-end"     -> ukDateMappings,
-            "1-weeks"                  -> number(min = 0, max = 52),
-            "1-alcoholic-drinks"       -> bigDecimal,
-            "1-food"                   -> bigDecimal,
-            "1-other-receipts"         -> bigDecimal,
-            "1-accommodation"          -> bigDecimal,
-            "1-average-occupancy-rate" -> bigDecimal.verifying(averageOccupancyConstraint)
-          ) {
-            case (
-                  yearEnd1,
-                  weeks1,
-                  alcohol1,
-                  food1,
-                  otherReceipts1,
-                  accommodation1,
-                  occupancy1,
-                  yearEnd2,
-                  weeks2,
-                  alcohol2,
-                  food2,
-                  otherReceipts2,
-                  accommodation2,
-                  occupancy2
-                ) =>
-              Seq(
-                TurnoverSection(yearEnd1, weeks1, alcohol1, food1, otherReceipts1, accommodation1, occupancy1),
-                TurnoverSection(yearEnd2, weeks2, alcohol2, food2, otherReceipts2, accommodation2, occupancy2)
-              )
-          } {
-            case Seq(
-                  TurnoverSection(yearEnd1, weeks1, alcohol1, food1, otherReceipts1, accommodation1, occupancy1),
-                  TurnoverSection(yearEnd2, weeks2, alcohol2, food2, otherReceipts2, accommodation2, occupancy2)
-                ) =>
-              Some(
-                (
-                  yearEnd1,
-                  weeks1,
-                  alcohol1,
-                  food1,
-                  otherReceipts1,
-                  accommodation1,
-                  occupancy1,
-                  yearEnd2,
-                  weeks2,
-                  alcohol2,
-                  food2,
-                  otherReceipts2,
-                  accommodation2,
-                  occupancy2
-                )
-              )
-            case _ => None
+            "0" -> columnMapping,
+            "1" -> columnMapping
+          ) { case (first, second) => Seq(first, second) } {
+            case Seq(first, second) => Some((first, second))
+            case _                  => None
           }
         case 3                               =>
           mapping(
-            "0-financial-year-end"     -> ukDateMappings,
-            "0-weeks"                  -> number(min = 0, max = 52),
-            "0-alcoholic-drinks"       -> bigDecimal,
-            "0-food"                   -> bigDecimal,
-            "0-other-receipts"         -> bigDecimal,
-            "0-accommodation"          -> bigDecimal,
-            "0-average-occupancy-rate" -> bigDecimal.verifying(averageOccupancyConstraint),
-            "1-financial-year-end"     -> ukDateMappings,
-            "1-weeks"                  -> number(min = 0, max = 52),
-            "1-alcoholic-drinks"       -> bigDecimal,
-            "1-food"                   -> bigDecimal,
-            "1-other-receipts"         -> bigDecimal,
-            "1-accommodation"          -> bigDecimal,
-            "1-average-occupancy-rate" -> bigDecimal.verifying(averageOccupancyConstraint),
-            "2-financial-year-end"     -> ukDateMappings,
-            "2-weeks"                  -> number(min = 0, max = 52),
-            "2-alcoholic-drinks"       -> bigDecimal,
-            "2-food"                   -> bigDecimal,
-            "2-other-receipts"         -> bigDecimal,
-            "2-accommodation"          -> bigDecimal,
-            "2-average-occupancy-rate" -> bigDecimal.verifying(averageOccupancyConstraint)
-          ) {
-            case (
-                  yearEnd1,
-                  weeks1,
-                  alcohol1,
-                  food1,
-                  otherReceipts1,
-                  accommodation1,
-                  occupancy1,
-                  yearEnd2,
-                  weeks2,
-                  alcohol2,
-                  food2,
-                  otherReceipts2,
-                  accommodation2,
-                  occupancy2,
-                  yearEnd3,
-                  weeks3,
-                  alcohol3,
-                  food3,
-                  otherReceipts3,
-                  accommodation3,
-                  occupancy3
-                ) =>
-              Seq(
-                TurnoverSection(yearEnd1, weeks1, alcohol1, food1, otherReceipts1, accommodation1, occupancy1),
-                TurnoverSection(yearEnd2, weeks2, alcohol2, food2, otherReceipts2, accommodation2, occupancy2),
-                TurnoverSection(yearEnd3, weeks3, alcohol3, food3, otherReceipts3, accommodation3, occupancy3)
-              )
-          } {
-            case Seq(
-                  TurnoverSection(yearEnd1, weeks1, alcohol1, food1, otherReceipts1, accommodation1, occupancy1),
-                  TurnoverSection(yearEnd2, weeks2, alcohol2, food2, otherReceipts2, accommodation2, occupancy2),
-                  TurnoverSection(yearEnd3, weeks3, alcohol3, food3, otherReceipts3, accommodation3, occupancy3)
-                ) =>
-              Some(
-                (
-                  yearEnd1,
-                  weeks1,
-                  alcohol1,
-                  food1,
-                  otherReceipts1,
-                  accommodation1,
-                  occupancy1,
-                  yearEnd2,
-                  weeks2,
-                  alcohol2,
-                  food2,
-                  otherReceipts2,
-                  accommodation2,
-                  occupancy2,
-                  yearEnd3,
-                  weeks3,
-                  alcohol3,
-                  food3,
-                  otherReceipts3,
-                  accommodation3,
-                  occupancy3
-                )
-              )
-
-            case _ =>
-              None
+            "0" -> columnMapping,
+            "1" -> columnMapping,
+            "2" -> columnMapping
+          ) { case (first, second, third) => Seq(first, second, third) } {
+            case Seq(first, second, third) => Some((first, second, third))
+            case _                         => None
           }
         case incorrectNumberOfFinancialYears =>
           throw new IllegalArgumentException(
-            s"expected $expectedNumberOfFinancialYears financial years submissions, got $incorrectNumberOfFinancialYears"
+            s"$expectedNumberOfFinancialYears must be between 1 and 3, was: $incorrectNumberOfFinancialYears"
           )
       }
-    )
+    }
   }
 }
