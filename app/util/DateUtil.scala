@@ -29,8 +29,15 @@ import javax.inject.{Inject, Singleton}
   */
 object DateUtil {
 
+  implicit class localDateHelpers(localDate: LocalDate) {
+    def shortDate: String =
+      localDate.format(shortDateFormatter)
+
+  }
+
   val ukTimezone: ZoneId = ZoneId.of("Europe/London")
 
+  private val shortDateFormatter: DateTimeFormatter           = DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.UK)
   private val dayMonthYearExampleFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("d M yyyy", Locale.UK)
   private val monthYearExampleFormatter: DateTimeFormatter    = DateTimeFormatter.ofPattern("M yyyy", Locale.UK)
   private val dayMonthExampleFormatter: DateTimeFormatter     = DateTimeFormatter.ofPattern("d M", Locale.UK)

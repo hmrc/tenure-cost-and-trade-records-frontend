@@ -14,19 +14,18 @@
  * limitations under the License.
  */
 
-package models.submissions.aboutfranchisesorlettings
+package navigation
 
-import models.submissions.common.AnswersYesNo
-import play.api.libs.json.Json
+/**
+  * @author Yuriy Tumakha
+  */
+object UrlHelpers {
 
-case class LettingSection(
-  lettingOtherPartOfPropertyInformationDetails: LettingOtherPartOfPropertyInformationDetails,
-  lettingOtherPartOfPropertyRentDetails: Option[LettingOtherPartOfPropertyRentDetails] = None,
-  addAnotherLettingToProperty: Option[AnswersYesNo] = None,
-  itemsInRent: List[String] = List.empty
-)
-
-object LettingSection {
-  implicit val format = Json.format[LettingSection]
+  def urlPlusParamPrefix(url: String): String =
+    if (url.indexOf("?") == -1) {
+      url + "?"
+    } else {
+      url + "&"
+    }
 
 }

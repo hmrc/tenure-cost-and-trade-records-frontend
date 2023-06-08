@@ -14,19 +14,26 @@
  * limitations under the License.
  */
 
-package models.submissions.aboutfranchisesorlettings
+package util
 
-import models.submissions.common.AnswersYesNo
-import play.api.libs.json.Json
+import java.text.NumberFormat
+import java.util.Locale
 
-case class LettingSection(
-  lettingOtherPartOfPropertyInformationDetails: LettingOtherPartOfPropertyInformationDetails,
-  lettingOtherPartOfPropertyRentDetails: Option[LettingOtherPartOfPropertyRentDetails] = None,
-  addAnotherLettingToProperty: Option[AnswersYesNo] = None,
-  itemsInRent: List[String] = List.empty
-)
+/**
+  * @author Yuriy Tumakha
+  */
+object NumberUtil {
 
-object LettingSection {
-  implicit val format = Json.format[LettingSection]
+  implicit class bigDecimalHelpers(bigDecimal: BigDecimal) {
+
+    def asMoney: String =
+      asMoneyFull.replace(".00", "")
+
+    def asMoneyFull: String =
+      NumberFormat
+        .getCurrencyInstance(Locale.UK)
+        .format(bigDecimal)
+
+  }
 
 }

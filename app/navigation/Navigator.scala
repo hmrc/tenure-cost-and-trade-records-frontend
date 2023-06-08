@@ -19,6 +19,7 @@ package navigation
 import connectors.Audit
 import controllers.routes
 import models.Session
+import navigation.UrlHelpers.urlPlusParamPrefix
 import navigation.identifiers.Identifier
 import play.api.mvc.{AnyContent, Call, Request}
 import uk.gov.hmrc.http.HeaderCarrier
@@ -29,11 +30,17 @@ abstract class Navigator @Inject() (
   audit: Audit
 ) {
 
+  implicit class callHelpers(call: Call) {
+    def callWithParam(paramAndValue: String): Call = call.copy(url = urlPlusParamPrefix(call.url) + paramAndValue)
+  }
+
   val routeMap: Map[Identifier, Session => Call]
 
   def cyaPage: Option[Call] = None
 
   def postponeCYARedirectPages: Set[String] = Set.empty
+
+  def overrideRedirectIfFromCYA: Map[String, Session => Call] = Map.empty
 
   private val defaultPage: Session => Call = _ => routes.LoginController.show()
 
@@ -41,23 +48,30 @@ abstract class Navigator @Inject() (
     hc: HeaderCarrier,
     request: Request[AnyContent]
   ): Session => Call =
-    routeMap.getOrElse(id, defaultPage) andThen possibleCYARedirect andThen auditNextUrl(session)
+    routeMap.getOrElse(id, defaultPage) andThen possibleCYARedirect(session: Session) andThen auditNextUrl(session)
 
   private def auditNextUrl(session: Session)(call: Call)(implicit hc: HeaderCarrier): Call = {
     audit.sendContinueNextPage(session, call.url)
     call
   }
 
-  private def possibleCYARedirect(nextCall: Call)(implicit request: Request[AnyContent]): Call =
-    cyaPage match {
-      case Some(cyaCall) if from == "CYA" =>
-        postponeCYARedirectPages
-          .find(nextCall.url.contains)
-          .fold(cyaCall)(_ => nextCall.copy(url = nextCall.url + "?from=CYA"))
-      case _                              => nextCall
+  private def possibleCYARedirect(session: Session)(nextCall: Call)(implicit request: Request[AnyContent]): Call =
+    if (from == "CYA") {
+      overrideRedirectIfFromCYA
+        .find(entry => nextCall.url.contains(entry._1))
+        .map(_._2(session))
+        .orElse(
+          postponeCYARedirectPages
+            .find(nextCall.url.contains)
+            .map(_ => nextCall.callWithParam("from=CYA"))
+        )
+        .orElse(cyaPage)
+        .getOrElse(nextCall)
+    } else {
+      nextCall
     }
 
-  private def from(implicit request: Request[AnyContent]): String =
+  def from(implicit request: Request[AnyContent]): String =
     request.body.asFormUrlEncoded.flatMap(_.get("from").flatMap(_.headOption)).getOrElse("")
 
 }

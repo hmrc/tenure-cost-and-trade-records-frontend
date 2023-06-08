@@ -22,7 +22,8 @@ import play.api.libs.json.Json
 case class CateringOperationSection(
   cateringOperationDetails: CateringOperationDetails,
   cateringOperationRentDetails: Option[CateringOperationRentDetails] = None,
-  addAnotherOperationToProperty: Option[AnswersYesNo] = None
+  addAnotherOperationToProperty: Option[AnswersYesNo] = None,
+  itemsInRent: List[String] = List.empty
 )
 
 object CateringOperationSection {

@@ -14,19 +14,20 @@
  * limitations under the License.
  */
 
-package models.submissions.aboutfranchisesorlettings
+package form.aboutfranchisesorlettings
 
-import models.submissions.common.AnswersYesNo
-import play.api.libs.json.Json
+import play.api.data.Form
+import play.api.data.Forms.{list, single, text}
 
-case class LettingSection(
-  lettingOtherPartOfPropertyInformationDetails: LettingOtherPartOfPropertyInformationDetails,
-  lettingOtherPartOfPropertyRentDetails: Option[LettingOtherPartOfPropertyRentDetails] = None,
-  addAnotherLettingToProperty: Option[AnswersYesNo] = None,
-  itemsInRent: List[String] = List.empty
-)
+/**
+  * @author Yuriy Tumakha
+  */
+object CateringOperationOrLettingAccommodationRentIncludesForm {
 
-object LettingSection {
-  implicit val format = Json.format[LettingSection]
+  val cateringOperationOrLettingAccommodationRentIncludesForm: Form[List[String]] = Form(
+    single(
+      "itemsInRent" -> list(text)
+    )
+  )
 
 }

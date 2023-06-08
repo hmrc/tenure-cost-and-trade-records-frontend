@@ -16,6 +16,7 @@
 
 package util
 
+import navigation.UrlHelpers.urlPlusParamPrefix
 import play.api.i18n.Messages
 import play.api.mvc.Call
 import uk.gov.hmrc.govukfrontend.views.Aliases.{Text, Value}
@@ -62,7 +63,7 @@ case class SectionAnswersRowBuilder[T](answers: Option[T])(implicit messages: Me
           Actions(items =
             Seq(
               ActionItem(
-                href = s"${editPage.url}?from=CYA#$editField",
+                href = s"${urlPlusParamPrefix(editPage.url)}from=CYA#$editField",
                 content = Text(messages("label.change")),
                 visuallyHiddenText = Some(messages(messageKey))
               )

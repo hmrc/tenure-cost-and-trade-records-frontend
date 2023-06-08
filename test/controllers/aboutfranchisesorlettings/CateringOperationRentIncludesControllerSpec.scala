@@ -29,7 +29,7 @@ class CateringOperationRentIncludesControllerSpec extends TestBaseSpec {
 
   val mockCateringOperationOrLettingAccommodationRentIncludes =
     mock[cateringOperationOrLettingAccommodationRentIncludes]
-  when(mockCateringOperationOrLettingAccommodationRentIncludes.apply(any, any, any, any, any)(any, any))
+  when(mockCateringOperationOrLettingAccommodationRentIncludes.apply(any, any, any, any, any, any)(any, any))
     .thenReturn(HtmlFormat.empty)
 
   val cateringOperationRentIncludesController = new CateringOperationRentIncludesController(

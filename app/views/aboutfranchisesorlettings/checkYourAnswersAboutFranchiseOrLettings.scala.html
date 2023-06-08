@@ -18,75 +18,132 @@
 @import controllers.aboutfranchisesorlettings
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import models.submissions.aboutfranchisesorlettings.CheckYourAnswersAboutFranchiseOrLettings
+@import models.submissions.common.AnswerYes
 @import models.pages.Summary
+@import navigation.AboutFranchisesOrLettingsNavigator
+@import navigation.identifiers.FranchiseOrLettingsTiedToPropertyId
+@import util.DateUtil._
+@import util.NumberUtil._
 @import util.SectionAnswersRowBuilder
 
 @this(layout: Layout,
         govukButton: GovukButton,
         govukRadios: GovukRadios,
+        govukSummaryList: GovukSummaryList,
+        navigator: AboutFranchisesOrLettingsNavigator,
         formWithCSRF: FormWithCSRF
 )
 
 @(theForm: Form[CheckYourAnswersAboutFranchiseOrLettings], backLink: String, summary: Summary)(implicit request: SessionRequest[_], messages: Messages)
 
 @sectionAnswers = @{
-  SectionAnswersRowBuilder(request.sessionData.aboutFranchisesOrLettings)
+    SectionAnswersRowBuilder(request.sessionData.aboutFranchisesOrLettings)
 }
 
 @layout(
- pageHeading = messages("checkYourAnswersAboutFranchiseOrLettings.heading"),
- backLinkUrl = backLink,
- showSection = true,
- fullWidth = true,
- summary = Some(summary),
- sectionName = messages("label.section.aboutTheFranchiseLettings"),
- theForm = theForm
+    pageHeading = messages("checkYourAnswersAboutFranchiseOrLettings.heading"),
+    backLinkUrl = backLink,
+    showSection = true,
+    fullWidth = true,
+    summary = Some(summary),
+    sectionName = messages("label.section.aboutTheFranchiseLettings"),
+    theForm = theForm
 ) {
 
- @formWithCSRF(action = aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.submit()) {
+    @formWithCSRF(action = aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.submit()) {
 
-  <dl class="govuk-summary-list">
-  <div id="fullName" class="govuk-summary-list__row">
-   <dt class="govuk-summary-list__key">Operator's Name</dt>
-   <dd class="govuk-summary-list__value">
-    John Smith
-   </dd>
-   <dd class="govuk-summary-list__actions">
-    <a href="/sending-rental-information/page/2?edit=fullName#fullName" class="govuk-link">Change <span class="govuk-visually-hidden">Full name</span></a>
-   </dd>
-  </div>
+        @govukSummaryList(SummaryList(rows =
+            sectionAnswers.row("checkYourAnswersAboutFranchiseOrLettings.franchiseLettings",
+                _.franchisesOrLettingsTiedToProperty.map(yesNo => messages(s"label.${yesNo.name}")).orElse(Some(messages(s"label.no"))),
+                aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show(), "franchiseOrLettingsTiedToProperty")
+        ))
 
-  <div id="userType" class="govuk-summary-list__row">
-   <dt class="govuk-summary-list__key">Type of business</dt>
-   <dd class="govuk-summary-list__value">
-   Hotel
-   </dd>
-   <dd class="govuk-summary-list__actions">
-    <a href="/sending-rental-information/page/2?edit=userType#userType" class="govuk-link">Change <span class="govuk-visually-hidden">I am (or represent) the</span></a>
-   </dd>
-  </div>
+        @if(sectionAnswers.answers.flatMap(_.franchisesOrLettingsTiedToProperty).contains(AnswerYes)) {
+            @if(sectionAnswers.answers.flatMap(_.cateringConcessionOrFranchise).isDefined) {
+                <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutFranchiseOrLettings.separateBusinesses.heading")</h2>
 
-  <div id="userType" class="govuk-summary-list__row">
-   <dt class="govuk-summary-list__key">Correspondence address</dt>
-   <dd class="govuk-summary-list__value">
-    1 Jones Street
-    Townley
-    JO1 3NS
-   </dd>
-   <dd class="govuk-summary-list__actions">
-    <a href="/sending-rental-information/page/2?edit=userType#userType" class="govuk-link">Change <span class="govuk-visually-hidden">I am (or represent) the</span></a>
-   </dd>
-  </div>
-  </dl>
+                @govukSummaryList(SummaryList(rows =
+                    sectionAnswers.optionalRow("checkYourAnswersAboutFranchiseOrLettings.separateBusiness",
+                        _.cateringConcessionOrFranchise.map(yesNo => messages(s"label.${yesNo.name}")),
+                        navigator.routeMap(FranchiseOrLettingsTiedToPropertyId)(request.sessionData), "cateringOperationOrLettingAccommodation")
+                ))
 
-     @includes.checkYourAnswersRadioButtons(
-         govukRadios,
-         theForm,
-         "checkYourAnswersAboutFranchiseOrLettings"
-     )
+                @if(sectionAnswers.answers.flatMap(_.cateringConcessionOrFranchise).contains(AnswerYes)) {
+                    @for((cateringOperation, idx) <- sectionAnswers.answers.map(_.cateringOperationSections).getOrElse(IndexedSeq.empty).zipWithIndex) {
+                        @govukSummaryList(SummaryList(rows =
+                            sectionAnswers.row("checkYourAnswersAboutFranchiseOrLettings.operatorName",
+                                _ => Option(cateringOperation.cateringOperationDetails.operatorName),
+                                aboutfranchisesorlettings.routes.CateringOperationDetailsController.show(Some(idx)), "operatorName") ++
+                                    sectionAnswers.row("checkYourAnswersAboutFranchiseOrLettings.typeOfBusiness",
+                                        _ => Option(cateringOperation.cateringOperationDetails.typeOfBusiness),
+                                        aboutfranchisesorlettings.routes.CateringOperationDetailsController.show(Some(idx)), "typeOfBusiness") ++
+                                    sectionAnswers.row("checkYourAnswersAboutFranchiseOrLettings.correspondenceAddress",
+                                        _ => Option(cateringOperation.cateringOperationDetails.cateringAddress.addressLines.map(Text(_).asHtml).mkString("""<p class="govuk-body">""", "<br/> ", "</p>")),
+                                        aboutfranchisesorlettings.routes.CateringOperationDetailsController.show(Some(idx)), "cateringAddress.buildingNameNumber",
+                                        ("valueAsHtml", _ => None)) ++
+                                    sectionAnswers.row("checkYourAnswersAboutFranchiseOrLettings.annualRent",
+                                        _ => cateringOperation.cateringOperationRentDetails.map(_.annualRent.asMoney),
+                                        aboutfranchisesorlettings.routes.CateringOperationDetailsRentController.show(idx), "annualRent") ++
+                                    sectionAnswers.row("checkYourAnswersAboutFranchiseOrLettings.dateSumFixed",
+                                        _ => cateringOperation.cateringOperationRentDetails.map(_.dateInput.shortDate),
+                                        aboutfranchisesorlettings.routes.CateringOperationDetailsRentController.show(idx), "dateInput.day") ++
+                                    sectionAnswers.row("checkYourAnswersAboutFranchiseOrLettings.itemsInRent",
+                                        _ => Option(cateringOperation.itemsInRent
+                                                .map(item => messages(s"checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.$item")).mkString("""<p class="govuk-body">""", "<br/> ", "</p>")),
+                                        aboutfranchisesorlettings.routes.CateringOperationRentIncludesController.show(idx), "itemsInRent",
+                                        ("valueAsHtml", _ => None))
+                        ))
+                    }
+                }
+            }
 
-     @includes.continueSaveAsDraftButtons(govukButton)
+            @if(sectionAnswers.answers.flatMap(_.lettingOtherPartOfProperty).isDefined) {
+                <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutFranchiseOrLettings.lettingsOtherPartOfProperties.heading")</h2>
 
- }
+                @govukSummaryList(SummaryList(rows =
+                    sectionAnswers.optionalRow("checkYourAnswersAboutFranchiseOrLettings.rentFromPartOfProperties",
+                        _.lettingOtherPartOfProperty.map(yesNo => messages(s"label.${yesNo.name}")),
+                        aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show(), "lettingOtherPartOfProperties")
+                ))
+
+                @if(sectionAnswers.answers.flatMap(_.lettingOtherPartOfProperty).contains(AnswerYes)) {
+                    @for((letting, idx) <- sectionAnswers.answers.map(_.lettingSections).getOrElse(IndexedSeq.empty).zipWithIndex) {
+                        @govukSummaryList(SummaryList(rows =
+                            sectionAnswers.row("checkYourAnswersAboutFranchiseOrLettings.lettingOperatorName",
+                                _ => Option(letting.lettingOtherPartOfPropertyInformationDetails.operatorName),
+                                aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsController.show(Some(idx)), "lettingOperatorName") ++
+                                    sectionAnswers.row("checkYourAnswersAboutFranchiseOrLettings.lettingTypeOfBusiness",
+                                        _ => Option(letting.lettingOtherPartOfPropertyInformationDetails.typeOfBusiness),
+                                        aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsController.show(Some(idx)), "lettingTypeOfBusiness") ++
+                                    sectionAnswers.row("checkYourAnswersAboutFranchiseOrLettings.correspondenceAddress",
+                                        _ => Option(letting.lettingOtherPartOfPropertyInformationDetails.lettingAddress.addressLines.map(Text(_).asHtml).mkString("""<p class="govuk-body">""", "<br/> ", "</p>")),
+                                        aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsController.show(Some(idx)), "lettingAddress.buildingNameNumber",
+                                        ("valueAsHtml", _ => None)) ++
+                                    sectionAnswers.row("checkYourAnswersAboutFranchiseOrLettings.annualRent",
+                                        _ => letting.lettingOtherPartOfPropertyRentDetails.map(_.annualRent.asMoney),
+                                        aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsRentController.show(idx), "annualRent") ++
+                                    sectionAnswers.row("checkYourAnswersAboutFranchiseOrLettings.dateSumFixed",
+                                        _ => letting.lettingOtherPartOfPropertyRentDetails.map(_.dateInput.shortDate),
+                                        aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsRentController.show(idx), "dateInput.day") ++
+                                    sectionAnswers.row("checkYourAnswersAboutFranchiseOrLettings.itemsInRent",
+                                        _ => Option(letting.itemsInRent
+                                                .map(item => messages(s"checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.$item")).mkString("""<p class="govuk-body">""", "<br/> ", "</p>")),
+                                        aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyRentIncludesController.show(idx), "itemsInRent",
+                                        ("valueAsHtml", _ => None))
+                        ))
+                    }
+                }
+            }
+        }
+
+        @includes.checkYourAnswersRadioButtons(
+            govukRadios,
+            theForm,
+            "checkYourAnswersAboutFranchiseOrLettings"
+        )
+
+        @includes.continueSaveAsDraftButtons(govukButton)
+
+    }
 
 }

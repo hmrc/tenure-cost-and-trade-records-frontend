@@ -32,46 +32,46 @@
 @(theForm: Form[CheckYourAnswersAdditionalInformation], session: Session)(implicit request: SessionRequest[_], messages: Messages)
 
 @sectionAnswers = @{
- SectionAnswersRowBuilder(request.sessionData.additionalInformation)
+    SectionAnswersRowBuilder(request.sessionData.additionalInformation)
 }
 
 @layout(
- pageHeading = messages("checkYourAnswersAdditionalInformation.heading"),
- showSection = true,
- fullWidth = true,
- summary = Some(session.toSummary),
- sectionName = messages("label.section.additionalInformation"),
- backLinkUrl = additionalinformation.routes.AlternativeContactDetailsController.show.url,
- theForm = theForm
+    pageHeading = messages("checkYourAnswersAdditionalInformation.heading"),
+    showSection = true,
+    fullWidth = true,
+    summary = Some(session.toSummary),
+    sectionName = messages("label.section.additionalInformation"),
+    backLinkUrl = additionalinformation.routes.AlternativeContactDetailsController.show.url,
+    theForm = theForm
 ) {
 
- @formWithCSRF(action = additionalinformation.routes.CheckYourAnswersAdditionalInformationController.submit()) {
+    @formWithCSRF(action = additionalinformation.routes.CheckYourAnswersAdditionalInformationController.submit()) {
 
-  @govukSummaryList(SummaryList(rows =
-   sectionAnswers.row("label.furtherInformation",
-    _.furtherInformationOrRemarksDetails.map(_.furtherInformationOrRemarksDetails).filter(_.trim != "").orElse(Some("No")),
-    additionalinformation.routes.FurtherInformationOrRemarksController.show(), "furtherInformationOrRemarks")
-  ))
+        @govukSummaryList(SummaryList(rows =
+            sectionAnswers.row("label.furtherInformation",
+                _.furtherInformationOrRemarksDetails.map(_.furtherInformationOrRemarksDetails).filter(_.trim != "").orElse(Some(messages(s"label.no"))),
+                additionalinformation.routes.FurtherInformationOrRemarksController.show(), "furtherInformationOrRemarks")
+        ))
 
-  <h2 class="govuk-heading-m">@messages("key.altContact.details")</h2>
+        <h2 class="govuk-heading-m">@messages("key.altContact.details")</h2>
 
-  @govukSummaryList(SummaryList(rows = sectionAnswers.row("label.fullName", _.altContactInformation.map(_.alternativeContactFullName), additionalinformation.routes.AlternativeContactDetailsController.show(), "alternativeContactFullName") ++
-          sectionAnswers.row("label.telephoneNumber", _.altContactInformation.map(_.alternativeContactDetails.phone), additionalinformation.routes.AlternativeContactDetailsController.show(), "alternativeContactDetails.phone") ++
-          sectionAnswers.row("label.emailAddress", _.altContactInformation.map(_.alternativeContactDetails.email), additionalinformation.routes.AlternativeContactDetailsController.show(), "alternativeContactDetails.email") ++
-          sectionAnswers.row("label.correspondenceAddress",
-           _.altContactInformation.map(_.alternativeContactAddress.addressLines.map(Text(_).asHtml).mkString("""<p class="govuk-body">""", "<br/> ", "</p>")),
-           additionalinformation.routes.AlternativeContactDetailsController.show(), "alternativeContactAddress.buildingNameNumber",
-           ("valueAsHtml", _ => None))
-  ))
+        @govukSummaryList(SummaryList(rows = sectionAnswers.row("label.fullName", _.altContactInformation.map(_.alternativeContactFullName), additionalinformation.routes.AlternativeContactDetailsController.show(), "alternativeContactFullName") ++
+                sectionAnswers.row("label.telephoneNumber", _.altContactInformation.map(_.alternativeContactDetails.phone), additionalinformation.routes.AlternativeContactDetailsController.show(), "alternativeContactDetails.phone") ++
+                sectionAnswers.row("label.emailAddress", _.altContactInformation.map(_.alternativeContactDetails.email), additionalinformation.routes.AlternativeContactDetailsController.show(), "alternativeContactDetails.email") ++
+                sectionAnswers.row("label.correspondenceAddress",
+                    _.altContactInformation.map(_.alternativeContactAddress.addressLines.map(Text(_).asHtml).mkString("""<p class="govuk-body">""", "<br/> ", "</p>")),
+                    additionalinformation.routes.AlternativeContactDetailsController.show(), "alternativeContactAddress.buildingNameNumber",
+                    ("valueAsHtml", _ => None))
+        ))
 
-  @includes.checkYourAnswersRadioButtons(
-   govukRadios,
-   theForm,
-   "checkYourAnswersAdditionalInformation"
-  )
+        @includes.checkYourAnswersRadioButtons(
+            govukRadios,
+            theForm,
+            "checkYourAnswersAdditionalInformation"
+        )
 
-  @includes.continueSaveAsDraftButtons(govukButton)
+        @includes.continueSaveAsDraftButtons(govukButton)
 
- }
+    }
 
 }

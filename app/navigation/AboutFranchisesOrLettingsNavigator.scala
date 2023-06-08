@@ -17,6 +17,7 @@
 package navigation
 
 import connectors.Audit
+import controllers.aboutfranchisesorlettings
 import models.{ForTypes, Session}
 import navigation.identifiers._
 import play.api.Logging
@@ -27,7 +28,30 @@ import javax.inject.Inject
 class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit) extends Navigator(audit) with Logging {
 
   override def cyaPage: Option[Call] =
-    Some(controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show())
+    Some(aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show())
+
+  override val overrideRedirectIfFromCYA: Map[String, Session => Call] = Map(
+    (
+      aboutfranchisesorlettings.routes.ConcessionOrFranchiseController.show().url,
+      _ => aboutfranchisesorlettings.routes.ConcessionOrFranchiseController.show()
+    ),
+    (
+      aboutfranchisesorlettings.routes.CateringOperationController.show().url,
+      _ => aboutfranchisesorlettings.routes.CateringOperationController.show()
+    ),
+    (
+      aboutfranchisesorlettings.routes.CateringOperationDetailsController
+        .show()
+        .url,
+      cateringOperationsRentIncludesConditionsRouting
+    ),
+    (
+      aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsController
+        .show()
+        .url,
+      lettingsRentIncludesConditionsRouting
+    )
+  )
 
   private def franchiseOrLettingConditionsRouting: Session => Call = answers => {
     answers.aboutFranchisesOrLettings.flatMap(_.franchisesOrLettingsTiedToProperty.map(_.name)) match {
