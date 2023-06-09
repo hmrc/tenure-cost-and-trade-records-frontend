@@ -89,14 +89,16 @@ object MappingSupport {
   )(AnnualRent.apply)(AnnualRent.unapply).verifying(Errors.maxCurrencyAmountExceeded, _.amount <= cdbMaxCurrencyAmount)
 
   lazy val multipleCurrentPropertyUsedMapping: Mapping[List[CurrentPropertyUsed]] =
-    list(nonEmptyText).verifying(
-      Constraint[List[String]]("constraint.required") { propertyUsages =>
-        if (propertyUsages.nonEmpty) Valid
-        else Invalid(ValidationError("error.required.propertyUsages"))
-      }
-    )
-      .verifying("Invalid property used", propertyUsages =>
-        propertyUsages.forall(str => CurrentPropertyUsed.withName(str).isDefined)
+    list(nonEmptyText)
+      .verifying(
+        Constraint[List[String]]("constraint.required") { propertyUsages =>
+          if (propertyUsages.nonEmpty) Valid
+          else Invalid(ValidationError("error.required.propertyUsages"))
+        }
+      )
+      .verifying(
+        "Invalid property used",
+        propertyUsages => propertyUsages.forall(str => CurrentPropertyUsed.withName(str).isDefined)
       )
       .transform[List[CurrentPropertyUsed]](
         propertyUsages => propertyUsages.flatMap(str => CurrentPropertyUsed.withName(str)),

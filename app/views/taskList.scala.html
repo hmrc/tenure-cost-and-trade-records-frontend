@@ -80,14 +80,17 @@
       </h2>
       <ul class="app-task-list__items">
        <li class="app-task-list__item">
-        <span class="app-task-list__task-name">
-         <a href="about-your-trading-history">Enter your trading details</a></span>
+        <span class="app-task-list__task-name">Occupation and accounting information</span>
         <span class="govuk-tag app-task-list__tag govuk-tag--grey" id="goods-summary-not-started">
-         Not started
+         Cannot start yet
         </span>
        </li>
-
-
+       <li class="app-task-list__item">
+        <span class="app-task-list__task-name">Turnover</span>
+        <span class="govuk-tag app-task-list__tag govuk-tag--grey" id="goods-summary-not-started">
+         Cannot start yet
+        </span>
+       </li>
       </ul>
      </li>
     </ol>
@@ -99,24 +102,15 @@
       </h2>
       <ul class="app-task-list__items">
        <li class="app-task-list__item">
-        <span class="app-task-list__task-name">
-         <a href="franchise-or-lettings-tied-to-property">Franchise or sub-lets tied to the property</a></span>
+        <span class="app-task-list__task-name">Separate business run from the property</span>
         <span class="govuk-tag app-task-list__tag govuk-tag--grey" id="goods-summary-not-started">
-         Not started
+         Cannot start yet
         </span>
        </li>
        <li class="app-task-list__item">
-        <span class="app-task-list__task-name">
-         <a href="catering-operation-or-letting-accommodation">Catering operation or letting accommodation run as separate business from the property</a></span>
+        <span class="app-task-list__task-name">Lettings</span>
         <span class="govuk-tag app-task-list__tag govuk-tag--grey" id="goods-summary-not-started">
-         Not started
-        </span>
-       </li>
-       <li class="app-task-list__item">
-        <span class="app-task-list__task-name">
-         <a href="letting-other-part-of-property">Rent received from letting other part of property</a></span>
-        <span class="govuk-tag app-task-list__tag govuk-tag--grey" id="goods-summary-not-started">
-         Not started
+         Cannot start yet
         </span>
        </li>
       </ul>
@@ -129,12 +123,40 @@
        <span class="app-task-list__section-number">4. </span> About your lease or agreement
       </h2>
       <ul class="app-task-list__items">
-
        <li class="app-task-list__item">
-        <span class="app-task-list__task-name">
-         <a href="about-your-landlord">Tell us about your landlord</a></span>
+        <span class="app-task-list__task-name">About your landlord</span>
         <span class="govuk-tag app-task-list__tag govuk-tag--grey" id="goods-summary-not-started">
-         Not started
+         Cannot start yet
+        </span>
+       </li>
+       <li class="app-task-list__item">
+        <span class="app-task-list__task-name">Changes to your lease</span>
+        <span class="govuk-tag app-task-list__tag govuk-tag--grey" id="goods-summary-not-started">
+         Cannot start yet
+        </span>
+       </li>
+       <li class="app-task-list__item">
+        <span class="app-task-list__task-name">Lease start date and rent paid</span>
+        <span class="govuk-tag app-task-list__tag govuk-tag--grey" id="goods-summary-not-started">
+         Cannot start yet
+        </span>
+       </li>
+       <li class="app-task-list__item">
+        <span class="app-task-list__task-name">What the rent includes</span>
+        <span class="govuk-tag app-task-list__tag govuk-tag--grey" id="goods-summary-not-started">
+         Cannot start yet
+        </span>
+       </li>
+       <li class="app-task-list__item">
+        <span class="app-task-list__task-name">How the rent was calculated</span>
+        <span class="govuk-tag app-task-list__tag govuk-tag--grey" id="goods-summary-not-started">
+         Cannot start yet
+        </span>
+       </li>
+       <li class="app-task-list__item">
+        <span class="app-task-list__task-name">Exclusions, restrictions or incentives</span>
+        <span class="govuk-tag app-task-list__tag govuk-tag--grey" id="goods-summary-not-started">
+         Cannot start yet
         </span>
        </li>
       </ul>
@@ -147,10 +169,11 @@
        <span class="app-task-list__section-number">5. </span> @messages("label.section.additionalInformation")
       </h2>
       <ul class="app-task-list__items">
-       @includes.taskListItem("further-information-or-remarks", "furtherInformationOrRemarks.heading",
+       @includes.taskListItem("further-information-or-remarks", "furtherInformationOrRemarksTasklist.heading",
         controllers.additionalinformation.routes.FurtherInformationOrRemarksController.show(),
         session.additionalInformation.flatMap(_.checkYourAnswersAdditionalInformation.map(_.checkYourAnswersAdditionalInformation)),
-        session.additionalInformation.flatMap(_.furtherInformationOrRemarksDetails)
+        session.additionalInformation.flatMap(_.furtherInformationOrRemarksDetails),
+        session.additionalInformation.flatMap(_.furtherInformationOrRemarksDetails).isEmpty
        )
 
        @includes.taskListItem("alternate-contact-details", "alternativeContactDetails.heading",
