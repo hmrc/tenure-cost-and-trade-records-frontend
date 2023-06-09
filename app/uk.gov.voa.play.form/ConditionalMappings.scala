@@ -89,6 +89,15 @@ object ConditionalMappings {
   def mandatoryIfEqualToAny[T](fieldName: String, values: Seq[String], mapping: Mapping[T]): Mapping[Option[T]] =
     ConditionalMapping(isAnyOf(fieldName, values), MandatoryOptionalMapping(mapping, Nil), None, Seq.empty)
 
+  def mandatoryIfAnyEqual[T](
+    pairs: Seq[(String, String)],
+    mapping: Mapping[T]
+  ): Mapping[Option[T]] = {
+    val condition: Condition = x =>
+      (for (pair <- pairs) yield x.get(pair._1).contains(pair._2)).count(b => b.equals(true)) > 0
+    ConditionalMapping(condition, MandatoryOptionalMapping(mapping, Nil), None, Seq.empty)
+  }
+
   def mandatoryIfAllEqual[T](
     pairs: Seq[(String, String)],
     mapping: Mapping[T],

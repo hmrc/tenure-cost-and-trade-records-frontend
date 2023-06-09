@@ -565,6 +565,7 @@ error.required.annualRentExcludingVat.annualRent = Enter the annual rent excludi
 error.invalid_currency.annualRent.annualRent = The annual rent figure must be a number
 error.dateInput.month.required = The date the rent was fixed must include a month
 error.dateInput.year.required = The date the rent was fixed must include a year
+error.sharedResponsibilities.required = Tell us how the responsibilities are shared
 
 ##CATERING OPERATION OR LETTING ACCOMMODATION CHECKBOXES
 ########################################################
