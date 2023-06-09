@@ -208,7 +208,7 @@ aboutYou.subheading = These should be the contact details of the person completi
 ####################
 aboutProperty.heading = What is the name of the current occupier?
 label.currentOccupierName = This should be the trading name of the business operating from the property
-label.propertyCurrentlyUsed = How is the property currently used?
+label.propertyCurrentlyUsed = What is the current use of the property?
 hint.select.main = If your property has more than one use, select the main function
 propertyCurrentlyUsed.publicHouse = Public house
 propertyCurrentlyUsed.wineCafeBar = Wine bar or cafe bar
