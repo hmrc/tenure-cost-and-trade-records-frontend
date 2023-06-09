@@ -94,13 +94,7 @@ class LettingOtherPartOfPropertyRentDetailsViewSpec
     "contain date format hint for dateInput-hint" in {
       val doc             = asDocument(createViewUsingForm(form))
       val firstOccupyHint = doc.getElementById("dateInput-hint").text()
-      assert(firstOccupyHint == messages("hint.date.example"))
-    }
-
-    "contain date field for the value dateInput.day" in {
-      val doc = asDocument(createViewUsingForm(form))
-      assertContainsLabel(doc, "dateInput.day", "Day")
-      assertContainsText(doc, "dateInput.day")
+      assert(firstOccupyHint == messages("help.date.month.year"))
     }
 
     "contain date field for the value dateInput.month" in {

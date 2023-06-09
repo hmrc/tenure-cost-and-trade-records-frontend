@@ -72,6 +72,20 @@ object Errors {
   val rent3Years    = "error.rent3Years.required"
   val underReview   = "error.underReview.required"
 
+  //How is current rent fixed
+  val howIsCurrentRentFixed = "error.howIsCurrentRentFixed.required"
+
+  //Method to fix current rent
+  val methodToFixCurrentRents = "error.methodToFixCurrentRents.required"
+
+  //Ultimately Responsible
+  val outsideRepairs    = "error.outsideRepairs.required"
+  val insideRepairs     = "error.insideRepairs.required"
+  val buildingInsurance = "error.buildingInsurance.required"
+
+  //What is your current rent based on
+  val currentRentBasedOn = "error.currentRentBasedOn.required"
+
   //generic errors
   val required        = "error.required"
   val booleanMissing  = "error.boolean_missing"

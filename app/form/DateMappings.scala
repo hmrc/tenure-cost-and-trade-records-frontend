@@ -139,15 +139,15 @@ object DateMappings {
       prefix + ".month",
       text.verifying(
         Errors.invalidDurationMonths,
-        x => x.trim.forall(Character.isDigit) && x.trim.toInt >= 0 && x.trim.toInt <= 12
+        x => x.trim.forall(Character.isDigit) && x.trim.toInt >= 1 && x.trim.toInt <= 12
       ),
       s"error$fieldErrorPart.month.required"
     ),
     "year"  -> nonEmptyTextOr(
       prefix + ".year",
       text.verifying(
-        Errors.invalidDurationYears,
-        x => x.trim.forall(Character.isDigit) && x.trim.toInt >= 0 && x.trim.toInt <= 9999
+        Errors.dateBefore1900,
+        x => x.trim.forall(Character.isDigit) && x.trim.toInt >= 1900 && x.trim.toInt <= 9999
       ),
       s"error$fieldErrorPart.year.required"
     )

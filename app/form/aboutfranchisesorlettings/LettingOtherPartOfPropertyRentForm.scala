@@ -16,7 +16,7 @@
 
 package form.aboutfranchisesorlettings
 
-import form.DateMappings.dateFieldsMapping
+import form.DateMappings.{dateFieldsMapping, monthsYearDurationMapping}
 import form.MappingSupport.currencyMapping
 import models.submissions.aboutfranchisesorlettings.LettingOtherPartOfPropertyRentDetails
 import play.api.data.Form
@@ -27,7 +27,7 @@ object LettingOtherPartOfPropertyRentForm {
   val lettingOtherPartOfPropertyRentForm = Form(
     mapping(
       "annualRent" -> currencyMapping(".annualRent"),
-      "dateInput"  -> dateFieldsMapping("dateInput")
+      "dateInput"  -> monthsYearDurationMapping("dateInput", fieldErrorPart = ".dateInput")
     )(LettingOtherPartOfPropertyRentDetails.apply)(
       LettingOtherPartOfPropertyRentDetails.unapply
     )

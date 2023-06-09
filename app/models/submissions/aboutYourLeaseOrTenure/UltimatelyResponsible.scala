@@ -16,14 +16,14 @@
 
 package models.submissions.aboutYourLeaseOrTenure
 
-import models.submissions.common.AnswerResponsibleParty
+import models.submissions.common.{BuildingInsurance, InsideRepairs, OutsideRepairs}
 import play.api.libs.json.Json
 
 case class UltimatelyResponsible(
-  outsideRepairs: AnswerResponsibleParty,
-  insideRepairs: AnswerResponsibleParty,
-  buildingInsurance: AnswerResponsibleParty,
-  sharedResponsibilities: String
+  outsideRepairs: OutsideRepairs,
+  insideRepairs: InsideRepairs,
+  buildingInsurance: BuildingInsurance,
+  sharedResponsibilities: Option[String]
 )
 
 object UltimatelyResponsible {

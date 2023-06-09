@@ -19,23 +19,74 @@ package models.submissions.common
 import models.{EnumFormat, NamedEnum, NamedEnumSupport}
 import play.api.libs.json.Format
 
-sealed trait AnswerResponsibleParty extends NamedEnum {
-  override def key: String = "answerLandlordTenantBoth"
+sealed trait OutsideRepairs extends NamedEnum {
+  val key: String = "outsideRepairs"
 }
-object AnswerResponsiblePartyLandlord extends AnswerResponsibleParty {
+object OutsideRepairsLandlord extends OutsideRepairs {
   override def name: String = "landlord"
 }
-object AnswerResponsiblePartyTenant extends AnswerResponsibleParty {
+object OutsideRepairsTenant extends OutsideRepairs {
   override def name: String = "tenant"
 }
-object AnswerResponsiblePartyBoth extends AnswerResponsibleParty {
+object OutsideRepairsBoth extends OutsideRepairs {
   override def name: String = "both"
 }
 
-object AnswerResponsibleParty extends NamedEnumSupport[AnswerResponsibleParty] {
-  implicit val format: Format[AnswerResponsibleParty] = EnumFormat(AnswerResponsibleParty)
+object OutsideRepairs extends NamedEnumSupport[OutsideRepairs] {
 
-  val all = List(AnswerResponsiblePartyLandlord, AnswerResponsiblePartyTenant, AnswerResponsiblePartyBoth)
+  implicit val format: Format[OutsideRepairs] = EnumFormat(
+    OutsideRepairs
+  )
+
+  val all = List(OutsideRepairsLandlord, OutsideRepairsTenant, OutsideRepairsBoth)
+
+  val key = all.head.key
+}
+
+sealed trait InsideRepairs extends NamedEnum {
+  val key: String = "outsideRepairs"
+}
+object InsideRepairsLandlord extends InsideRepairs {
+  override def name: String = "landlord"
+}
+object InsideRepairsTenant extends InsideRepairs {
+  override def name: String = "tenant"
+}
+object InsideRepairsBoth extends InsideRepairs {
+  override def name: String = "both"
+}
+
+object InsideRepairs extends NamedEnumSupport[InsideRepairs] {
+
+  implicit val format: Format[InsideRepairs] = EnumFormat(
+    InsideRepairs
+  )
+
+  val all = List(InsideRepairsLandlord, InsideRepairsTenant, InsideRepairsBoth)
+
+  val key = all.head.key
+}
+
+sealed trait BuildingInsurance extends NamedEnum {
+  val key: String = "buildingInsurance"
+}
+object BuildingInsuranceLandlord extends BuildingInsurance {
+  override def name: String = "landlord"
+}
+object BuildingInsuranceTenant extends BuildingInsurance {
+  override def name: String = "tenant"
+}
+object BuildingInsuranceBoth extends BuildingInsurance {
+  override def name: String = "both"
+}
+
+object BuildingInsurance extends NamedEnumSupport[BuildingInsurance] {
+
+  implicit val format: Format[BuildingInsurance] = EnumFormat(
+    BuildingInsurance
+  )
+
+  val all = List(BuildingInsuranceLandlord, BuildingInsuranceTenant, BuildingInsuranceBoth)
 
   val key = all.head.key
 }

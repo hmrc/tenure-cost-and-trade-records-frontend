@@ -24,7 +24,7 @@ import models.submissions.Form6010._
 import models.submissions.aboutYourLeaseOrTenure._
 import models.submissions.aboutfranchisesorlettings._
 import models.submissions.aboutyouandtheproperty._
-import models.submissions.common.{Address, AnswerResponsibleParty, AnswersYesNo, CYAYesNo, ContactDetails, ContactDetailsAddress}
+import models.submissions.common.{Address, AnswersYesNo, BuildingInsurance, CYAYesNo, ContactDetails, ContactDetailsAddress, InsideRepairs, OutsideRepairs}
 import models.submissions.connectiontoproperty.{AddressConnectionType, ConnectionToProperty}
 import models.submissions.notconnected.PastConnectionType
 import models.{AnnualRent, NamedEnum, NamedEnumSupport}
@@ -52,7 +52,11 @@ object MappingSupport {
   val pastConnectionType: Mapping[PastConnectionType]                           = Forms.of[PastConnectionType]
   val methodToFixCurrentRentsType: Mapping[MethodToFixCurrentRents]             = Forms.of[MethodToFixCurrentRents]
 
-  val responsiblePartyType: Mapping[AnswerResponsibleParty] = Forms.of[AnswerResponsibleParty]
+//  val responsiblePartyType: Mapping[AnswerResponsibleParty] = Forms.of[AnswerResponsibleParty]
+
+  val outsideRepairsType: Mapping[OutsideRepairs]       = Forms.of[OutsideRepairs]
+  val insideRepairsType: Mapping[InsideRepairs]         = Forms.of[InsideRepairs]
+  val buildingInsuranceType: Mapping[BuildingInsurance] = Forms.of[BuildingInsurance]
 
   val includeLicenseeType: Mapping[IncludeLicensees]            = Forms.of[IncludeLicensees]
   val includeOtherPropertyType: Mapping[IncludeOtherProperties] = Forms.of[IncludeOtherProperties]
