@@ -794,6 +794,7 @@ label.correspondenceAddress = Correspondence address
 ################################
 furtherInformationOrRemarks.heading = Further information or remarks
 hint.furtherInformationOrRemarks = Please provide further details if there is insufficient room for you to complete your answers to any of the forgoing questions, or if any of the questions require further explanation or clarification
+furtherInformationOrRemarksTasklist.heading = Additional relevant information
 
 # ALTERNATIVE CONTACT DETAILS
 #############################
@@ -840,8 +841,8 @@ checkYourAnswersAboutFranchiseOrLettings.dateSumFixed = When sum was fixed?
 checkYourAnswersAboutFranchiseOrLettings.itemsInRent = Items included in rent
 checkYourAnswersAboutYourLeaseOrTenure.heading = This is a holding page for the about your lease or tenure check your answers page
 checkYourAnswersAboutTheProperty.heading = Check your answers - about you and the property
-checkYourAnswersAboutTheProperty.aboutYou.heading = About you
-checkYourAnswersAboutTheProperty.aboutProperty.heading = About the property
+checkYourAnswersAboutTheProperty.aboutYou.heading = Your contact details
+checkYourAnswersAboutTheProperty.aboutProperty.heading = How the property is used
 checkYourAnswersAboutTheProperty.currentOccupier = Current Occupier
 checkYourAnswersAboutTheProperty.propertyUsage = How is the property currently used?
 checkYourAnswersAboutTheProperty.hasWebsite = Website?
