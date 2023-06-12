@@ -245,7 +245,9 @@ trait FakeObjects {
   // Additional information sessions
   val prefilledAdditionalInformation: AdditionalInformation = AdditionalInformation(
     Some(FurtherInformationOrRemarksDetails("Further information or remarks details")),
-    Some(AlternativeContactDetails("Full name", prefilledContactDetails, prefilledContactAddress)),
+    Some(
+      AlternativeContactDetails(Some("Full name"), Some(prefilledContactDetails), Some(prefilledContactAddress))
+    ),
     Some(CheckYourAnswersAdditionalInformation("CYA"))
   )
 
