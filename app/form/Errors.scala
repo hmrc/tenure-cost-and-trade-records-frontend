@@ -101,6 +101,7 @@ object Errors {
   val number             = "error.number"
 
   //Dates
+  val dateBeforeToday       = "error.date_before_today"
   val dateBefore1900        = "error.date_before_1900"
   val invalidDate           = "error.invalid_date"
   val invalidDateMonth      = "error.month.required"

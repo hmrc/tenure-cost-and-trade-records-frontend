@@ -16,7 +16,7 @@
 
 package form.aboutYourLeaseOrTenure
 
-import form.DateMappings.dateFieldsMapping
+import form.DateMappings.{dateFieldsAfterTodayMapping, dateFieldsMapping}
 import models.submissions.aboutYourLeaseOrTenure.IntervalsOfRentReview
 import play.api.data.Form
 import play.api.data.Forms.{default, mapping, optional, text}
@@ -27,7 +27,7 @@ object IntervalsOfRentReviewForm {
   val intervalsOfRentReviewForm = Form(
     mapping(
       "intervalsOfRentReview" -> optional(text),
-      "nextReview"            -> optional(dateFieldsMapping("nextReview", fieldErrorPart = ".nextReview"))
+      "nextReview"            -> optional(dateFieldsAfterTodayMapping("nextReview", fieldErrorPart = ".nextReview"))
     )(IntervalsOfRentReview.apply)(IntervalsOfRentReview.unapply)
   )
 }

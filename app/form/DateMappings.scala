@@ -30,7 +30,22 @@ object DateMappings {
 
   private val nineteenHundred = LocalDateTime.of(1900, 1, 1, 0, 0)
 
-  private def dateIsInPastAndAfter1900(fieldErrorPart: String): Constraint[(String, String)] =
+  private val todaysDate = LocalDateTime.now()
+
+  private def fullDateIsAfterToday(fieldErrorPart: String): Constraint[(String, String, String)] =
+    Constraint("fullDateIsAfterToday") { x =>
+      val day   = x._1.trim.toInt
+      val month = x._2.trim.toInt
+      val year  = x._3.trim.toInt
+
+      if (Try(LocalDateTime.of(year, month, day, 23, 59)).isFailure)
+        Invalid(Errors.invalidDate + fieldErrorPart)
+      else if (LocalDateTime.of(year, month, day, 23, 59).isBefore(todaysDate))
+        Invalid(Errors.dateBeforeToday + fieldErrorPart)
+      else
+        Valid
+    }
+  private def dateIsInPastAndAfter1900(fieldErrorPart: String): Constraint[(String, String)]     =
     Constraint("dateInPastAndAfter1900") { x =>
       val month                   = x._1.trim.toInt
       val year                    = x._2.trim.toInt
@@ -129,6 +144,40 @@ object DateMappings {
   ).verifying(
     if (allowFutureDates) fullDateIsAfter1900(fieldErrorPart)
     else fullDateIsInPastAndAfter1900(fieldErrorPart)
+  ).transform(
+    { case (day, month, year) => LocalDate.of(year.trim.toInt, month.trim.toInt, day.trim.toInt) },
+    (date: LocalDate) => (date.getDayOfMonth.toString, date.getMonthValue.toString, date.getYear.toString)
+  )
+
+  def dateFieldsAfterTodayMapping(
+    prefix: String,
+    allowFutureDates: Boolean = false,
+    fieldErrorPart: String = ""
+  ): Mapping[LocalDate] = tuple(
+    "day"   -> nonEmptyTextOr(
+      prefix + ".day",
+      text.verifying(
+        Errors.invalidDate,
+        x => x.trim.forall(Character.isDigit) && x.trim.toInt >= 1 && x.trim.toInt <= 31
+      ),
+      s"error$fieldErrorPart.day.required"
+    ),
+    "month" -> nonEmptyTextOr(
+      prefix + ".month",
+      text.verifying(
+        Errors.invalidDate,
+        x => x.trim.forall(Character.isDigit) && x.trim.toInt >= 1 && x.trim.toInt <= 12
+      ),
+      s"error$fieldErrorPart.month.required"
+    ),
+    "year"  -> nonEmptyTextOr(
+      prefix + ".year",
+      text.verifying(Errors.invalidDate, x => x.trim.forall(Character.isDigit) && x.trim.length == 4),
+      s"error$fieldErrorPart.year.required"
+    )
+  ).verifying(
+    if (allowFutureDates) fullDateIsAfterToday(fieldErrorPart)
+    else fullDateIsAfterToday(fieldErrorPart)
   ).transform(
     { case (day, month, year) => LocalDate.of(year.trim.toInt, month.trim.toInt, day.trim.toInt) },
     (date: LocalDate) => (date.getDayOfMonth.toString, date.getMonthValue.toString, date.getYear.toString)
