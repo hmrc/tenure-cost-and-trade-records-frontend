@@ -20,9 +20,9 @@ import models.submissions.common.{ContactDetails, ContactDetailsAddress}
 import play.api.libs.json.Json
 
 case class AlternativeContactDetails(
-  alternativeContactFullName: String,
-  alternativeContactDetails: ContactDetails,
-  alternativeContactAddress: ContactDetailsAddress
+  alternativeContactFullName: Option[String],
+  alternativeContactDetails: Option[ContactDetails],
+  alternativeContactAddress: Option[ContactDetailsAddress]
 )
 
 object AlternativeContactDetails {

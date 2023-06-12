@@ -22,6 +22,7 @@ import play.api.test.Helpers._
 import utils.TestBaseSpec
 import form.additionalinformation.AlternativeContactDetailsForm.alternativeContactDetailsForm
 import models.submissions.additionalinformation.AdditionalInformation
+import utils.FormBindingTestAssertions.mustNotContainErrorFor
 
 class AlternativeContactDetailsControllerSpec extends TestBaseSpec {
 
@@ -56,21 +57,21 @@ class AlternativeContactDetailsControllerSpec extends TestBaseSpec {
       val formData = baseFormData - errorKey.fullName
       val form     = alternativeContactDetailsForm.bind(formData)
 
-      mustContainError(errorKey.fullName, "error.alternativeContactName.required", form)
+      mustNotContainErrorFor(errorKey.fullName, form)
     }
 
     "error if phone is missing" in {
       val formData = baseFormData - errorKey.phone
       val form     = alternativeContactDetailsForm.bind(formData)
 
-      mustContainError(errorKey.phone, Errors.contactPhoneRequired, form)
+      mustNotContainErrorFor(errorKey.phone, form)
     }
 
     "error if email is missing" in {
       val formData = baseFormData - errorKey.email
       val form     = alternativeContactDetailsForm.bind(formData)
 
-      mustContainError(errorKey.email, Errors.contactEmailRequired, form)
+      mustNotContainErrorFor(errorKey.email, form)
     }
 
     "error if buildingNameNumber is missing" in {
