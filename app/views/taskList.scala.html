@@ -182,13 +182,15 @@
        @includes.taskListItem("further-information-or-remarks", "furtherInformationOrRemarksTasklist.heading",
         controllers.additionalinformation.routes.FurtherInformationOrRemarksController.show(),
         session.additionalInformation.flatMap(_.checkYourAnswersAdditionalInformation.map(_.checkYourAnswersAdditionalInformation)),
-        session.additionalInformation.flatMap(_.furtherInformationOrRemarksDetails)
+        session.additionalInformation.flatMap(_.furtherInformationOrRemarksDetails),
+        session.aboutYouAndTheProperty.flatMap(_.propertyDetails).isEmpty
        )
 
        @includes.taskListItem("alternate-contact-details", "alternativeContactDetails.heading",
         controllers.additionalinformation.routes.AlternativeContactDetailsController.show(),
         session.additionalInformation.flatMap(_.checkYourAnswersAdditionalInformation.map(_.checkYourAnswersAdditionalInformation)),
-        session.additionalInformation.flatMap(_.furtherInformationOrRemarksDetails)
+        session.additionalInformation.flatMap(_.altContactInformation),
+        session.additionalInformation.flatMap(_.furtherInformationOrRemarksDetails).isEmpty
        )
       </ul></li></ol>
 
