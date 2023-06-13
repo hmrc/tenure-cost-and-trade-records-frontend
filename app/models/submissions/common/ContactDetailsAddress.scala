@@ -16,6 +16,7 @@
 
 package models.submissions.common
 
+import models.submissions.PrintableAddress
 import play.api.libs.json.Json
 
 case class ContactDetailsAddress(
@@ -24,23 +25,7 @@ case class ContactDetailsAddress(
   town: String,
   county: Option[String],
   postcode: String
-) {
-  def singleLine: String =
-    addressLines.mkString(", ")
-
-  def multiLine: String =
-    addressLines.mkString("<br/> ")
-
-  def addressLines: List[String] =
-    List(
-      Some(buildingNameNumber),
-      street1,
-      Some(town),
-      county,
-      Some(postcode.replaceAll("^(\\S+?)\\s*?(\\d\\w\\w)$", "$1 $2"))
-    ).flatten
-
-}
+) extends PrintableAddress
 
 object ContactDetailsAddress {
   implicit val format = Json.format[ContactDetailsAddress]

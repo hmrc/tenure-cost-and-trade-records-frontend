@@ -14,19 +14,34 @@
  * limitations under the License.
  */
 
-package models.submissions.aboutYourLeaseOrTenure
+package models.submissions
 
-import models.submissions.PrintableAddress
-import play.api.libs.json.Json
+/**
+ * @author Yuriy Tumakha
+ */
+trait PrintableAddress {
 
-case class LandlordAddress(
-  buildingNameNumber: String,
-  street1: Option[String],
-  town: String,
-  county: Option[String],
-  postcode: String
-) extends PrintableAddress
+  def buildingNameNumber: String
 
-object LandlordAddress {
-  implicit val format = Json.format[LandlordAddress]
+  def street1: Option[String]
+
+  def town: String
+
+  def county: Option[String]
+
+  def postcode: String
+
+  def addressLines: List[String] =
+    List(
+      Some(buildingNameNumber),
+      street1,
+      Some(town),
+      county,
+      Some(postcode.replaceAll("^(\\S+?)\\s*?(\\d\\w\\w)$", "$1 $2"))
+    ).flatten
+
+  def singleLine: String = addressLines.mkString(", ")
+
+  def multiLine: String = addressLines.mkString("<br/> ")
+
 }
