@@ -73,7 +73,7 @@ class LettingOtherPartOfPropertyDetailsRentControllerSpec extends TestBaseSpec {
 
           Option(html.getElementById("annualRent").`val`()).value      shouldBe "1500"
           Option(html.getElementById("dateInput.month").`val`()).value shouldBe "6"
-          Option(html.getElementById("dateInput.year").`val`()).value  shouldBe "2000"
+          Option(html.getElementById("dateInput.year").`val`()).value  shouldBe "2022"
 
         }
       }

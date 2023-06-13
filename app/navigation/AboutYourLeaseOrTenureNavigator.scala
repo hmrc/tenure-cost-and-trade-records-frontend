@@ -17,6 +17,7 @@
 package navigation
 
 import connectors.Audit
+import controllers.aboutYourLeaseOrTenure
 import models.{ForTypes, Session}
 import navigation.identifiers._
 import play.api.Logging
@@ -25,6 +26,9 @@ import play.api.mvc.Call
 import javax.inject.Inject
 
 class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator(audit) with Logging {
+
+  override def cyaPage: Option[Call] =
+    Some(aboutYourLeaseOrTenure.routes.CheckYourAnswersAboutYourLeaseOrTenureController.show())
 
   private def aboutYourLandlordRouting: Session => Call = answers => {
     answers.forType match {
