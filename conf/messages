@@ -18,6 +18,17 @@ label.account.ref=Reference
 label.account.property=Property
 label.underReview=(under review)
 
+#OTHER FOOTER LINKS:
+########
+footer.cookies.link = Cookies
+footer.privacyNotice.link = Privacy policy
+footer.termsAndConditions.link = Terms and conditions
+footer.helpUsingGovUk.link = Help using GOV.UK
+footer.contactGovUk.link = Contact
+footer.welshHelp.link = Rhestr o Wasanaethau Cymraeg
+footer.needHelp = Need help
+footer.helplineText = Call our helpline on
+
 # SESSION TIMEOUT
 #################
 heading.sessionTimeout=Session timed out
