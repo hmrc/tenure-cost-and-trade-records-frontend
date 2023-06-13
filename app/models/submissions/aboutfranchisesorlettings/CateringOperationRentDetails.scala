@@ -23,7 +23,7 @@ import java.time.LocalDate
 
 case class CateringOperationRentDetails(
   annualRent: BigDecimal,
-  dateInput: MonthsYearDuration
+  dateInput: LocalDate
 )
 
 object CateringOperationRentDetails {

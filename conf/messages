@@ -964,7 +964,7 @@ error.months.required = Enter months amount
 error.years.required = Enter years amount
 error.currentOccupierName.required = Please select how the the property is currently used
 error.propertyCurrentlyUsed.required=Select your connection to the property
-
+error.invalid_date = Enter a valid date
 error.buildingNameNumber.required = Enter the first line of the address
 error.buildingNameNumber.maxLength = First line of the address must be 50 characters or fewer
 error.town.required = Enter the town or city of the address
