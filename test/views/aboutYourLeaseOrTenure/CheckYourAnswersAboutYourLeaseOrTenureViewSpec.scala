@@ -16,6 +16,7 @@
 
 package views.aboutYourLeaseOrTenure
 
+import actions.SessionRequest
 import form.aboutYourLeaseOrTenure.CheckYourAnswersAboutYourLeaseOrTenureForm
 import models.pages.Summary
 import models.submissions.aboutYourLeaseOrTenure.CheckYourAnswersAboutYourLeaseOrTenure
@@ -28,15 +29,17 @@ class CheckYourAnswersAboutYourLeaseOrTenureViewSpec
 
   val messageKeyPrefix = "checkYourAnswersAboutYourLeaseOrTenure"
 
-  override val form = CheckYourAnswersAboutYourLeaseOrTenureForm.checkYourAnswersAboutFranchiseOrLettingsForm
+  override val form = CheckYourAnswersAboutYourLeaseOrTenureForm.checkYourAnswersAboutYourLeaseOrTenureForm
 
   val backLink = controllers.aboutYourLeaseOrTenure.routes.LegalOrPlanningRestrictionsController.show().url
 
+  val sessionRequest = SessionRequest(baseFilled6010Session, fakeRequest)
+
   def createView = () =>
-    checkYourAnswersAboutLeaseAndTenureView(form, backLink, Summary("99996010001"))(fakeRequest, messages)
+    checkYourAnswersAboutLeaseAndTenureView(form, backLink, Summary("99996010001"))(sessionRequest, messages)
 
   def createViewUsingForm = (form: Form[CheckYourAnswersAboutYourLeaseOrTenure]) =>
-    checkYourAnswersAboutLeaseAndTenureView(form, backLink, Summary("99996010001"))(fakeRequest, messages)
+    checkYourAnswersAboutLeaseAndTenureView(form, backLink, Summary("99996010001"))(sessionRequest, messages)
 
   "Check Your Answers About The Property view" must {
 

@@ -650,6 +650,7 @@ error.nextReview.month.required = The date must include a month
 error.nextReview.year.required = The date must include a year
 error.currentLeaseOrAgreementBegin.required = Please provide at what intervals is the rent reviewed under the terms of the lease or agreement
 error.currentLeaseOrAgreementBegin.maxLength = This must be 1000 characters or fewer
+error.date_before_today.nextReview = The date of the next rent review cannot be in the past
 
 ##CURRENT RENT PAYABLE WITHIN 12 MONTHS
 #######################################
@@ -952,7 +953,6 @@ error.maxCurrencyAmountExceeded = Maximum amount exceeded - please contact the V
 error.invalid_phone=Enter a phone number, like 01632 960 001
 error.email=Enter an email in the correct format, like name@example.com
 error.isRelated=Select ‘Yes’ if you are still connected
-error.invalid_date = Enter a valid date
 error.date_must_be_in_past = Date must be in the past
 error.invalid_number = This must be a number
 error.date_before_1900 = Date must be on or after 1 January 1900

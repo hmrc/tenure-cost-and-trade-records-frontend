@@ -18,13 +18,16 @@ package form.aboutYourLeaseOrTenure
 
 import models.submissions.aboutYourLeaseOrTenure.CheckYourAnswersAboutYourLeaseOrTenure
 import play.api.data.Form
-import play.api.data.Forms.{mapping, text}
+import play.api.data.Forms.{default, mapping, text}
+import play.api.data.validation.Constraints.nonEmpty
 
 object CheckYourAnswersAboutYourLeaseOrTenureForm {
 
-  val checkYourAnswersAboutFranchiseOrLettingsForm = Form(
+  val checkYourAnswersAboutYourLeaseOrTenureForm = Form(
     mapping(
-      "checkYourAnswersAboutFranchiseOrLettings" -> text
+      "checkYourAnswersAboutYourLeaseOrTenure" -> default(text, "").verifying(
+        nonEmpty(errorMessage = "error.checkYourAnswersRadio.required")
+      )
     )(CheckYourAnswersAboutYourLeaseOrTenure.apply)(CheckYourAnswersAboutYourLeaseOrTenure.unapply)
   )
 }

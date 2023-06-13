@@ -649,6 +649,7 @@ error.nextReview.month.required = The date must include a month
 error.nextReview.year.required = The date must include a year
 error.currentLeaseOrAgreementBegin.required = Please provide at what intervals is the rent reviewed under the terms of the lease or agreement
 error.currentLeaseOrAgreementBegin.maxLength = This must be 1000 characters or fewer
+error.date_before_today.nextReview = The date of the next rent review cannot be in the past
 
 ##CURRENT RENT PAYABLE WITHIN 12 MONTHS
 #######################################
