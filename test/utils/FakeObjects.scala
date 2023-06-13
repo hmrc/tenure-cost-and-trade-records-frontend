@@ -169,12 +169,12 @@ trait FakeObjects {
   // Franchises or lettings
   val prefilledCateringOperationSectionYes: CateringOperationSection = CateringOperationSection(
     CateringOperationDetails("Operator Name", "Type of Business", prefilledCateringAddress),
-    Some(CateringOperationRentDetails(BigDecimal(1500), prefilledMonthYearInput)),
+    Some(CateringOperationRentDetails(BigDecimal(1500), prefilledDateInput)),
     Some(AnswerYes)
   )
   val prefilledCateringOperationSectionNo: CateringOperationSection  = CateringOperationSection(
     CateringOperationDetails("Operator Name", "Type of Business", prefilledCateringAddress),
-    Some(CateringOperationRentDetails(BigDecimal(1500), prefilledMonthYearInput)),
+    Some(CateringOperationRentDetails(BigDecimal(1500), prefilledDateInput)),
     Some(AnswerNo)
   )
   val prefilledLettingSectionYes: LettingSection                     = LettingSection(
@@ -183,7 +183,7 @@ trait FakeObjects {
       "Type of Business",
       prefilledLettingAddress
     ),
-    Some(LettingOtherPartOfPropertyRentDetails(BigDecimal(1500), prefilledMonthYearInput)),
+    Some(LettingOtherPartOfPropertyRentDetails(BigDecimal(1500), prefilledDateInput)),
     Some(AnswerYes)
   )
   val prefilledLettingSectionNo: LettingSection                      = LettingSection(
@@ -192,7 +192,7 @@ trait FakeObjects {
       "Type of Business",
       prefilledLettingAddress
     ),
-    Some(LettingOtherPartOfPropertyRentDetails(BigDecimal(1500), prefilledMonthYearInput)),
+    Some(LettingOtherPartOfPropertyRentDetails(BigDecimal(1500), prefilledDateInput)),
     Some(AnswerNo)
   )
 
