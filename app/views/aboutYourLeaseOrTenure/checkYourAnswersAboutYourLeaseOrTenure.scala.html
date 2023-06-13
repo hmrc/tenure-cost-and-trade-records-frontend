@@ -14,64 +14,86 @@
  * limitations under the License.
  *@
 
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
-@import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
+@import actions.SessionRequest
+@import controllers.aboutYourLeaseOrTenure
+@import uk.gov.hmrc.govukfrontend.views.html.components._
 @import models.submissions.aboutYourLeaseOrTenure.CheckYourAnswersAboutYourLeaseOrTenure
 @import models.pages.Summary
+@import util.SectionAnswersRowBuilder
 
 @this(layout: Layout,
         govukButton: GovukButton,
+        govukRadios: GovukRadios,
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[CheckYourAnswersAboutYourLeaseOrTenure], backLink: String, summary: Summary)(implicit request: Request[_], messages: Messages)
+@(theForm: Form[CheckYourAnswersAboutYourLeaseOrTenure], backLink: String, summary: Summary)(implicit request: SessionRequest[_], messages: Messages)
 
-@layout(
- pageHeading = messages("checkYourAnswersAboutYourLeaseOrTenure.heading"),
- backLinkUrl = backLink,
- showSection = true,
- summary = Some(summary),
- sectionName = messages("label.section.aboutYourLeaseOrTenure"),
- theForm = theForm
-) {
+    @sectionAnswers = @{
+        SectionAnswersRowBuilder(request.sessionData.aboutLeaseOrAgreementPartOne)
+    }
 
- @formWithCSRF(action = controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
+    @sectionAnswers2 = @{
+        SectionAnswersRowBuilder(request.sessionData.aboutLeaseOrAgreementPartTwo)
+    }
 
-  <dl class="govuk-summary-list">
-  <div id="fullName" class="govuk-summary-list__row">
-   <dt class="govuk-summary-list__key">Operator's Name</dt>
-   <dd class="govuk-summary-list__value">
-    John Smith
-   </dd>
-   <dd class="govuk-summary-list__actions">
-    <a href="/sending-rental-information/page/2?edit=fullName#fullName" class="govuk-link">Change <span class="govuk-visually-hidden">Full name</span></a>
-   </dd>
-  </div>
+    @layout(
+        pageHeading = messages("checkYourAnswersAboutYourLeaseOrTenure.heading"),
+        backLinkUrl = backLink,
+        showSection = true,
+        fullWidth = true,
+        summary = Some(summary),
+        sectionName = messages("label.section.aboutYourLeaseOrTenure"),
+        theForm = theForm
+    ) {
 
-  <div id="userType" class="govuk-summary-list__row">
-   <dt class="govuk-summary-list__key">Type of business</dt>
-   <dd class="govuk-summary-list__value">
-   Hotel
-   </dd>
-   <dd class="govuk-summary-list__actions">
-    <a href="/sending-rental-information/page/2?edit=userType#userType" class="govuk-link">Change <span class="govuk-visually-hidden">I am (or represent) the</span></a>
-   </dd>
-  </div>
+        @formWithCSRF(action = aboutYourLeaseOrTenure.routes.CheckYourAnswersAboutYourLeaseOrTenureController.submit()) {
 
-  <div id="userType" class="govuk-summary-list__row">
-   <dt class="govuk-summary-list__key">Correspondence address</dt>
-   <dd class="govuk-summary-list__value">
-    1 Jones Street
-    Townley
-    JO1 3NS
-   </dd>
-   <dd class="govuk-summary-list__actions">
-    <a href="/sending-rental-information/page/2?edit=userType#userType" class="govuk-link">Change <span class="govuk-visually-hidden">I am (or represent) the</span></a>
-   </dd>
-  </div>
-  </dl>
+            <dl class="govuk-summary-list">
+                <div id="fullName" class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">Operator's Name</dt>
+                    <dd class="govuk-summary-list__value">
+                        John Smith
+                    </dd>
+                    <dd class="govuk-summary-list__actions">
+                        <a href="/sending-rental-information/page/2?edit=fullName#fullName" class="govuk-link">
+                            Change <span class="govuk-visually-hidden">Full name</span></a>
+                    </dd>
+                </div>
 
-  @includes.continueSaveAsDraftButtons(govukButton)
+                <div id="userType" class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">Type of business</dt>
+                    <dd class="govuk-summary-list__value">
+                        Hotel
+                    </dd>
+                    <dd class="govuk-summary-list__actions">
+                        <a href="/sending-rental-information/page/2?edit=userType#userType" class="govuk-link">
+                            Change <span class="govuk-visually-hidden">I am (or represent) the</span></a>
+                    </dd>
+                </div>
 
- }
-}
+                <div id="userType" class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">Correspondence address</dt>
+                    <dd class="govuk-summary-list__value">
+                        1 Jones Street
+                        Townley
+                        JO1 3NS
+                    </dd>
+                    <dd class="govuk-summary-list__actions">
+                        <a href="/sending-rental-information/page/2?edit=userType#userType" class="govuk-link">
+                            Change <span class="govuk-visually-hidden">I am (or represent) the</span></a>
+                    </dd>
+                </div>
+            </dl>
+
+            @includes.checkYourAnswersRadioButtons(
+                govukRadios,
+                theForm,
+                "checkYourAnswersAboutYourLeaseOrTenure"
+            )
+
+            @includes.continueSaveAsDraftButtons(govukButton)
+
+        }
+
+    }

@@ -18,7 +18,9 @@ package controllers.aboutYourLeaseOrTenure
 
 import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
-import form.aboutYourLeaseOrTenure.CheckYourAnswersAboutYourLeaseOrTenureForm.checkYourAnswersAboutFranchiseOrLettingsForm
+import form.aboutYourLeaseOrTenure.CheckYourAnswersAboutYourLeaseOrTenureForm.checkYourAnswersAboutYourLeaseOrTenureForm
+import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne
+import models.submissions.aboutYourLeaseOrTenure.CheckYourAnswersAboutYourLeaseOrTenure
 import models.{ForTypes, Session}
 import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.CheckYourAnswersAboutYourLeaseOrTenureId
@@ -48,8 +50,8 @@ class CheckYourAnswersAboutYourLeaseOrTenureController @Inject() (
         checkYourAnswersAboutYourLeaseOrTenureView(
           request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.checkYourAnswersAboutYourLeaseOrTenure) match {
             case Some(checkYourAnswersAboutYourLeaseOrTenureView) =>
-              checkYourAnswersAboutFranchiseOrLettingsForm.fillAndValidate(checkYourAnswersAboutYourLeaseOrTenureView)
-            case _                                                => checkYourAnswersAboutFranchiseOrLettingsForm
+              checkYourAnswersAboutYourLeaseOrTenureForm.fillAndValidate(checkYourAnswersAboutYourLeaseOrTenureView)
+            case _                                                => checkYourAnswersAboutYourLeaseOrTenureForm
           },
           getBackLink(request.sessionData),
           request.sessionData.toSummary
@@ -59,10 +61,22 @@ class CheckYourAnswersAboutYourLeaseOrTenureController @Inject() (
   }
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft(
-      Redirect(
-        navigator.nextPage(CheckYourAnswersAboutYourLeaseOrTenureId, request.sessionData).apply(request.sessionData)
-      )
+    continueOrSaveAsDraft[CheckYourAnswersAboutYourLeaseOrTenure](
+      checkYourAnswersAboutYourLeaseOrTenureForm,
+      formWithErrors =>
+        BadRequest(
+          checkYourAnswersAboutYourLeaseOrTenureView(
+            formWithErrors,
+            getBackLink(request.sessionData),
+            request.sessionData.toSummary
+          )
+        ),
+      data => {
+        val updatedData =
+          updateAboutLeaseOrAgreementPartOne(_.copy(checkYourAnswersAboutYourLeaseOrTenure = Some(data)))
+        session.saveOrUpdate(updatedData)
+        Redirect(navigator.nextPage(CheckYourAnswersAboutYourLeaseOrTenureId, updatedData).apply(updatedData))
+      }
     )
   }
 
@@ -97,4 +111,5 @@ class CheckYourAnswersAboutYourLeaseOrTenureController @Inject() (
             }
         }
     }
+
 }

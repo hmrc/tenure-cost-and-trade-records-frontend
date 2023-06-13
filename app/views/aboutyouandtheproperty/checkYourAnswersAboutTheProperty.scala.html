@@ -59,9 +59,12 @@
             @govukSummaryList(SummaryList(rows =
                 sectionAnswers.row("checkYourAnswersAboutTheProperty.currentOccupier", _.propertyDetails.map(_.currentOccupierName), aboutyouandtheproperty.routes.AboutThePropertyController.show(), "currentOccupierName") ++
                     sectionAnswers.row("checkYourAnswersAboutTheProperty.propertyUsage",
-                        _.propertyDetails.map(_.propertyCurrentlyUsed).map(usage => s"${usage.head.key}.${usage.head.name}"),
+                        _.propertyDetails.map(_.propertyCurrentlyUsed
+                                .map(usage => s"${usage.key}.${usage.name}")
+                                .map(msgKey => messages(msgKey) + sectionAnswers.answers.filter(_ => msgKey == "propertyCurrentlyUsed.other").flatMap(_.propertyDetails.flatMap(_.currentlyUsedOtherField)).fold("")(v => s": $v"))
+                                .map(Text(_).asHtml).mkString("""<p class="govuk-body">""", "<br/> ", "</p>")),
                         aboutyouandtheproperty.routes.AboutThePropertyController.show(), "propertyCurrentlyUsed",
-                        ("propertyCurrentlyUsed.other", _.propertyDetails.flatMap(_.currentlyUsedOtherField))) ++
+                        ("valueAsHtml", _ => None)) ++
                     sectionAnswers.optionalRow("checkYourAnswersAboutTheProperty.hasWebsite",
                         _.websiteForPropertyDetails.map(_.buildingOperatingHaveAWebsite).map(hasWebsite => messages(s"label.${hasWebsite.name}")),
                         aboutyouandtheproperty.routes.WebsiteForPropertyController.show(), "buildingOperatingHaveAWebsite") ++
