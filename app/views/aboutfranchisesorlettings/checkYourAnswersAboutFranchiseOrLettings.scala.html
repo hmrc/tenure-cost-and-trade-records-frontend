@@ -78,7 +78,7 @@
                                         _ => Option(cateringOperation.cateringOperationDetails.typeOfBusiness),
                                         aboutfranchisesorlettings.routes.CateringOperationDetailsController.show(Some(idx)), "typeOfBusiness") ++
                                     sectionAnswers.row("checkYourAnswersAboutFranchiseOrLettings.correspondenceAddress",
-                                        _ => Option(cateringOperation.cateringOperationDetails.cateringAddress.addressLines.map(Text(_).asHtml).mkString("""<p class="govuk-body">""", "<br/> ", "</p>")),
+                                        _ => Option(cateringOperation.cateringOperationDetails.cateringAddress.escapedHtml),
                                         aboutfranchisesorlettings.routes.CateringOperationDetailsController.show(Some(idx)), "cateringAddress.buildingNameNumber",
                                         ("valueAsHtml", _ => None)) ++
                                     sectionAnswers.row("checkYourAnswersAboutFranchiseOrLettings.annualRent",
@@ -116,7 +116,7 @@
                                         _ => Option(letting.lettingOtherPartOfPropertyInformationDetails.typeOfBusiness),
                                         aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsController.show(Some(idx)), "lettingTypeOfBusiness") ++
                                     sectionAnswers.row("checkYourAnswersAboutFranchiseOrLettings.correspondenceAddress",
-                                        _ => Option(letting.lettingOtherPartOfPropertyInformationDetails.lettingAddress.addressLines.map(Text(_).asHtml).mkString("""<p class="govuk-body">""", "<br/> ", "</p>")),
+                                        _ => Option(letting.lettingOtherPartOfPropertyInformationDetails.lettingAddress.escapedHtml),
                                         aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsController.show(Some(idx)), "lettingAddress.buildingNameNumber",
                                         ("valueAsHtml", _ => None)) ++
                                     sectionAnswers.row("checkYourAnswersAboutFranchiseOrLettings.annualRent",

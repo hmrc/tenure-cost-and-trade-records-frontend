@@ -58,7 +58,7 @@
                     _.aboutTheLandlord.map(_.landlordFullName),
                     aboutYourLeaseOrTenure.routes.AboutYourLandlordController.show(), "landlordFullName") ++
                         sectionAnswers.row("label.landlordAddress.address",
-                            _.aboutTheLandlord.map(_.landlordAddress.addressLines.map(Text(_).asHtml).mkString("""<p class="govuk-body">""", "<br/>", "</p>")),
+                            _.aboutTheLandlord.map(_.landlordAddress.escapedHtml),
                             aboutYourLeaseOrTenure.routes.AboutYourLandlordController.show(), "landlordAddress.buildingNameNumber",
                             ("valueAsHtml", _ => None))
             ))

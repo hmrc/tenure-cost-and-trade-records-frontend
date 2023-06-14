@@ -16,6 +16,8 @@
 
 package models.submissions
 
+import uk.gov.hmrc.govukfrontend.views.Aliases
+
 /**
   * @author Yuriy Tumakha
   */
@@ -43,5 +45,18 @@ trait PrintableAddress {
   def singleLine: String = addressLines.mkString(", ")
 
   def multiLine: String = addressLines.mkString("<br/> ")
+
+}
+
+object PrintableAddress {
+
+  implicit class PrintableAddressHelper(printableAddress: PrintableAddress) extends Aliases {
+
+    def escapedHtml: String =
+      printableAddress.addressLines
+        .map(Text(_).asHtml)
+        .mkString("""<p class="govuk-body">""", "<br/> ", "</p>")
+
+  }
 
 }
