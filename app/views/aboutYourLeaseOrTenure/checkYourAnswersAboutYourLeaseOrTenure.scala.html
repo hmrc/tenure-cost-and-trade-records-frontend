@@ -19,11 +19,13 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import models.submissions.aboutYourLeaseOrTenure.CheckYourAnswersAboutYourLeaseOrTenure
 @import models.pages.Summary
+@import util.NumberUtil._
 @import util.SectionAnswersRowBuilder
 
 @this(layout: Layout,
         govukButton: GovukButton,
         govukRadios: GovukRadios,
+        govukSummaryList: GovukSummaryList,
         formWithCSRF: FormWithCSRF
 )
 
@@ -49,42 +51,25 @@
 
         @formWithCSRF(action = aboutYourLeaseOrTenure.routes.CheckYourAnswersAboutYourLeaseOrTenureController.submit()) {
 
-            <dl class="govuk-summary-list">
-                <div id="fullName" class="govuk-summary-list__row">
-                    <dt class="govuk-summary-list__key">Operator's Name</dt>
-                    <dd class="govuk-summary-list__value">
-                        John Smith
-                    </dd>
-                    <dd class="govuk-summary-list__actions">
-                        <a href="/sending-rental-information/page/2?edit=fullName#fullName" class="govuk-link">
-                            Change <span class="govuk-visually-hidden">Full name</span></a>
-                    </dd>
-                </div>
+            <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutYourLeaseOrTenure.yourLandlord.heading")</h2>
 
-                <div id="userType" class="govuk-summary-list__row">
-                    <dt class="govuk-summary-list__key">Type of business</dt>
-                    <dd class="govuk-summary-list__value">
-                        Hotel
-                    </dd>
-                    <dd class="govuk-summary-list__actions">
-                        <a href="/sending-rental-information/page/2?edit=userType#userType" class="govuk-link">
-                            Change <span class="govuk-visually-hidden">I am (or represent) the</span></a>
-                    </dd>
-                </div>
+            @govukSummaryList(SummaryList(rows =
+                sectionAnswers.row("label.landlordFullName",
+                    _.aboutTheLandlord.map(_.landlordFullName),
+                    aboutYourLeaseOrTenure.routes.AboutYourLandlordController.show(), "landlordFullName") ++
+                        sectionAnswers.row("label.landlordAddress.address",
+                            _.aboutTheLandlord.map(_.landlordAddress.addressLines.map(Text(_).asHtml).mkString("""<p class="govuk-body">""", "<br/>", "</p>")),
+                            aboutYourLeaseOrTenure.routes.AboutYourLandlordController.show(), "landlordAddress.buildingNameNumber",
+                            ("valueAsHtml", _ => None))
+            ))
 
-                <div id="userType" class="govuk-summary-list__row">
-                    <dt class="govuk-summary-list__key">Correspondence address</dt>
-                    <dd class="govuk-summary-list__value">
-                        1 Jones Street
-                        Townley
-                        JO1 3NS
-                    </dd>
-                    <dd class="govuk-summary-list__actions">
-                        <a href="/sending-rental-information/page/2?edit=userType#userType" class="govuk-link">
-                            Change <span class="govuk-visually-hidden">I am (or represent) the</span></a>
-                    </dd>
-                </div>
-            </dl>
+            <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutYourLeaseOrTenure.yourRent.heading")</h2>
+
+            @govukSummaryList(SummaryList(rows =
+                sectionAnswers.row("checkYourAnswersAboutYourLeaseOrTenure.currentAnnualRent",
+                    _.annualRent.map(_.amount.asMoney),
+                    aboutYourLeaseOrTenure.routes.CurrentAnnualRentController.show(), "currentAnnualRent")
+            ))
 
             @includes.checkYourAnswersRadioButtons(
                 govukRadios,
