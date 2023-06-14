@@ -25,7 +25,7 @@ import models.submissions.aboutYourLeaseOrTenure._
 import models.submissions.aboutfranchisesorlettings._
 import models.submissions.aboutyouandtheproperty._
 import models.submissions.common.{Address, AnswersYesNo, BuildingInsurance, CYAYesNo, ContactDetails, ContactDetailsAddress, InsideRepairs, OutsideRepairs}
-import models.submissions.connectiontoproperty.{AddressConnectionType, ConnectionToProperty}
+import models.submissions.connectiontoproperty.{AddressConnectionType, ConnectionToProperty, EditAddress}
 import models.submissions.notconnected.PastConnectionType
 import models.{AnnualRent, NamedEnum, NamedEnumSupport}
 import play.api.data.Forms.{boolean, default, email, list, mapping, nonEmptyText, optional, text}
@@ -234,7 +234,7 @@ object MappingSupport {
         maxLength(50, "error.county.maxLength")
       )
     ),
-    "postcode"           -> nonEmptyTextOr("alternativeContactAddress.postcode", postcode, "error.postcode.required")
+    "postcode"           -> nonEmptyTextOr("editAddress.postcode", postcode, "error.postcode.required")
   )(ContactDetailsAddress.apply)(ContactDetailsAddress.unapply)
 
   def mandatoryBooleanWithError(message: String) =

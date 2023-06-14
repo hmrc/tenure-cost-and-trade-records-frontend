@@ -20,6 +20,7 @@ import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
 import form.connectiontoproperty.EditAddressForm.editAddressForm
 import models.submissions.common.{Address, ContactDetailsAddress}
+import models.submissions.connectiontoproperty.EditAddress
 import navigation.ConnectionToPropertyNavigator
 import navigation.identifiers.EditAddressPageId
 import models.submissions.connectiontoproperty.StillConnectedDetails.updateStillConnectedDetails
@@ -55,7 +56,7 @@ class EditAddressController @Inject() (
   }
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft[ContactDetailsAddress](
+    continueOrSaveAsDraft[EditAddress](
       editAddressForm,
       formWithErrors => BadRequest(editAddressView(formWithErrors)),
       data => {
