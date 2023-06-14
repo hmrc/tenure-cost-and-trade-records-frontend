@@ -92,37 +92,32 @@ label.section.additionalInformation = Additional information
 #DUMMY START PAGE FULL INFORMATION
 ##############################
 start.page.heading = Send your business trade and cost information to the Valuation Office Agency
-start.header = Use this service if the Valuation Office Agency (VOA) has asked you for information about your business premises.
-start.title = Why you must provide this information
-start.block1 = The VOA collects this information from all businesses in England and Wales on behalf of the Valuation Officer. It’s used to set fair, up-to-date rateable values for non-domestic properties
-start.block2 = These values are used to determine business rates in England and Wales. You can check the rateable value of your property using our <a href="https://www.gov.uk/find-business-rates" class="govuk-link" target="_blank">business rates valuation service</a>.
 start.desc = You must send the Valuation Office Agency (VOA) information about your business property if they’ve asked you to. You need to do this even if you no longer own or rent the property.
 start.desc1 = The information you provide will be used by the local authority to help calculate business rates in your area.
 start.inset = If you do not send the information within 56 days of getting the letter the VOA sent to you, you may have to pay a penalty.
-start.warning = You could be taken to court if you submit false information
 start.subheading = What you’ll need
-start.item1 = the reference number from the letter you were sent by the VOA
+start.item1 = the reference number and postcode from the letter you were sent by the Valuation Office Agency (VOA)
 start.item2 = trading information for the last 3 financial years, or since you occupied the property
 start.item3 = details of any franchises or lettings run from the property as a separate business (if applicable)
 start.subheading2 = If you do not own the property, you’ll also need:
 start.item4 = your lease or agreement, including the current rent you pay
-start.item5 = information about any recent changes to your rent or any rent-free period
+start.item5 = information about any recent rent changes, or any rent-free period
 start.item6 = information about any changes you’ve made to the property that could affect its value
-start.subheading3 = If you no longer occupy, or have never occupied the property
-start.desc3 = You must still use this service to notify us if you no longer occupy, or have never occupied the property. This should take less than 2 minutes
-start.desc4 = If you’d like to learn more about business rates before starting your form, <a href="https://www.gov.uk/find-business-rates" class="govuk-link" target="_blank">visit our introduction to business rates</a> section. It explains things like how your rates are calculated, how to pay, and whether you qualify for business rates relief.
-start.title2 = Before you begin
-start.desc5 = Completing this online form takes anywhere between 20 minutes and an hour, depending on your business. <strong>You do not have to complete the form in one go</strong>. You can save what you’ve done and return to finish it later.
-start.desc6 = You have 56 days from the date printed on your letter from the VOA to return the form. You may have to pay a penalty if you fail to submit the form in time.
-start.headingFooter = You do not have to complete the form in one go. You can save what you’ve done and return to finish it later on.
+start.desc3 = If you no longer occupy, or have never occupied the property you must still use this service to notify us
+start.desc4 = You do not have to complete the form in one go. You can save what you’ve done and return to finish it later on.
+start.subheading3 = If you need help
+start.telephone = Telephone: 03000 501 262
+start.openingDays = Open weekdays, 9:00am to 4:30pm
+start.email = Email: <a href="mailto:formhelp@voa.gov.uk?subject=Ex-owners/occupiers form&body=Please email us your reference number, email address and/or telephone number only. If we require any further information we will contact you in due course. " target="_blank" id="mailto" onclick="gasend()">formhelp@voa.gov.uk</a>
+start.subheading4 = Alternative formats
+start.desc5 = If you would like information in an alternative format such as large print, braille, or something else, let us know by contacting us at 03000 501 501 (text relay prefix 18001). You can also <a href="https://www.qa.tax.service.gov.uk/send-trade-and-cost-information/" class="govuk-link" target="_blank">download a PDF version</a> of this declaration which you can complete and return to the VOA.
+start.subheading5 = Explore the topic
+start.desc6 = You can check the rateable value of the property using our business rates valuation service
+start.desc7 = If you’d like to learn more about business rates before starting your form, visit our <a href="https://www.gov.uk/find-business-rates" class="govuk-link" target="_blank">introduction to business rates</a> section. It explains things like how your rates are calculated, how to pay, and whether you qualify for business rates relief.
 start.button = Start now
 start.welsh = This service is also available in <a href="https://www.gov.uk" class="govuk-link" target="_blank">Welsh (Cymraeg)</a>
-start.subheading4 = If you need more information on business rates
-start.desc7 = Our <a href="https://www.gov.uk/browse/business/premises-rates" class="govuk-link" target="_blank">business premises and business rates page</a> can direct you to a broad range of information and services. It covers many topics, including estimating your business rates, getting support for your business, and contacting your council about a business rates bill.
-start.subheading5 = If you need help
-start.desc8 = If you have any questions, or need support in completing the form, please call us on 03000 501 262 weekdays between 9:00am and 4:30pm. Alternatively, you can email us on <a href="mailto:formhelp@voa.gov.uk?subject=Ex-owners/occupiers form&body=Please email us your reference number, email address and/or telephone number only. If we require any further information we will contact you in due course. " target="_blank" id="mailto" onclick="gasend()">formhelp@voa.gov.uk</a> and one of our customer service team will get back to you.
-start.subheading6 = Alternative formats
-start.desc9 = If you would like information in an alternative format such as large print, braille, or something else, let us know by contacting us at 03000 501501 (text relay prefix 18001). You will have the opportunity to download a PDF version of this declaration once you start using this service.
+start.subheading5 = Explore the topic
+start.desc8 = <a href="https://www.gov.uk/browse/business/premises-rates" class="govuk-link" target="_blank">Business premises and business rates page</a> can direct you to a broad range of information and services. It covers many topics, including estimating your business rates, getting support for your business, and contacting your council about a business rates bill.
 
 #LOGIN
 ##############################

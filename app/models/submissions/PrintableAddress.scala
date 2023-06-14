@@ -17,8 +17,8 @@
 package models.submissions
 
 /**
- * @author Yuriy Tumakha
- */
+  * @author Yuriy Tumakha
+  */
 trait PrintableAddress {
 
   def buildingNameNumber: String
