@@ -16,11 +16,10 @@
 
 package form.aboutyouandtheproperty
 
-import form.Errors
 import form.MappingSupport.contactDetailsMapping
 import models.submissions.aboutyouandtheproperty.CustomerDetails
 import play.api.data.Form
-import play.api.data.Forms.{default, mapping, nonEmptyText, text}
+import play.api.data.Forms.{default, mapping, text}
 import play.api.data.validation.Constraints.nonEmpty
 
 object AboutYouForm {

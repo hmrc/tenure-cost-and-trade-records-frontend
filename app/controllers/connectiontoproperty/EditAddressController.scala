@@ -19,8 +19,7 @@ package controllers.connectiontoproperty
 import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
 import form.connectiontoproperty.EditAddressForm.editAddressForm
-import models.submissions.common.{Address, ContactDetailsAddress}
-import models.submissions.connectiontoproperty.{EditAddress, EditTheAddress}
+import models.submissions.connectiontoproperty.EditTheAddress
 import navigation.ConnectionToPropertyNavigator
 import navigation.identifiers.EditAddressPageId
 import models.submissions.connectiontoproperty.StillConnectedDetails.updateStillConnectedDetails

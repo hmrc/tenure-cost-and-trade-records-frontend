@@ -16,7 +16,7 @@
 
 package form.aboutYourLeaseOrTenure
 
-import form.MappingSupport.{rent3Years, tenancy3Years, underReview, yesNoType}
+import form.MappingSupport.{rent3Years, tenancy3Years, underReview}
 import models.submissions.aboutYourLeaseOrTenure.LeaseOrAgreementYearsDetails
 import play.api.data.Form
 import play.api.data.Forms.mapping
