@@ -58,8 +58,7 @@ class EditAddressController @Inject() (
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[EditTheAddress](
       editAddressForm,
-      formWithErrors => BadRequest(editAddressView(formWithErrors,
-        request.sessionData.toSummary)),
+      formWithErrors => BadRequest(editAddressView(formWithErrors, request.sessionData.toSummary)),
       data => {
         val updatedData = updateStillConnectedDetails(_.copy(editAddress = Some(data)))
         session.saveOrUpdate(updatedData)
