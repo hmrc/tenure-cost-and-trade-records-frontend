@@ -16,36 +16,69 @@
 
 package controllers.aboutfranchisesorlettings
 
+import form.aboutfranchisesorlettings.CheckYourAnswersAboutFranchiseOrLettingsForm.checkYourAnswersAboutFranchiseOrLettingsForm
+import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
 import play.api.http.Status
+import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import play.twirl.api.HtmlFormat
+import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
-import views.html.aboutfranchisesorlettings.checkYourAnswersAboutFranchiseOrLettings
 
 class CheckYourAnswersAboutFranchiseOrLettingsControllerSpec extends TestBaseSpec {
 
-  val mockCheckYourAnswersAboutFranchiseOrLettingsView = mock[checkYourAnswersAboutFranchiseOrLettings]
-  when(mockCheckYourAnswersAboutFranchiseOrLettingsView.apply(any, any, any)(any, any)).thenReturn(HtmlFormat.empty)
+  import TestData._
 
-  val checkYourAnswersAboutFranchiseOrLettingsController = new CheckYourAnswersAboutFranchiseOrLettingsController(
-    stubMessagesControllerComponents(),
-    aboutFranchisesOrLettingsNavigator,
-    mockCheckYourAnswersAboutFranchiseOrLettingsView,
-    preFilledSession,
-    mockSessionRepo
-  )
+  def checkYourAnswersAboutFranchiseOrLettingsController(
+    aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = Some(prefilledAboutFranchiseOrLettings)
+  ) =
+    new CheckYourAnswersAboutFranchiseOrLettingsController(
+      stubMessagesControllerComponents(),
+      aboutFranchisesOrLettingsNavigator,
+      checkYourAnswersAboutFranchiseOrLettings,
+      preEnrichedActionRefiner(aboutFranchisesOrLettings = aboutFranchisesOrLettings),
+      mockSessionRepo
+    )
 
   "GET /" should {
     "return 200" in {
-      val result = checkYourAnswersAboutFranchiseOrLettingsController.show(fakeRequest)
+      val result = checkYourAnswersAboutFranchiseOrLettingsController().show(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return HTML" in {
-      val result = checkYourAnswersAboutFranchiseOrLettingsController.show(fakeRequest)
+      val result = checkYourAnswersAboutFranchiseOrLettingsController().show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
+  }
+
+  "SUBMIT /" should {
+    "throw a BAD_REQUEST if an empty form is submitted" in {
+      val res = checkYourAnswersAboutFranchiseOrLettingsController().submit(
+        FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)
+      )
+      status(res) shouldBe BAD_REQUEST
+    }
+  }
+
+  "Add another letting accommodation form" should {
+    "error if addAnotherCateringOperationOrLettingAccommodation is missing" in {
+      val formData = baseFormData - errorKey.checkYourAnswersAboutFranchiseOrLettings
+      val form     = checkYourAnswersAboutFranchiseOrLettingsForm.bind(formData)
+
+      mustContainError(errorKey.checkYourAnswersAboutFranchiseOrLettings, "error.checkYourAnswersRadio.required", form)
+    }
+  }
+
+  object TestData {
+    val errorKey: Object {
+      val checkYourAnswersAboutFranchiseOrLettings: String
+    } = new {
+      val checkYourAnswersAboutFranchiseOrLettings: String =
+        "checkYourAnswersAboutFranchiseOrLettings"
+    }
+
+    val baseFormData: Map[String, String] = Map("checkYourAnswersAboutFranchiseOrLettings" -> "yes")
   }
 
 }
