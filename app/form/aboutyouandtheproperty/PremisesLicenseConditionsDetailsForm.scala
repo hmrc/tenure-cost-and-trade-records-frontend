@@ -18,7 +18,7 @@ package form.aboutyouandtheproperty
 
 import models.submissions.aboutyouandtheproperty.PremisesLicenseConditionsDetails
 import play.api.data.Form
-import play.api.data.Forms.{default, mapping, nonEmptyText, text}
+import play.api.data.Forms.{default, mapping, text}
 import play.api.data.validation.Constraints.{maxLength, nonEmpty}
 
 object PremisesLicenseConditionsDetailsForm {

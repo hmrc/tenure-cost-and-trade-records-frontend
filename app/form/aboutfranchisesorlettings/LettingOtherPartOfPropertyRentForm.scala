@@ -16,7 +16,7 @@
 
 package form.aboutfranchisesorlettings
 
-import form.DateMappings.{dateFieldsMapping, monthsYearDurationMapping}
+import form.DateMappings.dateFieldsMapping
 import form.MappingSupport.currencyMapping
 import models.submissions.aboutfranchisesorlettings.LettingOtherPartOfPropertyRentDetails
 import play.api.data.Form

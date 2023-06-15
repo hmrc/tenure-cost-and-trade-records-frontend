@@ -58,6 +58,8 @@ trait FakeObjects {
     LettingAddress("004", Some("GORING ROAD"), "GORING-BY-SEA, WORTHING", Some("West sussex"), "BN12 4AX")
   val prefilledLandlordAddress: LandlordAddress =
     LandlordAddress("004", Some("GORING ROAD"), "GORING-BY-SEA, WORTHING", Some("West sussex"), "BN12 4AX")
+  val prefilledEditAddress: EditAddress         =
+    EditAddress("004", Some("GORING ROAD"), "GORING-BY-SEA, WORTHING", Some("West sussex"), "BN12 4AX")
 
   val prefilledDateInput: LocalDate               = LocalDate.of(2022, 6, 1)
   val prefilledMonthYearInput: MonthsYearDuration = MonthsYearDuration(6, 2000)
@@ -75,7 +77,7 @@ trait FakeObjects {
   val prefilledStillConnectedDetailsEdit: StillConnectedDetails = StillConnectedDetails(
     Some(AddressConnectionTypeYesChangeAddress),
     Some(ConnectionToThePropertyOccupierTrustee),
-    Some(prefilledContactAddress)
+    Some(prefilledEditTheAddress)
   )
   val prefilledStillConnectedDetailsNo: StillConnectedDetails   = StillConnectedDetails(Some(AddressConnectionTypeNo))
 
@@ -261,10 +263,15 @@ trait FakeObjects {
   val prefilledCurrentRentPayableWithin12Months =
     CurrentRentPayableWithin12Months(CurrentRentWithin12MonthsYes, prefilledMonthYearInput)
 
-  val prefilledAboutTheLandlord               =
+  val prefilledAboutTheLandlord =
     AboutTheLandlord(
       prefilledFakeName,
       prefilledLandlordAddress
+    )
+
+  val prefilledEditTheAddress                 =
+    EditTheAddress(
+      prefilledEditAddress
     )
   val prefilledConnectedToLandlordDetails     =
     ConnectedToLandlordInformationDetails(

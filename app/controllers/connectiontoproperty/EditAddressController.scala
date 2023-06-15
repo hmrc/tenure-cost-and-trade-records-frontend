@@ -19,7 +19,7 @@ package controllers.connectiontoproperty
 import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
 import form.connectiontoproperty.EditAddressForm.editAddressForm
-import models.submissions.common.{Address, ContactDetailsAddress}
+import models.submissions.connectiontoproperty.EditTheAddress
 import navigation.ConnectionToPropertyNavigator
 import navigation.identifiers.EditAddressPageId
 import models.submissions.connectiontoproperty.StillConnectedDetails.updateStillConnectedDetails
@@ -48,16 +48,18 @@ class EditAddressController @Inject() (
           request.sessionData.stillConnectedDetails.flatMap(_.editAddress) match {
             case Some(editAddress) => editAddressForm.fillAndValidate(editAddress)
             case _                 => editAddressForm
-          }
+          },
+          request.sessionData.toSummary
         )
       )
     )
   }
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft[ContactDetailsAddress](
+    continueOrSaveAsDraft[EditTheAddress](
       editAddressForm,
-      formWithErrors => BadRequest(editAddressView(formWithErrors)),
+      formWithErrors => BadRequest(editAddressView(formWithErrors,
+        request.sessionData.toSummary)),
       data => {
         val updatedData = updateStillConnectedDetails(_.copy(editAddress = Some(data)))
         session.saveOrUpdate(updatedData)

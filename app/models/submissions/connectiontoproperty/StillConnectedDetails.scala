@@ -18,13 +18,12 @@ package models.submissions.connectiontoproperty
 
 import actions.SessionRequest
 import models.Session
-import models.submissions.common.{Address, ContactDetailsAddress}
 import play.api.libs.json.Json
 
 case class StillConnectedDetails(
   addressConnectionType: Option[AddressConnectionType] = None,
   connectionToProperty: Option[ConnectionToProperty] = None,
-  editAddress: Option[ContactDetailsAddress] = None
+  editAddress: Option[EditTheAddress] = None
 )
 
 object StillConnectedDetails {
