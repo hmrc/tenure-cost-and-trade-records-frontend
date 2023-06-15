@@ -77,8 +77,8 @@ class EditAddressControllerSpec extends TestBaseSpec {
 
   object TestData {
     val errorKey = new {
-      val buildingNameNumber = "buildingNameNumber"
-      val postcode           = "postcode"
+      val buildingNameNumber = "editAddress.buildingNameNumber"
+      val postcode           = "editAddress.postcode"
     }
 
     val baseFormData: Map[String, String] = Map(

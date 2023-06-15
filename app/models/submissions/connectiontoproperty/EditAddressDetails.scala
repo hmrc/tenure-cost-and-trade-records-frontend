@@ -14,17 +14,19 @@
  * limitations under the License.
  */
 
-package form.connectiontoproperty
+package models.submissions.connectiontoproperty
 
-import form.MappingSupport.editAddressMapping
-import models.submissions.connectiontoproperty.EditTheAddress
-import play.api.data.Form
-import play.api.data.Forms.mapping
+import models.submissions.PrintableAddress
+import play.api.libs.json.Json
 
-object EditAddressForm {
-  val editAddressForm: Form[EditTheAddress] = Form(
-    mapping(
-      "editAddress" -> editAddressMapping
-    )(EditTheAddress.apply)(EditTheAddress.unapply)
-  )
+case class EditAddress(
+  buildingNameNumber: String,
+  street1: Option[String],
+  town: String,
+  county: Option[String],
+  postcode: String
+) extends PrintableAddress
+
+object EditAddress {
+  implicit val format = Json.format[EditAddress]
 }

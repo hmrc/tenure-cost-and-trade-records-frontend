@@ -24,7 +24,7 @@ import play.api.libs.json.Json
 case class StillConnectedDetails(
   addressConnectionType: Option[AddressConnectionType] = None,
   connectionToProperty: Option[ConnectionToProperty] = None,
-  editAddress: Option[EditAddress] = None
+  editAddress: Option[EditTheAddress] = None
 )
 
 object StillConnectedDetails {
