@@ -14,7 +14,7 @@
  * limitations under the License.
  *@
 
-@import models.submissions.common.ContactDetailsAddress
+@import models.submissions.connectiontoproperty.EditTheAddress
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
@@ -25,7 +25,7 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[ContactDetailsAddress])(implicit request: Request[_], messages: Messages)
+@(theForm: Form[EditTheAddress])(implicit request: Request[_], messages: Messages)
 
 @layout(
   pageHeading = messages("editAddress.heading"),
@@ -40,13 +40,13 @@
       <h1 class="govuk-fieldset__heading">@messages("editAddress.heading")</h1>
     </legend>
 
-    @includes.textInput(govukInput, theForm, "buildingNameNumber", "govuk-!-width-two-thirds", "buildingNameNumber")
-    @includes.textInput(govukInput, theForm, "street1", "govuk-!-width-two-thirds", "street1", optional = true)
-    @includes.textInput(govukInput, theForm, "town", "govuk-!-width-one-half", "town")
-    @includes.textInput(govukInput, theForm, "county", "govuk-!-width-one-half", "county", optional = true)
-    @includes.textInput(govukInput, theForm, "postcode", "govuk-!-width-one-quarter", "postcode")
+    @includes.textInput(govukInput, theForm, "editAddress.buildingNameNumber", "govuk-!-width-two-thirds", "buildingNameNumber")
+    @includes.textInput(govukInput, theForm, "editAddress.street1", "govuk-!-width-two-thirds", "street1", optional = true)
+    @includes.textInput(govukInput, theForm, "editAddress.town", "govuk-!-width-one-half", "town")
+    @includes.textInput(govukInput, theForm, "editAddress.county", "govuk-!-width-one-half", "county", optional = true)
+    @includes.textInput(govukInput, theForm, "editAddress.postcode", "govuk-!-width-one-quarter", "postcode")
 
-    @includes.continueButton(govukButton)
+      @includes.continueSaveAsDraftButtons(govukButton)
   }
 }
 

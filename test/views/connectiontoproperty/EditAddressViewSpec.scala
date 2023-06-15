@@ -18,11 +18,12 @@ package views.connectiontoproperty
 
 import form.connectiontoproperty.EditAddressForm
 import models.submissions.common.{Address, ContactDetailsAddress}
+import models.submissions.connectiontoproperty.{EditAddress, EditTheAddress}
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class EditAddressViewSpec extends QuestionViewBehaviours[ContactDetailsAddress] {
+class EditAddressViewSpec extends QuestionViewBehaviours[EditTheAddress] {
 
   val messageKeyPrefix = "editAddress"
 
@@ -30,13 +31,20 @@ class EditAddressViewSpec extends QuestionViewBehaviours[ContactDetailsAddress] 
 
   def createView = () => editAddressView(form)(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[ContactDetailsAddress]) => editAddressView(form)(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[EditTheAddress]) => editAddressView(form)(fakeRequest, messages)
 
   "Edit Address view" must {
 
     behave like normalPage(createView, messageKeyPrefix)
 
-    behave like pageWithTextFields(createViewUsingForm, "buildingNameNumber", "street1", "town", "county", "postcode")
+    behave like pageWithTextFields(
+      createViewUsingForm,
+      "editAddress.buildingNameNumber",
+      "editAddress.street1",
+      "editAddress.town",
+      "editAddress.county",
+      "editAddress.postcode"
+    )
 
     "has a link marked with back.link.label leading to the Are still connected Page" in {
       val doc          = asDocument(createView())
