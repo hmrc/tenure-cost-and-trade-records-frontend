@@ -16,10 +16,10 @@
 
 package form.aboutyouandtheproperty
 
-import form.MappingSupport.{aboutYourPropertyType, multipleCurrentPropertyUsedMapping}
+import form.MappingSupport.multipleCurrentPropertyUsedMapping
 import models.submissions.aboutyouandtheproperty._
 import play.api.data.Form
-import play.api.data.Forms.{default, mapping, nonEmptyText, optional, text}
+import play.api.data.Forms.{default, mapping, optional, text}
 import play.api.data.validation.Constraints.{maxLength, nonEmpty}
 
 object AboutThePropertyForm {

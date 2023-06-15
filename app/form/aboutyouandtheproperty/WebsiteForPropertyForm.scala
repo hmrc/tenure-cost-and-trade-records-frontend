@@ -19,8 +19,8 @@ package form.aboutyouandtheproperty
 import form.MappingSupport.buildingOperatingHaveAWebsiteType
 import models.submissions.aboutyouandtheproperty.{BuildingOperationHaveAWebsiteYes, WebsiteForPropertyDetails}
 import play.api.data.Form
-import play.api.data.Forms.{default, mapping, optional, text}
-import play.api.data.validation.Constraints.{minLength, nonEmpty, pattern}
+import play.api.data.Forms.{default, mapping, text}
+import play.api.data.validation.Constraints.{nonEmpty, pattern}
 import uk.gov.voa.play.form.ConditionalMappings.mandatoryIfEqual
 
 object WebsiteForPropertyForm {

@@ -19,7 +19,7 @@ package form.aboutfranchisesorlettings
 import form.MappingSupport.lettingOtherPartAddressMapping
 import models.submissions.aboutfranchisesorlettings.LettingOtherPartOfPropertyInformationDetails
 import play.api.data.Form
-import play.api.data.Forms.{default, mapping, nonEmptyText, text}
+import play.api.data.Forms.{default, mapping, text}
 import play.api.data.validation.Constraints.{maxLength, nonEmpty}
 
 object LettingOtherPartOfPropertyForm {

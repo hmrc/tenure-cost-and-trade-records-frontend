@@ -17,6 +17,7 @@
 package views.connectiontoproperty
 
 import form.connectiontoproperty.EditAddressForm
+import models.pages.Summary
 import models.submissions.common.{Address, ContactDetailsAddress}
 import models.submissions.connectiontoproperty.{EditAddress, EditTheAddress}
 import org.scalatest.matchers.must.Matchers._
@@ -29,9 +30,9 @@ class EditAddressViewSpec extends QuestionViewBehaviours[EditTheAddress] {
 
   override val form = EditAddressForm.editAddressForm
 
-  def createView = () => editAddressView(form)(fakeRequest, messages)
+  def createView = () => editAddressView(form, Summary("99996010001"))(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[EditTheAddress]) => editAddressView(form)(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[EditTheAddress]) => editAddressView(form, Summary("99996010001"))(fakeRequest, messages)
 
   "Edit Address view" must {
 

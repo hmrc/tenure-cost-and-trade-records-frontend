@@ -18,12 +18,10 @@ package form.aboutYourLeaseOrTenure
 
 import form.MappingSupport.{buildingInsuranceType, insideRepairsType, outsideRepairsType}
 import models.submissions.aboutYourLeaseOrTenure.UltimatelyResponsible
-import models.submissions.common.{BuildingInsuranceBoth, BuildingInsuranceLandlord, InsideRepairsBoth, InsideRepairsLandlord, InsideRepairsTenant, OutsideRepairsBoth, OutsideRepairsLandlord, OutsideRepairsTenant}
 import play.api.data.Form
-import play.api.data.Forms.{default, mapping, optional, text}
+import play.api.data.Forms.{default, mapping, text}
 import play.api.data.validation.Constraints.{maxLength, nonEmpty}
-import uk.gov.voa.play.form.ConditionalMappings.{isEqual, mandatoryIf, mandatoryIfAnyAreTrue, mandatoryIfAnyEqual, mandatoryIfEqual, mandatoryIfEqualToAny, mandatoryIfTrue}
-
+import uk.gov.voa.play.form.ConditionalMappings.mandatoryIfAnyEqual
 object UltimatelyResponsibleForm {
 
   val ultimatelyResponsibleForm = Form(

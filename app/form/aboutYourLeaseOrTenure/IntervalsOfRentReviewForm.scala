@@ -16,11 +16,10 @@
 
 package form.aboutYourLeaseOrTenure
 
-import form.DateMappings.{dateFieldsAfterTodayMapping, dateFieldsMapping}
+import form.DateMappings.dateFieldsAfterTodayMapping
 import models.submissions.aboutYourLeaseOrTenure.IntervalsOfRentReview
 import play.api.data.Form
-import play.api.data.Forms.{default, mapping, optional, text}
-import play.api.data.validation.Constraints.{maxLength, nonEmpty}
+import play.api.data.Forms.{mapping, optional, text}
 
 object IntervalsOfRentReviewForm {
 
