@@ -34,7 +34,8 @@
 @layout(
     pageHeading = messages("areYouConnected.heading", summary.address.map(_.singleLine).getOrElse("")),
     showH1 = false,
-    showSection = false,
+    showSection = true,
+    sectionName = messages("label.section.connectionToTheProperty"),
     summary = Some(summary),
     theForm = theForm
 ) {

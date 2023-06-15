@@ -40,7 +40,8 @@
 @layout(
   pageHeading = messages("editAddress.heading"),
   showH1 = false,
-  showSection = false,
+  showSection = true,
+    sectionName = messages("label.section.connectionToTheProperty"),
     summary = Some(summary),
   backLinkUrl = controllers.connectiontoproperty.routes.AreYouStillConnectedController.show.url,
   theForm = theForm
