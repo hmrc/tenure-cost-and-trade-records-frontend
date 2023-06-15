@@ -20,6 +20,7 @@
 @import models.submissions.aboutYourLeaseOrTenure.CheckYourAnswersAboutYourLeaseOrTenure
 @import models.pages.Summary
 @import util.DateUtil
+@import util.DateUtil._
 @import util.NumberUtil._
 @import util.SectionAnswersRowBuilder
 
@@ -65,7 +66,7 @@
                         ("valueAsHtml", _ => None))
         ))
 
-        @if(sectionAnswers.answers.map(_.leaseOrAgreementYearsDetails.isDefined)) {
+        @if(sectionAnswers.answers.exists(_.leaseOrAgreementYearsDetails.isDefined)) {
             <h2 class="govuk-heading-m">@messages("leaseOrAgreement.heading")</h2>
 
             @govukSummaryList(SummaryList(rows =
@@ -77,20 +78,29 @@
                             aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.show(), "agreedReviewedAlteredThreeYears") ++
                         sectionAnswers.row("checkYourAnswersAboutYourLeaseOrTenure.rentUnderReviewNegotiated",
                             _.leaseOrAgreementYearsDetails.map(_.rentUnderReviewNegotiated.name).map(v => messages(s"label.$v")),
-                            aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.show(), "rentUnderReviewNegotiated")
+                            aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.show(), "rentUnderReviewNegotiated") ++
+                        sectionAnswers.optionalRow("checkYourAnswersAboutYourLeaseOrTenure.rentDueInNext12Months",
+                            _.currentRentPayableWithin12Months.map(_.currentRentWithin12Months.name).map(v => messages(s"label.$v")),
+                            aboutYourLeaseOrTenure.routes.CurrentRentPayableWithin12MonthsController.show(), "rentPayable") ++
+                        sectionAnswers.optionalRow("checkYourAnswersAboutYourLeaseOrTenure.nextReviewOrExpiryDate",
+                            _.currentRentPayableWithin12Months.map(_.rentActuallyAgreed.toYearMonth).map(dateUtil.formatYearMonth),
+                            aboutYourLeaseOrTenure.routes.CurrentRentPayableWithin12MonthsController.show(), "dateReview.month")
             ))
         }
 
-        @if(sectionAnswers.answers.map(a => a.annualRent.isDefined || a.currentRentFirstPaid.isDefined)) {
+        @if(sectionAnswers.answers.exists(a => a.annualRent.isDefined || a.currentRentFirstPaid.isDefined)) {
             <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutYourLeaseOrTenure.yourRent.heading")</h2>
 
             @govukSummaryList(SummaryList(rows =
-                sectionAnswers.row("checkYourAnswersAboutYourLeaseOrTenure.currentAnnualRent",
+                sectionAnswers.optionalRow("checkYourAnswersAboutYourLeaseOrTenure.currentAnnualRent",
                     _.annualRent.map(_.amount.asMoney),
                     aboutYourLeaseOrTenure.routes.CurrentAnnualRentController.show(), "currentAnnualRent") ++
-                        sectionAnswers.row("checkYourAnswersAboutYourLeaseOrTenure.currentRentFirstPaid",
+                        sectionAnswers.optionalRow("checkYourAnswersAboutYourLeaseOrTenure.currentRentFirstPaid",
                             _.currentRentFirstPaid.map(_.currentRentFirstPaid.toYearMonth).map(dateUtil.formatYearMonth),
-                            aboutYourLeaseOrTenure.routes.CurrentRentFirstPaidController.show(), "currentRentFirstPaid.month")
+                            aboutYourLeaseOrTenure.routes.CurrentRentFirstPaidController.show(), "currentRentFirstPaid.month") ++
+                        sectionAnswers2.optionalRow("checkYourAnswersAboutYourLeaseOrTenure.tenancyLeaseAgreementExpire",
+                            _.tenancyLeaseAgreementExpire.map(_.tenancyLeaseAgreementExpire.shortDate),
+                            aboutYourLeaseOrTenure.routes.TenancyLeaseAgreementExpireController.show(), "tenancyLeaseAgreementExpire.day")
             ))
         }
 
