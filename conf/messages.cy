@@ -94,6 +94,7 @@ hint.date.example = For example, 10 2 1999
 
 # SECTION NAMES
 ###############
+label.section.connectionToTheProperty = Connection to the property
 label.section.aboutTheProperty = About you and the property
 label.section.aboutYourTradingHistory = Your trading history
 label.section.aboutTheFranchiseLettings = Franchises or lettings

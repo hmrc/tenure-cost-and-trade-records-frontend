@@ -95,6 +95,7 @@ hint.select.applicable = Select any that apply – leave blank if not applicable
 
 # SECTION NAMES
 ###############
+label.section.connectionToTheProperty = Connection to the property
 label.section.aboutTheProperty = About you and the property
 label.section.aboutYourTradingHistory = About your trading history
 label.section.aboutTheFranchiseLettings = Franchises or lettings
