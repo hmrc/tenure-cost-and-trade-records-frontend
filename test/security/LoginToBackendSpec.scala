@@ -63,7 +63,7 @@ class LoginToBackendSpec extends UnitTest {
     val refNum        = s"1111111899"
     val password      = "aljsljdf"
     val postcode      = "CV24 5RR"
-    val testAddress   = Address("123", None, None, postcode)
+    val testAddress   = Address("123", None, "test", None, postcode)
     val forType       = "FOR6010"
     val auth          = "YouAreLoggedInNow"
     val loginResponse = FORLoginResponse(auth, forType, testAddress)

@@ -25,7 +25,7 @@ import models.submissions.aboutYourLeaseOrTenure._
 import models.submissions.aboutfranchisesorlettings._
 import models.submissions.aboutyouandtheproperty._
 import models.submissions.common.{Address, AnswersYesNo, BuildingInsurance, CYAYesNo, ContactDetails, ContactDetailsAddress, InsideRepairs, OutsideRepairs}
-import models.submissions.connectiontoproperty.{AddressConnectionType, ConnectionToProperty}
+import models.submissions.connectiontoproperty.{AddressConnectionType, ConnectionToProperty, EditAddress}
 import models.submissions.notconnected.PastConnectionType
 import models.{AnnualRent, NamedEnum, NamedEnumSupport}
 import play.api.data.Forms.{boolean, default, email, list, mapping, nonEmptyText, optional, text}
@@ -144,8 +144,20 @@ object MappingSupport {
       nonEmpty(errorMessage = "error.buildingNameNumber.required"),
       maxLength(50, "error.buildingNameNumber.maxLength")
     ),
-    "street1"            -> optional(text(maxLength = 50)),
-    "street2"            -> optional(text(maxLength = 50)),
+    "street1"            -> optional(
+      default(text, "").verifying(
+        maxLength(50, "error.addressLineTwo.maxLength")
+      )
+    ),
+    "town"               -> default(text, "").verifying(
+      nonEmpty(errorMessage = "error.townCity.required"),
+      maxLength(50, "error.buildingNameNumber.maxLength")
+    ),
+    "county"             -> optional(
+      default(text, "").verifying(
+        maxLength(50, "error.county.maxLength")
+      )
+    ),
     "postcode"           -> nonEmptyTextOr("postcode", postcode, "error.postcode.required")
   )(Address.apply)(Address.unapply)
 
@@ -234,8 +246,30 @@ object MappingSupport {
         maxLength(50, "error.county.maxLength")
       )
     ),
-    "postcode"           -> nonEmptyTextOr("alternativeContactAddress.postcode", postcode, "error.postcode.required")
+    "postcode"           -> nonEmptyTextOr("editAddress.postcode", postcode, "error.postcode.required")
   )(ContactDetailsAddress.apply)(ContactDetailsAddress.unapply)
+
+  def editAddressMapping: Mapping[EditAddress] = mapping(
+    "buildingNameNumber" -> default(text, "").verifying(
+      nonEmpty(errorMessage = "error.buildingNameNumber.required"),
+      maxLength(50, "error.buildingNameNumber.maxLength")
+    ),
+    "street1"            -> optional(
+      default(text, "").verifying(
+        maxLength(50, "error.addressLineTwo.maxLength")
+      )
+    ),
+    "town"               -> default(text, "").verifying(
+      nonEmpty(errorMessage = "error.town.required"),
+      maxLength(50, "error.town.maxLength")
+    ),
+    "county"             -> optional(
+      default(text, "").verifying(
+        maxLength(50, "error.county.maxLength")
+      )
+    ),
+    "postcode"           -> nonEmptyTextOr("editAddress.postcode", postcode, "error.postcode.required")
+  )(EditAddress.apply)(EditAddress.unapply)
 
   def mandatoryBooleanWithError(message: String) =
     optional(boolean)

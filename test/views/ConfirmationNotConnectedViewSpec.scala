@@ -41,7 +41,7 @@ class ConfirmationNotConnectedViewSpec extends ViewBehaviours {
       assertContainsText(doc, "Reference:")
       assertContainsText(doc, "99996010/004")
       assertContainsText(doc, "Property:")
-      assertContainsText(doc, "001, GORING ROAD, GORING-BY-SEA, WORTHING, BN12 4AX")
+      assertContainsText(doc, "001, GORING ROAD, GORING-BY-SEA, WORTHING, WEST SUSSEX, BN12 4AX")
     }
 
     "contain confirmation text" in {

@@ -38,10 +38,11 @@ trait FakeViews { this: GuiceOneAppPerSuite =>
   lazy val editAddressView: editAddress                         = app.injector.instanceOf[editAddress]
 
   // Not connected
-  val pastConnectionView: pastConnection     = app.injector.instanceOf[pastConnection]
-  val removeConnectionView: removeConnection = app.injector.instanceOf[removeConnection]
-  val checkYourAnswersNotConnectedView       = app.injector.instanceOf[checkYourAnswersNotConnected]
-  val confirmationNotConnectedView           = app.injector.instanceOf[confirmationNotConnected]
+  val pastConnectionView: pastConnection                             = app.injector.instanceOf[pastConnection]
+  val removeConnectionView: removeConnection                         = app.injector.instanceOf[removeConnection]
+  val checkYourAnswersNotConnectedView: checkYourAnswersNotConnected =
+    app.injector.instanceOf[checkYourAnswersNotConnected]
+  val confirmationNotConnectedView: confirmationNotConnected         = app.injector.instanceOf[confirmationNotConnected]
 
   // About you and the property
   lazy val aboutYouView: aboutYou                                                    = app.injector.instanceOf[aboutYou]
@@ -65,28 +66,30 @@ trait FakeViews { this: GuiceOneAppPerSuite =>
     app.injector.instanceOf[checkYourAnswersAboutTheProperty]
 
   // About the franchise or letting
-  lazy val franchiseOrLettingsTiedToPropertyView      =
+  lazy val franchiseOrLettingsTiedToPropertyView: franchiseOrLettingsTiedToProperty                        =
     app.injector.instanceOf[franchiseOrLettingsTiedToProperty]
-  lazy val cateringOperationView                      =
+  lazy val cateringOperationView: cateringOperationOrLettingAccommodation                                  =
     app.injector.instanceOf[cateringOperationOrLettingAccommodation]
-  lazy val cateringOperationDetailsView               =
+  lazy val cateringOperationDetailsView: cateringOperationOrLettingAccommodationDetails                    =
     app.injector.instanceOf[cateringOperationOrLettingAccommodationDetails]
-  lazy val cateringOperationRentDetailsView           =
+  lazy val cateringOperationRentDetailsView: cateringOperationOrLettingAccommodationRentDetails            =
     app.injector.instanceOf[cateringOperationOrLettingAccommodationRentDetails]
-  lazy val cateringOperationRentIncludesView          =
+  lazy val cateringOperationRentIncludesView: cateringOperationOrLettingAccommodationRentIncludes          =
     app.injector.instanceOf[cateringOperationOrLettingAccommodationRentIncludes]
-  lazy val lettingOtherPartOfPropertyView             =
+  lazy val lettingOtherPartOfPropertyView: cateringOperationOrLettingAccommodation                         =
     app.injector.instanceOf[cateringOperationOrLettingAccommodation]
-  lazy val lettingOtherPartOfPropertyDetailsView      =
+  lazy val lettingOtherPartOfPropertyDetailsView: cateringOperationOrLettingAccommodationDetails           =
     app.injector.instanceOf[cateringOperationOrLettingAccommodationDetails]
-  lazy val lettingOtherPartOfPropertyRentDetailsView  =
+  lazy val lettingOtherPartOfPropertyRentDetailsView: cateringOperationOrLettingAccommodationRentDetails   =
     app.injector.instanceOf[cateringOperationOrLettingAccommodationRentDetails]
-  lazy val lettingOtherPartOfPropertyRentIncludesView =
+  lazy val lettingOtherPartOfPropertyRentIncludesView: cateringOperationOrLettingAccommodationRentIncludes =
     app.injector.instanceOf[cateringOperationOrLettingAccommodationRentIncludes]
-  lazy val concessionOrFranchiseView                  =
+  lazy val concessionOrFranchiseView: cateringOperationOrLettingAccommodation                              =
     app.injector.instanceOf[cateringOperationOrLettingAccommodation]
-  lazy val addAnotherOperationConcessionFranchise     =
+  lazy val addAnotherOperationConcessionFranchise: addAnotherCateringOperationOrLettingAccommodation       =
     app.injector.instanceOf[addAnotherCateringOperationOrLettingAccommodation]
+  lazy val checkYourAnswersAboutFranchiseOrLettings: checkYourAnswersAboutFranchiseOrLettings              =
+    app.injector.instanceOf[checkYourAnswersAboutFranchiseOrLettings]
 
   // About the lease or tenure
   lazy val aboutYourLandlordView = app.injector.instanceOf[aboutYourLandlord]

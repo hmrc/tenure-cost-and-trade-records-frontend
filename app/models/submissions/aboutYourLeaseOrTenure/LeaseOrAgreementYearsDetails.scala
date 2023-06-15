@@ -16,7 +16,6 @@
 
 package models.submissions.aboutYourLeaseOrTenure
 
-import models.submissions.common.AnswersYesNo
 import play.api.libs.json.Json
 
 case class LeaseOrAgreementYearsDetails(

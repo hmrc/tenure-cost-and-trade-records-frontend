@@ -140,7 +140,7 @@
 @customFooter = @{
     Some(hmrcFooter(Footer(
         meta = Some(Meta(content = HtmlContent(
-            Html(s"<h2>${messages("footer.needHelp")}</h2><p>${messages("footer.helplineText")} 01234 567 890</p>")),
+            Html(s"<h2 class=\"govuk-heading-m govuk-!-margin-bottom-1\">${messages("footer.needHelp")}</h2><p class=\"govuk-body\">${messages("footer.helplineText")} 01234 567 890</p>")),
             items = Some(
                 Seq(
                     FooterItem(text = Some(messages("footer.cookies.link")), href = Some(appConfig.cookiesUrl)),

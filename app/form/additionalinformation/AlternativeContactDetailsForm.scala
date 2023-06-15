@@ -19,8 +19,7 @@ package form.additionalinformation
 import form.MappingSupport.{contactAddressMapping, contactDetailsMapping}
 import models.submissions.additionalinformation.AlternativeContactDetails
 import play.api.data.Form
-import play.api.data.Forms.{default, mapping, optional, text}
-import play.api.data.validation.Constraints.nonEmpty
+import play.api.data.Forms.{mapping, optional, text}
 
 object AlternativeContactDetailsForm {
   val alternativeContactDetailsForm: Form[AlternativeContactDetails] = Form(

@@ -14,20 +14,19 @@
  * limitations under the License.
  */
 
-package form.aboutYourLeaseOrTenure
+package models.submissions.connectiontoproperty
 
-import form.MappingSupport.{rent3Years, tenancy3Years, underReview}
-import models.submissions.aboutYourLeaseOrTenure.LeaseOrAgreementYearsDetails
-import play.api.data.Form
-import play.api.data.Forms.mapping
+import models.submissions.PrintableAddress
+import play.api.libs.json.Json
 
-object LeaseOrAgreementYearsForm {
+case class EditAddress(
+  buildingNameNumber: String,
+  street1: Option[String],
+  town: String,
+  county: Option[String],
+  postcode: String
+) extends PrintableAddress
 
-  val leaseOrAgreementYearsForm = Form(
-    mapping(
-      "commenceWithinThreeYears"        -> tenancy3Years,
-      "agreedReviewedAlteredThreeYears" -> rent3Years,
-      "rentUnderReviewNegotiated"       -> underReview
-    )(LeaseOrAgreementYearsDetails.apply)(LeaseOrAgreementYearsDetails.unapply)
-  )
+object EditAddress {
+  implicit val format = Json.format[EditAddress]
 }

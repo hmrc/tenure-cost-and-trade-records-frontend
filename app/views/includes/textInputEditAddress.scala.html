@@ -31,13 +31,14 @@
         labelClasses: String = "",
         hintMsg: String = "",
         formGroupClasses: String = "",
+        value: String = ""
 )(implicit request: Request[_], messages: Messages)
 
 @govukInput(Input(
     id=id,
     name=id,
     inputType = "text",
-    value = theForm(id).value,
+    value = value,
     classes=classes,
     autocomplete=Some(autoCompleteLabel),
     formGroupClasses = formGroupClasses,

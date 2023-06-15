@@ -16,38 +16,32 @@
 
 package controllers.aboutfranchisesorlettings
 
-import navigation.AboutFranchisesOrLettingsNavigator
+import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
 import play.api.http.Status
 import play.api.test.Helpers._
-import play.twirl.api.HtmlFormat
 import utils.TestBaseSpec
-import views.html.aboutfranchisesorlettings.cateringOperationOrLettingAccommodationRentIncludes
 
 class CateringOperationRentIncludesControllerSpec extends TestBaseSpec {
 
-  val mockAboutFranchisesOrLettingsNavigator = mock[AboutFranchisesOrLettingsNavigator]
-
-  val mockCateringOperationOrLettingAccommodationRentIncludes =
-    mock[cateringOperationOrLettingAccommodationRentIncludes]
-  when(mockCateringOperationOrLettingAccommodationRentIncludes.apply(any, any, any, any, any, any)(any, any))
-    .thenReturn(HtmlFormat.empty)
-
-  val cateringOperationRentIncludesController = new CateringOperationRentIncludesController(
-    stubMessagesControllerComponents(),
-    mockAboutFranchisesOrLettingsNavigator,
-    mockCateringOperationOrLettingAccommodationRentIncludes,
-    preFilledSession,
-    mockSessionRepo
-  )
+  def cateringOperationRentIncludesController(
+    aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = Some(prefilledAboutFranchiseOrLettings)
+  ) =
+    new CateringOperationRentIncludesController(
+      stubMessagesControllerComponents(),
+      aboutFranchisesOrLettingsNavigator,
+      cateringOperationRentIncludesView,
+      preEnrichedActionRefiner(aboutFranchisesOrLettings = aboutFranchisesOrLettings),
+      mockSessionRepo
+    )
 
   "GET /" should {
     "return 200" in {
-      val result = cateringOperationRentIncludesController.show(0)(fakeRequest)
+      val result = cateringOperationRentIncludesController().show(0)(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return HTML" in {
-      val result = cateringOperationRentIncludesController.show(0)(fakeRequest)
+      val result = cateringOperationRentIncludesController().show(0)(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }

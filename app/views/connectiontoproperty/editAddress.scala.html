@@ -14,10 +14,11 @@
  * limitations under the License.
  *@
 
-@import models.submissions.common.ContactDetailsAddress
+@import models.submissions.connectiontoproperty.EditTheAddress
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
+@import models.pages.Summary
 
 @this(layout: Layout,
         govukButton: GovukButton,
@@ -25,12 +26,23 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[ContactDetailsAddress])(implicit request: Request[_], messages: Messages)
+@(theForm: Form[EditTheAddress], summary: Summary)(implicit request: Request[_], messages: Messages)
+
+@getAddressFieldValueOrDefaultUnlessErrors(field:String, defaultAddressValue: String) = @{
+    if(theForm.hasErrors) {
+        theForm(field).value.getOrElse("")
+    } else {
+        // if there are no errors on the form (i.e. it hasn't been submitted) then auto-populate with the default address
+        theForm(field).value.getOrElse(defaultAddressValue)
+    }
+}
 
 @layout(
   pageHeading = messages("editAddress.heading"),
   showH1 = false,
-  showSection = false,
+  showSection = true,
+    sectionName = messages("label.section.connectionToTheProperty"),
+    summary = Some(summary),
   backLinkUrl = controllers.connectiontoproperty.routes.AreYouStillConnectedController.show.url,
   theForm = theForm
 ) {
@@ -40,13 +52,13 @@
       <h1 class="govuk-fieldset__heading">@messages("editAddress.heading")</h1>
     </legend>
 
-    @includes.textInput(govukInput, theForm, "buildingNameNumber", "govuk-!-width-two-thirds", "buildingNameNumber")
-    @includes.textInput(govukInput, theForm, "street1", "govuk-!-width-two-thirds", "street1", optional = true)
-    @includes.textInput(govukInput, theForm, "town", "govuk-!-width-one-half", "town")
-    @includes.textInput(govukInput, theForm, "county", "govuk-!-width-one-half", "county", optional = true)
-    @includes.textInput(govukInput, theForm, "postcode", "govuk-!-width-one-quarter", "postcode")
+    @includes.textInputEditAddress(govukInput, theForm, "editAddress.buildingNameNumber", "govuk-!-width-two-thirds", "buildingNameNumber", value = getAddressFieldValueOrDefaultUnlessErrors("buildingNameNumber", summary.address.map(_.buildingNameNumber).getOrElse("")))
+    @includes.textInputEditAddress(govukInput, theForm, "editAddress.street1", "govuk-!-width-two-thirds", "street1", optional = true, value = getAddressFieldValueOrDefaultUnlessErrors("street1", summary.address.flatMap(_.street1).getOrElse("")))
+    @includes.textInputEditAddress(govukInput, theForm, "editAddress.town", "govuk-!-width-one-half", "town", value = getAddressFieldValueOrDefaultUnlessErrors("town", summary.address.flatMap(_.street2).getOrElse("")))
+    @includes.textInputEditAddress(govukInput, theForm, "editAddress.county", "govuk-!-width-one-half", "county", optional = true, value = getAddressFieldValueOrDefaultUnlessErrors("county", summary.address.flatMap(_.county).getOrElse("")))
+    @includes.textInputEditAddress(govukInput, theForm, "editAddress.postcode", "govuk-!-width-one-quarter", "postcode", value = getAddressFieldValueOrDefaultUnlessErrors("postcode", summary.address.map(_.postcode).getOrElse("")))
 
-    @includes.continueButton(govukButton)
+      @includes.continueSaveAsDraftButtons(govukButton)
   }
 }
 

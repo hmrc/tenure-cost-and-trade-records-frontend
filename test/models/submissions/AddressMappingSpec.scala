@@ -23,8 +23,8 @@ import utils.TestBaseSpec
 class AddressMappingSpec extends TestBaseSpec {
 
   val json2 =
-    """{"buildingNameNumber":"Some House","street1":"Some Street","street2":"Some City","postcode":"AA11 1AA"}"""
-  val data2 = Address("Some House", Some("Some Street"), Some("Some City"), "AA11 1AA")
+    """{"buildingNameNumber":"Some House","street1":"Some Street","street2":"Some City","county":"Some County","postcode":"AA11 1AA"}"""
+  val data2 = Address("Some House", Some("Some Street"), "Some City", Some("Some County"), "AA11 1AA")
 
   def toJson(data: Address): String = {
     val json = Json.toJson(data).toString

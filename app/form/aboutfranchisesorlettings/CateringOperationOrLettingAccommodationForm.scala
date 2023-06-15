@@ -19,7 +19,7 @@ package form.aboutfranchisesorlettings
 import form.MappingSupport.cateringAddressMapping
 import models.submissions.aboutfranchisesorlettings.CateringOperationDetails
 import play.api.data.Form
-import play.api.data.Forms.{default, mapping, nonEmptyText, text}
+import play.api.data.Forms.{default, mapping, text}
 import play.api.data.validation.Constraints.{maxLength, nonEmpty}
 
 object CateringOperationOrLettingAccommodationForm {
