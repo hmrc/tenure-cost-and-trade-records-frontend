@@ -48,7 +48,8 @@ class EditAddressController @Inject() (
           request.sessionData.stillConnectedDetails.flatMap(_.editAddress) match {
             case Some(editAddress) => editAddressForm.fillAndValidate(editAddress)
             case _                 => editAddressForm
-          }
+          },
+          request.sessionData.toSummary
         )
       )
     )
@@ -57,7 +58,8 @@ class EditAddressController @Inject() (
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[EditTheAddress](
       editAddressForm,
-      formWithErrors => BadRequest(editAddressView(formWithErrors)),
+      formWithErrors => BadRequest(editAddressView(formWithErrors,
+        request.sessionData.toSummary)),
       data => {
         val updatedData = updateStillConnectedDetails(_.copy(editAddress = Some(data)))
         session.saveOrUpdate(updatedData)
