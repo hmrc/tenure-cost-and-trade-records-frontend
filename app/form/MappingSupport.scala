@@ -144,8 +144,20 @@ object MappingSupport {
       nonEmpty(errorMessage = "error.buildingNameNumber.required"),
       maxLength(50, "error.buildingNameNumber.maxLength")
     ),
-    "street1"            -> optional(text(maxLength = 50)),
-    "street2"            -> optional(text(maxLength = 50)),
+    "street1"            -> optional(
+      default(text, "").verifying(
+        maxLength(50, "error.addressLineTwo.maxLength")
+      )
+    ),
+    "town"               -> default(text, "").verifying(
+      nonEmpty(errorMessage = "error.townCity.required"),
+      maxLength(50, "error.buildingNameNumber.maxLength")
+    ),
+    "county"             -> optional(
+      default(text, "").verifying(
+        maxLength(50, "error.county.maxLength")
+      )
+    ),
     "postcode"           -> nonEmptyTextOr("postcode", postcode, "error.postcode.required")
   )(Address.apply)(Address.unapply)
 

@@ -32,7 +32,8 @@ class EditAddressViewSpec extends QuestionViewBehaviours[EditTheAddress] {
 
   def createView = () => editAddressView(form, Summary("99996010001"))(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[EditTheAddress]) => editAddressView(form, Summary("99996010001"))(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[EditTheAddress]) =>
+    editAddressView(form, Summary("99996010001"))(fakeRequest, messages)
 
   "Edit Address view" must {
 

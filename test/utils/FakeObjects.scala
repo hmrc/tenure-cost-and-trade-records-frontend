@@ -37,7 +37,8 @@ trait FakeObjects {
   val forType6011: String       = "FOR6011"
   val forType6015: String       = "FOR6015"
   val forType6016: String       = "FOR6016"
-  val prefilledAddress: Address = Address("001", Some("GORING ROAD"), Some("GORING-BY-SEA, WORTHING"), "BN12 4AX")
+  val prefilledAddress: Address =
+    Address("001", Some("GORING ROAD"), "GORING-BY-SEA, WORTHING", Some("WEST SUSSEX"), "BN12 4AX")
   val token: String             = "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik="
 
   val prefilledContactDetails: ContactDetails        = ContactDetails("1234567890", "TestEmail@gmail.com")

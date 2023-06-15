@@ -18,12 +18,19 @@ package models.submissions.common
 
 import play.api.libs.json.Json
 
-case class Address(buildingNameNumber: String, street1: Option[String], street2: Option[String], postcode: String) {
+case class Address(
+  buildingNameNumber: String,
+  street1: Option[String],
+  street2: String,
+  county: Option[String],
+  postcode: String
+) {
   def singleLine: String =
     List(
       Some(buildingNameNumber),
       street1,
-      street2,
+      Some(street2),
+      county,
       Some(postcode.replaceAll("^(\\S+?)\\s*?(\\d\\w\\w)$", "$1 $2"))
     ).flatten.mkString(", ")
 
@@ -31,7 +38,8 @@ case class Address(buildingNameNumber: String, street1: Option[String], street2:
     List(
       Some(buildingNameNumber),
       street1,
-      street2,
+      Some(street2),
+      county,
       Some(postcode.replaceAll("^(\\S+?)\\s*?(\\d\\w\\w)$", "$1 $2"))
     ).flatten.mkString("<br/> ")
 }

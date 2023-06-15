@@ -28,6 +28,15 @@
 
 @(theForm: Form[EditTheAddress], summary: Summary)(implicit request: Request[_], messages: Messages)
 
+@getAddressFieldValueOrDefaultUnlessErrors(field:String, defaultAddressValue: String) = @{
+    if(theForm.hasErrors) {
+        theForm(field).value.getOrElse("")
+    } else {
+        // if there are no errors on the form (i.e. it hasn't been submitted) then auto-populate with the default address
+        theForm(field).value.getOrElse(defaultAddressValue)
+    }
+}
+
 @layout(
   pageHeading = messages("editAddress.heading"),
   showH1 = false,
@@ -42,11 +51,11 @@
       <h1 class="govuk-fieldset__heading">@messages("editAddress.heading")</h1>
     </legend>
 
-    @includes.textInput(govukInput, theForm, "editAddress.buildingNameNumber", "govuk-!-width-two-thirds", "buildingNameNumber")
-    @includes.textInput(govukInput, theForm, "editAddress.street1", "govuk-!-width-two-thirds", "street1", optional = true)
-    @includes.textInput(govukInput, theForm, "editAddress.town", "govuk-!-width-one-half", "town")
-    @includes.textInput(govukInput, theForm, "editAddress.county", "govuk-!-width-one-half", "county", optional = true)
-    @includes.textInput(govukInput, theForm, "editAddress.postcode", "govuk-!-width-one-quarter", "postcode")
+    @includes.textInput(govukInput, theForm, "editAddress.buildingNameNumber", "govuk-!-width-two-thirds", "buildingNameNumber", value = getAddressFieldValueOrDefaultUnlessErrors("buildingNameNumber", summary.address.map(_.buildingNameNumber).getOrElse("")))
+    @includes.textInput(govukInput, theForm, "editAddress.street1", "govuk-!-width-two-thirds", "street1", optional = true, value = getAddressFieldValueOrDefaultUnlessErrors("street1", summary.address.flatMap(_.street1).getOrElse("")))
+    @includes.textInput(govukInput, theForm, "editAddress.town", "govuk-!-width-one-half", "town", value = getAddressFieldValueOrDefaultUnlessErrors("town", summary.address.flatMap(_.street2).getOrElse("")))
+    @includes.textInput(govukInput, theForm, "editAddress.county", "govuk-!-width-one-half", "county", optional = true, value = getAddressFieldValueOrDefaultUnlessErrors("county", summary.address.flatMap(_.county).getOrElse("")))
+    @includes.textInput(govukInput, theForm, "editAddress.postcode", "govuk-!-width-one-quarter", "postcode", value = getAddressFieldValueOrDefaultUnlessErrors("postcode", summary.address.map(_.postcode).getOrElse("")))
 
       @includes.continueSaveAsDraftButtons(govukButton)
   }

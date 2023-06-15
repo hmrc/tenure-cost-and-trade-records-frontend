@@ -52,7 +52,7 @@ class RemoveConnectionViewSpec extends QuestionViewBehaviours[RemoveConnectionsD
       assertContainsText(doc, "Reference:")
       assertContainsText(doc, "99996010/001")
       assertContainsText(doc, "Property:")
-      assertContainsText(doc, "001, GORING ROAD, GORING-BY-SEA, WORTHING, BN12 4AX")
+      assertContainsText(doc, "001, GORING ROAD, GORING-BY-SEA, WORTHING, WEST SUSSEX, BN12 4AX")
     }
 
     "has a link marked with back.link.label leading to have you ever had a connection Page" in {
