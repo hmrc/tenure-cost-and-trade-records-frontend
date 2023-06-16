@@ -32,6 +32,7 @@
   pageHeading = messages("pastConnectionType.heading"),
   showH1 = false,
   theForm = theForm,
+    showAccountInfo = true,
   summary = Some(summary),
   backLinkUrl = controllers.connectiontoproperty.routes.AreYouStillConnectedController.show.url,
 ) {
@@ -47,7 +48,7 @@
       isHeading = true
     )
 
-    @includes.continueButton(govukButton)
+      @includes.continueSaveAsDraftButtons(govukButton)
   }
 }
 
