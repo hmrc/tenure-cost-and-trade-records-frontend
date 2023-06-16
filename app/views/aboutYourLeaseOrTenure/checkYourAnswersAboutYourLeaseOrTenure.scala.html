@@ -19,6 +19,8 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import models.submissions.aboutYourLeaseOrTenure.CheckYourAnswersAboutYourLeaseOrTenure
 @import models.pages.Summary
+@import util.DateUtil
+@import util.DateUtil._
 @import util.NumberUtil._
 @import util.SectionAnswersRowBuilder
 
@@ -26,59 +28,90 @@
         govukButton: GovukButton,
         govukRadios: GovukRadios,
         govukSummaryList: GovukSummaryList,
+        dateUtil: DateUtil,
         formWithCSRF: FormWithCSRF
 )
 
 @(theForm: Form[CheckYourAnswersAboutYourLeaseOrTenure], backLink: String, summary: Summary)(implicit request: SessionRequest[_], messages: Messages)
 
-    @sectionAnswers = @{
-        SectionAnswersRowBuilder(request.sessionData.aboutLeaseOrAgreementPartOne)
-    }
+@sectionAnswers = @{
+    SectionAnswersRowBuilder(request.sessionData.aboutLeaseOrAgreementPartOne)
+}
 
-    @sectionAnswers2 = @{
-        SectionAnswersRowBuilder(request.sessionData.aboutLeaseOrAgreementPartTwo)
-    }
+@sectionAnswers2 = @{
+    SectionAnswersRowBuilder(request.sessionData.aboutLeaseOrAgreementPartTwo)
+}
 
-    @layout(
-        pageHeading = messages("checkYourAnswersAboutYourLeaseOrTenure.heading"),
-        backLinkUrl = backLink,
-        showSection = true,
-        fullWidth = true,
-        summary = Some(summary),
-        sectionName = messages("label.section.aboutYourLeaseOrTenure"),
-        theForm = theForm
-    ) {
+@layout(
+    pageHeading = messages("checkYourAnswersAboutYourLeaseOrTenure.heading"),
+    backLinkUrl = backLink,
+    showSection = true,
+    fullWidth = true,
+    summary = Some(summary),
+    sectionName = messages("label.section.aboutYourLeaseOrTenure"),
+    theForm = theForm
+) {
 
-        @formWithCSRF(action = aboutYourLeaseOrTenure.routes.CheckYourAnswersAboutYourLeaseOrTenureController.submit()) {
+    @formWithCSRF(action = aboutYourLeaseOrTenure.routes.CheckYourAnswersAboutYourLeaseOrTenureController.submit()) {
 
-            <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutYourLeaseOrTenure.yourLandlord.heading")</h2>
+        <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutYourLeaseOrTenure.yourLandlord.heading")</h2>
+
+        @govukSummaryList(SummaryList(rows =
+            sectionAnswers.row("label.landlordFullName",
+                _.aboutTheLandlord.map(_.landlordFullName),
+                aboutYourLeaseOrTenure.routes.AboutYourLandlordController.show(), "landlordFullName") ++
+                    sectionAnswers.row("label.landlordAddress.address",
+                        _.aboutTheLandlord.map(_.landlordAddress.escapedHtml),
+                        aboutYourLeaseOrTenure.routes.AboutYourLandlordController.show(), "landlordAddress.buildingNameNumber",
+                        ("valueAsHtml", _ => None))
+        ))
+
+        @if(sectionAnswers.answers.exists(_.leaseOrAgreementYearsDetails.isDefined)) {
+            <h2 class="govuk-heading-m">@messages("leaseOrAgreement.heading")</h2>
 
             @govukSummaryList(SummaryList(rows =
-                sectionAnswers.row("label.landlordFullName",
-                    _.aboutTheLandlord.map(_.landlordFullName),
-                    aboutYourLeaseOrTenure.routes.AboutYourLandlordController.show(), "landlordFullName") ++
-                        sectionAnswers.row("label.landlordAddress.address",
-                            _.aboutTheLandlord.map(_.landlordAddress.addressLines.map(Text(_).asHtml).mkString("""<p class="govuk-body">""", "<br/>", "</p>")),
-                            aboutYourLeaseOrTenure.routes.AboutYourLandlordController.show(), "landlordAddress.buildingNameNumber",
-                            ("valueAsHtml", _ => None))
+                sectionAnswers.row("checkYourAnswersAboutYourLeaseOrTenure.commenceWithinThreeYears",
+                    _.leaseOrAgreementYearsDetails.map(_.commenceWithinThreeYears.name).map(v => messages(s"label.$v")),
+                    aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.show(), "commenceWithinThreeYears") ++
+                        sectionAnswers.row("checkYourAnswersAboutYourLeaseOrTenure.agreedReviewedAlteredThreeYears",
+                            _.leaseOrAgreementYearsDetails.map(_.agreedReviewedAlteredThreeYears.name).map(v => messages(s"label.$v")),
+                            aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.show(), "agreedReviewedAlteredThreeYears") ++
+                        sectionAnswers.row("checkYourAnswersAboutYourLeaseOrTenure.rentUnderReviewNegotiated",
+                            _.leaseOrAgreementYearsDetails.map(_.rentUnderReviewNegotiated.name).map(v => messages(s"label.$v")),
+                            aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.show(), "rentUnderReviewNegotiated") ++
+                        sectionAnswers.optionalRow("checkYourAnswersAboutYourLeaseOrTenure.rentDueInNext12Months",
+                            _.currentRentPayableWithin12Months.map(_.currentRentWithin12Months.name).map(v => messages(s"label.$v")),
+                            aboutYourLeaseOrTenure.routes.CurrentRentPayableWithin12MonthsController.show(), "rentPayable") ++
+                        sectionAnswers.optionalRow("checkYourAnswersAboutYourLeaseOrTenure.nextReviewOrExpiryDate",
+                            _.currentRentPayableWithin12Months.map(_.rentActuallyAgreed.toYearMonth).map(dateUtil.formatYearMonth),
+                            aboutYourLeaseOrTenure.routes.CurrentRentPayableWithin12MonthsController.show(), "dateReview.month")
             ))
+        }
 
+        @if(sectionAnswers.answers.exists(a => a.annualRent.isDefined || a.currentRentFirstPaid.isDefined)) {
             <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutYourLeaseOrTenure.yourRent.heading")</h2>
 
             @govukSummaryList(SummaryList(rows =
-                sectionAnswers.row("checkYourAnswersAboutYourLeaseOrTenure.currentAnnualRent",
+                sectionAnswers.optionalRow("checkYourAnswersAboutYourLeaseOrTenure.currentAnnualRent",
                     _.annualRent.map(_.amount.asMoney),
-                    aboutYourLeaseOrTenure.routes.CurrentAnnualRentController.show(), "currentAnnualRent")
+                    aboutYourLeaseOrTenure.routes.CurrentAnnualRentController.show(), "currentAnnualRent") ++
+                        sectionAnswers.optionalRow("checkYourAnswersAboutYourLeaseOrTenure.currentRentFirstPaid",
+                            _.currentRentFirstPaid.map(_.currentRentFirstPaid.toYearMonth).map(dateUtil.formatYearMonth),
+                            aboutYourLeaseOrTenure.routes.CurrentRentFirstPaidController.show(), "currentRentFirstPaid.month") ++
+                        sectionAnswers2.optionalRow("checkYourAnswersAboutYourLeaseOrTenure.tenancyLeaseAgreementExpire",
+                            _.tenancyLeaseAgreementExpire.map(_.tenancyLeaseAgreementExpire.shortDate),
+                            aboutYourLeaseOrTenure.routes.TenancyLeaseAgreementExpireController.show(), "tenancyLeaseAgreementExpire.day")
             ))
-
-            @includes.checkYourAnswersRadioButtons(
-                govukRadios,
-                theForm,
-                "checkYourAnswersAboutYourLeaseOrTenure"
-            )
-
-            @includes.continueSaveAsDraftButtons(govukButton)
-
         }
 
+        @includes.checkYourAnswersRadioButtons(
+            govukRadios,
+            theForm,
+            "checkYourAnswersAboutYourLeaseOrTenure"
+        )
+
+        @includes.continueSaveAsDraftButtons(govukButton)
+
     }
+
+}
