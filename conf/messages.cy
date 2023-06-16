@@ -123,7 +123,7 @@ start.telephone = Telephone: 03000 501 262
 start.openingDays = Open weekdays, 9:00am to 4:30pm
 start.email = Email: <a href="mailto:formhelp@voa.gov.uk?subject=Ex-owners/occupiers form&body=Please email us your reference number, email address and/or telephone number only. If we require any further information we will contact you in due course. " target="_blank" id="mailto" onclick="gasend()">formhelp@voa.gov.uk</a>
 start.subheading4 = Alternative formats
-start.desc5 = If you would like information in an alternative format such as large print, braille, or something else, let us know by contacting us at 03000 501 501 (text relay prefix 18001). You can also <a href="https://www.qa.tax.service.gov.uk/send-trade-and-cost-information/" class="govuk-link" target="_blank">download a PDF version</a> of this declaration which you can complete and return to the VOA.
+start.desc5 = If you would like information in an alternative format such as large print, braille, or something else, let us know by contacting us at 03000 501 501 (text relay prefix 18001). You can also <a href=#top class="govuk-link" target="_blank">download a PDF version</a> of this declaration which you can complete and return to the VOA.
 start.subheading5 = Explore the topic
 start.desc6 = You can check the rateable value of the property using our business rates valuation service
 start.desc7 = If you’d like to learn more about business rates before starting your form, visit our <a href="https://www.gov.uk/find-business-rates" class="govuk-link" target="_blank">introduction to business rates</a> section. It explains things like how your rates are calculated, how to pay, and whether you qualify for business rates relief.
@@ -199,9 +199,9 @@ error.pastConnectionType = Select ‘Yes’ if you ever had a connection to the 
 # REMOVE CONNECTION
 ###################
 removeConnection.heading = Provide your contact details
-removeConnection.subheading = We’ll use these details if we need to contact you before removing your connection to this property
+removeConnection.subheading = We’ll only use these details if we need to contact you before removing your connection to this property
 label.removeConnectionAdditionalInfo = Additional information
-hint.removeConnectionDetails.removeConnectionAdditionalInfo = For example, the name of the current owner or occupier
+hint.removeConnectionDetails.removeConnectionAdditionalInfo = For example, the date you last occupied the property
 error.fullName.required = Enter your name
 
 # ABOUT YOU AND PROPERTY SECTION
