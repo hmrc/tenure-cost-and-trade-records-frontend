@@ -63,11 +63,17 @@
                     sectionAnswers.row("label.landlordAddress.address",
                         _.aboutTheLandlord.map(_.landlordAddress.escapedHtml),
                         aboutYourLeaseOrTenure.routes.AboutYourLandlordController.show(), "landlordAddress.buildingNameNumber",
-                        ("valueAsHtml", _ => None))
+                        ("valueAsHtml", _ => None)) ++
+                    sectionAnswers.row("checkYourAnswersAboutYourLeaseOrTenure.connectedToLandlord",
+                        _.connectedToLandlord.map(_.name).map(v => messages(s"label.$v")),
+                        aboutYourLeaseOrTenure.routes.ConnectedToLandlordController.show(), "connectedToLandlord") ++
+                    sectionAnswers.row("checkYourAnswersAboutYourLeaseOrTenure.connectedToLandlordDetails",
+                        _.connectedToLandlordDetails.map(_.connectedToLandlordInformationDetails),
+                        aboutYourLeaseOrTenure.routes.ConnectedToLandlordDetailsController.show(), "connectedToLandlordDetails")
         ))
 
         @if(sectionAnswers.answers.exists(_.leaseOrAgreementYearsDetails.isDefined)) {
-            <h2 class="govuk-heading-m">@messages("leaseOrAgreement.heading")</h2>
+            <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutYourLeaseOrTenure.changesToYourLease.heading")</h2>
 
             @govukSummaryList(SummaryList(rows =
                 sectionAnswers.row("checkYourAnswersAboutYourLeaseOrTenure.commenceWithinThreeYears",
@@ -88,19 +94,27 @@
             ))
         }
 
-        @if(sectionAnswers.answers.exists(a => a.annualRent.isDefined || a.currentRentFirstPaid.isDefined)) {
-            <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutYourLeaseOrTenure.yourRent.heading")</h2>
+        @if(sectionAnswers.answers.exists(a => a.annualRent.isDefined || a.currentRentFirstPaid.isDefined || a.currentLeaseOrAgreementBegin.isDefined)) {
+            <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutYourLeaseOrTenure.leaseDetails.heading")</h2>
 
             @govukSummaryList(SummaryList(rows =
-                sectionAnswers.optionalRow("checkYourAnswersAboutYourLeaseOrTenure.currentAnnualRent",
-                    _.annualRent.map(_.amount.asMoney),
-                    aboutYourLeaseOrTenure.routes.CurrentAnnualRentController.show(), "currentAnnualRent") ++
+                sectionAnswers.row("checkYourAnswersAboutYourLeaseOrTenure.leasebackArrangement",
+                    _.leasebackArrangement.map(_.name).map(v => messages(s"label.$v")),
+                    Call("GET", "leaseback-arrangement"), "leasebackArrangement") ++ // TODO: Not implemented Controller for "leaseback-arrangement"
+                        sectionAnswers.optionalRow("checkYourAnswersAboutYourLeaseOrTenure.currentAnnualRent",
+                            _.annualRent.map(_.amount.asMoney),
+                            aboutYourLeaseOrTenure.routes.CurrentAnnualRentController.show(), "currentAnnualRent") ++
                         sectionAnswers.optionalRow("checkYourAnswersAboutYourLeaseOrTenure.currentRentFirstPaid",
                             _.currentRentFirstPaid.map(_.currentRentFirstPaid.toYearMonth).map(dateUtil.formatYearMonth),
                             aboutYourLeaseOrTenure.routes.CurrentRentFirstPaidController.show(), "currentRentFirstPaid.month") ++
                         sectionAnswers2.optionalRow("checkYourAnswersAboutYourLeaseOrTenure.tenancyLeaseAgreementExpire",
                             _.tenancyLeaseAgreementExpire.map(_.tenancyLeaseAgreementExpire.shortDate),
-                            aboutYourLeaseOrTenure.routes.TenancyLeaseAgreementExpireController.show(), "tenancyLeaseAgreementExpire.day")
+                            aboutYourLeaseOrTenure.routes.TenancyLeaseAgreementExpireController.show(), "tenancyLeaseAgreementExpire.day") ++
+                        sectionAnswers.row("checkYourAnswersAboutYourLeaseOrTenure.leaseStartDateAndDuration",
+                            _.currentLeaseOrAgreementBegin
+                                    .map(lease => s"${dateUtil.formatYearMonth(lease.leaseBegin.toYearMonth)}<br/>${lease.grantedFor} ${messages("suffix.grantedFor")}"),
+                            aboutYourLeaseOrTenure.routes.CurrentLeaseOrAgreementBeginController.show(), "leaseBegin",
+                            ("valueAsHtml", _ => None))
             ))
         }
 
