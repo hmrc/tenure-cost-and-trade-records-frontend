@@ -56,7 +56,7 @@ class CheckYourAnswersNotConnectedViewSpec extends QuestionViewBehaviours[NotCon
 
     "contain are you still connected field" in {
       val doc = asDocument(createView())
-      assertContainsText(doc, "Still Connected to the property?")
+      assertContainsText(doc, "Connected to the property?")
     }
 
     "contain still connected string boolean" in {
@@ -66,7 +66,7 @@ class CheckYourAnswersNotConnectedViewSpec extends QuestionViewBehaviours[NotCon
 
     "contain have you ever been connected field" in {
       val doc = asDocument(createView())
-      assertContainsText(doc, "Ever connected to the property?")
+      assertContainsText(doc, "Ever been connected to the property?")
     }
 
     "contain ever been connected string boolean" in {
@@ -74,19 +74,9 @@ class CheckYourAnswersNotConnectedViewSpec extends QuestionViewBehaviours[NotCon
       assertContainsText(doc, "Yes")
     }
 
-    "contain full name field" in {
-      val doc = asDocument(createView())
-      assertContainsText(doc, "Full name")
-    }
-
-    "contain full name string" in {
-      val doc = asDocument(createView())
-      assertContainsText(doc, "John Doe")
-    }
-
     "contain contact details field" in {
       val doc = asDocument(createView())
-      assertContainsText(doc, "Contact Details")
+      assertContainsText(doc, "Contacts and additional information")
     }
 
     "contain contact details phone string" in {
@@ -99,16 +89,6 @@ class CheckYourAnswersNotConnectedViewSpec extends QuestionViewBehaviours[NotCon
       assertContainsText(doc, "test@email.com")
     }
 
-    "contain additional information field" in {
-      val doc = asDocument(createView())
-      assertContainsText(doc, "Additional information")
-    }
-
-    "contain additional information string" in {
-      val doc = asDocument(createView())
-      assertContainsText(doc, "Additional Info")
-    }
-
     "contain legal declaration" in {
       val doc = asDocument(createView())
       assertContainsText(doc, messages("declaration.heading"))
@@ -116,10 +96,10 @@ class CheckYourAnswersNotConnectedViewSpec extends QuestionViewBehaviours[NotCon
       assertContainsText(doc, messages("hint.declaration"))
     }
 
-    "contain submit button with the value Submit" in {
+    "contain submit button with the value Accept and Send" in {
       val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("continue").text()
-      assert(loginButton == messages("button.label.submit"))
+      assert(loginButton == messages("button.label.send"))
     }
   }
 }
