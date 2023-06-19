@@ -34,7 +34,7 @@ import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class VacantPropertiesController @Inject()(
+class VacantPropertiesController @Inject() (
   mcc: MessagesControllerComponents,
   navigator: ConnectionToPropertyNavigator,
   vacantPropertiesView: vacantProperties,

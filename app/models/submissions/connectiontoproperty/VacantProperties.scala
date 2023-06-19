@@ -19,7 +19,7 @@ package models.submissions.connectiontoproperty
 import play.api.libs.json.Json
 
 case class VacantProperties(
-  vacantProperties: VacantPropertiesDetails,
+  vacantProperties: VacantPropertiesDetails
 )
 
 object VacantProperties {

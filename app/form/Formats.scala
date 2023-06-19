@@ -82,7 +82,7 @@ object Formats {
     namedEnumFormatter(CurrentPropertyUsed, Errors.propertyCurrentlyUsed)
   implicit val buildingOperatingHaveAWebsiteFormat: Formatter[BuildingOperationHaveAWebsite] =
     namedEnumFormatter(BuildingOperationHaveAWebsite, Errors.booleanMissing)
-  implicit val vacantPropertiesFormat: Formatter[VacantPropertiesDetails] =
+  implicit val vacantPropertiesFormat: Formatter[VacantPropertiesDetails]                    =
     namedEnumFormatter(VacantPropertiesDetails, Errors.booleanMissing)
 
   implicit val methodToFixCurrentRentDetailsFormat: Formatter[MethodToFixCurrentRents] =

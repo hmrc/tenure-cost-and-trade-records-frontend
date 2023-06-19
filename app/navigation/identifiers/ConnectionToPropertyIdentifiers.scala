@@ -25,4 +25,3 @@ case object EditAddressPageId extends Identifier { override def toString: String
 case object ConnectionToPropertyPageId extends Identifier { override def toString: String = "ConnectionToPropertyPage" }
 
 case object VacantPropertiesPageId extends Identifier { override def toString: String = "VacantPropertiesPage" }
-

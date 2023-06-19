@@ -17,25 +17,27 @@
 package views.connectiontoproperty
 
 import form.aboutyouandtheproperty.WebsiteForPropertyForm
+import form.connectiontoproperty.VacantPropertiesForm
 import models.pages.Summary
 import models.submissions.aboutyouandtheproperty.{BuildingOperationHaveAWebsiteNo, BuildingOperationHaveAWebsiteYes, WebsiteForPropertyDetails}
+import models.submissions.connectiontoproperty.{VacantProperties, VacantPropertiesDetails, VacantPropertiesDetailsNo, VacantPropertiesDetailsYes}
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
 
-class VacantPropertiesViewSpec extends QuestionViewBehaviours[WebsiteForPropertyDetails] {
+class VacantPropertiesViewSpec extends QuestionViewBehaviours[VacantProperties] {
 
-  val messageKeyPrefix = "buildingOperatingHaveAWebsite"
+  val messageKeyPrefix = "vacantProperties"
 
-  override val form: Form[WebsiteForPropertyDetails] = WebsiteForPropertyForm.websiteForPropertyForm
+  override val form: Form[VacantProperties] = VacantPropertiesForm.vacantPropertiesForm
 
-  def createView: () => Html = () => websiteForPropertyView(form, Summary("99996010001"))(fakeRequest, messages)
+  def createView: () => Html = () => vacantPropertiesView(form, Summary("99996010001"))(fakeRequest, messages)
 
-  def createViewUsingForm: Form[WebsiteForPropertyDetails] => Html = (form: Form[WebsiteForPropertyDetails]) =>
-    websiteForPropertyView(form, Summary("99996010001"))(fakeRequest, messages)
+  def createViewUsingForm: Form[VacantProperties] => Html = (form: Form[VacantProperties]) =>
+    vacantPropertiesView(form, Summary("99996010001"))(fakeRequest, messages)
 
-  "Property website view" must {
+  "Vacant properties view" must {
 
     behave like normalPage(createView, messageKeyPrefix)
 
@@ -57,9 +59,9 @@ class VacantPropertiesViewSpec extends QuestionViewBehaviours[WebsiteForProperty
       val doc = asDocument(createViewUsingForm(form))
       assertContainsRadioButton(
         doc,
-        "buildingOperatingHaveAWebsite",
-        "buildingOperatingHaveAWebsite",
-        BuildingOperationHaveAWebsiteYes.name,
+        "vacantProperties",
+        "vacantProperties",
+        VacantPropertiesDetailsYes.name,
         isChecked = false
       )
       assertContainsText(doc, messages("label.yes"))
@@ -69,17 +71,12 @@ class VacantPropertiesViewSpec extends QuestionViewBehaviours[WebsiteForProperty
       val doc = asDocument(createViewUsingForm(form))
       assertContainsRadioButton(
         doc,
-        "buildingOperatingHaveAWebsite-2",
-        "buildingOperatingHaveAWebsite",
-        BuildingOperationHaveAWebsiteNo.name,
+        "vacantProperties-2",
+        "vacantProperties",
+        VacantPropertiesDetailsNo.name,
         isChecked = false
       )
       assertContainsText(doc, messages("label.no"))
-    }
-
-    "contain an input for websiteAddressForProperty" in {
-      val doc = asDocument(createViewUsingForm(form))
-      assertRenderedById(doc, "websiteAddressForProperty")
     }
 
     "contain save and continue button with the value Save and Continue" in {

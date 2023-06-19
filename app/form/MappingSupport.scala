@@ -44,9 +44,8 @@ object MappingSupport {
   val userType: Mapping[UserType]                                               = Forms.of[UserType]
   val aboutYourPropertyType: Mapping[CurrentPropertyUsed]                       = Forms.of[CurrentPropertyUsed]
   val connectionToThePropertyType: Mapping[ConnectionToProperty]                = Forms.of[ConnectionToProperty]
-  val buildingOperatingHaveAWebsiteType: Mapping[BuildingOperationHaveAWebsite] = {
+  val buildingOperatingHaveAWebsiteType: Mapping[BuildingOperationHaveAWebsite] =
     Forms.of[BuildingOperationHaveAWebsite]
-  }
   val vacantPropertiesType: Mapping[VacantPropertiesDetails]                    = Forms.of[VacantPropertiesDetails]
   val yesNoType: Mapping[AnswersYesNo]                                          = Forms.of[AnswersYesNo]
   val cyaYesNo: Mapping[CYAYesNo]                                               = Forms.of[CYAYesNo]

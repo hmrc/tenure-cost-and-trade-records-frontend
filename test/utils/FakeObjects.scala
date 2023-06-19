@@ -270,10 +270,16 @@ trait FakeObjects {
       prefilledLandlordAddress
     )
 
-  val prefilledEditTheAddress                 =
+  val prefilledEditTheAddress =
     EditTheAddress(
       prefilledEditAddress
     )
+
+  val prefilledVacantPropertiesDetails =
+    VacantProperties(
+      VacantPropertiesDetailsYes
+    )
+
   val prefilledConnectedToLandlordDetails     =
     ConnectedToLandlordInformationDetails(
       "This is some test information"
@@ -315,6 +321,13 @@ trait FakeObjects {
     )
   )
 
+  val prefilledVacantProperties = StillConnectedDetails(
+    Some(AddressConnectionTypeYes),
+    Some(ConnectionToThePropertyOccupierTrustee),
+    Some(prefilledEditTheAddress),
+    Some(prefilledVacantPropertiesDetails)
+  )
+
   val prefilledAboutLeaseOrAgreementPartOne = AboutLeaseOrAgreementPartOne(
     Some(prefilledAboutTheLandlord),
     None,
@@ -352,4 +365,5 @@ trait FakeObjects {
     tenantAdditionsDisregardedDetails = Some(TenantAdditionsDisregardedDetails(AnswerNo)),
     legalOrPlanningRestrictions = Some(LegalOrPlanningRestrictions(AnswerNo))
   )
+
 }
