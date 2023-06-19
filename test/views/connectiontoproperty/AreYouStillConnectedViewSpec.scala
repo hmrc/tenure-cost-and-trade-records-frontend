@@ -60,13 +60,17 @@ class AreYouStillConnectedViewSpec extends QuestionViewBehaviours[AddressConnect
           assertEqualsValue(
             doc,
             "title",
-            messages("service.title", messages(s"$messageKeyPrefix.heading", ""))
+            messages("service.title", messages(s"$messageKeyPrefix.title", ""))
           )
         }
 
         "display the correct page title" in {
           val doc = asDocument(createView())
-          assertPageTitleEqualsMessage(doc, s"$messageKeyPrefix.heading", "")
+          assertEqualsValue(
+            doc,
+            "h1",
+            messages("areYouConnected.heading", "")
+          )
         }
 
         "display language toggles" in {

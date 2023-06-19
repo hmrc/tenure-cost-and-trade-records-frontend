@@ -169,7 +169,8 @@ logout.loginAgain=Log in again
 
 # ARE YOU STILL CONNECTED
 #########################
-areYouConnected.heading = Are you still connected to: </br>{0}?
+areYouConnected.title = Are you still connected to: {0}?
+areYouConnected.heading = Are you still connected to: <br>{0}?
 label.areYouConnected.addressUpdate = Yes I want to edit the address
 hint.noConnection = Choose this if you’re no longer connected to the property, or have never had a connection to the property
 
