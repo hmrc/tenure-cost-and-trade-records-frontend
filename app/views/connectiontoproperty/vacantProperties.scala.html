@@ -1,0 +1,78 @@
+@*
+ * Copyright 2023 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import models.submissions.connectiontoproperty.VacantProperties
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
+@import uk.gov.hmrc.govukfrontend.views.html.components._
+@import models.pages.Summary
+
+@this(layout: Layout,
+  govukButton: GovukButton,
+  govukRadios: GovukRadios,
+  govukDetails: GovukDetails,
+  formWithCSRF: FormWithCSRF
+)
+
+
+@(theForm: Form[VacantProperties], summary: Summary)(implicit request: Request[_], messages: Messages)
+
+@layout(
+  pageHeading = messages("vacantProperties.heading"),
+  showH1 = false,
+  showSection = true,
+    summary = Some(summary),
+  sectionName = messages("label.section.connectionToTheProperty"),
+    backLinkUrl = controllers.connectiontoproperty.routes.AreYouStillConnectedController.show.url,
+    theForm = theForm
+) {
+
+  @formWithCSRF(action = controllers.connectiontoproperty.routes.VacantPropertiesController.show(), args = Symbol("class") -> "myForm", Symbol("id") -> "myFormId") {
+
+      <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+          <h1 class="govuk-fieldset__heading">@messages("vacantProperties.heading")</h1>
+      </legend>
+
+      <p class="govuk-body">@{messages("vacantProperties.p1")}</p>
+
+      <p class="govuk-body">@{messages("vacantProperties.p2")}</p>
+
+      <p class="govuk-body">@{messages("vacantProperties.p3")}</p>
+
+      <ul class="govuk-list govuk-list--bullet">
+          <li>@{messages("vacantProperties.item1")}</li>
+          <li>@{messages("vacantProperties.item2")}</li>
+          <li>@{messages("vacantProperties.item3")}</li>
+      </ul>
+
+      @includes.radioButtons(
+          govukRadios,
+          theForm,
+          "vacantProperties",
+          "label.vacantProperties",
+          "govuk-!-font-weight-bold",
+          items = Seq(
+              "yes" -> messages("label.yes"),
+              "no" -> messages("label.no")
+          ).map(radioItem => RadioItem(
+              content = Text(radioItem._2),
+              checked = radioItem._1.equals(theForm("vacantProperties").value.getOrElse("")),
+              value = Option(radioItem._1)
+          )),
+      )
+
+    @includes.continueSaveAsDraftButtons(govukButton)
+  }
+}

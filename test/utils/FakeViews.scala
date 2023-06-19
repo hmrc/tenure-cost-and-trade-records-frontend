@@ -43,6 +43,7 @@ trait FakeViews { this: GuiceOneAppPerSuite =>
   val checkYourAnswersNotConnectedView: checkYourAnswersNotConnected =
     app.injector.instanceOf[checkYourAnswersNotConnected]
   val confirmationNotConnectedView: confirmationNotConnected         = app.injector.instanceOf[confirmationNotConnected]
+  val vacantPropertiesView: vacantProperties                         = app.injector.instanceOf[vacantProperties]
 
   // About you and the property
   lazy val aboutYouView: aboutYou                                                    = app.injector.instanceOf[aboutYou]
