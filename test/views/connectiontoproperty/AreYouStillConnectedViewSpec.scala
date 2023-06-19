@@ -55,6 +55,12 @@ class AreYouStillConnectedViewSpec extends QuestionViewBehaviours[AddressConnect
           span.text mustBe messagesApi("site.service_name")(Lang(Locale.UK))
         }
 
+        "Section heading is visible" in {
+          val doc         = asDocument(createViewUsingForm(form))
+          val sectionText = doc.getElementsByClass("govuk-caption-m").text()
+          assert(sectionText == messages("label.section.connectionToTheProperty"))
+        }
+
         "display the correct browser title" in {
           val doc = asDocument(createView())
           assertEqualsValue(
