@@ -35,7 +35,8 @@
   showSection = true,
     summary = Some(summary),
   sectionName = messages("label.section.connectionToTheProperty"),
-  theForm = theForm
+    backLinkUrl = controllers.connectiontoproperty.routes.AreYouStillConnectedController.show.url,
+    theForm = theForm
 ) {
 
   @formWithCSRF(action = controllers.connectiontoproperty.routes.VacantPropertiesController.show(), args = Symbol("class") -> "myForm", Symbol("id") -> "myFormId") {
