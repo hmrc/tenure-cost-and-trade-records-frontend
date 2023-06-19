@@ -14,15 +14,15 @@
  * limitations under the License.
  */
 
-package navigation.identifiers
+package models.submissions.connectiontoproperty
 
-case object SignInPageId extends Identifier { override def toString: String = "signInPage" }
+import play.api.libs.json.Json
 
-case object AreYouStillConnectedPageId extends Identifier { override def toString: String = "areYouStillConnectedPage" }
+case class VacantProperties(
+  vacantProperties: VacantPropertiesDetails,
+)
 
-case object EditAddressPageId extends Identifier { override def toString: String = "editAddressPage" }
+object VacantProperties {
+  implicit val format = Json.format[VacantProperties]
 
-case object ConnectionToPropertyPageId extends Identifier { override def toString: String = "ConnectionToPropertyPage" }
-
-case object VacantPropertiesPageId extends Identifier { override def toString: String = "VacantPropertiesPage" }
-
+}

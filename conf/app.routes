@@ -34,6 +34,9 @@ POST        /edit-address                                           controllers.
 
 GET         /connection-to-the-property                             controllers.connectiontoproperty.ConnectionToThePropertyController.show()
 POST        /connection-to-the-property                             controllers.connectiontoproperty.ConnectionToThePropertyController.submit()
+
+GET         /vacant-properties                                      controllers.connectiontoproperty.VacantPropertiesController.show()
+POST        /vacant-properties                                      controllers.connectiontoproperty.VacantPropertiesController.submit()
 # Not connected
 GET         /previously-connected                                   controllers.notconnected.PastConnectionController.show()
 POST        /previously-connected                                   controllers.notconnected.PastConnectionController.submit()

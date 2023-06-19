@@ -14,15 +14,16 @@
  * limitations under the License.
  */
 
-package navigation.identifiers
+package form.connectiontoproperty
 
-case object SignInPageId extends Identifier { override def toString: String = "signInPage" }
+import form.MappingSupport.vacantPropertiesType
+import models.submissions.connectiontoproperty.VacantProperties
+import play.api.data.Form
+import play.api.data.Forms.mapping
 
-case object AreYouStillConnectedPageId extends Identifier { override def toString: String = "areYouStillConnectedPage" }
-
-case object EditAddressPageId extends Identifier { override def toString: String = "editAddressPage" }
-
-case object ConnectionToPropertyPageId extends Identifier { override def toString: String = "ConnectionToPropertyPage" }
-
-case object VacantPropertiesPageId extends Identifier { override def toString: String = "VacantPropertiesPage" }
-
+object VacantPropertiesForm {
+  val vacantPropertiesForm = Form(
+    mapping(
+      "vacantProperties" -> vacantPropertiesType,
+    )(VacantProperties.apply)(VacantProperties.unapply))
+}

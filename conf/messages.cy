@@ -189,6 +189,17 @@ hint.occupierTrustee = Select this if you’re renting or leasing the property, 
 hint.ownerTrustee = Select this if you own and occupy the property - you’re considered an occupier if you own the property and lease it back to a business you operate from the property
 error.no.connection.selected = Select your connection to the property
 
+# VACANT PROPERTIES
+############################
+vacantProperties.heading = Vacant properties
+vacantProperties.p1 = You must declare if a property is vacant.
+vacantProperties.p2 = Properties can only be declared vacant if there is no kind of lease, tenancy or agreement to occupy in place.
+vacantProperties.p3 = Properties must not be declared vacant if:
+vacantProperties.item1 = the business operating from there is closed temporarily, for refurbishment, or seasonal closure, for example
+vacantProperties.item2 = the property is empty, but there is a current lease, tenancy or agreement to occupy in place
+vacantProperties.item3 = the property is being used by an individual, business or organisation under an informal arrangement
+label.vacantProperties = Is the property currently vacant?
+
 # NOT CONNECTED SECTION
 #######################
 
