@@ -57,6 +57,12 @@ class PastConnectionViewSpec extends QuestionViewBehaviours[PastConnectionType] 
       backlinkUrl mustBe controllers.connectiontoproperty.routes.AreYouStillConnectedController.show.url
     }
 
+    "Section heading is visible" in {
+      val doc         = asDocument(createViewUsingForm(form))
+      val sectionText = doc.getElementsByClass("govuk-caption-m").text()
+      assert(sectionText == messages("label.section.connectionToTheProperty"))
+    }
+
     "contain radio buttons for the value yes" in {
       val doc = asDocument(createViewUsingForm(form))
       assertContainsRadioButton(

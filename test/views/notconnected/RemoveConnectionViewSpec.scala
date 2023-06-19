@@ -63,6 +63,12 @@ class RemoveConnectionViewSpec extends QuestionViewBehaviours[RemoveConnectionsD
       backlinkUrl mustBe controllers.notconnected.routes.PastConnectionController.show().url
     }
 
+    "Section heading is visible" in {
+      val doc         = asDocument(createViewUsingForm(form))
+      val sectionText = doc.getElementsByClass("govuk-caption-m").text()
+      assert(sectionText == messages("label.section.connectionToTheProperty"))
+    }
+
     "contain an input for removeConnectionAdditionalInfo" in {
       val doc = asDocument(createViewUsingForm(form))
       assertRenderedById(doc, "removeConnectionAdditionalInfo")
