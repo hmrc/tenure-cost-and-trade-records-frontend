@@ -63,7 +63,7 @@ case class SectionAnswersRowBuilder[T](answers: Option[T])(implicit messages: Me
           Actions(items =
             Seq(
               ActionItem(
-                href = s"${urlPlusParamPrefix(editPage.url)}from=CYA#$editField",
+                href = s"${urlPlusParamPrefix(editPage.url)}from=CYA${editFieldTag(editField)}",
                 content = Text(messages("label.change")),
                 visuallyHiddenText = Some(messages(messageKey))
               )
@@ -108,5 +108,13 @@ case class SectionAnswersRowBuilder[T](answers: Option[T])(implicit messages: Me
       editField,
       conditionalTextMapping: _*
     )
+
+  def displayLabelsForYesAnswers(labelAnswerMap: Map[String, String]): String =
+    labelAnswerMap.toSeq
+      .flatMap(t => Option.when(t._2 == "yes")(messages(t._1)))
+      .mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>")
+
+  private def editFieldTag(editFieldId: String): String =
+    Option.when(editFieldId.nonEmpty)(editFieldId).fold("")(fieldId => s"#$fieldId")
 
 }
