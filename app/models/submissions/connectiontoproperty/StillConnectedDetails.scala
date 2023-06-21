@@ -22,10 +22,11 @@ import models.submissions.common.AnswersYesNo
 import play.api.libs.json.Json
 
 case class StillConnectedDetails(
-  addressConnectionType: Option[AddressConnectionType] = None,
-  connectionToProperty: Option[ConnectionToProperty] = None,
-  editAddress: Option[EditTheAddress] = None,
-  vacantProperties: Option[VacantProperties] = None
+                                noReferenceNumber: Option[NoReferenceNumber] = None,
+                                addressConnectionType: Option[AddressConnectionType] = None,
+                                connectionToProperty: Option[ConnectionToProperty] = None,
+                                editAddress: Option[EditTheAddress] = None,
+                                vacantProperties: Option[VacantProperties] = None
 )
 
 object StillConnectedDetails {

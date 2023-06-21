@@ -18,6 +18,8 @@ package navigation.identifiers
 
 case object SignInPageId extends Identifier { override def toString: String = "signInPage" }
 
+case object NoReferenceNumberPageId extends Identifier { override def toString: String = "NoReferenceNumberPage" }
+
 case object AreYouStillConnectedPageId extends Identifier { override def toString: String = "areYouStillConnectedPage" }
 
 case object EditAddressPageId extends Identifier { override def toString: String = "editAddressPage" }
@@ -25,3 +27,4 @@ case object EditAddressPageId extends Identifier { override def toString: String
 case object ConnectionToPropertyPageId extends Identifier { override def toString: String = "ConnectionToPropertyPage" }
 
 case object VacantPropertiesPageId extends Identifier { override def toString: String = "VacantPropertiesPage" }
+

@@ -25,6 +25,10 @@ GET         /saved/resume                                           controllers.
 POST        /saved/resume                                           controllers.SaveAsDraftController.resume
 GET         /saved/startagain                                       controllers.SaveAsDraftController.startAgain
 
+# No reference number
+GET         /no-reference-number                                    controllers.connectiontoproperty.NoReferenceNumberController.show()
+POST        /no-reference-number                                    controllers.connectiontoproperty.NoReferenceNumberController.submit()
+
 # Connection to the property
 GET         /are-you-still-connected                                controllers.connectiontoproperty.AreYouStillConnectedController.show()
 POST        /are-you-still-connected                                controllers.connectiontoproperty.AreYouStillConnectedController.submit()

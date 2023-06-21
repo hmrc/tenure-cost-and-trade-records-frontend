@@ -164,6 +164,18 @@ logout.header=You have been logged out
 logout.paragraph=You can close this window now
 logout.loginAgain=Log in again
 
+# NO REFERENCE NUMBER
+##############################
+noReferenceNumber.heading = If you do not have a reference number
+noReferenceNumber.subheading = If you’ve not received a letter from the VOA
+noReferenceNumber.p1 = You only need to declare your business trade and cost information when the VOA have asked you to do so. If you think you should have received a letter, you can request a replacement from the VOA.
+noReferenceNumber.subheading2 = If you need a replacement letter
+noReferenceNumber.p2 = If you no longer have access to your letter from the VOA, or you have not received one but think you should have, the VOA can issue a replacement. Complete the following form and the VOA will issue a replacement.
+noReferenceNumber.p3 = We can only reissue letters to the address where they were originally sent. <a href="https://www.gov.uk/contact-voa" class="govuk-link" target="_blank">Contact the VOA (opens in new tab)</a> if your business has changed address.
+noReferenceNumber.subheading3 = What are the details of the property related to the missing reference number?
+label.noReferenceNumberBusinessTradingName = Business or trading name
+error.noReferenceNumberBusinessTradingName.required = Enter a business or trading name
+
 # ARE YOU STILL CONNECTED SECTION
 #################################
 
