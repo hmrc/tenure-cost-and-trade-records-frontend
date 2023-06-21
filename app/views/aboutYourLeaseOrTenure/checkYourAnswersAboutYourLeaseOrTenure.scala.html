@@ -163,7 +163,38 @@
                                         .flatten.mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>")
                             ),
                             aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesDetailsController.show(), "",
-                            ("valueAsHtml", _ => None))
+                            ("valueAsHtml", _ => None)) ++
+                        sectionAnswers.row("checkYourAnswersAboutYourLeaseOrTenure.rentIncludeFixturesAndFittingsDetails",
+                            _.rentIncludeFixturesAndFittingsDetails.map(_.rentIncludeFixturesAndFittingsDetails.name).map(v => messages(s"label.$v")),
+                            aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsController.show(), "") ++
+                        sectionAnswers.conditionRow(
+                            _.rentIncludeFixturesAndFittingsDetails.map(_.rentIncludeFixturesAndFittingsDetails.name).contains("yes"),
+                            "checkYourAnswersAboutYourLeaseOrTenure.sumIncludedInRent",
+                            _.rentIncludeFixtureAndFittingsDetails.flatMap(_.sumIncludedInRent.map(_.asMoney)),
+                            aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsDetailsController.show(), "")
+
+            ))
+        }
+
+        @if(sectionAnswers.answers.exists(a => a.rentOpenMarketValueDetails.isDefined || a.rentIncreasedAnnuallyWithRPIDetails.isDefined)) {
+            <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutYourLeaseOrTenure.howRentWasCalculated.heading")</h2>
+
+            @govukSummaryList(SummaryList(rows =
+                sectionAnswers.row("checkYourAnswersAboutYourLeaseOrTenure.rentBasedOnOpenMarketValue",
+                    _.rentOpenMarketValueDetails.map(_.rentOpenMarketValues.name).map(v => messages(s"label.$v")),
+                    aboutYourLeaseOrTenure.routes.RentOpenMarketValueController.show(), "") ++
+                        sectionAnswers.conditionRow(
+                            _.rentOpenMarketValueDetails.map(_.rentOpenMarketValues.name).contains("no"),
+                            "checkYourAnswersAboutYourLeaseOrTenure.currentRentBasedOn",
+                            _.whatIsYourCurrentRentBasedOnDetails.map(r =>
+                                Seq(r.currentRentBasedOn.name).map(item => messages(s"label.currentRentBasedOn.$item"))
+                                        ++ r.describe.fold(Seq.empty[String])(d => Seq(Text(d).asHtml.body))
+                            ).map(_.mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>")),
+                            aboutYourLeaseOrTenure.routes.WhatIsYourRentBasedOnController.show(), "",
+                            ("valueAsHtml", _ => None)) ++
+                        sectionAnswers.row("checkYourAnswersAboutYourLeaseOrTenure.rentIncreasedAnnuallyWithIndex",
+                            _.rentIncreasedAnnuallyWithRPIDetails.map(_.rentIncreasedAnnuallyWithRPIDetails.name).map(v => messages(s"label.$v")),
+                            aboutYourLeaseOrTenure.routes.RentIncreaseAnnuallyWithRPIController.show(), "")
 
             ))
         }

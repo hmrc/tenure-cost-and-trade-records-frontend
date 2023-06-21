@@ -33,7 +33,8 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
   override val postponeCYARedirectPages: Set[String] = Set(
     aboutYourLeaseOrTenure.routes.ConnectedToLandlordDetailsController.show(),
     aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesDetailsController.show(),
-    aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsDetailsController.show()
+    aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsDetailsController.show(),
+    aboutYourLeaseOrTenure.routes.WhatIsYourRentBasedOnController.show()
   ).map(_.url)
 
   private def aboutYourLandlordRouting: Session => Call = answers => {
