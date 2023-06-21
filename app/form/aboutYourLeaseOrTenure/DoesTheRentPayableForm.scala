@@ -18,13 +18,14 @@ package form.aboutYourLeaseOrTenure
 
 import models.submissions.aboutYourLeaseOrTenure.DoesTheRentPayable
 import play.api.data.Form
-import play.api.data.Forms.{default, mapping, text}
+import play.api.data.Forms.{default, list, mapping, text}
 import play.api.data.validation.Constraints.{maxLength, nonEmpty}
 
 object DoesTheRentPayableForm {
 
   val doesTheRentPayableForm = Form(
     mapping(
+      "rentPayable"        -> list(text),
       "detailsToQuestions" ->
         default(text, "").verifying(
           nonEmpty(errorMessage = "error.detailsToQuestions.required"),

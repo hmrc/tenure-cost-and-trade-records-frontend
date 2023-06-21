@@ -19,6 +19,7 @@ package models.submissions.aboutYourLeaseOrTenure
 import play.api.libs.json.Json
 
 case class DoesTheRentPayable(
+  rentPayable: List[String] = List.empty,
   detailsToQuestions: String
 )
 

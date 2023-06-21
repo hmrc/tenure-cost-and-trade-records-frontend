@@ -42,6 +42,10 @@
     SectionAnswersRowBuilder(request.sessionData.aboutLeaseOrAgreementPartTwo)
 }
 
+@twoColumns(value1: String, value2: String) = {
+  <span style="display: table-cell; min-width: 15em;">@value1</span> <span style="display: table-cell;">@value2</span>
+}
+
 @layout(
     pageHeading = messages("checkYourAnswersAboutYourLeaseOrTenure.heading"),
     backLinkUrl = backLink,
@@ -117,7 +121,7 @@
             ))
         }
 
-        @if(sectionAnswers.answers.exists(a => a.includedInYourRentDetails.isDefined)) {
+        @if(sectionAnswers.answers.exists(a => a.includedInYourRentDetails.isDefined || a.rentIncludeTradeServicesDetails.isDefined)) {
             <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutYourLeaseOrTenure.whatRentIncludes.heading")</h2>
 
             @govukSummaryList(SummaryList(rows =
@@ -128,7 +132,37 @@
                         )
                     ),
                     aboutYourLeaseOrTenure.routes.IncludedInYourRentController.show(), "",
-                    ("valueAsHtml", _ => None))
+                    ("valueAsHtml", _ => None)) ++
+                        sectionAnswers.row("checkYourAnswersAboutYourLeaseOrTenure.itemsRentIncludesOrRelates",
+                            _.doesTheRentPayable.map(r =>
+                                r.rentPayable.map(item => messages(s"checkbox.rentPayable.$item"))
+                                        :+ Text(r.detailsToQuestions).asHtml
+                            ).map(_.mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>")),
+                            aboutYourLeaseOrTenure.routes.DoesTheRentPayableController.show(), "",
+                            ("valueAsHtml", _ => None)) ++
+                        sectionAnswers.row("checkYourAnswersAboutYourLeaseOrTenure.partyResponsibleForCosts",
+                            _.ultimatelyResponsible.map(r =>
+                                Seq(
+                                    twoColumns(messages("label.outsideRepairs"), messages(s"label.${r.outsideRepairs.name}")),
+                                    twoColumns(messages("label.insideRepairsShort"), messages(s"label.${r.insideRepairs.name}")),
+                                    twoColumns(messages("label.buildingInsurance"), messages(s"label.${r.buildingInsurance.name}")),
+                                ).map(_.body).mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>") +
+                                r.sharedResponsibilities.map(Text(_).asHtml).fold("")(v => s"""<p class="govuk-body">$v</p>""")
+                            ),
+                            aboutYourLeaseOrTenure.routes.UltimatelyResponsibleController.show(), "",
+                            ("valueAsHtml", _ => None)) ++
+                        sectionAnswers.row("checkYourAnswersAboutYourLeaseOrTenure.rentIncludesTradeServices",
+                            _.rentIncludeTradeServicesDetails.map(_.rentIncludeTradeServices.name).map(v => messages(s"label.$v")),
+                            aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesController.show(), "") ++
+                        sectionAnswers.conditionRow(_.rentIncludeTradeServicesDetails.map(_.rentIncludeTradeServices.name).contains("yes"),
+                            "checkYourAnswersAboutYourLeaseOrTenure.descriptionOfTradeServices",
+                            _.rentIncludeTradeServicesInformation.map(info =>
+                                Seq(info.sumIncludedInRent.map(_.asMoney + "<br/>"), Some(Text(info.describeTheServices).asHtml))
+                                        .flatten.mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>")
+                            ),
+                            aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesDetailsController.show(), "",
+                            ("valueAsHtml", _ => None))
+
             ))
         }
 
