@@ -18,7 +18,7 @@ package repository
 
 import models.Session
 import repositories.SessionData
-import repositories.{Session => SessionRepo}
+import repositories.{SessionRepository => SessionRepo}
 import utils.TestBaseSpec
 
 class SessionRepositorySpec extends TestBaseSpec {
@@ -34,15 +34,14 @@ class SessionRepositorySpec extends TestBaseSpec {
       val returnedSessionData: SessionData = repository.findFirst.futureValue // shouldBe session
 
       inside(returnedSessionData) { case SessionData(_, data, createdAt) =>
-        (data \ "session" \ "referenceNumber")
-          .as[String] shouldBe baseFilled6010Session.referenceNumber
+        (data.referenceNumber) shouldBe baseFilled6010Session.referenceNumber
       }
     }
 
     "get data from current session" in {
       repository.start(baseFilled6010Session).futureValue
 
-      val returnedSessionData: Option[Session] = repository.get[Session].futureValue
+      val returnedSessionData: Option[Session] = repository.get.futureValue
 
       inside(returnedSessionData) { case Some(session) =>
         session.referenceNumber shouldBe referenceNumber
@@ -54,7 +53,7 @@ class SessionRepositorySpec extends TestBaseSpec {
       repository.start(baseFilled6010Session).futureValue
       repository.remove().futureValue
 
-      val returnedSessionData: Option[Session] = repository.get[Session].futureValue
+      val returnedSessionData = repository.get.futureValue
 
       returnedSessionData shouldBe None
 
