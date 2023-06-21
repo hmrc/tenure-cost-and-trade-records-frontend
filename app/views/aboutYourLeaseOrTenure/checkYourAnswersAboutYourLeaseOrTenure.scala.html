@@ -68,7 +68,9 @@
                     sectionAnswers.row("checkYourAnswersAboutYourLeaseOrTenure.connectedToLandlord",
                         _.connectedToLandlord.map(_.name).map(v => messages(s"label.$v")),
                         aboutYourLeaseOrTenure.routes.ConnectedToLandlordController.show(), "connectedToLandlord") ++
-                    sectionAnswers.row("checkYourAnswersAboutYourLeaseOrTenure.connectedToLandlordDetails",
+                    sectionAnswers.conditionRow(
+                        _.connectedToLandlord.map(_.name).contains("yes"),
+                        "checkYourAnswersAboutYourLeaseOrTenure.connectedToLandlordDetails",
                         _.connectedToLandlordDetails.map(_.connectedToLandlordInformationDetails),
                         aboutYourLeaseOrTenure.routes.ConnectedToLandlordDetailsController.show(), "connectedToLandlordDetails")
         ))
