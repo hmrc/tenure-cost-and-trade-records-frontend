@@ -774,7 +774,9 @@ turnover.totalSalesCaption.6016 = Excluding VAT
 costOfSales.heading = This is a holding page for the cost of sales page
 
 # GROSS PROFIT
-grossProfit.heading = This is a holding page for the gross profits page
+grossProfit.heading = Total gross profits
+grossProfit.financialYearEnd = Financial year end
+grossProfit.totalGrossProfits = Total gross profits
 
 # TOTAL PAYROLL COSTS (FORM 6015)
 #########

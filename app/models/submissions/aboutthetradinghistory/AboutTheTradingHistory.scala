@@ -24,6 +24,7 @@ case class AboutTheTradingHistory(
   occupationAndAccountingInformation: Option[OccupationalAndAccountingInformation] = None,
   turnoverSections: Seq[TurnoverSection] = Seq.empty,
   turnoverSections1516: Seq[TurnoverSection1516] = Seq.empty,
+  grossProfitSections: Seq[GrossProfit] = Seq.empty,
   costOfSales: Option[CostOfSales] = None,
   fixedOperatingExpenses: Option[FixedOperatingExpenses] = None,
   grossProfit: Option[GrossProfit] = None,

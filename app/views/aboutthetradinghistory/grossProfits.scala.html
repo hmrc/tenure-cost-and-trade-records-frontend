@@ -15,25 +15,34 @@
  *@
 
 @import models.submissions.aboutthetradinghistory.GrossProfit
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
-@import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
+@import uk.gov.hmrc.govukfrontend.views.html.components.{GovukButton, FormWithCSRF, GovukInput, GovukTable}
 @import models.pages.Summary
+@import java.time.LocalDate
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukInsetText
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukDetails
 
 @this(layout: Layout,
         govukButton: GovukButton,
-        formWithCSRF: FormWithCSRF
+        formWithCSRF: FormWithCSRF,
+        govukInput: GovukInput,
+        govukTable: GovukTable,
+        govukInsetText: GovukInsetText,
+        govukDetails: GovukDetails
 )
 
-@(theForm: Form[GrossProfit], summary: Summary)(implicit request: Request[_], messages: Messages)
+
+@(form: Form[Seq[GrossProfit]], numOfColumns: Int, financialYears: Seq[LocalDate], summary: Summary)(implicit request: Request[_], messages: Messages)
+
+@columns = @{0 until numOfColumns}
 
 @layout(
   pageHeading = messages("grossProfit.heading"),
   showH1 = false,
   showSection = true,
-    summary = Some(summary),
+  summary = Some(summary),
   sectionName = messages("label.section.aboutYourTradingHistory"),
   backLinkUrl = controllers.aboutthetradinghistory.routes.TurnoverController.show.url,
-    theForm = theForm
+  theForm = form
 ) {
 
   @formWithCSRF(action = controllers.aboutthetradinghistory.routes.GrossProfitsController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {

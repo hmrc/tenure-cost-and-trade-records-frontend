@@ -18,8 +18,11 @@ package models.submissions.aboutthetradinghistory
 
 import play.api.libs.json.Json
 
+import java.time.LocalDate
+
 case class GrossProfit(
-  grossProfit: String
+      financialYearEnd: LocalDate,
+      grossProfit: BigDecimal
 )
 
 object GrossProfit {
