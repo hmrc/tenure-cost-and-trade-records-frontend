@@ -155,7 +155,7 @@
                             ("valueAsHtml", _ => None)) ++
                         sectionAnswers.row("checkYourAnswersAboutYourLeaseOrTenure.rentIncludesTradeServices",
                             _.rentIncludeTradeServicesDetails.map(_.rentIncludeTradeServices.name).map(v => messages(s"label.$v")),
-                            aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesController.show(), "") ++
+                            aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesController.show(), "rentIncludeTradeServices") ++
                         sectionAnswers.conditionRow(_.rentIncludeTradeServicesDetails.map(_.rentIncludeTradeServices.name).contains("yes"),
                             "checkYourAnswersAboutYourLeaseOrTenure.descriptionOfTradeServices",
                             _.rentIncludeTradeServicesInformation.map(info =>
@@ -166,12 +166,12 @@
                             ("valueAsHtml", _ => None)) ++
                         sectionAnswers.row("checkYourAnswersAboutYourLeaseOrTenure.rentIncludeFixturesAndFittingsDetails",
                             _.rentIncludeFixturesAndFittingsDetails.map(_.rentIncludeFixturesAndFittingsDetails.name).map(v => messages(s"label.$v")),
-                            aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsController.show(), "") ++
+                            aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsController.show(), "rentIncludeFixturesAndFittings") ++
                         sectionAnswers.conditionRow(
                             _.rentIncludeFixturesAndFittingsDetails.map(_.rentIncludeFixturesAndFittingsDetails.name).contains("yes"),
                             "checkYourAnswersAboutYourLeaseOrTenure.sumIncludedInRent",
                             _.rentIncludeFixtureAndFittingsDetails.flatMap(_.sumIncludedInRent.map(_.asMoney)),
-                            aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsDetailsController.show(), "")
+                            aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsDetailsController.show(), "rentIncludeFixturesAndFittingsDetails")
 
             ))
         }
@@ -182,7 +182,7 @@
             @govukSummaryList(SummaryList(rows =
                 sectionAnswers.row("checkYourAnswersAboutYourLeaseOrTenure.rentBasedOnOpenMarketValue",
                     _.rentOpenMarketValueDetails.map(_.rentOpenMarketValues.name).map(v => messages(s"label.$v")),
-                    aboutYourLeaseOrTenure.routes.RentOpenMarketValueController.show(), "") ++
+                    aboutYourLeaseOrTenure.routes.RentOpenMarketValueController.show(), "rentOpenMarketValue") ++
                         sectionAnswers.conditionRow(
                             _.rentOpenMarketValueDetails.map(_.rentOpenMarketValues.name).contains("no"),
                             "checkYourAnswersAboutYourLeaseOrTenure.currentRentBasedOn",
@@ -194,7 +194,31 @@
                             ("valueAsHtml", _ => None)) ++
                         sectionAnswers.row("checkYourAnswersAboutYourLeaseOrTenure.rentIncreasedAnnuallyWithIndex",
                             _.rentIncreasedAnnuallyWithRPIDetails.map(_.rentIncreasedAnnuallyWithRPIDetails.name).map(v => messages(s"label.$v")),
-                            aboutYourLeaseOrTenure.routes.RentIncreaseAnnuallyWithRPIController.show(), "")
+                            aboutYourLeaseOrTenure.routes.RentIncreaseAnnuallyWithRPIController.show(), "rentIncreasedAnnuallyWithRPIs") ++
+                        sectionAnswers2.row("checkYourAnswersAboutYourLeaseOrTenure.rentPayableVaryAccordingToTurnover",
+                            _.rentPayableVaryAccordingToGrossOrNetDetails.map(_.rentPayableVaryAccordingToGrossOrNets.name).map(v => messages(s"label.$v")),
+                            aboutYourLeaseOrTenure.routes.RentPayableVaryAccordingToGrossOrNetController.show(), "rentPayableVaryAccordingToGrossOrNet") ++
+                        sectionAnswers2.conditionRow(
+                            _.rentPayableVaryAccordingToGrossOrNetDetails.map(_.rentPayableVaryAccordingToGrossOrNets.name).contains("yes"),
+                            "checkYourAnswersAboutYourLeaseOrTenure.rentPayableVaryAccordingToTurnoverDetails",
+                            _.rentPayableVaryAccordingToGrossOrNetInformationDetails.map(_.rentPayableVaryAccordingToGrossOrNet),
+                            aboutYourLeaseOrTenure.routes.RentPayableVaryAccordingToGrossOrNetDetailsController.show(), "rentPayableVaryAccordingToGrossOrNetDetails") ++
+                        sectionAnswers2.row("checkYourAnswersAboutYourLeaseOrTenure.rentPayableVaryOnQuantityOfDrinks",
+                            _.rentPayableVaryOnQuantityOfBeersDetails.map(_.rentPayableVaryOnQuantityOfBeersDetails.name).map(v => messages(s"label.$v")),
+                            aboutYourLeaseOrTenure.routes.RentPayableVaryOnQuantityOfBeersController.show(), "rentPayableVaryOnQuantityOfBeers") ++
+                        sectionAnswers2.conditionRow(
+                            _.rentPayableVaryOnQuantityOfBeersDetails.map(_.rentPayableVaryOnQuantityOfBeersDetails.name).contains("yes"),
+                            "checkYourAnswersAboutYourLeaseOrTenure.rentPayableVaryOnQuantityOfDrinksDetails",
+                            _.rentPayableVaryOnQuantityOfBeersInformationDetails.map(_.rentPayableVaryOnQuantityOfBeersDetails),
+                            aboutYourLeaseOrTenure.routes.RentPayableVaryOnQuantityOfBeersDetailsController.show(), "rentPayableVaryOnQuantityOfBeersDetails") ++
+                        sectionAnswers2.row("checkYourAnswersAboutYourLeaseOrTenure.howAndWhenRentWasFixed",
+                            _.howIsCurrentRentFixed.map(r =>
+                                Seq(messages(s"label.${r.currentRentFixed.name}"),
+                                    dateUtil.formatYearMonth(r.rentActuallyAgreed.toYearMonth)
+                                ).mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>")
+                            ),
+                            aboutYourLeaseOrTenure.routes.HowIsCurrentRentFixedController.show(), "",
+                            ("valueAsHtml", _ => None))
 
             ))
         }
