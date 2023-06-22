@@ -20,7 +20,6 @@ import connectors.Audit
 import identifiers.{AreYouStillConnectedPageId, ConnectionToPropertyPageId, EditAddressPageId, Identifier, NoReferenceNumberPageId, VacantPropertiesPageId}
 import play.api.mvc.Call
 import models.Session
-import models.submissions.connectiontoproperty.NoReferenceNumber
 import play.api.Logging
 
 import javax.inject.Inject
@@ -41,10 +40,12 @@ class ConnectionToPropertyNavigator @Inject() (audit: Audit) extends Navigator(a
   }
 
   override val routeMap: Map[Identifier, Session => Call] = Map(
-    NoReferenceNumberPageId    -> (_ => controllers.routes.TaskListController.show()),
     AreYouStillConnectedPageId -> areYouStillConnectedRouting,
     EditAddressPageId          -> (_ => controllers.connectiontoproperty.routes.ConnectionToThePropertyController.show()),
     ConnectionToPropertyPageId -> (_ => controllers.routes.TaskListController.show()),
-    VacantPropertiesPageId     -> (_ => controllers.routes.TaskListController.show())
+    VacantPropertiesPageId     -> (_ => controllers.routes.TaskListController.show()),
+    NoReferenceNumberPageId    -> (_ =>
+      controllers.connectiontoproperty.routes.NoReferenceNumberContactDetailsController.show()
+    )
   )
 }

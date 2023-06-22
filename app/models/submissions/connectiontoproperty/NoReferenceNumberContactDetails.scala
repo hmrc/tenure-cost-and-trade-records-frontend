@@ -18,11 +18,11 @@ package models.submissions.connectiontoproperty
 
 import play.api.libs.json.Json
 
-case class NoReferenceNumber(
-  noReferenceNumberBusinessTradingName: String,
-  noReferenceNumberAddress: NoReferenceNumberAddress
+case class NoReferenceNumberContactDetails(
+  noReferenceNumberContactDetails: Option[String]
 )
 
-object NoReferenceNumber {
-  implicit val format = Json.format[NoReferenceNumber]
+object NoReferenceNumberContactDetails {
+  implicit val format1 = Json.format[NoReferenceNumberContactDetails]
+
 }

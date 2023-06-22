@@ -29,7 +29,7 @@ object NoReferenceNumberForm {
         nonEmpty(errorMessage = "error.noReferenceNumberBusinessTradingName.required"),
         maxLength(100, "error.noReferenceNumberBusinessTradingName.maxLength")
       ),
-      "noReferenceNumberAddress"  -> noReferenceNumberAddressMapping
+      "noReferenceNumberAddress"             -> noReferenceNumberAddressMapping
     )(NoReferenceNumber.apply)(NoReferenceNumber.unapply)
   )
 }

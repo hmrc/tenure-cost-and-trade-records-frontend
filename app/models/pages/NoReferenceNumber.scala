@@ -14,15 +14,11 @@
  * limitations under the License.
  */
 
-package models.submissions.connectiontoproperty
+package models.pages
 
-import play.api.libs.json.Json
+import models.submissions.common.Address
 
 case class NoReferenceNumber(
-  noReferenceNumberBusinessTradingName: String,
-  noReferenceNumberAddress: NoReferenceNumberAddress
+  referenceNumber: Option[String] = None,
+  address: Option[Address] = None
 )
-
-object NoReferenceNumber {
-  implicit val format = Json.format[NoReferenceNumber]
-}

@@ -32,12 +32,12 @@ import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class NoReferenceNumberController @Inject()(
-                                             mcc: MessagesControllerComponents,
-                                             navigator: ConnectionToPropertyNavigator,
-                                             noReferenceNumberView: noReferenceNumber,
-                                             withSessionRefiner: WithSessionRefiner,
-                                             @Named("session") val session: SessionRepo
+class NoReferenceNumberController @Inject() (
+  mcc: MessagesControllerComponents,
+  navigator: ConnectionToPropertyNavigator,
+  noReferenceNumberView: noReferenceNumber,
+  withSessionRefiner: WithSessionRefiner,
+  @Named("session") val session: SessionRepo
 ) extends FORDataCaptureController(mcc)
     with I18nSupport {
 
@@ -47,7 +47,7 @@ class NoReferenceNumberController @Inject()(
         noReferenceNumberView(
           request.sessionData.stillConnectedDetails.flatMap(_.noReferenceNumber) match {
             case Some(noReferenceNumber) => noReferenceNumberForm.fillAndValidate(noReferenceNumber)
-            case _                      => noReferenceNumberForm
+            case _                       => noReferenceNumberForm
           },
           request.sessionData.toSummary
         )

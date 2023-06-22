@@ -20,7 +20,6 @@ import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
 import form.connectiontoproperty.VacantPropertiesForm.vacantPropertiesForm
 import models.submissions.connectiontoproperty.StillConnectedDetails.updateStillConnectedDetails
-import models.submissions.common.AnswersYesNo
 import models.submissions.connectiontoproperty.VacantProperties
 import navigation.ConnectionToPropertyNavigator
 import navigation.identifiers.TiedForGoodsPageId

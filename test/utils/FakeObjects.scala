@@ -50,17 +50,19 @@ trait FakeObjects {
     "BN12 4AX"
   )
 
-  val prefilledFakeName                         = "John Doe"
-  val prefilledFakePhoneNo                      = "12345678901"
-  val prefilledFakeEmail                        = "test@email.com"
-  val prefilledCateringAddress: CateringAddress =
+  val prefilledFakeName                                            = "John Doe"
+  val prefilledFakePhoneNo                                         = "12345678901"
+  val prefilledFakeEmail                                           = "test@email.com"
+  val prefilledCateringAddress: CateringAddress                    =
     CateringAddress("004", Some("GORING ROAD"), "GORING-BY-SEA, WORTHING", Some("West sussex"), "BN12 4AX")
-  val prefilledLettingAddress: LettingAddress   =
+  val prefilledLettingAddress: LettingAddress                      =
     LettingAddress("004", Some("GORING ROAD"), "GORING-BY-SEA, WORTHING", Some("West sussex"), "BN12 4AX")
-  val prefilledLandlordAddress: LandlordAddress =
+  val prefilledLandlordAddress: LandlordAddress                    =
     LandlordAddress("004", Some("GORING ROAD"), "GORING-BY-SEA, WORTHING", Some("West sussex"), "BN12 4AX")
-  val prefilledEditAddress: EditAddress         =
+  val prefilledEditAddress: EditAddress                            =
     EditAddress("004", Some("GORING ROAD"), "GORING-BY-SEA, WORTHING", Some("West sussex"), "BN12 4AX")
+  val prefilledNoReferenceContactAddress: NoReferenceNumberAddress =
+    NoReferenceNumberAddress("004", Some("GORING ROAD"), "GORING-BY-SEA, WORTHING", Some("West sussex"), "BN12 4AX")
 
   val prefilledDateInput: LocalDate               = LocalDate.of(2022, 6, 1)
   val prefilledMonthYearInput: MonthsYearDuration = MonthsYearDuration(6, 2000)
@@ -273,6 +275,12 @@ trait FakeObjects {
   val prefilledEditTheAddress =
     EditTheAddress(
       prefilledEditAddress
+    )
+
+  val prefilledNoRefAddress =
+    NoReferenceNumber(
+      "Business Name",
+      prefilledNoReferenceContactAddress
     )
 
   val prefilledVacantPropertiesDetails =

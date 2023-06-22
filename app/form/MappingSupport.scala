@@ -25,7 +25,7 @@ import models.submissions.aboutYourLeaseOrTenure._
 import models.submissions.aboutfranchisesorlettings._
 import models.submissions.aboutyouandtheproperty._
 import models.submissions.common.{Address, AnswersYesNo, BuildingInsurance, CYAYesNo, ContactDetails, ContactDetailsAddress, InsideRepairs, OutsideRepairs}
-import models.submissions.connectiontoproperty.{AddressConnectionType, ConnectionToProperty, EditAddress, NoReferenceNumber, NoReferenceNumberAddress, VacantProperties, VacantPropertiesDetails}
+import models.submissions.connectiontoproperty.{AddressConnectionType, ConnectionToProperty, EditAddress, NoReferenceNumberAddress, VacantPropertiesDetails}
 import models.submissions.notconnected.PastConnectionType
 import models.{AnnualRent, NamedEnum, NamedEnumSupport}
 import play.api.data.Forms.{boolean, default, email, list, mapping, nonEmptyText, optional, text}
@@ -167,21 +167,21 @@ object MappingSupport {
       nonEmpty(errorMessage = "error.buildingNameNumber.required"),
       maxLength(50, "error.buildingNameNumber.maxLength")
     ),
-    "street1" -> optional(
+    "street1"            -> optional(
       default(text, "").verifying(
         maxLength(50, "error.addressLineTwo.maxLength")
       )
     ),
-    "town" -> default(text, "").verifying(
+    "town"               -> default(text, "").verifying(
       nonEmpty(errorMessage = "error.townCity.required"),
       maxLength(50, "error.buildingNameNumber.maxLength")
     ),
-    "county" -> optional(
+    "county"             -> optional(
       default(text, "").verifying(
         maxLength(50, "error.county.maxLength")
       )
     ),
-    "postcode" -> nonEmptyTextOr("noReferenceNumberAddress.postcode", postcode, "error.postcode.required")
+    "postcode"           -> nonEmptyTextOr("noReferenceNumberAddress.postcode", postcode, "error.postcode.required")
   )(NoReferenceNumberAddress.apply)(NoReferenceNumberAddress.unapply)
 
   def landlordAddressMapping: Mapping[LandlordAddress] = mapping(

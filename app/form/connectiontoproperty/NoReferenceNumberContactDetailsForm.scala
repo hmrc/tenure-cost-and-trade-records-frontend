@@ -14,15 +14,16 @@
  * limitations under the License.
  */
 
-package models.submissions.connectiontoproperty
+package form.connectiontoproperty
 
-import play.api.libs.json.Json
+import models.submissions.connectiontoproperty.NoReferenceNumberContactDetails
+import play.api.data.Form
+import play.api.data.Forms.{mapping, optional, text}
 
-case class NoReferenceNumber(
-  noReferenceNumberBusinessTradingName: String,
-  noReferenceNumberAddress: NoReferenceNumberAddress
-)
-
-object NoReferenceNumber {
-  implicit val format = Json.format[NoReferenceNumber]
+object NoReferenceNumberContactDetailsForm {
+  val noReferenceNumberContactDetailsForm: Form[NoReferenceNumberContactDetails] = Form(
+    mapping(
+      "noReferenceNumberContactDetails" -> optional(text)
+    )(NoReferenceNumberContactDetails.apply)(NoReferenceNumberContactDetails.unapply)
+  )
 }

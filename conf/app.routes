@@ -29,6 +29,8 @@ GET         /saved/startagain                                       controllers.
 GET         /no-reference-number                                    controllers.connectiontoproperty.NoReferenceNumberController.show()
 POST        /no-reference-number                                    controllers.connectiontoproperty.NoReferenceNumberController.submit()
 
+GET         /no-reference-number-contact-details                    controllers.connectiontoproperty.NoReferenceNumberContactDetailsController.show()
+
 # Connection to the property
 GET         /are-you-still-connected                                controllers.connectiontoproperty.AreYouStillConnectedController.show()
 POST        /are-you-still-connected                                controllers.connectiontoproperty.AreYouStillConnectedController.submit()

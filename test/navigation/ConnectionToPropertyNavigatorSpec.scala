@@ -17,7 +17,7 @@
 package navigation
 
 import connectors.Audit
-import navigation.identifiers.{AreYouStillConnectedPageId, ConnectionToPropertyPageId, EditAddressPageId, Identifier}
+import navigation.identifiers.{AreYouStillConnectedPageId, ConnectionToPropertyPageId, EditAddressPageId, Identifier, NoReferenceNumberPageId}
 import org.scalatest.matchers.must.Matchers.convertToAnyMustWrapper
 import play.api.libs.json.JsObject
 import uk.gov.hmrc.http.HeaderCarrier
@@ -74,6 +74,15 @@ class ConnectionToPropertyNavigatorSpec extends TestBaseSpec {
       navigator
         .nextPage(ConnectionToPropertyPageId, stillConnectedDetailsYesSession)
         .apply(stillConnectedDetailsYesSession) mustBe controllers.routes.TaskListController
+        .show()
+    }
+
+    "return a function that goes to the no reference number contact details page when connection to the property has been selected" in {
+      navigator
+        .nextPage(NoReferenceNumberPageId, stillConnectedDetailsYesSession)
+        .apply(
+          stillConnectedDetailsYesSession
+        ) mustBe controllers.connectiontoproperty.routes.NoReferenceNumberContactDetailsController
         .show()
     }
   }
