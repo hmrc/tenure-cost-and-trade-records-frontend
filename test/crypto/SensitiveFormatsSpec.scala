@@ -22,22 +22,14 @@ import play.api.{Configuration, Environment, Mode}
 import uk.gov.hmrc.crypto.Sensitive.SensitiveString
 import play.api.libs.json.{Json, OFormat, Writes}
 import SensitiveFormats._
+import utils.SensitiveTestHelper
 
 import java.io.File
 
-class SensitiveFormatsSpec extends AnyWordSpecLike with Matchers {
+class SensitiveFormatsSpec extends AnyWordSpecLike with Matchers with SensitiveTestHelper{
   import SensitiveFormatsSpec._
 
-  class TestMongoCrypto(configuration: Configuration) extends MongoCrypto(configuration) {
-    override protected val encryptionKey: String = configuration.get[String]("crypto.key")
-  }
-
-  val testEnv: Environment = Environment.simple(mode = Mode.Test)
-
-  val devSettings: Map[String, AnyRef] = Map(
-    "crypto.key" -> "P5xsJ9Nt+quxGZzB4DeLfw=="
-  )
-  val testConfig: Configuration = Configuration.load(testEnv, devSettings)
+  val testConfig: Configuration = loadTestConfig()
 
   implicit val crypto: MongoCrypto = new TestMongoCrypto(testConfig)
 
