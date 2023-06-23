@@ -37,7 +37,7 @@ class GuiceModule(
 
     bind(classOf[SessionRepo])
       .annotatedWith(Names.named("session"))
-      .to(classOf[Session])
+      .to(classOf[SessionRepository])
     bind(classOf[Clock]).toInstance(Clock.systemUTC())
 
   }

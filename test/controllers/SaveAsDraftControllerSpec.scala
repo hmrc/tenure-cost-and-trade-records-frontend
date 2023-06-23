@@ -174,7 +174,7 @@ class SaveAsDraftControllerSpec extends TestBaseSpec {
       backendConnector.loadSubmissionDraft(refNum).futureValue shouldBe Some(draft) // SubmissionDraft exists
       sessionRepo.saveOrUpdate(session.copy(token = "NEW_TOKEN", forType = "TMP_VALUE"))
 
-      val sessionBefore = sessionRepo.get[Session].futureValue.value
+      val sessionBefore = sessionRepo.get.futureValue.value
       sessionBefore.saveAsDraftPassword shouldBe Some(password)
       sessionBefore.token               shouldBe "NEW_TOKEN"
       sessionBefore.forType             shouldBe "TMP_VALUE"
@@ -188,7 +188,7 @@ class SaveAsDraftControllerSpec extends TestBaseSpec {
       status(result)           shouldBe SEE_OTHER
       redirectLocation(result) shouldBe Some(draft.exitPath)
 
-      val sessionAfter = sessionRepo.get[Session].futureValue.value
+      val sessionAfter = sessionRepo.get.futureValue.value
       sessionAfter.saveAsDraftPassword shouldBe None
       sessionAfter.token               shouldBe "NEW_TOKEN"
       sessionAfter.forType             shouldBe "FOR6010"

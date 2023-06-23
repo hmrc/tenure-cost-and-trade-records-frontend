@@ -6,6 +6,7 @@ object AppDependencies {
   val bootstrapVersion = "7.19.0"
   val playFrontendVersion = "7.13.0-play-28"
   val mongoVersion = "1.3.0"
+  val cryptoJsonVersion = "7.3.0"
   val jodaVersion = "2.9.4"
   val cachingClientVersion = "10.0.0-play-28"
 
@@ -20,6 +21,7 @@ object AppDependencies {
     "uk.gov.hmrc"       %% "play-frontend-hmrc"           % playFrontendVersion,
     "com.typesafe.play" %% "play-joda-forms"              % PlayVersion.current,
     "uk.gov.hmrc.mongo" %% "hmrc-mongo-play-28"           % mongoVersion,
+    "uk.gov.hmrc"       %% "crypto-json-play-28"          % cryptoJsonVersion,
     "com.typesafe.play" %% "play-json-joda"               % jodaVersion,
     "uk.gov.hmrc"       %% "http-caching-client"          % cachingClientVersion
   )

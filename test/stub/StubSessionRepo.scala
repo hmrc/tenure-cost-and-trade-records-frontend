@@ -16,6 +16,7 @@
 
 package stub
 
+import models.Session
 import play.api.libs.json.{JsValue, Json, Reads, Writes}
 import repositories.SessionRepo
 import uk.gov.hmrc.http.HeaderCarrier
@@ -29,16 +30,16 @@ case class StubSessionRepo() extends SessionRepo {
 
   private var session: Option[JsValue] = None
 
-  override def start[A](data: A)(implicit wts: Writes[A], hc: HeaderCarrier): Future[Unit] =
+  override def start(data: Session)(implicit wts: Writes[Session], hc: HeaderCarrier): Future[Unit] =
     saveOrUpdate(data)
 
-  override def saveOrUpdate[A](data: A)(implicit wts: Writes[A], hc: HeaderCarrier): Future[Unit] =
+  override def saveOrUpdate(data: Session)(implicit wts: Writes[Session], hc: HeaderCarrier): Future[Unit] =
     Future.successful {
       session = Some(Json.toJson(data))
     }
 
-  override def get[A](implicit rds: Reads[A], hc: HeaderCarrier): Future[Option[A]] =
-    Future.successful(session.map(_.as[A]))
+  override def get(implicit rds: Reads[Session], hc: HeaderCarrier): Future[Option[Session]] =
+    Future.successful(session.map(_.as[Session]))
 
   override def remove()(implicit hc: HeaderCarrier): Future[Unit] =
     Future.successful {

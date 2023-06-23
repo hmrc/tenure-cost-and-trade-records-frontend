@@ -32,3 +32,28 @@ object Helpers {
   }
 
 }
+
+import play.api.Configuration
+import play.api.Environment
+import play.api.Mode
+import crypto.MongoCrypto
+
+trait SensitiveTestHelper {
+
+  class TestMongoCrypto(configuration: Configuration) extends MongoCrypto(configuration) {
+    override protected val encryptionKey: String = configuration.get[String]("crypto.key")
+  }
+
+  def loadTestConfig(): Configuration = {
+    val testEnv: Environment = Environment.simple(mode = Mode.Test)
+    val devSettings: Map[String, AnyRef] = Map(
+      "crypto.key" -> "P5xsJ9Nt+quxGZzB4DeLfw=="
+    )
+    Configuration.load(testEnv, devSettings)
+  }
+
+  def createTestMongoCrypto(configuration: Configuration): MongoCrypto = {
+    new TestMongoCrypto(configuration)
+  }
+
+}

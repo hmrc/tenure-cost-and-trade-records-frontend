@@ -17,41 +17,46 @@
 package repositories
 
 import com.google.inject.Singleton
+import crypto.MongoCrypto
+import models.{SensitiveSession, Session}
 
 import javax.inject.Inject
 import org.mongodb.scala.model.IndexModel
 import play.api.libs.json._
 import org.mongodb.scala.model.Filters._
 import org.mongodb.scala.model._
+import uk.gov.hmrc.crypto.Sensitive
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.http.cache.client.NoSessionException
 import uk.gov.hmrc.mongo.play.json.{Codecs, PlayMongoRepository}
 import uk.gov.hmrc.mongo.MongoComponent
 import uk.gov.hmrc.play.http.logging.Mdc
+
 import scala.concurrent.{ExecutionContext, Future}
 import scala.concurrent.duration._
 import java.time.Instant
-import uk.gov.hmrc.mongo.play.json.formats.MongoJavatimeFormats
+import uk.gov.hmrc.mongo.play.json.formats.{MongoJavatimeFormats, MongoJodaFormats}
 
 @Singleton
-class Session @Inject() (mongo: MongoComponent)(implicit executionContext: ExecutionContext)
-    extends SessionRepository("session", mongo)
-
-abstract class SessionRepository @Inject() (formId: String, mongo: MongoComponent)(implicit
-  executionContext: ExecutionContext
-) extends PlayMongoRepository[SessionData](
+class SessionRepository @Inject() (mongo: MongoComponent)(implicit
+  executionContext: ExecutionContext,crypto: MongoCrypto
+) extends PlayMongoRepository[SensitiveSessionData](
       collectionName = "sessions",
       mongoComponent = mongo,
-      domainFormat = SessionData.format,
+      domainFormat = SensitiveSessionData.format,
       indexes =
-        Seq(IndexModel(Indexes.ascending("createdAt"), IndexOptions().name("sessionTTL").expireAfter(2L, HOURS)))
-    )
-    with SessionRepo {
+        Seq(IndexModel(Indexes.ascending("createdAt"), IndexOptions().name("sessionTTL").expireAfter(2L, HOURS))),
+  extraCodecs = Seq(
+    Codecs.playFormatCodec(MongoJodaFormats.dateTimeFormat),
+    Codecs.playFormatCodec(MongoJavatimeFormats.instantFormat)
+  )
+    ) with SessionRepo
+{
 
-  override def start[A](data: A)(implicit wts: Writes[A], hc: HeaderCarrier): Future[Unit] =
-    saveOrUpdate[A](data)
-
-  override def saveOrUpdate[A](data: A)(implicit wts: Writes[A], hc: HeaderCarrier): Future[Unit] =
+   def start(data: Session)(implicit wts: Writes[Session], hc: HeaderCarrier): Future[Unit] = {
+     saveOrUpdate(data)
+   }
+   def saveOrUpdate(data: Session)(implicit wts: Writes[Session], hc: HeaderCarrier): Future[Unit] =
     Mdc.preservingMdc {
       for {
         sessionId <- getSessionId
@@ -59,28 +64,24 @@ abstract class SessionRepository @Inject() (formId: String, mongo: MongoComponen
                        .findOneAndUpdate(
                          filter = Filters.equal("_id", sessionId),
                          update = Updates.combine(
-                           Updates.set(s"data.$formId", Codecs.toBson(data)),
+                           Updates.set(s"data", Codecs.toBson(SensitiveSession(data))),
                            Updates.setOnInsert("createdAt", Instant.now)
                          ),
                          options = FindOneAndUpdateOptions().upsert(true)
                        )
                        .toFuture()
-      } yield ()
+      } yield (
+      )
     }
 
-  override def get[A](implicit rds: Reads[A], hc: HeaderCarrier): Future[Option[A]] =
+   def get(implicit rds: Reads[Session], hc: HeaderCarrier) =
     Mdc.preservingMdc {
       for {
-        sessionId   <- getSessionId
-        maybeOption <- collection.find(Filters.equal("_id", sessionId)).headOption()
-      } yield maybeOption
-        .map(_.data \ formId)
-        .flatMap(x =>
-          x match {
-            case JsDefined(value) => Some(value.as[A])
-            case JsUndefined()    => None
-          }
-        )
+        sessionId <- getSessionId
+        maybeOption <-collection.find(Filters.equal("_id", sessionId)).headOption()
+      } yield maybeOption.map(
+        (_.data.decryptedValue)
+      )
     }
 
   def findFirst(implicit hc: HeaderCarrier): Future[SessionData] =
@@ -88,10 +89,10 @@ abstract class SessionRepository @Inject() (formId: String, mongo: MongoComponen
       for {
         sessionId <- getSessionId
         session   <- collection.find(Filters.equal("_id", sessionId)).first().toFuture()
-      } yield session
+      } yield session.decryptedValue
     }
 
-  override def remove()(implicit hc: HeaderCarrier): Future[Unit] =
+  def remove()(implicit hc: HeaderCarrier): Future[Unit] =
     Mdc.preservingMdc {
       for {
         sessionId <- getSessionId
@@ -114,7 +115,7 @@ abstract class SessionRepository @Inject() (formId: String, mongo: MongoComponen
 
 }
 
-case class SessionData(_id: String, data: JsValue, createdAt: Instant = Instant.now)
+case class SessionData(_id: String, data: Session, createdAt: Instant = Instant.now)
 
 object SessionData {
 
@@ -122,13 +123,34 @@ object SessionData {
   val format                                  = Json.format[SessionData]
 }
 
+case class SensitiveSessionData(_id:String, data:SensitiveSession, createdAt:Instant = Instant.now) extends Sensitive[SessionData]{
+  override def decryptedValue: SessionData = SessionData(
+    _id,
+    data.decryptedValue,
+    createdAt
+  )
+}
+
+object SensitiveSessionData{
+
+  implicit val formatInstant: Format[Instant] = MongoJavatimeFormats.instantFormat
+  implicit def format(implicit crypto: MongoCrypto): OFormat[SensitiveSessionData] = Json.format[SensitiveSessionData]
+
+  def apply(sessionData: SessionData):SensitiveSessionData = SensitiveSessionData(
+    sessionData._id,
+    SensitiveSession(sessionData.data),
+    sessionData.createdAt
+  )
+}
+
+
 trait SessionRepo {
 
-  def start[A](data: A)(implicit wts: Writes[A], hc: HeaderCarrier): Future[Unit]
+  def start(data: Session)(implicit wts: Writes[Session], hc: HeaderCarrier): Future[Unit]
 
-  def saveOrUpdate[A](data: A)(implicit wts: Writes[A], hc: HeaderCarrier): Future[Unit]
+  def saveOrUpdate(data: Session)(implicit wts: Writes[Session], hc: HeaderCarrier): Future[Unit]
 
-  def get[A](implicit rds: Reads[A], hc: HeaderCarrier): Future[Option[A]]
+  def get(implicit rds: Reads[Session], hc: HeaderCarrier): Future[Option[Session]]
 
   def remove()(implicit hc: HeaderCarrier): Future[Unit]
 }

@@ -38,7 +38,7 @@ case class WithSessionRefiner @Inject() (
     HeaderCarrierConverter.fromRequestAndSession(request, request.session)
 
   override protected def refine[A](request: Request[A]): Future[Either[Result, SessionRequest[A]]] =
-    sessionRepository.get[Session](implicitly[Reads[Session]], hc(request)).map {
+    sessionRepository.get(implicitly[Reads[Session]], hc(request)).map {
       case Some(s) =>
         Right(actions.SessionRequest(sessionData = s, request = request))
       case None    => Left(NotFound(errorHandler.notFoundTemplate(request)))
