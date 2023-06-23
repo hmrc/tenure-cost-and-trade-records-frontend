@@ -39,7 +39,7 @@
 
 @layout(
   pageHeading = messages("editAddress.heading"),
-  showH1 = false,
+  showH1 = true,
   showSection = true,
     sectionName = messages("label.section.connectionToTheProperty"),
     summary = Some(summary),
@@ -47,10 +47,6 @@
   theForm = theForm
 ) {
   @formWithCSRF(action = controllers.connectiontoproperty.routes.EditAddressController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
-
-    <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-      <h1 class="govuk-fieldset__heading">@messages("editAddress.heading")</h1>
-    </legend>
 
     @includes.textInputEditAddress(govukInput, theForm, "editAddress.buildingNameNumber", "govuk-!-width-two-thirds", "buildingNameNumber", value = getAddressFieldValueOrDefaultUnlessErrors("buildingNameNumber", summary.address.map(_.buildingNameNumber).getOrElse("")))
     @includes.textInputEditAddress(govukInput, theForm, "editAddress.street1", "govuk-!-width-two-thirds", "street1", optional = true, value = getAddressFieldValueOrDefaultUnlessErrors("street1", summary.address.flatMap(_.street1).getOrElse("")))
