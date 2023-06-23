@@ -14,15 +14,18 @@
  * limitations under the License.
  */
 
-package models.submissions.connectiontoproperty
+package models.submissions.requestReferenceNumber
 
+import models.submissions.common.{ContactDetails, ContactDetailsAddress}
 import play.api.libs.json.Json
 
-case class NoReferenceNumber(
-  noReferenceNumberBusinessTradingName: String,
-  noReferenceNumberAddress: NoReferenceNumberAddress
+case class NoReferenceNumberContactDetails(
+  noReferenceNumberContactDetailsFullName: String,
+  noReferenceNumberContactDetails: ContactDetails,
+  noReferenceNumberContactDetailsAdditionalInformation: Option[String]
 )
 
-object NoReferenceNumber {
-  implicit val format = Json.format[NoReferenceNumber]
+object NoReferenceNumberContactDetails {
+  implicit val format1 = Json.format[NoReferenceNumberContactDetails]
+
 }

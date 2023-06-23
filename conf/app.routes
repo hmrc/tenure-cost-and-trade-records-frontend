@@ -26,10 +26,11 @@ POST        /saved/resume                                           controllers.
 GET         /saved/startagain                                       controllers.SaveAsDraftController.startAgain
 
 # No reference number
-GET         /no-reference-number                                    controllers.connectiontoproperty.NoReferenceNumberController.show()
-POST        /no-reference-number                                    controllers.connectiontoproperty.NoReferenceNumberController.submit()
+GET         /no-reference-number                                    controllers.requestReferenceNumber.NoReferenceNumberController.show()
+POST        /no-reference-number                                    controllers.requestReferenceNumber.NoReferenceNumberController.submit()
 
-GET         /no-reference-number-contact-details                    controllers.connectiontoproperty.NoReferenceNumberContactDetailsController.show()
+GET         /no-reference-number-contact-details                    controllers.requestReferenceNumber.NoReferenceNumberContactDetailsController.show()
+POST        /no-reference-number-contact-details                    controllers.requestReferenceNumber.NoReferenceNumberContactDetailsController.submit()
 
 # Connection to the property
 GET         /are-you-still-connected                                controllers.connectiontoproperty.AreYouStillConnectedController.show()

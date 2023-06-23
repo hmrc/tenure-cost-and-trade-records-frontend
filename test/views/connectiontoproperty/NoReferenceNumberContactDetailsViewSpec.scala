@@ -16,23 +16,23 @@
 
 package views.connectiontoproperty
 
-import form.requestReferenceNumber.NoReferenceNumberForm
+import form.requestReferenceNumber.NoReferenceNumberContactDetailsForm
 import models.pages.Summary
-import models.submissions.requestReferenceNumber.NoReferenceNumber
+import models.submissions.requestReferenceNumber.NoReferenceNumberContactDetails
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class NoReferenceNumberViewSpec extends QuestionViewBehaviours[NoReferenceNumber] {
+class NoReferenceNumberContactDetailsViewSpec extends QuestionViewBehaviours[NoReferenceNumberContactDetails] {
 
-  val messageKeyPrefix = "noReferenceNumber"
+  val messageKeyPrefix = "noReferenceNumberContactDetails"
 
-  override val form = NoReferenceNumberForm.noReferenceNumberForm
+  override val form = NoReferenceNumberContactDetailsForm.noReferenceNumberContactDetailsForm
 
-  def createView = () => noReferenceAddressView(form, Summary("99996010001"))(fakeRequest, messages)
+  def createView = () => noReferenceNumberContactDetailsView(form, Summary("99996010001"))(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[NoReferenceNumber]) =>
-    noReferenceAddressView(form, Summary("99996010001"))(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[NoReferenceNumberContactDetails]) =>
+    noReferenceNumberContactDetailsView(form, Summary("99996010001"))(fakeRequest, messages)
 
   "No reference number view" must {
 
@@ -40,11 +40,9 @@ class NoReferenceNumberViewSpec extends QuestionViewBehaviours[NoReferenceNumber
 
     behave like pageWithTextFields(
       createViewUsingForm,
-      "noReferenceNumberAddress.buildingNameNumber",
-      "noReferenceNumberAddress.street1",
-      "noReferenceNumberAddress.town",
-      "noReferenceNumberAddress.county",
-      "noReferenceNumberAddress.postcode"
+      "noReferenceNumberContactDetailsFullName",
+      "noReferenceNumberContactDetails.phone",
+      "noReferenceNumberContactDetails.email"
     )
 
     "has a link marked with back.link.label leading to the Login Page" in {
@@ -52,7 +50,7 @@ class NoReferenceNumberViewSpec extends QuestionViewBehaviours[NoReferenceNumber
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText mustBe messages("back.link.label")
       val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.routes.LoginController.show().url
+      backlinkUrl mustBe controllers.requestReferenceNumber.routes.NoReferenceNumberController.show().url
     }
 
     "contain save and continue button with the value Save and Continue" in {

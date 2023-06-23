@@ -180,7 +180,12 @@ error.noReferenceNumberBusinessTradingName.required = Enter a business or tradin
 
 # NO REFERENCE NUMBER CONTACT DETAILS
 ##############################
-noReferenceNumberContactDetails.heading = Holding page for no reference number contact details page
+noReferenceNumberContactDetails.heading = Your contact details
+noReferenceNumberContactDetails.p1 = We'll need the contact details of the person completing the form. We will only use them to contact you about your enquiry
+label.noReferenceNumberContactDetailsFullName = Full name
+noReferenceNumberContactDetailsAdditionalInformation.heading = Additional information (optional)
+error.noReferenceNumberContactDetailsFullName.required = Enter your name
+
 
 # ARE YOU STILL CONNECTED SECTION
 #################################

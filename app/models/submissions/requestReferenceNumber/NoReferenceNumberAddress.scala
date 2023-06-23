@@ -14,15 +14,19 @@
  * limitations under the License.
  */
 
-package models.submissions.connectiontoproperty
+package models.submissions.requestReferenceNumber
 
+import models.submissions.PrintableAddress
 import play.api.libs.json.Json
 
-case class NoReferenceNumberContactDetails(
-  noReferenceNumberContactDetails: Option[String]
-)
+case class NoReferenceNumberAddress(
+  buildingNameNumber: String,
+  street1: Option[String],
+  town: String,
+  county: Option[String],
+  postcode: String
+) extends PrintableAddress
 
-object NoReferenceNumberContactDetails {
-  implicit val format1 = Json.format[NoReferenceNumberContactDetails]
-
+object NoReferenceNumberAddress {
+  implicit val format = Json.format[NoReferenceNumberAddress]
 }

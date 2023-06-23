@@ -14,7 +14,6 @@
  * limitations under the License.
  *@
 
-@import models.submissions.connectiontoproperty.NoReferenceNumber
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
@@ -25,6 +24,7 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
 @import models.pages.Summary
+@import models.submissions.requestReferenceNumber.NoReferenceNumber
 
 @this(layout: Layout,
         govukButton: GovukButton,
@@ -48,7 +48,7 @@
  theForm = theForm
 ) {
 
- @formWithCSRF(action = controllers.connectiontoproperty.routes.NoReferenceNumberController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
+ @formWithCSRF(action = controllers.requestReferenceNumber.routes.NoReferenceNumberController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
 
 
   <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">

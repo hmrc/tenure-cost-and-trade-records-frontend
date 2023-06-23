@@ -16,36 +16,37 @@
 
 package controllers.connectiontoproperty
 
-import controllers.requestReferenceNumber.NoReferenceNumberController
-import form.requestReferenceNumber.NoReferenceNumberForm.noReferenceNumberForm
+import controllers.requestReferenceNumber.NoReferenceNumberContactDetailsController
+import form.Errors
+import form.requestReferenceNumber.NoReferenceNumberContactDetailsForm.noReferenceNumberContactDetailsForm
 import models.submissions.connectiontoproperty.StillConnectedDetails
 import play.api.http.Status
 import play.api.test.Helpers._
 import utils.TestBaseSpec
 
-class NoReferenceNumberControllerSpec extends TestBaseSpec {
+class NoReferenceNumberContactDetailsControllerSpec extends TestBaseSpec {
 
   import TestData.{baseFormData, errorKey}
   import utils.FormBindingTestAssertions.mustContainError
 
-  def noReferenceNumberController(
+  def noReferenceNumberContactDetailsController(
     stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledStillConnectedDetailsYes)
-  ) = new NoReferenceNumberController(
+  ) = new NoReferenceNumberContactDetailsController(
     stubMessagesControllerComponents(),
     connectedToPropertyNavigator,
-    noReferenceAddressView,
+    noReferenceNumberContactDetailsView,
     preEnrichedActionRefiner(stillConnectedDetails = stillConnectedDetails),
     mockSessionRepo
   )
 
   "GET /" should {
     "return 200" in {
-      val result = noReferenceNumberController().show(fakeRequest)
+      val result = noReferenceNumberContactDetailsController().show(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return HTML" in {
-      val result = noReferenceNumberController().show(fakeRequest)
+      val result = noReferenceNumberContactDetailsController().show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
@@ -53,38 +54,39 @@ class NoReferenceNumberControllerSpec extends TestBaseSpec {
 
   "SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
-      val res = noReferenceNumberController().submit(
+      val res = noReferenceNumberContactDetailsController().submit(
         fakeRequest.withFormUrlEncodedBody(Seq.empty: _*)
       )
       status(res) shouldBe BAD_REQUEST
     }
   }
 
-  "Edit address form" should {
-    "error if building number is missing" in {
-      val formData = baseFormData - errorKey.buildingNameNumber
-      val form     = noReferenceNumberForm.bind(formData)
+  "no Reference Number Contact Details form" should {
+    "error if fullName is missing " in {
+      val formData = baseFormData - errorKey.fullName
+      val form     = noReferenceNumberContactDetailsForm.bind(formData)
 
-      mustContainError(errorKey.buildingNameNumber, "error.buildingNameNumber.required", form)
+      mustContainError(errorKey.fullName, "error.noReferenceNumberContactDetailsFullName.required", form)
     }
 
-    "error if postcode is missing" in {
-      val formData = baseFormData - errorKey.postcode
-      val form     = noReferenceNumberForm.bind(formData)
+    "error if email is missing" in {
+      val formData = baseFormData - errorKey.email
+      val form     = noReferenceNumberContactDetailsForm.bind(formData)
 
-      mustContainError(errorKey.postcode, "error.postcode.required", form)
+      mustContainError(errorKey.email, Errors.contactEmailRequired, form)
     }
   }
 
   object TestData {
     val errorKey = new {
-      val buildingNameNumber = "noReferenceNumberAddress.buildingNameNumber"
-      val postcode           = "noReferenceNumberAddress.postcode"
+      val fullName = "noReferenceNumberContactDetailsFullName"
+      val phone    = "noReferenceNumberContactDetails.phone"
+      val email    = "noReferenceNumberContactDetails.email"
     }
 
     val baseFormData: Map[String, String] = Map(
-      "buildingNameNumber" -> "001",
-      "postcode"           -> "BN12 4AX"
+      "noReferenceNumberContactDetails.phone"  -> "01234 123123",
+      "noReferenceNumberContactDetails.phone.email1" -> "blah.blah@test.com",
     )
   }
 }

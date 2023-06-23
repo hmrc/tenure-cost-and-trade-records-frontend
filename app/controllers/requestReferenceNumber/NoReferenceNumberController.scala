@@ -14,19 +14,21 @@
  * limitations under the License.
  */
 
-package controllers.connectiontoproperty
+package controllers.requestReferenceNumber
 
 import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
-import form.connectiontoproperty.NoReferenceNumberForm.noReferenceNumberForm
-import models.submissions.connectiontoproperty.NoReferenceNumber
+import form.requestReferenceNumber.NoReferenceNumberForm.noReferenceNumberForm
+import models.Session
+import models.submissions.common.Address
 import models.submissions.connectiontoproperty.StillConnectedDetails.updateStillConnectedDetails
+import models.submissions.requestReferenceNumber.NoReferenceNumber
 import navigation.ConnectionToPropertyNavigator
 import navigation.identifiers.NoReferenceNumberPageId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import views.html.connectiontoproperty.noReferenceNumber
+import views.html.requestReferenceNumber.noReferenceNumber
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
@@ -42,6 +44,7 @@ class NoReferenceNumberController @Inject() (
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    session.start(Session("", "", Address("", None, "", None, ""), ""))
     Future.successful(
       Ok(
         noReferenceNumberView(

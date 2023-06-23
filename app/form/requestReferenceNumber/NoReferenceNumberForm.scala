@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package form.connectiontoproperty
+package form.requestReferenceNumber
 
 import form.MappingSupport.noReferenceNumberAddressMapping
-import models.submissions.connectiontoproperty.NoReferenceNumber
+import models.submissions.requestReferenceNumber.NoReferenceNumber
 import play.api.data.Form
 import play.api.data.Forms.{default, mapping, text}
 import play.api.data.validation.Constraints.{maxLength, nonEmpty}

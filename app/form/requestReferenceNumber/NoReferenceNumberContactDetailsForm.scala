@@ -14,16 +14,27 @@
  * limitations under the License.
  */
 
-package form.connectiontoproperty
+package form.requestReferenceNumber
 
-import models.submissions.connectiontoproperty.NoReferenceNumberContactDetails
+import form.MappingSupport.contactDetailsMapping
+import models.submissions.requestReferenceNumber.NoReferenceNumberContactDetails
 import play.api.data.Form
-import play.api.data.Forms.{mapping, optional, text}
+import play.api.data.Forms.{default, mapping, optional, text}
+import play.api.data.validation.Constraints.{maxLength, nonEmpty}
 
 object NoReferenceNumberContactDetailsForm {
   val noReferenceNumberContactDetailsForm: Form[NoReferenceNumberContactDetails] = Form(
     mapping(
-      "noReferenceNumberContactDetails" -> optional(text)
+      "noReferenceNumberContactDetailsFullName"              -> default(text, "").verifying(
+        nonEmpty(errorMessage = "error.noReferenceNumberContactDetailsFullName.required")
+      ),
+      "noReferenceNumberContactDetails"                      -> contactDetailsMapping,
+      "noReferenceNumberContactDetailsAdditionalInformation" ->
+        optional(
+          default(text, "").verifying(
+            maxLength(2000, "error.char.count.maxLength")
+          )
+        )
     )(NoReferenceNumberContactDetails.apply)(NoReferenceNumberContactDetails.unapply)
   )
 }

@@ -25,6 +25,7 @@ import views.html.aboutfranchisesorlettings._
 import views.html.aboutyouandtheproperty.checkYourAnswersAboutTheProperty
 import views.html.additionalinformation.{alternativeContactDetails, furtherInformationOrRemarks}
 import views.html.form._
+import views.html.requestReferenceNumber.{noReferenceNumber, noReferenceNumberContactDetails}
 import views.html.{confirmationNotConnected, login}
 
 trait FakeViews { this: GuiceOneAppPerSuite =>
@@ -33,10 +34,12 @@ trait FakeViews { this: GuiceOneAppPerSuite =>
   lazy val loginView: login = app.injector.instanceOf[login]
 
   // Connection to the property
-  lazy val areYouStillConnectedView: areYouStillConnected       = app.injector.instanceOf[areYouStillConnected]
-  lazy val connectionToThePropertyView: connectionToTheProperty = app.injector.instanceOf[connectionToTheProperty]
-  lazy val editAddressView: editAddress                         = app.injector.instanceOf[editAddress]
-  lazy val noReferenceAddressView: noReferenceNumber            = app.injector.instanceOf[noReferenceNumber]
+  lazy val areYouStillConnectedView: areYouStillConnected                       = app.injector.instanceOf[areYouStillConnected]
+  lazy val connectionToThePropertyView: connectionToTheProperty                 = app.injector.instanceOf[connectionToTheProperty]
+  lazy val editAddressView: editAddress                                         = app.injector.instanceOf[editAddress]
+  lazy val noReferenceAddressView: noReferenceNumber                            = app.injector.instanceOf[noReferenceNumber]
+  lazy val noReferenceNumberContactDetailsView: noReferenceNumberContactDetails =
+    app.injector.instanceOf[noReferenceNumberContactDetails]
 
   // Not connected
   val pastConnectionView: pastConnection                             = app.injector.instanceOf[pastConnection]

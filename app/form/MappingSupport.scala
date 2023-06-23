@@ -25,8 +25,9 @@ import models.submissions.aboutYourLeaseOrTenure._
 import models.submissions.aboutfranchisesorlettings._
 import models.submissions.aboutyouandtheproperty._
 import models.submissions.common.{Address, AnswersYesNo, BuildingInsurance, CYAYesNo, ContactDetails, ContactDetailsAddress, InsideRepairs, OutsideRepairs}
-import models.submissions.connectiontoproperty.{AddressConnectionType, ConnectionToProperty, EditAddress, NoReferenceNumberAddress, VacantPropertiesDetails}
+import models.submissions.connectiontoproperty.{AddressConnectionType, ConnectionToProperty, EditAddress, VacantPropertiesDetails}
 import models.submissions.notconnected.PastConnectionType
+import models.submissions.requestReferenceNumber.NoReferenceNumberAddress
 import models.{AnnualRent, NamedEnum, NamedEnumSupport}
 import play.api.data.Forms.{boolean, default, email, list, mapping, nonEmptyText, optional, text}
 import play.api.data.format.Formatter

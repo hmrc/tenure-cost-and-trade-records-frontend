@@ -41,5 +41,9 @@ class ConnectedToPropertyIdentifiersSpec extends TestBaseSpec {
     "Identifier for no reference number page" in {
       assert(NoReferenceNumberPageId.toString.equals("NoReferenceNumberPage"))
     }
+
+    "Identifier for no reference number contact details page" in {
+      assert(NoReferenceNumberContactDetailsPageId.toString.equals("NoReferenceNumberContactDetailsPage"))
+    }
   }
 }

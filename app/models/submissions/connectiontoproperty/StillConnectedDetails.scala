@@ -18,6 +18,7 @@ package models.submissions.connectiontoproperty
 
 import actions.SessionRequest
 import models.Session
+import models.submissions.requestReferenceNumber._
 import play.api.libs.json.Json
 
 case class StillConnectedDetails(
@@ -25,7 +26,8 @@ case class StillConnectedDetails(
   connectionToProperty: Option[ConnectionToProperty] = None,
   editAddress: Option[EditTheAddress] = None,
   vacantProperties: Option[VacantProperties] = None,
-  noReferenceNumber: Option[NoReferenceNumber] = None
+  noReferenceNumber: Option[NoReferenceNumber] = None,
+  noReferenceContactDetails: Option[NoReferenceNumberContactDetails] = None
 )
 
 object StillConnectedDetails {
