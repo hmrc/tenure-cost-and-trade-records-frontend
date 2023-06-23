@@ -197,9 +197,7 @@
 
   @formWithCSRF(action = controllers.routes.FormSubmissionController.submit()) {
 
-    <legend class="govuk-fieldset__legend govuk-!-font-weight-bold">
-      @messages("declaration.heading")
-    </legend>
+    <h2 class="govuk-heading-m">@messages("declaration.heading")</h2>
 
     <p class="govuk-body">@messages("declaration.information")</p>
 

@@ -22,7 +22,7 @@
 
     @govukButton(
         Button(
-            attributes = Map("id" -> "continue", "novalidate" -> "novalidate"),
+            attributes = Map("id" -> "continue"),
             content = if (isSend) Text(messages("button.label.send")) else Text(messages("button.label.continue")),
             name = Some("continue_button"),
             value = Some("continue_button"),
