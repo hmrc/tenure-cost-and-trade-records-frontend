@@ -905,6 +905,12 @@ checkYourAnswersAboutYourLeaseOrTenure.rentPayableVaryAccordingToTurnoverDetails
 checkYourAnswersAboutYourLeaseOrTenure.rentPayableVaryOnQuantityOfDrinks = Rent varies according to alcohol supplied?
 checkYourAnswersAboutYourLeaseOrTenure.rentPayableVaryOnQuantityOfDrinksDetails = How rent varies according to alcohol supplied
 checkYourAnswersAboutYourLeaseOrTenure.howAndWhenRentWasFixed = How and when the rent was fixed
+checkYourAnswersAboutYourLeaseOrTenure.methodUsedToFixCurrentRent = How the rent was agreed
+checkYourAnswersAboutYourLeaseOrTenure.intervalsOfRentReview = Rent reviews: frequency and due date
+checkYourAnswersAboutYourLeaseOrTenure.canRentBeReducedOnReview = Can rent be reduced?
+checkYourAnswersAboutYourLeaseOrTenure.formerLeaseSurrenderedEarly = Former lease surrendered early?
+checkYourAnswersAboutYourLeaseOrTenure.disregardedAdditionsOrImprovements = Disregarded additions or improvements?
+checkYourAnswersAboutYourLeaseOrTenure.disregardedAdditionsOrImprovementsDetails = Description of disregarded improvements
 checkYourAnswersAboutTheProperty.heading = Check your answers - about you and the property
 checkYourAnswersAboutTheProperty.aboutYou.heading = Your contact details
 checkYourAnswersAboutTheProperty.aboutProperty.heading = How the property is used
