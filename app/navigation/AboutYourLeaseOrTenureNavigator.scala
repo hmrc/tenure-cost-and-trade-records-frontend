@@ -30,6 +30,17 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
   override def cyaPage: Option[Call] =
     Some(aboutYourLeaseOrTenure.routes.CheckYourAnswersAboutYourLeaseOrTenureController.show())
 
+  override val postponeCYARedirectPages: Set[String] = Set(
+    aboutYourLeaseOrTenure.routes.ConnectedToLandlordDetailsController.show(),
+    aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesDetailsController.show(),
+    aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsDetailsController.show(),
+    aboutYourLeaseOrTenure.routes.WhatIsYourRentBasedOnController.show(),
+    aboutYourLeaseOrTenure.routes.RentPayableVaryAccordingToGrossOrNetDetailsController.show(),
+    aboutYourLeaseOrTenure.routes.RentPayableVaryOnQuantityOfBeersDetailsController.show(),
+    aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedDetailsController.show(),
+    aboutYourLeaseOrTenure.routes.LegalOrPlanningRestrictionsDetailsController.show()
+  ).map(_.url)
+
   private def aboutYourLandlordRouting: Session => Call = answers => {
     answers.forType match {
       case ForTypes.for6011                    =>

@@ -20,7 +20,7 @@ import com.ibm.icu.text.SimpleDateFormat
 import com.ibm.icu.util.{TimeZone, ULocale}
 import play.api.i18n.Messages
 import uk.gov.hmrc.play.language.LanguageUtils
-import util.DateUtil.{localDateHelpers, monthYearFormat}
+import util.DateUtil.{dayMonthAbbrYearFormat, localDateHelpers, monthYearFormat}
 
 import java.time.format.DateTimeFormatter
 import java.time.{LocalDate, YearMonth, ZoneId, ZonedDateTime}
@@ -58,6 +58,14 @@ object DateUtil {
     "cy" -> monthYearFormatCY
   ).withDefaultValue(monthYearFormatEN)
 
+  private val dayMonthAbbrYearFormatEN: SimpleDateFormat = createDateFormatForPattern("d MMM yyyy", "en")
+  private val dayMonthAbbrYearFormatCY: SimpleDateFormat = createDateFormatForPattern("d MMM yyyy", "cy")
+
+  private val dayMonthAbbrYearFormat: Map[String, SimpleDateFormat] = Map(
+    "en" -> dayMonthAbbrYearFormatEN,
+    "cy" -> dayMonthAbbrYearFormatCY
+  ).withDefaultValue(dayMonthAbbrYearFormatEN)
+
   private def createDateFormatForPattern(pattern: String, langCode: String): SimpleDateFormat = {
     val uLocale         = new ULocale(langCode)
     val locale: ULocale = if (ULocale.getAvailableLocales.contains(uLocale)) uLocale else ULocale.getDefault
@@ -82,11 +90,24 @@ object DateUtil {
 @Singleton
 class DateUtil @Inject() (langUtil: LanguageUtils) {
 
+  /**
+    * Date format "d MMMM y".
+    */
   def formatDate(date: LocalDate)(implicit messages: Messages): String =
     langUtil.Dates.formatDate(date)
 
+  /**
+    * Date format "MMMM yyyy".
+    */
   def formatYearMonth(yearMonth: YearMonth)(implicit messages: Messages): String =
     monthYearFormat(messages.lang.code)
       .format(yearMonth.atDay(1).toEpochMilli)
+
+  /**
+    * Date format "d MMM yyyy".
+    */
+  def formatDayMonthAbbrYear(date: LocalDate)(implicit messages: Messages): String =
+    dayMonthAbbrYearFormat(messages.lang.code)
+      .format(date.toEpochMilli)
 
 }
