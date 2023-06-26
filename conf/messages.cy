@@ -125,11 +125,10 @@ start.email = Email: <a href="mailto:formhelp@voa.gov.uk?subject=Ex-owners/occup
 start.subheading4 = Alternative formats
 start.desc5 = If you would like information in an alternative format such as large print, braille, or something else, let us know by contacting us at 03000 501 501 (text relay prefix 18001). You can also <a href=#top class="govuk-link" target="_blank">download a PDF version</a> of this declaration which you can complete and return to the VOA.
 start.subheading5 = Explore the topic
-start.desc6 = You can check the rateable value of the property using our business rates valuation service
+start.desc6 = <a href="https://www.gov.uk/find-business-rates" class="govuk-link" target="_blank">Find a business rates valuation</a> for any business property in England and Wales
 start.desc7 = If you’d like to learn more about business rates before starting your form, visit our <a href="https://www.gov.uk/find-business-rates" class="govuk-link" target="_blank">introduction to business rates</a> section. It explains things like how your rates are calculated, how to pay, and whether you qualify for business rates relief.
 start.button = Start now
 start.welsh = This service is also available in <a href="https://www.gov.uk" class="govuk-link" target="_blank">Welsh (Cymraeg)</a>
-start.subheading5 = Explore the topic
 start.desc8 = <a href="https://www.gov.uk/browse/business/premises-rates" class="govuk-link" target="_blank">Business premises and business rates page</a> can direct you to a broad range of information and services. It covers many topics, including estimating your business rates, getting support for your business, and contacting your council about a business rates bill.
 
 #LOGIN
