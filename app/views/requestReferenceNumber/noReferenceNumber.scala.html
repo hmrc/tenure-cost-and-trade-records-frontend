@@ -1,0 +1,88 @@
+@*
+ * Copyright 2023 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukErrorSummary
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukDateInput
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukTextarea
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukCharacterCount
+@import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
+@import models.pages.Summary
+@import models.submissions.requestReferenceNumber.NoReferenceNumber
+
+@this(layout: Layout,
+        govukButton: GovukButton,
+        govukRadios: GovukRadios,
+        govukInput: GovukInput,
+        govukErrorSummary: GovukErrorSummary,
+        govukDateInput: GovukDateInput,
+        govukTextarea: GovukTextarea,
+        govukCharacterCount: GovukCharacterCount,
+        formWithCSRF: FormWithCSRF
+)
+
+@(theForm: Form[NoReferenceNumber], summary: Summary)(implicit request: Request[_], messages: Messages)
+
+@layout(
+ pageHeading = messages("noReferenceNumber.heading"),
+ showH1 = false,
+ showSection = true,
+ sectionName = messages("label.section.connectionToTheProperty"),
+ backLinkUrl = controllers.routes.LoginController.show.url,
+ theForm = theForm
+) {
+
+ @formWithCSRF(action = controllers.requestReferenceNumber.routes.NoReferenceNumberController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
+
+
+  <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+   <h1 class="govuk-fieldset__heading">@messages("noReferenceNumber.heading")</h1>
+  </legend>
+
+  <p class="govuk-body">
+   <b>@messages("noReferenceNumber.subheading")</b>
+  </p>
+
+  <p class="govuk-body">@messages("noReferenceNumber.p1")</p>
+
+  <p class="govuk-body">
+   <b>@messages("noReferenceNumber.subheading2")</b>
+  </p>
+
+  <p class="govuk-body">@messages("noReferenceNumber.p2")</p>
+
+  <p class="govuk-body">@HtmlContent(messages("noReferenceNumber.p3")).asHtml</p>
+
+  <p class="govuk-body">
+   <b>@messages("noReferenceNumber.subheading3")</b>
+  </p>
+
+  @includes.textInput(govukInput, theForm, "noReferenceNumberBusinessTradingName", "govuk-input--width-20", "noReferenceNumberBusinessTradingName", "noReferenceNumberBusinessTrading")
+  @includes.textInput(govukInput, theForm, "noReferenceNumberAddress.buildingNameNumber", "govuk-input--width-20", "buildingNameNumber", formGroupClasses = "address-field-one address-fields")
+  @includes.textInput(govukInput, theForm, "noReferenceNumberAddress.street1", "govuk-input--width-20", "street1", optional = true, formGroupClasses = "address-field-two address-fields")
+  @includes.textInput(govukInput, theForm, "noReferenceNumberAddress.town", "govuk-input--width-20", "town", formGroupClasses = "address-field-three address-fields")
+  @includes.textInput(govukInput, theForm, "noReferenceNumberAddress.county", "govuk-input--width-20", "county", optional = true, formGroupClasses = "address-field-four address-fields")
+  @includes.textInput(govukInput, theForm, "noReferenceNumberAddress.postcode", "govuk-input--width-10", "postcode", formGroupClasses = "address-field-postcode")
+
+
+  @includes.continueButton(govukButton)
+ }
+}
+
+

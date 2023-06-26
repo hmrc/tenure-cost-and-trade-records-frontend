@@ -25,8 +25,9 @@ import models.submissions.aboutYourLeaseOrTenure._
 import models.submissions.aboutfranchisesorlettings._
 import models.submissions.aboutyouandtheproperty._
 import models.submissions.common.{Address, AnswersYesNo, BuildingInsurance, CYAYesNo, ContactDetails, ContactDetailsAddress, InsideRepairs, OutsideRepairs}
-import models.submissions.connectiontoproperty.{AddressConnectionType, ConnectionToProperty, EditAddress, VacantProperties, VacantPropertiesDetails}
+import models.submissions.connectiontoproperty.{AddressConnectionType, ConnectionToProperty, EditAddress, VacantPropertiesDetails}
 import models.submissions.notconnected.PastConnectionType
+import models.submissions.requestReferenceNumber.NoReferenceNumberAddress
 import models.{AnnualRent, NamedEnum, NamedEnumSupport}
 import play.api.data.Forms.{boolean, default, email, list, mapping, nonEmptyText, optional, text}
 import play.api.data.format.Formatter
@@ -161,6 +162,28 @@ object MappingSupport {
     ),
     "postcode"           -> nonEmptyTextOr("postcode", postcode, "error.postcode.required")
   )(Address.apply)(Address.unapply)
+
+  def noReferenceNumberAddressMapping: Mapping[NoReferenceNumberAddress] = mapping(
+    "buildingNameNumber" -> default(text, "").verifying(
+      nonEmpty(errorMessage = "error.buildingNameNumber.required"),
+      maxLength(50, "error.buildingNameNumber.maxLength")
+    ),
+    "street1"            -> optional(
+      default(text, "").verifying(
+        maxLength(50, "error.addressLineTwo.maxLength")
+      )
+    ),
+    "town"               -> default(text, "").verifying(
+      nonEmpty(errorMessage = "error.townCity.required"),
+      maxLength(50, "error.buildingNameNumber.maxLength")
+    ),
+    "county"             -> optional(
+      default(text, "").verifying(
+        maxLength(50, "error.county.maxLength")
+      )
+    ),
+    "postcode"           -> nonEmptyTextOr("noReferenceNumberAddress.postcode", postcode, "error.postcode.required")
+  )(NoReferenceNumberAddress.apply)(NoReferenceNumberAddress.unapply)
 
   def landlordAddressMapping: Mapping[LandlordAddress] = mapping(
     "buildingNameNumber" -> default(text, "").verifying(

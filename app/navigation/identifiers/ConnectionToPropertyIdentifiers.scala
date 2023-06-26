@@ -25,3 +25,9 @@ case object EditAddressPageId extends Identifier { override def toString: String
 case object ConnectionToPropertyPageId extends Identifier { override def toString: String = "ConnectionToPropertyPage" }
 
 case object VacantPropertiesPageId extends Identifier { override def toString: String = "VacantPropertiesPage" }
+
+case object NoReferenceNumberPageId extends Identifier { override def toString: String = "NoReferenceNumberPage" }
+
+case object NoReferenceNumberContactDetailsPageId extends Identifier {
+  override def toString: String = "NoReferenceNumberContactDetailsPage"
+}

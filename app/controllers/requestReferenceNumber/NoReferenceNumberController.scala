@@ -14,42 +14,43 @@
  * limitations under the License.
  */
 
-package controllers.connectiontoproperty
+package controllers.requestReferenceNumber
 
 import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
-import form.connectiontoproperty.VacantPropertiesForm.vacantPropertiesForm
+import form.requestReferenceNumber.NoReferenceNumberForm.noReferenceNumberForm
+import models.Session
+import models.submissions.common.Address
 import models.submissions.connectiontoproperty.StillConnectedDetails.updateStillConnectedDetails
-import models.submissions.connectiontoproperty.VacantProperties
+import models.submissions.requestReferenceNumber.NoReferenceNumber
 import navigation.ConnectionToPropertyNavigator
-import navigation.identifiers.TiedForGoodsPageId
-import play.api.Logging
+import navigation.identifiers.NoReferenceNumberPageId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import views.html.connectiontoproperty.vacantProperties
+import views.html.requestReferenceNumber.noReferenceNumber
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class VacantPropertiesController @Inject() (
+class NoReferenceNumberController @Inject() (
   mcc: MessagesControllerComponents,
   navigator: ConnectionToPropertyNavigator,
-  vacantPropertiesView: vacantProperties,
+  noReferenceNumberView: noReferenceNumber,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
 ) extends FORDataCaptureController(mcc)
-    with I18nSupport
-    with Logging {
+    with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    session.start(Session("", "", Address("", None, "", None, ""), ""))
     Future.successful(
       Ok(
-        vacantPropertiesView(
-          request.sessionData.stillConnectedDetails.flatMap(_.vacantProperties) match {
-            case Some(vacantProperties) => vacantPropertiesForm.fillAndValidate(vacantProperties)
-            case _                      => vacantPropertiesForm
+        noReferenceNumberView(
+          request.sessionData.stillConnectedDetails.flatMap(_.noReferenceNumber) match {
+            case Some(noReferenceNumber) => noReferenceNumberForm.fillAndValidate(noReferenceNumber)
+            case _                       => noReferenceNumberForm
           },
           request.sessionData.toSummary
         )
@@ -57,21 +58,16 @@ class VacantPropertiesController @Inject() (
     )
   }
 
-  def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft[VacantProperties](
-      vacantPropertiesForm,
-      formWithErrors =>
-        BadRequest(
-          vacantPropertiesView(
-            formWithErrors,
-            request.sessionData.toSummary
-          )
-        ),
+  def submit = (Action andThen withSessionRefiner).async { implicit request =>
+    continueOrSaveAsDraft[NoReferenceNumber](
+      noReferenceNumberForm,
+      formWithErrors => BadRequest(noReferenceNumberView(formWithErrors, request.sessionData.toSummary)),
       data => {
-        val updatedData = updateStillConnectedDetails(_.copy(vacantProperties = Some(data)))
+        val updatedData = updateStillConnectedDetails(_.copy(noReferenceNumber = Some(data)))
         session.saveOrUpdate(updatedData)
-        Redirect(navigator.nextPage(TiedForGoodsPageId, updatedData).apply(updatedData))
+        Redirect(navigator.nextPage(NoReferenceNumberPageId, updatedData).apply(request.sessionData))
       }
     )
   }
+
 }

@@ -73,6 +73,10 @@
             )
         )
 
+        <p class="govuk-body">@HtmlContent(messages("label.noReference")).asHtml</p>
+
+        <p class="govuk-body">@HtmlContent(messages("label.downloadPDF")).asHtml</p>
+
         @defining(DateTime.now.toString) { now =>
             <input type="hidden" name="start-time" value="@now" />
         }

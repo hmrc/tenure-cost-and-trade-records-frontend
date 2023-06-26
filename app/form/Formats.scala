@@ -22,7 +22,7 @@ import models.submissions._
 import models.submissions.aboutYourLeaseOrTenure._
 import models.submissions.aboutyouandtheproperty._
 import models.submissions.common.{AnswersYesNo, BuildingInsurance, CYAYesNo, InsideRepairs, OutsideRepairs}
-import models.submissions.connectiontoproperty.{AddressConnectionType, ConnectionToProperty, VacantProperties, VacantPropertiesDetails}
+import models.submissions.connectiontoproperty.{AddressConnectionType, ConnectionToProperty, VacantPropertiesDetails}
 import models.submissions.notconnected.PastConnectionType
 import play.api.data.FormError
 import play.api.data.format.Formatter
