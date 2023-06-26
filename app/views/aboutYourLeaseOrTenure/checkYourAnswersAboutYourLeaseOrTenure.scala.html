@@ -248,6 +248,27 @@
             ))
         }
 
+        @if(sectionAnswers2.answers.exists(a => a.payACapitalSumDetails.isDefined || a.paymentWhenLeaseIsGrantedDetails.isDefined)) {
+            <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutYourLeaseOrTenure.exclusionsRestrictionsIncentives.heading")</h2>
+
+            @govukSummaryList(SummaryList(rows =
+                sectionAnswers2.row("checkYourAnswersAboutYourLeaseOrTenure.capitalSumOrPremium",
+                    _.payACapitalSumDetails.map(_.capitalSumOrPremium.name).map(v => messages(s"label.$v")),
+                    aboutYourLeaseOrTenure.routes.PayACapitalSumController.show(), "capitalSumOrPremium") ++
+                        sectionAnswers2.row("checkYourAnswersAboutYourLeaseOrTenure.receivePaymentWhenLeaseGranted",
+                            _.paymentWhenLeaseIsGrantedDetails.map(_.receivePaymentWhenLeaseGranted.name).map(v => messages(s"label.$v")),
+                            aboutYourLeaseOrTenure.routes.PaymentWhenLeaseIsGrantedController.show(), "receivePaymentWhenLeaseGranted") ++
+                        sectionAnswers2.row("checkYourAnswersAboutYourLeaseOrTenure.otherFactorsAffectingRent",
+                            _.legalOrPlanningRestrictions.map(_.legalPlanningRestrictions.name).map(v => messages(s"label.$v")),
+                            aboutYourLeaseOrTenure.routes.LegalOrPlanningRestrictionsController.show(), "legalPlanningRestrictions") ++
+                        sectionAnswers2.conditionRow(
+                            _.legalOrPlanningRestrictions.map(_.legalPlanningRestrictions.name).contains("yes"),
+                            "checkYourAnswersAboutYourLeaseOrTenure.otherFactorsAffectingRentDetails",
+                            _.legalOrPlanningRestrictionsDetails.map(_.legalPlanningRestrictions),
+                            aboutYourLeaseOrTenure.routes.LegalOrPlanningRestrictionsDetailsController.show(), "legalOrPlanningRestrictionsDetails")
+            ))
+        }
+
         @includes.checkYourAnswersRadioButtons(
             govukRadios,
             theForm,
