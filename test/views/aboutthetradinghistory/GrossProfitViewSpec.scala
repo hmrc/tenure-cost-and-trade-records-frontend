@@ -23,18 +23,22 @@ import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class GrossProfitsViewSpec extends QuestionViewBehaviours[GrossProfit] {
+import java.time.LocalDate
+
+class GrossProfitsViewSpec extends QuestionViewBehaviours[Seq[GrossProfit]] {
   // NOTE: this is a holding view test until the gross profit page is implemented
   def grossProfitView = app.injector.instanceOf[views.html.aboutthetradinghistory.grossProfits]
 
   val messageKeyPrefix = "grossProfit"
 
-  override val form = GrossProfitForm.grossProfitForm
+  override val form = GrossProfitForm.grossProfitForm(3)
 
-  def createView = () => grossProfitView(form, Summary("99996010001"))(fakeRequest, messages)
+  val fakeDates = Seq(LocalDate.of(2021, 4, 1), LocalDate.of(2022, 4, 1), LocalDate.of(2023, 4, 1))
 
-  def createViewUsingForm = (form: Form[GrossProfit]) =>
-    grossProfitView(form, Summary("99996010001"))(fakeRequest, messages)
+  def createView = () => grossProfitView(form, 3, fakeDates, Summary("99996010001"))(fakeRequest, messages)
+
+  def createViewUsingForm = (form: Form[Seq[GrossProfit]]) =>
+    grossProfitView(form, 3, fakeDates, Summary("99996010001"))(fakeRequest, messages)
 
   "grossProfits view" must {
 
