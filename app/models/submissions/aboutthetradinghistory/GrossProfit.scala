@@ -21,8 +21,8 @@ import play.api.libs.json.Json
 import java.time.LocalDate
 
 case class GrossProfit(
-      financialYearEnd: LocalDate,
-      grossProfit: BigDecimal
+  financialYearEnd: LocalDate,
+  grossProfit: BigDecimal
 )
 
 object GrossProfit {

@@ -15,11 +15,11 @@
  *@
 
 @import models.submissions.aboutthetradinghistory.GrossProfit
-@import uk.gov.hmrc.govukfrontend.views.html.components.{GovukButton, FormWithCSRF, GovukInput, GovukTable}
+@import uk.gov.hmrc.govukfrontend.views.html.components._
 @import models.pages.Summary
 @import java.time.LocalDate
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukInsetText
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukDetails
+@import uk.gov.hmrc.govukfrontend.views.Implicits.RichInput
+
 
 @this(layout: Layout,
         govukButton: GovukButton,
@@ -50,7 +50,42 @@
       <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
           <h1 class="govuk-fieldset__heading">@messages("grossProfit.heading")</h1>
       </legend>
-
+      @govukTable(Table(
+          rows = Seq(
+              TableRow(
+                  content = Text(messages("turnover.financialYearEnd"))
+              ) +:
+                      columns.map { idx  =>
+                          TableRow(
+                              content = HtmlContent(
+                                  govukInput(Input(
+                                      id = s"$idx.financial-year-end",
+                                      name = s"$idx.financial-year-end",
+                                      value = financialYears(idx).toString
+                                  ).withFormField(form(s"$idx.financial-year-end")))
+                              )
+                          )
+                      },
+              TableRow(
+                  content = Text(messages("grossProfit.heading"))
+              ) +: columns.map { idx  =>
+                  TableRow(
+                      content = HtmlContent(
+                          govukInput(Input(
+                              id = s"$idx.gross-profit",
+                              name = s"$idx.gross-profit",
+                              value = form(s"$idx.gross-profit").value,
+                              prefix = Some(PrefixOrSuffix(
+                                  content = Text("£")
+                              ))
+                          ).withFormField(form(s"$idx.gross-profit")))
+                      )
+                  )
+              }
+          ),
+          captionClasses = "govuk-table__caption--m",
+          firstCellIsHeader = false
+      ))
       @includes.continueSaveAsDraftButtons(govukButton)
   }
 }

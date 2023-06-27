@@ -26,38 +26,38 @@ import java.time.LocalDate
 object GrossProfitForm {
 
   def grossProfitForm(expectedNumberOfFinancialYears: Int): Form[Seq[GrossProfit]] = {
-    val ukDateMappings                                     = localDate("dd/MM/yyyy")
+    val ukDateMappings                                = localDate("dd/MM/yyyy")
     val dateTooEarlyConstraint: Constraint[LocalDate] = Constraint[LocalDate]("dateTooEarlyConstraint") { date =>
       if (date.isAfter(LocalDate.of(1900, 1, 1))) Valid else Invalid("errorName")
     }
-    val columnMapping: Mapping[GrossProfit] = mapping(
+    val columnMapping: Mapping[GrossProfit]           = mapping(
       "financial-year-end" -> ukDateMappings.verifying(dateTooEarlyConstraint, dateTooEarlyConstraint),
-      "gross-profit" -> bigDecimal
+      "gross-profit"       -> bigDecimal
     )(GrossProfit.apply)(GrossProfit.unapply)
 
     Form {
       expectedNumberOfFinancialYears match {
-        case 1 =>
+        case 1                               =>
           mapping("0" -> columnMapping)(section => Seq(section)) {
             case Seq(section) => Some(section)
-            case _ => None
+            case _            => None
           }
-        case 2 =>
+        case 2                               =>
           mapping(
             "0" -> columnMapping,
             "1" -> columnMapping
           ) { case (first, second) => Seq(first, second) } {
             case Seq(first, second) => Some((first, second))
-            case _ => None
+            case _                  => None
           }
-        case 3 =>
+        case 3                               =>
           mapping(
             "0" -> columnMapping,
             "1" -> columnMapping,
             "2" -> columnMapping
           ) { case (first, second, third) => Seq(first, second, third) } {
             case Seq(first, second, third) => Some((first, second, third))
-            case _ => None
+            case _                         => None
           }
         case incorrectNumberOfFinancialYears =>
           throw new IllegalArgumentException(
@@ -66,6 +66,5 @@ object GrossProfitForm {
       }
     }
   }
-
 
 }
