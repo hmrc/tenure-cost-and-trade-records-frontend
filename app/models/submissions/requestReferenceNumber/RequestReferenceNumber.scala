@@ -18,7 +18,7 @@ package models.submissions.requestReferenceNumber
 
 import actions.SessionRequest
 import models.Session
-import play.api.libs.json.Json
+import play.api.libs.json.{Json, OFormat}
 
 case class RequestReferenceNumber(
   noReferenceNumberAddress: Option[NoReferenceNumber] = None,
@@ -26,7 +26,7 @@ case class RequestReferenceNumber(
 )
 
 object RequestReferenceNumber {
-  implicit val format = Json.format[RequestReferenceNumber]
+  implicit val format: OFormat[RequestReferenceNumber] = Json.format[RequestReferenceNumber]
 
   def updateRequestReferenceNumber(
     copy: RequestReferenceNumber => RequestReferenceNumber
@@ -40,6 +40,5 @@ object RequestReferenceNumber {
     }
 
     sessionRequest.sessionData.copy(requestReferenceNumber = updatedRequestReferenceNumber)
-
   }
 }

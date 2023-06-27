@@ -59,7 +59,8 @@ case class Session(
     aboutTheTradingHistory,
     aboutFranchisesOrLettings,
     aboutLeaseOrAgreementPartOne,
-    aboutLeaseOrAgreementPartTwo
+    aboutLeaseOrAgreementPartTwo,
+    requestReferenceNumber
   )
 
   def toSummary: Summary = Summary(

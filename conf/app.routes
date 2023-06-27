@@ -26,6 +26,7 @@ POST        /saved/resume                                           controllers.
 GET         /saved/startagain                                       controllers.SaveAsDraftController.startAgain
 
 # No reference number
+GET         /request-reference-number-with-session                  controllers.requestReferenceNumber.NoReferenceNumberController.startWithSession()
 GET         /no-reference-number                                    controllers.requestReferenceNumber.NoReferenceNumberController.show()
 POST        /no-reference-number                                    controllers.requestReferenceNumber.NoReferenceNumberController.submit()
 

@@ -19,31 +19,26 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
 @import models.submissions.requestReferenceNumber.NoReferenceNumberContactDetails
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukCharacterCount
-@import models.pages.Summary
 
 @this(layout: Layout,
   govukButton: GovukButton,
   govukInput: GovukInput,
-        govukCharacterCount: GovukCharacterCount,
+  govukCharacterCount: GovukCharacterCount,
   formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[NoReferenceNumberContactDetails], summary: Summary)(implicit request: Request[_], messages: Messages)
+@(theForm: Form[NoReferenceNumberContactDetails])(implicit request: Request[_], messages: Messages)
 
     @layout(
         pageHeading = messages("noReferenceNumberContactDetails.heading"),
-        showH1 = false,
+        showH1 = true,
         showSection = true,
         sectionName = messages("label.section.connectionToTheProperty"),
         backLinkUrl = controllers.requestReferenceNumber.routes.NoReferenceNumberController.show.url,
         theForm = theForm
     )  {
 
-  @formWithCSRF(action = controllers.requestReferenceNumber.routes.NoReferenceNumberContactDetailsController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
-
-      <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-          <h1 class="govuk-fieldset__heading">@messages("noReferenceNumberContactDetails.heading")</h1>
-      </legend>
+  @formWithCSRF(action = controllers.requestReferenceNumber.routes.NoReferenceNumberContactDetailsController.submit()) {
 
       <p class="govuk-body">@messages("noReferenceNumberContactDetails.p1")</p>
 
