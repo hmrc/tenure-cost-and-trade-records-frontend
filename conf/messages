@@ -617,6 +617,10 @@ checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.rates = Rates
 checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.propertyInsurance = Property insurance
 checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.outsideRepairs = Outside repairs
 checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.insideRepairs = Inside repairs
+checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.noneOfThese = No, none of these are included in the rent
+checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.none = None
+error.cateringOperationOrLettingAccommodationCheckboxesDetails.required = Select items included in your rent, or select ’No, none of these are included in the rent’
+error.cateringOperationOrLettingAccommodationCheckboxesDetails.noneSelectedWithOther = Select items included in your rent, or select ’No, none of these are included in the rent’
 
 # ADD ANOTHER CATERING OPERATION OR LETTING ACCOMMODATION DETAILS
 #################################################################

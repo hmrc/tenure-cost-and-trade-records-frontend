@@ -16,6 +16,7 @@
 
 package form.aboutfranchisesorlettings
 
+import form.MappingSupport.{nonEmptyList, noneCantBeSelectedWithOther}
 import play.api.data.Form
 import play.api.data.Forms.{list, single, text}
 
@@ -26,7 +27,13 @@ object LettingOtherPartOfPropertyRentIncludesForm {
 
   val lettingOtherPartOfPropertyRentIncludesForm: Form[List[String]] = Form(
     single(
-      "itemsInRent" -> list(text)
+      "itemsInRent" -> list(text).verifying(
+        nonEmptyList("error.cateringOperationOrLettingAccommodationCheckboxesDetails.required"),
+        noneCantBeSelectedWithOther(
+          "noneOfThese",
+          "error.cateringOperationOrLettingAccommodationCheckboxesDetails.noneSelectedWithOther"
+        )
+      )
     )
   )
 

@@ -309,6 +309,21 @@ object MappingSupport {
     .transform[Int](_.replace(",", "").toInt, _.toString)
     .verifying(s"error.empty.required", _ >= 1)
 
+  def nonEmptyList[T](errorMessage: String = "error.required"): Constraint[List[T]] =
+    Constraint[List[T]]("constraint.nonEmptyList") { l =>
+      if (l.nonEmpty) Valid
+      else Invalid(ValidationError(errorMessage))
+    }
+
+  def noneCantBeSelectedWithOther[T](
+    noneOfTheseValue: T,
+    errorMessage: String
+  ): Constraint[List[T]] =
+    Constraint[List[T]]("constraint.noneCantBeSelectedWithOther") { l =>
+      if (l.size > 1 && l.contains(noneOfTheseValue)) Invalid(ValidationError(errorMessage))
+      else Valid
+    }
+
 }
 
 object EnumMapping {

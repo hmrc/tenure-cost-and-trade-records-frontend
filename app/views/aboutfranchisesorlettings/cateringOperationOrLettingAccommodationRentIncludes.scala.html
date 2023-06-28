@@ -19,6 +19,7 @@
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.checkboxes.Checkboxes
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.checkboxes.CheckboxItem
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.checkboxes.ExclusiveCheckbox
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukCheckboxes
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
@@ -79,6 +80,14 @@
      CheckboxItem(
       value = "insideRepairs",
       content = Text(messages("checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.insideRepairs"))
+     ),
+     CheckboxItem(
+      divider = "or"
+     ),
+     CheckboxItem(
+      behaviour = ExclusiveCheckbox,
+      value = "noneOfThese",
+      content = Text(messages("checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.noneOfThese"))
      )
     ),
     hint = Some(Hint(content = Text(messages("hint.cateringOperationOrLettingAccommodationCheckboxesDetails"))))
@@ -88,5 +97,3 @@
   @includes.continueSaveAsDraftButtons(govukButton)
  }
 }
-
-
