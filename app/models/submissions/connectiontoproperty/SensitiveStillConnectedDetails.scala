@@ -21,10 +21,10 @@ import play.api.libs.json.{Json, OFormat}
 import uk.gov.hmrc.crypto.Sensitive
 
 case class SensitiveStillConnectedDetails(
-                                           addressConnectionType: Option[AddressConnectionType] = None,
-                                           connectionToProperty: Option[ConnectionToProperty] = None,
-                                           editAddress: Option[SensitiveEditTheAddress] = None
-                                         ) extends Sensitive[StillConnectedDetails] {
+  addressConnectionType: Option[AddressConnectionType] = None,
+  connectionToProperty: Option[ConnectionToProperty] = None,
+  editAddress: Option[SensitiveEditTheAddress] = None
+) extends Sensitive[StillConnectedDetails] {
 
   override def decryptedValue: StillConnectedDetails = StillConnectedDetails(
     addressConnectionType,
@@ -34,14 +34,16 @@ case class SensitiveStillConnectedDetails(
 
 }
 
-object SensitiveStillConnectedDetails{
+object SensitiveStillConnectedDetails {
 
   import crypto.SensitiveFormats._
-  implicit def format(implicit crypto: MongoCrypto): OFormat[SensitiveStillConnectedDetails] = Json.format[SensitiveStillConnectedDetails]
+  implicit def format(implicit crypto: MongoCrypto): OFormat[SensitiveStillConnectedDetails] =
+    Json.format[SensitiveStillConnectedDetails]
 
-  def apply(stillConnectedDetails: StillConnectedDetails):SensitiveStillConnectedDetails = SensitiveStillConnectedDetails(
-    stillConnectedDetails.addressConnectionType,
-    stillConnectedDetails.connectionToProperty,
-    stillConnectedDetails.editAddress.map(SensitiveEditTheAddress(_))
-  )
+  def apply(stillConnectedDetails: StillConnectedDetails): SensitiveStillConnectedDetails =
+    SensitiveStillConnectedDetails(
+      stillConnectedDetails.addressConnectionType,
+      stillConnectedDetails.connectionToProperty,
+      stillConnectedDetails.editAddress.map(SensitiveEditTheAddress(_))
+    )
 }

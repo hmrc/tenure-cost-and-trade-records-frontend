@@ -26,7 +26,7 @@ import utils.SensitiveTestHelper
 
 class SensitiveAdditionalInformationSpec extends AnyWordSpecLike with Matchers with SensitiveTestHelper {
 
-  val testConfig: Configuration = loadTestConfig()
+  val testConfig: Configuration    = loadTestConfig()
   implicit val crypto: MongoCrypto = createTestMongoCrypto(testConfig)
 
   "SensitiveAdditionalInformation" should {
@@ -34,31 +34,38 @@ class SensitiveAdditionalInformationSpec extends AnyWordSpecLike with Matchers w
     "encrypt and decrypt sensitive fields correctly" in {
       val originalAdditionalInformation = AdditionalInformation(
         furtherInformationOrRemarksDetails = None,
-        altContactInformation = Some(AlternativeContactDetails(
-          alternativeContactFullName = Some("John Doe"),
-          alternativeContactDetails = Some(ContactDetails(
-            phone = "1234567890",
-            email = "johndoe@example.com"
-          )),
-          alternativeContactAddress = Some(ContactDetailsAddress(
-            buildingNameNumber = "123",
-            street1 = Some("Street 1"),
-            town = "Town",
-            county = Some("County"),
-            postcode = "12345"
-          ))
-        )),
-        checkYourAnswersAdditionalInformation =None
+        altContactInformation = Some(
+          AlternativeContactDetails(
+            alternativeContactFullName = Some("John Doe"),
+            alternativeContactDetails = Some(
+              ContactDetails(
+                phone = "1234567890",
+                email = "johndoe@example.com"
+              )
+            ),
+            alternativeContactAddress = Some(
+              ContactDetailsAddress(
+                buildingNameNumber = "123",
+                street1 = Some("Street 1"),
+                town = "Town",
+                county = Some("County"),
+                postcode = "12345"
+              )
+            )
+          )
+        ),
+        checkYourAnswersAdditionalInformation = None
       )
-      
+
       val sensitiveAdditionalInformation = SensitiveAdditionalInformation(originalAdditionalInformation)
 
-      sensitiveAdditionalInformation.furtherInformationOrRemarksDetails.isInstanceOf[Option[SensitiveString]] shouldBe true
-      sensitiveAdditionalInformation.altContactInformation.isInstanceOf[Option[SensitiveAlternativeContactDetails]] shouldBe true
+      sensitiveAdditionalInformation.furtherInformationOrRemarksDetails
+        .isInstanceOf[Option[SensitiveString]]                    shouldBe true
+      sensitiveAdditionalInformation.altContactInformation
+        .isInstanceOf[Option[SensitiveAlternativeContactDetails]] shouldBe true
 
       sensitiveAdditionalInformation.decryptedValue shouldBe originalAdditionalInformation
     }
 
   }
 }
-

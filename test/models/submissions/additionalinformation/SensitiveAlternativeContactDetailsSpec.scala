@@ -26,7 +26,7 @@ import utils.SensitiveTestHelper
 
 class SensitiveAlternativeContactDetailsSpec extends AnyWordSpecLike with Matchers with SensitiveTestHelper {
 
-  val testConfig: Configuration = loadTestConfig()
+  val testConfig: Configuration    = loadTestConfig()
   implicit val crypto: MongoCrypto = createTestMongoCrypto(testConfig)
 
   "SensitiveAlternativeContactDetails" should {
@@ -34,24 +34,30 @@ class SensitiveAlternativeContactDetailsSpec extends AnyWordSpecLike with Matche
     "encrypt and decrypt sensitive fields correctly" in {
       val originalAlternativeContactDetails = AlternativeContactDetails(
         alternativeContactFullName = Some("John Doe"),
-        alternativeContactDetails = Some(ContactDetails(
-          phone = "1234567890",
-          email = "johndoe@example.com"
-        )),
-        alternativeContactAddress = Some(ContactDetailsAddress(
-          buildingNameNumber = "123",
-          street1 = Some("Street 1"),
-          town = "Town",
-          county = Some("County"),
-          postcode = "12345"
-        ))
+        alternativeContactDetails = Some(
+          ContactDetails(
+            phone = "1234567890",
+            email = "johndoe@example.com"
+          )
+        ),
+        alternativeContactAddress = Some(
+          ContactDetailsAddress(
+            buildingNameNumber = "123",
+            street1 = Some("Street 1"),
+            town = "Town",
+            county = Some("County"),
+            postcode = "12345"
+          )
+        )
       )
 
       val sensitiveAlternativeContactDetails = SensitiveAlternativeContactDetails(originalAlternativeContactDetails)
 
       sensitiveAlternativeContactDetails.alternativeContactFullName.isInstanceOf[Option[SensitiveString]] shouldBe true
-      sensitiveAlternativeContactDetails.alternativeContactDetails.isInstanceOf[Option[SensitiveContactDetails]] shouldBe true
-      sensitiveAlternativeContactDetails.alternativeContactAddress.isInstanceOf[Option[SensitiveContactDetailsAddress]] shouldBe true
+      sensitiveAlternativeContactDetails.alternativeContactDetails
+        .isInstanceOf[Option[SensitiveContactDetails]]                                                    shouldBe true
+      sensitiveAlternativeContactDetails.alternativeContactAddress
+        .isInstanceOf[Option[SensitiveContactDetailsAddress]]                                             shouldBe true
 
       sensitiveAlternativeContactDetails.decryptedValue shouldBe originalAlternativeContactDetails
     }

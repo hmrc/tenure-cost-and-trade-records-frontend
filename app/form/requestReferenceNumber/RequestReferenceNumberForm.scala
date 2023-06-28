@@ -22,7 +22,7 @@ import play.api.data.Form
 import play.api.data.Forms.{default, mapping, text}
 import play.api.data.validation.Constraints.{maxLength, nonEmpty}
 
-object NoReferenceNumberForm {
+object RequestReferenceNumberForm {
   val noReferenceNumberForm: Form[NoReferenceNumber] = Form(
     mapping(
       "noReferenceNumberBusinessTradingName" -> default(text, "").verifying(

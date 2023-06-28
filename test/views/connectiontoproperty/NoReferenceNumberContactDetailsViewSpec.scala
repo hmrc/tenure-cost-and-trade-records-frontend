@@ -16,7 +16,7 @@
 
 package views.connectiontoproperty
 
-import form.requestReferenceNumber.NoReferenceNumberContactDetailsForm
+import form.requestReferenceNumber.RequestReferenceNumberContactDetailsForm
 import models.pages.Summary
 import models.submissions.requestReferenceNumber.NoReferenceNumberContactDetails
 import org.scalatest.matchers.must.Matchers._
@@ -27,7 +27,7 @@ class NoReferenceNumberContactDetailsViewSpec extends QuestionViewBehaviours[NoR
 
   val messageKeyPrefix = "noReferenceNumberContactDetails"
 
-  override val form = NoReferenceNumberContactDetailsForm.noReferenceNumberContactDetailsForm
+  override val form = RequestReferenceNumberContactDetailsForm.noReferenceNumberContactDetailsForm
 
   def createView = () => noReferenceNumberContactDetailsView(form, Summary("99996010001"))(fakeRequest, messages)
 
@@ -50,7 +50,7 @@ class NoReferenceNumberContactDetailsViewSpec extends QuestionViewBehaviours[NoR
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText mustBe messages("back.link.label")
       val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.requestReferenceNumber.routes.NoReferenceNumberController.show().url
+      backlinkUrl mustBe controllers.requestReferenceNumber.routes.RequestReferenceNumberController.show().url
     }
 
     "contain save and continue button with the value Save and Continue" in {

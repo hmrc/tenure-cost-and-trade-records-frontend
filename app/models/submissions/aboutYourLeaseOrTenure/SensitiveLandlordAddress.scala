@@ -21,12 +21,13 @@ import play.api.libs.json.{Json, OFormat}
 import uk.gov.hmrc.crypto.Sensitive
 import uk.gov.hmrc.crypto.Sensitive.SensitiveString
 
-case class SensitiveLandlordAddress(buildingNameNumber: SensitiveString,
-                                    street1: Option[SensitiveString],
-                                    town: SensitiveString,
-                                    county: Option[SensitiveString],
-                                    postcode: SensitiveString
-                                   ) extends Sensitive[LandlordAddress] {
+case class SensitiveLandlordAddress(
+  buildingNameNumber: SensitiveString,
+  street1: Option[SensitiveString],
+  town: SensitiveString,
+  county: Option[SensitiveString],
+  postcode: SensitiveString
+) extends Sensitive[LandlordAddress] {
 
   override def decryptedValue: LandlordAddress = LandlordAddress(
     buildingNameNumber.decryptedValue,
@@ -37,11 +38,12 @@ case class SensitiveLandlordAddress(buildingNameNumber: SensitiveString,
   )
 }
 
-object SensitiveLandlordAddress{
+object SensitiveLandlordAddress {
   import crypto.SensitiveFormats._
-  implicit def format(implicit crypto: MongoCrypto): OFormat[SensitiveLandlordAddress] = Json.format[SensitiveLandlordAddress]
+  implicit def format(implicit crypto: MongoCrypto): OFormat[SensitiveLandlordAddress] =
+    Json.format[SensitiveLandlordAddress]
 
-  def apply(landlordAddress: LandlordAddress):SensitiveLandlordAddress = SensitiveLandlordAddress(
+  def apply(landlordAddress: LandlordAddress): SensitiveLandlordAddress = SensitiveLandlordAddress(
     SensitiveString(landlordAddress.buildingNameNumber),
     landlordAddress.street1.map(SensitiveString(_)),
     SensitiveString(landlordAddress.town),

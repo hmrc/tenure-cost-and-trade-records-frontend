@@ -18,7 +18,7 @@ package controllers.requestReferenceNumber
 
 import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
-import form.requestReferenceNumber.NoReferenceNumberForm.noReferenceNumberForm
+import form.requestReferenceNumber.RequestReferenceNumberForm.noReferenceNumberForm
 import models.Session
 import models.submissions.common.Address
 import models.submissions.connectiontoproperty.StillConnectedDetails.updateStillConnectedDetails
@@ -28,16 +28,16 @@ import navigation.identifiers.NoReferenceNumberPageId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import views.html.requestReferenceNumber.noReferenceNumber
+import views.html.requestReferenceNumber.requestReferenceNumber
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class NoReferenceNumberController @Inject() (
+class RequestReferenceNumberController @Inject() (
   mcc: MessagesControllerComponents,
   navigator: ConnectionToPropertyNavigator,
-  noReferenceNumberView: noReferenceNumber,
+  noReferenceNumberView: requestReferenceNumber,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
 ) extends FORDataCaptureController(mcc)

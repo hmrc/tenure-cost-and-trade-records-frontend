@@ -23,27 +23,27 @@ import play.api.libs.json.{Json, OFormat}
 import uk.gov.hmrc.crypto.Sensitive
 
 case class SensitiveAboutLeaseOrAgreementPartOne(
-                                                  aboutTheLandlord: Option[SensitiveAboutTheLandlord] = None,
-                                                  connectedToLandlord: Option[AnswersYesNo] = None,
-                                                  connectedToLandlordDetails: Option[ConnectedToLandlordInformationDetails] = None,
-                                                  leaseOrAgreementYearsDetails: Option[LeaseOrAgreementYearsDetails] = None,
-                                                  currentRentPayableWithin12Months: Option[CurrentRentPayableWithin12Months] = None,
-                                                  annualRent: Option[AnnualRent] = None,
-                                                  currentRentFirstPaid: Option[CurrentRentFirstPaid] = None,
-                                                  currentLeaseOrAgreementBegin: Option[CurrentLeaseOrAgreementBegin] = None,
-                                                  includedInYourRentDetails: Option[IncludedInYourRentDetails] = None,
-                                                  doesTheRentPayable: Option[DoesTheRentPayable] = None,
-                                                  ultimatelyResponsible: Option[UltimatelyResponsible] = None,
-                                                  sharedResponsibilitiesDetails: Option[SharedResponsibilitiesDetails] = None,
-                                                  rentIncludeTradeServicesDetails: Option[RentIncludeTradeServicesDetails] = None,
-                                                  rentIncludeTradeServicesInformation: Option[RentIncludeTradeServicesInformationDetails] = None,
-                                                  rentIncludeFixturesAndFittingsDetails: Option[RentIncludeFixturesAndFittingsDetails] = None,
-                                                  rentIncludeFixtureAndFittingsDetails: Option[RentIncludeFixturesOrFittingsInformationDetails] = None,
-                                                  rentOpenMarketValueDetails: Option[RentOpenMarketValueDetails] = None,
-                                                  whatIsYourCurrentRentBasedOnDetails: Option[WhatIsYourCurrentRentBasedOnDetails] = None,
-                                                  rentIncreasedAnnuallyWithRPIDetails: Option[RentIncreasedAnnuallyWithRPIDetails] = None,
-                                                  checkYourAnswersAboutYourLeaseOrTenure: Option[CheckYourAnswersAboutYourLeaseOrTenure] = None
-                                                ) extends Sensitive[AboutLeaseOrAgreementPartOne] {
+  aboutTheLandlord: Option[SensitiveAboutTheLandlord] = None,
+  connectedToLandlord: Option[AnswersYesNo] = None,
+  connectedToLandlordDetails: Option[ConnectedToLandlordInformationDetails] = None,
+  leaseOrAgreementYearsDetails: Option[LeaseOrAgreementYearsDetails] = None,
+  currentRentPayableWithin12Months: Option[CurrentRentPayableWithin12Months] = None,
+  annualRent: Option[AnnualRent] = None,
+  currentRentFirstPaid: Option[CurrentRentFirstPaid] = None,
+  currentLeaseOrAgreementBegin: Option[CurrentLeaseOrAgreementBegin] = None,
+  includedInYourRentDetails: Option[IncludedInYourRentDetails] = None,
+  doesTheRentPayable: Option[DoesTheRentPayable] = None,
+  ultimatelyResponsible: Option[UltimatelyResponsible] = None,
+  sharedResponsibilitiesDetails: Option[SharedResponsibilitiesDetails] = None,
+  rentIncludeTradeServicesDetails: Option[RentIncludeTradeServicesDetails] = None,
+  rentIncludeTradeServicesInformation: Option[RentIncludeTradeServicesInformationDetails] = None,
+  rentIncludeFixturesAndFittingsDetails: Option[RentIncludeFixturesAndFittingsDetails] = None,
+  rentIncludeFixtureAndFittingsDetails: Option[RentIncludeFixturesOrFittingsInformationDetails] = None,
+  rentOpenMarketValueDetails: Option[RentOpenMarketValueDetails] = None,
+  whatIsYourCurrentRentBasedOnDetails: Option[WhatIsYourCurrentRentBasedOnDetails] = None,
+  rentIncreasedAnnuallyWithRPIDetails: Option[RentIncreasedAnnuallyWithRPIDetails] = None,
+  checkYourAnswersAboutYourLeaseOrTenure: Option[CheckYourAnswersAboutYourLeaseOrTenure] = None
+) extends Sensitive[AboutLeaseOrAgreementPartOne] {
   override def decryptedValue: AboutLeaseOrAgreementPartOne = AboutLeaseOrAgreementPartOne(
     aboutTheLandlord.map(_.decryptedValue),
     connectedToLandlord,
@@ -68,30 +68,32 @@ case class SensitiveAboutLeaseOrAgreementPartOne(
   )
 }
 
-object SensitiveAboutLeaseOrAgreementPartOne{
+object SensitiveAboutLeaseOrAgreementPartOne {
   import crypto.SensitiveFormats._
-  implicit def format(implicit crypto: MongoCrypto): OFormat[SensitiveAboutLeaseOrAgreementPartOne] = Json.format[SensitiveAboutLeaseOrAgreementPartOne]
+  implicit def format(implicit crypto: MongoCrypto): OFormat[SensitiveAboutLeaseOrAgreementPartOne] =
+    Json.format[SensitiveAboutLeaseOrAgreementPartOne]
 
-  def apply(aboutLeaseOrAgreementPartOne: AboutLeaseOrAgreementPartOne):SensitiveAboutLeaseOrAgreementPartOne = SensitiveAboutLeaseOrAgreementPartOne(
-    aboutLeaseOrAgreementPartOne.aboutTheLandlord.map(SensitiveAboutTheLandlord(_)),
-    aboutLeaseOrAgreementPartOne.connectedToLandlord,
-    aboutLeaseOrAgreementPartOne.connectedToLandlordDetails,
-    aboutLeaseOrAgreementPartOne.leaseOrAgreementYearsDetails,
-    aboutLeaseOrAgreementPartOne.currentRentPayableWithin12Months,
-    aboutLeaseOrAgreementPartOne.annualRent,
-    aboutLeaseOrAgreementPartOne.currentRentFirstPaid,
-    aboutLeaseOrAgreementPartOne.currentLeaseOrAgreementBegin,
-    aboutLeaseOrAgreementPartOne.includedInYourRentDetails,
-    aboutLeaseOrAgreementPartOne.doesTheRentPayable,
-    aboutLeaseOrAgreementPartOne.ultimatelyResponsible,
-    aboutLeaseOrAgreementPartOne.sharedResponsibilitiesDetails,
-    aboutLeaseOrAgreementPartOne.rentIncludeTradeServicesDetails,
-    aboutLeaseOrAgreementPartOne.rentIncludeTradeServicesInformation,
-    aboutLeaseOrAgreementPartOne.rentIncludeFixturesAndFittingsDetails,
-    aboutLeaseOrAgreementPartOne.rentIncludeFixtureAndFittingsDetails,
-    aboutLeaseOrAgreementPartOne.rentOpenMarketValueDetails,
-    aboutLeaseOrAgreementPartOne.whatIsYourCurrentRentBasedOnDetails,
-    aboutLeaseOrAgreementPartOne.rentIncreasedAnnuallyWithRPIDetails,
-    aboutLeaseOrAgreementPartOne.checkYourAnswersAboutYourLeaseOrTenure
-  )
+  def apply(aboutLeaseOrAgreementPartOne: AboutLeaseOrAgreementPartOne): SensitiveAboutLeaseOrAgreementPartOne =
+    SensitiveAboutLeaseOrAgreementPartOne(
+      aboutLeaseOrAgreementPartOne.aboutTheLandlord.map(SensitiveAboutTheLandlord(_)),
+      aboutLeaseOrAgreementPartOne.connectedToLandlord,
+      aboutLeaseOrAgreementPartOne.connectedToLandlordDetails,
+      aboutLeaseOrAgreementPartOne.leaseOrAgreementYearsDetails,
+      aboutLeaseOrAgreementPartOne.currentRentPayableWithin12Months,
+      aboutLeaseOrAgreementPartOne.annualRent,
+      aboutLeaseOrAgreementPartOne.currentRentFirstPaid,
+      aboutLeaseOrAgreementPartOne.currentLeaseOrAgreementBegin,
+      aboutLeaseOrAgreementPartOne.includedInYourRentDetails,
+      aboutLeaseOrAgreementPartOne.doesTheRentPayable,
+      aboutLeaseOrAgreementPartOne.ultimatelyResponsible,
+      aboutLeaseOrAgreementPartOne.sharedResponsibilitiesDetails,
+      aboutLeaseOrAgreementPartOne.rentIncludeTradeServicesDetails,
+      aboutLeaseOrAgreementPartOne.rentIncludeTradeServicesInformation,
+      aboutLeaseOrAgreementPartOne.rentIncludeFixturesAndFittingsDetails,
+      aboutLeaseOrAgreementPartOne.rentIncludeFixtureAndFittingsDetails,
+      aboutLeaseOrAgreementPartOne.rentOpenMarketValueDetails,
+      aboutLeaseOrAgreementPartOne.whatIsYourCurrentRentBasedOnDetails,
+      aboutLeaseOrAgreementPartOne.rentIncreasedAnnuallyWithRPIDetails,
+      aboutLeaseOrAgreementPartOne.checkYourAnswersAboutYourLeaseOrTenure
+    )
 }

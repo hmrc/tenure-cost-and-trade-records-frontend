@@ -39,24 +39,24 @@ import uk.gov.hmrc.mongo.play.json.formats.{MongoJavatimeFormats, MongoJodaForma
 
 @Singleton
 class SessionRepository @Inject() (mongo: MongoComponent)(implicit
-  executionContext: ExecutionContext,crypto: MongoCrypto
+  executionContext: ExecutionContext,
+  crypto: MongoCrypto
 ) extends PlayMongoRepository[SensitiveSessionData](
       collectionName = "sessions",
       mongoComponent = mongo,
       domainFormat = SensitiveSessionData.format,
       indexes =
         Seq(IndexModel(Indexes.ascending("createdAt"), IndexOptions().name("sessionTTL").expireAfter(2L, HOURS))),
-  extraCodecs = Seq(
-    Codecs.playFormatCodec(MongoJodaFormats.dateTimeFormat),
-    Codecs.playFormatCodec(MongoJavatimeFormats.instantFormat)
-  )
-    ) with SessionRepo
-{
+      extraCodecs = Seq(
+        Codecs.playFormatCodec(MongoJodaFormats.dateTimeFormat),
+        Codecs.playFormatCodec(MongoJavatimeFormats.instantFormat)
+      )
+    )
+    with SessionRepo {
 
-   def start(data: Session)(implicit wts: Writes[Session], hc: HeaderCarrier): Future[Unit] = {
-     saveOrUpdate(data)
-   }
-   def saveOrUpdate(data: Session)(implicit wts: Writes[Session], hc: HeaderCarrier): Future[Unit] =
+  def start(data: Session)(implicit wts: Writes[Session], hc: HeaderCarrier): Future[Unit]        =
+    saveOrUpdate(data)
+  def saveOrUpdate(data: Session)(implicit wts: Writes[Session], hc: HeaderCarrier): Future[Unit] =
     Mdc.preservingMdc {
       for {
         sessionId <- getSessionId
@@ -74,11 +74,11 @@ class SessionRepository @Inject() (mongo: MongoComponent)(implicit
       )
     }
 
-   def get(implicit rds: Reads[Session], hc: HeaderCarrier) =
+  def get(implicit rds: Reads[Session], hc: HeaderCarrier) =
     Mdc.preservingMdc {
       for {
-        sessionId <- getSessionId
-        maybeOption <-collection.find(Filters.equal("_id", sessionId)).headOption()
+        sessionId   <- getSessionId
+        maybeOption <- collection.find(Filters.equal("_id", sessionId)).headOption()
       } yield maybeOption.map(
         (_.data.decryptedValue)
       )
@@ -123,7 +123,8 @@ object SessionData {
   val format                                  = Json.format[SessionData]
 }
 
-case class SensitiveSessionData(_id:String, data:SensitiveSession, createdAt:Instant = Instant.now) extends Sensitive[SessionData]{
+case class SensitiveSessionData(_id: String, data: SensitiveSession, createdAt: Instant = Instant.now)
+    extends Sensitive[SessionData] {
   override def decryptedValue: SessionData = SessionData(
     _id,
     data.decryptedValue,
@@ -131,18 +132,17 @@ case class SensitiveSessionData(_id:String, data:SensitiveSession, createdAt:Ins
   )
 }
 
-object SensitiveSessionData{
+object SensitiveSessionData {
 
-  implicit val formatInstant: Format[Instant] = MongoJavatimeFormats.instantFormat
+  implicit val formatInstant: Format[Instant]                                      = MongoJavatimeFormats.instantFormat
   implicit def format(implicit crypto: MongoCrypto): OFormat[SensitiveSessionData] = Json.format[SensitiveSessionData]
 
-  def apply(sessionData: SessionData):SensitiveSessionData = SensitiveSessionData(
+  def apply(sessionData: SessionData): SensitiveSessionData = SensitiveSessionData(
     sessionData._id,
     SensitiveSession(sessionData.data),
     sessionData.createdAt
   )
 }
-
 
 trait SessionRepo {
 

@@ -24,10 +24,9 @@ import models.submissions.common.{ContactDetails, SensitiveContactDetails}
 import crypto.MongoCrypto
 import utils.SensitiveTestHelper
 
-
 class SensitiveCustomerDetailsSpec extends AnyWordSpecLike with Matchers with SensitiveTestHelper {
 
-  val testConfig: Configuration = loadTestConfig()
+  val testConfig: Configuration    = loadTestConfig()
   implicit val crypto: MongoCrypto = createTestMongoCrypto(testConfig)
 
   "SensitiveCustomerDetails" should {
@@ -43,7 +42,7 @@ class SensitiveCustomerDetailsSpec extends AnyWordSpecLike with Matchers with Se
 
       val sensitiveCustomerDetails = SensitiveCustomerDetails(originalCustomerDetails)
 
-      sensitiveCustomerDetails.fullName.isInstanceOf[SensitiveString] shouldBe true
+      sensitiveCustomerDetails.fullName.isInstanceOf[SensitiveString]               shouldBe true
       sensitiveCustomerDetails.contactDetails.isInstanceOf[SensitiveContactDetails] shouldBe true
 
       sensitiveCustomerDetails.decryptedValue shouldBe originalCustomerDetails
@@ -51,4 +50,3 @@ class SensitiveCustomerDetailsSpec extends AnyWordSpecLike with Matchers with Se
 
   }
 }
-

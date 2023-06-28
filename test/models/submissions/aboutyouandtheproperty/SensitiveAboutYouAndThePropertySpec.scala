@@ -25,20 +25,22 @@ import utils.SensitiveTestHelper
 
 class SensitiveAboutYouAndThePropertySpec extends AnyWordSpecLike with Matchers with SensitiveTestHelper {
 
-  val testConfig: Configuration = loadTestConfig()
+  val testConfig: Configuration    = loadTestConfig()
   implicit val crypto: MongoCrypto = createTestMongoCrypto(testConfig)
 
   "SensitiveAboutYouAndTheProperty" should {
 
     "encrypt and decrypt sensitive fields correctly" in {
-      val originalAboutYouAndTheProperty = AboutYouAndTheProperty(
-        customerDetails = Some(CustomerDetails(
-          fullName = "John Doe",
-          contactDetails = ContactDetails(
-            phone = "123456789",
-            email = "test@example.com"
+      val originalAboutYouAndTheProperty  = AboutYouAndTheProperty(
+        customerDetails = Some(
+          CustomerDetails(
+            fullName = "John Doe",
+            contactDetails = ContactDetails(
+              phone = "123456789",
+              email = "test@example.com"
+            )
           )
-        ))
+        )
       )
       val sensitiveAboutYouAndTheProperty = SensitiveAboutYouAndTheProperty(originalAboutYouAndTheProperty)
 

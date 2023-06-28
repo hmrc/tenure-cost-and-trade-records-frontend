@@ -16,21 +16,21 @@
 
 package controllers.connectiontoproperty
 
-import controllers.requestReferenceNumber.NoReferenceNumberController
-import form.requestReferenceNumber.NoReferenceNumberForm.noReferenceNumberForm
+import controllers.requestReferenceNumber.RequestReferenceNumberController
+import form.requestReferenceNumber.RequestReferenceNumberForm.noReferenceNumberForm
 import models.submissions.connectiontoproperty.StillConnectedDetails
 import play.api.http.Status
 import play.api.test.Helpers._
 import utils.TestBaseSpec
 
-class NoReferenceNumberControllerSpec extends TestBaseSpec {
+class RequestReferenceNumberControllerSpec extends TestBaseSpec {
 
   import TestData.{baseFormData, errorKey}
   import utils.FormBindingTestAssertions.mustContainError
 
   def noReferenceNumberController(
     stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledStillConnectedDetailsYes)
-  ) = new NoReferenceNumberController(
+  ) = new RequestReferenceNumberController(
     stubMessagesControllerComponents(),
     connectedToPropertyNavigator,
     noReferenceAddressView,

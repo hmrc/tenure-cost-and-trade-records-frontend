@@ -22,18 +22,19 @@ import uk.gov.hmrc.crypto.Sensitive
 
 case class SensitiveEditTheAddress(
   editAddress: SensitiveEditAddress
-)extends Sensitive[EditTheAddress] {
+) extends Sensitive[EditTheAddress] {
 
   override def decryptedValue: EditTheAddress = EditTheAddress(
     editAddress.decryptedValue
   )
 }
 
-object SensitiveEditTheAddress{
+object SensitiveEditTheAddress {
   import crypto.SensitiveFormats._
-  implicit def format(implicit crypto: MongoCrypto): OFormat[SensitiveEditTheAddress] = Json.format[SensitiveEditTheAddress]
+  implicit def format(implicit crypto: MongoCrypto): OFormat[SensitiveEditTheAddress] =
+    Json.format[SensitiveEditTheAddress]
 
-  def apply(editTheAddress: EditTheAddress):SensitiveEditTheAddress= SensitiveEditTheAddress(
+  def apply(editTheAddress: EditTheAddress): SensitiveEditTheAddress = SensitiveEditTheAddress(
     SensitiveEditAddress(editTheAddress.editAddress)
   )
 }

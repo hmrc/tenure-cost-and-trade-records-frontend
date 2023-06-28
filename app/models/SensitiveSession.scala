@@ -28,21 +28,23 @@ import models.submissions.notconnected.SensitiveRemoveConnectionDetails
 import play.api.libs.json.{Json, OFormat}
 import uk.gov.hmrc.crypto.Sensitive
 
-case class SensitiveSession (referenceNumber: String,
-                             forType: String,
-                             address: SensitiveAddress,
-                             token: String,
-                             stillConnectedDetails: Option[SensitiveStillConnectedDetails] = None,
-                             removeConnectionDetails: Option[SensitiveRemoveConnectionDetails] = None,
-                             aboutYouAndTheProperty: Option[SensitiveAboutYouAndTheProperty] = None,
-                             additionalInformation: Option[SensitiveAdditionalInformation] = None,
-                             aboutTheTradingHistory: Option[AboutTheTradingHistory] = None,
-                             aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = None,
-                             aboutLeaseOrAgreementPartOne: Option[SensitiveAboutLeaseOrAgreementPartOne] = None,
-                             aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = None,
-                             saveAsDraftPassword: Option[String] = None) extends Sensitive[Session]{
+case class SensitiveSession(
+  referenceNumber: String,
+  forType: String,
+  address: SensitiveAddress,
+  token: String,
+  stillConnectedDetails: Option[SensitiveStillConnectedDetails] = None,
+  removeConnectionDetails: Option[SensitiveRemoveConnectionDetails] = None,
+  aboutYouAndTheProperty: Option[SensitiveAboutYouAndTheProperty] = None,
+  additionalInformation: Option[SensitiveAdditionalInformation] = None,
+  aboutTheTradingHistory: Option[AboutTheTradingHistory] = None,
+  aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = None,
+  aboutLeaseOrAgreementPartOne: Option[SensitiveAboutLeaseOrAgreementPartOne] = None,
+  aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = None,
+  saveAsDraftPassword: Option[String] = None
+) extends Sensitive[Session] {
 
-  override def decryptedValue:Session = Session(
+  override def decryptedValue: Session = Session(
     referenceNumber,
     forType,
     address.decryptedValue,
@@ -63,7 +65,7 @@ object SensitiveSession {
 
   implicit def format(implicit crypto: MongoCrypto): OFormat[SensitiveSession] = Json.format[SensitiveSession]
 
-  def apply(session: Session):SensitiveSession = SensitiveSession(
+  def apply(session: Session): SensitiveSession = SensitiveSession(
     session.referenceNumber,
     session.forType,
     SensitiveAddress(session.address),

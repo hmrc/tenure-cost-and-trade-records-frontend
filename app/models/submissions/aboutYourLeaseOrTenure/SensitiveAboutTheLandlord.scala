@@ -22,20 +22,21 @@ import uk.gov.hmrc.crypto.Sensitive
 import uk.gov.hmrc.crypto.Sensitive.SensitiveString
 
 case class SensitiveAboutTheLandlord(
-                                      landlordFullName: SensitiveString,
-                                      landlordAddress: SensitiveLandlordAddress
-                                    ) extends Sensitive[AboutTheLandlord] {
+  landlordFullName: SensitiveString,
+  landlordAddress: SensitiveLandlordAddress
+) extends Sensitive[AboutTheLandlord] {
   override def decryptedValue: AboutTheLandlord = AboutTheLandlord(
     landlordFullName.decryptedValue,
     landlordAddress.decryptedValue
   )
 }
 
-object SensitiveAboutTheLandlord{
+object SensitiveAboutTheLandlord {
   import crypto.SensitiveFormats._
-  implicit def format(implicit crypto: MongoCrypto): OFormat[SensitiveAboutTheLandlord] = Json.format[SensitiveAboutTheLandlord]
+  implicit def format(implicit crypto: MongoCrypto): OFormat[SensitiveAboutTheLandlord] =
+    Json.format[SensitiveAboutTheLandlord]
 
-  def apply(aboutTheLandlord: AboutTheLandlord):SensitiveAboutTheLandlord= SensitiveAboutTheLandlord(
+  def apply(aboutTheLandlord: AboutTheLandlord): SensitiveAboutTheLandlord = SensitiveAboutTheLandlord(
     SensitiveString(aboutTheLandlord.landlordFullName),
     SensitiveLandlordAddress(aboutTheLandlord.landlordAddress)
   )

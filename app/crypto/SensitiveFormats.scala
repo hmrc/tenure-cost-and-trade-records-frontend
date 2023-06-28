@@ -22,6 +22,7 @@ import uk.gov.hmrc.crypto.json.JsonEncryption
 
 object SensitiveFormats {
 
-  implicit def sensitiveStringFormat(implicit crypto: MongoCrypto): Format[SensitiveString] = JsonEncryption.sensitiveEncrypterDecrypter(SensitiveString.apply)
+  implicit def sensitiveStringFormat(implicit crypto: MongoCrypto): Format[SensitiveString] =
+    JsonEncryption.sensitiveEncrypterDecrypter(SensitiveString.apply)
 
 }
