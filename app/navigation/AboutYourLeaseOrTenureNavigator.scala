@@ -31,6 +31,7 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
     Some(aboutYourLeaseOrTenure.routes.CheckYourAnswersAboutYourLeaseOrTenureController.show())
 
   override val postponeCYARedirectPages: Set[String] = Set(
+    aboutYourLeaseOrTenure.routes.CurrentRentPayableWithin12MonthsController.show(),
     aboutYourLeaseOrTenure.routes.ConnectedToLandlordDetailsController.show(),
     aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesDetailsController.show(),
     aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsDetailsController.show(),

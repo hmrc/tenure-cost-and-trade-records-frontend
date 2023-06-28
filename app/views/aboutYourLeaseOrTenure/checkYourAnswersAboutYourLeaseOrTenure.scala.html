@@ -42,6 +42,10 @@
     SectionAnswersRowBuilder(request.sessionData.aboutLeaseOrAgreementPartTwo)
 }
 
+@forType = @{
+    request.sessionData.forType
+}
+
 @twoColumns(value1: String, value2: String) = {
   <span style="display: table-cell; min-width: 15em;">@value1</span> <span style="display: table-cell;">@value2</span>
 }
@@ -91,15 +95,17 @@
                     aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.show(), "",
                     ("valueAsHtml", _ => None)) ++
                         sectionAnswers.optionalRow("checkYourAnswersAboutYourLeaseOrTenure.rentDueInNext12Months",
-                            _.currentRentPayableWithin12Months.map(_.currentRentWithin12Months.name).map(v => messages(s"label.$v")),
-                            aboutYourLeaseOrTenure.routes.CurrentRentPayableWithin12MonthsController.show(), "rentPayable") ++
-                        sectionAnswers.optionalRow("checkYourAnswersAboutYourLeaseOrTenure.nextReviewOrExpiryDate",
-                            _.currentRentPayableWithin12Months.map(_.rentActuallyAgreed.toYearMonth).map(dateUtil.formatYearMonth),
-                            aboutYourLeaseOrTenure.routes.CurrentRentPayableWithin12MonthsController.show(), "dateReview.month")
+                            _.currentRentPayableWithin12Months.map(r => Seq(
+                                messages(s"label.${r.currentRentWithin12Months.name}"),
+                                messages("checkYourAnswersAboutYourLeaseOrTenure.nextReviewOrExpiryDate", dateUtil.formatYearMonth(r.rentActuallyAgreed.toYearMonth))
+                            ).mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>")),
+                            aboutYourLeaseOrTenure.routes.CurrentRentPayableWithin12MonthsController.show(), "",
+                            ("valueAsHtml", _ => None))
             ))
         }
 
-        @if(sectionAnswers.answers.exists(a => a.annualRent.isDefined || a.currentRentFirstPaid.isDefined || a.currentLeaseOrAgreementBegin.isDefined)) {
+        @if((forType == ForTypes.for6010 || forType == ForTypes.for6015 || forType == ForTypes.for6016)
+                && sectionAnswers.answers.exists(a => a.annualRent.isDefined || a.currentLeaseOrAgreementBegin.isDefined)) {
             <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutYourLeaseOrTenure.leaseDetails.heading")</h2>
 
             @govukSummaryList(SummaryList(rows =
@@ -112,14 +118,30 @@
                         sectionAnswers.optionalRow("checkYourAnswersAboutYourLeaseOrTenure.currentRentFirstPaid",
                             _.currentRentFirstPaid.map(_.currentRentFirstPaid.toYearMonth).map(dateUtil.formatYearMonth),
                             aboutYourLeaseOrTenure.routes.CurrentRentFirstPaidController.show(), "currentRentFirstPaid.month") ++
-                        sectionAnswers2.optionalRow("checkYourAnswersAboutYourLeaseOrTenure.tenancyLeaseAgreementExpire",
-                            _.tenancyLeaseAgreementExpire.map(_.tenancyLeaseAgreementExpire.shortDate),
-                            aboutYourLeaseOrTenure.routes.TenancyLeaseAgreementExpireController.show(), "tenancyLeaseAgreementExpire.day") ++
                         sectionAnswers.row("checkYourAnswersAboutYourLeaseOrTenure.leaseStartDateAndDuration",
                             _.currentLeaseOrAgreementBegin
                                     .map(lease => s"${dateUtil.formatYearMonth(lease.leaseBegin.toYearMonth)}<br/>${lease.grantedFor} ${messages("suffix.grantedFor")}"),
                             aboutYourLeaseOrTenure.routes.CurrentLeaseOrAgreementBeginController.show(), "leaseBegin",
                             ("valueAsHtml", _ => None))
+            ))
+        }
+
+        @if(forType == ForTypes.for6011) {
+            <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutYourLeaseOrTenure.yourRent.heading")</h2>
+
+            @govukSummaryList(SummaryList(rows =
+                sectionAnswers.optionalRow("checkYourAnswersAboutYourLeaseOrTenure.currentAnnualRent",
+                    _.annualRent.map(_.amount.asMoney),
+                    aboutYourLeaseOrTenure.routes.CurrentAnnualRentController.show(), "currentAnnualRent") ++
+                        sectionAnswers.row("checkYourAnswersAboutYourLeaseOrTenure.rentIncludesVat",
+                            _.rentIncludesVat.map(_.name).map(v => messages(s"label.$v")),
+                            Call("GET", "rent-includes-vat"), "rentIncludesVat") ++ // TODO: Not implemented Controller for "rent-includes-vat"
+                        sectionAnswers.optionalRow("checkYourAnswersAboutYourLeaseOrTenure.currentRentFirstPaid",
+                            _.currentRentFirstPaid.map(_.currentRentFirstPaid.toYearMonth).map(dateUtil.formatYearMonth),
+                            aboutYourLeaseOrTenure.routes.CurrentRentFirstPaidController.show(), "currentRentFirstPaid.month") ++
+                        sectionAnswers2.row("checkYourAnswersAboutYourLeaseOrTenure.tenancyLeaseAgreementExpire",
+                            _.tenancyLeaseAgreementExpire.map(_.tenancyLeaseAgreementExpire.shortDate),
+                            aboutYourLeaseOrTenure.routes.TenancyLeaseAgreementExpireController.show(), "tenancyLeaseAgreementExpire.day")
             ))
         }
 
