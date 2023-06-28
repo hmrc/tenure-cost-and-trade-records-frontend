@@ -16,7 +16,6 @@
 
 package models.submissions.aboutyouandtheproperty
 
-
 import play.api.libs.json.{Json, OFormat}
 import uk.gov.hmrc.crypto.Sensitive
 import uk.gov.hmrc.crypto.Sensitive.SensitiveString
@@ -24,13 +23,13 @@ import crypto.MongoCrypto
 import models.submissions.common.SensitiveContactDetails
 
 case class SensitiveCustomerDetails(
-                                     fullName: SensitiveString,
-                                     contactDetails: SensitiveContactDetails
-                                   ) extends Sensitive[CustomerDetails] {
+  fullName: SensitiveString,
+  contactDetails: SensitiveContactDetails
+) extends Sensitive[CustomerDetails] {
 
   override def decryptedValue: CustomerDetails = CustomerDetails(
     fullName.decryptedValue,
-    contactDetails.decryptedValue,
+    contactDetails.decryptedValue
   )
 
 }
@@ -39,10 +38,11 @@ object SensitiveCustomerDetails {
 
   import crypto.SensitiveFormats._
 
-  implicit def format(implicit crypto: MongoCrypto): OFormat[SensitiveCustomerDetails] = Json.format[SensitiveCustomerDetails]
+  implicit def format(implicit crypto: MongoCrypto): OFormat[SensitiveCustomerDetails] =
+    Json.format[SensitiveCustomerDetails]
 
   def apply(customerDetails: CustomerDetails): SensitiveCustomerDetails = SensitiveCustomerDetails(
     SensitiveString(customerDetails.fullName),
-    SensitiveContactDetails(customerDetails.contactDetails),
+    SensitiveContactDetails(customerDetails.contactDetails)
   )
 }

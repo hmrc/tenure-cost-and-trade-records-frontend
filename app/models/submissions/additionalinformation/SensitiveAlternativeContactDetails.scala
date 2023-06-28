@@ -27,7 +27,7 @@ case class SensitiveAlternativeContactDetails(
   alternativeContactFullName: Option[SensitiveString],
   alternativeContactDetails: Option[SensitiveContactDetails],
   alternativeContactAddress: Option[SensitiveContactDetailsAddress]
-)extends Sensitive[AlternativeContactDetails] {
+) extends Sensitive[AlternativeContactDetails] {
 
   override def decryptedValue: AlternativeContactDetails = AlternativeContactDetails(
     alternativeContactFullName.map(_.decryptedValue),
@@ -36,12 +36,14 @@ case class SensitiveAlternativeContactDetails(
   )
 }
 
-object SensitiveAlternativeContactDetails{
-  implicit def format(implicit crypto: MongoCrypto): OFormat[SensitiveAlternativeContactDetails] = Json.format[SensitiveAlternativeContactDetails]
+object SensitiveAlternativeContactDetails {
+  implicit def format(implicit crypto: MongoCrypto): OFormat[SensitiveAlternativeContactDetails] =
+    Json.format[SensitiveAlternativeContactDetails]
 
-  def apply(alternativeContactDetails: AlternativeContactDetails):SensitiveAlternativeContactDetails=SensitiveAlternativeContactDetails(
-    alternativeContactDetails.alternativeContactFullName.map(SensitiveString(_)),
-    alternativeContactDetails.alternativeContactDetails.map(SensitiveContactDetails(_)),
-    alternativeContactDetails.alternativeContactAddress.map(SensitiveContactDetailsAddress(_))
-  )
+  def apply(alternativeContactDetails: AlternativeContactDetails): SensitiveAlternativeContactDetails =
+    SensitiveAlternativeContactDetails(
+      alternativeContactDetails.alternativeContactFullName.map(SensitiveString(_)),
+      alternativeContactDetails.alternativeContactDetails.map(SensitiveContactDetails(_)),
+      alternativeContactDetails.alternativeContactAddress.map(SensitiveContactDetailsAddress(_))
+    )
 }

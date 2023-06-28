@@ -21,12 +21,13 @@ import play.api.libs.json.{Json, OFormat}
 import uk.gov.hmrc.crypto.Sensitive
 import uk.gov.hmrc.crypto.Sensitive.SensitiveString
 
-case class SensitiveContactDetailsAddress(buildingNameNumber: SensitiveString,
-                                          street1: Option[SensitiveString],
-                                          town: SensitiveString,
-                                          county: Option[SensitiveString],
-                                          postcode: SensitiveString
-                                         ) extends Sensitive[ContactDetailsAddress] {
+case class SensitiveContactDetailsAddress(
+  buildingNameNumber: SensitiveString,
+  street1: Option[SensitiveString],
+  town: SensitiveString,
+  county: Option[SensitiveString],
+  postcode: SensitiveString
+) extends Sensitive[ContactDetailsAddress] {
 
   override def decryptedValue: ContactDetailsAddress = ContactDetailsAddress(
     buildingNameNumber.decryptedValue,
@@ -37,15 +38,17 @@ case class SensitiveContactDetailsAddress(buildingNameNumber: SensitiveString,
   )
 }
 
-object SensitiveContactDetailsAddress{
+object SensitiveContactDetailsAddress {
   import crypto.SensitiveFormats._
-  implicit def format(implicit crypto: MongoCrypto): OFormat[SensitiveContactDetailsAddress] = Json.format[SensitiveContactDetailsAddress]
+  implicit def format(implicit crypto: MongoCrypto): OFormat[SensitiveContactDetailsAddress] =
+    Json.format[SensitiveContactDetailsAddress]
 
-  def apply(contactDetailsAddress: ContactDetailsAddress):SensitiveContactDetailsAddress = SensitiveContactDetailsAddress(
-    SensitiveString(contactDetailsAddress.buildingNameNumber),
-    contactDetailsAddress.street1.map(SensitiveString(_)),
-    SensitiveString(contactDetailsAddress.town),
-    contactDetailsAddress.county.map(SensitiveString(_)),
-    SensitiveString(contactDetailsAddress.postcode)
-  )
+  def apply(contactDetailsAddress: ContactDetailsAddress): SensitiveContactDetailsAddress =
+    SensitiveContactDetailsAddress(
+      SensitiveString(contactDetailsAddress.buildingNameNumber),
+      contactDetailsAddress.street1.map(SensitiveString(_)),
+      SensitiveString(contactDetailsAddress.town),
+      contactDetailsAddress.county.map(SensitiveString(_)),
+      SensitiveString(contactDetailsAddress.postcode)
+    )
 }

@@ -25,7 +25,7 @@ import utils.SensitiveTestHelper
 
 class SensitiveContactDetailsAddressSpec extends AnyWordSpecLike with Matchers with SensitiveTestHelper {
 
-  val testConfig: Configuration = loadTestConfig()
+  val testConfig: Configuration    = loadTestConfig()
   implicit val crypto: MongoCrypto = createTestMongoCrypto(testConfig)
 
   "SensitiveContactDetailsAddress" should {
@@ -42,12 +42,11 @@ class SensitiveContactDetailsAddressSpec extends AnyWordSpecLike with Matchers w
       val sensitiveAddress = SensitiveContactDetailsAddress(originalAddress)
 
       sensitiveAddress.buildingNameNumber.isInstanceOf[SensitiveString] shouldBe true
-      sensitiveAddress.town.isInstanceOf[SensitiveString] shouldBe true
-      sensitiveAddress.postcode.isInstanceOf[SensitiveString] shouldBe true
+      sensitiveAddress.town.isInstanceOf[SensitiveString]               shouldBe true
+      sensitiveAddress.postcode.isInstanceOf[SensitiveString]           shouldBe true
 
       sensitiveAddress.decryptedValue shouldBe originalAddress
     }
 
   }
 }
-

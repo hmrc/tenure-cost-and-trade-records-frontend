@@ -45,7 +45,7 @@ class ConnectionToPropertyNavigator @Inject() (audit: Audit) extends Navigator(a
     ConnectionToPropertyPageId            -> (_ => controllers.routes.TaskListController.show()),
     VacantPropertiesPageId                -> (_ => controllers.routes.TaskListController.show()),
     NoReferenceNumberPageId               -> (_ =>
-      controllers.requestReferenceNumber.routes.NoReferenceNumberContactDetailsController.show()
+      controllers.requestReferenceNumber.routes.RequestReferenceNumberContactDetailsController.show()
     ),
     NoReferenceNumberContactDetailsPageId -> (_ => controllers.routes.TaskListController.show())
   )

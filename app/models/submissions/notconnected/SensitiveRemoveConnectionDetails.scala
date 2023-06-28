@@ -21,22 +21,24 @@ import play.api.libs.json.{Json, OFormat}
 import uk.gov.hmrc.crypto.Sensitive
 
 case class SensitiveRemoveConnectionDetails(
-            removeConnectionDetails: Option[SensitiveRemoveConnectionsDetails] = None,
-            pastConnectionType: Option[PastConnectionType] = None
-          ) extends Sensitive[RemoveConnectionDetails] {
+  removeConnectionDetails: Option[SensitiveRemoveConnectionsDetails] = None,
+  pastConnectionType: Option[PastConnectionType] = None
+) extends Sensitive[RemoveConnectionDetails] {
   override def decryptedValue: RemoveConnectionDetails = RemoveConnectionDetails(
     removeConnectionDetails.map(_.decryptedValue),
     pastConnectionType
   )
 }
 
-object SensitiveRemoveConnectionDetails{
+object SensitiveRemoveConnectionDetails {
 
   import crypto.SensitiveFormats._
-  implicit def format(implicit crypto: MongoCrypto): OFormat[SensitiveRemoveConnectionDetails] = Json.format[SensitiveRemoveConnectionDetails]
+  implicit def format(implicit crypto: MongoCrypto): OFormat[SensitiveRemoveConnectionDetails] =
+    Json.format[SensitiveRemoveConnectionDetails]
 
-  def apply(removeConnectionDetails: RemoveConnectionDetails):SensitiveRemoveConnectionDetails = SensitiveRemoveConnectionDetails(
-    removeConnectionDetails.removeConnectionDetails.map(SensitiveRemoveConnectionsDetails(_)),
-    removeConnectionDetails.pastConnectionType
-  )
+  def apply(removeConnectionDetails: RemoveConnectionDetails): SensitiveRemoveConnectionDetails =
+    SensitiveRemoveConnectionDetails(
+      removeConnectionDetails.removeConnectionDetails.map(SensitiveRemoveConnectionsDetails(_)),
+      removeConnectionDetails.pastConnectionType
+    )
 }

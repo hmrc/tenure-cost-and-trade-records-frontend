@@ -25,7 +25,7 @@ import uk.gov.hmrc.crypto.Sensitive.SensitiveString
 import utils.SensitiveTestHelper
 
 class SensitiveAddressSpec extends AnyWordSpecLike with Matchers with SensitiveTestHelper {
-  val testConfig: Configuration = loadTestConfig()
+  val testConfig: Configuration    = loadTestConfig()
   implicit val crypto: MongoCrypto = new TestMongoCrypto(testConfig)
 
   "SensitiveAddress" should {
@@ -43,8 +43,8 @@ class SensitiveAddressSpec extends AnyWordSpecLike with Matchers with SensitiveT
 
       // Ensure the sensitive fields are encrypted
       sensitiveAddress.buildingNameNumber.isInstanceOf[SensitiveString] shouldBe true
-      sensitiveAddress.street2.isInstanceOf[SensitiveString] shouldBe true
-      sensitiveAddress.postcode.isInstanceOf[SensitiveString] shouldBe true
+      sensitiveAddress.street2.isInstanceOf[SensitiveString]            shouldBe true
+      sensitiveAddress.postcode.isInstanceOf[SensitiveString]           shouldBe true
 
       // Ensure the sensitive fields are decrypted correctly
       sensitiveAddress.decryptedValue shouldBe originalAddress

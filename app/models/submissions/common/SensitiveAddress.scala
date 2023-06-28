@@ -22,12 +22,12 @@ import uk.gov.hmrc.crypto.Sensitive
 import uk.gov.hmrc.crypto.Sensitive.SensitiveString
 
 case class SensitiveAddress(
-                             buildingNameNumber: SensitiveString,
-                             street1: Option[SensitiveString],
-                             street2: SensitiveString,
-                             county: Option[SensitiveString],
-                             postcode: SensitiveString
-         ) extends Sensitive[Address] {
+  buildingNameNumber: SensitiveString,
+  street1: Option[SensitiveString],
+  street2: SensitiveString,
+  county: Option[SensitiveString],
+  postcode: SensitiveString
+) extends Sensitive[Address] {
 
   override def decryptedValue: Address = Address(
     buildingNameNumber.decryptedValue,
@@ -38,11 +38,11 @@ case class SensitiveAddress(
   )
 }
 
-object SensitiveAddress{
+object SensitiveAddress {
   import crypto.SensitiveFormats._
   implicit def format(implicit crypto: MongoCrypto): OFormat[SensitiveAddress] = Json.format[SensitiveAddress]
 
-  def apply(address: Address):SensitiveAddress=SensitiveAddress(
+  def apply(address: Address): SensitiveAddress = SensitiveAddress(
     SensitiveString(address.buildingNameNumber),
     address.street1.map(SensitiveString(_)),
     SensitiveString(address.street2),

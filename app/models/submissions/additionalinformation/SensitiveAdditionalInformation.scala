@@ -25,7 +25,7 @@ case class SensitiveAdditionalInformation(
   furtherInformationOrRemarksDetails: Option[FurtherInformationOrRemarksDetails] = None,
   altContactInformation: Option[SensitiveAlternativeContactDetails] = None,
   checkYourAnswersAdditionalInformation: Option[CheckYourAnswersAdditionalInformation] = None
-)extends Sensitive[AdditionalInformation] {
+) extends Sensitive[AdditionalInformation] {
 
   override def decryptedValue: AdditionalInformation = AdditionalInformation(
     furtherInformationOrRemarksDetails,
@@ -35,13 +35,15 @@ case class SensitiveAdditionalInformation(
 
 }
 
-object SensitiveAdditionalInformation{
+object SensitiveAdditionalInformation {
 
-  implicit def format(implicit crypto: MongoCrypto): OFormat[SensitiveAdditionalInformation] = Json.format[SensitiveAdditionalInformation]
+  implicit def format(implicit crypto: MongoCrypto): OFormat[SensitiveAdditionalInformation] =
+    Json.format[SensitiveAdditionalInformation]
 
-  def apply(additionalInformation: AdditionalInformation):SensitiveAdditionalInformation = SensitiveAdditionalInformation(
-    additionalInformation.furtherInformationOrRemarksDetails,
-    additionalInformation.altContactInformation.map(SensitiveAlternativeContactDetails(_)),
-    additionalInformation.checkYourAnswersAdditionalInformation
-  )
+  def apply(additionalInformation: AdditionalInformation): SensitiveAdditionalInformation =
+    SensitiveAdditionalInformation(
+      additionalInformation.furtherInformationOrRemarksDetails,
+      additionalInformation.altContactInformation.map(SensitiveAlternativeContactDetails(_)),
+      additionalInformation.checkYourAnswersAdditionalInformation
+    )
 }

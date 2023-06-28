@@ -25,7 +25,7 @@ import utils.SensitiveTestHelper
 
 class SensitiveContactDetailsSpec extends AnyWordSpecLike with Matchers with SensitiveTestHelper {
 
-  val testConfig: Configuration = loadTestConfig()
+  val testConfig: Configuration    = loadTestConfig()
   implicit val crypto: MongoCrypto = createTestMongoCrypto(testConfig)
 
   "SensitiveContactDetails" should {

@@ -21,12 +21,13 @@ import play.api.libs.json.{Json, OFormat}
 import uk.gov.hmrc.crypto.Sensitive
 import uk.gov.hmrc.crypto.Sensitive.SensitiveString
 
-case class SensitiveEditAddress(buildingNameNumber: SensitiveString,
-                                street1: Option[SensitiveString],
-                                town: SensitiveString,
-                                county: Option[SensitiveString],
-                                postcode: SensitiveString
-                               ) extends Sensitive[EditAddress] {
+case class SensitiveEditAddress(
+  buildingNameNumber: SensitiveString,
+  street1: Option[SensitiveString],
+  town: SensitiveString,
+  county: Option[SensitiveString],
+  postcode: SensitiveString
+) extends Sensitive[EditAddress] {
 
   override def decryptedValue: EditAddress = EditAddress(
     buildingNameNumber.decryptedValue,
@@ -37,11 +38,11 @@ case class SensitiveEditAddress(buildingNameNumber: SensitiveString,
   )
 }
 
-object SensitiveEditAddress{
+object SensitiveEditAddress {
   import crypto.SensitiveFormats._
   implicit def format(implicit crypto: MongoCrypto): OFormat[SensitiveEditAddress] = Json.format[SensitiveEditAddress]
 
-  def apply(editAddress: EditAddress):SensitiveEditAddress = SensitiveEditAddress(
+  def apply(editAddress: EditAddress): SensitiveEditAddress = SensitiveEditAddress(
     SensitiveString(editAddress.buildingNameNumber),
     editAddress.street1.map(SensitiveString(_)),
     SensitiveString(editAddress.town),

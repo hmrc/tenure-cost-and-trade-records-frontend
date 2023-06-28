@@ -16,9 +16,9 @@
 
 package controllers.connectiontoproperty
 
-import controllers.requestReferenceNumber.NoReferenceNumberContactDetailsController
+import controllers.requestReferenceNumber.RequestReferenceNumberContactDetailsController
 import form.Errors
-import form.requestReferenceNumber.NoReferenceNumberContactDetailsForm.noReferenceNumberContactDetailsForm
+import form.requestReferenceNumber.RequestReferenceNumberContactDetailsForm.noReferenceNumberContactDetailsForm
 import models.submissions.connectiontoproperty.StillConnectedDetails
 import play.api.http.Status
 import play.api.test.Helpers._
@@ -31,7 +31,7 @@ class NoReferenceNumberContactDetailsControllerSpec extends TestBaseSpec {
 
   def noReferenceNumberContactDetailsController(
     stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledStillConnectedDetailsYes)
-  ) = new NoReferenceNumberContactDetailsController(
+  ) = new RequestReferenceNumberContactDetailsController(
     stubMessagesControllerComponents(),
     connectedToPropertyNavigator,
     noReferenceNumberContactDetailsView,
@@ -85,8 +85,8 @@ class NoReferenceNumberContactDetailsControllerSpec extends TestBaseSpec {
     }
 
     val baseFormData: Map[String, String] = Map(
-      "noReferenceNumberContactDetails.phone"  -> "01234 123123",
-      "noReferenceNumberContactDetails.phone.email1" -> "blah.blah@test.com",
+      "noReferenceNumberContactDetails.phone"        -> "01234 123123",
+      "noReferenceNumberContactDetails.phone.email1" -> "blah.blah@test.com"
     )
   }
 }

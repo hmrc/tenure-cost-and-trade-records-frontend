@@ -16,7 +16,7 @@
 
 package views.connectiontoproperty
 
-import form.requestReferenceNumber.NoReferenceNumberForm
+import form.requestReferenceNumber.RequestReferenceNumberForm
 import models.pages.Summary
 import models.submissions.requestReferenceNumber.NoReferenceNumber
 import org.scalatest.matchers.must.Matchers._
@@ -27,7 +27,7 @@ class NoReferenceNumberViewSpec extends QuestionViewBehaviours[NoReferenceNumber
 
   val messageKeyPrefix = "noReferenceNumber"
 
-  override val form = NoReferenceNumberForm.noReferenceNumberForm
+  override val form = RequestReferenceNumberForm.noReferenceNumberForm
 
   def createView = () => noReferenceAddressView(form, Summary("99996010001"))(fakeRequest, messages)
 

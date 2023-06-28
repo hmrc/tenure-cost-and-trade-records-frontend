@@ -25,7 +25,7 @@ import utils.SensitiveTestHelper
 
 class SensitiveAboutTheLandlordSpec extends AnyWordSpecLike with Matchers with SensitiveTestHelper {
 
-  val testConfig: Configuration = loadTestConfig()
+  val testConfig: Configuration    = loadTestConfig()
   implicit val crypto: MongoCrypto = createTestMongoCrypto(testConfig)
 
   "SensitiveAboutTheLandlord" should {
@@ -45,7 +45,7 @@ class SensitiveAboutTheLandlordSpec extends AnyWordSpecLike with Matchers with S
       val sensitiveAboutTheLandlord = SensitiveAboutTheLandlord(originalAboutTheLandlord)
 
       // Ensure the sensitive fields are encrypted
-      sensitiveAboutTheLandlord.landlordFullName.isInstanceOf[SensitiveString] shouldBe true
+      sensitiveAboutTheLandlord.landlordFullName.isInstanceOf[SensitiveString]         shouldBe true
       sensitiveAboutTheLandlord.landlordAddress.isInstanceOf[SensitiveLandlordAddress] shouldBe true
 
       // Ensure the sensitive fields are decrypted correctly
@@ -54,4 +54,3 @@ class SensitiveAboutTheLandlordSpec extends AnyWordSpecLike with Matchers with S
 
   }
 }
-

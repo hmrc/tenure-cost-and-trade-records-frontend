@@ -23,10 +23,10 @@ import uk.gov.hmrc.crypto.Sensitive
 import uk.gov.hmrc.crypto.Sensitive.SensitiveString
 
 case class SensitiveRemoveConnectionsDetails(
-                                              removeConnectionFullName: SensitiveString,
-                                              removeConnectionDetails: SensitiveContactDetails,
-                                              removeConnectionAdditionalInfo: Option[String]
-                                            )extends Sensitive[RemoveConnectionsDetails] {
+  removeConnectionFullName: SensitiveString,
+  removeConnectionDetails: SensitiveContactDetails,
+  removeConnectionAdditionalInfo: Option[String]
+) extends Sensitive[RemoveConnectionsDetails] {
   override def decryptedValue: RemoveConnectionsDetails = RemoveConnectionsDetails(
     removeConnectionFullName.decryptedValue,
     removeConnectionDetails.decryptedValue,
@@ -34,13 +34,15 @@ case class SensitiveRemoveConnectionsDetails(
   )
 }
 
-object SensitiveRemoveConnectionsDetails{
+object SensitiveRemoveConnectionsDetails {
   import crypto.SensitiveFormats._
-  implicit def format(implicit crypto: MongoCrypto): OFormat[SensitiveRemoveConnectionsDetails] = Json.format[SensitiveRemoveConnectionsDetails]
+  implicit def format(implicit crypto: MongoCrypto): OFormat[SensitiveRemoveConnectionsDetails] =
+    Json.format[SensitiveRemoveConnectionsDetails]
 
-  def apply(removeConnectionsDetails: RemoveConnectionsDetails):SensitiveRemoveConnectionsDetails = SensitiveRemoveConnectionsDetails(
-    SensitiveString(removeConnectionsDetails.removeConnectionFullName),
-    SensitiveContactDetails(removeConnectionsDetails.removeConnectionDetails),
-    removeConnectionsDetails.removeConnectionAdditionalInfo
-  )
+  def apply(removeConnectionsDetails: RemoveConnectionsDetails): SensitiveRemoveConnectionsDetails =
+    SensitiveRemoveConnectionsDetails(
+      SensitiveString(removeConnectionsDetails.removeConnectionFullName),
+      SensitiveContactDetails(removeConnectionsDetails.removeConnectionDetails),
+      removeConnectionsDetails.removeConnectionAdditionalInfo
+    )
 }

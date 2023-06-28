@@ -26,33 +26,37 @@ import utils.SensitiveTestHelper
 
 class SensitiveAboutLeaseOrAgreementPartOneSpec extends AnyWordSpecLike with Matchers with SensitiveTestHelper {
 
-  val testConfig: Configuration = loadTestConfig()
+  val testConfig: Configuration    = loadTestConfig()
   implicit val crypto: MongoCrypto = createTestMongoCrypto(testConfig)
 
   "SensitiveAboutLeaseOrAgreementPartOne" should {
 
     "encrypt and decrypt sensitive fields correctly" in {
-      val originalAboutLeaseOrAgreementPartOne = AboutLeaseOrAgreementPartOne(
-        aboutTheLandlord = Some(AboutTheLandlord(
-          landlordFullName = "John Doe",
-          landlordAddress = LandlordAddress(
-            buildingNameNumber = "123",
-            street1 = Some("Street 1"),
-            town = "Town",
-            county = Some("County"),
-            postcode = "12345"
+      val originalAboutLeaseOrAgreementPartOne  = AboutLeaseOrAgreementPartOne(
+        aboutTheLandlord = Some(
+          AboutTheLandlord(
+            landlordFullName = "John Doe",
+            landlordAddress = LandlordAddress(
+              buildingNameNumber = "123",
+              street1 = Some("Street 1"),
+              town = "Town",
+              county = Some("County"),
+              postcode = "12345"
+            )
           )
-        ))
+        )
       )
-      val sensitiveAboutLeaseOrAgreementPartOne = SensitiveAboutLeaseOrAgreementPartOne(originalAboutLeaseOrAgreementPartOne)
+      val sensitiveAboutLeaseOrAgreementPartOne =
+        SensitiveAboutLeaseOrAgreementPartOne(originalAboutLeaseOrAgreementPartOne)
 
-      sensitiveAboutLeaseOrAgreementPartOne.aboutTheLandlord.isInstanceOf[Option[SensitiveAboutTheLandlord]] shouldBe true
+      sensitiveAboutLeaseOrAgreementPartOne.aboutTheLandlord
+        .isInstanceOf[Option[SensitiveAboutTheLandlord]]                                           shouldBe true
       sensitiveAboutLeaseOrAgreementPartOne.connectedToLandlord.isInstanceOf[Option[AnswersYesNo]] shouldBe true
-      sensitiveAboutLeaseOrAgreementPartOne.connectedToLandlordDetails.isInstanceOf[Option[ConnectedToLandlordInformationDetails]] shouldBe true
+      sensitiveAboutLeaseOrAgreementPartOne.connectedToLandlordDetails
+        .isInstanceOf[Option[ConnectedToLandlordInformationDetails]]                               shouldBe true
 
       sensitiveAboutLeaseOrAgreementPartOne.decryptedValue shouldBe originalAboutLeaseOrAgreementPartOne
     }
 
   }
 }
-

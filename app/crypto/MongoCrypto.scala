@@ -22,7 +22,7 @@ import uk.gov.hmrc.crypto.AesGCMCrypto
 import javax.inject.{Inject, Singleton}
 
 @Singleton
-class MongoCrypto @Inject()(configuration: Configuration) extends AesGCMCrypto {
+class MongoCrypto @Inject() (configuration: Configuration) extends AesGCMCrypto {
 
   override protected val encryptionKey: String = configuration.underlying.getString("crypto.key")
 

@@ -26,7 +26,7 @@ import utils.SensitiveTestHelper
 
 import java.io.File
 
-class SensitiveFormatsSpec extends AnyWordSpecLike with Matchers with SensitiveTestHelper{
+class SensitiveFormatsSpec extends AnyWordSpecLike with Matchers with SensitiveTestHelper {
   import SensitiveFormatsSpec._
 
   val testConfig: Configuration = loadTestConfig()
@@ -36,25 +36,25 @@ class SensitiveFormatsSpec extends AnyWordSpecLike with Matchers with SensitiveT
   "SensitiveFormats" should {
 
     "serialize and deserialize SensitiveString correctly" in {
-      val originalString = "mySensitiveData"
+      val originalString  = "mySensitiveData"
       val sensitiveString = SensitiveString(originalString)
 
-      val json = Json.toJson(sensitiveString)
+      val json         = Json.toJson(sensitiveString)
       val deserialized = Json.fromJson[SensitiveString](json)
 
-      deserialized.get shouldBe sensitiveString
+      deserialized.get                shouldBe sensitiveString
       deserialized.get.decryptedValue shouldBe originalString
     }
 
     "serialize and deserialize SensitiveTestEntity correctly" in {
-      val originalString = "mySensitiveData"
+      val originalString  = "mySensitiveData"
       val sensitiveString = SensitiveString(originalString)
-      val testEntity = SensitiveTestEntity("normalString", sensitiveString)
+      val testEntity      = SensitiveTestEntity("normalString", sensitiveString)
 
-      val json = Json.toJson(testEntity)
+      val json         = Json.toJson(testEntity)
       val deserialized = Json.fromJson[SensitiveTestEntity](json)
 
-      deserialized.get shouldBe testEntity
+      deserialized.get                 shouldBe testEntity
       deserialized.get.encryptedString shouldBe sensitiveString
     }
 
@@ -64,9 +64,9 @@ class SensitiveFormatsSpec extends AnyWordSpecLike with Matchers with SensitiveT
 object SensitiveFormatsSpec {
 
   case class SensitiveTestEntity(
-                                  normalString    : String,
-                                  encryptedString : SensitiveString
-                                )
+    normalString: String,
+    encryptedString: SensitiveString
+  )
 
   object SensitiveTestEntity {
     import crypto.SensitiveFormats._
