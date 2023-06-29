@@ -187,7 +187,8 @@ class LoginControllerSpec extends TestBaseSpec {
             aboutTheTradingHistory = Some(prefilledAboutTheTradingHistory),
             aboutFranchisesOrLettings = Some(prefilledAboutFranchiseOrLettings),
             aboutLeaseOrAgreementPartOne = Some(prefilledAboutLeaseOrAgreementPartOne),
-            aboutLeaseOrAgreementPartTwo = Some(prefilledAboutLeaseOrAgreementPartTwo)
+            aboutLeaseOrAgreementPartTwo = Some(prefilledAboutLeaseOrAgreementPartTwo),
+            requestReferenceNumber = Some(prefilledRequestReferenceNumber)
           )
         )
       )(

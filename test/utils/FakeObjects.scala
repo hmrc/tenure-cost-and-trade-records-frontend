@@ -28,7 +28,7 @@ import models.{AnnualRent, Session, SubmissionDraft}
 import models.submissions.common.{Address, AnswerNo, AnswerYes, ContactDetails, ContactDetailsAddress}
 import models.submissions.connectiontoproperty._
 import models.submissions.notconnected.{PastConnectionTypeYes, RemoveConnectionDetails, RemoveConnectionsDetails}
-import models.submissions.requestReferenceNumber.{NoReferenceNumber, NoReferenceNumberAddress}
+import models.submissions.requestReferenceNumber.{CheckYourAnswersRequestReferenceNumber, NoReferenceNumber, NoReferenceNumberAddress, NoReferenceNumberContactDetails, RequestReferenceNumberDetails}
 
 import java.time.LocalDate
 
@@ -42,14 +42,16 @@ trait FakeObjects {
     Address("001", Some("GORING ROAD"), "GORING-BY-SEA, WORTHING", Some("WEST SUSSEX"), "BN12 4AX")
   val token: String             = "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik="
 
-  val prefilledContactDetails: ContactDetails        = ContactDetails("1234567890", "TestEmail@gmail.com")
-  val prefilledContactAddress: ContactDetailsAddress = ContactDetailsAddress(
+  val prefilledContactDetails: ContactDetails                       = ContactDetails("1234567890", "TestEmail@gmail.com")
+  val prefilledContactAddress: ContactDetailsAddress                = ContactDetailsAddress(
     "004",
     Some("GORING ROAD"),
     "WORTHING",
     Some("West sussex"),
     "BN12 4AX"
   )
+  val prefilledNoRefContactDetails: NoReferenceNumberContactDetails =
+    NoReferenceNumberContactDetails("test", prefilledContactDetails, Some("test"))
 
   val prefilledFakeName                                            = "John Doe"
   val prefilledFakePhoneNo                                         = "12345678901"
@@ -375,4 +377,9 @@ trait FakeObjects {
     legalOrPlanningRestrictions = Some(LegalOrPlanningRestrictions(AnswerNo))
   )
 
+  val prefilledRequestReferenceNumber = RequestReferenceNumberDetails(
+    noReferenceNumberAddress = Some(NoReferenceNumber(prefilledFakeName, prefilledNoReferenceContactAddress)),
+    noReferenceContactDetails = Some(NoReferenceNumberContactDetails(prefilledFakeName, prefilledContactDetails, Some("test"))),
+    Some(CheckYourAnswersRequestReferenceNumber("CYA"))
+  )
 }

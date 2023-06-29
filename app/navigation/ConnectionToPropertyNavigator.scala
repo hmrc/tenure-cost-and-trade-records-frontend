@@ -17,7 +17,7 @@
 package navigation
 
 import connectors.Audit
-import identifiers.{AreYouStillConnectedPageId, ConnectionToPropertyPageId, EditAddressPageId, Identifier, NoReferenceNumberContactDetailsPageId, NoReferenceNumberPageId, VacantPropertiesPageId}
+import identifiers.{AreYouStillConnectedPageId, CheckYourAnswersRequestReferenceNumberPageId, ConnectionToPropertyPageId, EditAddressPageId, Identifier, NoReferenceNumberContactDetailsPageId, NoReferenceNumberPageId, VacantPropertiesPageId}
 import play.api.mvc.Call
 import models.Session
 import play.api.Logging
@@ -40,13 +40,16 @@ class ConnectionToPropertyNavigator @Inject() (audit: Audit) extends Navigator(a
   }
 
   override val routeMap: Map[Identifier, Session => Call] = Map(
-    AreYouStillConnectedPageId            -> areYouStillConnectedRouting,
-    EditAddressPageId                     -> (_ => controllers.connectiontoproperty.routes.ConnectionToThePropertyController.show()),
-    ConnectionToPropertyPageId            -> (_ => controllers.routes.TaskListController.show()),
-    VacantPropertiesPageId                -> (_ => controllers.routes.TaskListController.show()),
-    NoReferenceNumberPageId               -> (_ =>
+    AreYouStillConnectedPageId                   -> areYouStillConnectedRouting,
+    EditAddressPageId                            -> (_ => controllers.connectiontoproperty.routes.ConnectionToThePropertyController.show()),
+    ConnectionToPropertyPageId                   -> (_ => controllers.routes.TaskListController.show()),
+    VacantPropertiesPageId                       -> (_ => controllers.routes.TaskListController.show()),
+    NoReferenceNumberPageId                      -> (_ =>
       controllers.requestReferenceNumber.routes.RequestReferenceNumberContactDetailsController.show()
     ),
-    NoReferenceNumberContactDetailsPageId -> (_ => controllers.routes.TaskListController.show())
+    NoReferenceNumberContactDetailsPageId        -> (_ =>
+      controllers.requestReferenceNumber.routes.CheckYourAnswersRequestReferenceNumberController.show()
+    ),
+    CheckYourAnswersRequestReferenceNumberPageId -> (_ => controllers.routes.TaskListController.show())
   )
 }

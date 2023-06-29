@@ -91,7 +91,7 @@ class ConnectionToPropertyNavigatorSpec extends TestBaseSpec {
         .nextPage(NoReferenceNumberContactDetailsPageId, stillConnectedDetailsYesSession)
         .apply(
           stillConnectedDetailsYesSession
-        ) mustBe controllers.routes.TaskListController
+        ) mustBe controllers.requestReferenceNumber.routes.CheckYourAnswersRequestReferenceNumberController
         .show()
     }
   }

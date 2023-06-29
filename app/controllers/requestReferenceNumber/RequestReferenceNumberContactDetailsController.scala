@@ -21,11 +21,12 @@ import controllers.FORDataCaptureController
 import form.requestReferenceNumber.RequestReferenceNumberContactDetailsForm.noReferenceNumberContactDetailsForm
 import models.submissions.requestReferenceNumber.NoReferenceNumberContactDetails
 import navigation.ConnectionToPropertyNavigator
-import models.submissions.connectiontoproperty.StillConnectedDetails.updateStillConnectedDetails
+import models.submissions.requestReferenceNumber.RequestReferenceNumberDetails.updateRequestReferenceNumber
 import navigation.identifiers.NoReferenceNumberContactDetailsPageId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
+import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.requestReferenceNumber.requestReferenceNumberContactDetails
 
 import javax.inject.{Inject, Named, Singleton}
@@ -38,37 +39,36 @@ class RequestReferenceNumberContactDetailsController @Inject() (
   noReferenceNumberContactDetailsView: requestReferenceNumberContactDetails,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FORDataCaptureController(mcc)
+) extends FrontendController(mcc)
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Future.successful(
       Ok(
         noReferenceNumberContactDetailsView(
-          request.sessionData.stillConnectedDetails.flatMap(_.noReferenceContactDetails) match {
+          request.sessionData.requestReferenceNumberDetails.flatMap(_.noReferenceContactDetails) match {
             case Some(noReferenceContactDetails) =>
               noReferenceNumberContactDetailsForm.fillAndValidate(noReferenceContactDetails)
             case _                               => noReferenceNumberContactDetailsForm
-          },
-          request.sessionData.toSummary
+          }
         )
       )
     )
   }
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft[NoReferenceNumberContactDetails](
-      noReferenceNumberContactDetailsForm,
-      formWithErrors =>
-        BadRequest(
-          noReferenceNumberContactDetailsView(formWithErrors, request.sessionData.toSummary)
-        ),
-      data => {
-        val updatedData = updateStillConnectedDetails(_.copy(noReferenceContactDetails = Some(data)))
-        session.saveOrUpdate(updatedData)
-        Redirect(navigator.nextPage(NoReferenceNumberContactDetailsPageId, updatedData).apply(updatedData))
-      }
-    )
+    noReferenceNumberContactDetailsForm
+      .bindFromRequest()
+      .fold(
+        formWithErrors => Future.successful(BadRequest(noReferenceNumberContactDetailsView(formWithErrors))),
+        data => {
+          val updatedData = updateRequestReferenceNumber(_.copy(noReferenceContactDetails = Some(data)))
+          session.saveOrUpdate(updatedData)
+          Future.successful(
+            Redirect(navigator.nextPage(NoReferenceNumberContactDetailsPageId, updatedData).apply(updatedData))
+          )
+        }
+      )
   }
 
 }

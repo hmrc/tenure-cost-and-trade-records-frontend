@@ -29,10 +29,10 @@ class NoReferenceNumberContactDetailsViewSpec extends QuestionViewBehaviours[NoR
 
   override val form = RequestReferenceNumberContactDetailsForm.noReferenceNumberContactDetailsForm
 
-  def createView = () => noReferenceNumberContactDetailsView(form, Summary("99996010001"))(fakeRequest, messages)
+  def createView = () => noReferenceNumberContactDetailsView(form)(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[NoReferenceNumberContactDetails]) =>
-    noReferenceNumberContactDetailsView(form, Summary("99996010001"))(fakeRequest, messages)
+    noReferenceNumberContactDetailsView(form)(fakeRequest, messages)
 
   "No reference number view" must {
 

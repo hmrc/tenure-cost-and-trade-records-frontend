@@ -25,6 +25,7 @@ import models.submissions.additionalinformation.SensitiveAdditionalInformation
 import models.submissions.common.SensitiveAddress
 import models.submissions.connectiontoproperty.SensitiveStillConnectedDetails
 import models.submissions.notconnected.SensitiveRemoveConnectionDetails
+import models.submissions.requestReferenceNumber.{RequestReferenceNumberDetails, SensitiveRequestReferenceNumber}
 import play.api.libs.json.{Json, OFormat}
 import uk.gov.hmrc.crypto.Sensitive
 
@@ -41,7 +42,8 @@ case class SensitiveSession(
   aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = None,
   aboutLeaseOrAgreementPartOne: Option[SensitiveAboutLeaseOrAgreementPartOne] = None,
   aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = None,
-  saveAsDraftPassword: Option[String] = None
+  saveAsDraftPassword: Option[String] = None,
+  requestReferenceNumberDetails: Option[SensitiveRequestReferenceNumber]
 ) extends Sensitive[Session] {
 
   override def decryptedValue: Session = Session(
@@ -57,7 +59,8 @@ case class SensitiveSession(
     aboutFranchisesOrLettings,
     aboutLeaseOrAgreementPartOne.map(_.decryptedValue),
     aboutLeaseOrAgreementPartTwo,
-    saveAsDraftPassword
+    saveAsDraftPassword,
+    requestReferenceNumberDetails.map(_.decryptedValue)
   )
 }
 
@@ -78,6 +81,7 @@ object SensitiveSession {
     session.aboutFranchisesOrLettings,
     session.aboutLeaseOrAgreementPartOne.map(SensitiveAboutLeaseOrAgreementPartOne(_)),
     session.aboutLeaseOrAgreementPartTwo,
-    session.saveAsDraftPassword
+    session.saveAsDraftPassword,
+    session.requestReferenceNumberDetails.map(SensitiveRequestReferenceNumber(_))
   )
 }

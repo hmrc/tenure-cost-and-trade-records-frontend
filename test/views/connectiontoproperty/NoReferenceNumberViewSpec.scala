@@ -29,10 +29,9 @@ class NoReferenceNumberViewSpec extends QuestionViewBehaviours[NoReferenceNumber
 
   override val form = RequestReferenceNumberForm.noReferenceNumberForm
 
-  def createView = () => noReferenceAddressView(form, Summary("99996010001"))(fakeRequest, messages)
+  def createView = () => noReferenceAddressView(form)(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[NoReferenceNumber]) =>
-    noReferenceAddressView(form, Summary("99996010001"))(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[NoReferenceNumber]) => noReferenceAddressView(form)(fakeRequest, messages)
 
   "No reference number view" must {
 

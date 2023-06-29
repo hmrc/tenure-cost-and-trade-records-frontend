@@ -18,28 +18,29 @@ package models.submissions.requestReferenceNumber
 
 import actions.SessionRequest
 import models.Session
-import play.api.libs.json.Json
+import play.api.libs.json.{Json, OFormat}
 
-case class RequestReferenceNumber(
+case class RequestReferenceNumberDetails(
   noReferenceNumberAddress: Option[NoReferenceNumber] = None,
-  noReferenceContactDetails: Option[NoReferenceNumberContactDetails] = None
+  noReferenceContactDetails: Option[NoReferenceNumberContactDetails] = None,
+  checkYourAnswersRequestReferenceNumber: Option[CheckYourAnswersRequestReferenceNumber] = None
 )
 
-object RequestReferenceNumber {
-  implicit val format = Json.format[RequestReferenceNumber]
+object RequestReferenceNumberDetails {
+  implicit val format: OFormat[RequestReferenceNumberDetails] = Json.format[RequestReferenceNumberDetails]
 
   def updateRequestReferenceNumber(
-    copy: RequestReferenceNumber => RequestReferenceNumber
+    copy: RequestReferenceNumberDetails => RequestReferenceNumberDetails
   )(implicit sessionRequest: SessionRequest[_]): Session = {
 
-    val currentRequestReferenceNumber = sessionRequest.sessionData.requestReferenceNumber
+    val currentRequestReferenceNumber = sessionRequest.sessionData.requestReferenceNumberDetails
 
     val updatedRequestReferenceNumber = currentRequestReferenceNumber match {
-      case Some(_) => sessionRequest.sessionData.requestReferenceNumber.map(copy)
-      case _       => Some(copy(RequestReferenceNumber()))
+      case Some(_) => sessionRequest.sessionData.requestReferenceNumberDetails.map(copy)
+      case _       => Some(copy(RequestReferenceNumberDetails()))
     }
 
-    sessionRequest.sessionData.copy(requestReferenceNumber = updatedRequestReferenceNumber)
+    sessionRequest.sessionData.copy(requestReferenceNumberDetails = updatedRequestReferenceNumber)
 
   }
 }
