@@ -37,7 +37,8 @@
 
 @layout(
  pageHeading = messages("taskList.heading"),
- backLinkUrl = controllers.connectiontoproperty.routes.ConnectionToThePropertyController.show.url
+ backLinkUrl = controllers.connectiontoproperty.routes.ConnectionToThePropertyController.show.url,
+ summary = session.toSummary
 ) {
 
     <p class="govuk-body">@messages("taskList.subHeading")</p>
