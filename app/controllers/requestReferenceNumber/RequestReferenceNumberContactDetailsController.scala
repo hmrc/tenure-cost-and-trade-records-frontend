@@ -17,15 +17,14 @@
 package controllers.requestReferenceNumber
 
 import actions.WithSessionRefiner
-import controllers.FORDataCaptureController
-import form.requestReferenceNumber.RequestReferenceNumberContactDetailsForm.noReferenceNumberContactDetailsForm
-import models.submissions.requestReferenceNumber.NoReferenceNumberContactDetails
+import form.requestReferenceNumber.RequestReferenceNumberContactDetailsForm.requestReferenceNumberContactDetailsForm
 import navigation.ConnectionToPropertyNavigator
-import models.submissions.connectiontoproperty.StillConnectedDetails.updateStillConnectedDetails
+import models.submissions.requestReferenceNumber.RequestReferenceNumberDetails.updateRequestReferenceNumber
 import navigation.identifiers.NoReferenceNumberContactDetailsPageId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
+import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.requestReferenceNumber.requestReferenceNumberContactDetails
 
 import javax.inject.{Inject, Named, Singleton}
@@ -35,40 +34,39 @@ import scala.concurrent.Future
 class RequestReferenceNumberContactDetailsController @Inject() (
   mcc: MessagesControllerComponents,
   navigator: ConnectionToPropertyNavigator,
-  noReferenceNumberContactDetailsView: requestReferenceNumberContactDetails,
+  requestReferenceNumberContactDetailsView: requestReferenceNumberContactDetails,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FORDataCaptureController(mcc)
+) extends FrontendController(mcc)
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Future.successful(
       Ok(
-        noReferenceNumberContactDetailsView(
-          request.sessionData.stillConnectedDetails.flatMap(_.noReferenceContactDetails) match {
-            case Some(noReferenceContactDetails) =>
-              noReferenceNumberContactDetailsForm.fillAndValidate(noReferenceContactDetails)
-            case _                               => noReferenceNumberContactDetailsForm
-          },
-          request.sessionData.toSummary
+        requestReferenceNumberContactDetailsView(
+          request.sessionData.requestReferenceNumberDetails.flatMap(_.requestReferenceContactDetails) match {
+            case Some(requestReferenceContactDetails) =>
+              requestReferenceNumberContactDetailsForm.fillAndValidate(requestReferenceContactDetails)
+            case _                                    => requestReferenceNumberContactDetailsForm
+          }
         )
       )
     )
   }
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft[NoReferenceNumberContactDetails](
-      noReferenceNumberContactDetailsForm,
-      formWithErrors =>
-        BadRequest(
-          noReferenceNumberContactDetailsView(formWithErrors, request.sessionData.toSummary)
-        ),
-      data => {
-        val updatedData = updateStillConnectedDetails(_.copy(noReferenceContactDetails = Some(data)))
-        session.saveOrUpdate(updatedData)
-        Redirect(navigator.nextPage(NoReferenceNumberContactDetailsPageId, updatedData).apply(updatedData))
-      }
-    )
+    requestReferenceNumberContactDetailsForm
+      .bindFromRequest()
+      .fold(
+        formWithErrors => Future.successful(BadRequest(requestReferenceNumberContactDetailsView(formWithErrors))),
+        data => {
+          val updatedData = updateRequestReferenceNumber(_.copy(requestReferenceContactDetails = Some(data)))
+          session.saveOrUpdate(updatedData)
+          Future.successful(
+            Redirect(navigator.nextPage(NoReferenceNumberContactDetailsPageId, updatedData).apply(updatedData))
+          )
+        }
+      )
   }
 
 }

@@ -26,11 +26,15 @@ POST        /saved/resume                                           controllers.
 GET         /saved/startagain                                       controllers.SaveAsDraftController.startAgain
 
 # No reference number
+GET         /request-reference-number-with-session                  controllers.requestReferenceNumber.RequestReferenceNumberController.startWithSession()
 GET         /request-reference-number                               controllers.requestReferenceNumber.RequestReferenceNumberController.show()
 POST        /request-reference-number                               controllers.requestReferenceNumber.RequestReferenceNumberController.submit()
 
 GET         /request-reference-number-contact-details               controllers.requestReferenceNumber.RequestReferenceNumberContactDetailsController.show()
 POST        /request-reference-number-contact-details               controllers.requestReferenceNumber.RequestReferenceNumberContactDetailsController.submit()
+
+GET         /check-your-answers-request-reference-number            controllers.requestReferenceNumber.CheckYourAnswersRequestReferenceNumberController.show()
+POST        /check-your-answers-request-reference-number            controllers.requestReferenceNumber.CheckYourAnswersRequestReferenceNumberController.submit()
 
 # Connection to the property
 GET         /are-you-still-connected                                controllers.connectiontoproperty.AreYouStillConnectedController.show()
@@ -304,3 +308,6 @@ GET         /confirmation                                           controllers.
 
 POST        /declaration                                            controllers.FormSubmissionController.submit()
 GET         /confirmation                                           controllers.FormSubmissionController.confirmation()
+
+POST        /declaration-request-reference-number                   controllers.RequestReferenceNumberFormSubmissionController.submit()
+GET         /confirmation-request-reference-number                  controllers.RequestReferenceNumberFormSubmissionController.confirmation()

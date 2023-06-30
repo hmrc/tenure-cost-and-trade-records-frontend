@@ -34,7 +34,6 @@
 
 @layout(
   pageHeading = messages("aboutYou.heading"),
-  showH1 = false,
   backLinkUrl = controllers.routes.TaskListController.show.url,
   showSection = true,
     summary = Some(summary),
@@ -44,25 +43,11 @@
 
   @formWithCSRF(action = controllers.aboutyouandtheproperty.routes.AboutYouController.submit(), args = Symbol("class") -> "myForm", Symbol("id") -> "myFormId") {
 
-    <h1 class="govuk-heading-l">@messages("aboutYou.heading")</h1>
-
     <p class="govuk-body">@messages("aboutYou.subheading")</p>
 
-    @govukInput(
-      Input(
-        id = "fullName",
-        name = "fullName",
-        classes = "govuk-!-width-two-thirds",
-        value = theForm("fullName").value,
-        label = Label(
-          content = Text(messages("label.fullName"))
-        ),
-        errorMessage = theForm.errors.asTextErrorMessageForField("fullName"),
-      ).withFormField(theForm("fullName"))
-    )
-      
-      @includes.textInput(govukInput, theForm, "contactDetails.phone", "govuk-!-width-two-thirds", "phone")
-      @includes.textInput(govukInput, theForm, "contactDetails.email", "govuk-!-width-two-thirds", "email")
+    @includes.textInput(govukInput, theForm, "fullName", "govuk-!-width-two-thirds", "fullName")
+    @includes.textInput(govukInput, theForm, "contactDetails.phone", "govuk-!-width-two-thirds", "phone")
+    @includes.textInput(govukInput, theForm, "contactDetails.email", "govuk-!-width-two-thirds", "email")
 
     @includes.continueSaveAsDraftButtons(govukButton)
   }

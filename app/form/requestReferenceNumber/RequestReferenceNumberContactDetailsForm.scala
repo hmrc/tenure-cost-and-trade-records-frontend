@@ -17,24 +17,24 @@
 package form.requestReferenceNumber
 
 import form.MappingSupport.contactDetailsMapping
-import models.submissions.requestReferenceNumber.NoReferenceNumberContactDetails
+import models.submissions.requestReferenceNumber.RequestReferenceNumberContactDetails
 import play.api.data.Form
 import play.api.data.Forms.{default, mapping, optional, text}
 import play.api.data.validation.Constraints.{maxLength, nonEmpty}
 
 object RequestReferenceNumberContactDetailsForm {
-  val noReferenceNumberContactDetailsForm: Form[NoReferenceNumberContactDetails] = Form(
+  val requestReferenceNumberContactDetailsForm: Form[RequestReferenceNumberContactDetails] = Form(
     mapping(
-      "noReferenceNumberContactDetailsFullName"              -> default(text, "").verifying(
-        nonEmpty(errorMessage = "error.noReferenceNumberContactDetailsFullName.required")
+      "requestReferenceNumberContactDetailsFullName"              -> default(text, "").verifying(
+        nonEmpty(errorMessage = "error.requestReferenceNumberContactDetailsFullName.required")
       ),
-      "noReferenceNumberContactDetails"                      -> contactDetailsMapping,
-      "noReferenceNumberContactDetailsAdditionalInformation" ->
+      "requestReferenceNumberContactDetails"                      -> contactDetailsMapping,
+      "requestReferenceNumberContactDetailsAdditionalInformation" ->
         optional(
           default(text, "").verifying(
             maxLength(2000, "error.char.count.maxLength")
           )
         )
-    )(NoReferenceNumberContactDetails.apply)(NoReferenceNumberContactDetails.unapply)
+    )(RequestReferenceNumberContactDetails.apply)(RequestReferenceNumberContactDetails.unapply)
   )
 }

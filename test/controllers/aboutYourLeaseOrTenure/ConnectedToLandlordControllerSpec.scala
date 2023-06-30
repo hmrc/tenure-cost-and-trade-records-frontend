@@ -17,44 +17,46 @@
 package controllers.aboutYourLeaseOrTenure
 
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
+import navigation.AboutYourLeaseOrTenureNavigator
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import utils.TestBaseSpec
 
-class IntervalsOfRentReviewControllerSpec extends TestBaseSpec {
+class ConnectedToLandlordControllerSpec extends TestBaseSpec {
 
-  def intervalsOfRentReviewController(
+  val mockAboutYourLeaseOrTenureNavigator = mock[AboutYourLeaseOrTenureNavigator]
+
+  def connectedToLandlordController(
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
   ) =
-    new IntervalsOfRentReviewController(
+    new ConnectedToLandlordController(
       stubMessagesControllerComponents(),
-      aboutYourLeaseOrTenureNavigator,
-      intervalsOfRentReviewView,
+      mockAboutYourLeaseOrTenureNavigator,
+      connectedToLandlordView,
       preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
       mockSessionRepo
     )
 
-  "GET /" should {
+  "GET /"    should {
     "return 200" in {
-      val result = intervalsOfRentReviewController().show(fakeRequest)
+      val result = connectedToLandlordController().show(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return HTML" in {
-      val result = intervalsOfRentReviewController().show(fakeRequest)
+      val result = connectedToLandlordController().show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
   }
-
   "SUBMIT /" should {
-    "throw a See_Other if an empty form is submitted" in {
+    "throw a BAD_REQUEST if an empty form is submitted" in {
 
-      val res = intervalsOfRentReviewController().submit(
+      val res = connectedToLandlordController().submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)
       )
-      status(res) shouldBe SEE_OTHER
+      status(res) shouldBe BAD_REQUEST
     }
   }
 }

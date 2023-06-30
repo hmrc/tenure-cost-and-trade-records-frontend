@@ -14,10 +14,9 @@
  * limitations under the License.
  */
 
-package controllers.connectiontoproperty
+package controllers.requestReferenceNumber
 
-import controllers.requestReferenceNumber.RequestReferenceNumberController
-import form.requestReferenceNumber.RequestReferenceNumberForm.noReferenceNumberForm
+import form.requestReferenceNumber.RequestReferenceNumberForm.requestReferenceNumberForm
 import models.submissions.connectiontoproperty.StillConnectedDetails
 import play.api.http.Status
 import play.api.test.Helpers._
@@ -33,7 +32,7 @@ class RequestReferenceNumberControllerSpec extends TestBaseSpec {
   ) = new RequestReferenceNumberController(
     stubMessagesControllerComponents(),
     connectedToPropertyNavigator,
-    noReferenceAddressView,
+    requestReferenceAddressView,
     preEnrichedActionRefiner(stillConnectedDetails = stillConnectedDetails),
     mockSessionRepo
   )
@@ -63,14 +62,21 @@ class RequestReferenceNumberControllerSpec extends TestBaseSpec {
   "Edit address form" should {
     "error if building number is missing" in {
       val formData = baseFormData - errorKey.buildingNameNumber
-      val form     = noReferenceNumberForm.bind(formData)
+      val form     = requestReferenceNumberForm.bind(formData)
 
       mustContainError(errorKey.buildingNameNumber, "error.buildingNameNumber.required", form)
     }
 
+    "error if town or city is missing" in {
+      val formData = baseFormData - errorKey.town
+      val form     = requestReferenceNumberForm.bind(formData)
+
+      mustContainError(errorKey.town, "error.townCity.required", form)
+    }
+
     "error if postcode is missing" in {
       val formData = baseFormData - errorKey.postcode
-      val form     = noReferenceNumberForm.bind(formData)
+      val form     = requestReferenceNumberForm.bind(formData)
 
       mustContainError(errorKey.postcode, "error.postcode.required", form)
     }
@@ -78,12 +84,14 @@ class RequestReferenceNumberControllerSpec extends TestBaseSpec {
 
   object TestData {
     val errorKey = new {
-      val buildingNameNumber = "noReferenceNumberAddress.buildingNameNumber"
-      val postcode           = "noReferenceNumberAddress.postcode"
+      val buildingNameNumber = "requestReferenceNumberAddress.buildingNameNumber"
+      val town               = "requestReferenceNumberAddress.town"
+      val postcode           = "requestReferenceNumberAddress.postcode"
     }
 
     val baseFormData: Map[String, String] = Map(
       "buildingNameNumber" -> "001",
+      "town"               -> "Manchester",
       "postcode"           -> "BN12 4AX"
     )
   }

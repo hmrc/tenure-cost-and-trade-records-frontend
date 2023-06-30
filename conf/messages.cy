@@ -91,6 +91,7 @@ label.change = Change
 ##############
 hint.select.all = Select all that apply
 hint.date.example = For example, 10 2 1999
+hint.select.applicable = Select any that apply – leave blank if not applicable
 
 # SECTION NAMES
 ###############
@@ -100,7 +101,6 @@ label.section.aboutYourTradingHistory = Your trading history
 label.section.aboutTheFranchiseLettings = Franchises or lettings
 label.section.aboutYourLeaseOrTenure = Your lease or agreement
 label.section.additionalInformation = Additional information
-
 
 # DUMMY START PAGE FULL INFORMATION
 ##############################
@@ -167,19 +167,25 @@ logout.loginAgain=Log in again
 
 # NO REFERENCE NUMBER
 ##############################
-noReferenceNumber.heading = If you do not have a reference number
-noReferenceNumber.subheading = If you’ve not received a letter from the VOA
-noReferenceNumber.p1 = You only need to declare your business trade and cost information when the VOA have asked you to do so. If you think you should have received a letter, you can request a replacement from the VOA.
-noReferenceNumber.subheading2 = If you need a replacement letter
-noReferenceNumber.p2 = If you no longer have access to your letter from the VOA, or you have not received one but think you should have, the VOA can issue a replacement. Complete the following form and the VOA will issue a replacement.
-noReferenceNumber.p3 = We can only reissue letters to the address where they were originally sent. <a href="https://www.gov.uk/contact-voa" class="govuk-link" target="_blank">Contact the VOA (opens in new tab)</a> if your business has changed address.
-noReferenceNumber.subheading3 = What are the details of the property related to the missing reference number?
-label.noReferenceNumberBusinessTradingName = Business or trading name
-error.noReferenceNumberBusinessTradingName.required = Enter a business or trading name
+requestReferenceNumber.heading = If you do not have a reference number
+requestReferenceNumber.subheading = If you’ve not received a letter from the VOA
+requestReferenceNumber.p1 = You only need to declare your business trade and cost information when the VOA have asked you to do so. If you think you should have received a letter, you can request a replacement from the VOA.
+requestReferenceNumber.subheading2 = If you need a replacement letter
+requestReferenceNumber.p2 = If you no longer have access to your letter from the VOA, or you have not received one but think you should have, the VOA can issue a replacement. Complete the following form and the VOA will issue a replacement.
+requestReferenceNumber.p3 = We can only reissue letters to the address where they were originally sent. <a href="https://www.gov.uk/contact-voa" class="govuk-link" target="_blank">Contact the VOA (opens in new tab)</a> if your business has changed address.
+requestReferenceNumber.subheading3 = What are the details of the property related to the missing reference number?
+label.requestReferenceNumberBusinessTradingName = Business or trading name
+error.referenceNumberBusinessTradingName.required = Enter a business or trading name
+key.requestReferenceNumberAddress = Address
+key.nameContactRequestReferenceNumber = Name and contact details
 
 # NO REFERENCE NUMBER CONTACT DETAILS
 ##############################
-noReferenceNumberContactDetails.heading = Holding page for no reference number contact details page
+requestReferenceNumberContactDetails.heading = Your contact details
+requestReferenceNumberContactDetails.p1 = We'll need the contact details of the person completing the form. We will only use them to contact you about your enquiry
+label.requestReferenceNumberContactDetailsFullName = Full name
+requestReferenceNumberContactDetailsAdditionalInformation.heading = Additional information (optional)
+error.requestReferenceNumberContactDetailsFullName.required = Enter your name
 
 # ARE YOU STILL CONNECTED SECTION
 #################################
@@ -243,9 +249,7 @@ aboutYou.subheading = These should be the contact details of the person completi
 
 # ABOUT THE PROPERTY
 ####################
-aboutProperty.heading = What is the name of the current occupier?
-label.currentOccupierName = This should be the trading name of the business operating from the property
-label.propertyCurrentlyUsed = What is the current use of the property?
+aboutProperty.heading = How is the property currently used?
 hint.select.main = If your property has more than one use, select the main function
 propertyCurrentlyUsed.publicHouse = Public house
 propertyCurrentlyUsed.wineCafeBar = Wine bar or cafe bar
@@ -260,8 +264,6 @@ propertyCurrentlyUsed.conferenceCentre = Conference centre
 propertyCurrentlyUsed.other = Other
 hint.other.use.propertyCurrentlyUsedOther = Describe the use of your property is not listed
 hint.other.vacant.propertyCurrentlyUsedOther = Please give details if the property has another use, or is vacant
-error.currentOccupierName.required = Enter the current occupier’s name
-error.currentOccupierName.maxLength = The current occupier’s name must be 50 characters or less
 
 # WEBSITE FOR PROPERTY
 ######################
@@ -958,6 +960,7 @@ checkYourAnswersAboutTheProperty.enforcementActionHasBeenTakenInformationDetails
 checkYourAnswersAboutTheProperty.tiedForGoods = Tied for any goods?
 checkYourAnswersAboutTheProperty.tiedForGoodsDetails = Type of tie
 checkYourAnswersAboutTheTradingHistory.heading = This is a holding page for the about your trading history check your answers page
+checkYourAnswersRequestReferenceNumber.heading = Check your answers - if you do not have a reference number
 
 # Confirmation Page
 ###################
@@ -1060,7 +1063,7 @@ error.duration.months = The month figure must be a number between 1 and 12
 error.duration.days = Days must be a number between 1 and 31
 error.months.required = Enter months amount
 error.years.required = Enter years amount
-error.currentOccupierName.required = Please select how the the property is currently used
+error.required.propertyUsages = Please select how the the property is currently used
 error.propertyCurrentlyUsed.required=Select your connection to the property
 error.invalid_date = Enter a valid date
 error.buildingNameNumber.required = Enter the first line of the address

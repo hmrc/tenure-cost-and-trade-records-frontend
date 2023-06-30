@@ -23,8 +23,7 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukCharacterCount
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
-@import models.pages.Summary
-@import models.submissions.requestReferenceNumber.NoReferenceNumber
+@import models.submissions.requestReferenceNumber.RequestReferenceNumber
 
 @this(layout: Layout,
         govukButton: GovukButton,
@@ -37,11 +36,11 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[NoReferenceNumber], summary: Summary)(implicit request: Request[_], messages: Messages)
+@(theForm: Form[RequestReferenceNumber])(implicit request: Request[_], messages: Messages)
 
 @layout(
- pageHeading = messages("noReferenceNumber.heading"),
- showH1 = false,
+ pageHeading = messages("requestReferenceNumber.heading"),
+ showH1 = true,
  showSection = true,
  sectionName = messages("label.section.connectionToTheProperty"),
  backLinkUrl = controllers.routes.LoginController.show.url,
@@ -50,36 +49,29 @@
 
  @formWithCSRF(action = controllers.requestReferenceNumber.routes.RequestReferenceNumberController.submit()) {
 
-
-  <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-   <h1 class="govuk-fieldset__heading">@messages("noReferenceNumber.heading")</h1>
-  </legend>
-
   <p class="govuk-body">
-   <b>@messages("noReferenceNumber.subheading")</b>
+   <b>@messages("requestReferenceNumber.subheading")</b>
   </p>
 
-  <p class="govuk-body">@messages("noReferenceNumber.p1")</p>
+  <p class="govuk-body">@messages("requestReferenceNumber.p1")</p>
 
   <p class="govuk-body">
-   <b>@messages("noReferenceNumber.subheading2")</b>
+   <b>@messages("requestReferenceNumber.subheading2")</b>
   </p>
 
-  <p class="govuk-body">@messages("noReferenceNumber.p2")</p>
+  <p class="govuk-body">@messages("requestReferenceNumber.p2")</p>
 
-  <p class="govuk-body">@HtmlContent(messages("noReferenceNumber.p3")).asHtml</p>
+  <p class="govuk-body">@HtmlContent(messages("requestReferenceNumber.p3")).asHtml</p>
 
-  <p class="govuk-body">
-   <b>@messages("noReferenceNumber.subheading3")</b>
-  </p>
+  <h2 class="govuk-heading-m">@messages("requestReferenceNumber.subheading3")</h2>
 
-  @includes.textInput(govukInput, theForm, "noReferenceNumberBusinessTradingName", "govuk-input--width-20", "noReferenceNumberBusinessTradingName", "noReferenceNumberBusinessTrading")
-  @includes.textInput(govukInput, theForm, "noReferenceNumberAddress.buildingNameNumber", "govuk-input--width-20", "buildingNameNumber", formGroupClasses = "address-field-one address-fields")
-  @includes.textInput(govukInput, theForm, "noReferenceNumberAddress.street1", "govuk-input--width-20", "street1", optional = true, formGroupClasses = "address-field-two address-fields")
-  @includes.textInput(govukInput, theForm, "noReferenceNumberAddress.town", "govuk-input--width-20", "town", formGroupClasses = "address-field-three address-fields")
-  @includes.textInput(govukInput, theForm, "noReferenceNumberAddress.county", "govuk-input--width-20", "county", optional = true, formGroupClasses = "address-field-four address-fields")
-  @includes.textInput(govukInput, theForm, "noReferenceNumberAddress.postcode", "govuk-input--width-10", "postcode", formGroupClasses = "address-field-postcode")
+  @includes.textInput(govukInput, theForm, "requestReferenceNumberBusinessTradingName", "govuk-input--width-20", "requestReferenceNumberBusinessTradingName")
 
+  @includes.textInput(govukInput, theForm, "requestReferenceNumberAddress.buildingNameNumber", "govuk-input--width-20", "buildingNameNumber", formGroupClasses = "address-field-one address-fields")
+  @includes.textInput(govukInput, theForm, "requestReferenceNumberAddress.street1", "govuk-input--width-20", "street1", optional = true, formGroupClasses = "address-field-two address-fields")
+  @includes.textInput(govukInput, theForm, "requestReferenceNumberAddress.town", "govuk-input--width-20", "town", formGroupClasses = "address-field-three address-fields")
+  @includes.textInput(govukInput, theForm, "requestReferenceNumberAddress.county", "govuk-input--width-20", "county", optional = true, formGroupClasses = "address-field-four address-fields")
+  @includes.textInput(govukInput, theForm, "requestReferenceNumberAddress.postcode", "govuk-input--width-10", "postcode", formGroupClasses = "address-field-postcode")
 
   @includes.continueButton(govukButton)
  }

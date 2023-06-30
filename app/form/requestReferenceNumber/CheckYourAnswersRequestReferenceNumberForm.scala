@@ -16,20 +16,18 @@
 
 package form.requestReferenceNumber
 
-import form.MappingSupport.requestReferenceNumberAddressMapping
-import models.submissions.requestReferenceNumber.RequestReferenceNumber
+import models.submissions.requestReferenceNumber.CheckYourAnswersRequestReferenceNumber
 import play.api.data.Form
 import play.api.data.Forms.{default, mapping, text}
-import play.api.data.validation.Constraints.{maxLength, nonEmpty}
+import play.api.data.validation.Constraints.nonEmpty
 
-object RequestReferenceNumberForm {
-  val requestReferenceNumberForm: Form[RequestReferenceNumber] = Form(
+object CheckYourAnswersRequestReferenceNumberForm {
+
+  val checkYourAnswersRequestReferenceNumberForm = Form(
     mapping(
-      "requestReferenceNumberBusinessTradingName" -> default(text, "").verifying(
-        nonEmpty(errorMessage = "error.requestReferenceNumberBusinessTradingName.required"),
-        maxLength(100, "error.requestReferenceNumberBusinessTradingName.maxLength")
-      ),
-      "requestReferenceNumberAddress"             -> requestReferenceNumberAddressMapping
-    )(RequestReferenceNumber.apply)(RequestReferenceNumber.unapply)
+      "CheckYourAnswersRequestReferenceNumber" -> default(text, "").verifying(
+        nonEmpty(errorMessage = "error.checkYourAnswersRadio.required")
+      )
+    )(CheckYourAnswersRequestReferenceNumber.apply)(CheckYourAnswersRequestReferenceNumber.unapply)
   )
 }
