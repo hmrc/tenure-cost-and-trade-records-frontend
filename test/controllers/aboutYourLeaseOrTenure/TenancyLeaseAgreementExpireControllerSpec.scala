@@ -18,6 +18,7 @@ package controllers.aboutYourLeaseOrTenure
 
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo
 import play.api.http.Status
+import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import utils.TestBaseSpec
 
@@ -44,6 +45,15 @@ class TenancyLeaseAgreementExpireControllerSpec extends TestBaseSpec {
       val result = tenancyLeaseAgreementExpireController().show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
+    }
+
+    "SUBMIT /" should {
+      "throw a BAD_REQUEST if an empty form is submitted" in {
+        val res = tenancyLeaseAgreementExpireController().submit(
+          FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)
+        )
+        status(res) shouldBe BAD_REQUEST
+      }
     }
   }
 }

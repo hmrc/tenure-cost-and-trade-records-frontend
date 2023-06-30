@@ -18,6 +18,7 @@ package controllers.aboutYourLeaseOrTenure
 
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
 import play.api.http.Status
+import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import utils.TestBaseSpec
 
@@ -44,6 +45,16 @@ class IntervalsOfRentReviewControllerSpec extends TestBaseSpec {
       val result = intervalsOfRentReviewController().show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
+    }
+  }
+
+  "SUBMIT /" should {
+    "throw a See_Other if an empty form is submitted" in {
+
+      val res = intervalsOfRentReviewController().submit(
+        FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)
+      )
+      status(res) shouldBe SEE_OTHER
     }
   }
 }
