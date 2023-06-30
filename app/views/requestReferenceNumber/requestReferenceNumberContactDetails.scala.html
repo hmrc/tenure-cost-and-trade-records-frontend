@@ -17,9 +17,8 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
-@import models.submissions.requestReferenceNumber.NoReferenceNumberContactDetails
+@import models.submissions.requestReferenceNumber.RequestReferenceNumberContactDetails
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukCharacterCount
-@import models.pages.Summary
 
 @this(layout: Layout,
   govukButton: GovukButton,
@@ -28,10 +27,10 @@
   formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[NoReferenceNumberContactDetails])(implicit request: Request[_], messages: Messages)
+@(theForm: Form[RequestReferenceNumberContactDetails])(implicit request: Request[_], messages: Messages)
 
     @layout(
-        pageHeading = messages("noReferenceNumberContactDetails.heading"),
+        pageHeading = messages("requestReferenceNumberContactDetails.heading"),
         showH1 = true,
         showSection = true,
         sectionName = messages("label.section.connectionToTheProperty"),
@@ -41,12 +40,12 @@
 
   @formWithCSRF(action = controllers.requestReferenceNumber.routes.RequestReferenceNumberContactDetailsController.submit()){
 
-      <p class="govuk-body">@messages("noReferenceNumberContactDetails.p1")</p>
+      <p class="govuk-body">@messages("requestReferenceNumberContactDetails.p1")</p>
 
-      @includes.textInput(govukInput, theForm, "noReferenceNumberContactDetailsFullName", "govuk-!-width-two-thirds", "noReferenceNumberContactDetailsFullName")
-      @includes.textInput(govukInput, theForm, "noReferenceNumberContactDetails.phone", "govuk-!-width-two-thirds", "phone")
-      @includes.textInput(govukInput, theForm, "noReferenceNumberContactDetails.email", "govuk-!-width-two-thirds", "email")
-      @includes.textInputCharCount(govukCharacterCount, theForm, "noReferenceNumberContactDetailsAdditionalInformation", "noReferenceNumberContactDetailsAdditionalInformation.heading")
+      @includes.textInput(govukInput, theForm, "requestReferenceNumberContactDetailsFullName", "govuk-!-width-two-thirds", "requestReferenceNumberContactDetailsFullName")
+      @includes.textInput(govukInput, theForm, "requestReferenceNumberContactDetails.phone", "govuk-!-width-two-thirds", "phone")
+      @includes.textInput(govukInput, theForm, "requestReferenceNumberContactDetails.email", "govuk-!-width-two-thirds", "email")
+      @includes.textInputCharCount(govukCharacterCount, theForm, "requestReferenceNumberContactDetailsAdditionalInformation", "requestReferenceNumberContactDetailsAdditionalInformation.heading")
 
       @includes.continueButton(govukButton)
   }

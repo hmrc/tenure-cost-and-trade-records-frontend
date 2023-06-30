@@ -27,9 +27,9 @@ case class SensitiveRequestAddress(
   town: SensitiveString,
   county: Option[SensitiveString],
   postcode: SensitiveString
-) extends Sensitive[NoReferenceNumberAddress] {
+) extends Sensitive[RequestReferenceNumberAddress] {
 
-  override def decryptedValue: NoReferenceNumberAddress = NoReferenceNumberAddress(
+  override def decryptedValue: RequestReferenceNumberAddress = RequestReferenceNumberAddress(
     buildingNameNumber.decryptedValue,
     street1.map(_.decryptedValue),
     town.decryptedValue,
@@ -43,7 +43,7 @@ object SensitiveRequestAddress {
   implicit def format(implicit crypto: MongoCrypto): OFormat[SensitiveRequestAddress] =
     Json.format[SensitiveRequestAddress]
 
-  def apply(requestAddress: NoReferenceNumberAddress): SensitiveRequestAddress = SensitiveRequestAddress(
+  def apply(requestAddress: RequestReferenceNumberAddress): SensitiveRequestAddress = SensitiveRequestAddress(
     SensitiveString(requestAddress.buildingNameNumber),
     requestAddress.street1.map(SensitiveString(_)),
     SensitiveString(requestAddress.town),

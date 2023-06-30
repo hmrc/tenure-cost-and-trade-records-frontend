@@ -17,20 +17,21 @@
 package views.requestReferenceNumber
 
 import form.requestReferenceNumber.RequestReferenceNumberForm
-import models.submissions.requestReferenceNumber.NoReferenceNumber
+import models.submissions.requestReferenceNumber.RequestReferenceNumber
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class NoReferenceNumberViewSpec extends QuestionViewBehaviours[NoReferenceNumber] {
+class NoReferenceNumberViewSpec extends QuestionViewBehaviours[RequestReferenceNumber] {
 
-  val messageKeyPrefix = "noReferenceNumber"
+  val messageKeyPrefix = "requestReferenceNumber"
 
-  override val form = RequestReferenceNumberForm.noReferenceNumberForm
+  override val form = RequestReferenceNumberForm.requestReferenceNumberForm
 
-  def createView = () => noReferenceAddressView(form)(fakeRequest, messages)
+  def createView = () => requestReferenceAddressView(form)(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[NoReferenceNumber]) => noReferenceAddressView(form)(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[RequestReferenceNumber]) =>
+    requestReferenceAddressView(form)(fakeRequest, messages)
 
   "No reference number view" must {
 
@@ -38,11 +39,11 @@ class NoReferenceNumberViewSpec extends QuestionViewBehaviours[NoReferenceNumber
 
     behave like pageWithTextFields(
       createViewUsingForm,
-      "noReferenceNumberAddress.buildingNameNumber",
-      "noReferenceNumberAddress.street1",
-      "noReferenceNumberAddress.town",
-      "noReferenceNumberAddress.county",
-      "noReferenceNumberAddress.postcode"
+      "requestReferenceNumberAddress.buildingNameNumber",
+      "requestReferenceNumberAddress.street1",
+      "requestReferenceNumberAddress.town",
+      "requestReferenceNumberAddress.county",
+      "requestReferenceNumberAddress.postcode"
     )
 
     "has a link marked with back.link.label leading to the Login Page" in {
@@ -53,34 +54,34 @@ class NoReferenceNumberViewSpec extends QuestionViewBehaviours[NoReferenceNumber
       backlinkUrl mustBe controllers.routes.LoginController.show().url
     }
 
-    "contain an input for noReferenceNumberBusinessTradingName" in {
+    "contain an input for requestReferenceNumberBusinessTradingName" in {
       val doc = asDocument(createViewUsingForm(form))
-      assertRenderedById(doc, "noReferenceNumberBusinessTradingName")
+      assertRenderedById(doc, "requestReferenceNumberBusinessTradingName")
     }
 
-    "contain an input for noReferenceNumberAddress.buildingNameNumber" in {
+    "contain an input for requestReferenceNumberAddress.buildingNameNumber" in {
       val doc = asDocument(createViewUsingForm(form))
-      assertRenderedById(doc, "noReferenceNumberAddress.buildingNameNumber")
+      assertRenderedById(doc, "requestReferenceNumberAddress.buildingNameNumber")
     }
 
-    "contain an input for noReferenceNumberAddress.street1" in {
+    "contain an input for requestReferenceNumberAddress.street1" in {
       val doc = asDocument(createViewUsingForm(form))
-      assertRenderedById(doc, "noReferenceNumberAddress.street1")
+      assertRenderedById(doc, "requestReferenceNumberAddress.street1")
     }
 
-    "contain an input for noReferenceNumberAddress.town" in {
+    "contain an input for requestReferenceNumberAddress.town" in {
       val doc = asDocument(createViewUsingForm(form))
-      assertRenderedById(doc, "noReferenceNumberAddress.town")
+      assertRenderedById(doc, "requestReferenceNumberAddress.town")
     }
 
-    "contain an input for noReferenceNumberAddress.county" in {
+    "contain an input for requestReferenceNumberAddress.county" in {
       val doc = asDocument(createViewUsingForm(form))
-      assertRenderedById(doc, "noReferenceNumberAddress.county")
+      assertRenderedById(doc, "requestReferenceNumberAddress.county")
     }
 
-    "contain an input for noReferenceNumberAddress.postcode" in {
+    "contain an input for requestReferenceNumberAddress.postcode" in {
       val doc = asDocument(createViewUsingForm(form))
-      assertRenderedById(doc, "noReferenceNumberAddress.postcode")
+      assertRenderedById(doc, "requestReferenceNumberAddress.postcode")
     }
 
     "contain save and continue button with the value Save and Continue" in {

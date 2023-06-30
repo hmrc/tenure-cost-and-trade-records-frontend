@@ -21,13 +21,13 @@ import play.api.libs.json.{Json, OFormat}
 import uk.gov.hmrc.crypto.Sensitive
 
 case class SensitiveRequestReferenceNumber(
-  noReferenceNumberAddress: Option[SensitiveRequestReferenceNumberAddress] = None,
-  noReferenceContactDetails: Option[NoReferenceNumberContactDetails] = None
+  requestReferenceNumberAddress: Option[SensitiveRequestReferenceNumberAddress] = None,
+  requestReferenceContactDetails: Option[RequestReferenceNumberContactDetails] = None
 ) extends Sensitive[RequestReferenceNumberDetails] {
 
   override def decryptedValue: RequestReferenceNumberDetails = RequestReferenceNumberDetails(
-    noReferenceNumberAddress.map(_.decryptedValue),
-    noReferenceContactDetails
+    requestReferenceNumberAddress.map(_.decryptedValue),
+    requestReferenceContactDetails
   )
 }
 
@@ -38,7 +38,7 @@ object SensitiveRequestReferenceNumber {
 
   def apply(requestReferenceNumber: RequestReferenceNumberDetails): SensitiveRequestReferenceNumber =
     SensitiveRequestReferenceNumber(
-      requestReferenceNumber.noReferenceNumberAddress.map(SensitiveRequestReferenceNumberAddress(_)),
-      requestReferenceNumber.noReferenceContactDetails
+      requestReferenceNumber.requestReferenceNumberAddress.map(SensitiveRequestReferenceNumberAddress(_)),
+      requestReferenceNumber.requestReferenceContactDetails
     )
 }

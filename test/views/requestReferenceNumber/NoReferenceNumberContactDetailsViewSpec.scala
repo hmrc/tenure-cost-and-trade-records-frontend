@@ -17,21 +17,21 @@
 package views.requestReferenceNumber
 
 import form.requestReferenceNumber.RequestReferenceNumberContactDetailsForm
-import models.submissions.requestReferenceNumber.NoReferenceNumberContactDetails
+import models.submissions.requestReferenceNumber.RequestReferenceNumberContactDetails
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class NoReferenceNumberContactDetailsViewSpec extends QuestionViewBehaviours[NoReferenceNumberContactDetails] {
+class NoReferenceNumberContactDetailsViewSpec extends QuestionViewBehaviours[RequestReferenceNumberContactDetails] {
 
-  val messageKeyPrefix = "noReferenceNumberContactDetails"
+  val messageKeyPrefix = "requestReferenceNumberContactDetails"
 
-  override val form = RequestReferenceNumberContactDetailsForm.noReferenceNumberContactDetailsForm
+  override val form = RequestReferenceNumberContactDetailsForm.requestReferenceNumberContactDetailsForm
 
-  def createView = () => noReferenceNumberContactDetailsView(form)(fakeRequest, messages)
+  def createView = () => requestReferenceNumberContactDetailsView(form)(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[NoReferenceNumberContactDetails]) =>
-    noReferenceNumberContactDetailsView(form)(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[RequestReferenceNumberContactDetails]) =>
+    requestReferenceNumberContactDetailsView(form)(fakeRequest, messages)
 
   "No reference number view" must {
 
@@ -39,9 +39,9 @@ class NoReferenceNumberContactDetailsViewSpec extends QuestionViewBehaviours[NoR
 
     behave like pageWithTextFields(
       createViewUsingForm,
-      "noReferenceNumberContactDetailsFullName",
-      "noReferenceNumberContactDetails.phone",
-      "noReferenceNumberContactDetails.email"
+      "requestReferenceNumberContactDetailsFullName",
+      "requestReferenceNumberContactDetails.phone",
+      "requestReferenceNumberContactDetails.email"
     )
 
     "has a link marked with back.link.label leading to the Login Page" in {
@@ -52,19 +52,19 @@ class NoReferenceNumberContactDetailsViewSpec extends QuestionViewBehaviours[NoR
       backlinkUrl mustBe controllers.requestReferenceNumber.routes.RequestReferenceNumberController.show().url
     }
 
-    "contain an input for noReferenceNumberContactDetailsFullName" in {
+    "contain an input for requestReferenceNumberContactDetailsFullName" in {
       val doc = asDocument(createViewUsingForm(form))
-      assertRenderedById(doc, "noReferenceNumberContactDetailsFullName")
+      assertRenderedById(doc, "requestReferenceNumberContactDetailsFullName")
     }
 
-    "contain an input for noReferenceNumberContactDetails.phone" in {
+    "contain an input for requestReferenceNumberContactDetails.phone" in {
       val doc = asDocument(createViewUsingForm(form))
-      assertRenderedById(doc, "noReferenceNumberContactDetails.phone")
+      assertRenderedById(doc, "requestReferenceNumberContactDetails.phone")
     }
 
-    "contain an input for noReferenceNumberContactDetails.email" in {
+    "contain an input for requestReferenceNumberContactDetails.email" in {
       val doc = asDocument(createViewUsingForm(form))
-      assertRenderedById(doc, "noReferenceNumberContactDetails.email")
+      assertRenderedById(doc, "requestReferenceNumberContactDetails.email")
     }
 
     "contain save and continue button with the value Save and Continue" in {

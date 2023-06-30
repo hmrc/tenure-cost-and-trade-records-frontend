@@ -17,7 +17,7 @@
 package controllers.requestReferenceNumber
 
 import form.Errors
-import form.requestReferenceNumber.RequestReferenceNumberContactDetailsForm.noReferenceNumberContactDetailsForm
+import form.requestReferenceNumber.RequestReferenceNumberContactDetailsForm.requestReferenceNumberContactDetailsForm
 import models.submissions.connectiontoproperty.StillConnectedDetails
 import play.api.http.Status
 import play.api.test.Helpers._
@@ -28,24 +28,24 @@ class NoReferenceNumberContactDetailsControllerSpec extends TestBaseSpec {
   import TestData.{baseFormData, errorKey}
   import utils.FormBindingTestAssertions.mustContainError
 
-  def noReferenceNumberContactDetailsController(
+  def requestReferenceNumberContactDetailsController(
     stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledStillConnectedDetailsYes)
   ) = new RequestReferenceNumberContactDetailsController(
     stubMessagesControllerComponents(),
     connectedToPropertyNavigator,
-    noReferenceNumberContactDetailsView,
+    requestReferenceNumberContactDetailsView,
     preEnrichedActionRefiner(stillConnectedDetails = stillConnectedDetails),
     mockSessionRepo
   )
 
   "GET /" should {
     "return 200" in {
-      val result = noReferenceNumberContactDetailsController().show(fakeRequest)
+      val result = requestReferenceNumberContactDetailsController().show(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return HTML" in {
-      val result = noReferenceNumberContactDetailsController().show(fakeRequest)
+      val result = requestReferenceNumberContactDetailsController().show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
@@ -53,7 +53,7 @@ class NoReferenceNumberContactDetailsControllerSpec extends TestBaseSpec {
 
   "SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
-      val res = noReferenceNumberContactDetailsController().submit(
+      val res = requestReferenceNumberContactDetailsController().submit(
         fakeRequest.withFormUrlEncodedBody(Seq.empty: _*)
       )
       status(res) shouldBe BAD_REQUEST
@@ -63,21 +63,21 @@ class NoReferenceNumberContactDetailsControllerSpec extends TestBaseSpec {
   "no Reference Number Contact Details form" should {
     "error if fullName is missing " in {
       val formData = baseFormData - errorKey.fullName
-      val form     = noReferenceNumberContactDetailsForm.bind(formData)
+      val form     = requestReferenceNumberContactDetailsForm.bind(formData)
 
-      mustContainError(errorKey.fullName, "error.noReferenceNumberContactDetailsFullName.required", form)
+      mustContainError(errorKey.fullName, "error.requestReferenceNumberContactDetailsFullName.required", form)
     }
 
     "error if phone is missing" in {
       val formData = baseFormData - errorKey.phone
-      val form     = noReferenceNumberContactDetailsForm.bind(formData)
+      val form     = requestReferenceNumberContactDetailsForm.bind(formData)
 
       mustContainError(errorKey.phone, Errors.contactPhoneRequired, form)
     }
 
     "error if email is missing" in {
       val formData = baseFormData - errorKey.email
-      val form     = noReferenceNumberContactDetailsForm.bind(formData)
+      val form     = requestReferenceNumberContactDetailsForm.bind(formData)
 
       mustContainError(errorKey.email, Errors.contactEmailRequired, form)
     }
@@ -85,15 +85,15 @@ class NoReferenceNumberContactDetailsControllerSpec extends TestBaseSpec {
 
   object TestData {
     val errorKey = new {
-      val fullName = "noReferenceNumberContactDetailsFullName"
-      val phone    = "noReferenceNumberContactDetails.phone"
-      val email    = "noReferenceNumberContactDetails.email"
+      val fullName = "requestReferenceNumberContactDetailsFullName"
+      val phone    = "requestReferenceNumberContactDetails.phone"
+      val email    = "requestReferenceNumberContactDetails.email"
     }
 
     val baseFormData: Map[String, String] = Map(
-      "noReferenceNumberContactDetailsFullName" -> "John Smith",
-      "noReferenceNumberContactDetails.phone"   -> "01234 123123",
-      "noReferenceNumberContactDetails.email1"  -> "blah.blah@test.com"
+      "requestReferenceNumberContactDetailsFullName" -> "John Smith",
+      "requestReferenceNumberContactDetails.phone"   -> "01234 123123",
+      "requestReferenceNumberContactDetails.email1"  -> "blah.blah@test.com"
     )
   }
 }

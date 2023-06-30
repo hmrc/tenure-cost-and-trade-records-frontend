@@ -17,7 +17,7 @@
 package controllers.requestReferenceNumber
 
 import actions.WithSessionRefiner
-import form.requestReferenceNumber.RequestReferenceNumberContactDetailsForm.noReferenceNumberContactDetailsForm
+import form.requestReferenceNumber.RequestReferenceNumberContactDetailsForm.requestReferenceNumberContactDetailsForm
 import navigation.ConnectionToPropertyNavigator
 import models.submissions.requestReferenceNumber.RequestReferenceNumberDetails.updateRequestReferenceNumber
 import navigation.identifiers.NoReferenceNumberContactDetailsPageId
@@ -34,7 +34,7 @@ import scala.concurrent.Future
 class RequestReferenceNumberContactDetailsController @Inject() (
   mcc: MessagesControllerComponents,
   navigator: ConnectionToPropertyNavigator,
-  noReferenceNumberContactDetailsView: requestReferenceNumberContactDetails,
+  requestReferenceNumberContactDetailsView: requestReferenceNumberContactDetails,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
 ) extends FrontendController(mcc)
@@ -43,11 +43,11 @@ class RequestReferenceNumberContactDetailsController @Inject() (
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Future.successful(
       Ok(
-        noReferenceNumberContactDetailsView(
-          request.sessionData.requestReferenceNumberDetails.flatMap(_.noReferenceContactDetails) match {
-            case Some(noReferenceContactDetails) =>
-              noReferenceNumberContactDetailsForm.fillAndValidate(noReferenceContactDetails)
-            case _                               => noReferenceNumberContactDetailsForm
+        requestReferenceNumberContactDetailsView(
+          request.sessionData.requestReferenceNumberDetails.flatMap(_.requestReferenceContactDetails) match {
+            case Some(requestReferenceContactDetails) =>
+              requestReferenceNumberContactDetailsForm.fillAndValidate(requestReferenceContactDetails)
+            case _                                    => requestReferenceNumberContactDetailsForm
           }
         )
       )
@@ -55,12 +55,12 @@ class RequestReferenceNumberContactDetailsController @Inject() (
   }
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    noReferenceNumberContactDetailsForm
+    requestReferenceNumberContactDetailsForm
       .bindFromRequest()
       .fold(
-        formWithErrors => Future.successful(BadRequest(noReferenceNumberContactDetailsView(formWithErrors))),
+        formWithErrors => Future.successful(BadRequest(requestReferenceNumberContactDetailsView(formWithErrors))),
         data => {
-          val updatedData = updateRequestReferenceNumber(_.copy(noReferenceContactDetails = Some(data)))
+          val updatedData = updateRequestReferenceNumber(_.copy(requestReferenceContactDetails = Some(data)))
           session.saveOrUpdate(updatedData)
           Future.successful(
             Redirect(navigator.nextPage(NoReferenceNumberContactDetailsPageId, updatedData).apply(updatedData))

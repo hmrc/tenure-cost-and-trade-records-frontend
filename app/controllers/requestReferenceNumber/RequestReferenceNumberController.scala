@@ -17,7 +17,7 @@
 package controllers.requestReferenceNumber
 
 import actions.WithSessionRefiner
-import form.requestReferenceNumber.RequestReferenceNumberForm.noReferenceNumberForm
+import form.requestReferenceNumber.RequestReferenceNumberForm.requestReferenceNumberForm
 import models.Session
 import models.submissions.common.Address
 import models.submissions.requestReferenceNumber.RequestReferenceNumberDetails.updateRequestReferenceNumber
@@ -36,7 +36,7 @@ import scala.concurrent.Future
 class RequestReferenceNumberController @Inject() (
   mcc: MessagesControllerComponents,
   navigator: ConnectionToPropertyNavigator,
-  noReferenceNumberView: requestReferenceNumber,
+  requestReferenceNumberView: requestReferenceNumber,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
 ) extends FrontendController(mcc)
@@ -50,10 +50,11 @@ class RequestReferenceNumberController @Inject() (
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Future.successful(
       Ok(
-        noReferenceNumberView(
-          request.sessionData.requestReferenceNumberDetails.flatMap(_.noReferenceNumberAddress) match {
-            case Some(noReferenceNumber) => noReferenceNumberForm.fillAndValidate(noReferenceNumber)
-            case _                       => noReferenceNumberForm
+        requestReferenceNumberView(
+          request.sessionData.requestReferenceNumberDetails.flatMap(_.requestReferenceNumberAddress) match {
+            case Some(requestReferenceNumberAddress) =>
+              requestReferenceNumberForm.fillAndValidate(requestReferenceNumberAddress)
+            case _                                   => requestReferenceNumberForm
           }
         )
       )
@@ -61,12 +62,12 @@ class RequestReferenceNumberController @Inject() (
   }
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    noReferenceNumberForm
+    requestReferenceNumberForm
       .bindFromRequest()
       .fold(
-        formWithErrors => Future.successful(BadRequest(noReferenceNumberView(formWithErrors))),
+        formWithErrors => Future.successful(BadRequest(requestReferenceNumberView(formWithErrors))),
         data => {
-          val updatedData = updateRequestReferenceNumber(_.copy(noReferenceNumberAddress = Some(data)))
+          val updatedData = updateRequestReferenceNumber(_.copy(requestReferenceNumberAddress = Some(data)))
           session.saveOrUpdate(updatedData)
           Future.successful(Redirect(navigator.nextPage(NoReferenceNumberPageId, updatedData).apply(updatedData)))
         }

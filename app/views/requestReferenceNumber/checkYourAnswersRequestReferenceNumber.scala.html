@@ -36,14 +36,14 @@
  backLinkUrl = controllers.requestReferenceNumber.routes.RequestReferenceNumberContactDetailsController.show.url
 ) {
 
- @formWithCSRF(action = controllers.notconnected.routes.CheckYourAnswersNotConnectedController.submit(), args = Symbol("class") -> "myForm", Symbol("id") -> "myFormId") {
+ @formWithCSRF(action = controllers.notconnected.routes.CheckYourAnswersNotConnectedController.submit()) {
 
   <h2 class="govuk-heading-m">@messages("checkYourAnswersRequestReferenceNumber.subheading1")</h2>
 
   @govukSummaryList(SummaryList(rows = Seq(
    SummaryListRow(
     key = Key(Text(messages("key.requestReferenceNumberAddress"))),
-     value = Value(HtmlContent(session.requestReferenceNumberDetails.flatMap(_.noReferenceNumberAddress.map(_.noReferenceNumberAddress.multiLine)).getOrElse("").getOrElse(""))),
+     value = Value(HtmlContent(session.requestReferenceNumberDetails.flatMap(_.requestReferenceNumberAddress.map(_.requestReferenceNumberAddress.multiLine)).getOrElse("").getOrElse(""))),
     actions = Option(Actions(items = Seq(ActionItem(href="/send-trade-and-cost-information/are-you-still-connected",
      visuallyHiddenText = Some(messages("key.requestReferenceNumberAddress")),
      content = Text(messages("label.change")))))
@@ -59,10 +59,10 @@
   @govukSummaryList(SummaryList(rows = Seq(SummaryListRow(
     key = Key(Text(messages("key.nameContactRequestReferenceNumber"))),
     value = Value(HtmlContent(
-     s"<p class=\"govuk-body\">${session.requestReferenceNumberDetails.flatMap(_.noReferenceContactDetails.map(_.noReferenceNumberContactDetailsFullName.capitalize)).getOrElse("").getOrElse("")}</p>"
-     + s"<p class=\"govuk-body\">${session.requestReferenceNumberDetails.flatMap(_.noReferenceContactDetails.map(_.noReferenceNumberContactDetails.phone)).getOrElse("").getOrElse("")}</p>"
-      + s"<p class=\"govuk-body\">${session.requestReferenceNumberDetails.flatMap(_.noReferenceContactDetails.map(_.noReferenceNumberContactDetails.email)).getOrElse("").getOrElse("")}</p>"
-     + s"<p class=\"govuk-body\">${session.requestReferenceNumberDetails.flatMap(_.noReferenceContactDetails.map(_.noReferenceNumberContactDetailsAdditionalInformation).getOrElse(Some(""))).getOrElse("")}</p>"
+     s"<p class=\"govuk-body\">${session.requestReferenceNumberDetails.flatMap(_.requestReferenceContactDetails.map(_.requestReferenceNumberContactDetailsFullName.capitalize)).getOrElse("").getOrElse("")}</p>"
+     + s"<p class=\"govuk-body\">${session.requestReferenceNumberDetails.flatMap(_.requestReferenceContactDetails.map(_.requestReferenceNumberContactDetails.phone)).getOrElse("").getOrElse("")}</p>"
+      + s"<p class=\"govuk-body\">${session.requestReferenceNumberDetails.flatMap(_.requestReferenceContactDetails.map(_.requestReferenceNumberContactDetails.email)).getOrElse("").getOrElse("")}</p>"
+     + s"<p class=\"govuk-body\">${session.requestReferenceNumberDetails.flatMap(_.requestReferenceContactDetails.map(_.requestReferenceNumberContactDetailsAdditionalInformation).getOrElse(Some(""))).getOrElse("")}</p>"
     )),
     actions = Option(Actions(items = Seq(ActionItem(href="/send-trade-and-cost-information/remove-connection",
      visuallyHiddenText = Some(messages("key.nameContactRequestReferenceNumber")),

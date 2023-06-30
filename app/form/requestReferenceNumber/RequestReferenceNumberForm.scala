@@ -16,20 +16,20 @@
 
 package form.requestReferenceNumber
 
-import form.MappingSupport.noReferenceNumberAddressMapping
-import models.submissions.requestReferenceNumber.NoReferenceNumber
+import form.MappingSupport.requestReferenceNumberAddressMapping
+import models.submissions.requestReferenceNumber.RequestReferenceNumber
 import play.api.data.Form
 import play.api.data.Forms.{default, mapping, text}
 import play.api.data.validation.Constraints.{maxLength, nonEmpty}
 
 object RequestReferenceNumberForm {
-  val noReferenceNumberForm: Form[NoReferenceNumber] = Form(
+  val requestReferenceNumberForm: Form[RequestReferenceNumber] = Form(
     mapping(
-      "noReferenceNumberBusinessTradingName" -> default(text, "").verifying(
-        nonEmpty(errorMessage = "error.noReferenceNumberBusinessTradingName.required"),
-        maxLength(100, "error.noReferenceNumberBusinessTradingName.maxLength")
+      "requestReferenceNumberBusinessTradingName" -> default(text, "").verifying(
+        nonEmpty(errorMessage = "error.requestReferenceNumberBusinessTradingName.required"),
+        maxLength(100, "error.requestReferenceNumberBusinessTradingName.maxLength")
       ),
-      "noReferenceNumberAddress"             -> noReferenceNumberAddressMapping
-    )(NoReferenceNumber.apply)(NoReferenceNumber.unapply)
+      "requestReferenceNumberAddress"             -> requestReferenceNumberAddressMapping
+    )(RequestReferenceNumber.apply)(RequestReferenceNumber.unapply)
   )
 }
