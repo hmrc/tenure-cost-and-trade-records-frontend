@@ -34,11 +34,11 @@ trait FakeViews { this: GuiceOneAppPerSuite =>
   lazy val loginView: login = app.injector.instanceOf[login]
 
   // Connection to the property
-  lazy val areYouStillConnectedView: areYouStillConnected                            = app.injector.instanceOf[areYouStillConnected]
-  lazy val connectionToThePropertyView: connectionToTheProperty                      = app.injector.instanceOf[connectionToTheProperty]
-  lazy val editAddressView: editAddress                                              = app.injector.instanceOf[editAddress]
-  lazy val noReferenceAddressView: requestReferenceNumber                            = app.injector.instanceOf[requestReferenceNumber]
-  lazy val noReferenceNumberContactDetailsView: requestReferenceNumberContactDetails =
+  lazy val areYouStillConnectedView: areYouStillConnected                                 = app.injector.instanceOf[areYouStillConnected]
+  lazy val connectionToThePropertyView: connectionToTheProperty                           = app.injector.instanceOf[connectionToTheProperty]
+  lazy val editAddressView: editAddress                                                   = app.injector.instanceOf[editAddress]
+  lazy val requestReferenceAddressView: requestReferenceNumber                            = app.injector.instanceOf[requestReferenceNumber]
+  lazy val requestReferenceNumberContactDetailsView: requestReferenceNumberContactDetails =
     app.injector.instanceOf[requestReferenceNumberContactDetails]
 
   // Not connected

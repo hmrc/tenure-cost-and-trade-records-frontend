@@ -167,23 +167,25 @@ logout.loginAgain=Log in again
 
 # NO REFERENCE NUMBER
 ##############################
-noReferenceNumber.heading = If you do not have a reference number
-noReferenceNumber.subheading = If you’ve not received a letter from the VOA
-noReferenceNumber.p1 = You only need to declare your business trade and cost information when the VOA have asked you to do so. If you think you should have received a letter, you can request a replacement from the VOA.
-noReferenceNumber.subheading2 = If you need a replacement letter
-noReferenceNumber.p2 = If you no longer have access to your letter from the VOA, or you have not received one but think you should have, the VOA can issue a replacement. Complete the following form and the VOA will issue a replacement.
-noReferenceNumber.p3 = We can only reissue letters to the address where they were originally sent. <a href="https://www.gov.uk/contact-voa" class="govuk-link" target="_blank">Contact the VOA (opens in new tab)</a> if your business has changed address.
-noReferenceNumber.subheading3 = What are the details of the property related to the missing reference number?
-label.noReferenceNumberBusinessTradingName = Business or trading name
-error.noReferenceNumberBusinessTradingName.required = Enter a business or trading name
+requestReferenceNumber.heading = If you do not have a reference number
+requestReferenceNumber.subheading = If you’ve not received a letter from the VOA
+requestReferenceNumber.p1 = You only need to declare your business trade and cost information when the VOA have asked you to do so. If you think you should have received a letter, you can request a replacement from the VOA.
+requestReferenceNumber.subheading2 = If you need a replacement letter
+requestReferenceNumber.p2 = If you no longer have access to your letter from the VOA, or you have not received one but think you should have, the VOA can issue a replacement. Complete the following form and the VOA will issue a replacement.
+requestReferenceNumber.p3 = We can only reissue letters to the address where they were originally sent. <a href="https://www.gov.uk/contact-voa" class="govuk-link" target="_blank">Contact the VOA (opens in new tab)</a> if your business has changed address.
+requestReferenceNumber.subheading3 = What are the details of the property related to the missing reference number?
+label.requestReferenceNumberBusinessTradingName = Business or trading name
+error.referenceNumberBusinessTradingName.required = Enter a business or trading name
+key.requestReferenceNumberAddress = Address
+key.nameContactRequestReferenceNumber = Name and contact details
 
 # NO REFERENCE NUMBER CONTACT DETAILS
 ##############################
-noReferenceNumberContactDetails.heading = Your contact details
-noReferenceNumberContactDetails.p1 = We'll need the contact details of the person completing the form. We will only use them to contact you about your enquiry
-label.noReferenceNumberContactDetailsFullName = Full name
-noReferenceNumberContactDetailsAdditionalInformation.heading = Additional information (optional)
-error.noReferenceNumberContactDetailsFullName.required = Enter your name
+requestReferenceNumberContactDetails.heading = Your contact details
+requestReferenceNumberContactDetails.p1 = We'll need the contact details of the person completing the form. We will only use them to contact you about your enquiry
+label.requestReferenceNumberContactDetailsFullName = Full name
+requestReferenceNumberContactDetailsAdditionalInformation.heading = Additional information (optional)
+error.requestReferenceNumberContactDetailsFullName.required = Enter your name
 
 # ARE YOU STILL CONNECTED SECTION
 #################################
@@ -958,6 +960,7 @@ checkYourAnswersAboutTheProperty.enforcementActionHasBeenTakenInformationDetails
 checkYourAnswersAboutTheProperty.tiedForGoods = Tied for any goods?
 checkYourAnswersAboutTheProperty.tiedForGoodsDetails = Type of tie
 checkYourAnswersAboutTheTradingHistory.heading = This is a holding page for the about your trading history check your answers page
+checkYourAnswersRequestReferenceNumber.heading = Check your answers - if you do not have a reference number
 
 # Confirmation Page
 ###################

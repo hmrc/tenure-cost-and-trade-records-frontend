@@ -18,11 +18,11 @@ package models.submissions.requestReferenceNumber
 
 import play.api.libs.json.Json
 
-case class RequestReferenceNumber(
-  requestReferenceNumberBusinessTradingName: String,
-  requestReferenceNumberAddress: RequestReferenceNumberAddress
+case class CheckYourAnswersRequestReferenceNumber(
+  checkYourAnswersRequestReferenceNumber: String
 )
 
-object RequestReferenceNumber {
-  implicit val format = Json.format[RequestReferenceNumber]
+object CheckYourAnswersRequestReferenceNumber {
+  implicit val format = Json.format[CheckYourAnswersRequestReferenceNumber]
+
 }

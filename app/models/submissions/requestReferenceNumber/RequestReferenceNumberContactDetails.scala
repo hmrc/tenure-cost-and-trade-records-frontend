@@ -16,16 +16,16 @@
 
 package models.submissions.requestReferenceNumber
 
-import models.submissions.common.{ContactDetails, ContactDetailsAddress}
+import models.submissions.common.ContactDetails
 import play.api.libs.json.Json
 
-case class NoReferenceNumberContactDetails(
-  noReferenceNumberContactDetailsFullName: String,
-  noReferenceNumberContactDetails: ContactDetails,
-  noReferenceNumberContactDetailsAdditionalInformation: Option[String]
+case class RequestReferenceNumberContactDetails(
+  requestReferenceNumberContactDetailsFullName: String,
+  requestReferenceNumberContactDetails: ContactDetails,
+  requestReferenceNumberContactDetailsAdditionalInformation: Option[String]
 )
 
-object NoReferenceNumberContactDetails {
-  implicit val format1 = Json.format[NoReferenceNumberContactDetails]
+object RequestReferenceNumberContactDetails {
+  implicit val format1 = Json.format[RequestReferenceNumberContactDetails]
 
 }

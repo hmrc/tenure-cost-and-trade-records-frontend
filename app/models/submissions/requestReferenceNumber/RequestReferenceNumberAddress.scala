@@ -19,7 +19,7 @@ package models.submissions.requestReferenceNumber
 import models.submissions.PrintableAddress
 import play.api.libs.json.Json
 
-case class NoReferenceNumberAddress(
+case class RequestReferenceNumberAddress(
   buildingNameNumber: String,
   street1: Option[String],
   town: String,
@@ -27,6 +27,6 @@ case class NoReferenceNumberAddress(
   postcode: String
 ) extends PrintableAddress
 
-object NoReferenceNumberAddress {
-  implicit val format = Json.format[NoReferenceNumberAddress]
+object RequestReferenceNumberAddress {
+  implicit val format = Json.format[RequestReferenceNumberAddress]
 }

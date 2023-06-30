@@ -28,7 +28,7 @@ import models.{AnnualRent, Session, SubmissionDraft}
 import models.submissions.common.{Address, AnswerNo, AnswerYes, ContactDetails, ContactDetailsAddress}
 import models.submissions.connectiontoproperty._
 import models.submissions.notconnected.{PastConnectionTypeYes, RemoveConnectionDetails, RemoveConnectionsDetails}
-import models.submissions.requestReferenceNumber.{NoReferenceNumber, NoReferenceNumberAddress}
+import models.submissions.requestReferenceNumber.{CheckYourAnswersRequestReferenceNumber, RequestReferenceNumber, RequestReferenceNumberAddress, RequestReferenceNumberContactDetails, RequestReferenceNumberDetails}
 
 import java.time.LocalDate
 
@@ -42,28 +42,36 @@ trait FakeObjects {
     Address("001", Some("GORING ROAD"), "GORING-BY-SEA, WORTHING", Some("WEST SUSSEX"), "BN12 4AX")
   val token: String             = "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik="
 
-  val prefilledContactDetails: ContactDetails        = ContactDetails("1234567890", "TestEmail@gmail.com")
-  val prefilledContactAddress: ContactDetailsAddress = ContactDetailsAddress(
+  val prefilledContactDetails: ContactDetails                            = ContactDetails("1234567890", "TestEmail@gmail.com")
+  val prefilledContactAddress: ContactDetailsAddress                     = ContactDetailsAddress(
     "004",
     Some("GORING ROAD"),
     "WORTHING",
     Some("West sussex"),
     "BN12 4AX"
   )
+  val prefilledNoRefContactDetails: RequestReferenceNumberContactDetails =
+    RequestReferenceNumberContactDetails("test", prefilledContactDetails, Some("test"))
 
-  val prefilledFakeName                                            = "John Doe"
-  val prefilledFakePhoneNo                                         = "12345678901"
-  val prefilledFakeEmail                                           = "test@email.com"
-  val prefilledCateringAddress: CateringAddress                    =
+  val prefilledFakeName                                                 = "John Doe"
+  val prefilledFakePhoneNo                                              = "12345678901"
+  val prefilledFakeEmail                                                = "test@email.com"
+  val prefilledCateringAddress: CateringAddress                         =
     CateringAddress("004", Some("GORING ROAD"), "GORING-BY-SEA, WORTHING", Some("West sussex"), "BN12 4AX")
-  val prefilledLettingAddress: LettingAddress                      =
+  val prefilledLettingAddress: LettingAddress                           =
     LettingAddress("004", Some("GORING ROAD"), "GORING-BY-SEA, WORTHING", Some("West sussex"), "BN12 4AX")
-  val prefilledLandlordAddress: LandlordAddress                    =
+  val prefilledLandlordAddress: LandlordAddress                         =
     LandlordAddress("004", Some("GORING ROAD"), "GORING-BY-SEA, WORTHING", Some("West sussex"), "BN12 4AX")
-  val prefilledEditAddress: EditAddress                            =
+  val prefilledEditAddress: EditAddress                                 =
     EditAddress("004", Some("GORING ROAD"), "GORING-BY-SEA, WORTHING", Some("West sussex"), "BN12 4AX")
-  val prefilledNoReferenceContactAddress: NoReferenceNumberAddress =
-    NoReferenceNumberAddress("004", Some("GORING ROAD"), "GORING-BY-SEA, WORTHING", Some("West sussex"), "BN12 4AX")
+  val prefilledNoReferenceContactAddress: RequestReferenceNumberAddress =
+    RequestReferenceNumberAddress(
+      "004",
+      Some("GORING ROAD"),
+      "GORING-BY-SEA, WORTHING",
+      Some("West sussex"),
+      "BN12 4AX"
+    )
 
   val prefilledDateInput: LocalDate               = LocalDate.of(2022, 6, 1)
   val prefilledMonthYearInput: MonthsYearDuration = MonthsYearDuration(6, 2000)
@@ -279,7 +287,7 @@ trait FakeObjects {
     )
 
   val prefilledNoRefAddress =
-    NoReferenceNumber(
+    RequestReferenceNumber(
       "Business Name",
       prefilledNoReferenceContactAddress
     )
@@ -375,4 +383,9 @@ trait FakeObjects {
     legalOrPlanningRestrictions = Some(LegalOrPlanningRestrictions(AnswerNo))
   )
 
+  val prefilledRequestReferenceNumber = RequestReferenceNumberDetails(
+    Some(RequestReferenceNumber(prefilledFakeName, prefilledNoReferenceContactAddress)),
+    Some(RequestReferenceNumberContactDetails(prefilledFakeName, prefilledContactDetails, Some("test"))),
+    Some(CheckYourAnswersRequestReferenceNumber("CYA"))
+  )
 }

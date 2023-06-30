@@ -24,6 +24,7 @@ import models.submissions.additionalinformation.AdditionalInformation
 import models.submissions.common.Address
 import models.submissions.connectiontoproperty.StillConnectedDetails
 import models.submissions.notconnected.RemoveConnectionDetails
+import models.submissions.requestReferenceNumber.RequestReferenceNumberDetails
 import play.api.libs.json.{Json, OFormat}
 
 /**
@@ -40,7 +41,8 @@ case class UserData(
   aboutTheTradingHistory: Option[AboutTheTradingHistory],
   aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings],
   aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne],
-  aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo]
+  aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo],
+  requestReferenceNumber: Option[RequestReferenceNumberDetails]
 )
 
 object UserData {
