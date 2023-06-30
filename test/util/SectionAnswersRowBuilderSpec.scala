@@ -80,9 +80,7 @@ class SectionAnswersRowBuilderSpec extends TestBaseSpec {
     "return answer value with conditional text field value `Other<br/>Details for other option` if selected option `Other`" in {
       val answers = SectionAnswersRowBuilder(
         aboutYouAndTheProperty6010YesSession.aboutYouAndTheProperty.map(
-          _.copy(propertyDetails =
-            Some(PropertyDetails("currentOccupierName", List(CurrentPropertyOther), Some("Details for other option")))
-          )
+          _.copy(propertyDetails = Some(PropertyDetails(List(CurrentPropertyOther), Some("Details for other option"))))
         )
       )(messages)
 

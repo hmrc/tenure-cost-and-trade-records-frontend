@@ -46,8 +46,6 @@ class AboutThePropertyViewSpec extends QuestionViewBehaviours[PropertyDetails] {
 
     behave like normalPage(createView, messageKeyPrefix)
 
-    behave like pageWithTextFields(createViewUsingForm, "currentOccupierName")
-
     "has a link marked with back.link.label leading to the task list Page" in {
       val doc          = asDocument(createView())
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
@@ -174,8 +172,6 @@ class AboutThePropertyViewSpec extends QuestionViewBehaviours[PropertyDetails] {
   "About the property view 6015" must {
 
     behave like normalPage(createView6015, messageKeyPrefix)
-
-    behave like pageWithTextFields(createViewUsingForm, "currentOccupierName")
 
     "has a link marked with back.link.label leading to the task list Page" in {
       val doc          = asDocument(createView())
