@@ -45,7 +45,7 @@
     key = Key(Text(messages("key.requestReferenceNumberAddress"))),
      value = Value(HtmlContent(session.requestReferenceNumberDetails.flatMap(_.noReferenceNumberAddress.map(_.noReferenceNumberAddress.multiLine)).getOrElse("").getOrElse(""))),
     actions = Option(Actions(items = Seq(ActionItem(href="/send-trade-and-cost-information/are-you-still-connected",
-     visuallyHiddenText = Some(messages("key.still.connected")),
+     visuallyHiddenText = Some(messages("key.requestReferenceNumberAddress")),
      content = Text(messages("label.change")))))
     )
    )
@@ -65,7 +65,7 @@
      + s"<p class=\"govuk-body\">${session.requestReferenceNumberDetails.flatMap(_.noReferenceContactDetails.map(_.noReferenceNumberContactDetailsAdditionalInformation).getOrElse(Some(""))).getOrElse("")}</p>"
     )),
     actions = Option(Actions(items = Seq(ActionItem(href="/send-trade-and-cost-information/remove-connection",
-     visuallyHiddenText = Some(messages("key.contact.details")),
+     visuallyHiddenText = Some(messages("key.nameContactRequestReferenceNumber")),
      content = Text(messages("label.change")))))
     )
    )

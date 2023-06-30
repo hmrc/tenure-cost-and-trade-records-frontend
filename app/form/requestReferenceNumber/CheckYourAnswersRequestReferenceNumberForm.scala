@@ -16,7 +16,6 @@
 
 package form.requestReferenceNumber
 
-import models.submissions.additionalinformation.CheckYourAnswersAdditionalInformation
 import models.submissions.requestReferenceNumber.CheckYourAnswersRequestReferenceNumber
 import play.api.data.Form
 import play.api.data.Forms.{default, mapping, text}

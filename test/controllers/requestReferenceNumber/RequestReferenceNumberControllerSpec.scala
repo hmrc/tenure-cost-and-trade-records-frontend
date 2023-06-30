@@ -14,9 +14,8 @@
  * limitations under the License.
  */
 
-package controllers.connectiontoproperty
+package controllers.requestReferenceNumber
 
-import controllers.requestReferenceNumber.RequestReferenceNumberController
 import form.requestReferenceNumber.RequestReferenceNumberForm.noReferenceNumberForm
 import models.submissions.connectiontoproperty.StillConnectedDetails
 import play.api.http.Status
@@ -68,6 +67,13 @@ class RequestReferenceNumberControllerSpec extends TestBaseSpec {
       mustContainError(errorKey.buildingNameNumber, "error.buildingNameNumber.required", form)
     }
 
+    "error if town or city is missing" in {
+      val formData = baseFormData - errorKey.town
+      val form     = noReferenceNumberForm.bind(formData)
+
+      mustContainError(errorKey.town, "error.townCity.required", form)
+    }
+
     "error if postcode is missing" in {
       val formData = baseFormData - errorKey.postcode
       val form     = noReferenceNumberForm.bind(formData)
@@ -79,11 +85,13 @@ class RequestReferenceNumberControllerSpec extends TestBaseSpec {
   object TestData {
     val errorKey = new {
       val buildingNameNumber = "noReferenceNumberAddress.buildingNameNumber"
+      val town               = "noReferenceNumberAddress.town"
       val postcode           = "noReferenceNumberAddress.postcode"
     }
 
     val baseFormData: Map[String, String] = Map(
       "buildingNameNumber" -> "001",
+      "town"               -> "Manchester",
       "postcode"           -> "BN12 4AX"
     )
   }

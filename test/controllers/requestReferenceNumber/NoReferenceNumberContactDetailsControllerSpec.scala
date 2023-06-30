@@ -14,9 +14,8 @@
  * limitations under the License.
  */
 
-package controllers.connectiontoproperty
+package controllers.requestReferenceNumber
 
-import controllers.requestReferenceNumber.RequestReferenceNumberContactDetailsController
 import form.Errors
 import form.requestReferenceNumber.RequestReferenceNumberContactDetailsForm.noReferenceNumberContactDetailsForm
 import models.submissions.connectiontoproperty.StillConnectedDetails
@@ -69,6 +68,13 @@ class NoReferenceNumberContactDetailsControllerSpec extends TestBaseSpec {
       mustContainError(errorKey.fullName, "error.noReferenceNumberContactDetailsFullName.required", form)
     }
 
+    "error if phone is missing" in {
+      val formData = baseFormData - errorKey.phone
+      val form     = noReferenceNumberContactDetailsForm.bind(formData)
+
+      mustContainError(errorKey.phone, Errors.contactPhoneRequired, form)
+    }
+
     "error if email is missing" in {
       val formData = baseFormData - errorKey.email
       val form     = noReferenceNumberContactDetailsForm.bind(formData)
@@ -85,8 +91,9 @@ class NoReferenceNumberContactDetailsControllerSpec extends TestBaseSpec {
     }
 
     val baseFormData: Map[String, String] = Map(
-      "noReferenceNumberContactDetails.phone"        -> "01234 123123",
-      "noReferenceNumberContactDetails.phone.email1" -> "blah.blah@test.com"
+      "noReferenceNumberContactDetailsFullName" -> "John Smith",
+      "noReferenceNumberContactDetails.phone"   -> "01234 123123",
+      "noReferenceNumberContactDetails.email1"  -> "blah.blah@test.com"
     )
   }
 }

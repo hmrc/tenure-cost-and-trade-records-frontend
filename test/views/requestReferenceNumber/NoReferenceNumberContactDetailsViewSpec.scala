@@ -14,10 +14,9 @@
  * limitations under the License.
  */
 
-package views.connectiontoproperty
+package views.requestReferenceNumber
 
 import form.requestReferenceNumber.RequestReferenceNumberContactDetailsForm
-import models.pages.Summary
 import models.submissions.requestReferenceNumber.NoReferenceNumberContactDetails
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
@@ -51,6 +50,21 @@ class NoReferenceNumberContactDetailsViewSpec extends QuestionViewBehaviours[NoR
       backlinkText mustBe messages("back.link.label")
       val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
       backlinkUrl mustBe controllers.requestReferenceNumber.routes.RequestReferenceNumberController.show().url
+    }
+
+    "contain an input for noReferenceNumberContactDetailsFullName" in {
+      val doc = asDocument(createViewUsingForm(form))
+      assertRenderedById(doc, "noReferenceNumberContactDetailsFullName")
+    }
+
+    "contain an input for noReferenceNumberContactDetails.phone" in {
+      val doc = asDocument(createViewUsingForm(form))
+      assertRenderedById(doc, "noReferenceNumberContactDetails.phone")
+    }
+
+    "contain an input for noReferenceNumberContactDetails.email" in {
+      val doc = asDocument(createViewUsingForm(form))
+      assertRenderedById(doc, "noReferenceNumberContactDetails.email")
     }
 
     "contain save and continue button with the value Save and Continue" in {

@@ -17,12 +17,10 @@
 package controllers.requestReferenceNumber
 
 import actions.WithSessionRefiner
-import controllers.FORDataCaptureController
 import form.requestReferenceNumber.RequestReferenceNumberForm.noReferenceNumberForm
 import models.Session
 import models.submissions.common.Address
 import models.submissions.requestReferenceNumber.RequestReferenceNumberDetails.updateRequestReferenceNumber
-import models.submissions.requestReferenceNumber.NoReferenceNumber
 import navigation.ConnectionToPropertyNavigator
 import navigation.identifiers.NoReferenceNumberPageId
 import play.api.i18n.I18nSupport

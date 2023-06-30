@@ -14,10 +14,9 @@
  * limitations under the License.
  */
 
-package views.connectiontoproperty
+package views.requestReferenceNumber
 
 import form.requestReferenceNumber.RequestReferenceNumberForm
-import models.pages.Summary
 import models.submissions.requestReferenceNumber.NoReferenceNumber
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
@@ -52,6 +51,36 @@ class NoReferenceNumberViewSpec extends QuestionViewBehaviours[NoReferenceNumber
       backlinkText mustBe messages("back.link.label")
       val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
       backlinkUrl mustBe controllers.routes.LoginController.show().url
+    }
+
+    "contain an input for noReferenceNumberBusinessTradingName" in {
+      val doc = asDocument(createViewUsingForm(form))
+      assertRenderedById(doc, "noReferenceNumberBusinessTradingName")
+    }
+
+    "contain an input for noReferenceNumberAddress.buildingNameNumber" in {
+      val doc = asDocument(createViewUsingForm(form))
+      assertRenderedById(doc, "noReferenceNumberAddress.buildingNameNumber")
+    }
+
+    "contain an input for noReferenceNumberAddress.street1" in {
+      val doc = asDocument(createViewUsingForm(form))
+      assertRenderedById(doc, "noReferenceNumberAddress.street1")
+    }
+
+    "contain an input for noReferenceNumberAddress.town" in {
+      val doc = asDocument(createViewUsingForm(form))
+      assertRenderedById(doc, "noReferenceNumberAddress.town")
+    }
+
+    "contain an input for noReferenceNumberAddress.county" in {
+      val doc = asDocument(createViewUsingForm(form))
+      assertRenderedById(doc, "noReferenceNumberAddress.county")
+    }
+
+    "contain an input for noReferenceNumberAddress.postcode" in {
+      val doc = asDocument(createViewUsingForm(form))
+      assertRenderedById(doc, "noReferenceNumberAddress.postcode")
     }
 
     "contain save and continue button with the value Save and Continue" in {

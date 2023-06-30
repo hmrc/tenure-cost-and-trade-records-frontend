@@ -25,7 +25,7 @@ import models.submissions.additionalinformation.SensitiveAdditionalInformation
 import models.submissions.common.SensitiveAddress
 import models.submissions.connectiontoproperty.SensitiveStillConnectedDetails
 import models.submissions.notconnected.SensitiveRemoveConnectionDetails
-import models.submissions.requestReferenceNumber.{RequestReferenceNumberDetails, SensitiveRequestReferenceNumber}
+import models.submissions.requestReferenceNumber.SensitiveRequestReferenceNumber
 import play.api.libs.json.{Json, OFormat}
 import uk.gov.hmrc.crypto.Sensitive
 

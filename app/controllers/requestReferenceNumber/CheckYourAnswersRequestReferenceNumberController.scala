@@ -18,19 +18,14 @@ package controllers.requestReferenceNumber
 
 import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
-import form.additionalinformation.CheckYourAnswersAdditionalInformationForm.checkYourAnswersAdditionalInformationForm
-import form.requestReferenceNumber.CheckYourAnswersRequestReferenceNumberForm
 import form.requestReferenceNumber.CheckYourAnswersRequestReferenceNumberForm.checkYourAnswersRequestReferenceNumberForm
 import models.submissions.requestReferenceNumber.RequestReferenceNumberDetails.updateRequestReferenceNumber
-import models.submissions.additionalinformation.CheckYourAnswersAdditionalInformation
-import models.submissions.requestReferenceNumber.CheckYourAnswersRequestReferenceNumber
-import navigation.AdditionalInformationNavigator
-import navigation.identifiers.{CheckYourAnswersAdditionalInformationId, CheckYourAnswersRequestReferenceNumberPageId}
+import navigation.ConnectionToPropertyNavigator
+import navigation.identifiers.CheckYourAnswersRequestReferenceNumberPageId
 import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import views.html.additionalinformation.checkYourAnswersAdditionalInformation
 import views.html.requestReferenceNumber.checkYourAnswersRequestReferenceNumber
 
 import javax.inject.{Inject, Named, Singleton}
@@ -39,7 +34,7 @@ import scala.concurrent.Future
 @Singleton
 class CheckYourAnswersRequestReferenceNumberController @Inject() (
   mcc: MessagesControllerComponents,
-  navigator: AdditionalInformationNavigator,
+  navigator: ConnectionToPropertyNavigator,
   checkYourAnswersRequestReferenceNumberView: checkYourAnswersRequestReferenceNumber,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo

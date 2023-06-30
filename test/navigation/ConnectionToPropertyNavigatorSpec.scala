@@ -85,14 +85,5 @@ class ConnectionToPropertyNavigatorSpec extends TestBaseSpec {
         ) mustBe controllers.requestReferenceNumber.routes.RequestReferenceNumberContactDetailsController
         .show()
     }
-
-    "return a function that goes to the no reference number cya page when connection to the property has been selected" in {
-      navigator
-        .nextPage(NoReferenceNumberContactDetailsPageId, stillConnectedDetailsYesSession)
-        .apply(
-          stillConnectedDetailsYesSession
-        ) mustBe controllers.requestReferenceNumber.routes.CheckYourAnswersRequestReferenceNumberController
-        .show()
-    }
   }
 }

@@ -378,8 +378,8 @@ trait FakeObjects {
   )
 
   val prefilledRequestReferenceNumber = RequestReferenceNumberDetails(
-    noReferenceNumberAddress = Some(NoReferenceNumber(prefilledFakeName, prefilledNoReferenceContactAddress)),
-    noReferenceContactDetails = Some(NoReferenceNumberContactDetails(prefilledFakeName, prefilledContactDetails, Some("test"))),
+    Some(NoReferenceNumber(prefilledFakeName, prefilledNoReferenceContactAddress)),
+    Some(NoReferenceNumberContactDetails(prefilledFakeName, prefilledContactDetails, Some("test"))),
     Some(CheckYourAnswersRequestReferenceNumber("CYA"))
   )
 }

@@ -48,8 +48,10 @@ class ConnectionToPropertyNavigator @Inject() (audit: Audit) extends Navigator(a
       controllers.requestReferenceNumber.routes.RequestReferenceNumberContactDetailsController.show()
     ),
     NoReferenceNumberContactDetailsPageId        -> (_ =>
-      controllers.requestReferenceNumber.routes.CheckYourAnswersRequestReferenceNumberController.show()
+      controllers.requestReferenceNumber.routes.CheckYourAnswersRequestReferenceNumberController.submit()
     ),
-    CheckYourAnswersRequestReferenceNumberPageId -> (_ => controllers.routes.TaskListController.show())
+    CheckYourAnswersRequestReferenceNumberPageId -> (_ =>
+      controllers.routes.RequestReferenceNumberFormSubmissionController.submit()
+    )
   )
 }

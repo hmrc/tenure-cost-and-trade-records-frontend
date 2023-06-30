@@ -308,3 +308,6 @@ GET         /confirmation                                           controllers.
 
 POST        /declaration                                            controllers.FormSubmissionController.submit()
 GET         /confirmation                                           controllers.FormSubmissionController.confirmation()
+
+POST        /declaration-request-reference-number                   controllers.RequestReferenceNumberFormSubmissionController.submit()
+GET         /confirmation-request-reference-number                  controllers.RequestReferenceNumberFormSubmissionController.confirmation()
