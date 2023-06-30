@@ -19,7 +19,6 @@ package models.submissions.aboutyouandtheproperty
 import play.api.libs.json.Json
 
 case class PropertyDetails(
-  currentOccupierName: String,
   propertyCurrentlyUsed: List[CurrentPropertyUsed],
   currentlyUsedOtherField: Option[String]
 )

@@ -91,6 +91,7 @@ label.change = Change
 ##############
 hint.select.all = Select all that apply
 hint.date.example = For example, 10 2 1999
+hint.select.applicable = Select any that apply – leave blank if not applicable
 
 # SECTION NAMES
 ###############
@@ -100,7 +101,6 @@ label.section.aboutYourTradingHistory = Your trading history
 label.section.aboutTheFranchiseLettings = Franchises or lettings
 label.section.aboutYourLeaseOrTenure = Your lease or agreement
 label.section.additionalInformation = Additional information
-
 
 # DUMMY START PAGE FULL INFORMATION
 ##############################
@@ -179,7 +179,11 @@ error.noReferenceNumberBusinessTradingName.required = Enter a business or tradin
 
 # NO REFERENCE NUMBER CONTACT DETAILS
 ##############################
-noReferenceNumberContactDetails.heading = Holding page for no reference number contact details page
+noReferenceNumberContactDetails.heading = Your contact details
+noReferenceNumberContactDetails.p1 = We'll need the contact details of the person completing the form. We will only use them to contact you about your enquiry
+label.noReferenceNumberContactDetailsFullName = Full name
+noReferenceNumberContactDetailsAdditionalInformation.heading = Additional information (optional)
+error.noReferenceNumberContactDetailsFullName.required = Enter your name
 
 # ARE YOU STILL CONNECTED SECTION
 #################################
@@ -243,9 +247,7 @@ aboutYou.subheading = These should be the contact details of the person completi
 
 # ABOUT THE PROPERTY
 ####################
-aboutProperty.heading = What is the name of the current occupier?
-label.currentOccupierName = This should be the trading name of the business operating from the property
-label.propertyCurrentlyUsed = What is the current use of the property?
+aboutProperty.heading = How is the property currently used?
 hint.select.main = If your property has more than one use, select the main function
 propertyCurrentlyUsed.publicHouse = Public house
 propertyCurrentlyUsed.wineCafeBar = Wine bar or cafe bar
@@ -260,8 +262,6 @@ propertyCurrentlyUsed.conferenceCentre = Conference centre
 propertyCurrentlyUsed.other = Other
 hint.other.use.propertyCurrentlyUsedOther = Describe the use of your property is not listed
 hint.other.vacant.propertyCurrentlyUsedOther = Please give details if the property has another use, or is vacant
-error.currentOccupierName.required = Enter the current occupier’s name
-error.currentOccupierName.maxLength = The current occupier’s name must be 50 characters or less
 
 # WEBSITE FOR PROPERTY
 ######################
@@ -1060,7 +1060,7 @@ error.duration.months = The month figure must be a number between 1 and 12
 error.duration.days = Days must be a number between 1 and 31
 error.months.required = Enter months amount
 error.years.required = Enter years amount
-error.currentOccupierName.required = Please select how the the property is currently used
+error.required.propertyUsages = Please select how the the property is currently used
 error.propertyCurrentlyUsed.required=Select your connection to the property
 error.invalid_date = Enter a valid date
 error.buildingNameNumber.required = Enter the first line of the address

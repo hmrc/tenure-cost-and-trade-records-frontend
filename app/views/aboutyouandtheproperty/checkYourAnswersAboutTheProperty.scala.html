@@ -57,7 +57,6 @@
             <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutTheProperty.aboutProperty.heading")</h2>
 
             @govukSummaryList(SummaryList(rows =
-                sectionAnswers.row("checkYourAnswersAboutTheProperty.currentOccupier", _.propertyDetails.map(_.currentOccupierName), aboutyouandtheproperty.routes.AboutThePropertyController.show(), "currentOccupierName") ++
                     sectionAnswers.row("checkYourAnswersAboutTheProperty.propertyUsage",
                         _.propertyDetails.map(_.propertyCurrentlyUsed
                                 .map(usage => s"${usage.key}.${usage.name}")
