@@ -19,6 +19,7 @@ package controllers.aboutthetradinghistory
 import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.GrossProfitForm.grossProfitForm
+import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.updateAboutTheTradingHistory
 import models.submissions.aboutthetradinghistory.GrossProfit
 import navigation.AboutTheTradingHistoryNavigator
 import navigation.identifiers.GrossProfitsId
@@ -27,7 +28,9 @@ import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import views.html.aboutthetradinghistory.grossProfits
 
+import java.time.LocalDate
 import javax.inject.{Inject, Named, Singleton}
+import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class GrossProfitsController @Inject() (
@@ -36,30 +39,51 @@ class GrossProfitsController @Inject() (
   grossProfitsView: grossProfits,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FORDataCaptureController(mcc)
+)(implicit ec: ExecutionContext)
+    extends FORDataCaptureController(mcc)
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
-    Ok(
-      grossProfitsView(
-        request.sessionData.aboutTheTradingHistory.flatMap(_.grossProfit) match {
-          case Some(grossProfit) => grossProfitForm.fillAndValidate(grossProfit)
-          case _                 => grossProfitForm
-        },
-        request.sessionData.toSummary
-      )
-    )
+    request.sessionData.aboutTheTradingHistory
+      .filter(_.occupationAndAccountingInformation.isDefined)
+      .fold(Redirect(routes.AboutYourTradingHistoryController.show())) { aboutTheTradingHistory =>
+        val numberOfColumns                = aboutTheTradingHistory.turnoverSections.size
+        val financialYears: Seq[LocalDate] = aboutTheTradingHistory.turnoverSections1516.foldLeft(Seq.empty[LocalDate])(
+          (sequence, turnoverSection) => sequence :+ turnoverSection.financialYearEnd
+        )
+        Ok(
+          grossProfitsView(
+            grossProfitForm(numberOfColumns).fillAndValidate(aboutTheTradingHistory.grossProfitSections),
+            numberOfColumns,
+            financialYears,
+            request.sessionData.toSummary
+          )
+        )
+      }
   }
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft[GrossProfit](
-      grossProfitForm,
-      formWithErrors => BadRequest(grossProfitsView(formWithErrors, request.sessionData.toSummary)),
-      data => {
-        val updatedData = request.sessionData
-        Redirect(navigator.nextPage(GrossProfitsId, updatedData).apply(updatedData))
+    request.sessionData.aboutTheTradingHistory
+      .filter(_.occupationAndAccountingInformation.isDefined)
+      .fold(Future.successful(Redirect(routes.AboutYourTradingHistoryController.show()))) { aboutTheTradingHistory =>
+        val numberOfColumns                = aboutTheTradingHistory.turnoverSections.size
+        val financialYears: Seq[LocalDate] = aboutTheTradingHistory.turnoverSections1516.foldLeft(Seq.empty[LocalDate])(
+          (sequence, turnoverSection) => sequence :+ turnoverSection.financialYearEnd
+        )
+        continueOrSaveAsDraft[Seq[GrossProfit]](
+          grossProfitForm(numberOfColumns),
+          formWithErrors =>
+            BadRequest(
+              grossProfitsView(formWithErrors, numberOfColumns, financialYears, request.sessionData.toSummary)
+            ),
+          success => {
+            val updatedData = updateAboutTheTradingHistory(_.copy(grossProfitSections = success))
+            session
+              .saveOrUpdate(updatedData)
+              .map(_ => Redirect(navigator.nextPage(GrossProfitsId, updatedData).apply(updatedData)))
+          }
+        )
       }
-    )
   }
 
 }

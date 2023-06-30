@@ -142,7 +142,7 @@ hint.postcode = For example, AB12 3CD
 error.invalid_refnum = Enter your reference number as it appears on your letter
 error.invalid_postcode_as_on_letter = Enter your postcode as it appears on your letter
 label.noReference = <a href="http://localhost:9526/send-trade-and-cost-information/no-reference-number" class="govuk-link">I do not have my reference</a>
-label.downloadPDF = <a href=#top" class="govuk-link">Download a PDF version</a>
+label.downloadPDF = <a href="#top" class="govuk-link">Download a PDF version</a>
 
 #LOGIN- Invalid Form Type
 ##############################
@@ -618,6 +618,10 @@ checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.rates = Rates
 checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.propertyInsurance = Property insurance
 checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.outsideRepairs = Outside repairs
 checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.insideRepairs = Inside repairs
+checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.noneOfThese = No, none of these are included in the rent
+checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.none = None
+error.cateringOperationOrLettingAccommodationCheckboxesDetails.required = Select items included in your rent, or select ’No, none of these are included in the rent’
+error.cateringOperationOrLettingAccommodationCheckboxesDetails.noneSelectedWithOther = Select items included in your rent, or select ’No, none of these are included in the rent’
 
 # ADD ANOTHER CATERING OPERATION OR LETTING ACCOMMODATION DETAILS
 #################################################################
@@ -897,15 +901,17 @@ checkYourAnswersAboutYourLeaseOrTenure.connectedToLandlord = Connected to landlo
 checkYourAnswersAboutYourLeaseOrTenure.connectedToLandlordDetails = Relationship to the landlord
 checkYourAnswersAboutYourLeaseOrTenure.changesToYourLease.heading = Changes to your lease
 checkYourAnswersAboutYourLeaseOrTenure.leaseOrAgreementDetails = Lease or agreement details
-checkYourAnswersAboutYourLeaseOrTenure.commenceWithinThreeYears.yes = Tenancy did commence within last 3 years
+checkYourAnswersAboutYourLeaseOrTenure.commenceWithinThreeYears.yes = Tenancy commenced within last 3 years
 checkYourAnswersAboutYourLeaseOrTenure.commenceWithinThreeYears.no = Tenancy did not commence within last 3 years
 checkYourAnswersAboutYourLeaseOrTenure.agreedReviewedAlteredThreeYears.yes = Rent has changed within last 3 years
 checkYourAnswersAboutYourLeaseOrTenure.agreedReviewedAlteredThreeYears.no = Rent has not changed within last 3 years
 checkYourAnswersAboutYourLeaseOrTenure.rentUnderReviewNegotiated.yes = Rent is under review or negotiation
 checkYourAnswersAboutYourLeaseOrTenure.rentUnderReviewNegotiated.no = Rent is not under review or negotiation
-checkYourAnswersAboutYourLeaseOrTenure.rentDueInNext12Months = Current rent payable due to review within the next 12 months?
-checkYourAnswersAboutYourLeaseOrTenure.nextReviewOrExpiryDate = Date of next rent review or expiry of existing lease
+checkYourAnswersAboutYourLeaseOrTenure.rentDueInNext12Months = Rent review due within 12 months?
+checkYourAnswersAboutYourLeaseOrTenure.nextReviewOrExpiryDate = Rent is reviewed or expires on {0}
 checkYourAnswersAboutYourLeaseOrTenure.leaseDetails.heading = Lease details
+checkYourAnswersAboutYourLeaseOrTenure.yourRent.heading = Your rent
+checkYourAnswersAboutYourLeaseOrTenure.rentIncludesVat = Rent includes VAT?
 checkYourAnswersAboutYourLeaseOrTenure.leasebackArrangement = Leaseback arrangement?
 checkYourAnswersAboutYourLeaseOrTenure.currentAnnualRent = Current annual rent
 checkYourAnswersAboutYourLeaseOrTenure.currentRentFirstPaid = Date current rent was first paid
