@@ -51,8 +51,9 @@
   @govukRadios(Radios(
     fieldset =  Some(Fieldset(
       legend = Some(Legend(
-        content = Text(Messages("label.propertyCurrentlyUsed")),
-        classes = "govuk-fieldset__legend--m"
+        content = Text(Messages("aboutProperty.heading")),
+        classes = "govuk-label--l govuk-fieldset__legend--m",
+        isPageHeading = true
       ))
     )),
     hint = Hint(content = HtmlContent(messages("hint.select.main"))),
@@ -102,8 +103,9 @@
     Checkboxes(
       fieldset =  Some(Fieldset(
         legend = Some(Legend(
-          content = Text(Messages("label.propertyCurrentlyUsed")),
-          classes = "govuk-fieldset__legend--m"
+          content = Text(Messages("aboutProperty.heading")),
+          classes = "govuk-label--l govuk-fieldset__legend--m",
+          isPageHeading = true
         ))
       )),
       name = "propertyCurrentlyUsed[]",
@@ -162,21 +164,6 @@
 ) {
 
   @formWithCSRF(action = controllers.aboutyouandtheproperty.routes.AboutThePropertyController.submit(), args = Symbol("class") -> "myForm", Symbol("id") -> "myFormId") {
-
-    <h1 class="govuk-heading-l">@messages("aboutProperty.heading")</h1>
-
-    @govukInput(
-      Input(
-        id = "currentOccupierName",
-        name = "currentOccupierName",
-        classes = "govuk-!-width-two-thirds",
-        value = theForm("currentOccupierName").value,
-        label = Label(
-          content = Text(messages("label.currentOccupierName"))
-        ),
-        errorMessage = theForm.errors.asTextErrorMessageForField("currentOccupierName"),
-      ).withFormField(theForm("currentOccupierName"))
-    )
 
     @govukFieldset(Fieldset(html = content))
 

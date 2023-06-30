@@ -16,7 +16,6 @@
 
 package controllers.aboutyouandtheproperty
 
-import form.Errors
 import play.api.http.Status
 import play.api.test.Helpers._
 import utils.FormBindingTestAssertions.mustContainError
@@ -60,13 +59,6 @@ class AboutThePropertyControllerSpec extends TestBaseSpec {
   }
 
   "About the property form" should {
-    "error if currentOccupierName is missing" in {
-      val formData = baseFormData - errorKey.currentOccupierName
-      val form     = aboutThePropertyForm.bind(formData)
-
-      mustContainError(errorKey.currentOccupierName, Errors.currentOccupierName, form)
-    }
-
     "error if propertyCurrentlyUsed is missing" in {
       val formData = baseFormData - errorKey.propertyCurrentlyUsed
       val form     = aboutThePropertyForm.bind(formData)
@@ -77,14 +69,12 @@ class AboutThePropertyControllerSpec extends TestBaseSpec {
 
   object TestData {
     val errorKey: Object {
-      val currentOccupierName: String
       val propertyCurrentlyUsed: String
     } = new {
-      val currentOccupierName: String   = "currentOccupierName"
       val propertyCurrentlyUsed: String = "propertyCurrentlyUsed"
     }
 
     val baseFormData: Map[String, String] =
-      Map("currentOccupierName" -> "Tobermory", "propertyCurrentlyUsed" -> CurrentPropertyHotel.name)
+      Map("propertyCurrentlyUsed" -> CurrentPropertyHotel.name)
   }
 }
