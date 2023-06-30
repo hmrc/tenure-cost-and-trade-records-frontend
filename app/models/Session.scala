@@ -26,7 +26,7 @@ import models.submissions.additionalinformation.AdditionalInformation
 import models.submissions.common.Address
 import models.submissions.connectiontoproperty.StillConnectedDetails
 import models.submissions.notconnected.RemoveConnectionDetails
-import models.submissions.requestReferenceNumber.RequestReferenceNumber
+import models.submissions.requestReferenceNumber.RequestReferenceNumberDetails
 import play.api.libs.json._
 
 // New session properties must be also added to class `UserData` and method `toUserData`
@@ -45,7 +45,6 @@ case class Session(
   aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = None,
   saveAsDraftPassword: Option[String] = None,
   lastCYAPageUrl: Option[String] = None,
-  requestReferenceNumber: Option[RequestReferenceNumber] = None
   requestReferenceNumberDetails: Option[RequestReferenceNumberDetails] = None
   // New session properties must be also added to class `UserData` and method `toUserData`
 ) {

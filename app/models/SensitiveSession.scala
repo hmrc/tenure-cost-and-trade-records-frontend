@@ -45,8 +45,6 @@ case class SensitiveSession(
   aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = None,
   saveAsDraftPassword: Option[String] = None,
   lastCYAPageUrl: Option[String] = None,
-  requestReferenceNumber: Option[RequestReferenceNumber] = None
-  saveAsDraftPassword: Option[String] = None,
   requestReferenceNumberDetails: Option[SensitiveRequestReferenceNumber]
 ) extends Sensitive[Session] {
 
@@ -65,8 +63,6 @@ case class SensitiveSession(
     aboutLeaseOrAgreementPartTwo,
     saveAsDraftPassword,
     lastCYAPageUrl,
-    requestReferenceNumber
-    saveAsDraftPassword,
     requestReferenceNumberDetails.map(_.decryptedValue)
   )
 }
@@ -90,8 +86,6 @@ object SensitiveSession {
     session.aboutLeaseOrAgreementPartTwo,
     session.saveAsDraftPassword,
     session.lastCYAPageUrl,
-    session.requestReferenceNumber
-    session.saveAsDraftPassword,
     session.requestReferenceNumberDetails.map(SensitiveRequestReferenceNumber(_))
   )
 }
