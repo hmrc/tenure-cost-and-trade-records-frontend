@@ -37,7 +37,7 @@
 
 @layout(
  pageHeading = messages("taskList.heading"),
- backLinkUrl = controllers.connectiontoproperty.routes.ConnectionToThePropertyController.show.url,
+ backLinkUrl = session.lastCYAPageUrl.orElse(Some(LoginController.startPage.url)),
  summary = session.toSummary
 ) {
 
