@@ -17,7 +17,7 @@
 package navigation
 
 import connectors.Audit
-import identifiers.{AreYouStillConnectedPageId, CheckYourAnswersRequestReferenceNumberPageId, ConnectionToPropertyPageId, EditAddressPageId, Identifier, NoReferenceNumberContactDetailsPageId, NoReferenceNumberPageId, VacantPropertiesPageId}
+import identifiers.{AreYouStillConnectedPageId, AreYouThirdPartyPageId, CheckYourAnswersAboutThePropertyPageId, CheckYourAnswersRequestReferenceNumberPageId, ConnectionToPropertyPageId, EditAddressPageId, Identifier, LettingIncomePageId, NoReferenceNumberContactDetailsPageId, NoReferenceNumberPageId, PropertyBecomeVacantPageId, TradingNameOperatingFromPropertyPageId, TradingNameOwnThePropertyPageId, TradingNamePayingRentPageId, VacantPropertiesPageId}
 import play.api.mvc.Call
 import models.Session
 import play.api.Logging
@@ -28,7 +28,7 @@ class ConnectionToPropertyNavigator @Inject() (audit: Audit) extends Navigator(a
 
   private def areYouStillConnectedRouting: Session => Call = answers => {
     answers.stillConnectedDetails.flatMap(_.addressConnectionType.map(_.name)) match {
-      case Some("yes")                => controllers.connectiontoproperty.routes.ConnectionToThePropertyController.show()
+      case Some("yes")                => controllers.connectiontoproperty.routes.VacantPropertiesController.show()
       case Some("yes-change-address") => controllers.connectiontoproperty.routes.EditAddressController.show()
       case Some("no")                 => controllers.notconnected.routes.PastConnectionController.show()
       case _                          =>
@@ -39,19 +39,49 @@ class ConnectionToPropertyNavigator @Inject() (audit: Audit) extends Navigator(a
     }
   }
 
+  private def whenDidThePropertyBecomeVacant: Session => Call = answers => {
+    answers.stillConnectedDetails.flatMap(_.vacantProperties.map(_.vacantProperties.name)) match {
+      case Some("yes") => controllers.connectiontoproperty.routes.VacantPropertiesStartDateController.show()
+      case Some("no")  => controllers.connectiontoproperty.routes.TradingNameOperatingFromPropertyController.show()
+      case _ =>
+        logger.warn(
+          s"Navigation for catering operations reached without correct selection of conditions by controller"
+        )
+        throw new RuntimeException("Invalid option exception for catering operations conditions routing")
+    }
+  }
+
+  private def tradingNameOwnTheProperty: Session => Call = answers => {
+    answers.stillConnectedDetails.flatMap(_.tradingNameOwnTheProperty.map(_.name)) match {
+      case Some("yes") => controllers.connectiontoproperty.routes.AreYouThirdPartyController.show()
+      case Some("no") => controllers.connectiontoproperty.routes.TradingNamePayingRentController.show()
+      case _ =>
+        logger.warn(
+          s"Navigation for catering operations reached without correct selection of conditions by controller"
+        )
+        throw new RuntimeException("Invalid option exception for catering operations conditions routing")
+    }
+  }
   override val routeMap: Map[Identifier, Session => Call] = Map(
     AreYouStillConnectedPageId                   -> areYouStillConnectedRouting,
-    EditAddressPageId                            -> (_ => controllers.connectiontoproperty.routes.ConnectionToThePropertyController.show()),
+    EditAddressPageId                            -> (_ => controllers.connectiontoproperty.routes.VacantPropertiesController.show()),
     ConnectionToPropertyPageId                   -> (_ => controllers.routes.TaskListController.show()),
     VacantPropertiesPageId                       -> (_ => controllers.routes.TaskListController.show()),
-    NoReferenceNumberPageId                      -> (_ =>
+    NoReferenceNumberPageId -> (_ =>
       controllers.requestReferenceNumber.routes.RequestReferenceNumberContactDetailsController.show()
-    ),
-    NoReferenceNumberContactDetailsPageId        -> (_ =>
+      ),
+    NoReferenceNumberContactDetailsPageId -> (_ =>
       controllers.requestReferenceNumber.routes.CheckYourAnswersRequestReferenceNumberController.submit()
-    ),
+      ),
     CheckYourAnswersRequestReferenceNumberPageId -> (_ =>
       controllers.routes.RequestReferenceNumberFormSubmissionController.submit()
-    )
+      ),
+    PropertyBecomeVacantPageId -> whenDidThePropertyBecomeVacant,
+    LettingIncomePageId -> (_ => controllers.connectiontoproperty.routes.VacantPropertiesController.show()),
+    TradingNameOperatingFromPropertyPageId -> (_ => controllers.connectiontoproperty.routes.TradingNameOwnThePropertyController.show()),
+    TradingNameOwnThePropertyPageId -> tradingNameOwnTheProperty,
+    TradingNamePayingRentPageId -> (_ => controllers.connectiontoproperty.routes.AreYouThirdPartyController.show()),
+    AreYouThirdPartyPageId -> (_ => controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToPropertyController.show()),
+    CheckYourAnswersAboutThePropertyPageId -> (_ => controllers.routes.TaskListController.show())
   )
 }

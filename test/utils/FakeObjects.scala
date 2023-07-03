@@ -27,6 +27,7 @@ import models.submissions.additionalinformation._
 import models.{AnnualRent, Session, SubmissionDraft}
 import models.submissions.common.{Address, AnswerNo, AnswerYes, ContactDetails, ContactDetailsAddress}
 import models.submissions.connectiontoproperty._
+import models.submissions.connectiontoproperty.StartDateOfVacantProperty
 import models.submissions.notconnected.{PastConnectionTypeYes, RemoveConnectionDetails, RemoveConnectionsDetails}
 import models.submissions.requestReferenceNumber.{CheckYourAnswersRequestReferenceNumber, RequestReferenceNumber, RequestReferenceNumberAddress, RequestReferenceNumberContactDetails, RequestReferenceNumberDetails}
 
@@ -76,6 +77,8 @@ trait FakeObjects {
   val prefilledDateInput: LocalDate               = LocalDate.of(2022, 6, 1)
   val prefilledMonthYearInput: MonthsYearDuration = MonthsYearDuration(6, 2000)
 
+  val prefilledTradingNameOperatingFromProperty = TradingNameOperatingFromProperty("TRADING NAME")
+
   val baseFilled6010Session: Session = Session(referenceNumber, forType6010, prefilledAddress, token)
   val baseFilled6011Session: Session = Session(referenceNumber, forType6011, prefilledAddress, token)
   val baseFilled6015Session: Session = Session(referenceNumber, forType6015, prefilledAddress, token)
@@ -91,14 +94,42 @@ trait FakeObjects {
     Some(ConnectionToThePropertyOccupierTrustee),
     Some(prefilledEditTheAddress)
   )
-  val prefilledStillConnectedDetailsNo: StillConnectedDetails   = StillConnectedDetails(Some(AddressConnectionTypeNo))
 
+  val prefilledStillConnectedDetailsYesToAll: StillConnectedDetails = StillConnectedDetails(
+    Some(AddressConnectionTypeYes),
+    Some(ConnectionToThePropertyOccupierTrustee),
+    Some(EditTheAddress(EditAddress("Street 1",Some("Street 2"),"Town",Some("County"),"BN12 4AX"))),
+    Some(VacantProperties(VacantPropertiesDetailsYes)),
+    Some(TradingNameOperatingFromProperty("ABC LTD")),
+    Some(AnswerYes),
+    Some(AnswerYes),
+    Some(AnswerYes),
+    Some(StartDateOfVacantProperty((prefilledDateInput)))
+  )
+
+  val prefilledStillConnectedDetailsNoToAll: StillConnectedDetails = StillConnectedDetails(
+    Some(AddressConnectionTypeNo),
+    Some(ConnectionToThePropertyOccupierAgent),
+    Some(EditTheAddress(EditAddress("Street 1", Some("Street 2"), "Town", Some("County"), "BN12 4AX"))),
+    Some(VacantProperties(VacantPropertiesDetailsNo)),
+    Some(TradingNameOperatingFromProperty("ABC LTD")),
+    Some(AnswerNo),
+    Some(AnswerNo),
+    Some(AnswerNo),
+    Some(StartDateOfVacantProperty((LocalDate.now())))
+  )
+
+  val prefilledStillConnectedDetailsNo: StillConnectedDetails   = StillConnectedDetails(Some(AddressConnectionTypeNo))
   val stillConnectedDetailsYesSession: Session                =
     baseFilled6010Session.copy(stillConnectedDetails = Some(prefilledStillConnectedDetailsYes))
+  val stillConnectedDetailsYesToAllSession: Session =
+    baseFilled6010Session.copy(stillConnectedDetails = Some(prefilledStillConnectedDetailsYesToAll))
   val stillConnectedDetailsEditSession: Session               =
     baseFilled6010Session.copy(stillConnectedDetails = Some(prefilledStillConnectedDetailsEdit))
   val stillConnectedDetailsNoSession: Session                 =
     baseFilled6010Session.copy(stillConnectedDetails = Some(prefilledStillConnectedDetailsNo))
+  val stillConnectedDetailsNoToAllSession: Session =
+    baseFilled6010Session.copy(stillConnectedDetails = Some(prefilledStillConnectedDetailsNoToAll))
   val stillConnectedDetails6011YesSession: Session            =
     baseFilled6011Session.copy(stillConnectedDetails = Some(prefilledStillConnectedDetailsYes))
   val stillConnectedDetails6011NoSession: Session             =
@@ -341,8 +372,18 @@ trait FakeObjects {
   val prefilledVacantProperties = StillConnectedDetails(
     Some(AddressConnectionTypeYes),
     Some(ConnectionToThePropertyOccupierTrustee),
+    Some(prefilledEditTheAddress)
+  )
+
+  val prefilledNotVacantPropertiesCYA = StillConnectedDetails(
+    Some(AddressConnectionTypeYes),
+    Some(ConnectionToThePropertyOccupierTrustee),
     Some(prefilledEditTheAddress),
-    Some(prefilledVacantPropertiesDetails)
+    Some(prefilledVacantPropertiesDetails),
+    Some(prefilledTradingNameOperatingFromProperty),
+    Some(AnswerYes),
+    Some(AnswerYes),
+    Some(AnswerNo)
   )
 
   val prefilledAboutLeaseOrAgreementPartOne = AboutLeaseOrAgreementPartOne(

@@ -18,25 +18,26 @@ package controllers.connectiontoproperty
 
 import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
-import form.connectiontoproperty.VacantPropertiesForm.vacantPropertiesForm
-import models.submissions.connectiontoproperty.StillConnectedDetails.updateStillConnectedDetails
-import models.submissions.connectiontoproperty.VacantProperties
+import models.Session
+import models.submissions.common.AnswersYesNo
 import navigation.ConnectionToPropertyNavigator
-import navigation.identifiers.PropertyBecomeVacantPageId
 import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import views.html.connectiontoproperty.vacantProperties
+import views.html.connectiontoproperty.tradingNameOwnTheProperty
+import form.connectiontoproperty.TradingNameOwnThePropertyForm.tradingNameOwnThePropertyForm
+import models.submissions.connectiontoproperty.StillConnectedDetails.updateStillConnectedDetails
+import navigation.identifiers.TradingNameOwnThePropertyPageId
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class VacantPropertiesController @Inject() (
+class TradingNameOwnThePropertyController @Inject()(
   mcc: MessagesControllerComponents,
   navigator: ConnectionToPropertyNavigator,
-  vacantPropertiesView: vacantProperties,
+  tradingNameOwnThePropertyView: tradingNameOwnTheProperty,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
 ) extends FORDataCaptureController(mcc)
@@ -46,11 +47,13 @@ class VacantPropertiesController @Inject() (
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Future.successful(
       Ok(
-        vacantPropertiesView(
-          request.sessionData.stillConnectedDetails.flatMap(_.vacantProperties) match {
-            case Some(vacantProperties) => vacantPropertiesForm.fillAndValidate(vacantProperties)
-            case _                      => vacantPropertiesForm
+        tradingNameOwnThePropertyView(
+          request.sessionData.stillConnectedDetails.flatMap(_.tradingNameOwnTheProperty) match {
+            case Some(enforcementAction) => tradingNameOwnThePropertyForm.fillAndValidate(enforcementAction)
+            case _                       => tradingNameOwnThePropertyForm
           },
+          getBackLink(request.sessionData),
+          request.sessionData.stillConnectedDetails.get.tradingNameOperatingFromProperty.get.tradingName,
           request.sessionData.toSummary
         )
       )
@@ -58,20 +61,25 @@ class VacantPropertiesController @Inject() (
   }
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft[VacantProperties](
-      vacantPropertiesForm,
+    continueOrSaveAsDraft[AnswersYesNo](
+      tradingNameOwnThePropertyForm,
       formWithErrors =>
         BadRequest(
-          vacantPropertiesView(
+          tradingNameOwnThePropertyView(
             formWithErrors,
+            getBackLink(request.sessionData),
+            request.sessionData.stillConnectedDetails.get.tradingNameOperatingFromProperty.get.tradingName,
             request.sessionData.toSummary
           )
         ),
       data => {
-        val updatedData = updateStillConnectedDetails(_.copy(vacantProperties = Some(data)))
+        val updatedData = updateStillConnectedDetails(_.copy(tradingNameOwnTheProperty = Some(data)))
         session.saveOrUpdate(updatedData)
-        Redirect(navigator.nextPage(PropertyBecomeVacantPageId, updatedData).apply(updatedData))
+        Redirect(navigator.nextPage(TradingNameOwnThePropertyPageId, updatedData).apply(updatedData))
       }
     )
   }
+
+  private def getBackLink(answers: Session): String =
+    controllers.connectiontoproperty.routes.TradingNameOperatingFromPropertyController.show().url
 }

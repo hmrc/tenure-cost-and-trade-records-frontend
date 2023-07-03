@@ -104,7 +104,7 @@ trait TestBaseSpec
     )
 
   def preEnrichedActionRefiner(
-    stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledStillConnectedDetailsYes),
+    stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledStillConnectedDetailsYesToAll),
     removeConnectionDetails: Option[RemoveConnectionDetails] = Some(prefilledRemoveConnection),
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyNo),
     additionalInformation: Option[AdditionalInformation] = Some(prefilledAdditionalInformation),
