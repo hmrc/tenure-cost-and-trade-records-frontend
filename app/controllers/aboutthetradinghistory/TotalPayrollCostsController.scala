@@ -28,7 +28,9 @@ import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import views.html.aboutthetradinghistory.totalPayrollCosts
 
+import java.time.LocalDate
 import javax.inject.{Inject, Named, Singleton}
+import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class TotalPayrollCostsController @Inject() (
@@ -37,30 +39,52 @@ class TotalPayrollCostsController @Inject() (
   totalPayrollCostsView: totalPayrollCosts,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FORDataCaptureController(mcc)
+)(implicit ec: ExecutionContext)
+    extends FORDataCaptureController(mcc)
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
-    Ok(
-      totalPayrollCostsView(
-        request.sessionData.aboutTheTradingHistory.flatMap(_.totalPayrollCost) match {
-          case Some(totalPayrollCost) => totalPayrollCostForm.fillAndValidate(totalPayrollCost)
-          case _                      => totalPayrollCostForm
-        },
-        request.sessionData.toSummary
-      )
-    )
+    request.sessionData.aboutTheTradingHistory
+      .filter(_.occupationAndAccountingInformation.isDefined)
+      .fold(Redirect(routes.AboutYourTradingHistoryController.show())) { aboutTheTradingHistory =>
+        val numberOfColumns                = aboutTheTradingHistory.turnoverSections.size
+        val financialYears: Seq[LocalDate] = aboutTheTradingHistory.turnoverSections1516.foldLeft(Seq.empty[LocalDate])(
+          (sequence, turnoverSection) => sequence :+ turnoverSection.financialYearEnd
+        )
+        Ok(
+          totalPayrollCostsView(
+            totalPayrollCostForm(numberOfColumns).fillAndValidate(aboutTheTradingHistory.totalPayrollCostSections),
+            numberOfColumns,
+            financialYears,
+            request.sessionData.toSummary
+          )
+        )
+      }
+
   }
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft[TotalPayrollCost](
-      totalPayrollCostForm,
-      formWithErrors => BadRequest(totalPayrollCostsView(formWithErrors, request.sessionData.toSummary)),
-      data => {
-        val updatedData = updateAboutTheTradingHistory(_.copy(totalPayrollCost = Some(data)))
-        Redirect(navigator.nextPage(TotalPayrollCostId, updatedData).apply(updatedData))
+    request.sessionData.aboutTheTradingHistory
+      .filter(_.occupationAndAccountingInformation.isDefined)
+      .fold(Future.successful(Redirect(routes.AboutYourTradingHistoryController.show()))) { aboutTheTradingHistory =>
+        val numberOfColumns                = aboutTheTradingHistory.turnoverSections.size
+        val financialYears: Seq[LocalDate] = aboutTheTradingHistory.turnoverSections1516.foldLeft(Seq.empty[LocalDate])(
+          (sequence, turnoverSection) => sequence :+ turnoverSection.financialYearEnd
+        )
+        continueOrSaveAsDraft[Seq[TotalPayrollCost]](
+          totalPayrollCostForm(numberOfColumns),
+          formWithErrors =>
+            BadRequest(
+              totalPayrollCostsView(formWithErrors, numberOfColumns, financialYears, request.sessionData.toSummary)
+            ),
+          success => {
+            val updatedData = updateAboutTheTradingHistory(_.copy(totalPayrollCostSections = success))
+            session
+              .saveOrUpdate(updatedData)
+              .map(_ => Redirect(navigator.nextPage(TotalPayrollCostId, updatedData).apply(updatedData)))
+          }
+        )
       }
-    )
   }
 
 }
