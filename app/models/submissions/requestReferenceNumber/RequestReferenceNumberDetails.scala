@@ -23,7 +23,8 @@ import play.api.libs.json.{Json, OFormat}
 case class RequestReferenceNumberDetails(
   requestReferenceNumberAddress: Option[RequestReferenceNumber] = None,
   requestReferenceContactDetails: Option[RequestReferenceNumberContactDetails] = None,
-  checkYourAnswersRequestReferenceNumber: Option[CheckYourAnswersRequestReferenceNumber] = None
+  checkYourAnswersRequestReferenceNumber: Option[CheckYourAnswersRequestReferenceNumber] = None,
+  downloadPDFReferenceNumber: Option[DownloadPDFReferenceNumber] = None
 )
 
 object RequestReferenceNumberDetails {

@@ -17,9 +17,10 @@
 package navigation
 
 import connectors.Audit
-import identifiers.{AreYouStillConnectedPageId, CheckYourAnswersRequestReferenceNumberPageId, ConnectionToPropertyPageId, EditAddressPageId, Identifier, NoReferenceNumberContactDetailsPageId, NoReferenceNumberPageId, VacantPropertiesPageId}
+import identifiers.{AreYouStillConnectedPageId, CheckYourAnswersRequestReferenceNumberPageId, ConnectionToPropertyPageId, DownloadPDFReferenceNumberPageId, EditAddressPageId, Identifier, NoReferenceNumberContactDetailsPageId, NoReferenceNumberPageId, VacantPropertiesPageId}
 import play.api.mvc.Call
 import models.Session
+import models.submissions.requestReferenceNumber.DownloadPDFReferenceNumber
 import play.api.Logging
 
 import javax.inject.Inject
@@ -52,6 +53,7 @@ class ConnectionToPropertyNavigator @Inject() (audit: Audit) extends Navigator(a
     ),
     CheckYourAnswersRequestReferenceNumberPageId -> (_ =>
       controllers.routes.RequestReferenceNumberFormSubmissionController.submit()
-    )
+    ),
+    DownloadPDFReferenceNumberPageId  ->  (_ => controllers.routes.TaskListController.show())
   )
 }

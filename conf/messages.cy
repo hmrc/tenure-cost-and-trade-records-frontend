@@ -187,6 +187,12 @@ label.requestReferenceNumberContactDetailsFullName = Full name
 requestReferenceNumberContactDetailsAdditionalInformation.heading = Additional information (optional)
 error.requestReferenceNumberContactDetailsFullName.required = Enter your name
 
+# DOWNLOAD PDF REFERENCE NUMBER
+downloadPDFReferenceNumber.heading = What is your reference number?
+downloadPDFReferenceNumber.p1 = You’ll need the reference number from the letter you received from the VOA
+label.downloadPDFReferenceNumber = Reference number
+hint.downloadPDFReferenceNumber = For example, 1000001/101
+
 # ARE YOU STILL CONNECTED SECTION
 #################################
 

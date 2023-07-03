@@ -77,7 +77,9 @@
             <a class="govuk-link" href=@controllers.requestReferenceNumber.routes.RequestReferenceNumberController.startWithSession()>@messages("label.requestReference")</a>
         </p>
 
-        <p class="govuk-body">@HtmlContent(messages("label.downloadPDF")).asHtml</p>
+        <p class="govuk-body">
+            <a class="govuk-link"  href=@controllers.requestReferenceNumber.routes.DownloadPDFReferenceNumberController.show()>@messages("label.downloadPDFReferenceNumberLogin")</a>
+        </p>
 
         @defining(DateTime.now.toString) { now =>
             <input type="hidden" name="start-time" value="@now" />

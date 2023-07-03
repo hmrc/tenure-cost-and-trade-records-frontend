@@ -35,3 +35,6 @@ case object NoReferenceNumberContactDetailsPageId extends Identifier {
 case object CheckYourAnswersRequestReferenceNumberPageId extends Identifier {
   override def toString: String = "CheckYourAnswersRequestReferenceNumberPage"
 }
+
+case object DownloadPDFReferenceNumberPageId extends Identifier { override def toString: String = "DownloadPDFReferenceNumberPage" }
+
