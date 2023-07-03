@@ -17,6 +17,7 @@
 package models.submissions.connectiontoproperty
 
 import crypto.MongoCrypto
+import models.submissions.common.AnswersYesNo
 import play.api.libs.json.{Json, OFormat}
 import uk.gov.hmrc.crypto.Sensitive
 
@@ -30,8 +31,6 @@ case class SensitiveStillConnectedDetails(
                                            tradingNamePayingRent: Option[AnswersYesNo] = None,
                                            areYouThirdParty: Option[AnswersYesNo] = None,
                                            vacantPropertyStartDate: Option[StartDateOfVacantProperty] = None,
-                                           noReferenceNumber: Option[NoReferenceNumber] = None,
-                                           noReferenceContactDetails: Option[NoReferenceNumberContactDetails] = None,
                                            checkYourAnswersConnectionToProperty: Option[CheckYourAnswersConnectionToProperty] = None
                                          ) extends Sensitive[StillConnectedDetails] {
 
@@ -45,8 +44,6 @@ case class SensitiveStillConnectedDetails(
     tradingNamePayingRent,
     areYouThirdParty,
     vacantPropertyStartDate,
-    noReferenceNumber,
-    noReferenceContactDetails,
     checkYourAnswersConnectionToProperty
   )
 
@@ -68,8 +65,6 @@ object SensitiveStillConnectedDetails {
     stillConnectedDetails.tradingNamePayingRent,
     stillConnectedDetails.areYouThirdParty,
     stillConnectedDetails.vacantPropertyStartDate,
-    stillConnectedDetails.noReferenceNumber,
-    stillConnectedDetails.noReferenceContactDetails,
     stillConnectedDetails.checkYourAnswersConnectionToProperty
   )
 }

@@ -18,6 +18,8 @@ package models.submissions.connectiontoproperty
 
 import actions.SessionRequest
 import models.Session
+import models.pages.NoReferenceNumber
+import models.submissions.common.AnswersYesNo
 import models.submissions.requestReferenceNumber._
 import play.api.libs.json.Json
 
@@ -31,8 +33,6 @@ case class StillConnectedDetails(
   tradingNamePayingRent: Option[AnswersYesNo] = None,
   areYouThirdParty: Option[AnswersYesNo] = None,
   vacantPropertyStartDate: Option[StartDateOfVacantProperty] = None,
-  noReferenceNumber: Option[NoReferenceNumber] = None,
-  noReferenceContactDetails: Option[NoReferenceNumberContactDetails] = None,
   checkYourAnswersConnectionToProperty: Option[CheckYourAnswersConnectionToProperty] = None
 )
 
