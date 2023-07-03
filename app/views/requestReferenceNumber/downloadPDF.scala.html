@@ -14,11 +14,13 @@
  * limitations under the License.
  *@
 
-@import models.submissions.requestReferenceNumber.DownloadPDFReferenceNumber
+@import models.submissions.requestReferenceNumber.DownloadPDF
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
 @import models.pages.Summary
+@import uk.gov.hmrc.govukfrontend.views.Aliases.HtmlContent
+
 
 @this(layout: Layout,
         govukButton: GovukButton,
@@ -26,27 +28,16 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[DownloadPDFReferenceNumber])(implicit request: Request[_], messages: Messages)
+@()(implicit request: Request[_], messages: Messages)
 
 @layout(
-  pageHeading = messages("downloadPDFReferenceNumber.heading"),
-  showH1 = true,
-  backLinkUrl = controllers.routes.Application.index().url,
-  theForm = theForm
+  pageHeading = messages("downloadPDF.heading"),
+  backLinkUrl = controllers.requestReferenceNumber.routes.DownloadPDFReferenceNumberController.show().url
 ) {
 
-  @formWithCSRF(action = controllers.requestReferenceNumber.routes.DownloadPDFReferenceNumberController.submit()) {
 
-      <p class="govuk-body">@{messages("downloadPDFReferenceNumber.p1")}</p>
-
-      @includes.textInput(govukInput, theForm, "downloadPDFReferenceNumber", "govuk-input--width-20", "downloadPDFReferenceNumber", hintMsg = "downloadPDFReferenceNumber")
-
-      <p class="govuk-body">
-          <a class="govuk-link" href=@controllers.requestReferenceNumber.routes.RequestReferenceNumberController.startWithSession()>@messages("label.requestReference")</a>
-      </p>
-
-      @includes.continueButton(govukButton)
+      <p class="govuk-body">@{HtmlContent(messages("downloadPDF.p1")).asHtml}</p>
   }
-}
+
 
 

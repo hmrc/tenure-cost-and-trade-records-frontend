@@ -53,8 +53,7 @@ class DownloadPDFReferenceNumberController @Inject()(
         request.sessionData.requestReferenceNumberDetails.flatMap(_.downloadPDFReferenceNumber) match {
           case Some(data) => downloadPDFReferenceNumberForm.fillAndValidate(data)
           case _          => downloadPDFReferenceNumberForm
-        },
-        request.sessionData.toSummary
+        }
       )
     )
   }
@@ -63,7 +62,7 @@ class DownloadPDFReferenceNumberController @Inject()(
     downloadPDFReferenceNumberForm
       .bindFromRequest()
       .fold(
-        formWithErrors => Future.successful(BadRequest(downloadPDFReferenceNumberView(formWithErrors, request.sessionData.toSummary))),
+        formWithErrors => Future.successful(BadRequest(downloadPDFReferenceNumberView(formWithErrors))),
         data => {
           val updatedData = updateRequestReferenceNumber(_.copy(downloadPDFReferenceNumber = Some(data)))
           session.saveOrUpdate(updatedData)

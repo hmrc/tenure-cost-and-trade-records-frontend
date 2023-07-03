@@ -16,21 +16,21 @@
 
 package form.requestReferenceNumber
 
-import models.submissions.requestReferenceNumber.DownloadPDFReferenceNumber
+import models.submissions.requestReferenceNumber.DownloadPDF
 import play.api.data.Form
 import play.api.data.Forms.{default, mapping, text}
-import play.api.data.validation.Constraints.{maxLength, nonEmpty}
+import play.api.data.validation.Constraints.nonEmpty
 
-object DownloadPDFReferenceNumberForm {
+object DownloadPDFForm {
 
-  val downloadPDFReferenceNumberForm = Form(
+  val downloadPDFForm = Form(
     mapping(
-      "downloadPDFReferenceNumber" ->
+      "downloadPDF" ->
         default(text, "").verifying(
-          nonEmpty(errorMessage = "error.downloadPDFReferenceNumber.required"),
+          nonEmpty(errorMessage = "error.downloadPDF.required")
         )
-    )(DownloadPDFReferenceNumber.apply)(
-      DownloadPDFReferenceNumber.unapply
+    )(DownloadPDF.apply)(
+      DownloadPDF.unapply
     )
   )
 }

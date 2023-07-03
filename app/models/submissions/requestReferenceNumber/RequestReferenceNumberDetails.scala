@@ -17,6 +17,7 @@
 package models.submissions.requestReferenceNumber
 
 import actions.SessionRequest
+
 import models.Session
 import play.api.libs.json.{Json, OFormat}
 
@@ -24,7 +25,8 @@ case class RequestReferenceNumberDetails(
   requestReferenceNumberAddress: Option[RequestReferenceNumber] = None,
   requestReferenceContactDetails: Option[RequestReferenceNumberContactDetails] = None,
   checkYourAnswersRequestReferenceNumber: Option[CheckYourAnswersRequestReferenceNumber] = None,
-  downloadPDFReferenceNumber: Option[DownloadPDFReferenceNumber] = None
+  downloadPDFReferenceNumber: Option[DownloadPDFReferenceNumber] = None,
+  downloadPDF: Option[DownloadPDF] = None,
 )
 
 object RequestReferenceNumberDetails {
