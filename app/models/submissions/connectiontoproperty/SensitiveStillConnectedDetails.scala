@@ -21,15 +21,33 @@ import play.api.libs.json.{Json, OFormat}
 import uk.gov.hmrc.crypto.Sensitive
 
 case class SensitiveStillConnectedDetails(
-  addressConnectionType: Option[AddressConnectionType] = None,
-  connectionToProperty: Option[ConnectionToProperty] = None,
-  editAddress: Option[SensitiveEditTheAddress] = None
-) extends Sensitive[StillConnectedDetails] {
+                                           addressConnectionType: Option[AddressConnectionType] = None,
+                                           connectionToProperty: Option[ConnectionToProperty] = None,
+                                           editAddress: Option[SensitiveEditTheAddress] = None,
+                                           vacantProperties: Option[VacantProperties] = None,
+                                           tradingNameOperatingFromProperty: Option[TradingNameOperatingFromProperty] = None,
+                                           tradingNameOwnTheProperty: Option[AnswersYesNo] = None,
+                                           tradingNamePayingRent: Option[AnswersYesNo] = None,
+                                           areYouThirdParty: Option[AnswersYesNo] = None,
+                                           vacantPropertyStartDate: Option[StartDateOfVacantProperty] = None,
+                                           noReferenceNumber: Option[NoReferenceNumber] = None,
+                                           noReferenceContactDetails: Option[NoReferenceNumberContactDetails] = None,
+                                           checkYourAnswersConnectionToProperty: Option[CheckYourAnswersConnectionToProperty] = None
+                                         ) extends Sensitive[StillConnectedDetails] {
 
   override def decryptedValue: StillConnectedDetails = StillConnectedDetails(
     addressConnectionType,
     connectionToProperty,
-    editAddress.map(_.decryptedValue)
+    editAddress.map(_.decryptedValue),
+    vacantProperties,
+    tradingNameOperatingFromProperty,
+    tradingNameOwnTheProperty,
+    tradingNamePayingRent,
+    areYouThirdParty,
+    vacantPropertyStartDate,
+    noReferenceNumber,
+    noReferenceContactDetails,
+    checkYourAnswersConnectionToProperty
   )
 
 }
@@ -40,10 +58,18 @@ object SensitiveStillConnectedDetails {
   implicit def format(implicit crypto: MongoCrypto): OFormat[SensitiveStillConnectedDetails] =
     Json.format[SensitiveStillConnectedDetails]
 
-  def apply(stillConnectedDetails: StillConnectedDetails): SensitiveStillConnectedDetails =
-    SensitiveStillConnectedDetails(
-      stillConnectedDetails.addressConnectionType,
-      stillConnectedDetails.connectionToProperty,
-      stillConnectedDetails.editAddress.map(SensitiveEditTheAddress(_))
-    )
+  def apply(stillConnectedDetails: StillConnectedDetails):SensitiveStillConnectedDetails = SensitiveStillConnectedDetails(
+    stillConnectedDetails.addressConnectionType,
+    stillConnectedDetails.connectionToProperty,
+    stillConnectedDetails.editAddress.map(SensitiveEditTheAddress(_)),
+    stillConnectedDetails.vacantProperties,
+    stillConnectedDetails.tradingNameOperatingFromProperty,
+    stillConnectedDetails.tradingNameOwnTheProperty,
+    stillConnectedDetails.tradingNamePayingRent,
+    stillConnectedDetails.areYouThirdParty,
+    stillConnectedDetails.vacantPropertyStartDate,
+    stillConnectedDetails.noReferenceNumber,
+    stillConnectedDetails.noReferenceContactDetails,
+    stillConnectedDetails.checkYourAnswersConnectionToProperty
+  )
 }

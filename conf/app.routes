@@ -48,6 +48,22 @@ POST        /connection-to-the-property                             controllers.
 
 GET         /vacant-properties                                      controllers.connectiontoproperty.VacantPropertiesController.show()
 POST        /vacant-properties                                      controllers.connectiontoproperty.VacantPropertiesController.submit()
+
+GET         /name-of-operator-from-property                         controllers.connectiontoproperty.TradingNameOperatingFromPropertyController.show()
+POST        /name-of-operator-from-property                         controllers.connectiontoproperty.TradingNameOperatingFromPropertyController.submit()
+
+GET         /trading-name-own-the-property                          controllers.connectiontoproperty.TradingNameOwnThePropertyController.show()
+POST        /trading-name-own-the-property                          controllers.connectiontoproperty.TradingNameOwnThePropertyController.submit()
+
+GET         /trading-name-paying-rent                               controllers.connectiontoproperty.TradingNamePayingRentController.show()
+POST        /trading-name-paying-rent                               controllers.connectiontoproperty.TradingNamePayingRentController.submit()
+
+GET         /are-you-third-party                                    controllers.connectiontoproperty.AreYouThirdPartyController.show()
+POST        /are-you-third-party                                    controllers.connectiontoproperty.AreYouThirdPartyController.submit()
+
+GET         /vacant-property-start-date                             controllers.connectiontoproperty.VacantPropertiesStartDateController.show()
+POST        /vacant-property-start-date                             controllers.connectiontoproperty.VacantPropertiesStartDateController.submit()
+
 # Not connected
 GET         /previously-connected                                   controllers.notconnected.PastConnectionController.show()
 POST        /previously-connected                                   controllers.notconnected.PastConnectionController.submit()
@@ -286,6 +302,9 @@ GET         /alternate-contact-details                              controllers.
 POST        /alternate-contact-details                              controllers.additionalinformation.AlternativeContactDetailsController.submit()
 
 GET         /check-your-answers                                     controllers.Form6010.CheckYourAnswersController.show()
+
+GET         /check-your-answers-connection-to-property              controllers.connectiontoproperty.CheckYourAnswersConnectionToPropertyController.show()
+POST        /check-your-answers-connection-to-property              controllers.connectiontoproperty.CheckYourAnswersConnectionToPropertyController.submit()
 
 GET         /check-your-answers-about-the-property                  controllers.aboutyouandtheproperty.CheckYourAnswersAboutThePropertyController.show()
 POST        /check-your-answers-about-the-property                  controllers.aboutyouandtheproperty.CheckYourAnswersAboutThePropertyController.submit()

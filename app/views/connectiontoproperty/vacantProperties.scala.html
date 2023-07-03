@@ -39,7 +39,7 @@
     theForm = theForm
 ) {
 
-  @formWithCSRF(action = controllers.connectiontoproperty.routes.VacantPropertiesController.show(), args = Symbol("class") -> "myForm", Symbol("id") -> "myFormId") {
+  @formWithCSRF(action = controllers.connectiontoproperty.routes.VacantPropertiesController.submit(), args = Symbol("class") -> "myForm", Symbol("id") -> "myFormId") {
 
       <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
           <h1 class="govuk-fieldset__heading">@messages("vacantProperties.heading")</h1>
