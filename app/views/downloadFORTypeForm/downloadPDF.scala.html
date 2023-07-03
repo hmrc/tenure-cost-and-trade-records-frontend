@@ -14,11 +14,9 @@
  * limitations under the License.
  *@
 
-@import models.submissions.requestReferenceNumber.DownloadPDF
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
-@import models.pages.Summary
 @import uk.gov.hmrc.govukfrontend.views.Aliases.HtmlContent
 
 
@@ -32,7 +30,7 @@
 
 @layout(
   pageHeading = messages("downloadPDF.heading"),
-  backLinkUrl = controllers.requestReferenceNumber.routes.DownloadPDFReferenceNumberController.show().url
+  backLinkUrl = controllers.downloadFORTypeForm.routes.DownloadPDFReferenceNumberController.show().url
 ) {
 
 

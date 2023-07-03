@@ -14,11 +14,10 @@
  * limitations under the License.
  *@
 
-@import models.submissions.requestReferenceNumber.DownloadPDFReferenceNumber
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
-@import models.pages.Summary
+@import models.submissions.downloadFORTypeForm.DownloadPDFReferenceNumber
 
 @this(layout: Layout,
         govukButton: GovukButton,
@@ -26,16 +25,17 @@
         formWithCSRF: FormWithCSRF
 )
 
+
 @(theForm: Form[DownloadPDFReferenceNumber])(implicit request: Request[_], messages: Messages)
 
 @layout(
   pageHeading = messages("downloadPDFReferenceNumber.heading"),
   showH1 = true,
-  backLinkUrl = controllers.routes.Application.index().url,
+  backLinkUrl = controllers.routes.LoginController.show().url,
   theForm = theForm
 ) {
 
-  @formWithCSRF(action = controllers.requestReferenceNumber.routes.DownloadPDFReferenceNumberController.submit()) {
+  @formWithCSRF(action = controllers.downloadFORTypeForm.routes.DownloadPDFReferenceNumberController.submit()) {
 
       <p class="govuk-body">@{messages("downloadPDFReferenceNumber.p1")}</p>
 

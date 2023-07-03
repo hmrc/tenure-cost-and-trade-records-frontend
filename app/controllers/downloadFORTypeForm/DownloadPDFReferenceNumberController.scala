@@ -14,20 +14,20 @@
  * limitations under the License.
  */
 
-package controllers.requestReferenceNumber
+package controllers.downloadFORTypeForm
 
 import actions.WithSessionRefiner
-import controllers.FORDataCaptureController
-import form.requestReferenceNumber.DownloadPDFReferenceNumberForm.downloadPDFReferenceNumberForm
-import models.submissions.requestReferenceNumber.RequestReferenceNumberDetails.updateRequestReferenceNumber
+import form.downloadFORTypeForm.DownloadPDFReferenceNumberForm.downloadPDFReferenceNumberForm
 import models.Session
 import models.submissions.common.Address
+import models.submissions.downloadFORTypeForm.DownloadPDFDetails.updateDownloadPDFDetails
 import navigation.ConnectionToPropertyNavigator
-import navigation.identifiers.{DownloadPDFReferenceNumberPageId, TenantsAdditionsDisregardedDetailsId}
+import navigation.identifiers.DownloadPDFReferenceNumberPageId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import views.html.requestReferenceNumber.downloadPDFReferenceNumber
+import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
+import views.html.downloadFORTypeForm.downloadPDFReferenceNumber
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
@@ -39,18 +39,18 @@ class DownloadPDFReferenceNumberController @Inject()(
   downloadPDFReferenceNumberView: downloadPDFReferenceNumber,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FORDataCaptureController(mcc)
+) extends FrontendController(mcc)
     with I18nSupport {
 
   def startWithSession: Action[AnyContent] = Action.async { implicit request =>
     session.start(Session("", "", Address("", None, "", None, ""), ""))
-    Future.successful(Redirect(routes.DownloadPDFReferenceNumberController.show()))
+    Future.successful(Redirect(routes.DownloadPDFReferenceNumberController.show().url))
   }
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     Ok(
       downloadPDFReferenceNumberView(
-        request.sessionData.requestReferenceNumberDetails.flatMap(_.downloadPDFReferenceNumber) match {
+        request.sessionData.downloadPDFDetails.flatMap(_.downloadPDFReferenceNumber) match {
           case Some(data) => downloadPDFReferenceNumberForm.fillAndValidate(data)
           case _          => downloadPDFReferenceNumberForm
         }
@@ -64,7 +64,7 @@ class DownloadPDFReferenceNumberController @Inject()(
       .fold(
         formWithErrors => Future.successful(BadRequest(downloadPDFReferenceNumberView(formWithErrors))),
         data => {
-          val updatedData = updateRequestReferenceNumber(_.copy(downloadPDFReferenceNumber = Some(data)))
+          val updatedData = updateDownloadPDFDetails(_.copy(downloadPDFReferenceNumber = Some(data)))
           session.saveOrUpdate(updatedData)
           Future.successful(
             Redirect(navigator.nextPage(DownloadPDFReferenceNumberPageId, updatedData).apply(updatedData))

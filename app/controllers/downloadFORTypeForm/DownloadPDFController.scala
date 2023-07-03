@@ -14,20 +14,13 @@
  * limitations under the License.
  */
 
-package controllers.requestReferenceNumber
+package controllers.downloadFORTypeForm
 
-import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
-import form.requestReferenceNumber.DownloadPDFForm.downloadPDFForm
-import models.Session
-import models.submissions.common.Address
-import models.submissions.requestReferenceNumber.RequestReferenceNumberDetails.updateRequestReferenceNumber
-import navigation.ConnectionToPropertyNavigator
-import navigation.identifiers.DownloadPDFReferenceNumberPageId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import views.html.requestReferenceNumber.{downloadPDF, downloadPDFReferenceNumber}
+import views.html.downloadFORTypeForm.downloadPDF
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future

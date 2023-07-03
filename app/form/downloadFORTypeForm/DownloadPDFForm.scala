@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package form.requestReferenceNumber
+package form.downloadFORTypeForm
 
-import models.submissions.requestReferenceNumber.DownloadPDF
+import models.submissions.downloadFORTypeForm.DownloadPDF
 import play.api.data.Form
 import play.api.data.Forms.{default, mapping, text}
 import play.api.data.validation.Constraints.nonEmpty

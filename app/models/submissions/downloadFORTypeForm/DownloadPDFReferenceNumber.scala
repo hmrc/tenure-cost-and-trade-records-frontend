@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package models.submissions.requestReferenceNumber
+package models.submissions.downloadFORTypeForm
 
 import play.api.libs.json.Json
 

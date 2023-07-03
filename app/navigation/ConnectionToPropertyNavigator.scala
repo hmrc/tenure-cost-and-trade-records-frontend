@@ -53,6 +53,6 @@ class ConnectionToPropertyNavigator @Inject() (audit: Audit) extends Navigator(a
     CheckYourAnswersRequestReferenceNumberPageId -> (_ =>
       controllers.routes.RequestReferenceNumberFormSubmissionController.submit()
     ),
-    DownloadPDFReferenceNumberPageId  ->  (_ => controllers.requestReferenceNumber.routes.DownloadPDFController.show())
+    DownloadPDFReferenceNumberPageId  ->  (_ => controllers.downloadFORTypeForm.routes.DownloadPDFController.show())
   )
 }
