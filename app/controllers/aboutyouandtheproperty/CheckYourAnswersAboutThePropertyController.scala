@@ -73,6 +73,9 @@ class CheckYourAnswersAboutThePropertyController @Inject() (
         ),
       data => {
         val updatedData = updateAboutYouAndTheProperty(_.copy(checkYourAnswersAboutTheProperty = Some(data)))
+          .copy(lastCYAPageUrl =
+            Some(controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show().url)
+          )
         session.saveOrUpdate(updatedData)
         Redirect(navigator.nextPage(CheckYourAnswersAboutThePropertyPageId, updatedData).apply(updatedData))
       }

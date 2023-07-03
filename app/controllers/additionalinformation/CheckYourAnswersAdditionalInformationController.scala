@@ -70,6 +70,9 @@ class CheckYourAnswersAdditionalInformationController @Inject() (
         ),
       data => {
         val updatedData = updateAdditionalInformation(_.copy(checkYourAnswersAdditionalInformation = Some(data)))
+          .copy(lastCYAPageUrl =
+            Some(controllers.additionalinformation.routes.CheckYourAnswersAdditionalInformationController.show().url)
+          )
         session.saveOrUpdate(updatedData)
         Redirect(navigator.nextPage(CheckYourAnswersAdditionalInformationId, updatedData).apply(updatedData))
       }

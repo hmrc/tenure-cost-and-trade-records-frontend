@@ -44,6 +44,7 @@ case class Session(
   aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = None,
   aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = None,
   saveAsDraftPassword: Option[String] = None,
+  lastCYAPageUrl: Option[String] = None,
   requestReferenceNumberDetails: Option[RequestReferenceNumberDetails] = None
   // New session properties must be also added to class `UserData` and method `toUserData`
 ) {

@@ -73,6 +73,11 @@ class CheckYourAnswersAboutFranchiseOrLettingsController @Inject() (
         ),
       data => {
         val updatedData = updateAboutFranchisesOrLettings(_.copy(checkYourAnswersAboutFranchiseOrLettings = Some(data)))
+          .copy(lastCYAPageUrl =
+            Some(
+              controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show().url
+            )
+          )
         session.saveOrUpdate(updatedData)
         Redirect(navigator.nextPage(CheckYourAnswersAboutFranchiseOrLettingsId, updatedData).apply(updatedData))
       }
