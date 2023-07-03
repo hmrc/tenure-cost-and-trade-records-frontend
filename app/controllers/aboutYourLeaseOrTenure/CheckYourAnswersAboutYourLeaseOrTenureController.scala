@@ -74,6 +74,11 @@ class CheckYourAnswersAboutYourLeaseOrTenureController @Inject() (
       data => {
         val updatedData =
           updateAboutLeaseOrAgreementPartOne(_.copy(checkYourAnswersAboutYourLeaseOrTenure = Some(data)))
+            .copy(lastCYAPageUrl =
+              Some(
+                controllers.aboutYourLeaseOrTenure.routes.CheckYourAnswersAboutYourLeaseOrTenureController.show().url
+              )
+            )
         session.saveOrUpdate(updatedData)
         Redirect(navigator.nextPage(CheckYourAnswersAboutYourLeaseOrTenureId, updatedData).apply(updatedData))
       }
