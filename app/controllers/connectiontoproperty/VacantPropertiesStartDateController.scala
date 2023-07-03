@@ -68,7 +68,6 @@ class VacantPropertiesStartDateController @Inject()(
           )
         ),
       data => {
-        println("@" * 80)
         val updatedData = updateStillConnectedDetails(_.copy(vacantPropertyStartDate = Some(data)))
         session.saveOrUpdate(updatedData)
         Redirect(navigator.nextPage(LettingIncomePageId, updatedData).apply(updatedData))
