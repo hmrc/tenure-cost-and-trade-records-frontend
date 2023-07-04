@@ -44,7 +44,7 @@ class DownloadPDFReferenceNumberController @Inject()(
 
   def startWithSession: Action[AnyContent] = Action.async { implicit request =>
     session.start(Session("", "", Address("", None, "", None, ""), ""))
-    Future.successful(Redirect(routes.DownloadPDFReferenceNumberController.show().url))
+    Future.successful(Redirect(routes.DownloadPDFReferenceNumberController.show()))
   }
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
