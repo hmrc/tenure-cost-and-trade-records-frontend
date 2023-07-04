@@ -15,18 +15,29 @@
  *@
 
 @import models.submissions.aboutthetradinghistory.TotalPayrollCost
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
-@import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
+@import uk.gov.hmrc.govukfrontend.views.html.components._
 @import models.pages.Summary
+@import java.time.LocalDate
+@import uk.gov.hmrc.govukfrontend.views.Implicits.RichInput
+
 
 @this(layout: Layout,
         govukButton: GovukButton,
-        formWithCSRF: FormWithCSRF
+        formWithCSRF: FormWithCSRF,
+        govukInput: GovukInput,
+        govukTable: GovukTable,
+        govukInsetText: GovukInsetText,
+        govukDetails: GovukDetails
 )
 
+@(form: Form[Seq[TotalPayrollCost]], numOfColumns: Int, financialYears: Seq[LocalDate], summary: Summary)(implicit request: Request[_], messages: Messages)
 
-@(theForm: Form[TotalPayrollCost], summary: Summary)(implicit request: Request[_], messages: Messages)
+@columns = @{0 until numOfColumns}
 
+@directorsRemunerationHeading = {
+    <p class="govuk-body">@messages("totalPayrollCosts.directorsRemuneration")</p>
+    <p class="govuk-body">@messages("totalPayrollCosts.directorsRemuneration.add")</p>
+}
 @layout(
   pageHeading = messages("totalPayrollCosts.heading"),
   showH1 = false,
@@ -34,7 +45,7 @@
     summary = Some(summary),
   sectionName = messages("label.section.aboutYourTradingHistory"),
   backLinkUrl = controllers.aboutthetradinghistory.routes.CostOfSalesController.show().url,
-    theForm =  theForm
+    theForm =  form
 ) {
 
   @formWithCSRF(action = controllers.aboutthetradinghistory.routes.TotalPayrollCostsController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
@@ -42,7 +53,62 @@
       <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
           <h1 class="govuk-fieldset__heading">@messages("totalPayrollCosts.heading")</h1>
       </legend>
-
+      <p class="govuk-body">@messages("totalPayrollCosts.p1")</p>
+      @govukInsetText(InsetText(
+          content = Text(messages("totalPayrollCosts.p2"))
+      ))
+      @govukTable(Table(
+          rows = Seq(
+              TableRow(
+                  content = Text(messages("totalPayrollCosts.financialYearEnd"))
+              ) +:
+                      columns.map { idx  =>
+                          TableRow(
+                              content = HtmlContent(
+                                  govukInput(Input(
+                                      id = s"$idx.financial-year-end",
+                                      name = s"$idx.financial-year-end",
+                                      value = financialYears(idx).toString
+                                  ).withFormField(form(s"$idx.financial-year-end")))
+                              )
+                          )
+                      },
+              TableRow(
+                  content = Text(messages("totalPayrollCosts.managersAndStaff"))
+              ) +: columns.map { idx  =>
+                  TableRow(
+                      content = HtmlContent(
+                          govukInput(Input(
+                              id = s"$idx.managers-and-staff",
+                              name = s"$idx.managers-and-staff",
+                              value = form(s"$idx.managers-and-staff").value,
+                              prefix = Some(PrefixOrSuffix(
+                                  content = Text("£")
+                              ))
+                          ).withFormField(form(s"$idx.managers-and-staff")))
+                      )
+                  )
+              },
+              TableRow(
+                  content = HtmlContent(directorsRemunerationHeading)
+              ) +: columns.map { idx  =>
+                  TableRow(
+                      content = HtmlContent(
+                          govukInput(Input(
+                              id = s"$idx.directors-remuneration",
+                              name = s"$idx.directors-remuneration",
+                              value = form(s"$idx.directors-remuneration").value,
+                              prefix = Some(PrefixOrSuffix(
+                                  content = Text("£")
+                              ))
+                          ).withFormField(form(s"$idx.directors-remuneration")))
+                      )
+                  )
+              }
+          ),
+          captionClasses = "govuk-table__caption--m",
+          firstCellIsHeader = false
+      ))
       @includes.continueSaveAsDraftButtons(govukButton)
   }
 }

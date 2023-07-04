@@ -857,7 +857,13 @@ grossProfit.totalGrossProfits = Total gross profits
 
 # TOTAL PAYROLL COSTS (FORM 6015)
 #########
-totalPayrollCosts.heading = This is a holding page for the total payroll costs page
+totalPayrollCosts.heading = Total payroll costs
+totalPayrollCosts.p1 = Provide details of your wages, salaries, National Insurance, and pension contributions, excluding head office staff costs.
+totalPayrollCosts.p2 = All fields on this page are mandatory. If none of the categories are applicable, enter the number 0.
+totalPayrollCosts.financialYearEnd = Financial year end
+totalPayrollCosts.managersAndStaff = Managers and staff
+totalPayrollCosts.directorsRemuneration = Director's remuneration
+totalPayrollCosts.directorsRemuneration.add = (if applicable)
 
 # VARIABLE OPERATING EXPENSES (FORM 6015)
 #########

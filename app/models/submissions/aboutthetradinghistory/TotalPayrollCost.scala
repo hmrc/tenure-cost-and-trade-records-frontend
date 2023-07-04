@@ -18,8 +18,12 @@ package models.submissions.aboutthetradinghistory
 
 import play.api.libs.json.Json
 
+import java.time.LocalDate
+
 case class TotalPayrollCost(
-  totalPayrollCost: String
+  financialYearEnd: LocalDate,
+  managersAndStaff: BigDecimal,
+  directorsRemuneration: BigDecimal
 )
 
 object TotalPayrollCost {
