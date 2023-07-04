@@ -73,6 +73,9 @@ class CheckYourAnswersConnectionToPropertyController @Inject()(
         ),
       data => {
         val updatedData = updateStillConnectedDetails(_.copy(checkYourAnswersConnectionToProperty = Some(data)))
+          .copy(lastCYAPageUrl =
+            Some(controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToPropertyController.show().url)
+          )
         session.saveOrUpdate(updatedData)
         Redirect(navigator.nextPage(CheckYourAnswersAboutThePropertyPageId, updatedData).apply(updatedData))
       }
