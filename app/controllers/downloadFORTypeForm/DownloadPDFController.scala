@@ -30,8 +30,7 @@ import scala.concurrent.Future
 class DownloadPDFController @Inject() (
   mcc: MessagesControllerComponents,
   downloadPDFView: downloadPDF,
-  withSessionRefiner: WithSessionRefiner,
-  @Named("session") val session: SessionRepo
+  withSessionRefiner: WithSessionRefiner
 ) extends FORDataCaptureController(mcc)
     with I18nSupport {
 

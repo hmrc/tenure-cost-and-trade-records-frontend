@@ -26,6 +26,7 @@ import models.submissions.additionalinformation.AdditionalInformation
 import models.submissions.connectiontoproperty.StillConnectedDetails
 import models.submissions.notconnected.RemoveConnectionDetails
 import models.Session
+import models.submissions.downloadFORTypeForm.DownloadPDFDetails
 import org.mockito.scalatest.MockitoSugar
 import org.scalatest.{BeforeAndAfterEach, Inside, OptionValues}
 import org.scalatest.concurrent.ScalaFutures
@@ -111,7 +112,8 @@ trait TestBaseSpec
     aboutTheTradingHistory: Option[AboutTheTradingHistory] = Some(prefilledAboutTheTradingHistory),
     aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = Some(prefilledAboutFranchiseOrLettings),
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne),
-    aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwo)
+    aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwo),
+    downloadPDFDetails: Option[DownloadPDFDetails] = None
   ): WithSessionRefiner =
     new WithSessionRefiner(mockCustomErrorHandler, mockSessionRepository) {
 
@@ -131,7 +133,8 @@ trait TestBaseSpec
                 aboutTheTradingHistory = aboutTheTradingHistory,
                 aboutFranchisesOrLettings = aboutFranchisesOrLettings,
                 aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne,
-                aboutLeaseOrAgreementPartTwo = aboutLeaseOrAgreementPartTwo
+                aboutLeaseOrAgreementPartTwo = aboutLeaseOrAgreementPartTwo,
+                downloadPDFDetails = downloadPDFDetails
               ),
               request = request
             )

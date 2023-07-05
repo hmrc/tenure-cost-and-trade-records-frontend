@@ -24,6 +24,7 @@ import views.html.aboutYourLeaseOrTenure._
 import views.html.aboutfranchisesorlettings._
 import views.html.aboutyouandtheproperty.checkYourAnswersAboutTheProperty
 import views.html.additionalinformation.{alternativeContactDetails, furtherInformationOrRemarks}
+import views.html.downloadFORTypeForm.{downloadPDF, downloadPDFReferenceNumber}
 import views.html.form._
 import views.html.requestReferenceNumber.{requestReferenceNumber, requestReferenceNumberContactDetails}
 import views.html.{confirmationNotConnected, login}
@@ -40,6 +41,10 @@ trait FakeViews { this: GuiceOneAppPerSuite =>
   lazy val connectionToThePropertyView: connectionToTheProperty                           = app.injector.instanceOf[connectionToTheProperty]
   lazy val editAddressView: editAddress                                                   = app.injector.instanceOf[editAddress]
   lazy val requestReferenceAddressView: requestReferenceNumber                            = app.injector.instanceOf[requestReferenceNumber]
+  lazy val downloadPDFReferenceNumberView: downloadPDFReferenceNumber                     =
+    app.injector.instanceOf[downloadPDFReferenceNumber]
+  lazy val downloadPDFView: downloadPDF                                                   =
+    app.injector.instanceOf[downloadPDF]
   lazy val requestReferenceNumberContactDetailsView: requestReferenceNumberContactDetails =
     app.injector.instanceOf[requestReferenceNumberContactDetails]
   lazy val checkYourAnswersConnectionToProperty: checkYourAnswersConnectionToProperty     =

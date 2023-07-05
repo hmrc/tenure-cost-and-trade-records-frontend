@@ -17,7 +17,7 @@
 package navigation
 
 import connectors.Audit
-import navigation.identifiers.{AreYouStillConnectedPageId, AreYouThirdPartyPageId, ConnectionToPropertyPageId, EditAddressPageId, Identifier, NoReferenceNumberContactDetailsPageId, NoReferenceNumberPageId, PropertyBecomeVacantPageId, TradingNameOwnThePropertyPageId}
+import navigation.identifiers.{AreYouStillConnectedPageId, AreYouThirdPartyPageId, CheckYourAnswersRequestReferenceNumberPageId, ConnectionToPropertyPageId, DownloadPDFReferenceNumberPageId, EditAddressPageId, Identifier, LettingIncomePageId, NoReferenceNumberContactDetailsPageId, NoReferenceNumberPageId, PropertyBecomeVacantPageId, TradingNameOperatingFromPropertyPageId, TradingNameOwnThePropertyPageId, VacantPropertiesPageId}
 import org.scalatest.matchers.must.Matchers.convertToAnyMustWrapper
 import play.api.libs.json.JsObject
 import uk.gov.hmrc.http.HeaderCarrier
@@ -120,5 +120,45 @@ class ConnectionToPropertyNavigatorSpec extends TestBaseSpec {
         ) mustBe controllers.requestReferenceNumber.routes.RequestReferenceNumberContactDetailsController
         .show()
     }
+  }
+
+  "return a function that goes to the check your answers request reference number page when connection to the property has been selected" in {
+    navigator
+      .nextPage(CheckYourAnswersRequestReferenceNumberPageId, stillConnectedDetailsYesSession)
+      .apply(
+        stillConnectedDetailsYesSession
+      ) mustBe controllers.routes.RequestReferenceNumberFormSubmissionController.submit()
+  }
+
+  "return a function that goes to the download pdf reference number page" in {
+    navigator
+      .nextPage(DownloadPDFReferenceNumberPageId, stillConnectedDetailsYesSession)
+      .apply(
+        stillConnectedDetailsYesSession
+      ) mustBe controllers.downloadFORTypeForm.routes.DownloadPDFController.show()
+  }
+
+  "return a function that goes from the vacant property page to tasklist" in {
+    navigator
+      .nextPage(VacantPropertiesPageId, stillConnectedDetailsYesSession)
+      .apply(
+        stillConnectedDetailsYesSession
+      ) mustBe controllers.routes.TaskListController.show()
+  }
+
+  "return a function that goes from Letting Income page to vacant properties page" in {
+    navigator
+      .nextPage(LettingIncomePageId, stillConnectedDetailsYesSession)
+      .apply(
+        stillConnectedDetailsYesSession
+      ) mustBe controllers.connectiontoproperty.routes.VacantPropertiesController.show()
+  }
+
+  "return a function that goes from trading name page to trading name own the property page" in {
+    navigator
+      .nextPage(TradingNameOperatingFromPropertyPageId, stillConnectedDetailsYesSession)
+      .apply(
+        stillConnectedDetailsYesSession
+      ) mustBe controllers.connectiontoproperty.routes.TradingNameOwnThePropertyController.show()
   }
 }

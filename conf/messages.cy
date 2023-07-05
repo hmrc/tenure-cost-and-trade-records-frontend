@@ -141,8 +141,8 @@ label.postcode = Postcode
 hint.postcode = For example, AB12 3CD
 error.invalid_refnum = Enter your reference number as it appears on your letter
 error.invalid_postcode_as_on_letter = Enter your postcode as it appears on your letter
-label.noReference = <a href="http://localhost:9526/send-trade-and-cost-information/no-reference-number" class="govuk-link">I do not have my reference</a>
-label.downloadPDF = <a href="#top" class="govuk-link">Download a PDF version</a>
+label.requestReference = I do not have my reference
+label.downloadPDFReferenceNumberLogin = Download a PDF version
 
 #LOGIN- Invalid Form Type
 ##############################
@@ -225,6 +225,7 @@ hint.ownerTrustee = Select this if you own and occupy the property - you’re co
 error.no.connection.selected = Select your connection to the property
 
 #NAME OF BUSINESS OPERATING FROM THE PROPERTY
+#####################################
 label.tradingNameFromProperty = Trading name
 tradingNameFromProperty.heading = What is the trading name of the business or organisation operating form the property?
 error.tradingNameFromProperty.required = If the trading name is not known, please input unknown

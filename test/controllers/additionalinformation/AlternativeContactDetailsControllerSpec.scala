@@ -22,6 +22,7 @@ import play.api.test.Helpers._
 import utils.TestBaseSpec
 import form.additionalinformation.AlternativeContactDetailsForm.alternativeContactDetailsForm
 import models.submissions.additionalinformation.AdditionalInformation
+import play.api.test.FakeRequest
 import utils.FormBindingTestAssertions.mustNotContainErrorFor
 
 class AlternativeContactDetailsControllerSpec extends TestBaseSpec {

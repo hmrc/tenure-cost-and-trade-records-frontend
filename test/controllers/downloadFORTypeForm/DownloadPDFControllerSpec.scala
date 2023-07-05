@@ -14,36 +14,40 @@
  * limitations under the License.
  */
 
-package controllers.additionalinformation
+package controllers.downloadFORTypeForm
 
-import models.submissions.additionalinformation.AdditionalInformation
+import actions.WithSessionRefiner
+import config.ErrorHandler
 import play.api.http.Status
-import play.api.test.FakeRequest
 import play.api.test.Helpers._
+import stub.StubSessionRepo
 import utils.TestBaseSpec
+import views.html.downloadFORTypeForm.downloadPDF
 
-class FurtherInformationOrRemarksControllerSpec extends TestBaseSpec {
+class DownloadPDFControllerSpec extends TestBaseSpec {
 
-  def furtherInformationOrRemarksController(
-    additionalInformation: Option[AdditionalInformation] = Some(prefilledAdditionalInformation)
-  ) = new FurtherInformationOrRemarksController(
+  private val sessionRepo           = StubSessionRepo()
+  private def downloadPDFController = new DownloadPDFController(
     stubMessagesControllerComponents(),
-    additionalInformationNavigator,
-    furtherInformationOrRemarksView,
-    preEnrichedActionRefiner(additionalInformation = additionalInformation),
-    mockSessionRepo
+    inject[downloadPDF],
+    WithSessionRefiner(inject[ErrorHandler], sessionRepo)
   )
 
   "GET /" should {
     "return 200" in {
-      val result = furtherInformationOrRemarksController().show(fakeRequest)
+      sessionRepo.saveOrUpdate(prefilledBaseSession)
+
+      val result = downloadPDFController.show(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return HTML" in {
-      val result = furtherInformationOrRemarksController().show(fakeRequest)
+      sessionRepo.saveOrUpdate(prefilledBaseSession)
+
+      val result = downloadPDFController.show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
   }
+
 }
