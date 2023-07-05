@@ -26,6 +26,18 @@ case object ConnectionToPropertyPageId extends Identifier { override def toStrin
 
 case object VacantPropertiesPageId extends Identifier { override def toString: String = "VacantPropertiesPage" }
 
+case object PropertyBecomeVacantPageId extends Identifier { override def toString: String = "PropertyBecomeVacant" }
+
+case object LettingIncomePageId extends Identifier { override def toString: String = "LettingIncome"}
+
+case object TradingNameOperatingFromPropertyPageId extends Identifier {override def toString: String = "TradingNameOperatingFromProperty"}
+
+case object TradingNameOwnThePropertyPageId extends Identifier {override def toString: String = "TradingNameOwnTheProperty"}
+
+case object TradingNamePayingRentPageId extends Identifier {override def toString: String = "TradingNamePayingRent"}
+
+case object AreYouThirdPartyPageId extends Identifier {override def toString: String = "AreYouThirdParty"}
+
 case object NoReferenceNumberPageId extends Identifier { override def toString: String = "NoReferenceNumberPage" }
 
 case object NoReferenceNumberContactDetailsPageId extends Identifier {
@@ -37,5 +49,3 @@ case object CheckYourAnswersRequestReferenceNumberPageId extends Identifier {
 }
 
 case object DownloadPDFReferenceNumberPageId extends Identifier { override def toString: String = "DownloadPDFReferenceNumberPage" }
-
-case object DownloadPDFPageId extends Identifier { override def toString: String = "DownloadPDFPage" }

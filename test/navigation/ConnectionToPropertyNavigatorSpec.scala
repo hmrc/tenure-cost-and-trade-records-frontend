@@ -17,7 +17,7 @@
 package navigation
 
 import connectors.Audit
-import navigation.identifiers.{AreYouStillConnectedPageId, ConnectionToPropertyPageId, EditAddressPageId, Identifier, NoReferenceNumberContactDetailsPageId, NoReferenceNumberPageId}
+import navigation.identifiers.{AreYouStillConnectedPageId, AreYouThirdPartyPageId, ConnectionToPropertyPageId, EditAddressPageId, Identifier, NoReferenceNumberContactDetailsPageId, NoReferenceNumberPageId, PropertyBecomeVacantPageId, TradingNameOwnThePropertyPageId}
 import org.scalatest.matchers.must.Matchers.convertToAnyMustWrapper
 import play.api.libs.json.JsObject
 import uk.gov.hmrc.http.HeaderCarrier
@@ -47,7 +47,7 @@ class ConnectionToPropertyNavigatorSpec extends TestBaseSpec {
     "return a function that goes to the type of connection to the property page when still connected has been selected and the selection is yes" in {
       navigator
         .nextPage(AreYouStillConnectedPageId, stillConnectedDetailsYesSession)
-        .apply(stillConnectedDetailsYesSession) mustBe routes.ConnectionToThePropertyController
+        .apply(stillConnectedDetailsYesSession) mustBe routes.VacantPropertiesController
         .show()
     }
 
@@ -64,10 +64,35 @@ class ConnectionToPropertyNavigatorSpec extends TestBaseSpec {
         .show()
     }
 
-    "return a function that goes to the type of connection to the property page when edit address has been completed" in {
+    "return a function that goes to the vacancy status page when edit address has been completed" in {
       navigator
         .nextPage(EditAddressPageId, stillConnectedDetailsEditSession)
-        .apply(stillConnectedDetailsEditSession) mustBe routes.ConnectionToThePropertyController.show()
+        .apply(stillConnectedDetailsEditSession) mustBe routes.VacantPropertiesController.show()
+    }
+
+    "return a function that goes to the vacant properties start date page when the property currently vacant has been answered with 'yes'" in {
+      val nextPage = navigator.nextPage(PropertyBecomeVacantPageId, stillConnectedDetailsYesToAllSession).apply(stillConnectedDetailsYesToAllSession)
+      nextPage mustBe controllers.connectiontoproperty.routes.VacantPropertiesStartDateController.show()
+    }
+
+    "return a function that goes to the trading name operating from property page when PropertyBecomeVacantPageId has been answered with 'no'" in {
+      val nextPage = navigator.nextPage(PropertyBecomeVacantPageId, stillConnectedDetailsNoToAllSession).apply(stillConnectedDetailsNoToAllSession)
+      nextPage mustBe controllers.connectiontoproperty.routes.TradingNameOperatingFromPropertyController.show()
+    }
+
+    "return a function that goes to the are you third party page when TradingNameOwnThePropertyPageId has been answered with 'yes'" in {
+      val nextPage = navigator.nextPage(TradingNameOwnThePropertyPageId, stillConnectedDetailsYesToAllSession).apply(stillConnectedDetailsYesToAllSession)
+      nextPage mustBe controllers.connectiontoproperty.routes.AreYouThirdPartyController.show()
+    }
+
+    "return a function that goes to the trading name paying rent page when TradingNameOwnThePropertyPageId has been answered with 'no'" in {
+      val nextPage = navigator.nextPage(TradingNameOwnThePropertyPageId, stillConnectedDetailsNoToAllSession).apply(stillConnectedDetailsNoToAllSession)
+      nextPage mustBe controllers.connectiontoproperty.routes.TradingNamePayingRentController.show()
+    }
+
+    "return a function that goes to the check your answers page when AreYouThirdPartyPageId has been answered" in {
+      val nextPage = navigator.nextPage(AreYouThirdPartyPageId, stillConnectedDetailsYesSession).apply(stillConnectedDetailsYesSession)
+      nextPage mustBe controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToPropertyController.show()
     }
 
     "return a function that goes to the task list page when connection to the property has been selected" in {

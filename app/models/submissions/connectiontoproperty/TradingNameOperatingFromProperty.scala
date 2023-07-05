@@ -14,19 +14,12 @@
  * limitations under the License.
  */
 
-package models.submissions.aboutthetradinghistory
+package models.submissions.connectiontoproperty
 
 import play.api.libs.json.Json
 
-import java.time.LocalDate
+case class TradingNameOperatingFromProperty(tradingName: String)
 
-case class TotalPayrollCost(
-  financialYearEnd: LocalDate,
-  managersAndStaff: BigDecimal,
-  directorsRemuneration: BigDecimal
-)
-
-object TotalPayrollCost {
-  implicit val format = Json.format[TotalPayrollCost]
-
+object TradingNameOperatingFromProperty {
+  implicit val format = Json.format[TradingNameOperatingFromProperty]
 }

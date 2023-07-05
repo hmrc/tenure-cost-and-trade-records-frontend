@@ -34,13 +34,19 @@ trait FakeViews { this: GuiceOneAppPerSuite =>
   lazy val loginView: login = app.injector.instanceOf[login]
 
   // Connection to the property
+
+  lazy val areYouThirdPartyView: areYouThirdParty                                    = app.injector.instanceOf[areYouThirdParty]
   lazy val areYouStillConnectedView: areYouStillConnected                                 = app.injector.instanceOf[areYouStillConnected]
   lazy val connectionToThePropertyView: connectionToTheProperty                           = app.injector.instanceOf[connectionToTheProperty]
   lazy val editAddressView: editAddress                                                   = app.injector.instanceOf[editAddress]
   lazy val requestReferenceAddressView: requestReferenceNumber                            = app.injector.instanceOf[requestReferenceNumber]
   lazy val requestReferenceNumberContactDetailsView: requestReferenceNumberContactDetails =
     app.injector.instanceOf[requestReferenceNumberContactDetails]
-
+  lazy val checkYourAnswersConnectionToProperty: checkYourAnswersConnectionToProperty     = app.injector.instanceOf[checkYourAnswersConnectionToProperty]
+  lazy val tradingNameOperatingFromProperty: tradingNameOperatingFromProperty             = app.injector.instanceOf[tradingNameOperatingFromProperty]
+  lazy val tradingNameOwnTheProperty: tradingNameOwnTheProperty                           = app.injector.instanceOf[tradingNameOwnTheProperty]
+  lazy val tradingNamePayRentView: tradingNamePayingRent                                  = app.injector.instanceOf[tradingNamePayingRent]
+  lazy val vacantPropertiesStartDateView: vacantPropertyStartDate                         = app.injector.instanceOf[vacantPropertyStartDate]
   // Not connected
   val pastConnectionView: pastConnection                             = app.injector.instanceOf[pastConnection]
   val removeConnectionView: removeConnection                         = app.injector.instanceOf[removeConnection]

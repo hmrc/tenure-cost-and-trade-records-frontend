@@ -23,18 +23,21 @@ import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class TotalPayrollCostsViewSpec extends QuestionViewBehaviours[TotalPayrollCost] {
+import java.time.LocalDate
+
+class TotalPayrollCostsViewSpec extends QuestionViewBehaviours[Seq[TotalPayrollCost]] {
   //NOTE: this is a holding view test until the total payroll costs page is implemented
   def totalPayrollCostsView = app.injector.instanceOf[views.html.aboutthetradinghistory.totalPayrollCosts]
 
   val messageKeyPrefix = "totalPayrollCosts"
 
-  override val form = TotalPayrollCostForm.totalPayrollCostForm
+  override val form = TotalPayrollCostForm.totalPayrollCostForm(3)
+  val fakeDates     = Seq(LocalDate.of(2021, 4, 1), LocalDate.of(2022, 4, 1), LocalDate.of(2023, 4, 1))
 
-  def createView = () => totalPayrollCostsView(form, Summary("99996010001"))(fakeRequest, messages)
+  def createView = () => totalPayrollCostsView(form, 3, fakeDates, Summary("99996010001"))(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[TotalPayrollCost]) =>
-    totalPayrollCostsView(form, Summary("99996010001"))(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[Seq[TotalPayrollCost]]) =>
+    totalPayrollCostsView(form, 3, fakeDates, Summary("99996010001"))(fakeRequest, messages)
 
   "Total Payroll Costs view" must {
 

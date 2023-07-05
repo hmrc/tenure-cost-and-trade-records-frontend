@@ -28,4 +28,5 @@ object CodeCoverageSettings {
     ScoverageKeys.coverageFailOnMinimum := true,
     ScoverageKeys.coverageHighlighting := true
   )
+
 }

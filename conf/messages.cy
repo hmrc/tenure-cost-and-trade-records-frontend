@@ -97,7 +97,7 @@ hint.select.applicable = Select any that apply – leave blank if not applicable
 ###############
 label.section.connectionToTheProperty = Connection to the property
 label.section.aboutTheProperty = About you and the property
-label.section.aboutYourTradingHistory = Your trading history
+label.section.aboutYourTradingHistory = Trading history
 label.section.aboutTheFranchiseLettings = Franchises or lettings
 label.section.aboutYourLeaseOrTenure = Your lease or agreement
 label.section.additionalInformation = Additional information
@@ -224,6 +224,29 @@ hint.occupierTrustee = Select this if you’re renting or leasing the property, 
 hint.ownerTrustee = Select this if you own and occupy the property - you’re considered an occupier if you own the property and lease it back to a business you operate from the property
 error.no.connection.selected = Select your connection to the property
 
+#NAME OF BUSINESS OPERATING FROM THE PROPERTY
+label.tradingNameFromProperty = Trading name
+tradingNameFromProperty.heading = What is the trading name of the business or organisation operating form the property?
+error.tradingNameFromProperty.required = If the trading name is not known, please input unknown
+error.tradingNameFromProperty.maxLength = This must be 100 characters or fewer
+
+# DOES TRADING NAME OWN THE PROPERTY
+#####################################
+tradingNameOwnTheProperty.heading = Does {0} own the property?
+hint.tradingNameOwnTheProperty = Only select ‘yes‘ if you own the premises or land used by the business
+
+# DOES TRADING NAME PAY RENT ON THE PROPERTY
+############################################
+tradingNamePayingRent.heading = Does {0} pay rent on the property?
+tradingNamePayingRent.title = Paying rent
+tradingNamePayingRent.p1 = You must declare whether you pay rent under the terms of your lease or agreement.
+tradingNamePayingRent.p2 = You should select ‘yes‘ even if you pay rent under an informal agreement, or have a temporary rent-free agreement.
+tradingNamePayingRent.p3 = Select ‘no‘ if the owner of the property allows you to occupy it on a permanent rent-free agreement.
+
+# ARE YOU THIRD-PARTY WORKING ON BEHALF OF TRADING NAME
+#######################################################
+areYouThirdParty.heading = Are you a third-party, working on behalf of {0}?
+
 # VACANT PROPERTIES
 ############################
 vacantProperties.heading = Vacant properties
@@ -234,6 +257,30 @@ vacantProperties.item1 = the business operating from there is closed temporarily
 vacantProperties.item2 = the property is empty, but there is a current lease, tenancy or agreement to occupy in place
 vacantProperties.item3 = the property is being used by an individual, business or organisation under an informal arrangement
 label.vacantProperties = Is the property currently vacant?
+
+# CHECK YOUR ANSWERS CONNECTION TO PROPERTY
+###########################################
+checkYourAnswersConnectionToProperty.heading= Check your answers - connection to the property
+checkYourAnswersConnectionToProperty.connectionStatus.heading = Connection status
+label.connectedToTheProperty = Connected to the property?
+label.yes-change-address = Yes I want to edit the address
+checkYourAnswersConnectionToProperty.proposedAddress = Proposed address
+checkYourAnswersConnectionToProperty.vacancyStatus.heading = Vacancy status
+checkYourAnswersConnectionToProperty.isPropertyVacant = Is the property vacant?
+checkYourAnswersConnectionToProperty.occupierDetails.heading = Occupier details
+checkYourAnswersConnectionToProperty.nameOfOccupier = Name of occupier
+checkYourAnswersConnectionToProperty.ownsTheProperty = Owns the property?
+checkYourAnswersConnectionToProperty.payRent = Pay rent?
+checkYourAnswersConnectionToProperty.thirdParty = Third party?
+
+# VACANT PROPERTY START DATE
+############################
+vacantPropertyStartDate.heading = When did the property become vacant?
+label.startDateOfVacantProperty =
+label.startDateOfVacantProperty.help = For example 27 9 2017
+error.startDateOfVacantProperty.day.required = The date must include a day
+error.startDateOfVacantProperty.month.required = The date must include a month
+error.startDateOfVacantProperty.year.required = The date must include a year
 
 # NOT CONNECTED SECTION
 #######################

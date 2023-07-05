@@ -14,19 +14,18 @@
  * limitations under the License.
  */
 
-package models.submissions.aboutthetradinghistory
+package form.connectiontoproperty
 
-import play.api.libs.json.Json
+import form.MappingSupport.yesNoType
+import models.submissions.common.AnswersYesNo
+import play.api.data.Form
+import play.api.data.Forms.mapping
 
-import java.time.LocalDate
+object TradingNamePayingRentForm {
+  lazy val tradingNamePayingRentForm: Form[AnswersYesNo] = Form(tradingNamePayingRentMapping)
 
-case class TotalPayrollCost(
-  financialYearEnd: LocalDate,
-  managersAndStaff: BigDecimal,
-  directorsRemuneration: BigDecimal
-)
-
-object TotalPayrollCost {
-  implicit val format = Json.format[TotalPayrollCost]
+  val tradingNamePayingRentMapping = mapping(
+    "tradingNamePayingRent" -> yesNoType
+  )(x => x)(b => Some(b))
 
 }

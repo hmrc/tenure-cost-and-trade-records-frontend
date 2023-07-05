@@ -14,19 +14,14 @@
  * limitations under the License.
  */
 
-package models.submissions.aboutthetradinghistory
+package models.submissions.connectiontoproperty
 
 import play.api.libs.json.Json
 
 import java.time.LocalDate
 
-case class TotalPayrollCost(
-  financialYearEnd: LocalDate,
-  managersAndStaff: BigDecimal,
-  directorsRemuneration: BigDecimal
-)
+case class StartDateOfVacantProperty(datePropertyBecomeVacant: LocalDate)
 
-object TotalPayrollCost {
-  implicit val format = Json.format[TotalPayrollCost]
-
+object StartDateOfVacantProperty {
+  implicit val format = Json.format[StartDateOfVacantProperty]
 }

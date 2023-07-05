@@ -14,19 +14,18 @@
  * limitations under the License.
  */
 
-package models.submissions.aboutthetradinghistory
+package form.connectiontoproperty
 
-import play.api.libs.json.Json
+import form.DateMappings.dateFieldsMapping
+import models.submissions.connectiontoproperty.StartDateOfVacantProperty
+import play.api.data.Form
+import play.api.data.Forms.{mapping, optional, text}
 
-import java.time.LocalDate
+object VacantPropertyStartDateForm {
 
-case class TotalPayrollCost(
-  financialYearEnd: LocalDate,
-  managersAndStaff: BigDecimal,
-  directorsRemuneration: BigDecimal
-)
-
-object TotalPayrollCost {
-  implicit val format = Json.format[TotalPayrollCost]
-
+  val vacantPropertyStartDateForm = Form(
+    mapping(
+      "startDateOfVacantProperty"  -> dateFieldsMapping("startDateOfVacantProperty", fieldErrorPart = ".startDateOfVacantProperty")
+    )(StartDateOfVacantProperty.apply)(StartDateOfVacantProperty.unapply)
+  )
 }

@@ -14,19 +14,14 @@
  * limitations under the License.
  */
 
-package models.submissions.aboutthetradinghistory
+package models.submissions.connectiontoproperty
 
 import play.api.libs.json.Json
 
-import java.time.LocalDate
-
-case class TotalPayrollCost(
-  financialYearEnd: LocalDate,
-  managersAndStaff: BigDecimal,
-  directorsRemuneration: BigDecimal
+case class CheckYourAnswersConnectionToProperty(
+                                                 checkYourAnswersConnectionToProperty: String
 )
 
-object TotalPayrollCost {
-  implicit val format = Json.format[TotalPayrollCost]
-
+object CheckYourAnswersConnectionToProperty {
+  implicit val format = Json.format[CheckYourAnswersConnectionToProperty]
 }

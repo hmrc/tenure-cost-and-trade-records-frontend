@@ -35,72 +35,135 @@
  request.sessionData
 }
 
+@isLeaseHolder = @{
+  true
+}
+
+@totalSections = @{
+ if(isLeaseHolder) {
+  6
+ } else {
+  5
+ }
+}
+
+@section1Completed = @{ session.stillConnectedDetails.flatMap(_.checkYourAnswersConnectionToProperty.map(_.checkYourAnswersConnectionToProperty)) }
+@section2Completed = @{ session.aboutYouAndTheProperty.flatMap(_.checkYourAnswersAboutTheProperty.map(_.checkYourAnswersAboutYourProperty)) }
+@section3Completed = @{ session.aboutTheTradingHistory.flatMap(_.checkYourAnswersAboutTheTradingHistory.map(_.checkYourAnswersAboutTheTradingHistory)) }
+@section4Completed = @{ session.aboutFranchisesOrLettings.flatMap(_.checkYourAnswersAboutFranchiseOrLettings.map(_.checkYourAnswersAboutFranchiseOrLettings)) }
+@section5Completed = @{ session.aboutLeaseOrAgreementPartOne.flatMap(_.checkYourAnswersAboutYourLeaseOrTenure.map(_.checkYourAnswersAboutYourLeaseOrTenure)) }
+@section6Completed = @{ session.additionalInformation.flatMap(_.checkYourAnswersAdditionalInformation.map(_.checkYourAnswersAdditionalInformation)) }
+
+@completedSections = @{
+ Seq(
+  section1Completed,
+  section2Completed,
+  section3Completed,
+  section4Completed,
+  section5Completed,
+  section6Completed
+ ).count(_.contains("yes"))
+}
+
+@declarationStatus = @{
+ if(completedSections == totalSections) {
+  "complete"
+ } else {
+  "incomplete"
+ }
+}
+
 @layout(
  pageHeading = messages("taskList.heading"),
  backLinkUrl = session.lastCYAPageUrl.orElse(Some(LoginController.startPage.url)),
  summary = session.toSummary
 ) {
 
-    <p class="govuk-body">@messages("taskList.subHeading")</p>
+ <h2 class="govuk-heading-s govuk-!-margin-bottom-2">Declaration @declarationStatus</h2>
+ <p class="govuk-body govuk-!-margin-bottom-7">You have completed @completedSections of @totalSections sections.</p>
 
     <ol class="app-task-list">
 
      <li>
       <h2 class="app-task-list__section">
-       <span class="app-task-list__section-number">1. </span> @messages("label.section.aboutTheProperty")
+       <span class="app-task-list__section-number">1. </span> @messages("label.section.connectionToTheProperty")
+      </h2>
+
+      <ul class="app-task-list__items">
+       @includes.taskListItem("are-you-still-connected", "checkYourAnswersConnectionToProperty.connectionStatus.heading",
+        controllers.connectiontoproperty.routes.AreYouStillConnectedController.show(),
+        section1Completed,
+        session.stillConnectedDetails.flatMap(_.addressConnectionType)
+       )
+
+       @includes.taskListItem("vacant-properties", "checkYourAnswersConnectionToProperty.vacancyStatus.heading",
+        controllers.connectiontoproperty.routes.VacantPropertiesController.show(),
+        section1Completed,
+        session.stillConnectedDetails.flatMap(_.vacantProperties),
+        session.stillConnectedDetails.flatMap(_.addressConnectionType).isEmpty
+       )
+
+       @includes.taskListItem("name-of-operator-from-property", "checkYourAnswersConnectionToProperty.occupierDetails.heading",
+        controllers.connectiontoproperty.routes.TradingNameOperatingFromPropertyController.show(),
+        section1Completed,
+        session.stillConnectedDetails.flatMap(_.tradingNameOperatingFromProperty),
+        session.stillConnectedDetails.flatMap(_.vacantProperties).isEmpty
+       )
+      </ul>
+     </li>
+
+     <li>
+      <h2 class="app-task-list__section">
+       <span class="app-task-list__section-number">2. </span> @messages("label.section.aboutTheProperty")
       </h2>
 
       <ul class="app-task-list__items">
        @includes.taskListItem("about-you", "checkYourAnswersAboutTheProperty.aboutYou.heading",
         controllers.aboutyouandtheproperty.routes.AboutYouController.show(),
-        session.aboutYouAndTheProperty.flatMap(_.checkYourAnswersAboutTheProperty.map(_.checkYourAnswersAboutYourProperty)),
-        session.aboutYouAndTheProperty.flatMap(_.customerDetails)
+        section2Completed,
+        session.aboutYouAndTheProperty.flatMap(_.customerDetails),
+        session.stillConnectedDetails.flatMap(_.checkYourAnswersConnectionToProperty).isEmpty
        )
 
        @includes.taskListItem("about-the-property", "checkYourAnswersAboutTheProperty.aboutProperty.heading",
         controllers.aboutyouandtheproperty.routes.AboutThePropertyController.show(),
-        session.aboutYouAndTheProperty.flatMap(_.checkYourAnswersAboutTheProperty.map(_.checkYourAnswersAboutYourProperty)),
+        section2Completed,
         session.aboutYouAndTheProperty.flatMap(_.propertyDetails),
         session.aboutYouAndTheProperty.flatMap(_.customerDetails).isEmpty
        )
 
        @includes.taskListItem("licensable-activities", "checkYourAnswersAboutTheProperty.license.heading",
         controllers.aboutyouandtheproperty.routes.LicensableActivitiesController.show(),
-        session.aboutYouAndTheProperty.flatMap(_.checkYourAnswersAboutTheProperty.map(_.checkYourAnswersAboutYourProperty)),
+        section2Completed,
         session.aboutYouAndTheProperty.flatMap(_.licensableActivities),
         session.aboutYouAndTheProperty.flatMap(_.propertyDetails).isEmpty
        )
       </ul>
      </li>
-    </ol>
 
-    <ol class="app-task-list">
      <li>
       <h2 class="app-task-list__section">
-       <span class="app-task-list__section-number">2. </span>About your trading history
+       <span class="app-task-list__section-number">3. </span> @messages("label.section.aboutYourTradingHistory")
       </h2>
       <ul class="app-task-list__items">
-       <li class="app-task-list__item">
-        <span class="app-task-list__task-name">
-         <a href="about-your-trading-history">Enter your trading details</a></span>
-        <span class="govuk-tag app-task-list__tag govuk-tag--grey">
-         Cannot start yet
-        </span>
-       </li>
-       <li class="app-task-list__item">
-        <span class="app-task-list__task-name">Turnover</span>
-        <span class="govuk-tag app-task-list__tag govuk-tag--grey">
-         Cannot start yet
-        </span>
-       </li>
-      </ul>
-     </li>
-    </ol>
+       @includes.taskListItem("about-your-trading-history", "aboutYourTradingHistory.heading",
+        controllers.aboutthetradinghistory.routes.AboutYourTradingHistoryController.show(),
+        section3Completed,
+        session.aboutTheTradingHistory.flatMap(_.occupationAndAccountingInformation),
+        session.aboutYouAndTheProperty.flatMap(_.checkYourAnswersAboutTheProperty).isEmpty
+       )
 
-    <ol class="app-task-list">
+       @includes.taskListItem("turnover", "turnover.heading",
+        controllers.aboutthetradinghistory.routes.TurnoverController.show(),
+        section3Completed,
+        session.aboutTheTradingHistory.flatMap(_.turnoverSections),
+        session.aboutTheTradingHistory.flatMap(_.occupationAndAccountingInformation).isEmpty
+       )
+      </ul>
+
      <li>
       <h2 class="app-task-list__section">
-       <span class="app-task-list__section-number">3. </span> About any franchises or lettings
+       <span class="app-task-list__section-number">4. </span> @messages("label.section.aboutTheFranchiseLettings")
       </h2>
       <ul class="app-task-list__items">
        <li class="app-task-list__item">
@@ -125,75 +188,77 @@
        </li>
       </ul>
      </li>
-    </ol>
 
-    <ol class="app-task-list">
+     @if(isLeaseHolder) {
+      <li>
+       <h2 class="app-task-list__section">
+        <span class="app-task-list__section-number">5. </span> @messages("label.section.aboutYourLeaseOrTenure")
+       </h2>
+       <ul class="app-task-list__items">
+        <li class="app-task-list__item">
+         <span class="app-task-list__task-name">
+          <a href="about-your-landlord">Tell us about your landlord</a></span>
+         <span class="govuk-tag app-task-list__tag govuk-tag--grey">
+          Cannot start yet
+         </span>
+        </li>
+        <li class="app-task-list__item">
+         <span class="app-task-list__task-name">Changes to your lease</span>
+         <span class="govuk-tag app-task-list__tag govuk-tag--grey">
+          Cannot start yet
+         </span>
+        </li>
+        <li class="app-task-list__item">
+         <span class="app-task-list__task-name">Lease start date and rent paid</span>
+         <span class="govuk-tag app-task-list__tag govuk-tag--grey">
+          Cannot start yet
+         </span>
+        </li>
+        <li class="app-task-list__item">
+         <span class="app-task-list__task-name">What the rent includes</span>
+         <span class="govuk-tag app-task-list__tag govuk-tag--grey">
+          Cannot start yet
+         </span>
+        </li>
+        <li class="app-task-list__item">
+         <span class="app-task-list__task-name">How the rent was calculated</span>
+         <span class="govuk-tag app-task-list__tag govuk-tag--grey">
+          Cannot start yet
+         </span>
+        </li>
+        <li class="app-task-list__item">
+         <span class="app-task-list__task-name">Exclusions, restrictions or incentives</span>
+         <span class="govuk-tag app-task-list__tag govuk-tag--grey">
+          Cannot start yet
+         </span>
+        </li>
+       </ul>
+      </li>
+     }
+
      <li>
       <h2 class="app-task-list__section">
-       <span class="app-task-list__section-number">4. </span> About your lease or agreement
-      </h2>
-      <ul class="app-task-list__items">
-       <li class="app-task-list__item">
-        <span class="app-task-list__task-name">
-         <a href="about-your-landlord">Tell us about your landlord</a></span>
-        <span class="govuk-tag app-task-list__tag govuk-tag--grey">
-         Cannot start yet
-        </span>
-       </li>
-       <li class="app-task-list__item">
-        <span class="app-task-list__task-name">Changes to your lease</span>
-        <span class="govuk-tag app-task-list__tag govuk-tag--grey">
-         Cannot start yet
-        </span>
-       </li>
-       <li class="app-task-list__item">
-        <span class="app-task-list__task-name">Lease start date and rent paid</span>
-        <span class="govuk-tag app-task-list__tag govuk-tag--grey">
-         Cannot start yet
-        </span>
-       </li>
-       <li class="app-task-list__item">
-        <span class="app-task-list__task-name">What the rent includes</span>
-        <span class="govuk-tag app-task-list__tag govuk-tag--grey">
-         Cannot start yet
-        </span>
-       </li>
-       <li class="app-task-list__item">
-        <span class="app-task-list__task-name">How the rent was calculated</span>
-        <span class="govuk-tag app-task-list__tag govuk-tag--grey">
-         Cannot start yet
-        </span>
-       </li>
-       <li class="app-task-list__item">
-        <span class="app-task-list__task-name">Exclusions, restrictions or incentives</span>
-        <span class="govuk-tag app-task-list__tag govuk-tag--grey">
-         Cannot start yet
-        </span>
-       </li>
-      </ul>
-     </li>
-    </ol>
-
-    <ol class="app-task-list">
-     <li>
-      <h2 class="app-task-list__section">
-       <span class="app-task-list__section-number">5. </span> @messages("label.section.additionalInformation")
+       <span class="app-task-list__section-number">@totalSections. </span> @messages("label.section.additionalInformation")
       </h2>
       <ul class="app-task-list__items">
        @includes.taskListItem("further-information-or-remarks", "furtherInformationOrRemarksTasklist.heading",
         controllers.additionalinformation.routes.FurtherInformationOrRemarksController.show(),
-        session.additionalInformation.flatMap(_.checkYourAnswersAdditionalInformation.map(_.checkYourAnswersAdditionalInformation)),
+        section6Completed,
         session.additionalInformation.flatMap(_.furtherInformationOrRemarksDetails),
-        session.aboutYouAndTheProperty.flatMap(_.propertyDetails).isEmpty
+        if (isLeaseHolder) session.aboutLeaseOrAgreementPartOne.flatMap(_.checkYourAnswersAboutYourLeaseOrTenure).isEmpty
+        else session.aboutFranchisesOrLettings.flatMap(_.checkYourAnswersAboutFranchiseOrLettings).isEmpty
        )
 
        @includes.taskListItem("alternate-contact-details", "alternativeContactDetails.heading",
         controllers.additionalinformation.routes.AlternativeContactDetailsController.show(),
-        session.additionalInformation.flatMap(_.checkYourAnswersAdditionalInformation.map(_.checkYourAnswersAdditionalInformation)),
+        section6Completed,
         session.additionalInformation.flatMap(_.altContactInformation),
         session.additionalInformation.flatMap(_.furtherInformationOrRemarksDetails).isEmpty
        )
-      </ul></li></ol>
+      </ul>
+     </li>
+
+    </ol>
 
 
   @formWithCSRF(action = controllers.routes.FormSubmissionController.submit()) {
@@ -203,12 +268,9 @@
     <p class="govuk-body">@messages("declaration.information")</p>
 
     @govukWarningText(WarningText(
-      content = Text(messages("hint.declaration")),
-      classes = "govuk-!-margin-bottom-2"
+      content = Text(messages("hint.declaration"))
     ))
 
     @includes.continueButton(govukButton, isSend = true)
   }
 }
-
-
