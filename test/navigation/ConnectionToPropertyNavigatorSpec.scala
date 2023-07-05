@@ -71,27 +71,37 @@ class ConnectionToPropertyNavigatorSpec extends TestBaseSpec {
     }
 
     "return a function that goes to the vacant properties start date page when the property currently vacant has been answered with 'yes'" in {
-      val nextPage = navigator.nextPage(PropertyBecomeVacantPageId, stillConnectedDetailsYesToAllSession).apply(stillConnectedDetailsYesToAllSession)
+      val nextPage = navigator
+        .nextPage(PropertyBecomeVacantPageId, stillConnectedDetailsYesToAllSession)
+        .apply(stillConnectedDetailsYesToAllSession)
       nextPage mustBe controllers.connectiontoproperty.routes.VacantPropertiesStartDateController.show()
     }
 
     "return a function that goes to the trading name operating from property page when PropertyBecomeVacantPageId has been answered with 'no'" in {
-      val nextPage = navigator.nextPage(PropertyBecomeVacantPageId, stillConnectedDetailsNoToAllSession).apply(stillConnectedDetailsNoToAllSession)
+      val nextPage = navigator
+        .nextPage(PropertyBecomeVacantPageId, stillConnectedDetailsNoToAllSession)
+        .apply(stillConnectedDetailsNoToAllSession)
       nextPage mustBe controllers.connectiontoproperty.routes.TradingNameOperatingFromPropertyController.show()
     }
 
     "return a function that goes to the are you third party page when TradingNameOwnThePropertyPageId has been answered with 'yes'" in {
-      val nextPage = navigator.nextPage(TradingNameOwnThePropertyPageId, stillConnectedDetailsYesToAllSession).apply(stillConnectedDetailsYesToAllSession)
+      val nextPage = navigator
+        .nextPage(TradingNameOwnThePropertyPageId, stillConnectedDetailsYesToAllSession)
+        .apply(stillConnectedDetailsYesToAllSession)
       nextPage mustBe controllers.connectiontoproperty.routes.AreYouThirdPartyController.show()
     }
 
     "return a function that goes to the trading name paying rent page when TradingNameOwnThePropertyPageId has been answered with 'no'" in {
-      val nextPage = navigator.nextPage(TradingNameOwnThePropertyPageId, stillConnectedDetailsNoToAllSession).apply(stillConnectedDetailsNoToAllSession)
+      val nextPage = navigator
+        .nextPage(TradingNameOwnThePropertyPageId, stillConnectedDetailsNoToAllSession)
+        .apply(stillConnectedDetailsNoToAllSession)
       nextPage mustBe controllers.connectiontoproperty.routes.TradingNamePayingRentController.show()
     }
 
     "return a function that goes to the check your answers page when AreYouThirdPartyPageId has been answered" in {
-      val nextPage = navigator.nextPage(AreYouThirdPartyPageId, stillConnectedDetailsYesSession).apply(stillConnectedDetailsYesSession)
+      val nextPage = navigator
+        .nextPage(AreYouThirdPartyPageId, stillConnectedDetailsYesSession)
+        .apply(stillConnectedDetailsYesSession)
       nextPage mustBe controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToPropertyController.show()
     }
 

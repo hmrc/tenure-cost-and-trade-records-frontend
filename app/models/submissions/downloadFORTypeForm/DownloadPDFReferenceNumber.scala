@@ -19,7 +19,7 @@ package models.submissions.downloadFORTypeForm
 import play.api.libs.json.Json
 
 case class DownloadPDFReferenceNumber(
-                                       downloadPDFReferenceNumber: String
+  downloadPDFReferenceNumber: String
 )
 
 object DownloadPDFReferenceNumber {

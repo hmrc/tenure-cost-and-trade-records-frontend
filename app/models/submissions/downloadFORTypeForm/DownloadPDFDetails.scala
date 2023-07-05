@@ -22,7 +22,7 @@ import play.api.libs.json.{Json, OFormat}
 
 case class DownloadPDFDetails(
   downloadPDFReferenceNumber: Option[DownloadPDFReferenceNumber] = None,
-  downloadPDF: Option[DownloadPDF] = None,
+  downloadPDF: Option[DownloadPDF] = None
 )
 
 object DownloadPDFDetails {

@@ -30,8 +30,8 @@ class CheckYourAnswersConnectionToPropertyControllerSpec extends TestBaseSpec {
   import TestData._
 
   def checkYourAnswersConnectionToPropertyController(
-                                                          stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledNotVacantPropertiesCYA)
-                                                        ) =
+    stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledNotVacantPropertiesCYA)
+  ) =
     new CheckYourAnswersConnectionToPropertyController(
       stubMessagesControllerComponents(),
       connectedToPropertyNavigator,
@@ -39,7 +39,6 @@ class CheckYourAnswersConnectionToPropertyControllerSpec extends TestBaseSpec {
       preEnrichedActionRefiner(stillConnectedDetails = stillConnectedDetails),
       mockSessionRepo
     )
-
 
   "GET /" should {
     "return 200" in {
@@ -50,7 +49,7 @@ class CheckYourAnswersConnectionToPropertyControllerSpec extends TestBaseSpec {
     "return HTML" in {
       val result = checkYourAnswersConnectionToPropertyController().show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
-      charset(result) shouldBe Some("utf-8")
+      charset(result)     shouldBe Some("utf-8")
     }
   }
 
@@ -66,7 +65,7 @@ class CheckYourAnswersConnectionToPropertyControllerSpec extends TestBaseSpec {
   "Check Your Answers Connection To Property form" should {
     "error if checkYourAnswersConnectionToProperty is missing" in {
       val formData = baseFormData - errorKey.checkYourAnswersConnectionToProperty
-      val form = checkYourAnswersConnectionToPropertyForm.bind(formData)
+      val form     = checkYourAnswersConnectionToPropertyForm.bind(formData)
 
       mustContainError(errorKey.checkYourAnswersConnectionToProperty, "error.checkYourAnswersRadio.required", form)
     }

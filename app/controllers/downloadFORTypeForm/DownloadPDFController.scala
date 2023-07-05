@@ -27,7 +27,7 @@ import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class DownloadPDFController @Inject()(
+class DownloadPDFController @Inject() (
   mcc: MessagesControllerComponents,
   downloadPDFView: downloadPDF,
   withSessionRefiner: WithSessionRefiner,

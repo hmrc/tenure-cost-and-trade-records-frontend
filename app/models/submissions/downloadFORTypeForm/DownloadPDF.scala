@@ -19,7 +19,7 @@ package models.submissions.downloadFORTypeForm
 import play.api.libs.json.Json
 
 case class DownloadPDF(
-                        downloadPDF: String
+  downloadPDF: String
 )
 
 object DownloadPDF {

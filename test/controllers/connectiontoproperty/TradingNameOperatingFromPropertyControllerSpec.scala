@@ -30,8 +30,8 @@ class TradingNameOperatingFromPropertyControllerSpec extends TestBaseSpec {
   import TestData._
 
   def tradingNameOperatingFromPropertyController(
-                                                      stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledNotVacantPropertiesCYA)
-                                                    ) =
+    stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledNotVacantPropertiesCYA)
+  ) =
     new TradingNameOperatingFromPropertyController(
       stubMessagesControllerComponents(),
       connectedToPropertyNavigator,
@@ -39,7 +39,6 @@ class TradingNameOperatingFromPropertyControllerSpec extends TestBaseSpec {
       preEnrichedActionRefiner(stillConnectedDetails = stillConnectedDetails),
       mockSessionRepo
     )
-
 
   "GET /" should {
     "return 200" in {
@@ -50,7 +49,7 @@ class TradingNameOperatingFromPropertyControllerSpec extends TestBaseSpec {
     "return HTML" in {
       val result = tradingNameOperatingFromPropertyController().show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
-      charset(result) shouldBe Some("utf-8")
+      charset(result)     shouldBe Some("utf-8")
     }
   }
 
@@ -66,7 +65,7 @@ class TradingNameOperatingFromPropertyControllerSpec extends TestBaseSpec {
   "Trading Name Operating From Property form" should {
     "error if trading name is missing" in {
       val formData = baseFormData - errorKey.tradingNameFromProperty
-      val form = tradingNameOperatingFromPropertyForm.bind(formData)
+      val form     = tradingNameOperatingFromPropertyForm.bind(formData)
 
       mustContainError(errorKey.tradingNameFromProperty, "error.tradingNameFromProperty.required", form)
     }

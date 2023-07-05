@@ -27,7 +27,7 @@ object DownloadPDFReferenceNumberForm {
     mapping(
       "downloadPDFReferenceNumber" ->
         default(text, "").verifying(
-          nonEmpty(errorMessage = "error.downloadPDFReferenceNumber.required"),
+          nonEmpty(errorMessage = "error.downloadPDFReferenceNumber.required")
         )
     )(DownloadPDFReferenceNumber.apply)(
       DownloadPDFReferenceNumber.unapply

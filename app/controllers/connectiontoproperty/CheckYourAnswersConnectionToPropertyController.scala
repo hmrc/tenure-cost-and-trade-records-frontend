@@ -34,12 +34,12 @@ import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class CheckYourAnswersConnectionToPropertyController @Inject()(
-                                                                mcc: MessagesControllerComponents,
-                                                                navigator: ConnectionToPropertyNavigator,
-                                                                checkYourAnswersConnectionToPropertyView: checkYourAnswersConnectionToProperty,
-                                                                withSessionRefiner: WithSessionRefiner,
-                                                                @Named("session") val session: SessionRepo
+class CheckYourAnswersConnectionToPropertyController @Inject() (
+  mcc: MessagesControllerComponents,
+  navigator: ConnectionToPropertyNavigator,
+  checkYourAnswersConnectionToPropertyView: checkYourAnswersConnectionToProperty,
+  withSessionRefiner: WithSessionRefiner,
+  @Named("session") val session: SessionRepo
 ) extends FORDataCaptureController(mcc)
     with I18nSupport
     with Logging {

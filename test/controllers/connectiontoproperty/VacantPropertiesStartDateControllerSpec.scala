@@ -27,8 +27,8 @@ import utils.TestBaseSpec
 class VacantPropertiesStartDateControllerSpec extends TestBaseSpec {
 
   def vacantPropertiesStartDateController(
-                                           stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledStillConnectedDetailsYesToAll)
-                                                     ) =
+    stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledStillConnectedDetailsYesToAll)
+  ) =
     new VacantPropertiesStartDateController(
       stubMessagesControllerComponents(),
       connectedToPropertyNavigator,
@@ -50,13 +50,13 @@ class VacantPropertiesStartDateControllerSpec extends TestBaseSpec {
     }
 
     "display the page with the fields prefilled in" when {
-        "exists within the session" in {
-          val result = vacantPropertiesStartDateController().show()(fakeRequest)
-          val html   = Jsoup.parse(contentAsString(result))
-          Option(html.getElementById("startDateOfVacantProperty.day").`val`()).value      shouldBe "1"
-          Option(html.getElementById("startDateOfVacantProperty.month").`val`()).value shouldBe "6"
-          Option(html.getElementById("startDateOfVacantProperty.year").`val`()).value  shouldBe "2022"
-        }
+      "exists within the session" in {
+        val result = vacantPropertiesStartDateController().show()(fakeRequest)
+        val html   = Jsoup.parse(contentAsString(result))
+        Option(html.getElementById("startDateOfVacantProperty.day").`val`()).value   shouldBe "1"
+        Option(html.getElementById("startDateOfVacantProperty.month").`val`()).value shouldBe "6"
+        Option(html.getElementById("startDateOfVacantProperty.year").`val`()).value  shouldBe "2022"
+      }
     }
   }
 
@@ -70,4 +70,3 @@ class VacantPropertiesStartDateControllerSpec extends TestBaseSpec {
   }
 
 }
-

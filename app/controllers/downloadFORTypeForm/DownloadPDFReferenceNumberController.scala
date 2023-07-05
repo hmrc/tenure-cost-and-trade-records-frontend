@@ -33,7 +33,7 @@ import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class DownloadPDFReferenceNumberController @Inject()(
+class DownloadPDFReferenceNumberController @Inject() (
   mcc: MessagesControllerComponents,
   navigator: ConnectionToPropertyNavigator,
   downloadPDFReferenceNumberView: downloadPDFReferenceNumber,

@@ -27,6 +27,7 @@ object TradingNameOperatingFromPropertyForm {
       "tradingNameFromProperty" -> default(text, "").verifying(
         nonEmpty(errorMessage = "error.tradingNameFromProperty.required"),
         maxLength(100, "error.tradingNameFromProperty.maxLength")
-      ))(TradingNameOperatingFromProperty.apply)(TradingNameOperatingFromProperty.unapply)
+      )
+    )(TradingNameOperatingFromProperty.apply)(TradingNameOperatingFromProperty.unapply)
   )
 }
