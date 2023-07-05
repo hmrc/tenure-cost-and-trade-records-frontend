@@ -15,6 +15,7 @@
  *@
 
 @import actions.SessionRequest
+@import models.submissions.common.AnswerYes
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukWarningText
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.warningtext.WarningText
@@ -31,13 +32,11 @@
 
 @()(implicit request: SessionRequest[_], messages: Messages)
 
-@session = @{
- request.sessionData
-}
+@session = @{ request.sessionData }
 
-@isLeaseHolder = @{
-  true
-}
+@forType = @{ session.forType }
+
+@isLeaseHolder = @{ !session.stillConnectedDetails.flatMap(_.tradingNameOwnTheProperty).contains(AnswerYes) }
 
 @totalSections = @{
  if(isLeaseHolder) {
@@ -133,9 +132,17 @@
        )
 
        @includes.taskListItem("licensable-activities", "checkYourAnswersAboutTheProperty.license.heading",
-        controllers.aboutyouandtheproperty.routes.LicensableActivitiesController.show(),
+        if(forType == ForTypes.for6015 || forType == ForTypes.for6016) {
+         controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedController.show()
+        } else {
+         controllers.aboutyouandtheproperty.routes.LicensableActivitiesController.show()
+        },
         section2Completed,
-        session.aboutYouAndTheProperty.flatMap(_.licensableActivities),
+        if(forType == ForTypes.for6015 || forType == ForTypes.for6016) {
+         session.aboutYouAndTheProperty.flatMap(_.premisesLicenseGrantedDetail)
+        } else {
+         session.aboutYouAndTheProperty.flatMap(_.licensableActivities)
+        },
         session.aboutYouAndTheProperty.flatMap(_.propertyDetails).isEmpty
        )
       </ul>
@@ -159,6 +166,43 @@
         session.aboutTheTradingHistory.flatMap(_.turnoverSections),
         session.aboutTheTradingHistory.flatMap(_.occupationAndAccountingInformation).isEmpty
        )
+
+       @if(forType == ForTypes.for6015 || forType == ForTypes.for6016) {
+        @includes.taskListItem("total-payroll-costs", "taskList.payrollCosts",
+         controllers.aboutthetradinghistory.routes.TotalPayrollCostsController.show(),
+         section3Completed,
+         session.aboutTheTradingHistory.flatMap(_.totalPayrollCostSections),
+         session.aboutTheTradingHistory.flatMap(_.turnoverSections).isEmpty
+        )
+
+        @includes.taskListItem("variable-operating-expenses", "taskList.variableOperatingExpense",
+         controllers.aboutthetradinghistory.routes.VariableOperatingExpensesController.show(),
+         section3Completed,
+         session.aboutTheTradingHistory.flatMap(_.variableOperatingExpenses),
+         session.aboutTheTradingHistory.flatMap(_.totalPayrollCostSections).isEmpty
+        )
+
+        @includes.taskListItem("fixed-operating-expenses", "taskList.fixedOperatingExpenses",
+         controllers.aboutthetradinghistory.routes.FixedOperatingExpensesController.show(),
+         section3Completed,
+         session.aboutTheTradingHistory.flatMap(_.fixedOperatingExpenses),
+         session.aboutTheTradingHistory.flatMap(_.variableOperatingExpenses).isEmpty
+        )
+
+        @includes.taskListItem("other-costs", "taskList.otherCosts",
+         controllers.aboutthetradinghistory.routes.OtherCostsController.show(),
+         section3Completed,
+         session.aboutTheTradingHistory.flatMap(_.otherCosts),
+         session.aboutTheTradingHistory.flatMap(_.fixedOperatingExpenses).isEmpty
+        )
+
+        @includes.taskListItem("net-profit", "taskList.profitSummary",
+         controllers.aboutthetradinghistory.routes.NetProfitController.show(),
+         section3Completed,
+         session.aboutTheTradingHistory.flatMap(_.netProfit),
+         session.aboutTheTradingHistory.flatMap(_.otherCosts).isEmpty
+        )
+       }
       </ul>
      </li>
 
@@ -203,39 +247,53 @@
          section4Completed.isEmpty
         )
 
-        @includes.taskListItem("lease-or-agreement-details", "checkYourAnswersAboutYourLeaseOrTenure.changesToYourLease.heading",
-         controllers.aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.show(),
-         section5Completed,
-         session.aboutLeaseOrAgreementPartOne.flatMap(_.leaseOrAgreementYearsDetails),
-         session.aboutLeaseOrAgreementPartOne.flatMap(_.aboutTheLandlord).isEmpty
-        )
+        @if(forType == ForTypes.for6010 || forType == ForTypes.for6015 || forType == ForTypes.for6016) {
+         @includes.taskListItem("lease-or-agreement-details", "checkYourAnswersAboutYourLeaseOrTenure.changesToYourLease.heading",
+          controllers.aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.show(),
+          section5Completed,
+          session.aboutLeaseOrAgreementPartOne.flatMap(_.leaseOrAgreementYearsDetails),
+          session.aboutLeaseOrAgreementPartOne.flatMap(_.aboutTheLandlord).isEmpty
+         )
+        }
 
-        @includes.taskListItem("current-annual-rent", "checkYourAnswersAboutYourLeaseOrTenure.leaseDetails.heading",
-         controllers.aboutYourLeaseOrTenure.routes.CurrentAnnualRentController.show(),
-         section5Completed,
-         session.aboutLeaseOrAgreementPartOne.flatMap(_.annualRent),
-         session.aboutLeaseOrAgreementPartOne.flatMap(_.leaseOrAgreementYearsDetails).isEmpty
-        )
-        @includes.taskListItem("included-in-your-rent", "checkYourAnswersAboutYourLeaseOrTenure.whatRentIncludes.heading",
-         controllers.aboutYourLeaseOrTenure.routes.IncludedInYourRentController.show(),
-         section5Completed,
-         session.aboutLeaseOrAgreementPartOne.flatMap(_.includedInYourRentDetails),
-         session.aboutLeaseOrAgreementPartOne.flatMap(_.annualRent).isEmpty
-        )
+        @if(forType == ForTypes.for6010 || forType == ForTypes.for6015 || forType == ForTypes.for6016) {
+         @includes.taskListItem("leaseback-arrangement", "checkYourAnswersAboutYourLeaseOrTenure.leaseDetails.heading",
+          Call("GET", "leaseback-arrangement"), // TODO: Not implemented Controller for "leaseback-arrangement"
+          section5Completed,
+          session.aboutLeaseOrAgreementPartOne.flatMap(_.annualRent),
+          session.aboutLeaseOrAgreementPartOne.flatMap(_.leaseOrAgreementYearsDetails).isEmpty
+         )
+        } else {
+         @includes.taskListItem("current-annual-rent", "checkYourAnswersAboutYourLeaseOrTenure.yourRent.heading",
+          controllers.aboutYourLeaseOrTenure.routes.CurrentAnnualRentController.show(),
+          section5Completed,
+          session.aboutLeaseOrAgreementPartOne.flatMap(_.annualRent),
+          session.aboutLeaseOrAgreementPartOne.flatMap(_.aboutTheLandlord).isEmpty
+         )
+        }
 
-        @includes.taskListItem("rent-open-market-value", "checkYourAnswersAboutYourLeaseOrTenure.howRentWasCalculated.heading",
-         controllers.aboutYourLeaseOrTenure.routes.RentOpenMarketValueController.show(),
-         section5Completed,
-         session.aboutLeaseOrAgreementPartOne.flatMap(_.rentOpenMarketValueDetails),
-         session.aboutLeaseOrAgreementPartOne.flatMap(_.includedInYourRentDetails).isEmpty
-        )
+        @if(forType == ForTypes.for6010 || forType == ForTypes.for6015 || forType == ForTypes.for6016) {
+         @includes.taskListItem("included-in-your-rent", "checkYourAnswersAboutYourLeaseOrTenure.whatRentIncludes.heading",
+          controllers.aboutYourLeaseOrTenure.routes.IncludedInYourRentController.show(),
+          section5Completed,
+          session.aboutLeaseOrAgreementPartOne.flatMap(_.includedInYourRentDetails),
+          session.aboutLeaseOrAgreementPartOne.flatMap(_.annualRent).isEmpty
+         )
 
-        @includes.taskListItem("pay-a-capital-sum", "checkYourAnswersAboutYourLeaseOrTenure.exclusionsRestrictionsIncentives.heading",
-         controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumController.show(),
-         section5Completed,
-         session.aboutLeaseOrAgreementPartTwo.flatMap(_.payACapitalSumDetails),
-         session.aboutLeaseOrAgreementPartOne.flatMap(_.rentOpenMarketValueDetails).isEmpty
-        )
+         @includes.taskListItem("rent-open-market-value", "checkYourAnswersAboutYourLeaseOrTenure.howRentWasCalculated.heading",
+          controllers.aboutYourLeaseOrTenure.routes.RentOpenMarketValueController.show(),
+          section5Completed,
+          session.aboutLeaseOrAgreementPartOne.flatMap(_.rentOpenMarketValueDetails),
+          session.aboutLeaseOrAgreementPartOne.flatMap(_.includedInYourRentDetails).isEmpty
+         )
+
+         @includes.taskListItem("pay-a-capital-sum", "checkYourAnswersAboutYourLeaseOrTenure.exclusionsRestrictionsIncentives.heading",
+          controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumController.show(),
+          section5Completed,
+          session.aboutLeaseOrAgreementPartTwo.flatMap(_.payACapitalSumDetails),
+          session.aboutLeaseOrAgreementPartOne.flatMap(_.rentOpenMarketValueDetails).isEmpty
+         )
+        }
        </ul>
       </li>
      }
