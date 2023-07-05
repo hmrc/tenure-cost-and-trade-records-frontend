@@ -122,7 +122,7 @@
         controllers.aboutyouandtheproperty.routes.AboutYouController.show(),
         section2Completed,
         session.aboutYouAndTheProperty.flatMap(_.customerDetails),
-        session.stillConnectedDetails.flatMap(_.checkYourAnswersConnectionToProperty).isEmpty
+        section1Completed.isEmpty
        )
 
        @includes.taskListItem("about-the-property", "checkYourAnswersAboutTheProperty.aboutProperty.heading",
@@ -150,7 +150,7 @@
         controllers.aboutthetradinghistory.routes.AboutYourTradingHistoryController.show(),
         section3Completed,
         session.aboutTheTradingHistory.flatMap(_.occupationAndAccountingInformation),
-        session.aboutYouAndTheProperty.flatMap(_.checkYourAnswersAboutTheProperty).isEmpty
+        section2Completed.isEmpty
        )
 
        @includes.taskListItem("turnover", "turnover.heading",
@@ -160,32 +160,33 @@
         session.aboutTheTradingHistory.flatMap(_.occupationAndAccountingInformation).isEmpty
        )
       </ul>
+     </li>
 
      <li>
       <h2 class="app-task-list__section">
        <span class="app-task-list__section-number">4. </span> @messages("label.section.aboutTheFranchiseLettings")
       </h2>
       <ul class="app-task-list__items">
-       <li class="app-task-list__item">
-        <span class="app-task-list__task-name">
-         <a href="franchise-or-lettings-tied-to-property">Franchise or sub-lets tied to the property</a></span>
-        <span class="govuk-tag app-task-list__tag govuk-tag--grey">
-         Cannot start yet
-        </span>
-       </li>
-       <li class="app-task-list__item">
-        <span class="app-task-list__task-name">
-         <a href="catering-operation-or-letting-accommodation">Catering operation or letting accommodation run as separate business from the property</a></span>
-        <span class="govuk-tag app-task-list__tag govuk-tag--grey">
-         Cannot start yet
-        </span>
-       </li>
-       <li class="app-task-list__item">
-        <span class="app-task-list__task-name">Lettings</span>
-        <span class="govuk-tag app-task-list__tag govuk-tag--grey">
-         Cannot start yet
-        </span>
-       </li>
+       @includes.taskListItem("franchise-or-lettings-tied-to-property", "taskList.rentalIncomeStatus",
+        controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show(),
+        section4Completed,
+        session.aboutFranchisesOrLettings.flatMap(_.franchisesOrLettingsTiedToProperty),
+        section3Completed.isEmpty
+       )
+
+       @includes.taskListItem("catering-operation-or-letting-accommodation", "taskList.separateBusinesses",
+        controllers.aboutfranchisesorlettings.routes.CateringOperationController.show(),
+        section4Completed,
+        session.aboutFranchisesOrLettings.flatMap(_.cateringConcessionOrFranchise),
+        session.aboutFranchisesOrLettings.flatMap(_.franchisesOrLettingsTiedToProperty).isEmpty
+       )
+
+       @includes.taskListItem("letting-other-part-of-property", "checkYourAnswersAboutFranchiseOrLettings.lettingsOtherPartOfProperties.heading",
+        controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show(),
+        section4Completed,
+        session.aboutFranchisesOrLettings.flatMap(_.lettingOtherPartOfProperty),
+        session.aboutFranchisesOrLettings.flatMap(_.cateringConcessionOrFranchise).isEmpty
+       )
       </ul>
      </li>
 
@@ -195,43 +196,46 @@
         <span class="app-task-list__section-number">5. </span> @messages("label.section.aboutYourLeaseOrTenure")
        </h2>
        <ul class="app-task-list__items">
-        <li class="app-task-list__item">
-         <span class="app-task-list__task-name">
-          <a href="about-your-landlord">Tell us about your landlord</a></span>
-         <span class="govuk-tag app-task-list__tag govuk-tag--grey">
-          Cannot start yet
-         </span>
-        </li>
-        <li class="app-task-list__item">
-         <span class="app-task-list__task-name">Changes to your lease</span>
-         <span class="govuk-tag app-task-list__tag govuk-tag--grey">
-          Cannot start yet
-         </span>
-        </li>
-        <li class="app-task-list__item">
-         <span class="app-task-list__task-name">Lease start date and rent paid</span>
-         <span class="govuk-tag app-task-list__tag govuk-tag--grey">
-          Cannot start yet
-         </span>
-        </li>
-        <li class="app-task-list__item">
-         <span class="app-task-list__task-name">What the rent includes</span>
-         <span class="govuk-tag app-task-list__tag govuk-tag--grey">
-          Cannot start yet
-         </span>
-        </li>
-        <li class="app-task-list__item">
-         <span class="app-task-list__task-name">How the rent was calculated</span>
-         <span class="govuk-tag app-task-list__tag govuk-tag--grey">
-          Cannot start yet
-         </span>
-        </li>
-        <li class="app-task-list__item">
-         <span class="app-task-list__task-name">Exclusions, restrictions or incentives</span>
-         <span class="govuk-tag app-task-list__tag govuk-tag--grey">
-          Cannot start yet
-         </span>
-        </li>
+        @includes.taskListItem("about-your-landlord", "checkYourAnswersAboutYourLeaseOrTenure.yourLandlord.heading",
+         controllers.aboutYourLeaseOrTenure.routes.AboutYourLandlordController.show(),
+         section5Completed,
+         session.aboutLeaseOrAgreementPartOne.flatMap(_.aboutTheLandlord),
+         section4Completed.isEmpty
+        )
+
+        @includes.taskListItem("lease-or-agreement-details", "checkYourAnswersAboutYourLeaseOrTenure.changesToYourLease.heading",
+         controllers.aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.show(),
+         section5Completed,
+         session.aboutLeaseOrAgreementPartOne.flatMap(_.leaseOrAgreementYearsDetails),
+         session.aboutLeaseOrAgreementPartOne.flatMap(_.aboutTheLandlord).isEmpty
+        )
+
+        @includes.taskListItem("current-annual-rent", "checkYourAnswersAboutYourLeaseOrTenure.leaseDetails.heading",
+         controllers.aboutYourLeaseOrTenure.routes.CurrentAnnualRentController.show(),
+         section5Completed,
+         session.aboutLeaseOrAgreementPartOne.flatMap(_.annualRent),
+         session.aboutLeaseOrAgreementPartOne.flatMap(_.leaseOrAgreementYearsDetails).isEmpty
+        )
+        @includes.taskListItem("included-in-your-rent", "checkYourAnswersAboutYourLeaseOrTenure.whatRentIncludes.heading",
+         controllers.aboutYourLeaseOrTenure.routes.IncludedInYourRentController.show(),
+         section5Completed,
+         session.aboutLeaseOrAgreementPartOne.flatMap(_.includedInYourRentDetails),
+         session.aboutLeaseOrAgreementPartOne.flatMap(_.annualRent).isEmpty
+        )
+
+        @includes.taskListItem("rent-open-market-value", "checkYourAnswersAboutYourLeaseOrTenure.howRentWasCalculated.heading",
+         controllers.aboutYourLeaseOrTenure.routes.RentOpenMarketValueController.show(),
+         section5Completed,
+         session.aboutLeaseOrAgreementPartOne.flatMap(_.rentOpenMarketValueDetails),
+         session.aboutLeaseOrAgreementPartOne.flatMap(_.includedInYourRentDetails).isEmpty
+        )
+
+        @includes.taskListItem("pay-a-capital-sum", "checkYourAnswersAboutYourLeaseOrTenure.exclusionsRestrictionsIncentives.heading",
+         controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumController.show(),
+         section5Completed,
+         session.aboutLeaseOrAgreementPartTwo.flatMap(_.payACapitalSumDetails),
+         session.aboutLeaseOrAgreementPartOne.flatMap(_.rentOpenMarketValueDetails).isEmpty
+        )
        </ul>
       </li>
      }
@@ -245,8 +249,8 @@
         controllers.additionalinformation.routes.FurtherInformationOrRemarksController.show(),
         section6Completed,
         session.additionalInformation.flatMap(_.furtherInformationOrRemarksDetails),
-        if (isLeaseHolder) session.aboutLeaseOrAgreementPartOne.flatMap(_.checkYourAnswersAboutYourLeaseOrTenure).isEmpty
-        else session.aboutFranchisesOrLettings.flatMap(_.checkYourAnswersAboutFranchiseOrLettings).isEmpty
+        if (isLeaseHolder) section5Completed.isEmpty
+        else section4Completed.isEmpty
        )
 
        @includes.taskListItem("alternate-contact-details", "alternativeContactDetails.heading",
@@ -260,17 +264,18 @@
 
     </ol>
 
-
+ @if(completedSections == totalSections) {
   @formWithCSRF(action = controllers.routes.FormSubmissionController.submit()) {
 
-    <h2 class="govuk-heading-m">@messages("declaration.heading")</h2>
+   <h2 class="govuk-heading-m">@messages("declaration.heading")</h2>
+   <p class="govuk-body">@messages("declaration.information")</p>
 
-    <p class="govuk-body">@messages("declaration.information")</p>
+   @govukWarningText(WarningText(
+    content = Text(messages("hint.declaration"))
+   ))
 
-    @govukWarningText(WarningText(
-      content = Text(messages("hint.declaration"))
-    ))
-
-    @includes.continueButton(govukButton, isSend = true)
+   @includes.continueButton(govukButton, isSend = true)
   }
+ }
+
 }
