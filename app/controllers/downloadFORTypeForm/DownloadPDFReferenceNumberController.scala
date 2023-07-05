@@ -43,7 +43,7 @@ class DownloadPDFReferenceNumberController @Inject()(
     with I18nSupport {
 
   def startWithSession: Action[AnyContent] = Action.async { implicit request =>
-    session.start(Session("", "", Address("", None, "", None, ""), ""))
+    session.start(Session("", "FOR6010", Address("", None, "", None, ""), ""))
     Future.successful(Redirect(routes.DownloadPDFReferenceNumberController.show()))
   }
 

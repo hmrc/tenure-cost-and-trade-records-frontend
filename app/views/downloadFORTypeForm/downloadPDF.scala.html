@@ -26,16 +26,23 @@
         formWithCSRF: FormWithCSRF
 )
 
-@()(implicit request: Request[_], messages: Messages)
+@(forType: String)(implicit request: Request[_], messages: Messages)
 
 @layout(
   pageHeading = messages("downloadPDF.heading"),
   backLinkUrl = controllers.downloadFORTypeForm.routes.DownloadPDFReferenceNumberController.show().url
 ) {
+    @if(forType.equals(ForTypes.for6010)) {
 
-
-      <p class="govuk-body">@{HtmlContent(messages("downloadPDF.p1")).asHtml}</p>
-  }
+        <p class="govuk-body">@{
+            HtmlContent(messages("downloadPDF.p1")).asHtml
+        }</p>
+    } else {
+        <p class="govuk-body">@{
+            HtmlContent(messages("downloadPDF.p2")).asHtml
+        }</p>
+    }
+}
 
 
 

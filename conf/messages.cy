@@ -194,9 +194,10 @@ label.downloadPDFReferenceNumber = Reference number
 error.downloadPDFReferenceNumber.required = You must provide a reference number
 hint.downloadPDFReferenceNumber = For example, 1000001/101
 
-# DOWNLOAD PDF LINK
-downloadPDFLink.heading = Download a PDF version of this declaration
-downloadPDFLink.p1 = Test link
+# DOWNLOAD PDF
+downloadPDF.heading = Download a PDF version of this declaration
+downloadPDF.p1 = <a href="https://www.gov.uk/government/publications/vo-6010-request-for-rental-information-public-houses" class="govuk-link" target="_blank">VO6010 request for rental information: public houses (opens in a new tab)</a>
+downloadPDF.p2 = <a href="https://www.gov.uk/government/publications/vo-6010-request-for-rental-information-public-houses" class="govuk-link" target="_blank">VO6011 request for rental information: pubs, licensed restaurants and wine bars (receipts only) (opens in a new tab)</a>
 
 # ARE YOU STILL CONNECTED SECTION
 #################################

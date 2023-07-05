@@ -16,6 +16,7 @@
 
 package controllers.downloadFORTypeForm
 
+import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
@@ -29,11 +30,12 @@ import scala.concurrent.Future
 class DownloadPDFController @Inject()(
   mcc: MessagesControllerComponents,
   downloadPDFView: downloadPDF,
+  withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
 ) extends FORDataCaptureController(mcc)
     with I18nSupport {
 
-  def show: Action[AnyContent] = Action.async { implicit request =>
-    Future.successful(Ok(downloadPDFView()))
+  def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    Future.successful(Ok(downloadPDFView(request.sessionData.forType)))
   }
 }
