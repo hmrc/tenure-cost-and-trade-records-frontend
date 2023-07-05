@@ -34,7 +34,7 @@ import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class TradingNameOwnThePropertyController @Inject()(
+class TradingNameOwnThePropertyController @Inject() (
   mcc: MessagesControllerComponents,
   navigator: ConnectionToPropertyNavigator,
   tradingNameOwnThePropertyView: tradingNameOwnTheProperty,

@@ -43,7 +43,7 @@ class ConnectionToPropertyNavigator @Inject() (audit: Audit) extends Navigator(a
     answers.stillConnectedDetails.flatMap(_.vacantProperties.map(_.vacantProperties.name)) match {
       case Some("yes") => controllers.connectiontoproperty.routes.VacantPropertiesStartDateController.show()
       case Some("no")  => controllers.connectiontoproperty.routes.TradingNameOperatingFromPropertyController.show()
-      case _ =>
+      case _           =>
         logger.warn(
           s"Navigation for catering operations reached without correct selection of conditions by controller"
         )
@@ -51,11 +51,11 @@ class ConnectionToPropertyNavigator @Inject() (audit: Audit) extends Navigator(a
     }
   }
 
-  private def tradingNameOwnTheProperty: Session => Call = answers => {
+  private def tradingNameOwnTheProperty: Session => Call  = answers => {
     answers.stillConnectedDetails.flatMap(_.tradingNameOwnTheProperty.map(_.name)) match {
       case Some("yes") => controllers.connectiontoproperty.routes.AreYouThirdPartyController.show()
-      case Some("no") => controllers.connectiontoproperty.routes.TradingNamePayingRentController.show()
-      case _ =>
+      case Some("no")  => controllers.connectiontoproperty.routes.TradingNamePayingRentController.show()
+      case _           =>
         logger.warn(
           s"Navigation for catering operations reached without correct selection of conditions by controller"
         )
@@ -67,21 +67,25 @@ class ConnectionToPropertyNavigator @Inject() (audit: Audit) extends Navigator(a
     EditAddressPageId                            -> (_ => controllers.connectiontoproperty.routes.VacantPropertiesController.show()),
     ConnectionToPropertyPageId                   -> (_ => controllers.routes.TaskListController.show()),
     VacantPropertiesPageId                       -> (_ => controllers.routes.TaskListController.show()),
-    NoReferenceNumberPageId -> (_ =>
+    NoReferenceNumberPageId                      -> (_ =>
       controllers.requestReferenceNumber.routes.RequestReferenceNumberContactDetailsController.show()
-      ),
-    NoReferenceNumberContactDetailsPageId -> (_ =>
+    ),
+    NoReferenceNumberContactDetailsPageId        -> (_ =>
       controllers.requestReferenceNumber.routes.CheckYourAnswersRequestReferenceNumberController.submit()
-      ),
+    ),
     CheckYourAnswersRequestReferenceNumberPageId -> (_ =>
       controllers.routes.RequestReferenceNumberFormSubmissionController.submit()
-      ),
-    PropertyBecomeVacantPageId -> whenDidThePropertyBecomeVacant,
-    LettingIncomePageId -> (_ => controllers.connectiontoproperty.routes.VacantPropertiesController.show()),
-    TradingNameOperatingFromPropertyPageId -> (_ => controllers.connectiontoproperty.routes.TradingNameOwnThePropertyController.show()),
-    TradingNameOwnThePropertyPageId -> tradingNameOwnTheProperty,
-    TradingNamePayingRentPageId -> (_ => controllers.connectiontoproperty.routes.AreYouThirdPartyController.show()),
-    AreYouThirdPartyPageId -> (_ => controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToPropertyController.show()),
-    CheckYourAnswersAboutThePropertyPageId -> (_ => controllers.routes.TaskListController.show())
+    ),
+    PropertyBecomeVacantPageId                   -> whenDidThePropertyBecomeVacant,
+    LettingIncomePageId                          -> (_ => controllers.connectiontoproperty.routes.VacantPropertiesController.show()),
+    TradingNameOperatingFromPropertyPageId       -> (_ =>
+      controllers.connectiontoproperty.routes.TradingNameOwnThePropertyController.show()
+    ),
+    TradingNameOwnThePropertyPageId              -> tradingNameOwnTheProperty,
+    TradingNamePayingRentPageId                  -> (_ => controllers.connectiontoproperty.routes.AreYouThirdPartyController.show()),
+    AreYouThirdPartyPageId                       -> (_ =>
+      controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToPropertyController.show()
+    ),
+    CheckYourAnswersAboutThePropertyPageId       -> (_ => controllers.routes.TaskListController.show())
   )
 }

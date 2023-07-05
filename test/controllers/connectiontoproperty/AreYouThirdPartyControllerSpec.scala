@@ -16,7 +16,6 @@
 
 package controllers.connectiontoproperty
 
-
 import controllers.connectiontoproperty.TestData.{baseFormData, errorKey}
 import form.Errors
 import models.submissions.connectiontoproperty.StillConnectedDetails
@@ -29,7 +28,9 @@ import form.connectiontoproperty.AreYouThirdPartyForm.areYouThirdPartyForm
 
 class AreYouThirdPartyControllerSpec extends TestBaseSpec {
 
-  def areYouThirdPartyController(stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledStillConnectedDetailsYesToAll)) =
+  def areYouThirdPartyController(
+    stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledStillConnectedDetailsYesToAll)
+  ) =
     new AreYouThirdPartyController(
       stubMessagesControllerComponents(),
       connectedToPropertyNavigator,
@@ -48,7 +49,7 @@ class AreYouThirdPartyControllerSpec extends TestBaseSpec {
     "return HTML" in {
       val result = areYouThirdPartyController().show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
-      charset(result) shouldBe Some("utf-8")
+      charset(result)     shouldBe Some("utf-8")
     }
   }
 
@@ -64,7 +65,7 @@ class AreYouThirdPartyControllerSpec extends TestBaseSpec {
     "Are you third party form" should {
       "error if areYouThirdParty is missing" in {
         val formData = baseFormData - errorKey.areYouThirdParty
-        val form = areYouThirdPartyForm.bind(formData)
+        val form     = areYouThirdPartyForm.bind(formData)
 
         mustContainError(errorKey.areYouThirdParty, Errors.booleanMissing, form)
       }

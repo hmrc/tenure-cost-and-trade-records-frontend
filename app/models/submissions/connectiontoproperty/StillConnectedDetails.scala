@@ -29,7 +29,7 @@ case class StillConnectedDetails(
   editAddress: Option[EditTheAddress] = None,
   vacantProperties: Option[VacantProperties] = None,
   tradingNameOperatingFromProperty: Option[TradingNameOperatingFromProperty] = None,
-  tradingNameOwnTheProperty: Option[AnswersYesNo] =None,
+  tradingNameOwnTheProperty: Option[AnswersYesNo] = None,
   tradingNamePayingRent: Option[AnswersYesNo] = None,
   areYouThirdParty: Option[AnswersYesNo] = None,
   vacantPropertyStartDate: Option[StartDateOfVacantProperty] = None,

@@ -34,15 +34,15 @@ import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class TradingNamePayingRentController @Inject()(
-                                                 mcc: MessagesControllerComponents,
-                                                 navigator: ConnectionToPropertyNavigator,
-                                                 tradingNamePayingRentView: tradingNamePayingRent,
-                                                 withSessionRefiner: WithSessionRefiner,
-                                                 @Named("session") val session: SessionRepo
-                                               ) extends FORDataCaptureController(mcc)
-  with I18nSupport
-  with Logging {
+class TradingNamePayingRentController @Inject() (
+  mcc: MessagesControllerComponents,
+  navigator: ConnectionToPropertyNavigator,
+  tradingNamePayingRentView: tradingNamePayingRent,
+  withSessionRefiner: WithSessionRefiner,
+  @Named("session") val session: SessionRepo
+) extends FORDataCaptureController(mcc)
+    with I18nSupport
+    with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Future.successful(
@@ -50,7 +50,7 @@ class TradingNamePayingRentController @Inject()(
         tradingNamePayingRentView(
           request.sessionData.stillConnectedDetails.flatMap(_.tradingNamePayingRent) match {
             case Some(enforcementAction) => tradingNamePayingRentForm.fillAndValidate(enforcementAction)
-            case _ => tradingNamePayingRentForm
+            case _                       => tradingNamePayingRentForm
           },
           getBackLink(request.sessionData),
           request.sessionData.stillConnectedDetails.get.tradingNameOperatingFromProperty.get.tradingName,

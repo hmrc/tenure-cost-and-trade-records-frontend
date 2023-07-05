@@ -33,7 +33,7 @@ import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class TradingNameOperatingFromPropertyController @Inject()(
+class TradingNameOperatingFromPropertyController @Inject() (
   mcc: MessagesControllerComponents,
   navigator: ConnectionToPropertyNavigator,
   nameOfBusinessOperatingFromPropertyView: tradingNameOperatingFromProperty,
@@ -68,7 +68,7 @@ class TradingNameOperatingFromPropertyController @Inject()(
           )
         ),
       data => {
-        val updatedData = updateStillConnectedDetails(_.copy( tradingNameOperatingFromProperty= Some(data)))
+        val updatedData = updateStillConnectedDetails(_.copy(tradingNameOperatingFromProperty = Some(data)))
         session.saveOrUpdate(updatedData)
         Redirect(navigator.nextPage(TradingNameOperatingFromPropertyPageId, updatedData).apply(updatedData))
       }

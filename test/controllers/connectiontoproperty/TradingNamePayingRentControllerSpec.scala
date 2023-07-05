@@ -28,7 +28,9 @@ import utils.TestBaseSpec
 
 class TradingNamePayingRentControllerSpec extends TestBaseSpec {
   import TestData._
-  def tradingNamePayingRentController(stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledStillConnectedDetailsYesToAll)) =
+  def tradingNamePayingRentController(
+    stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledStillConnectedDetailsYesToAll)
+  ) =
     new TradingNamePayingRentController(
       stubMessagesControllerComponents(),
       connectedToPropertyNavigator,
@@ -47,7 +49,7 @@ class TradingNamePayingRentControllerSpec extends TestBaseSpec {
     "return HTML" in {
       val result = tradingNamePayingRentController().show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
-      charset(result) shouldBe Some("utf-8")
+      charset(result)     shouldBe Some("utf-8")
     }
   }
 
@@ -63,7 +65,7 @@ class TradingNamePayingRentControllerSpec extends TestBaseSpec {
     "Trading Name paying rent form" should {
       "error if areYouThirdParty is missing" in {
         val formData = baseFormData - errorKey.tradingNamePayingRent
-        val form = tradingNamePayingRentForm.bind(formData)
+        val form     = tradingNamePayingRentForm.bind(formData)
 
         mustContainError(errorKey.tradingNamePayingRent, Errors.booleanMissing, form)
       }
