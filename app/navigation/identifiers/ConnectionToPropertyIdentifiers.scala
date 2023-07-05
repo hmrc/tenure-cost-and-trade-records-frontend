@@ -28,15 +28,19 @@ case object VacantPropertiesPageId extends Identifier { override def toString: S
 
 case object PropertyBecomeVacantPageId extends Identifier { override def toString: String = "PropertyBecomeVacant" }
 
-case object LettingIncomePageId extends Identifier { override def toString: String = "LettingIncome"}
+case object LettingIncomePageId extends Identifier { override def toString: String = "LettingIncome" }
 
-case object TradingNameOperatingFromPropertyPageId extends Identifier {override def toString: String = "TradingNameOperatingFromProperty"}
+case object TradingNameOperatingFromPropertyPageId extends Identifier {
+  override def toString: String = "TradingNameOperatingFromProperty"
+}
 
-case object TradingNameOwnThePropertyPageId extends Identifier {override def toString: String = "TradingNameOwnTheProperty"}
+case object TradingNameOwnThePropertyPageId extends Identifier {
+  override def toString: String = "TradingNameOwnTheProperty"
+}
 
-case object TradingNamePayingRentPageId extends Identifier {override def toString: String = "TradingNamePayingRent"}
+case object TradingNamePayingRentPageId extends Identifier { override def toString: String = "TradingNamePayingRent" }
 
-case object AreYouThirdPartyPageId extends Identifier {override def toString: String = "AreYouThirdParty"}
+case object AreYouThirdPartyPageId extends Identifier { override def toString: String = "AreYouThirdParty" }
 
 case object NoReferenceNumberPageId extends Identifier { override def toString: String = "NoReferenceNumberPage" }
 

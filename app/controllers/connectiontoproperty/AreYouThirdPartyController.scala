@@ -34,15 +34,15 @@ import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class AreYouThirdPartyController @Inject()(
-                                            mcc: MessagesControllerComponents,
-                                            navigator: ConnectionToPropertyNavigator,
-                                            areYouThirdPartyView: areYouThirdParty,
-                                            withSessionRefiner: WithSessionRefiner,
-                                            @Named("session") val session: SessionRepo
-                                          ) extends FORDataCaptureController(mcc)
-  with I18nSupport
-  with Logging {
+class AreYouThirdPartyController @Inject() (
+  mcc: MessagesControllerComponents,
+  navigator: ConnectionToPropertyNavigator,
+  areYouThirdPartyView: areYouThirdParty,
+  withSessionRefiner: WithSessionRefiner,
+  @Named("session") val session: SessionRepo
+) extends FORDataCaptureController(mcc)
+    with I18nSupport
+    with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Future.successful(
@@ -50,7 +50,7 @@ class AreYouThirdPartyController @Inject()(
         areYouThirdPartyView(
           request.sessionData.stillConnectedDetails.flatMap(_.areYouThirdParty) match {
             case Some(enforcementAction) => areYouThirdPartyForm.fillAndValidate(enforcementAction)
-            case _ => areYouThirdPartyForm
+            case _                       => areYouThirdPartyForm
           },
           getBackLink(request.sessionData),
           request.sessionData.stillConnectedDetails.get.tradingNameOperatingFromProperty.get.tradingName,
@@ -80,12 +80,12 @@ class AreYouThirdPartyController @Inject()(
     )
   }
 
-  private def getBackLink(answers: Session): String = {
+  private def getBackLink(answers: Session): String =
     answers.stillConnectedDetails.flatMap(_.tradingNameOwnTheProperty.map(_.name)) match {
-      case Some("yes")  => controllers.connectiontoproperty.routes.TradingNameOwnThePropertyController.show().url
-      case Some("no")   => controllers.connectiontoproperty.routes.TradingNamePayingRentController.show().url
-      case _            => logger.warn(s"Back link for are you third party reached with unknown trade services value")
+      case Some("yes") => controllers.connectiontoproperty.routes.TradingNameOwnThePropertyController.show().url
+      case Some("no")  => controllers.connectiontoproperty.routes.TradingNamePayingRentController.show().url
+      case _           =>
+        logger.warn(s"Back link for are you third party reached with unknown trade services value")
         controllers.connectiontoproperty.routes.ConnectionToThePropertyController.show().url
     }
-  }
 }

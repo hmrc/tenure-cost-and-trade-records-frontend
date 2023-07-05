@@ -28,7 +28,9 @@ import utils.TestBaseSpec
 
 class TradingNameOwnThePropertyControllerSpec extends TestBaseSpec {
   import TestData._
-  def tradingNameOwnThePropertyController(stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledStillConnectedDetailsYesToAll)) =
+  def tradingNameOwnThePropertyController(
+    stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledStillConnectedDetailsYesToAll)
+  ) =
     new TradingNameOwnThePropertyController(
       stubMessagesControllerComponents(),
       connectedToPropertyNavigator,
@@ -47,7 +49,7 @@ class TradingNameOwnThePropertyControllerSpec extends TestBaseSpec {
     "return HTML" in {
       val result = tradingNameOwnThePropertyController().show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
-      charset(result) shouldBe Some("utf-8")
+      charset(result)     shouldBe Some("utf-8")
     }
   }
 
@@ -63,7 +65,7 @@ class TradingNameOwnThePropertyControllerSpec extends TestBaseSpec {
     "Trading Name own the property form" should {
       "error if areYouThirdParty is missing" in {
         val formData = baseFormData - errorKey.tradingNameOwnTheProperty
-        val form = tradingNameOwnThePropertyForm.bind(formData)
+        val form     = tradingNameOwnThePropertyForm.bind(formData)
 
         mustContainError(errorKey.tradingNameOwnTheProperty, Errors.booleanMissing, form)
       }

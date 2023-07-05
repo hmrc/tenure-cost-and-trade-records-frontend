@@ -25,7 +25,10 @@ object VacantPropertyStartDateForm {
 
   val vacantPropertyStartDateForm = Form(
     mapping(
-      "startDateOfVacantProperty"  -> dateFieldsMapping("startDateOfVacantProperty", fieldErrorPart = ".startDateOfVacantProperty")
+      "startDateOfVacantProperty" -> dateFieldsMapping(
+        "startDateOfVacantProperty",
+        fieldErrorPart = ".startDateOfVacantProperty"
+      )
     )(StartDateOfVacantProperty.apply)(StartDateOfVacantProperty.unapply)
   )
 }

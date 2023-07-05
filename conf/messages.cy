@@ -175,7 +175,7 @@ requestReferenceNumber.p2 = If you no longer have access to your letter from the
 requestReferenceNumber.p3 = We can only reissue letters to the address where they were originally sent. <a href="https://www.gov.uk/contact-voa" class="govuk-link" target="_blank">Contact the VOA (opens in new tab)</a> if your business has changed address.
 requestReferenceNumber.subheading3 = What are the details of the property related to the missing reference number?
 label.requestReferenceNumberBusinessTradingName = Business or trading name
-error.referenceNumberBusinessTradingName.required = Enter a business or trading name
+error.requestReferenceNumberBusinessTradingName.required = Enter a business or trading name
 key.requestReferenceNumberAddress = Address
 key.nameContactRequestReferenceNumber = Name and contact details
 

@@ -33,7 +33,7 @@ import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class VacantPropertiesStartDateController @Inject()(
+class VacantPropertiesStartDateController @Inject() (
   mcc: MessagesControllerComponents,
   navigator: ConnectionToPropertyNavigator,
   vacantPropertyStartDateView: vacantPropertyStartDate,
@@ -49,7 +49,7 @@ class VacantPropertiesStartDateController @Inject()(
         vacantPropertyStartDateView(
           request.sessionData.stillConnectedDetails.flatMap(_.vacantPropertyStartDate) match {
             case Some(vacantPropertyStartDate) => vacantPropertyStartDateForm.fillAndValidate(vacantPropertyStartDate)
-            case _                      => vacantPropertyStartDateForm
+            case _                             => vacantPropertyStartDateForm
           },
           request.sessionData.toSummary
         )
