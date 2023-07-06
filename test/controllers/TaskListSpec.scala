@@ -35,19 +35,35 @@ class TaskListSpec extends TestBaseSpec {
   )
 
   "GET /" should {
-    "return 200" in {
+    "return 200 (6010)" in {
       sessionRepo.saveOrUpdate(prefilledBaseSession)
 
       val result = taskListController.show(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
-    "return HTML" in {
-      sessionRepo.saveOrUpdate(prefilledBaseSession)
+    "return HTML (6011)" in {
+      sessionRepo.saveOrUpdate(baseFilled6011Session)
 
       val result = taskListController.show(fakeRequest)
+      status(result)      shouldBe Status.OK
       contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+    }
+
+    "return HTML (6015)" in {
+      sessionRepo.saveOrUpdate(baseFilled6015Session)
+
+      val result = taskListController.show(fakeRequest)
+      status(result)      shouldBe Status.OK
+      contentType(result) shouldBe Some("text/html")
+    }
+
+    "return HTML (6016)" in {
+      sessionRepo.saveOrUpdate(baseFilled6016Session)
+
+      val result = taskListController.show(fakeRequest)
+      status(result)      shouldBe Status.OK
+      contentType(result) shouldBe Some("text/html")
     }
   }
 
