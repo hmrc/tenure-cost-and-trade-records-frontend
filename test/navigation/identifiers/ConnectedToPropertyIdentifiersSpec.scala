@@ -86,8 +86,12 @@ class ConnectedToPropertyIdentifiersSpec extends TestBaseSpec {
       assert(AreYouThirdPartyPageId.toString.equals("AreYouThirdParty"))
     }
 
-    "Identifier for cya about the property page" in {
+    "Identifier for cya reference number page" in {
       assert(CheckYourAnswersRequestReferenceNumberPageId.toString.equals("CheckYourAnswersRequestReferenceNumberPage"))
+    }
+
+    "Identifier for cya about the property page" in {
+      assert(CheckYourAnswersAboutThePropertyId.toString.equals("CheckYourAnswersAboutThePropertyPage"))
     }
   }
 }
