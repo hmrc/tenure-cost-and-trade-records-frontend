@@ -17,7 +17,7 @@
 package navigation
 
 import connectors.Audit
-import identifiers.{AreYouStillConnectedPageId, AreYouThirdPartyPageId, CheckYourAnswersAboutThePropertyPageId, CheckYourAnswersRequestReferenceNumberPageId, ConnectionToPropertyPageId, EditAddressPageId, Identifier, LettingIncomePageId, NoReferenceNumberContactDetailsPageId, NoReferenceNumberPageId, PropertyBecomeVacantPageId, TradingNameOperatingFromPropertyPageId, TradingNameOwnThePropertyPageId, TradingNamePayingRentPageId, VacantPropertiesPageId}
+import identifiers.{AreYouStillConnectedPageId, AreYouThirdPartyPageId, CheckYourAnswersAboutThePropertyPageId, CheckYourAnswersRequestReferenceNumberPageId, ConnectionToPropertyPageId, DownloadPDFReferenceNumberPageId, EditAddressPageId, Identifier, LettingIncomePageId, NoReferenceNumberContactDetailsPageId, NoReferenceNumberPageId, PropertyBecomeVacantPageId, TradingNameOperatingFromPropertyPageId, TradingNameOwnThePropertyPageId, TradingNamePayingRentPageId, VacantPropertiesPageId}
 import play.api.mvc.Call
 import models.Session
 import play.api.Logging
@@ -76,6 +76,7 @@ class ConnectionToPropertyNavigator @Inject() (audit: Audit) extends Navigator(a
     CheckYourAnswersRequestReferenceNumberPageId -> (_ =>
       controllers.routes.RequestReferenceNumberFormSubmissionController.submit()
     ),
+    DownloadPDFReferenceNumberPageId             -> (_ => controllers.downloadFORTypeForm.routes.DownloadPDFController.show()),
     PropertyBecomeVacantPageId                   -> whenDidThePropertyBecomeVacant,
     LettingIncomePageId                          -> (_ => controllers.connectiontoproperty.routes.VacantPropertiesController.show()),
     TradingNameOperatingFromPropertyPageId       -> (_ =>

@@ -36,6 +36,12 @@ POST        /request-reference-number-contact-details               controllers.
 GET         /check-your-answers-request-reference-number            controllers.requestReferenceNumber.CheckYourAnswersRequestReferenceNumberController.show()
 POST        /check-your-answers-request-reference-number            controllers.requestReferenceNumber.CheckYourAnswersRequestReferenceNumberController.submit()
 
+GET         /download-pdf-reference-number-with-session             controllers.downloadFORTypeForm.DownloadPDFReferenceNumberController.startWithSession()
+GET         /download-pdf-reference-number                          controllers.downloadFORTypeForm.DownloadPDFReferenceNumberController.show()
+POST        /download-pdf-reference-number                          controllers.downloadFORTypeForm.DownloadPDFReferenceNumberController.submit()
+
+GET         /download-pdf                                           controllers.downloadFORTypeForm.DownloadPDFController.show()
+
 # Connection to the property
 GET         /are-you-still-connected                                controllers.connectiontoproperty.AreYouStillConnectedController.show()
 POST        /are-you-still-connected                                controllers.connectiontoproperty.AreYouStillConnectedController.submit()
