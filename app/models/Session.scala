@@ -25,6 +25,7 @@ import models.submissions.aboutthetradinghistory.AboutTheTradingHistory
 import models.submissions.additionalinformation.AdditionalInformation
 import models.submissions.common.Address
 import models.submissions.connectiontoproperty.StillConnectedDetails
+import models.submissions.downloadFORTypeForm.DownloadPDFDetails
 import models.submissions.notconnected.RemoveConnectionDetails
 import models.submissions.requestReferenceNumber.RequestReferenceNumberDetails
 import play.api.libs.json._
@@ -45,7 +46,8 @@ case class Session(
   aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = None,
   saveAsDraftPassword: Option[String] = None,
   lastCYAPageUrl: Option[String] = None,
-  requestReferenceNumberDetails: Option[RequestReferenceNumberDetails] = None
+  requestReferenceNumberDetails: Option[RequestReferenceNumberDetails] = None,
+  downloadPDFDetails: Option[DownloadPDFDetails] = None
   // New session properties must be also added to class `UserData` and method `toUserData`
 ) {
 
@@ -61,7 +63,8 @@ case class Session(
     aboutFranchisesOrLettings,
     aboutLeaseOrAgreementPartOne,
     aboutLeaseOrAgreementPartTwo,
-    requestReferenceNumberDetails
+    requestReferenceNumberDetails,
+    downloadPDFDetails
   )
 
   def toSummary: Summary = Summary(

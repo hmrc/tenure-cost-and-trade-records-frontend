@@ -141,8 +141,8 @@ label.postcode = Postcode
 hint.postcode = For example, AB12 3CD
 error.invalid_refnum = Enter your reference number as it appears on your letter
 error.invalid_postcode_as_on_letter = Enter your postcode as it appears on your letter
-label.noReference = <a href="http://localhost:9526/send-trade-and-cost-information/no-reference-number" class="govuk-link">I do not have my reference</a>
-label.downloadPDF = <a href="#top" class="govuk-link">Download a PDF version</a>
+label.requestReference = I do not have my reference
+label.downloadPDFReferenceNumberLogin = Download a PDF version
 
 #LOGIN- Invalid Form Type
 ##############################
@@ -187,6 +187,18 @@ label.requestReferenceNumberContactDetailsFullName = Full name
 requestReferenceNumberContactDetailsAdditionalInformation.heading = Additional information (optional)
 error.requestReferenceNumberContactDetailsFullName.required = Enter your name
 
+# DOWNLOAD PDF REFERENCE NUMBER
+downloadPDFReferenceNumber.heading = What is your reference number?
+downloadPDFReferenceNumber.p1 = You’ll need the reference number from the letter you received from the VOA
+label.downloadPDFReferenceNumber = Reference number
+error.downloadPDFReferenceNumber.required = You must provide a reference number
+hint.downloadPDFReferenceNumber = For example, 1000001/101
+
+# DOWNLOAD PDF
+downloadPDF.heading = Download a PDF version of this declaration
+downloadPDF.p1 = <a href="https://www.gov.uk/government/publications/vo-6010-request-for-rental-information-public-houses" class="govuk-link" target="_blank">VO6010 request for rental information: public houses (opens in a new tab)</a>
+downloadPDF.p2 = <a href="https://www.gov.uk/government/publications/vo-6010-request-for-rental-information-public-houses" class="govuk-link" target="_blank">VO6011 request for rental information: pubs, licensed restaurants and wine bars (receipts only) (opens in a new tab)</a>
+
 # ARE YOU STILL CONNECTED SECTION
 #################################
 
@@ -213,6 +225,7 @@ hint.ownerTrustee = Select this if you own and occupy the property - you’re co
 error.no.connection.selected = Select your connection to the property
 
 #NAME OF BUSINESS OPERATING FROM THE PROPERTY
+#####################################
 label.tradingNameFromProperty = Trading name
 tradingNameFromProperty.heading = What is the trading name of the business or organisation operating form the property?
 error.tradingNameFromProperty.required = If the trading name is not known, please input unknown
