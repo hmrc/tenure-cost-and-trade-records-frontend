@@ -73,7 +73,10 @@
 
  <h2 class="govuk-heading-m">@{messages("start.subheading4")}</h2>
 
- <p class="govuk-body">@{HtmlContent(messages("start.desc5")).asHtml}</p>
+ <span class="govuk-body">@{HtmlContent(messages("start.desc5")).asHtml}
+  <a class="govuk-body govuk-link" href=@controllers.downloadFORTypeForm.routes.DownloadPDFReferenceNumberController.startWithSession()>@messages("start.desc5a")</a>
+ <span class="govuk-body">@{HtmlContent(messages("start.desc5b")).asHtml}
+ </span>
 
  <h2 class="govuk-heading-m">@{messages("start.subheading5")}</h2>
 
