@@ -17,7 +17,7 @@
 package navigation
 
 import connectors.Audit
-import identifiers.{AreYouStillConnectedPageId, AreYouThirdPartyPageId, CheckYourAnswersAboutThePropertyPageId, CheckYourAnswersRequestReferenceNumberPageId, ConnectionToPropertyPageId, DownloadPDFReferenceNumberPageId, EditAddressPageId, Identifier, LettingIncomePageId, NoReferenceNumberContactDetailsPageId, NoReferenceNumberPageId, PropertyBecomeVacantPageId, TradingNameOperatingFromPropertyPageId, TradingNameOwnThePropertyPageId, TradingNamePayingRentPageId, VacantPropertiesPageId}
+import identifiers.{AreYouStillConnectedPageId, AreYouThirdPartyPageId, CheckYourAnswersAboutThePropertyId, CheckYourAnswersAboutThePropertyPageId, CheckYourAnswersRequestReferenceNumberPageId, ConnectionToPropertyPageId, DownloadPDFReferenceNumberPageId, EditAddressPageId, Identifier, LettingIncomePageId, NoReferenceNumberContactDetailsPageId, NoReferenceNumberPageId, PropertyBecomeVacantPageId, TradingNameOperatingFromPropertyPageId, TradingNameOwnThePropertyPageId, TradingNamePayingRentPageId, VacantPropertiesPageId}
 import play.api.mvc.Call
 import models.Session
 import play.api.Logging
@@ -87,6 +87,6 @@ class ConnectionToPropertyNavigator @Inject() (audit: Audit) extends Navigator(a
     AreYouThirdPartyPageId                       -> (_ =>
       controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToPropertyController.show()
     ),
-    CheckYourAnswersAboutThePropertyPageId       -> (_ => controllers.routes.TaskListController.show())
+    CheckYourAnswersAboutThePropertyId           -> (_ => controllers.routes.TaskListController.show())
   )
 }

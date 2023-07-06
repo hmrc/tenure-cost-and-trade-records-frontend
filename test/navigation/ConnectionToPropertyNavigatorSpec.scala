@@ -17,7 +17,7 @@
 package navigation
 
 import connectors.Audit
-import navigation.identifiers.{AreYouStillConnectedPageId, AreYouThirdPartyPageId, CheckYourAnswersRequestReferenceNumberPageId, ConnectionToPropertyPageId, DownloadPDFReferenceNumberPageId, EditAddressPageId, Identifier, LettingIncomePageId, NoReferenceNumberContactDetailsPageId, NoReferenceNumberPageId, PropertyBecomeVacantPageId, TradingNameOperatingFromPropertyPageId, TradingNameOwnThePropertyPageId, VacantPropertiesPageId}
+import navigation.identifiers.{AreYouStillConnectedPageId, AreYouThirdPartyPageId, CheckYourAnswersAboutThePropertyPageId, CheckYourAnswersRequestReferenceNumberPageId, ConnectionToPropertyPageId, DownloadPDFReferenceNumberPageId, EditAddressPageId, Identifier, LettingIncomePageId, NoReferenceNumberContactDetailsPageId, NoReferenceNumberPageId, PropertyBecomeVacantPageId, TradingNameOperatingFromPropertyPageId, TradingNameOwnThePropertyPageId, VacantPropertiesPageId}
 import org.scalatest.matchers.must.Matchers.convertToAnyMustWrapper
 import play.api.libs.json.JsObject
 import uk.gov.hmrc.http.HeaderCarrier
@@ -160,5 +160,13 @@ class ConnectionToPropertyNavigatorSpec extends TestBaseSpec {
       .apply(
         stillConnectedDetailsYesSession
       ) mustBe controllers.connectiontoproperty.routes.TradingNameOwnThePropertyController.show()
+  }
+
+  "return a function that goes from CYA page to tasklist" in {
+    navigator
+      .nextPage(CheckYourAnswersAboutThePropertyPageId, stillConnectedDetailsYesSession)
+      .apply(
+        stillConnectedDetailsYesSession
+      ) mustBe controllers.routes.LoginController.show()
   }
 }

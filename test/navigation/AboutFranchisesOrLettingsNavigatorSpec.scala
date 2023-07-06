@@ -190,5 +190,13 @@ class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec {
           sessionAboutFranchiseOrLetting6010NoSession
         ) mustBe controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show()
     }
+
+    "return a function that goes to task list page from cya" in {
+      aboutFranchisesOrLettingsNavigator
+        .nextPage(CheckYourAnswersAboutFranchiseOrLettingsId, sessionAboutFranchiseOrLetting6010NoSession)
+        .apply(
+          sessionAboutFranchiseOrLetting6010NoSession
+        ) mustBe controllers.routes.TaskListController.show()
+    }
   }
 }

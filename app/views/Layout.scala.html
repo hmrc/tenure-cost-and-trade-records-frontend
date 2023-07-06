@@ -37,6 +37,7 @@
         hmrcStandardHeader: HmrcStandardHeader,
         headTemplate: head,
         scriptsTemplate: scripts,
+        hmrcScripts: HmrcScripts,
         govukPhaseBanner: GovukPhaseBanner,
         hmrcLanguageSelectHelper: HmrcLanguageSelectHelper,
         govukBackLink: GovukBackLink,
@@ -161,7 +162,7 @@
     headBlock = Some(hmrcHead(headBlock = headTemplate(withTimeoutDialog))),
     headerBlock = Some(headerBlock),
     footerBlock = customFooter,
-    scriptsBlock = Some(scriptsTemplate()),
+    scriptsBlock = Some(hmrcScripts()),
     beforeContentBlock = Option(beforeBLock),
     mainContentLayout = Some(if (fullWidth) fullWidthMainContent(_) else twoThirdsMainContent(_))
 )(contentWithHeading)
