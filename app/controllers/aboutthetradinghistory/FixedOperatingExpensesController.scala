@@ -19,6 +19,7 @@ package controllers.aboutthetradinghistory
 import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.FixedOperatingExpensesForm.fixedOperatingExpensesForm
+import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.{format, updateAboutTheTradingHistory}
 import models.submissions.aboutthetradinghistory.FixedOperatingExpenses
 import navigation.AboutTheTradingHistoryNavigator
 import navigation.identifiers.FixedOperatingExpensesId
@@ -27,7 +28,9 @@ import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import views.html.aboutthetradinghistory.fixedOperatingExpenses
 
+import java.time.LocalDate
 import javax.inject.{Inject, Named, Singleton}
+import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class FixedOperatingExpensesController @Inject() (
@@ -36,30 +39,53 @@ class FixedOperatingExpensesController @Inject() (
   fixedOperatingExpensesView: fixedOperatingExpenses,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FORDataCaptureController(mcc)
+)(implicit ec: ExecutionContext)
+    extends FORDataCaptureController(mcc)
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
-    Ok(
-      fixedOperatingExpensesView(
-        request.sessionData.aboutTheTradingHistory.flatMap(_.fixedOperatingExpenses) match {
-          case Some(fixedOperatingExpenses) => fixedOperatingExpensesForm.fillAndValidate(fixedOperatingExpenses)
-          case _                            => fixedOperatingExpensesForm
-        },
-        request.sessionData.toSummary
-      )
-    )
+    request.sessionData.aboutTheTradingHistory
+      .filter(_.occupationAndAccountingInformation.isDefined)
+      .fold(Redirect(routes.AboutYourTradingHistoryController.show())) { aboutTheTradingHistory =>
+        val numberOfColumns                = aboutTheTradingHistory.turnoverSections.size
+        val financialYears: Seq[LocalDate] = aboutTheTradingHistory.turnoverSections1516.foldLeft(Seq.empty[LocalDate])(
+          (sequence, turnoverSection) => sequence :+ turnoverSection.financialYearEnd
+        )
+        Ok(
+          fixedOperatingExpensesView(
+            fixedOperatingExpensesForm(numberOfColumns)
+              .fillAndValidate(aboutTheTradingHistory.fixedOperatingExpensesSections),
+            numberOfColumns,
+            financialYears,
+            request.sessionData.toSummary
+          )
+        )
+      }
   }
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft[FixedOperatingExpenses](
-      fixedOperatingExpensesForm,
-      formWithErrors => BadRequest(fixedOperatingExpensesView(formWithErrors, request.sessionData.toSummary)),
-      data => {
-        val updatedData = request.sessionData
-        Redirect(navigator.nextPage(FixedOperatingExpensesId, updatedData).apply(updatedData))
+    request.sessionData.aboutTheTradingHistory
+      .filter(_.occupationAndAccountingInformation.isDefined)
+      .fold(Future.successful(Redirect(routes.AboutYourTradingHistoryController.show()))) { aboutTheTradingHistory =>
+        val numberOfColumns                = aboutTheTradingHistory.turnoverSections.size
+        val financialYears: Seq[LocalDate] = aboutTheTradingHistory.turnoverSections1516.foldLeft(Seq.empty[LocalDate])(
+          (sequence, turnoverSection) => sequence :+ turnoverSection.financialYearEnd
+        )
+        continueOrSaveAsDraft[Seq[FixedOperatingExpenses]](
+          fixedOperatingExpensesForm(numberOfColumns),
+          formWithErrors =>
+            BadRequest(
+              fixedOperatingExpensesView(formWithErrors, numberOfColumns, financialYears, request.sessionData.toSummary)
+            ),
+          success => {
+            val updatedData = updateAboutTheTradingHistory(_.copy(fixedOperatingExpensesSections = success))
+            session
+              .saveOrUpdate(updatedData)
+              .map(_ => Redirect(navigator.nextPage(FixedOperatingExpensesId, updatedData).apply(updatedData)))
+          }
+        )
       }
-    )
+
   }
 
 }

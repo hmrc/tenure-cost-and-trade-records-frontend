@@ -17,9 +17,15 @@
 package models.submissions.aboutthetradinghistory
 
 import play.api.libs.json.Json
+import java.time.LocalDate
 
 case class FixedOperatingExpenses(
-  fixedOperatingExpenses: String
+  financialYearEnd: LocalDate,
+  rent: BigDecimal,
+  businessRates: BigDecimal,
+  insurance: BigDecimal,
+  loanInterest: BigDecimal,
+  depreciation: BigDecimal
 )
 
 object FixedOperatingExpenses {

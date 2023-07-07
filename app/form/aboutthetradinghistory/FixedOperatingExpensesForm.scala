@@ -17,14 +17,56 @@
 package form.aboutthetradinghistory
 
 import models.submissions.aboutthetradinghistory.FixedOperatingExpenses
-import play.api.data.Form
-import play.api.data.Forms.{default, mapping, text}
+import play.api.data.{Form, Mapping}
+import play.api.data.Forms.{bigDecimal, default, localDate, mapping, text}
+import play.api.data.validation.{Constraint, Invalid, Valid}
+
+import java.time.LocalDate
 
 object FixedOperatingExpensesForm {
-
-  val fixedOperatingExpensesForm = Form(
-    mapping(
-      "fixedOperatingExpenses" -> default(text, "")
+  def fixedOperatingExpensesForm(expectedNumberOfFinancialYears: Int): Form[Seq[FixedOperatingExpenses]] = {
+    val ukDateMappings                                 = localDate("dd/MM/yyyy")
+    val dateTooEarlyConstraint: Constraint[LocalDate]  = Constraint[LocalDate]("dateTooEarlyConstraint") { date =>
+      if (date.isAfter(LocalDate.of(1900, 1, 1))) Valid else Invalid("errorName")
+    }
+    val columnMapping: Mapping[FixedOperatingExpenses] = mapping(
+      "financial-year-end" -> ukDateMappings.verifying(dateTooEarlyConstraint, dateTooEarlyConstraint),
+      "rent"               -> bigDecimal,
+      "business-rates"     -> bigDecimal,
+      "insurance"          -> bigDecimal,
+      "loan-interest"      -> bigDecimal,
+      "depreciation"       -> bigDecimal
     )(FixedOperatingExpenses.apply)(FixedOperatingExpenses.unapply)
-  )
+
+    Form {
+      expectedNumberOfFinancialYears match {
+        case 1                               =>
+          mapping("0" -> columnMapping)(section => Seq(section)) {
+            case Seq(section) => Some(section)
+            case _            => None
+          }
+        case 2                               =>
+          mapping(
+            "0" -> columnMapping,
+            "1" -> columnMapping
+          ) { case (first, second) => Seq(first, second) } {
+            case Seq(first, second) => Some((first, second))
+            case _                  => None
+          }
+        case 3                               =>
+          mapping(
+            "0" -> columnMapping,
+            "1" -> columnMapping,
+            "2" -> columnMapping
+          ) { case (first, second, third) => Seq(first, second, third) } {
+            case Seq(first, second, third) => Some((first, second, third))
+            case _                         => None
+          }
+        case incorrectNumberOfFinancialYears =>
+          throw new IllegalArgumentException(
+            s"$expectedNumberOfFinancialYears must be between 1 and 3, was: $incorrectNumberOfFinancialYears"
+          )
+      }
+    }
+  }
 }
