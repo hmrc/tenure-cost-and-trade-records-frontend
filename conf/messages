@@ -890,7 +890,14 @@ variableOperatingExpenses.heading = This is a holding page for the variable oper
 
 # FIXED OPERATING EXPENSES (FORM 6015)
 #########
-fixedOperatingExpenses.heading = This is a holding page for the fixed operating expenses page
+fixedOperatingExpenses.heading = Fixed operating expenses
+fixedOperatingExpenses.p1 = Provide details of your fixed operating
+fixedOperatingExpenses.p2 = All fields on this page are mandatory. If none of the categories are applicable, enter the number 0.
+fixedOperatingExpenses.rent = Rent
+fixedOperatingExpenses.businessRates = Business rates
+fixedOperatingExpenses.insurance = Insurance
+fixedOperatingExpenses.loanInterest = Loan interest
+fixedOperatingExpenses.depreciation = Depreciation
 
 # OTHER COSTS (FORM 6015)
 #########

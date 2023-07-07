@@ -15,16 +15,24 @@
  *@
 
 @import models.submissions.aboutthetradinghistory.FixedOperatingExpenses
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
-@import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
+@import uk.gov.hmrc.govukfrontend.views.html.components._
+@import uk.gov.hmrc.govukfrontend.views.Implicits.RichInput
 @import models.pages.Summary
+@import java.time.LocalDate
 
 @this(layout: Layout,
         govukButton: GovukButton,
-        formWithCSRF: FormWithCSRF
+        formWithCSRF: FormWithCSRF,
+        govukInput: GovukInput,
+        govukTable: GovukTable,
+        govukInsetText: GovukInsetText,
+        govukDetails: GovukDetails
 )
 
-@(theForm: Form[FixedOperatingExpenses], summary: Summary)(implicit request: Request[_], messages: Messages)
+
+@(form: Form[Seq[FixedOperatingExpenses]], numOfColumns: Int, financialYears: Seq[LocalDate], summary: Summary)(implicit request: Request[_], messages: Messages)
+
+@columns = @{0 until numOfColumns}
 
 @layout(
   pageHeading = messages("fixedOperatingExpenses.heading"),
@@ -33,7 +41,7 @@
     summary = Some(summary),
   sectionName = messages("label.section.aboutYourTradingHistory"),
   backLinkUrl = controllers.aboutthetradinghistory.routes.VariableOperatingExpensesController.show.url,
-    theForm = theForm
+    theForm = form
 ) {
 
   @formWithCSRF(action = controllers.aboutthetradinghistory.routes.FixedOperatingExpensesController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
@@ -41,7 +49,110 @@
       <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
           <h1 class="govuk-fieldset__heading">@messages("fixedOperatingExpenses.heading")</h1>
       </legend>
-
+      <p class="govuk-body">@messages("fixedOperatingExpenses.p1")</p>
+      @govukInsetText(InsetText(
+          content = Text(messages("fixedOperatingExpenses.p2"))
+      ))
+      @govukTable(Table(
+          rows = Seq(
+              TableRow(
+                  content = Text(messages("turnover.financialYearEnd"))
+              ) +:
+                      columns.map { idx  =>
+                          TableRow(
+                              content = HtmlContent(
+                                  govukInput(Input(
+                                      id = s"$idx.financial-year-end",
+                                      name = s"$idx.financial-year-end",
+                                      value = financialYears(idx).toString
+                                  ).withFormField(form(s"$idx.financial-year-end")))
+                              )
+                          )
+                      },
+              TableRow(
+                  content = Text(messages("fixedOperatingExpenses.rent"))
+              ) +: columns.map { idx  =>
+                  TableRow(
+                      content = HtmlContent(
+                          govukInput(Input(
+                              id = s"$idx.rent",
+                              name = s"$idx.rent",
+                              value = form(s"$idx.rent").value,
+                              prefix = Some(PrefixOrSuffix(
+                                  content = Text("£")
+                              ))
+                          ).withFormField(form(s"$idx.rent")))
+                      )
+                  )
+              },
+              TableRow(
+                 content = Text(messages("fixedOperatingExpenses.businessRates"))
+                      ) +: columns.map { idx  =>
+                  TableRow(
+                      content = HtmlContent(
+                          govukInput(Input(
+                              id = s"$idx.business-rates",
+                              name = s"$idx.business-rates",
+                              value = form(s"$idx.business-rates").value,
+                              prefix = Some(PrefixOrSuffix(
+                                  content = Text("£")
+                              ))
+                          ).withFormField(form(s"$idx.business-rates")))
+                      )
+                  )
+              },
+              TableRow(
+                  content = Text(messages("fixedOperatingExpenses.insurance"))
+              ) +: columns.map { idx  =>
+                  TableRow(
+                      content = HtmlContent(
+                          govukInput(Input(
+                              id = s"$idx.insurance",
+                              name = s"$idx.insurance",
+                              value = form(s"$idx.insurance").value,
+                              prefix = Some(PrefixOrSuffix(
+                                  content = Text("£")
+                              ))
+                          ).withFormField(form(s"$idx.insurance")))
+                      )
+                  )
+              },
+              TableRow(
+                  content = Text(messages("fixedOperatingExpenses.loanInterest"))
+              ) +: columns.map { idx  =>
+                  TableRow(
+                      content = HtmlContent(
+                          govukInput(Input(
+                              id = s"$idx.loan-interest",
+                              name = s"$idx.loan-interest",
+                              value = form(s"$idx.loan-interest").value,
+                              prefix = Some(PrefixOrSuffix(
+                                  content = Text("£")
+                              ))
+                          ).withFormField(form(s"$idx.loan-interest")))
+                      )
+                  )
+              },
+              TableRow(
+                  content = Text(messages("fixedOperatingExpenses.depreciation"))
+              ) +: columns.map { idx  =>
+                  TableRow(
+                      content = HtmlContent(
+                          govukInput(Input(
+                              id = s"$idx.depreciation",
+                              name = s"$idx.depreciation",
+                              value = form(s"$idx.depreciation").value,
+                              prefix = Some(PrefixOrSuffix(
+                                  content = Text("£")
+                              ))
+                          ).withFormField(form(s"$idx.depreciation")))
+                      )
+                  )
+              }
+          ),
+          captionClasses = "govuk-table__caption--m",
+          firstCellIsHeader = false
+      ))
       @includes.continueSaveAsDraftButtons(govukButton)
   }
 }

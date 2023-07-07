@@ -185,7 +185,7 @@
         @includes.taskListItem("fixed-operating-expenses", "taskList.fixedOperatingExpenses",
          controllers.aboutthetradinghistory.routes.FixedOperatingExpensesController.show(),
          section3Completed,
-         session.aboutTheTradingHistory.flatMap(_.fixedOperatingExpenses),
+         session.aboutTheTradingHistory.flatMap(_.fixedOperatingExpensesSections),
          session.aboutTheTradingHistory.flatMap(_.variableOperatingExpenses).isEmpty
         )
 
@@ -193,7 +193,7 @@
          controllers.aboutthetradinghistory.routes.OtherCostsController.show(),
          section3Completed,
          session.aboutTheTradingHistory.flatMap(_.otherCosts),
-         session.aboutTheTradingHistory.flatMap(_.fixedOperatingExpenses).isEmpty
+         session.aboutTheTradingHistory.flatMap(_.fixedOperatingExpensesSections).isEmpty
         )
 
         @includes.taskListItem("net-profit", "taskList.profitSummary",
