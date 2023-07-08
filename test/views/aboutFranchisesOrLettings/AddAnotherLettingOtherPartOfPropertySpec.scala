@@ -16,6 +16,7 @@
 
 package views.aboutFranchisesOrLettings
 
+import actions.SessionRequest
 import form.aboutfranchisesorlettings.AddAnotherCateringOperationOrLettingAccommodationForm
 import models.pages.Summary
 import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
@@ -31,6 +32,8 @@ class AddAnotherLettingOtherPartOfPropertySpec extends QuestionViewBehaviours[An
   override val form: Form[AnswersYesNo] =
     AddAnotherCateringOperationOrLettingAccommodationForm.addAnotherCateringOperationForm
 
+  val sessionRequest = SessionRequest(baseFilled6010Session, fakeRequest)
+
   def createView: () => Html = () =>
     addAnotherOperationConcessionFranchise(
       form,
@@ -38,7 +41,7 @@ class AddAnotherLettingOtherPartOfPropertySpec extends QuestionViewBehaviours[An
       messageKeyPrefix,
       controllers.aboutfranchisesorlettings.routes.CateringOperationRentIncludesController.show(0).url,
       Summary("99996010001")
-    )(fakeRequest, messages)
+    )(sessionRequest, messages)
 
   def createViewUsingForm: Form[AnswersYesNo] => Html = (form: Form[AnswersYesNo]) =>
     addAnotherOperationConcessionFranchise(
@@ -47,7 +50,7 @@ class AddAnotherLettingOtherPartOfPropertySpec extends QuestionViewBehaviours[An
       messageKeyPrefix,
       controllers.aboutfranchisesorlettings.routes.CateringOperationRentIncludesController.show(0).url,
       Summary("99996010001")
-    )(fakeRequest, messages)
+    )(sessionRequest, messages)
 
   "Add another letting part of property view" must {
 
