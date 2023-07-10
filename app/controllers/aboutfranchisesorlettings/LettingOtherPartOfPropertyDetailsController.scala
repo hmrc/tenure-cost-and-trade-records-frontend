@@ -73,11 +73,11 @@ class LettingOtherPartOfPropertyDetailsController @Inject() (
           )
         ),
       data => {
-        val ifFranchisesOrLettingsEmpty                                        = AboutFranchisesOrLettings(lettingSections =
+        val ifFranchisesOrLettingsEmpty                                 = AboutFranchisesOrLettings(lettingSections =
           IndexedSeq(LettingSection(lettingOtherPartOfPropertyInformationDetails = data))
         )
-        val updatedAboutFranchisesOrLettings: (Int, AboutFranchisesOrLettings) =
-          request.sessionData.aboutFranchisesOrLettings.fold(0 -> ifFranchisesOrLettingsEmpty) { franchiseOrLettings =>
+        val updatedAboutFranchisesOrLettings: AboutFranchisesOrLettings =
+          request.sessionData.aboutFranchisesOrLettings.fold(ifFranchisesOrLettingsEmpty) { franchiseOrLettings =>
             val existingSections                                   = franchiseOrLettings.lettingSections
             val requestedSection                                   = index.flatMap(existingSections.lift)
             val updatedSections: (Int, IndexedSeq[LettingSection]) = requestedSection.fold {
@@ -89,14 +89,12 @@ class LettingOtherPartOfPropertyDetailsController @Inject() (
               indexToUpdate -> existingSections
                 .updated(indexToUpdate, sectionToUpdate.copy(lettingOtherPartOfPropertyInformationDetails = data))
             }
-            updatedSections._1 -> franchiseOrLettings.copy(lettingSections = updatedSections._2)
+            franchiseOrLettings
+              .copy(lettingCurrentIndex = updatedSections._1, lettingSections = updatedSections._2)
           }
-        updatedAboutFranchisesOrLettings match {
-          case (currentIndex, aboutFranchisesOrLettings) =>
-            val updatedData = updateAboutFranchisesOrLettings(_ => aboutFranchisesOrLettings)
-            session.saveOrUpdate(updatedData)
-            Redirect(navigator.nextPage(LettingAccommodationDetailsPageId, updatedData).apply(updatedData))
-        }
+        val updatedData                                                 = updateAboutFranchisesOrLettings(_ => updatedAboutFranchisesOrLettings)
+        session.saveOrUpdate(updatedData)
+        Redirect(navigator.nextPage(LettingAccommodationDetailsPageId, updatedData).apply(updatedData))
       }
     )
   }

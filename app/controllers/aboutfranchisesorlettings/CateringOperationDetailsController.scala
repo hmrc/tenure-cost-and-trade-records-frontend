@@ -92,11 +92,11 @@ class CateringOperationDetailsController @Inject() (
           )
         ),
       data => {
-        val ifFranchisesOrLettingsEmpty                                        = AboutFranchisesOrLettings(cateringOperationSections =
+        val ifFranchisesOrLettingsEmpty                                 = AboutFranchisesOrLettings(cateringOperationSections =
           IndexedSeq(CateringOperationSection(cateringOperationDetails = data))
         )
-        val updatedAboutFranchisesOrLettings: (Int, AboutFranchisesOrLettings) =
-          request.sessionData.aboutFranchisesOrLettings.fold(0 -> ifFranchisesOrLettingsEmpty) { franchiseOrLettings =>
+        val updatedAboutFranchisesOrLettings: AboutFranchisesOrLettings =
+          request.sessionData.aboutFranchisesOrLettings.fold(ifFranchisesOrLettingsEmpty) { franchiseOrLettings =>
             val existingSections                                             = franchiseOrLettings.cateringOperationSections
             val requestedSection                                             = index.flatMap(existingSections.lift)
             val updatedSections: (Int, IndexedSeq[CateringOperationSection]) =
@@ -111,15 +111,13 @@ class CateringOperationDetailsController @Inject() (
                   sectionToUpdate.copy(cateringOperationDetails = data)
                 )
               }
-            updatedSections._1 -> franchiseOrLettings
-              .copy(cateringOperationSections = updatedSections._2)
+            franchiseOrLettings
+              .copy(cateringOperationCurrentIndex = updatedSections._1, cateringOperationSections = updatedSections._2)
           }
-        updatedAboutFranchisesOrLettings match {
-          case (currentIndex, aboutFranchisesOrLettings) =>
-            val updatedData = updateAboutFranchisesOrLettings(_ => aboutFranchisesOrLettings)
-            session.saveOrUpdate(updatedData)
-            Redirect(navigator.nextPage(CateringOperationDetailsPageId, updatedData).apply(updatedData))
-        }
+
+        val updatedData = updateAboutFranchisesOrLettings(_ => updatedAboutFranchisesOrLettings)
+        session.saveOrUpdate(updatedData)
+        Redirect(navigator.nextPage(CateringOperationDetailsPageId, updatedData).apply(updatedData))
       }
     )
   }
