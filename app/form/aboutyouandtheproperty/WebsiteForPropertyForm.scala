@@ -26,7 +26,7 @@ import uk.gov.voa.play.form.ConditionalMappings.mandatoryIfEqual
 object WebsiteForPropertyForm {
 
   val webaddressRegex =
-    """(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})"""
+    """(?:\w+\.)*\w+\.com"""
 
   val websiteForPropertyForm = Form(
     mapping(
