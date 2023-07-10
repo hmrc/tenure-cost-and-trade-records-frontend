@@ -73,10 +73,10 @@ class LettingOtherPartOfPropertyDetailsController @Inject() (
           )
         ),
       data => {
-        val ifFranchisesOrLettingsEmpty                                 = AboutFranchisesOrLettings(lettingSections =
+        val ifFranchisesOrLettingsEmpty      = AboutFranchisesOrLettings(lettingSections =
           IndexedSeq(LettingSection(lettingOtherPartOfPropertyInformationDetails = data))
         )
-        val updatedAboutFranchisesOrLettings: AboutFranchisesOrLettings =
+        val updatedAboutFranchisesOrLettings =
           request.sessionData.aboutFranchisesOrLettings.fold(ifFranchisesOrLettingsEmpty) { franchiseOrLettings =>
             val existingSections                                   = franchiseOrLettings.lettingSections
             val requestedSection                                   = index.flatMap(existingSections.lift)
@@ -92,7 +92,7 @@ class LettingOtherPartOfPropertyDetailsController @Inject() (
             franchiseOrLettings
               .copy(lettingCurrentIndex = updatedSections._1, lettingSections = updatedSections._2)
           }
-        val updatedData                                                 = updateAboutFranchisesOrLettings(_ => updatedAboutFranchisesOrLettings)
+        val updatedData                      = updateAboutFranchisesOrLettings(_ => updatedAboutFranchisesOrLettings)
         session.saveOrUpdate(updatedData)
         Redirect(navigator.nextPage(LettingAccommodationDetailsPageId, updatedData).apply(updatedData))
       }

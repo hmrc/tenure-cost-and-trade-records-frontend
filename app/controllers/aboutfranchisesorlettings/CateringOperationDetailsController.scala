@@ -92,10 +92,10 @@ class CateringOperationDetailsController @Inject() (
           )
         ),
       data => {
-        val ifFranchisesOrLettingsEmpty                                 = AboutFranchisesOrLettings(cateringOperationSections =
+        val ifFranchisesOrLettingsEmpty      = AboutFranchisesOrLettings(cateringOperationSections =
           IndexedSeq(CateringOperationSection(cateringOperationDetails = data))
         )
-        val updatedAboutFranchisesOrLettings: AboutFranchisesOrLettings =
+        val updatedAboutFranchisesOrLettings =
           request.sessionData.aboutFranchisesOrLettings.fold(ifFranchisesOrLettingsEmpty) { franchiseOrLettings =>
             val existingSections                                             = franchiseOrLettings.cateringOperationSections
             val requestedSection                                             = index.flatMap(existingSections.lift)
