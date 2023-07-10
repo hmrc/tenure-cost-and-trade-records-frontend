@@ -41,7 +41,7 @@ class RequestReferenceNumberFormSubmissionController @Inject() (
     extends FrontendController(mcc)
     with I18nSupport {
 
-  lazy val confirmationUrl = controllers.routes.FormSubmissionController.confirmation().url
+  lazy val confirmationUrl = controllers.routes.RequestReferenceNumberFormSubmissionController.confirmation().url
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     submit(request.sessionData.referenceNumber)
@@ -50,14 +50,14 @@ class RequestReferenceNumberFormSubmissionController @Inject() (
   private def submit[T](refNum: String)(implicit request: SessionRequest[T]): Future[Result] = {
     val hc = HeaderCarrierConverter.fromRequestAndSession(request, request.session)
     for {
-      _ <- submitNotConnectedInformation(refNum)(hc, request)
+      _ <- submitRequestReferenceNumberInformation(refNum)(hc, request)
     } yield Found(confirmationUrl)
   }
 
-  def submitNotConnectedInformation(
+  def submitRequestReferenceNumberInformation(
     refNum: String
   )(implicit hc: HeaderCarrier, request: SessionRequest[_]): Future[Unit] = {
-    val auditType      = "requestReferenceNumber"
+    val auditType = "requestReferenceNumber"
     // Dummy data from session to able creation of audit dashboards
     val submissionJson = Json.toJson(request.sessionData).as[JsObject]
 
