@@ -26,7 +26,7 @@ import views.behaviours.QuestionViewBehaviours
 
 class DownloadPDFViewSpec extends QuestionViewBehaviours[DownloadPDF] {
 
-  val messageKeyPrefix = "downloadPDF"
+  val messageKeyPrefix = "downloadPdf"
 
   override val form = DownloadPDFForm.downloadPDFForm
 

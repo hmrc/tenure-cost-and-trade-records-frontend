@@ -57,7 +57,7 @@ class RequestReferenceNumberFormSubmissionController @Inject() (
   def submitRequestReferenceNumberInformation(
     refNum: String
   )(implicit hc: HeaderCarrier, request: SessionRequest[_]): Future[Unit] = {
-    val auditType = "requestReferenceNumber"
+    val auditType      = "requestReferenceNumber"
     // Dummy data from session to able creation of audit dashboards
     val submissionJson = Json.toJson(request.sessionData).as[JsObject]
 
