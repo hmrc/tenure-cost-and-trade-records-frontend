@@ -76,19 +76,39 @@ class AddAnotherLettingOtherPartOfPropertyController @Inject() (
           )
         ),
       data =>
-        request.sessionData.aboutFranchisesOrLettings.fold(
-          Redirect(routes.LettingOtherPartOfPropertyRentIncludesController.show(index))
-        ) { aboutFranchisesOrLettings =>
-          val existingSections = aboutFranchisesOrLettings.lettingSections
-          val updatedSections  = existingSections.updated(
-            index,
-            existingSections(index).copy(addAnotherLettingToProperty = Some(data))
-          )
-          val updatedData      = updateAboutFranchisesOrLettings(_.copy(lettingSections = updatedSections))
-          session.saveOrUpdate(updatedData)
-          Redirect(navigator.nextPage(AddAnotherLettingAccommodationPageId, updatedData).apply(updatedData))
-        }
+        request.sessionData.aboutFranchisesOrLettings
+          .map(_.lettingSections)
+          .filter(_.nonEmpty)
+          .fold(
+            Redirect(
+              if (data.name == "yes") {
+                routes.LettingOtherPartOfPropertyDetailsController.show()
+              } else {
+                routes.CheckYourAnswersAboutFranchiseOrLettingsController.show()
+              }
+            )
+          ) { existingSections =>
+            val updatedSections = existingSections.updated(
+              index,
+              existingSections(index).copy(addAnotherLettingToProperty = Some(data))
+            )
+            val updatedData     = updateAboutFranchisesOrLettings(_.copy(lettingSections = updatedSections))
+            session.saveOrUpdate(updatedData)
+            Redirect(navigator.nextPage(AddAnotherLettingAccommodationPageId, updatedData).apply(updatedData))
+          }
     )
+  }
+
+  def remove(idx: Int) = (Action andThen withSessionRefiner).async { implicit request =>
+    request.sessionData.aboutFranchisesOrLettings.map(_.lettingSections).map { lettingSections =>
+      val updatedSections = lettingSections.patch(idx, Nil, 1)
+      session.saveOrUpdate(
+        updateAboutFranchisesOrLettings(
+          _.copy(lettingCurrentIndex = 0, lettingSections = updatedSections)
+        )
+      )
+    }
+    Redirect(routes.AddAnotherLettingOtherPartOfPropertyController.show(0))
   }
 
 }

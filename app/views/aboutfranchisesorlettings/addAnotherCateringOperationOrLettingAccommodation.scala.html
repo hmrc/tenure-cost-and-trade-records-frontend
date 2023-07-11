@@ -93,7 +93,11 @@
           },
           content = Text("Change")),
          ActionItem(
-          href = "",
+          href = if (isLettingOtherPartOfProperty) {
+           controllers.aboutfranchisesorlettings.routes.AddAnotherLettingOtherPartOfPropertyController.remove(idx).url
+          } else {
+           controllers.aboutfranchisesorlettings.routes.AddAnotherCateringOperationController.remove(idx).url
+          },
           content = Text("Remove"))
         ),
         classes = "hmrc-summary-list__actions"

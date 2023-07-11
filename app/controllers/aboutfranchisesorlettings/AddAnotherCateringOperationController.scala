@@ -74,19 +74,39 @@ class AddAnotherCateringOperationController @Inject() (
           )
         ),
       data =>
-        request.sessionData.aboutFranchisesOrLettings.fold(
-          Redirect(routes.CateringOperationRentIncludesController.show(index))
-        ) { aboutFranchisesOrLettings =>
-          val existingSections = aboutFranchisesOrLettings.cateringOperationSections
-          val updatedSections  = existingSections.updated(
-            index,
-            existingSections(index).copy(addAnotherOperationToProperty = Some(data))
-          )
-          val updatedData      = updateAboutFranchisesOrLettings(_.copy(cateringOperationSections = updatedSections))
-          session.saveOrUpdate(updatedData)
-          Redirect(navigator.nextPage(AddAnotherCateringOperationPageId, updatedData).apply(updatedData))
-        }
+        request.sessionData.aboutFranchisesOrLettings
+          .map(_.cateringOperationSections)
+          .filter(_.nonEmpty)
+          .fold(
+            Redirect(
+              if (data.name == "yes") {
+                routes.CateringOperationDetailsController.show()
+              } else {
+                routes.LettingOtherPartOfPropertyController.show()
+              }
+            )
+          ) { existingSections =>
+            val updatedSections = existingSections.updated(
+              index,
+              existingSections(index).copy(addAnotherOperationToProperty = Some(data))
+            )
+            val updatedData     = updateAboutFranchisesOrLettings(_.copy(cateringOperationSections = updatedSections))
+            session.saveOrUpdate(updatedData)
+            Redirect(navigator.nextPage(AddAnotherCateringOperationPageId, updatedData).apply(updatedData))
+          }
     )
+  }
+
+  def remove(idx: Int) = (Action andThen withSessionRefiner).async { implicit request =>
+    request.sessionData.aboutFranchisesOrLettings.map(_.cateringOperationSections).map { cateringOperationSections =>
+      val updatedSections = cateringOperationSections.patch(idx, Nil, 1)
+      session.saveOrUpdate(
+        updateAboutFranchisesOrLettings(
+          _.copy(cateringOperationCurrentIndex = 0, cateringOperationSections = updatedSections)
+        )
+      )
+    }
+    Redirect(routes.AddAnotherCateringOperationController.show(0))
   }
 
 }
