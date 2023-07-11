@@ -29,7 +29,7 @@
 @(theForm: Form[DownloadPDFReferenceNumber])(implicit request: Request[_], messages: Messages)
 
 @layout(
-  pageHeading = messages("downloadPDFReferenceNumber.heading"),
+  pageHeading = messages("downloadPdfReferenceNumber.heading"),
   showH1 = true,
   backLinkUrl = controllers.routes.LoginController.show().url,
   theForm = theForm
@@ -37,9 +37,9 @@
 
   @formWithCSRF(action = controllers.downloadFORTypeForm.routes.DownloadPDFReferenceNumberController.submit()) {
 
-      <p class="govuk-body">@{messages("downloadPDFReferenceNumber.p1")}</p>
+      <p class="govuk-body">@{messages("downloadPdfReferenceNumber.p1")}</p>
 
-      @includes.textInput(govukInput, theForm, "downloadPDFReferenceNumber", "govuk-input--width-20", "downloadPDFReferenceNumber", hintMsg = "downloadPDFReferenceNumber")
+      @includes.textInput(govukInput, theForm, "downloadPdfReferenceNumber", "govuk-input--width-20", "downloadPdfReferenceNumber", hintMsg = "downloadPdfReferenceNumber")
 
       <p class="govuk-body">
           <a class="govuk-link" href=@controllers.requestReferenceNumber.routes.RequestReferenceNumberController.startWithSession()>@messages("label.requestReference")</a>

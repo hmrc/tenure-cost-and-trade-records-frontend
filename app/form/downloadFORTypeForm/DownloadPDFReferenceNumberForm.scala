@@ -25,9 +25,9 @@ object DownloadPDFReferenceNumberForm {
 
   val downloadPDFReferenceNumberForm = Form(
     mapping(
-      "downloadPDFReferenceNumber" ->
+      "downloadPdfReferenceNumber" ->
         default(text, "").verifying(
-          nonEmpty(errorMessage = "error.downloadPDFReferenceNumber.required")
+          nonEmpty(errorMessage = "error.downloadPdfReferenceNumber.required")
         )
     )(DownloadPDFReferenceNumber.apply)(
       DownloadPDFReferenceNumber.unapply
