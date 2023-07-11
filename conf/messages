@@ -121,7 +121,7 @@ start.desc4 = You do not have to complete the form in one go. You can save what 
 start.subheading3 = If you need help
 start.telephone = Telephone: 03000 501 262
 start.openingDays = Open weekdays, 9:00am to 4:30pm
-start.email = Email: <a href="mailto:formhelp@voa.gov.uk?subject=Ex-owners/occupiers form&body=Please email us your reference number, email address and/or telephone number only. If we require any further information we will contact you in due course. " target="_blank" id="mailto" onclick="gasend()">formhelp@voa.gov.uk</a>
+start.email = Email: <a href="mailto:formhelp@voa.gov.uk?subject=Ex-owners/occupiers form&body=Please%20email%20us%20your%20reference%20number,%20email%20address%20and/or%20telephone%20number%20only.%20If%20we%20require%20any%20further%20information%20we%20will%20contact%20you%20in%20due%20course." target="_blank" id="mailto" onclick="gasend()">formhelp@voa.gov.uk</a>
 start.subheading4 = Alternative formats
 start.desc5 = If you would like information in an alternative format such as large print, braille, or something else, let us know by contacting us at 03000 501 501 (text relay prefix 18001). You can also <a href=#top class="govuk-link" target="_blank">download a PDF version</a> of this declaration which you can complete and return to the VOA.
 start.subheading5 = Explore the topic
