@@ -31,7 +31,6 @@
 
 @layout(
   pageHeading = messages("vacantProperties.heading"),
-  showH1 = false,
   showSection = true,
     summary = Some(summary),
   sectionName = messages("label.section.connectionToTheProperty"),
@@ -40,10 +39,6 @@
 ) {
 
   @formWithCSRF(action = controllers.connectiontoproperty.routes.VacantPropertiesController.submit(), args = Symbol("class") -> "myForm", Symbol("id") -> "myFormId") {
-
-      <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-          <h1 class="govuk-fieldset__heading">@messages("vacantProperties.heading")</h1>
-      </legend>
 
       <p class="govuk-body">@{messages("vacantProperties.p1")}</p>
 
