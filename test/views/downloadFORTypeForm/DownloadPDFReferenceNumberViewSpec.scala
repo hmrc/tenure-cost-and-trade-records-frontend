@@ -24,7 +24,7 @@ import views.behaviours.QuestionViewBehaviours
 
 class DownloadPDFReferenceNumberViewSpec extends QuestionViewBehaviours[DownloadPDFReferenceNumber] {
 
-  val messageKeyPrefix = "downloadPDFReferenceNumber"
+  val messageKeyPrefix = "downloadPdfReferenceNumber"
 
   override val form = DownloadPDFReferenceNumberForm.downloadPDFReferenceNumberForm
 
@@ -39,7 +39,7 @@ class DownloadPDFReferenceNumberViewSpec extends QuestionViewBehaviours[Download
 
     behave like pageWithTextFields(
       createViewUsingForm,
-      "downloadPDFReferenceNumber"
+      "downloadPdfReferenceNumber"
     )
 
     "has a link marked with back.link.label leading to the Login Page" in {
@@ -50,9 +50,9 @@ class DownloadPDFReferenceNumberViewSpec extends QuestionViewBehaviours[Download
       backlinkUrl mustBe controllers.routes.LoginController.show().url
     }
 
-    "contain an input for downloadPDFReferenceNumber" in {
+    "contain an input for downloadPdfReferenceNumber" in {
       val doc = asDocument(createViewUsingForm(form))
-      assertRenderedById(doc, "downloadPDFReferenceNumber")
+      assertRenderedById(doc, "downloadPdfReferenceNumber")
     }
 
     "contain save and continue button with the value Save and Continue" in {

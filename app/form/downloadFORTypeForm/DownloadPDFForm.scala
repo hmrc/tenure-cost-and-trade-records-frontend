@@ -25,9 +25,9 @@ object DownloadPDFForm {
 
   val downloadPDFForm = Form(
     mapping(
-      "downloadPDF" ->
+      "downloadPdf" ->
         default(text, "").verifying(
-          nonEmpty(errorMessage = "error.downloadPDF.required")
+          nonEmpty(errorMessage = "error.downloadPdf.required")
         )
     )(DownloadPDF.apply)(
       DownloadPDF.unapply
