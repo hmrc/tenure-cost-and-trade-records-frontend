@@ -14,6 +14,7 @@
  * limitations under the License.
  *@
 
+@import actions.SessionRequest
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
@@ -38,10 +39,36 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[_], index: Int, cateringOrLetting: String, backLink: String, summary: Summary)(implicit request: Request[_], messages: Messages)
+@(theForm: Form[_], index: Int, cateringOrLetting: String, backLink: String, summary: Summary)(implicit request: SessionRequest[_], messages: Messages)
+
+@session = @{ request.sessionData }
+
+@forType = @{ session.forType }
+
+@isLettingOtherPartOfProperty = @{ cateringOrLetting.equals("addAnotherLettingOtherPartOfProperty") }
+
+@formAction = @{
+ if (isLettingOtherPartOfProperty) {
+  controllers.aboutfranchisesorlettings.routes.AddAnotherLettingOtherPartOfPropertyController.submit(index)
+ } else {
+  controllers.aboutfranchisesorlettings.routes.AddAnotherCateringOperationController.submit(index)
+ }
+}
+
+@operatorNames = @{
+ session.aboutFranchisesOrLettings.fold(Seq.empty[String]){
+  fr => if (isLettingOtherPartOfProperty) {
+   fr.lettingSections.map(_.lettingOtherPartOfPropertyInformationDetails.operatorName)
+  } else {
+   fr.cateringOperationSections.map(_.cateringOperationDetails.operatorName)
+  }
+ }
+}
+
+@pluralSuffix = @{ if (operatorNames.size > 1) "s" else "" }
 
 @layout(
- pageHeading = messages(s"${cateringOrLetting}.heading", 1),
+ pageHeading = messages(s"${cateringOrLetting}.heading", operatorNames.size) + pluralSuffix,
  showSection = true,
  summary = Some(summary),
  sectionName = messages("label.section.aboutTheFranchiseLettings"),
@@ -49,36 +76,34 @@
  theForm = theForm
 ) {
 
- @formWithCSRF(action = {
-  if(cateringOrLetting.equals("addAnotherCateringOperationOrLettingAccommodations"))
-   controllers.aboutfranchisesorlettings.routes.AddAnotherCateringOperationController.submit(index)
-  else if(cateringOrLetting.equals("addAnotherLettingOtherPartOfProperty"))
-   controllers.aboutfranchisesorlettings.routes.AddAnotherLettingOtherPartOfPropertyController.submit(index)
-  else controllers.routes.TaskListController.show()},
-  args = Symbol("class") -> "myForm", Symbol("id") -> "myFormId") {
+ @formWithCSRF(action = formAction) {
 
   @govukSummaryList(
     SummaryList(
-     rows = Seq(
+     rows = operatorNames.zipWithIndex.map { case (operatorName, idx) =>
       SummaryListRow(
-       key = Key(Text("Wombles Inc"), classes = "govuk-!-font-weight-regular"),
+       key = Key(Text(operatorName), classes = "govuk-!-font-weight-regular"),
        actions = Actions(
         items = Seq(
-          ActionItem(
-            href = {if (cateringOrLetting.equals("addAnotherCateringOperationOrLettingAccommodation"))
-              controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController.show().url
-            else if (cateringOrLetting.equals("addAnotherLettingOtherPartOfProperty"))
-              controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsController.show().url
-             else controllers.routes.TaskListController.show().url},
-            content = Text("Change")),
-          ActionItem(
-            href = "",
-            content = Text("Remove"))
+         ActionItem(
+          href = if (isLettingOtherPartOfProperty) {
+           controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsController.show(idx).url
+          } else {
+           controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController.show(idx).url
+          },
+          content = Text("Change")),
+         ActionItem(
+          href = if (isLettingOtherPartOfProperty) {
+           controllers.aboutfranchisesorlettings.routes.AddAnotherLettingOtherPartOfPropertyController.remove(idx).url
+          } else {
+           controllers.aboutfranchisesorlettings.routes.AddAnotherCateringOperationController.remove(idx).url
+          },
+          content = Text("Remove"))
         ),
         classes = "hmrc-summary-list__actions"
        )
       )
-     ),
+     },
      classes = "hmrc-list-with-actions hmrc-list-with-actions--short"
     )
   )
@@ -113,5 +138,5 @@
 
   @includes.continueSaveAsDraftButtons(govukButton)
  }
-}
 
+}

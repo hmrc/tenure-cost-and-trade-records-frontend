@@ -64,7 +64,7 @@ class AddAnotherLettingOtherPartOfPropertyControllerSpec extends TestBaseSpec {
       val formData = baseFormData - errorKey.addAnotherLettingOtherPartOfProperty
       val form     = addAnotherLettingForm.bind(formData)
 
-      mustContainError(errorKey.addAnotherLettingOtherPartOfProperty, Errors.booleanMissing, form)
+      mustContainError(errorKey.addAnotherLettingOtherPartOfProperty, "error.addAnotherLetting.required", form)
     }
   }
 

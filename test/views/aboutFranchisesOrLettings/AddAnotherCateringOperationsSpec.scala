@@ -16,6 +16,7 @@
 
 package views.aboutFranchisesOrLettings
 
+import actions.SessionRequest
 import form.aboutfranchisesorlettings.AddAnotherCateringOperationOrLettingAccommodationForm
 import models.pages.Summary
 import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
@@ -31,6 +32,8 @@ class AddAnotherCateringOperationsSpec extends QuestionViewBehaviours[AnswersYes
   override val form: Form[AnswersYesNo] =
     AddAnotherCateringOperationOrLettingAccommodationForm.addAnotherCateringOperationForm
 
+  val sessionRequest = SessionRequest(baseFilled6010Session, fakeRequest)
+
   def createView: () => Html = () =>
     addAnotherOperationConcessionFranchise(
       form,
@@ -38,7 +41,7 @@ class AddAnotherCateringOperationsSpec extends QuestionViewBehaviours[AnswersYes
       messageKeyPrefix,
       controllers.aboutfranchisesorlettings.routes.CateringOperationRentIncludesController.show(0).url,
       Summary("99996010001")
-    )(fakeRequest, messages)
+    )(sessionRequest, messages)
 
   def createViewUsingForm: Form[AnswersYesNo] => Html = (form: Form[AnswersYesNo]) =>
     addAnotherOperationConcessionFranchise(
@@ -47,11 +50,11 @@ class AddAnotherCateringOperationsSpec extends QuestionViewBehaviours[AnswersYes
       messageKeyPrefix,
       controllers.aboutfranchisesorlettings.routes.CateringOperationRentIncludesController.show(0).url,
       Summary("99996010001")
-    )(fakeRequest, messages)
+    )(sessionRequest, messages)
 
   "Add another catering operation view" must {
 
-    behave like normalPageWithMessageExtra(createView, messageKeyPrefix, "1")
+    behave like normalPageWithMessageExtra(createView, messageKeyPrefix, "0")
 
     "has a link marked with back.link.label leading to the franchise or letting tied to property Page" in {
       val doc          = asDocument(createView())

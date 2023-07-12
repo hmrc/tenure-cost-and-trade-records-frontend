@@ -684,6 +684,8 @@ addAnotherCateringOperationOrLettingAccommodations.heading = You have added {0} 
 addAnotherLettingOtherPartOfProperty.heading = You have added {0} letting
 label.addAnotherCateringOperationOrLettingAccommodations = Do you need to add another separate business or franchise?
 label.addAnotherLettingOtherPartOfProperty = Do you need to add another letting?
+error.addAnotherSeparateBusinessOrFranchise.required = Select whether you need to add another separate business or franchise
+error.addAnotherLetting.required = Select whether you need to add another letting
 
 # TENANTS ADDITIONS DISREGARDED
 ###############################

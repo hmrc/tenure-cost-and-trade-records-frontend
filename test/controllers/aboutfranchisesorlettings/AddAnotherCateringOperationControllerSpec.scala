@@ -64,7 +64,11 @@ class AddAnotherCateringOperationControllerSpec extends TestBaseSpec {
       val formData = baseFormData - errorKey.addAnotherCateringOperationOrLettingAccommodation
       val form     = addAnotherCateringOperationForm.bind(formData)
 
-      mustContainError(errorKey.addAnotherCateringOperationOrLettingAccommodation, Errors.booleanMissing, form)
+      mustContainError(
+        errorKey.addAnotherCateringOperationOrLettingAccommodation,
+        "error.addAnotherSeparateBusinessOrFranchise.required",
+        form
+      )
     }
   }
 

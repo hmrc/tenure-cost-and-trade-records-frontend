@@ -169,6 +169,7 @@ POST        /catering-operation-rent-includes                       controllers.
 
 GET         /add-another-catering-operation                         controllers.aboutfranchisesorlettings.AddAnotherCateringOperationController.show(idx: Int)
 POST        /add-another-catering-operation                         controllers.aboutfranchisesorlettings.AddAnotherCateringOperationController.submit(idx: Int)
+GET         /remove-catering-operation                              controllers.aboutfranchisesorlettings.AddAnotherCateringOperationController.remove(idx: Int)
 
 GET         /letting-other-part-of-property-details                 controllers.aboutfranchisesorlettings.LettingOtherPartOfPropertyDetailsController.show(idx: Option[Int] ?= None)
 POST        /letting-other-part-of-property-details                 controllers.aboutfranchisesorlettings.LettingOtherPartOfPropertyDetailsController.submit(idx: Option[Int])
@@ -181,6 +182,7 @@ POST        /letting-other-part-of-property-checkbox                controllers.
 
 GET         /add-another-letting-other-part-of-property             controllers.aboutfranchisesorlettings.AddAnotherLettingOtherPartOfPropertyController.show(idx: Int)
 POST        /add-another-letting-other-part-of-property             controllers.aboutfranchisesorlettings.AddAnotherLettingOtherPartOfPropertyController.submit(idx: Int)
+GET         /remove-letting-other-part-of-property                  controllers.aboutfranchisesorlettings.AddAnotherLettingOtherPartOfPropertyController.remove(idx: Int)
 
 # About your leace or tenure
 GET         /about-your-landlord                                    controllers.aboutYourLeaseOrTenure.AboutYourLandlordController.show()
