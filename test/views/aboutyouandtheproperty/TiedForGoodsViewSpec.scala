@@ -55,6 +55,23 @@ class TiedForGoodsViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
       assert(sectionText == messages("label.section.aboutTheProperty"))
     }
 
+    "contain explanation section" in {
+      val doc = asDocument(createView())
+      assert(doc.toString.contains(messages("tiedForGoods.para1")))
+      assert(doc.toString.contains(messages("tiedForGoods.para2")))
+      assert(doc.toString.contains(messages("tiedForGoods.heading1")))
+      assert(doc.toString.contains(messages("tiedForGoods.p1")))
+      assert(doc.toString.contains(messages("tiedForGoods.heading2")))
+      assert(doc.toString.contains(messages("tiedForGoods.p2")))
+      assert(doc.toString.contains(messages("tiedForGoods.heading3")))
+      assert(doc.toString.contains(messages("tiedForGoods.p3")))
+    }
+
+    "contain label question" in {
+      val doc = asDocument(createView())
+      assert(doc.toString.contains(messages("tiedForGoods.label")))
+    }
+
     "contain radio buttons for the value yes" in {
       val doc = asDocument(createViewUsingForm(form))
       assertContainsRadioButton(
@@ -89,17 +106,6 @@ class TiedForGoodsViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
       val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("save").text()
       assert(loginButton == messages("button.label.save"))
-    }
-
-    "contain get help section" in {
-      val doc = asDocument(createView())
-      assert(doc.toString.contains(messages("help.tiedForGoods.title")))
-      assert(doc.toString.contains(messages("help.tiedForGoods.heading1")))
-      assert(doc.toString.contains(messages("help.tiedForGoods.p1")))
-      assert(doc.toString.contains(messages("help.tiedForGoods.heading2")))
-      assert(doc.toString.contains(messages("help.tiedForGoods.p2")))
-      assert(doc.toString.contains(messages("help.tiedForGoods.heading3")))
-      assert(doc.toString.contains(messages("help.tiedForGoods.p3")))
     }
   }
 }
