@@ -93,5 +93,9 @@ class ConnectedToPropertyIdentifiersSpec extends TestBaseSpec {
     "Identifier for cya about the property page" in {
       assert(CheckYourAnswersAboutThePropertyId.toString.equals("CheckYourAnswersAboutThePropertyPage"))
     }
+
+    "Identifier for cya connection to property page" in {
+      assert(CheckYourAnswersConnectionToPropertyId.toString.equals("CheckYourAnswersConnectionToPropertyPage"))
+    }
   }
 }

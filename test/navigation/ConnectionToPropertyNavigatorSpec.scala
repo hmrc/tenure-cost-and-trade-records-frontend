@@ -17,7 +17,7 @@
 package navigation
 
 import connectors.Audit
-import navigation.identifiers.{AreYouStillConnectedPageId, AreYouThirdPartyPageId, CheckYourAnswersAboutThePropertyPageId, CheckYourAnswersRequestReferenceNumberPageId, ConnectionToPropertyPageId, DownloadPDFReferenceNumberPageId, EditAddressPageId, Identifier, LettingIncomePageId, NoReferenceNumberContactDetailsPageId, NoReferenceNumberPageId, PropertyBecomeVacantPageId, TradingNameOperatingFromPropertyPageId, TradingNameOwnThePropertyPageId, VacantPropertiesPageId}
+import navigation.identifiers.{AreYouStillConnectedPageId, AreYouThirdPartyPageId, CheckYourAnswersAboutThePropertyPageId, CheckYourAnswersConnectionToPropertyId, CheckYourAnswersRequestReferenceNumberPageId, ConnectionToPropertyPageId, DownloadPDFReferenceNumberPageId, EditAddressPageId, Identifier, LettingIncomePageId, NoReferenceNumberContactDetailsPageId, NoReferenceNumberPageId, PropertyBecomeVacantPageId, TradingNameOperatingFromPropertyPageId, TradingNameOwnThePropertyPageId, VacantPropertiesPageId}
 import org.scalatest.matchers.must.Matchers.convertToAnyMustWrapper
 import play.api.libs.json.JsObject
 import uk.gov.hmrc.http.HeaderCarrier
@@ -168,5 +168,13 @@ class ConnectionToPropertyNavigatorSpec extends TestBaseSpec {
       .apply(
         stillConnectedDetailsYesSession
       ) mustBe controllers.routes.LoginController.show()
+  }
+
+  "return a function that goes from check your answers connection to property page to task list page" in {
+    navigator
+      .nextPage(CheckYourAnswersConnectionToPropertyId, stillConnectedDetailsYesToAllSession)
+      .apply(
+        stillConnectedDetailsYesToAllSession
+      ) mustBe controllers.routes.TaskListController.show()
   }
 }
