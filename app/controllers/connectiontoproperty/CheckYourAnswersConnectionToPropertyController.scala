@@ -21,9 +21,9 @@ import controllers.FORDataCaptureController
 import form.connectiontoproperty.CheckYourAnswersConnectionToPropertyForm.checkYourAnswersConnectionToPropertyForm
 import models.submissions.connectiontoproperty.StillConnectedDetails.updateStillConnectedDetails
 import models.submissions.connectiontoproperty.CheckYourAnswersConnectionToProperty
-import models.{ForTypes, Session}
+import models.Session
 import navigation.ConnectionToPropertyNavigator
-import navigation.identifiers.CheckYourAnswersAboutThePropertyPageId
+import navigation.identifiers.CheckYourAnswersConnectionToPropertyId
 import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
@@ -77,7 +77,7 @@ class CheckYourAnswersConnectionToPropertyController @Inject() (
             Some(controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToPropertyController.show().url)
           )
         session.saveOrUpdate(updatedData)
-        Redirect(navigator.nextPage(CheckYourAnswersAboutThePropertyPageId, updatedData).apply(updatedData))
+        Redirect(navigator.nextPage(CheckYourAnswersConnectionToPropertyId, updatedData).apply(updatedData))
       }
     )
   }

@@ -58,3 +58,7 @@ case object AreYouThirdPartyPageId extends Identifier { override def toString: S
 case object CheckYourAnswersAboutThePropertyId extends Identifier {
   override def toString: String = "CheckYourAnswersAboutThePropertyPage"
 }
+
+case object CheckYourAnswersConnectionToPropertyId extends Identifier {
+  override def toString: String = "CheckYourAnswersConnectionToPropertyPage"
+}
