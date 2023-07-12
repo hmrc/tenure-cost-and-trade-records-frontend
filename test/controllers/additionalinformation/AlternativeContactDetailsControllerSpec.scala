@@ -86,7 +86,7 @@ class AlternativeContactDetailsControllerSpec extends TestBaseSpec {
       val formData = baseFormData - errorKey.town
       val form     = alternativeContactDetailsForm.bind(formData)
 
-      mustContainError(errorKey.town, "error.town.required", form)
+      mustContainError(errorKey.town, "error.townCity.required", form)
     }
 
     "error if postcode is missing" in {
@@ -115,6 +115,7 @@ class AlternativeContactDetailsControllerSpec extends TestBaseSpec {
       "contactDetails.email1"                        -> "blah.blah@test.com",
       "alternativeContactFullName"                   -> "Mr John Smith",
       "alternativeContactAddress.buildingNameNumber" -> "001",
+      "alternativeContactAddress.town"               -> "Manchester",
       "alternativeContactAddress.postcode"           -> "BN12 4AX"
     )
   }

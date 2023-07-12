@@ -16,17 +16,17 @@
 
 package models.submissions.additionalinformation
 
-import models.submissions.common.{ContactDetails, ContactDetailsAddress}
+import models.submissions.PrintableAddress
 import play.api.libs.json.Json
 
-case class AlternativeContactDetails(
-  alternativeContactFullName: Option[String],
-  alternativeContactDetails: Option[ContactDetails],
-  alternativeContactAddress: Option[AlternativeAddress]
-)
+case class AlternativeAddress(
+  buildingNameNumber: String,
+  street1: Option[String],
+  town: String,
+  county: Option[String],
+  postcode: String
+) extends PrintableAddress
 
-object AlternativeContactDetails {
-  implicit val format1 = Json.format[AlternativeContactDetails]
-  implicit val format2 = Json.format[AlternativeAddress]
-
+object AlternativeAddress {
+  implicit val format = Json.format[AlternativeAddress]
 }

@@ -24,6 +24,7 @@ import models.submissions.Form6010._
 import models.submissions.aboutYourLeaseOrTenure._
 import models.submissions.aboutfranchisesorlettings._
 import models.submissions.aboutyouandtheproperty._
+import models.submissions.additionalinformation.AlternativeAddress
 import models.submissions.common.{Address, AnswersYesNo, BuildingInsurance, CYAYesNo, ContactDetails, ContactDetailsAddress, InsideRepairs, OutsideRepairs}
 import models.submissions.connectiontoproperty.{AddressConnectionType, ConnectionToProperty, EditAddress, VacantPropertiesDetails}
 import models.submissions.notconnected.PastConnectionType
@@ -206,6 +207,28 @@ object MappingSupport {
     ),
     "postcode"           -> nonEmptyTextOr("landlordAddress.postcode", postcode, "error.postcode.required")
   )(LandlordAddress.apply)(LandlordAddress.unapply)
+
+  def alternativeAddressMapping: Mapping[AlternativeAddress] = mapping(
+    "buildingNameNumber" -> default(text, "").verifying(
+      nonEmpty(errorMessage = "error.buildingNameNumber.required"),
+      maxLength(50, "error.buildingNameNumber.maxLength")
+    ),
+    "street1"            -> optional(
+      default(text, "").verifying(
+        maxLength(50, "error.addressLineTwo.maxLength")
+      )
+    ),
+    "town"               -> default(text, "").verifying(
+      nonEmpty(errorMessage = "error.townCity.required"),
+      maxLength(50, "error.buildingNameNumber.maxLength")
+    ),
+    "county"             -> optional(
+      default(text, "").verifying(
+        maxLength(50, "error.county.maxLength")
+      )
+    ),
+    "postcode"           -> nonEmptyTextOr("alternativeContactAddress.postcode", postcode, "error.postcode.required")
+  )(AlternativeAddress.apply)(AlternativeAddress.unapply)
 
   def cateringAddressMapping: Mapping[CateringAddress] = mapping(
     "buildingNameNumber" -> default(text, "").verifying(

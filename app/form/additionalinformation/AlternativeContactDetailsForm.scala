@@ -16,7 +16,7 @@
 
 package form.additionalinformation
 
-import form.MappingSupport.{contactAddressMapping, contactDetailsMapping}
+import form.MappingSupport.{alternativeAddressMapping, contactAddressMapping, contactDetailsMapping}
 import models.submissions.additionalinformation.AlternativeContactDetails
 import play.api.data.Form
 import play.api.data.Forms.{mapping, optional, text}
@@ -26,7 +26,7 @@ object AlternativeContactDetailsForm {
     mapping(
       "alternativeContactFullName" -> optional(text),
       "alternativeContactDetails"  -> optional(contactDetailsMapping),
-      "alternativeContactAddress"  -> optional(contactAddressMapping)
+      "alternativeContactAddress"  -> optional(alternativeAddressMapping)
     )(AlternativeContactDetails.apply)(AlternativeContactDetails.unapply)
   )
 }

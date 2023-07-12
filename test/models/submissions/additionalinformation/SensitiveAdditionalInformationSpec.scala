@@ -44,7 +44,7 @@ class SensitiveAdditionalInformationSpec extends AnyWordSpecLike with Matchers w
               )
             ),
             alternativeContactAddress = Some(
-              ContactDetailsAddress(
+              AlternativeAddress(
                 buildingNameNumber = "123",
                 street1 = Some("Street 1"),
                 town = "Town",
