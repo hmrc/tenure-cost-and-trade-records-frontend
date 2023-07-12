@@ -52,6 +52,13 @@ trait FakeObjects {
     Some("West sussex"),
     "BN12 4AX"
   )
+  val prefilledAlternativeAddress: AlternativeAddress                    = AlternativeAddress(
+    "004",
+    Some("GORING ROAD"),
+    "WORTHING",
+    Some("West sussex"),
+    "BN12 4AX"
+  )
   val prefilledNoRefContactDetails: RequestReferenceNumberContactDetails =
     RequestReferenceNumberContactDetails("test", prefilledContactDetails, Some("test"))
 
@@ -292,7 +299,7 @@ trait FakeObjects {
   val prefilledAdditionalInformation: AdditionalInformation = AdditionalInformation(
     Some(FurtherInformationOrRemarksDetails("Further information or remarks details")),
     Some(
-      AlternativeContactDetails(Some("Full name"), Some(prefilledContactDetails), Some(prefilledContactAddress))
+      AlternativeContactDetails(Some("Full name"), Some(prefilledContactDetails), Some(prefilledAlternativeAddress))
     ),
     Some(CheckYourAnswersAdditionalInformation("CYA"))
   )

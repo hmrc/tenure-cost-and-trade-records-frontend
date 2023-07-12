@@ -26,7 +26,7 @@ import crypto.SensitiveFormats._
 case class SensitiveAlternativeContactDetails(
   alternativeContactFullName: Option[SensitiveString],
   alternativeContactDetails: Option[SensitiveContactDetails],
-  alternativeContactAddress: Option[SensitiveContactDetailsAddress]
+  alternativeContactAddress: Option[SensitiveAlternativeAddress]
 ) extends Sensitive[AlternativeContactDetails] {
 
   override def decryptedValue: AlternativeContactDetails = AlternativeContactDetails(
@@ -44,6 +44,6 @@ object SensitiveAlternativeContactDetails {
     SensitiveAlternativeContactDetails(
       alternativeContactDetails.alternativeContactFullName.map(SensitiveString(_)),
       alternativeContactDetails.alternativeContactDetails.map(SensitiveContactDetails(_)),
-      alternativeContactDetails.alternativeContactAddress.map(SensitiveContactDetailsAddress(_))
+      alternativeContactDetails.alternativeContactAddress.map(SensitiveAlternativeAddress(_))
     )
 }
