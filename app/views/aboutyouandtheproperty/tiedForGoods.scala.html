@@ -30,7 +30,6 @@
 
 @layout(
   pageHeading = messages("tiedForGoods.heading"),
-  showH1 = false,
   showSection = true,
     summary = Some(summary),
   sectionName = messages("label.section.aboutTheProperty"),
@@ -40,26 +39,29 @@
 
   @formWithCSRF(action = controllers.aboutyouandtheproperty.routes.TiedForGoodsController.submit(), args = Symbol("class") -> "myForm", Symbol("id") -> "myFormId") {
 
+    <p class="govuk-body">@{messages("tiedForGoods.para1")}</p>
+
+    <p class="govuk-body">@{messages("tiedForGoods.para2")}</p>
+
+    <h2 class="govuk-heading-s">@{messages("tiedForGoods.heading1")}</h2>
+
+    <p class="govuk-body">@{messages("tiedForGoods.p1")}</p>
+
+    <h2 class="govuk-heading-s">@{messages("tiedForGoods.heading2")}</h2>
+
+    <p class="govuk-body">@{messages("tiedForGoods.p2")}</p>
+
+    <h2 class="govuk-heading-s">@{messages("tiedForGoods.heading3")}</h2>
+
+    <p class="govuk-body">@{messages("tiedForGoods.p3")}</p>
+
     @includes.radioButtonsYesNo(
       govukRadios,
       theForm,
       "tiedForGoods",
-      "tiedForGoods.heading",
-      "govuk-fieldset__legend--l",
-      isHeading = true,
-      hint = "hint.tiedForGoods"
+      "tiedForGoods.label",
+      "govuk-!-font-weight-bold"
     )
-
-    @govukDetails(Details(
-      summary = Text(messages("help.tiedForGoods.title")),
-      content = HtmlContent(
-        s"<p class='govuk-!-font-weight-bold'>${messages("help.tiedForGoods.heading1")}</p>" +
-        s"<p>${messages("help.tiedForGoods.p1")}</p>" +
-        s"<p class='govuk-!-font-weight-bold'>${messages("help.tiedForGoods.heading2")}</p>" +
-        s"<p>${messages("help.tiedForGoods.p2")}</p>" +
-        s"<p class='govuk-!-font-weight-bold'>${messages("help.tiedForGoods.heading3")}</p>" +
-        s"<p>${messages("help.tiedForGoods.p3")}</p>")
-    ))
 
     @includes.continueSaveAsDraftButtons(govukButton)
   }
