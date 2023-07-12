@@ -19,7 +19,7 @@ package form.aboutfranchisesorlettings
 import form.MappingSupport.yesNoType
 import models.submissions.common.AnswersYesNo
 import play.api.data.Form
-import play.api.data.Forms.mapping
+import play.api.data.Forms.{mapping, optional}
 
 object AddAnotherCateringOperationOrLettingAccommodationForm {
 
@@ -28,7 +28,9 @@ object AddAnotherCateringOperationOrLettingAccommodationForm {
   )
 
   val baseAddAnotherCateringOperationMapping = mapping(
-    "addAnotherCateringOperationOrLettingAccommodations" -> yesNoType
+    "addAnotherCateringOperationOrLettingAccommodations" -> optional(yesNoType)
+      .verifying("error.addAnotherSeparateBusinessOrFranchise.required", _.nonEmpty)
+      .transform[AnswersYesNo](_.get, Some(_))
   )(x => x)(b => Some(b))
 
   val addAnotherCateringOperationForm = Form(baseAddAnotherCateringOperationMapping)

@@ -54,7 +54,7 @@ class AddAnotherCateringOperationsSpec extends QuestionViewBehaviours[AnswersYes
 
   "Add another catering operation view" must {
 
-    behave like normalPageWithMessageExtra(createView, messageKeyPrefix, "1")
+    behave like normalPageWithMessageExtra(createView, messageKeyPrefix, "0")
 
     "has a link marked with back.link.label leading to the franchise or letting tied to property Page" in {
       val doc          = asDocument(createView())

@@ -19,7 +19,7 @@ package form.aboutfranchisesorlettings
 import form.MappingSupport.yesNoType
 import models.submissions.common.AnswersYesNo
 import play.api.data.Form
-import play.api.data.Forms.mapping
+import play.api.data.Forms.{mapping, optional}
 
 object AddAnotherLettingOtherPartOfPropertyForm {
 
@@ -28,7 +28,9 @@ object AddAnotherLettingOtherPartOfPropertyForm {
   )
 
   val baseAddAnotherLettingMapping = mapping(
-    "addAnotherLettingOtherPartOfProperty" -> yesNoType
+    "addAnotherLettingOtherPartOfProperty" -> optional(yesNoType)
+      .verifying("error.addAnotherLetting.required", _.nonEmpty)
+      .transform[AnswersYesNo](_.get, Some(_))
   )(x => x)(b => Some(b))
 
   val addAnotherLettingForm = Form(baseAddAnotherLettingMapping)
