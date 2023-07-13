@@ -141,7 +141,7 @@ label.postcode = Postcode
 hint.postcode = For example, AB12 3CD
 error.invalid_refnum = Enter your reference number as it appears on your letter
 error.invalid_postcode_as_on_letter = Enter your postcode as it appears on your letter
-label.requestReference = I do not have my reference
+label.requestReference = I do not have my reference number
 label.downloadPdfReferenceNumberLogin = Download a PDF version
 
 #LOGIN- Invalid Form Type
@@ -201,6 +201,7 @@ downloadPdf.6010.label = VO6010 request for rental information: public houses (o
 downloadPdf.6011.url = https://www.gov.uk/government/publications/request-for-rental-information-pubs-houses-licensed-restaurants-wine-bars-receipts-only
 downloadPdf.6011.label = VO6011 request for rental information: pubs, licensed restaurants and wine bars (receipts only) (opens in a new tab)
 downloadPdf.no.download = No download found for the reference number
+downloadPdf.retry = Retry with my reference number:
 
 # ARE YOU STILL CONNECTED SECTION
 #################################
