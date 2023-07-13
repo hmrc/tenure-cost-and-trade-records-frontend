@@ -416,9 +416,9 @@ help.enforcementActionHasBeenTaken.p1 = You must tell us if any enforcement acti
 # ENFORCEMENT ACTION BEEN TAKEN DETAILS
 #######################################
 enforcementActionHasBeenTakenDetails.heading = Describe the enforcement action taken
-help.enforcementActionHasBeenTakenDetails.title = Help with describing restricting on the use of the property
-help.enforcementActionHasBeenTakenDetails.heading = Describing restricting on the use of the property
-help.enforcementActionHasBeenTakenDetails.p1 = You’re only required to write a short description of the conditions we’re concerned with. Example of acceptable descriptions include:
+help.enforcementActionHasBeenTakenDetails.title = Help with describing the enforcement action taken
+help.enforcementActionHasBeenTakenDetails.heading = Describing the enforcement action taken
+help.enforcementActionHasBeenTakenDetails.p1 = You’re only required to write a short description of the enforcement action taken against your premises. Example of acceptable descriptions include:
 help.enforcementActionHasBeenTakenDetails.list.p1 = Every retail sale or supply of alcohol made under the premises licence must be made or authorised by a person who holds a personal licence
 help.enforcementActionHasBeenTakenDetails.list.p2 = All customer exits must display signs asking customers to leave quietly and have consideration for residents
 help.enforcementActionHasBeenTakenDetails.list.p3 = We are required to keep an incident book
@@ -437,7 +437,6 @@ tiedForGoods.p2 = As the name suggests, people with a beer-only tie buy beer fro
 tiedForGoods.heading3 = Partial tie
 tiedForGoods.p3 = Partial ties are normally negotiated to give the tenant some flexibility to sell certain items independently, for example guest ales or fine wines.
 tiedForGoods.label = Are you required to sell certain goods as part of your lease or tenancy agreement?
-partialTieConditional.textbox = Give details of your partial tie
 
 # TIED FOR GOODS DETAILS
 ########################
@@ -445,6 +444,7 @@ tiedForGoodsDetails.heading = What type of tie do you have?
 tiedForGoodsDetails.fullTie = Full tie
 tiedForGoodsDetails.beerOnly = Beer only
 tiedForGoodsDetails.partialTie = Partial tie
+partialTieConditional.textbox = Give details of your partial tie
 error.tiedForGoodsDetails.required = Enter details of your partial tie
 
 # TENANCY LEASE AGREEMENT(USED ON 6010, 6015, 6016, 6030, 6032, 6033, 6034, 6035, 6036, 6037, 6038, 6043, 6049, 6056, 6057, 6066)
