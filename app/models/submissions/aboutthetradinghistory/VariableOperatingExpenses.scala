@@ -18,8 +18,18 @@ package models.submissions.aboutthetradinghistory
 
 import play.api.libs.json.Json
 
+import java.time.LocalDate
+
 case class VariableOperatingExpenses(
-  variableOperatingExpenses: String
+                                      financialYearEnd: LocalDate,
+                                      energyAndUtilities: BigDecimal,
+                                      cleaningAndLaundry: BigDecimal,
+                                      buildingMaintenanceAndRepairs: BigDecimal,
+                                      fixturesFittingsAndEquipment: BigDecimal,
+                                      advertisingAndPromotions: BigDecimal,
+                                      administrationAndSundries: BigDecimal,
+                                      entertainment: BigDecimal,
+                                      totalVariableOperatingExpenses: BigDecimal
 )
 
 object VariableOperatingExpenses {

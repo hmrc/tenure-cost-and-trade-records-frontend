@@ -23,19 +23,23 @@ import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class VariableOperatingExpensesViewSpec extends QuestionViewBehaviours[VariableOperatingExpenses] {
+import java.time.LocalDate
+
+class VariableOperatingExpensesViewSpec extends QuestionViewBehaviours[Seq[VariableOperatingExpenses]] {
   // NOTE: this is a holding view test until the variable operating expenses page is implemented
   def variableOperatingExpensesView =
     app.injector.instanceOf[views.html.aboutthetradinghistory.variableOperatingExpenses]
 
+  val fakeDates = Seq(LocalDate.of(2021, 4, 1), LocalDate.of(2022, 4, 1), LocalDate.of(2023, 4, 1))
+
   val messageKeyPrefix = "variableOperatingExpenses"
 
-  override val form = VariableOperatingExpensesForm.variableOperatingExpensesForm
+  override val form = VariableOperatingExpensesForm.variableOperatingExpensesForm(3)
 
-  def createView = () => variableOperatingExpensesView(form, Summary("99996010001"))(fakeRequest, messages)
+  def createView = () => variableOperatingExpensesView(form, 3, fakeDates, Summary("99996010001"))(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[VariableOperatingExpenses]) =>
-    variableOperatingExpensesView(form, Summary("99996010001"))(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[Seq[VariableOperatingExpenses]]) =>
+    variableOperatingExpensesView(form, 3, fakeDates, Summary("99996010001"))(fakeRequest, messages)
 
   "Variable Operating Expenses view" must {
 
