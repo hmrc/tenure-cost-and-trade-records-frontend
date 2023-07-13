@@ -200,6 +200,7 @@ downloadPdf.6010.url = https://www.gov.uk/government/publications/vo-6010-reques
 downloadPdf.6010.label = VO6010 request for rental information: public houses (opens in a new tab)
 downloadPdf.6011.url = https://www.gov.uk/government/publications/request-for-rental-information-pubs-houses-licensed-restaurants-wine-bars-receipts-only
 downloadPdf.6011.label = VO6011 request for rental information: pubs, licensed restaurants and wine bars (receipts only) (opens in a new tab)
+downloadPdf.no.download = No download found for the reference number
 
 # ARE YOU STILL CONNECTED SECTION
 #################################

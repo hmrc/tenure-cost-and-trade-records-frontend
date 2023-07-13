@@ -32,15 +32,22 @@
   pageHeading = messages("downloadPdf.heading"),
   backLinkUrl = controllers.downloadFORTypeForm.routes.DownloadPDFReferenceNumberController.show().url
 ) {
-    @if(forType.equals(ForTypes.for6010)) {
-      <p class="govuk-body">
-        <a class="govuk-link" target="_blank" href=@messages("downloadPdf.6010.url")>@messages("downloadPdf.6010.label")</a>
-      </p>
-    } else {
-      <p class="govuk-body">
-        <a class="govuk-link" target="_blank" href=@messages("downloadPdf.6011.url")>@messages("downloadPdf.6011.label")</a>
-      </p>
-    }
+
+  @forType match {
+      case ForTypes.for6010 => {
+          <p class="govuk-body">
+              <a class="govuk-link" target="_blank" href=@messages("downloadPdf.6010.url")>@messages("downloadPdf.6010.label")</a>
+          </p>
+      }
+      case ForTypes.for6011 => {
+          <p class="govuk-body">
+              <a class="govuk-link" target="_blank" href=@messages("downloadPdf.6011.url")>@messages("downloadPdf.6011.label")</a>
+          </p>
+      }
+      case _ =>{
+          <p class="govuk-body">@messages("downloadPdf.no.download")</p>
+      }
+  }
 }
 
 
