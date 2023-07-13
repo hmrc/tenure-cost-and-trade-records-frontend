@@ -24,6 +24,7 @@ import models.submissions.aboutyouandtheproperty.SensitiveAboutYouAndTheProperty
 import models.submissions.additionalinformation.SensitiveAdditionalInformation
 import models.submissions.common.SensitiveAddress
 import models.submissions.connectiontoproperty.SensitiveStillConnectedDetails
+import models.submissions.downloadFORTypeForm.DownloadPDFDetails
 import models.submissions.notconnected.SensitiveRemoveConnectionDetails
 import models.submissions.requestReferenceNumber.SensitiveRequestReferenceNumber
 import models.submissions.requestReferenceNumber.RequestReferenceNumber
@@ -45,7 +46,8 @@ case class SensitiveSession(
   aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = None,
   saveAsDraftPassword: Option[String] = None,
   lastCYAPageUrl: Option[String] = None,
-  requestReferenceNumberDetails: Option[SensitiveRequestReferenceNumber]
+  requestReferenceNumberDetails: Option[SensitiveRequestReferenceNumber],
+  downloadPDFDetails: Option[DownloadPDFDetails] = None
 ) extends Sensitive[Session] {
 
   override def decryptedValue: Session = Session(
@@ -63,7 +65,8 @@ case class SensitiveSession(
     aboutLeaseOrAgreementPartTwo,
     saveAsDraftPassword,
     lastCYAPageUrl,
-    requestReferenceNumberDetails.map(_.decryptedValue)
+    requestReferenceNumberDetails.map(_.decryptedValue),
+    downloadPDFDetails
   )
 }
 
@@ -86,6 +89,7 @@ object SensitiveSession {
     session.aboutLeaseOrAgreementPartTwo,
     session.saveAsDraftPassword,
     session.lastCYAPageUrl,
-    session.requestReferenceNumberDetails.map(SensitiveRequestReferenceNumber(_))
+    session.requestReferenceNumberDetails.map(SensitiveRequestReferenceNumber(_)),
+    session.downloadPDFDetails
   )
 }
