@@ -33,14 +33,13 @@
   backLinkUrl = controllers.downloadFORTypeForm.routes.DownloadPDFReferenceNumberController.show().url
 ) {
     @if(forType.equals(ForTypes.for6010)) {
-
-        <p class="govuk-body">@{
-            HtmlContent(messages("downloadPdf.p1")).asHtml
-        }</p>
+      <p class="govuk-body">
+        <a class="govuk-link" target="_blank" href=@messages("downloadPdf.6010.url")>@messages("downloadPdf.6010.label")</a>
+      </p>
     } else {
-        <p class="govuk-body">@{
-            HtmlContent(messages("downloadPdf.p2")).asHtml
-        }</p>
+      <p class="govuk-body">
+        <a class="govuk-link" target="_blank" href=@messages("downloadPdf.6011.url")>@messages("downloadPdf.6011.label")</a>
+      </p>
     }
 }
 
