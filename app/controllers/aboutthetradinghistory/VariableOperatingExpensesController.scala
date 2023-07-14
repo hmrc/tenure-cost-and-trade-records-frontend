@@ -26,8 +26,10 @@ import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import views.html.aboutthetradinghistory.variableOperatingExpenses
-
+import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.{format, updateAboutTheTradingHistory}
+import java.time.LocalDate
 import javax.inject.{Inject, Named, Singleton}
+import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class VariableOperatingExpensesController @Inject() (
@@ -36,31 +38,51 @@ class VariableOperatingExpensesController @Inject() (
   variableOperativeExpensesView: variableOperatingExpenses,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FORDataCaptureController(mcc)
+)(implicit ec: ExecutionContext) extends FORDataCaptureController(mcc)
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
-    Ok(
-      variableOperativeExpensesView(
-        request.sessionData.aboutTheTradingHistory.flatMap(_.variableOperatingExpenses) match {
-          case Some(variableOperatingExpenses) =>
-            variableOperatingExpensesForm.fillAndValidate(variableOperatingExpenses)
-          case _                               => variableOperatingExpensesForm
-        },
-        request.sessionData.toSummary
-      )
-    )
+    request.sessionData.aboutTheTradingHistory
+      .filter(_.occupationAndAccountingInformation.isDefined)
+      .fold(Redirect(routes.AboutYourTradingHistoryController.show())) { aboutTheTradingHistory =>
+        val numberOfColumns = aboutTheTradingHistory.turnoverSections.size
+        val financialYears: Seq[LocalDate] = aboutTheTradingHistory.turnoverSections1516.foldLeft(Seq.empty[LocalDate])(
+          (sequence, turnoverSection) => sequence :+ turnoverSection.financialYearEnd
+        )
+        Ok(
+          variableOperativeExpensesView(
+            variableOperatingExpensesForm(numberOfColumns)
+              .fillAndValidate(aboutTheTradingHistory.variableOperatingExpensesSections),
+            numberOfColumns,
+            financialYears,
+            request.sessionData.toSummary
+          )
+        )
+      }
   }
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft[VariableOperatingExpenses](
-      variableOperatingExpensesForm,
-      formWithErrors => BadRequest(variableOperativeExpensesView(formWithErrors, request.sessionData.toSummary)),
-      data => {
-        val updatedData = request.sessionData
-        Redirect(navigator.nextPage(VariableOperatingExpensesId, updatedData).apply(updatedData))
+    request.sessionData.aboutTheTradingHistory
+      .filter(_.occupationAndAccountingInformation.isDefined)
+      .fold(Future.successful(Redirect(routes.AboutYourTradingHistoryController.show()))) { aboutTheTradingHistory =>
+        val numberOfColumns = aboutTheTradingHistory.turnoverSections.size
+        val financialYears: Seq[LocalDate] = aboutTheTradingHistory.turnoverSections1516.foldLeft(Seq.empty[LocalDate])(
+          (sequence, turnoverSection) => sequence :+ turnoverSection.financialYearEnd
+        )
+        continueOrSaveAsDraft[Seq[VariableOperatingExpenses]](
+          variableOperatingExpensesForm(numberOfColumns),
+          formWithErrors =>
+            BadRequest(
+              variableOperativeExpensesView(formWithErrors, numberOfColumns, financialYears, request.sessionData.toSummary)
+            ),
+          success => {
+            val updatedData = updateAboutTheTradingHistory(_.copy(variableOperatingExpensesSections = success))
+            session
+              .saveOrUpdate(updatedData)
+              .map(_ => Redirect(navigator.nextPage(VariableOperatingExpensesId, updatedData).apply(updatedData)))
+          }
+        )
       }
-    )
   }
 
 }

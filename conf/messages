@@ -889,7 +889,19 @@ totalPayrollCosts.directorsRemuneration.add = (if applicable)
 
 # VARIABLE OPERATING EXPENSES (FORM 6015)
 #########
-variableOperatingExpenses.heading = This is a holding page for the variable operating expenses page
+variableOperatingExpenses.heading = Variable operating expenses
+variableOperatingExpenses.p1 = Provide details of your expenses excluding mortgage or loan interest, rent, insurance or any contribution to head office expenses.
+variableOperatingExpenses.p2 = All fields on this page are mandatory. If none of the categories are applicable, enter the number 0.
+variableOperatingExpenses.energyAndUtilities = Energy and utilities
+variableOperatingExpenses.cleaningAndLaundry = Cleaning and laundry
+variableOperatingExpenses.buildingMaintenanceAndRepairs = Building maintenance and repairs
+variableOperatingExpenses.fixturesFittingsAndEquipment = Repairs and renewal of fixtures and fittings, equipment etc
+variableOperatingExpenses.advertisingAndPromotions = Advertising, marketing and promotions
+variableOperatingExpenses.administrationAndSundries = Administration and sundries
+variableOperatingExpenses.entertainment = Entertainment
+variableOperatingExpenses.entertainment.p1 = Artiste fees, for example
+variableOperatingExpenses.totalVariableOperatingExpenses = Total variable operating expenses
+
 
 # FIXED OPERATING EXPENSES (FORM 6015)
 #########

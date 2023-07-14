@@ -30,7 +30,7 @@ case class AboutTheTradingHistory(
   netProfit: Option[NetProfit] = None,
   otherCosts: Option[OtherCosts] = None,
   totalPayrollCostSections: Seq[TotalPayrollCost] = Seq.empty,
-  variableOperatingExpenses: Option[VariableOperatingExpenses] = None,
+  variableOperatingExpensesSections: Seq[VariableOperatingExpenses] = Seq.empty,
   checkYourAnswersAboutTheTradingHistory: Option[CheckYourAnswersAboutTheTradingHistory] = None
 )
 
