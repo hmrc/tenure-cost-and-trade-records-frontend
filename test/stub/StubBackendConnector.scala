@@ -33,6 +33,10 @@ case class StubBackendConnector() extends BackendConnector {
     hc: HeaderCarrier
   ): Future[FORLoginResponse] = ???
 
+  override def retrieveFORType(referenceNumber: String)(implicit
+    hc: HeaderCarrier
+  ): Future[String] = ???
+
   override def saveAsDraft(referenceNumber: String, submissionDraft: SubmissionDraft)(implicit
     hc: HeaderCarrier
   ): Future[Unit] = {

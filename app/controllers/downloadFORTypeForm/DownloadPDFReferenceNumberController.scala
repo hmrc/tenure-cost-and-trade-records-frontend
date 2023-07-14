@@ -20,7 +20,7 @@ import actions.WithSessionRefiner
 import models.submissions.downloadFORTypeForm.DownloadPDF
 import play.api.Logging
 import views.html.downloadFORTypeForm.downloadPDF
-import scala.util.{Success, Failure}
+import scala.util.{Failure, Success}
 import connectors.BackendConnector
 import form.downloadFORTypeForm.DownloadPDFReferenceNumberForm.downloadPDFReferenceNumberForm
 import models.Session
@@ -42,12 +42,11 @@ class DownloadPDFReferenceNumberController @Inject() (
   mcc: MessagesControllerComponents,
   navigator: ConnectionToPropertyNavigator,
   downloadPDFReferenceNumberView: downloadPDFReferenceNumber,
-  downloadPDF: downloadPDF,
   backendConnector: BackendConnector,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) (implicit connector: BackendConnector, ec: ExecutionContext)
-  extends FrontendController(mcc)
+)(implicit ec: ExecutionContext)
+    extends FrontendController(mcc)
     with Logging
     with I18nSupport {
 
@@ -67,18 +66,20 @@ class DownloadPDFReferenceNumberController @Inject() (
     )
   }
 
-  def submit  = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit = (Action andThen withSessionRefiner).async { implicit request =>
     downloadPDFReferenceNumberForm
       .bindFromRequest()
       .fold(
         formWithErrors => Future.successful(BadRequest(downloadPDFReferenceNumberView(formWithErrors))),
         data => {
           val updatedData = updateDownloadPDFDetails(_.copy(downloadPDFReferenceNumber = Some(data)))
+          session.saveOrUpdate(updatedData)
+
           backendConnector.retrieveFORType(data.downloadPDFReferenceNumber).onComplete({
             case Success(value) => session.saveOrUpdate(updateDownloadPDFDetails(_.copy(downloadPDF = Some(DownloadPDF(value)))))
             case Failure(ex) => logger.debug(s"Failed to retrieve a valid FOR Type: ${ex.getMessage}")
           })
-          session.saveOrUpdate(updatedData)
+
           Future.successful(
             Redirect(navigator.nextPage(DownloadPDFReferenceNumberPageId, updatedData).apply(updatedData))
           )

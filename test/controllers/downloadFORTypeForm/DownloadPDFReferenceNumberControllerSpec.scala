@@ -16,6 +16,7 @@
 
 package controllers.downloadFORTypeForm
 
+import connectors.BackendConnector
 import form.Errors
 import form.requestReferenceNumber.RequestReferenceNumberContactDetailsForm.requestReferenceNumberContactDetailsForm
 import models.submissions.connectiontoproperty.StillConnectedDetails
@@ -32,6 +33,7 @@ class DownloadPDFReferenceNumberControllerSpec extends TestBaseSpec {
     stubMessagesControllerComponents(),
     connectedToPropertyNavigator,
     downloadPDFReferenceNumberView,
+    inject[BackendConnector],
     preEnrichedActionRefiner(downloadPDFDetails = downloadPDFDetails),
     mockSessionRepo
   )
