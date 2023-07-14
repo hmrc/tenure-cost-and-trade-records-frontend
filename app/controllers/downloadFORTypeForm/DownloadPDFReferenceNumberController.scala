@@ -75,10 +75,13 @@ class DownloadPDFReferenceNumberController @Inject() (
           val updatedData = updateDownloadPDFDetails(_.copy(downloadPDFReferenceNumber = Some(data)))
           session.saveOrUpdate(updatedData)
 
-          backendConnector.retrieveFORType(data.downloadPDFReferenceNumber).onComplete({
-            case Success(value) => session.saveOrUpdate(updateDownloadPDFDetails(_.copy(downloadPDF = Some(DownloadPDF(value)))))
-            case Failure(ex) => logger.debug(s"Failed to retrieve a valid FOR Type: ${ex.getMessage}")
-          })
+          backendConnector
+            .retrieveFORType(data.downloadPDFReferenceNumber)
+            .onComplete({
+              case Success(value) =>
+                session.saveOrUpdate(updateDownloadPDFDetails(_.copy(downloadPDF = Some(DownloadPDF(value)))))
+              case Failure(ex)    => logger.debug(s"Failed to retrieve a valid FOR Type: ${ex.getMessage}")
+            })
 
           Future.successful(
             Redirect(navigator.nextPage(DownloadPDFReferenceNumberPageId, updatedData).apply(updatedData))
