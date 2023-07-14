@@ -68,14 +68,19 @@ class DefaultBackendConnector @Inject() (servicesConfig: ServicesConfig, http: F
     }
 
   override def verifyCredentials(refNumber: String, postcode: String)(implicit
-    hc: HeaderCarrier
+                                                                      hc: HeaderCarrier
   ): Future[FORLoginResponse] = {
     val parts = Seq(refNumber, postcode).map(urlEncode)
     http.GET[FORLoginResponse](url(s"${parts.mkString("/")}/verify"))(readsHack, hc, ec)
   }
 
+  override def retrieveFORType(referenceNumber: String)(implicit
+                                                        hc: HeaderCarrier
+  ): Future[String] =
+    http.GET(url(s"${referenceNumber}/forType")).map(res => (res.json \ "FORType").as[String])
+
   override def saveAsDraft(referenceNumber: String, submissionDraft: SubmissionDraft)(implicit
-    hc: HeaderCarrier
+                                                                                      hc: HeaderCarrier
   ): Future[Unit] =
     http.PUT(saveAsDraftUrl(referenceNumber), submissionDraft) map { _ => () }
 
@@ -94,6 +99,8 @@ class DefaultBackendConnector @Inject() (servicesConfig: ServicesConfig, http: F
 @ImplementedBy(classOf[DefaultBackendConnector])
 trait BackendConnector {
   def verifyCredentials(refNumber: String, postcode: String)(implicit hc: HeaderCarrier): Future[FORLoginResponse]
+
+  def retrieveFORType(refNumber: String)(implicit hc: HeaderCarrier): Future[String]
 
   def saveAsDraft(referenceNumber: String, submissionDraft: SubmissionDraft)(implicit hc: HeaderCarrier): Future[Unit]
 
