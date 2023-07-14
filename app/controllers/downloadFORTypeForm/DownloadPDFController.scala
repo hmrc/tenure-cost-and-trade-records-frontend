@@ -39,7 +39,7 @@ class DownloadPDFController @Inject() (
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     request.sessionData.downloadPDFDetails.flatMap(_.downloadPDF.map(_.downloadPDF)) match {
       case Some(forType: String) => Future.successful(Ok(downloadPDFView(forType)))
-      case None                  => Redirect(controllers.routes.LoginController.show)
+      case None => Future.successful(Ok(downloadPDFView("")))
     }
   }
 }
