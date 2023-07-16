@@ -1,0 +1,68 @@
+@*
+ * Copyright 2023 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
+@import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcCurrencyInput
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukDateInput
+@import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Label
+@import uk.gov.hmrc.hmrcfrontend.views.viewmodels.currencyinput.CurrencyInput
+@import models.pages.Summary
+
+@this(layout: Layout,
+        govukButton: GovukButton,
+        govukDateInput: GovukDateInput,
+        hmrcCurrencyInput : HmrcCurrencyInput,
+        formWithCSRF: FormWithCSRF
+)
+
+@(theForm: Form[_], index: Int, tenantName: String, backLink: String, summary: Summary)(implicit request: Request[_], messages: Messages)
+
+@layout(
+ pageHeading = messages("lettingPartOfPropertyRentDetails.heading", tenantName),
+ showSection = true,
+ summary = Some(summary),
+ sectionName = messages("label.section.connectionToTheProperty"),
+ backLinkUrl = backLink,
+ theForm = theForm
+) {
+    @formWithCSRF(action = controllers.connectiontoproperty.routes.LettingPartOfPropertyDetailsRentController.submit(index),
+        args = Symbol("class") -> "myForm", Symbol("id") -> "myFormId") {
+
+        @hmrcCurrencyInput(
+            CurrencyInput(
+                id = "annualRent",
+                name = "annualRent",
+                value = theForm("annualRent").value,
+                classes = "govuk-input--width-10 total-annual-rent",
+                label = Label(
+                    content = Text(messages("label.annualRent")),
+                    classes = "govuk-!-font-weight-bold"
+                ),
+                autocomplete = Some("off"),
+                errorMessage = theForm.errors.asTextErrorMessageForField("annualRent"),
+            )
+        )
+
+        @includes.dateFields(form = theForm, field = "dateInput", govukDate = govukDateInput, showDays = true)
+
+        @includes.continueSaveAsDraftButtons(govukButton)
+    }
+}
+
+

@@ -18,25 +18,22 @@ package controllers.connectiontoproperty
 
 import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
-import form.connectiontoproperty.VacantPropertiesForm.vacantPropertiesForm
-import models.submissions.connectiontoproperty.StillConnectedDetails.updateStillConnectedDetails
-import models.submissions.connectiontoproperty.VacantProperties
+import models.Session
 import navigation.ConnectionToPropertyNavigator
-import navigation.identifiers.VacantPropertiesPageId
 import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import views.html.connectiontoproperty.vacantProperties
+import views.html.connectiontoproperty.checkYourAnswersConnectionToVacantProperty
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class VacantPropertiesController @Inject() (
+class CheckYourAnswersConnectionToVacantPropertyController @Inject()(
   mcc: MessagesControllerComponents,
   navigator: ConnectionToPropertyNavigator,
-  vacantPropertiesView: vacantProperties,
+  checkYourAnswersConnectionToVacantPropertyView: checkYourAnswersConnectionToVacantProperty,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
 ) extends FORDataCaptureController(mcc)
@@ -46,32 +43,11 @@ class VacantPropertiesController @Inject() (
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Future.successful(
       Ok(
-        vacantPropertiesView(
-          request.sessionData.stillConnectedDetails.flatMap(_.vacantProperties) match {
-            case Some(vacantProperties) => vacantPropertiesForm.fillAndValidate(vacantProperties)
-            case _                      => vacantPropertiesForm
-          },
-          request.sessionData.toSummary
-        )
+        checkYourAnswersConnectionToVacantPropertyView(getBackLink(request.sessionData))
       )
     )
   }
 
-  def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft[VacantProperties](
-      vacantPropertiesForm,
-      formWithErrors =>
-        BadRequest(
-          vacantPropertiesView(
-            formWithErrors,
-            request.sessionData.toSummary
-          )
-        ),
-      data => {
-        val updatedData = updateStillConnectedDetails(_.copy(vacantProperties = Some(data)))
-        session.saveOrUpdate(updatedData)
-        Redirect(navigator.nextPage(VacantPropertiesPageId, updatedData).apply(updatedData))
-      }
-    )
-  }
+  private def getBackLink(answers: Session): String =
+    controllers.connectiontoproperty.routes.AreYouThirdPartyController.show().url
 }

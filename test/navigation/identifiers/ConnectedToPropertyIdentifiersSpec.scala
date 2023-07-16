@@ -38,6 +38,18 @@ class ConnectedToPropertyIdentifiersSpec extends TestBaseSpec {
       assert(ConnectionToPropertyPageId.toString.equals("ConnectionToPropertyPage"))
     }
 
+    "Identifier for vacant properties page" in {
+      assert(VacantPropertiesPageId.toString.equals("VacantPropertiesPage"))
+    }
+
+    "Identifier for property become vacant page" in {
+      assert(PropertyBecomeVacantPageId.toString.equals("PropertyBecomeVacantPage"))
+    }
+
+    "Identifier for letting income page" in {
+      assert(LettingIncomePageId.toString.equals("LettingIncomePage"))
+    }
+
     "Identifier for no reference number page" in {
       assert(NoReferenceNumberPageId.toString.equals("NoReferenceNumberPage"))
     }
@@ -66,14 +78,6 @@ class ConnectedToPropertyIdentifiersSpec extends TestBaseSpec {
       assert(DownloadPDFReferenceNumberPageId.toString.equals("DownloadPDFReferenceNumberPage"))
     }
 
-    "Identifier for property become vacant page" in {
-      assert(PropertyBecomeVacantPageId.toString.equals("PropertyBecomeVacant"))
-    }
-
-    "Identifier for letting income page" in {
-      assert(LettingIncomePageId.toString.equals("LettingIncome"))
-    }
-
     "Identifier for trading name operating from property page" in {
       assert(TradingNameOperatingFromPropertyPageId.toString.equals("TradingNameOperatingFromProperty"))
     }
@@ -82,13 +86,40 @@ class ConnectedToPropertyIdentifiersSpec extends TestBaseSpec {
       assert(TradingNameOwnThePropertyPageId.toString.equals("TradingNameOwnTheProperty"))
     }
 
+    "Identifier for trading name paying page" in {
+      assert(TradingNamePayingRentPageId.toString.equals("TradingNamePayingRentPage"))
+    }
+
+    "Identifier for provide your contact details page" in {
+      assert(ProvideYourContactDetailsPageId.toString.equals("ProvideYourContactDetailsPage"))
+    }
+
     "Identifier for are you third party page" in {
       assert(AreYouThirdPartyPageId.toString.equals("AreYouThirdParty"))
     }
 
+    "Identifier for letting part of the property details page" in {
+      assert(LettingPartOfPropertyDetailsPageId.toString.equals("LettingPartOfPropertyDetailsPage"))
+    }
+
+    "Identifier for letting part of the property rent details page" in {
+      assert(LettingPartOfPropertyRentDetailsPageId.toString.equals("LettingPartOfPropertyRentDetailsPage"))
+    }
+
+    "Identifier for letting part of the property items included in rent page" in {
+      assert(LettingPartOfPropertyItemsIncludedInRentPageId.toString.equals("LettingPartOfPropertyItemsIncludedInRentPage"))
+    }
+
+    "Identifier for add another letting part of the property page" in {
+      assert(AddAnotherLettingPartOfPropertyPageId.toString.equals("AddAnotherLettingPartOfPropertyPage"))
+    }
+
+    "Identifier for cya about the property page" in {
     "Identifier for cya reference number page" in {
       assert(CheckYourAnswersRequestReferenceNumberPageId.toString.equals("CheckYourAnswersRequestReferenceNumberPage"))
     }
+
+
 
     "Identifier for cya about the property page" in {
       assert(CheckYourAnswersAboutThePropertyId.toString.equals("CheckYourAnswersAboutThePropertyPage"))

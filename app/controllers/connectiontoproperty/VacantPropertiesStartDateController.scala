@@ -22,7 +22,7 @@ import form.connectiontoproperty.VacantPropertyStartDateForm.vacantPropertyStart
 import models.submissions.connectiontoproperty.StillConnectedDetails.updateStillConnectedDetails
 import models.submissions.connectiontoproperty.StartDateOfVacantProperty
 import navigation.ConnectionToPropertyNavigator
-import navigation.identifiers.LettingIncomePageId
+import navigation.identifiers.PropertyBecomeVacantPageId
 import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
@@ -70,7 +70,7 @@ class VacantPropertiesStartDateController @Inject() (
       data => {
         val updatedData = updateStillConnectedDetails(_.copy(vacantPropertyStartDate = Some(data)))
         session.saveOrUpdate(updatedData)
-        Redirect(navigator.nextPage(LettingIncomePageId, updatedData).apply(updatedData))
+        Redirect(navigator.nextPage(PropertyBecomeVacantPageId, updatedData).apply(updatedData))
       }
     )
   }

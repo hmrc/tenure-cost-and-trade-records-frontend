@@ -26,7 +26,7 @@ import models.submissions.aboutfranchisesorlettings._
 import models.submissions.aboutyouandtheproperty._
 import models.submissions.additionalinformation.AlternativeAddress
 import models.submissions.common.{Address, AnswersYesNo, BuildingInsurance, CYAYesNo, ContactDetails, ContactDetailsAddress, InsideRepairs, OutsideRepairs}
-import models.submissions.connectiontoproperty.{AddressConnectionType, ConnectionToProperty, EditAddress, VacantPropertiesDetails}
+import models.submissions.connectiontoproperty.{AddressConnectionType, ConnectionToProperty, CorrespondenceAddress, EditAddress, VacantPropertiesDetails, YourContactDetails}
 import models.submissions.notconnected.PastConnectionType
 import models.submissions.requestReferenceNumber.RequestReferenceNumberAddress
 import models.{AnnualRent, NamedEnum, NamedEnumSupport}
@@ -317,6 +317,36 @@ object MappingSupport {
     ),
     "postcode"           -> nonEmptyTextOr("editAddress.postcode", postcode, "error.postcode.required")
   )(EditAddress.apply)(EditAddress.unapply)
+
+  def yourContactDetailsMapping: Mapping[YourContactDetails] = mapping(
+    "fullName" -> default(text, "").verifying(
+      nonEmpty(errorMessage = "error.fullName.required")
+    ),
+    "contactDetails" -> contactDetailsMapping,
+    "provideContactDetailsAdditionalInformation" -> optional(default(text, "").verifying(maxLength(1000, "error.char.count.maxLength"))
+    ))(YourContactDetails.apply)(YourContactDetails.unapply)
+
+  def correspondenceAddressMapping: Mapping[CorrespondenceAddress] = mapping(
+    "addressLineOne" -> default(text, "").verifying(
+      nonEmpty(errorMessage = "error.addressLineOne.required"),
+      maxLength(50, "error.addressLineOne.maxLength")
+    ),
+    "addressLineTwo" -> optional(
+      default(text, "").verifying(
+        maxLength(50, "error.addressLineTwo.maxLength")
+      )
+    ),
+    "town" -> default(text, "").verifying(
+      nonEmpty(errorMessage = "error.townCity.required"),
+      maxLength(50, "error.town.maxLength")
+    ),
+    "county" -> optional(
+      default(text, "").verifying(
+        maxLength(50, "error.county.maxLength")
+      )
+    ),
+    "postcode" -> nonEmptyTextOr("correspondenceAddress.postcode", postcode, "error.postcode.required")
+  )(CorrespondenceAddress.apply)(CorrespondenceAddress.unapply)
 
   def mandatoryBooleanWithError(message: String) =
     optional(boolean)
