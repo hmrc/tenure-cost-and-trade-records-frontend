@@ -74,14 +74,14 @@ class ConnectionToPropertyNavigatorSpec extends TestBaseSpec {
       val nextPage = navigator
         .nextPage(PropertyBecomeVacantPageId, stillConnectedDetailsYesToAllSession)
         .apply(stillConnectedDetailsYesToAllSession)
-      nextPage mustBe controllers.connectiontoproperty.routes.VacantPropertiesStartDateController.show()
+      nextPage mustBe controllers.connectiontoproperty.routes.IsRentReceivedFromLettingController.show()
     }
 
     "return a function that goes to the trading name operating from property page when PropertyBecomeVacantPageId has been answered with 'no'" in {
       val nextPage = navigator
         .nextPage(PropertyBecomeVacantPageId, stillConnectedDetailsNoToAllSession)
         .apply(stillConnectedDetailsNoToAllSession)
-      nextPage mustBe controllers.connectiontoproperty.routes.TradingNameOperatingFromPropertyController.show()
+      nextPage mustBe controllers.connectiontoproperty.routes.IsRentReceivedFromLettingController.show()
     }
 
     "return a function that goes to the are you third party page when TradingNameOwnThePropertyPageId has been answered with 'yes'" in {
@@ -170,14 +170,6 @@ class ConnectionToPropertyNavigatorSpec extends TestBaseSpec {
       ) mustBe controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToVacantPropertyController.show()
   }
 
-  "return a function that goes from check your answers connection to property page to task list page" in {
-    navigator
-      .nextPage(CheckYourAnswersAboutThePropertyPageId, stillConnectedDetailsYesToAllSession)
-      .apply(
-        stillConnectedDetailsYesToAllSession
-      ) mustBe controllers.routes.TaskListController.show()
-  }
-
   "return a function that goes from trading name paying rent page to are you third party page" in {
     navigator
       .nextPage(TradingNamePayingRentPageId, stillConnectedDetailsYesSession)
@@ -224,13 +216,5 @@ class ConnectionToPropertyNavigatorSpec extends TestBaseSpec {
       .apply(
         stillConnectedDetailsYesSession
       ) mustBe controllers.routes.LoginController.show()
-  }
-
-  "return a function that goes from check your answers connection to property page to task list page" in {
-    navigator
-      .nextPage(CheckYourAnswersConnectionToPropertyId, stillConnectedDetailsYesToAllSession)
-      .apply(
-        stillConnectedDetailsYesToAllSession
-      ) mustBe controllers.routes.TaskListController.show()
   }
 }

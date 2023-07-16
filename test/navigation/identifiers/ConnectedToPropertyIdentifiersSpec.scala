@@ -66,10 +66,6 @@ class ConnectedToPropertyIdentifiersSpec extends TestBaseSpec {
       assert(ConnectionToPropertyPageId.toString.equals("ConnectionToPropertyPage"))
     }
 
-    "Identifier for vacant properties page" in {
-      assert(VacantPropertiesPageId.toString.equals("VacantPropertiesPage"))
-    }
-
     "Identifier for cya request ref number page" in {
       assert(CheckYourAnswersRequestReferenceNumberPageId.toString.equals("CheckYourAnswersRequestReferenceNumberPage"))
     }
@@ -114,15 +110,8 @@ class ConnectedToPropertyIdentifiersSpec extends TestBaseSpec {
       assert(AddAnotherLettingPartOfPropertyPageId.toString.equals("AddAnotherLettingPartOfPropertyPage"))
     }
 
-    "Identifier for cya about the property page" in {
     "Identifier for cya reference number page" in {
       assert(CheckYourAnswersRequestReferenceNumberPageId.toString.equals("CheckYourAnswersRequestReferenceNumberPage"))
-    }
-
-
-
-    "Identifier for cya about the property page" in {
-      assert(CheckYourAnswersAboutThePropertyId.toString.equals("CheckYourAnswersAboutThePropertyPage"))
     }
 
     "Identifier for cya connection to property page" in {
