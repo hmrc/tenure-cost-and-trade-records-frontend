@@ -18,25 +18,26 @@ package controllers.connectiontoproperty
 
 import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
-import form.connectiontoproperty.VacantPropertiesForm.vacantPropertiesForm
+import form.connectiontoproperty.isRentReceivedFromLettingForm.isRentReceivedFromLettingForm
+import models.Session
+import models.submissions.common.AnswersYesNo
 import models.submissions.connectiontoproperty.StillConnectedDetails.updateStillConnectedDetails
-import models.submissions.connectiontoproperty.VacantProperties
 import navigation.ConnectionToPropertyNavigator
-import navigation.identifiers.VacantPropertiesPageId
+import navigation.identifiers.LettingIncomePageId
 import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import views.html.connectiontoproperty.vacantProperties
+import views.html.connectiontoproperty.isRentReceivedFromLetting
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class VacantPropertiesController @Inject() (
+class IsRentReceivedFromLettingController @Inject()(
   mcc: MessagesControllerComponents,
   navigator: ConnectionToPropertyNavigator,
-  vacantPropertiesView: vacantProperties,
+  isRentReceivedFromLettingView: isRentReceivedFromLetting,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
 ) extends FORDataCaptureController(mcc)
@@ -46,11 +47,12 @@ class VacantPropertiesController @Inject() (
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Future.successful(
       Ok(
-        vacantPropertiesView(
-          request.sessionData.stillConnectedDetails.flatMap(_.vacantProperties) match {
-            case Some(vacantProperties) => vacantPropertiesForm.fillAndValidate(vacantProperties)
-            case _                      => vacantPropertiesForm
+        isRentReceivedFromLettingView(
+          request.sessionData.stillConnectedDetails.flatMap(_.isAnyRentReceived) match {
+            case Some(enforcementAction) => isRentReceivedFromLettingForm.fillAndValidate(enforcementAction)
+            case _                       => isRentReceivedFromLettingForm
           },
+          getBackLink(request.sessionData),
           request.sessionData.toSummary
         )
       )
@@ -58,20 +60,24 @@ class VacantPropertiesController @Inject() (
   }
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft[VacantProperties](
-      vacantPropertiesForm,
+    continueOrSaveAsDraft[AnswersYesNo](
+      isRentReceivedFromLettingForm,
       formWithErrors =>
         BadRequest(
-          vacantPropertiesView(
+          isRentReceivedFromLettingView(
             formWithErrors,
+            getBackLink(request.sessionData),
             request.sessionData.toSummary
           )
         ),
       data => {
-        val updatedData = updateStillConnectedDetails(_.copy(vacantProperties = Some(data)))
+        val updatedData = updateStillConnectedDetails(_.copy(isAnyRentReceived = Some(data)))
         session.saveOrUpdate(updatedData)
-        Redirect(navigator.nextPage(VacantPropertiesPageId, updatedData).apply(updatedData))
+        Redirect(navigator.nextPage(LettingIncomePageId, updatedData).apply(updatedData))
       }
     )
   }
+
+  private def getBackLink(answers: Session): String =
+    controllers.connectiontoproperty.routes.VacantPropertiesStartDateController.show().url
 }

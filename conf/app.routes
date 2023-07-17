@@ -70,6 +70,25 @@ POST        /are-you-third-party                                    controllers.
 GET         /vacant-property-start-date                             controllers.connectiontoproperty.VacantPropertiesStartDateController.show()
 POST        /vacant-property-start-date                             controllers.connectiontoproperty.VacantPropertiesStartDateController.submit()
 
+GET         /any-rent-received                                      controllers.connectiontoproperty.IsRentReceivedFromLettingController.show()
+POST        /any-rent-received                                      controllers.connectiontoproperty.IsRentReceivedFromLettingController.submit()
+
+GET         /your-contact-details                                   controllers.connectiontoproperty.ProvideContactDetailsController.show()
+POST        /your-contact-details                                   controllers.connectiontoproperty.ProvideContactDetailsController.submit()
+
+GET         /letting-part-of-property-details                       controllers.connectiontoproperty.LettingPartOfPropertyDetailsController.show(idx: Option[Int] ?= None)
+POST        /letting-part-of-property-details                       controllers.connectiontoproperty.LettingPartOfPropertyDetailsController.submit(idx: Option[Int])
+
+GET         /letting-part-of-property-rent                          controllers.connectiontoproperty.LettingPartOfPropertyDetailsRentController.show(idx: Int)
+POST        /letting-part-of-property-rent                          controllers.connectiontoproperty.LettingPartOfPropertyDetailsRentController.submit(idx: Int)
+
+GET         /letting-part-of-property-checkbox                      controllers.connectiontoproperty.LettingPartOfPropertyItemsIncludedInRentController.show(idx: Int)
+POST        /letting-part-of-property-checkbox                      controllers.connectiontoproperty.LettingPartOfPropertyItemsIncludedInRentController.submit(idx: Int)
+
+GET         /add-another-letting-part-of-property                   controllers.connectiontoproperty.AddAnotherLettingPartOfPropertyController.show(idx: Int)
+POST        /add-another-letting-part-of-property                   controllers.connectiontoproperty.AddAnotherLettingPartOfPropertyController.submit(idx: Int)
+GET         /remove-letting-part-of-property                        controllers.connectiontoproperty.AddAnotherLettingPartOfPropertyController.remove(idx: Int)
+
 # Not connected
 GET         /previously-connected                                   controllers.notconnected.PastConnectionController.show()
 POST        /previously-connected                                   controllers.notconnected.PastConnectionController.submit()
@@ -313,6 +332,11 @@ GET         /check-your-answers                                     controllers.
 
 GET         /check-your-answers-connection-to-property              controllers.connectiontoproperty.CheckYourAnswersConnectionToPropertyController.show()
 POST        /check-your-answers-connection-to-property              controllers.connectiontoproperty.CheckYourAnswersConnectionToPropertyController.submit()
+
+GET         /check-your-answers-connection-to-vacant-property       controllers.connectiontoproperty.CheckYourAnswersConnectionToVacantPropertyController.show()
+
+POST        /connection-to-property-declaration                     controllers.connectiontoproperty.ConnectionToPropertySubmissionController.submit()
+GET         /connection-to-property-confirmation                    controllers.connectiontoproperty.ConnectionToPropertySubmissionController.confirmation()
 
 GET         /check-your-answers-about-the-property                  controllers.aboutyouandtheproperty.CheckYourAnswersAboutThePropertyController.show()
 POST        /check-your-answers-about-the-property                  controllers.aboutyouandtheproperty.CheckYourAnswersAboutThePropertyController.submit()

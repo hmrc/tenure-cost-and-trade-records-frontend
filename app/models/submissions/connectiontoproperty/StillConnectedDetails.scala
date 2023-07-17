@@ -18,9 +18,7 @@ package models.submissions.connectiontoproperty
 
 import actions.SessionRequest
 import models.Session
-import models.pages.NoReferenceNumber
 import models.submissions.common.AnswersYesNo
-import models.submissions.requestReferenceNumber._
 import play.api.libs.json.Json
 
 case class StillConnectedDetails(
@@ -33,7 +31,12 @@ case class StillConnectedDetails(
   tradingNamePayingRent: Option[AnswersYesNo] = None,
   areYouThirdParty: Option[AnswersYesNo] = None,
   vacantPropertyStartDate: Option[StartDateOfVacantProperty] = None,
-  checkYourAnswersConnectionToProperty: Option[CheckYourAnswersConnectionToProperty] = None
+  isAnyRentReceived:Option[AnswersYesNo] = None,
+  provideContactDetails: Option[ProvideContactDetails] = None,
+  lettingPartOfPropertyDetailsIndex: Int = 0,
+  lettingPartOfPropertyDetails: IndexedSeq[LettingPartOfPropertyDetails] = IndexedSeq.empty,
+  checkYourAnswersConnectionToProperty: Option[CheckYourAnswersConnectionToProperty] = None,
+  checkYourAnswersConnectionToVacantProperty: Option[CheckYourAnswersConnectionToVacantProperty] = None
 )
 
 object StillConnectedDetails {
