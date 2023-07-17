@@ -57,7 +57,7 @@ class ConnectionToPropertySubmissionController @Inject()(
   def submitNotConnectedInformation(
     refNum: String
   )(implicit hc: HeaderCarrier, request: SessionRequest[_]): Future[Unit] = {
-    val auditType      = "ConnectionToPropertyFormSubmission"
+    val auditType      = "VacantFormSubmission"
     // Dummy data from session to able creation of audit dashboards
     val submissionJson = Json.toJson(request.sessionData).as[JsObject]
 
