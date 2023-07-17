@@ -23,7 +23,7 @@ import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty.updateAb
 import models.submissions.aboutyouandtheproperty.CheckYourAnswersAboutYourProperty
 import models.{ForTypes, Session}
 import navigation.AboutYouAndThePropertyNavigator
-import navigation.identifiers.{CheckYourAnswersAboutThePropertyId, CheckYourAnswersAboutThePropertyPageId}
+import navigation.identifiers.CheckYourAnswersAboutThePropertyPageId
 import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
@@ -77,7 +77,7 @@ class CheckYourAnswersAboutThePropertyController @Inject() (
             Some(controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show().url)
           )
         session.saveOrUpdate(updatedData)
-        Redirect(navigator.nextPage(CheckYourAnswersAboutThePropertyId, updatedData).apply(updatedData))
+        Redirect(navigator.nextPage(CheckYourAnswersAboutThePropertyPageId, updatedData).apply(updatedData))
       }
     )
   }
