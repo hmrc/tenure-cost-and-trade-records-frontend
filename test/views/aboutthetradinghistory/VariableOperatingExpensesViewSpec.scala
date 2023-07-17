@@ -36,7 +36,8 @@ class VariableOperatingExpensesViewSpec extends QuestionViewBehaviours[Seq[Varia
 
   override val form = VariableOperatingExpensesForm.variableOperatingExpensesForm(3)
 
-  def createView = () => variableOperatingExpensesView(form, 3, fakeDates, Summary("99996010001"))(fakeRequest, messages)
+  def createView = () =>
+    variableOperatingExpensesView(form, 3, fakeDates, Summary("99996010001"))(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[Seq[VariableOperatingExpenses]]) =>
     variableOperatingExpensesView(form, 3, fakeDates, Summary("99996010001"))(fakeRequest, messages)

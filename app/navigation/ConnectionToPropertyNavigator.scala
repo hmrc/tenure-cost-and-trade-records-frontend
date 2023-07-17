@@ -87,6 +87,6 @@ class ConnectionToPropertyNavigator @Inject() (audit: Audit) extends Navigator(a
     AreYouThirdPartyPageId                       -> (_ =>
       controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToPropertyController.show()
     ),
-    CheckYourAnswersConnectionToPropertyId           -> (_ => controllers.routes.TaskListController.show())
+    CheckYourAnswersConnectionToPropertyId       -> (_ => controllers.routes.TaskListController.show())
   )
 }

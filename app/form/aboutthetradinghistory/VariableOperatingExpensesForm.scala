@@ -25,45 +25,45 @@ import java.time.LocalDate
 
 object VariableOperatingExpensesForm {
   def variableOperatingExpensesForm(expectedNumberOfFinancialYears: Int): Form[Seq[VariableOperatingExpenses]] = {
-    val ukDateMappings = localDate("dd/MM/yyyy")
-    val dateTooEarlyConstraint: Constraint[LocalDate] = Constraint[LocalDate]("dateTooEarlyConstraint") { date =>
+    val ukDateMappings                                    = localDate("dd/MM/yyyy")
+    val dateTooEarlyConstraint: Constraint[LocalDate]     = Constraint[LocalDate]("dateTooEarlyConstraint") { date =>
       if (date.isAfter(LocalDate.of(1900, 1, 1))) Valid else Invalid("errorName")
     }
     val columnMapping: Mapping[VariableOperatingExpenses] = mapping(
-      "financial-year-end" -> ukDateMappings.verifying(dateTooEarlyConstraint, dateTooEarlyConstraint),
-      "energy-and-utilities" -> bigDecimal,
-      "cleaning-and-laundry" -> bigDecimal,
-      "building-maintenance-and-repairs" -> bigDecimal,
-      "fixtures-fittings-and-equipment" -> bigDecimal,
-      "advertising-and-promotions" -> bigDecimal,
-      "administration-and-sundries" -> bigDecimal,
-      "entertainment" -> bigDecimal,
+      "financial-year-end"                -> ukDateMappings.verifying(dateTooEarlyConstraint, dateTooEarlyConstraint),
+      "energy-and-utilities"              -> bigDecimal,
+      "cleaning-and-laundry"              -> bigDecimal,
+      "building-maintenance-and-repairs"  -> bigDecimal,
+      "fixtures-fittings-and-equipment"   -> bigDecimal,
+      "advertising-and-promotions"        -> bigDecimal,
+      "administration-and-sundries"       -> bigDecimal,
+      "entertainment"                     -> bigDecimal,
       "total-variable-operating-expenses" -> bigDecimal
     )(VariableOperatingExpenses.apply)(VariableOperatingExpenses.unapply)
 
     Form {
       expectedNumberOfFinancialYears match {
-        case 1 =>
+        case 1                               =>
           mapping("0" -> columnMapping)(section => Seq(section)) {
             case Seq(section) => Some(section)
-            case _ => None
+            case _            => None
           }
-        case 2 =>
+        case 2                               =>
           mapping(
             "0" -> columnMapping,
             "1" -> columnMapping
           ) { case (first, second) => Seq(first, second) } {
             case Seq(first, second) => Some((first, second))
-            case _ => None
+            case _                  => None
           }
-        case 3 =>
+        case 3                               =>
           mapping(
             "0" -> columnMapping,
             "1" -> columnMapping,
             "2" -> columnMapping
           ) { case (first, second, third) => Seq(first, second, third) } {
             case Seq(first, second, third) => Some((first, second, third))
-            case _ => None
+            case _                         => None
           }
         case incorrectNumberOfFinancialYears =>
           throw new IllegalArgumentException(
