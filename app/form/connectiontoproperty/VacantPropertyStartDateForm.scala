@@ -19,7 +19,7 @@ package form.connectiontoproperty
 import form.DateMappings.dateFieldsMapping
 import models.submissions.connectiontoproperty.StartDateOfVacantProperty
 import play.api.data.Form
-import play.api.data.Forms.{mapping, optional, text}
+import play.api.data.Forms.mapping
 
 object VacantPropertyStartDateForm {
 

@@ -19,7 +19,6 @@ package models.submissions.additionalinformation
 import crypto.MongoCrypto
 import play.api.libs.json.{Json, OFormat}
 import uk.gov.hmrc.crypto.Sensitive
-import crypto.SensitiveFormats._
 
 case class SensitiveAdditionalInformation(
   furtherInformationOrRemarksDetails: Option[FurtherInformationOrRemarksDetails] = None,

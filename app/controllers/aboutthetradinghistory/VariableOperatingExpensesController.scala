@@ -26,7 +26,7 @@ import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import views.html.aboutthetradinghistory.variableOperatingExpenses
-import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.{format, updateAboutTheTradingHistory}
+import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.updateAboutTheTradingHistory
 import java.time.LocalDate
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.{ExecutionContext, Future}

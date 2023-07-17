@@ -20,10 +20,9 @@ import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import repositories.SessionRepo
 import views.html.downloadFORTypeForm.downloadPDF
 
-import javax.inject.{Inject, Named, Singleton}
+import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
 
 @Singleton

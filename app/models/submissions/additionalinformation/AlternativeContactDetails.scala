@@ -16,7 +16,7 @@
 
 package models.submissions.additionalinformation
 
-import models.submissions.common.{ContactDetails, ContactDetailsAddress}
+import models.submissions.common.{ContactDetails}
 import play.api.libs.json.Json
 
 case class AlternativeContactDetails(

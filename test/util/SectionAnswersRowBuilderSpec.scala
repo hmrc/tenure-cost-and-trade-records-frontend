@@ -94,7 +94,7 @@ class SectionAnswersRowBuilderSpec extends TestBaseSpec {
 
       row shouldBe Seq(
         SummaryListRow(
-          key = Key(Text("How is the property currently used?")),
+          key = Key(Text("Property use")),
           value = Value(HtmlContent("Other<br/>Details for other option")),
           actions = Some(
             Actions(items =
@@ -102,7 +102,7 @@ class SectionAnswersRowBuilderSpec extends TestBaseSpec {
                 ActionItem(
                   href = "/send-trade-and-cost-information/about-the-property?from=CYA#propertyCurrentlyUsed",
                   content = Text("Change"),
-                  visuallyHiddenText = Some("How is the property currently used?")
+                  visuallyHiddenText = Some("Property use")
                 )
               )
             )

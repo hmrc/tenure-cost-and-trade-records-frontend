@@ -18,9 +18,7 @@ package models.submissions.connectiontoproperty
 
 import actions.SessionRequest
 import models.Session
-import models.pages.NoReferenceNumber
 import models.submissions.common.AnswersYesNo
-import models.submissions.requestReferenceNumber._
 import play.api.libs.json.Json
 
 case class StillConnectedDetails(
