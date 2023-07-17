@@ -19,14 +19,16 @@ package controllers.aboutthetradinghistory
 import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.CheckYourAnswersAboutTheTradingHistoryForm.checkYourAnswersAboutTheTradingHistoryForm
+import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.updateAboutTheTradingHistory
+import models.submissions.aboutthetradinghistory.CheckYourAnswersAboutTheTradingHistory
 import models.{ForTypes, Session}
 import navigation.AboutTheTradingHistoryNavigator
+import navigation.identifiers.CheckYourAnswersAboutTheTradingHistoryId
 import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import views.html.aboutthetradinghistory.checkYourAnswersAboutTheTradingHistory
-import views.html.taskList
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
@@ -36,7 +38,6 @@ class CheckYourAnswersAboutTheTradingHistoryController @Inject() (
   mcc: MessagesControllerComponents,
   navigator: AboutTheTradingHistoryNavigator,
   checkYourAnswersAboutTheTradingHistoryView: checkYourAnswersAboutTheTradingHistory,
-  taskListView: taskList,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
 ) extends FORDataCaptureController(mcc)
@@ -60,8 +61,24 @@ class CheckYourAnswersAboutTheTradingHistoryController @Inject() (
   }
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft(
-      Ok(taskListView())
+    continueOrSaveAsDraft[CheckYourAnswersAboutTheTradingHistory](
+      checkYourAnswersAboutTheTradingHistoryForm,
+      formWithErrors =>
+        BadRequest(
+          checkYourAnswersAboutTheTradingHistoryView(
+            formWithErrors,
+            getBackLink(request.sessionData),
+            request.sessionData.toSummary
+          )
+        ),
+      data => {
+        val updatedData = updateAboutTheTradingHistory(_.copy(checkYourAnswersAboutTheTradingHistory = Some(data)))
+          .copy(lastCYAPageUrl =
+            Some(controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url)
+          )
+        session.saveOrUpdate(updatedData)
+        Redirect(navigator.nextPage(CheckYourAnswersAboutTheTradingHistoryId, updatedData).apply(updatedData))
+      }
     )
   }
 
