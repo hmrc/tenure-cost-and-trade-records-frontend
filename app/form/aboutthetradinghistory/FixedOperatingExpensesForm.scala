@@ -18,7 +18,7 @@ package form.aboutthetradinghistory
 
 import models.submissions.aboutthetradinghistory.FixedOperatingExpenses
 import play.api.data.{Form, Mapping}
-import play.api.data.Forms.{bigDecimal, default, localDate, mapping, text}
+import play.api.data.Forms.{bigDecimal, localDate, mapping}
 import play.api.data.validation.{Constraint, Invalid, Valid}
 
 import java.time.LocalDate

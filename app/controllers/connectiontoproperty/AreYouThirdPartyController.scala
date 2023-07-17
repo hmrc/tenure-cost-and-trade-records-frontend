@@ -20,7 +20,7 @@ import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
 import form.connectiontoproperty.AreYouThirdPartyForm.areYouThirdPartyForm
 import models.Session
-import models.submissions.common.{AnswerYes, AnswersYesNo}
+import models.submissions.common.AnswersYesNo
 import models.submissions.connectiontoproperty.StillConnectedDetails.updateStillConnectedDetails
 import navigation.ConnectionToPropertyNavigator
 import navigation.identifiers.AreYouThirdPartyPageId

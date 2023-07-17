@@ -18,7 +18,6 @@ package models.submissions.requestReferenceNumber
 
 import actions.SessionRequest
 import models.Session
-import models.submissions.downloadFORTypeForm.{DownloadPDF, DownloadPDFReferenceNumber}
 import play.api.libs.json.{Json, OFormat}
 
 case class RequestReferenceNumberDetails(
