@@ -112,7 +112,13 @@ trait FakeObjects {
     Some(AnswerYes),
     Some(AnswerYes),
     Some(AnswerYes),
-    Some(StartDateOfVacantProperty(prefilledDateInput))
+    Some(StartDateOfVacantProperty(prefilledDateInput)),
+    Some(AnswerYes),
+    Some(ProvideContactDetails(YourContactDetails("fullname",prefilledContactDetails,Some("additional info")))),
+    lettingPartOfPropertyDetailsIndex = 0,
+    lettingPartOfPropertyDetails = IndexedSeq(LettingPartOfPropertyDetails(TenantDetails("name","billboard",CorrespondenceAddress("building",Some("street"),"town",Some("county"),"BN12 4AX")),Some(LettingPartOfPropertyRentDetails(2000,prefilledDateInput)),List("Other"),addAnotherLettingToProperty = Some(AnswerYes))),
+    checkYourAnswersConnectionToProperty = None,
+    checkYourAnswersConnectionToVacantProperty = None
   )
 
   val prefilledStillConnectedDetailsNoToAll: StillConnectedDetails = StillConnectedDetails(
@@ -124,7 +130,9 @@ trait FakeObjects {
     Some(AnswerNo),
     Some(AnswerNo),
     Some(AnswerNo),
-    Some(StartDateOfVacantProperty((LocalDate.now())))
+    Some(StartDateOfVacantProperty((LocalDate.now()))),
+    Some(AnswerNo),
+    Some(prefilledProvideContactDetails)
   )
 
   val prefilledStillConnectedDetailsNo: StillConnectedDetails = StillConnectedDetails(Some(AddressConnectionTypeNo))
@@ -199,6 +207,12 @@ trait FakeObjects {
     Some(AnswerNo),
     None
   )
+
+  val prefilledProvideContactDetails: ProvideContactDetails = ProvideContactDetails(YourContactDetails(
+    fullName = "Tobermory",
+    contactDetails = ContactDetails(prefilledFakePhoneNo,prefilledFakeEmail),
+    additionalInformation = Some("Additional information")
+  ))
 
   val aboutYouAndTheProperty6010YesSession: Session =
     stillConnectedDetailsYesSession.copy(aboutYouAndTheProperty = Some(prefilledAboutYouAndThePropertyYes))

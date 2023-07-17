@@ -31,7 +31,12 @@ case class StillConnectedDetails(
   tradingNamePayingRent: Option[AnswersYesNo] = None,
   areYouThirdParty: Option[AnswersYesNo] = None,
   vacantPropertyStartDate: Option[StartDateOfVacantProperty] = None,
-  checkYourAnswersConnectionToProperty: Option[CheckYourAnswersConnectionToProperty] = None
+  isAnyRentReceived:Option[AnswersYesNo] = None,
+  provideContactDetails: Option[ProvideContactDetails] = None,
+  lettingPartOfPropertyDetailsIndex: Int = 0,
+  lettingPartOfPropertyDetails: IndexedSeq[LettingPartOfPropertyDetails] = IndexedSeq.empty,
+  checkYourAnswersConnectionToProperty: Option[CheckYourAnswersConnectionToProperty] = None,
+  checkYourAnswersConnectionToVacantProperty: Option[CheckYourAnswersConnectionToVacantProperty] = None
 )
 
 object StillConnectedDetails {

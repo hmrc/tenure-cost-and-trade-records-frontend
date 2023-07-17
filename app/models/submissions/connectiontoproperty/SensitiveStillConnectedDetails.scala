@@ -31,7 +31,12 @@ case class SensitiveStillConnectedDetails(
   tradingNamePayingRent: Option[AnswersYesNo] = None,
   areYouThirdParty: Option[AnswersYesNo] = None,
   vacantPropertyStartDate: Option[StartDateOfVacantProperty] = None,
-  checkYourAnswersConnectionToProperty: Option[CheckYourAnswersConnectionToProperty] = None
+  isAnyRentReceived:Option[AnswersYesNo] = None,
+  provideContactDetails: Option[SensitiveProvideContactDetails] = None,
+  lettingPartOfPropertyDetailsIndex: Int = 0,
+  lettingPartOfPropertyDetails: IndexedSeq[SensitiveLettingPartOfPropertyDetails] = IndexedSeq.empty,
+  checkYourAnswersConnectionToProperty: Option[CheckYourAnswersConnectionToProperty] = None,
+  checkYourAnswersConnectionToVacantProperty: Option[CheckYourAnswersConnectionToVacantProperty] = None
 ) extends Sensitive[StillConnectedDetails] {
 
   override def decryptedValue: StillConnectedDetails = StillConnectedDetails(
@@ -44,7 +49,12 @@ case class SensitiveStillConnectedDetails(
     tradingNamePayingRent,
     areYouThirdParty,
     vacantPropertyStartDate,
-    checkYourAnswersConnectionToProperty
+    isAnyRentReceived,
+    provideContactDetails.map(_.decryptedValue),
+    lettingPartOfPropertyDetailsIndex,
+    lettingPartOfPropertyDetails.map(_.decryptedValue),
+    checkYourAnswersConnectionToProperty,
+    checkYourAnswersConnectionToVacantProperty
   )
 
 }
@@ -66,6 +76,11 @@ object SensitiveStillConnectedDetails {
       stillConnectedDetails.tradingNamePayingRent,
       stillConnectedDetails.areYouThirdParty,
       stillConnectedDetails.vacantPropertyStartDate,
-      stillConnectedDetails.checkYourAnswersConnectionToProperty
+      stillConnectedDetails.isAnyRentReceived,
+      stillConnectedDetails.provideContactDetails.map(SensitiveProvideContactDetails(_)),
+      stillConnectedDetails.lettingPartOfPropertyDetailsIndex,
+      stillConnectedDetails.lettingPartOfPropertyDetails.map(SensitiveLettingPartOfPropertyDetails(_)),
+      stillConnectedDetails.checkYourAnswersConnectionToProperty,
+      stillConnectedDetails.checkYourAnswersConnectionToVacantProperty
     )
 }

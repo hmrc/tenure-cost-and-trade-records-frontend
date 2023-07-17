@@ -90,7 +90,7 @@ label.change = Change
 # COMMON HINTS
 ##############
 hint.select.all = Select all that apply
-hint.date.example = For example, 10 2 1999
+hint.date.example = For example, 27 9 2017
 hint.select.applicable = Select any that apply – leave blank if not applicable
 
 # SECTION NAMES
@@ -281,6 +281,88 @@ label.startDateOfVacantProperty.help = For example 27 9 2017
 error.startDateOfVacantProperty.day.required = The date must include a day
 error.startDateOfVacantProperty.month.required = The date must include a month
 error.startDateOfVacantProperty.year.required = The date must include a year
+
+# LETTING INCOME - IS ANT RENT RECEIVED FROM LETTING
+####################################################
+isRentReceivedFromLetting.heading = Is any rent received form letting parts of the property?
+isRentReceivedFromLetting.title = Letting income
+isRentReceivedFromLetting.p1 = You must declare any income received from letting parts of the property, for example advertising billboards, car parking or telephone masts. You will have the oppertunity to add more than one letting if required.
+
+# CONNECTION TO PROPERTY TENANT DETAILS
+#######################################
+tenantDetails.heading = Provide the tenant''s details
+label.tenantName = Tenant''s name
+label.descriptionOfLetting = Description of letting
+hint.descriptionOfLetting = For example, a billboard, residential accommodation
+label.addressLineOne = Address line 1
+label.addressLineTwo = Address line 2
+error.tenantName.required = Enter the name of the tenant
+error.tenantName.maxLength = Tenant''s name must be 100 characters or fewer
+error.descriptionOfLetting.required = Enter a description of the letting
+error.descriptionOfLetting.maxLength = Description of letting must be 100 characters or fewer
+error.addressLineOne.required = Enter the first line of the address
+error.addressLineOne.maxLength = First line of the address must be 50 characters or fewer
+error.addressLineTwo.maxLength = Second line of address must be 50 characters or fewer
+
+# CONNECTION TO PROPERTY ANNUAL RENT
+###########################################
+lettingPartOfPropertyRentDetails.heading = Annual rent for {0}
+
+# CONNECTION TO PROPERTY ITEMS INCLUDED IN RENT
+###############################################
+lettingPartOfPropertyCheckboxesDetails.heading = Are any of the following included in your rent for {0}?
+hint.lettingPartOfPropertyCheckboxesDetails = Select all that apply
+checkbox.lettingPartOfPropertyCheckboxesDetails.rates = Rates
+checkbox.lettingPartOfPropertyCheckboxesDetails.propertyInsurance = Property insurance
+checkbox.lettingPartOfPropertyCheckboxesDetails.outsideRepairs = Outside repairs
+checkbox.lettingPartOfPropertyCheckboxesDetails.insideRepairs = Inside repairs
+checkbox.lettingPartOfPropertyCheckboxesDetails.noneOfThese = No, none of these are included in the rent
+checkbox.lettingPartOfPropertyCheckboxesDetails.none = None
+error.lettingPartOfPropertyCheckboxesDetails.required = Select items included in your rent, or select ’No, none of these are included in the rent’
+error.lettingPartOfPropertyCheckboxesDetails.noneSelectedWithOther = Select items included in your rent, or select ’No, none of these are included in the rent’
+
+# CONNECTION TO PROPERTY - ADD ANOTHER LETTING DETAILS
+#################################################################
+addAnotherLettingPartOfProperty.heading = You have added {0} letting
+label.addAnotherLettingPartOfProperty = Do you need to add another letting?
+error.addAnotherLetting.required = Select whether you need to add another letting
+
+# PROVIDE YOUR CONTACT DETAILS
+##############################
+provideContactDetails.heading = Provide your contact details
+provideContactDetails.title = Provide your contact details
+provideContactDetails.p1 = These should be the contact details of the person completing this form. We will only use them to update you about your declaration.
+provideContactDetailsAdditionalInformation.heading = Additional Information (optional)
+provideContactDetailsAdditionalInformation.hint = For example, the name of the previous owner or occupier
+
+# CHECK YOUR ANSWERS VACANT PROPERTY SUBMISSION
+#############################################
+checkYourAnswersConnectionToVacantProperty.heading = Check your answers - vacant properties
+checkYourAnswersConnectionToVacantProperty.connectionStatus.heading = Connection status
+label.checkYourAnswersConnectionToVacantProperty = Connected to the property?
+checkYourAnswersConnectionToVacantProperty.vacancyStatus.heading = Vacancy status
+checkYourAnswersConnectionToVacantProperty.isPropertyVacant = Property currently vacant?
+checkYourAnswersConnectionToVacantProperty.vacantDate = When the property became vacant
+checkYourAnswersConnectionToVacantProperty.lettings.heading = Lettings
+checkYourAnswersConnectionToVacantProperty.isRentReceived = Rent received from letting parts of the property?
+checkYourAnswersConnectionToVacantProperty.yourContactDetails.heading = Your contact details
+checkYourAnswersConnectionToVacantProperty.yourContactDetails.title = Contacts and additional information
+checkYourAnswersConnectionToVacantProperty.tenantDetails = Tenant''s details
+checkYourAnswersConnectionToVacantProperty.annualRent = Annual rent
+checkYourAnswersConnectionToVacantProperty.fixedOn = Fixed on
+checkYourAnswersConnectionToVacantProperty.itemsInRent = Included in rent
+checkYourAnswersConnectionToVacantProperty.addAnotherLetting = Add another letting?
+
+# Confirmation Page Connection to Property
+##########################################
+label.connectionToProperty.confirm.heading = Declaration sent successfully
+label.connectionToProperty.emailConfirm = We have sent you a confirmation email.
+label.connectionToProperty.saveCopyOfAnswers.1 = Save a copy of your answers
+label.connectionToProperty.saveCopyOfAnswers.2 = (print or PDF download)
+label.connectionToProperty.unableToRetrieveAnswers = You will be unable to retrieve your answers beyond this point
+label.connectionToProperty.whatNext = What happens next
+connectionToProperty.confirm.copy.list.1 = We have sent your application to the Valuation Office Agency.
+connectionToProperty.confirm.copy.list.2 = They may need to contact you for further information.
 
 # NOT CONNECTED SECTION
 #######################

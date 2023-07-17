@@ -27,7 +27,7 @@ import views.html.additionalinformation.{alternativeContactDetails, furtherInfor
 import views.html.downloadFORTypeForm.{downloadPDF, downloadPDFReferenceNumber}
 import views.html.form._
 import views.html.requestReferenceNumber.{requestReferenceNumber, requestReferenceNumberContactDetails}
-import views.html.{confirmationNotConnected, login}
+import views.html.{confirmationConnectionToProperty, confirmationNotConnected, login}
 
 trait FakeViews { this: GuiceOneAppPerSuite =>
 
@@ -49,11 +49,19 @@ trait FakeViews { this: GuiceOneAppPerSuite =>
     app.injector.instanceOf[requestReferenceNumberContactDetails]
   lazy val checkYourAnswersConnectionToProperty: checkYourAnswersConnectionToProperty     =
     app.injector.instanceOf[checkYourAnswersConnectionToProperty]
+  lazy val checkYourAnswersConnectionToVacantProperty: checkYourAnswersConnectionToVacantProperty = app.injector.instanceOf[checkYourAnswersConnectionToVacantProperty]
+  lazy val confirmationConnectionToProperty: confirmationConnectionToProperty = app.injector.instanceOf[confirmationConnectionToProperty]
   lazy val tradingNameOperatingFromProperty: tradingNameOperatingFromProperty             =
     app.injector.instanceOf[tradingNameOperatingFromProperty]
   lazy val tradingNameOwnTheProperty: tradingNameOwnTheProperty                           = app.injector.instanceOf[tradingNameOwnTheProperty]
   lazy val tradingNamePayRentView: tradingNamePayingRent                                  = app.injector.instanceOf[tradingNamePayingRent]
   lazy val vacantPropertiesStartDateView: vacantPropertyStartDate                         = app.injector.instanceOf[vacantPropertyStartDate]
+  lazy val isRentReceivedFromLettingView: isRentReceivedFromLetting                       = app.injector.instanceOf[isRentReceivedFromLetting]
+  lazy val provideContactDetailsView: provideContactDetails                               = app.injector.instanceOf[provideContactDetails]
+  lazy val addAnotherLettingPartOfPropertyView: addAnotherLettingPartOfProperty           = app.injector.instanceOf[addAnotherLettingPartOfProperty]
+  lazy val tenantDetailsView: tenantDetails                                               = app.injector.instanceOf[tenantDetails]
+  lazy val lettingPartOfPropertyRentDetailsView: lettingPartOfPropertyRentDetails         = app.injector.instanceOf[lettingPartOfPropertyRentDetails]
+  lazy val lettingPartOfPropertyRentIncludesView: lettingPartOfPropertyRentIncludes       = app.injector.instanceOf[lettingPartOfPropertyRentIncludes]
   // Not connected
   val pastConnectionView: pastConnection                                                  = app.injector.instanceOf[pastConnection]
   val removeConnectionView: removeConnection                                              = app.injector.instanceOf[removeConnection]
