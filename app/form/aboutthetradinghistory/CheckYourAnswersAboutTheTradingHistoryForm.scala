@@ -18,13 +18,16 @@ package form.aboutthetradinghistory
 
 import models.submissions.aboutthetradinghistory.CheckYourAnswersAboutTheTradingHistory
 import play.api.data.Form
-import play.api.data.Forms.{mapping, text}
+import play.api.data.Forms.{default, mapping, text}
+import play.api.data.validation.Constraints.nonEmpty
 
 object CheckYourAnswersAboutTheTradingHistoryForm {
 
   val checkYourAnswersAboutTheTradingHistoryForm = Form(
     mapping(
-      "checkYourAnswersAboutTheTradingHistory" -> text
+      "checkYourAnswersAboutTheTradingHistory" -> default(text, "").verifying(
+        nonEmpty(errorMessage = "error.checkYourAnswersRadio.required")
+      )
     )(CheckYourAnswersAboutTheTradingHistory.apply)(CheckYourAnswersAboutTheTradingHistory.unapply)
   )
 }

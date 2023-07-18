@@ -18,8 +18,8 @@ package models.submissions.connectiontoproperty
 
 import play.api.libs.json.Json
 
-case class ProvideContactDetails (yourContactDetails: YourContactDetails)
+case class ProvideContactDetails(yourContactDetails: YourContactDetails)
 
-object ProvideContactDetails{
+object ProvideContactDetails {
   implicit val format = Json.format[ProvideContactDetails]
 }

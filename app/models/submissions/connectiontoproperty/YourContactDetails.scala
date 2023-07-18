@@ -20,11 +20,12 @@ import models.submissions.PrintableYourContactDetails
 import models.submissions.common.ContactDetails
 import play.api.libs.json.Json
 
-case class YourContactDetails (
-                                fullName:String,
-                                contactDetails: ContactDetails,
-                                additionalInformation: Option[String] = None) extends PrintableYourContactDetails
+case class YourContactDetails(
+  fullName: String,
+  contactDetails: ContactDetails,
+  additionalInformation: Option[String] = None
+) extends PrintableYourContactDetails
 
-object YourContactDetails{
+object YourContactDetails {
   implicit val format = Json.format[YourContactDetails]
 }

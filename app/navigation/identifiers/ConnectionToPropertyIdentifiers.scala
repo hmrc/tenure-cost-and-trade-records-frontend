@@ -52,19 +52,31 @@ case object TradingNameOwnThePropertyPageId extends Identifier {
   override def toString: String = "TradingNameOwnTheProperty"
 }
 
-case object TradingNamePayingRentPageId extends Identifier { override def toString: String = "TradingNamePayingRentPage" }
+case object TradingNamePayingRentPageId extends Identifier {
+  override def toString: String = "TradingNamePayingRentPage"
+}
 
-case object ProvideYourContactDetailsPageId extends Identifier { override def toString: String = "ProvideYourContactDetailsPage" }
+case object ProvideYourContactDetailsPageId extends Identifier {
+  override def toString: String = "ProvideYourContactDetailsPage"
+}
 
 case object AreYouThirdPartyPageId extends Identifier { override def toString: String = "AreYouThirdParty" }
 
-case object LettingPartOfPropertyDetailsPageId extends Identifier { override def toString: String = "LettingPartOfPropertyDetailsPage"}
+case object LettingPartOfPropertyDetailsPageId extends Identifier {
+  override def toString: String = "LettingPartOfPropertyDetailsPage"
+}
 
-case object LettingPartOfPropertyRentDetailsPageId extends Identifier { override def toString: String = "LettingPartOfPropertyRentDetailsPage"}
+case object LettingPartOfPropertyRentDetailsPageId extends Identifier {
+  override def toString: String = "LettingPartOfPropertyRentDetailsPage"
+}
 
-case object LettingPartOfPropertyItemsIncludedInRentPageId extends Identifier { override def toString: String = "LettingPartOfPropertyItemsIncludedInRentPage"}
+case object LettingPartOfPropertyItemsIncludedInRentPageId extends Identifier {
+  override def toString: String = "LettingPartOfPropertyItemsIncludedInRentPage"
+}
 
-case object AddAnotherLettingPartOfPropertyPageId extends Identifier { override def toString: String = "AddAnotherLettingPartOfPropertyPage"}
+case object AddAnotherLettingPartOfPropertyPageId extends Identifier {
+  override def toString: String = "AddAnotherLettingPartOfPropertyPage"
+}
 
 case object CheckYourAnswersConnectionToPropertyId extends Identifier {
   override def toString: String = "CheckYourAnswersConnectionToPropertyPage"

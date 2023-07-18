@@ -34,12 +34,12 @@ import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class ProvideContactDetailsController @Inject()(
-                                                 mcc: MessagesControllerComponents,
-                                                 navigator: ConnectionToPropertyNavigator,
-                                                 provideContactDetailsView: provideContactDetails,
-                                                 withSessionRefiner: WithSessionRefiner,
-                                                 @Named("session") val session: SessionRepo
+class ProvideContactDetailsController @Inject() (
+  mcc: MessagesControllerComponents,
+  navigator: ConnectionToPropertyNavigator,
+  provideContactDetailsView: provideContactDetails,
+  withSessionRefiner: WithSessionRefiner,
+  @Named("session") val session: SessionRepo
 ) extends FORDataCaptureController(mcc)
     with I18nSupport
     with Logging {
@@ -54,7 +54,7 @@ class ProvideContactDetailsController @Inject()(
           },
           getBackLink(request.sessionData) match {
             case Right(link) => link
-            case Left(msg) =>
+            case Left(msg)   =>
               logger.warn(s"Navigation for provide your contact details page reached with error: $msg")
               throw new RuntimeException(s"Navigation for provide your contact details page reached with error $msg")
           },
@@ -69,14 +69,16 @@ class ProvideContactDetailsController @Inject()(
       provideContactDetailsForm,
       formWithErrors =>
         BadRequest(
-          provideContactDetailsView(formWithErrors,
+          provideContactDetailsView(
+            formWithErrors,
             getBackLink(request.sessionData) match {
               case Right(link) => link
-              case Left(msg) =>
+              case Left(msg)   =>
                 logger.warn(s"Navigation for provide your contact details page reached with error: $msg")
                 throw new RuntimeException(s"Navigation for provide your contact details page reached with error $msg")
             },
-            request.sessionData.toSummary)
+            request.sessionData.toSummary
+          )
         ),
       data => {
         val updatedData = updateStillConnectedDetails(_.copy(provideContactDetails = Some(data)))
@@ -86,12 +88,11 @@ class ProvideContactDetailsController @Inject()(
     )
   }
 
-  private def getBackLink(answers: Session): Either[String,String] = {
+  private def getBackLink(answers: Session): Either[String, String] =
     answers.stillConnectedDetails.flatMap(_.isAnyRentReceived.map(_.name)) match {
       case Some("yes") => Right(controllers.connectiontoproperty.routes.VacantPropertiesStartDateController.show().url)
-      case Some ("no") => Right(controllers.connectiontoproperty.routes.VacantPropertiesStartDateController.show().url)
-      case _                          => Left(s"Unknown connection to property back link")
+      case Some("no")  => Right(controllers.connectiontoproperty.routes.VacantPropertiesStartDateController.show().url)
+      case _           => Left(s"Unknown connection to property back link")
     }
 
-  }
 }

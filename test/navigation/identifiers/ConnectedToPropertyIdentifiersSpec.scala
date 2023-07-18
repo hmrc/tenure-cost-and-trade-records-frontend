@@ -103,7 +103,9 @@ class ConnectedToPropertyIdentifiersSpec extends TestBaseSpec {
     }
 
     "Identifier for letting part of the property items included in rent page" in {
-      assert(LettingPartOfPropertyItemsIncludedInRentPageId.toString.equals("LettingPartOfPropertyItemsIncludedInRentPage"))
+      assert(
+        LettingPartOfPropertyItemsIncludedInRentPageId.toString.equals("LettingPartOfPropertyItemsIncludedInRentPage")
+      )
     }
 
     "Identifier for add another letting part of the property page" in {

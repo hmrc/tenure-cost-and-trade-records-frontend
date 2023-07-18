@@ -27,8 +27,8 @@ class LettingPartOfPropertyItemsIncludedInRentControllerSpec extends TestBaseSpe
   import TestData._
 
   def lettingPartOfPropertyItemsIncludedInRentController(
-                                                  stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledStillConnectedDetailsYesToAll)
-                                                ) =
+    stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledStillConnectedDetailsYesToAll)
+  ) =
     new LettingPartOfPropertyItemsIncludedInRentController(
       stubMessagesControllerComponents(),
       connectedToPropertyNavigator,
@@ -46,7 +46,7 @@ class LettingPartOfPropertyItemsIncludedInRentControllerSpec extends TestBaseSpe
     "return HTML" in {
       val result = lettingPartOfPropertyItemsIncludedInRentController().show(0)(fakeRequest)
       contentType(result) shouldBe Some("text/html")
-      charset(result) shouldBe Some("utf-8")
+      charset(result)     shouldBe Some("utf-8")
     }
   }
 

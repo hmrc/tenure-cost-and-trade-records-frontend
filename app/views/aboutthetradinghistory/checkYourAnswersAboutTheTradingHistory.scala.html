@@ -15,12 +15,14 @@
  *@
 
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
 @import models.submissions.aboutthetradinghistory.CheckYourAnswersAboutTheTradingHistory
 @import models.pages.Summary
 
 @this(layout: Layout,
         govukButton: GovukButton,
+        govukRadios: GovukRadios,
         formWithCSRF: FormWithCSRF
 )
 
@@ -31,7 +33,7 @@
  backLinkUrl = backLink,
  showSection = true,
  summary = Some(summary),
- sectionName = messages("label.section.aboutTheTradingHistory"),
+ sectionName = messages("label.section.aboutYourTradingHistory"),
  theForm = theForm
 ) {
 
@@ -59,6 +61,12 @@
   </div>
 
   </dl>
+
+  @includes.checkYourAnswersRadioButtons(
+   govukRadios,
+   theForm,
+   "checkYourAnswersAboutTheTradingHistory"
+  )
 
   @includes.continueSaveAsDraftButtons(govukButton)
 

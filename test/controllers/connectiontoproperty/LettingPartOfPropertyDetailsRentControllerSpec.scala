@@ -29,8 +29,8 @@ class LettingPartOfPropertyDetailsRentControllerSpec extends TestBaseSpec {
   import TestData._
 
   def lettingPartOfPropertyDetailsRentController(
-                                               stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledStillConnectedDetailsYesToAll)
-                                             ) =
+    stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledStillConnectedDetailsYesToAll)
+  ) =
     new LettingPartOfPropertyDetailsRentController(
       stubMessagesControllerComponents(),
       connectedToPropertyNavigator,
@@ -48,7 +48,7 @@ class LettingPartOfPropertyDetailsRentControllerSpec extends TestBaseSpec {
     "return HTML" in {
       val result = lettingPartOfPropertyDetailsRentController().show(0)(fakeRequest)
       contentType(result) shouldBe Some("text/html")
-      charset(result) shouldBe Some("utf-8")
+      charset(result)     shouldBe Some("utf-8")
     }
 
     "redirect the user to the other Letting other part of property details page" when {
@@ -68,11 +68,11 @@ class LettingPartOfPropertyDetailsRentControllerSpec extends TestBaseSpec {
       "given an index" which {
         "exists within the session" in {
           val result = lettingPartOfPropertyDetailsRentController().show(0)(fakeRequest)
-          val html = Jsoup.parse(contentAsString(result))
+          val html   = Jsoup.parse(contentAsString(result))
 
-          Option(html.getElementById("annualRent").`val`()).value shouldBe "2000"
+          Option(html.getElementById("annualRent").`val`()).value      shouldBe "2000"
           Option(html.getElementById("dateInput.month").`val`()).value shouldBe "6"
-          Option(html.getElementById("dateInput.year").`val`()).value shouldBe "2022"
+          Option(html.getElementById("dateInput.year").`val`()).value  shouldBe "2022"
         }
       }
     }

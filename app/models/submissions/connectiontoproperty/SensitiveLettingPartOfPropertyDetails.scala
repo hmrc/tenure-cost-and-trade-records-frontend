@@ -41,10 +41,11 @@ object SensitiveLettingPartOfPropertyDetails {
   implicit def format(implicit crypto: MongoCrypto): OFormat[SensitiveLettingPartOfPropertyDetails] =
     Json.format[SensitiveLettingPartOfPropertyDetails]
 
-  def apply(lettingDetails: LettingPartOfPropertyDetails): SensitiveLettingPartOfPropertyDetails = SensitiveLettingPartOfPropertyDetails(
-    SensitiveTenantDetails(lettingDetails.tenantDetails),
-    lettingDetails.lettingPartOfPropertyRentDetails,
-    lettingDetails.itemsIncludedInRent,
-    lettingDetails.addAnotherLettingToProperty
-  )
+  def apply(lettingDetails: LettingPartOfPropertyDetails): SensitiveLettingPartOfPropertyDetails =
+    SensitiveLettingPartOfPropertyDetails(
+      SensitiveTenantDetails(lettingDetails.tenantDetails),
+      lettingDetails.lettingPartOfPropertyRentDetails,
+      lettingDetails.itemsIncludedInRent,
+      lettingDetails.addAnotherLettingToProperty
+    )
 }

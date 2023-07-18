@@ -18,10 +18,9 @@ package models.submissions.connectiontoproperty
 
 import play.api.libs.json.Json
 
-case class TenantDetails (name:String,
-                          descriptionOfLetting:String,
-                          correspondenceAddress: CorrespondenceAddress) extends PrintableTenantDetails
+case class TenantDetails(name: String, descriptionOfLetting: String, correspondenceAddress: CorrespondenceAddress)
+    extends PrintableTenantDetails
 
-object TenantDetails{
+object TenantDetails {
   implicit val format = Json.format[TenantDetails]
 }

@@ -24,7 +24,7 @@ import play.api.data.Forms.mapping
 
 object LettingPartOfPropertyRentForm {
 
-  val lettingPartOfPropertyRentForm:Form[LettingPartOfPropertyRentDetails] = Form(
+  val lettingPartOfPropertyRentForm: Form[LettingPartOfPropertyRentDetails] = Form(
     mapping(
       "annualRent" -> currencyMapping(".annualRent"),
       "dateInput"  -> dateFieldsMapping("dateInput")

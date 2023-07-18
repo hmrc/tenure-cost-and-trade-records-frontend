@@ -34,7 +34,7 @@ import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class IsRentReceivedFromLettingController @Inject()(
+class IsRentReceivedFromLettingController @Inject() (
   mcc: MessagesControllerComponents,
   navigator: ConnectionToPropertyNavigator,
   isRentReceivedFromLettingView: isRentReceivedFromLetting,

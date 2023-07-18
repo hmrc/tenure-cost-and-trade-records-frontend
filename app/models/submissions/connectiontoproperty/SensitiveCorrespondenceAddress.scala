@@ -40,7 +40,8 @@ case class SensitiveCorrespondenceAddress(
 
 object SensitiveCorrespondenceAddress {
   import crypto.SensitiveFormats._
-  implicit def format(implicit crypto: MongoCrypto): OFormat[SensitiveCorrespondenceAddress] = Json.format[SensitiveCorrespondenceAddress]
+  implicit def format(implicit crypto: MongoCrypto): OFormat[SensitiveCorrespondenceAddress] =
+    Json.format[SensitiveCorrespondenceAddress]
 
   def apply(address: CorrespondenceAddress): SensitiveCorrespondenceAddress = SensitiveCorrespondenceAddress(
     SensitiveString(address.buildingNameNumber),
