@@ -16,6 +16,7 @@
 
 package controllers.downloadFORTypeForm
 
+import connectors.BackendConnector
 import form.Errors
 import form.requestReferenceNumber.RequestReferenceNumberContactDetailsForm.requestReferenceNumberContactDetailsForm
 import models.submissions.connectiontoproperty.StillConnectedDetails
@@ -23,6 +24,8 @@ import models.submissions.downloadFORTypeForm.{DownloadPDFDetails, DownloadPDFRe
 import play.api.http.Status
 import play.api.test.Helpers._
 import utils.TestBaseSpec
+
+import scala.concurrent.ExecutionContext
 
 class DownloadPDFReferenceNumberControllerSpec extends TestBaseSpec {
 
@@ -34,7 +37,7 @@ class DownloadPDFReferenceNumberControllerSpec extends TestBaseSpec {
     downloadPDFReferenceNumberView,
     preEnrichedActionRefiner(downloadPDFDetails = downloadPDFDetails),
     mockSessionRepo
-  )
+  )(any[BackendConnector], any[ExecutionContext])
 
   "GET /" should {
     "return 200" in {

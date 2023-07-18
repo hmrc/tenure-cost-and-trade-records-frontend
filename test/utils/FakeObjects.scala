@@ -465,6 +465,8 @@ trait FakeObjects {
     Some(CheckYourAnswersRequestReferenceNumber("CYA"))
   )
 
-  val prefilledDownloadPDFRef = DownloadPDFDetails
-  (Some(DownloadPDFReferenceNumber("99996010001")), Some(DownloadPDF("FOR6010")))
+  val prefilledDownloadPDFRef: DownloadPDFDetails = DownloadPDFDetails(
+    Some(DownloadPDFReferenceNumber("99996010001")),
+    Some(DownloadPDF("FOR6010"))
+  )
 }

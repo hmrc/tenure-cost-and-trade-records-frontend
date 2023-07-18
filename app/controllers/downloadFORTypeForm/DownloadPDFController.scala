@@ -33,8 +33,7 @@ class DownloadPDFController @Inject() (
   downloadPDFView: downloadPDF,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit connector: BackendConnector, ec: ExecutionContext)
-    extends FORDataCaptureController(mcc)
+) extends FORDataCaptureController(mcc)
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>

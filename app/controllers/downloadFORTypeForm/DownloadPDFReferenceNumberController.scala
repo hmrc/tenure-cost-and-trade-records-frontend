@@ -42,7 +42,6 @@ class DownloadPDFReferenceNumberController @Inject() (
   mcc: MessagesControllerComponents,
   navigator: ConnectionToPropertyNavigator,
   downloadPDFReferenceNumberView: downloadPDFReferenceNumber,
-  downloadPDF: downloadPDF,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
 )(implicit connector: BackendConnector, ec: ExecutionContext)
