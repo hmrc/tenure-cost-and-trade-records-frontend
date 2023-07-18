@@ -28,7 +28,7 @@ import models.{AnnualRent, Session, SubmissionDraft}
 import models.submissions.common.{Address, AnswerNo, AnswerYes, ContactDetails, ContactDetailsAddress}
 import models.submissions.connectiontoproperty._
 import models.submissions.connectiontoproperty.StartDateOfVacantProperty
-import models.submissions.downloadFORTypeForm.{DownloadPDFDetails, DownloadPDFReferenceNumber}
+import models.submissions.downloadFORTypeForm.{DownloadPDF, DownloadPDFDetails, DownloadPDFReferenceNumber}
 import models.submissions.notconnected.{PastConnectionTypeYes, RemoveConnectionDetails, RemoveConnectionsDetails}
 import models.submissions.requestReferenceNumber.{CheckYourAnswersRequestReferenceNumber, RequestReferenceNumber, RequestReferenceNumberAddress, RequestReferenceNumberContactDetails, RequestReferenceNumberDetails}
 
@@ -465,5 +465,6 @@ trait FakeObjects {
     Some(CheckYourAnswersRequestReferenceNumber("CYA"))
   )
 
-  val prefilledDownloadPDFRef = DownloadPDFDetails(Some(DownloadPDFReferenceNumber("99996010001")))
+  val prefilledDownloadPDFRef = DownloadPDFDetails
+  (Some(DownloadPDFReferenceNumber("99996010001")), Some(DownloadPDF("FOR6010")))
 }

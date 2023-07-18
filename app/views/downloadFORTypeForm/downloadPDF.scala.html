@@ -32,15 +32,37 @@
   pageHeading = messages("downloadPdf.heading"),
   backLinkUrl = controllers.downloadFORTypeForm.routes.DownloadPDFReferenceNumberController.show().url
 ) {
-    @if(forType.equals(ForTypes.for6010)) {
 
-        <p class="govuk-body">@{
-            HtmlContent(messages("downloadPdf.p1")).asHtml
-        }</p>
-    } else {
-        <p class="govuk-body">@{
-            HtmlContent(messages("downloadPdf.p2")).asHtml
-        }</p>
+    @forType match {
+        case ForTypes.for6010 => {
+            <p class="govuk-body">
+                <a class="govuk-link" target="_blank" href=@messages("downloadPdf.6010.url")>@messages("downloadPdf.6010.label")</a>
+            </p>
+        }
+        case ForTypes.for6011 => {
+            <p class="govuk-body">
+                <a class="govuk-link" target="_blank" href=@messages("downloadPdf.6011.url")>@messages("downloadPdf.6011.label")</a>
+            </p>
+        }
+        case ForTypes.for6015 => {
+            <p class="govuk-body">
+                <a class="govuk-link" target="_blank" href=@messages("downloadPdf.6015.url")>@messages("downloadPdf.6015.label")</a>
+            </p>
+        }
+        case ForTypes.for6016 => {
+            <p class="govuk-body">
+                <a class="govuk-link" target="_blank" href=@messages("downloadPdf.6016.url")>@messages("downloadPdf.6016.label")</a>
+            </p>
+        }
+        case _ =>{
+            <p class="govuk-body">@messages("downloadPdf.no.download")</p>
+            <p class="govuk-body">@messages("downloadPdf.retry")
+            <a class="govuk-link" href=@controllers.downloadFORTypeForm.routes.DownloadPDFReferenceNumberController.startWithSession()>@messages("label.downloadPdfReferenceNumberLogin")</a>
+            </p>
+            <p class="govuk-body">
+                <a class="govuk-link" href=@controllers.requestReferenceNumber.routes.RequestReferenceNumberController.startWithSession()>@messages("label.requestReference")</a>
+            </p>
+        }
     }
 }
 

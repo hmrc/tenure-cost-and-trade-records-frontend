@@ -17,6 +17,11 @@
 package controllers.downloadFORTypeForm
 
 import actions.WithSessionRefiner
+import models.submissions.downloadFORTypeForm.DownloadPDF
+import play.api.Logging
+import views.html.downloadFORTypeForm.downloadPDF
+import scala.util.{Failure, Success}
+import connectors.BackendConnector
 import form.downloadFORTypeForm.DownloadPDFReferenceNumberForm.downloadPDFReferenceNumberForm
 import models.Session
 import models.submissions.common.Address
@@ -30,20 +35,23 @@ import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.downloadFORTypeForm.downloadPDFReferenceNumber
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class DownloadPDFReferenceNumberController @Inject() (
   mcc: MessagesControllerComponents,
   navigator: ConnectionToPropertyNavigator,
   downloadPDFReferenceNumberView: downloadPDFReferenceNumber,
+  downloadPDF: downloadPDF,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FrontendController(mcc)
+)(implicit connector: BackendConnector, ec: ExecutionContext)
+    extends FrontendController(mcc)
+    with Logging
     with I18nSupport {
 
   def startWithSession: Action[AnyContent] = Action.async { implicit request =>
-    session.start(Session("", "FOR6010", Address("", None, "", None, ""), ""))
+    session.start(Session("", "", Address("", None, "", None, ""), ""))
     Future.successful(Redirect(routes.DownloadPDFReferenceNumberController.show()))
   }
 
@@ -66,11 +74,19 @@ class DownloadPDFReferenceNumberController @Inject() (
         data => {
           val updatedData = updateDownloadPDFDetails(_.copy(downloadPDFReferenceNumber = Some(data)))
           session.saveOrUpdate(updatedData)
+
+          connector
+            .retrieveFORType(data.downloadPDFReferenceNumber)
+            .onComplete({
+              case Success(value) =>
+                session.saveOrUpdate(updateDownloadPDFDetails(_.copy(downloadPDF = Some(DownloadPDF(value)))))
+              case Failure(ex)    => logger.debug(s"Failed to retrieve a valid FOR Type: ${ex.getMessage}")
+            })
+
           Future.successful(
             Redirect(navigator.nextPage(DownloadPDFReferenceNumberPageId, updatedData).apply(updatedData))
           )
         }
       )
   }
-
 }
