@@ -32,18 +32,19 @@ import javax.inject.{Inject, Named, Singleton}
 
 @Singleton
 class LettingPartOfPropertyDetailsController @Inject() (
-                                                              mcc: MessagesControllerComponents,
-                                                              navigator: ConnectionToPropertyNavigator,
-                                                              tenantDetailsView: tenantDetails,
-                                                              withSessionRefiner: WithSessionRefiner,
-                                                              @Named("session") val session: SessionRepo
-                                                            ) extends FORDataCaptureController(mcc)
-  with I18nSupport {
+  mcc: MessagesControllerComponents,
+  navigator: ConnectionToPropertyNavigator,
+  tenantDetailsView: tenantDetails,
+  withSessionRefiner: WithSessionRefiner,
+  @Named("session") val session: SessionRepo
+) extends FORDataCaptureController(mcc)
+    with I18nSupport {
 
   def show(index: Option[Int]): Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     val existingDetails: Option[TenantDetails] = for {
-      requestedIndex          <- index
-      existingLettingPartOfPropertyDetails <- request.sessionData.stillConnectedDetails.map(_.lettingPartOfPropertyDetails)
+      requestedIndex                        <- index
+      existingLettingPartOfPropertyDetails  <-
+        request.sessionData.stillConnectedDetails.map(_.lettingPartOfPropertyDetails)
       // lift turns exception-throwing access by index into an option-returning safe operation
       requestedLettingPartOfPropertyDetails <- existingLettingPartOfPropertyDetails.lift(requestedIndex)
     } yield requestedLettingPartOfPropertyDetails.tenantDetails
@@ -71,13 +72,13 @@ class LettingPartOfPropertyDetailsController @Inject() (
           )
         ),
       data => {
-        val ifLettingPartOfPropertyDetailsEmpty      = StillConnectedDetails(lettingPartOfPropertyDetails =
+        val ifLettingPartOfPropertyDetailsEmpty = StillConnectedDetails(lettingPartOfPropertyDetails =
           IndexedSeq(LettingPartOfPropertyDetails(tenantDetails = data))
         )
-        val updatedStillConnectedDetails =
+        val updatedStillConnectedDetails        =
           request.sessionData.stillConnectedDetails.fold(ifLettingPartOfPropertyDetailsEmpty) { stillConnectedDetails =>
-            val existingSections                                   = stillConnectedDetails.lettingPartOfPropertyDetails
-            val requestedSection                                   = index.flatMap(existingSections.lift)
+            val existingSections                                                 = stillConnectedDetails.lettingPartOfPropertyDetails
+            val requestedSection                                                 = index.flatMap(existingSections.lift)
             val updatedSections: (Int, IndexedSeq[LettingPartOfPropertyDetails]) = requestedSection.fold {
               val defaultSection   = LettingPartOfPropertyDetails(data)
               val appendedSections = existingSections.appended(defaultSection)
@@ -88,9 +89,12 @@ class LettingPartOfPropertyDetailsController @Inject() (
                 .updated(indexToUpdate, sectionToUpdate.copy(tenantDetails = data))
             }
             stillConnectedDetails
-              .copy(lettingPartOfPropertyDetailsIndex = updatedSections._1, lettingPartOfPropertyDetails = updatedSections._2)
+              .copy(
+                lettingPartOfPropertyDetailsIndex = updatedSections._1,
+                lettingPartOfPropertyDetails = updatedSections._2
+              )
           }
-        val updatedData                      = updateStillConnectedDetails(_ => updatedStillConnectedDetails)
+        val updatedData                         = updateStillConnectedDetails(_ => updatedStillConnectedDetails)
         session.saveOrUpdate(updatedData)
         Redirect(navigator.nextPage(LettingPartOfPropertyDetailsPageId, updatedData).apply(updatedData))
       }

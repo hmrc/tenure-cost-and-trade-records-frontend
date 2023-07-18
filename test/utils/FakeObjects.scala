@@ -114,9 +114,20 @@ trait FakeObjects {
     Some(AnswerYes),
     Some(StartDateOfVacantProperty(prefilledDateInput)),
     Some(AnswerYes),
-    Some(ProvideContactDetails(YourContactDetails("fullname",prefilledContactDetails,Some("additional info")))),
+    Some(ProvideContactDetails(YourContactDetails("fullname", prefilledContactDetails, Some("additional info")))),
     lettingPartOfPropertyDetailsIndex = 0,
-    lettingPartOfPropertyDetails = IndexedSeq(LettingPartOfPropertyDetails(TenantDetails("name","billboard",CorrespondenceAddress("building",Some("street"),"town",Some("county"),"BN12 4AX")),Some(LettingPartOfPropertyRentDetails(2000,prefilledDateInput)),List("Other"),addAnotherLettingToProperty = Some(AnswerYes))),
+    lettingPartOfPropertyDetails = IndexedSeq(
+      LettingPartOfPropertyDetails(
+        TenantDetails(
+          "name",
+          "billboard",
+          CorrespondenceAddress("building", Some("street"), "town", Some("county"), "BN12 4AX")
+        ),
+        Some(LettingPartOfPropertyRentDetails(2000, prefilledDateInput)),
+        List("Other"),
+        addAnotherLettingToProperty = Some(AnswerYes)
+      )
+    ),
     checkYourAnswersConnectionToProperty = None,
     checkYourAnswersConnectionToVacantProperty = None
   )
@@ -208,11 +219,13 @@ trait FakeObjects {
     None
   )
 
-  val prefilledProvideContactDetails: ProvideContactDetails = ProvideContactDetails(YourContactDetails(
-    fullName = "Tobermory",
-    contactDetails = ContactDetails(prefilledFakePhoneNo,prefilledFakeEmail),
-    additionalInformation = Some("Additional information")
-  ))
+  val prefilledProvideContactDetails: ProvideContactDetails = ProvideContactDetails(
+    YourContactDetails(
+      fullName = "Tobermory",
+      contactDetails = ContactDetails(prefilledFakePhoneNo, prefilledFakeEmail),
+      additionalInformation = Some("Additional information")
+    )
+  )
 
   val aboutYouAndTheProperty6010YesSession: Session =
     stillConnectedDetailsYesSession.copy(aboutYouAndTheProperty = Some(prefilledAboutYouAndThePropertyYes))

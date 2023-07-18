@@ -28,8 +28,8 @@ class AddAnotherLettingPartOfPropertyControllerSpec extends TestBaseSpec {
   import TestData._
 
   def addAnotherLettingPartOfPropertyController(
-                                                 stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledStillConnectedDetailsYesToAll)
-                                               ) =
+    stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledStillConnectedDetailsYesToAll)
+  ) =
     new AddAnotherLettingPartOfPropertyController(
       stubMessagesControllerComponents(),
       connectedToPropertyNavigator,
@@ -47,7 +47,7 @@ class AddAnotherLettingPartOfPropertyControllerSpec extends TestBaseSpec {
     "return HTML" in {
       val result = addAnotherLettingPartOfPropertyController().show(1)(fakeRequest)
       contentType(result) shouldBe Some("text/html")
-      charset(result) shouldBe Some("utf-8")
+      charset(result)     shouldBe Some("utf-8")
     }
 
     "SUBMIT /" should {
@@ -69,7 +69,7 @@ class AddAnotherLettingPartOfPropertyControllerSpec extends TestBaseSpec {
   "Letting part of property form" should {
     "error if addAnotherCateringOperationOrLettingAccommodation is missing" in {
       val formData = baseFormData - errorKey.addAnotherLettingPartOfProperty
-      val form = addAnotherLettingForm.bind(formData)
+      val form     = addAnotherLettingForm.bind(formData)
 
       mustContainError(
         errorKey.addAnotherLettingPartOfProperty,

@@ -19,13 +19,13 @@ package models.submissions.connectiontoproperty
 import models.submissions.common.AnswersYesNo
 import play.api.libs.json.Json
 
-case class LettingPartOfPropertyDetails (
+case class LettingPartOfPropertyDetails(
   tenantDetails: TenantDetails,
-  lettingPartOfPropertyRentDetails: Option[LettingPartOfPropertyRentDetails]=None,
+  lettingPartOfPropertyRentDetails: Option[LettingPartOfPropertyRentDetails] = None,
   itemsIncludedInRent: List[String] = List.empty,
   addAnotherLettingToProperty: Option[AnswersYesNo] = None
-                          )
+)
 
-object LettingPartOfPropertyDetails{
+object LettingPartOfPropertyDetails {
   implicit val format = Json.format[LettingPartOfPropertyDetails]
 }

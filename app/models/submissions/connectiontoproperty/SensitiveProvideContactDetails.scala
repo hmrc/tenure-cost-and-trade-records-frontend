@@ -33,7 +33,8 @@ object SensitiveProvideContactDetails {
   implicit def format(implicit crypto: MongoCrypto): OFormat[SensitiveProvideContactDetails] =
     Json.format[SensitiveProvideContactDetails]
 
-  def apply(provideContactDetails: ProvideContactDetails): SensitiveProvideContactDetails = SensitiveProvideContactDetails(
-    SensitiveYourContactDetails(provideContactDetails.yourContactDetails)
-  )
+  def apply(provideContactDetails: ProvideContactDetails): SensitiveProvideContactDetails =
+    SensitiveProvideContactDetails(
+      SensitiveYourContactDetails(provideContactDetails.yourContactDetails)
+    )
 }

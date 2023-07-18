@@ -40,7 +40,8 @@ trait PrintableYourContactDetails {
 }
 
 object PrintableYourContactDetails {
-  implicit class PrintableYourContactDetailsHelper(printableYourContactDetails: PrintableYourContactDetails) extends Aliases {
+  implicit class PrintableYourContactDetailsHelper(printableYourContactDetails: PrintableYourContactDetails)
+      extends Aliases {
     def escapedHtml: String =
       printableYourContactDetails.yourContactDetails
         .map(Text(_).asHtml)

@@ -31,7 +31,7 @@ import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
-class ConnectionToPropertySubmissionController @Inject()(
+class ConnectionToPropertySubmissionController @Inject() (
   mcc: MessagesControllerComponents,
   confirmationView: confirmationConnectionToProperty,
   audit: Audit,
@@ -41,7 +41,8 @@ class ConnectionToPropertySubmissionController @Inject()(
     extends FrontendController(mcc)
     with I18nSupport {
 
-  lazy val confirmationUrl = controllers.connectiontoproperty.routes.ConnectionToPropertySubmissionController.confirmation().url
+  lazy val confirmationUrl =
+    controllers.connectiontoproperty.routes.ConnectionToPropertySubmissionController.confirmation().url
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     submit(request.sessionData.referenceNumber)

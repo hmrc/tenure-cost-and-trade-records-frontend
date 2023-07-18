@@ -31,7 +31,7 @@ case class SensitiveStillConnectedDetails(
   tradingNamePayingRent: Option[AnswersYesNo] = None,
   areYouThirdParty: Option[AnswersYesNo] = None,
   vacantPropertyStartDate: Option[StartDateOfVacantProperty] = None,
-  isAnyRentReceived:Option[AnswersYesNo] = None,
+  isAnyRentReceived: Option[AnswersYesNo] = None,
   provideContactDetails: Option[SensitiveProvideContactDetails] = None,
   lettingPartOfPropertyDetailsIndex: Int = 0,
   lettingPartOfPropertyDetails: IndexedSeq[SensitiveLettingPartOfPropertyDetails] = IndexedSeq.empty,

@@ -32,13 +32,13 @@ import scala.concurrent.Future
 
 @Singleton
 class AddAnotherLettingPartOfPropertyController @Inject() (
-                                                                 mcc: MessagesControllerComponents,
-                                                                 navigator: ConnectionToPropertyNavigator,
-                                                                 addAnotherLettingPartOfPropertyView: addAnotherLettingPartOfProperty,
-                                                                 withSessionRefiner: WithSessionRefiner,
-                                                                 @Named("session") val session: SessionRepo
-                                                               ) extends FORDataCaptureController(mcc)
-  with I18nSupport {
+  mcc: MessagesControllerComponents,
+  navigator: ConnectionToPropertyNavigator,
+  addAnotherLettingPartOfPropertyView: addAnotherLettingPartOfProperty,
+  withSessionRefiner: WithSessionRefiner,
+  @Named("session") val session: SessionRepo
+) extends FORDataCaptureController(mcc)
+    with I18nSupport {
 
   def show(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     val existingSection = request.sessionData.stillConnectedDetails.flatMap(_.lettingPartOfPropertyDetails.lift(index))

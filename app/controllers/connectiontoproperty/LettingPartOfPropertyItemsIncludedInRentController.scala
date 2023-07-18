@@ -30,7 +30,7 @@ import views.html.connectiontoproperty.lettingPartOfPropertyRentIncludes
 import javax.inject.{Inject, Named, Singleton}
 
 @Singleton
-class LettingPartOfPropertyItemsIncludedInRentController @Inject()(
+class LettingPartOfPropertyItemsIncludedInRentController @Inject() (
   mcc: MessagesControllerComponents,
   navigator: ConnectionToPropertyNavigator,
   lettingPartOfPropertyRentIncludesView: lettingPartOfPropertyRentIncludes,
@@ -86,7 +86,9 @@ class LettingPartOfPropertyItemsIncludedInRentController @Inject()(
         )
         val updatedSession  = updateStillConnectedDetails(_.copy(lettingPartOfPropertyDetails = updatedSections))
         session.saveOrUpdate(updatedSession)
-        Redirect(navigator.nextPage(LettingPartOfPropertyItemsIncludedInRentPageId, updatedSession).apply(updatedSession))
+        Redirect(
+          navigator.nextPage(LettingPartOfPropertyItemsIncludedInRentPageId, updatedSession).apply(updatedSession)
+        )
       }
     )).getOrElse(startRedirect)
   }

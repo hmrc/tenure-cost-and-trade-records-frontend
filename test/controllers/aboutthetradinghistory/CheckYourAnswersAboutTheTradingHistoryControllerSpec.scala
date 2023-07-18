@@ -39,7 +39,6 @@ class CheckYourAnswersAboutTheTradingHistoryControllerSpec extends TestBaseSpec 
     stubMessagesControllerComponents(),
     mockAboutTheTradingHistoryNavigator,
     mockCheckYourAnswersAboutTheTradingHistoryView,
-    mockTaskListView,
     preFilledSession,
     mockSessionRepo
   )

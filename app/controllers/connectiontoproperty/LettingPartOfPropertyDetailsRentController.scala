@@ -31,7 +31,7 @@ import views.html.connectiontoproperty.lettingPartOfPropertyRentDetails
 import javax.inject.{Inject, Named, Singleton}
 
 @Singleton
-class LettingPartOfPropertyDetailsRentController @Inject()(
+class LettingPartOfPropertyDetailsRentController @Inject() (
   mcc: MessagesControllerComponents,
   navigator: ConnectionToPropertyNavigator,
   lettingPartOfPropertyRentDetailsView: lettingPartOfPropertyRentDetails,
@@ -42,19 +42,20 @@ class LettingPartOfPropertyDetailsRentController @Inject()(
 
   def show(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     val existingSection = request.sessionData.stillConnectedDetails.flatMap(_.lettingPartOfPropertyDetails.lift(index))
-    existingSection.fold(Redirect(routes.LettingPartOfPropertyDetailsController.show(None))) { lettingPartOfPropertyDetails =>
-      val lettingDetailsForm = lettingPartOfPropertyDetails.lettingPartOfPropertyRentDetails.fold(
-        lettingPartOfPropertyRentForm
-      )(lettingPartOfPropertyRentForm.fill)
-      Ok(
-        lettingPartOfPropertyRentDetailsView(
-          lettingDetailsForm,
-          index,
-          existingSection.get.tenantDetails.name,
-          controllers.connectiontoproperty.routes.LettingPartOfPropertyDetailsController.show(Some(index)).url,
-          request.sessionData.toSummary
+    existingSection.fold(Redirect(routes.LettingPartOfPropertyDetailsController.show(None))) {
+      lettingPartOfPropertyDetails =>
+        val lettingDetailsForm = lettingPartOfPropertyDetails.lettingPartOfPropertyRentDetails.fold(
+          lettingPartOfPropertyRentForm
+        )(lettingPartOfPropertyRentForm.fill)
+        Ok(
+          lettingPartOfPropertyRentDetailsView(
+            lettingDetailsForm,
+            index,
+            existingSection.get.tenantDetails.name,
+            controllers.connectiontoproperty.routes.LettingPartOfPropertyDetailsController.show(Some(index)).url,
+            request.sessionData.toSummary
+          )
         )
-      )
     }
   }
 

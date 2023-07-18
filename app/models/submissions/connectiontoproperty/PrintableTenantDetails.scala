@@ -27,8 +27,6 @@ trait PrintableTenantDetails {
 
   def correspondenceAddress: CorrespondenceAddress
 
-
-
   def tenantDetails: List[String] =
     List(
       Some(name),

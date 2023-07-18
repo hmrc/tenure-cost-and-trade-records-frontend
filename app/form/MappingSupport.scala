@@ -319,12 +319,14 @@ object MappingSupport {
   )(EditAddress.apply)(EditAddress.unapply)
 
   def yourContactDetailsMapping: Mapping[YourContactDetails] = mapping(
-    "fullName" -> default(text, "").verifying(
+    "fullName"                                   -> default(text, "").verifying(
       nonEmpty(errorMessage = "error.fullName.required")
     ),
-    "contactDetails" -> contactDetailsMapping,
-    "provideContactDetailsAdditionalInformation" -> optional(default(text, "").verifying(maxLength(1000, "error.char.count.maxLength"))
-    ))(YourContactDetails.apply)(YourContactDetails.unapply)
+    "contactDetails"                             -> contactDetailsMapping,
+    "provideContactDetailsAdditionalInformation" -> optional(
+      default(text, "").verifying(maxLength(1000, "error.char.count.maxLength"))
+    )
+  )(YourContactDetails.apply)(YourContactDetails.unapply)
 
   def correspondenceAddressMapping: Mapping[CorrespondenceAddress] = mapping(
     "addressLineOne" -> default(text, "").verifying(
@@ -336,16 +338,16 @@ object MappingSupport {
         maxLength(50, "error.addressLineTwo.maxLength")
       )
     ),
-    "town" -> default(text, "").verifying(
+    "town"           -> default(text, "").verifying(
       nonEmpty(errorMessage = "error.townCity.required"),
       maxLength(50, "error.town.maxLength")
     ),
-    "county" -> optional(
+    "county"         -> optional(
       default(text, "").verifying(
         maxLength(50, "error.county.maxLength")
       )
     ),
-    "postcode" -> nonEmptyTextOr("correspondenceAddress.postcode", postcode, "error.postcode.required")
+    "postcode"       -> nonEmptyTextOr("correspondenceAddress.postcode", postcode, "error.postcode.required")
   )(CorrespondenceAddress.apply)(CorrespondenceAddress.unapply)
 
   def mandatoryBooleanWithError(message: String) =
