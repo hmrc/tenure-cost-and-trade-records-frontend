@@ -16,13 +16,10 @@
 
 package controllers.downloadFORTypeForm
 
-import connectors.BackendConnector
-import form.Errors
-import form.requestReferenceNumber.RequestReferenceNumberContactDetailsForm.requestReferenceNumberContactDetailsForm
-import models.submissions.connectiontoproperty.StillConnectedDetails
-import models.submissions.downloadFORTypeForm.{DownloadPDFDetails, DownloadPDFReferenceNumber}
+import models.submissions.downloadFORTypeForm.DownloadPDFDetails
 import play.api.http.Status
 import play.api.test.Helpers._
+import stub.{StubBackendConnector, StubSessionRepo}
 import utils.TestBaseSpec
 
 import scala.concurrent.ExecutionContext
@@ -35,9 +32,10 @@ class DownloadPDFReferenceNumberControllerSpec extends TestBaseSpec {
     stubMessagesControllerComponents(),
     connectedToPropertyNavigator,
     downloadPDFReferenceNumberView,
+    StubBackendConnector(),
     preEnrichedActionRefiner(downloadPDFDetails = downloadPDFDetails),
-    mockSessionRepo
-  )(any[BackendConnector], any[ExecutionContext])
+    StubSessionRepo()
+  )(any[ExecutionContext])
 
   "GET /" should {
     "return 200" in {
