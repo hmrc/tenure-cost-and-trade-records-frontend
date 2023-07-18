@@ -85,7 +85,9 @@ trait FakeObjects {
   val prefilledDateInput: LocalDate               = LocalDate.of(2022, 6, 1)
   val prefilledMonthYearInput: MonthsYearDuration = MonthsYearDuration(6, 2000)
 
-  val prefilledTradingNameOperatingFromProperty = TradingNameOperatingFromProperty("TRADING NAME")
+  val prefilledTradingNameOperatingFromProperty: TradingNameOperatingFromProperty = TradingNameOperatingFromProperty(
+    "TRADING NAME"
+  )
 
   val baseFilled6010Session: Session = Session(referenceNumber, forType6010, prefilledAddress, token)
   val baseFilled6011Session: Session = Session(referenceNumber, forType6011, prefilledAddress, token)
@@ -466,7 +468,7 @@ trait FakeObjects {
   )
 
   val prefilledDownloadPDFRef: DownloadPDFDetails = DownloadPDFDetails(
-    Some(DownloadPDFReferenceNumber("99996010001")),
-    Some(DownloadPDF("FOR6010"))
+    Some(DownloadPDFReferenceNumber(referenceNumber)),
+    Some(DownloadPDF(forType6010))
   )
 }

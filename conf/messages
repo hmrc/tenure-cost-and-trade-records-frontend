@@ -187,7 +187,11 @@ label.requestReferenceNumberContactDetailsFullName = Full name
 requestReferenceNumberContactDetailsAdditionalInformation.heading = Additional information (optional)
 error.requestReferenceNumberContactDetailsFullName.required = Enter your name
 
+# DOWNLOAD FORM SECTION
+#######################
+
 # DOWNLOAD PDF REFERENCE NUMBER
+###############################
 downloadPdfReferenceNumber.heading = What is your reference number?
 downloadPdfReferenceNumber.p1 = You’ll need the reference number from the letter you received from the VOA
 label.downloadPdfReferenceNumber = Reference number
@@ -195,6 +199,7 @@ error.downloadPdfReferenceNumber.required = You must provide a reference number
 hint.downloadPdfReferenceNumber = For example, 1000001/101
 
 # DOWNLOAD PDF
+##############
 downloadPdf.heading = Download a PDF version of this declaration
 downloadPdf.6010.url = https://www.gov.uk/government/publications/vo-6010-request-for-rental-information-public-houses
 downloadPdf.6010.label = VO6010 request for rental information: public houses (opens in a new tab)

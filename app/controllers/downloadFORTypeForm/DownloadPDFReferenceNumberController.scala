@@ -19,7 +19,6 @@ package controllers.downloadFORTypeForm
 import actions.WithSessionRefiner
 import models.submissions.downloadFORTypeForm.DownloadPDF
 import play.api.Logging
-import views.html.downloadFORTypeForm.downloadPDF
 import scala.util.{Failure, Success}
 import connectors.BackendConnector
 import form.downloadFORTypeForm.DownloadPDFReferenceNumberForm.downloadPDFReferenceNumberForm
@@ -42,9 +41,10 @@ class DownloadPDFReferenceNumberController @Inject() (
   mcc: MessagesControllerComponents,
   navigator: ConnectionToPropertyNavigator,
   downloadPDFReferenceNumberView: downloadPDFReferenceNumber,
+  connector: BackendConnector,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit connector: BackendConnector, ec: ExecutionContext)
+)(implicit ec: ExecutionContext)
     extends FrontendController(mcc)
     with Logging
     with I18nSupport {
@@ -65,7 +65,7 @@ class DownloadPDFReferenceNumberController @Inject() (
     )
   }
 
-  def submit = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     downloadPDFReferenceNumberForm
       .bindFromRequest()
       .fold(
