@@ -20,20 +20,25 @@ import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import repositories.SessionRepo
 import views.html.downloadFORTypeForm.downloadPDF
 
-import javax.inject.{Inject, Singleton}
+import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
 
 @Singleton
 class DownloadPDFController @Inject() (
   mcc: MessagesControllerComponents,
   downloadPDFView: downloadPDF,
-  withSessionRefiner: WithSessionRefiner
+  withSessionRefiner: WithSessionRefiner,
+  @Named("session") val session: SessionRepo
 ) extends FORDataCaptureController(mcc)
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    Future.successful(Ok(downloadPDFView(request.sessionData.forType)))
+    request.sessionData.downloadPDFDetails.flatMap(_.downloadPDF.map(_.downloadPDF)) match {
+      case Some(forType: String) => Future.successful(Ok(downloadPDFView(forType)))
+      case None                  => Future.successful(Ok(downloadPDFView("")))
+    }
   }
 }

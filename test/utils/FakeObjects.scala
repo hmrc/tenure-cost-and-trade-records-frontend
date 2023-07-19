@@ -28,7 +28,7 @@ import models.{AnnualRent, Session, SubmissionDraft}
 import models.submissions.common.{Address, AnswerNo, AnswerYes, ContactDetails, ContactDetailsAddress}
 import models.submissions.connectiontoproperty._
 import models.submissions.connectiontoproperty.StartDateOfVacantProperty
-import models.submissions.downloadFORTypeForm.{DownloadPDFDetails, DownloadPDFReferenceNumber}
+import models.submissions.downloadFORTypeForm.{DownloadPDF, DownloadPDFDetails, DownloadPDFReferenceNumber}
 import models.submissions.notconnected.{PastConnectionTypeYes, RemoveConnectionDetails, RemoveConnectionsDetails}
 import models.submissions.requestReferenceNumber.{CheckYourAnswersRequestReferenceNumber, RequestReferenceNumber, RequestReferenceNumberAddress, RequestReferenceNumberContactDetails, RequestReferenceNumberDetails}
 
@@ -85,7 +85,9 @@ trait FakeObjects {
   val prefilledDateInput: LocalDate               = LocalDate.of(2022, 6, 1)
   val prefilledMonthYearInput: MonthsYearDuration = MonthsYearDuration(6, 2000)
 
-  val prefilledTradingNameOperatingFromProperty = TradingNameOperatingFromProperty("TRADING NAME")
+  val prefilledTradingNameOperatingFromProperty: TradingNameOperatingFromProperty = TradingNameOperatingFromProperty(
+    "TRADING NAME"
+  )
 
   val baseFilled6010Session: Session = Session(referenceNumber, forType6010, prefilledAddress, token)
   val baseFilled6011Session: Session = Session(referenceNumber, forType6011, prefilledAddress, token)
@@ -465,5 +467,8 @@ trait FakeObjects {
     Some(CheckYourAnswersRequestReferenceNumber("CYA"))
   )
 
-  val prefilledDownloadPDFRef = DownloadPDFDetails(Some(DownloadPDFReferenceNumber("99996010001")))
+  val prefilledDownloadPDFRef: DownloadPDFDetails = DownloadPDFDetails(
+    Some(DownloadPDFReferenceNumber(referenceNumber)),
+    Some(DownloadPDF(forType6010))
+  )
 }

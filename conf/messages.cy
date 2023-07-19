@@ -123,7 +123,7 @@ start.telephone = Telephone: 03000 501 262
 start.openingDays = Open weekdays, 9:00am to 4:30pm
 start.email = Email: <a href="mailto:formhelp@voa.gov.uk?subject=Ex-owners/occupiers%20form&body=Please%20email%20us%20your%20reference%20number,%20email%20address%20and/or%20telephone%20number%20only.%20If%20we%20require%20any%20further%20information%20we%20will%20contact%20you%20in%20due%20course." target="_blank" id="mailto" onclick="gasend()">formhelp@voa.gov.uk</a>
 start.subheading4 = Alternative formats
-start.desc5 = If you would like information in an alternative format such as large print, braille, or something else, let us know by contacting us at 03000 501 501 (text relay prefix 18001). You can also <a href=#top class="govuk-link" target="_blank">download a PDF version</a> of this declaration which you can complete and return to the VOA.
+start.desc5 = If you would like information in an alternative format such as large print, braille, or something else, let us know by contacting us at 03000 501 501 (text relay prefix 18001). You can also <a href={0} class="govuk-link" target="_blank">download a PDF version</a> of this declaration which you can complete and return to the VOA.
 start.subheading5 = Explore the topic
 start.desc6 = <a href="https://www.gov.uk/find-business-rates" class="govuk-link" target="_blank">Find a business rates valuation</a> for any business property in England and Wales
 start.desc7 = If you’d like to learn more about business rates before starting your form, visit our <a href="https://www.gov.uk/find-business-rates" class="govuk-link" target="_blank">introduction to business rates</a> section. It explains things like how your rates are calculated, how to pay, and whether you qualify for business rates relief.
@@ -141,7 +141,7 @@ label.postcode = Postcode
 hint.postcode = For example, AB12 3CD
 error.invalid_refnum = Enter your reference number as it appears on your letter
 error.invalid_postcode_as_on_letter = Enter your postcode as it appears on your letter
-label.requestReference = I do not have my reference
+label.requestReference = I do not have my reference number
 label.downloadPdfReferenceNumberLogin = Download a PDF version
 
 #LOGIN- Invalid Form Type
@@ -187,17 +187,30 @@ label.requestReferenceNumberContactDetailsFullName = Full name
 requestReferenceNumberContactDetailsAdditionalInformation.heading = Additional information (optional)
 error.requestReferenceNumberContactDetailsFullName.required = Enter your name
 
+# DOWNLOAD FORM SECTION
+#######################
+
 # DOWNLOAD PDF REFERENCE NUMBER
-downloadPDFReferenceNumber.heading = What is your reference number?
-downloadPDFReferenceNumber.p1 = You’ll need the reference number from the letter you received from the VOA
+###############################
+downloadPdfReferenceNumber.heading = What is your reference number?
+downloadPdfReferenceNumber.p1 = You’ll need the reference number from the letter you received from the VOA
 label.downloadPdfReferenceNumber = Reference number
 error.downloadPdfReferenceNumber.required = You must provide a reference number
 hint.downloadPdfReferenceNumber = For example, 1000001/101
 
 # DOWNLOAD PDF
+##############
 downloadPdf.heading = Download a PDF version of this declaration
-downloadPdf.p1 = <a href="https://www.gov.uk/government/publications/vo-6010-request-for-rental-information-public-houses" class="govuk-link" target="_blank">VO6010 request for rental information: public houses (opens in a new tab)</a>
-downloadPdf.p2 = <a href="https://www.gov.uk/government/publications/vo-6010-request-for-rental-information-public-houses" class="govuk-link" target="_blank">VO6011 request for rental information: pubs, licensed restaurants and wine bars (receipts only) (opens in a new tab)</a>
+downloadPdf.6010.url = https://www.gov.uk/government/publications/vo-6010-request-for-rental-information-public-houses
+downloadPdf.6010.label = VO6010 request for rental information: public houses (opens in a new tab)
+downloadPdf.6011.url = https://www.gov.uk/government/publications/request-for-rental-information-pubs-houses-licensed-restaurants-wine-bars-receipts-only
+downloadPdf.6011.label = VO6011 request for rental information: pubs, licensed restaurants and wine bars (receipts only) (opens in a new tab)
+downloadPdf.6015.url = https://www.gov.uk/government/publications/request-for-rental-information-hotels
+downloadPdf.6015.label = VO6015 request for rental information: hotels (opens in a new tab)
+downloadPdf.6016.url = https://www.gov.uk/government/publications/request-for-rental-information-hotels-and-guest-houses
+downloadPdf.6016.label = VO6016 request for rental information: hotels and guest houses (opens in a new tab)
+downloadPdf.no.download = No download found for the reference number
+downloadPdf.retry = Retry with my reference number:
 
 # ARE YOU STILL CONNECTED SECTION
 #################################

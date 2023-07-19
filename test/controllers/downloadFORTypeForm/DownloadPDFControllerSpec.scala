@@ -16,35 +16,33 @@
 
 package controllers.downloadFORTypeForm
 
-import actions.WithSessionRefiner
-import config.ErrorHandler
+import models.submissions.downloadFORTypeForm.DownloadPDFDetails
 import play.api.http.Status
 import play.api.test.Helpers._
-import stub.StubSessionRepo
 import utils.TestBaseSpec
-import views.html.downloadFORTypeForm.downloadPDF
 
 class DownloadPDFControllerSpec extends TestBaseSpec {
 
-  private val sessionRepo           = StubSessionRepo()
-  private def downloadPDFController = new DownloadPDFController(
-    stubMessagesControllerComponents(),
-    inject[downloadPDF],
-    WithSessionRefiner(inject[ErrorHandler], sessionRepo)
-  )
+  private def downloadPDFController(downloadPDFDetails: Option[DownloadPDFDetails] = Some(prefilledDownloadPDFRef)) =
+    new DownloadPDFController(
+      stubMessagesControllerComponents(),
+      downloadPDFView,
+      preEnrichedActionRefiner(downloadPDFDetails = downloadPDFDetails),
+      mockSessionRepo
+    )
 
   "GET /" should {
     "return 200" in {
-      sessionRepo.saveOrUpdate(prefilledBaseSession)
+      mockSessionRepo.saveOrUpdate(prefilledBaseSession)
 
-      val result = downloadPDFController.show(fakeRequest)
+      val result = downloadPDFController().show(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return HTML" in {
-      sessionRepo.saveOrUpdate(prefilledBaseSession)
+      mockSessionRepo.saveOrUpdate(prefilledBaseSession)
 
-      val result = downloadPDFController.show(fakeRequest)
+      val result = downloadPDFController().show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
