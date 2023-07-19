@@ -50,9 +50,24 @@ class DownloadPDFReferenceNumberViewSpec extends QuestionViewBehaviours[Download
       backlinkUrl mustBe controllers.routes.LoginController.show().url
     }
 
-    "contain an input for downloadPdfReferenceNumber" in {
-      val doc = asDocument(createViewUsingForm(form))
-      assertRenderedById(doc, "downloadPdfReferenceNumber")
+    "paragraph text" in {
+      val doc = asDocument(createView())
+      assert(doc.toString.contains(messages("downloadPdfReferenceNumber.p1")))
+    }
+
+    "hint text" in {
+      val doc = asDocument(createView())
+      assert(doc.toString.contains(messages("hint.downloadPdfReferenceNumber")))
+    }
+
+    "contain link for I do not have a reference number" in {
+      val doc = asDocument(createView())
+      assert(doc.select("a[class=govuk-link]").toString.contains(messages("label.requestReference")))
+      assert(
+        doc.toString.contains(
+          controllers.requestReferenceNumber.routes.RequestReferenceNumberController.startWithSession().url
+        )
+      )
     }
 
     "contain save and continue button with the value Save and Continue" in {

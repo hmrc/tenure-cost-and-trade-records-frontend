@@ -16,15 +16,17 @@
 
 package controllers.downloadFORTypeForm
 
+import form.downloadFORTypeForm.DownloadPDFReferenceNumberForm.downloadPDFReferenceNumberForm
 import models.submissions.downloadFORTypeForm.DownloadPDFDetails
 import play.api.http.Status
 import play.api.test.Helpers._
-import stub.{StubBackendConnector, StubSessionRepo}
+import stub.StubBackendConnector
 import utils.TestBaseSpec
 
-import scala.concurrent.ExecutionContext
-
 class DownloadPDFReferenceNumberControllerSpec extends TestBaseSpec {
+
+  import TestData.{baseFormData, errorKey}
+  import utils.FormBindingTestAssertions.mustContainError
 
   def downloadPDFReferenceNumberController(
     downloadPDFDetails: Option[DownloadPDFDetails] = Some(prefilledDownloadPDFRef)
@@ -34,10 +36,15 @@ class DownloadPDFReferenceNumberControllerSpec extends TestBaseSpec {
     downloadPDFReferenceNumberView,
     StubBackendConnector(),
     preEnrichedActionRefiner(downloadPDFDetails = downloadPDFDetails),
-    StubSessionRepo()
-  )(any[ExecutionContext])
+    mockSessionRepo
+  )
 
   "GET /" should {
+    "return 303" in {
+      val result = downloadPDFReferenceNumberController().startWithSession(fakeRequest)
+      status(result) shouldBe Status.SEE_OTHER
+    }
+
     "return 200" in {
       val result = downloadPDFReferenceNumberController().show(fakeRequest)
       status(result) shouldBe Status.OK
@@ -57,5 +64,24 @@ class DownloadPDFReferenceNumberControllerSpec extends TestBaseSpec {
       )
       status(res) shouldBe BAD_REQUEST
     }
+  }
+
+  "Download PDF reference number form" should {
+    "error if reference number is missing" in {
+      val formData = baseFormData - errorKey.referenceNumber
+      val form     = downloadPDFReferenceNumberForm.bind(formData)
+
+      mustContainError(errorKey.referenceNumber, "error.downloadPdfReferenceNumber.required", form)
+    }
+  }
+
+  object TestData {
+    val errorKey = new {
+      val referenceNumber = "downloadPdfReferenceNumber"
+    }
+
+    val baseFormData: Map[String, String] = Map(
+      "downloadPdfReferenceNumber" -> "9999601001"
+    )
   }
 }

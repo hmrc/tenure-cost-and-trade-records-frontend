@@ -17,9 +17,7 @@
 package views.downloadFORTypeForm
 
 import form.downloadFORTypeForm.DownloadPDFForm
-import form.requestReferenceNumber.RequestReferenceNumberForm
 import models.submissions.downloadFORTypeForm.DownloadPDF
-import models.submissions.requestReferenceNumber.RequestReferenceNumber
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
@@ -30,20 +28,68 @@ class DownloadPDFViewSpec extends QuestionViewBehaviours[DownloadPDF] {
 
   override val form = DownloadPDFForm.downloadPDFForm
 
-  def createView = () => downloadPDFView("FOR6010")(fakeRequest, messages)
+  def createView6010      = () => downloadPDFView("FOR6010")(fakeRequest, messages)
+  def createView6011      = () => downloadPDFView("FOR6011")(fakeRequest, messages)
+  def createView6015      = () => downloadPDFView("FOR6015")(fakeRequest, messages)
+  def createView6016      = () => downloadPDFView("FOR6016")(fakeRequest, messages)
+  def createViewNoForType = () => downloadPDFView("")(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[DownloadPDF]) => downloadPDFView("FOR6010")(fakeRequest, messages)
 
   "download pdf view" must {
 
-    behave like normalPage(createView, messageKeyPrefix)
+    behave like normalPage(createView6010, messageKeyPrefix)
 
     "has a link marked with back.link.label leading to the Download Reference Page" in {
-      val doc          = asDocument(createView())
+      val doc          = asDocument(createView6010())
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText mustBe messages("back.link.label")
       val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
       backlinkUrl mustBe controllers.downloadFORTypeForm.routes.DownloadPDFReferenceNumberController.show().url
+    }
+
+    "contain link to form download 6010" in {
+      val doc = asDocument(createView6010())
+      assert(doc.select("a[class=govuk-link]").toString.contains(messages("downloadPdf.6010.label")))
+      assert(doc.select("a[class=govuk-link]").toString.contains(messages("downloadPdf.6010.url")))
+    }
+
+    "contain link to form download 6011" in {
+      val doc = asDocument(createView6011())
+      assert(doc.select("a[class=govuk-link]").toString.contains(messages("downloadPdf.6011.label")))
+      assert(doc.select("a[class=govuk-link]").toString.contains(messages("downloadPdf.6011.url")))
+    }
+
+    "contain link to form download 6015" in {
+      val doc = asDocument(createView6015())
+      assert(doc.select("a[class=govuk-link]").toString.contains(messages("downloadPdf.6015.label")))
+      assert(doc.select("a[class=govuk-link]").toString.contains(messages("downloadPdf.6015.url")))
+    }
+
+    "contain link to form download 6016" in {
+      val doc = asDocument(createView6016())
+      assert(doc.select("a[class=govuk-link]").toString.contains(messages("downloadPdf.6016.label")))
+      assert(doc.select("a[class=govuk-link]").toString.contains(messages("downloadPdf.6016.url")))
+    }
+
+    "No FOR type found page" in {
+      val doc = asDocument(createViewNoForType())
+      assert(doc.toString.contains(messages("downloadPdf.no.download")))
+      assert(doc.toString.contains(messages("downloadPdf.retry")))
+      assert(doc.select("a[class=govuk-link]").toString.contains(messages("label.downloadPdfReferenceNumberLogin")))
+      assert(
+        doc
+          .select("a[class=govuk-link]")
+          .toString
+          .contains(controllers.downloadFORTypeForm.routes.DownloadPDFReferenceNumberController.startWithSession().url)
+      )
+      assert(doc.select("a[class=govuk-link]").toString.contains(messages("label.requestReference")))
+      assert(
+        doc
+          .select("a[class=govuk-link]")
+          .toString
+          .contains(controllers.requestReferenceNumber.routes.RequestReferenceNumberController.startWithSession().url)
+      )
     }
   }
 }
