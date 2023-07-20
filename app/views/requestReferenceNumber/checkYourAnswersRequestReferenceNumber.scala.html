@@ -44,7 +44,7 @@
    SummaryListRow(
     key = Key(Text(messages("key.requestReferenceNumberAddress"))),
      value = Value(HtmlContent(session.requestReferenceNumberDetails.flatMap(_.requestReferenceNumberAddress.map(_.requestReferenceNumberAddress.multiLine)).getOrElse("").getOrElse(""))),
-    actions = Option(Actions(items = Seq(ActionItem(href="/send-trade-and-cost-information/are-you-still-connected",
+    actions = Option(Actions(items = Seq(ActionItem(href="/send-trade-and-cost-information/request-reference-number",
      visuallyHiddenText = Some(messages("key.requestReferenceNumberAddress")),
      content = Text(messages("label.change")))))
     )
@@ -64,7 +64,7 @@
       + s"<p class=\"govuk-body\">${session.requestReferenceNumberDetails.flatMap(_.requestReferenceContactDetails.map(_.requestReferenceNumberContactDetails.email)).getOrElse("").getOrElse("")}</p>"
      + s"<p class=\"govuk-body\">${session.requestReferenceNumberDetails.flatMap(_.requestReferenceContactDetails.map(_.requestReferenceNumberContactDetailsAdditionalInformation).getOrElse(Some(""))).getOrElse("")}</p>"
     )),
-    actions = Option(Actions(items = Seq(ActionItem(href="/send-trade-and-cost-information/remove-connection",
+    actions = Option(Actions(items = Seq(ActionItem(href="/send-trade-and-cost-information/request-reference-number-contact-details",
      visuallyHiddenText = Some(messages("key.nameContactRequestReferenceNumber")),
      content = Text(messages("label.change")))))
     )
