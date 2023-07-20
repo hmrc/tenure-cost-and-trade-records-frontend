@@ -298,8 +298,8 @@ error.startDateOfVacantProperty.year.required = The date must include a year
 
 # Letting INCOME - IS ANT RENT RECEIVED FROM LETTING
 ####################################################
-isRentReceivedFromLetting.heading = Is any rent received form letting parts of the property?
-isRentReceivedFromLetting.title = Letting income
+isRentReceivedFromLetting.heading = Letting income
+isRentReceivedFromLetting.label = Is any rent received form letting parts of the property?
 isRentReceivedFromLetting.p1 = You must declare any income received from letting parts of the property, for example advertising billboards, car parking or telephone masts. You will have the oppertunity to add more than one letting if required.
 
 # CONNECTION TO PROPERTY TENANT DETAILS

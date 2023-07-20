@@ -16,45 +16,29 @@
 
 @import models.submissions.connectiontoproperty.TradingNameOperatingFromProperty
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukErrorSummary
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukDateInput
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukTextarea
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukCharacterCount
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
 @import models.pages.Summary
 
 @this(layout: Layout,
         govukButton: GovukButton,
-        govukRadios: GovukRadios,
         govukInput: GovukInput,
-        govukErrorSummary: GovukErrorSummary,
-        govukDateInput: GovukDateInput,
-        govukTextarea: GovukTextarea,
-        govukCharacterCount: GovukCharacterCount,
         formWithCSRF: FormWithCSRF
 )
-
 
 @(theForm: Form[TradingNameOperatingFromProperty], summary: Summary)(implicit request: Request[_], messages: Messages)
 
 @layout(
- pageHeading = messages("nameOfBusinessOperating.heading"),
- showH1 = false,
+ pageHeading = messages("tradingNameFromProperty.heading"),
  showSection = true,
  summary = Some(summary),
  sectionName = messages("label.section.connectionToTheProperty"),
  backLinkUrl = controllers.connectiontoproperty.routes.VacantPropertiesController.show.url,
  theForm = theForm
 ) {
- @formWithCSRF(action = controllers.connectiontoproperty.routes.TradingNameOperatingFromPropertyController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
+ @formWithCSRF(action = controllers.connectiontoproperty.routes.TradingNameOperatingFromPropertyController.submit()) {
 
-  <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-   <h1 class="govuk-fieldset__heading">@messages("tradingNameFromProperty.heading")</h1>
-  </legend>
-
-  @includes.textInput(govukInput, theForm, "tradingNameFromProperty", "govuk-input--width-20", "tradingNameFromProperty", "tradingNameFromProperty", labelClasses = "govuk-!-font-weight-bold")
+  @includes.textInput(govukInput, theForm, "tradingNameFromProperty", "govuk-input--width-20", "tradingNameFromProperty", "tradingNameFromProperty")
   @includes.continueSaveAsDraftButtons(govukButton)
  }
 }
