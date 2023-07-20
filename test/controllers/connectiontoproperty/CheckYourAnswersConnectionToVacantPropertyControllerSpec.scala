@@ -23,8 +23,6 @@ import utils.TestBaseSpec
 
 class CheckYourAnswersConnectionToVacantPropertyControllerSpec extends TestBaseSpec {
 
-  import TestData._
-
   def checkYourAnswersConnectionToVacantPropertyController(
     stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledNotVacantPropertiesCYA)
   ) =

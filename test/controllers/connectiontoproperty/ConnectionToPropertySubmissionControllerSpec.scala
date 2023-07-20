@@ -18,13 +18,11 @@ package controllers.connectiontoproperty
 
 import models.submissions.connectiontoproperty.StillConnectedDetails
 import play.api.http.Status
-import play.api.test.Helpers.{charset, contentType, status, stubMessagesControllerComponents}
+import play.api.test.Helpers.{status, stubMessagesControllerComponents}
 import connectors.Audit
 import utils.TestBaseSpec
 
 class ConnectionToPropertySubmissionControllerSpec extends TestBaseSpec {
-
-  import TestData._
 
   val audit = mock[Audit]
   //doNothing.when(audit).sendExplicitAudit(any[String], any[JsObject])(any[HeaderCarrier], any[ExecutionContext])

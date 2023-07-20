@@ -20,7 +20,6 @@ import org.scalatest.wordspec.AnyWordSpecLike
 import org.scalatest.matchers.should.Matchers
 import play.api.Configuration
 import crypto.MongoCrypto
-import models.AnnualRent
 import models.submissions.common.AnswersYesNo
 import utils.SensitiveTestHelper
 

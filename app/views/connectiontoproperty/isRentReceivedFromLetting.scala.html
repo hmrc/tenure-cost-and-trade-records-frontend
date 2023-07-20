@@ -29,7 +29,6 @@
 
 @layout(
   pageHeading = messages("isRentReceivedFromLetting.heading"),
-  showH1 = false,
   showSection = true,
     summary = Some(summary),
   sectionName = messages("label.section.connectionToTheProperty"),
@@ -39,19 +38,14 @@
 
   @formWithCSRF(action = controllers.connectiontoproperty.routes.IsRentReceivedFromLettingController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
 
-      <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-          <h1 class="govuk-fieldset__heading">@messages("isRentReceivedFromLetting.title")</h1>
-      </legend>
-
-      <p class="govuk-body">@messages("isRentReceivedFromLetting.p1")</p>
+    <p class="govuk-body">@messages("isRentReceivedFromLetting.p1")</p>
 
     @includes.radioButtonsYesNo(
       govukRadios,
       theForm,
       "isRentReceivedFromLetting",
-      messages("isRentReceivedFromLetting.heading"),
-      "govuk-fieldset__legend--l",
-      isHeading = true
+      "isRentReceivedFromLetting.label",
+      "govuk-!-font-weight-bold"
     )
 
     @includes.continueSaveAsDraftButtons(govukButton)

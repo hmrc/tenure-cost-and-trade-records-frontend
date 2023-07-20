@@ -24,8 +24,6 @@ import utils.TestBaseSpec
 
 class LettingPartOfPropertyItemsIncludedInRentControllerSpec extends TestBaseSpec {
 
-  import TestData._
-
   def lettingPartOfPropertyItemsIncludedInRentController(
     stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledStillConnectedDetailsYesToAll)
   ) =

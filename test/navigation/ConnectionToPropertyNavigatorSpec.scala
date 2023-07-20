@@ -17,7 +17,7 @@
 package navigation
 
 import connectors.Audit
-import navigation.identifiers.{AddAnotherLettingPartOfPropertyPageId, AreYouStillConnectedPageId, AreYouThirdPartyPageId, CheckYourAnswersAboutThePropertyPageId, CheckYourAnswersRequestReferenceNumberPageId, ConnectionToPropertyPageId, DownloadPDFReferenceNumberPageId, EditAddressPageId, Identifier, LettingIncomePageId, LettingPartOfPropertyDetailsPageId, LettingPartOfPropertyItemsIncludedInRentPageId, LettingPartOfPropertyRentDetailsPageId, NoReferenceNumberContactDetailsPageId, NoReferenceNumberPageId, PropertyBecomeVacantPageId, ProvideYourContactDetailsPageId, TradingNameOperatingFromPropertyPageId, TradingNameOwnThePropertyPageId, TradingNamePayingRentPageId, VacantPropertiesPageId}
+import navigation.identifiers._
 import org.scalatest.matchers.must.Matchers.convertToAnyMustWrapper
 import play.api.libs.json.JsObject
 import uk.gov.hmrc.http.HeaderCarrier
