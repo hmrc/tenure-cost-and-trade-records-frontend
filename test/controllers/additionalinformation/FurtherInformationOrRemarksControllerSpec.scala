@@ -18,7 +18,6 @@ package controllers.additionalinformation
 
 import models.submissions.additionalinformation.AdditionalInformation
 import play.api.http.Status
-import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import utils.TestBaseSpec
 

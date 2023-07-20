@@ -18,7 +18,6 @@ package controllers.additionalinformation
 
 import navigation.AdditionalInformationNavigator
 import play.api.http.Status
-import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import play.twirl.api.HtmlFormat
 import utils.TestBaseSpec

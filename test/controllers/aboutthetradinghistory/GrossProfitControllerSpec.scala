@@ -17,11 +17,12 @@
 package controllers.aboutthetradinghistory
 
 import navigation.AboutTheTradingHistoryNavigator
-import play.api.http.Status
-import play.api.test.Helpers._
-import play.twirl.api.HtmlFormat
+//import play.api.http.Status
+//import play.api.test.Helpers._
+//import play.twirl.api.HtmlFormat
 import utils.TestBaseSpec
-import views.html.aboutthetradinghistory.grossProfits
+//import views.html.aboutthetradinghistory.grossProfits
+
 class GrossProfitControllerSpec extends TestBaseSpec {
 
   val mockTradingHistoryNavigator = mock[AboutTheTradingHistoryNavigator]

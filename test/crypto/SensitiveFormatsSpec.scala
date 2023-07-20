@@ -18,13 +18,11 @@ package crypto
 
 import org.scalatest.wordspec.AnyWordSpecLike
 import org.scalatest.matchers.should.Matchers
-import play.api.{Configuration, Environment, Mode}
+import play.api.Configuration
 import uk.gov.hmrc.crypto.Sensitive.SensitiveString
-import play.api.libs.json.{Json, OFormat, Writes}
+import play.api.libs.json.{Json, OFormat}
 import SensitiveFormats._
 import utils.SensitiveTestHelper
-
-import java.io.File
 
 class SensitiveFormatsSpec extends AnyWordSpecLike with Matchers with SensitiveTestHelper {
   import SensitiveFormatsSpec._

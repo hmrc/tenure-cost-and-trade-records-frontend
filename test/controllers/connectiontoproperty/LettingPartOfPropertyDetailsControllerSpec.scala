@@ -26,8 +26,6 @@ import utils.TestBaseSpec
 
 class LettingPartOfPropertyDetailsControllerSpec extends TestBaseSpec {
 
-  import TestData._
-
   def lettingPartOfPropertyDetailsControllerr(
     stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledStillConnectedDetailsYesToAll)
   ) =

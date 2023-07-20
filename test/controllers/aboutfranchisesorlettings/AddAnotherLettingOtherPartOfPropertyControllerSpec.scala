@@ -16,7 +16,6 @@
 
 package controllers.aboutfranchisesorlettings
 
-import form.Errors
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
 import form.aboutfranchisesorlettings.AddAnotherLettingOtherPartOfPropertyForm.addAnotherLettingForm
 import play.api.http.Status

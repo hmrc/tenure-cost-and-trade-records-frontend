@@ -16,13 +16,13 @@
 
 package controllers.connectiontoproperty
 
-import form.Errors
 import form.connectiontoproperty.AddAnotherLettingPartOfPropertyForm.addAnotherLettingForm
 import models.submissions.connectiontoproperty.StillConnectedDetails
 import play.api.http.Status
 import play.api.test.Helpers._
 import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
+
 class AddAnotherLettingPartOfPropertyControllerSpec extends TestBaseSpec {
 
   import TestData._

@@ -19,7 +19,6 @@ package controllers
 import actions.WithSessionRefiner
 import config.ErrorHandler
 import connectors.Audit
-import models.Session
 import play.api.http.Status.{BAD_REQUEST, NOT_FOUND, OK, SEE_OTHER}
 import play.api.test.Helpers.{POST, contentAsString, redirectLocation, status, stubMessagesControllerComponents}
 import stub.{StubBackendConnector, StubSessionRepo}
