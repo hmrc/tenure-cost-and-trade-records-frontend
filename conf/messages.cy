@@ -1125,8 +1125,10 @@ checkYourAnswersAboutTheProperty.enforcementAction = Enforcement action taken?
 checkYourAnswersAboutTheProperty.enforcementActionHasBeenTakenInformationDetails = Description of enforcement action
 checkYourAnswersAboutTheProperty.tiedForGoods = Tied for any goods?
 checkYourAnswersAboutTheProperty.tiedForGoodsDetails = Type of tie
-checkYourAnswersAboutTheTradingHistory.heading = This is a holding page for the about your trading history check your answers page
+checkYourAnswersAboutTheTradingHistory.heading = Check your answers - about your trading history
 checkYourAnswersRequestReferenceNumber.heading = Check your answers - if you do not have a reference number
+checkYourAnswersRequestReferenceNumber.subheading1 = Property details
+checkYourAnswersRequestReferenceNumber.subheading2 = Your details
 
 # Confirmation Page
 ###################
