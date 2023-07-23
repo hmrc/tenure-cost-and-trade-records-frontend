@@ -26,7 +26,7 @@ import views.behaviours.QuestionViewBehaviours
 
 class LegalOrPlanningRestrictionsViewSpec extends QuestionViewBehaviours[LegalOrPlanningRestrictions] {
 
-  val messageKeyPrefix = "legalPlanningRestrictions"
+  val messageKeyPrefix = "legalOrPlanningRestrictions"
 
   override val form = LegalOrPlanningRestrictionsForm.legalPlanningRestrictionsForm
 
@@ -57,8 +57,8 @@ class LegalOrPlanningRestrictionsViewSpec extends QuestionViewBehaviours[LegalOr
       val doc = asDocument(createViewUsingForm(form))
       assertContainsRadioButton(
         doc,
-        "legalPlanningRestrictions",
-        "legalPlanningRestrictions",
+        "legalOrPlanningRestrictions",
+        "legalOrPlanningRestrictions",
         AnswerYes.name,
         false
       )
@@ -69,8 +69,8 @@ class LegalOrPlanningRestrictionsViewSpec extends QuestionViewBehaviours[LegalOr
       val doc = asDocument(createViewUsingForm(form))
       assertContainsRadioButton(
         doc,
-        "legalPlanningRestrictions-2",
-        "legalPlanningRestrictions",
+        "legalOrPlanningRestrictions-2",
+        "legalOrPlanningRestrictions",
         AnswerNo.name,
         false
       )

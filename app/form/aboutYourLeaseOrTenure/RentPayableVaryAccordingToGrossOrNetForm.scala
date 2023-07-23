@@ -16,7 +16,7 @@
 
 package form.aboutYourLeaseOrTenure
 
-import form.MappingSupport.yesNoType
+import form.MappingSupport.createYesNoType
 import models.submissions.aboutYourLeaseOrTenure.RentPayableVaryAccordingToGrossOrNetDetails
 import play.api.data.Form
 import play.api.data.Forms.mapping
@@ -25,7 +25,7 @@ object RentPayableVaryAccordingToGrossOrNetForm {
 
   val rentPayableVaryAccordingToGrossOrNetForm = Form(
     mapping(
-      "rentPayableVaryAccordingToGrossOrNet" -> yesNoType
+      "rentPayableVaryAccordingToGrossOrNet" -> createYesNoType("error.rentPayableVaryAccordingToGrossOrNet.missing")
     )(RentPayableVaryAccordingToGrossOrNetDetails.apply)(RentPayableVaryAccordingToGrossOrNetDetails.unapply)
   )
 }

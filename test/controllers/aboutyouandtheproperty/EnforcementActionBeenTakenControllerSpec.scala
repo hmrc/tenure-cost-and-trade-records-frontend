@@ -16,7 +16,6 @@
 
 package controllers.aboutyouandtheproperty
 
-import form.Errors
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
 import play.api.http.Status
 import play.api.test.FakeRequest
@@ -64,7 +63,7 @@ class EnforcementActionBeenTakenControllerSpec extends TestBaseSpec {
       val formData = baseFormData - errorKey.enforcementAction
       val form     = enforcementActionForm.bind(formData)
 
-      mustContainError(errorKey.enforcementAction, Errors.booleanMissing, form)
+      mustContainError(errorKey.enforcementAction, "error.enforcementActionBeenTaken.missing", form)
     }
   }
 
@@ -72,9 +71,9 @@ class EnforcementActionBeenTakenControllerSpec extends TestBaseSpec {
     val errorKey: Object {
       val enforcementAction: String
     } = new {
-      val enforcementAction: String = "enforcementAction"
+      val enforcementAction: String = "enforcementActionBeenTaken"
     }
 
-    val baseFormData: Map[String, String] = Map("enforcementAction" -> "yes")
+    val baseFormData: Map[String, String] = Map("enforcementActionBeenTaken" -> "yes")
   }
 }

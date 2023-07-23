@@ -26,7 +26,7 @@ object PremisesLicenseGrantedForm {
   lazy val basePremisesLicenseGrantedForm: Form[AnswersYesNo] = Form(basePremisesLicenseGrantedMapping)
 
   val basePremisesLicenseGrantedMapping = mapping(
-    "premisesLicenseGranted" -> MappingSupport.yesNoType
+    "premisesLicenseGranted" -> MappingSupport.createYesNoType("error.premisesLicenseGranted.missing")
   )(x => x)(b => Some(b))
 
   val premisesLicenseGrantedForm = Form(basePremisesLicenseGrantedMapping)

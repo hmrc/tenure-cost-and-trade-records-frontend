@@ -16,7 +16,7 @@
 
 package form.aboutfranchisesorlettings
 
-import form.MappingSupport.yesNoType
+import form.MappingSupport.createYesNoType
 import models.submissions.common.AnswersYesNo
 import play.api.data.Form
 import play.api.data.Forms.mapping
@@ -28,7 +28,7 @@ object CateringOperationForm {
   )
 
   val baseCateringOperationOrLettingAccommodationMapping = mapping(
-    "cateringOperationOrLettingAccommodation" -> yesNoType
+    "cateringOperationOrLettingAccommodation" -> createYesNoType("error.cateringOperationOrLettingAccommodation.missing")
   )(x => x)(b => Some(b))
 
   val cateringOperationForm = Form(baseCateringOperationOrLettingAccommodationMapping)

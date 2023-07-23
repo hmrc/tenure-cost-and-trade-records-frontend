@@ -16,7 +16,7 @@
 
 package form.aboutyouandtheproperty
 
-import form.MappingSupport.yesNoType
+import form.MappingSupport.createYesNoType
 import models.submissions.common.AnswersYesNo
 import play.api.data.Form
 import play.api.data.Forms.mapping
@@ -25,7 +25,7 @@ object EnforcementActionForm {
   lazy val baseEnforcementActionForm: Form[AnswersYesNo] = Form(baseEnforcementActionMapping)
 
   val baseEnforcementActionMapping = mapping(
-    "enforcementAction" -> yesNoType
+    "enforcementActionBeenTaken" -> createYesNoType("error.enforcementActionBeenTaken.missing")
   )(x => x)(b => Some(b))
 
   val enforcementActionForm = Form(baseEnforcementActionMapping)

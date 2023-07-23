@@ -16,7 +16,7 @@
 
 package form.aboutYourLeaseOrTenure
 
-import form.MappingSupport.yesNoType
+import form.MappingSupport.createYesNoType
 import models.submissions.aboutYourLeaseOrTenure.RentIncludeFixturesAndFittingsDetails
 import play.api.data.Form
 import play.api.data.Forms.mapping
@@ -25,7 +25,7 @@ object RentIncludeFixtureAndFittingsForm {
 
   val rentIncludeFixturesAndFittingsForm = Form(
     mapping(
-      "rentIncludeFixturesAndFittings" -> yesNoType
+      "rentIncludeFixturesAndFittings" -> createYesNoType("error.rentIncludeFixturesAndFittings.missing")
     )(RentIncludeFixturesAndFittingsDetails.apply)(RentIncludeFixturesAndFittingsDetails.unapply)
   )
 }

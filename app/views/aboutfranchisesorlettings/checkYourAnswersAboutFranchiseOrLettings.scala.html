@@ -104,7 +104,7 @@
                 @govukSummaryList(SummaryList(rows =
                     sectionAnswers.optionalRow("checkYourAnswersAboutFranchiseOrLettings.rentFromPartOfProperties",
                         _.lettingOtherPartOfProperty.map(yesNo => messages(s"label.${yesNo.name}")),
-                        aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show(), "lettingOtherPartOfProperties")
+                        aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show(), "lettingOtherPartOfProperty")
                 ))
 
                 @if(sectionAnswers.answers.flatMap(_.lettingOtherPartOfProperty).contains(AnswerYes)) {

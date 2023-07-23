@@ -26,7 +26,7 @@ import views.behaviours.QuestionViewBehaviours
 
 class CanRentBeReducedOnReviewViewSpec extends QuestionViewBehaviours[CanRentBeReducedOnReviewDetails] {
 
-  val messageKeyPrefix = "rentReducedOnReview"
+  val messageKeyPrefix = "canRentBeReducedOnReview"
 
   override val form = CanRentBeReducedOnReviewForm.canRentBeReducedOnReviewForm
 
@@ -57,8 +57,8 @@ class CanRentBeReducedOnReviewViewSpec extends QuestionViewBehaviours[CanRentBeR
       val doc = asDocument(createViewUsingForm(form))
       assertContainsRadioButton(
         doc,
-        "rentReducedOnReview",
-        "rentReducedOnReview",
+        "canRentBeReducedOnReview",
+        "canRentBeReducedOnReview",
         AnswerYes.name,
         false
       )
@@ -69,8 +69,8 @@ class CanRentBeReducedOnReviewViewSpec extends QuestionViewBehaviours[CanRentBeR
       val doc = asDocument(createViewUsingForm(form))
       assertContainsRadioButton(
         doc,
-        "rentReducedOnReview-2",
-        "rentReducedOnReview",
+        "canRentBeReducedOnReview-2",
+        "canRentBeReducedOnReview",
         AnswerNo.name,
         false
       )

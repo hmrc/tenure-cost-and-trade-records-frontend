@@ -16,7 +16,7 @@
 
 package form.aboutYourLeaseOrTenure
 
-import form.MappingSupport.yesNoType
+import form.MappingSupport.createYesNoType
 import models.submissions.aboutYourLeaseOrTenure.PaymentWhenLeaseIsGrantedDetails
 import play.api.data.Form
 import play.api.data.Forms.mapping
@@ -25,7 +25,7 @@ object PaymentWhenLeaseIsGrantedForm {
 
   val paymentWhenLeaseIsGrantedForm = Form(
     mapping(
-      "receivePaymentWhenLeaseGranted" -> yesNoType
+      "receivePaymentWhenLeaseGranted" -> createYesNoType("error.receivePaymentWhenLeaseGranted.missing")
     )(PaymentWhenLeaseIsGrantedDetails.apply)(PaymentWhenLeaseIsGrantedDetails.unapply)
   )
 }

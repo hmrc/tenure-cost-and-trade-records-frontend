@@ -16,7 +16,7 @@
 
 package form.aboutYourLeaseOrTenure
 
-import form.MappingSupport.yesNoType
+import form.MappingSupport.createYesNoType
 import models.submissions.common.AnswersYesNo
 import play.api.data.Form
 import play.api.data.Forms.mapping
@@ -27,7 +27,7 @@ object ConnectedToLandlordForm {
   )
 
   val baseConnectedToLandlordMapping = mapping(
-    "connectedToLandlord" -> yesNoType
+    "connectedToLandlord" -> createYesNoType("error.connectedToLandlord.missing")
   )(x => x)(b => Some(b))
 
   val connectedToLandlordForm = Form(baseConnectedToLandlordMapping)

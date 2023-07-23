@@ -20,7 +20,7 @@ import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import utils.FormBindingTestAssertions.mustContainBooleanRequiredErrorFor
+import utils.FormBindingTestAssertions.{mustContainBooleanRequiredErrorFor, mustContainError}
 import utils.TestBaseSpec
 
 class PremisesLicenseGrantedControllerSpec extends TestBaseSpec {
@@ -63,7 +63,7 @@ class PremisesLicenseGrantedControllerSpec extends TestBaseSpec {
       val formData = baseFormData - errorKey.premisesLicenseGranted
       val form     = premisesLicenseGrantedForm.bind(formData)
 
-      mustContainBooleanRequiredErrorFor(errorKey.premisesLicenseGranted, form)
+      mustContainError(errorKey.premisesLicenseGranted,"error.premisesLicenseGranted.missing", form)
     }
   }
 

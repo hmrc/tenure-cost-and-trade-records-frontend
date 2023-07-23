@@ -70,8 +70,8 @@ POST        /are-you-third-party                                    controllers.
 GET         /vacant-property-start-date                             controllers.connectiontoproperty.VacantPropertiesStartDateController.show()
 POST        /vacant-property-start-date                             controllers.connectiontoproperty.VacantPropertiesStartDateController.submit()
 
-GET         /any-rent-received                                      controllers.connectiontoproperty.IsRentReceivedFromLettingController.show()
-POST        /any-rent-received                                      controllers.connectiontoproperty.IsRentReceivedFromLettingController.submit()
+GET         /is-rent-received-from-letting                          controllers.connectiontoproperty.IsRentReceivedFromLettingController.show()
+POST        /is-rent-received-from-letting                          controllers.connectiontoproperty.IsRentReceivedFromLettingController.submit()
 
 GET         /your-contact-details                                   controllers.connectiontoproperty.ProvideContactDetailsController.show()
 POST        /your-contact-details                                   controllers.connectiontoproperty.ProvideContactDetailsController.submit()
@@ -111,11 +111,11 @@ POST        /licensable-activities                                  controllers.
 GET         /licensable-activities-details                          controllers.aboutyouandtheproperty.LicensableActivitiesDetailsController.show()
 POST        /licensable-activities-details                          controllers.aboutyouandtheproperty.LicensableActivitiesDetailsController.submit()
 
-GET         /premises-license                                       controllers.aboutyouandtheproperty.PremisesLicenseConditionsController.show()
-POST        /premises-license                                       controllers.aboutyouandtheproperty.PremisesLicenseConditionsController.submit()
+GET         /premises-license-conditions                            controllers.aboutyouandtheproperty.PremisesLicenseConditionsController.show()
+POST        /premises-license-conditions                            controllers.aboutyouandtheproperty.PremisesLicenseConditionsController.submit()
 
-GET         /premises-license-conditions                            controllers.aboutyouandtheproperty.PremisesLicenseConditionsDetailsController.show()
-POST        /premises-license-conditions                            controllers.aboutyouandtheproperty.PremisesLicenseConditionsDetailsController.submit()
+GET         /premises-license-conditions-details                    controllers.aboutyouandtheproperty.PremisesLicenseConditionsDetailsController.show()
+POST        /premises-license-conditions-details                    controllers.aboutyouandtheproperty.PremisesLicenseConditionsDetailsController.submit()
 
 GET         /enforcement-action-been-taken                          controllers.aboutyouandtheproperty.EnforcementActionBeenTakenController.show()
 POST        /enforcement-action-been-taken                          controllers.aboutyouandtheproperty.EnforcementActionBeenTakenController.submit()
@@ -177,8 +177,8 @@ POST        /catering-operation-or-letting-accommodation            controllers.
 GET         /letting-other-part-of-property                         controllers.aboutfranchisesorlettings.LettingOtherPartOfPropertyController.show()
 POST        /letting-other-part-of-property                         controllers.aboutfranchisesorlettings.LettingOtherPartOfPropertyController.submit()
 
-GET         /catering-operation-details/                            controllers.aboutfranchisesorlettings.CateringOperationDetailsController.show(idx: Option[Int] ?= None)
-POST        /catering-operation-details/                            controllers.aboutfranchisesorlettings.CateringOperationDetailsController.submit(idx: Option[Int])
+GET         /catering-operation-details                             controllers.aboutfranchisesorlettings.CateringOperationDetailsController.show(idx: Option[Int] ?= None)
+POST        /catering-operation-details                             controllers.aboutfranchisesorlettings.CateringOperationDetailsController.submit(idx: Option[Int])
 
 GET         /catering-operation-rent                                controllers.aboutfranchisesorlettings.CateringOperationDetailsRentController.show(idx: Int)
 POST        /catering-operation-rent                                controllers.aboutfranchisesorlettings.CateringOperationDetailsRentController.submit(idx: Int)
@@ -268,14 +268,14 @@ POST        /rent-include-fixtures-and-fittings                     controllers.
 GET         /rent-include-fixtures-and-fittings-details             controllers.aboutYourLeaseOrTenure.RentIncludeFixtureAndFittingsDetailsController.show()
 POST        /rent-include-fixtures-and-fittings-details             controllers.aboutYourLeaseOrTenure.RentIncludeFixtureAndFittingsDetailsController.submit()
 
-GET         /incentives-payments-conditions                         controllers.aboutYourLeaseOrTenure.IncentivesPaymentsConditionsController.show()
-POST        /incentives-payments-conditions                         controllers.aboutYourLeaseOrTenure.IncentivesPaymentsConditionsController.submit()
+GET         /former-lease-surrendered                               controllers.aboutYourLeaseOrTenure.IncentivesPaymentsConditionsController.show()
+POST        /former-lease-surrendered                               controllers.aboutYourLeaseOrTenure.IncentivesPaymentsConditionsController.submit()
 
 GET         /pay-a-capital-sum                                      controllers.aboutYourLeaseOrTenure.PayACapitalSumController.show()
 POST        /pay-a-capital-sum                                      controllers.aboutYourLeaseOrTenure.PayACapitalSumController.submit()
 
-GET         /payment-when-lease-is-granted                          controllers.aboutYourLeaseOrTenure.PaymentWhenLeaseIsGrantedController.show()
-POST        /payment-when-lease-is-granted                          controllers.aboutYourLeaseOrTenure.PaymentWhenLeaseIsGrantedController.submit()
+GET         /receive-payment-when-lease-granted                     controllers.aboutYourLeaseOrTenure.PaymentWhenLeaseIsGrantedController.show()
+POST        /receive-payment-when-lease-granted                     controllers.aboutYourLeaseOrTenure.PaymentWhenLeaseIsGrantedController.submit()
 
 GET         /can-rent-be-reduced-on-review                          controllers.aboutYourLeaseOrTenure.CanRentBeReducedOnReviewController.show()
 POST        /can-rent-be-reduced-on-review                          controllers.aboutYourLeaseOrTenure.CanRentBeReducedOnReviewController.submit()

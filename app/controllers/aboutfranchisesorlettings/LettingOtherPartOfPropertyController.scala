@@ -52,7 +52,7 @@ class LettingOtherPartOfPropertyController @Inject() (
               lettingOtherPartOfPropertiesForm.fillAndValidate(lettingOtherPartOfProperty)
             case _                                => lettingOtherPartOfPropertiesForm
           },
-          "lettingOtherPartOfProperties",
+          "lettingOtherPartOfProperty",
           getBackLink(request.sessionData) match {
             case Right(link) => link
             case Left(msg)   =>
@@ -74,7 +74,7 @@ class LettingOtherPartOfPropertyController @Inject() (
         BadRequest(
           cateringOperationOrLettingAccommodationView(
             formWithErrors,
-            "lettingOtherPartOfProperties",
+            "lettingOtherPartOfProperty",
             getBackLink(request.sessionData) match {
               case Right(link) => link
               case Left(msg)   =>
