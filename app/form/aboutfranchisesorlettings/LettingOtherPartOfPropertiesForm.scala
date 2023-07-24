@@ -16,7 +16,7 @@
 
 package form.aboutfranchisesorlettings
 
-import form.MappingSupport.yesNoType
+import form.MappingSupport.createYesNoType
 import models.submissions.common.AnswersYesNo
 import play.api.data.Form
 import play.api.data.Forms.mapping
@@ -28,7 +28,7 @@ object LettingOtherPartOfPropertiesForm {
   )
 
   val baseLettingOtherPartOfPropertiesMapping = mapping(
-    "lettingOtherPartOfProperties" -> yesNoType
+    "lettingOtherPartOfProperty" -> createYesNoType("error.lettingOtherPartOfProperty.missing")
   )(x => x)(b => Some(b))
 
   val lettingOtherPartOfPropertiesForm = Form(baseLettingOtherPartOfPropertiesMapping)

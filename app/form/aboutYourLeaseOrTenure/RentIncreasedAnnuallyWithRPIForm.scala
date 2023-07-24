@@ -16,7 +16,7 @@
 
 package form.aboutYourLeaseOrTenure
 
-import form.MappingSupport.yesNoType
+import form.MappingSupport.createYesNoType
 import models.submissions.aboutYourLeaseOrTenure.RentIncreasedAnnuallyWithRPIDetails
 import play.api.data.Form
 import play.api.data.Forms.mapping
@@ -25,7 +25,7 @@ object RentIncreasedAnnuallyWithRPIForm {
 
   val rentIncreasedAnnuallyWithRPIDetailsForm = Form(
     mapping(
-      "rentIncreasedAnnuallyWithRPIs" -> yesNoType
+      "rentIncreasedAnnuallyWithRPIs" -> createYesNoType("error.rentIncreasedAnnuallyWithRPIs.missing")
     )(RentIncreasedAnnuallyWithRPIDetails.apply)(RentIncreasedAnnuallyWithRPIDetails.unapply)
   )
 }

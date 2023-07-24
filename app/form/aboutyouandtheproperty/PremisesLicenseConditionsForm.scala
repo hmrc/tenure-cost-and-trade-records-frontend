@@ -16,7 +16,7 @@
 
 package form.aboutyouandtheproperty
 
-import form.MappingSupport.yesNoType
+import form.MappingSupport.createYesNoType
 import models.submissions.common.AnswersYesNo
 import play.api.data.Form
 import play.api.data.Forms.mapping
@@ -27,7 +27,7 @@ object PremisesLicenseConditionsForm {
   )
 
   val basePremisesLicenseConditionsMapping = mapping(
-    "premisesLicenseConditions" -> yesNoType
+    "premisesLicenseConditions" -> createYesNoType("error.premisesLicenseConditions.missing")
   )(x => x)(b => Some(b))
 
   val premisesLicenseConditionsForm = Form(basePremisesLicenseConditionsMapping)

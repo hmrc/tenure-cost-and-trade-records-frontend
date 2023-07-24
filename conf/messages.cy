@@ -248,6 +248,7 @@ error.tradingNameFromProperty.maxLength = This must be 100 characters or fewer
 #####################################
 tradingNameOwnTheProperty.heading = Does {0} own the property?
 hint.tradingNameOwnTheProperty = Only select ‘yes‘ if you own the premises or land used by the business
+error.tradingNameOwnTheProperty.missing = Select yes if the organisation owns the property
 
 # DOES TRADING NAME PAY RENT ON THE PROPERTY
 ############################################
@@ -256,10 +257,12 @@ tradingNamePayingRent.title = Paying rent
 tradingNamePayingRent.p1 = You must declare whether you pay rent under the terms of your lease or agreement.
 tradingNamePayingRent.p2 = You should select ‘yes‘ even if you pay rent under an informal agreement, or have a temporary rent-free agreement.
 tradingNamePayingRent.p3 = Select ‘no‘ if the owner of the property allows you to occupy it on a permanent rent-free agreement.
+error.tradingNamePayingRent.missing = Select yes if the organisation pays rent on the property
 
 # ARE YOU THIRD-PARTY WORKING ON BEHALF OF TRADING NAME
 #######################################################
 areYouThirdParty.heading = Are you a third-party, working on behalf of {0}?
+error.areYouThirdParty.missing = Select yes if you are working on behalf of the organisation
 
 # VACANT PROPERTIES
 ############################
@@ -301,6 +304,7 @@ error.startDateOfVacantProperty.year.required = The date must include a year
 isRentReceivedFromLetting.heading = Letting income
 isRentReceivedFromLetting.label = Is any rent received form letting parts of the property?
 isRentReceivedFromLetting.p1 = You must declare any income received from letting parts of the property, for example advertising billboards, car parking or telephone masts. You will have the oppertunity to add more than one letting if required.
+error.isRentReceivedFromLetting.missing = Select yes if ant rent is received from letting out parts of the property
 
 # CONNECTION TO PROPERTY TENANT DETAILS
 #######################################
@@ -432,6 +436,7 @@ error.webAddressFormat = Enter an address in the correct format, like www.exampl
 premisesLicenseGranted.heading = Has the premises licence been granted for the property?
 help.premisesLicenseGranted.title = Help with your premises licence
 help.premisesLicenseGranted.text = We’re interested to know if you’re permitted to serve alcohol under the terms of a premises licence, a personal licence, or a club premises certificate.
+error.premisesLicenseGranted.missing = Select yes if a premises licence has been granted
 
 # PREMISES LICENSE GRANTED DETAILS (6015,6016)
 ##############################################
@@ -466,6 +471,7 @@ help.licensableActivities.list2.p4 = a boxing or wrestling match
 help.licensableActivities.list2.p5 = live music
 help.licensableActivities.list2.p6 = any playing of recorded music
 help.licensableActivities.list2.p7 = a dance performance
+error.licensableActivities.missing = Select yes if licensable activities occur within the given timeframe
 
 # LICENSABLE ACTIVITIES DETAILS
 ###############################
@@ -487,6 +493,7 @@ help.premisesLicenseConditions.title = Help with conditions restricting the use 
 help.premisesLicenseConditions.heading = Conditions restricting the use of your property
 help.premisesLicenseConditions.p1 = Premises licences can be granted on the condition the holder of the premises licence complies with the pre-defined terms. These can include restrictions on the use of certain parts of the property.
 help.premisesLicenseConditions.p2 = Check your premises licence if you’re not sure. Any special conditions will be clearly stated there.
+error.premisesLicenseConditions.missing = Select yes if your licence has any conditions as stated
 
 # PREMISES LICENCE CONDITIONS DETAILS
 #####################################
@@ -507,6 +514,7 @@ hint.enforcementActionHasBeenTaken = This can be any suspensions, closure orders
 help.enforcementActionHasBeenTaken.title = Help with enforcement action
 help.enforcementActionHasBeenTaken.heading = Enforcement action
 help.enforcementActionHasBeenTaken.p1 = You must tell us if any enforcement action has been taken against your premises by your local licensing authority under your tenure. If a lease or agreement was assigned to you from another tenant, you must let us know if any enforcement action was taken against them under the current agreement.
+error.enforcementAction.missing = Select yes if any enforcement has been taken
 
 # ENFORCEMENT ACTION BEEN TAKEN DETAILS
 #######################################
@@ -532,6 +540,7 @@ tiedForGoods.p2 = As the name suggests, people with a beer-only tie buy beer fro
 tiedForGoods.heading3 = Partial tie
 tiedForGoods.p3 = Partial ties are normally negotiated to give the tenant some flexibility to sell certain items independently, for example guest ales or fine wines.
 tiedForGoods.label = Are you required to sell certain goods as part of your lease or tenancy agreement?
+error.tiedForGoods.missing = You must choose one
 
 # TIED FOR GOODS DETAILS
 ########################
@@ -548,6 +557,7 @@ tenancyLeaseAgreement.heading = About the property
 label.tenancyLeaseAgreement = Do you hold a tenancy, lease or agreement to occupy?
 label.yes = Yes
 label.no = No
+error.tenancyLeaseAgreement.missing = Select yes if the tenancy, lease or agreement commenced in the last 3 years
 
 # FRANCHISE OR LETTINGS TIED TO PROPERTY
 #######################################
@@ -555,6 +565,7 @@ franchiseLettings.heading = Do you have any franchises or lettings tied to the p
 franchiseLettings.subheading = You should declare any:
 franchiseLettings.list1 = catering operation or letting accommodation run as a separate business if you’ve not included their turnover on the previous page
 franchiseLettings.list2 = rent received from letting other parts of the property including advertising billboards, car parking or telephone masts
+error.franchiseOrLettingsTiedToProperty.missing = Select yes if any franchises or lettings are tied to the property
 
 # ABOUT YOUR LANDLORD
 ##############################
@@ -581,16 +592,21 @@ includedInYourRentApply.subheading = Select any that apply
 label.vat = VAT
 label.nondomesticRates = Non-domestic rates
 label.waterCharges = Water charges
+error.vat.missing = You must choose one
+error.nondomesticRates.missing = You must choose one
+error.waterCharges.missing = You must choose one
 
 # CATERING OPERATION OR LETTING ACCOMMODATION
 ############################################
 cateringOperationOrLettingAccommodation.heading = Is any catering operation or letting accommodation run as a separate business from the property?
 hint.cateringOperationOrLettingAccommodation = You will have the opportunity to add more than one business if required
+error.cateringOperationOrLettingAccommodation.missing = Select yes if any separate businesses are run from the property
 
 # LETTING OTHER PART OF PROPERTY
 ##############################
-lettingOtherPartOfProperties.heading = Is any rent received from letting other parts of the property?
-hint.lettingOtherPartOfProperties = Including advertising rights, stations or hoardings
+lettingOtherPartOfProperty.heading = Is any rent received from letting other parts of the property?
+hint.lettingOtherPartOfProperty = Including advertising rights, stations or hoardings
+error.lettingOtherPartOfProperty.missing = Select yes if any rent received from letting other parts of the property
 
 # CURRENT ANNUAL RENT
 ##############################
@@ -602,6 +618,7 @@ hint.currentAnnualRent = For example, 32000
 rentOpenMarketValue.heading = When the current rent was agreed, was it based on the open market value at that time?
 help.rentOpenMarketValue.title = If you’re not sure
 help.rentOpenMarketValue.p1 = If your rent isn’t based on open market value, it may simply be a fixed amount agreed between both parties, or linked to another factor. If you are unsure, it may be stipulated in your lease or agreement.
+error.rentOpenMarketValue.missing = Select yes if the rent was based on the open market value
 
 # DOES THE RENT PAYABLE
 ######################
@@ -619,6 +636,7 @@ error.detailsToQuestions.maxLength = This must be 1000 characters or fewer
 # RENT PAYABLE VARY ON QUANTITY OF BEERS
 #######################################
 rentPayableVaryOnQuantityOfBeers.heading = Does the rent payable vary according to the quantity of beers, wines or spirits supplied to the property?
+error.rentPayableVaryOnQuantityOfBeers.missing = Select yes if the rent varies according to the quantity of alcohol you sell
 
 # RENT PAYABLE VARY ON QUANTITY OF BEERS DETAILS
 ###############################################
@@ -630,6 +648,7 @@ error.rentPayableVaryOnQuantityOfBeersDetails.maxLength  = This must be 1000 cha
 # RENT PAYABLE VARY ACCORDING TO GROSS OR NET
 ############################################
 rentPayableVaryAccordingToGrossOrNet.heading = Does the rent payable vary according to the gross or net turnover of the business?
+error.rentPayableVaryAccordingToGrossOrNet.missing = Select yes if the rent varies according to your turnover
 
 # RENT PAYABLE VARY ACCORDING TO GROSS OR NET DETAILS
 ####################################################
@@ -660,6 +679,7 @@ error.buildingInsurance.required = Tell us who is responsible for the building i
 ############################
 rentIncludeTradeServices.heading = Does the rent include any trade services provided by the landlord?
 hint.rentIncludeTradeServices = For example, maintenance of trade fixtures and fittings, cellar services, marketing, staff training
+error.rentIncludeTradeServices.missing = Select yes if the rent includes any trade services provided by the landlord
 
 # RENT INCLUDE TRADE SERVICES DETAILS
 ####################################
@@ -677,6 +697,7 @@ error.describeServices.maxLength = This must be 1000 characters or fewer
 rentIncludeFixturesAndFittings.heading = Does the rent include any trade fixtures and fittings, plant and machinery, furniture and other equipment belonging to the landlord?
 error.required.rentIncludeFixturesAndFittings = Please provide a value
 error.invalid_currency.rentIncludeFixturesAndFittings = Please provide a number
+error.rentIncludeFixturesAndFittings.missing = Select yes if the rent includes any equipment belonging to the landlord
 
 # RENT INCLUDE FIXTURES AND FITTINGS DETAILS
 ###########################################
@@ -688,25 +709,30 @@ error.invalid_currency.rentIncludeFixturesAndFittingsDetails = Please provide a 
 # INCENTIVES, PAYMENTS AND CONDITIONS
 ####################################
 formerLeaseSurrendered.heading = Was a former lease or agreement surrendered early as a condition of the present one being granted?
+error.formerLeaseSurrendered.missing = Select yes if a former lease or agreement was surrendered early
 
 # CAN RENT BE REDUCED ON REVIEW
 ##############################
-rentReducedOnReview.heading = Can the rent be reduced on review under the terms of the lease or agreement?
+canRentBeReducedOnReview.heading = Can the rent be reduced on review under the terms of the lease or agreement?
+error.canRentBeReducedOnReview.missing = Select yet if the rent can be reduced on review
 
 # PAY A CAPITAL SUM
 ##################
-capitalSumOrPremium.heading = Did you pay a capital sum or premium for your lease or agreement, ignoring tenant’s inventory?
-hint.capitalSumOrPremium = The sum could be paid to the landlord or a previous lessee
+payACapitalSum.heading = Did you pay a capital sum or premium for your lease or agreement, ignoring tenant’s inventory?
+hint.payACapitalSum = The sum could be paid to the landlord or a previous lessee
+error.payACapitalSum.missing = Select yes if you paid a capital sum or premium for your lease
 
 # PAYMENT WHEN LEASE IS GRANTED
 ##############################
 receivePaymentWhenLeaseGranted.heading = Did you receive any payment when the lease was granted, or following assignment of the lease or agreement?
 hint.receivePaymentWhenLeaseGranted = Select ‘no’ if your rent has been reviewed since you received the payment
+error.receivePaymentWhenLeaseGranted.missing = Select yes if you received any payment when the lease was granted
 
 # RENT INCREASE ANNUALLY WITH RPI
 ################################
 rentIncreasedAnnuallyWithRPIs.heading = Does the rent increase annually in line with the retail price index (RPI)?
 label.rentIncreasedAnnuallyWithRPIs = Does the rent increase annually in line with the retail price index (RPI)?
+error.rentIncreasedAnnuallyWithRPIs.missing = Select yes if the rent increases annually in line with the RPI
 
 # METHOD USED TO FIX CURRENT RENT
 ################################
@@ -788,6 +814,7 @@ error.addAnotherLetting.required = Select whether you need to add another lettin
 ###############################
 tenantsAdditionsDisregarded.heading = Were any tenants’ additions or improvements disregarded at the time the rent was agreed or determined
 hint.tenantsAdditionsDisregarded = For example, is your rent based on the market value of the property before you made improvements like fitting out a shell, or adding parking
+error.tenantsAdditionsDisregarded.missing = Select yes if any additions or improvements were disregarded
 
 ##TENANTS ADDITIONS DISREGARDED DETAILS
 #######################################
@@ -798,8 +825,9 @@ error.tenantsAdditionsDisregardedDetails.maxLength = This must be 2000 character
 
 # LEGAL PLANNING RESTRICTIONS
 #############################
-legalPlanningRestrictions.heading = Are there any legal or planning restrictions, unusual terms or conditions in the lease or agreement that may have affected the rent payable?
-hint.legalPlanningRestrictions = For example, a break clause, contracting out of the Landlord and Tenant Act
+legalOrPlanningRestrictions.heading = Are there any legal or planning restrictions, unusual terms or conditions in the lease or agreement that may have affected the rent payable?
+hint.legalOrPlanningRestrictions = For example, a break clause, contracting out of the Landlord and Tenant Act
+error.legalOrPlanningRestrictions.missing = Select yes if ant unusual conditions in the rent may have affected the rent payable
 
 # LEGAL PLANNING RESTRICTIONS DETAILS
 #####################################
@@ -995,6 +1023,7 @@ netProfit.heading = This is a holding page for the net profits page
 #########
 concessionOrFranchise.heading = Is any concession or franchise run as a separate business from the property?
 hint.concessionOrFranchise = Choose ’no’ if you’ve included turnover from these businesses in your turnover. You will have the opportunity to add more than one business if required.
+error.concessionOrFranchise.missing = Select yes if any separate businesses are run from the property
 
 # ADDITIONAL INFORMATION
 ########################
@@ -1025,6 +1054,7 @@ tenancyLeaseAgreementExpire.heading = When does your tenancy, lease or agreement
 # CONNECTED TO LANDLORD
 ###########################################
 connectedToLandlord.heading = Other than contractually, are you connected to the landlord in any way?
+error.connectedToLandlord.missing = Select yet if you are connected to the landlord
 
 # CONNECTED TO LANDLORD DETAILS
 ###############################
@@ -1121,7 +1151,7 @@ checkYourAnswersAboutTheProperty.licensableActivities = Licensable activities be
 checkYourAnswersAboutTheProperty.licensableActivitiesDetails = Description of licensable activities
 checkYourAnswersAboutTheProperty.premisesLicenseConditions = Premises license restriction on property use?
 checkYourAnswersAboutTheProperty.premisesLicenseConditionsDetails = Description of license restriction
-checkYourAnswersAboutTheProperty.enforcementAction = Enforcement action taken?
+checkYourAnswersAboutTheProperty.enforcementActionBeenTaken = Enforcement action taken?
 checkYourAnswersAboutTheProperty.enforcementActionHasBeenTakenInformationDetails = Description of enforcement action
 checkYourAnswersAboutTheProperty.tiedForGoods = Tied for any goods?
 checkYourAnswersAboutTheProperty.tiedForGoodsDetails = Type of tie

@@ -64,7 +64,7 @@ class PremisesLicenseConditionsControllerSpec extends TestBaseSpec {
       val formData = baseFormData - errorKey.premisesLicenseConditions
       val form     = premisesLicenseConditionsForm.bind(formData)
 
-      mustContainError(errorKey.premisesLicenseConditions, Errors.booleanMissing, form)
+      mustContainError(errorKey.premisesLicenseConditions, "error.premisesLicenseConditions.missing", form)
     }
   }
 

@@ -67,7 +67,7 @@ class IsRentReceivedFromLettingControllerSpec extends TestBaseSpec {
         val formData = baseFormData - errorKey.isRentReceivedFromLetting
         val form     = isRentReceivedFromLettingForm.bind(formData)
 
-        mustContainError(errorKey.isRentReceivedFromLetting, Errors.booleanMissing, form)
+        mustContainError(errorKey.isRentReceivedFromLetting, "error.isRentReceivedFromLetting.missing", form)
       }
     }
   }

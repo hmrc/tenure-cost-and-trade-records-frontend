@@ -29,7 +29,7 @@
 @(theForm: Form[CanRentBeReducedOnReviewDetails], summary: Summary)(implicit request: Request[_], messages: Messages)
 
 @layout(
- pageHeading = messages("rentReducedOnReview.heading"),
+ pageHeading = messages("canRentBeReducedOnReview.heading"),
  showH1 = false,
  showSection = true,
     summary = Some(summary),
@@ -43,8 +43,8 @@
     @includes.radioButtonsYesNo(
       govukRadios,
       theForm,
-      "rentReducedOnReview",
-      "rentReducedOnReview.heading",
+      "canRentBeReducedOnReview",
+      "canRentBeReducedOnReview.heading",
       "govuk-fieldset__legend--l",
       isHeading = true
     )

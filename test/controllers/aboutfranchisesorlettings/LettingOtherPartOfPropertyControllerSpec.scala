@@ -63,11 +63,11 @@ class LettingOtherPartOfPropertyControllerSpec extends TestBaseSpec {
   }
 
   "Letting other part of properties form" should {
-    "error if lettingOtherPartOfProperties is missing" in {
+    "error if lettingOtherPartOfProperty is missing" in {
       val formData = baseFormData - errorKey.lettingOtherPartOfProperties
       val form     = lettingOtherPartOfPropertiesForm.bind(formData)
 
-      mustContainError(errorKey.lettingOtherPartOfProperties, Errors.booleanMissing, form)
+      mustContainError(errorKey.lettingOtherPartOfProperties, "error.lettingOtherPartOfProperty.missing", form)
     }
   }
 
@@ -75,9 +75,9 @@ class LettingOtherPartOfPropertyControllerSpec extends TestBaseSpec {
     val errorKey: Object {
       val lettingOtherPartOfProperties: String
     } = new {
-      val lettingOtherPartOfProperties: String = "lettingOtherPartOfProperties"
+      val lettingOtherPartOfProperties: String = "lettingOtherPartOfProperty"
     }
 
-    val baseFormData: Map[String, String] = Map("lettingOtherPartOfProperties" -> "yes")
+    val baseFormData: Map[String, String] = Map("lettingOtherPartOfProperty" -> "yes")
   }
 }

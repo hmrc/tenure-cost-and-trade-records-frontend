@@ -16,7 +16,7 @@
 
 package form.aboutYourLeaseOrTenure
 
-import form.MappingSupport.yesNoType
+import form.MappingSupport.createYesNoType
 import models.submissions.aboutYourLeaseOrTenure.LegalOrPlanningRestrictions
 import play.api.data.Form
 import play.api.data.Forms.mapping
@@ -25,7 +25,7 @@ object LegalOrPlanningRestrictionsForm {
 
   val legalPlanningRestrictionsForm = Form(
     mapping(
-      "legalPlanningRestrictions" -> yesNoType
+      "legalOrPlanningRestrictions" -> createYesNoType("error.legalOrPlanningRestrictions.missing")
     )(LegalOrPlanningRestrictions.apply)(LegalOrPlanningRestrictions.unapply)
   )
 }

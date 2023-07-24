@@ -16,7 +16,7 @@
 
 package form.connectiontoproperty
 
-import form.MappingSupport.yesNoType
+import form.MappingSupport.createYesNoType
 import models.submissions.common.AnswersYesNo
 import play.api.data.Form
 import play.api.data.Forms.mapping
@@ -25,7 +25,7 @@ object AreYouThirdPartyForm {
   lazy val areYouThirdPartyForm: Form[AnswersYesNo] = Form(areYouThirdPartyMapping)
 
   val areYouThirdPartyMapping = mapping(
-    "areYouThirdParty" -> yesNoType
+    "areYouThirdParty" -> createYesNoType("error.areYouThirdParty.missing")
   )(x => x)(b => Some(b))
 
 }

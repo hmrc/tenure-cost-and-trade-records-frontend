@@ -65,7 +65,7 @@ class LicensableActivitiesControllerSpec extends TestBaseSpec {
       val formData = baseFormData - errorKey.licensableActivities
       val form     = licensableActivitiesForm.bind(formData)
 
-      mustContainError(errorKey.licensableActivities, Errors.booleanMissing, form)
+      mustContainError(errorKey.licensableActivities, "error.licensableActivities.missing", form)
     }
   }
 

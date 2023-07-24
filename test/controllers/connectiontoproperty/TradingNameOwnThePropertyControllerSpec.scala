@@ -67,7 +67,7 @@ class TradingNameOwnThePropertyControllerSpec extends TestBaseSpec {
         val formData = baseFormData - errorKey.tradingNameOwnTheProperty
         val form     = tradingNameOwnThePropertyForm.bind(formData)
 
-        mustContainError(errorKey.tradingNameOwnTheProperty, Errors.booleanMissing, form)
+        mustContainError(errorKey.tradingNameOwnTheProperty, "error.tradingNameOwnTheProperty.missing", form)
       }
     }
   }

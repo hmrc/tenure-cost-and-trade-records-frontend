@@ -16,7 +16,7 @@
 
 package form.aboutyouandtheproperty
 
-import form.MappingSupport.yesNoType
+import form.MappingSupport.createYesNoType
 import models.submissions.common.AnswersYesNo
 import play.api.data.Form
 import play.api.data.Forms.mapping
@@ -26,7 +26,7 @@ object LicensableActivitiesForm {
   lazy val baseLicensableActivitiesForm: Form[AnswersYesNo] = Form(baseLicensableActivitiesMapping)
 
   val baseLicensableActivitiesMapping = mapping(
-    "licensableActivities" -> yesNoType
+    "licensableActivities" -> createYesNoType("error.licensableActivities.missing")
   )(x => x)(b => Some(b))
 
   val licensableActivitiesForm = Form(baseLicensableActivitiesMapping)

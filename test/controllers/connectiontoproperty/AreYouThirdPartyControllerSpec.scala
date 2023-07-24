@@ -67,7 +67,7 @@ class AreYouThirdPartyControllerSpec extends TestBaseSpec {
         val formData = baseFormData - errorKey.areYouThirdParty
         val form     = areYouThirdPartyForm.bind(formData)
 
-        mustContainError(errorKey.areYouThirdParty, Errors.booleanMissing, form)
+        mustContainError(errorKey.areYouThirdParty, "error.areYouThirdParty.missing", form)
       }
     }
   }

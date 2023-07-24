@@ -16,7 +16,7 @@
 
 package form.connectiontoproperty
 
-import form.MappingSupport.yesNoType
+import form.MappingSupport.createYesNoType
 import models.submissions.common.AnswersYesNo
 import play.api.data.Form
 import play.api.data.Forms.mapping
@@ -25,6 +25,6 @@ object isRentReceivedFromLettingForm {
   lazy val isRentReceivedFromLettingForm: Form[AnswersYesNo] = Form(isRentReceivedFromLettingMapping)
 
   val isRentReceivedFromLettingMapping = mapping(
-    "isRentReceivedFromLetting" -> yesNoType
+    "isRentReceivedFromLetting" -> createYesNoType("error.isRentReceivedFromLetting.missing")
   )(x => x)(b => Some(b))
 }

@@ -16,7 +16,7 @@
 
 package form.connectiontoproperty
 
-import form.MappingSupport.yesNoType
+import form.MappingSupport.createYesNoType
 import models.submissions.common.AnswersYesNo
 import play.api.data.Form
 import play.api.data.Forms.mapping
@@ -25,7 +25,7 @@ object TradingNameOwnThePropertyForm {
   lazy val tradingNameOwnThePropertyForm: Form[AnswersYesNo] = Form(tradingNameOwnThePropertyMapping)
 
   val tradingNameOwnThePropertyMapping = mapping(
-    "tradingNameOwnTheProperty" -> yesNoType
+    "tradingNameOwnTheProperty" -> createYesNoType("error.tradingNameOwnTheProperty.missing")
   )(x => x)(b => Some(b))
 
 }

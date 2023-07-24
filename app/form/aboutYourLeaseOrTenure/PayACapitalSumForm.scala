@@ -16,7 +16,7 @@
 
 package form.aboutYourLeaseOrTenure
 
-import form.MappingSupport.yesNoType
+import form.MappingSupport.createYesNoType
 import models.submissions.aboutYourLeaseOrTenure.PayACapitalSumDetails
 import play.api.data.Form
 import play.api.data.Forms.mapping
@@ -25,7 +25,7 @@ object PayACapitalSumForm {
 
   val payACapitalSumForm = Form(
     mapping(
-      "capitalSumOrPremium" -> yesNoType
+      "payACapitalSum" -> createYesNoType("error.payACapitalSum.missing")
     )(PayACapitalSumDetails.apply)(PayACapitalSumDetails.unapply)
   )
 }

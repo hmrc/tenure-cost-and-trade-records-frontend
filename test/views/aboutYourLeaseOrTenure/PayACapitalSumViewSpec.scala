@@ -26,7 +26,7 @@ import views.behaviours.QuestionViewBehaviours
 
 class PayACapitalSumViewSpec extends QuestionViewBehaviours[PayACapitalSumDetails] {
 
-  val messageKeyPrefix = "capitalSumOrPremium"
+  val messageKeyPrefix = "payACapitalSum"
 
   override val form = PayACapitalSumForm.payACapitalSumForm
 
@@ -59,8 +59,8 @@ class PayACapitalSumViewSpec extends QuestionViewBehaviours[PayACapitalSumDetail
       val doc = asDocument(createViewUsingForm(form))
       assertContainsRadioButton(
         doc,
-        "capitalSumOrPremium",
-        "capitalSumOrPremium",
+        "payACapitalSum",
+        "payACapitalSum",
         AnswerYes.name,
         false
       )
@@ -71,8 +71,8 @@ class PayACapitalSumViewSpec extends QuestionViewBehaviours[PayACapitalSumDetail
       val doc = asDocument(createViewUsingForm(form))
       assertContainsRadioButton(
         doc,
-        "capitalSumOrPremium-2",
-        "capitalSumOrPremium",
+        "payACapitalSum-2",
+        "payACapitalSum",
         AnswerNo.name,
         false
       )

@@ -16,7 +16,7 @@
 
 package form.aboutYourLeaseOrTenure
 
-import form.MappingSupport.yesNoType
+import form.MappingSupport.createYesNoType
 import models.submissions.aboutYourLeaseOrTenure.TenantAdditionsDisregardedDetails
 import play.api.data.Form
 import play.api.data.Forms.mapping
@@ -25,7 +25,7 @@ object TenantsAdditionsDisregardedForm {
 
   val tenantsAdditionsDisregardedForm = Form(
     mapping(
-      "tenantsAdditionsDisregarded" -> yesNoType
+      "tenantsAdditionsDisregarded" -> createYesNoType("error.tenantsAdditionsDisregarded.missing")
     )(TenantAdditionsDisregardedDetails.apply)(TenantAdditionsDisregardedDetails.unapply)
   )
 }

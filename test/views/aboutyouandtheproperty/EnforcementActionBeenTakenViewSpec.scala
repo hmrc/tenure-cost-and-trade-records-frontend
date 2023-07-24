@@ -60,8 +60,8 @@ class EnforcementActionBeenTakenViewSpec extends QuestionViewBehaviours[AnswersY
       val doc = asDocument(createViewUsingForm(form))
       assertContainsRadioButton(
         doc,
-        "enforcementAction",
-        "enforcementAction",
+        "enforcementActionBeenTaken",
+        "enforcementActionBeenTaken",
         AnswerYes.name,
         isChecked = false
       )
@@ -72,8 +72,8 @@ class EnforcementActionBeenTakenViewSpec extends QuestionViewBehaviours[AnswersY
       val doc = asDocument(createViewUsingForm(form))
       assertContainsRadioButton(
         doc,
-        "enforcementAction-2",
-        "enforcementAction",
+        "enforcementActionBeenTaken-2",
+        "enforcementActionBeenTaken",
         AnswerNo.name,
         isChecked = false
       )

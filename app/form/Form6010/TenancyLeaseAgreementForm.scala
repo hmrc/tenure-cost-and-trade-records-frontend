@@ -16,7 +16,7 @@
 
 package form.Form6010
 
-import form.MappingSupport.yesNoType
+import form.MappingSupport.createYesNoType
 import models.submissions.Form6010.TenancyLeaseAgreementDetails
 import play.api.data.Form
 import play.api.data.Forms.mapping
@@ -25,7 +25,7 @@ object TenancyLeaseAgreementForm {
 
   val tenancyLeaseAgreementForm = Form(
     mapping(
-      "tenancyLeaseAgreement" -> yesNoType
+      "tenancyLeaseAgreement" -> createYesNoType("error.tenancyLeaseAgreement.missing")
     )(TenancyLeaseAgreementDetails.apply)(TenancyLeaseAgreementDetails.unapply)
   )
 }

@@ -16,7 +16,7 @@
 
 package form.aboutYourLeaseOrTenure
 
-import form.MappingSupport.yesNoType
+import form.MappingSupport.createYesNoType
 import models.submissions.aboutYourLeaseOrTenure.CanRentBeReducedOnReviewDetails
 import play.api.data.Form
 import play.api.data.Forms.mapping
@@ -25,7 +25,7 @@ object CanRentBeReducedOnReviewForm {
 
   val canRentBeReducedOnReviewForm = Form(
     mapping(
-      "rentReducedOnReview" -> yesNoType
+      "canRentBeReducedOnReview" -> createYesNoType("error.canRentBeReducedOnReview.missing")
     )(CanRentBeReducedOnReviewDetails.apply)(CanRentBeReducedOnReviewDetails.unapply)
   )
 }

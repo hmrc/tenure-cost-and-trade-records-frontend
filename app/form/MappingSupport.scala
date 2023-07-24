@@ -49,7 +49,6 @@ object MappingSupport {
   val buildingOperatingHaveAWebsiteType: Mapping[BuildingOperationHaveAWebsite] =
     Forms.of[BuildingOperationHaveAWebsite]
   val vacantPropertiesType: Mapping[VacantPropertiesDetails]                    = Forms.of[VacantPropertiesDetails]
-  val yesNoType: Mapping[AnswersYesNo]                                          = Forms.of[AnswersYesNo]
   val cyaYesNo: Mapping[CYAYesNo]                                               = Forms.of[CYAYesNo]
   val addressConnectionType: Mapping[AddressConnectionType]                     = Forms.of[AddressConnectionType]
   val pastConnectionType: Mapping[PastConnectionType]                           = Forms.of[PastConnectionType]
@@ -117,6 +116,9 @@ object MappingSupport {
   )(AnnualRent.apply)(AnnualRent.unapply).verifying(Errors.maxCurrencyAmountExceeded, _.amount <= cdbMaxCurrencyAmount)
 
   val currency: Mapping[BigDecimal] = currencyMapping()
+
+  def createYesNoType(errorMessage: String): Mapping[AnswersYesNo] =
+    Forms.of[AnswersYesNo](answersYesNoDefFormat(errorMessage))
 
   def currencyMapping(fieldErrorPart: String = ""): Mapping[BigDecimal] = default(text, "")
     .verifying(nonEmpty(errorMessage = Errors.annualRentExcludingVAT + fieldErrorPart))

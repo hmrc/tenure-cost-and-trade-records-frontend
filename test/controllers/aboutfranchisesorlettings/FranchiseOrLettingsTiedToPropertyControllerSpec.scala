@@ -66,7 +66,7 @@ class FranchiseOrLettingsTiedToPropertyControllerSpec extends TestBaseSpec {
       val formData = baseFormData - errorKey.franchiseOrLettingsTiedToProperty
       val form     = franchiseOrLettingsTiedToPropertyForm.bind(formData)
 
-      mustContainError(errorKey.franchiseOrLettingsTiedToProperty, Errors.booleanMissing, form)
+      mustContainError(errorKey.franchiseOrLettingsTiedToProperty, "error.franchiseOrLettingsTiedToProperty.missing", form)
     }
   }
 

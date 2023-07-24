@@ -67,7 +67,7 @@ class TradingNamePayingRentControllerSpec extends TestBaseSpec {
         val formData = baseFormData - errorKey.tradingNamePayingRent
         val form     = tradingNamePayingRentForm.bind(formData)
 
-        mustContainError(errorKey.tradingNamePayingRent, Errors.booleanMissing, form)
+        mustContainError(errorKey.tradingNamePayingRent, "error.tradingNamePayingRent.missing", form)
       }
     }
   }
