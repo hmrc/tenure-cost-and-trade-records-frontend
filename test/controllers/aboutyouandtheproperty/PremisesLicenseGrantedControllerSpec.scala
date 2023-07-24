@@ -63,7 +63,7 @@ class PremisesLicenseGrantedControllerSpec extends TestBaseSpec {
       val formData = baseFormData - errorKey.premisesLicenseGranted
       val form     = premisesLicenseGrantedForm.bind(formData)
 
-      mustContainError(errorKey.premisesLicenseGranted,"error.premisesLicenseGranted.missing", form)
+      mustContainError(errorKey.premisesLicenseGranted, "error.premisesLicenseGranted.missing", form)
     }
   }
 
