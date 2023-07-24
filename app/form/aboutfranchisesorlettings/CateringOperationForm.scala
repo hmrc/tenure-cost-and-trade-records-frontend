@@ -28,7 +28,9 @@ object CateringOperationForm {
   )
 
   val baseCateringOperationOrLettingAccommodationMapping = mapping(
-    "cateringOperationOrLettingAccommodation" -> createYesNoType("error.cateringOperationOrLettingAccommodation.missing")
+    "cateringOperationOrLettingAccommodation" -> createYesNoType(
+      "error.cateringOperationOrLettingAccommodation.missing"
+    )
   )(x => x)(b => Some(b))
 
   val cateringOperationForm = Form(baseCateringOperationOrLettingAccommodationMapping)
