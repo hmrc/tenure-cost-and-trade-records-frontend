@@ -41,7 +41,7 @@ import crypto.MongoCrypto
 trait SensitiveTestHelper {
 
   class TestMongoCrypto(configuration: Configuration) extends MongoCrypto(configuration) {
-    override protected val encryptionKey: String = configuration.get[String]("crypto.key")
+   // override protected val encryptionKey: String = configuration.get[String]("crypto.key")
   }
 
   def loadTestConfig(): Configuration = {
@@ -54,5 +54,4 @@ trait SensitiveTestHelper {
 
   def createTestMongoCrypto(configuration: Configuration): MongoCrypto =
     new TestMongoCrypto(configuration)
-
 }
