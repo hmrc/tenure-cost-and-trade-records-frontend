@@ -17,13 +17,18 @@
 package crypto
 
 import play.api.Configuration
-import uk.gov.hmrc.crypto.AesGCMCrypto
+import uk.gov.hmrc.crypto.{Crypted, Decrypter, Encrypter, PlainBytes, PlainContent, PlainText, SymmetricCryptoFactory}
 
 import javax.inject.{Inject, Singleton}
 
 @Singleton
-class MongoCrypto @Inject() (configuration: Configuration) extends AesGCMCrypto {
+class MongoCrypto @Inject() (configuration: Configuration) extends Encrypter with Decrypter {
 
-  override protected val encryptionKey: String = configuration.underlying.getString("crypto.key")
+  private val symmetricCrypto: Encrypter with Decrypter = SymmetricCryptoFactory.aesGcmCryptoFromConfig("crypto", configuration.underlying)
 
+  override def encrypt(plain: PlainContent): Crypted = symmetricCrypto.encrypt(plain)
+
+  override def decrypt(reversiblyEncrypted: Crypted): PlainText = symmetricCrypto.decrypt(reversiblyEncrypted)
+
+  override def decryptAsBytes(reversiblyEncrypted: Crypted): PlainBytes = symmetricCrypto.decryptAsBytes(reversiblyEncrypted)
 }
