@@ -17,7 +17,6 @@
 package controllers.downloadFORTypeForm
 
 import form.downloadFORTypeForm.DownloadPDFReferenceNumberForm.downloadPDFReferenceNumberForm
-import models.submissions.downloadFORTypeForm.DownloadPDFDetails
 import play.api.http.Status
 import play.api.test.Helpers._
 import stub.StubBackendConnector
@@ -28,23 +27,13 @@ class DownloadPDFReferenceNumberControllerSpec extends TestBaseSpec {
   import TestData.{baseFormData, errorKey}
   import utils.FormBindingTestAssertions.mustContainError
 
-  def downloadPDFReferenceNumberController(
-    downloadPDFDetails: Option[DownloadPDFDetails] = Some(prefilledDownloadPDFRef)
-  ) = new DownloadPDFReferenceNumberController(
+  def downloadPDFReferenceNumberController() = new DownloadPDFReferenceNumberController(
     stubMessagesControllerComponents(),
-    connectedToPropertyNavigator,
     downloadPDFReferenceNumberView,
-    StubBackendConnector(),
-    preEnrichedActionRefiner(downloadPDFDetails = downloadPDFDetails),
-    mockSessionRepo
+    StubBackendConnector()
   )
 
   "GET /" should {
-    "return 303" in {
-      val result = downloadPDFReferenceNumberController().startWithSession(fakeRequest)
-      status(result) shouldBe Status.SEE_OTHER
-    }
-
     "return 200" in {
       val result = downloadPDFReferenceNumberController().show(fakeRequest)
       status(result) shouldBe Status.OK

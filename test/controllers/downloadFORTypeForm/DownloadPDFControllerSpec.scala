@@ -23,26 +23,24 @@ import utils.TestBaseSpec
 
 class DownloadPDFControllerSpec extends TestBaseSpec {
 
-  private def downloadPDFController(downloadPDFDetails: Option[DownloadPDFDetails] = Some(prefilledDownloadPDFRef)) =
+  private def downloadPDFController() =
     new DownloadPDFController(
       stubMessagesControllerComponents(),
-      downloadPDFView,
-      preEnrichedActionRefiner(downloadPDFDetails = downloadPDFDetails),
-      mockSessionRepo
+      downloadPDFView
     )
 
   "GET /" should {
     "return 200" in {
       mockSessionRepo.saveOrUpdate(prefilledBaseSession)
 
-      val result = downloadPDFController().show(fakeRequest)
+      val result = downloadPDFController().show("FOR2016")(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return HTML" in {
       mockSessionRepo.saveOrUpdate(prefilledBaseSession)
 
-      val result = downloadPDFController().show(fakeRequest)
+      val result = downloadPDFController().show("FOR2016")(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }

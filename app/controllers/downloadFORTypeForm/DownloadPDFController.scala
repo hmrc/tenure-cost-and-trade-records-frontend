@@ -26,7 +26,7 @@ import scala.concurrent.Future
 @Singleton
 class DownloadPDFController @Inject() (
   mcc: MessagesControllerComponents,
-  downloadPDFView: downloadPDF,
+  downloadPDFView: downloadPDF
 ) extends FrontendController(mcc) {
 
   def show(forType: String): Action[AnyContent] = Action.async { implicit request =>

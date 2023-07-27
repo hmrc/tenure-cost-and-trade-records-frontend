@@ -40,17 +40,20 @@ class DownloadPDFReferenceNumberController @Inject() (
   }
 
   def submit: Action[AnyContent] = Action.async { implicit request =>
-    downloadPDFReferenceNumberForm.bindFromRequest().fold(
-      formWithErrors => { Future.successful(BadRequest(downloadPDFReferenceNumberView(formWithErrors))) },
-      userData => {
-        connector.retrieveFORType(userData.downloadPDFReferenceNumber).flatMap {
-          value => Future.successful(Redirect(controllers.downloadFORTypeForm.routes.DownloadPDFController.show(value)))
-        }.recover {
-          case _ =>
-          logger.error(s"Failed to retrieve a FOR Type for ${userData.downloadPDFReferenceNumber}")
-          Redirect(controllers.downloadFORTypeForm.routes.DownloadPDFController.show("invalidType"))
-        }
-      }
-    )
+    downloadPDFReferenceNumberForm
+      .bindFromRequest()
+      .fold(
+        formWithErrors => Future.successful(BadRequest(downloadPDFReferenceNumberView(formWithErrors))),
+        userData =>
+          connector
+            .retrieveFORType(userData.downloadPDFReferenceNumber)
+            .flatMap { value =>
+              Future.successful(Redirect(controllers.downloadFORTypeForm.routes.DownloadPDFController.show(value)))
+            }
+            .recover { case _ =>
+              logger.error(s"Failed to retrieve a FOR Type for ${userData.downloadPDFReferenceNumber}")
+              Redirect(controllers.downloadFORTypeForm.routes.DownloadPDFController.show("invalidType"))
+            }
+      )
   }
 }

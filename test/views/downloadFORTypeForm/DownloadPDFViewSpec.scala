@@ -81,7 +81,7 @@ class DownloadPDFViewSpec extends QuestionViewBehaviours[DownloadPDF] {
         doc
           .select("a[class=govuk-link]")
           .toString
-          .contains(controllers.downloadFORTypeForm.routes.DownloadPDFReferenceNumberController.startWithSession().url)
+          .contains(controllers.downloadFORTypeForm.routes.DownloadPDFReferenceNumberController.show().url)
       )
       assert(doc.select("a[class=govuk-link]").toString.contains(messages("label.requestReference")))
       assert(
