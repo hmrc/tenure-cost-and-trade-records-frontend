@@ -130,14 +130,6 @@ class ConnectionToPropertyNavigatorSpec extends TestBaseSpec {
       ) mustBe controllers.routes.RequestReferenceNumberFormSubmissionController.submit()
   }
 
-  "return a function that goes to the download pdf reference number page" in {
-    navigator
-      .nextPage(DownloadPDFReferenceNumberPageId, stillConnectedDetailsYesSession)
-      .apply(
-        stillConnectedDetailsYesSession
-      ) mustBe controllers.downloadFORTypeForm.routes.DownloadPDFController.show()
-  }
-
   "return a function that goes from the vacant property page to Vacent property Start Date page if answer yes" in {
     navigator
       .nextPage(VacantPropertiesPageId, stillConnectedDetailsYesToAllSession)

@@ -70,10 +70,6 @@ class ConnectedToPropertyIdentifiersSpec extends TestBaseSpec {
       assert(CheckYourAnswersRequestReferenceNumberPageId.toString.equals("CheckYourAnswersRequestReferenceNumberPage"))
     }
 
-    "Identifier for download pdf reference page" in {
-      assert(DownloadPDFReferenceNumberPageId.toString.equals("DownloadPDFReferenceNumberPage"))
-    }
-
     "Identifier for trading name operating from property page" in {
       assert(TradingNameOperatingFromPropertyPageId.toString.equals("TradingNameOperatingFromProperty"))
     }

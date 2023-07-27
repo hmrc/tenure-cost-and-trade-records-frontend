@@ -16,76 +16,44 @@
 
 package controllers.downloadFORTypeForm
 
-import actions.WithSessionRefiner
-import models.submissions.downloadFORTypeForm.DownloadPDF
 import play.api.Logging
-import scala.util.{Failure, Success}
 import connectors.BackendConnector
 import form.downloadFORTypeForm.DownloadPDFReferenceNumberForm.downloadPDFReferenceNumberForm
-import models.Session
-import models.submissions.common.Address
-import models.submissions.downloadFORTypeForm.DownloadPDFDetails.updateDownloadPDFDetails
-import navigation.ConnectionToPropertyNavigator
-import navigation.identifiers.DownloadPDFReferenceNumberPageId
-import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.downloadFORTypeForm.downloadPDFReferenceNumber
 
-import javax.inject.{Inject, Named, Singleton}
+import javax.inject.{Inject, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class DownloadPDFReferenceNumberController @Inject() (
   mcc: MessagesControllerComponents,
-  navigator: ConnectionToPropertyNavigator,
   downloadPDFReferenceNumberView: downloadPDFReferenceNumber,
-  connector: BackendConnector,
-  withSessionRefiner: WithSessionRefiner,
-  @Named("session") val session: SessionRepo
+  connector: BackendConnector
 )(implicit ec: ExecutionContext)
     extends FrontendController(mcc)
-    with Logging
-    with I18nSupport {
+    with Logging {
 
-  def startWithSession: Action[AnyContent] = Action.async { implicit request =>
-    session.start(Session("", "", Address("", None, "", None, ""), ""))
-    Future.successful(Redirect(routes.DownloadPDFReferenceNumberController.show()))
+  def show: Action[AnyContent] = Action.async { implicit request =>
+    Future.successful(Ok(downloadPDFReferenceNumberView(downloadPDFReferenceNumberForm)))
   }
 
-  def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
-    Ok(
-      downloadPDFReferenceNumberView(
-        request.sessionData.downloadPDFDetails.flatMap(_.downloadPDFReferenceNumber) match {
-          case Some(data) => downloadPDFReferenceNumberForm.fillAndValidate(data)
-          case _          => downloadPDFReferenceNumberForm
-        }
-      )
-    )
-  }
-
-  def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit: Action[AnyContent] = Action.async { implicit request =>
     downloadPDFReferenceNumberForm
       .bindFromRequest()
       .fold(
         formWithErrors => Future.successful(BadRequest(downloadPDFReferenceNumberView(formWithErrors))),
-        data => {
-          val updatedData = updateDownloadPDFDetails(_.copy(downloadPDFReferenceNumber = Some(data)))
-          session.saveOrUpdate(updatedData)
-
+        userData =>
           connector
-            .retrieveFORType(data.downloadPDFReferenceNumber)
-            .onComplete({
-              case Success(value) =>
-                session.saveOrUpdate(updateDownloadPDFDetails(_.copy(downloadPDF = Some(DownloadPDF(value)))))
-              case Failure(ex)    => logger.debug(s"Failed to retrieve a valid FOR Type: ${ex.getMessage}")
-            })
-
-          Future.successful(
-            Redirect(navigator.nextPage(DownloadPDFReferenceNumberPageId, updatedData).apply(updatedData))
-          )
-        }
+            .retrieveFORType(userData.downloadPDFReferenceNumber)
+            .flatMap { value =>
+              Future.successful(Redirect(controllers.downloadFORTypeForm.routes.DownloadPDFController.show(value)))
+            }
+            .recover { case _ =>
+              logger.error(s"Failed to retrieve a FOR Type for ${userData.downloadPDFReferenceNumber}")
+              Redirect(controllers.downloadFORTypeForm.routes.DownloadPDFController.show("invalidType"))
+            }
       )
   }
 }

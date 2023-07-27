@@ -55,7 +55,7 @@
         case _ =>{
             <p class="govuk-body">@messages("downloadPdf.no.download")</p>
             <p class="govuk-body">@messages("downloadPdf.retry")
-            <a class="govuk-link" href=@controllers.downloadFORTypeForm.routes.DownloadPDFReferenceNumberController.startWithSession()>@messages("label.downloadPdfReferenceNumberLogin")</a>
+            <a class="govuk-link" href=@controllers.downloadFORTypeForm.routes.DownloadPDFReferenceNumberController.show()>@messages("label.downloadPdfReferenceNumberLogin")</a>
             </p>
             <p class="govuk-body">
                 <a class="govuk-link" href=@controllers.requestReferenceNumber.routes.RequestReferenceNumberController.startWithSession()>@messages("label.requestReference")</a>
