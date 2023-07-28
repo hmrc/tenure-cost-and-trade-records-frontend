@@ -23,6 +23,7 @@ import java.time.Instant
 
 case class NotConnectedSubmission(
   id: String,
+  forType: String,
   address: Address,
   fullName: String,
   emailAddress: Option[String],
