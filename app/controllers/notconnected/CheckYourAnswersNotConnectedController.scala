@@ -87,6 +87,7 @@ class CheckYourAnswersNotConnectedController @Inject() (
 
     val submission = NotConnectedSubmission(
       session.referenceNumber,
+      session.forType,
       session.address,
       sessionRemoveConnection.map(_.removeConnectionFullName).getOrElse(""),
       sessionRemoveConnection.map(_.removeConnectionDetails.email),
