@@ -25,7 +25,7 @@ object CheckYourAnswersAboutThePropertyForm {
 
   val checkYourAnswersAboutThePropertyForm = Form(
     mapping(
-      "checkYourAnswersAboutYourProperty" -> default(text, "").verifying(
+      "checkYourAnswersAboutTheProperty" -> default(text, "").verifying(
         nonEmpty(errorMessage = "error.checkYourAnswersRadio.required")
       )
     )(CheckYourAnswersAboutYourProperty.apply)(CheckYourAnswersAboutYourProperty.unapply)

@@ -90,8 +90,8 @@ POST        /add-another-letting-part-of-property                   controllers.
 GET         /remove-letting-part-of-property                        controllers.connectiontoproperty.AddAnotherLettingPartOfPropertyController.remove(idx: Int)
 
 # Not connected
-GET         /previously-connected                                   controllers.notconnected.PastConnectionController.show()
-POST        /previously-connected                                   controllers.notconnected.PastConnectionController.submit()
+GET         /past-connection-type                                   controllers.notconnected.PastConnectionController.show()
+POST        /past-connection-type                                   controllers.notconnected.PastConnectionController.submit()
 
 GET         /remove-connection                                      controllers.notconnected.RemoveConnectionController.show()
 POST        /remove-connection                                      controllers.notconnected.RemoveConnectionController.submit()
