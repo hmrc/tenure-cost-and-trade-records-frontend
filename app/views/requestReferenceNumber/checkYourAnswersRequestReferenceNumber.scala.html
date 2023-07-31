@@ -44,7 +44,7 @@
    SummaryListRow(
     key = Key(Text(messages("key.requestReferenceNumberAddress"))),
      value = Value(HtmlContent(session.requestReferenceNumberDetails.flatMap(_.requestReferenceNumberAddress.map(_.requestReferenceNumberAddress.multiLine)).getOrElse("").getOrElse(""))),
-    actions = Option(Actions(items = Seq(ActionItem(href="/send-trade-and-cost-information/request-reference-number",
+    actions = Option(Actions(items = Seq(ActionItem(href="/send-trade-and-cost-information/request-reference-number-address",
      visuallyHiddenText = Some(messages("key.requestReferenceNumberAddress")),
      content = Text(messages("label.change")))))
     )

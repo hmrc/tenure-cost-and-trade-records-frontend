@@ -25,7 +25,7 @@ object CheckYourAnswersAboutYourLeaseOrTenureForm {
 
   val checkYourAnswersAboutYourLeaseOrTenureForm = Form(
     mapping(
-      "checkYourAnswersAboutYourLeaseOrTenure" -> default(text, "").verifying(
+      "checkYourAnswersLeaseOrTenure" -> default(text, "").verifying(
         nonEmpty(errorMessage = "error.checkYourAnswersRadio.required")
       )
     )(CheckYourAnswersAboutYourLeaseOrTenure.apply)(CheckYourAnswersAboutYourLeaseOrTenure.unapply)

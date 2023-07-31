@@ -513,7 +513,7 @@ hint.enforcementActionHasBeenTaken = This can be any suspensions, closure orders
 help.enforcementActionHasBeenTaken.title = Help with enforcement action
 help.enforcementActionHasBeenTaken.heading = Enforcement action
 help.enforcementActionHasBeenTaken.p1 = You must tell us if any enforcement action has been taken against your premises by your local licensing authority under your tenure. If a lease or agreement was assigned to you from another tenant, you must let us know if any enforcement action was taken against them under the current agreement.
-error.enforcementAction.missing = Select yes if any enforcement has been taken
+error.enforcementActionBeenTaken.missing = Select yes if any enforcement has been taken
 
 # ENFORCEMENT ACTION BEEN TAKEN DETAILS
 #######################################
