@@ -24,11 +24,13 @@ import javax.inject.{Inject, Singleton}
 @Singleton
 class MongoCrypto @Inject() (configuration: Configuration) extends Encrypter with Decrypter {
 
-  private val symmetricCrypto: Encrypter with Decrypter = SymmetricCryptoFactory.aesGcmCryptoFromConfig("crypto", configuration.underlying)
+  private val symmetricCrypto: Encrypter with Decrypter =
+    SymmetricCryptoFactory.aesGcmCryptoFromConfig("crypto", configuration.underlying)
 
   override def encrypt(plain: PlainContent): Crypted = symmetricCrypto.encrypt(plain)
 
   override def decrypt(reversiblyEncrypted: Crypted): PlainText = symmetricCrypto.decrypt(reversiblyEncrypted)
 
-  override def decryptAsBytes(reversiblyEncrypted: Crypted): PlainBytes = symmetricCrypto.decryptAsBytes(reversiblyEncrypted)
+  override def decryptAsBytes(reversiblyEncrypted: Crypted): PlainBytes =
+    symmetricCrypto.decryptAsBytes(reversiblyEncrypted)
 }
