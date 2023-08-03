@@ -16,7 +16,6 @@
 
 package controllers.aboutyouandtheproperty
 
-import form.Errors
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
 import play.api.http.Status
 import play.api.test.Helpers._

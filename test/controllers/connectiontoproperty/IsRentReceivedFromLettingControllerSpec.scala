@@ -16,7 +16,6 @@
 
 package controllers.connectiontoproperty
 
-import form.Errors
 import form.connectiontoproperty.isRentReceivedFromLettingForm.isRentReceivedFromLettingForm
 import models.submissions.connectiontoproperty.StillConnectedDetails
 import play.api.http.Status
