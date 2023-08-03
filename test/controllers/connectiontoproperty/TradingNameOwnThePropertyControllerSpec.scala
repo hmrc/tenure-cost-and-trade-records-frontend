@@ -17,7 +17,6 @@
 package controllers.connectiontoproperty
 
 import form.connectiontoproperty.TradingNameOwnThePropertyForm.tradingNameOwnThePropertyForm
-import form.Errors
 import models.submissions.connectiontoproperty.StillConnectedDetails
 import play.api.http.Status
 import play.api.http.Status.BAD_REQUEST

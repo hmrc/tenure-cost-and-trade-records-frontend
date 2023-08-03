@@ -16,7 +16,6 @@
 
 package controllers.connectiontoproperty
 
-import form.Errors
 import form.connectiontoproperty.TradingNamePayingRentForm.tradingNamePayingRentForm
 import models.submissions.connectiontoproperty.StillConnectedDetails
 import play.api.http.Status

@@ -15,13 +15,11 @@
  *@
 
 @import models.submissions.aboutthetradinghistory.OccupationalAndAccountingInformation
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.fieldset.Fieldset
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukDateInput
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukFieldset
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
 @import models.pages.Summary
-
 
 @this(layout: Layout,
         govukButton: GovukButton,
@@ -32,45 +30,37 @@
 
 @(theForm: Form[OccupationalAndAccountingInformation], summary: Summary)(implicit request: Request[_], messages: Messages)
 
-@content = {
-  <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-   <h1 class="govuk-fieldset__heading">@messages("aboutYourTradingHistory.heading")</h1>
-  </legend>
-
-  <p class="govuk-body">@messages("aboutYourTradingHistory.subheader")</p>
-
-  @includes.dateFields(
-      form = theForm,
-      field = "firstOccupy",
-      label = "label.firstOccupy",
-      govukDate = govukDateInput,
-      helpText = messages("label.firstOccupy.help")
-  )
-
-  @includes.dateFields(
-      form = theForm,
-      field = "financialYear",
-      label = "label.financialYear",
-      govukDate = govukDateInput,
-      hideYear = true,
-      helpText = messages("label.financialYear.help"))
-}
-
 @layout(
- pageHeading = messages("aboutYourTradingHistory.heading"),
- showH1 = false,
- showSection = true,
+    pageHeading = messages("aboutYourTradingHistory.heading"),
+    showSection = true,
     summary = Some(summary),
- sectionName = messages("label.section.aboutYourTradingHistory"),
- backLinkUrl = controllers.routes.TaskListController.show().url,
- theForm = theForm
+    sectionName = messages("label.section.aboutYourTradingHistory"),
+    backLinkUrl = controllers.routes.TaskListController.show().url,
+    theForm = theForm
 ) {
-  @formWithCSRF(action = controllers.aboutthetradinghistory.routes.AboutYourTradingHistoryController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
+    @formWithCSRF(action = controllers.aboutthetradinghistory.routes.AboutYourTradingHistoryController.submit()) {
 
-    @govukFieldset(Fieldset(html = content))
+        <p class="govuk-body">@messages("aboutYourTradingHistory.subheader")</p>
 
-    @includes.continueSaveAsDraftButtons(govukButton)
-  }
+        @includes.dateFields(
+            form = theForm,
+            field = "firstOccupy",
+            label = "label.firstOccupy",
+            govukDate = govukDateInput,
+            helpText = messages("hint.month.year.example")
+        )
+
+        @includes.dateFields(
+            form = theForm,
+            field = "financialYear",
+            label = "label.financialYear",
+            govukDate = govukDateInput,
+            hideYear = true,
+            helpText = s"${messages("label.financialYear.help")}<br><br>${messages("hint.day.month.example")}"
+        )
+
+        @includes.continueSaveAsDraftButtons(govukButton)
+    }
 }
 
 

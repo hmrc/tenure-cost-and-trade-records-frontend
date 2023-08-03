@@ -90,7 +90,9 @@ label.change = Change
 # COMMON HINTS
 ##############
 hint.select.all = Select all that apply
-hint.date.example = For example, 10 2 1999
+hint.date.example = For example, 27 9 2017
+hint.month.year.example = For example, 9 2017
+hint.day.month.example = For example, 27 9
 hint.select.applicable = Select any that apply – leave blank if not applicable
 
 # SECTION NAMES
@@ -845,8 +847,6 @@ error.firstOccupy.month.required = The date the property was first occupied must
 error.firstOccupy.year.required = The date the property was first occupied must include a year
 error.financialYear.day.required = The date the financial years ends must include a day
 error.financialYear.month.required = The date the financial years ends must include a month
-error.financialYear.year.required = The date the financial years ends must include a year
-label.firstOccupy.help = For example, 6 2015
 label.financialYear.help = If your financial year end changed within the last 3 years, you can declare the former dates on the next page
 
 # CURRENT RENT FIRST PAID

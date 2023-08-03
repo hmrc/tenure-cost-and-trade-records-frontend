@@ -17,7 +17,6 @@
 package controllers.connectiontoproperty
 
 import controllers.connectiontoproperty.TestData.{baseFormData, errorKey}
-import form.Errors
 import models.submissions.connectiontoproperty.StillConnectedDetails
 import play.api.http.Status
 import play.api.test.FakeRequest

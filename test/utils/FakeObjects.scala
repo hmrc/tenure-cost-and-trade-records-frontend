@@ -247,6 +247,12 @@ trait FakeObjects {
     stillConnectedDetails6016NoSession.copy(aboutYouAndTheProperty = Some(prefilledAboutYouAndThePropertyNo))
 
   // Trading history
+  val prefilledAboutYourTradingHistory: AboutTheTradingHistory = AboutTheTradingHistory(
+    Some(OccupationalAndAccountingInformation(MonthsYearDuration(9, 2017), DayMonthsDuration(27, 9)))
+  )
+
+  val aboutYourTradingHistory6010YesSession: Session =
+    aboutYouAndTheProperty6010YesSession.copy(aboutTheTradingHistory = Some(prefilledAboutYourTradingHistory))
 
   // Franchises or lettings
   val prefilledCateringOperationSectionYes: CateringOperationSection = CateringOperationSection(
