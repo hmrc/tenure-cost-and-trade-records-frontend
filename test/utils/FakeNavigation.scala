@@ -28,6 +28,7 @@ trait FakeNavigation { this: GuiceOneAppPerSuite =>
   lazy val connectedToPropertyNavigator       = app.injector.instanceOf[ConnectionToPropertyNavigator]
   lazy val removeConnectionNavigator          = app.injector.instanceOf[RemoveConnectionNavigator]
   lazy val aboutYouAndThePropertyNavigator    = app.injector.instanceOf[AboutYouAndThePropertyNavigator]
+  lazy val aboutYourTradingHistoryNavigator   = app.injector.instanceOf[AboutTheTradingHistoryNavigator]
   lazy val aboutFranchisesOrLettingsNavigator = app.injector.instanceOf[AboutFranchisesOrLettingsNavigator]
   lazy val aboutYourLeaseOrTenureNavigator    = app.injector.instanceOf[AboutYourLeaseOrTenureNavigator]
   lazy val additionalInformationNavigator     = app.injector.instanceOf[AdditionalInformationNavigator]

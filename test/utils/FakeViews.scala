@@ -22,6 +22,7 @@ import views.html.notconnected._
 import views.html.aboutyouandtheproperty._
 import views.html.aboutYourLeaseOrTenure._
 import views.html.aboutfranchisesorlettings._
+import views.html.aboutthetradinghistory.aboutYourTradingHistory
 import views.html.aboutyouandtheproperty.checkYourAnswersAboutTheProperty
 import views.html.additionalinformation.{alternativeContactDetails, furtherInformationOrRemarks}
 import views.html.downloadFORTypeForm.{downloadPDF, downloadPDFReferenceNumber}
@@ -95,6 +96,9 @@ trait FakeViews { this: GuiceOneAppPerSuite =>
   lazy val tiedForGoodsDetailsView: tiedForGoodsDetails                              = app.injector.instanceOf[tiedForGoodsDetails]
   lazy val checkYourAnswersAboutThePropertyView: checkYourAnswersAboutTheProperty    =
     app.injector.instanceOf[checkYourAnswersAboutTheProperty]
+
+  // About your trading history
+  lazy val aboutYourTradingHistoryView: aboutYourTradingHistory = app.injector.instanceOf[aboutYourTradingHistory]
 
   // About the franchise or letting
   lazy val franchiseOrLettingsTiedToPropertyView: franchiseOrLettingsTiedToProperty                        =
