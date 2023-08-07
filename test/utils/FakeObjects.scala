@@ -22,7 +22,7 @@ import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartOne, 
 import models.submissions.aboutfranchisesorlettings
 import models.submissions.aboutfranchisesorlettings.LettingSection
 import models.submissions.aboutyouandtheproperty._
-import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, OccupationalAndAccountingInformation}
+import models.submissions.aboutthetradinghistory._
 import models.submissions.additionalinformation._
 import models.{AnnualRent, Session, SubmissionDraft}
 import models.submissions.common.{Address, AnswerNo, AnswerYes, ContactDetails, ContactDetailsAddress}
@@ -248,7 +248,18 @@ trait FakeObjects {
 
   // Trading history
   val prefilledAboutYourTradingHistory: AboutTheTradingHistory = AboutTheTradingHistory(
-    Some(OccupationalAndAccountingInformation(MonthsYearDuration(9, 2017), DayMonthsDuration(27, 9)))
+    Some(OccupationalAndAccountingInformation(MonthsYearDuration(9, 2017), DayMonthsDuration(27, 9))),
+    Seq(
+      TurnoverSection(
+        LocalDate.now(),
+        123,
+        BigDecimal(234),
+        BigDecimal(345),
+        BigDecimal(456),
+        BigDecimal(567),
+        BigDecimal(678)
+      )
+    )
   )
 
   val aboutYourTradingHistory6010YesSession: Session =

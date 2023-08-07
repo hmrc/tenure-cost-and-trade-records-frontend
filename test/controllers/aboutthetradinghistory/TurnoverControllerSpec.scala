@@ -16,39 +16,43 @@
 
 package controllers.aboutthetradinghistory
 
-//import form.aboutthetradinghistory.TurnoverForm
-import navigation.AboutTheTradingHistoryNavigator
-//import play.api.data.Form
-//import play.api.http.Status
-//import play.api.test.Helpers._
-//import play.twirl.api.HtmlFormat
+import models.submissions.aboutthetradinghistory.AboutTheTradingHistory
+import play.api.http.Status
+import play.api.http.Status.BAD_REQUEST
+import play.api.test.FakeRequest
+import play.api.test.Helpers.{charset, contentType, status, stubMessagesControllerComponents}
 import utils.TestBaseSpec
-//import views.html.aboutthetradinghistory.turnover
-//import models.submissions.aboutthetradinghistory.TurnoverSection
 
 class TurnoverControllerSpec extends TestBaseSpec {
 
-  val mockAboutYouNavigator = mock[AboutTheTradingHistoryNavigator]
+  def turnoverController(
+    aboutTheTradingHistory: Option[AboutTheTradingHistory] = Some(prefilledAboutYourTradingHistory)
+  ) = new TurnoverController(
+    stubMessagesControllerComponents(),
+    aboutYourTradingHistoryNavigator,
+    turnoverView,
+    preEnrichedActionRefiner(aboutTheTradingHistory = aboutTheTradingHistory),
+    mockSessionRepo
+  )
 
-  //TODO - Add test for controller that can mock View to be passed in to controller.
-//  val aboutYourTradingHistoryController = new TurnoverController(
-//    stubMessagesControllerComponents(),
-//    mockAboutYouNavigator,
-//    turnoverView,
-//    preFilledSession,
-//    mockSessionRepo
-//  )
-//
-//  "GET /" should {
-//    "return 200" in {
-//      val result = aboutYourTradingHistoryController.show(fakeRequest)
-//      status(result) shouldBe Status.OK
-//    }
-//
-//    "return HTML" in {
-//      val result = aboutYourTradingHistoryController.show(fakeRequest)
-//      contentType(result) shouldBe Some("text/html")
-//      charset(result)     shouldBe Some("utf-8")
-//    }
-//  }
+  "About your trading history controller" should {
+    "return 200" in {
+      val result = turnoverController().show(fakeRequest)
+      status(result) shouldBe Status.OK
+    }
+
+    "return HTML" in {
+      val result = turnoverController().show(fakeRequest)
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
+    }
+
+    "SUBMIT /" should {
+      "throw a BAD_REQUEST if an empty form is submitted" in {
+        val res = turnoverController().submit(FakeRequest().withFormUrlEncodedBody(Seq.empty: _*))
+        status(res) shouldBe BAD_REQUEST
+      }
+    }
+  }
+
 }
