@@ -440,6 +440,18 @@ trait FakeObjects {
     Some(AnswerNo)
   )
 
+  val prefilledAboutLeaseOrAgreement6010Route = AboutLeaseOrAgreementPartOne(
+    Some(prefilledAboutTheLandlord),
+    Some(AnswerYes),
+    Some(prefilledConnectedToLandlordDetails),
+    Some(prefilledLeaseOrAgreementYearsDetails),
+    Some(prefilledCurrentRentPayableWithin12Months),
+    Some(prefilledAnnualRent),
+    rentIncludeTradeServicesDetails = Some(RentIncludeTradeServicesDetails(AnswerYes)),
+    rentIncludeFixturesAndFittingsDetails = Some(RentIncludeFixturesAndFittingsDetails(AnswerYes)),
+    rentOpenMarketValueDetails = Some(RentOpenMarketValueDetails(AnswerYes))
+  )
+
   val prefilledAboutLeaseOrAgreementPartOne = AboutLeaseOrAgreementPartOne(
     Some(prefilledAboutTheLandlord),
     None,

@@ -570,7 +570,7 @@ error.franchiseOrLettingsTiedToProperty.missing = Select yes if any franchises o
 
 # ABOUT YOUR LANDLORD
 ##############################
-aboutYourLandlord.heading = About your landlord
+aboutYourLandlord.heading = Your landlord
 label.landlordFullName = Landlord’s name
 label.landlordAddress.address = Landlord’s address
 error.landlordFullName.required = If the landlord’s name is not known, please input unknown

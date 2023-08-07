@@ -38,7 +38,7 @@ class AboutYourLeaseOrTenure6010NavigatorSpec extends TestBaseSpec {
     "FOR6010",
     prefilledAddress,
     "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=",
-    aboutLeaseOrAgreementPartOne = Some(prefilledAboutLeaseOrAgreementPartOne),
+    aboutLeaseOrAgreementPartOne = Some(prefilledAboutLeaseOrAgreement6010Route),
     aboutLeaseOrAgreementPartTwo = Some(prefilledAboutLeaseOrAgreementPartTwo)
   )
   val session6010No = Session(
@@ -64,7 +64,7 @@ class AboutYourLeaseOrTenure6010NavigatorSpec extends TestBaseSpec {
     "return a function that goes to lease or agreement years page when about your landlord has been completed" in {
       navigator
         .nextPage(AboutTheLandlordPageId, session6010)
-        .apply(session6010) mustBe controllers.aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.show()
+        .apply(session6010) mustBe controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordController.show()
     }
 
     "return a function that goes to current annual rent page when lease or agreement details with yes has been completed" in {
