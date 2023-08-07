@@ -349,11 +349,6 @@ trait FakeObjects {
   val prefilledCurrentRentPayableWithin12Months =
     CurrentRentPayableWithin12Months(CurrentRentWithin12MonthsYes, prefilledMonthYearInput)
 
-//  val prefilledConnectedToLandlord =
-//    ConnectedToLandlord(
-//      Some(AnswerYes)
-//    )
-
   val prefilledAboutTheLandlord =
     AboutTheLandlord(
       prefilledFakeName,
