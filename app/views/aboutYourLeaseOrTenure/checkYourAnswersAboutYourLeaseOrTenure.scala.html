@@ -116,7 +116,7 @@
                             _.annualRent.map(_.amount.asMoney),
                             aboutYourLeaseOrTenure.routes.CurrentAnnualRentController.show(), "currentAnnualRent") ++
                         sectionAnswers.optionalRow("checkYourAnswersAboutYourLeaseOrTenure.currentRentFirstPaid",
-                            _.currentRentFirstPaid.map(_.currentRentFirstPaid).map(dateUtil.formatDayMonthAbbrYear),
+                            _.currentRentFirstPaid.map(_.currentRentFirstPaid).map(v => dateUtil.formatDayMonthAbbrYear(v)),
                             aboutYourLeaseOrTenure.routes.CurrentRentFirstPaidController.show(), "currentRentFirstPaid.month") ++
                         sectionAnswers.row("checkYourAnswersAboutYourLeaseOrTenure.leaseStartDateAndDuration",
                             _.currentLeaseOrAgreementBegin
@@ -137,7 +137,7 @@
                             _.rentIncludesVat.map(_.name).map(v => messages(s"label.$v")),
                             Call("GET", "rent-includes-vat"), "rentIncludesVat") ++ // TODO: Not implemented Controller for "rent-includes-vat"
                         sectionAnswers.optionalRow("checkYourAnswersAboutYourLeaseOrTenure.currentRentFirstPaid",
-                            _.currentRentFirstPaid.map(_.currentRentFirstPaid).map(dateUtil.formatDayMonthAbbrYear),
+                            _.currentRentFirstPaid.map(_.currentRentFirstPaid).map(v => dateUtil.formatDayMonthAbbrYear(v)),
                             aboutYourLeaseOrTenure.routes.CurrentRentFirstPaidController.show(), "currentRentFirstPaid.month") ++
                         sectionAnswers2.row("checkYourAnswersAboutYourLeaseOrTenure.tenancyLeaseAgreementExpire",
                             _.tenancyLeaseAgreementExpire.map(_.tenancyLeaseAgreementExpire.shortDate),
@@ -182,7 +182,7 @@
                             "checkYourAnswersAboutYourLeaseOrTenure.descriptionOfTradeServices",
                             _.rentIncludeTradeServicesInformation.map(info =>
                                 Seq(info.sumIncludedInRent.map(_.asMoney + "<br/>"), Some(Text(info.describeTheServices).asHtml))
-                                        .flatten.mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>")
+                                        .mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>")
                             ),
                             aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesDetailsController.show(), "",
                             ("valueAsHtml", _ => None)) ++
@@ -248,7 +248,7 @@
                             _.intervalsOfRentReview.map(r =>
                                 Seq(r.currentRentWithin12Months.map(Text(_).asHtml),
                                     r.intervalsOfRentReview.map(date => dateUtil.formatDayMonthAbbrYear(date))
-                                ).flatten.mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>")
+                                ).mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>")
                             ),
                             aboutYourLeaseOrTenure.routes.IntervalsOfRentReviewController.show(), "",
                             ("valueAsHtml", _ => None)) ++
