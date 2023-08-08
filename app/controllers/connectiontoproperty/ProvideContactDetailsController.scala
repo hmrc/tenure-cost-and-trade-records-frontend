@@ -88,12 +88,15 @@ class ProvideContactDetailsController @Inject() (
     )
   }
 
-  private def getBackLink(answers: Session): Either[String, String] =
+  private def getBackLink(answers: Session): Either[String, String] = {
+    logger.debug(s"**A: ${answers.stillConnectedDetails}")
+    logger.debug(s"**B: ${answers.stillConnectedDetails.flatMap(_.isAnyRentReceived.map(_.name))}")
     answers.stillConnectedDetails.flatMap(_.isAnyRentReceived.map(_.name)) match {
       case Some("yes") =>
         Right(controllers.connectiontoproperty.routes.AddAnotherLettingPartOfPropertyController.show(0).url)
       case Some("no")  => Right(controllers.connectiontoproperty.routes.IsRentReceivedFromLettingController.show().url)
       case _           => Left(s"Unknown connection to property back link")
     }
+  }
 
 }
