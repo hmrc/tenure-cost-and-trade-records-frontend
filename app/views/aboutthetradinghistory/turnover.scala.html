@@ -83,7 +83,8 @@
   @formWithCSRF(action = controllers.aboutthetradinghistory.routes.TurnoverController.submit, args = 'class -> "myForm", 'id -> "myFormId") {
 
       <p class="govuk-body">@messages("turnover.p1")</p>
-      <p class="govuk-body">@messages("turnover.p2")</p>
+      @* TODO - Reinstate paragraph when cut and paste functionality developed *@
+      @*<p class="govuk-body">@messages("turnover.p2")</p>*@
 
       @govukInsetText(InsetText(
           content = Text(messages("turnover.inset"))

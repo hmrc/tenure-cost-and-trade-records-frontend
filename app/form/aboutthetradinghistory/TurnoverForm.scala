@@ -38,10 +38,10 @@ object TurnoverForm {
       "financial-year-end"     -> ukDateMappings.verifying(dateTooEarlyConstraint, dateTooEarlyConstraint),
       "weeks"                  -> number(min = 0, max = 52),
       "alcoholic-drinks"       -> bigDecimal,
-      "food"                   -> bigDecimal.verifying(averageOccupancyConstraint),
+      "food"                   -> bigDecimal,
       "other-receipts"         -> bigDecimal,
       "accommodation"          -> bigDecimal,
-      "average-occupancy-rate" -> bigDecimal
+      "average-occupancy-rate" -> bigDecimal.verifying(averageOccupancyConstraint)
     )(TurnoverSection.apply)(TurnoverSection.unapply)
 
     Form {
