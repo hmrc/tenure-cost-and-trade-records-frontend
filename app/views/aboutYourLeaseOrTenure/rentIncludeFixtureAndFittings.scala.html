@@ -40,7 +40,7 @@
 
   @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
 
-    @includes.radioButtonsYesNo(govukRadios, theForm, "rentIncludeFixturesAndFittings", "rentIncludeFixturesAndFittings.heading", "govuk-fieldset__legend--l", isHeading = true)
+    @includes.radioButtonsYesNo(govukRadios, theForm, "rentIncludeFixturesAndFittings", "rentIncludeFixturesAndFittings.heading", "govuk-fieldset__legend--l", isHeading = true, hint = "hint.rentIncludeFixturesAndFittings")
 
     @includes.continueSaveAsDraftButtons(govukButton)
   }

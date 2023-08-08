@@ -48,7 +48,7 @@ class CurrentRentFirstPaidViewSpec extends QuestionViewBehaviours[CurrentRentFir
 
     "contain an subhead for page" in {
       val doc = asDocument(createViewUsingForm(form))
-      assertContainsText(doc, messages("label.currentRentFirstPaid"))
+      assertContainsText(doc, messages("label.currentRentFirstPaid.p1"))
     }
 
     "contain date format hint for currentRentFirstPaid-hint" in {
