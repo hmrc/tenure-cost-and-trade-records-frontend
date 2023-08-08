@@ -949,19 +949,20 @@ label.costOfSales = Cost of sales
 label.grossProfit = Gross profits
 
 # TURNOVER
-#########
+##########
 turnover.heading = Turnover
-turnover.p1 = Provide us with details of your turnover. If the accounts do not relate to a whole year, or if you are not trading continuously, state the relevant number of weeks. If your accounts are held in a spreadsheet that mirrors this form, you can copy and paste them.
+turnover.p1 = Provide us with details of your turnover. If the accounts do not relate to a whole year, or if you are not trading continuously, state the relevant number of weeks.
+turnover.p2 = If your accounts are held in a spreadsheet that mirrors this form, you can copy and paste them into this form. Copy the relevant figures in your spreadsheet and paste them into the first corresponding field on this page.
 turnover.inset = All fields on this page are mandatory. If none of the categories are applicable, enter the number 0.
 turnover.financialYearEnd = Financial year end
 turnover.tradingPeriod = Trading period
-turnover.alcoholicDrinks = Alcoholic drinks (exc VAT)
+turnover.alcoholicDrinks = Alcoholic drinks (excluding VAT)
 turnover.alcoholicDrinksCaption = Including soft drinks, crisps, nuts
-turnover.food = Food (exc VAT)
+turnover.food = Food (excluding VAT)
 turnover.foodCaption = Excluding alcoholic drinks
-turnover.otherReceipts = Other receipts (exc VAT)
+turnover.otherReceipts = Other receipts (excluding VAT)
 turnover.otherReceiptsCaption = For example, admission charges or camping pitches
-turnover.accommodation = Accommodation (exc VAT)
+turnover.accommodation = Accommodation (excluding VAT)
 turnover.accommodationCaption = Excluding meals
 turnover.averageOccupancyRate = Average occupancy rate
 turnover.averageOccupancyRateCaption = Lodges and hotels only

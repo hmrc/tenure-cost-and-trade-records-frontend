@@ -40,27 +40,27 @@
 }
 
 @alcoholicDrinksHeading = {
-    <p class="govuk-body">@messages("turnover.alcoholicDrinks")</p>
+    <p class="govuk-body govuk-!-font-weight-bold">@messages("turnover.alcoholicDrinks")</p>
     <span class="govuk-caption-m">@messages("turnover.alcoholicDrinksCaption")</span>
 }
 
 @foodHeading = {
-        <p class="govuk-body">@messages("turnover.food")</p>
+        <p class="govuk-body govuk-!-font-weight-bold">@messages("turnover.food")</p>
         <span class="govuk-caption-m">@messages("turnover.foodCaption")</span>
     }
 
 @otherReceiptsHeading = {
-        <p class="govuk-body">@messages("turnover.otherReceipts")</p>
+        <p class="govuk-body govuk-!-font-weight-bold">@messages("turnover.otherReceipts")</p>
         <span class="govuk-caption-m">@messages("turnover.otherReceiptsCaption")</span>
     }
 
 @accommodationHeading = {
-        <p class="govuk-body">@messages("turnover.accommodation")</p>
+        <p class="govuk-body govuk-!-font-weight-bold">@messages("turnover.accommodation")</p>
         <span class="govuk-caption-m">@messages("turnover.accommodationCaption")</span>
     }
 
 @averageOccupancyRateHeading = {
-        <p class="govuk-body">@messages("turnover.averageOccupancyRate")</p>
+        <p class="govuk-body govuk-!-font-weight-bold">@messages("turnover.averageOccupancyRate")</p>
         <span class="govuk-caption-m">@messages("turnover.averageOccupancyRateCaption")</span>
     }
 
@@ -72,7 +72,6 @@
 
 @layout(
   pageHeading = messages("turnover.heading"),
-  showH1 = false,
   showSection = true,
     summary = Some(summary),
   sectionName = messages("label.section.aboutYourTradingHistory"),
@@ -83,10 +82,9 @@
 
   @formWithCSRF(action = controllers.aboutthetradinghistory.routes.TurnoverController.submit, args = 'class -> "myForm", 'id -> "myFormId") {
 
-      <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-          <h1 class="govuk-fieldset__heading">@messages("turnover.heading")</h1>
-      </legend>
       <p class="govuk-body">@messages("turnover.p1")</p>
+      <p class="govuk-body">@messages("turnover.p2")</p>
+
       @govukInsetText(InsetText(
           content = Text(messages("turnover.inset"))
       ))
@@ -98,7 +96,8 @@
           rows = Seq(
 
               TableRow(
-                  content = Text(messages("turnover.financialYearEnd"))
+                  content = Text(messages("turnover.financialYearEnd")),
+                  classes = "govuk-!-font-weight-bold"
               ) +:
                   columns.map { idx  =>
                   TableRow(
@@ -112,7 +111,8 @@
                   )
               },
               TableRow(
-                  content = Text(messages("turnover.tradingPeriod"))
+                  content = Text(messages("turnover.tradingPeriod")),
+                  classes = "govuk-!-font-weight-bold"
               ) +:
                       columns.map { idx =>
                           TableRow(

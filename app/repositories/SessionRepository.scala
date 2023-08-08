@@ -27,7 +27,6 @@ import org.mongodb.scala.model.Filters._
 import org.mongodb.scala.model._
 import uk.gov.hmrc.crypto.Sensitive
 import uk.gov.hmrc.http.HeaderCarrier
-import uk.gov.hmrc.http.cache.client.NoSessionException
 import uk.gov.hmrc.mongo.play.json.{Codecs, PlayMongoRepository}
 import uk.gov.hmrc.mongo.MongoComponent
 import uk.gov.hmrc.play.http.logging.Mdc
@@ -114,6 +113,8 @@ class SessionRepository @Inject() (mongo: MongoComponent)(implicit
     hc.sessionId.fold(noSession)(c => Future.successful(c.value))
 
 }
+
+case object NoSessionException extends Exception("Could not find sessionId in HeaderCarrier")
 
 case class SessionData(_id: String, data: Session, createdAt: Instant = Instant.now)
 

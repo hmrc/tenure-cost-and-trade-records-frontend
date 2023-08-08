@@ -23,7 +23,6 @@ object AppDependencies {
     "uk.gov.hmrc.mongo" %% "hmrc-mongo-play-28"           % mongoVersion,
     "uk.gov.hmrc"       %% "crypto-json-play-28"          % cryptoJsonVersion,
     "com.typesafe.play" %% "play-json-joda"               % jodaVersion,
-    "uk.gov.hmrc"       %% "http-caching-client"          % cachingClientVersion
   )
 
   private val allTestsScope = "test,it"
