@@ -664,7 +664,7 @@ error.rentPayableVaryAccordingToGrossOrNetDetails.maxLength  = This must be 1000
 ultimatelyResponsible.heading = Who is ultimately responsible for the following costs?
 ultimatelyResponsible.subheading = This could be either by direct payment, or by reimbursing the person who initially paid for the service
 label.outsideRepairs = Outside repairs
-label.insideRepairs = Inside repairs public and business areas
+label.insideRepairs = Inside repairs to public and business areas
 label.insideRepairsShort = Inside repairs
 label.buildingInsurance = Building insurance
 label.landlord = Landlord
@@ -686,7 +686,7 @@ error.rentIncludeTradeServices.missing = Select yes if the rent includes any tra
 # RENT INCLUDE TRADE SERVICES DETAILS
 ####################################
 rentIncludeTradeServicesDetails.heading = Where specifically itemised, what sum is included in the rent to cover services provided by the landlord, excluding VAT?
-rentIncludeTradeServicesDetails.hint = Leave blank if this is not specifically itemised
+rentIncludeTradeServicesDetails.hint = Leave blank if these are not specifically itemised
 label.describeServices = Describe services provided
 rentIncludeTradeServicesDetailsTextBox.hint = For example, maintenance of fires, annual gas checks and cellar services
 error.required.sumIncludedInRent = Please provide a value
@@ -696,7 +696,8 @@ error.describeServices.maxLength = This must be 1000 characters or fewer
 
 # RENT INCLUDE FIXTURES AND FITTINGS
 ###################################
-rentIncludeFixturesAndFittings.heading = Does the rent include any trade fixtures and fittings, plant and machinery, furniture and other equipment belonging to the landlord?
+rentIncludeFixturesAndFittings.heading = Does the rent include any equipment belonging to the landlord?
+hint.rentIncludeFixturesAndFittings = For example, any trade fixtures and fittings, plant and machinery, or furniture
 error.required.rentIncludeFixturesAndFittings = Please provide a value
 error.invalid_currency.rentIncludeFixturesAndFittings = Please provide a number
 error.rentIncludeFixturesAndFittings.missing = Select yes if the rent includes any equipment belonging to the landlord
@@ -851,7 +852,7 @@ label.financialYear.help = If your financial year end changed within the last 3 
 
 # CURRENT RENT FIRST PAID
 #########################
-currentRentFirstPaid.heading = When was the current rent first paid under the terms of the current lease or agreement?
+currentRentFirstPaid.heading = When was the current rent first paid
 label.currentRentFirstPaid = Disregard alterations solely due to changes in the amount of rates or services payable
 label.currentRentFirstPaid.help = For example, 27 9 2017
 error.currentRentFirstPaid.month.required = The date when the current rent was first paid must include a month

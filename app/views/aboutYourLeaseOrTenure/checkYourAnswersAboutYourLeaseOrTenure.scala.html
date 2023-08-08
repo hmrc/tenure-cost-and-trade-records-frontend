@@ -116,7 +116,7 @@
                             _.annualRent.map(_.amount.asMoney),
                             aboutYourLeaseOrTenure.routes.CurrentAnnualRentController.show(), "currentAnnualRent") ++
                         sectionAnswers.optionalRow("checkYourAnswersAboutYourLeaseOrTenure.currentRentFirstPaid",
-                            _.currentRentFirstPaid.map(_.currentRentFirstPaid.toYearMonth).map(dateUtil.formatYearMonth),
+                            _.currentRentFirstPaid.map(_.currentRentFirstPaid).map(dateUtil.formatDayMonthAbbrYear),
                             aboutYourLeaseOrTenure.routes.CurrentRentFirstPaidController.show(), "currentRentFirstPaid.month") ++
                         sectionAnswers.row("checkYourAnswersAboutYourLeaseOrTenure.leaseStartDateAndDuration",
                             _.currentLeaseOrAgreementBegin
@@ -137,7 +137,7 @@
                             _.rentIncludesVat.map(_.name).map(v => messages(s"label.$v")),
                             Call("GET", "rent-includes-vat"), "rentIncludesVat") ++ // TODO: Not implemented Controller for "rent-includes-vat"
                         sectionAnswers.optionalRow("checkYourAnswersAboutYourLeaseOrTenure.currentRentFirstPaid",
-                            _.currentRentFirstPaid.map(_.currentRentFirstPaid.toYearMonth).map(dateUtil.formatYearMonth),
+                            _.currentRentFirstPaid.map(_.currentRentFirstPaid).map(dateUtil.formatDayMonthAbbrYear),
                             aboutYourLeaseOrTenure.routes.CurrentRentFirstPaidController.show(), "currentRentFirstPaid.month") ++
                         sectionAnswers2.row("checkYourAnswersAboutYourLeaseOrTenure.tenancyLeaseAgreementExpire",
                             _.tenancyLeaseAgreementExpire.map(_.tenancyLeaseAgreementExpire.shortDate),

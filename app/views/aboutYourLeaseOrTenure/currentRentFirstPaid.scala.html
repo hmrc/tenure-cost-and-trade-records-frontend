@@ -42,7 +42,7 @@
 
 @layout(
  pageHeading = messages("currentRentFirstPaid.heading"),
- showH1 = false,
+ showH1 = true,
  showSection = true,
  summary = Some(summary),
  sectionName = messages("label.section.aboutYourLeaseOrTenure"),
@@ -52,21 +52,35 @@
 
  @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.CurrentRentFirstPaidController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
 
-  <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-   <h1 class="govuk-fieldset__heading">@messages("currentRentFirstPaid.heading")</h1>
-  </legend>
+  <p class="govuk-body">@messages("label.currentRentFirstPaid.p1")</p>
 
-  <p class="govuk-body">@messages("label.currentRentFirstPaid")</p>
+  <p class="govuk-body">@messages("label.currentRentFirstPaid.p2")</p>
+
+  <ul class='list-bullet'>
+   <li><span class="govuk-body">@messages("currentRentFirstPaid.list1")</span></li>
+   <li><span class="govuk-body">@messages("currentRentFirstPaid.list2")</span></li>
+   <li><span class="govuk-body">@messages("currentRentFirstPaid.list3")</span></li>
+  </ul>
+
+  <p class="govuk-body">@messages("label.currentRentFirstPaid.p3")</p>
+
+  <p class="govuk-body">@messages("label.currentRentFirstPaid.p4")</p>
+
+  <ul class='list-bullet'>
+   <li><span class="govuk-body">@messages("currentRentFirstPaid.list4")</span></li>
+   <li><span class="govuk-body">@messages("currentRentFirstPaid.list5")</span></li>
+  </ul>
+
+  <p class="govuk-heading-m">@messages("label.currentRentFirstPaid.p5")</p>
 
   @includes.dateFields(
    form = theForm,
    field = "currentRentFirstPaid",
    govukDate = govukDateInput,
    showFieldSet = false,
-   helpText = messages("label.currentRentFirstPaid.help")
+   helpText = messages("label.currentRentFirstPaid.help"),
+   showDays = true
   )
-
-  @includes.help_with_service_currentRentFirstPaid()
 
   @includes.continueSaveAsDraftButtons(govukButton)
  }
