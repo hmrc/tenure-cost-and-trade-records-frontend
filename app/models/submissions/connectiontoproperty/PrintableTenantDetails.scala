@@ -16,7 +16,6 @@
 
 package models.submissions.connectiontoproperty
 
-import models.submissions.common.ContactDetails
 import uk.gov.hmrc.govukfrontend.views.Aliases
 
 trait PrintableTenantDetails {

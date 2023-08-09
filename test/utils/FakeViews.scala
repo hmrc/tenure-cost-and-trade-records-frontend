@@ -26,7 +26,6 @@ import views.html.aboutthetradinghistory._
 import views.html.aboutyouandtheproperty.checkYourAnswersAboutTheProperty
 import views.html.additionalinformation.{alternativeContactDetails, furtherInformationOrRemarks}
 import views.html.downloadFORTypeForm.{downloadPDF, downloadPDFReferenceNumber}
-import views.html.form._
 import views.html.requestReferenceNumber.{requestReferenceNumber, requestReferenceNumberContactDetails}
 import views.html.{confirmationConnectionToProperty, confirmationNotConnected, login}
 

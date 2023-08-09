@@ -16,7 +16,7 @@
 
 package form.aboutYourLeaseOrTenure
 
-import form.DateMappings.{dateFieldsMapping, monthsYearDurationMapping}
+import form.DateMappings.dateFieldsMapping
 import models.submissions.aboutYourLeaseOrTenure.CurrentRentFirstPaid
 import play.api.data.Form
 import play.api.data.Forms.mapping
