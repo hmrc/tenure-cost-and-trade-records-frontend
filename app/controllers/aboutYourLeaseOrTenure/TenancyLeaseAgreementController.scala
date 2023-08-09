@@ -14,18 +14,18 @@
  * limitations under the License.
  */
 
-package controllers.Form6010
+package controllers.aboutYourLeaseOrTenure
 
 import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
 import controllers.LoginController.loginForm
-import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import views.html.form.tenancyLeaseAgreement
-import form.Form6010.TenancyLeaseAgreementForm.tenancyLeaseAgreementForm
-import models.submissions.Form6010.TenancyLeaseAgreementDetails
+import form.aboutYourLeaseOrTenure.TenancyLeaseAgreementForm.tenancyLeaseAgreementForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo.updateAboutLeaseOrAgreementPartTwo
+import models.submissions.aboutYourLeaseOrTenure.TenancyLeaseAgreementDetails
 import play.api.i18n.I18nSupport
+import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
+import views.html.aboutYourLeaseOrTenure.tenancyLeaseAgreement
 import views.html.login
 
 import javax.inject.{Inject, Named, Singleton}

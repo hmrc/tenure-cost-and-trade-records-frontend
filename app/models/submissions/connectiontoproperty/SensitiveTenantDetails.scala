@@ -17,10 +17,8 @@
 package models.submissions.connectiontoproperty
 
 import crypto.MongoCrypto
-import models.submissions.common.SensitiveContactDetails
 import play.api.libs.json.{Json, OFormat}
 import uk.gov.hmrc.crypto.Sensitive
-import uk.gov.hmrc.crypto.Sensitive.SensitiveString
 
 case class SensitiveTenantDetails(
   name: String,

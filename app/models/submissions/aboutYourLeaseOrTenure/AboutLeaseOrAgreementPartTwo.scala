@@ -18,7 +18,6 @@ package models.submissions.aboutYourLeaseOrTenure
 
 import actions.SessionRequest
 import models.Session
-import models.submissions.Form6010.TenancyLeaseAgreementDetails
 import play.api.libs.json.Json
 
 case class AboutLeaseOrAgreementPartTwo(

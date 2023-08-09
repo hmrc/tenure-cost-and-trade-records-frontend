@@ -165,8 +165,8 @@ GET         /net-profit                                             controllers.
 POST        /net-profit                                             controllers.aboutthetradinghistory.NetProfitController.submit()
 
 # About the francise or letting
-GET         /tenancy-lease-agreement                                controllers.Form6010.TenancyLeaseAgreementController.show()
-POST        /tenancy-lease-agreement                                controllers.Form6010.TenancyLeaseAgreementController.submit()
+GET         /tenancy-lease-agreement                                controllers.aboutYourLeaseOrTenure.TenancyLeaseAgreementController.show()
+POST        /tenancy-lease-agreement                                controllers.aboutYourLeaseOrTenure.TenancyLeaseAgreementController.submit()
 
 GET         /franchise-or-lettings-tied-to-property                 controllers.aboutfranchisesorlettings.FranchiseOrLettingsTiedToPropertyController.show()
 POST        /franchise-or-lettings-tied-to-property                 controllers.aboutfranchisesorlettings.FranchiseOrLettingsTiedToPropertyController.submit()
@@ -327,8 +327,6 @@ POST        /further-information-or-remarks                         controllers.
 
 GET         /alternate-contact-details                              controllers.additionalinformation.AlternativeContactDetailsController.show()
 POST        /alternate-contact-details                              controllers.additionalinformation.AlternativeContactDetailsController.submit()
-
-GET         /check-your-answers                                     controllers.Form6010.CheckYourAnswersController.show()
 
 GET         /check-your-answers-connection-to-property              controllers.connectiontoproperty.CheckYourAnswersConnectionToPropertyController.show()
 POST        /check-your-answers-connection-to-property              controllers.connectiontoproperty.CheckYourAnswersConnectionToPropertyController.submit()

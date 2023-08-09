@@ -23,7 +23,7 @@ import models.Session
 import models.submissions.connectiontoproperty.StillConnectedDetails.updateStillConnectedDetails
 import models.submissions.connectiontoproperty.ProvideContactDetails
 import navigation.ConnectionToPropertyNavigator
-import navigation.identifiers.{AboutYouPageId, ProvideYourContactDetailsPageId}
+import navigation.identifiers.ProvideYourContactDetailsPageId
 import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
