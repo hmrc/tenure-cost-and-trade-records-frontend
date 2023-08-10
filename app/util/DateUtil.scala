@@ -20,10 +20,10 @@ import com.ibm.icu.text.SimpleDateFormat
 import com.ibm.icu.util.{TimeZone, ULocale}
 import play.api.i18n.Messages
 import uk.gov.hmrc.play.language.LanguageUtils
-import util.DateUtil.{dayMonthAbbrYearFormat, localDateHelpers, monthYearFormat}
+import util.DateUtil.{dayMonthAbbrYearFormat, dayMonthFormat, localDateHelpers, monthYearFormat}
 
 import java.time.format.DateTimeFormatter
-import java.time.{LocalDate, YearMonth, ZoneId, ZonedDateTime}
+import java.time.{LocalDate, MonthDay, YearMonth, ZoneId, ZonedDateTime}
 import java.util.Locale
 import javax.inject.{Inject, Singleton}
 
@@ -57,6 +57,14 @@ object DateUtil {
     "en" -> monthYearFormatEN,
     "cy" -> monthYearFormatCY
   ).withDefaultValue(monthYearFormatEN)
+
+  private val dayMonthFormatEN: SimpleDateFormat = createDateFormatForPattern("d MMMM", "en")
+  private val dayMonthFormatCY: SimpleDateFormat = createDateFormatForPattern("d MMMM", "cy")
+
+  private val dayMonthFormat: Map[String, SimpleDateFormat] = Map(
+    "en" -> dayMonthFormatEN,
+    "cy" -> dayMonthFormatCY
+  ).withDefaultValue(dayMonthFormatEN)
 
   private val dayMonthAbbrYearFormatEN: SimpleDateFormat = createDateFormatForPattern("d MMM yyyy", "en")
   private val dayMonthAbbrYearFormatCY: SimpleDateFormat = createDateFormatForPattern("d MMM yyyy", "cy")
@@ -102,6 +110,13 @@ class DateUtil @Inject() (langUtil: LanguageUtils) {
   def formatYearMonth(yearMonth: YearMonth)(implicit messages: Messages): String =
     monthYearFormat(messages.lang.code)
       .format(yearMonth.atDay(1).toEpochMilli)
+
+  /**
+   * Date format "d MMMM".
+   */
+  def formatMonthDay(monthDay: MonthDay)(implicit messages: Messages): String =
+    dayMonthFormat(messages.lang.code)
+      .format(monthDay.atYear(2023).toEpochMilli)
 
   /**
     * Date format "d MMM yyyy".
