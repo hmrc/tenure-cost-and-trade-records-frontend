@@ -30,7 +30,7 @@
 
 @layout(
   pageHeading = messages("legalOrPlanningRestrictions.heading"),
-  showH1 = false,
+  showH1 = true,
   showSection = true,
     summary = Some(summary),
   sectionName = messages("label.section.aboutYourLeaseOrTenure"),
@@ -40,14 +40,23 @@
 
   @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.LegalOrPlanningRestrictionsController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
 
-    @includes.radioButtonsYesNo(
+      <p class="govuk-body">@{messages("legalOrPlanningRestrictions.p1")}</p>
+
+      <ul class="govuk-list govuk-list--bullet">
+          <li>@{messages("legalOrPlanningRestrictions.list1")}</li>
+          <li>@{messages("legalOrPlanningRestrictions.list2")}</li>
+          <li>@{messages("legalOrPlanningRestrictions.list3")}</li>
+      </ul>
+
+      <p class="govuk-body">@{messages("legalOrPlanningRestrictions.p2")}</p>
+
+
+      @includes.radioButtonsYesNo(
       govukRadios,
       theForm,
       "legalOrPlanningRestrictions",
-      "legalOrPlanningRestrictions.heading",
-      "govuk-fieldset__legend--l",
-      isHeading = true,
-      hint = "hint.legalOrPlanningRestrictions"
+      "legalOrPlanningRestrictions.subheading",
+      "govuk-fieldset__legend--m"
     )
 
     @includes.continueSaveAsDraftButtons(govukButton)

@@ -654,8 +654,8 @@ error.rentPayableVaryAccordingToGrossOrNet.missing = Select yes if the rent vari
 
 # RENT PAYABLE VARY ACCORDING TO GROSS OR NET DETAILS
 ####################################################
-rentPayableVaryAccordingToGrossOrNetDetails.heading = Tell us how the rent payable is affected by your turnover
-label.rentPayableVaryAccordingToGrossOrNetDetails = For example, tell us if your rent increases if your turnover exceeds a certain amount
+rentPayableVaryAccordingToGrossOrNetDetails.heading = Describe how your rent payable is affected by your turnover
+label.rentPayableVaryAccordingToGrossOrNetDetails = For example, provide details of any base rate you may pay, plus any additional percentage increments when your turnover exceeds certain thresholds
 error.rentPayableVaryAccordingToGrossOrNetDetails.required = Describe how your rent is affected by your turnover
 error.rentPayableVaryAccordingToGrossOrNetDetails.maxLength  = This must be 1000 characters or fewer
 
@@ -721,7 +721,7 @@ error.canRentBeReducedOnReview.missing = Select yet if the rent can be reduced o
 
 # PAY A CAPITAL SUM
 ##################
-payACapitalSum.heading = Did you pay a capital sum or premium for your lease or agreement, ignoring tenant’s inventory?
+payACapitalSum.heading = Did you pay a capital sum or premium for your lease or agreement, ignoring tenants’ inventory?
 hint.payACapitalSum = The sum could be paid to the landlord or a previous lessee
 error.payACapitalSum.missing = Select yes if you paid a capital sum or premium for your lease
 
@@ -733,7 +733,9 @@ error.receivePaymentWhenLeaseGranted.missing = Select yes if you received any pa
 
 # RENT INCREASE ANNUALLY WITH RPI
 ################################
-rentIncreasedAnnuallyWithRPIs.heading = Does the rent increase annually in line with the retail price index (RPI)?
+rentIncreasedAnnuallyWithRPIs.heading = Index-linked rent
+rentIncreasedAnnuallyWithRPIs.p1 = You must tell us if your rent increases in line with any indices such as the retail price index (RPI) or the consumer price index (CPI).
+rentIncreasedAnnuallyWithRPIs.subheading = Does the rent increase annually in line with any indices?
 label.rentIncreasedAnnuallyWithRPIs = Does the rent increase annually in line with the retail price index (RPI)?
 error.rentIncreasedAnnuallyWithRPIs.missing = Select yes if the rent increases annually in line with the RPI
 
@@ -756,7 +758,15 @@ label.renewalLeaseTenancy = On a renewal of a lease or tenancy
 label.saleLeaseback = As part of a sale and leaseback transaction
 label.rentActuallyAgreed = When was the rent actually agreed or set?
 label.rentActuallyAgreed.help = For example, 27 9 2017
-error.rentActuallyAgreed.day.required = The date must include a day
+help.rentActuallyAgreed.title = If you’re not sure which date to use
+help.rentActuallyAgreed.p1 = The date when the rent was agreed or set is normally the date when:
+rentActuallyAgreed.list1 = a new lease or agreement is signed
+rentActuallyAgreed.list2 = an interim rent is established
+rentActuallyAgreed.list3 = a new rent is established following a rent review
+rentActuallyAgreed.list4 = a lease is renewed
+rentActuallyAgreed.list5 = a sale and leaseback is agreed
+help.rentActuallyAgreed.p2 = It may not necessarily be the date of occupation or the date a rent is first paid.
+error.rentActuallyAgreed.day.required = The date when the rent was agreed must include a day
 error.rentActuallyAgreed.month.required = The date when the rent was agreed must include a month
 error.rentActuallyAgreed.year.required = The date when the rent was agreed must include a year
 error.howIsCurrentRentFixed.required = Tell us how the rent was fixed
@@ -815,7 +825,13 @@ error.addAnotherLetting.required = Select whether you need to add another lettin
 
 # TENANTS ADDITIONS DISREGARDED
 ###############################
-tenantsAdditionsDisregarded.heading = Were any tenants’ additions or improvements disregarded at the time the rent was agreed or determined
+tenantsAdditionsDisregarded.heading = Additions or improvements
+tenantsAdditionsDisregarded.p1 = If the rent is based on market value of the property before any additions or improvements were made by the tenant, you must provide details.
+tenantsAdditionsDisregarded.p2 = Examples of additions or improvements could include, but are not limited to:
+tenantsAdditionsDisregarded.list1 = fitting out a shell
+tenantsAdditionsDisregarded.list2 = adding parking
+tenantsAdditionsDisregarded.list3 = upgrading accommodation
+tenantsAdditionsDisregarded.subheading = Were any tenants‘ additions or improvements disregarded at the time the rent was agreed or determined?
 hint.tenantsAdditionsDisregarded = For example, is your rent based on the market value of the property before you made improvements like fitting out a shell, or adding parking
 error.tenantsAdditionsDisregarded.missing = Select yes if any additions or improvements were disregarded
 
@@ -828,13 +844,19 @@ error.tenantsAdditionsDisregardedDetails.maxLength = This must be 2000 character
 
 # LEGAL PLANNING RESTRICTIONS
 #############################
-legalOrPlanningRestrictions.heading = Are there any legal or planning restrictions, unusual terms or conditions in the lease or agreement that may have affected the rent payable?
+legalOrPlanningRestrictions.heading = Other factors effecting the rent
+legalOrPlanningRestrictions.p1 = You must describe any other factors which may have affected the rent payable as these can also affect the property‘s valuation. We need to know about any factors such as:
+legalOrPlanningRestrictions.list1 = legal restrictions
+legalOrPlanningRestrictions.list2 = planning restrictions
+legalOrPlanningRestrictions.list3 = unusual terms or conditions in the lease or agreement
+legalOrPlanningRestrictions.p2 = Typical examples would be a break clause in the lease or agreement, or an agreement which contracts out of certain rights included in the Landlord and Tenant Act.
+legalOrPlanningRestrictions.subheading = Are there any other factors that may have affected the rent payable?
 hint.legalOrPlanningRestrictions = For example, a break clause, contracting out of the Landlord and Tenant Act
 error.legalOrPlanningRestrictions.missing = Select yes if ant unusual conditions in the rent may have affected the rent payable
 
 # LEGAL PLANNING RESTRICTIONS DETAILS
 #####################################
-legalOrPlanningRestrictionsDetails.heading = Describe the legal or planning restrictions, unusual terms or conditions in the lease or agreement that may have affected the rent payable
+legalOrPlanningRestrictionsDetails.heading = Describe the other factors that may have affected the rent payable
 error.legalOrPlanningRestrictionsDetails.required = Please describe the legal or planning restrictions, unusual terms or conditions in the lease or agreement that may have affected the rent payable
 error.legalOrPlanningRestrictionsDetails.maxLength = This must be 2000 characters or fewer
 
@@ -871,10 +893,13 @@ label.currentRentFirstPaid.help = For example, 9 2017
 
 # INTERVALS OF RENT REVIEW
 ##########################
-intervalsOfRentReview.heading = At what intervals is the rent reviewed under the terms of the lease or agreement?
-hint.intervalsOfRentReview = Do not include any changes to your rent linked to indexes such as the RPI, or your sales. For example, rent is reviewed annually, every two years, every three years - leave blank if not applicable
+intervalsOfRentReview.heading = Rent reviews
+intervalsOfRentReview.p1 = If your lease or agreement states your rent will be reviewed at any point, you must provide details. Tell us the intervals or frequency of the reviews, for example every 18 months or every 2 years.
+intervalsOfRentReview.p2 = Do not include any changes to your rent linked to your turnover, or indices such as the retial price index (RPI).
+intervalsOfRentReview.subheading = How often is the rent reviewed under the terms of the lease or agreement?
+hint.intervalsOfRentReview = Leave blank if the lease does not include any rent reviews
 label.nextReview = When is the next rent review due?
-label.nextReview.help = For example, 27 9 2017 - leave blank if not applicable
+label.nextReview.help = For example, 27 9 2017 - leave blank if no rent reviews are due
 error.nextReview.day.required = The date must include a day
 error.nextReview.month.required = The date must include a month
 error.nextReview.year.required = The date must include a year
