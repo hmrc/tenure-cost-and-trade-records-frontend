@@ -46,7 +46,14 @@
       <h1 class="govuk-fieldset__heading">@messages("intervalsOfRentReview.heading")</h1>
     </legend>
 
-    @includes.textInputCharCount(
+    <p class="govuk-body">@messages("intervalsOfRentReview.p1")</p>
+
+    <p class="govuk-body">@messages("intervalsOfRentReview.p2")</p>
+
+    <p class="govuk-heading-m">@messages("intervalsOfRentReview.subheading")</p>
+
+
+      @includes.textInputCharCount(
       govukCharacterCount,
       theForm,
       "intervalsOfRentReview",

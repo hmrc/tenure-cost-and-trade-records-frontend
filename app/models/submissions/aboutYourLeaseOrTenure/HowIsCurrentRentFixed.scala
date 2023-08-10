@@ -19,7 +19,9 @@ package models.submissions.aboutYourLeaseOrTenure
 import models.submissions.Form6010.MonthsYearDuration
 import play.api.libs.json.Json
 
-case class HowIsCurrentRentFixed(currentRentFixed: CurrentRentFixed, rentActuallyAgreed: MonthsYearDuration)
+import java.time.LocalDate
+
+case class HowIsCurrentRentFixed(currentRentFixed: CurrentRentFixed, rentActuallyAgreed: LocalDate)
 
 object HowIsCurrentRentFixed {
   implicit val format = Json.format[HowIsCurrentRentFixed]

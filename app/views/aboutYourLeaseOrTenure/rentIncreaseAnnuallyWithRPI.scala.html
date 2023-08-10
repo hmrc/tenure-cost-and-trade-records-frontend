@@ -31,7 +31,7 @@
 
 @layout(
  pageHeading = messages("rentIncreasedAnnuallyWithRPIs.heading"),
- showH1 = false,
+ showH1 = true,
  showSection = true,
  summary = Some(summary),
  sectionName = messages("label.section.aboutYourLeaseOrTenure"),
@@ -41,7 +41,9 @@
 
  @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.RentIncreaseAnnuallyWithRPIController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
 
-  @includes.radioButtonsYesNo(govukRadios, theForm, "rentIncreasedAnnuallyWithRPIs", "rentIncreasedAnnuallyWithRPIs.heading", "govuk-fieldset__legend--l", isHeading = true)
+  <p class="govuk-body">@messages("rentIncreasedAnnuallyWithRPIs.p1")</p>
+
+  @includes.radioButtonsYesNo(govukRadios, theForm, "rentIncreasedAnnuallyWithRPIs", "rentIncreasedAnnuallyWithRPIs.subheading", "govuk-fieldset__legend--m")
 
   @includes.continueSaveAsDraftButtons(govukButton)
  }

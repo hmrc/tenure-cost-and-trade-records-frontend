@@ -30,7 +30,7 @@
 
 @layout(
  pageHeading = messages("tenantsAdditionsDisregarded.heading"),
- showH1 = false,
+ showH1 = true,
  showSection = true,
     summary = Some(summary),
  sectionName = messages("label.section.aboutYourLeaseOrTenure"),
@@ -40,14 +40,23 @@
 
   @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
 
-    @includes.radioButtonsYesNo(
+      <p class="govuk-body">@messages("tenantsAdditionsDisregarded.p1")</p>
+
+      <p class="govuk-body">@messages("tenantsAdditionsDisregarded.p2")</p>
+
+      <ul class="govuk-list govuk-list--bullet">
+          <li>@{messages("tenantsAdditionsDisregarded.list1")}</li>
+          <li>@{messages("tenantsAdditionsDisregarded.list2")}</li>
+          <li>@{messages("tenantsAdditionsDisregarded.list3")}</li>
+      </ul>
+
+      @includes.radioButtonsYesNo(
       govukRadios,
       theForm,
       "tenantsAdditionsDisregarded",
-      "tenantsAdditionsDisregarded.heading",
-      "govuk-fieldset__legend--l",
-      hint = "hint.tenantsAdditionsDisregarded",
-      isHeading = true
+      "tenantsAdditionsDisregarded.subheading",
+      "govuk-fieldset__legend--m",
+      hint = "hint.tenantsAdditionsDisregarded"
     )
 
     @includes.continueSaveAsDraftButtons(govukButton)

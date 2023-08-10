@@ -19,6 +19,9 @@
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukDateInput
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukDetails
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Details
+@import uk.gov.hmrc.govukfrontend.views.Aliases.HtmlContent
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
 @import uk.gov.hmrc.govukfrontend.views.Aliases.RadioItem
 @import models.pages.Summary
@@ -26,9 +29,11 @@
 @this(layout: Layout,
         govukButton: GovukButton,
         govukRadios: GovukRadios,
+        govukDetails: GovukDetails,
         govukDateInput: GovukDateInput,
         formWithCSRF: FormWithCSRF
 )
+
 
 @(theForm: Form[HowIsCurrentRentFixed], backLink: String, summary: Summary)(implicit request: Request[_], messages: Messages)
 
@@ -69,8 +74,21 @@
         form = theForm,
         field = "rentActuallyAgreed",
         govukDate = govukDateInput,
-        helpText = messages("label.rentActuallyAgreed.help")
+        helpText = messages("label.rentActuallyAgreed.help"),
+        showDays = true
     )
+
+      @govukDetails(Details(
+          summary = Text(messages("help.rentActuallyAgreed.title")),
+          content = HtmlContent(
+              s"<p>${messages("help.rentActuallyAgreed.p1")}</p>" +
+                      s"<li>${messages("rentActuallyAgreed.list1")}</li>" +
+                      s"<li>${messages("rentActuallyAgreed.list2")}</li>" +
+                      s"<li>${messages("rentActuallyAgreed.list3")}</li>" +
+                      s"<li>${messages("rentActuallyAgreed.list4")}</li>" +
+                      s"<li>${messages("rentActuallyAgreed.list5")}</li><p>" +
+                      s"<p>${messages("help.rentActuallyAgreed.p2")}</p>"
+          )))
 
     @includes.continueSaveAsDraftButtons(govukButton)
   }

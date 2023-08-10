@@ -15,20 +15,29 @@
  *@
 
 @import models.submissions.aboutYourLeaseOrTenure.WhatIsYourCurrentRentBasedOnDetails
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukCharacterCount
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukCheckboxes
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Checkboxes
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
-@import uk.gov.hmrc.govukfrontend.views.Aliases.RadioItem
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Fieldset
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Legend
+@import uk.gov.hmrc.govukfrontend.views.Aliases.CheckboxItem
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Hint
+@import uk.gov.hmrc.govukfrontend.views.Aliases.HtmlContent
 @import models.pages.Summary
 
 @this(layout: Layout,
         govukButton: GovukButton,
         govukRadios: GovukRadios,
         govukCharacterCount: GovukCharacterCount,
+        govukCheckboxes: GovukCheckboxes,
         formWithCSRF: FormWithCSRF
 )
+
 
 @(theForm: Form[WhatIsYourCurrentRentBasedOnDetails], summary: Summary)(implicit request: Request[_], messages: Messages)
 
@@ -42,29 +51,49 @@
  theForm = theForm
 ) {
 
-  @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.WhatIsYourRentBasedOnController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
+    @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.WhatIsYourRentBasedOnController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
 
-    @includes.radioButtons(
-      govukRadios,
-      theForm,
-      "currentRentBasedOn",
-      "currentRentBasedOn.heading",
-      "govuk-fieldset__legend--l",
-      items = Seq(
-        "percentageOpenMarket" -> messages("label.percentageOpenMarket"),
-        "fixed" -> messages("label.fixed"),
-        "percentageTurnover" -> messages("label.percentageTurnover"),
-        "indexed" -> messages("label.indexed"),
-        "stepped" -> messages("label.stepped"),
-        "other" -> messages("label.other"),
-      ).map(radioItem => RadioItem(
-        content = Text(radioItem._2),
-        checked = radioItem._1.equals(theForm("currentRentBasedOn").value.getOrElse("")),
-        value = Option(radioItem._1)
-      )),
-      isHeading = true,
-      inline = false
-    )
+        @govukCheckboxes(
+            Checkboxes(
+                fieldset = Some(Fieldset(
+                    legend = Some(Legend(
+                        content = Text(Messages("currentRentBasedOn.heading")),
+                        classes = "govuk-label--l govuk-fieldset__legend--m",
+                        isPageHeading = true
+                    ))
+                )),
+                name = "currentRentBasedOn",
+                items = Seq(
+                    CheckboxItem(
+                        content = Text(messages("label.percentageOpenMarket")),
+                        value = "percentageOpenMarket",
+                    ),
+                    CheckboxItem(
+                        content = Text(messages("label.fixed")),
+                        value = "fixed",
+                    ),
+                    CheckboxItem(
+                        content = Text(messages("label.percentageTurnover")),
+                        value = "percentageTurnover",
+                    ),
+                    CheckboxItem(
+                        content = Text(messages("label.indexed")),
+                        value = "indexed",
+                    ),
+                    CheckboxItem(
+                        content = Text(messages("label.stepped")),
+                        value = "stepped",
+                    ),
+                    CheckboxItem(
+                        content = Text(messages("label.other")),
+                        value = "other"
+                    )
+                ),
+                hint = Hint(content = HtmlContent(messages("hint.select.all"))),
+                errorMessage = theForm.errors.asTextErrorMessageForField("currentRentBasedOn")
+            ).withFormField(theForm("currentRentBasedOn"))
+        )
+
 
     @includes.textInputCharCount(
       govukCharacterCount,

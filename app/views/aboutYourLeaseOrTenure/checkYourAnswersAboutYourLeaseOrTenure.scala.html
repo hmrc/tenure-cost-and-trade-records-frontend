@@ -236,7 +236,7 @@
                         sectionAnswers2.row("checkYourAnswersAboutYourLeaseOrTenure.howAndWhenRentWasFixed",
                             _.howIsCurrentRentFixed.map(r =>
                                 Seq(messages(s"label.${r.currentRentFixed.name}"),
-                                    dateUtil.formatYearMonth(r.rentActuallyAgreed.toYearMonth)
+                                    dateUtil.formatDayMonthAbbrYear(r.rentActuallyAgreed)
                                 ).mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>")
                             ),
                             aboutYourLeaseOrTenure.routes.HowIsCurrentRentFixedController.show(), "",
