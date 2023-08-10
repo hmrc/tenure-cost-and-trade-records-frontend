@@ -29,8 +29,6 @@ class CheckYourAnswersAboutTheTradingHistoryControllerSpec extends TestBaseSpec 
   val backLink = controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedController.show().url
 
   val mockAboutTheTradingHistoryNavigator            = mock[AboutTheTradingHistoryNavigator]
-  val mockCheckYourAnswersAboutTheTradingHistoryView = mock[checkYourAnswersAboutTheTradingHistory]
-  when(mockCheckYourAnswersAboutTheTradingHistoryView.apply(any, any, any)(any, any)).thenReturn(HtmlFormat.empty)
 
   val mockTaskListView = mock[taskList]
   when(mockTaskListView.apply()(any, any)).thenReturn(HtmlFormat.empty)
@@ -38,7 +36,7 @@ class CheckYourAnswersAboutTheTradingHistoryControllerSpec extends TestBaseSpec 
   val checkYourAnswersAboutThePropertyController = new CheckYourAnswersAboutTheTradingHistoryController(
     stubMessagesControllerComponents(),
     mockAboutTheTradingHistoryNavigator,
-    mockCheckYourAnswersAboutTheTradingHistoryView,
+    checkYourAnswersAboutTheTradingHistoryView,
     preFilledSession,
     mockSessionRepo
   )
@@ -55,4 +53,5 @@ class CheckYourAnswersAboutTheTradingHistoryControllerSpec extends TestBaseSpec 
       charset(result)     shouldBe Some("utf-8")
     }
   }
+
 }
