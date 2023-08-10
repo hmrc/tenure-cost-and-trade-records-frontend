@@ -23,7 +23,7 @@ import models.Session
 import models.submissions.connectiontoproperty.StillConnectedDetails.updateStillConnectedDetails
 import models.submissions.connectiontoproperty.ProvideContactDetails
 import navigation.ConnectionToPropertyNavigator
-import navigation.identifiers.{AboutYouPageId, ProvideYourContactDetailsPageId}
+import navigation.identifiers.ProvideYourContactDetailsPageId
 import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
@@ -88,12 +88,15 @@ class ProvideContactDetailsController @Inject() (
     )
   }
 
-  private def getBackLink(answers: Session): Either[String, String] =
+  private def getBackLink(answers: Session): Either[String, String] = {
+    logger.debug(s"**Cont: ${answers.stillConnectedDetails}")
+    logger.debug(s"**Cont: ${answers.stillConnectedDetails.flatMap(_.isAnyRentReceived.map(_.name))}")
     answers.stillConnectedDetails.flatMap(_.isAnyRentReceived.map(_.name)) match {
       case Some("yes") =>
         Right(controllers.connectiontoproperty.routes.AddAnotherLettingPartOfPropertyController.show(0).url)
       case Some("no")  => Right(controllers.connectiontoproperty.routes.IsRentReceivedFromLettingController.show().url)
       case _           => Left(s"Unknown connection to property back link")
     }
+  }
 
 }

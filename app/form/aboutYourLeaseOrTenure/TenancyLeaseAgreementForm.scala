@@ -14,13 +14,18 @@
  * limitations under the License.
  */
 
-package models.submissions.Form6010
+package form.aboutYourLeaseOrTenure
 
-import models.submissions.common.AnswersYesNo
-import play.api.libs.json.Json
+import form.MappingSupport.createYesNoType
+import models.submissions.aboutYourLeaseOrTenure.TenancyLeaseAgreementDetails
+import play.api.data.Form
+import play.api.data.Forms.mapping
 
-case class TenancyLeaseAgreementDetails(tenancyLeaseAgreements: AnswersYesNo)
+object TenancyLeaseAgreementForm {
 
-object TenancyLeaseAgreementDetails {
-  implicit val format = Json.format[TenancyLeaseAgreementDetails]
+  val tenancyLeaseAgreementForm = Form(
+    mapping(
+      "tenancyLeaseAgreement" -> createYesNoType("error.tenancyLeaseAgreement.missing")
+    )(TenancyLeaseAgreementDetails.apply)(TenancyLeaseAgreementDetails.unapply)
+  )
 }

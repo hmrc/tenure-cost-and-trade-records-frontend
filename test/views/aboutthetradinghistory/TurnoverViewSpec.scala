@@ -24,8 +24,6 @@ import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
 class TurnoverViewSpec extends QuestionViewBehaviours[Seq[TurnoverSection]] {
-  // NOTE: this is a holding view test until the turnover page is implemented
-  def turnoverView = app.injector.instanceOf[views.html.aboutthetradinghistory.turnover]
 
   val messageKeyPrefix = "turnover"
 
@@ -49,9 +47,76 @@ class TurnoverViewSpec extends QuestionViewBehaviours[Seq[TurnoverSection]] {
     }
 
     "Section heading is visible" in {
-      val doc         = asDocument(createViewUsingForm(form)) // govuk-caption-m
+      val doc         = asDocument(createViewUsingForm(form))
       val sectionText = doc.getElementsByClass("govuk-caption-m").first().text()
       assert(sectionText == messages("label.section.aboutYourTradingHistory"))
+    }
+
+    "contains paragraph details" in {
+      val doc = asDocument(createView())
+      assert(doc.toString.contains(messages("turnover.p1")))
+      // TODO - Reinstate paragraph when cut and paste functionality developed
+//      assert(doc.toString.contains(messages("turnover.p2")))
+      assert(doc.toString.contains(messages("turnover.inset")))
+    }
+
+    "contain get help section" in {
+      val doc = asDocument(createView())
+      assert(doc.toString.contains(messages("turnover.details")))
+      assert(doc.toString.contains(messages("turnover.details.h1")))
+      assert(doc.toString.contains(messages("turnover.details.p1")))
+      assert(doc.toString.contains(messages("turnover.details.p2")))
+      assert(doc.toString.contains(messages("turnover.details.h2")))
+      assert(doc.toString.contains(messages("turnover.details.p3")))
+    }
+
+    s"contain an input for financial-year-end" in {
+      val doc = asDocument(createView())
+      assertRenderedById(doc, "0.financial-year-end")
+      assertRenderedById(doc, "1.financial-year-end")
+      assertRenderedById(doc, "2.financial-year-end")
+    }
+
+    s"contain an input for weeks" in {
+      val doc = asDocument(createView())
+      assertRenderedById(doc, "0.weeks")
+      assertRenderedById(doc, "1.weeks")
+      assertRenderedById(doc, "2.weeks")
+    }
+
+    s"contain an input for alcoholic-drinks" in {
+      val doc = asDocument(createView())
+      assertRenderedById(doc, "0.alcoholic-drinks")
+      assertRenderedById(doc, "1.alcoholic-drinks")
+      assertRenderedById(doc, "2.alcoholic-drinks")
+    }
+
+    s"contain an input for food" in {
+      val doc = asDocument(createView())
+      assertRenderedById(doc, "0.food")
+      assertRenderedById(doc, "1.food")
+      assertRenderedById(doc, "2.food")
+    }
+
+    s"contain an input for other-receiptss" in {
+      val doc = asDocument(createView())
+      assertRenderedById(doc, "0.other-receipts")
+      assertRenderedById(doc, "1.other-receipts")
+      assertRenderedById(doc, "2.other-receipts")
+    }
+
+    s"contain an input for accommodation" in {
+      val doc = asDocument(createView())
+      assertRenderedById(doc, "0.accommodation")
+      assertRenderedById(doc, "1.accommodation")
+      assertRenderedById(doc, "2.accommodation")
+    }
+
+    s"contain an input for average-occupancy-rate" in {
+      val doc = asDocument(createView())
+      assertRenderedById(doc, "0.average-occupancy-rate")
+      assertRenderedById(doc, "1.average-occupancy-rate")
+      assertRenderedById(doc, "2.average-occupancy-rate")
     }
 
     "contain save and continue button with the value Save and Continue" in {

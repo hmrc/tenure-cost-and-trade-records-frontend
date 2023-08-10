@@ -19,9 +19,9 @@ package form.aboutyouandtheproperty
 import form.MappingSupport.multipleCurrentPropertyUsedMapping
 import models.submissions.aboutyouandtheproperty._
 import play.api.data.Form
-import play.api.data.Forms.{default, mapping, optional, text}
+import play.api.data.Forms.{default, mapping, text}
 import play.api.data.validation.Constraints.nonEmpty
-import uk.gov.voa.play.form.ConditionalMappings.{mandatoryIfAnyEqual, mandatoryIfEqual}
+import uk.gov.voa.play.form.ConditionalMappings.mandatoryIfAnyEqual
 
 object AboutThePropertyForm {
 
