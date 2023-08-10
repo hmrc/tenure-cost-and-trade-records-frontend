@@ -18,8 +18,10 @@
 @import controllers.aboutthetradinghistory
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import models.submissions.aboutthetradinghistory.CheckYourAnswersAboutTheTradingHistory
+@import models.submissions.aboutthetradinghistory.TurnoverSection
 @import models.pages.Summary
 @import util.DateUtil
+@import util.NumberUtil._
 @import util.SectionAnswersRowBuilder
 
 @this(layout: Layout,
@@ -34,6 +36,34 @@
 
 @sectionAnswers = @{
     SectionAnswersRowBuilder(request.sessionData.aboutTheTradingHistory)
+}
+
+@table(valuesGrid: Seq[Seq[String]]) = {
+@valuesGrid.map { values =>
+    <span style="display: table-cell; min-width: 9em;">
+        @values.map { value =>
+            <p class="govuk-body">@value</p>
+        }
+    </span>
+}
+}
+
+@turnoverValuesTable(turnoverSections: Seq[TurnoverSection]) = @{
+    table(
+        turnoverSections.map(t => Seq(
+            dateUtil.formatDayMonthAbbrYear(t.financialYearEnd),
+            s"${t.tradingPeriod} ${messages("turnover.weeks")}",
+            t.alcoholicDrinks.asMoney
+        ))
+    ).body
+}
+
+@turnoverKeys = @{
+    Seq(
+        messages("checkYourAnswersAboutTheTradingHistory.financialYearEnd"),
+        messages("checkYourAnswersAboutTheTradingHistory.financialYearEnd"),
+        messages("checkYourAnswersAboutTheTradingHistory.financialYearEnd"),
+    ).mkString("""<p class="govuk-body govuk-!-font-weight-bold">""", """</p> <p class="govuk-body govuk-!-font-weight-bold">""", "</p>")
 }
 
 @layout(
@@ -51,7 +81,10 @@
     @govukSummaryList(SummaryList(rows =
         sectionAnswers.row("checkYourAnswersAboutTheTradingHistory.occupationAndAccounting",
             _.occupationAndAccountingInformation.map(
-                a => s"${dateUtil.formatYearMonth(a.firstOccupy.toYearMonth)}<br/>${dateUtil.formatMonthDay(a.financialYear.toMonthDay)}"
+                a => Seq(
+                    dateUtil.formatYearMonth(a.firstOccupy.toYearMonth),
+                    dateUtil.formatMonthDay(a.financialYear.toMonthDay)
+                ).mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>")
             ),
             aboutthetradinghistory.routes.AboutYourTradingHistoryController.show(), "",
             ("valueAsHtml", _ => None))
@@ -62,16 +95,8 @@
     @govukSummaryList(SummaryList(rows =
         Seq(
             SummaryListRow(
-                key = Key(
-                    HtmlContent(messages("checkYourAnswersAboutTheTradingHistory.financialYearEnd"))
-                ),
-                value = Value(
-                    HtmlContent(
-                        sectionAnswers.answers
-                        .map(_.turnoverSections.map(t => dateUtil.formatDayMonthAbbrYear(t.financialYearEnd)).mkString(" , "))
-                        .getOrElse("")
-                    )
-                ),
+                key = Key(HtmlContent(turnoverKeys)),
+                value = Value(HtmlContent(sectionAnswers.answers.fold("")(t => turnoverValuesTable(t.turnoverSections)))),
                 actions = Some(
                     Actions(items =
                         Seq(
