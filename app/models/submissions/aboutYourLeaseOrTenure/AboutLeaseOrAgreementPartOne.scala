@@ -21,6 +21,7 @@ import models.{AnnualRent, Session}
 import models.submissions.common.AnswersYesNo
 import play.api.libs.json.Json
 
+//There are now 22 attributes in this case class, so no more can be added
 case class AboutLeaseOrAgreementPartOne(
   aboutTheLandlord: Option[AboutTheLandlord] = None,
   connectedToLandlord: Option[AnswersYesNo] = None,

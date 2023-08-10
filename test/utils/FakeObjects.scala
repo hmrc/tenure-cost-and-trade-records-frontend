@@ -480,7 +480,8 @@ trait FakeObjects {
     rentPayableVaryAccordingToGrossOrNetDetails = Some(RentPayableVaryAccordingToGrossOrNetDetails(AnswerYes)),
     rentPayableVaryOnQuantityOfBeersDetails = Some(RentPayableVaryOnQuantityOfBeersDetails(AnswerYes)),
     tenantAdditionsDisregardedDetails = Some(TenantAdditionsDisregardedDetails(AnswerYes)),
-    legalOrPlanningRestrictions = Some(LegalOrPlanningRestrictions(AnswerYes))
+    legalOrPlanningRestrictions = Some(LegalOrPlanningRestrictions(AnswerYes)),
+    propertyUseLeasebackAgreement = Some(AnswerYes)
   )
 
   val prefilledAboutLeaseOrAgreementPartTwoNo = AboutLeaseOrAgreementPartTwo(

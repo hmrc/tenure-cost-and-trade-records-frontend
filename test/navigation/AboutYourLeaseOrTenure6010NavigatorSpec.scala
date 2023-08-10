@@ -70,7 +70,15 @@ class AboutYourLeaseOrTenure6010NavigatorSpec extends TestBaseSpec {
     "return a function that goes to current annual rent page when lease or agreement details with yes has been completed" in {
       navigator
         .nextPage(LeaseOrAgreementDetailsPageId, session6010)
-        .apply(session6010) mustBe controllers.aboutYourLeaseOrTenure.routes.CurrentAnnualRentController.show()
+        .apply(session6010) mustBe controllers.aboutYourLeaseOrTenure.routes.PropertyUseLeasebackAgreementController
+        .show()
+    }
+
+    "return a function that goes to current annual rent page when property use leaseback agreement with yes has been completed" in {
+      navigator
+        .nextPage(LeaseOrAgreementDetailsPageId, session6010)
+        .apply(session6010) mustBe controllers.aboutYourLeaseOrTenure.routes.PropertyUseLeasebackAgreementController
+        .show()
     }
 
     "return a function that goes to payable within 12 months page when lease or agreement details with no has been completed" in {

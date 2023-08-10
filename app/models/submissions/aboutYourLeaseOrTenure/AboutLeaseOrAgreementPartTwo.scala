@@ -18,6 +18,7 @@ package models.submissions.aboutYourLeaseOrTenure
 
 import actions.SessionRequest
 import models.Session
+import models.submissions.common.AnswersYesNo
 import play.api.libs.json.Json
 
 case class AboutLeaseOrAgreementPartTwo(
@@ -39,7 +40,8 @@ case class AboutLeaseOrAgreementPartTwo(
   tenancyLeaseAgreementExpire: Option[TenancyLeaseAgreementExpire] = None,
   tenancyLeaseAgreementDetails: Option[TenancyLeaseAgreementDetails] = None,
   legalOrPlanningRestrictions: Option[LegalOrPlanningRestrictions] = None,
-  legalOrPlanningRestrictionsDetails: Option[LegalOrPlanningRestrictionsDetails] = None
+  legalOrPlanningRestrictionsDetails: Option[LegalOrPlanningRestrictionsDetails] = None,
+  propertyUseLeasebackAgreement: Option[AnswersYesNo] = None
 )
 
 object AboutLeaseOrAgreementPartTwo {
