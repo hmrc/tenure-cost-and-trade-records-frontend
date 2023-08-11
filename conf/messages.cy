@@ -610,6 +610,12 @@ lettingOtherPartOfProperty.heading = Is any rent received from letting other par
 hint.lettingOtherPartOfProperty = Including advertising rights, stations or hoardings
 error.lettingOtherPartOfProperty.missing = Select yes if any rent received from letting other parts of the property
 
+# PROPERTY USE LEASEBACK AGREEMENT
+##############################
+propertyUseLeasebackAgreement.heading = Does {0} occupy the property using a leaseback agreement?
+help.propertyUseLeasebackAgreement.title = Help with leaseback arrangements
+help.propertyUseLeasebackAgreement.p1 = In a leaseback arrangement, a business can sell their premises to an investor then lease it back for a specific amount of time. These agreements allow businesses to raise capital while maintaining the control of their former property, and often include buy-back options.
+
 # CURRENT ANNUAL RENT
 ##############################
 currentAnnualRent.heading = What is the current annual rent?
@@ -909,12 +915,17 @@ error.date_before_today.nextReview = The date of the next rent review cannot be 
 
 # CURRENT RENT PAYABLE WITHIN 12 MONTHS
 #######################################
-currentRentPayableWithin12Months.heading = Is the current rent payable due to review within the next 12 months, either under the terms of the existing lease, or upon grant of a new lease?
+currentRentPayableWithin12Months.heading = Future rent reviews
+currentRentPayableWithin12Months.p1 = You must declare if your current rent is due to be reviewed within the next 12 months. This could be under the terms of the existing lease, or when a new lease is granted.
+currentRentPayableWithin12Months.p2 = Do not include any changes to your rent linked to your turnover, or indices such as the retail price index (RPI).
+currentRentPayableWithin12Months.subheading = Is the current rent payable due for review within the next 12 months?
 currentRentPayableWithin12Months.hint = Do not include any rent increases linked to turnover or the retail price index (RPI)
-label.dateReview = Date of next rent review or expiry of existing lease
+label.dateReview = Date of next rent review, or expiry of existing lease
 error.currentRentPayableWithin12Months.required = Select yes if the current rent will be reviewed in the next 12 months
+error.dateReview.day.required = The date of review or expiry must include a day
 error.dateReview.month.required = The date of review or expiry must include a month
 error.dateReview.year.required = The date of review or expiry must include a year
+label.currentRentPayableWithin12Months.help = For example, 27 9 2023 - leave blank if no rent reviews are due
 
 # WHAT IS YOUR RENT BASED ON
 ############################

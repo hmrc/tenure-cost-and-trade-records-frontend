@@ -52,11 +52,6 @@ class CurrentRentPayableWithin12MonthsViewSpec extends QuestionViewBehaviours[Cu
       assert(sectionText == messages("label.section.aboutYourLeaseOrTenure"))
     }
 
-    "display the correct radio button hint" in {
-      val doc = asDocument(createViewUsingForm(form))
-      assertContainsText(doc, messages("currentRentPayableWithin12Months.hint"))
-    }
-
     "contain radio buttons for the value yes" in {
       val doc = asDocument(createViewUsingForm(form))
       assertContainsRadioButton(
@@ -84,11 +79,6 @@ class CurrentRentPayableWithin12MonthsViewSpec extends QuestionViewBehaviours[Cu
     "display the correct date label" in {
       val doc = asDocument(createViewUsingForm(form))
       assertContainsText(doc, messages("label.dateReview"))
-    }
-
-    "display the correct date hint" in {
-      val doc = asDocument(createViewUsingForm(form))
-      assertContainsText(doc, messages("currentRentPayableWithin12Months.hint"))
     }
 
     "contain date field for the value dateReview.month" in {

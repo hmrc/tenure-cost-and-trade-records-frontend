@@ -14,19 +14,18 @@
  * limitations under the License.
  */
 
-package models.submissions.aboutYourLeaseOrTenure
+package form.aboutYourLeaseOrTenure
 
-import models.submissions.Form6010.MonthsYearDuration
-import play.api.libs.json.Json
+import form.MappingSupport.createYesNoType
+import models.submissions.common.AnswersYesNo
+import play.api.data.Form
+import play.api.data.Forms.mapping
 
-import java.time.LocalDate
+object PropertyUseLeasebackAgreementForm {
+  lazy val propertyUseLeasebackAgreementForm: Form[AnswersYesNo] = Form(propertyUseLeasebackAgreementMapping)
 
-case class CurrentRentPayableWithin12Months(
-  currentRentWithin12Months: CurrentRentWithin12Months,
-  rentActuallyAgreed: LocalDate
-)
-
-object CurrentRentPayableWithin12Months {
-  implicit val format = Json.format[CurrentRentPayableWithin12Months]
+  val propertyUseLeasebackAgreementMapping = mapping(
+    "propertyUseLeasebackAgreement" -> createYesNoType("error.propertyUseLeasebackAgreement.missing")
+  )(x => x)(b => Some(b))
 
 }

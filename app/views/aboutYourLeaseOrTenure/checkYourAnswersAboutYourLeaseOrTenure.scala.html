@@ -97,7 +97,7 @@
                         sectionAnswers.optionalRow("checkYourAnswersAboutYourLeaseOrTenure.rentDueInNext12Months",
                             _.currentRentPayableWithin12Months.map(r => Seq(
                                 messages(s"label.${r.currentRentWithin12Months.name}"),
-                                messages("checkYourAnswersAboutYourLeaseOrTenure.nextReviewOrExpiryDate", dateUtil.formatYearMonth(r.rentActuallyAgreed.toYearMonth))
+                                messages("checkYourAnswersAboutYourLeaseOrTenure.nextReviewOrExpiryDate", dateUtil.formatDayMonthAbbrYear(r.rentActuallyAgreed))
                             ).mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>")),
                             aboutYourLeaseOrTenure.routes.CurrentRentPayableWithin12MonthsController.show(), "",
                             ("valueAsHtml", _ => None))
@@ -110,7 +110,7 @@
 
             @govukSummaryList(SummaryList(rows =
                 sectionAnswers.row("checkYourAnswersAboutYourLeaseOrTenure.leasebackArrangement",
-                    _.leasebackArrangement.map(_.name).map(v => messages(s"label.$v")),
+                    _.propertyUseLeasebackAgreement.map(_.name).map(v => messages(s"label.$v")),
                     Call("GET", "leaseback-arrangement"), "leasebackArrangement") ++ // TODO: Not implemented Controller for "leaseback-arrangement"
                         sectionAnswers.optionalRow("checkYourAnswersAboutYourLeaseOrTenure.currentAnnualRent",
                             _.annualRent.map(_.amount.asMoney),
