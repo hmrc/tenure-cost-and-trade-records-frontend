@@ -915,12 +915,16 @@ error.date_before_today.nextReview = The date of the next rent review cannot be 
 
 # CURRENT RENT PAYABLE WITHIN 12 MONTHS
 #######################################
-currentRentPayableWithin12Months.heading = Is the current rent payable due to review within the next 12 months, either under the terms of the existing lease, or upon grant of a new lease?
+currentRentPayableWithin12Months.heading = Future rent reviews
+currentRentPayableWithin12Months.p1 = You must declare if your current rent is due to be reviewed within the next 12 months. This could be under the terms of the existing lease, or when a new lease is granted.
+currentRentPayableWithin12Months.p2 = Do not include any changes to your rent linked to your turnover, or indices such as the retail price index (RPI).
+currentRentPayableWithin12Months.subheading = Is the current rent payable due for review within the next 12 months?
 currentRentPayableWithin12Months.hint = Do not include any rent increases linked to turnover or the retail price index (RPI)
-label.dateReview = Date of next rent review or expiry of existing lease
+label.dateReview = Date of next rent review, or expiry of existing lease
 error.currentRentPayableWithin12Months.required = Select yes if the current rent will be reviewed in the next 12 months
 error.dateReview.month.required = The date of review or expiry must include a month
 error.dateReview.year.required = The date of review or expiry must include a year
+label.currentRentPayableWithin12Months.help = For example, 27 9 2023 - leave blank if no rent reviews are due
 
 # WHAT IS YOUR RENT BASED ON
 ############################
