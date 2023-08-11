@@ -19,9 +19,11 @@ package models.submissions.aboutYourLeaseOrTenure
 import models.submissions.Form6010.MonthsYearDuration
 import play.api.libs.json.Json
 
+import java.time.LocalDate
+
 case class CurrentRentPayableWithin12Months(
   currentRentWithin12Months: CurrentRentWithin12Months,
-  rentActuallyAgreed: MonthsYearDuration
+  rentActuallyAgreed: LocalDate
 )
 
 object CurrentRentPayableWithin12Months {

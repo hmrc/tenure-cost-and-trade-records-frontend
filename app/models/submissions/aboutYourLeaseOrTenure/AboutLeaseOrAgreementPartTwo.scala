@@ -40,8 +40,7 @@ case class AboutLeaseOrAgreementPartTwo(
   tenancyLeaseAgreementExpire: Option[TenancyLeaseAgreementExpire] = None,
   tenancyLeaseAgreementDetails: Option[TenancyLeaseAgreementDetails] = None,
   legalOrPlanningRestrictions: Option[LegalOrPlanningRestrictions] = None,
-  legalOrPlanningRestrictionsDetails: Option[LegalOrPlanningRestrictionsDetails] = None,
-  propertyUseLeasebackAgreement: Option[AnswersYesNo] = None
+  legalOrPlanningRestrictionsDetails: Option[LegalOrPlanningRestrictionsDetails] = None
 )
 
 object AboutLeaseOrAgreementPartTwo {

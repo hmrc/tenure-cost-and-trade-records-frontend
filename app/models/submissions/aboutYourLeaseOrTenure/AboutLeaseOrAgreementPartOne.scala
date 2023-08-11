@@ -28,6 +28,7 @@ case class AboutLeaseOrAgreementPartOne(
   connectedToLandlordDetails: Option[ConnectedToLandlordInformationDetails] = None,
   leaseOrAgreementYearsDetails: Option[LeaseOrAgreementYearsDetails] = None,
   currentRentPayableWithin12Months: Option[CurrentRentPayableWithin12Months] = None,
+  propertyUseLeasebackAgreement: Option[AnswersYesNo] = None,
   annualRent: Option[AnnualRent] = None,
   currentRentFirstPaid: Option[CurrentRentFirstPaid] = None,
   currentLeaseOrAgreementBegin: Option[CurrentLeaseOrAgreementBegin] = None,
@@ -43,7 +44,6 @@ case class AboutLeaseOrAgreementPartOne(
   whatIsYourCurrentRentBasedOnDetails: Option[WhatIsYourCurrentRentBasedOnDetails] = None,
   rentIncreasedAnnuallyWithRPIDetails: Option[RentIncreasedAnnuallyWithRPIDetails] = None,
   checkYourAnswersAboutYourLeaseOrTenure: Option[CheckYourAnswersAboutYourLeaseOrTenure] = None,
-  leasebackArrangement: Option[AnswersYesNo] = None,
   rentIncludesVat: Option[AnswersYesNo] = None
 )
 

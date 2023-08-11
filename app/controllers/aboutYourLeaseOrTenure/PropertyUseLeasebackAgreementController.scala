@@ -19,11 +19,11 @@ package controllers.aboutYourLeaseOrTenure
 import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.PropertyUseLeasebackAgreementForm.propertyUseLeasebackAgreementForm
-import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo.updateAboutLeaseOrAgreementPartTwo
+import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne
 import models.Session
 import models.submissions.common.AnswersYesNo
 import navigation.AboutYourLeaseOrTenureNavigator
-import navigation.identifiers.{PropertyUseLeasebackAgreementId, TradingNameOwnThePropertyPageId}
+import navigation.identifiers.PropertyUseLeasebackAgreementId
 import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
@@ -48,7 +48,7 @@ class PropertyUseLeasebackAgreementController @Inject() (
     Future.successful(
       Ok(
         propertyUseLeasebackAgreementView(
-          request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.propertyUseLeasebackAgreement) match {
+          request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.propertyUseLeasebackAgreement) match {
             case Some(propertyUseLeasebackAgreement) =>
               propertyUseLeasebackAgreementForm.fillAndValidate(propertyUseLeasebackAgreement)
             case _                                   => propertyUseLeasebackAgreementForm
@@ -78,7 +78,7 @@ class PropertyUseLeasebackAgreementController @Inject() (
           )
         ),
       data => {
-        val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(propertyUseLeasebackAgreement = Some(data)))
+        val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(propertyUseLeasebackAgreement = Some(data)))
         session.saveOrUpdate(updatedData)
         Redirect(navigator.nextPage(PropertyUseLeasebackAgreementId, updatedData).apply(updatedData))
       }
