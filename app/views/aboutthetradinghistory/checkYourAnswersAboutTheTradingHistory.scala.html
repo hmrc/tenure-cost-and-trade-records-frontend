@@ -40,7 +40,7 @@
 
 @table(valuesGrid: Seq[Seq[String]]) = {
 @valuesGrid.map { values =>
-    <span style="display: table-cell; min-width: 9em;">
+    <span class="hmrc-turnover-table-column">
         @values.map { value =>
             <p class="govuk-body">@value</p>
         }
@@ -53,7 +53,11 @@
         turnoverSections.map(t => Seq(
             dateUtil.formatDayMonthAbbrYear(t.financialYearEnd),
             s"${t.tradingPeriod} ${messages("turnover.weeks")}",
-            t.alcoholicDrinks.asMoney
+            t.alcoholicDrinks.asMoney,
+            t.food.asMoney,
+            t.otherReceipts.asMoney,
+            t.accommodation.asMoney,
+            t.averageOccupancyRate.withScale(2)
         ))
     ).body
 }
@@ -61,8 +65,12 @@
 @turnoverKeys = @{
     Seq(
         messages("checkYourAnswersAboutTheTradingHistory.financialYearEnd"),
-        messages("checkYourAnswersAboutTheTradingHistory.financialYearEnd"),
-        messages("checkYourAnswersAboutTheTradingHistory.financialYearEnd"),
+        messages("checkYourAnswersAboutTheTradingHistory.tradingPeriod"),
+        messages("checkYourAnswersAboutTheTradingHistory.drinks"),
+        messages("checkYourAnswersAboutTheTradingHistory.food"),
+        messages("checkYourAnswersAboutTheTradingHistory.otherReceipts"),
+        messages("checkYourAnswersAboutTheTradingHistory.accommodation"),
+        messages("checkYourAnswersAboutTheTradingHistory.averageOccupancyRate"),
     ).mkString("""<p class="govuk-body govuk-!-font-weight-bold">""", """</p> <p class="govuk-body govuk-!-font-weight-bold">""", "</p>")
 }
 
