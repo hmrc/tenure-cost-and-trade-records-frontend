@@ -151,10 +151,8 @@
             @govukSummaryList(SummaryList(rows =
                 sectionAnswers.row("checkYourAnswersAboutYourLeaseOrTenure.includedInYourRent",
                     _.includedInYourRentDetails.map(r =>
-                        sectionAnswers.displayLabelsForYesAnswers(
-                            Map("label.vat" -> r.vat.name, "label.nondomesticRates" -> r.nonDomesticRates.name, "label.waterCharges" -> r.waterCharges.name)
-                        )
-                    ),
+                        r.includedInYourRent.map(item => messages(s"checkbox.rentPayable.$item"))
+                    ).map(_.mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>")),
                     aboutYourLeaseOrTenure.routes.IncludedInYourRentController.show(), "",
                     ("valueAsHtml", _ => None)) ++
                         sectionAnswers.row("checkYourAnswersAboutYourLeaseOrTenure.itemsRentIncludesOrRelates",

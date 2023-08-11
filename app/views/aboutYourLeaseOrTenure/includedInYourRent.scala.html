@@ -19,19 +19,24 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
 @import models.pages.Summary
+@import uk.gov.hmrc.govukfrontend.views.Aliases._
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukCheckboxes
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
+
+
 
 @this(layout: Layout,
         govukButton: GovukButton,
         govukRadios: GovukRadios,
+        govukCheckboxes: GovukCheckboxes,
         formWithCSRF: FormWithCSRF
 )
-
 
 @(theForm: Form[IncludedInYourRentDetails], summary: Summary)(implicit request: Request[_], messages: Messages)
 
 @layout(
  pageHeading = messages("includedInYourRent.heading"),
- showH1 = false,
+ showH1 = true,
  showSection = true,
     summary = Some(summary),
  sectionName = messages("label.section.aboutYourLeaseOrTenure"),
@@ -41,15 +46,38 @@
 
   @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.IncludedInYourRentController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
 
-    <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-     <h1 class="govuk-fieldset__heading">@messages("includedInYourRent.heading")</h1>
-    </legend>
-
-    @includes.radioButtonsYesNo(govukRadios, theForm, "vat", "label.vat", "govuk-!-font-weight-bold")
-
-    @includes.radioButtonsYesNo(govukRadios, theForm, "nondomesticRates", "label.nondomesticRates", "govuk-!-font-weight-bold")
-
-    @includes.radioButtonsYesNo(govukRadios, theForm, "waterCharges", "label.waterCharges", "govuk-!-font-weight-bold")
+      @includes.checkboxes(
+          govukCheckboxes,
+          theForm,
+          "includedInYourRent",
+          "hint.includedInYourRent",
+          items = Seq(
+              CheckboxItem(
+                  id = "vat",
+                  content = Text(messages("checkbox.includedInYourRent.vat")),
+                  value = "vat"
+              ),
+              CheckboxItem(
+                  id = "nondomesticRates",
+                  content = Text(messages("checkbox.includedInYourRent.nondomesticRates")),
+                  value = "nondomesticRates"
+              ),
+              CheckboxItem(
+                  id = "waterCharges",
+                  content = Text(messages("checkbox.includedInYourRent.waterCharges")),
+                  value = "waterCharges"
+              ),
+              CheckboxItem(
+                  divider = Some("or")
+              ),
+              CheckboxItem(
+                  id = "none",
+                  content = Text(messages("checkbox.includedInYourRent.none")),
+                  value = "none",
+                  behaviour = Some(ExclusiveCheckbox)
+              )
+          )
+      )
 
     @includes.continueSaveAsDraftButtons(govukButton)
   }

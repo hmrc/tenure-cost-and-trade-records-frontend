@@ -56,31 +56,37 @@ class DoesTheRentPayableViewSpec extends QuestionViewBehaviours[DoesTheRentPayab
 
     "contain checkbox for the value rates" in {
       val doc = asDocument(createViewUsingForm(form))
-      assertContainsCheckBox(doc, "rates", "rentPayable", "", false)
+      assertContainsCheckBox(doc, "rates", "rentPayable", "rates", false)
       assertContainsText(doc, messages("checkbox.rentPayable.proprietor"))
     }
 
     "contain checkbox for the value property insurance" in {
       val doc = asDocument(createViewUsingForm(form))
-      assertContainsCheckBox(doc, "propertyInsurance", "rentPayable", "", false)
+      assertContainsCheckBox(doc, "propertyInsurance", "rentPayable", "propertyInsurance", false)
       assertContainsText(doc, messages("checkbox.rentPayable.otherProperty"))
     }
 
     "contain checkbox for the value outside repairs" in {
       val doc = asDocument(createViewUsingForm(form))
-      assertContainsCheckBox(doc, "outsideRepairs", "rentPayable", "", false)
+      assertContainsCheckBox(doc, "outsideRepairs", "rentPayable", "outsideRepairs", false)
       assertContainsText(doc, messages("checkbox.rentPayable.onlyPart"))
     }
 
     "contain checkbox for the value inside repairs" in {
       val doc = asDocument(createViewUsingForm(form))
-      assertContainsCheckBox(doc, "insideRepairs", "rentPayable", "", false)
+      assertContainsCheckBox(doc, "insideRepairs", "rentPayable", "insideRepairs", false)
       assertContainsText(doc, messages("checkbox.rentPayable.onlyLand"))
     }
 
     "contain checkbox for the repairs?" in {
       val doc = asDocument(createViewUsingForm(form))
-      assertContainsCheckBox(doc, "insideRepairs", "rentPayable", "", false)
+      assertContainsCheckBox(doc, "shellUnit", "rentPayable", "shellUnit", false)
+      assertContainsText(doc, messages("checkbox.rentPayable.shellUnit"))
+    }
+
+    "contain checkbox for the none?" in {
+      val doc = asDocument(createViewUsingForm(form))
+      assertContainsCheckBox(doc, "none", "rentPayable", "none", false)
       assertContainsText(doc, messages("checkbox.rentPayable.shellUnit"))
     }
 

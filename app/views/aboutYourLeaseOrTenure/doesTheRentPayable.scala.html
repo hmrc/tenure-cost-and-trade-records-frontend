@@ -21,6 +21,8 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukCheckboxes
 @import uk.gov.hmrc.govukfrontend.views.Aliases.CheckboxItem
+@import uk.gov.hmrc.govukfrontend.views.Aliases.ExclusiveCheckbox
+
 @import models.pages.Summary
 
 @this(layout: Layout,
@@ -29,7 +31,6 @@
         govukCheckboxes: GovukCheckboxes,
         formWithCSRF: FormWithCSRF
 )
-
 
 @(theForm: Form[DoesTheRentPayable], summary: Summary)(implicit request: Request[_], messages: Messages)
 
@@ -58,24 +59,39 @@
       items = Seq(
         CheckboxItem(
           id = Some("rates"),
-          content = Text(messages("checkbox.rentPayable.proprietor"))
+          content = Text(messages("checkbox.rentPayable.proprietor")),
+          value = "rates"
         ),
         CheckboxItem(
           id = Some("propertyInsurance"),
-          content = Text(messages("checkbox.rentPayable.otherProperty"))
+          content = Text(messages("checkbox.rentPayable.otherProperty")),
+            value = "propertyInsurance"
         ),
         CheckboxItem(
           id = Some("outsideRepairs"),
-          content = Text(messages("checkbox.rentPayable.onlyPart"))
+          content = Text(messages("checkbox.rentPayable.onlyPart")),
+            value = "outsideRepairs"
         ),
         CheckboxItem(
           id = Some("insideRepairs"),
-          content = Text(messages("checkbox.rentPayable.onlyLand"))
+          content = Text(messages("checkbox.rentPayable.onlyLand")),
+            value = "insideRepairs"
         ),
         CheckboxItem(
-          id = Some("insideRepairs"),
-          content = Text(messages("checkbox.rentPayable.shellUnit"))
+          id = Some("shellUnit"),
+          content = Text(messages("checkbox.rentPayable.shellUnit")),
+            value = "shellUnit"
+        ),
+        CheckboxItem(
+            divider = Some("or")
+        ),
+        CheckboxItem(
+            id = Some("none"),
+            content = Text(messages("checkbox.includedInYourRent.none")),
+            value = "none",
+            behaviour = Some(ExclusiveCheckbox)
         )
+
       )
     )
 
