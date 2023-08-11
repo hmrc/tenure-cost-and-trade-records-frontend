@@ -111,7 +111,7 @@
             @govukSummaryList(SummaryList(rows =
                 sectionAnswers.row("checkYourAnswersAboutYourLeaseOrTenure.leasebackArrangement",
                     _.propertyUseLeasebackAgreement.map(_.name).map(v => messages(s"label.$v")),
-                    Call("GET", "leaseback-arrangement"), "leasebackArrangement") ++ // TODO: Not implemented Controller for "leaseback-arrangement"
+                    aboutYourLeaseOrTenure.routes.PropertyUseLeasebackAgreementController.show(), "") ++
                         sectionAnswers.optionalRow("checkYourAnswersAboutYourLeaseOrTenure.currentAnnualRent",
                             _.annualRent.map(_.amount.asMoney),
                             aboutYourLeaseOrTenure.routes.CurrentAnnualRentController.show(), "currentAnnualRent") ++

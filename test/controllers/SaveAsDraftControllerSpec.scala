@@ -212,7 +212,7 @@ class SaveAsDraftControllerSpec extends TestBaseSpec {
   "SaveAsDraftController.timeout" should {
     "save SubmissionDraft with generated password and redirect to session timeout page" in {
       val refNum = submissionDraft.session.referenceNumber
-      sessionRepo.saveOrUpdate(submissionDraft.session)
+      sessionRepo.saveOrUpdate(submissionDraft.session.copy(saveAsDraftPassword = None))
 
       val result = saveAsDraftController.timeout(exitPath)(fakeRequest)
       status(result)           shouldBe SEE_OTHER

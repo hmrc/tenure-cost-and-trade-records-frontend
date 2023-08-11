@@ -18,21 +18,33 @@ package util
 
 import java.text.NumberFormat
 import java.util.Locale
+import scala.math.BigDecimal.RoundingMode.HALF_UP
 
 /**
   * @author Yuriy Tumakha
   */
 object NumberUtil {
 
+  implicit class stringHelpers(str: String) {
+    def removeTrailingZeros: String =
+      str.replace(".00", "")
+  }
+
   implicit class bigDecimalHelpers(bigDecimal: BigDecimal) {
 
     def asMoney: String =
-      asMoneyFull.replace(".00", "")
+      asMoneyFull.removeTrailingZeros
 
     def asMoneyFull: String =
       NumberFormat
         .getCurrencyInstance(Locale.UK)
         .format(bigDecimal)
+
+    def withScale(scale: Int): String =
+      withScaleFull(scale).removeTrailingZeros
+
+    def withScaleFull(scale: Int): String =
+      bigDecimal.setScale(scale, HALF_UP).toString
 
   }
 

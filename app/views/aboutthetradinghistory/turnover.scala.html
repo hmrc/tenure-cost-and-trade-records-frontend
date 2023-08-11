@@ -80,7 +80,7 @@
   theForm = form
 ) {
 
-  @formWithCSRF(action = controllers.aboutthetradinghistory.routes.TurnoverController.submit, args = 'class -> "myForm", 'id -> "myFormId") {
+  @formWithCSRF(action = controllers.aboutthetradinghistory.routes.TurnoverController.submit) {
 
       <p class="govuk-body">@messages("turnover.p1")</p>
       @* TODO - Reinstate paragraph when cut and paste functionality developed *@
