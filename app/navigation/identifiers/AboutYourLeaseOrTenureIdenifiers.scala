@@ -32,6 +32,10 @@ case object CurrentRentPayableWithin12monthsPageId extends Identifier {
   override def toString: String = "currentRentPayableWithin12monthsPage"
 }
 
+case object PropertyUseLeasebackAgreementId extends Identifier {
+  override def toString: String = "propertyUseLeasebackAgreementPage"
+}
+
 case object CurrentAnnualRentPageId extends Identifier { override def toString: String = "currentAnnualRentPage" }
 
 case object CurrentRentFirstPaidPageId extends Identifier { override def toString: String = "currentRentFirstPaidPage" }

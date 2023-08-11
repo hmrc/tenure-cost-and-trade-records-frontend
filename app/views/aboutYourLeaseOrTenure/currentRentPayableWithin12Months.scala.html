@@ -48,7 +48,7 @@
 
 @layout(
  pageHeading = messages("currentRentPayableWithin12Months.heading"),
- showH1 = false,
+ showH1 = true,
  showSection = true,
  summary = Some(summary),
  sectionName = messages("label.section.aboutYourLeaseOrTenure"),
@@ -57,7 +57,11 @@
 ) {
 
  @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.CurrentRentPayableWithin12MonthsController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
-  
+
+  <p class="govuk-body">@messages("currentRentPayableWithin12Months.p1")</p>
+
+  <p class="govuk-body">@messages("currentRentPayableWithin12Months.p2")</p>
+
   @govukRadios(
    Radios(
     name = "rentPayable",
@@ -77,18 +81,16 @@
      Fieldset(
       legend = Option(
        Legend(
-        content = Text(messages("currentRentPayableWithin12Months.heading")),
-        isPageHeading = true,
-        classes = "govuk-fieldset__legend--l"
+        content = Text(messages("currentRentPayableWithin12Months.subheading")),
+        classes = "govuk-fieldset__legend--m"
        )
       )
      )
-    ),
-    hint = Some(Hint(content = Text(messages("currentRentPayableWithin12Months.hint")))),
+    )
    )
   )
 
-  @includes.dateFields(form = theForm, field = "dateReview", govukDate = govukDateInput)
+  @includes.dateFields(form = theForm, field = "dateReview", govukDate = govukDateInput, helpText = messages("label.currentRentPayableWithin12Months.help"), showDays = true)
 
   @includes.continueSaveAsDraftButtons(govukButton)
  }

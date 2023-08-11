@@ -75,7 +75,7 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
     ) match {
       case (Some("no"), Some("no"), Some("no")) =>
         controllers.aboutYourLeaseOrTenure.routes.CurrentRentPayableWithin12MonthsController.show()
-      case _                                    => controllers.aboutYourLeaseOrTenure.routes.CurrentAnnualRentController.show()
+      case _                                    => controllers.aboutYourLeaseOrTenure.routes.PropertyUseLeasebackAgreementController.show()
     }
   }
 
@@ -200,6 +200,9 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
     LeaseOrAgreementDetailsPageId                 -> leaseOrAgreementDetailsRouting,
     CurrentRentPayableWithin12monthsPageId        -> (_ =>
       controllers.aboutYourLeaseOrTenure.routes.CheckYourAnswersAboutYourLeaseOrTenureController.show()
+    ),
+    PropertyUseLeasebackAgreementId               -> (_ =>
+      controllers.aboutYourLeaseOrTenure.routes.CurrentAnnualRentController.show()
     ),
     CurrentAnnualRentPageId                       -> (_ => controllers.aboutYourLeaseOrTenure.routes.CurrentRentFirstPaidController.show()),
     CurrentRentFirstPaidPageId                    -> currentRentFirstPaidRouting,
