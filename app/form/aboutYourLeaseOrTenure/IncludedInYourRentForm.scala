@@ -16,10 +16,9 @@
 
 package form.aboutYourLeaseOrTenure
 
-import form.MappingSupport.createYesNoType
 import models.submissions.aboutYourLeaseOrTenure.IncludedInYourRentDetails
 import play.api.data.Form
-import play.api.data.Forms.{list, mapping, optional, text}
+import play.api.data.Forms.{list, mapping, text}
 
 object IncludedInYourRentForm {
 

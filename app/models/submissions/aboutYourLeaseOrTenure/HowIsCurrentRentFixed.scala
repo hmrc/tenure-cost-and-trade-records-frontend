@@ -16,7 +16,6 @@
 
 package models.submissions.aboutYourLeaseOrTenure
 
-import models.submissions.Form6010.MonthsYearDuration
 import play.api.libs.json.Json
 
 import java.time.LocalDate
