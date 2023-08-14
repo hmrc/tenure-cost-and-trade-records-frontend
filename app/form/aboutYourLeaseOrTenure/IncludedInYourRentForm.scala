@@ -16,6 +16,7 @@
 
 package form.aboutYourLeaseOrTenure
 
+import form.MappingSupport.includedInYourRentInformation
 import models.submissions.aboutYourLeaseOrTenure.IncludedInYourRentDetails
 import play.api.data.Form
 import play.api.data.Forms.{list, mapping, text}
@@ -24,7 +25,7 @@ object IncludedInYourRentForm {
 
   val includedInYourRentForm = Form(
     mapping(
-      "includedInYourRent" -> list(text)
+      "includedInYourRent" -> includedInYourRentInformation
     )(IncludedInYourRentDetails.apply)(IncludedInYourRentDetails.unapply)
   )
 }

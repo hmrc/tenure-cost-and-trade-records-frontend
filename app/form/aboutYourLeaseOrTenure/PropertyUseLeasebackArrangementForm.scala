@@ -21,11 +21,11 @@ import models.submissions.common.AnswersYesNo
 import play.api.data.Form
 import play.api.data.Forms.mapping
 
-object PropertyUseLeasebackAgreementForm {
-  lazy val propertyUseLeasebackAgreementForm: Form[AnswersYesNo] = Form(propertyUseLeasebackAgreementMapping)
+object PropertyUseLeasebackArrangementForm {
+  lazy val propertyUseLeasebackArrangementForm: Form[AnswersYesNo] = Form(propertyUseLeasebackArrangementMapping)
 
-  val propertyUseLeasebackAgreementMapping = mapping(
-    "propertyUseLeasebackAgreement" -> createYesNoType("error.propertyUseLeasebackAgreement.missing")
+  val propertyUseLeasebackArrangementMapping = mapping(
+    "propertyUseLeasebackArrangement" -> createYesNoType("error.propertyUseLeasebackArrangement.missing")
   )(x => x)(b => Some(b))
 
 }

@@ -77,6 +77,6 @@ class CurrentAnnualRentController @Inject() (
   private def getBackLink(answers: Session): String =
     answers.forType match {
       case ForTypes.for6011 => controllers.aboutYourLeaseOrTenure.routes.AboutYourLandlordController.show().url
-      case _                => controllers.aboutYourLeaseOrTenure.routes.PropertyUseLeasebackAgreementController.show().url
+      case _                => controllers.aboutYourLeaseOrTenure.routes.PropertyUseLeasebackArrangementController.show().url
     }
 }

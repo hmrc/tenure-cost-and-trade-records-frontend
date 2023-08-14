@@ -19,10 +19,10 @@ package models.submissions.aboutYourLeaseOrTenure
 import models.submissions.common.AnswersYesNo
 import play.api.libs.json.Json
 
-case class PropertyUseLeasebackAgreementDetails(
-  propertyUseLeasebackAgreement: AnswersYesNo
+case class PropertyUseLeasebackArrangementDetails(
+  propertyUseLeasebackArrangement: AnswersYesNo
 )
 
-object PropertyUseLeasebackAgreementDetails {
-  implicit val format = Json.format[PropertyUseLeasebackAgreementDetails]
+object PropertyUseLeasebackArrangementDetails {
+  implicit val format = Json.format[PropertyUseLeasebackArrangementDetails]
 }

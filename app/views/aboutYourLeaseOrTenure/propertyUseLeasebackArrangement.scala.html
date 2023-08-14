@@ -29,7 +29,7 @@
 @(theForm: Form[AnswersYesNo], backLink: String, tradingName:String, summary: Summary)(implicit request: Request[_], messages: Messages)
 
 @layout(
-  pageHeading = messages("propertyUseLeasebackAgreement.heading",tradingName),
+  pageHeading = messages("propertyUseLeasebackArrangement.heading",tradingName),
   showH1 = false,
   showSection = true,
     summary = Some(summary),
@@ -38,21 +38,21 @@
   theForm = theForm,
 ) {
 
-  @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.PropertyUseLeasebackAgreementController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
+  @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.PropertyUseLeasebackArrangementController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
 
     @includes.radioButtonsYesNo(
       govukRadios,
       theForm,
-      "propertyUseLeasebackAgreement",
-      messages("propertyUseLeasebackAgreement.heading",tradingName),
+      "propertyUseLeasebackArrangement",
+      messages("propertyUseLeasebackArrangement.heading",tradingName),
       "govuk-fieldset__legend--l",
       isHeading = true
     )
 
       @govukDetails(Details(
-          summary = Text(messages("help.propertyUseLeasebackAgreement.title")),
+          summary = Text(messages("help.propertyUseLeasebackArrangement.title")),
           content = HtmlContent(
-              s"<p>${messages("help.propertyUseLeasebackAgreement.p1")}</p>"
+              s"<p>${messages("help.propertyUseLeasebackArrangement.p1")}</p>"
           )))
 
     @includes.continueSaveAsDraftButtons(govukButton)
