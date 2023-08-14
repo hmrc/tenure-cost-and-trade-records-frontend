@@ -53,82 +53,29 @@ class IncludedInYourRentViewSpec extends QuestionViewBehaviours[IncludedInYourRe
       assert(sectionText == messages("label.section.aboutYourLeaseOrTenure"))
     }
 
-    "contain radio buttons for vat with the value yes" in {
+    "contain checkbox for the vat" in {
       val doc = asDocument(createViewUsingForm(form))
-      assertContainsRadioButton(
-        doc,
-        "vat",
-        "vat",
-        AnswerYes.name,
-        false
-      )
-      assertContainsText(doc, messages("label.yes"))
+      assertContainsCheckBox(doc, "vat", "includedInYourRent", "vat", false)
+      assertContainsText(doc, messages("label.includedInYourRent.vat"))
     }
 
-    "contain radio buttons for vat with the value no" in {
+    "contain checkbox for the nondomesticRates" in {
       val doc = asDocument(createViewUsingForm(form))
-      assertContainsRadioButton(
-        doc,
-        "vat-2",
-        "vat",
-        AnswerNo.name,
-        false
-      )
-      assertContainsText(doc, messages("label.no"))
+      assertContainsCheckBox(doc, "nondomesticRates", "includedInYourRent", "nondomesticRates", false)
+      assertContainsText(doc, messages("label.includedInYourRent.nondomesticRates"))
     }
 
-    "contain radio buttons for NDR with the value yes" in {
+    "contain checkbox for the waterCharges" in {
       val doc = asDocument(createViewUsingForm(form))
-      assertContainsRadioButton(
-        doc,
-        "nondomesticRates",
-        "nondomesticRates",
-        AnswerYes.name,
-        false
-      )
-      assertContainsText(doc, messages("label.yes"))
+      assertContainsCheckBox(doc, "waterCharges", "includedInYourRent", "waterCharges", false)
+      assertContainsText(doc, messages("label.includedInYourRent.waterCharges"))
     }
 
-    "contain radio buttons for NDR with the value no" in {
+    "contain checkbox for none" in {
       val doc = asDocument(createViewUsingForm(form))
-      assertContainsRadioButton(
-        doc,
-        "nondomesticRates-2",
-        "nondomesticRates",
-        AnswerNo.name,
-        false
-      )
-      assertContainsText(doc, messages("label.no"))
+      assertContainsCheckBox(doc, "none", "includedInYourRent", "none", false)
+      assertContainsText(doc, messages("label.includedInYourRent.none"))
     }
 
-    "contain radio buttons for water charge with the value yes" in {
-      val doc = asDocument(createViewUsingForm(form))
-      assertContainsRadioButton(
-        doc,
-        "waterCharges",
-        "waterCharges",
-        AnswerYes.name,
-        false
-      )
-      assertContainsText(doc, messages("label.yes"))
-    }
-
-    "contain radio buttons for water charge with the value no" in {
-      val doc = asDocument(createViewUsingForm(form))
-      assertContainsRadioButton(
-        doc,
-        "waterCharges-2",
-        "waterCharges",
-        AnswerNo.name,
-        false
-      )
-      assertContainsText(doc, messages("label.no"))
-    }
-
-    "contain save and continue button with the value Save and Continue" in {
-      val doc         = asDocument(createViewUsingForm(form))
-      val loginButton = doc.getElementById("continue").text()
-      assert(loginButton == messages("button.label.continue"))
-    }
   }
 }

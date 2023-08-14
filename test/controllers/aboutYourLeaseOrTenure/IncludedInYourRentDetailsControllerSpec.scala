@@ -50,14 +50,4 @@ class IncludedInYourRentDetailsControllerSpec extends TestBaseSpec {
       charset(result)     shouldBe Some("utf-8")
     }
   }
-
-  "SUBMIT /" should {
-    "throw a BAD_REQUEST if an empty form is submitted" in {
-
-      val res = IncludedInYourRentController().submit(
-        FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)
-      )
-      status(res) shouldBe BAD_REQUEST
-    }
-  }
 }

@@ -124,4 +124,7 @@ object Formats {
   implicit val whatIsYourRentBasedOnFormatter: Formatter[CurrentRentBasedOn] =
     namedEnumFormatter(CurrentRentBasedOn, Errors.currentRentBasedOn)
 
+  implicit val includedInYourRentFormatter: Formatter[IncludedInYourRentInformation] =
+    namedEnumFormatter(IncludedInYourRentInformation, Errors.currentRentBasedOn)
+
 }

@@ -331,6 +331,18 @@ lettingPartOfPropertyRentDetails.heading = Annual rent for {0}
 ###############################################
 lettingPartOfPropertyCheckboxesDetails.heading = Are any of the following included in your rent for {0}?
 hint.lettingPartOfPropertyCheckboxesDetails = Select all that apply
+label.percentageOpenMarket = A percentage of open market value
+label.fixed = A fixed amount
+label.percentageTurnover = A percentage of turnover of the occupier’s business
+label.indexed = Indexed to the retail price index (RPI) or another index
+label.stepped = Stepped rent arrangement
+label.other = Other (for example, combination of the above)
+label.currentRentBasedOn.percentageOpenMarket = A percentage of open market value
+label.currentRentBasedOn.fixed = A fixed amount
+label.currentRentBasedOn.percentageTurnover = A percentage of turnover of the occupier’s business
+label.currentRentBasedOn.indexed = Indexed to the retail price index (RPI) or another index
+label.currentRentBasedOn.stepped = Stepped rent arrangement
+label.currentRentBasedOn.other = Other
 checkbox.lettingPartOfPropertyCheckboxesDetails.rates = Rates
 checkbox.lettingPartOfPropertyCheckboxesDetails.propertyInsurance = Property insurance
 checkbox.lettingPartOfPropertyCheckboxesDetails.outsideRepairs = Outside repairs
@@ -592,7 +604,14 @@ includedInYourRent.heading = Are any of the following are included in your rent?
 includedInYourRentApply.subheading = Select any that apply
 label.vat = VAT
 label.nondomesticRates = Non-domestic rates
-label.waterCharges = Water charges
+label.waterCharges = A percentage of turnover of the occupier’s business
+label.indexed = Water charges
+label.none = No, none of these are included in the rent
+label.includedInYourRent.vat = VAT
+label.includedInYourRent.nondomesticRates = Non-domestic rates
+label.includedInYourRent.waterCharges = Water charges
+label.includedInYourRent.none = No, none of these are included in the rent
+hint.includedInYourRent = Select all that apply
 error.vat.missing = You must choose one
 error.nondomesticRates.missing = You must choose one
 error.waterCharges.missing = You must choose one
@@ -609,11 +628,12 @@ lettingOtherPartOfProperty.heading = Is any rent received from letting other par
 hint.lettingOtherPartOfProperty = Including advertising rights, stations or hoardings
 error.lettingOtherPartOfProperty.missing = Select yes if any rent received from letting other parts of the property
 
-# PROPERTY USE LEASEBACK AGREEMENT
+# PROPERTY USE LEASEBACK ARRANGEMENT
 ##############################
-propertyUseLeasebackAgreement.heading = Does {0} occupy the property using a leaseback agreement?
-help.propertyUseLeasebackAgreement.title = Help with leaseback arrangements
-help.propertyUseLeasebackAgreement.p1 = In a leaseback arrangement, a business can sell their premises to an investor then lease it back for a specific amount of time. These agreements allow businesses to raise capital while maintaining the control of their former property, and often include buy-back options.
+propertyUseLeasebackArrangement.heading = Does {0} occupy the property using a leaseback agreement?
+help.propertyUseLeasebackArrangement.title = Help with leaseback arrangements
+help.propertyUseLeasebackArrangement.p1 = In a leaseback arrangement, a business can sell their premises to an investor then lease it back for a specific amount of time. These agreements allow businesses to raise capital while maintaining the control of their former property, and often include buy-back options.
+error.propertyUseLeasebackArrangement.missing = Select yes if the property uses a leaseback agreement
 
 # CURRENT ANNUAL RENT
 ##############################

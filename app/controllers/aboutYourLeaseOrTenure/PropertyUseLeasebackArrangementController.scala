@@ -18,7 +18,7 @@ package controllers.aboutYourLeaseOrTenure
 
 import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
-import form.aboutYourLeaseOrTenure.PropertyUseLeasebackAgreementForm.propertyUseLeasebackAgreementForm
+import form.aboutYourLeaseOrTenure.PropertyUseLeasebackArrangementForm.propertyUseLeasebackArrangementForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne
 import models.Session
 import models.submissions.common.AnswersYesNo
@@ -28,16 +28,16 @@ import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import views.html.aboutYourLeaseOrTenure.propertyUseLeasebackAgreement
+import views.html.aboutYourLeaseOrTenure.propertyUseLeasebackArrangement
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class PropertyUseLeasebackAgreementController @Inject() (
+class PropertyUseLeasebackArrangementController @Inject() (
   mcc: MessagesControllerComponents,
   navigator: AboutYourLeaseOrTenureNavigator,
-  propertyUseLeasebackAgreementView: propertyUseLeasebackAgreement,
+  propertyUseLeasebackAgreementView: propertyUseLeasebackArrangement,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
 ) extends FORDataCaptureController(mcc)
@@ -50,8 +50,8 @@ class PropertyUseLeasebackAgreementController @Inject() (
         propertyUseLeasebackAgreementView(
           request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.propertyUseLeasebackAgreement) match {
             case Some(propertyUseLeasebackAgreement) =>
-              propertyUseLeasebackAgreementForm.fillAndValidate(propertyUseLeasebackAgreement)
-            case _                                   => propertyUseLeasebackAgreementForm
+              propertyUseLeasebackArrangementForm.fillAndValidate(propertyUseLeasebackAgreement)
+            case _                                   => propertyUseLeasebackArrangementForm
           },
           getBackLink(request.sessionData),
           request.sessionData.stillConnectedDetails
@@ -65,7 +65,7 @@ class PropertyUseLeasebackAgreementController @Inject() (
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[AnswersYesNo](
-      propertyUseLeasebackAgreementForm,
+      propertyUseLeasebackArrangementForm,
       formWithErrors =>
         BadRequest(
           propertyUseLeasebackAgreementView(

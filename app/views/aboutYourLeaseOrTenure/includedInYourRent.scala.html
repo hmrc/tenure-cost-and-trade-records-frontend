@@ -19,13 +19,18 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
 @import models.pages.Summary
+@import uk.gov.hmrc.govukfrontend.views.Aliases._
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukCheckboxes
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
+
+
 
 @this(layout: Layout,
         govukButton: GovukButton,
         govukRadios: GovukRadios,
+        govukCheckboxes: GovukCheckboxes,
         formWithCSRF: FormWithCSRF
 )
-
 
 @(theForm: Form[IncludedInYourRentDetails], summary: Summary)(implicit request: Request[_], messages: Messages)
 
@@ -33,7 +38,7 @@
  pageHeading = messages("includedInYourRent.heading"),
  showH1 = false,
  showSection = true,
-    summary = Some(summary),
+ summary = Some(summary),
  sectionName = messages("label.section.aboutYourLeaseOrTenure"),
  backLinkUrl = controllers.aboutYourLeaseOrTenure.routes.CurrentLeaseOrAgreementBeginController.show.url,
  theForm = theForm
@@ -41,16 +46,46 @@
 
   @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.IncludedInYourRentController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
 
-    <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-     <h1 class="govuk-fieldset__heading">@messages("includedInYourRent.heading")</h1>
-    </legend>
-
-    @includes.radioButtonsYesNo(govukRadios, theForm, "vat", "label.vat", "govuk-!-font-weight-bold")
-
-    @includes.radioButtonsYesNo(govukRadios, theForm, "nondomesticRates", "label.nondomesticRates", "govuk-!-font-weight-bold")
-
-    @includes.radioButtonsYesNo(govukRadios, theForm, "waterCharges", "label.waterCharges", "govuk-!-font-weight-bold")
-
+      @govukCheckboxes(
+          Checkboxes(
+              fieldset = Some(Fieldset(
+                  legend = Some(Legend(
+                      content = Text(Messages("includedInYourRent.heading")),
+                      classes = "govuk-label--l govuk-fieldset__legend--m",
+                      isPageHeading = true
+                  ))
+              )),
+              name = "includedInYourRent",
+              items = Seq(
+                  CheckboxItem(
+                      id = "vat",
+                      content = Text(messages("label.includedInYourRent.vat")),
+                      value = "vat"
+                  ),
+                  CheckboxItem(
+                      id = "nondomesticRates",
+                      content = Text(messages("label.includedInYourRent.nondomesticRates")),
+                      value = "nondomesticRates"
+                  ),
+                  CheckboxItem(
+                      id = "waterCharges",
+                      content = Text(messages("label.includedInYourRent.waterCharges")),
+                      value = "waterCharges"
+                  ),
+                  CheckboxItem(
+                      divider = Some("or")
+                  ),
+                  CheckboxItem(
+                      id = "none",
+                      content = Text(messages("label.includedInYourRent.none")),
+                      value = "none",
+                      behaviour = Some(ExclusiveCheckbox)
+                  )
+              ),
+              hint = Hint(content = HtmlContent(messages("hint.includedInYourRent"))),
+              errorMessage = theForm.errors.asTextErrorMessageForField("includedInYourRent")
+          ).withFormField(theForm("includedInYourRent"))
+      )
     @includes.continueSaveAsDraftButtons(govukButton)
   }
 }

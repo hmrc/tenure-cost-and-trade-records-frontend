@@ -111,7 +111,7 @@
             @govukSummaryList(SummaryList(rows =
                 sectionAnswers.row("checkYourAnswersAboutYourLeaseOrTenure.leasebackArrangement",
                     _.propertyUseLeasebackAgreement.map(_.name).map(v => messages(s"label.$v")),
-                    aboutYourLeaseOrTenure.routes.PropertyUseLeasebackAgreementController.show(), "") ++
+                    aboutYourLeaseOrTenure.routes.PropertyUseLeasebackArrangementController.show(), "leasebackArrangement") ++
                         sectionAnswers.optionalRow("checkYourAnswersAboutYourLeaseOrTenure.currentAnnualRent",
                             _.annualRent.map(_.amount.asMoney),
                             aboutYourLeaseOrTenure.routes.CurrentAnnualRentController.show(), "currentAnnualRent") ++
@@ -149,12 +149,12 @@
             <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutYourLeaseOrTenure.whatRentIncludes.heading")</h2>
 
             @govukSummaryList(SummaryList(rows =
-                sectionAnswers.row("checkYourAnswersAboutYourLeaseOrTenure.includedInYourRent",
+                sectionAnswers.conditionRow(
+                    _.includedInYourRentDetails.map(_.includedInYourRent.name).contains("no"),
+                    "checkYourAnswersAboutYourLeaseOrTenure.includedInYourRent",
                     _.includedInYourRentDetails.map(r =>
-                        sectionAnswers.displayLabelsForYesAnswers(
-                            Map("label.vat" -> r.vat.name, "label.nondomesticRates" -> r.nonDomesticRates.name, "label.waterCharges" -> r.waterCharges.name)
-                        )
-                    ),
+                        Seq(r.includedInYourRent.name).map(item => messages(s"label.includedInYourRent.$item"))
+                    ).map(_.mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>")),
                     aboutYourLeaseOrTenure.routes.IncludedInYourRentController.show(), "",
                     ("valueAsHtml", _ => None)) ++
                         sectionAnswers.row("checkYourAnswersAboutYourLeaseOrTenure.itemsRentIncludesOrRelates",

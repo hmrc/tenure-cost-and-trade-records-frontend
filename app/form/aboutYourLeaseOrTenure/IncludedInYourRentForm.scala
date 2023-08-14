@@ -16,18 +16,16 @@
 
 package form.aboutYourLeaseOrTenure
 
-import form.MappingSupport.createYesNoType
+import form.MappingSupport.includedInYourRentInformation
 import models.submissions.aboutYourLeaseOrTenure.IncludedInYourRentDetails
 import play.api.data.Form
-import play.api.data.Forms.mapping
+import play.api.data.Forms.{list, mapping, text}
 
 object IncludedInYourRentForm {
 
   val includedInYourRentForm = Form(
     mapping(
-      "vat"              -> createYesNoType("error.vat.missing"),
-      "nondomesticRates" -> createYesNoType("error.nondomesticRates.missing"),
-      "waterCharges"     -> createYesNoType("error.waterCharges.missing")
+      "includedInYourRent" -> includedInYourRentInformation
     )(IncludedInYourRentDetails.apply)(IncludedInYourRentDetails.unapply)
   )
 }

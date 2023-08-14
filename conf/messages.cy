@@ -591,9 +591,11 @@ error.underReview.required = Select yes if the rent is currently under review, o
 ##############################
 includedInYourRent.heading = Are any of the following are included in your rent?
 includedInYourRentApply.subheading = Select any that apply
-label.vat = VAT
-label.nondomesticRates = Non-domestic rates
-label.waterCharges = Water charges
+checkbox.includedInYourRent.vat = VAT
+checkbox.includedInYourRent.nondomesticRates = Non-domestic rates
+checkbox.includedInYourRent.waterCharges = Water charges
+checkbox.includedInYourRent.none = No, none of these are included in the rent
+hint.includedInYourRent = Select all that apply
 error.vat.missing = You must choose one
 error.nondomesticRates.missing = You must choose one
 error.waterCharges.missing = You must choose one
@@ -610,11 +612,12 @@ lettingOtherPartOfProperty.heading = Is any rent received from letting other par
 hint.lettingOtherPartOfProperty = Including advertising rights, stations or hoardings
 error.lettingOtherPartOfProperty.missing = Select yes if any rent received from letting other parts of the property
 
-# PROPERTY USE LEASEBACK AGREEMENT
+# PROPERTY USE LEASEBACK ARRANGEMENT
 ##############################
-propertyUseLeasebackAgreement.heading = Does {0} occupy the property using a leaseback agreement?
-help.propertyUseLeasebackAgreement.title = Help with leaseback arrangements
-help.propertyUseLeasebackAgreement.p1 = In a leaseback arrangement, a business can sell their premises to an investor then lease it back for a specific amount of time. These agreements allow businesses to raise capital while maintaining the control of their former property, and often include buy-back options.
+propertyUseLeasebackArrangement.heading = Does {0} occupy the property using a leaseback agreement?
+help.propertyUseLeasebackArrangement.title = Help with leaseback arrangements
+help.propertyUseLeasebackArrangement.p1 = In a leaseback arrangement, a business can sell their premises to an investor then lease it back for a specific amount of time. These agreements allow businesses to raise capital while maintaining the control of their former property, and often include buy-back options.
+error.propertyUseLeasebackArrangement.missing = Select yes if the property uses a leaseback agreement
 
 # CURRENT ANNUAL RENT
 ##############################

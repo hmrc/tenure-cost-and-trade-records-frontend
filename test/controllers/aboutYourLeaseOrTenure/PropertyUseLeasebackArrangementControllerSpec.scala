@@ -16,7 +16,7 @@
 
 package controllers.aboutYourLeaseOrTenure
 
-import form.aboutYourLeaseOrTenure.PropertyUseLeasebackAgreementForm.propertyUseLeasebackAgreementForm
+import form.aboutYourLeaseOrTenure.PropertyUseLeasebackArrangementForm.propertyUseLeasebackArrangementForm
 import form.connectiontoproperty.TradingNameOwnThePropertyForm.tradingNameOwnThePropertyForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo
 import models.submissions.connectiontoproperty.StillConnectedDetails
@@ -27,12 +27,12 @@ import play.api.test.Helpers.{charset, contentType, status, stubMessagesControll
 import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
 
-class PropertyUseLeasebackAgreementControllerSpec extends TestBaseSpec {
+class PropertyUseLeasebackArrangementControllerSpec extends TestBaseSpec {
   import TestData._
   def propertyUseLeasebackAgreementController(
     aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwo)
   ) =
-    new PropertyUseLeasebackAgreementController(
+    new PropertyUseLeasebackArrangementController(
       stubMessagesControllerComponents(),
       aboutYourLeaseOrTenureNavigator,
       propertyUseLeasebackAgreementView,
@@ -65,21 +65,25 @@ class PropertyUseLeasebackAgreementControllerSpec extends TestBaseSpec {
 
     "Trading Name own the property form" should {
       "error if areYouThirdParty is missing" in {
-        val formData = baseFormData - errorKey.propertyUseLeasebackAgreement
-        val form     = propertyUseLeasebackAgreementForm.bind(formData)
+        val formData = baseFormData - errorKey.propertyUseLeasebackArrangement
+        val form     = propertyUseLeasebackArrangementForm.bind(formData)
 
-        mustContainError(errorKey.propertyUseLeasebackAgreement, "error.propertyUseLeasebackAgreement.missing", form)
+        mustContainError(
+          errorKey.propertyUseLeasebackArrangement,
+          "error.propertyUseLeasebackArrangement.missing",
+          form
+        )
       }
     }
   }
 
   object TestData {
     val errorKey = new {
-      val propertyUseLeasebackAgreement = "propertyUseLeasebackAgreement"
+      val propertyUseLeasebackArrangement = "propertyUseLeasebackArrangement"
     }
 
     val baseFormData: Map[String, String] = Map(
-      "propertyUseLeasebackAgreement" -> "yes"
+      "propertyUseLeasebackArrangement" -> "yes"
     )
   }
 }
