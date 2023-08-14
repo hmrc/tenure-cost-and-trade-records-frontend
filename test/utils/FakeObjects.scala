@@ -353,7 +353,7 @@ trait FakeObjects {
   val additionalInformationSession: Session =
     stillConnectedDetailsYesSession.copy(additionalInformation = Some(prefilledAdditionalInformation))
 
-  val prefilledFirstOccupy                      = MonthsYearDuration(2000, 2)
+  val prefilledFirstOccupy                      = MonthsYearDuration(2, 2000)
   val prefilledFinancialYear                    = DayMonthsDuration(2, 12)
   val prefilledBigDecimal                       = BigDecimal(9999999)
   val prefilledAnnualRent                       = AnnualRent(prefilledBigDecimal)

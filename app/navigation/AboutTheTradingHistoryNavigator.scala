@@ -17,6 +17,7 @@
 package navigation
 
 import connectors.Audit
+import controllers.aboutthetradinghistory
 import models.{ForTypes, Session}
 import navigation.identifiers._
 import play.api.mvc.Call
@@ -26,26 +27,30 @@ import javax.inject.Inject
 
 class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator(audit) with Logging {
 
+  override def cyaPage: Option[Call] =
+    Some(aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show())
+
   private def turnoverRouting: Session => Call = answers => {
     if (answers.forType == ForTypes.for6015)
-      controllers.aboutthetradinghistory.routes.CostOfSalesController.show()
+      aboutthetradinghistory.routes.CostOfSalesController.show()
     else
-      controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show()
+      aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show()
   }
 
   override val routeMap: Map[Identifier, Session => Call] = Map(
-    AboutYourTradingHistoryPageId            -> (_ => controllers.aboutthetradinghistory.routes.TurnoverController.show()),
+    AboutYourTradingHistoryPageId            -> (_ => aboutthetradinghistory.routes.TurnoverController.show()),
     TurnoverPageId                           -> turnoverRouting,
-    CostOfSalesId                            -> (_ => controllers.aboutthetradinghistory.routes.TotalPayrollCostsController.show()),
-    TotalPayrollCostId                       -> (_ => controllers.aboutthetradinghistory.routes.VariableOperatingExpensesController.show()),
+    CostOfSalesId                            -> (_ => aboutthetradinghistory.routes.TotalPayrollCostsController.show()),
+    TotalPayrollCostId                       -> (_ => aboutthetradinghistory.routes.VariableOperatingExpensesController.show()),
     VariableOperatingExpensesId              -> (_ =>
-      controllers.aboutthetradinghistory.routes.FixedOperatingExpensesController.show()
+      aboutthetradinghistory.routes.FixedOperatingExpensesController.show()
     ),
-    FixedOperatingExpensesId                 -> (_ => controllers.aboutthetradinghistory.routes.OtherCostsController.show()),
-    OtherCostsId                             -> (_ => controllers.aboutthetradinghistory.routes.NetProfitController.show()),
+    FixedOperatingExpensesId                 -> (_ => aboutthetradinghistory.routes.OtherCostsController.show()),
+    OtherCostsId                             -> (_ => aboutthetradinghistory.routes.NetProfitController.show()),
     NetProfitId                              -> (_ =>
-      controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show()
+      aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show()
     ),
     CheckYourAnswersAboutTheTradingHistoryId -> (_ => controllers.routes.TaskListController.show())
   )
+
 }

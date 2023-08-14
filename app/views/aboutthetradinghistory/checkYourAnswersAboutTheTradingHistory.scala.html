@@ -14,61 +14,121 @@
  * limitations under the License.
  *@
 
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
-@import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
+@import actions.SessionRequest
+@import controllers.aboutthetradinghistory
+@import uk.gov.hmrc.govukfrontend.views.html.components._
 @import models.submissions.aboutthetradinghistory.CheckYourAnswersAboutTheTradingHistory
+@import models.submissions.aboutthetradinghistory.TurnoverSection
 @import models.pages.Summary
+@import util.DateUtil
+@import util.NumberUtil._
+@import util.SectionAnswersRowBuilder
 
 @this(layout: Layout,
         govukButton: GovukButton,
         govukRadios: GovukRadios,
+        govukSummaryList: GovukSummaryList,
+        dateUtil: DateUtil,
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[CheckYourAnswersAboutTheTradingHistory], backLink: String, summary: Summary)(implicit request: Request[_], messages: Messages)
+@(theForm: Form[CheckYourAnswersAboutTheTradingHistory], backLink: String, summary: Summary)(implicit request: SessionRequest[_], messages: Messages)
+
+@sectionAnswers = @{
+    SectionAnswersRowBuilder(request.sessionData.aboutTheTradingHistory)
+}
+
+@table(valuesGrid: Seq[Seq[String]]) = {
+@valuesGrid.map { values =>
+    <span class="hmrc-turnover-table-column">
+        @values.map { value =>
+            <p class="govuk-body">@value</p>
+        }
+    </span>
+}
+}
+
+@turnoverValuesTable(turnoverSections: Seq[TurnoverSection]) = @{
+    table(
+        turnoverSections.map(t => Seq(
+            dateUtil.formatDayMonthAbbrYear(t.financialYearEnd),
+            s"${t.tradingPeriod} ${messages("turnover.weeks")}",
+            t.alcoholicDrinks.asMoney,
+            t.food.asMoney,
+            t.otherReceipts.asMoney,
+            t.accommodation.asMoney,
+            t.averageOccupancyRate.withScale(2) + "%"
+        ))
+    ).body
+}
+
+@turnoverKeys = @{
+    Seq(
+        messages("checkYourAnswersAboutTheTradingHistory.financialYearEnd"),
+        messages("checkYourAnswersAboutTheTradingHistory.tradingPeriod"),
+        messages("checkYourAnswersAboutTheTradingHistory.drinks"),
+        messages("checkYourAnswersAboutTheTradingHistory.food"),
+        messages("checkYourAnswersAboutTheTradingHistory.otherReceipts"),
+        messages("checkYourAnswersAboutTheTradingHistory.accommodation"),
+        messages("checkYourAnswersAboutTheTradingHistory.averageOccupancyRate"),
+    ).mkString("""<p class="govuk-body govuk-!-font-weight-bold">""", """</p> <p class="govuk-body govuk-!-font-weight-bold">""", "</p>")
+}
 
 @layout(
- pageHeading = messages("checkYourAnswersAboutTheTradingHistory.heading"),
- backLinkUrl = backLink,
- showSection = true,
- summary = Some(summary),
- sectionName = messages("label.section.aboutYourTradingHistory"),
- theForm = theForm
+    pageHeading = messages("checkYourAnswersAboutTheTradingHistory.heading"),
+    backLinkUrl = backLink,
+    showSection = true,
+    fullWidth = true,
+    summary = Some(summary),
+    sectionName = messages("label.section.aboutYourTradingHistory"),
+    theForm = theForm
 ) {
 
- @formWithCSRF(action = controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
+    <h2 class="govuk-heading-m">@messages("aboutYourTradingHistory.heading")</h2>
 
-  <dl class="govuk-summary-list">
-  <div id="fullName" class="govuk-summary-list__row">
-   <dt class="govuk-summary-list__key">Property Occupation Date</dt>
-   <dd class="govuk-summary-list__value">
-    January 2018
-   </dd>
-   <dd class="govuk-summary-list__actions">
-    <a href="/sending-rental-information/page/2?edit=fullName#fullName" class="govuk-link">Change <span class="govuk-visually-hidden">Full name</span></a>
-   </dd>
-  </div>
+    @govukSummaryList(SummaryList(rows =
+        sectionAnswers.row("checkYourAnswersAboutTheTradingHistory.occupationAndAccounting",
+            _.occupationAndAccountingInformation.map(
+                a => Seq(
+                    dateUtil.formatYearMonth(a.firstOccupy.toYearMonth),
+                    dateUtil.formatMonthDay(a.financialYear.toMonthDay)
+                ).mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>")
+            ),
+            aboutthetradinghistory.routes.AboutYourTradingHistoryController.show(), "",
+            ("valueAsHtml", _ => None))
+    ))
 
-  <div id="userType" class="govuk-summary-list__row">
-   <dt class="govuk-summary-list__key">Current Financial Year End</dt>
-   <dd class="govuk-summary-list__value">
-   31 March
-   </dd>
-   <dd class="govuk-summary-list__actions">
-    <a href="/sending-rental-information/page/2?edit=userType#userType" class="govuk-link">Change <span class="govuk-visually-hidden">I am (or represent) the</span></a>
-   </dd>
-  </div>
+    <h2 class="govuk-heading-m">@messages("turnover.heading")</h2>
 
-  </dl>
+    @govukSummaryList(SummaryList(rows =
+        Seq(
+            SummaryListRow(
+                key = Key(HtmlContent(turnoverKeys)),
+                value = Value(HtmlContent(sectionAnswers.answers.fold("")(t => turnoverValuesTable(t.turnoverSections)))),
+                actions = Some(
+                    Actions(items =
+                        Seq(
+                            ActionItem(
+                                href = s"${aboutthetradinghistory.routes.TurnoverController.show().url}?from=CYA",
+                                content = Text(messages("label.change")),
+                                visuallyHiddenText = Some(messages("turnover.heading"))
+                            )
+                        )
+                    )
+                )
+            )
+        )
+    ))
 
-  @includes.checkYourAnswersRadioButtons(
-   govukRadios,
-   theForm,
-   "checkYourAnswersAboutTheTradingHistory"
-  )
+    @formWithCSRF(action = controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.submit()) {
 
-  @includes.continueSaveAsDraftButtons(govukButton)
+        @includes.checkYourAnswersRadioButtons(
+            govukRadios,
+            theForm,
+            "checkYourAnswersAboutTheTradingHistory"
+        )
 
- }
+        @includes.continueSaveAsDraftButtons(govukButton)
+    }
+
 }
