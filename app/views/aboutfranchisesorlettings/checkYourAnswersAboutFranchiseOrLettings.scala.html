@@ -52,6 +52,8 @@
 
     @formWithCSRF(action = aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.submit()) {
 
+            <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutFranchiseOrLettings.rentalIncome")</h2>
+
         @govukSummaryList(SummaryList(rows =
             sectionAnswers.row("checkYourAnswersAboutFranchiseOrLettings.franchiseLettings",
                 _.franchisesOrLettingsTiedToProperty.map(yesNo => messages(s"label.${yesNo.name}")).orElse(Some(messages(s"label.no"))),

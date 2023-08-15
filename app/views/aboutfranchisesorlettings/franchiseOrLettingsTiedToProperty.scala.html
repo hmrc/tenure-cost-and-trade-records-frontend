@@ -44,12 +44,15 @@
 
   @formWithCSRF(action = controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.submit(), args = Symbol("class") -> "myForm", Symbol("id") -> "myFormId") {
 
-    <p class="govuk-body">@messages("franchiseLettings.subheading")</p>
+    <p class="govuk-body">@messages("franchiseLettings.p1")</p>
+    <p class="govuk-body">@messages("franchiseLettings.p2")</p>
 
-    <ul class='list-bullet'>
+    <ul class='govuk-list--spaced'>
       <li><span class="govuk-body">@messages("franchiseLettings.list1")</span></li>
       <li><span class="govuk-body">@messages("franchiseLettings.list2")</span></li>
     </ul>
+
+      <p class="govuk-heading-m">@messages("franchiseLettings.subheading")</p>
 
     @govukRadios(
     Radios(
