@@ -1,4 +1,4 @@
-/*
+@*
  * Copyright 2023 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,20 +12,23 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */
+ *@
 
-package models.submissions.aboutYourLeaseOrTenure
+@import uk.gov.hmrc.govukfrontend.views.html.components._
+@this(layout: Layout, govukWarningText: GovukWarningText, govukBackLink: GovukBackLink)
 
-import play.api.libs.json.Json
+@()(implicit request: Request[_], messages: Messages)
 
-import java.time.LocalDate
+@warningMessage = @{
+ messages("admin.confirmed.heading")
+}
 
-case class CurrentRentPayableWithin12Months(
-  currentRentWithin12Months: CurrentRentWithin12Months,
-  rentActuallyAgreed: Option[LocalDate]
-)
+@layout(
+ pageHeading = warningMessage,
+ withTimeoutDialog = false
+) {
 
-object CurrentRentPayableWithin12Months {
-  implicit val format = Json.format[CurrentRentPayableWithin12Months]
+ <p class="govuk-body">@messages("admin.upload.p.1")</p>
+
 
 }

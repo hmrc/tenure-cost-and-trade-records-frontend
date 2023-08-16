@@ -930,6 +930,7 @@ error.currentRentPayableWithin12Months.required = Select yes if the current rent
 error.dateReview.day.required = The date of review or expiry must include a day
 error.dateReview.month.required = The date of review or expiry must include a month
 error.dateReview.year.required = The date of review or expiry must include a year
+error.date_before_today.dateReview = The date cannot be in the past
 label.currentRentPayableWithin12Months.help = For example, 27 9 2023 - leave blank if no rent reviews are due
 
 # WHAT IS YOUR RENT BASED ON
@@ -1336,3 +1337,9 @@ error.tiedType.required = Select which type of tie you have
 error.addressLineTwo.maxLength = Address line 2 must be 50 characters or fewer
 error.county.maxLength = County must be 50 characters or fewer
 
+# Admin pages
+admin.login.heading = Sign in
+admin.upload.heading = Please upload the file
+label.admin.upload = File to upload
+admin.confirmed.heading = File uploaded successfully
+admin.upload.p.1 = Credentials will be checked and processed by backend service.

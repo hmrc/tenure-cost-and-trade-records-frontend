@@ -70,7 +70,9 @@ trait TestBaseSpec
     new GuiceApplicationBuilder()
       .configure(
         "metrics.jvm"     -> false,
-        "metrics.enabled" -> false
+        "metrics.enabled" -> false,
+        "app.username" -> "validUsername",
+        "app.password" -> "validPassword"
       )
       .build()
 

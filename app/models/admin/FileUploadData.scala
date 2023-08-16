@@ -14,18 +14,12 @@
  * limitations under the License.
  */
 
-package models.submissions.aboutYourLeaseOrTenure
+package models.admin
 
-import play.api.libs.json.Json
+import play.api.libs.json.{Json, OFormat}
 
-import java.time.LocalDate
+case class FileUploadData(json: String)
 
-case class CurrentRentPayableWithin12Months(
-  currentRentWithin12Months: CurrentRentWithin12Months,
-  rentActuallyAgreed: Option[LocalDate]
-)
-
-object CurrentRentPayableWithin12Months {
-  implicit val format = Json.format[CurrentRentPayableWithin12Months]
-
+object FileUploadData {
+  implicit val format: OFormat[FileUploadData] = Json.format[FileUploadData]
 }

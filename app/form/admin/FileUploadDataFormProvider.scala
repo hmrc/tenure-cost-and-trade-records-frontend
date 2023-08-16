@@ -14,18 +14,17 @@
  * limitations under the License.
  */
 
-package models.submissions.aboutYourLeaseOrTenure
+package form.admin
 
-import play.api.libs.json.Json
+import play.api.data.Form
+import play.api.data.Forms._
+import models.admin.FileUploadData
 
-import java.time.LocalDate
+class FileUploadDataFormProvider {
 
-case class CurrentRentPayableWithin12Months(
-  currentRentWithin12Months: CurrentRentWithin12Months,
-  rentActuallyAgreed: Option[LocalDate]
-)
-
-object CurrentRentPayableWithin12Months {
-  implicit val format = Json.format[CurrentRentPayableWithin12Months]
-
+  def apply(): Form[FileUploadData] = Form(
+    mapping(
+      "json" -> default(text,"fileUpload.error.json.required")
+    )(FileUploadData.apply)(FileUploadData.unapply)
+  )
 }
