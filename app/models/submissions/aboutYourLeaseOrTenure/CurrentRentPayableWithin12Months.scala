@@ -22,7 +22,7 @@ import java.time.LocalDate
 
 case class CurrentRentPayableWithin12Months(
   currentRentWithin12Months: CurrentRentWithin12Months,
-  rentActuallyAgreed: LocalDate
+  rentActuallyAgreed: Option[LocalDate]
 )
 
 object CurrentRentPayableWithin12Months {

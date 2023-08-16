@@ -16,18 +16,18 @@
 
 package form.aboutYourLeaseOrTenure
 
-import form.DateMappings.dateFieldsMapping
+import form.DateMappings.{dateFieldsAfterTodayMapping, dateFieldsMapping}
 import form.MappingSupport.currentRentPayableWithin12MonthsType
 import models.submissions.aboutYourLeaseOrTenure.CurrentRentPayableWithin12Months
 import play.api.data.Form
-import play.api.data.Forms.mapping
+import play.api.data.Forms.{mapping, optional}
 
 object CurrentRentPayableWithin12MonthsForm {
 
   val currentRentPayableWithin12MonthsForm = Form(
     mapping(
       "rentPayable" -> currentRentPayableWithin12MonthsType,
-      "dateReview"  -> dateFieldsMapping("dateReview", fieldErrorPart = ".dateReview")
+      "dateReview"  -> optional(dateFieldsAfterTodayMapping("dateReview", allowFutureDates = true, fieldErrorPart = ".dateReview"))
     )(CurrentRentPayableWithin12Months.apply)(CurrentRentPayableWithin12Months.unapply)
   )
 }
