@@ -654,7 +654,8 @@ checkbox.rentPayable.proprietor = Proprietor’s, manager’s or staff living ac
 checkbox.rentPayable.otherProperty = Other property
 checkbox.rentPayable.onlyPart = Only part of the property
 checkbox.rentPayable.onlyLand = Only to land (excluding buildings)
-checkbox.rentPayable.shellUnit = A 'shell' unit you had to fit out yourself
+checkbox.rentPayable.shellUnit = A ‘shell‘ unit you had to fit out yourself
+checkbox.rentPayable.none = No, the rent payable does not include or relate to any of these options
 label.detailsToQuestions = Give details if you selected any of the options
 hint.detailsToQuestions = For example, the rent includes residential accommodation, or also includes the premises next door
 error.detailsToQuestions.required = Please provide further information
@@ -955,6 +956,7 @@ error.currentRentPayableWithin12Months.required = Select yes if the current rent
 error.dateReview.day.required = The date of review or expiry must include a day
 error.dateReview.month.required = The date of review or expiry must include a month
 error.dateReview.year.required = The date of review or expiry must include a year
+error.date_before_today.dateReview = The date cannot be in the past
 label.currentRentPayableWithin12Months.help = For example, 27 9 2023 - leave blank if no rent reviews are due
 
 # WHAT IS YOUR RENT BASED ON

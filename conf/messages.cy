@@ -928,6 +928,7 @@ error.currentRentPayableWithin12Months.required = Select yes if the current rent
 error.dateReview.day.required = The date of review or expiry must include a day
 error.dateReview.month.required = The date of review or expiry must include a month
 error.dateReview.year.required = The date of review or expiry must include a year
+error.date_before_today.dateReview = The date cannot be in the past
 label.currentRentPayableWithin12Months.help = For example, 27 9 2023 - leave blank if no rent reviews are due
 
 # WHAT IS YOUR RENT BASED ON

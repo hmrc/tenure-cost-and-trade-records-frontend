@@ -358,7 +358,7 @@ trait FakeObjects {
   val prefilledBigDecimal                       = BigDecimal(9999999)
   val prefilledAnnualRent                       = AnnualRent(prefilledBigDecimal)
   val prefilledCurrentRentPayableWithin12Months =
-    CurrentRentPayableWithin12Months(CurrentRentWithin12MonthsYes, prefilledDateInput)
+    CurrentRentPayableWithin12Months(CurrentRentWithin12MonthsYes, Some(prefilledDateInput))
 
   val prefilledAboutTheLandlord =
     AboutTheLandlord(
