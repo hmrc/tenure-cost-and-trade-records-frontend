@@ -42,14 +42,10 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
     TurnoverPageId                           -> turnoverRouting,
     CostOfSalesId                            -> (_ => aboutthetradinghistory.routes.TotalPayrollCostsController.show()),
     TotalPayrollCostId                       -> (_ => aboutthetradinghistory.routes.VariableOperatingExpensesController.show()),
-    VariableOperatingExpensesId              -> (_ =>
-      aboutthetradinghistory.routes.FixedOperatingExpensesController.show()
-    ),
+    VariableOperatingExpensesId              -> (_ => aboutthetradinghistory.routes.FixedOperatingExpensesController.show()),
     FixedOperatingExpensesId                 -> (_ => aboutthetradinghistory.routes.OtherCostsController.show()),
     OtherCostsId                             -> (_ => aboutthetradinghistory.routes.NetProfitController.show()),
-    NetProfitId                              -> (_ =>
-      aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show()
-    ),
+    NetProfitId                              -> (_ => aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show()),
     CheckYourAnswersAboutTheTradingHistoryId -> (_ => controllers.routes.TaskListController.show())
   )
 

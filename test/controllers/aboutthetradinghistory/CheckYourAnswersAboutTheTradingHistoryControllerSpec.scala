@@ -28,7 +28,7 @@ class CheckYourAnswersAboutTheTradingHistoryControllerSpec extends TestBaseSpec 
 
   val backLink = controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedController.show().url
 
-  val mockAboutTheTradingHistoryNavigator            = mock[AboutTheTradingHistoryNavigator]
+  val mockAboutTheTradingHistoryNavigator = mock[AboutTheTradingHistoryNavigator]
 
   val mockTaskListView = mock[taskList]
   when(mockTaskListView.apply()(any, any)).thenReturn(HtmlFormat.empty)

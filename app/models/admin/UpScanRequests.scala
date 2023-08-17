@@ -24,28 +24,28 @@ import play.api.libs.json.JodaWrites._
 
 object UpScanRequests {
 
-  implicit val initiateRequest: OFormat[InitiateRequest] = Json.format[InitiateRequest]
-  implicit val uploadRequests: OFormat[UploadRequest] = Json.format[UploadRequest]
-  implicit val initialResponse: OFormat[InitiateResponse] = Json.format[InitiateResponse]
-  implicit val uploadDetails: OFormat[UploadDetails] = Json.format[UploadDetails]
+  implicit val initiateRequest: OFormat[InitiateRequest]                    = Json.format[InitiateRequest]
+  implicit val uploadRequests: OFormat[UploadRequest]                       = Json.format[UploadRequest]
+  implicit val initialResponse: OFormat[InitiateResponse]                   = Json.format[InitiateResponse]
+  implicit val uploadDetails: OFormat[UploadDetails]                        = Json.format[UploadDetails]
   implicit val uploadConfirmationSucess: OFormat[UploadConfirmationSuccess] = Json.format[UploadConfirmationSuccess]
-  implicit val failureDetails: OFormat[FailureDetails] = Json.format[FailureDetails]
-  implicit val uploadConfirmationError: OFormat[UploadConfirmationError] = Json.format[UploadConfirmationError]
+  implicit val failureDetails: OFormat[FailureDetails]                      = Json.format[FailureDetails]
+  implicit val uploadConfirmationError: OFormat[UploadConfirmationError]    = Json.format[UploadConfirmationError]
   case class InitiateRequest(
-                              callbackUrl: String,
-                              successRedirect: Option[String] = None,
-                              maxFileSize: Int
-                            )
+    callbackUrl: String,
+    successRedirect: Option[String] = None,
+    maxFileSize: Int
+  )
 
   case class InitiateResponse(
-                               reference: String,
-                               uploadRequest: UploadRequest
-                             )
+    reference: String,
+    uploadRequest: UploadRequest
+  )
 
   case class UploadRequest(
-                            href: String,
-                            fields: Map[String, String]
-                          )
+    href: String,
+    fields: Map[String, String]
+  )
 
   sealed trait UploadConfirmation {
     val reference: String
@@ -55,43 +55,38 @@ object UpScanRequests {
   object UploadConfirmation {
     implicit val format: OFormat[UploadConfirmation] = new OFormat[UploadConfirmation] {
       override def writes(o: UploadConfirmation): JsObject = o match {
-        case x : UploadConfirmationError => uploadConfirmationError.writes(x)
+        case x: UploadConfirmationError   => uploadConfirmationError.writes(x)
         case x: UploadConfirmationSuccess => uploadConfirmationSucess.writes(x)
       }
 
-      override def reads(json: JsValue): JsResult[UploadConfirmation] = {
+      override def reads(json: JsValue): JsResult[UploadConfirmation] =
         uploadConfirmationSucess.reads(json).orElse(uploadConfirmationError.reads(json))
-      }
     }
   }
 
-  case class UploadConfirmationSuccess (
-                                         reference: String,
-                                         downloadUrl: String,
-                                         fileStatus: String,
-                                         uploadDetails: UploadDetails
-                                       ) extends UploadConfirmation
+  case class UploadConfirmationSuccess(
+    reference: String,
+    downloadUrl: String,
+    fileStatus: String,
+    uploadDetails: UploadDetails
+  ) extends UploadConfirmation
 
-  case class UploadConfirmationError (
-                                       reference: String,
-                                       fileStatus: String,
-                                       failureDetails: FailureDetails
-                                     )  extends UploadConfirmation
+  case class UploadConfirmationError(
+    reference: String,
+    fileStatus: String,
+    failureDetails: FailureDetails
+  ) extends UploadConfirmation
 
-  case class FailureDetails (
-                              failureReason: String,
-                              message: String
-                            )
+  case class FailureDetails(
+    failureReason: String,
+    message: String
+  )
 
-
-
-  case class UploadDetails (
-                             uploadTimestamp: DateTime,
-                             checksum: String,
-                             fileMimeType: String,
-                             fileName: String
-                           )
-
-
+  case class UploadDetails(
+    uploadTimestamp: DateTime,
+    checksum: String,
+    fileMimeType: String,
+    fileName: String
+  )
 
 }

@@ -31,22 +31,24 @@ import uk.gov.hmrc.http.HttpClient
 import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
 class UpscanConnectorSpec extends TestBaseSpec {
 
-  private val config    = inject[Configuration]
-  private val appConfig = inject[AppConfig]
-  private val actorSystem = inject[ActorSystem]
-  private val httpClient = app.injector.instanceOf[HttpClient]
+  private val config                                         = inject[Configuration]
+  private val appConfig                                      = inject[AppConfig]
+  private val actorSystem                                    = inject[ActorSystem]
+  private val httpClient                                     = app.injector.instanceOf[HttpClient]
   def withUpscanConnector[T](block: UpscanConnector => T): T =
     Server.withApplicationFromContext() { context =>
       new BuiltInComponentsFromContext(context) with HttpFiltersComponents {
-        override def router: Router = Router.from {
-          case POST(p"/upscan/v2/initiate") => Action { req =>
-            Ok(Json.obj(
-              "reference" -> "someRef",
-              "uploadRequest" -> Json.obj(
-                "href" -> "someUrl",
-                "fields" -> Json.obj()
+        override def router: Router = Router.from { case POST(p"/upscan/v2/initiate") =>
+          Action { req =>
+            Ok(
+              Json.obj(
+                "reference"     -> "someRef",
+                "uploadRequest" -> Json.obj(
+                  "href"   -> "someUrl",
+                  "fields" -> Json.obj()
+                )
               )
-            ))
+            )
           }
         }
       }.application
@@ -57,8 +59,10 @@ class UpscanConnectorSpec extends TestBaseSpec {
             httpClient,
             Configuration("microservice.services.upscan.port" -> port.value)
               .withFallback(config),
-            new ServicesConfig(Configuration("microservice.services.upscan.port" -> port.value)
-              .withFallback(config))
+            new ServicesConfig(
+              Configuration("microservice.services.upscan.port" -> port.value)
+                .withFallback(config)
+            )
           )
         )
       }

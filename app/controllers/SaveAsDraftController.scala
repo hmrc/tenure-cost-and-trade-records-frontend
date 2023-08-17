@@ -133,7 +133,7 @@ class SaveAsDraftController @Inject() (
       saveSubmissionDraft(session, exitPath)
     } else {
       val generatedPassword = AlphanumericPasswordGenerator.generatePassword
-      val updatedSession = session.copy(saveAsDraftPassword = generatedPassword)
+      val updatedSession    = session.copy(saveAsDraftPassword = generatedPassword)
 
       for {
         _ <- saveSubmissionDraft(updatedSession, exitPath)
