@@ -71,8 +71,8 @@ trait TestBaseSpec
       .configure(
         "metrics.jvm"     -> false,
         "metrics.enabled" -> false,
-        "app.username" -> "validUsername",
-        "app.password" -> "validPassword"
+        "app.username"    -> "validUsername",
+        "app.password"    -> "validPassword"
       )
       .build()
 

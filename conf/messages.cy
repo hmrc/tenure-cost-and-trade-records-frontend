@@ -1112,21 +1112,23 @@ key.still.connected = Still Connected to the property?
 key.ever.connected = Ever connected to the property?
 key.contact.details = Contact Details
 
+# About franchise or lettings CYA
 checkYourAnswers.heading = This is a holding page for the check your answers page
 checkYourAnswersAboutFranchiseOrLettings.heading = Check your answers - franchises or lettings
-checkYourAnswersAboutFranchiseOrLettings.franchiseLettings = Franchises or lettings tied to the property?
-checkYourAnswersAboutFranchiseOrLettings.separateBusinesses.heading = Separate businesses operating from the property
+checkYourAnswersAboutFranchiseOrLettings.franchiseLettings.heading = Rental income
+checkYourAnswersAboutFranchiseOrLettings.franchiseLettings = Rental income?
+checkYourAnswersAboutFranchiseOrLettings.separateBusinesses.heading = Separate businesses
 checkYourAnswersAboutFranchiseOrLettings.separateBusiness = Separate business run from the property?
 checkYourAnswersAboutFranchiseOrLettings.lettingsOtherPartOfProperties.heading = Lettings
-checkYourAnswersAboutFranchiseOrLettings.rentFromPartOfProperties = Rent received from lettings?
-checkYourAnswersAboutFranchiseOrLettings.operatorName = Operator’s name
-checkYourAnswersAboutFranchiseOrLettings.typeOfBusiness = Type of business
-checkYourAnswersAboutFranchiseOrLettings.correspondenceAddress = Correspondence address
-checkYourAnswersAboutFranchiseOrLettings.lettingOperatorName = Tenant’s name
-checkYourAnswersAboutFranchiseOrLettings.lettingTypeOfBusiness = Description of letting
-checkYourAnswersAboutFranchiseOrLettings.annualRent = Annual rent payment
-checkYourAnswersAboutFranchiseOrLettings.dateSumFixed = When sum was fixed?
-checkYourAnswersAboutFranchiseOrLettings.itemsInRent = Items included in rent
+checkYourAnswersAboutFranchiseOrLettings.rentFromPartOfProperties = Letting other parts of the property?
+checkYourAnswersAboutFranchiseOrLettings.operatorName = Business’s details
+checkYourAnswersAboutFranchiseOrLettings.lettingOperatorName = Tenant’s details
+checkYourAnswersAboutFranchiseOrLettings.annualRent = Annual rent
+checkYourAnswersAboutFranchiseOrLettings.dateSumFixed = Fixed on {0}
+checkYourAnswersAboutFranchiseOrLettings.itemsInRent = Included in rent
+checkYourAnswersAboutFranchiseOrLettings.addBusiness = Add another business?
+checkYourAnswersAboutFranchiseOrLettings.addLetting = Add another letting?
+
 checkYourAnswersAboutYourLeaseOrTenure.heading = Check your answers - your lease or agreement
 checkYourAnswersAboutYourLeaseOrTenure.yourLandlord.heading = Your landlord
 checkYourAnswersAboutYourLeaseOrTenure.landlordDetails = Landlord’s details

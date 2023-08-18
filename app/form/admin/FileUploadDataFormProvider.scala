@@ -24,7 +24,7 @@ class FileUploadDataFormProvider {
 
   def apply(): Form[FileUploadData] = Form(
     mapping(
-      "json" -> default(text,"fileUpload.error.json.required")
+      "json" -> default(text, "fileUpload.error.json.required")
     )(FileUploadData.apply)(FileUploadData.unapply)
   )
 }
