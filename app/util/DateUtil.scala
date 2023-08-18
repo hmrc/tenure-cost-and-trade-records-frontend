@@ -36,12 +36,6 @@ object DateUtil {
     def shortDate: String =
       localDate.format(shortDateFormatter)
 
-    def abbrMonthDate(langCode: String): String =
-      langCode match {
-        case "cy" => localDate.format(dayMonAbbrYearFormat.withLocale(Locale.forLanguageTag(langCode)))
-        case _    => localDate.format(dayMonAbbrYearFormat)
-      }
-
     def toEpochMilli: Long =
       localDate.atStartOfDay(ukTimezone).toInstant.toEpochMilli
 
@@ -52,7 +46,6 @@ object DateUtil {
   private val ibmTimeZone: TimeZone = TimeZone.getTimeZone(defaultTimeZoneId)
 
   private val shortDateFormatter: DateTimeFormatter           = DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.UK)
-  private val dayMonAbbrYearFormat: DateTimeFormatter         = DateTimeFormatter.ofPattern("d MMM yyyy", Locale.UK)
   private val dayMonthYearExampleFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("d M yyyy", Locale.UK)
   private val monthYearExampleFormatter: DateTimeFormatter    = DateTimeFormatter.ofPattern("M yyyy", Locale.UK)
   private val dayMonthExampleFormatter: DateTimeFormatter     = DateTimeFormatter.ofPattern("d M", Locale.UK)

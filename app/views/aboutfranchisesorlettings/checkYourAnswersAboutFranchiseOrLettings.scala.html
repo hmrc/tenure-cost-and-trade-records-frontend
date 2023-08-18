@@ -22,7 +22,7 @@
 @import models.pages.Summary
 @import navigation.AboutFranchisesOrLettingsNavigator
 @import navigation.identifiers._
-@import util.DateUtil._
+@import util.DateUtil
 @import util.NumberUtil._
 @import util.SectionAnswersRowBuilder
 
@@ -31,6 +31,7 @@
         govukRadios: GovukRadios,
         govukSummaryList: GovukSummaryList,
         navigator: AboutFranchisesOrLettingsNavigator,
+        dateUtil: DateUtil,
         formWithCSRF: FormWithCSRF
 )
 
@@ -81,7 +82,7 @@
                                 ("valueAsHtml", _ => None)) ++
                             sectionAnswers.row("checkYourAnswersAboutFranchiseOrLettings.annualRent",
                                 _ => cateringOperation.cateringOperationRentDetails.map(_.annualRent.asMoney).mkString("""<p class="govuk-body">""", "", "</p>") +
-                                        cateringOperation.cateringOperationRentDetails.map(x => messages(s"checkYourAnswersAboutFranchiseOrLettings.dateSumFixed", x.dateInput.abbrMonthDate(messages.lang.code)))
+                                        cateringOperation.cateringOperationRentDetails.map(x => messages(s"checkYourAnswersAboutFranchiseOrLettings.dateSumFixed", dateUtil.formatDayMonthAbbrYear(x.dateInput)))
                                                 .getOrElse("").mkString("""<p class="govuk-body">""", "", "</p>"),
                                 aboutfranchisesorlettings.routes.CateringOperationDetailsRentController.show(idx), "annualRent",
                                 ("valueAsHtml", _ => None)) ++
@@ -122,7 +123,7 @@
                                 ("valueAsHtml", _ => None)) ++
                             sectionAnswers.row("checkYourAnswersAboutFranchiseOrLettings.annualRent",
                                 _ => letting.lettingOtherPartOfPropertyRentDetails.map(_.annualRent.asMoney).mkString("""<p class="govuk-body">""", "", "</p>") +
-                                        letting.lettingOtherPartOfPropertyRentDetails.map(x => messages(s"checkYourAnswersAboutFranchiseOrLettings.dateSumFixed", x.dateInput.abbrMonthDate(messages.lang.code)))
+                                        letting.lettingOtherPartOfPropertyRentDetails.map(x => messages(s"checkYourAnswersAboutFranchiseOrLettings.dateSumFixed", dateUtil.formatDayMonthAbbrYear(x.dateInput)))
                                                 .getOrElse("").mkString("""<p class="govuk-body">""", "", "</p>"),
                                 aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsRentController.show(idx), "annualRent",
                                 ("valueAsHtml", _ => None)) ++
