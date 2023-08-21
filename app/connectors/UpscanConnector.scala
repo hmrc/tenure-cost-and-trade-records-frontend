@@ -36,8 +36,7 @@ class UpscanConnector @Inject() (http: HttpClient, val configuration: Configurat
 
   val callBackUrl     = configuration.get[String]("microservice.services.upscan.callback-url")
   val maxFileSize     = configuration.get[Int]("microservice.services.upscan.max-file-size")
-  val successRedirect =
-    s"http://localhost:9526${configuration.get[String]("app.rootContext")}${controllers.admin.routes.FileUploadController.showResult.url}"
+  val successRedirect = configuration.get[String]("microservice.services.upscan.success-url")
 
   def initiate()(implicit hc: HeaderCarrier, ec: ExecutionContext): Future[InitiateResponse] = {
     val request = InitiateRequest(callbackUrl = callBackUrl, Some(successRedirect), maxFileSize = maxFileSize)
