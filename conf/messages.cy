@@ -563,11 +563,12 @@ error.tenancyLeaseAgreement.missing = Select yes if the tenancy, lease or agreem
 
 # FRANCHISE OR LETTINGS TIED TO PROPERTY
 #######################################
-franchiseLettings.heading = Do you have any franchises or lettings tied to the property?
-franchiseLettings.subheading = You should declare any:
-franchiseLettings.list1 = catering operation or letting accommodation run as a separate business if you’ve not included their turnover on the previous page
-franchiseLettings.list2 = rent received from letting other parts of the property including advertising billboards, car parking or telephone masts
-error.franchiseOrLettingsTiedToProperty.missing = Select yes if any franchises or lettings are tied to the property
+franchiseLettings.heading = Rental income
+franchiseLettings.p1 = You must declare any income received by letting out parts of your property.
+franchiseLettings.p2 = You must include:
+franchiseLettings.list1 = any payments received instead of trading receipts from third-party businesses operating from the property under a concession or franchise agreement.
+franchiseLettings.list2 = rental income from letting other parts of the property including advertising billboards, car parking or phone masts.
+franchiseLettings.subheading = Do you still receive income from letting out parts of your property?
 
 # ABOUT YOUR LANDLORD
 ##############################
@@ -609,7 +610,7 @@ error.cateringOperationOrLettingAccommodation.missing = Select yes if any separa
 # LETTING OTHER PART OF PROPERTY
 ##############################
 lettingOtherPartOfProperty.heading = Is any rent received from letting other parts of the property?
-hint.lettingOtherPartOfProperty = Including advertising rights, stations or hoardings
+hint.lettingOtherPartOfProperty = For example, advertising billboards, phones masts or car parking. You will have the opportunity to add additional lettings if required.
 error.lettingOtherPartOfProperty.missing = Select yes if any rent received from letting other parts of the property
 
 # PROPERTY USE LEASEBACK ARRANGEMENT
@@ -802,7 +803,7 @@ error.lettingTypeOfBusiness.maxLength = Description of letting must be 100 chara
 # CATERING OPERATION OR LETTING ACCOMMODATION RENT DETAILS
 ##########################################################
 cateringOperationOrLettingAccommodationRentDetails.heading = Annual rent for {0}
-label.annualRent = Annual rent payment (excluding VAT)
+label.annualRent = Annual rent payment excluding VAT
 label.dateInput = When was this sum fixed?
 error.required.annualRentExcludingVat.annualRent = Enter the annual rent excluding VAT
 error.invalid_currency.annualRent.annualRent = The annual rent figure must be a number
