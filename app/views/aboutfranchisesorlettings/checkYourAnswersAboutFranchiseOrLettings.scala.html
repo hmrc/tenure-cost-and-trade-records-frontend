@@ -53,7 +53,7 @@
 
     @formWithCSRF(action = aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.submit()) {
 
-        <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutFranchiseOrLettings.rentalIncome")</h2>
+        <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutFranchiseOrLettings.franchiseLettings.heading")</h2>
 
         @govukSummaryList(SummaryList(rows =
             sectionAnswers.row("checkYourAnswersAboutFranchiseOrLettings.franchiseLettings",
