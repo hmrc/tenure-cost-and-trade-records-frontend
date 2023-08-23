@@ -19,7 +19,6 @@ package views.aboutYourLeaseOrTenure
 import form.aboutYourLeaseOrTenure.IncludedInYourRentForm
 import models.pages.Summary
 import models.submissions.aboutYourLeaseOrTenure._
-import models.submissions.common.{AnswerNo, AnswerYes}
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
@@ -55,27 +54,28 @@ class IncludedInYourRentViewSpec extends QuestionViewBehaviours[IncludedInYourRe
 
     "contain checkbox for the vat" in {
       val doc = asDocument(createViewUsingForm(form))
-      assertContainsCheckBox(doc, "vat", "includedInYourRent", "vat", false)
+      assertContainsCheckBox(doc, "vat", "includedInYourRent[]", "vat", false)
       assertContainsText(doc, messages("label.includedInYourRent.vat"))
     }
 
     "contain checkbox for the nondomesticRates" in {
       val doc = asDocument(createViewUsingForm(form))
-      assertContainsCheckBox(doc, "nondomesticRates", "includedInYourRent", "nondomesticRates", false)
+      assertContainsCheckBox(doc, "nondomesticRates", "includedInYourRent[]", "nondomesticRates", false)
       assertContainsText(doc, messages("label.includedInYourRent.nondomesticRates"))
     }
 
     "contain checkbox for the waterCharges" in {
       val doc = asDocument(createViewUsingForm(form))
-      assertContainsCheckBox(doc, "waterCharges", "includedInYourRent", "waterCharges", false)
+      assertContainsCheckBox(doc, "waterCharges", "includedInYourRent[]", "waterCharges", false)
       assertContainsText(doc, messages("label.includedInYourRent.waterCharges"))
     }
 
     "contain checkbox for none" in {
       val doc = asDocument(createViewUsingForm(form))
-      assertContainsCheckBox(doc, "none", "includedInYourRent", "none", false)
-      assertContainsText(doc, messages("label.includedInYourRent.none"))
+      assertContainsCheckBox(doc, "none", "includedInYourRent[]", "none", false)
+      assertContainsText(doc, messages("label.includedInYourRent.noneOfThese"))
     }
 
   }
+
 }

@@ -149,11 +149,10 @@
             <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutYourLeaseOrTenure.whatRentIncludes.heading")</h2>
 
             @govukSummaryList(SummaryList(rows =
-                sectionAnswers.conditionRow(
-                    _.includedInYourRentDetails.map(_.includedInYourRent.name).contains("no"),
+                sectionAnswers.row(
                     "checkYourAnswersAboutYourLeaseOrTenure.includedInYourRent",
                     _.includedInYourRentDetails.map(r =>
-                        Seq(r.includedInYourRent.name).map(item => messages(s"label.includedInYourRent.$item"))
+                        r.includedInYourRent.map(_.name).map(item => messages(s"label.includedInYourRent.$item"))
                     ).map(_.mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>")),
                     aboutYourLeaseOrTenure.routes.IncludedInYourRentController.show(), "",
                     ("valueAsHtml", _ => None)) ++
