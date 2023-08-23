@@ -25,7 +25,7 @@ object IncludedInYourRentForm {
 
   val includedInYourRentForm = Form(
     mapping(
-      "includedInYourRent" -> includedInYourRentInformation
+      "includedInYourRent" -> list(includedInYourRentInformation)
     )(IncludedInYourRentDetails.apply)(IncludedInYourRentDetails.unapply)
   )
 }

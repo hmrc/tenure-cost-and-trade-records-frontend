@@ -18,7 +18,7 @@ package models.submissions.aboutYourLeaseOrTenure
 
 import play.api.libs.json.Json
 
-case class IncludedInYourRentDetails(includedInYourRent: IncludedInYourRentInformation)
+case class IncludedInYourRentDetails(includedInYourRent: List[IncludedInYourRentInformation] = List.empty)
 
 object IncludedInYourRentDetails {
   implicit val format = Json.format[IncludedInYourRentDetails]
