@@ -78,7 +78,7 @@
             PhaseBanner(
                 classes = "no-print",
                 tag = Option(Tag(Text(messages("phase.beta")))),
-                content = HtmlContent(messages("phase.text", s"dummy.url"))
+                content = HtmlContent(messages("phase.text", s"${routes.FeedbackController.feedback.url}"))
             )
             )
     }
