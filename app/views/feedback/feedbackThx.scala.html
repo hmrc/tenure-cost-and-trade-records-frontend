@@ -14,21 +14,22 @@
  * limitations under the License.
  *@
 
-@import controllers.routes
-@import play.api.i18n.Messages
-@import play.api.mvc.RequestHeader
-@import views.html.Layout
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.button.Button
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 
-@this(layout: Layout)
+@this(layout: Layout,
+)
 
-@()(implicit request: RequestHeader, messages: Messages)
+@()(implicit request: Request[_], messages: Messages)
 
 @layout(
-    pageH1 = Some(messages("feedback.thankyou.h1")),
+    pageHeading = messages("feedback.thankyou.h1"),
     showFeedback = false
 ) {
     <p class="govuk-body">
         <a class="govuk-link"
-            href="@routes.PostcodeSearchController.onPageLoad(None, None).url">@messages("feedback.thankyou.link")</a>
+        href="@routes.LoginController.show().url">@messages("feedback.thankyou.link")</a>
     </p>
 }
+

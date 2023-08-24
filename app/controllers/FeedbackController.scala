@@ -16,7 +16,6 @@
 
 package controllers
 
-
 import connectors.Audit
 import form.Feedback
 import play.api.data.Form
@@ -29,13 +28,12 @@ import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class FeedbackController @Inject()(
-                                    mcc: MessagesControllerComponents,
-                                    feedbackView: feedback,
-                                    feedbackThxView: feedbackThx,
-                                    audit: Audit
-                                  ) extends FrontendController(mcc) {
-
+class FeedbackController @Inject() (
+  mcc: MessagesControllerComponents,
+  feedbackView: feedback,
+  feedbackThxView: feedbackThx,
+  audit: Audit
+) extends FrontendController(mcc) {
 
   import FeedbackFormMapper.feedbackForm
 
@@ -48,30 +46,30 @@ class FeedbackController @Inject()(
   }
 
   def feedbackSubmit(): Action[AnyContent] = Action.async { implicit request =>
-    feedbackForm.bindFromRequest().fold(
-      formWithErrors => Future.successful({
-        BadRequest(feedbackView(formWithErrors))
-      }),
-      feedbackForm => {
-        sendFeedback(feedbackForm)
-        Future.successful(Redirect(routes.FeedbackController.feedbackThx))
-      }
-    )
+    feedbackForm
+      .bindFromRequest()
+      .fold(
+        formWithErrors =>
+          Future.successful {
+            BadRequest(feedbackView(formWithErrors))
+          },
+        feedbackForm => {
+          sendFeedback(feedbackForm)
+          Future.successful(Redirect(routes.FeedbackController.feedbackThx))
+        }
+      )
   }
 
-  private def sendFeedback(f: Feedback)(implicit request: Request[_]) = {
+  private def sendFeedback(f: Feedback)(implicit request: Request[_]) =
     audit("SurveyFeedback", Map("comments" -> f.comments.getOrElse(""), "satisfaction" -> f.rating.get))
-  }
 
 }
 
 object FeedbackFormMapper {
   val feedbackForm = Form(
     mapping(
-      "feedback-rating" -> optional(text).verifying("feedback.rating.required", _.isDefined),
-      "feedback-comments" -> optional(text).verifying("feedback.comments.maxLength", it => {
-        it.forall(_.length <=  1200)
-      })
+      "feedback-rating"   -> optional(text).verifying("feedback.rating.required", _.isDefined),
+      "feedback-comments" -> optional(text).verifying("feedback.comments.maxLength", it => it.forall(_.length <= 1200))
     )(Feedback.apply)(Feedback.unapply)
   )
 }

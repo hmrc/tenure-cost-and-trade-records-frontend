@@ -39,7 +39,7 @@ trait Audit extends AuditConnector {
 
   def apply(event: String, detail: Map[String, String])(implicit hc: HeaderCarrier): Future[AuditResult] = {
     val tags = hc.toAuditTags()
-    val de = DataEvent(auditSource = AUDIT_SOURCE, auditType = event, tags = tags, detail = detail)
+    val de   = DataEvent(auditSource = AUDIT_SOURCE, auditType = event, tags = tags, detail = detail)
     sendEvent(de)
   }
 

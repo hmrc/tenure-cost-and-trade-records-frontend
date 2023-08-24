@@ -45,8 +45,8 @@
 @(theForm: Form[Feedback])(implicit messages: Messages, request: Request[_])
 
 @layout(
-    pageH1 = Some(messages("label.feedback.heading")),
-    theForm = Option(theForm),
+    pageHeading = messages("label.feedback.heading"),
+    theForm = theForm,
     showFeedback = false
 ) {
 
