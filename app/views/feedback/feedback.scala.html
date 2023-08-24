@@ -1,0 +1,118 @@
+@*
+ * Copyright 2023 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import controllers.routes
+@import form.Feedback
+
+@import play.api.data._
+@import play.api.i18n.Messages
+@import play.api.mvc.Request
+@import uk.gov.hmrc.govukfrontend.views.Aliases.{Fieldset, Legend, Text}
+@import uk.gov.hmrc.govukfrontend.views.html.components._
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.button.Button
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.hint.Hint
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.label.Label
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.radios.{RadioItem, Radios}
+@import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcCharacterCount
+@import uk.gov.hmrc.hmrcfrontend.views.viewmodels.charactercount.CharacterCount
+@import views.html.Layout
+
+@this(
+        layout: Layout,
+        govukInput: GovukInput,
+        govukWarningText: GovukWarningText,
+        govukRadios: GovukRadios,
+        govukErrorSummary:GovukErrorSummary,
+        govukButton:GovukButton,
+        hmrcCharacterCount: HmrcCharacterCount,
+        formWithCSRF: FormWithCSRF
+)
+
+@(theForm: Form[Feedback])(implicit messages: Messages, request: Request[_])
+
+@layout(
+    pageH1 = Some(messages("label.feedback.heading")),
+    theForm = Option(theForm),
+    showFeedback = false
+) {
+
+    <p class="govuk-body">@messages("label.feedback.p1")</p>
+
+    @formWithCSRF(
+        action = routes.FeedbackController.feedbackSubmit,
+        args = Symbol("novalidate") -> "novalidate" ) {
+
+        @govukRadios(
+            Radios(
+                name = "feedback-rating",
+                items = Seq(
+                    "5" -> messages("feedback.rating.5"),
+                    "4" -> messages("feedback.rating.4"),
+                    "3" -> messages("feedback.rating.3"),
+                    "2" -> messages("feedback.rating.2"),
+                    "1" -> messages("feedback.rating.1")
+                ).map(radioItem => RadioItem(
+                    content = Text(radioItem._2),
+                    checked = radioItem._1.equals(theForm("feedback-rating").value.getOrElse("")),
+                    value = Option(radioItem._1)
+                )
+                ),
+                errorMessage = theForm.errors.asTextErrorMessageForField("feedback-rating"),
+                fieldset = Option(
+                    Fieldset(
+                        legend = Option(
+                            Legend(
+                                content = Text(messages("feedback.satisfaction.label")),
+                                isPageHeading = true,
+                                classes = "govuk-fieldset__legend--s"
+                            )
+                        )
+                    )
+                )
+            )
+        )
+
+        @hmrcCharacterCount(
+            CharacterCount(
+                id = "feedback-comments",
+                name = "feedback-comments",
+                value = theForm("feedback-comments").value,
+                rows = 8,
+                maxLength = Some(1200),
+                errorMessage = theForm.errors.asTextErrorMessageForField("feedback-comments"),
+                label = Label(
+                    classes = "govuk-!-font-weight-bold",
+                    content = Text(messages("label.feedback.comments"))
+                ),
+                hint = Some(Hint(content = Text(messages("feedback.bottomCopy"))))
+            )
+        )
+
+
+        <p class="govuk-body">
+        @govukButton(
+            Button(
+                attributes = Map("id" -> "send"),
+                content = Text(messages("label.submit")),
+                name = Some("send"),
+                value = Some("send"),
+                inputType = Some("submit")
+            )
+        )
+        </p>
+    }
+}

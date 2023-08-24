@@ -22,6 +22,7 @@ import models.audit.SavedAsDraftEvent
 import play.api.i18n.Messages
 import play.api.libs.json.{JsObject, Json}
 import uk.gov.hmrc.http.HeaderCarrier
+import uk.gov.hmrc.play.audit.AuditExtensions.auditHeaderCarrier
 import uk.gov.hmrc.play.audit.http.config.AuditingConfig
 import uk.gov.hmrc.play.audit.http.connector.{AuditChannel, AuditConnector, AuditResult, DatastreamMetrics}
 import uk.gov.hmrc.play.audit.model.DataEvent
@@ -35,6 +36,12 @@ trait Audit extends AuditConnector {
   implicit def ec: ExecutionContext
 
   private val AUDIT_SOURCE = "tenure-cost-and-trade-records-frontend"
+
+  def apply(event: String, detail: Map[String, String])(implicit hc: HeaderCarrier): Future[AuditResult] = {
+    val tags = hc.toAuditTags()
+    val de = DataEvent(auditSource = AUDIT_SOURCE, auditType = event, tags = tags, detail = detail)
+    sendEvent(de)
+  }
 
   def sendContinueNextPage(session: Session, url: String)(implicit hc: HeaderCarrier): Unit = {
     val continueNextPageJson = Json.toJson(session).as[JsObject] + ("nextPageURL" -> Json.toJson(url))
