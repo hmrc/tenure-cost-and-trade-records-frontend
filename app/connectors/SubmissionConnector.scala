@@ -17,8 +17,10 @@
 package connectors
 
 import com.google.inject.ImplementedBy
+
 import javax.inject.{Inject, Singleton}
-import models.submissions.NotConnectedSubmission
+import models.submissions.{ConnectedSubmission, NotConnectedSubmission}
+
 import scala.concurrent.{ExecutionContext, Future}
 import uk.gov.hmrc.http.{BadRequestException, HeaderCarrier, HttpReads, HttpResponse, Upstream4xxResponse}
 import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
@@ -44,11 +46,20 @@ class HodSubmissionConnector @Inject() (config: ServicesConfig, http: ForHttp)(i
     hc: HeaderCarrier
   ): Future[Unit] =
     http.PUT(s"${url(s"submissions/notConnected/$refNumber")}", submission).map(_ => ())
+
+  override def submitConnected(refNumber: String, submission: ConnectedSubmission)(implicit
+                                                                                         hc: HeaderCarrier
+  ): Future[Unit] =
+    http.PUT(s"${url(s"submissions/connected/$refNumber")}", submission).map(_ => ())
 }
 
 @ImplementedBy(classOf[HodSubmissionConnector])
 trait SubmissionConnector {
   def submitNotConnected(refNumber: String, submission: NotConnectedSubmission)(implicit
     hc: HeaderCarrier
+  ): Future[Unit]
+
+  def submitConnected(refNumber: String, submission: ConnectedSubmission)(implicit
+                                                                                hc: HeaderCarrier
   ): Future[Unit]
 }

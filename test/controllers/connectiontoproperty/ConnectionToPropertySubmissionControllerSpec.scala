@@ -16,21 +16,31 @@
 
 package controllers.connectiontoproperty
 
+import config.ErrorHandler
 import models.submissions.connectiontoproperty.StillConnectedDetails
 import play.api.http.Status
 import play.api.test.Helpers.{status, stubMessagesControllerComponents}
-import connectors.Audit
+import connectors.{Audit, SubmissionConnector}
+import models.submissions.ConnectedSubmission
+import org.mockito.ArgumentMatchers.anyString
+import uk.gov.hmrc.http.HeaderCarrier
 import utils.TestBaseSpec
+
+import scala.concurrent.Future
 
 class ConnectionToPropertySubmissionControllerSpec extends TestBaseSpec {
 
   val audit = mock[Audit]
+  val submissionConnector = mock[SubmissionConnector]
+  val errorHandler = mock[ErrorHandler]
   //doNothing.when(audit).sendExplicitAudit(any[String], any[JsObject])(any[HeaderCarrier], any[ExecutionContext])
   def connectionToPropertySubmissionController(
     stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledNotVacantPropertiesCYA)
   )         =
     new ConnectionToPropertySubmissionController(
       stubMessagesControllerComponents(),
+      submissionConnector,
+      errorHandler,
       confirmationConnectionToProperty,
       audit,
       preEnrichedActionRefiner(stillConnectedDetails = stillConnectedDetails),
@@ -38,9 +48,11 @@ class ConnectionToPropertySubmissionControllerSpec extends TestBaseSpec {
     )
 
   "SUBMIT /" should {
-    "return 302" in {
+    "return 303" in {
+      when(submissionConnector.submitConnected(anyString(), any[ConnectedSubmission])(any[HeaderCarrier]))
+        .thenReturn(Future.successful(()))
       val result = connectionToPropertySubmissionController().submit(fakeRequest)
-      status(result) shouldBe Status.FOUND
+      status(result) shouldBe Status.SEE_OTHER
     }
   }
 }

@@ -17,7 +17,11 @@
 package controllers.connectiontoproperty
 
 import actions.{SessionRequest, WithSessionRefiner}
-import connectors.Audit
+import config.ErrorHandler
+import connectors.{Audit, SubmissionConnector}
+import models.Session
+import models.submissions.ConnectedSubmission
+import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.libs.json.{JsObject, Json}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Result}
@@ -33,40 +37,46 @@ import scala.concurrent.{ExecutionContext, Future}
 @Singleton
 class ConnectionToPropertySubmissionController @Inject() (
   mcc: MessagesControllerComponents,
+  submissionConnector: SubmissionConnector,
+  errorHandler: ErrorHandler,
   confirmationView: confirmationConnectionToProperty,
   audit: Audit,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
 )(implicit ec: ExecutionContext)
     extends FrontendController(mcc)
-    with I18nSupport {
-
-  lazy val confirmationUrl =
-    controllers.connectiontoproperty.routes.ConnectionToPropertySubmissionController.confirmation().url
+    with I18nSupport
+    with Logging {
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    submit(request.sessionData.referenceNumber)
+    submit()
   }
 
-  private def submit[T](refNum: String)(implicit request: SessionRequest[T]): Future[Result] = {
-    val hc = HeaderCarrierConverter.fromRequestAndSession(request, request.session)
-    for {
-      _ <- submitNotConnectedInformation(refNum)(hc, request)
-    } yield Found(confirmationUrl)
-  }
-
-  def submitNotConnectedInformation(
-    refNum: String
-  )(implicit hc: HeaderCarrier, request: SessionRequest[_]): Future[Unit] = {
-    val auditType      = "VacantFormSubmission"
-    // Dummy data from session to able creation of audit dashboards
+  private def submit[T]()(implicit request: SessionRequest[T]): Future[Result] = {
+    implicit val hc: HeaderCarrier = HeaderCarrierConverter.fromRequestAndSession(request, request.session)
+    val auditType = "VacantFormSubmission"
     val submissionJson = Json.toJson(request.sessionData).as[JsObject]
-
-    audit.sendExplicitAudit(auditType, submissionJson ++ Audit.languageJson)
-    Future.unit
+    val session = request.sessionData
+    submitToBackend(session).map { _ =>
+      audit.sendExplicitAudit(auditType, submissionJson ++ Audit.languageJson)
+      Redirect(controllers.connectiontoproperty.routes.ConnectionToPropertySubmissionController.confirmation())
+    } recover { case e: Exception =>
+      logger.error(s"Could not send data to HOD - ${session.referenceNumber} - ${hc.sessionId}")
+      audit.sendExplicitAudit("ConnectedSubmissionFailed", submissionJson)
+      InternalServerError(errorHandler.internalServerErrorTemplate(request))
+    }
   }
 
   def confirmation: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Future(Ok(confirmationView()))
+  }
+
+  private def submitToBackend(
+                               session: Session
+                             )(implicit hc: HeaderCarrier, request: SessionRequest[_]): Future[Unit] = {
+
+    val submission = ConnectedSubmission(session)
+
+    submissionConnector.submitConnected(session.referenceNumber, submission)
   }
 }
