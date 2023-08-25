@@ -368,8 +368,8 @@ GET        /feedback                                                controllers.
 GET        /thankyou-for-your-feedback                              controllers.feedback.FeedbackController.feedbackThx
 POST       /feedback                                                controllers.feedback.FeedbackController.feedbackSubmit
 
-#GET         /survey                                                 controllers.feedback.SurveyController.onPageView(journey: String)
-#POST        /survey                                                 controllers.feedback.SurveyController.formCompleteFeedback
+GET         /survey                                                 controllers.feedback.SurveyController.onPageView(journey: String)
+POST        /survey                                                 controllers.feedback.SurveyController.formCompleteFeedback
 
 # Admin routes
 GET         /admin/login                                            controllers.admin.FileUploadController.loginPage

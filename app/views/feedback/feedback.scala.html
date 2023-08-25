@@ -14,8 +14,7 @@
  * limitations under the License.
  *@
 
-@import controllers.routes
-@import form.Feedback
+@import controllers.feedback.SurveyFeedback
 
 @import play.api.data._
 @import play.api.i18n.Messages
@@ -27,8 +26,7 @@
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.hint.Hint
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.label.Label
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.radios.{RadioItem, Radios}
-@import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcCharacterCount
-@import uk.gov.hmrc.hmrcfrontend.views.viewmodels.charactercount.CharacterCount
+
 @import views.html.Layout
 
 @this(
@@ -38,11 +36,12 @@
         govukRadios: GovukRadios,
         govukErrorSummary:GovukErrorSummary,
         govukButton:GovukButton,
-        hmrcCharacterCount: HmrcCharacterCount,
+        govukCharacterCount: GovukCharacterCount,
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[Feedback])(implicit messages: Messages, request: Request[_])
+
+@(theForm: Form[SurveyFeedback])(implicit messages: Messages, request: Request[_])
 
 @layout(
     pageHeading = messages("label.feedback.heading"),
@@ -58,25 +57,22 @@
 
         @govukRadios(
             Radios(
-                name = "feedback-rating",
+                name = "satisfaction",
+                idPrefix="satisfaction",
                 items = Seq(
-                    "5" -> messages("feedback.rating.5"),
-                    "4" -> messages("feedback.rating.4"),
-                    "3" -> messages("feedback.rating.3"),
-                    "2" -> messages("feedback.rating.2"),
-                    "1" -> messages("feedback.rating.1")
+                    "verySatisfied", "satisfied", "neither", "dissatisfied", "veryDissatisfied"
                 ).map(radioItem => RadioItem(
-                    content = Text(radioItem._2),
-                    checked = radioItem._1.equals(theForm("feedback-rating").value.getOrElse("")),
-                    value = Option(radioItem._1)
+                    content = Text(messages("satisfactionSurveyType." + radioItem)),
+                    checked = theForm("satisfaction").value.exists(_ == radioItem),
+                    value = Option(radioItem)
                 )
                 ),
-                errorMessage = theForm.errors.asTextErrorMessageForField("feedback-rating"),
+                errorMessage = theForm.errors.asTextErrorMessageForField("satisfaction"),
                 fieldset = Option(
                     Fieldset(
                         legend = Option(
                             Legend(
-                                content = Text(messages("feedback.satisfaction.label")),
+                                content = Text(messages("label.satisfactionSurvey")),
                                 isPageHeading = true,
                                 classes = "govuk-fieldset__legend--s"
                             )
@@ -86,19 +82,19 @@
             )
         )
 
-        @hmrcCharacterCount(
+        @govukCharacterCount(
             CharacterCount(
-                id = "feedback-comments",
-                name = "feedback-comments",
-                value = theForm("feedback-comments").value,
+                id = "details",
+                name = "details",
+                value = theForm("details").value,
                 rows = 8,
-                maxLength = Some(1200),
-                errorMessage = theForm.errors.asTextErrorMessageForField("feedback-comments"),
+                maxLength = 1200,
+                errorMessage = theForm.errors.asTextErrorMessageForField("details"),
                 label = Label(
                     classes = "govuk-!-font-weight-bold",
                     content = Text(messages("label.feedback.comments"))
                 ),
-                hint = Some(Hint(content = Text(messages("feedback.bottomCopy"))))
+                hint = Hint(content = Text(messages("text.survey.bottomCopy")))
             )
         )
 
@@ -106,11 +102,11 @@
         <p class="govuk-body">
         @govukButton(
             Button(
-                attributes = Map("id" -> "send"),
-                content = Text(messages("label.submit")),
-                name = Some("send"),
-                value = Some("send"),
-                inputType = Some("submit")
+                attributes = Map("id" -> "send", "novalidate" -> "novalidate"),
+                content = Text(messages("button.label.submit")),
+                name = "send",
+                value = "send",
+                inputType = "submit"
             )
         )
         </p>

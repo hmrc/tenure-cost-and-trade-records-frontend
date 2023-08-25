@@ -14,9 +14,23 @@
  * limitations under the License.
  *@
 
-@this(layout: Layout)
+@import models.pages.Summary
+@import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukCharacterCount
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukErrorSummary
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
+@import uk.gov.hmrc.govukfrontend.views.html.components._
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
 
-@()(implicit request: Request[_], messages: Messages)
+@this(layout: Layout,
+        govukRadios: GovukRadios,
+        govukButton: GovukButton,
+        govukErrorSummary: GovukErrorSummary,
+        govukCharacterCount: GovukCharacterCount,
+        formWithCSRF: FormWithCSRF)
+
+@(theForm: Form[_], referenceNumber: String, email: Option[String], summary: Summary)(implicit request: Request[_], messages: Messages)
 
 @layout(
     pageHeading = messages("label.confirm.heading"),
@@ -38,8 +52,83 @@
 
     <p class="govuk-body">@messages("confirmation.service")</p>
 
-    <p class="govuk-body">
-        <a href="@routes.LoginController.show">@messages("label.submitAnotherForm")</a>
-    </p>
+
+    <section class="govuk-!-display-none-print">
+
+        <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+
+        <h2 class="govuk-heading-m">@messages("heading.giveFeedback")</h2>
+
+        <p class="govuk-body">
+        @formWithCSRF(
+            action = controllers.feedback.routes.SurveyController.formCompleteFeedback,
+            args = Symbol("novalidate") -> "novalidate") {
+
+            <input type="hidden" id="journey" name="journey" value="@theForm("journey").value.getOrElse(NormalJourney.name)"/>
+            <input type="hidden" id="surveyUrl" name="surveyUrl" value="@theForm("surveyUrl").value.getOrElse("")"/>
+
+        @govukRadios(
+            Radios(
+                name = "satisfaction",
+                idPrefix = "satisfaction",
+                items = Seq(
+                    "verySatisfied", "satisfied", "neither", "dissatisfied", "veryDissatisfied"
+                ).map(radioItem => RadioItem(
+                    content = Text(messages("satisfactionSurveyType." + radioItem)),
+                    checked = theForm("satisfaction").value.contains(radioItem),
+                    value = Option(radioItem)
+                )
+                ),
+                errorMessage = theForm.errors.asTextErrorMessageForField("satisfaction"),
+                fieldset = Option(
+                    Fieldset(
+                        legend = Option(
+                            Legend(
+                                content = Text(messages("label.satisfaction.1")),
+                                isPageHeading = true,
+                                classes = "govuk-fieldset--s"
+                            )
+                        )
+                    )
+                )
+            )
+        )
+
+        @govukCharacterCount(
+            CharacterCount(
+                id = "details",
+                name = "details",
+                value = theForm("details").value,
+                rows = 8,
+                maxLength = 1200,
+                errorMessage = theForm.errors.asTextErrorMessageForField("details"),
+                label = Label(
+                    content = Text(messages("label.feedback.comments"))
+                ),
+                hint = Hint(content = Text(messages("text.survey.bottomCopy")))
+            )
+        )
+
+
+        <p class="govuk-body">
+        @govukButton(
+            Button(
+                attributes = Map("id" -> "send", "novalidate" -> "novalidate"),
+                content = Text(messages("button.label.submitFeedback")),
+                name = "send",
+                value = "send",
+                inputType = "submit"
+            )
+        )
+        </p>
+        }
+        </p>
+
+        <p class="govuk-body">
+            <a href="@routes.LoginController.show">@messages("label.submitAnotherForm")</a>
+        </p>
+    </section>
+
+
 }
 

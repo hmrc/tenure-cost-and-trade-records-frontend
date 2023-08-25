@@ -73,6 +73,8 @@ class SessionRepository @Inject() (mongo: MongoComponent)(implicit
       )
     }
 
+    def findById(documentId: String, referenceNumber: String): Future[Option[Document]]
+
   def get(implicit rds: Reads[Session], hc: HeaderCarrier) =
     Mdc.preservingMdc {
       for {
