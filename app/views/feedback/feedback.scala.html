@@ -53,7 +53,7 @@
     <p class="govuk-body">@messages("label.feedback.p1")</p>
 
     @formWithCSRF(
-        action = routes.FeedbackController.feedbackSubmit,
+        action = controllers.feedback.routes.FeedbackController.feedbackSubmit,
         args = Symbol("novalidate") -> "novalidate" ) {
 
         @govukRadios(

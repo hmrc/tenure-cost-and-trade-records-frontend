@@ -17,6 +17,7 @@
 package controllers
 
 import connectors.Audit
+import controllers.feedback.FeedbackController
 import org.jsoup.Jsoup
 import org.mockito.scalatest.MockitoSugar
 import org.scalatest.BeforeAndAfter

@@ -14,13 +14,14 @@
  * limitations under the License.
  */
 
-package controllers
+package controllers.feedback
 
 import connectors.Audit
+import controllers.routes
 import form.Feedback
 import play.api.data.Form
 import play.api.data.Forms.{mapping, optional, text}
-import play.api.mvc.{MessagesControllerComponents, _}
+import play.api.mvc._
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.feedback.{feedback, feedbackThx}
 
@@ -55,7 +56,7 @@ class FeedbackController @Inject() (
           },
         feedbackForm => {
           sendFeedback(feedbackForm)
-          Future.successful(Redirect(routes.FeedbackController.feedbackThx))
+          Future.successful(Redirect(controllers.feedback.routes.FeedbackController.feedbackThx))
         }
       )
   }
