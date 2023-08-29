@@ -17,6 +17,7 @@
 package controllers.feedback
 
 import actions.{RefNumAction, RefNumRequest}
+import config.SessionId
 import connectors.Audit
 
 import javax.inject.{Inject, Singleton}
@@ -77,10 +78,10 @@ class SurveyController @Inject() (
     )
   }
 
-  private def viewConfirmationPage(refNum: String, form: Option[Form[SurveyFeedback]] = None)(implicit request:RefNumRequest[AnyContent] ) =
-    repository.findById(Session(hc), refNum) map {
+  private def viewConfirmationPage(refNum: String, form: Option[Form[SurveyFeedback]] = None)(implicit request:RefNumRequest[AnyContent]) =
+    repository.findById(SessionId(hc), refNum) map {
       case Some(doc) =>
-        val summary = SummaryBuilder.build(doc)
+        val summary = request.session.data
         Ok(confirmationView(
           form.getOrElse(completedFeedbackFormNormalJourney.bind(Map("surveyUrl" -> "survey")).discardingErrors), refNum,
           summary.customerDetails.map(_.contactDetails.email),

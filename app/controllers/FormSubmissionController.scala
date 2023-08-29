@@ -16,7 +16,7 @@
 
 package controllers
 
-import actions.{SessionRequest, WithSessionRefiner}
+import actions.{RefNumAction, RefNumRequest, SessionRequest, WithSessionRefiner}
 import connectors.Audit
 import play.api.i18n.I18nSupport
 import play.api.libs.json.{JsObject, Json}
@@ -33,6 +33,7 @@ import scala.concurrent.{ExecutionContext, Future}
 @Singleton
 class FormSubmissionController @Inject() (
   mcc: MessagesControllerComponents,
+  refNumberAction: RefNumAction,
   confirmationView: confirmation,
   audit: Audit,
   withSessionRefiner: WithSessionRefiner,
@@ -43,8 +44,17 @@ class FormSubmissionController @Inject() (
 
   lazy val confirmationUrl = controllers.routes.FormSubmissionController.confirmation().url
 
-  def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    submit(request.sessionData.referenceNumber)
+
+//  def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+//    submit(request.sessionData.referenceNumber)
+//  }
+
+  def submit: Action[AnyContent] = refNumberAction.async { implicit request: RefNumRequest[AnyContent] =>
+    request.body.asFormUrlEncoded.flatMap { body =>
+      body.get("declaration").map { agree =>
+        if (agree.headOption.exists(_.toBoolean)) submit(request.refNum) else rejectSubmission
+      }
+    } getOrElse rejectSubmission
   }
 
   private def submit[T](refNum: String)(implicit request: SessionRequest[T]): Future[Result] = {
@@ -65,7 +75,11 @@ class FormSubmissionController @Inject() (
     Future.unit
   }
 
-  def confirmation: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    Ok(confirmationView())
+  private def rejectSubmission = Future.successful {
+    Found(routes.LoginController.show.url)
   }
+
+//  def confirmation: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+//    Ok(confirmationView(request.sessionData.referenceNumber,request.sessionData.forType, request.sessionData.toSummary, request.sessionData))
+//  }
 }

@@ -29,6 +29,12 @@ import scala.concurrent.ExecutionContext
   * This allow us to test login controller without starting google guice.
   */
 
+object SessionId {
+  def apply(implicit hc: HeaderCarrier): String = hc.sessionId.map(_.value).getOrElse(throw SessionIdMissing())
+}
+
+case class SessionIdMissing() extends Exception
+
 @ImplementedBy(classOf[DefaultLoginToBackendAction])
 trait LoginToBackendAction {
   def apply(implicit hc: HeaderCarrier, ec: ExecutionContext): LoginToBackend
