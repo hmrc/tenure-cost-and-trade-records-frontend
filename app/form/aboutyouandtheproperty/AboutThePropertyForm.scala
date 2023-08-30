@@ -41,7 +41,8 @@ object AboutThePropertyForm {
     mapping(
       "propertyCurrentlyUsed"      -> multipleCurrentPropertyUsedMapping,
       "propertyCurrentlyUsedOther" -> mandatoryIfAnyEqual(
-        Seq(("propertyCurrentlyUsed[0]", "other"), ("propertyCurrentlyUsed[]", "other")),
+        Seq(("propertyCurrentlyUsed[0]", "other"),
+          ("propertyCurrentlyUsed[]", "other")),
         default(text, "").verifying(
           nonEmpty(errorMessage = "error.propertyCurrentlyUsed.required")
         )

@@ -108,6 +108,17 @@ object MappingSupport {
         currentPropertyUseds => currentPropertyUseds.map(_.name)
       )
 
+  lazy val multipleDoesTheRentPayableMapping: Mapping[List[DoesTheRentPayableList]] =
+    list(nonEmptyText)
+      .verifying(
+        "Invalid rent payable used",
+        doTheRentsPayable => doTheRentsPayable.forall(str => DoesTheRentPayableList.withName(str).isDefined)
+      )
+      .transform[List[DoesTheRentPayableList]](
+        doTheRentsPayable => doTheRentsPayable.flatMap(str => DoesTheRentPayableList.withName(str)),
+        doesTheRentsPayable => doesTheRentsPayable.map(_.name)
+      )
+
   lazy val rentIncludeFixturesAndFittingsDetails: Mapping[AnnualRent] = mapping(
     "rentIncludeFixturesAndFittingsDetails" -> currencyMapping(".rentIncludeFixturesAndFittingsDetails")
   )(AnnualRent.apply)(AnnualRent.unapply).verifying(Errors.maxCurrencyAmountExceeded, _.amount <= cdbMaxCurrencyAmount)

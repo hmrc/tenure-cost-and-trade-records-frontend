@@ -16,20 +16,36 @@
 
 package form.aboutYourLeaseOrTenure
 
-import models.submissions.aboutYourLeaseOrTenure.DoesTheRentPayable
+import form.MappingSupport.multipleDoesTheRentPayableMapping
+import models.submissions.aboutYourLeaseOrTenure._
 import play.api.data.Form
-import play.api.data.Forms.{default, list, mapping, text}
+import play.api.data.Forms.{default, mapping, text}
 import play.api.data.validation.Constraints.{maxLength, nonEmpty}
+import uk.gov.voa.play.form.ConditionalMappings.mandatoryIfAnyEqual
 
 object DoesTheRentPayableForm {
 
-  val doesTheRentPayableForm = Form(
+  val proprietor = DoesTheRentPayableListProprietor.name
+  val otherProperty = DoesTheRentPayableListOtherProperty.name
+  val onlyPart = DoesTheRentPayableListOnlyPart.name
+  val onlyLand = DoesTheRentPayableListOnlyLand.name
+  val shellUnit = DoesTheRentPayableListShellUnit.name
+  val none = DoesTheRentPayableListNone.name
+
+  val doesTheRentPayableForm: Form[DoesTheRentPayable] = Form(
     mapping(
-      "rentPayable"        -> list(text),
+      "rentPayable"        -> multipleDoesTheRentPayableMapping,
       "detailsToQuestions" ->
-        default(text, "").verifying(
-          nonEmpty(errorMessage = "error.detailsToQuestions.required"),
-          maxLength(1000, "error.detailsToQuestions.maxLength")
+        mandatoryIfAnyEqual(
+          Seq(("rentPayable[]", "proprietor"),
+            ("rentPayable[]", "otherProperty"),
+            ("rentPayable[]", "onlyPart"),
+            ("rentPayable[]", "onlyLand"),
+            ("rentPayable[]", "shellUnit")),
+          default(text, "").verifying(
+            nonEmpty(errorMessage = "error.detailsToQuestions.required"),
+            maxLength(1000, "error.detailsToQuestions.maxLength")
+          )
         )
     )(DoesTheRentPayable.apply)(DoesTheRentPayable.unapply)
   )

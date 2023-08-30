@@ -17,12 +17,12 @@
 @import models.submissions.aboutYourLeaseOrTenure.DoesTheRentPayable
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Text
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukCharacterCount
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukCheckboxes
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Checkboxes
-@import uk.gov.hmrc.govukfrontend.views.Aliases.CheckboxItem
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.checkboxes.CheckboxItem
 @import uk.gov.hmrc.govukfrontend.views.Aliases.ExclusiveCheckbox
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Fieldset
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Legend
@@ -52,39 +52,39 @@
 
         @govukCheckboxes(
             Checkboxes(
-                name = "rentPayable[]",
                 fieldset = Fieldset(
                     legend = Legend(
                         content = Text(messages("hint.select.applicable")),
                         classes = "govuk-fieldset__legend--s"
                     )
                 ),
+                name = "rentPayable[]",
                 items = Seq(
                     CheckboxItem(
-                        content = Text(messages("checkbox.rentPayable.proprietor")),
+                        content = Text(messages("rentPayable.proprietor")),
                         value = "proprietor"
                     ),
                     CheckboxItem(
-                        content = Text(messages("checkbox.rentPayable.otherProperty")),
+                        content = Text(messages("rentPayable.otherProperty")),
                         value = "otherProperty"
                     ),
                     CheckboxItem(
-                        content = Text(messages("checkbox.rentPayable.onlyPart")),
+                        content = Text(messages("rentPayable.onlyPart")),
                         value = "onlyPart"
                     ),
                     CheckboxItem(
-                        content = Text(messages("checkbox.rentPayable.onlyLand")),
+                        content = Text(messages("rentPayable.onlyLand")),
                         value = "onlyLand"
                     ),
                     CheckboxItem(
-                        content = Text(messages("checkbox.rentPayable.shellUnit")),
+                        content = Text(messages("rentPayable.shellUnit")),
                         value = "shellUnit"
                     ),
                     CheckboxItem(
                         divider = "or"
                     ),
                     CheckboxItem(
-                        content = Text(messages("checkbox.rentPayable.noneOfThese")),
+                        content = Text(messages("rentPayable.noneOfThese")),
                         value = "none",
                         behaviour = ExclusiveCheckbox
                     )
