@@ -435,7 +435,7 @@ propertyCurrentlyUsed.lodgeAndRestaurant = Lodge and restaurant
 propertyCurrentlyUsed.conferenceCentre = Conference centre
 propertyCurrentlyUsed.other = Other
 hint.other.use.propertyCurrentlyUsedOther = Describe the use of your property is not listed
-hint.other.vacant.propertyCurrentlyUsedOther = Please give details if the property has another use, or is vacant
+hint.other.vacant.propertyCurrentlyUsedOther = Please give details if the property has another use
 
 # WEBSITE FOR PROPERTY
 ######################
@@ -494,7 +494,7 @@ help.licensableActivitiesDetails.heading = Describing your licensable activities
 help.licensableActivitiesDetails.p1 = You’re only required to write a short description of the licensable activities we’re concerned with. Examples of acceptable descriptions include:
 help.licensableActivitiesDetails.list.p1 = We start serving alcohol at 9am, Monday to Saturday
 help.licensableActivitiesDetails.list.p2 = We have a DJ playing until 1am on Fridays and Saturdays
-help.licensableActivitiesDetails.list.p3 = Our hot-breakfast service starts at 4am every day
+help.licensableActivitiesDetails.list.p3 = Our hot-breakfast service starts at 4.45am every day
 error.licensableActivitiesDetails.required = Tell us about the licensable activities regularly commencing before 10:00 or after 23:30
 error.premisesLicenseConditionsDetails.maxLength = This must be 2000 characters or fewer
 
@@ -513,7 +513,7 @@ error.premisesLicenseConditions.missing = Select yes if your licence has any con
 premisesLicenseConditionsDetails.heading = Describe the conditions restricting the use of all or parts of the property
 help.premisesLicenseConditionsDetails.title = Help with describing restrictions on the use of the property
 help.premisesLicenseConditionsDetails.heading = Describing restricting on the use of the property
-help.premisesLicenseConditionsDetails.p1 = You’re only required to write a short description of the conditions we’re concerned with. Example of acceptable descriptions include:
+help.premisesLicenseConditionsDetails.p1 = You’re only required to write a short description of the conditions we’re concerned with. Examples of acceptable descriptions include:
 help.premisesLicenseConditionsDetails.list.p1 = No drinks allowed on the terrace after 10pm
 help.premisesLicenseConditionsDetails.list.p2 = Only 200 people allowed in the function room at any time
 help.premisesLicenseConditionsDetails.list.p3 = No entry or re-entry allowed after 11:30pm on Fridays and Saturdays
@@ -534,7 +534,7 @@ error.enforcementActionBeenTaken.missing = Select yes if any enforcement has bee
 enforcementActionHasBeenTakenDetails.heading = Describe the enforcement action taken
 help.enforcementActionHasBeenTakenDetails.title = Help with describing the enforcement action taken
 help.enforcementActionHasBeenTakenDetails.heading = Describing the enforcement action taken
-help.enforcementActionHasBeenTakenDetails.p1 = You’re only required to write a short description of the enforcement action taken against your premises. Example of acceptable descriptions include:
+help.enforcementActionHasBeenTakenDetails.p1 = You’re only required to write a short description of the enforcement action taken against your premises. Examples of acceptable descriptions include:
 help.enforcementActionHasBeenTakenDetails.list.p1 = Every retail sale or supply of alcohol made under the premises licence must be made or authorised by a person who holds a personal licence
 help.enforcementActionHasBeenTakenDetails.list.p2 = All customer exits must display signs asking customers to leave quietly and have consideration for residents
 help.enforcementActionHasBeenTakenDetails.list.p3 = We are required to keep an incident book
@@ -544,7 +544,7 @@ error.enforcementActionHasBeenTakenDetails.maxLength  = This must be 2000 charac
 # TIED FOR GOODS
 ################
 tiedForGoods.heading = Tied goods
-tiedForGoods.para1 = Many properties are required to sell certain goods, such as beers, wine and mixers, as part of their lease or tenancy agreement. This common arrangements for public houses leased through a brewery, for example.
+tiedForGoods.para1 = Many properties are required to sell certain goods, such as beers, wines and mixers, as part of their lease or tenancy agreement. This is a common arrangement for public houses leased through a brewery, for example.
 tiedForGoods.para2 = There are three main types of tie under which people can be required to sell goods:
 tiedForGoods.heading1 = Full tie
 tiedForGoods.p1 = People with a full tie are required to buy all the goods they sell from their landlord.
@@ -860,8 +860,7 @@ tenantsAdditionsDisregarded.p2 = Examples of additions or improvements could inc
 tenantsAdditionsDisregarded.list1 = fitting out a shell
 tenantsAdditionsDisregarded.list2 = adding parking
 tenantsAdditionsDisregarded.list3 = upgrading accommodation
-tenantsAdditionsDisregarded.subheading = Were any tenants‘ additions or improvements disregarded at the time the rent was agreed or determined?
-hint.tenantsAdditionsDisregarded = For example, is your rent based on the market value of the property before you made improvements like fitting out a shell, or adding parking
+tenantsAdditionsDisregarded.subheading = Were any tenants’ additions or improvements disregarded at the time the rent was agreed or determined?
 error.tenantsAdditionsDisregarded.missing = Select yes if any additions or improvements were disregarded
 
 ##TENANTS ADDITIONS DISREGARDED DETAILS
