@@ -27,7 +27,7 @@ footer.helpUsingGovUk.link = Help using GOV.UK
 footer.contactGovUk.link = Contact
 footer.welshHelp.link = Rhestr o Wasanaethau Cymraeg
 footer.needHelp = Need help
-footer.helplineText = Call our helpline on
+footer.helplineText = Call our helpline on 03000 501 262
 
 # SESSION TIMEOUT
 #################
@@ -1289,7 +1289,7 @@ confirmation.service = What did you think of this service? (takes 30 seconds)
 #########################
 helpWithService.title = Get help with this service
 common.helpWithServiceHeader = If you need more help
-common.helpWithService = Call the VOA team on 01234 567 890 for help using this service.
+common.helpWithService = Call the VOA team on 03000 501 262 for help using this service.
 
 # HELP WITH SERVICE CURRENT RENT FIRST PAID
 ##############################
