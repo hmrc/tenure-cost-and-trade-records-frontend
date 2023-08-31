@@ -548,8 +548,11 @@ error.tiedForGoods.missing = You must choose one
 ########################
 tiedForGoodsDetails.heading = What type of tie do you have?
 tiedForGoodsDetails.fullTie = Full tie
+hint.fullTie = You are required to buy all the goods you sell from your landlord
 tiedForGoodsDetails.beerOnly = Beer only
+hint.beerOnly = You buy beer from your landlord and can source other items independently
 tiedForGoodsDetails.partialTie = Partial tie
+hint.partialTie = You have some flexibility to source certain items independently, for example guest ales or fine wines
 partialTieConditional.textbox = Give details of your partial tie
 error.tiedForGoodsDetails.required = Enter details of your partial tie
 
