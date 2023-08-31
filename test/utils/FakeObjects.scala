@@ -413,7 +413,7 @@ trait FakeObjects {
         )
       )
     )
-  val connectedSubmission = ConnectedSubmission(stillConnectedDetailsYesToAllSession)
+  val connectedSubmission                     = ConnectedSubmission(stillConnectedDetailsYesToAllSession)
 
   val prefilledAboutTheTradingHistory = AboutTheTradingHistory(
     occupationAndAccountingInformation = Some(

@@ -534,13 +534,6 @@ error.enforcementActionHasBeenTakenDetails.maxLength  = This must be 2000 charac
 ################
 tiedForGoods.heading = Tied goods
 tiedForGoods.para1 = Many properties are required to sell certain goods, such as beers, wines and mixers, as part of their lease or tenancy agreement. This is a common arrangement for public houses leased through a brewery, for example.
-tiedForGoods.para2 = There are three main types of tie under which people can be required to sell goods:
-tiedForGoods.heading1 = Full tie
-tiedForGoods.p1 = People with a full tie are required to buy all the goods they sell from their landlord.
-tiedForGoods.heading2 = Beer only
-tiedForGoods.p2 = As the name suggests, people with a beer-only tie buy beer from their landlord but can source other items independently.
-tiedForGoods.heading3 = Partial tie
-tiedForGoods.p3 = Partial ties are normally negotiated to give the tenant some flexibility to sell certain items independently, for example guest ales or fine wines.
 tiedForGoods.label = Are you required to sell certain goods as part of your lease or tenancy agreement?
 error.tiedForGoods.missing = You must choose one
 

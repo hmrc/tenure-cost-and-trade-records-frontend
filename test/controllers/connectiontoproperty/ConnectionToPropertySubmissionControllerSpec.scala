@@ -30,13 +30,13 @@ import scala.concurrent.Future
 
 class ConnectionToPropertySubmissionControllerSpec extends TestBaseSpec {
 
-  val audit = mock[Audit]
+  val audit               = mock[Audit]
   val submissionConnector = mock[SubmissionConnector]
-  val errorHandler = mock[ErrorHandler]
+  val errorHandler        = mock[ErrorHandler]
   //doNothing.when(audit).sendExplicitAudit(any[String], any[JsObject])(any[HeaderCarrier], any[ExecutionContext])
   def connectionToPropertySubmissionController(
     stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledNotVacantPropertiesCYA)
-  )         =
+  )                       =
     new ConnectionToPropertySubmissionController(
       stubMessagesControllerComponents(),
       submissionConnector,

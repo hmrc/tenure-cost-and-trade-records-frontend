@@ -43,11 +43,11 @@ class SubmissionConnectorSpec extends TestBaseSpec {
     Server.withApplicationFromContext() { context =>
       new BuiltInComponentsFromContext(context) with HttpFiltersComponents {
         override def router: Router = Router.from {
-          case PUT(p"/tenure-cost-and-trade-records/submissions/connected/99996010004")    =>
+          case PUT(p"/tenure-cost-and-trade-records/submissions/connected/99996010004") =>
             Action { req =>
               Created("")
             }
-          case PUT(p"/tenure-cost-and-trade-records/submissions/connected/WRONG_ID")       =>
+          case PUT(p"/tenure-cost-and-trade-records/submissions/connected/WRONG_ID")    =>
             Action { req =>
               BadRequest(Json.obj("statusCode" -> BAD_REQUEST, "message" -> "Wrong ID"))
             }

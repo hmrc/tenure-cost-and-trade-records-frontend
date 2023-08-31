@@ -29,28 +29,27 @@ import models.submissions.notconnected.RemoveConnectionDetails
 import models.submissions.requestReferenceNumber.RequestReferenceNumberDetails
 import play.api.libs.json.Json
 
-case class ConnectedSubmission (
-                                 referenceNumber: String,
-                                 forType: String,
-                                 address: Address,
-                                 token: String,
-                                 stillConnectedDetails: Option[StillConnectedDetails] = None,
-                                 removeConnectionDetails: Option[RemoveConnectionDetails] = None,
-                                 aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = None,
-                                 additionalInformation: Option[AdditionalInformation] = None,
-                                 aboutTheTradingHistory: Option[AboutTheTradingHistory] = None,
-                                 aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = None,
-                                 aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = None,
-                                 aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = None,
-                                 saveAsDraftPassword: Option[String] = None,
-                                 lastCYAPageUrl: Option[String] = None,
-                                 requestReferenceNumberDetails: Option[RequestReferenceNumberDetails] = None,
-                                 downloadPDFDetails: Option[DownloadPDFDetails] = None
-                               )
+case class ConnectedSubmission(
+  referenceNumber: String,
+  forType: String,
+  address: Address,
+  token: String,
+  stillConnectedDetails: Option[StillConnectedDetails] = None,
+  removeConnectionDetails: Option[RemoveConnectionDetails] = None,
+  aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = None,
+  additionalInformation: Option[AdditionalInformation] = None,
+  aboutTheTradingHistory: Option[AboutTheTradingHistory] = None,
+  aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = None,
+  aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = None,
+  aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = None,
+  saveAsDraftPassword: Option[String] = None,
+  lastCYAPageUrl: Option[String] = None,
+  requestReferenceNumberDetails: Option[RequestReferenceNumberDetails] = None,
+  downloadPDFDetails: Option[DownloadPDFDetails] = None
+)
 
 object ConnectedSubmission {
   implicit val format = Json.format[ConnectedSubmission]
-
 
   def apply(session: Session): ConnectedSubmission = ConnectedSubmission(
     session.referenceNumber,
