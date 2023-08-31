@@ -531,7 +531,6 @@ error.enforcementActionHasBeenTakenDetails.required = Tell us about the enforcem
 error.enforcementActionHasBeenTakenDetails.maxLength  = This must be 2000 characters or fewer
 
 # TIED FOR GOODS
-# TIED FOR GOODS
 ################
 tiedForGoods.heading = Tied goods
 tiedForGoods.para1 = Many properties are required to sell certain goods, such as beers, wines and mixers, as part of their lease or tenancy agreement. This is a common arrangement for public houses leased through a brewery, for example.
