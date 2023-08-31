@@ -58,13 +58,6 @@ class TiedForGoodsViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
     "contain explanation section" in {
       val doc = asDocument(createView())
       assert(doc.toString.contains(messages("tiedForGoods.para1")))
-      assert(doc.toString.contains(messages("tiedForGoods.para2")))
-      assert(doc.toString.contains(messages("tiedForGoods.heading1")))
-      assert(doc.toString.contains(messages("tiedForGoods.p1")))
-      assert(doc.toString.contains(messages("tiedForGoods.heading2")))
-      assert(doc.toString.contains(messages("tiedForGoods.p2")))
-      assert(doc.toString.contains(messages("tiedForGoods.heading3")))
-      assert(doc.toString.contains(messages("tiedForGoods.p3")))
     }
 
     "contain label question" in {

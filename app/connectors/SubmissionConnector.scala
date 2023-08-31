@@ -48,7 +48,7 @@ class HodSubmissionConnector @Inject() (config: ServicesConfig, http: ForHttp)(i
     http.PUT(s"${url(s"submissions/notConnected/$refNumber")}", submission).map(_ => ())
 
   override def submitConnected(refNumber: String, submission: ConnectedSubmission)(implicit
-                                                                                         hc: HeaderCarrier
+    hc: HeaderCarrier
   ): Future[Unit] =
     http.PUT(s"${url(s"submissions/connected/$refNumber")}", submission).map(_ => ())
 }
@@ -60,6 +60,6 @@ trait SubmissionConnector {
   ): Future[Unit]
 
   def submitConnected(refNumber: String, submission: ConnectedSubmission)(implicit
-                                                                                hc: HeaderCarrier
+    hc: HeaderCarrier
   ): Future[Unit]
 }

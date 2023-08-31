@@ -54,9 +54,9 @@ class ConnectionToPropertySubmissionController @Inject() (
 
   private def submit[T]()(implicit request: SessionRequest[T]): Future[Result] = {
     implicit val hc: HeaderCarrier = HeaderCarrierConverter.fromRequestAndSession(request, request.session)
-    val auditType = "VacantFormSubmission"
-    val submissionJson = Json.toJson(request.sessionData).as[JsObject]
-    val session = request.sessionData
+    val auditType                  = "VacantFormSubmission"
+    val submissionJson             = Json.toJson(request.sessionData).as[JsObject]
+    val session                    = request.sessionData
     submitToBackend(session).map { _ =>
       audit.sendExplicitAudit(auditType, submissionJson ++ Audit.languageJson)
       Redirect(controllers.connectiontoproperty.routes.ConnectionToPropertySubmissionController.confirmation())
@@ -72,8 +72,8 @@ class ConnectionToPropertySubmissionController @Inject() (
   }
 
   private def submitToBackend(
-                               session: Session
-                             )(implicit hc: HeaderCarrier, request: SessionRequest[_]): Future[Unit] = {
+    session: Session
+  )(implicit hc: HeaderCarrier, request: SessionRequest[_]): Future[Unit] = {
 
     val submission = ConnectedSubmission(session)
 
