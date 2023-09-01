@@ -76,9 +76,9 @@ class AddAnotherCateringOperationControllerSpec extends TestBaseSpec {
       val addAnotherCateringOperationOrLettingAccommodation: String
     } = new {
       val addAnotherCateringOperationOrLettingAccommodation: String =
-        "addAnotherCateringOperationOrLettingAccommodations"
+        "addAnotherCateringOperation"
     }
 
-    val baseFormData: Map[String, String] = Map("addAnotherCateringOperationOrLettingAccommodations" -> "yes")
+    val baseFormData: Map[String, String] = Map("addAnotherCateringOperation" -> "yes")
   }
 }
