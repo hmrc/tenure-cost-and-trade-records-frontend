@@ -841,9 +841,9 @@ error.cateringOperationOrLettingAccommodationCheckboxesDetails.noneSelectedWithO
 
 # ADD ANOTHER CATERING OPERATION OR LETTING ACCOMMODATION DETAILS
 #################################################################
-addAnotherCateringOperationOrLettingAccommodations.heading = You have added {0} separate business or franchise
+addAnotherCateringOperation.heading = You have added {0} separate business or franchise
 addAnotherLettingOtherPartOfProperty.heading = You have added {0} letting
-label.addAnotherCateringOperationOrLettingAccommodations = Do you need to add another separate business or franchise?
+label.addAnotherCateringOperation = Do you need to add another separate business or franchise?
 label.addAnotherLettingOtherPartOfProperty = Do you need to add another letting?
 error.addAnotherSeparateBusinessOrFranchise.required = Select whether you need to add another separate business or franchise
 error.addAnotherLetting.required = Select whether you need to add another letting
