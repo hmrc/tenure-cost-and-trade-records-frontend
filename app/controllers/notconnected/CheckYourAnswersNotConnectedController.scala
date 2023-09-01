@@ -23,7 +23,7 @@ import models.submissions.NotConnectedSubmission
 import controllers.FORDataCaptureController
 import models.Session
 import play.api.{Logger, Logging}
-import play.api.i18n.I18nSupport
+import play.api.i18n.{I18nSupport, Messages}
 import play.api.libs.json.{JsObject, Json}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
@@ -82,7 +82,7 @@ class CheckYourAnswersNotConnectedController @Inject() (
 
   private def submitToBackend(
     session: Session
-  )(implicit hc: HeaderCarrier, request: SessionRequest[_]): Future[Unit] = {
+  )(implicit hc: HeaderCarrier, request: SessionRequest[_], messages: Messages): Future[Unit] = {
     val sessionRemoveConnection = session.removeConnectionDetails.flatMap(_.removeConnectionDetails)
 
     val submission = NotConnectedSubmission(
@@ -98,7 +98,7 @@ class CheckYourAnswersNotConnectedController @Inject() (
         case Some(_) => true
         case None    => false
       },
-      Some(Audit.language)
+      Some(messages.lang.language)
     )
 
     submissionConnector.submitNotConnected(session.referenceNumber, submission)
