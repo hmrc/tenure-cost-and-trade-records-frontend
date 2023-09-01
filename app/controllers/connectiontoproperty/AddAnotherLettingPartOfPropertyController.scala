@@ -51,7 +51,7 @@ class AddAnotherLettingPartOfPropertyController @Inject() (
             case _                        => addAnotherLettingForm
           },
           index,
-          controllers.connectiontoproperty.routes.LettingPartOfPropertyDetailsRentController.show(index).url,
+          controllers.connectiontoproperty.routes.LettingPartOfPropertyItemsIncludedInRentController.show(index).url,
           request.sessionData.toSummary
         )
       )
@@ -66,7 +66,7 @@ class AddAnotherLettingPartOfPropertyController @Inject() (
           addAnotherLettingPartOfPropertyView(
             formWithErrors,
             index,
-            controllers.connectiontoproperty.routes.LettingPartOfPropertyDetailsRentController
+            controllers.connectiontoproperty.routes.LettingPartOfPropertyItemsIncludedInRentController
               .show(index)
               .url,
             request.sessionData.toSummary
