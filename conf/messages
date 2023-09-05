@@ -1277,6 +1277,8 @@ confirmation.whatNext = What happens next
 confirmation.list.1 = We have sent your application to the Valuation Office Agency.
 confirmation.list.2 = They may need to contact you for further information.
 confirmation.service = What did you think of this service? (takes 30 seconds)
+print.link=Print a copy of your form
+print.link.cantPrintLater=If you want to print a copy, you should do it now as you will not be able to print it later.
 
 # Help section
 ##############

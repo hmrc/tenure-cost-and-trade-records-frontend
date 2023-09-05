@@ -15,34 +15,45 @@
  *@
 
 @import models.Session
+@import views.html.includes.notConnectedAnswersTable
 
-@this(layout: Layout)
+@this(
+        layout: Layout,
+        notConnectedAnswers: notConnectedAnswersTable
+)
 
 @(session: Session)(implicit request: Request[_], messages: Messages)
 
-@layout(
-    pageHeading = messages("confirmation.heading"),
-    summary = Some(session.toSummary),
-    showH1 = false,
-    withTimeoutDialog = false
-) {
+    @layout(
+        pageHeading = messages("confirmation.heading"),
+        summary = Some(session.toSummary),
+        showH1 = false,
+        withTimeoutDialog = false
+    ) {
 
-    <div class="govuk-panel govuk-panel--confirmation no-print">
-        <h1 class="govuk-panel__title">@messages(s"confirmation.heading")</h1>
-    </div>
+        <div class="govuk-panel govuk-panel--confirmation govuk-!-display-none-print">
+            <h1 class="govuk-panel__title">@messages(s"confirmation.heading")</h1>
+        </div>
 
-    <p class="govuk-body">@messages("confirmation.emailConfirm")</p>
-    <p class="govuk-body">@messages("confirmation.saveCopyOfAnswers")</p>
-    <p class="govuk-body">@messages("confirmation.unableToRetrieveAnswers")</p>
+        @includes.printConfirmation()
 
-    <h2 class="govuk-heading-m">@messages("confirmation.whatNext")</h2>
-    <p class="govuk-body">@messages("confirmation.list.1")</p>
-    <p class="govuk-body">@messages("confirmation.list.2")</p>
+        <div class="print-only">
+            @notConnectedAnswers(session)
+        </div>
 
-    <p class="govuk-body">@messages("confirmation.service")</p>
+        <div class="govuk-!-display-none-print">
+            <p class="govuk-body">@messages("confirmation.emailConfirm")</p>
+            <p class="govuk-body">@messages("confirmation.saveCopyOfAnswers")</p>
+            <p class="govuk-body">@messages("confirmation.unableToRetrieveAnswers")</p>
+        </div>
 
-    <p class="govuk-body">
-        <a href="@routes.LoginController.show">@messages("label.submitAnotherForm")</a>
-    </p>
-}
+        <h2 class="govuk-heading-m">@messages("confirmation.whatNext")</h2>
+        <p class="govuk-body">@messages("confirmation.list.1")</p>
+        <p class="govuk-body">@messages("confirmation.list.2")</p>
 
+        <p class="govuk-body govuk-!-display-none-print">@messages("confirmation.service")</p>
+
+        <p class="govuk-body govuk-!-display-none-print">
+            <a href="@routes.LoginController.show">@messages("label.submitAnotherForm")</a>
+        </p>
+    }
