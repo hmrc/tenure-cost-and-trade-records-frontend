@@ -14,18 +14,6 @@
  * limitations under the License.
  */
 
-package form.aboutYourLeaseOrTenure
+package form
 
-import form.MappingSupport.includedInYourRentInformation
-import models.submissions.aboutYourLeaseOrTenure.IncludedInYourRentDetails
-import play.api.data.Form
-import play.api.data.Forms.{list, mapping, text}
-
-object IncludedInYourRentForm {
-
-  val includedInYourRentForm = Form(
-    mapping(
-      "includedInYourRent" -> list(includedInYourRentInformation)
-    )(IncludedInYourRentDetails.apply)(IncludedInYourRentDetails.unapply)
-  )
-}
+case class Feedback(rating: Option[String], comments: Option[String])

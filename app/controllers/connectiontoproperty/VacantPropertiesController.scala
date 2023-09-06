@@ -19,6 +19,7 @@ package controllers.connectiontoproperty
 import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
 import form.connectiontoproperty.VacantPropertiesForm.vacantPropertiesForm
+import models.Session
 import models.submissions.connectiontoproperty.StillConnectedDetails.updateStillConnectedDetails
 import models.submissions.connectiontoproperty.VacantProperties
 import navigation.ConnectionToPropertyNavigator
@@ -51,6 +52,7 @@ class VacantPropertiesController @Inject() (
             case Some(vacantProperties) => vacantPropertiesForm.fillAndValidate(vacantProperties)
             case _                      => vacantPropertiesForm
           },
+          getBackLink(request.sessionData),
           request.sessionData.toSummary
         )
       )
@@ -64,6 +66,7 @@ class VacantPropertiesController @Inject() (
         BadRequest(
           vacantPropertiesView(
             formWithErrors,
+            getBackLink(request.sessionData),
             request.sessionData.toSummary
           )
         ),
@@ -74,4 +77,15 @@ class VacantPropertiesController @Inject() (
       }
     )
   }
+
+  private def getBackLink(answers: Session): String =
+    answers.stillConnectedDetails.flatMap(_.addressConnectionType.map(_.name)) match {
+      case Some("yes")                => controllers.connectiontoproperty.routes.AreYouStillConnectedController.show().url
+      case Some("yes-change-address") =>
+        controllers.connectiontoproperty.routes.EditAddressController.show().url
+      case Some("no")                 => controllers.connectiontoproperty.routes.AreYouStillConnectedController.show().url
+      case _                          =>
+        logger.warn(s"Back link for vacant properties reached with unknown enforcement taken value")
+        controllers.routes.TaskListController.show().url
+    }
 }

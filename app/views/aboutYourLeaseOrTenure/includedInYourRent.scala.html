@@ -38,24 +38,24 @@
  pageHeading = messages("includedInYourRent.heading"),
  showH1 = false,
  showSection = true,
- summary = Some(summary),
+ summary = summary,
  sectionName = messages("label.section.aboutYourLeaseOrTenure"),
  backLinkUrl = controllers.aboutYourLeaseOrTenure.routes.CurrentLeaseOrAgreementBeginController.show.url,
  theForm = theForm
 ) {
 
-  @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.IncludedInYourRentController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
+  @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.IncludedInYourRentController.submit()) {
 
       @govukCheckboxes(
           Checkboxes(
-              fieldset = Some(Fieldset(
-                  legend = Some(Legend(
+              fieldset = Fieldset(
+                  legend = Legend(
                       content = Text(Messages("includedInYourRent.heading")),
                       classes = "govuk-label--l govuk-fieldset__legend--m",
                       isPageHeading = true
-                  ))
-              )),
-              name = "includedInYourRent",
+                  )
+              ),
+              name = "includedInYourRent[]",
               items = Seq(
                   CheckboxItem(
                       id = "vat",
@@ -73,13 +73,13 @@
                       value = "waterCharges"
                   ),
                   CheckboxItem(
-                      divider = Some("or")
+                      divider = "or"
                   ),
                   CheckboxItem(
                       id = "none",
-                      content = Text(messages("label.includedInYourRent.none")),
+                      content = Text(messages("label.includedInYourRent.noneOfThese")),
                       value = "none",
-                      behaviour = Some(ExclusiveCheckbox)
+                      behaviour = ExclusiveCheckbox
                   )
               ),
               hint = Hint(content = HtmlContent(messages("hint.includedInYourRent"))),
@@ -88,6 +88,5 @@
       )
     @includes.continueSaveAsDraftButtons(govukButton)
   }
+
 }
-
-

@@ -27,7 +27,7 @@ footer.helpUsingGovUk.link = Help using GOV.UK
 footer.contactGovUk.link = Contact
 footer.welshHelp.link = Rhestr o Wasanaethau Cymraeg
 footer.needHelp = Need help
-footer.helplineText = Call our helpline on
+footer.helplineText = Call our helpline on 03000 501 262
 
 # SESSION TIMEOUT
 #################
@@ -424,7 +424,7 @@ propertyCurrentlyUsed.lodgeAndRestaurant = Lodge and restaurant
 propertyCurrentlyUsed.conferenceCentre = Conference centre
 propertyCurrentlyUsed.other = Other
 hint.other.use.propertyCurrentlyUsedOther = Describe the use of your property is not listed
-hint.other.vacant.propertyCurrentlyUsedOther = Please give details if the property has another use, or is vacant
+hint.other.vacant.propertyCurrentlyUsedOther = Please give details if the property has another use
 
 # WEBSITE FOR PROPERTY
 ######################
@@ -483,7 +483,7 @@ help.licensableActivitiesDetails.heading = Describing your licensable activities
 help.licensableActivitiesDetails.p1 = You’re only required to write a short description of the licensable activities we’re concerned with. Examples of acceptable descriptions include:
 help.licensableActivitiesDetails.list.p1 = We start serving alcohol at 9am, Monday to Saturday
 help.licensableActivitiesDetails.list.p2 = We have a DJ playing until 1am on Fridays and Saturdays
-help.licensableActivitiesDetails.list.p3 = Our hot-breakfast service starts at 4am every day
+help.licensableActivitiesDetails.list.p3 = Our hot-breakfast service starts at 4.45am every day
 error.licensableActivitiesDetails.required = Tell us about the licensable activities regularly commencing before 10:00 or after 23:30
 error.premisesLicenseConditionsDetails.maxLength = This must be 2000 characters or fewer
 
@@ -502,7 +502,7 @@ error.premisesLicenseConditions.missing = Select yes if your licence has any con
 premisesLicenseConditionsDetails.heading = Describe the conditions restricting the use of all or parts of the property
 help.premisesLicenseConditionsDetails.title = Help with describing restrictions on the use of the property
 help.premisesLicenseConditionsDetails.heading = Describing restricting on the use of the property
-help.premisesLicenseConditionsDetails.p1 = You’re only required to write a short description of the conditions we’re concerned with. Example of acceptable descriptions include:
+help.premisesLicenseConditionsDetails.p1 = You’re only required to write a short description of the conditions we’re concerned with. Examples of acceptable descriptions include:
 help.premisesLicenseConditionsDetails.list.p1 = No drinks allowed on the terrace after 10pm
 help.premisesLicenseConditionsDetails.list.p2 = Only 200 people allowed in the function room at any time
 help.premisesLicenseConditionsDetails.list.p3 = No entry or re-entry allowed after 11:30pm on Fridays and Saturdays
@@ -523,7 +523,7 @@ error.enforcementAction.missing = Select yes if any enforcement has been taken
 enforcementActionHasBeenTakenDetails.heading = Describe the enforcement action taken
 help.enforcementActionHasBeenTakenDetails.title = Help with describing the enforcement action taken
 help.enforcementActionHasBeenTakenDetails.heading = Describing the enforcement action taken
-help.enforcementActionHasBeenTakenDetails.p1 = You’re only required to write a short description of the enforcement action taken against your premises. Example of acceptable descriptions include:
+help.enforcementActionHasBeenTakenDetails.p1 = You’re only required to write a short description of the enforcement action taken against your premises. Examples of acceptable descriptions include:
 help.enforcementActionHasBeenTakenDetails.list.p1 = Every retail sale or supply of alcohol made under the premises licence must be made or authorised by a person who holds a personal licence
 help.enforcementActionHasBeenTakenDetails.list.p2 = All customer exits must display signs asking customers to leave quietly and have consideration for residents
 help.enforcementActionHasBeenTakenDetails.list.p3 = We are required to keep an incident book
@@ -533,14 +533,7 @@ error.enforcementActionHasBeenTakenDetails.maxLength  = This must be 2000 charac
 # TIED FOR GOODS
 ################
 tiedForGoods.heading = Tied goods
-tiedForGoods.para1 = Many properties are required to sell certain goods, such as beers, wine and mixers, as part of their lease or tenancy agreement. This common arrangements for public houses leased through a brewery, for example.
-tiedForGoods.para2 = There are three main types of tie under which people can be required to sell goods:
-tiedForGoods.heading1 = Full tie
-tiedForGoods.p1 = People with a full tie are required to buy all the goods they sell from their landlord.
-tiedForGoods.heading2 = Beer only
-tiedForGoods.p2 = As the name suggests, people with a beer-only tie buy beer from their landlord but can source other items independently.
-tiedForGoods.heading3 = Partial tie
-tiedForGoods.p3 = Partial ties are normally negotiated to give the tenant some flexibility to sell certain items independently, for example guest ales or fine wines.
+tiedForGoods.para1 = Many properties are required to sell certain goods, such as beers, wines and mixers, as part of their lease or tenancy agreement. This is a common arrangement for public houses leased through a brewery, for example.
 tiedForGoods.label = Are you required to sell certain goods as part of your lease or tenancy agreement?
 error.tiedForGoods.missing = You must choose one
 
@@ -548,8 +541,11 @@ error.tiedForGoods.missing = You must choose one
 ########################
 tiedForGoodsDetails.heading = What type of tie do you have?
 tiedForGoodsDetails.fullTie = Full tie
+hint.fullTie = You are required to buy all the goods you sell from your landlord
 tiedForGoodsDetails.beerOnly = Beer only
+hint.beerOnly = You buy beer from your landlord and can source other items independently
 tiedForGoodsDetails.partialTie = Partial tie
+hint.partialTie = You have some flexibility to source certain items independently, for example guest ales or fine wines
 partialTieConditional.textbox = Give details of your partial tie
 error.tiedForGoodsDetails.required = Enter details of your partial tie
 
@@ -563,11 +559,12 @@ error.tenancyLeaseAgreement.missing = Select yes if the tenancy, lease or agreem
 
 # FRANCHISE OR LETTINGS TIED TO PROPERTY
 #######################################
-franchiseLettings.heading = Do you have any franchises or lettings tied to the property?
-franchiseLettings.subheading = You should declare any:
-franchiseLettings.list1 = catering operation or letting accommodation run as a separate business if you’ve not included their turnover on the previous page
-franchiseLettings.list2 = rent received from letting other parts of the property including advertising billboards, car parking or telephone masts
-error.franchiseOrLettingsTiedToProperty.missing = Select yes if any franchises or lettings are tied to the property
+franchiseLettings.heading = Rental income
+franchiseLettings.p1 = You must declare any income received by letting out parts of your property.
+franchiseLettings.p2 = You must include:
+franchiseLettings.list1 = any payments received instead of trading receipts from third-party businesses operating from the property under a concession or franchise agreement.
+franchiseLettings.list2 = rental income from letting other parts of the property including advertising billboards, car parking or phone masts.
+franchiseLettings.subheading = Do you still receive income from letting out parts of your property?
 
 # ABOUT YOUR LANDLORD
 ##############################
@@ -591,10 +588,11 @@ error.underReview.required = Select yes if the rent is currently under review, o
 ##############################
 includedInYourRent.heading = Are any of the following are included in your rent?
 includedInYourRentApply.subheading = Select any that apply
-checkbox.includedInYourRent.vat = VAT
-checkbox.includedInYourRent.nondomesticRates = Non-domestic rates
-checkbox.includedInYourRent.waterCharges = Water charges
-checkbox.includedInYourRent.none = No, none of these are included in the rent
+label.includedInYourRent.vat = VAT
+label.includedInYourRent.nondomesticRates = Non-domestic rates
+label.includedInYourRent.waterCharges = Water charges
+label.includedInYourRent.noneOfThese = No, none of these are included in the rent
+label.includedInYourRent.none = None
 hint.includedInYourRent = Select all that apply
 error.vat.missing = You must choose one
 error.nondomesticRates.missing = You must choose one
@@ -609,7 +607,7 @@ error.cateringOperationOrLettingAccommodation.missing = Select yes if any separa
 # LETTING OTHER PART OF PROPERTY
 ##############################
 lettingOtherPartOfProperty.heading = Is any rent received from letting other parts of the property?
-hint.lettingOtherPartOfProperty = Including advertising rights, stations or hoardings
+hint.lettingOtherPartOfProperty = For example, advertising billboards, phones masts or car parking. You will have the opportunity to add additional lettings if required.
 error.lettingOtherPartOfProperty.missing = Select yes if any rent received from letting other parts of the property
 
 # PROPERTY USE LEASEBACK ARRANGEMENT
@@ -639,6 +637,8 @@ checkbox.rentPayable.otherProperty = Other property
 checkbox.rentPayable.onlyPart = Only part of the property
 checkbox.rentPayable.onlyLand = Only to land (excluding buildings)
 checkbox.rentPayable.shellUnit = A 'shell' unit you had to fit out yourself
+checkbox.rentPayable.noneOfThese = No, the rent payable does not include or relate to any of these options
+checkbox.rentPayable.none = None
 label.detailsToQuestions = Give details if you selected any of the options
 hint.detailsToQuestions = For example, the rent includes residential accommodation, or also includes the premises next door
 error.detailsToQuestions.required = Please provide further information
@@ -802,7 +802,7 @@ error.lettingTypeOfBusiness.maxLength = Description of letting must be 100 chara
 # CATERING OPERATION OR LETTING ACCOMMODATION RENT DETAILS
 ##########################################################
 cateringOperationOrLettingAccommodationRentDetails.heading = Annual rent for {0}
-label.annualRent = Annual rent payment (excluding VAT)
+label.annualRent = Annual rent payment excluding VAT
 label.dateInput = When was this sum fixed?
 error.required.annualRentExcludingVat.annualRent = Enter the annual rent excluding VAT
 error.invalid_currency.annualRent.annualRent = The annual rent figure must be a number
@@ -825,9 +825,9 @@ error.cateringOperationOrLettingAccommodationCheckboxesDetails.noneSelectedWithO
 
 # ADD ANOTHER CATERING OPERATION OR LETTING ACCOMMODATION DETAILS
 #################################################################
-addAnotherCateringOperationOrLettingAccommodations.heading = You have added {0} separate business or franchise
+addAnotherCateringOperation.heading = You have added {0} separate business or franchise
 addAnotherLettingOtherPartOfProperty.heading = You have added {0} letting
-label.addAnotherCateringOperationOrLettingAccommodations = Do you need to add another separate business or franchise?
+label.addAnotherCateringOperation = Do you need to add another separate business or franchise?
 label.addAnotherLettingOtherPartOfProperty = Do you need to add another letting?
 error.addAnotherSeparateBusinessOrFranchise.required = Select whether you need to add another separate business or franchise
 error.addAnotherLetting.required = Select whether you need to add another letting
@@ -840,8 +840,7 @@ tenantsAdditionsDisregarded.p2 = Examples of additions or improvements could inc
 tenantsAdditionsDisregarded.list1 = fitting out a shell
 tenantsAdditionsDisregarded.list2 = adding parking
 tenantsAdditionsDisregarded.list3 = upgrading accommodation
-tenantsAdditionsDisregarded.subheading = Were any tenants‘ additions or improvements disregarded at the time the rent was agreed or determined?
-hint.tenantsAdditionsDisregarded = For example, is your rent based on the market value of the property before you made improvements like fitting out a shell, or adding parking
+tenantsAdditionsDisregarded.subheading = Were any tenants additions or improvements disregarded at the time the rent was agreed or determined?
 error.tenantsAdditionsDisregarded.missing = Select yes if any additions or improvements were disregarded
 
 ##TENANTS ADDITIONS DISREGARDED DETAILS
@@ -1112,21 +1111,23 @@ key.still.connected = Still Connected to the property?
 key.ever.connected = Ever connected to the property?
 key.contact.details = Contact Details
 
+# About franchise or lettings CYA
 checkYourAnswers.heading = This is a holding page for the check your answers page
 checkYourAnswersAboutFranchiseOrLettings.heading = Check your answers - franchises or lettings
-checkYourAnswersAboutFranchiseOrLettings.franchiseLettings = Franchises or lettings tied to the property?
-checkYourAnswersAboutFranchiseOrLettings.separateBusinesses.heading = Separate businesses operating from the property
+checkYourAnswersAboutFranchiseOrLettings.franchiseLettings.heading = Rental income
+checkYourAnswersAboutFranchiseOrLettings.franchiseLettings = Rental income?
+checkYourAnswersAboutFranchiseOrLettings.separateBusinesses.heading = Separate businesses
 checkYourAnswersAboutFranchiseOrLettings.separateBusiness = Separate business run from the property?
 checkYourAnswersAboutFranchiseOrLettings.lettingsOtherPartOfProperties.heading = Lettings
-checkYourAnswersAboutFranchiseOrLettings.rentFromPartOfProperties = Rent received from lettings?
-checkYourAnswersAboutFranchiseOrLettings.operatorName = Operator’s name
-checkYourAnswersAboutFranchiseOrLettings.typeOfBusiness = Type of business
-checkYourAnswersAboutFranchiseOrLettings.correspondenceAddress = Correspondence address
-checkYourAnswersAboutFranchiseOrLettings.lettingOperatorName = Tenant’s name
-checkYourAnswersAboutFranchiseOrLettings.lettingTypeOfBusiness = Description of letting
-checkYourAnswersAboutFranchiseOrLettings.annualRent = Annual rent payment
-checkYourAnswersAboutFranchiseOrLettings.dateSumFixed = When sum was fixed?
-checkYourAnswersAboutFranchiseOrLettings.itemsInRent = Items included in rent
+checkYourAnswersAboutFranchiseOrLettings.rentFromPartOfProperties = Letting other parts of the property?
+checkYourAnswersAboutFranchiseOrLettings.operatorName = Business’s details
+checkYourAnswersAboutFranchiseOrLettings.lettingOperatorName = Tenant’s details
+checkYourAnswersAboutFranchiseOrLettings.annualRent = Annual rent
+checkYourAnswersAboutFranchiseOrLettings.dateSumFixed = Fixed on {0}
+checkYourAnswersAboutFranchiseOrLettings.itemsInRent = Included in rent
+checkYourAnswersAboutFranchiseOrLettings.addBusiness = Add another business?
+checkYourAnswersAboutFranchiseOrLettings.addLetting = Add another letting?
+
 checkYourAnswersAboutYourLeaseOrTenure.heading = Check your answers - your lease or agreement
 checkYourAnswersAboutYourLeaseOrTenure.yourLandlord.heading = Your landlord
 checkYourAnswersAboutYourLeaseOrTenure.landlordDetails = Landlord’s details
@@ -1227,7 +1228,7 @@ confirmation.service = What did you think of this service? (takes 30 seconds)
 #########################
 helpWithService.title = Get help with this service
 common.helpWithServiceHeader = If you need more help
-common.helpWithService = Call the VOA team on 01234 567 890 for help using this service.
+common.helpWithService = Call the VOA team on 03000 501 262 for help using this service.
 
 # HELP WITH SERVICE CURRENT RENT FIRST PAID
 ##############################

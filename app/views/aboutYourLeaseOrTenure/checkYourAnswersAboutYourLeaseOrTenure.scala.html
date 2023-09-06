@@ -97,7 +97,7 @@
                         sectionAnswers.optionalRow("checkYourAnswersAboutYourLeaseOrTenure.rentDueInNext12Months",
                             _.currentRentPayableWithin12Months.map(r => Seq(
                                 messages(s"label.${r.currentRentWithin12Months.name}"),
-                                messages("checkYourAnswersAboutYourLeaseOrTenure.nextReviewOrExpiryDate", r => dateUtil.formatDayMonthAbbrYear(r))
+                                r.rentActuallyAgreed.map(x => messages("checkYourAnswersAboutYourLeaseOrTenure.nextReviewOrExpiryDate", r.rentActuallyAgreed.map(date => dateUtil.formatDayMonthAbbrYear(date).getOrElse("")).getOrElse(""))).getOrElse("")
                             ).mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>")),
                             aboutYourLeaseOrTenure.routes.CurrentRentPayableWithin12MonthsController.show(), "",
                             ("valueAsHtml", _ => None))
@@ -149,11 +149,10 @@
             <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutYourLeaseOrTenure.whatRentIncludes.heading")</h2>
 
             @govukSummaryList(SummaryList(rows =
-                sectionAnswers.conditionRow(
-                    _.includedInYourRentDetails.map(_.includedInYourRent.name).contains("no"),
+                sectionAnswers.row(
                     "checkYourAnswersAboutYourLeaseOrTenure.includedInYourRent",
                     _.includedInYourRentDetails.map(r =>
-                        Seq(r.includedInYourRent.name).map(item => messages(s"label.includedInYourRent.$item"))
+                        r.includedInYourRent.map(_.name).map(item => messages(s"label.includedInYourRent.$item"))
                     ).map(_.mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>")),
                     aboutYourLeaseOrTenure.routes.IncludedInYourRentController.show(), "",
                     ("valueAsHtml", _ => None)) ++
@@ -181,7 +180,7 @@
                         sectionAnswers.conditionRow(_.rentIncludeTradeServicesDetails.map(_.rentIncludeTradeServices.name).contains("yes"),
                             "checkYourAnswersAboutYourLeaseOrTenure.descriptionOfTradeServices",
                             _.rentIncludeTradeServicesInformation.map(info =>
-                                Seq(info.sumIncludedInRent.map(_.asMoney + "<br/>"), Some(Text(info.describeTheServices).asHtml))
+                                Seq(info.sumIncludedInRent.map(_.asMoney + "<br/>").getOrElse(""), Some(Text(info.describeTheServices).asHtml).getOrElse(""))
                                         .mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>")
                             ),
                             aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesDetailsController.show(), "",
@@ -246,8 +245,8 @@
                             aboutYourLeaseOrTenure.routes.MethodToFixCurrentRentController.show(), "methodUsedToFixCurrentRent") ++
                         sectionAnswers2.row("checkYourAnswersAboutYourLeaseOrTenure.intervalsOfRentReview",
                             _.intervalsOfRentReview.map(r =>
-                                Seq(r.currentRentWithin12Months.map(Text(_).asHtml),
-                                    r.intervalsOfRentReview.map(date => dateUtil.formatDayMonthAbbrYear(date))
+                                Seq(r.currentRentWithin12Months.map(Text(_).asHtml).getOrElse(""),
+                                    r.intervalsOfRentReview.map(date => dateUtil.formatDayMonthAbbrYear(date)).getOrElse("")
                                 ).mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>")
                             ),
                             aboutYourLeaseOrTenure.routes.IntervalsOfRentReviewController.show(), "",

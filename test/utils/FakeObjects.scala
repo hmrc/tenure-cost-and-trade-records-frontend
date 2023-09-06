@@ -19,7 +19,7 @@ package utils
 import models.submissions.Form6010._
 import models.submissions.aboutfranchisesorlettings._
 import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartOne, _}
-import models.submissions.aboutfranchisesorlettings
+import models.submissions.{ConnectedSubmission, aboutfranchisesorlettings}
 import models.submissions.aboutfranchisesorlettings.LettingSection
 import models.submissions.aboutyouandtheproperty._
 import models.submissions.aboutthetradinghistory._
@@ -413,6 +413,7 @@ trait FakeObjects {
         )
       )
     )
+  val connectedSubmission                     = ConnectedSubmission(stillConnectedDetailsYesToAllSession)
 
   val prefilledAboutTheTradingHistory = AboutTheTradingHistory(
     occupationAndAccountingInformation = Some(

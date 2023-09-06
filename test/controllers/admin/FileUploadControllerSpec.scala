@@ -32,16 +32,16 @@ import scala.concurrent.{ExecutionContext, Future}
 
 class FileUploadControllerSpec extends TestBaseSpec {
 
-  val mockUpscanConnector: UpscanConnector = mock[UpscanConnector]
-  val mockWs: WSClient = mock[WSClient]
+  val mockUpscanConnector: UpscanConnector                       = mock[UpscanConnector]
+  val mockWs: WSClient                                           = mock[WSClient]
   //val mockFormProvider: FileUploadDataFormProvider = mock[FileUploadDataFormProvider]
-  val realFormProvider = new FileUploadDataFormProvider()
-  val controllerComponents: ControllerComponents = injector.instanceOf[ControllerComponents]
+  val realFormProvider                                           = new FileUploadDataFormProvider()
+  val controllerComponents: ControllerComponents                 = injector.instanceOf[ControllerComponents]
   val messagesControllerComponents: MessagesControllerComponents = injector.instanceOf[MessagesControllerComponents]
-  val configuration: Configuration = injector.instanceOf[Configuration]
-  val adminLoginView: login = injector.instanceOf[login]
-  val confirmationView: confirmation = injector.instanceOf[confirmation]
-  val fileUploadView: fileUpload = injector.instanceOf[fileUpload]
+  val configuration: Configuration                               = injector.instanceOf[Configuration]
+  val adminLoginView: login                                      = injector.instanceOf[login]
+  val confirmationView: confirmation                             = injector.instanceOf[confirmation]
+  val fileUploadView: fileUpload                                 = injector.instanceOf[fileUpload]
 
   val controller = new FileUploadController(
     messagesControllerComponents,
@@ -58,21 +58,21 @@ class FileUploadControllerSpec extends TestBaseSpec {
 
     "render the login page" in {
       val result: Future[Result] = controller.loginPage.apply(fakeRequest)
-      status(result) shouldBe OK
+      status(result)      shouldBe OK
       contentType(result) shouldBe Some("text/html")
     }
 
     "authenticate a valid user" in {
-     val postRequest = FakeRequest(POST, "/yourAuthRoute")
-       .withHeaders("Content-Type" -> "application/x-www-form-urlencoded")
-       .withFormUrlEncodedBody("username" -> "validUsername", "password" -> "validPassword")
+      val postRequest            = FakeRequest(POST, "/yourAuthRoute")
+        .withHeaders("Content-Type" -> "application/x-www-form-urlencoded")
+        .withFormUrlEncodedBody("username" -> "validUsername", "password" -> "validPassword")
 
       val result: Future[Result] = controller.authenticate.apply(postRequest)
       status(result) shouldBe SEE_OTHER
     }
 
     "reject an invalid user" in {
-      val postRequest = FakeRequest(POST, "/yourAuthRoute")
+      val postRequest            = FakeRequest(POST, "/yourAuthRoute")
         .withHeaders("Content-Type" -> "application/x-www-form-urlencoded")
         .withFormUrlEncodedBody("username" -> "validUsername", "password" -> "invalidPassword")
 
@@ -82,14 +82,14 @@ class FileUploadControllerSpec extends TestBaseSpec {
 
     "display the upload page for authenticated users" in {
 
-      val mockFields = Map("key1" -> "value1", "key2" -> "value2")
-      val mockUploadRequest = UploadRequest("http://example.com/upload", mockFields)
+      val mockFields           = Map("key1" -> "value1", "key2" -> "value2")
+      val mockUploadRequest    = UploadRequest("http://example.com/upload", mockFields)
       val mockInitiateResponse = InitiateResponse("someReference", mockUploadRequest)
 
       when(mockUpscanConnector.initiate()(any[HeaderCarrier], any[ExecutionContext]))
         .thenReturn(Future.successful(mockInitiateResponse))
 
-      val requestWithSession = fakeRequest.withSession(("authenticated", "true"))
+      val requestWithSession     = fakeRequest.withSession(("authenticated", "true"))
       val result: Future[Result] = controller.uploadPage.apply(requestWithSession)
       status(result) shouldBe OK
     }
@@ -97,9 +97,9 @@ class FileUploadControllerSpec extends TestBaseSpec {
     "showResult" should {
 
       "display the confirmation view for authenticated users" in {
-        val requestWithSession = fakeRequest.withSession(("authenticated", "true"))
+        val requestWithSession     = fakeRequest.withSession(("authenticated", "true"))
         val result: Future[Result] = controller.showResult.apply(requestWithSession)
-        status(result) shouldBe OK
+        status(result)      shouldBe OK
         contentType(result) shouldBe Some("text/html")
         // Optionally, you can check for specific content or parts of the view rendered.
       }

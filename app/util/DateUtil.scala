@@ -112,8 +112,8 @@ class DateUtil @Inject() (langUtil: LanguageUtils) {
       .format(yearMonth.atDay(1).toEpochMilli)
 
   /**
-   * Date format "d MMMM".
-   */
+    * Date format "d MMMM".
+    */
   def formatMonthDay(monthDay: MonthDay)(implicit messages: Messages): String =
     dayMonthFormat(messages.lang.code)
       .format(monthDay.atYear(2023).toEpochMilli)

@@ -73,15 +73,18 @@
           items = Seq(
               RadioItem(
                   content = Text(messages("tiedForGoodsDetails.fullTie")),
-                  value = Some("fullTie")
+                  value = Some("fullTie"),
+                  hint = Some(Hint(content = Text(messages("hint.fullTie")))),
               ),
               RadioItem(
                   content = Text(messages("tiedForGoodsDetails.beerOnly")),
-                  value = Some("beerOnly")
+                  value = Some("beerOnly"),
+                  hint = Some(Hint(content = Text(messages("hint.beerOnly")))),
               ),
               RadioItem(
                   content = Text(messages("tiedForGoodsDetails.partialTie")),
                   value = Some("partialTie"),
+                  hint = Some(Hint(content = Text(messages("hint.partialTie")))),
                   conditionalHtml = Some(conditionalHTML)
               )
           ),

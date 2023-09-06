@@ -32,10 +32,12 @@ class VacantPropertiesViewSpec extends QuestionViewBehaviours[VacantProperties] 
 
   override val form: Form[VacantProperties] = VacantPropertiesForm.vacantPropertiesForm
 
-  def createView: () => Html = () => vacantPropertiesView(form, Summary("99996010001"))(fakeRequest, messages)
+  val backLink: String = controllers.connectiontoproperty.routes.EditAddressController.show().url
+
+  def createView: () => Html = () => vacantPropertiesView(form, backLink, Summary("99996010001"))(fakeRequest, messages)
 
   def createViewUsingForm: Form[VacantProperties] => Html = (form: Form[VacantProperties]) =>
-    vacantPropertiesView(form, Summary("99996010001"))(fakeRequest, messages)
+    vacantPropertiesView(form, backLink, Summary("99996010001"))(fakeRequest, messages)
 
   "Vacant properties view" must {
 
@@ -46,7 +48,7 @@ class VacantPropertiesViewSpec extends QuestionViewBehaviours[VacantProperties] 
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText mustBe messages("back.link.label")
       val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.connectiontoproperty.routes.AreYouStillConnectedController.show().url
+      backlinkUrl mustBe controllers.connectiontoproperty.routes.EditAddressController.show().url
     }
 
     "Section heading is visible" in {

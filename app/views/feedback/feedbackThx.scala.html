@@ -1,4 +1,4 @@
-/*
+@*
  * Copyright 2023 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,20 +12,24 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */
+ *@
 
-package form.aboutYourLeaseOrTenure
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.button.Button
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 
-import form.MappingSupport.includedInYourRentInformation
-import models.submissions.aboutYourLeaseOrTenure.IncludedInYourRentDetails
-import play.api.data.Form
-import play.api.data.Forms.{list, mapping, text}
+@this(layout: Layout,
+)
 
-object IncludedInYourRentForm {
+@()(implicit request: Request[_], messages: Messages)
 
-  val includedInYourRentForm = Form(
-    mapping(
-      "includedInYourRent" -> list(includedInYourRentInformation)
-    )(IncludedInYourRentDetails.apply)(IncludedInYourRentDetails.unapply)
-  )
+@layout(
+    pageHeading = messages("feedback.thankyou.h1"),
+    showFeedback = false
+) {
+    <p class="govuk-body">
+        <a class="govuk-link"
+        href="@routes.LoginController.show().url">@messages("feedback.thankyou.link")</a>
+    </p>
 }
+

@@ -364,6 +364,10 @@ GET         /confirmation                                           controllers.
 POST        /declaration-request-reference-number                   controllers.RequestReferenceNumberFormSubmissionController.submit()
 GET         /confirmation-request-reference-number                  controllers.RequestReferenceNumberFormSubmissionController.confirmation()
 
+GET        /feedback                                                controllers.FeedbackController.feedback
+GET        /thankyou-for-your-feedback                              controllers.FeedbackController.feedbackThx
+POST       /feedback                                                controllers.FeedbackController.feedbackSubmit
+
 # Admin routes
 GET         /admin/login                                            controllers.admin.FileUploadController.loginPage
 POST        /admin/login                                            controllers.admin.FileUploadController.authenticate

@@ -28,7 +28,7 @@ object AddAnotherCateringOperationOrLettingAccommodationForm {
   )
 
   val baseAddAnotherCateringOperationMapping = mapping(
-    "addAnotherCateringOperationOrLettingAccommodations" -> optional(
+    "addAnotherCateringOperation" -> optional(
       createYesNoType("error.addAnotherSeparateBusinessOrFranchise.required")
     )
       .verifying("error.addAnotherSeparateBusinessOrFranchise.required", _.nonEmpty)
