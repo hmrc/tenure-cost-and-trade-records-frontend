@@ -48,7 +48,7 @@
  theForm = theForm
 ) {
 
- @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.AboutYourLandlordController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
+ @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.AboutYourLandlordController.submit()) {
 
   <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
    <h1 class="govuk-fieldset__heading">@messages("aboutYourLandlord.heading")</h1>

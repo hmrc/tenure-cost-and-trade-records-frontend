@@ -4,7 +4,7 @@ site.service_name = Declare your business trade and cost information
 service.title = {0} - Declare your business trade and cost information - GOV.UK
 gov.name = GOV.UK
 phase.beta = BETA
-phase.text = Mae hwn yn wasanaeth newydd – bydd eich <a href="{0}" class="govuk-link" target="_blank" id="betaFeedback">adborth</a> yn ein helpu i’w wella
+phase.text = Mae hwn yn wasanaeth newydd – bydd eich <a href="{0}" class="govuk-link" rel="noreferrer noopener" target="_blank" id="betaFeedback">adborth (opens in new tab)</a> yn ein helpu i’w wella
 label.continue=Parhewch
 button.label.continue = Yn eich blaen
 button.label.submit = Submit

@@ -37,7 +37,7 @@
   theForm = theForm
 ) {
 
-  @formWithCSRF(action = controllers.connectiontoproperty.routes.AreYouThirdPartyController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
+  @formWithCSRF(action = controllers.connectiontoproperty.routes.AreYouThirdPartyController.submit()) {
 
     @includes.radioButtonsYesNo(
       govukRadios,

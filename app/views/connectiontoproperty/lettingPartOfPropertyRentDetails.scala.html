@@ -41,8 +41,7 @@
  backLinkUrl = backLink,
  theForm = theForm
 ) {
-    @formWithCSRF(action = controllers.connectiontoproperty.routes.LettingPartOfPropertyDetailsRentController.submit(index),
-        args = Symbol("class") -> "myForm", Symbol("id") -> "myFormId") {
+    @formWithCSRF(action = controllers.connectiontoproperty.routes.LettingPartOfPropertyDetailsRentController.submit(index)) {
 
         @hmrcCurrencyInput(
             CurrencyInput(

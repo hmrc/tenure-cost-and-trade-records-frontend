@@ -47,7 +47,6 @@
 
 @layout(
  pageHeading = messages("currentLeaseOrAgreementBegin.heading"),
- showH1 = false,
  showSection = true,
  summary = Some(summary),
  sectionName = messages("label.section.aboutYourLeaseOrTenure"),
@@ -55,11 +54,7 @@
  theForm = theForm
 ) {
 
- @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.CurrentLeaseOrAgreementBeginController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
-
-  <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-   <h1 class="govuk-fieldset__heading">@messages("currentLeaseOrAgreementBegin.heading")</h1>
-  </legend>
+ @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.CurrentLeaseOrAgreementBeginController.submit()) {
 
   <p class="govuk-body">@messages("label.currentLeaseOrAgreementBegin")</p>
 

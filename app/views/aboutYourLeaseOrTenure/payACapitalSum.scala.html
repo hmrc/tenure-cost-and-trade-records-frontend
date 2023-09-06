@@ -39,7 +39,7 @@
   theForm = theForm
 ) {
 
-  @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
+  @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumController.submit()) {
 
     @includes.radioButtonsYesNo(
       govukRadios,

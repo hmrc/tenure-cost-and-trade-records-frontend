@@ -39,7 +39,7 @@
   backLinkUrl = controllers.connectiontoproperty.routes.AreYouStillConnectedController.show.url,
 ) {
 
-  @formWithCSRF(action = controllers.notconnected.routes.PastConnectionController.submit(), args = Symbol("class") -> "myForm", Symbol("id") -> "myFormId") {
+  @formWithCSRF(action = controllers.notconnected.routes.PastConnectionController.submit()) {
 
     @includes.radioButtonsYesNo(
       govukRadios,

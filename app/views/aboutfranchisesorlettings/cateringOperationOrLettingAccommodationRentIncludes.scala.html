@@ -53,8 +53,8 @@
    controllers.aboutfranchisesorlettings.routes.CateringOperationRentIncludesController.submit(index)
   else if(cateringOrLetting.equals("lettingOtherPartOfPropertyCheckboxesDetails"))
    controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyRentIncludesController.submit(index)
-  else controllers.routes.TaskListController.show()},
-  args = Symbol("class") -> "myForm", Symbol("id") -> "myFormId") {
+  else controllers.routes.TaskListController.show()}
+ ) {
 
   @govukCheckboxes(
    Checkboxes(
