@@ -35,7 +35,7 @@
  backLinkUrl = controllers.notconnected.routes.RemoveConnectionController.show.url
 ) {
 
- @formWithCSRF(action = controllers.notconnected.routes.CheckYourAnswersNotConnectedController.submit(), args = Symbol("class") -> "myForm", Symbol("id") -> "myFormId") {
+ @formWithCSRF(action = controllers.notconnected.routes.CheckYourAnswersNotConnectedController.submit()) {
 
   <h2 class="govuk-heading-m">@messages("checkYourAnswersNotConnected.subheading1")</h2>
 

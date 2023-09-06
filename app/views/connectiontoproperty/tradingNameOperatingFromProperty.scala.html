@@ -38,7 +38,7 @@
 ) {
  @formWithCSRF(action = controllers.connectiontoproperty.routes.TradingNameOperatingFromPropertyController.submit()) {
 
-  @includes.textInput(govukInput, theForm, "tradingNameFromProperty", "govuk-input--width-20", "tradingNameFromProperty", "tradingNameFromProperty")
+  @includes.textInput(govukInput, theForm, "tradingNameFromProperty", "govuk-input--width-20", "tradingNameFromProperty")
   @includes.continueSaveAsDraftButtons(govukButton)
  }
 }

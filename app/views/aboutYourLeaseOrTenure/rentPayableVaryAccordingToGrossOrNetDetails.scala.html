@@ -30,7 +30,6 @@
 
 @layout(
  pageHeading = messages("rentPayableVaryAccordingToGrossOrNetDetails.heading"),
- showH1 = false,
  showSection = true,
  summary = Some(summary),
  sectionName = messages("label.section.aboutYourLeaseOrTenure"),
@@ -38,11 +37,7 @@
  theForm = theForm
 ) {
 
- @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryAccordingToGrossOrNetDetailsController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
-
-  <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-   <h1 class="govuk-fieldset__heading">@messages("rentPayableVaryAccordingToGrossOrNetDetails.heading")</h1>
-  </legend>
+ @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryAccordingToGrossOrNetDetailsController.submit()) {
 
   @includes.textInputCharCount(govukCharacterCount, theForm, "rentPayableVaryAccordingToGrossOrNetDetails", "label.rentPayableVaryAccordingToGrossOrNetDetails", "govuk-fieldset__legend--l")
 

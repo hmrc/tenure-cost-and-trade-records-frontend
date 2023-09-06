@@ -38,7 +38,7 @@
   theForm = theForm
 ) {
 
-  @formWithCSRF(action = controllers.additionalinformation.routes.AlternativeContactDetailsController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
+  @formWithCSRF(action = controllers.additionalinformation.routes.AlternativeContactDetailsController.submit()) {
 
     <h1 class="govuk-heading-l">@messages("alternativeContactDetails.heading")</h1>
 

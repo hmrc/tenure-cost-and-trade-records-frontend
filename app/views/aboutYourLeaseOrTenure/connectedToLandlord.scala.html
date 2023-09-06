@@ -43,7 +43,7 @@
  theForm = theForm
 ) {
 
- @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
+ @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordController.submit()) {
 
   @govukRadios(Radios(
    fieldset = Some(Fieldset(

@@ -47,7 +47,7 @@
   theForm = theForm
 ) {
 
-  @formWithCSRF(action = controllers.notconnected.routes.RemoveConnectionController.submit(), args = Symbol("class") -> "myForm", Symbol("id") -> "myFormId") {
+  @formWithCSRF(action = controllers.notconnected.routes.RemoveConnectionController.submit()) {
 
     <p class="govuk-body">@messages("removeConnection.subheading")</p>
 

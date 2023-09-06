@@ -52,7 +52,6 @@
 
 @layout(
  pageHeading = messages("currentAnnualRent.heading"),
- showH1 = false,
  showSection = true,
  summary = Some(summary),
  sectionName = messages("label.section.aboutYourLeaseOrTenure"),
@@ -60,11 +59,7 @@
  theForm = theForm
 ) {
 
- @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.CurrentAnnualRentController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
-
-  <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-   <h1 class="govuk-fieldset__heading">@messages("currentAnnualRent.heading")</h1>
-  </legend>
+ @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.CurrentAnnualRentController.submit()) {
 
   @hmrcCurrencyInput(
    CurrencyInput(

@@ -40,7 +40,7 @@
   theForm = theForm
 ) {
 
-  @formWithCSRF(action = controllers.aboutyouandtheproperty.routes.EnforcementActionBeenTakenDetailsController.submit(), args = Symbol("class") -> "myForm", Symbol("class") -> "myFormId") {
+  @formWithCSRF(action = controllers.aboutyouandtheproperty.routes.EnforcementActionBeenTakenDetailsController.submit()) {
 
     @govukCharacterCount(
       CharacterCount(

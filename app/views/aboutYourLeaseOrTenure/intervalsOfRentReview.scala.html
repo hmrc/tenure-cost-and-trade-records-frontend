@@ -32,7 +32,6 @@
 
 @layout(
  pageHeading = messages("intervalsOfRentReview.heading"),
- showH1 = false,
  showSection = true,
     summary = Some(summary),
  sectionName = messages("label.section.aboutYourLeaseOrTenure"),
@@ -40,11 +39,7 @@
  theForm = theForm
 ) {
 
-  @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.IntervalsOfRentReviewController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
-
-    <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-      <h1 class="govuk-fieldset__heading">@messages("intervalsOfRentReview.heading")</h1>
-    </legend>
+  @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.IntervalsOfRentReviewController.submit()) {
 
     <p class="govuk-body">@messages("intervalsOfRentReview.p1")</p>
 

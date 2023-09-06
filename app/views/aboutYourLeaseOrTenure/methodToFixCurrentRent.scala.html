@@ -40,7 +40,7 @@
  theForm = theForm
 ) {
 
-  @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.MethodToFixCurrentRentController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
+  @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.MethodToFixCurrentRentController.submit()) {
 
     @includes.radioButtons(
       govukRadios,
