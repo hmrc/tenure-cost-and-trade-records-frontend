@@ -356,7 +356,7 @@ POST        /check-your-answers-lease-or-tenure                     controllers.
 
 GET         /check-your-answers-not-connected                       controllers.notconnected.CheckYourAnswersNotConnectedController.show()
 POST        /check-your-answers-not-connected                       controllers.notconnected.CheckYourAnswersNotConnectedController.submit()
-GET         /confirmation                                           controllers.notconnected.CheckYourAnswersNotConnectedController.confirmation()
+GET         /confirmation-not-connected                             controllers.notconnected.CheckYourAnswersNotConnectedController.confirmation()
 
 POST        /declaration                                            controllers.FormSubmissionController.submit()
 GET         /confirmation                                           controllers.FormSubmissionController.confirmation()

@@ -16,71 +16,42 @@
 
 @import actions.SessionRequest
 @import uk.gov.hmrc.govukfrontend.views.html.components._
-@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
 @import models.submissions.connectiontoproperty.CheckYourAnswersConnectionToProperty
 @import models.pages.Summary
-@import controllers.connectiontoproperty
-@import util.SectionAnswersRowBuilder
+@import views.html.answers.answersConnectionToTheProperty
 
 @this(layout: Layout,
         govukButton: GovukButton,
         govukSummaryList: GovukSummaryList,
         govukRadios: GovukRadios,
+        answersSectionConnectionToTheProperty: answersConnectionToTheProperty,
         formWithCSRF: FormWithCSRF
 )
 
 
 @(theForm: Form[CheckYourAnswersConnectionToProperty], backLink: String, summary: Summary)(implicit request: SessionRequest[_], messages: Messages)
 
-    @sectionAnswers = @{
-        SectionAnswersRowBuilder(request.sessionData.stillConnectedDetails)
+@layout(
+    pageHeading = messages("checkYourAnswersConnectionToProperty.heading"),
+    backLinkUrl = backLink,
+    showSection = true,
+    fullWidth = true,
+    summary = Some(summary),
+    sectionName = messages("label.section.connectionToTheProperty"),
+    theForm = theForm
+) {
+
+    @answersSectionConnectionToTheProperty()
+
+    @formWithCSRF(action = controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToPropertyController.submit()) {
+
+        @includes.checkYourAnswersRadioButtons(
+            govukRadios,
+            theForm,
+            "checkYourAnswersConnectionToProperty"
+        )
+
+        @includes.continueSaveAsDraftButtons(govukButton)
+
     }
-
-    @layout(
-        pageHeading = messages("checkYourAnswersConnectionToProperty.heading"),
-        backLinkUrl = backLink,
-        showSection = true,
-        fullWidth = true,
-        summary = Some(summary),
-        sectionName = messages("label.section.connectionToTheProperty"),
-        theForm = theForm
-    ) {
-
-        @formWithCSRF(action = controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToPropertyController.submit()) {
-            @if(sectionAnswers.answers.exists(a => a.editAddress.isDefined)) {
-            <h2 class="govuk-heading-m">@messages("checkYourAnswersConnectionToProperty.connectionStatus.heading")</h2>
-
-                @govukSummaryList(SummaryList(rows = sectionAnswers.row("label.connectedToTheProperty", _.addressConnectionType.map(_.name).map(v => messages(s"label.$v")), connectiontoproperty.routes.AreYouStillConnectedController.show(), "isRelated") ++
-                        sectionAnswers.row("checkYourAnswersConnectionToProperty.proposedAddress",
-                            _.editAddress.map(l => s"${l.editAddress.escapedHtml}"),
-                            controllers.connectiontoproperty.routes.EditAddressController.show(), "",
-                            ("valueAsHtml", _ => None))
-                )
-                )
-            }else{
-                <h2 class="govuk-heading-m">@messages("checkYourAnswersConnectionToProperty.connectionStatus.heading")</h2>
-                @govukSummaryList(SummaryList(rows = sectionAnswers.row("label.connectedToTheProperty", _.addressConnectionType.map(_.name).map(v => messages(s"label.$v")), connectiontoproperty.routes.AreYouStillConnectedController.show(), "isRelated")))
-            }
-            <h2 class="govuk-heading-m">@messages("checkYourAnswersConnectionToProperty.vacancyStatus.heading")</h2>
-            @govukSummaryList(SummaryList(rows =
-                sectionAnswers.row("checkYourAnswersConnectionToProperty.isPropertyVacant", _.vacantProperties.map(_.vacantProperties.name).map(v => messages(s"label.$v")), connectiontoproperty.routes.VacantPropertiesController.show(), "vacantProperties")
-            ))
-
-            <h2 class="govuk-heading-m">@messages("checkYourAnswersConnectionToProperty.occupierDetails.heading")</h2>
-            @govukSummaryList(SummaryList(rows =
-                sectionAnswers.row("checkYourAnswersConnectionToProperty.nameOfOccupier", _.tradingNameOperatingFromProperty.map(_.tradingName), connectiontoproperty.routes.TradingNameOperatingFromPropertyController.show(), "currentOccupierName")
-             ++ sectionAnswers.row("checkYourAnswersConnectionToProperty.ownsTheProperty", _.tradingNameOwnTheProperty.map(_.name).map(v => messages(s"label.$v")), connectiontoproperty.routes.TradingNameOwnThePropertyController.show(), "currentOccupierName")
-             ++ sectionAnswers.row("checkYourAnswersConnectionToProperty.payRent", _.tradingNamePayingRent.map(_.name).map(v => messages(s"label.$v")), connectiontoproperty.routes.TradingNamePayingRentController.show(), "currentOccupierName")
-             ++ sectionAnswers.row("checkYourAnswersConnectionToProperty.thirdParty", _.areYouThirdParty.map(_.name).map(v => messages(s"label.$v")), connectiontoproperty.routes.AreYouThirdPartyController.show(), "currentOccupierName")
-            ))
-
-            @includes.checkYourAnswersRadioButtons(
-                govukRadios,
-                theForm,
-                "checkYourAnswersConnectionToProperty"
-            )
-
-            @includes.continueSaveAsDraftButtons(govukButton)
-
-        }
-    }
+}
