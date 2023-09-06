@@ -16,19 +16,18 @@
 
 @()(implicit messages: Messages)
 
-<div id="printConfirmation" class="govuk-!-display-none-print govuk-!-display-none govuk-inset-text" aria-hidden="true">
-    <p class="govuk-body">
+<div class="govuk-inset-text govuk-!-display-none-print">
+    <p id="printLinkParagraph" class="govuk-body govuk-!-display-none" aria-hidden="true">
         <a id="printLink" href="#" class="govuk-link print-link">@messages("print.link")</a>
     </p>
     <p class="govuk-body">@messages("print.link.cantPrintLater")</p>
 </div>
 
 <script>
-        document.getElementById("printConfirmation").classList.remove("govuk-!-display-none");
-        document.getElementById("printConfirmation").setAttribute("aria-hidden", "false");
+        document.getElementById("printLinkParagraph").classList.remove("govuk-!-display-none");
+        document.getElementById("printLinkParagraph").setAttribute("aria-hidden", "false");
         document.getElementById("printLink").addEventListener("click", function (event) {
                     event.preventDefault();
-                    window.focus();
                     window.print();
                 }
         );
