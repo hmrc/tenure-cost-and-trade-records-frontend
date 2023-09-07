@@ -1,0 +1,48 @@
+@*
+ * Copyright 2023 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import actions.SessionRequest
+@import controllers.additionalinformation
+@import uk.gov.hmrc.govukfrontend.views.html.components._
+@import util.SectionAnswersRowBuilder
+
+@this(govukSummaryList: GovukSummaryList)
+
+
+@()(implicit request: SessionRequest[_], messages: Messages)
+
+
+@sectionAnswers = @{
+    SectionAnswersRowBuilder(request.sessionData.additionalInformation)
+}
+
+@govukSummaryList(SummaryList(rows =
+    sectionAnswers.row("label.furtherInformation",
+        _.furtherInformationOrRemarksDetails.map(_.furtherInformationOrRemarksDetails).filter(_.trim != "").orElse(Some(messages(s"label.no"))),
+        additionalinformation.routes.FurtherInformationOrRemarksController.show(), "furtherInformationOrRemarks")
+))
+
+<h2 class="govuk-heading-m">@messages("key.altContact.details")</h2>
+
+@govukSummaryList(SummaryList(rows =
+    sectionAnswers.row("label.fullName", _.altContactInformation.flatMap(_.alternativeContactFullName), additionalinformation.routes.AlternativeContactDetailsController.show(), "alternativeContactFullName") ++
+            sectionAnswers.row("label.telephoneNumber", _.altContactInformation.flatMap(_.alternativeContactDetails.map(_.phone)), additionalinformation.routes.AlternativeContactDetailsController.show(), "alternativeContactDetails.phone") ++
+            sectionAnswers.row("label.emailAddress", _.altContactInformation.flatMap(_.alternativeContactDetails.map(_.email)), additionalinformation.routes.AlternativeContactDetailsController.show(), "alternativeContactDetails.email") ++
+            sectionAnswers.row("label.correspondenceAddress",
+                _.altContactInformation.flatMap(_.alternativeContactAddress.map(_.escapedHtml)),
+                additionalinformation.routes.AlternativeContactDetailsController.show(), "alternativeContactAddress.buildingNameNumber",
+                ("valueAsHtml", _ => None))
+))

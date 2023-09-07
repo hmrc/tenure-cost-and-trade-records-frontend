@@ -15,6 +15,7 @@
  *@
 
 @import actions.SessionRequest
+@import models.submissions.common.AnswerYes
 @import views.html.answers._
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 
@@ -22,22 +23,36 @@
         govukSummaryList: GovukSummaryList,
         answersSectionConnectionToTheProperty: answersConnectionToTheProperty,
         answersSectionAboutTheProperty: answersAboutTheProperty,
-        answersSectionAboutYourTradingHistory: answersAboutYourTradingHistory
+        answersSectionAboutYourTradingHistory: answersAboutYourTradingHistory,
+        answersSectionAboutTheFranchiseLettings: answersAboutTheFranchiseLettings,
+        answersSectionAboutYourLeaseOrTenure: answersAboutYourLeaseOrTenure,
+        answersSectionAdditionalInformation: answersAdditionalInformation
 )
 
 
 @()(implicit request: SessionRequest[_], messages: Messages)
 
 
-<span class="govuk-caption-m">@messages("label.section.connectionToTheProperty")</span>
+@isLeaseHolder = @{
+    !request.sessionData.stillConnectedDetails.flatMap(_.tradingNameOwnTheProperty).contains(AnswerYes)
+}
 
+<span class="govuk-caption-m">@messages("label.section.connectionToTheProperty")</span>
 @answersSectionConnectionToTheProperty()
 
 <span class="govuk-caption-m">@messages("label.section.aboutTheProperty")</span>
-
 @answersSectionAboutTheProperty()
 
 <span class="govuk-caption-m">@messages("label.section.aboutYourTradingHistory")</span>
-
 @answersSectionAboutYourTradingHistory()
 
+<span class="govuk-caption-m">@messages("label.section.aboutTheFranchiseLettings")</span>
+@answersSectionAboutTheFranchiseLettings()
+
+@if(isLeaseHolder) {
+    <span class="govuk-caption-m">@messages("label.section.aboutYourLeaseOrTenure")</span>
+    @answersSectionAboutYourLeaseOrTenure()
+}
+
+<span class="govuk-caption-m">@messages("label.section.additionalInformation")</span>
+@answersSectionAdditionalInformation()
