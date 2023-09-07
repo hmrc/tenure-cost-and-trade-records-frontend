@@ -37,7 +37,6 @@
 
 @layout(
   pageHeading = messages("grossProfit.heading"),
-  showH1 = false,
   showSection = true,
   summary = Some(summary),
   sectionName = messages("label.section.aboutYourTradingHistory"),
@@ -45,11 +44,8 @@
   theForm = form
 ) {
 
-  @formWithCSRF(action = controllers.aboutthetradinghistory.routes.GrossProfitsController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
+  @formWithCSRF(action = controllers.aboutthetradinghistory.routes.GrossProfitsController.submit()) {
 
-      <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-          <h1 class="govuk-fieldset__heading">@messages("grossProfit.heading")</h1>
-      </legend>
       @govukTable(Table(
           rows = Seq(
               TableRow(

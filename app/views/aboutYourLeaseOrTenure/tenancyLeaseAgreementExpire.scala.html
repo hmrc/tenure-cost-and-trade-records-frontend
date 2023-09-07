@@ -41,7 +41,6 @@
 
 @layout(
  pageHeading = messages("tenancyLeaseAgreementExpire.heading"),
- showH1 = false,
  showSection = true,
  summary = Some(summary),
  sectionName = messages("label.section.aboutYourLeaseOrTenure"),
@@ -49,11 +48,7 @@
  theForm = theForm
 ) {
 
- @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.TenancyLeaseAgreementExpireController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
-
-  <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-   <h1 class="govuk-fieldset__heading">@messages("tenancyLeaseAgreementExpire.heading")</h1>
-  </legend>
+ @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.TenancyLeaseAgreementExpireController.submit()) {
 
   @includes.dateFields(form = theForm, field = "tenancyLeaseAgreementExpire", govukDate = govukDateInput, showDays = true, showFieldSet = false)
 

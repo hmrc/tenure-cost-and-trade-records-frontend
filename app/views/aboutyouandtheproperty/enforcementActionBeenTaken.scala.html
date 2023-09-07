@@ -38,7 +38,7 @@
   theForm = theForm
 ) {
 
-  @formWithCSRF(action = controllers.aboutyouandtheproperty.routes.EnforcementActionBeenTakenController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
+  @formWithCSRF(action = controllers.aboutyouandtheproperty.routes.EnforcementActionBeenTakenController.submit()) {
 
     @includes.radioButtonsYesNo(
       govukRadios,

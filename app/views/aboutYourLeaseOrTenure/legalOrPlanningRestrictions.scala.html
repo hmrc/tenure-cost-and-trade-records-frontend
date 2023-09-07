@@ -38,7 +38,7 @@
   theForm = theForm
 ) {
 
-  @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.LegalOrPlanningRestrictionsController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
+  @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.LegalOrPlanningRestrictionsController.submit()) {
 
       <p class="govuk-body">@{messages("legalOrPlanningRestrictions.p1")}</p>
 

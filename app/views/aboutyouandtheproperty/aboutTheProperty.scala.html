@@ -163,7 +163,7 @@
   theForm = theForm
 ) {
 
-  @formWithCSRF(action = controllers.aboutyouandtheproperty.routes.AboutThePropertyController.submit(), args = Symbol("class") -> "myForm", Symbol("id") -> "myFormId") {
+  @formWithCSRF(action = controllers.aboutyouandtheproperty.routes.AboutThePropertyController.submit()) {
 
     @govukFieldset(Fieldset(html = content))
 

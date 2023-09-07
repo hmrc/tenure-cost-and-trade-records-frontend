@@ -38,7 +38,7 @@
   theForm = theForm
 ) {
 
-  @formWithCSRF(action = controllers.additionalinformation.routes.FurtherInformationOrRemarksController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
+  @formWithCSRF(action = controllers.additionalinformation.routes.FurtherInformationOrRemarksController.submit()) {
 
     @includes.textInputCharCount(
       govukCharacterCount,

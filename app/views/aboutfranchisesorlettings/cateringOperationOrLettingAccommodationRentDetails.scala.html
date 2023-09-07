@@ -46,8 +46,8 @@
             controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsRentController.submit(index)
         else if(cateringOrLetting.equals("lettingOtherPartOfPropertyRentDetails"))
             controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsRentController.submit(index)
-        else controllers.routes.TaskListController.show()},
-        args = Symbol("class") -> "myForm", Symbol("id") -> "myFormId") {
+        else controllers.routes.TaskListController.show()}
+    ) {
 
         @hmrcCurrencyInput(
             CurrencyInput(

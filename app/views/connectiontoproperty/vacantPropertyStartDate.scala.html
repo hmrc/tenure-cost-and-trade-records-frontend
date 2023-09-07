@@ -38,7 +38,7 @@
  theForm = theForm
 ) {
 
-  @formWithCSRF(action = controllers.connectiontoproperty.routes.VacantPropertiesStartDateController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
+  @formWithCSRF(action = controllers.connectiontoproperty.routes.VacantPropertiesStartDateController.submit()) {
 
     @includes.dateFields(
         form = theForm,

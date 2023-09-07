@@ -50,7 +50,7 @@
  theForm = theForm
 ) {
 
- @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.CurrentRentFirstPaidController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
+ @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.CurrentRentFirstPaidController.submit()) {
 
   <p class="govuk-body">@messages("label.currentRentFirstPaid.p1")</p>
 

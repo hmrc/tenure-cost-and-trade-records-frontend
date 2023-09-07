@@ -38,7 +38,7 @@
  theForm = theForm
 ) {
 
-  @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
+  @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsController.submit()) {
 
     @includes.radioButtonsYesNo(govukRadios, theForm, "rentIncludeFixturesAndFittings", "rentIncludeFixturesAndFittings.heading", "govuk-fieldset__legend--l", isHeading = true, hint = "hint.rentIncludeFixturesAndFittings")
 

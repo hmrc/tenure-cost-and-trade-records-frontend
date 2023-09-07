@@ -36,7 +36,7 @@
     backLinkUrl = backLink,
     theForm = theForm
 ) {
-        @formWithCSRF(action = controllers.connectiontoproperty.routes.LettingPartOfPropertyDetailsController.submit(index), args = Symbol("class") -> "myForm", Symbol("id") -> "myFormId") {
+        @formWithCSRF(action = controllers.connectiontoproperty.routes.LettingPartOfPropertyDetailsController.submit(index)) {
 
             @includes.textInput(govukInput, theForm, "tenantName", "govuk-input--width-20", "tenantName", "tenantName", labelClasses = "govuk-!-font-weight-bold")
             @includes.textInput(govukInput, theForm, "descriptionOfLetting", "govuk-input--width-20", "descriptionOfLetting", "descriptionOfLetting", labelClasses = "govuk-!-font-weight-bold", hintMsg = "descriptionOfLetting")

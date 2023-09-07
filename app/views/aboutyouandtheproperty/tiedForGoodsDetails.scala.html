@@ -60,7 +60,7 @@
   theForm = theForm
 ) {
 
-  @formWithCSRF(action = controllers.aboutyouandtheproperty.routes.TiedForGoodsDetailsController.submit(), args = Symbol("class") -> "myForm", Symbol("id") -> "myFormId") {
+  @formWithCSRF(action = controllers.aboutyouandtheproperty.routes.TiedForGoodsDetailsController.submit()) {
 
       @govukRadios(Radios(
           fieldset = Some(Fieldset(

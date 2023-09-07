@@ -42,7 +42,7 @@
     theForm = theForm
 ) {
 
-    @formWithCSRF(action = controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.submit(), args = Symbol("class") -> "myForm", Symbol("id") -> "myFormId") {
+    @formWithCSRF(action = controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.submit()) {
 
         <p class="govuk-body">@messages("franchiseLettings.p1")</p>
         <p class="govuk-body">@messages("franchiseLettings.p2")</p>

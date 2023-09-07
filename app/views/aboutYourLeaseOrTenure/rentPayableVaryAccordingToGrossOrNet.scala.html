@@ -38,7 +38,7 @@
  theForm = theForm
 ) {
 
- @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryAccordingToGrossOrNetController.submit(), args = 'class -> "myForm", 'id -> "myFormId") {
+ @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryAccordingToGrossOrNetController.submit()) {
 
   @includes.radioButtonsYesNo(govukRadios, theForm, "rentPayableVaryAccordingToGrossOrNet", "rentPayableVaryAccordingToGrossOrNet.heading", "govuk-fieldset__legend--l", isHeading = true)
 
