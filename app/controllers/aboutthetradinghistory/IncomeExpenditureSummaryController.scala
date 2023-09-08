@@ -18,8 +18,8 @@ package controllers.aboutthetradinghistory
 
 import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
-import form.aboutthetradinghistory.CostOfSalesForm.costOfSalesForm
-import models.submissions.aboutthetradinghistory.CostOfSales
+import form.aboutthetradinghistory.IncomeExpenditureSummaryForm.incomeExpenditureSummaryForm
+import models.submissions.aboutthetradinghistory.IncomeExpenditureSummary
 import navigation.AboutTheTradingHistoryNavigator
 import navigation.identifiers.IncomeExpenditureSummaryId
 import play.api.i18n.I18nSupport
@@ -42,9 +42,9 @@ class IncomeExpenditureSummaryController @Inject() (
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     Ok(
       incomeExpenditureSummaryView(
-        request.sessionData.aboutTheTradingHistory.flatMap(_.costOfSales) match {
-          case Some(costOfSales) => costOfSalesForm.fillAndValidate(costOfSales)
-          case _                 => costOfSalesForm
+        request.sessionData.aboutTheTradingHistory.flatMap(_.incomeExpenditureSummary) match {
+          case Some(incomeExpenditureSummary) => incomeExpenditureSummaryForm.fillAndValidate(incomeExpenditureSummary)
+          case _                              => incomeExpenditureSummaryForm
         },
         request.sessionData.toSummary
       )
@@ -52,8 +52,8 @@ class IncomeExpenditureSummaryController @Inject() (
   }
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft[CostOfSales](
-      costOfSalesForm,
+    continueOrSaveAsDraft[IncomeExpenditureSummary](
+      incomeExpenditureSummaryForm,
       formWithErrors => BadRequest(incomeExpenditureSummaryView(formWithErrors, request.sessionData.toSummary)),
       data => {
         val updatedData = request.sessionData

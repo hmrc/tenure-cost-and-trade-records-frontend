@@ -16,22 +16,22 @@
 
 package views.aboutthetradinghistory
 
-import form.aboutthetradinghistory.CostOfSalesForm
+import form.aboutthetradinghistory.IncomeExpenditureSummaryForm
 import models.pages.Summary
-import models.submissions.aboutthetradinghistory.CostOfSales
+import models.submissions.aboutthetradinghistory.IncomeExpenditureSummary
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class IncomeExpenditureSummaryViewSpec extends QuestionViewBehaviours[CostOfSales] {
+class IncomeExpenditureSummaryViewSpec extends QuestionViewBehaviours[IncomeExpenditureSummary] {
   // NOTE: this is a holding view test until page is implemented
   val messageKeyPrefix = "incomeExpenditureSummary"
 
-  override val form = CostOfSalesForm.costOfSalesForm
+  override val form = IncomeExpenditureSummaryForm.incomeExpenditureSummaryForm
 
   def createView = () => incomeExpenditureSummaryView(form, Summary("99996010001"))(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[CostOfSales]) =>
+  def createViewUsingForm = (form: Form[IncomeExpenditureSummary]) =>
     incomeExpenditureSummaryView(form, Summary("99996010001"))(fakeRequest, messages)
 
   "income and expenditure summary view" must {

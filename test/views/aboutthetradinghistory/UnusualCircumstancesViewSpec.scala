@@ -16,24 +16,22 @@
 
 package views.aboutthetradinghistory
 
-import form.aboutthetradinghistory.OtherCostsForm
+import form.aboutthetradinghistory.UnusualCircumstancesForm
 import models.pages.Summary
-import models.submissions.aboutthetradinghistory.OtherCosts
+import models.submissions.aboutthetradinghistory.{OtherCosts, UnusualCircumstances}
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class UnusualCircumstancesViewSpec extends QuestionViewBehaviours[OtherCosts] {
+class UnusualCircumstancesViewSpec extends QuestionViewBehaviours[UnusualCircumstances] {
   //NOTE: this is a holding view test until the other costs page is implemented
-  def otherCostsView = app.injector.instanceOf[views.html.aboutthetradinghistory.otherCosts]
-
   val messageKeyPrefix = "unusualCircumstances"
 
-  override val form = OtherCostsForm.otherCostsForm
+  override val form = UnusualCircumstancesForm.unusualCircumstancesForm
 
   def createView = () => unusualCircumstancesView(form, Summary("99996010001"))(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[OtherCosts]) =>
+  def createViewUsingForm = (form: Form[UnusualCircumstances]) =>
     unusualCircumstancesView(form, Summary("99996010001"))(fakeRequest, messages)
 
   "Other Costs view" must {

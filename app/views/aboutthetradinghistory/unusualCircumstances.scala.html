@@ -14,7 +14,7 @@
  * limitations under the License.
  *@
 
-@import models.submissions.aboutthetradinghistory.OtherCosts
+@import models.submissions.aboutthetradinghistory.UnusualCircumstances
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
 @import models.pages.Summary
@@ -24,7 +24,7 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[OtherCosts], summary: Summary)(implicit request: Request[_], messages: Messages)
+@(theForm: Form[UnusualCircumstances], summary: Summary)(implicit request: Request[_], messages: Messages)
 
 @layout(
   pageHeading = messages("unusualCircumstances.heading"),

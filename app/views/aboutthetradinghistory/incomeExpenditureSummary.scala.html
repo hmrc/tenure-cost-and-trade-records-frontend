@@ -14,7 +14,7 @@
  * limitations under the License.
  *@
 
-@import models.submissions.aboutthetradinghistory.CostOfSales
+@import models.submissions.aboutthetradinghistory.IncomeExpenditureSummary
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
 @import models.pages.Summary
@@ -24,7 +24,7 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[CostOfSales], summary: Summary)(implicit request: Request[_], messages: Messages)
+@(theForm: Form[IncomeExpenditureSummary], summary: Summary)(implicit request: Request[_], messages: Messages)
 
 @layout(
   pageHeading = messages("incomeExpenditureSummary.heading"),

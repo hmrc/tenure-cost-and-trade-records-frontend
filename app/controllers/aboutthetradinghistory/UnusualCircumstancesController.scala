@@ -18,8 +18,8 @@ package controllers.aboutthetradinghistory
 
 import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
-import form.aboutthetradinghistory.OtherCostsForm.otherCostsForm
-import models.submissions.aboutthetradinghistory.OtherCosts
+import form.aboutthetradinghistory.UnusualCircumstancesForm.unusualCircumstancesForm
+import models.submissions.aboutthetradinghistory.UnusualCircumstances
 import navigation.AboutTheTradingHistoryNavigator
 import navigation.identifiers.UnusualCircumstancesId
 import play.api.i18n.I18nSupport
@@ -42,9 +42,9 @@ class UnusualCircumstancesController @Inject() (
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     Ok(
       unusualCircumstancesView(
-        request.sessionData.aboutTheTradingHistory.flatMap(_.otherCosts) match {
-          case Some(otherCosts) => otherCostsForm.fillAndValidate(otherCosts)
-          case _                => otherCostsForm
+        request.sessionData.aboutTheTradingHistory.flatMap(_.unusualCircumstances) match {
+          case Some(unusualCircumstances) => unusualCircumstancesForm.fillAndValidate(unusualCircumstances)
+          case _                          => unusualCircumstancesForm
         },
         request.sessionData.toSummary
       )
@@ -52,8 +52,8 @@ class UnusualCircumstancesController @Inject() (
   }
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft[OtherCosts](
-      otherCostsForm,
+    continueOrSaveAsDraft[UnusualCircumstances](
+      unusualCircumstancesForm,
       formWithErrors => BadRequest(unusualCircumstancesView(formWithErrors, request.sessionData.toSummary)),
       data => {
         val updatedData = request.sessionData
