@@ -48,6 +48,14 @@ case object OtherCostsId extends Identifier {
   override def toString: String = "otherCosts"
 }
 
+case object IncomeExpenditureSummaryId extends Identifier {
+  override def toString: String = "incomeExpenditureSummary"
+}
+
+case object UnusualCircumstancesId extends Identifier {
+  override def toString: String = "unusualCircumstances"
+}
+
 case object NetProfitId extends Identifier {
   override def toString: String = "netProfit"
 }
