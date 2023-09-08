@@ -30,7 +30,7 @@ import views.html.aboutthetradinghistory.unusualCircumstances
 import javax.inject.{Inject, Named, Singleton}
 
 @Singleton
-class UnusualCircumstancesController @Inject()(
+class UnusualCircumstancesController @Inject() (
   mcc: MessagesControllerComponents,
   navigator: AboutTheTradingHistoryNavigator,
   unusualCircumstancesView: unusualCircumstances,

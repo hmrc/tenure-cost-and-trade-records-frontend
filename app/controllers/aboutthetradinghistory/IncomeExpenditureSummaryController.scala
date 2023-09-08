@@ -30,7 +30,7 @@ import views.html.aboutthetradinghistory.incomeExpenditureSummary
 import javax.inject.{Inject, Named, Singleton}
 
 @Singleton
-class IncomeExpenditureSummaryController @Inject()(
+class IncomeExpenditureSummaryController @Inject() (
   mcc: MessagesControllerComponents,
   navigator: AboutTheTradingHistoryNavigator,
   incomeExpenditureSummaryView: incomeExpenditureSummary,
