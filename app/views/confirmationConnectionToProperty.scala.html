@@ -14,29 +14,51 @@
  * limitations under the License.
  *@
 
-@this(layout: Layout)
+@import actions.SessionRequest
+@import views.html.answers.vacantPropertyAnswersTable
 
-@()(implicit request: Request[_], messages: Messages)
+@this(
+        layout: Layout,
+        vacantPropertyAnswers: vacantPropertyAnswersTable
+)
+
+
+@()(implicit request: SessionRequest[_], messages: Messages)
+
 
 @layout(
     pageHeading = messages("label.connectionToProperty.confirm.heading"),
+    summary = Some(request.sessionData.toSummary),
     showH1 = false,
     withTimeoutDialog = false
 ) {
 
-    <div class="govuk-panel govuk-panel--confirmation no-print">
+    <div class="govuk-panel govuk-panel--confirmation govuk-!-display-none-print">
         <h1 class="govuk-panel__title">@messages("label.connectionToProperty.confirm.heading")</h1>
     </div>
 
-    <p class="govuk-body">@messages("label.connectionToProperty.emailConfirm")</p>
-    <p class="govuk-body"><a href="">@messages("label.connectionToProperty.saveCopyOfAnswers.1")</a> @messages("label.connectionToProperty.saveCopyOfAnswers.2")</p>
-    <p class="govuk-body">@messages("label.connectionToProperty.unableToRetrieveAnswers")</p>
+    @includes.printConfirmation()
+
+    <div class="print-only">
+        @vacantPropertyAnswers()
+    </div>
+
+    <div class="govuk-!-display-none-print">
+        <p class="govuk-body">@messages("label.connectionToProperty.emailConfirm")</p>
+        <p class="govuk-body">@messages("label.connectionToProperty.saveCopyOfAnswers.1") @messages("label.connectionToProperty.saveCopyOfAnswers.2")</p>
+        <p class="govuk-body">@messages("label.connectionToProperty.unableToRetrieveAnswers")</p>
+    </div>
 
     <h2 class="govuk-heading-m">@messages("label.connectionToProperty.whatNext")</h2>
     <p class="govuk-body">@messages("connectionToProperty.confirm.copy.list.1")</p>
     <p class="govuk-body">@messages("connectionToProperty.confirm.copy.list.2")</p>
 
+    <p class="govuk-body govuk-!-display-none-print">@messages("confirmation.service")</p>
+
+    <p class="govuk-body govuk-!-display-none-print">
+        <a href="@routes.LoginController.show">@messages("label.submitAnotherForm")</a>
+    </p>
+
   @* TODO PDF download link*@
   @* TODO Feedback template*@
 }
-

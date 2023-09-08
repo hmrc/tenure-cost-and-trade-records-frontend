@@ -14,32 +14,46 @@
  * limitations under the License.
  *@
 
-@this(layout: Layout)
+@import actions.SessionRequest
+@import views.html.answers.answersAllSectionsTable
 
-@()(implicit request: Request[_], messages: Messages)
+@this(
+        layout: Layout,
+        answersAllSections: answersAllSectionsTable
+)
+
+@()(implicit request: SessionRequest[_], messages: Messages)
 
 @layout(
-    pageHeading = messages("label.confirm.heading"),
+    pageHeading = messages("confirmation.heading"),
+    summary = Some(request.sessionData.toSummary),
     showH1 = false,
     withTimeoutDialog = false
 ) {
 
-    <div class="govuk-panel govuk-panel--confirmation no-print">
-        <h1 class="govuk-panel__title">@messages("label.confirm.heading")</h1>
+    <div class="govuk-panel govuk-panel--confirmation govuk-!-display-none-print">
+        <h1 class="govuk-panel__title">@messages(s"confirmation.heading")</h1>
     </div>
 
-    <p class="govuk-body">@messages("label.emailConfirm")</p>
-    <p class="govuk-body">@messages("label.saveCopyOfAnswers")</p>
-    <p class="govuk-body">@messages("label.unableToRetrieveAnswers")</p>
+    @includes.printConfirmation()
 
-    <h2 class="govuk-heading-m">@messages("label.whatNext")</h2>
-    <p class="govuk-body">@messages("confirm.copy.list.1")</p>
-    <p class="govuk-body">@messages("confirm.copy.list.2")</p>
+    <div class="print-only">
+        @answersAllSections()
+    </div>
 
-    <p class="govuk-body">@messages("confirmation.service")</p>
+    <div class="govuk-!-display-none-print">
+        <p class="govuk-body">@messages("confirmation.emailConfirm")</p>
+        <p class="govuk-body">@messages("confirmation.saveCopyOfAnswers")</p>
+        <p class="govuk-body">@messages("confirmation.unableToRetrieveAnswers")</p>
+    </div>
 
-    <p class="govuk-body">
+    <h2 class="govuk-heading-m">@messages("confirmation.whatNext")</h2>
+    <p class="govuk-body">@messages("confirmation.list.1")</p>
+    <p class="govuk-body">@messages("confirmation.list.2")</p>
+
+    <p class="govuk-body govuk-!-display-none-print">@messages("confirmation.service")</p>
+
+    <p class="govuk-body govuk-!-display-none-print">
         <a href="@routes.LoginController.show">@messages("label.submitAnotherForm")</a>
     </p>
 }
-

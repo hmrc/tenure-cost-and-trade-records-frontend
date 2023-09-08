@@ -258,7 +258,7 @@
 
         @if(forType == ForTypes.for6010 || forType == ForTypes.for6015 || forType == ForTypes.for6016) {
          @includes.taskListItem("leaseback-arrangement", "checkYourAnswersAboutYourLeaseOrTenure.leaseDetails.heading",
-          Call("GET", "leaseback-arrangement"), // TODO: Not implemented Controller for "leaseback-arrangement"
+          controllers.aboutYourLeaseOrTenure.routes.PropertyUseLeasebackArrangementController.show(),
           section5Completed,
           session.aboutLeaseOrAgreementPartOne.flatMap(_.annualRent),
           session.aboutLeaseOrAgreementPartOne.flatMap(_.leaseOrAgreementYearsDetails).isEmpty

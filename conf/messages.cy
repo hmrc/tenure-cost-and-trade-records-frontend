@@ -1228,6 +1228,8 @@ confirmation.whatNext = What happens next
 confirmation.list.1 = We have sent your application to the Valuation Office Agency.
 confirmation.list.2 = They may need to contact you for further information.
 confirmation.service = What did you think of this service? (takes 30 seconds)
+print.link=Argraffu copi o’ch ffurflen
+print.link.cantPrintLater=Os hoffech argraffu copi, dylech wneud hynny nawr gan na fyddwch yn gallu ei argraffu nes ymlaen.
 
 # Help section
 ##############
