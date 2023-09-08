@@ -1033,9 +1033,8 @@ turnover.otherCaption.6016 = Including hire of function rooms, conference rooms 
 turnover.totalSales.6016 = Total sales revenue
 turnover.totalSalesCaption.6016 = Excluding VAT
 
-
 # COST OF SALES
-costOfSales.heading = This is a holding page for the cost of sales page
+costOfSales.heading = Cost of sales - holding page
 
 # GROSS PROFIT
 grossProfit.heading = This is a holding page for the gross profits page
@@ -1053,8 +1052,16 @@ variableOperatingExpenses.heading = This is a holding page for the variable oper
 fixedOperatingExpenses.heading = This is a holding page for the fixed operating expenses page
 
 # OTHER COSTS (FORM 6015)
-#########
-otherCosts.heading = This is a holding page for the other costs page
+#########################
+otherCosts.heading = Other costs - holding page
+
+# INCOME EXPENDITURE SUMMARY (FORM 6015)
+########################################
+incomeExpenditureSummary.heading = Income and expediture summary - holding page
+
+# UNUSUAL CIRCUMSTANCES (FORM 6015)
+###################################
+unusualCircumstances.heading = Describe any unusual circumstances that may affect the turnover figures on the previous page - holding page
 
 # NET PROFITS (FORM 6015)
 #########

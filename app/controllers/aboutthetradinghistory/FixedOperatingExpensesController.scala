@@ -48,7 +48,7 @@ class FixedOperatingExpensesController @Inject() (
       .filter(_.occupationAndAccountingInformation.isDefined)
       .fold(Redirect(routes.AboutYourTradingHistoryController.show())) { aboutTheTradingHistory =>
         val numberOfColumns                = aboutTheTradingHistory.turnoverSections.size
-        val financialYears: Seq[LocalDate] = aboutTheTradingHistory.turnoverSections1516.foldLeft(Seq.empty[LocalDate])(
+        val financialYears: Seq[LocalDate] = aboutTheTradingHistory.turnoverSections.foldLeft(Seq.empty[LocalDate])(
           (sequence, turnoverSection) => sequence :+ turnoverSection.financialYearEnd
         )
         Ok(
@@ -68,7 +68,7 @@ class FixedOperatingExpensesController @Inject() (
       .filter(_.occupationAndAccountingInformation.isDefined)
       .fold(Future.successful(Redirect(routes.AboutYourTradingHistoryController.show()))) { aboutTheTradingHistory =>
         val numberOfColumns                = aboutTheTradingHistory.turnoverSections.size
-        val financialYears: Seq[LocalDate] = aboutTheTradingHistory.turnoverSections1516.foldLeft(Seq.empty[LocalDate])(
+        val financialYears: Seq[LocalDate] = aboutTheTradingHistory.turnoverSections.foldLeft(Seq.empty[LocalDate])(
           (sequence, turnoverSection) => sequence :+ turnoverSection.financialYearEnd
         )
         continueOrSaveAsDraft[Seq[FixedOperatingExpenses]](

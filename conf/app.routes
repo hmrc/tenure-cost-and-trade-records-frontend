@@ -136,33 +136,34 @@ POST        /about-your-trading-history                             controllers.
 GET         /turnover                                               controllers.aboutthetradinghistory.TurnoverController.show()
 POST        /turnover                                               controllers.aboutthetradinghistory.TurnoverController.submit()
 
-# Form 6015 routing
+# Form 6015 routing start
 GET         /cost-of-sales                                          controllers.aboutthetradinghistory.CostOfSalesController.show()
 POST        /cost-of-sales                                          controllers.aboutthetradinghistory.CostOfSalesController.submit()
-
-# Form 6015 routing
+# NOT USED -check other forms before deleting
 GET         /gross-profits                                          controllers.aboutthetradinghistory.GrossProfitsController.show()
 POST        /gross-profits                                          controllers.aboutthetradinghistory.GrossProfitsController.submit()
 
-# Form 6015 routing
 GET         /total-payroll-costs                                    controllers.aboutthetradinghistory.TotalPayrollCostsController.show()
 POST        /total-payroll-costs                                    controllers.aboutthetradinghistory.TotalPayrollCostsController.submit()
 
-# Form 6015 routing
 GET         /variable-operating-expenses                            controllers.aboutthetradinghistory.VariableOperatingExpensesController.show()
 POST        /variable-operating-expenses                            controllers.aboutthetradinghistory.VariableOperatingExpensesController.submit()
 
-# Form 6015 routing
 GET         /fixed-operating-expenses                               controllers.aboutthetradinghistory.FixedOperatingExpensesController.show()
 POST        /fixed-operating-expenses                               controllers.aboutthetradinghistory.FixedOperatingExpensesController.submit()
 
-# Form 6015 routing
 GET         /other-costs                                            controllers.aboutthetradinghistory.OtherCostsController.show()
 POST        /other-costs                                            controllers.aboutthetradinghistory.OtherCostsController.submit()
 
-# Form 6015 routing
+GET         /income-expenditure-summary                             controllers.aboutthetradinghistory.IncomeExpenditureSummaryController.show()
+POST        /income-expenditure-summary                             controllers.aboutthetradinghistory.IncomeExpenditureSummaryController.submit()
+
+GET         /unusual-circumstances                                  controllers.aboutthetradinghistory.UnusualCircumstancesController.show()
+POST        /unusual-circumstances                                  controllers.aboutthetradinghistory.UnusualCircumstancesController.submit()
+# NOT USED -check other forms before deleting
 GET         /net-profit                                             controllers.aboutthetradinghistory.NetProfitController.show()
 POST        /net-profit                                             controllers.aboutthetradinghistory.NetProfitController.submit()
+# Form 6015 routing end
 
 # About the francise or letting
 GET         /tenancy-lease-agreement                                controllers.aboutYourLeaseOrTenure.TenancyLeaseAgreementController.show()
