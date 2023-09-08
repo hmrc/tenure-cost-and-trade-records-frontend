@@ -16,13 +16,15 @@
 
 package views
 
+import actions.SessionRequest
 import views.behaviours.ViewBehaviours
 
 class confirmationConnectionToPropertyViewSpec extends ViewBehaviours {
 
   val messageKeyPrefix = "label.connectionToProperty.confirm"
+  val sessionRequest   = SessionRequest(baseFilled6010Session, fakeRequest)
 
-  def createView = () => confirmationConnectionToProperty()(fakeRequest, messages)
+  def createView = () => confirmationConnectionToProperty()(sessionRequest, messages)
 
   "confirmation not connected view" must {
 

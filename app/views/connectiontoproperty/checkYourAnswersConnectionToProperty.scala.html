@@ -31,27 +31,27 @@
 
 @(theForm: Form[CheckYourAnswersConnectionToProperty], backLink: String, summary: Summary)(implicit request: SessionRequest[_], messages: Messages)
 
-@layout(
-    pageHeading = messages("checkYourAnswersConnectionToProperty.heading"),
-    backLinkUrl = backLink,
-    showSection = true,
-    fullWidth = true,
-    summary = Some(summary),
-    sectionName = messages("label.section.connectionToTheProperty"),
-    theForm = theForm
-) {
+    @layout(
+        pageHeading = messages("checkYourAnswersConnectionToProperty.heading"),
+        backLinkUrl = backLink,
+        showSection = true,
+        fullWidth = true,
+        summary = Some(summary),
+        sectionName = messages("label.section.connectionToTheProperty"),
+        theForm = theForm
+    ) {
 
-    @answersSectionConnectionToTheProperty()
+        @answersSectionConnectionToTheProperty()
 
-    @formWithCSRF(action = controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToPropertyController.submit()) {
+        @formWithCSRF(action = controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToPropertyController.submit()) {
 
-        @includes.checkYourAnswersRadioButtons(
-            govukRadios,
-            theForm,
-            "checkYourAnswersConnectionToProperty"
-        )
+            @includes.checkYourAnswersRadioButtons(
+                govukRadios,
+                theForm,
+                "checkYourAnswersConnectionToProperty"
+            )
 
-        @includes.continueSaveAsDraftButtons(govukButton)
+            @includes.continueSaveAsDraftButtons(govukButton)
 
+        }
     }
-}
