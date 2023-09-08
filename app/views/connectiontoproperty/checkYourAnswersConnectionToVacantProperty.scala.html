@@ -17,96 +17,33 @@
 @import actions.SessionRequest
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.warningtext.WarningText
-@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
-@import models.submissions.connectiontoproperty.CheckYourAnswersConnectionToVacantProperty
-@import models.pages.Summary
-@import controllers.connectiontoproperty
-@import util.SectionAnswersRowBuilder
-@import util.DateUtil
-@import util.DateUtil._
-@import models.submissions.common.AnswerYes
-@import util.NumberUtil.bigDecimalHelpers
-@import java.time.LocalDate
+@import views.html.answers.vacantPropertyAnswersTable
 
-@this(layout: Layout,
+@this(
+        layout: Layout,
         govukButton: GovukButton,
         govukSummaryList: GovukSummaryList,
         govukRadios: GovukRadios,
         govukWarningText: GovukWarningText,
-        dateUtil: DateUtil,
+        vacantPropertyAnswers: vacantPropertyAnswersTable,
         formWithCSRF: FormWithCSRF
 )
 
 
 @(backLink: String)(implicit request: SessionRequest[_], messages: Messages)
 
-@session = @{
-    request.sessionData
-}
-    @sectionAnswers = @{
-        SectionAnswersRowBuilder(request.sessionData.stillConnectedDetails)
-    }
 
     @layout(
         pageHeading = messages("checkYourAnswersConnectionToVacantProperty.heading"),
         backLinkUrl = backLink,
-        summary = Some(session.toSummary),
+        summary = Some(request.sessionData.toSummary),
         fullWidth = true,
         sectionName = messages("label.section.connectionToTheProperty")
     ) {
 
+        @vacantPropertyAnswers()
+
         @formWithCSRF(action = controllers.connectiontoproperty.routes.ConnectionToPropertySubmissionController.submit()) {
-            @if(sectionAnswers.answers.exists(a => a.editAddress.isDefined)) {
-            <h2 class="govuk-heading-m">@messages("checkYourAnswersConnectionToVacantProperty.connectionStatus.heading")</h2>
-
-                @govukSummaryList(SummaryList(rows = sectionAnswers.row("label.checkYourAnswersConnectionToVacantProperty", _.addressConnectionType.map(_.name).map(v => messages(s"label.$v")), connectiontoproperty.routes.AreYouStillConnectedController.show(), "isRelated") ++
-                        sectionAnswers.row("checkYourAnswersConnectionToVacantProperty.proposedAddress",
-                            _.editAddress.map(l => s"${l.editAddress.escapedHtml}"),
-                            controllers.connectiontoproperty.routes.EditAddressController.show(), "",
-                            ("valueAsHtml", _ => None))
-                )
-                )
-            }else{
-                <h2 class="govuk-heading-m">@messages("checkYourAnswersConnectionToVacantProperty.connectionStatus.heading")</h2>
-                @govukSummaryList(SummaryList(rows = sectionAnswers.row("label.checkYourAnswersConnectionToVacantProperty", _.addressConnectionType.map(_.name).map(v => messages(s"label.$v")), connectiontoproperty.routes.AreYouStillConnectedController.show(), "isRelated")))
-            }
-            <h2 class="govuk-heading-m">@messages("checkYourAnswersConnectionToVacantProperty.vacancyStatus.heading")</h2>
-            @govukSummaryList(SummaryList(rows =
-                sectionAnswers.row("checkYourAnswersConnectionToVacantProperty.isPropertyVacant", _.vacantProperties.map(_.vacantProperties.name).map(v => messages(s"label.$v")), connectiontoproperty.routes.VacantPropertiesController.show(), "vacantProperties") ++
-                sectionAnswers.row("checkYourAnswersConnectionToVacantProperty.vacantDate", _.vacantPropertyStartDate.map(_.datePropertyBecomeVacant).map(v => dateUtil.formatDayMonthAbbrYear(v)), connectiontoproperty.routes.VacantPropertiesStartDateController.show(), "startDateOfVacantProperty.day")
-            ))
-
-            <h2 class="govuk-heading-m">@messages("checkYourAnswersConnectionToVacantProperty.lettings.heading")</h2>
-            @govukSummaryList(SummaryList(rows =
-                sectionAnswers.row("checkYourAnswersConnectionToVacantProperty.isRentReceived", _.isAnyRentReceived.map(_.name).map(v => messages(s"label.$v")), connectiontoproperty.routes.IsRentReceivedFromLettingController.show(), "vacantProperties")
-            ))
-
-            @if(sectionAnswers.answers.flatMap(_.isAnyRentReceived).contains(AnswerYes)) {
-                @for((letting, idx) <- sectionAnswers.answers.map(_.lettingPartOfPropertyDetails).getOrElse(IndexedSeq.empty).zipWithIndex) {
-                    @govukSummaryList(SummaryList(rows =
-                        sectionAnswers.row("checkYourAnswersConnectionToVacantProperty.tenantDetails",
-                            _ => Option(letting.tenantDetails.escapedHtml),
-                            connectiontoproperty.routes.LettingPartOfPropertyDetailsController.show(Some(idx)), "tenantName",("valueAsHtml", _ => None)) ++
-                        sectionAnswers.row("checkYourAnswersConnectionToVacantProperty.annualRent",
-                            _ => letting.lettingPartOfPropertyRentDetails.map(lrd => s"""<p class="govuk-body">${lrd.annualRent.asMoney} </br> ${messages("checkYourAnswersConnectionToVacantProperty.fixedOn")} ${dateUtil.formatDayMonthAbbrYear(lrd.dateInput)} </p>"""),
-                            controllers.connectiontoproperty.routes.LettingPartOfPropertyDetailsRentController.show(idx),"annualRent",("valueAsHtml", _ => None)) ++
-                        sectionAnswers.row("checkYourAnswersConnectionToVacantProperty.itemsInRent",
-                                    _ => Option(letting.itemsIncludedInRent.filter(_ != "noneOfThese")).filter(_.nonEmpty).fold(List("none"))(identity)
-                                            .map(item => messages(s"checkbox.lettingPartOfPropertyCheckboxesDetails.$item"))
-                                            .mkString("""<p class="govuk-body">""", "<br/> ", "</p>"),
-                                    connectiontoproperty.routes.LettingPartOfPropertyItemsIncludedInRentController.show(idx), "itemsInRent",
-                                    ("valueAsHtml", _ => None)) ++
-                                sectionAnswers.row("checkYourAnswersConnectionToVacantProperty.addAnotherLetting",_ => letting.addAnotherLettingToProperty.map(_.name).map(v => messages(s"label.$v")), connectiontoproperty.routes.AddAnotherLettingPartOfPropertyController.show(idx), "addAnotherLettingPartOfProperty")
-                    ))
-                }
-            }
-
-            <h2 class="govuk-heading-m">@messages("checkYourAnswersConnectionToVacantProperty.yourContactDetails.heading")</h2>
-            @govukSummaryList(SummaryList(rows = sectionAnswers.row("checkYourAnswersConnectionToVacantProperty.yourContactDetails.title",
-                _.provideContactDetails.map(l => s"${l.yourContactDetails.escapedHtml}"),
-                controllers.connectiontoproperty.routes.ProvideContactDetailsController.show(), "yourContactDetails.fullName",
-                ("valueAsHtml", _ => None))
-            ))
 
             <h2 class="govuk-heading-m">@messages("declaration.heading")</h2>
             <p class="govuk-body">@messages("declaration.information")</p>

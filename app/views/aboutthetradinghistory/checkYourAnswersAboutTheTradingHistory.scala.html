@@ -15,64 +15,21 @@
  *@
 
 @import actions.SessionRequest
-@import controllers.aboutthetradinghistory
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import models.submissions.aboutthetradinghistory.CheckYourAnswersAboutTheTradingHistory
-@import models.submissions.aboutthetradinghistory.TurnoverSection
 @import models.pages.Summary
-@import util.DateUtil
-@import util.NumberUtil._
-@import util.SectionAnswersRowBuilder
+@import views.html.answers.answersAboutYourTradingHistory
 
 @this(layout: Layout,
         govukButton: GovukButton,
         govukRadios: GovukRadios,
-        govukSummaryList: GovukSummaryList,
-        dateUtil: DateUtil,
+        answersSectionAboutYourTradingHistory: answersAboutYourTradingHistory,
         formWithCSRF: FormWithCSRF
 )
 
+
 @(theForm: Form[CheckYourAnswersAboutTheTradingHistory], backLink: String, summary: Summary)(implicit request: SessionRequest[_], messages: Messages)
 
-@sectionAnswers = @{
-    SectionAnswersRowBuilder(request.sessionData.aboutTheTradingHistory)
-}
-
-@table(valuesGrid: Seq[Seq[String]]) = {
-@valuesGrid.map { values =>
-    <span class="hmrc-turnover-table-column">
-        @values.map { value =>
-            <p class="govuk-body">@value</p>
-        }
-    </span>
-}
-}
-
-@turnoverValuesTable(turnoverSections: Seq[TurnoverSection]) = @{
-    table(
-        turnoverSections.map(t => Seq(
-            dateUtil.formatDayMonthAbbrYear(t.financialYearEnd),
-            s"${t.tradingPeriod} ${messages("turnover.weeks")}",
-            t.alcoholicDrinks.asMoney,
-            t.food.asMoney,
-            t.otherReceipts.asMoney,
-            t.accommodation.asMoney,
-            t.averageOccupancyRate.withScale(2) + "%"
-        ))
-    ).body
-}
-
-@turnoverKeys = @{
-    Seq(
-        messages("checkYourAnswersAboutTheTradingHistory.financialYearEnd"),
-        messages("checkYourAnswersAboutTheTradingHistory.tradingPeriod"),
-        messages("checkYourAnswersAboutTheTradingHistory.drinks"),
-        messages("checkYourAnswersAboutTheTradingHistory.food"),
-        messages("checkYourAnswersAboutTheTradingHistory.otherReceipts"),
-        messages("checkYourAnswersAboutTheTradingHistory.accommodation"),
-        messages("checkYourAnswersAboutTheTradingHistory.averageOccupancyRate"),
-    ).mkString("""<p class="govuk-body govuk-!-font-weight-bold">""", """</p> <p class="govuk-body govuk-!-font-weight-bold">""", "</p>")
-}
 
 @layout(
     pageHeading = messages("checkYourAnswersAboutTheTradingHistory.heading"),
@@ -84,41 +41,7 @@
     theForm = theForm
 ) {
 
-    <h2 class="govuk-heading-m">@messages("aboutYourTradingHistory.heading")</h2>
-
-    @govukSummaryList(SummaryList(rows =
-        sectionAnswers.row("checkYourAnswersAboutTheTradingHistory.occupationAndAccounting",
-            _.occupationAndAccountingInformation.map(
-                a => Seq(
-                    dateUtil.formatYearMonth(a.firstOccupy.toYearMonth),
-                    dateUtil.formatMonthDay(a.financialYear.toMonthDay)
-                ).mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>")
-            ),
-            aboutthetradinghistory.routes.AboutYourTradingHistoryController.show(), "",
-            ("valueAsHtml", _ => None))
-    ))
-
-    <h2 class="govuk-heading-m">@messages("turnover.heading")</h2>
-
-    @govukSummaryList(SummaryList(rows =
-        Seq(
-            SummaryListRow(
-                key = Key(HtmlContent(turnoverKeys)),
-                value = Value(HtmlContent(sectionAnswers.answers.fold("")(t => turnoverValuesTable(t.turnoverSections)))),
-                actions = Some(
-                    Actions(items =
-                        Seq(
-                            ActionItem(
-                                href = s"${aboutthetradinghistory.routes.TurnoverController.show().url}?from=CYA",
-                                content = Text(messages("label.change")),
-                                visuallyHiddenText = Some(messages("turnover.heading"))
-                            )
-                        )
-                    )
-                )
-            )
-        )
-    ))
+    @answersSectionAboutYourTradingHistory()
 
     @formWithCSRF(action = controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.submit()) {
 
