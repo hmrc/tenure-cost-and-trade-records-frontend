@@ -30,8 +30,9 @@ import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import views.html.connectiontoproperty.isRentReceivedFromLetting
 
+import java.util.concurrent.TimeUnit
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class IsRentReceivedFromLettingController @Inject() (
@@ -40,7 +41,8 @@ class IsRentReceivedFromLettingController @Inject() (
   isRentReceivedFromLettingView: isRentReceivedFromLetting,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FORDataCaptureController(mcc)
+)(implicit ec: ExecutionContext)
+    extends FORDataCaptureController(mcc)
     with I18nSupport
     with Logging {
 
@@ -72,8 +74,10 @@ class IsRentReceivedFromLettingController @Inject() (
         ),
       data => {
         val updatedData = updateStillConnectedDetails(_.copy(isAnyRentReceived = Some(data)))
-        session.saveOrUpdate(updatedData)
-        Redirect(navigator.nextPage(LettingIncomePageId, updatedData).apply(updatedData))
+        session.saveOrUpdate(updatedData).map { _ =>
+          TimeUnit.SECONDS.sleep(1)
+          Redirect(navigator.nextPage(LettingIncomePageId, updatedData).apply(updatedData))
+        }
       }
     )
   }
