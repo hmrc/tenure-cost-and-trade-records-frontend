@@ -16,4 +16,4 @@
 
 package form
 
-case class Feedback(rating: Option[String], comments: Option[String])
+case class  Feedback(rating: Option[String], comments: Option[String])

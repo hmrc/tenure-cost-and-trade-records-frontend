@@ -16,13 +16,27 @@
 
 @import actions.SessionRequest
 @import views.html.answers.answersAllSectionsTable
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
+@import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.radios.Radios
+@import uk.gov.hmrc.govukfrontend.views.Aliases._
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukCharacterCount
+
+
+@import form.Feedback
 
 @this(
         layout: Layout,
-        answersAllSections: answersAllSectionsTable
+        answersAllSections: answersAllSectionsTable,
+        govukButton: GovukButton,
+        govukRadios: GovukRadios,
+        govukCharacterCount: GovukCharacterCount,
+        formWithCSRF: FormWithCSRF
 )
 
-@()(implicit request: SessionRequest[_], messages: Messages)
+@(theForm: Form[Feedback])(implicit request: SessionRequest[_], messages: Messages)
 
 @layout(
     pageHeading = messages("confirmation.heading"),
@@ -53,7 +67,78 @@
 
     <p class="govuk-body govuk-!-display-none-print">@messages("confirmation.service")</p>
 
-    <p class="govuk-body govuk-!-display-none-print">
-        <a href="@routes.LoginController.show">@messages("label.submitAnotherForm")</a>
-    </p>
+
+
+    <div class="no-print">
+
+        <h2 class="govuk-heading-l">@messages("confirmation.feedback.title")</h2>
+
+        @formWithCSRF(
+            action = routes.FeedbackController.feedbackSubmit,
+            args = Symbol("novalidate") -> "novalidate" ) {
+
+
+            <div class="govuk-form-group">
+                <fieldset class="govuk-fieldset">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">@messages("confirmation.feedback.subheading")</legend>
+
+                    @govukRadios(
+                        Radios(
+                            name = "feedback-rating",
+                            items =
+                                Seq(
+                                    "5" -> messages("feedback.rating.5"),
+                                    "4" -> messages("feedback.rating.4"),
+                                    "3" -> messages("feedback.rating.3"),
+                                    "2" -> messages("feedback.rating.2"),
+                                    "1" -> messages("feedback.rating.1")
+                                ).map(radioItem =>
+                                    RadioItem(
+                                        content = Text(radioItem._2),
+                                        checked = radioItem._1.equals(theForm("feedback-rating").value.getOrElse("")),
+                                        value = Option(radioItem._1)
+                                    )
+                                ),
+                            errorMessage = theForm.errors.asTextErrorMessageForField("feedback-rating"),
+                        )
+                    )
+                </fieldset>
+            </div>
+
+
+            @govukCharacterCount(
+                CharacterCount(
+                    id = "feedback-comments",
+                    name = "feedback-comments",
+                    value = theForm("feedback-comments").value,
+                    rows = 8,
+                    maxLength = Some(1200),
+                    errorMessage = theForm.errors.asTextErrorMessageForField("feedback-comments"),
+                    label = Label(
+                        classes = "govuk-!-font-weight-bold",
+                        content = Text(messages("label.feedback.comments"))
+                    ),
+                    hint = Some(Hint(content = Text(messages("feedback.bottomCopy"))))
+                )
+            )
+
+
+            @govukButton(
+                Button(
+                    attributes = Map("id" -> "send"),
+                    content = Text(messages("label.submit")),
+                    name = Some("send"),
+                    value = Some("send"),
+                    inputType = Some("submit")
+                )
+            )
+        }
+
+        <p class="govuk-body govuk-!-display-none-print">
+            <a href="@routes.LoginController.show">@messages("label.submitAnotherForm")</a>
+        </p>
+
+    </div>
+
+
 }
