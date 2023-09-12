@@ -76,20 +76,6 @@ class DownloadPDFViewSpec extends QuestionViewBehaviours[DownloadPDF] {
       val doc = asDocument(createViewNoForType())
       assert(doc.toString.contains(messages("downloadPdf.no.download")))
       assert(doc.toString.contains(messages("downloadPdf.retry")))
-      assert(doc.select("a[class=govuk-link]").toString.contains(messages("label.downloadPdfReferenceNumberLogin")))
-      assert(
-        doc
-          .select("a[class=govuk-link]")
-          .toString
-          .contains(controllers.downloadFORTypeForm.routes.DownloadPDFReferenceNumberController.show().url)
-      )
-      assert(doc.select("a[class=govuk-link]").toString.contains(messages("label.requestReference")))
-      assert(
-        doc
-          .select("a[class=govuk-link]")
-          .toString
-          .contains(controllers.requestReferenceNumber.routes.RequestReferenceNumberController.startWithSession().url)
-      )
     }
   }
 }

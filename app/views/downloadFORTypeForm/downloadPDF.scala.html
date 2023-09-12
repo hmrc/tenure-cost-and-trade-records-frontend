@@ -30,11 +30,13 @@
 
 @layout(
   pageHeading = messages("downloadPdf.heading"),
+    showH1 = false,
   backLinkUrl = controllers.downloadFORTypeForm.routes.DownloadPDFReferenceNumberController.show().url
 ) {
 
     @forType match {
         case ForTypes.for6010 => {
+            <h1 class="govuk-heading-l">@messages("downloadPdf.heading")</h1>
             <p class="govuk-body">@messages("downloadPdf.englishWelsh")</p>
             <p class="govuk-body">
                 <a class="govuk-link" target="_blank" href=@messages("downloadPdf.6010.url")>@messages("downloadPdf.6010.label")</a>
@@ -42,6 +44,7 @@
             <a href="@routes.LoginController.show" class="govuk-button" data-module="govuk-button" >@messages("downloadPdf.continueJourneyButton")</a>
         }
         case ForTypes.for6011 => {
+            <h1 class="govuk-heading-l">@messages("downloadPdf.heading")</h1>
             <p class="govuk-body">@messages("downloadPdf.englishWelsh")</p>
             <p class="govuk-body">
                 <a class="govuk-link" target="_blank" href=@messages("downloadPdf.6011.url")>@messages("downloadPdf.6011.label")</a>
@@ -49,6 +52,7 @@
             <a href="@routes.LoginController.show" class="govuk-button" data-module="govuk-button" >@messages("downloadPdf.continueJourneyButton")</a>
         }
         case ForTypes.for6015 => {
+            <h1 class="govuk-heading-l">@messages("downloadPdf.heading")</h1>
             <p class="govuk-body">@messages("downloadPdf.englishWelsh")</p>
             <p class="govuk-body">
                 <a class="govuk-link" target="_blank" href=@messages("downloadPdf.6015.url")>@messages("downloadPdf.6015.label")</a>
@@ -56,6 +60,7 @@
             <a href="@routes.LoginController.show" class="govuk-button" data-module="govuk-button" >@messages("downloadPdf.continueJourneyButton")</a>
         }
         case ForTypes.for6016 => {
+            <h1 class="govuk-heading-l">@messages("downloadPdf.heading")</h1>
             <p class="govuk-body">@messages("downloadPdf.englishWelsh")</p>
             <p class="govuk-body">
                 <a class="govuk-link" target="_blank" href=@messages("downloadPdf.6016.url")>@messages("downloadPdf.6016.label")</a>
