@@ -79,7 +79,7 @@ class LoginController @Inject() (
   mcc: MessagesControllerComponents,
   login: login,
   loginToBackend: LoginToBackendAction,
-  errorView: ErrorTemplate,
+  errorView: views.html.error.error,
   loginFailedView: loginFailed,
   lockedOutView: lockedOut,
   loggedOutView: loggedOut,
@@ -152,9 +152,9 @@ class LoginController @Inject() (
       }
       .recover {
         case Upstream4xxResponse(_, 409, _, _)    =>
-          Conflict(errorView("409 Conflict Error", "409 Conflict Error", "409 Conflict Error"))
+          Conflict(errorView(409))
         case Upstream4xxResponse(_, 403, _, _)    =>
-          Conflict(errorView("403 Forbidden Error", "403 Forbidden Error", "403 Forbidden Error"))
+          Conflict(errorView(403))
         case Upstream4xxResponse(body, 401, _, _) =>
           val failed            = Json.parse(body).as[FailedLoginResponse]
           val remainingAttempts = failed.numberOfRemainingTriesUntilIPLockout
