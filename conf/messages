@@ -133,6 +133,16 @@ start.button = Start now
 start.welsh = This service is also available in <a href="https://www.gov.uk" class="govuk-link" target="_blank">Welsh (Cymraeg)</a>
 start.desc8 = <a href="https://www.gov.uk/browse/business/premises-rates" class="govuk-link" target="_blank">Business premises and business rates page</a> can direct you to a broad range of information and services. It covers many topics, including estimating your business rates, getting support for your business, and contacting your council about a business rates bill.
 
+#ERROR PAGES
+##############################
+error.404.heading=The page you requested cannot be found. Please try again.
+error.408.heading=The page or service has timed out. Please re-enter your details or start again
+error.410.heading=The page you requested is no longer available
+error.500.heading=There is a problem with the page and it cannot be displayed. Please try again later.
+error.403.heading=The reference number you entered does not match our records. Please check and try again.
+error.409.heading=You cannot edit this information because it has already been submitted.
+error.409.body=You can email us at <a href="mailto:formhelp@voa.gov.uk">formhelp@voa.gov.uk</a> if you need further help.
+
 #LOGIN
 ##############################
 login.heading = What is your reference number and postcode?
