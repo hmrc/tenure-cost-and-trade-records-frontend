@@ -41,6 +41,9 @@ class RequestReferenceNumberFormSubmissionController @Inject() (
     extends FrontendController(mcc)
     with I18nSupport {
 
+  import FeedbackFormMapper.feedbackForm
+
+
   lazy val confirmationUrl = controllers.routes.RequestReferenceNumberFormSubmissionController.confirmation().url
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
@@ -66,6 +69,6 @@ class RequestReferenceNumberFormSubmissionController @Inject() (
   }
 
   def confirmation: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    Ok(confirmationView())
+    Ok(confirmationView(feedbackForm))
   }
 }
