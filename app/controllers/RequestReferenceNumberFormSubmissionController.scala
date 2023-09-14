@@ -43,7 +43,6 @@ class RequestReferenceNumberFormSubmissionController @Inject() (
 
   import FeedbackFormMapper.feedbackForm
 
-
   lazy val confirmationUrl = controllers.routes.RequestReferenceNumberFormSubmissionController.confirmation().url
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>

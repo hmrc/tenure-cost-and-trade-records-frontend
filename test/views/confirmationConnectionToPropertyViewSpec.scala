@@ -17,6 +17,7 @@
 package views
 
 import actions.SessionRequest
+import controllers.FeedbackFormMapper
 import views.behaviours.ViewBehaviours
 
 class confirmationConnectionToPropertyViewSpec extends ViewBehaviours {
@@ -24,7 +25,8 @@ class confirmationConnectionToPropertyViewSpec extends ViewBehaviours {
   val messageKeyPrefix = "label.connectionToProperty.confirm"
   val sessionRequest   = SessionRequest(baseFilled6010Session, fakeRequest)
 
-  def createView = () => confirmationConnectionToProperty()(sessionRequest, messages)
+  val form       = FeedbackFormMapper.feedbackForm
+  def createView = () => confirmationConnectionToProperty(form)(sessionRequest, messages)
 
   "confirmation not connected view" must {
 

@@ -68,13 +68,12 @@
     <p class="govuk-body govuk-!-display-none-print">@messages("confirmation.service")</p>
 
 
-
     <div class="no-print">
 
         <h2 class="govuk-heading-l">@messages("confirmation.feedback.title")</h2>
 
         @formWithCSRF(
-            action = routes.FeedbackController.feedbackSubmit,
+            action = routes.FeedbackController.feedbackConnectedSubmit,
             args = Symbol("novalidate") -> "novalidate" ) {
 
 

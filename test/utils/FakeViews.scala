@@ -27,7 +27,7 @@ import views.html.aboutyouandtheproperty.checkYourAnswersAboutTheProperty
 import views.html.additionalinformation.{alternativeContactDetails, furtherInformationOrRemarks}
 import views.html.downloadFORTypeForm.{downloadPDF, downloadPDFReferenceNumber}
 import views.html.requestReferenceNumber.{requestReferenceNumber, requestReferenceNumberContactDetails}
-import views.html.{confirmationConnectionToProperty, confirmationNotConnected, login}
+import views.html.{confirmation, confirmationConnectionToProperty, confirmationNotConnected, login}
 
 trait FakeViews { this: GuiceOneAppPerSuite =>
 
@@ -53,6 +53,8 @@ trait FakeViews { this: GuiceOneAppPerSuite =>
     app.injector.instanceOf[checkYourAnswersConnectionToVacantProperty]
   lazy val confirmationConnectionToProperty: confirmationConnectionToProperty                     =
     app.injector.instanceOf[confirmationConnectionToProperty]
+  lazy val confirmation: confirmation                                                             =
+    app.injector.instanceOf[confirmation]
   lazy val tradingNameOperatingFromProperty: tradingNameOperatingFromProperty                     =
     app.injector.instanceOf[tradingNameOperatingFromProperty]
   lazy val tradingNameOwnTheProperty: tradingNameOwnTheProperty                                   = app.injector.instanceOf[tradingNameOwnTheProperty]

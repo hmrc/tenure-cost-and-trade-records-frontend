@@ -16,12 +16,15 @@
 
 package controllers
 
+import actions.WithSessionRefiner
 import connectors.Audit
 import form.Feedback
 import play.api.data.Form
 import play.api.data.Forms.{mapping, optional, text}
+import play.api.i18n.I18nSupport
 import play.api.mvc.{MessagesControllerComponents, _}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
+import views.html.{confirmation, confirmationConnectionToProperty, confirmationNotConnected}
 import views.html.feedback.{feedback, feedbackThx}
 
 import javax.inject.{Inject, Singleton}
@@ -32,8 +35,13 @@ class FeedbackController @Inject() (
   mcc: MessagesControllerComponents,
   feedbackView: feedback,
   feedbackThxView: feedbackThx,
+  confirmationConnectedView: confirmation,
+  confirmationNotConnectedView: confirmationNotConnected,
+  confirmationVacantProperty: confirmationConnectionToProperty,
+  withSessionRefiner: WithSessionRefiner,
   audit: Audit
-) extends FrontendController(mcc) {
+) extends FrontendController(mcc)
+    with I18nSupport {
 
   import FeedbackFormMapper.feedbackForm
 
@@ -60,8 +68,62 @@ class FeedbackController @Inject() (
       )
   }
 
-  private def sendFeedback(f: Feedback)(implicit request: Request[_]) =
-    audit("SurveyFeedback", Map("comments" -> f.comments.getOrElse(""), "satisfaction" -> f.rating.get))
+  def feedbackConnectedSubmit = (Action andThen withSessionRefiner).async { implicit request =>
+    feedbackForm
+      .bindFromRequest()
+      .fold(
+        formWithErrors =>
+          Future.successful {
+            BadRequest(confirmationConnectedView(formWithErrors))
+          },
+        feedbackForm => {
+          sendConnectedFeedback(feedbackForm)
+          Future.successful(Redirect(routes.FeedbackController.feedbackThx))
+        }
+      )
+  }
+
+  def feedbackNotConnectedSubmit = (Action andThen withSessionRefiner).async { implicit request =>
+    feedbackForm
+      .bindFromRequest()
+      .fold(
+        formWithErrors =>
+          Future.successful {
+            BadRequest(confirmationNotConnectedView(formWithErrors, request.sessionData))
+          },
+        feedbackForm => {
+          sendFeedbackNotConnected(feedbackForm)
+          Future.successful(Redirect(routes.FeedbackController.feedbackThx))
+        }
+      )
+  }
+
+  def feedbackVacantPropertySubmit = (Action andThen withSessionRefiner).async { implicit request =>
+    feedbackForm
+      .bindFromRequest()
+      .fold(
+        formWithErrors =>
+          Future.successful {
+            BadRequest(confirmationVacantProperty(formWithErrors))
+          },
+        feedbackForm => {
+          sendFeedbackVacantProperty(feedbackForm)
+          Future.successful(Redirect(routes.FeedbackController.feedbackThx))
+        }
+      )
+  }
+
+  private def sendFeedback(f: Feedback)(implicit request: Request[_])               =
+    audit("inPageFeedback", Map("comments" -> f.comments.getOrElse(""), "satisfaction" -> f.rating.get))
+
+  private def sendConnectedFeedback(f: Feedback)(implicit request: Request[_])      =
+    audit("postSubmitFeedback", Map("comments" -> f.comments.getOrElse(""), "satisfaction" -> f.rating.get))
+
+  private def sendFeedbackNotConnected(f: Feedback)(implicit request: Request[_])   =
+    audit("notConnected", Map("comments" -> f.comments.getOrElse(""), "satisfaction" -> f.rating.get))
+
+  private def sendFeedbackVacantProperty(f: Feedback)(implicit request: Request[_]) =
+    audit("vacantProperty", Map("comments" -> f.comments.getOrElse(""), "satisfaction" -> f.rating.get))
 
 }
 
