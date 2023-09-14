@@ -62,7 +62,7 @@ class FeedbackController @Inject() (
             BadRequest(feedbackView(formWithErrors))
           },
         feedbackForm => {
-          sendFeedback(feedbackForm)
+          sendFeedback("inPageFeedback", feedbackForm)
           Future.successful(Redirect(routes.FeedbackController.feedbackThx))
         }
       )
@@ -77,7 +77,7 @@ class FeedbackController @Inject() (
             BadRequest(confirmationConnectedView(formWithErrors))
           },
         feedbackForm => {
-          sendConnectedFeedback(feedbackForm)
+          sendFeedback("postSubmitFeedback", feedbackForm)
           Future.successful(Redirect(routes.FeedbackController.feedbackThx))
         }
       )
@@ -92,7 +92,7 @@ class FeedbackController @Inject() (
             BadRequest(confirmationNotConnectedView(formWithErrors, request.sessionData))
           },
         feedbackForm => {
-          sendFeedbackNotConnected(feedbackForm)
+          sendFeedback("notConnected", feedbackForm)
           Future.successful(Redirect(routes.FeedbackController.feedbackThx))
         }
       )
@@ -107,24 +107,14 @@ class FeedbackController @Inject() (
             BadRequest(confirmationVacantProperty(formWithErrors))
           },
         feedbackForm => {
-          sendFeedbackVacantProperty(feedbackForm)
+          sendFeedback("vacantProperty", feedbackForm)
           Future.successful(Redirect(routes.FeedbackController.feedbackThx))
         }
       )
   }
 
-  private def sendFeedback(f: Feedback)(implicit request: Request[_])               =
-    audit("inPageFeedback", Map("comments" -> f.comments.getOrElse(""), "satisfaction" -> f.rating.get))
-
-  private def sendConnectedFeedback(f: Feedback)(implicit request: Request[_])      =
-    audit("postSubmitFeedback", Map("comments" -> f.comments.getOrElse(""), "satisfaction" -> f.rating.get))
-
-  private def sendFeedbackNotConnected(f: Feedback)(implicit request: Request[_])   =
-    audit("notConnected", Map("comments" -> f.comments.getOrElse(""), "satisfaction" -> f.rating.get))
-
-  private def sendFeedbackVacantProperty(f: Feedback)(implicit request: Request[_]) =
-    audit("vacantProperty", Map("comments" -> f.comments.getOrElse(""), "satisfaction" -> f.rating.get))
-
+  private def sendFeedback(eventName: String, f: Feedback)(implicit request: Request[_]) =
+    audit(eventName, Map("comments" -> f.comments.getOrElse(""), "satisfaction" -> f.rating.get))
 }
 
 object FeedbackFormMapper {

@@ -18,13 +18,11 @@ package controllers.admin
 
 import connectors.UpscanConnector
 import form.admin.FileUploadDataFormProvider
-import models.admin.UpScanRequests.{UploadConfirmation, UploadConfirmationSuccess}
 import play.api.Configuration
 import play.api.mvc._
 import play.api.data._
 import play.api.data.Forms._
 import play.api.i18n.I18nSupport
-import play.api.libs.json.{JsValue, Json}
 import play.api.libs.ws.WSClient
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 
