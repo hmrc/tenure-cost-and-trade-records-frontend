@@ -14,33 +14,138 @@
  * limitations under the License.
  *@
 
+@import actions.SessionRequest
 @import models.submissions.aboutthetradinghistory.CostOfSales
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
-@import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
-@import models.pages.Summary
+@import uk.gov.hmrc.govukfrontend.views.html.components._
+@import uk.gov.hmrc.govukfrontend.views.Implicits._
 
-@this(layout: Layout,
+@this(
+        layout: Layout,
         govukButton: GovukButton,
-        formWithCSRF: FormWithCSRF
+        formWithCSRF: FormWithCSRF,
+        govukInput: GovukInput,
+        govukTable: GovukTable,
+        govukInsetText: GovukInsetText,
+        govukDetails: GovukDetails
 )
 
-@(theForm: Form[CostOfSales], summary: Summary)(implicit request: Request[_], messages: Messages)
 
-@layout(
-  pageHeading = messages("costOfSales.heading"),
-  showSection = true,
-    summary = Some(summary),
-  sectionName = messages("label.section.aboutYourTradingHistory"),
-  backLinkUrl = controllers.aboutthetradinghistory.routes.TurnoverController.show().url,
-    theForm = theForm
-) {
+@(form: Form[Seq[CostOfSales]])(implicit request: SessionRequest[_], messages: Messages)
 
-  @formWithCSRF(action = controllers.aboutthetradinghistory.routes.CostOfSalesController.submit()) {
 
-      @includes.continueSaveAsDraftButtons(govukButton)
-  }
+
+@accommodationHeading = {
+    <p class="govuk-body govuk-!-font-weight-bold">@messages("turnover.accommodation")</p>
 }
 
+@foodHeading = {
+    <p class="govuk-body govuk-!-font-weight-bold">@messages("turnover.food")</p>
+}
 
+@drinksHeading = {
+    <p class="govuk-body govuk-!-font-weight-bold">@messages("turnover.alcoholicDrinks")</p>
+}
 
+@otherHeading = {
+    <p class="govuk-body govuk-!-font-weight-bold">@messages("costOfSales.otherSales")</p>
+    <span class="govuk-caption-m">@messages("costOfSales.otherSales.hint")</span>
+}
 
+@columns = @{
+    0 until form.value.fold(1)(_.size)
+}
+
+@layout(
+    pageHeading = messages("costOfSales.heading"),
+    showSection = true,
+    sectionName = messages("label.section.aboutYourTradingHistory"),
+    summary = Some(request.sessionData.toSummary),
+    backLinkUrl = controllers.aboutthetradinghistory.routes.TurnoverController.show().url,
+    theForm = form
+) {
+
+    @formWithCSRF(action = controllers.aboutthetradinghistory.routes.CostOfSalesController.submit()) {
+
+        @govukTable(Table(
+            rows = Seq(
+
+                TableRow(
+                    content = Text(messages("turnover.financialYearEnd")),
+                    classes = "govuk-!-font-weight-bold"
+                ) +:
+                        columns.map { idx =>
+                            TableRow(
+                                content = HtmlContent(
+                                    form(s"$idx.financial-year-end").value.getOrElse("")
+                                )
+                            )
+                        },
+                TableRow(
+                    content = HtmlContent(accommodationHeading)
+                ) +: columns.map { idx =>
+                    TableRow(
+                        content = HtmlContent(
+                            govukInput(
+                                Input(
+                                    prefix = Some(PrefixOrSuffix(
+                                        content = Text("£")
+                                    ))
+                                ).withFormField(form(s"$idx.accommodation"))
+                            )
+                        )
+                    )
+                },
+                TableRow(
+                    content = HtmlContent(foodHeading)
+                ) +: columns.map { idx =>
+                    TableRow(
+                        content = HtmlContent(
+                            govukInput(
+                                Input(
+                                    prefix = Some(PrefixOrSuffix(
+                                        content = Text("£")
+                                    ))
+                                ).withFormField(form(s"$idx.food"))
+                            )
+                        )
+                    )
+                },
+                TableRow(
+                    content = HtmlContent(drinksHeading)
+                ) +: columns.map { idx =>
+                    TableRow(
+                        content = HtmlContent(
+                            govukInput(
+                                Input(
+                                    prefix = Some(PrefixOrSuffix(
+                                        content = Text("£")
+                                    ))
+                                ).withFormField(form(s"$idx.drinks"))
+                            )
+                        )
+                    )
+                },
+                TableRow(
+                    content = HtmlContent(otherHeading)
+                ) +: columns.map { idx =>
+                    TableRow(
+                        content = HtmlContent(
+                            govukInput(
+                                Input(
+                                    prefix = Some(PrefixOrSuffix(
+                                        content = Text("£")
+                                    ))
+                                ).withFormField(form(s"$idx.other"))
+                            )
+                        )
+                    )
+                },
+            ),
+
+            captionClasses = "govuk-table__caption--m",
+            firstCellIsHeader = true
+        ))
+
+        @includes.continueSaveAsDraftButtons(govukButton)
+    }
+}

@@ -19,6 +19,7 @@ package controllers.aboutthetradinghistory
 import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.CostOfSalesForm.costOfSalesForm
+import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.updateAboutTheTradingHistory
 import models.submissions.aboutthetradinghistory.CostOfSales
 import navigation.AboutTheTradingHistoryNavigator
 import navigation.identifiers.CostOfSalesId
@@ -28,6 +29,7 @@ import repositories.SessionRepo
 import views.html.aboutthetradinghistory.costOfSales
 
 import javax.inject.{Inject, Named, Singleton}
+import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class CostOfSalesController @Inject() (
@@ -36,30 +38,42 @@ class CostOfSalesController @Inject() (
   costOfSalesView: costOfSales,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FORDataCaptureController(mcc)
+)(implicit ec: ExecutionContext)
+    extends FORDataCaptureController(mcc)
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
-    Ok(
-      costOfSalesView(
-        request.sessionData.aboutTheTradingHistory.flatMap(_.costOfSales) match {
-          case Some(costOfSales) => costOfSalesForm.fillAndValidate(costOfSales)
-          case _                 => costOfSalesForm
-        },
-        request.sessionData.toSummary
-      )
-    )
+    request.sessionData.aboutTheTradingHistory
+      .filter(_.occupationAndAccountingInformation.isDefined)
+      .fold(Redirect(routes.AboutYourTradingHistoryController.show())) { aboutTheTradingHistory =>
+        val numberOfColumns = aboutTheTradingHistory.costOfSales.size
+        Ok(
+          costOfSalesView(
+            costOfSalesForm(numberOfColumns).fillAndValidate(aboutTheTradingHistory.costOfSales)
+          )
+        )
+      }
   }
 
-  def submit = (Action andThen withSessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft[CostOfSales](
-      costOfSalesForm,
-      formWithErrors => BadRequest(costOfSalesView(formWithErrors, request.sessionData.toSummary)),
-      data => {
-        val updatedData = request.sessionData
-        Redirect(navigator.nextPage(CostOfSalesId, updatedData).apply(updatedData))
+  def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    request.sessionData.aboutTheTradingHistory
+      .filter(_.occupationAndAccountingInformation.isDefined)
+      .fold(Future.successful(Redirect(routes.AboutYourTradingHistoryController.show()))) { aboutTheTradingHistory =>
+        val numberOfColumns = aboutTheTradingHistory.costOfSales.size
+        continueOrSaveAsDraft[Seq[CostOfSales]](
+          costOfSalesForm(numberOfColumns),
+          formWithErrors =>
+            BadRequest(
+              costOfSalesView(formWithErrors)
+            ),
+          data => {
+            val updatedData = updateAboutTheTradingHistory(_.copy(costOfSales = data))
+            session
+              .saveOrUpdate(updatedData)
+              .map(_ => Redirect(navigator.nextPage(CostOfSalesId, updatedData).apply(updatedData)))
+          }
+        )
       }
-    )
   }
 
 }

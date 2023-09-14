@@ -20,16 +20,16 @@ import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.OccupationalAndAccountingInformationForm.occupationalAndAccountingInformationForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.updateAboutTheTradingHistory
-import models.submissions.aboutthetradinghistory.{OccupationalAndAccountingInformation, TurnoverSection}
+import models.submissions.aboutthetradinghistory.{CostOfSales, OccupationalAndAccountingInformation, TurnoverSection}
 import navigation.AboutTheTradingHistoryNavigator
 import navigation.identifiers.AboutYourTradingHistoryPageId
 import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
+import util.AccountingInformationUtil
 import views.html.aboutthetradinghistory.aboutYourTradingHistory
 
-import java.time.LocalDate
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.ExecutionContext
 
@@ -65,10 +65,11 @@ class AboutYourTradingHistoryController @Inject() (
         if (request.sessionData.aboutTheTradingHistory.flatMap(_.occupationAndAccountingInformation).contains(data)) {
           Redirect(navigator.nextPage(AboutYourTradingHistoryPageId, request.sessionData).apply(request.sessionData))
         } else {
-          val updatedData = updateAboutTheTradingHistory(
+          val financialYearsList = AccountingInformationUtil.financialYearsRequired(data)
+          val updatedData        = updateAboutTheTradingHistory(
             _.copy(
               occupationAndAccountingInformation = Some(data),
-              turnoverSections = financialYearsRequired(data).map { finYearEnd =>
+              turnoverSections = financialYearsList.map { finYearEnd =>
                 TurnoverSection(
                   financialYearEnd = finYearEnd,
                   tradingPeriod = 52,
@@ -78,7 +79,8 @@ class AboutYourTradingHistoryController @Inject() (
                   accommodation = 0,
                   averageOccupancyRate = 0
                 )
-              }
+              },
+              costOfSales = financialYearsList.map(CostOfSales(_, 0, 0, 0, 0))
             )
           )
           session
@@ -88,18 +90,4 @@ class AboutYourTradingHistoryController @Inject() (
     )
   }
 
-  private def financialYearsRequired(accountingInfo: OccupationalAndAccountingInformation): Seq[LocalDate] = {
-    val now: LocalDate            = LocalDate.now
-    val currentFinancialYear: Int =
-      if (
-        now.isBefore(LocalDate.of(now.getYear, accountingInfo.financialYear.months, accountingInfo.financialYear.days))
-      ) {
-        now.getYear
-      } else now.getYear + 1
-    val yearDifference            = currentFinancialYear - accountingInfo.firstOccupy.years
-    (1 to yearDifference.min(3)).map(yearsAgo =>
-      LocalDate
-        .of(currentFinancialYear - yearsAgo, accountingInfo.financialYear.months, accountingInfo.financialYear.days)
-    )
-  }
 }

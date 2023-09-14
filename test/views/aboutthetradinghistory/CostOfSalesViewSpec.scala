@@ -16,25 +16,26 @@
 
 package views.aboutthetradinghistory
 
+import actions.SessionRequest
 import form.aboutthetradinghistory.CostOfSalesForm
-import models.pages.Summary
 import models.submissions.aboutthetradinghistory.CostOfSales
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class CostOfSalesViewSpec extends QuestionViewBehaviours[CostOfSales] {
+class CostOfSalesViewSpec extends QuestionViewBehaviours[Seq[CostOfSales]] {
   // NOTE: this is a holding view test until the cost of sales page is implemented
   def costOfSalesView = app.injector.instanceOf[views.html.aboutthetradinghistory.costOfSales]
 
   val messageKeyPrefix = "costOfSales"
+  val numberOfColumns  = 1
+  val sessionRequest   = SessionRequest(baseFilled6015Session, fakeRequest)
 
-  override val form = CostOfSalesForm.costOfSalesForm
+  override val form = CostOfSalesForm.costOfSalesForm(numberOfColumns)
 
-  def createView = () => costOfSalesView(form, Summary("99996010001"))(fakeRequest, messages)
+  def createView = () => costOfSalesView(form)(sessionRequest, messages)
 
-  def createViewUsingForm = (form: Form[CostOfSales]) =>
-    costOfSalesView(form, Summary("99996010001"))(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[Seq[CostOfSales]]) => costOfSalesView(form)(sessionRequest, messages)
 
   "costOfSales view" must {
 
@@ -45,7 +46,7 @@ class CostOfSalesViewSpec extends QuestionViewBehaviours[CostOfSales] {
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText mustBe messages("back.link.label")
       val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.aboutthetradinghistory.routes.TurnoverController.show.url
+      backlinkUrl mustBe controllers.aboutthetradinghistory.routes.TurnoverController.show().url
     }
 
     "Section heading is visible" in {
@@ -60,4 +61,5 @@ class CostOfSalesViewSpec extends QuestionViewBehaviours[CostOfSales] {
       assert(loginButton == messages("button.label.continue"))
     }
   }
+
 }

@@ -18,8 +18,14 @@ package models.submissions.aboutthetradinghistory
 
 import play.api.libs.json.Json
 
+import java.time.LocalDate
+
 case class CostOfSales(
-  costOfSales: String
+  financialYearEnd: LocalDate,
+  accommodation: BigDecimal,
+  food: BigDecimal,
+  drinks: BigDecimal,
+  other: BigDecimal
 )
 
 object CostOfSales {
