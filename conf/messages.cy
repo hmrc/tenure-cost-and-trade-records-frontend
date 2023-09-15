@@ -26,7 +26,7 @@ footer.termsAndConditions.link = Terms and conditions
 footer.helpUsingGovUk.link = Help using GOV.UK
 footer.contactGovUk.link = Contact
 footer.welshHelp.link = Rhestr o Wasanaethau Cymraeg
-footer.needHelp = Need help
+footer.needHelp = Need help?
 footer.helplineText = Call our helpline on 03000 501 262
 
 # SESSION TIMEOUT
