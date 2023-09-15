@@ -1301,6 +1301,30 @@ saveAsDraft.startAgain=Start form again
 saveAsDraft.forgotPassword=If you’ve forgotten your password, you’ll have to start the form again.
 saveAsDraft.timeout.login=Log in again
 
+# Feedback
+########
+label.submit=Submit
+label.feedback.heading=Give Feedback
+feedback.thankyou.h1=Thank you for your feedback
+feedback.thankyou.link=Start
+copy.feedback.anotherForm=Submit another form
+feedback.satisfaction.label=Overall, how did you feel about this service?
+feedback.rating.5=Very satisfied
+feedback.rating.4=Satisfied
+feedback.rating.3=Neither satisfied or dissatisfied
+feedback.rating.2=Dissatisfied
+feedback.rating.1=Very dissatisfied
+label.feedback.p1=We use feedback to make our services better.
+label.feedback.comments=How could we improve this service? (optional)
+feedback.comments.hint=Do not include any personal or financial information. For example, your National Insurance or credit card numbers
+feedback.comments.label=Comments (optional)
+feedback.bottomCopy=Don’t include any personal or financial information, for example your National Insurance or credit card numbers.
+
+feedback.rating.required=Select how satisfied you are with this service
+feedback.comments.maxLength=Comments must be 1200 characters or fewer
+confirmation.feedback.subheading=Overall, how did you feel about this service?
+confirmation.feedback.title=Feedback
+
 # Errors
 ########
 error.required = Please provide a value

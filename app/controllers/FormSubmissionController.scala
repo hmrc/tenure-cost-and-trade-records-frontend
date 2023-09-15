@@ -41,6 +41,8 @@ class FormSubmissionController @Inject() (
     extends FrontendController(mcc)
     with I18nSupport {
 
+  import FeedbackFormMapper.feedbackForm
+
   lazy val confirmationUrl = controllers.routes.FormSubmissionController.confirmation().url
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
@@ -66,6 +68,6 @@ class FormSubmissionController @Inject() (
   }
 
   def confirmation: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    Ok(confirmationView())
+    Ok(confirmationView(feedbackForm))
   }
 }

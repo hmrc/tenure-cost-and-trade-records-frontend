@@ -1377,6 +1377,8 @@ feedback.bottomCopy=Don’t include any personal or financial information, for e
 
 feedback.rating.required=Select how satisfied you are with this service
 feedback.comments.maxLength=Comments must be 1200 characters or fewer
+confirmation.feedback.subheading=Overall, how did you feel about this service?
+confirmation.feedback.title=Feedback
 
 # Errors
 ########

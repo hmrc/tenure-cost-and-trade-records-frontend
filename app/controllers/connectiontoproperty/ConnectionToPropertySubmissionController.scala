@@ -19,6 +19,7 @@ package controllers.connectiontoproperty
 import actions.{SessionRequest, WithSessionRefiner}
 import config.ErrorHandler
 import connectors.{Audit, SubmissionConnector}
+import controllers.FeedbackFormMapper
 import models.Session
 import models.submissions.ConnectedSubmission
 import play.api.Logging
@@ -48,6 +49,8 @@ class ConnectionToPropertySubmissionController @Inject() (
     with I18nSupport
     with Logging {
 
+  import FeedbackFormMapper.feedbackForm
+
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     submit()
   }
@@ -68,7 +71,7 @@ class ConnectionToPropertySubmissionController @Inject() (
   }
 
   def confirmation: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    Future(Ok(confirmationView()))
+    Future(Ok(confirmationView(feedbackForm)))
   }
 
   private def submitToBackend(
