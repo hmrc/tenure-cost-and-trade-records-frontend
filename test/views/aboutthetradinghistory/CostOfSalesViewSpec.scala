@@ -49,9 +49,9 @@ class CostOfSalesViewSpec extends QuestionViewBehaviours[Seq[CostOfSales]] {
     }
 
     "Section heading is visible" in {
-      val doc         = asDocument(createViewUsingForm(form)) // govuk-caption-m
-      val sectionText = doc.getElementsByClass("govuk-caption-m").text()
-      assert(sectionText == messages("label.section.aboutYourTradingHistory"))
+      val doc         = asDocument(createViewUsingForm(form))
+      val captions    = doc.getElementsByClass("govuk-caption-m").eachText()
+      assert(captions.contains(messages("label.section.aboutYourTradingHistory")))
     }
 
     "contain save and continue button with the value Save and Continue" in {
