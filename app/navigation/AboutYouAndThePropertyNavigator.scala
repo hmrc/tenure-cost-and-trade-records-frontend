@@ -100,23 +100,13 @@ class AboutYouAndThePropertyNavigator @Inject() (audit: Audit) extends Navigator
     answers.aboutYouAndTheProperty.flatMap(_.enforcementAction.map(_.name)) match {
       case Some("yes") => controllers.aboutyouandtheproperty.routes.EnforcementActionBeenTakenDetailsController.show()
       case Some("no")  =>
-        if (answers.forType == ForTypes.for6011)
-          controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show()
-        else
-          controllers.aboutyouandtheproperty.routes.TiedForGoodsController.show()
+        controllers.aboutyouandtheproperty.routes.TiedForGoodsController.show()
       case _           =>
         logger.warn(
           s"Navigation for about the property reached without correct selection of enforcement action taken by controller"
         )
         throw new RuntimeException("Invalid option exception for enforcement action taken routing")
     }
-  }
-
-  private def enforcementActionTakenDetailsRouting: Session => Call = answers => {
-    if (answers.forType == ForTypes.for6011)
-      controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show()
-    else
-      controllers.aboutyouandtheproperty.routes.TiedForGoodsController.show()
   }
 
   private def tiedGoodsRouting: Session => Call = answers => {
@@ -146,7 +136,9 @@ class AboutYouAndThePropertyNavigator @Inject() (audit: Audit) extends Navigator
       controllers.aboutyouandtheproperty.routes.EnforcementActionBeenTakenController.show()
     ),
     EnforcementActionBeenTakenPageId        -> enforcementActionTakenRouting,
-    EnforcementActionBeenTakenDetailsPageId -> enforcementActionTakenDetailsRouting,
+    EnforcementActionBeenTakenDetailsPageId -> (_ =>
+      controllers.aboutyouandtheproperty.routes.TiedForGoodsController.show()
+    ),
     TiedForGoodsPageId                      -> tiedGoodsRouting,
     TiedForGoodsDetailsPageId               -> (_ =>
       controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show()

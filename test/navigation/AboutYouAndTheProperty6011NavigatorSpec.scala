@@ -58,7 +58,7 @@ class AboutYouAndTheProperty6011NavigatorSpec extends TestBaseSpec {
         .nextPage(EnforcementActionBeenTakenPageId, aboutYouAndTheProperty6011NoSession)
         .apply(
           aboutYouAndTheProperty6011NoSession
-        ) mustBe controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController
+        ) mustBe controllers.aboutyouandtheproperty.routes.TiedForGoodsController
         .show()
     }
   }
@@ -122,7 +122,7 @@ class AboutYouAndTheProperty6011NavigatorSpec extends TestBaseSpec {
         .nextPage(EnforcementActionBeenTakenDetailsPageId, aboutYouAndTheProperty6011YesSession)
         .apply(
           aboutYouAndTheProperty6011YesSession
-        ) mustBe controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show()
+        ) mustBe controllers.aboutyouandtheproperty.routes.TiedForGoodsController.show()
     }
   }
 }
