@@ -235,7 +235,7 @@ downloadPdf.continueJourneyButton = Continue declaration online
 #########################
 areYouConnected.title = Are you still connected to: {0}?
 areYouConnected.heading = Are you still connected to: <br>{0}?
-label.areYouConnected.addressUpdate = Yes I want to edit the address
+label.areYouConnected.addressUpdate = Yes, and I want to edit the address
 hint.noConnection = Choose this if you’re no longer connected to the property, or have never had a connection to the property
 
 # EDIT ADDRESS
@@ -302,7 +302,7 @@ checkYourAnswersConnectionToProperty.isPropertyVacant = Is the property vacant?
 checkYourAnswersConnectionToProperty.occupierDetails.heading = Occupier details
 checkYourAnswersConnectionToProperty.nameOfOccupier = Name of occupier
 checkYourAnswersConnectionToProperty.ownsTheProperty = Owns the property?
-checkYourAnswersConnectionToProperty.payRent = Pay rent?
+checkYourAnswersConnectionToProperty.payRent = Pays rent?
 checkYourAnswersConnectionToProperty.thirdParty = Third party?
 
 # VACANT PROPERTY START DATE
@@ -589,7 +589,7 @@ franchiseLettings.p1 = You must declare any income received by letting out parts
 franchiseLettings.p2 = You must include:
 franchiseLettings.list1 = any payments received instead of trading receipts from third-party businesses operating from the property under a concession or franchise agreement.
 franchiseLettings.list2 = rental income from letting other parts of the property including advertising billboards, car parking or phone masts.
-franchiseLettings.subheading = Do you still receive income from letting out parts of your property?
+franchiseLettings.subheading = Do you receive income from letting out parts of your property?
 
 # ABOUT YOUR LANDLORD
 ##############################
@@ -743,7 +743,7 @@ error.rentIncludeFixturesAndFittings.missing = Select yes if the rent includes a
 
 # RENT INCLUDE FIXTURES AND FITTINGS DETAILS
 ###########################################
-rentIncludeFixturesAndFittingsDetails.heading = Where specifically itemised, what sum is included in the rent to cover equipment provided by the landlord, excluding VAT?
+rentIncludeFixturesAndFittingsDetails.heading = What sum is included in the rent to cover the equipment, excluding VAT?
 rentIncludeFixturesAndFittingsDetails.hint = Leave blank if this is not specifically itemised
 error.required.rentIncludeFixturesAndFittingsDetails = Please provide a value
 error.invalid_currency.rentIncludeFixturesAndFittingsDetails = Please provide a number
@@ -865,7 +865,7 @@ error.addAnotherLetting.required = Select whether you need to add another lettin
 # TENANTS ADDITIONS DISREGARDED
 ###############################
 tenantsAdditionsDisregarded.heading = Additions or improvements
-tenantsAdditionsDisregarded.p1 = If the rent is based on market value of the property before any additions or improvements were made by the tenant, you must provide details.
+tenantsAdditionsDisregarded.p1 = If the rent is based on the market value of the property before any additions or improvements were made by the tenant, you must provide details.
 tenantsAdditionsDisregarded.p2 = Examples of additions or improvements could include, but are not limited to:
 tenantsAdditionsDisregarded.list1 = fitting out a shell
 tenantsAdditionsDisregarded.list2 = adding parking
@@ -912,14 +912,14 @@ label.financialYear.help = If your financial year end changed within the last 3 
 
 # CURRENT RENT FIRST PAID
 #########################
-currentRentFirstPaid.heading = When was the current rent first paid
+currentRentFirstPaid.heading = When the current rent was first paid
 label.currentRentFirstPaid.p1 = You need to declare when you first paid rent at its current rate.
 label.currentRentFirstPaid.p2 = This is not necessarily when you first took occupation. It could be when the current rent was first paid by you following:
 currentRentFirstPaid.list1 = a rent review
 currentRentFirstPaid.list2 = a lease renewal or alteration
 currentRentFirstPaid.list3 = an initial rent-free period
 label.currentRentFirstPaid.p3 = If the current lease was originally assigned to another party, tell us when they first paid rent at this rate
-label.currentRentFirstPaid.p4 = You do not need to tell us about any changes in the rent which are part of your current agreement. This could include, but are not limited to:
+label.currentRentFirstPaid.p4 = You do not need to tell us about any changes in the rent which are part of your current agreement. These could include, but are not limited to:
 currentRentFirstPaid.list4 = changes linked to your turnover
 currentRentFirstPaid.list5 = fluctuations in any index to which your rent may be linked, for example the retail price index (RPI)
 label.currentRentFirstPaid.p5 = When was the current rent first paid under the terms of the lease or agreement?
@@ -1274,7 +1274,7 @@ checkYourAnswersAboutTheProperty.enforcementAction = Enforcement action taken?
 checkYourAnswersAboutTheProperty.enforcementActionHasBeenTakenInformationDetails = Description of enforcement action
 checkYourAnswersAboutTheProperty.tiedForGoods = Tied for any goods?
 checkYourAnswersAboutTheProperty.tiedForGoodsDetails = Type of tie
-checkYourAnswersAboutTheTradingHistory.heading = Check your answers - about your trading history
+checkYourAnswersAboutTheTradingHistory.heading = Check your answers - trading history
 checkYourAnswersAboutTheTradingHistory.occupationAndAccounting = Occupation date and financial year end
 checkYourAnswersAboutTheTradingHistory.financialYearEnd = Financial year end
 checkYourAnswersAboutTheTradingHistory.tradingPeriod = Trading period
