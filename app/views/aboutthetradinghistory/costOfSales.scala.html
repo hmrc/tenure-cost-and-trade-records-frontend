@@ -33,6 +33,12 @@
 @(form: Form[Seq[CostOfSales]])(implicit request: SessionRequest[_], messages: Messages)
 
 
+@detailsContent = {
+    <p class="govuk-body govuk-!-font-weight-bold">@messages("costOfSales.details.h1")</p>
+    <p class="govuk-body">@messages("costOfSales.details.p1")</p>
+    <p class="govuk-body">@messages("costOfSales.details.p2")</p>
+}
+
 @financialYearEndContent(fieldName: String, form: Form[Seq[CostOfSales]]) = {
     @form(fieldName).value.map { endDate =>
         @endDate
@@ -41,24 +47,26 @@
 }
 
 @accommodationHeading = {
-    <p class="govuk-body govuk-!-font-weight-bold">@messages("turnover.accommodation")</p>
+    <p class="govuk-body"><span class="govuk-!-font-weight-bold">@messages("costOfSales.accommodation")</span> @messages("costOfSales.excludingVAT")</p>
 }
 
 @foodHeading = {
-    <p class="govuk-body govuk-!-font-weight-bold">@messages("turnover.food")</p>
+    <p class="govuk-body"><span class="govuk-!-font-weight-bold">@messages("costOfSales.food")</span> @messages("costOfSales.excludingVAT")</p>
 }
 
 @drinksHeading = {
-    <p class="govuk-body govuk-!-font-weight-bold">@messages("turnover.alcoholicDrinks")</p>
+    <p class="govuk-body"><span class="govuk-!-font-weight-bold">@messages("costOfSales.drinks")</span> @messages("costOfSales.excludingVAT")</p>
 }
 
 @otherHeading = {
-    <p class="govuk-body govuk-!-font-weight-bold">@messages("costOfSales.otherSales")</p>
+    <p class="govuk-body">
+        <span class="govuk-!-font-weight-bold">@messages("costOfSales.otherSales")</span> @messages("costOfSales.excludingVAT")
+    </p>
     <span class="govuk-caption-m">@messages("costOfSales.otherSales.hint")</span>
 }
 
 @columns = @{
-    0 until form.value.fold(1)(_.size)
+    form.value.fold(Seq.empty[Int])(_.indices)
 }
 
 @layout(
@@ -70,7 +78,21 @@
     theForm = form
 ) {
 
+    <p class="govuk-body">@messages("costOfSales.p1")</p>
+    <ul class="govuk-list govuk-list--bullet">
+        <li>@messages("costOfSales.excluding.item1")</li>
+        <li>@messages("costOfSales.excluding.item2")</li>
+        <li>@messages("costOfSales.excluding.item3")</li>
+        <li>@messages("costOfSales.excluding.item4")</li>
+    </ul>
 
+    @govukInsetText(InsetText(
+        content = Text(messages("costOfSales.note"))
+    ))
+    @govukDetails(Details(
+        summary = Text(messages("costOfSales.details.link")),
+        content = HtmlContent(detailsContent)
+    ))
 
     @formWithCSRF(action = controllers.aboutthetradinghistory.routes.CostOfSalesController.submit()) {
 
@@ -78,7 +100,7 @@
             rows = Seq(
 
                 TableRow(
-                    content = Text(messages("turnover.financialYearEnd")),
+                    content = Text(messages("costOfSales.financialYearEnd")),
                     classes = "govuk-!-font-weight-bold"
                 ) +:
                         columns.map { idx =>
