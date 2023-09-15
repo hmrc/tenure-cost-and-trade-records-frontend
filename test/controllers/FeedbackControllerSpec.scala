@@ -16,6 +16,8 @@
 
 package controllers
 
+import actions.WithSessionRefiner
+import config.ErrorHandler
 import connectors.Audit
 import org.jsoup.Jsoup
 import org.mockito.scalatest.MockitoSugar
@@ -26,10 +28,12 @@ import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.{charset, contentAsString, contentType, defaultAwaitTimeout, redirectLocation, status}
+import stub.StubSessionRepo
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.audit.http.connector.AuditResult
 import uk.gov.hmrc.play.bootstrap.tools.Stubs.stubMessagesControllerComponents
-import utils.HtmlAssertionHelper
+import utils.{HtmlAssertionHelper, TestBaseSpec}
+import views.html.{confirmation, confirmationConnectionToProperty, confirmationNotConnected}
 import views.html.feedback.{feedback, feedbackThx}
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -40,19 +44,29 @@ class FeedbackControllerSpec
     with MockitoSugar
     with GuiceOneAppPerSuite
     with BeforeAndAfter
-    with HtmlAssertionHelper {
+    with HtmlAssertionHelper
+    with TestBaseSpec {
 
-  private val fakeRequest        = FakeRequest("GET", "/")
-  private val postRequest        = FakeRequest("POST", "/")
-  implicit def hc: HeaderCarrier = any[HeaderCarrier]
-  implicit val ec                = app.injector.instanceOf[ExecutionContext]
+  private val sessionRepo = StubSessionRepo()
+
+  override val fakeRequest = FakeRequest("GET", "/")
+  private val postRequest  = FakeRequest("POST", "/")
 
   val auditServiceMock         = mock[Audit]
   val feedbackView: feedback   = app.injector.instanceOf[feedback]
   val feedbackThx: feedbackThx = app.injector.instanceOf[feedbackThx]
 
   private val controller =
-    new FeedbackController(stubMessagesControllerComponents(), feedbackView, feedbackThx, auditServiceMock)
+    new FeedbackController(
+      stubMessagesControllerComponents(),
+      feedbackView,
+      feedbackThx,
+      confirmation,
+      confirmationNotConnectedView,
+      confirmationConnectionToProperty,
+      WithSessionRefiner(inject[ErrorHandler], sessionRepo),
+      inject[Audit]
+    )
 
   before {
     reset(auditServiceMock)
@@ -91,11 +105,6 @@ class FeedbackControllerSpec
         //given
         val comments = "Really amazing bro, wow!"
         val rating   = "5"
-        when(
-          auditServiceMock.apply(eqTo("SurveyFeedback"), eqTo(Map("comments" -> comments, "satisfaction" -> rating)))
-        )
-          .thenReturn(Future(AuditResult.Success))
-        //when
         val result   = controller.feedbackSubmit()(
           postRequest.withFormUrlEncodedBody(
             "feedback-comments" -> comments,
@@ -114,9 +123,6 @@ class FeedbackControllerSpec
       "fails with BAD_REQUEST" in {
         //given
         val comments = "Really amazing bro, wow!"
-        when(auditServiceMock.apply(any[String], anyMap[String, String]))
-          .thenReturn(Future(AuditResult.Success))
-        //when
         val result   = controller.feedbackSubmit()(
           postRequest.withFormUrlEncodedBody(
             "feedback-comments" -> comments
@@ -133,9 +139,6 @@ class FeedbackControllerSpec
         //given
         val tooLongComment = (1 to 1200).toList.mkString("")
         val rating         = "5"
-        when(auditServiceMock.apply(any[String], anyMap[String, String]))
-          .thenReturn(Future(AuditResult.Success))
-        //when
         val result         = controller.feedbackSubmit()(
           postRequest.withFormUrlEncodedBody(
             "feedback-comments" -> tooLongComment,

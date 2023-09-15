@@ -16,7 +16,8 @@
 
 package views
 
-import controllers.{LoginController, LoginDetails}
+import controllers.{FeedbackFormMapper, LoginController, LoginDetails}
+import form.Feedback
 import play.api.data.Form
 import views.behaviours.{QuestionViewBehaviours, ViewBehaviours}
 
@@ -26,7 +27,9 @@ class ConfirmationNotConnectedViewSpec extends ViewBehaviours {
 
 //  override val form = LoginController.loginForm
 
-  def createView = () => confirmationNotConnectedView(baseFilled6010Session)(fakeRequest, messages)
+  val form = FeedbackFormMapper.feedbackForm
+
+  def createView = () => confirmationNotConnectedView(form, baseFilled6010Session)(fakeRequest, messages)
 
 //  def createViewUsingForm = () => confirmationNotConnectedView(baseFilled6010Session)(fakeRequest, messages)
 

@@ -20,7 +20,7 @@ import actions.{SessionRequest, WithSessionRefiner}
 import config.ErrorHandler
 import connectors.{Audit, SubmissionConnector}
 import models.submissions.NotConnectedSubmission
-import controllers.FORDataCaptureController
+import controllers.{FORDataCaptureController, FeedbackFormMapper}
 import models.Session
 import play.api.{Logger, Logging}
 import play.api.i18n.{I18nSupport, Messages}
@@ -51,6 +51,8 @@ class CheckYourAnswersNotConnectedController @Inject() (
     with I18nSupport
     with Logging {
 
+  import FeedbackFormMapper.feedbackForm
+
   lazy val confirmationUrl: String =
     controllers.notconnected.routes.CheckYourAnswersNotConnectedController.confirmation().url
 
@@ -77,7 +79,7 @@ class CheckYourAnswersNotConnectedController @Inject() (
   }
 
   def confirmation: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    Future.successful(Ok(confirmationNotConnectedView(request.sessionData)))
+    Future.successful(Ok(confirmationNotConnectedView(feedbackForm, request.sessionData)))
   }
 
   private def submitToBackend(

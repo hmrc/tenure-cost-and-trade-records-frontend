@@ -16,7 +16,7 @@
 
 package form.aboutYourLeaseOrTenure
 
-import form.DateMappings.{dateFieldsAfterTodayMapping, dateFieldsMapping}
+import form.DateMappings.dateFieldsAfterTodayMapping
 import form.MappingSupport.currentRentPayableWithin12MonthsType
 import models.submissions.aboutYourLeaseOrTenure.CurrentRentPayableWithin12Months
 import play.api.data.Form
