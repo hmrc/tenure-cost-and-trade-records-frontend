@@ -34,6 +34,13 @@
 
 
 
+@financialYearEndContent(fieldName: String, form: Form[Seq[CostOfSales]]) = {
+    @form(fieldName).value.map { endDate =>
+        @endDate
+        <input type="hidden" name="@fieldName" value="@endDate" />
+    }
+}
+
 @accommodationHeading = {
     <p class="govuk-body govuk-!-font-weight-bold">@messages("turnover.accommodation")</p>
 }
@@ -76,7 +83,7 @@
                         columns.map { idx =>
                             TableRow(
                                 content = HtmlContent(
-                                    form(s"$idx.financial-year-end").value.getOrElse("")
+                                    financialYearEndContent(s"$idx.financial-year-end", form)
                                 )
                             )
                         },
