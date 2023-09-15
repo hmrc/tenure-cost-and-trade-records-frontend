@@ -49,8 +49,8 @@ class CostOfSalesViewSpec extends QuestionViewBehaviours[Seq[CostOfSales]] {
     }
 
     "Section heading is visible" in {
-      val doc         = asDocument(createViewUsingForm(form))
-      val captions    = doc.getElementsByClass("govuk-caption-m").eachText()
+      val doc      = asDocument(createViewUsingForm(form))
+      val captions = doc.getElementsByClass("govuk-caption-m").eachText()
       assert(captions.contains(messages("label.section.aboutYourTradingHistory")))
     }
 
