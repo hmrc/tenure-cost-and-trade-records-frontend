@@ -1028,6 +1028,7 @@ costOfSalesOrGrossProfit.heading = Would you rather give details of your cost of
 hint.costOfSalesOrGrossProfit = We need to see details of your turnover broken down by specific department. You can decide whether you’d like to provide these figures for your cost of sales, or gross profits.
 label.costOfSales = Cost of sales
 label.grossProfit = Gross profits
+error.costOfSales.maxColumns = Number of columns must be between 1 and 3
 
 # TURNOVER
 ##########

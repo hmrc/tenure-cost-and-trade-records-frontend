@@ -26,6 +26,7 @@ import navigation.identifiers.CostOfSalesId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
+import util.AccountingInformationUtil
 import views.html.aboutthetradinghistory.costOfSales
 
 import javax.inject.{Inject, Named, Singleton}
@@ -46,10 +47,21 @@ class CostOfSalesController @Inject() (
     request.sessionData.aboutTheTradingHistory
       .filter(_.occupationAndAccountingInformation.isDefined)
       .fold(Redirect(routes.AboutYourTradingHistoryController.show())) { aboutTheTradingHistory =>
-        val numberOfColumns = aboutTheTradingHistory.costOfSales.size
+        val costOfSales =
+          if (aboutTheTradingHistory.costOfSales.isEmpty) {
+            val financialYearsList = AccountingInformationUtil.financialYearsRequired(
+              aboutTheTradingHistory.occupationAndAccountingInformation.get
+            )
+            val initialCostOfSales = financialYearsList.map(CostOfSales(_, 0, 0, 0, 0))
+            val updatedData        = updateAboutTheTradingHistory(_.copy(costOfSales = initialCostOfSales))
+            session.saveOrUpdate(updatedData)
+            initialCostOfSales
+          } else {
+            aboutTheTradingHistory.costOfSales
+          }
         Ok(
           costOfSalesView(
-            costOfSalesForm(numberOfColumns).fillAndValidate(aboutTheTradingHistory.costOfSales)
+            costOfSalesForm.fillAndValidate(costOfSales)
           )
         )
       }
@@ -59,9 +71,8 @@ class CostOfSalesController @Inject() (
     request.sessionData.aboutTheTradingHistory
       .filter(_.occupationAndAccountingInformation.isDefined)
       .fold(Future.successful(Redirect(routes.AboutYourTradingHistoryController.show()))) { aboutTheTradingHistory =>
-        val numberOfColumns = aboutTheTradingHistory.costOfSales.size
         continueOrSaveAsDraft[Seq[CostOfSales]](
-          costOfSalesForm(numberOfColumns),
+          costOfSalesForm,
           formWithErrors =>
             BadRequest(
               costOfSalesView(formWithErrors)

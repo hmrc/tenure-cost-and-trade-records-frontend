@@ -33,7 +33,6 @@
 @(form: Form[Seq[CostOfSales]])(implicit request: SessionRequest[_], messages: Messages)
 
 
-
 @financialYearEndContent(fieldName: String, form: Form[Seq[CostOfSales]]) = {
     @form(fieldName).value.map { endDate =>
         @endDate
@@ -71,6 +70,8 @@
     theForm = form
 ) {
 
+
+
     @formWithCSRF(action = controllers.aboutthetradinghistory.routes.CostOfSalesController.submit()) {
 
         @govukTable(Table(
@@ -83,7 +84,7 @@
                         columns.map { idx =>
                             TableRow(
                                 content = HtmlContent(
-                                    financialYearEndContent(s"$idx.financial-year-end", form)
+                                    financialYearEndContent(s"costOfSales[$idx].financial-year-end", form)
                                 )
                             )
                         },
@@ -97,7 +98,7 @@
                                     prefix = Some(PrefixOrSuffix(
                                         content = Text("£")
                                     ))
-                                ).withFormField(form(s"$idx.accommodation"))
+                                ).withFormField(form(s"costOfSales[$idx].accommodation"))
                             )
                         )
                     )
@@ -112,7 +113,7 @@
                                     prefix = Some(PrefixOrSuffix(
                                         content = Text("£")
                                     ))
-                                ).withFormField(form(s"$idx.food"))
+                                ).withFormField(form(s"costOfSales[$idx].food"))
                             )
                         )
                     )
@@ -127,7 +128,7 @@
                                     prefix = Some(PrefixOrSuffix(
                                         content = Text("£")
                                     ))
-                                ).withFormField(form(s"$idx.drinks"))
+                                ).withFormField(form(s"costOfSales[$idx].drinks"))
                             )
                         )
                     )
@@ -142,7 +143,7 @@
                                     prefix = Some(PrefixOrSuffix(
                                         content = Text("£")
                                     ))
-                                ).withFormField(form(s"$idx.other"))
+                                ).withFormField(form(s"costOfSales[$idx].other"))
                             )
                         )
                     )
