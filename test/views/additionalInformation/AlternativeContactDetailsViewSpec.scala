@@ -54,7 +54,7 @@ class AlternativeContactDetailsViewSpec extends QuestionViewBehaviours[Alternati
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText mustBe messages("back.link.label")
       val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.additionalinformation.routes.FurtherInformationOrRemarksController.show().url
+      backlinkUrl mustBe controllers.additionalinformation.routes.ContactDetailsQuestionController.show().url
     }
 
     "Section heading is visible" in {

@@ -14,18 +14,13 @@
  * limitations under the License.
  */
 
-package navigation.identifiers
+package models.submissions.additionalinformation
 
-case object FurtherInformationId extends Identifier { override def toString: String = "furtherInformationPage" }
+import models.submissions.common.AnswersYesNo
+import play.api.libs.json.Json
 
-case object AlternativeContactDetailsId extends Identifier {
-  override def toString: String = "alternativeContactDetailsPage"
-}
+case class ContactDetailsQuestion(contactDetailsQuestion: AnswersYesNo)
 
-case object CheckYourAnswersAdditionalInformationId extends Identifier {
-  override def toString: String = "checkYourAnswersAdditionalInformationPage"
-}
-
-case object ContactDetailsQuestionId extends Identifier {
-  override def toString: String = "contactDetailsQuestionPage"
+object ContactDetailsQuestion {
+  implicit val format = Json.format[ContactDetailsQuestion]
 }

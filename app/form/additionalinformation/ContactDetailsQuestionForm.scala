@@ -14,18 +14,19 @@
  * limitations under the License.
  */
 
-package navigation.identifiers
+package form.additionalinformation
 
-case object FurtherInformationId extends Identifier { override def toString: String = "furtherInformationPage" }
+import form.MappingSupport.createYesNoType
+import models.submissions.additionalinformation.ContactDetailsQuestion
+import play.api.data.Form
+import play.api.data.Forms.mapping
 
-case object AlternativeContactDetailsId extends Identifier {
-  override def toString: String = "alternativeContactDetailsPage"
-}
+object ContactDetailsQuestionForm {
 
-case object CheckYourAnswersAdditionalInformationId extends Identifier {
-  override def toString: String = "checkYourAnswersAdditionalInformationPage"
-}
+  val contactDetailsQuestionForm = Form(
+    mapping(
+      "contactDetailsQuestion" -> createYesNoType("error.contactDetailsQuestion.missing")
+    )(ContactDetailsQuestion.apply)(ContactDetailsQuestion.unapply)
+  )
 
-case object ContactDetailsQuestionId extends Identifier {
-  override def toString: String = "contactDetailsQuestionPage"
 }
