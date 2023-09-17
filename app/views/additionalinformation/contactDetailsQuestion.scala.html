@@ -14,45 +14,43 @@
  * limitations under the License.
  *@
 
-@import actions.SessionRequest
-@import controllers.additionalinformation
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
-@import models.submissions.additionalinformation.CheckYourAnswersAdditionalInformation
 @import uk.gov.hmrc.govukfrontend.views.html.components._
-@import models.Session
-@import views.html.answers.answersAdditionalInformation
+@import models.submissions.additionalinformation.ContactDetailsQuestion
+@import models.pages.Summary
 
 @this(layout: Layout,
         govukButton: GovukButton,
-        govukSummaryList: GovukSummaryList,
         govukRadios: GovukRadios,
-        answersSectionAdditionalInformation: answersAdditionalInformation,
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[CheckYourAnswersAdditionalInformation], session: Session)(implicit request: SessionRequest[_], messages: Messages)
+
+@(theForm: Form[ContactDetailsQuestion], summary: Summary)(implicit request: Request[_], messages: Messages)
 
 @layout(
-    pageHeading = messages("checkYourAnswersAdditionalInformation.heading"),
+    pageHeading = messages("contactDetailsQuestion.heading"),
     showSection = true,
-    fullWidth = true,
-    summary = Some(session.toSummary),
+    showH1= false,
+    summary = Some(summary),
     sectionName = messages("label.section.additionalInformation"),
-    backLinkUrl = additionalinformation.routes.AlternativeContactDetailsController.show.url,
+    backLinkUrl = controllers.additionalinformation.routes.FurtherInformationOrRemarksController.show().url,
     theForm = theForm
 ) {
 
-    @answersSectionAdditionalInformation()
-
-    @formWithCSRF(action = additionalinformation.routes.CheckYourAnswersAdditionalInformationController.submit()) {
-
-        @includes.checkYourAnswersRadioButtons(
+    @formWithCSRF(action = controllers.additionalinformation.routes.ContactDetailsQuestionController.submit()) {
+        @includes.radioButtonsYesNo(
             govukRadios,
             theForm,
-            "checkYourAnswersAdditionalInformation"
+            "contactDetailsQuestion",
+            "contactDetailsQuestion.heading",
+            "govuk-fieldset__legend--l",
+            "hint.contactDetailsQuestion",
+            isHeading = true
         )
-
         @includes.continueSaveAsDraftButtons(govukButton)
-
     }
 }
+
+
+

@@ -330,6 +330,9 @@ GET         /task-list                                              controllers.
 GET         /further-information-or-remarks                         controllers.additionalinformation.FurtherInformationOrRemarksController.show()
 POST        /further-information-or-remarks                         controllers.additionalinformation.FurtherInformationOrRemarksController.submit()
 
+GET         /contact-details-question                               controllers.additionalinformation.ContactDetailsQuestionController.show()
+POST        /contact-details-question                               controllers.additionalinformation.ContactDetailsQuestionController.submit()
+
 GET         /alternate-contact-details                              controllers.additionalinformation.AlternativeContactDetailsController.show()
 POST        /alternate-contact-details                              controllers.additionalinformation.AlternativeContactDetailsController.submit()
 

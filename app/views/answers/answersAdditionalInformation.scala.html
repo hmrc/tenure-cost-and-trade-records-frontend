@@ -29,6 +29,8 @@
     SectionAnswersRowBuilder(request.sessionData.additionalInformation)
 }
 
+    <h2 class="govuk-heading-m govuk-!-margin-top-8">@messages("key.additionalInformation")</h2>
+
 @govukSummaryList(SummaryList(rows =
     sectionAnswers.row("label.furtherInformation",
         _.furtherInformationOrRemarksDetails.map(_.furtherInformationOrRemarksDetails).filter(_.trim != "").orElse(Some(messages(s"label.no"))),
@@ -37,6 +39,11 @@
 
 <h2 class="govuk-heading-m">@messages("key.altContact.details")</h2>
 
+@govukSummaryList(SummaryList(rows =
+        sectionAnswers.row("label.altDetails.question", _.altDetailsQuestion.map(_.contactDetailsQuestion.name).map(v => messages(s"label.$v")),
+            additionalinformation.routes.ContactDetailsQuestionController.show(), "contactDetailsQuestion"
+        )
+    ))
 @govukSummaryList(SummaryList(rows =
     sectionAnswers.row("label.fullName", _.altContactInformation.flatMap(_.alternativeContactFullName), additionalinformation.routes.AlternativeContactDetailsController.show(), "alternativeContactFullName") ++
             sectionAnswers.row("label.telephoneNumber", _.altContactInformation.flatMap(_.alternativeContactDetails.map(_.phone)), additionalinformation.routes.AlternativeContactDetailsController.show(), "alternativeContactDetails.phone") ++
