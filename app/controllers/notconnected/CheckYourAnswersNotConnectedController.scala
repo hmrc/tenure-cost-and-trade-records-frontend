@@ -25,7 +25,7 @@ import models.Session
 import play.api.{Logger, Logging}
 import play.api.i18n.{I18nSupport, Messages}
 import play.api.libs.json.{JsObject, Json}
-import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Result}
 import repositories.SessionRepo
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.http.HeaderCarrierConverter
@@ -56,31 +56,68 @@ class CheckYourAnswersNotConnectedController @Inject() (
   lazy val confirmationUrl: String =
     controllers.notconnected.routes.CheckYourAnswersNotConnectedController.confirmation().url
 
-  val log: Logger = Logger(classOf[CheckYourAnswersNotConnectedController])
-
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Future.successful(Ok(checkYourAnswersNotConnectedView(request.sessionData)))
   }
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    implicit val hc: HeaderCarrier = HeaderCarrierConverter.fromRequestAndSession(request, request.session)
-    val auditType                  = "NotConnectedSubmission"
-    val submissionJson             = Json.toJson(request.sessionData).as[JsObject]
-    val session                    = request.sessionData
+    submit(request.sessionData.referenceNumber)
+  }
+
+  private def submit[T](refNum: String)(implicit request: SessionRequest[T]): Future[Result] = {
+    val hc = HeaderCarrierConverter.fromRequestAndSession(request, request.session)
+    for {
+      _ <- submitNotConnected(refNum)(hc, request)
+    } yield Found(confirmationUrl)
+  }
+
+  def submitNotConnected(
+    refNum: String
+  )(implicit hc: HeaderCarrier, request: SessionRequest[_]): Future[Unit] = {
+    val auditType      = "NotConnectedSubmission"
+    // Dummy data from session to able creation of audit dashboards
+    val submissionJson = Json.toJson(request.sessionData).as[JsObject]
+    val session        = request.sessionData
 
     submitToBackend(session).map { _ =>
       audit.sendExplicitAudit(auditType, submissionJson ++ Audit.languageJson)
-      Redirect(controllers.notconnected.routes.CheckYourAnswersNotConnectedController.confirmation())
+      println("123123123")
+      Redirect(confirmationUrl)
     } recover { case e: Exception =>
       logger.error(s"Could not send data to HOD - ${session.referenceNumber} - ${hc.sessionId}")
       audit.sendExplicitAudit("NotConnectedSubmissionFailed", submissionJson)
       InternalServerError(errorHandler.internalServerErrorTemplate(request))
     }
+    Future.unit
   }
 
   def confirmation: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    Future.successful(Ok(confirmationNotConnectedView(feedbackForm, request.sessionData)))
+    Future(Ok(confirmationNotConnectedView(feedbackForm, request.sessionData)))
   }
+
+//  def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+//    Future.successful(Ok(checkYourAnswersNotConnectedView(request.sessionData)))
+//  }
+
+//  def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+//    implicit val hc: HeaderCarrier = HeaderCarrierConverter.fromRequestAndSession(request, request.session)
+//    val auditType                  = "NotConnectedSubmission"
+//    val submissionJson             = Json.toJson(request.sessionData).as[JsObject]
+//    val session                    = request.sessionData
+//
+//    submitToBackend(session).map { _ =>
+//      audit.sendExplicitAudit(auditType, submissionJson ++ Audit.languageJson)
+//      Redirect(controllers.notconnected.routes.CheckYourAnswersNotConnectedController.confirmation())
+//    } recover { case e: Exception =>
+//      logger.error(s"Could not send data to HOD - ${session.referenceNumber} - ${hc.sessionId}")
+//      audit.sendExplicitAudit("NotConnectedSubmissionFailed", submissionJson)
+//      InternalServerError(errorHandler.internalServerErrorTemplate(request))
+//    }
+//  }
+//
+//  def confirmation: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+//    Future.successful(Ok(confirmationNotConnectedView(feedbackForm, request.sessionData)))
+//  }
 
   private def submitToBackend(
     session: Session
