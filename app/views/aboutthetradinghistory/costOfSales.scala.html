@@ -18,6 +18,7 @@
 @import models.submissions.aboutthetradinghistory.CostOfSales
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import uk.gov.hmrc.govukfrontend.views.Implicits._
+@import util.NumberUtil._
 
 @this(
         layout: Layout,
@@ -63,6 +64,16 @@
         <span class="govuk-!-font-weight-bold">@messages("costOfSales.otherSales")</span> @messages("costOfSales.excludingVAT")
     </p>
     <span class="govuk-caption-m">@messages("costOfSales.otherSales.hint")</span>
+}
+
+@totalHeading = {
+    <p class="govuk-body">
+        <span class="govuk-!-font-weight-bold">@messages("costOfSales.total")</span> @messages("costOfSales.excludingVAT")
+    </p>
+}
+
+@totalContent(idx: Int) = {
+    <span id="@{"total." + idx}">@form.value.fold("")(_(idx).total.asMoney)</span>
 }
 
 @columns = @{
@@ -170,6 +181,14 @@
                         )
                     )
                 },
+                TableRow(
+                    content = HtmlContent(totalHeading)
+                ) +:
+                        columns.map { idx =>
+                            TableRow(
+                                content = HtmlContent(totalContent(idx))
+                            )
+                        }
             ),
 
             captionClasses = "govuk-table__caption--m",

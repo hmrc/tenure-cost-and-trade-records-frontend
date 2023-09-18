@@ -26,7 +26,9 @@ case class CostOfSales(
   food: BigDecimal,
   drinks: BigDecimal,
   other: BigDecimal
-)
+) {
+  def total: BigDecimal = accommodation + food + drinks + other
+}
 
 object CostOfSales {
   implicit val format = Json.format[CostOfSales]
