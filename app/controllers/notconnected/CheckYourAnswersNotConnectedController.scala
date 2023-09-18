@@ -95,30 +95,6 @@ class CheckYourAnswersNotConnectedController @Inject() (
     Future(Ok(confirmationNotConnectedView(feedbackForm, request.sessionData)))
   }
 
-//  def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-//    Future.successful(Ok(checkYourAnswersNotConnectedView(request.sessionData)))
-//  }
-
-//  def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-//    implicit val hc: HeaderCarrier = HeaderCarrierConverter.fromRequestAndSession(request, request.session)
-//    val auditType                  = "NotConnectedSubmission"
-//    val submissionJson             = Json.toJson(request.sessionData).as[JsObject]
-//    val session                    = request.sessionData
-//
-//    submitToBackend(session).map { _ =>
-//      audit.sendExplicitAudit(auditType, submissionJson ++ Audit.languageJson)
-//      Redirect(controllers.notconnected.routes.CheckYourAnswersNotConnectedController.confirmation())
-//    } recover { case e: Exception =>
-//      logger.error(s"Could not send data to HOD - ${session.referenceNumber} - ${hc.sessionId}")
-//      audit.sendExplicitAudit("NotConnectedSubmissionFailed", submissionJson)
-//      InternalServerError(errorHandler.internalServerErrorTemplate(request))
-//    }
-//  }
-//
-//  def confirmation: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-//    Future.successful(Ok(confirmationNotConnectedView(feedbackForm, request.sessionData)))
-//  }
-
   private def submitToBackend(
     session: Session
   )(implicit hc: HeaderCarrier, request: SessionRequest[_], messages: Messages): Future[Unit] = {
