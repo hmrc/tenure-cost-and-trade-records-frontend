@@ -46,8 +46,8 @@ class ConnectionToPropertySubmissionController @Inject() (
 
   import FeedbackFormMapper.feedbackForm
 
-  lazy val confirmationUrl = controllers.connectiontoproperty.routes.ConnectionToPropertySubmissionController.confirmation().url
-
+  lazy val confirmationUrl =
+    controllers.connectiontoproperty.routes.ConnectionToPropertySubmissionController.confirmation().url
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     submit(request.sessionData.referenceNumber)
@@ -61,9 +61,9 @@ class ConnectionToPropertySubmissionController @Inject() (
   }
 
   def submitConnectionToProperty(
-                                     refNum: String
-                                   )(implicit hc: HeaderCarrier, request: SessionRequest[_]): Future[Unit] = {
-    val auditType = "VacantFormSubmission"
+    refNum: String
+  )(implicit hc: HeaderCarrier, request: SessionRequest[_]): Future[Unit] = {
+    val auditType      = "VacantFormSubmission"
     // Dummy data from session to able creation of audit dashboards
     val submissionJson = Json.toJson(request.sessionData).as[JsObject]
 
