@@ -81,7 +81,6 @@ class CheckYourAnswersNotConnectedController @Inject() (
 
     submitToBackend(session).map { _ =>
       audit.sendExplicitAudit(auditType, submissionJson ++ Audit.languageJson)
-      println("123123123")
       Redirect(confirmationUrl)
     } recover { case e: Exception =>
       logger.error(s"Could not send data to HOD - ${session.referenceNumber} - ${hc.sessionId}")
