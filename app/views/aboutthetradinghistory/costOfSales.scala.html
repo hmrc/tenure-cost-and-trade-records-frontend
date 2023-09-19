@@ -41,10 +41,10 @@
 }
 
 @financialYearEndContent(fieldName: String, form: Form[Seq[CostOfSales]]) = {
-    @form(fieldName).value.map { endDate =>
-        @endDate
-        <input type="hidden" name="@fieldName" value="@endDate" />
-    }
+@form(fieldName).value.map { endDate =>
+    @endDate
+    <input type="hidden" name="@fieldName" value="@endDate" />
+}
 }
 
 @accommodationHeading = {
@@ -73,11 +73,17 @@
 }
 
 @totalContent(idx: Int) = {
-    <span id="@{"total." + idx}">@form.value.fold("")(_(idx).total.asMoney)</span>
+    <span id="@{
+        "total." + idx
+    }">@form.value.fold("")(_(idx).total.asMoney)</span>
 }
 
 @columns = @{
-    form.value.fold(Seq.empty[Int])(_.indices)
+    request.sessionData.aboutTheTradingHistory.map(_.costOfSales).fold(Seq.empty[Int])(_.indices)
+}
+
+@costInputAttributes = @{
+    Map("maxlength" -> "13")
 }
 
 @layout(
@@ -130,7 +136,8 @@
                                 Input(
                                     prefix = Some(PrefixOrSuffix(
                                         content = Text("£")
-                                    ))
+                                    )),
+                                    attributes = costInputAttributes
                                 ).withFormField(form(s"costOfSales[$idx].accommodation"))
                             )
                         )
@@ -145,7 +152,8 @@
                                 Input(
                                     prefix = Some(PrefixOrSuffix(
                                         content = Text("£")
-                                    ))
+                                    )),
+                                    attributes = costInputAttributes
                                 ).withFormField(form(s"costOfSales[$idx].food"))
                             )
                         )
@@ -160,7 +168,8 @@
                                 Input(
                                     prefix = Some(PrefixOrSuffix(
                                         content = Text("£")
-                                    ))
+                                    )),
+                                    attributes = costInputAttributes
                                 ).withFormField(form(s"costOfSales[$idx].drinks"))
                             )
                         )
@@ -175,7 +184,8 @@
                                 Input(
                                     prefix = Some(PrefixOrSuffix(
                                         content = Text("£")
-                                    ))
+                                    )),
+                                    attributes = costInputAttributes
                                 ).withFormField(form(s"costOfSales[$idx].other"))
                             )
                         )
@@ -198,3 +208,5 @@
         @includes.continueSaveAsDraftButtons(govukButton)
     }
 }
+
+<script src="@routes.Assets.versioned("javascripts/cost-of-sales.js")"></script>
