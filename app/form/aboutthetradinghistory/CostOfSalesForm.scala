@@ -16,15 +16,25 @@
 
 package form.aboutthetradinghistory
 
+import form.DateMappings.dateTooEarlyConstraint
 import models.submissions.aboutthetradinghistory.CostOfSales
-import play.api.data.Form
-import play.api.data.Forms.{default, mapping, text}
+import play.api.data.Forms._
+import play.api.data.{Form, Mapping}
 
 object CostOfSalesForm {
 
-  val costOfSalesForm = Form(
-    mapping(
-      "costOfSales" -> default(text, "")
-    )(CostOfSales.apply)(CostOfSales.unapply)
+  val columnMapping: Mapping[CostOfSales] = mapping(
+    "financial-year-end" -> localDate("dd/MM/yyyy").verifying(dateTooEarlyConstraint),
+    "accommodation"      -> bigDecimal,
+    "food"               -> bigDecimal,
+    "drinks"             -> bigDecimal,
+    "other"              -> bigDecimal
+  )(CostOfSales.apply)(CostOfSales.unapply)
+
+  val costOfSalesForm: Form[Seq[CostOfSales]] = Form(
+    single(
+      "costOfSales" -> seq(columnMapping).verifying("error.costOfSales.maxColumns", _.length <= 3)
+    )
   )
+
 }

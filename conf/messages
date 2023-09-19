@@ -1028,6 +1028,7 @@ costOfSalesOrGrossProfit.heading = Would you rather give details of your cost of
 hint.costOfSalesOrGrossProfit = We need to see details of your turnover broken down by specific department. You can decide whether you’d like to provide these figures for your cost of sales, or gross profits.
 label.costOfSales = Cost of sales
 label.grossProfit = Gross profits
+error.costOfSales.maxColumns = Number of columns must be between 1 and 3
 
 # TURNOVER
 ##########
@@ -1075,7 +1076,25 @@ turnover.totalSales.6016 = Total sales revenue
 turnover.totalSalesCaption.6016 = Excluding VAT
 
 # COST OF SALES
-costOfSales.heading = Cost of sales - holding page
+costOfSales.heading = Cost of sales
+costOfSales.p1 = Provide details of your departmental cost of sales excluding:
+costOfSales.excluding.item1 = payroll costs
+costOfSales.excluding.item2 = variable operating expenses
+costOfSales.excluding.item3 = fixed operating expenses
+costOfSales.excluding.item4 = other costs
+costOfSales.note = All fields on this page are mandatory. If none of the categories are applicable, enter the number 0.
+costOfSales.details.link = Help with completing this page
+costOfSales.details.h1 = General guidance
+costOfSales.details.p1 = Do not include VAT in any of the figures you declare on this page.
+costOfSales.details.p2 = If you have not broken down your cost of sales into separate categories, or if you have recorded certain categories together - such as all food and drinks - you can declare them together in a single field.
+costOfSales.financialYearEnd = Financial year end
+costOfSales.excludingVAT = (excluding VAT)
+costOfSales.accommodation = Accommodation
+costOfSales.food = Food
+costOfSales.drinks = Drinks
+costOfSales.otherSales = Other
+costOfSales.otherSales.hint = Including hire of function rooms, conference rooms and telephones
+costOfSales.total = Total cost of sales
 
 # GROSS PROFIT
 grossProfit.heading = Total gross profits

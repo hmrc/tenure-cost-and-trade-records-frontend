@@ -25,7 +25,7 @@ case class AboutTheTradingHistory(
   turnoverSections: Seq[TurnoverSection] = Seq.empty,
   turnoverSections1516: Seq[TurnoverSection1516] = Seq.empty,
   grossProfitSections: Seq[GrossProfit] = Seq.empty,
-  costOfSales: Option[CostOfSales] = None,
+  costOfSales: Seq[CostOfSales] = Seq.empty,
   fixedOperatingExpensesSections: Seq[FixedOperatingExpenses] = Seq.empty,
   netProfit: Option[NetProfit] = None,
   otherCosts: Option[OtherCosts] = None,

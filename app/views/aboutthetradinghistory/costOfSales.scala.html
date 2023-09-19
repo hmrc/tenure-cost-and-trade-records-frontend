@@ -14,33 +14,199 @@
  * limitations under the License.
  *@
 
+@import actions.SessionRequest
 @import models.submissions.aboutthetradinghistory.CostOfSales
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
-@import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
-@import models.pages.Summary
+@import uk.gov.hmrc.govukfrontend.views.html.components._
+@import uk.gov.hmrc.govukfrontend.views.Implicits._
+@import util.NumberUtil._
 
-@this(layout: Layout,
+@this(
+        layout: Layout,
         govukButton: GovukButton,
-        formWithCSRF: FormWithCSRF
+        formWithCSRF: FormWithCSRF,
+        govukInput: GovukInput,
+        govukTable: GovukTable,
+        govukInsetText: GovukInsetText,
+        govukDetails: GovukDetails
 )
 
-@(theForm: Form[CostOfSales], summary: Summary)(implicit request: Request[_], messages: Messages)
 
-@layout(
-  pageHeading = messages("costOfSales.heading"),
-  showSection = true,
-    summary = Some(summary),
-  sectionName = messages("label.section.aboutYourTradingHistory"),
-  backLinkUrl = controllers.aboutthetradinghistory.routes.TurnoverController.show().url,
-    theForm = theForm
-) {
+@(form: Form[Seq[CostOfSales]])(implicit request: SessionRequest[_], messages: Messages)
 
-  @formWithCSRF(action = controllers.aboutthetradinghistory.routes.CostOfSalesController.submit()) {
 
-      @includes.continueSaveAsDraftButtons(govukButton)
-  }
+@detailsContent = {
+    <p class="govuk-body govuk-!-font-weight-bold">@messages("costOfSales.details.h1")</p>
+    <p class="govuk-body">@messages("costOfSales.details.p1")</p>
+    <p class="govuk-body">@messages("costOfSales.details.p2")</p>
 }
 
+@financialYearEndContent(fieldName: String, form: Form[Seq[CostOfSales]]) = {
+@form(fieldName).value.map { endDate =>
+    @endDate
+    <input type="hidden" name="@fieldName" value="@endDate" />
+}
+}
 
+@accommodationHeading = {
+    <p class="govuk-body"><span class="govuk-!-font-weight-bold">@messages("costOfSales.accommodation")</span> @messages("costOfSales.excludingVAT")</p>
+}
 
+@foodHeading = {
+    <p class="govuk-body"><span class="govuk-!-font-weight-bold">@messages("costOfSales.food")</span> @messages("costOfSales.excludingVAT")</p>
+}
 
+@drinksHeading = {
+    <p class="govuk-body"><span class="govuk-!-font-weight-bold">@messages("costOfSales.drinks")</span> @messages("costOfSales.excludingVAT")</p>
+}
+
+@otherHeading = {
+    <p class="govuk-body">
+        <span class="govuk-!-font-weight-bold">@messages("costOfSales.otherSales")</span> @messages("costOfSales.excludingVAT")
+    </p>
+    <span class="govuk-caption-m">@messages("costOfSales.otherSales.hint")</span>
+}
+
+@totalHeading = {
+    <p class="govuk-body">
+        <span class="govuk-!-font-weight-bold">@messages("costOfSales.total")</span> @messages("costOfSales.excludingVAT")
+    </p>
+}
+
+@totalContent(idx: Int) = {
+    <span id="@{
+        "total." + idx
+    }">@form.value.fold("")(_(idx).total.asMoney)</span>
+}
+
+@columns = @{
+    request.sessionData.aboutTheTradingHistory.map(_.costOfSales).fold(Seq.empty[Int])(_.indices)
+}
+
+@costInputAttributes = @{
+    Map("maxlength" -> "13")
+}
+
+@layout(
+    pageHeading = messages("costOfSales.heading"),
+    showSection = true,
+    sectionName = messages("label.section.aboutYourTradingHistory"),
+    summary = Some(request.sessionData.toSummary),
+    backLinkUrl = controllers.aboutthetradinghistory.routes.TurnoverController.show().url,
+    theForm = form
+) {
+
+    <p class="govuk-body">@messages("costOfSales.p1")</p>
+    <ul class="govuk-list govuk-list--bullet">
+        <li>@messages("costOfSales.excluding.item1")</li>
+        <li>@messages("costOfSales.excluding.item2")</li>
+        <li>@messages("costOfSales.excluding.item3")</li>
+        <li>@messages("costOfSales.excluding.item4")</li>
+    </ul>
+
+    @govukInsetText(InsetText(
+        content = Text(messages("costOfSales.note"))
+    ))
+    @govukDetails(Details(
+        summary = Text(messages("costOfSales.details.link")),
+        content = HtmlContent(detailsContent)
+    ))
+
+    @formWithCSRF(action = controllers.aboutthetradinghistory.routes.CostOfSalesController.submit()) {
+
+        @govukTable(Table(
+            rows = Seq(
+
+                TableRow(
+                    content = Text(messages("costOfSales.financialYearEnd")),
+                    classes = "govuk-!-font-weight-bold"
+                ) +:
+                        columns.map { idx =>
+                            TableRow(
+                                content = HtmlContent(
+                                    financialYearEndContent(s"costOfSales[$idx].financial-year-end", form)
+                                )
+                            )
+                        },
+                TableRow(
+                    content = HtmlContent(accommodationHeading)
+                ) +: columns.map { idx =>
+                    TableRow(
+                        content = HtmlContent(
+                            govukInput(
+                                Input(
+                                    prefix = Some(PrefixOrSuffix(
+                                        content = Text("£")
+                                    )),
+                                    attributes = costInputAttributes
+                                ).withFormField(form(s"costOfSales[$idx].accommodation"))
+                            )
+                        )
+                    )
+                },
+                TableRow(
+                    content = HtmlContent(foodHeading)
+                ) +: columns.map { idx =>
+                    TableRow(
+                        content = HtmlContent(
+                            govukInput(
+                                Input(
+                                    prefix = Some(PrefixOrSuffix(
+                                        content = Text("£")
+                                    )),
+                                    attributes = costInputAttributes
+                                ).withFormField(form(s"costOfSales[$idx].food"))
+                            )
+                        )
+                    )
+                },
+                TableRow(
+                    content = HtmlContent(drinksHeading)
+                ) +: columns.map { idx =>
+                    TableRow(
+                        content = HtmlContent(
+                            govukInput(
+                                Input(
+                                    prefix = Some(PrefixOrSuffix(
+                                        content = Text("£")
+                                    )),
+                                    attributes = costInputAttributes
+                                ).withFormField(form(s"costOfSales[$idx].drinks"))
+                            )
+                        )
+                    )
+                },
+                TableRow(
+                    content = HtmlContent(otherHeading)
+                ) +: columns.map { idx =>
+                    TableRow(
+                        content = HtmlContent(
+                            govukInput(
+                                Input(
+                                    prefix = Some(PrefixOrSuffix(
+                                        content = Text("£")
+                                    )),
+                                    attributes = costInputAttributes
+                                ).withFormField(form(s"costOfSales[$idx].other"))
+                            )
+                        )
+                    )
+                },
+                TableRow(
+                    content = HtmlContent(totalHeading)
+                ) +:
+                        columns.map { idx =>
+                            TableRow(
+                                content = HtmlContent(totalContent(idx))
+                            )
+                        }
+            ),
+
+            captionClasses = "govuk-table__caption--m",
+            firstCellIsHeader = true
+        ))
+
+        @includes.continueSaveAsDraftButtons(govukButton)
+    }
+}
+
+<script src="@routes.Assets.versioned("javascripts/cost-of-sales.js")"></script>

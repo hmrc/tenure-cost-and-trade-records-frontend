@@ -16,6 +16,7 @@
 
 package controllers.aboutthetradinghistory
 
+import actions.SessionRequest
 import navigation.AboutTheTradingHistoryNavigator
 import play.api.http.Status
 import play.api.test.Helpers._
@@ -23,11 +24,14 @@ import play.twirl.api.HtmlFormat
 import utils.TestBaseSpec
 import views.html.aboutthetradinghistory.costOfSales
 
+import scala.concurrent.ExecutionContext
+
 class CostOfSalesControllerSpec extends TestBaseSpec {
 
+  val sessionRequest           = SessionRequest(baseFilled6015Session, fakeRequest)
   val mockCostOfSalesNavigator = mock[AboutTheTradingHistoryNavigator]
   val mockCostOfSalesView      = mock[costOfSales]
-  when(mockCostOfSalesView.apply(any, any)(any, any)).thenReturn(HtmlFormat.empty)
+  when(mockCostOfSalesView.apply(any)(any, any)).thenReturn(HtmlFormat.empty)
 
   val costOfSalesController = new CostOfSalesController(
     stubMessagesControllerComponents(),
@@ -35,18 +39,19 @@ class CostOfSalesControllerSpec extends TestBaseSpec {
     mockCostOfSalesView,
     preFilledSession,
     mockSessionRepo
-  )
+  )(inject[ExecutionContext])
 
   "GET /" should {
     "return 200" in {
-      val result = costOfSalesController.show(fakeRequest)
+      val result = costOfSalesController.show(sessionRequest)
       status(result) shouldBe Status.OK
     }
 
     "return HTML" in {
-      val result = costOfSalesController.show(fakeRequest)
+      val result = costOfSalesController.show(sessionRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
   }
+
 }

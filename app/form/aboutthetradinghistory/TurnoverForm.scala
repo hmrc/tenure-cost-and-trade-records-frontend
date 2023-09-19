@@ -16,12 +16,11 @@
 
 package form.aboutthetradinghistory
 
+import form.DateMappings.dateTooEarlyConstraint
 import models.submissions.aboutthetradinghistory.TurnoverSection
 import play.api.data.{Form, Mapping}
 import play.api.data.Forms.{bigDecimal, localDate, mapping, number}
 import play.api.data.validation.{Constraint, Invalid, Valid}
-
-import java.time.LocalDate
 
 object TurnoverForm {
   def turnoverForm(expectedNumberOfFinancialYears: Int): Form[Seq[TurnoverSection]] = {
@@ -31,11 +30,8 @@ object TurnoverForm {
         if (averageOccupancy >= 0 && averageOccupancy <= 100) Valid
         else Invalid("Average occupancy rate must be between 0 and 100")
     }
-    val dateTooEarlyConstraint: Constraint[LocalDate]      = Constraint[LocalDate]("dateTooEarlyConstraint") { date =>
-      if (date.isAfter(LocalDate.of(1900, 1, 1))) Valid else Invalid("errorName")
-    }
     val columnMapping: Mapping[TurnoverSection]            = mapping(
-      "financial-year-end"     -> ukDateMappings.verifying(dateTooEarlyConstraint, dateTooEarlyConstraint),
+      "financial-year-end"     -> ukDateMappings.verifying(dateTooEarlyConstraint),
       "weeks"                  -> number(min = 0, max = 52),
       "alcoholic-drinks"       -> bigDecimal,
       "food"                   -> bigDecimal,

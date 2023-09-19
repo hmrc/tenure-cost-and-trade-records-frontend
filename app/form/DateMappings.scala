@@ -22,15 +22,19 @@ import models.submissions.Form6010.{DayMonthsDuration, MonthsYearDuration}
 import play.api.data.Forms._
 import play.api.data.Mapping
 import play.api.data.validation.{Constraint, Invalid, Valid}
+import util.DateUtil.nowInUK
 
 import java.time.{LocalDate, LocalDateTime}
 import scala.util.Try
 
 object DateMappings {
 
-  private val nineteenHundred = LocalDateTime.of(1900, 1, 1, 0, 0)
+  private val nineteenHundred     = LocalDateTime.of(1900, 1, 1, 0, 0)
+  private val nineteenHundredDate = nineteenHundred.toLocalDate
 
-  private val todaysDate = LocalDateTime.now()
+  val dateTooEarlyConstraint: Constraint[LocalDate] = Constraint[LocalDate]("dateTooEarlyConstraint") { date =>
+    if (date.isAfter(nineteenHundredDate)) Valid else Invalid(Errors.dateBefore1900)
+  }
 
   private def fullDateIsAfterToday(fieldErrorPart: String): Constraint[(String, String, String)] =
     Constraint("fullDateIsAfterToday") { x =>
@@ -40,7 +44,7 @@ object DateMappings {
 
       if (Try(LocalDateTime.of(year, month, day, 23, 59)).isFailure)
         Invalid(Errors.invalidDate + fieldErrorPart)
-      else if (LocalDateTime.of(year, month, day, 23, 59).isBefore(todaysDate))
+      else if (LocalDateTime.of(year, month, day, 23, 59).isBefore(nowInUK.toLocalDateTime))
         Invalid(Errors.dateBeforeToday + fieldErrorPart)
       else
         Valid
