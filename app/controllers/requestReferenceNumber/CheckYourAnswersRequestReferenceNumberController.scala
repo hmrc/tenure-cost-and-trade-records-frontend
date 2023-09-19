@@ -42,7 +42,7 @@ class CheckYourAnswersRequestReferenceNumberController @Inject() (
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
 )(implicit ec: ExecutionContext)
-  extends FORDataCaptureController(mcc)
+    extends FORDataCaptureController(mcc)
     with I18nSupport
     with Logging {
 
@@ -50,7 +50,6 @@ class CheckYourAnswersRequestReferenceNumberController @Inject() (
 
   lazy val confirmationUrl: String =
     controllers.requestReferenceNumber.routes.CheckYourAnswersRequestReferenceNumberController.confirmation().url
-
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Future.successful(
@@ -79,9 +78,9 @@ class CheckYourAnswersRequestReferenceNumberController @Inject() (
   }
 
   def submitRequestReferenceNumber(
-                                  refNum: String
-                                )(implicit hc: HeaderCarrier, request: SessionRequest[_]): Future[Unit] = {
-    val auditType = "noReference"
+    refNum: String
+  )(implicit hc: HeaderCarrier, request: SessionRequest[_]): Future[Unit] = {
+    val auditType      = "noReference"
     // Dummy data from session to able creation of audit dashboards
     val submissionJson = Json.toJson(request.sessionData).as[JsObject]
 
@@ -92,6 +91,5 @@ class CheckYourAnswersRequestReferenceNumberController @Inject() (
   def confirmation: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Future(Ok(confirmationRequestReferenceNumberView(feedbackForm)))
   }
-
 
 }

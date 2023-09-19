@@ -127,7 +127,7 @@ class ConnectionToPropertyNavigatorSpec extends TestBaseSpec {
       .nextPage(CheckYourAnswersRequestReferenceNumberPageId, stillConnectedDetailsYesSession)
       .apply(
         stillConnectedDetailsYesSession
-      ) mustBe controllers.routes.RequestReferenceNumberFormSubmissionController.submit()
+      ) mustBe controllers.requestReferenceNumber.routes.CheckYourAnswersRequestReferenceNumberController.submit()
   }
 
   "return a function that goes from the vacant property page to Vacent property Start Date page if answer yes" in {
