@@ -113,6 +113,21 @@ class FeedbackController @Inject() (
       )
   }
 
+  def feedbackRequestReferenceNumber(): Action[AnyContent] = Action.async { implicit request =>
+    feedbackForm
+      .bindFromRequest()
+      .fold(
+        formWithErrors =>
+          Future.successful {
+            BadRequest(feedbackView(formWithErrors))
+          },
+        feedbackForm => {
+          sendFeedback("noReference", feedbackForm)
+          Future.successful(Redirect(routes.FeedbackController.feedbackThx))
+        }
+      )
+  }
+
   private def sendFeedback(eventName: String, f: Feedback)(implicit request: Request[_]) =
     audit(eventName, Map("comments" -> f.comments.getOrElse(""), "satisfaction" -> f.rating.get))
 }

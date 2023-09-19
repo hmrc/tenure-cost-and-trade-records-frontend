@@ -16,31 +16,40 @@
 
 package controllers.requestReferenceNumber
 
-import actions.WithSessionRefiner
+import actions.{SessionRequest, WithSessionRefiner}
+import connectors.Audit
 import controllers.FORDataCaptureController
 import form.requestReferenceNumber.CheckYourAnswersRequestReferenceNumberForm.checkYourAnswersRequestReferenceNumberForm
-import models.submissions.requestReferenceNumber.RequestReferenceNumberDetails.updateRequestReferenceNumber
-import navigation.ConnectionToPropertyNavigator
-import navigation.identifiers.CheckYourAnswersRequestReferenceNumberPageId
+
 import play.api.Logging
 import play.api.i18n.I18nSupport
-import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import play.api.libs.json.{JsObject, Json}
+import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Result}
 import repositories.SessionRepo
-import views.html.requestReferenceNumber.checkYourAnswersRequestReferenceNumber
+import uk.gov.hmrc.http.HeaderCarrier
+import uk.gov.hmrc.play.http.HeaderCarrierConverter
+import views.html.requestReferenceNumber.{checkYourAnswersRequestReferenceNumber, confirmationRequestReferenceNumber}
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class CheckYourAnswersRequestReferenceNumberController @Inject() (
   mcc: MessagesControllerComponents,
-  navigator: ConnectionToPropertyNavigator,
   checkYourAnswersRequestReferenceNumberView: checkYourAnswersRequestReferenceNumber,
+  confirmationRequestReferenceNumberView: confirmationRequestReferenceNumber,
+  audit: Audit,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FORDataCaptureController(mcc)
+)(implicit ec: ExecutionContext)
+    extends FORDataCaptureController(mcc)
     with I18nSupport
     with Logging {
+
+  import controllers.FeedbackFormMapper.feedbackForm
+
+  lazy val confirmationUrl: String =
+    controllers.requestReferenceNumber.routes.CheckYourAnswersRequestReferenceNumberController.confirmation().url
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Future.successful(
@@ -57,21 +66,30 @@ class CheckYourAnswersRequestReferenceNumberController @Inject() (
     )
   }
 
-  def submit = (Action andThen withSessionRefiner).async { implicit request =>
-    checkYourAnswersRequestReferenceNumberForm
-      .bindFromRequest()
-      .fold(
-        formWithErrors =>
-          Future
-            .successful(BadRequest(checkYourAnswersRequestReferenceNumberView(formWithErrors, request.sessionData))),
-        data => {
-          val updatedData = updateRequestReferenceNumber(_.copy(checkYourAnswersRequestReferenceNumber = Some(data)))
-          session.saveOrUpdate(updatedData)
-          Future.successful(
-            Redirect(navigator.nextPage(CheckYourAnswersRequestReferenceNumberPageId, updatedData).apply(updatedData))
-          )
-        }
-      )
+  def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    submit(request.sessionData.referenceNumber)
+  }
+
+  private def submit[T](refNum: String)(implicit request: SessionRequest[T]): Future[Result] = {
+    val hc = HeaderCarrierConverter.fromRequestAndSession(request, request.session)
+    for {
+      _ <- submitRequestReferenceNumber(refNum)(hc, request)
+    } yield Found(confirmationUrl)
+  }
+
+  def submitRequestReferenceNumber(
+    refNum: String
+  )(implicit hc: HeaderCarrier, request: SessionRequest[_]): Future[Unit] = {
+    val auditType      = "noReference"
+    // Dummy data from session to able creation of audit dashboards
+    val submissionJson = Json.toJson(request.sessionData).as[JsObject]
+
+    audit.sendExplicitAudit(auditType, submissionJson ++ Audit.languageJson)
+    Future.unit
+  }
+
+  def confirmation: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    Future(Ok(confirmationRequestReferenceNumberView(feedbackForm)))
   }
 
 }

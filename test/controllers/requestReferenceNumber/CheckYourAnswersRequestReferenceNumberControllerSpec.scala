@@ -16,21 +16,24 @@
 
 package controllers.requestReferenceNumber
 
+import connectors.Audit
 import navigation.ConnectionToPropertyNavigator
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import play.twirl.api.HtmlFormat
 import utils.TestBaseSpec
-import views.html.requestReferenceNumber.checkYourAnswersRequestReferenceNumber
+import views.html.requestReferenceNumber.{checkYourAnswersRequestReferenceNumber, confirmationRequestReferenceNumber}
 import views.html.taskList
 
 class CheckYourAnswersRequestReferenceNumberControllerSpec extends TestBaseSpec {
 
   val backLink = controllers.requestReferenceNumber.routes.RequestReferenceNumberContactDetailsController.show().url
 
+  val mockAudit: Audit                               = mock[Audit]
   val mockConnectionToPropertyNavigator              = mock[ConnectionToPropertyNavigator]
   val mockCheckYourAnswersRequestReferenceNumberView = mock[checkYourAnswersRequestReferenceNumber]
+  val mockRequestReferenceNumber                     = mock[confirmationRequestReferenceNumber]
   when(mockCheckYourAnswersRequestReferenceNumberView.apply(any, any)(any, any)).thenReturn(HtmlFormat.empty)
 
   val mockTaskListView = mock[taskList]
@@ -38,8 +41,9 @@ class CheckYourAnswersRequestReferenceNumberControllerSpec extends TestBaseSpec 
 
   val checkYourAnswersRequestReferenceController = new CheckYourAnswersRequestReferenceNumberController(
     stubMessagesControllerComponents(),
-    mockConnectionToPropertyNavigator,
     mockCheckYourAnswersRequestReferenceNumberView,
+    mockRequestReferenceNumber,
+    mockAudit,
     preFilledSession,
     mockSessionRepo
   )
@@ -58,11 +62,11 @@ class CheckYourAnswersRequestReferenceNumberControllerSpec extends TestBaseSpec 
   }
 
   "SUBMIT /" should {
-    "throw a BAD_REQUEST if an empty form is submitted" in {
+    "throw a FOUND if an empty form is submitted" in {
       val res = checkYourAnswersRequestReferenceController.submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)
       )
-      status(res) shouldBe BAD_REQUEST
+      status(res) shouldBe FOUND
     }
   }
 }
