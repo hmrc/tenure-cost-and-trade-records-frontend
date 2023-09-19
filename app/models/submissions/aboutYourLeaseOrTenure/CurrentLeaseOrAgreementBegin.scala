@@ -19,7 +19,7 @@ package models.submissions.aboutYourLeaseOrTenure
 import models.submissions.Form6010.MonthsYearDuration
 import play.api.libs.json.Json
 
-case class CurrentLeaseOrAgreementBegin(leaseBegin: MonthsYearDuration, grantedFor: Int)
+case class CurrentLeaseOrAgreementBegin(leaseBegin: MonthsYearDuration, grantedFor: String)
 
 object CurrentLeaseOrAgreementBegin {
   implicit val format = Json.format[CurrentLeaseOrAgreementBegin]

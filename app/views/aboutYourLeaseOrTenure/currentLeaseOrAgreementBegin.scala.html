@@ -29,6 +29,7 @@
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Label
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Input
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.input.PrefixOrSuffix
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.hint.Hint
 @import models.pages.Summary
 
 @this(layout: Layout,
@@ -43,6 +44,7 @@
         formWithCSRF: FormWithCSRF
 )
 
+
 @(theForm: Form[CurrentLeaseOrAgreementBegin], summary: Summary)(implicit request: Request[_], messages: Messages)
 
 @layout(
@@ -56,6 +58,7 @@
 
  @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.CurrentLeaseOrAgreementBeginController.submit()) {
 
+  <p class="govuk-heading-m">@messages("currentLeaseOrAgreementBegin.subheading")</p>
   <p class="govuk-body">@messages("label.currentLeaseOrAgreementBegin")</p>
 
   @includes.dateFields(
@@ -66,21 +69,17 @@
    helpText = messages("label.currentRentFirstPaid.help")
   )
 
-  @govukInput(
-   Input(
-    id = "grantedFor",
-    name = "grantedFor",
-    value = theForm("grantedFor").value,
-    classes = "govuk-input--width-3",
-    errorMessage = theForm.errors.asTextErrorMessageForField("grantedFor"),
-    attributes = Map("maxLength" -> "3"),
-    label = Label(
-     content = Text(messages("label.grantedFor")),
-     classes = "govuk-!-font-weight-bold"
-    ),
-    suffix = Some(PrefixOrSuffix(content = Text(messages("suffix.grantedFor")))),
-   )
-  )
+  @govukInput(Input(
+   id = "grantedFor",
+   name = "grantedFor",
+   value = theForm("grantedFor").value,
+   errorMessage = theForm.errors.asTextErrorMessageForField("grantedFor"),
+   label = Label(
+    classes = "govuk-label--m",
+    content = Text(messages("label.grantedFor"))
+   ),
+   hint = Some(Hint(content = Text(messages("hint.currentLeaseOrAgreementBegin"))))
+  ))
 
   @includes.continueSaveAsDraftButtons(govukButton)
  }
