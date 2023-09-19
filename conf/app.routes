@@ -35,6 +35,7 @@ POST        /request-reference-number-contact-details               controllers.
 
 GET         /check-your-answers-request-reference-number            controllers.requestReferenceNumber.CheckYourAnswersRequestReferenceNumberController.show()
 POST        /check-your-answers-request-reference-number            controllers.requestReferenceNumber.CheckYourAnswersRequestReferenceNumberController.submit()
+GET         /confirmation-request-reference-number                  controllers.requestReferenceNumber.CheckYourAnswersRequestReferenceNumberController.confirmation()
 
 # PDF download
 GET         /download-pdf-reference-number                          controllers.downloadFORTypeForm.DownloadPDFReferenceNumberController.show()
@@ -371,6 +372,7 @@ POST       /feedback                                                controllers.
 POST       /feedback-not-connected                                  controllers.FeedbackController.feedbackNotConnectedSubmit
 POST       /feedback-connected                                      controllers.FeedbackController.feedbackConnectedSubmit
 POST       /feedback-vacant-property                                controllers.FeedbackController.feedbackVacantPropertySubmit
+POST       /feedback-request-reference-number                       controllers.FeedbackController.feedbackRequestReferenceNumber
 
 # Admin routes
 GET         /admin/login                                            controllers.admin.FileUploadController.loginPage

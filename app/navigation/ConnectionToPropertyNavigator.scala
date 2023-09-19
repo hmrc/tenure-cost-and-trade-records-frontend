@@ -119,10 +119,10 @@ class ConnectionToPropertyNavigator @Inject() (audit: Audit) extends Navigator(a
       controllers.requestReferenceNumber.routes.RequestReferenceNumberContactDetailsController.show()
     ),
     NoReferenceNumberContactDetailsPageId          -> (_ =>
-      controllers.requestReferenceNumber.routes.CheckYourAnswersRequestReferenceNumberController.submit()
+      controllers.requestReferenceNumber.routes.CheckYourAnswersRequestReferenceNumberController.show()
     ),
     CheckYourAnswersRequestReferenceNumberPageId   -> (_ =>
-      controllers.routes.RequestReferenceNumberFormSubmissionController.submit()
+      controllers.requestReferenceNumber.routes.CheckYourAnswersRequestReferenceNumberController.submit()
     ),
     PropertyBecomeVacantPageId                     -> (_ =>
       controllers.connectiontoproperty.routes.IsRentReceivedFromLettingController.show()
