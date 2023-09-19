@@ -20,14 +20,17 @@ import form.DateMappings.monthsYearDurationMapping
 import form.MappingSupport.intMapping
 import models.submissions.aboutYourLeaseOrTenure.CurrentLeaseOrAgreementBegin
 import play.api.data.Form
-import play.api.data.Forms.mapping
+import play.api.data.Forms.{default, mapping, text}
+import play.api.data.validation.Constraints.nonEmpty
 
 object CurrentLeaseOrAgreementBeginForm {
 
   val currentLeaseOrAgreementBeginForm = Form(
     mapping(
       "leaseBegin" -> monthsYearDurationMapping("leaseBegin", ".leaseBegin"),
-      "grantedFor" -> intMapping()
+      "grantedFor" -> default(text, "").verifying(
+        nonEmpty(errorMessage = "error.grantedFor.required")
+      )
     )(CurrentLeaseOrAgreementBegin.apply)(CurrentLeaseOrAgreementBegin.unapply)
   )
 }

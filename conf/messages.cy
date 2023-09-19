@@ -914,11 +914,12 @@ error.currentRentFirstPaid.year.required = The date when the current rent was fi
 
 # CURRENT LEASE OR AGREEMENT BEGIN
 ##################################
-currentLeaseOrAgreementBegin.heading = When did the current lease or agreement begin?
+currentLeaseOrAgreementBegin.heading = Lease length and start date
+currentLeaseOrAgreementBegin.subheading = When did the current lease or agreement begin?
 label.currentLeaseOrAgreementBegin = If the current lease was originally assigned to another party, tell us when it was started by them
 label.grantedFor = How long was it granted for?
-suffix.grantedFor = mis
-error.empty.required = Please enter how long it was granted for
+hint.currentLeaseOrAgreementBegin = For example, 18 months, 1.5 years, or 1 year and 6 months
+error.grantedFor.required = Please enter how long it was granted for
 error.leaseBegin.month.required = The date the current lease began must include a month
 error.leaseBegin.year.required = The date the current lease began must include a year
 label.currentRentFirstPaid.help = For example, 9 2017

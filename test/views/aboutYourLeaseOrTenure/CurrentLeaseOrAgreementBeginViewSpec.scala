@@ -68,11 +68,6 @@ class CurrentLeaseOrAgreementBeginViewSpec extends QuestionViewBehaviours[Curren
       assertContainsLabel(doc, "grantedFor", "How long was it granted for?")
     }
 
-    "contain suffix for the value months" in {
-      val doc = asDocument(createViewUsingForm(form))
-      assertContainsText(doc, "months")
-    }
-
     "contain save and continue button with the value Save and Continue" in {
       val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("continue").text()
