@@ -1120,7 +1120,10 @@ error.concessionOrFranchise.missing = Select yes if any separate businesses are 
 # ADDITIONAL INFORMATION
 ########################
 checkYourAnswersAdditionalInformation.heading = Check your answers - additional information journey
-label.furtherInformation = Further information or remarks (if any)
+label.furtherInformation = Further information or remarks
+key.altContact.details = Alternative contact details
+key.additionalInformation = Additional information
+label.altDetails.question= Use alternative contact details?
 key.altContact.details = Alternative contact details
 label.fullName = Full name
 label.telephoneNumber = Telephone number
@@ -1132,6 +1135,11 @@ label.correspondenceAddress = Correspondence address
 furtherInformationOrRemarks.heading = Further information or remarks
 hint.furtherInformationOrRemarks = Please provide further details if there is insufficient room for you to complete your answers to any of the forgoing questions, or if any of the questions require further explanation or clarification
 furtherInformationOrRemarksTasklist.heading = Additional relevant information
+
+# ALTERNATIVE DETAILS QUESTION
+################################
+alternativeDetailsQuestion.heading = Would you like us to use alternative details if we need to contact you?
+hint.alternativeDetailsQuestion = You can either provide alternative contact details, or nominate someone else we should contact if we have any queries about this declaration
 
 # ALTERNATIVE CONTACT DETAILS
 #############################
