@@ -24,7 +24,7 @@ import views.html.aboutYourLeaseOrTenure._
 import views.html.aboutfranchisesorlettings._
 import views.html.aboutthetradinghistory._
 import views.html.aboutyouandtheproperty.checkYourAnswersAboutTheProperty
-import views.html.additionalinformation.{alternativeContactDetails, furtherInformationOrRemarks}
+import views.html.additionalinformation.{alternativeContactDetails, contactDetailsQuestion, furtherInformationOrRemarks}
 import views.html.downloadFORTypeForm.{downloadPDF, downloadPDFReferenceNumber}
 import views.html.requestReferenceNumber.{requestReferenceNumber, requestReferenceNumberContactDetails}
 import views.html.{confirmation, confirmationConnectionToProperty, confirmationNotConnected, login}
@@ -215,4 +215,6 @@ trait FakeViews { this: GuiceOneAppPerSuite =>
     app.injector.instanceOf[furtherInformationOrRemarks]
   lazy val alternativeContactDetailsView: alternativeContactDetails     =
     app.injector.instanceOf[alternativeContactDetails]
+  lazy val contactDetailsQuestionView: contactDetailsQuestion           =
+    app.injector.instanceOf[contactDetailsQuestion]
 }

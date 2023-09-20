@@ -16,45 +16,34 @@
 
 package views.additionalInformation
 
-import form.additionalinformation.AlternativeContactDetailsForm
+import form.additionalinformation.ContactDetailsQuestionForm
+import models.submissions.additionalinformation.ContactDetailsQuestion
 import models.pages.Summary
-import models.submissions.additionalinformation.AlternativeContactDetails
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
-import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
 
-class AlternativeContactDetailsViewSpec extends QuestionViewBehaviours[AlternativeContactDetails] {
+class ContactDetailsQuestionViewSpec extends QuestionViewBehaviours[ContactDetailsQuestion] {
 
-  val messageKeyPrefix = "alternativeContactDetails"
+  val messageKeyPrefix = "contactDetailsQuestion"
 
-  override val form: Form[AlternativeContactDetails] = AlternativeContactDetailsForm.alternativeContactDetailsForm
+  override val form = ContactDetailsQuestionForm.contactDetailsQuestionForm
 
-  def createView: () => Html = () => alternativeContactDetailsView(form, Summary("99996010001"))(fakeRequest, messages)
+  def createView = () => contactDetailsQuestionView(form, Summary("99996010001"))(fakeRequest, messages)
 
-  def createViewUsingForm: Form[AlternativeContactDetails] => Html = (form: Form[AlternativeContactDetails]) =>
-    alternativeContactDetailsView(form, Summary("99996010001"))(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[ContactDetailsQuestion]) =>
+    contactDetailsQuestionView(form, Summary("99996010001"))(fakeRequest, messages)
 
-  "Alternative Contact Details view" must {
+  "Contact details question" must {
 
     behave like normalPage(createView, messageKeyPrefix)
 
-    behave like pageWithTextFields(
-      createViewUsingForm,
-      "alternativeContactFullName",
-      "alternativeContactDetails.phone",
-      "alternativeContactDetails.email",
-      "alternativeContactAddress.buildingNameNumber",
-      "alternativeContactAddress.town",
-      "alternativeContactAddress.postcode"
-    )
-
-    "has a link marked with back.link.label leading to the task Page" in {
+    "has a link marked as backLink leading further information or remarks Page" in {
       val doc          = asDocument(createView())
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText mustBe messages("back.link.label")
       val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.additionalinformation.routes.ContactDetailsQuestionController.show().url
+      backlinkUrl mustBe controllers.additionalinformation.routes.FurtherInformationOrRemarksController.show.url
     }
 
     "Section heading is visible" in {
@@ -63,14 +52,28 @@ class AlternativeContactDetailsViewSpec extends QuestionViewBehaviours[Alternati
       assert(sectionText == messages("label.section.additionalInformation"))
     }
 
-    "contain an input for alternativeContactAddress.street1" in {
+    "contain radio buttons for the value yes" in {
       val doc = asDocument(createViewUsingForm(form))
-      assertRenderedById(doc, "alternativeContactAddress.street1")
+      assertContainsRadioButton(
+        doc,
+        "contactDetailsQuestion",
+        "contactDetailsQuestion",
+        "yes",
+        false
+      )
+      assertContainsText(doc, messages("label.yes"))
     }
 
-    "contain an input for alternativeContactAddress.county" in {
+    "contain radio buttons for the value no" in {
       val doc = asDocument(createViewUsingForm(form))
-      assertRenderedById(doc, "alternativeContactAddress.county")
+      assertContainsRadioButton(
+        doc,
+        "contactDetailsQuestion-2",
+        "contactDetailsQuestion",
+        "no",
+        false
+      )
+      assertContainsText(doc, messages("label.no"))
     }
 
     "contain save and continue button with the value Save and Continue" in {
