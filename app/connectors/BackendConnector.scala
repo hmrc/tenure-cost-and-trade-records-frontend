@@ -17,10 +17,10 @@
 package connectors
 
 import com.google.inject.ImplementedBy
-import models.{FORLoginResponse, SubmissionDraft}
+import models.{Credentials, FORLoginResponse, SubmissionDraft}
+import play.api.libs.json.Writes
 import uk.gov.hmrc.http.{BadRequestException, HeaderCarrier, HttpReads, HttpResponse, Upstream4xxResponse}
 import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
-import views.html.helper.urlEncode
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
@@ -70,8 +70,9 @@ class DefaultBackendConnector @Inject() (servicesConfig: ServicesConfig, http: F
   override def verifyCredentials(refNumber: String, postcode: String)(implicit
     hc: HeaderCarrier
   ): Future[FORLoginResponse] = {
-    val parts = Seq(refNumber, postcode).map(urlEncode)
-    http.GET[FORLoginResponse](url(s"${parts.mkString("/")}/verify"))(readsHack, hc, ec)
+    val credentials    = Credentials(refNumber, postcode)
+    val wrtCredentials = implicitly[Writes[Credentials]]
+    http.POST[Credentials, FORLoginResponse](url("authenticate"), credentials)(wrtCredentials, readsHack, hc, ec)
   }
 
   override def retrieveFORType(referenceNumber: String)(implicit
