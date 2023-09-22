@@ -49,5 +49,5 @@ class CheckYourAnswersConnectionToVacantPropertyController @Inject() (
   }
 
   private def getBackLink(answers: Session): String =
-    controllers.connectiontoproperty.routes.AreYouThirdPartyController.show().url
+    controllers.connectiontoproperty.routes.ProvideContactDetailsController.show().url
 }
