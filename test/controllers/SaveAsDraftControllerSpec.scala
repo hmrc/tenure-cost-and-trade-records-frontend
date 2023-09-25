@@ -71,7 +71,7 @@ class SaveAsDraftControllerSpec extends TestBaseSpec {
     }
 
     "save SubmissionDraft and return page displaying saveAsDraftPassword if session.saveAsDraftPassword is defined" in {
-      sessionRepo.saveOrUpdate(prefilledBaseSession.copy(saveAsDraftPassword = Some(password)))
+      sessionRepo.saveOrUpdate(prefilledBaseSession.copy(saveAsDraftPassword = Some(mongoHasher.hash(password))))
 
       val result = saveAsDraftController.customPassword(exitPath)(fakeRequest)
       status(result) shouldBe OK
@@ -175,7 +175,7 @@ class SaveAsDraftControllerSpec extends TestBaseSpec {
     }
 
     "load SubmissionDraft to user session and redirect to exitPath" in {
-      val session = prefilledBaseSession.copy(saveAsDraftPassword = Some(password))
+      val session = prefilledBaseSession.copy(saveAsDraftPassword = Some(mongoHasher.hash(password)))
       val refNum  = session.referenceNumber
       val draft   = submissionDraft.copy(session = session)
       backendConnector.saveAsDraft(refNum, draft)
@@ -183,9 +183,10 @@ class SaveAsDraftControllerSpec extends TestBaseSpec {
       sessionRepo.saveOrUpdate(session.copy(token = "NEW_TOKEN", forType = "TMP_VALUE"))
 
       val sessionBefore = sessionRepo.get.futureValue.value
-      sessionBefore.saveAsDraftPassword shouldBe Some(password)
-      sessionBefore.token               shouldBe "NEW_TOKEN"
-      sessionBefore.forType             shouldBe "TMP_VALUE"
+      mongoHasher.verify(password, sessionBefore.saveAsDraftPassword.getOrElse("")) shouldBe true
+
+      sessionBefore.token   shouldBe "NEW_TOKEN"
+      sessionBefore.forType shouldBe "TMP_VALUE"
 
       val result = saveAsDraftController.resume(
         fakeRequest

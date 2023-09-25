@@ -110,14 +110,14 @@ class SaveAsDraftController @Inject() (
         formWithErrors => BadRequest(saveAsDraftLoginView(formWithErrors)),
         password =>
           backendConnector.loadSubmissionDraft(session.referenceNumber).map {
-            case Some(draft) if draft.session.saveAsDraftPassword.contains(password) =>
+            case Some(draft) if draft.session.saveAsDraftPassword.exists(mongoHasher.verify(password, _)) =>
               val restoredSession = draft.session.copy(token = session.token, saveAsDraftPassword = None)
               sessionRepo.saveOrUpdate(restoredSession)
 
               Redirect(draft.exitPath)
-            case None                                                                =>
+            case None                                                                                     =>
               NotFound(errorHandler.notFoundTemplate(request))
-            case _                                                                   =>
+            case _                                                                                        =>
               val formWithLoginError = saveAsDraftLoginForm.withError("password", "saveAsDraft.error.invalidPassword")
               BadRequest(saveAsDraftLoginView(formWithLoginError))
           }
