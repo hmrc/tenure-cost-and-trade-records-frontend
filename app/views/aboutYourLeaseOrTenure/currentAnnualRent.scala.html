@@ -52,6 +52,7 @@
 
 @layout(
  pageHeading = messages("currentAnnualRent.heading"),
+ showH1 = false,
  showSection = true,
  summary = Some(summary),
  sectionName = messages("label.section.aboutYourLeaseOrTenure"),
@@ -68,7 +69,9 @@
     value = theForm("currentAnnualRent").value,
     classes = "govuk-input--width-10 total-annual-rent",
     label = Label(
-     classes = "govuk-!-font-weight-bold"
+     content = Text(messages("currentAnnualRent.heading")),
+     classes = "govuk-label--l",
+     isPageHeading = true
     ),
     hint = Hint(content = Text(messages("hint.currentAnnualRent"))),
     autocomplete = Some("off"),

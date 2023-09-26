@@ -27,16 +27,11 @@ import org.scalatest.wordspec.AnyWordSpec
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.http.Status
 import play.api.test.FakeRequest
-import play.api.test.Helpers.{charset, contentAsString, contentType, defaultAwaitTimeout, redirectLocation, status}
+import play.api.test.Helpers.{charset, contentAsString, contentType, redirectLocation, status}
 import stub.StubSessionRepo
-import uk.gov.hmrc.http.HeaderCarrier
-import uk.gov.hmrc.play.audit.http.connector.AuditResult
 import uk.gov.hmrc.play.bootstrap.tools.Stubs.stubMessagesControllerComponents
 import utils.{HtmlAssertionHelper, TestBaseSpec}
-import views.html.{confirmation, confirmationConnectionToProperty, confirmationNotConnected}
 import views.html.feedback.{feedback, feedbackThx}
-
-import scala.concurrent.{ExecutionContext, Future}
 
 class FeedbackControllerSpec
     extends AnyWordSpec
