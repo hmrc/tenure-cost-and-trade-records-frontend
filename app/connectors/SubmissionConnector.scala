@@ -22,11 +22,11 @@ import javax.inject.{Inject, Singleton}
 import models.submissions.{ConnectedSubmission, NotConnectedSubmission}
 
 import scala.concurrent.{ExecutionContext, Future}
-import uk.gov.hmrc.http.{BadRequestException, HeaderCarrier, HttpReads, HttpResponse, Upstream4xxResponse}
+import uk.gov.hmrc.http.{BadRequestException, HeaderCarrier, HttpClient, HttpReads, HttpResponse, Upstream4xxResponse}
 import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
 
 @Singleton
-class HodSubmissionConnector @Inject() (config: ServicesConfig, http: ForHttp)(implicit ec: ExecutionContext)
+class HodSubmissionConnector @Inject() (config: ServicesConfig, http: HttpClient)(implicit ec: ExecutionContext)
     extends SubmissionConnector {
   lazy val serviceUrl = config.baseUrl("tenure-cost-and-trade-records")
 

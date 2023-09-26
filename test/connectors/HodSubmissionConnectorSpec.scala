@@ -29,15 +29,14 @@ import play.api.test._
 import play.api.{BuiltInComponentsFromContext, Configuration}
 import play.core.server.Server
 import play.filters.HttpFiltersComponents
-import uk.gov.hmrc.http.BadRequestException
+import uk.gov.hmrc.http.{BadRequestException, HttpClient}
 import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
 import utils.TestBaseSpec
 
 class SubmissionConnectorSpec extends TestBaseSpec {
 
-  private val config      = inject[Configuration]
-  private val appConfig   = inject[AppConfig]
-  private val actorSystem = inject[ActorSystem]
+  private val config     = inject[Configuration]
+  private val httpClient = inject[HttpClient]
 
   def withSubmissionConnector[T](block: SubmissionConnector => T): T =
     Server.withApplicationFromContext() { context =>
@@ -61,7 +60,7 @@ class SubmissionConnectorSpec extends TestBaseSpec {
               Configuration("microservice.services.tenure-cost-and-trade-records.port" -> port.value)
                 .withFallback(config)
             ),
-            new ForHttpClient(config, appConfig, actorSystem, wsClient)
+            httpClient
           )
         )
       }

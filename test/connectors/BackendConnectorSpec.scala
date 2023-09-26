@@ -27,7 +27,7 @@ import play.api.test._
 import play.api.{BuiltInComponentsFromContext, Configuration}
 import play.core.server.Server
 import play.filters.HttpFiltersComponents
-import uk.gov.hmrc.http.{BadRequestException, UpstreamErrorResponse}
+import uk.gov.hmrc.http.{BadRequestException, HttpClient, UpstreamErrorResponse}
 import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
 import utils.TestBaseSpec
 
@@ -36,9 +36,8 @@ import utils.TestBaseSpec
   */
 class BackendConnectorSpec extends TestBaseSpec {
 
-  private val config      = inject[Configuration]
-  private val appConfig   = inject[AppConfig]
-  private val actorSystem = inject[ActorSystem]
+  private val config     = inject[Configuration]
+  private val httpClient = inject[HttpClient]
 
   def withBackendConnector[T](block: BackendConnector => T): T =
     Server.withApplicationFromContext() { context =>
@@ -74,7 +73,7 @@ class BackendConnectorSpec extends TestBaseSpec {
               Configuration("microservice.services.tenure-cost-and-trade-records.port" -> port.value)
                 .withFallback(config)
             ),
-            new ForHttpClient(config, appConfig, actorSystem, wsClient)
+            httpClient
           )
         )
       }
