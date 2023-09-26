@@ -39,8 +39,8 @@
     @if(cateringOrLetting.equals("cateringOperationOrLettingAccommodationDetails")) {
         @formWithCSRF(action = controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController.submit(index)) {
 
-            @includes.textInput(govukInput, theForm, "operatorName", "govuk-input--width-20", "operatorName", "operatorName", labelClasses = "govuk-!-font-weight-bold")
-            @includes.textInput(govukInput, theForm, "typeOfBusiness", "govuk-input--width-20", "typeOfBusiness", "typeOfBusiness", labelClasses = "govuk-!-font-weight-bold", hintMsg = "typeOfBusiness")
+            @includes.textInput(govukInput, theForm, "operatorName", "govuk-input--width-20", "operatorName", labelClasses = "govuk-!-font-weight-bold")
+            @includes.textInput(govukInput, theForm, "typeOfBusiness", "govuk-input--width-20", "typeOfBusiness", labelClasses = "govuk-!-font-weight-bold", hintMsg = "typeOfBusiness")
 
             <p class="govuk-body">
                 <b>@messages("label.correspondenceAddress")</b>
@@ -57,8 +57,8 @@
     } else if(cateringOrLetting.equals("lettingOtherPartOfPropertyDetails")) {
         @formWithCSRF(action = controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsController.submit(index), args = Symbol("class") -> "myForm", Symbol("id") -> "myFormId") {
 
-            @includes.textInput(govukInput, theForm, "lettingOperatorName", "govuk-input--width-20", "lettingOperatorName", "lettingOperatorName", labelClasses = "govuk-!-font-weight-bold")
-            @includes.textInput(govukInput, theForm, "lettingTypeOfBusiness", "govuk-input--width-20", "lettingTypeOfBusiness", "typeOfBusiness", labelClasses = "govuk-!-font-weight-bold", hintMsg = "lettingTypeOfBusiness")
+            @includes.textInput(govukInput, theForm, "lettingOperatorName", "govuk-input--width-20", "lettingOperatorName", labelClasses = "govuk-!-font-weight-bold")
+            @includes.textInput(govukInput, theForm, "lettingTypeOfBusiness", "govuk-input--width-20", "lettingTypeOfBusiness", labelClasses = "govuk-!-font-weight-bold", hintMsg = "lettingTypeOfBusiness")
 
             <p class="govuk-body">
                 <b>@messages("label.correspondenceAddress")</b>
