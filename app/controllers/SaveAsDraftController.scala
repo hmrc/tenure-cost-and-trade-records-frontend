@@ -19,6 +19,7 @@ package controllers
 import actions.WithSessionRefiner
 import config.ErrorHandler
 import connectors.{Audit, BackendConnector}
+import crypto.MongoHasher
 import form.CustomUserPasswordForm.customUserPasswordForm
 import form.SaveAsDraftLoginForm.saveAsDraftLoginForm
 import models.{Session, SubmissionDraft}
@@ -45,6 +46,7 @@ class SaveAsDraftController @Inject() (
   saveAsDraftLoginView: saveAsDraftLogin,
   sessionTimeoutView: sessionTimeout,
   dateUtil: DateUtil,
+  mongoHasher: MongoHasher,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") sessionRepo: SessionRepo,
   errorHandler: ErrorHandler,
@@ -72,7 +74,7 @@ class SaveAsDraftController @Inject() (
         formWithErrors =>
           Ok(customPasswordSaveAsDraftView(formWithErrors, expiryDate, exitPath, request.sessionData.toSummary)),
         validData => {
-          val session = request.sessionData.copy(saveAsDraftPassword = validData.password)
+          val session = request.sessionData.copy(saveAsDraftPassword = mongoHasher.hash(validData.password))
           sessionRepo.saveOrUpdate(session)
           saveSubmissionDraft(session, exitPath)
         }
@@ -108,14 +110,14 @@ class SaveAsDraftController @Inject() (
         formWithErrors => BadRequest(saveAsDraftLoginView(formWithErrors)),
         password =>
           backendConnector.loadSubmissionDraft(session.referenceNumber).map {
-            case Some(draft) if draft.session.saveAsDraftPassword.contains(password) =>
+            case Some(draft) if draft.session.saveAsDraftPassword.exists(mongoHasher.verify(password, _)) =>
               val restoredSession = draft.session.copy(token = session.token, saveAsDraftPassword = None)
               sessionRepo.saveOrUpdate(restoredSession)
 
               Redirect(draft.exitPath)
-            case None                                                                =>
+            case None                                                                                     =>
               NotFound(errorHandler.notFoundTemplate(request))
-            case _                                                                   =>
+            case _                                                                                        =>
               val formWithLoginError = saveAsDraftLoginForm.withError("password", "saveAsDraft.error.invalidPassword")
               BadRequest(saveAsDraftLoginView(formWithLoginError))
           }
@@ -133,7 +135,7 @@ class SaveAsDraftController @Inject() (
       saveSubmissionDraft(session, exitPath)
     } else {
       val generatedPassword = AlphanumericPasswordGenerator.generatePassword
-      val updatedSession    = session.copy(saveAsDraftPassword = generatedPassword)
+      val updatedSession    = session.copy(saveAsDraftPassword = mongoHasher.hash(generatedPassword))
 
       for {
         _ <- saveSubmissionDraft(updatedSession, exitPath)

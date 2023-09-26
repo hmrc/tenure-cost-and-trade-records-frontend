@@ -19,10 +19,10 @@ package controllers
 import actions.WithSessionRefiner
 import config.ErrorHandler
 import connectors.Audit
+import crypto.MongoHasher
 import play.api.http.Status.{BAD_REQUEST, NOT_FOUND, OK, SEE_OTHER}
 import play.api.test.Helpers.{POST, contentAsString, redirectLocation, status, stubMessagesControllerComponents}
 import stub.{StubBackendConnector, StubSessionRepo}
-import util.AlphanumericPasswordGenerator.passwordLength
 import util.DateUtil
 import utils.TestBaseSpec
 import views.html.{customPasswordSaveAsDraft, saveAsDraftLogin, sessionTimeout, submissionDraftSaved}
@@ -37,6 +37,8 @@ class SaveAsDraftControllerSpec extends TestBaseSpec {
   private val password         = "P@$$word1"
   private val exitPath         = "/exit/path"
 
+  def mongoHasher: MongoHasher = inject[MongoHasher]
+
   private def saveAsDraftController = new SaveAsDraftController(
     backendConnector,
     inject[customPasswordSaveAsDraft],
@@ -44,6 +46,7 @@ class SaveAsDraftControllerSpec extends TestBaseSpec {
     inject[saveAsDraftLogin],
     inject[sessionTimeout],
     inject[DateUtil],
+    inject[MongoHasher],
     WithSessionRefiner(inject[ErrorHandler], sessionRepo),
     sessionRepo,
     inject[ErrorHandler],
@@ -68,7 +71,7 @@ class SaveAsDraftControllerSpec extends TestBaseSpec {
     }
 
     "save SubmissionDraft and return page displaying saveAsDraftPassword if session.saveAsDraftPassword is defined" in {
-      sessionRepo.saveOrUpdate(prefilledBaseSession.copy(saveAsDraftPassword = Some(password)))
+      sessionRepo.saveOrUpdate(prefilledBaseSession.copy(saveAsDraftPassword = Some(mongoHasher.hash(password))))
 
       val result = saveAsDraftController.customPassword(exitPath)(fakeRequest)
       status(result) shouldBe OK
@@ -110,6 +113,12 @@ class SaveAsDraftControllerSpec extends TestBaseSpec {
 
       status(result) shouldBe OK
       checkFinalPageDraftSaved(contentAsString(result))
+
+      val session = backendConnector.loadSubmissionDraft(prefilledBaseSession.referenceNumber).futureValue.get.session
+      session.address shouldBe submissionDraft.session.address
+
+      val passwordHash = session.saveAsDraftPassword.getOrElse("")
+      mongoHasher.verify(password, passwordHash) shouldBe true
     }
   }
 
@@ -166,7 +175,7 @@ class SaveAsDraftControllerSpec extends TestBaseSpec {
     }
 
     "load SubmissionDraft to user session and redirect to exitPath" in {
-      val session = prefilledBaseSession.copy(saveAsDraftPassword = Some(password))
+      val session = prefilledBaseSession.copy(saveAsDraftPassword = Some(mongoHasher.hash(password)))
       val refNum  = session.referenceNumber
       val draft   = submissionDraft.copy(session = session)
       backendConnector.saveAsDraft(refNum, draft)
@@ -174,9 +183,10 @@ class SaveAsDraftControllerSpec extends TestBaseSpec {
       sessionRepo.saveOrUpdate(session.copy(token = "NEW_TOKEN", forType = "TMP_VALUE"))
 
       val sessionBefore = sessionRepo.get.futureValue.value
-      sessionBefore.saveAsDraftPassword shouldBe Some(password)
-      sessionBefore.token               shouldBe "NEW_TOKEN"
-      sessionBefore.forType             shouldBe "TMP_VALUE"
+      mongoHasher.verify(password, sessionBefore.saveAsDraftPassword.getOrElse("")) shouldBe true
+
+      sessionBefore.token   shouldBe "NEW_TOKEN"
+      sessionBefore.forType shouldBe "TMP_VALUE"
 
       val result = saveAsDraftController.resume(
         fakeRequest
@@ -219,8 +229,7 @@ class SaveAsDraftControllerSpec extends TestBaseSpec {
       redirectLocation(result) shouldBe Some(routes.SaveAsDraftController.sessionTimeout.url)
 
       val session = backendConnector.loadSubmissionDraft(refNum).futureValue.get.session
-      session.address                         shouldBe submissionDraft.session.address
-      session.saveAsDraftPassword.getOrElse("") should have length passwordLength
+      session.address shouldBe submissionDraft.session.address
     }
   }
 
