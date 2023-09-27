@@ -29,7 +29,7 @@ FOR - form of return - forms used for users to send details of different types o
 >sbt run
 
 Then you can open in your browser the following url:
-http://localhost:9526/send-trade-and-cost-information/logi
+http://localhost:9526/send-trade-and-cost-information/login
 
 * Service manager
 
