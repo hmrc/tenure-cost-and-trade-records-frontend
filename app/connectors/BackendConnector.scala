@@ -19,15 +19,16 @@ package connectors
 import com.google.inject.ImplementedBy
 import models.{Credentials, FORLoginResponse, SubmissionDraft}
 import play.api.libs.json.Writes
-import uk.gov.hmrc.http.{BadRequestException, HeaderCarrier, HttpReads, HttpResponse, Upstream4xxResponse}
+import uk.gov.hmrc.http.{BadRequestException, HeaderCarrier, HttpClient, HttpReads, HttpResponse, Upstream4xxResponse}
 import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
-class DefaultBackendConnector @Inject() (servicesConfig: ServicesConfig, http: ForHttp)(implicit ec: ExecutionContext)
-    extends BackendConnector {
+class DefaultBackendConnector @Inject() (servicesConfig: ServicesConfig, http: HttpClient)(implicit
+  ec: ExecutionContext
+) extends BackendConnector {
 
   private val serviceUrl         = servicesConfig.baseUrl("tenure-cost-and-trade-records")
   private val backendBaseUrl     = s"$serviceUrl/tenure-cost-and-trade-records"
@@ -36,26 +37,6 @@ class DefaultBackendConnector @Inject() (servicesConfig: ServicesConfig, http: F
   private def saveAsDraftUrl(referenceNumber: String) = s"$saveAsDraftBaseUrl/$referenceNumber"
 
   private def url(path: String) = s"$serviceUrl/tenure-cost-and-trade-records/$path"
-
-//  val backend = HttpClientSyncBackend()
-//
-//  def testConnection(referenceNumber: String, postcode: String): String = {
-//
-//    val parts = Seq(referenceNumber, postcode).map(urlEncode)
-//
-//    val request = basicRequest.get(uri"${url(s"${parts.mkString("/")}/verify")}")
-//
-//    val response = request.send(backend)
-//
-//    var name = ""
-//    response.body match {
-//      case Left(f) => name = "Anonymous"
-//      case Right(n) => name = n
-//    }
-//    logger.debug(s"Connecting with: ${url(s"${parts.mkString("/")}/test")}, response: ${name}")
-//    if (name.startsWith("\"")) name = name.substring(1, name.length -1)
-//    name
-//  }
 
   def readsHack(implicit httpReads: HttpReads[FORLoginResponse]) =
     new HttpReads[FORLoginResponse] {
