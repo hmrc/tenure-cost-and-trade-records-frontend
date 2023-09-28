@@ -1421,10 +1421,3 @@ error.fullName.required = Enter your full name
 error.tiedType.required = Select which type of tie you have
 error.addressLineTwo.maxLength = Address line 2 must be 50 characters or fewer
 error.county.maxLength = County must be 50 characters or fewer
-
-# Admin pages
-admin.login.heading = Sign in
-admin.upload.heading = Please upload the file
-label.admin.upload = File to upload
-admin.confirmed.heading = File uploaded successfully
-admin.upload.p.1 = Credentials will be checked and processed by backend service.
