@@ -15,9 +15,9 @@
  *@
 
 @import models.submissions.aboutYourLeaseOrTenure.LegalOrPlanningRestrictionsDetails
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukCharacterCount
-@import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.charactercount.CharacterCount
+@import uk.gov.hmrc.govukfrontend.views.html.components._
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
 @import models.pages.Summary
 
 @this(layout: Layout,
@@ -30,6 +30,7 @@
 
 @layout(
   pageHeading = messages("legalOrPlanningRestrictionsDetails.heading"),
+  showH1 = false,
   showSection = true,
     summary = Some(summary),
   sectionName = messages("label.section.aboutYourLeaseOrTenure"),
@@ -39,11 +40,19 @@
 
   @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.LegalOrPlanningRestrictionsDetailsController.submit()) {
 
-    @includes.textInputCharCount(
-      govukCharacterCount,
-      theForm,
-      "legalOrPlanningRestrictionsDetails"
-    )
+      @govukCharacterCount(
+          CharacterCount(
+              id = "legalOrPlanningRestrictionsDetails",
+              name = "legalOrPlanningRestrictionsDetails",
+              maxLength = 2000,
+              label = Label(
+                  content = Text(messages("legalOrPlanningRestrictionsDetails.heading")),
+                  classes = "govuk-label--l",
+                  isPageHeading = true
+              ),
+              errorMessage = theForm.errors.asTextErrorMessageForField("legalOrPlanningRestrictionsDetails"),
+          ).withFormField(theForm("legalOrPlanningRestrictionsDetails"))
+      )
 
     @includes.continueSaveAsDraftButtons(govukButton)
   }

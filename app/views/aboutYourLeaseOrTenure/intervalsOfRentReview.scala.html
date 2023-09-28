@@ -15,10 +15,8 @@
  *@
 
 @import models.submissions.aboutYourLeaseOrTenure.IntervalsOfRentReview
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukDateInput
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukCharacterCount
-@import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
+@import uk.gov.hmrc.govukfrontend.views.html.components._
 @import models.pages.Summary
 
 @this(layout: Layout,
@@ -45,15 +43,18 @@
 
     <p class="govuk-body">@messages("intervalsOfRentReview.p2")</p>
 
-    <p class="govuk-heading-m">@messages("intervalsOfRentReview.subheading")</p>
-
-
-      @includes.textInputCharCount(
-      govukCharacterCount,
-      theForm,
-      "intervalsOfRentReview",
-      classes = "govuk-!-font-weight-bold",
-      hint = "hint.intervalsOfRentReview"
+    @govukCharacterCount(
+      CharacterCount(
+          id = "intervalsOfRentReview",
+          name = "intervalsOfRentReview",
+          maxLength = 2000,
+          hint = Some(Hint(content = Text(messages("hint.intervalsOfRentReview")))),
+          label = Label(
+              content = Text(messages("intervalsOfRentReview.label")),
+              classes = "govuk-label--m"
+          ),
+          errorMessage = theForm.errors.asTextErrorMessageForField("intervalsOfRentReview"),
+      ).withFormField(theForm("intervalsOfRentReview"))
     )
 
     @includes.dateFields(
