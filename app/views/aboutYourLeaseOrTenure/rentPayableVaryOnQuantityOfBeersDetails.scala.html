@@ -18,6 +18,11 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukCharacterCount
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Hint
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Text
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.label.Label
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.charactercount.CharacterCount
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
 @import models.pages.Summary
 
 @this(layout: Layout,
@@ -30,6 +35,7 @@
 
 @layout(
  pageHeading = messages("rentPayableVaryOnQuantityOfBeersDetails.heading"),
+  showH1 = false,
  showSection = true,
  summary = Some(summary),
  sectionName = messages("label.section.aboutYourLeaseOrTenure"),
@@ -39,7 +45,20 @@
 
  @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryOnQuantityOfBeersDetailsController.submit()) {
 
-  @includes.textInputCharCount(govukCharacterCount, theForm, "rentPayableVaryOnQuantityOfBeersDetails", "", "govuk-!-font-weight-bold", hint = "hint.rentPayableVaryOnQuantityOfBeersDetails")
+  @govukCharacterCount(
+   CharacterCount(
+    id = "rentPayableVaryOnQuantityOfBeersDetails",
+    name = "rentPayableVaryOnQuantityOfBeersDetails",
+    maxLength = 2000,
+    label = Label(
+     content = Text(messages("rentPayableVaryOnQuantityOfBeersDetails.heading")),
+     classes = "govuk-label--l",
+     isPageHeading = true
+    ),
+    hint = Some(Hint(content = Text(messages("hint.rentPayableVaryOnQuantityOfBeersDetails")))),
+    errorMessage = theForm.errors.asTextErrorMessageForField("rentPayableVaryOnQuantityOfBeersDetails"),
+   ).withFormField(theForm("rentPayableVaryOnQuantityOfBeersDetails"))
+  )
 
   @includes.continueSaveAsDraftButtons(govukButton)
  }

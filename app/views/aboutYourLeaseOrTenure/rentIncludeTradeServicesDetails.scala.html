@@ -22,6 +22,9 @@
 @import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcCurrencyInput
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Hint
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Text
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.label.Label
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.charactercount.CharacterCount
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
 @import models.pages.Summary
 
 @this(layout: Layout,
@@ -30,7 +33,6 @@
         hmrcCurrencyInput : HmrcCurrencyInput,
         formWithCSRF: FormWithCSRF
 )
-
 
 @(theForm: Form[RentIncludeTradeServicesInformationDetails], summary: Summary)(implicit request: Request[_], messages: Messages)
 
@@ -51,12 +53,28 @@
     name = "sumIncludedInRent",
     value = theForm("sumIncludedInRent").value,
     classes = "govuk-input--width-10 total-annual-rent",
+    label = Label(
+     content = Text(messages("rentIncludeTradeServicesDetails.label")),
+     classes = "govuk-label--m"
+    ),
     autocomplete = Some("off"),
     hint = Some(Hint(content = Text(messages("rentIncludeTradeServicesDetails.hint")))),
    )
   )
 
-  @includes.textInputCharCount(govukCharacterCount, theForm, "describeServices", "label.describeServices", "govuk-!-font-weight-bold", hint = "rentIncludeTradeServicesDetailsTextBox.hint")
+  @govukCharacterCount(
+   CharacterCount(
+    id = "describeServices",
+    name = "describeServices",
+    maxLength = 2000,
+    label = Label(
+     content = Text(messages("label.describeServices")),
+     classes = "govuk-label--m"
+    ),
+    hint = Some(Hint(content = Text(messages("rentIncludeTradeServicesDetailsTextBox.hint")))),
+    errorMessage = theForm.errors.asTextErrorMessageForField("describeServices"),
+   ).withFormField(theForm("describeServices"))
+  )
 
   @includes.continueSaveAsDraftButtons(govukButton)
  }

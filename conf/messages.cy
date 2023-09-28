@@ -708,7 +708,8 @@ error.rentIncludeTradeServices.missing = Select yes if the rent includes any tra
 
 # RENT INCLUDE TRADE SERVICES DETAILS
 ####################################
-rentIncludeTradeServicesDetails.heading = Where specifically itemised, what sum is included in the rent to cover services provided by the landlord, excluding VAT?
+rentIncludeTradeServicesDetails.heading = Trade services provided by the landlord
+rentIncludeTradeServicesDetails.label = What sum is included in the rent to cover these services?
 rentIncludeTradeServicesDetails.hint = Leave blank if these are not specifically itemised
 label.describeServices = Describe services provided
 rentIncludeTradeServicesDetailsTextBox.hint = For example, maintenance of fires, annual gas checks and cellar services
@@ -727,7 +728,7 @@ error.rentIncludeFixturesAndFittings.missing = Select yes if the rent includes a
 
 # RENT INCLUDE FIXTURES AND FITTINGS DETAILS
 ###########################################
-rentIncludeFixturesAndFittingsDetails.heading = What sum is included in the rent to cover the equipment, excluding VAT?
+rentIncludeFixturesAndFittingsDetails.heading = Where specifically itemised, what sum is included in the rent to cover the equipment provided by the landlord, excluding VAT?
 rentIncludeFixturesAndFittingsDetails.hint = Leave blank if this is not specifically itemised
 error.required.rentIncludeFixturesAndFittingsDetails = Please provide a value
 error.invalid_currency.rentIncludeFixturesAndFittingsDetails = Please provide a number
@@ -929,7 +930,7 @@ label.currentRentFirstPaid.help = For example, 9 2017
 intervalsOfRentReview.heading = Rent reviews
 intervalsOfRentReview.p1 = If your lease or agreement states your rent will be reviewed at any point, you must provide details. Tell us the intervals or frequency of the reviews, for example every 18 months or every 2 years.
 intervalsOfRentReview.p2 = Do not include any changes to your rent linked to your turnover, or indices such as the retial price index (RPI).
-intervalsOfRentReview.subheading = How often is the rent reviewed under the terms of the lease or agreement?
+intervalsOfRentReview.label = How often is the rent reviewed under the terms of the lease or agreement?
 hint.intervalsOfRentReview = Leave blank if the lease does not include any rent reviews
 label.nextReview = When is the next rent review due?
 label.nextReview.help = For example, 27 9 2017 - leave blank if no rent reviews are due
