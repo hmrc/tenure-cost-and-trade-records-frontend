@@ -376,11 +376,3 @@ POST       /feedback-not-connected                                  controllers.
 POST       /feedback-connected                                      controllers.FeedbackController.feedbackConnectedSubmit
 POST       /feedback-vacant-property                                controllers.FeedbackController.feedbackVacantPropertySubmit
 POST       /feedback-request-reference-number                       controllers.FeedbackController.feedbackRequestReferenceNumber
-
-# Admin routes
-GET         /admin/login                                            controllers.admin.FileUploadController.loginPage
-POST        /admin/login                                            controllers.admin.FileUploadController.authenticate
-
-GET         /admin/upload                                           controllers.admin.FileUploadController.uploadPage
-
-GET         /admin/confirmation                                     controllers.admin.FileUploadController.showResult
