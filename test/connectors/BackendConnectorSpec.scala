@@ -16,8 +16,6 @@
 
 package connectors
 
-import akka.actor.ActorSystem
-import config.AppConfig
 import play.api.http.Status.BAD_REQUEST
 import play.api.libs.json.Json
 import play.api.mvc.Results.{BadRequest, Created, InternalServerError, NotFound, Ok}
