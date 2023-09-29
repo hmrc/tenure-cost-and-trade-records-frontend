@@ -19,6 +19,7 @@ package controllers
 import actions.WithSessionRefiner
 import connectors.Audit
 import form.Feedback
+import models.Session
 import play.api.data.Form
 import play.api.data.Forms.{mapping, optional, text}
 import play.api.i18n.I18nSupport
@@ -53,7 +54,7 @@ class FeedbackController @Inject() (
     Ok(feedbackThxView())
   }
 
-  def feedbackSubmit(): Action[AnyContent] = Action.async { implicit request =>
+  def feedbackSubmit(): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     feedbackForm
       .bindFromRequest()
       .fold(
@@ -62,7 +63,7 @@ class FeedbackController @Inject() (
             BadRequest(feedbackView(formWithErrors))
           },
         feedbackForm => {
-          sendFeedback("inPageFeedback", feedbackForm)
+          sendFeedback("inPageFeedback", feedbackForm, request.sessionData)
           Future.successful(Redirect(routes.FeedbackController.feedbackThx))
         }
       )
@@ -77,7 +78,7 @@ class FeedbackController @Inject() (
             BadRequest(confirmationConnectedView(formWithErrors))
           },
         feedbackForm => {
-          sendFeedback("postSubmitFeedback", feedbackForm)
+          sendFeedback("postSubmitFeedback", feedbackForm, request.sessionData)
           Future.successful(Redirect(routes.FeedbackController.feedbackThx))
         }
       )
@@ -92,7 +93,7 @@ class FeedbackController @Inject() (
             BadRequest(confirmationNotConnectedView(formWithErrors, request.sessionData))
           },
         feedbackForm => {
-          sendFeedback("notConnectedFeedback", feedbackForm)
+          sendFeedback("notConnectedFeedback", feedbackForm, request.sessionData)
           Future.successful(Redirect(routes.FeedbackController.feedbackThx))
         }
       )
@@ -107,7 +108,7 @@ class FeedbackController @Inject() (
             BadRequest(confirmationVacantProperty(formWithErrors))
           },
         feedbackForm => {
-          sendFeedback("vacantPropertyFeedback", feedbackForm)
+          sendFeedback("vacantPropertyFeedback", feedbackForm, request.sessionData)
           Future.successful(Redirect(routes.FeedbackController.feedbackThx))
         }
       )
@@ -128,8 +129,20 @@ class FeedbackController @Inject() (
       )
   }
 
-  private def sendFeedback(eventName: String, f: Feedback)(implicit request: Request[_]) =
+  private def sendFeedback(eventName: String, f: Feedback)(implicit request: Request[_])                   =
     audit(eventName, Map("comments" -> f.comments.getOrElse(""), "satisfaction" -> f.rating.get))
+
+  private def sendFeedback(eventName: String, f: Feedback, session: Session)(implicit request: Request[_]) =
+    audit(
+      eventName,
+      Map(
+        "comments"        -> f.comments.getOrElse(""),
+        "satisfaction"    -> f.rating.get,
+        "referenceNumber" -> session.referenceNumber,
+        "forType"         -> session.forType
+      )
+    )
+
 }
 
 object FeedbackFormMapper {

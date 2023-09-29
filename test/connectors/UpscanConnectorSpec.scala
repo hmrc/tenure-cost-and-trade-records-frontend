@@ -16,8 +16,6 @@
 
 package connectors
 
-import akka.actor.ActorSystem
-import config.AppConfig
 import play.api.libs.json.Json
 import play.api.{BuiltInComponentsFromContext, Configuration}
 import play.api.mvc.Results.Ok
@@ -29,11 +27,10 @@ import play.api.routing.sird._
 import play.api.test.WsTestClient
 import uk.gov.hmrc.http.HttpClient
 import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
+
 class UpscanConnectorSpec extends TestBaseSpec {
 
   private val config                                         = inject[Configuration]
-  private val appConfig                                      = inject[AppConfig]
-  private val actorSystem                                    = inject[ActorSystem]
   private val httpClient                                     = app.injector.instanceOf[HttpClient]
   def withUpscanConnector[T](block: UpscanConnector => T): T =
     Server.withApplicationFromContext() { context =>

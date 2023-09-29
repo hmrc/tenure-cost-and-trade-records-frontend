@@ -16,9 +16,8 @@
 
 package controllers
 
-import actions.WithSessionRefiner
-import config.ErrorHandler
 import connectors.Audit
+import models.submissions.connectiontoproperty.StillConnectedDetails
 import org.jsoup.Jsoup
 import org.mockito.scalatest.MockitoSugar
 import org.scalatest.BeforeAndAfter
@@ -28,10 +27,8 @@ import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.{charset, contentAsString, contentType, redirectLocation, status}
-import stub.StubSessionRepo
 import uk.gov.hmrc.play.bootstrap.tools.Stubs.stubMessagesControllerComponents
 import utils.{HtmlAssertionHelper, TestBaseSpec}
-import views.html.feedback.{feedback, feedbackThx}
 
 class FeedbackControllerSpec
     extends AnyWordSpec
@@ -42,52 +39,40 @@ class FeedbackControllerSpec
     with HtmlAssertionHelper
     with TestBaseSpec {
 
-  private val sessionRepo = StubSessionRepo()
+  private val postRequest = FakeRequest("POST", "/")
 
-  override val fakeRequest = FakeRequest("GET", "/")
-  private val postRequest  = FakeRequest("POST", "/")
+  private val auditServiceMock: Audit = mock[Audit]
 
-  val auditServiceMock         = mock[Audit]
-  val feedbackView: feedback   = app.injector.instanceOf[feedback]
-  val feedbackThx: feedbackThx = app.injector.instanceOf[feedbackThx]
+  def feedbackController(
+    stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledStillConnectedDetailsYes)
+  ) = new FeedbackController(
+    stubMessagesControllerComponents(),
+    feedbackView,
+    feedbackThx,
+    confirmation,
+    confirmationNotConnectedView,
+    confirmationConnectionToProperty,
+    preEnrichedActionRefiner(stillConnectedDetails = stillConnectedDetails),
+    auditServiceMock
+  )
 
-  private val controller =
-    new FeedbackController(
-      stubMessagesControllerComponents(),
-      feedbackView,
-      feedbackThx,
-      confirmation,
-      confirmationNotConnectedView,
-      confirmationConnectionToProperty,
-      WithSessionRefiner(inject[ErrorHandler], sessionRepo),
-      inject[Audit]
-    )
+  val comments = "Really amazing bro, wow!"
+  val rating   = "5"
 
   before {
     reset(auditServiceMock)
   }
 
-  "render feedback" should {
-    "return HTML and 200 status" in {
-      val result = controller.feedback()(fakeRequest)
+  "Feedback controller" should {
+    "return HTML and 200 status for feedback form page" in {
+      val result = feedbackController().feedback()(fakeRequest)
       status(result)      shouldBe Status.OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
-  }
 
-  "submit feedback" should {
-    "call audit service and render feedbackThx" in {
-      val result = controller.feedback()(fakeRequest)
-      status(result)      shouldBe Status.OK
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
-    }
-  }
-
-  "render thx" should {
-    "return HTML and 200 status" in {
-      val result = controller.feedbackThx()(fakeRequest)
+    "return HTML and 200 status for thank you page" in {
+      val result = feedbackController().feedbackThx()(fakeRequest)
       status(result)      shouldBe Status.OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
@@ -95,52 +80,95 @@ class FeedbackControllerSpec
   }
 
   "form is valid" when {
-    "feedback is posted to audit" should {
+    "request reference number feedback is posted to audit" should {
       "return redirect to thx page SEE_OTHER" in {
-        //given
-        val comments = "Really amazing bro, wow!"
-        val rating   = "5"
-        val result   = controller.feedbackSubmit()(
+        val result = feedbackController().feedbackRequestReferenceNumber()(
           postRequest.withFormUrlEncodedBody(
             "feedback-comments" -> comments,
             "feedback-rating"   -> rating
           )
         )
-        //then should be redirected to thx page
-        status(of = result).shouldBe(Status.SEE_OTHER)
-        redirectLocation(of = result).shouldBe(Some(controllers.routes.FeedbackController.feedbackThx.url))
+        status(result) shouldBe Status.SEE_OTHER
+        redirectLocation(result) shouldBe Some(controllers.routes.FeedbackController.feedbackThx.url)
+      }
+    }
+
+    "in page feedback is posted to audit" should {
+      "return redirect to thx page SEE_OTHER" in {
+        val result = feedbackController().feedbackSubmit()(
+          postRequest.withFormUrlEncodedBody(
+            "feedback-comments" -> comments,
+            "feedback-rating"   -> rating
+          )
+        )
+        status(result) shouldBe Status.SEE_OTHER
+        redirectLocation(result) shouldBe Some(controllers.routes.FeedbackController.feedbackThx.url)
+      }
+    }
+
+    "connected feedback is posted to audit" should {
+      "return redirect to thx page SEE_OTHER" in {
+        val result = feedbackController().feedbackConnectedSubmit()(
+          postRequest.withFormUrlEncodedBody(
+            "feedback-comments" -> comments,
+            "feedback-rating"   -> rating
+          )
+        )
+        status(result) shouldBe Status.SEE_OTHER
+        redirectLocation(result) shouldBe Some(controllers.routes.FeedbackController.feedbackThx.url)
+      }
+    }
+
+    "vacant property feedback is posted to audit" should {
+      "return redirect to thx page SEE_OTHER" in {
+        val result = feedbackController().feedbackVacantPropertySubmit()(
+          postRequest.withFormUrlEncodedBody(
+            "feedback-comments" -> comments,
+            "feedback-rating"   -> rating
+          )
+        )
+        status(result) shouldBe Status.SEE_OTHER
+        redirectLocation(result) shouldBe Some(controllers.routes.FeedbackController.feedbackThx.url)
+      }
+    }
+
+    "not connected feedback is posted to audit" should {
+      "return redirect to thx page SEE_OTHER" in {
+        val result = feedbackController().feedbackNotConnectedSubmit()(
+          postRequest.withFormUrlEncodedBody(
+            "feedback-comments" -> comments,
+            "feedback-rating"   -> rating
+          )
+        )
+        status(result) shouldBe Status.SEE_OTHER
+        redirectLocation(result) shouldBe Some(controllers.routes.FeedbackController.feedbackThx.url)
       }
     }
   }
 
   "form is invalid" when {
-    "feedback-rating is missing"    should {
+    "feedback-rating is missing" should {
       "fails with BAD_REQUEST" in {
-        //given
-        val comments = "Really amazing bro, wow!"
-        val result   = controller.feedbackSubmit()(
+        val result = feedbackController().feedbackRequestReferenceNumber()(
           postRequest.withFormUrlEncodedBody(
             "feedback-comments" -> comments
           )
         )
-        //then should be redirected to thx page
         status(result) shouldBe Status.BAD_REQUEST
-        val html     = Jsoup.parse(contentAsString(result))
+        val html   = Jsoup.parse(contentAsString(result))
         assertPageContainsElement(html, "feedback-rating-error")
       }
     }
+
     "feedback-comments is too long" should {
       "fails with BAD_REQUEST" in {
-        //given
         val tooLongComment = (1 to 1200).toList.mkString("")
-        val rating         = "5"
-        val result         = controller.feedbackSubmit()(
+        val result         = feedbackController().feedbackRequestReferenceNumber()(
           postRequest.withFormUrlEncodedBody(
             "feedback-comments" -> tooLongComment,
             "feedback-rating"   -> rating
           )
         )
-        //then should be redirected to thx page
         status(result) shouldBe Status.BAD_REQUEST
         val html           = Jsoup.parse(contentAsString(result))
         assertPageContainsElement(html, "feedback-comments-error")
