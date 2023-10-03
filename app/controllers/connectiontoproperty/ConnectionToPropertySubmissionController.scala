@@ -61,6 +61,8 @@ class ConnectionToPropertySubmissionController @Inject() (
     val session                    = request.sessionData
     submitToBackend(session).flatMap { _ =>
       audit.sendExplicitAudit(auditType, submissionJson ++ Audit.languageJson)
+      // Temporary to generate failed audit event TODO REMOVE *****
+      audit.sendExplicitAudit("VacantFormSubmissionFailed", submissionJson)
       Future.successful(
         Redirect(controllers.connectiontoproperty.routes.ConnectionToPropertySubmissionController.confirmation())
       )
