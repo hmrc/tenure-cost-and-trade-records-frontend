@@ -165,7 +165,7 @@ test.text = Welcome
 ##############################
 heading.login.loginFailed=The details you have entered do not match our records
 error.login.failed=Enter the reference number and postcode as they appear in the letter you received from the VOA.
-error.login.attemptsleft= You have {0} remaining attempts to enter the correct details before your account is locked for 24 hours.
+error.login.attemptsleft= You have {0} remaining attempts to enter the correct details before your account is locked for 2 hours.
 error.login.attemptsleftSubheading = If the system does not recognise you reference number, <a href="https://www.gov.uk/contact-voa" class="govuk-link" target="_blank">contact the VOA</a>
 error.login.1.attempt.left=You have one remaining attempt to enter the correct details before your account is locked for 2 hours.
 heading.login.lockedOut=You are now locked out
