@@ -18,6 +18,7 @@ package controllers.additionalinformation
 
 import models.submissions.additionalinformation.AdditionalInformation
 import play.api.http.Status
+import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import utils.TestBaseSpec
 
@@ -43,6 +44,15 @@ class FurtherInformationOrRemarksControllerSpec extends TestBaseSpec {
       val result = furtherInformationOrRemarksController().show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
+    }
+  }
+
+  "SUBMIT /" should {
+    "return 303 if an empty form is submitted as field is optional" in {
+      val result = furtherInformationOrRemarksController().submit(
+        FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)
+      )
+      status(result) shouldBe SEE_OTHER
     }
   }
 }

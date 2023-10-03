@@ -30,7 +30,7 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[CheckYourAnswersAdditionalInformation], session: Session)(implicit request: SessionRequest[_], messages: Messages)
+@(theForm: Form[CheckYourAnswersAdditionalInformation], session: Session, backLink: String)(implicit request: SessionRequest[_], messages: Messages)
 
     @layout(
         pageHeading = messages("checkYourAnswersAdditionalInformation.heading"),
@@ -38,7 +38,7 @@
         fullWidth = true,
         summary = Some(session.toSummary),
         sectionName = messages("label.section.additionalInformation"),
-        backLinkUrl = additionalinformation.routes.AlternativeContactDetailsController.show.url,
+        backLinkUrl = backLink,
         theForm = theForm
     ) {
 
