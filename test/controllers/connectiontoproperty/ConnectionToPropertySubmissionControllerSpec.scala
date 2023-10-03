@@ -39,6 +39,8 @@ class ConnectionToPropertySubmissionControllerSpec extends TestBaseSpec {
   )                       =
     new ConnectionToPropertySubmissionController(
       stubMessagesControllerComponents(),
+      submissionConnector,
+      errorHandler,
       confirmationConnectionToProperty,
       audit,
       preEnrichedActionRefiner(stillConnectedDetails = stillConnectedDetails),
@@ -46,11 +48,11 @@ class ConnectionToPropertySubmissionControllerSpec extends TestBaseSpec {
     )
 
   "SUBMIT /" should {
-    "return 302" in {
+    "return 303" in {
       when(submissionConnector.submitConnected(anyString(), any[ConnectedSubmission])(any[HeaderCarrier]))
         .thenReturn(Future.successful(()))
       val result = connectionToPropertySubmissionController().submit(fakeRequest)
-      status(result) shouldBe Status.FOUND
+      status(result) shouldBe Status.SEE_OTHER
     }
   }
 }
