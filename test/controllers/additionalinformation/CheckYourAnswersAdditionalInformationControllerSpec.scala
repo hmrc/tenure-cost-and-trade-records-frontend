@@ -16,43 +16,68 @@
 
 package controllers.additionalinformation
 
-import navigation.AdditionalInformationNavigator
+import form.additionalinformation.CheckYourAnswersAdditionalInformationForm.checkYourAnswersAdditionalInformationForm
+import models.submissions.additionalinformation.AdditionalInformation
 import play.api.http.Status
+import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import play.twirl.api.HtmlFormat
+import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
-import views.html.additionalinformation.checkYourAnswersAdditionalInformation
-import views.html.taskList
 
 class CheckYourAnswersAdditionalInformationControllerSpec extends TestBaseSpec {
 
-  val backLink = controllers.additionalinformation.routes.AlternativeContactDetailsController.show().url
+  import TestData._
 
-  val mockAdditionalInformationNavigator            = mock[AdditionalInformationNavigator]
-  val mockCheckYourAnswersAdditionalInformationView = mock[checkYourAnswersAdditionalInformation]
-  when(mockCheckYourAnswersAdditionalInformationView.apply(any, any)(any, any)).thenReturn(HtmlFormat.empty)
-
-  val mockTaskListView = mock[taskList]
-  when(mockTaskListView.apply()(any, any)).thenReturn(HtmlFormat.empty)
-
-  val checkYourAdditionalInformationController = new CheckYourAnswersAdditionalInformationController(
+  def checkYourAdditionalInformationController(
+    additionalInformation: Option[AdditionalInformation] = Some(prefilledAdditionalInformation)
+  ) = new CheckYourAnswersAdditionalInformationController(
     stubMessagesControllerComponents(),
-    mockAdditionalInformationNavigator,
-    mockCheckYourAnswersAdditionalInformationView,
-    preFilledSession,
+    additionalInformationNavigator,
+    checkYourAnswersAdditionalInformationView,
+    preEnrichedActionRefiner(additionalInformation = additionalInformation),
     mockSessionRepo
   )
 
   "GET /" should {
     "return 200" in {
-      val result = checkYourAdditionalInformationController.show(fakeRequest)
+      val result = checkYourAdditionalInformationController().show(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return HTML" in {
-      val result = checkYourAdditionalInformationController.show(fakeRequest)
+      val result = checkYourAdditionalInformationController().show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
   }
+
+  "SUBMIT /" should {
+    "throw a BAD_REQUEST if an empty form is submitted" in {
+      val result = checkYourAdditionalInformationController().submit(
+        FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)
+      )
+      status(result) shouldBe BAD_REQUEST
+    }
+  }
+
+  "Check Your Answers additional information form" should {
+    "error if checkYourAnswersAdditionalInformation is missing" in {
+      val formData = baseFormData - errorKey.checkYourAnswersAdditionalInformation
+      val form     = checkYourAnswersAdditionalInformationForm.bind(formData)
+
+      mustContainError(errorKey.checkYourAnswersAdditionalInformation, "error.checkYourAnswersRadio.required", form)
+    }
+  }
+
+  object TestData {
+    val errorKey: Object {
+      val checkYourAnswersAdditionalInformation: String
+    } = new {
+      val checkYourAnswersAdditionalInformation: String =
+        "checkYourAnswersAdditionalInformation"
+    }
+
+    val baseFormData: Map[String, String] = Map("checkYourAnswersAdditionalInformation" -> "yes")
+  }
+
 }

@@ -26,20 +26,19 @@ import views.behaviours.QuestionViewBehaviours
 class CheckYourAnswersAdditionalInformationViewSpec
     extends QuestionViewBehaviours[CheckYourAnswersAdditionalInformation] {
 
-  def checkYourAnswersAdditionalInformationView =
-    app.injector.instanceOf[views.html.additionalinformation.checkYourAnswersAdditionalInformation]
-
   val messageKeyPrefix = "checkYourAnswersAdditionalInformation"
 
   override val form = CheckYourAnswersAdditionalInformationForm.checkYourAnswersAdditionalInformationForm
 
+  val backLink = controllers.additionalinformation.routes.AlternativeContactDetailsController.show().url
+
   val sessionRequest = SessionRequest(baseFilled6010Session, fakeRequest)
 
   def createView = () =>
-    checkYourAnswersAdditionalInformationView(form, notConnected6010NoSession)(sessionRequest, messages)
+    checkYourAnswersAdditionalInformationView(form, notConnected6010NoSession, backLink)(sessionRequest, messages)
 
   def createViewUsingForm = (form: Form[CheckYourAnswersAdditionalInformation]) =>
-    checkYourAnswersAdditionalInformationView(form, notConnected6010NoSession)(sessionRequest, messages)
+    checkYourAnswersAdditionalInformationView(form, notConnected6010NoSession, backLink)(sessionRequest, messages)
 
   "Check Your Answers Additional Information view" must {
 
@@ -54,7 +53,7 @@ class CheckYourAnswersAdditionalInformationViewSpec
     }
 
     "Section heading is visible" in {
-      val doc         = asDocument(createViewUsingForm(form)) // govuk-caption-m
+      val doc         = asDocument(createViewUsingForm(form))
       val sectionText = doc.getElementsByClass("govuk-caption-m").text()
       assert(sectionText == messages("label.section.additionalInformation"))
     }
