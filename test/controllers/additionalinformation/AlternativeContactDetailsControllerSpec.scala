@@ -16,6 +16,7 @@
 
 package controllers.additionalinformation
 
+import form.Errors
 import play.api.http.Status
 import play.api.test.Helpers._
 import utils.TestBaseSpec
@@ -56,21 +57,21 @@ class AlternativeContactDetailsControllerSpec extends TestBaseSpec {
       val formData = baseFormData - errorKey.fullName
       val form     = alternativeContactDetailsForm.bind(formData)
 
-      mustNotContainErrorFor(errorKey.fullName, form)
+      mustContainError(errorKey.fullName, "error.fullName.required", form)
     }
 
     "error if phone is missing" in {
       val formData = baseFormData - errorKey.phone
       val form     = alternativeContactDetailsForm.bind(formData)
 
-      mustNotContainErrorFor(errorKey.phone, form)
+      mustContainError(errorKey.phone, Errors.contactPhoneRequired, form)
     }
 
     "error if email is missing" in {
       val formData = baseFormData - errorKey.email
       val form     = alternativeContactDetailsForm.bind(formData)
 
-      mustNotContainErrorFor(errorKey.email, form)
+      mustContainError(errorKey.email, Errors.contactEmailRequired, form)
     }
 
     "error if buildingNameNumber is missing" in {
