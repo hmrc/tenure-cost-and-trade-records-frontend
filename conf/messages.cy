@@ -1124,7 +1124,8 @@ checkYourAnswersAdditionalInformation.heading = Check your answers - additional 
 label.furtherInformation = Further information or remarks
 key.altContact.details = Alternative contact details
 key.additionalInformation = Additional information
-label.altDetails.question= Use alternative contact details?
+label.altDetails.question = Use alternative contact details?
+label.altDetails = Alternative details
 key.altContact.details = Alternative contact details
 label.fullName = Full name
 label.telephoneNumber = Telephone number
@@ -1145,7 +1146,7 @@ hint.alternativeDetailsQuestion = You can either provide alternative contact det
 # ALTERNATIVE CONTACT DETAILS
 #############################
 alternativeContactDetails.heading = Alternative contact details
-hint.alternativeContactDetails = If you would like us to either contact you at at different address or  contact someone else if we have any queries about this form, please give details here
+hint.alternativeContactDetails = Provide the details of the person you would like us to contact if we have any queries about the declaration
 label.alternativeContactDetails = Correspondence address
 
 # TENANCY LEASE AGREEMENT EXPIRE (FORM 6011)

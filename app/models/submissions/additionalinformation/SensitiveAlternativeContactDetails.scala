@@ -24,15 +24,15 @@ import uk.gov.hmrc.crypto.Sensitive.SensitiveString
 import crypto.SensitiveFormats._
 
 case class SensitiveAlternativeContactDetails(
-  alternativeContactFullName: Option[SensitiveString],
-  alternativeContactDetails: Option[SensitiveContactDetails],
-  alternativeContactAddress: Option[SensitiveAlternativeAddress]
+  alternativeContactFullName: SensitiveString,
+  alternativeContactDetails: SensitiveContactDetails,
+  alternativeContactAddress: SensitiveAlternativeAddress
 ) extends Sensitive[AlternativeContactDetails] {
 
   override def decryptedValue: AlternativeContactDetails = AlternativeContactDetails(
-    alternativeContactFullName.map(_.decryptedValue),
-    alternativeContactDetails.map(_.decryptedValue),
-    alternativeContactAddress.map(_.decryptedValue)
+    alternativeContactFullName.decryptedValue,
+    alternativeContactDetails.decryptedValue,
+    alternativeContactAddress.decryptedValue
   )
 }
 
@@ -42,8 +42,8 @@ object SensitiveAlternativeContactDetails {
 
   def apply(alternativeContactDetails: AlternativeContactDetails): SensitiveAlternativeContactDetails =
     SensitiveAlternativeContactDetails(
-      alternativeContactDetails.alternativeContactFullName.map(SensitiveString(_)),
-      alternativeContactDetails.alternativeContactDetails.map(SensitiveContactDetails(_)),
-      alternativeContactDetails.alternativeContactAddress.map(SensitiveAlternativeAddress(_))
+      SensitiveString(alternativeContactDetails.alternativeContactFullName),
+      SensitiveContactDetails(alternativeContactDetails.alternativeContactDetails),
+      SensitiveAlternativeAddress(alternativeContactDetails.alternativeContactAddress)
     )
 }

@@ -346,7 +346,7 @@ trait FakeObjects {
     Some(FurtherInformationOrRemarksDetails("Further information or remarks details")),
     Some(ContactDetailsQuestion(AnswerYes)),
     Some(
-      AlternativeContactDetails(Some("Full name"), Some(prefilledContactDetails), Some(prefilledAlternativeAddress))
+      AlternativeContactDetails("Full name", prefilledContactDetails, prefilledAlternativeAddress)
     ),
     Some(CheckYourAnswersAdditionalInformation("CYA"))
   )

@@ -45,12 +45,22 @@
     )
 ))
 
-@govukSummaryList(SummaryList(rows =
-    sectionAnswers.row("label.fullName", _.altContactInformation.flatMap(_.alternativeContactFullName), additionalinformation.routes.AlternativeContactDetailsController.show(), "alternativeContactFullName") ++
-            sectionAnswers.row("label.telephoneNumber", _.altContactInformation.flatMap(_.alternativeContactDetails.map(_.phone)), additionalinformation.routes.AlternativeContactDetailsController.show(), "alternativeContactDetails.phone") ++
-            sectionAnswers.row("label.emailAddress", _.altContactInformation.flatMap(_.alternativeContactDetails.map(_.email)), additionalinformation.routes.AlternativeContactDetailsController.show(), "alternativeContactDetails.email") ++
-            sectionAnswers.row("label.correspondenceAddress",
-                _.altContactInformation.flatMap(_.alternativeContactAddress.map(_.escapedHtml)),
-                additionalinformation.routes.AlternativeContactDetailsController.show(), "alternativeContactAddress.buildingNameNumber",
-                ("valueAsHtml", _ => None))
-))
+    @govukSummaryList(SummaryList(rows =
+        sectionAnswers.conditionRow(
+            _.altDetailsQuestion.map(_.contactDetailsQuestion.name).contains("yes"),
+            "label.altDetails",
+            _.altContactInformation.map { x =>
+                val contactDetails = Seq(
+                    s"<p class=\"govuk-body\">${x.alternativeContactFullName.getOrElse("")}</p>",
+                    s"<p class=\"govuk-body\">${x.alternativeContactDetails.email.getOrElse("")}</p>",
+                    s"<p class=\"govuk-body\">${x.alternativeContactDetails.phone.getOrElse("")}</p>",
+                    s"<p class=\"govuk-body\">${x.alternativeContactAddress.escapedHtml.getOrElse("")}</p>",
+                ).mkString
+
+                contactDetails
+            },
+            additionalinformation.routes.AlternativeContactDetailsController.show(),
+            "alternativeContactFullName",
+            ("valueAsHtml", _ => None)
+        )
+    ))
