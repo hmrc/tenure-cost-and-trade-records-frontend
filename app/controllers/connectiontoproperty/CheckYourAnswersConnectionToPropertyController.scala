@@ -31,8 +31,7 @@ import repositories.SessionRepo
 import views.html.connectiontoproperty.checkYourAnswersConnectionToProperty
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.Future
-import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class CheckYourAnswersConnectionToPropertyController @Inject() (
@@ -41,7 +40,7 @@ class CheckYourAnswersConnectionToPropertyController @Inject() (
   checkYourAnswersConnectionToPropertyView: checkYourAnswersConnectionToProperty,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FORDataCaptureController(mcc)
+)(implicit ec: ExecutionContext) extends FORDataCaptureController(mcc)
     with I18nSupport
     with Logging {
 
