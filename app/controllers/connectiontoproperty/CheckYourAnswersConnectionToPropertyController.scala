@@ -32,6 +32,7 @@ import views.html.connectiontoproperty.checkYourAnswersConnectionToProperty
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
+import scala.concurrent.ExecutionContext.Implicits.global
 
 @Singleton
 class CheckYourAnswersConnectionToPropertyController @Inject() (
@@ -76,8 +77,9 @@ class CheckYourAnswersConnectionToPropertyController @Inject() (
           .copy(lastCYAPageUrl =
             Some(controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToPropertyController.show().url)
           )
-        session.saveOrUpdate(updatedData)
-        Redirect(navigator.nextPage(CheckYourAnswersConnectionToPropertyId, updatedData).apply(updatedData))
+        session.saveOrUpdate(updatedData).flatMap{ _ =>
+        Future.successful(Redirect(navigator.nextPage(CheckYourAnswersConnectionToPropertyId, updatedData).apply(updatedData)))
+        }
       }
     )
   }
