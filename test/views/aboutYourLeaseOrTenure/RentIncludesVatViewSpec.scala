@@ -32,13 +32,13 @@ class RentIncludesVatViewSpec extends QuestionViewBehaviours[RentIncludesVatDeta
   def createView = () => rentIncludesVatView(form, Summary("99996010001"))(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[RentIncludesVatDetails]) =>
-    connectedToLandlordView(form, Summary("99996010001"))(fakeRequest, messages)
+    rentIncludesVatView(form, Summary("99996010001"))(fakeRequest, messages)
 
   "Rent includes VAT view" must {
 
     behave like normalPage(createView, messageKeyPrefix)
 
-    "has a link marked with back.link.label leading to the franchise or letting tied to property Page" in {
+    "has a link marked with back.link.label leading to the current annual rent Page" in {
       val doc          = asDocument(createView())
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText mustBe messages("back.link.label")
@@ -56,8 +56,8 @@ class RentIncludesVatViewSpec extends QuestionViewBehaviours[RentIncludesVatDeta
       val doc = asDocument(createViewUsingForm(form))
       assertContainsRadioButton(
         doc,
-        "connectedToLandlord",
-        "connectedToLandlord",
+        "rentIncludesVat",
+        "rentIncludesVat",
         "yes",
         false
       )
@@ -68,8 +68,8 @@ class RentIncludesVatViewSpec extends QuestionViewBehaviours[RentIncludesVatDeta
       val doc = asDocument(createViewUsingForm(form))
       assertContainsRadioButton(
         doc,
-        "connectedToLandlord-2",
-        "connectedToLandlord",
+        "rentIncludesVat-2",
+        "rentIncludesVat",
         "no",
         false
       )
