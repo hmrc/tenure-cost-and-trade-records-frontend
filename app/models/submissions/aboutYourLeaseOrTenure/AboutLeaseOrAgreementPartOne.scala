@@ -44,7 +44,7 @@ case class AboutLeaseOrAgreementPartOne(
   whatIsYourCurrentRentBasedOnDetails: Option[WhatIsYourCurrentRentBasedOnDetails] = None,
   rentIncreasedAnnuallyWithRPIDetails: Option[RentIncreasedAnnuallyWithRPIDetails] = None,
   checkYourAnswersAboutYourLeaseOrTenure: Option[CheckYourAnswersAboutYourLeaseOrTenure] = None,
-  rentIncludesVat: Option[AnswersYesNo] = None
+  rentIncludesVat: Option[RentIncludesVatDetails] = None
 )
 
 object AboutLeaseOrAgreementPartOne {

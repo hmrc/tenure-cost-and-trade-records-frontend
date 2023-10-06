@@ -20,6 +20,7 @@ import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.CurrentAnnualRentForm.currentAnnualRentForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne
+import models.submissions.common.{AnswerNo, AnswerYes}
 import models.{AnnualRent, ForTypes, Session}
 import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.CurrentAnnualRentPageId
@@ -76,7 +77,15 @@ class CurrentAnnualRentController @Inject() (
 
   private def getBackLink(answers: Session): String =
     answers.forType match {
-      case ForTypes.for6011 => controllers.aboutYourLeaseOrTenure.routes.AboutYourLandlordController.show().url
+      case ForTypes.for6011 =>
+        answers.aboutLeaseOrAgreementPartOne.flatMap(_.connectedToLandlord) match {
+          case Some(AnswerYes) =>
+            controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordDetailsController.show().url
+          case Some(AnswerNo)  => controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordController.show().url
+          case _               =>
+            logger.warn(s"Back link for current annual rent page reached with unknown value")
+            controllers.routes.TaskListController.show().url
+        }
       case _                => controllers.aboutYourLeaseOrTenure.routes.PropertyUseLeasebackArrangementController.show().url
     }
 }

@@ -40,7 +40,8 @@ class CheckYourAnswersConnectionToPropertyController @Inject() (
   checkYourAnswersConnectionToPropertyView: checkYourAnswersConnectionToProperty,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext) extends FORDataCaptureController(mcc)
+)(implicit ec: ExecutionContext)
+    extends FORDataCaptureController(mcc)
     with I18nSupport
     with Logging {
 
@@ -76,8 +77,10 @@ class CheckYourAnswersConnectionToPropertyController @Inject() (
           .copy(lastCYAPageUrl =
             Some(controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToPropertyController.show().url)
           )
-        session.saveOrUpdate(updatedData).flatMap{ _ =>
-        Future.successful(Redirect(navigator.nextPage(CheckYourAnswersConnectionToPropertyId, updatedData).apply(updatedData)))
+        session.saveOrUpdate(updatedData).flatMap { _ =>
+          Future.successful(
+            Redirect(navigator.nextPage(CheckYourAnswersConnectionToPropertyId, updatedData).apply(updatedData))
+          )
         }
       }
     )

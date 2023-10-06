@@ -44,24 +44,45 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
 
   private def aboutYourLandlordRouting: Session => Call = answers => {
     answers.forType match {
-      case ForTypes.for6011                                       =>
-        controllers.aboutYourLeaseOrTenure.routes.CurrentAnnualRentController.show()
-      case ForTypes.for6015 | ForTypes.for6016 | ForTypes.for6010 =>
+      case ForTypes.for6015 | ForTypes.for6016 | ForTypes.for6010 | ForTypes.for6011 =>
         controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordController.show()
-      case _                                                      =>
+      case _                                                                         =>
         controllers.aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.show()
     }
   }
 
-  private def connectedToLandlordRouting: Session => Call = answers => {
+  def connectedToLandlordRouting: Session => Call = answers => {
     answers.aboutLeaseOrAgreementPartOne.flatMap(_.connectedToLandlord.map(_.name)) match {
       case Some("yes") => controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordDetailsController.show()
-      case Some("no")  => controllers.aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.show()
+      case Some("no")  =>
+        answers.forType match {
+          case ForTypes.for6011 => controllers.aboutYourLeaseOrTenure.routes.CurrentAnnualRentController.show()
+          case _                => controllers.aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.show()
+
+        }
       case _           =>
         logger.warn(
           s"Navigation for connected to landlord reached without correct selection of conditions by controller"
         )
         throw new RuntimeException("Invalid option exception for connected to landlord routing")
+    }
+  }
+
+  private def connectedToLandlordDetailsRouting: Session => Call = answers => {
+    answers.forType match {
+      case ForTypes.for6011 =>
+        controllers.aboutYourLeaseOrTenure.routes.CurrentAnnualRentController.show()
+      case _                =>
+        controllers.aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.show()
+    }
+  }
+
+  private def currentAnnualRentRouting: Session => Call = answers => {
+    answers.forType match {
+      case ForTypes.for6011 =>
+        controllers.aboutYourLeaseOrTenure.routes.RentIncludesVatController.show()
+      case _                =>
+        controllers.aboutYourLeaseOrTenure.routes.CurrentRentFirstPaidController.show()
     }
   }
 
@@ -194,9 +215,7 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
   override val routeMap: Map[Identifier, Session => Call] = Map(
     AboutTheLandlordPageId                        -> aboutYourLandlordRouting,
     ConnectedToLandlordPageId                     -> connectedToLandlordRouting,
-    ConnectedToLandlordDetailsPageId              -> (_ =>
-      controllers.aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.show()
-    ),
+    ConnectedToLandlordDetailsPageId              -> connectedToLandlordDetailsRouting,
     LeaseOrAgreementDetailsPageId                 -> leaseOrAgreementDetailsRouting,
     CurrentRentPayableWithin12monthsPageId        -> (_ =>
       controllers.aboutYourLeaseOrTenure.routes.CheckYourAnswersAboutYourLeaseOrTenureController.show()
@@ -204,7 +223,7 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
     PropertyUseLeasebackAgreementId               -> (_ =>
       controllers.aboutYourLeaseOrTenure.routes.CurrentAnnualRentController.show()
     ),
-    CurrentAnnualRentPageId                       -> (_ => controllers.aboutYourLeaseOrTenure.routes.CurrentRentFirstPaidController.show()),
+    CurrentAnnualRentPageId                       -> currentAnnualRentRouting,
     CurrentRentFirstPaidPageId                    -> currentRentFirstPaidRouting,
     TenancyLeaseAgreementExpirePageId             -> (_ =>
       controllers.aboutYourLeaseOrTenure.routes.CheckYourAnswersAboutYourLeaseOrTenureController.show()
@@ -219,6 +238,7 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
     RentIncludeTradeServicesDetailsPageId         -> (_ =>
       controllers.aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsController.show()
     ),
+    RentIncludesVatPageId                         -> (_ => controllers.aboutYourLeaseOrTenure.routes.CurrentRentFirstPaidController.show),
     RentFixtureAndFittingsPageId                  -> rentFixtureAndFittingsRouting,
     RentFixtureAndFittingsDetailsPageId           -> (_ =>
       controllers.aboutYourLeaseOrTenure.routes.RentOpenMarketValueController.show()
