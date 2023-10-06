@@ -38,7 +38,7 @@
 )
 
 
-@(theForm: Form[CurrentRentFirstPaid], summary: Summary)(implicit request: Request[_], messages: Messages)
+@(theForm: Form[CurrentRentFirstPaid], backLink: String, summary: Summary)(implicit request: Request[_], messages: Messages)
 
 @layout(
  pageHeading = messages("currentRentFirstPaid.heading"),
@@ -46,7 +46,7 @@
  showSection = true,
  summary = Some(summary),
  sectionName = messages("label.section.aboutYourLeaseOrTenure"),
- backLinkUrl = controllers.aboutYourLeaseOrTenure.routes.CurrentAnnualRentController.show.url,
+ backLinkUrl = backLink,
  theForm = theForm
 ) {
 

@@ -231,6 +231,9 @@ POST        /current-lease-or-agreement-begin                       controllers.
 GET         /included-in-your-rent                                  controllers.aboutYourLeaseOrTenure.IncludedInYourRentController.show()
 POST        /included-in-your-rent                                  controllers.aboutYourLeaseOrTenure.IncludedInYourRentController.submit()
 
+GET         /rent-includes-vat                                        controllers.aboutYourLeaseOrTenure.RentIncludesVatController.show()
+POST        /rent-includes-vat                                        controllers.aboutYourLeaseOrTenure.RentIncludesVatController.submit()
+
 GET         /does-the-rent-payable                                  controllers.aboutYourLeaseOrTenure.DoesTheRentPayableController.show()
 POST        /does-the-rent-payable                                  controllers.aboutYourLeaseOrTenure.DoesTheRentPayableController.submit()
 

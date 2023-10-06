@@ -733,6 +733,12 @@ rentIncludeFixturesAndFittingsDetails.hint = Leave blank if this is not specific
 error.required.rentIncludeFixturesAndFittingsDetails = Please provide a value
 error.invalid_currency.rentIncludeFixturesAndFittingsDetails = Please provide a number
 
+#RENT INCLUDES VAT
+#################
+rentIncludesVat.heading = Does the current annual rent include VAT?
+rentIncludesVat.error = Select yes if the rent includes VAT
+
+
 # INCENTIVES, PAYMENTS AND CONDITIONS
 ####################################
 formerLeaseSurrendered.heading = Was a former lease or agreement surrendered early as a condition of the present one being granted?

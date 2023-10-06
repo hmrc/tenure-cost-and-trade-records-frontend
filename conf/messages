@@ -742,6 +742,12 @@ error.required.rentIncludeFixturesAndFittings = Please provide a value
 error.invalid_currency.rentIncludeFixturesAndFittings = Please provide a number
 error.rentIncludeFixturesAndFittings.missing = Select yes if the rent includes any equipment belonging to the landlord
 
+#RENT INCLUDES VAT
+#################
+rentIncludesVat.heading = Does the current annual rent include VAT?
+rentIncludesVat.error = Select yes if the rent includes VAT
+
+
 # RENT INCLUDE FIXTURES AND FITTINGS DETAILS
 ###########################################
 rentIncludeFixturesAndFittingsDetails.heading = Where specifically itemised, what sum is included in the rent to cover the equipment provided by the landlord, excluding VAT?

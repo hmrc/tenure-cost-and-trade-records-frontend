@@ -173,6 +173,8 @@ trait FakeViews { this: GuiceOneAppPerSuite =>
     app.injector.instanceOf[rentIncludeFixtureAndFittings]
   lazy val rentIncludeFixtureAndFittingsDetailsView        =
     app.injector.instanceOf[rentIncludeFixtureAndFittingsDetails]
+  lazy val rentIncludesVatView                             =
+    app.injector.instanceOf[rentIncludesVat]
   lazy val rentIncludeTradeServicesDetailsView             =
     app.injector.instanceOf[rentIncludeTradeServicesDetails]
   lazy val rentPayableVaryAccordingToGrossOrNetView        =

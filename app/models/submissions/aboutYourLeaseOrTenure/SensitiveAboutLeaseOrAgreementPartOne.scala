@@ -43,7 +43,8 @@ case class SensitiveAboutLeaseOrAgreementPartOne(
   rentOpenMarketValueDetails: Option[RentOpenMarketValueDetails] = None,
   whatIsYourCurrentRentBasedOnDetails: Option[WhatIsYourCurrentRentBasedOnDetails] = None,
   rentIncreasedAnnuallyWithRPIDetails: Option[RentIncreasedAnnuallyWithRPIDetails] = None,
-  checkYourAnswersAboutYourLeaseOrTenure: Option[CheckYourAnswersAboutYourLeaseOrTenure] = None
+  checkYourAnswersAboutYourLeaseOrTenure: Option[CheckYourAnswersAboutYourLeaseOrTenure] = None,
+  rentIncludesVat: Option[RentIncludesVatDetails] = None
 ) extends Sensitive[AboutLeaseOrAgreementPartOne] {
   override def decryptedValue: AboutLeaseOrAgreementPartOne = AboutLeaseOrAgreementPartOne(
     aboutTheLandlord.map(_.decryptedValue),
@@ -66,7 +67,8 @@ case class SensitiveAboutLeaseOrAgreementPartOne(
     rentOpenMarketValueDetails,
     whatIsYourCurrentRentBasedOnDetails,
     rentIncreasedAnnuallyWithRPIDetails,
-    checkYourAnswersAboutYourLeaseOrTenure
+    checkYourAnswersAboutYourLeaseOrTenure,
+    rentIncludesVat
   )
 }
 
@@ -97,6 +99,7 @@ object SensitiveAboutLeaseOrAgreementPartOne {
       aboutLeaseOrAgreementPartOne.rentOpenMarketValueDetails,
       aboutLeaseOrAgreementPartOne.whatIsYourCurrentRentBasedOnDetails,
       aboutLeaseOrAgreementPartOne.rentIncreasedAnnuallyWithRPIDetails,
-      aboutLeaseOrAgreementPartOne.checkYourAnswersAboutYourLeaseOrTenure
+      aboutLeaseOrAgreementPartOne.checkYourAnswersAboutYourLeaseOrTenure,
+      aboutLeaseOrAgreementPartOne.rentIncludesVat
     )
 }

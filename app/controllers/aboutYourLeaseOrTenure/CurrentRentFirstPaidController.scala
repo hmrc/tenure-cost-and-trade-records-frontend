@@ -19,6 +19,7 @@ package controllers.aboutYourLeaseOrTenure
 import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.CurrentRentFirstPaidForm.currentRentFirstPaidForm
+import models.{ForTypes, Session}
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne
 import models.submissions.aboutYourLeaseOrTenure.CurrentRentFirstPaid
 import navigation.AboutYourLeaseOrTenureNavigator
@@ -47,6 +48,7 @@ class CurrentRentFirstPaidController @Inject() (
           case Some(currentRentFirstPaid) => currentRentFirstPaidForm.fillAndValidate(currentRentFirstPaid)
           case _                          => currentRentFirstPaidForm
         },
+        getBackLink(request.sessionData),
         request.sessionData.toSummary
       )
     )
@@ -55,7 +57,10 @@ class CurrentRentFirstPaidController @Inject() (
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[CurrentRentFirstPaid](
       currentRentFirstPaidForm,
-      formWithErrors => BadRequest(currentRentFirstPaidView(formWithErrors, request.sessionData.toSummary)),
+      formWithErrors =>
+        BadRequest(
+          currentRentFirstPaidView(formWithErrors, getBackLink(request.sessionData), request.sessionData.toSummary)
+        ),
       data => {
         val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(currentRentFirstPaid = Some(data)))
         session.saveOrUpdate(updatedData)
@@ -63,5 +68,11 @@ class CurrentRentFirstPaidController @Inject() (
       }
     )
   }
+
+  private def getBackLink(answers: Session): String =
+    answers.forType match {
+      case ForTypes.for6011 => controllers.aboutYourLeaseOrTenure.routes.RentIncludesVatController.show().url
+      case _                => controllers.aboutYourLeaseOrTenure.routes.PropertyUseLeasebackArrangementController.show().url
+    }
 
 }
