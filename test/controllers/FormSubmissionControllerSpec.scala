@@ -18,11 +18,16 @@ package controllers
 
 import actions.WithSessionRefiner
 import config.ErrorHandler
-import connectors.Audit
+import connectors.{Audit, SubmissionConnector}
+import models.submissions.ConnectedSubmission
+import org.mockito.ArgumentMatchers.anyString
 import play.api.test.Helpers._
 import stub.StubSessionRepo
+import uk.gov.hmrc.http.HeaderCarrier
 import utils.TestBaseSpec
 import views.html.confirmation
+
+import scala.concurrent.Future
 
 /**
   * @author Yuriy Tumakha
@@ -30,9 +35,12 @@ import views.html.confirmation
 class FormSubmissionControllerSpec extends TestBaseSpec {
 
   private val sessionRepo = StubSessionRepo()
-
+  val submissionConnector = mock[SubmissionConnector]
+  val errorHandler = mock[ErrorHandler]
   private def formSubmissionController = new FormSubmissionController(
     stubMessagesControllerComponents(),
+    submissionConnector,
+    errorHandler,
     inject[confirmation],
     inject[Audit],
     WithSessionRefiner(inject[ErrorHandler], sessionRepo),
@@ -42,9 +50,10 @@ class FormSubmissionControllerSpec extends TestBaseSpec {
   "FormSubmissionController" should {
     "handle submit form with all sections" in {
       sessionRepo.saveOrUpdate(prefilledBaseSession)
-
+      when(submissionConnector.submitConnected(anyString(), any[ConnectedSubmission])(any[HeaderCarrier]))
+        .thenReturn(Future.successful(()))
       val result = formSubmissionController.submit(fakeRequest)
-      status(result)           shouldBe FOUND
+      status(result)           shouldBe SEE_OTHER
       redirectLocation(result) shouldBe Some(controllers.routes.FormSubmissionController.confirmation().url)
     }
 
