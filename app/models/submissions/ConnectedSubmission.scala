@@ -29,6 +29,8 @@ import models.submissions.notconnected.RemoveConnectionDetails
 import models.submissions.requestReferenceNumber.RequestReferenceNumberDetails
 import play.api.libs.json.Json
 
+import java.time.Instant
+
 case class ConnectedSubmission(
   referenceNumber: String,
   forType: String,
@@ -45,7 +47,8 @@ case class ConnectedSubmission(
   saveAsDraftPassword: Option[String] = None,
   lastCYAPageUrl: Option[String] = None,
   requestReferenceNumberDetails: Option[RequestReferenceNumberDetails] = None,
-  downloadPDFDetails: Option[DownloadPDFDetails] = None
+  downloadPDFDetails: Option[DownloadPDFDetails] = None,
+  createdAt: Instant
 )
 
 object ConnectedSubmission {
@@ -67,6 +70,7 @@ object ConnectedSubmission {
     session.saveAsDraftPassword,
     session.lastCYAPageUrl,
     session.requestReferenceNumberDetails,
-    session.downloadPDFDetails
+    session.downloadPDFDetails,
+    Instant.now()
   )
 }
