@@ -211,6 +211,10 @@ object DateMappings {
     (my: MonthsYearDuration) => (my.months.toString, my.years.toString)
   )
 
+  def isDayMonthValidDate(day: Int, month: Int): Boolean = {
+    Try(LocalDate.of(LocalDate.now().getYear, month, day)).isSuccess
+  }
+
   def dayMonthsDurationMapping(prefix: String, fieldErrorPart: String = ""): Mapping[DayMonthsDuration] = tuple(
     "day"   -> nonEmptyTextOr(
       prefix + ".day",
@@ -228,7 +232,10 @@ object DateMappings {
       ),
       s"error$fieldErrorPart.month.required"
     )
-  ).transform(
+  ).verifying("error.invalid_date", formData => {
+    val (day, month) = (formData._1.trim.toInt, formData._2.trim.toInt)
+    isDayMonthValidDate(day, month)
+  }).transform(
     { case (days, months) =>
       DayMonthsDuration(days.trim.toInt, months.trim.toInt)
     },
