@@ -28,6 +28,7 @@
 @import uk.gov.hmrc.govukfrontend.views.Aliases.CheckboxItem
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Hint
 @import uk.gov.hmrc.govukfrontend.views.Aliases.HtmlContent
+@import uk.gov.hmrc.govukfrontend.views.Aliases.RadioItem
 @import models.pages.Summary
 
 @this(layout: Layout,
@@ -53,49 +54,31 @@
 
     @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.WhatIsYourRentBasedOnController.submit()) {
 
-        @govukCheckboxes(
-            Checkboxes(
-                fieldset = Some(Fieldset(
-                    legend = Some(Legend(
-                        content = Text(Messages("currentRentBasedOn.heading")),
-                        classes = "govuk-label--l govuk-fieldset__legend--m",
-                        isPageHeading = true
-                    ))
-                )),
-                name = "currentRentBasedOn",
-                items = Seq(
-                    CheckboxItem(
-                        content = Text(messages("label.percentageOpenMarket")),
-                        value = "percentageOpenMarket",
-                    ),
-                    CheckboxItem(
-                        content = Text(messages("label.fixed")),
-                        value = "fixed",
-                    ),
-                    CheckboxItem(
-                        content = Text(messages("label.percentageTurnover")),
-                        value = "percentageTurnover",
-                    ),
-                    CheckboxItem(
-                        content = Text(messages("label.indexed")),
-                        value = "indexed",
-                    ),
-                    CheckboxItem(
-                        content = Text(messages("label.stepped")),
-                        value = "stepped",
-                    ),
-                    CheckboxItem(
-                        content = Text(messages("label.other")),
-                        value = "other"
-                    )
-                ),
-                hint = Hint(content = HtmlContent(messages("hint.select.all"))),
-                errorMessage = theForm.errors.asTextErrorMessageForField("currentRentBasedOn")
-            ).withFormField(theForm("currentRentBasedOn"))
+        @includes.radioButtons(
+            govukRadios,
+            theForm,
+            "currentRentBasedOn",
+            "currentRentBasedOn.heading",
+            "govuk-label--l govuk-fieldset__legend--m",
+            items = Seq(
+                "percentageOpenMarket" -> messages("label.percentageOpenMarket"),
+                "fixed" -> messages("label.fixed"),
+                "percentageTurnover" -> messages("label.percentageTurnover"),
+                "indexed" -> messages("label.indexed"),
+                "stepped" -> messages("label.stepped"),
+                "other" -> messages("label.other")
+            ).map(radioItem => RadioItem(
+                content = Text(radioItem._2),
+                checked = radioItem._1.equals(theForm("currentRentBasedOn").value.getOrElse("")),
+                value = Option(radioItem._1)
+            )),
+            isHeading = true,
+            inline = false
         )
 
 
-    @includes.textInputCharCount(
+
+        @includes.textInputCharCount(
       govukCharacterCount,
       theForm,
       "whatIsYourRentBasedOn",
