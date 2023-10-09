@@ -86,6 +86,13 @@ class AboutYourTradingHistoryControllerSpec extends TestBaseSpec {
 
       mustContainError(errorKey.financialYearMonth, "error.financialYear.month.required", form)
     }
+
+    "error if financial year date is incorrect" in {
+      val formData = baseFormData.updated("financialYear.day", "31").updated("financialYear.month", "2")
+      val form = occupationalAndAccountingInformationForm.bind(formData)
+
+      mustContainError("financialYear", "error.invalid_date", form)
+    }
   }
 
   object TestData {
