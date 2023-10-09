@@ -31,7 +31,7 @@ import repositories.SessionRepo
 import views.html.additionalinformation.checkYourAnswersAdditionalInformation
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class CheckYourAnswersAdditionalInformationController @Inject() (
@@ -40,7 +40,7 @@ class CheckYourAnswersAdditionalInformationController @Inject() (
   checkYourAnswersAdditionalInformationView: checkYourAnswersAdditionalInformation,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FORDataCaptureController(mcc)
+)(implicit ec: ExecutionContext) extends FORDataCaptureController(mcc)
     with I18nSupport
     with Logging {
 
@@ -76,8 +76,9 @@ class CheckYourAnswersAdditionalInformationController @Inject() (
           .copy(lastCYAPageUrl =
             Some(controllers.additionalinformation.routes.CheckYourAnswersAdditionalInformationController.show().url)
           )
-        session.saveOrUpdate(updatedData)
-        Redirect(navigator.nextPage(CheckYourAnswersAdditionalInformationId, updatedData).apply(updatedData))
+        session.saveOrUpdate(updatedData).flatMap { _ =>
+          Future.successful(Redirect(navigator.nextPage(CheckYourAnswersAdditionalInformationId, updatedData).apply(updatedData)))
+        }
       }
     )
   }
