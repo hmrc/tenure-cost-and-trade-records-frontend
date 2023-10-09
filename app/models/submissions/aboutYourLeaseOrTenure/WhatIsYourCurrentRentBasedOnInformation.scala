@@ -40,9 +40,6 @@ object CurrentRentBasedOnSteppedRent extends CurrentRentBasedOn {
 object CurrentRentBasedOnOther extends CurrentRentBasedOn {
   override def name: String = "other"
 }
-object CurrentRentBasedOnNone extends CurrentRentBasedOn {
-  override def name: String = "none"
-}
 
 object CurrentRentBasedOn extends NamedEnumSupport[CurrentRentBasedOn] {
 
@@ -54,8 +51,7 @@ object CurrentRentBasedOn extends NamedEnumSupport[CurrentRentBasedOn] {
     CurrentRentBasedOnPercentageTurnover,
     CurrentRentBasedOnIndexedToRPI,
     CurrentRentBasedOnSteppedRent,
-    CurrentRentBasedOnOther,
-    CurrentRentBasedOnNone
+    CurrentRentBasedOnOther
   )
 
   val key = all.head.key
