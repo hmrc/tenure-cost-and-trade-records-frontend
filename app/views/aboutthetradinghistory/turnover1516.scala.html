@@ -86,9 +86,6 @@
     @formWithCSRF(action = controllers.aboutthetradinghistory.routes.TurnoverController.submit, args = 'class -> "myForm", 'id -> "myFormId") {
 
         <p class="govuk-body">@messages("turnover.p1")</p>
-        @govukInsetText(InsetText(
-            content = Text(messages("turnover.inset"))
-        ))
         @govukDetails(Details(
             summary = Text(messages("turnover.details.6016")),
             content = HtmlContent(detailsContent)

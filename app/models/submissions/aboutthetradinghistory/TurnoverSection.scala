@@ -23,12 +23,13 @@ import java.time.LocalDate
 case class TurnoverSection(
   financialYearEnd: LocalDate,
   tradingPeriod: Int,
-  alcoholicDrinks: BigDecimal,
-  food: BigDecimal,
-  otherReceipts: BigDecimal,
-  accommodation: BigDecimal,
-  averageOccupancyRate: BigDecimal
+  alcoholicDrinks: Option[BigDecimal],
+  food: Option[BigDecimal],
+  otherReceipts: Option[BigDecimal],
+  accommodation: Option[BigDecimal],
+  averageOccupancyRate: Option[BigDecimal]
 )
+
 object TurnoverSection {
   implicit val format = Json.format[TurnoverSection]
 }

@@ -73,11 +73,11 @@ class AboutYourTradingHistoryController @Inject() (
                 TurnoverSection(
                   financialYearEnd = finYearEnd,
                   tradingPeriod = 52,
-                  alcoholicDrinks = 0,
-                  food = 0,
-                  otherReceipts = 0,
-                  accommodation = 0,
-                  averageOccupancyRate = 0
+                  alcoholicDrinks = None,
+                  food = None,
+                  otherReceipts = None,
+                  accommodation = None,
+                  averageOccupancyRate = None
                 )
               },
               costOfSales = financialYearsList.map(CostOfSales(_, 0, 0, 0, 0))

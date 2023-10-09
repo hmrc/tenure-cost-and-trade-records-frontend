@@ -48,11 +48,11 @@
         turnoverSections.map(t => Seq(
             dateUtil.formatDayMonthAbbrYear(t.financialYearEnd),
             s"${t.tradingPeriod} ${messages("turnover.weeks")}",
-            t.alcoholicDrinks.asMoney,
-            t.food.asMoney,
-            t.otherReceipts.asMoney,
-            t.accommodation.asMoney,
-            t.averageOccupancyRate.withScale(2) + "%"
+            t.alcoholicDrinks.getOrElse(zeroBigDecimal).asMoney,
+            t.food.getOrElse(zeroBigDecimal).asMoney,
+            t.otherReceipts.getOrElse(zeroBigDecimal).asMoney,
+            t.accommodation.getOrElse(zeroBigDecimal).asMoney,
+            t.averageOccupancyRate.getOrElse(zeroBigDecimal).withScale(2) + "%"
         ))
     ).body
 }
