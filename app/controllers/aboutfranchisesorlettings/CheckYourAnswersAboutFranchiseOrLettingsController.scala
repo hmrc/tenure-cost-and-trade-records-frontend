@@ -31,7 +31,7 @@ import repositories.SessionRepo
 import views.html.aboutfranchisesorlettings.checkYourAnswersAboutFranchiseOrLettings
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class CheckYourAnswersAboutFranchiseOrLettingsController @Inject() (
@@ -40,7 +40,7 @@ class CheckYourAnswersAboutFranchiseOrLettingsController @Inject() (
   checkYourAnswersAboutFranchiseOrLettingsView: checkYourAnswersAboutFranchiseOrLettings,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FORDataCaptureController(mcc)
+)(implicit ec: ExecutionContext) extends FORDataCaptureController(mcc)
     with I18nSupport
     with Logging {
 
@@ -78,8 +78,9 @@ class CheckYourAnswersAboutFranchiseOrLettingsController @Inject() (
               controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show().url
             )
           )
-        session.saveOrUpdate(updatedData)
-        Redirect(navigator.nextPage(CheckYourAnswersAboutFranchiseOrLettingsId, updatedData).apply(updatedData))
+        session.saveOrUpdate(updatedData).flatMap { _ =>
+          Future.successful(Redirect(navigator.nextPage(CheckYourAnswersAboutFranchiseOrLettingsId, updatedData).apply(updatedData)))
+        }
       }
     )
   }

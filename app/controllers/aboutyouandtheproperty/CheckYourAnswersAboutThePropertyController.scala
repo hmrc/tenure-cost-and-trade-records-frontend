@@ -31,7 +31,7 @@ import repositories.SessionRepo
 import views.html.aboutyouandtheproperty.checkYourAnswersAboutTheProperty
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class CheckYourAnswersAboutThePropertyController @Inject() (
@@ -40,7 +40,7 @@ class CheckYourAnswersAboutThePropertyController @Inject() (
   checkYourAnswersAboutThePropertyView: checkYourAnswersAboutTheProperty,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FORDataCaptureController(mcc)
+) (implicit ec: ExecutionContext) extends FORDataCaptureController(mcc)
     with I18nSupport
     with Logging {
 
@@ -76,8 +76,8 @@ class CheckYourAnswersAboutThePropertyController @Inject() (
           .copy(lastCYAPageUrl =
             Some(controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show().url)
           )
-        session.saveOrUpdate(updatedData)
-        Redirect(navigator.nextPage(CheckYourAnswersAboutThePropertyPageId, updatedData).apply(updatedData))
+        session.saveOrUpdate(updatedData).flatMap(_ =>
+        Future.successful(Redirect(navigator.nextPage(CheckYourAnswersAboutThePropertyPageId, updatedData).apply(updatedData))))
       }
     )
   }

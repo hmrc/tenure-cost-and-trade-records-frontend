@@ -31,7 +31,7 @@ import repositories.SessionRepo
 import views.html.aboutthetradinghistory.checkYourAnswersAboutTheTradingHistory
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class CheckYourAnswersAboutTheTradingHistoryController @Inject() (
@@ -40,7 +40,7 @@ class CheckYourAnswersAboutTheTradingHistoryController @Inject() (
   checkYourAnswersAboutTheTradingHistoryView: checkYourAnswersAboutTheTradingHistory,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FORDataCaptureController(mcc)
+)(implicit ec: ExecutionContext) extends FORDataCaptureController(mcc)
     with I18nSupport
     with Logging {
 
@@ -76,8 +76,8 @@ class CheckYourAnswersAboutTheTradingHistoryController @Inject() (
           .copy(lastCYAPageUrl =
             Some(controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url)
           )
-        session.saveOrUpdate(updatedData)
-        Redirect(navigator.nextPage(CheckYourAnswersAboutTheTradingHistoryId, updatedData).apply(updatedData))
+        session.saveOrUpdate(updatedData).flatMap( _ =>
+        Future.successful(Redirect(navigator.nextPage(CheckYourAnswersAboutTheTradingHistoryId, updatedData).apply(updatedData))))
       }
     )
   }
