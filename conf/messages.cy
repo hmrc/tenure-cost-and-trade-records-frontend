@@ -708,7 +708,7 @@ error.rentIncludeTradeServices.missing = Select yes if the rent includes any tra
 
 # RENT INCLUDE TRADE SERVICES DETAILS
 ####################################
-rentIncludeTradeServicesDetails.heading = Trade services provided by the landlord
+rentIncludeTradeServicesDetails.heading = Where specifically itemised, what sum is included in the rent to cover the services, excluding VAT?
 rentIncludeTradeServicesDetails.label = What sum is included in the rent to cover these services?
 rentIncludeTradeServicesDetails.hint = Leave blank if these are not specifically itemised
 label.describeServices = Describe services provided

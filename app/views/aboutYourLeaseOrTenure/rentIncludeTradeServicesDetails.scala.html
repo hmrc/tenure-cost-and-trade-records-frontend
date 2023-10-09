@@ -53,15 +53,12 @@
     name = "sumIncludedInRent",
     value = theForm("sumIncludedInRent").value,
     classes = "govuk-input--width-10 total-annual-rent",
-    label = Label(
-     content = Text(messages("rentIncludeTradeServicesDetails.label")),
-     classes = "govuk-label--m"
-    ),
     autocomplete = Some("off"),
     hint = Some(Hint(content = Text(messages("rentIncludeTradeServicesDetails.hint")))),
    )
   )
 
+<div class="govuk-!-margin-top-8">
   @govukCharacterCount(
    CharacterCount(
     id = "describeServices",
@@ -69,12 +66,12 @@
     maxLength = 2000,
     label = Label(
      content = Text(messages("label.describeServices")),
-     classes = "govuk-label--m"
+     classes = "govuk-label--s"
     ),
-    hint = Some(Hint(content = Text(messages("rentIncludeTradeServicesDetailsTextBox.hint")))),
     errorMessage = theForm.errors.asTextErrorMessageForField("describeServices"),
    ).withFormField(theForm("describeServices"))
   )
+</div>
 
   @includes.continueSaveAsDraftButtons(govukButton)
  }
