@@ -1088,7 +1088,6 @@ costOfSales.excluding.item1 = payroll costs
 costOfSales.excluding.item2 = variable operating expenses
 costOfSales.excluding.item3 = fixed operating expenses
 costOfSales.excluding.item4 = other costs
-costOfSales.note = All fields on this page are mandatory. If none of the categories are applicable, enter the number 0.
 costOfSales.details.link = Help with completing this page
 costOfSales.details.h1 = General guidance
 costOfSales.details.p1 = Do not include VAT in any of the figures you declare on this page.

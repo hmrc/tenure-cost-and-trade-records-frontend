@@ -25,10 +25,10 @@ object CostOfSalesForm {
 
   val columnMapping: Mapping[CostOfSales] = mapping(
     "financial-year-end" -> localDate("dd/MM/yyyy").verifying(dateTooEarlyConstraint),
-    "accommodation"      -> bigDecimal,
-    "food"               -> bigDecimal,
-    "drinks"             -> bigDecimal,
-    "other"              -> bigDecimal
+    "accommodation"      -> optional(bigDecimal),
+    "food"               -> optional(bigDecimal),
+    "drinks"             -> optional(bigDecimal),
+    "other"              -> optional(bigDecimal)
   )(CostOfSales.apply)(CostOfSales.unapply)
 
   val costOfSalesForm: Form[Seq[CostOfSales]] = Form(
