@@ -40,7 +40,8 @@ class CheckYourAnswersAdditionalInformationController @Inject() (
   checkYourAnswersAdditionalInformationView: checkYourAnswersAdditionalInformation,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext) extends FORDataCaptureController(mcc)
+)(implicit ec: ExecutionContext)
+    extends FORDataCaptureController(mcc)
     with I18nSupport
     with Logging {
 
@@ -77,7 +78,9 @@ class CheckYourAnswersAdditionalInformationController @Inject() (
             Some(controllers.additionalinformation.routes.CheckYourAnswersAdditionalInformationController.show().url)
           )
         session.saveOrUpdate(updatedData).flatMap { _ =>
-          Future.successful(Redirect(navigator.nextPage(CheckYourAnswersAdditionalInformationId, updatedData).apply(updatedData)))
+          Future.successful(
+            Redirect(navigator.nextPage(CheckYourAnswersAdditionalInformationId, updatedData).apply(updatedData))
+          )
         }
       }
     )

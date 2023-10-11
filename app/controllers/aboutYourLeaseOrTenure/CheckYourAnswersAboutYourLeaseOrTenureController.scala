@@ -40,7 +40,8 @@ class CheckYourAnswersAboutYourLeaseOrTenureController @Inject() (
   checkYourAnswersAboutYourLeaseOrTenureView: checkYourAnswersAboutYourLeaseOrTenure,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext) extends FORDataCaptureController(mcc)
+)(implicit ec: ExecutionContext)
+    extends FORDataCaptureController(mcc)
     with I18nSupport
     with Logging {
 
@@ -80,7 +81,9 @@ class CheckYourAnswersAboutYourLeaseOrTenureController @Inject() (
               )
             )
         session.saveOrUpdate(updatedData).flatMap { _ =>
-          Future.successful(Redirect(navigator.nextPage(CheckYourAnswersAboutYourLeaseOrTenureId, updatedData).apply(updatedData)))
+          Future.successful(
+            Redirect(navigator.nextPage(CheckYourAnswersAboutYourLeaseOrTenureId, updatedData).apply(updatedData))
+          )
         }
       }
     )

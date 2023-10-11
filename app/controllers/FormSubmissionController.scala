@@ -58,9 +58,9 @@ class FormSubmissionController @Inject() (
 
   private def submit[T]()(implicit request: SessionRequest[T]): Future[Result] = {
     implicit val hc: HeaderCarrier = HeaderCarrierConverter.fromRequestAndSession(request, request.session)
-    val auditType = "FormSubmission"
-    val submissionJson = Json.toJson(request.sessionData).as[JsObject]
-    val session = request.sessionData
+    val auditType                  = "FormSubmission"
+    val submissionJson             = Json.toJson(request.sessionData).as[JsObject]
+    val session                    = request.sessionData
 
     submitToBackend(session).flatMap { _ =>
       audit.sendExplicitAudit(auditType, submissionJson ++ Audit.languageJson)
@@ -79,8 +79,8 @@ class FormSubmissionController @Inject() (
   }
 
   private def submitToBackend(
-                               session: Session
-                             )(implicit hc: HeaderCarrier, request: SessionRequest[_]): Future[Unit] = {
+    session: Session
+  )(implicit hc: HeaderCarrier, request: SessionRequest[_]): Future[Unit] = {
     val submission = ConnectedSubmission(session)
     submissionConnector.submitConnected(session.referenceNumber, submission)
   }
