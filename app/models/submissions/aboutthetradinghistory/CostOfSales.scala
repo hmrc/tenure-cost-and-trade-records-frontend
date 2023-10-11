@@ -17,17 +17,20 @@
 package models.submissions.aboutthetradinghistory
 
 import play.api.libs.json.Json
+import util.NumberUtil.zeroBigDecimal
 
 import java.time.LocalDate
 
 case class CostOfSales(
   financialYearEnd: LocalDate,
-  accommodation: BigDecimal,
-  food: BigDecimal,
-  drinks: BigDecimal,
-  other: BigDecimal
+  accommodation: Option[BigDecimal],
+  food: Option[BigDecimal],
+  drinks: Option[BigDecimal],
+  other: Option[BigDecimal]
 ) {
-  def total: BigDecimal = accommodation + food + drinks + other
+  def total: BigDecimal =
+    accommodation.getOrElse(zeroBigDecimal) + food.getOrElse(zeroBigDecimal) +
+      drinks.getOrElse(zeroBigDecimal) + other.getOrElse(zeroBigDecimal)
 }
 
 object CostOfSales {

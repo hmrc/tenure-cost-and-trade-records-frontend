@@ -52,7 +52,7 @@ class CostOfSalesController @Inject() (
             val financialYearsList = AccountingInformationUtil.financialYearsRequired(
               aboutTheTradingHistory.occupationAndAccountingInformation.get
             )
-            val initialCostOfSales = financialYearsList.map(CostOfSales(_, 0, 0, 0, 0))
+            val initialCostOfSales = financialYearsList.map(CostOfSales(_, None, None, None, None))
             val updatedData        = updateAboutTheTradingHistory(_.copy(costOfSales = initialCostOfSales))
             session.saveOrUpdate(updatedData)
             initialCostOfSales

@@ -253,11 +253,11 @@ trait FakeObjects {
       TurnoverSection(
         LocalDate.now(),
         123,
-        BigDecimal(234),
-        BigDecimal(345),
-        BigDecimal(456),
-        BigDecimal(567),
-        BigDecimal(678)
+        Some(BigDecimal(234)),
+        Some(BigDecimal(345)),
+        Some(BigDecimal(456)),
+        Some(BigDecimal(567)),
+        Some(BigDecimal(678))
       )
     )
   )
