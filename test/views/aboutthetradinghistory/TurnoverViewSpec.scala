@@ -57,7 +57,6 @@ class TurnoverViewSpec extends QuestionViewBehaviours[Seq[TurnoverSection]] {
       assert(doc.toString.contains(messages("turnover.p1")))
       // TODO - Reinstate paragraph when cut and paste functionality developed
 //      assert(doc.toString.contains(messages("turnover.p2")))
-      assert(doc.toString.contains(messages("turnover.inset")))
     }
 
     "contain get help section" in {

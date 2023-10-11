@@ -77,13 +77,9 @@ class CheckYourAnswersAboutTheTradingHistoryController @Inject() (
           .copy(lastCYAPageUrl =
             Some(controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url)
           )
-        session
-          .saveOrUpdate(updatedData)
-          .flatMap(_ =>
-            Future.successful(
-              Redirect(navigator.nextPage(CheckYourAnswersAboutTheTradingHistoryId, updatedData).apply(updatedData))
-            )
-          )
+        session.saveOrUpdate(updatedData).map { _ =>
+          Redirect(navigator.nextPage(CheckYourAnswersAboutTheTradingHistoryId, updatedData).apply(updatedData))
+        }
       }
     )
   }

@@ -25,6 +25,8 @@ import scala.math.BigDecimal.RoundingMode.HALF_UP
   */
 object NumberUtil {
 
+  val zeroBigDecimal: BigDecimal = BigDecimal(0)
+
   implicit class stringHelpers(str: String) {
     def removeTrailingZeros: String =
       str.replace(".00", "")
