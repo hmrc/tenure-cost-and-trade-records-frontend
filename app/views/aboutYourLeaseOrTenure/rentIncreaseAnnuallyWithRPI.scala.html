@@ -16,8 +16,19 @@
 
 @import models.submissions.aboutYourLeaseOrTenure.RentIncreasedAnnuallyWithRPIDetails
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukErrorSummary
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukDateInput
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukTextarea
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukCharacterCount
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Radios
+@import uk.gov.hmrc.govukfrontend.views.Aliases.RadioItem
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Fieldset
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Legend
 @import models.pages.Summary
 
 @this(layout: Layout,
@@ -25,7 +36,6 @@
         govukRadios: GovukRadios,
         formWithCSRF: FormWithCSRF
 )
-
 
 @(theForm: Form[RentIncreasedAnnuallyWithRPIDetails], backLink: String, summary: Summary)(implicit request: Request[_], messages: Messages)
 
@@ -43,8 +53,33 @@
 
   <p class="govuk-body">@messages("rentIncreasedAnnuallyWithRPIs.p1")</p>
 
-  @includes.radioButtonsYesNo(govukRadios, theForm, "rentIncreasedAnnuallyWithRPIs", "rentIncreasedAnnuallyWithRPIs.subheading", "govuk-fieldset__legend--m")
-
+  @govukRadios(
+   Radios(
+    name = "rentIncreasedAnnuallyWithRPIs",
+    idPrefix = Option("rentIncreaseAnnuallyWithRPI"),
+    items = Seq(
+     "yes" -> messages("label.yes"),
+     "no" -> messages("label.no")
+    ).map(radioItem => RadioItem(
+     content = Text(radioItem._2),
+     checked = radioItem._1.equals(theForm("rentIncreasedAnnuallyWithRPIs").value.getOrElse("")),
+     value = Option(radioItem._1)
+    )
+    ),
+    classes = "govuk-radios--inline",
+    errorMessage = theForm.errors.asTextErrorMessageForField("rentIncreasedAnnuallyWithRPIs"),
+    fieldset = Option(
+     Fieldset(
+      legend = Option(
+       Legend(
+        content = Text(messages("rentIncreasedAnnuallyWithRPIs.subheading")),
+        classes = "govuk-fieldset__legend--m"
+       )
+      )
+     )
+    )
+   )
+  )
   @includes.continueSaveAsDraftButtons(govukButton)
  }
 }

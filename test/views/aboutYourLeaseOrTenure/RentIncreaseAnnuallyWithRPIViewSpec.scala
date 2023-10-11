@@ -59,7 +59,7 @@ class RentIncreaseAnnuallyWithRPIViewSpec extends QuestionViewBehaviours[RentInc
       val doc = asDocument(createViewUsingForm(form))
       assertContainsRadioButton(
         doc,
-        "rentIncreasedAnnuallyWithRPIs",
+        "rentIncreaseAnnuallyWithRPI",
         "rentIncreasedAnnuallyWithRPIs",
         AnswerYes.name,
         false
@@ -71,7 +71,7 @@ class RentIncreaseAnnuallyWithRPIViewSpec extends QuestionViewBehaviours[RentInc
       val doc = asDocument(createViewUsingForm(form))
       assertContainsRadioButton(
         doc,
-        "rentIncreasedAnnuallyWithRPIs-2",
+        "rentIncreaseAnnuallyWithRPI-2",
         "rentIncreasedAnnuallyWithRPIs",
         AnswerNo.name,
         false
