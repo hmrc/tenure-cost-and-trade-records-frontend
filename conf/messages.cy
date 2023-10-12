@@ -438,7 +438,7 @@ propertyCurrentlyUsed.lodgeAndRestaurant = Lodge and restaurant
 propertyCurrentlyUsed.conferenceCentre = Conference centre
 propertyCurrentlyUsed.other = Other
 hint.other.use.propertyCurrentlyUsedOther = Describe the use of your property is not listed
-hint.other.vacant.propertyCurrentlyUsedOther = Please give details if the property has another use
+hint.other.vacant.propertyCurrentlyUsedOther = Give details if the property has another use
 
 # WEBSITE FOR PROPERTY
 ######################
