@@ -1199,6 +1199,7 @@ label.alternativeContactDetails = Correspondence address
 # TENANCY LEASE AGREEMENT EXPIRE (FORM 6011)
 ###########################################
 tenancyLeaseAgreementExpire.heading = When does your tenancy, lease or agreement expire, or if earlier, what is the date of your next review (excluding indexation)?
+error.date_before_today.tenancyLeaseAgreementExpire = The date of the tenancy, lease or agreement cannot be in the past
 
 # CONNECTED TO LANDLORD
 ###########################################
