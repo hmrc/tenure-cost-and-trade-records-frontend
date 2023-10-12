@@ -56,7 +56,7 @@ class CurrentRentPayableWithin12MonthsViewSpec extends QuestionViewBehaviours[Cu
       val doc = asDocument(createViewUsingForm(form))
       assertContainsRadioButton(
         doc,
-        "rentPayable",
+        "currentRentPayableWithin12Months",
         "rentPayable",
         CurrentRentWithin12MonthsYes.name,
         false
@@ -68,7 +68,7 @@ class CurrentRentPayableWithin12MonthsViewSpec extends QuestionViewBehaviours[Cu
       val doc = asDocument(createViewUsingForm(form))
       assertContainsRadioButton(
         doc,
-        "rentPayable-2",
+        "currentRentPayableWithin12Months-2",
         "rentPayable",
         CurrentRentWithin12MonthsNo.name,
         false
