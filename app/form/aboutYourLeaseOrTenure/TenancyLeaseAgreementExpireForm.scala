@@ -16,7 +16,7 @@
 
 package form.aboutYourLeaseOrTenure
 
-import form.DateMappings.{dateFieldsAfterTodayMapping, dateFieldsMapping}
+import form.DateMappings.dateFieldsAfterTodayMapping
 import models.submissions.aboutYourLeaseOrTenure.TenancyLeaseAgreementExpire
 import play.api.data.Form
 import play.api.data.Forms.mapping
