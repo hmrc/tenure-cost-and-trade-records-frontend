@@ -78,7 +78,7 @@ class FeedbackController @Inject() (
             BadRequest(confirmationConnectedView(formWithErrors))
           },
         feedbackForm => {
-          sendFeedback("postSubmitFeedback", feedbackForm, request.sessionData)
+          sendFeedback("PostSubmitFeedback", feedbackForm, request.sessionData)
           Future.successful(Redirect(routes.FeedbackController.feedbackThx))
         }
       )
@@ -93,7 +93,7 @@ class FeedbackController @Inject() (
             BadRequest(confirmationNotConnectedView(formWithErrors, request.sessionData))
           },
         feedbackForm => {
-          sendFeedback("notConnectedFeedback", feedbackForm, request.sessionData)
+          sendFeedback("NotConnectedFeedback", feedbackForm, request.sessionData)
           Future.successful(Redirect(routes.FeedbackController.feedbackThx))
         }
       )
@@ -108,7 +108,7 @@ class FeedbackController @Inject() (
             BadRequest(confirmationVacantProperty(formWithErrors))
           },
         feedbackForm => {
-          sendFeedback("vacantPropertyFeedback", feedbackForm, request.sessionData)
+          sendFeedback("VacantPropertyFeedback", feedbackForm, request.sessionData)
           Future.successful(Redirect(routes.FeedbackController.feedbackThx))
         }
       )
@@ -123,7 +123,7 @@ class FeedbackController @Inject() (
             BadRequest(feedbackView(formWithErrors))
           },
         feedbackForm => {
-          sendFeedback("noReferenceFeedback", feedbackForm)
+          sendFeedback("NoReferenceFeedback", feedbackForm)
           Future.successful(Redirect(routes.FeedbackController.feedbackThx))
         }
       )
