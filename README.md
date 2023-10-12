@@ -22,7 +22,7 @@ FOR - form of return - forms used for users to send details of different types o
 ## Dependencies
 
 * A local Mongo DB instance needs to run locally
-* You can start the dependencies in service manger by running:
+* You can start the dependencies in service manager by running:
 >sm2 --start VOA_TCTR   
 >mongod
 ## Run the service
