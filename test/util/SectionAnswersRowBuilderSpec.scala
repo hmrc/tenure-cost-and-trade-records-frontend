@@ -95,7 +95,8 @@ class SectionAnswersRowBuilderSpec extends TestBaseSpec {
       row shouldBe Seq(
         SummaryListRow(
           key = Key(Text("Property use")),
-          value = Value(HtmlContent("Other<br/>Details for other option")),
+          value =
+            Value(HtmlContent("Other (reveals a text box to include a description)<br/>Details for other option")),
           actions = Some(
             Actions(items =
               Seq(

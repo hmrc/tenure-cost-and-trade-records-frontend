@@ -436,9 +436,9 @@ propertyCurrentlyUsed.discoNightclub = Disco or nightclub
 propertyCurrentlyUsed.healthSpa = Health Spa
 propertyCurrentlyUsed.lodgeAndRestaurant = Lodge and restaurant
 propertyCurrentlyUsed.conferenceCentre = Conference centre
-propertyCurrentlyUsed.other = Other
+propertyCurrentlyUsed.other = Other (reveals a text box to include a description)
 hint.other.use.propertyCurrentlyUsedOther = Describe the use of your property is not listed
-hint.other.vacant.propertyCurrentlyUsedOther = Give details if the property has another use
+hint.other.vacant.propertyCurrentlyUsedOther = Give details
 
 # WEBSITE FOR PROPERTY
 ######################
