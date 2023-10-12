@@ -400,14 +400,14 @@ checkYourAnswersConnectionToVacantProperty.addAnotherLetting = Add another letti
 
 # Confirmation Page Connection to Property
 ##########################################
-label.connectionToProperty.confirm.heading = Declaration sent successfully
-label.connectionToProperty.emailConfirm = We have sent you a confirmation email.
-label.connectionToProperty.saveCopyOfAnswers.1 = Save a copy of your answers
-label.connectionToProperty.saveCopyOfAnswers.2 = (print or PDF download)
-label.connectionToProperty.unableToRetrieveAnswers = You will be unable to retrieve your answers beyond this point
+label.connectionToProperty.confirm.heading = Request sent successfully
+label.connectionToProperty.requestRefNum = Your request for a reference number has been sent to the VOA.
 label.connectionToProperty.whatNext = What happens next
-connectionToProperty.confirm.copy.list.1 = We have sent your application to the Valuation Office Agency.
-connectionToProperty.confirm.copy.list.2 = They may need to contact you for further information.
+label.connectionToProperty.reissued = You will be reissued with a declaration request letter if the VOA has sent you one recently.
+label.connectionToProperty.contact = The VOA may need to contact you if:
+list.connectionToProperty.p1 = the address you supplied does not match their records
+list.connectionToProperty.p2 = they have no record of sending you a letter
+list.connectionToProperty.p3 = they require further information
 
 # NOT CONNECTED SECTION
 #######################

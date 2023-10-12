@@ -34,9 +34,9 @@ import scala.concurrent.Future
   */
 class FormSubmissionControllerSpec extends TestBaseSpec {
 
-  private val sessionRepo = StubSessionRepo()
-  val submissionConnector = mock[SubmissionConnector]
-  val errorHandler = mock[ErrorHandler]
+  private val sessionRepo              = StubSessionRepo()
+  val submissionConnector              = mock[SubmissionConnector]
+  val errorHandler                     = mock[ErrorHandler]
   private def formSubmissionController = new FormSubmissionController(
     stubMessagesControllerComponents(),
     submissionConnector,
