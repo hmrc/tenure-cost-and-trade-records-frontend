@@ -119,6 +119,8 @@
                                       id = s"$idx.weeks",
                                       name = s"$idx.weeks",
                                       value = form(s"$idx.weeks").value,
+                                      classes = "govuk-input--width-2",
+                                      attributes = Map("maxlength" -> "2"),
                                       suffix = Some(PrefixOrSuffix(
                                           content = Text(messages("turnover.weeks"))
                                       ))
@@ -199,6 +201,8 @@
                                       id = s"$idx.average-occupancy-rate",
                                       name = s"$idx.average-occupancy-rate",
                                       value = form(s"$idx.average-occupancy-rate").value,
+                                      classes = "govuk-input--width-3",
+                                      attributes = Map("maxlength" -> "5"),
                                       suffix = Some(PrefixOrSuffix(
                                           content = Text("%")
                                       ))
