@@ -16,7 +16,7 @@
 
 package form.aboutYourLeaseOrTenure
 
-import form.DateMappings.dateFieldsMapping
+import form.DateMappings.{dateFieldsAfterTodayMapping, dateFieldsMapping}
 import models.submissions.aboutYourLeaseOrTenure.TenancyLeaseAgreementExpire
 import play.api.data.Form
 import play.api.data.Forms.mapping
@@ -25,7 +25,10 @@ object TenancyLeaseAgreementExpireForm {
 
   val tenancyLeaseAgreementExpireForm = Form(
     mapping(
-      "tenancyLeaseAgreementExpire" -> dateFieldsMapping("tenancyLeaseAgreementExpire")
+      "tenancyLeaseAgreementExpire" -> dateFieldsAfterTodayMapping(
+        "tenancyLeaseAgreementExpire",
+        fieldErrorPart = ".tenancyLeaseAgreementExpire"
+      )
     )(TenancyLeaseAgreementExpire.apply)(TenancyLeaseAgreementExpire.unapply)
   )
 }
