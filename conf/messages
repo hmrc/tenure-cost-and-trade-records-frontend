@@ -1061,6 +1061,15 @@ turnover.details.p1 = Do not include VAT in any of the figures you declare on th
 turnover.details.p2 = If you have not broken down your turnover into separate categories, or if you have recorded certain categories together - such as all food and drinks - you can declare them together in a single field.
 turnover.details.h2 = Financial year end
 turnover.details.p3 = Your financial year end dates are pre-populated by the system. If your financial year end has changed during the period shown, you can edit these dates accordingly.
+error.turnover.alcohol.sales.required = Enter 0 if you didn’t sell any alcoholic drinks
+error.turnover.food.sales.required = Enter 0 if you didn’t sell any food
+error.turnover.other.sales.required = Enter 0 if you don’t have any sales in this category
+error.turnover.accommodation.sales.required = Enter 0 if you didn’t provide any accommodation
+error.turnover.averageOccupancyRate.required = Enter 0 if you didn’t provide any accommodation
+error.turnover.alcohol.sales.range = The alcohol sales figure must be a number between {0} and {1}
+error.turnover.food.sales.range = The food sales figure must be a number between {0} and {1}
+error.turnover.other.sales.range = The ’other receipts’ sales figure must be a number between {0} and {1}
+error.turnover.accommodation.sales.range = The accommodation sales figure must be a number between {0} and {1}
 
 # TURNOVER 6016
 #########

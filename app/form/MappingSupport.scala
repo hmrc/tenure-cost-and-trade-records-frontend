@@ -35,7 +35,9 @@ import play.api.data.format.Formatter
 import play.api.data.validation.{Constraint, Invalid, Valid, ValidationError}
 import play.api.data.validation.Constraints.{maxLength, minLength, nonEmpty, pattern}
 import play.api.data.{FormError, Forms, Mapping}
+import util.NumberUtil.zeroBigDecimal
 
+import scala.util.Try
 import scala.util.matching.Regex
 
 object MappingSupport {
@@ -367,6 +369,19 @@ object MappingSupport {
     .transform[Int](_.replace(",", "").toInt, _.toString)
     .verifying(s"error.empty.required", _ >= 1)
 
+  def between[T](
+    minValue: T,
+    maxValue: T,
+    errorMessage: String = "error.range"
+  )(implicit ordering: scala.math.Ordering[T]): Constraint[T] =
+    Constraint[T]("constraint.between", minValue, maxValue) { v =>
+      if (ordering.compare(v, minValue) < 0 || ordering.compare(v, maxValue) > 0) {
+        Invalid(ValidationError(errorMessage, minValue, maxValue))
+      } else {
+        Valid
+      }
+    }
+
   def nonEmptyList[T](errorMessage: String = "error.required"): Constraint[List[T]] =
     Constraint[List[T]]("constraint.nonEmptyList") { l =>
       if (l.nonEmpty) Valid
@@ -381,6 +396,14 @@ object MappingSupport {
       if (l.size > 1 && l.contains(noneOfTheseValue)) Invalid(ValidationError(errorMessage))
       else Valid
     }
+
+  private val salesMax = BigDecimal(1000000000000L)
+
+  def turnoverSalesMapping(field: String): Mapping[Option[BigDecimal]] = optional(
+    text
+      .transform[BigDecimal](s => Try(BigDecimal(s)).getOrElse(-1), _.toString)
+      .verifying(between(zeroBigDecimal, salesMax, s"error.$field.range"))
+  ).verifying(s"error.$field.required", _.nonEmpty)
 
 }
 

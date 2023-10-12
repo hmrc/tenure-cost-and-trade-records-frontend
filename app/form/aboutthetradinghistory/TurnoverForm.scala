@@ -17,6 +17,7 @@
 package form.aboutthetradinghistory
 
 import form.DateMappings.dateTooEarlyConstraint
+import form.MappingSupport.turnoverSalesMapping
 import models.submissions.aboutthetradinghistory.TurnoverSection
 import play.api.data.{Form, Mapping}
 import play.api.data.Forms.{bigDecimal, localDate, mapping, number, optional}
@@ -33,11 +34,12 @@ object TurnoverForm {
     val columnMapping: Mapping[TurnoverSection]            = mapping(
       "financial-year-end"     -> ukDateMappings.verifying(dateTooEarlyConstraint),
       "weeks"                  -> number(min = 0, max = 52),
-      "alcoholic-drinks"       -> optional(bigDecimal),
-      "food"                   -> optional(bigDecimal),
-      "other-receipts"         -> optional(bigDecimal),
-      "accommodation"          -> optional(bigDecimal),
+      "alcoholic-drinks"       -> turnoverSalesMapping("turnover.alcohol.sales"),
+      "food"                   -> turnoverSalesMapping("turnover.food.sales"),
+      "other-receipts"         -> turnoverSalesMapping("turnover.other.sales"),
+      "accommodation"          -> turnoverSalesMapping("turnover.accommodation.sales"),
       "average-occupancy-rate" -> optional(bigDecimal.verifying(averageOccupancyConstraint))
+        .verifying("error.turnover.averageOccupancyRate.required", _.nonEmpty)
     )(TurnoverSection.apply)(TurnoverSection.unapply)
 
     Form {
