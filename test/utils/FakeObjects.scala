@@ -19,12 +19,12 @@ package utils
 import models.submissions.Form6010._
 import models.submissions.aboutfranchisesorlettings._
 import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartOne, _}
-import models.submissions.{ConnectedSubmission, aboutfranchisesorlettings}
+import models.submissions.{ConnectedSubmission, NotConnectedSubmission, aboutfranchisesorlettings}
 import models.submissions.aboutfranchisesorlettings.LettingSection
 import models.submissions.aboutyouandtheproperty._
 import models.submissions.aboutthetradinghistory._
 import models.submissions.additionalinformation._
-import models.{AnnualRent, Session, SubmissionDraft}
+import models.{AnnualRent, ForTypes, Session, SubmissionDraft}
 import models.submissions.common.{Address, AnswerNo, AnswerYes, ContactDetails, ContactDetailsAddress}
 import models.submissions.connectiontoproperty._
 import models.submissions.connectiontoproperty.StartDateOfVacantProperty
@@ -32,7 +32,7 @@ import models.submissions.downloadFORTypeForm.{DownloadPDF, DownloadPDFDetails, 
 import models.submissions.notconnected.{PastConnectionTypeYes, RemoveConnectionDetails, RemoveConnectionsDetails}
 import models.submissions.requestReferenceNumber.{CheckYourAnswersRequestReferenceNumber, RequestReferenceNumber, RequestReferenceNumberAddress, RequestReferenceNumberContactDetails, RequestReferenceNumberDetails}
 
-import java.time.LocalDate
+import java.time.{Instant, LocalDate}
 
 trait FakeObjects {
   val referenceNumber: String   = "99996010004"
@@ -415,6 +415,8 @@ trait FakeObjects {
       )
     )
   val connectedSubmission                     = ConnectedSubmission(stillConnectedDetailsYesToAllSession)
+
+  val notConnectedSubmission                  = NotConnectedSubmission("id",ForTypes.for6010,prefilledAddress,"John Smith",Some("test@test.com"),Some("12312312312"),Some("additional info"),Instant.now(),false)
 
   val prefilledAboutTheTradingHistory = AboutTheTradingHistory(
     occupationAndAccountingInformation = Some(

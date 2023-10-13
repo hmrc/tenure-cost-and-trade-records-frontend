@@ -16,78 +16,89 @@
 
 package connectors
 
-import config.AppConfig
-import play.api.http.Status.BAD_REQUEST
-import play.api.libs.json.Json
-import play.api.mvc.Results.{BadRequest, Created, Forbidden, NotFound}
-import play.api.routing.Router
-import play.api.routing.sird._
-import play.api.test._
-import play.api.{BuiltInComponentsFromContext, Configuration}
-import play.core.server.Server
-import play.filters.HttpFiltersComponents
-import uk.gov.hmrc.http.HttpClient
-import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
+import models.submissions.{ConnectedSubmission, NotConnectedSubmission}
+import org.scalatest.RecoverMethods.recoverToExceptionIf
+import play.api.http.Status.CREATED
+import play.api.libs.json.Format
+import uk.gov.hmrc.http.{BadRequestException, HeaderCarrier, HttpClient, HttpReads, HttpResponse}
 import utils.TestBaseSpec
+
+import scala.concurrent.{ExecutionContext, Future}
 
 class SubmissionConnectorSpec extends TestBaseSpec {
 
-  private val config     = inject[Configuration]
-  private val httpClient = inject[HttpClient]
-  private val appConfig  = inject[AppConfig]
+  val mockHttpClient = mock[HttpClient]
+  val refNumber      = "12345678"
 
-  def withSubmissionConnector[T](block: SubmissionConnector => T): T =
-    Server.withApplicationFromContext() { context =>
-      new BuiltInComponentsFromContext(context) with HttpFiltersComponents {
-        override def router: Router = Router.from {
-          case (PUT(p"/tenure-cost-and-trade-records/submissions/connected/99996010004")) =>
-            Action { req =>
-              Created("")
-            }
+  val connector = new HodSubmissionConnector(servicesConfig, frontendAppConfig, mockHttpClient)
 
-          case PUT(p"/tenure-cost-and-trade-records/submissions/connected/WRONG_ID") =>
-            Action { req =>
-              if (req.headers.get("Authorization").isDefined) {
-                BadRequest(Json.obj("statusCode" -> BAD_REQUEST, "message" -> "Wrong ID"))
-              } else {
-                Forbidden("Invalid token")
-              }
-            }
-          case _                                                                     =>
-            Action { req =>
-              NotFound("Not mocked")
-            }
-        }
-      }.application
-    } { implicit port =>
-      WsTestClient.withClient { wsClient =>
-        block(
-          new HodSubmissionConnector(
-            new ServicesConfig(
-              Configuration("microservice.services.tenure-cost-and-trade-records.port" -> port.value)
-                .withFallback(config)
-            ),
-            appConfig,
-            httpClient
+  "SubmissionConnector" when {
+
+    "submitNotConnected is called" should {
+
+      "make a PUT request and handle success response" in {
+        when(
+          mockHttpClient.PUT[NotConnectedSubmission, HttpResponse](
+            startsWith(s"${connector.serviceUrl}/tenure-cost-and-trade-records/submissions/notConnected/"),
+            argThat[NotConnectedSubmission](_ => true), // Matching any NotConnectedSubmission here
+            any[Seq[(String, String)]]
+          )(
+            any[Format[NotConnectedSubmission]],
+            any[HttpReads[HttpResponse]],
+            any[HeaderCarrier],
+            any[ExecutionContext]
           )
         )
-      }
-    }
+          .thenReturn(Future.successful(HttpResponse(201, "")))
 
-  "SubmissionConnector" should {
-    "submit ConnectedSubmission" in {
-      withSubmissionConnector { submissionConnector =>
-        await(submissionConnector.submitConnected("99996010004", connectedSubmission))
-      }
-    }
+        val result = connector.submitNotConnected(refNumber, notConnectedSubmission)
 
-    "return BadRequestException on save with wrong id" in {
-      withSubmissionConnector { submissionConnector =>
-        val thrown = intercept[Exception] {
-          await(submissionConnector.submitConnected("WRONG_ID", connectedSubmission))
+        await(result) shouldBe ()
+      }
+
+      "handle BadRequestException response" in {
+        when(
+          mockHttpClient.PUT[NotConnectedSubmission, HttpResponse](
+            startsWith(s"${connector.serviceUrl}/tenure-cost-and-trade-records/submissions/notConnected/"),
+            argThat[NotConnectedSubmission](_ => true), // Matching any NotConnectedSubmission here
+            any[Seq[(String, String)]]
+          )(
+            any[Format[NotConnectedSubmission]],
+            any[HttpReads[HttpResponse]],
+            any[HeaderCarrier],
+            any[ExecutionContext]
+          )
+        )
+          .thenReturn(Future.successful(HttpResponse(400, "Bad Request")))
+
+        recoverToExceptionIf[BadRequestException] {
+          connector.submitNotConnected(refNumber, notConnectedSubmission)
+        } map { exception =>
+          exception          shouldBe a[BadRequestException]
+          //exception.getMessage should include("Bad Request")
         }
       }
-    }
-  }
 
+    }
+
+    "submitConnected is called" should {
+
+      "make a PUT request and handle success response" in {
+        when(
+          mockHttpClient.PUT[ConnectedSubmission, HttpResponse](
+            startsWith(s"${connector.serviceUrl}/tenure-cost-and-trade-records/submissions/connected/"),
+            argThat[ConnectedSubmission](_ => true), // Matching any ConnectedSubmission here
+            any[Seq[(String, String)]]
+          )(any[Format[ConnectedSubmission]], any[HttpReads[HttpResponse]], any[HeaderCarrier], any[ExecutionContext])
+        )
+          .thenReturn(Future.successful(HttpResponse(201, "")))
+
+        val result = connector.submitConnected(refNumber, connectedSubmission)
+
+        await(result) shouldBe ()
+      }
+
+    }
+
+  }
 }
