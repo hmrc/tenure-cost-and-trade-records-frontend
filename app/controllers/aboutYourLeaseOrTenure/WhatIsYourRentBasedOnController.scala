@@ -20,10 +20,11 @@ import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.WhatIsYourCurrentRentBasedOnForm.whatIsYourCurrentRentBasedOnForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne
-import models.submissions.aboutYourLeaseOrTenure.WhatIsYourCurrentRentBasedOnDetails
+import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartOne, CurrentRentBasedOnOther, WhatIsYourCurrentRentBasedOnDetails}
 import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.WhatRentBasedOnPageId
 import play.api.i18n.I18nSupport
+import play.api.mvc.Session
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import views.html.aboutYourLeaseOrTenure.whatIsYourRentBasedOn
@@ -61,11 +62,19 @@ class WhatIsYourRentBasedOnController @Inject() (
       whatIsYourCurrentRentBasedOnForm,
       formWithErrors => BadRequest(whatIsYourRentBasedOnView(formWithErrors, request.sessionData.toSummary)),
       data => {
-        val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(whatIsYourCurrentRentBasedOnDetails = Some(data)))
-        session.saveOrUpdate(updatedData)
-        Redirect(navigator.nextPage(WhatRentBasedOnPageId, updatedData).apply(updatedData))
+        val currentRentBasedOnValue = request.body.asFormUrlEncoded.get("currentRentBasedOn").headOption.getOrElse("")
+        val isOther                 = currentRentBasedOnValue == CurrentRentBasedOnOther.name
+        if (isOther && data.describe.isEmpty) {
+          val formWithCustomError = whatIsYourCurrentRentBasedOnForm
+            .fillAndValidate(data)
+            .withError("whatIsYourRentBasedOn", "error.whatIsYourRentBasedOn.required")
+          BadRequest(whatIsYourRentBasedOnView(formWithCustomError, request.sessionData.toSummary))
+        } else {
+          val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(whatIsYourCurrentRentBasedOnDetails = Some(data)))
+          session.saveOrUpdate(updatedData)
+          Redirect(navigator.nextPage(WhatRentBasedOnPageId, updatedData).apply(updatedData))
+        }
       }
     )
   }
-
 }
