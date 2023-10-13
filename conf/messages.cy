@@ -929,7 +929,7 @@ hint.currentLeaseOrAgreementBegin = For example, 18 months, 1.5 years, or 1 year
 error.grantedFor.required = Please enter how long it was granted for
 error.leaseBegin.month.required = The date the current lease began must include a month
 error.leaseBegin.year.required = The date the current lease began must include a year
-label.currentRentFirstPaid.help = For example, 9 2017
+label.currentLeaseOrAgreementBegin.help = For example, 9 2017
 
 # INTERVALS OF RENT REVIEW
 ##########################
