@@ -17,49 +17,48 @@
 package connectors
 
 import com.google.inject.ImplementedBy
+import config.AppConfig
 
 import javax.inject.{Inject, Singleton}
 import models.submissions.{ConnectedSubmission, NotConnectedSubmission}
 
 import scala.concurrent.{ExecutionContext, Future}
-import uk.gov.hmrc.http.{BadRequestException, HeaderCarrier, HttpClient, HttpReads, HttpResponse, Upstream4xxResponse}
+import uk.gov.hmrc.http._
 import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
 
 @Singleton
-class HodSubmissionConnector @Inject() (config: ServicesConfig, http: HttpClient)(implicit ec: ExecutionContext)
-    extends SubmissionConnector {
-  lazy val serviceUrl = config.baseUrl("tenure-cost-and-trade-records")
+class HodSubmissionConnector @Inject() (config: ServicesConfig, appConfig: AppConfig, http: HttpClient)(implicit
+                                                                                                        ec: ExecutionContext
+) extends SubmissionConnector {
 
-  private def url(path: String) = s"$serviceUrl/tenure-cost-and-trade-records/$path"
+  private val serviceUrl           = config.baseUrl("tenure-cost-and-trade-records")
+  private val internalAuthToken    = appConfig.internalAuthToken
+  private def url(path: String)    = s"$serviceUrl/tenure-cost-and-trade-records/$path"
 
-  implicit def httpReads = new HttpReads[HttpResponse] {
-    override def read(method: String, url: String, response: HttpResponse): HttpResponse =
+  private def handleHttpResponse: HttpReads[HttpResponse] = new HttpReads[HttpResponse] {
+    override def read(method: String, url: String, response: HttpResponse): HttpResponse = {
       response.status match {
         case 400 => throw new BadRequestException(response.body)
         case 401 => throw new Upstream4xxResponse(response.body, 401, 401, response.headers)
         case 409 => throw new Upstream4xxResponse(response.body, 409, 409, response.headers)
         case _   => HttpReads.Implicits.readRaw.read(method, url, response)
       }
+    }
   }
 
-  override def submitNotConnected(refNumber: String, submission: NotConnectedSubmission)(implicit
-    hc: HeaderCarrier
-  ): Future[Unit] =
-    http.PUT(s"${url(s"submissions/notConnected/$refNumber")}", submission).map(_ => ())
+  override def submitNotConnected(refNumber: String, submission: NotConnectedSubmission)(implicit hc: HeaderCarrier): Future[Unit] = {
+    http.PUT[NotConnectedSubmission, HttpResponse](url(s"submissions/notConnected/$refNumber"), submission, Seq("Authorization" -> internalAuthToken)).map(_ => ())
+  }
 
-  override def submitConnected(refNumber: String, submission: ConnectedSubmission)(implicit
-    hc: HeaderCarrier
-  ): Future[Unit] =
-    http.PUT(s"${url(s"submissions/connected/$refNumber")}", submission).map(_ => ())
+  override def submitConnected(refNumber: String, submission: ConnectedSubmission)(implicit hc: HeaderCarrier): Future[Unit] = {
+    http.PUT[ConnectedSubmission, HttpResponse](url(s"submissions/connected/$refNumber"), submission, Seq("Authorization" -> internalAuthToken)).map(response => println(response.status))
+  }
+
+
 }
 
 @ImplementedBy(classOf[HodSubmissionConnector])
 trait SubmissionConnector {
-  def submitNotConnected(refNumber: String, submission: NotConnectedSubmission)(implicit
-    hc: HeaderCarrier
-  ): Future[Unit]
-
-  def submitConnected(refNumber: String, submission: ConnectedSubmission)(implicit
-    hc: HeaderCarrier
-  ): Future[Unit]
+  def submitNotConnected(refNumber: String, submission: NotConnectedSubmission)(implicit hc: HeaderCarrier): Future[Unit]
+  def submitConnected(refNumber: String, submission: ConnectedSubmission)(implicit hc: HeaderCarrier): Future[Unit]
 }

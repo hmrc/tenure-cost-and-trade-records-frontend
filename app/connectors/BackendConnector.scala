@@ -17,6 +17,7 @@
 package connectors
 
 import com.google.inject.ImplementedBy
+import config.AppConfig
 import models.{Credentials, FORLoginResponse, SubmissionDraft}
 import play.api.libs.json.Writes
 import uk.gov.hmrc.http.{BadRequestException, HeaderCarrier, HttpClient, HttpReads, HttpResponse, Upstream4xxResponse}
@@ -26,14 +27,14 @@ import javax.inject.{Inject, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
-class DefaultBackendConnector @Inject() (servicesConfig: ServicesConfig, http: HttpClient)(implicit
-  ec: ExecutionContext
+class DefaultBackendConnector @Inject() (servicesConfig: ServicesConfig, appConfig: AppConfig, http: HttpClient)(
+  implicit ec: ExecutionContext
 ) extends BackendConnector {
 
-  private val serviceUrl         = servicesConfig.baseUrl("tenure-cost-and-trade-records")
-  private val backendBaseUrl     = s"$serviceUrl/tenure-cost-and-trade-records"
-  private val saveAsDraftBaseUrl = s"$backendBaseUrl/saveAsDraft"
-
+  private val serviceUrl                              = servicesConfig.baseUrl("tenure-cost-and-trade-records")
+  private val backendBaseUrl                          = s"$serviceUrl/tenure-cost-and-trade-records"
+  private val saveAsDraftBaseUrl                      = s"$backendBaseUrl/saveAsDraft"
+  private val internalAuthToken                       = appConfig.internalAuthToken
   private def saveAsDraftUrl(referenceNumber: String) = s"$saveAsDraftBaseUrl/$referenceNumber"
 
   private def url(path: String) = s"$serviceUrl/tenure-cost-and-trade-records/$path"
@@ -53,28 +54,38 @@ class DefaultBackendConnector @Inject() (servicesConfig: ServicesConfig, http: H
   ): Future[FORLoginResponse] = {
     val credentials    = Credentials(refNumber, postcode)
     val wrtCredentials = implicitly[Writes[Credentials]]
-    http.POST[Credentials, FORLoginResponse](url("authenticate"), credentials)(wrtCredentials, readsHack, hc, ec)
+    http.POST[Credentials, FORLoginResponse](
+      url("authenticate"),
+      credentials,
+      Seq("Authorization" -> internalAuthToken)
+    )(wrtCredentials, readsHack, hc, ec)
   }
 
   override def retrieveFORType(referenceNumber: String)(implicit
     hc: HeaderCarrier
   ): Future[String] =
-    http.GET(url(s"$referenceNumber/forType")).map(res => (res.json \ "FORType").as[String])
+    http
+      .GET(url(s"$referenceNumber/forType"), headers = Seq("Authorization" -> internalAuthToken))
+      .map(res => (res.json \ "FORType").as[String])
 
   override def saveAsDraft(referenceNumber: String, submissionDraft: SubmissionDraft)(implicit
     hc: HeaderCarrier
   ): Future[Unit] =
-    http.PUT(saveAsDraftUrl(referenceNumber), submissionDraft) map { _ => () }
+    http.PUT(saveAsDraftUrl(referenceNumber), submissionDraft, headers = Seq("Authorization" -> internalAuthToken)) map { _ =>
+      ()
+    }
 
   override def loadSubmissionDraft(referenceNumber: String)(implicit
     hc: HeaderCarrier
   ): Future[Option[SubmissionDraft]] =
-    http.GET[Option[SubmissionDraft]](saveAsDraftUrl(referenceNumber))
+    http.GET[Option[SubmissionDraft]](saveAsDraftUrl(referenceNumber),headers = Seq("Authorization" -> internalAuthToken))
 
   override def deleteSubmissionDraft(referenceNumber: String)(implicit
     hc: HeaderCarrier
-  ): Future[Int] =
-    http.DELETE(saveAsDraftUrl(referenceNumber)).map(res => (res.json \ "deletedCount").as[Int])
+  ): Future[Int]                     =
+    http
+      .DELETE(saveAsDraftUrl(referenceNumber), headers = Seq("Authorization" -> internalAuthToken))
+      .map(res => (res.json \ "deletedCount").as[Int])
 
 }
 

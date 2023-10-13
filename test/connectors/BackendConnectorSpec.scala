@@ -16,6 +16,7 @@
 
 package connectors
 
+import config.AppConfig
 import play.api.http.Status.BAD_REQUEST
 import play.api.libs.json.Json
 import play.api.mvc.Results.{BadRequest, Created, InternalServerError, NotFound, Ok}
@@ -35,6 +36,7 @@ import utils.TestBaseSpec
 class BackendConnectorSpec extends TestBaseSpec {
 
   private val config     = inject[Configuration]
+  private val appConfig  = inject[AppConfig]
   private val httpClient = inject[HttpClient]
 
   def withBackendConnector[T](block: BackendConnector => T): T =
@@ -71,6 +73,7 @@ class BackendConnectorSpec extends TestBaseSpec {
               Configuration("microservice.services.tenure-cost-and-trade-records.port" -> port.value)
                 .withFallback(config)
             ),
+            appConfig,
             httpClient
           )
         )

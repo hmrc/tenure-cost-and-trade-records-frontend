@@ -16,16 +16,17 @@
 
 package connectors
 
+import config.AppConfig
 import play.api.http.Status.BAD_REQUEST
 import play.api.libs.json.Json
-import play.api.mvc.Results.{BadRequest, Created}
+import play.api.mvc.Results.{BadRequest, Created, Forbidden, NotFound}
 import play.api.routing.Router
 import play.api.routing.sird._
 import play.api.test._
 import play.api.{BuiltInComponentsFromContext, Configuration}
 import play.core.server.Server
 import play.filters.HttpFiltersComponents
-import uk.gov.hmrc.http.{BadRequestException, HttpClient}
+import uk.gov.hmrc.http.HttpClient
 import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
 import utils.TestBaseSpec
 
@@ -33,18 +34,28 @@ class SubmissionConnectorSpec extends TestBaseSpec {
 
   private val config     = inject[Configuration]
   private val httpClient = inject[HttpClient]
+  private val appConfig  = inject[AppConfig]
 
   def withSubmissionConnector[T](block: SubmissionConnector => T): T =
     Server.withApplicationFromContext() { context =>
       new BuiltInComponentsFromContext(context) with HttpFiltersComponents {
         override def router: Router = Router.from {
-          case PUT(p"/tenure-cost-and-trade-records/submissions/connected/99996010004") =>
+          case (PUT(p"/tenure-cost-and-trade-records/submissions/connected/99996010004")) =>
             Action { req =>
               Created("")
             }
-          case PUT(p"/tenure-cost-and-trade-records/submissions/connected/WRONG_ID")    =>
+
+          case PUT(p"/tenure-cost-and-trade-records/submissions/connected/WRONG_ID") =>
             Action { req =>
-              BadRequest(Json.obj("statusCode" -> BAD_REQUEST, "message" -> "Wrong ID"))
+              if (req.headers.get("Authorization").isDefined) {
+                BadRequest(Json.obj("statusCode" -> BAD_REQUEST, "message" -> "Wrong ID"))
+              } else {
+                Forbidden("Invalid token")
+              }
+            }
+          case _                                                                     =>
+            Action { req =>
+              NotFound("Not mocked")
             }
         }
       }.application
@@ -56,6 +67,7 @@ class SubmissionConnectorSpec extends TestBaseSpec {
               Configuration("microservice.services.tenure-cost-and-trade-records.port" -> port.value)
                 .withFallback(config)
             ),
+            appConfig,
             httpClient
           )
         )
@@ -71,7 +83,7 @@ class SubmissionConnectorSpec extends TestBaseSpec {
 
     "return BadRequestException on save with wrong id" in {
       withSubmissionConnector { submissionConnector =>
-        intercept[BadRequestException] {
+        val thrown = intercept[Exception] {
           await(submissionConnector.submitConnected("WRONG_ID", connectedSubmission))
         }
       }

@@ -79,14 +79,9 @@ class InternalAuthTokenInitialiserImpl @Inject() (
           "principal"   -> appName,
           "permissions" -> Seq(
             Json.obj(
-              "resourceType"     -> "claim-child-benefit",
+              "resourceType"     -> "tenure-cost-and-trade-records",
               "resourceLocation" -> "*",
               "actions"          -> List("*")
-            ),
-            Json.obj(
-              "resourceType"     -> "home-office-immigration-status-proxy",
-              "resourceLocation" -> s"status/public-funds/nino/$appName",
-              "actions"          -> List("WRITE")
             )
           )
         )
