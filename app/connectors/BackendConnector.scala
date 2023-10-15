@@ -71,18 +71,25 @@ class DefaultBackendConnector @Inject() (servicesConfig: ServicesConfig, appConf
   override def saveAsDraft(referenceNumber: String, submissionDraft: SubmissionDraft)(implicit
     hc: HeaderCarrier
   ): Future[Unit] =
-    http.PUT(saveAsDraftUrl(referenceNumber), submissionDraft, headers = Seq("Authorization" -> internalAuthToken)) map { _ =>
+    http.PUT(
+      saveAsDraftUrl(referenceNumber),
+      submissionDraft,
+      headers = Seq("Authorization" -> internalAuthToken)
+    ) map { _ =>
       ()
     }
 
   override def loadSubmissionDraft(referenceNumber: String)(implicit
     hc: HeaderCarrier
   ): Future[Option[SubmissionDraft]] =
-    http.GET[Option[SubmissionDraft]](saveAsDraftUrl(referenceNumber),headers = Seq("Authorization" -> internalAuthToken))
+    http.GET[Option[SubmissionDraft]](
+      saveAsDraftUrl(referenceNumber),
+      headers = Seq("Authorization" -> internalAuthToken)
+    )
 
   override def deleteSubmissionDraft(referenceNumber: String)(implicit
     hc: HeaderCarrier
-  ): Future[Int]                     =
+  ): Future[Int] =
     http
       .DELETE(saveAsDraftUrl(referenceNumber), headers = Seq("Authorization" -> internalAuthToken))
       .map(res => (res.json \ "deletedCount").as[Int])
