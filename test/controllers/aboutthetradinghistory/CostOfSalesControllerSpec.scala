@@ -28,7 +28,7 @@ import scala.concurrent.ExecutionContext
 
 class CostOfSalesControllerSpec extends TestBaseSpec {
 
-  val sessionRequest           = SessionRequest(baseFilled6015Session, fakeRequest)
+  val sessionRequest           = SessionRequest(aboutYourTradingHistory6015YesSession, fakeRequest)
   val mockCostOfSalesNavigator = mock[AboutTheTradingHistoryNavigator]
   val mockCostOfSalesView      = mock[costOfSales]
   when(mockCostOfSalesView.apply(any)(any, any)).thenReturn(HtmlFormat.empty)
@@ -37,7 +37,7 @@ class CostOfSalesControllerSpec extends TestBaseSpec {
     stubMessagesControllerComponents(),
     mockCostOfSalesNavigator,
     mockCostOfSalesView,
-    preFilledSession,
+    preEnrichedActionRefiner(aboutTheTradingHistory = aboutYourTradingHistory6015YesSession.aboutTheTradingHistory),
     mockSessionRepo
   )(inject[ExecutionContext])
 

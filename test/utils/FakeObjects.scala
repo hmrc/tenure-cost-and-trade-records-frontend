@@ -265,6 +265,14 @@ trait FakeObjects {
   val aboutYourTradingHistory6010YesSession: Session =
     aboutYouAndTheProperty6010YesSession.copy(aboutTheTradingHistory = Some(prefilledAboutYourTradingHistory))
 
+  val aboutYourTradingHistory6015YesSession: Session =
+    aboutYouAndTheProperty6015YesSession.copy(
+      aboutTheTradingHistory = Some(
+        prefilledAboutYourTradingHistory
+          .copy(costOfSales = Seq(CostOfSales(LocalDate.now, None, None, None, None)))
+      )
+    )
+
   // Franchises or lettings
   val prefilledCateringOperationSectionYes: CateringOperationSection = CateringOperationSection(
     CateringOperationDetails("Operator Name", "Type of Business", prefilledCateringAddress),

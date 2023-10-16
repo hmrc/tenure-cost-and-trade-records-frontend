@@ -79,8 +79,7 @@ class AboutYourTradingHistoryController @Inject() (
                   accommodation = None,
                   averageOccupancyRate = None
                 )
-              },
-              costOfSales = financialYearsList.map(CostOfSales(_, None, None, None, None))
+              }
             )
           )
           session
