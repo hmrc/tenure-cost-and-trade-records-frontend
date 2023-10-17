@@ -46,23 +46,10 @@ class CostOfSalesController @Inject() (
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     request.sessionData.aboutTheTradingHistory
       .filter(_.occupationAndAccountingInformation.isDefined)
+      .filter(_.costOfSales.nonEmpty)
       .fold(Redirect(routes.AboutYourTradingHistoryController.show())) { aboutTheTradingHistory =>
-        val costOfSales =
-          if (aboutTheTradingHistory.costOfSales.isEmpty) {
-            val financialYearsList = AccountingInformationUtil.financialYearsRequired(
-              aboutTheTradingHistory.occupationAndAccountingInformation.get
-            )
-            val initialCostOfSales = financialYearsList.map(CostOfSales(_, None, None, None, None))
-            val updatedData        = updateAboutTheTradingHistory(_.copy(costOfSales = initialCostOfSales))
-            session.saveOrUpdate(updatedData)
-            initialCostOfSales
-          } else {
-            aboutTheTradingHistory.costOfSales
-          }
         Ok(
-          costOfSalesView(
-            costOfSalesForm.fillAndValidate(costOfSales)
-          )
+          costOfSalesView(costOfSalesForm.fillAndValidate(aboutTheTradingHistory.costOfSales))
         )
       }
   }

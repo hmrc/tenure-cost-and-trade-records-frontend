@@ -16,23 +16,26 @@
 
 package form.aboutthetradinghistory
 
-import form.DateMappings.dateTooEarlyConstraint
+import form.DateMappings.dateFieldsMapping
 import form.MappingSupport.turnoverSalesMapping
 import models.submissions.aboutthetradinghistory.TurnoverSection
 import play.api.data.{Form, Mapping}
-import play.api.data.Forms.{bigDecimal, localDate, mapping, number, optional}
+import play.api.data.Forms.{bigDecimal, mapping, number, optional}
 import play.api.data.validation.{Constraint, Invalid, Valid}
 
 object TurnoverForm {
   def turnoverForm(expectedNumberOfFinancialYears: Int): Form[Seq[TurnoverSection]] = {
-    val ukDateMappings                                     = localDate("dd/MM/yyyy")
     val averageOccupancyConstraint: Constraint[BigDecimal] = Constraint[BigDecimal]("averageOccupancyConstraint") {
       averageOccupancy =>
         if (averageOccupancy >= 0 && averageOccupancy <= 100) Valid
         else Invalid("Average occupancy rate must be between 0 and 100")
     }
-    val columnMapping: Mapping[TurnoverSection]            = mapping(
-      "financial-year-end"     -> ukDateMappings.verifying(dateTooEarlyConstraint),
+    def columnMapping(idx: Int): Mapping[TurnoverSection]  = mapping(
+      "financial-year-end"     -> dateFieldsMapping(
+        s"$idx.financial-year-end",
+        allowFutureDates = true,
+        fieldErrorPart = ".financialYearEnd"
+      ),
       "weeks"                  -> number(min = 0, max = 52),
       "alcoholic-drinks"       -> turnoverSalesMapping("turnover.alcohol.sales"),
       "food"                   -> turnoverSalesMapping("turnover.food.sales"),
@@ -45,23 +48,23 @@ object TurnoverForm {
     Form {
       expectedNumberOfFinancialYears match {
         case 1                               =>
-          mapping("0" -> columnMapping)(section => Seq(section)) {
+          mapping("0" -> columnMapping(0))(section => Seq(section)) {
             case Seq(section) => Some(section)
             case _            => None
           }
         case 2                               =>
           mapping(
-            "0" -> columnMapping,
-            "1" -> columnMapping
+            "0" -> columnMapping(0),
+            "1" -> columnMapping(1)
           ) { case (first, second) => Seq(first, second) } {
             case Seq(first, second) => Some((first, second))
             case _                  => None
           }
         case 3                               =>
           mapping(
-            "0" -> columnMapping,
-            "1" -> columnMapping,
-            "2" -> columnMapping
+            "0" -> columnMapping(0),
+            "1" -> columnMapping(1),
+            "2" -> columnMapping(2)
           ) { case (first, second, third) => Seq(first, second, third) } {
             case Seq(first, second, third) => Some((first, second, third))
             case _                         => None

@@ -20,7 +20,7 @@ import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.TurnoverForm.turnoverForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.updateAboutTheTradingHistory
-import models.submissions.aboutthetradinghistory.TurnoverSection
+import models.submissions.aboutthetradinghistory.{CostOfSales, TurnoverSection}
 import navigation.AboutTheTradingHistoryNavigator
 import navigation.identifiers.TurnoverPageId
 import play.api.i18n.I18nSupport
@@ -66,7 +66,12 @@ class TurnoverController @Inject() (
           turnoverForm(numberOfColumns),
           formWithErrors => BadRequest(turnoverView(formWithErrors, numberOfColumns, request.sessionData.toSummary)),
           success => {
-            val updatedData = updateAboutTheTradingHistory(_.copy(turnoverSections = success))
+            val updatedData = updateAboutTheTradingHistory(
+              _.copy(
+                turnoverSections = success,
+                costOfSales = success.map(_.financialYearEnd).map(CostOfSales(_, None, None, None, None))
+              )
+            )
             session
               .saveOrUpdate(updatedData)
               .map(_ => Redirect(navigator.nextPage(TurnoverPageId, updatedData).apply(updatedData)))

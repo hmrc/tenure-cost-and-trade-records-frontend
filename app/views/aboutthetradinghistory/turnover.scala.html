@@ -23,6 +23,7 @@
         govukButton: GovukButton,
         formWithCSRF: FormWithCSRF,
         govukInput: GovukInput,
+        govukDateInput: GovukDateInput,
         govukTable: GovukTable,
         govukInsetText: GovukInsetText,
         govukDetails: GovukDetails
@@ -37,6 +38,10 @@
     <p class="govuk-body govuk-!-font-weight-bold">@messages("turnover.details.h2")</p>
     <p class="govuk-body">@messages("turnover.details.p3")</p>
 
+}
+
+@financialYearEndContent(fieldName: String) = {
+    @includes.dateFields(form = form, field = fieldName, govukDate = govukDateInput, helpText = "", showDays = true, showFieldSet = false)
 }
 
 @alcoholicDrinksHeading = {
@@ -100,11 +105,7 @@
                   columns.map { idx  =>
                   TableRow(
                       content = HtmlContent(
-                          govukInput(Input(
-                              id = s"$idx.financial-year-end",
-                              name = s"$idx.financial-year-end",
-                              value = form(s"$idx.financial-year-end").value
-                          ).withFormField(form(s"$idx.financial-year-end")))
+                          financialYearEndContent(s"$idx.financial-year-end")
                       )
                   )
               },
