@@ -54,6 +54,8 @@ trait FakeViews { this: GuiceOneAppPerSuite =>
     app.injector.instanceOf[checkYourAnswersConnectionToVacantProperty]
   lazy val confirmationConnectionToProperty: confirmationConnectionToProperty                     =
     app.injector.instanceOf[confirmationConnectionToProperty]
+  lazy val confirmationVacantProperty: confirmationVacantProperty                                 =
+    app.injector.instanceOf[confirmationVacantProperty]
   lazy val confirmation: confirmation                                                             =
     app.injector.instanceOf[confirmation]
   lazy val tradingNameOperatingFromProperty: tradingNameOperatingFromProperty                     =

@@ -41,7 +41,7 @@ class ConnectionToPropertySubmissionControllerSpec extends TestBaseSpec {
       stubMessagesControllerComponents(),
       submissionConnector,
       errorHandler,
-      confirmationConnectionToProperty,
+      confirmationVacantProperty,
       audit,
       preEnrichedActionRefiner(stillConnectedDetails = stillConnectedDetails),
       mockSessionRepo

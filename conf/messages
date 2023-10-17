@@ -409,6 +409,20 @@ list.connectionToProperty.p1 = the address you supplied does not match their rec
 list.connectionToProperty.p2 = they have no record of sending you a letter
 list.connectionToProperty.p3 = they require further information
 
+# Vacant property connection
+label.vacantProperty.confirm.heading = Declaration sent successfully
+label.vacantProperty.emailConfirm = We have sent you a confirmation email.
+label.vacantProperty.saveCopyOfAnswers.1 = Save a copy of your answers (print or PDF download)
+label.vacantProperty.unableToRetrieveAnswers = You will be unable to retrieve your answers beyond this point
+label.vacantProperty.whatNext = What happens next
+vacantProperty.confirm.copy.list.1 = We have sent your declaration to the Valuation Office Agency.
+vacantProperty.confirm.copy.list.2 = They may need to contact you for further information.
+label.vacantProperty.reissued = You will be reissued with a declaration request letter if the VOA has sent you one recently.
+label.vacantProperty.contact = The VOA may need to contact you if:
+list.vacantProperty.p1 = the address you supplied does not match their records
+list.vacantProperty.p2 = they have no record of sending you a letter
+list.vacantProperty.p3 = they require further information
+
 # NOT CONNECTED SECTION
 #######################
 
@@ -1422,11 +1436,11 @@ label.feedback.p1=We use feedback to make our services better.
 label.feedback.comments=How could we improve this service? (optional)
 feedback.comments.hint=Do not include any personal or financial information. For example, your National Insurance or credit card numbers
 feedback.comments.label=Comments (optional)
-feedback.bottomCopy=Don’t include any personal or financial information, for example your National Insurance or credit card numbers.
+feedback.bottomCopy=Do not include any personal or financial information, for example your National Insurance or credit card numbers.
 
 feedback.rating.required=Select how satisfied you are with this service
 feedback.comments.maxLength=Comments must be 1200 characters or fewer
-confirmation.feedback.subheading=Overall, how did you feel about this service?
+confirmation.feedback.subheading=How did you feel about this service?
 confirmation.feedback.title=Feedback
 
 # Errors

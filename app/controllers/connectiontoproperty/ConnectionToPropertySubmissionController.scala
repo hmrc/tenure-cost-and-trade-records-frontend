@@ -30,6 +30,7 @@ import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import uk.gov.hmrc.play.http.HeaderCarrierConverter
 import views.html.confirmationConnectionToProperty
+import views.html.connectiontoproperty.confirmationVacantProperty
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
@@ -39,7 +40,7 @@ class ConnectionToPropertySubmissionController @Inject() (
   mcc: MessagesControllerComponents,
   submissionConnector: SubmissionConnector,
   errorHandler: ErrorHandler,
-  confirmationView: confirmationConnectionToProperty,
+  vacantPropertyView: confirmationVacantProperty,
   audit: Audit,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
@@ -79,7 +80,7 @@ class ConnectionToPropertySubmissionController @Inject() (
   }
 
   def confirmation: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    Future(Ok(confirmationView(feedbackForm)))
+    Future(Ok(vacantPropertyView(feedbackForm)))
   }
 
   private def submitToBackend(
