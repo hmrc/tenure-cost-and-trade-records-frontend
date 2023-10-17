@@ -71,22 +71,24 @@ class CheckYourAnswersNotConnectedController @Inject() (
     } yield Found(confirmationUrl)
   }
 
-  def submitNotConnected(
-    refNum: String
-  )(implicit hc: HeaderCarrier, request: SessionRequest[_]): Future[Unit] = {
+  def submitNotConnected(refNum: String)(implicit hc: HeaderCarrier, request: SessionRequest[_]): Future[Unit] = {
     val auditType      = "NotConnectedSubmission"
-    // Dummy data from session to able creation of audit dashboards
     val submissionJson = Json.toJson(request.sessionData).as[JsObject]
     val session        = request.sessionData
 
     submitToBackend(session).map { _ =>
-      audit.sendExplicitAudit(auditType, submissionJson ++ Audit.languageJson)
-      // Temporary to generate failed audit event TODO REMOVE *****
-      audit.sendExplicitAudit("NotConnectedSubmissionFailed", submissionJson)
+      val outcome = Json.obj("isSuccessful" -> true)
+      audit.sendExplicitAudit(auditType, submissionJson ++ Audit.languageJson ++ Json.obj("outcome" -> outcome))
       Redirect(confirmationUrl)
     } recover { case e: Exception =>
-      logger.error(s"Could not send data to HOD - ${session.referenceNumber} - ${hc.sessionId}")
-      audit.sendExplicitAudit("NotConnectedSubmissionFailed", submissionJson)
+      val failureReason = s"Could not send data to HOD - ${session.referenceNumber} - ${hc.sessionId}"
+      logger.error(failureReason)
+      val outcome       = Json.obj(
+        "isSuccessful"    -> false,
+        "failureCategory" -> INTERNAL_SERVER_ERROR,
+        "failureReason"   -> failureReason
+      )
+      audit.sendExplicitAudit(auditType, submissionJson ++ Json.obj("outcome" -> outcome))
       InternalServerError(errorHandler.internalServerErrorTemplate(request))
     }
     Future.unit
