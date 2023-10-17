@@ -30,7 +30,7 @@ object DoesTheRentPayableForm {
         nonEmptyList("error.doesTheRentPayable.required"),
         noneCantBeSelectedWithOther(
           "noneOfThese",
-          "error.cateringOperationOrLettingAccommodationCheckboxesDetails.noneSelectedWithOther"
+          "error.doesTheRentPayable.noneSelectedWithOther"
         )
       ),
       "detailsToQuestions" ->
