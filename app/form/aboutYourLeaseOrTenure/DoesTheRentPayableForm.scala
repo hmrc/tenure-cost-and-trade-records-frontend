@@ -16,6 +16,7 @@
 
 package form.aboutYourLeaseOrTenure
 
+import form.MappingSupport.{nonEmptyList, noneCantBeSelectedWithOther}
 import models.submissions.aboutYourLeaseOrTenure.DoesTheRentPayable
 import play.api.data.Form
 import play.api.data.Forms.{default, list, mapping, text}
@@ -25,10 +26,15 @@ object DoesTheRentPayableForm {
 
   val doesTheRentPayableForm = Form(
     mapping(
-      "rentPayable"        -> list(text),
+      "rentPayable"        -> list(text).verifying(
+        nonEmptyList("error.doesTheRentPayable.required"),
+        noneCantBeSelectedWithOther(
+          "noneOfThese",
+          "error.cateringOperationOrLettingAccommodationCheckboxesDetails.noneSelectedWithOther"
+        )
+      ),
       "detailsToQuestions" ->
         default(text, "").verifying(
-          nonEmpty(errorMessage = "error.detailsToQuestions.required"),
           maxLength(1000, "error.detailsToQuestions.maxLength")
         )
     )(DoesTheRentPayable.apply)(DoesTheRentPayable.unapply)

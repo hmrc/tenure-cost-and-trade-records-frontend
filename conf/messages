@@ -671,6 +671,8 @@ checkbox.rentPayable.noneOfThese = No, the rent payable does not include or rela
 checkbox.rentPayable.none = None
 label.detailsToQuestions = Give details if you selected any of the options
 hint.detailsToQuestions = For example, the rent includes residential accommodation, or also includes the premises next door
+error.doesTheRentPayable.required = Select items that the rent payable includes, or select ’No, none of these are included in the rent’
+error.doesTheRentPayable.noneSelectedWithOther = Select items that the rent payable includes, or select ’No, none of these are included in the rent’
 error.detailsToQuestions.required = Please provide further information
 error.detailsToQuestions.maxLength = This must be 1000 characters or fewer
 
