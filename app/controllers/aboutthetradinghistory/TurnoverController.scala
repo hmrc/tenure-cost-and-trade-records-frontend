@@ -69,7 +69,7 @@ class TurnoverController @Inject() (
             val updatedData = updateAboutTheTradingHistory(
               _.copy(
                 turnoverSections = success,
-                costOfSales = success.map(sections => CostOfSales(sections.financialYearEnd, None, None, None, None))
+                costOfSales = success.map(_.financialYearEnd).map(CostOfSales(_, None, None, None, None))
               )
             )
             session
