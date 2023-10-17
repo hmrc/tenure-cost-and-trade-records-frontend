@@ -59,12 +59,13 @@ class FormSubmissionController @Inject() (
   private def submit[T]()(implicit request: SessionRequest[T]): Future[Result] = {
     implicit val hc: HeaderCarrier = HeaderCarrierConverter.fromRequestAndSession(request, request.session)
 
+    val auditType      = "FormSubmission"
     val submissionJson = Json.toJson(request.sessionData).as[JsObject] ++ Audit.languageJson
     val session        = request.sessionData
 
     submitToBackend(session).flatMap { _ =>
       val outcome = Json.obj("isSuccessful" -> true)
-      audit.sendExplicitAudit("FormSubmission", submissionJson ++ Json.obj("outcome" -> outcome))
+      audit.sendExplicitAudit(auditType, submissionJson ++ Json.obj("outcome" -> outcome))
       Future.successful(Redirect(controllers.routes.FormSubmissionController.confirmation()))
     } recover { case e: Exception =>
       val failureReason = s"Could not send data to HOD - ${session.referenceNumber} - ${hc.sessionId}"
@@ -74,7 +75,7 @@ class FormSubmissionController @Inject() (
         "failureCategory" -> INTERNAL_SERVER_ERROR,
         "failureReason"   -> failureReason
       )
-      audit.sendExplicitAudit("NotConnectedSubmission", submissionJson ++ Json.obj("outcome" -> outcome))
+      audit.sendExplicitAudit(auditType, submissionJson ++ Json.obj("outcome" -> outcome))
       InternalServerError(errorHandler.internalServerErrorTemplate(request))
     }
   }
