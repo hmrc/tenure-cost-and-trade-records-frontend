@@ -58,18 +58,24 @@ class FormSubmissionController @Inject() (
 
   private def submit[T]()(implicit request: SessionRequest[T]): Future[Result] = {
     implicit val hc: HeaderCarrier = HeaderCarrierConverter.fromRequestAndSession(request, request.session)
-    val auditType                  = "FormSubmission"
-    val submissionJson             = Json.toJson(request.sessionData).as[JsObject]
-    val session                    = request.sessionData
+
+    val auditType      = "FormSubmission"
+    val submissionJson = Json.toJson(request.sessionData).as[JsObject] ++ Audit.languageJson
+    val session        = request.sessionData
 
     submitToBackend(session).flatMap { _ =>
-      audit.sendExplicitAudit(auditType, submissionJson ++ Audit.languageJson)
-      Future.successful(
-        Redirect(controllers.routes.FormSubmissionController.confirmation())
-      )
+      val outcome = Json.obj("isSuccessful" -> true)
+      audit.sendExplicitAudit(auditType, submissionJson ++ Json.obj("outcome" -> outcome))
+      Future.successful(Redirect(controllers.routes.FormSubmissionController.confirmation()))
     } recover { case e: Exception =>
-      logger.error(s"Could not send data to HOD - ${session.referenceNumber} - ${hc.sessionId}")
-      audit.sendExplicitAudit("FormSubmissionFailed", submissionJson)
+      val failureReason = s"Could not send data to HOD - ${session.referenceNumber} - ${hc.sessionId}"
+      logger.error(failureReason)
+      val outcome       = Json.obj(
+        "isSuccessful"    -> false,
+        "failureCategory" -> INTERNAL_SERVER_ERROR,
+        "failureReason"   -> failureReason
+      )
+      audit.sendExplicitAudit(auditType, submissionJson ++ Json.obj("outcome" -> outcome))
       InternalServerError(errorHandler.internalServerErrorTemplate(request))
     }
   }

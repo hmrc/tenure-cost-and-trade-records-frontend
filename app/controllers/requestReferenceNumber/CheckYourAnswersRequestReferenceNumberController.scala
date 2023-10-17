@@ -80,11 +80,13 @@ class CheckYourAnswersRequestReferenceNumberController @Inject() (
   def submitRequestReferenceNumber(
     refNum: String
   )(implicit hc: HeaderCarrier, request: SessionRequest[_]): Future[Unit] = {
-    val auditType      = "NoReferenceSubmission"
-    // Dummy data from session to able creation of audit dashboards
-    val submissionJson = Json.toJson(request.sessionData).as[JsObject]
 
-    audit.sendExplicitAudit(auditType, submissionJson ++ Audit.languageJson)
+    val submissionJson = Json.toJson(request.sessionData).as[JsObject]
+    val outcome        = Json.obj("isSuccessful" -> true)
+    audit.sendExplicitAudit(
+      "NoReferenceSubmission",
+      submissionJson ++ Audit.languageJson ++ Json.obj("outcome" -> outcome)
+    )
     Future.unit
   }
 

@@ -60,15 +60,20 @@ class ConnectionToPropertySubmissionController @Inject() (
     val submissionJson             = Json.toJson(request.sessionData).as[JsObject]
     val session                    = request.sessionData
     submitToBackend(session).flatMap { _ =>
-      audit.sendExplicitAudit(auditType, submissionJson ++ Audit.languageJson)
-      // Temporary to generate failed audit event TODO REMOVE *****
-      audit.sendExplicitAudit("VacantFormSubmissionFailed", submissionJson)
+      val outcome = Json.obj("isSuccessful" -> true)
+      audit.sendExplicitAudit(auditType, submissionJson ++ Audit.languageJson ++ Json.obj("outcome" -> outcome))
       Future.successful(
         Redirect(controllers.connectiontoproperty.routes.ConnectionToPropertySubmissionController.confirmation())
       )
     } recover { case e: Exception =>
-      logger.error(s"Could not send data to HOD - ${session.referenceNumber} - ${hc.sessionId}")
-      audit.sendExplicitAudit("VacantFormSubmissionFailed", submissionJson)
+      val failureReason = s"Could not send data to HOD - ${session.referenceNumber} - ${hc.sessionId}"
+      logger.error(failureReason)
+      val outcome       = Json.obj(
+        "isSuccessful"    -> false,
+        "failureCategory" -> INTERNAL_SERVER_ERROR,
+        "failureReason"   -> failureReason
+      )
+      audit.sendExplicitAudit(auditType, submissionJson ++ Json.obj("outcome" -> outcome))
       InternalServerError(errorHandler.internalServerErrorTemplate(request))
     }
   }
