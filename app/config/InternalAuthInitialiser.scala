@@ -48,7 +48,7 @@ class InternalAuthTokenInitialiserImpl @Inject() (
     configuration.get[Service]("microservice.services.internal-auth")
 
   private val internalAuthToken: String =
-    configuration.get[String]("internal-auth.token")
+    configuration.get[String]("internalAuthToken")
 
   private val appName: String =
     configuration.get[String]("appName")
