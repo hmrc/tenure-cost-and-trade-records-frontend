@@ -30,8 +30,18 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
   override def cyaPage: Option[Call] =
     Some(aboutYourLeaseOrTenure.routes.CheckYourAnswersAboutYourLeaseOrTenureController.show())
 
+  override val overrideRedirectIfFromCYA: Map[String, Session => Call] = Map(
+    (
+      aboutYourLeaseOrTenure.routes.PropertyUseLeasebackArrangementController.show().url,
+      _ => aboutYourLeaseOrTenure.routes.PropertyUseLeasebackArrangementController.show()
+    ),
+    (
+      aboutYourLeaseOrTenure.routes.CurrentRentPayableWithin12MonthsController.show().url,
+      _ => aboutYourLeaseOrTenure.routes.CurrentRentPayableWithin12MonthsController.show()
+    )
+  )
+
   override val postponeCYARedirectPages: Set[String] = Set(
-    aboutYourLeaseOrTenure.routes.CurrentRentPayableWithin12MonthsController.show(),
     aboutYourLeaseOrTenure.routes.ConnectedToLandlordDetailsController.show(),
     aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesDetailsController.show(),
     aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsDetailsController.show(),
