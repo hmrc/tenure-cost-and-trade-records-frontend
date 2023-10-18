@@ -49,6 +49,7 @@ class BackendConnectorSpec extends TestBaseSpec with BeforeAndAfterAll {
       .configure(
         "metrics.jvm"                                              -> false,
         "metrics.enabled"                                          -> false,
+        "create-internal-auth-token-on-start"                      -> false,
         "microservice.services.tenure-cost-and-trade-records.port" -> 11111
       )
       .build()

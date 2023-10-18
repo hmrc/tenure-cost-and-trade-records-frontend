@@ -70,7 +70,8 @@ trait TestBaseSpec
     new GuiceApplicationBuilder()
       .configure(
         "metrics.jvm"     -> false,
-        "metrics.enabled" -> false
+        "metrics.enabled" -> false,
+        "create-internal-auth-token-on-start" -> false
       )
       .build()
 

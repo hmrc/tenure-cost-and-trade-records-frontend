@@ -42,7 +42,8 @@ class LoginControllerSpec extends TestBaseSpec {
       .configure(
         "metrics.jvm"          -> false,
         "metrics.enabled"      -> false,
-        "bannerNotice.enabled" -> false
+        "bannerNotice.enabled" -> false,
+        "create-internal-auth-token-on-start" -> false
       )
       .build()
 
