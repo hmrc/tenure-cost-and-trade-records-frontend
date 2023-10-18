@@ -21,7 +21,6 @@ import controllers.FORDataCaptureController
 import form.additionalinformation.ContactDetailsQuestionForm.contactDetailsQuestionForm
 import models.submissions.additionalinformation.AdditionalInformation.updateAdditionalInformation
 import models.submissions.additionalinformation.ContactDetailsQuestion
-import models.submissions.common.AnswersYesNo
 import navigation.AdditionalInformationNavigator
 import navigation.identifiers.ContactDetailsQuestionId
 import play.api.i18n.I18nSupport

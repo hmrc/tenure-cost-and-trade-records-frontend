@@ -26,7 +26,6 @@ import navigation.identifiers.CostOfSalesId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import util.AccountingInformationUtil
 import views.html.aboutthetradinghistory.costOfSales
 
 import javax.inject.{Inject, Named, Singleton}

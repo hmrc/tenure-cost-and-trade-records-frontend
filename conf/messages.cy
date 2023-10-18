@@ -315,7 +315,7 @@ error.startDateOfVacantProperty.day.required = The date must include a day
 error.startDateOfVacantProperty.month.required = The date must include a month
 error.startDateOfVacantProperty.year.required = The date must include a year
 
-# Letting INCOME - IS ANT RENT RECEIVED FROM LETTING
+# LETTING INCOME - IS ANT RENT RECEIVED FROM LETTING
 ####################################################
 isRentReceivedFromLetting.heading = Letting income
 isRentReceivedFromLetting.label = Is any rent received form letting parts of the property?
@@ -340,12 +340,24 @@ error.addressLineTwo.maxLength = Second line of address must be 50 characters or
 
 # CONNECTION TO PROPERTY ANNUAL RENT
 ###########################################
-lettingPartOfPropertyRentDetails.heading = Annual rent for {0}
+lettingPartOfPropertyRentDetails.heading = Annual rent for tenant
 
 # CONNECTION TO PROPERTY ITEMS INCLUDED IN RENT
 ###############################################
-lettingPartOfPropertyCheckboxesDetails.heading = Are any of the following included in your rent for {0}?
+lettingPartOfPropertyCheckboxesDetails.heading = Items included in the rent
 hint.lettingPartOfPropertyCheckboxesDetails = Select all that apply
+label.percentageOpenMarket = A percentage of open market value
+label.fixed = A fixed amount
+label.percentageTurnover = A percentage of turnover of the occupier’s business
+label.indexed = Indexed to the retail price index (RPI) or another index
+label.stepped = Stepped rent arrangement
+label.other = Other (for example, combination of the above)
+label.currentRentBasedOn.percentageOpenMarket = A percentage of open market value
+label.currentRentBasedOn.fixed = A fixed amount
+label.currentRentBasedOn.percentageTurnover = A percentage of turnover of the occupier’s business
+label.currentRentBasedOn.indexed = Indexed to the retail price index (RPI) or another index
+label.currentRentBasedOn.stepped = Stepped rent arrangement
+label.currentRentBasedOn.other = Other
 checkbox.lettingPartOfPropertyCheckboxesDetails.rates = Rates
 checkbox.lettingPartOfPropertyCheckboxesDetails.propertyInsurance = Property insurance
 checkbox.lettingPartOfPropertyCheckboxesDetails.outsideRepairs = Outside repairs
@@ -369,7 +381,7 @@ provideContactDetails.p1 = These should be the contact details of the person com
 provideContactDetailsAdditionalInformation.heading = Additional Information (optional)
 provideContactDetailsAdditionalInformation.hint = For example, the name of the previous owner or occupier
 
-# CHECK YOUR ANSWERS VACENT PROPERTY SUBMISSION
+# CHECK YOUR ANSWERS VACANT PROPERTY SUBMISSION
 #############################################
 checkYourAnswersConnectionToVacantProperty.heading = Check your answers - vacant properties
 checkYourAnswersConnectionToVacantProperty.connectionStatus.heading = Connection status

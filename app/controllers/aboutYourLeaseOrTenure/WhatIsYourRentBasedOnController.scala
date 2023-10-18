@@ -20,11 +20,10 @@ import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.WhatIsYourCurrentRentBasedOnForm.whatIsYourCurrentRentBasedOnForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne
-import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartOne, CurrentRentBasedOnOther, WhatIsYourCurrentRentBasedOnDetails}
+import models.submissions.aboutYourLeaseOrTenure.{CurrentRentBasedOnOther, WhatIsYourCurrentRentBasedOnDetails}
 import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.WhatRentBasedOnPageId
 import play.api.i18n.I18nSupport
-import play.api.mvc.Session
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import views.html.aboutYourLeaseOrTenure.whatIsYourRentBasedOn

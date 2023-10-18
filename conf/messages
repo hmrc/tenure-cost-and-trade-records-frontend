@@ -338,11 +338,11 @@ error.addressLineTwo.maxLength = Second line of address must be 50 characters or
 
 # CONNECTION TO PROPERTY ANNUAL RENT
 ###########################################
-lettingPartOfPropertyRentDetails.heading = Annual rent for {0}
+lettingPartOfPropertyRentDetails.heading = Annual rent for tenant
 
 # CONNECTION TO PROPERTY ITEMS INCLUDED IN RENT
 ###############################################
-lettingPartOfPropertyCheckboxesDetails.heading = Are any of the following included in your rent for {0}?
+lettingPartOfPropertyCheckboxesDetails.heading = Items included in the rent
 hint.lettingPartOfPropertyCheckboxesDetails = Select all that apply
 label.percentageOpenMarket = A percentage of open market value
 label.fixed = A fixed amount
@@ -853,7 +853,8 @@ error.lettingTypeOfBusiness.maxLength = Description of letting must be 100 chara
 
 # CATERING OPERATION OR LETTING ACCOMMODATION RENT DETAILS
 ##########################################################
-cateringOperationOrLettingAccommodationRentDetails.heading = Annual rent for {0}
+cateringOperationOrLettingAccommodationRentDetails.heading = Annual rent for separate business
+lettingOtherPartOfPropertyRentDetails.heading = Annual rent for tenant
 label.annualRent = Annual rent payment excluding VAT
 label.dateInput = When was this sum fixed?
 error.required.annualRentExcludingVat.annualRent = Enter the annual rent excluding VAT
@@ -864,7 +865,7 @@ error.sharedResponsibilities.required = Tell us how the responsibilities are sha
 
 # CATERING OPERATION OR LETTING ACCOMMODATION CHECKBOXES
 ########################################################
-cateringOperationOrLettingAccommodationCheckboxesDetails.heading = Are any of the following included in your rent for {0}?
+cateringOperationOrLettingAccommodationCheckboxesDetails.heading = Items included in the rent
 hint.cateringOperationOrLettingAccommodationCheckboxesDetails = Select any that apply
 checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.rates = Rates
 checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.propertyInsurance = Property insurance

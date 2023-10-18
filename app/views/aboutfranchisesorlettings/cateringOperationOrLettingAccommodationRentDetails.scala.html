@@ -34,7 +34,10 @@
 @(theForm: Form[_], index: Int, cateringOrLetting: String, operatorName: String, backLink: String, summary: Summary)(implicit request: Request[_], messages: Messages)
 
 @layout(
- pageHeading = messages("cateringOperationOrLettingAccommodationRentDetails.heading", operatorName),
+ pageHeading = if(cateringOrLetting.equals("cateringOperationOrLettingAccommodationRentDetails"))
+     messages("cateringOperationOrLettingAccommodationRentDetails.heading")
+         else
+     messages("lettingOtherPartOfPropertyRentDetails.heading"),
  showSection = true,
  summary = Some(summary),
  sectionName = messages("label.section.aboutTheFranchiseLettings"),
