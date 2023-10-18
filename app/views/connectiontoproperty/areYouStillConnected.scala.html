@@ -32,7 +32,7 @@
 @(theForm: Form[_], summary: Summary)(implicit request: Request[_], messages: Messages)
 
 @layout(
-    pageHeading = messages("areYouConnected.title", summary.address.map(_.singleLine).getOrElse("")),
+    pageHeading = messages("areYouConnected.heading"),
     showH1 = false,
     showSection = true,
     sectionName = messages("label.section.connectionToTheProperty"),
@@ -47,7 +47,7 @@
             govukRadios,
             theForm,
             "isRelated",
-            messages("areYouConnected.heading", summary.address.map(_.singleLine).getOrElse("")),
+            messages("areYouConnected.heading"),
             "govuk-fieldset__legend--l",
             isHeading = true,
             items = Seq(

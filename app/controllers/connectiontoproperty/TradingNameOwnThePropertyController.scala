@@ -53,9 +53,6 @@ class TradingNameOwnThePropertyController @Inject() (
             case _                       => tradingNameOwnThePropertyForm
           },
           getBackLink(request.sessionData),
-          request.sessionData.stillConnectedDetails
-            .flatMap(_.tradingNameOperatingFromProperty.map(_.tradingName))
-            .getOrElse(""),
           request.sessionData.toSummary
         )
       )
@@ -70,9 +67,6 @@ class TradingNameOwnThePropertyController @Inject() (
           tradingNameOwnThePropertyView(
             formWithErrors,
             getBackLink(request.sessionData),
-            request.sessionData.stillConnectedDetails
-              .flatMap(_.tradingNameOperatingFromProperty.map(_.tradingName))
-              .getOrElse(""),
             request.sessionData.toSummary
           )
         ),
