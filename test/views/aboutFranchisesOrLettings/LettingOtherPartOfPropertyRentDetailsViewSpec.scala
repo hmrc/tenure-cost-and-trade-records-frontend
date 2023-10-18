@@ -59,7 +59,7 @@ class LettingOtherPartOfPropertyRentDetailsViewSpec
 
     behave like normalPageWithMessageExtra(
       createView,
-      "cateringOperationOrLettingAccommodationRentDetails",
+      "lettingOtherPartOfPropertyRentDetails",
       "Wombles Inc"
     )
 

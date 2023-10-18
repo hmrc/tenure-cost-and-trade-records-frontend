@@ -66,7 +66,7 @@ class AreYouStillConnectedViewSpec extends QuestionViewBehaviours[AddressConnect
           assertEqualsValue(
             doc,
             "title",
-            messages("service.title", messages(s"$messageKeyPrefix.title", ""))
+            messages("service.title", messages(s"areYouConnected.heading", ""))
           )
         }
 

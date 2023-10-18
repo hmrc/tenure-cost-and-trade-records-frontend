@@ -233,8 +233,7 @@ downloadPdf.continueJourneyButton = Continue declaration online
 
 # ARE YOU STILL CONNECTED
 #########################
-areYouConnected.title = Are you still connected to: {0}?
-areYouConnected.heading = Are you still connected to: <br>{0}?
+areYouConnected.heading = Are you still connected to the property?
 label.areYouConnected.addressUpdate = Yes, and I want to edit the address
 hint.noConnection = Choose this if you’re no longer connected to the property, or have never had a connection to the property
 
@@ -268,8 +267,8 @@ error.tradingNameOwnTheProperty.missing = Select yes if the organisation owns th
 
 # DOES TRADING NAME PAY RENT ON THE PROPERTY
 ############################################
-tradingNamePayingRent.heading = Does {0} pay rent on the property?
-tradingNamePayingRent.title = Paying rent
+tradingNamePayingRent.heading = Paying rent
+tradingNamePayingRent.title = Does {0} pay rent on the property?
 tradingNamePayingRent.p1 = You must declare whether you pay rent under the terms of your lease or agreement.
 tradingNamePayingRent.p2 = You should select ‘yes‘ even if you pay rent under an informal agreement, or have a temporary rent-free agreement.
 tradingNamePayingRent.p3 = Select ‘no‘ if the owner of the property allows you to occupy it on a permanent rent-free agreement.
@@ -277,8 +276,9 @@ error.tradingNamePayingRent.missing = Select yes if the organisation pays rent o
 
 # ARE YOU THIRD-PARTY WORKING ON BEHALF OF TRADING NAME
 #######################################################
-areYouThirdParty.heading = Are you a third-party, working on behalf of {0}?
+areYouThirdParty.heading = Are you a third party?
 error.areYouThirdParty.missing = Select yes if you are working on behalf of the organisation
+
 
 # VACANT PROPERTIES
 ############################
@@ -315,7 +315,7 @@ error.startDateOfVacantProperty.day.required = The date must include a day
 error.startDateOfVacantProperty.month.required = The date must include a month
 error.startDateOfVacantProperty.year.required = The date must include a year
 
-# Letting INCOME - IS ANT RENT RECEIVED FROM LETTING
+# LETTING INCOME - IS ANT RENT RECEIVED FROM LETTING
 ####################################################
 isRentReceivedFromLetting.heading = Letting income
 isRentReceivedFromLetting.label = Is any rent received form letting parts of the property?
@@ -340,12 +340,24 @@ error.addressLineTwo.maxLength = Second line of address must be 50 characters or
 
 # CONNECTION TO PROPERTY ANNUAL RENT
 ###########################################
-lettingPartOfPropertyRentDetails.heading = Annual rent for {0}
+lettingPartOfPropertyRentDetails.heading = Annual rent for tenant
 
 # CONNECTION TO PROPERTY ITEMS INCLUDED IN RENT
 ###############################################
-lettingPartOfPropertyCheckboxesDetails.heading = Are any of the following included in your rent for {0}?
+lettingPartOfPropertyCheckboxesDetails.heading = Items included in the rent
 hint.lettingPartOfPropertyCheckboxesDetails = Select all that apply
+label.percentageOpenMarket = A percentage of open market value
+label.fixed = A fixed amount
+label.percentageTurnover = A percentage of turnover of the occupier’s business
+label.indexed = Indexed to the retail price index (RPI) or another index
+label.stepped = Stepped rent arrangement
+label.other = Other (for example, combination of the above)
+label.currentRentBasedOn.percentageOpenMarket = A percentage of open market value
+label.currentRentBasedOn.fixed = A fixed amount
+label.currentRentBasedOn.percentageTurnover = A percentage of turnover of the occupier’s business
+label.currentRentBasedOn.indexed = Indexed to the retail price index (RPI) or another index
+label.currentRentBasedOn.stepped = Stepped rent arrangement
+label.currentRentBasedOn.other = Other
 checkbox.lettingPartOfPropertyCheckboxesDetails.rates = Rates
 checkbox.lettingPartOfPropertyCheckboxesDetails.propertyInsurance = Property insurance
 checkbox.lettingPartOfPropertyCheckboxesDetails.outsideRepairs = Outside repairs
@@ -369,7 +381,7 @@ provideContactDetails.p1 = These should be the contact details of the person com
 provideContactDetailsAdditionalInformation.heading = Additional Information (optional)
 provideContactDetailsAdditionalInformation.hint = For example, the name of the previous owner or occupier
 
-# CHECK YOUR ANSWERS VACENT PROPERTY SUBMISSION
+# CHECK YOUR ANSWERS VACANT PROPERTY SUBMISSION
 #############################################
 checkYourAnswersConnectionToVacantProperty.heading = Check your answers - vacant properties
 checkYourAnswersConnectionToVacantProperty.connectionStatus.heading = Connection status
@@ -640,7 +652,7 @@ error.lettingOtherPartOfProperty.missing = Select yes if any rent received from 
 
 # PROPERTY USE LEASEBACK ARRANGEMENT
 ##############################
-propertyUseLeasebackArrangement.heading = Does {0} occupy the property using a leaseback agreement?
+propertyUseLeasebackArrangement.heading = Is there a leaseback arrangement?
 help.propertyUseLeasebackArrangement.title = Help with leaseback arrangements
 help.propertyUseLeasebackArrangement.p1 = In a leaseback arrangement, a business can sell their premises to an investor then lease it back for a specific amount of time. These agreements allow businesses to raise capital while maintaining the control of their former property, and often include buy-back options.
 error.propertyUseLeasebackArrangement.missing = Select yes if the property uses a leaseback agreement

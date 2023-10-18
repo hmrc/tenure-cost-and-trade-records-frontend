@@ -233,8 +233,7 @@ downloadPdf.continueJourneyButton = Continue declaration online
 
 # ARE YOU STILL CONNECTED
 #########################
-areYouConnected.title = Are you still connected to: {0}?
-areYouConnected.heading = Are you still connected to: <br>{0}?
+areYouConnected.heading = Are you still connected to the property?
 label.areYouConnected.addressUpdate = Yes, and I want to edit the address
 hint.noConnection = Choose this if you’re no longer connected to the property, or have never had a connection to the property
 
@@ -261,14 +260,14 @@ error.tradingNameFromProperty.maxLength = This must be 100 characters or fewer
 
 # DOES TRADING NAME OWN THE PROPERTY
 #####################################
-tradingNameOwnTheProperty.heading = Does {0} own the property?
+tradingNameOwnTheProperty.heading = Do you own the property?
 hint.tradingNameOwnTheProperty = Only select ‘yes‘ if you own the premises or land used by the business
 error.tradingNameOwnTheProperty.missing = Select yes if the organisation owns the property
 
 # DOES TRADING NAME PAY RENT ON THE PROPERTY
 ############################################
-tradingNamePayingRent.heading = Does {0} pay rent on the property?
-tradingNamePayingRent.title = Paying rent
+tradingNamePayingRent.heading = Paying rent
+tradingNamePayingRent.title = Does {0} pay rent on the property?
 tradingNamePayingRent.p1 = You must declare whether you pay rent under the terms of your lease or agreement.
 tradingNamePayingRent.p2 = You should select ‘yes‘ even if you pay rent under an informal agreement, or have a temporary rent-free agreement.
 tradingNamePayingRent.p3 = Select ‘no‘ if the owner of the property allows you to occupy it on a permanent rent-free agreement.
@@ -276,7 +275,7 @@ error.tradingNamePayingRent.missing = Select yes if the organisation pays rent o
 
 # ARE YOU THIRD-PARTY WORKING ON BEHALF OF TRADING NAME
 #######################################################
-areYouThirdParty.heading = Are you a third-party, working on behalf of {0}?
+areYouThirdParty.heading = Are you a third party?
 error.areYouThirdParty.missing = Select yes if you are working on behalf of the organisation
 
 # VACANT PROPERTIES
@@ -339,11 +338,11 @@ error.addressLineTwo.maxLength = Second line of address must be 50 characters or
 
 # CONNECTION TO PROPERTY ANNUAL RENT
 ###########################################
-lettingPartOfPropertyRentDetails.heading = Annual rent for {0}
+lettingPartOfPropertyRentDetails.heading = Annual rent for tenant
 
 # CONNECTION TO PROPERTY ITEMS INCLUDED IN RENT
 ###############################################
-lettingPartOfPropertyCheckboxesDetails.heading = Are any of the following included in your rent for {0}?
+lettingPartOfPropertyCheckboxesDetails.heading = Items included in the rent
 hint.lettingPartOfPropertyCheckboxesDetails = Select all that apply
 label.percentageOpenMarket = A percentage of open market value
 label.fixed = A fixed amount
@@ -656,7 +655,7 @@ error.lettingOtherPartOfProperty.missing = Select yes if any rent received from 
 
 # PROPERTY USE LEASEBACK ARRANGEMENT
 ##############################
-propertyUseLeasebackArrangement.heading = Does {0} occupy the property using a leaseback agreement?
+propertyUseLeasebackArrangement.heading = Is there a leaseback arrangement?
 help.propertyUseLeasebackArrangement.title = Help with leaseback arrangements
 help.propertyUseLeasebackArrangement.p1 = In a leaseback arrangement, a business can sell their premises to an investor then lease it back for a specific amount of time. These agreements allow businesses to raise capital while maintaining the control of their former property, and often include buy-back options.
 error.propertyUseLeasebackArrangement.missing = Select yes if the property uses a leaseback agreement
@@ -854,7 +853,8 @@ error.lettingTypeOfBusiness.maxLength = Description of letting must be 100 chara
 
 # CATERING OPERATION OR LETTING ACCOMMODATION RENT DETAILS
 ##########################################################
-cateringOperationOrLettingAccommodationRentDetails.heading = Annual rent for {0}
+cateringOperationOrLettingAccommodationRentDetails.heading = Annual rent for separate business
+lettingOtherPartOfPropertyRentDetails.heading = Annual rent for tenant
 label.annualRent = Annual rent payment excluding VAT
 label.dateInput = When was this sum fixed?
 error.required.annualRentExcludingVat.annualRent = Enter the annual rent excluding VAT
@@ -865,7 +865,7 @@ error.sharedResponsibilities.required = Tell us how the responsibilities are sha
 
 # CATERING OPERATION OR LETTING ACCOMMODATION CHECKBOXES
 ########################################################
-cateringOperationOrLettingAccommodationCheckboxesDetails.heading = Are any of the following included in your rent for {0}?
+cateringOperationOrLettingAccommodationCheckboxesDetails.heading = Items included in the rent
 hint.cateringOperationOrLettingAccommodationCheckboxesDetails = Select any that apply
 checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.rates = Rates
 checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.propertyInsurance = Property insurance

@@ -28,7 +28,7 @@
 @(theForm: Form[AnswersYesNo], backLink: String, tradingName:String, summary: Summary)(implicit request: Request[_], messages: Messages)
 
 @layout(
-  pageHeading = messages("tradingNamePayingRent.heading",tradingName),
+  pageHeading = messages("tradingNamePayingRent.heading"),
   showSection = true,
   summary = Some(summary),
   sectionName = messages("label.section.connectionToTheProperty"),
@@ -46,7 +46,7 @@
       govukRadios,
       theForm,
       "tradingNamePayingRent",
-      messages("tradingNamePayingRent.heading",tradingName),
+      messages("tradingNamePayingRent.title",tradingName),
       "govuk-fieldset__legend--m"
     )
 

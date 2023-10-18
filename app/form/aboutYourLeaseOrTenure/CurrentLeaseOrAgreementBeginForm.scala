@@ -17,7 +17,6 @@
 package form.aboutYourLeaseOrTenure
 
 import form.DateMappings.monthsYearDurationMapping
-import form.MappingSupport.intMapping
 import models.submissions.aboutYourLeaseOrTenure.CurrentLeaseOrAgreementBegin
 import play.api.data.Form
 import play.api.data.Forms.{default, mapping, text}

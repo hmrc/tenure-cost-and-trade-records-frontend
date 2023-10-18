@@ -20,7 +20,7 @@ import form.MappingSupport.{nonEmptyList, noneCantBeSelectedWithOther}
 import models.submissions.aboutYourLeaseOrTenure.DoesTheRentPayable
 import play.api.data.Form
 import play.api.data.Forms.{default, list, mapping, text}
-import play.api.data.validation.Constraints.{maxLength, nonEmpty}
+import play.api.data.validation.Constraints.maxLength
 
 object DoesTheRentPayableForm {
 
