@@ -58,7 +58,7 @@ class HodSubmissionConnector @Inject() (config: ServicesConfig, appConfig: AppCo
         response.status match {
           case 201 => Future.successful(())
           case 400 => Future.failed(new BadRequestException(response.body))
-          case _ => Future.failed(new Exception(s"Unexpected response: ${response.status}"))
+          case _   => Future.failed(new Exception(s"Unexpected response: ${response.status}"))
         }
       }
 
@@ -76,7 +76,7 @@ class HodSubmissionConnector @Inject() (config: ServicesConfig, appConfig: AppCo
           case 201 => Future.successful(())
           case 400 => Future.failed(new BadRequestException(response.body))
           // Handle other cases if necessary
-          case _ => Future.failed(new Exception(s"Unexpected response: ${response.status}"))
+          case _   => Future.failed(new Exception(s"Unexpected response: ${response.status}"))
         }
       }
 

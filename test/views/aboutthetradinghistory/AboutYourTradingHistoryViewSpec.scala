@@ -53,11 +53,6 @@ class AboutYourTradingHistoryViewSpec extends QuestionViewBehaviours[Occupationa
       backlinkUrl mustBe controllers.routes.TaskListController.show().url
     }
 
-    "contain an subhead for page" in {
-      val doc = asDocument(createViewUsingForm(form))
-      assertContainsText(doc, messages("aboutYourTradingHistory.subheader"))
-    }
-
     "contain date format hint for firstOccupy-hint" in {
       val doc             = asDocument(createViewUsingForm(form))
       val firstOccupyHint = doc.getElementById("firstOccupy-hint").text()

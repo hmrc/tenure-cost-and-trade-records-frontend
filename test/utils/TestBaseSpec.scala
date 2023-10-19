@@ -69,8 +69,8 @@ trait TestBaseSpec
   override def fakeApplication(): Application =
     new GuiceApplicationBuilder()
       .configure(
-        "metrics.jvm"     -> false,
-        "metrics.enabled" -> false,
+        "metrics.jvm"                         -> false,
+        "metrics.enabled"                     -> false,
         "create-internal-auth-token-on-start" -> false
       )
       .build()

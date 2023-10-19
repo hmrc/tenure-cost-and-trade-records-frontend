@@ -27,9 +27,9 @@ import views.html.confirmation
 
 class RequestReferenceNumberFormSubmissionControllerSpec extends TestBaseSpec {
 
-  private val sessionRepo              = StubSessionRepo()
-  val submissionConnector              = mock[SubmissionConnector]
-  val errorHandler                     = mock[ErrorHandler]
+  private val sessionRepo                                    = StubSessionRepo()
+  val submissionConnector                                    = mock[SubmissionConnector]
+  val errorHandler                                           = mock[ErrorHandler]
   private def requestReferenceNumberFormSubmissionController = new RequestReferenceNumberFormSubmissionController(
     stubMessagesControllerComponents(),
     inject[confirmation],
@@ -38,20 +38,22 @@ class RequestReferenceNumberFormSubmissionControllerSpec extends TestBaseSpec {
     sessionRepo
   )
 
-    "RequestReferenceNumberFormSubmissionController" should {
-      "handle submit form with all sections" in {
-        sessionRepo.saveOrUpdate(prefilledBaseSession)
-        val result = requestReferenceNumberFormSubmissionController.submit(fakeRequest)
-        status(result) shouldBe FOUND
-        redirectLocation(result) shouldBe Some(controllers.routes.RequestReferenceNumberFormSubmissionController.confirmation().url)
-      }
+  "RequestReferenceNumberFormSubmissionController" should {
+    "handle submit form with all sections" in {
+      sessionRepo.saveOrUpdate(prefilledBaseSession)
+      val result = requestReferenceNumberFormSubmissionController.submit(fakeRequest)
+      status(result)           shouldBe FOUND
+      redirectLocation(result) shouldBe Some(
+        controllers.routes.RequestReferenceNumberFormSubmissionController.confirmation().url
+      )
+    }
 
-      "show submission confirmation" in {
-        sessionRepo.saveOrUpdate(baseFilled6011Session)
+    "show submission confirmation" in {
+      sessionRepo.saveOrUpdate(baseFilled6011Session)
 
-        val result = requestReferenceNumberFormSubmissionController.confirmation(fakeRequest)
-        status(result) shouldBe OK
-        contentType(result) shouldBe Some("text/html")
-      }
+      val result = requestReferenceNumberFormSubmissionController.confirmation(fakeRequest)
+      status(result)      shouldBe OK
+      contentType(result) shouldBe Some("text/html")
+    }
   }
 }
