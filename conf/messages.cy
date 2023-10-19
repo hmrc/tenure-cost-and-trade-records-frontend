@@ -255,7 +255,7 @@ error.no.connection.selected = Select your connection to the property
 #NAME OF BUSINESS OPERATING FROM THE PROPERTY
 #####################################
 label.tradingNameFromProperty = Trading name
-tradingNameFromProperty.heading = What is the trading name of the business or organisation operating form the property?
+tradingNameFromProperty.heading = What is the trading name of the business or organisation operating from the property?
 error.tradingNameFromProperty.required = If the trading name is not known, please input unknown
 error.tradingNameFromProperty.maxLength = This must be 100 characters or fewer
 
@@ -494,7 +494,7 @@ help.premisesLicenseGrantedInformation.list.p3 = No entry or re-entry allowed af
 
 # LICENSABLE ACTIVITIES
 #######################
-licensableActivities.heading = Do licensable activities regularly commence before 10:00 or after 23:30 on any day of the week?
+licensableActivities.heading = Do licensable activities regularly occur before 10am or after 11.30pm on any day of the week?
 hint.licensableActivities= Licensable activities could include, selling alcohol, selling food and refreshments, or providing live entertainment
 help.licensableActivities.title = Help with licensable activities
 help.licensableActivities.heading = Licensable activities
@@ -517,7 +517,7 @@ error.licensableActivities.missing = Select yes if licensable activities occur w
 
 # LICENSABLE ACTIVITIES DETAILS
 ###############################
-licensableActivitiesDetails.heading = Describe the licensable activities regularly commencing before 10:00 or after 23:30
+licensableActivitiesDetails.heading = Describe the licensable activities regularly occurring before 10am or after 11.30pm
 help.licensableActivitiesDetails.title = Help with describing your licensable activities
 help.licensableActivitiesDetails.heading = Describing your licensable activities
 help.licensableActivitiesDetails.p1 = You’re only required to write a short description of the licensable activities we’re concerned with. Examples of acceptable descriptions include:
@@ -530,7 +530,7 @@ error.premisesLicenseConditionsDetails.maxLength = This must be 2000 characters 
 # PREMISES LICENCE CONDITIONS
 #############################
 premisesLicenseConditions.heading = Does your premises licence have conditions restricting the use of all or parts of the property?
-hint.premisesLicenseConditions = For example, no drinks outside after 22:00
+hint.premisesLicenseConditions = For example, no drinks outside after 10pm
 help.premisesLicenseConditions.title = Help with conditions restricting the use of your property
 help.premisesLicenseConditions.heading = Conditions restricting the use of your property
 help.premisesLicenseConditions.p1 = Premises licences can be granted on the condition the holder of the premises licence complies with the pre-defined terms. These can include restrictions on the use of certain parts of the property.
@@ -626,7 +626,7 @@ error.underReview.required = Select yes if the rent is currently under review, o
 
 # LEASE OR AGREEMENT DETAILS VAT
 ##############################
-includedInYourRent.heading = Are any of the following are included in your rent?
+includedInYourRent.heading = Are any of the following items included in your rent?
 includedInYourRentApply.subheading = Select any that apply
 label.includedInYourRent.vat = VAT
 label.includedInYourRent.nondomesticRates = Non-domestic rates
@@ -640,7 +640,7 @@ error.waterCharges.missing = You must choose one
 
 # CATERING OPERATION OR LETTING ACCOMMODATION
 ############################################
-cateringOperationOrLettingAccommodation.heading = Is any catering operation or letting accommodation run as a separate business from the property?
+cateringOperationOrLettingAccommodation.heading = Are any separate catering or accommodation businesses run from your property?
 hint.cateringOperationOrLettingAccommodation = You will have the opportunity to add more than one business if required
 error.cateringOperationOrLettingAccommodation.missing = Select yes if any separate businesses are run from the property
 
@@ -920,7 +920,6 @@ error.legalOrPlanningRestrictionsDetails.maxLength = This must be 2000 character
 # ABOUT YOUR TRADING HISTORY
 ##############################
 aboutYourTradingHistory.heading = Occupation and accounting information
-aboutYourTradingHistory.subheader = The questions on this page will ensure we only ask you for relevant information about your trading history
 label.firstOccupy = When did you first occupy the property?
 label.financialYear =When does your current financial year end?
 error.firstOccupy.month.required = The date the property was first occupied must include a month

@@ -71,7 +71,7 @@ class CheckYourAnswersNotConnectedControllerSpec extends TestBaseSpec {
       mockSessionRepo.saveOrUpdate(baseFilled6011Session)
 
       val result = checkYourAdditionalInformationController().confirmation(fakeRequest)
-      status(result) shouldBe OK
+      status(result)      shouldBe OK
       contentType(result) shouldBe Some("text/html")
 
       val content = contentAsString(result)

@@ -40,9 +40,9 @@ class LoginControllerSpec extends TestBaseSpec {
   override def fakeApplication(): play.api.Application =
     new GuiceApplicationBuilder()
       .configure(
-        "metrics.jvm"          -> false,
-        "metrics.enabled"      -> false,
-        "bannerNotice.enabled" -> false,
+        "metrics.jvm"                         -> false,
+        "metrics.enabled"                     -> false,
+        "bannerNotice.enabled"                -> false,
         "create-internal-auth-token-on-start" -> false
       )
       .build()

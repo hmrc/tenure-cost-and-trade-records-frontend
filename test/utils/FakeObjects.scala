@@ -424,7 +424,17 @@ trait FakeObjects {
     )
   val connectedSubmission                     = ConnectedSubmission(stillConnectedDetailsYesToAllSession)
 
-  val notConnectedSubmission                  = NotConnectedSubmission("id",ForTypes.for6010,prefilledAddress,"John Smith",Some("test@test.com"),Some("12312312312"),Some("additional info"),Instant.now(),false)
+  val notConnectedSubmission = NotConnectedSubmission(
+    "id",
+    ForTypes.for6010,
+    prefilledAddress,
+    "John Smith",
+    Some("test@test.com"),
+    Some("12312312312"),
+    Some("additional info"),
+    Instant.now(),
+    false
+  )
 
   val prefilledAboutTheTradingHistory = AboutTheTradingHistory(
     occupationAndAccountingInformation = Some(
