@@ -81,7 +81,7 @@ class CheckYourAnswersNotConnectedController @Inject() (
       audit.sendExplicitAudit(auditType, submissionJson ++ Audit.languageJson ++ Json.obj("outcome" -> outcome))
       Redirect(confirmationUrl)
     } recover { case e: Exception =>
-      val failureReason = s"Could not send data to HOD - ${session.referenceNumber} - ${hc.sessionId}"
+      val failureReason = s"Could not send data to HOD - ${session.referenceNumber} - ${hc.sessionId.getOrElse("")}"
       logger.error(failureReason)
       val outcome       = Json.obj(
         "isSuccessful"    -> false,
