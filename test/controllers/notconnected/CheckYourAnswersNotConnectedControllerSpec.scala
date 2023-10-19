@@ -18,10 +18,15 @@ package controllers.notconnected
 
 import config.ErrorHandler
 import connectors.{Audit, SubmissionConnector}
+import models.submissions.NotConnectedSubmission
 import models.submissions.notconnected.RemoveConnectionDetails
+import org.mockito.ArgumentMatchers.anyString
 import play.api.http.Status
 import play.api.test.Helpers._
+import uk.gov.hmrc.http.HeaderCarrier
 import utils.TestBaseSpec
+
+import scala.concurrent.Future
 
 class CheckYourAnswersNotConnectedControllerSpec extends TestBaseSpec {
 
@@ -53,5 +58,26 @@ class CheckYourAnswersNotConnectedControllerSpec extends TestBaseSpec {
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
+
+    "handle submit form with all sections" in {
+      mockSessionRepo.saveOrUpdate(prefilledBaseSession)
+      when(mockSubmissionConnector.submitNotConnected(anyString(), any[NotConnectedSubmission])(any[HeaderCarrier]))
+        .thenReturn(Future.successful(()))
+      val result = checkYourAdditionalInformationController().submit(fakeRequest)
+      status(result) shouldBe FOUND
+    }
+
+    "show submission confirmation" in {
+      mockSessionRepo.saveOrUpdate(baseFilled6011Session)
+
+      val result = checkYourAdditionalInformationController().confirmation(fakeRequest)
+      status(result) shouldBe OK
+      contentType(result) shouldBe Some("text/html")
+
+      val content = contentAsString(result)
+      content should include("confirmation.heading")
+      content should include("print-link")
+    }
+
   }
 }
