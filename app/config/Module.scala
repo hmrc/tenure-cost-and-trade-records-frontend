@@ -16,10 +16,25 @@
 
 package config
 
-import com.google.inject.AbstractModule
+import play.api.inject.Binding
+import play.api.{Configuration, Environment}
 
-class Module extends AbstractModule {
+class Module extends play.api.inject.Module {
 
-  override def configure(): Unit =
-    bind(classOf[AppConfig]).asEagerSingleton()
+  override def bindings(environment: Environment, configuration: Configuration): Seq[Binding[_]] = {
+
+    val isCreateInternalAuthTokenOnStart = configuration.get[Boolean]("create-internal-auth-token-on-start")
+
+    val authTokenInitialiserBinding =
+      if (isCreateInternalAuthTokenOnStart) {
+        bind[InternalAuthTokenInitialiser].to[InternalAuthTokenInitialiserImpl].eagerly()
+      } else {
+        bind[InternalAuthTokenInitialiser].to[NoOpInternalAuthTokenInitialiser].eagerly()
+      }
+
+    val appConfigBinding = bind[AppConfig].toSelf.eagerly()
+
+    Seq(authTokenInitialiserBinding, appConfigBinding)
+    //Seq(appConfigBinding)
+  }
 }
