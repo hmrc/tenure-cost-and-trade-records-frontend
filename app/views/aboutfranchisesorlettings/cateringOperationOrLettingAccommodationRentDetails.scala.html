@@ -35,10 +35,11 @@
 
 @layout(
  pageHeading = if(cateringOrLetting.equals("cateringOperationOrLettingAccommodationRentDetails"))
-     messages("cateringOperationOrLettingAccommodationRentDetails.heading")
+     messages("cateringOperationOrLettingAccommodationRentDetails.title")
          else
-     messages("lettingOtherPartOfPropertyRentDetails.heading"),
+     messages("lettingOtherPartOfPropertyRentDetails.title"),
  showSection = true,
+    showH1 = false,
  summary = Some(summary),
  sectionName = messages("label.section.aboutTheFranchiseLettings"),
  backLinkUrl = backLink,
@@ -51,6 +52,14 @@
             controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsRentController.submit(index)
         else controllers.routes.TaskListController.show()}
     ) {
+
+        @if(cateringOrLetting.equals("cateringOperationOrLettingAccommodationRentDetails")) {
+            <h1 class="govuk-heading-l">@messages("cateringOperationOrLettingAccommodationRentDetails.heading", operatorName)</h1>
+        }
+
+        @if(cateringOrLetting.equals("lettingOtherPartOfPropertyRentDetails")) {
+            <h1 class="govuk-heading-l">@messages("lettingOtherPartOfPropertyRentDetails.heading", operatorName)</h1>
+        }
 
         @hmrcCurrencyInput(
             CurrencyInput(

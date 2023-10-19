@@ -74,8 +74,8 @@ class SubmissionConnectorSpec extends TestBaseSpec {
         recoverToExceptionIf[BadRequestException] {
           connector.submitNotConnected(refNumber, notConnectedSubmission)
         } map { exception =>
-          exception          shouldBe a[BadRequestException]
-          //exception.getMessage should include("Bad Request")
+          exception shouldBe a[BadRequestException]
+        //exception.getMessage should include("Bad Request")
         }
       }
 

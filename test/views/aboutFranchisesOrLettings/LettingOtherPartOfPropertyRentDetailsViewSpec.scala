@@ -40,7 +40,7 @@ class LettingOtherPartOfPropertyRentDetailsViewSpec
       form,
       0,
       messageKeyPrefix,
-      "Wombles Inc",
+      "tenant",
       backLink,
       Summary("99996010001")
     )(fakeRequest, messages)
@@ -50,7 +50,7 @@ class LettingOtherPartOfPropertyRentDetailsViewSpec
       form,
       0,
       messageKeyPrefix,
-      "Wombles Inc",
+      "tenant",
       backLink,
       Summary("99996010001")
     )(fakeRequest, messages)
@@ -60,7 +60,7 @@ class LettingOtherPartOfPropertyRentDetailsViewSpec
     behave like normalPageWithMessageExtra(
       createView,
       "lettingOtherPartOfPropertyRentDetails",
-      "Wombles Inc"
+      "tenant"
     )
 
     behave like pageWithTextFields(createViewUsingForm, "annualRent")

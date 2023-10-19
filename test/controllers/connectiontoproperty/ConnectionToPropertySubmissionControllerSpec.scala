@@ -50,7 +50,6 @@ class ConnectionToPropertySubmissionControllerSpec extends TestBaseSpec {
       mockSessionRepo
     )
 
-
   "submit method" when {
 
     "submission is successful" should {

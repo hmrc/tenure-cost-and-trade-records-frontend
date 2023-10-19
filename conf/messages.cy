@@ -233,6 +233,7 @@ downloadPdf.continueJourneyButton = Continue declaration online
 
 # ARE YOU STILL CONNECTED
 #########################
+areYouConnected.title = Are you still connected to: {0}?
 areYouConnected.heading = Are you still connected to the property?
 label.areYouConnected.addressUpdate = Yes, and I want to edit the address
 hint.noConnection = Choose this if you’re no longer connected to the property, or have never had a connection to the property
@@ -851,6 +852,9 @@ error.lettingTypeOfBusiness.maxLength = Description of letting must be 100 chara
 # CATERING OPERATION OR LETTING ACCOMMODATION RENT DETAILS
 ##########################################################
 cateringOperationOrLettingAccommodationRentDetails.heading = Annual rent for {0}
+cateringOperationOrLettingAccommodationRentDetails.title = Annual rent for separate business
+lettingOtherPartOfPropertyRentDetails.heading = Annual rent for {0}
+lettingOtherPartOfPropertyRentDetails.title = Annual rent for tenant
 label.annualRent = Annual rent payment excluding VAT
 label.dateInput = When was this sum fixed?
 error.required.annualRentExcludingVat.annualRent = Enter the annual rent excluding VAT
