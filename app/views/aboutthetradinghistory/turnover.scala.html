@@ -121,7 +121,10 @@
                                       name = s"$idx.weeks",
                                       value = form(s"$idx.weeks").value,
                                       classes = "govuk-input--width-2",
-                                      attributes = Map("maxlength" -> "2"),
+                                      attributes = Map(
+                                          "maxlength" -> "2",
+                                          "aria-label" -> messages("turnover.tradingPeriod")
+                                      ),
                                       suffix = Some(PrefixOrSuffix(
                                           content = Text(messages("turnover.weeks"))
                                       ))
@@ -138,6 +141,10 @@
                                   id = s"$idx.alcoholic-drinks",
                                   name = s"$idx.alcoholic-drinks",
                                   value = form(s"$idx.alcoholic-drinks").value,
+                                  attributes = Map(
+                                      "maxlength" -> "13",
+                                      "aria-label" -> messages("turnover.alcoholicDrinks")
+                                  ),
                                   prefix = Some(PrefixOrSuffix(
                                       content = Text("£")
                                   ))
@@ -154,6 +161,10 @@
                                       id = s"$idx.food",
                                       name = s"$idx.food",
                                       value = form(s"$idx.food").value,
+                                      attributes = Map(
+                                          "maxlength" -> "13",
+                                          "aria-label" -> messages("turnover.food")
+                                      ),
                                       prefix = Some(PrefixOrSuffix(
                                           content = Text("£")
                                       ))
@@ -170,6 +181,10 @@
                                       id = s"$idx.other-receipts",
                                       name = s"$idx.other-receipts",
                                       value = form(s"$idx.other-receipts").value,
+                                      attributes = Map(
+                                          "maxlength" -> "13",
+                                          "aria-label" -> messages("turnover.otherReceipts")
+                                      ),
                                       prefix = Some(PrefixOrSuffix(
                                           content = Text("£")
                                       ))
@@ -186,6 +201,10 @@
                                       id = s"$idx.accommodation",
                                       name = s"$idx.accommodation",
                                       value = form(s"$idx.accommodation").value,
+                                      attributes = Map(
+                                          "maxlength" -> "13",
+                                          "aria-label" -> messages("turnover.accommodation")
+                                      ),
                                       prefix = Some(PrefixOrSuffix(
                                           content = Text("£")
                                       ))
@@ -203,7 +222,10 @@
                                       name = s"$idx.average-occupancy-rate",
                                       value = form(s"$idx.average-occupancy-rate").value,
                                       classes = "govuk-input--width-3",
-                                      attributes = Map("maxlength" -> "5"),
+                                      attributes = Map(
+                                          "maxlength" -> "5",
+                                          "aria-label" -> messages("turnover.averageOccupancyRate")
+                                      ),
                                       suffix = Some(PrefixOrSuffix(
                                           content = Text("%")
                                       ))
