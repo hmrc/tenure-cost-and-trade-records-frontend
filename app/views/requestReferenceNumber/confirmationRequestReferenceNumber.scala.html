@@ -48,7 +48,7 @@
     <div class="govuk-panel govuk-panel--confirmation govuk-!-display-none-print">
         <h1 class="govuk-panel__title">@messages("label.connectionToProperty.confirm.heading")</h1>
     </div>
-
+    
     <div class="govuk-!-display-none-print">
         <p class="govuk-body">@messages("label.connectionToProperty.requestRefNum")</p>
     </div>
@@ -66,6 +66,71 @@
         <li>@{messages("list.connectionToProperty.p2")}</li>
         <li>@{messages("list.connectionToProperty.p3")}</li>
     </ul>
+
+    <hr>
+    <p>
+
+    <div class="no-print">
+
+        @formWithCSRF(
+            action = routes.FeedbackController.feedbackRequestReferenceNumber,
+            args = Symbol("novalidate") -> "novalidate" ) {
+
+
+            <div class="govuk-form-group">
+                <fieldset class="govuk-fieldset">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">@messages("confirmation.feedback.subheading")</legend>
+
+                    @govukRadios(
+                        Radios(
+                            name = "feedback-rating",
+                            items =
+                                Seq(
+                                    "5" -> messages("feedback.rating.5"),
+                                    "4" -> messages("feedback.rating.4"),
+                                    "3" -> messages("feedback.rating.3"),
+                                    "2" -> messages("feedback.rating.2"),
+                                    "1" -> messages("feedback.rating.1")
+                                ).map(radioItem =>
+                                    RadioItem(
+                                        content = Text(radioItem._2),
+                                        checked = radioItem._1.equals(theForm("feedback-rating").value.getOrElse("")),
+                                        value = Option(radioItem._1)
+                                    )
+                                ),
+                            errorMessage = theForm.errors.asTextErrorMessageForField("feedback-rating"),
+                        )
+                    )
+                </fieldset>
+            </div>
+
+
+            @govukCharacterCount(
+                CharacterCount(
+                    id = "feedback-comments",
+                    name = "feedback-comments",
+                    value = theForm("feedback-comments").value,
+                    rows = 8,
+                    maxLength = Some(1200),
+                    errorMessage = theForm.errors.asTextErrorMessageForField("feedback-comments"),
+                    label = Label(
+                        classes = "govuk-!-font-weight-bold",
+                        content = Text(messages("label.feedback.comments"))
+                    ),
+                    hint = Some(Hint(content = Text(messages("feedback.bottomCopy"))))
+                )
+            )
+
+            @govukButton(
+                Button(
+                    attributes = Map("id" -> "send"),
+                    content = Text(messages("label.submit")),
+                    name = Some("send"),
+                    value = Some("send"),
+                    inputType = Some("submit")
+                )
+            )
+        }
 
     </div>
 
