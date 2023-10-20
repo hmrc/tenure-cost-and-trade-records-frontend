@@ -628,6 +628,11 @@ error.underReview.required = Select yes if the rent is currently under review, o
 ##############################
 includedInYourRent.heading = Are any of the following items included in your rent?
 includedInYourRentApply.subheading = Select any that apply
+label.vat = VAT
+label.nondomesticRates = Non-domestic rates
+label.waterCharges = A percentage of turnover of the occupier’s business
+label.indexed = Water charges
+label.none = No, none of these are included in the rent
 label.includedInYourRent.vat = VAT
 label.includedInYourRent.nondomesticRates = Non-domestic rates
 label.includedInYourRent.waterCharges = Water charges
@@ -637,6 +642,8 @@ hint.includedInYourRent = Select all that apply
 error.vat.missing = You must choose one
 error.nondomesticRates.missing = You must choose one
 error.waterCharges.missing = You must choose one
+error.includedInYourRent.required = Select items that are included in your rent, or select ’No, none of these are included in the rent’
+error.includedInYourRent.noneSelectedWithOther = Select items that are included in your rent, or select ’No, none of these are included in the rent’
 
 # CATERING OPERATION OR LETTING ACCOMMODATION
 ############################################
