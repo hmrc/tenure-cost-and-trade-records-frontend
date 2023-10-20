@@ -56,7 +56,11 @@
         action = routes.FeedbackController.feedbackSubmit,
         args = Symbol("novalidate") -> "novalidate" ) {
 
-        @govukRadios(
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">@messages("feedback.satisfaction.label")</legend>
+
+                @govukRadios(
             Radios(
                 name = "feedback-rating",
                 items = Seq(
@@ -71,20 +75,12 @@
                     value = Option(radioItem._1)
                 )
                 ),
-                errorMessage = theForm.errors.asTextErrorMessageForField("feedback-rating"),
-                fieldset = Option(
-                    Fieldset(
-                        legend = Option(
-                            Legend(
-                                content = Text(messages("feedback.satisfaction.label")),
-                                isPageHeading = true,
-                                classes = "govuk-fieldset__legend--s"
-                            )
-                        )
-                    )
-                )
+                errorMessage = theForm.errors.asTextErrorMessageForField("feedback-rating")
             )
         )
+
+            </fieldset>
+        </div>
 
         @hmrcCharacterCount(
             CharacterCount(
@@ -102,8 +98,6 @@
             )
         )
 
-
-        <p class="govuk-body">
         @govukButton(
             Button(
                 attributes = Map("id" -> "send"),
@@ -113,6 +107,5 @@
                 inputType = Some("submit")
             )
         )
-        </p>
     }
 }
