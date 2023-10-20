@@ -34,14 +34,17 @@
 @(theForm: Form[_], index: Int, tenantName: String, backLink: String, summary: Summary)(implicit request: Request[_], messages: Messages)
 
 @layout(
- pageHeading = messages("lettingPartOfPropertyRentDetails.heading", tenantName),
+ pageHeading = messages("lettingPartOfPropertyRentDetails.heading"),
  showSection = true,
+    showH1 = false,
  summary = Some(summary),
  sectionName = messages("label.section.connectionToTheProperty"),
  backLinkUrl = backLink,
  theForm = theForm
 ) {
     @formWithCSRF(action = controllers.connectiontoproperty.routes.LettingPartOfPropertyDetailsRentController.submit(index)) {
+
+        <p class="govuk-heading-l">@messages("lettingPartOfPropertyRentDetails.title", tenantName)</p>
 
         @hmrcCurrencyInput(
             CurrencyInput(

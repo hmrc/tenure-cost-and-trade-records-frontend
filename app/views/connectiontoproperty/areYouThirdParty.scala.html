@@ -25,7 +25,7 @@
   formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[AnswersYesNo], backLink: String, summary: Summary)(implicit request: Request[_], messages: Messages)
+@(theForm: Form[AnswersYesNo], backLink: String, tradingName:String, summary: Summary)(implicit request: Request[_], messages: Messages)
 
 @layout(
   pageHeading = messages("areYouThirdParty.heading"),
@@ -43,7 +43,7 @@
       govukRadios,
       theForm,
       "areYouThirdParty",
-      messages("areYouThirdParty.heading"),
+      messages("areYouThirdParty.title", tradingName),
       "govuk-fieldset__legend--l",
       isHeading = true
     )

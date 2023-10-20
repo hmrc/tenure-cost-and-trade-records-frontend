@@ -53,6 +53,7 @@ class AreYouThirdPartyController @Inject() (
             case _                       => areYouThirdPartyForm
           },
           getBackLink(request.sessionData),
+          request.sessionData.stillConnectedDetails.get.tradingNameOperatingFromProperty.get.tradingName,
           request.sessionData.toSummary
         )
       )
@@ -67,6 +68,7 @@ class AreYouThirdPartyController @Inject() (
           areYouThirdPartyView(
             formWithErrors,
             getBackLink(request.sessionData),
+            request.sessionData.stillConnectedDetails.get.tradingNameOperatingFromProperty.get.tradingName,
             request.sessionData.toSummary
           )
         ),

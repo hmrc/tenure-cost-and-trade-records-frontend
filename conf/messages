@@ -233,6 +233,7 @@ downloadPdf.continueJourneyButton = Continue declaration online
 
 # ARE YOU STILL CONNECTED
 #########################
+areYouConnected.title = Are you still connected to: {0}?
 areYouConnected.heading = Are you still connected to the property?
 label.areYouConnected.addressUpdate = Yes, and I want to edit the address
 hint.noConnection = Choose this if you’re no longer connected to the property, or have never had a connection to the property
@@ -261,6 +262,7 @@ error.tradingNameFromProperty.maxLength = This must be 100 characters or fewer
 # DOES TRADING NAME OWN THE PROPERTY
 #####################################
 tradingNameOwnTheProperty.heading = Do you own the property?
+tradingNameOwnTheProperty.title = Does {0} own the property?
 hint.tradingNameOwnTheProperty = Only select ‘yes‘ if you own the premises or land used by the business
 error.tradingNameOwnTheProperty.missing = Select yes if the organisation owns the property
 
@@ -276,6 +278,7 @@ error.tradingNamePayingRent.missing = Select yes if the organisation pays rent o
 # ARE YOU THIRD-PARTY WORKING ON BEHALF OF TRADING NAME
 #######################################################
 areYouThirdParty.heading = Are you a third party?
+areYouThirdParty.title = Are you a third-party, working on behalf of {0}?
 error.areYouThirdParty.missing = Select yes if you are working on behalf of the organisation
 
 # VACANT PROPERTIES
@@ -339,10 +342,11 @@ error.addressLineTwo.maxLength = Second line of address must be 50 characters or
 # CONNECTION TO PROPERTY ANNUAL RENT
 ###########################################
 lettingPartOfPropertyRentDetails.heading = Annual rent for tenant
+lettingPartOfPropertyRentDetails.title = Annual rent for {0}
 
 # CONNECTION TO PROPERTY ITEMS INCLUDED IN RENT
 ###############################################
-lettingPartOfPropertyCheckboxesDetails.heading = Items included in the rent
+lettingPartOfPropertyCheckboxesDetails.heading = Are any of the following included in your rent for {0}?
 hint.lettingPartOfPropertyCheckboxesDetails = Select all that apply
 label.percentageOpenMarket = A percentage of open market value
 label.fixed = A fixed amount
@@ -655,7 +659,8 @@ error.lettingOtherPartOfProperty.missing = Select yes if any rent received from 
 
 # PROPERTY USE LEASEBACK ARRANGEMENT
 ##############################
-propertyUseLeasebackArrangement.heading = Is there a leaseback arrangement?
+propertyUseLeasebackArrangement.heading = Does {0} occupy the property using a leaseback agreement?
+propertyUseLeasebackArrangement.title = Is there a leaseback arrangement?
 help.propertyUseLeasebackArrangement.title = Help with leaseback arrangements
 help.propertyUseLeasebackArrangement.p1 = In a leaseback arrangement, a business can sell their premises to an investor then lease it back for a specific amount of time. These agreements allow businesses to raise capital while maintaining the control of their former property, and often include buy-back options.
 error.propertyUseLeasebackArrangement.missing = Select yes if the property uses a leaseback agreement
@@ -853,8 +858,10 @@ error.lettingTypeOfBusiness.maxLength = Description of letting must be 100 chara
 
 # CATERING OPERATION OR LETTING ACCOMMODATION RENT DETAILS
 ##########################################################
-cateringOperationOrLettingAccommodationRentDetails.heading = Annual rent for separate business
-lettingOtherPartOfPropertyRentDetails.heading = Annual rent for tenant
+cateringOperationOrLettingAccommodationRentDetails.heading = Annual rent for {0}
+cateringOperationOrLettingAccommodationRentDetails.title = Annual rent for separate business
+lettingOtherPartOfPropertyRentDetails.heading = Annual rent for {0}
+lettingOtherPartOfPropertyRentDetails.title = Annual rent for tenant
 label.annualRent = Annual rent payment excluding VAT
 label.dateInput = When was this sum fixed?
 error.required.annualRentExcludingVat.annualRent = Enter the annual rent excluding VAT
@@ -865,7 +872,7 @@ error.sharedResponsibilities.required = Tell us how the responsibilities are sha
 
 # CATERING OPERATION OR LETTING ACCOMMODATION CHECKBOXES
 ########################################################
-cateringOperationOrLettingAccommodationCheckboxesDetails.heading = Items included in the rent
+cateringOperationOrLettingAccommodationCheckboxesDetails.heading = Are any of the following included in your rent for {0}?
 hint.cateringOperationOrLettingAccommodationCheckboxesDetails = Select any that apply
 checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.rates = Rates
 checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.propertyInsurance = Property insurance

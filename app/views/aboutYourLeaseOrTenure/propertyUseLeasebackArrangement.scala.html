@@ -26,10 +26,10 @@
   formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[AnswersYesNo], backLink: String, summary: Summary)(implicit request: Request[_], messages: Messages)
+@(theForm: Form[AnswersYesNo], backLink: String, tradingName:String, summary: Summary)(implicit request: Request[_], messages: Messages)
 
 @layout(
-  pageHeading = messages("propertyUseLeasebackArrangement.heading"),
+  pageHeading = messages("propertyUseLeasebackArrangement.title"),
   showH1 = false,
   showSection = true,
     summary = Some(summary),
@@ -44,7 +44,7 @@
       govukRadios,
       theForm,
       "propertyUseLeasebackArrangement",
-      messages("propertyUseLeasebackArrangement.heading"),
+      messages("propertyUseLeasebackArrangement.heading", tradingName),
       "govuk-fieldset__legend--l",
       isHeading = true
     )
