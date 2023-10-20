@@ -644,6 +644,8 @@ hint.includedInYourRent = Select all that apply
 error.vat.missing = You must choose one
 error.nondomesticRates.missing = You must choose one
 error.waterCharges.missing = You must choose one
+error.includedInYourRent.required = Select items that are included in your rent, or select ’No, none of these are included in the rent’
+error.includedInYourRent.noneSelectedWithOther = Select items that are included in your rent, or select ’No, none of these are included in the rent’
 
 # CATERING OPERATION OR LETTING ACCOMMODATION
 ############################################

@@ -139,7 +139,7 @@
         sectionAnswers.row(
             "checkYourAnswersAboutYourLeaseOrTenure.includedInYourRent",
             _.includedInYourRentDetails.map(r =>
-                r.includedInYourRent.map(_.name).map(item => messages(s"label.includedInYourRent.$item"))
+                r.includedInYourRent.map(item => messages(s"label.includedInYourRent.$item"))
             ).map(_.mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>")),
             aboutYourLeaseOrTenure.routes.IncludedInYourRentController.show(), "",
             ("valueAsHtml", _ => None)) ++

@@ -16,16 +16,22 @@
 
 package form.aboutYourLeaseOrTenure
 
-import form.MappingSupport.includedInYourRentInformation
+import form.MappingSupport.{includedInYourRentInformation, nonEmptyList, noneCantBeSelectedWithOther}
 import models.submissions.aboutYourLeaseOrTenure.IncludedInYourRentDetails
 import play.api.data.Form
-import play.api.data.Forms.{list, mapping}
+import play.api.data.Forms.{list, mapping, text}
 
 object IncludedInYourRentForm {
 
   val includedInYourRentForm = Form(
     mapping(
-      "includedInYourRent" -> list(includedInYourRentInformation)
+      "includedInYourRent" -> list(text).verifying(
+        nonEmptyList("error.includedInYourRent.required"),
+        noneCantBeSelectedWithOther(
+          "noneOfThese",
+          "error.includedInYourRent.noneSelectedWithOther"
+        )
+      )
     )(IncludedInYourRentDetails.apply)(IncludedInYourRentDetails.unapply)
   )
 }
