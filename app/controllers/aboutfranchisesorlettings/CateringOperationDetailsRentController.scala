@@ -57,7 +57,7 @@ class CateringOperationDetailsRentController @Inject() (
           index,
           "cateringOperationOrLettingAccommodationRentDetails",
           existingSection.get.cateringOperationDetails.operatorName,
-          controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController.show().url,
+          controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController.show(Some(index)).url,
           request.sessionData.toSummary
         )
       )
