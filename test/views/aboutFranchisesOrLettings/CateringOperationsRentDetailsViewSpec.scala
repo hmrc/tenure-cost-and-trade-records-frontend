@@ -38,7 +38,7 @@ class CateringOperationsRentDetailsViewSpec extends QuestionViewBehaviours[Cater
       form,
       0,
       messageKeyPrefix,
-      "Wombles Inc",
+      "separate business",
       controllers.aboutfranchisesorlettings.routes.CateringOperationController.show().url,
       Summary("99996010001")
     )(fakeRequest, messages)
@@ -48,14 +48,14 @@ class CateringOperationsRentDetailsViewSpec extends QuestionViewBehaviours[Cater
       form,
       0,
       messageKeyPrefix,
-      "Wombles Inc",
+      "separate business",
       controllers.aboutfranchisesorlettings.routes.CateringOperationController.show().url,
       Summary("99996010001")
     )(fakeRequest, messages)
 
   "Catering operation rent details view" must {
 
-    behave like normalPageWithMessageExtra(createView, messageKeyPrefix, "Wombles Inc")
+    behave like normalPageWithMessageExtra(createView, messageKeyPrefix, "separate business")
 
     behave like pageWithTextFields(createViewUsingForm, "annualRent")
 

@@ -32,6 +32,7 @@ class AppConfig @Inject() (config: Configuration) {
   lazy val helpUsingGovUkUrl: String     = "https://www.gov.uk/help"
   lazy val contactGovUkUrl: String       = "https://www.gov.uk/government/organisations/hm-revenue-customs/contact"
   lazy val welshHelpUrl: String          = "https://www.gov.uk/cymraeg"
+  lazy val internalAuthToken: String     = getString("internalAuthToken")
 
   private def getString(key: String): String   =
     config.getOptional[String](key).getOrElse(throw ConfigSettingMissing(key))

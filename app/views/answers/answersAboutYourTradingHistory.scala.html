@@ -35,11 +35,11 @@
 
 @table(valuesGrid: Seq[Seq[String]]) = {
 @valuesGrid.map { values =>
-    <span class="hmrc-turnover-table-column">
+    <div class="hmrc-turnover-table-column">
         @values.map { value =>
             <p class="govuk-body">@value</p>
         }
-    </span>
+    </div>
 }
 }
 

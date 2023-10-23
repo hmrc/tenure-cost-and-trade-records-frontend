@@ -40,8 +40,6 @@
 ) {
     @formWithCSRF(action = controllers.aboutthetradinghistory.routes.AboutYourTradingHistoryController.submit()) {
 
-        <p class="govuk-body">@messages("aboutYourTradingHistory.subheader")</p>
-
         @includes.dateFields(
             form = theForm,
             field = "firstOccupy",

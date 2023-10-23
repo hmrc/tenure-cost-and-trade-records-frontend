@@ -63,7 +63,7 @@ class FeedbackController @Inject() (
             BadRequest(feedbackView(formWithErrors))
           },
         feedbackForm => {
-          sendFeedback("inPageFeedback", feedbackForm, request.sessionData)
+          sendFeedback("InPageFeedback", feedbackForm, request.sessionData)
           Future.successful(Redirect(routes.FeedbackController.feedbackThx))
         }
       )

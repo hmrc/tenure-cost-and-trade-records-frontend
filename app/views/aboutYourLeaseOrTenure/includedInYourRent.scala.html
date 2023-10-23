@@ -82,8 +82,7 @@
                       behaviour = ExclusiveCheckbox
                   )
               ),
-              hint = Hint(content = HtmlContent(messages("hint.includedInYourRent"))),
-              errorMessage = theForm.errors.asTextErrorMessageForField("includedInYourRent")
+              hint = Hint(content = HtmlContent(messages("hint.includedInYourRent")))
           ).withFormField(theForm("includedInYourRent"))
       )
     @includes.continueSaveAsDraftButtons(govukButton)

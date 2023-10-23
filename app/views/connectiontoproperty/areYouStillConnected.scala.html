@@ -47,7 +47,7 @@
             govukRadios,
             theForm,
             "isRelated",
-            messages("areYouConnected.heading"),
+            messages("areYouConnected.title", summary.address.map(_.singleLine).getOrElse("")),
             "govuk-fieldset__legend--l",
             isHeading = true,
             items = Seq(

@@ -23,6 +23,9 @@ import play.api.test.Helpers.{status, stubMessagesControllerComponents}
 import connectors.{Audit, SubmissionConnector}
 import models.submissions.ConnectedSubmission
 import org.mockito.ArgumentMatchers.anyString
+import play.api.libs.json.JsObject
+import play.api.mvc.Request
+import play.twirl.api.Html
 import uk.gov.hmrc.http.HeaderCarrier
 import utils.TestBaseSpec
 
@@ -47,12 +50,36 @@ class ConnectionToPropertySubmissionControllerSpec extends TestBaseSpec {
       mockSessionRepo
     )
 
-  "SUBMIT /" should {
-    "return 303" in {
-      when(submissionConnector.submitConnected(anyString(), any[ConnectedSubmission])(any[HeaderCarrier]))
-        .thenReturn(Future.successful(()))
-      val result = connectionToPropertySubmissionController().submit(fakeRequest)
-      status(result) shouldBe Status.SEE_OTHER
+  "submit method" when {
+
+    "submission is successful" should {
+      "redirect (HTTP 303)" in {
+        when(submissionConnector.submitConnected(anyString(), any[ConnectedSubmission])(any[HeaderCarrier]))
+          .thenReturn(Future.successful(()))
+        val result = connectionToPropertySubmissionController().submit(fakeRequest)
+        status(result) shouldBe Status.SEE_OTHER
+      }
     }
+
+    "submission fails" should {
+      "return InternalServerError" in {
+        when(submissionConnector.submitConnected(anyString(), any[ConnectedSubmission])(any[HeaderCarrier]))
+          .thenReturn(Future.failed(new RuntimeException("Test error")))
+        when(errorHandler.internalServerErrorTemplate(org.mockito.ArgumentMatchers.any(classOf[Request[_]])))
+          .thenReturn(Html("Some Error Message"))
+        val result = connectionToPropertySubmissionController().submit(fakeRequest)
+        status(result) shouldBe Status.INTERNAL_SERVER_ERROR
+      }
+    }
+
   }
+  "confirmation method" should {
+
+    "display the confirmation view" in {
+      val result = connectionToPropertySubmissionController().confirmation(fakeRequest)
+      status(result) shouldBe Status.OK
+    }
+
+  }
+
 }

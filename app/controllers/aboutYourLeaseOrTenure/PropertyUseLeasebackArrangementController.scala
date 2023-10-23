@@ -54,6 +54,9 @@ class PropertyUseLeasebackArrangementController @Inject() (
             case _                                   => propertyUseLeasebackArrangementForm
           },
           getBackLink(request.sessionData),
+          request.sessionData.stillConnectedDetails
+            .flatMap(_.tradingNameOperatingFromProperty.map(_.tradingName))
+            .getOrElse(""),
           request.sessionData.toSummary
         )
       )
@@ -68,6 +71,9 @@ class PropertyUseLeasebackArrangementController @Inject() (
           propertyUseLeasebackAgreementView(
             formWithErrors,
             getBackLink(request.sessionData),
+            request.sessionData.stillConnectedDetails
+              .flatMap(_.tradingNameOperatingFromProperty.map(_.tradingName))
+              .getOrElse(""),
             request.sessionData.toSummary
           )
         ),
