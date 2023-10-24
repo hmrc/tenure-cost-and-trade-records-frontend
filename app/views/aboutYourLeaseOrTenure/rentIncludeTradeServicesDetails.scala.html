@@ -54,6 +54,9 @@
     value = theForm("sumIncludedInRent").value,
     classes = "govuk-input--width-10 total-annual-rent",
     autocomplete = Some("off"),
+    attributes = Map(
+     "aria-label" -> messages("rentIncludeTradeServicesDetails.label")
+    ),
     hint = Some(Hint(content = Text(messages("rentIncludeTradeServicesDetails.hint")))),
    )
   )
@@ -76,6 +79,3 @@
   @includes.continueSaveAsDraftButtons(govukButton)
  }
 }
-
-
-
