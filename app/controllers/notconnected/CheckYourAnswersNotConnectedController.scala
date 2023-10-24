@@ -71,7 +71,7 @@ class CheckYourAnswersNotConnectedController @Inject() (
     } yield Found(confirmationUrl)
   }
 
-  def submitNotConnected(refNum: String)(implicit hc: HeaderCarrier, request: SessionRequest[_]): Future[Unit] = {
+  def submitNotConnected(refNum: String)(implicit hc: HeaderCarrier, request: SessionRequest[_]): Future[Result] = {
     val auditType      = "NotConnectedSubmission"
     val submissionJson = Json.toJson(request.sessionData).as[JsObject]
     val session        = request.sessionData
@@ -91,7 +91,6 @@ class CheckYourAnswersNotConnectedController @Inject() (
       audit.sendExplicitAudit(auditType, submissionJson ++ Json.obj("outcome" -> outcome))
       InternalServerError(errorHandler.internalServerErrorTemplate(request))
     }
-    Future.unit
   }
 
   def confirmation: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
