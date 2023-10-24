@@ -317,12 +317,12 @@ error.startDateOfVacantProperty.day.required = The date must include a day
 error.startDateOfVacantProperty.month.required = The date must include a month
 error.startDateOfVacantProperty.year.required = The date must include a year
 
-# LETTING INCOME - IS ANT RENT RECEIVED FROM LETTING
+# LETTING INCOME - IS ANY RENT RECEIVED FROM LETTING
 ####################################################
 isRentReceivedFromLetting.heading = Letting income
-isRentReceivedFromLetting.label = Is any rent received form letting parts of the property?
+isRentReceivedFromLetting.label = Do you receive any rent from letting parts of your property?
 isRentReceivedFromLetting.p1 = You must declare any income received from letting parts of the property, for example advertising billboards, car parking or telephone masts. You will have the oppertunity to add more than one letting if required.
-error.isRentReceivedFromLetting.missing = Select yes if ant rent is received from letting out parts of the property
+error.isRentReceivedFromLetting.missing = Select yes if any rent is received from letting out parts of the property
 
 # CONNECTION TO PROPERTY TENANT DETAILS
 #######################################
@@ -676,22 +676,22 @@ hint.currentAnnualRent = For example, 32000.
 # RENT OPEN MARKET VALUE
 #######################
 rentOpenMarketValue.heading = When the current rent was agreed, was it based on the open market value at that time?
-help.rentOpenMarketValue.title = If you’re not sure
-help.rentOpenMarketValue.p1 = If your rent isn’t based on open market value, it may simply be a fixed amount agreed between both parties, or linked to another factor. If you are unsure, it may be stipulated in your lease or agreement.
+help.rentOpenMarketValue.title = If you're not sure what the rent is based on
+help.rentOpenMarketValue.p1 = If your rent is not based on open market value, it may simply be a fixed amount agreed between both parties, or linked to another factor. If you are unsure, it may be stipulated in your lease or agreement.
 error.rentOpenMarketValue.missing = Select yes if the rent was based on the open market value
 
 # DOES THE RENT PAYABLE
 ######################
-rentPayable.heading = Does the rent payable include or relate to any of the following?
-checkbox.rentPayable.proprietor = Proprietor’s, manager’s or staff living accommodation
+rentPayable.heading = Does the rent payable include any of the listed options?
+checkbox.rentPayable.proprietor = Living accommodation for proprietors or staff
 checkbox.rentPayable.otherProperty = Other property
 checkbox.rentPayable.onlyPart = Only part of the property
 checkbox.rentPayable.onlyLand = Only to land (excluding buildings)
 checkbox.rentPayable.shellUnit = A ‘shell‘ unit you had to fit out yourself
-checkbox.rentPayable.noneOfThese = No, the rent payable does not include or relate to any of these options
+checkbox.rentPayable.noneOfThese = No, the rent payable does not include any of these options
 checkbox.rentPayable.none = None
-label.detailsToQuestions = Give details if you selected any of the options
-hint.detailsToQuestions = For example, the rent includes residential accommodation, or also includes the premises next door.
+label.detailsToQuestions = Additional information
+hint.detailsToQuestions = Give details if you want to tell us more about any options that may apply.
 error.doesTheRentPayable.required = Select items that the rent payable includes, or select ’No, none of these are included in the rent’
 error.doesTheRentPayable.noneSelectedWithOther = Select items that the rent payable includes, or select ’No, none of these are included in the rent’
 error.detailsToQuestions.required = Please provide further information
@@ -732,8 +732,8 @@ label.buildingInsurance = Building insurance
 label.landlord = Landlord
 label.tenant = Tenant
 label.both = Both
-label.sharedResponsibilities = Give details of the shared responsibilities
-hint.sharedResponsibilities = For example, costs are shared equally, landlord 75%, tenant 25%.
+label.sharedResponsibilities = Give details of any shared responsibilities
+hint.sharedResponsibilities = For example, ’business insurance costs are shared equally’, or ’landlord covers 75% for outside repairs, tenant pays 25%’.
 error.sharedResponsibilities.maxLength = This must be 2000 characters or fewer
 error.outsideRepairs.required = Tell us who is responsible for the outside repairs
 error.insideRepairs.required = Tell us who is responsible for the inside repairs
@@ -827,14 +827,9 @@ label.renewalLeaseTenancy = At a lease renewal
 label.saleLeaseback = As part of a sale and leaseback transaction
 label.rentActuallyAgreed = When was the rent actually agreed or set?
 label.rentActuallyAgreed.help = For example, 27 9 2017.
-help.rentActuallyAgreed.title = If you’re not sure which date to use
-help.rentActuallyAgreed.p1 = The date when the rent was agreed or set is normally the date when:
-rentActuallyAgreed.list1 = a new lease or agreement is signed
-rentActuallyAgreed.list2 = an interim rent is established
-rentActuallyAgreed.list3 = a new rent is established following a rent review
-rentActuallyAgreed.list4 = a lease is renewed
-rentActuallyAgreed.list5 = a sale and leaseback is agreed
-help.rentActuallyAgreed.p2 = It may not necessarily be the date of occupation or the date a rent is first paid.
+help.rentActuallyAgreed.title = If you’re not sure when the rent was agreed
+help.rentActuallyAgreed.p1 = The date when the rent was agreed or set is normally the date when any of the listed options happened. It may not necessarily be the date of occupation, or the date the rent was first paid.
+help.rentActuallyAgreed.p2 = If you’re still unsure, refer to your lease or agreement.
 error.rentActuallyAgreed.day.required = The date when the rent was agreed must include a day
 error.rentActuallyAgreed.month.required = The date when the rent was agreed must include a month
 error.rentActuallyAgreed.year.required = The date when the rent was agreed must include a year
@@ -897,8 +892,8 @@ error.addAnotherLetting.required = Select whether you need to add another lettin
 
 # TENANTS ADDITIONS DISREGARDED
 ###############################
-tenantsAdditionsDisregarded.heading = Additions or improvements
-tenantsAdditionsDisregarded.p1 = If the rent is based on the market value of the property before any additions or improvements were made by the tenant, you must provide details.
+tenantsAdditionsDisregarded.heading = Disregarded additions or improvements
+tenantsAdditionsDisregarded.p1 = We need to know if the rent was based on the market value of the property before any additions or improvements were made by the tenant.
 tenantsAdditionsDisregarded.p2 = Examples of additions or improvements could include, but are not limited to:
 tenantsAdditionsDisregarded.list1 = fitting out a shell
 tenantsAdditionsDisregarded.list2 = adding parking
@@ -975,12 +970,13 @@ label.currentLeaseOrAgreementBegin.help = For example, 9 2017.
 # INTERVALS OF RENT REVIEW
 ##########################
 intervalsOfRentReview.heading = Rent reviews
-intervalsOfRentReview.p1 = If your lease or agreement states your rent will be reviewed at any point, you must provide details. Tell us the intervals or frequency of the reviews, for example every 18 months or every 2 years.
-intervalsOfRentReview.p2 = Do not include any changes to your rent linked to your turnover, or indices such as the retial price index (RPI).
+intervalsOfRentReview.p1 = Provide details if your lease or agreement states your rent will be reviewed at any point.
+intervalsOfRentReview.p2 = Changes to your rent linked to your turnover, or indices such as the RPI, are not classed as rent reviews.
+intervalsOfRentReview.p3 = If your lease or agreement does not include any rent reviews, leave this page blanks and select ’save and continue’.
 intervalsOfRentReview.label = How often is the rent reviewed under the terms of the lease or agreement?
-hint.intervalsOfRentReview = Leave blank if the lease does not include any rent reviews.
+hint.intervalsOfRentReview = For example, every 18 months or every 2 years.
 label.nextReview = When is the next rent review due?
-label.nextReview.help = For example, 27 9 2017 - leave blank if no rent reviews are due.
+label.nextReview.help = For example, 27 9 2025
 error.nextReview.day.required = The date must include a day
 error.nextReview.month.required = The date must include a month
 error.nextReview.year.required = The date must include a year
@@ -1218,7 +1214,7 @@ label.correspondenceAddress = Correspondence address
 # FURTHER INFORMATION OR REMARKS
 ################################
 furtherInformationOrRemarks.heading = Further information or remarks
-hint.furtherInformationOrRemarks = Please provide further details if there is insufficient room for you to complete your answers to any of the forgoing questions, or if any of the questions require further explanation or clarification.
+hint.furtherInformationOrRemarks = Please provide further details if there was not enough room for you to complete your answers to any of the previous questions, or if any questions require further explanation or clarification.
 furtherInformationOrRemarksTasklist.heading = Additional relevant information
 
 # ALTERNATIVE DETAILS QUESTION
