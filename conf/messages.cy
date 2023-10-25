@@ -1360,13 +1360,19 @@ checkYourAnswersRequestReferenceNumber.subheading2 = Your details
 confirmation.heading = Declaration sent successfully
 confirmation.emailConfirm = We have sent you a confirmation email
 confirmation.saveCopyOfAnswers = Save a copy of your answers (print or PDF download)
-confirmation.unableToRetrieveAnswers = You will be unable to retrieve your answers beyond this point
+confirmation.unableToRetrieveAnswers = You will not be able to:
+confirmation.unableToRetrieveAnswers.list.1 = retrieve your answers once you leave this page
+confirmation.unableToRetrieveAnswers.list.2 = access your answers from the confirmation email
+confirmation.unableToRetrieveAnswers.list.3 = request your answers from the Valuation Office Agency (VOA)
+confirmation.businessRatesBill = Your business rates bill
+confirmation.businessRatesBill.list.1 = You can see <a href="#" class="govuk-link" target="_blank">how your business rates are calculated (opens in new tab)</a> and go on to challenge your property’s rateable value if you think it’s wrong.
+confirmation.businessRatesBill.list.2 = Our <a href="#" class="govuk-link" target="_blank">guide to business rates relief (opens in new tab)</a> explains how some properties are eligible for discounts from their local council.
 confirmation.whatNext = What happens next
-confirmation.list.1 = We have sent your application to the Valuation Office Agency.
-confirmation.list.2 = They may need to contact you for further information.
-confirmation.service = What did you think of this service? (takes 30 seconds)
-print.link=Print a copy of your form
-print.link.cantPrintLater=If you want to print a copy, you should do it now as you will not be able to print it later.
+confirmation.list.1 = We have sent your declaration to the VOA. They made need to contact you to check some of the details.
+confirmation.list.2 = The VOA use the information provided to set rateable values for businesses in England and Wales. Your local council uses these rateable values to calculate your business rates bill.
+print.link.cantPrintLater=This is your only chance to
+print.link= save a copy of your answers
+print.printOrPdf = (print or PDF download)
 
 # Help section
 ##############
