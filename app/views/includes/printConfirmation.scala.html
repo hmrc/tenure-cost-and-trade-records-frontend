@@ -14,14 +14,17 @@
  * limitations under the License.
  *@
 
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
 @()(implicit messages: Messages)
 
 <div class="govuk-inset-text govuk-!-display-none-print">
-    <p id="printLinkParagraph" class="govuk-body govuk-!-display-none" aria-hidden="true">
-        <a id="printLink" href="#" class="govuk-link print-link">@messages("print.link")</a>
-    </p>
-    <p class="govuk-body">@messages("print.link.cantPrintLater")</p>
-</div>
+        <p id="printLinkParagraph" class="govuk-body govuk-!-display-none" aria-hidden="true">
+            @messages("print.link.cantPrintLater")
+            <a id="printLink" href="#" class="govuk-link print-link"> @messages("print.link")</a>
+            @messages("print.printOrPdf")
+        </p>
+    </div>
+
 
 <script>
         document.getElementById("printLinkParagraph").classList.remove("govuk-!-display-none");

@@ -49,37 +49,43 @@
         <h1 class="govuk-panel__title">@messages(s"confirmation.heading")</h1>
     </div>
 
+    <p class="govuk-body">@messages("confirmation.emailConfirm")</p>
+
     @includes.printConfirmation()
 
     <div class="print-only">
         @answersAllSections()
     </div>
 
+    <p class="govuk-body">@messages("confirmation.unableToRetrieveAnswers")</p>
+
     <div class="govuk-!-display-none-print">
-        <p class="govuk-body">@messages("confirmation.emailConfirm")</p>
-        <p class="govuk-body">@messages("confirmation.saveCopyOfAnswers")</p>
-        <p class="govuk-body">@messages("confirmation.unableToRetrieveAnswers")</p>
-    </div>
+    <ul class="govuk-list govuk-list--bullet">
+        <li>@{messages("confirmation.unableToRetrieveAnswers.list.1")}</li>
+        <li>@{messages("confirmation.unableToRetrieveAnswers.list.2")}</li>
+        <li>@{messages("confirmation.unableToRetrieveAnswers.list.3")}</li>
+    </ul>
 
     <h2 class="govuk-heading-m">@messages("confirmation.whatNext")</h2>
     <p class="govuk-body">@messages("confirmation.list.1")</p>
     <p class="govuk-body">@messages("confirmation.list.2")</p>
 
-    <p class="govuk-body govuk-!-display-none-print">@messages("confirmation.service")</p>
-
+        <h2 class="govuk-heading-m">@messages("confirmation.businessRatesBill")</h2>
+        <p class="govuk-body">@{HtmlContent(messages("confirmation.businessRatesBill.list.1")).asHtml}</p>
+        <p class="govuk-body">@{HtmlContent(messages("confirmation.businessRatesBill.list.2")).asHtml}</p>
+    </div>
 
     <div class="no-print">
-
-        <h2 class="govuk-heading-l">@messages("confirmation.feedback.title")</h2>
 
         @formWithCSRF(
             action = routes.FeedbackController.feedbackConnectedSubmit,
             args = Symbol("novalidate") -> "novalidate" ) {
 
-
+            <hr>
+            <p>
             <div class="govuk-form-group">
                 <fieldset class="govuk-fieldset">
-                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">@messages("confirmation.feedback.subheading")</legend>
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">@messages("confirmation.feedback.subheading")</legend>
 
                     @govukRadios(
                         Radios(
