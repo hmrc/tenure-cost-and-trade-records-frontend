@@ -49,6 +49,10 @@
 
     <logger name="application" level="DEBUG"/>
 
+    <logger name = "org.mongodb.driver" level="ERROR"/>
+
+    <logger name= "play.shaded.ahc.org.asynchttpclient" level="ERROR"/>
+
     <logger name="connector" level="TRACE">
         <appender-ref ref="STDOUT"/>
     </logger>

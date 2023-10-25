@@ -97,20 +97,15 @@ class CheckYourAnswersAboutFranchiseOrLettingsController @Inject() (
     answers.forType match {
       case ForTypes.for6010 | ForTypes.for6011 =>
         answers.aboutFranchisesOrLettings.flatMap(_.franchisesOrLettingsTiedToProperty.map(_.name)) match {
-          case Some("yes") => controllers.aboutfranchisesorlettings.routes.CateringOperationController.show().url
+          case Some("yes") =>
+            answers.aboutFranchisesOrLettings.get.lettingOtherPartOfProperty.isDefined match {
+              case true  => getUrlForLettingPartOfProperty(answers)
+              case false => controllers.aboutfranchisesorlettings.routes.CateringOperationController.show().url
+            }
           case Some("no")  =>
             controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show().url
           case _           =>
             logger.warn(s"Back link for enforcement action page reached with unknown enforcement taken value")
-            controllers.routes.TaskListController.show().url
-        }
-        answers.aboutFranchisesOrLettings.flatMap(_.lettingOtherPartOfProperty.map(_.name)) match {
-          case Some("yes") =>
-            controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsController.show().url
-          case Some("no")  =>
-            controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show().url
-          case _           =>
-            logger.warn(s"Back link for premises license page reached with unknown enforcement taken value")
             controllers.routes.TaskListController.show().url
         }
 
@@ -148,4 +143,14 @@ class CheckYourAnswersAboutFranchiseOrLettingsController @Inject() (
         }
     }
 
+  private def getUrlForLettingPartOfProperty(answers: Session) =
+    answers.aboutFranchisesOrLettings.flatMap(_.lettingOtherPartOfProperty.map(_.name)) match {
+      case Some("yes") =>
+        controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsController.show().url
+      case Some("no")  =>
+        controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show().url
+      case _           =>
+        logger.warn(s"Back link for premises license page reached with unknown enforcement taken value")
+        controllers.routes.TaskListController.show().url
+    }
 }
