@@ -608,6 +608,7 @@ franchiseLettings.p2 = You must include:
 franchiseLettings.list1 = any payments received instead of trading receipts from third-party businesses operating from the property under a concession or franchise agreement
 franchiseLettings.list2 = rental income from letting other parts of the property including advertising billboards, car parking or phone masts
 franchiseLettings.subheading = Do you receive income from letting out parts of your property?
+error.franchiseOrLettings.missing = Select yes if you receive income from letting out parts of your property
 
 # ABOUT YOUR LANDLORD
 ##############################

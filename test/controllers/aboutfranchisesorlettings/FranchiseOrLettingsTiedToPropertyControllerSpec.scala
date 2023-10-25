@@ -67,7 +67,7 @@ class FranchiseOrLettingsTiedToPropertyControllerSpec extends TestBaseSpec {
 
       mustContainError(
         errorKey.franchiseOrLettingsTiedToProperty,
-        "error.franchiseOrLettingsTiedToProperty.missing",
+        "error.franchiseOrLettings.missing",
         form
       )
     }

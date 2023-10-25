@@ -28,7 +28,7 @@ object FranchiseOrLettingsTiedToPropertyForm {
   )
 
   val baseFranchiseOrLettingsTiedToPropertyMapping = mapping(
-    "franchiseOrLettingsTiedToProperty" -> createYesNoType("error.franchiseOrLettingsTiedToProperty.missing")
+    "franchiseOrLettingsTiedToProperty" -> createYesNoType("error.franchiseOrLettings.missing")
   )(x => x)(b => Some(b))
 
   val franchiseOrLettingsTiedToPropertyForm = Form(baseFranchiseOrLettingsTiedToPropertyMapping)
