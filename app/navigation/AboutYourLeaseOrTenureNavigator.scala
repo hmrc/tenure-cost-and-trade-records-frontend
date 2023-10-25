@@ -222,6 +222,22 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
     }
   }
 
+  private def RPIRouting: Session => Call = answers => {
+    answers.aboutLeaseOrAgreementPartOne.flatMap(
+      _.whatIsYourCurrentRentBasedOnDetails.map(_.currentRentBasedOn.name)
+    ) match {
+      case Some("indexed") =>
+        controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryAccordingToGrossOrNetController.show()
+      case Some(_)         =>
+        controllers.aboutYourLeaseOrTenure.routes.RentIncreaseAnnuallyWithRPIController.show()
+      case _               =>
+        logger.warn(
+          s"Navigation for RPI routing without correct selection of conditions by controller"
+        )
+        throw new RuntimeException("Invalid option exception for RPI routing")
+    }
+  }
+
   override val routeMap: Map[Identifier, Session => Call] = Map(
     AboutTheLandlordPageId                        -> aboutYourLandlordRouting,
     ConnectedToLandlordPageId                     -> connectedToLandlordRouting,
@@ -254,9 +270,7 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
       controllers.aboutYourLeaseOrTenure.routes.RentOpenMarketValueController.show()
     ),
     RentOpenMarketPageId                          -> rentRentOpenMarketRouting,
-    WhatRentBasedOnPageId                         -> (_ =>
-      controllers.aboutYourLeaseOrTenure.routes.RentIncreaseAnnuallyWithRPIController.show()
-    ),
+    WhatRentBasedOnPageId                         -> RPIRouting,
     RentIncreaseByRPIPageId                       -> (_ =>
       controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryAccordingToGrossOrNetController.show()
     ),
