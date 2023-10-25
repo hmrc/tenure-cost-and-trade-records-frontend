@@ -472,7 +472,9 @@ trait FakeObjects {
     Some(prefilledAnnualRent),
     rentIncludeTradeServicesDetails = Some(RentIncludeTradeServicesDetails(AnswerYes)),
     rentIncludeFixturesAndFittingsDetails = Some(RentIncludeFixturesAndFittingsDetails(AnswerYes)),
-    rentOpenMarketValueDetails = Some(RentOpenMarketValueDetails(AnswerYes))
+    rentOpenMarketValueDetails = Some(RentOpenMarketValueDetails(AnswerYes)),
+    whatIsYourCurrentRentBasedOnDetails =
+      Some(WhatIsYourCurrentRentBasedOnDetails(CurrentRentBasedOnIndexedToRPI, Some("Test")))
   )
 
   val prefilledAboutLeaseOrAgreementPartOne = AboutLeaseOrAgreementPartOne(

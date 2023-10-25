@@ -199,7 +199,9 @@ class AboutYourLeaseOrTenure6010NavigatorSpec extends TestBaseSpec {
     "return a function that goes to increase by RPI when what rent based on has been completed" in {
       navigator
         .nextPage(WhatRentBasedOnPageId, session6010)
-        .apply(session6010) mustBe controllers.aboutYourLeaseOrTenure.routes.RentIncreaseAnnuallyWithRPIController
+        .apply(
+          session6010
+        ) mustBe controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryAccordingToGrossOrNetController
         .show()
     }
 
