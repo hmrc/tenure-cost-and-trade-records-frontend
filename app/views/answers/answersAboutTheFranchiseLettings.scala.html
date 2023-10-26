@@ -38,6 +38,7 @@
     SectionAnswersRowBuilder(request.sessionData.aboutFranchisesOrLettings)
 }
 
+
 <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutFranchiseOrLettings.franchiseLettings.heading")</h2>
 
 @govukSummaryList(SummaryList(rows =
@@ -58,6 +59,7 @@
 
         @if(sectionAnswers.answers.flatMap(_.cateringConcessionOrFranchise).contains(AnswerYes)) {
             @for((cateringOperation, idx) <- sectionAnswers.answers.map(_.cateringOperationSections).getOrElse(IndexedSeq.empty).zipWithIndex) {
+              <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutFranchiseOrLettings.operatorCount",idx+1)</h2>
                 @govukSummaryList(SummaryList(rows =
                     sectionAnswers.row("checkYourAnswersAboutFranchiseOrLettings.operatorName",
                         _ => Option(cateringOperation.cateringOperationDetails.operatorName).mkString("""<p class="govuk-body">""", "", "</p>") +
@@ -79,18 +81,21 @@
                                 ("valueAsHtml", _ => None))
                 ))
             }
-
-            @govukSummaryList(SummaryList(rows =
-                sectionAnswers.row("checkYourAnswersAboutFranchiseOrLettings.addBusiness",
-                    _ => Some(messages(s"label.no.nage")),
-                    navigator.routeMap(CateringOperationRentIncludesPageId)(request.sessionData), "cateringOperationOrLettingAccommodation")
-            ))
+            @if((request.sessionData.aboutFranchisesOrLettings.flatMap(_.cateringOperationSections)).getOrElse(IndexedSeq.empty).length >0) {
+                @govukSummaryList(SummaryList(rows =
+                    List(
+                        SummaryListRow(
+                            Key(Text(messages("checkYourAnswersAboutFranchiseOrLettings.addedBusiness", (request.sessionData.aboutFranchisesOrLettings.flatMap(_.cateringOperationSections)).getOrElse(IndexedSeq.empty).length)), classes = "govuk-heading-m"),
+                            actions = Some(Actions(items = List(ActionItem((navigator.routeMap(CateringOperationRentIncludesPageId)(request.sessionData)).url, Text(messages("checkYourAnswersAboutFranchiseOrLettings.addBusiness"))))))
+                        )
+                    )
+                ))
+            }
         }
     }
 
     @if(sectionAnswers.answers.flatMap(_.lettingOtherPartOfProperty).isDefined) {
         <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutFranchiseOrLettings.lettingsOtherPartOfProperties.heading")</h2>
-
         @govukSummaryList(SummaryList(rows =
             sectionAnswers.optionalRow("checkYourAnswersAboutFranchiseOrLettings.rentFromPartOfProperties",
                 _.lettingOtherPartOfProperty.map(yesNo => messages(s"label.${yesNo.name}")),
@@ -99,6 +104,7 @@
 
         @if(sectionAnswers.answers.flatMap(_.lettingOtherPartOfProperty).contains(AnswerYes)) {
             @for((letting, idx) <- sectionAnswers.answers.map(_.lettingSections).getOrElse(IndexedSeq.empty).zipWithIndex) {
+                <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutFranchiseOrLettings.lettingOperatorNumber",idx+1)</h2>
                 @govukSummaryList(SummaryList(rows =
                     sectionAnswers.row("checkYourAnswersAboutFranchiseOrLettings.lettingOperatorName",
                         _ => Option(letting.lettingOtherPartOfPropertyInformationDetails.operatorName).mkString("""<p class="govuk-body">""", "", "</p>") +
@@ -121,11 +127,16 @@
                 ))
             }
 
-            @govukSummaryList(SummaryList(rows =
-                sectionAnswers.row("checkYourAnswersAboutFranchiseOrLettings.addLetting",
-                    _ => Some(messages(s"label.no.nage")),
-                    navigator.routeMap(LettingAccommodationRentIncludesPageId)(request.sessionData), "lettingOtherPartOfProperty")
-            ))
+            @if((request.sessionData.aboutFranchisesOrLettings.flatMap(_.lettingSections)).getOrElse(IndexedSeq.empty).length >0) {
+                @govukSummaryList(SummaryList(rows =
+                    List(
+                        SummaryListRow(
+                            Key(Text(messages("checkYourAnswersAboutFranchiseOrLettings.addedLetting", (request.sessionData.aboutFranchisesOrLettings.flatMap(_.lettingSections)).getOrElse(IndexedSeq.empty).length)), classes = "govuk-heading-m"),
+                            actions = Some(Actions(items = List(ActionItem((navigator.routeMap(LettingAccommodationRentIncludesPageId)(request.sessionData)).url, Text(messages("checkYourAnswersAboutFranchiseOrLettings.addLetting"))))))
+                        )
+                    )
+                ))
+            }
         }
     }
 }
