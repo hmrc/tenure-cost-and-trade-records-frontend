@@ -347,7 +347,8 @@ lettingPartOfPropertyRentDetails.title = Annual rent for {0}
 
 # CONNECTION TO PROPERTY ITEMS INCLUDED IN RENT
 ###############################################
-lettingPartOfPropertyCheckboxesDetails.heading = Are any of the following included in your rent for {0}?
+lettingPartOfPropertyCheckboxesDetails.heading = Items included in your rent
+lettingPartOfPropertyCheckboxesDetails.title = Are any of the following included in your rent for {0}?
 hint.lettingPartOfPropertyCheckboxesDetails = Select all that apply
 label.percentageOpenMarket = A percentage of open market value
 label.fixed = A fixed amount
@@ -871,7 +872,8 @@ error.sharedResponsibilities.required = Tell us how the responsibilities are sha
 
 # CATERING OPERATION OR LETTING ACCOMMODATION CHECKBOXES
 ########################################################
-cateringOperationOrLettingAccommodationCheckboxesDetails.heading = Are any of the following included in your rent for {0}?
+cateringOperationOrLettingAccommodationCheckboxesDetails.heading = Items included in your rent
+cateringOperationOrLettingAccommodationCheckboxesDetails.title = Are any of the following included in your rent for {0}
 hint.cateringOperationOrLettingAccommodationCheckboxesDetails = Select any that apply.
 checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.rates = Rates
 checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.propertyInsurance = Property insurance

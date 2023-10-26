@@ -39,9 +39,9 @@
 @(form: Form[_], index: Int, cateringOrLetting: String, operatorName: String, backLink: String, summary: Summary)(implicit request: Request[_], messages: Messages)
 
 @layout(
- pageHeading = messages("cateringOperationOrLettingAccommodationCheckboxesDetails.heading", operatorName),
+ pageHeading = messages("cateringOperationOrLettingAccommodationCheckboxesDetails.heading"),
  showSection = true,
- summary = Some(summary),
+ showH1 = false,
  sectionName = messages("label.section.aboutTheFranchiseLettings"),
  backLinkUrl = backLink,
  theForm = form
@@ -55,6 +55,8 @@
    controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyRentIncludesController.submit(index)
   else controllers.routes.TaskListController.show()}
  ) {
+
+  <h1 class="govuk-heading-l">@messages("cateringOperationOrLettingAccommodationCheckboxesDetails.title", operatorName)</h1>
 
   @govukCheckboxes(
    Checkboxes(
