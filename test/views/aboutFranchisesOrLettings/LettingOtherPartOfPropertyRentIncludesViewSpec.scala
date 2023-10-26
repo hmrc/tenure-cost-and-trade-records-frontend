@@ -36,23 +36,22 @@ class LettingOtherPartOfPropertyRentIncludesViewSpec extends QuestionViewBehavio
   override val form = lettingOtherPartOfPropertyRentIncludesForm
 
   def createView = () =>
-    cateringOperationRentIncludesView(form, 0, messageKeyPrefix, "Wombles Inc", backLink, Summary("99996010001"))(
+    cateringOperationRentIncludesView(form, 0, messageKeyPrefix, "{0}", backLink, Summary("99996010001"))(
       fakeRequest,
       messages
     )
 
   def createViewUsingForm = (form: Form[List[String]]) =>
-    cateringOperationRentIncludesView(form, 0, messageKeyPrefix, "Wombles Inc", backLink, Summary("99996010001"))(
+    cateringOperationRentIncludesView(form, 0, messageKeyPrefix, "{0}", backLink, Summary("99996010001"))(
       fakeRequest,
       messages
     )
 
   "Catering operation rent includes view" must {
 
-    behave like normalPageWithMessageExtra(
+    behave like normalPageWithDifferentHeadingAndTitle(
       createView,
-      "cateringOperationOrLettingAccommodationCheckboxesDetails",
-      "Wombles Inc"
+      "cateringOperationOrLettingAccommodationCheckboxesDetails"
     )
 
     "has a link marked with back.link.label leading to the franchise or letting tied to property Page" in {

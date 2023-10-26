@@ -34,20 +34,20 @@ class CateringOperationsRentIncludesViewSpec extends QuestionViewBehaviours[List
   override val form = cateringOperationOrLettingAccommodationRentIncludesForm
 
   def createView = () =>
-    cateringOperationRentIncludesView(form, 0, messageKeyPrefix, "Wombles Inc", backLink, Summary("99996010001"))(
+    cateringOperationRentIncludesView(form, 0, messageKeyPrefix, "{0}", backLink, Summary("99996010001"))(
       fakeRequest,
       messages
     )
 
   def createViewUsingForm = (form: Form[List[String]]) =>
-    cateringOperationRentIncludesView(form, 0, messageKeyPrefix, "Wombles Inc", backLink, Summary("99996010001"))(
+    cateringOperationRentIncludesView(form, 0, messageKeyPrefix, "{0}", backLink, Summary("99996010001"))(
       fakeRequest,
       messages
     )
 
   "Catering operation rent includes view" must {
 
-    behave like normalPageWithMessageExtra(createView, messageKeyPrefix, "Wombles Inc")
+    behave like normalPageWithDifferentHeadingAndTitle(createView, messageKeyPrefix)
 
     "has a link marked with back.link.label leading to the franchise or letting tied to property Page" in {
       val doc          = asDocument(createView())

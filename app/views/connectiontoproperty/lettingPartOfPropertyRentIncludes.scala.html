@@ -41,6 +41,7 @@
 @layout(
  pageHeading = messages("lettingPartOfPropertyCheckboxesDetails.heading"),
  showSection = true,
+ showH1 = false,
  summary = Some(summary),
  sectionName = messages("label.section.connectionToTheProperty"),
  backLinkUrl = backLink,
@@ -48,6 +49,8 @@
 ) {
 
  @formWithCSRF(action = controllers.connectiontoproperty.routes.LettingPartOfPropertyItemsIncludedInRentController.submit(index)) {
+
+  <h1 class="govuk-heading-l">@messages("lettingPartOfPropertyCheckboxesDetails.title", operatorName)</h1>
 
   @govukCheckboxes(
    Checkboxes(
