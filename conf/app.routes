@@ -134,6 +134,9 @@ POST        /tied-for-goods-details                                 controllers.
 GET         /about-your-trading-history                             controllers.aboutthetradinghistory.AboutYourTradingHistoryController.show()
 POST        /about-your-trading-history                             controllers.aboutthetradinghistory.AboutYourTradingHistoryController.submit()
 
+GET         /financial-year-end                                     controllers.aboutthetradinghistory.FinancialYearEndController.show()
+POST        /financial-year-end                                     controllers.aboutthetradinghistory.FinancialYearEndController.submit()
+
 GET         /turnover                                               controllers.aboutthetradinghistory.TurnoverController.show()
 POST        /turnover                                               controllers.aboutthetradinghistory.TurnoverController.submit()
 

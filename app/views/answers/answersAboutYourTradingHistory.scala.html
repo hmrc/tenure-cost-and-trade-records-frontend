@@ -76,7 +76,7 @@
         _.occupationAndAccountingInformation.map(
             a => Seq(
                 dateUtil.formatYearMonth(a.firstOccupy.toYearMonth),
-                dateUtil.formatMonthDay(a.financialYear.toMonthDay)
+                a.financialYear.map(_.toMonthDay).map(dateUtil.formatMonthDay).getOrElse("")
             ).mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>")
         ),
         aboutthetradinghistory.routes.AboutYourTradingHistoryController.show(), "",

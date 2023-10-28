@@ -933,9 +933,13 @@ error.legalOrPlanningRestrictionsDetails.maxLength = This must be 2000 character
 ##############################
 aboutYourTradingHistory.heading = Occupation and accounting information
 label.firstOccupy = When did you first occupy the property?
-label.financialYear =When does your current financial year end?
 error.firstOccupy.month.required = The date the property was first occupied must include a month
 error.firstOccupy.year.required = The date the property was first occupied must include a year
+
+# FINANCIAL YEAR-END
+##############################
+financialYearEnd.heading = Your financial year end
+label.financialYear = When does your current financial year end?
 error.financialYear.day.required = The date the financial years ends must include a day
 error.financialYear.month.required = The date the financial years ends must include a month
 label.financialYear.help = If your financial year end changed within the last 3 years, you can declare the former dates on the next page.

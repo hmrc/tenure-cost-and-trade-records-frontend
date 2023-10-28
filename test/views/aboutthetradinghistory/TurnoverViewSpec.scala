@@ -16,7 +16,7 @@
 
 package views.aboutthetradinghistory
 
-import form.aboutthetradinghistory.{OccupationalAndAccountingInformationForm, TurnoverForm}
+import form.aboutthetradinghistory.{OccupationalInformationForm, TurnoverForm}
 import models.pages.Summary
 import models.submissions.aboutthetradinghistory.{OccupationalAndAccountingInformation, TurnoverSection}
 import org.scalatest.matchers.must.Matchers._

@@ -16,15 +16,15 @@
 
 package controllers.aboutthetradinghistory
 
-import form.aboutthetradinghistory.OccupationalInformationForm.occupationalInformationForm
+import form.aboutthetradinghistory.AccountingInformationForm.accountingInformationForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import utils.TestBaseSpec
 import utils.FormBindingTestAssertions.mustContainError
+import utils.TestBaseSpec
 
-class AboutYourTradingHistoryControllerSpec extends TestBaseSpec {
+class FinancialYearEndControllerSpec extends TestBaseSpec {
 
   import TestData.{baseFormData, errorKey}
 
@@ -58,19 +58,26 @@ class AboutYourTradingHistoryControllerSpec extends TestBaseSpec {
     }
   }
 
-  "About your trading history form" should {
-    "error if first occupy month is missing " in {
-      val formData = baseFormData - errorKey.occupyMonth
-      val form     = occupationalInformationForm.bind(formData)
+  "Financial year end form" should {
+    "error if financial year day is missing " in {
+      val formData = baseFormData - errorKey.financialYearDay
+      val form     = accountingInformationForm.bind(formData)
 
-      mustContainError(errorKey.occupyMonth, "error.firstOccupy.month.required", form)
+      mustContainError(errorKey.financialYearDay, "error.financialYear.day.required", form)
     }
 
-    "error if first occupy year is missing" in {
-      val formData = baseFormData - errorKey.occupyYear
-      val form     = occupationalInformationForm.bind(formData)
+    "error if financial year month is missing" in {
+      val formData = baseFormData - errorKey.financialYearMonth
+      val form     = accountingInformationForm.bind(formData)
 
-      mustContainError(errorKey.occupyYear, "error.firstOccupy.year.required", form)
+      mustContainError(errorKey.financialYearMonth, "error.financialYear.month.required", form)
+    }
+
+    "error if financial year date is incorrect" in {
+      val formData = baseFormData.updated("financialYear.day", "31").updated("financialYear.month", "2")
+      val form     = accountingInformationForm.bind(formData)
+
+      mustContainError("financialYear", "error.invalid_date", form)
     }
   }
 
@@ -88,8 +95,8 @@ class AboutYourTradingHistoryControllerSpec extends TestBaseSpec {
     }
 
     val baseFormData: Map[String, String] = Map(
-      "firstOccupy.month" -> "9",
-      "firstOccupy.year"  -> "2017"
+      "financialYear.day"   -> "27",
+      "financialYear.month" -> "9"
     )
 
   }

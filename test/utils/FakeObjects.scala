@@ -248,7 +248,7 @@ trait FakeObjects {
 
   // Trading history
   val prefilledAboutYourTradingHistory: AboutTheTradingHistory = AboutTheTradingHistory(
-    Some(OccupationalAndAccountingInformation(MonthsYearDuration(9, 2017), DayMonthsDuration(27, 9))),
+    Some(OccupationalAndAccountingInformation(MonthsYearDuration(9, 2017), Some(DayMonthsDuration(27, 9)))),
     Seq(
       TurnoverSection(
         LocalDate.now(),
@@ -363,7 +363,7 @@ trait FakeObjects {
     stillConnectedDetailsYesSession.copy(additionalInformation = Some(prefilledAdditionalInformation))
 
   val prefilledFirstOccupy                      = MonthsYearDuration(2, 2000)
-  val prefilledFinancialYear                    = DayMonthsDuration(2, 12)
+  val prefilledFinancialYear                    = Some(DayMonthsDuration(2, 12))
   val prefilledBigDecimal                       = BigDecimal(9999999)
   val prefilledAnnualRent                       = AnnualRent(prefilledBigDecimal)
   val prefilledCurrentRentPayableWithin12Months =

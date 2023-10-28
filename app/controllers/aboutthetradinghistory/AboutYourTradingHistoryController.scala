@@ -18,16 +18,16 @@ package controllers.aboutthetradinghistory
 
 import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
-import form.aboutthetradinghistory.OccupationalAndAccountingInformationForm.occupationalAndAccountingInformationForm
+import form.aboutthetradinghistory.OccupationalInformationForm.occupationalInformationForm
+import models.submissions.Form6010.MonthsYearDuration
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.updateAboutTheTradingHistory
-import models.submissions.aboutthetradinghistory.{OccupationalAndAccountingInformation, TurnoverSection}
+import models.submissions.aboutthetradinghistory.OccupationalAndAccountingInformation
 import navigation.AboutTheTradingHistoryNavigator
 import navigation.identifiers.AboutYourTradingHistoryPageId
 import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import util.AccountingInformationUtil
 import views.html.aboutthetradinghistory.aboutYourTradingHistory
 
 import javax.inject.{Inject, Named, Singleton}
@@ -49,8 +49,9 @@ class AboutYourTradingHistoryController @Inject() (
     Ok(
       aboutYourTradingHistoryView(
         request.sessionData.aboutTheTradingHistory.flatMap(_.occupationAndAccountingInformation) match {
-          case Some(tradingHistory) => occupationalAndAccountingInformationForm.fillAndValidate(tradingHistory)
-          case _                    => occupationalAndAccountingInformationForm
+          case Some(occupationAccounting) =>
+            occupationalInformationForm.fill(occupationAccounting.firstOccupy)
+          case _                          => occupationalInformationForm
         },
         request.sessionData.toSummary
       )
@@ -58,34 +59,23 @@ class AboutYourTradingHistoryController @Inject() (
   }
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft[OccupationalAndAccountingInformation](
-      occupationalAndAccountingInformationForm,
+    continueOrSaveAsDraft[MonthsYearDuration](
+      occupationalInformationForm,
       formWithErrors => BadRequest(aboutYourTradingHistoryView(formWithErrors, request.sessionData.toSummary)),
-      data =>
-        if (request.sessionData.aboutTheTradingHistory.flatMap(_.occupationAndAccountingInformation).contains(data)) {
-          Redirect(navigator.nextPage(AboutYourTradingHistoryPageId, request.sessionData).apply(request.sessionData))
-        } else {
-          val financialYearsList = AccountingInformationUtil.financialYearsRequired(data)
-          val updatedData        = updateAboutTheTradingHistory(
-            _.copy(
-              occupationAndAccountingInformation = Some(data),
-              turnoverSections = financialYearsList.map { finYearEnd =>
-                TurnoverSection(
-                  financialYearEnd = finYearEnd,
-                  tradingPeriod = 52,
-                  alcoholicDrinks = None,
-                  food = None,
-                  otherReceipts = None,
-                  accommodation = None,
-                  averageOccupancyRate = None
-                )
-              }
-            )
+      data => {
+        val occupationAndAccounting = request.sessionData.aboutTheTradingHistory
+          .flatMap(_.occupationAndAccountingInformation)
+          .fold(OccupationalAndAccountingInformation(data))(_.copy(firstOccupy = data))
+
+        val updatedData = updateAboutTheTradingHistory(
+          _.copy(
+            occupationAndAccountingInformation = Some(occupationAndAccounting)
           )
-          session
-            .saveOrUpdate(updatedData)
-            .map(_ => Redirect(navigator.nextPage(AboutYourTradingHistoryPageId, updatedData).apply(updatedData)))
-        }
+        )
+        session
+          .saveOrUpdate(updatedData)
+          .map(_ => Redirect(navigator.nextPage(AboutYourTradingHistoryPageId, updatedData).apply(updatedData)))
+      }
     )
   }
 

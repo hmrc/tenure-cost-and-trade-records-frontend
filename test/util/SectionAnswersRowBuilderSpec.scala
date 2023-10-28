@@ -41,7 +41,10 @@ class SectionAnswersRowBuilderSpec extends TestBaseSpec {
             ActionItem(
               href = "/send-trade-and-cost-information/about-you?from=CYA#fullName",
               content = Text("Change"),
-              visuallyHiddenText = Some("Full name")
+              visuallyHiddenText = Some("Full name"),
+              attributes = Map(
+                "aria-label" -> "Change Full name"
+              )
             )
           )
         )
@@ -103,7 +106,10 @@ class SectionAnswersRowBuilderSpec extends TestBaseSpec {
                 ActionItem(
                   href = "/send-trade-and-cost-information/about-the-property?from=CYA#propertyCurrentlyUsed",
                   content = Text("Change"),
-                  visuallyHiddenText = Some("Property use")
+                  visuallyHiddenText = Some("Property use"),
+                  attributes = Map(
+                    "aria-label" -> "Change Property use"
+                  )
                 )
               )
             )

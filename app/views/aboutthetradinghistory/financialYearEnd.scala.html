@@ -14,7 +14,7 @@
  * limitations under the License.
  *@
 
-@import models.submissions.Form6010.MonthsYearDuration
+@import models.submissions.Form6010.DayMonthsDuration
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukDateInput
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukFieldset
@@ -28,10 +28,10 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[MonthsYearDuration], summary: Summary)(implicit request: Request[_], messages: Messages)
+@(theForm: Form[(DayMonthsDuration, Boolean)], summary: Summary)(implicit request: Request[_], messages: Messages)
 
 @layout(
-    pageHeading = messages("aboutYourTradingHistory.heading"),
+    pageHeading = messages("financialYearEnd.heading"),
     showSection = true,
     summary = Some(summary),
     sectionName = messages("label.section.aboutYourTradingHistory"),
@@ -42,10 +42,11 @@
 
         @includes.dateFields(
             form = theForm,
-            field = "firstOccupy",
-            label = "label.firstOccupy",
+            field = "financialYear",
+            label = "label.financialYear",
             govukDate = govukDateInput,
-            helpText = messages("hint.month.year.example")
+            hideYear = true,
+            helpText = s"${messages("label.financialYear.help")}<br><br>${messages("hint.day.month.example")}"
         )
 
         @includes.continueSaveAsDraftButtons(govukButton)

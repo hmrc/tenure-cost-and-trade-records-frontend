@@ -45,7 +45,8 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
   }
 
   override val routeMap: Map[Identifier, Session => Call] = Map(
-    AboutYourTradingHistoryPageId            -> (_ => aboutthetradinghistory.routes.TurnoverController.show()),
+    AboutYourTradingHistoryPageId            -> (_ => aboutthetradinghistory.routes.FinancialYearEndController.show()),
+    FinancialYearEndPageId                   -> (_ => aboutthetradinghistory.routes.TurnoverController.show()),
     TurnoverPageId                           -> turnoverRouting,
     CostOfSalesId                            -> (_ => aboutthetradinghistory.routes.TotalPayrollCostsController.show()),
     TotalPayrollCostId                       -> (_ => aboutthetradinghistory.routes.VariableOperatingExpensesController.show()),

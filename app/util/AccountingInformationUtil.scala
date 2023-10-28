@@ -16,7 +16,7 @@
 
 package util
 
-import models.submissions.aboutthetradinghistory.OccupationalAndAccountingInformation
+import models.submissions.Form6010.{DayMonthsDuration, MonthsYearDuration}
 
 import java.time.LocalDate
 
@@ -25,13 +25,13 @@ import java.time.LocalDate
   */
 object AccountingInformationUtil {
 
-  def financialYearsRequired(accountingInfo: OccupationalAndAccountingInformation): Seq[LocalDate] = {
+  def financialYearsRequired(firstOccupy: MonthsYearDuration, financialYear: DayMonthsDuration): Seq[LocalDate] = {
     val now     = LocalDate.now
     val yearNow = now.getYear
 
-    val firstOccupyYear       = accountingInfo.firstOccupy.years
-    val financialYearEndDay   = accountingInfo.financialYear.days
-    val financialYearEndMonth = accountingInfo.financialYear.months
+    val firstOccupyYear       = firstOccupy.years
+    val financialYearEndDay   = financialYear.days
+    val financialYearEndMonth = financialYear.months
 
     val currentFinancialYear =
       if (now isBefore LocalDate.of(yearNow, financialYearEndMonth, financialYearEndDay)) {
