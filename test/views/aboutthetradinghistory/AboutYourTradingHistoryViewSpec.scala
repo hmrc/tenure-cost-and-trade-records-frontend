@@ -16,6 +16,7 @@
 
 package views.aboutthetradinghistory
 
+import actions.SessionRequest
 import form.aboutthetradinghistory.OccupationalInformationForm
 import models.pages.Summary
 import models.submissions.Form6010.MonthsYearDuration
@@ -32,13 +33,15 @@ class AboutYourTradingHistoryViewSpec extends QuestionViewBehaviours[MonthsYearD
 
   val messageKeyPrefix = "aboutYourTradingHistory"
 
+  val sessionRequest = SessionRequest(aboutYourTradingHistory6010YesSession, fakeRequest)
+
   override val form: Form[MonthsYearDuration] =
     OccupationalInformationForm.occupationalInformationForm
 
-  def createView: () => Html = () => aboutTheTradingHistoryView(form, Summary("99996010001"))(fakeRequest, messages)
+  def createView: () => Html = () => aboutTheTradingHistoryView(form)(sessionRequest, messages)
 
   def createViewUsingForm: Form[MonthsYearDuration] => Html =
-    (form: Form[MonthsYearDuration]) => aboutTheTradingHistoryView(form, Summary("99996010001"))(fakeRequest, messages)
+    (form: Form[MonthsYearDuration]) => aboutTheTradingHistoryView(form)(sessionRequest, messages)
 
   "About the trading history view" must {
 

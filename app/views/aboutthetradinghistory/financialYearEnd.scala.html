@@ -14,31 +14,40 @@
  * limitations under the License.
  *@
 
+@import actions.SessionRequest
 @import models.submissions.Form6010.DayMonthsDuration
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukDateInput
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukFieldset
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
-@import models.pages.Summary
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukCheckboxes
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Checkboxes
+@import uk.gov.hmrc.govukfrontend.views.Aliases.CheckboxItem
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Fieldset
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Legend
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.hint.Hint
 
 @this(layout: Layout,
         govukButton: GovukButton,
         govukDateInput: GovukDateInput,
         govukFieldset: GovukFieldset,
+        govukCheckboxes: GovukCheckboxes,
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[(DayMonthsDuration, Boolean)], summary: Summary)(implicit request: Request[_], messages: Messages)
+@(theForm: Form[(DayMonthsDuration, Boolean)])(implicit request: SessionRequest[_], messages: Messages)
 
 @layout(
     pageHeading = messages("financialYearEnd.heading"),
     showSection = true,
-    summary = Some(summary),
+    summary = Some(request.sessionData.toSummary),
     sectionName = messages("label.section.aboutYourTradingHistory"),
-    backLinkUrl = controllers.routes.TaskListController.show().url,
+    backLinkUrl = controllers.aboutthetradinghistory.routes.AboutYourTradingHistoryController.show().url,
     theForm = theForm
 ) {
-    @formWithCSRF(action = controllers.aboutthetradinghistory.routes.AboutYourTradingHistoryController.submit()) {
+    @formWithCSRF(action = controllers.aboutthetradinghistory.routes.FinancialYearEndController.submit()) {
 
         @includes.dateFields(
             form = theForm,
@@ -46,7 +55,27 @@
             label = "label.financialYear",
             govukDate = govukDateInput,
             hideYear = true,
-            helpText = s"${messages("label.financialYear.help")}<br><br>${messages("hint.day.month.example")}"
+            helpText = messages("hint.day.month.example")
+        )
+
+        @govukCheckboxes(
+            Checkboxes(
+                name = "yearEndChanged",
+                fieldset = Fieldset(
+                    legend = Legend(
+                        content = Text(messages("financialYearEnd.yearEndChanged.legend")),
+                        classes = "govuk-fieldset__legend--s"
+                    )
+                ),
+                hint = Some(Hint(content = Text(messages("financialYearEnd.yearEndChanged.hint")))),
+                items = Seq(
+                    CheckboxItem(
+                        content = Text(messages("financialYearEnd.yearEndChanged")),
+                        value = "true",
+                        checked = theForm("yearEndChanged").value.contains("true")
+                    )
+                )
+            ).withFormField(theForm("yearEndChanged"))
         )
 
         @includes.continueSaveAsDraftButtons(govukButton)

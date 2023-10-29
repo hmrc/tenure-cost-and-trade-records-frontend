@@ -52,8 +52,7 @@ class AboutYourTradingHistoryController @Inject() (
           case Some(occupationAccounting) =>
             occupationalInformationForm.fill(occupationAccounting.firstOccupy)
           case _                          => occupationalInformationForm
-        },
-        request.sessionData.toSummary
+        }
       )
     )
   }
@@ -61,7 +60,7 @@ class AboutYourTradingHistoryController @Inject() (
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[MonthsYearDuration](
       occupationalInformationForm,
-      formWithErrors => BadRequest(aboutYourTradingHistoryView(formWithErrors, request.sessionData.toSummary)),
+      formWithErrors => BadRequest(aboutYourTradingHistoryView(formWithErrors)),
       data => {
         val occupationAndAccounting = request.sessionData.aboutTheTradingHistory
           .flatMap(_.occupationAndAccountingInformation)

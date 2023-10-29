@@ -32,10 +32,24 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
 
   override val overrideRedirectIfFromCYA: Map[String, Session => Call] = Map(
     (
+      aboutthetradinghistory.routes.FinancialYearEndController.show().url,
+      _ => aboutthetradinghistory.routes.FinancialYearEndController.show()
+    ),
+    (
+      aboutthetradinghistory.routes.FinancialYearEndDatesController.show().url,
+      _ => aboutthetradinghistory.routes.FinancialYearEndDatesController.show()
+    ),
+    (
       aboutthetradinghistory.routes.TurnoverController.show().url,
       _ => aboutthetradinghistory.routes.TurnoverController.show()
     )
   )
+
+  private def financialYearEndRouting: Session => Call =
+    _.aboutTheTradingHistory.flatMap(_.occupationAndAccountingInformation.flatMap(_.yearEndChanged)) match {
+      case Some(true) => aboutthetradinghistory.routes.FinancialYearEndDatesController.show()
+      case _ => aboutthetradinghistory.routes.TurnoverController.show()
+    }
 
   private def turnoverRouting: Session => Call = answers => {
     if (answers.forType == ForTypes.for6015)
@@ -46,7 +60,8 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
 
   override val routeMap: Map[Identifier, Session => Call] = Map(
     AboutYourTradingHistoryPageId            -> (_ => aboutthetradinghistory.routes.FinancialYearEndController.show()),
-    FinancialYearEndPageId                   -> (_ => aboutthetradinghistory.routes.TurnoverController.show()),
+    FinancialYearEndPageId                   -> financialYearEndRouting,
+    FinancialYearEndDatesPageId              -> (_ => aboutthetradinghistory.routes.TurnoverController.show()),
     TurnoverPageId                           -> turnoverRouting,
     CostOfSalesId                            -> (_ => aboutthetradinghistory.routes.TotalPayrollCostsController.show()),
     TotalPayrollCostId                       -> (_ => aboutthetradinghistory.routes.VariableOperatingExpensesController.show()),

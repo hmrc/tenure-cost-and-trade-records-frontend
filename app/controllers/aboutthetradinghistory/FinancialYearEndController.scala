@@ -58,8 +58,7 @@ class FinancialYearEndController @Inject() (
               .getOrElse(false)
             accountingInformationForm.fill((financialYear, yearEndChanged))
           case _                   => accountingInformationForm
-        },
-        request.sessionData.toSummary
+        }
       )
     )
   }
@@ -67,7 +66,7 @@ class FinancialYearEndController @Inject() (
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[(DayMonthsDuration, Boolean)](
       accountingInformationForm,
-      formWithErrors => BadRequest(financialYearEndView(formWithErrors, request.sessionData.toSummary)),
+      formWithErrors => BadRequest(financialYearEndView(formWithErrors)),
       data => {
         val sessionTradingHistory      = request.sessionData.aboutTheTradingHistory
         val previousFinancialYearsList =
@@ -78,9 +77,9 @@ class FinancialYearEndController @Inject() (
 
         val newFinancialYearsList = AccountingInformationUtil.financialYearsRequired(firstOccupy, data._1)
 
-        if (newFinancialYearsList.equals(previousFinancialYearsList)) {
-          Redirect(navigator.nextPage(FinancialYearEndPageId, request.sessionData).apply(request.sessionData))
-        } else {
+//        if (newFinancialYearsList.equals(previousFinancialYearsList) && !data._2) {
+//          Redirect(navigator.nextPage(FinancialYearEndPageId, request.sessionData).apply(request.sessionData))
+//        } else {
           val updatedData = updateAboutTheTradingHistory(
             _.copy(
               occupationAndAccountingInformation =
@@ -101,7 +100,7 @@ class FinancialYearEndController @Inject() (
           session
             .saveOrUpdate(updatedData)
             .map(_ => Redirect(navigator.nextPage(FinancialYearEndPageId, updatedData).apply(updatedData)))
-        }
+//        }
       }
     )
   }

@@ -940,9 +940,16 @@ error.firstOccupy.year.required = The date the property was first occupied must 
 ##############################
 financialYearEnd.heading = Your financial year end
 label.financialYear = When does your current financial year end?
+financialYearEnd.yearEndChanged.legend = If your financial year end has changed
+financialYearEnd.yearEndChanged.hint = Use the checkbox if your financial year end has changed in the last 3 years. You will be taken to a separate page to declare the former year-end dates.
+financialYearEnd.yearEndChanged = My financial year end has changed in the last three years.
 error.financialYear.day.required = The date the financial years ends must include a day
 error.financialYear.month.required = The date the financial years ends must include a month
-label.financialYear.help = If your financial year end changed within the last 3 years, you can declare the former dates on the next page.
+
+# FINANCIAL YEAR-END DATES
+##############################
+financialYearEndDates.heading = Amend your financial year-end dates
+
 
 # CURRENT RENT FIRST PAID
 #########################

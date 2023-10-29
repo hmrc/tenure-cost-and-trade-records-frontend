@@ -16,6 +16,7 @@
 
 package views.aboutthetradinghistory
 
+import actions.SessionRequest
 import form.aboutthetradinghistory.AccountingInformationForm.accountingInformationForm
 import models.pages.Summary
 import models.submissions.Form6010.{DayMonthsDuration, MonthsYearDuration}
@@ -32,13 +33,14 @@ class FinancialYearEndViewSpec extends QuestionViewBehaviours[(DayMonthsDuration
 
   val messageKeyPrefix = "financialYearEnd"
 
+  val sessionRequest = SessionRequest(aboutYourTradingHistory6010YesSession, fakeRequest)
+
   override val form: Form[(DayMonthsDuration, Boolean)] = accountingInformationForm
 
-  def createView: () => Html = () => financialYearEndView(form, Summary("99996010001"))(fakeRequest, messages)
+  def createView: () => Html = () => financialYearEndView(form)(sessionRequest, messages)
 
   def createViewUsingForm: Form[(DayMonthsDuration, Boolean)] => Html =
-    (form: Form[(DayMonthsDuration, Boolean)]) =>
-      financialYearEndView(form, Summary("99996010001"))(fakeRequest, messages)
+    (form: Form[(DayMonthsDuration, Boolean)]) => financialYearEndView(form)(sessionRequest, messages)
 
   "About the trading history view" must {
 
@@ -49,7 +51,7 @@ class FinancialYearEndViewSpec extends QuestionViewBehaviours[(DayMonthsDuration
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText mustBe messages("back.link.label")
       val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.routes.TaskListController.show().url
+      backlinkUrl mustBe controllers.aboutthetradinghistory.routes.AboutYourTradingHistoryController.show().url
     }
 
     "contain date format hint for financialYear-hint" in {
