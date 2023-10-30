@@ -48,7 +48,7 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
   private def financialYearEndRouting: Session => Call =
     _.aboutTheTradingHistory.flatMap(_.occupationAndAccountingInformation.flatMap(_.yearEndChanged)) match {
       case Some(true) => aboutthetradinghistory.routes.FinancialYearEndDatesController.show()
-      case _ => aboutthetradinghistory.routes.TurnoverController.show()
+      case _          => aboutthetradinghistory.routes.TurnoverController.show()
     }
 
   private def turnoverRouting: Session => Call = answers => {

@@ -21,7 +21,6 @@ import models.submissions.Form6010.DayMonthsDuration
 import play.api.data.Form
 import play.api.data.Forms.{optional, text, tuple}
 
-
 object AccountingInformationForm {
 
   val accountingInformationForm: Form[(DayMonthsDuration, Boolean)] = Form(

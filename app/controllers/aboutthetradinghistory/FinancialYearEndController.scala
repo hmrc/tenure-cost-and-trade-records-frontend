@@ -80,26 +80,26 @@ class FinancialYearEndController @Inject() (
 //        if (newFinancialYearsList.equals(previousFinancialYearsList) && !data._2) {
 //          Redirect(navigator.nextPage(FinancialYearEndPageId, request.sessionData).apply(request.sessionData))
 //        } else {
-          val updatedData = updateAboutTheTradingHistory(
-            _.copy(
-              occupationAndAccountingInformation =
-                Some(OccupationalAndAccountingInformation(firstOccupy, Some(data._1), Some(data._2))),
-              turnoverSections = newFinancialYearsList.map { finYearEnd =>
-                TurnoverSection(
-                  financialYearEnd = finYearEnd,
-                  tradingPeriod = 52,
-                  alcoholicDrinks = None,
-                  food = None,
-                  otherReceipts = None,
-                  accommodation = None,
-                  averageOccupancyRate = None
-                )
-              }
-            )
+        val updatedData = updateAboutTheTradingHistory(
+          _.copy(
+            occupationAndAccountingInformation =
+              Some(OccupationalAndAccountingInformation(firstOccupy, Some(data._1), Some(data._2))),
+            turnoverSections = newFinancialYearsList.map { finYearEnd =>
+              TurnoverSection(
+                financialYearEnd = finYearEnd,
+                tradingPeriod = 52,
+                alcoholicDrinks = None,
+                food = None,
+                otherReceipts = None,
+                accommodation = None,
+                averageOccupancyRate = None
+              )
+            }
           )
-          session
-            .saveOrUpdate(updatedData)
-            .map(_ => Redirect(navigator.nextPage(FinancialYearEndPageId, updatedData).apply(updatedData)))
+        )
+        session
+          .saveOrUpdate(updatedData)
+          .map(_ => Redirect(navigator.nextPage(FinancialYearEndPageId, updatedData).apply(updatedData)))
 //        }
       }
     )
