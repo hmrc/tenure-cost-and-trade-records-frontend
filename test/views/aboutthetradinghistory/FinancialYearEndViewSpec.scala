@@ -57,7 +57,7 @@ class FinancialYearEndViewSpec extends QuestionViewBehaviours[(DayMonthsDuration
     "contain date format hint for financialYear-hint" in {
       val doc               = asDocument(createViewUsingForm(form))
       val financialYearHint = doc.getElementById("financialYear-hint").text()
-      assert(financialYearHint == s"${messages("label.financialYear.help")} ${messages("hint.day.month.example")}")
+      assert(financialYearHint == messages("hint.day.month.example"))
     }
 
     "contain date field for the value financialYear.month" in {

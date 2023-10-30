@@ -16,7 +16,7 @@
 
 package controllers.aboutthetradinghistory
 
-import actions.WithSessionRefiner
+import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.OccupationalInformationForm.occupationalInformationForm
 import models.submissions.Form6010.MonthsYearDuration
@@ -28,6 +28,7 @@ import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
+import util.AccountingInformationUtil.financialYearsRequired
 import views.html.aboutthetradinghistory.aboutYourTradingHistory
 
 import javax.inject.{Inject, Named, Singleton}
@@ -73,9 +74,25 @@ class AboutYourTradingHistoryController @Inject() (
         )
         session
           .saveOrUpdate(updatedData)
-          .map(_ => Redirect(navigator.nextPage(AboutYourTradingHistoryPageId, updatedData).apply(updatedData)))
+          .map(_ =>
+            navigator.cyaPage
+              .filter(_ =>
+                navigator.from == "CYA" && occupationAndAccounting.financialYear.isDefined
+                  && newFinancialYears(occupationAndAccounting) == previousFinancialYears
+              )
+              .getOrElse(navigator.nextPage(AboutYourTradingHistoryPageId, updatedData).apply(updatedData))
+          )
+          .map(Redirect)
       }
     )
   }
+
+  private def previousFinancialYears(implicit request: SessionRequest[AnyContent]): Seq[Int] =
+    request.sessionData.aboutTheTradingHistory
+      .fold(Seq.empty[Int])(_.turnoverSections.map(_.financialYearEnd.getYear))
+
+  private def newFinancialYears(occupationAndAccounting: OccupationalAndAccountingInformation): Seq[Int] =
+    occupationAndAccounting.financialYear
+      .fold(Seq.empty[Int])(financialYearsRequired(occupationAndAccounting.firstOccupy, _).map(_.getYear))
 
 }

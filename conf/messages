@@ -931,7 +931,7 @@ error.legalOrPlanningRestrictionsDetails.maxLength = This must be 2000 character
 
 # ABOUT YOUR TRADING HISTORY
 ##############################
-aboutYourTradingHistory.heading = Occupation and accounting information
+aboutYourTradingHistory.heading = When did you first occupy the property?
 label.firstOccupy = When did you first occupy the property?
 error.firstOccupy.month.required = The date the property was first occupied must include a month
 error.firstOccupy.year.required = The date the property was first occupied must include a year
