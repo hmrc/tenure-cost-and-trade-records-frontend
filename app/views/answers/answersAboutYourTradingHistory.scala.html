@@ -72,15 +72,12 @@
 <h2 class="govuk-heading-m">@messages("aboutYourTradingHistory.heading")</h2>
 
 @govukSummaryList(SummaryList(rows =
-    sectionAnswers.row("checkYourAnswersAboutTheTradingHistory.occupationAndAccounting",
-        _.occupationAndAccountingInformation.map(
-            a => Seq(
-                dateUtil.formatYearMonth(a.firstOccupy.toYearMonth),
-                a.financialYear.map(_.toMonthDay).map(dateUtil.formatMonthDay).getOrElse("")
-            ).mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>")
-        ),
-        aboutthetradinghistory.routes.AboutYourTradingHistoryController.show(), "",
-        ("valueAsHtml", _ => None))
+    sectionAnswers.row("checkYourAnswersAboutTheTradingHistory.occupationDate",
+        _.occupationAndAccountingInformation.map(_.firstOccupy.toYearMonth).map(dateUtil.formatYearMonth),
+        aboutthetradinghistory.routes.AboutYourTradingHistoryController.show(), "firstOccupy.month") ++
+            sectionAnswers.row("checkYourAnswersAboutTheTradingHistory.financialYearEnd",
+                _.occupationAndAccountingInformation.flatMap(_.financialYear.map(_.toMonthDay)).map(dateUtil.formatMonthDay),
+                aboutthetradinghistory.routes.FinancialYearEndController.show(), "financialYear.day")
 ))
 
 <h2 class="govuk-heading-m">@messages("turnover.heading")</h2>

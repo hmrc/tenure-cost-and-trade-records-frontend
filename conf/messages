@@ -931,8 +931,8 @@ error.legalOrPlanningRestrictionsDetails.maxLength = This must be 2000 character
 
 # ABOUT YOUR TRADING HISTORY
 ##############################
-aboutYourTradingHistory.heading = When did you first occupy the property?
-label.firstOccupy = When did you first occupy the property?
+aboutYourTradingHistory.heading = Occupation and accounting information
+firstOccupy.heading = When did you first occupy the property?
 error.firstOccupy.month.required = The date the property was first occupied must include a month
 error.firstOccupy.year.required = The date the property was first occupied must include a year
 
@@ -1361,7 +1361,7 @@ checkYourAnswersAboutTheProperty.enforcementActionHasBeenTakenInformationDetails
 checkYourAnswersAboutTheProperty.tiedForGoods = Tied goods?
 checkYourAnswersAboutTheProperty.tiedForGoodsDetails = Type of tie
 checkYourAnswersAboutTheTradingHistory.heading = Check your answers - trading history
-checkYourAnswersAboutTheTradingHistory.occupationAndAccounting = Occupation date and financial year end
+checkYourAnswersAboutTheTradingHistory.occupationDate = Occupation date
 checkYourAnswersAboutTheTradingHistory.financialYearEnd = Financial year end
 checkYourAnswersAboutTheTradingHistory.tradingPeriod = Trading period
 checkYourAnswersAboutTheTradingHistory.drinks = Drinks

@@ -92,8 +92,7 @@
     @backLinkUrl.map{ url =>
         <div>@govukBackLink(
             BackLink(
-                href = url,
-                content = Text(messages("back.link.label"))
+                href = url
             )
         )
         </div>

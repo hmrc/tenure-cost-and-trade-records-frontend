@@ -31,7 +31,7 @@ class AboutYourTradingHistoryViewSpec extends QuestionViewBehaviours[MonthsYearD
   def aboutTheTradingHistoryView: aboutYourTradingHistory =
     app.injector.instanceOf[views.html.aboutthetradinghistory.aboutYourTradingHistory]
 
-  val messageKeyPrefix = "aboutYourTradingHistory"
+  val messageKeyPrefix = "firstOccupy"
 
   val sessionRequest = SessionRequest(aboutYourTradingHistory6010YesSession, fakeRequest)
 
