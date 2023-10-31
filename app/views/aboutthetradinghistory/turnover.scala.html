@@ -91,6 +91,9 @@
       @* TODO - Reinstate paragraph when cut and paste functionality developed *@
       @*<p class="govuk-body">@messages("turnover.p2")</p>*@
 
+      @govukInsetText(InsetText(
+          content = Text(messages("turnover.inset"))
+      ))
       @govukDetails(Details(
           summary = Text(messages("turnover.details")),
           content = HtmlContent(detailsContent)
