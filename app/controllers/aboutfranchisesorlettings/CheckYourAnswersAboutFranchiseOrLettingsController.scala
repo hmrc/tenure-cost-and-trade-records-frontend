@@ -20,7 +20,8 @@ import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
 import form.aboutfranchisesorlettings.CheckYourAnswersAboutFranchiseOrLettingsForm.checkYourAnswersAboutFranchiseOrLettingsForm
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
-import models.submissions.aboutfranchisesorlettings.CheckYourAnswersAboutFranchiseOrLettings
+import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, CheckYourAnswersAboutFranchiseOrLettings}
+import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
 import models.{ForTypes, Session}
 import navigation.AboutFranchisesOrLettingsNavigator
 import navigation.identifiers.CheckYourAnswersAboutFranchiseOrLettingsId
@@ -88,26 +89,16 @@ class CheckYourAnswersAboutFranchiseOrLettingsController @Inject() (
     )
   }
 
-  private def getLettingsIndex(session: Session): Int =
+  private def getLettingsIndex(session: Session): Int  =
     session.aboutFranchisesOrLettings.map(_.lettingCurrentIndex).getOrElse(0)
-
+  private def getCateringsIndex(session: Session): Int =
+    session.aboutFranchisesOrLettings.map(_.cateringOperationCurrentIndex).getOrElse(0)
   private def getBackLink(
     answers: Session
-  ): String = //TODO Look at the back link logic. Got it loading but I'll come back to it! - Pete
+  ): String                                            = //TODO Look at the back link logic. Got it loading but I'll come back to it! - Pete
     answers.forType match {
       case ForTypes.for6010 | ForTypes.for6011 =>
-        answers.aboutFranchisesOrLettings.flatMap(_.franchisesOrLettingsTiedToProperty.map(_.name)) match {
-          case Some("yes") =>
-            answers.aboutFranchisesOrLettings.get.lettingOtherPartOfProperty.isDefined match {
-              case true  => getUrlForLettingPartOfProperty(answers)
-              case false => controllers.aboutfranchisesorlettings.routes.CateringOperationController.show().url
-            }
-          case Some("no")  =>
-            controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show().url
-          case _           =>
-            logger.warn(s"Back link for enforcement action page reached with unknown enforcement taken value")
-            controllers.routes.TaskListController.show().url
-        }
+        getBackUrlFor6010and6011(answers)
 
       case ForTypes.for6015 | ForTypes.for6016 =>
         answers.aboutFranchisesOrLettings.flatMap(_.franchisesOrLettingsTiedToProperty.map(_.name)) match {
@@ -153,4 +144,46 @@ class CheckYourAnswersAboutFranchiseOrLettingsController @Inject() (
         logger.warn(s"Back link for premises license page reached with unknown enforcement taken value")
         controllers.routes.TaskListController.show().url
     }
+
+  private def getBackUrlFor6010and6011(session: Session): String = {
+    val aboutFranchiseOrLettings                          = session.aboutFranchisesOrLettings.get
+    def isNoOrNone(answer: Option[AnswersYesNo]): Boolean =
+      answer match {
+        case Some(AnswerNo) | None => true
+        case _                     => false
+      }
+
+    aboutFranchiseOrLettings match {
+      case AboutFranchisesOrLettings(Some(AnswerYes), Some(AnswerYes), _, _, _, _, _, _)
+          if aboutFranchiseOrLettings.lettingSections.nonEmpty =>
+        controllers.aboutfranchisesorlettings.routes.AddAnotherLettingOtherPartOfPropertyController
+          .show(getLettingsIndex(session))
+          .url
+
+      case AboutFranchisesOrLettings(Some(AnswerYes), Some(AnswerYes), _, _, _, _, _, _) =>
+        controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show().url
+
+      case AboutFranchisesOrLettings(Some(AnswerYes), _, _, _, _, _, _, _)
+          if isNoOrNone(aboutFranchiseOrLettings.lettingOtherPartOfProperty) =>
+        controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show().url
+
+      case AboutFranchisesOrLettings(Some(AnswerYes), _, _, _, _, _, _, _)
+          if aboutFranchiseOrLettings.cateringConcessionOrFranchise.contains(
+            AnswerYes
+          ) && aboutFranchiseOrLettings.cateringOperationSections.nonEmpty =>
+        controllers.aboutfranchisesorlettings.routes.AddAnotherCateringOperationController
+          .show(getCateringsIndex(session))
+          .url
+
+      case AboutFranchisesOrLettings(Some(AnswerYes), _, _, _, _, _, _, _)
+          if aboutFranchiseOrLettings.cateringConcessionOrFranchise.contains(AnswerYes) =>
+        controllers.aboutfranchisesorlettings.routes.ConcessionOrFranchiseController.show().url
+
+      case AboutFranchisesOrLettings(Some(AnswerNo), _, _, _, _, _, _, _) =>
+        controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show().url
+
+      case _ =>
+        controllers.routes.TaskListController.show().url
+    }
+  }
 }

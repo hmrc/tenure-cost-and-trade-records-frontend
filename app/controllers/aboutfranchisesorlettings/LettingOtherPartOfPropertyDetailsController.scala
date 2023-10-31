@@ -53,7 +53,7 @@ class LettingOtherPartOfPropertyDetailsController @Inject() (
         existingDetails.fold(lettingOtherPartOfPropertyForm)(lettingOtherPartOfPropertyForm.fill),
         index,
         "lettingOtherPartOfPropertyDetails",
-        controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show().url,
+        getBackLink(index),
         request.sessionData.toSummary
       )
     )
@@ -68,7 +68,7 @@ class LettingOtherPartOfPropertyDetailsController @Inject() (
             formWithErrors,
             index,
             "lettingOtherPartOfPropertyDetails",
-            controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show().url,
+            getBackLink(index),
             request.sessionData.toSummary
           )
         ),
@@ -97,6 +97,13 @@ class LettingOtherPartOfPropertyDetailsController @Inject() (
         Redirect(navigator.nextPage(LettingAccommodationDetailsPageId, updatedData).apply(updatedData))
       }
     )
+  }
+
+  def getBackLink(maybeIndex: Option[Int]) = {
+    maybeIndex match {
+       case Some(index) if index > 0 => {controllers.aboutfranchisesorlettings.routes.AddAnotherLettingOtherPartOfPropertyController.show(index-1).url}
+       case _ =>  {controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show().url}
+    }
   }
 
 }

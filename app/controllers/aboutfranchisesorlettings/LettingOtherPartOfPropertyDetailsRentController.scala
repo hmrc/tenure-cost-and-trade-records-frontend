@@ -52,7 +52,7 @@ class LettingOtherPartOfPropertyDetailsRentController @Inject() (
           index,
           "lettingOtherPartOfPropertyRentDetails",
           existingSection.get.lettingOtherPartOfPropertyInformationDetails.operatorName,
-          controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsController.show().url,
+          controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsController.show(Some(index)).url,
           request.sessionData.toSummary
         )
       )
@@ -71,7 +71,7 @@ class LettingOtherPartOfPropertyDetailsRentController @Inject() (
             index,
             "lettingOtherPartOfPropertyRentDetails",
             existingSection.lettingOtherPartOfPropertyInformationDetails.operatorName,
-            controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsController.show().url,
+            controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsController.show(Some(index)).url,
             request.sessionData.toSummary
           )
         ),

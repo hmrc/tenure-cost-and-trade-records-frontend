@@ -29,6 +29,7 @@ import repositories.SessionRepo
 import views.html.aboutfranchisesorlettings.cateringOperationOrLettingAccommodationRentDetails
 
 import javax.inject.{Inject, Named, Singleton}
+import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class CateringOperationDetailsRentController @Inject() (
@@ -37,7 +38,7 @@ class CateringOperationDetailsRentController @Inject() (
   cateringOperationOrLettingAccommodationRentDetailsView: cateringOperationOrLettingAccommodationRentDetails,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FORDataCaptureController(mcc)
+)(implicit ec: ExecutionContext) extends FORDataCaptureController(mcc)
     with I18nSupport {
 
   def show(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
@@ -91,9 +92,8 @@ class CateringOperationDetailsRentController @Inject() (
           )
           val updatedData      = updateAboutFranchisesOrLettings(_.copy(cateringOperationSections = updatedSections))
           session.saveOrUpdate(updatedData)
-          Redirect(navigator.nextPage(CateringOperationRentDetailsPageId, updatedData).apply(updatedData))
+            Redirect(navigator.nextPage(CateringOperationRentDetailsPageId, updatedData).apply(updatedData))
         }
     )
   }
-
 }

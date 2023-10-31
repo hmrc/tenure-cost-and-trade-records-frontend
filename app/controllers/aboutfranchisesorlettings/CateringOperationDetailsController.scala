@@ -58,7 +58,7 @@ class CateringOperationDetailsController @Inject() (
         ),
         index,
         "cateringOperationOrLettingAccommodationDetails",
-        getBackLink(request.sessionData) match {
+        getBackLink(request.sessionData, index) match {
           case Right(link) => link
           case Left(msg)   =>
             logger.warn(s"Navigation for catering operation details page reached with error: $msg")
@@ -80,7 +80,7 @@ class CateringOperationDetailsController @Inject() (
             formWithErrors,
             index,
             "cateringOperationOrLettingAccommodationDetails",
-            getBackLink(request.sessionData) match {
+            getBackLink(request.sessionData, index) match {
               case Right(link) => link
               case Left(msg)   =>
                 logger.warn(s"Navigation for catering operation details page reached with error: $msg")
@@ -122,11 +122,18 @@ class CateringOperationDetailsController @Inject() (
     )
   }
 
-  private def getBackLink(answers: Session): Either[String, String] =
+  private def getBackLink(answers: Session, maybeIndex: Option[Int]): Either[String, String] =
     answers.forType match {
       case ForTypes.for6015 | ForTypes.for6016 =>
         Right(controllers.aboutfranchisesorlettings.routes.ConcessionOrFranchiseController.show().url)
       case _                                   =>
-        Right(controllers.aboutfranchisesorlettings.routes.CateringOperationController.show().url)
+        maybeIndex match {
+          case Some(index) if index > 0 =>
+            Right(
+              controllers.aboutfranchisesorlettings.routes.AddAnotherCateringOperationController.show(index - 1).url
+            )
+          case _                        =>
+            Right(controllers.aboutfranchisesorlettings.routes.CateringOperationController.show().url)
+        }
     }
 }
