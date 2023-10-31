@@ -1483,6 +1483,7 @@ error.minLength=Minimum length is {0} characters
 error.invalid_postcode=Enter a valid UK postcode
 error.invalid_currency = Please provide a number
 error.maxCurrencyAmountExceeded = Maximum amount exceeded - please contact the VOA
+error.maxCurrencyAmountExceeded.annualRent = Maximum amount exceeded - please contact the VOA
 error.invalid_phone=Enter a phone number, like 01632 960 001
 error.email=Enter an email in the correct format, like name@example.com
 error.isRelated=Select ‘Yes’ if you are still connected
