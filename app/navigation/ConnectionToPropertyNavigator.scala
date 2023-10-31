@@ -52,10 +52,14 @@ class ConnectionToPropertyNavigator @Inject() (audit: Audit) extends Navigator(a
   }
 
   private def isAnyRentReceived: Session => Call                          = answers => {
-    logger.debug(s"**Nav: ${answers.stillConnectedDetails}")
-    logger.debug(s"**Nav: ${answers.stillConnectedDetails.flatMap(_.isAnyRentReceived.map(_.name))}")
     answers.stillConnectedDetails.flatMap(_.isAnyRentReceived.map(_.name)) match {
-      case Some("yes") => controllers.connectiontoproperty.routes.LettingPartOfPropertyDetailsController.show()
+      case Some("yes") =>
+        answers.stillConnectedDetails.get.lettingPartOfPropertyDetails.isEmpty match {
+          case true  => controllers.connectiontoproperty.routes.LettingPartOfPropertyDetailsController.show()
+          case false =>
+            controllers.connectiontoproperty.routes.AddAnotherLettingPartOfPropertyController
+              .show(answers.stillConnectedDetails.get.lettingPartOfPropertyDetailsIndex)
+        }
       case Some("no")  => controllers.connectiontoproperty.routes.ProvideContactDetailsController.show()
       case _           =>
         logger.warn(

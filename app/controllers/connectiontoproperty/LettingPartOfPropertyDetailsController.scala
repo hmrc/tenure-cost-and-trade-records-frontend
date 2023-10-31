@@ -19,6 +19,7 @@ package controllers.connectiontoproperty
 import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
 import form.connectiontoproperty.TenantDetailsForm.tenantDetailsForm
+import models.Session
 import models.submissions.connectiontoproperty.{LettingPartOfPropertyDetails, StillConnectedDetails, TenantDetails}
 import models.submissions.connectiontoproperty.StillConnectedDetails.updateStillConnectedDetails
 import navigation.ConnectionToPropertyNavigator
@@ -53,7 +54,7 @@ class LettingPartOfPropertyDetailsController @Inject() (
       tenantDetailsView(
         existingDetails.fold(tenantDetailsForm)(tenantDetailsForm.fill),
         index,
-        controllers.connectiontoproperty.routes.IsRentReceivedFromLettingController.show().url,
+        getBackLink(index),
         request.sessionData.toSummary
       )
     )
@@ -67,7 +68,7 @@ class LettingPartOfPropertyDetailsController @Inject() (
           tenantDetailsView(
             formWithErrors,
             index,
-            controllers.connectiontoproperty.routes.IsRentReceivedFromLettingController.show().url,
+            getBackLink(index),
             request.sessionData.toSummary
           )
         ),
@@ -100,4 +101,12 @@ class LettingPartOfPropertyDetailsController @Inject() (
       }
     )
   }
+
+  private def getBackLink(mayBeIndex: Option[Int]): String =
+    mayBeIndex match {
+      case Some(index) if index > 0 =>
+        controllers.connectiontoproperty.routes.AddAnotherLettingPartOfPropertyController.show(index - 1).url
+      case _                        => controllers.connectiontoproperty.routes.IsRentReceivedFromLettingController.show().url
+    }
+
 }
