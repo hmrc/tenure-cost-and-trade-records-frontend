@@ -143,7 +143,7 @@ class ConnectionToPropertyNavigatorSpec extends TestBaseSpec {
       .nextPage(LettingIncomePageId, stillConnectedDetailsYesToAllSession)
       .apply(
         stillConnectedDetailsYesToAllSession
-      ) mustBe controllers.connectiontoproperty.routes.LettingPartOfPropertyDetailsController.show()
+      ) mustBe controllers.connectiontoproperty.routes.AddAnotherLettingPartOfPropertyController.show(0)
   }
 
   "return a function that goes from trading name page to trading name own the property page" in {
