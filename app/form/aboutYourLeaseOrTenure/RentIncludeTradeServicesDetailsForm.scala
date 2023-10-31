@@ -29,7 +29,7 @@ object RentIncludeTradeServicesDetailsForm {
       "describeServices"  ->
         default(text, "").verifying(
           nonEmpty(errorMessage = "error.describeServices.required"),
-          maxLength(1000, "error.describeServices.maxLength")
+          maxLength(2000, "error.describeServices.maxLength")
         )
     )(RentIncludeTradeServicesInformationDetails.apply)(RentIncludeTradeServicesInformationDetails.unapply)
   )
