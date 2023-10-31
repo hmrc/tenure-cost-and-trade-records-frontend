@@ -110,7 +110,7 @@ start.page.heading = Send your business trade and cost information to the Valuat
 start.desc = You must send the Valuation Office Agency (VOA) information about your business property if they’ve asked you to. You need to do this even if you no longer own or rent the property.
 start.desc1 = The information you provide will be used by the local authority to help calculate business rates in your area.
 start.inset = If you do not send the information within 56 days of getting the letter the VOA sent to you, you may have to pay a penalty.
-start.subheading = What you’ll need
+start.subheading = What you’ll need:
 start.item1 = the reference number and postcode from the letter you were sent by the Valuation Office Agency (VOA)
 start.item2 = trading information for the last 3 financial years, or since you occupied the property
 start.item3 = details of any franchises or lettings run from the property as a separate business (if applicable)
@@ -119,7 +119,7 @@ start.item4 = your lease or agreement, including the current rent you pay
 start.item5 = information about any recent rent changes, or any rent-free period
 start.item6 = information about any changes you’ve made to the property that could affect its value
 start.desc3 = If you no longer occupy, or have never occupied the property you must still use this service to notify us.
-start.desc4 = You do not have to complete the form in one go. You can save what you’ve done and return to finish it later on.
+start.desc4 = You do not have to complete the form in one go. You can save what you’ve done and return to finish it later.
 start.subheading3 = If you need help
 start.telephone = Telephone: 03000 501 262
 start.openingDays = Open weekdays, 9:00am to 4:30pm
@@ -131,7 +131,7 @@ start.desc6 = <a href="https://www.gov.uk/find-business-rates" class="govuk-link
 start.desc7 = If you’d like to learn more about business rates before starting your form, visit our <a href="https://www.gov.uk/introduction-to-business-rates" class="govuk-link" target="_blank">introduction to business rates</a> section. It explains things like how your rates are calculated, how to pay, and whether you qualify for business rates relief.
 start.button = Start now
 start.welsh = This service is also available in <a href="https://www.gov.uk" class="govuk-link" target="_blank">Welsh (Cymraeg)</a>
-start.desc8 = <a href="https://www.gov.uk/browse/business/premises-rates" class="govuk-link" target="_blank">Business premises and business rates page</a> can direct you to a broad range of information and services. It covers many topics, including estimating your business rates, getting support for your business, and contacting your council about a business rates bill.
+start.desc8 = <a href="https://www.gov.uk/browse/business/premises-rates" class="govuk-link" target="_blank">Business premises and business rates</a> can direct you to a broad range of information and services. It covers many topics, including estimating your business rates, getting support for your business, and contacting your council about a business rates bill.
 
 #ERROR PAGES
 ##############################
@@ -1444,7 +1444,7 @@ label.feedback.heading=Give Feedback
 feedback.thankyou.h1=Thank you for your feedback
 feedback.thankyou.link=Start
 copy.feedback.anotherForm=Submit another form
-feedback.satisfaction.label=Overall, how did you feel about this service?
+feedback.satisfaction.label=How did you feel about this service?
 feedback.rating.5=Very satisfied
 feedback.rating.4=Satisfied
 feedback.rating.3=Neither satisfied or dissatisfied
@@ -1458,7 +1458,7 @@ feedback.bottomCopy=Do not include any personal or financial information, for ex
 
 feedback.rating.required=Select how satisfied you are with this service
 feedback.comments.maxLength=Comments must be 1200 characters or fewer
-confirmation.feedback.subheading=Overall, how did you feel about this service?
+confirmation.feedback.subheading=How did you feel about this service?
 confirmation.feedback.title=Feedback
 
 # Errors
