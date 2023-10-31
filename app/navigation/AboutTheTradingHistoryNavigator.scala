@@ -30,20 +30,12 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
   override def cyaPage: Option[Call] =
     Some(aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show())
 
-  override val overrideRedirectIfFromCYA: Map[String, Session => Call] = Map(
-    (
-      aboutthetradinghistory.routes.FinancialYearEndController.show().url,
-      _ => aboutthetradinghistory.routes.FinancialYearEndController.show()
-    ),
-    (
-      aboutthetradinghistory.routes.FinancialYearEndDatesController.show().url,
-      _ => aboutthetradinghistory.routes.FinancialYearEndDatesController.show()
-    ),
-    (
-      aboutthetradinghistory.routes.TurnoverController.show().url,
-      _ => aboutthetradinghistory.routes.TurnoverController.show()
-    )
-  )
+  override val postponeCYARedirectPages: Set[String] = Set(
+    aboutthetradinghistory.routes.FinancialYearEndController.show(),
+    aboutthetradinghistory.routes.FinancialYearEndDatesController.show(),
+    aboutthetradinghistory.routes.TurnoverController.show(),
+    aboutthetradinghistory.routes.CostOfSalesController.show()
+  ).map(_.url)
 
   private def financialYearEndRouting: Session => Call =
     _.aboutTheTradingHistory.flatMap(_.occupationAndAccountingInformation.flatMap(_.yearEndChanged)) match {

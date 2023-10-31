@@ -22,6 +22,8 @@
 @import util.NumberUtil._
 @import util.SectionAnswersRowBuilder
 
+@import java.time.LocalDate
+
 @this(
         govukSummaryList: GovukSummaryList,
         dateUtil: DateUtil
@@ -41,6 +43,14 @@
         }
     </div>
 }
+}
+
+@financialYearEndDatesTable(financialYearEndDates: Seq[LocalDate]) = @{
+    table(
+        financialYearEndDates.map(financialYearEnd => Seq(
+            dateUtil.formatDayMonthAbbrYear(financialYearEnd)
+        ))
+    ).body
 }
 
 @turnoverValuesTable(turnoverSections: Seq[TurnoverSection]) = @{
@@ -77,7 +87,11 @@
         aboutthetradinghistory.routes.AboutYourTradingHistoryController.show(), "firstOccupy.month") ++
             sectionAnswers.row("checkYourAnswersAboutTheTradingHistory.financialYearEnd",
                 _.occupationAndAccountingInformation.flatMap(_.financialYear.map(_.toMonthDay)).map(dateUtil.formatMonthDay),
-                aboutthetradinghistory.routes.FinancialYearEndController.show(), "financialYear.day")
+                aboutthetradinghistory.routes.FinancialYearEndController.show(), "financialYear.day") ++
+            sectionAnswers.row("financialYearEndDates.heading",
+                _.fold("")(t => financialYearEndDatesTable(t.turnoverSections.map(_.financialYearEnd))),
+                aboutthetradinghistory.routes.FinancialYearEndDatesController.show(), "",
+                ("valueAsHtml", _ => None))
 ))
 
 <h2 class="govuk-heading-m">@messages("turnover.heading")</h2>
