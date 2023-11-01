@@ -56,8 +56,9 @@
   else controllers.routes.TaskListController.show()}
  ) {
 
-  <h1 class="govuk-heading-l">@messages("cateringOperationOrLettingAccommodationCheckboxesDetails.title", operatorName)</h1>
+ <h1 class="govuk-heading-l">@messages("cateringOperationOrLettingAccommodationCheckboxesDetails.title", operatorName)</h1>
 
+  <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
   @govukCheckboxes(
    Checkboxes(
     name = "itemsInRent[]",
@@ -95,6 +96,7 @@
     hint = Some(Hint(content = Text(messages("hint.cateringOperationOrLettingAccommodationCheckboxesDetails"))))
    ).withFormField(form("itemsInRent"))
   )
+  </legend>
 
   @includes.continueSaveAsDraftButtons(govukButton)
  }

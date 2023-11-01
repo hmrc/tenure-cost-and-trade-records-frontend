@@ -697,7 +697,7 @@ hint.detailsToQuestions = Give details if you want to tell us more about any opt
 error.doesTheRentPayable.required = Select items that the rent payable includes, or select ’No, none of these are included in the rent’
 error.doesTheRentPayable.noneSelectedWithOther = Select items that the rent payable includes, or select ’No, none of these are included in the rent’
 error.detailsToQuestions.required = Please provide further information
-error.detailsToQuestions.maxLength = This must be 1000 characters or fewer
+error.detailsToQuestions.maxLength = This must be 2000 characters or fewer
 
 # RENT PAYABLE VARY ON QUANTITY OF BEERS
 #######################################
@@ -709,7 +709,7 @@ error.rentPayableVaryOnQuantityOfBeers.missing = Select yes if the rent varies a
 rentPayableVaryOnQuantityOfBeersDetails.heading = How is the rent payable affected by the drinks supplied to your property?
 hint.rentPayableVaryOnQuantityOfBeersDetails = For example, tell us if your rent changes if the quantity supplied exceeds a certain amount.
 error.rentPayableVaryOnQuantityOfBeersDetails.required = Describe how the drinks supplied to your property affect your rent
-error.rentPayableVaryOnQuantityOfBeersDetails.maxLength  = This must be 1000 characters or fewer
+error.rentPayableVaryOnQuantityOfBeersDetails.maxLength  = This must be 2000 characters or fewer
 
 # RENT PAYABLE VARY ACCORDING TO GROSS OR NET
 ############################################
@@ -721,7 +721,7 @@ error.rentPayableVaryAccordingToGrossOrNet.missing = Select yes if the rent vari
 rentPayableVaryAccordingToGrossOrNetDetails.heading = Describe how your rent payable is affected by your turnover
 label.rentPayableVaryAccordingToGrossOrNetDetails = For example, provide details of any base rate you may pay, plus any additional percentage increments when your turnover exceeds certain thresholds.
 error.rentPayableVaryAccordingToGrossOrNetDetails.required = Describe how your rent is affected by your turnover
-error.rentPayableVaryAccordingToGrossOrNetDetails.maxLength  = This must be 1000 characters or fewer
+error.rentPayableVaryAccordingToGrossOrNetDetails.maxLength  = This must be 2000 characters or fewer
 
 # ULTIMATELY RESPONSIBLE
 #######################
@@ -757,7 +757,7 @@ rentIncludeTradeServicesDetailsTextBox.hint = For example, maintenance of fires,
 error.required.sumIncludedInRent = Please provide a value
 error.invalid_currency.sumIncludedInRent= Please provide a number
 error.describeServices.required = Describe the services supplied by the landlord
-error.describeServices.maxLength = This must be 1000 characters or fewer
+error.describeServices.maxLength = This must be 2000 characters or fewer
 
 # RENT INCLUDE FIXTURES AND FITTINGS
 ###################################
