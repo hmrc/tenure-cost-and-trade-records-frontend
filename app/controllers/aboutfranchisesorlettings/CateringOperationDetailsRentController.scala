@@ -38,7 +38,8 @@ class CateringOperationDetailsRentController @Inject() (
   cateringOperationOrLettingAccommodationRentDetailsView: cateringOperationOrLettingAccommodationRentDetails,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext) extends FORDataCaptureController(mcc)
+)(implicit ec: ExecutionContext)
+    extends FORDataCaptureController(mcc)
     with I18nSupport {
 
   def show(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
@@ -92,7 +93,7 @@ class CateringOperationDetailsRentController @Inject() (
           )
           val updatedData      = updateAboutFranchisesOrLettings(_.copy(cateringOperationSections = updatedSections))
           session.saveOrUpdate(updatedData)
-            Redirect(navigator.nextPage(CateringOperationRentDetailsPageId, updatedData).apply(updatedData))
+          Redirect(navigator.nextPage(CateringOperationRentDetailsPageId, updatedData).apply(updatedData))
         }
     )
   }
