@@ -99,11 +99,11 @@ class LettingOtherPartOfPropertyDetailsController @Inject() (
     )
   }
 
-  def getBackLink(maybeIndex: Option[Int]) = {
+  def getBackLink(maybeIndex: Option[Int]) =
     maybeIndex match {
-       case Some(index) if index > 0 => {controllers.aboutfranchisesorlettings.routes.AddAnotherLettingOtherPartOfPropertyController.show(index-1).url}
-       case _ =>  {controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show().url}
+      case Some(index) if index > 0 =>
+        controllers.aboutfranchisesorlettings.routes.AddAnotherLettingOtherPartOfPropertyController.show(index - 1).url
+      case _                        => controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show().url
     }
-  }
 
 }
