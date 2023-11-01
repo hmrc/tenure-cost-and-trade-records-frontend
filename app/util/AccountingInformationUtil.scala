@@ -16,7 +16,10 @@
 
 package util
 
+import actions.SessionRequest
 import models.submissions.Form6010.{DayMonthsDuration, MonthsYearDuration}
+import models.submissions.aboutthetradinghistory.OccupationalAndAccountingInformation
+import play.api.mvc.AnyContent
 
 import java.time.LocalDate
 
@@ -50,5 +53,13 @@ object AccountingInformationUtil {
       )
     }
   }
+
+  def previousFinancialYears(implicit request: SessionRequest[AnyContent]): Seq[Int] =
+    request.sessionData.aboutTheTradingHistory
+      .fold(Seq.empty[Int])(_.turnoverSections.map(_.financialYearEnd.getYear))
+
+  def newFinancialYears(occupationAndAccounting: OccupationalAndAccountingInformation): Seq[Int] =
+    occupationAndAccounting.financialYear
+      .fold(Seq.empty[Int])(financialYearsRequired(occupationAndAccounting.firstOccupy, _).map(_.getYear))
 
 }

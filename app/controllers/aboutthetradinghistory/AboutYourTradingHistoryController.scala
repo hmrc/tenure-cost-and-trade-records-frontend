@@ -28,7 +28,7 @@ import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import util.AccountingInformationUtil.financialYearsRequired
+import util.AccountingInformationUtil._
 import views.html.aboutthetradinghistory.aboutYourTradingHistory
 
 import javax.inject.{Inject, Named, Singleton}
@@ -86,13 +86,5 @@ class AboutYourTradingHistoryController @Inject() (
       }
     )
   }
-
-  private def previousFinancialYears(implicit request: SessionRequest[AnyContent]): Seq[Int] =
-    request.sessionData.aboutTheTradingHistory
-      .fold(Seq.empty[Int])(_.turnoverSections.map(_.financialYearEnd.getYear))
-
-  private def newFinancialYears(occupationAndAccounting: OccupationalAndAccountingInformation): Seq[Int] =
-    occupationAndAccounting.financialYear
-      .fold(Seq.empty[Int])(financialYearsRequired(occupationAndAccounting.firstOccupy, _).map(_.getYear))
 
 }

@@ -19,7 +19,7 @@ package controllers.aboutthetradinghistory
 import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.AccountingInformationForm.accountingInformationForm
-import models.submissions.Form6010.{DayMonthsDuration, MonthsYearDuration}
+import models.submissions.Form6010.DayMonthsDuration
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.updateAboutTheTradingHistory
 import models.submissions.aboutthetradinghistory.{OccupationalAndAccountingInformation, TurnoverSection}
 import navigation.AboutTheTradingHistoryNavigator
@@ -28,12 +28,11 @@ import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import util.AccountingInformationUtil
+import util.AccountingInformationUtil._
 import views.html.aboutthetradinghistory.financialYearEnd
 
-import java.time.LocalDate
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.ExecutionContext
+import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class FinancialYearEndController @Inject() (
@@ -48,61 +47,84 @@ class FinancialYearEndController @Inject() (
     with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
-    Ok(
-      financialYearEndView(
-        request.sessionData.aboutTheTradingHistory
-          .flatMap(_.occupationAndAccountingInformation.flatMap(_.financialYear)) match {
-          case Some(financialYear) =>
-            val yearEndChanged = request.sessionData.aboutTheTradingHistory
-              .flatMap(_.occupationAndAccountingInformation.flatMap(_.yearEndChanged))
-              .getOrElse(false)
-            accountingInformationForm.fill((financialYear, yearEndChanged))
-          case _                   => accountingInformationForm
-        }
-      )
-    )
-  }
-
-  def submit = (Action andThen withSessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft[(DayMonthsDuration, Boolean)](
-      accountingInformationForm,
-      formWithErrors => BadRequest(financialYearEndView(formWithErrors)),
-      data => {
-        val sessionTradingHistory      = request.sessionData.aboutTheTradingHistory
-        val previousFinancialYearsList =
-          sessionTradingHistory.fold(Seq.empty[LocalDate])(_.turnoverSections.map(_.financialYearEnd))
-        val firstOccupy                = sessionTradingHistory
-          .flatMap(_.occupationAndAccountingInformation.map(_.firstOccupy))
-          .getOrElse(MonthsYearDuration(1, 2000))
-
-        val newFinancialYearsList = AccountingInformationUtil.financialYearsRequired(firstOccupy, data._1)
-
-//        if (newFinancialYearsList.equals(previousFinancialYearsList) && !data._2) {
-//          Redirect(navigator.nextPage(FinancialYearEndPageId, request.sessionData).apply(request.sessionData))
-//        } else {
-        val updatedData = updateAboutTheTradingHistory(
-          _.copy(
-            occupationAndAccountingInformation =
-              Some(OccupationalAndAccountingInformation(firstOccupy, Some(data._1), Some(data._2))),
-            turnoverSections = newFinancialYearsList.map { finYearEnd =>
-              TurnoverSection(
-                financialYearEnd = finYearEnd,
-                tradingPeriod = 52,
-                alcoholicDrinks = None,
-                food = None,
-                otherReceipts = None,
-                accommodation = None,
-                averageOccupancyRate = None
-              )
+    request.sessionData.aboutTheTradingHistory
+      .filter(_.occupationAndAccountingInformation.isDefined)
+      .fold(Redirect(routes.AboutYourTradingHistoryController.show())) { aboutTheTradingHistory =>
+        Ok(
+          financialYearEndView(
+            aboutTheTradingHistory.occupationAndAccountingInformation.flatMap(_.financialYear) match {
+              case Some(financialYear) =>
+                val yearEndChanged = aboutTheTradingHistory.occupationAndAccountingInformation
+                  .flatMap(_.yearEndChanged)
+                  .getOrElse(false)
+                accountingInformationForm.fill((financialYear, yearEndChanged))
+              case _                   => accountingInformationForm
             }
           )
         )
-        session
-          .saveOrUpdate(updatedData)
-          .map(_ => Redirect(navigator.nextPage(FinancialYearEndPageId, updatedData).apply(updatedData)))
-//        }
       }
-    )
+  }
+
+  def submit = (Action andThen withSessionRefiner).async { implicit request =>
+    request.sessionData.aboutTheTradingHistory
+      .filter(_.occupationAndAccountingInformation.isDefined)
+      .fold(Future.successful(Redirect(routes.AboutYourTradingHistoryController.show()))) { aboutTheTradingHistory =>
+        continueOrSaveAsDraft[(DayMonthsDuration, Boolean)](
+          accountingInformationForm,
+          formWithErrors => BadRequest(financialYearEndView(formWithErrors)),
+          data => {
+            val occupationAndAccounting        = aboutTheTradingHistory.occupationAndAccountingInformation.get
+            val firstOccupy                    = occupationAndAccounting.firstOccupy
+            val newOccupationAndAccounting     =
+              OccupationalAndAccountingInformation(firstOccupy, Some(data._1), Some(data._2))
+            val isFinancialYearEndDayUnchanged = occupationAndAccounting.financialYear.contains(data._1)
+            val isFinancialYearsListUnchanged  = newFinancialYears(newOccupationAndAccounting) == previousFinancialYears
+
+            val turnoverSections = if (isFinancialYearEndDayUnchanged && isFinancialYearsListUnchanged) {
+              aboutTheTradingHistory.turnoverSections
+            } else if (isFinancialYearsListUnchanged) {
+              (aboutTheTradingHistory.turnoverSections zip financialYearsRequired(firstOccupy, data._1)).map {
+                case (turnoverSection, finYearEnd) => turnoverSection.copy(financialYearEnd = finYearEnd)
+              }
+            } else {
+              financialYearsRequired(firstOccupy, data._1).map { finYearEnd =>
+                TurnoverSection(
+                  financialYearEnd = finYearEnd,
+                  tradingPeriod = 52,
+                  alcoholicDrinks = None,
+                  food = None,
+                  otherReceipts = None,
+                  accommodation = None,
+                  averageOccupancyRate = None
+                )
+              }
+            }
+
+            val sectionCompleted = if (isFinancialYearsListUnchanged) {
+              aboutTheTradingHistory.checkYourAnswersAboutTheTradingHistory
+            } else {
+              None
+            }
+
+            val updatedData = updateAboutTheTradingHistory(
+              _.copy(
+                occupationAndAccountingInformation = Some(newOccupationAndAccounting),
+                turnoverSections = turnoverSections,
+                checkYourAnswersAboutTheTradingHistory = sectionCompleted
+              )
+            )
+
+            session
+              .saveOrUpdate(updatedData)
+              .map(_ =>
+                navigator.cyaPage
+                  .filter(_ => navigator.from == "CYA" && isFinancialYearsListUnchanged && !data._2)
+                  .getOrElse(navigator.nextPage(FinancialYearEndPageId, updatedData).apply(updatedData))
+              )
+              .map(Redirect)
+          }
+        )
+      }
   }
 
 }
