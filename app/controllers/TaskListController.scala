@@ -32,7 +32,7 @@ class TaskListController @Inject() (
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    Ok(taskListView())
+    Ok(taskListView(request.sessionData.forType))
   }
 
 }

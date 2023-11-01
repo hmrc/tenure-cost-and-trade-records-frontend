@@ -101,7 +101,7 @@ label.section.connectionToTheProperty = Connection to the property
 label.section.aboutTheProperty = About you and the property
 label.section.aboutYourTradingHistory = Trading history
 label.section.aboutTheFranchiseLettings = Franchises or lettings
-label.section.aboutTheFranchiseLettings = Concessions or lettings
+label.section.aboutTheFranchiseConcessions = Concessions or lettings
 label.section.aboutYourLeaseOrTenure = Your lease or agreement
 label.section.additionalInformation = Additional information
 
