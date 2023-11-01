@@ -56,14 +56,15 @@
   else controllers.routes.TaskListController.show()}
  ) {
 
-  <h1 class="govuk-heading-l">@messages("cateringOperationOrLettingAccommodationCheckboxesDetails.title", operatorName)</h1>
+@*  <h1 class="govuk-heading-l">@messages("cateringOperationOrLettingAccommodationCheckboxesDetails.title", operatorName)</h1>*@
 
   @govukCheckboxes(
    Checkboxes(
     name = "itemsInRent[]",
     fieldset = Some(Fieldset(
      legend = Some(Legend(
-      classes = "govuk-fieldset__legend govuk-fieldset__legend--s"
+      content = Text(messages("cateringOperationOrLettingAccommodationCheckboxesDetails.title", operatorName)),
+      classes = "govuk-fieldset__legend govuk-fieldset__legend--l"
      ))
     )),
     items = Seq(
