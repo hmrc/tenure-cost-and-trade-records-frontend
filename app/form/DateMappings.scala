@@ -118,6 +118,37 @@ object DateMappings {
     (date: RoughDate) => (date.month.getOrElse(0).toString, date.year.toString)
   )
 
+  def requiredDateMapping(
+    allowFutureDates: Boolean = false,
+    fieldErrorPart: String = ""
+  ): Mapping[LocalDate] =
+    tuple(
+      "day"   -> optional(text)
+        .verifying(s"error$fieldErrorPart.day.required", _.nonEmpty)
+        .transform[String](_.getOrElse(""), Option(_))
+        .verifying(
+          Errors.invalidDate,
+          x => x.trim.forall(Character.isDigit) && x.trim.toInt >= 1 && x.trim.toInt <= 31
+        ),
+      "month" -> optional(text)
+        .verifying(s"error$fieldErrorPart.month.required", _.nonEmpty)
+        .transform[String](_.getOrElse(""), Option(_))
+        .verifying(
+          Errors.invalidDate,
+          x => x.trim.forall(Character.isDigit) && x.trim.toInt >= 1 && x.trim.toInt <= 12
+        ),
+      "year"  -> optional(text)
+        .verifying(s"error$fieldErrorPart.year.required", _.nonEmpty)
+        .transform[String](_.getOrElse(""), Option(_))
+        .verifying(Errors.invalidDate, x => x.trim.forall(Character.isDigit) && x.trim.length == 4)
+    ).verifying(
+      if (allowFutureDates) fullDateIsAfter1900(fieldErrorPart)
+      else fullDateIsInPastAndAfter1900(fieldErrorPart)
+    ).transform(
+      { case (day, month, year) => LocalDate.of(year.trim.toInt, month.trim.toInt, day.trim.toInt) },
+      (date: LocalDate) => (date.getDayOfMonth.toString, date.getMonthValue.toString, date.getYear.toString)
+    )
+
   //  for precise dates, where all fields must be present and accurate
   def dateFieldsMapping(
     prefix: String,

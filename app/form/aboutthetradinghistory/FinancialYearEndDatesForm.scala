@@ -16,7 +16,7 @@
 
 package form.aboutthetradinghistory
 
-import form.DateMappings.dateFieldsMapping
+import form.DateMappings.requiredDateMapping
 import play.api.data.Forms._
 import play.api.data.{Form, Mapping}
 
@@ -26,8 +26,7 @@ object FinancialYearEndDatesForm {
 
   private val dateMapping: Mapping[LocalDate] =
     single(
-      "date" -> dateFieldsMapping(
-        "financial-year-end[0].date",
+      "date" -> requiredDateMapping(
         allowFutureDates = true,
         fieldErrorPart = ".financialYearEnd"
       )
