@@ -30,7 +30,7 @@
 )
 
 
-@()(implicit request: SessionRequest[_], messages: Messages)
+@(forType: String)(implicit request: SessionRequest[_], messages: Messages)
 
 @session = @{ request.sessionData }
 
@@ -207,9 +207,18 @@
      </li>
 
      <li>
+      @if(forType == ForTypes.for6010 || forType == ForTypes.for6011) {
+        <h2 class="app-task-list__section">
+        <span class="app-task-list__section-number">4.</span>
+        @messages("label.section.aboutTheFranchiseLettings")
+        </h2>
+      }
+      @if(forType == ForTypes.for6015 || forType == ForTypes.for6016) {
       <h2 class="app-task-list__section">
-       <span class="app-task-list__section-number">4. </span> @messages("label.section.aboutTheFranchiseLettings")
-      </h2>
+       <span class="app-task-list__section-number">4.</span>
+       @messages("label.section.aboutTheFranchiseConcessions")
+     </h2>
+       }
       <ul class="app-task-list__items">
        @includes.taskListItem("franchise-or-lettings-tied-to-property", "taskList.rentalIncomeStatus",
         controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show(),

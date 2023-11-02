@@ -101,6 +101,7 @@ label.section.connectionToTheProperty = Connection to the property
 label.section.aboutTheProperty = About you and the property
 label.section.aboutYourTradingHistory = Trading history
 label.section.aboutTheFranchiseLettings = Franchises or lettings
+label.section.aboutTheFranchiseConcessions = Concessions and lettings
 label.section.aboutYourLeaseOrTenure = Your lease or agreement
 label.section.additionalInformation = Additional information
 
@@ -467,7 +468,7 @@ propertyCurrentlyUsed.healthSpa = Health Spa
 propertyCurrentlyUsed.lodgeAndRestaurant = Lodge and restaurant
 propertyCurrentlyUsed.conferenceCentre = Conference centre
 propertyCurrentlyUsed.other = Other (reveals a text box to include a description)
-hint.other.use.propertyCurrentlyUsedOther = Describe the use of your property is not listed.
+hint.other.use.propertyCurrentlyUsedOther = Describe the use of your property if not listed.
 hint.other.vacant.propertyCurrentlyUsedOther = Give details.
 
 # WEBSITE FOR PROPERTY
@@ -486,7 +487,7 @@ error.premisesLicenseGranted.missing = Select yes if a premises licence has been
 
 # PREMISES LICENSE GRANTED DETAILS (6015,6016)
 ##############################################
-premisesLicenseGrantedInformation.heading = Give details of your premises licence, including any conditions restricting the use of all or part of the property
+premisesLicenseGrantedInformation.heading = Give details of your premises licence, including any unusual conditions restricting the use of all or part of the property
 help.premisesLicenseGrantedInformation.title = Help with your description
 help.premisesLicenseGrantedInformation.heading1 = Describing your premises licence
 help.premisesLicenseGrantedInformation.p1 = Let us know if you have a premises licence, a personal licence, or a club premises certificate.
