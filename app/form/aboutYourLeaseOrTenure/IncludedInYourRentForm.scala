@@ -16,7 +16,7 @@
 
 package form.aboutYourLeaseOrTenure
 
-import form.MappingSupport.{includedInYourRentInformation, nonEmptyList, noneCantBeSelectedWithOther}
+import form.MappingSupport.{nonEmptyList, noneCantBeSelectedWithOther}
 import models.submissions.aboutYourLeaseOrTenure.IncludedInYourRentDetails
 import play.api.data.Form
 import play.api.data.Forms.{list, mapping, text}
