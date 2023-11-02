@@ -38,6 +38,7 @@ class CheckYourAnswersNotConnectedControllerSpec extends TestBaseSpec {
     removeConnectionDetails: Option[RemoveConnectionDetails] = Some(prefilledNotConnectedYes)
   ) = new CheckYourAnswersNotConnectedController(
     stubMessagesControllerComponents(),
+    removeConnectionNavigator,
     mockSubmissionConnector,
     checkYourAnswersNotConnectedView,
     confirmationNotConnectedView,

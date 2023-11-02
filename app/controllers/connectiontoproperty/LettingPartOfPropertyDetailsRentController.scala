@@ -29,6 +29,7 @@ import repositories.SessionRepo
 import views.html.connectiontoproperty.lettingPartOfPropertyRentDetails
 
 import javax.inject.{Inject, Named, Singleton}
+import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class LettingPartOfPropertyDetailsRentController @Inject() (
@@ -37,7 +38,8 @@ class LettingPartOfPropertyDetailsRentController @Inject() (
   lettingPartOfPropertyRentDetailsView: lettingPartOfPropertyRentDetails,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FORDataCaptureController(mcc)
+)(implicit val ec: ExecutionContext)
+    extends FORDataCaptureController(mcc)
     with I18nSupport {
 
   def show(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
@@ -59,31 +61,40 @@ class LettingPartOfPropertyDetailsRentController @Inject() (
     }
   }
 
-  def submit(index: Int) = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     val existingSection = request.sessionData.stillConnectedDetails.map(_.lettingPartOfPropertyDetails).get(index)
 
     continueOrSaveAsDraft[LettingPartOfPropertyRentDetails](
       lettingPartOfPropertyRentForm,
       formWithErrors =>
-        BadRequest(
-          lettingPartOfPropertyRentDetailsView(
-            formWithErrors,
-            index,
-            existingSection.tenantDetails.name,
-            controllers.connectiontoproperty.routes.LettingPartOfPropertyDetailsController.show(Some(index)).url,
-            request.sessionData.toSummary
+        Future.successful(
+          BadRequest(
+            lettingPartOfPropertyRentDetailsView(
+              formWithErrors,
+              index,
+              existingSection.tenantDetails.name,
+              controllers.connectiontoproperty.routes.LettingPartOfPropertyDetailsController.show(Some(index)).url,
+              request.sessionData.toSummary
+            )
           )
         ),
       data =>
         request.sessionData.stillConnectedDetails.fold(
-          Redirect(routes.LettingPartOfPropertyDetailsController.show(Some(index)))
+          Future.successful(
+            Redirect(routes.LettingPartOfPropertyDetailsController.show(Some(index)))
+          )
         ) { stillConnectedDetails =>
           val existingSections = stillConnectedDetails.lettingPartOfPropertyDetails
           val updatedSections  = existingSections
             .updated(index, existingSections(index).copy(lettingPartOfPropertyRentDetails = Some(data)))
           val updatedData      = updateStillConnectedDetails(_.copy(lettingPartOfPropertyDetails = updatedSections))
-          session.saveOrUpdate(updatedData)
-          Redirect(navigator.nextPage(LettingPartOfPropertyRentDetailsPageId, updatedData).apply(updatedData))
+          session.saveOrUpdate(updatedData).map { _ =>
+            val redirectToCYA = navigator.cyaPageVacant.filter(_ => navigator.from(request) == "CYA")
+            val nextPage      =
+              redirectToCYA
+                .getOrElse(navigator.nextPage(LettingPartOfPropertyRentDetailsPageId, updatedData).apply(updatedData))
+            Redirect(nextPage)
+          }
         }
     )
   }

@@ -44,6 +44,12 @@ abstract class Navigator @Inject() (
 
   private val defaultPage: Session => Call = _ => routes.LoginController.show()
 
+  def next(id: Identifier, session: Session)(implicit
+    hc: HeaderCarrier,
+    request: Request[AnyContent]
+  ): Session => Call =
+    routeMap.getOrElse(id, defaultPage) andThen auditNextUrl(session)
+
   def nextPage(id: Identifier, session: Session)(implicit
     hc: HeaderCarrier,
     request: Request[AnyContent]

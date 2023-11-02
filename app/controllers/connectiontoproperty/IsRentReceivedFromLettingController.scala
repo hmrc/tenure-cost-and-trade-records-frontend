@@ -76,7 +76,7 @@ class IsRentReceivedFromLettingController @Inject() (
         val updatedData = updateStillConnectedDetails(_.copy(isAnyRentReceived = Some(data)))
         session.saveOrUpdate(updatedData).map { _ =>
           TimeUnit.SECONDS.sleep(1)
-          Redirect(navigator.nextPage(LettingIncomePageId, updatedData).apply(updatedData))
+          Redirect(navigator.next(LettingIncomePageId, updatedData).apply(updatedData))
         }
       }
     )

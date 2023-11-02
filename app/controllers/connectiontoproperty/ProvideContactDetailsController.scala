@@ -31,7 +31,7 @@ import repositories.SessionRepo
 import views.html.connectiontoproperty.provideContactDetails
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class ProvideContactDetailsController @Inject() (
@@ -40,7 +40,8 @@ class ProvideContactDetailsController @Inject() (
   provideContactDetailsView: provideContactDetails,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FORDataCaptureController(mcc)
+)(implicit val ec: ExecutionContext)
+    extends FORDataCaptureController(mcc)
     with I18nSupport
     with Logging {
 
@@ -82,8 +83,12 @@ class ProvideContactDetailsController @Inject() (
         ),
       data => {
         val updatedData = updateStillConnectedDetails(_.copy(provideContactDetails = Some(data)))
-        session.saveOrUpdate(updatedData)
-        Redirect(navigator.nextPage(ProvideYourContactDetailsPageId, updatedData).apply(updatedData))
+        session.saveOrUpdate(updatedData).map { _ =>
+          val redirectToCYA = navigator.cyaPageVacant.filter(_ => navigator.from(request) == "CYA")
+          val nextPage      =
+            redirectToCYA.getOrElse(navigator.nextPage(ProvideYourContactDetailsPageId, updatedData).apply(updatedData))
+          Redirect(nextPage)
+        }
       }
     )
   }
