@@ -14,6 +14,7 @@
  * limitations under the License.
  *@
 
+@import actions.SessionRequest
 @import models.submissions.aboutthetradinghistory.TurnoverSection
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import uk.gov.hmrc.govukfrontend.views.Implicits.RichInput
@@ -29,7 +30,7 @@
         govukDetails: GovukDetails
 )
 
-@(form: Form[Seq[TurnoverSection]], numOfColumns: Int, summary: Summary)(implicit request: Request[_], messages: Messages)
+@(form: Form[Seq[TurnoverSection]], numOfColumns: Int, summary: Summary)(implicit request: SessionRequest[_], messages: Messages)
 
 @detailsContent = {
     <p class="govuk-body govuk-!-font-weight-bold">@messages("turnover.details.h1")</p>
@@ -76,13 +77,17 @@
 @columns = @{0 until numOfColumns}
 
 @layout(
-  pageHeading = messages("turnover.heading"),
-  showSection = true,
+    pageHeading = messages("turnover.heading"),
+    showSection = true,
     summary = Some(summary),
-  sectionName = messages("label.section.aboutYourTradingHistory"),
-  backLinkUrl = controllers.aboutthetradinghistory.routes.FinancialYearEndController.show().url,
-  fullWidth = true,
-  theForm = form
+    sectionName = messages("label.section.aboutYourTradingHistory"),
+    backLinkUrl = if(request.sessionData.aboutTheTradingHistory.flatMap(_.occupationAndAccountingInformation.flatMap(_.yearEndChanged)).contains(true)) {
+        controllers.aboutthetradinghistory.routes.FinancialYearEndDatesController.show().url
+    } else {
+        controllers.aboutthetradinghistory.routes.FinancialYearEndController.show().url
+    },
+    fullWidth = true,
+    theForm = form
 ) {
 
   @formWithCSRF(action = controllers.aboutthetradinghistory.routes.TurnoverController.submit) {

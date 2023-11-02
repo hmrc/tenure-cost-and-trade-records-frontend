@@ -15,8 +15,9 @@
  *@
 
 @import actions.SessionRequest
-@import models.submissions.aboutthetradinghistory.TurnoverSection
 @import uk.gov.hmrc.govukfrontend.views.html.components._
+
+@import java.time.LocalDate
 
 @this(layout: Layout,
         govukButton: GovukButton,
@@ -28,13 +29,15 @@
         govukDetails: GovukDetails
 )
 
-@(form: Form[Seq[TurnoverSection]], numOfColumns: Int)(implicit request: SessionRequest[_], messages: Messages)
+@(form: Form[Seq[LocalDate]])(implicit request: SessionRequest[_], messages: Messages)
 
 @financialYearEndContent(fieldName: String) = {
     @includes.dateFields(form = form, field = fieldName, govukDate = govukDateInput, helpText = "", showDays = true, showFieldSet = false)
 }
 
-@columns = @{0 until numOfColumns}
+@indices = @{
+    request.sessionData.aboutTheTradingHistory.map(_.turnoverSections).fold(Seq.empty[Int])(_.indices)
+}
 
 @layout(
   pageHeading = messages("financialYearEndDates.heading"),
@@ -48,8 +51,8 @@
 
   @formWithCSRF(action = controllers.aboutthetradinghistory.routes.FinancialYearEndDatesController.submit) {
 
-      @columns.map { idx  =>
-          @financialYearEndContent(s"$idx.financial-year-end")
+      @indices.map { idx  =>
+          @financialYearEndContent(s"financial-year-end[$idx].date")
       }
 
       @includes.continueSaveAsDraftButtons(govukButton)
