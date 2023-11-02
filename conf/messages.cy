@@ -933,13 +933,26 @@ error.legalOrPlanningRestrictionsDetails.maxLength = This must be 2000 character
 # ABOUT YOUR TRADING HISTORY
 ##############################
 aboutYourTradingHistory.heading = Occupation and accounting information
-label.firstOccupy = When did you first occupy the property?
-label.financialYear =When does your current financial year end?
+firstOccupy.heading = When did you first occupy the property?
 error.firstOccupy.month.required = The date the property was first occupied must include a month
 error.firstOccupy.year.required = The date the property was first occupied must include a year
+
+# FINANCIAL YEAR-END
+##############################
+financialYearEnd.heading = Your financial year end
+label.financialYear = When does your current financial year end?
+financialYearEnd.yearEndChanged.legend = If your financial year end has changed
+financialYearEnd.yearEndChanged.hint = Use the checkbox if your financial year end has changed in the last 3 years. You will be taken to a separate page to declare the former year-end dates.
+financialYearEnd.yearEndChanged = My financial year end has changed in the last three years.
 error.financialYear.day.required = The date the financial years ends must include a day
 error.financialYear.month.required = The date the financial years ends must include a month
-label.financialYear.help = If your financial year end changed within the last 3 years, you can declare the former dates on the next page.
+
+# FINANCIAL YEAR-END DATES
+##############################
+financialYearEndDates.heading = Amend your financial year-end dates
+financialYearEndDates.p1 = Adjust any of the dates displayed on this page to show the changes to your financial year end.
+financialYearEndDates.financialYear.label = Financial year ending {0}
+
 
 # CURRENT RENT FIRST PAID
 #########################
@@ -1067,6 +1080,7 @@ error.costOfSales.maxColumns = Number of columns must be between 1 and 3
 turnover.heading = Turnover
 turnover.p1 = Provide us with details of your turnover. If the accounts do not relate to a whole year, or if you are not trading continuously, state the relevant number of weeks.
 turnover.p2 = If your accounts are held in a spreadsheet that mirrors this form, you can copy and paste them into this form. Copy the relevant figures in your spreadsheet and paste them into the first corresponding field on this page.
+turnover.inset = All fields on this page are mandatory. If none of the categories are applicable, enter the number 0.
 turnover.financialYearEnd = Financial year end
 turnover.tradingPeriod = Trading period
 turnover.alcoholicDrinks = Alcoholic drinks (excluding VAT)
@@ -1351,7 +1365,7 @@ checkYourAnswersAboutTheProperty.enforcementActionHasBeenTakenInformationDetails
 checkYourAnswersAboutTheProperty.tiedForGoods = Tied goods?
 checkYourAnswersAboutTheProperty.tiedForGoodsDetails = Type of tie
 checkYourAnswersAboutTheTradingHistory.heading = Check your answers - trading history
-checkYourAnswersAboutTheTradingHistory.occupationAndAccounting = Occupation date and financial year end
+checkYourAnswersAboutTheTradingHistory.occupationDate = Occupation date
 checkYourAnswersAboutTheTradingHistory.financialYearEnd = Financial year end
 checkYourAnswersAboutTheTradingHistory.tradingPeriod = Trading period
 checkYourAnswersAboutTheTradingHistory.drinks = Drinks

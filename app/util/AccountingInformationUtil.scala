@@ -16,7 +16,10 @@
 
 package util
 
+import actions.SessionRequest
+import models.submissions.Form6010.{DayMonthsDuration, MonthsYearDuration}
 import models.submissions.aboutthetradinghistory.OccupationalAndAccountingInformation
+import play.api.mvc.AnyContent
 
 import java.time.LocalDate
 
@@ -25,13 +28,13 @@ import java.time.LocalDate
   */
 object AccountingInformationUtil {
 
-  def financialYearsRequired(accountingInfo: OccupationalAndAccountingInformation): Seq[LocalDate] = {
+  def financialYearsRequired(firstOccupy: MonthsYearDuration, financialYear: DayMonthsDuration): Seq[LocalDate] = {
     val now     = LocalDate.now
     val yearNow = now.getYear
 
-    val firstOccupyYear       = accountingInfo.firstOccupy.years
-    val financialYearEndDay   = accountingInfo.financialYear.days
-    val financialYearEndMonth = accountingInfo.financialYear.months
+    val firstOccupyYear       = firstOccupy.years
+    val financialYearEndDay   = financialYear.days
+    val financialYearEndMonth = financialYear.months
 
     val currentFinancialYear =
       if (now isBefore LocalDate.of(yearNow, financialYearEndMonth, financialYearEndDay)) {
@@ -50,5 +53,13 @@ object AccountingInformationUtil {
       )
     }
   }
+
+  def previousFinancialYears(implicit request: SessionRequest[AnyContent]): Seq[Int] =
+    request.sessionData.aboutTheTradingHistory
+      .fold(Seq.empty[Int])(_.turnoverSections.map(_.financialYearEnd.getYear))
+
+  def newFinancialYears(occupationAndAccounting: OccupationalAndAccountingInformation): Seq[Int] =
+    occupationAndAccounting.financialYear
+      .fold(Seq.empty[Int])(financialYearsRequired(occupationAndAccounting.firstOccupy, _).map(_.getYear))
 
 }

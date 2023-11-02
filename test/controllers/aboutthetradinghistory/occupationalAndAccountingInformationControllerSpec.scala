@@ -28,7 +28,7 @@ class occupationalAndAccountingInformationControllerSpec extends TestBaseSpec {
 
   val mockAboutYouNavigator: AboutTheTradingHistoryNavigator   = mock[AboutTheTradingHistoryNavigator]
   val mockAboutYourTradingHistoryView: aboutYourTradingHistory = mock[aboutYourTradingHistory]
-  when(mockAboutYourTradingHistoryView.apply(any, any)(any, any)).thenReturn(HtmlFormat.empty)
+  when(mockAboutYourTradingHistoryView.apply(any)(any, any)).thenReturn(HtmlFormat.empty)
 
   val aboutYourTradingHistoryController = new AboutYourTradingHistoryController(
     stubMessagesControllerComponents(),

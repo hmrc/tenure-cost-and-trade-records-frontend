@@ -27,12 +27,13 @@
     helpText: Option[String] = None,
     labelSuffix: Option[String] = None,
     label: Option[String] = None,
+    labelArg0: Option[String] = None,
     showDays : Boolean = false,
         hideYear: Boolean= false,
     showFieldSet: Boolean = true,
     hiddenBy: Option[HiddenBy] = None)(implicit request: Request[_], messages: Messages)
 
-    @labelText = @{ label.getOrElse("label." + field + labelSuffix.getOrElse(""))}
+    @labelText = @{ labelArg0.fold(messages(label.getOrElse("label." + field + labelSuffix.getOrElse(""))))(arg0 => messages(label.get, arg0))}
     @dayfield  = @{field + ".day"}
     @monthfield  = @{field + ".month"}
     @yearfield  = @{field + ".year"}
@@ -100,7 +101,7 @@
             ),
             fieldset = Fieldset(
                 legend = Legend(
-                    content = HtmlContent(messages(labelText)),
+                    content = HtmlContent(labelText),
                     classes = "govuk-!-font-weight-bold"
                 )
             ),

@@ -20,6 +20,14 @@ case object AboutYourTradingHistoryPageId extends Identifier {
   override def toString: String = "aboutYourTradingHistoryPage"
 }
 
+case object FinancialYearEndPageId extends Identifier {
+  override def toString: String = "financialYearEndPage"
+}
+
+case object FinancialYearEndDatesPageId extends Identifier {
+  override def toString: String = "financialYearEndDatesPage"
+}
+
 case object TurnoverPageId extends Identifier {
   override def toString: String = "turnoverPage"
 }

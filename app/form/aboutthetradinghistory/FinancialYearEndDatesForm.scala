@@ -14,17 +14,28 @@
  * limitations under the License.
  */
 
-package models.submissions.aboutthetradinghistory
+package form.aboutthetradinghistory
 
-import models.submissions.Form6010.{DayMonthsDuration, MonthsYearDuration}
-import play.api.libs.json.Json
+import form.DateMappings.requiredDateMapping
+import play.api.data.Forms._
+import play.api.data.{Form, Mapping}
 
-case class OccupationalAndAccountingInformation(
-  firstOccupy: MonthsYearDuration,
-  financialYear: Option[DayMonthsDuration] = None,
-  yearEndChanged: Option[Boolean] = Some(false)
-)
-object OccupationalAndAccountingInformation {
-  implicit val format = Json.format[OccupationalAndAccountingInformation]
+import java.time.LocalDate
+
+object FinancialYearEndDatesForm {
+
+  private val dateMapping: Mapping[LocalDate] =
+    single(
+      "date" -> requiredDateMapping(
+        allowFutureDates = true,
+        fieldErrorPart = ".financialYearEnd"
+      )
+    )
+
+  val financialYearEndDatesForm: Form[Seq[LocalDate]] = Form(
+    single(
+      "financial-year-end" -> seq(dateMapping)
+    )
+  )
 
 }

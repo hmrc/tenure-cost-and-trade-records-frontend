@@ -14,17 +14,21 @@
  * limitations under the License.
  */
 
-package models.submissions.aboutthetradinghistory
+package form.aboutthetradinghistory
 
-import models.submissions.Form6010.{DayMonthsDuration, MonthsYearDuration}
-import play.api.libs.json.Json
+import form.DateMappings.dayMonthsDurationMapping
+import models.submissions.Form6010.DayMonthsDuration
+import play.api.data.Form
+import play.api.data.Forms.{optional, text, tuple}
 
-case class OccupationalAndAccountingInformation(
-  firstOccupy: MonthsYearDuration,
-  financialYear: Option[DayMonthsDuration] = None,
-  yearEndChanged: Option[Boolean] = Some(false)
-)
-object OccupationalAndAccountingInformation {
-  implicit val format = Json.format[OccupationalAndAccountingInformation]
+object AccountingInformationForm {
+
+  val accountingInformationForm: Form[(DayMonthsDuration, Boolean)] = Form(
+    tuple(
+      "financialYear"  -> dayMonthsDurationMapping("financialYear", ".financialYear"),
+      "yearEndChanged" -> optional(text)
+        .transform[Boolean](_.exists(_.equals("true")), b => Some(b.toString))
+    )
+  )
 
 }

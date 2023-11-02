@@ -14,10 +14,10 @@
  * limitations under the License.
  *@
 
+@import actions.SessionRequest
 @import models.submissions.aboutthetradinghistory.TurnoverSection1516
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import uk.gov.hmrc.govukfrontend.views.Implicits.RichInput
-@import models.pages.Summary
 
 @this(layout: Layout,
         govukButton: GovukButton,
@@ -28,7 +28,7 @@
         govukDetails: GovukDetails
 )
 
-@(form: Form[Seq[TurnoverSection1516]], numOfColumns: Int, summary: Summary)(implicit request: Request[_], messages: Messages)
+@(form: Form[Seq[TurnoverSection1516]])(implicit request: SessionRequest[_], messages: Messages)
 
 @detailsContent = {
     <p class="govuk-body govuk-!-font-weight-bold">@messages("turnover.details.h1.6016")</p>
@@ -70,13 +70,14 @@
         <span class="govuk-caption-m">@messages("turnover.totalSales.6016")</span>
 }
 
-
-@columns = @{0 until numOfColumns}
+@columns = @{
+    request.sessionData.aboutTheTradingHistory.map(_.turnoverSections).fold(Seq.empty[Int])(_.indices)
+}
 
 @layout(
     pageHeading = messages("turnover.heading"),
     showSection = true,
-    summary = Some(summary),
+    summary = Some(request.sessionData.toSummary),
     sectionName = messages("label.section.aboutYourTradingHistory"),
     backLinkUrl = controllers.aboutthetradinghistory.routes.AboutYourTradingHistoryController.show.url,
     fullWidth = true,

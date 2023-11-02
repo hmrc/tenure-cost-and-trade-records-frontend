@@ -14,10 +14,10 @@
  * limitations under the License.
  *@
 
+@import actions.SessionRequest
 @import models.submissions.aboutthetradinghistory.TurnoverSection
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import uk.gov.hmrc.govukfrontend.views.Implicits.RichInput
-@import models.pages.Summary
 
 @this(layout: Layout,
         govukButton: GovukButton,
@@ -29,7 +29,7 @@
         govukDetails: GovukDetails
 )
 
-@(form: Form[Seq[TurnoverSection]], numOfColumns: Int, summary: Summary)(implicit request: Request[_], messages: Messages)
+@(form: Form[Seq[TurnoverSection]])(implicit request: SessionRequest[_], messages: Messages)
 
 @detailsContent = {
     <p class="govuk-body govuk-!-font-weight-bold">@messages("turnover.details.h1")</p>
@@ -73,16 +73,22 @@
     @form.value.getOrElse(Seq.empty)
 }
 
-@columns = @{0 until numOfColumns}
+@columns = @{
+    request.sessionData.aboutTheTradingHistory.map(_.turnoverSections).fold(Seq.empty[Int])(_.indices)
+}
 
 @layout(
-  pageHeading = messages("turnover.heading"),
-  showSection = true,
-    summary = Some(summary),
-  sectionName = messages("label.section.aboutYourTradingHistory"),
-  backLinkUrl = controllers.aboutthetradinghistory.routes.AboutYourTradingHistoryController.show.url,
-  fullWidth = true,
-  theForm = form
+    pageHeading = messages("turnover.heading"),
+    showSection = true,
+    summary = Some(request.sessionData.toSummary),
+    sectionName = messages("label.section.aboutYourTradingHistory"),
+    backLinkUrl = if(request.sessionData.aboutTheTradingHistory.flatMap(_.occupationAndAccountingInformation.flatMap(_.yearEndChanged)).contains(true)) {
+        controllers.aboutthetradinghistory.routes.FinancialYearEndDatesController.show().url
+    } else {
+        controllers.aboutthetradinghistory.routes.FinancialYearEndController.show().url
+    },
+    fullWidth = true,
+    theForm = form
 ) {
 
   @formWithCSRF(action = controllers.aboutthetradinghistory.routes.TurnoverController.submit) {
@@ -91,6 +97,9 @@
       @* TODO - Reinstate paragraph when cut and paste functionality developed *@
       @*<p class="govuk-body">@messages("turnover.p2")</p>*@
 
+      @govukInsetText(InsetText(
+          content = Text(messages("turnover.inset"))
+      ))
       @govukDetails(Details(
           summary = Text(messages("turnover.details")),
           content = HtmlContent(detailsContent)

@@ -65,7 +65,10 @@ case class SectionAnswersRowBuilder[T](answers: Option[T])(implicit messages: Me
               ActionItem(
                 href = s"${urlPlusParamPrefix(editPage.url)}from=CYA${editFieldTag(editField)}",
                 content = Text(messages("label.change")),
-                visuallyHiddenText = Some(messages(messageKey))
+                visuallyHiddenText = Some(messages(messageKey)),
+                attributes = Map(
+                  "aria-label" -> s"${messages("label.change")} ${messages(messageKey)}"
+                )
               )
             )
           )

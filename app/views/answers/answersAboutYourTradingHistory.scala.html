@@ -22,6 +22,8 @@
 @import util.NumberUtil._
 @import util.SectionAnswersRowBuilder
 
+@import java.time.LocalDate
+
 @this(
         govukSummaryList: GovukSummaryList,
         dateUtil: DateUtil
@@ -41,6 +43,14 @@
         }
     </div>
 }
+}
+
+@financialYearEndDatesTable(financialYearEndDates: Seq[LocalDate]) = @{
+    table(
+        financialYearEndDates.map(financialYearEnd => Seq(
+            dateUtil.formatDayMonthAbbrYear(financialYearEnd)
+        ))
+    ).body
 }
 
 @turnoverValuesTable(turnoverSections: Seq[TurnoverSection]) = @{
@@ -72,15 +82,16 @@
 <h2 class="govuk-heading-m">@messages("aboutYourTradingHistory.heading")</h2>
 
 @govukSummaryList(SummaryList(rows =
-    sectionAnswers.row("checkYourAnswersAboutTheTradingHistory.occupationAndAccounting",
-        _.occupationAndAccountingInformation.map(
-            a => Seq(
-                dateUtil.formatYearMonth(a.firstOccupy.toYearMonth),
-                dateUtil.formatMonthDay(a.financialYear.toMonthDay)
-            ).mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>")
-        ),
-        aboutthetradinghistory.routes.AboutYourTradingHistoryController.show(), "",
-        ("valueAsHtml", _ => None))
+    sectionAnswers.row("checkYourAnswersAboutTheTradingHistory.occupationDate",
+        _.occupationAndAccountingInformation.map(_.firstOccupy.toYearMonth).map(dateUtil.formatYearMonth),
+        aboutthetradinghistory.routes.AboutYourTradingHistoryController.show(), "firstOccupy.month") ++
+            sectionAnswers.row("checkYourAnswersAboutTheTradingHistory.financialYearEnd",
+                _.occupationAndAccountingInformation.flatMap(_.financialYear.map(_.toMonthDay)).map(dateUtil.formatMonthDay),
+                aboutthetradinghistory.routes.FinancialYearEndController.show(), "financialYear.day") ++
+            sectionAnswers.row("financialYearEndDates.heading",
+                _.fold("")(t => financialYearEndDatesTable(t.turnoverSections.map(_.financialYearEnd))),
+                aboutthetradinghistory.routes.FinancialYearEndDatesController.show(), "",
+                ("valueAsHtml", _ => None))
 ))
 
 <h2 class="govuk-heading-m">@messages("turnover.heading")</h2>

@@ -30,12 +30,18 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
   override def cyaPage: Option[Call] =
     Some(aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show())
 
-  override val overrideRedirectIfFromCYA: Map[String, Session => Call] = Map(
-    (
-      aboutthetradinghistory.routes.TurnoverController.show().url,
-      _ => aboutthetradinghistory.routes.TurnoverController.show()
-    )
-  )
+  override val postponeCYARedirectPages: Set[String] = Set(
+    aboutthetradinghistory.routes.FinancialYearEndController.show(),
+    aboutthetradinghistory.routes.FinancialYearEndDatesController.show(),
+    aboutthetradinghistory.routes.TurnoverController.show(),
+    aboutthetradinghistory.routes.CostOfSalesController.show()
+  ).map(_.url)
+
+  private def financialYearEndRouting: Session => Call =
+    _.aboutTheTradingHistory.flatMap(_.occupationAndAccountingInformation.flatMap(_.yearEndChanged)) match {
+      case Some(true) => aboutthetradinghistory.routes.FinancialYearEndDatesController.show()
+      case _          => aboutthetradinghistory.routes.TurnoverController.show()
+    }
 
   private def turnoverRouting: Session => Call = answers => {
     if (answers.forType == ForTypes.for6015)
@@ -45,7 +51,9 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
   }
 
   override val routeMap: Map[Identifier, Session => Call] = Map(
-    AboutYourTradingHistoryPageId            -> (_ => aboutthetradinghistory.routes.TurnoverController.show()),
+    AboutYourTradingHistoryPageId            -> (_ => aboutthetradinghistory.routes.FinancialYearEndController.show()),
+    FinancialYearEndPageId                   -> financialYearEndRouting,
+    FinancialYearEndDatesPageId              -> (_ => aboutthetradinghistory.routes.TurnoverController.show()),
     TurnoverPageId                           -> turnoverRouting,
     CostOfSalesId                            -> (_ => aboutthetradinghistory.routes.TotalPayrollCostsController.show()),
     TotalPayrollCostId                       -> (_ => aboutthetradinghistory.routes.VariableOperatingExpensesController.show()),

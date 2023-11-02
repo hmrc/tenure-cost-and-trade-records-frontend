@@ -16,7 +16,7 @@
 
 package form.aboutthetradinghistory
 
-import form.DateMappings.dateFieldsMapping
+import form.DateMappings.requiredDateMapping
 import form.MappingSupport.turnoverSalesMapping
 import models.submissions.aboutthetradinghistory.TurnoverSection
 import play.api.data.{Form, Mapping}
@@ -24,15 +24,15 @@ import play.api.data.Forms.{bigDecimal, mapping, number, optional}
 import play.api.data.validation.{Constraint, Invalid, Valid}
 
 object TurnoverForm {
+
   def turnoverForm(expectedNumberOfFinancialYears: Int): Form[Seq[TurnoverSection]] = {
     val averageOccupancyConstraint: Constraint[BigDecimal] = Constraint[BigDecimal]("averageOccupancyConstraint") {
       averageOccupancy =>
         if (averageOccupancy >= 0 && averageOccupancy <= 100) Valid
         else Invalid("Average occupancy rate must be between 0 and 100")
     }
-    def columnMapping(idx: Int): Mapping[TurnoverSection]  = mapping(
-      "financial-year-end"     -> dateFieldsMapping(
-        s"$idx.financial-year-end",
+    def columnMapping: Mapping[TurnoverSection]            = mapping(
+      "financial-year-end"     -> requiredDateMapping(
         allowFutureDates = true,
         fieldErrorPart = ".financialYearEnd"
       ),
@@ -48,23 +48,23 @@ object TurnoverForm {
     Form {
       expectedNumberOfFinancialYears match {
         case 1                               =>
-          mapping("0" -> columnMapping(0))(section => Seq(section)) {
+          mapping("0" -> columnMapping)(section => Seq(section)) {
             case Seq(section) => Some(section)
             case _            => None
           }
         case 2                               =>
           mapping(
-            "0" -> columnMapping(0),
-            "1" -> columnMapping(1)
+            "0" -> columnMapping,
+            "1" -> columnMapping
           ) { case (first, second) => Seq(first, second) } {
             case Seq(first, second) => Some((first, second))
             case _                  => None
           }
         case 3                               =>
           mapping(
-            "0" -> columnMapping(0),
-            "1" -> columnMapping(1),
-            "2" -> columnMapping(2)
+            "0" -> columnMapping,
+            "1" -> columnMapping,
+            "2" -> columnMapping
           ) { case (first, second, third) => Seq(first, second, third) } {
             case Seq(first, second, third) => Some((first, second, third))
             case _                         => None
@@ -76,4 +76,5 @@ object TurnoverForm {
       }
     }
   }
+
 }

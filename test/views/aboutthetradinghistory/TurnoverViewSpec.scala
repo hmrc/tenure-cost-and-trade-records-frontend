@@ -16,9 +16,10 @@
 
 package views.aboutthetradinghistory
 
-import form.aboutthetradinghistory.{OccupationalAndAccountingInformationForm, TurnoverForm}
+import actions.SessionRequest
+import form.aboutthetradinghistory.TurnoverForm
 import models.pages.Summary
-import models.submissions.aboutthetradinghistory.{OccupationalAndAccountingInformation, TurnoverSection}
+import models.submissions.aboutthetradinghistory.TurnoverSection
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
@@ -29,10 +30,11 @@ class TurnoverViewSpec extends QuestionViewBehaviours[Seq[TurnoverSection]] {
 
   override val form = TurnoverForm.turnoverForm(3)
 
-  def createView = () => turnoverView(form, 3, Summary("99996010001"))(fakeRequest, messages)
+  val sessionRequest = SessionRequest(aboutYourTradingHistory6010YesSession, fakeRequest)
 
-  def createViewUsingForm = (form: Form[Seq[TurnoverSection]]) =>
-    turnoverView(form, 3, Summary("99996010001"))(fakeRequest, messages)
+  def createView = () => turnoverView(form)(sessionRequest, messages)
+
+  def createViewUsingForm = (form: Form[Seq[TurnoverSection]]) => turnoverView(form)(sessionRequest, messages)
 
   "Turnover view" must {
 
@@ -43,7 +45,7 @@ class TurnoverViewSpec extends QuestionViewBehaviours[Seq[TurnoverSection]] {
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText mustBe messages("back.link.label")
       val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.aboutthetradinghistory.routes.AboutYourTradingHistoryController.show.url
+      backlinkUrl mustBe controllers.aboutthetradinghistory.routes.FinancialYearEndController.show().url
     }
 
     "Section heading is visible" in {
