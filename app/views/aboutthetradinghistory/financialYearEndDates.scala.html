@@ -29,10 +29,18 @@
         govukDetails: GovukDetails
 )
 
-@(form: Form[Seq[LocalDate]])(implicit request: SessionRequest[_], messages: Messages)
+@(form: Form[Seq[LocalDate]], finYears: Seq[Int])(implicit request: SessionRequest[_], messages: Messages)
 
-@financialYearEndContent(fieldName: String) = {
-    @includes.dateFields(form = form, field = fieldName, govukDate = govukDateInput, helpText = "", showDays = true, showFieldSet = false)
+@financialYearEndContent(idx: Int) = {
+    @includes.dateFields(
+        form = form,
+        field = s"financial-year-end[$idx].date",
+        govukDate = govukDateInput,
+        label = "financialYearEndDates.financialYear.label",
+        labelArg0 = finYears(idx).toString,
+        helpText = "",
+        showDays = true
+    )
 }
 
 @indices = @{
@@ -49,10 +57,12 @@
   theForm = form
 ) {
 
+    <p class="govuk-body">@messages("financialYearEndDates.p1")</p>
+
   @formWithCSRF(action = controllers.aboutthetradinghistory.routes.FinancialYearEndDatesController.submit) {
 
       @indices.map { idx  =>
-          @financialYearEndContent(s"financial-year-end[$idx].date")
+          @financialYearEndContent(idx)
       }
 
       @includes.continueSaveAsDraftButtons(govukButton)

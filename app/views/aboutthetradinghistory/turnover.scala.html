@@ -18,7 +18,6 @@
 @import models.submissions.aboutthetradinghistory.TurnoverSection
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import uk.gov.hmrc.govukfrontend.views.Implicits.RichInput
-@import models.pages.Summary
 
 @this(layout: Layout,
         govukButton: GovukButton,
@@ -30,7 +29,7 @@
         govukDetails: GovukDetails
 )
 
-@(form: Form[Seq[TurnoverSection]], numOfColumns: Int, summary: Summary)(implicit request: SessionRequest[_], messages: Messages)
+@(form: Form[Seq[TurnoverSection]])(implicit request: SessionRequest[_], messages: Messages)
 
 @detailsContent = {
     <p class="govuk-body govuk-!-font-weight-bold">@messages("turnover.details.h1")</p>
@@ -74,12 +73,14 @@
     @form.value.getOrElse(Seq.empty)
 }
 
-@columns = @{0 until numOfColumns}
+@columns = @{
+    request.sessionData.aboutTheTradingHistory.map(_.turnoverSections).fold(Seq.empty[Int])(_.indices)
+}
 
 @layout(
     pageHeading = messages("turnover.heading"),
     showSection = true,
-    summary = Some(summary),
+    summary = Some(request.sessionData.toSummary),
     sectionName = messages("label.section.aboutYourTradingHistory"),
     backLinkUrl = if(request.sessionData.aboutTheTradingHistory.flatMap(_.occupationAndAccountingInformation.flatMap(_.yearEndChanged)).contains(true)) {
         controllers.aboutthetradinghistory.routes.FinancialYearEndDatesController.show().url

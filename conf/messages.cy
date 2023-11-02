@@ -949,6 +949,8 @@ error.financialYear.month.required = The date the financial years ends must incl
 # FINANCIAL YEAR-END DATES
 ##############################
 financialYearEndDates.heading = Amend your financial year-end dates
+financialYearEndDates.p1 = Adjust any of the dates displayed on this page to show the changes to your financial year end.
+financialYearEndDates.financialYear.label = Financial year ending {0}
 
 
 # CURRENT RENT FIRST PAID

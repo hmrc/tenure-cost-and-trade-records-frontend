@@ -258,6 +258,24 @@ trait FakeObjects {
         Some(BigDecimal(456)),
         Some(BigDecimal(567)),
         Some(BigDecimal(678))
+      ),
+      TurnoverSection(
+        LocalDate.now().minusYears(1),
+        123,
+        Some(BigDecimal(234)),
+        Some(BigDecimal(345)),
+        Some(BigDecimal(456)),
+        Some(BigDecimal(567)),
+        Some(BigDecimal(678))
+      ),
+      TurnoverSection(
+        LocalDate.now().minusYears(2),
+        123,
+        Some(BigDecimal(234)),
+        Some(BigDecimal(345)),
+        Some(BigDecimal(456)),
+        Some(BigDecimal(567)),
+        Some(BigDecimal(678))
       )
     )
   )

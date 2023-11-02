@@ -25,6 +25,7 @@ import navigation.identifiers.FinancialYearEndDatesPageId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
+import util.AccountingInformationUtil.newFinancialYears
 import views.html.aboutthetradinghistory.financialYearEndDates
 
 import java.time.{LocalDate, MonthDay}
@@ -45,12 +46,13 @@ class FinancialYearEndDatesController @Inject() (
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     request.sessionData.aboutTheTradingHistory
       .filter(_.occupationAndAccountingInformation.map(_.financialYear).isDefined)
-      .map(_.turnoverSections)
-      .filter(_.nonEmpty)
-      .fold(Redirect(routes.AboutYourTradingHistoryController.show())) { turnoverSections =>
+      .filter(_.turnoverSections.nonEmpty)
+      .fold(Redirect(routes.AboutYourTradingHistoryController.show())) { aboutTheTradingHistory =>
+        val occupationAndAccounting = aboutTheTradingHistory.occupationAndAccountingInformation.get
         Ok(
           financialYearEndDatesView(
-            financialYearEndDatesForm.fill(turnoverSections.map(_.financialYearEnd))
+            financialYearEndDatesForm.fill(aboutTheTradingHistory.turnoverSections.map(_.financialYearEnd)),
+            newFinancialYears(occupationAndAccounting)
           )
         )
       }
@@ -61,9 +63,16 @@ class FinancialYearEndDatesController @Inject() (
       .filter(_.occupationAndAccountingInformation.map(_.financialYear).isDefined)
       .filter(_.turnoverSections.nonEmpty)
       .fold(Future.successful(Redirect(routes.AboutYourTradingHistoryController.show()))) { aboutTheTradingHistory =>
+        val occupationAndAccounting = aboutTheTradingHistory.occupationAndAccountingInformation.get
         continueOrSaveAsDraft[Seq[LocalDate]](
           financialYearEndDatesForm,
-          formWithErrors => BadRequest(financialYearEndDatesView(formWithErrors)),
+          formWithErrors =>
+            BadRequest(
+              financialYearEndDatesView(
+                formWithErrors,
+                newFinancialYears(occupationAndAccounting)
+              )
+            ),
           data => {
             val occupationAndAccounting = aboutTheTradingHistory.occupationAndAccountingInformation.get
             val financialYearEnd        = occupationAndAccounting.financialYear.get.toMonthDay

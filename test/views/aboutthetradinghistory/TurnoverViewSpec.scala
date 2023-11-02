@@ -32,10 +32,9 @@ class TurnoverViewSpec extends QuestionViewBehaviours[Seq[TurnoverSection]] {
 
   val sessionRequest = SessionRequest(aboutYourTradingHistory6010YesSession, fakeRequest)
 
-  def createView = () => turnoverView(form, 3, Summary("99996010001"))(sessionRequest, messages)
+  def createView = () => turnoverView(form)(sessionRequest, messages)
 
-  def createViewUsingForm = (form: Form[Seq[TurnoverSection]]) =>
-    turnoverView(form, 3, Summary("99996010001"))(sessionRequest, messages)
+  def createViewUsingForm = (form: Form[Seq[TurnoverSection]]) => turnoverView(form)(sessionRequest, messages)
 
   "Turnover view" must {
 
