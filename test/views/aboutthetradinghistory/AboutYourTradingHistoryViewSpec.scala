@@ -18,18 +18,13 @@ package views.aboutthetradinghistory
 
 import actions.SessionRequest
 import form.aboutthetradinghistory.OccupationalInformationForm
-import models.pages.Summary
 import models.submissions.Form6010.MonthsYearDuration
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
-import views.html.aboutthetradinghistory.aboutYourTradingHistory
 
 class AboutYourTradingHistoryViewSpec extends QuestionViewBehaviours[MonthsYearDuration] {
-
-  def aboutTheTradingHistoryView: aboutYourTradingHistory =
-    app.injector.instanceOf[views.html.aboutthetradinghistory.aboutYourTradingHistory]
 
   val messageKeyPrefix = "firstOccupy"
 
@@ -38,10 +33,10 @@ class AboutYourTradingHistoryViewSpec extends QuestionViewBehaviours[MonthsYearD
   override val form: Form[MonthsYearDuration] =
     OccupationalInformationForm.occupationalInformationForm
 
-  def createView: () => Html = () => aboutTheTradingHistoryView(form)(sessionRequest, messages)
+  def createView: () => Html = () => aboutYourTradingHistoryView(form)(sessionRequest, messages)
 
   def createViewUsingForm: Form[MonthsYearDuration] => Html =
-    (form: Form[MonthsYearDuration]) => aboutTheTradingHistoryView(form)(sessionRequest, messages)
+    (form: Form[MonthsYearDuration]) => aboutYourTradingHistoryView(form)(sessionRequest, messages)
 
   "About the trading history view" must {
 

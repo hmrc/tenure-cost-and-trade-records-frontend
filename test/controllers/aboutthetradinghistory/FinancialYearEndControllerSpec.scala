@@ -28,31 +28,31 @@ class FinancialYearEndControllerSpec extends TestBaseSpec {
 
   import TestData.{baseFormData, errorKey}
 
-  def aboutYourTradingHistoryController(
+  def financialYearEndController(
     aboutTheTradingHistory: Option[AboutTheTradingHistory] = Some(prefilledAboutYourTradingHistory)
-  ) = new AboutYourTradingHistoryController(
+  ) = new FinancialYearEndController(
     stubMessagesControllerComponents(),
     aboutYourTradingHistoryNavigator,
-    aboutYourTradingHistoryView,
+    financialYearEndView,
     preEnrichedActionRefiner(aboutTheTradingHistory = aboutTheTradingHistory),
     mockSessionRepo
   )
 
   "About your trading history controller" should {
     "return 200" in {
-      val result = aboutYourTradingHistoryController().show(fakeRequest)
+      val result = financialYearEndController().show(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return HTML" in {
-      val result = aboutYourTradingHistoryController().show(fakeRequest)
+      val result = financialYearEndController().show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
 
     "SUBMIT /" should {
       "throw a BAD_REQUEST if an empty form is submitted" in {
-        val res = aboutYourTradingHistoryController().submit(FakeRequest().withFormUrlEncodedBody(Seq.empty: _*))
+        val res = financialYearEndController().submit(FakeRequest().withFormUrlEncodedBody(Seq.empty: _*))
         status(res) shouldBe BAD_REQUEST
       }
     }
@@ -83,13 +83,9 @@ class FinancialYearEndControllerSpec extends TestBaseSpec {
 
   object TestData {
     val errorKey: Object {
-      val occupyMonth: String
-      val occupyYear: String
       val financialYearDay: String
       val financialYearMonth: String
     } = new {
-      val occupyMonth        = "firstOccupy.month"
-      val occupyYear         = "firstOccupy.year"
       val financialYearDay   = "financialYear.day"
       val financialYearMonth = "financialYear.month"
     }

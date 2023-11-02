@@ -17,27 +17,31 @@
 package views.aboutthetradinghistory
 
 import actions.SessionRequest
-import form.aboutthetradinghistory.AccountingInformationForm.accountingInformationForm
-import models.submissions.Form6010.DayMonthsDuration
+import form.aboutthetradinghistory.FinancialYearEndDatesForm.financialYearEndDatesForm
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
 
-class FinancialYearEndViewSpec extends QuestionViewBehaviours[(DayMonthsDuration, Boolean)] {
+import java.time.LocalDate
 
-  val messageKeyPrefix = "financialYearEnd"
+class FinancialYearEndDatesViewSpec extends QuestionViewBehaviours[Seq[LocalDate]] {
+
+  val messageKeyPrefix = "financialYearEndDates"
 
   val sessionRequest = SessionRequest(aboutYourTradingHistory6010YesSession, fakeRequest)
 
-  override val form: Form[(DayMonthsDuration, Boolean)] = accountingInformationForm
+  private val today    = LocalDate.now
+  private val finYears = Seq(today, today.minusYears(1), today.minusYears(2)).map(_.getYear)
 
-  def createView: () => Html = () => financialYearEndView(form)(sessionRequest, messages)
+  override val form: Form[Seq[LocalDate]] = financialYearEndDatesForm
 
-  def createViewUsingForm: Form[(DayMonthsDuration, Boolean)] => Html =
-    (form: Form[(DayMonthsDuration, Boolean)]) => financialYearEndView(form)(sessionRequest, messages)
+  def createView: () => Html = () => financialYearEndDatesView(form, finYears)(sessionRequest, messages)
 
-  "financialYearEnd view" must {
+  def createViewUsingForm: Form[Seq[LocalDate]] => Html =
+    financialYearEndDatesView(_, finYears)(sessionRequest, messages)
+
+  "financialYearEndDates view" must {
 
     behave like normalPage(createView, messageKeyPrefix)
 
@@ -46,25 +50,24 @@ class FinancialYearEndViewSpec extends QuestionViewBehaviours[(DayMonthsDuration
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText mustBe messages("back.link.label")
       val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.aboutthetradinghistory.routes.AboutYourTradingHistoryController.show().url
+      backlinkUrl mustBe controllers.aboutthetradinghistory.routes.FinancialYearEndController.show().url
     }
 
-    "contain date format hint for financialYear-hint" in {
-      val doc               = asDocument(createViewUsingForm(form))
-      val financialYearHint = doc.getElementById("financialYear-hint").text()
-      assert(financialYearHint == messages("hint.day.month.example"))
-    }
-
-    "contain date field for the value financialYear.month" in {
+    "contain date field for the value financial-year-end[0].date.day" in {
       val doc = asDocument(createViewUsingForm(form))
-      assertContainsLabel(doc, "financialYear.month", "Month")
-      assertContainsText(doc, "financialYear.month")
+      assertContainsLabel(doc, "financial-year-end[0].date.day", "Day")
+      assertContainsText(doc, "financial-year-end[0].date.day")
+    }
+    "contain date field for the value financial-year-end[0].date.month" in {
+      val doc = asDocument(createViewUsingForm(form))
+      assertContainsLabel(doc, "financial-year-end[0].date.month", "Month")
+      assertContainsText(doc, "financial-year-end[0].date.month")
     }
 
-    "contain date field for the value financialYear.day" in {
+    "contain date field for the value financial-year-end[0].date.year" in {
       val doc = asDocument(createViewUsingForm(form))
-      assertContainsLabel(doc, "financialYear.day", "Day")
-      assertContainsText(doc, "financialYear.day")
+      assertContainsLabel(doc, "financial-year-end[0].date.year", "Year")
+      assertContainsText(doc, "financial-year-end[0].date.year")
     }
 
     "contain save and continue button with the value Save and Continue" in {
