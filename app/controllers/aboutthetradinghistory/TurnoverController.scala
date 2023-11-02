@@ -20,7 +20,7 @@ import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.TurnoverForm.turnoverForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.updateAboutTheTradingHistory
-import models.submissions.aboutthetradinghistory.{CostOfSales, TurnoverSection}
+import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, TurnoverSection}
 import navigation.AboutTheTradingHistoryNavigator
 import navigation.identifiers.TurnoverPageId
 import play.api.i18n.I18nSupport
@@ -64,10 +64,14 @@ class TurnoverController @Inject() (
           turnoverForm(numberOfColumns),
           formWithErrors => BadRequest(turnoverView(formWithErrors)),
           success => {
+            val turnoverSections =
+              (success zip financialYearEndDates(aboutTheTradingHistory)).map { case (turnoverSection, finYearEnd) =>
+                turnoverSection.copy(financialYearEnd = finYearEnd)
+              }
+
             val updatedData = updateAboutTheTradingHistory(
               _.copy(
-                turnoverSections = success,
-                costOfSales = success.map(_.financialYearEnd).map(CostOfSales(_, None, None, None, None))
+                turnoverSections = turnoverSections
               )
             )
             session
@@ -77,5 +81,8 @@ class TurnoverController @Inject() (
         )
       }
   }
+
+  private def financialYearEndDates(aboutTheTradingHistory: AboutTheTradingHistory) =
+    aboutTheTradingHistory.turnoverSections.map(_.financialYearEnd)
 
 }

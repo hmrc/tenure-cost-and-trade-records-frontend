@@ -71,13 +71,6 @@ class TurnoverViewSpec extends QuestionViewBehaviours[Seq[TurnoverSection]] {
       assert(doc.toString.contains(messages("turnover.details.p3")))
     }
 
-    s"contain an input for financial-year-end" in {
-      val doc = asDocument(createView())
-      assertRenderedById(doc, "0.financial-year-end")
-      assertRenderedById(doc, "1.financial-year-end")
-      assertRenderedById(doc, "2.financial-year-end")
-    }
-
     s"contain an input for weeks" in {
       val doc = asDocument(createView())
       assertRenderedById(doc, "0.weeks")

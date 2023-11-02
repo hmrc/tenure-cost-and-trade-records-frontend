@@ -44,7 +44,7 @@
 }
 
 @indices = @{
-    request.sessionData.aboutTheTradingHistory.map(_.turnoverSections).fold(Seq.empty[Int])(_.indices)
+    request.sessionData.aboutTheTradingHistory.fold(Seq.empty[Int])(_.turnoverSections.indices)
 }
 
 @layout(

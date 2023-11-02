@@ -18,7 +18,10 @@
 @import models.submissions.aboutthetradinghistory.CostOfSales
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import uk.gov.hmrc.govukfrontend.views.Implicits._
+@import util.DateUtil
 @import util.NumberUtil._
+
+@import java.time.LocalDate
 
 @this(
         layout: Layout,
@@ -27,7 +30,8 @@
         govukInput: GovukInput,
         govukTable: GovukTable,
         govukInsetText: GovukInsetText,
-        govukDetails: GovukDetails
+        govukDetails: GovukDetails,
+        dateUtil: DateUtil
 )
 
 
@@ -38,13 +42,6 @@
     <p class="govuk-body govuk-!-font-weight-bold">@messages("costOfSales.details.h1")</p>
     <p class="govuk-body">@messages("costOfSales.details.p1")</p>
     <p class="govuk-body">@messages("costOfSales.details.p2")</p>
-}
-
-@financialYearEndContent(fieldName: String, form: Form[Seq[CostOfSales]]) = {
-@form(fieldName).value.map { endDate =>
-    @endDate
-    <input type="hidden" name="@fieldName" value="@endDate" />
-}
 }
 
 @accommodationHeading = {
@@ -79,7 +76,7 @@
 }
 
 @columns = @{
-    request.sessionData.aboutTheTradingHistory.map(_.costOfSales).fold(Seq.empty[Int])(_.indices)
+    request.sessionData.aboutTheTradingHistory.map(_.turnoverSections).fold(Seq.empty[Int])(_.indices)
 }
 
 @costInputAttributes = @{
@@ -117,10 +114,11 @@
                     content = Text(messages("costOfSales.financialYearEnd")),
                     classes = "govuk-!-font-weight-bold"
                 ) +:
-                        columns.map { idx =>
+                        request.sessionData.aboutTheTradingHistory
+                        .fold(Seq.empty[LocalDate])(_.turnoverSections.map(_.financialYearEnd)).map { finYearEnd =>
                             TableRow(
-                                content = HtmlContent(
-                                    financialYearEndContent(s"costOfSales[$idx].financial-year-end", form)
+                                content = Text(
+                                    dateUtil.formatDayMonthAbbrYear(finYearEnd)
                                 )
                             )
                         },
