@@ -32,7 +32,6 @@ class ConnectionToPropertyNavigator @Inject() (audit: Audit) extends Navigator(a
   def cyaPageVacant: Option[Call] =
     Some(controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToVacantPropertyController.show())
 
-
   private def areYouStillConnectedRouting: Session => Call = answers => {
     answers.stillConnectedDetails.flatMap(_.addressConnectionType.map(_.name)) match {
       case Some("yes")                => controllers.connectiontoproperty.routes.VacantPropertiesController.show()
