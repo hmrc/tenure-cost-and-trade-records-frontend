@@ -32,10 +32,6 @@ class ConnectionToPropertyNavigator @Inject() (audit: Audit) extends Navigator(a
   def cyaPageVacant: Option[Call] =
     Some(controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToVacantPropertyController.show())
 
-  override val overrideRedirectIfFromCYA: Map[String, Session => Call] =
-    Map(
-      controllers.connectiontoproperty.routes.VacantPropertiesController.show().url -> isPropertyVacant
-    )
 
   private def areYouStillConnectedRouting: Session => Call = answers => {
     answers.stillConnectedDetails.flatMap(_.addressConnectionType.map(_.name)) match {
