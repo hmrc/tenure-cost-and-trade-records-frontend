@@ -178,6 +178,15 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
     }
   }
 
+  private def payableGrossOrNetDetailsRouting: Session => Call = answers => {
+    answers.forType match {
+      case ForTypes.for6015 | ForTypes.for6016 =>
+        controllers.aboutYourLeaseOrTenure.routes.HowIsCurrentRentFixedController.show()
+      case _                                   =>
+        controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryOnQuantityOfBeersController.show()
+    }
+  }
+
   private def rentVaryQuantityOfBeersRouting: Session => Call = answers => {
     answers.aboutLeaseOrAgreementPartTwo.flatMap(
       _.rentPayableVaryOnQuantityOfBeersDetails.map(_.rentPayableVaryOnQuantityOfBeersDetails.name)
@@ -275,9 +284,7 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
       controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryAccordingToGrossOrNetController.show()
     ),
     RentPayableVaryAccordingToGrossOrNetId        -> payableGrossOrNetRouting,
-    RentPayableVaryAccordingToGrossOrNetDetailsId -> (_ =>
-      controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryOnQuantityOfBeersController.show()
-    ),
+    RentPayableVaryAccordingToGrossOrNetDetailsId -> payableGrossOrNetDetailsRouting,
     rentVaryQuantityOfBeersId                     -> rentVaryQuantityOfBeersRouting,
     rentVaryQuantityOfBeersDetailsId              -> (_ =>
       controllers.aboutYourLeaseOrTenure.routes.HowIsCurrentRentFixedController.show()

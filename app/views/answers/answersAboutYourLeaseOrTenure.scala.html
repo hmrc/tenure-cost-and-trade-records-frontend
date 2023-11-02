@@ -107,7 +107,7 @@
                     aboutYourLeaseOrTenure.routes.CurrentRentFirstPaidController.show(), "currentRentFirstPaid.month") ++
                 sectionAnswers.row("checkYourAnswersAboutYourLeaseOrTenure.leaseStartDateAndDuration",
                     _.currentLeaseOrAgreementBegin
-                    .map(lease => s"${dateUtil.formatYearMonth(lease.leaseBegin.toYearMonth)}<br/>${lease.grantedFor} ${messages("suffix.grantedFor")}"),
+                    .map(lease => s"${dateUtil.formatYearMonth(lease.leaseBegin.toYearMonth)}<br/>${lease.grantedFor}"),
                     aboutYourLeaseOrTenure.routes.CurrentLeaseOrAgreementBeginController.show(), "leaseBegin",
                     ("valueAsHtml", _ => None))
     ))

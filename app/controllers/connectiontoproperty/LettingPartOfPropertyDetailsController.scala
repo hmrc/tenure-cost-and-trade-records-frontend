@@ -19,7 +19,6 @@ package controllers.connectiontoproperty
 import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
 import form.connectiontoproperty.TenantDetailsForm.tenantDetailsForm
-import models.Session
 import models.submissions.connectiontoproperty.{LettingPartOfPropertyDetails, StillConnectedDetails, TenantDetails}
 import models.submissions.connectiontoproperty.StillConnectedDetails.updateStillConnectedDetails
 import navigation.ConnectionToPropertyNavigator
