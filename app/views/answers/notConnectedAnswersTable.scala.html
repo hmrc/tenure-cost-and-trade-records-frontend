@@ -37,7 +37,7 @@
             SummaryListRow(
                 key = Key(Text(messages("key.ever.connected"))),
                 value = Value(Text(session.removeConnectionDetails.flatMap(_.pastConnectionType.map(_.name.capitalize)).getOrElse(""))),
-                actions = Option(Actions(items = Seq(ActionItem(href = "/send-trade-and-cost-information/previously-connected",
+                actions = Option(Actions(items = Seq(ActionItem(href = "/send-trade-and-cost-information/past-connection-type?from=CYA",
                     visuallyHiddenText = Some(messages("key.ever.connected")),
                     content = Text(messages("label.change")))))
                 )

@@ -26,6 +26,17 @@ import javax.inject.Inject
 
 class ConnectionToPropertyNavigator @Inject() (audit: Audit) extends Navigator(audit) with Logging {
 
+  override def cyaPage: Option[Call] =
+    Some(controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToPropertyController.show())
+
+  def cyaPageVacant: Option[Call] =
+    Some(controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToVacantPropertyController.show())
+
+  override val overrideRedirectIfFromCYA: Map[String, Session => Call] =
+    Map(
+      controllers.connectiontoproperty.routes.VacantPropertiesController.show().url -> isPropertyVacant
+    )
+
   private def areYouStillConnectedRouting: Session => Call = answers => {
     answers.stillConnectedDetails.flatMap(_.addressConnectionType.map(_.name)) match {
       case Some("yes")                => controllers.connectiontoproperty.routes.VacantPropertiesController.show()

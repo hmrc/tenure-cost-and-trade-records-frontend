@@ -73,7 +73,7 @@ class VacantPropertiesController @Inject() (
       data => {
         val updatedData = updateStillConnectedDetails(_.copy(vacantProperties = Some(data)))
         session.saveOrUpdate(updatedData)
-        Redirect(navigator.nextPage(VacantPropertiesPageId, updatedData).apply(updatedData))
+        Redirect(navigator.next(VacantPropertiesPageId, updatedData).apply(updatedData))
       }
     )
   }

@@ -91,7 +91,7 @@ class AddAnotherLettingPartOfPropertyController @Inject() (
             )
             val updatedData     = updateStillConnectedDetails(_.copy(lettingPartOfPropertyDetails = updatedSections))
             session.saveOrUpdate(updatedData)
-            Redirect(navigator.nextPage(AddAnotherLettingPartOfPropertyPageId, updatedData).apply(updatedData))
+            Redirect(navigator.next(AddAnotherLettingPartOfPropertyPageId, updatedData).apply(updatedData))
           }
     )
   }

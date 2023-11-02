@@ -30,7 +30,7 @@ import repositories.SessionRepo
 import views.html.connectiontoproperty.tradingNameOperatingFromProperty
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class TradingNameOperatingFromPropertyController @Inject() (
@@ -39,7 +39,8 @@ class TradingNameOperatingFromPropertyController @Inject() (
   nameOfBusinessOperatingFromPropertyView: tradingNameOperatingFromProperty,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FORDataCaptureController(mcc)
+)(implicit val ec: ExecutionContext)
+    extends FORDataCaptureController(mcc)
     with I18nSupport
     with Logging {
 
@@ -69,8 +70,13 @@ class TradingNameOperatingFromPropertyController @Inject() (
         ),
       data => {
         val updatedData = updateStillConnectedDetails(_.copy(tradingNameOperatingFromProperty = Some(data)))
-        session.saveOrUpdate(updatedData)
-        Redirect(navigator.nextPage(TradingNameOperatingFromPropertyPageId, updatedData).apply(updatedData))
+        session.saveOrUpdate(updatedData).map { _ =>
+          val redirectToCYA = navigator.cyaPage.filter(_ => navigator.from(request) == "CYA")
+          val nextPage      =
+            redirectToCYA
+              .getOrElse(navigator.nextPage(TradingNameOperatingFromPropertyPageId, updatedData).apply(updatedData))
+          Redirect(nextPage)
+        }
       }
     )
   }

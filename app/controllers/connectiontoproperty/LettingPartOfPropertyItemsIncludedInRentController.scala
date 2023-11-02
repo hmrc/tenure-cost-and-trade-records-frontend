@@ -28,6 +28,7 @@ import repositories.SessionRepo
 import views.html.connectiontoproperty.lettingPartOfPropertyRentIncludes
 
 import javax.inject.{Inject, Named, Singleton}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class LettingPartOfPropertyItemsIncludedInRentController @Inject() (
@@ -36,7 +37,8 @@ class LettingPartOfPropertyItemsIncludedInRentController @Inject() (
   lettingPartOfPropertyRentIncludesView: lettingPartOfPropertyRentIncludes,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FORDataCaptureController(mcc)
+)(implicit val ec: ExecutionContext)
+    extends FORDataCaptureController(mcc)
     with I18nSupport {
 
   def show(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
@@ -85,10 +87,14 @@ class LettingPartOfPropertyItemsIncludedInRentController @Inject() (
           currentSection.copy(itemsIncludedInRent = data)
         )
         val updatedSession  = updateStillConnectedDetails(_.copy(lettingPartOfPropertyDetails = updatedSections))
-        session.saveOrUpdate(updatedSession)
-        Redirect(
-          navigator.nextPage(LettingPartOfPropertyItemsIncludedInRentPageId, updatedSession).apply(updatedSession)
-        )
+        session.saveOrUpdate(updatedSession).map { _ =>
+          val redirectToCYA = navigator.cyaPageVacant.filter(_ => navigator.from(request) == "CYA")
+          val nextPage      =
+            redirectToCYA.getOrElse(
+              navigator.nextPage(LettingPartOfPropertyItemsIncludedInRentPageId, updatedSession).apply(updatedSession)
+            )
+          Redirect(nextPage)
+        }
       }
     )).getOrElse(startRedirect)
   }

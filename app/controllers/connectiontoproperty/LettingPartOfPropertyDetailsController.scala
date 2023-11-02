@@ -30,6 +30,7 @@ import repositories.SessionRepo
 import views.html.connectiontoproperty.tenantDetails
 
 import javax.inject.{Inject, Named, Singleton}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class LettingPartOfPropertyDetailsController @Inject() (
@@ -38,7 +39,8 @@ class LettingPartOfPropertyDetailsController @Inject() (
   tenantDetailsView: tenantDetails,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FORDataCaptureController(mcc)
+)(implicit val ec: ExecutionContext)
+    extends FORDataCaptureController(mcc)
     with I18nSupport {
 
   def show(index: Option[Int]): Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
@@ -96,8 +98,13 @@ class LettingPartOfPropertyDetailsController @Inject() (
               )
           }
         val updatedData                         = updateStillConnectedDetails(_ => updatedStillConnectedDetails)
-        session.saveOrUpdate(updatedData)
-        Redirect(navigator.nextPage(LettingPartOfPropertyDetailsPageId, updatedData).apply(updatedData))
+        session.saveOrUpdate(updatedData).map { _ =>
+          val redirectToCYA = navigator.cyaPageVacant.filter(_ => navigator.from(request) == "CYA")
+          val nextPage      =
+            redirectToCYA
+              .getOrElse(navigator.nextPage(LettingPartOfPropertyDetailsPageId, updatedData).apply(updatedData))
+          Redirect(nextPage)
+        }
       }
     )
   }
