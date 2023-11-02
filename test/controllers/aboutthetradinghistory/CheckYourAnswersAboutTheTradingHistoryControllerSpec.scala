@@ -30,7 +30,7 @@ class CheckYourAnswersAboutTheTradingHistoryControllerSpec extends TestBaseSpec 
   val mockAboutTheTradingHistoryNavigator = mock[AboutTheTradingHistoryNavigator]
 
   val mockTaskListView = mock[taskList]
-  when(mockTaskListView.apply()(any, any)).thenReturn(HtmlFormat.empty)
+  when(mockTaskListView.apply(any)(any, any)).thenReturn(HtmlFormat.empty)
 
   val checkYourAnswersAboutThePropertyController = new CheckYourAnswersAboutTheTradingHistoryController(
     stubMessagesControllerComponents(),

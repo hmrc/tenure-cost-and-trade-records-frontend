@@ -37,7 +37,7 @@ class CheckYourAnswersRequestReferenceNumberControllerSpec extends TestBaseSpec 
   when(mockCheckYourAnswersRequestReferenceNumberView.apply(any, any)(any, any)).thenReturn(HtmlFormat.empty)
 
   val mockTaskListView = mock[taskList]
-  when(mockTaskListView.apply()(any, any)).thenReturn(HtmlFormat.empty)
+  when(mockTaskListView.apply(any)(any, any)).thenReturn(HtmlFormat.empty)
 
   val checkYourAnswersRequestReferenceController = new CheckYourAnswersRequestReferenceNumberController(
     stubMessagesControllerComponents(),
