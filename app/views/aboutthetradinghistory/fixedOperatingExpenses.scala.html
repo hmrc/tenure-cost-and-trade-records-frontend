@@ -19,6 +19,7 @@
 @import uk.gov.hmrc.govukfrontend.views.Implicits.RichInput
 @import models.pages.Summary
 @import java.time.LocalDate
+@import util.DateUtil._
 
 @this(layout: Layout,
         govukButton: GovukButton,
@@ -61,7 +62,7 @@
                                   govukInput(Input(
                                       id = s"$idx.financial-year-end",
                                       name = s"$idx.financial-year-end",
-                                      value = financialYears(idx).toString
+                                      value = financialYears(idx).shortDate
                                   ).withFormField(form(s"$idx.financial-year-end")))
                               )
                           )

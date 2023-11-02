@@ -53,7 +53,7 @@ class VariableOperatingExpensesController @Inject() (
         Ok(
           variableOperativeExpensesView(
             variableOperatingExpensesForm(numberOfColumns)
-              .fillAndValidate(aboutTheTradingHistory.variableOperatingExpensesSections),
+              .fill(aboutTheTradingHistory.variableOperatingExpensesSections),
             numberOfColumns,
             financialYears,
             request.sessionData.toSummary

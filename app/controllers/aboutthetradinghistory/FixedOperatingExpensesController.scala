@@ -54,7 +54,7 @@ class FixedOperatingExpensesController @Inject() (
         Ok(
           fixedOperatingExpensesView(
             fixedOperatingExpensesForm(numberOfColumns)
-              .fillAndValidate(aboutTheTradingHistory.fixedOperatingExpensesSections),
+              .fill(aboutTheTradingHistory.fixedOperatingExpensesSections),
             numberOfColumns,
             financialYears,
             request.sessionData.toSummary
