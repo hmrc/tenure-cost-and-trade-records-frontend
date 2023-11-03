@@ -530,7 +530,7 @@ help.licensableActivitiesDetails.list.p1 = We start serving alcohol at 9am, Mond
 help.licensableActivitiesDetails.list.p2 = We have a DJ playing until 1am on Fridays and Saturdays
 help.licensableActivitiesDetails.list.p3 = Our hot-breakfast service starts at 4.45am every day
 error.licensableActivitiesDetails.required = Tell us about the licensable activities regularly commencing before 10:00 or after 23:30
-error.premisesLicenseConditionsDetails.maxLength = This must be 2000 characters or fewer
+error.licensableActivitiesDetails.maxLength = This must be 2000 characters or fewer
 
 # PREMISES LICENCE CONDITIONS
 #############################
@@ -679,7 +679,7 @@ hint.currentAnnualRent = For example, 32000.
 # RENT OPEN MARKET VALUE
 #######################
 rentOpenMarketValue.heading = When the current rent was agreed, was it based on the open market value at that time?
-help.rentOpenMarketValue.title = If you're not sure what the rent is based on
+help.rentOpenMarketValue.title = If you’re not sure what the rent is based on
 help.rentOpenMarketValue.p1 = If your rent is not based on open market value, it may simply be a fixed amount agreed between both parties, or linked to another factor. If you are unsure, it may be stipulated in your lease or agreement.
 error.rentOpenMarketValue.missing = Select yes if the rent was based on the open market value
 
@@ -738,6 +738,7 @@ label.both = Both
 label.sharedResponsibilities = Give details of any shared responsibilities
 hint.sharedResponsibilities = For example, ’business insurance costs are shared equally’, or ’landlord covers 75% for outside repairs, tenant pays 25%’.
 error.sharedResponsibilities.maxLength = This must be 2000 characters or fewer
+error.sharedResponsibilities = This must be 2000 characters or fewer
 error.outsideRepairs.required = Tell us who is responsible for the outside repairs
 error.insideRepairs.required = Tell us who is responsible for the inside repairs
 error.buildingInsurance.required = Tell us who is responsible for the building insurance
@@ -987,11 +988,10 @@ label.currentLeaseOrAgreementBegin.help = For example, 9 2017.
 # INTERVALS OF RENT REVIEW
 ##########################
 intervalsOfRentReview.heading = Rent reviews
-intervalsOfRentReview.p1 = Provide details if your lease or agreement states your rent will be reviewed at any point.
-intervalsOfRentReview.p2 = Changes to your rent linked to your turnover, or indices such as the RPI, are not classed as rent reviews.
-intervalsOfRentReview.p3 = If your lease or agreement does not include any rent reviews, leave this page blanks and select ’save and continue’.
+intervalsOfRentReview.p1 = If your lease or agreement states your rent will be reviewed at any point, you must provide details. Tell us the intervals or frequency of the reviews, for example every 18 months or every 2 years.
+intervalsOfRentReview.p2 = Do not include any changes to your rent linked to your turnover, or indices such as the rental price index (RPI).
 intervalsOfRentReview.label = How often is the rent reviewed under the terms of the lease or agreement?
-hint.intervalsOfRentReview = For example, every 18 months or every 2 years.
+hint.intervalsOfRentReview = Leave blank if the lease does not include any rent reviews.
 label.nextReview = When is the next rent review due?
 label.nextReview.help = For example, 27 9 2025
 error.nextReview.day.required = The date must include a day

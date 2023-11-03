@@ -987,11 +987,10 @@ label.currentLeaseOrAgreementBegin.help = For example, 9 2017.
 # INTERVALS OF RENT REVIEW
 ##########################
 intervalsOfRentReview.heading = Rent reviews
-intervalsOfRentReview.p1 = Provide details if your lease or agreement states your rent will be reviewed at any point.
-intervalsOfRentReview.p2 = Changes to your rent linked to your turnover, or indices such as the RPI, are not classed as rent reviews.
-intervalsOfRentReview.p3 = If your lease or agreement does not include any rent reviews, leave this page blanks and select ’save and continue’.
+intervalsOfRentReview.p1 = If your lease or agreement states your rent will be reviewed at any point, you must provide details. Tell us the intervals or frequency of the reviews, for example every 18 months or every 2 years.
+intervalsOfRentReview.p2 = Do not include any changes to your rent linked to your turnover, or indices such as the rental price index (RPI).
 intervalsOfRentReview.label = How often is the rent reviewed under the terms of the lease or agreement?
-hint.intervalsOfRentReview = For example, every 18 months or every 2 years.
+hint.intervalsOfRentReview = Leave blank if the lease does not include any rent reviews.
 label.nextReview = When is the next rent review due?
 label.nextReview.help = For example, 27 9 2025
 error.nextReview.day.required = The date must include a day
