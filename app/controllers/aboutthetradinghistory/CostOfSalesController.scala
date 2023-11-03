@@ -73,7 +73,12 @@ class CostOfSalesController @Inject() (
           val updatedData = updateAboutTheTradingHistory(_.copy(costOfSales = costOfSales))
           session
             .saveOrUpdate(updatedData)
-            .map(_ => Redirect(navigator.nextPage(CostOfSalesId, updatedData).apply(updatedData)))
+            .map(_ =>
+              navigator.cyaPage
+                .filter(_ => navigator.from == "CYA" && aboutTheTradingHistory.totalPayrollCostSections.nonEmpty)
+                .getOrElse(navigator.nextPage(CostOfSalesId, updatedData).apply(updatedData))
+            )
+            .map(Redirect)
         }
       )
     }

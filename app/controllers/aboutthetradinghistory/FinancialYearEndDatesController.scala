@@ -20,6 +20,7 @@ import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.FinancialYearEndDatesForm.financialYearEndDatesForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.updateAboutTheTradingHistory
+import models.submissions.aboutthetradinghistory.CostOfSales
 import navigation.AboutTheTradingHistoryNavigator
 import navigation.identifiers.FinancialYearEndDatesPageId
 import play.api.i18n.I18nSupport
@@ -89,10 +90,19 @@ class FinancialYearEndDatesController @Inject() (
                 turnoverSection.copy(financialYearEnd = finYearEnd)
               }
 
+            val costOfSales = if (aboutTheTradingHistory.costOfSales.size == turnoverSections.size) {
+              (aboutTheTradingHistory.costOfSales zip turnoverSections.map(_.financialYearEnd)).map {
+                case (costOfSales, finYearEnd) => costOfSales.copy(financialYearEnd = finYearEnd)
+              }
+            } else {
+              turnoverSections.map(_.financialYearEnd).map(CostOfSales(_, None, None, None, None))
+            }
+
             val updatedData = updateAboutTheTradingHistory(
               _.copy(
                 occupationAndAccountingInformation = Some(newOccupationAndAccounting),
-                turnoverSections = turnoverSections
+                turnoverSections = turnoverSections,
+                costOfSales = costOfSales
               )
             )
 
