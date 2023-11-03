@@ -53,7 +53,7 @@ class TotalPayrollCostsController @Inject() (
         )
         Ok(
           totalPayrollCostsView(
-            totalPayrollCostForm(numberOfColumns).fillAndValidate(aboutTheTradingHistory.totalPayrollCostSections),
+            totalPayrollCostForm(numberOfColumns).fill(aboutTheTradingHistory.totalPayrollCostSections),
             numberOfColumns,
             financialYears,
             request.sessionData.toSummary

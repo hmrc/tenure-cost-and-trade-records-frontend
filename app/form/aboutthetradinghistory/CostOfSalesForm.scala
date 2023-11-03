@@ -16,15 +16,16 @@
 
 package form.aboutthetradinghistory
 
-import form.DateMappings.dateTooEarlyConstraint
 import models.submissions.aboutthetradinghistory.CostOfSales
 import play.api.data.Forms._
 import play.api.data.{Form, Mapping}
 
+import java.time.LocalDate
+
 object CostOfSalesForm {
 
   val columnMapping: Mapping[CostOfSales] = mapping(
-    "financial-year-end" -> localDate("dd/MM/yyyy").verifying(dateTooEarlyConstraint),
+    "financial-year-end" -> optional(text).transform[LocalDate](_ => LocalDate.EPOCH, _ => Some("")),
     "accommodation"      -> optional(bigDecimal),
     "food"               -> optional(bigDecimal),
     "drinks"             -> optional(bigDecimal),

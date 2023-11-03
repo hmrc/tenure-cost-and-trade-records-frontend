@@ -16,15 +16,15 @@
 
 package controllers.aboutthetradinghistory
 
-import actions.WithSessionRefiner
+import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.CostOfSalesForm.costOfSalesForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.updateAboutTheTradingHistory
-import models.submissions.aboutthetradinghistory.CostOfSales
+import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, CostOfSales}
 import navigation.AboutTheTradingHistoryNavigator
 import navigation.identifiers.CostOfSalesId
 import play.api.i18n.I18nSupport
-import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Result}
 import repositories.SessionRepo
 import views.html.aboutthetradinghistory.costOfSales
 
@@ -42,35 +42,57 @@ class CostOfSalesController @Inject() (
     extends FORDataCaptureController(mcc)
     with I18nSupport {
 
-  def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
-    request.sessionData.aboutTheTradingHistory
-      .filter(_.occupationAndAccountingInformation.isDefined)
-      .filter(_.costOfSales.nonEmpty)
-      .fold(Redirect(routes.AboutYourTradingHistoryController.show())) { aboutTheTradingHistory =>
-        Ok(
-          costOfSalesView(costOfSalesForm.fillAndValidate(aboutTheTradingHistory.costOfSales))
-        )
+  def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    runWithSessionCheck { aboutTheTradingHistory =>
+      val costOfSales = if (aboutTheTradingHistory.costOfSales.size == aboutTheTradingHistory.turnoverSections.size) {
+        (aboutTheTradingHistory.costOfSales zip financialYearEndDates(aboutTheTradingHistory)).map {
+          case (costOfSales, finYearEnd) => costOfSales.copy(financialYearEnd = finYearEnd)
+        }
+      } else {
+        financialYearEndDates(aboutTheTradingHistory).map(CostOfSales(_, None, None, None, None))
       }
+
+      val updatedData = updateAboutTheTradingHistory(_.copy(costOfSales = costOfSales))
+      session
+        .saveOrUpdate(updatedData)
+        .map(_ => Ok(costOfSalesView(costOfSalesForm.fillAndValidate(costOfSales))))
+    }
   }
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    runWithSessionCheck { aboutTheTradingHistory =>
+      continueOrSaveAsDraft[Seq[CostOfSales]](
+        costOfSalesForm,
+        formWithErrors => BadRequest(costOfSalesView(formWithErrors)),
+        data => {
+          val costOfSales =
+            (data zip financialYearEndDates(aboutTheTradingHistory)).map { case (costOfSales, finYearEnd) =>
+              costOfSales.copy(financialYearEnd = finYearEnd)
+            }
+
+          val updatedData = updateAboutTheTradingHistory(_.copy(costOfSales = costOfSales))
+          session
+            .saveOrUpdate(updatedData)
+            .map(_ =>
+              navigator.cyaPage
+                .filter(_ => navigator.from == "CYA" && aboutTheTradingHistory.totalPayrollCostSections.nonEmpty)
+                .getOrElse(navigator.nextPage(CostOfSalesId, updatedData).apply(updatedData))
+            )
+            .map(Redirect)
+        }
+      )
+    }
+  }
+
+  private def runWithSessionCheck(
+    action: AboutTheTradingHistory => Future[Result]
+  )(implicit request: SessionRequest[AnyContent]) =
     request.sessionData.aboutTheTradingHistory
       .filter(_.occupationAndAccountingInformation.isDefined)
-      .fold(Future.successful(Redirect(routes.AboutYourTradingHistoryController.show()))) { aboutTheTradingHistory =>
-        continueOrSaveAsDraft[Seq[CostOfSales]](
-          costOfSalesForm,
-          formWithErrors =>
-            BadRequest(
-              costOfSalesView(formWithErrors)
-            ),
-          data => {
-            val updatedData = updateAboutTheTradingHistory(_.copy(costOfSales = data))
-            session
-              .saveOrUpdate(updatedData)
-              .map(_ => Redirect(navigator.nextPage(CostOfSalesId, updatedData).apply(updatedData)))
-          }
-        )
-      }
-  }
+      .filter(_.turnoverSections.nonEmpty)
+      .fold(Future.successful(Redirect(routes.AboutYourTradingHistoryController.show())))(action)
+
+  private def financialYearEndDates(aboutTheTradingHistory: AboutTheTradingHistory) =
+    aboutTheTradingHistory.turnoverSections.map(_.financialYearEnd)
 
 }

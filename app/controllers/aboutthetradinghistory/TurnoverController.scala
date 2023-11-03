@@ -20,7 +20,7 @@ import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.TurnoverForm.turnoverForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.updateAboutTheTradingHistory
-import models.submissions.aboutthetradinghistory.{CostOfSales, TurnoverSection}
+import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, TurnoverSection}
 import navigation.AboutTheTradingHistoryNavigator
 import navigation.identifiers.TurnoverPageId
 import play.api.i18n.I18nSupport
@@ -64,18 +64,30 @@ class TurnoverController @Inject() (
           turnoverForm(numberOfColumns),
           formWithErrors => BadRequest(turnoverView(formWithErrors)),
           success => {
+            val turnoverSections =
+              (success zip financialYearEndDates(aboutTheTradingHistory)).map { case (turnoverSection, finYearEnd) =>
+                turnoverSection.copy(financialYearEnd = finYearEnd)
+              }
+
             val updatedData = updateAboutTheTradingHistory(
               _.copy(
-                turnoverSections = success,
-                costOfSales = success.map(_.financialYearEnd).map(CostOfSales(_, None, None, None, None))
+                turnoverSections = turnoverSections
               )
             )
             session
               .saveOrUpdate(updatedData)
-              .map(_ => Redirect(navigator.nextPage(TurnoverPageId, updatedData).apply(updatedData)))
+              .map(_ =>
+                navigator.cyaPage
+                  .filter(_ => navigator.from == "CYA" && aboutTheTradingHistory.costOfSales.head.drinks.isDefined)
+                  .getOrElse(navigator.nextPage(TurnoverPageId, updatedData).apply(updatedData))
+              )
+              .map(Redirect)
           }
         )
       }
   }
+
+  private def financialYearEndDates(aboutTheTradingHistory: AboutTheTradingHistory) =
+    aboutTheTradingHistory.turnoverSections.map(_.financialYearEnd)
 
 }

@@ -18,6 +18,9 @@
 @import models.submissions.aboutthetradinghistory.TurnoverSection
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import uk.gov.hmrc.govukfrontend.views.Implicits.RichInput
+@import util.DateUtil
+
+@import java.time.LocalDate
 
 @this(layout: Layout,
         govukButton: GovukButton,
@@ -26,7 +29,8 @@
         govukDateInput: GovukDateInput,
         govukTable: GovukTable,
         govukInsetText: GovukInsetText,
-        govukDetails: GovukDetails
+        govukDetails: GovukDetails,
+        dateUtil: DateUtil
 )
 
 @(form: Form[Seq[TurnoverSection]])(implicit request: SessionRequest[_], messages: Messages)
@@ -38,10 +42,6 @@
     <p class="govuk-body govuk-!-font-weight-bold">@messages("turnover.details.h2")</p>
     <p class="govuk-body">@messages("turnover.details.p3")</p>
 
-}
-
-@financialYearEndContent(fieldName: String) = {
-    @includes.dateFields(form = form, field = fieldName, govukDate = govukDateInput, helpText = "", showDays = true, showFieldSet = false)
 }
 
 @alcoholicDrinksHeading = {
@@ -74,7 +74,7 @@
 }
 
 @columns = @{
-    request.sessionData.aboutTheTradingHistory.map(_.turnoverSections).fold(Seq.empty[Int])(_.indices)
+    request.sessionData.aboutTheTradingHistory.fold(Seq.empty[Int])(_.turnoverSections.indices)
 }
 
 @layout(
@@ -111,13 +111,14 @@
                   content = Text(messages("turnover.financialYearEnd")),
                   classes = "govuk-!-font-weight-bold"
               ) +:
-                  columns.map { idx  =>
-                  TableRow(
-                      content = HtmlContent(
-                          financialYearEndContent(s"$idx.financial-year-end")
-                      )
-                  )
-              },
+                      request.sessionData.aboutTheTradingHistory
+                      .fold(Seq.empty[LocalDate])(_.turnoverSections.map(_.financialYearEnd)).map { finYearEnd =>
+                          TableRow(
+                              content = Text(
+                                  dateUtil.formatDayMonthAbbrYear(finYearEnd)
+                              )
+                          )
+                      },
               TableRow(
                   content = Text(messages("turnover.tradingPeriod")),
                   classes = "govuk-!-font-weight-bold"

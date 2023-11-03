@@ -17,6 +17,7 @@
 @import actions.SessionRequest
 @import controllers.aboutthetradinghistory
 @import uk.gov.hmrc.govukfrontend.views.html.components._
+@import models.submissions.aboutthetradinghistory.CostOfSales
 @import models.submissions.aboutthetradinghistory.TurnoverSection
 @import util.DateUtil
 @import util.NumberUtil._
@@ -33,6 +34,10 @@
 
 @sectionAnswers = @{
     SectionAnswersRowBuilder(request.sessionData.aboutTheTradingHistory)
+}
+
+@forType = @{
+    request.sessionData.forType
 }
 
 @table(valuesGrid: Seq[Seq[String]]) = {
@@ -79,6 +84,30 @@
     ).mkString("""<p class="govuk-body govuk-!-font-weight-bold">""", """</p> <p class="govuk-body govuk-!-font-weight-bold">""", "</p>")
 }
 
+@costOfSalesValuesTable(costOfSales: Seq[CostOfSales]) = @{
+    table(
+        costOfSales.map(s => Seq(
+            dateUtil.formatDayMonthAbbrYear(s.financialYearEnd),
+            s.accommodation.getOrElse(zeroBigDecimal).asMoney,
+            s.drinks.getOrElse(zeroBigDecimal).asMoney,
+            s.food.getOrElse(zeroBigDecimal).asMoney,
+            s.other.getOrElse(zeroBigDecimal).asMoney,
+            s.total.asMoney
+        ))
+    ).body
+}
+
+@costOfSalesKeys = @{
+    Seq(
+        messages("checkYourAnswersAboutTheTradingHistory.financialYearEnd"),
+        messages("checkYourAnswersAboutTheTradingHistory.accommodation"),
+        messages("checkYourAnswersAboutTheTradingHistory.drinks"),
+        messages("checkYourAnswersAboutTheTradingHistory.food"),
+        messages("checkYourAnswersAboutTheTradingHistory.otherReceipts"),
+        messages("costOfSales.total"),
+    ).mkString("""<p class="govuk-body govuk-!-font-weight-bold">""", """</p> <p class="govuk-body govuk-!-font-weight-bold">""", "</p>")
+}
+
 <h2 class="govuk-heading-m">@messages("aboutYourTradingHistory.heading")</h2>
 
 @govukSummaryList(SummaryList(rows =
@@ -107,7 +136,10 @@
                         ActionItem(
                             href = s"${aboutthetradinghistory.routes.TurnoverController.show().url}?from=CYA",
                             content = Text(messages("label.change")),
-                            visuallyHiddenText = Some(messages("turnover.heading"))
+                            visuallyHiddenText = Some(messages("turnover.heading")),
+                            attributes = Map(
+                                "aria-label" -> s"${messages("label.change")} ${messages("turnover.heading")}"
+                            )
                         )
                     )
                 )
@@ -115,3 +147,30 @@
         )
     )
 ))
+
+@if(forType == ForTypes.for6015) {
+    <h2 class="govuk-heading-m">@messages("costOfSales.heading")</h2>
+
+    @govukSummaryList(SummaryList(rows =
+        Seq(
+            SummaryListRow(
+                key = Key(HtmlContent(costOfSalesKeys)),
+                value = Value(HtmlContent(sectionAnswers.answers.fold("")(t => costOfSalesValuesTable(t.costOfSales)))),
+                actions = Some(
+                    Actions(items =
+                        Seq(
+                            ActionItem(
+                                href = s"${aboutthetradinghistory.routes.CostOfSalesController.show().url}?from=CYA",
+                                content = Text(messages("label.change")),
+                                visuallyHiddenText = Some(messages("costOfSales.heading")),
+                                attributes = Map(
+                                    "aria-label" -> s"${messages("label.change")} ${messages("costOfSales.heading")}"
+                                )
+                            )
+                        )
+                    )
+                )
+            )
+        )
+    ))
+}
