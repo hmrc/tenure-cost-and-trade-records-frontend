@@ -31,7 +31,7 @@ class RequestReferenceNumberControllerSpec extends TestBaseSpec {
     stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledStillConnectedDetailsYes)
   ) = new RequestReferenceNumberController(
     stubMessagesControllerComponents(),
-    connectedToPropertyNavigator,
+    requestReferenceNumberNavigator,
     requestReferenceAddressView,
     preEnrichedActionRefiner(stillConnectedDetails = stillConnectedDetails),
     mockSessionRepo

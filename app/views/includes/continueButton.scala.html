@@ -20,6 +20,14 @@
 
 @(govukButton: GovukButton, isSend: Boolean = false)(implicit request: Request[_], messages: Messages)
 
+    @from = @{
+        request.queryString.get("from").flatMap(_.headOption)
+        .orElse(request.asInstanceOf[Request[AnyContent]].body.asFormUrlEncoded.flatMap(_.get("from").flatMap(_.headOption)))
+        .getOrElse("")
+    }
+
+    <input type="hidden" name="from" value="@from" />
+
     @govukButton(
         Button(
             attributes = Map("id" -> "continue"),

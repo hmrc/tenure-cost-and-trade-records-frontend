@@ -62,7 +62,7 @@
               <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutFranchiseOrLettings.operatorCount",idx+1)</h2>
                 @govukSummaryList(SummaryList(rows =
                     sectionAnswers.row("checkYourAnswersAboutFranchiseOrLettings.operatorName",
-                        _ => Option(cateringOperation.cateringOperationDetails.operatorName).mkString("""<p class="govuk-body">""", "", "</p>") +
+                        _ => Option(cateringOperation.cateringOperationDetails.operatorName).map(Text(_).asHtml).mkString("""<p class="govuk-body">""", "", "</p>") +
                                 Option(cateringOperation.cateringOperationDetails.typeOfBusiness).getOrElse("").mkString("""<p class="govuk-body">""", "", "</p>") +
                                 Option(cateringOperation.cateringOperationDetails.cateringAddress.escapedHtml).getOrElse(""),
                         aboutfranchisesorlettings.routes.CateringOperationDetailsController.show(Some(idx)), "operatorName",
@@ -107,7 +107,7 @@
                 <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutFranchiseOrLettings.lettingOperatorNumber",idx+1)</h2>
                 @govukSummaryList(SummaryList(rows =
                     sectionAnswers.row("checkYourAnswersAboutFranchiseOrLettings.lettingOperatorName",
-                        _ => Option(letting.lettingOtherPartOfPropertyInformationDetails.operatorName).mkString("""<p class="govuk-body">""", "", "</p>") +
+                        _ => Option(letting.lettingOtherPartOfPropertyInformationDetails.operatorName).map(Text(_).asHtml).mkString("""<p class="govuk-body">""", "", "</p>") +
                                 Option(letting.lettingOtherPartOfPropertyInformationDetails.typeOfBusiness).getOrElse("").mkString("""<p class="govuk-body">""", "", "</p>") +
                                 Option(letting.lettingOtherPartOfPropertyInformationDetails.lettingAddress.escapedHtml).getOrElse(""),
                         aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsController.show(Some(idx)), "lettingOperatorName",

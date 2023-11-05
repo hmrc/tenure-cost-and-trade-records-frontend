@@ -18,7 +18,7 @@ package controllers.requestReferenceNumber
 
 import actions.WithSessionRefiner
 import form.requestReferenceNumber.RequestReferenceNumberContactDetailsForm.requestReferenceNumberContactDetailsForm
-import navigation.ConnectionToPropertyNavigator
+import navigation.RequestReferenceNumberNavigator
 import models.submissions.requestReferenceNumber.RequestReferenceNumberDetails.updateRequestReferenceNumber
 import navigation.identifiers.NoReferenceNumberContactDetailsPageId
 import play.api.i18n.I18nSupport
@@ -28,16 +28,17 @@ import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.requestReferenceNumber.requestReferenceNumberContactDetails
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class RequestReferenceNumberContactDetailsController @Inject() (
   mcc: MessagesControllerComponents,
-  navigator: ConnectionToPropertyNavigator,
+  navigator: RequestReferenceNumberNavigator,
   requestReferenceNumberContactDetailsView: requestReferenceNumberContactDetails,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FrontendController(mcc)
+)(implicit ec: ExecutionContext)
+    extends FrontendController(mcc)
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
@@ -61,10 +62,11 @@ class RequestReferenceNumberContactDetailsController @Inject() (
         formWithErrors => Future.successful(BadRequest(requestReferenceNumberContactDetailsView(formWithErrors))),
         data => {
           val updatedData = updateRequestReferenceNumber(_.copy(requestReferenceContactDetails = Some(data)))
-          session.saveOrUpdate(updatedData)
-          Future.successful(
-            Redirect(navigator.nextPage(NoReferenceNumberContactDetailsPageId, updatedData).apply(updatedData))
-          )
+          session
+            .saveOrUpdate(updatedData)
+            .map(_ =>
+              Redirect(navigator.nextPage(NoReferenceNumberContactDetailsPageId, updatedData).apply(updatedData))
+            )
         }
       )
   }

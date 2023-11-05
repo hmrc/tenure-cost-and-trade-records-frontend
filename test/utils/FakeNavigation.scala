@@ -25,6 +25,7 @@ trait FakeNavigation { this: GuiceOneAppPerSuite =>
 
   implicit def implicitRequest: FakeRequest[AnyContentAsEmpty.type] = FakeRequest("GET", "/")
 
+  lazy val requestReferenceNumberNavigator    = app.injector.instanceOf[RequestReferenceNumberNavigator]
   lazy val connectedToPropertyNavigator       = app.injector.instanceOf[ConnectionToPropertyNavigator]
   lazy val removeConnectionNavigator          = app.injector.instanceOf[RemoveConnectionNavigator]
   lazy val aboutYouAndThePropertyNavigator    = app.injector.instanceOf[AboutYouAndThePropertyNavigator]

@@ -32,7 +32,7 @@ class NoReferenceNumberContactDetailsControllerSpec extends TestBaseSpec {
     stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledStillConnectedDetailsYes)
   ) = new RequestReferenceNumberContactDetailsController(
     stubMessagesControllerComponents(),
-    connectedToPropertyNavigator,
+    requestReferenceNumberNavigator,
     requestReferenceNumberContactDetailsView,
     preEnrichedActionRefiner(stillConnectedDetails = stillConnectedDetails),
     mockSessionRepo

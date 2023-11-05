@@ -19,6 +19,7 @@
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 @import models.Session
 @import models.submissions.requestReferenceNumber.CheckYourAnswersRequestReferenceNumber
+@import util.SectionAnswersRowBuilder
 
 
 @this(layout: Layout,
@@ -30,61 +31,56 @@
 
 @(theForm: Form[CheckYourAnswersRequestReferenceNumber], session: Session)(implicit request: Request[_], messages: Messages)
 
-@layout(
- pageHeading = messages("checkYourAnswersRequestReferenceNumber.heading"),
- fullWidth = true,
- backLinkUrl = controllers.requestReferenceNumber.routes.RequestReferenceNumberContactDetailsController.show.url
-) {
-
- @formWithCSRF(action = controllers.requestReferenceNumber.routes.CheckYourAnswersRequestReferenceNumberController.submit()) {
-
-  <h2 class="govuk-heading-m">@messages("checkYourAnswersRequestReferenceNumber.subheading1")</h2>
-
-  @govukSummaryList(SummaryList(rows = Seq(
-   SummaryListRow(
-    key = Key(Text(messages("key.requestReferenceNumberAddress"))),
-     value = Value(HtmlContent(session.requestReferenceNumberDetails.flatMap(_.requestReferenceNumberAddress.map(_.requestReferenceNumberAddress.multiLine)).getOrElse("").getOrElse(""))),
-    actions = Option(Actions(items = Seq(ActionItem(href="/send-trade-and-cost-information/request-reference-number-address",
-     visuallyHiddenText = Some(messages("key.requestReferenceNumberAddress")),
-     content = Text(messages("label.change")))))
-    )
-   )
-  )
-  )
-  )
-
-
-  <h2 class="govuk-heading-m">@messages("checkYourAnswersRequestReferenceNumber.subheading2")</h2>
-
-  @govukSummaryList(SummaryList(rows = Seq(SummaryListRow(
-    key = Key(Text(messages("key.nameContactRequestReferenceNumber"))),
-    value = Value(HtmlContent(
-     s"<p class=\"govuk-body\">${session.requestReferenceNumberDetails.flatMap(_.requestReferenceContactDetails.map(_.requestReferenceNumberContactDetailsFullName.capitalize)).getOrElse("").getOrElse("")}</p>"
-     + s"<p class=\"govuk-body\">${session.requestReferenceNumberDetails.flatMap(_.requestReferenceContactDetails.map(_.requestReferenceNumberContactDetails.phone)).getOrElse("").getOrElse("")}</p>"
-      + s"<p class=\"govuk-body\">${session.requestReferenceNumberDetails.flatMap(_.requestReferenceContactDetails.map(_.requestReferenceNumberContactDetails.email)).getOrElse("").getOrElse("")}</p>"
-     + s"<p class=\"govuk-body\">${session.requestReferenceNumberDetails.flatMap(_.requestReferenceContactDetails.map(_.requestReferenceNumberContactDetailsAdditionalInformation).getOrElse(Some(""))).getOrElse("")}</p>"
-    )),
-    actions = Option(Actions(items = Seq(ActionItem(href="/send-trade-and-cost-information/request-reference-number-contact-details",
-     visuallyHiddenText = Some(messages("key.nameContactRequestReferenceNumber")),
-     content = Text(messages("label.change")))))
-    )
-   )
-  )))
-
-  <h2 class="govuk-heading-m">@messages("declaration.heading")</h2>
-
-  <p class="govuk-body">@messages("declaration.information")</p>
-
-  @govukWarningText(WarningText(
-   content = Text(messages("hint.declaration")),
-   classes = "govuk-!-margin-bottom-2"
-  ))
-
-  @includes.acceptAndSendButton(govukButton)
-
- }
-
+@sectionAnswers = @{
+    SectionAnswersRowBuilder(session.requestReferenceNumberDetails)
 }
 
+@layout(
+    pageHeading = messages("checkYourAnswersRequestReferenceNumber.heading"),
+    fullWidth = true,
+    backLinkUrl = controllers.requestReferenceNumber.routes.RequestReferenceNumberContactDetailsController.show.url
+) {
 
+    @formWithCSRF(action = controllers.requestReferenceNumber.routes.CheckYourAnswersRequestReferenceNumberController.submit()) {
 
+        <h2 class="govuk-heading-m">@messages("checkYourAnswersRequestReferenceNumber.subheading1")</h2>
+
+        @govukSummaryList(SummaryList(rows =
+            sectionAnswers.row("key.requestReferenceNumberAddress",
+                _.requestReferenceNumberAddress.map(r =>
+                    """<p class="govuk-body">""" + Text(r.requestReferenceNumberBusinessTradingName).asHtml + "</p>" +
+                            r.requestReferenceNumberAddress.escapedHtml
+                ),
+                controllers.requestReferenceNumber.routes.RequestReferenceNumberController.show(), "",
+                ("valueAsHtml", _ => None))
+        ))
+
+        <h2 class="govuk-heading-m">@messages("checkYourAnswersRequestReferenceNumber.subheading2")</h2>
+
+        @govukSummaryList(SummaryList(rows =
+            sectionAnswers.row("key.nameContactRequestReferenceNumber",
+                _.requestReferenceContactDetails.map(details =>
+                    (Seq(
+                        details.requestReferenceNumberContactDetailsFullName.capitalize,
+                        details.requestReferenceNumberContactDetails.phone,
+                        details.requestReferenceNumberContactDetails.email
+                    ) ++ details.requestReferenceNumberContactDetailsAdditionalInformation.toSeq).map(Text(_).asHtml)
+                ).map(_.mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>")),
+                controllers.requestReferenceNumber.routes.RequestReferenceNumberContactDetailsController.show(), "",
+                ("valueAsHtml", _ => None))
+        ))
+
+        <h2 class="govuk-heading-m">@messages("declaration.heading")</h2>
+
+        <p class="govuk-body">@messages("declaration.information")</p>
+
+        @govukWarningText(WarningText(
+            content = Text(messages("hint.declaration")),
+            classes = "govuk-!-margin-bottom-2"
+        ))
+
+        @includes.acceptAndSendButton(govukButton)
+
+    }
+
+}

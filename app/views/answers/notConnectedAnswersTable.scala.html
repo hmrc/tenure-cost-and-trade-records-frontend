@@ -16,54 +16,42 @@
 
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import models.Session
+@import util.SectionAnswersRowBuilder
 
 @this(govukSummaryList: GovukSummaryList)
 
 @(session: Session)(implicit messages: Messages)
 
+@stillConnectedDetailsAnswers = @{
+    SectionAnswersRowBuilder(session.stillConnectedDetails)
+}
+
+@removeConnectionDetailsAnswers = @{
+    SectionAnswersRowBuilder(session.removeConnectionDetails)
+}
+
 <h2 class="govuk-heading-m">@messages("checkYourAnswersNotConnected.subheading1")</h2>
 
-@govukSummaryList(
-    SummaryList(rows =
-        Seq(
-            SummaryListRow(
-                key = Key(Text(messages("key.still.connected"))),
-                value = Value(Text(session.stillConnectedDetails.flatMap(_.addressConnectionType.map(_.name.capitalize)).getOrElse(""))),
-                actions = Option(Actions(items = Seq(ActionItem(href = "/send-trade-and-cost-information/are-you-still-connected",
-                    visuallyHiddenText = Some(messages("key.still.connected")),
-                    content = Text(messages("label.change")))))
-                )
-            ),
-            SummaryListRow(
-                key = Key(Text(messages("key.ever.connected"))),
-                value = Value(Text(session.removeConnectionDetails.flatMap(_.pastConnectionType.map(_.name.capitalize)).getOrElse(""))),
-                actions = Option(Actions(items = Seq(ActionItem(href = "/send-trade-and-cost-information/past-connection-type?from=CYA",
-                    visuallyHiddenText = Some(messages("key.ever.connected")),
-                    content = Text(messages("label.change")))))
-                )
-            )
-        )
-    )
-)
+@govukSummaryList(SummaryList(rows =
+    stillConnectedDetailsAnswers.row("key.still.connected",
+        _.addressConnectionType.map(_.name.capitalize),
+        controllers.connectiontoproperty.routes.AreYouStillConnectedController.show(), "isRelated") ++
+            removeConnectionDetailsAnswers.row("key.ever.connected",
+                _.pastConnectionType.map(_.name.capitalize),
+                controllers.notconnected.routes.PastConnectionController.show(), "pastConnectionType")
+))
 
 <h2 class="govuk-heading-m">@messages("checkYourAnswersNotConnected.subheading2")</h2>
 
-@govukSummaryList(
-    SummaryList(rows =
-        Seq(
-            SummaryListRow(
-                key = Key(Text(messages("key.contact.details"))),
-                value = Value(HtmlContent(
-                    s"<p class=\"govuk-body\">${session.removeConnectionDetails.flatMap(_.removeConnectionDetails.map(_.removeConnectionFullName.capitalize)).getOrElse("").getOrElse("")}</p>"
-                            + s"<p class=\"govuk-body\">${session.removeConnectionDetails.flatMap(_.removeConnectionDetails.map(_.removeConnectionDetails.phone)).getOrElse("").getOrElse("")}</p>"
-                            + s"<p class=\"govuk-body\">${session.removeConnectionDetails.flatMap(_.removeConnectionDetails.map(_.removeConnectionDetails.email)).getOrElse("").getOrElse("")}</p>"
-                            + s"<p class=\"govuk-body\">${session.removeConnectionDetails.flatMap(_.removeConnectionDetails.map(_.removeConnectionAdditionalInfo).getOrElse(Some(""))).getOrElse("")}</p>"
-                )),
-                actions = Option(Actions(items = Seq(ActionItem(href = "/send-trade-and-cost-information/remove-connection",
-                    visuallyHiddenText = Some(messages("key.contact.details")),
-                    content = Text(messages("label.change")))))
-                )
-            )
-        )
-    )
-)
+@govukSummaryList(SummaryList(rows =
+    removeConnectionDetailsAnswers.row("key.contact.details",
+        _.removeConnectionDetails.map(details =>
+            (Seq(
+                details.removeConnectionFullName.capitalize,
+                details.removeConnectionDetails.phone,
+                details.removeConnectionDetails.email
+            ) ++ details.removeConnectionAdditionalInfo.toSeq).map(Text(_).asHtml)
+        ).map(_.mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>")),
+        controllers.notconnected.routes.RemoveConnectionController.show(), "",
+        ("valueAsHtml", _ => None))
+))
