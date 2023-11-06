@@ -21,12 +21,18 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukCharacterCount
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
 @import uk.gov.hmrc.govukfrontend.views.Aliases.RadioItem
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.textarea.Textarea
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.label.Label
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Hint
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukTextarea
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
 @import models.pages.Summary
 
 @this(layout: Layout,
         govukButton: GovukButton,
         govukRadios: GovukRadios,
         govukCharacterCount: GovukCharacterCount,
+        govukTextarea: GovukTextarea,
         formWithCSRF: FormWithCSRF
 )
 
@@ -97,14 +103,20 @@
       )),
     )
 
-    @includes.textInputCharCount(
-      govukCharacterCount,
-      theForm,
-      "sharedResponsibilities",
-      labelContent = "label.sharedResponsibilities",
-      classes = "govuk-!-font-weight-bold",
-      hint = "hint.sharedResponsibilities"
-    )
+  @govukTextarea(
+      Textarea(
+          id = "sharedResponsibilities",
+          name = "sharedResponsibilities",
+          value = theForm("sharedResponsibilities").value,
+          label = Label(
+              content = Text(messages("label.sharedResponsibilities"))
+          ),
+          hint = Hint(
+              content = Text(messages("hint.sharedResponsibilities"))
+          ),
+          errorMessage =  theForm.errors.asTextErrorMessageForField("sharedResponsibilities")
+            )
+        )
 
     @includes.continueSaveAsDraftButtons(govukButton)
   }
