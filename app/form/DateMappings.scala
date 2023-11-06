@@ -24,7 +24,7 @@ import play.api.data.Mapping
 import play.api.data.validation.{Constraint, Invalid, Valid}
 import util.DateUtil.nowInUK
 
-import java.time.{LocalDate, LocalDateTime}
+import java.time.{LocalDate, LocalDateTime, YearMonth}
 import scala.util.Try
 
 object DateMappings {
@@ -240,7 +240,7 @@ object DateMappings {
       MonthsYearDuration(months.trim.toInt, years.trim.toInt)
     },
     (my: MonthsYearDuration) => (my.months.toString, my.years.toString)
-  )
+  ).verifying(monthYearNotInTheFuture(Errors.dateMustBeInPast))
 
   def isDayMonthValidDate(day: Int, month: Int): Boolean =
     Try(LocalDate.of(LocalDate.now().getYear, month, day)).isSuccess
@@ -274,5 +274,14 @@ object DateMappings {
     },
     (my: DayMonthsDuration) => (my.days.toString, my.months.toString)
   )
+
+  def monthYearNotInTheFuture(error: String): Constraint[MonthsYearDuration] =
+    Constraint("pastOrCurrentYearMonthsYearDuration") { duration =>
+      val currentYearMonth = YearMonth.now()
+      if (currentYearMonth.isBefore(duration.toYearMonth) || currentYearMonth.equals(duration.toYearMonth))
+        Invalid(error)
+      else
+        Valid
+    }
 
 }
