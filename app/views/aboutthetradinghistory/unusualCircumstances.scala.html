@@ -18,11 +18,16 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
 @import models.pages.Summary
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukCharacterCount
+@import uk.gov.hmrc.govukfrontend.views.Aliases.CharacterCount
+@import uk.gov.hmrc.govukfrontend.views.Implicits.RichCharacterCount
 
 @this(layout: Layout,
         govukButton: GovukButton,
-        formWithCSRF: FormWithCSRF
+        formWithCSRF: FormWithCSRF,
+        govukCharacterCount: GovukCharacterCount,
 )
+
 
 @(theForm: Form[UnusualCircumstances], summary: Summary)(implicit request: Request[_], messages: Messages)
 
@@ -34,7 +39,16 @@
   backLinkUrl = controllers.aboutthetradinghistory.routes.IncomeExpenditureSummaryController.show.url,
 ) {
 
+    <p class="govuk-body">@messages("unusualCircumstances.explain")</p>
+
   @formWithCSRF(action = controllers.aboutthetradinghistory.routes.UnusualCircumstancesController.submit()) {
+      @govukCharacterCount(
+          CharacterCount(
+              id = "unusualCircumstances",
+              name = "unusualCircumstances",
+              maxLength = 2000,
+          ).withFormField(theForm("unusualCircumstances"))
+      )
 
       @includes.continueSaveAsDraftButtons(govukButton)
   }
