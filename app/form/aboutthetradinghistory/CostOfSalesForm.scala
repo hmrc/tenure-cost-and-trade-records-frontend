@@ -16,6 +16,7 @@
 
 package form.aboutthetradinghistory
 
+import form.MappingSupport.turnoverSalesMapping
 import models.submissions.aboutthetradinghistory.CostOfSales
 import play.api.data.Forms._
 import play.api.data.{Form, Mapping}
@@ -26,10 +27,10 @@ object CostOfSalesForm {
 
   val columnMapping: Mapping[CostOfSales] = mapping(
     "financial-year-end" -> optional(text).transform[LocalDate](_ => LocalDate.EPOCH, _ => Some("")),
-    "accommodation"      -> optional(bigDecimal),
-    "food"               -> optional(bigDecimal),
-    "drinks"             -> optional(bigDecimal),
-    "other"              -> optional(bigDecimal)
+    "accommodation"      -> turnoverSalesMapping("turnover.accommodation.sales"),
+    "food"               -> turnoverSalesMapping("turnover.food.sales"),
+    "drinks"             -> turnoverSalesMapping("turnover.alcohol.sales"),
+    "other"              -> turnoverSalesMapping("turnover.other.sales")
   )(CostOfSales.apply)(CostOfSales.unapply)
 
   val costOfSalesForm: Form[Seq[CostOfSales]] = Form(
