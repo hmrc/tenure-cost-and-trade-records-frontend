@@ -390,6 +390,7 @@ provideContactDetailsAdditionalInformation.hint = For example, the name of the p
 #############################################
 checkYourAnswersConnectionToVacantProperty.heading = Check your answers - vacant properties
 checkYourAnswersConnectionToVacantProperty.connectionStatus.heading = Connection status
+checkYourAnswersConnectionToVacantProperty.proposedAddress = Proposed address
 label.checkYourAnswersConnectionToVacantProperty = Connected to the property?
 checkYourAnswersConnectionToVacantProperty.vacancyStatus.heading = Vacancy status
 checkYourAnswersConnectionToVacantProperty.isPropertyVacant = Property currently vacant?
