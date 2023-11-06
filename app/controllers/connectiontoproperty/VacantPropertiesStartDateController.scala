@@ -49,7 +49,7 @@ class VacantPropertiesStartDateController @Inject() (
       Ok(
         vacantPropertyStartDateView(
           request.sessionData.stillConnectedDetails.flatMap(_.vacantPropertyStartDate) match {
-            case Some(vacantPropertyStartDate) => vacantPropertyStartDateForm.fillAndValidate(vacantPropertyStartDate)
+            case Some(vacantPropertyStartDate) => vacantPropertyStartDateForm.fill(vacantPropertyStartDate)
             case _                             => vacantPropertyStartDateForm
           },
           request.sessionData.toSummary
@@ -71,7 +71,7 @@ class VacantPropertiesStartDateController @Inject() (
       data => {
         val updatedData = updateStillConnectedDetails(_.copy(vacantPropertyStartDate = Some(data)))
         session.saveOrUpdate(updatedData).map { _ =>
-          val redirectToCYA = navigator.cyaPageVacant.filter(_ => navigator.from(request) == "CYA")
+          val redirectToCYA = navigator.cyaPageVacant.filter(_ => navigator.from == "CYA")
           val nextPage      =
             redirectToCYA.getOrElse(navigator.nextPage(PropertyBecomeVacantPageId, updatedData).apply(updatedData))
           Redirect(nextPage)

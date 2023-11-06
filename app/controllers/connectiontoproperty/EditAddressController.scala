@@ -29,7 +29,7 @@ import repositories.SessionRepo
 import views.html.connectiontoproperty.editAddress
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class EditAddressController @Inject() (
@@ -38,7 +38,8 @@ class EditAddressController @Inject() (
   editAddressView: editAddress,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FORDataCaptureController(mcc)
+)(implicit val ec: ExecutionContext)
+    extends FORDataCaptureController(mcc)
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
@@ -61,8 +62,15 @@ class EditAddressController @Inject() (
       formWithErrors => BadRequest(editAddressView(formWithErrors, request.sessionData.toSummary)),
       data => {
         val updatedData = updateStillConnectedDetails(_.copy(editAddress = Some(data)))
-        session.saveOrUpdate(updatedData)
-        Redirect(navigator.nextPage(EditAddressPageId, updatedData).apply(updatedData))
+        session
+          .saveOrUpdate(updatedData)
+          .map(_ =>
+            navigator
+              .cyaPageDependsOnSession(updatedData)
+              .filter(_ => navigator.from == "CYA")
+              .getOrElse(navigator.next(EditAddressPageId, updatedData).apply(updatedData))
+          )
+          .map(Redirect)
       }
     )
   }

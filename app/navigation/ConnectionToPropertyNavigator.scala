@@ -20,6 +20,7 @@ import connectors.Audit
 import identifiers._
 import play.api.mvc.Call
 import models.Session
+import models.submissions.connectiontoproperty.{AddressConnectionTypeNo, VacantPropertiesDetailsYes}
 import play.api.Logging
 
 import javax.inject.Inject
@@ -31,6 +32,28 @@ class ConnectionToPropertyNavigator @Inject() (audit: Audit) extends Navigator(a
 
   def cyaPageVacant: Option[Call] =
     Some(controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToVacantPropertyController.show())
+
+  def cyaPageNotConnected: Option[Call] =
+    Some(controllers.notconnected.routes.CheckYourAnswersNotConnectedController.show())
+
+  def cyaPageDependsOnSession(session: Session): Option[Call] =
+    if (isNotConnectedPropertySubmission(session)) {
+      cyaPageNotConnected
+    } else if (isVacantPropertySubmission(session)) {
+      cyaPageVacant
+    } else {
+      cyaPage
+    }
+
+  def isVacantPropertySubmission(session: Session): Boolean =
+    session.stillConnectedDetails
+      .flatMap(_.vacantProperties)
+      .exists(_.vacantProperties == VacantPropertiesDetailsYes)
+
+  def isNotConnectedPropertySubmission(session: Session): Boolean =
+    session.stillConnectedDetails
+      .flatMap(_.addressConnectionType)
+      .contains(AddressConnectionTypeNo)
 
   override val overrideRedirectIfFromCYA: Map[String, Session => Call] = Map(
     (

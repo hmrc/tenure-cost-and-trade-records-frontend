@@ -44,6 +44,20 @@ class ConnectionToPropertyNavigatorSpec extends TestBaseSpec {
         .apply(stillConnectedDetailsYesSession) mustBe controllers.routes.LoginController.show()
     }
 
+    "cyaPageDependsOnSession() returns CYA page depending on session data" in {
+      navigator.cyaPageDependsOnSession(
+        stillConnectedDetailsYesToAllSession
+      ) mustBe Some(routes.CheckYourAnswersConnectionToVacantPropertyController.show())
+
+      navigator.cyaPageDependsOnSession(
+        stillConnectedDetailsYesSession
+      ) mustBe Some(routes.CheckYourAnswersConnectionToPropertyController.show())
+
+      navigator.cyaPageDependsOnSession(
+        stillConnectedDetailsNoSession
+      ) mustBe Some(controllers.notconnected.routes.CheckYourAnswersNotConnectedController.show())
+    }
+
     "return a function that goes to the type of connection to the property page when still connected has been selected and the selection is yes" in {
       navigator
         .nextPage(AreYouStillConnectedPageId, stillConnectedDetailsYesSession)
