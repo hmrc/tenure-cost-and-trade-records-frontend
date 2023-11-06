@@ -53,7 +53,7 @@
 
 @govukSummaryList(SummaryList(rows =
     sectionAnswers.row("checkYourAnswersAboutYourLeaseOrTenure.landlordDetails",
-        _.aboutTheLandlord.map(l => s"<p class=\"govuk-body\">${l.landlordFullName}</p>${l.landlordAddress.escapedHtml}"),
+        _.aboutTheLandlord.map(l => s"<p class=\"govuk-body\">${Text(l.landlordFullName).asHtml}</p>${l.landlordAddress.escapedHtml}"),
         aboutYourLeaseOrTenure.routes.AboutYourLandlordController.show(), "",
         ("valueAsHtml", _ => None)) ++
             sectionAnswers.row("checkYourAnswersAboutYourLeaseOrTenure.connectedToLandlord",

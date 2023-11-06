@@ -21,7 +21,7 @@ import form.requestReferenceNumber.RequestReferenceNumberForm.requestReferenceNu
 import models.Session
 import models.submissions.common.Address
 import models.submissions.requestReferenceNumber.RequestReferenceNumberDetails.updateRequestReferenceNumber
-import navigation.ConnectionToPropertyNavigator
+import navigation.RequestReferenceNumberNavigator
 import navigation.identifiers.NoReferenceNumberPageId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
@@ -30,16 +30,17 @@ import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.requestReferenceNumber.requestReferenceNumber
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class RequestReferenceNumberController @Inject() (
   mcc: MessagesControllerComponents,
-  navigator: ConnectionToPropertyNavigator,
+  navigator: RequestReferenceNumberNavigator,
   requestReferenceNumberView: requestReferenceNumber,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FrontendController(mcc)
+)(implicit ec: ExecutionContext)
+    extends FrontendController(mcc)
     with I18nSupport {
 
   def startWithSession: Action[AnyContent] = Action.async { implicit request =>
@@ -68,8 +69,9 @@ class RequestReferenceNumberController @Inject() (
         formWithErrors => Future.successful(BadRequest(requestReferenceNumberView(formWithErrors))),
         data => {
           val updatedData = updateRequestReferenceNumber(_.copy(requestReferenceNumberAddress = Some(data)))
-          session.saveOrUpdate(updatedData)
-          Future.successful(Redirect(navigator.nextPage(NoReferenceNumberPageId, updatedData).apply(updatedData)))
+          session
+            .saveOrUpdate(updatedData)
+            .map(_ => Redirect(navigator.nextPage(NoReferenceNumberPageId, updatedData).apply(updatedData)))
         }
       )
   }

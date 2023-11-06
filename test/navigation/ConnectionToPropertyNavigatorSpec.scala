@@ -112,22 +112,6 @@ class ConnectionToPropertyNavigatorSpec extends TestBaseSpec {
         .show()
     }
 
-    "return a function that goes to the no reference number contact details page when connection to the property has been selected" in {
-      navigator
-        .nextPage(NoReferenceNumberPageId, stillConnectedDetailsYesSession)
-        .apply(
-          stillConnectedDetailsYesSession
-        ) mustBe controllers.requestReferenceNumber.routes.RequestReferenceNumberContactDetailsController
-        .show()
-    }
-  }
-
-  "return a function that goes to the check your answers request reference number page when connection to the property has been selected" in {
-    navigator
-      .nextPage(CheckYourAnswersRequestReferenceNumberPageId, stillConnectedDetailsYesSession)
-      .apply(
-        stillConnectedDetailsYesSession
-      ) mustBe controllers.requestReferenceNumber.routes.CheckYourAnswersRequestReferenceNumberController.submit()
   }
 
   "return a function that goes from the vacant property page to Vacent property Start Date page if answer yes" in {

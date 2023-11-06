@@ -32,7 +32,7 @@
 @govukSummaryList(SummaryList(rows =
     sectionAnswers.row(
         "checkYourAnswersAboutTheProperty.contact.details",
-        _.customerDetails.flatMap(x => s"<p class=\"govuk-body\">${x.fullName}</p><p class=\"govuk-body\">${x.contactDetails.email}</p><p class=\"govuk-body\">${x.contactDetails.phone}</p>"),
+        _.customerDetails.flatMap(x => s"<p class=\"govuk-body\">${Text(x.fullName).asHtml}</p><p class=\"govuk-body\">${x.contactDetails.email}</p><p class=\"govuk-body\">${x.contactDetails.phone}</p>"),
         aboutyouandtheproperty.routes.AboutYouController.show(),
         "fullName",
         ("valueAsHtml", _ => None))

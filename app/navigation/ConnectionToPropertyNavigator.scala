@@ -32,6 +32,21 @@ class ConnectionToPropertyNavigator @Inject() (audit: Audit) extends Navigator(a
   def cyaPageVacant: Option[Call] =
     Some(controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToVacantPropertyController.show())
 
+  override val overrideRedirectIfFromCYA: Map[String, Session => Call] = Map(
+    (
+      controllers.connectiontoproperty.routes.VacantPropertiesController.show().url,
+      _ => controllers.connectiontoproperty.routes.VacantPropertiesController.show()
+    ),
+    (
+      controllers.connectiontoproperty.routes.EditAddressController.show().url,
+      _ => controllers.connectiontoproperty.routes.EditAddressController.show()
+    ),
+    (
+      controllers.notconnected.routes.PastConnectionController.show().url,
+      _ => controllers.notconnected.routes.PastConnectionController.show()
+    )
+  )
+
   private def areYouStillConnectedRouting: Session => Call = answers => {
     answers.stillConnectedDetails.flatMap(_.addressConnectionType.map(_.name)) match {
       case Some("yes")                => controllers.connectiontoproperty.routes.VacantPropertiesController.show()
@@ -125,15 +140,6 @@ class ConnectionToPropertyNavigator @Inject() (audit: Audit) extends Navigator(a
     EditAddressPageId                              -> (_ => controllers.connectiontoproperty.routes.VacantPropertiesController.show()),
     ConnectionToPropertyPageId                     -> (_ => controllers.routes.TaskListController.show()),
     VacantPropertiesPageId                         -> isPropertyVacant,
-    NoReferenceNumberPageId                        -> (_ =>
-      controllers.requestReferenceNumber.routes.RequestReferenceNumberContactDetailsController.show()
-    ),
-    NoReferenceNumberContactDetailsPageId          -> (_ =>
-      controllers.requestReferenceNumber.routes.CheckYourAnswersRequestReferenceNumberController.show()
-    ),
-    CheckYourAnswersRequestReferenceNumberPageId   -> (_ =>
-      controllers.requestReferenceNumber.routes.CheckYourAnswersRequestReferenceNumberController.submit()
-    ),
     PropertyBecomeVacantPageId                     -> (_ =>
       controllers.connectiontoproperty.routes.IsRentReceivedFromLettingController.show()
     ),

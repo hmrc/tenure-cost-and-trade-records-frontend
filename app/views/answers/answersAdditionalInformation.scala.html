@@ -51,11 +51,11 @@
             "label.altDetails",
             _.altContactInformation.map { x =>
                 val contactDetails = Seq(
-                    s"<p class=\"govuk-body\">${x.alternativeContactFullName.getOrElse("")}</p>",
-                    s"<p class=\"govuk-body\">${x.alternativeContactDetails.email.getOrElse("")}</p>",
-                    s"<p class=\"govuk-body\">${x.alternativeContactDetails.phone.getOrElse("")}</p>",
-                    s"<p class=\"govuk-body\">${x.alternativeContactAddress.escapedHtml.getOrElse("")}</p>",
-                ).mkString
+                    Text(x.alternativeContactFullName).asHtml,
+                    x.alternativeContactDetails.email,
+                    x.alternativeContactDetails.phone,
+                    x.alternativeContactAddress.escapedHtml,
+                ).mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>")
 
                 contactDetails
             },
