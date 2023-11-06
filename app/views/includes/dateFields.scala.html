@@ -19,6 +19,7 @@
 @import uk.gov.hmrc.govukfrontend.views.Aliases._
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukDateInput
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
+@import form.Errors
 @import util.DateUtil
 
 @(  form: Form[_],
@@ -55,24 +56,30 @@
     }
 
     @dateInputItems = @{
+
+        def getErrorClass(field: String) = {
+            if(form.error(field).isDefined  || (form.errors.map(_.message).contains(Errors.dateMustBeInPast)))
+                "govuk-input--error"
+            else ""
+        }
         val month = InputItem(
             id = monthfield,
             name = monthfield,
-            classes = ("govuk-input--width-2 " + (if(form.error(monthfield).isDefined) "govuk-input--error" else "")),
+            classes = ("govuk-input--width-2 " + getErrorClass(monthfield)),
             value = form(monthfield).value,
             label = messages("label.date.month")
         )
         val year = InputItem(
             id = yearfield,
             name = yearfield,
-            classes = ("govuk-input--width-4 " + (if(form.error(yearfield).isDefined) "govuk-input--error" else "")),
+            classes = ("govuk-input--width-4 " + getErrorClass(yearfield)),
             value = form(yearfield).value,
             label = messages("label.date.year")
         )
         val day = InputItem(
             id = dayfield,
             name = dayfield,
-            classes = ("govuk-input--width-2 " + (if(form.error(dayfield).isDefined) "govuk-input--error" else "")),
+            classes = ("govuk-input--width-2 " + getErrorClass(dayfield)),
             value = form(dayfield).value,
             label = messages("label.date.day")
         )
