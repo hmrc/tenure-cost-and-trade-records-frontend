@@ -48,8 +48,8 @@
 
     <h2 class="govuk-heading-m">@messages("checkYourAnswersConnectionToProperty.occupierDetails.heading")</h2>
     @govukSummaryList(SummaryList(rows =
-        sectionAnswers.row("checkYourAnswersConnectionToProperty.nameOfOccupier", _.tradingNameOperatingFromProperty.map(_.tradingName), connectiontoproperty.routes.TradingNameOperatingFromPropertyController.show(), "currentOccupierName")
-                ++ sectionAnswers.row("checkYourAnswersConnectionToProperty.ownsTheProperty", _.tradingNameOwnTheProperty.map(_.name).map(v => messages(s"label.$v")), connectiontoproperty.routes.TradingNameOwnThePropertyController.show(), "currentOccupierName")
-                ++ sectionAnswers.row("checkYourAnswersConnectionToProperty.payRent", _.tradingNamePayingRent.map(_.name).map(v => messages(s"label.$v")), connectiontoproperty.routes.TradingNamePayingRentController.show(), "currentOccupierName")
-                ++ sectionAnswers.row("checkYourAnswersConnectionToProperty.thirdParty", _.areYouThirdParty.map(_.name).map(v => messages(s"label.$v")), connectiontoproperty.routes.AreYouThirdPartyController.show(), "currentOccupierName")
+        sectionAnswers.row("checkYourAnswersConnectionToProperty.nameOfOccupier", _.tradingNameOperatingFromProperty.map(_.tradingName), connectiontoproperty.routes.TradingNameOperatingFromPropertyController.show(), "tradingNameFromProperty")
+                ++ sectionAnswers.row("checkYourAnswersConnectionToProperty.ownsTheProperty", _.tradingNameOwnTheProperty.map(_.name).map(v => messages(s"label.$v")), connectiontoproperty.routes.TradingNameOwnThePropertyController.show(), "tradingNameOwnTheProperty")
+                ++ sectionAnswers.row("checkYourAnswersConnectionToProperty.payRent", _.tradingNamePayingRent.map(_.name).map(v => messages(s"label.$v")), connectiontoproperty.routes.TradingNamePayingRentController.show(), "tradingNamePayingRent")
+                ++ sectionAnswers.row("checkYourAnswersConnectionToProperty.thirdParty", _.areYouThirdParty.map(_.name).map(v => messages(s"label.$v")), connectiontoproperty.routes.AreYouThirdPartyController.show(), "areYouThirdParty")
     ))
