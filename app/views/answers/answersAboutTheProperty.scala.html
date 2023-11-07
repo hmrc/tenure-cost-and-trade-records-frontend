@@ -46,7 +46,7 @@
             usage => s"${messages(s"propertyCurrentlyUsed.${usage.name}")}"
                     + sectionAnswers.answers.filter(_ => s"propertyCurrentlyUsed.${usage.name}" == "propertyCurrentlyUsed.other").flatMap(_.propertyDetails.flatMap(_.currentlyUsedOtherField)).fold("")(v => s"<p class=\"govuk-body\">$v")
         ).mkString("""<p class="govuk-body">""", """</p><p class="govuk-body">""", "</p>")),
-        aboutyouandtheproperty.routes.AboutThePropertyController.show(), "propertyCurrentlyUsed",
+        aboutyouandtheproperty.routes.AboutThePropertyController.show(), "propertyCurrentlyUsed[0]",
         ("valueAsHtml", _ => None)) ++
             sectionAnswers.optionalRow(
                 "checkYourAnswersAboutTheProperty.hasWebsite",
@@ -85,7 +85,7 @@
                 aboutyouandtheproperty.routes.PremisesLicenseConditionsDetailsController.show(), "premisesLicenseConditionsDetails") ++
             sectionAnswers.optionalRow("checkYourAnswersAboutTheProperty.enforcementAction",
                 _.enforcementAction.map(yesNo => messages(s"label.${yesNo.name}")),
-                aboutyouandtheproperty.routes.EnforcementActionBeenTakenController.show(), "enforcementAction") ++
+                aboutyouandtheproperty.routes.EnforcementActionBeenTakenController.show(), "enforcementActionBeenTaken") ++
             sectionAnswers.conditionRow(_.enforcementAction.map(_.name).contains("yes"),
                 "checkYourAnswersAboutTheProperty.enforcementActionHasBeenTakenInformationDetails",
                 _.enforcementActionHasBeenTakenInformationDetails.map(_.enforcementActionHasBeenTakenDetails),

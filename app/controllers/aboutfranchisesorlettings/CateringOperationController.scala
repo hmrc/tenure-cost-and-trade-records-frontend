@@ -20,7 +20,7 @@ import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
 import form.aboutfranchisesorlettings.CateringOperationForm.cateringOperationForm
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
-import models.submissions.common.AnswersYesNo
+import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
 import navigation.AboutFranchisesOrLettingsNavigator
 import navigation.identifiers.CateringOperationPageId
 import play.api.i18n.I18nSupport
@@ -29,6 +29,7 @@ import repositories.SessionRepo
 import views.html.aboutfranchisesorlettings.cateringOperationOrLettingAccommodation
 
 import javax.inject.{Inject, Named, Singleton}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class CateringOperationController @Inject() (
@@ -37,7 +38,8 @@ class CateringOperationController @Inject() (
   cateringOperationOrLettingAccommodationView: cateringOperationOrLettingAccommodation,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FORDataCaptureController(mcc)
+)(implicit ec: ExecutionContext)
+    extends FORDataCaptureController(mcc)
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
@@ -45,7 +47,7 @@ class CateringOperationController @Inject() (
       cateringOperationOrLettingAccommodationView(
         request.sessionData.aboutFranchisesOrLettings.flatMap(_.cateringConcessionOrFranchise) match {
           case Some(cateringOperationOrLettingAccommodation) =>
-            cateringOperationForm.fillAndValidate(cateringOperationOrLettingAccommodation)
+            cateringOperationForm.fill(cateringOperationOrLettingAccommodation)
           case _                                             => cateringOperationForm
         },
         "cateringOperationOrLettingAccommodation",
@@ -70,8 +72,19 @@ class CateringOperationController @Inject() (
       data => {
         val updatedData =
           updateAboutFranchisesOrLettings(_.copy(cateringConcessionOrFranchise = Some(data)))
-        session.saveOrUpdate(updatedData)
-        Redirect(navigator.nextPage(CateringOperationPageId, updatedData).apply(updatedData))
+        session
+          .saveOrUpdate(updatedData)
+          .map { _ =>
+            navigator.cyaPage
+              .filter(_ =>
+                navigator.from == "CYA" && (data == AnswerNo ||
+                  request.sessionData.aboutFranchisesOrLettings
+                    .flatMap(_.cateringConcessionOrFranchise)
+                    .contains(AnswerYes))
+              )
+              .getOrElse(navigator.nextPage(CateringOperationPageId, updatedData).apply(updatedData))
+          }
+          .map(Redirect)
       }
     )
   }

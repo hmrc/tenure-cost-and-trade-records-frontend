@@ -20,7 +20,7 @@ import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
 import form.aboutfranchisesorlettings.FranchiseOrLettingsTiedToPropertyForm.franchiseOrLettingsTiedToPropertyForm
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
-import models.submissions.common.AnswersYesNo
+import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
 import navigation.AboutFranchisesOrLettingsNavigator
 import navigation.identifiers.FranchiseOrLettingsTiedToPropertyId
 import play.api.i18n.I18nSupport
@@ -29,7 +29,7 @@ import repositories.SessionRepo
 import views.html.aboutfranchisesorlettings.franchiseOrLettingsTiedToProperty
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class FranchiseOrLettingsTiedToPropertyController @Inject() (
@@ -38,7 +38,8 @@ class FranchiseOrLettingsTiedToPropertyController @Inject() (
   franchiseOrLettingsTiedToPropertyView: franchiseOrLettingsTiedToProperty,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FORDataCaptureController(mcc)
+)(implicit ec: ExecutionContext)
+    extends FORDataCaptureController(mcc)
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
@@ -47,7 +48,7 @@ class FranchiseOrLettingsTiedToPropertyController @Inject() (
         franchiseOrLettingsTiedToPropertyView(
           request.sessionData.aboutFranchisesOrLettings.flatMap(_.franchisesOrLettingsTiedToProperty) match {
             case Some(franchisesOrLettingsTiedToProperty) =>
-              franchiseOrLettingsTiedToPropertyForm.fillAndValidate(franchisesOrLettingsTiedToProperty)
+              franchiseOrLettingsTiedToPropertyForm.fill(franchisesOrLettingsTiedToProperty)
             case _                                        => franchiseOrLettingsTiedToPropertyForm
           },
           request.sessionData.stillConnectedDetails.flatMap(_.connectionToProperty).toString,
@@ -70,8 +71,19 @@ class FranchiseOrLettingsTiedToPropertyController @Inject() (
         ),
       data => {
         val updatedData = updateAboutFranchisesOrLettings(_.copy(franchisesOrLettingsTiedToProperty = Some(data)))
-        session.saveOrUpdate(updatedData)
-        Redirect(navigator.nextPage(FranchiseOrLettingsTiedToPropertyId, updatedData).apply(updatedData))
+        session
+          .saveOrUpdate(updatedData)
+          .map { _ =>
+            navigator.cyaPage
+              .filter(_ =>
+                navigator.from == "CYA" && (data == AnswerNo ||
+                  request.sessionData.aboutFranchisesOrLettings
+                    .flatMap(_.franchisesOrLettingsTiedToProperty)
+                    .contains(AnswerYes))
+              )
+              .getOrElse(navigator.next(FranchiseOrLettingsTiedToPropertyId, updatedData).apply(updatedData))
+          }
+          .map(Redirect)
       }
     )
   }
