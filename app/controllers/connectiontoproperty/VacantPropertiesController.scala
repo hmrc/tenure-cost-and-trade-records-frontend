@@ -31,7 +31,7 @@ import repositories.SessionRepo
 import views.html.connectiontoproperty.vacantProperties
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class VacantPropertiesController @Inject() (
@@ -40,7 +40,8 @@ class VacantPropertiesController @Inject() (
   vacantPropertiesView: vacantProperties,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FORDataCaptureController(mcc)
+)(implicit val ec: ExecutionContext)
+    extends FORDataCaptureController(mcc)
     with I18nSupport
     with Logging {
 
@@ -49,7 +50,7 @@ class VacantPropertiesController @Inject() (
       Ok(
         vacantPropertiesView(
           request.sessionData.stillConnectedDetails.flatMap(_.vacantProperties) match {
-            case Some(vacantProperties) => vacantPropertiesForm.fillAndValidate(vacantProperties)
+            case Some(vacantProperties) => vacantPropertiesForm.fill(vacantProperties)
             case _                      => vacantPropertiesForm
           },
           getBackLink(request.sessionData),
@@ -72,20 +73,28 @@ class VacantPropertiesController @Inject() (
         ),
       data => {
         val updatedData = updateStillConnectedDetails(_.copy(vacantProperties = Some(data)))
-        session.saveOrUpdate(updatedData)
-        Redirect(navigator.next(VacantPropertiesPageId, updatedData).apply(updatedData))
+        session
+          .saveOrUpdate(updatedData)
+          .map(_ =>
+            navigator
+              .cyaPageDependsOnSession(updatedData)
+              .filter(_ =>
+                navigator.from == "CYA" &&
+                  request.sessionData.stillConnectedDetails
+                    .flatMap(_.vacantProperties)
+                    .exists(_.vacantProperties == data.vacantProperties)
+              )
+              .getOrElse(navigator.next(VacantPropertiesPageId, updatedData).apply(updatedData))
+          )
+          .map(Redirect)
       }
     )
   }
 
   private def getBackLink(answers: Session): String =
     answers.stillConnectedDetails.flatMap(_.addressConnectionType.map(_.name)) match {
-      case Some("yes")                => controllers.connectiontoproperty.routes.AreYouStillConnectedController.show().url
-      case Some("yes-change-address") =>
-        controllers.connectiontoproperty.routes.EditAddressController.show().url
-      case Some("no")                 => controllers.connectiontoproperty.routes.AreYouStillConnectedController.show().url
-      case _                          =>
-        logger.warn(s"Back link for vacant properties reached with unknown enforcement taken value")
-        controllers.routes.TaskListController.show().url
+      case Some("yes-change-address") => controllers.connectiontoproperty.routes.EditAddressController.show().url
+      case _                          => controllers.connectiontoproperty.routes.AreYouStillConnectedController.show().url
     }
+
 }

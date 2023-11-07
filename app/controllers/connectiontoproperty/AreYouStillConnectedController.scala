@@ -29,7 +29,7 @@ import models.submissions.connectiontoproperty.StillConnectedDetails.updateStill
 import models.submissions.connectiontoproperty.AddressConnectionType
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class AreYouStillConnectedController @Inject() (
@@ -38,7 +38,8 @@ class AreYouStillConnectedController @Inject() (
   areYouStillConnectedView: areYouStillConnected,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FORDataCaptureController(mcc)
+)(implicit val ec: ExecutionContext)
+    extends FORDataCaptureController(mcc)
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
@@ -46,7 +47,7 @@ class AreYouStillConnectedController @Inject() (
       Ok(
         areYouStillConnectedView(
           request.sessionData.stillConnectedDetails.flatMap(_.addressConnectionType) match {
-            case Some(addressConnectionType) => areYouStillConnectedForm.fillAndValidate(addressConnectionType)
+            case Some(addressConnectionType) => areYouStillConnectedForm.fill(addressConnectionType)
             case _                           => areYouStillConnectedForm
           },
           request.sessionData.toSummary
@@ -61,8 +62,18 @@ class AreYouStillConnectedController @Inject() (
       formWithErrors => BadRequest(areYouStillConnectedView(formWithErrors, request.sessionData.toSummary)),
       data => {
         val updatedData = updateStillConnectedDetails(_.copy(addressConnectionType = Some(data)))
-        session.saveOrUpdate(updatedData)
-        Redirect(navigator.nextPage(AreYouStillConnectedPageId, updatedData).apply(updatedData))
+        session
+          .saveOrUpdate(updatedData)
+          .map(_ =>
+            navigator
+              .cyaPageDependsOnSession(updatedData)
+              .filter(_ =>
+                navigator.from == "CYA" &&
+                  request.sessionData.stillConnectedDetails.flatMap(_.addressConnectionType).contains(data)
+              )
+              .getOrElse(navigator.next(AreYouStillConnectedPageId, updatedData).apply(updatedData))
+          )
+          .map(Redirect)
       }
     )
   }
