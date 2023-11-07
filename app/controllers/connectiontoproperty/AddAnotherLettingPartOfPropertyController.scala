@@ -19,7 +19,7 @@ import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
 import form.connectiontoproperty.AddAnotherLettingPartOfPropertyForm.addAnotherLettingForm
 import models.submissions.connectiontoproperty.StillConnectedDetails.updateStillConnectedDetails
-import models.submissions.common.AnswersYesNo
+import models.submissions.common.{AnswerNo, AnswersYesNo}
 import navigation.ConnectionToPropertyNavigator
 import navigation.identifiers.AddAnotherLettingPartOfPropertyPageId
 import play.api.i18n.I18nSupport
@@ -28,7 +28,7 @@ import repositories.SessionRepo
 import views.html.connectiontoproperty.addAnotherLettingPartOfProperty
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class AddAnotherLettingPartOfPropertyController @Inject() (
@@ -37,7 +37,8 @@ class AddAnotherLettingPartOfPropertyController @Inject() (
   addAnotherLettingPartOfPropertyView: addAnotherLettingPartOfProperty,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FORDataCaptureController(mcc)
+)(implicit ec: ExecutionContext)
+    extends FORDataCaptureController(mcc)
     with I18nSupport {
 
   def show(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
@@ -47,7 +48,7 @@ class AddAnotherLettingPartOfPropertyController @Inject() (
       Ok(
         addAnotherLettingPartOfPropertyView(
           existingSection.flatMap(_.addAnotherLettingToProperty) match {
-            case Some(addAnotherLettings) => addAnotherLettingForm.fillAndValidate(addAnotherLettings)
+            case Some(addAnotherLettings) => addAnotherLettingForm.fill(addAnotherLettings)
             case _                        => addAnotherLettingForm
           },
           index,
@@ -77,12 +78,14 @@ class AddAnotherLettingPartOfPropertyController @Inject() (
           .map(_.lettingPartOfPropertyDetails)
           .filter(_.nonEmpty)
           .fold(
-            Redirect(
-              if (data.name == "yes") {
-                routes.LettingPartOfPropertyDetailsController.show()
-              } else {
-                routes.CheckYourAnswersConnectionToVacantPropertyController.show()
-              }
+            Future.successful(
+              Redirect(
+                if (data.name == "yes") {
+                  routes.LettingPartOfPropertyDetailsController.show()
+                } else {
+                  routes.CheckYourAnswersConnectionToVacantPropertyController.show()
+                }
+              )
             )
           ) { existingSections =>
             val updatedSections = existingSections.updated(
@@ -90,8 +93,15 @@ class AddAnotherLettingPartOfPropertyController @Inject() (
               existingSections(index).copy(addAnotherLettingToProperty = Some(data))
             )
             val updatedData     = updateStillConnectedDetails(_.copy(lettingPartOfPropertyDetails = updatedSections))
-            session.saveOrUpdate(updatedData)
-            Redirect(navigator.next(AddAnotherLettingPartOfPropertyPageId, updatedData).apply(updatedData))
+            session
+              .saveOrUpdate(updatedData)
+              .map { _ =>
+                navigator
+                  .cyaPageDependsOnSession(updatedData)
+                  .filter(_ => navigator.from == "CYA" && data == AnswerNo)
+                  .getOrElse(navigator.next(AddAnotherLettingPartOfPropertyPageId, updatedData).apply(updatedData))
+              }
+              .map(Redirect)
           }
     )
   }
