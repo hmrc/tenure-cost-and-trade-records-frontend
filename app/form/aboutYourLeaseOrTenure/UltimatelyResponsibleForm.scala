@@ -32,8 +32,7 @@ object UltimatelyResponsibleForm {
       "sharedResponsibilities" -> mandatoryIfAnyEqual(
         Seq(("outsideRepairs", "both"), ("insideRepairs", "both"), ("buildingInsurance", "both")),
         default(text, "").verifying(
-          nonEmpty(errorMessage = "error.sharedResponsibilities.required"),
-          maxLength(2000, "error.sharedResponsibilities.maxLength")
+          nonEmpty(errorMessage = "error.sharedResponsibilities.required")
         )
       )
     )(UltimatelyResponsible.apply)(UltimatelyResponsible.unapply)
