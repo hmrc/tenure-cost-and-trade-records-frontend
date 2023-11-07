@@ -34,6 +34,10 @@
     SectionAnswersRowBuilder(request.sessionData.stillConnectedDetails)
 }
 
+@lettingsLastIndex = @{
+    sectionAnswers.answers.map(_.lettingPartOfPropertyDetails.size - 1).filter(_ >= 0).getOrElse(0)
+}
+
 @if(sectionAnswers.answers.exists(a => a.editAddress.isDefined)) {
     <h2 class="govuk-heading-m">@messages("checkYourAnswersConnectionToVacantProperty.connectionStatus.heading")</h2>
 
@@ -74,7 +78,7 @@
                         .mkString("""<p class="govuk-body">""", "<br/> ", "</p>"),
                         connectiontoproperty.routes.LettingPartOfPropertyItemsIncludedInRentController.show(idx), "itemsInRent",
                         ("valueAsHtml", _ => None)) ++
-                    sectionAnswers.row("checkYourAnswersConnectionToVacantProperty.addAnotherLetting", _ => letting.addAnotherLettingToProperty.map(_.name).map(v => messages(s"label.$v")), connectiontoproperty.routes.AddAnotherLettingPartOfPropertyController.show(idx), "addAnotherLettingPartOfProperty")
+                    sectionAnswers.row("checkYourAnswersConnectionToVacantProperty.addAnotherLetting", _ => letting.addAnotherLettingToProperty.map(_.name).map(v => messages(s"label.$v")), connectiontoproperty.routes.AddAnotherLettingPartOfPropertyController.show(lettingsLastIndex), "addAnotherLettingPartOfProperty")
         ))
     }
 }

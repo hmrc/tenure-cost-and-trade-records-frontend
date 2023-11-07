@@ -20,7 +20,7 @@ import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
 import form.connectiontoproperty.isRentReceivedFromLettingForm.isRentReceivedFromLettingForm
 import models.Session
-import models.submissions.common.AnswersYesNo
+import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
 import models.submissions.connectiontoproperty.StillConnectedDetails.updateStillConnectedDetails
 import navigation.ConnectionToPropertyNavigator
 import navigation.identifiers.LettingIncomePageId
@@ -51,7 +51,7 @@ class IsRentReceivedFromLettingController @Inject() (
       Ok(
         isRentReceivedFromLettingView(
           request.sessionData.stillConnectedDetails.flatMap(_.isAnyRentReceived) match {
-            case Some(enforcementAction) => isRentReceivedFromLettingForm.fillAndValidate(enforcementAction)
+            case Some(enforcementAction) => isRentReceivedFromLettingForm.fill(enforcementAction)
             case _                       => isRentReceivedFromLettingForm
           },
           getBackLink(request.sessionData),
@@ -74,10 +74,19 @@ class IsRentReceivedFromLettingController @Inject() (
         ),
       data => {
         val updatedData = updateStillConnectedDetails(_.copy(isAnyRentReceived = Some(data)))
-        session.saveOrUpdate(updatedData).map { _ =>
-          TimeUnit.SECONDS.sleep(1)
-          Redirect(navigator.next(LettingIncomePageId, updatedData).apply(updatedData))
-        }
+        session
+          .saveOrUpdate(updatedData)
+          .map { _ =>
+            TimeUnit.SECONDS.sleep(1)
+            navigator
+              .cyaPageDependsOnSession(updatedData)
+              .filter(_ =>
+                navigator.from == "CYA" && (data == AnswerNo ||
+                  request.sessionData.stillConnectedDetails.flatMap(_.isAnyRentReceived).contains(AnswerYes))
+              )
+              .getOrElse(navigator.next(LettingIncomePageId, updatedData).apply(updatedData))
+          }
+          .map(Redirect)
       }
     )
   }
