@@ -1464,6 +1464,7 @@ confirmation.feedback.title=Feedback
 
 # Errors
 ########
+error.enter = Enter {0}
 error.required = Please provide a value
 error.boolean_missing=You must choose one
 error.no_value_selected=You must choose one

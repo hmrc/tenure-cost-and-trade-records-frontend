@@ -45,7 +45,8 @@
         field = "startDateOfVacantProperty",
         govukDate = govukDateInput,
         showDays = true,
-        helpText = messages("label.startDateOfVacantProperty.help")
+        helpText = messages("label.startDateOfVacantProperty.help"),
+        fieldError = messages("vacantPropertyStartDate.heading")
     )
 
     @includes.continueSaveAsDraftButtons(govukButton)

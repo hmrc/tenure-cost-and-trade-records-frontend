@@ -19,7 +19,9 @@
 @import uk.gov.hmrc.govukfrontend.views.Aliases._
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukDateInput
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
+@import form.Errors
 @import util.DateUtil
+
 
 @(  form: Form[_],
     field: String,
@@ -30,14 +32,24 @@
     showDays : Boolean = false,
         hideYear: Boolean= false,
     showFieldSet: Boolean = true,
-    hiddenBy: Option[HiddenBy] = None)(implicit request: Request[_], messages: Messages)
+    hiddenBy: Option[HiddenBy] = None,
+    fieldError: Option[String] = None)(implicit request: Request[_], messages: Messages)
 
     @labelText = @{ label.getOrElse("label." + field + labelSuffix.getOrElse(""))}
     @dayfield  = @{field + ".day"}
     @monthfield  = @{field + ".month"}
     @yearfield  = @{field + ".year"}
     @dateErrorMessage(field: String) = @{
+        val dayIsEmpty = form(dayfield).value.forall(_.isEmpty)
+        val monthIsEmpty = form(monthfield).value.forall(_.isEmpty)
+        val yearIsEmpty = form(yearfield).value.forall(_.isEmpty)
+
         var msg: Option[ErrorMessage] = None
+
+        if(form.hasErrors && dayIsEmpty && monthIsEmpty && yearIsEmpty) {
+            Some(ErrorMessage(content = Text(messages("error.enter", fieldError.getOrElse("").toLowerCase.replace("?","")))))
+        } else {
+
         if(form.errors(field).isDefined){
             msg = form.errors.asTextErrorMessageForField(field)
         }
@@ -52,7 +64,7 @@
         }
         msg
     }
-
+    }
     @dateInputItems = @{
         val month = InputItem(
             id = monthfield,
