@@ -42,9 +42,7 @@ import scala.util.matching.Regex
 
 object MappingSupport {
 
-  val postcodeRegex                                                             =
-    """(GIR ?0AA)|((([A-Z-[QVX]][0-9][0-9]?)|(([A-Z-[QVX]][A-Z-[IJZ]][0-9][0-9]?)|(([A-Z-[QVX]][0-9][A-HJKPSTUW])|([A-Z-[QVX]][A-Z-[IJZ]][0-9][ABEHMNPRVWXY])))) ?[0-9][A-Z-[CIKMOV]]{2})""" //scalastyle:ignore
-  val phoneRegex                                                                = """^^[0-9\s\+()-]+$"""
+   val phoneRegex                                                                = """^^[0-9\s\+()-]+$"""
   val userType: Mapping[UserType]                                               = Forms.of[UserType]
   val aboutYourPropertyType: Mapping[CurrentPropertyUsed]                       = Forms.of[CurrentPropertyUsed]
   val connectionToThePropertyType: Mapping[ConnectionToProperty]                = Forms.of[ConnectionToProperty]
@@ -166,7 +164,7 @@ object MappingSupport {
         maxLength(50, "error.county.maxLength")
       )
     ),
-    "postcode"           -> nonEmptyTextOr("postcode", postcode, "error.postcode.required")
+    "postcode"           -> postcode
   )(Address.apply)(Address.unapply)
 
   def requestReferenceNumberAddressMapping: Mapping[RequestReferenceNumberAddress] = mapping(
@@ -210,7 +208,7 @@ object MappingSupport {
         maxLength(50, "error.county.maxLength")
       )
     ),
-    "postcode"           -> nonEmptyTextOr("landlordAddress.postcode", postcode, "error.postcode.required")
+    "postcode"           -> postcode
   )(LandlordAddress.apply)(LandlordAddress.unapply)
 
   def alternativeAddressMapping: Mapping[AlternativeAddress] = mapping(
@@ -232,7 +230,7 @@ object MappingSupport {
         maxLength(50, "error.county.maxLength")
       )
     ),
-    "postcode"           -> nonEmptyTextOr("alternativeContactAddress.postcode", postcode, "error.postcode.required")
+    "postcode"           -> postcode
   )(AlternativeAddress.apply)(AlternativeAddress.unapply)
 
   def cateringAddressMapping: Mapping[CateringAddress] = mapping(
@@ -254,7 +252,7 @@ object MappingSupport {
         maxLength(50, "error.county.maxLength")
       )
     ),
-    "postcode"           -> nonEmptyTextOr("cateringAddress.postcode", postcode, "error.postcode.required")
+    "postcode"           -> postcode
   )(CateringAddress.apply)(CateringAddress.unapply)
 
   def lettingOtherPartAddressMapping: Mapping[LettingAddress] = mapping(
@@ -298,7 +296,7 @@ object MappingSupport {
         maxLength(50, "error.county.maxLength")
       )
     ),
-    "postcode"           -> nonEmptyTextOr("editAddress.postcode", postcode, "error.postcode.required")
+    "postcode"           -> postcode
   )(ContactDetailsAddress.apply)(ContactDetailsAddress.unapply)
 
   def editAddressMapping: Mapping[EditAddress] = mapping(
@@ -320,7 +318,7 @@ object MappingSupport {
         maxLength(50, "error.county.maxLength")
       )
     ),
-    "postcode"           -> nonEmptyTextOr("editAddress.postcode", postcode, "error.postcode.required")
+    "postcode"           -> postcode
   )(EditAddress.apply)(EditAddress.unapply)
 
   def yourContactDetailsMapping: Mapping[YourContactDetails] = mapping(
@@ -352,7 +350,7 @@ object MappingSupport {
         maxLength(50, "error.county.maxLength")
       )
     ),
-    "postcode"       -> nonEmptyTextOr("correspondenceAddress.postcode", postcode, "error.postcode.required")
+    "postcode"       -> postcode
   )(CorrespondenceAddress.apply)(CorrespondenceAddress.unapply)
 
   def mandatoryBooleanWithError(message: String) =
