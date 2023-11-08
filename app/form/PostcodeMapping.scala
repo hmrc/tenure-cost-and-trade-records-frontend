@@ -36,14 +36,14 @@ object PostcodeMapping {
   }
 
   def postcodeFormatter(
-                         requiredError: String = "",
-                         maxLengthError: String = "",
-                         formatError: String = ""
-                       ): Formatter[String] = new Formatter[String] {
+    requiredError: String = "",
+    maxLengthError: String = "",
+    formatError: String = ""
+  ): Formatter[String] = new Formatter[String] {
 
-    override def bind(key: String, data: Map[String, String]): Either[Seq[FormError], String] = {
+    override def bind(key: String, data: Map[String, String]): Either[Seq[FormError], String] =
       data.get(key).filter(_.trim.nonEmpty) match {
-        case None => Left(Seq(FormError(key, requiredError)))
+        case None              => Left(Seq(FormError(key, requiredError)))
         case Some(rawPostcode) =>
           val cleanedPostcode = rawPostcode.replaceAll("[^A-Za-z0-9]", "").toUpperCase
           if (cleanedPostcode.length > 8) {
@@ -54,7 +54,6 @@ object PostcodeMapping {
             Right(cleanedPostcode.substring(0, cleanedPostcode.length - 3) + " " + cleanedPostcode.takeRight(3))
           }
       }
-    }
 
     override def unbind(key: String, value: String): Map[String, String] = Map(key -> value)
   }

@@ -28,8 +28,8 @@ object Errors {
   val addressTownCityRequired           = "error.address.townCity.required"
   val addressPostcodeRequired           = "error.address.postcode.required"
   val postcodeRequired                  = "error.postcode.required"
-  val postcodeInvalid                   = "Enter a full UK postcode such as AB12 3CD"
-  val postcodeMaxLength                 = "Postcode must be 8 characters or fewer"
+  val postcodeInvalid                   = "error.postcode.invalid"
+  val postcodeMaxLength                 = "error.postcode.maxLength"
 
   //Login
   val invalidRefNum             = "error.invalid_refnum"

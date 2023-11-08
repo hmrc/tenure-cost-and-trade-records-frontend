@@ -42,7 +42,7 @@ import scala.util.matching.Regex
 
 object MappingSupport {
 
-   val phoneRegex                                                                = """^^[0-9\s\+()-]+$"""
+  val phoneRegex                                                                = """^^[0-9\s\+()-]+$"""
   val userType: Mapping[UserType]                                               = Forms.of[UserType]
   val aboutYourPropertyType: Mapping[CurrentPropertyUsed]                       = Forms.of[CurrentPropertyUsed]
   val connectionToThePropertyType: Mapping[ConnectionToProperty]                = Forms.of[ConnectionToProperty]
