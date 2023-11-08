@@ -539,8 +539,8 @@ premisesLicenseConditions.heading = Does your premises licence have conditions r
 hint.premisesLicenseConditions = For example, no drinks outside after 10pm.
 help.premisesLicenseConditions.title = Help with conditions restricting the use of your property
 help.premisesLicenseConditions.heading = Conditions restricting the use of your property
-help.premisesLicenseConditions.p1 = Premises licences can be granted on the condition the holder of the premises licence complies with the pre-defined terms. These can include restrictions on the use of certain parts of the property.
-help.premisesLicenseConditions.p2 = Check your premises licence if you’re not sure. Any special conditions will be clearly stated there.
+help.premisesLicenseConditions.p1 = Sometimes, a premises licence is only granted if the holder of the licence agrees to special conditions. These can include restrictions on the use of certain parts of the property.
+help.premisesLicenseConditions.p2 = Check your premises licence if you’re not sure. You'll find any special conditions stated clearly on there.
 error.premisesLicenseConditions.missing = Select yes if your licence has any conditions as stated
 
 # PREMISES LICENCE CONDITIONS DETAILS
