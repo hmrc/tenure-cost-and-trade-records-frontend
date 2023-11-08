@@ -579,7 +579,8 @@ error.enforcementActionHasBeenTakenDetails.maxLength  = This must be 2000 charac
 # TIED FOR GOODS
 ################
 tiedForGoods.heading = Tied goods
-tiedForGoods.para1 = Many properties are required to sell certain goods, such as beers, wines and mixers, as part of their lease or tenancy agreement. This is a common arrangement for public houses leased through a brewery, for example.
+tiedForGoods.para1 = Many properties are required to sell certain goods, such as beers, wines and mixers, as part of their lease or tenancy agreement. These are known as tied goods.
+tiedForGoods.para2 = Being required to sell tied goods is a common arrangement for public houses leased from breweries.
 tiedForGoods.label = Are you required to sell certain goods as part of your lease or tenancy agreement?
 error.tiedForGoods.missing = You must choose one
 
@@ -660,7 +661,7 @@ error.cateringOperationOrLettingAccommodation.missing = Select yes if any separa
 
 # LETTING OTHER PART OF PROPERTY
 ##############################
-lettingOtherPartOfProperty.heading = Is any rent received from letting other parts of the property?
+lettingOtherPartOfProperty.heading = Do you receive any rent from letting other parts of the property?
 hint.lettingOtherPartOfProperty = For example, advertising billboards, phones masts or car parking. You will have the opportunity to add additional lettings if required.
 error.lettingOtherPartOfProperty.missing = Select yes if any rent received from letting other parts of the property
 
