@@ -296,7 +296,7 @@ label.vacantProperties = Is the property currently vacant?
 
 # CHECK YOUR ANSWERS CONNECTION TO PROPERTY
 ###########################################
-checkYourAnswersConnectionToProperty.heading= Check your answers - connection to the property
+checkYourAnswersConnectionToProperty.heading= Check your answers – connection to the property
 checkYourAnswersConnectionToProperty.connectionStatus.heading = Connection status
 label.connectedToTheProperty = Connected to the property?
 label.yes-change-address = Yes I want to edit the address
@@ -388,7 +388,7 @@ provideContactDetailsAdditionalInformation.hint = For example, the name of the p
 
 # CHECK YOUR ANSWERS VACANT PROPERTY SUBMISSION
 #############################################
-checkYourAnswersConnectionToVacantProperty.heading = Check your answers - vacant properties
+checkYourAnswersConnectionToVacantProperty.heading = Check your answers – vacant properties
 checkYourAnswersConnectionToVacantProperty.connectionStatus.heading = Connection status
 checkYourAnswersConnectionToVacantProperty.proposedAddress = Proposed address
 label.checkYourAnswersConnectionToVacantProperty = Connected to the property?
@@ -1050,7 +1050,7 @@ hint.aboutYou = If you’re renting or leasing the property, even as a charity o
 
 # TASK LIST
 ###########
-taskList.heading = Declaration summary - check your progress
+taskList.heading = Declaration summary – check your progress
 taskList.subHeading = You can save your declaration and come back later. You have 90 days from the first time you save to complete this declaration or your information will be deleted.
 taskList.status.completed = Completed
 taskList.status.inProgress = In progress
@@ -1217,7 +1217,7 @@ error.concessionOrFranchise.missing = Select yes if any separate businesses are 
 
 # ADDITIONAL INFORMATION
 ########################
-checkYourAnswersAdditionalInformation.heading = Check your answers - additional information journey
+checkYourAnswersAdditionalInformation.heading = Check your answers – additional information journey
 label.furtherInformation = Further information or remarks
 key.altContact.details = Alternative contact details
 key.additionalInformation = Additional information
@@ -1266,7 +1266,7 @@ error.connectedToLandlord.missing = Select yet if you are connected to the landl
 
 # NOT CONNECTED
 ###############
-checkYourAnswersNotConnected.heading = Check your answers - no connection to the property
+checkYourAnswersNotConnected.heading = Check your answers – no connection to the property
 key.still.connected = Connected to the property?
 key.ever.connected = Ever been connected to the property?
 key.contact.details = Contacts and additional information
@@ -1275,7 +1275,7 @@ checkYourAnswersNotConnected.subheading2 = Your contact details
 
 # About franchise or lettings CYA
 checkYourAnswers.heading = This is a holding page for the check your answers page
-checkYourAnswersAboutFranchiseOrLettings.heading = Check your answers - franchises or lettings
+checkYourAnswersAboutFranchiseOrLettings.heading = Check your answers – franchises or lettings
 checkYourAnswersAboutFranchiseOrLettings.franchiseLettings.heading = Rental income
 checkYourAnswersAboutFranchiseOrLettings.franchiseLettings = Rental income?
 checkYourAnswersAboutFranchiseOrLettings.separateBusinesses.heading = Separate businesses
@@ -1294,7 +1294,7 @@ checkYourAnswersAboutFranchiseOrLettings.addedBusiness = You have added {0} busi
 checkYourAnswersAboutFranchiseOrLettings.addLetting = Add or remove tenant
 checkYourAnswersAboutFranchiseOrLettings.addedLetting = You have added {0} tenant
 
-checkYourAnswersAboutYourLeaseOrTenure.heading = Check your answers - your lease or agreement
+checkYourAnswersAboutYourLeaseOrTenure.heading = Check your answers – your lease or agreement
 checkYourAnswersAboutYourLeaseOrTenure.yourLandlord.heading = Your landlord
 checkYourAnswersAboutYourLeaseOrTenure.landlordDetails = Landlord’s details
 checkYourAnswersAboutYourLeaseOrTenure.connectedToLandlord = Connected to landlord?
@@ -1345,7 +1345,7 @@ checkYourAnswersAboutYourLeaseOrTenure.capitalSumOrPremium = Capital sum paid fo
 checkYourAnswersAboutYourLeaseOrTenure.receivePaymentWhenLeaseGranted = Payment received when lease was granted?
 checkYourAnswersAboutYourLeaseOrTenure.otherFactorsAffectingRent = Other factors affecting the rent?
 checkYourAnswersAboutYourLeaseOrTenure.otherFactorsAffectingRentDetails = Description of factors affecting the rent
-checkYourAnswersAboutTheProperty.heading = Check your answers - about you and the property
+checkYourAnswersAboutTheProperty.heading = Check your answers – about you and the property
 checkYourAnswersAboutTheProperty.aboutYou.heading = Your contact details
 checkYourAnswersAboutTheProperty.contact.details = Contact details
 checkYourAnswersAboutTheProperty.aboutProperty.heading = How the property is used
@@ -1364,7 +1364,7 @@ checkYourAnswersAboutTheProperty.enforcementAction = Enforcement action?
 checkYourAnswersAboutTheProperty.enforcementActionHasBeenTakenInformationDetails = Description of enforcement
 checkYourAnswersAboutTheProperty.tiedForGoods = Tied goods?
 checkYourAnswersAboutTheProperty.tiedForGoodsDetails = Type of tie
-checkYourAnswersAboutTheTradingHistory.heading = Check your answers - trading history
+checkYourAnswersAboutTheTradingHistory.heading = Check your answers – trading history
 checkYourAnswersAboutTheTradingHistory.occupationDate = Occupation date
 checkYourAnswersAboutTheTradingHistory.financialYearEnd = Financial year end
 checkYourAnswersAboutTheTradingHistory.tradingPeriod = Trading period
@@ -1373,7 +1373,7 @@ checkYourAnswersAboutTheTradingHistory.food = Food
 checkYourAnswersAboutTheTradingHistory.otherReceipts = Other receipts
 checkYourAnswersAboutTheTradingHistory.accommodation = Accommodation
 checkYourAnswersAboutTheTradingHistory.averageOccupancyRate = Average occupancy rate
-checkYourAnswersRequestReferenceNumber.heading = Check your answers - if you do not have a reference number
+checkYourAnswersRequestReferenceNumber.heading = Check your answers – if you do not have a reference number
 checkYourAnswersRequestReferenceNumber.subheading1 = Property details
 checkYourAnswersRequestReferenceNumber.subheading2 = Your details
 
