@@ -21,7 +21,7 @@ import controllers.FORDataCaptureController
 import form.aboutfranchisesorlettings.LettingOtherPartOfPropertiesForm.lettingOtherPartOfPropertiesForm
 import models.{ForTypes, Session}
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
-import models.submissions.common.AnswersYesNo
+import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
 import navigation.AboutFranchisesOrLettingsNavigator
 import navigation.identifiers.LettingAccommodationPageId
 import play.api.i18n.I18nSupport
@@ -31,7 +31,7 @@ import repositories.SessionRepo
 import views.html.aboutfranchisesorlettings.cateringOperationOrLettingAccommodation
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class LettingOtherPartOfPropertyController @Inject() (
@@ -40,7 +40,8 @@ class LettingOtherPartOfPropertyController @Inject() (
   cateringOperationOrLettingAccommodationView: cateringOperationOrLettingAccommodation,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FORDataCaptureController(mcc)
+)(implicit ec: ExecutionContext)
+    extends FORDataCaptureController(mcc)
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
@@ -49,7 +50,7 @@ class LettingOtherPartOfPropertyController @Inject() (
         cateringOperationOrLettingAccommodationView(
           request.sessionData.aboutFranchisesOrLettings.flatMap(_.lettingOtherPartOfProperty) match {
             case Some(lettingOtherPartOfProperty) =>
-              lettingOtherPartOfPropertiesForm.fillAndValidate(lettingOtherPartOfProperty)
+              lettingOtherPartOfPropertiesForm.fill(lettingOtherPartOfProperty)
             case _                                => lettingOtherPartOfPropertiesForm
           },
           "lettingOtherPartOfProperty",
@@ -88,8 +89,19 @@ class LettingOtherPartOfPropertyController @Inject() (
         ),
       data => {
         val updatedData = updateAboutFranchisesOrLettings(_.copy(lettingOtherPartOfProperty = Some(data)))
-        session.saveOrUpdate(updatedData)
-        Redirect(navigator.nextPage(LettingAccommodationPageId, updatedData).apply(updatedData))
+        session
+          .saveOrUpdate(updatedData)
+          .map { _ =>
+            navigator.cyaPage
+              .filter(_ =>
+                navigator.from == "CYA" && (data == AnswerNo ||
+                  request.sessionData.aboutFranchisesOrLettings
+                    .flatMap(_.lettingOtherPartOfProperty)
+                    .contains(AnswerYes))
+              )
+              .getOrElse(navigator.nextPage(LettingAccommodationPageId, updatedData).apply(updatedData))
+          }
+          .map(Redirect)
       }
     )
   }

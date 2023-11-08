@@ -35,7 +35,7 @@
 }
 
 @lettingsLastIndex = @{
-    sectionAnswers.answers.map(_.lettingPartOfPropertyDetails.size - 1).filter(_ >= 0).getOrElse(0)
+    sectionAnswers.answers.map(_.lettingPartOfPropertyDetails.size - 1).getOrElse(0) max 0
 }
 
 @if(sectionAnswers.answers.exists(a => a.editAddress.isDefined)) {
@@ -60,7 +60,7 @@
 
 <h2 class="govuk-heading-m">@messages("checkYourAnswersConnectionToVacantProperty.lettings.heading")</h2>
 @govukSummaryList(SummaryList(rows =
-    sectionAnswers.row("checkYourAnswersConnectionToVacantProperty.isRentReceived", _.isAnyRentReceived.map(_.name).map(v => messages(s"label.$v")), connectiontoproperty.routes.IsRentReceivedFromLettingController.show(), "vacantProperties")
+    sectionAnswers.row("checkYourAnswersConnectionToVacantProperty.isRentReceived", _.isAnyRentReceived.map(_.name).map(v => messages(s"label.$v")), connectiontoproperty.routes.IsRentReceivedFromLettingController.show(), "isRentReceivedFromLetting")
 ))
 
 @if(sectionAnswers.answers.flatMap(_.isAnyRentReceived).contains(AnswerYes)) {
@@ -68,7 +68,7 @@
         @govukSummaryList(SummaryList(rows =
             sectionAnswers.row("checkYourAnswersConnectionToVacantProperty.tenantDetails",
                 _ => Option(letting.tenantDetails.escapedHtml),
-                connectiontoproperty.routes.LettingPartOfPropertyDetailsController.show(Some(idx)), "tenantName", ("valueAsHtml", _ => None)) ++
+                connectiontoproperty.routes.LettingPartOfPropertyDetailsController.show(Some(idx)), "", ("valueAsHtml", _ => None)) ++
                     sectionAnswers.row("checkYourAnswersConnectionToVacantProperty.annualRent",
                         _ => letting.lettingPartOfPropertyRentDetails.map(lrd => s"""<p class="govuk-body">${lrd.annualRent.asMoney} </br> ${messages("checkYourAnswersConnectionToVacantProperty.fixedOn")} ${dateUtil.formatDayMonthAbbrYear(lrd.dateInput)} </p>"""),
                         controllers.connectiontoproperty.routes.LettingPartOfPropertyDetailsRentController.show(idx), "annualRent", ("valueAsHtml", _ => None)) ++
