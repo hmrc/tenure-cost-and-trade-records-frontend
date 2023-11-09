@@ -52,21 +52,27 @@ class LocalDateFormatter(
     ).bind(data).flatMap {
       case (None, None, None)          => Left(Seq(FormError(dayKey, "error.date.required", Seq(fieldName, allDateFields))))
       case (Some(d), Some(m), Some(y)) =>
-        val day   = Try(d.trim.toInt).filter((1 to 31).contains(_)).getOrElse(0)
-        val month = Try(m.trim.toInt).filter((1 to 12).contains(_)).getOrElse(0)
-        val year  = Try(y.trim.toInt).filter(_ > 0).getOrElse(0)
-        if (day > 0 && month > 0 && year > 0) {
+        val day          = Try(d.trim.toInt).filter((1 to 31).contains(_)).getOrElse(0)
+        val month        = Try(m.trim.toInt).filter((1 to 12).contains(_)).getOrElse(0)
+        val year         = Try(y.trim.toInt).filter(_ > 0).getOrElse(0)
+        val datePartsSeq = Seq(day, month, year)
+        if (datePartsSeq.forall(_ > 0)) {
           validateDate(day, month, year, allowFutureDates).left.map { errorKey =>
             Seq(FormError(dayKey, errorKey, Seq(fieldNameCapitalized, allDateFields)))
           }
         } else {
-          val invalidFields = (Seq(day, month, year) zip allDateFields).filter(_._1 == 0).map(_._2)
+          val invalidFields = (datePartsSeq zip allDateFields).filter(_._1 == 0).map(_._2)
           val focusKey      = s"$key.${invalidFields.head}"
           Left(Seq(FormError(focusKey, "error.date.invalid", Seq(fieldNameCapitalized, invalidFields))))
         }
       case (d, m, y)                   =>
-        val missedFields = (Seq(d, m, y) zip allDateFields).filter(_._1.isEmpty).map(_._2)
-        val arg1         = missedFields.mkString("a ", " and ", "")
+        val prefix       = messages("error.dateParts.prefix")
+        val separator    = messages("error.dateParts.separator")
+        val dayText      = messages("error.dateParts.day")
+        val monthText    = messages("error.dateParts.month")
+        val yearText     = messages("error.dateParts.year")
+        val missedFields = (Seq(d, m, y) zip Seq(dayText, monthText, yearText)).filter(_._1.isEmpty).map(_._2)
+        val arg1         = missedFields.mkString(s"$prefix ", s" $separator ", "")
         val focusKey     = s"$key.${missedFields.head}"
         Left(Seq(FormError(focusKey, "error.date.mustInclude", Seq(fieldNameCapitalized, arg1, missedFields))))
     }

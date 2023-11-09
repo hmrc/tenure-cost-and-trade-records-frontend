@@ -34,7 +34,7 @@ class FinancialYearEndDatesViewSpec extends QuestionViewBehaviours[Seq[LocalDate
   private val today    = LocalDate.now
   private val finYears = Seq(today, today.minusYears(1), today.minusYears(2)).map(_.getYear)
 
-  override val form: Form[Seq[LocalDate]] = financialYearEndDatesForm
+  override val form: Form[Seq[LocalDate]] = financialYearEndDatesForm(messages)
 
   def createView: () => Html = () => financialYearEndDatesView(form, finYears)(sessionRequest, messages)
 
