@@ -19,7 +19,7 @@ package form.aboutthetradinghistory
 import form.MappingSupport.turnoverSalesMapping
 import models.submissions.aboutthetradinghistory.TurnoverSection
 import play.api.data.{Form, Mapping}
-import play.api.data.Forms.{bigDecimal, mapping, number, optional, text}
+import play.api.data.Forms.{bigDecimal, ignored, mapping, number, optional, text}
 import play.api.data.validation.{Constraint, Invalid, Valid}
 
 import java.time.LocalDate
@@ -33,7 +33,7 @@ object TurnoverForm {
         else Invalid("Average occupancy rate must be between 0 and 100")
     }
     def columnMapping: Mapping[TurnoverSection]            = mapping(
-      "financial-year-end"     -> optional(text).transform[LocalDate](_ => LocalDate.EPOCH, _ => Some("")),
+      "financial-year-end"     -> ignored(LocalDate.EPOCH),
       "weeks"                  -> number(min = 0, max = 52),
       "alcoholic-drinks"       -> turnoverSalesMapping("turnover.alcohol.sales"),
       "food"                   -> turnoverSalesMapping("turnover.food.sales"),

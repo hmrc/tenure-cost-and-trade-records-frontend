@@ -314,9 +314,7 @@ checkYourAnswersConnectionToProperty.thirdParty = Third party?
 vacantPropertyStartDate.heading = When did the property become vacant?
 label.startDateOfVacantProperty =
 label.startDateOfVacantProperty.help = For example 27 9 2017
-error.startDateOfVacantProperty.day.required = The date must include a day
-error.startDateOfVacantProperty.month.required = The date must include a month
-error.startDateOfVacantProperty.year.required = The date must include a year
+fieldName.startDateOfVacantProperty = the date
 
 # LETTING INCOME - IS ANY RENT RECEIVED FROM LETTING
 ####################################################
@@ -835,9 +833,7 @@ label.rentActuallyAgreed.help = For example, 27 9 2017.
 help.rentActuallyAgreed.title = If you’re not sure when the rent was agreed
 help.rentActuallyAgreed.p1 = The date when the rent was agreed or set is normally the date when any of the listed options happened. It may not necessarily be the date of occupation, or the date the rent was first paid.
 help.rentActuallyAgreed.p2 = If you’re still unsure, refer to your lease or agreement.
-error.rentActuallyAgreed.day.required = The date when the rent was agreed must include a day
-error.rentActuallyAgreed.month.required = The date when the rent was agreed must include a month
-error.rentActuallyAgreed.year.required = The date when the rent was agreed must include a year
+fieldName.rentActuallyAgreed = the date when the rent was agreed
 error.howIsCurrentRentFixed.required = Tell us how the rent was fixed
 
 # CATERING OPERATION OR LETTING DETAILS
@@ -1101,9 +1097,7 @@ turnover.details.p1 = Do not include VAT in any of the figures you declare on th
 turnover.details.p2 = If you have not broken down your turnover into separate categories, or if you have recorded certain categories together - such as all food and drinks - you can declare them together in a single field.
 turnover.details.h2 = Financial year end
 turnover.details.p3 = Your financial year end dates are pre-populated by the system. If your financial year end has changed during the period shown, you can edit these dates accordingly.
-error.financialYearEnd.day.required = The financial year-end date must include a day
-error.financialYearEnd.month.required = The financial year-end date must include a month
-error.financialYearEnd.year.required = The financial year-end date must include a year
+fieldName.financialYearEnd = the financial year-end date
 error.turnover.alcohol.sales.required = Enter 0 if you didn’t sell any alcoholic drinks
 error.turnover.food.sales.required = Enter 0 if you didn’t sell any food
 error.turnover.other.sales.required = Enter 0 if you don’t have any sales in this category
@@ -1535,3 +1529,9 @@ error.fullName.required = Enter your full name
 error.tiedType.required = Select which type of tie you have
 error.addressLineTwo.maxLength = Address line 2 must be 50 characters or fewer
 error.county.maxLength = County must be 50 characters or fewer
+
+error.date.required = Enter {0}
+error.date.mustInclude = {0} must include {1}
+error.date.invalid = {0} must be a real date
+error.date.before1900 = {0} must be on or after 1 January 1900
+error.date.mustBeInPast = {0} must be in the past

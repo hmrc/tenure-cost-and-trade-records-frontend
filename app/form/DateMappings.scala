@@ -21,7 +21,8 @@ import models.RoughDate
 import models.submissions.Form6010.{DayMonthsDuration, MonthsYearDuration}
 import play.api.data.Forms._
 import play.api.data.Mapping
-import play.api.data.validation.{Constraint, Invalid, Valid}
+import play.api.data.validation.{Constraint, Invalid, Valid, ValidationError}
+import play.api.i18n.Messages
 import util.DateUtil.nowInUK
 
 import java.time.{LocalDate, LocalDateTime, YearMonth}
@@ -119,35 +120,10 @@ object DateMappings {
   )
 
   def requiredDateMapping(
-    allowFutureDates: Boolean = false,
-    fieldErrorPart: String = ""
-  ): Mapping[LocalDate] =
-    tuple(
-      "day"   -> optional(text)
-        .verifying(s"error$fieldErrorPart.day.required", _.nonEmpty)
-        .transform[String](_.getOrElse(""), Option(_))
-        .verifying(
-          Errors.invalidDate,
-          x => x.trim.forall(Character.isDigit) && x.trim.toInt >= 1 && x.trim.toInt <= 31
-        ),
-      "month" -> optional(text)
-        .verifying(s"error$fieldErrorPart.month.required", _.nonEmpty)
-        .transform[String](_.getOrElse(""), Option(_))
-        .verifying(
-          Errors.invalidDate,
-          x => x.trim.forall(Character.isDigit) && x.trim.toInt >= 1 && x.trim.toInt <= 12
-        ),
-      "year"  -> optional(text)
-        .verifying(s"error$fieldErrorPart.year.required", _.nonEmpty)
-        .transform[String](_.getOrElse(""), Option(_))
-        .verifying(Errors.invalidDate, x => x.trim.forall(Character.isDigit) && x.trim.length == 4)
-    ).verifying(
-      if (allowFutureDates) fullDateIsAfter1900(fieldErrorPart)
-      else fullDateIsInPastAndAfter1900(fieldErrorPart)
-    ).transform(
-      { case (day, month, year) => LocalDate.of(year.trim.toInt, month.trim.toInt, day.trim.toInt) },
-      (date: LocalDate) => (date.getDayOfMonth.toString, date.getMonthValue.toString, date.getYear.toString)
-    )
+    fieldNameKey: String,
+    allowFutureDates: Boolean = false
+  )(implicit messages: Messages): Mapping[LocalDate] =
+    of(new LocalDateFormatter(fieldNameKey, allowFutureDates))
 
   //  for precise dates, where all fields must be present and accurate
   def dateFieldsMapping(

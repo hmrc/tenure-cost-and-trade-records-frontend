@@ -16,19 +16,20 @@
 
 package form.connectiontoproperty
 
-import form.DateMappings.dateFieldsMapping
+import form.DateMappings.requiredDateMapping
 import models.submissions.connectiontoproperty.StartDateOfVacantProperty
 import play.api.data.Form
 import play.api.data.Forms.mapping
+import play.api.i18n.Messages
 
 object VacantPropertyStartDateForm {
 
-  val vacantPropertyStartDateForm = Form(
+  def vacantPropertyStartDateForm(implicit messages: Messages): Form[StartDateOfVacantProperty] = Form(
     mapping(
-      "startDateOfVacantProperty" -> dateFieldsMapping(
-        "startDateOfVacantProperty",
-        fieldErrorPart = ".startDateOfVacantProperty"
+      "startDateOfVacantProperty" -> requiredDateMapping(
+        "startDateOfVacantProperty"
       )
     )(StartDateOfVacantProperty.apply)(StartDateOfVacantProperty.unapply)
   )
+
 }

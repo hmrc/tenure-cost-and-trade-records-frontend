@@ -16,18 +16,20 @@
 
 package form.aboutYourLeaseOrTenure
 
-import form.DateMappings.dateFieldsMapping
+import form.DateMappings.requiredDateMapping
 import form.MappingSupport.howIsCurrentRentFixedType
 import models.submissions.aboutYourLeaseOrTenure.HowIsCurrentRentFixed
 import play.api.data.Form
 import play.api.data.Forms.mapping
+import play.api.i18n.Messages
 
 object HowIsCurrentRentFixedForm {
 
-  val howIsCurrentRentFixedForm = Form(
+  def howIsCurrentRentFixedForm(implicit messages: Messages): Form[HowIsCurrentRentFixed] = Form(
     mapping(
       "howIsCurrentRentFixed" -> howIsCurrentRentFixedType,
-      "rentActuallyAgreed"    -> dateFieldsMapping("rentActuallyAgreed", fieldErrorPart = ".rentActuallyAgreed")
+      "rentActuallyAgreed"    -> requiredDateMapping("rentActuallyAgreed")
     )(HowIsCurrentRentFixed.apply)(HowIsCurrentRentFixed.unapply)
   )
+
 }
