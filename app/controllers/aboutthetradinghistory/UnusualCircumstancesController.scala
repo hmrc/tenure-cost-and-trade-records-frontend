@@ -29,6 +29,7 @@ import repositories.SessionRepo
 import views.html.aboutthetradinghistory.unusualCircumstances
 
 import javax.inject.{Inject, Named, Singleton}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class UnusualCircumstancesController @Inject() (
@@ -37,7 +38,7 @@ class UnusualCircumstancesController @Inject() (
   unusualCircumstancesView: unusualCircumstances,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FORDataCaptureController(mcc)
+) (implicit ec: ExecutionContext) extends FORDataCaptureController(mcc)
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
@@ -58,8 +59,9 @@ class UnusualCircumstancesController @Inject() (
       formWithErrors => BadRequest(unusualCircumstancesView(formWithErrors, request.sessionData.toSummary)),
       data => {
         val updatedData = updateAboutTheTradingHistory(_.copy(unusualCircumstances = Some(data)))
-        session.saveOrUpdate(updatedData)
-        Redirect(navigator.nextPage(UnusualCircumstancesId, updatedData).apply(updatedData))
+        session.saveOrUpdate(updatedData).map { _ =>
+          Redirect(navigator.nextPage(UnusualCircumstancesId, updatedData).apply(updatedData))
+        }
       }
     )
   }
