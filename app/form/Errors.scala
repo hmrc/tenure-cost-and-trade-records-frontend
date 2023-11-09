@@ -27,6 +27,9 @@ object Errors {
   val addressBuildingNameNumberRequired = "error.address.buildingName.required"
   val addressTownCityRequired           = "error.address.townCity.required"
   val addressPostcodeRequired           = "error.address.postcode.required"
+  val postcodeRequired                  = "error.postcode.required"
+  val postcodeInvalid                   = "error.postcode.invalid"
+  val postcodeMaxLength                 = "error.postcode.maxLength"
 
   //Login
   val invalidRefNum             = "error.invalid_refnum"

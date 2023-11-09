@@ -20,6 +20,7 @@ import actions.WithSessionRefiner
 import config.LoginToBackendAction
 import connectors.{Audit, BackendConnector}
 import controllers.LoginController.startPage
+import form.PostcodeMapping.customPostcodeMapping
 import form.{Errors, MappingSupport}
 import models.submissions.common.Address
 import models.{ForTypes, Session}
@@ -55,15 +56,7 @@ object LoginController {
           validLength
         }
       ),
-      "postcode"        -> text.verifying(
-        Errors.invalidPostcodeOnLetter,
-        pc => {
-          var cleanPostcode = pc.replaceAll("[^\\w\\d]", "")
-          cleanPostcode = cleanPostcode.patch(cleanPostcode.length - 3, " ", 0).toUpperCase
-          val isValid       = cleanPostcode.matches(MappingSupport.postcodeRegex): Boolean
-          isValid
-        }
-      ),
+      "postcode"        -> customPostcodeMapping,
       "start-time"      -> jodaDate("yyyy-MM-dd'T'HH:mm:ss.SSSZ")
     )(LoginDetails.apply)(LoginDetails.unapply)
   )

@@ -22,36 +22,43 @@ import play.api.data.format.Formatter
 object PostcodeMapping {
 
   def postcode(
-    missingError: String = form.Errors.invalidPostcode,
-    formatError: String = form.Errors.invalidPostcode
-  ): Mapping[String] = Forms.of[String](postcodeFormatter(missingError, formatError))
+    requiredError: String = Errors.postcodeRequired,
+    maxLengthError: String = Errors.postcodeMaxLength,
+    formatError: String = Errors.postcodeInvalid
+  ): Mapping[String] =
+    Forms.of[String](postcodeFormatter(requiredError, maxLengthError, formatError))
 
-  val allowedChars = """[^a-zA-Z0-9]""".r
+  def isValid(postcode: String): Boolean = {
+    val cleanedPostcode = postcode.replaceAll("\\s", "").toUpperCase
+    val postcodeRegex   =
+      """^(GIR0AA|[A-Za-z][0-9]{1,2}|[A-Za-z][A-HJ-Y][0-9]{1,2}|[A-Za-z][0-9][A-Za-z]|[A-Za-z][A-HJ-Y][0-9][A-Za-z])[0-9][A-Za-z]{2}$"""
+    cleanedPostcode.matches(postcodeRegex)
+  }
 
-  val postcodeRegex = """^[A-Z]{1,2}[0-9][A-Z0-9]? ?[0-9][A-Z]{2}$""".r
+  def postcodeFormatter(
+    requiredError: String = "",
+    maxLengthError: String = "",
+    formatError: String = ""
+  ): Formatter[String] = new Formatter[String] {
 
-  def postcodeFormatter(missingError: String = "postcode.missing", formatError: String = "postcode.format") =
-    new Formatter[String] {
-      override def bind(key: String, data: Map[String, String]): Either[Seq[FormError], String] =
-        data
-          .get(key)
-          .filterNot(_.trim == "")
-          .map { rawPostcode =>
-            val cleanedPostcode = allowedChars.replaceAllIn(rawPostcode, "").toUpperCase
-            cleanedPostcode match {
-              case postcodeRegex() =>
-                Right(
-                  cleanedPostcode.substring(0, cleanedPostcode.length - 3) + " " + cleanedPostcode.substring(
-                    cleanedPostcode.length - 3
-                  )
-                )
-              case _               => Left(Seq(FormError(key, formatError, Seq(rawPostcode))))
-            }
+    override def bind(key: String, data: Map[String, String]): Either[Seq[FormError], String] =
+      data.get(key).filter(_.trim.nonEmpty) match {
+        case None              => Left(Seq(FormError(key, requiredError)))
+        case Some(rawPostcode) =>
+          val cleanedPostcode = rawPostcode.replaceAll("[^A-Za-z0-9]", "").toUpperCase
+          if (cleanedPostcode.length > 8) {
+            Left(Seq(FormError(key, maxLengthError)))
+          } else if (!isValid(cleanedPostcode)) {
+            Left(Seq(FormError(key, formatError)))
+          } else {
+            Right(cleanedPostcode.substring(0, cleanedPostcode.length - 3) + " " + cleanedPostcode.takeRight(3))
           }
-          .getOrElse(Left(Seq(FormError(key, missingError))))
+      }
 
-      override def unbind(key: String, value: String): Map[String, String] =
-        Map(key -> value)
-    }
+    override def unbind(key: String, value: String): Map[String, String] = Map(key -> value)
+  }
 
+  val customPostcodeMapping = PostcodeMapping.postcode(
+    formatError = Errors.invalidPostcodeOnLetter
+  )
 }
