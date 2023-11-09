@@ -31,7 +31,7 @@ class SessionRepositorySpec extends TestBaseSpec {
 
       repository.start(baseFilled6010Session).futureValue
 
-      val returnedSessionData: SessionData = repository.findFirst.futureValue // shouldBe session
+      val returnedSessionData: SessionData = repository.findSession.futureValue // shouldBe session
 
       inside(returnedSessionData) { case SessionData(_, data, createdAt) =>
         (data.referenceNumber) shouldBe baseFilled6010Session.referenceNumber

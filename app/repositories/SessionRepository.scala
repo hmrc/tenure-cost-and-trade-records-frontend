@@ -83,7 +83,7 @@ class SessionRepository @Inject() (mongo: MongoComponent)(implicit
       )
     }
 
-  def findFirst(implicit hc: HeaderCarrier): Future[SessionData] =
+  def findSession(implicit hc: HeaderCarrier): Future[SessionData] =
     Mdc.preservingMdc {
       for {
         sessionId <- getSessionId
