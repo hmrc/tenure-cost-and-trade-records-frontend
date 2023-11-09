@@ -19,6 +19,7 @@ package controllers.aboutthetradinghistory
 import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.UnusualCircumstancesForm.unusualCircumstancesForm
+import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.updateAboutTheTradingHistory
 import models.submissions.aboutthetradinghistory.UnusualCircumstances
 import navigation.AboutTheTradingHistoryNavigator
 import navigation.identifiers.UnusualCircumstancesId
@@ -56,7 +57,8 @@ class UnusualCircumstancesController @Inject() (
       unusualCircumstancesForm,
       formWithErrors => BadRequest(unusualCircumstancesView(formWithErrors, request.sessionData.toSummary)),
       data => {
-        val updatedData = request.sessionData
+        val updatedData = updateAboutTheTradingHistory(_.copy(unusualCircumstances = Some(data)))
+        session.saveOrUpdate(updatedData)
         Redirect(navigator.nextPage(UnusualCircumstancesId, updatedData).apply(updatedData))
       }
     )

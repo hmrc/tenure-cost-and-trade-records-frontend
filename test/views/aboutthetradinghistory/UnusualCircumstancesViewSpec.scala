@@ -57,5 +57,9 @@ class UnusualCircumstancesViewSpec extends QuestionViewBehaviours[UnusualCircums
       val loginButton = doc.getElementById("continue").text()
       assert(loginButton == messages("button.label.continue"))
     }
+    "contain an input for unusualCircumstances" in {
+      val doc = asDocument(createViewUsingForm(form))
+      assertRenderedById(doc, "unusualCircumstances")
+    }
   }
 }
