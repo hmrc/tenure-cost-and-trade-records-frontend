@@ -16,7 +16,7 @@
 
 package controllers.aboutYourLeaseOrTenure
 
-import actions.WithSessionRefiner
+import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.LeaseOrAgreementYearsForm.leaseOrAgreementYearsForm
 import models.Session
@@ -24,14 +24,14 @@ import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne.up
 import models.submissions.aboutYourLeaseOrTenure.LeaseOrAgreementYearsDetails
 import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.LeaseOrAgreementDetailsPageId
-import play.api.i18n.I18nSupport
 import play.api.Logging
+import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import views.html.aboutYourLeaseOrTenure.leaseOrAgreementYears
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class LeaseOrAgreementYearsController @Inject() (
@@ -40,7 +40,8 @@ class LeaseOrAgreementYearsController @Inject() (
   leaseOrAgreementYearsView: leaseOrAgreementYears,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FORDataCaptureController(mcc)
+)(implicit ec: ExecutionContext)
+    extends FORDataCaptureController(mcc)
     with I18nSupport
     with Logging {
 
@@ -48,9 +49,8 @@ class LeaseOrAgreementYearsController @Inject() (
     Future.successful(
       Ok(
         leaseOrAgreementYearsView(
-          request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.leaseOrAgreementYearsDetails) match {
-            case Some(leaseOrAgreementYearsDetails) =>
-              leaseOrAgreementYearsForm.fillAndValidate(leaseOrAgreementYearsDetails)
+          leaseOrAgreementDetailsInSession match {
+            case Some(leaseOrAgreementYearsDetails) => leaseOrAgreementYearsForm.fill(leaseOrAgreementYearsDetails)
             case _                                  => leaseOrAgreementYearsForm
           },
           getBackLink(request.sessionData),
@@ -68,12 +68,29 @@ class LeaseOrAgreementYearsController @Inject() (
           leaseOrAgreementYearsView(formWithErrors, getBackLink(request.sessionData), request.sessionData.toSummary)
         ),
       data => {
-        val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(leaseOrAgreementYearsDetails = Some(data)))
-        session.saveOrUpdate(updatedData)
-        Redirect(navigator.nextPage(LeaseOrAgreementDetailsPageId, updatedData).apply(updatedData))
+        val sessionContains3No = leaseOrAgreementDetailsInSession.exists(contains3No)
+        val updatedData        = updateAboutLeaseOrAgreementPartOne(_.copy(leaseOrAgreementYearsDetails = Some(data)))
+        session
+          .saveOrUpdate(updatedData)
+          .map { _ =>
+            navigator.cyaPage
+              .filter(_ => navigator.from == "CYA" && contains3No(data) == sessionContains3No)
+              .getOrElse(navigator.next(LeaseOrAgreementDetailsPageId, updatedData).apply(updatedData))
+          }
+          .map(Redirect)
       }
     )
   }
+
+  private def contains3No(d: LeaseOrAgreementYearsDetails): Boolean =
+    Seq(d.commenceWithinThreeYears, d.agreedReviewedAlteredThreeYears, d.rentUnderReviewNegotiated)
+      .forall(_.name == "no")
+
+  private def leaseOrAgreementDetailsInSession(implicit
+    request: SessionRequest[AnyContent]
+  ): Option[LeaseOrAgreementYearsDetails] =
+    request.sessionData.aboutLeaseOrAgreementPartOne
+      .flatMap(_.leaseOrAgreementYearsDetails)
 
   private def getBackLink(answers: Session): String =
     answers.aboutLeaseOrAgreementPartOne.flatMap(_.connectedToLandlord.map(_.name)) match {
