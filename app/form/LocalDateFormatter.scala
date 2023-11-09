@@ -20,6 +20,7 @@ import play.api.data.FormError
 import play.api.data.Forms._
 import play.api.data.format.Formatter
 import play.api.i18n.Messages
+import util.DateUtil.nowInUK
 
 import java.time.LocalDate
 import scala.util.Try
@@ -31,7 +32,8 @@ import scala.util.Try
   */
 class LocalDateFormatter(
   fieldNameKey: String,
-  allowFutureDates: Boolean = false
+  allowPastDates: Boolean,
+  allowFutureDates: Boolean
 )(implicit messages: Messages)
     extends Formatter[LocalDate] {
 
@@ -89,9 +91,13 @@ class LocalDateFormatter(
     Try(LocalDate.of(year, month, day)).toEither.left
       .map(_ => "error.date.invalid")
       .flatMap { date =>
+        val todayUKDate = nowInUK.toLocalDate
+
         if (date.isBefore(nineteenHundred)) {
           Left("error.date.before1900")
-        } else if (!allowFutureDates && date.isAfter(LocalDate.now)) {
+        } else if (!allowPastDates && date.isBefore(todayUKDate)) {
+          Left("error.date.beforeToday")
+        } else if (!allowFutureDates && date.isAfter(todayUKDate)) {
           Left("error.date.mustBeInPast")
         } else {
           Right(date)

@@ -29,6 +29,7 @@ object FinancialYearEndDatesForm {
     single(
       "date" -> requiredDateMapping(
         "financialYearEnd",
+        allowPastDates = true,
         allowFutureDates = true
       )
     )

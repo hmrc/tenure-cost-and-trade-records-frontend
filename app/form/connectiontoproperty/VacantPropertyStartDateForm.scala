@@ -27,7 +27,8 @@ object VacantPropertyStartDateForm {
   def vacantPropertyStartDateForm(implicit messages: Messages): Form[StartDateOfVacantProperty] = Form(
     mapping(
       "startDateOfVacantProperty" -> requiredDateMapping(
-        "startDateOfVacantProperty"
+        "startDateOfVacantProperty",
+        allowPastDates = true
       )
     )(StartDateOfVacantProperty.apply)(StartDateOfVacantProperty.unapply)
   )

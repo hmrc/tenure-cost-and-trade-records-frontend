@@ -16,19 +16,22 @@
 
 package form.aboutYourLeaseOrTenure
 
-import form.DateMappings.dateFieldsAfterTodayMapping
+import form.DateMappings.requiredDateMapping
 import models.submissions.aboutYourLeaseOrTenure.TenancyLeaseAgreementExpire
 import play.api.data.Form
 import play.api.data.Forms.mapping
+import play.api.i18n.Messages
 
 object TenancyLeaseAgreementExpireForm {
 
-  val tenancyLeaseAgreementExpireForm = Form(
-    mapping(
-      "tenancyLeaseAgreementExpire" -> dateFieldsAfterTodayMapping(
-        "tenancyLeaseAgreementExpire",
-        fieldErrorPart = ".tenancyLeaseAgreementExpire"
-      )
-    )(TenancyLeaseAgreementExpire.apply)(TenancyLeaseAgreementExpire.unapply)
-  )
+  def tenancyLeaseAgreementExpireForm(implicit messages: Messages): Form[TenancyLeaseAgreementExpire] =
+    Form(
+      mapping(
+        "tenancyLeaseAgreementExpire" -> requiredDateMapping(
+          "tenancyLeaseAgreementExpire",
+          allowFutureDates = true
+        )
+      )(TenancyLeaseAgreementExpire.apply)(TenancyLeaseAgreementExpire.unapply)
+    )
+
 }

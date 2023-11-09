@@ -28,7 +28,7 @@ object HowIsCurrentRentFixedForm {
   def howIsCurrentRentFixedForm(implicit messages: Messages): Form[HowIsCurrentRentFixed] = Form(
     mapping(
       "howIsCurrentRentFixed" -> howIsCurrentRentFixedType,
-      "rentActuallyAgreed"    -> requiredDateMapping("rentActuallyAgreed")
+      "rentActuallyAgreed"    -> requiredDateMapping("rentActuallyAgreed", allowPastDates = true)
     )(HowIsCurrentRentFixed.apply)(HowIsCurrentRentFixed.unapply)
   )
 
