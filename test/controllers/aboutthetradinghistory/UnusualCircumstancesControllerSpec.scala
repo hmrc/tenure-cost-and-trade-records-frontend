@@ -18,6 +18,7 @@ package controllers.aboutthetradinghistory
 
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory
 import play.api.http.Status
+import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import utils.TestBaseSpec
 
@@ -44,5 +45,26 @@ class UnusualCircumstancesControllerSpec extends TestBaseSpec {
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
+  }
+
+  "SUBMIT /" should {
+    "Redirect to CYA if an empty form is submitted" in {
+      val result = unusualCircumstancesController().submit(FakeRequest().withFormUrlEncodedBody(Seq.empty: _*))
+      status(result)           shouldBe SEE_OTHER
+      redirectLocation(result) shouldBe Some(
+        "/send-trade-and-cost-information/check-your-answers-about-the-trading-history"
+      )
+    }
+
+    "Redirect to CYA if not empty form submitted and save data in the session" in {
+      val testData = Map("unusualCircumstances" -> "test text")
+      val result   = unusualCircumstancesController().submit(FakeRequest().withFormUrlEncodedBody(testData.toSeq: _*))
+
+      status(result)           shouldBe SEE_OTHER
+      redirectLocation(result) shouldBe Some(
+        "/send-trade-and-cost-information/check-your-answers-about-the-trading-history"
+      )
+    }
+
   }
 }
