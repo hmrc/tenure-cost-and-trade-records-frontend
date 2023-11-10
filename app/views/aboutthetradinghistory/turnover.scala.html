@@ -33,14 +33,28 @@
         dateUtil: DateUtil
 )
 
-@(form: Form[Seq[TurnoverSection]])(implicit request: SessionRequest[_], messages: Messages)
+@(form: Form[Seq[TurnoverSection]], forType: String)(implicit request: SessionRequest[_], messages: Messages)
 
 @detailsContent = {
-    <p class="govuk-body govuk-!-font-weight-bold">@messages("turnover.details.h1")</p>
-    <p class="govuk-body">@messages("turnover.details.p1")</p>
-    <p class="govuk-body">@messages("turnover.details.p2")</p>
-    <p class="govuk-body govuk-!-font-weight-bold">@messages("turnover.details.h2")</p>
-    <p class="govuk-body">@messages("turnover.details.p3")</p>
+    @if(forType.equals("FOR6010") || forType.equals("FOR6011")) {
+        <p class="govuk-body govuk-!-font-weight-bold">@messages("turnover.details.h1")</p>
+        <p class="govuk-body">@messages("turnover.details.p1")</p>
+        <p class="govuk-body">@messages("turnover.details.p2")</p>
+        <p class="govuk-body govuk-!-font-weight-bold">@messages("turnover.details.h2")</p>
+        <p class="govuk-body">@messages("turnover.details.p3")</p>
+    }
+
+    @if(forType.equals("FOR6015") || forType.equals("FOR6016")) {
+        <p class="govuk-body govuk-!-font-weight-bold">@messages("turnover.details.h1")</p>
+        <p class="govuk-body">@messages("turnover.details.6015.p1")</p>
+        <p class="govuk-body govuk-!-font-weight-bold">@messages("turnover.details.h2")</p>
+        <p class="govuk-body">@messages("turnover.details.p3")</p>
+        <p class="govuk-body govuk-!-font-weight-bold">@messages("turnover.details.6015.h3")</p>
+        <p class="govuk-body">@messages("turnover.details.6015.p4")</p>
+        <p class="govuk-body govuk-!-font-weight-bold">@messages("turnover.details.6015.h4")</p>
+        <p class="govuk-body">@messages("turnover.details.6015.p5")</p>
+        <p class="govuk-body">@messages("turnover.details.6015.p6")</p>
+    }
 
 }
 
@@ -93,7 +107,16 @@
 
   @formWithCSRF(action = controllers.aboutthetradinghistory.routes.TurnoverController.submit) {
 
-      <p class="govuk-body">@messages("turnover.p1")</p>
+      @if(forType.equals("FOR6010") || forType.equals("FOR6011")) {
+          <p class="govuk-body">@messages("turnover.p1")</p>
+      }
+
+      @if(forType.equals("FOR6015") || forType.equals("FOR6016")) {
+          <p class="govuk-body">@messages("turnover.6015.p1")</p>
+          <p class="govuk-body">@messages("turnover.6015.p2")</p>
+          @* TODO - Reinstate paragraph when cut and paste functionality developed *@
+@*          <p class="govuk-body">@messages("turnover.6015.p3")</p>*@
+      }
       @* TODO - Reinstate paragraph when cut and paste functionality developed *@
       @*<p class="govuk-body">@messages("turnover.p2")</p>*@
 
