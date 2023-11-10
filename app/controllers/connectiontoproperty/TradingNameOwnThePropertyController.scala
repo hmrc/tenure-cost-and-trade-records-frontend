@@ -16,7 +16,7 @@
 
 package controllers.connectiontoproperty
 
-import actions.WithSessionRefiner
+import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
 import models.Session
 import models.submissions.common.AnswersYesNo
@@ -31,7 +31,7 @@ import models.submissions.connectiontoproperty.StillConnectedDetails.updateStill
 import navigation.identifiers.TradingNameOwnThePropertyPageId
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class TradingNameOwnThePropertyController @Inject() (
@@ -40,7 +40,8 @@ class TradingNameOwnThePropertyController @Inject() (
   tradingNameOwnThePropertyView: tradingNameOwnTheProperty,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FORDataCaptureController(mcc)
+)(implicit ec: ExecutionContext)
+    extends FORDataCaptureController(mcc)
     with I18nSupport
     with Logging {
 
@@ -48,8 +49,8 @@ class TradingNameOwnThePropertyController @Inject() (
     Future.successful(
       Ok(
         tradingNameOwnThePropertyView(
-          request.sessionData.stillConnectedDetails.flatMap(_.tradingNameOwnTheProperty) match {
-            case Some(enforcementAction) => tradingNameOwnThePropertyForm.fillAndValidate(enforcementAction)
+          ownThePropertyInSession match {
+            case Some(enforcementAction) => tradingNameOwnThePropertyForm.fill(enforcementAction)
             case _                       => tradingNameOwnThePropertyForm
           },
           getBackLink(request.sessionData),
@@ -78,11 +79,23 @@ class TradingNameOwnThePropertyController @Inject() (
         ),
       data => {
         val updatedData = updateStillConnectedDetails(_.copy(tradingNameOwnTheProperty = Some(data)))
-        session.saveOrUpdate(updatedData)
-        Redirect(navigator.nextPage(TradingNameOwnThePropertyPageId, updatedData).apply(updatedData))
+        session
+          .saveOrUpdate(updatedData)
+          .map { _ =>
+            navigator
+              .cyaPageDependsOnSession(updatedData)
+              .filter(_ => navigator.from == "CYA" && ownThePropertyInSession.contains(data))
+              .getOrElse(navigator.nextPage(TradingNameOwnThePropertyPageId, updatedData).apply(updatedData))
+          }
+          .map(Redirect)
       }
     )
   }
+
+  private def ownThePropertyInSession(implicit
+    request: SessionRequest[AnyContent]
+  ): Option[AnswersYesNo] =
+    request.sessionData.stillConnectedDetails.flatMap(_.tradingNameOwnTheProperty)
 
   private def getBackLink(answers: Session): String =
     controllers.connectiontoproperty.routes.TradingNameOperatingFromPropertyController.show().url

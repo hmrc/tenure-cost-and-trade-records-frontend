@@ -70,6 +70,10 @@ class ConnectionToPropertyNavigator @Inject() (audit: Audit) extends Navigator(a
     )
   )
 
+  override val postponeCYARedirectPages: Set[String] = Set(
+    controllers.connectiontoproperty.routes.TradingNamePayingRentController.show()
+  ).map(_.url)
+
   private def areYouStillConnectedRouting: Session => Call = answers => {
     answers.stillConnectedDetails.flatMap(_.addressConnectionType.map(_.name)) match {
       case Some("yes")                => controllers.connectiontoproperty.routes.VacantPropertiesController.show()

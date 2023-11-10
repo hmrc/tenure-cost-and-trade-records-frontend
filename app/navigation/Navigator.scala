@@ -38,8 +38,14 @@ abstract class Navigator @Inject() (
 
   def cyaPage: Option[Call] = None
 
+  /**
+    * Postpone redirect to CYA in case the next page is in this Set.
+    */
   def postponeCYARedirectPages: Set[String] = Set.empty
 
+  /**
+    * Redirect to another page (value in Map) instead of back to CYA in case the next page is a key in Map.
+    */
   def overrideRedirectIfFromCYA: Map[String, Session => Call] = Map.empty
 
   private val defaultPage: Session => Call = _ => routes.LoginController.show()
