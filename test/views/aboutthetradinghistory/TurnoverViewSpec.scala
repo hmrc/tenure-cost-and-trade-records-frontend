@@ -32,7 +32,11 @@ class TurnoverViewSpec extends QuestionViewBehaviours[Seq[TurnoverSection]] {
 
   val sessionRequest = SessionRequest(aboutYourTradingHistory6010YesSession, fakeRequest)
 
+  val sessionRequest6015 = SessionRequest(aboutYourTradingHistory6015YesSession, fakeRequest)
+
   def createView = () => turnoverView(form)(sessionRequest, messages)
+
+  def createView6015 = () => turnoverView(form)(sessionRequest6015, messages)
 
   def createViewUsingForm = (form: Form[Seq[TurnoverSection]]) => turnoverView(form)(sessionRequest, messages)
 
@@ -71,6 +75,18 @@ class TurnoverViewSpec extends QuestionViewBehaviours[Seq[TurnoverSection]] {
       assert(doc.toString.contains(messages("turnover.details.p3")))
     }
 
+    "contain get help section for 6015" in {
+      val doc = asDocument(createView6015())
+      assert(doc.toString.contains(messages("turnover.details.6015.p1")))
+      assert(doc.toString.contains(messages("turnover.details.6015.p2")))
+      assert(doc.toString.contains(messages("turnover.details.6015.h2")))
+      assert(doc.toString.contains(messages("turnover.details.6015.h3")))
+      assert(doc.toString.contains(messages("turnover.details.6015.p4")))
+      assert(doc.toString.contains(messages("turnover.details.6015.h4")))
+      assert(doc.toString.contains(messages("turnover.details.6015.p5")))
+      assert(doc.toString.contains(messages("turnover.details.6015.p6")))
+    }
+
     s"contain an input for weeks" in {
       val doc = asDocument(createView())
       assertRenderedById(doc, "0.weeks")
@@ -92,7 +108,7 @@ class TurnoverViewSpec extends QuestionViewBehaviours[Seq[TurnoverSection]] {
       assertRenderedById(doc, "2.food")
     }
 
-    s"contain an input for other-receiptss" in {
+    s"contain an input for other-receipts" in {
       val doc = asDocument(createView())
       assertRenderedById(doc, "0.other-receipts")
       assertRenderedById(doc, "1.other-receipts")

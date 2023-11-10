@@ -38,7 +38,8 @@ class UnusualCircumstancesController @Inject() (
   unusualCircumstancesView: unusualCircumstances,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) (implicit ec: ExecutionContext) extends FORDataCaptureController(mcc)
+)(implicit ec: ExecutionContext)
+    extends FORDataCaptureController(mcc)
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>

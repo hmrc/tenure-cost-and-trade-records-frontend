@@ -36,11 +36,26 @@
 @(form: Form[Seq[TurnoverSection]])(implicit request: SessionRequest[_], messages: Messages)
 
 @detailsContent = {
+@if(forType == ForTypes.for6010 || forType == ForTypes.for6011) {
     <p class="govuk-body govuk-!-font-weight-bold">@messages("turnover.details.h1")</p>
     <p class="govuk-body">@messages("turnover.details.p1")</p>
     <p class="govuk-body">@messages("turnover.details.p2")</p>
     <p class="govuk-body govuk-!-font-weight-bold">@messages("turnover.details.h2")</p>
     <p class="govuk-body">@messages("turnover.details.p3")</p>
+}
+
+@if(forType == ForTypes.for6015 || forType == ForTypes.for6016) {
+    <p class="govuk-body govuk-!-font-weight-bold">@messages("turnover.details.h1")</p>
+    <p class="govuk-body">@messages("turnover.details.6015.p1")</p>
+    <p class="govuk-body govuk-!-font-weight-bold">@messages("turnover.details.h2")</p>
+    <p class="govuk-body">@messages("turnover.details.p3")</p>
+    <p class="govuk-body govuk-!-font-weight-bold">@messages("turnover.details.6015.h3")</p>
+    <p class="govuk-body">@messages("turnover.details.6015.p4")</p>
+    <p class="govuk-body govuk-!-font-weight-bold">@messages("turnover.details.6015.h4")</p>
+    <p class="govuk-body">@messages("turnover.details.6015.p5")</p>
+    <p class="govuk-body">@messages("turnover.details.6015.p6")</p>
+}
+
 
 }
 
@@ -73,12 +88,16 @@
     @form.value.getOrElse(Seq.empty)
 }
 
+    @forType = @{
+        request.sessionData.forType
+    }
+
 @columns = @{
     request.sessionData.aboutTheTradingHistory.fold(Seq.empty[Int])(_.turnoverSections.indices)
 }
 
 @layout(
-    pageHeading = messages("turnover.heading"),
+    pageHeading = if(forType == ForTypes.for6010 || forType == ForTypes.for6011) { messages("turnover.heading") } else { messages("turnover.6015.heading") },
     showSection = true,
     summary = Some(request.sessionData.toSummary),
     sectionName = messages("label.section.aboutYourTradingHistory"),
@@ -93,7 +112,16 @@
 
   @formWithCSRF(action = controllers.aboutthetradinghistory.routes.TurnoverController.submit) {
 
-      <p class="govuk-body">@messages("turnover.p1")</p>
+      @if(forType == ForTypes.for6010 || forType == ForTypes.for6011) {
+          <p class="govuk-body">@messages("turnover.p1")</p>
+      }
+
+      @if(forType == ForTypes.for6015 || forType == ForTypes.for6016) {
+          <p class="govuk-body">@messages("turnover.6015.p1")</p>
+          <p class="govuk-body">@messages("turnover.6015.p2")</p>
+          @* TODO - Reinstate paragraph when cut and paste functionality developed *@
+@*          <p class="govuk-body">@messages("turnover.6015.p3")</p>*@
+      }
       @* TODO - Reinstate paragraph when cut and paste functionality developed *@
       @*<p class="govuk-body">@messages("turnover.p2")</p>*@
 
