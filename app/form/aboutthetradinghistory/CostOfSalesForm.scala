@@ -26,7 +26,7 @@ import java.time.LocalDate
 object CostOfSalesForm {
 
   val columnMapping: Mapping[CostOfSales] = mapping(
-    "financial-year-end" -> optional(text).transform[LocalDate](_ => LocalDate.EPOCH, _ => Some("")),
+    "financial-year-end" -> ignored(LocalDate.EPOCH),
     "accommodation"      -> turnoverSalesMapping("turnover.accommodation.sales"),
     "food"               -> turnoverSalesMapping("turnover.food.sales"),
     "drinks"             -> turnoverSalesMapping("turnover.alcohol.sales"),

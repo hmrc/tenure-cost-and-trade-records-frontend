@@ -16,19 +16,18 @@
 
 package form.aboutYourLeaseOrTenure
 
-import form.DateMappings.dateFieldsMapping
+import form.DateMappings.requiredDateMapping
 import models.submissions.aboutYourLeaseOrTenure.CurrentRentFirstPaid
 import play.api.data.Form
 import play.api.data.Forms.mapping
+import play.api.i18n.Messages
 
 object CurrentRentFirstPaidForm {
 
-  val currentRentFirstPaidForm = Form(
+  def currentRentFirstPaidForm(implicit messages: Messages): Form[CurrentRentFirstPaid] = Form(
     mapping(
-      "currentRentFirstPaid" -> dateFieldsMapping(
-        "currentRentFirstPaid",
-        fieldErrorPart = ".currentRentFirstPaid"
-      )
+      "currentRentFirstPaid" -> requiredDateMapping("currentRentFirstPaid", allowPastDates = true)
     )(CurrentRentFirstPaid.apply)(CurrentRentFirstPaid.unapply)
   )
+
 }

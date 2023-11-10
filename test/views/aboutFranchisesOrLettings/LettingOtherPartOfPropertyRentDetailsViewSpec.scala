@@ -33,7 +33,7 @@ class LettingOtherPartOfPropertyRentDetailsViewSpec
   val messageKeyPrefix = "lettingOtherPartOfPropertyRentDetails"
 
   val backLink      = controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsController.show().url
-  override val form = LettingOtherPartOfPropertyRentForm.lettingOtherPartOfPropertyRentForm
+  override val form = LettingOtherPartOfPropertyRentForm.lettingOtherPartOfPropertyRentForm(messages)
 
   def createView = () =>
     lettingOtherPartOfPropertyRentDetailsView(

@@ -27,7 +27,7 @@ class IntervalsOfRentReviewViewSpec extends QuestionViewBehaviours[IntervalsOfRe
 
   val messageKeyPrefix = "intervalsOfRentReview"
 
-  override val form = IntervalsOfRentReviewForm.intervalsOfRentReviewForm
+  override val form = IntervalsOfRentReviewForm.intervalsOfRentReviewForm(messages)
 
   def createView = () => intervalsOfRentReviewView(form, Summary("99996010001"))(fakeRequest, messages)
 

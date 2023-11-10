@@ -16,17 +16,20 @@
 
 package form.aboutYourLeaseOrTenure
 
-import form.DateMappings.dateFieldsAfterTodayMapping
+import form.DateMappings.requiredDateMapping
 import models.submissions.aboutYourLeaseOrTenure.IntervalsOfRentReview
 import play.api.data.Form
 import play.api.data.Forms.{mapping, optional, text}
+import play.api.i18n.Messages
 
 object IntervalsOfRentReviewForm {
 
-  val intervalsOfRentReviewForm = Form(
-    mapping(
-      "intervalsOfRentReview" -> optional(text),
-      "nextReview"            -> optional(dateFieldsAfterTodayMapping("nextReview", fieldErrorPart = ".nextReview"))
-    )(IntervalsOfRentReview.apply)(IntervalsOfRentReview.unapply)
-  )
+  def intervalsOfRentReviewForm(implicit messages: Messages): Form[IntervalsOfRentReview] =
+    Form(
+      mapping(
+        "intervalsOfRentReview" -> optional(text),
+        "nextReview"            -> optional(requiredDateMapping("nextReview", allowFutureDates = true))
+      )(IntervalsOfRentReview.apply)(IntervalsOfRentReview.unapply)
+    )
+
 }

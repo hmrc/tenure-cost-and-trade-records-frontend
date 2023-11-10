@@ -31,7 +31,8 @@ class CateringOperationsRentDetailsViewSpec extends QuestionViewBehaviours[Cater
 
   val messageKeyPrefix = "cateringOperationOrLettingAccommodationRentDetails"
 
-  override val form = CateringOperationOrLettingAccommodationRentForm.cateringOperationOrLettingAccommodationRentForm
+  override val form =
+    CateringOperationOrLettingAccommodationRentForm.cateringOperationOrLettingAccommodationRentForm(messages)
 
   def createView = () =>
     cateringOperationRentDetailsView(

@@ -314,9 +314,7 @@ checkYourAnswersConnectionToProperty.thirdParty = Third party?
 vacantPropertyStartDate.heading = When did the property become vacant?
 label.startDateOfVacantProperty =
 label.startDateOfVacantProperty.help = For example 27 9 2017
-error.startDateOfVacantProperty.day.required = The date must include a day
-error.startDateOfVacantProperty.month.required = The date must include a month
-error.startDateOfVacantProperty.year.required = The date must include a year
+fieldName.startDateOfVacantProperty = the date when the property did become vacant
 
 # LETTING INCOME - IS ANY RENT RECEIVED FROM LETTING
 ####################################################
@@ -345,6 +343,7 @@ error.addressLineTwo.maxLength = Second line of address must be 50 characters or
 ###########################################
 lettingPartOfPropertyRentDetails.heading = Annual rent for tenant
 lettingPartOfPropertyRentDetails.title = Annual rent for {0}
+fieldName.lettingPartOfPropertyFixedRentDate = the date the rent was fixed
 
 # CONNECTION TO PROPERTY ITEMS INCLUDED IN RENT
 ###############################################
@@ -835,15 +834,14 @@ label.rentActuallyAgreed.help = For example, 27 9 2017.
 help.rentActuallyAgreed.title = If you’re not sure when the rent was agreed
 help.rentActuallyAgreed.p1 = The date when the rent was agreed or set is normally the date when any of the listed options happened. It may not necessarily be the date of occupation, or the date the rent was first paid.
 help.rentActuallyAgreed.p2 = If you’re still unsure, refer to your lease or agreement.
-error.rentActuallyAgreed.day.required = The date when the rent was agreed must include a day
-error.rentActuallyAgreed.month.required = The date when the rent was agreed must include a month
-error.rentActuallyAgreed.year.required = The date when the rent was agreed must include a year
+fieldName.rentActuallyAgreed = the date when the rent was agreed
 error.howIsCurrentRentFixed.required = Tell us how the rent was fixed
 
 # CATERING OPERATION OR LETTING DETAILS
 #######################################
 cateringOperationOrLettingAccommodationDetails.heading = Provide the business’s details
 lettingOtherPartOfPropertyDetails.heading = Provide the tenant’s details
+fieldName.lettingOtherPartOfPropertyFixedRentDate = the date the rent was fixed
 label.operatorName = Operator’s name
 label.lettingOperatorName = Tenant’s name
 label.typeOfBusiness = Describe the type of business
@@ -867,6 +865,7 @@ lettingOtherPartOfPropertyRentDetails.heading = Annual rent for {0}
 lettingOtherPartOfPropertyRentDetails.title = Annual rent for tenant
 label.annualRent = Annual rent payment excluding VAT
 label.dateInput = When was this sum fixed?
+fieldName.cateringOrLettingFixedRentDate = the date the rent was fixed
 error.required.annualRentExcludingVat.annualRent = Enter the annual rent excluding VAT
 error.invalid_currency.annualRent.annualRent = The annual rent figure must be a number
 error.dateInput.month.required = The date the rent was fixed must include a month
@@ -970,9 +969,7 @@ currentRentFirstPaid.list4 = changes linked to your turnover
 currentRentFirstPaid.list5 = fluctuations in any index to which your rent may be linked, for example the retail price index (RPI)
 label.currentRentFirstPaid.p5 = When was the current rent first paid under the terms of the lease or agreement?
 label.currentRentFirstPaid.help = For example, 27 9 2017.
-error.currentRentFirstPaid.day.required = The date when the current rent was first paid must include a day
-error.currentRentFirstPaid.month.required = The date when the current rent was first paid must include a month
-error.currentRentFirstPaid.year.required = The date when the current rent was first paid must include a year
+fieldName.currentRentFirstPaid = the date when the current rent was first paid
 
 # CURRENT LEASE OR AGREEMENT BEGIN
 ##################################
@@ -995,12 +992,9 @@ intervalsOfRentReview.label = How often is the rent reviewed under the terms of 
 hint.intervalsOfRentReview = Leave blank if the lease does not include any rent reviews.
 label.nextReview = When is the next rent review due?
 label.nextReview.help = For example, 27 9 2025
-error.nextReview.day.required = The date must include a day
-error.nextReview.month.required = The date must include a month
-error.nextReview.year.required = The date must include a year
+fieldName.nextReview = the date of the next rent review
 error.currentLeaseOrAgreementBegin.required = Please provide at what intervals is the rent reviewed under the terms of the lease or agreement
 error.currentLeaseOrAgreementBegin.maxLength = This must be 1000 characters or fewer
-error.date_before_today.nextReview = The date of the next rent review cannot be in the past
 
 # CURRENT RENT PAYABLE WITHIN 12 MONTHS
 #######################################
@@ -1011,10 +1005,7 @@ currentRentPayableWithin12Months.subheading = Is the current rent payable due fo
 currentRentPayableWithin12Months.hint = Do not include any rent increases linked to turnover or the retail price index (RPI).
 label.dateReview = Date of next rent review, or expiry of existing lease
 error.currentRentPayableWithin12Months.required = Select yes if the current rent will be reviewed in the next 12 months
-error.dateReview.day.required = The date of review or expiry must include a day
-error.dateReview.month.required = The date of review or expiry must include a month
-error.dateReview.year.required = The date of review or expiry must include a year
-error.date_before_today.dateReview = The date cannot be in the past
+fieldName.dateReview = the date of review or expiry
 label.currentRentPayableWithin12Months.help = For example, 27 9 2023 - leave blank if no rent reviews are due.
 
 # WHAT IS YOUR RENT BASED ON
@@ -1116,6 +1107,7 @@ turnover.details.6015.p6 = For example, rental income from a restaurant concessi
 error.financialYearEnd.day.required = The financial year-end date must include a day
 error.financialYearEnd.month.required = The financial year-end date must include a month
 error.financialYearEnd.year.required = The financial year-end date must include a year
+fieldName.financialYearEnd = the financial year-end date
 error.turnover.alcohol.sales.required = Enter 0 if you didn’t sell any alcoholic drinks
 error.turnover.food.sales.required = Enter 0 if you didn’t sell any food
 error.turnover.other.sales.required = Enter 0 if you don’t have any sales in this category
@@ -1264,7 +1256,7 @@ label.alternativeContactDetails = Correspondence address
 # TENANCY LEASE AGREEMENT EXPIRE (FORM 6011)
 ###########################################
 tenancyLeaseAgreementExpire.heading = When does your tenancy, lease or agreement expire, or if earlier, what is the date of your next review (excluding indexation)?
-error.date_before_today.tenancyLeaseAgreementExpire = The date of the tenancy, lease or agreement cannot be in the past
+fieldName.tenancyLeaseAgreementExpire = the date of the tenancy, lease or agreement
 
 # CONNECTED TO LANDLORD
 ###########################################
@@ -1550,3 +1542,15 @@ error.fullName.required = Enter your full name
 error.tiedType.required = Select which type of tie you have
 error.addressLineTwo.maxLength = Address line 2 must be 50 characters or fewer
 error.county.maxLength = County must be 50 characters or fewer
+
+error.date.required = Enter {0}
+error.date.mustInclude = {0} must include {1}
+error.date.invalid = {0} must be a real date
+error.date.before1900 = {0} must be on or after 1 January 1900
+error.date.beforeToday = {0} cannot be in the past
+error.date.mustBeInPast = {0} must be in the past
+error.dateParts.prefix =
+error.dateParts.separator = a
+error.dateParts.day = diwrnod
+error.dateParts.month = mis
+error.dateParts.year = blwyddyn

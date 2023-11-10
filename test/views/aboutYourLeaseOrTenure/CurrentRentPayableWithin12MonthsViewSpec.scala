@@ -27,7 +27,7 @@ class CurrentRentPayableWithin12MonthsViewSpec extends QuestionViewBehaviours[Cu
 
   val messageKeyPrefix = "currentRentPayableWithin12Months"
 
-  override val form = CurrentRentPayableWithin12MonthsForm.currentRentPayableWithin12MonthsForm
+  override val form = CurrentRentPayableWithin12MonthsForm.currentRentPayableWithin12MonthsForm(messages)
 
   def createView = () => currentRentPayableWithin12MonthsView(form, Summary("99996010001"))(fakeRequest, messages)
 

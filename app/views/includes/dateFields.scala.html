@@ -46,10 +46,7 @@
         if(msg.isEmpty) {
             if(form.errors.exists(x => x.key.contains(field))){
                 val firstError = form.errors.find(x => x.key.contains(field))
-                if (firstError.get.args.size == 2)
-                    msg = Some(ErrorMessage(content = Text(messages(firstError.get.message.replaceAll("[\\[|\\]]", ""), firstError.get.args(0), firstError.get.args(1)))))
-                else
-                    msg = Some(ErrorMessage(content = Text(messages(firstError.get.message.replaceAll("[\\[|\\]]", "")))))
+                msg = Some(ErrorMessage(content = Text(messages(firstError.get.message.replaceAll("[\\[|\\]]", ""), firstError.get.args: _*))))
             }
         }
         msg
@@ -57,37 +54,43 @@
 
     @dateInputItems = @{
 
-        def getErrorClass(field: String) = {
-            if(form.error(field).isDefined  || (form.errors.map(_.message).contains(Errors.dateMustBeInPast)))
+        def getErrorClass(inputField: String, datePart: String) = {
+            if (form.error(inputField).isDefined || form.errors.find(_.key.startsWith(field)).flatMap(_.args.lastOption).exists {
+                case errorParts: Seq[String] => errorParts.contains(datePart)
+                case _ => false
+            }) {
                 "govuk-input--error"
-            else ""
+            } else {
+                ""
+            }
         }
+
         val month = InputItem(
             id = monthfield,
             name = monthfield,
-            classes = ("govuk-input--width-2 " + getErrorClass(monthfield)),
+            classes = "govuk-input--width-2 " + getErrorClass(monthfield, "month"),
             value = form(monthfield).value,
             label = messages("label.date.month")
         )
         val year = InputItem(
             id = yearfield,
             name = yearfield,
-            classes = ("govuk-input--width-4 " + getErrorClass(yearfield)),
+            classes = "govuk-input--width-4 " + getErrorClass(yearfield, "year"),
             value = form(yearfield).value,
             label = messages("label.date.year")
         )
         val day = InputItem(
             id = dayfield,
             name = dayfield,
-            classes = ("govuk-input--width-2 " + getErrorClass(dayfield)),
+            classes = "govuk-input--width-2 " + getErrorClass(dayfield, "day"),
             value = form(dayfield).value,
             label = messages("label.date.day")
         )
 
-        if(showDays){
+        if (showDays) {
             Seq(day, month, year)
-        }else if (hideYear) {
-            Seq(day,month)
+        } else if (hideYear) {
+            Seq(day, month)
         } else {
             Seq(month, year)
         }
