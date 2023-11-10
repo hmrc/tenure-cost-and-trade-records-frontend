@@ -49,8 +49,7 @@ class TurnoverController @Inject() (
         val numberOfColumns = aboutTheTradingHistory.turnoverSections.size
         Ok(
           turnoverView(
-            turnoverForm(numberOfColumns).fill(aboutTheTradingHistory.turnoverSections),
-            request.sessionData.forType
+            turnoverForm(numberOfColumns).fill(aboutTheTradingHistory.turnoverSections)
           )
         )
       }
@@ -63,7 +62,7 @@ class TurnoverController @Inject() (
         val numberOfColumns = aboutTheTradingHistory.turnoverSections.size
         continueOrSaveAsDraft[Seq[TurnoverSection]](
           turnoverForm(numberOfColumns),
-          formWithErrors => BadRequest(turnoverView(formWithErrors, request.sessionData.forType)),
+          formWithErrors => BadRequest(turnoverView(formWithErrors)),
           success => {
             val turnoverSections =
               (success zip financialYearEndDates(aboutTheTradingHistory)).map { case (turnoverSection, finYearEnd) =>

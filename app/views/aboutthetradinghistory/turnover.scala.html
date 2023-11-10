@@ -33,7 +33,7 @@
         dateUtil: DateUtil
 )
 
-@(form: Form[Seq[TurnoverSection]], forType: String)(implicit request: SessionRequest[_], messages: Messages)
+@(form: Form[Seq[TurnoverSection]])(implicit request: SessionRequest[_], messages: Messages)
 
 @detailsContent = {
 @if(forType == ForTypes.for6010 || forType == ForTypes.for6011) {
