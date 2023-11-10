@@ -18,7 +18,6 @@ package views.aboutYourLeaseOrTenure
 
 import form.aboutYourLeaseOrTenure.HowIsCurrentRentFixedForm
 import models.pages.Summary
-import models.submissions.Form6010._
 import models.submissions.aboutYourLeaseOrTenure.{CurrentRentFixedInterimRent, CurrentRentFixedNewLeaseAgreement, CurrentRentFixedRenewalLeaseTenancy, CurrentRentFixedRentReview, CurrentRentFixedSaleLeaseback, HowIsCurrentRentFixed}
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
@@ -28,7 +27,7 @@ class HowIsCurrentRentFixedViewSpec extends QuestionViewBehaviours[HowIsCurrentR
 
   val messageKeyPrefix = "howIsCurrentRentFixed"
 
-  override val form = HowIsCurrentRentFixedForm.howIsCurrentRentFixedForm
+  override val form = HowIsCurrentRentFixedForm.howIsCurrentRentFixedForm(messages)
 
   val backLink = controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryAccordingToGrossOrNetController.show().url
 

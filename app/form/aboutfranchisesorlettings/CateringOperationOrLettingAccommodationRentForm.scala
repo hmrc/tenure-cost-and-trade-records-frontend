@@ -16,20 +16,23 @@
 
 package form.aboutfranchisesorlettings
 
-import form.DateMappings.dateFieldsMapping
+import form.DateMappings.requiredDateMapping
 import form.MappingSupport.currencyMapping
 import models.submissions.aboutfranchisesorlettings.CateringOperationRentDetails
 import play.api.data.Form
 import play.api.data.Forms.mapping
+import play.api.i18n.Messages
 
 object CateringOperationOrLettingAccommodationRentForm {
 
-  val cateringOperationOrLettingAccommodationRentForm = Form(
-    mapping(
-      "annualRent" -> currencyMapping(".annualRent"),
-      "dateInput"  -> dateFieldsMapping("dateInput")
-    )(CateringOperationRentDetails.apply)(
-      CateringOperationRentDetails.unapply
+  def cateringOperationOrLettingAccommodationRentForm(implicit messages: Messages): Form[CateringOperationRentDetails] =
+    Form(
+      mapping(
+        "annualRent" -> currencyMapping(".annualRent"),
+        "dateInput"  -> requiredDateMapping("cateringOrLettingFixedRentDate", allowPastDates = true)
+      )(CateringOperationRentDetails.apply)(
+        CateringOperationRentDetails.unapply
+      )
     )
-  )
+
 }

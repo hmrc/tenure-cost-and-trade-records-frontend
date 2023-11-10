@@ -30,7 +30,7 @@ class TenancyLeaseAgreementExpireViewSpec extends QuestionViewBehaviours[Tenancy
 
   val messageKeyPrefix = "tenancyLeaseAgreementExpire"
 
-  override val form = TenancyLeaseAgreementExpireForm.tenancyLeaseAgreementExpireForm
+  override val form = TenancyLeaseAgreementExpireForm.tenancyLeaseAgreementExpireForm(messages)
 
   def createView = () => tenancyLeaseAgreementExpireView(form, Summary("99996010001"))(fakeRequest, messages)
 

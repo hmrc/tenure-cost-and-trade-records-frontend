@@ -29,7 +29,7 @@ class CurrentRentFirstPaidViewSpec extends QuestionViewBehaviours[CurrentRentFir
 
   val backLink = controllers.aboutYourLeaseOrTenure.routes.CurrentAnnualRentController.show().url
 
-  override val form = CurrentRentFirstPaidForm.currentRentFirstPaidForm
+  override val form = CurrentRentFirstPaidForm.currentRentFirstPaidForm(messages)
 
   def createView = () => currentRentFirstPaidView(form, backLink, Summary("99996010001"))(fakeRequest, messages)
 

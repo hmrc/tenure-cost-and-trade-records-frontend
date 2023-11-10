@@ -16,20 +16,23 @@
 
 package form.aboutfranchisesorlettings
 
-import form.DateMappings.dateFieldsMapping
+import form.DateMappings.requiredDateMapping
 import form.MappingSupport.currencyMapping
 import models.submissions.aboutfranchisesorlettings.LettingOtherPartOfPropertyRentDetails
 import play.api.data.Form
 import play.api.data.Forms.mapping
+import play.api.i18n.Messages
 
 object LettingOtherPartOfPropertyRentForm {
 
-  val lettingOtherPartOfPropertyRentForm = Form(
-    mapping(
-      "annualRent" -> currencyMapping(".annualRent"),
-      "dateInput"  -> dateFieldsMapping("dateInput")
-    )(LettingOtherPartOfPropertyRentDetails.apply)(
-      LettingOtherPartOfPropertyRentDetails.unapply
+  def lettingOtherPartOfPropertyRentForm(implicit messages: Messages): Form[LettingOtherPartOfPropertyRentDetails] =
+    Form(
+      mapping(
+        "annualRent" -> currencyMapping(".annualRent"),
+        "dateInput"  -> requiredDateMapping("lettingOtherPartOfPropertyFixedRentDate", allowPastDates = true)
+      )(LettingOtherPartOfPropertyRentDetails.apply)(
+        LettingOtherPartOfPropertyRentDetails.unapply
+      )
     )
-  )
+
 }
