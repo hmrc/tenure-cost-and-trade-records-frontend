@@ -97,7 +97,7 @@
 }
 
 @layout(
-    pageHeading = messages("turnover.heading"),
+    pageHeading = if(forType == ForTypes.for6010 || forType == ForTypes.for6011) { messages("turnover.heading") } else { messages("turnover.6015.heading") },
     showSection = true,
     summary = Some(request.sessionData.toSummary),
     sectionName = messages("label.section.aboutYourTradingHistory"),
