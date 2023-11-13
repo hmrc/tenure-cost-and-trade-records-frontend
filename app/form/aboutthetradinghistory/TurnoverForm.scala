@@ -19,7 +19,7 @@ package form.aboutthetradinghistory
 import form.MappingSupport.turnoverSalesMapping
 import models.submissions.aboutthetradinghistory.TurnoverSection
 import play.api.data.{Form, Mapping}
-import play.api.data.Forms.{bigDecimal, ignored, mapping, number, optional, text}
+import play.api.data.Forms.{bigDecimal, ignored, mapping, number, optional}
 import play.api.data.validation.{Constraint, Invalid, Valid}
 
 import java.time.LocalDate

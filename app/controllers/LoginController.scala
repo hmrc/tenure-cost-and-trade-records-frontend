@@ -21,7 +21,7 @@ import config.LoginToBackendAction
 import connectors.{Audit, BackendConnector}
 import controllers.LoginController.startPage
 import form.PostcodeMapping.customPostcodeMapping
-import form.{Errors, MappingSupport}
+import form.Errors
 import models.submissions.common.Address
 import models.{ForTypes, Session}
 import org.joda.time.DateTime
