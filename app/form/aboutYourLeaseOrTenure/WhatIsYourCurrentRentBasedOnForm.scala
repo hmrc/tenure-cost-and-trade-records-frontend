@@ -30,7 +30,7 @@ object WhatIsYourCurrentRentBasedOnForm {
       "currentRentBasedOn"    -> whatIsYourRentBasedOnType,
       "whatIsYourRentBasedOn" -> optional(
         text.verifying(
-          maxLength(2000, Errors.maxLength)
+          maxLength(2000, "error.currentRentBasedOn.maxLength")
         )
       )
     )(WhatIsYourCurrentRentBasedOnDetails.apply)(WhatIsYourCurrentRentBasedOnDetails.unapply)
