@@ -110,7 +110,7 @@
     theForm = form
 ) {
 
-  @formWithCSRF(action = controllers.aboutthetradinghistory.routes.TurnoverController.submit) {
+
 
       @if(forType == ForTypes.for6010 || forType == ForTypes.for6011) {
           <p class="govuk-body">@messages("turnover.p1")</p>
@@ -124,7 +124,7 @@
       }
       @* TODO - Reinstate paragraph when cut and paste functionality developed *@
       @*<p class="govuk-body">@messages("turnover.p2")</p>*@
-
+    @formWithCSRF(action = controllers.aboutthetradinghistory.routes.TurnoverController.submit) {
       @govukInsetText(InsetText(
           content = Text(messages("turnover.inset"))
       ))

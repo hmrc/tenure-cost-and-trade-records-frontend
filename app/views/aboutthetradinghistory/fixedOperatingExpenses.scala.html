@@ -43,10 +43,9 @@
   backLinkUrl = controllers.aboutthetradinghistory.routes.VariableOperatingExpensesController.show.url,
     theForm = form
 ) {
-
-  @formWithCSRF(action = controllers.aboutthetradinghistory.routes.FixedOperatingExpensesController.submit()) {
-
       <p class="govuk-body">@messages("fixedOperatingExpenses.p1")</p>
+
+    @formWithCSRF(action = controllers.aboutthetradinghistory.routes.FixedOperatingExpensesController.submit()) {
 
       @govukInsetText(InsetText(
           content = Text(messages("fixedOperatingExpenses.p2"))

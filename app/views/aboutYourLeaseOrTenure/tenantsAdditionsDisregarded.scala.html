@@ -38,8 +38,6 @@
  theForm = theForm
 ) {
 
-  @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController.submit()) {
-
       <p class="govuk-body">@messages("tenantsAdditionsDisregarded.p1")</p>
 
       <p class="govuk-body">@messages("tenantsAdditionsDisregarded.p2")</p>
@@ -50,6 +48,7 @@
           <li>@{messages("tenantsAdditionsDisregarded.list3")}</li>
       </ul>
 
+    @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController.submit()) {
       @includes.radioButtonsYesNo(
       govukRadios,
       theForm,
