@@ -42,7 +42,7 @@
     theForm = theForm
 ) {
 
-    @formWithCSRF(action = controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.submit()) {
+
 
         <p class="govuk-body">@messages("franchiseLettings.p1")</p>
         <p class="govuk-body">@messages("franchiseLettings.p2")</p>
@@ -54,6 +54,7 @@
 
         <h2 class="govuk-heading-m">@messages("franchiseLettings.subheading")</h2>
 
+    @formWithCSRF(action = controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.submit()) {
         @govukRadios(
             Radios(
                 name = "franchiseOrLettingsTiedToProperty",
