@@ -81,7 +81,9 @@ class FranchiseOrLettingsTiedToPropertyController @Inject() (
                     .flatMap(_.franchisesOrLettingsTiedToProperty)
                     .contains(AnswerYes))
               )
-              .getOrElse(navigator.next(FranchiseOrLettingsTiedToPropertyId, updatedData).apply(updatedData))
+              .getOrElse(
+                navigator.nextWithoutRedirectToCYA(FranchiseOrLettingsTiedToPropertyId, updatedData).apply(updatedData)
+              )
           }
           .map(Redirect)
       }

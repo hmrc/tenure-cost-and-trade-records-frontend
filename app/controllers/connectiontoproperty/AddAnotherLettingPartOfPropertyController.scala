@@ -99,7 +99,11 @@ class AddAnotherLettingPartOfPropertyController @Inject() (
                 navigator
                   .cyaPageDependsOnSession(updatedData)
                   .filter(_ => navigator.from == "CYA" && data == AnswerNo)
-                  .getOrElse(navigator.next(AddAnotherLettingPartOfPropertyPageId, updatedData).apply(updatedData))
+                  .getOrElse(
+                    navigator
+                      .nextWithoutRedirectToCYA(AddAnotherLettingPartOfPropertyPageId, updatedData)
+                      .apply(updatedData)
+                  )
               }
               .map(Redirect)
           }

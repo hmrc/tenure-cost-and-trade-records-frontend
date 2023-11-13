@@ -84,7 +84,7 @@ class VacantPropertiesController @Inject() (
                     .flatMap(_.vacantProperties)
                     .exists(_.vacantProperties == data.vacantProperties)
               )
-              .getOrElse(navigator.next(VacantPropertiesPageId, updatedData).apply(updatedData))
+              .getOrElse(navigator.nextWithoutRedirectToCYA(VacantPropertiesPageId, updatedData).apply(updatedData))
           )
           .map(Redirect)
       }

@@ -16,7 +16,7 @@
 
 package controllers.connectiontoproperty
 
-import actions.WithSessionRefiner
+import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
 import form.connectiontoproperty.AreYouStillConnectedForm.areYouStillConnectedForm
 import navigation.ConnectionToPropertyNavigator
@@ -26,7 +26,7 @@ import play.api.mvc._
 import repositories.SessionRepo
 import views.html.connectiontoproperty.areYouStillConnected
 import models.submissions.connectiontoproperty.StillConnectedDetails.updateStillConnectedDetails
-import models.submissions.connectiontoproperty.AddressConnectionType
+import models.submissions.connectiontoproperty.{AddressConnectionType, AddressConnectionTypeNo, AddressConnectionTypeYes}
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
@@ -46,7 +46,7 @@ class AreYouStillConnectedController @Inject() (
     Future.successful(
       Ok(
         areYouStillConnectedView(
-          request.sessionData.stillConnectedDetails.flatMap(_.addressConnectionType) match {
+          connectionTypeInSession match {
             case Some(addressConnectionType) => areYouStillConnectedForm.fill(addressConnectionType)
             case _                           => areYouStillConnectedForm
           },
@@ -67,15 +67,25 @@ class AreYouStillConnectedController @Inject() (
           .map(_ =>
             navigator
               .cyaPageDependsOnSession(updatedData)
-              .filter(_ =>
-                navigator.from == "CYA" &&
-                  request.sessionData.stillConnectedDetails.flatMap(_.addressConnectionType).contains(data)
+              .filter(_ => navigator.from == "CYA" && connectionTypeInSession.contains(data))
+              .getOrElse(
+                if (data == AddressConnectionTypeNo || connectionTypeInSession.contains(AddressConnectionTypeNo)) {
+                  navigator.nextWithoutRedirectToCYA(AreYouStillConnectedPageId, updatedData).apply(updatedData)
+                } else if (navigator.from == "CYA" && data == AddressConnectionTypeYes) {
+                  navigator.cyaPageDependsOnSession(updatedData).orElse(navigator.cyaPage).get
+                } else {
+                  navigator.nextPage(AreYouStillConnectedPageId, updatedData).apply(updatedData)
+                }
               )
-              .getOrElse(navigator.next(AreYouStillConnectedPageId, updatedData).apply(updatedData))
           )
           .map(Redirect)
       }
     )
   }
+
+  private def connectionTypeInSession(implicit
+    request: SessionRequest[AnyContent]
+  ): Option[AddressConnectionType] =
+    request.sessionData.stillConnectedDetails.flatMap(_.addressConnectionType)
 
 }
