@@ -18,13 +18,17 @@ package form.aboutYourLeaseOrTenure
 
 import models.submissions.aboutYourLeaseOrTenure.ConnectedToLandlordInformationDetails
 import play.api.data.Form
-import play.api.data.Forms.{mapping, nonEmptyText}
+import play.api.data.Forms.{default, mapping, nonEmptyText, text}
+import play.api.data.validation.Constraints.{maxLength, nonEmpty}
 
 object ConnectedToLandlordDetailsForm {
 
   val connectedToLandlordDetailsForm = Form(
     mapping(
-      "connectedToLandlordDetails" -> nonEmptyText(maxLength = 2000)
+      "connectedToLandlordDetails" -> default(text, "").verifying(
+        nonEmpty(errorMessage = "error.connectedToLandlordDetails.required"),
+        maxLength(2000, "error.connectedToLandlordDetails.maxLength")
+      )
     )(ConnectedToLandlordInformationDetails.apply)(ConnectedToLandlordInformationDetails.unapply)
   )
 }

@@ -189,9 +189,10 @@ requestReferenceNumber.p2 = If you no longer have access to your letter from the
 requestReferenceNumber.p3 = We can only reissue letters to the address where they were originally sent. <a href="https://www.gov.uk/contact-voa" class="govuk-link" target="_blank">Contact the VOA (opens in new tab)</a> if your business has changed address.
 requestReferenceNumber.subheading3 = What are the details of the property related to the missing reference number?
 label.requestReferenceNumberBusinessTradingName = Business or trading name
-error.requestReferenceNumberBusinessTradingName.required = Enter a business or trading name
+error.requestReferenceNumberBusinessTradingName.required = Enter the business or trading name
 key.requestReferenceNumberAddress = Address
 key.nameContactRequestReferenceNumber = Name and contact details
+error.requestReferenceNumberBusinessTradingName.maxLength = Business or trading name must be 50 characters or fewer
 
 # NO REFERENCE NUMBER CONTACT DETAILS
 ##############################
@@ -209,7 +210,7 @@ error.requestReferenceNumberContactDetailsFullName.required = Enter your name
 downloadPdfReferenceNumber.heading = What is your reference number?
 downloadPdfReferenceNumber.p1 = You’ll need the reference number from the letter you received from the VOA
 label.downloadPdfReferenceNumber = Reference number
-error.downloadPdfReferenceNumber.required = You must provide a reference number
+error.downloadPdfReferenceNumber.required = Enter your reference number
 hint.downloadPdfReferenceNumber = For example, 1000001/101.
 
 # DOWNLOAD PDF
@@ -257,7 +258,7 @@ error.no.connection.selected = Select your connection to the property
 #NAME OF BUSINESS OPERATING FROM THE PROPERTY
 label.tradingNameFromProperty = Trading name
 tradingNameFromProperty.heading = What is the trading name of the business or organisation operating from the property?
-error.tradingNameFromProperty.required = If the trading name is not known, please input unknown
+error.tradingNameFromProperty.required = Enter the trading name of the business or organisation
 error.tradingNameFromProperty.maxLength = This must be 100 characters or fewer
 
 # DOES TRADING NAME OWN THE PROPERTY
@@ -293,6 +294,7 @@ vacantProperties.item1 = the business operating from there is closed temporarily
 vacantProperties.item2 = the property is empty, but there is a current lease, tenancy or agreement to occupy in place
 vacantProperties.item3 = the property is being used by an individual, business or organisation under an informal arrangement
 label.vacantProperties = Is the property currently vacant?
+error.vacantProperties.required = Select yes if the property is currently vacant
 
 # CHECK YOUR ANSWERS CONNECTION TO PROPERTY
 ###########################################
@@ -314,7 +316,7 @@ checkYourAnswersConnectionToProperty.thirdParty = Third party?
 vacantPropertyStartDate.heading = When did the property become vacant?
 label.startDateOfVacantProperty =
 label.startDateOfVacantProperty.help = For example 27 9 2017
-fieldName.startDateOfVacantProperty = the date when the property did become vacant
+fieldName.startDateOfVacantProperty = the date the property became vacant
 
 # LETTING INCOME - IS ANY RENT RECEIVED FROM LETTING
 ####################################################
@@ -331,13 +333,13 @@ label.descriptionOfLetting = Description of letting
 hint.descriptionOfLetting = For example, a billboard, residential accommodation.
 label.addressLineOne = Address line 1
 label.addressLineTwo = Address line 2
-error.tenantName.required = Enter the name of the tenant
+error.tenantName.required = Enter the name of the person or business renting the property
 error.tenantName.maxLength = Tenant''s name must be 100 characters or fewer
 error.descriptionOfLetting.required = Enter a description of the letting
 error.descriptionOfLetting.maxLength = Description of letting must be 100 characters or fewer
 error.addressLineOne.required = Enter the first line of the address
-error.addressLineOne.maxLength = First line of the address must be 50 characters or fewer
-error.addressLineTwo.maxLength = Second line of address must be 50 characters or fewer
+error.addressLineOne.maxLength = Address line 1 must be 50 characters or fewer
+error.addressLineTwo.maxLength = Address line 2 must be 50 characters or fewer
 
 # CONNECTION TO PROPERTY ANNUAL RENT
 ###########################################
@@ -375,7 +377,7 @@ error.lettingPartOfPropertyCheckboxesDetails.noneSelectedWithOther = Select item
 #################################################################
 addAnotherLettingPartOfProperty.heading = You have added {0} letting
 label.addAnotherLettingPartOfProperty = Do you need to add another letting?
-error.addAnotherLetting.required = Select whether you need to add another letting
+error.addAnotherLetting.required = Select yes if you would like to add another letting
 
 # PROVIDE YOUR CONTACT DETAILS
 ##############################
@@ -435,7 +437,7 @@ list.vacantProperty.p3 = they require further information
 # ARE YOU STILL CONNECTED
 #########################
 pastConnectionType.heading = Have you ever had a connection to the property?
-error.pastConnectionType = Select ‘Yes’ if you ever had a connection to the property
+error.pastConnectionType = Select yes if you ever had a connection to the property
 
 # REMOVE CONNECTION
 ###################
@@ -477,6 +479,7 @@ buildingOperatingHaveAWebsite.heading = Does the business operating from the pro
 websiteAddressForProperty.textbox = What is the business website address?
 error.websiteAddressForProperty.required = Enter your web address
 error.webAddressFormat = Enter an address in the correct format, like www.example.com
+error.buildingOperatingHaveAWebsite.required = Select yes if the business has a website
 
 # PREMISES LICENSE GRANTED (6015,6016)
 ######################################
@@ -518,7 +521,7 @@ help.licensableActivities.list2.p4 = a boxing or wrestling match
 help.licensableActivities.list2.p5 = live music
 help.licensableActivities.list2.p6 = any playing of recorded music
 help.licensableActivities.list2.p7 = a dance performance
-error.licensableActivities.missing = Select yes if licensable activities occur within the given timeframe
+error.licensableActivities.missing = Select yes if licensable activities regularly happen before 10am or after 11:30pm
 
 # LICENSABLE ACTIVITIES DETAILS
 ###############################
@@ -529,8 +532,8 @@ help.licensableActivitiesDetails.p1 = You’re only required to write a short de
 help.licensableActivitiesDetails.list.p1 = We start serving alcohol at 9am, Monday to Saturday
 help.licensableActivitiesDetails.list.p2 = We have a DJ playing until 1am on Fridays and Saturdays
 help.licensableActivitiesDetails.list.p3 = Our hot-breakfast service starts at 4.45am every day
-error.licensableActivitiesDetails.required = Tell us about the licensable activities regularly commencing before 10:00 or after 23:30
-error.licensableActivitiesDetails.maxLength = This must be 2000 characters or fewer
+error.licensableActivitiesDetails.required = You must describe the licensable activities that regularly happen before 10am or after 11:30pm
+error.licensableActivitiesDetails.maxLength = Your description of the licensable activities must be 2000 characters or fewer
 
 # PREMISES LICENCE CONDITIONS
 #############################
@@ -540,7 +543,7 @@ help.premisesLicenseConditions.title = Help with conditions restricting the use 
 help.premisesLicenseConditions.heading = Conditions restricting the use of your property
 help.premisesLicenseConditions.p1 = Sometimes, a premises licence is only granted if the holder of the licence agrees to special conditions. These can include restrictions on the use of certain parts of the property.
 help.premisesLicenseConditions.p2 = Check your premises licence if you’re not sure. You'll find any special conditions stated clearly on there.
-error.premisesLicenseConditions.missing = Select yes if your licence has any conditions as stated
+error.premisesLicenseConditions.missing = Select yes if your premises licence has conditions restricting the use of your property
 
 # PREMISES LICENCE CONDITIONS DETAILS
 #####################################
@@ -551,8 +554,8 @@ help.premisesLicenseConditionsDetails.p1 = You’re only required to write a sho
 help.premisesLicenseConditionsDetails.list.p1 = No drinks allowed on the terrace after 10pm
 help.premisesLicenseConditionsDetails.list.p2 = Only 200 people allowed in the function room at any time
 help.premisesLicenseConditionsDetails.list.p3 = No entry or re-entry allowed after 11:30pm on Fridays and Saturdays
-error.premisesLicenseConditionsDetails.required = Tell us about the conditions restricting the use of the property
-error.premisesLicenseConditionsDetails.maxLength  = This must be 2000 characters or fewer
+error.premisesLicenseConditionsDetails.required = You must describe the conditions restricting the use of your property
+error.premisesLicenseConditionsDetails.maxLength  = Your description of the conditions restricting the use of your property must be 2000 characters or fewer
 
 # ENFORCEMENT ACTION BEEN TAKEN
 ##############################£
@@ -561,7 +564,7 @@ hint.enforcementActionHasBeenTaken = This can be any suspensions, closure orders
 help.enforcementActionHasBeenTaken.title = Help with enforcement action
 help.enforcementActionHasBeenTaken.heading = Enforcement action
 help.enforcementActionHasBeenTaken.p1 = You must tell us if any enforcement action has been taken against your premises by your local licensing authority under your tenure. If a lease or agreement was assigned to you from another tenant, you must let us know if any enforcement action was taken against them under the current agreement.
-error.enforcementActionBeenTaken.missing = Select yes if any enforcement has been taken
+error.enforcementActionBeenTaken.missing = Select yes if any enforcement action has been taken
 
 # ENFORCEMENT ACTION BEEN TAKEN DETAILS
 #######################################
@@ -572,8 +575,8 @@ help.enforcementActionHasBeenTakenDetails.p1 = You’re only required to write a
 help.enforcementActionHasBeenTakenDetails.list.p1 = Every retail sale or supply of alcohol made under the premises licence must be made or authorised by a person who holds a personal licence
 help.enforcementActionHasBeenTakenDetails.list.p2 = All customer exits must display signs asking customers to leave quietly and have consideration for residents
 help.enforcementActionHasBeenTakenDetails.list.p3 = We are required to keep an incident book
-error.enforcementActionHasBeenTakenDetails.required = Tell us about the enforcement action
-error.enforcementActionHasBeenTakenDetails.maxLength  = This must be 2000 characters or fewer
+error.enforcementActionHasBeenTakenDetails.required = You must describe the enforcement action taken
+error.enforcementActionHasBeenTakenDetails.maxLength  = Your description of the enforcement action taken must be 2000 characters of fewer
 
 # TIED FOR GOODS
 ################
@@ -581,7 +584,7 @@ tiedForGoods.heading = Tied goods
 tiedForGoods.para1 = Many properties are required to sell certain goods, such as beers, wines and mixers, as part of their lease or tenancy agreement. These are known as tied goods.
 tiedForGoods.para2 = Being required to sell tied goods is a common arrangement for public houses leased from breweries.
 tiedForGoods.label = Are you required to sell certain goods as part of your lease or tenancy agreement?
-error.tiedForGoods.missing = You must choose one
+error.tiedForGoods.missing = Select yes if you are tied for any goods
 
 # TIED FOR GOODS DETAILS
 ########################
@@ -593,7 +596,7 @@ hint.beerOnly = You buy beer from your landlord and can source other items indep
 tiedForGoodsDetails.partialTie = Partial tie
 hint.partialTie = You have some flexibility to source certain items independently, for example guest ales or fine wines.
 partialTieConditional.textbox = Give details of your partial tie
-error.tiedForGoodsDetails.required = Enter details of your partial tie
+error.tiedForGoodsDetails.required = Select which type of tie you have
 
 # TENANCY LEASE AGREEMENT(USED ON 6010, 6015, 6016, 6030, 6032, 6033, 6034, 6035, 6036, 6037, 6038, 6043, 6049, 6056, 6057, 6066)
 ##############################
@@ -656,7 +659,7 @@ error.includedInYourRent.noneSelectedWithOther = Select items that are included 
 ############################################
 cateringOperationOrLettingAccommodation.heading = Are any separate catering or accommodation businesses run from your property?
 hint.cateringOperationOrLettingAccommodation = You will have the opportunity to add more than one business if required.
-error.cateringOperationOrLettingAccommodation.missing = Select yes if any separate businesses are run from the property
+error.cateringOperationOrLettingAccommodation.missing = Select yes if any separate catering or accommodation businesses are run from your property
 
 # LETTING OTHER PART OF PROPERTY
 ##############################
@@ -854,7 +857,7 @@ error.operatorName.required = Enter the name of the person or company operating 
 error.operatorName.maxLength = Operator‘s name must be 100 characters or fewer
 error.typeOfBusiness.required = Enter a description of the separate business
 error.typeOfBusiness.maxLength = Type of business must be 100 characters or fewer
-error.lettingTypeOfBusiness.required = Enter a description of the separate letting
+error.lettingTypeOfBusiness.required = Enter a description of the letting
 error.lettingOperatorName.maxLength = Tenant‘s name must be 100 characters or fewer
 error.lettingTypeOfBusiness.maxLength = Description of letting must be 100 characters or fewer
 
@@ -867,8 +870,8 @@ lettingOtherPartOfPropertyRentDetails.title = Annual rent for tenant
 label.annualRent = Annual rent payment excluding VAT
 label.dateInput = When was this sum fixed?
 fieldName.cateringOrLettingFixedRentDate = the date the rent was fixed
-error.required.annualRentExcludingVat.annualRent = Enter the annual rent excluding VAT
-error.invalid_currency.annualRent.annualRent = The annual rent figure must be a number
+error.required.annualRentExcludingVat.annualRent = Enter the annual rent
+error.invalid_currency.annualRent.annualRent = The annual rent must be a number
 error.dateInput.month.required = The date the rent was fixed must include a month
 error.dateInput.year.required = The date the rent was fixed must include a year
 error.sharedResponsibilities.required = Tell us how the responsibilities are shared
@@ -893,8 +896,8 @@ addAnotherCateringOperation.heading = You have added {0} separate business or fr
 addAnotherLettingOtherPartOfProperty.heading = You have added {0} letting
 label.addAnotherCateringOperation = Do you need to add another separate business or franchise?
 label.addAnotherLettingOtherPartOfProperty = Do you need to add another letting?
-error.addAnotherSeparateBusinessOrFranchise.required = Select whether you need to add another separate business or franchise
-error.addAnotherLetting.required = Select whether you need to add another letting
+error.addAnotherSeparateBusinessOrFranchise.required = Select yes if you would like to add another business or franchise
+error.addAnotherLetting.required = Select yes if you would like to add another letting
 
 # TENANTS ADDITIONS DISREGARDED
 ###############################
@@ -1495,7 +1498,7 @@ contactDetails.email1.email.tooLong=Email address must be 50 characters or fewer
 alternativeContact.contactDetails.email1.email.tooLong=Email address must be 50 characters or fewer
 error.contact.full.name.required = Please enter the full name
 error.alternativeContactName.required = Enter the alternative name
-error.contact.email.required = Enter your email address
+error.contact.email.required = Enter an email in the correct format, like name@example.com
 error.contact.phone.required = Enter your phone number
 error.contact.phone.minLength = Phone number must be between 11 and 20 characters
 error.contact.phone.maxLength = Phone number must be between 11 and 20 characters
@@ -1507,9 +1510,9 @@ error.invalid_postcode=Enter a valid UK postcode
 error.invalid_currency = Please provide a number
 error.maxCurrencyAmountExceeded = Maximum amount exceeded - please contact the VOA
 error.maxCurrencyAmountExceeded.annualRent = Maximum amount exceeded - please contact the VOA
-error.invalid_phone=Enter a phone number, like 01632 960 001
+error.invalid_phone=Enter a phone number, like 01632 960 000
 error.email=Enter an email in the correct format, like name@example.com
-error.isRelated=Select ‘Yes’ if you are still connected
+error.isRelated=Select if you are still connected to the property, not connected to the property, or if the address needs to be updated
 error.date_must_be_in_past = Date must be in the past
 error.invalid_number = This must be a number
 error.date_before_1900 = Date must be on or after 1 January 1900
@@ -1519,13 +1522,13 @@ error.duration.months = The month figure must be a number between 1 and 12
 error.duration.days = Days must be a number between 1 and 31
 error.months.required = Enter months amount
 error.years.required = Enter years amount
-error.required.propertyUsages = Please select how the the property is currently used
-error.propertyCurrentlyUsed.required = Please give details if the property has another use, or is vacant
+error.required.propertyUsages = Select the current use of the property
+error.propertyCurrentlyUsed.required = Describe the current use of the property
 error.invalid_date = Enter a valid date
 error.buildingNameNumber.required = Enter the first line of the address
-error.buildingNameNumber.maxLength = First line of the address must be 50 characters or fewer
+error.buildingNameNumber.maxLength = Address line 1 must be 50 characters or fewer
 error.town.required = Enter the town or city of the address
-error.town.maxLength = Town or city of address must be 50 characters or fewer
+error.town.maxLength = Town or city name must be 50 characters or fewer
 error.line2.maxLength = Second line of address must be 50 characters or fewer
 error.line3.maxLength = Third line of address must be 50 characters or fewer
 error.postcode.required = Enter the postcode
@@ -1538,18 +1541,18 @@ error.required.annualRent = Enter the annual rent excluding VAT
 error.invalid_currency.annualRent = The annual rent figure must be a number
 error.required.annualRentExcludingVat = Enter the annual rent excluding VAT
 error.char.count.maxLength = This must be 2000 characters or fewer
-error.townCity.required = Enter the town or city
-error.fullName.required = Enter your full name
+error.townCity.required = Enter the name of the town or city
+error.fullName.required = Enter your name
 error.tiedType.required = Select which type of tie you have
 error.addressLineTwo.maxLength = Address line 2 must be 50 characters or fewer
-error.county.maxLength = County must be 50 characters or fewer
+error.county.maxLength = County name must be 50 characters or fewer
 
 error.date.required = Enter {0}
 error.date.mustInclude = {0} must include {1}
 error.date.invalid = {0} must be a real date
 error.date.before1900 = {0} must be on or after 1 January 1900
 error.date.beforeToday = {0} cannot be in the past
-error.date.mustBeInPast = {0} must be in the past
+error.date.mustBeInPast = {0} must be today or in the past
 error.dateParts.prefix = a
 error.dateParts.separator = and
 error.dateParts.day = day
