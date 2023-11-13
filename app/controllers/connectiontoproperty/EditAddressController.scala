@@ -68,7 +68,7 @@ class EditAddressController @Inject() (
             navigator
               .cyaPageDependsOnSession(updatedData)
               .filter(_ => navigator.from == "CYA")
-              .getOrElse(navigator.next(EditAddressPageId, updatedData).apply(updatedData))
+              .getOrElse(navigator.nextWithoutRedirectToCYA(EditAddressPageId, updatedData).apply(updatedData))
           )
           .map(Redirect)
       }

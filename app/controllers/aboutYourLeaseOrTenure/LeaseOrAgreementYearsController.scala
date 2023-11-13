@@ -75,7 +75,9 @@ class LeaseOrAgreementYearsController @Inject() (
           .map { _ =>
             navigator.cyaPage
               .filter(_ => navigator.from == "CYA" && contains3No(data) == sessionContains3No)
-              .getOrElse(navigator.next(LeaseOrAgreementDetailsPageId, updatedData).apply(updatedData))
+              .getOrElse(
+                navigator.nextWithoutRedirectToCYA(LeaseOrAgreementDetailsPageId, updatedData).apply(updatedData)
+              )
           }
           .map(Redirect)
       }

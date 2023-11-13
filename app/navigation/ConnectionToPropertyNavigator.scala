@@ -55,22 +55,8 @@ class ConnectionToPropertyNavigator @Inject() (audit: Audit) extends Navigator(a
       .flatMap(_.addressConnectionType)
       .contains(AddressConnectionTypeNo)
 
-  override val overrideRedirectIfFromCYA: Map[String, Session => Call] = Map(
-    (
-      controllers.connectiontoproperty.routes.VacantPropertiesController.show().url,
-      _ => controllers.connectiontoproperty.routes.VacantPropertiesController.show()
-    ),
-    (
-      controllers.connectiontoproperty.routes.EditAddressController.show().url,
-      _ => controllers.connectiontoproperty.routes.EditAddressController.show()
-    ),
-    (
-      controllers.notconnected.routes.PastConnectionController.show().url,
-      _ => controllers.notconnected.routes.PastConnectionController.show()
-    )
-  )
-
   override val postponeCYARedirectPages: Set[String] = Set(
+    controllers.connectiontoproperty.routes.EditAddressController.show(),
     controllers.connectiontoproperty.routes.TradingNamePayingRentController.show()
   ).map(_.url)
 

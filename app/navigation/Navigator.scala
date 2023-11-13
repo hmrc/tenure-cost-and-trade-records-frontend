@@ -50,12 +50,18 @@ abstract class Navigator @Inject() (
 
   private val defaultPage: Session => Call = _ => routes.LoginController.show()
 
-  def next(id: Identifier, session: Session)(implicit
+  /**
+    * Get next page ignoring redirect back to CYA.
+    */
+  def nextWithoutRedirectToCYA(id: Identifier, session: Session)(implicit
     hc: HeaderCarrier,
     request: Request[AnyContent]
   ): Session => Call =
     routeMap.getOrElse(id, defaultPage) andThen auditNextUrl(session)
 
+  /**
+    * Get next page with possible redirect back to CYA.
+    */
   def nextPage(id: Identifier, session: Session)(implicit
     hc: HeaderCarrier,
     request: Request[AnyContent]

@@ -84,7 +84,7 @@ class IsRentReceivedFromLettingController @Inject() (
                 navigator.from == "CYA" && (data == AnswerNo ||
                   request.sessionData.stillConnectedDetails.flatMap(_.isAnyRentReceived).contains(AnswerYes))
               )
-              .getOrElse(navigator.next(LettingIncomePageId, updatedData).apply(updatedData))
+              .getOrElse(navigator.nextWithoutRedirectToCYA(LettingIncomePageId, updatedData).apply(updatedData))
           }
           .map(Redirect)
       }

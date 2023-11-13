@@ -38,7 +38,7 @@
     sectionAnswers.answers.map(_.lettingPartOfPropertyDetails.size - 1).getOrElse(0) max 0
 }
 
-@if(sectionAnswers.answers.exists(a => a.editAddress.isDefined)) {
+@if(sectionAnswers.answers.exists(_.addressConnectionType.map(_.name).contains("yes-change-address"))) {
     <h2 class="govuk-heading-m">@messages("checkYourAnswersConnectionToVacantProperty.connectionStatus.heading")</h2>
 
     @govukSummaryList(SummaryList(rows = sectionAnswers.row("label.checkYourAnswersConnectionToVacantProperty", _.addressConnectionType.map(_.name).map(v => messages(s"label.$v")), connectiontoproperty.routes.AreYouStillConnectedController.show(), "isRelated") ++
