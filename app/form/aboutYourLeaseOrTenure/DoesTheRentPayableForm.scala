@@ -35,7 +35,7 @@ object DoesTheRentPayableForm {
       ),
       "detailsToQuestions" ->
         default(text, "").verifying(
-          maxLength(2000, "error.detailsToQuestions.maxLength")
+          maxLength(500, "error.detailsToQuestions.maxLength")
         )
     )(DoesTheRentPayable.apply)(DoesTheRentPayable.unapply)
   )

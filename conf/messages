@@ -259,7 +259,7 @@ error.no.connection.selected = Select your connection to the property
 label.tradingNameFromProperty = Trading name
 tradingNameFromProperty.heading = What is the trading name of the business or organisation operating from the property?
 error.tradingNameFromProperty.required = Enter the trading name of the business or organisation
-error.tradingNameFromProperty.maxLength = This must be 100 characters or fewer
+error.tradingNameFromProperty.maxLength = The trading name must be 50 characters or fewer
 
 # DOES TRADING NAME OWN THE PROPERTY
 #####################################
@@ -334,9 +334,9 @@ hint.descriptionOfLetting = For example, a billboard, residential accommodation.
 label.addressLineOne = Address line 1
 label.addressLineTwo = Address line 2
 error.tenantName.required = Enter the name of the person or business renting the property
-error.tenantName.maxLength = Tenant''s name must be 100 characters or fewer
+error.tenantName.maxLength = Tenant''s name must be 50 characters or fewer
 error.descriptionOfLetting.required = Enter a description of the letting
-error.descriptionOfLetting.maxLength = Description of letting must be 100 characters or fewer
+error.descriptionOfLetting.maxLength = Description of letting must be 50 characters or fewer
 error.addressLineOne.required = Enter the first line of the address
 error.addressLineOne.maxLength = Address line 1 must be 50 characters or fewer
 error.addressLineTwo.maxLength = Address line 2 must be 50 characters or fewer
@@ -386,6 +386,7 @@ provideContactDetails.title = Provide your contact details
 provideContactDetails.p1 = These should be the contact details of the person completing this form. We will only use them to update you about your declaration.
 provideContactDetailsAdditionalInformation.heading = Additional Information (optional)
 provideContactDetailsAdditionalInformation.hint = For example, the name of the previous owner or occupier.
+error.fullName.maxLength = Your name must be 50 characters or fewer
 
 # CHECK YOUR ANSWERS VACANT PROPERTY SUBMISSION
 #############################################
@@ -472,6 +473,7 @@ propertyCurrentlyUsed.conferenceCentre = Conference centre
 propertyCurrentlyUsed.other = Other (reveals a text box to include a description)
 hint.other.use.propertyCurrentlyUsedOther = Describe the use of your property if not listed.
 hint.other.vacant.propertyCurrentlyUsedOther = Give details.
+error.propertyCurrentlyUsed.maxLength = Your description must be 200 characters or fewer
 
 # WEBSITE FOR PROPERTY
 ######################
@@ -533,7 +535,7 @@ help.licensableActivitiesDetails.list.p1 = We start serving alcohol at 9am, Mond
 help.licensableActivitiesDetails.list.p2 = We have a DJ playing until 1am on Fridays and Saturdays
 help.licensableActivitiesDetails.list.p3 = Our hot-breakfast service starts at 4.45am every day
 error.licensableActivitiesDetails.required = You must describe the licensable activities that regularly happen before 10am or after 11:30pm
-error.licensableActivitiesDetails.maxLength = Your description of the licensable activities must be 2000 characters or fewer
+error.licensableActivitiesDetails.maxLength = Your description of the licensable activities must be 200 characters or fewer
 
 # PREMISES LICENCE CONDITIONS
 #############################
@@ -555,7 +557,7 @@ help.premisesLicenseConditionsDetails.list.p1 = No drinks allowed on the terrace
 help.premisesLicenseConditionsDetails.list.p2 = Only 200 people allowed in the function room at any time
 help.premisesLicenseConditionsDetails.list.p3 = No entry or re-entry allowed after 11:30pm on Fridays and Saturdays
 error.premisesLicenseConditionsDetails.required = You must describe the conditions restricting the use of your property
-error.premisesLicenseConditionsDetails.maxLength  = Your description of the conditions restricting the use of your property must be 2000 characters or fewer
+error.premisesLicenseConditionsDetails.maxLength  = Your description of the conditions restricting the use of your property must be 200 characters or fewer
 
 # ENFORCEMENT ACTION BEEN TAKEN
 ##############################£
@@ -576,7 +578,7 @@ help.enforcementActionHasBeenTakenDetails.list.p1 = Every retail sale or supply 
 help.enforcementActionHasBeenTakenDetails.list.p2 = All customer exits must display signs asking customers to leave quietly and have consideration for residents
 help.enforcementActionHasBeenTakenDetails.list.p3 = We are required to keep an incident book
 error.enforcementActionHasBeenTakenDetails.required = You must describe the enforcement action taken
-error.enforcementActionHasBeenTakenDetails.maxLength  = Your description of the enforcement action taken must be 2000 characters of fewer
+error.enforcementActionHasBeenTakenDetails.maxLength  = Your description of the enforcement action taken must be 200 characters of fewer
 
 # TIED FOR GOODS
 ################
@@ -854,12 +856,12 @@ hint.typeOfBusiness = For example, bed and breakfast, hotel, restaurant.
 hint.lettingTypeOfBusiness = For example, a billboard, residential accommodation.
 label.correspondenceAddress = Correspondence address
 error.operatorName.required = Enter the name of the person or company operating the business
-error.operatorName.maxLength = Operator‘s name must be 100 characters or fewer
+error.operatorName.maxLength = Operator‘s name must be 50 characters or fewer
 error.typeOfBusiness.required = Enter a description of the separate business
-error.typeOfBusiness.maxLength = Type of business must be 100 characters or fewer
+error.typeOfBusiness.maxLength = Type of business must be 50 characters or fewer
 error.lettingTypeOfBusiness.required = Enter a description of the letting
-error.lettingOperatorName.maxLength = Tenant‘s name must be 100 characters or fewer
-error.lettingTypeOfBusiness.maxLength = Description of letting must be 100 characters or fewer
+error.lettingOperatorName.maxLength = Tenant‘s name must be 50 characters or fewer
+error.lettingTypeOfBusiness.maxLength = Description of letting must be 50 characters or fewer
 
 # CATERING OPERATION OR LETTING ACCOMMODATION RENT DETAILS
 ##########################################################
@@ -1547,6 +1549,7 @@ error.required.annualRentExcludingVat = Enter the annual rent
 error.char.count.maxLength = This must be 2000 characters or fewer
 error.townCity.required = Enter the name of the town or city
 error.fullName.required = Enter your name
+error.fullName.mexLength = Full name must be 50 characters or fewer
 error.tiedType.required = Select which type of tie you have
 error.addressLineTwo.maxLength = Address line 2 must be 50 characters or fewer
 error.county.maxLength = County name must be 50 characters or fewer

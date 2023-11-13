@@ -27,7 +27,7 @@ object PremisesLicenseConditionsDetailsForm {
     mapping(
       "premisesLicenseConditionsDetails" -> default(text, "").verifying(
         nonEmpty(errorMessage = "error.premisesLicenseConditionsDetails.required"),
-        maxLength(2000, "error.premisesLicenseConditionsDetails.maxLength")
+        maxLength(200, "error.premisesLicenseConditionsDetails.maxLength")
       )
     )(PremisesLicenseConditionsDetails.apply)(PremisesLicenseConditionsDetails.unapply)
   )

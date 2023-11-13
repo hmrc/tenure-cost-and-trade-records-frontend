@@ -28,11 +28,11 @@ object CateringOperationOrLettingAccommodationForm {
     mapping(
       "operatorName"    -> default(text, "").verifying(
         nonEmpty(errorMessage = "error.operatorName.required"),
-        maxLength(100, "error.operatorName.maxLength")
+        maxLength(50, "error.operatorName.maxLength")
       ),
       "typeOfBusiness"  -> default(text, "").verifying(
         nonEmpty(errorMessage = "error.typeOfBusiness.required"),
-        maxLength(100, "error.typeOfBusiness.maxLength")
+        maxLength(50, "error.typeOfBusiness.maxLength")
       ),
       "cateringAddress" -> cateringAddressMapping
     )(CateringOperationDetails.apply)(CateringOperationDetails.unapply)

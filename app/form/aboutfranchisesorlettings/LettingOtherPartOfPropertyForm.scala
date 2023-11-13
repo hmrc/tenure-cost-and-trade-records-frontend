@@ -28,11 +28,11 @@ object LettingOtherPartOfPropertyForm {
     mapping(
       "lettingOperatorName"   -> default(text, "").verifying(
         nonEmpty(errorMessage = "error.operatorName.required"),
-        maxLength(100, "error.lettingOperatorName.maxLength")
+        maxLength(50, "error.lettingOperatorName.maxLength")
       ),
       "lettingTypeOfBusiness" -> default(text, "").verifying(
         nonEmpty(errorMessage = "error.lettingTypeOfBusiness.required"),
-        maxLength(100, "error.lettingTypeOfBusiness.maxLength")
+        maxLength(50, "error.lettingTypeOfBusiness.maxLength")
       ),
       "lettingAddress"        -> lettingOtherPartAddressMapping
     )(LettingOtherPartOfPropertyInformationDetails.apply)(LettingOtherPartOfPropertyInformationDetails.unapply)

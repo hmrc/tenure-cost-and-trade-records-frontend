@@ -28,11 +28,11 @@ object TenantDetailsForm {
     mapping(
       "tenantName"            -> default(text, "").verifying(
         nonEmpty(errorMessage = "error.tenantName.required"),
-        maxLength(100, "error.tenantName.maxLength")
+        maxLength(50, "error.tenantName.maxLength")
       ),
       "descriptionOfLetting"  -> default(text, "").verifying(
         nonEmpty(errorMessage = "error.descriptionOfLetting.required"),
-        maxLength(100, "error.descriptionOfLetting.maxLength")
+        maxLength(50, "error.descriptionOfLetting.maxLength")
       ),
       "correspondenceAddress" -> correspondenceAddressMapping
     )(TenantDetails.apply)(TenantDetails.unapply)
