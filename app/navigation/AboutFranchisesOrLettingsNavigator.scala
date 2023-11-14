@@ -104,16 +104,19 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit) extends Naviga
 
   private def addAnotherCateringOperationsConditionsRouting: Session => Call = answers => {
 
-    def getLastCateringOperationIndex(session: Session): Option[Int] = {
+    def getLastCateringOperationIndex(session: Session): Option[Int] =
       session.aboutFranchisesOrLettings.flatMap { aboutFranchiseOrLettings =>
-        aboutFranchiseOrLettings.cateringOperationSections.lastOption.map(_ => aboutFranchiseOrLettings.cateringOperationSections.size)
+        aboutFranchiseOrLettings.cateringOperationSections.lastOption.map(_ =>
+          aboutFranchiseOrLettings.cateringOperationSections.size
+        )
       }
-    }
 
     val existingSection =
       answers.aboutFranchisesOrLettings.flatMap(_.cateringOperationSections.lift(getCateringOperationsIndex(answers)))
     existingSection.flatMap(_.addAnotherOperationToProperty).get.name match {
-      case "yes" => controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController.show(getLastCateringOperationIndex(answers))
+      case "yes" =>
+        controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController
+          .show(getLastCateringOperationIndex(answers))
       case "no"  => controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show()
       case _     =>
         logger.warn(
