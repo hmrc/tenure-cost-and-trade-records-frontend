@@ -16,7 +16,7 @@
 
 package controllers.aboutthetradinghistory
 
-import actions.{SessionRequest, WithSessionRefiner}
+import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.OccupationalInformationForm.occupationalInformationForm
 import models.submissions.Form6010.MonthsYearDuration

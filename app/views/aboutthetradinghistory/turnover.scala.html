@@ -60,44 +60,49 @@
 }
 
 @alcoholicDrinksHeading = {
-    <p class="govuk-body govuk-!-font-weight-bold">@messages("turnover.alcoholicDrinks")</p>
+@messages("turnover.alcoholicDrinks")
     <span class="govuk-caption-m">@messages("turnover.alcoholicDrinksCaption")</span>
 }
 
 @foodHeading = {
-        <p class="govuk-body govuk-!-font-weight-bold">@messages("turnover.food")</p>
-        <span class="govuk-caption-m">@messages("turnover.foodCaption")</span>
-    }
-
-@otherReceiptsHeading = {
-        <p class="govuk-body govuk-!-font-weight-bold">@messages("turnover.otherReceipts")</p>
-        <span class="govuk-caption-m">@messages("turnover.otherReceiptsCaption")</span>
-    }
-
-@accommodationHeading = {
-        <p class="govuk-body govuk-!-font-weight-bold">@messages("turnover.accommodation")</p>
-        <span class="govuk-caption-m">@messages("turnover.accommodationCaption")</span>
-    }
-
-@averageOccupancyRateHeading = {
-        <p class="govuk-body govuk-!-font-weight-bold">@messages("turnover.averageOccupancyRate")</p>
-        <span class="govuk-caption-m">@messages("turnover.averageOccupancyRateCaption")</span>
-    }
-
-@filterForm = {
-    @form.value.getOrElse(Seq.empty)
+@messages("turnover.food")
+    <span class="govuk-caption-m">@messages("turnover.foodCaption")</span>
 }
 
-    @forType = @{
-        request.sessionData.forType
-    }
+@otherReceiptsHeading = {
+@messages("turnover.otherReceipts")
+    <span class="govuk-caption-m">@messages("turnover.otherReceiptsCaption")</span>
+}
+
+@accommodationHeading = {
+@messages("turnover.accommodation")
+    <span class="govuk-caption-m">@messages("turnover.accommodationCaption")</span>
+}
+
+@averageOccupancyRateHeading = {
+@messages("turnover.averageOccupancyRate")
+    <span class="govuk-caption-m">@messages("turnover.averageOccupancyRateCaption")</span>
+}
+
+@forType = @{
+    request.sessionData.forType
+}
 
 @columns = @{
     request.sessionData.aboutTheTradingHistory.fold(Seq.empty[Int])(_.turnoverSections.indices)
 }
 
+@financialYearEndDates = @{
+    request.sessionData.aboutTheTradingHistory
+    .fold(Seq.empty[LocalDate])(_.turnoverSections.map(_.financialYearEnd)).zipWithIndex
+}
+
 @layout(
-    pageHeading = if(forType == ForTypes.for6010 || forType == ForTypes.for6011) { messages("turnover.heading") } else { messages("turnover.6015.heading") },
+    pageHeading = if(forType == ForTypes.for6010 || forType == ForTypes.for6011) {
+        messages("turnover.heading")
+    } else {
+        messages("turnover.6015.heading")
+    },
     showSection = true,
     summary = Some(request.sessionData.toSummary),
     sectionName = messages("label.section.aboutYourTradingHistory"),
@@ -111,176 +116,183 @@
 ) {
 
 
+    @if(forType == ForTypes.for6010 || forType == ForTypes.for6011) {
+        <p class="govuk-body">@messages("turnover.p1")</p>
+    }
 
-      @if(forType == ForTypes.for6010 || forType == ForTypes.for6011) {
-          <p class="govuk-body">@messages("turnover.p1")</p>
-      }
-
-      @if(forType == ForTypes.for6015 || forType == ForTypes.for6016) {
-          <p class="govuk-body">@messages("turnover.6015.p1")</p>
-          <p class="govuk-body">@messages("turnover.6015.p2")</p>
-          @* TODO - Reinstate paragraph when cut and paste functionality developed *@
-@*          <p class="govuk-body">@messages("turnover.6015.p3")</p>*@
-      }
-      @* TODO - Reinstate paragraph when cut and paste functionality developed *@
-      @*<p class="govuk-body">@messages("turnover.p2")</p>*@
+    @if(forType == ForTypes.for6015 || forType == ForTypes.for6016) {
+        <p class="govuk-body">@messages("turnover.6015.p1")</p>
+        <p class="govuk-body">@messages("turnover.6015.p2")</p>
+        @* TODO - Reinstate paragraph when cut and paste functionality developed *@
+        @* <p class="govuk-body">@messages("turnover.6015.p3")</p>*@
+    }
+    @* TODO - Reinstate paragraph when cut and paste functionality developed *@
+    @*<p class="govuk-body">@messages("turnover.p2")</p>*@
     @formWithCSRF(action = controllers.aboutthetradinghistory.routes.TurnoverController.submit) {
-      @govukInsetText(InsetText(
-          content = Text(messages("turnover.inset"))
-      ))
-      @govukDetails(Details(
-          summary = Text(messages("turnover.details")),
-          content = HtmlContent(detailsContent)
-      ))
-      @govukTable(Table(
-          rows = Seq(
+        @govukInsetText(InsetText(
+            content = Text(messages("turnover.inset"))
+        ))
+        @govukDetails(Details(
+            summary = Text(messages("turnover.details")),
+            content = HtmlContent(detailsContent)
+        ))
 
-              TableRow(
-                  content = Text(messages("turnover.financialYearEnd")),
-                  classes = "govuk-!-font-weight-bold"
-              ) +:
-                      request.sessionData.aboutTheTradingHistory
-                      .fold(Seq.empty[LocalDate])(_.turnoverSections.map(_.financialYearEnd)).map { finYearEnd =>
-                          TableRow(
-                              content = Text(
-                                  dateUtil.formatDayMonthAbbrYear(finYearEnd)
-                              )
-                          )
-                      },
-              TableRow(
-                  content = Text(messages("turnover.tradingPeriod")),
-                  classes = "govuk-!-font-weight-bold"
-              ) +:
-                      columns.map { idx =>
-                          TableRow(
-                              content = HtmlContent(
-                                  govukInput(Input(
-                                      id = s"$idx.weeks",
-                                      name = s"$idx.weeks",
-                                      value = form(s"$idx.weeks").value,
-                                      classes = "govuk-input--width-2",
-                                      attributes = Map(
-                                          "maxlength" -> "2",
-                                          "aria-label" -> messages("turnover.tradingPeriod")
-                                      ),
-                                      suffix = Some(PrefixOrSuffix(
-                                          content = Text(messages("turnover.weeks"))
-                                      ))
-                                  ).withFormField(form(s"$idx.weeks")))
-                              )
-                          )
-                      },
-              TableRow(
-                  content = HtmlContent(alcoholicDrinksHeading)
-              ) +: columns.map { idx =>
-                      TableRow(
-                          content = HtmlContent(
-                              govukInput(Input(
-                                  id = s"$idx.alcoholic-drinks",
-                                  name = s"$idx.alcoholic-drinks",
-                                  value = form(s"$idx.alcoholic-drinks").value,
-                                  attributes = Map(
-                                      "maxlength" -> "13",
-                                      "aria-label" -> messages("turnover.alcoholicDrinks")
-                                  ),
-                                  prefix = Some(PrefixOrSuffix(
-                                      content = Text("£")
-                                  ))
-                              ).withFormField(form(s"$idx.alcoholic-drinks")))
-                          )
-                      )
-                  },
-              TableRow(
-                  content = HtmlContent(foodHeading)
-              ) +: columns.map { idx  =>
-                          TableRow(
-                              content = HtmlContent(
-                                  govukInput(Input(
-                                      id = s"$idx.food",
-                                      name = s"$idx.food",
-                                      value = form(s"$idx.food").value,
-                                      attributes = Map(
-                                          "maxlength" -> "13",
-                                          "aria-label" -> messages("turnover.food")
-                                      ),
-                                      prefix = Some(PrefixOrSuffix(
-                                          content = Text("£")
-                                      ))
-                                  ).withFormField(form(s"$idx.food")))
-                              )
-                          )
-                      },
-              TableRow(
-                  content = HtmlContent(otherReceiptsHeading)
-              ) +: columns.map { idx  =>
-                          TableRow(
-                              content = HtmlContent(
-                                  govukInput(Input(
-                                      id = s"$idx.other-receipts",
-                                      name = s"$idx.other-receipts",
-                                      value = form(s"$idx.other-receipts").value,
-                                      attributes = Map(
-                                          "maxlength" -> "13",
-                                          "aria-label" -> messages("turnover.otherReceipts")
-                                      ),
-                                      prefix = Some(PrefixOrSuffix(
-                                          content = Text("£")
-                                      ))
-                                  ).withFormField(form(s"$idx.other-receipts")))
-                              )
-                          )
-                      },
-              TableRow(
-                  content = HtmlContent(accommodationHeading)
-              ) +: columns.map { idx  =>
-                          TableRow(
-                              content = HtmlContent(
-                                  govukInput(Input(
-                                      id = s"$idx.accommodation",
-                                      name = s"$idx.accommodation",
-                                      value = form(s"$idx.accommodation").value,
-                                      attributes = Map(
-                                          "maxlength" -> "13",
-                                          "aria-label" -> messages("turnover.accommodation")
-                                      ),
-                                      prefix = Some(PrefixOrSuffix(
-                                          content = Text("£")
-                                      ))
-                                  ).withFormField(form(s"$idx.accommodation")))
-                              )
-                          )
-                      },
-              TableRow(
-                  content = HtmlContent(averageOccupancyRateHeading)
-              ) +: columns.map { idx  =>
-                          TableRow(
-                              content = HtmlContent(
-                                  govukInput(Input(
-                                      id = s"$idx.average-occupancy-rate",
-                                      name = s"$idx.average-occupancy-rate",
-                                      value = form(s"$idx.average-occupancy-rate").value,
-                                      classes = "govuk-input--width-3",
-                                      attributes = Map(
-                                          "maxlength" -> "5",
-                                          "aria-label" -> messages("turnover.averageOccupancyRate")
-                                      ),
-                                      suffix = Some(PrefixOrSuffix(
-                                          content = Text("%")
-                                      ))
-                                  ).withFormField(form(s"$idx.average-occupancy-rate")))
-                              )
-                          )
-                      }
-          ),
+        @financialYearEndDates.map { case (finYearEnd, idx) =>
 
-          captionClasses = "govuk-table__caption--m",
-          firstCellIsHeader = false
-      ))
+            @govukTable(Table(
+                head = Seq(
+                    HeadCell(
+                        content = Text(messages("turnover.financialYearEnd")),
+                        classes = "govuk-!-width-one-half"
+                    ),
+                    HeadCell(
+                        content = Text(dateUtil.formatDayMonthAbbrYear(finYearEnd)),
+                        classes = "govuk-!-width-one-half",
+                        attributes = Map(
+                            "style" -> "min-width: 13em;"
+                        )
+                    )
+                ),
+                firstCellIsHeader = true,
+                rows = Seq(
+                    Seq(
+                        TableRow(
+                            content = Text(messages("turnover.tradingPeriod"))
+                        ),
+                        TableRow(
+                            content = HtmlContent(
+                                govukInput(Input(
+                                    id = s"$idx.weeks",
+                                    name = s"$idx.weeks",
+                                    value = form(s"$idx.weeks").value,
+                                    classes = "govuk-input--width-2",
+                                    attributes = Map(
+                                        "maxlength" -> "2",
+                                        "aria-label" -> messages("turnover.tradingPeriod")
+                                    ),
+                                    suffix = Some(PrefixOrSuffix(
+                                        content = Text(messages("turnover.weeks"))
+                                    ))
+                                ).withFormField(form(s"$idx.weeks")))
+                            )
+                        )
+                    ),
+                    Seq(
+                        TableRow(
+                            content = HtmlContent(alcoholicDrinksHeading)
+                        ),
+                        TableRow(
+                            content = HtmlContent(
+                                govukInput(Input(
+                                    id = s"$idx.alcoholic-drinks",
+                                    name = s"$idx.alcoholic-drinks",
+                                    value = form(s"$idx.alcoholic-drinks").value,
+                                    classes = "govuk-input--width-10",
+                                    attributes = Map(
+                                        "maxlength" -> "13",
+                                        "aria-label" -> messages("turnover.alcoholicDrinks")
+                                    ),
+                                    prefix = Some(PrefixOrSuffix(
+                                        content = Text("£")
+                                    ))
+                                ).withFormField(form(s"$idx.alcoholic-drinks")))
+                            )
+                        )
+                    ),
+                    Seq(
+                        TableRow(
+                            content = HtmlContent(foodHeading)
+                        ),
+                        TableRow(
+                            content = HtmlContent(
+                                govukInput(Input(
+                                    id = s"$idx.food",
+                                    name = s"$idx.food",
+                                    value = form(s"$idx.food").value,
+                                    classes = "govuk-input--width-10",
+                                    attributes = Map(
+                                        "maxlength" -> "13",
+                                        "aria-label" -> messages("turnover.food")
+                                    ),
+                                    prefix = Some(PrefixOrSuffix(
+                                        content = Text("£")
+                                    ))
+                                ).withFormField(form(s"$idx.food")))
+                            )
+                        )
+                    ),
+                    Seq(
+                        TableRow(
+                            content = HtmlContent(otherReceiptsHeading)
+                        ),
+                        TableRow(
+                            content = HtmlContent(
+                                govukInput(Input(
+                                    id = s"$idx.other-receipts",
+                                    name = s"$idx.other-receipts",
+                                    value = form(s"$idx.other-receipts").value,
+                                    classes = "govuk-input--width-10",
+                                    attributes = Map(
+                                        "maxlength" -> "13",
+                                        "aria-label" -> messages("turnover.otherReceipts")
+                                    ),
+                                    prefix = Some(PrefixOrSuffix(
+                                        content = Text("£")
+                                    ))
+                                ).withFormField(form(s"$idx.other-receipts")))
+                            )
+                        )
+                    ),
+                    Seq(
+                        TableRow(
+                            content = HtmlContent(accommodationHeading)
+                        ),
+                        TableRow(
+                            content = HtmlContent(
+                                govukInput(Input(
+                                    id = s"$idx.accommodation",
+                                    name = s"$idx.accommodation",
+                                    value = form(s"$idx.accommodation").value,
+                                    classes = "govuk-input--width-10",
+                                    attributes = Map(
+                                        "maxlength" -> "13",
+                                        "aria-label" -> messages("turnover.accommodation")
+                                    ),
+                                    prefix = Some(PrefixOrSuffix(
+                                        content = Text("£")
+                                    ))
+                                ).withFormField(form(s"$idx.accommodation")))
+                            )
+                        )
+                    ),
+                    Seq(
+                        TableRow(
+                            content = HtmlContent(averageOccupancyRateHeading)
+                        ),
+                        TableRow(
+                            content = HtmlContent(
+                                govukInput(Input(
+                                    id = s"$idx.average-occupancy-rate",
+                                    name = s"$idx.average-occupancy-rate",
+                                    value = form(s"$idx.average-occupancy-rate").value,
+                                    classes = "govuk-input--width-3",
+                                    attributes = Map(
+                                        "maxlength" -> "5",
+                                        "aria-label" -> messages("turnover.averageOccupancyRate")
+                                    ),
+                                    suffix = Some(PrefixOrSuffix(
+                                        content = Text("%")
+                                    ))
+                                ).withFormField(form(s"$idx.average-occupancy-rate")))
+                            )
+                        )
+                    )
+                )
+            ))
 
-      @includes.continueSaveAsDraftButtons(govukButton)
-  }
+        }
+
+        @includes.continueSaveAsDraftButtons(govukButton)
+    }
+
 }
-
-
-
-
