@@ -26,21 +26,38 @@
 )
 
 
-@(theForm: Form[_], index: Option[Int], cateringOrLetting: String, backLink: String, summary: Summary)(implicit request: Request[_], messages: Messages)
+@(theForm: Form[_], index: Option[Int], cateringOrLetting: String, backLink: String, summary: Summary, formType: String)(implicit request: Request[_], messages: Messages)
+
+@typeConcession = @{formType == ForTypes.for6015 || formType == ForTypes.for6016}
+
+@label =@{
+        if(typeConcession) messages("label.section.aboutTheFranchiseConcessions")  else {
+            messages("label.section.aboutTheFranchiseLettings")
+        }
+    }
+@heading =@{
+        if(typeConcession) messages("concessionDetails.heading")  else {
+            messages(s"${cateringOrLetting}.heading")
+        }
+    }
+
+@nameLabel = @{if(typeConcession) "tradingName"  else "operatorName" }
+
+@formHint =  @{if(typeConcession) "concessionTypeOfBusiness"  else "typeOfBusiness" }
 
 @layout(
-    pageHeading = messages(s"${cateringOrLetting}.heading"),
+    pageHeading = heading,
     showSection = true,
     summary = Some(summary),
-    sectionName = messages("label.section.aboutTheFranchiseLettings"),
+    sectionName = label,
     backLinkUrl = backLink,
     theForm = theForm
 ) {
     @if(cateringOrLetting.equals("cateringOperationOrLettingAccommodationDetails")) {
         @formWithCSRF(action = controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController.submit(index)) {
 
-            @includes.textInput(govukInput, theForm, "operatorName", "govuk-input--width-20", "operatorName", labelClasses = "govuk-!-font-weight-bold")
-            @includes.textInput(govukInput, theForm, "typeOfBusiness", "govuk-input--width-20", "typeOfBusiness", labelClasses = "govuk-!-font-weight-bold", hintMsg = "typeOfBusiness")
+            @includes.textInput(govukInput, theForm, "operatorName", "govuk-input--width-20", nameLabel, labelClasses = "govuk-!-font-weight-bold")
+            @includes.textInput(govukInput, theForm, "typeOfBusiness", "govuk-input--width-20", "typeOfBusiness", labelClasses = "govuk-!-font-weight-bold", hintMsg = formHint)
 
             <p class="govuk-body">
                 <b>@messages("label.correspondenceAddress")</b>

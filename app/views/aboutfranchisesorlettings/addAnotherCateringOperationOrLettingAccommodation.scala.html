@@ -30,6 +30,7 @@
 @import uk.gov.hmrc.govukfrontend.views.Aliases.RadioItem
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Fieldset
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Legend
+@import uk.gov.hmrc.govukfrontend.views.Aliases.ErrorMessage
 @import models.pages.Summary
 
 @this(layout: Layout,
@@ -39,11 +40,24 @@
         formWithCSRF: FormWithCSRF
 )
 
+
 @(theForm: Form[_], index: Int, cateringOrLetting: String, backLink: String, summary: Summary)(implicit request: SessionRequest[_], messages: Messages)
+
+
 
 @session = @{ request.sessionData }
 
 @forType = @{ session.forType }
+
+@isConcession = @{ forType == ForTypes.for6015 || forType == ForTypes.for6016 }
+
+@headingKey = @{if (isConcession) "addAnotherConcessionOrLetting.heading" else s"$cateringOrLetting.heading"}
+
+@label = @{if (isConcession) messages("label.section.aboutTheFranchiseConcessions")  else messages("label.section.aboutTheFranchiseLettings")}
+
+@formLabel =@{if (isConcession) messages("label.addAnotherConcessionOrLetting")  else messages(s"label.${cateringOrLetting}")}
+
+@pageHeading = @{messages(if(isConcession) "addAnotherConcessionOrLetting.heading"  else s"${cateringOrLetting}.heading", operatorNames.size) + pluralSuffix}
 
 @isLettingOtherPartOfProperty = @{ cateringOrLetting.equals("addAnotherLettingOtherPartOfProperty") }
 
@@ -68,10 +82,10 @@
 @pluralSuffix = @{ if (operatorNames.size > 1) "s" else "" }
 
 @layout(
- pageHeading = messages(s"${cateringOrLetting}.heading", operatorNames.size) + pluralSuffix,
+ pageHeading = pageHeading,
  showSection = true,
  summary = Some(summary),
- sectionName = messages("label.section.aboutTheFranchiseLettings"),
+ sectionName = label,
  backLinkUrl = backLink,
  theForm = theForm
 ) {
@@ -127,7 +141,7 @@
      Fieldset(
       legend = Option(
        Legend(
-        content = Text(messages(s"label.${cateringOrLetting}")),
+        content = Text(formLabel),
         classes = "govuk-!-font-weight-bold"
        )
       )

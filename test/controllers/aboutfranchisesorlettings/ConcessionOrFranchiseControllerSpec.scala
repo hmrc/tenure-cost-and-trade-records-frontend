@@ -29,7 +29,7 @@ class ConcessionOrFranchiseControllerSpec extends TestBaseSpec {
   val concessionOrFranchiseController = new ConcessionOrFranchiseController(
     stubMessagesControllerComponents(),
     mockAboutFranchisesOrLettingsNavigator,
-    concessionOrFranchiseView,
+    rentFromConcession,
     preFilledSession,
     mockSessionRepo
   )

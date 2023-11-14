@@ -37,7 +37,8 @@ class ConcessionOrFranchiseViewSpec extends QuestionViewBehaviours[CateringOpera
       form,
       messageKeyPrefix,
       controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show().url,
-      Summary("99996010001")
+      Summary("99996010001"),
+      "6010"
     )(fakeRequest, messages)
 
   def createViewUsingForm: Form[CateringOperationDetails] => Html = (form: Form[CateringOperationDetails]) =>
@@ -45,7 +46,8 @@ class ConcessionOrFranchiseViewSpec extends QuestionViewBehaviours[CateringOpera
       form,
       messageKeyPrefix,
       controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show().url,
-      Summary("99996010001")
+      Summary("99996010001"),
+      "6010"
     )(fakeRequest, messages)
 
   "Concession or franchise view" must {

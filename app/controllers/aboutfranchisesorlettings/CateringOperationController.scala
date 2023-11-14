@@ -52,7 +52,8 @@ class CateringOperationController @Inject() (
         },
         "cateringOperationOrLettingAccommodation",
         controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show().url,
-        request.sessionData.toSummary
+        request.sessionData.toSummary,
+        request.sessionData.forType
       )
     )
   }
@@ -66,7 +67,8 @@ class CateringOperationController @Inject() (
             formWithErrors,
             "cateringOperationOrLettingAccommodation",
             controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show().url,
-            request.sessionData.toSummary
+            request.sessionData.toSummary,
+            request.sessionData.forType
           )
         ),
       data => {

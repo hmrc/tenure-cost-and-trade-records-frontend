@@ -127,6 +127,18 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit) extends Naviga
 
   }
 
+  private def rentForConcessionsRouting: Session => Call = answers => {
+    answers.aboutFranchisesOrLettings.flatMap(_.cateringConcessionOrFranchise.map(_.name)) match {
+      case Some("yes") => controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController.show()
+      case Some("no")  => controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show()
+      case _           =>
+        logger.warn(
+          s"Navigation for catering operations reached without correct selection of conditions by controller"
+        )
+        throw new RuntimeException("Invalid option exception for catering operations conditions routing")
+    }
+  }
+
   private def lettingAccommodationConditionsRouting: Session => Call = answers => {
     answers.aboutFranchisesOrLettings.flatMap(_.lettingOtherPartOfProperty.map(_.name)) match {
       case Some("yes") =>
@@ -185,6 +197,7 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit) extends Naviga
     LettingAccommodationRentDetailsPageId      -> lettingsRentDetailsConditionsRouting,
     LettingAccommodationRentIncludesPageId     -> lettingsRentIncludesConditionsRouting,
     AddAnotherLettingAccommodationPageId       -> addAnotherLettingsConditionsRouting,
+    RentFromConcessionId                       -> rentForConcessionsRouting,
     CheckYourAnswersAboutFranchiseOrLettingsId -> (_ => controllers.routes.TaskListController.show())
   )
 }

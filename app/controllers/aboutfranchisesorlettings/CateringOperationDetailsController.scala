@@ -66,7 +66,8 @@ class CateringOperationDetailsController @Inject() (
               s"Navigation for catering operation details page reached with error $msg"
             )
         },
-        request.sessionData.toSummary
+        request.sessionData.toSummary,
+        request.sessionData.forType
       )
     )
   }
@@ -88,7 +89,8 @@ class CateringOperationDetailsController @Inject() (
                   s"Navigation for catering operation details page reached with error $msg"
                 )
             },
-            request.sessionData.toSummary
+            request.sessionData.toSummary,
+            request.sessionData.forType
           )
         ),
       data => {

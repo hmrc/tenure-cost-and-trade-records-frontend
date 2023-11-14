@@ -41,7 +41,8 @@ class CateringOperationsRentDetailsViewSpec extends QuestionViewBehaviours[Cater
       messageKeyPrefix,
       "separate business",
       controllers.aboutfranchisesorlettings.routes.CateringOperationController.show().url,
-      Summary("99996010001")
+      Summary("99996010001"),
+      "FOR6010"
     )(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[CateringOperationRentDetails]) =>
@@ -51,7 +52,8 @@ class CateringOperationsRentDetailsViewSpec extends QuestionViewBehaviours[Cater
       messageKeyPrefix,
       "separate business",
       controllers.aboutfranchisesorlettings.routes.CateringOperationController.show().url,
-      Summary("99996010001")
+      Summary("99996010001"),
+      "FOR6010"
     )(fakeRequest, messages)
 
   "Catering operation rent details view" must {

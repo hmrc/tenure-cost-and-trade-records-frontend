@@ -56,7 +56,8 @@ class LettingOtherPartOfPropertyRentIncludesController @Inject() (
             controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsRentController
               .show(index)
               .url,
-            request.sessionData.toSummary
+            request.sessionData.toSummary,
+            request.sessionData.forType
           )
         )
       }
@@ -78,7 +79,8 @@ class LettingOtherPartOfPropertyRentIncludesController @Inject() (
             controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsRentController
               .show(index)
               .url,
-            request.sessionData.toSummary
+            request.sessionData.toSummary,
+            request.sessionData.forType
           )
         ),
       data => {

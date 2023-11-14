@@ -54,7 +54,8 @@ class LettingOtherPartOfPropertyDetailsController @Inject() (
         index,
         "lettingOtherPartOfPropertyDetails",
         getBackLink(index),
-        request.sessionData.toSummary
+        request.sessionData.toSummary,
+        request.sessionData.forType
       )
     )
   }
@@ -69,7 +70,8 @@ class LettingOtherPartOfPropertyDetailsController @Inject() (
             index,
             "lettingOtherPartOfPropertyDetails",
             getBackLink(index),
-            request.sessionData.toSummary
+            request.sessionData.toSummary,
+            request.sessionData.forType
           )
         ),
       data => {

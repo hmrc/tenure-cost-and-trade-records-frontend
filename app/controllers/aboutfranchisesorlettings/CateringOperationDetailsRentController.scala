@@ -60,7 +60,8 @@ class CateringOperationDetailsRentController @Inject() (
           "cateringOperationOrLettingAccommodationRentDetails",
           existingSection.get.cateringOperationDetails.operatorName,
           controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController.show(Some(index)).url,
-          request.sessionData.toSummary
+          request.sessionData.toSummary,
+          request.sessionData.forType
         )
       )
     }
@@ -79,7 +80,8 @@ class CateringOperationDetailsRentController @Inject() (
             "cateringOperationOrLettingAccommodationRentDetails",
             existingSection.cateringOperationDetails.operatorName,
             controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController.show().url,
-            request.sessionData.toSummary
+            request.sessionData.toSummary,
+            request.sessionData.forType
           )
         ),
       data =>

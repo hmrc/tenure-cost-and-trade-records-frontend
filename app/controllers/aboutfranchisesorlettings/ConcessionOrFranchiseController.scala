@@ -22,11 +22,11 @@ import form.aboutfranchisesorlettings.ConcessionOrFranchiseForm.concessionOrFran
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
 import models.submissions.common.AnswersYesNo
 import navigation.AboutFranchisesOrLettingsNavigator
-import navigation.identifiers.CateringOperationPageId
+import navigation.identifiers.RentFromConcessionId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import views.html.aboutfranchisesorlettings.cateringOperationOrLettingAccommodation
+import views.html.aboutconcessionsorlettings.rentFromConcessions
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
@@ -35,7 +35,7 @@ import scala.concurrent.Future
 class ConcessionOrFranchiseController @Inject() (
   mcc: MessagesControllerComponents,
   navigator: AboutFranchisesOrLettingsNavigator,
-  cateringOperationOrLettingAccommodationView: cateringOperationOrLettingAccommodation,
+  rentFromConcessionsView: rentFromConcessions,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
 ) extends FORDataCaptureController(mcc)
@@ -44,13 +44,12 @@ class ConcessionOrFranchiseController @Inject() (
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Future.successful(
       Ok(
-        cateringOperationOrLettingAccommodationView(
+        rentFromConcessionsView(
           request.sessionData.aboutFranchisesOrLettings.flatMap(_.cateringConcessionOrFranchise) match {
             case Some(cateringConcessionOrFranchise) =>
               concessionOrFranchiseForm.fillAndValidate(cateringConcessionOrFranchise)
             case _                                   => concessionOrFranchiseForm
           },
-          "concessionOrFranchise",
           controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show().url,
           request.sessionData.toSummary
         )
@@ -63,9 +62,8 @@ class ConcessionOrFranchiseController @Inject() (
       concessionOrFranchiseForm,
       formWithErrors =>
         BadRequest(
-          cateringOperationOrLettingAccommodationView(
+          rentFromConcessionsView(
             formWithErrors,
-            "concessionOrFranchise",
             controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show().url,
             request.sessionData.toSummary
           )
@@ -73,7 +71,7 @@ class ConcessionOrFranchiseController @Inject() (
       data => {
         val updatedData = updateAboutFranchisesOrLettings(_.copy(cateringConcessionOrFranchise = Some(data)))
         session.saveOrUpdate(updatedData)
-        Redirect(navigator.nextPage(CateringOperationPageId, updatedData).apply(updatedData))
+        Redirect(navigator.nextPage(RentFromConcessionId, updatedData).apply(updatedData))
       }
     )
   }
