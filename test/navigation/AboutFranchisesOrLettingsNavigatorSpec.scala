@@ -124,7 +124,7 @@ class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec {
         .nextPage(AddAnotherCateringOperationPageId, sessionAboutFranchiseOrLetting6010YesSession)
         .apply(
           sessionAboutFranchiseOrLetting6010YesSession
-        ) mustBe controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController.show()
+        ) mustBe controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController.show(Some(1))
     }
 
     "return a function that goes to lettings page when letting page has been completed no" in {
