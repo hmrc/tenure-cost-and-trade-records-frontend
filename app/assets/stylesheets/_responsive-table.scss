@@ -2,7 +2,7 @@
   vertical-align: top;
 }
 
-.hmrc-responsive-table td:not(:first-child) .govuk-table tr th:first-child {
+.hmrc-responsive-table td:not(:first-child) .govuk-table th:first-child {
   display: none;
 }
 
@@ -20,7 +20,7 @@
     width: 100%;
   }
 
-  .hmrc-responsive-table td:not(:first-child) .govuk-table tr th:first-child {
+  .hmrc-responsive-table td:not(:first-child) .govuk-table th:first-child {
     display: table-cell;
   }
 }
