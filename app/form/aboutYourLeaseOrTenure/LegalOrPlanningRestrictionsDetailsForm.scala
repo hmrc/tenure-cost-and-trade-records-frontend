@@ -28,7 +28,7 @@ object LegalOrPlanningRestrictionsDetailsForm {
       "legalOrPlanningRestrictionsDetails" ->
         default(text, "").verifying(
           nonEmpty(errorMessage = "error.legalOrPlanningRestrictionsDetails.required"),
-          maxLength(2000, "error.legalOrPlanningRestrictionsDetails.maxLength")
+          maxLength(500, "error.legalOrPlanningRestrictionsDetails.maxLength")
         )
     )(LegalOrPlanningRestrictionsDetails.apply)(
       LegalOrPlanningRestrictionsDetails.unapply

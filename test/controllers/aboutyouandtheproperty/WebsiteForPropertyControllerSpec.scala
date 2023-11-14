@@ -64,7 +64,7 @@ class WebsiteForPropertyControllerSpec extends TestBaseSpec {
       val formData = baseFormData - errorKey.buildingOperatingHaveAWebsite
       val form     = websiteForPropertyForm.bind(formData)
 
-      mustContainError(errorKey.buildingOperatingHaveAWebsite, Errors.booleanMissing, form)
+      mustContainError(errorKey.buildingOperatingHaveAWebsite, Errors.buildingOperatingHaveAWebsite, form)
     }
   }
 

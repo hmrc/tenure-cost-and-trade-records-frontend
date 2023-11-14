@@ -27,7 +27,7 @@ object FurtherInformationOrRemarksForm {
     mapping(
       "furtherInformationOrRemarks" ->
         default(text, "").verifying(
-          maxLength(2000, "error.char.count.maxLength")
+          maxLength(2000, "error.furtherInformationOrRemarks.maxLength")
         )
     )(FurtherInformationOrRemarksDetails.apply)(FurtherInformationOrRemarksDetails.unapply)
   )

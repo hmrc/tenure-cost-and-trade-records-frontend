@@ -80,13 +80,14 @@ object Formats {
   implicit val aboutYourPropertyFormat: Formatter[CurrentPropertyUsed]                       =
     namedEnumFormatter(CurrentPropertyUsed, Errors.propertyCurrentlyUsed)
   implicit val buildingOperatingHaveAWebsiteFormat: Formatter[BuildingOperationHaveAWebsite] =
-    namedEnumFormatter(BuildingOperationHaveAWebsite, Errors.booleanMissing)
+    namedEnumFormatter(BuildingOperationHaveAWebsite, Errors.buildingOperatingHaveAWebsite)
   implicit val vacantPropertiesFormat: Formatter[VacantPropertiesDetails]                    =
-    namedEnumFormatter(VacantPropertiesDetails, Errors.booleanMissing)
+    namedEnumFormatter(VacantPropertiesDetails, Errors.vacantProperties)
 
   implicit val methodToFixCurrentRentDetailsFormat: Formatter[MethodToFixCurrentRents] =
     namedEnumFormatter(MethodToFixCurrentRents, Errors.methodToFixCurrentRents)
-  implicit val tiedForGoodsDetailsFormat: Formatter[TiedForGoodsInformation]           =
+
+  implicit val tiedForGoodsDetailsFormat: Formatter[TiedForGoodsInformation] =
     namedEnumFormatter(TiedForGoodsInformation, Errors.tiedForGoodsDetails)
 
 //  implicit val answerResponsiblePartyFormatter: Formatter[AnswerResponsibleParty] =

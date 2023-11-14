@@ -27,7 +27,7 @@ object AlternativeContactDetailsForm {
     mapping(
       "alternativeContactFullName" -> default(text, "").verifying(
         nonEmpty(errorMessage = "error.fullName.required"),
-        maxLength(100)
+        maxLength(50, "error.fullName.mexLength")
       ),
       "alternativeContactDetails"  -> contactDetailsMapping,
       "alternativeContactAddress"  -> alternativeAddressMapping

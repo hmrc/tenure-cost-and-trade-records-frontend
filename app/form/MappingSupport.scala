@@ -86,6 +86,7 @@ object MappingSupport {
   val cdbMaxCurrencyAmount  = 9999999.99
   val spacesIntRegex: Regex = """^\-?\d{1,10}$""".r
   val intRegex: Regex       = """^\d{1,3}$""".r
+  val invalidCharRegex      = """^[0-9A-Za-z\s\-]+$"""
 
   lazy val annualRent: Mapping[AnnualRent] = mapping(
     "annualRentExcludingVat" -> currencyMapping(".annualRentExcludingVat")
@@ -170,20 +171,24 @@ object MappingSupport {
   def requestReferenceNumberAddressMapping: Mapping[RequestReferenceNumberAddress] = mapping(
     "buildingNameNumber" -> default(text, "").verifying(
       nonEmpty(errorMessage = "error.buildingNameNumber.required"),
-      maxLength(50, "error.buildingNameNumber.maxLength")
+      maxLength(50, "error.buildingNameNumber.maxLength"),
+      pattern(invalidCharRegex.r, error = "error.invalidCharAddress1")
     ),
     "street1"            -> optional(
       default(text, "").verifying(
-        maxLength(50, "error.addressLineTwo.maxLength")
+        maxLength(50, "error.addressLineTwo.maxLength"),
+        pattern(invalidCharRegex.r, error = "error.invalidCharAddress2")
       )
     ),
     "town"               -> default(text, "").verifying(
       nonEmpty(errorMessage = "error.townCity.required"),
-      maxLength(50, "error.buildingNameNumber.maxLength")
+      maxLength(50, "error.buildingNameNumber.maxLength"),
+      pattern(invalidCharRegex.r, error = "error.invalidCharTownCity")
     ),
     "county"             -> optional(
       default(text, "").verifying(
-        maxLength(50, "error.county.maxLength")
+        maxLength(50, "error.county.maxLength"),
+        pattern(invalidCharRegex.r, error = "error.invalidCharCounty")
       )
     ),
     "postcode"           -> nonEmptyTextOr("requestReferenceNumberAddress.postcode", postcode, "error.postcode.required")
@@ -323,7 +328,8 @@ object MappingSupport {
 
   def yourContactDetailsMapping: Mapping[YourContactDetails] = mapping(
     "fullName"                                   -> default(text, "").verifying(
-      nonEmpty(errorMessage = "error.fullName.required")
+      nonEmpty(errorMessage = "error.fullName.required"),
+      maxLength(50, "error.fullName.maxLength")
     ),
     "contactDetails"                             -> contactDetailsMapping,
     "provideContactDetailsAdditionalInformation" -> optional(

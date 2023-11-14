@@ -20,7 +20,7 @@ import form.MappingSupport.multipleCurrentPropertyUsedMapping
 import models.submissions.aboutyouandtheproperty._
 import play.api.data.Form
 import play.api.data.Forms.{default, mapping, text}
-import play.api.data.validation.Constraints.nonEmpty
+import play.api.data.validation.Constraints.{maxLength, nonEmpty}
 import uk.gov.voa.play.form.ConditionalMappings.mandatoryIfAnyEqual
 
 object AboutThePropertyForm {
@@ -43,7 +43,8 @@ object AboutThePropertyForm {
       "propertyCurrentlyUsedOther" -> mandatoryIfAnyEqual(
         Seq(("propertyCurrentlyUsed[0]", "other"), ("propertyCurrentlyUsed[]", "other")),
         default(text, "").verifying(
-          nonEmpty(errorMessage = "error.propertyCurrentlyUsed.required")
+          nonEmpty(errorMessage = "error.propertyCurrentlyUsed.required"),
+          maxLength(200, "error.propertyCurrentlyUsed.maxLength")
         )
       )
     )(PropertyDetails.apply)(PropertyDetails.unapply)

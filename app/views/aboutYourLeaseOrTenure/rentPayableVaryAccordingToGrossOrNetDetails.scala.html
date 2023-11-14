@@ -39,7 +39,13 @@
 
  @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryAccordingToGrossOrNetDetailsController.submit()) {
 
-  @includes.textInputCharCount(govukCharacterCount, theForm, "rentPayableVaryAccordingToGrossOrNetDetails", "label.rentPayableVaryAccordingToGrossOrNetDetails", "govuk-fieldset__legend--l")
+  @includes.textInputCharCount(
+   govukCharacterCount,
+   theForm,
+   "rentPayableVaryAccordingToGrossOrNetDetails",
+   "label.rentPayableVaryAccordingToGrossOrNetDetails",
+   "govuk-fieldset__legend--l",
+   500)
 
   @includes.continueSaveAsDraftButtons(govukButton)
  }

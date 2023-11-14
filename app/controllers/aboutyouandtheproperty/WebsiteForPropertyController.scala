@@ -55,7 +55,6 @@ class WebsiteForPropertyController @Inject() (
     )
   }
 
-  //TODO - the view needs to be updated so that if the user selects 'yes' the text field is mandatory. It is currently possible for a user to click 'yes' and enter no data.
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[WebsiteForPropertyDetails](
       websiteForPropertyForm,
