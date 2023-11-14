@@ -881,6 +881,16 @@ error.dateInput.month.required = The date the rent was fixed must include a mont
 error.dateInput.year.required = The date the rent was fixed must include a year
 error.sharedResponsibilities.required = Tell us how the responsibilities are shared
 
+# CONCESSIONS OR LETTINGS (6015/6016)
+########################################################
+rentReceived.heading = Rent received from {0}
+rentReceived.label = Annual rent payment excluding VAT
+rentReceived.confirmation = I confirm this payment was not included in the turnover figures
+rentReceivedDetails.heading = Calculating the rent for {0}
+rentReceivedDetails.p = Explain how the income received figure was calculated- for example, 10% of the total takings
+rentReceivedDetails.date.label = When was the rent fixed at its current rate
+rentReceivedDetails.date.hint =
+
 # CATERING OPERATION OR LETTING ACCOMMODATION CHECKBOXES
 ########################################################
 cateringOperationOrLettingAccommodationCheckboxesDetails.heading = Items included in your rent
