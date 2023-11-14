@@ -45,7 +45,6 @@ object AboutThePropertyForm {
         default(text, "").verifying(
           nonEmpty(errorMessage = "error.propertyCurrentlyUsed.required"),
           maxLength(200, "error.propertyCurrentlyUsed.maxLength")
-
         )
       )
     )(PropertyDetails.apply)(PropertyDetails.unapply)

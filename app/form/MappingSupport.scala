@@ -86,7 +86,7 @@ object MappingSupport {
   val cdbMaxCurrencyAmount  = 9999999.99
   val spacesIntRegex: Regex = """^\-?\d{1,10}$""".r
   val intRegex: Regex       = """^\d{1,3}$""".r
-  val invalidCharRegex = """^[0-9A-Za-z\s\-]+$"""
+  val invalidCharRegex      = """^[0-9A-Za-z\s\-]+$"""
 
   lazy val annualRent: Mapping[AnnualRent] = mapping(
     "annualRentExcludingVat" -> currencyMapping(".annualRentExcludingVat")
