@@ -1,0 +1,26 @@
+.hmrc-responsive-table > tbody > tr > td {
+  vertical-align: top;
+}
+
+.hmrc-responsive-table td:not(:first-child) .govuk-table tr th:first-child {
+  display: none;
+}
+
+@media all and (max-width: 800px) {
+  table.hmrc-responsive-table {
+    width: 100%;
+  }
+
+  .hmrc-responsive-table > tbody > tr {
+    display: block;
+  }
+
+  .hmrc-responsive-table > tbody > tr > td {
+    display: block;
+    width: 100%;
+  }
+
+  .hmrc-responsive-table td:not(:first-child) .govuk-table tr th:first-child {
+    display: table-cell;
+  }
+}
