@@ -273,7 +273,7 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
     RentIncludeTradeServicesDetailsPageId         -> (_ =>
       controllers.aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsController.show()
     ),
-    RentIncludesVatPageId                         -> (_ => controllers.aboutYourLeaseOrTenure.routes.CurrentRentFirstPaidController.show),
+    RentIncludesVatPageId                         -> (_ => controllers.aboutYourLeaseOrTenure.routes.CurrentRentFirstPaidController.show()),
     RentFixtureAndFittingsPageId                  -> rentFixtureAndFittingsRouting,
     RentFixtureAndFittingsDetailsPageId           -> (_ =>
       controllers.aboutYourLeaseOrTenure.routes.RentOpenMarketValueController.show()

@@ -1,0 +1,40 @@
+.hmrc-responsive-table {
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+
+.hmrc-responsive-table > tbody > tr > td {
+  vertical-align: top;
+  padding: 0;
+}
+
+.hmrc-responsive-table .govuk-table td {
+  padding-right: 1em;
+}
+
+.hmrc-responsive-table td:not(:first-child) .govuk-table th:first-child {
+  display: none;
+}
+
+@media all and (max-width: 800px) {
+  table.hmrc-responsive-table {
+    width: 100%;
+  }
+
+  .hmrc-responsive-table > tbody > tr {
+    display: block;
+  }
+
+  .hmrc-responsive-table > tbody > tr > td {
+    display: block;
+    width: 100%;
+  }
+
+  .hmrc-responsive-table .govuk-table td {
+    padding-right: 0;
+  }
+
+  .hmrc-responsive-table td:not(:first-child) .govuk-table th:first-child {
+    display: table-cell;
+  }
+}
