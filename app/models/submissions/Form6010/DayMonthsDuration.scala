@@ -20,8 +20,11 @@ import play.api.libs.json.Json
 
 import java.time.MonthDay
 
+/**
+  * Represents dd/mm part of Date.
+  */
 case class DayMonthsDuration(days: Int, months: Int) {
-  def toMonthDay = MonthDay.of(months, days)
+  def toMonthDay: MonthDay = MonthDay.of(months, days)
 }
 
 object DayMonthsDuration {

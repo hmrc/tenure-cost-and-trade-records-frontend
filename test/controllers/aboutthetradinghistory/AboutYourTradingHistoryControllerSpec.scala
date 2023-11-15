@@ -59,18 +59,25 @@ class AboutYourTradingHistoryControllerSpec extends TestBaseSpec {
   }
 
   "About your trading history form" should {
+    "error if first occupy month and year are missing " in {
+      val formData = baseFormData - errorKey.occupyMonth - errorKey.occupyYear
+      val form     = occupationalInformationForm(messages).bind(formData)
+
+      mustContainError(errorKey.occupyMonth, "error.date.required", form)
+    }
+
     "error if first occupy month is missing " in {
       val formData = baseFormData - errorKey.occupyMonth
-      val form     = occupationalInformationForm.bind(formData)
+      val form     = occupationalInformationForm(messages).bind(formData)
 
-      mustContainError(errorKey.occupyMonth, "error.firstOccupy.month.required", form)
+      mustContainError(errorKey.occupyMonth, "error.date.mustInclude", form)
     }
 
     "error if first occupy year is missing" in {
       val formData = baseFormData - errorKey.occupyYear
-      val form     = occupationalInformationForm.bind(formData)
+      val form     = occupationalInformationForm(messages).bind(formData)
 
-      mustContainError(errorKey.occupyYear, "error.firstOccupy.year.required", form)
+      mustContainError(errorKey.occupyYear, "error.date.mustInclude", form)
     }
   }
 

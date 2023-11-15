@@ -27,7 +27,7 @@ class CurrentLeaseOrAgreementBeginViewSpec extends QuestionViewBehaviours[Curren
 
   val messageKeyPrefix = "currentLeaseOrAgreementBegin"
 
-  override val form = CurrentLeaseOrAgreementBeginForm.currentLeaseOrAgreementBeginForm
+  override val form = CurrentLeaseOrAgreementBeginForm.currentLeaseOrAgreementBeginForm(messages)
 
   def createView = () => currentLeaseOrAgreementBeginView(form, Summary("99996010001"))(fakeRequest, messages)
 
