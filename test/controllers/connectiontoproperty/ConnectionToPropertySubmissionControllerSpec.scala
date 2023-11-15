@@ -23,7 +23,6 @@ import play.api.test.Helpers.{status, stubMessagesControllerComponents}
 import connectors.{Audit, SubmissionConnector}
 import models.submissions.ConnectedSubmission
 import org.mockito.ArgumentMatchers.anyString
-import play.api.libs.json.JsObject
 import play.api.mvc.Request
 import play.twirl.api.Html
 import uk.gov.hmrc.http.HeaderCarrier

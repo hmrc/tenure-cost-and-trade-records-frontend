@@ -18,7 +18,6 @@ package connectors
 
 import models.submissions.{ConnectedSubmission, NotConnectedSubmission}
 import org.scalatest.RecoverMethods.recoverToExceptionIf
-import play.api.http.Status.CREATED
 import play.api.libs.json.Format
 import uk.gov.hmrc.http.{BadRequestException, HeaderCarrier, HttpClient, HttpReads, HttpResponse}
 import utils.TestBaseSpec
