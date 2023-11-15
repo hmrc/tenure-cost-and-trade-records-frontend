@@ -113,6 +113,17 @@ class LettingOtherPartOfPropertyController @Inject() (
       case ForTypes.for6015 | ForTypes.for6016 =>
         Right(controllers.aboutfranchisesorlettings.routes.ConcessionOrFranchiseController.show().url)
       case _                                   =>
-        Right(controllers.aboutfranchisesorlettings.routes.CateringOperationController.show().url)
+        Right(getBackLinkOfrSections(answers))
+    }
+
+  private def getBackLinkOfrSections(answers: Session): String =
+    answers.aboutFranchisesOrLettings.flatMap { aboutFranchiseOrLettings =>
+      aboutFranchiseOrLettings.cateringOperationSections.lastOption.map(_ =>
+        aboutFranchiseOrLettings.cateringOperationSections.size - 1
+      )
+    } match {
+      case Some(index) =>
+        controllers.aboutfranchisesorlettings.routes.AddAnotherCateringOperationController.show(index).url
+      case None        => controllers.aboutfranchisesorlettings.routes.CateringOperationController.show().url
     }
 }
