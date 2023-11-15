@@ -846,13 +846,16 @@ error.howIsCurrentRentFixed.required = Select how the current rent was fixed
 # CATERING OPERATION OR LETTING DETAILS
 #######################################
 cateringOperationOrLettingAccommodationDetails.heading = Provide the business’s details
+concessionDetails.heading = Provide the concession’s details
 lettingOtherPartOfPropertyDetails.heading = Provide the tenant’s details
 fieldName.lettingOtherPartOfPropertyFixedRentDate = the date the rent was fixed
 label.operatorName = Operator’s name
 label.lettingOperatorName = Tenant’s name
+label.tradingName = Trading name
 label.typeOfBusiness = Describe the type of business
 label.lettingTypeOfBusiness = Description of letting
 hint.typeOfBusiness = For example, bed and breakfast, hotel, restaurant.
+hint.concessionTypeOfBusiness = For example, a restaurant, or leisure facilities
 hint.lettingTypeOfBusiness = For example, a billboard, residential accommodation.
 label.correspondenceAddress = Correspondence address
 error.operatorName.required = Enter the name of the person or company operating the business
@@ -895,8 +898,10 @@ error.cateringOperationOrLettingAccommodationCheckboxesDetails.noneSelectedWithO
 # ADD ANOTHER CATERING OPERATION OR LETTING ACCOMMODATION DETAILS
 #################################################################
 addAnotherCateringOperation.heading = You have added {0} separate business or franchise
+addAnotherConcessionOrLetting.heading = You have added {0} separate business or concession
 addAnotherLettingOtherPartOfProperty.heading = You have added {0} letting
 label.addAnotherCateringOperation = Do you need to add another separate business or franchise?
+label.addAnotherConcessionOrLetting = Do you need to add another separate business or concession?
 label.addAnotherLettingOtherPartOfProperty = Do you need to add another letting?
 error.addAnotherSeparateBusinessOrFranchise.required = Select yes if you would like to add another business or franchise
 error.addAnotherLetting.required = Select yes if you would like to add another letting
@@ -1224,9 +1229,10 @@ netProfit.heading = This is a holding page for the net profits page
 
 # CONCESSIONS OR FRANCHISE (FORM 6015)
 #########
-concessionOrFranchise.heading = Is any concession or franchise run as a separate business from the property?
-hint.concessionOrFranchise = Choose ’no’ if you’ve included turnover from these businesses in your turnover. You will have the opportunity to add more than one business if required.
-error.concessionOrFranchise.missing = Select yes if any separate businesses are run from the property
+concessionOrFranchise.heading = Rent from concessions
+p.concessionOrFranchise = You must declare any rental income received from allowing any separate business to operate from the property, for example restaurants or car hire kiosk. You will have the opportunity to add more than one business if required.
+label.concessionOrFranchise = Do you receive any rent from third-party business operating from part of the property?
+error.concessionOrFranchise.missing = Select yes if you receive any rent from third-party business operating from part of the property
 
 # ADDITIONAL INFORMATION
 ########################

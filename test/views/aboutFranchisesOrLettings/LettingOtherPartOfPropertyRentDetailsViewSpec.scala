@@ -42,7 +42,8 @@ class LettingOtherPartOfPropertyRentDetailsViewSpec
       messageKeyPrefix,
       "tenant",
       backLink,
-      Summary("99996010001")
+      Summary("99996010001"),
+      "6010"
     )(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[LettingOtherPartOfPropertyRentDetails]) =>
@@ -52,7 +53,8 @@ class LettingOtherPartOfPropertyRentDetailsViewSpec
       messageKeyPrefix,
       "tenant",
       backLink,
-      Summary("99996010001")
+      Summary("99996010001"),
+      "6010"
     )(fakeRequest, messages)
 
   "Catering operation rent details view" must {

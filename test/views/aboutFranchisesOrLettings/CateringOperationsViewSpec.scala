@@ -35,7 +35,8 @@ class CateringOperationsViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
       form,
       messageKeyPrefix,
       controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show().url,
-      Summary("99996010001")
+      Summary("99996010001"),
+      "6010"
     )(fakeRequest, messages)
 
   def createViewUsingForm: Form[AnswersYesNo] => Html = (form: Form[AnswersYesNo]) =>
@@ -43,7 +44,8 @@ class CateringOperationsViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
       form,
       messageKeyPrefix,
       controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show().url,
-      Summary("99996010001")
+      Summary("99996010001"),
+      "6010"
     )(fakeRequest, messages)
 
   "Franchise or lettings tied to property view" must {

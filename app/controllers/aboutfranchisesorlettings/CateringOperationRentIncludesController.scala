@@ -54,7 +54,8 @@ class CateringOperationRentIncludesController @Inject() (
             "cateringOperationOrLettingAccommodationCheckboxesDetails",
             currentSection.cateringOperationDetails.operatorName,
             controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsRentController.show(index).url,
-            request.sessionData.toSummary
+            request.sessionData.toSummary,
+            request.sessionData.forType
           )
         )
       }
@@ -74,7 +75,8 @@ class CateringOperationRentIncludesController @Inject() (
             "cateringOperationOrLettingAccommodationCheckboxesDetails",
             currentSection.cateringOperationDetails.operatorName,
             controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsRentController.show(index).url,
-            request.sessionData.toSummary
+            request.sessionData.toSummary,
+            request.sessionData.forType
           )
         ),
       data => {

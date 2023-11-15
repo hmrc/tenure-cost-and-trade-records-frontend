@@ -34,13 +34,13 @@ class CateringOperationsRentIncludesViewSpec extends QuestionViewBehaviours[List
   override val form = cateringOperationOrLettingAccommodationRentIncludesForm
 
   def createView = () =>
-    cateringOperationRentIncludesView(form, 0, messageKeyPrefix, "{0}", backLink, Summary("99996010001"))(
+    cateringOperationRentIncludesView(form, 0, messageKeyPrefix, "{0}", backLink, Summary("99996010001"), "FOR6010")(
       fakeRequest,
       messages
     )
 
   def createViewUsingForm = (form: Form[List[String]]) =>
-    cateringOperationRentIncludesView(form, 0, messageKeyPrefix, "{0}", backLink, Summary("99996010001"))(
+    cateringOperationRentIncludesView(form, 0, messageKeyPrefix, "{0}", backLink, Summary("99996010001"), "FOR6010")(
       fakeRequest,
       messages
     )

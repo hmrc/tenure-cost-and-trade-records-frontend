@@ -51,7 +51,7 @@ class FranchiseOrLettingsTiedToPropertyController @Inject() (
               franchiseOrLettingsTiedToPropertyForm.fill(franchisesOrLettingsTiedToProperty)
             case _                                        => franchiseOrLettingsTiedToPropertyForm
           },
-          request.sessionData.stillConnectedDetails.flatMap(_.connectionToProperty).toString,
+          request.sessionData.forType,
           request.sessionData.toSummary
         )
       )

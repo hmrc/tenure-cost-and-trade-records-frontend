@@ -20,6 +20,10 @@ case object FranchiseOrLettingsTiedToPropertyId extends Identifier {
   override def toString: String = "franchiseOrLettingsTiedToPropertyPage"
 }
 
+case object RentFromConcessionId extends Identifier {
+  override def toString: String = "rentFromConcession"
+}
+
 case object CateringOperationPageId extends Identifier {
   override def toString: String = "cateringOperationPage"
 }

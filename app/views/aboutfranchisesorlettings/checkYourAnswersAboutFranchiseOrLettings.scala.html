@@ -30,13 +30,22 @@
 
 @(theForm: Form[CheckYourAnswersAboutFranchiseOrLettings], backLink: String, summary: Summary)(implicit request: SessionRequest[_], messages: Messages)
 
+@isConcession  = @{
+    request.sessionData.forType == ForTypes.for6015 || request.sessionData.forType == ForTypes.for6016}
+
+@label = @{if (isConcession) messages("label.section.aboutTheFranchiseConcessions")  else messages("label.section.aboutTheFranchiseLettings")}
+
+@pageHeading = @{
+    if (isConcession) messages("checkYourAnswersAboutConcessionsOrLettings.heading") else  messages("checkYourAnswersAboutFranchiseOrLettings.heading")
+}
+
     @layout(
-        pageHeading = messages("checkYourAnswersAboutFranchiseOrLettings.heading"),
+        pageHeading = pageHeading,
         backLinkUrl = backLink,
         showSection = true,
         fullWidth = true,
         summary = Some(summary),
-        sectionName = messages("label.section.aboutTheFranchiseLettings"),
+        sectionName = label,
         theForm = theForm
     ) {
 

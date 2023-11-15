@@ -32,14 +32,20 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[_], cateringOrLetting: String, backLink: String, summary: Summary)(implicit request: Request[_], messages: Messages)
+@(theForm: Form[_], cateringOrLetting: String, backLink: String, summary: Summary, formType: String)(implicit request: Request[_], messages: Messages)
+
+@label =@{
+  if(formType == ForTypes.for6015 || formType == ForTypes.for6016) messages("label.section.aboutTheFranchiseConcessions")  else {
+   messages("label.section.aboutTheFranchiseLettings")
+  }
+ }
 
 @layout(
  pageHeading = messages(s"${cateringOrLetting}.heading"),
  showH1 = false,
  showSection = true,
  summary = Some(summary),
- sectionName = messages("label.section.aboutTheFranchiseLettings"),
+ sectionName = label,
  backLinkUrl = backLink,
  theForm = theForm
 ) {

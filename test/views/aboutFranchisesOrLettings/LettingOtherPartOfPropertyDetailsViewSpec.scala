@@ -34,7 +34,8 @@ class LettingOtherPartOfPropertyDetailsViewSpec extends QuestionViewBehaviours[C
       Some(0),
       messageKeyPrefix,
       controllers.aboutfranchisesorlettings.routes.CateringOperationController.show().url,
-      Summary("99996010001")
+      Summary("99996010001"),
+      "6010"
     )(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[CateringOperationDetails]) =>
@@ -43,7 +44,8 @@ class LettingOtherPartOfPropertyDetailsViewSpec extends QuestionViewBehaviours[C
       Some(0),
       messageKeyPrefix,
       controllers.aboutfranchisesorlettings.routes.CateringOperationController.show().url,
-      Summary("99996010001")
+      Summary("99996010001"),
+      "6010"
     )(fakeRequest, messages)
 
   "Catering operation details view" must {

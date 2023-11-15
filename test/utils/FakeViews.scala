@@ -21,6 +21,7 @@ import views.html.connectiontoproperty._
 import views.html.notconnected._
 import views.html.aboutyouandtheproperty._
 import views.html.aboutYourLeaseOrTenure._
+import views.html.aboutconcessionsorlettings.rentFromConcessions
 import views.html.aboutfranchisesorlettings._
 import views.html.aboutthetradinghistory._
 import views.html.aboutyouandtheproperty.checkYourAnswersAboutTheProperty
@@ -136,6 +137,8 @@ trait FakeViews { this: GuiceOneAppPerSuite =>
     app.injector.instanceOf[addAnotherCateringOperationOrLettingAccommodation]
   lazy val checkYourAnswersAboutFranchiseOrLettings: checkYourAnswersAboutFranchiseOrLettings              =
     app.injector.instanceOf[checkYourAnswersAboutFranchiseOrLettings]
+  lazy val rentFromConcession: rentFromConcessions                                                         =
+    app.injector.instanceOf[rentFromConcessions]
 
   // About the lease or tenure
   lazy val aboutYourLandlordView = app.injector.instanceOf[aboutYourLandlord]

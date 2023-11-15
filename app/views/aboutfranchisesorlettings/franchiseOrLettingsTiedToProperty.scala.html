@@ -33,11 +33,16 @@
 
 @(theForm: Form[_], userType: String, summary: Summary)(implicit request: Request[_], messages: Messages)
 
+@label =@{
+    if(userType == ForTypes.for6015 || userType == ForTypes.for6016) messages("label.section.aboutTheFranchiseConcessions")  else {
+        messages("label.section.aboutTheFranchiseLettings")
+    }
+}
 @layout(
     pageHeading = messages("franchiseLettings.heading"),
     showSection = true,
     summary = Some(summary),
-    sectionName = messages("label.section.aboutTheFranchiseLettings"),
+    sectionName = label,
     backLinkUrl = controllers.routes.TaskListController.show.url,
     theForm = theForm
 ) {
