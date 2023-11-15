@@ -7,7 +7,7 @@ function synchronizeRowsHeight() {
         for (let t = 0; t < tablesCount; t++) {
             const rows = govukTables[t].getElementsByTagName("tr");
             for (let r = 0; r < rows.length; r++) {
-                rowsHeight[r] = rowsHeight.length > r ? Math.max(rows[r].offsetHeight, rowsHeight[r]) : rows[r].offsetHeight;
+                rowsHeight[r] = rowsHeight.length > r && rowsHeight[r] > rows[r].offsetHeight ? rowsHeight[r] : rows[r].offsetHeight;
             }
         }
         for (let t = 0; t < tablesCount; t++) {
