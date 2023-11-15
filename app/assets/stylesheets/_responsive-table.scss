@@ -8,6 +8,10 @@
   padding: 0;
 }
 
+.hmrc-responsive-table .govuk-table td {
+  padding-right: 1em;
+}
+
 .hmrc-responsive-table td:not(:first-child) .govuk-table th:first-child {
   display: none;
 }
@@ -24,6 +28,10 @@
   .hmrc-responsive-table > tbody > tr > td {
     display: block;
     width: 100%;
+  }
+
+  .hmrc-responsive-table .govuk-table td {
+    padding-right: 0;
   }
 
   .hmrc-responsive-table td:not(:first-child) .govuk-table th:first-child {
