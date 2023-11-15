@@ -919,7 +919,7 @@ error.tenantsAdditionsDisregarded.missing = Select yes if any additions or impro
 
 ##TENANTS ADDITIONS DISREGARDED DETAILS
 #######################################
-tenantsAdditionsDisregardedDetails.heading = Describe the disregarded additions or improvementsgi
+tenantsAdditionsDisregardedDetails.heading = Describe the disregarded additions or improvements
 hint.tenantsAdditionsDisregardedDetails = Give a brief description of the work carried out and how much it cost.
 error.tenantsAdditionsDisregardedDetails.required = Enter a description of the disregarded additions or improvements
 error.tenantsAdditionsDisregardedDetails.maxLength = Description of the disregarded additions or improvements must be 500 characters or fewer
