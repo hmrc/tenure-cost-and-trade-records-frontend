@@ -21,6 +21,7 @@ object Errors {
   //annual rent
   val annualRentExcludingVAT         = "error.required.annualRentExcludingVat"
   val annualRentExcludingVATCurrency = "error.invalid_currency.annualRent"
+  val negativeAnnualRent             = "error.negativeNumber"
 
   //address
   val addressRequired                   = "address.required"
