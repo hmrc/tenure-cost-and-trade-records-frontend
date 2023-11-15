@@ -328,24 +328,20 @@ object MappingSupport {
   def editAddressMapping: Mapping[EditAddress] = mapping(
     "buildingNameNumber" -> default(text, "").verifying(
       nonEmpty(errorMessage = "error.buildingNameNumber.required"),
-      maxLength(50, "error.buildingNameNumber.maxLength"),
-      pattern(invalidCharRegex.r, error = "error.invalidCharAddress1")
+      maxLength(50, "error.buildingNameNumber.maxLength")
     ),
     "street1"            -> optional(
       default(text, "").verifying(
-        maxLength(50, "error.addressLineTwo.maxLength"),
-        pattern(invalidCharRegex.r, error = "error.invalidCharAddress2")
+        maxLength(50, "error.addressLineTwo.maxLength")
       )
     ),
     "town"               -> default(text, "").verifying(
       nonEmpty(errorMessage = "error.town.required"),
-      maxLength(50, "error.town.maxLength"),
-      pattern(invalidCharRegex.r, error = "error.invalidCharTownCity")
+      maxLength(50, "error.town.maxLength")
     ),
     "county"             -> optional(
       default(text, "").verifying(
-        maxLength(50, "error.county.maxLength"),
-        pattern(invalidCharRegex.r, error = "error.invalidCharCounty")
+        maxLength(50, "error.county.maxLength")
       )
     ),
     "postcode"           -> postcode
