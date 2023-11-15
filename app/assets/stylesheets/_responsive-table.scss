@@ -1,5 +1,11 @@
+.hmrc-responsive-table {
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+
 .hmrc-responsive-table > tbody > tr > td {
   vertical-align: top;
+  padding: 0;
 }
 
 .hmrc-responsive-table td:not(:first-child) .govuk-table th:first-child {
