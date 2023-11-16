@@ -61,8 +61,8 @@ class MonthYearFormatter(
       case (Some(_), None)    =>
         oneError(yearKey, "error.date.mustInclude", Seq(fieldCapitalized, yearText, Seq("year")))
       case (Some(m), Some(y)) =>
-        val month = Try(m.trim.toInt).filter((1 to 12).contains(_)).getOrElse(0)
-        val year  = Try(y.trim.toInt).filter(_ >= 1900).getOrElse(0)
+        val month = Try(m.trim.toInt).filter((1 to 12) contains _).getOrElse(0)
+        val year  = Try(y.trim.toInt).filter((1900 to 9999) contains _).getOrElse(0)
         if (Seq(month, year).forall(_ > 0)) {
           validateDate(month, year).left.map { errorKey =>
             Seq(FormError(monthKey, errorKey, Seq(fieldCapitalized, monthYearFields)))

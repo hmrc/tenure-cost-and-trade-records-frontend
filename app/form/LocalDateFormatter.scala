@@ -54,9 +54,9 @@ class LocalDateFormatter(
     ).bind(data).flatMap {
       case (None, None, None)          => oneError(dayKey, "error.date.required", Seq(fieldName, allDateFields))
       case (Some(d), Some(m), Some(y)) =>
-        val day          = Try(d.trim.toInt).filter((1 to 31).contains(_)).getOrElse(0)
-        val month        = Try(m.trim.toInt).filter((1 to 12).contains(_)).getOrElse(0)
-        val year         = Try(y.trim.toInt).filter(_ > 0).getOrElse(0)
+        val day          = Try(d.trim.toInt).filter((1 to 31) contains _).getOrElse(0)
+        val month        = Try(m.trim.toInt).filter((1 to 12) contains _).getOrElse(0)
+        val year         = Try(y.trim.toInt).filter((1000 to 9999) contains _).getOrElse(0)
         val datePartsSeq = Seq(day, month, year)
         if (datePartsSeq.forall(_ > 0)) {
           validateDate(day, month, year).left.map { errorKey =>
