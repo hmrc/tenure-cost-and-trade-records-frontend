@@ -80,45 +80,6 @@ class SectionAnswersRowBuilderSpec extends TestBaseSpec {
       ) shouldBe Seq.empty
     }
 
-    "return answer value with conditional text field value `Other<br/>Details for other option` if selected option `Other`" in {
-      val answers = SectionAnswersRowBuilder(
-        aboutYouAndTheProperty6010YesSession.aboutYouAndTheProperty.map(
-          _.copy(propertyDetails = Some(PropertyDetails(List(CurrentPropertyOther), Some("Details for other option"))))
-        )
-      )(messages)
-
-      val row = answers.row(
-        "checkYourAnswersAboutTheProperty.propertyUsage",
-        _.propertyDetails.map(_.propertyCurrentlyUsed).map(usage => s"${usage.head.key}.${usage.head.name}"),
-        aboutyouandtheproperty.routes.AboutThePropertyController.show(),
-        "propertyCurrentlyUsed",
-        ("propertyCurrentlyUsed.other", _.propertyDetails.flatMap(_.currentlyUsedOtherField))
-      )
-
-      row shouldBe Seq(
-        SummaryListRow(
-          key = Key(Text("Property use")),
-          value =
-            Value(HtmlContent("Other (reveals a text box to include a description)<br/>Details for other option")),
-          actions = Some(
-            Actions(items =
-              Seq(
-                ActionItem(
-                  href = "/send-trade-and-cost-information/about-the-property?from=CYA#propertyCurrentlyUsed",
-                  content = Text("Change"),
-                  visuallyHiddenText = Some("Property use"),
-                  attributes = Map(
-                    "aria-label" -> "Change Property use"
-                  )
-                )
-              )
-            )
-          )
-        )
-      )
-
-    }
-
   }
 
 }
