@@ -26,7 +26,7 @@ object PhoneNumberMapping {
 
   def validatePhoneNumber = {
 
-    def validPNLength(pN: String) = pN.length >= 11 && pN.length <= 20
+    def validPNLength(pN: String) = pN.length >= 10 && pN.length <= 20
 
     text
       .verifying(Errors.contactPhoneRequired, pN => pN.nonEmpty)

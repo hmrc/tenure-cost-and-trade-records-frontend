@@ -36,10 +36,9 @@ class PhoneNumberMappingSpec extends AnyWordSpecLike with should.Matchers with T
         ("phone number", "validity"),
         ("1", false),
         ("12", false),
-        ("1234567890", false),
         ("012345678901234567890", false), // 21
         ("0123456789012345678901", false), // 22
-        ("01234567890", true), // 11
+        ("0123456789", true), // 10
         ("012345678901", true),
         ("+44 1234567890", true),
         ("+44 0808 157 0192", true),
