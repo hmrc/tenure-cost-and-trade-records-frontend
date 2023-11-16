@@ -1315,8 +1315,11 @@ checkYourAnswersAboutFranchiseOrLettings.dateSumFixed = Fixed on {0}
 checkYourAnswersAboutFranchiseOrLettings.itemsInRent = Included in rent
 checkYourAnswersAboutFranchiseOrLettings.addBusiness = Add or remove business
 checkYourAnswersAboutFranchiseOrLettings.addedBusiness = You have added {0} business
+checkYourAnswersAboutFranchiseOrLettings.addedBusinessPlural = You have added {0} businesses
 checkYourAnswersAboutFranchiseOrLettings.addLetting = Add or remove tenant
 checkYourAnswersAboutFranchiseOrLettings.addedLetting = You have added {0} tenant
+checkYourAnswersAboutFranchiseOrLettings.addedLettingPlural = You have added {0} tenants
+
 
 checkYourAnswersAboutYourLeaseOrTenure.heading = Check your answers – your lease or agreement
 checkYourAnswersAboutYourLeaseOrTenure.yourLandlord.heading = Your landlord
