@@ -90,11 +90,19 @@
       RadioItem(
         content = Text(messages("propertyCurrentlyUsed.other")),
         value = Some("other"),
-        conditionalHtml = Some(conditionalHTML(messages("hint.other.vacant.propertyCurrentlyUsedOther")))
       )
     ),
     errorMessage = theForm.errors.asTextErrorMessageForField("propertyCurrentlyUsed")
   ).withFormField(theForm("propertyCurrentlyUsed[0]"))
+  )
+
+  @govukInput(
+    Input(
+      id = "propertyCurrentlyUsedOther",
+      name = "propertyCurrentlyUsedOther",
+      classes = "govuk-input--width-30",
+      value = theForm("propertyCurrentlyUsedOther").value
+    )
   )
 }
 
