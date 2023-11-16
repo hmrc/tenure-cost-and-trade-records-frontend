@@ -370,8 +370,8 @@ checkbox.lettingPartOfPropertyCheckboxesDetails.outsideRepairs = Outside repairs
 checkbox.lettingPartOfPropertyCheckboxesDetails.insideRepairs = Inside repairs
 checkbox.lettingPartOfPropertyCheckboxesDetails.noneOfThese = No, none of these are included in the rent
 checkbox.lettingPartOfPropertyCheckboxesDetails.none = None
-error.lettingPartOfPropertyCheckboxesDetails.required = Select items included in your rent, or select ’No, none of these are included in the rent’
-error.lettingPartOfPropertyCheckboxesDetails.noneSelectedWithOther = Select items included in your rent, or select ’No, none of these are included in the rent’
+error.lettingPartOfPropertyCheckboxesDetails.required = Select items included in your rent, or select ‘No, none of these are included in the rent’
+error.lettingPartOfPropertyCheckboxesDetails.noneSelectedWithOther = Select items included in your rent, or select ‘No, none of these are included in the rent’
 
 # CONNECTION TO PROPERTY - ADD ANOTHER LETTING DETAILS
 #################################################################
@@ -513,9 +513,9 @@ help.licensableActivities.list1.p1 = the retail sale of alcohol
 help.licensableActivities.list1.p2 = the supply of alcohol in clubs
 help.licensableActivities.list1.p3 = the provision of late-night refreshment
 help.licensableActivities.list1.p4 = the provision of regulated entertainment
-help.licensableActivities.p2 = In this instance, ’clubs’ is a cover-all term covering establishment categories covered by this form.
-help.licensableActivities.p3 = ’Late-night refreshment’ is defined as the supply of hot food and drink to the public for consumption between 23:00 and 05:00.
-help.licensableActivities.p4 = ’Regulated entertainment’ is defined as:
+help.licensableActivities.p2 = In this instance, ‘clubs’ is a cover-all term covering establishment categories covered by this form.
+help.licensableActivities.p3 = ‘Late-night refreshment’ is defined as the supply of hot food and drink to the public for consumption between 23:00 and 05:00.
+help.licensableActivities.p4 = ‘Regulated entertainment’ is defined as:
 help.licensableActivities.list2.p1 = a performance of a play
 help.licensableActivities.list2.p2 = showing a film
 help.licensableActivities.list2.p3 = an indoor sporting event
@@ -654,8 +654,8 @@ hint.includedInYourRent = Select all that apply.
 error.vat.missing = You must choose one
 error.nondomesticRates.missing = You must choose one
 error.waterCharges.missing = You must choose one
-error.includedInYourRent.required = Select items that are included in your rent, or select ’No, none of these are included in the rent’
-error.includedInYourRent.noneSelectedWithOther = Select items that are included in your rent, or select ’No, none of these are included in the rent’
+error.includedInYourRent.required = Select items that are included in your rent, or select ‘No, none of these are included in the rent’
+error.includedInYourRent.noneSelectedWithOther = Select items that are included in your rent, or select ‘No, none of these are included in the rent’
 
 # CATERING OPERATION OR LETTING ACCOMMODATION
 ############################################
@@ -701,8 +701,8 @@ checkbox.rentPayable.noneOfThese = No, the rent payable does not include any of 
 checkbox.rentPayable.none = None
 label.detailsToQuestions = Additional information
 hint.detailsToQuestions = Give details if you want to tell us more about any options that may apply.
-error.doesTheRentPayable.required = Select items that the rent payable includes, or select ’No, none of these are included in the rent’
-error.doesTheRentPayable.noneSelectedWithOther = Select items that the rent payable includes, or select ’No, none of these are included in the rent’
+error.doesTheRentPayable.required = Select items that the rent payable includes, or select ‘No, none of these are included in the rent’
+error.doesTheRentPayable.noneSelectedWithOther = Select items that the rent payable includes, or select ‘No, none of these are included in the rent’
 error.detailsToQuestions.required = Please provide further information
 error.detailsToQuestions.maxLength = Additional information must be 500 characters or fewer
 
@@ -742,7 +742,7 @@ label.landlord = Landlord
 label.tenant = Tenant
 label.both = Both
 label.sharedResponsibilities = Give details of any shared responsibilities
-hint.sharedResponsibilities = For example, ’business insurance costs are shared equally’, or ’landlord covers 75% for outside repairs, tenant pays 25%’.
+hint.sharedResponsibilities = For example, ‘business insurance costs are shared equally’, or ‘landlord covers 75% for outside repairs, tenant pays 25%’.
 error.sharedResponsibilities.maxLength = This must be 2000 characters or fewer
 error.sharedResponsibilities = This must be 2000 characters or fewer
 error.outsideRepairs.required = Select who is responsible for outside repairs
@@ -892,8 +892,8 @@ checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.outsideRepairs
 checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.insideRepairs = Inside repairs
 checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.noneOfThese = No, none of these are included in the rent
 checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.none = None
-error.cateringOperationOrLettingAccommodationCheckboxesDetails.required = Select items included in your rent, or select ’No, none of these are included in the rent’
-error.cateringOperationOrLettingAccommodationCheckboxesDetails.noneSelectedWithOther = Select items included in your rent, or select ’No, none of these are included in the rent’
+error.cateringOperationOrLettingAccommodationCheckboxesDetails.required = Select items included in your rent, or select ‘No, none of these are included in the rent’
+error.cateringOperationOrLettingAccommodationCheckboxesDetails.noneSelectedWithOther = Select items included in your rent, or select ‘No, none of these are included in the rent’
 
 # ADD ANOTHER CATERING OPERATION OR LETTING ACCOMMODATION DETAILS
 #################################################################
@@ -928,7 +928,7 @@ error.tenantsAdditionsDisregardedDetails.maxLength = Description of the disregar
 
 # LEGAL PLANNING RESTRICTIONS
 #############################
-legalOrPlanningRestrictions.heading = Other factors effecting the rent
+legalOrPlanningRestrictions.heading = Other factors affecting the rent
 legalOrPlanningRestrictions.p1 = You must describe any other factors which may have affected the rent payable as these can also affect the property‘s valuation. We need to know about any factors such as:
 legalOrPlanningRestrictions.list1 = legal restrictions
 legalOrPlanningRestrictions.list2 = planning restrictions
@@ -1037,8 +1037,8 @@ label.currentRentBasedOn.percentageTurnover = A percentage of turnover of the oc
 label.currentRentBasedOn.indexed = Indexed to the retail price index (RPI) or another index
 label.currentRentBasedOn.stepped = Stepped rent arrangement
 label.currentRentBasedOn.other = Other
-label.whatIsYourRentBasedOn.describe = Describe
-hint.whatIsYourRentBasedOn.describe = For example, 75% of the open market value, or indexed to the consumer price index.
+label.whatIsYourRentBasedOn.describe = Additional information
+hint.whatIsYourRentBasedOn.describe = For example, "rent is 50% of the open market value, plus 7.5% of the turnover".
 error.whatIsYourRentBasedOn.required = Describe how your rent is calculated
 error.currentRentBasedOn.required = Select what your rent is based on
 error.currentRentBasedOn.maxLength = Additional information must be 500 characters or fewer
@@ -1052,7 +1052,7 @@ userType.occupier = Occupier’s agent
 userType.lessee = Lessee’s agent
 userType.owner = Owner’s agent
 label.userType = What is your relationship to the property?
-hint.aboutYou = If you’re renting or leasing the property, even as a charity or non-profit organisation, you’re considered the occupier. If you are both the owner and the occupier, select ’Owner or trustee for owner’.
+hint.aboutYou = If you’re renting or leasing the property, even as a charity or non-profit organisation, you’re considered the occupier. If you are both the owner and the occupier, select ‘Owner or trustee for owner’.
 
 # TASK LIST
 ###########
@@ -1105,11 +1105,8 @@ turnover.averageOccupancyRate = Average occupancy rate
 turnover.averageOccupancyRateCaption = Lodges and hotels only.
 turnover.weeks = weeks
 turnover.details = Help with completing turnover
-turnover.details.h1 = General guidance
 turnover.details.p1 = Do not include VAT in any of the figures you declare on this page.
 turnover.details.p2 = If you have not broken down your turnover into separate categories, or if you have recorded certain categories together - such as all food and drinks - you can declare them together in a single field.
-turnover.details.h2 = Financial year end
-turnover.details.p3 = Your financial year end dates are pre-populated by the system. If your financial year end has changed during the period shown, you can edit these dates accordingly.
 turnover.details.6015.p1 = Do not include VAT in any of the figures you declare on this page. If you have not broken down your turnover into separate categories, or if you have recorded certain categories together - such as all food and drinks - you can declare them together in a single field.
 turnover.details.6015.p2 = If you have not broken down your turnover into separate categories, or if you have recorded certain categories together - such as all food and drinks - you can declare them together in a single field.
 turnover.details.6015.h2 = Financial year end
@@ -1129,7 +1126,7 @@ error.turnover.accommodation.sales.required = Enter 0 if you didn’t provide an
 error.turnover.averageOccupancyRate.required = Enter 0 if you didn’t provide any accommodation
 error.turnover.alcohol.sales.range = The alcohol sales figure must be a number between {0} and {1}
 error.turnover.food.sales.range = The food sales figure must be a number between {0} and {1}
-error.turnover.other.sales.range = The ’other receipts’ sales figure must be a number between {0} and {1}
+error.turnover.other.sales.range = The ‘other receipts’ sales figure must be a number between {0} and {1}
 error.turnover.accommodation.sales.range = The accommodation sales figure must be a number between {0} and {1}
 
 # TURNOVER 6016
@@ -1450,7 +1447,7 @@ saveAsDraft.password.rules.header=Your password must:
 saveAsDraft.password.rule1=contain at least 8 characters
 saveAsDraft.password.rule2=have at least one number (0-9)
 saveAsDraft.password.rule3=have at least one letter (a-z)
-saveAsDraft.password.rule4=not contain any common words like ’password’, for example
+saveAsDraft.password.rule4=not contain any common words like ‘password’, for example
 error.password.minLength=Password must contain at least {0} characters
 error.password.atLeastOneNumber=Password must have at least one number
 error.password.atLeastOneLetter=Password must have at least one letter
