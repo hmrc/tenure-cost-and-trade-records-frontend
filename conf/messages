@@ -371,7 +371,7 @@ checkbox.lettingPartOfPropertyCheckboxesDetails.insideRepairs = Inside repairs
 checkbox.lettingPartOfPropertyCheckboxesDetails.noneOfThese = No, none of these are included in the rent
 checkbox.lettingPartOfPropertyCheckboxesDetails.none = None
 error.lettingPartOfPropertyCheckboxesDetails.required = Select any items included in your rent or select ’No, none of these items are included in the rent’
-error.lettingPartOfPropertyCheckboxesDetails.noneSelectedWithOther = Select any items included in your rent or select ’No, none of these items are included in the rentÆ
+error.lettingPartOfPropertyCheckboxesDetails.noneSelectedWithOther = Select any items included in your rent or select ’No, none of these items are included in the rent’
 
 # CONNECTION TO PROPERTY - ADD ANOTHER LETTING DETAILS
 #################################################################
