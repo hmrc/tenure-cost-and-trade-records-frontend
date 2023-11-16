@@ -20,6 +20,7 @@ import form.Form6010.ConditionalMapping.nonEmptyTextOr
 import models.submissions._
 import form.Formats._
 import form.Formats.userTypeFormat
+import form.PhoneNumberMapping.validatePhoneNumber
 import models.submissions.Form6010._
 import models.submissions.aboutYourLeaseOrTenure._
 import models.submissions.aboutfranchisesorlettings._
@@ -42,7 +43,6 @@ import scala.util.matching.Regex
 
 object MappingSupport {
 
-  val phoneRegex                                                                = """^^[0-9\s\+()-]+$"""
   val userType: Mapping[UserType]                                               = Forms.of[UserType]
   val aboutYourPropertyType: Mapping[CurrentPropertyUsed]                       = Forms.of[CurrentPropertyUsed]
   val connectionToThePropertyType: Mapping[ConnectionToProperty]                = Forms.of[ConnectionToProperty]
@@ -134,12 +134,7 @@ object MappingSupport {
 
   val contactDetailsMapping: Mapping[ContactDetails] =
     mapping(
-      "phone" -> default(text, "").verifying(
-        nonEmpty(errorMessage = Errors.contactPhoneRequired),
-        pattern(phoneRegex.r, error = Errors.invalidPhone),
-        minLength(11, "error.contact.phone.minLength"),
-        maxLength(20, "error.contact.phone.maxLength")
-      ),
+      "phone" -> validatePhoneNumber,
       "email" -> default(email, "").verifying(
         nonEmpty(errorMessage = Errors.contactEmailRequired),
         //TODO Add Regex here

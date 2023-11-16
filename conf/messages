@@ -370,8 +370,8 @@ checkbox.lettingPartOfPropertyCheckboxesDetails.outsideRepairs = Outside repairs
 checkbox.lettingPartOfPropertyCheckboxesDetails.insideRepairs = Inside repairs
 checkbox.lettingPartOfPropertyCheckboxesDetails.noneOfThese = No, none of these are included in the rent
 checkbox.lettingPartOfPropertyCheckboxesDetails.none = None
-error.lettingPartOfPropertyCheckboxesDetails.required = Select items included in your rent, or select ‘No, none of these are included in the rent’
-error.lettingPartOfPropertyCheckboxesDetails.noneSelectedWithOther = Select items included in your rent, or select ‘No, none of these are included in the rent’
+error.lettingPartOfPropertyCheckboxesDetails.required = Select any items included in your rent or select ’No, none of these items are included in the rent’
+error.lettingPartOfPropertyCheckboxesDetails.noneSelectedWithOther = Select any items included in your rent or select ’No, none of these items are included in the rent’
 
 # CONNECTION TO PROPERTY - ADD ANOTHER LETTING DETAILS
 #################################################################
@@ -654,8 +654,8 @@ hint.includedInYourRent = Select all that apply.
 error.vat.missing = You must choose one
 error.nondomesticRates.missing = You must choose one
 error.waterCharges.missing = You must choose one
-error.includedInYourRent.required = Select items that are included in your rent, or select ‘No, none of these are included in the rent’
-error.includedInYourRent.noneSelectedWithOther = Select items that are included in your rent, or select ‘No, none of these are included in the rent’
+error.includedInYourRent.required = Select any items included in your rent, or select ’No, none of these items are included in the rent’
+error.includedInYourRent.noneSelectedWithOther = Select any items included in your rent, or select ’No, none of these items are included in the rent’
 
 # CATERING OPERATION OR LETTING ACCOMMODATION
 ############################################
@@ -701,8 +701,8 @@ checkbox.rentPayable.noneOfThese = No, the rent payable does not include any of 
 checkbox.rentPayable.none = None
 label.detailsToQuestions = Additional information
 hint.detailsToQuestions = Give details if you want to tell us more about any options that may apply.
-error.doesTheRentPayable.required = Select items that the rent payable includes, or select ‘No, none of these are included in the rent’
-error.doesTheRentPayable.noneSelectedWithOther = Select items that the rent payable includes, or select ‘No, none of these are included in the rent’
+error.doesTheRentPayable.required = Select any options included in the rent, or select ’No, the rent does not include any of these options’
+error.doesTheRentPayable.noneSelectedWithOther = Select any options included in the rent, or select ’No, the rent does not include any of these options’
 error.detailsToQuestions.required = Please provide further information
 error.detailsToQuestions.maxLength = Additional information must be 500 characters or fewer
 
@@ -892,8 +892,8 @@ checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.outsideRepairs
 checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.insideRepairs = Inside repairs
 checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.noneOfThese = No, none of these are included in the rent
 checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.none = None
-error.cateringOperationOrLettingAccommodationCheckboxesDetails.required = Select items included in your rent, or select ‘No, none of these are included in the rent’
-error.cateringOperationOrLettingAccommodationCheckboxesDetails.noneSelectedWithOther = Select items included in your rent, or select ‘No, none of these are included in the rent’
+error.cateringOperationOrLettingAccommodationCheckboxesDetails.required = Select any items included in your rent or select ’No, none of these items are included in the rent’
+error.cateringOperationOrLettingAccommodationCheckboxesDetails.noneSelectedWithOther = Select any items included in your rent or select ’No, none of these items are included in the rent’
 
 # ADD ANOTHER CATERING OPERATION OR LETTING ACCOMMODATION DETAILS
 #################################################################
@@ -1313,8 +1313,10 @@ checkYourAnswersAboutFranchiseOrLettings.dateSumFixed = Fixed on {0}
 checkYourAnswersAboutFranchiseOrLettings.itemsInRent = Included in rent
 checkYourAnswersAboutFranchiseOrLettings.addBusiness = Add or remove business
 checkYourAnswersAboutFranchiseOrLettings.addedBusiness = You have added {0} business
+checkYourAnswersAboutFranchiseOrLettings.addedBusinessPlural = You have added {0} businesses
 checkYourAnswersAboutFranchiseOrLettings.addLetting = Add or remove tenant
 checkYourAnswersAboutFranchiseOrLettings.addedLetting = You have added {0} tenant
+checkYourAnswersAboutFranchiseOrLettings.addedLettingPlural = You have added {0} tenants
 
 checkYourAnswersAboutYourLeaseOrTenure.heading = Check your answers – your lease or agreement
 checkYourAnswersAboutYourLeaseOrTenure.yourLandlord.heading = Your landlord
@@ -1512,8 +1514,7 @@ error.contact.full.name.required = Please enter the full name
 error.alternativeContactName.required = Enter the alternative name
 error.contact.email.required = Enter an email in the correct format, like name@example.com
 error.contact.phone.required = Enter your phone number
-error.contact.phone.minLength = Phone number must be longer than 10 characters and shorter than 20 characters
-error.contact.phone.maxLength = Phone number must be longer than 10 characters and shorter than 20 characters
+error.contact.phone.invalidLength = Phone numbers must be between 10 and 20 characters long
 error.userType.required=Select your connection to the property
 error.contact.details.missing=At least one of phone, email, or address must be given
 error.maxLength=This must be {0} characters or fewer
