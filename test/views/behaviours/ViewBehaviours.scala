@@ -123,6 +123,56 @@ trait ViewBehaviours extends ViewSpecBase {
       }
     }
 
+  def normalPageWithZeroBusinessOrLettings(
+    view: () => HtmlFormat.Appendable,
+    messageKeyPrefix: String,
+    messageExtra: String,
+    expectedGuidanceKeys: String*
+  ) =
+    "behave like a normal page" when {
+      "rendered" must {
+        "have the correct banner title" in {
+          val doc  = asDocument(view())
+          val nav  = Option {
+            doc.getElementById("proposition-menu")
+          }.getOrElse(
+            doc
+              .getElementsByAttributeValue("class", "hmrc-header__service-name hmrc-header__service-name--linked")
+              .first()
+              .parent()
+          )
+          val span = nav.children.first
+          span.text mustBe messagesApi("site.service_name")(Lang(Locale.UK))
+        }
+
+        "display the correct browser title" in {
+          val doc = asDocument(view())
+          assertEqualsValue(
+            doc,
+            "title",
+            messages("service.title", messages(s"$messageKeyPrefix.zeroBusinessOrFranchises.heading", messageExtra))
+          )
+        }
+
+        "display the correct page title" in {
+          val doc = asDocument(view())
+          assertPageTitleEqualsMessage(doc, s"$messageKeyPrefix.zeroBusinessOrFranchises.heading", messageExtra)
+        }
+
+        "display the correct guidance" in {
+          val doc = asDocument(view())
+          for (key <- expectedGuidanceKeys) assertContainsText(doc, messages(s"$messageKeyPrefix.$key"))
+        }
+
+        "display language toggles" in {
+          val doc = asDocument(view())
+          doc.getElementById("cymraeg-switch") != null || !doc
+            .getElementsByAttributeValue("href", "/valuation-office-agency-contact-frontend/language/cymraeg")
+            .isEmpty
+        }
+      }
+    }
+
   def normalPageWithDifferentHeadingAndTitle(
     view: () => HtmlFormat.Appendable,
     messageKeyPrefix: String,

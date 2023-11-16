@@ -57,7 +57,7 @@
 
 @formLabel =@{if (isConcession) messages("label.addAnotherConcessionOrLetting")  else messages(s"label.${cateringOrLetting}")}
 
-@pageHeading = @{messages(if(isConcession) "addAnotherConcessionOrLetting.heading"  else s"${cateringOrLetting}.heading", operatorNames.size) + pluralSuffix}
+@pageHeading = @{messages(if (isConcession) "addAnotherConcessionOrLetting.heading"  else if  (operatorNames.size == 0) messages(s"${cateringOrLetting}.zeroBusinessOrFranchises.heading") else s"${cateringOrLetting}.heading", operatorNames.size) + pluralSuffix}
 
 @isLettingOtherPartOfProperty = @{ cateringOrLetting.equals("addAnotherLettingOtherPartOfProperty") }
 
