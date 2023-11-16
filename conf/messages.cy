@@ -370,8 +370,8 @@ checkbox.lettingPartOfPropertyCheckboxesDetails.outsideRepairs = Outside repairs
 checkbox.lettingPartOfPropertyCheckboxesDetails.insideRepairs = Inside repairs
 checkbox.lettingPartOfPropertyCheckboxesDetails.noneOfThese = No, none of these are included in the rent
 checkbox.lettingPartOfPropertyCheckboxesDetails.none = None
-error.lettingPartOfPropertyCheckboxesDetails.required = Select items included in your rent, or select ’No, none of these are included in the rent’
-error.lettingPartOfPropertyCheckboxesDetails.noneSelectedWithOther = Select items included in your rent, or select ’No, none of these are included in the rent’
+error.lettingPartOfPropertyCheckboxesDetails.required = Select any items included in your rent or select ’No, none of these items are included in the rent’
+error.lettingPartOfPropertyCheckboxesDetails.noneSelectedWithOther = Select any items included in your rent or select ’No, none of these items are included in the rentÆ
 
 # CONNECTION TO PROPERTY - ADD ANOTHER LETTING DETAILS
 #################################################################
@@ -654,8 +654,8 @@ hint.includedInYourRent = Select all that apply.
 error.vat.missing = You must choose one
 error.nondomesticRates.missing = You must choose one
 error.waterCharges.missing = You must choose one
-error.includedInYourRent.required = Select items that are included in your rent, or select ’No, none of these are included in the rent’
-error.includedInYourRent.noneSelectedWithOther = Select items that are included in your rent, or select ’No, none of these are included in the rent’
+error.includedInYourRent.required = Select any items included in your rent, or select ’No, none of these items are included in the rent’
+error.includedInYourRent.noneSelectedWithOther = Select any items included in your rent, or select ’No, none of these items are included in the rent’
 
 # CATERING OPERATION OR LETTING ACCOMMODATION
 ############################################
@@ -701,8 +701,8 @@ checkbox.rentPayable.noneOfThese = No, the rent payable does not include any of 
 checkbox.rentPayable.none = None
 label.detailsToQuestions = Additional information
 hint.detailsToQuestions = Give details if you want to tell us more about any options that may apply.
-error.doesTheRentPayable.required = Select items that the rent payable includes, or select ’No, none of these are included in the rent’
-error.doesTheRentPayable.noneSelectedWithOther = Select items that the rent payable includes, or select ’No, none of these are included in the rent’
+error.doesTheRentPayable.required = Select any options included in the rent, or select ’No, the rent does not include any of these options’
+error.doesTheRentPayable.noneSelectedWithOther = Select any options included in the rent, or select ’No, the rent does not include any of these options’
 error.detailsToQuestions.required = Please provide further information
 error.detailsToQuestions.maxLength = Additional information must be 500 characters or fewer
 
@@ -892,8 +892,8 @@ checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.outsideRepairs
 checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.insideRepairs = Inside repairs
 checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.noneOfThese = No, none of these are included in the rent
 checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.none = None
-error.cateringOperationOrLettingAccommodationCheckboxesDetails.required = Select items included in your rent, or select ’No, none of these are included in the rent’
-error.cateringOperationOrLettingAccommodationCheckboxesDetails.noneSelectedWithOther = Select items included in your rent, or select ’No, none of these are included in the rent’
+error.cateringOperationOrLettingAccommodationCheckboxesDetails.required = Select any items included in your rent or select ’No, none of these items are included in the rent’
+error.cateringOperationOrLettingAccommodationCheckboxesDetails.noneSelectedWithOther = Select any items included in your rent or select ’No, none of these items are included in the rent’
 
 # ADD ANOTHER CATERING OPERATION OR LETTING ACCOMMODATION DETAILS
 #################################################################
