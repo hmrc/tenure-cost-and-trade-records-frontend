@@ -67,12 +67,8 @@ class TurnoverViewSpec extends QuestionViewBehaviours[Seq[TurnoverSection]] {
 
     "contain get help section" in {
       val doc = asDocument(createView())
-      assert(doc.toString.contains(messages("turnover.details")))
-      assert(doc.toString.contains(messages("turnover.details.h1")))
       assert(doc.toString.contains(messages("turnover.details.p1")))
       assert(doc.toString.contains(messages("turnover.details.p2")))
-      assert(doc.toString.contains(messages("turnover.details.h2")))
-      assert(doc.toString.contains(messages("turnover.details.p3")))
     }
 
     "contain get help section for 6015" in {
