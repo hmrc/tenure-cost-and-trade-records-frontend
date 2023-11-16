@@ -94,7 +94,7 @@ object ConditionalMappings {
     mapping: Mapping[T]
   ): Mapping[Option[T]] = {
     val condition: Condition = x =>
-      (for (pair <- pairs) yield x.get(pair._1).contains(pair._2)).count(b => b.equals(true)) > 0
+      (for (pair <- pairs) yield x.get(pair._1).contains(pair._2)).count(identity) > 0
     ConditionalMapping(condition, MandatoryOptionalMapping(mapping, Nil), None, Seq.empty)
   }
 
