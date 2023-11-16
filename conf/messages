@@ -899,6 +899,8 @@ error.cateringOperationOrLettingAccommodationCheckboxesDetails.noneSelectedWithO
 #################################################################
 addAnotherCateringOperation.heading = You have added {0} separate business or franchise
 addAnotherConcessionOrLetting.heading = You have added {0} separate business or concession
+addAnotherCateringOperation.zeroBusinessOrFranchises.heading = You have removed all your separate business or franchises
+addAnotherLettingOtherPartOfProperty.zeroBusinessOrFranchises.heading = You have removed all your separate business or concessions
 addAnotherLettingOtherPartOfProperty.heading = You have added {0} letting
 label.addAnotherCateringOperation = Do you need to add another separate business or franchise?
 label.addAnotherConcessionOrLetting = Do you need to add another separate business or concession?
