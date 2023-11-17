@@ -55,7 +55,7 @@ class SaveAsDraftControllerSpec extends TestBaseSpec {
   )
 
   "SaveAsDraftController.customPassword" should {
-    "return 404 if session is empty" in {
+    "return 307 if session is empty" in {
       sessionRepo.remove()
 
       val result = saveAsDraftController.customPassword(exitPath)(fakeRequest)
