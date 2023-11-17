@@ -16,14 +16,12 @@
 
 package form
 
-import form.Form6010.ConditionalMapping._
 import models.submissions.Form6010.{DayMonthsDuration, MonthsYearDuration}
 import play.api.data.Forms._
 import play.api.data.Mapping
 import play.api.i18n.Messages
 
 import java.time.LocalDate
-import scala.util.Try
 
 object DateMappings {
 
@@ -41,37 +39,10 @@ object DateMappings {
   )(implicit messages: Messages): Mapping[MonthsYearDuration] =
     of(new MonthYearFormatter(fieldNameKey, allowPastDates, allowFutureDates))
 
-  def isDayMonthValidDate(day: Int, month: Int): Boolean =
-    Try(LocalDate.of(LocalDate.now().getYear, month, day)).isSuccess
-
-  def dayMonthsDurationMapping(prefix: String, fieldErrorPart: String = ""): Mapping[DayMonthsDuration] = tuple(
-    "day"   -> nonEmptyTextOr(
-      prefix + ".day",
-      text.verifying(
-        Errors.invalidDurationDays,
-        x => x.trim.forall(Character.isDigit) && x.trim.toInt >= 0 && x.trim.toInt <= 31
-      ),
-      s"error$fieldErrorPart.day.required"
-    ),
-    "month" -> nonEmptyTextOr(
-      prefix + ".month",
-      text.verifying(
-        Errors.invalidDurationMonths,
-        x => x.trim.forall(Character.isDigit) && x.trim.toInt >= 0 && x.trim.toInt <= 12
-      ),
-      s"error$fieldErrorPart.month.required"
-    )
-  ).verifying(
-    "error.invalid_date",
-    formData => {
-      val (day, month) = (formData._1.trim.toInt, formData._2.trim.toInt)
-      isDayMonthValidDate(day, month)
-    }
-  ).transform(
-    { case (days, months) =>
-      DayMonthsDuration(days.trim.toInt, months.trim.toInt)
-    },
-    (my: DayMonthsDuration) => (my.days.toString, my.months.toString)
-  )
+  def dayMonthMapping(
+    fieldNameKey: String,
+    allow29February: Boolean = false
+  )(implicit messages: Messages): Mapping[DayMonthsDuration] =
+    of(new DayMonthFormatter(fieldNameKey, allow29February))
 
 }

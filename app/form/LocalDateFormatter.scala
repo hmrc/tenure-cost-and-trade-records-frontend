@@ -54,9 +54,9 @@ class LocalDateFormatter(
     ).bind(data).flatMap {
       case (None, None, None)          => oneError(dayKey, "error.date.required", Seq(fieldName, allDateFields))
       case (Some(d), Some(m), Some(y)) =>
-        val day          = Try(d.trim.toInt).filter((1 to 31) contains _).getOrElse(0)
-        val month        = Try(m.trim.toInt).filter((1 to 12) contains _).getOrElse(0)
-        val year         = Try(y.trim.toInt).filter((1000 to 9999) contains _).getOrElse(0)
+        val day          = parseNumber(d, 1 to 31)
+        val month        = parseNumber(m, 1 to 12)
+        val year         = parseNumber(y, 1000 to 9999)
         val datePartsSeq = Seq(day, month, year)
         if (datePartsSeq.forall(_ > 0)) {
           validateDate(day, month, year).left.map { errorKey =>
@@ -87,6 +87,9 @@ class LocalDateFormatter(
       s"$key.month" -> value.getMonthValue.toString,
       s"$key.year"  -> value.getYear.toString
     )
+
+  private def parseNumber(str: String, allowedRange: Range): Int =
+    Try(str.trim.toInt).filter(allowedRange.contains).getOrElse(0)
 
   private def oneError(key: String, message: String, args: Seq[Any]): Left[Seq[FormError], LocalDate] =
     Left(Seq(FormError(key, message, args)))

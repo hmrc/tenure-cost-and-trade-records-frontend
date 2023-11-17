@@ -59,25 +59,46 @@ class FinancialYearEndControllerSpec extends TestBaseSpec {
   }
 
   "Financial year end form" should {
+    "error if financial year end day and month are missing " in {
+      val formData = baseFormData - errorKey.financialYearDay - errorKey.financialYearMonth
+      val form     = accountingInformationForm(messages).bind(formData)
+
+      mustContainError(errorKey.financialYearDay, "error.date.required", form)
+    }
+
     "error if financial year day is missing " in {
       val formData = baseFormData - errorKey.financialYearDay
-      val form     = accountingInformationForm.bind(formData)
+      val form     = accountingInformationForm(messages).bind(formData)
 
-      mustContainError(errorKey.financialYearDay, "error.financialYear.day.required", form)
+      mustContainError(errorKey.financialYearDay, "error.date.mustInclude", form)
     }
 
     "error if financial year month is missing" in {
       val formData = baseFormData - errorKey.financialYearMonth
-      val form     = accountingInformationForm.bind(formData)
+      val form     = accountingInformationForm(messages).bind(formData)
 
-      mustContainError(errorKey.financialYearMonth, "error.financialYear.month.required", form)
+      mustContainError(errorKey.financialYearMonth, "error.date.mustInclude", form)
     }
 
     "error if financial year date is incorrect" in {
       val formData = baseFormData.updated("financialYear.day", "31").updated("financialYear.month", "2")
-      val form     = accountingInformationForm.bind(formData)
+      val form     = accountingInformationForm(messages).bind(formData)
 
-      mustContainError("financialYear", "error.invalid_date", form)
+      mustContainError(errorKey.financialYearDay, "error.date.invalid", form)
+    }
+
+    "error if financial year day is incorrect" in {
+      val formData = baseFormData.updated("financialYear.day", "32")
+      val form     = accountingInformationForm(messages).bind(formData)
+
+      mustContainError(errorKey.financialYearDay, "error.date.day.invalid", form)
+    }
+
+    "error if financial year month is incorrect" in {
+      val formData = baseFormData.updated("financialYear.month", "13")
+      val form     = accountingInformationForm(messages).bind(formData)
+
+      mustContainError(errorKey.financialYearMonth, "error.date.month.invalid", form)
     }
   }
 
