@@ -54,7 +54,7 @@ class LettingOtherPartOfPropertyController @Inject() (
             case _                                => lettingOtherPartOfPropertiesForm
           },
           "lettingOtherPartOfProperty",
-          getBackLink(request.sessionData) match {
+          getBackLink(request.sessionData, navigator.from) match {
             case Right(link) => link
             case Left(msg)   =>
               logger.warn(s"Navigation for catering operation details page reached with error: $msg")
@@ -77,7 +77,7 @@ class LettingOtherPartOfPropertyController @Inject() (
           cateringOperationOrLettingAccommodationView(
             formWithErrors,
             "lettingOtherPartOfProperty",
-            getBackLink(request.sessionData) match {
+            getBackLink(request.sessionData,navigator.from) match {
               case Right(link) => link
               case Left(msg)   =>
                 logger.warn(s"Navigation for letting other part of property page reached with error: $msg")
@@ -108,12 +108,16 @@ class LettingOtherPartOfPropertyController @Inject() (
     )
   }
 
-  private def getBackLink(answers: Session): Either[String, String] =
-    answers.forType match {
-      case ForTypes.for6015 | ForTypes.for6016 =>
-        Right(controllers.aboutfranchisesorlettings.routes.ConcessionOrFranchiseController.show().url)
-      case _                                   =>
-        Right(getBackLinkOfrSections(answers))
+  private def getBackLink(answers: Session, fromLocation: String): Either[String, String] =
+    fromLocation match {
+      case "TL" => Right(controllers.routes.TaskListController.show().url + "#letting-other-part-of-property")
+      case _    =>
+        answers.forType match {
+          case ForTypes.for6015 | ForTypes.for6016 =>
+            Right(controllers.aboutfranchisesorlettings.routes.ConcessionOrFranchiseController.show().url)
+          case _                                   =>
+            Right(getBackLinkOfrSections(answers))
+        }
     }
 
   private def getBackLinkOfrSections(answers: Session): String =

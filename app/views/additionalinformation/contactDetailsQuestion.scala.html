@@ -26,7 +26,7 @@
 )
 
 
-@(theForm: Form[ContactDetailsQuestion], summary: Summary)(implicit request: Request[_], messages: Messages)
+@(theForm: Form[ContactDetailsQuestion], summary: Summary, fromLocation:String = "")(implicit request: Request[_], messages: Messages)
 
 @layout(
     pageHeading = messages("contactDetailsQuestion.heading"),
@@ -34,7 +34,11 @@
     showH1= false,
     summary = Some(summary),
     sectionName = messages("label.section.additionalInformation"),
-    backLinkUrl = controllers.additionalinformation.routes.FurtherInformationOrRemarksController.show().url,
+    backLinkUrl = { fromLocation match {
+            case "TL" => controllers.routes.TaskListController.show().url+"#alternate-contact-details"
+            case _ => controllers.additionalinformation.routes.FurtherInformationOrRemarksController.show().url
+        }
+    },
     theForm = theForm
 ) {
 

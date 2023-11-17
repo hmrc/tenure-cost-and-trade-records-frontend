@@ -38,8 +38,6 @@
     theForm = theForm
 ) {
 
-  @formWithCSRF(action = controllers.connectiontoproperty.routes.VacantPropertiesController.submit()) {
-
       <p class="govuk-body">@{messages("vacantProperties.p1")}</p>
 
       <p class="govuk-body">@{messages("vacantProperties.p2")}</p>
@@ -51,7 +49,7 @@
           <li>@{messages("vacantProperties.item2")}</li>
           <li>@{messages("vacantProperties.item3")}</li>
       </ul>
-
+    @formWithCSRF(action = controllers.connectiontoproperty.routes.VacantPropertiesController.submit()) {
       @includes.radioButtons(
           govukRadios,
           theForm,

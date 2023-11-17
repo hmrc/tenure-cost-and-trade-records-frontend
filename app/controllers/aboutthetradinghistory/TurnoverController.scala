@@ -49,7 +49,8 @@ class TurnoverController @Inject() (
         val numberOfColumns = aboutTheTradingHistory.turnoverSections.size
         Ok(
           turnoverView(
-            turnoverForm(numberOfColumns).fill(aboutTheTradingHistory.turnoverSections)
+            turnoverForm(numberOfColumns).fill(aboutTheTradingHistory.turnoverSections),
+            navigator.from
           )
         )
       }

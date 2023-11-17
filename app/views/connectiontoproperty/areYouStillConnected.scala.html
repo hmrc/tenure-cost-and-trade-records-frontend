@@ -29,7 +29,7 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[_], summary: Summary)(implicit request: Request[_], messages: Messages)
+@(theForm: Form[_], summary: Summary,maybeFromTL: String="")(implicit request: Request[_], messages: Messages)
 
 @layout(
     pageHeading = messages("areYouConnected.heading"),
@@ -37,10 +37,12 @@
     showSection = true,
     sectionName = messages("label.section.connectionToTheProperty"),
     summary = Some(summary),
-    backLinkUrl = controllers.routes.LoginController.show().url,
+    backLinkUrl = maybeFromTL match {
+        case "TL" => controllers.routes.TaskListController.show().url
+        case _ => controllers.routes.LoginController.show().url
+    },
     theForm = theForm
 ) {
-
     @formWithCSRF(action = controllers.connectiontoproperty.routes.AreYouStillConnectedController.submit()) {
 
         @includes.radioButtons(
