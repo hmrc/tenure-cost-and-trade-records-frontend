@@ -20,7 +20,7 @@ import actions.WithSessionRefiner
 import config.ErrorHandler
 import connectors.Audit
 import crypto.MongoHasher
-import play.api.http.Status.{BAD_REQUEST, NOT_FOUND, OK, SEE_OTHER}
+import play.api.http.Status.{BAD_REQUEST, NOT_FOUND, OK, SEE_OTHER, TEMPORARY_REDIRECT}
 import play.api.test.Helpers.{POST, contentAsString, redirectLocation, status, stubMessagesControllerComponents}
 import stub.{StubBackendConnector, StubSessionRepo}
 import util.DateUtil
@@ -47,7 +47,7 @@ class SaveAsDraftControllerSpec extends TestBaseSpec {
     inject[sessionTimeout],
     inject[DateUtil],
     inject[MongoHasher],
-    WithSessionRefiner(inject[ErrorHandler], sessionRepo),
+    WithSessionRefiner(sessionRepo),
     sessionRepo,
     inject[ErrorHandler],
     inject[Audit],
@@ -59,7 +59,7 @@ class SaveAsDraftControllerSpec extends TestBaseSpec {
       sessionRepo.remove()
 
       val result = saveAsDraftController.customPassword(exitPath)(fakeRequest)
-      status(result) shouldBe NOT_FOUND
+      status(result) shouldBe TEMPORARY_REDIRECT
     }
 
     "return customUserPasswordForm if session.saveAsDraftPassword is empty" in {

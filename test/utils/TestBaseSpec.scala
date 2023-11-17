@@ -17,7 +17,7 @@
 package utils
 
 import actions.{SessionRequest, WithSessionRefiner}
-import config.{AppConfig, ErrorHandler}
+import config.AppConfig
 import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartOne, AboutLeaseOrAgreementPartTwo}
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
 import models.submissions.aboutyouandtheproperty._
@@ -95,7 +95,6 @@ trait TestBaseSpec
   implicit val hc: HeaderCarrier = HeaderCarrier(sessionId = Some(SessionId("my-session")))
   implicit val clock: Clock      = Clock.fixed(Instant.now(), ZoneId.systemDefault())
 
-  val mockCustomErrorHandler: ErrorHandler     = mock[ErrorHandler]
   val mockSessionRepository: SessionRepository = mock[SessionRepository]
 
   val preFilledSession: WithSessionRefiner =
@@ -116,7 +115,7 @@ trait TestBaseSpec
     aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwo),
     downloadPDFDetails: Option[DownloadPDFDetails] = None
   ): WithSessionRefiner =
-    new WithSessionRefiner(mockCustomErrorHandler, mockSessionRepository) {
+    new WithSessionRefiner(mockSessionRepository) {
 
       override def refine[A](request: Request[A]): Future[Either[Result, SessionRequest[A]]] =
         Future.successful(

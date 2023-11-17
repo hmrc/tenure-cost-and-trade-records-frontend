@@ -17,7 +17,6 @@
 package controllers
 
 import actions.WithSessionRefiner
-import config.ErrorHandler
 import play.api.http.Status
 import play.api.test.Helpers._
 import stub.StubSessionRepo
@@ -31,7 +30,7 @@ class TaskListSpec extends TestBaseSpec {
   private def taskListController = new TaskListController(
     stubMessagesControllerComponents(),
     inject[taskList],
-    WithSessionRefiner(inject[ErrorHandler], sessionRepo)
+    WithSessionRefiner(sessionRepo)
   )
 
   "GET /" should {
