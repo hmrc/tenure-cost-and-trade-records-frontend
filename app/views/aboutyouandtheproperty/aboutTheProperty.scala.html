@@ -101,7 +101,10 @@
       id = "propertyCurrentlyUsedOther",
       name = "propertyCurrentlyUsedOther",
       classes = "govuk-input--width-30",
-      value = theForm("propertyCurrentlyUsedOther").value
+      value = theForm("propertyCurrentlyUsedOther").value,
+      label = Label(
+        content = Text(messages("propertyCurrentlyUsed.otherLabel"))
+      )
     )
   )
 }
