@@ -84,7 +84,7 @@ class CateringOperationsRentDetailsViewSpec extends QuestionViewBehaviours[Cater
 
     "contain date legend for label.dateInput" in {
       val doc    = asDocument(createViewUsingForm(form))
-      val legend = doc.getElementsByClass("govuk-fieldset__legend govuk-!-font-weight-bold").text()
+      val legend = doc.getElementsByClass("govuk-fieldset__legend").text()
       assert(legend == messages("label.dateInput"))
     }
 

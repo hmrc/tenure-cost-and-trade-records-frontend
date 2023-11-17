@@ -19,7 +19,6 @@
 @import uk.gov.hmrc.govukfrontend.views.Aliases._
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukDateInput
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
-@import form.Errors
 @import util.DateUtil
 
 @(  form: Form[_],
@@ -29,6 +28,7 @@
     labelSuffix: Option[String] = None,
     label: Option[String] = None,
     labelArg0: Option[String] = None,
+    customClass: Option[String] = None,
     showDays : Boolean = false,
         hideYear: Boolean= false,
     showFieldSet: Boolean = true,
@@ -112,7 +112,7 @@
             fieldset = Fieldset(
                 legend = Legend(
                     content = HtmlContent(labelText),
-                    classes = "govuk-!-font-weight-bold"
+                    classes = s"${customClass.getOrElse("")} govuk-!-font-weight-bold"
                 )
             ),
             errorMessage = dateErrorMessage(field),

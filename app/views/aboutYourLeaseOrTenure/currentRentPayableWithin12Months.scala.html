@@ -90,7 +90,13 @@
    )
   )
 
-  @includes.dateFields(form = theForm, field = "dateReview", govukDate = govukDateInput, helpText = messages("label.currentRentPayableWithin12Months.help"), showDays = true)
+  @includes.dateFields(
+   form = theForm,
+   field = "dateReview",
+   govukDate = govukDateInput,
+   helpText = messages("label.currentRentPayableWithin12Months.help"),
+   showDays = true,
+   customClass = "govuk-fieldset__legend--m")
 
   @includes.continueSaveAsDraftButtons(govukButton)
  }
