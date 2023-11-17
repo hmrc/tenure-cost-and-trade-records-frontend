@@ -90,8 +90,7 @@ abstract class Navigator @Inject() (
     }
 
   def from(implicit request: Request[AnyContent]): String =
-    request.body.asFormUrlEncoded.flatMap(_.get("from").flatMap(_.headOption)).getOrElse("")
-
-  def fromLocation(implicit request: Request[AnyContent]): String =
-    request.getQueryString("from").getOrElse("")
+    request
+      .getQueryString("from")
+      .getOrElse(request.body.asFormUrlEncoded.flatMap(_.get("from").flatMap(_.headOption)).getOrElse(""))
 }

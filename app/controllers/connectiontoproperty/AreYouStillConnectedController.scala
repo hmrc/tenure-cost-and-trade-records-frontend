@@ -52,7 +52,7 @@ class AreYouStillConnectedController @Inject() (
             case _                           => areYouStillConnectedForm
           },
           request.sessionData.toSummary,
-          navigator.fromLocation
+          navigator.from
         )
       )
     )

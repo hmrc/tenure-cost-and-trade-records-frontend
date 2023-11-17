@@ -51,7 +51,7 @@ class AboutThePropertyController @Inject() (
           },
           request.sessionData.forType,
           request.sessionData.toSummary,
-          navigator.fromLocation
+          navigator.from
         )
       )
     )

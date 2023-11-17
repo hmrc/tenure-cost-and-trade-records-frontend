@@ -50,7 +50,7 @@ class LicensableActivitiesController @Inject() (
             case _                          => licensableActivitiesForm
           },
           request.sessionData.toSummary,
-          navigator.fromLocation
+          navigator.from
         )
       )
     )

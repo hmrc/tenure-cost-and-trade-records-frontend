@@ -53,7 +53,7 @@ class TradingNameOperatingFromPropertyController @Inject() (
             case _                      => tradingNameOperatingFromProperty
           },
           request.sessionData.toSummary,
-          navigator.fromLocation
+          navigator.from
         )
       )
     )

@@ -53,7 +53,7 @@ class VacantPropertiesController @Inject() (
             case Some(vacantProperties) => vacantPropertiesForm.fill(vacantProperties)
             case _                      => vacantPropertiesForm
           },
-          getBackLink(request.sessionData, navigator.fromLocation),
+          getBackLink(request.sessionData, navigator.from),
           request.sessionData.toSummary
         )
       )

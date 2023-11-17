@@ -43,7 +43,7 @@ class CateringOperationController @Inject() (
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
-    val backLink = navigator.fromLocation match {
+    val backLink = navigator.from match {
       case "TL" => controllers.routes.TaskListController.show().url + "#catering-operation-or-letting-accommodation"
       case _    => controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show().url
     }

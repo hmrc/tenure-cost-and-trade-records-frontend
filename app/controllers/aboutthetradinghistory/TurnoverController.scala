@@ -50,7 +50,7 @@ class TurnoverController @Inject() (
         Ok(
           turnoverView(
             turnoverForm(numberOfColumns).fill(aboutTheTradingHistory.turnoverSections),
-            navigator.fromLocation
+            navigator.from
           )
         )
       }
