@@ -1007,6 +1007,7 @@ hint.intervalsOfRentReview = Leave blank if the lease does not include any rent 
 label.nextReview = When is the next rent review due?
 label.nextReview.help = For example, 27 9 2025
 fieldName.nextReview = the date of the next rent review
+error.intervalsOfRent.maxLength = Your rent-review frequency should be 100 characters or fewer
 error.currentLeaseOrAgreementBegin.required = Please provide at what intervals is the rent reviewed under the terms of the lease or agreement
 error.currentLeaseOrAgreementBegin.maxLength = This must be 1000 characters or fewer
 
