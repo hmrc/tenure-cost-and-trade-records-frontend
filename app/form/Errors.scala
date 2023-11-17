@@ -52,6 +52,7 @@ object Errors {
   val contactPhoneRequired      = "error.contact.phone.required"
   val contactPhoneLength        = "error.contact.phone.invalidLength"
   val contactEmailRequired      = "error.contact.email.required"
+  val emailFormat               = "error.emailFormat.required"
   val alternativeAddressMissing = "error.alternative.address.missing"
   val alternativeContactMissing = "error.alternative.contact.missing"
 
