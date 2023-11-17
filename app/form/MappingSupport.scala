@@ -16,6 +16,7 @@
 
 package form
 
+import form.EmailMapping.validateEmail
 import form.Form6010.ConditionalMapping.nonEmptyTextOr
 import models.submissions._
 import form.Formats._
@@ -135,11 +136,7 @@ object MappingSupport {
   val contactDetailsMapping: Mapping[ContactDetails] =
     mapping(
       "phone" -> validatePhoneNumber,
-      "email" -> default(email, "").verifying(
-        nonEmpty(errorMessage = Errors.contactEmailRequired),
-        //TODO Add Regex here
-        maxLength(50, "contactDetails.email1.email.tooLong")
-      )
+      "email" -> validateEmail
     )(ContactDetails.apply)(ContactDetails.unapply)
 
   def addressMapping: Mapping[Address] = mapping(

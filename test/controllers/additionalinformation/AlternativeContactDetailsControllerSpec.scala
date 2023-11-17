@@ -90,10 +90,17 @@ class AlternativeContactDetailsControllerSpec extends TestBaseSpec {
     }
 
     "error if email is missing" in {
-      val formData = baseFormData - errorKey.email
+      val formData = baseFormData + (errorKey.email -> "")
       val form     = alternativeContactDetailsForm.bind(formData)
 
       mustContainError(errorKey.email, Errors.contactEmailRequired, form)
+    }
+
+    "error if email is invalid format" in {
+      val formData = baseFormData + (errorKey.email -> "invalid_email_address")
+      val form     = alternativeContactDetailsForm.bind(formData)
+
+      mustContainError(errorKey.email, Errors.emailFormat, form)
     }
 
     "error if buildingNameNumber is missing" in {
@@ -116,6 +123,7 @@ class AlternativeContactDetailsControllerSpec extends TestBaseSpec {
 
       mustContainError(errorKey.postcode, "error.postcode.required", form)
     }
+
   }
 
   object TestData {
