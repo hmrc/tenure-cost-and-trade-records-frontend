@@ -112,7 +112,7 @@
             fieldset = Fieldset(
                 legend = Legend(
                     content = HtmlContent(labelText),
-                    classes = s"${customClass.getOrElse("")} govuk-!-font-weight-bold"
+                    classes = customClass.getOrElse("govuk-!-font-weight-bold")
                 )
             ),
             errorMessage = dateErrorMessage(field),
