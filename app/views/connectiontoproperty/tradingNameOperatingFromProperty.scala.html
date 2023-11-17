@@ -26,7 +26,7 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[TradingNameOperatingFromProperty], summary: Summary)(implicit request: Request[_], messages: Messages)
+@(theForm: Form[TradingNameOperatingFromProperty], summary: Summary, fromLocation:String ="")(implicit request: Request[_], messages: Messages)
 
 @layout(
  pageHeading = messages("tradingNameFromProperty.heading"),
@@ -34,7 +34,12 @@
  showH1 = true,
  summary = Some(summary),
  sectionName = messages("label.section.connectionToTheProperty"),
- backLinkUrl = controllers.connectiontoproperty.routes.VacantPropertiesController.show.url,
+ backLinkUrl = { fromLocation match {
+  case "TL" => controllers.routes.TaskListController.show().url+"#name-of-operator-from-property"
+  case _  => controllers.connectiontoproperty.routes.VacantPropertiesController.show.url
+ }
+
+ },
  theForm = theForm
 ) {
  @formWithCSRF(action = controllers.connectiontoproperty.routes.TradingNameOperatingFromPropertyController.submit()) {

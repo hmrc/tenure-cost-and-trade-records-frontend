@@ -50,7 +50,8 @@ class AboutThePropertyController @Inject() (
             case _                     => aboutThePropertyForm
           },
           request.sessionData.forType,
-          request.sessionData.toSummary
+          request.sessionData.toSummary,
+          navigator.fromLocation
         )
       )
     )

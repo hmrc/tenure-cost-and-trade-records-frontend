@@ -53,7 +53,7 @@ class VacantPropertiesController @Inject() (
             case Some(vacantProperties) => vacantPropertiesForm.fill(vacantProperties)
             case _                      => vacantPropertiesForm
           },
-          getBackLink(request.sessionData),
+          getBackLink(request.sessionData, navigator.fromLocation),
           request.sessionData.toSummary
         )
       )
@@ -91,10 +91,14 @@ class VacantPropertiesController @Inject() (
     )
   }
 
-  private def getBackLink(answers: Session): String =
-    answers.stillConnectedDetails.flatMap(_.addressConnectionType.map(_.name)) match {
-      case Some("yes-change-address") => controllers.connectiontoproperty.routes.EditAddressController.show().url
-      case _                          => controllers.connectiontoproperty.routes.AreYouStillConnectedController.show().url
+  private def getBackLink(answers: Session, fromTaskList: String = ""): String =
+    fromTaskList match {
+      case "TL" => controllers.routes.TaskListController.show().url + "#vacant-properties"
+      case _    =>
+        answers.stillConnectedDetails.flatMap(_.addressConnectionType.map(_.name)) match {
+          case Some("yes-change-address") => controllers.connectiontoproperty.routes.EditAddressController.show().url
+          case _                          => controllers.connectiontoproperty.routes.AreYouStillConnectedController.show().url
+        }
     }
 
 }

@@ -49,7 +49,8 @@ class LicensableActivitiesController @Inject() (
             case Some(licensableActivities) => licensableActivitiesForm.fillAndValidate(licensableActivities)
             case _                          => licensableActivitiesForm
           },
-          request.sessionData.toSummary
+          request.sessionData.toSummary,
+          navigator.fromLocation
         )
       )
     )

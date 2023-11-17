@@ -43,7 +43,7 @@
         @if(cannotStartYet) {
             @messages(taskNameKey)
         } else {
-            <a href="@taskPage.url" aria-describedby="@taskId">@messages(taskNameKey)</a>
+            <a href="@taskPage.url?from=TL" aria-describedby="@taskId">@messages(taskNameKey)</a>
         }
     </span>
     <strong class="govuk-tag @itemTagClass app-task-list__tag" id="@taskId">@statusText</strong>

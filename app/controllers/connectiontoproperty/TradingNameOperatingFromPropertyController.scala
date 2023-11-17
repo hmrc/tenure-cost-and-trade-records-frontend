@@ -52,7 +52,8 @@ class TradingNameOperatingFromPropertyController @Inject() (
             case Some(vacantProperties) => tradingNameOperatingFromProperty.fillAndValidate(vacantProperties)
             case _                      => tradingNameOperatingFromProperty
           },
-          request.sessionData.toSummary
+          request.sessionData.toSummary,
+          navigator.fromLocation
         )
       )
     )

@@ -44,7 +44,7 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[PropertyDetails], forType: String, summary: Summary)(implicit request: Request[_], messages: Messages)
+@(theForm: Form[PropertyDetails], forType: String, summary: Summary, fromLocation:String = "")(implicit request: Request[_], messages: Messages)
 
 @content = {
 @if(forType.equals(ForTypes.for6010) || forType.equals(ForTypes.for6011)) {
@@ -167,7 +167,11 @@
   showSection = true,
   summary = Some(summary),
   sectionName = messages("label.section.aboutTheProperty"),
-  backLinkUrl = controllers.aboutyouandtheproperty.routes.AboutYouController.show.url,
+  backLinkUrl = { fromLocation match {
+    case "TL" => controllers.routes.TaskListController.show().url+"#about-the-property"
+    case _ => controllers.aboutyouandtheproperty.routes.AboutYouController.show.url
+    }
+  },
   theForm = theForm
 ) {
 
