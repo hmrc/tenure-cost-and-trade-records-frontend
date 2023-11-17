@@ -89,10 +89,17 @@ class NoReferenceNumberContactDetailsControllerSpec extends TestBaseSpec {
     }
 
     "error if email is missing" in {
-      val formData = baseFormData - errorKey.email
+      val formData = baseFormData + (errorKey.email -> "")
       val form     = requestReferenceNumberContactDetailsForm.bind(formData)
 
       mustContainError(errorKey.email, Errors.contactEmailRequired, form)
+    }
+
+    "error if email is invalid format" in {
+      val formData = baseFormData + (errorKey.email -> "invalid_email_address")
+      val form     = requestReferenceNumberContactDetailsForm.bind(formData)
+
+      mustContainError(errorKey.email, Errors.emailFormat, form)
     }
   }
 

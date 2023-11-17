@@ -24,14 +24,12 @@ object EmailMapping {
 
   val invalidEmailRegex = """^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$"""
 
-  def validateEmail = {
-
+  def validateEmail =
     text
       .verifying(Errors.contactEmailRequired, eA => eA.nonEmpty)
       .verifying(
         Errors.emailFormat,
         eA => if (eA.nonEmpty) eA.matches(invalidEmailRegex) else true
       )
-  }
 
 }
