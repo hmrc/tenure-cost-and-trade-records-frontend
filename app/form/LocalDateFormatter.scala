@@ -52,31 +52,32 @@ class LocalDateFormatter(
         "year"  -> optional(text)
       )
     ).bind(data).flatMap {
-      case (None, None, None)          => Left(Seq(FormError(dayKey, "error.date.required", Seq(fieldName, allDateFields))))
+      case (None, None, None)          => oneError(dayKey, "error.date.required", Seq(fieldName, allDateFields))
       case (Some(d), Some(m), Some(y)) =>
-        val day          = Try(d.trim.toInt).filter((1 to 31).contains(_)).getOrElse(0)
-        val month        = Try(m.trim.toInt).filter((1 to 12).contains(_)).getOrElse(0)
-        val year         = Try(y.trim.toInt).filter(_ > 0).getOrElse(0)
+        val day          = parseNumber(d, 1 to 31)
+        val month        = parseNumber(m, 1 to 12)
+        val year         = parseNumber(y, 1000 to 9999)
         val datePartsSeq = Seq(day, month, year)
         if (datePartsSeq.forall(_ > 0)) {
-          validateDate(day, month, year, allowFutureDates).left.map { errorKey =>
+          validateDate(day, month, year).left.map { errorKey =>
             Seq(FormError(dayKey, errorKey, Seq(fieldNameCapitalized, allDateFields)))
           }
         } else {
           val invalidFields = (datePartsSeq zip allDateFields).filter(_._1 == 0).map(_._2)
           val focusKey      = s"$key.${invalidFields.head}"
-          Left(Seq(FormError(focusKey, "error.date.invalid", Seq(fieldNameCapitalized, invalidFields))))
+          oneError(focusKey, "error.date.invalid", Seq(fieldNameCapitalized, invalidFields))
         }
       case (d, m, y)                   =>
-        val prefix       = messages("error.dateParts.prefix")
-        val separator    = messages("error.dateParts.separator")
-        val dayText      = messages("error.dateParts.day")
-        val monthText    = messages("error.dateParts.month")
-        val yearText     = messages("error.dateParts.year")
-        val missedFields = (Seq(d, m, y) zip Seq(dayText, monthText, yearText)).filter(_._1.isEmpty).map(_._2)
-        val arg1         = missedFields.mkString(s"$prefix ", s" $separator ", "")
-        val focusKey     = s"$key.${missedFields.head}"
-        Left(Seq(FormError(focusKey, "error.date.mustInclude", Seq(fieldNameCapitalized, arg1, missedFields))))
+        val prefix           = messages("error.dateParts.prefix")
+        val separator        = messages("error.dateParts.separator")
+        val dayText          = messages("error.dateParts.day")
+        val monthText        = messages("error.dateParts.month")
+        val yearText         = messages("error.dateParts.year")
+        val missedFields     = (Seq(d, m, y) zip allDateFields).filter(_._1.isEmpty).map(_._2)
+        val missedFieldsText = (Seq(d, m, y) zip Seq(dayText, monthText, yearText)).filter(_._1.isEmpty).map(_._2)
+        val arg1             = missedFieldsText.mkString(s"$prefix ", s" $separator ", "")
+        val focusKey         = s"$key.${missedFields.head}"
+        oneError(focusKey, "error.date.mustInclude", Seq(fieldNameCapitalized, arg1, missedFields))
     }
   }
 
@@ -87,7 +88,13 @@ class LocalDateFormatter(
       s"$key.year"  -> value.getYear.toString
     )
 
-  private def validateDate(day: Int, month: Int, year: Int, allowFutureDates: Boolean): Either[String, LocalDate] =
+  private def parseNumber(str: String, allowedRange: Range): Int =
+    Try(str.trim.toInt).filter(allowedRange.contains).getOrElse(0)
+
+  private def oneError(key: String, message: String, args: Seq[Any]): Left[Seq[FormError], LocalDate] =
+    Left(Seq(FormError(key, message, args)))
+
+  private def validateDate(day: Int, month: Int, year: Int): Either[String, LocalDate] =
     Try(LocalDate.of(year, month, day)).toEither.left
       .map(_ => "error.date.invalid")
       .flatMap { date =>

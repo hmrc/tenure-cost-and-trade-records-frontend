@@ -16,20 +16,22 @@
 
 package form.aboutYourLeaseOrTenure
 
-import form.DateMappings.monthsYearDurationMapping
+import form.DateMappings.monthYearMapping
 import models.submissions.aboutYourLeaseOrTenure.CurrentLeaseOrAgreementBegin
 import play.api.data.Form
 import play.api.data.Forms.{default, mapping, text}
 import play.api.data.validation.Constraints.nonEmpty
+import play.api.i18n.Messages
 
 object CurrentLeaseOrAgreementBeginForm {
 
-  val currentLeaseOrAgreementBeginForm = Form(
+  def currentLeaseOrAgreementBeginForm(implicit messages: Messages): Form[CurrentLeaseOrAgreementBegin] = Form(
     mapping(
-      "leaseBegin" -> monthsYearDurationMapping("leaseBegin", ".leaseBegin"),
+      "leaseBegin" -> monthYearMapping("leaseBegin", allowPastDates = true),
       "grantedFor" -> default(text, "").verifying(
         nonEmpty(errorMessage = "error.grantedFor.required")
       )
     )(CurrentLeaseOrAgreementBegin.apply)(CurrentLeaseOrAgreementBegin.unapply)
   )
+
 }

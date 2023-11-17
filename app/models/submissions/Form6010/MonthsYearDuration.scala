@@ -20,8 +20,11 @@ import play.api.libs.json.Json
 
 import java.time.YearMonth
 
+/**
+  * Represents mm/yyyy part of Date.
+  */
 case class MonthsYearDuration(months: Int, years: Int) {
-  def toYearMonth = YearMonth.of(years, months)
+  def toYearMonth: YearMonth = YearMonth.of(years, months)
 }
 
 object MonthsYearDuration {

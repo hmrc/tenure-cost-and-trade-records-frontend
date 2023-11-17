@@ -30,7 +30,7 @@ class FinancialYearEndViewSpec extends QuestionViewBehaviours[(DayMonthsDuration
 
   val sessionRequest = SessionRequest(aboutYourTradingHistory6010YesSession, fakeRequest)
 
-  override val form: Form[(DayMonthsDuration, Boolean)] = accountingInformationForm
+  override val form: Form[(DayMonthsDuration, Boolean)] = accountingInformationForm(messages)
 
   def createView: () => Html = () => financialYearEndView(form)(sessionRequest, messages)
 

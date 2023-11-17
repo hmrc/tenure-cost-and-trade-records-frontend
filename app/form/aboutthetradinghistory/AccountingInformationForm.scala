@@ -16,18 +16,19 @@
 
 package form.aboutthetradinghistory
 
-import form.DateMappings.dayMonthsDurationMapping
+import form.DateMappings.dayMonthMapping
 import models.submissions.Form6010.DayMonthsDuration
 import play.api.data.Form
 import play.api.data.Forms.{optional, text, tuple}
+import play.api.i18n.Messages
 
 object AccountingInformationForm {
 
-  val accountingInformationForm: Form[(DayMonthsDuration, Boolean)] = Form(
+  def accountingInformationForm(implicit messages: Messages): Form[(DayMonthsDuration, Boolean)] = Form(
     tuple(
-      "financialYear"  -> dayMonthsDurationMapping("financialYear", ".financialYear"),
+      "financialYear"  -> dayMonthMapping("financialYear", allow29February = false),
       "yearEndChanged" -> optional(text)
-        .transform[Boolean](_.exists(_.equals("true")), b => Some(b.toString))
+        .transform[Boolean](_.contains("true"), b => Some(b.toString))
     )
   )
 

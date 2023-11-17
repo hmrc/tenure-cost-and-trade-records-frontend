@@ -949,8 +949,7 @@ error.legalOrPlanningRestrictionsDetails.maxLength = The description of the othe
 ##############################
 aboutYourTradingHistory.heading = Occupation and accounting information
 firstOccupy.heading = When did you first occupy the property?
-error.firstOccupy.month.required = The date the property was first occupied must include a month
-error.firstOccupy.year.required = The date the property was first occupied must include a year
+fieldName.firstOccupy = the date the property was first occupied
 
 # FINANCIAL YEAR-END
 ##############################
@@ -959,8 +958,7 @@ label.financialYear = When does your current financial year end?
 financialYearEnd.yearEndChanged.legend = If your financial year end has changed
 financialYearEnd.yearEndChanged.hint = Use the checkbox if your financial year end has changed in the last 3 years. You will be taken to a separate page to declare the former year-end dates.
 financialYearEnd.yearEndChanged = My financial year end has changed in the last three years.
-error.financialYear.day.required = The date the financial years ends must include a day
-error.financialYear.month.required = The date the financial years ends must include a month
+fieldName.financialYear = the date the financial years ends
 
 # FINANCIAL YEAR-END DATES
 ##############################
@@ -993,8 +991,7 @@ label.currentLeaseOrAgreementBegin = If the current lease was originally assigne
 label.grantedFor = How long was it granted for?
 hint.currentLeaseOrAgreementBegin = For example, 18 months, 1.5 years, or 1 year and 6 months.
 error.grantedFor.required = Enter the length of the current lease
-error.leaseBegin.month.required = The date the current lease began must include a month
-error.leaseBegin.year.required = The date the current lease began must include a year
+fieldName.leaseBegin = the date the current lease began
 label.currentLeaseOrAgreementBegin.help = For example, 9 2017.
 
 # INTERVALS OF RENT REVIEW
@@ -1569,9 +1566,14 @@ error.tiedType.required = Select which type of tie you have
 error.addressLineTwo.maxLength = Address line 2 must be 50 characters or fewer
 error.townCity.maxLength = Town or city name must be 50 characters or fewer
 error.county.maxLength = County name must be 50 characters or fewer
+
+# Date fields validation
 error.date.required = Enter {0}
 error.date.mustInclude = {0} must include {1}
 error.date.invalid = {0} must be a real date
+error.date.day.invalid = The day figure must be a number between 1 and 31
+error.date.month.invalid = The month figure must be a number between 1 and 12
+error.date.year.invalid = {0} must be on or after January 1900
 error.date.before1900 = {0} must be on or after 1 January 1900
 error.date.beforeToday = {0} cannot be in the past
 error.date.mustBeInPast = {0} must be today or in the past
