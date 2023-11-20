@@ -952,7 +952,9 @@ error.legalOrPlanningRestrictionsDetails.maxLength = The description of the othe
 ##############################
 aboutYourTradingHistory.heading = Occupation and accounting information
 firstOccupy.heading = When did you first occupy the property?
-fieldName.firstOccupy = the date the property was first occupied
+
+fieldName.firstOccupy = the date when you you first occupied the property
+fieldName.firstOccupy.monthYear = the month and year when you first occupied the property
 
 # FINANCIAL YEAR-END
 ##############################
@@ -1542,8 +1544,8 @@ error.date_must_be_in_past = Date must be in the past
 error.invalid_number = This must be a number
 error.date_before_1900 = Date must be on or after 1 January 1900
 error.date_before_1900.firstOccupationDate = Date must be on or after 1 January 1900
-error.duration.years = The year figure must be a number between 1 and 999
-error.duration.months = The month figure must be a number between 1 and 12
+error.duration.years = The year should be a 4-digit number
+error.duration.months = The month must be a number between 1 and 12
 error.duration.days = Days must be a number between 1 and 31
 error.months.required = Enter months amount
 error.years.required = Enter years amount
@@ -1581,8 +1583,8 @@ error.date.mustInclude = {0} must include {1}
 error.date.invalid = {0} must be a real date
 error.date.day.invalid = The day figure must be a number between 1 and 31
 error.date.month.invalid = The month figure must be a number between 1 and 12
-error.date.year.invalid = {0} must be on or after January 1900
-error.date.before1900 = {0} must be on or after 1 January 1900
+error.date.year.invalid = The year should be a 4-digit number
+error.date.before1900 = {0} must be after December 1899
 error.date.beforeToday = {0} cannot be in the past
 error.date.mustBeInPast = {0} must be today or in the past
 error.date.mustBeInFuture = {0} must be today or in the future
