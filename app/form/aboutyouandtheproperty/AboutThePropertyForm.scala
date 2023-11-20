@@ -16,7 +16,7 @@
 
 package form.aboutyouandtheproperty
 
-import form.MappingSupport.multipleCurrentPropertyUsedMapping
+import form.MappingSupport.currentPropertyUsedMapping
 import models.submissions.aboutyouandtheproperty._
 import play.api.data.Form
 import play.api.data.Forms.{default, mapping, text}
@@ -39,9 +39,9 @@ object AboutThePropertyForm {
 
   val aboutThePropertyForm: Form[PropertyDetails] = Form(
     mapping(
-      "propertyCurrentlyUsed"      -> multipleCurrentPropertyUsedMapping,
+      "propertyCurrentlyUsed"      -> currentPropertyUsedMapping,
       "propertyCurrentlyUsedOther" -> mandatoryIfAnyEqual(
-        Seq(("propertyCurrentlyUsed[0]", "other"), ("propertyCurrentlyUsed[]", "other")),
+        Seq(("propertyCurrentlyUsed", "other")),
         default(text, "").verifying(
           nonEmpty(errorMessage = "error.propertyCurrentlyUsed.required"),
           maxLength(200, "error.propertyCurrentlyUsed.maxLength")
@@ -49,5 +49,4 @@ object AboutThePropertyForm {
       )
     )(PropertyDetails.apply)(PropertyDetails.unapply)
   )
-
 }

@@ -42,10 +42,10 @@
 
 @govukSummaryList(SummaryList(rows =
     sectionAnswers.row("checkYourAnswersAboutTheProperty.propertyUsage",
-        _.propertyDetails.map(_.propertyCurrentlyUsed.map(
-            usage => s"${messages(s"propertyCurrentlyUsed.${usage.name}")}"
-                    + sectionAnswers.answers.filter(_ => s"propertyCurrentlyUsed.${usage.name}" == "propertyCurrentlyUsed.other").flatMap(_.propertyDetails.flatMap(_.currentlyUsedOtherField)).fold("")(v => s"<p class=\"govuk-body\">$v")
-        ).mkString("""<p class="govuk-body">""", """</p><p class="govuk-body">""", "</p>")),
+        _.propertyDetails.map(
+            usage => s"${messages(s"propertyCurrentlyUsed.${usage.propertyCurrentlyUsed.name}")}"
+                    + sectionAnswers.answers.filter(_ => s"propertyCurrentlyUsed.${usage.propertyCurrentlyUsed.name}" == "propertyCurrentlyUsed.other").flatMap(_.propertyDetails.flatMap(_.currentlyUsedOtherField)).fold("")(v => s"<p class=\"govuk-body\">$v")
+        ).mkString("""<p class="govuk-body">""", """</p><p class="govuk-body">""", "</p>"),
         aboutyouandtheproperty.routes.AboutThePropertyController.show(), "",
         ("valueAsHtml", _ => None)) ++
             sectionAnswers.optionalRow(

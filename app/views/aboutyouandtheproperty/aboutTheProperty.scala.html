@@ -57,7 +57,7 @@
       ))
     )),
     hint = Hint(content = HtmlContent(messages("hint.select.main"))),
-    name = "propertyCurrentlyUsed[0]",
+    name = "propertyCurrentlyUsed",
     items = Seq(
       RadioItem(
         content = Text(messages("propertyCurrentlyUsed.publicHouse")),
@@ -93,7 +93,7 @@
       )
     ),
     errorMessage = theForm.errors.asTextErrorMessageForField("propertyCurrentlyUsed")
-  ).withFormField(theForm("propertyCurrentlyUsed[0]"))
+  ).withFormField(theForm("propertyCurrentlyUsed"))
   )
 
   @govukInput(
@@ -110,8 +110,7 @@
 }
 
 @if(forType.equals(ForTypes.for6015) || forType.equals(ForTypes.for6016)) {
-  @govukCheckboxes(
-    Checkboxes(
+  @govukRadios(Radios(
       fieldset =  Some(Fieldset(
         legend = Some(Legend(
           content = Text(Messages("aboutProperty.heading")),
@@ -119,27 +118,27 @@
           isPageHeading = true
         ))
       )),
-      name = "propertyCurrentlyUsed[]",
+      name = "propertyCurrentlyUsed",
       items = Seq(
-        CheckboxItem(
+        RadioItem(
           content = Text(messages("propertyCurrentlyUsed.hotel")),
-          value = "hotel",
+          value = Some("hotel"),
         ),
-        CheckboxItem(
+        RadioItem(
           content = Text(messages("propertyCurrentlyUsed.healthSpa")),
-          value = "healthSpa",
+          value = Some("healthSpa"),
         ),
-        CheckboxItem(
+        RadioItem(
           content = Text(messages("propertyCurrentlyUsed.lodgeAndRestaurant")),
-          value = "lodgeAndRestaurant",
+          value = Some("lodgeAndRestaurant"),
         ),
-        CheckboxItem(
+        RadioItem(
           content = Text(messages("propertyCurrentlyUsed.conferenceCentre")),
-          value = "conferenceCentre",
+          value = Some("conferenceCentre"),
         ),
-        CheckboxItem(
+        RadioItem(
           content = Text(messages("propertyCurrentlyUsed.other")),
-          value = "other",
+          value = Some("other"),
           conditionalHtml = Some(conditionalHTML(messages("hint.other.use.propertyCurrentlyUsedOther")))
         )
       ),
