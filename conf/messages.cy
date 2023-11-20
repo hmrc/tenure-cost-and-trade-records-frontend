@@ -581,7 +581,6 @@ help.enforcementActionHasBeenTakenDetails.list.p3 = We are required to keep an i
 error.enforcementActionHasBeenTakenDetails.required = You must describe the enforcement action taken
 error.enforcementActionHasBeenTakenDetails.maxLength  = Your description of the enforcement action taken must be 200 characters of fewer
 
-
 # TIED FOR GOODS
 ################
 tiedForGoods.heading = Tied goods
@@ -995,7 +994,7 @@ label.currentLeaseOrAgreementBegin = If the current lease was originally assigne
 label.grantedFor = How long was it granted for?
 hint.currentLeaseOrAgreementBegin = For example, 18 months, 1.5 years, or 1 year and 6 months.
 error.grantedFor.required = Enter the length of the current lease
-fieldName.leaseBegin = the date the current lease began
+fieldName.leaseBegin = the date when the current lease began
 label.currentLeaseOrAgreementBegin.help = For example, 9 2017.
 
 # INTERVALS OF RENT REVIEW
