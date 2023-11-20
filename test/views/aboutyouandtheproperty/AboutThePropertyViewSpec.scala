@@ -64,8 +64,8 @@ class AboutThePropertyViewSpec extends QuestionViewBehaviours[PropertyDetails] {
       val doc = asDocument(createViewUsingForm(form))
       assertContainsRadioButton(
         doc,
-        "propertyCurrentlyUsed[0]",
-        "propertyCurrentlyUsed[0]",
+        "propertyCurrentlyUsed",
+        "propertyCurrentlyUsed",
         CurrentPropertyPublicHouse.name,
         isChecked = false
       )
@@ -76,8 +76,8 @@ class AboutThePropertyViewSpec extends QuestionViewBehaviours[PropertyDetails] {
       val doc = asDocument(createViewUsingForm(form))
       assertContainsRadioButton(
         doc,
-        "propertyCurrentlyUsed[0]-2",
-        "propertyCurrentlyUsed[0]",
+        "propertyCurrentlyUsed-2",
+        "propertyCurrentlyUsed",
         CurrentPropertyWineBarOrCafe.name,
         isChecked = false
       )
@@ -88,8 +88,8 @@ class AboutThePropertyViewSpec extends QuestionViewBehaviours[PropertyDetails] {
       val doc = asDocument(createViewUsingForm(form))
       assertContainsRadioButton(
         doc,
-        "propertyCurrentlyUsed[0]-3",
-        "propertyCurrentlyUsed[0]",
+        "propertyCurrentlyUsed-3",
+        "propertyCurrentlyUsed",
         CurrentPropertyOtherBar.name,
         isChecked = false
       )
@@ -100,8 +100,8 @@ class AboutThePropertyViewSpec extends QuestionViewBehaviours[PropertyDetails] {
       val doc = asDocument(createViewUsingForm(form))
       assertContainsRadioButton(
         doc,
-        "propertyCurrentlyUsed[0]-4",
-        "propertyCurrentlyUsed[0]",
+        "propertyCurrentlyUsed-4",
+        "propertyCurrentlyUsed",
         CurrentPropertyPubAndRestaurant.name,
         isChecked = false
       )
@@ -112,8 +112,8 @@ class AboutThePropertyViewSpec extends QuestionViewBehaviours[PropertyDetails] {
       val doc = asDocument(createViewUsingForm(form))
       assertContainsRadioButton(
         doc,
-        "propertyCurrentlyUsed[0]-5",
-        "propertyCurrentlyUsed[0]",
+        "propertyCurrentlyUsed-5",
+        "propertyCurrentlyUsed",
         CurrentPropertyLicencedRestaurant.name,
         isChecked = false
       )
@@ -124,8 +124,8 @@ class AboutThePropertyViewSpec extends QuestionViewBehaviours[PropertyDetails] {
       val doc = asDocument(createViewUsingForm(form))
       assertContainsRadioButton(
         doc,
-        "propertyCurrentlyUsed[0]-6",
-        "propertyCurrentlyUsed[0]",
+        "propertyCurrentlyUsed-6",
+        "propertyCurrentlyUsed",
         CurrentPropertyHotel.name,
         isChecked = false
       )
@@ -136,8 +136,8 @@ class AboutThePropertyViewSpec extends QuestionViewBehaviours[PropertyDetails] {
       val doc = asDocument(createViewUsingForm(form))
       assertContainsRadioButton(
         doc,
-        "propertyCurrentlyUsed[0]-7",
-        "propertyCurrentlyUsed[0]",
+        "propertyCurrentlyUsed-7",
+        "propertyCurrentlyUsed",
         CurrentPropertyDiscoOrNightclub.name,
         isChecked = false
       )
@@ -148,8 +148,8 @@ class AboutThePropertyViewSpec extends QuestionViewBehaviours[PropertyDetails] {
       val doc = asDocument(createViewUsingForm(form))
       assertContainsRadioButton(
         doc,
-        "propertyCurrentlyUsed[0]-8",
-        "propertyCurrentlyUsed[0]",
+        "propertyCurrentlyUsed-8",
+        "propertyCurrentlyUsed",
         CurrentPropertyOther.name,
         isChecked = false
       )
@@ -192,7 +192,7 @@ class AboutThePropertyViewSpec extends QuestionViewBehaviours[PropertyDetails] {
       assertContainsCheckBox(
         doc,
         "propertyCurrentlyUsed",
-        "propertyCurrentlyUsed[]",
+        "propertyCurrentlyUsed",
         CurrentPropertyHotel.name,
         isChecked = false
       )
@@ -204,7 +204,7 @@ class AboutThePropertyViewSpec extends QuestionViewBehaviours[PropertyDetails] {
       assertContainsCheckBox(
         doc,
         "propertyCurrentlyUsed-2",
-        "propertyCurrentlyUsed[]",
+        "propertyCurrentlyUsed",
         CurrentPropertyHealthSpa.name,
         isChecked = false
       )
@@ -216,7 +216,7 @@ class AboutThePropertyViewSpec extends QuestionViewBehaviours[PropertyDetails] {
       assertContainsCheckBox(
         doc,
         "propertyCurrentlyUsed-3",
-        "propertyCurrentlyUsed[]",
+        "propertyCurrentlyUsed",
         CurrentPropertyLodgeAndRestaurant.name,
         isChecked = false
       )
@@ -228,7 +228,7 @@ class AboutThePropertyViewSpec extends QuestionViewBehaviours[PropertyDetails] {
       assertContainsCheckBox(
         doc,
         "propertyCurrentlyUsed-4",
-        "propertyCurrentlyUsed[]",
+        "propertyCurrentlyUsed",
         CurrentPropertyConferenceCentre.name,
         isChecked = false
       )
@@ -240,7 +240,7 @@ class AboutThePropertyViewSpec extends QuestionViewBehaviours[PropertyDetails] {
       assertContainsCheckBox(
         doc,
         "propertyCurrentlyUsed-5",
-        "propertyCurrentlyUsed[]",
+        "propertyCurrentlyUsed",
         CurrentPropertyOther.name,
         isChecked = false
       )
