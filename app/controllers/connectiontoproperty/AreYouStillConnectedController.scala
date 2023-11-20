@@ -43,6 +43,7 @@ class AreYouStillConnectedController @Inject() (
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+
     Future.successful(
       Ok(
         areYouStillConnectedView(
@@ -50,7 +51,8 @@ class AreYouStillConnectedController @Inject() (
             case Some(addressConnectionType) => areYouStillConnectedForm.fill(addressConnectionType)
             case _                           => areYouStillConnectedForm
           },
-          request.sessionData.toSummary
+          request.sessionData.toSummary,
+          navigator.from
         )
       )
     )

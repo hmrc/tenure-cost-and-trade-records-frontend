@@ -33,7 +33,7 @@
         dateUtil: DateUtil
 )
 
-@(form: Form[Seq[TurnoverSection]])(implicit request: SessionRequest[_], messages: Messages)
+@(form: Form[Seq[TurnoverSection]],fromLocation:String="")(implicit request: SessionRequest[_], messages: Messages)
 
 @detailsContent = {
 @if(forType == ForTypes.for6010 || forType == ForTypes.for6011) {
@@ -103,10 +103,14 @@
     showSection = true,
     summary = Some(request.sessionData.toSummary),
     sectionName = messages("label.section.aboutYourTradingHistory"),
-    backLinkUrl = if(request.sessionData.aboutTheTradingHistory.flatMap(_.occupationAndAccountingInformation.flatMap(_.yearEndChanged)).contains(true)) {
-        controllers.aboutthetradinghistory.routes.FinancialYearEndDatesController.show().url
-    } else {
-        controllers.aboutthetradinghistory.routes.FinancialYearEndController.show().url
+    backLinkUrl = fromLocation match {
+        case "TL" => controllers.routes.TaskListController.show().url + "#turnover"
+        case _ =>
+            if(request.sessionData.aboutTheTradingHistory.flatMap(_.occupationAndAccountingInformation.flatMap(_.yearEndChanged)).contains(true)) {
+                controllers.aboutthetradinghistory.routes.FinancialYearEndDatesController.show().url
+            } else {
+                controllers.aboutthetradinghistory.routes.FinancialYearEndController.show().url
+            }
     },
     fullWidth = true,
     theForm = form

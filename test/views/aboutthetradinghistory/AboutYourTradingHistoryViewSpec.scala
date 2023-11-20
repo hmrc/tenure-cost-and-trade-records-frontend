@@ -31,7 +31,7 @@ class AboutYourTradingHistoryViewSpec extends QuestionViewBehaviours[MonthsYearD
   val sessionRequest = SessionRequest(aboutYourTradingHistory6010YesSession, fakeRequest)
 
   override val form: Form[MonthsYearDuration] =
-    OccupationalInformationForm.occupationalInformationForm
+    OccupationalInformationForm.occupationalInformationForm(messages)
 
   def createView: () => Html = () => aboutYourTradingHistoryView(form)(sessionRequest, messages)
 

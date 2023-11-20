@@ -16,16 +16,17 @@
 
 package form.aboutthetradinghistory
 
-import form.DateMappings.monthsYearDurationMapping
+import form.DateMappings.monthYearMapping
 import models.submissions.Form6010.MonthsYearDuration
 import play.api.data.Form
 import play.api.data.Forms._
+import play.api.i18n.Messages
 
 object OccupationalInformationForm {
 
-  val occupationalInformationForm: Form[MonthsYearDuration] = Form(
+  def occupationalInformationForm(implicit messages: Messages): Form[MonthsYearDuration] = Form(
     single(
-      "firstOccupy" -> monthsYearDurationMapping("firstOccupy", ".firstOccupy")
+      "firstOccupy" -> monthYearMapping("firstOccupy", allowPastDates = true)
     )
   )
 
