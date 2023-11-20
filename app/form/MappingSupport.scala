@@ -139,6 +139,12 @@ object MappingSupport {
       "email" -> validateEmail
     )(ContactDetails.apply)(ContactDetails.unapply)
 
+  val alternativeContactDetailsMapping: Mapping[ContactDetails] =
+    mapping(
+      "phone" -> validatePhoneNumber,
+      "email" -> validateEmail
+    )(ContactDetails.apply)(ContactDetails.unapply)
+
   def addressMapping: Mapping[Address] = mapping(
     "buildingNameNumber" -> default(text, "").verifying(
       nonEmpty(errorMessage = "error.buildingNameNumber.required"),

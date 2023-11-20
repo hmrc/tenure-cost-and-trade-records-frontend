@@ -29,7 +29,7 @@ object PhoneNumberMapping {
     def validPNLength(pN: String) = pN.length >= 10 && pN.length <= 20
 
     text
-      .verifying(Errors.contactPhoneRequired, pN => pN.nonEmpty)
+      .verifying(Errors.contactAlternativePhoneRequired, pN => pN.nonEmpty)
       .verifying(Errors.contactPhoneLength, pN => if (pN.nonEmpty) validPNLength(pN) else true)
       .verifying(
         Errors.invalidPhone,
