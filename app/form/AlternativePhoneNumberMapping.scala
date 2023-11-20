@@ -18,18 +18,18 @@ package form
 
 import play.api.data.Forms.text
 
-object PhoneNumberMapping {
+object AlternativePhoneNumberMapping {
 
   // Valid formats: 1234567890 | +44 1234567890 | +44 0123 456 789 | +441234567890 | 0123 456 7890 | 0123-456-7890 | +44 123-456-7890
 
   val phoneNumberRegex = """^^[0-9\s\+()-]+$"""
 
-  def validatePhoneNumber = {
+  def validateAlternativePhoneNumber = {
 
     def validPNLength(pN: String) = pN.length >= 10 && pN.length <= 20
 
     text
-      .verifying(Errors.contactPhoneRequired, pN => pN.nonEmpty)
+      .verifying(Errors.contactAlternativePhoneRequired, pN => pN.nonEmpty)
       .verifying(Errors.contactPhoneLength, pN => if (pN.nonEmpty) validPNLength(pN) else true)
       .verifying(
         Errors.invalidPhone,

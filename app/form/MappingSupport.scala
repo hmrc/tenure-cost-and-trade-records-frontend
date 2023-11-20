@@ -16,6 +16,8 @@
 
 package form
 
+import form.AlternativeEmailMapping.validateAlternativeEmail
+import form.AlternativePhoneNumberMapping.validateAlternativePhoneNumber
 import form.EmailMapping.validateEmail
 import form.Form6010.ConditionalMapping.nonEmptyTextOr
 import models.submissions._
@@ -26,7 +28,7 @@ import models.submissions.Form6010._
 import models.submissions.aboutYourLeaseOrTenure._
 import models.submissions.aboutfranchisesorlettings._
 import models.submissions.aboutyouandtheproperty._
-import models.submissions.additionalinformation.AlternativeAddress
+import models.submissions.additionalinformation.{AlternativeAddress, AlternativeContactDetails}
 import models.submissions.common.{Address, AnswersYesNo, BuildingInsurance, CYAYesNo, ContactDetails, ContactDetailsAddress, InsideRepairs, OutsideRepairs}
 import models.submissions.connectiontoproperty.{AddressConnectionType, ConnectionToProperty, CorrespondenceAddress, EditAddress, VacantPropertiesDetails, YourContactDetails}
 import models.submissions.notconnected.PastConnectionType
@@ -141,8 +143,8 @@ object MappingSupport {
 
   val alternativeContactDetailsMapping: Mapping[ContactDetails] =
     mapping(
-      "phone" -> validatePhoneNumber,
-      "email" -> validateEmail
+      "phone" -> validateAlternativePhoneNumber,
+      "email" -> validateAlternativeEmail
     )(ContactDetails.apply)(ContactDetails.unapply)
 
   def addressMapping: Mapping[Address] = mapping(

@@ -77,7 +77,7 @@ class LettingOtherPartOfPropertyController @Inject() (
           cateringOperationOrLettingAccommodationView(
             formWithErrors,
             "lettingOtherPartOfProperty",
-            getBackLink(request.sessionData,navigator.from) match {
+            getBackLink(request.sessionData, navigator.from) match {
               case Right(link) => link
               case Left(msg)   =>
                 logger.warn(s"Navigation for letting other part of property page reached with error: $msg")
