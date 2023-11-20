@@ -16,7 +16,9 @@
 
 @import models.submissions.common.AnswersYesNo
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
 @import uk.gov.hmrc.govukfrontend.views.html.components._
+
 @import models.pages.Summary
 
 @this(layout: Layout,
@@ -39,15 +41,32 @@
 
   @formWithCSRF(action = controllers.connectiontoproperty.routes.AreYouThirdPartyController.submit()) {
 
-    @includes.radioButtonsYesNo(
-      govukRadios,
-      theForm,
-      "areYouThirdParty",
-      messages("areYouThirdParty.title", tradingName),
-      "govuk-fieldset__legend--l",
-      isHeading = true
-    )
+      @govukRadios(
+          Radios(
+              name = "areYouThirdParty",
+              idPrefix = Option("areYouThirdParty"),
+              items = Seq(
+                  RadioItem(
+                      content = Text(messages("label.yes")),
+                      value = Some("yes"),
+                      hint = Some(Hint(content = Text(messages("hint.areYouThirdParty.yes", tradingName)))),
+                  ),
+                  RadioItem(
+                      content = Text(messages("label.no")),
+                      value = Some("no"),
+                      hint = Some(Hint(content = Text(messages("hint.areYouThirdParty.no", tradingName)))),
+                  )),
+              errorMessage =  theForm.errors.asTextErrorMessageForField("areYouThirdParty"),
+              fieldset = Option(Fieldset(
+                  legend = Option(Legend(
+                      content = Text(messages("areYouThirdParty.title", tradingName)),
+                      isPageHeading = true,
+                      classes = "govuk-fieldset__legend--l"
+                  ))
+              ))
+          ).withFormField(theForm("areYouThirdParty"))
+      )
 
-    @includes.continueSaveAsDraftButtons(govukButton)
+      @includes.continueSaveAsDraftButtons(govukButton)
   }
 }

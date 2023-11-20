@@ -17,9 +17,7 @@
 package util
 
 import controllers.aboutyouandtheproperty
-import models.submissions.aboutyouandtheproperty.{CurrentPropertyOther, PropertyDetails}
 import uk.gov.hmrc.govukfrontend.views.Aliases.{Key, Text}
-import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.{ActionItem, Actions, SummaryListRow, Value}
 import utils.TestBaseSpec
 

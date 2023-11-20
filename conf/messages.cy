@@ -281,7 +281,9 @@ error.tradingNamePayingRent.missing = Select yes if the organisation pays rent o
 # ARE YOU THIRD-PARTY WORKING ON BEHALF OF TRADING NAME
 #######################################################
 areYouThirdParty.heading = Are you a third party?
-areYouThirdParty.title = Are you a third-party, working on behalf of {0}?
+areYouThirdParty.title = Are you a third party working on behalf of {0}?
+hint.areYouThirdParty.yes = Choose ‘yes’ if you have been contracted by {0} to complete this declaration
+hint.areYouThirdParty.no = Choose ‘no’ if you are an owner, director, or direct employee of {0}, or you are completing this declaration on their behalf in an unofficial capacity
 error.areYouThirdParty.missing = Select yes if you are working on behalf of the organisation
 
 # VACANT PROPERTIES
