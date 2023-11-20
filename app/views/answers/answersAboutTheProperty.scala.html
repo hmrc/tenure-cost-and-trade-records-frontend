@@ -44,7 +44,7 @@
     sectionAnswers.row("checkYourAnswersAboutTheProperty.propertyUsage",
         _.propertyDetails.map(
             usage => s"${messages(s"propertyCurrentlyUsed.${usage.propertyCurrentlyUsed.name}")}"
-                    + sectionAnswers.answers.filter(_ => s"propertyCurrentlyUsed.${usage.propertyCurrentlyUsed.name}" == "propertyCurrentlyUsed.other").flatMap(_.propertyDetails.flatMap(_.currentlyUsedOtherField)).fold("")(v => s"<p class=\"govuk-body\">$v")
+                    + sectionAnswers.answers.filter(_ => usage.currentlyUsedOtherField.isDefined).flatMap(_.propertyDetails.flatMap(_.currentlyUsedOtherField)).fold("")(v => s"<p class=\"govuk-body\">$v")
         ).mkString("""<p class="govuk-body">""", """</p><p class="govuk-body">""", "</p>"),
         aboutyouandtheproperty.routes.AboutThePropertyController.show(), "",
         ("valueAsHtml", _ => None)) ++
