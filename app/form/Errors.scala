@@ -42,19 +42,21 @@ object Errors {
   val invalidPostcodeOnLetter   = "error.invalid_postcode_as_on_letter"
 
   //Are you still connected Error
-  val isConnectedError          = "error.isRelated"
-  val connectionToPropertyError = "error.no.connection.selected"
+  val isConnectedError                = "error.isRelated"
+  val connectionToPropertyError       = "error.no.connection.selected"
   // Not connected
-  val isPastConnected           = "error.pastConnectionType"
+  val isPastConnected                 = "error.pastConnectionType"
   //About You Errors
-  val userTypeRequired          = "error.userType.required"
-  val contactDetailsMissing     = "error.contact.details.missing"
-  val contactPhoneRequired      = "error.contact.phone.required"
-  val contactPhoneLength        = "error.contact.phone.invalidLength"
-  val contactEmailRequired      = "error.contact.email.required"
-  val emailFormat               = "error.emailFormat.required"
-  val alternativeAddressMissing = "error.alternative.address.missing"
-  val alternativeContactMissing = "error.alternative.contact.missing"
+  val userTypeRequired                = "error.userType.required"
+  val contactDetailsMissing           = "error.contact.details.missing"
+  val contactPhoneRequired            = "error.contact.phone.required"
+  val contactAlternativePhoneRequired = "error.contact.alternativePhone.required"
+  val contactPhoneLength              = "error.contact.phone.invalidLength"
+  val contactEmailRequired            = "error.contact.email.required"
+  val contactAlternativeEmailRequired = "error.contact.alternativeEmail.required"
+  val emailFormat                     = "error.emailFormat.required"
+  val alternativeAddressMissing       = "error.alternative.address.missing"
+  val alternativeContactMissing       = "error.alternative.contact.missing"
 
   //Vacant properties
   val vacantProperties = "error.vacantProperties.required"
@@ -119,6 +121,7 @@ object Errors {
   val invalidDateMonth      = "error.month.required"
   val invalidDateYear       = "error.year.required"
   val dateMustBeInPast      = "error.date_must_be_in_past"
+  val dateMustBeInFuture    = "error.date.mustBeInFuture"
   val invalidDurationDays   = "error.duration.days"
   val invalidDurationMonths = "error.duration.months"
   val invalidDurationYears  = "error.duration.years"
