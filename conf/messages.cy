@@ -581,6 +581,7 @@ help.enforcementActionHasBeenTakenDetails.list.p3 = We are required to keep an i
 error.enforcementActionHasBeenTakenDetails.required = You must describe the enforcement action taken
 error.enforcementActionHasBeenTakenDetails.maxLength  = Your description of the enforcement action taken must be 200 characters of fewer
 
+
 # TIED FOR GOODS
 ################
 tiedForGoods.heading = Tied goods
@@ -588,6 +589,8 @@ tiedForGoods.para1 = Many properties are required to sell certain goods, such as
 tiedForGoods.para2 = Being required to sell tied goods is a common arrangement for public houses leased from breweries.
 tiedForGoods.label = Are you required to sell certain goods as part of your lease or tenancy agreement?
 error.tiedForGoods.missing = Select yes if you are tied for any goods
+error.tiedForGoodsDetailsText.required = Describe your partial tie
+error.tiedForGoodsDetailsText.maxLength = Your description of your partial tie should be 100 characters or fewer
 
 # TIED FOR GOODS DETAILS
 ########################
