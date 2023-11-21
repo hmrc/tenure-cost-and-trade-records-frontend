@@ -16,6 +16,8 @@
 
 package form
 
+import form.AlternativeEmailMapping.validateAlternativeEmail
+import form.AlternativePhoneNumberMapping.validateAlternativePhoneNumber
 import form.EmailMapping.validateEmail
 import form.Form6010.ConditionalMapping.nonEmptyTextOr
 import models.submissions._
@@ -26,7 +28,7 @@ import models.submissions.Form6010._
 import models.submissions.aboutYourLeaseOrTenure._
 import models.submissions.aboutfranchisesorlettings._
 import models.submissions.aboutyouandtheproperty._
-import models.submissions.additionalinformation.AlternativeAddress
+import models.submissions.additionalinformation.{AlternativeAddress, AlternativeContactDetails}
 import models.submissions.common.{Address, AnswersYesNo, BuildingInsurance, CYAYesNo, ContactDetails, ContactDetailsAddress, InsideRepairs, OutsideRepairs}
 import models.submissions.connectiontoproperty.{AddressConnectionType, ConnectionToProperty, CorrespondenceAddress, EditAddress, VacantPropertiesDetails, YourContactDetails}
 import models.submissions.notconnected.PastConnectionType
@@ -94,22 +96,7 @@ object MappingSupport {
     "annualRentExcludingVat" -> currencyMapping(".annualRentExcludingVat")
   )(AnnualRent.apply)(AnnualRent.unapply).verifying(Errors.maxCurrencyAmountExceeded, _.amount <= cdbMaxCurrencyAmount)
 
-  lazy val multipleCurrentPropertyUsedMapping: Mapping[List[CurrentPropertyUsed]] =
-    list(nonEmptyText)
-      .verifying(
-        Constraint[List[String]]("constraint.required") { propertyUsages =>
-          if (propertyUsages.nonEmpty) Valid
-          else Invalid(ValidationError("error.required.propertyUsages"))
-        }
-      )
-      .verifying(
-        "Invalid property used",
-        propertyUsages => propertyUsages.forall(str => CurrentPropertyUsed.withName(str).isDefined)
-      )
-      .transform[List[CurrentPropertyUsed]](
-        propertyUsages => propertyUsages.flatMap(str => CurrentPropertyUsed.withName(str)),
-        currentPropertyUseds => currentPropertyUseds.map(_.name)
-      )
+  lazy val currentPropertyUsedMapping: Mapping[CurrentPropertyUsed] = Forms.of[CurrentPropertyUsed]
 
   lazy val rentIncludeFixturesAndFittingsDetails: Mapping[AnnualRent] = mapping(
     "rentIncludeFixturesAndFittingsDetails" -> currencyMapping(".rentIncludeFixturesAndFittingsDetails")
@@ -137,6 +124,12 @@ object MappingSupport {
     mapping(
       "phone" -> validatePhoneNumber,
       "email" -> validateEmail
+    )(ContactDetails.apply)(ContactDetails.unapply)
+
+  val alternativeContactDetailsMapping: Mapping[ContactDetails] =
+    mapping(
+      "phone" -> validateAlternativePhoneNumber,
+      "email" -> validateAlternativeEmail
     )(ContactDetails.apply)(ContactDetails.unapply)
 
   def addressMapping: Mapping[Address] = mapping(

@@ -1,4 +1,4 @@
-@*
+/*
  * Copyright 2023 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,12 +12,24 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *@
+ */
 
-@import play.api.Configuration
-@import views.html.includes.javascripts
+package form
 
-@this(configuration: Configuration, javascripts: javascripts)
+import play.api.data.Forms.text
 
-@()
-<!--javascripts()-->
+object AlternativeEmailMapping {
+
+  // Valid formats: test@test.com | test.test@hotmail.com | test.account@digital.gov.uk |
+
+  val invalidEmailRegex = """^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$"""
+
+  def validateAlternativeEmail =
+    text
+      .verifying(Errors.contactAlternativeEmailRequired, eA => eA.nonEmpty)
+      .verifying(
+        Errors.emailFormat,
+        eA => if (eA.nonEmpty) eA.matches(invalidEmailRegex) else true
+      )
+
+}

@@ -30,7 +30,7 @@ object IntervalsOfRentReviewForm {
       mapping(
         "intervalsOfRentReview" -> optional(text)
           .verifying("error.intervalsOfRent.maxLength", mL => mL.forall(_.length <= 100)),
-        "nextReview"            -> optional(requiredDateMapping("nextReview", allowFutureDates = true))
+        "nextReview"            -> optional(requiredDateMapping("nextReview"))
       )(IntervalsOfRentReview.apply)(IntervalsOfRentReview.unapply)
     )
 

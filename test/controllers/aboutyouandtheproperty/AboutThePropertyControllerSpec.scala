@@ -63,7 +63,7 @@ class AboutThePropertyControllerSpec extends TestBaseSpec {
       val formData = baseFormData - errorKey.propertyCurrentlyUsed
       val form     = aboutThePropertyForm.bind(formData)
 
-      mustContainError(errorKey.propertyCurrentlyUsed, "error.required.propertyUsages", form)
+      mustContainError(errorKey.propertyCurrentlyUsed, "error.currentPropertyUse.required", form)
     }
   }
 

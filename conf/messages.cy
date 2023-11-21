@@ -281,7 +281,9 @@ error.tradingNamePayingRent.missing = Select yes if the organisation pays rent o
 # ARE YOU THIRD-PARTY WORKING ON BEHALF OF TRADING NAME
 #######################################################
 areYouThirdParty.heading = Are you a third party?
-areYouThirdParty.title = Are you a third-party, working on behalf of {0}?
+areYouThirdParty.title = Are you a third party working on behalf of {0}?
+hint.areYouThirdParty.yes = Choose ‘yes’ if you have been contracted by {0} to complete this declaration
+hint.areYouThirdParty.no = Choose ‘no’ if you are an owner, director, or direct employee of {0}, or you are completing this declaration on their behalf in an unofficial capacity
 error.areYouThirdParty.missing = Select yes if you are working on behalf of the organisation
 
 # VACANT PROPERTIES
@@ -345,7 +347,7 @@ error.addressLineTwo.maxLength = Address line 2 must be 50 characters or fewer
 ###########################################
 lettingPartOfPropertyRentDetails.heading = Annual rent for tenant
 lettingPartOfPropertyRentDetails.title = Annual rent for {0}
-fieldName.lettingPartOfPropertyFixedRentDate = the date the rent was fixed
+fieldName.lettingPartOfPropertyFixedRentDate = the date when the annual rent was fixed
 
 # CONNECTION TO PROPERTY ITEMS INCLUDED IN RENT
 ###############################################
@@ -669,6 +671,7 @@ error.cateringOperationOrLettingAccommodation.missing = Select yes if any separa
 lettingOtherPartOfProperty.heading = Do you receive any rent from letting other parts of the property?
 hint.lettingOtherPartOfProperty = For example, advertising billboards, phones masts or car parking. You will have the opportunity to add additional lettings if required.
 error.lettingOtherPartOfProperty.missing = Select yes if any rent received from letting other parts of the property
+fieldName.lettingOtherPartOfPropertyFixedRentDate = the date when the annual rent was fixed
 
 # PROPERTY USE LEASEBACK ARRANGEMENT
 ##############################
@@ -841,7 +844,7 @@ label.rentActuallyAgreed.help = For example, 27 9 2017.
 help.rentActuallyAgreed.title = If you’re not sure when the rent was agreed
 help.rentActuallyAgreed.p1 = The date when the rent was agreed or set is normally the date when any of the listed options happened. It may not necessarily be the date of occupation, or the date the rent was first paid.
 help.rentActuallyAgreed.p2 = If you’re still unsure, refer to your lease or agreement.
-fieldName.rentActuallyAgreed = the date when the rent was agreed
+fieldName.rentActuallyAgreed = the date when the current rent was agreed or set
 error.howIsCurrentRentFixed.required = Select how the current rent was fixed
 
 # CATERING OPERATION OR LETTING DETAILS
@@ -849,7 +852,7 @@ error.howIsCurrentRentFixed.required = Select how the current rent was fixed
 cateringOperationOrLettingAccommodationDetails.heading = Provide the business’s details
 concessionDetails.heading = Provide the concession’s details
 lettingOtherPartOfPropertyDetails.heading = Provide the tenant’s details
-fieldName.lettingOtherPartOfPropertyFixedRentDate = the date the rent was fixed
+fieldName.lettingOtherPartOfPropertyFixedRentDate = the date when the annual rent was fixed
 label.operatorName = Operator’s name
 label.lettingOperatorName = Tenant’s name
 label.tradingName = Trading name
@@ -859,7 +862,7 @@ hint.typeOfBusiness = For example, bed and breakfast, hotel, restaurant.
 hint.concessionTypeOfBusiness = For example, a restaurant, or leisure facilities
 hint.lettingTypeOfBusiness = For example, a billboard, residential accommodation.
 label.correspondenceAddress = Correspondence address
-error.operatorName.required = Enter the name of the person or company operating the business
+error.operatorName.required = Enter the name of the person or business renting the property
 error.operatorName.maxLength = Operator‘s name must be 50 characters or fewer
 error.typeOfBusiness.required = Enter a description of the separate business
 error.typeOfBusiness.maxLength = Type of business must be 50 characters or fewer
@@ -875,7 +878,7 @@ lettingOtherPartOfPropertyRentDetails.heading = Annual rent for {0}
 lettingOtherPartOfPropertyRentDetails.title = Annual rent for tenant
 label.annualRent = Annual rent payment excluding VAT
 label.dateInput = When was this sum fixed?
-fieldName.cateringOrLettingFixedRentDate = the date the rent was fixed
+fieldName.cateringOrLettingFixedRentDate = the date when the annual rent was fixed
 error.required.annualRentExcludingVat.annualRent = Enter the annual rent
 error.invalid_currency.annualRent.annualRent = The annual rent must be a number
 error.dateInput.month.required = The date the rent was fixed must include a month
@@ -1003,7 +1006,7 @@ intervalsOfRentReview.label = How often is the rent reviewed under the terms of 
 hint.intervalsOfRentReview = Leave blank if the lease does not include any rent reviews.
 label.nextReview = When is the next rent review due?
 label.nextReview.help = For example, 27 9 2025
-fieldName.nextReview = the date of the next rent review
+fieldName.nextReview = the date when the next rent review is due
 error.intervalsOfRent.maxLength = Your rent-review frequency should be 100 characters or fewer
 error.currentLeaseOrAgreementBegin.required = Please provide at what intervals is the rent reviewed under the terms of the lease or agreement
 error.currentLeaseOrAgreementBegin.maxLength = This must be 1000 characters or fewer
@@ -1017,7 +1020,7 @@ currentRentPayableWithin12Months.subheading = Is the current rent payable due fo
 currentRentPayableWithin12Months.hint = Do not include any rent increases linked to turnover or the retail price index (RPI).
 label.dateReview = Date of next rent review, or expiry of existing lease
 error.currentRentPayableWithin12Months.required = Select yes if the current rent will be reviewed in the next 12 months
-fieldName.dateReview = the date of review or expiry
+fieldName.dateReview = the date when the rent will be reviewed, or the lease expires
 label.currentRentPayableWithin12Months.help = For example, 27 9 2023 - leave blank if no rent reviews are due.
 
 # WHAT IS YOUR RENT BASED ON
@@ -1296,6 +1299,7 @@ checkYourAnswersNotConnected.subheading2 = Your contact details
 # About franchise or lettings CYA
 checkYourAnswers.heading = This is a holding page for the check your answers page
 checkYourAnswersAboutFranchiseOrLettings.heading = Check your answers – franchises or lettings
+checkYourAnswersAboutConcessionsOrLettings.heading = Check your answers – concessions or lettings
 checkYourAnswersAboutFranchiseOrLettings.franchiseLettings.heading = Rental income
 checkYourAnswersAboutFranchiseOrLettings.franchiseLettings = Rental income?
 checkYourAnswersAboutFranchiseOrLettings.separateBusinesses.heading = Separate businesses
@@ -1315,7 +1319,6 @@ checkYourAnswersAboutFranchiseOrLettings.addedBusinessPlural = You have added {0
 checkYourAnswersAboutFranchiseOrLettings.addLetting = Add or remove tenant
 checkYourAnswersAboutFranchiseOrLettings.addedLetting = You have added {0} tenant
 checkYourAnswersAboutFranchiseOrLettings.addedLettingPlural = You have added {0} tenants
-
 
 checkYourAnswersAboutYourLeaseOrTenure.heading = Check your answers – your lease or agreement
 checkYourAnswersAboutYourLeaseOrTenure.yourLandlord.heading = Your landlord
@@ -1512,8 +1515,10 @@ alternativeContact.contactDetails.email1.email.tooLong=Email address must be 50 
 error.contact.full.name.required = Please enter the full name
 error.alternativeContactName.required = Enter the alternative name
 error.contact.email.required = Enter your email address
+error.contact.alternativeEmail.required = Enter your email address, or an alternative email address
 error.emailFormat.required = Enter an email in the correct format, like name@example.com
 error.contact.phone.required = Enter your phone number
+error.contact.alternativePhone.required = Enter your phone number, or an alternative phone number
 error.contact.phone.invalidLength = Phone numbers must be between 10 and 20 characters long
 error.userType.required=Select your connection to the property
 error.contact.details.missing=At least one of phone, email, or address must be given
@@ -1527,6 +1532,9 @@ error.invalidCharTownCity = Town or city name must only contain letters, numbers
 error.invalidCharCounty = County name must only contain letters, numbers, hyphens and spaces
 error.maxCurrencyAmountExceeded = Maximum amount exceeded - please contact the VOA
 error.maxCurrencyAmountExceeded.annualRent = Maximum amount exceeded - please contact the VOA
+
+error.negativeNumber.annualRent = The annual rent cannot be a negative number
+
 error.invalid_phone=Enter a phone number, like 01632 960 000
 error.email=Enter an email in the correct format, like name@example.com
 error.isRelated=Select if you are still connected to the property, not connected to the property, or if the address needs to be updated
@@ -1539,12 +1547,12 @@ error.duration.months = The month figure must be a number between 1 and 12
 error.duration.days = Days must be a number between 1 and 31
 error.months.required = Enter months amount
 error.years.required = Enter years amount
-error.required.propertyUsages = Select the current use of the property
+error.currentPropertyUse.required = Select the current use of the property
 error.propertyCurrentlyUsed.required = Describe the current use of the property
 error.invalid_date = Enter a valid date
 error.buildingNameNumber.required = Enter the first line of the address
 error.buildingNameNumber.maxLength = Address line 1 must be 50 characters or fewer
-error.town.required = Enter the town or city of the address
+error.town.required = Enter the name of the town or city
 error.town.maxLength = Town or city name must be 50 characters or fewer
 error.line2.maxLength = Second line of address must be 50 characters or fewer
 error.line3.maxLength = Third line of address must be 50 characters or fewer
@@ -1560,9 +1568,11 @@ error.required.annualRentExcludingVat = Enter the annual rent
 error.char.count.maxLength = This must be 2000 characters or fewer
 error.townCity.required = Enter the name of the town or city
 error.fullName.required = Enter your name
+error.fullNameAlternative.required = Enter your name, or an alternative name
 error.fullName.mexLength = Full name must be 50 characters or fewer
 error.tiedType.required = Select which type of tie you have
 error.addressLineTwo.maxLength = Address line 2 must be 50 characters or fewer
+error.townCity.maxLength = Town or city name must be 50 characters or fewer
 error.county.maxLength = County name must be 50 characters or fewer
 
 # Date fields validation
@@ -1575,6 +1585,7 @@ error.date.year.invalid = {0} must be on or after January 1900
 error.date.before1900 = {0} must be on or after 1 January 1900
 error.date.beforeToday = {0} cannot be in the past
 error.date.mustBeInPast = {0} must be today or in the past
+error.date.mustBeInFuture = {0} must be today or in the future
 error.dateParts.prefix = a
 error.dateParts.separator = and
 error.dateParts.day = day

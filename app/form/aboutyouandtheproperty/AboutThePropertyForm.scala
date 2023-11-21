@@ -16,12 +16,12 @@
 
 package form.aboutyouandtheproperty
 
-import form.MappingSupport.multipleCurrentPropertyUsedMapping
+import form.MappingSupport.currentPropertyUsedMapping
 import models.submissions.aboutyouandtheproperty._
 import play.api.data.Form
-import play.api.data.Forms.{default, mapping, text}
+import play.api.data.Forms.{default, mapping, nonEmptyText, optional, text}
 import play.api.data.validation.Constraints.{maxLength, nonEmpty}
-import uk.gov.voa.play.form.ConditionalMappings.mandatoryIfAnyEqual
+import uk.gov.voa.play.form.ConditionalMappings.{mandatoryIfAnyEqual, mandatoryIfEqual}
 
 object AboutThePropertyForm {
 
@@ -39,15 +39,17 @@ object AboutThePropertyForm {
 
   val aboutThePropertyForm: Form[PropertyDetails] = Form(
     mapping(
-      "propertyCurrentlyUsed"      -> multipleCurrentPropertyUsedMapping,
-      "propertyCurrentlyUsedOther" -> mandatoryIfAnyEqual(
-        Seq(("propertyCurrentlyUsed[0]", "other"), ("propertyCurrentlyUsed[]", "other")),
+      "propertyCurrentlyUsed"      -> currentPropertyUsedMapping,
+      "propertyCurrentlyUsedOther" -> optional(
         default(text, "").verifying(
-          nonEmpty(errorMessage = "error.propertyCurrentlyUsed.required"),
           maxLength(200, "error.propertyCurrentlyUsed.maxLength")
         )
       )
-    )(PropertyDetails.apply)(PropertyDetails.unapply)
+    )(PropertyDetails.apply)(PropertyDetails.unapply).verifying(
+      "error.propertyCurrentlyUsed.required",
+      pd => {
+        (if (pd.propertyCurrentlyUsed == CurrentPropertyOther && pd.currentlyUsedOtherField.isEmpty) false else true)
+      }
+    )
   )
-
 }
