@@ -34,7 +34,7 @@ class RequestReferenceNumberFormSubmissionControllerSpec extends TestBaseSpec {
     stubMessagesControllerComponents(),
     inject[confirmation],
     inject[Audit],
-    WithSessionRefiner(inject[ErrorHandler], sessionRepo),
+    WithSessionRefiner(sessionRepo),
     sessionRepo
   )
 

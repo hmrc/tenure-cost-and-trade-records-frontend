@@ -20,7 +20,6 @@ import form.DateMappings.requiredDateMapping
 import models.submissions.aboutYourLeaseOrTenure.IntervalsOfRentReview
 import play.api.data.Form
 import play.api.data.Forms.{mapping, optional, text}
-import play.api.data.validation.Constraints.maxLength
 import play.api.i18n.Messages
 
 object IntervalsOfRentReviewForm {
