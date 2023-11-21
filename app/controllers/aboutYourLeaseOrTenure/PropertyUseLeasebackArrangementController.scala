@@ -26,7 +26,7 @@ import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.PropertyUseLeasebackAgreementId
 import play.api.Logging
 import play.api.i18n.I18nSupport
-import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Request}
 import repositories.SessionRepo
 import views.html.aboutYourLeaseOrTenure.propertyUseLeasebackArrangement
 
@@ -85,6 +85,14 @@ class PropertyUseLeasebackArrangementController @Inject() (
     )
   }
 
-  private def getBackLink(answers: Session): String =
-    controllers.connectiontoproperty.routes.TradingNameOperatingFromPropertyController.show().url
+  private def getBackLink(answers: Session)(implicit request: Request[AnyContent]): String = {
+    println("@" * 80)
+    println(navigator.from)
+
+    navigator.from match {
+      case "TL" => controllers.routes.TaskListController.show().url + "#leaseback-arrangement"
+      case _    => controllers.aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.show.url
+    }
+  }
+
 }

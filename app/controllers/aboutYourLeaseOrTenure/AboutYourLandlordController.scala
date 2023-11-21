@@ -49,7 +49,8 @@ class AboutYourLandlordController @Inject() (
             case Some(aboutTheLandlord) => aboutTheLandlordForm.fillAndValidate(aboutTheLandlord)
             case _                      => aboutTheLandlordForm
           },
-          request.sessionData.toSummary
+          request.sessionData.toSummary,
+          navigator.from
         )
       )
     )
