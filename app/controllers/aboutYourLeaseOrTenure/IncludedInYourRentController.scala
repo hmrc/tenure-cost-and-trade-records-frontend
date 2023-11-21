@@ -49,7 +49,8 @@ class IncludedInYourRentController @Inject() (
             case Some(includedInYourRentDetails) => includedInYourRentForm.fillAndValidate(includedInYourRentDetails)
             case _                               => includedInYourRentForm
           },
-          request.sessionData.toSummary
+          request.sessionData.toSummary,
+          navigator.from
         )
       )
     )

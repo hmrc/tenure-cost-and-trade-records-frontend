@@ -19,18 +19,20 @@ package controllers.aboutYourLeaseOrTenure
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
 import navigation.AboutYourLeaseOrTenureNavigator
 import play.api.http.Status
+import play.api.mvc.{AnyContent, Request}
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import utils.TestBaseSpec
 
 class AboutYourLandlordControllerSpec extends TestBaseSpec {
 
+  val mockNavigator = mock[AboutYourLeaseOrTenureNavigator]
   def aboutYourLandlordController(
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
-  ) =
+  )                 =
     new AboutYourLandlordController(
       stubMessagesControllerComponents(),
-      mock[AboutYourLeaseOrTenureNavigator],
+      mockNavigator,
       aboutYourLandlordView,
       preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
       mockSessionRepo
@@ -38,11 +40,13 @@ class AboutYourLandlordControllerSpec extends TestBaseSpec {
 
   "GET /" should {
     "return 200" in {
+      when(mockNavigator.from(any[Request[AnyContent]])).thenReturn("")
       val result = aboutYourLandlordController().show(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return HTML" in {
+      when(mockNavigator.from(any[Request[AnyContent]])).thenReturn("")
       val result = aboutYourLandlordController().show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
@@ -51,6 +55,7 @@ class AboutYourLandlordControllerSpec extends TestBaseSpec {
 
   "SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
+      when(mockNavigator.from(any[Request[AnyContent]])).thenReturn("")
       val res = aboutYourLandlordController().submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)
       )

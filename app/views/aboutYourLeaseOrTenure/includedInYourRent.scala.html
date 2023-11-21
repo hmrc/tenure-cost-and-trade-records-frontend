@@ -32,7 +32,7 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[IncludedInYourRentDetails], summary: Summary)(implicit request: Request[_], messages: Messages)
+@(theForm: Form[IncludedInYourRentDetails], summary: Summary, fromLocation: String = "")(implicit request: Request[_], messages: Messages)
 
 @layout(
  pageHeading = messages("includedInYourRent.heading"),
@@ -40,7 +40,11 @@
  showSection = true,
  summary = summary,
  sectionName = messages("label.section.aboutYourLeaseOrTenure"),
- backLinkUrl = controllers.aboutYourLeaseOrTenure.routes.CurrentLeaseOrAgreementBeginController.show.url,
+ backLinkUrl = { fromLocation match {
+     case "TL" => controllers.routes.TaskListController.show().url+"#included-in-your-rent"
+     case _ => controllers.aboutYourLeaseOrTenure.routes.CurrentLeaseOrAgreementBeginController.show.url
+    }
+ },
  theForm = theForm
 ) {
 
