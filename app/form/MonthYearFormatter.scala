@@ -39,7 +39,10 @@ class MonthYearFormatter(
 )(implicit messages: Messages)
     extends Formatter[MonthsYearDuration] {
 
-  require(allowPastDates || allowFutureDates, s"${getClass.getSimpleName} must be configured to allow past or future dates")
+  require(
+    allowPastDates || allowFutureDates,
+    s"${getClass.getSimpleName} must be configured to allow past or future dates"
+  )
 
   private val monthYearFields = Seq("month", "year")
 

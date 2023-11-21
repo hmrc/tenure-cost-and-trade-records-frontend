@@ -37,7 +37,10 @@ class LocalDateFormatter(
 )(implicit messages: Messages)
     extends Formatter[LocalDate] {
 
-  require(allowPastDates || allowFutureDates, s"${getClass.getSimpleName} must be configured to allow past or future dates")
+  require(
+    allowPastDates || allowFutureDates,
+    s"${getClass.getSimpleName} must be configured to allow past or future dates"
+  )
 
   private val allDateFields   = Seq("day", "month", "year")
   private val nineteenHundred = LocalDate.of(1900, 1, 1)

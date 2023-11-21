@@ -20,7 +20,7 @@ import form.MappingSupport.{buildingInsuranceType, insideRepairsType, outsideRep
 import models.submissions.aboutYourLeaseOrTenure.UltimatelyResponsible
 import play.api.data.Form
 import play.api.data.Forms.{default, mapping, text}
-import play.api.data.validation.Constraints.{maxLength, nonEmpty}
+import play.api.data.validation.Constraints.nonEmpty
 import uk.gov.voa.play.form.ConditionalMappings.mandatoryIfAnyEqual
 object UltimatelyResponsibleForm {
 

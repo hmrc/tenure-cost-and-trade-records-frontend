@@ -19,9 +19,8 @@ package form.aboutyouandtheproperty
 import form.MappingSupport.currentPropertyUsedMapping
 import models.submissions.aboutyouandtheproperty._
 import play.api.data.Form
-import play.api.data.Forms.{default, mapping, nonEmptyText, optional, text}
-import play.api.data.validation.Constraints.{maxLength, nonEmpty}
-import uk.gov.voa.play.form.ConditionalMappings.{mandatoryIfAnyEqual, mandatoryIfEqual}
+import play.api.data.Forms.{default, mapping, optional, text}
+import play.api.data.validation.Constraints.maxLength
 
 object AboutThePropertyForm {
 
@@ -47,9 +46,8 @@ object AboutThePropertyForm {
       )
     )(PropertyDetails.apply)(PropertyDetails.unapply).verifying(
       "error.propertyCurrentlyUsed.required",
-      pd => {
-        (if (pd.propertyCurrentlyUsed == CurrentPropertyOther && pd.currentlyUsedOtherField.isEmpty) false else true)
-      }
+      pd => !(pd.propertyCurrentlyUsed == CurrentPropertyOther && pd.currentlyUsedOtherField.isEmpty)
     )
   )
+
 }
