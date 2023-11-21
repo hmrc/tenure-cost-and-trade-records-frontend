@@ -64,7 +64,7 @@ class SessionRepository @Inject() (mongo: MongoComponent)(implicit
                          filter = Filters.equal("_id", sessionId),
                          update = Updates.combine(
                            Updates.set(s"data", Codecs.toBson(SensitiveSession(data))),
-                           Updates.setOnInsert("createdAt", Instant.now)
+                           Updates.set("createdAt", Instant.now)
                          ),
                          options = FindOneAndUpdateOptions().upsert(true)
                        )
