@@ -78,8 +78,7 @@ class MonthYearFormatter(
           Left(
             Seq(
               Option.when(month == 0 || month == -1)(FormError(monthKey, "error.date.month.invalid")),
-              Option.when(year == 0)(FormError(yearKey, "error.date.year.invalid", Seq(fieldCapitalized))),
-              Option.when(year == -1)(FormError(yearKey, "error.date.year.invalid"))
+              Option.when(year  == 0 || year  == -1)(FormError(yearKey,   "error.date.year.invalid"))
             ).flatten
           )
         }
