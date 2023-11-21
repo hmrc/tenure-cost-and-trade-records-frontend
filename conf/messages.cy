@@ -963,7 +963,8 @@ label.financialYear = When does your current financial year end?
 financialYearEnd.yearEndChanged.legend = If your financial year end has changed
 financialYearEnd.yearEndChanged.hint = Use the checkbox if your financial year end has changed in the last 3 years. You will be taken to a separate page to declare the former year-end dates.
 financialYearEnd.yearEndChanged = My financial year end has changed in the last three years.
-fieldName.financialYear = the date the financial years ends
+fieldName.financialYear = the date when your current financial years ends
+fieldName.financialYear.dayMonth = the day and month when your current financial years ends
 
 # FINANCIAL YEAR-END DATES
 ##############################
