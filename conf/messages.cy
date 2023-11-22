@@ -953,7 +953,7 @@ error.legalOrPlanningRestrictionsDetails.maxLength = The description of the othe
 aboutYourTradingHistory.heading = Occupation and accounting information
 firstOccupy.heading = When did you first occupy the property?
 
-fieldName.firstOccupy = the date when you you first occupied the property
+fieldName.firstOccupy = the date when you first occupied the property
 fieldName.firstOccupy.monthYear = the month and year when you first occupied the property
 
 # FINANCIAL YEAR-END
