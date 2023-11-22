@@ -28,7 +28,6 @@ object OccupationalInformationForm {
     single(
       "firstOccupy" -> monthYearMapping(
         "firstOccupy",
-        Some(".monthYear"),
         allowPastDates = true,
         allowFutureDates = false
       )

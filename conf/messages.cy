@@ -953,8 +953,7 @@ error.legalOrPlanningRestrictionsDetails.maxLength = The description of the othe
 aboutYourTradingHistory.heading = Occupation and accounting information
 firstOccupy.heading = When did you first occupy the property?
 
-fieldName.firstOccupy = the date when you first occupied the property
-fieldName.firstOccupy.monthYear = the month and year when you first occupied the property
+fieldName.firstOccupy = the {0} when you first occupied the property
 
 # FINANCIAL YEAR-END
 ##############################
@@ -963,8 +962,7 @@ label.financialYear = When does your current financial year end?
 financialYearEnd.yearEndChanged.legend = If your financial year end has changed
 financialYearEnd.yearEndChanged.hint = Use the checkbox if your financial year end has changed in the last 3 years. You will be taken to a separate page to declare the former year-end dates.
 financialYearEnd.yearEndChanged = My financial year end has changed in the last three years.
-fieldName.financialYear = the date when your current financial years ends
-fieldName.financialYear.dayMonth = the day and month when your current financial years ends
+fieldName.financialYear = the {0} when your current financial year ends
 
 # FINANCIAL YEAR-END DATES
 ##############################
@@ -1594,3 +1592,6 @@ error.dateParts.separator = and
 error.dateParts.day = day
 error.dateParts.month = month
 error.dateParts.year = year
+error.dateParts.date = date
+error.dateParts.dayMonth = day and month
+error.dateParts.monthYear = month and year

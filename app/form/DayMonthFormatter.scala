@@ -33,7 +33,6 @@ import scala.util.Try
   */
 class DayMonthFormatter(
   fieldNameKey: String,
-  dayMonthSfx: Option[String] = None,
   allow29February: Boolean
 )(implicit messages: Messages)
     extends Formatter[DayMonthsDuration] {
@@ -43,12 +42,12 @@ class DayMonthFormatter(
 
   override def bind(key: String, data: Map[String, String]): Either[Seq[FormError], DayMonthsDuration] = {
 
-    val fieldName        = messages(s"fieldName.$fieldNameKey")
+    val dateText = messages("error.dateParts.date")
+    val dMText   = messages("error.dateParts.dayMonth")
 
-    val customDayMonth        = dayMonthSfx match {
-      case Some(sfx) => messages(s"fieldName.$fieldNameKey$sfx")
-      case None      => messages(s"fieldName.$fieldNameKey")
-    }
+    val fieldName         = messages(s"fieldName.$fieldNameKey", dateText)
+    val dayMonthFieldName = messages(s"fieldName.$fieldNameKey", dMText)
+
     val fieldCapitalized = fieldName.capitalize
     val dayText          = messages("error.dateParts.day")
     val monthText        = messages("error.dateParts.month")
@@ -61,7 +60,7 @@ class DayMonthFormatter(
         "month" -> optional(text)
       )
     ).bind(data).flatMap {
-      case (None, None)       => oneError(dayKey, "error.date.required", Seq(customDayMonth, dayMonthFields))
+      case (None, None)       => oneError(dayKey, "error.date.required", Seq(dayMonthFieldName, dayMonthFields))
       case (None, Some(_))    =>
         oneError(dayKey, "error.date.mustInclude", Seq(fieldCapitalized, dayText, Seq("day")))
       case (Some(_), None)    =>
