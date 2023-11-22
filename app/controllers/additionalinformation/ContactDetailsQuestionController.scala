@@ -50,7 +50,8 @@ class ContactDetailsQuestionController @Inject() (
               contactDetailsQuestionForm.fillAndValidate(altDetailsQuestion)
             case _                        => contactDetailsQuestionForm
           },
-          request.sessionData.toSummary
+          request.sessionData.toSummary,
+          navigator.from
         )
       )
     )

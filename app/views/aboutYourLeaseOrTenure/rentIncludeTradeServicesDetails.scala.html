@@ -47,6 +47,8 @@
 
  @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesDetailsController.submit()) {
 
+  <p class="govuk-heading-m">@messages("rentIncludeTradeServicesDetails.title")</p>
+
   @hmrcCurrencyInput(
    CurrencyInput(
     id = "sumIncludedInRent",
@@ -55,7 +57,7 @@
     classes = "govuk-input--width-10 total-annual-rent",
     autocomplete = Some("off"),
     attributes = Map(
-     "aria-label" -> messages("rentIncludeTradeServicesDetails.label")
+     "aria-label" -> messages("rentIncludeTradeServicesDetails.title")
     ),
     hint = Some(Hint(content = Text(messages("rentIncludeTradeServicesDetails.hint")))),
    )
@@ -69,9 +71,10 @@
     maxLength = 500,
     label = Label(
      content = Text(messages("label.describeServices")),
-     classes = "govuk-label--s"
+     classes = "govuk-label--m"
     ),
     errorMessage = theForm.errors.asTextErrorMessageForField("describeServices"),
+    hint = Some(Hint(content = Text(messages("rentIncludeTradeServicesDetails.hint2"))))
    ).withFormField(theForm("describeServices"))
   )
 </div>

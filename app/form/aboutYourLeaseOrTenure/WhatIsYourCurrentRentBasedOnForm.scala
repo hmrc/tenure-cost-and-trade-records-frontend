@@ -16,7 +16,6 @@
 
 package form.aboutYourLeaseOrTenure
 
-import form.Errors
 import form.MappingSupport.whatIsYourRentBasedOnType
 import models.submissions.aboutYourLeaseOrTenure.WhatIsYourCurrentRentBasedOnDetails
 import play.api.data.Form

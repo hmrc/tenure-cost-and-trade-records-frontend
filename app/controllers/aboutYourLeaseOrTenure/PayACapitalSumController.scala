@@ -26,7 +26,7 @@ import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.PayCapitalSumId
 import play.api.Logging
 import play.api.i18n.I18nSupport
-import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Request}
 import repositories.SessionRepo
 import views.html.aboutYourLeaseOrTenure.payACapitalSum
 
@@ -72,15 +72,19 @@ class PayACapitalSumController @Inject() (
     )
   }
 
-  private def getBackLink(answers: Session): String =
-    answers.aboutLeaseOrAgreementPartTwo.flatMap(
-      _.tenantAdditionsDisregardedDetails.map(_.tenantAdditionalDisregarded.name)
-    ) match {
-      case Some("yes") =>
-        controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedDetailsController.show().url
-      case Some("no")  => controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController.show().url
-      case _           =>
-        logger.warn(s"Back link for pay capital sum page reached with unknown tenants additions disregarded value")
-        controllers.routes.TaskListController.show().url
+  private def getBackLink(answers: Session)(implicit request: Request[AnyContent]): String =
+    navigator.from match {
+      case "TL" => controllers.routes.TaskListController.show().url + "#pay-a-capital-sum"
+      case _    =>
+        answers.aboutLeaseOrAgreementPartTwo.flatMap(
+          _.tenantAdditionsDisregardedDetails.map(_.tenantAdditionalDisregarded.name)
+        ) match {
+          case Some("yes") =>
+            controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedDetailsController.show().url
+          case Some("no")  => controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController.show().url
+          case _           =>
+            logger.warn(s"Back link for pay capital sum page reached with unknown tenants additions disregarded value")
+            controllers.routes.TaskListController.show().url
+        }
     }
 }

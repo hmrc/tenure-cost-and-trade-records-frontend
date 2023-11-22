@@ -281,7 +281,9 @@ error.tradingNamePayingRent.missing = Select yes if the organisation pays rent o
 # ARE YOU THIRD-PARTY WORKING ON BEHALF OF TRADING NAME
 #######################################################
 areYouThirdParty.heading = Are you a third party?
-areYouThirdParty.title = Are you a third-party, working on behalf of {0}?
+areYouThirdParty.title = Are you a third party working on behalf of {0}?
+hint.areYouThirdParty.yes = Choose ‘yes’ if you have been contracted by {0} to complete this declaration
+hint.areYouThirdParty.no = Choose ‘no’ if you are an owner, director, or direct employee of {0}, or you are completing this declaration on their behalf in an unofficial capacity
 error.areYouThirdParty.missing = Select yes if you are working on behalf of the organisation
 
 # VACANT PROPERTIES
@@ -761,10 +763,12 @@ error.rentIncludeTradeServices.missing = Select yes if the rent includes any tra
 
 # RENT INCLUDE TRADE SERVICES DETAILS
 ####################################
-rentIncludeTradeServicesDetails.heading = Where specifically itemised, what sum is included in the rent to cover the services, excluding VAT?
+rentIncludeTradeServicesDetails.heading = Trade services provided by the landlord
+rentIncludeTradeServicesDetails.title = What sum is included in the rent to cover the services, excluding VAT?
 rentIncludeTradeServicesDetails.label = What sum is included in the rent to cover these services?
-rentIncludeTradeServicesDetails.hint = Leave blank if these are not specifically itemised.
-label.describeServices = Describe services provided
+rentIncludeTradeServicesDetails.hint = Leave blank if the sum is not specifically itemised.
+rentIncludeTradeServicesDetails.hint2 = For example, maintenance of fires, annual gas checks and cellar services.
+label.describeServices = Describe the services provided
 rentIncludeTradeServicesDetailsTextBox.hint = For example, maintenance of fires, annual gas checks and cellar services.
 error.required.sumIncludedInRent = Please provide a value
 error.invalid_currency.sumIncludedInRent= Please provide a number
@@ -952,7 +956,8 @@ error.legalOrPlanningRestrictionsDetails.maxLength = The description of the othe
 ##############################
 aboutYourTradingHistory.heading = Occupation and accounting information
 firstOccupy.heading = When did you first occupy the property?
-fieldName.firstOccupy = the date the property was first occupied
+
+fieldName.firstOccupy = the {0} when you first occupied the property
 
 # FINANCIAL YEAR-END
 ##############################
@@ -961,7 +966,7 @@ label.financialYear = When does your current financial year end?
 financialYearEnd.yearEndChanged.legend = If your financial year end has changed
 financialYearEnd.yearEndChanged.hint = Use the checkbox if your financial year end has changed in the last 3 years. You will be taken to a separate page to declare the former year-end dates.
 financialYearEnd.yearEndChanged = My financial year end has changed in the last three years.
-fieldName.financialYear = the date the financial years ends
+fieldName.financialYear = the {0} when your current financial year ends
 
 # FINANCIAL YEAR-END DATES
 ##############################
@@ -1542,8 +1547,8 @@ error.date_must_be_in_past = Date must be in the past
 error.invalid_number = This must be a number
 error.date_before_1900 = Date must be on or after 1 January 1900
 error.date_before_1900.firstOccupationDate = Date must be on or after 1 January 1900
-error.duration.years = The year figure must be a number between 1 and 999
-error.duration.months = The month figure must be a number between 1 and 12
+error.duration.years = The year should be a 4-digit number
+error.duration.months = The month must be a number between 1 and 12
 error.duration.days = Days must be a number between 1 and 31
 error.months.required = Enter months amount
 error.years.required = Enter years amount
@@ -1579,10 +1584,10 @@ error.county.maxLength = County name must be 50 characters or fewer
 error.date.required = Enter {0}
 error.date.mustInclude = {0} must include {1}
 error.date.invalid = {0} must be a real date
-error.date.day.invalid = The day figure must be a number between 1 and 31
-error.date.month.invalid = The month figure must be a number between 1 and 12
-error.date.year.invalid = {0} must be on or after January 1900
-error.date.before1900 = {0} must be on or after 1 January 1900
+error.date.day.invalid = The day should be a number between 1 and 31
+error.date.month.invalid = The month must be a number between 1 and 12
+error.date.year.invalid = The year should be a 4-digit number
+error.date.before1900 = {0} must be after December 1899
 error.date.beforeToday = {0} cannot be in the past
 error.date.mustBeInPast = {0} must be today or in the past
 error.date.mustBeInFuture = {0} must be today or in the future
@@ -1591,3 +1596,6 @@ error.dateParts.separator = and
 error.dateParts.day = day
 error.dateParts.month = month
 error.dateParts.year = year
+error.dateParts.date = date
+error.dateParts.dayMonth = day and month
+error.dateParts.monthYear = month and year

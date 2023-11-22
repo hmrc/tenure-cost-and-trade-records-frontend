@@ -43,7 +43,7 @@ class FormSubmissionControllerSpec extends TestBaseSpec {
     errorHandler,
     inject[confirmation],
     inject[Audit],
-    WithSessionRefiner(inject[ErrorHandler], sessionRepo),
+    WithSessionRefiner(sessionRepo),
     sessionRepo
   )
 

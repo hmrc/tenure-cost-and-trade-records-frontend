@@ -26,7 +26,7 @@ import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.LeaseOrAgreementDetailsPageId
 import play.api.Logging
 import play.api.i18n.I18nSupport
-import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Request}
 import repositories.SessionRepo
 import views.html.aboutYourLeaseOrTenure.leaseOrAgreementYears
 
@@ -94,15 +94,19 @@ class LeaseOrAgreementYearsController @Inject() (
     request.sessionData.aboutLeaseOrAgreementPartOne
       .flatMap(_.leaseOrAgreementYearsDetails)
 
-  private def getBackLink(answers: Session): String =
-    answers.aboutLeaseOrAgreementPartOne.flatMap(_.connectedToLandlord.map(_.name)) match {
-      case Some("yes") =>
-        controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordDetailsController.show().url
-      case Some("no")  =>
-        controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordController.show().url
-      case _           =>
-        logger.warn(s"Back link for lease or agreement page reached with unknown enforcement taken value")
-        controllers.aboutYourLeaseOrTenure.routes.AboutYourLandlordController.show().url
+  private def getBackLink(answers: Session)(implicit request: Request[AnyContent]): String =
+    navigator.from match {
+      case "TL" => controllers.routes.TaskListController.show().url + "#lease-or-agreement-details"
+      case _    =>
+        answers.aboutLeaseOrAgreementPartOne.flatMap(_.connectedToLandlord.map(_.name)) match {
+          case Some("yes") =>
+            controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordDetailsController.show().url
+          case Some("no")  =>
+            controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordController.show().url
+          case _           =>
+            logger.warn(s"Back link for lease or agreement page reached with unknown enforcement taken value")
+            controllers.aboutYourLeaseOrTenure.routes.AboutYourLandlordController.show().url
+        }
     }
 
 }

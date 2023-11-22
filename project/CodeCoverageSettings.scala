@@ -14,6 +14,7 @@ object CodeCoverageSettings {
     ".*Filters?",
     "MicroserviceAuditConnector",
     "Module",
+    "config.InternalAuthTokenInitialiserImpl",
     "GraphiteStartUp",
     """.*\.Reverse[^.]*;""",
     """views\.*""",

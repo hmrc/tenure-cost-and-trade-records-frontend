@@ -41,7 +41,13 @@ class DayMonthFormatter(
   private val validationYear = if (allow29February) 2020 else 2021
 
   override def bind(key: String, data: Map[String, String]): Either[Seq[FormError], DayMonthsDuration] = {
-    val fieldName        = messages(s"fieldName.$fieldNameKey")
+
+    val dateText = messages("error.dateParts.date")
+    val dMText   = messages("error.dateParts.dayMonth")
+
+    val fieldName         = messages(s"fieldName.$fieldNameKey", dateText)
+    val dayMonthFieldName = messages(s"fieldName.$fieldNameKey", dMText)
+
     val fieldCapitalized = fieldName.capitalize
     val dayText          = messages("error.dateParts.day")
     val monthText        = messages("error.dateParts.month")
@@ -54,7 +60,7 @@ class DayMonthFormatter(
         "month" -> optional(text)
       )
     ).bind(data).flatMap {
-      case (None, None)       => oneError(dayKey, "error.date.required", Seq(fieldName, dayMonthFields))
+      case (None, None)       => oneError(dayKey, "error.date.required", Seq(dayMonthFieldName, dayMonthFields))
       case (None, Some(_))    =>
         oneError(dayKey, "error.date.mustInclude", Seq(fieldCapitalized, dayText, Seq("day")))
       case (Some(_), None)    =>

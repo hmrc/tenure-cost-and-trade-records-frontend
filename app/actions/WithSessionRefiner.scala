@@ -16,10 +16,9 @@
 
 package actions
 
-import config.ErrorHandler
 import models.Session
 import play.api.libs.json.Reads
-import play.api.mvc.Results.NotFound
+import play.api.mvc.Results.TemporaryRedirect
 import play.api.mvc.{ActionRefiner, Request, Result}
 import repositories.SessionRepo
 import uk.gov.hmrc.http.HeaderCarrier
@@ -29,7 +28,6 @@ import javax.inject.{Inject, Named}
 import scala.concurrent.{ExecutionContext, Future}
 
 case class WithSessionRefiner @Inject() (
-  errorHandler: ErrorHandler,
   @Named("session") val sessionRepository: SessionRepo
 )(implicit override val executionContext: ExecutionContext)
     extends ActionRefiner[Request, SessionRequest] {
@@ -39,9 +37,8 @@ case class WithSessionRefiner @Inject() (
 
   override protected def refine[A](request: Request[A]): Future[Either[Result, SessionRequest[A]]] =
     sessionRepository.get(implicitly[Reads[Session]], hc(request)).map {
-      case Some(s) =>
-        Right(actions.SessionRequest(sessionData = s, request = request))
-      case None    => Left(NotFound(errorHandler.notFoundTemplate(request)))
+      case Some(s) => Right(actions.SessionRequest(sessionData = s, request = request))
+      case None    => Left(TemporaryRedirect(controllers.routes.LoginController.show().url))
     }
 
 }

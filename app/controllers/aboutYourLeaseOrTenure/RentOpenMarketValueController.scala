@@ -26,7 +26,7 @@ import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.RentOpenMarketPageId
 import play.api.Logging
 import play.api.i18n.I18nSupport
-import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Request}
 import repositories.SessionRepo
 import views.html.aboutYourLeaseOrTenure.rentOpenMarketValue
 
@@ -75,15 +75,20 @@ class RentOpenMarketValueController @Inject() (
     )
   }
 
-  private def getBackLink(answers: Session): String =
-    answers.aboutLeaseOrAgreementPartOne.flatMap(
-      _.rentIncludeFixturesAndFittingsDetails.map(_.rentIncludeFixturesAndFittingsDetails.name)
-    ) match {
-      case Some("yes") =>
-        controllers.aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsDetailsController.show().url
-      case Some("no")  => controllers.aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsController.show().url
-      case _           =>
-        logger.warn(s"Back link for fixture and fittings page reached with unknown trade services value")
-        controllers.routes.TaskListController.show().url
+  private def getBackLink(answers: Session)(implicit request: Request[AnyContent]): String =
+    navigator.from match {
+      case "TL" => controllers.routes.TaskListController.show().url + "#rent-open-market-value"
+      case _    =>
+        answers.aboutLeaseOrAgreementPartOne.flatMap(
+          _.rentIncludeFixturesAndFittingsDetails.map(_.rentIncludeFixturesAndFittingsDetails.name)
+        ) match {
+          case Some("yes") =>
+            controllers.aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsDetailsController.show().url
+          case Some("no")  =>
+            controllers.aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsController.show().url
+          case _           =>
+            logger.warn(s"Back link for fixture and fittings page reached with unknown trade services value")
+            controllers.routes.TaskListController.show().url
+        }
     }
 }
