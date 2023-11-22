@@ -761,10 +761,12 @@ error.rentIncludeTradeServices.missing = Select yes if the rent includes any tra
 
 # RENT INCLUDE TRADE SERVICES DETAILS
 ####################################
-rentIncludeTradeServicesDetails.heading = Where specifically itemised, what sum is included in the rent to cover the services, excluding VAT?
+rentIncludeTradeServicesDetails.title = Trade services provided by landlord
+rentIncludeTradeServicesDetails.heading = What sum is included in the rent to cover the services, excluding VAT?
 rentIncludeTradeServicesDetails.label = What sum is included in the rent to cover these services?
 rentIncludeTradeServicesDetails.hint = Leave blank if these are not specifically itemised.
-label.describeServices = Describe services provided
+rentIncludeTradeServicesDetails.hint2 = For example, maintenance of fires, annual gas checks and cellar services.
+label.describeServices = Describe the services provided
 rentIncludeTradeServicesDetailsTextBox.hint = For example, maintenance of fires, annual gas checks and cellar services.
 error.required.sumIncludedInRent = Please provide a value
 error.invalid_currency.sumIncludedInRent= Please provide a number
