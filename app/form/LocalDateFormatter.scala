@@ -33,7 +33,8 @@ import scala.util.Try
 class LocalDateFormatter(
   fieldNameKey: String,
   allowPastDates: Boolean,
-  allowFutureDates: Boolean
+  allowFutureDates: Boolean,
+  years: Option[Seq[Int]] = None
 )(implicit messages: Messages)
     extends Formatter[LocalDate] {
 
@@ -46,7 +47,15 @@ class LocalDateFormatter(
   private val nineteenHundred = LocalDate.of(1900, 1, 1)
 
   override def bind(key: String, data: Map[String, String]): Either[Seq[FormError], LocalDate] = {
-    val fieldName            = messages(s"fieldName.$fieldNameKey")
+
+    val keyParts = key.split("\\[|\\]")
+    val fieldIndex = keyParts.lift(1).flatMap(s => Try(s.toInt).toOption).getOrElse(0)
+    val yearForField = years.flatMap(_.lift(fieldIndex))
+
+    val fieldName = yearForField match {
+      case Some(year) => messages(s"fieldName.$fieldNameKey", year.toString)
+      case None => messages(s"fieldName.$fieldNameKey")
+    }
     val fieldNameCapitalized = fieldName.capitalize
     val dayKey               = s"$key.day"
 
