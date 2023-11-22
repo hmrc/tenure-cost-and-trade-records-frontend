@@ -85,14 +85,10 @@ class PropertyUseLeasebackArrangementController @Inject() (
     )
   }
 
-  private def getBackLink(answers: Session)(implicit request: Request[AnyContent]): String = {
-    println("@" * 80)
-    println(navigator.from)
-
+  private def getBackLink(answers: Session)(implicit request: Request[AnyContent]): String =
     navigator.from match {
       case "TL" => controllers.routes.TaskListController.show().url + "#leaseback-arrangement"
       case _    => controllers.aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.show.url
     }
-  }
 
 }
