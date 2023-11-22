@@ -28,7 +28,7 @@ object DateMappings {
     fieldNameKey: String,
     allowPastDates: Boolean = false,
     allowFutureDates: Boolean = false,
-    years:Option[Seq[Int]] = None
+    years: Option[Seq[Int]] = None
   )(implicit messages: Messages): Mapping[LocalDate] =
     of(new LocalDateFormatter(fieldNameKey, allowPastDates, allowFutureDates, years))
 

@@ -25,8 +25,7 @@ import java.time.LocalDate
 
 object FinancialYearEndDatesForm {
 
-
-  private def dateMapping(years:Option[Seq[Int]] = None)(implicit messages: Messages): Mapping[LocalDate] =
+  private def dateMapping(years: Option[Seq[Int]] = None)(implicit messages: Messages): Mapping[LocalDate] =
     single(
       "date" -> requiredDateMapping(
         "financialYearEnd",
@@ -36,9 +35,10 @@ object FinancialYearEndDatesForm {
       )
     )
 
-  def financialYearEndDatesForm(years:Option[Seq[Int]] = None)(implicit messages: Messages): Form[Seq[LocalDate]] = Form(
-    single(
-      "financial-year-end" -> seq(dateMapping(years))
+  def financialYearEndDatesForm(years: Option[Seq[Int]] = None)(implicit messages: Messages): Form[Seq[LocalDate]] =
+    Form(
+      single(
+        "financial-year-end" -> seq(dateMapping(years))
+      )
     )
-  )
 }
