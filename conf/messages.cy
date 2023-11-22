@@ -1092,7 +1092,7 @@ error.costOfSales.maxColumns = Number of columns must be between 1 and 3
 ##########
 turnover.heading = Turnover
 turnover.6015.heading = Total Turnover
-turnover.p1 = Provide us with details of your turnover. If the accounts do not relate to a whole year, or if you are not trading continuously, state the relevant number of weeks.
+turnover.p1 = Provide us with details of your turnover. If the accounts do not relate to a whole year, or if you were not trading continuously, state the relevant number of weeks.
 turnover.6015.p1 = You must provide details of your total turnover. Include all forms of income from accommodation, food and drink sales, and income from franchises such as coffee kiosks. You must also include income from any leisure activities, and any rental income form concessions or lettings.
 turnover.6015.p2 = If the accounts do no relate to a whole year, or if you were not trading continuously, state the relevant number of weeks.
 turnover.6015.p3 = If your accounts are held in a spreadsheet that mirrors this form, you can copy and paste them into this page. Copy the relevant figures in your spreadsheet and paste them into the first corresponding field on this page.
