@@ -25,7 +25,7 @@ import util.DateUtil.nowInUK
 
 import java.time.LocalDate
 import scala.collection.immutable.Seq
-import scala.util.Try
+import scala.util.{Failure, Success, Try}
 
 /**
   * Handles binding [mm] [yyyy] fields to MonthsYearDuration and unbinding MonthsYearDuration to [mm] [yyyy] fields.
@@ -47,7 +47,13 @@ class MonthYearFormatter(
   private val monthYearFields = Seq("month", "year")
 
   override def bind(key: String, data: Map[String, String]): Either[Seq[FormError], MonthsYearDuration] = {
-    val fieldName        = messages(s"fieldName.$fieldNameKey")
+
+    val dateText = messages("error.dateParts.date")
+    val mYText   = messages("error.dateParts.monthYear")
+
+    val fieldName          = messages(s"fieldName.$fieldNameKey", dateText)
+    val monthYearFieldName = messages(s"fieldName.$fieldNameKey", mYText)
+
     val fieldCapitalized = fieldName.capitalize
     val monthText        = messages("error.dateParts.month")
     val yearText         = messages("error.dateParts.year")
@@ -60,7 +66,7 @@ class MonthYearFormatter(
         "year"  -> optional(text)
       )
     ).bind(data).flatMap {
-      case (None, None)       => oneError(monthKey, "error.date.required", Seq(fieldName, monthYearFields))
+      case (None, None)       => oneError(monthKey, "error.date.required", Seq(monthYearFieldName, monthYearFields))
       case (None, Some(_))    =>
         oneError(monthKey, "error.date.mustInclude", Seq(fieldCapitalized, monthText, Seq("month")))
       case (Some(_), None)    =>
@@ -68,15 +74,15 @@ class MonthYearFormatter(
       case (Some(m), Some(y)) =>
         val month = parseNumber(m, 1 to 12)
         val year  = parseNumber(y, 1900 to 9999)
-        if (Seq(month, year).forall(_ > 0)) {
+        if (month > 0 && year >= 0) {
           validateDate(month, year).left.map { errorKey =>
             Seq(FormError(monthKey, errorKey, Seq(fieldCapitalized, monthYearFields)))
           }
         } else {
           Left(
             Seq(
-              Option.when(month == 0)(FormError(monthKey, "error.date.month.invalid")),
-              Option.when(year == 0)(FormError(yearKey, "error.date.year.invalid", Seq(fieldCapitalized)))
+              Option.when(month == 0 || month == -1)(FormError(monthKey, "error.date.month.invalid")),
+              Option.when(year == 0 || year == -1)(FormError(yearKey, "error.date.year.invalid"))
             ).flatten
           )
         }
@@ -90,25 +96,34 @@ class MonthYearFormatter(
     )
 
   private def parseNumber(str: String, allowedRange: Range): Int =
-    Try(str.trim.toInt).filter(allowedRange.contains).getOrElse(0)
+    Try(str.trim.toInt) match {
+      case Success(number) if allowedRange.contains(number) => number
+      case Success(_)                                       => 0
+      case Failure(_)                                       => -1
+    }
 
   private def oneError(key: String, message: String, args: Seq[Any]): Left[Seq[FormError], MonthsYearDuration] =
     Left(Seq(FormError(key, message, args)))
 
   private def validateDate(month: Int, year: Int): Either[String, MonthsYearDuration] =
-    Try(LocalDate.of(year, month, 1)).toEither.left
-      .map(_ => "error.date.invalid")
-      .flatMap { date =>
-        val today        = nowInUK.toLocalDate
-        val startOfMonth = LocalDate.of(today.getYear, today.getMonthValue, 1)
+    if (year == -1) {
+      Left("error.date.year.invalid")
+    } else if (year < 1900) {
+      Left("error.date.before1900")
+    } else {
+      Try(LocalDate.of(year, month, 1)).toEither.left
+        .map(_ => "error.date.invalid")
+        .flatMap { date =>
+          val today        = nowInUK.toLocalDate
+          val startOfMonth = LocalDate.of(today.getYear, today.getMonthValue, 1)
 
-        if (!allowPastDates && date.isBefore(startOfMonth)) {
-          Left("error.date.beforeToday")
-        } else if (!allowFutureDates && date.isAfter(startOfMonth)) {
-          Left("error.date.mustBeInPast")
-        } else {
-          Right(MonthsYearDuration(date.getMonthValue, date.getYear))
+          if (!allowPastDates && date.isBefore(startOfMonth)) {
+            Left("error.date.beforeToday")
+          } else if (!allowFutureDates && date.isAfter(startOfMonth)) {
+            Left("error.date.mustBeInPast")
+          } else {
+            Right(MonthsYearDuration(date.getMonthValue, date.getYear))
+          }
         }
-      }
-
+    }
 }
