@@ -590,6 +590,8 @@ tiedForGoods.para1 = Many properties are required to sell certain goods, such as
 tiedForGoods.para2 = Being required to sell tied goods is a common arrangement for public houses leased from breweries.
 tiedForGoods.label = Are you required to sell certain goods as part of your lease or tenancy agreement?
 error.tiedForGoods.missing = Select yes if you are tied for any goods
+error.tiedForGoodsDetailsText.required = Describe your partial tie
+error.tiedForGoodsDetailsText.maxLength = Your description of your partial tie should be 100 characters or fewer
 
 # TIED FOR GOODS DETAILS
 ########################
@@ -997,7 +999,7 @@ label.currentLeaseOrAgreementBegin = If the current lease was originally assigne
 label.grantedFor = How long was it granted for?
 hint.currentLeaseOrAgreementBegin = For example, 18 months, 1.5 years, or 1 year and 6 months.
 error.grantedFor.required = Enter the length of the current lease
-fieldName.leaseBegin = the date the current lease began
+fieldName.leaseBegin = the date when the current lease began
 label.currentLeaseOrAgreementBegin.help = For example, 9 2017.
 
 # INTERVALS OF RENT REVIEW
@@ -1090,7 +1092,7 @@ error.costOfSales.maxColumns = Number of columns must be between 1 and 3
 ##########
 turnover.heading = Turnover
 turnover.6015.heading = Total Turnover
-turnover.p1 = Provide us with details of your turnover. If the accounts do not relate to a whole year, or if you are not trading continuously, state the relevant number of weeks.
+turnover.p1 = Provide us with details of your turnover. If the accounts do not relate to a whole year, or if you were not trading continuously, state the relevant number of weeks.
 turnover.6015.p1 = You must provide details of your total turnover. Include all forms of income from accommodation, food and drink sales, and income from franchises such as coffee kiosks. You must also include income from any leisure activities, and any rental income form concessions or lettings.
 turnover.6015.p2 = If the accounts do no relate to a whole year, or if you were not trading continuously, state the relevant number of weeks.
 turnover.6015.p3 = If your accounts are held in a spreadsheet that mirrors this form, you can copy and paste them into this page. Copy the relevant figures in your spreadsheet and paste them into the first corresponding field on this page.

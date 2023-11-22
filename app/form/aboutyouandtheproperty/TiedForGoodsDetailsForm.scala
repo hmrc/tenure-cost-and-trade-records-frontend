@@ -20,7 +20,7 @@ import form.MappingSupport.tiedForGoodsDetailsType
 import models.submissions.aboutyouandtheproperty.{TiedForGoodsInformationDetails, TiedForGoodsInformationDetailsPartialTie}
 import play.api.data.Form
 import play.api.data.Forms.{default, mapping, text}
-import play.api.data.validation.Constraints.nonEmpty
+import play.api.data.validation.Constraints.{maxLength, nonEmpty}
 import uk.gov.voa.play.form.ConditionalMappings.mandatoryIfEqual
 
 object TiedForGoodsDetailsForm {
@@ -32,7 +32,8 @@ object TiedForGoodsDetailsForm {
         "tiedForGoodsDetails",
         TiedForGoodsInformationDetailsPartialTie.name,
         default(text, "").verifying(
-          nonEmpty(errorMessage = "error.tiedForGoodsDetails.required")
+          nonEmpty(errorMessage = "error.tiedForGoodsDetailsText.required"),
+          maxLength(100, "error.tiedForGoodsDetailsText.maxLength")
         )
       )
     )(TiedForGoodsInformationDetails.apply)(TiedForGoodsInformationDetails.unapply)
