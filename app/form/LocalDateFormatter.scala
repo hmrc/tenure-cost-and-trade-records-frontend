@@ -48,8 +48,9 @@ class LocalDateFormatter(
 
   override def bind(key: String, data: Map[String, String]): Either[Seq[FormError], LocalDate] = {
 
-    val keyParts = key.split("\\[|\\]")
-    val fieldIndex = keyParts.lift(1).flatMap(s => Try(s.toInt).toOption).getOrElse(0)
+    val indexFromKey = key.split("\\[|\\]")
+    val fieldIndex   = indexFromKey.lift(1).flatMap(s => Try(s.toInt).toOption).getOrElse(0)
+
     val yearForField = years.flatMap(_.lift(fieldIndex))
 
     val fieldName = yearForField match {
