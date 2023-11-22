@@ -26,7 +26,7 @@ object AccountingInformationForm {
 
   def accountingInformationForm(implicit messages: Messages): Form[(DayMonthsDuration, Boolean)] = Form(
     tuple(
-      "financialYear"  -> dayMonthMapping("financialYear", ".dayMonth",  allow29February = false),
+      "financialYear"  -> dayMonthMapping("financialYear", Some(".dayMonth"), allow29February = false),
       "yearEndChanged" -> optional(text)
         .transform[Boolean](_.contains("true"), b => Some(b.toString))
     )

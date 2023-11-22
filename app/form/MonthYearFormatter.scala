@@ -34,7 +34,7 @@ import scala.util.{Failure, Success, Try}
   */
 class MonthYearFormatter(
   fieldNameKey: String,
-  monthYearSfx: String,
+  monthYearSfx: Option[String] = None,
   allowPastDates: Boolean,
   allowFutureDates: Boolean
 )(implicit messages: Messages)
@@ -48,8 +48,13 @@ class MonthYearFormatter(
   private val monthYearFields = Seq("month", "year")
 
   override def bind(key: String, data: Map[String, String]): Either[Seq[FormError], MonthsYearDuration] = {
+
     val fieldName        = messages(s"fieldName.$fieldNameKey")
-    val customMonthYear  = messages(s"fieldName.$fieldNameKey$monthYearSfx")
+
+    val customFieldName        = monthYearSfx match {
+      case Some(sfx) => messages(s"fieldName.$fieldNameKey$sfx")
+      case None      => messages(s"fieldName.$fieldNameKey")
+    }
     val fieldCapitalized = fieldName.capitalize
     val monthText        = messages("error.dateParts.month")
     val yearText         = messages("error.dateParts.year")
@@ -62,7 +67,7 @@ class MonthYearFormatter(
         "year"  -> optional(text)
       )
     ).bind(data).flatMap {
-      case (None, None)       => oneError(monthKey, "error.date.required", Seq(customMonthYear, monthYearFields))
+      case (None, None)       => oneError(monthKey, "error.date.required", Seq(customFieldName, monthYearFields))
       case (None, Some(_))    =>
         oneError(monthKey, "error.date.mustInclude", Seq(fieldCapitalized, monthText, Seq("month")))
       case (Some(_), None)    =>
@@ -78,7 +83,7 @@ class MonthYearFormatter(
           Left(
             Seq(
               Option.when(month == 0 || month == -1)(FormError(monthKey, "error.date.month.invalid")),
-              Option.when(year  == 0 || year  == -1)(FormError(yearKey,   "error.date.year.invalid"))
+              Option.when(year == 0 || year == -1)(FormError(yearKey, "error.date.year.invalid"))
             ).flatten
           )
         }

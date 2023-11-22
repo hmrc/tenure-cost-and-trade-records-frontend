@@ -34,7 +34,7 @@ object DateMappings {
 
   def monthYearMapping(
     fieldNameKey: String,
-    monthYearSfx: String,
+    monthYearSfx: Option[String] = None,
     allowPastDates: Boolean = false,
     allowFutureDates: Boolean = false
   )(implicit messages: Messages): Mapping[MonthsYearDuration] =
@@ -42,7 +42,7 @@ object DateMappings {
 
   def dayMonthMapping(
     fieldNameKey: String,
-    dayMonthSfx: String,
+    dayMonthSfx: Option[String] = None,
     allow29February: Boolean = false
   )(implicit messages: Messages): Mapping[DayMonthsDuration] =
     of(new DayMonthFormatter(fieldNameKey, dayMonthSfx, allow29February))

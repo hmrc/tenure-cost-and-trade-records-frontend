@@ -26,7 +26,12 @@ object OccupationalInformationForm {
 
   def occupationalInformationForm(implicit messages: Messages): Form[MonthsYearDuration] = Form(
     single(
-      "firstOccupy" -> monthYearMapping("firstOccupy", ".monthYear", allowPastDates = true, allowFutureDates = false)
+      "firstOccupy" -> monthYearMapping(
+        "firstOccupy",
+        Some(".monthYear"),
+        allowPastDates = true,
+        allowFutureDates = false
+      )
     )
   )
 

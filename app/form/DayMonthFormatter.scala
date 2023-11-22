@@ -33,7 +33,7 @@ import scala.util.Try
   */
 class DayMonthFormatter(
   fieldNameKey: String,
-  dayMonthSfx: String,
+  dayMonthSfx: Option[String] = None,
   allow29February: Boolean
 )(implicit messages: Messages)
     extends Formatter[DayMonthsDuration] {
@@ -42,8 +42,13 @@ class DayMonthFormatter(
   private val validationYear = if (allow29February) 2020 else 2021
 
   override def bind(key: String, data: Map[String, String]): Either[Seq[FormError], DayMonthsDuration] = {
+
     val fieldName        = messages(s"fieldName.$fieldNameKey")
-    val customDayMonth   = messages(s"fieldName.$fieldNameKey$dayMonthSfx")
+
+    val customDayMonth        = dayMonthSfx match {
+      case Some(sfx) => messages(s"fieldName.$fieldNameKey$sfx")
+      case None      => messages(s"fieldName.$fieldNameKey")
+    }
     val fieldCapitalized = fieldName.capitalize
     val dayText          = messages("error.dateParts.day")
     val monthText        = messages("error.dateParts.month")
