@@ -48,7 +48,20 @@
  theForm = theForm
 ) {
 
+ <p class="govuk-body">@{messages("tenancyLeaseAgreementExpire.p1")}</p>
+
+ <p class="govuk-body">@{messages("tenancyLeaseAgreementExpire.p2")}</p>
+
+ <p class="govuk-body">@{messages("tenancyLeaseAgreementExpire.p3")}</p>
+
+ <ul class="govuk-list govuk-list--bullet">
+  <li>@{messages("tenancyLeaseAgreementExpire.item1")}</li>
+  <li>@{messages("tenancyLeaseAgreementExpire.item2")}</li>
+ </ul>
+
  @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.TenancyLeaseAgreementExpireController.submit()) {
+
+  <h2 class="govuk-heading-m">@messages("tenancyLeaseAgreementExpire.title")</h2>
 
   @includes.dateFields(form = theForm, field = "tenancyLeaseAgreementExpire", govukDate = govukDateInput, showDays = true, showFieldSet = false)
 

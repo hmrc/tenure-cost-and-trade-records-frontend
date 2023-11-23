@@ -1275,7 +1275,13 @@ label.alternativeContactDetails = Correspondence address
 
 # TENANCY LEASE AGREEMENT EXPIRE (FORM 6011)
 ###########################################
-tenancyLeaseAgreementExpire.heading = When does your tenancy, lease or agreement expire, or if earlier, what is the date of your next review (excluding indexation)?
+tenancyLeaseAgreementExpire.heading = Lease review or expiry
+tenancyLeaseAgreementExpire.title = When will the current tenancy, lease or agreement be reviewed, or expire?
+tenancyLeaseAgreementExpire.p1 = You must declare the date of the next review of your tenancy, lease, or agreement.
+tenancyLeaseAgreementExpire.p2 = Alternatively, you should declare the expiry date of your tenancy, lease, or agreement if it will not be reviewed before it ends.
+tenancyLeaseAgreementExpire.p3 = You do not need to tell us about any changes in the rent which are part of your current agreement. These could include, but are not limited to:
+tenancyLeaseAgreementExpire.item1 = changes linked to your turnover
+tenancyLeaseAgreementExpire.item2 = fluctuations in any index to which your rent may be linked, for example the retail price index (RPI)
 fieldName.tenancyLeaseAgreementExpire = the date of the tenancy, lease or agreement
 
 # CONNECTED TO LANDLORD
