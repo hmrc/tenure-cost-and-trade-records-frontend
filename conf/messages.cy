@@ -264,9 +264,9 @@ error.tradingNameFromProperty.maxLength = The trading name must be 50 characters
 # DOES TRADING NAME OWN THE PROPERTY
 #####################################
 tradingNameOwnTheProperty.heading = Do you own the property?
-hint.tradingNameOwnTheProperty = Only select ‘yes‘ if you own the premises or land used by the business.
+hint.tradingNameOwnTheProperty = Only select ‘yes’ if you own the premises or land used by the business.
 tradingNameOwnTheProperty.title = Does {0} own the property?
-hint.tradingNameOwnTheProperty = Only select ‘yes‘ if you own the premises or land used by the business
+hint.tradingNameOwnTheProperty = Only select ‘yes’ if you own the premises or land used by the business.
 error.tradingNameOwnTheProperty.missing = Select yes if the organisation owns the property
 
 # DOES TRADING NAME PAY RENT ON THE PROPERTY
@@ -274,8 +274,8 @@ error.tradingNameOwnTheProperty.missing = Select yes if the organisation owns th
 tradingNamePayingRent.heading = Paying rent
 tradingNamePayingRent.title = Does {0} pay rent on the property?
 tradingNamePayingRent.p1 = You must declare whether you pay rent under the terms of your lease or agreement.
-tradingNamePayingRent.p2 = You should select ‘yes‘ even if you pay rent under an informal agreement, or have a temporary rent-free agreement.
-tradingNamePayingRent.p3 = Select ‘no‘ if the owner of the property allows you to occupy it on a permanent rent-free agreement.
+tradingNamePayingRent.p2 = You should select ‘yes’ even if you pay rent under an informal agreement, or have a temporary rent-free agreement.
+tradingNamePayingRent.p3 = Select ‘no’ if the owner of the property allows you to occupy it on a permanent rent-free agreement.
 error.tradingNamePayingRent.missing = Select yes if the organisation pays rent on the property
 
 # ARE YOU THIRD-PARTY WORKING ON BEHALF OF TRADING NAME
@@ -481,7 +481,7 @@ error.propertyCurrentlyUsed.maxLength = Your description must be 200 characters 
 # WEBSITE FOR PROPERTY
 ######################
 buildingOperatingHaveAWebsite.heading = Does the business operating from the property have a website?
-websiteAddressForProperty.textbox = What is the business website address?
+websiteAddressForProperty.textbox = Enter website address
 error.websiteAddressForProperty.required = Enter your web address
 error.webAddressFormat = Enter an address in the correct format, like www.example.com
 error.buildingOperatingHaveAWebsite.required = Select yes if the business has a website
@@ -502,7 +502,7 @@ help.premisesLicenseGrantedInformation.p1 = Let us know if you have a premises l
 help.premisesLicenseGrantedInformation.heading2 = Describing restrictions on the use of the property
 help.premisesLicenseGrantedInformation.p2 = You’re only required to write a short description of the conditions we’re concerned with. Examples of acceptable descriptions include:
 help.premisesLicenseGrantedInformation.list.p1 = No drinks allowed on the terrace after 10pm
-help.premisesLicenseGrantedInformation.list.p2 = Only 200 people allowed in the function room at any time
+help.premisesLicenseGrantedInformation.list.p2 = A maximum 200 people allowed in the function room at any time
 help.premisesLicenseGrantedInformation.list.p3 = No entry or re-entry allowed after 11.30pm on Fridays or Saturdays
 
 # LICENSABLE ACTIVITIES
@@ -791,7 +791,7 @@ rentIncludesVat.error = Select yes if the rent includes VAT
 
 # RENT INCLUDE FIXTURES AND FITTINGS DETAILS
 ###########################################
-rentIncludeFixturesAndFittingsDetails.heading = Where specifically itemised, what sum is included in the rent to cover the equipment provided by the landlord, excluding VAT?
+rentIncludeFixturesAndFittingsDetails.heading = What sum is included in the rent to cover the equipment provided by the landlord, excluding VAT?
 rentIncludeFixturesAndFittingsDetails.hint = Leave blank if this is not specifically itemised.
 error.required.rentIncludeFixturesAndFittingsDetails = Please provide a value
 error.invalid_currency.rentIncludeFixturesAndFittingsDetails = Please provide a number
@@ -837,7 +837,8 @@ error.methodToFixCurrentRents.required = Select how the current rent was agreed
 
 # HOW IS CURRENT RENT FIXED
 ##########################
-howIsCurrentRentFixed.heading = How was the current rent fixed?
+howIsCurrentRentFixed.heading = Setting the current rent
+howIsCurrentRentFixed.label = How is the current rent fixed?
 label.newLeaseAgreement = At the beginning of a new lease or agreement
 label.interimRent = As an interim rent under the Landlord and Tenant Act
 label.rentReview = At a rent review
@@ -845,9 +846,14 @@ label.renewalLeaseTenancy = At a lease renewal
 label.saleLeaseback = As part of a sale and leaseback transaction
 label.rentActuallyAgreed = When was the rent actually agreed or set?
 label.rentActuallyAgreed.help = For example, 27 9 2017.
-help.rentActuallyAgreed.title = If you’re not sure when the rent was agreed
-help.rentActuallyAgreed.p1 = The date when the rent was agreed or set is normally the date when any of the listed options happened. It may not necessarily be the date of occupation, or the date the rent was first paid.
-help.rentActuallyAgreed.p2 = If you’re still unsure, refer to your lease or agreement.
+help.rentActuallyAgreed.title = If you’re not sure which date to use
+help.rentActuallyAgreed.p1 = The date when the rent was agreed or set is normally the date when:
+help.rentActuallyAgreed.list.p1 = a new lease or agreement is signed
+help.rentActuallyAgreed.list.p2 = an interim rent is established
+help.rentActuallyAgreed.list.p3 = a new rent is established following a rent review
+help.rentActuallyAgreed.list.p4 = a lease is renewed
+help.rentActuallyAgreed.list.p5 = a sale and leaseback is agreed
+help.rentActuallyAgreed.p2 = It may not necessarily be the date of occupation or the date a rent is first paid.
 fieldName.rentActuallyAgreed = the date when the current rent was agreed or set
 error.howIsCurrentRentFixed.required = Select how the current rent was fixed
 
@@ -1005,8 +1011,9 @@ label.currentLeaseOrAgreementBegin.help = For example, 9 2017.
 # INTERVALS OF RENT REVIEW
 ##########################
 intervalsOfRentReview.heading = Rent reviews
-intervalsOfRentReview.p1 = If your lease or agreement states your rent will be reviewed at any point, you must provide details. Tell us the intervals or frequency of the reviews, for example every 18 months or every 2 years.
-intervalsOfRentReview.p2 = Do not include any changes to your rent linked to your turnover, or indices such as the rental price index (RPI).
+intervalsOfRentReview.p1 = Provide details if your lease or agreement states your rent will be reviewed at any point.
+intervalsOfRentReview.p2 = Changes to your rent linked to your turnover, or indices such as the RPI, are not classed as rent reviews.
+intervalsOfRentReview.p2 = If your lease or agreement does not include any rent reviews, leave this page blank and select ‘save and continue’
 intervalsOfRentReview.label = How often is the rent reviewed under the terms of the lease or agreement?
 hint.intervalsOfRentReview = Leave blank if the lease does not include any rent reviews.
 label.nextReview = When is the next rent review due?
@@ -1037,7 +1044,7 @@ label.fixed = A fixed amount
 label.percentageTurnover = A percentage of turnover of the occupier’s business
 label.indexed = Indexed to the retail price index (RPI) or another index
 label.stepped = Stepped rent arrangement
-label.other = Other (for example, combination of the above)
+label.other = The rent is based on something else
 label.currentRentBasedOn.percentageOpenMarket = A percentage of open market value
 label.currentRentBasedOn.fixed = A fixed amount
 label.currentRentBasedOn.percentageTurnover = A percentage of turnover of the occupier’s business
@@ -1100,8 +1107,8 @@ turnover.p2 = If your accounts are held in a spreadsheet that mirrors this form,
 turnover.inset = All fields on this page are mandatory. If none of the categories are applicable, enter the number 0.
 turnover.financialYearEnd = Financial year end
 turnover.tradingPeriod = Trading period
-turnover.alcoholicDrinks = Alcoholic drinks (excluding VAT)
-turnover.alcoholicDrinksCaption = Including soft drinks, crisps, nuts.
+turnover.alcoholicDrinks = Drinks (excluding VAT)
+turnover.alcoholicDrinksCaption = Including alcoholic and soft drinks, crisps, nuts.
 turnover.food = Food (excluding VAT)
 turnover.foodCaption = Excluding alcoholic drinks.
 turnover.otherReceipts = Other receipts (excluding VAT)
