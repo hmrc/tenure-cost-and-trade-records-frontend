@@ -1250,7 +1250,7 @@ error.concessionOrFranchise.missing = Select yes if you receive any rent from th
 
 # ADDITIONAL INFORMATION
 ########################
-checkYourAnswersAdditionalInformation.heading = Check your answers – additional information journey
+checkYourAnswersAdditionalInformation.heading = Check your answers – additional information
 label.furtherInformation = Further information or remarks
 key.altContact.details = Alternative contact details
 key.additionalInformation = Additional information
