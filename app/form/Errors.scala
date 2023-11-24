@@ -21,6 +21,7 @@ object Errors {
   //annual rent
   val annualRentExcludingVAT         = "error.required.annualRentExcludingVat"
   val annualRentExcludingVATCurrency = "error.invalid_currency.annualRent"
+  val annualRentLessThanZero         = "error.annualRentLessThanZero.annualRent"
   val negativeAnnualRent             = "error.negativeNumber"
 
   //address
@@ -35,6 +36,7 @@ object Errors {
   //Login
   val invalidRefNum             = "error.invalid_refnum"
   val maxCurrencyAmountExceeded = "error.maxCurrencyAmountExceeded"
+  val minSuceeded = "error.invalid_postcode"
   val toDateIsAfterFromDate     = "error.writtenAgreement.steppedDetails.stepTo.day"
   val fromDateIsAfterToDate     = "error.writtenAgreement.steppedDetails.stepFrom.day"
   val overlappingDates          = "error.steppedDetails.overlappingDates"

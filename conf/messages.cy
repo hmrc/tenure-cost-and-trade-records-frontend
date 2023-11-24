@@ -1543,9 +1543,7 @@ error.invalidCharTownCity = Town or city name must only contain letters, numbers
 error.invalidCharCounty = County name must only contain letters, numbers, hyphens and spaces
 error.maxCurrencyAmountExceeded = Maximum amount exceeded - please contact the VOA
 error.maxCurrencyAmountExceeded.annualRent = Maximum amount exceeded - please contact the VOA
-
-error.negativeNumber.annualRent = The annual rent cannot be a negative number
-
+error.annualRentLessThanZero.annualRent = The annual rent must be greater than zero
 error.invalid_phone=Enter a phone number, like 01632 960 000
 error.email=Enter an email in the correct format, like name@example.com
 error.isRelated=Select if you are still connected to the property, not connected to the property, or if the address needs to be updated

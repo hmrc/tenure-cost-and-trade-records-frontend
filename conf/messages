@@ -1575,6 +1575,7 @@ error.month.required = The date must include a month
 error.year.required = The date must include a year
 error.required.annualRent = Enter the annual rent excluding VAT
 error.invalid_currency.annualRent = The annual rent must be a number
+error.annualRentLessThanZero.annualRent = The annual rent must be greater than zero
 error.required.annualRentExcludingVat = Enter the annual rent
 error.char.count.maxLength = This must be 2000 characters or fewer
 error.townCity.required = Enter the name of the town or city
