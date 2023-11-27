@@ -114,10 +114,6 @@ object MappingSupport {
   def currencyMapping(fieldErrorPart: String = ""): Mapping[BigDecimal] = default(text, "")
     .verifying(nonEmpty(errorMessage = Errors.annualRentExcludingVAT + fieldErrorPart))
     .verifying(
-      Errors.annualRentLessThanZero + fieldErrorPart,
-      x => x == "" || ((x.replace(",", "") matches decimalRegex) && BigDecimal(x.replace(",", "")) < 0.000)
-    )
-    .verifying(
       Errors.annualRentExcludingVATCurrency + fieldErrorPart,
       x => x == "" || ((x.replace(",", "") matches decimalRegex) && BigDecimal(x.replace(",", "")) >= 0.000)
     )
