@@ -61,9 +61,10 @@ class LocalDateFormatter(
         oneError(dayKey, "error.date.required", Seq(fieldName, allDateFields))
 
       case (Some(d), Some(m), Some(y)) =>
-        val day   = parseNumber(d, 1 to 31)
-        val month = parseNumber(m, 1 to 12)
-        val year  = parseNumber(y, 1000 to 9999)
+        val day          = parseNumber(d, 1 to 31)
+        val month        = parseNumber(m, 1 to 12)
+        val year         = parseNumber(y, 1000 to 9999)
+        val datePartsSeq = Seq(day, month, year)
 
         val invalidFields = Seq(
           (day, s"$key.day", "error.date.day.invalid"),
@@ -72,14 +73,19 @@ class LocalDateFormatter(
         ).filter(_._1 == 0)
 
         invalidFields match {
-          case Seq((_, focusKey, error)) =>
-            oneError(focusKey, error, Seq(fieldNameCapitalized))
-          case _                         =>
+          case Seq((_, field, error))                      =>
+            oneError(field, error, Seq(fieldNameCapitalized, field))
+          case multipleErrors if multipleErrors.length > 1 =>
+            val errorFields = (datePartsSeq zip allDateFields).filter(_._1 == 0).map(_._2)
+            val focusKey    = s"$key.${errorFields.head}"
+            oneError(focusKey, "error.date.invalid", Seq(fieldNameCapitalized, errorFields))
+          case _                                           =>
             validateDate(day, month, year).left.map { errorKey =>
-              Seq(FormError(s"$key.day", errorKey, Seq(fieldNameCapitalized))) // Consider updating this as well
+              Seq(FormError(key, errorKey, Seq(fieldNameCapitalized, allDateFields)))
             }
         }
-      case (d, m, y)                   =>
+
+      case (d, m, y) =>
         val prefix           = messages("error.dateParts.prefix")
         val separator        = messages("error.dateParts.separator")
         val dayText          = messages("error.dateParts.day")
