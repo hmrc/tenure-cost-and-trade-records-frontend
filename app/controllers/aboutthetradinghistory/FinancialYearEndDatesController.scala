@@ -26,7 +26,7 @@ import navigation.identifiers.FinancialYearEndDatesPageId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import util.AccountingInformationUtil.newFinancialYears
+import util.AccountingInformationUtil.{newFinancialYears, previousFinancialYears}
 import views.html.aboutthetradinghistory.financialYearEndDates
 
 import java.time.{LocalDate, MonthDay}
@@ -52,7 +52,7 @@ class FinancialYearEndDatesController @Inject() (
         val occupationAndAccounting = aboutTheTradingHistory.occupationAndAccountingInformation.get
         Ok(
           financialYearEndDatesView(
-            financialYearEndDatesForm.fill(aboutTheTradingHistory.turnoverSections.map(_.financialYearEnd)),
+            financialYearEndDatesForm().fill(aboutTheTradingHistory.turnoverSections.map(_.financialYearEnd)),
             newFinancialYears(occupationAndAccounting)
           )
         )
@@ -66,7 +66,7 @@ class FinancialYearEndDatesController @Inject() (
       .fold(Future.successful(Redirect(routes.AboutYourTradingHistoryController.show()))) { aboutTheTradingHistory =>
         val occupationAndAccounting = aboutTheTradingHistory.occupationAndAccountingInformation.get
         continueOrSaveAsDraft[Seq[LocalDate]](
-          financialYearEndDatesForm,
+          financialYearEndDatesForm(Some(newFinancialYears(occupationAndAccounting))),
           formWithErrors =>
             BadRequest(
               financialYearEndDatesView(

@@ -24,13 +24,13 @@ import play.api.i18n.Messages
 import java.time.LocalDate
 
 object DateMappings {
-
   def requiredDateMapping(
     fieldNameKey: String,
     allowPastDates: Boolean = false,
-    allowFutureDates: Boolean = false
+    allowFutureDates: Boolean = false,
+    years: Option[Seq[Int]] = None
   )(implicit messages: Messages): Mapping[LocalDate] =
-    of(new LocalDateFormatter(fieldNameKey, allowPastDates, allowFutureDates))
+    of(new LocalDateFormatter(fieldNameKey, allowPastDates, allowFutureDates, years))
 
   def monthYearMapping(
     fieldNameKey: String,
