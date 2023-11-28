@@ -45,12 +45,15 @@ class HodSubmissionConnector @Inject() (config: ServicesConfig, appConfig: AppCo
       }
   }
 
+  private def cleanedRefNumber(refNumber:String ) = refNumber.replaceAll("[^0-9]", "")
+
   override def submitNotConnected(refNumber: String, submission: NotConnectedSubmission)(implicit
     hc: HeaderCarrier
-  ): Future[Unit] =
+  ): Future[Unit] = {
+
     http
       .PUT[NotConnectedSubmission, HttpResponse](
-        url(s"submissions/notConnected/$refNumber"),
+        url(s"submissions/notConnected/${cleanedRefNumber(refNumber)}"),
         submission,
         Seq("Authorization" -> internalAuthToken)
       )
@@ -61,13 +64,14 @@ class HodSubmissionConnector @Inject() (config: ServicesConfig, appConfig: AppCo
           case _   => Future.failed(new Exception(s"Unexpected response: ${response.status}"))
         }
       }
+  }
 
   override def submitConnected(refNumber: String, submission: ConnectedSubmission)(implicit
     hc: HeaderCarrier
-  ): Future[Unit] =
+  ): Future[Unit] = {
     http
       .PUT[ConnectedSubmission, HttpResponse](
-        url(s"submissions/connected/$refNumber"),
+        url(s"submissions/connected/${cleanedRefNumber(refNumber)}"),
         submission,
         Seq("Authorization" -> internalAuthToken)
       )
@@ -79,6 +83,7 @@ class HodSubmissionConnector @Inject() (config: ServicesConfig, appConfig: AppCo
           case _   => Future.failed(new Exception(s"Unexpected response: ${response.status}"))
         }
       }
+  }
 }
 
 @ImplementedBy(classOf[HodSubmissionConnector])

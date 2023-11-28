@@ -66,7 +66,7 @@ class ConnectionToPropertySubmissionController @Inject() (
         Redirect(controllers.connectiontoproperty.routes.ConnectionToPropertySubmissionController.confirmation())
       )
     } recover { case e: Exception =>
-      val failureReason = s"Could not send data to HOD - ${session.referenceNumber} - ${hc.sessionId.getOrElse("")}"
+      val failureReason = s"Could not send data to HOD - ${session.referenceNumber} - ${hc.sessionId.getOrElse("")} - ${e.getMessage}"
       logger.error(failureReason)
       val outcome       = Json.obj(
         "isSuccessful"    -> false,
