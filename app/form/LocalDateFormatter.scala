@@ -53,9 +53,9 @@ class LocalDateFormatter(
 
     val yearForField = years.flatMap(_.lift(fieldIndex))
 
-    val fieldName = yearForField match {
+    val fieldName            = yearForField match {
       case Some(year) => messages(s"fieldName.$fieldNameKey", year.toString)
-      case None => messages(s"fieldName.$fieldNameKey")
+      case None       => messages(s"fieldName.$fieldNameKey")
     }
     val fieldNameCapitalized = fieldName.capitalize
     val dayKey               = s"$key.day"
