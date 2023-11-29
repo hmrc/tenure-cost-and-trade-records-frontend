@@ -16,7 +16,6 @@
 
 package form
 
-import play.api.data.FormError
 import utils.TestBaseSpec
 
 import java.time.LocalDate

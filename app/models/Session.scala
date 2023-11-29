@@ -51,6 +51,11 @@ case class Session(
   // New session properties must be also added to class `UserData` and method `toUserData`
 ) {
 
+  /**
+    * Returns only referenceNumber digits without slash or any other special char to use in endpoint path.
+    */
+  def referenceNumberCleaned = referenceNumber.replaceAll("[^0-9]", "")
+
   def toUserData: UserData = UserData(
     referenceNumber,
     forType,
