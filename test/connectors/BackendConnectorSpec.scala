@@ -82,7 +82,7 @@ class BackendConnectorSpec extends TestBaseSpec with BeforeAndAfterAll {
     }
 
     "throw BadRequestException exception on save with wring id" in {
-      val testId = "WRONG_ID_123"
+      val testId = "99997777111"
       stubFor(
         put(urlEqualTo(endpointBase + testId))
           .willReturn(aResponse().withStatus(400))
