@@ -82,7 +82,7 @@ class BackendConnectorSpec extends TestBaseSpec with BeforeAndAfterAll {
     }
 
     "throw BadRequestException exception on save with wring id" in {
-      val testId = "WRONG_ID"
+      val testId = "WRONG_ID_123"
       stubFor(
         put(urlEqualTo(endpointBase + testId))
           .willReturn(aResponse().withStatus(400))
@@ -109,7 +109,7 @@ class BackendConnectorSpec extends TestBaseSpec with BeforeAndAfterAll {
 
     "handle unknown id for load SubmissionDraft" in {
       // Adjust based on your expected behavior for unknown ids
-      val testId = "unknownId"
+      val testId = "unknownId_123"
       stubFor(
         get(urlEqualTo(endpointBase + testId))
           .willReturn(aResponse().withStatus(404))

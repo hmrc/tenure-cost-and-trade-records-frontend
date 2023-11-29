@@ -42,7 +42,13 @@ import views.html._
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
 
-case class LoginDetails(referenceNumber: String, postcode: String, startTime: DateTime)
+case class LoginDetails(referenceNumber: String, postcode: String, startTime: DateTime) {
+
+  /**
+    * Returns only referenceNumber digits without slash or any other special char to use in endpoint path.
+    */
+  def referenceNumberCleaned = referenceNumber.replaceAll("[^0-9]", "")
+}
 
 object LoginController {
   val loginForm = Form(
@@ -106,7 +112,7 @@ class LoginController @Inject() (
       .bindFromRequest()
       .fold(
         formWithErrors => Future.successful(BadRequest(login(formWithErrors))),
-        loginData => verifyLogin(loginData.referenceNumber, loginData.postcode, loginData.startTime)
+        loginData => verifyLogin(loginData.referenceNumberCleaned, loginData.postcode, loginData.startTime)
       )
   }
 
@@ -132,7 +138,7 @@ class LoginController @Inject() (
             session
               .start(Session(referenceNumber, forNum, address, token))
               .flatMap(_ =>
-                backendConnector.loadSubmissionDraft(referenceNumber).map {
+                backendConnector.loadSubmissionDraft(cleanedRefNumber).map {
                   case Some(_) => Redirect(controllers.routes.SaveAsDraftController.loginToResume)
                   case _       => Redirect(startPage)
                 }

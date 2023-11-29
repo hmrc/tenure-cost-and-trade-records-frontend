@@ -31,11 +31,14 @@ class DefaultBackendConnector @Inject() (servicesConfig: ServicesConfig, appConf
   implicit ec: ExecutionContext
 ) extends BackendConnector {
 
-  private val serviceUrl                              = servicesConfig.baseUrl("tenure-cost-and-trade-records")
-  private val backendBaseUrl                          = s"$serviceUrl/tenure-cost-and-trade-records"
-  private val saveAsDraftBaseUrl                      = s"$backendBaseUrl/saveAsDraft"
-  private val internalAuthToken                       = appConfig.internalAuthToken
-  private def saveAsDraftUrl(referenceNumber: String) = s"$saveAsDraftBaseUrl/$referenceNumber"
+  private val serviceUrl         = servicesConfig.baseUrl("tenure-cost-and-trade-records")
+  private val backendBaseUrl     = s"$serviceUrl/tenure-cost-and-trade-records"
+  private val saveAsDraftBaseUrl = s"$backendBaseUrl/saveAsDraft"
+  private val internalAuthToken  = appConfig.internalAuthToken
+
+  private def cleanedRefNumber(refNumber: String) = refNumber.replaceAll("[^0-9]", "")
+
+  private def saveAsDraftUrl(referenceNumber: String) = s"$saveAsDraftBaseUrl/${cleanedRefNumber(referenceNumber)}"
 
   private def url(path: String) = s"$serviceUrl/tenure-cost-and-trade-records/$path"
 
@@ -52,7 +55,7 @@ class DefaultBackendConnector @Inject() (servicesConfig: ServicesConfig, appConf
   override def verifyCredentials(refNumber: String, postcode: String)(implicit
     hc: HeaderCarrier
   ): Future[FORLoginResponse] = {
-    val credentials    = Credentials(refNumber, postcode)
+    val credentials    = Credentials(cleanedRefNumber(refNumber), postcode)
     val wrtCredentials = implicitly[Writes[Credentials]]
     http.POST[Credentials, FORLoginResponse](
       url("authenticate"),
@@ -65,7 +68,7 @@ class DefaultBackendConnector @Inject() (servicesConfig: ServicesConfig, appConf
     hc: HeaderCarrier
   ): Future[String] =
     http
-      .GET(url(s"$referenceNumber/forType"), headers = Seq("Authorization" -> internalAuthToken))
+      .GET(url(s"${cleanedRefNumber(referenceNumber)}/forType"), headers = Seq("Authorization" -> internalAuthToken))
       .map(res => (res.json \ "FORType").as[String])
 
   override def saveAsDraft(referenceNumber: String, submissionDraft: SubmissionDraft)(implicit

@@ -68,8 +68,9 @@ class FormSubmissionController @Inject() (
       audit.sendExplicitAudit(auditType, submissionJson ++ Json.obj("outcome" -> outcome))
       Future.successful(Redirect(controllers.routes.FormSubmissionController.confirmation()))
     } recover { case e: Exception =>
-      val failureReason = s"Could not send data to HOD - ${session.referenceNumber} - ${hc.sessionId.getOrElse("")} - ${e.getMessage}"
-      logger.error(failureReason)
+      val failureReason =
+        s"Could not send data to HOD - ${session.referenceNumber} - ${hc.sessionId.getOrElse("")} - ${e.getMessage}"
+      logger.error(failureReason, e)
       val outcome       = Json.obj(
         "isSuccessful"    -> false,
         "failureCategory" -> INTERNAL_SERVER_ERROR,

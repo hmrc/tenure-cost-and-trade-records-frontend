@@ -88,10 +88,9 @@ class SaveAsDraftController @Inject() (
     request: Request[_]
   ): Future[Result] = {
     val forType         = session.forType
-    val referenceNumber = session.referenceNumber
     val submissionDraft = SubmissionDraft(forType, session, exitPath)
 
-    backendConnector.saveAsDraft(referenceNumber, submissionDraft).map { _ =>
+    backendConnector.saveAsDraft(session.referenceNumberCleaned, submissionDraft).map { _ =>
       audit.sendSavedAsDraft(submissionDraft.toSavedAsDraftEvent)
       Ok(submissionDraftSavedView(session.saveAsDraftPassword.getOrElse(""), expiryDate, exitPath))
     }
@@ -125,7 +124,7 @@ class SaveAsDraftController @Inject() (
   }
 
   def startAgain = (Action andThen withSessionRefiner).async { implicit request =>
-    backendConnector.deleteSubmissionDraft(request.sessionData.referenceNumber)
+    backendConnector.deleteSubmissionDraft(request.sessionData.referenceNumberCleaned)
     Redirect(LoginController.startPage)
   }
 
