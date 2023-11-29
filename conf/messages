@@ -275,8 +275,8 @@ error.tradingNameOwnTheProperty.missing = Select yes if the organisation owns th
 tradingNamePayingRent.heading = Paying rent
 tradingNamePayingRent.title = Does {0} pay rent on the property?
 tradingNamePayingRent.p1 = You must declare whether you pay rent under the terms of your lease or agreement.
-tradingNamePayingRent.p2 = You should select ‘yes‘ even if you pay rent under an informal agreement, or have a temporary rent-free agreement.
-tradingNamePayingRent.p3 = Select ‘no‘ if the owner of the property allows you to occupy it on a permanent rent-free agreement.
+tradingNamePayingRent.p2 = You should select ‘yes’ even if you pay rent under an informal agreement, or have a temporary rent-free agreement.
+tradingNamePayingRent.p3 = Select ‘no’ if the owner of the property allows you to occupy it on a permanent rent-free agreement.
 error.tradingNamePayingRent.missing = Select yes if the organisation pays rent on the property
 
 # ARE YOU THIRD-PARTY WORKING ON BEHALF OF TRADING NAME
@@ -1053,7 +1053,7 @@ label.currentRentBasedOn.indexed = Indexed to the retail price index (RPI) or an
 label.currentRentBasedOn.stepped = Stepped rent arrangement
 label.currentRentBasedOn.other = Other
 label.whatIsYourRentBasedOn.describe = Additional information
-hint.whatIsYourRentBasedOn.describe = For example, "rent is 50% of the open market value, plus 7.5% of the turnover".
+hint.whatIsYourRentBasedOn.describe = Give details if you want to tell us more about what the rent is based on. For example, "rent is 50% of the open market value, plus 7.5% of the turnover".
 error.whatIsYourRentBasedOn.required = Describe how your rent is calculated
 error.currentRentBasedOn.required = Select what your rent is based on
 error.currentRentBasedOn.maxLength = Additional information must be 500 characters or fewer
