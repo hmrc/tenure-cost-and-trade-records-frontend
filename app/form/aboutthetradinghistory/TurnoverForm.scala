@@ -16,60 +16,95 @@
 
 package form.aboutthetradinghistory
 
-import form.MappingSupport.turnoverSalesMapping
 import models.submissions.aboutthetradinghistory.TurnoverSection
 import play.api.data.{Form, Mapping}
-import play.api.data.Forms.{bigDecimal, ignored, mapping, number, optional}
-import play.api.data.validation.{Constraint, Invalid, Valid}
+import play.api.data.Forms.{ignored, mapping, optional}
+import play.api.i18n.Messages
+import play.api.data.Forms._
 
+import scala.util.Try
 import java.time.LocalDate
 
 object TurnoverForm {
 
-  def turnoverForm(expectedNumberOfFinancialYears: Int): Form[Seq[TurnoverSection]] = {
-    val averageOccupancyConstraint: Constraint[BigDecimal] = Constraint[BigDecimal]("averageOccupancyConstraint") {
-      averageOccupancy =>
-        if (averageOccupancy >= 0 && averageOccupancy <= 100) Valid
-        else Invalid("Average occupancy rate must be between 0 and 100")
-    }
-    def columnMapping: Mapping[TurnoverSection]            = mapping(
+  def turnoverForm(expectedNumberOfFinancialYears: Int, financialYearEndDates: Seq[LocalDate])(implicit
+    messages: Messages
+  ): Form[Seq[TurnoverSection]] = {
+
+    val salesMax = BigDecimal(1000000000000L)
+
+    def turnoverSalesMappingWithYear(field: String, year: String)(implicit
+      messages: Messages
+    ): Mapping[Option[BigDecimal]] = optional(
+      text
+        .verifying(messages(s"error.$field.range", year), s => Try(BigDecimal(s)).isSuccess)
+        .transform[BigDecimal](
+          s => BigDecimal(s),
+          _.toString
+        )
+        .verifying(messages(s"error.$field.negative", year), _ >= 0)
+        .verifying(messages(s"error.$field.range", year), _ <= salesMax)
+    ).verifying(messages(s"error.$field.required", year), _.isDefined)
+
+    def averageOccupancyRateMapping(year: String)(implicit messages: Messages): Mapping[Option[BigDecimal]] = optional(
+      text
+        .transform[BigDecimal](
+          s => Try(BigDecimal(s)).getOrElse(BigDecimal(-1)),
+          _.toString
+        )
+        .verifying(
+          messages("error.turnover.averageOccupancyRate.invalid", year),
+          amount => amount >= 0 && amount <= 100
+        )
+    ).verifying(messages("error.turnover.averageOccupancyRate.required", year), _.isDefined)
+
+    def columnMapping(year: String)(implicit messages: Messages): Mapping[TurnoverSection] = mapping(
       "financial-year-end"     -> ignored(LocalDate.EPOCH),
-      "weeks"                  -> number(min = 0, max = 52),
-      "alcoholic-drinks"       -> turnoverSalesMapping("turnover.alcohol.sales"),
-      "food"                   -> turnoverSalesMapping("turnover.food.sales"),
-      "other-receipts"         -> turnoverSalesMapping("turnover.other.sales"),
-      "accommodation"          -> turnoverSalesMapping("turnover.accommodation.sales"),
-      "average-occupancy-rate" -> optional(bigDecimal.verifying(averageOccupancyConstraint))
-        .verifying("error.turnover.averageOccupancyRate.required", _.nonEmpty)
-    )(TurnoverSection.apply)(TurnoverSection.unapply)
+      "weeks"                  -> text
+        .verifying(messages("error.weeksMapping.blank", year), _.nonEmpty)
+        .transform[Int](
+          str => Try(str.toInt).getOrElse(-1),
+          int => int.toString
+        )
+        .verifying(messages("error.weeksMapping.invalid", year), weeks => weeks == 0 || (weeks >= 1 && weeks <= 52)),
+      "alcoholic-drinks"       -> turnoverSalesMappingWithYear("turnover.alcohol.sales", year),
+      "food"                   -> turnoverSalesMappingWithYear("turnover.food.sales", year),
+      "other-receipts"         -> turnoverSalesMappingWithYear("turnover.other.sales", year),
+      "accommodation"          -> turnoverSalesMappingWithYear("turnover.accommodation.sales", year),
+      "average-occupancy-rate" -> averageOccupancyRateMapping(year)
+    )(TurnoverSection.apply)(TurnoverSection.unapply _)
+
+    val yearMappings = financialYearEndDates.map(date => columnMapping(date.getYear.toString))
 
     Form {
       expectedNumberOfFinancialYears match {
-        case 1                               =>
-          mapping("0" -> columnMapping)(section => Seq(section)) {
-            case Seq(section) => Some(section)
-            case _            => None
-          }
-        case 2                               =>
+        case 1 =>
           mapping(
-            "0" -> columnMapping,
-            "1" -> columnMapping
-          ) { case (first, second) => Seq(first, second) } {
-            case Seq(first, second) => Some((first, second))
+            "0" -> yearMappings(0)
+          )(Seq(_))(_.headOption)
+
+        case 2 =>
+          mapping(
+            "0" -> yearMappings(0),
+            "1" -> yearMappings(1)
+          )(Seq(_, _)) {
+            case Seq(first, second) => Some(first, second)
             case _                  => None
           }
-        case 3                               =>
+
+        case 3 =>
           mapping(
-            "0" -> columnMapping,
-            "1" -> columnMapping,
-            "2" -> columnMapping
-          ) { case (first, second, third) => Seq(first, second, third) } {
-            case Seq(first, second, third) => Some((first, second, third))
+            "0" -> yearMappings(0),
+            "1" -> yearMappings(1),
+            "2" -> yearMappings(2)
+          )(Seq(_, _, _)) {
+            case Seq(first, second, third) => Some(first, second, third)
             case _                         => None
           }
-        case incorrectNumberOfFinancialYears =>
+
+        case _ =>
           throw new IllegalArgumentException(
-            s"$expectedNumberOfFinancialYears must be between 1 and 3, was: $incorrectNumberOfFinancialYears"
+            s"Unexpected number of financial years: $expectedNumberOfFinancialYears"
           )
       }
     }

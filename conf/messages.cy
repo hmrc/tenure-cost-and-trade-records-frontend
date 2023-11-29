@@ -1133,15 +1133,20 @@ error.financialYearEnd.day.required = The financial year-end date must include a
 error.financialYearEnd.month.required = The financial year-end date must include a month
 error.financialYearEnd.year.required = The financial year-end date must include a year
 fieldName.financialYearEnd = the financial year-end date ending {0}
-error.turnover.alcohol.sales.required = Enter 0 if you didn’t sell any alcoholic drinks
-error.turnover.food.sales.required = Enter 0 if you didn’t sell any food
-error.turnover.other.sales.required = Enter 0 if you don’t have any sales in this category
-error.turnover.accommodation.sales.required = Enter 0 if you didn’t provide any accommodation
-error.turnover.averageOccupancyRate.required = Enter 0 if you didn’t provide any accommodation
-error.turnover.alcohol.sales.range = The alcohol sales figure must be a number between {0} and {1}
-error.turnover.food.sales.range = The food sales figure must be a number between {0} and {1}
-error.turnover.other.sales.range = The ‘other receipts’ sales figure must be a number between {0} and {1}
-error.turnover.accommodation.sales.range = The accommodation sales figure must be a number between {0} and {1}
+error.turnover.alcohol.sales.required = Enter 0 if you did not sell any alcoholic drinks in the year ending {0}
+error.turnover.food.sales.required = Enter 0 if you did not sell any food in the year ending {0}
+error.turnover.other.sales.required = Enter 0 if you did not have any other receipts in the year ending {0}
+error.turnover.accommodation.sales.required = Enter 0 if you did not provide any accommodation in the year ending {0}
+error.turnover.averageOccupancyRate.required = Enter 0 if you did not provide any accommodation in the year ending {0}, or your property is not a lodge or a hotel
+error.turnover.alcohol.sales.range = The alcohol sales in the year ending {0} must be a number, for example 100 or 100.00
+error.turnover.food.sales.range = The food sales in the year ending {0} must be a number, for example  100 or 100.00
+error.turnover.other.sales.range = Other receipts in the year ending {0}  must be a number, for example  100 or 100.00
+error.turnover.accommodation.sales.range = Accommodation in the year ending {0} must be a number, for example  100 or 100.00
+error.turnover.averageOccupancyRate.invalid = Average occupancy rate in the year ending {0} must be a number from 1 to 100
+error.turnover.alcohol.sales.negative = Turnover from alcohol sales in the year ending {0} cannot be a negative number
+error.turnover.food.sales.negative = Turnover from food sales in the year ending {0} cannot be a negative number
+error.turnover.other.sales.negative = Turnover from other receipts in the year ending {0} cannot be a negative number
+error.turnover.accommodation.sales.negative = Turnover from accommodation in the year ending {0} cannot be a negative number
 
 # TURNOVER 6016
 #########
@@ -1589,6 +1594,8 @@ error.tiedType.required = Select which type of tie you have
 error.addressLineTwo.maxLength = Address line 2 must be 50 characters or fewer
 error.townCity.maxLength = Town or city name must be 50 characters or fewer
 error.county.maxLength = County name must be 50 characters or fewer
+error.weeksMapping.blank = Enter 0 if you are not trading in the year ending {0}
+error.weeksMapping.invalid = The trading period in the year ending {0} should be a number from 1 to 52
 
 # Date fields validation
 error.date.required = Enter {0}
