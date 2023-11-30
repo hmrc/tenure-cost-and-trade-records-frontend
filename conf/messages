@@ -665,7 +665,7 @@ error.includedInYourRent.noneSelectedWithOther = Select any items included in yo
 
 # CATERING OPERATION OR LETTING ACCOMMODATION
 ############################################
-cateringOperationOrLettingAccommodation.heading = Are any separate catering or accommodation businesses run from your property?
+cateringOperationOrLettingAccommodation.heading = Are any separate accommodation or catering businesses run from your property?
 hint.cateringOperationOrLettingAccommodation = You will have the opportunity to add more than one business if required.
 error.cateringOperationOrLettingAccommodation.missing = Select yes if any separate catering or accommodation businesses are run from your property
 
