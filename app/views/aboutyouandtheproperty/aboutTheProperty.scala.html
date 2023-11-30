@@ -92,7 +92,8 @@
         value = Some("other"),
       )
     ),
-    errorMessage = theForm.errors.asTextErrorMessageForField("propertyCurrentlyUsed")
+    errorMessage = theForm.errors.asTextErrorMessageForField("propertyCurrentlyUsed"),
+    formGroupClasses = "govuk-!-margin-bottom-3",
   ).withFormField(theForm("propertyCurrentlyUsed"))
   )
 
@@ -143,7 +144,8 @@
         )
       ),
       hint = Hint(content = HtmlContent(messages("hint.select.all"))),
-      errorMessage = theForm.errors.asTextErrorMessageForField("propertyCurrentlyUsed")
+      errorMessage = theForm.errors.asTextErrorMessageForField("propertyCurrentlyUsed"),
+      formGroupClasses = "govuk-!-margin-bottom-3",
     ).withFormField(theForm("propertyCurrentlyUsed"))
   )
 }
