@@ -16,15 +16,20 @@
 
 package form.aboutYourLeaseOrTenure
 
+import form.requestReferenceNumber.OptionalCurrencyMapping.currencyMappingOptional
 import models.submissions.aboutYourLeaseOrTenure.RentIncludeFixturesOrFittingsInformationDetails
 import play.api.data.Form
-import play.api.data.Forms.{bigDecimal, mapping, optional}
+import play.api.data.Forms.mapping
+import play.api.i18n.Messages
 
 object RentIncludeFixtureAndFittingDetailsForm {
 
-  val rentIncludeFixtureAndFittingsDetailsForm: Form[RentIncludeFixturesOrFittingsInformationDetails] = Form(
+  def rentIncludeFixtureAndFittingsDetailsForm(annualRent: Option[BigDecimal] = None)(implicit
+    messages: Messages
+  ): Form[RentIncludeFixturesOrFittingsInformationDetails] = Form(
     mapping(
-      "rentIncludeFixturesAndFittingsDetails" -> optional(bigDecimal)
-    )(RentIncludeFixturesOrFittingsInformationDetails.apply)(RentIncludeFixturesOrFittingsInformationDetails.unapply)
+      "rentIncludeFixturesAndFittingsDetails" ->
+        currencyMappingOptional(messages("error.rentIncludeFixturesAndFittingsDetails.title"), annualRent)
+    )(RentIncludeFixturesOrFittingsInformationDetails.apply)(RentIncludeFixturesOrFittingsInformationDetails.unapply _)
   )
 }

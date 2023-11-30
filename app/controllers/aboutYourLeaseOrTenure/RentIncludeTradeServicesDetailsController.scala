@@ -47,8 +47,8 @@ class RentIncludeTradeServicesDetailsController @Inject() (
         rentIncludeTradeServicesDetailsView(
           request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.rentIncludeTradeServicesInformation) match {
             case Some(rentIncludeTradeServicesInformation) =>
-              rentIncludeTradeServicesDetailsForm.fillAndValidate(rentIncludeTradeServicesInformation)
-            case _                                         => rentIncludeTradeServicesDetailsForm
+              rentIncludeTradeServicesDetailsForm().fillAndValidate(rentIncludeTradeServicesInformation)
+            case _                                         => rentIncludeTradeServicesDetailsForm()
           },
           request.sessionData.toSummary
         )
@@ -57,8 +57,9 @@ class RentIncludeTradeServicesDetailsController @Inject() (
   }
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
+    val annualRent = request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.annualRent.map(_.amount))
     continueOrSaveAsDraft[RentIncludeTradeServicesInformationDetails](
-      rentIncludeTradeServicesDetailsForm,
+      rentIncludeTradeServicesDetailsForm(annualRent),
       formWithErrors => BadRequest(rentIncludeTradeServicesDetailsView(formWithErrors, request.sessionData.toSummary)),
       data => {
         val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(rentIncludeTradeServicesInformation = Some(data)))

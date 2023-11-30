@@ -774,6 +774,7 @@ error.required.sumIncludedInRent = Please provide a value
 error.invalid_currency.sumIncludedInRent= Please provide a number
 error.describeServices.required = Enter a description of the trade services provided by the landlord
 error.describeServices.maxLength = The description of the trade services must be 500 characters or fewer
+error.rentIncludeTradeServicesDetails.title = Sum included to cover trade services
 
 # RENT INCLUDE FIXTURES AND FITTINGS
 ###################################
@@ -793,8 +794,7 @@ rentIncludesVat.error = Select yes if the rent includes VAT
 ###########################################
 rentIncludeFixturesAndFittingsDetails.heading = What sum is included in the rent to cover the equipment provided by the landlord, excluding VAT?
 rentIncludeFixturesAndFittingsDetails.hint = Leave blank if this is not specifically itemised.
-error.required.rentIncludeFixturesAndFittingsDetails = Please provide a value
-error.invalid_currency.rentIncludeFixturesAndFittingsDetails = Please provide a number
+error.rentIncludeFixturesAndFittingsDetails.title = Sum included to cover equipment
 
 # INCENTIVES, PAYMENTS AND CONDITIONS
 ####################################
@@ -1596,6 +1596,11 @@ error.townCity.maxLength = Town or city name must be 50 characters or fewer
 error.county.maxLength = County name must be 50 characters or fewer
 error.weeksMapping.blank = Enter 0 if you are not trading in the year ending {0}
 error.weeksMapping.invalid = The trading period in the year ending {0} should be a number from 1 to 52
+
+# Currency optional validation
+error.optCurrency.negative = {0} cannot be a negative number
+error.optCurrency.invalid = {0} must be a number, for example 100 or 100.00
+error.optCurrency.graterThanAnnualRent = {0} cannot be grater than the annual rent
 
 # Date fields validation
 error.date.required = Enter {0}

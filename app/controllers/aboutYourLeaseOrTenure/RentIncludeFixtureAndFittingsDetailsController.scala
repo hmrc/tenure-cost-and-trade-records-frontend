@@ -47,8 +47,8 @@ class RentIncludeFixtureAndFittingsDetailsController @Inject() (
         rentIncludeFixtureAndFittingsDetailsView(
           request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.rentIncludeFixtureAndFittingsDetails) match {
             case Some(rentIncludeFixtureAndFittingsDetails) =>
-              rentIncludeFixtureAndFittingsDetailsForm.fillAndValidate(rentIncludeFixtureAndFittingsDetails)
-            case _                                          => rentIncludeFixtureAndFittingsDetailsForm
+              rentIncludeFixtureAndFittingsDetailsForm().fillAndValidate(rentIncludeFixtureAndFittingsDetails)
+            case _                                          => rentIncludeFixtureAndFittingsDetailsForm()
           },
           request.sessionData.toSummary
         )
@@ -57,8 +57,9 @@ class RentIncludeFixtureAndFittingsDetailsController @Inject() (
   }
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
+    val annualRent = request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.annualRent.map(_.amount))
     continueOrSaveAsDraft[RentIncludeFixturesOrFittingsInformationDetails](
-      rentIncludeFixtureAndFittingsDetailsForm,
+      rentIncludeFixtureAndFittingsDetailsForm(annualRent),
       formWithErrors =>
         BadRequest(rentIncludeFixtureAndFittingsDetailsView(formWithErrors, request.sessionData.toSummary)),
       data => {

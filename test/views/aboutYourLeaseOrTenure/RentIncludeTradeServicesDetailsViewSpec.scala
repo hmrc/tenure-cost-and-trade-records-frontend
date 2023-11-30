@@ -28,7 +28,7 @@ class RentIncludeTradeServicesDetailsViewSpec
 
   val messageKeyPrefix = "rentIncludeTradeServicesDetails"
 
-  override val form = RentIncludeTradeServicesDetailsForm.rentIncludeTradeServicesDetailsForm
+  override val form = RentIncludeTradeServicesDetailsForm.rentIncludeTradeServicesDetailsForm()(messages)
 
   def createView = () => rentIncludeTradeServicesDetailsView(form, Summary("99996010001"))(fakeRequest, messages)
 
