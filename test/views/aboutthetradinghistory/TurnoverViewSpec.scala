@@ -24,11 +24,16 @@ import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
+import java.time.LocalDate
+
 class TurnoverViewSpec extends QuestionViewBehaviours[Seq[TurnoverSection]] {
 
   val messageKeyPrefix = "turnover"
 
-  override val form = TurnoverForm.turnoverForm(3)
+  override val form = TurnoverForm.turnoverForm(
+    3,
+    Seq(LocalDate.of(2021, 12, 31), LocalDate.of(2022, 12, 31), LocalDate.of(2023, 12, 31))
+  )(messages)
 
   val sessionRequest = SessionRequest(aboutYourTradingHistory6010YesSession, fakeRequest)
 
