@@ -15,8 +15,11 @@
  *@
 
 @import models.submissions.aboutYourLeaseOrTenure.TenantsAdditionsDisregardedDetails
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukCharacterCount
+@import uk.gov.hmrc.govukfrontend.views.html.components._
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
+@import uk.gov.hmrc.govukfrontend.views.Aliases.CharacterCount
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Label
+
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
 @import models.pages.Summary
 
@@ -26,12 +29,12 @@
         formWithCSRF: FormWithCSRF
 )
 
-
 @(theForm: Form[TenantsAdditionsDisregardedDetails], summary: Summary)(implicit request: Request[_], messages: Messages)
 
 @layout(
   pageHeading = messages("tenantsAdditionsDisregardedDetails.heading"),
   showSection = true,
+    showH1 = false,
     summary = Some(summary),
   sectionName = messages("label.section.aboutYourLeaseOrTenure"),
   backLinkUrl = controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController.show.url,
@@ -41,12 +44,19 @@
   @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedDetailsController.submit()
   ) {
 
-    @includes.textInputCharCount(
-      govukCharacterCount,
-      theForm,
-      "tenantsAdditionsDisregardedDetails",
-      "hint.tenantsAdditionsDisregardedDetails"
-    )
+      @govukCharacterCount(
+          CharacterCount(
+              id = "tenantsAdditionsDisregardedDetails",
+              name = "tenantsAdditionsDisregardedDetails",
+              maxLength = 500,
+              hint = Some(Hint(content = Text(messages("hint.tenantsAdditionsDisregardedDetails")))),
+              label = Label(
+                  content = Text(messages("tenantsAdditionsDisregardedDetails.heading")),
+                  classes = "govuk-label--l"
+              ),
+              errorMessage = theForm.errors.asTextErrorMessageForField("tenantsAdditionsDisregardedDetails"),
+          ).withFormField(theForm("tenantsAdditionsDisregardedDetails"))
+      )
 
     @includes.continueSaveAsDraftButtons(govukButton)
   }

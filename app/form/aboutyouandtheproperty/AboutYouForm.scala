@@ -20,14 +20,15 @@ import form.MappingSupport.contactDetailsMapping
 import models.submissions.aboutyouandtheproperty.CustomerDetails
 import play.api.data.Form
 import play.api.data.Forms.{default, mapping, text}
-import play.api.data.validation.Constraints.nonEmpty
+import play.api.data.validation.Constraints.{maxLength, nonEmpty}
 
 object AboutYouForm {
 
   val aboutYouForm: Form[CustomerDetails] = Form(
     mapping(
       "fullName"       -> default(text, "").verifying(
-        nonEmpty(errorMessage = "error.fullName.required")
+        nonEmpty(errorMessage = "error.fullName.required"),
+        maxLength(50, "error.fullName.maxLength")
       ),
       "contactDetails" -> contactDetailsMapping
     )(CustomerDetails.apply)(CustomerDetails.unapply)
