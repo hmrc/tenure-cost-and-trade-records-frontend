@@ -49,10 +49,10 @@
               id = "tenantsAdditionsDisregardedDetails",
               name = "tenantsAdditionsDisregardedDetails",
               maxLength = 500,
-              hint = Some(Hint(content = Text(messages("hint.tenantsAdditionsDisregardedDetails")))),
               label = Label(
                   content = Text(messages("tenantsAdditionsDisregardedDetails.heading")),
-                  classes = "govuk-label--l"
+                  classes = "govuk-label--l",
+                  isPageHeading = true
               ),
               errorMessage = theForm.errors.asTextErrorMessageForField("tenantsAdditionsDisregardedDetails"),
           ).withFormField(theForm("tenantsAdditionsDisregardedDetails"))
