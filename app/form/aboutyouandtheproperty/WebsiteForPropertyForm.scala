@@ -17,6 +17,7 @@
 package form.aboutyouandtheproperty
 
 import form.MappingSupport.buildingOperatingHaveAWebsiteType
+import form.WebsiteMapping.validateWebaddress
 import models.submissions.aboutyouandtheproperty.{BuildingOperationHaveAWebsiteYes, WebsiteForPropertyDetails}
 import play.api.data.Form
 import play.api.data.Forms.{default, mapping, text}
@@ -25,19 +26,13 @@ import uk.gov.voa.play.form.ConditionalMappings.mandatoryIfEqual
 
 object WebsiteForPropertyForm {
 
-  val webaddressRegex =
-    """^[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&//=]*)$"""
-
   val websiteForPropertyForm = Form(
     mapping(
       "buildingOperatingHaveAWebsite" -> buildingOperatingHaveAWebsiteType,
       "websiteAddressForProperty"     -> mandatoryIfEqual(
         "buildingOperatingHaveAWebsite",
         BuildingOperationHaveAWebsiteYes.name,
-        default(text, "").verifying(
-          nonEmpty(errorMessage = "error.websiteAddressForProperty.required"),
-          pattern(webaddressRegex.r, error = "error.webAddressFormat")
-        )
+        validateWebaddress
       )
     )(WebsiteForPropertyDetails.apply)(WebsiteForPropertyDetails.unapply)
   )

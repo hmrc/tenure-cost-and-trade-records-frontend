@@ -483,7 +483,7 @@ error.propertyCurrentlyUsed.maxLength = Your description must be 200 characters 
 buildingOperatingHaveAWebsite.heading = Does the business operating from the property have a website?
 websiteAddressForProperty.textbox = Enter website address
 error.websiteAddressForProperty.required = Enter your web address
-error.webAddressFormat = Enter an address in the correct format, like www.example.com
+error.webaddressFormat.required = Enter an address in the correct format, like www.example.com
 error.buildingOperatingHaveAWebsite.required = Select yes if the business has a website
 
 # PREMISES LICENSE GRANTED (6015,6016)

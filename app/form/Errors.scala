@@ -63,6 +63,8 @@ object Errors {
 
   //Website for property
   val buildingOperatingHaveAWebsite = "error.buildingOperatingHaveAWebsite.required"
+  val webAddressBlank               = "error.websiteAddressForProperty.required"
+  val webaddressFormat              = "error.webaddressFormat.required"
 
   //About The Property Errors
   val currentOccupierName   = "error.currentOccupierName.required"
