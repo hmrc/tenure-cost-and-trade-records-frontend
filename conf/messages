@@ -1599,6 +1599,7 @@ error.townCity.maxLength = Town or city name must be 50 characters or fewer
 error.county.maxLength = County name must be 50 characters or fewer
 error.weeksMapping.blank = Enter 0 if you are not trading in the year ending {0}
 error.weeksMapping.invalid = The trading period in the year ending {0} should be a number from 1 to 52
+error.fullName.maxLength = Full name must be 50 characters or fewer
 
 # Currency optional validation
 error.optCurrency.negative = {0} cannot be a negative number

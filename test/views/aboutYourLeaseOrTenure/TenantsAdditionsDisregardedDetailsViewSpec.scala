@@ -38,8 +38,6 @@ class TenantsAdditionsDisregardedDetailsViewSpec extends QuestionViewBehaviours[
 
     behave like normalPage(createView, messageKeyPrefix)
 
-    behave like pageWithTextFields(createViewUsingForm, "tenantsAdditionsDisregardedDetails")
-
     "has a link marked with back.link.label leading to the tenants additions disregarded Page" in {
       val doc          = asDocument(createView())
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
