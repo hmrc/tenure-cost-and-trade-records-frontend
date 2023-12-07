@@ -1294,7 +1294,7 @@ tenancyLeaseAgreementExpire.p2 = Alternatively, you should declare the expiry da
 tenancyLeaseAgreementExpire.p3 = You do not need to tell us about any changes in the rent which are part of your current agreement. These could include, but are not limited to:
 tenancyLeaseAgreementExpire.item1 = changes linked to your turnover
 tenancyLeaseAgreementExpire.item2 = fluctuations in any index to which your rent may be linked, for example the retail price index (RPI)
-fieldName.tenancyLeaseAgreementExpire = the date of the tenancy, lease or agreement
+fieldName.tenancyLeaseAgreementExpire = the renewal or expiry date of the current lease
 
 # CONNECTED TO LANDLORD
 ###########################################
