@@ -90,7 +90,7 @@ object MappingSupport {
   val negativeAmount        = """^-\d+$"""
   val spacesIntRegex: Regex = """^\-?\d{1,10}$""".r
   val intRegex: Regex       = """^\d{1,3}$""".r
-  val invalidCharRegex      = """^[0-9A-Za-z\s\-]+$"""
+  val invalidCharRegex      = """^[0-9A-Za-z\s\-\,]+$"""
 
   lazy val annualRent: Mapping[AnnualRent] = mapping(
     "annualRentExcludingVat" -> currencyMapping(".annualRentExcludingVat")
@@ -313,20 +313,24 @@ object MappingSupport {
   def editAddressMapping: Mapping[EditAddress] = mapping(
     "buildingNameNumber" -> default(text, "").verifying(
       nonEmpty(errorMessage = "error.buildingNameNumber.required"),
-      maxLength(50, "error.buildingNameNumber.maxLength")
+      maxLength(50, "error.buildingNameNumber.maxLength"),
+      pattern(invalidCharRegex.r, error = "error.invalidCharAddress1")
     ),
     "street1"            -> optional(
       default(text, "").verifying(
-        maxLength(50, "error.addressLineTwo.maxLength")
+        maxLength(50, "error.addressLineTwo.maxLength"),
+        pattern(invalidCharRegex.r, error = "error.invalidCharAddress2")
       )
     ),
     "town"               -> default(text, "").verifying(
       nonEmpty(errorMessage = "error.town.required"),
-      maxLength(50, "error.town.maxLength")
+      maxLength(50, "error.town.maxLength"),
+      pattern(invalidCharRegex.r, error = "error.invalidCharTownCity")
     ),
     "county"             -> optional(
       default(text, "").verifying(
-        maxLength(50, "error.county.maxLength")
+        maxLength(50, "error.county.maxLength"),
+        pattern(invalidCharRegex.r, error = "error.invalidCharCounty")
       )
     ),
     "postcode"           -> postcode
