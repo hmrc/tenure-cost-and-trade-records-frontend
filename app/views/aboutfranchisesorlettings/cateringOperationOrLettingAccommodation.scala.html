@@ -34,20 +34,48 @@
 
 @(theForm: Form[_], cateringOrLetting: String, backLink: String, summary: Summary, formType: String)(implicit request: Request[_], messages: Messages)
 
+@for6015 = @{formType == ForTypes.for6015 || formType == ForTypes.for6016}
+
 @label =@{
-  if(formType == ForTypes.for6015 || formType == ForTypes.for6016) messages("label.section.aboutTheFranchiseConcessions")  else {
+  if(for6015) messages("label.section.aboutTheFranchiseConcessions")  else {
    messages("label.section.aboutTheFranchiseLettings")
   }
  }
 
+@heading = @{
+  if(for6015) messages("lettingsIncome.heading")  else {
+   messages(s"${cateringOrLetting}.heading")
+  }
+ }
+@hint = @{
+ if(for6015) None  else {
+  Some(Hint(content = Text(messages(s"hint.${cateringOrLetting}"))))
+ }
+}
+@legend =@{
+  if(for6015){
+   Option(Legend(
+    content = Text(messages("lettingsIncome.label")),
+    isPageHeading = false,
+    classes = "govuk-!-font-weight-bold"
+   ))
+  } else {
+   Option(Legend(
+     content = Text(messages(s"${cateringOrLetting}.heading")),
+     isPageHeading = true,
+     classes = "govuk-fieldset__legend--l"
+    ))
+  }
+ }
+
 @layout(
- pageHeading = messages(s"${cateringOrLetting}.heading"),
- showH1 = false,
+ pageHeading = heading,
+ showH1 = if(for6015) true else false,
  showSection = true,
  summary = Some(summary),
  sectionName = label,
  backLinkUrl = backLink,
- theForm = theForm
+ theForm = theForm,
 ) {
 
  @formWithCSRF(action = {
@@ -60,6 +88,10 @@
     else controllers.routes.TaskListController.show()}
  ) {
 
+  @if(for6015) {
+   <p class="govuk-body">@messages("lettingsIncome.p1")</p>
+  }
+
   @govukRadios(
    Radios(
     name = s"${cateringOrLetting}",
@@ -71,22 +103,10 @@
     ).map(radioItem => RadioItem(
      content = Text(radioItem._2),
      checked = radioItem._1.equals(theForm(s"${cateringOrLetting}").value.getOrElse("")),
-     value = Option(radioItem._1)
-    )
-    ),
+     value = Option(radioItem._1))),
     errorMessage = theForm.errors.asTextErrorMessageForField(s"${cateringOrLetting}"),
-    fieldset = Option(
-     Fieldset(
-      legend = Option(
-       Legend(
-        content = Text(messages(s"${cateringOrLetting}.heading")),
-        isPageHeading = true,
-        classes = "govuk-fieldset__legend--l"
-       )
-      )
-     )
-    ),
-    hint = Some(Hint(content = Text(messages(s"hint.${cateringOrLetting}")))),
+    fieldset = Option(Fieldset(legend = legend)),
+    hint = hint,
    )
   )
 
