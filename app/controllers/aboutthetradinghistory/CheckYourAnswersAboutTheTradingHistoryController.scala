@@ -51,7 +51,7 @@ class CheckYourAnswersAboutTheTradingHistoryController @Inject() (
         checkYourAnswersAboutTheTradingHistoryView(
           request.sessionData.aboutTheTradingHistory.flatMap(_.checkYourAnswersAboutTheTradingHistory) match {
             case Some(checkYourAnswersAboutTheTradingHistory) =>
-              checkYourAnswersAboutTheTradingHistoryForm.fillAndValidate(checkYourAnswersAboutTheTradingHistory)
+              checkYourAnswersAboutTheTradingHistoryForm.fill(checkYourAnswersAboutTheTradingHistory)
             case _                                            => checkYourAnswersAboutTheTradingHistoryForm
           },
           getBackLink(request.sessionData),

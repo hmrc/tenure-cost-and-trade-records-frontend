@@ -46,7 +46,7 @@ class WebsiteForPropertyController @Inject() (
       Ok(
         websiteForPropertyView(
           request.sessionData.aboutYouAndTheProperty.flatMap(_.websiteForPropertyDetails) match {
-            case Some(websiteForPropertyDetails) => websiteForPropertyForm.fillAndValidate(websiteForPropertyDetails)
+            case Some(websiteForPropertyDetails) => websiteForPropertyForm.fill(websiteForPropertyDetails)
             case _                               => websiteForPropertyForm
           },
           request.sessionData.toSummary

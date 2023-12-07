@@ -52,7 +52,7 @@ class CheckYourAnswersAboutFranchiseOrLettingsController @Inject() (
         checkYourAnswersAboutFranchiseOrLettingsView(
           request.sessionData.aboutFranchisesOrLettings.flatMap(_.checkYourAnswersAboutFranchiseOrLettings) match {
             case Some(checkYourAnswersAboutFranchiseOrLettings) =>
-              checkYourAnswersAboutFranchiseOrLettingsForm.fillAndValidate(checkYourAnswersAboutFranchiseOrLettings)
+              checkYourAnswersAboutFranchiseOrLettingsForm.fill(checkYourAnswersAboutFranchiseOrLettings)
             case _                                              => checkYourAnswersAboutFranchiseOrLettingsForm
           },
           getBackLink(request.sessionData),

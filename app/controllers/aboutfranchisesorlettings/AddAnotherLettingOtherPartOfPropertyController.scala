@@ -48,7 +48,7 @@ class AddAnotherLettingOtherPartOfPropertyController @Inject() (
       Ok(
         addAnotherCateringOperationOrLettingAccommodationView(
           existingSection.flatMap(_.addAnotherLettingToProperty) match {
-            case Some(addAnotherLettings) => addAnotherLettingForm.fillAndValidate(addAnotherLettings)
+            case Some(addAnotherLettings) => addAnotherLettingForm.fill(addAnotherLettings)
             case _                        => addAnotherLettingForm
           },
           index,

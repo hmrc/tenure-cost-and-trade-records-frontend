@@ -47,7 +47,7 @@ class EnforcementActionBeenTakenDetailsController @Inject() (
         enforcementActionBeenTakenDetailsView(
           request.sessionData.aboutYouAndTheProperty.flatMap(_.enforcementActionHasBeenTakenInformationDetails) match {
             case Some(enforcementActionInformation) =>
-              enforcementActionDetailsForm.fillAndValidate(enforcementActionInformation)
+              enforcementActionDetailsForm.fill(enforcementActionInformation)
             case _                                  => enforcementActionDetailsForm
           },
           request.sessionData.toSummary

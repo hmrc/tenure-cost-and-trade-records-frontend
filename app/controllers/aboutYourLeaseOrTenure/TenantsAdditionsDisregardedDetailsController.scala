@@ -44,7 +44,7 @@ class TenantsAdditionsDisregardedDetailsController @Inject() (
     Ok(
       tenantsAdditionsDisregardedDetailsView(
         request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.tenantsAdditionsDisregardedDetails) match {
-          case Some(data) => tenantsAdditionsDisregardedDetailsForm.fillAndValidate(data)
+          case Some(data) => tenantsAdditionsDisregardedDetailsForm.fill(data)
           case _          => tenantsAdditionsDisregardedDetailsForm
         },
         request.sessionData.toSummary

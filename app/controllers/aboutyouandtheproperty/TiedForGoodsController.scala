@@ -49,7 +49,7 @@ class TiedForGoodsController @Inject() (
       Ok(
         tiedForGoodsView(
           request.sessionData.aboutYouAndTheProperty.flatMap(_.tiedForGoods) match {
-            case Some(tiedForGoods) => tiedForGoodsForm.fillAndValidate(tiedForGoods)
+            case Some(tiedForGoods) => tiedForGoodsForm.fill(tiedForGoods)
             case _                  => tiedForGoodsForm
           },
           getBackLink(request.sessionData),

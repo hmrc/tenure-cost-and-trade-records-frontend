@@ -46,7 +46,7 @@ class CanRentBeReducedOnReviewController @Inject() (
       Ok(
         canRentBeReducedOnReviewView(
           request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.canRentBeReducedOnReviewDetails) match {
-            case Some(data) => canRentBeReducedOnReviewForm.fillAndValidate(data)
+            case Some(data) => canRentBeReducedOnReviewForm.fill(data)
             case _          => canRentBeReducedOnReviewForm
           },
           request.sessionData.toSummary

@@ -43,7 +43,7 @@ class OtherCostsController @Inject() (
     Ok(
       otherCostsView(
         request.sessionData.aboutTheTradingHistory.flatMap(_.otherCosts) match {
-          case Some(otherCosts) => otherCostsForm.fillAndValidate(otherCosts)
+          case Some(otherCosts) => otherCostsForm.fill(otherCosts)
           case _                => otherCostsForm
         },
         request.sessionData.toSummary

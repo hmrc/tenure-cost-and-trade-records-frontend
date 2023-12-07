@@ -43,7 +43,7 @@ class NetProfitController @Inject() (
     Ok(
       netProfitView(
         request.sessionData.aboutTheTradingHistory.flatMap(_.netProfit) match {
-          case Some(netProfit) => netProfitForm.fillAndValidate(netProfit)
+          case Some(netProfit) => netProfitForm.fill(netProfit)
           case _               => netProfitForm
         },
         request.sessionData.toSummary

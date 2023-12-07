@@ -50,7 +50,7 @@ class AreYouThirdPartyController @Inject() (
       Ok(
         areYouThirdPartyView(
           request.sessionData.stillConnectedDetails.flatMap(_.areYouThirdParty) match {
-            case Some(enforcementAction) => areYouThirdPartyForm.fillAndValidate(enforcementAction)
+            case Some(enforcementAction) => areYouThirdPartyForm.fill(enforcementAction)
             case _                       => areYouThirdPartyForm
           },
           getBackLink(request.sessionData),

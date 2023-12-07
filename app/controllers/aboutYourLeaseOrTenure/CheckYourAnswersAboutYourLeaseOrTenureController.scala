@@ -51,7 +51,7 @@ class CheckYourAnswersAboutYourLeaseOrTenureController @Inject() (
         checkYourAnswersAboutYourLeaseOrTenureView(
           request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.checkYourAnswersAboutYourLeaseOrTenure) match {
             case Some(checkYourAnswersAboutYourLeaseOrTenureView) =>
-              checkYourAnswersAboutYourLeaseOrTenureForm.fillAndValidate(checkYourAnswersAboutYourLeaseOrTenureView)
+              checkYourAnswersAboutYourLeaseOrTenureForm.fill(checkYourAnswersAboutYourLeaseOrTenureView)
             case _                                                => checkYourAnswersAboutYourLeaseOrTenureForm
           },
           getBackLink(request.sessionData),

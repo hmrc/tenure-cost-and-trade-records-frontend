@@ -47,7 +47,7 @@ class RentIncludeTradeServicesDetailsController @Inject() (
         rentIncludeTradeServicesDetailsView(
           request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.rentIncludeTradeServicesInformation) match {
             case Some(rentIncludeTradeServicesInformation) =>
-              rentIncludeTradeServicesDetailsForm().fillAndValidate(rentIncludeTradeServicesInformation)
+              rentIncludeTradeServicesDetailsForm().fill(rentIncludeTradeServicesInformation)
             case _                                         => rentIncludeTradeServicesDetailsForm()
           },
           request.sessionData.toSummary

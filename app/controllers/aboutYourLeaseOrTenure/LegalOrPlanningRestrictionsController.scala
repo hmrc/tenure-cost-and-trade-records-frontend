@@ -44,7 +44,7 @@ class LegalOrPlanningRestrictionsController @Inject() (
     Ok(
       legalOrPlanningRestrictionsView(
         request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.legalOrPlanningRestrictions) match {
-          case Some(data) => legalPlanningRestrictionsForm.fillAndValidate(data)
+          case Some(data) => legalPlanningRestrictionsForm.fill(data)
           case _          => legalPlanningRestrictionsForm
         },
         request.sessionData.toSummary

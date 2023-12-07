@@ -46,7 +46,7 @@ class TenancyLeaseAgreementExpireController @Inject() (
         tenancyLeaseAgreementExpireView(
           request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.tenancyLeaseAgreementExpire) match {
             case Some(tenancyLeaseAgreementExpire) =>
-              tenancyLeaseAgreementExpireForm.fillAndValidate(tenancyLeaseAgreementExpire)
+              tenancyLeaseAgreementExpireForm.fill(tenancyLeaseAgreementExpire)
             case _                                 => tenancyLeaseAgreementExpireForm
           },
           request.sessionData.toSummary

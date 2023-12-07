@@ -46,7 +46,7 @@ class AboutYourLandlordController @Inject() (
       Ok(
         aboutYourLandlordView(
           request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.aboutTheLandlord) match {
-            case Some(aboutTheLandlord) => aboutTheLandlordForm.fillAndValidate(aboutTheLandlord)
+            case Some(aboutTheLandlord) => aboutTheLandlordForm.fill(aboutTheLandlord)
             case _                      => aboutTheLandlordForm
           },
           request.sessionData.toSummary,

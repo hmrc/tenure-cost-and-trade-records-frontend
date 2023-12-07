@@ -46,7 +46,7 @@ class IncludedInYourRentController @Inject() (
       Ok(
         includedInYourRentView(
           request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.includedInYourRentDetails) match {
-            case Some(includedInYourRentDetails) => includedInYourRentForm.fillAndValidate(includedInYourRentDetails)
+            case Some(includedInYourRentDetails) => includedInYourRentForm.fill(includedInYourRentDetails)
             case _                               => includedInYourRentForm
           },
           request.sessionData.toSummary,

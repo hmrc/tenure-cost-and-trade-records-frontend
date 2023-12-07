@@ -46,7 +46,7 @@ class TenancyLeaseAgreementController @Inject() (
       Ok(
         tenancyLeaseAgreementView(
           request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.tenancyLeaseAgreementDetails) match {
-            case Some(data) => tenancyLeaseAgreementForm.fillAndValidate(data)
+            case Some(data) => tenancyLeaseAgreementForm.fill(data)
             case _          => tenancyLeaseAgreementForm
           }
         )

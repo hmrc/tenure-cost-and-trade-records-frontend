@@ -46,7 +46,7 @@ class AboutYouController @Inject() (
       Ok(
         aboutYouView(
           request.sessionData.aboutYouAndTheProperty.flatMap(_.customerDetails) match {
-            case Some(customerDetails) => aboutYouForm.fillAndValidate(customerDetails)
+            case Some(customerDetails) => aboutYouForm.fill(customerDetails)
             case _                     => aboutYouForm
           },
           request.sessionData.toSummary

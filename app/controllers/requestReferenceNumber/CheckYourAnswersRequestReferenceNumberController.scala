@@ -57,7 +57,7 @@ class CheckYourAnswersRequestReferenceNumberController @Inject() (
         checkYourAnswersRequestReferenceNumberView(
           request.sessionData.requestReferenceNumberDetails.flatMap(_.checkYourAnswersRequestReferenceNumber) match {
             case Some(checkYourAnswersRequestReferenceNumber) =>
-              checkYourAnswersRequestReferenceNumberForm.fillAndValidate(checkYourAnswersRequestReferenceNumber)
+              checkYourAnswersRequestReferenceNumberForm.fill(checkYourAnswersRequestReferenceNumber)
             case _                                            => checkYourAnswersRequestReferenceNumberForm
           },
           request.sessionData

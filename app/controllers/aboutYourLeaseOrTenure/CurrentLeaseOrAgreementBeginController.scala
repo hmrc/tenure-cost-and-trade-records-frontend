@@ -45,7 +45,7 @@ class CurrentLeaseOrAgreementBeginController @Inject() (
       currentLeaseOrAgreementBeginView(
         request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.currentLeaseOrAgreementBegin) match {
           case Some(currentLeaseOrAgreementBegin) =>
-            currentLeaseOrAgreementBeginForm.fillAndValidate(currentLeaseOrAgreementBegin)
+            currentLeaseOrAgreementBeginForm.fill(currentLeaseOrAgreementBegin)
           case _                                  => currentLeaseOrAgreementBeginForm
         },
         request.sessionData.toSummary

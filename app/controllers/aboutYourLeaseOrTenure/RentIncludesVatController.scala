@@ -47,7 +47,7 @@ class RentIncludesVatController @Inject() (
       Ok(
         rentIncludeVatView(
           request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.rentIncludesVat) match {
-            case Some(rentIncludeVat) => rentIncludesVatForm.fillAndValidate(rentIncludeVat)
+            case Some(rentIncludeVat) => rentIncludesVatForm.fill(rentIncludeVat)
             case _                    => rentIncludesVatForm
           },
           request.sessionData.toSummary

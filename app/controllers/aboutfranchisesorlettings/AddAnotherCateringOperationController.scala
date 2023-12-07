@@ -48,7 +48,7 @@ class AddAnotherCateringOperationController @Inject() (
       Ok(
         addAnotherCateringOperationOrLettingAccommodationView(
           existingSection.flatMap(_.addAnotherOperationToProperty) match {
-            case Some(addAnotherOperation) => addAnotherCateringOperationForm.fillAndValidate(addAnotherOperation)
+            case Some(addAnotherOperation) => addAnotherCateringOperationForm.fill(addAnotherOperation)
             case _                         => addAnotherCateringOperationForm
           },
           index,

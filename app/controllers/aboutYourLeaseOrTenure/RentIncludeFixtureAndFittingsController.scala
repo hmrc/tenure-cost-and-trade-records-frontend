@@ -50,7 +50,7 @@ class RentIncludeFixtureAndFittingsController @Inject() (
         rentIncludeFixtureAndFittingsView(
           request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.rentIncludeFixturesAndFittingsDetails) match {
             case Some(rentIncludeFixturesAndFittingsDetails) =>
-              rentIncludeFixturesAndFittingsForm.fillAndValidate(rentIncludeFixturesAndFittingsDetails)
+              rentIncludeFixturesAndFittingsForm.fill(rentIncludeFixturesAndFittingsDetails)
             case _                                           => rentIncludeFixturesAndFittingsForm
           },
           getBackLink(request.sessionData),

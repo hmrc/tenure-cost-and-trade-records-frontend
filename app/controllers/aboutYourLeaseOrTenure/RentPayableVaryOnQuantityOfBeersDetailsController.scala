@@ -48,7 +48,7 @@ class RentPayableVaryOnQuantityOfBeersDetailsController @Inject() (
           request.sessionData.aboutLeaseOrAgreementPartTwo
             .flatMap(_.rentPayableVaryOnQuantityOfBeersInformationDetails) match {
             case Some(rentPayableVaryOnQuantityOfBeersInformationDetails) =>
-              rentPayableVaryOnQuantityOfBeersDetailsForm.fillAndValidate(
+              rentPayableVaryOnQuantityOfBeersDetailsForm.fill(
                 rentPayableVaryOnQuantityOfBeersInformationDetails
               )
             case _                                                        => rentPayableVaryOnQuantityOfBeersDetailsForm
