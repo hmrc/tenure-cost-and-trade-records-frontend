@@ -14,32 +14,161 @@
  * limitations under the License.
  *@
 
+@import actions.SessionRequest
 @import models.submissions.aboutthetradinghistory.OtherCosts
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
-@import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
-@import models.pages.Summary
+@import uk.gov.hmrc.govukfrontend.views.html.components._
+@import uk.gov.hmrc.govukfrontend.views.Implicits._
+@import util.DateUtil
+@import util.NumberUtil._
+@import java.time.LocalDate
 
 @this(layout: Layout,
         govukButton: GovukButton,
-        formWithCSRF: FormWithCSRF
+        formWithCSRF: FormWithCSRF,
+        govukInput: GovukInput,
+        govukDateInput: GovukDateInput,
+        govukTable: GovukTable,
+        govukInsetText: GovukInsetText,
+        govukDetails: GovukDetails,
+        govukCharacterCount: GovukCharacterCount,
+        dateUtil: DateUtil
 )
 
-@(theForm: Form[OtherCosts], summary: Summary)(implicit request: Request[_], messages: Messages)
+@(theForm: Form[OtherCosts], backLinkUrl: Option[String]= None, fromLocation: String = "")(implicit request: SessionRequest[_], messages: Messages)
+
+@detailsContent = {
+    <p class="govuk-body">@messages("otherCosts.details.p1")</p>
+}
+
+@contributionToHeadOfficeHeading = {
+    <p class="govuk-body"><span class="govuk-!-font-weight-bold">@messages("otherCosts.contributionToHeadOffice")</span></p>
+}
+
+@otherCostsHeading = {
+    <p class="govuk-body"><span class="govuk-!-font-weight-bold">@messages("otherCosts.otherCosts")</span></p>
+    @otherCostsDetailsDescription
+}
+
+@otherCostsDetailsDescription = {
+    <span class="govuk-hint">@messages("otherCosts.otherCosts.p1")</span>
+}
+
+@totalHeading = {
+    <p class="govuk-body"><span class="govuk-!-font-weight-bold">@messages("otherCosts.total")</span></p>
+}
+
+@totalOtherCostContent(idx: Int) = {
+    <span id="@{"otherCostTotal." + idx}">
+    @theForm.value.fold("")(_.otherCosts.map(_.total).sum.asMoney)
+    </span>
+}
+
+@columns = @{
+    request.sessionData.aboutTheTradingHistory.map(_.turnoverSections).fold(Seq.empty[Int])(_.indices)
+}
+
+
+@costInputAttributes = @{
+    Map("maxlength" -> "13")
+}
 
 @layout(
   pageHeading = messages("otherCosts.heading"),
   showSection = true,
-    summary = Some(summary),
+  summary = Some(request.sessionData.toSummary),
   sectionName = messages("label.section.aboutYourTradingHistory"),
   backLinkUrl = controllers.aboutthetradinghistory.routes.FixedOperatingExpensesController.show.url,
+  theForm = theForm
 ) {
+    @detailsContent
+    @govukInsetText(InsetText(
+        content = Text(messages("otherCosts.inset"))
+    ))
 
   @formWithCSRF(action = controllers.aboutthetradinghistory.routes.OtherCostsController.submit()) {
+
+      @govukTable(Table(
+          rows = Seq(
+              // Header Row for Financial Year End
+              TableRow(
+                  content = Text(messages("otherCosts.financialYearEnd")),
+                  classes = "govuk-!-font-weight-bold"
+              ) +: columns.map { idx =>
+                  TableRow(
+                      content = Text(
+                          dateUtil.formatDayMonthAbbrYear(request.sessionData.aboutTheTradingHistory.flatMap(_.otherCosts).map(_.otherCosts(idx).financialYearEnd).getOrElse(LocalDate.now))
+                      )
+                  )
+              },
+
+              // Row for Contributions to Head Office
+              TableRow(
+                  content = HtmlContent(contributionToHeadOfficeHeading)
+              ) +: columns.map { idx =>
+                  TableRow(
+                      content = HtmlContent(
+                          govukInput(
+                              Input(
+                                  prefix = Some(PrefixOrSuffix(
+                                      content = Text("£")
+                                  )),
+                                  attributes = costInputAttributes
+                              ).withFormField(theForm(s"otherCosts[$idx].contributionsToHeadOffice"))
+                          )
+                      )
+                  )
+              },
+
+              // Row for Other Costs
+              TableRow(
+                  content = HtmlContent(otherCostsHeading)
+              ) +: columns.map { idx =>
+                  TableRow(
+                      content = HtmlContent(
+                          govukInput(
+                              Input(
+                                  prefix = Some(PrefixOrSuffix(
+                                      content = Text("£")
+                                  )),
+                                  attributes = costInputAttributes
+                              ).withFormField(theForm(s"otherCosts[$idx].otherCosts"))
+                          )
+                      )
+                  )
+              },
+                      // Additional Cell for TextArea spanning across remaining columns
+                     Seq( TableRow(content = HtmlContent("")),TableRow(
+                          content = HtmlContent(
+      govukCharacterCount(
+          CharacterCount(
+              id = "otherCostDetails",
+              name = "otherCostDetails",
+              maxLength = 2000,
+              hint = Some(Hint(content = Text(messages("otherCostDetails.hint")))),
+              errorMessage = theForm.errors.asTextErrorMessageForField("otherCostDetails"),
+          ).withFormField(theForm("otherCostDetails"))
+      )
+      ),
+      colspan = Some(columns.size) // Adjust based on required span
+      )),
+
+              // Row for Total
+              TableRow(
+                  content = HtmlContent(totalHeading)
+              ) +: columns.map { idx =>
+                  TableRow(
+                      content = HtmlContent(totalOtherCostContent(idx))
+                  )
+              }
+          ),
+          captionClasses = "govuk-table__caption--m",
+          firstCellIsHeader = true
+      ))
 
       @includes.continueSaveAsDraftButtons(govukButton)
   }
 }
 
-
+<script src="@routes.Assets.versioned("javascripts/other-costs.js")"></script>
 
 

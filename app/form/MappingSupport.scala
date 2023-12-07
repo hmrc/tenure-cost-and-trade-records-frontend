@@ -423,6 +423,11 @@ object MappingSupport {
       .verifying(between(zeroBigDecimal, salesMax, s"error.$field.range"))
   ).verifying(s"error.$field.required", _.nonEmpty)
 
+  def otherCostValueMapping(field: String): Mapping[Option[BigDecimal]] = optional(
+    text
+      .transform[BigDecimal](s => Try(BigDecimal(s)).getOrElse(-1), _.toString)
+      .verifying(between(zeroBigDecimal, salesMax, s"error.$field.range"))
+  ).verifying(s"error.$field.required", _.nonEmpty)
 }
 
 object EnumMapping {

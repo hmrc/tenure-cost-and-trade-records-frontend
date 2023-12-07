@@ -16,6 +16,7 @@
 
 package controllers.aboutthetradinghistory
 
+import actions.SessionRequest
 import navigation.AboutTheTradingHistoryNavigator
 import play.api.http.Status
 import play.api.test.Helpers._
@@ -25,9 +26,10 @@ import views.html.aboutthetradinghistory.otherCosts
 
 class OtherCostsControllerSpec extends TestBaseSpec {
 
+  val sessionRequest           = SessionRequest(aboutYourTradingHistory6015YesSession, fakeRequest)
   val mockOtherCostsNavigator = mock[AboutTheTradingHistoryNavigator]
   val mockOtherCostsView      = mock[otherCosts]
-  when(mockOtherCostsView.apply(any, any)(any, any)).thenReturn(HtmlFormat.empty)
+  when(mockOtherCostsView.apply(any,any,any)(any, any)).thenReturn(HtmlFormat.empty)
 
   val otherCostsController = new OtherCostsController(
     stubMessagesControllerComponents(),
@@ -39,12 +41,12 @@ class OtherCostsControllerSpec extends TestBaseSpec {
 
   "GET /" should {
     "return 200" in {
-      val result = otherCostsController.show(fakeRequest)
+      val result = otherCostsController.show(sessionRequest)
       status(result) shouldBe Status.OK
     }
 
     "return HTML" in {
-      val result = otherCostsController.show(fakeRequest)
+      val result = otherCostsController.show(sessionRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }

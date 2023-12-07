@@ -17,11 +17,18 @@
 package models.submissions.aboutthetradinghistory
 
 import play.api.libs.json.Json
+import util.NumberUtil.zeroBigDecimal
+import java.time.LocalDate
 
-case class OtherCosts(
-                       otherCosts: Seq[OtherCost] = Seq.empty,
-                       otherCostDetails: Option[String] = None
-                     )
-object OtherCosts {
-  implicit val format = Json.format[OtherCosts]
+case class OtherCost(
+                      financialYearEnd: LocalDate,
+                      contributionsToHeadOffice: Option[BigDecimal],
+                      otherCosts: Option[BigDecimal]
+                    ) {
+  def total: BigDecimal =contributionsToHeadOffice.getOrElse(zeroBigDecimal) + otherCosts.getOrElse(zeroBigDecimal)
+}
+
+
+object OtherCost {
+  implicit val format = Json.format[OtherCost]
 }

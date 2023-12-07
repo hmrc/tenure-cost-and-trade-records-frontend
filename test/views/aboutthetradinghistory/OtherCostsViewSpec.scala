@@ -16,6 +16,7 @@
 
 package views.aboutthetradinghistory
 
+import actions.SessionRequest
 import form.aboutthetradinghistory.OtherCostsForm
 import models.pages.Summary
 import models.submissions.aboutthetradinghistory.OtherCosts
@@ -29,12 +30,13 @@ class OtherCostsViewSpec extends QuestionViewBehaviours[OtherCosts] {
 
   val messageKeyPrefix = "otherCosts"
 
-  override val form = OtherCostsForm.otherCostsForm
+  override val form = OtherCostsForm.form
+  val sessionRequest   = SessionRequest(baseFilled6015Session, fakeRequest)
 
-  def createView = () => otherCostsView(form, Summary("99996010001"))(fakeRequest, messages)
+  def createView = () => otherCostsView(form)(sessionRequest, messages)
 
   def createViewUsingForm = (form: Form[OtherCosts]) =>
-    otherCostsView(form, Summary("99996010001"))(fakeRequest, messages)
+    otherCostsView(form)(sessionRequest, messages)
 
   "Other Costs view" must {
 

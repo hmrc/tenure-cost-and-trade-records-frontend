@@ -16,15 +16,37 @@
 
 package form.aboutthetradinghistory
 
-import models.submissions.aboutthetradinghistory.OtherCosts
-import play.api.data.Form
-import play.api.data.Forms.{default, mapping, text}
+import models.submissions.aboutthetradinghistory.{OtherCost, OtherCosts}
+import form.MappingSupport.otherCostValueMapping
+import play.api.data.{Form, Mapping}
+import play.api.data.Forms._
+import play.api.data.validation.{Constraint, Invalid, Valid, ValidationError}
+
+import java.time.LocalDate
 
 object OtherCostsForm {
 
-  val otherCostsForm = Form(
-    mapping(
-      "otherCosts" -> default(text, "")
-    )(OtherCosts.apply)(OtherCosts.unapply)
+  val otherCostDetailsRequired: Constraint[OtherCosts] = Constraint("constraints.otherCostDetailsRequired") { otherCosts =>
+    if (!otherCosts.otherCostDetails.isDefined && otherCosts.otherCosts.exists(_.otherCosts.exists(_ > 0))) {
+      Invalid(Seq(ValidationError("error.otherCostDetails.required")))
+    } else {
+      Valid
+    }
+  }
+
+  val otherCostMapping: Mapping[OtherCost] = mapping(
+    "financialYearEnd" -> ignored(LocalDate.EPOCH),
+    "contributionsToHeadOffice" -> otherCostValueMapping("otherCosts.contributionsToHeadOffice"),
+    "otherCosts" -> otherCostValueMapping("otherCosts.otherCosts")
+  )(OtherCost.apply)(OtherCost.unapply)
+
+  val otherCostsMapping: Mapping[OtherCosts] = mapping(
+    "otherCosts" -> seq(otherCostMapping),
+    "otherCostDetails" -> optional(text(maxLength = 2000))
+  )(OtherCosts.apply)(OtherCosts.unapply)
+
+  val form: Form[OtherCosts] = Form(
+    otherCostsMapping.verifying(otherCostDetailsRequired)
   )
+
 }
