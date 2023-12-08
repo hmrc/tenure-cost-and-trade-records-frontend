@@ -1230,7 +1230,20 @@ fixedOperatingExpenses.depreciation = Depreciation
 
 # OTHER COSTS (FORM 6015)
 #########################
-otherCosts.heading = Other costs - holding page
+otherCosts.heading = Other costs
+otherCosts.details.p1 = Provide details of all other costs that were deducted before calculating the net profit, but have not been previously declared.
+otherCosts.inset = All fields on this page are mandatory. If none of the categories are applicable, enter the number 0.
+otherCosts.financialYearEnd = Financial year end
+otherCosts.contributionToHeadOffice = Contributions to head office
+otherCosts.otherCosts = Other costs
+otherCosts.otherCosts.p1 = Include all other costs not listed previously
+otherCostDetails.hint = Give details of the items included in your other costs
+otherCosts.total = Total other costs
+error.otherCosts.contributionsToHeadOffice.required = Some year {0}
+error.otherCosts.contributionsToHeadOffice.range = contributionsToHeadOffice range for year {0}
+error.otherCosts.otherCosts.required = Required Other cost {0}
+error.otherCosts.otherCosts.range = Range Other cost for year {0} should be between 0 and 1,000,000,000,000
+error.otherCostDetails.required = Other costs details is required
 
 # INCOME EXPENDITURE SUMMARY (FORM 6015)
 ########################################

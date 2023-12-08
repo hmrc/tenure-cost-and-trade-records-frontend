@@ -287,7 +287,7 @@ trait FakeObjects {
     aboutYouAndTheProperty6015YesSession.copy(
       aboutTheTradingHistory = Some(
         prefilledAboutYourTradingHistory
-          .copy(costOfSales = Seq(CostOfSales(LocalDate.now, None, None, None, None)))
+          .copy(costOfSales = Seq(CostOfSales(LocalDate.now, None, None, None, None)),otherCosts = Some(OtherCosts(otherCosts = Seq(OtherCost(LocalDate.now,None,None)))))
       )
     )
 
