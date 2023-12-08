@@ -73,7 +73,7 @@ class MonthYearFormatter(
         oneError(yearKey, "error.date.mustInclude", Seq(fieldCapitalized, yearText, Seq("year")))
       case (Some(m), Some(y)) =>
         val month = parseNumber(m, 1 to 12)
-        val year  = parseNumber(y, 1900 to 9999)
+        val year  = parseNumber(y, 1 to 9999)
         if (month > 0 && year >= 0) {
           validateDate(month, year).left.map { errorKey =>
             Seq(FormError(monthKey, errorKey, Seq(fieldCapitalized, monthYearFields)))
@@ -107,6 +107,8 @@ class MonthYearFormatter(
 
   private def validateDate(month: Int, year: Int): Either[String, MonthsYearDuration] =
     if (year == -1) {
+      Left("error.date.year.invalid")
+    } else if ( year == 0){
       Left("error.date.year.invalid")
     } else if (year < 1900) {
       Left("error.date.before1900")
