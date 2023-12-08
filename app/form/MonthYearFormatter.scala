@@ -55,7 +55,8 @@ class MonthYearFormatter(
     val monthYearFieldName = messages(s"fieldName.$fieldNameKey", mYText)
 
     val fieldCapitalized = fieldName.capitalize
-    val monthText        = messages("error.dateParts.month")
+    val prefix           = messages("error.dateParts.prefix")
+    val monthText        = messages(s"error.dateParts.month")
     val yearText         = messages("error.dateParts.year")
     val monthKey         = s"$key.month"
     val yearKey          = s"$key.year"
@@ -68,9 +69,9 @@ class MonthYearFormatter(
     ).bind(data).flatMap {
       case (None, None)       => oneError(monthKey, "error.date.required", Seq(monthYearFieldName, monthYearFields))
       case (None, Some(_))    =>
-        oneError(monthKey, "error.date.mustInclude", Seq(fieldCapitalized, monthText, Seq("month")))
+        oneError(monthKey, "error.date.mustInclude", Seq(fieldCapitalized,s"$prefix $monthText", Seq("month")))
       case (Some(_), None)    =>
-        oneError(yearKey, "error.date.mustInclude", Seq(fieldCapitalized, yearText, Seq("year")))
+        oneError(yearKey, "error.date.mustInclude", Seq(fieldCapitalized, s"$prefix $yearText", Seq("year")))
       case (Some(m), Some(y)) =>
         val month = parseNumber(m, 1 to 12)
         val year  = parseNumber(y, 1 to 9999)
