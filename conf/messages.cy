@@ -1612,7 +1612,7 @@ error.optCurrency.graterThanAnnualRent = {0} cannot be grater than the annual re
 
 # Date fields validation
 error.date.required = Enter {0}
-error.date.mustInclude = {0} must include a {1}
+error.date.mustInclude = {0} must include {1}
 error.date.invalid = {0} must be a real date
 error.date.day.invalid = The day must be a number from 1 to 31
 error.date.month.invalid = The month must be a number from 1 to 12
