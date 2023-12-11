@@ -90,7 +90,7 @@ class SaveAsDraftController @Inject() (
     val forType         = session.forType
     val submissionDraft = SubmissionDraft(forType, session, exitPath)
 
-    backendConnector.saveAsDraft(session.referenceNumberCleaned, submissionDraft).map { _ =>
+    backendConnector.saveAsDraft(session.referenceNumberCleaned, submissionDraft,hc).map { _ =>
       audit.sendSavedAsDraft(submissionDraft.toSavedAsDraftEvent)
       Ok(submissionDraftSavedView(session.saveAsDraftPassword.getOrElse(""), expiryDate, exitPath))
     }
@@ -108,7 +108,7 @@ class SaveAsDraftController @Inject() (
       .fold(
         formWithErrors => BadRequest(saveAsDraftLoginView(formWithErrors)),
         password =>
-          backendConnector.loadSubmissionDraft(session.referenceNumber).map {
+          backendConnector.loadSubmissionDraft(session.referenceNumber,hc).map {
             case Some(draft) if draft.session.saveAsDraftPassword.exists(mongoHasher.verify(password, _)) =>
               val restoredSession = draft.session.copy(token = session.token, saveAsDraftPassword = None)
               sessionRepo.saveOrUpdate(restoredSession)
@@ -124,7 +124,7 @@ class SaveAsDraftController @Inject() (
   }
 
   def startAgain = (Action andThen withSessionRefiner).async { implicit request =>
-    backendConnector.deleteSubmissionDraft(request.sessionData.referenceNumberCleaned)
+    backendConnector.deleteSubmissionDraft(request.sessionData.referenceNumberCleaned,hc)
     Redirect(LoginController.startPage)
   }
 

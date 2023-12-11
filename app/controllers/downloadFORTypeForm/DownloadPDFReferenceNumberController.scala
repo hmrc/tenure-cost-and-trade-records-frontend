@@ -46,7 +46,7 @@ class DownloadPDFReferenceNumberController @Inject() (
         formWithErrors => Future.successful(BadRequest(downloadPDFReferenceNumberView(formWithErrors))),
         userData =>
           connector
-            .retrieveFORType(userData.downloadPDFReferenceNumber)
+            .retrieveFORType(userData.downloadPDFReferenceNumber,hc)
             .flatMap { value =>
               Future.successful(Redirect(controllers.downloadFORTypeForm.routes.DownloadPDFController.show(value)))
             }
