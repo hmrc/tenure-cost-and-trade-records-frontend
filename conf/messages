@@ -1239,11 +1239,11 @@ otherCosts.otherCosts = Other costs
 otherCosts.otherCosts.p1 = Include all other costs not listed previously
 otherCostDetails.hint = Give details of the items included in your other costs
 otherCosts.total = Total other costs
-error.otherCosts.contributionsToHeadOffice.required = Some year {0}
-error.otherCosts.contributionsToHeadOffice.range = contributionsToHeadOffice range for year {0}
-error.otherCosts.otherCosts.required = Required Other cost {0}
-error.otherCosts.otherCosts.range = Range Other cost for year {0} should be between 0 and 1,000,000,000,000
-error.otherCostDetails.required = Other costs details is required
+error.otherCosts.contributionsToHeadOffice.required = Enter 0 if you had no contributions to head office in the year ending {0}
+error.otherCosts.contributionsToHeadOffice.range = The contributions to head office for the year ending {0} must be a number like 100 or 100.00 and cannot be less than 0
+error.otherCosts.otherCosts.required = Enter 0 if you had no no other costs in the year ending {0}
+error.otherCosts.otherCosts.range = The other costs for the year ending {0} must be a number like 100 or 100.00 and cannot be less than 0
+error.otherCostDetails.required = Enter a description of the items included in your other costs
 
 # INCOME EXPENDITURE SUMMARY (FORM 6015)
 ########################################
