@@ -21,13 +21,12 @@ import util.NumberUtil.zeroBigDecimal
 import java.time.LocalDate
 
 case class OtherCost(
-                      financialYearEnd: LocalDate,
-                      contributionsToHeadOffice: Option[BigDecimal],
-                      otherCosts: Option[BigDecimal]
-                    ) {
-  def total: BigDecimal =contributionsToHeadOffice.getOrElse(zeroBigDecimal) + otherCosts.getOrElse(zeroBigDecimal)
+  financialYearEnd: LocalDate,
+  contributionsToHeadOffice: Option[BigDecimal],
+  otherCosts: Option[BigDecimal]
+) {
+  def total: BigDecimal = contributionsToHeadOffice.getOrElse(zeroBigDecimal) + otherCosts.getOrElse(zeroBigDecimal)
 }
-
 
 object OtherCost {
   implicit val format = Json.format[OtherCost]

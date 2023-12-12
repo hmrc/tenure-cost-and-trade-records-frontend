@@ -39,15 +39,15 @@ class OtherCostsController @Inject() (
   otherCostsView: otherCosts,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-                                     )(implicit ec: ExecutionContext)
-  extends FORDataCaptureController(mcc)
+)(implicit ec: ExecutionContext)
+    extends FORDataCaptureController(mcc)
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     runWithSessionCheckForOtherCosts { aboutTheTradingHistory =>
-      val yearEndDates = financialYearEndDates(aboutTheTradingHistory)
+      val yearEndDates       = financialYearEndDates(aboutTheTradingHistory)
       val existingOtherCosts = aboutTheTradingHistory.otherCosts.getOrElse(OtherCosts())
-      val updatedOtherCosts = if (existingOtherCosts.otherCosts.size != yearEndDates.size) {
+      val updatedOtherCosts  = if (existingOtherCosts.otherCosts.size != yearEndDates.size) {
         val newOtherCosts = yearEndDates.map(date => OtherCost(date, None, None))
         OtherCosts(newOtherCosts)
       } else {
@@ -55,13 +55,12 @@ class OtherCostsController @Inject() (
       }
 
       val updatedData = updateAboutTheTradingHistory(_.copy(otherCosts = Some(updatedOtherCosts)))
-      val filledForm = form.fill(updatedOtherCosts)
-      session.saveOrUpdate(updatedData)
+      val filledForm  = form.fill(updatedOtherCosts)
+      session
+        .saveOrUpdate(updatedData)
         .flatMap(_ => Ok(otherCostsView(filledForm)))
     }
   }
-
-
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
     runWithSessionCheckForOtherCosts { aboutTheTradingHistory =>
@@ -70,13 +69,13 @@ class OtherCostsController @Inject() (
         formWithErrors => {
           val updatedOtherCosts = aboutTheTradingHistory.otherCosts.getOrElse(OtherCosts(Seq.empty)).otherCosts
 
-          val updatedErrors = formWithErrors.errors.map { error =>
+          val updatedErrors         = formWithErrors.errors.map { error =>
             if (error.key.startsWith("otherCosts[")) {
-              val index = error.key.split("\\[")(1).split("\\]")(0).toInt
+              val index            = error.key.split("\\[")(1).split("\\]")(0).toInt
               val financialYearEnd = updatedOtherCosts.lift(index).map(_.financialYearEnd).getOrElse(LocalDate.now)
               error.copy(args = Seq(financialYearEnd))
             } else if (error.key.isEmpty && error.message == "error.otherCostDetails.required") {
-                error.copy(key = "otherCostDetails")
+              error.copy(key = "otherCostDetails")
             } else {
               error
             }
@@ -86,11 +85,12 @@ class OtherCostsController @Inject() (
           BadRequest(otherCostsView(updatedFormWithErrors))
         },
         data => {
-          val updatedOtherCostWithDate = (data.otherCosts zip financialYearEndDates(aboutTheTradingHistory)).map{
-            case (otherCost,finYearEnd) => otherCost.copy(financialYearEnd = finYearEnd)
+          val updatedOtherCostWithDate = (data.otherCosts zip financialYearEndDates(aboutTheTradingHistory)).map {
+            case (otherCost, finYearEnd) => otherCost.copy(financialYearEnd = finYearEnd)
           }
 
-          val updatedData = updateAboutTheTradingHistory(_.copy(otherCosts = Some(data.copy(otherCosts = updatedOtherCostWithDate))))
+          val updatedData =
+            updateAboutTheTradingHistory(_.copy(otherCosts = Some(data.copy(otherCosts = updatedOtherCostWithDate))))
           session
             .saveOrUpdate(updatedData)
             .map(_ =>
@@ -104,11 +104,9 @@ class OtherCostsController @Inject() (
     }
   }
 
-
-
   private def runWithSessionCheckForOtherCosts(
-                                                action: AboutTheTradingHistory => Future[Result]
-                                              )(implicit request: SessionRequest[AnyContent]) =
+    action: AboutTheTradingHistory => Future[Result]
+  )(implicit request: SessionRequest[AnyContent]) =
     request.sessionData.aboutTheTradingHistory
       .filter(_.occupationAndAccountingInformation.isDefined)
       .fold(Future.successful(Redirect(routes.AboutYourTradingHistoryController.show())))(action)

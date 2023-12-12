@@ -161,7 +161,7 @@ class FeedbackControllerSpec
       val result = feedbackController().feedbackSubmitWithoutSession()(
         postRequest.withFormUrlEncodedBody(
           "feedback-comments" -> "Good feedback",
-          "feedback-rating" -> "5"
+          "feedback-rating"   -> "5"
         )
       )
       status(result) shouldBe Status.SEE_OTHER

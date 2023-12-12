@@ -55,8 +55,8 @@ class DefaultBackendConnector @Inject() (servicesConfig: ServicesConfig, appConf
   override def verifyCredentials(refNumber: String, postcode: String)(implicit
     hc: HeaderCarrier
   ): Future[FORLoginResponse] = {
-    val credentials    = Credentials(cleanedRefNumber(refNumber), postcode)
-    val wrtCredentials = implicitly[Writes[Credentials]]
+    val credentials            = Credentials(cleanedRefNumber(refNumber), postcode)
+    val wrtCredentials         = implicitly[Writes[Credentials]]
     implicit val headerCarrier = hc.copy(authorization = Some(Authorization(internalAuthToken)))
     http.POST[Credentials, FORLoginResponse](
       url("authenticate"),
@@ -64,40 +64,36 @@ class DefaultBackendConnector @Inject() (servicesConfig: ServicesConfig, appConf
     )(wrtCredentials, readsHack, headerCarrier, ec)
   }
 
-  override def retrieveFORType(referenceNumber: String,
-    hc: HeaderCarrier
-  ): Future[String] = {
+  override def retrieveFORType(referenceNumber: String, hc: HeaderCarrier): Future[String] = {
     implicit val headerCarrier = hc.copy(authorization = Some(Authorization(internalAuthToken)))
 
     http
-      .GET(url(s"${cleanedRefNumber(referenceNumber)}/forType"))(HttpReads.Implicits.readRaw,headerCarrier,ec)
+      .GET(url(s"${cleanedRefNumber(referenceNumber)}/forType"))(HttpReads.Implicits.readRaw, headerCarrier, ec)
       .map(res => (res.json \ "FORType").as[String])
   }
 
-  override def saveAsDraft(referenceNumber: String, submissionDraft: SubmissionDraft,
+  override def saveAsDraft(
+    referenceNumber: String,
+    submissionDraft: SubmissionDraft,
     hc: HeaderCarrier
   ): Future[Unit] = {
     implicit val headerCarrier = hc.copy(authorization = Some(Authorization(internalAuthToken)))
     http.PUT(
       saveAsDraftUrl(referenceNumber),
       submissionDraft
-    )map { _ =>
+    ) map { _ =>
       ()
     }
   }
 
-  override def loadSubmissionDraft(referenceNumber: String,
-    hc: HeaderCarrier
-  ): Future[Option[SubmissionDraft]] = {
+  override def loadSubmissionDraft(referenceNumber: String, hc: HeaderCarrier): Future[Option[SubmissionDraft]] = {
     implicit val headerCarrier = hc.copy(authorization = Some(Authorization(internalAuthToken)))
     http.GET[Option[SubmissionDraft]](
       saveAsDraftUrl(referenceNumber)
-    )(HttpReads.Implicits.readOptionOfNotFound[SubmissionDraft],headerCarrier,ec)
+    )(HttpReads.Implicits.readOptionOfNotFound[SubmissionDraft], headerCarrier, ec)
   }
 
-  override def deleteSubmissionDraft(referenceNumber: String,
-    hc: HeaderCarrier
-  ): Future[Int] = {
+  override def deleteSubmissionDraft(referenceNumber: String, hc: HeaderCarrier): Future[Int] = {
     implicit val headerCarrier = hc.copy(authorization = Some(Authorization(internalAuthToken)))
     http
       .DELETE(saveAsDraftUrl(referenceNumber))
