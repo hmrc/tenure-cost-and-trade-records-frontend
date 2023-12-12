@@ -36,16 +36,16 @@ case class StubBackendConnector() extends BackendConnector {
   def retrieveFORType(referenceNumber: String, hc: HeaderCarrier): Future[String] =
     Future.successful("FOR6010")
 
-  override def saveAsDraft(referenceNumber: String, submissionDraft: SubmissionDraft,
+  override def saveAsDraft(
+    referenceNumber: String,
+    submissionDraft: SubmissionDraft,
     hc: HeaderCarrier
   ): Future[Unit] = {
     draft = Some(referenceNumber -> submissionDraft)
     Future.unit
   }
 
-  override def loadSubmissionDraft(referenceNumber: String,
-    hc: HeaderCarrier
-  ): Future[Option[SubmissionDraft]] =
+  override def loadSubmissionDraft(referenceNumber: String, hc: HeaderCarrier): Future[Option[SubmissionDraft]] =
     Future.successful(draft.filter(_._1 == referenceNumber).map(_._2))
 
   override def deleteSubmissionDraft(referenceNumber: String, hc: HeaderCarrier): Future[Int] = {

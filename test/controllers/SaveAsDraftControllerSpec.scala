@@ -114,7 +114,8 @@ class SaveAsDraftControllerSpec extends TestBaseSpec {
       status(result) shouldBe OK
       checkFinalPageDraftSaved(contentAsString(result))
 
-      val session = backendConnector.loadSubmissionDraft(prefilledBaseSession.referenceNumber,hc).futureValue.get.session
+      val session =
+        backendConnector.loadSubmissionDraft(prefilledBaseSession.referenceNumber, hc).futureValue.get.session
       session.address shouldBe submissionDraft.session.address
 
       val passwordHash = session.saveAsDraftPassword.getOrElse("")
@@ -144,8 +145,8 @@ class SaveAsDraftControllerSpec extends TestBaseSpec {
     "return 404 if SubmissionDraft doesn't exist" in {
       val refNum = prefilledBaseSession.referenceNumber
       sessionRepo.saveOrUpdate(prefilledBaseSession)
-      backendConnector.deleteSubmissionDraft(refNum,hc)
-      backendConnector.loadSubmissionDraft(refNum,hc).futureValue shouldBe None // SubmissionDraft deleted
+      backendConnector.deleteSubmissionDraft(refNum, hc)
+      backendConnector.loadSubmissionDraft(refNum, hc).futureValue shouldBe None // SubmissionDraft deleted
 
       val result = saveAsDraftController.resume(
         fakeRequest
@@ -158,8 +159,10 @@ class SaveAsDraftControllerSpec extends TestBaseSpec {
     "return saveAsDraftLoginForm with error `saveAsDraft.error.invalidPassword`" in {
       val refNum = submissionDraft.session.referenceNumber
       sessionRepo.saveOrUpdate(submissionDraft.session)
-      backendConnector.saveAsDraft(refNum, submissionDraft,hc)
-      backendConnector.loadSubmissionDraft(refNum,hc).futureValue shouldBe Some(submissionDraft) // SubmissionDraft exists
+      backendConnector.saveAsDraft(refNum, submissionDraft, hc)
+      backendConnector.loadSubmissionDraft(refNum, hc).futureValue shouldBe Some(
+        submissionDraft
+      ) // SubmissionDraft exists
 
       val result = saveAsDraftController.resume(
         fakeRequest
@@ -178,8 +181,8 @@ class SaveAsDraftControllerSpec extends TestBaseSpec {
       val session = prefilledBaseSession.copy(saveAsDraftPassword = Some(mongoHasher.hash(password)))
       val refNum  = session.referenceNumber
       val draft   = submissionDraft.copy(session = session)
-      backendConnector.saveAsDraft(refNum, draft,hc)
-      backendConnector.loadSubmissionDraft(refNum,hc).futureValue shouldBe Some(draft) // SubmissionDraft exists
+      backendConnector.saveAsDraft(refNum, draft, hc)
+      backendConnector.loadSubmissionDraft(refNum, hc).futureValue shouldBe Some(draft) // SubmissionDraft exists
       sessionRepo.saveOrUpdate(session.copy(token = "NEW_TOKEN", forType = "TMP_VALUE"))
 
       val sessionBefore = sessionRepo.get.futureValue.value
@@ -207,15 +210,17 @@ class SaveAsDraftControllerSpec extends TestBaseSpec {
   "SaveAsDraftController.startAgain" should {
     "delete SubmissionDraft and redirect to start page" in {
       val refNum = submissionDraft.session.referenceNumber
-      backendConnector.saveAsDraft(refNum, submissionDraft,hc)
+      backendConnector.saveAsDraft(refNum, submissionDraft, hc)
 
-      backendConnector.loadSubmissionDraft(refNum,hc).futureValue shouldBe Some(submissionDraft) // SubmissionDraft exists
+      backendConnector.loadSubmissionDraft(refNum, hc).futureValue shouldBe Some(
+        submissionDraft
+      ) // SubmissionDraft exists
 
       val result = saveAsDraftController.startAgain(fakeRequest)
       status(result)           shouldBe SEE_OTHER
       redirectLocation(result) shouldBe Some(LoginController.startPage.url)
 
-      backendConnector.loadSubmissionDraft(refNum,hc).futureValue shouldBe None // SubmissionDraft deleted
+      backendConnector.loadSubmissionDraft(refNum, hc).futureValue shouldBe None // SubmissionDraft deleted
     }
   }
 
@@ -228,7 +233,7 @@ class SaveAsDraftControllerSpec extends TestBaseSpec {
       status(result)           shouldBe SEE_OTHER
       redirectLocation(result) shouldBe Some(routes.SaveAsDraftController.sessionTimeout.url)
 
-      val session = backendConnector.loadSubmissionDraft(refNum,hc).futureValue.get.session
+      val session = backendConnector.loadSubmissionDraft(refNum, hc).futureValue.get.session
       session.address shouldBe submissionDraft.session.address
     }
   }

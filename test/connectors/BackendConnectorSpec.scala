@@ -101,7 +101,7 @@ class BackendConnectorSpec extends TestBaseSpec with BeforeAndAfterAll {
           .willReturn(aResponse().withStatus(200).withBody(Json.stringify(Json.toJson(submissionDraft))))
       )
 
-      val result = await(backendConnector.loadSubmissionDraft(testId,new HeaderCarrier()))
+      val result = await(backendConnector.loadSubmissionDraft(testId, new HeaderCarrier()))
 
       // Adjust the assertion according to your expected result
       result.get shouldBe submissionDraft

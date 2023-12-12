@@ -20,6 +20,7 @@ import actions.WithSessionRefiner
 import connectors.Audit
 import form.Feedback
 import models.Session
+import models.submissions.common.Address
 import play.api.data.Form
 import play.api.data.Forms.{mapping, optional, text}
 import play.api.i18n.I18nSupport
@@ -54,7 +55,7 @@ class FeedbackController @Inject() (
     Ok(feedbackThxView())
   }
 
-  def feedbackSubmit(): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+  def feedbackSubmitWithoutSession(): Action[AnyContent] = Action.async { implicit request =>
     feedbackForm
       .bindFromRequest()
       .fold(
@@ -63,10 +64,33 @@ class FeedbackController @Inject() (
             BadRequest(feedbackView(formWithErrors))
           },
         feedbackForm => {
-          sendFeedback("InPageFeedback", feedbackForm, request.sessionData)
+          sendFeedback("InPageFeedback", feedbackForm)
           Future.successful(Redirect(routes.FeedbackController.feedbackThx))
         }
       )
+  }
+
+  def feedbackSubmit(): Action[AnyContent] = Action.async { implicit request =>
+    if (request.session.get("session").isEmpty) {
+      feedbackSubmitWithoutSession().apply(request) // need that if user is not logged in
+    } else {
+      (Action andThen withSessionRefiner)
+        .async { implicit request =>
+          feedbackForm
+            .bindFromRequest()
+            .fold(
+              formWithErrors =>
+                Future.successful {
+                  BadRequest(feedbackView(formWithErrors))
+                },
+              feedbackForm => {
+                sendFeedback("InPageFeedback", feedbackForm, request.sessionData)
+                Future.successful(Redirect(routes.FeedbackController.feedbackThx))
+              }
+            )
+        }
+        .apply(request)
+    }
   }
 
   def feedbackConnectedSubmit = (Action andThen withSessionRefiner).async { implicit request =>

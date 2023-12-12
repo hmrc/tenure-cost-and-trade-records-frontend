@@ -146,6 +146,29 @@ class FeedbackControllerSpec
     }
   }
 
+  "feedbackSubmitWithoutSession" should {
+    "return BadRequest for invalid form submission" in {
+      val result = feedbackController().feedbackSubmitWithoutSession()(
+        postRequest.withFormUrlEncodedBody(
+          "feedback-rating" -> ""
+        )
+      )
+      status(result) shouldBe Status.BAD_REQUEST
+      contentType(result) shouldBe Some("text/html")
+    }
+
+    "return Redirect to feedbackThx for valid form submission" in {
+      val result = feedbackController().feedbackSubmitWithoutSession()(
+        postRequest.withFormUrlEncodedBody(
+          "feedback-comments" -> "Good feedback",
+          "feedback-rating"   -> "5"
+        )
+      )
+      status(result) shouldBe Status.SEE_OTHER
+      redirectLocation(result) shouldBe Some(controllers.routes.FeedbackController.feedbackThx.url)
+    }
+  }
+
   "form is invalid" when {
     "feedback-rating is missing" should {
       "fails with BAD_REQUEST" in {

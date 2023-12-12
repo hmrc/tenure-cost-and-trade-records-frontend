@@ -69,7 +69,7 @@ class MonthYearFormatter(
     ).bind(data).flatMap {
       case (None, None)       => oneError(monthKey, "error.date.required", Seq(monthYearFieldName, monthYearFields))
       case (None, Some(_))    =>
-        oneError(monthKey, "error.date.mustInclude", Seq(fieldCapitalized,s"$prefix $monthText", Seq("month")))
+        oneError(monthKey, "error.date.mustInclude", Seq(fieldCapitalized, s"$prefix $monthText", Seq("month")))
       case (Some(_), None)    =>
         oneError(yearKey, "error.date.mustInclude", Seq(fieldCapitalized, s"$prefix $yearText", Seq("year")))
       case (Some(m), Some(y)) =>
@@ -109,7 +109,7 @@ class MonthYearFormatter(
   private def validateDate(month: Int, year: Int): Either[String, MonthsYearDuration] =
     if (year == -1) {
       Left("error.date.year.invalid")
-    } else if ( year == 0){
+    } else if (year == 0) {
       Left("error.date.year.invalid")
     } else if (year < 1900) {
       Left("error.date.before1900")

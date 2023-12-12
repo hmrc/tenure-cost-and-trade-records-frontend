@@ -26,22 +26,23 @@ import java.time.LocalDate
 
 object OtherCostsForm {
 
-  val otherCostDetailsRequired: Constraint[OtherCosts] = Constraint("constraints.otherCostDetailsRequired") { otherCosts =>
-    if (!otherCosts.otherCostDetails.isDefined && otherCosts.otherCosts.exists(_.otherCosts.exists(_ > 0))) {
-      Invalid(Seq(ValidationError("error.otherCostDetails.required")))
-    } else {
-      Valid
-    }
+  val otherCostDetailsRequired: Constraint[OtherCosts] = Constraint("constraints.otherCostDetailsRequired") {
+    otherCosts =>
+      if (!otherCosts.otherCostDetails.isDefined && otherCosts.otherCosts.exists(_.otherCosts.exists(_ > 0))) {
+        Invalid(Seq(ValidationError("error.otherCostDetails.required")))
+      } else {
+        Valid
+      }
   }
 
   val otherCostMapping: Mapping[OtherCost] = mapping(
-    "financialYearEnd" -> ignored(LocalDate.EPOCH),
+    "financialYearEnd"          -> ignored(LocalDate.EPOCH),
     "contributionsToHeadOffice" -> otherCostValueMapping("otherCosts.contributionsToHeadOffice"),
-    "otherCosts" -> otherCostValueMapping("otherCosts.otherCosts")
+    "otherCosts"                -> otherCostValueMapping("otherCosts.otherCosts")
   )(OtherCost.apply)(OtherCost.unapply)
 
   val otherCostsMapping: Mapping[OtherCosts] = mapping(
-    "otherCosts" -> seq(otherCostMapping),
+    "otherCosts"       -> seq(otherCostMapping),
     "otherCostDetails" -> optional(text(maxLength = 2000))
   )(OtherCosts.apply)(OtherCosts.unapply)
 
