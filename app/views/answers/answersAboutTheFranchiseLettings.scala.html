@@ -67,12 +67,19 @@
                                 Option(cateringOperation.cateringOperationDetails.cateringAddress.escapedHtml).getOrElse(""),
                         aboutfranchisesorlettings.routes.CateringOperationDetailsController.show(Some(idx)), "operatorName",
                         ("valueAsHtml", _ => None)) ++
-                            sectionAnswers.row("checkYourAnswersAboutFranchiseOrLettings.annualRent",
+                            sectionAnswers.row(
+
+
+                                "checkYourAnswersAboutFranchiseOrLettings.annualRent",
                                 _ => cateringOperation.cateringOperationRentDetails.map(_.annualRent.asMoney).mkString("""<p class="govuk-body">""", "", "</p>") +
                                         cateringOperation.cateringOperationRentDetails.map(x => messages(s"checkYourAnswersAboutFranchiseOrLettings.dateSumFixed", dateUtil.formatDayMonthAbbrYear(x.dateInput)))
                                         .getOrElse("").mkString("""<p class="govuk-body">""", "", "</p>"),
                                 aboutfranchisesorlettings.routes.CateringOperationDetailsRentController.show(idx), "annualRent",
-                                ("valueAsHtml", _ => None)) ++
+                                ("valueAsHtml", _ => None)
+
+
+
+                            ) ++
                             sectionAnswers.row("checkYourAnswersAboutFranchiseOrLettings.itemsInRent",
                                 _ => Option(cateringOperation.itemsInRent.filter(_ != "noneOfThese")).filter(_.nonEmpty).fold(List("none"))(identity)
                                 .map(item => messages(s"checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.$item"))

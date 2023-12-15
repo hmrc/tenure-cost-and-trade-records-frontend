@@ -895,6 +895,21 @@ error.dateInput.month.required = The date the rent was fixed must include a mont
 error.dateInput.year.required = The date the rent was fixed must include a year
 error.sharedResponsibilities.required = Tell us how the responsibilities are shared
 
+# RENT RECEIVED (6015/6016 0NLY)
+rent.received.from.heading = Rent received from {0}
+rent.received.from.excluding.VAT = Annual rent payment excluding VAT
+rent.received.from.error = Enter the rent received
+rent.received.from.confirm = I confirm this payment was not included in the turnover figures
+rent.received.from.confirm.error = Please confirm this payment was not included in the turnover figures
+
+
+# CALCULATING THE RENT (6015/6016 0NLY)
+calculating.the.rent.for.heading = Calculating the rent for {0}
+calculating.the.rent.for.explain = Explain how the income received figure was calculated- for example, 10% of the total takings
+calculating.the.rent.for.explain.error = Plese explain how the income received figure was calculated
+calculating.the.rent.for. = When was the rent fixed at its current rate
+calculating.the.rent.for.error = Enter the date when the annual rent was fixed
+
 # CATERING OPERATION OR LETTING ACCOMMODATION CHECKBOXES
 ########################################################
 cateringOperationOrLettingAccommodationCheckboxesDetails.heading = Items included in your rent

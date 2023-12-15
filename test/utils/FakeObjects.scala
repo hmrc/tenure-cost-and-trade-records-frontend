@@ -298,11 +298,15 @@ trait FakeObjects {
   val prefilledCateringOperationSectionYes: CateringOperationSection = CateringOperationSection(
     CateringOperationDetails("Operator Name", "Type of Business", prefilledCateringAddress),
     Some(CateringOperationRentDetails(BigDecimal(1500), prefilledDateInput)),
+    Some(RentReceivedFrom(BigDecimal(1500), true)),
+    Some(CalculatingTheRent("test", prefilledDateInput)),
     Some(AnswerYes)
   )
   val prefilledCateringOperationSectionNo: CateringOperationSection  = CateringOperationSection(
     CateringOperationDetails("Operator Name", "Type of Business", prefilledCateringAddress),
     Some(CateringOperationRentDetails(BigDecimal(1500), prefilledDateInput)),
+    Some(RentReceivedFrom(BigDecimal(1500), true)),
+    Some(CalculatingTheRent("test", prefilledDateInput)),
     Some(AnswerNo)
   )
   val prefilledLettingSectionYes: LettingSection                     = LettingSection(
