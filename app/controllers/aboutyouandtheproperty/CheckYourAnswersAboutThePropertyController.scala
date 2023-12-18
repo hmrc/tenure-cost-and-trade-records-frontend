@@ -51,7 +51,7 @@ class CheckYourAnswersAboutThePropertyController @Inject() (
         checkYourAnswersAboutThePropertyView(
           request.sessionData.aboutYouAndTheProperty.flatMap(_.checkYourAnswersAboutTheProperty) match {
             case Some(checkYourAnswersAboutTheProperty) =>
-              checkYourAnswersAboutThePropertyForm.fillAndValidate(checkYourAnswersAboutTheProperty)
+              checkYourAnswersAboutThePropertyForm.fill(checkYourAnswersAboutTheProperty)
             case _                                      => checkYourAnswersAboutThePropertyForm
           },
           getBackLink(request.sessionData),

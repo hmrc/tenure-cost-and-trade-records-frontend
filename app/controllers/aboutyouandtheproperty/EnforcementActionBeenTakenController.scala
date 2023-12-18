@@ -49,7 +49,7 @@ class EnforcementActionBeenTakenController @Inject() (
       Ok(
         enforcementActionBeenTakenView(
           request.sessionData.aboutYouAndTheProperty.flatMap(_.enforcementAction) match {
-            case Some(enforcementAction) => enforcementActionForm.fillAndValidate(enforcementAction)
+            case Some(enforcementAction) => enforcementActionForm.fill(enforcementAction)
             case _                       => enforcementActionForm
           },
           getBackLink(request.sessionData),

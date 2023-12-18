@@ -46,7 +46,7 @@ class PaymentWhenLeaseIsGrantedController @Inject() (
       Ok(
         paymentWhenLeaseIsGrantedView(
           request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.paymentWhenLeaseIsGrantedDetails) match {
-            case Some(data) => paymentWhenLeaseIsGrantedForm.fillAndValidate(data)
+            case Some(data) => paymentWhenLeaseIsGrantedForm.fill(data)
             case _          => paymentWhenLeaseIsGrantedForm
           },
           request.sessionData.toSummary

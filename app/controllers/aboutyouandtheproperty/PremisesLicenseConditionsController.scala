@@ -49,7 +49,7 @@ class PremisesLicenseConditionsController @Inject() (
       Ok(
         premisesLicenseView(
           request.sessionData.aboutYouAndTheProperty.flatMap(_.premisesLicenseConditions) match {
-            case Some(premisesLicense) => premisesLicenseConditionsForm.fillAndValidate(premisesLicense)
+            case Some(premisesLicense) => premisesLicenseConditionsForm.fill(premisesLicense)
             case _                     => premisesLicenseConditionsForm
           },
           getBackLink(request.sessionData),

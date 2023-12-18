@@ -47,7 +47,7 @@ class ConcessionOrFranchiseController @Inject() (
         rentFromConcessionsView(
           request.sessionData.aboutFranchisesOrLettings.flatMap(_.cateringConcessionOrFranchise) match {
             case Some(cateringConcessionOrFranchise) =>
-              concessionOrFranchiseForm.fillAndValidate(cateringConcessionOrFranchise)
+              concessionOrFranchiseForm.fill(cateringConcessionOrFranchise)
             case _                                   => concessionOrFranchiseForm
           },
           controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show().url,

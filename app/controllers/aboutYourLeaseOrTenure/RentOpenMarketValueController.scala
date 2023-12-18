@@ -50,7 +50,7 @@ class RentOpenMarketValueController @Inject() (
         rentOpenMarketValueView(
           request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.rentOpenMarketValueDetails) match {
             case Some(rentOpenMarketValueDetails) =>
-              rentOpenMarketValuesForm.fillAndValidate(rentOpenMarketValueDetails)
+              rentOpenMarketValuesForm.fill(rentOpenMarketValueDetails)
             case _                                => rentOpenMarketValuesForm
           },
           getBackLink(request.sessionData),

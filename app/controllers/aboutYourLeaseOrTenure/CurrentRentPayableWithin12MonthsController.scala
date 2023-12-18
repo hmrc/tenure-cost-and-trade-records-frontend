@@ -45,7 +45,7 @@ class CurrentRentPayableWithin12MonthsController @Inject() (
       currentRentPayableWithin12MonthsView(
         request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.currentRentPayableWithin12Months) match {
           case Some(currentRentPayableWithin12Months) =>
-            currentRentPayableWithin12MonthsForm.fillAndValidate(currentRentPayableWithin12Months)
+            currentRentPayableWithin12MonthsForm.fill(currentRentPayableWithin12Months)
           case _                                      => currentRentPayableWithin12MonthsForm
         },
         request.sessionData.toSummary

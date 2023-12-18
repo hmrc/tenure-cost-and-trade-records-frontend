@@ -48,7 +48,7 @@ class PastConnectionController @Inject() (
           request.sessionData.removeConnectionDetails match {
             case Some(removeConnectionDetails) =>
               removeConnectionDetails.pastConnectionType match {
-                case Some(pastConnection) => pastConnectionForm.fillAndValidate(pastConnection)
+                case Some(pastConnection) => pastConnectionForm.fill(pastConnection)
                 case _                    => pastConnectionForm
               }
             case _                             => pastConnectionForm

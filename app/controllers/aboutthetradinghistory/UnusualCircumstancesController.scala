@@ -46,7 +46,7 @@ class UnusualCircumstancesController @Inject() (
     Ok(
       unusualCircumstancesView(
         request.sessionData.aboutTheTradingHistory.flatMap(_.unusualCircumstances) match {
-          case Some(unusualCircumstances) => unusualCircumstancesForm.fillAndValidate(unusualCircumstances)
+          case Some(unusualCircumstances) => unusualCircumstancesForm.fill(unusualCircumstances)
           case _                          => unusualCircumstancesForm
         },
         request.sessionData.toSummary

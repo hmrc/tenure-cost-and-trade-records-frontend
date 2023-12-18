@@ -49,7 +49,7 @@ class PayACapitalSumController @Inject() (
       Ok(
         payACapitalSumView(
           request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.payACapitalSumDetails) match {
-            case Some(data) => payACapitalSumForm.fillAndValidate(data)
+            case Some(data) => payACapitalSumForm.fill(data)
             case _          => payACapitalSumForm
           },
           getBackLink(request.sessionData),

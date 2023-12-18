@@ -46,7 +46,7 @@ class MethodToFixCurrentRentController @Inject() (
       Ok(
         methodToFixCurrentRentView(
           request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.methodToFixCurrentRentDetails) match {
-            case Some(data) => methodToFixCurrentRentForm.fillAndValidate(data)
+            case Some(data) => methodToFixCurrentRentForm.fill(data)
             case _          => methodToFixCurrentRentForm
           },
           request.sessionData.toSummary

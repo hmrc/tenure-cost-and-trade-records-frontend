@@ -46,7 +46,7 @@ class AlternativeContactDetailsController @Inject() (
       Ok(
         alternativeContactDetailsView(
           request.sessionData.additionalInformation.flatMap(_.altContactInformation) match {
-            case Some(altContactInformation) => alternativeContactDetailsForm.fillAndValidate(altContactInformation)
+            case Some(altContactInformation) => alternativeContactDetailsForm.fill(altContactInformation)
             case _                           => alternativeContactDetailsForm
           },
           request.sessionData.toSummary

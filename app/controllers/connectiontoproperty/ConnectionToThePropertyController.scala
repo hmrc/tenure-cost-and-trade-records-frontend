@@ -50,7 +50,7 @@ class ConnectionToThePropertyController @Inject() (
       Ok(
         connectionToThePropertyView(
           request.sessionData.stillConnectedDetails.flatMap(_.connectionToProperty) match {
-            case Some(connectionToProperty) => connectionToThePropertyForm.fillAndValidate(connectionToProperty)
+            case Some(connectionToProperty) => connectionToThePropertyForm.fill(connectionToProperty)
             case _                          => connectionToThePropertyForm
           },
           getBackLink(request.sessionData) match {

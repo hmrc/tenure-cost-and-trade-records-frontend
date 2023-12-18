@@ -48,7 +48,7 @@ class RentPayableVaryAccordingToGrossOrNetController @Inject() (
           request.sessionData.aboutLeaseOrAgreementPartTwo
             .flatMap(_.rentPayableVaryAccordingToGrossOrNetDetails) match {
             case Some(rentPayableVaryAccordingToGrossOrNetDetails) =>
-              rentPayableVaryAccordingToGrossOrNetForm.fillAndValidate(rentPayableVaryAccordingToGrossOrNetDetails)
+              rentPayableVaryAccordingToGrossOrNetForm.fill(rentPayableVaryAccordingToGrossOrNetDetails)
             case _                                                 => rentPayableVaryAccordingToGrossOrNetForm
           },
           request.sessionData.toSummary

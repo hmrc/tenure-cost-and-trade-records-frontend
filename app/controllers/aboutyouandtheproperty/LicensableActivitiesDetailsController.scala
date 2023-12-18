@@ -47,7 +47,7 @@ class LicensableActivitiesDetailsController @Inject() (
         licensableActivitiesDetailsView(
           request.sessionData.aboutYouAndTheProperty.flatMap(_.licensableActivitiesInformationDetails) match {
             case Some(licensableActivitiesInformation) =>
-              licensableActivitiesDetailsForm.fillAndValidate(licensableActivitiesInformation)
+              licensableActivitiesDetailsForm.fill(licensableActivitiesInformation)
             case _                                     => licensableActivitiesDetailsForm
           },
           request.sessionData.toSummary

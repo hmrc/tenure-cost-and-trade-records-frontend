@@ -47,7 +47,7 @@ class PremisesLicenseConditionsDetailsController @Inject() (
         premisesLicenseConditionsView(
           request.sessionData.aboutYouAndTheProperty.flatMap(_.premisesLicenseConditionsDetails) match {
             case Some(premisesLicenseInformation) =>
-              premisesLicenceDetailsForm.fillAndValidate(premisesLicenseInformation)
+              premisesLicenceDetailsForm.fill(premisesLicenseInformation)
             case _                                => premisesLicenceDetailsForm
           },
           request.sessionData.toSummary

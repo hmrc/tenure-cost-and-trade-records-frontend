@@ -43,7 +43,7 @@ class IncomeExpenditureSummaryController @Inject() (
     Ok(
       incomeExpenditureSummaryView(
         request.sessionData.aboutTheTradingHistory.flatMap(_.incomeExpenditureSummary) match {
-          case Some(incomeExpenditureSummary) => incomeExpenditureSummaryForm.fillAndValidate(incomeExpenditureSummary)
+          case Some(incomeExpenditureSummary) => incomeExpenditureSummaryForm.fill(incomeExpenditureSummary)
           case _                              => incomeExpenditureSummaryForm
         },
         request.sessionData.toSummary

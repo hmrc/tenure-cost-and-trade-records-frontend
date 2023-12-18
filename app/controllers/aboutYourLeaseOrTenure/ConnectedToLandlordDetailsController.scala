@@ -49,7 +49,7 @@ class ConnectedToLandlordDetailsController @Inject() (
         connectedToLandlordDetailsView(
           request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.connectedToLandlordDetails) match {
             case Some(connectedToLandlordDetails) =>
-              connectedToLandlordDetailsForm.fillAndValidate(connectedToLandlordDetails)
+              connectedToLandlordDetailsForm.fill(connectedToLandlordDetails)
             case _                                => connectedToLandlordDetailsForm
           },
           request.sessionData.toSummary

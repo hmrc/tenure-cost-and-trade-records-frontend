@@ -47,7 +47,7 @@ class FurtherInformationOrRemarksController @Inject() (
         furtherInformationOrRemarksView(
           request.sessionData.additionalInformation.flatMap(_.furtherInformationOrRemarksDetails) match {
             case Some(furtherInformationOrRemarksDetails) =>
-              furtherInformationOrRemarksForm.fillAndValidate(furtherInformationOrRemarksDetails)
+              furtherInformationOrRemarksForm.fill(furtherInformationOrRemarksDetails)
             case _                                        => furtherInformationOrRemarksForm
           },
           request.sessionData.toSummary

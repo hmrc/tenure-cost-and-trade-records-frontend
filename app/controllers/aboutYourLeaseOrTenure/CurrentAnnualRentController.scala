@@ -47,7 +47,7 @@ class CurrentAnnualRentController @Inject() (
     Ok(
       currentAnnualRentView(
         request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.annualRent) match {
-          case Some(annualRent) => currentAnnualRentForm.fillAndValidate(annualRent)
+          case Some(annualRent) => currentAnnualRentForm.fill(annualRent)
           case _                => currentAnnualRentForm
         },
         getBackLink(request.sessionData),

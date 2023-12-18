@@ -46,7 +46,7 @@ class IncentivesPaymentsConditionsController @Inject() (
       Ok(
         incentivesPaymentsConditionsView(
           request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.incentivesPaymentsConditionsDetails) match {
-            case Some(data) => incentivesPaymentsConditionsForm.fillAndValidate(data)
+            case Some(data) => incentivesPaymentsConditionsForm.fill(data)
             case _          => incentivesPaymentsConditionsForm
           },
           request.sessionData.toSummary

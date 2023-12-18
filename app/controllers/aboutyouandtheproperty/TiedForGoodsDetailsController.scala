@@ -46,7 +46,7 @@ class TiedForGoodsDetailsController @Inject() (
       Ok(
         tiedForGoodsDetailsView(
           request.sessionData.aboutYouAndTheProperty.flatMap(_.tiedForGoodsDetails) match {
-            case Some(tiedForGoodsDetails) => tiedForGoodsDetailsForm.fillAndValidate(tiedForGoodsDetails)
+            case Some(tiedForGoodsDetails) => tiedForGoodsDetailsForm.fill(tiedForGoodsDetails)
             case _                         => tiedForGoodsDetailsForm
           },
           request.sessionData.toSummary

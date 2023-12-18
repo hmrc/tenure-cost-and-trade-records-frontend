@@ -49,7 +49,7 @@ class TradingNameOperatingFromPropertyController @Inject() (
       Ok(
         nameOfBusinessOperatingFromPropertyView(
           request.sessionData.stillConnectedDetails.flatMap(_.tradingNameOperatingFromProperty) match {
-            case Some(vacantProperties) => tradingNameOperatingFromProperty.fillAndValidate(vacantProperties)
+            case Some(vacantProperties) => tradingNameOperatingFromProperty.fill(vacantProperties)
             case _                      => tradingNameOperatingFromProperty
           },
           request.sessionData.toSummary,

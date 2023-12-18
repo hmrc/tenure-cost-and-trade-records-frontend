@@ -47,7 +47,7 @@ class RequestReferenceNumberContactDetailsController @Inject() (
         requestReferenceNumberContactDetailsView(
           request.sessionData.requestReferenceNumberDetails.flatMap(_.requestReferenceContactDetails) match {
             case Some(requestReferenceContactDetails) =>
-              requestReferenceNumberContactDetailsForm.fillAndValidate(requestReferenceContactDetails)
+              requestReferenceNumberContactDetailsForm.fill(requestReferenceContactDetails)
             case _                                    => requestReferenceNumberContactDetailsForm
           }
         )

@@ -47,7 +47,7 @@ class ContactDetailsQuestionController @Inject() (
         contactDetailsQuestionView(
           request.sessionData.additionalInformation.flatMap(_.altDetailsQuestion) match {
             case Some(altDetailsQuestion) =>
-              contactDetailsQuestionForm.fillAndValidate(altDetailsQuestion)
+              contactDetailsQuestionForm.fill(altDetailsQuestion)
             case _                        => contactDetailsQuestionForm
           },
           request.sessionData.toSummary,
