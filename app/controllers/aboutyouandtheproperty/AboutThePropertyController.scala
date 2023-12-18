@@ -19,10 +19,12 @@ package controllers.aboutyouandtheproperty
 import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
 import form.aboutyouandtheproperty.AboutThePropertyForm.aboutThePropertyForm
+import models.Session
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty.updateAboutYouAndTheProperty
 import models.submissions.aboutyouandtheproperty.PropertyDetails
 import navigation.AboutYouAndThePropertyNavigator
 import navigation.identifiers.AboutThePropertyPageId
+import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
@@ -39,9 +41,24 @@ class AboutThePropertyController @Inject() (
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
 ) extends FORDataCaptureController(mcc)
-    with I18nSupport {
+    with I18nSupport
+    with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    val backLink = navigator.from match {
+      case "TL" => controllers.routes.TaskListController.show().url + "#about-the-property"
+      case _    =>
+        request.sessionData.additionalInformation.flatMap(
+          _.altDetailsQuestion.map(_.contactDetailsQuestion.name)
+        ) match {
+          case Some("yes") =>
+            controllers.additionalinformation.routes.AlternativeContactDetailsController.show.url
+          case Some("no")  => controllers.additionalinformation.routes.ContactDetailsQuestionController.show.url
+          case _           =>
+            logger.warn(s"Back link for alternative contact page reached with unknown enforcement taken value")
+            controllers.routes.TaskListController.show().url
+        }
+    }
     Future.successful(
       Ok(
         aboutThePropertyView(
@@ -51,13 +68,27 @@ class AboutThePropertyController @Inject() (
           },
           request.sessionData.forType,
           request.sessionData.toSummary,
-          navigator.from
+          backLink
         )
       )
     )
   }
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    val backLink = navigator.from match {
+      case "TL" => controllers.routes.TaskListController.show().url + "#about-the-property"
+      case _    =>
+        request.sessionData.additionalInformation.flatMap(
+          _.altDetailsQuestion.map(_.contactDetailsQuestion.name)
+        ) match {
+          case Some("yes") =>
+            controllers.additionalinformation.routes.AlternativeContactDetailsController.show.url
+          case Some("no")  => controllers.additionalinformation.routes.ContactDetailsQuestionController.show.url
+          case _           =>
+            logger.warn(s"Back link for alternative contact page reached with unknown enforcement taken value")
+            controllers.routes.TaskListController.show().url
+        }
+    }
     continueOrSaveAsDraft[PropertyDetails](
       aboutThePropertyForm,
       formWithErrors =>
@@ -65,7 +96,8 @@ class AboutThePropertyController @Inject() (
           aboutThePropertyView(
             formWithErrors,
             request.sessionData.forType,
-            request.sessionData.toSummary
+            request.sessionData.toSummary,
+            backLink
           )
         ),
       data => {
@@ -75,5 +107,15 @@ class AboutThePropertyController @Inject() (
       }
     )
   }
+
+  private def getBackLink(answers: Session): String =
+    answers.additionalInformation.flatMap(_.altDetailsQuestion.map(_.contactDetailsQuestion.name)) match {
+      case Some("yes") =>
+        controllers.aboutyouandtheproperty.routes.EnforcementActionBeenTakenDetailsController.show().url
+      case Some("no")  => controllers.aboutyouandtheproperty.routes.EnforcementActionBeenTakenController.show().url
+      case _           =>
+        logger.warn(s"Back link for tied goods page reached with unknown enforcement taken value")
+        controllers.routes.TaskListController.show().url
+    }
 
 }
