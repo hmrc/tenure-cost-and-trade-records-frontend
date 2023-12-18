@@ -138,7 +138,7 @@ class LoginController @Inject() (
             session
               .start(Session(referenceNumber, forNum, address, token))
               .flatMap(_ =>
-                backendConnector.loadSubmissionDraft(cleanedRefNumber).map {
+                backendConnector.loadSubmissionDraft(cleanedRefNumber, hc).map {
                   case Some(_) => Redirect(controllers.routes.SaveAsDraftController.loginToResume)
                   case _       => Redirect(startPage)
                 }

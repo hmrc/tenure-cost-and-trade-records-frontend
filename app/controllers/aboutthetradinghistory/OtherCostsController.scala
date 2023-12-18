@@ -16,18 +16,21 @@
 
 package controllers.aboutthetradinghistory
 
-import actions.WithSessionRefiner
+import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
-import form.aboutthetradinghistory.OtherCostsForm.otherCostsForm
-import models.submissions.aboutthetradinghistory.OtherCosts
+import form.aboutthetradinghistory.OtherCostsForm.form
+import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, OtherCost, OtherCosts}
+import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.updateAboutTheTradingHistory
 import navigation.AboutTheTradingHistoryNavigator
 import navigation.identifiers.OtherCostsId
 import play.api.i18n.I18nSupport
-import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Result}
 import repositories.SessionRepo
 import views.html.aboutthetradinghistory.otherCosts
 
+import java.time.LocalDate
 import javax.inject.{Inject, Named, Singleton}
+import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class OtherCostsController @Inject() (
@@ -36,30 +39,79 @@ class OtherCostsController @Inject() (
   otherCostsView: otherCosts,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FORDataCaptureController(mcc)
+)(implicit ec: ExecutionContext)
+    extends FORDataCaptureController(mcc)
     with I18nSupport {
 
-  def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
-    Ok(
-      otherCostsView(
-        request.sessionData.aboutTheTradingHistory.flatMap(_.otherCosts) match {
-          case Some(otherCosts) => otherCostsForm.fill(otherCosts)
-          case _                => otherCostsForm
-        },
-        request.sessionData.toSummary
-      )
-    )
+  def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    runWithSessionCheckForOtherCosts { aboutTheTradingHistory =>
+      val yearEndDates       = financialYearEndDates(aboutTheTradingHistory)
+      val existingOtherCosts = aboutTheTradingHistory.otherCosts.getOrElse(OtherCosts())
+      val updatedOtherCosts  = if (existingOtherCosts.otherCosts.size != yearEndDates.size) {
+        val newOtherCosts = yearEndDates.map(date => OtherCost(date, None, None))
+        OtherCosts(newOtherCosts)
+      } else {
+        existingOtherCosts
+      }
+
+      val updatedData = updateAboutTheTradingHistory(_.copy(otherCosts = Some(updatedOtherCosts)))
+      val filledForm  = form.fill(updatedOtherCosts)
+      session
+        .saveOrUpdate(updatedData)
+        .flatMap(_ => Ok(otherCostsView(filledForm)))
+    }
   }
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft[OtherCosts](
-      otherCostsForm,
-      formWithErrors => BadRequest(otherCostsView(formWithErrors, request.sessionData.toSummary)),
-      data => {
-        val updatedData = request.sessionData
-        Redirect(navigator.nextPage(OtherCostsId, updatedData).apply(updatedData))
-      }
-    )
+    runWithSessionCheckForOtherCosts { aboutTheTradingHistory =>
+      continueOrSaveAsDraft[OtherCosts](
+        form,
+        formWithErrors => {
+          val updatedOtherCosts = aboutTheTradingHistory.otherCosts.getOrElse(OtherCosts(Seq.empty)).otherCosts
+
+          val updatedErrors         = formWithErrors.errors.map { error =>
+            if (error.key.startsWith("otherCosts[")) {
+              val index            = error.key.split("\\[")(1).split("\\]")(0).toInt
+              val financialYearEnd = updatedOtherCosts.lift(index).map(_.financialYearEnd).getOrElse(LocalDate.now)
+              error.copy(args = Seq(financialYearEnd))
+            } else if (error.key.isEmpty && error.message == "error.otherCostDetails.required") {
+              error.copy(key = "otherCostDetails")
+            } else {
+              error
+            }
+          }
+          val updatedFormWithErrors = formWithErrors.copy(errors = updatedErrors)
+
+          BadRequest(otherCostsView(updatedFormWithErrors))
+        },
+        data => {
+          val updatedOtherCostWithDate = (data.otherCosts zip financialYearEndDates(aboutTheTradingHistory)).map {
+            case (otherCost, finYearEnd) => otherCost.copy(financialYearEnd = finYearEnd)
+          }
+
+          val updatedData =
+            updateAboutTheTradingHistory(_.copy(otherCosts = Some(data.copy(otherCosts = updatedOtherCostWithDate))))
+          session
+            .saveOrUpdate(updatedData)
+            .map(_ =>
+              navigator.cyaPage
+                .filter(_ => navigator.from == "CYA" && aboutTheTradingHistory.totalPayrollCostSections.nonEmpty)
+                .getOrElse(navigator.nextPage(OtherCostsId, updatedData).apply(updatedData))
+            )
+            .map(Redirect)
+        }
+      )
+    }
   }
+
+  private def runWithSessionCheckForOtherCosts(
+    action: AboutTheTradingHistory => Future[Result]
+  )(implicit request: SessionRequest[AnyContent]) =
+    request.sessionData.aboutTheTradingHistory
+      .filter(_.occupationAndAccountingInformation.isDefined)
+      .fold(Future.successful(Redirect(routes.AboutYourTradingHistoryController.show())))(action)
+
+  private def financialYearEndDates(aboutTheTradingHistory: AboutTheTradingHistory) =
+    aboutTheTradingHistory.turnoverSections.map(_.financialYearEnd)
 
 }

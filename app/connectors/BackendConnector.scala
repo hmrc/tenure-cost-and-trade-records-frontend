@@ -20,7 +20,7 @@ import com.google.inject.ImplementedBy
 import config.AppConfig
 import models.{Credentials, FORLoginResponse, SubmissionDraft}
 import play.api.libs.json.Writes
-import uk.gov.hmrc.http.{BadRequestException, HeaderCarrier, HttpClient, HttpReads, HttpResponse, Upstream4xxResponse}
+import uk.gov.hmrc.http.{Authorization, BadRequestException, HeaderCarrier, HttpClient, HttpReads, HttpReadsLegacyRawReads, HttpResponse, Upstream4xxResponse}
 import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
 
 import javax.inject.{Inject, Singleton}
@@ -55,59 +55,61 @@ class DefaultBackendConnector @Inject() (servicesConfig: ServicesConfig, appConf
   override def verifyCredentials(refNumber: String, postcode: String)(implicit
     hc: HeaderCarrier
   ): Future[FORLoginResponse] = {
-    val credentials    = Credentials(cleanedRefNumber(refNumber), postcode)
-    val wrtCredentials = implicitly[Writes[Credentials]]
+    val credentials            = Credentials(cleanedRefNumber(refNumber), postcode)
+    val wrtCredentials         = implicitly[Writes[Credentials]]
+    implicit val headerCarrier = hc.copy(authorization = Some(Authorization(internalAuthToken)))
     http.POST[Credentials, FORLoginResponse](
       url("authenticate"),
-      credentials,
-      Seq("Authorization" -> internalAuthToken)
-    )(wrtCredentials, readsHack, hc, ec)
+      credentials
+    )(wrtCredentials, readsHack, headerCarrier, ec)
   }
 
-  override def retrieveFORType(referenceNumber: String)(implicit
-    hc: HeaderCarrier
-  ): Future[String] =
-    http
-      .GET(url(s"${cleanedRefNumber(referenceNumber)}/forType"), headers = Seq("Authorization" -> internalAuthToken))
-      .map(res => (res.json \ "FORType").as[String])
+  override def retrieveFORType(referenceNumber: String, hc: HeaderCarrier): Future[String] = {
+    implicit val headerCarrier = hc.copy(authorization = Some(Authorization(internalAuthToken)))
 
-  override def saveAsDraft(referenceNumber: String, submissionDraft: SubmissionDraft)(implicit
+    http
+      .GET(url(s"${cleanedRefNumber(referenceNumber)}/forType"))(HttpReads.Implicits.readRaw, headerCarrier, ec)
+      .map(res => (res.json \ "FORType").as[String])
+  }
+
+  override def saveAsDraft(
+    referenceNumber: String,
+    submissionDraft: SubmissionDraft,
     hc: HeaderCarrier
-  ): Future[Unit] =
+  ): Future[Unit] = {
+    implicit val headerCarrier = hc.copy(authorization = Some(Authorization(internalAuthToken)))
     http.PUT(
       saveAsDraftUrl(referenceNumber),
-      submissionDraft,
-      headers = Seq("Authorization" -> internalAuthToken)
+      submissionDraft
     ) map { _ =>
       ()
     }
+  }
 
-  override def loadSubmissionDraft(referenceNumber: String)(implicit
-    hc: HeaderCarrier
-  ): Future[Option[SubmissionDraft]] =
+  override def loadSubmissionDraft(referenceNumber: String, hc: HeaderCarrier): Future[Option[SubmissionDraft]] = {
+    implicit val headerCarrier = hc.copy(authorization = Some(Authorization(internalAuthToken)))
     http.GET[Option[SubmissionDraft]](
-      saveAsDraftUrl(referenceNumber),
-      headers = Seq("Authorization" -> internalAuthToken)
-    )
+      saveAsDraftUrl(referenceNumber)
+    )(HttpReads.Implicits.readOptionOfNotFound[SubmissionDraft], headerCarrier, ec)
+  }
 
-  override def deleteSubmissionDraft(referenceNumber: String)(implicit
-    hc: HeaderCarrier
-  ): Future[Int] =
+  override def deleteSubmissionDraft(referenceNumber: String, hc: HeaderCarrier): Future[Int] = {
+    implicit val headerCarrier = hc.copy(authorization = Some(Authorization(internalAuthToken)))
     http
-      .DELETE(saveAsDraftUrl(referenceNumber), headers = Seq("Authorization" -> internalAuthToken))
+      .DELETE(saveAsDraftUrl(referenceNumber))
       .map(res => (res.json \ "deletedCount").as[Int])
-
+  }
 }
 
 @ImplementedBy(classOf[DefaultBackendConnector])
 trait BackendConnector {
   def verifyCredentials(refNumber: String, postcode: String)(implicit hc: HeaderCarrier): Future[FORLoginResponse]
 
-  def retrieveFORType(referenceNumber: String)(implicit hc: HeaderCarrier): Future[String]
+  def retrieveFORType(referenceNumber: String, hc: HeaderCarrier): Future[String]
 
-  def saveAsDraft(referenceNumber: String, submissionDraft: SubmissionDraft)(implicit hc: HeaderCarrier): Future[Unit]
+  def saveAsDraft(referenceNumber: String, submissionDraft: SubmissionDraft, hc: HeaderCarrier): Future[Unit]
 
-  def loadSubmissionDraft(referenceNumber: String)(implicit hc: HeaderCarrier): Future[Option[SubmissionDraft]]
+  def loadSubmissionDraft(referenceNumber: String, hc: HeaderCarrier): Future[Option[SubmissionDraft]]
 
-  def deleteSubmissionDraft(referenceNumber: String)(implicit hc: HeaderCarrier): Future[Int]
+  def deleteSubmissionDraft(referenceNumber: String, hc: HeaderCarrier): Future[Int]
 }
