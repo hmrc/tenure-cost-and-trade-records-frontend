@@ -49,7 +49,7 @@ class AdditionalInformationNavigatorSpec extends TestBaseSpec {
         .nextPage(FurtherInformationId, additionalInformationSession)
         .apply(
           additionalInformationSession
-        ) mustBe controllers.additionalinformation.routes.ContactDetailsQuestionController
+        ) mustBe controllers.additionalinformation.routes.CheckYourAnswersAdditionalInformationController
         .show()
     }
 

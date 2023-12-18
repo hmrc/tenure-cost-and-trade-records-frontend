@@ -16,6 +16,7 @@
 
 @import actions.SessionRequest
 @import controllers.aboutyouandtheproperty
+@import controllers.additionalinformation
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import util.SectionAnswersRowBuilder
 
@@ -27,6 +28,10 @@
     SectionAnswersRowBuilder(request.sessionData.aboutYouAndTheProperty)
 }
 
+@sectionAnswersAdditionalInfo = @{
+    SectionAnswersRowBuilder(request.sessionData.additionalInformation)
+}
+
 <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutTheProperty.aboutYou.heading")</h2>
 
 @govukSummaryList(SummaryList(rows =
@@ -36,6 +41,26 @@
         aboutyouandtheproperty.routes.AboutYouController.show(),
         "fullName",
         ("valueAsHtml", _ => None))
+))
+
+@govukSummaryList(SummaryList(rows =
+    sectionAnswersAdditionalInfo.conditionRow(
+        _.altDetailsQuestion.map(_.contactDetailsQuestion.name).contains("yes"),
+        "label.altDetails",
+        _.altContactInformation.map { x =>
+            val contactDetails = Seq(
+                Text(x.alternativeContactFullName).asHtml,
+                x.alternativeContactDetails.email,
+                x.alternativeContactDetails.phone,
+                x.alternativeContactAddress.escapedHtml,
+            ).mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>")
+
+            contactDetails
+        },
+        additionalinformation.routes.AlternativeContactDetailsController.show(),
+        "",
+        ("valueAsHtml", _ => None)
+    )
 ))
 
 <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutTheProperty.aboutProperty.heading")</h2>

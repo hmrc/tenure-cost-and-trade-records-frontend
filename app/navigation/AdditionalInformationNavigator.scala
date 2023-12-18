@@ -27,7 +27,7 @@ import javax.inject.Inject
 class AdditionalInformationNavigator @Inject() (audit: Audit) extends Navigator(audit) {
 
   override def cyaPage: Option[Call] =
-    Some(controllers.additionalinformation.routes.CheckYourAnswersAdditionalInformationController.show())
+    Some(controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show())
 
   private def contactDetailsQuestionRouting: Session => Call = answers => {
     answers.additionalInformation.flatMap(
@@ -43,7 +43,9 @@ class AdditionalInformationNavigator @Inject() (audit: Audit) extends Navigator(
     }
   }
   override val routeMap: Map[Identifier, Session => Call]    = Map(
-    FurtherInformationId                    -> (_ => controllers.additionalinformation.routes.ContactDetailsQuestionController.show()),
+    FurtherInformationId                    -> (_ =>
+      controllers.additionalinformation.routes.CheckYourAnswersAdditionalInformationController.show()
+    ),
     ContactDetailsQuestionId                -> contactDetailsQuestionRouting,
     AlternativeContactDetailsId             -> (_ => controllers.aboutyouandtheproperty.routes.AboutThePropertyController.show()),
     CheckYourAnswersAdditionalInformationId -> (_ => controllers.routes.TaskListController.show())
