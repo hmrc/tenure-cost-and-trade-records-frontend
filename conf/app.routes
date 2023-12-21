@@ -327,6 +327,15 @@ POST        /what-is-your-rent-based-on                             controllers.
 GET         /ultimately-responsible                                 controllers.aboutYourLeaseOrTenure.UltimatelyResponsibleController.show()
 POST        /ultimately-responsible                                 controllers.aboutYourLeaseOrTenure.UltimatelyResponsibleController.submit()
 
+GET         /ultimately-responsible-building-insurance              controllers.aboutYourLeaseOrTenure.UltimatelyResponsibleBuildingInsuranceController.show()
+POST        /ultimately-responsible-building-insurance              controllers.aboutYourLeaseOrTenure.UltimatelyResponsibleBuildingInsuranceController.submit()
+
+GET         /ultimately-responsible-inside-repairs                  controllers.aboutYourLeaseOrTenure.UltimatelyResponsibleInsideRepairsController.show()
+POST        /ultimately-responsible-inside-repairs                  controllers.aboutYourLeaseOrTenure.UltimatelyResponsibleInsideRepairsController.submit()
+
+GET         /ultimately-responsible-outside-repairs                 controllers.aboutYourLeaseOrTenure.UltimatelyResponsibleOutsideRepairsController.show()
+POST        /ultimately-responsible-outside-repairs                 controllers.aboutYourLeaseOrTenure.UltimatelyResponsibleOutsideRepairsController.submit()
+
 GET         /connected-to-landlord                                  controllers.aboutYourLeaseOrTenure.ConnectedToLandlordController.show()
 POST        /connected-to-landlord                                  controllers.aboutYourLeaseOrTenure.ConnectedToLandlordController.submit()
 
