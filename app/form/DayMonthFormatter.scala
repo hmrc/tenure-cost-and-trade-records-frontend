@@ -49,6 +49,7 @@ class DayMonthFormatter(
     val dayMonthFieldName = messages(s"fieldName.$fieldNameKey", dMText)
 
     val fieldCapitalized = fieldName.capitalize
+    val prefix           = messages("error.dateParts.prefix")
     val dayText          = messages("error.dateParts.day")
     val monthText        = messages("error.dateParts.month")
     val dayKey           = s"$key.day"
@@ -62,9 +63,9 @@ class DayMonthFormatter(
     ).bind(data).flatMap {
       case (None, None)       => oneError(dayKey, "error.date.required", Seq(dayMonthFieldName, dayMonthFields))
       case (None, Some(_))    =>
-        oneError(dayKey, "error.date.mustInclude", Seq(fieldCapitalized, dayText, Seq("day")))
+        oneError(dayKey, "error.date.mustInclude", Seq(fieldCapitalized, s"$prefix $dayText", Seq("day")))
       case (Some(_), None)    =>
-        oneError(monthKey, "error.date.mustInclude", Seq(fieldCapitalized, monthText, Seq("month")))
+        oneError(monthKey, "error.date.mustInclude", Seq(fieldCapitalized, s"$prefix $monthText", Seq("month")))
       case (Some(d), Some(m)) =>
         val day   = parseNumber(d, 1 to 31)
         val month = parseNumber(m, 1 to 12)

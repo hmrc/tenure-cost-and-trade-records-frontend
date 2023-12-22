@@ -51,7 +51,7 @@ class CheckYourAnswersConnectionToPropertyController @Inject() (
         checkYourAnswersConnectionToPropertyView(
           request.sessionData.stillConnectedDetails.flatMap(_.checkYourAnswersConnectionToProperty) match {
             case Some(checkYourAnswersAboutTheProperty) =>
-              checkYourAnswersConnectionToPropertyForm.fillAndValidate(checkYourAnswersAboutTheProperty)
+              checkYourAnswersConnectionToPropertyForm.fill(checkYourAnswersAboutTheProperty)
             case _                                      => checkYourAnswersConnectionToPropertyForm
           },
           getBackLink(request.sessionData),

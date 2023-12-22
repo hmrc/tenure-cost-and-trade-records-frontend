@@ -46,7 +46,7 @@ class RemoveConnectionController @Inject() (
       Ok(
         removeConnectionView(
           request.sessionData.removeConnectionDetails.flatMap(_.removeConnectionDetails) match {
-            case Some(removeConnectionDetails) => removeConnectionForm.fillAndValidate(removeConnectionDetails)
+            case Some(removeConnectionDetails) => removeConnectionForm.fill(removeConnectionDetails)
             case _                             => removeConnectionForm
           },
           request.sessionData.toSummary

@@ -51,7 +51,7 @@ class CheckYourAnswersAdditionalInformationController @Inject() (
         checkYourAnswersAdditionalInformationView(
           request.sessionData.additionalInformation.flatMap(_.checkYourAnswersAdditionalInformation) match {
             case Some(checkYourAnswersAdditionalInformation) =>
-              checkYourAnswersAdditionalInformationForm.fillAndValidate(checkYourAnswersAdditionalInformation)
+              checkYourAnswersAdditionalInformationForm.fill(checkYourAnswersAdditionalInformation)
             case _                                           => checkYourAnswersAdditionalInformationForm
           },
           request.sessionData,

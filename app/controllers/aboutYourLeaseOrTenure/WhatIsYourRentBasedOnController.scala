@@ -47,7 +47,7 @@ class WhatIsYourRentBasedOnController @Inject() (
         whatIsYourRentBasedOnView(
           request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.whatIsYourCurrentRentBasedOnDetails) match {
             case Some(whatIsYourCurrentRentBasedOnDetails) =>
-              whatIsYourCurrentRentBasedOnForm.fillAndValidate(whatIsYourCurrentRentBasedOnDetails)
+              whatIsYourCurrentRentBasedOnForm.fill(whatIsYourCurrentRentBasedOnDetails)
             case None                                      => whatIsYourCurrentRentBasedOnForm
           },
           request.sessionData.toSummary

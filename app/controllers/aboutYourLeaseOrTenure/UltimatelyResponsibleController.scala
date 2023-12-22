@@ -46,7 +46,7 @@ class UltimatelyResponsibleController @Inject() (
       Ok(
         ultimatelyResponsibleView(
           request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.ultimatelyResponsible) match {
-            case Some(ultimatelyResponsible) => ultimatelyResponsibleForm.fillAndValidate(ultimatelyResponsible)
+            case Some(ultimatelyResponsible) => ultimatelyResponsibleForm.fill(ultimatelyResponsible)
             case _                           => ultimatelyResponsibleForm
           },
           request.sessionData.toSummary

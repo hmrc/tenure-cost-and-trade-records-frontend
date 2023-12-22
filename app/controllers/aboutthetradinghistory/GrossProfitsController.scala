@@ -53,7 +53,7 @@ class GrossProfitsController @Inject() (
         )
         Ok(
           grossProfitsView(
-            grossProfitForm(numberOfColumns).fillAndValidate(aboutTheTradingHistory.grossProfitSections),
+            grossProfitForm(numberOfColumns).fill(aboutTheTradingHistory.grossProfitSections),
             numberOfColumns,
             financialYears,
             request.sessionData.toSummary

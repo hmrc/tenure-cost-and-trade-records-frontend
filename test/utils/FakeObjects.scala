@@ -281,14 +281,17 @@ trait FakeObjects {
   )
 
   val aboutYourTradingHistory6010YesSession: Session =
-    aboutYouAndTheProperty6010YesSession.copy(aboutTheTradingHistory = Some(prefilledAboutYourTradingHistory))
+    aboutYouAndTheProperty6010YesSession.copy(aboutTheTradingHistory = Some(prefilledAboutYourTradingHistory),stillConnectedDetails = Some(prefilledStillConnectedDetailsYesToAll))
 
   val aboutYourTradingHistory6015YesSession: Session =
     aboutYouAndTheProperty6015YesSession.copy(
       aboutTheTradingHistory = Some(
         prefilledAboutYourTradingHistory
-          .copy(costOfSales = Seq(CostOfSales(LocalDate.now, None, None, None, None)))
-      )
+          .copy(
+            costOfSales = Seq(CostOfSales(LocalDate.now, None, None, None, None)),
+            otherCosts = Some(OtherCosts(otherCosts = Seq(OtherCost(LocalDate.now, None, None))))
+          )
+      ), stillConnectedDetails = Some(prefilledStillConnectedDetailsYesToAll)
     )
 
   // Franchises or lettings

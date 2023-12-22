@@ -50,7 +50,7 @@ class RentIncreaseAnnuallyWithRPIController @Inject() (
         rentIncreaseAnnuallyWithRPIView(
           request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.rentIncreasedAnnuallyWithRPIDetails) match {
             case Some(rentIncreasedAnnuallyWithRPIDetails) =>
-              rentIncreasedAnnuallyWithRPIDetailsForm.fillAndValidate(rentIncreasedAnnuallyWithRPIDetails)
+              rentIncreasedAnnuallyWithRPIDetailsForm.fill(rentIncreasedAnnuallyWithRPIDetails)
             case None                                      => rentIncreasedAnnuallyWithRPIDetailsForm
           },
           getBackLink(request.sessionData),

@@ -40,7 +40,6 @@ class RentIncludeFixtureAndFittingsControllerSpec extends TestBaseSpec {
 
   "RentIncludeFixtureAndFittings controller" should {
     "return 200" in {
-      println(s"${prefilledAboutLeaseOrAgreementPartOne.rentIncludeFixturesAndFittingsDetails}")
       val result = rentIncludeFixtureAndFittingsController().show(fakeRequest)
       status(result) shouldBe Status.OK
     }

@@ -46,7 +46,7 @@ class DoesTheRentPayableController @Inject() (
       Ok(
         doesTheRentPayableView(
           request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.doesTheRentPayable) match {
-            case Some(doesTheRentPayable) => doesTheRentPayableForm.fillAndValidate(doesTheRentPayable)
+            case Some(doesTheRentPayable) => doesTheRentPayableForm.fill(doesTheRentPayable)
             case _                        => doesTheRentPayableForm
           },
           request.sessionData.toSummary

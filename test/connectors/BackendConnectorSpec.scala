@@ -24,7 +24,7 @@ import org.scalatest.BeforeAndAfterAll
 import play.api.Application
 import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.libs.json.Json
-import uk.gov.hmrc.http.{BadRequestException, Upstream4xxResponse}
+import uk.gov.hmrc.http.{BadRequestException, HeaderCarrier, Upstream4xxResponse}
 import utils.TestBaseSpec
 
 class BackendConnectorSpec extends TestBaseSpec with BeforeAndAfterAll {
@@ -75,13 +75,13 @@ class BackendConnectorSpec extends TestBaseSpec with BeforeAndAfterAll {
           .willReturn(aResponse().withStatus(201))
       )
 
-      val result = await(backendConnector.saveAsDraft(testId, submissionDraft))
+      val result = await(backendConnector.saveAsDraft(testId, submissionDraft, new HeaderCarrier()))
 
       result should be(()) // Assuming the method returns Unit on success
       wireMockServer.verify(putRequestedFor(urlEqualTo(endpointBase + testId)))
     }
 
-    "throw BadRequestException exception on save with wring id" in {
+    "throw BadRequestException exception on save with wrong id" in {
       val testId = "99997777111"
       stubFor(
         put(urlEqualTo(endpointBase + testId))
@@ -89,7 +89,7 @@ class BackendConnectorSpec extends TestBaseSpec with BeforeAndAfterAll {
       )
 
       intercept[BadRequestException] {
-        await(backendConnector.saveAsDraft(testId, submissionDraft))
+        await(backendConnector.saveAsDraft(testId, submissionDraft, new HeaderCarrier()))
       }
     }
 
@@ -101,7 +101,7 @@ class BackendConnectorSpec extends TestBaseSpec with BeforeAndAfterAll {
           .willReturn(aResponse().withStatus(200).withBody(Json.stringify(Json.toJson(submissionDraft))))
       )
 
-      val result = await(backendConnector.loadSubmissionDraft(testId))
+      val result = await(backendConnector.loadSubmissionDraft(testId, new HeaderCarrier()))
 
       // Adjust the assertion according to your expected result
       result.get shouldBe submissionDraft
@@ -115,7 +115,7 @@ class BackendConnectorSpec extends TestBaseSpec with BeforeAndAfterAll {
           .willReturn(aResponse().withStatus(404))
       )
 
-      val result = await(backendConnector.loadSubmissionDraft(testId))
+      val result = await(backendConnector.loadSubmissionDraft(testId, new HeaderCarrier()))
 
       // Adjust the assertion based on your expected behavior
       result shouldBe None
@@ -127,7 +127,7 @@ class BackendConnectorSpec extends TestBaseSpec with BeforeAndAfterAll {
         delete(urlEqualTo(endpointBase + testId))
           .willReturn(aResponse().withStatus(200).withBody(Json.stringify(Json.obj("deletedCount" -> 1))))
       )
-      val result = await(backendConnector.deleteSubmissionDraft(testId))
+      val result = await(backendConnector.deleteSubmissionDraft(testId, new HeaderCarrier()))
 
       result shouldBe 1
       wireMockServer.verify(deleteRequestedFor(urlEqualTo(endpointBase + testId)))
@@ -141,7 +141,7 @@ class BackendConnectorSpec extends TestBaseSpec with BeforeAndAfterAll {
       )
 
       intercept[Upstream4xxResponse] {
-        await(backendConnector.deleteSubmissionDraft(testId))
+        await(backendConnector.deleteSubmissionDraft(testId, new HeaderCarrier()))
       }
     }
 

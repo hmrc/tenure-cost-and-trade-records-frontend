@@ -44,7 +44,7 @@ class IntervalsOfRentReviewController @Inject() (
     Ok(
       intervalsOfRentReviewView(
         request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.intervalsOfRentReview) match {
-          case Some(data) => intervalsOfRentReviewForm.fillAndValidate(data)
+          case Some(data) => intervalsOfRentReviewForm.fill(data)
           case _          => intervalsOfRentReviewForm
         },
         request.sessionData.toSummary

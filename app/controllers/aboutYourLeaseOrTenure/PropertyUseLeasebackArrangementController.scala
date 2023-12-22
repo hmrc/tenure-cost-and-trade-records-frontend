@@ -50,7 +50,7 @@ class PropertyUseLeasebackArrangementController @Inject() (
         propertyUseLeasebackAgreementView(
           request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.propertyUseLeasebackAgreement) match {
             case Some(propertyUseLeasebackAgreement) =>
-              propertyUseLeasebackArrangementForm.fillAndValidate(propertyUseLeasebackAgreement)
+              propertyUseLeasebackArrangementForm.fill(propertyUseLeasebackAgreement)
             case _                                   => propertyUseLeasebackArrangementForm
           },
           getBackLink(request.sessionData),

@@ -47,7 +47,7 @@ class PremisesLicenseGrantedController @Inject() (
         premisesLicenseGrantedView(
           request.sessionData.aboutYouAndTheProperty.flatMap(_.premisesLicenseGrantedDetail) match {
             case Some(premisesLicenseGrantedDetail) =>
-              premisesLicenseGrantedForm.fillAndValidate(premisesLicenseGrantedDetail)
+              premisesLicenseGrantedForm.fill(premisesLicenseGrantedDetail)
             case _                                  => premisesLicenseGrantedForm
           },
           request.sessionData.toSummary

@@ -45,7 +45,7 @@ class CurrentRentFirstPaidController @Inject() (
     Ok(
       currentRentFirstPaidView(
         request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.currentRentFirstPaid) match {
-          case Some(currentRentFirstPaid) => currentRentFirstPaidForm.fillAndValidate(currentRentFirstPaid)
+          case Some(currentRentFirstPaid) => currentRentFirstPaidForm.fill(currentRentFirstPaid)
           case _                          => currentRentFirstPaidForm
         },
         getBackLink(request.sessionData),

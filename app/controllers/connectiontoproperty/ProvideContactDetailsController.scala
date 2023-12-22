@@ -50,7 +50,7 @@ class ProvideContactDetailsController @Inject() (
       Ok(
         provideContactDetailsView(
           request.sessionData.stillConnectedDetails.flatMap(_.provideContactDetails) match {
-            case Some(customerDetails) => provideContactDetailsForm.fillAndValidate(customerDetails)
+            case Some(customerDetails) => provideContactDetailsForm.fill(customerDetails)
             case _                     => provideContactDetailsForm
           },
           getBackLink(request.sessionData) match {

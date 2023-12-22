@@ -50,7 +50,7 @@ class TradingNamePayingRentController @Inject() (
       Ok(
         tradingNamePayingRentView(
           request.sessionData.stillConnectedDetails.flatMap(_.tradingNamePayingRent) match {
-            case Some(enforcementAction) => tradingNamePayingRentForm.fillAndValidate(enforcementAction)
+            case Some(enforcementAction) => tradingNamePayingRentForm.fill(enforcementAction)
             case _                       => tradingNamePayingRentForm
           },
           getBackLink(request.sessionData),
