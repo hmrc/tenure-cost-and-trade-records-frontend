@@ -32,7 +32,7 @@ import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class UltimatelyResponsibleInsideRepairsController @Inject()(
+class UltimatelyResponsibleInsideRepairsController @Inject() (
   mcc: MessagesControllerComponents,
   navigator: AboutYourLeaseOrTenureNavigator,
   ultimatelyResponsibleIRView: ultimatelyResponsibleInsideRepairs,
@@ -47,7 +47,7 @@ class UltimatelyResponsibleInsideRepairsController @Inject()(
         ultimatelyResponsibleIRView(
           request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.ultimatelyResponsibleInsideRepairs) match {
             case Some(ultimatelyResponsibleIR) => ultimatelyResponsibleInsideRepairsForm.fill(ultimatelyResponsibleIR)
-            case _                           => ultimatelyResponsibleInsideRepairsForm
+            case _                             => ultimatelyResponsibleInsideRepairsForm
           },
           request.sessionData.toSummary
         )

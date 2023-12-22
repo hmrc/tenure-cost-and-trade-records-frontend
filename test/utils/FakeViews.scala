@@ -160,6 +160,12 @@ trait FakeViews { this: GuiceOneAppPerSuite =>
     app.injector.instanceOf[currentRentFirstPaid]
   lazy val ultimatelyResponsibleView                       =
     app.injector.instanceOf[ultimatelyResponsible]
+  lazy val ultimatelyResponsibleInsideRepairsView          =
+    app.injector.instanceOf[ultimatelyResponsibleInsideRepairs]
+  lazy val ultimatelyResponsibleOutsideRepairsView         =
+    app.injector.instanceOf[ultimatelyResponsibleOutsideRepairs]
+  lazy val ultimatelyResponsibleBuildingInsuranceView      =
+    app.injector.instanceOf[ultimatelyResponsibleBuildingInsurance]
   lazy val intervalsOfRentReviewView                       =
     app.injector.instanceOf[intervalsOfRentReview]
   lazy val includedInYourRentView                          =

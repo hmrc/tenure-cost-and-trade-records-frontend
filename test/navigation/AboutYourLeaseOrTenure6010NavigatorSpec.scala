@@ -127,7 +127,9 @@ class AboutYourLeaseOrTenure6010NavigatorSpec extends TestBaseSpec {
     "return a function that goes to ultimately responsible page when does rent payable has been completed" in {
       navigator
         .nextPage(DoesRentPayablePageId, session6010)
-        .apply(session6010) mustBe controllers.aboutYourLeaseOrTenure.routes.UltimatelyResponsibleController
+        .apply(
+          session6010
+        ) mustBe controllers.aboutYourLeaseOrTenure.routes.UltimatelyResponsibleInsideRepairsController
         .show()
     }
 

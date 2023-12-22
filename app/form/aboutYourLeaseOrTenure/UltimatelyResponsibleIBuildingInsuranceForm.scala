@@ -29,7 +29,7 @@ object UltimatelyResponsibleIBuildingInsuranceForm {
 
   val ultimatelyResponsibleBuildingInsuranceForm = Form(
     mapping(
-      "buildingInsurance"      -> buildingInsuranceType,
+      "buildingInsurance"        -> buildingInsuranceType,
       "sharedResponsibilitiesBI" -> mandatoryIfEqual(
         "buildingInsurance",
         BuildingInsuranceBoth.name,

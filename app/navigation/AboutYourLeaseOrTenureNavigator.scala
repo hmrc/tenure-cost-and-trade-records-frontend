@@ -265,24 +265,21 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
     ),
     CurrentLeaseBeginPageId                       -> (_ => controllers.aboutYourLeaseOrTenure.routes.IncludedInYourRentController.show()),
     IncludedInYourRentPageId                      -> (_ => controllers.aboutYourLeaseOrTenure.routes.DoesTheRentPayableController.show()),
-    DoesRentPayablePageId                         -> (_ => controllers.aboutYourLeaseOrTenure.routes.UltimatelyResponsibleInsideRepairsController.show()),
-
+    DoesRentPayablePageId                         -> (_ =>
+      controllers.aboutYourLeaseOrTenure.routes.UltimatelyResponsibleInsideRepairsController.show()
+    ),
     UltimatelyResponsiblePageId                   -> (_ =>
       controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesController.show()
     ),
-
-    UltimatelyResponsibleInsideRepairsPageId -> (_ =>
+    UltimatelyResponsibleInsideRepairsPageId      -> (_ =>
       controllers.aboutYourLeaseOrTenure.routes.UltimatelyResponsibleOutsideRepairsController.show()
-      ),
-    UltimatelyResponsibleOutsideRepairsPageId -> (_ =>
+    ),
+    UltimatelyResponsibleOutsideRepairsPageId     -> (_ =>
       controllers.aboutYourLeaseOrTenure.routes.UltimatelyResponsibleBuildingInsuranceController.show()
-      ),
-    UltimatelyResponsibleBusinessInsurancePageId -> (_ =>
+    ),
+    UltimatelyResponsibleBusinessInsurancePageId  -> (_ =>
       controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesController.show()
-      ),
-
-
-
+    ),
     RentIncludeTradeServicesPageId                -> rentIncludeTradeServicesRouting,
     RentIncludeTradeServicesDetailsPageId         -> (_ =>
       controllers.aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsController.show()

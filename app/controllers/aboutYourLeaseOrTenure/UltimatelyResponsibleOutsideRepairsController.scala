@@ -32,7 +32,7 @@ import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class UltimatelyResponsibleOutsideRepairsController @Inject()(
+class UltimatelyResponsibleOutsideRepairsController @Inject() (
   mcc: MessagesControllerComponents,
   navigator: AboutYourLeaseOrTenureNavigator,
   ultimatelyResponsibleORView: ultimatelyResponsibleOutsideRepairs,

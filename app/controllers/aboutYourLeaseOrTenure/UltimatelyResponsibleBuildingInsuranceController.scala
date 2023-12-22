@@ -33,7 +33,7 @@ import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class UltimatelyResponsibleBuildingInsuranceController @Inject()(
+class UltimatelyResponsibleBuildingInsuranceController @Inject() (
   mcc: MessagesControllerComponents,
   navigator: AboutYourLeaseOrTenureNavigator,
   ultimatelyResponsibleBIView: ultimatelyResponsibleBuildingInsurance,
@@ -47,8 +47,9 @@ class UltimatelyResponsibleBuildingInsuranceController @Inject()(
       Ok(
         ultimatelyResponsibleBIView(
           request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.ultimatelyResponsibleBuildingInsurance) match {
-            case Some(ultimatelyResponsibleBI) => ultimatelyResponsibleBuildingInsuranceForm.fill(ultimatelyResponsibleBI)
-            case _                           => ultimatelyResponsibleBuildingInsuranceForm
+            case Some(ultimatelyResponsibleBI) =>
+              ultimatelyResponsibleBuildingInsuranceForm.fill(ultimatelyResponsibleBI)
+            case _                             => ultimatelyResponsibleBuildingInsuranceForm
           },
           request.sessionData.toSummary
         )
@@ -61,7 +62,8 @@ class UltimatelyResponsibleBuildingInsuranceController @Inject()(
       ultimatelyResponsibleBuildingInsuranceForm,
       formWithErrors => BadRequest(ultimatelyResponsibleBIView(formWithErrors, request.sessionData.toSummary)),
       data => {
-        val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(ultimatelyResponsibleBuildingInsurance = Some(data)))
+        val updatedData =
+          updateAboutLeaseOrAgreementPartTwo(_.copy(ultimatelyResponsibleBuildingInsurance = Some(data)))
         session.saveOrUpdate(updatedData)
         Redirect(navigator.nextPage(UltimatelyResponsibleBusinessInsurancePageId, updatedData).apply(updatedData))
       }

@@ -42,7 +42,7 @@ case class AboutLeaseOrAgreementPartTwo(
   legalOrPlanningRestrictionsDetails: Option[LegalOrPlanningRestrictionsDetails] = None,
   ultimatelyResponsibleInsideRepairs: Option[UltimatelyResponsibleInsideRepairs] = None,
   ultimatelyResponsibleOutsideRepairs: Option[UltimatelyResponsibleOutsideRepairs] = None,
-  ultimatelyResponsibleBuildingInsurance: Option[UltimatelyResponsibleBuildingInsurance] = None,
+  ultimatelyResponsibleBuildingInsurance: Option[UltimatelyResponsibleBuildingInsurance] = None
 )
 
 object AboutLeaseOrAgreementPartTwo {

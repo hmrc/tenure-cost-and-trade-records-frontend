@@ -28,7 +28,7 @@ object UltimatelyResponsibleOutsideRepairsForm {
 
   val ultimatelyResponsibleOutsideRepairsForm = Form(
     mapping(
-      "outsideRepairs"         -> outsideRepairsType,
+      "outsideRepairs"           -> outsideRepairsType,
       "sharedResponsibilitiesOR" -> mandatoryIfEqual(
         "outsideRepairs",
         OutsideRepairsBoth.name,

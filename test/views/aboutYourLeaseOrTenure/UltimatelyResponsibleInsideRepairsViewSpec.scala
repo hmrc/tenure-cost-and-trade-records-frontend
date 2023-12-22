@@ -16,39 +16,37 @@
 
 package views.aboutYourLeaseOrTenure
 
-import form.aboutYourLeaseOrTenure.RentIncludeTradeServicesForm
+import form.aboutYourLeaseOrTenure.{UltimatelyResponsibleForm, UltimatelyResponsibleInsideRepairsForm}
 import models.pages.Summary
-import models.submissions.aboutYourLeaseOrTenure._
-import models.submissions.common.{AnswerNo, AnswerYes}
+import models.submissions.aboutYourLeaseOrTenure.{UltimatelyResponsible, UltimatelyResponsibleInsideRepairs}
+import models.submissions.common._
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class RentIncludeTradeServiceViewSpec extends QuestionViewBehaviours[RentIncludeTradeServicesDetails] {
+class UltimatelyResponsibleInsideRepairsViewSpec extends QuestionViewBehaviours[UltimatelyResponsibleInsideRepairs] {
 
-  val messageKeyPrefix = "rentIncludeTradeServices"
+  val messageKeyPrefix = "ultimatelyResponsibleIR"
 
-  override val form = RentIncludeTradeServicesForm.rentIncludeTradeServicesForm
+  override val form = UltimatelyResponsibleInsideRepairsForm.ultimatelyResponsibleInsideRepairsForm
 
-  val backLink = controllers.aboutYourLeaseOrTenure.routes.AboutYourLandlordController.show().url
+  def createView = () => ultimatelyResponsibleInsideRepairsView(form, Summary("99996010001"))(fakeRequest, messages)
 
-  def createView = () => rentIncludeTradeServicesView(form, Summary("99996010001"))(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[UltimatelyResponsibleInsideRepairs]) =>
+    ultimatelyResponsibleInsideRepairsView(form, Summary("99996010001"))(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[RentIncludeTradeServicesDetails]) =>
-    rentIncludeTradeServicesView(form, Summary("99996010001"))(fakeRequest, messages)
-
-  "Rent include trade services view" must {
+  "Ultimately responsible view" must {
 
     behave like normalPage(createView, messageKeyPrefix)
 
-    "has a link marked with back.link.label leading to the franchise or letting tied to property Page" in {
+    behave like pageWithTextFields(createViewUsingForm, "sharedResponsibilitiesIR")
+
+    "has a link marked with back.link.label leading to the does the rent payable Page" in {
       val doc          = asDocument(createView())
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText mustBe messages("back.link.label")
       val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.aboutYourLeaseOrTenure.routes.UltimatelyResponsibleBuildingInsuranceController
-        .show()
-        .url
+      backlinkUrl mustBe controllers.aboutYourLeaseOrTenure.routes.DoesTheRentPayableController.show().url
     }
 
     "Section heading is visible" in {
@@ -57,28 +55,40 @@ class RentIncludeTradeServiceViewSpec extends QuestionViewBehaviours[RentInclude
       assert(sectionText == messages("label.section.aboutYourLeaseOrTenure"))
     }
 
-    "contain radio buttons for rent include trade services with the value yes" in {
+    "contain radio buttons for inside repair with the value landlord" in {
       val doc = asDocument(createViewUsingForm(form))
       assertContainsRadioButton(
         doc,
-        "rentIncludeTradeServices",
-        "rentIncludeTradeServices",
-        AnswerYes.name,
+        "insideRepairs",
+        "insideRepairs",
+        InsideRepairsLandlord.name,
         false
       )
-      assertContainsText(doc, messages("label.yes"))
+      assertContainsText(doc, messages("label.landlord"))
     }
 
-    "contain radio buttons for rent include trade services with the value no" in {
+    "contain radio buttons for inside repair with the value tenant" in {
       val doc = asDocument(createViewUsingForm(form))
       assertContainsRadioButton(
         doc,
-        "rentIncludeTradeServices-2",
-        "rentIncludeTradeServices",
-        AnswerNo.name,
+        "insideRepairs-2",
+        "insideRepairs",
+        InsideRepairsTenant.name,
         false
       )
-      assertContainsText(doc, messages("label.no"))
+      assertContainsText(doc, messages("label.tenant"))
+    }
+
+    "contain radio buttons for inside repair with the value both" in {
+      val doc = asDocument(createViewUsingForm(form))
+      assertContainsRadioButton(
+        doc,
+        "insideRepairs-3",
+        "insideRepairs",
+        InsideRepairsBoth.name,
+        false
+      )
+      assertContainsText(doc, messages("label.both"))
     }
 
     "contain save and continue button with the value Save and Continue" in {
