@@ -20,7 +20,6 @@
 @import uk.gov.hmrc.govukfrontend.views.Implicits.RichInput
 @import util.DateUtil
 
-@import java.time.LocalDate
 
 @this(layout: Layout,
         govukButton: GovukButton,
@@ -99,11 +98,6 @@
     request.sessionData.aboutTheTradingHistory.fold(Seq.empty[Int])(_.turnoverSections.indices)
 }
 
-@financialYearEndDates = @{
-    request.sessionData.aboutTheTradingHistory
-    .fold(Seq.empty[LocalDate])(_.turnoverSections.map(_.financialYearEnd)).zipWithIndex
-}
-
 @layout(
     pageHeading = if(forType == ForTypes.for6010 || forType == ForTypes.for6011) {
         messages("turnover.heading")
@@ -151,7 +145,7 @@
         <table class="hmrc-responsive-table">
             <tbody>
                 <tr>
-                @financialYearEndDates.map { case (finYearEnd, idx) =>
+                @request.sessionData.financialYearEndDates.map { case (finYearEnd, idx) =>
                 <td>
                     @govukTable(Table(
                         head = Seq(
@@ -159,10 +153,7 @@
                                 content = Text(messages("turnover.financialYearEnd"))
                             ),
                             HeadCell(
-                                content = Text(dateUtil.formatDayMonthAbbrYear(finYearEnd)),
-                                attributes = Map(
-                                    "style" -> "min-width: 10em;"
-                                )
+                                content = Text(dateUtil.formatDayMonthAbbrYear(finYearEnd))
                             )
                         ),
                         firstCellIsHeader = true,
