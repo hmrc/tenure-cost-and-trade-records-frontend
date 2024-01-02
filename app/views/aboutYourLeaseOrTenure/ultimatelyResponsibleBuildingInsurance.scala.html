@@ -20,10 +20,9 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukCharacterCount
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
-@import uk.gov.hmrc.govukfrontend.views.Aliases.RadioItem
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.textarea.Textarea
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.label.Label
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Hint
+@import uk.gov.hmrc.govukfrontend.views.Aliases._
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukTextarea
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
 @import models.pages.Summary
@@ -39,9 +38,27 @@
 
 @(theForm: Form[UltimatelyResponsibleBuildingInsurance], summary: Summary)(implicit request: Request[_], messages: Messages)
 
+    @conditionalHTML = {
+    @govukTextarea(
+        Textarea(
+            id = "sharedResponsibilitiesBI",
+            name = "sharedResponsibilitiesBI",
+            value = theForm("sharedResponsibilitiesBI").value,
+            label = Label(
+                content = Text(messages("label.sharedResponsibilitiesBI"))
+            ),
+            hint = Hint(
+                content = Text(messages("hint.sharedResponsibilitiesBI"))
+            ),
+            errorMessage =  theForm.errors.asTextErrorMessageForField("sharedResponsibilitiesBI")
+        )
+    )
+    }
+
 @layout(
  pageHeading = messages("ultimatelyResponsibleBI.heading"),
  showSection = true,
+    showH1 = false,
     summary = Some(summary),
  sectionName = messages("label.section.aboutYourLeaseOrTenure"),
  backLinkUrl = controllers.aboutYourLeaseOrTenure.routes.UltimatelyResponsibleOutsideRepairsController.show.url,
@@ -50,40 +67,36 @@
 
   @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.UltimatelyResponsibleBuildingInsuranceController.submit()) {
 
-    <p class="govuk-body">@messages("ultimatelyResponsibleBI.subheading")</p>
+      <h1 class="govuk-heading-l">@messages("ultimatelyResponsibleBI.heading")</h1>
+      <h2 class="govuk-body">@messages("ultimatelyResponsibleBI.subheading")</h2>
 
-    @includes.radioButtons(
-      govukRadios,
-      theForm,
-      "buildingInsurance",
-      "label.buildingInsurance",
-      "govuk-!-font-weight-bold",
-      items = Seq(
-          "landlord" -> messages("label.landlord"),
-          "tenant" -> messages("label.tenant"),
-          "both" -> messages("label.both")
-      ).map(radioItem => RadioItem(
-          content = Text(radioItem._2),
-          checked = radioItem._1.equals(theForm("rentReducedOnReview").value.getOrElse("")),
-          value = Option(radioItem._1)
-      )),
-        inline = false
-    )
 
-  @govukTextarea(
-      Textarea(
-          id = "sharedResponsibilitiesBI",
-          name = "sharedResponsibilitiesBI",
-          value = theForm("sharedResponsibilitiesBI").value,
-          label = Label(
-              content = Text(messages("label.sharedResponsibilitiesBI"))
+      @govukRadios(Radios(
+          fieldset = Some(Fieldset(
+              legend = Some(Legend(
+                  classes = "govuk-fieldset__legend govuk-fieldset__legend--l",
+              ))
+          )),
+          name = "buildingInsurance",
+          items = Seq(
+              RadioItem(
+                  content = Text(messages("label.landlord")),
+                  value = Some("landlord")
+              ),
+              RadioItem(
+                  content = Text(messages("label.tenant")),
+                  value = Some("tenant")
+              ),
+              RadioItem(
+                  content = Text(messages("label.both")),
+                  value = Some("both"),
+                  conditionalHtml = Some(conditionalHTML)
+              )
           ),
-          hint = Hint(
-              content = Text(messages("hint.sharedResponsibilitiesBI"))
-          ),
-          errorMessage =  theForm.errors.asTextErrorMessageForField("sharedResponsibilitiesBI")
-            )
-        )
+          errorMessage = theForm.errors.asTextErrorMessageForField("buildingInsurance")
+      ).withFormField(theForm("buildingInsurance")))
+
+
 
     @includes.continueSaveAsDraftButtons(govukButton)
   }

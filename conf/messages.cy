@@ -768,7 +768,7 @@ label.sharedResponsibilitiesIR = Give details of any shared responsibilities
 hint.sharedResponsibilitiesIR = For example, ‘business insurance costs are shared equally’, or ‘landlord covers 75% for outside repairs, tenant pays 25%’.
 error.sharedResponsibilitiesIR.maxLength = This must be 2000 characters or fewer
 error.sharedResponsibilitiesIR = This must be 2000 characters or fewer
-error.insideRepairs.required = Select who is responsible for the inside repairs
+error.sharedResponsibilitiesIR.required = Please give details of any shared responsibilities for inside repairs to public and business areas
 
 # ULTIMATELY RESPONSIBLE OUTSIDE REPAIRS
 #######################
@@ -782,7 +782,7 @@ label.sharedResponsibilitiesOR = Give details of any shared responsibilities
 hint.sharedResponsibilitiesOR = For example, ‘business insurance costs are shared equally’, or ‘landlord covers 75% for outside repairs, tenant pays 25%’.
 error.sharedResponsibilitiesOR.maxLength = This must be 2000 characters or fewer
 error.sharedResponsibilitiesOR = This must be 2000 characters or fewer
-error.outsideRepairs.required = Select who is responsible for outside repairs
+error.sharedResponsibilitiesOR.required = Please give details of any shared responsibilities for outside repairs
 
 # ULTIMATELY RESPONSIBLE BUILDING INSURANCE
 #######################
@@ -796,7 +796,7 @@ label.sharedResponsibilitiesBI = Give details of any shared responsibilities
 hint.sharedResponsibilitiesBI = For example, ‘business insurance costs are shared equally’, or ‘landlord covers 75% for outside repairs, tenant pays 25%’.
 error.sharedResponsibilitiesBi.maxLength = This must be 2000 characters or fewer
 error.sharedResponsibilitiesBI = This must be 2000 characters or fewer
-error.buildingInsurance.required = Select who is responsible for the building insurance
+error.sharedResponsibilitiesBI.required = Please give details of any shared responsibilities for building insurance
 
 # RENT INCLUDE TRADE SERVICES
 ############################

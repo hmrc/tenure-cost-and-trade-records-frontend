@@ -34,8 +34,8 @@ object UltimatelyResponsibleIBuildingInsuranceForm {
         "buildingInsurance",
         BuildingInsuranceBoth.name,
         default(text, "").verifying(
-          nonEmpty(errorMessage = "error.buildingInsurance.required"),
-          maxLength(100, "error.buildingInsurance.maxLength")
+          nonEmpty(errorMessage = "error.sharedResponsibilitiesBI.required"),
+          maxLength(100, "error.sharedResponsibilitiesBI.maxLength")
         )
       )
     )(UltimatelyResponsibleBuildingInsurance.apply)(UltimatelyResponsibleBuildingInsurance.unapply)
