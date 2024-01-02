@@ -22,6 +22,7 @@
 @import play.api.i18n.Messages
 @import models.pages.IncomeExpenditureEntry
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
+@import util.NumberUtil._
 
 @this(
         layout: Layout,
@@ -48,35 +49,35 @@
                 Seq(TableRow(content = Text(messages("incomeExpenditureSummary.financialYearEndLabel")))) ++ financialYears.map(year => TableRow(content = Text(year),classes = "govuk-!-font-weight-bold")) ++ Seq(TableRow(content = Empty))
             ) ++ Seq(
                 Seq(TableRow(content = Text(messages("incomeExpenditureSummary.totalTurnoverLabel")))) ++
-                        entries.map(entry => TableRow(content = Text(f"£${entry.totalTurnover}%,.2f"))) ++
+                        entries.map(entry => TableRow(content = Text({entry.totalTurnover.asMoney}))) ++
                         Seq(TableRow(content = HtmlContent(s"<a href='${entries.head.turnoverUrl}' class='govuk-link'>Change</a>"))),
 
                 Seq(TableRow(content = Text(messages("incomeExpenditureSummary.totalCostOfSalesLabel")))) ++
-                        entries.map(entry => TableRow(content = Text(f"£${entry.totalCostOfSales}%,.2f"))) ++
+                        entries.map(entry => TableRow(content = Text(entry.totalCostOfSales.asMoney))) ++
                         Seq(TableRow(content = HtmlContent(s"<a href='${entries.head.costOfSalesUrl}' class='govuk-link'>Change</a>"))),
 
                 Seq(TableRow(content = Text(messages("incomeExpenditureSummary.totalGrossProfitsLabel")))) ++
-                        entries.map(entry => TableRow(content = Text(f"£${entry.totalGrossProfits}%,.2f")))++
+                        entries.map(entry => TableRow(content = Text(entry.totalGrossProfits.asMoney)))++
                         Seq(TableRow(content = Empty)),
 
                 Seq(TableRow(content = Text(messages("incomeExpenditureSummary.totalPayrollCostLabel")))) ++
-                        entries.map(entry => TableRow(content = Text(f"£${entry.totalPayrollCost}%,.2f"))) ++
+                        entries.map(entry => TableRow(content = Text(entry.totalPayrollCost.asMoney))) ++
                         Seq(TableRow(content = HtmlContent(s"<a href='${entries.head.totalPayrollCostURL}' class='govuk-link'>Change</a>"))),
 
                 Seq(TableRow(content = Text(messages("incomeExpenditureSummary.variableExpenses")))) ++
-                        entries.map(entry => TableRow(content = Text(f"£${entry.variableExpenses}%,.2f"))) ++
+                        entries.map(entry => TableRow(content = Text(entry.variableExpenses.asMoney))) ++
                         Seq(TableRow(content = HtmlContent(s"<a href='${entries.head.variableExpensesURL}' class='govuk-link'>Change</a>"))),
 
                 Seq(TableRow(content = Text(messages("incomeExpenditureSummary.fixedExpensesLabel")))) ++
-                        entries.map(entry => TableRow(content = Text(f"£${entry.fixedExpenses}%,.2f"))) ++
+                        entries.map(entry => TableRow(content = Text(entry.fixedExpenses.asMoney))) ++
                         Seq(TableRow(content = HtmlContent(s"<a href='${entries.head.fixedExpensesUrl}' class='govuk-link'>Change</a>"))),
 
                 Seq(TableRow(content = Text(messages("incomeExpenditureSummary.totalNetProfitLabel")))) ++
-                        entries.map(entry => TableRow(content = Text(f"£${entry.totalNetProfit}%,.2f")))++
+                        entries.map(entry => TableRow(content = Text(entry.totalNetProfit.asMoney)))++
                         Seq(TableRow(content = Empty)),
 
                 Seq(TableRow(content = Text(messages("incomeExpenditureSummary.profitMargin")))) ++
-                        entries.map(entry => TableRow(content = Text(f"${entry.profitMargin}%.2f%%")))++
+                        entries.map(entry => TableRow(content = Text(entry.profitMargin.asMoney)))++
                         Seq(TableRow(content = Empty))
 
             ),

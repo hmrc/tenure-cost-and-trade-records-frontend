@@ -1261,6 +1261,7 @@ incomeExpenditureSummary.fixedExpensesLabel = Fixed Expenses
 incomeExpenditureSummary.totalNetProfitLabel = Total net profits based on your figures
 incomeExpenditureSummary.profitMargin = Profit margin based on your figures
 incomeExpenditureSummary.confirmation = I confirm that these figures are correct
+error.incomeExpenditureSummary.required = Select if these figures are correct
 
 # UNUSUAL CIRCUMSTANCES (FORM 6015)
 ###################################

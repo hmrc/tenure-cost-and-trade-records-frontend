@@ -26,7 +26,7 @@ object IncomeExpenditureSummaryForm {
   val incomeExpenditureSummaryForm = Form(
     mapping(
       "incomeExpenditureSummary" -> default(text, "").verifying(
-        nonEmpty(errorMessage = "error.checkYourAnswersRadio.required"))
+        nonEmpty(errorMessage = "error.incomeExpenditureSummary.required"))
     )(IncomeExpenditureSummary.apply)(IncomeExpenditureSummary.unapply)
   )
 }
