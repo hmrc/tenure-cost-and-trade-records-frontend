@@ -12,6 +12,10 @@
   padding-right: 1em;
 }
 
+.hmrc-responsive-table .govuk-table th {
+  min-width: 10em;
+}
+
 .hmrc-responsive-table td:not(:first-child) .govuk-table th:first-child {
   display: none;
 }
