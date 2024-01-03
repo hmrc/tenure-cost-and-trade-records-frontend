@@ -48,12 +48,8 @@
         _.altDetailsQuestion.map(_.contactDetailsQuestion.name).contains("yes"),
         "label.altDetails",
         _.altContactInformation.map { x =>
-            val contactDetails = Seq(
-                Text(x.alternativeContactFullName).asHtml,
-                x.alternativeContactDetails.email,
-                x.alternativeContactDetails.phone,
-                x.alternativeContactAddress.escapedHtml,
-            ).mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>")
+            val contactDetails =
+                x.alternativeContactAddress.escapedHtml
 
             contactDetails
         },

@@ -1290,8 +1290,8 @@ error.contactDetailsQuestion.missing= Select yes if you would like us to use alt
 
 # ALTERNATIVE CONTACT DETAILS
 #############################
-alternativeContactDetails.heading = Alternative contact details
-hint.alternativeContactDetails = Provide the details of the person you would like us to contact if we have any queries about the declaration.
+alternativeContactDetails.heading = Alternative correspondence address
+hint.alternativeContactDetails = If you would like us to contact you at a different address, give details here
 label.alternativeContactDetails = Correspondence address
 
 # TENANCY LEASE AGREEMENT EXPIRE (FORM 6011)
