@@ -1251,7 +1251,18 @@ otherCosts.heading = Other costs - holding page
 
 # INCOME EXPENDITURE SUMMARY (FORM 6015)
 ########################################
-incomeExpenditureSummary.heading = Income and expediture summary - holding page
+incomeExpenditureSummary.heading = Income and expenditure summary
+incomeExpenditureSummary.financialYearEndLabel = Financial year end
+incomeExpenditureSummary.totalTurnoverLabel = Total turnover
+incomeExpenditureSummary.totalCostOfSalesLabel = Total cost of sales
+incomeExpenditureSummary.totalGrossProfitsLabel = Total gross profits based on your figures
+incomeExpenditureSummary.totalPayrollCostLabel = Total payroll costs
+incomeExpenditureSummary.variableExpenses = Variable expenses
+incomeExpenditureSummary.fixedExpensesLabel = Fixed Expenses
+incomeExpenditureSummary.totalNetProfitLabel = Total net profits based on your figures
+incomeExpenditureSummary.profitMargin = Profit margin based on your figures
+incomeExpenditureSummary.confirmation = I confirm that these figures are correct
+error.incomeExpenditureSummary.required = Select if these figures are correct
 
 # UNUSUAL CIRCUMSTANCES (FORM 6015)
 ###################################
