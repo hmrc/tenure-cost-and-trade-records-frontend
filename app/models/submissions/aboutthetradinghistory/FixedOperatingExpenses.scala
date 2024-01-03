@@ -26,7 +26,7 @@ case class FixedOperatingExpenses(
   insurance: BigDecimal,
   loanInterest: BigDecimal,
   depreciation: BigDecimal
-){
+) {
   def total = rent + businessRates + insurance + loanInterest + depreciation
 }
 

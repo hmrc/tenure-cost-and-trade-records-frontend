@@ -17,20 +17,15 @@
 package form.aboutthetradinghistory
 
 import models.submissions.aboutthetradinghistory.VariableOperatingExpenses
+import play.api.data.Forms.{bigDecimal, ignored, mapping}
 import play.api.data.{Form, Mapping}
-import play.api.data.Forms.{bigDecimal, localDate, mapping}
-import play.api.data.validation.{Constraint, Invalid, Valid}
 
 import java.time.LocalDate
 
 object VariableOperatingExpensesForm {
   def variableOperatingExpensesForm(expectedNumberOfFinancialYears: Int): Form[Seq[VariableOperatingExpenses]] = {
-    val ukDateMappings                                    = localDate("dd/MM/yyyy")
-    val dateTooEarlyConstraint: Constraint[LocalDate]     = Constraint[LocalDate]("dateTooEarlyConstraint") { date =>
-      if (date.isAfter(LocalDate.of(1900, 1, 1))) Valid else Invalid("errorName")
-    }
     val columnMapping: Mapping[VariableOperatingExpenses] = mapping(
-      "financial-year-end"                -> ukDateMappings.verifying(dateTooEarlyConstraint, dateTooEarlyConstraint),
+      "financial-year-end"                -> ignored(LocalDate.EPOCH),
       "energy-and-utilities"              -> bigDecimal,
       "cleaning-and-laundry"              -> bigDecimal,
       "building-maintenance-and-repairs"  -> bigDecimal,

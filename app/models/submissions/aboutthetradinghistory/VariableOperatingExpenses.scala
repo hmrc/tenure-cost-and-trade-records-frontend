@@ -30,8 +30,9 @@ case class VariableOperatingExpenses(
   administrationAndSundries: BigDecimal,
   entertainment: BigDecimal,
   totalVariableOperatingExpenses: BigDecimal
-){
-  def total = energyAndUtilities + cleaningAndLaundry + buildingMaintenanceAndRepairs + fixturesFittingsAndEquipment + advertisingAndPromotions +administrationAndSundries + entertainment
+) {
+  def total =
+    energyAndUtilities + cleaningAndLaundry + buildingMaintenanceAndRepairs + fixturesFittingsAndEquipment + advertisingAndPromotions + administrationAndSundries + entertainment
 
 }
 

@@ -28,8 +28,8 @@ case class TurnoverSection(
   otherReceipts: Option[BigDecimal],
   accommodation: Option[BigDecimal],
   averageOccupancyRate: Option[BigDecimal]
-){
-  def total = Seq(alcoholicDrinks,accommodation,food,otherReceipts).flatten.sum
+) {
+  def total = Seq(alcoholicDrinks, accommodation, food, otherReceipts).flatten.sum
 }
 
 object TurnoverSection {
