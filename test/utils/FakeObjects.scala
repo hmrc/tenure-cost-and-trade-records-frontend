@@ -281,7 +281,10 @@ trait FakeObjects {
   )
 
   val aboutYourTradingHistory6010YesSession: Session =
-    aboutYouAndTheProperty6010YesSession.copy(aboutTheTradingHistory = Some(prefilledAboutYourTradingHistory),stillConnectedDetails = Some(prefilledStillConnectedDetailsYesToAll))
+    aboutYouAndTheProperty6010YesSession.copy(
+      aboutTheTradingHistory = Some(prefilledAboutYourTradingHistory),
+      stillConnectedDetails = Some(prefilledStillConnectedDetailsYesToAll)
+    )
 
   val aboutYourTradingHistory6015YesSession: Session =
     aboutYouAndTheProperty6015YesSession.copy(
@@ -291,18 +294,23 @@ trait FakeObjects {
             costOfSales = Seq(CostOfSales(LocalDate.now, None, None, None, None)),
             otherCosts = Some(OtherCosts(otherCosts = Seq(OtherCost(LocalDate.now, None, None))))
           )
-      ), stillConnectedDetails = Some(prefilledStillConnectedDetailsYesToAll)
+      ),
+      stillConnectedDetails = Some(prefilledStillConnectedDetailsYesToAll)
     )
 
   // Franchises or lettings
   val prefilledCateringOperationSectionYes: CateringOperationSection = CateringOperationSection(
     CateringOperationDetails("Operator Name", "Type of Business", prefilledCateringAddress),
     Some(CateringOperationRentDetails(BigDecimal(1500), prefilledDateInput)),
+    Some(RentReceivedFrom(BigDecimal(1500), true)),
+    Some(CalculatingTheRent("test", prefilledDateInput)),
     Some(AnswerYes)
   )
   val prefilledCateringOperationSectionNo: CateringOperationSection  = CateringOperationSection(
     CateringOperationDetails("Operator Name", "Type of Business", prefilledCateringAddress),
     Some(CateringOperationRentDetails(BigDecimal(1500), prefilledDateInput)),
+    Some(RentReceivedFrom(BigDecimal(1500), true)),
+    Some(CalculatingTheRent("test", prefilledDateInput)),
     Some(AnswerNo)
   )
   val prefilledLettingSectionYes: LettingSection                     = LettingSection(

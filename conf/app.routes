@@ -191,6 +191,12 @@ POST        /catering-operation-details                             controllers.
 GET         /catering-operation-rent                                controllers.aboutfranchisesorlettings.CateringOperationDetailsRentController.show(idx: Int)
 POST        /catering-operation-rent                                controllers.aboutfranchisesorlettings.CateringOperationDetailsRentController.submit(idx: Int)
 
+GET         /rent-received-from                                     controllers.aboutfranchisesorlettings.RentReceivedFromController.show(idx: Int)
+POST        /rent-received-from                                     controllers.aboutfranchisesorlettings.RentReceivedFromController.submit(idx: Int)
+
+GET         /calculating-the-rent-for                               controllers.aboutfranchisesorlettings.CalculatingTheRentForController.show(idx: Int)
+POST        /calculating-the-rent-for                               controllers.aboutfranchisesorlettings.CalculatingTheRentForController.submit(idx: Int)
+
 GET         /catering-operation-rent-includes                       controllers.aboutfranchisesorlettings.CateringOperationRentIncludesController.show(idx: Int)
 POST        /catering-operation-rent-includes                       controllers.aboutfranchisesorlettings.CateringOperationRentIncludesController.submit(idx: Int)
 
