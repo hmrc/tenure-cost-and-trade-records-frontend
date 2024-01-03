@@ -40,22 +40,10 @@ object CostOfSalesForm {
     }
 
     Form(
-      years.length match {
-        case 1 =>
-          mapping(
-            mappingPerYear.head
-          )(Seq(_))(_.headOption)
-        case 2 =>
-          mapping(
-            mappingPerYear.head,
-            mappingPerYear(1)
-          )(Seq(_, _))(_.toTuple2)
-        case 3 =>
-          mapping(
-            mappingPerYear.head,
-            mappingPerYear(1),
-            mappingPerYear(2)
-          )(Seq(_, _, _))(_.toTuple3)
+      mappingPerYear match {
+        case Seq(a)       => mapping(a)(Seq(_))(_.headOption)
+        case Seq(a, b)    => mapping(a, b)(Seq(_, _))(_.toTuple2)
+        case Seq(a, b, c) => mapping(a, b, c)(Seq(_, _, _))(_.toTuple3)
       }
     )
   }
