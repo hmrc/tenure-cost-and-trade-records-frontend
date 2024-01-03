@@ -30,7 +30,10 @@ case class VariableOperatingExpenses(
   administrationAndSundries: BigDecimal,
   entertainment: BigDecimal,
   totalVariableOperatingExpenses: BigDecimal
-)
+){
+  def total = energyAndUtilities + cleaningAndLaundry + buildingMaintenanceAndRepairs + fixturesFittingsAndEquipment + advertisingAndPromotions +administrationAndSundries + entertainment
+
+}
 
 object VariableOperatingExpenses {
   implicit val format = Json.format[VariableOperatingExpenses]
