@@ -394,6 +394,8 @@ trait FakeObjects {
   val prefilledCurrentRentPayableWithin12Months =
     CurrentRentPayableWithin12Months(CurrentRentWithin12MonthsYes, Some(prefilledDateInput))
 
+  val prefilledPropertyUseLeasebackArrangement = PropertyUseLeasebackArrangementDetails(AnswerYes)
+
   val prefilledAboutTheLandlord =
     AboutTheLandlord(
       prefilledFakeName,
@@ -493,7 +495,7 @@ trait FakeObjects {
     Some(prefilledConnectedToLandlordDetails),
     Some(prefilledLeaseOrAgreementYearsDetails),
     Some(prefilledCurrentRentPayableWithin12Months),
-    Some(AnswerYes),
+    Some(prefilledPropertyUseLeasebackArrangement),
     Some(prefilledAnnualRent),
     rentIncludeTradeServicesDetails = Some(RentIncludeTradeServicesDetails(AnswerYes)),
     rentIncludeFixturesAndFittingsDetails = Some(RentIncludeFixturesAndFittingsDetails(AnswerYes)),
@@ -508,7 +510,7 @@ trait FakeObjects {
     Some(prefilledConnectedToLandlordDetails),
     Some(prefilledLeaseOrAgreementYearsDetails),
     Some(prefilledCurrentRentPayableWithin12Months),
-    Some(AnswerYes),
+    Some(prefilledPropertyUseLeasebackArrangement),
     Some(prefilledAnnualRent),
     rentIncludeTradeServicesDetails = Some(RentIncludeTradeServicesDetails(AnswerYes)),
     rentIncludeFixturesAndFittingsDetails = Some(RentIncludeFixturesAndFittingsDetails(AnswerYes)),
@@ -521,7 +523,7 @@ trait FakeObjects {
     Some(prefilledConnectedToLandlordDetails),
     Some(prefilledLeaseOrAgreementYearsDetailsNo),
     Some(prefilledCurrentRentPayableWithin12Months),
-    Some(AnswerYes),
+    Some(prefilledPropertyUseLeasebackArrangement),
     Some(prefilledAnnualRent),
     rentIncludeTradeServicesDetails = Some(RentIncludeTradeServicesDetails(AnswerNo)),
     rentIncludeFixturesAndFittingsDetails = Some(RentIncludeFixturesAndFittingsDetails(AnswerNo)),

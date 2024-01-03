@@ -17,15 +17,24 @@
 package form.aboutYourLeaseOrTenure
 
 import form.MappingSupport.createYesNoType
+import models.submissions.aboutYourLeaseOrTenure.{PropertyUseLeasebackArrangementDetails, RentIncludeFixturesAndFittingsDetails}
 import models.submissions.common.AnswersYesNo
 import play.api.data.Form
 import play.api.data.Forms.mapping
 
 object PropertyUseLeasebackArrangementForm {
-  lazy val propertyUseLeasebackArrangementForm: Form[AnswersYesNo] = Form(propertyUseLeasebackArrangementMapping)
-
-  val propertyUseLeasebackArrangementMapping = mapping(
-    "propertyUseLeasebackArrangement" -> createYesNoType("error.propertyUseLeasebackArrangement.missing")
-  )(x => x)(b => Some(b))
-
+  val propertyUseLeasebackArrangementForm = Form(
+    mapping(
+      "propertyUseLeasebackArrangement" -> createYesNoType("error.propertyUseLeasebackArrangement.missing")
+    )(PropertyUseLeasebackArrangementDetails.apply)(PropertyUseLeasebackArrangementDetails.unapply)
+  )
 }
+
+//
+//  lazy val propertyUseLeasebackArrangementForm: Form[PropertyUseLeasebackArrangementDetails] = Form(
+//    propertyUseLeasebackArrangementMapping
+//  )
+//
+//  val propertyUseLeasebackArrangementMapping = mapping(
+//    "propertyUseLeasebackArrangement" -> createYesNoType("error.propertyUseLeasebackArrangement.missing")
+//  )(x => x)(b => Some(b))

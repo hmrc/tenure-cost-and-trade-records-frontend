@@ -28,7 +28,7 @@ case class AboutLeaseOrAgreementPartOne(
   connectedToLandlordDetails: Option[ConnectedToLandlordInformationDetails] = None,
   leaseOrAgreementYearsDetails: Option[LeaseOrAgreementYearsDetails] = None,
   currentRentPayableWithin12Months: Option[CurrentRentPayableWithin12Months] = None,
-  propertyUseLeasebackAgreement: Option[AnswersYesNo] = None,
+  propertyUseLeasebackAgreement: Option[PropertyUseLeasebackArrangementDetails] = None,
   annualRent: Option[AnnualRent] = None,
   currentRentFirstPaid: Option[CurrentRentFirstPaid] = None,
   currentLeaseOrAgreementBegin: Option[CurrentLeaseOrAgreementBegin] = None,

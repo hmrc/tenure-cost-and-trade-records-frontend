@@ -14,32 +14,38 @@
  * limitations under the License.
  */
 
-package views.connectiontoproperty
+package views.aboutYourLeaseOrTenure
 
-import form.connectiontoproperty.AreYouThirdPartyForm
-import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
+import form.aboutYourLeaseOrTenure.PropertyUseLeasebackArrangementForm.propertyUseLeasebackArrangementForm
+import models.pages.Summary
+import models.submissions.aboutYourLeaseOrTenure.PropertyUseLeasebackArrangementDetails
+import models.submissions.common.{AnswerNo, AnswerYes}
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import play.api.i18n.Lang
 import views.behaviours.QuestionViewBehaviours
 
 import java.util.Locale
+class PropertyUseLeasebackAgreementViewSpec extends QuestionViewBehaviours[PropertyUseLeasebackArrangementDetails] {
 
-class AreYouThirdPartyViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
+  val messageKeyPrefix = "propertyUseLeasebackArrangement"
 
-  val messageKeyPrefix = "areYouThirdParty"
+  override val form = propertyUseLeasebackArrangementForm
 
-  override val form = AreYouThirdPartyForm.areYouThirdPartyForm
-
-  val backLink = controllers.connectiontoproperty.routes.IsRentReceivedFromLettingController.show().url
-
+  val backLink   = controllers.aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.show().url
   def createView = () =>
-    areYouThirdPartyView(form, backLink, "Wombles Inc", stillConnectedDetailsNoSession.toSummary)(fakeRequest, messages)
+    propertyUseLeasebackAgreementView(form, backLink, "Wombles Inc", Summary("99996010001"))(
+      fakeRequest,
+      messages
+    )
 
-  def createViewUsingForm = (form: Form[AnswersYesNo]) =>
-    areYouThirdPartyView(form, backLink, "Wombles Inc", stillConnectedDetailsNoSession.toSummary)(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[PropertyUseLeasebackArrangementDetails]) =>
+    propertyUseLeasebackAgreementView(form, backLink, "Wombles Inc", Summary("99996010001"))(
+      fakeRequest,
+      messages
+    )
 
-  "Are you a third party view" must {
+  "Property Use Leaseback Agreement view" must {
 
     "behave like a normal page" when {
       "rendered" must {
@@ -60,7 +66,7 @@ class AreYouThirdPartyViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
         "Section heading is visible" in {
           val doc         = asDocument(createViewUsingForm(form))
           val sectionText = doc.getElementsByClass("govuk-caption-m").text()
-          assert(sectionText == messages("label.section.connectionToTheProperty"))
+          assert(sectionText == messages("label.section.aboutYourLeaseOrTenure"))
         }
 
         "display the correct browser title" in {
@@ -68,7 +74,7 @@ class AreYouThirdPartyViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
           assertEqualsValue(
             doc,
             "title",
-            messages("service.title", messages("areYouThirdParty.heading"))
+            messages("service.title", messages("propertyUseLeasebackArrangement.title"))
           )
         }
 
@@ -77,7 +83,7 @@ class AreYouThirdPartyViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
           assertEqualsValue(
             doc,
             "h1",
-            messages("areYouThirdParty.title", "Wombles Inc")
+            messages("propertyUseLeasebackArrangement.heading", "Wombles Inc")
           )
         }
 
@@ -92,18 +98,42 @@ class AreYouThirdPartyViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
       }
     }
 
-    "contain radio buttons for the value yes with hint" in {
-      val doc = asDocument(createViewUsingForm(form))
-      assertContainsRadioButton(doc, "areYouThirdParty", "areYouThirdParty", AnswerYes.name, false)
-      assertContainsText(doc, messages("label.yes"))
-      assertContainsText(doc, messages("hint.areYouThirdParty.yes", "Wombles Inc"))
+    "has a link marked with back.link.label leading to lease or agreement years Page" in {
+      val doc          = asDocument(createView())
+      val backlinkText = doc.select("a[class=govuk-back-link]").text()
+      backlinkText mustBe messages("back.link.label")
+      val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
+      backlinkUrl mustBe controllers.aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.show.url
     }
 
-    "contain radio buttons for the value no with hint" in {
+    "Section heading is visible" in {
+      val doc         = asDocument(createViewUsingForm(form))
+      val sectionText = doc.getElementsByClass("govuk-caption-m").text()
+      assert(sectionText == messages("label.section.aboutYourLeaseOrTenure"))
+    }
+
+    "contain radio buttons for payment when lease granted with the value yes" in {
       val doc = asDocument(createViewUsingForm(form))
-      assertContainsRadioButton(doc, "areYouThirdParty-2", "areYouThirdParty", AnswerNo.name, false)
+      assertContainsRadioButton(
+        doc,
+        "propertyUseLeasebackArrangement",
+        "propertyUseLeasebackArrangement",
+        AnswerYes.name,
+        false
+      )
+      assertContainsText(doc, messages("label.yes"))
+    }
+
+    "contain radio buttons for payment when lease granted with the value no" in {
+      val doc = asDocument(createViewUsingForm(form))
+      assertContainsRadioButton(
+        doc,
+        "propertyUseLeasebackArrangement-2",
+        "propertyUseLeasebackArrangement",
+        AnswerNo.name,
+        false
+      )
       assertContainsText(doc, messages("label.no"))
-      assertContainsText(doc, messages("hint.areYouThirdParty.no", "Wombles Inc"))
     }
 
     "contain save and continue button with the value Save and Continue" in {
