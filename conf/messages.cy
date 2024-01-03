@@ -1387,6 +1387,15 @@ key.contact.details = Contacts and additional information
 checkYourAnswersNotConnected.subheading1 = Connection to the property
 checkYourAnswersNotConnected.subheading2 = Your contact details
 
+# MAXIMUM OF 5 LETTINGS
+##################################
+maxOf5Lettings.heading = You have added the maximum of 5 lettings
+maxOf5Lettings.contact = If you have 6 or more lettings at your property, the VOA will contact you to collect information on the remaining lettings
+maxOf5Lettings.confirm = I confirm that I understand the VOA will contact me regarding the remaining lettings
+maxOf5Lettings.link = Check or update the 5 added businesses
+maxOf5Lettings.error = Please confirm that you understand the VOA will contact you regarding the remaining letters
+
+
 # About franchise or lettings CYA
 checkYourAnswers.heading = This is a holding page for the check your answers page
 checkYourAnswersAboutFranchiseOrLettings.heading = Check your answers – franchises or lettings
