@@ -19,6 +19,7 @@ package controllers.aboutfranchisesorlettings
 import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
 import form.aboutfranchisesorlettings.CateringOperationOrLettingAccommodationRentIncludesForm.cateringOperationOrLettingAccommodationRentIncludesForm
+import models.ForTypes
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
 import navigation.AboutFranchisesOrLettingsNavigator
 import navigation.identifiers.CateringOperationRentIncludesPageId
@@ -53,7 +54,7 @@ class CateringOperationRentIncludesController @Inject() (
             index,
             "cateringOperationOrLettingAccommodationCheckboxesDetails",
             currentSection.cateringOperationDetails.operatorName,
-            controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsRentController.show(index).url,
+            backlink(request.sessionData.forType, index),
             request.sessionData.toSummary,
             request.sessionData.forType
           )
@@ -74,7 +75,7 @@ class CateringOperationRentIncludesController @Inject() (
             index,
             "cateringOperationOrLettingAccommodationCheckboxesDetails",
             currentSection.cateringOperationDetails.operatorName,
-            controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsRentController.show(index).url,
+            backlink(request.sessionData.forType, index),
             request.sessionData.toSummary,
             request.sessionData.forType
           )
@@ -89,6 +90,17 @@ class CateringOperationRentIncludesController @Inject() (
         Redirect(navigator.nextPage(CateringOperationRentIncludesPageId, updatedSession).apply(updatedSession))
       }
     )).getOrElse(startRedirect)
+  }
+
+  def backlink(forType: String, index: Int): String = {
+    val isForType6016Or6015 = forType == ForTypes.for6016 || forType == ForTypes.for6015
+
+    isForType6016Or6015 match {
+      case true  =>
+        controllers.aboutfranchisesorlettings.routes.CalculatingTheRentForController.show(index).url
+      case false =>
+        controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsRentController.show(index).url
+    }
   }
 
   private def startRedirect: Result = Redirect(routes.CateringOperationDetailsController.show(None))

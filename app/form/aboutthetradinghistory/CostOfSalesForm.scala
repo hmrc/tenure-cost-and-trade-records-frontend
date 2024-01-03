@@ -16,27 +16,36 @@
 
 package form.aboutthetradinghistory
 
-import form.MappingSupport.turnoverSalesMapping
+import form.MappingSupport._
 import models.submissions.aboutthetradinghistory.CostOfSales
 import play.api.data.Forms._
 import play.api.data.{Form, Mapping}
+import play.api.i18n.Messages
 
 import java.time.LocalDate
 
 object CostOfSalesForm {
 
-  val columnMapping: Mapping[CostOfSales] = mapping(
+  private def columnMapping(year: String)(implicit messages: Messages): Mapping[CostOfSales] = mapping(
     "financial-year-end" -> ignored(LocalDate.EPOCH),
-    "accommodation"      -> turnoverSalesMapping("turnover.accommodation.sales"),
-    "food"               -> turnoverSalesMapping("turnover.food.sales"),
-    "drinks"             -> turnoverSalesMapping("turnover.alcohol.sales"),
-    "other"              -> turnoverSalesMapping("turnover.other.sales")
+    "accommodation"      -> turnoverSalesMappingWithYear("turnover.accommodation.sales", year),
+    "food"               -> turnoverSalesMappingWithYear("turnover.food.sales", year),
+    "drinks"             -> turnoverSalesMappingWithYear("turnover.alcohol.sales", year),
+    "other"              -> turnoverSalesMappingWithYear("turnover.other.sales", year)
   )(CostOfSales.apply)(CostOfSales.unapply)
 
-  val costOfSalesForm: Form[Seq[CostOfSales]] = Form(
-    single(
-      "costOfSales" -> seq(columnMapping).verifying("error.costOfSales.maxColumns", _.length <= 3)
+  def costOfSalesForm(years: Seq[String])(implicit messages: Messages): Form[Seq[CostOfSales]] = {
+    val mappingPerYear = years.take(3).zipWithIndex.map { case (year, idx) =>
+      s"costOfSales[$idx]" -> columnMapping(year)
+    }
+
+    Form(
+      mappingPerYear match {
+        case Seq(a)       => mapping(a)(Seq(_))(_.headOption)
+        case Seq(a, b)    => mapping(a, b)(Seq(_, _))(_.toTuple2)
+        case Seq(a, b, c) => mapping(a, b, c)(Seq(_, _, _))(_.toTuple3)
+      }
     )
-  )
+  }
 
 }

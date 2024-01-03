@@ -28,6 +28,7 @@ import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Result}
 import repositories.SessionRepo
 import views.html.aboutthetradinghistory.costOfSales
 
+import java.time.LocalDate
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -55,14 +56,14 @@ class CostOfSalesController @Inject() (
       val updatedData = updateAboutTheTradingHistory(_.copy(costOfSales = costOfSales))
       session
         .saveOrUpdate(updatedData)
-        .flatMap(_ => Ok(costOfSalesView(costOfSalesForm.fill(costOfSales))))
+        .flatMap(_ => Ok(costOfSalesView(costOfSalesForm(years(aboutTheTradingHistory)).fill(costOfSales))))
     }
   }
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     runWithSessionCheck { aboutTheTradingHistory =>
       continueOrSaveAsDraft[Seq[CostOfSales]](
-        costOfSalesForm,
+        costOfSalesForm(years(aboutTheTradingHistory)),
         formWithErrors => BadRequest(costOfSalesView(formWithErrors)),
         data => {
           val costOfSales =
@@ -86,13 +87,16 @@ class CostOfSalesController @Inject() (
 
   private def runWithSessionCheck(
     action: AboutTheTradingHistory => Future[Result]
-  )(implicit request: SessionRequest[AnyContent]) =
+  )(implicit request: SessionRequest[AnyContent]): Future[Result] =
     request.sessionData.aboutTheTradingHistory
       .filter(_.occupationAndAccountingInformation.isDefined)
       .filter(_.turnoverSections.nonEmpty)
       .fold(Future.successful(Redirect(routes.AboutYourTradingHistoryController.show())))(action)
 
-  private def financialYearEndDates(aboutTheTradingHistory: AboutTheTradingHistory) =
+  private def financialYearEndDates(aboutTheTradingHistory: AboutTheTradingHistory): Seq[LocalDate] =
     aboutTheTradingHistory.turnoverSections.map(_.financialYearEnd)
+
+  private def years(aboutTheTradingHistory: AboutTheTradingHistory): Seq[String] =
+    financialYearEndDates(aboutTheTradingHistory).map(_.getYear.toString)
 
 }
