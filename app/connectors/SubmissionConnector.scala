@@ -20,7 +20,7 @@ import com.google.inject.ImplementedBy
 import config.AppConfig
 
 import javax.inject.{Inject, Singleton}
-import models.submissions.{ConnectedSubmission, NotConnectedSubmission}
+import models.submissions.{ConnectedSubmission, NotConnectedSubmission, RequestReferenceNumberSubmission}
 
 import scala.concurrent.{ExecutionContext, Future}
 import uk.gov.hmrc.http._
@@ -31,21 +31,38 @@ class HodSubmissionConnector @Inject() (config: ServicesConfig, appConfig: AppCo
   ec: ExecutionContext
 ) extends SubmissionConnector {
 
-  val serviceUrl                = config.baseUrl("tenure-cost-and-trade-records")
-  val internalAuthToken         = appConfig.internalAuthToken
+  val serviceUrl: String        = config.baseUrl("tenure-cost-and-trade-records")
+  val internalAuthToken: String = appConfig.internalAuthToken
   private def url(path: String) = s"$serviceUrl/tenure-cost-and-trade-records/$path"
 
   private def handleHttpResponse: HttpReads[HttpResponse] = new HttpReads[HttpResponse] {
     override def read(method: String, url: String, response: HttpResponse): HttpResponse =
       response.status match {
         case 400 => throw new BadRequestException(response.body)
-        case 401 => throw new Upstream4xxResponse(response.body, 401, 401, response.headers)
-        case 409 => throw new Upstream4xxResponse(response.body, 409, 409, response.headers)
+        case 401 => throw Upstream4xxResponse(response.body, 401, 401, response.headers)
+        case 409 => throw Upstream4xxResponse(response.body, 409, 409, response.headers)
         case _   => HttpReads.Implicits.readRaw.read(method, url, response)
       }
   }
 
   private def cleanedRefNumber(refNumber: String) = refNumber.replaceAll("[^0-9]", "")
+
+  override def submitRequestReferenceNumber(submission: RequestReferenceNumberSubmission)(implicit
+    hc: HeaderCarrier
+  ): Future[Unit] =
+    http
+      .PUT[RequestReferenceNumberSubmission, HttpResponse](
+        url(s"submissions/requestRefNum}"),
+        submission,
+        Seq("Authorization" -> internalAuthToken)
+      )
+      .flatMap { response =>
+        response.status match {
+          case 201 => Future.successful(())
+          case 400 => Future.failed(new BadRequestException(response.body))
+          case _   => Future.failed(new Exception(s"Unexpected response: ${response.status}"))
+        }
+      }
 
   override def submitNotConnected(refNumber: String, submission: NotConnectedSubmission)(implicit
     hc: HeaderCarrier
@@ -85,6 +102,9 @@ class HodSubmissionConnector @Inject() (config: ServicesConfig, appConfig: AppCo
 
 @ImplementedBy(classOf[HodSubmissionConnector])
 trait SubmissionConnector {
+  def submitRequestReferenceNumber(submission: RequestReferenceNumberSubmission)(implicit
+    hc: HeaderCarrier
+  ): Future[Unit]
   def submitNotConnected(refNumber: String, submission: NotConnectedSubmission)(implicit
     hc: HeaderCarrier
   ): Future[Unit]
