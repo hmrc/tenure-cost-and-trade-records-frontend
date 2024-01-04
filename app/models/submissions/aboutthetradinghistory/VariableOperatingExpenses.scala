@@ -32,8 +32,16 @@ case class VariableOperatingExpenses(
   other: Option[BigDecimal]
 ) {
   def total: BigDecimal =
-    Seq(energyAndUtilities, cleaningAndLaundry, buildingMaintenanceAndRepairs, fixturesFittingsAndEquipment,
-      advertisingAndPromotions, administrationAndSundries, entertainment, other).flatten.sum
+    Seq(
+      energyAndUtilities,
+      cleaningAndLaundry,
+      buildingMaintenanceAndRepairs,
+      fixturesFittingsAndEquipment,
+      advertisingAndPromotions,
+      administrationAndSundries,
+      entertainment,
+      other
+    ).flatten.sum
 }
 
 object VariableOperatingExpenses {

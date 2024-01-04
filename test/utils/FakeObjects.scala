@@ -344,43 +344,45 @@ trait FakeObjects {
         BigDecimal(1)
       )
     ),
-    variableOperatingExpensesSections = VariableOperatingExpensesSections(
-      Seq(
-        VariableOperatingExpenses(
-          LocalDate.now(),
-          Some(BigDecimal(1)),
-          Some(BigDecimal(1)),
-          Some(BigDecimal(1)),
-          Some(BigDecimal(1)),
-          Some(BigDecimal(1)),
-          Some(BigDecimal(1)),
-          Some(BigDecimal(1)),
-          Some(BigDecimal(1))
+    variableOperatingExpensesSections = Some(
+      VariableOperatingExpensesSections(
+        Seq(
+          VariableOperatingExpenses(
+            LocalDate.now(),
+            Some(BigDecimal(1)),
+            Some(BigDecimal(1)),
+            Some(BigDecimal(1)),
+            Some(BigDecimal(1)),
+            Some(BigDecimal(1)),
+            Some(BigDecimal(1)),
+            Some(BigDecimal(1)),
+            Some(BigDecimal(1))
+          ),
+          VariableOperatingExpenses(
+            LocalDate.now().minusYears(1),
+            Some(BigDecimal(1)),
+            Some(BigDecimal(1)),
+            Some(BigDecimal(1)),
+            Some(BigDecimal(1)),
+            Some(BigDecimal(1)),
+            Some(BigDecimal(1)),
+            Some(BigDecimal(1)),
+            Some(BigDecimal(1))
+          ),
+          VariableOperatingExpenses(
+            LocalDate.now().minusYears(2),
+            Some(BigDecimal(1)),
+            Some(BigDecimal(1)),
+            Some(BigDecimal(1)),
+            Some(BigDecimal(1)),
+            Some(BigDecimal(1)),
+            Some(BigDecimal(1)),
+            Some(BigDecimal(1)),
+            Some(BigDecimal(1))
+          )
         ),
-        VariableOperatingExpenses(
-          LocalDate.now().minusYears(1),
-          Some(BigDecimal(1)),
-          Some(BigDecimal(1)),
-          Some(BigDecimal(1)),
-          Some(BigDecimal(1)),
-          Some(BigDecimal(1)),
-          Some(BigDecimal(1)),
-          Some(BigDecimal(1)),
-          Some(BigDecimal(1))
-        ),
-        VariableOperatingExpenses(
-          LocalDate.now().minusYears(2),
-          Some(BigDecimal(1)),
-          Some(BigDecimal(1)),
-          Some(BigDecimal(1)),
-          Some(BigDecimal(1)),
-          Some(BigDecimal(1)),
-          Some(BigDecimal(1)),
-          Some(BigDecimal(1)),
-          Some(BigDecimal(1))
-        )
-      ),
-      Some("Other expenses details for all years")
+        Some("Other expenses details for all years")
+      )
     ),
     otherCosts = Some(
       OtherCosts(

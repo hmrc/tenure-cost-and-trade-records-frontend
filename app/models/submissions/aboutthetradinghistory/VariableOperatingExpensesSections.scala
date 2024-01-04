@@ -19,8 +19,8 @@ package models.submissions.aboutthetradinghistory
 import play.api.libs.json.Json
 
 /**
- * @author Yuriy Tumakha
- */
+  * @author Yuriy Tumakha
+  */
 case class VariableOperatingExpensesSections(
   variableOperatingExpenses: Seq[VariableOperatingExpenses] = Seq.empty,
   otherExpensesDetails: Option[String] = None
