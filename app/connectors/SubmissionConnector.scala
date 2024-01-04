@@ -52,7 +52,7 @@ class HodSubmissionConnector @Inject() (config: ServicesConfig, appConfig: AppCo
   ): Future[Unit] =
     http
       .PUT[RequestReferenceNumberSubmission, HttpResponse](
-        url(s"submissions/requestRefNum}"),
+        url(s"submissions/requestRefNum"),
         submission,
         Seq("Authorization" -> internalAuthToken)
       )
