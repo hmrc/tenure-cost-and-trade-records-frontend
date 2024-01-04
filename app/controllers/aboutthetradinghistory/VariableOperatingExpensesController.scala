@@ -20,7 +20,7 @@ import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.VariableOperatingExpensesForm.variableOperatingExpensesForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.updateAboutTheTradingHistory
-import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, VariableOperatingExpenses}
+import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, VariableOperatingExpenses, VariableOperatingExpensesSections}
 import navigation.AboutTheTradingHistoryNavigator
 import navigation.identifiers.VariableOperatingExpensesId
 import play.api.i18n.I18nSupport
@@ -48,46 +48,50 @@ class VariableOperatingExpensesController @Inject() (
       val yearEndDates = financialYearEndDates(tradingHistory)
       val years        = yearEndDates.map(_.getYear.toString)
 
-      val voeSections =
-        if (tradingHistory.variableOperatingExpensesSections.size == tradingHistory.turnoverSections.size) {
-          (tradingHistory.variableOperatingExpensesSections zip yearEndDates).map { case (voe, finYearEnd) =>
+      val existingVoeSeq = tradingHistory.variableOperatingExpensesSections
+        .fold(Seq.empty[VariableOperatingExpenses])(_.variableOperatingExpenses)
+
+      val voeSeq =
+        if (existingVoeSeq.size == tradingHistory.turnoverSections.size) {
+          (existingVoeSeq zip yearEndDates).map { case (voe, finYearEnd) =>
             voe.copy(financialYearEnd = finYearEnd)
           }
         } else {
-          yearEndDates.map(VariableOperatingExpenses(_, 0, 0, 0, 0, 0, 0, 0, 0))
+          yearEndDates.map(VariableOperatingExpenses(_, None, None, None, None, None, None, None, None))
         }
 
-      val numberOfColumns = tradingHistory.turnoverSections.size
+      val voeSections = tradingHistory.variableOperatingExpensesSections
+        .fold(VariableOperatingExpensesSections(voeSeq))(_.copy(variableOperatingExpenses = voeSeq))
 
-      val updatedData = updateAboutTheTradingHistory(_.copy(variableOperatingExpensesSections = voeSections))
+      val updatedData = updateAboutTheTradingHistory(_.copy(variableOperatingExpensesSections = Some(voeSections)))
       session
         .saveOrUpdate(updatedData)
         .flatMap(_ =>
           Ok(
             variableOperativeExpensesView(
-              variableOperatingExpensesForm(numberOfColumns).fill(voeSections)
+              variableOperatingExpensesForm(years).fill(voeSections)
             )
           )
         )
     }
   }
 
-  def submit = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     runWithSessionCheck { tradingHistory =>
       val yearEndDates = financialYearEndDates(tradingHistory)
       val years        = yearEndDates.map(_.getYear.toString)
 
-      val numberOfColumns = tradingHistory.turnoverSections.size
-
-      continueOrSaveAsDraft[Seq[VariableOperatingExpenses]](
-        variableOperatingExpensesForm(numberOfColumns),
+      continueOrSaveAsDraft[VariableOperatingExpensesSections](
+        variableOperatingExpensesForm(years),
         formWithErrors => BadRequest(variableOperativeExpensesView(formWithErrors)),
         data => {
-          val voeSections = (data zip yearEndDates).map { case (voe, finYearEnd) =>
+          val voeSeq = (data.variableOperatingExpenses zip yearEndDates).map { case (voe, finYearEnd) =>
             voe.copy(financialYearEnd = finYearEnd)
           }
 
-          val updatedData = updateAboutTheTradingHistory(_.copy(variableOperatingExpensesSections = voeSections))
+          val voeSections = data.copy(variableOperatingExpenses = voeSeq)
+
+          val updatedData = updateAboutTheTradingHistory(_.copy(variableOperatingExpensesSections = Some(voeSections)))
           session
             .saveOrUpdate(updatedData)
             .map(_ =>

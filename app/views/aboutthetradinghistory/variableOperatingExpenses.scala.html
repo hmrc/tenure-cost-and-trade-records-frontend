@@ -15,7 +15,7 @@
  *@
 
 @import actions.SessionRequest
-@import models.submissions.aboutthetradinghistory.VariableOperatingExpenses
+@import models.submissions.aboutthetradinghistory.VariableOperatingExpensesSections
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import uk.gov.hmrc.govukfrontend.views.Implicits.RichInput
 @import util.DateUtil
@@ -30,7 +30,7 @@
         dateUtil: DateUtil
 )
 
-@(form: Form[Seq[VariableOperatingExpenses]])(implicit request: SessionRequest[_], messages: Messages)
+@(form: Form[VariableOperatingExpensesSections])(implicit request: SessionRequest[_], messages: Messages)
 
 @entertainmentHeading = {
     <p class="govuk-body">@messages("variableOperatingExpenses.entertainment")</p>
@@ -78,13 +78,10 @@
                                 TableRow(
                                     content = HtmlContent(
                                         govukInput(Input(
-                                            id = s"$idx.energy-and-utilities",
-                                            name = s"$idx.energy-and-utilities",
-                                            value = form(s"$idx.energy-and-utilities").value,
                                             prefix = Some(PrefixOrSuffix(
                                                 content = Text("£")
                                             ))
-                                        ).withFormField(form(s"$idx.energy-and-utilities")))
+                                        ).withFormField(form(s"variableOperatingExpenses.year[$idx].energy-and-utilities")))
                                     )
                                 )
                             ),
@@ -95,13 +92,10 @@
                                 TableRow(
                                     content = HtmlContent(
                                         govukInput(Input(
-                                            id = s"$idx.cleaning-and-laundry",
-                                            name = s"$idx.cleaning-and-laundry",
-                                            value = form(s"$idx.cleaning-and-laundry").value,
                                             prefix = Some(PrefixOrSuffix(
                                                 content = Text("£")
                                             ))
-                                        ).withFormField(form(s"$idx.cleaning-and-laundry")))
+                                        ).withFormField(form(s"variableOperatingExpenses.year[$idx].cleaning-and-laundry")))
                                     )
                                 )
                             ),
@@ -112,13 +106,10 @@
                                 TableRow(
                                     content = HtmlContent(
                                         govukInput(Input(
-                                            id = s"$idx.building-maintenance-and-repairs",
-                                            name = s"$idx.building-maintenance-and-repairs",
-                                            value = form(s"$idx.building-maintenance-and-repairs").value,
                                             prefix = Some(PrefixOrSuffix(
                                                 content = Text("£")
                                             ))
-                                        ).withFormField(form(s"$idx.building-maintenance-and-repairs")))
+                                        ).withFormField(form(s"variableOperatingExpenses.year[$idx].building-maintenance-and-repairs")))
                                     )
                                 )
                             ),
@@ -129,13 +120,10 @@
                                 TableRow(
                                     content = HtmlContent(
                                         govukInput(Input(
-                                            id = s"$idx.fixtures-fittings-and-equipment",
-                                            name = s"$idx.fixtures-fittings-and-equipment",
-                                            value = form(s"$idx.fixtures-fittings-and-equipment").value,
                                             prefix = Some(PrefixOrSuffix(
                                                 content = Text("£")
                                             ))
-                                        ).withFormField(form(s"$idx.fixtures-fittings-and-equipment")))
+                                        ).withFormField(form(s"variableOperatingExpenses.year[$idx].fixtures-fittings-and-equipment")))
                                     )
                                 )
                             ),
@@ -146,13 +134,10 @@
                                 TableRow(
                                     content = HtmlContent(
                                         govukInput(Input(
-                                            id = s"$idx.advertising-and-promotions",
-                                            name = s"$idx.advertising-and-promotions",
-                                            value = form(s"$idx.advertising-and-promotions").value,
                                             prefix = Some(PrefixOrSuffix(
                                                 content = Text("£")
                                             ))
-                                        ).withFormField(form(s"$idx.advertising-and-promotions")))
+                                        ).withFormField(form(s"variableOperatingExpenses.year[$idx].advertising-and-promotions")))
                                     )
                                 )
                             ),
@@ -163,13 +148,10 @@
                                 TableRow(
                                     content = HtmlContent(
                                         govukInput(Input(
-                                            id = s"$idx.administration-and-sundries",
-                                            name = s"$idx.administration-and-sundries",
-                                            value = form(s"$idx.administration-and-sundries").value,
                                             prefix = Some(PrefixOrSuffix(
                                                 content = Text("£")
                                             ))
-                                        ).withFormField(form(s"$idx.administration-and-sundries")))
+                                        ).withFormField(form(s"variableOperatingExpenses.year[$idx].administration-and-sundries")))
                                     )
                                 )
                             ),
@@ -180,30 +162,24 @@
                                 TableRow(
                                     content = HtmlContent(
                                         govukInput(Input(
-                                            id = s"$idx.entertainment",
-                                            name = s"$idx.entertainment",
-                                            value = form(s"$idx.entertainment").value,
                                             prefix = Some(PrefixOrSuffix(
                                                 content = Text("£")
                                             ))
-                                        ).withFormField(form(s"$idx.entertainment")))
+                                        ).withFormField(form(s"variableOperatingExpenses.year[$idx].entertainment")))
                                     )
                                 )
                             ),
                             Seq(
                                 TableRow(
-                                    content = Text(messages("variableOperatingExpenses.totalVariableOperatingExpenses"))
+                                    content = Text(messages("variableOperatingExpenses.other"))
                                 ),
                                 TableRow(
                                     content = HtmlContent(
                                         govukInput(Input(
-                                            id = s"$idx.total-variable-operating-expenses",
-                                            name = s"$idx.total-variable-operating-expenses",
-                                            value = form(s"$idx.total-variable-operating-expenses").value,
                                             prefix = Some(PrefixOrSuffix(
                                                 content = Text("£")
                                             ))
-                                        ).withFormField(form(s"$idx.total-variable-operating-expenses")))
+                                        ).withFormField(form(s"variableOperatingExpenses.year[$idx].other")))
                                     )
                                 )
                             )

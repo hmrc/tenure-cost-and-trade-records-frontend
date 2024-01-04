@@ -18,14 +18,14 @@ package views.aboutthetradinghistory
 
 import actions.SessionRequest
 import form.aboutthetradinghistory.VariableOperatingExpensesForm
-import models.submissions.aboutthetradinghistory.VariableOperatingExpenses
+import models.submissions.aboutthetradinghistory.VariableOperatingExpensesSections
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
 import java.time.LocalDate
 
-class VariableOperatingExpensesViewSpec extends QuestionViewBehaviours[Seq[VariableOperatingExpenses]] {
+class VariableOperatingExpensesViewSpec extends QuestionViewBehaviours[VariableOperatingExpensesSections] {
   // NOTE: this is a holding view test until the variable operating expenses page is implemented
   def variableOperatingExpensesView =
     app.injector.instanceOf[views.html.aboutthetradinghistory.variableOperatingExpenses]
@@ -35,11 +35,11 @@ class VariableOperatingExpensesViewSpec extends QuestionViewBehaviours[Seq[Varia
   val messageKeyPrefix = "variableOperatingExpenses"
   val sessionRequest   = SessionRequest(baseFilled6015Session, fakeRequest)
 
-  override val form = VariableOperatingExpensesForm.variableOperatingExpensesForm(3)
+  override val form = VariableOperatingExpensesForm.variableOperatingExpensesForm(Seq("2026", "2025", "2024"))(messages)
 
   def createView = () => variableOperatingExpensesView(form)(sessionRequest, messages)
 
-  def createViewUsingForm = (form: Form[Seq[VariableOperatingExpenses]]) =>
+  def createViewUsingForm = (form: Form[VariableOperatingExpensesSections]) =>
     variableOperatingExpensesView(form)(sessionRequest, messages)
 
   "Variable Operating Expenses view" must {
@@ -51,7 +51,7 @@ class VariableOperatingExpensesViewSpec extends QuestionViewBehaviours[Seq[Varia
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText mustBe messages("back.link.label")
       val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.aboutthetradinghistory.routes.TotalPayrollCostsController.show.url
+      backlinkUrl mustBe controllers.aboutthetradinghistory.routes.TotalPayrollCostsController.show().url
     }
 
     "Section heading is visible" in {
@@ -66,4 +66,5 @@ class VariableOperatingExpensesViewSpec extends QuestionViewBehaviours[Seq[Varia
       assert(loginButton == messages("button.label.continue"))
     }
   }
+
 }
