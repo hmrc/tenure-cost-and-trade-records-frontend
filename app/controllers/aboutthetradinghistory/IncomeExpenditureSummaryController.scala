@@ -28,7 +28,6 @@ import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import views.html.aboutthetradinghistory.incomeExpenditureSummary
-import util.NumberUtil.zeroBigDecimal
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.ExecutionContext
@@ -40,7 +39,8 @@ class IncomeExpenditureSummaryController @Inject() (
   incomeExpenditureSummaryView: incomeExpenditureSummary,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext) extends FORDataCaptureController(mcc)
+)(implicit ec: ExecutionContext)
+    extends FORDataCaptureController(mcc)
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
@@ -62,55 +62,69 @@ class IncomeExpenditureSummaryController @Inject() (
     continueOrSaveAsDraft[IncomeExpenditureSummary](
       incomeExpenditureSummaryForm,
       formWithErrors => {
-        val entries = request.sessionData.aboutTheTradingHistory.map(createIncomeExpenditureEntries).getOrElse(Seq.empty)
-        BadRequest(incomeExpenditureSummaryView(formWithErrors, request.sessionData.toSummary,entries))},
+        val entries =
+          request.sessionData.aboutTheTradingHistory.map(createIncomeExpenditureEntries).getOrElse(Seq.empty)
+        BadRequest(incomeExpenditureSummaryView(formWithErrors, request.sessionData.toSummary, entries))
+      },
       data => {
         val updatedData = updateAboutTheTradingHistory(_.copy(incomeExpenditureSummary = Some(data)))
-        session.saveOrUpdate(updatedData).map(_ =>
-        Redirect(navigator.nextPage(IncomeExpenditureSummaryId, updatedData).apply(updatedData)))
+        session
+          .saveOrUpdate(updatedData)
+          .map(_ => Redirect(navigator.nextPage(IncomeExpenditureSummaryId, updatedData).apply(updatedData)))
       }
     )
   }
 
-  private def createIncomeExpenditureEntries(aboutTheTradingHistory: AboutTheTradingHistory): Seq[IncomeExpenditureEntry] = {
+  private def createIncomeExpenditureEntries(
+    aboutTheTradingHistory: AboutTheTradingHistory
+  ): Seq[IncomeExpenditureEntry] =
     aboutTheTradingHistory.turnoverSections.map { turnoverSection =>
-      val costOfSalesEntry = aboutTheTradingHistory.costOfSales.find(_.financialYearEnd == turnoverSection.financialYearEnd).get
+      val costOfSalesEntry =
+        aboutTheTradingHistory.costOfSales.find(_.financialYearEnd == turnoverSection.financialYearEnd).get
       val totalCostOfSales = costOfSalesEntry.total
 
-      val payrollCostEntry = aboutTheTradingHistory.totalPayrollCostSections.find(_.financialYearEnd == turnoverSection.financialYearEnd).get
+      val payrollCostEntry  =
+        aboutTheTradingHistory.totalPayrollCostSections.find(_.financialYearEnd == turnoverSection.financialYearEnd).get
       val totalPayrollCosts = payrollCostEntry.total
 
-      val variableExpensesEntry = aboutTheTradingHistory.variableOperatingExpensesSections.find(_.financialYearEnd == turnoverSection.financialYearEnd).get
-      val variableExpenses = variableExpensesEntry.total
+      val variableExpensesEntry = aboutTheTradingHistory.variableOperatingExpensesSections
+        .find(_.financialYearEnd == turnoverSection.financialYearEnd)
+        .get
+      val variableExpenses      = variableExpensesEntry.total
 
-      val fixedExpensesEntry = aboutTheTradingHistory.fixedOperatingExpensesSections.find(_.financialYearEnd == turnoverSection.financialYearEnd).get
+      val fixedExpensesEntry = aboutTheTradingHistory.fixedOperatingExpensesSections
+        .find(_.financialYearEnd == turnoverSection.financialYearEnd)
+        .get
       val totalFixedExpenses = fixedExpensesEntry.total
 
-      val otherCosts = aboutTheTradingHistory.otherCosts.map(_.otherCosts.find(_.financialYearEnd == turnoverSection.financialYearEnd)).flatten.map(_.total).sum
+      val otherCosts = aboutTheTradingHistory.otherCosts
+        .map(_.otherCosts.find(_.financialYearEnd == turnoverSection.financialYearEnd))
+        .flatten
+        .map(_.total)
+        .sum
 
-      val totalTurnover = turnoverSection.total
+      val totalTurnover    = turnoverSection.total
       val totalGrossProfit = totalTurnover - totalCostOfSales
-      val totalNetProfit = totalGrossProfit - (totalPayrollCosts + variableExpenses + totalFixedExpenses + otherCosts)
-      val profitMargin = if (totalTurnover > BigDecimal(0)) (totalNetProfit / totalTurnover) * 100 else BigDecimal(0)
+      val totalNetProfit   = totalGrossProfit - (totalPayrollCosts + variableExpenses + totalFixedExpenses + otherCosts)
+      val profitMargin     = if (totalTurnover > BigDecimal(0)) (totalNetProfit / totalTurnover) * 100 else BigDecimal(0)
 
       IncomeExpenditureEntry(
         financialYearEnd = turnoverSection.financialYearEnd.toString,
         totalTurnover = totalTurnover,
         turnoverUrl = routes.TurnoverController.show().url,
-          totalCostOfSales = totalCostOfSales,
+        totalCostOfSales = totalCostOfSales,
         costOfSalesUrl = routes.CostOfSalesController.show().url,
-          totalGrossProfits = totalGrossProfit,
+        totalGrossProfits = totalGrossProfit,
         totalPayrollCost = totalPayrollCosts,
         totalPayrollCostURL = routes.TotalPayrollCostsController.show().url,
-          variableExpenses = variableExpenses,
+        variableExpenses = variableExpenses,
         variableExpensesURL = routes.VariableOperatingExpensesController.show().url,
-          fixedExpenses = totalFixedExpenses,
+        fixedExpenses = totalFixedExpenses,
         fixedExpensesUrl = routes.FixedOperatingExpensesController.show().url,
-          otherCost = otherCosts,
+        otherCost = otherCosts,
         otherCostsUrl = routes.OtherCostsController.show().url,
-          totalNetProfit = totalNetProfit,
+        totalNetProfit = totalNetProfit,
         profitMargin = profitMargin
       )
     }
-  }
 }

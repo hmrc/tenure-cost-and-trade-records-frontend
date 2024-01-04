@@ -65,6 +65,7 @@ trait FakeObjects {
   val prefilledFakeName                                                 = "John Doe"
   val prefilledFakePhoneNo                                              = "12345678901"
   val prefilledFakeEmail                                                = "test@email.com"
+  val prefilledFakeTradingName                                          = "TRADING NAME"
   val prefilledCateringAddress: CateringAddress                         =
     CateringAddress("004", Some("GORING ROAD"), "GORING-BY-SEA, WORTHING", Some("West sussex"), "BN12 4AX")
   val prefilledLettingAddress: LettingAddress                           =
@@ -93,6 +94,18 @@ trait FakeObjects {
   val baseFilled6011Session: Session = Session(referenceNumber, forType6011, prefilledAddress, token)
   val baseFilled6015Session: Session = Session(referenceNumber, forType6015, prefilledAddress, token)
   val baseFilled6016Session: Session = Session(referenceNumber, forType6016, prefilledAddress, token)
+
+  // Request reference number
+  val prefilledRequestRefNumCYA = RequestReferenceNumberDetails(
+    Some(RequestReferenceNumber(prefilledFakeTradingName, prefilledNoReferenceContactAddress)),
+    Some(
+      RequestReferenceNumberContactDetails(
+        prefilledFakeName,
+        ContactDetails(prefilledFakePhoneNo, prefilledFakeEmail),
+        Some("Additional Information")
+      )
+    )
+  )
 
   // Are your still connected sessions
   val prefilledStillConnectedDetailsYes: StillConnectedDetails  = StillConnectedDetails(
@@ -277,7 +290,8 @@ trait FakeObjects {
         Some(BigDecimal(567)),
         Some(BigDecimal(678))
       )
-    ),costOfSales = Seq(
+    ),
+    costOfSales = Seq(
       CostOfSales(
         LocalDate.now(),
         Some(BigDecimal(1)),
@@ -299,7 +313,8 @@ trait FakeObjects {
         Some(BigDecimal(1)),
         Some(BigDecimal(1))
       )
-    ),totalPayrollCostSections = Seq(
+    ),
+    totalPayrollCostSections = Seq(
       TotalPayrollCost(
         LocalDate.now(),
         BigDecimal(1),
@@ -315,7 +330,8 @@ trait FakeObjects {
         BigDecimal(1),
         BigDecimal(2)
       )
-    ),fixedOperatingExpensesSections = Seq(
+    ),
+    fixedOperatingExpensesSections = Seq(
       FixedOperatingExpenses(
         LocalDate.now(),
         BigDecimal(1),
@@ -340,7 +356,8 @@ trait FakeObjects {
         BigDecimal(1),
         BigDecimal(1)
       )
-    ),variableOperatingExpensesSections = Seq(
+    ),
+    variableOperatingExpensesSections = Seq(
       VariableOperatingExpenses(
         LocalDate.now(),
         BigDecimal(1),
@@ -374,24 +391,26 @@ trait FakeObjects {
         BigDecimal(1),
         BigDecimal(1)
       )
-    ), otherCosts = Some(
-      OtherCosts(otherCosts = Seq(
-        OtherCost(
-          LocalDate.now(),
-          Some(BigDecimal(1)),
-          Some(BigDecimal(1))
+    ),
+    otherCosts = Some(
+      OtherCosts(
+        otherCosts = Seq(
+          OtherCost(
+            LocalDate.now(),
+            Some(BigDecimal(1)),
+            Some(BigDecimal(1))
+          ),
+          OtherCost(
+            LocalDate.now().minusYears(1),
+            Some(BigDecimal(1)),
+            Some(BigDecimal(1))
+          ),
+          OtherCost(
+            LocalDate.now().minusYears(2),
+            Some(BigDecimal(1)),
+            Some(BigDecimal(1))
+          )
         ),
-        OtherCost(
-          LocalDate.now().minusYears(1),
-          Some(BigDecimal(1)),
-          Some(BigDecimal(1))
-        ),
-        OtherCost(
-          LocalDate.now().minusYears(2),
-          Some(BigDecimal(1)),
-          Some(BigDecimal(1))
-        )
-      ),
         Some("Other Costs Details")
       )
     )

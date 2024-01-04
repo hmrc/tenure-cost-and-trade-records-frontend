@@ -17,20 +17,20 @@
 package models.pages
 
 case class IncomeExpenditureEntry(
-                                   financialYearEnd: String,
-                                   totalTurnover: BigDecimal,
-                                   turnoverUrl: String,
-                                   totalCostOfSales: BigDecimal,
-                                   costOfSalesUrl: String,
-                                   totalGrossProfits: BigDecimal,
-                                   totalPayrollCost: BigDecimal,
-                                   totalPayrollCostURL:String,
-                                   variableExpenses: BigDecimal,
-                                   variableExpensesURL: String,
-                                   fixedExpenses: BigDecimal,
-                                   fixedExpensesUrl:String,
-                                   otherCost: BigDecimal,
-                                   otherCostsUrl: String,
-                                   totalNetProfit: BigDecimal,
-                                   profitMargin: BigDecimal
-                                 )
+  financialYearEnd: String,
+  totalTurnover: BigDecimal,
+  turnoverUrl: String,
+  totalCostOfSales: BigDecimal,
+  costOfSalesUrl: String,
+  totalGrossProfits: BigDecimal,
+  totalPayrollCost: BigDecimal,
+  totalPayrollCostURL: String,
+  variableExpenses: BigDecimal,
+  variableExpensesURL: String,
+  fixedExpenses: BigDecimal,
+  fixedExpensesUrl: String,
+  otherCost: BigDecimal,
+  otherCostsUrl: String,
+  totalNetProfit: BigDecimal,
+  profitMargin: BigDecimal
+)

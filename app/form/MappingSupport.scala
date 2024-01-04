@@ -28,16 +28,16 @@ import models.submissions.Form6010._
 import models.submissions.aboutYourLeaseOrTenure._
 import models.submissions.aboutfranchisesorlettings._
 import models.submissions.aboutyouandtheproperty._
-import models.submissions.additionalinformation.{AlternativeAddress, AlternativeContactDetails}
+import models.submissions.additionalinformation.AlternativeAddress
 import models.submissions.common.{Address, AnswersYesNo, BuildingInsurance, CYAYesNo, ContactDetails, ContactDetailsAddress, InsideRepairs, OutsideRepairs}
 import models.submissions.connectiontoproperty.{AddressConnectionType, ConnectionToProperty, CorrespondenceAddress, EditAddress, VacantPropertiesDetails, YourContactDetails}
 import models.submissions.notconnected.PastConnectionType
 import models.submissions.requestReferenceNumber.RequestReferenceNumberAddress
 import models.{AnnualRent, NamedEnum, NamedEnumSupport}
-import play.api.data.Forms.{boolean, default, email, list, mapping, nonEmptyText, optional, text}
+import play.api.data.Forms.{boolean, default, mapping, optional, text}
 import play.api.data.format.Formatter
 import play.api.data.validation.{Constraint, Invalid, Valid, ValidationError}
-import play.api.data.validation.Constraints.{maxLength, minLength, nonEmpty, pattern}
+import play.api.data.validation.Constraints.{maxLength, nonEmpty, pattern}
 import play.api.data.{FormError, Forms, Mapping}
 import play.api.i18n.Messages
 import util.NumberUtil.zeroBigDecimal

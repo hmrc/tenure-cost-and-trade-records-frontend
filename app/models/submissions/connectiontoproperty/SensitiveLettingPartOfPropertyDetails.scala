@@ -37,7 +37,7 @@ case class SensitiveLettingPartOfPropertyDetails(
 }
 
 object SensitiveLettingPartOfPropertyDetails {
-  import crypto.SensitiveFormats._
+
   implicit def format(implicit crypto: MongoCrypto): OFormat[SensitiveLettingPartOfPropertyDetails] =
     Json.format[SensitiveLettingPartOfPropertyDetails]
 

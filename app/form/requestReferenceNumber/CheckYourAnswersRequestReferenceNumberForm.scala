@@ -25,7 +25,7 @@ object CheckYourAnswersRequestReferenceNumberForm {
 
   val checkYourAnswersRequestReferenceNumberForm = Form(
     mapping(
-      "CheckYourAnswersRequestReferenceNumber" -> default(text, "").verifying(
+      "checkYourAnswersRequestReferenceNumber" -> default(text, "").verifying(
         nonEmpty(errorMessage = "error.checkYourAnswersRadio.required")
       )
     )(CheckYourAnswersRequestReferenceNumber.apply)(CheckYourAnswersRequestReferenceNumber.unapply)

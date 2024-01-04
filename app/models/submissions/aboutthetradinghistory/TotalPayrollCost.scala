@@ -24,7 +24,7 @@ case class TotalPayrollCost(
   financialYearEnd: LocalDate,
   managersAndStaff: BigDecimal,
   directorsRemuneration: BigDecimal
-){
+) {
   def total = managersAndStaff + directorsRemuneration
 }
 

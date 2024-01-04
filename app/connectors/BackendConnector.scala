@@ -20,7 +20,7 @@ import com.google.inject.ImplementedBy
 import config.AppConfig
 import models.{Credentials, FORLoginResponse, SubmissionDraft}
 import play.api.libs.json.Writes
-import uk.gov.hmrc.http.{Authorization, BadRequestException, HeaderCarrier, HttpClient, HttpReads, HttpReadsLegacyRawReads, HttpResponse, Upstream4xxResponse}
+import uk.gov.hmrc.http.{Authorization, BadRequestException, HeaderCarrier, HttpClient, HttpReads, HttpResponse, Upstream4xxResponse}
 import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
 
 import javax.inject.{Inject, Singleton}
