@@ -28,6 +28,7 @@ import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import views.html.aboutthetradinghistory.incomeExpenditureSummary
+import util.NumberUtil.zeroBigDecimal
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.ExecutionContext
@@ -79,22 +80,23 @@ class IncomeExpenditureSummaryController @Inject() (
     aboutTheTradingHistory: AboutTheTradingHistory
   ): Seq[IncomeExpenditureEntry] =
     aboutTheTradingHistory.turnoverSections.map { turnoverSection =>
-
-      val finYearEnd = turnoverSection.financialYearEnd
+      val finYearEnd       = turnoverSection.financialYearEnd
       val costOfSalesEntry = aboutTheTradingHistory.costOfSales.find(_.financialYearEnd == finYearEnd).get
       val totalCostOfSales = costOfSalesEntry.total
 
-      val payrollCostEntry = aboutTheTradingHistory.totalPayrollCostSections.find(_.financialYearEnd == finYearEnd).get
+      val payrollCostEntry  = aboutTheTradingHistory.totalPayrollCostSections.find(_.financialYearEnd == finYearEnd).get
       val totalPayrollCosts = payrollCostEntry.total
 
       val variableExpenses = aboutTheTradingHistory.variableOperatingExpensesSections
         .flatMap(_.variableOperatingExpenses.find(_.financialYearEnd == finYearEnd).map(_.total))
         .getOrElse(zeroBigDecimal)
 
-      val fixedExpensesEntry = aboutTheTradingHistory.fixedOperatingExpensesSections.find(_.financialYearEnd == finYearEnd).get
+      val fixedExpensesEntry =
+        aboutTheTradingHistory.fixedOperatingExpensesSections.find(_.financialYearEnd == finYearEnd).get
       val totalFixedExpenses = fixedExpensesEntry.total
 
-      val otherCosts = aboutTheTradingHistory.otherCosts.flatMap(_.otherCosts.find(_.financialYearEnd == finYearEnd)).map(_.total).sum
+      val otherCosts =
+        aboutTheTradingHistory.otherCosts.flatMap(_.otherCosts.find(_.financialYearEnd == finYearEnd)).map(_.total).sum
 
       val totalTurnover    = turnoverSection.total
       val totalGrossProfit = totalTurnover - totalCostOfSales
