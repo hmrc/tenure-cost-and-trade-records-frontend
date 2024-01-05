@@ -1404,6 +1404,7 @@ checkYourAnswersNotConnected.subheading2 = Your contact details
 
 # MAXIMUM OF 5 LETTINGS
 ##################################
+
 maxOf5Lettings.heading = You have added the maximum of 5 lettings
 maxOf5Lettings.contact = If you have 6 or more lettings at your property, the VOA will contact you to collect information on the remaining lettings
 maxOf5Lettings.confirm = I confirm that I understand the VOA will contact me regarding the remaining lettings

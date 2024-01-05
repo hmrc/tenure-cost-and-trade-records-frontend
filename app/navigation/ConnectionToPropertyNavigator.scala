@@ -172,6 +172,7 @@ class ConnectionToPropertyNavigator @Inject() (audit: Audit) extends Navigator(a
     LettingPartOfPropertyRentDetailsPageId         -> lettingsPartOfPropertyRentDetailsConditionsRouting,
     LettingPartOfPropertyItemsIncludedInRentPageId -> lettingPartOfPropertyItemsIncludedInRentConditionsRouting,
     AddAnotherLettingPartOfPropertyPageId          -> addAnotherLettingsConditionsRouting,
+    MaxOfLettingsReachedId                         -> (_ => controllers.connectiontoproperty.routes.ProvideContactDetailsController.show()),
     CheckYourAnswersConnectionToPropertyId         -> (_ => controllers.routes.TaskListController.show())
   )
 }

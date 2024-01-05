@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,28 +17,144 @@
 package controllers
 
 import actions.WithSessionRefiner
+import form.MaxOfLettingsForm.maxOfLettingsForm
+import models.submissions.MaxOfLettings
+import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
+import models.submissions.connectiontoproperty.StillConnectedDetails.updateStillConnectedDetails
+import navigation.{AboutFranchisesOrLettingsNavigator, ConnectionToPropertyNavigator}
+import navigation.identifiers.{MaxOfLettingsReachedCateringId, MaxOfLettingsReachedCurrentId, MaxOfLettingsReachedId}
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import views.html.maxOfLettingsReached
+
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
-class MaxOfLettingsReachedController @Inject()(
-mcc: MessagesControllerComponents,
-withSessionRefiner: WithSessionRefiner,
-maxOfLettingsReachedView: maxOfLettingsReached,
-@Named("session") val session: SessionRepo)(implicit ec: ExecutionContext)
-  extends FORDataCaptureController(mcc)
+class MaxOfLettingsReachedController @Inject() (
+  mcc: MessagesControllerComponents,
+  withSessionRefiner: WithSessionRefiner,
+  maxOfLettingsReachedView: maxOfLettingsReached,
+  connectionNavigator: ConnectionToPropertyNavigator,
+  franchiseNavigator: AboutFranchisesOrLettingsNavigator,
+  @Named("session") val session: SessionRepo
+)(implicit ec: ExecutionContext)
+    extends FORDataCaptureController(mcc)
     with I18nSupport {
 
-  def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+  def show(source: Option[String]): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    val (backLink, form, sourceOpt) = source match {
+      case Some("connection")        =>
+        (
+          controllers.connectiontoproperty.routes.AddAnotherLettingPartOfPropertyController.show(4).url,
+          request.sessionData.stillConnectedDetails.flatMap(_.maxOfLettings),
+          "connection"
+        )
+      case Some("franchiseCatering") =>
+        (
+          controllers.aboutfranchisesorlettings.routes.AddAnotherCateringOperationController.show(4).url,
+          request.sessionData.aboutFranchisesOrLettings.flatMap(_.cateringMaxOfLettings),
+          "franchiseCatering"
+        )
+      case Some("franchiseLetting")  =>
+        (
+          controllers.aboutfranchisesorlettings.routes.AddAnotherLettingOtherPartOfPropertyController.show(4).url,
+          request.sessionData.aboutFranchisesOrLettings.flatMap(_.currentMaxOfLetting),
+          "franchiseLetting"
+        )
+      case _                         =>
+        (
+          routes.TaskListController.show().url,
+          None,
+          ""
+        )
+    }
+
+    val filledForm = form.map(maxOfLettingsForm.fill).getOrElse(maxOfLettingsForm)
+
     Future.successful(
-      Ok(maxOfLettingsReachedView("ksjbckjs"))
+      Ok(
+        maxOfLettingsReachedView(
+          filledForm,
+          backLink,
+          sourceOpt,
+          request.sessionData.toSummary
+        )
+      )
     )
   }
 
+  def submit(source: Option[String]): Action[AnyContent] = (Action andThen withSessionRefiner).async {
+    implicit request =>
+      val (backLink, form, sourceOpt) = source match {
+        case Some("connection")        =>
+          (
+            controllers.connectiontoproperty.routes.AddAnotherLettingPartOfPropertyController.show(4).url,
+            request.sessionData.stillConnectedDetails.flatMap(_.maxOfLettings),
+            "connection"
+          )
+        case Some("franchiseCatering") =>
+          (
+            controllers.aboutfranchisesorlettings.routes.AddAnotherCateringOperationController.show(4).url,
+            request.sessionData.aboutFranchisesOrLettings.flatMap(_.cateringMaxOfLettings),
+            "franchiseCatering"
+          )
+        case Some("franchiseLetting")  =>
+          (
+            controllers.aboutfranchisesorlettings.routes.AddAnotherLettingOtherPartOfPropertyController.show(4).url,
+            request.sessionData.aboutFranchisesOrLettings.flatMap(_.currentMaxOfLetting),
+            "franchiseLetting"
+          )
+        case _                         =>
+          (
+            routes.TaskListController.show().url,
+            None,
+            ""
+          )
+      }
 
-  def submit: Action[AnyContent] = ???
+      continueOrSaveAsDraft[MaxOfLettings](
+        maxOfLettingsForm,
+        formWithErrors =>
+          BadRequest(
+            maxOfLettingsReachedView(
+              formWithErrors,
+              backLink,
+              sourceOpt,
+              request.sessionData.toSummary
+            )
+          ),
+        data => {
+          val updatedData = source match {
+            case Some("connection")        =>
+              updateStillConnectedDetails(_.copy(maxOfLettings = Some(data)))
+            case Some("franchiseCatering") =>
+              updateAboutFranchisesOrLettings(_.copy(cateringMaxOfLettings = Some(data)))
+            case Some("franchiseLetting")  =>
+              updateAboutFranchisesOrLettings(_.copy(currentMaxOfLetting = data))
+          }
+          session
+            .saveOrUpdate(updatedData)
+            .map { _ =>
+              source match {
+                case Some("connection")        =>
+                  connectionNavigator
+                    .cyaPageDependsOnSession(updatedData)
+                    .filter(_ => connectionNavigator.from == "CYA")
+                    .getOrElse(
+                      connectionNavigator
+                        .nextWithoutRedirectToCYA(MaxOfLettingsReachedId, updatedData)
+                        .apply(updatedData)
+                    )
+                case Some("franchiseCatering") =>
+                  franchiseNavigator.nextPage(MaxOfLettingsReachedCateringId, updatedData).apply(updatedData)
+                case Some("franchiseLetting")  =>
+                  franchiseNavigator.nextPage(MaxOfLettingsReachedCurrentId, updatedData).apply(updatedData)
+              }
+            }
+            .map(Redirect)
+        }
+      )
+  }
 }

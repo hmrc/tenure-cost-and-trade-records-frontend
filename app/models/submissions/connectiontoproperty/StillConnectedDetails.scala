@@ -18,6 +18,7 @@ package models.submissions.connectiontoproperty
 
 import actions.SessionRequest
 import models.Session
+import models.submissions.MaxOfLettings
 import models.submissions.common.AnswersYesNo
 import play.api.libs.json.Json
 
@@ -34,6 +35,7 @@ case class StillConnectedDetails(
   isAnyRentReceived: Option[AnswersYesNo] = None,
   provideContactDetails: Option[ProvideContactDetails] = None,
   lettingPartOfPropertyDetailsIndex: Int = 0,
+  maxOfLettings: Option[MaxOfLettings] = None,
   lettingPartOfPropertyDetails: IndexedSeq[LettingPartOfPropertyDetails] = IndexedSeq.empty,
   checkYourAnswersConnectionToProperty: Option[CheckYourAnswersConnectionToProperty] = None,
   checkYourAnswersConnectionToVacantProperty: Option[CheckYourAnswersConnectionToVacantProperty] = None

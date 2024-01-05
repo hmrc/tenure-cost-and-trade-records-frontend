@@ -61,6 +61,13 @@ class AddAnotherCateringOperationController @Inject() (
   }
 
   def submit(index: Int) = (Action andThen withSessionRefiner).async { implicit request =>
+    if (request.sessionData.aboutFranchisesOrLettings.exists(_.cateringOperationCurrentIndex >= 4)) {
+
+      val redirectUrl = controllers.routes.MaxOfLettingsReachedController.show(Some("franchiseCatering")).url
+
+      Future.successful(Redirect(redirectUrl))
+    } else {
+
     val fromCYA = request.sessionData.aboutFranchisesOrLettings.flatMap(_.fromCYA).getOrElse(false)
     continueOrSaveAsDraft[AnswersYesNo](
       addAnotherCateringOperationForm,

@@ -220,6 +220,12 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit) extends Naviga
     LettingAccommodationRentIncludesPageId     -> lettingsRentIncludesConditionsRouting,
     AddAnotherLettingAccommodationPageId       -> addAnotherLettingsConditionsRouting,
     RentFromConcessionId                       -> rentForConcessionsRouting,
+    MaxOfLettingsReachedCateringId             -> (_ =>
+      controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show()
+    ),
+    MaxOfLettingsReachedCurrentId              -> (_ =>
+      controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show()
+    ),
     CheckYourAnswersAboutFranchiseOrLettingsId -> (_ => controllers.routes.TaskListController.show())
   )
 }
