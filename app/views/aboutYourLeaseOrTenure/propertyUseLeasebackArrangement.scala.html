@@ -16,7 +16,7 @@
 
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.html.components._
-@import models.submissions.aboutYourLeaseOrTenure.PropertyUseLeasebackArrangementDetails
+@import models.submissions.common.AnswersYesNo
 
 @import models.pages.Summary
 
@@ -27,7 +27,8 @@
   formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[PropertyUseLeasebackArrangementDetails], backLink: String, tradingName:String, summary: Summary)(implicit request: Request[_], messages: Messages)
+
+@(theForm: Form[AnswersYesNo], backLink: String, tradingName:String, summary: Summary)(implicit request: Request[_], messages: Messages)
 
 @layout(
   pageHeading = messages("propertyUseLeasebackArrangement.title"),

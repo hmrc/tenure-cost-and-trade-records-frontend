@@ -19,14 +19,14 @@ package views.aboutYourLeaseOrTenure
 import form.aboutYourLeaseOrTenure.PropertyUseLeasebackArrangementForm.propertyUseLeasebackArrangementForm
 import models.pages.Summary
 import models.submissions.aboutYourLeaseOrTenure.PropertyUseLeasebackArrangementDetails
-import models.submissions.common.{AnswerNo, AnswerYes}
+import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import play.api.i18n.Lang
 import views.behaviours.QuestionViewBehaviours
 
 import java.util.Locale
-class PropertyUseLeasebackAgreementViewSpec extends QuestionViewBehaviours[PropertyUseLeasebackArrangementDetails] {
+class PropertyUseLeasebackAgreementViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
 
   val messageKeyPrefix = "propertyUseLeasebackArrangement"
 
@@ -39,7 +39,7 @@ class PropertyUseLeasebackAgreementViewSpec extends QuestionViewBehaviours[Prope
       messages
     )
 
-  def createViewUsingForm = (form: Form[PropertyUseLeasebackArrangementDetails]) =>
+  def createViewUsingForm = (form: Form[AnswersYesNo]) =>
     propertyUseLeasebackAgreementView(form, backLink, "Wombles Inc", Summary("99996010001"))(
       fakeRequest,
       messages

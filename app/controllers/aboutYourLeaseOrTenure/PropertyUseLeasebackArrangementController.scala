@@ -65,7 +65,7 @@ class PropertyUseLeasebackArrangementController @Inject() (
   }
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft[PropertyUseLeasebackArrangementDetails](
+    continueOrSaveAsDraft[AnswersYesNo](
       propertyUseLeasebackArrangementForm,
       formWithErrors =>
         BadRequest(
