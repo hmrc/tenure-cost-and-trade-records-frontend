@@ -60,54 +60,60 @@ class AddAnotherLettingPartOfPropertyController @Inject() (
   }
 
   def submit(index: Int) = (Action andThen withSessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft[AnswersYesNo](
-      addAnotherLettingForm,
-      formWithErrors =>
-        BadRequest(
-          addAnotherLettingPartOfPropertyView(
-            formWithErrors,
-            index,
-            controllers.connectiontoproperty.routes.LettingPartOfPropertyItemsIncludedInRentController
-              .show(index)
-              .url,
-            request.sessionData.toSummary
-          )
-        ),
-      data =>
-        request.sessionData.stillConnectedDetails
-          .map(_.lettingPartOfPropertyDetails)
-          .filter(_.nonEmpty)
-          .fold(
-            Future.successful(
-              Redirect(
-                if (data.name == "yes") {
-                  routes.LettingPartOfPropertyDetailsController.show()
-                } else {
-                  routes.CheckYourAnswersConnectionToVacantPropertyController.show()
-                }
-              )
-            )
-          ) { existingSections =>
-            val updatedSections = existingSections.updated(
+    if (request.sessionData.stillConnectedDetails.exists(_.lettingPartOfPropertyDetailsIndex >= 4)) {
+
+      val redirectUrl = controllers.routes.MaxOfLettingsReachedController.show(Some("connection")).url
+      Future.successful(Redirect(redirectUrl))
+    } else {
+      continueOrSaveAsDraft[AnswersYesNo](
+        addAnotherLettingForm,
+        formWithErrors =>
+          BadRequest(
+            addAnotherLettingPartOfPropertyView(
+              formWithErrors,
               index,
-              existingSections(index).copy(addAnotherLettingToProperty = Some(data))
+              controllers.connectiontoproperty.routes.LettingPartOfPropertyItemsIncludedInRentController
+                .show(index)
+                .url,
+              request.sessionData.toSummary
             )
-            val updatedData     = updateStillConnectedDetails(_.copy(lettingPartOfPropertyDetails = updatedSections))
-            session
-              .saveOrUpdate(updatedData)
-              .map { _ =>
-                navigator
-                  .cyaPageDependsOnSession(updatedData)
-                  .filter(_ => navigator.from == "CYA" && data == AnswerNo)
-                  .getOrElse(
-                    navigator
-                      .nextWithoutRedirectToCYA(AddAnotherLettingPartOfPropertyPageId, updatedData)
-                      .apply(updatedData)
-                  )
-              }
-              .map(Redirect)
-          }
-    )
+          ),
+        data =>
+          request.sessionData.stillConnectedDetails
+            .map(_.lettingPartOfPropertyDetails)
+            .filter(_.nonEmpty)
+            .fold(
+              Future.successful(
+                Redirect(
+                  if (data.name == "yes") {
+                    routes.LettingPartOfPropertyDetailsController.show()
+                  } else {
+                    routes.CheckYourAnswersConnectionToVacantPropertyController.show()
+                  }
+                )
+              )
+            ) { existingSections =>
+              val updatedSections = existingSections.updated(
+                index,
+                existingSections(index).copy(addAnotherLettingToProperty = Some(data))
+              )
+              val updatedData     = updateStillConnectedDetails(_.copy(lettingPartOfPropertyDetails = updatedSections))
+              session
+                .saveOrUpdate(updatedData)
+                .map { _ =>
+                  navigator
+                    .cyaPageDependsOnSession(updatedData)
+                    .filter(_ => navigator.from == "CYA" && data == AnswerNo)
+                    .getOrElse(
+                      navigator
+                        .nextWithoutRedirectToCYA(AddAnotherLettingPartOfPropertyPageId, updatedData)
+                        .apply(updatedData)
+                    )
+                }
+                .map(Redirect)
+            }
+      )
+    }
   }
 
   def remove(idx: Int) = (Action andThen withSessionRefiner).async { implicit request =>

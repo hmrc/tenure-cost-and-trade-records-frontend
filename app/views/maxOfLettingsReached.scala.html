@@ -17,6 +17,7 @@
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Text
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
+@import models.pages.Summary
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.button.Button
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.input.Input
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.label.Label
@@ -29,34 +30,50 @@
 )
 
 
-@(form: Form[String])(implicit request: Request[_], messages: Messages)
+@(form: Form[_], backLink: String, source: String, summary: Summary)(implicit request: Request[_], messages: Messages)
+
+@sectionName = @{
+
+ source match {
+  case "connection"  => messages("label.section.connectionToTheProperty")
+  case _             => messages("label.section.aboutTheFranchiseConcessions")
+ }
+}
 
 @layout(
- pageHeading = messages("saveAsDraft.startAgain") ,
+ pageHeading = messages("maxOf5Lettings.heading") ,
+ sectionName = sectionName,
+ showSection = true,
+ backLinkUrl = backLink,
+ fullWidth = true,
  theForm = form
 ) {
 
 
+  <p class="govuk-body govuk-!-width-three-quarters">@messages("maxOf5Lettings.contact")</p>
 
- <p class="govuk-body">@messages("")</p>
-
- @formWithCSRF(action = routes.MaxOfLettingsReachedController.submit()) {
-
+ @formWithCSRF(action = routes.MaxOfLettingsReachedController.submit(source)) {
   @govukCheckboxes(
    Checkboxes(
-    name = "declaration",
+    name = "maxOfLettings",
     items = Seq(
      CheckboxItem(
-      content = Text(messages("rent.received.from.confirm")),
+      content = Text(messages("maxOf5Lettings.confirm")),
       value = "true",
-      checked = form("declaration").value.contains("true"),
+      checked = form("maxOfLettings").value.contains("true"),
      )
     )
-   ).withFormField(form("declaration"))
+   ).withFormField(form("maxOfLettings"))
   )
+
+  <p class="govuk-body">
+   <a href="@backLink" class="govuk-link">@messages("maxOf5Lettings.link")</a>
+  </p>
+
+  <br>
+  <br>
   @includes.continueSaveAsDraftButtons(govukButton)
  }
-
 
 
 }

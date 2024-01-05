@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,20 +14,14 @@
  * limitations under the License.
  */
 
-package models.submissions.connectiontoproperty
+package models.submissions
 
-import models.submissions.MaxOfLettings
-import models.submissions.common.AnswersYesNo
 import play.api.libs.json.Json
 
-case class LettingPartOfPropertyDetails(
-  tenantDetails: TenantDetails,
-  lettingPartOfPropertyRentDetails: Option[LettingPartOfPropertyRentDetails] = None,
-  itemsIncludedInRent: List[String] = List.empty,
-  addAnotherLettingToProperty: Option[AnswersYesNo] = None,
-  maxOfLettings: Option[MaxOfLettings] = None
+case class MaxOfLettings(
+  maxOfLettings: Boolean
 )
 
-object LettingPartOfPropertyDetails {
-  implicit val format = Json.format[LettingPartOfPropertyDetails]
+object MaxOfLettings {
+  implicit val format = Json.format[MaxOfLettings]
 }

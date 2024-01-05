@@ -478,36 +478,44 @@ trait FakeObjects {
     Some(AnswerYes),
     Some(AnswerYes),
     0,
+    None,
     IndexedSeq(prefilledCateringOperationSectionYes),
     Some(AnswerYes),
     0,
+    None,
     IndexedSeq(prefilledLettingSectionYes)
   )
   val prefilledAboutFranchiseOrLettingsNo: AboutFranchisesOrLettings     = AboutFranchisesOrLettings(
     Some(AnswerNo),
     Some(AnswerNo),
     0,
+    None,
     IndexedSeq(prefilledCateringOperationSectionNo),
     Some(AnswerNo),
     0,
+    None,
     IndexedSeq(prefilledLettingSectionNo)
   )
   val prefilledAboutFranchiseOrLettings6015: AboutFranchisesOrLettings   = AboutFranchisesOrLettings(
     Some(AnswerYes),
     Some(AnswerYes),
     0,
+    None,
     IndexedSeq(prefilledCateringOperationSectionYes),
     Some(AnswerYes),
     0,
+    None,
     IndexedSeq(prefilledLettingSectionYes)
   )
   val prefilledAboutFranchiseOrLettingsNo6015: AboutFranchisesOrLettings = AboutFranchisesOrLettings(
     Some(AnswerNo),
     Some(AnswerNo),
     0,
+    None,
     IndexedSeq(prefilledCateringOperationSectionNo),
     Some(AnswerNo),
     0,
+    None,
     IndexedSeq(prefilledLettingSectionNo)
   )
 

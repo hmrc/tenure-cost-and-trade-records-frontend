@@ -17,6 +17,7 @@
 package models.submissions.connectiontoproperty
 
 import crypto.MongoCrypto
+import models.submissions.MaxOfLettings
 import models.submissions.common.AnswersYesNo
 import play.api.libs.json.{Json, OFormat}
 import uk.gov.hmrc.crypto.Sensitive
@@ -34,6 +35,7 @@ case class SensitiveStillConnectedDetails(
   isAnyRentReceived: Option[AnswersYesNo] = None,
   provideContactDetails: Option[SensitiveProvideContactDetails] = None,
   lettingPartOfPropertyDetailsIndex: Int = 0,
+  maxOfLettings: Option[MaxOfLettings] = None,
   lettingPartOfPropertyDetails: IndexedSeq[SensitiveLettingPartOfPropertyDetails] = IndexedSeq.empty,
   checkYourAnswersConnectionToProperty: Option[CheckYourAnswersConnectionToProperty] = None,
   checkYourAnswersConnectionToVacantProperty: Option[CheckYourAnswersConnectionToVacantProperty] = None
@@ -52,6 +54,7 @@ case class SensitiveStillConnectedDetails(
     isAnyRentReceived,
     provideContactDetails.map(_.decryptedValue),
     lettingPartOfPropertyDetailsIndex,
+    maxOfLettings,
     lettingPartOfPropertyDetails.map(_.decryptedValue),
     checkYourAnswersConnectionToProperty,
     checkYourAnswersConnectionToVacantProperty
@@ -79,6 +82,7 @@ object SensitiveStillConnectedDetails {
       stillConnectedDetails.isAnyRentReceived,
       stillConnectedDetails.provideContactDetails.map(SensitiveProvideContactDetails(_)),
       stillConnectedDetails.lettingPartOfPropertyDetailsIndex,
+      stillConnectedDetails.maxOfLettings,
       stillConnectedDetails.lettingPartOfPropertyDetails.map(SensitiveLettingPartOfPropertyDetails(_)),
       stillConnectedDetails.checkYourAnswersConnectionToProperty,
       stillConnectedDetails.checkYourAnswersConnectionToVacantProperty

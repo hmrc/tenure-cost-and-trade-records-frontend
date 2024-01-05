@@ -52,6 +52,14 @@ case object AddAnotherCateringOperationPageId extends Identifier {
   override def toString: String = "addAnotherCateringOperationPage"
 }
 
+case object MaxOfLettingsReachedCateringId extends Identifier {
+  override def toString: String = "MaxOfLettingsReachedCateringPage"
+}
+
+case object MaxOfLettingsReachedCurrentId extends Identifier {
+  override def toString: String = "MaxOfLettingsReachedCurrentPage"
+}
+
 case object LettingAccommodationPageId extends Identifier {
   override def toString: String = "lettingAccommodationPage"
 }
