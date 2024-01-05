@@ -28,7 +28,7 @@ import models.submissions.Form6010._
 import models.submissions.aboutYourLeaseOrTenure._
 import models.submissions.aboutfranchisesorlettings._
 import models.submissions.aboutyouandtheproperty._
-import models.submissions.additionalinformation.{AlternativeAddress, AlternativeContactDetails}
+import models.submissions.additionalinformation.AlternativeAddress
 import models.submissions.common.{Address, AnswersYesNo, BuildingInsurance, CYAYesNo, ContactDetails, ContactDetailsAddress, InsideRepairs, OutsideRepairs}
 import models.submissions.connectiontoproperty.{AddressConnectionType, ConnectionToProperty, CorrespondenceAddress, EditAddress, VacantPropertiesDetails, YourContactDetails}
 import models.submissions.notconnected.PastConnectionType
@@ -49,11 +49,11 @@ object MappingSupport {
 
   implicit class EnrichedSeq[A](seq: Seq[A]) {
     def toTuple2: Option[(A, A)]    = seq match {
-      case Seq(a, b) => Some(a, b)
+      case Seq(a, b) => Some((a, b))
       case _         => None
     }
     def toTuple3: Option[(A, A, A)] = seq match {
-      case Seq(a, b, c) => Some(a, b, c)
+      case Seq(a, b, c) => Some((a, b, c))
       case _            => None
     }
   }
