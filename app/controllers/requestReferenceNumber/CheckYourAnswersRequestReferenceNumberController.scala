@@ -17,12 +17,14 @@
 package controllers.requestReferenceNumber
 
 import actions.{SessionRequest, WithSessionRefiner}
-import connectors.Audit
+import config.ErrorHandler
+import connectors.{Audit, SubmissionConnector}
 import controllers.FORDataCaptureController
 import form.requestReferenceNumber.CheckYourAnswersRequestReferenceNumberForm.checkYourAnswersRequestReferenceNumberForm
-
+import models.Session
+import models.submissions.RequestReferenceNumberSubmission
 import play.api.Logging
-import play.api.i18n.I18nSupport
+import play.api.i18n.{I18nSupport, Messages}
 import play.api.libs.json.{JsObject, Json}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Result}
 import repositories.SessionRepo
@@ -30,14 +32,17 @@ import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.http.HeaderCarrierConverter
 import views.html.requestReferenceNumber.{checkYourAnswersRequestReferenceNumber, confirmationRequestReferenceNumber}
 
+import java.time.Instant
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class CheckYourAnswersRequestReferenceNumberController @Inject() (
   mcc: MessagesControllerComponents,
+  submissionConnector: SubmissionConnector,
   checkYourAnswersRequestReferenceNumberView: checkYourAnswersRequestReferenceNumber,
   confirmationRequestReferenceNumberView: confirmationRequestReferenceNumber,
+  errorHandler: ErrorHandler,
   audit: Audit,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
@@ -67,31 +72,62 @@ class CheckYourAnswersRequestReferenceNumberController @Inject() (
   }
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    submit(request.sessionData.referenceNumber)
+    submit()
   }
 
-  private def submit[T](refNum: String)(implicit request: SessionRequest[T]): Future[Result] = {
+  private def submit[T]()(implicit request: SessionRequest[T]): Future[Result] = {
     val hc = HeaderCarrierConverter.fromRequestAndSession(request, request.session)
     for {
-      _ <- submitRequestReferenceNumber(refNum)(hc, request)
+      _ <- submitRequestReferenceNumber()(hc, request)
     } yield Found(confirmationUrl)
   }
 
-  def submitRequestReferenceNumber(
-    refNum: String
-  )(implicit hc: HeaderCarrier, request: SessionRequest[_]): Future[Unit] = {
-
+  def submitRequestReferenceNumber()(implicit hc: HeaderCarrier, request: SessionRequest[_]): Future[Result] = {
+    val auditType      = "NoReferenceSubmission"
+    val session        = request.sessionData
     val submissionJson = Json.toJson(request.sessionData).as[JsObject]
-    val outcome        = Json.obj("isSuccessful" -> true)
-    audit.sendExplicitAudit(
-      "NoReferenceSubmission",
-      submissionJson ++ Audit.languageJson ++ Json.obj("outcome" -> outcome)
-    )
-    Future.unit
+
+    submitRequestRefNumToBackend(session).map { _ =>
+      val outcome = Json.obj("isSuccessful" -> true)
+      audit.sendExplicitAudit(
+        auditType,
+        submissionJson ++ Audit.languageJson ++ Json.obj("outcome" -> outcome)
+      )
+      Redirect(confirmationUrl)
+    } recover { case e: Exception =>
+      val failureReason = s"Could not send request reference number data to HOD - ${hc.sessionId.getOrElse("")}"
+      logger.error(failureReason)
+      val outcome       = Json.obj(
+        "isSuccessful"    -> false,
+        "failureCategory" -> INTERNAL_SERVER_ERROR,
+        "failureReason"   -> failureReason
+      )
+      audit.sendExplicitAudit(auditType, submissionJson ++ Json.obj("outcome" -> outcome))
+      InternalServerError(errorHandler.internalServerErrorTemplate(request))
+    }
   }
 
   def confirmation: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Future(Ok(confirmationRequestReferenceNumberView(feedbackForm)))
   }
 
+  private def submitRequestRefNumToBackend(
+    session: Session
+  )(implicit hc: HeaderCarrier, request: SessionRequest[_], messages: Messages): Future[Unit] = {
+    val sessionRequestRefNum        = session.requestReferenceNumberDetails
+    val sessionRequestRefNumAddress = sessionRequestRefNum.flatMap(_.requestReferenceNumberAddress)
+    val sessionRequestRefNumDetails = sessionRequestRefNum.flatMap(_.requestReferenceContactDetails)
+
+    val submission = RequestReferenceNumberSubmission(
+      sessionRequestRefNumAddress.map(_.requestReferenceNumberBusinessTradingName).getOrElse(""),
+      sessionRequestRefNumAddress.map(_.requestReferenceNumberAddress).get,
+      sessionRequestRefNumDetails.map(_.requestReferenceNumberContactDetailsFullName).getOrElse(""),
+      sessionRequestRefNumDetails.map(_.requestReferenceNumberContactDetails).get,
+      sessionRequestRefNumDetails.map(_.requestReferenceNumberContactDetailsAdditionalInformation).get,
+      Instant.now(),
+      Some(messages.lang.language)
+    )
+
+    submissionConnector.submitRequestReferenceNumber(submission)
+  }
 }

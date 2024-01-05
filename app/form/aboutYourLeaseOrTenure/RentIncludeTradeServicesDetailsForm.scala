@@ -19,7 +19,7 @@ package form.aboutYourLeaseOrTenure
 import form.requestReferenceNumber.OptionalCurrencyMapping.currencyMappingOptional
 import models.submissions.aboutYourLeaseOrTenure.RentIncludeTradeServicesInformationDetails
 import play.api.data.Form
-import play.api.data.Forms.{bigDecimal, default, mapping, optional, text}
+import play.api.data.Forms.{default, mapping, text}
 import play.api.data.validation.Constraints.{maxLength, nonEmpty}
 import play.api.i18n.Messages
 

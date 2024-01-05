@@ -28,7 +28,7 @@ import views.html.aboutyouandtheproperty.checkYourAnswersAboutTheProperty
 import views.html.additionalinformation.{alternativeContactDetails, checkYourAnswersAdditionalInformation, contactDetailsQuestion, furtherInformationOrRemarks}
 import views.html.downloadFORTypeForm.{downloadPDF, downloadPDFReferenceNumber}
 import views.html.feedback.{feedback, feedbackThx}
-import views.html.requestReferenceNumber.{confirmationRequestReferenceNumber, requestReferenceNumber, requestReferenceNumberContactDetails}
+import views.html.requestReferenceNumber.{checkYourAnswersRequestReferenceNumber, confirmationRequestReferenceNumber, requestReferenceNumber, requestReferenceNumberContactDetails}
 import views.html.{confirmation, confirmationConnectionToProperty, confirmationNotConnected, login}
 
 trait FakeViews { this: GuiceOneAppPerSuite =>
@@ -36,8 +36,13 @@ trait FakeViews { this: GuiceOneAppPerSuite =>
   // Sign in
   lazy val loginView: login = app.injector.instanceOf[login]
 
-  // Connection to the property
+  // Request reference number
+  lazy val checkYourAnswersRequestReferenceNumberView: checkYourAnswersRequestReferenceNumber =
+    app.injector.instanceOf[checkYourAnswersRequestReferenceNumber]
+  lazy val confirmationRequestReferenceNumberView: confirmationRequestReferenceNumber         =
+    app.injector.instanceOf[confirmationRequestReferenceNumber]
 
+  // Connection to the property
   lazy val areYouThirdPartyView: areYouThirdParty                                                 = app.injector.instanceOf[areYouThirdParty]
   lazy val areYouStillConnectedView: areYouStillConnected                                         = app.injector.instanceOf[areYouStillConnected]
   lazy val connectionToThePropertyView: connectionToTheProperty                                   = app.injector.instanceOf[connectionToTheProperty]

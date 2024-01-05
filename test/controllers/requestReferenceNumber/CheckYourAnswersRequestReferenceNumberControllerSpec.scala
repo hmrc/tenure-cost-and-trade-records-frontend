@@ -16,46 +16,44 @@
 
 package controllers.requestReferenceNumber
 
-import connectors.Audit
-import navigation.ConnectionToPropertyNavigator
+import config.ErrorHandler
+import form.requestReferenceNumber.CheckYourAnswersRequestReferenceNumberForm.checkYourAnswersRequestReferenceNumberForm
+import connectors.{Audit, SubmissionConnector}
+import models.submissions.requestReferenceNumber.RequestReferenceNumberDetails
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import play.twirl.api.HtmlFormat
 import utils.TestBaseSpec
-import views.html.requestReferenceNumber.{checkYourAnswersRequestReferenceNumber, confirmationRequestReferenceNumber}
-import views.html.taskList
+import utils.FormBindingTestAssertions.mustContainError
 
 class CheckYourAnswersRequestReferenceNumberControllerSpec extends TestBaseSpec {
 
-  val backLink = controllers.requestReferenceNumber.routes.RequestReferenceNumberContactDetailsController.show().url
+  import TestData._
 
-  val mockAudit: Audit                               = mock[Audit]
-  val mockConnectionToPropertyNavigator              = mock[ConnectionToPropertyNavigator]
-  val mockCheckYourAnswersRequestReferenceNumberView = mock[checkYourAnswersRequestReferenceNumber]
-  val mockRequestReferenceNumber                     = mock[confirmationRequestReferenceNumber]
-  when(mockCheckYourAnswersRequestReferenceNumberView.apply(any, any)(any, any)).thenReturn(HtmlFormat.empty)
+  val submissionConnector: SubmissionConnector = mock[SubmissionConnector]
 
-  val mockTaskListView = mock[taskList]
-  when(mockTaskListView.apply(any)(any, any)).thenReturn(HtmlFormat.empty)
-
-  val checkYourAnswersRequestReferenceController = new CheckYourAnswersRequestReferenceNumberController(
-    stubMessagesControllerComponents(),
-    mockCheckYourAnswersRequestReferenceNumberView,
-    mockRequestReferenceNumber,
-    mockAudit,
-    preFilledSession,
-    mockSessionRepo
-  )
+  def checkYourAnswersRequestReferenceController(
+    requestReferenceNumberDetails: Option[RequestReferenceNumberDetails] = Some(prefilledRequestRefNumCYA)
+  ) =
+    new CheckYourAnswersRequestReferenceNumberController(
+      stubMessagesControllerComponents(),
+      inject[SubmissionConnector],
+      checkYourAnswersRequestReferenceNumberView,
+      confirmationRequestReferenceNumberView,
+      inject[ErrorHandler],
+      inject[Audit],
+      preEnrichedActionRefiner(requestReferenceNumberDetails = requestReferenceNumberDetails),
+      mockSessionRepo
+    )
 
   "GET /" should {
     "return 200" in {
-      val result = checkYourAnswersRequestReferenceController.show(fakeRequest)
+      val result = checkYourAnswersRequestReferenceController().show(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return HTML" in {
-      val result = checkYourAnswersRequestReferenceController.show(fakeRequest)
+      val result = checkYourAnswersRequestReferenceController().show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
@@ -63,10 +61,31 @@ class CheckYourAnswersRequestReferenceNumberControllerSpec extends TestBaseSpec 
 
   "SUBMIT /" should {
     "throw a FOUND if an empty form is submitted" in {
-      val res = checkYourAnswersRequestReferenceController.submit(
+      val res = checkYourAnswersRequestReferenceController().submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)
       )
       status(res) shouldBe FOUND
     }
   }
+
+  "Check Your Answers request reference number form" should {
+    "error if checkYourAnswersRequestReferenceNumber is missing" in {
+      val formData = baseFormData - errorKey.checkYourAnswersRequestReferenceNumber
+      val form     = checkYourAnswersRequestReferenceNumberForm.bind(formData)
+
+      mustContainError(errorKey.checkYourAnswersRequestReferenceNumber, "error.checkYourAnswersRadio.required", form)
+    }
+  }
+
+  object TestData {
+    val errorKey: Object {
+      val checkYourAnswersRequestReferenceNumber: String
+    } = new {
+      val checkYourAnswersRequestReferenceNumber: String =
+        "checkYourAnswersRequestReferenceNumber"
+    }
+
+    val baseFormData: Map[String, String] = Map("checkYourAnswersRequestReferenceNumber" -> "yes")
+  }
+
 }

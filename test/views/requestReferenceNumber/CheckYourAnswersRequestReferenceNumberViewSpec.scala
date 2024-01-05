@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package views.additionalInformation
+package views.requestReferenceNumber
 
 import actions.SessionRequest
 import form.additionalinformation.CheckYourAnswersAdditionalInformationForm
@@ -27,9 +27,6 @@ import views.behaviours.QuestionViewBehaviours
 
 class CheckYourAnswersRequestReferenceNumberViewSpec
     extends QuestionViewBehaviours[CheckYourAnswersRequestReferenceNumber] {
-
-  def checkYourAnswersRequestReferenceNumberView =
-    app.injector.instanceOf[views.html.requestReferenceNumber.checkYourAnswersRequestReferenceNumber]
 
   val messageKeyPrefix = "checkYourAnswersRequestReferenceNumber"
 

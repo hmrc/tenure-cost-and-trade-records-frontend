@@ -26,7 +26,7 @@ import navigation.identifiers.FinancialYearEndDatesPageId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import util.AccountingInformationUtil.{newFinancialYears, previousFinancialYears}
+import util.AccountingInformationUtil.newFinancialYears
 import views.html.aboutthetradinghistory.financialYearEndDates
 
 import java.time.{LocalDate, MonthDay}
