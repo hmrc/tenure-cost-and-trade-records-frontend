@@ -20,8 +20,7 @@ import form.MappingSupport.buildingOperatingHaveAWebsiteType
 import form.WebsiteMapping.validateWebaddress
 import models.submissions.aboutyouandtheproperty.{BuildingOperationHaveAWebsiteYes, WebsiteForPropertyDetails}
 import play.api.data.Form
-import play.api.data.Forms.{default, mapping, text}
-import play.api.data.validation.Constraints.{nonEmpty, pattern}
+import play.api.data.Forms.mapping
 import uk.gov.voa.play.form.ConditionalMappings.mandatoryIfEqual
 
 object WebsiteForPropertyForm {

@@ -65,6 +65,7 @@ trait FakeObjects {
   val prefilledFakeName                                                 = "John Doe"
   val prefilledFakePhoneNo                                              = "12345678901"
   val prefilledFakeEmail                                                = "test@email.com"
+  val prefilledFakeTradingName                                          = "TRADING NAME"
   val prefilledCateringAddress: CateringAddress                         =
     CateringAddress("004", Some("GORING ROAD"), "GORING-BY-SEA, WORTHING", Some("West sussex"), "BN12 4AX")
   val prefilledLettingAddress: LettingAddress                           =
@@ -93,6 +94,18 @@ trait FakeObjects {
   val baseFilled6011Session: Session = Session(referenceNumber, forType6011, prefilledAddress, token)
   val baseFilled6015Session: Session = Session(referenceNumber, forType6015, prefilledAddress, token)
   val baseFilled6016Session: Session = Session(referenceNumber, forType6016, prefilledAddress, token)
+
+  // Request reference number
+  val prefilledRequestRefNumCYA = RequestReferenceNumberDetails(
+    Some(RequestReferenceNumber(prefilledFakeTradingName, prefilledNoReferenceContactAddress)),
+    Some(
+      RequestReferenceNumberContactDetails(
+        prefilledFakeName,
+        ContactDetails(prefilledFakePhoneNo, prefilledFakeEmail),
+        Some("Additional Information")
+      )
+    )
+  )
 
   // Are your still connected sessions
   val prefilledStillConnectedDetailsYes: StillConnectedDetails  = StillConnectedDetails(

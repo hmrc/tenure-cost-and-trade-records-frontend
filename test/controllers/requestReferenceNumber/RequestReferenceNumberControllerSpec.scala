@@ -48,6 +48,11 @@ class RequestReferenceNumberControllerSpec extends TestBaseSpec {
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
+
+    "return 303" in {
+      val result = noReferenceNumberController().startWithSession(fakeRequest)
+      status(result) shouldBe Status.SEE_OTHER
+    }
   }
 
   "SUBMIT /" should {

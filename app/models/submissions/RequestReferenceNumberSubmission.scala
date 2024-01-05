@@ -14,21 +14,26 @@
  * limitations under the License.
  */
 
-package models.submissions.aboutthetradinghistory
+package models.submissions
 
+import models.submissions.common.ContactDetails
+import models.submissions.requestReferenceNumber.RequestReferenceNumberAddress
 import play.api.libs.json.Json
 
-import java.time.LocalDate
+import java.time.Instant
 
-case class TotalPayrollCost(
-  financialYearEnd: LocalDate,
-  managersAndStaff: BigDecimal,
-  directorsRemuneration: BigDecimal
-) {
-  def total = managersAndStaff + directorsRemuneration
-}
+case class RequestReferenceNumberSubmission(
+  BusinessTradingName: String,
+  address: RequestReferenceNumberAddress,
+  fullName: String,
+  contactDetails: ContactDetails,
+  additionalInformation: Option[String],
+  createdAt: Instant,
+  lang: Option[String] = None
+)
 
-object TotalPayrollCost {
-  implicit val format = Json.format[TotalPayrollCost]
+object RequestReferenceNumberSubmission {
+
+  implicit val format = Json.format[RequestReferenceNumberSubmission]
 
 }
