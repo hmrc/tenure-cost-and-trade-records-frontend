@@ -16,7 +16,7 @@
 
 package controllers
 
-import actions.WithSessionRefiner
+import actions.{SessionRequest, WithSessionRefiner}
 import form.MaxOfLettingsForm.maxOfLettingsForm
 import models.submissions.MaxOfLettings
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
@@ -44,33 +44,7 @@ class MaxOfLettingsReachedController @Inject() (
     with I18nSupport {
 
   def show(source: Option[String]): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    val (backLink, form, sourceOpt) = source match {
-      case Some("connection")        =>
-        (
-          controllers.connectiontoproperty.routes.AddAnotherLettingPartOfPropertyController.show(4).url,
-          request.sessionData.stillConnectedDetails.flatMap(_.maxOfLettings),
-          "connection"
-        )
-      case Some("franchiseCatering") =>
-        (
-          controllers.aboutfranchisesorlettings.routes.AddAnotherCateringOperationController.show(4).url,
-          request.sessionData.aboutFranchisesOrLettings.flatMap(_.cateringMaxOfLettings),
-          "franchiseCatering"
-        )
-      case Some("franchiseLetting")  =>
-        (
-          controllers.aboutfranchisesorlettings.routes.AddAnotherLettingOtherPartOfPropertyController.show(4).url,
-          request.sessionData.aboutFranchisesOrLettings.flatMap(_.currentMaxOfLetting),
-          "franchiseLetting"
-        )
-      case _                         =>
-        (
-          routes.TaskListController.show().url,
-          None,
-          ""
-        )
-    }
-
+    val (backLink, form, sourceOpt) = getSourceDetails(source, request)
     val filledForm = form.map(maxOfLettingsForm.fill).getOrElse(maxOfLettingsForm)
 
     Future.successful(
@@ -87,32 +61,7 @@ class MaxOfLettingsReachedController @Inject() (
 
   def submit(source: Option[String]): Action[AnyContent] = (Action andThen withSessionRefiner).async {
     implicit request =>
-      val (backLink, form, sourceOpt) = source match {
-        case Some("connection")        =>
-          (
-            controllers.connectiontoproperty.routes.AddAnotherLettingPartOfPropertyController.show(4).url,
-            request.sessionData.stillConnectedDetails.flatMap(_.maxOfLettings),
-            "connection"
-          )
-        case Some("franchiseCatering") =>
-          (
-            controllers.aboutfranchisesorlettings.routes.AddAnotherCateringOperationController.show(4).url,
-            request.sessionData.aboutFranchisesOrLettings.flatMap(_.cateringMaxOfLettings),
-            "franchiseCatering"
-          )
-        case Some("franchiseLetting")  =>
-          (
-            controllers.aboutfranchisesorlettings.routes.AddAnotherLettingOtherPartOfPropertyController.show(4).url,
-            request.sessionData.aboutFranchisesOrLettings.flatMap(_.currentMaxOfLetting),
-            "franchiseLetting"
-          )
-        case _                         =>
-          (
-            routes.TaskListController.show().url,
-            None,
-            ""
-          )
-      }
+      val (backLink, _, sourceOpt) = getSourceDetails(source, request)
 
       continueOrSaveAsDraft[MaxOfLettings](
         maxOfLettingsForm,
@@ -157,4 +106,34 @@ class MaxOfLettingsReachedController @Inject() (
         }
       )
   }
+
+  private def getSourceDetails(source: Option[String], request: SessionRequest[AnyContent]): (String, Option[MaxOfLettings], String) = {
+    source match {
+      case Some("connection") =>
+        (
+          controllers.connectiontoproperty.routes.AddAnotherLettingPartOfPropertyController.show(4).url,
+          request.sessionData.stillConnectedDetails.flatMap(_.maxOfLettings),
+          "connection"
+        )
+      case Some("franchiseCatering") =>
+        (
+          controllers.aboutfranchisesorlettings.routes.AddAnotherCateringOperationController.show(4).url,
+          request.sessionData.aboutFranchisesOrLettings.flatMap(_.cateringMaxOfLettings),
+          "franchiseCatering"
+        )
+      case Some("franchiseLetting") =>
+        (
+          controllers.aboutfranchisesorlettings.routes.AddAnotherLettingOtherPartOfPropertyController.show(4).url,
+          request.sessionData.aboutFranchisesOrLettings.flatMap(_.currentMaxOfLetting),
+          "franchiseLetting"
+        )
+      case _ =>
+        (
+          routes.TaskListController.show().url,
+          None,
+          ""
+        )
+    }
+  }
+
 }
