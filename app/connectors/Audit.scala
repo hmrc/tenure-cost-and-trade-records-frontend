@@ -51,13 +51,6 @@ trait Audit extends AuditConnector {
   def sendSavedAsDraft(savedAsDraftEvent: SavedAsDraftEvent)(implicit hc: HeaderCarrier): Unit =
     sendExplicitAudit("SavedAsDraft", savedAsDraftEvent)
 
-  private def sendEventMap(event: String, detail: Map[String, String], tags: Map[String, String])(implicit
-    hc: HeaderCarrier
-  ): Future[AuditResult] = {
-    val de = DataEvent(auditSource = AUDIT_SOURCE, auditType = event, tags = tags, detail = detail)
-    sendEvent(de)
-  }
-
 }
 
 object Audit {
