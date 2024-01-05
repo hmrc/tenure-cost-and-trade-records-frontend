@@ -17,19 +17,24 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.checkboxes.Checkboxes
 @import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcCurrencyInput
+@import uk.gov.hmrc.govukfrontend.views.Aliases.CheckboxItem
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukDateInput
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Label
 @import uk.gov.hmrc.hmrcfrontend.views.viewmodels.currencyinput.CurrencyInput
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukCheckboxes
 @import models.pages.Summary
 
 @this(layout: Layout,
         govukButton: GovukButton,
         govukDateInput: GovukDateInput,
+        govukCheckboxes: GovukCheckboxes,
         hmrcCurrencyInput : HmrcCurrencyInput,
         formWithCSRF: FormWithCSRF
 )
+
 
 @(theForm: Form[_], index: Int, cateringOrLetting: String, operatorName: String, backLink: String, summary: Summary, formType: String)(implicit request: Request[_], messages: Messages)
 
@@ -55,7 +60,8 @@
             controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsRentController.submit(index)
         else if(cateringOrLetting.equals("lettingOtherPartOfPropertyRentDetails"))
             controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsRentController.submit(index)
-        else controllers.routes.TaskListController.show()}
+        else controllers.routes.TaskListController.show()
+    }
     ) {
 
         @if(cateringOrLetting.equals("cateringOperationOrLettingAccommodationRentDetails")) {
@@ -82,6 +88,24 @@
         )
 
         @includes.dateFields(form = theForm, field = "dateInput", govukDate = govukDateInput, showDays = true)
+
+        @if(formType == ForTypes.for6015 || formType == ForTypes.for6016) {
+            @govukCheckboxes(
+                Checkboxes(
+                    name = "declaration",
+                    items = Seq(
+                        CheckboxItem(
+                            content = Text(messages("rent.received.from.confirm")),
+                            value = "true",
+                            checked = theForm("declaration").value.contains("true"),
+                            label = Label(
+                                classes = "govuk-!-font-weight-bold",
+                            )
+                        )
+                    )
+                ).withFormField(theForm("declaration"))
+            )
+        }
 
         @includes.continueSaveAsDraftButtons(govukButton)
     }

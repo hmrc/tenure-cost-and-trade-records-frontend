@@ -113,8 +113,6 @@ class LettingOtherPartOfPropertyController @Inject() (
       case "TL" => Right(controllers.routes.TaskListController.show().url + "#letting-other-part-of-property")
       case _    =>
         answers.forType match {
-          case ForTypes.for6015 | ForTypes.for6016 =>
-            Right(controllers.aboutfranchisesorlettings.routes.ConcessionOrFranchiseController.show().url)
           case _                                   =>
             Right(getBackLinkOfrSections(answers))
         }

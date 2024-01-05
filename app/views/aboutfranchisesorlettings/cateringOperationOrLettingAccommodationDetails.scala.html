@@ -17,6 +17,7 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
+@import actions.SessionRequest
 @import models.pages.Summary
 
 @this(layout: Layout,
@@ -25,10 +26,11 @@
         formWithCSRF: FormWithCSRF
 )
 
-
-@(theForm: Form[_], index: Option[Int], cateringOrLetting: String, backLink: String, summary: Summary, formType: String)(implicit request: Request[_], messages: Messages)
+@(theForm: Form[_], index: Option[Int], cateringOrLetting: String, backLink: String, summary: Summary, formType: String)(implicit request: SessionRequest[_], messages: Messages)
 
 @typeConcession = @{formType == ForTypes.for6015 || formType == ForTypes.for6016}
+
+    @specificPage = @{request.sessionData.aboutFranchisesOrLettings.flatMap(_.lettingOtherPartOfProperty.map(_.name))}
 
 @label =@{
         if(typeConcession) messages("label.section.aboutTheFranchiseConcessions")  else {
@@ -36,7 +38,10 @@
         }
     }
 @heading =@{
-        if(typeConcession) messages("concessionDetails.heading")  else {
+    if(typeConcession && specificPage.contains("yes")) messages("lettingDetails.heading")
+        else if(typeConcession && specificPage.isEmpty) messages("concessionDetails.heading")
+
+        else {
             messages(s"${cateringOrLetting}.heading")
         }
     }
