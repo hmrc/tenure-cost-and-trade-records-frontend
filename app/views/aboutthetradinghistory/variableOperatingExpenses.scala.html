@@ -19,6 +19,7 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import uk.gov.hmrc.govukfrontend.views.Implicits.RichInput
 @import util.DateUtil
+@import util.NumberUtil._
 
 @this(layout: Layout,
         govukButton: GovukButton,
@@ -44,6 +45,14 @@
         @messages("variableOperatingExpenses.other")
         <span class="govuk-caption-m">@messages("variableOperatingExpenses.other.p1")</span>
     </p>
+}
+
+@totalContent(idx: Int) = {
+    <span
+    data-total-prefix="variableOperatingExpenses.year[@idx]."
+    data-total-items="energy-and-utilities,cleaning-and-laundry,building-maintenance-and-repairs,fixtures-fittings-and-equipment,advertising-and-promotions,administration-and-sundries,entertainment,other">
+    @form.value.fold("")(_.variableOperatingExpenses(idx).total.asMoney)
+    </span>
 }
 
 @layout(
@@ -171,6 +180,12 @@
                                         ).withFormField(form(s"variableOperatingExpenses.year[$idx].other")))
                                     )
                                 )
+                            ),
+                            Seq(
+                                TableRow(content = Text(messages("variableOperatingExpenses.total"))),
+                                TableRow(
+                                    content = HtmlContent(totalContent(idx))
+                                )
                             )
                         )
                     ))
@@ -182,6 +197,8 @@
 
         @includes.continueSaveAsDraftButtons(govukButton)
     }
-}
 
-<script src="@routes.Assets.versioned("javascripts/responsive-table.js")"></script>
+    <script src="@routes.Assets.versioned("javascripts/data-total.js")"></script>
+    <script src="@routes.Assets.versioned("javascripts/responsive-table.js")"></script>
+
+}

@@ -38,8 +38,6 @@
     withTimeoutDialog = false
 ) {
 
-    <script src="@routes.Assets.versioned("javascripts/show-password.js")"></script>
-
     <p class="govuk-body">@messages("saveAsDraft.passwordReminder")</p>
 
     @formWithCSRF(action = routes.SaveAsDraftController.resume) {
@@ -54,7 +52,7 @@
                 ),
                 suffix = PrefixOrSuffix(
                     content = HtmlContent(
-                        """<a href="#" onclick="togglePassword('password', this, event)" tabindex="-1">Show</a>"""
+                        """<a href="#" data-toggle-password="password" tabindex="-1">Show</a>"""
                     ),
                     classes = "hmrc-show-password__suffix"
                 ),
@@ -76,5 +74,7 @@
     </p>
 
     <p class="govuk-body">@messages("saveAsDraft.forgotPassword")</p>
+
+    <script src="@routes.Assets.versioned("javascripts/toggle-password.js")"></script>
 
 }

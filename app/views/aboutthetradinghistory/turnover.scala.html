@@ -19,6 +19,7 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import uk.gov.hmrc.govukfrontend.views.Implicits.RichInput
 @import util.DateUtil
+@import util.NumberUtil._
 
 
 @this(layout: Layout,
@@ -75,11 +76,20 @@
         <span class="govuk-caption-m">@messages("turnover.otherReceiptsCaption")</span>
     </p>
 }
+
 @totalSalesRevenueHeading = {
     <p class="govuk-body govuk-!-font-weight-bold">
         @messages("turnover.totalSalesRevenue")
         <span class="govuk-caption-m">@messages("turnover.totalSalesRevenueCaption")</span>
     </p>
+}
+
+@totalContent(idx: Int) = {
+    <span
+    data-total-prefix="@idx."
+    data-total-items="accommodation,food,alcoholic-drinks,other-receipts">
+    @form.value.fold("")(_(idx).total.asMoney)
+    </span>
 }
 
 @accommodationHeading = {
@@ -303,9 +313,7 @@
                                     content = HtmlContent(totalSalesRevenueHeading)
                                 ),
                                 TableRow(
-                                    content = HtmlContent(
-                                        s"""<span id="total-sales-revenue-$idx" class="total-sales-revenue"></span>"""
-                                    )
+                                    content = HtmlContent(totalContent(idx))
                                 )
                             )
                         )
@@ -319,7 +327,7 @@
         @includes.continueSaveAsDraftButtons(govukButton)
     }
 
-}
+    <script src="@routes.Assets.versioned("javascripts/data-total.js")"></script>
+    <script src="@routes.Assets.versioned("javascripts/responsive-table.js")"></script>
 
-<script src="@routes.Assets.versioned("javascripts/responsive-table.js")"></script>
-<script src="@routes.Assets.versioned("javascripts/total-turnover.js")"></script>
+}

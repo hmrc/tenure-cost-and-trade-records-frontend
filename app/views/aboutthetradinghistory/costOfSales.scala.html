@@ -69,9 +69,11 @@
 }
 
 @totalContent(idx: Int) = {
-    <span id="@{
-        "total." + idx
-    }">@form.value.fold("")(_(idx).total.asMoney)</span>
+    <span
+    data-total-prefix="costOfSales[@idx]."
+    data-total-items="accommodation,food,drinks,other">
+    @form.value.fold("")(_(idx).total.asMoney)
+    </span>
 }
 
 @costInputAttributes = @{
@@ -206,5 +208,5 @@
     }
 }
 
+<script src="@routes.Assets.versioned("javascripts/data-total.js")"></script>
 <script src="@routes.Assets.versioned("javascripts/responsive-table.js")"></script>
-<script src="@routes.Assets.versioned("javascripts/cost-of-sales.js")"></script>
