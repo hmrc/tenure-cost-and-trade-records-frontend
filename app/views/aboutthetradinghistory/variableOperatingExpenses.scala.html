@@ -33,8 +33,17 @@
 @(form: Form[VariableOperatingExpensesSections])(implicit request: SessionRequest[_], messages: Messages)
 
 @entertainmentHeading = {
-    <p class="govuk-body">@messages("variableOperatingExpenses.entertainment")</p>
-    <p class="govuk-body">@messages("variableOperatingExpenses.entertainment.p1")</p>
+    <p class="govuk-body govuk-!-font-weight-bold">
+        @messages("variableOperatingExpenses.entertainment")
+        <span class="govuk-caption-m">@messages("variableOperatingExpenses.entertainment.p1")</span>
+    </p>
+}
+
+@otherHeading = {
+    <p class="govuk-body govuk-!-font-weight-bold">
+        @messages("variableOperatingExpenses.other")
+        <span class="govuk-caption-m">@messages("variableOperatingExpenses.other.p1")</span>
+    </p>
 }
 
 @layout(
@@ -62,19 +71,13 @@
 
                     @govukTable(Table(
                         head = Seq(
-                            HeadCell(
-                                content = Text(messages("turnover.financialYearEnd"))
-                            ),
-                            HeadCell(
-                                content = Text(dateUtil.formatDayMonthAbbrYear(finYearEnd))
-                            )
+                            HeadCell(content = Text(messages("turnover.financialYearEnd"))),
+                            HeadCell(content = Text(dateUtil.formatDayMonthAbbrYear(finYearEnd)))
                         ),
                         firstCellIsHeader = true,
                         rows = Seq(
                             Seq(
-                                TableRow(
-                                    content = Text(messages("variableOperatingExpenses.energyAndUtilities"))
-                                ),
+                                TableRow(content = Text(messages("variableOperatingExpenses.energyAndUtilities"))),
                                 TableRow(
                                     content = HtmlContent(
                                         govukInput(Input(
@@ -86,9 +89,7 @@
                                 )
                             ),
                             Seq(
-                                TableRow(
-                                    content = Text(messages("variableOperatingExpenses.cleaningAndLaundry"))
-                                ),
+                                TableRow(content = Text(messages("variableOperatingExpenses.cleaningAndLaundry"))),
                                 TableRow(
                                     content = HtmlContent(
                                         govukInput(Input(
@@ -100,9 +101,7 @@
                                 )
                             ),
                             Seq(
-                                TableRow(
-                                    content = Text(messages("variableOperatingExpenses.buildingMaintenanceAndRepairs"))
-                                ),
+                                TableRow(content = Text(messages("variableOperatingExpenses.buildingMaintenanceAndRepairs"))),
                                 TableRow(
                                     content = HtmlContent(
                                         govukInput(Input(
@@ -114,9 +113,7 @@
                                 )
                             ),
                             Seq(
-                                TableRow(
-                                    content = Text(messages("variableOperatingExpenses.fixturesFittingsAndEquipment"))
-                                ),
+                                TableRow(content = Text(messages("variableOperatingExpenses.fixturesFittingsAndEquipment"))),
                                 TableRow(
                                     content = HtmlContent(
                                         govukInput(Input(
@@ -128,9 +125,7 @@
                                 )
                             ),
                             Seq(
-                                TableRow(
-                                    content = Text(messages("variableOperatingExpenses.advertisingAndPromotions"))
-                                ),
+                                TableRow(content = Text(messages("variableOperatingExpenses.advertisingAndPromotions"))),
                                 TableRow(
                                     content = HtmlContent(
                                         govukInput(Input(
@@ -142,9 +137,7 @@
                                 )
                             ),
                             Seq(
-                                TableRow(
-                                    content = Text(messages("variableOperatingExpenses.administrationAndSundries"))
-                                ),
+                                TableRow(content = Text(messages("variableOperatingExpenses.administrationAndSundries"))),
                                 TableRow(
                                     content = HtmlContent(
                                         govukInput(Input(
@@ -156,9 +149,7 @@
                                 )
                             ),
                             Seq(
-                                TableRow(
-                                    content = HtmlContent(entertainmentHeading)
-                                ),
+                                TableRow(content = HtmlContent(entertainmentHeading)),
                                 TableRow(
                                     content = HtmlContent(
                                         govukInput(Input(
@@ -170,9 +161,7 @@
                                 )
                             ),
                             Seq(
-                                TableRow(
-                                    content = Text(messages("variableOperatingExpenses.other"))
-                                ),
+                                TableRow(content = HtmlContent(otherHeading)),
                                 TableRow(
                                     content = HtmlContent(
                                         govukInput(Input(
