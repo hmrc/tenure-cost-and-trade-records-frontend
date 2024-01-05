@@ -16,60 +16,56 @@
 
 package form.aboutthetradinghistory
 
-import models.submissions.aboutthetradinghistory.VariableOperatingExpenses
+import form.MappingSupport._
+import models.submissions.aboutthetradinghistory.{VariableOperatingExpenses, VariableOperatingExpensesSections}
+import play.api.data.Forms.{ignored, mapping, optional, text}
 import play.api.data.{Form, Mapping}
-import play.api.data.Forms.{bigDecimal, localDate, mapping}
-import play.api.data.validation.{Constraint, Invalid, Valid}
+import play.api.i18n.Messages
 
 import java.time.LocalDate
 
 object VariableOperatingExpensesForm {
-  def variableOperatingExpensesForm(expectedNumberOfFinancialYears: Int): Form[Seq[VariableOperatingExpenses]] = {
-    val ukDateMappings                                    = localDate("dd/MM/yyyy")
-    val dateTooEarlyConstraint: Constraint[LocalDate]     = Constraint[LocalDate]("dateTooEarlyConstraint") { date =>
-      if (date.isAfter(LocalDate.of(1900, 1, 1))) Valid else Invalid("errorName")
-    }
-    val columnMapping: Mapping[VariableOperatingExpenses] = mapping(
-      "financial-year-end"                -> ukDateMappings.verifying(dateTooEarlyConstraint, dateTooEarlyConstraint),
-      "energy-and-utilities"              -> bigDecimal,
-      "cleaning-and-laundry"              -> bigDecimal,
-      "building-maintenance-and-repairs"  -> bigDecimal,
-      "fixtures-fittings-and-equipment"   -> bigDecimal,
-      "advertising-and-promotions"        -> bigDecimal,
-      "administration-and-sundries"       -> bigDecimal,
-      "entertainment"                     -> bigDecimal,
-      "total-variable-operating-expenses" -> bigDecimal
-    )(VariableOperatingExpenses.apply)(VariableOperatingExpenses.unapply)
 
-    Form {
-      expectedNumberOfFinancialYears match {
-        case 1                               =>
-          mapping("0" -> columnMapping)(section => Seq(section)) {
-            case Seq(section) => Some(section)
-            case _            => None
-          }
-        case 2                               =>
-          mapping(
-            "0" -> columnMapping,
-            "1" -> columnMapping
-          ) { case (first, second) => Seq(first, second) } {
-            case Seq(first, second) => Some((first, second))
-            case _                  => None
-          }
-        case 3                               =>
-          mapping(
-            "0" -> columnMapping,
-            "1" -> columnMapping,
-            "2" -> columnMapping
-          ) { case (first, second, third) => Seq(first, second, third) } {
-            case Seq(first, second, third) => Some((first, second, third))
-            case _                         => None
-          }
-        case incorrectNumberOfFinancialYears =>
-          throw new IllegalArgumentException(
-            s"$expectedNumberOfFinancialYears must be between 1 and 3, was: $incorrectNumberOfFinancialYears"
-          )
-      }
+  private def columnMapping(year: String)(implicit messages: Messages): Mapping[VariableOperatingExpenses] = mapping(
+    "financial-year-end"               -> ignored(LocalDate.EPOCH),
+    "energy-and-utilities"             -> turnoverSalesMappingWithYear("variableExpenses.energyAndUtilities", year),
+    "cleaning-and-laundry"             -> turnoverSalesMappingWithYear("variableExpenses.cleaningAndLaundry", year),
+    "building-maintenance-and-repairs" -> turnoverSalesMappingWithYear(
+      "variableExpenses.buildingMaintenanceAndRepairs",
+      year
+    ),
+    "fixtures-fittings-and-equipment"  -> turnoverSalesMappingWithYear(
+      "variableExpenses.fixturesFittingsAndEquipment",
+      year
+    ),
+    "advertising-and-promotions"       -> turnoverSalesMappingWithYear("variableExpenses.advertisingAndPromotions", year),
+    "administration-and-sundries"      -> turnoverSalesMappingWithYear("variableExpenses.administrationAndSundries", year),
+    "entertainment"                    -> turnoverSalesMappingWithYear("variableExpenses.entertainment", year),
+    "other"                            -> turnoverSalesMappingWithYear("variableExpenses.other", year)
+  )(VariableOperatingExpenses.apply)(VariableOperatingExpenses.unapply)
+
+  private def variableOperatingExpensesSeq(
+    years: Seq[String]
+  )(implicit messages: Messages): Mapping[Seq[VariableOperatingExpenses]] = {
+    val mappingPerYear = years.take(3).zipWithIndex.map { case (year, idx) =>
+      s"year[$idx]" -> columnMapping(year)
+    }
+
+    mappingPerYear match {
+      case Seq(a)       => mapping(a)(Seq(_))(_.headOption)
+      case Seq(a, b)    => mapping(a, b)(Seq(_, _))(_.toTuple2)
+      case Seq(a, b, c) => mapping(a, b, c)(Seq(_, _, _))(_.toTuple3)
     }
   }
+
+  def variableOperatingExpensesForm(
+    years: Seq[String]
+  )(implicit messages: Messages): Form[VariableOperatingExpensesSections] =
+    Form {
+      mapping(
+        "variableOperatingExpenses" -> variableOperatingExpensesSeq(years),
+        "otherExpensesDetails"      -> optional(text(maxLength = 2000))
+      )(VariableOperatingExpensesSections.apply)(VariableOperatingExpensesSections.unapply)
+    }
+
 }

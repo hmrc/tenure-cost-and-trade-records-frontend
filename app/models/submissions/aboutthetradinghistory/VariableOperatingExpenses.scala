@@ -22,18 +22,26 @@ import java.time.LocalDate
 
 case class VariableOperatingExpenses(
   financialYearEnd: LocalDate,
-  energyAndUtilities: BigDecimal,
-  cleaningAndLaundry: BigDecimal,
-  buildingMaintenanceAndRepairs: BigDecimal,
-  fixturesFittingsAndEquipment: BigDecimal,
-  advertisingAndPromotions: BigDecimal,
-  administrationAndSundries: BigDecimal,
-  entertainment: BigDecimal,
-  totalVariableOperatingExpenses: BigDecimal
+  energyAndUtilities: Option[BigDecimal],
+  cleaningAndLaundry: Option[BigDecimal],
+  buildingMaintenanceAndRepairs: Option[BigDecimal],
+  fixturesFittingsAndEquipment: Option[BigDecimal],
+  advertisingAndPromotions: Option[BigDecimal],
+  administrationAndSundries: Option[BigDecimal],
+  entertainment: Option[BigDecimal],
+  other: Option[BigDecimal]
 ) {
-  def total =
-    energyAndUtilities + cleaningAndLaundry + buildingMaintenanceAndRepairs + fixturesFittingsAndEquipment + advertisingAndPromotions + administrationAndSundries + entertainment
-
+  def total: BigDecimal =
+    Seq(
+      energyAndUtilities,
+      cleaningAndLaundry,
+      buildingMaintenanceAndRepairs,
+      fixturesFittingsAndEquipment,
+      advertisingAndPromotions,
+      administrationAndSundries,
+      entertainment,
+      other
+    ).flatten.sum
 }
 
 object VariableOperatingExpenses {

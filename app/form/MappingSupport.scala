@@ -49,11 +49,11 @@ object MappingSupport {
 
   implicit class EnrichedSeq[A](seq: Seq[A]) {
     def toTuple2: Option[(A, A)]    = seq match {
-      case Seq(a, b) => Some(a, b)
+      case Seq(a, b) => Some((a, b))
       case _         => None
     }
     def toTuple3: Option[(A, A, A)] = seq match {
-      case Seq(a, b, c) => Some(a, b, c)
+      case Seq(a, b, c) => Some((a, b, c))
       case _            => None
     }
   }
