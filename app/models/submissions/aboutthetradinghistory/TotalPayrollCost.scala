@@ -24,7 +24,9 @@ case class TotalPayrollCost(
   financialYearEnd: LocalDate,
   managersAndStaff: BigDecimal,
   directorsRemuneration: BigDecimal
-)
+){
+  def total = managersAndStaff + directorsRemuneration
+}
 
 object TotalPayrollCost {
   implicit val format = Json.format[TotalPayrollCost]

@@ -28,7 +28,7 @@ import models.submissions.Form6010._
 import models.submissions.aboutYourLeaseOrTenure._
 import models.submissions.aboutfranchisesorlettings._
 import models.submissions.aboutyouandtheproperty._
-import models.submissions.additionalinformation.{AlternativeAddress, AlternativeContactDetails}
+import models.submissions.additionalinformation.AlternativeAddress
 import models.submissions.common.{Address, AnswersYesNo, BuildingInsurance, CYAYesNo, ContactDetails, ContactDetailsAddress, InsideRepairs, OutsideRepairs}
 import models.submissions.connectiontoproperty.{AddressConnectionType, ConnectionToProperty, CorrespondenceAddress, EditAddress, VacantPropertiesDetails, YourContactDetails}
 import models.submissions.notconnected.PastConnectionType
@@ -39,12 +39,24 @@ import play.api.data.format.Formatter
 import play.api.data.validation.{Constraint, Invalid, Valid, ValidationError}
 import play.api.data.validation.Constraints.{maxLength, minLength, nonEmpty, pattern}
 import play.api.data.{FormError, Forms, Mapping}
+import play.api.i18n.Messages
 import util.NumberUtil.zeroBigDecimal
 
 import scala.util.Try
 import scala.util.matching.Regex
 
 object MappingSupport {
+
+  implicit class EnrichedSeq[A](seq: Seq[A]) {
+    def toTuple2: Option[(A, A)]    = seq match {
+      case Seq(a, b) => Some((a, b))
+      case _         => None
+    }
+    def toTuple3: Option[(A, A, A)] = seq match {
+      case Seq(a, b, c) => Some((a, b, c))
+      case _            => None
+    }
+  }
 
   val userType: Mapping[UserType]                                               = Forms.of[UserType]
   val aboutYourPropertyType: Mapping[CurrentPropertyUsed]                       = Forms.of[CurrentPropertyUsed]
@@ -417,11 +429,18 @@ object MappingSupport {
 
   private val salesMax = BigDecimal(1000000000000L)
 
-  def turnoverSalesMapping(field: String): Mapping[Option[BigDecimal]] = optional(
+  def turnoverSalesMappingWithYear(field: String, year: String)(implicit
+    messages: Messages
+  ): Mapping[Option[BigDecimal]] = optional(
     text
-      .transform[BigDecimal](s => Try(BigDecimal(s)).getOrElse(-1), _.toString)
-      .verifying(between(zeroBigDecimal, salesMax, s"error.$field.range"))
-  ).verifying(s"error.$field.required", _.nonEmpty)
+      .verifying(messages(s"error.$field.range", year), s => Try(BigDecimal(s)).isSuccess)
+      .transform[BigDecimal](
+        s => BigDecimal(s),
+        _.toString
+      )
+      .verifying(messages(s"error.$field.negative", year), _ >= 0)
+      .verifying(messages(s"error.$field.range", year), _ <= salesMax)
+  ).verifying(messages(s"error.$field.required", year), _.isDefined)
 
   def otherCostValueMapping(field: String): Mapping[Option[BigDecimal]] = optional(
     text

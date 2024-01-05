@@ -16,19 +16,14 @@
 
 package models.submissions.aboutfranchisesorlettings
 
-import models.submissions.common.AnswersYesNo
 import play.api.libs.json.Json
 
-case class CateringOperationSection(
-  cateringOperationDetails: CateringOperationDetails,
-  cateringOperationRentDetails: Option[CateringOperationRentDetails] = None,
-  rentReceivedFrom: Option[RentReceivedFrom] = None,
-  calculatingTheRent: Option[CalculatingTheRent] = None,
-  addAnotherOperationToProperty: Option[AnswersYesNo] = None,
-  itemsInRent: List[String] = List.empty
+case class RentReceivedFrom(
+  annualRent: BigDecimal,
+  declaration: Boolean
 )
 
-object CateringOperationSection {
-  implicit val format = Json.format[CateringOperationSection]
+object RentReceivedFrom {
+  implicit val format = Json.format[RentReceivedFrom]
 
 }

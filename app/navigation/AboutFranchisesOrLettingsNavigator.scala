@@ -88,7 +88,23 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit) extends Naviga
     session.aboutFranchisesOrLettings.map(_.cateringOperationCurrentIndex).getOrElse(0)
 
   private def cateringOperationsDetailsConditionsRouting: Session => Call = answers => {
-    controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsRentController
+    answers.forType match {
+      case ForTypes.for6015 | ForTypes.for6016 =>
+        controllers.aboutfranchisesorlettings.routes.RentReceivedFromController
+          .show(getCateringOperationsIndex(answers))
+      case _                                   =>
+        controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsRentController
+          .show(getCateringOperationsIndex(answers))
+    }
+  }
+
+  private def rentReceivedFromRouting: Session => Call = answers => {
+    controllers.aboutfranchisesorlettings.routes.CalculatingTheRentForController
+      .show(getCateringOperationsIndex(answers))
+  }
+
+  private def calculatingTheRentForRouting: Session => Call = answers => {
+    controllers.aboutfranchisesorlettings.routes.CateringOperationRentIncludesController
       .show(getCateringOperationsIndex(answers))
   }
 
@@ -192,6 +208,8 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit) extends Naviga
     CateringOperationRentDetailsPageId         -> cateringOperationsRentDetailsConditionsRouting,
     CateringOperationRentIncludesPageId        -> cateringOperationsRentIncludesConditionsRouting,
     AddAnotherCateringOperationPageId          -> addAnotherCateringOperationsConditionsRouting,
+    RentReceivedFromPageId                     -> rentReceivedFromRouting,
+    CalculatingTheRentForPageId                -> calculatingTheRentForRouting,
     LettingAccommodationPageId                 -> lettingAccommodationConditionsRouting,
     LettingAccommodationDetailsPageId          -> lettingsDetailsConditionsRouting,
     LettingAccommodationRentDetailsPageId      -> lettingsRentDetailsConditionsRouting,
