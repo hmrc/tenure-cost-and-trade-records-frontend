@@ -1219,6 +1219,14 @@ totalPayrollCosts.financialYearEnd = Financial year end
 totalPayrollCosts.managersAndStaff = Managers and staff
 totalPayrollCosts.directorsRemuneration = Director's remuneration
 totalPayrollCosts.directorsRemuneration.add = (if applicable)
+totalPayrollCosts.total = Total payroll costs
+error.managers-and-staff.required = Enter 0 if you did not have any payroll costs for managers and staff in the year ending {0}
+error.managers-and-staff.range = The payroll costs for managers and staff in the year ending {0} must be a number, for example 100 or 100.00
+error.managers-and-staff.negative = The payroll costs for managers and staff in the year ending {0} cannot be a negative number
+error.directors-remuneration.required= Enter 0 if you did not have directors remuneration in the year ending {0}
+error.directors-remuneration.range = The directors remuneration in the year ending {0} must be a number, for example 100 or 100.00
+error.directors-remuneration.negative = The directors remuneration in the year ending {0} cannot be a negative number
+
 
 # VARIABLE OPERATING EXPENSES (FORM 6015)
 #########
