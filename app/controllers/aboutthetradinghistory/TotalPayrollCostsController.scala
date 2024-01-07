@@ -20,7 +20,7 @@ import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.TotalPayrollCostForm.totalPayrollCostForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.updateAboutTheTradingHistory
-import models.submissions.aboutthetradinghistory.TotalPayrollCost
+import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, TotalPayrollCost}
 import navigation.AboutTheTradingHistoryNavigator
 import navigation.identifiers.TotalPayrollCostId
 import play.api.i18n.I18nSupport
@@ -53,7 +53,7 @@ class TotalPayrollCostsController @Inject() (
         )
         Ok(
           totalPayrollCostsView(
-            totalPayrollCostForm(numberOfColumns).fill(aboutTheTradingHistory.totalPayrollCostSections),
+            totalPayrollCostForm(years(aboutTheTradingHistory)).fill(aboutTheTradingHistory.totalPayrollCostSections),
             numberOfColumns,
             financialYears,
             request.sessionData.toSummary
@@ -72,7 +72,7 @@ class TotalPayrollCostsController @Inject() (
           (sequence, turnoverSection) => sequence :+ turnoverSection.financialYearEnd
         )
         continueOrSaveAsDraft[Seq[TotalPayrollCost]](
-          totalPayrollCostForm(numberOfColumns),
+          totalPayrollCostForm(years(aboutTheTradingHistory)),
           formWithErrors =>
             BadRequest(
               totalPayrollCostsView(formWithErrors, numberOfColumns, financialYears, request.sessionData.toSummary)
@@ -86,5 +86,10 @@ class TotalPayrollCostsController @Inject() (
         )
       }
   }
+
+  private def financialYearEndDates(aboutTheTradingHistory: AboutTheTradingHistory): Seq[LocalDate] =
+    aboutTheTradingHistory.turnoverSections.map(_.financialYearEnd)
+  private def years(aboutTheTradingHistory: AboutTheTradingHistory): Seq[String] =
+    financialYearEndDates(aboutTheTradingHistory).map(_.getYear.toString)
 
 }
