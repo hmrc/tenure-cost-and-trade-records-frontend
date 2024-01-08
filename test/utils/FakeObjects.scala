@@ -317,18 +317,18 @@ trait FakeObjects {
     totalPayrollCostSections = Seq(
       TotalPayrollCost(
         LocalDate.now(),
-        BigDecimal(1),
-        BigDecimal(2)
+        Some(BigDecimal(1)),
+        Some(BigDecimal(2))
       ),
       TotalPayrollCost(
         LocalDate.now().minusYears(1),
-        BigDecimal(1),
-        BigDecimal(2)
+        Some(BigDecimal(1)),
+        Some(BigDecimal(2))
       ),
       TotalPayrollCost(
         LocalDate.now().minusYears(2),
-        BigDecimal(1),
-        BigDecimal(2)
+        Some(BigDecimal(1)),
+        Some(BigDecimal(2))
       )
     ),
     fixedOperatingExpensesSections = Seq(
@@ -433,7 +433,8 @@ trait FakeObjects {
         prefilledAboutYourTradingHistory
           .copy(
             costOfSales = Seq(CostOfSales(LocalDate.now, None, None, None, None)),
-            otherCosts = Some(OtherCosts(otherCosts = Seq(OtherCost(LocalDate.now, None, None))))
+            otherCosts = Some(OtherCosts(otherCosts = Seq(OtherCost(LocalDate.now, None, None)))),
+            totalPayrollCostSections = Seq(TotalPayrollCost(LocalDate.now,None,None))
           )
       ),
       stillConnectedDetails = Some(prefilledStillConnectedDetailsYesToAll)

@@ -22,10 +22,10 @@ import java.time.LocalDate
 
 case class TotalPayrollCost(
   financialYearEnd: LocalDate,
-  managersAndStaff: BigDecimal,
-  directorsRemuneration: BigDecimal
-) {
-  def total = managersAndStaff + directorsRemuneration
+  managersAndStaff: Option[BigDecimal],
+  directorsRemuneration: Option[BigDecimal]
+){
+  def total = Seq(managersAndStaff , directorsRemuneration).flatten.sum
 }
 
 object TotalPayrollCost {
