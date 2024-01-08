@@ -90,21 +90,12 @@ class CheckYourAnswersAboutThePropertyController @Inject() (
 
   private def getBackLink(answers: Session): String =
     answers.forType match {
-      case ForTypes.for6010                    =>
+      case ForTypes.for6010 | ForTypes.for6011 =>
         answers.aboutYouAndTheProperty.flatMap(_.tiedForGoods.map(_.name)) match {
           case Some("yes") => controllers.aboutyouandtheproperty.routes.TiedForGoodsDetailsController.show().url
           case Some("no")  => controllers.aboutyouandtheproperty.routes.TiedForGoodsController.show().url
           case _           =>
             logger.warn(s"Back link for enforcement action page reached with unknown enforcement taken value")
-            controllers.routes.TaskListController.show().url
-        }
-      case ForTypes.for6011                    =>
-        answers.aboutYouAndTheProperty.flatMap(_.enforcementAction.map(_.name)) match {
-          case Some("yes") =>
-            controllers.aboutyouandtheproperty.routes.EnforcementActionBeenTakenDetailsController.show().url
-          case Some("no")  => controllers.aboutyouandtheproperty.routes.EnforcementActionBeenTakenController.show().url
-          case _           =>
-            logger.warn(s"Back link for enforcement action details page reached with unknown enforcement taken value")
             controllers.routes.TaskListController.show().url
         }
       case ForTypes.for6015 | ForTypes.for6016 =>
