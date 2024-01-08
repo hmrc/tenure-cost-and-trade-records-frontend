@@ -50,9 +50,11 @@
 }
 
 @totalContent(idx: Int) = {
-    <span id="@{
-        "payrollTotal." + idx
-    }">@form.value.fold("")(_(idx).total.asMoney)</span>
+    <span
+    data-total-prefix="totalPayrollCosts[@idx]."
+    data-total-items="managers-and-staff,directors-remuneration">
+    @form.value.fold("")(_(idx).total.asMoney)
+    </span>
 }
 
 @layout(
@@ -121,8 +123,8 @@
       ))
       @includes.continueSaveAsDraftButtons(govukButton)
   }
+
+    <script src="@routes.Assets.versioned("javascripts/data-total.js")"></script>
+    <script src="@routes.Assets.versioned("javascripts/responsive-table.js")"></script>
+
 }
-<script src="@routes.Assets.versioned("javascripts/total-payroll-costs.js")"></script>
-
-
-
