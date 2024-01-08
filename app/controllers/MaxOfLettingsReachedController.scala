@@ -45,7 +45,7 @@ class MaxOfLettingsReachedController @Inject() (
 
   def show(source: Option[String]): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     val (backLink, form, sourceOpt) = getSourceDetails(source, request)
-    val filledForm = form.map(maxOfLettingsForm.fill).getOrElse(maxOfLettingsForm)
+    val filledForm                  = form.map(maxOfLettingsForm.fill).getOrElse(maxOfLettingsForm)
 
     Future.successful(
       Ok(
@@ -107,9 +107,12 @@ class MaxOfLettingsReachedController @Inject() (
       )
   }
 
-  private def getSourceDetails(source: Option[String], request: SessionRequest[AnyContent]): (String, Option[MaxOfLettings], String) = {
+  private def getSourceDetails(
+    source: Option[String],
+    request: SessionRequest[AnyContent]
+  ): (String, Option[MaxOfLettings], String) =
     source match {
-      case Some("connection") =>
+      case Some("connection")        =>
         (
           controllers.connectiontoproperty.routes.AddAnotherLettingPartOfPropertyController.show(4).url,
           request.sessionData.stillConnectedDetails.flatMap(_.maxOfLettings),
@@ -121,19 +124,18 @@ class MaxOfLettingsReachedController @Inject() (
           request.sessionData.aboutFranchisesOrLettings.flatMap(_.cateringMaxOfLettings),
           "franchiseCatering"
         )
-      case Some("franchiseLetting") =>
+      case Some("franchiseLetting")  =>
         (
           controllers.aboutfranchisesorlettings.routes.AddAnotherLettingOtherPartOfPropertyController.show(4).url,
           request.sessionData.aboutFranchisesOrLettings.flatMap(_.currentMaxOfLetting),
           "franchiseLetting"
         )
-      case _ =>
+      case _                         =>
         (
           routes.TaskListController.show().url,
           None,
           ""
         )
     }
-  }
 
 }
