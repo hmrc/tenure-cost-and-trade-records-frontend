@@ -18,9 +18,6 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
 @import models.pages.Summary
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.button.Button
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.input.Input
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.label.Label
 
 @this(
         layout: Layout,
@@ -32,12 +29,6 @@
 
 @(form: Form[_], backLink: String, source: String, summary: Summary)(implicit request: Request[_], messages: Messages)
 
-@from = @{
- val sourceParam = source.getOrElse("")
- request.queryString.get("from").flatMap(_.headOption)
-         .orElse(request.asInstanceOf[Request[AnyContent]].body.asFormUrlEncoded.flatMap(_.get("from").flatMap(_.headOption)))
-         .getOrElse(sourceParam)
-}
 
 @sectionName = @{
 
@@ -80,28 +71,6 @@
   <br>
   <br>
 
-  <input type="hidden" name="from" value="@from" />
-
-  <div class="govuk-button-group">
-   @govukButton(
-    Button(
-     attributes = Map("id" -> "continue"),
-     content = Text(messages("button.label.continue")),
-     name = Some("continue_button"),
-     value = Some("continue_button"),
-     inputType = Some("submit")
-    )
-   )
-   @govukButton(
-    Button(
-     classes="govuk-button--secondary",
-     attributes = Map("id" -> "save"),
-     content = Text(messages("button.label.save")),
-     name = Some("save_button"),
-     value = Some("save_button"),
-     inputType = Some("submit")
-    )
-   )
-  </div>
+  @includes.continueSaveAsDraftButtons(govukButton)
  }
 }
