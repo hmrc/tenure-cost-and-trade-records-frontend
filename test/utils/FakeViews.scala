@@ -29,7 +29,7 @@ import views.html.additionalinformation.{alternativeContactDetails, checkYourAns
 import views.html.downloadFORTypeForm.{downloadPDF, downloadPDFReferenceNumber}
 import views.html.feedback.{feedback, feedbackThx}
 import views.html.requestReferenceNumber.{checkYourAnswersRequestReferenceNumber, confirmationRequestReferenceNumber, requestReferenceNumber, requestReferenceNumberContactDetails}
-import views.html.{confirmation, confirmationConnectionToProperty, confirmationNotConnected, login}
+import views.html.{confirmation, confirmationConnectionToProperty, confirmationNotConnected, login, maxOfLettingsReached}
 
 trait FakeViews { this: GuiceOneAppPerSuite =>
 
