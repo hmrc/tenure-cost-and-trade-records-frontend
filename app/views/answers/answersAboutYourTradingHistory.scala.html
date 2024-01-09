@@ -123,7 +123,7 @@
                     voe.administrationAndSundries.getOrElse(zeroBigDecimal).asMoney,
                     voe.entertainment.getOrElse(zeroBigDecimal).asMoney,
                     voe.other.getOrElse(zeroBigDecimal).asMoney,
-                    //                    Option.when(idx == 0)(voeSections.flatMap(_.otherExpensesDetails)).flatten.getOrElse(" &nbsp; "),
+                    // Option.when(idx == 0)(voeSections.flatMap(_.otherExpensesDetails)).flatten.getOrElse(" &nbsp; "),
                     voe.total.asMoney
                 )
             }
@@ -142,7 +142,7 @@
         messages("variableOperatingExpenses.administrationAndSundries"),
         messages("variableOperatingExpenses.entertainment"),
         messages("checkYourAnswersAboutTheTradingHistory.variableOperatingExpenses.other"),
-        //        messages("checkYourAnswersAboutTheTradingHistory.variableOperatingExpenses.otherDetails"),
+        // messages("checkYourAnswersAboutTheTradingHistory.variableOperatingExpenses.otherDetails"),
         messages("variableOperatingExpenses.total"),
     ).mkString("""<p class="govuk-body govuk-!-font-weight-bold">""", """</p> <p class="govuk-body govuk-!-font-weight-bold">""", "</p>")
 }
