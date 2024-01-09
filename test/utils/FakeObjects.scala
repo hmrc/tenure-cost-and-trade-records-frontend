@@ -434,7 +434,7 @@ trait FakeObjects {
           .copy(
             costOfSales = Seq(CostOfSales(LocalDate.now, None, None, None, None)),
             otherCosts = Some(OtherCosts(otherCosts = Seq(OtherCost(LocalDate.now, None, None)))),
-            totalPayrollCostSections = Seq(TotalPayrollCost(LocalDate.now,None,None))
+            totalPayrollCostSections = Seq(TotalPayrollCost(LocalDate.now, None, None))
           )
       ),
       stillConnectedDetails = Some(prefilledStillConnectedDetailsYesToAll)
@@ -478,36 +478,44 @@ trait FakeObjects {
     Some(AnswerYes),
     Some(AnswerYes),
     0,
+    None,
     IndexedSeq(prefilledCateringOperationSectionYes),
     Some(AnswerYes),
     0,
+    None,
     IndexedSeq(prefilledLettingSectionYes)
   )
   val prefilledAboutFranchiseOrLettingsNo: AboutFranchisesOrLettings     = AboutFranchisesOrLettings(
     Some(AnswerNo),
     Some(AnswerNo),
     0,
+    None,
     IndexedSeq(prefilledCateringOperationSectionNo),
     Some(AnswerNo),
     0,
+    None,
     IndexedSeq(prefilledLettingSectionNo)
   )
   val prefilledAboutFranchiseOrLettings6015: AboutFranchisesOrLettings   = AboutFranchisesOrLettings(
     Some(AnswerYes),
     Some(AnswerYes),
     0,
+    None,
     IndexedSeq(prefilledCateringOperationSectionYes),
     Some(AnswerYes),
     0,
+    None,
     IndexedSeq(prefilledLettingSectionYes)
   )
   val prefilledAboutFranchiseOrLettingsNo6015: AboutFranchisesOrLettings = AboutFranchisesOrLettings(
     Some(AnswerNo),
     Some(AnswerNo),
     0,
+    None,
     IndexedSeq(prefilledCateringOperationSectionNo),
     Some(AnswerNo),
     0,
+    None,
     IndexedSeq(prefilledLettingSectionNo)
   )
 
