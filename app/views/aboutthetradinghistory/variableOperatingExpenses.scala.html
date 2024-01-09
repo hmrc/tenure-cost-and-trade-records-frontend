@@ -17,6 +17,10 @@
 @import actions.SessionRequest
 @import models.submissions.aboutthetradinghistory.VariableOperatingExpensesSections
 @import uk.gov.hmrc.govukfrontend.views.html.components._
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
+@import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcCharacterCount
+@import uk.gov.hmrc.hmrcfrontend.views.html.components.CharacterCount
+@import uk.gov.hmrc.hmrcfrontend.views.Implicits.RichCharacterCount
 @import uk.gov.hmrc.govukfrontend.views.Implicits.RichInput
 @import util.DateUtil
 @import util.NumberUtil._
@@ -28,6 +32,7 @@
         govukTable: GovukTable,
         govukInsetText: GovukInsetText,
         govukDetails: GovukDetails,
+        hmrcCharacterCount: HmrcCharacterCount,
         dateUtil: DateUtil
 )
 
@@ -45,6 +50,25 @@
         @messages("variableOperatingExpenses.other")
         <span class="govuk-caption-m">@messages("variableOperatingExpenses.other.p1")</span>
     </p>
+}
+
+@otherExpensesDetailsContent(idx: Int) = {
+    <div class="hmrc-overlap-full-width-parent">
+    @if(idx == 0) {
+        <div class="hmrc-overlap-full-width">
+        @hmrcCharacterCount(
+            CharacterCount(
+                rows = 4,
+                maxLength = 2000,
+                errorMessage = form.errors.asTextErrorMessageForField("otherExpensesDetails"),
+                label = Label(
+                    content = Text(messages("variableOperatingExpenses.otherExpensesDetails"))
+                )
+            ).withFormField(form("otherExpensesDetails"))
+        )
+        </div>
+    }
+    </div>
 }
 
 @totalContent(idx: Int) = {
@@ -179,6 +203,12 @@
                                             ))
                                         ).withFormField(form(s"variableOperatingExpenses.year[$idx].other")))
                                     )
+                                )
+                            ),
+                            Seq(
+                                TableRow(),
+                                TableRow(
+                                    content = HtmlContent(otherExpensesDetailsContent(idx))
                                 )
                             ),
                             Seq(

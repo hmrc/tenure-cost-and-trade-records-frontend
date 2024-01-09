@@ -3,3 +3,16 @@
   min-width: 7em;
   padding-right: 0.5em;
 }
+
+.hmrc-overlap-full-width-parent {
+  height: 9em;
+}
+
+.hmrc-overlap-full-width {
+  position: absolute;
+  width: 555px;
+}
+
+.hmrc-overlap-full-width textarea {
+  width: 555px;
+}
