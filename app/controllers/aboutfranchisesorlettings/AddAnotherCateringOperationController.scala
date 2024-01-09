@@ -20,7 +20,7 @@ import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
 import form.aboutfranchisesorlettings.AddAnotherCateringOperationOrLettingAccommodationForm.addAnotherCateringOperationForm
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
-import models.submissions.common.AnswersYesNo
+import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
 import navigation.AboutFranchisesOrLettingsNavigator
 import navigation.identifiers.AddAnotherCateringOperationPageId
 import play.api.i18n.I18nSupport
@@ -61,6 +61,7 @@ class AddAnotherCateringOperationController @Inject() (
   }
 
   def submit(index: Int) = (Action andThen withSessionRefiner).async { implicit request =>
+    val fromCYA = request.sessionData.aboutFranchisesOrLettings.flatMap(_.fromCYA).getOrElse(false)
     continueOrSaveAsDraft[AnswersYesNo](
       addAnotherCateringOperationForm,
       formWithErrors =>
@@ -79,8 +80,10 @@ class AddAnotherCateringOperationController @Inject() (
           .filter(_.nonEmpty)
           .fold(
             Redirect(
-              if (data.name == "yes") {
+              if (data == AnswerYes) {
                 routes.CateringOperationDetailsController.show()
+              } else if (data == AnswerNo && fromCYA == true) {
+                routes.CheckYourAnswersAboutFranchiseOrLettingsController.show()
               } else {
                 routes.LettingOtherPartOfPropertyController.show()
               }
