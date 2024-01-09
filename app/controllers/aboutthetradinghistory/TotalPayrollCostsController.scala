@@ -89,7 +89,7 @@ class TotalPayrollCostsController @Inject() (
 
   private def financialYearEndDates(aboutTheTradingHistory: AboutTheTradingHistory): Seq[LocalDate] =
     aboutTheTradingHistory.turnoverSections.map(_.financialYearEnd)
-  private def years(aboutTheTradingHistory: AboutTheTradingHistory): Seq[String] =
+  private def years(aboutTheTradingHistory: AboutTheTradingHistory): Seq[String]                    =
     financialYearEndDates(aboutTheTradingHistory).map(_.getYear.toString)
 
 }

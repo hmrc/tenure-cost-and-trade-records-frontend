@@ -43,8 +43,8 @@ class MaxOfLettingsReachedController @Inject() (
     extends FORDataCaptureController(mcc)
     with I18nSupport {
 
-  def show(source: Option[String]): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    val (backLink, form, sourceOpt) = getSourceDetails(source, request)
+  def show(src: Option[String]): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    val (backLink, form, sourceOpt) = getSourceDetails(src, request)
     val filledForm                  = form.map(maxOfLettingsForm.fill).getOrElse(maxOfLettingsForm)
 
     Future.successful(
@@ -59,52 +59,51 @@ class MaxOfLettingsReachedController @Inject() (
     )
   }
 
-  def submit(source: Option[String]): Action[AnyContent] = (Action andThen withSessionRefiner).async {
-    implicit request =>
-      val (backLink, _, sourceOpt) = getSourceDetails(source, request)
+  def submit(src: Option[String]): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    val (backLink, _, sourceOpt) = getSourceDetails(src, request)
 
-      continueOrSaveAsDraft[MaxOfLettings](
-        maxOfLettingsForm,
-        formWithErrors =>
-          BadRequest(
-            maxOfLettingsReachedView(
-              formWithErrors,
-              backLink,
-              sourceOpt,
-              request.sessionData.toSummary
-            )
-          ),
-        data => {
-          val updatedData = source match {
-            case Some("connection")        =>
-              updateStillConnectedDetails(_.copy(maxOfLettings = Some(data)))
-            case Some("franchiseCatering") =>
-              updateAboutFranchisesOrLettings(_.copy(cateringMaxOfLettings = Some(data)))
-            case Some("franchiseLetting")  =>
-              updateAboutFranchisesOrLettings(_.copy(currentMaxOfLetting = data))
-          }
-          session
-            .saveOrUpdate(updatedData)
-            .map { _ =>
-              source match {
-                case Some("connection")        =>
-                  connectionNavigator
-                    .cyaPageDependsOnSession(updatedData)
-                    .filter(_ => connectionNavigator.from == "CYA")
-                    .getOrElse(
-                      connectionNavigator
-                        .nextWithoutRedirectToCYA(MaxOfLettingsReachedId, updatedData)
-                        .apply(updatedData)
-                    )
-                case Some("franchiseCatering") =>
-                  franchiseNavigator.nextPage(MaxOfLettingsReachedCateringId, updatedData).apply(updatedData)
-                case Some("franchiseLetting")  =>
-                  franchiseNavigator.nextPage(MaxOfLettingsReachedCurrentId, updatedData).apply(updatedData)
-              }
-            }
-            .map(Redirect)
+    continueOrSaveAsDraft[MaxOfLettings](
+      maxOfLettingsForm,
+      formWithErrors =>
+        BadRequest(
+          maxOfLettingsReachedView(
+            formWithErrors,
+            backLink,
+            sourceOpt,
+            request.sessionData.toSummary
+          )
+        ),
+      data => {
+        val updatedData = src match {
+          case Some("connection")        =>
+            updateStillConnectedDetails(_.copy(maxOfLettings = Some(data)))
+          case Some("franchiseCatering") =>
+            updateAboutFranchisesOrLettings(_.copy(cateringMaxOfLettings = Some(data)))
+          case Some("franchiseLetting")  =>
+            updateAboutFranchisesOrLettings(_.copy(currentMaxOfLetting = data))
         }
-      )
+        session
+          .saveOrUpdate(updatedData)
+          .map { _ =>
+            src match {
+              case Some("connection")        =>
+                connectionNavigator
+                  .cyaPageDependsOnSession(updatedData)
+                  .filter(_ => connectionNavigator.from == "CYA")
+                  .getOrElse(
+                    connectionNavigator
+                      .nextWithoutRedirectToCYA(MaxOfLettingsReachedId, updatedData)
+                      .apply(updatedData)
+                  )
+              case Some("franchiseCatering") =>
+                franchiseNavigator.nextPage(MaxOfLettingsReachedCateringId, updatedData).apply(updatedData)
+              case Some("franchiseLetting")  =>
+                franchiseNavigator.nextPage(MaxOfLettingsReachedCurrentId, updatedData).apply(updatedData)
+            }
+          }
+          .map(Redirect)
+      }
+    )
   }
 
   private def getSourceDetails(
