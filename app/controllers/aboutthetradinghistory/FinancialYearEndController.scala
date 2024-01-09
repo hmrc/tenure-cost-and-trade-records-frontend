@@ -116,7 +116,6 @@ class FinancialYearEndController @Inject() (
               turnoverSections.map(_.financialYearEnd).map(TotalPayrollCost(_, None, None))
             }
 
-
             val sectionCompleted = if (isFinancialYearsListUnchanged) {
               aboutTheTradingHistory.checkYourAnswersAboutTheTradingHistory
             } else {

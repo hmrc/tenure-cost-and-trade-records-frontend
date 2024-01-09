@@ -24,8 +24,8 @@ case class TotalPayrollCost(
   financialYearEnd: LocalDate,
   managersAndStaff: Option[BigDecimal],
   directorsRemuneration: Option[BigDecimal]
-){
-  def total = Seq(managersAndStaff , directorsRemuneration).flatten.sum
+) {
+  def total = Seq(managersAndStaff, directorsRemuneration).flatten.sum
 }
 
 object TotalPayrollCost {
