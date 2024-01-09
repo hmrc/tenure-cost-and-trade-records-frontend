@@ -77,14 +77,15 @@ class CateringOperationController @Inject() (
           )
         ),
       data => {
+        val isFromCYA   = navigator.from == "CYA"
         val updatedData =
-          updateAboutFranchisesOrLettings(_.copy(cateringConcessionOrFranchise = Some(data)))
+          updateAboutFranchisesOrLettings(_.copy(cateringConcessionOrFranchise = Some(data), fromCYA = Some(isFromCYA)))
         session
           .saveOrUpdate(updatedData)
           .map { _ =>
             navigator.cyaPage
               .filter(_ =>
-                navigator.from == "CYA" && (data == AnswerNo ||
+                isFromCYA && (data == AnswerNo ||
                   request.sessionData.aboutFranchisesOrLettings
                     .flatMap(_.cateringConcessionOrFranchise)
                     .contains(AnswerYes))
@@ -95,5 +96,4 @@ class CateringOperationController @Inject() (
       }
     )
   }
-
 }

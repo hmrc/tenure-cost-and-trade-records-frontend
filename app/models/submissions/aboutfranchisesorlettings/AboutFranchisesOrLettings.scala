@@ -29,7 +29,8 @@ case class AboutFranchisesOrLettings(
   lettingOtherPartOfProperty: Option[AnswersYesNo] = None,
   lettingCurrentIndex: Int = 0,
   lettingSections: IndexedSeq[LettingSection] = IndexedSeq.empty,
-  checkYourAnswersAboutFranchiseOrLettings: Option[CheckYourAnswersAboutFranchiseOrLettings] = None
+  checkYourAnswersAboutFranchiseOrLettings: Option[CheckYourAnswersAboutFranchiseOrLettings] = None,
+  fromCYA: Option[Boolean] = None
 )
 
 object AboutFranchisesOrLettings {
