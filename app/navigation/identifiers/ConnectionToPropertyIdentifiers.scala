@@ -77,3 +77,7 @@ case object AddAnotherLettingPartOfPropertyPageId extends Identifier {
 case object CheckYourAnswersConnectionToPropertyId extends Identifier {
   override def toString: String = "CheckYourAnswersConnectionToPropertyPage"
 }
+
+case object MaxOfLettingsReachedId extends Identifier {
+  override def toString: String = "MaxOfLettingsReachedPage"
+}

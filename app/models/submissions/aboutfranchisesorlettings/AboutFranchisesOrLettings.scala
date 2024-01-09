@@ -18,6 +18,7 @@ package models.submissions.aboutfranchisesorlettings
 
 import actions.SessionRequest
 import models.Session
+import models.submissions.MaxOfLettings
 import models.submissions.common.AnswersYesNo
 import play.api.libs.json.Json
 
@@ -25,11 +26,14 @@ case class AboutFranchisesOrLettings(
   franchisesOrLettingsTiedToProperty: Option[AnswersYesNo] = None,
   cateringConcessionOrFranchise: Option[AnswersYesNo] = None,
   cateringOperationCurrentIndex: Int = 0,
+  cateringMaxOfLettings: Option[MaxOfLettings] = None,
   cateringOperationSections: IndexedSeq[CateringOperationSection] = IndexedSeq.empty,
   lettingOtherPartOfProperty: Option[AnswersYesNo] = None,
   lettingCurrentIndex: Int = 0,
+  currentMaxOfLetting: Option[MaxOfLettings] = None,
   lettingSections: IndexedSeq[LettingSection] = IndexedSeq.empty,
-  checkYourAnswersAboutFranchiseOrLettings: Option[CheckYourAnswersAboutFranchiseOrLettings] = None
+  checkYourAnswersAboutFranchiseOrLettings: Option[CheckYourAnswersAboutFranchiseOrLettings] = None,
+  fromCYA: Option[Boolean] = None
 )
 
 object AboutFranchisesOrLettings {

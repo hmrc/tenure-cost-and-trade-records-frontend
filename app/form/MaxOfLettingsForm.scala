@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,20 +14,21 @@
  * limitations under the License.
  */
 
-package models.submissions.connectiontoproperty
+package form
 
 import models.submissions.MaxOfLettings
-import models.submissions.common.AnswersYesNo
-import play.api.libs.json.Json
+import play.api.data.Form
+import play.api.data.Forms.{mapping, nonEmptyText, text}
+import play.api.i18n.Messages
+import play.api.data.Forms._
+import play.api.data.format.Formats._
 
-case class LettingPartOfPropertyDetails(
-  tenantDetails: TenantDetails,
-  lettingPartOfPropertyRentDetails: Option[LettingPartOfPropertyRentDetails] = None,
-  itemsIncludedInRent: List[String] = List.empty,
-  addAnotherLettingToProperty: Option[AnswersYesNo] = None,
-  maxOfLettings: Option[MaxOfLettings] = None
-)
-
-object LettingPartOfPropertyDetails {
-  implicit val format = Json.format[LettingPartOfPropertyDetails]
+object MaxOfLettingsForm {
+  def maxOfLettingsForm(implicit messages: Messages): Form[MaxOfLettings] =
+    Form(
+      mapping(
+        "maxOfLettings" -> of[Boolean]
+          .verifying(messages("maxOf5Lettings.error"), value => value)
+      )(MaxOfLettings.apply)(MaxOfLettings.unapply)
+    )
 }

@@ -30,7 +30,7 @@ class TotalPayrollCostsViewSpec extends QuestionViewBehaviours[Seq[TotalPayrollC
   //NOTE: this is a holding view test until the total payroll costs page is implemented
   def totalPayrollCostsView = app.injector.instanceOf[views.html.aboutthetradinghistory.totalPayrollCosts]
 
-  val sessionRequest   = SessionRequest(aboutYourTradingHistory6015YesSession, fakeRequest)
+  val sessionRequest = SessionRequest(aboutYourTradingHistory6015YesSession, fakeRequest)
 
   val messageKeyPrefix = "totalPayrollCosts"
 

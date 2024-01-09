@@ -29,7 +29,7 @@ import views.html.additionalinformation.{alternativeContactDetails, checkYourAns
 import views.html.downloadFORTypeForm.{downloadPDF, downloadPDFReferenceNumber}
 import views.html.feedback.{feedback, feedbackThx}
 import views.html.requestReferenceNumber.{checkYourAnswersRequestReferenceNumber, confirmationRequestReferenceNumber, requestReferenceNumber, requestReferenceNumberContactDetails}
-import views.html.{confirmation, confirmationConnectionToProperty, confirmationNotConnected, login}
+import views.html.{confirmation, confirmationConnectionToProperty, confirmationNotConnected, login, maxOfLettingsReached}
 
 trait FakeViews { this: GuiceOneAppPerSuite =>
 
@@ -43,6 +43,7 @@ trait FakeViews { this: GuiceOneAppPerSuite =>
     app.injector.instanceOf[confirmationRequestReferenceNumber]
 
   // Connection to the property
+
   lazy val areYouThirdPartyView: areYouThirdParty                                                 = app.injector.instanceOf[areYouThirdParty]
   lazy val areYouStillConnectedView: areYouStillConnected                                         = app.injector.instanceOf[areYouStillConnected]
   lazy val connectionToThePropertyView: connectionToTheProperty                                   = app.injector.instanceOf[connectionToTheProperty]
@@ -229,6 +230,10 @@ trait FakeViews { this: GuiceOneAppPerSuite =>
     app.injector.instanceOf[howIsCurrentRentFixed]
   lazy val checkYourAnswersAboutLeaseAndTenureView         =
     app.injector.instanceOf[checkYourAnswersAboutYourLeaseOrTenure]
+
+  // Max letting reached
+  lazy val maxOfLettingsReachedView =
+    app.injector.instanceOf[maxOfLettingsReached]
 
   // Additional information
   lazy val furtherInformationOrRemarksView: furtherInformationOrRemarks                     =
