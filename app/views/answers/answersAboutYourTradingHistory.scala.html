@@ -19,6 +19,7 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import models.submissions.aboutthetradinghistory.CostOfSales
 @import models.submissions.aboutthetradinghistory.TurnoverSection
+@import models.submissions.aboutthetradinghistory.VariableOperatingExpensesSections
 @import util.DateUtil
 @import util.NumberUtil._
 @import util.SectionAnswersRowBuilder
@@ -44,7 +45,7 @@
 @valuesGrid.map { values =>
     <div class="hmrc-turnover-table-column">
         @values.map { value =>
-            <p class="govuk-body">@value</p>
+            <p class="govuk-body">@Html(value)</p>
         }
     </div>
 }
@@ -108,6 +109,44 @@
     ).mkString("""<p class="govuk-body govuk-!-font-weight-bold">""", """</p> <p class="govuk-body govuk-!-font-weight-bold">""", "</p>")
 }
 
+@variableOperatingExpensesValuesTable(voeSections: Option[VariableOperatingExpensesSections]) = @{
+    table(
+        voeSections.fold(Seq.empty[Seq[String]])(
+            _.variableOperatingExpenses.zipWithIndex.map {
+                case (voe, idx) => Seq(
+                    dateUtil.formatDayMonthAbbrYear(voe.financialYearEnd),
+                    voe.energyAndUtilities.getOrElse(zeroBigDecimal).asMoney,
+                    voe.cleaningAndLaundry.getOrElse(zeroBigDecimal).asMoney,
+                    voe.buildingMaintenanceAndRepairs.getOrElse(zeroBigDecimal).asMoney,
+                    voe.fixturesFittingsAndEquipment.getOrElse(zeroBigDecimal).asMoney + "<br/> &nbsp;",
+                    voe.advertisingAndPromotions.getOrElse(zeroBigDecimal).asMoney + "<br/> &nbsp;",
+                    voe.administrationAndSundries.getOrElse(zeroBigDecimal).asMoney,
+                    voe.entertainment.getOrElse(zeroBigDecimal).asMoney,
+                    voe.other.getOrElse(zeroBigDecimal).asMoney,
+                    //                    Option.when(idx == 0)(voeSections.flatMap(_.otherExpensesDetails)).flatten.getOrElse(" &nbsp; "),
+                    voe.total.asMoney
+                )
+            }
+        )
+    ).body
+}
+
+@variableOperatingExpensesKeys = @{
+    Seq(
+        messages("checkYourAnswersAboutTheTradingHistory.financialYearEnd"),
+        messages("variableOperatingExpenses.energyAndUtilities"),
+        messages("variableOperatingExpenses.cleaningAndLaundry"),
+        messages("variableOperatingExpenses.buildingMaintenanceAndRepairs"),
+        messages("variableOperatingExpenses.fixturesFittingsAndEquipment"),
+        messages("variableOperatingExpenses.advertisingAndPromotions"),
+        messages("variableOperatingExpenses.administrationAndSundries"),
+        messages("variableOperatingExpenses.entertainment"),
+        messages("checkYourAnswersAboutTheTradingHistory.variableOperatingExpenses.other"),
+        //        messages("checkYourAnswersAboutTheTradingHistory.variableOperatingExpenses.otherDetails"),
+        messages("variableOperatingExpenses.total"),
+    ).mkString("""<p class="govuk-body govuk-!-font-weight-bold">""", """</p> <p class="govuk-body govuk-!-font-weight-bold">""", "</p>")
+}
+
 <h2 class="govuk-heading-m">@messages("aboutYourTradingHistory.heading")</h2>
 
 @govukSummaryList(SummaryList(rows =
@@ -115,14 +154,14 @@
         _.occupationAndAccountingInformation.map(_.firstOccupy.toYearMonth).map(dateUtil.formatYearMonth),
         aboutthetradinghistory.routes.AboutYourTradingHistoryController.show(), "firstOccupy.month") ++
 
-    sectionAnswers.row("checkYourAnswersAboutTheTradingHistory.financialYearEnd",
-        _.occupationAndAccountingInformation.flatMap(_.financialYear.map(_.toMonthDay)).map(dateUtil.formatMonthDay),
-        aboutthetradinghistory.routes.FinancialYearEndController.show(), "financialYear.day") ++
+            sectionAnswers.row("checkYourAnswersAboutTheTradingHistory.financialYearEnd",
+                _.occupationAndAccountingInformation.flatMap(_.financialYear.map(_.toMonthDay)).map(dateUtil.formatMonthDay),
+                aboutthetradinghistory.routes.FinancialYearEndController.show(), "financialYear.day") ++
 
-    sectionAnswers.row("financialYearEndDates.heading",
-         _.fold("")(t => financialYearEndDatesTable(t.turnoverSections.map(_.financialYearEnd))),
-         aboutthetradinghistory.routes.FinancialYearEndDatesController.show(), "",
-         ("valueAsHtml", _ => None))
+            sectionAnswers.row("financialYearEndDates.heading",
+                _.fold("")(t => financialYearEndDatesTable(t.turnoverSections.map(_.financialYearEnd))),
+                aboutthetradinghistory.routes.FinancialYearEndDatesController.show(), "",
+                ("valueAsHtml", _ => None))
 ))
 
 <h2 class="govuk-heading-m">@messages("turnover.heading")</h2>
@@ -174,9 +213,43 @@
                 )
             )
         )
-                ++
-                sectionAnswers.row("checkYourAnswersAboutTheTradingHistory.unusualCircumstances",
-                    _.unusualCircumstances.map(_.unusualCircumstances),
-                    aboutthetradinghistory.routes.UnusualCircumstancesController.show(), "unusualCircumstances")
     ))
+
+
+
+
+
+    <h2 class="govuk-heading-m">@messages("variableOperatingExpenses.heading")</h2>
+
+    @govukSummaryList(SummaryList(rows =
+        Seq(
+            SummaryListRow(
+                key = Key(HtmlContent(variableOperatingExpensesKeys)),
+                value = Value(HtmlContent(sectionAnswers.answers.fold("")(t => variableOperatingExpensesValuesTable(t.variableOperatingExpensesSections)))),
+                actions = Some(
+                    Actions(items =
+                        Seq(
+                            ActionItem(
+                                href = s"${aboutthetradinghistory.routes.VariableOperatingExpensesController.show().url}?from=CYA",
+                                content = Text(messages("label.change")),
+                                visuallyHiddenText = Some(messages("variableOperatingExpenses.heading")),
+                                attributes = Map(
+                                    "aria-label" -> s"${messages("label.change")} ${messages("variableOperatingExpenses.heading")}"
+                                )
+                            )
+                        )
+                    )
+                )
+            )
+        )
+    ))
+
+
 }
+
+
+@govukSummaryList(SummaryList(rows =
+    sectionAnswers.row("checkYourAnswersAboutTheTradingHistory.unusualCircumstances",
+        _.unusualCircumstances.map(_.unusualCircumstances),
+        aboutthetradinghistory.routes.UnusualCircumstancesController.show(), "unusualCircumstances")
+))
