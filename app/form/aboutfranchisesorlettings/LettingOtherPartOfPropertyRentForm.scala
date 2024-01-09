@@ -20,7 +20,8 @@ import form.DateMappings.requiredDateMapping
 import form.MappingSupport.currencyMapping
 import models.submissions.aboutfranchisesorlettings.LettingOtherPartOfPropertyRentDetails
 import play.api.data.Form
-import play.api.data.Forms.mapping
+import play.api.data.Forms._
+import play.api.data.format.Formats._
 import play.api.i18n.Messages
 
 object LettingOtherPartOfPropertyRentForm {
@@ -29,7 +30,9 @@ object LettingOtherPartOfPropertyRentForm {
     Form(
       mapping(
         "annualRent" -> currencyMapping(".annualRent"),
-        "dateInput"  -> requiredDateMapping("lettingOtherPartOfPropertyFixedRentDate", allowPastDates = true)
+        "dateInput"  -> requiredDateMapping("lettingOtherPartOfPropertyFixedRentDate", allowPastDates = true),
+        "declaration" -> of[Boolean]
+          .verifying(messages("rent.received.from.confirm.error"), value => value)
       )(LettingOtherPartOfPropertyRentDetails.apply)(
         LettingOtherPartOfPropertyRentDetails.unapply
       )

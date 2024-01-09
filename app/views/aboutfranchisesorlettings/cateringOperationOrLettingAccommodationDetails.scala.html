@@ -29,23 +29,23 @@
 @(theForm: Form[_], index: Option[Int], cateringOrLetting: String, backLink: String, summary: Summary, formType: String)(implicit request: SessionRequest[_], messages: Messages)
 
 @typeConcession = @{formType == ForTypes.for6015 || formType == ForTypes.for6016}
-
-    @specificPage = @{request.sessionData.aboutFranchisesOrLettings.flatMap(_.lettingOtherPartOfProperty.map(_.name))}
+@concessionsPage = @{request.sessionData.aboutFranchisesOrLettings.flatMap(_.cateringConcessionOrFranchise.map(_.name))}
+@lettingsPage = @{request.sessionData.aboutFranchisesOrLettings.flatMap(_.lettingOtherPartOfProperty.map(_.name))}
+@concessionLoop = @{request.sessionData.aboutFranchisesOrLettings.flatMap(_.cateringOperationSections.flatMap(_.addAnotherOperationToProperty))}
 
 @label =@{
         if(typeConcession) messages("label.section.aboutTheFranchiseConcessions")  else {
             messages("label.section.aboutTheFranchiseLettings")
         }
     }
+
 @heading =@{
-    if(typeConcession && specificPage.contains("yes")) messages("lettingDetails.heading")
-        else if(typeConcession && specificPage.isEmpty) messages("concessionDetails.heading")
-
-        else {
-            messages(s"${cateringOrLetting}.heading")
-        }
+    if(typeConcession && (typeConcession && lettingsPage.isEmpty || typeConcession && lettingsPage.contains("no") || typeConcession && concessionLoop.contains(Some("yes")))) messages("concessionDetails.heading")
+    else if(typeConcession && (typeConcession && lettingsPage.contains("yes"))) messages("lettingDetails.heading")
+    else {
+        messages(s"${cateringOrLetting}.heading")
     }
-
+}
 @nameLabel = @{if(typeConcession) "tradingName"  else "operatorName" }
 
 @formHint =  @{if(typeConcession) "concessionTypeOfBusiness"  else "typeOfBusiness" }
