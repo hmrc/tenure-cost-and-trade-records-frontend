@@ -56,7 +56,7 @@ class CostOfSalesController @Inject() (
       val updatedData = updateAboutTheTradingHistory(_.copy(costOfSales = costOfSales))
       session
         .saveOrUpdate(updatedData)
-        .flatMap(_ => Ok(costOfSalesView(costOfSalesForm(years(aboutTheTradingHistory)).fill(costOfSales))))
+        .flatMap(_ => Ok(costOfSalesView(costOfSalesForm(years(aboutTheTradingHistory)).fill(costOfSales),navigator.from)))
     }
   }
 
@@ -64,7 +64,7 @@ class CostOfSalesController @Inject() (
     runWithSessionCheck { aboutTheTradingHistory =>
       continueOrSaveAsDraft[Seq[CostOfSales]](
         costOfSalesForm(years(aboutTheTradingHistory)),
-        formWithErrors => BadRequest(costOfSalesView(formWithErrors)),
+        formWithErrors => BadRequest(costOfSalesView(formWithErrors,navigator.from)),
         data => {
           val costOfSales =
             (data zip financialYearEndDates(aboutTheTradingHistory)).map { case (costOfSales, finYearEnd) =>

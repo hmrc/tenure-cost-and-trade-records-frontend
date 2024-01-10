@@ -117,6 +117,8 @@
     sectionName = messages("label.section.aboutYourTradingHistory"),
     backLinkUrl = fromLocation match {
         case "TL" => controllers.routes.TaskListController.show().url + "#turnover"
+
+        case "IES" => controllers.aboutthetradinghistory.routes.IncomeExpenditureSummaryController.show().url
         case _ =>
             if(request.sessionData.aboutTheTradingHistory.flatMap(_.occupationAndAccountingInformation.flatMap(_.yearEndChanged)).contains(true)) {
                 controllers.aboutthetradinghistory.routes.FinancialYearEndDatesController.show().url
