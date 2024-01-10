@@ -33,7 +33,7 @@
         dateUtil: DateUtil
 )
 
-@(form: Form[Seq[TotalPayrollCost]], numOfColumns: Int, financialYears: Seq[LocalDate], summary: Summary)(implicit request: SessionRequest[_], messages: Messages)
+@(form: Form[Seq[TotalPayrollCost]], numOfColumns: Int, financialYears: Seq[LocalDate], summary: Summary, fromLocation: String = "")(implicit request: SessionRequest[_], messages: Messages)
 
 @columns = @{
     request.sessionData.aboutTheTradingHistory.map(_.turnoverSections).fold(Seq.empty[Int])(_.indices)
@@ -60,7 +60,11 @@
   showSection = true,
     summary = Some(summary),
   sectionName = messages("label.section.aboutYourTradingHistory"),
-  backLinkUrl = controllers.aboutthetradinghistory.routes.CostOfSalesController.show().url,
+  backLinkUrl = fromLocation match {
+      case "TL" => controllers.routes.TaskListController.show().url + "#turnover"
+      case "IES" => controllers.aboutthetradinghistory.routes.IncomeExpenditureSummaryController.show().url
+      case _ =>controllers.aboutthetradinghistory.routes.CostOfSalesController.show().url
+  },
     theForm =  form
 ) {
 

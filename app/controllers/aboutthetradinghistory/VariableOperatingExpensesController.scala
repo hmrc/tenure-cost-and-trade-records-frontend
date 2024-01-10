@@ -69,7 +69,7 @@ class VariableOperatingExpensesController @Inject() (
         .flatMap(_ =>
           Ok(
             variableOperativeExpensesView(
-              variableOperatingExpensesForm(years).fill(voeSections)
+              variableOperatingExpensesForm(years).fill(voeSections),navigator.from
             )
           )
         )
@@ -83,7 +83,7 @@ class VariableOperatingExpensesController @Inject() (
 
       continueOrSaveAsDraft[VariableOperatingExpensesSections](
         variableOperatingExpensesForm(years),
-        formWithErrors => BadRequest(variableOperativeExpensesView(formWithErrors)),
+        formWithErrors => BadRequest(variableOperativeExpensesView(formWithErrors,navigator.from)),
         data => {
           val voeSeq = (data.variableOperatingExpenses zip yearEndDates).map { case (voe, finYearEnd) =>
             voe.copy(financialYearEnd = finYearEnd)

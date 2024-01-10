@@ -21,7 +21,7 @@ import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.IncomeExpenditureSummaryForm.incomeExpenditureSummaryForm
 import models.pages.IncomeExpenditureEntry
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.updateAboutTheTradingHistory
-import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, IncomeExpenditureSummary}
+import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, IncomeExpenditureSummary, TotalPayrollCost}
 import navigation.AboutTheTradingHistoryNavigator
 import navigation.identifiers.IncomeExpenditureSummaryId
 import play.api.i18n.I18nSupport
@@ -84,7 +84,7 @@ class IncomeExpenditureSummaryController @Inject() (
       val costOfSalesEntry = aboutTheTradingHistory.costOfSales.find(_.financialYearEnd == finYearEnd).get
       val totalCostOfSales = costOfSalesEntry.total
 
-      val payrollCostEntry  = aboutTheTradingHistory.totalPayrollCostSections.find(_.financialYearEnd == finYearEnd).get
+      val payrollCostEntry  = aboutTheTradingHistory.totalPayrollCostSections.find(_.financialYearEnd == finYearEnd).getOrElse(TotalPayrollCost(finYearEnd,None,None))
       val totalPayrollCosts = payrollCostEntry.total
 
       val variableExpenses = aboutTheTradingHistory.variableOperatingExpensesSections
@@ -106,18 +106,18 @@ class IncomeExpenditureSummaryController @Inject() (
       IncomeExpenditureEntry(
         financialYearEnd = turnoverSection.financialYearEnd.toString,
         totalTurnover = totalTurnover,
-        turnoverUrl = routes.TurnoverController.show().url,
+        turnoverUrl = routes.TurnoverController.show().url+"?from=IES",
         totalCostOfSales = totalCostOfSales,
-        costOfSalesUrl = routes.CostOfSalesController.show().url,
+        costOfSalesUrl = routes.CostOfSalesController.show().url+"?from=IES",
         totalGrossProfits = totalGrossProfit,
         totalPayrollCost = totalPayrollCosts,
-        totalPayrollCostURL = routes.TotalPayrollCostsController.show().url,
+        totalPayrollCostURL = routes.TotalPayrollCostsController.show().url+"?from=IES",
         variableExpenses = variableExpenses,
-        variableExpensesURL = routes.VariableOperatingExpensesController.show().url,
+        variableExpensesURL = routes.VariableOperatingExpensesController.show().url+"?from=IES",
         fixedExpenses = totalFixedExpenses,
-        fixedExpensesUrl = routes.FixedOperatingExpensesController.show().url,
+        fixedExpensesUrl = routes.FixedOperatingExpensesController.show().url+"?from=IES",
         otherCost = otherCosts,
-        otherCostsUrl = routes.OtherCostsController.show().url,
+        otherCostsUrl = routes.OtherCostsController.show().url+"?from=IES",
         totalNetProfit = totalNetProfit,
         profitMargin = profitMargin
       )
