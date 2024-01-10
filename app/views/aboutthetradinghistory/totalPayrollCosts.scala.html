@@ -55,6 +55,10 @@
     }">@form.value.fold("")(_(idx).total.asMoney)</span>
 }
 
+@costInputAttributes = @{
+    Map("maxlength" -> "13")
+}
+
 @layout(
   pageHeading = messages("totalPayrollCosts.heading"),
   showSection = true,
@@ -68,65 +72,86 @@
     theForm =  form
 ) {
 
-      <p class="govuk-body">@messages("totalPayrollCosts.p1")</p>
+    <p class="govuk-body">@messages("totalPayrollCosts.p1")</p>
 
     @formWithCSRF(action = controllers.aboutthetradinghistory.routes.TotalPayrollCostsController.submit()) {
-      @govukInsetText(InsetText(
-          content = Text(messages("totalPayrollCosts.p2"))
-      ))
-      @govukTable(Table(
-          head = Some(
-              HeadCell(content = Text(messages("totalPayrollCosts.financialYearEnd"))) +:
-                      columns.map { idx =>
-                          HeadCell(content = Text(dateUtil.formatDayMonthAbbrYear(financialYears(idx))))
-                      }
-          ),
-          rows = Seq(
-              TableRow(
-                  content = Text(messages("totalPayrollCosts.managersAndStaff"))
-              ) +: columns.map { idx  =>
-                  TableRow(
-                      content = HtmlContent(
-                          govukInput(Input(
-                              name = s"totalPayrollCosts[$idx].managers-and-staff",
-                              value = form(s"totalPayrollCosts[$idx].managers-and-staff").value,
-                              prefix = Some(PrefixOrSuffix(
-                                  content = Text("£")
+        @govukInsetText(InsetText(
+            content = Text(messages("totalPayrollCosts.p2"))
+        ))
+
+        <table class="hmrc-responsive-table">
+            <tbody>
+                <tr>
+                @request.sessionData.financialYearEndDates.map { case (finYearEnd, idx) =>
+                <td>
+                    @govukTable(Table(
+                        head = Seq(
+                            HeadCell(
+                                content = Text(messages("totalPayrollCosts.financialYearEnd"))
+                            ),
+                            HeadCell(
+                                content = Text(dateUtil.formatDayMonthAbbrYear(finYearEnd))
+                            )
+                        ),
+                        firstCellIsHeader = true,
+                        rows = Seq(
+                            Seq(
+                                TableRow(
+                                    content = Text(messages("totalPayrollCosts.managersAndStaff"))
+                    ),
+                    TableRow(
+                        content = HtmlContent(
+                            govukInput(
+                                Input(
+                                    name = s"totalPayrollCosts[$idx].managers-and-staff",
+                                    value = form(s"totalPayrollCosts[$idx].managers-and-staff").value,
+                                    prefix = Some(PrefixOrSuffix(
+                                        content = Text("£")
+                                    )),
+                                    attributes = costInputAttributes
+                                ).withFormField(form(s"totalPayrollCosts[$idx].managers-and-staff"))
+                    )
+                    )
+                    )
+                    ),
+                    Seq(
+                        TableRow(
+                            content = Text(messages("totalPayrollCosts.directorsRemuneration"))
+                    ),
+                    TableRow(
+                        content = HtmlContent(
+                            govukInput(
+                                Input(
+                                    name = s"totalPayrollCosts[$idx].directors-remuneration",
+                                    value = form(s"totalPayrollCosts[$idx].directors-remuneration").value,
+                                    prefix = Some(PrefixOrSuffix(
+                                        content = Text("£")
+                                    )),
+                                    attributes = costInputAttributes
+                                ).withFormField(form(s"totalPayrollCosts[$idx].directors-remuneration"))
+                            )
+                        )
+                    )
+                    ),
+                    Seq(
+                        TableRow(
+                            content =  HtmlContent(totalHeading)
+                        ),
+                        TableRow(
+                            content = HtmlContent(totalContent(idx))
+                        )
+                    )
+                    )
                               ))
-                          ).withFormField(form(s"totalPayrollCosts[$idx].managers-and-staff")))
-                      )
-                  )
-              },
-              TableRow(
-                  content = HtmlContent(directorsRemunerationHeading)
-              ) +: columns.map { idx  =>
-                  TableRow(
-                      content = HtmlContent(
-                          govukInput(Input(
-                              name = s"totalPayrollCosts[$idx].directors-remuneration",
-                              value = form(s"totalPayrollCosts[$idx].directors-remuneration").value,
-                              prefix = Some(PrefixOrSuffix(
-                                  content = Text("£")
-                              ))
-                          ).withFormField(form(s"totalPayrollCosts[$idx].directors-remuneration")))
-                      )
-                  )
-              },
-              TableRow(
-                  content = HtmlContent(totalHeading)
-              ) +: columns.map { idx =>
-                  TableRow(
-                      content = HtmlContent(totalContent(idx))
-                  )
-              }
-          ),
-          captionClasses = "govuk-table__caption--m",
-          firstCellIsHeader = true
-      ))
-      @includes.continueSaveAsDraftButtons(govukButton)
-  }
+                </td>
+                }
+                </tr>
+            </tbody>
+        </table>
+
+        @includes.continueSaveAsDraftButtons(govukButton)
+    }
 }
+
 <script src="@routes.Assets.versioned("javascripts/total-payroll-costs.js")"></script>
-
-
-
+<script src="@routes.Assets.versioned("javascripts/responsive-table.js")"></script>
