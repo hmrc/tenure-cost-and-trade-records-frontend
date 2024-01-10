@@ -56,7 +56,8 @@ class TotalPayrollCostsController @Inject() (
             totalPayrollCostForm(years(aboutTheTradingHistory)).fill(aboutTheTradingHistory.totalPayrollCostSections),
             numberOfColumns,
             financialYears,
-            request.sessionData.toSummary
+            request.sessionData.toSummary,
+            navigator.from
           )
         )
       }
@@ -75,10 +76,15 @@ class TotalPayrollCostsController @Inject() (
           totalPayrollCostForm(years(aboutTheTradingHistory)),
           formWithErrors =>
             BadRequest(
-              totalPayrollCostsView(formWithErrors, numberOfColumns, financialYears, request.sessionData.toSummary)
+              totalPayrollCostsView(formWithErrors, numberOfColumns, financialYears, request.sessionData.toSummary,navigator.from)
             ),
           success => {
-            val updatedData = updateAboutTheTradingHistory(_.copy(totalPayrollCostSections = success))
+            val totalPaytollCosts =
+              (success zip financialYearEndDates(aboutTheTradingHistory)).map { case (totalPaytollCost, finYearEnd) =>
+                totalPaytollCost.copy(financialYearEnd = finYearEnd)
+              }
+
+            val updatedData = updateAboutTheTradingHistory(_.copy(totalPayrollCostSections = totalPaytollCosts))
             session
               .saveOrUpdate(updatedData)
               .map(_ => Redirect(navigator.nextPage(TotalPayrollCostId, updatedData).apply(updatedData)))

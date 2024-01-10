@@ -31,7 +31,7 @@
 )
 
 
-@(form: Form[Seq[FixedOperatingExpenses]], numOfColumns: Int, financialYears: Seq[LocalDate], summary: Summary)(implicit request: Request[_], messages: Messages)
+@(form: Form[Seq[FixedOperatingExpenses]], numOfColumns: Int, financialYears: Seq[LocalDate], summary: Summary, fromLocation: String = "")(implicit request: Request[_], messages: Messages)
 
 @columns = @{0 until numOfColumns}
 
@@ -40,7 +40,11 @@
   showSection = true,
     summary = Some(summary),
   sectionName = messages("label.section.aboutYourTradingHistory"),
-  backLinkUrl = controllers.aboutthetradinghistory.routes.VariableOperatingExpensesController.show.url,
+  backLinkUrl = fromLocation match {
+      case "TL" => controllers.routes.TaskListController.show().url + "#turnover"
+      case "IES" => controllers.aboutthetradinghistory.routes.IncomeExpenditureSummaryController.show().url
+      case _ => controllers.aboutthetradinghistory.routes.VariableOperatingExpensesController.show.url
+  },
     theForm = form
 ) {
       <p class="govuk-body">@messages("fixedOperatingExpenses.p1")</p>
