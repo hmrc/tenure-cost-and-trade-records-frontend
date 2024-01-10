@@ -57,6 +57,7 @@ class CateringOperationDetailsController @Inject() (
           cateringOperationOrLettingAccommodationForm.fill
         ),
         index,
+        "concessionDetails",
         "cateringOperationOrLettingAccommodationDetails",
         getBackLink(request.sessionData, index) match {
           case Right(link) => link
@@ -80,6 +81,7 @@ class CateringOperationDetailsController @Inject() (
           cateringOperationDetailsView(
             formWithErrors,
             index,
+            "concessionDetails",
             "cateringOperationOrLettingAccommodationDetails",
             getBackLink(request.sessionData, index) match {
               case Right(link) => link

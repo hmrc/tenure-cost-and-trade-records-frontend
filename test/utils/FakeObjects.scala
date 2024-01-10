@@ -448,6 +448,7 @@ trait FakeObjects {
       prefilledLettingAddress
     ),
     Some(LettingOtherPartOfPropertyRentDetails(BigDecimal(1500), prefilledDateInput)),
+    Some(LettingOtherPartOfPropertyRent6015Details(BigDecimal(1500), prefilledDateInput, true)),
     Some(AnswerYes)
   )
   val prefilledLettingSectionNo: LettingSection                      = LettingSection(
@@ -457,6 +458,7 @@ trait FakeObjects {
       prefilledLettingAddress
     ),
     Some(LettingOtherPartOfPropertyRentDetails(BigDecimal(1500), prefilledDateInput)),
+    Some(LettingOtherPartOfPropertyRent6015Details(BigDecimal(1500), prefilledDateInput, true)),
     Some(AnswerNo)
   )
 

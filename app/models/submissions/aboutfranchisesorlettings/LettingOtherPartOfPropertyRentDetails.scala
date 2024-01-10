@@ -22,8 +22,7 @@ import java.time.LocalDate
 
 case class LettingOtherPartOfPropertyRentDetails(
   annualRent: BigDecimal,
-  dateInput: LocalDate,
-  declaration: Boolean
+  dateInput: LocalDate
 )
 object LettingOtherPartOfPropertyRentDetails {
   implicit val format = Json.format[LettingOtherPartOfPropertyRentDetails]

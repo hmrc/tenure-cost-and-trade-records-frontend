@@ -14,21 +14,18 @@
  * limitations under the License.
  */
 
-package models.submissions.aboutthetradinghistory
+package models.submissions.aboutfranchisesorlettings
 
 import play.api.libs.json.Json
 
 import java.time.LocalDate
 
-case class TotalPayrollCost(
-  financialYearEnd: LocalDate,
-  managersAndStaff: BigDecimal,
-  directorsRemuneration: BigDecimal
-) {
-  def total = managersAndStaff + directorsRemuneration
-}
-
-object TotalPayrollCost {
-  implicit val format = Json.format[TotalPayrollCost]
+case class LettingOtherPartOfPropertyRent6015Details(
+  annualRent: BigDecimal,
+  dateInput: LocalDate,
+  declaration: Boolean
+)
+object LettingOtherPartOfPropertyRent6015Details {
+  implicit val format = Json.format[LettingOtherPartOfPropertyRent6015Details]
 
 }
