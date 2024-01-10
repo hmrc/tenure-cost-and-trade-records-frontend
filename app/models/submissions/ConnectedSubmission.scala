@@ -52,6 +52,7 @@ case class ConnectedSubmission(
 )
 
 object ConnectedSubmission {
+
   implicit val format = Json.format[ConnectedSubmission]
 
   def apply(session: Session): ConnectedSubmission = ConnectedSubmission(

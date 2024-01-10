@@ -1293,6 +1293,7 @@ incomeExpenditureSummary.totalGrossProfitsLabel = Total gross profits based on y
 incomeExpenditureSummary.totalPayrollCostLabel = Total payroll costs
 incomeExpenditureSummary.variableExpenses = Variable expenses
 incomeExpenditureSummary.fixedExpensesLabel = Fixed Expenses
+incomeExpenditureSummary.otherCostsLabel = Other costs
 incomeExpenditureSummary.totalNetProfitLabel = Total net profits based on your figures
 incomeExpenditureSummary.profitMargin = Profit margin based on your figures
 incomeExpenditureSummary.confirmation = I confirm that these figures are correct

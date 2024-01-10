@@ -23,13 +23,16 @@
 @import models.pages.IncomeExpenditureEntry
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
 @import util.NumberUtil._
+@import util.DateUtil
+@import java.time.LocalDate
 
 @this(
         layout: Layout,
         govukTable: GovukTable,
         govukButton: GovukButton,
         govukCheckboxes: GovukCheckboxes,
-        formWithCSRF: FormWithCSRF
+        formWithCSRF: FormWithCSRF,
+        dateUtil: DateUtil
 )
 
 
@@ -46,7 +49,7 @@
     @defining(entries.map(_.financialYearEnd).distinct) { financialYears =>
         @govukTable(Table(
             rows = Seq(
-                Seq(TableRow(content = Text(messages("incomeExpenditureSummary.financialYearEndLabel")))) ++ financialYears.map(year => TableRow(content = Text(year),classes = "govuk-!-font-weight-bold")) ++ Seq(TableRow(content = Empty))
+                Seq(TableRow(content = Text(messages("incomeExpenditureSummary.financialYearEndLabel")))) ++ financialYears.map(year => TableRow(content = Text(dateUtil.formatDayMonthAbbrYear(LocalDate.parse(year))),classes = "govuk-!-font-weight-bold")) ++ Seq(TableRow(content = Empty))
             ) ++ Seq(
                 Seq(TableRow(content = Text(messages("incomeExpenditureSummary.totalTurnoverLabel")))) ++
                         entries.map(entry => TableRow(content = Text({entry.totalTurnover.asMoney}))) ++
@@ -72,14 +75,17 @@
                         entries.map(entry => TableRow(content = Text(entry.fixedExpenses.asMoney))) ++
                         Seq(TableRow(content = HtmlContent(s"<a href='${entries.head.fixedExpensesUrl}' class='govuk-link'>Change</a>"))),
 
+                Seq(TableRow(content = Text(messages("incomeExpenditureSummary.otherCostsLabel")))) ++
+                        entries.map(entry => TableRow(content = Text(entry.otherCost.asMoney))) ++
+                        Seq(TableRow(content = HtmlContent(s"<a href='${entries.head.otherCostsUrl}' class='govuk-link'>Change</a>"))),
+
                 Seq(TableRow(content = Text(messages("incomeExpenditureSummary.totalNetProfitLabel")))) ++
                         entries.map(entry => TableRow(content = Text(entry.totalNetProfit.asMoney)))++
                         Seq(TableRow(content = Empty)),
 
                 Seq(TableRow(content = Text(messages("incomeExpenditureSummary.profitMargin")))) ++
-                        entries.map(entry => TableRow(content = Text(entry.profitMargin.asMoney)))++
+                        entries.map(entry => TableRow(content = Text(entry.profitMargin.withScale(2) + "%")))++
                         Seq(TableRow(content = Empty))
-
             ),
             firstCellIsHeader = true,
             classes = "govuk-table"

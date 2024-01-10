@@ -34,7 +34,7 @@
 )
 
 
-@(form: Form[Seq[CostOfSales]])(implicit request: SessionRequest[_], messages: Messages)
+@(form: Form[Seq[CostOfSales]],fromLocation:String = "")(implicit request: SessionRequest[_], messages: Messages)
 
 
 @detailsContent = {
@@ -85,7 +85,11 @@
     showSection = true,
     sectionName = messages("label.section.aboutYourTradingHistory"),
     summary = Some(request.sessionData.toSummary),
-    backLinkUrl = controllers.aboutthetradinghistory.routes.TurnoverController.show().url,
+    backLinkUrl = fromLocation match {
+        case "TL" => controllers.routes.TaskListController.show().url + "#turnover"
+        case "IES" => controllers.aboutthetradinghistory.routes.IncomeExpenditureSummaryController.show().url
+        case _ => controllers.aboutthetradinghistory.routes.TurnoverController.show().url
+    },
     theForm = form
 ) {
 

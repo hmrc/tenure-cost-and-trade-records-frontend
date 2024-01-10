@@ -36,7 +36,7 @@
         dateUtil: DateUtil
 )
 
-@(form: Form[VariableOperatingExpensesSections])(implicit request: SessionRequest[_], messages: Messages)
+@(form: Form[VariableOperatingExpensesSections], fromLocation:String = "")(implicit request: SessionRequest[_], messages: Messages)
 
 @columns = @{
     request.sessionData.financialYearEndDates.size
@@ -96,7 +96,11 @@
     showSection = true,
     summary = Some(request.sessionData.toSummary),
     sectionName = messages("label.section.aboutYourTradingHistory"),
-    backLinkUrl = controllers.aboutthetradinghistory.routes.TotalPayrollCostsController.show.url,
+    backLinkUrl = fromLocation match {
+        case "TL" => controllers.routes.TaskListController.show().url + "#turnover"
+        case "IES" => controllers.aboutthetradinghistory.routes.IncomeExpenditureSummaryController.show().url
+        case _ =>controllers.aboutthetradinghistory.routes.TotalPayrollCostsController.show.url
+    },
     theForm = form
 ) {
 
