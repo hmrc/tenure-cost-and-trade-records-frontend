@@ -16,25 +16,24 @@
 
 package models.submissions
 
-import models.submissions.common.Address
-import play.api.libs.json._
+import models.submissions.common.ContactDetails
+import models.submissions.requestReferenceNumber.RequestReferenceNumberAddress
+import play.api.libs.json.Json
 
 import java.time.Instant
 
-case class NotConnectedSubmission(
-  id: String,
-  forType: String,
-  address: Address,
+case class RequestReferenceNumberSubmission(
+  BusinessTradingName: String,
+  address: RequestReferenceNumberAddress,
   fullName: String,
-  emailAddress: Option[String],
-  phoneNumber: Option[String],
+  contactDetails: ContactDetails,
   additionalInformation: Option[String],
   createdAt: Instant,
-  previouslyConnected: Boolean,
   lang: Option[String] = None
 )
-object NotConnectedSubmission {
+
+object RequestReferenceNumberSubmission {
   import uk.gov.hmrc.mongo.play.json.formats.MongoJavatimeFormats.Implicits._
-  implicit val format = Json.format[NotConnectedSubmission]
+  implicit val format = Json.format[RequestReferenceNumberSubmission]
 
 }

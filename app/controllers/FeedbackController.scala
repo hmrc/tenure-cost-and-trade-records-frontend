@@ -20,7 +20,6 @@ import actions.WithSessionRefiner
 import connectors.Audit
 import form.Feedback
 import models.Session
-import models.submissions.common.Address
 import play.api.data.Form
 import play.api.data.Forms.{mapping, optional, text}
 import play.api.i18n.I18nSupport

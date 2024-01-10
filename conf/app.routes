@@ -25,6 +25,11 @@ GET         /saved/resume                                           controllers.
 POST        /saved/resume                                           controllers.SaveAsDraftController.resume
 GET         /saved/startagain                                       controllers.SaveAsDraftController.startAgain
 
+# MAXIMUM OF LETTINGS REACHED
+
+GET         /max-lettings                                           controllers.MaxOfLettingsReachedController.show(src: Option[String] ?= None)
+POST        /max-lettings                                           controllers.MaxOfLettingsReachedController.submit(src: Option[String] ?=None)
+
 # No reference number
 GET         /request-reference-number-with-session                  controllers.requestReferenceNumber.RequestReferenceNumberController.startWithSession()
 GET         /request-reference-number                               controllers.requestReferenceNumber.RequestReferenceNumberController.show()

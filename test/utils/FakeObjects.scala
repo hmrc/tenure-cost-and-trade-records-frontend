@@ -65,6 +65,7 @@ trait FakeObjects {
   val prefilledFakeName                                                 = "John Doe"
   val prefilledFakePhoneNo                                              = "12345678901"
   val prefilledFakeEmail                                                = "test@email.com"
+  val prefilledFakeTradingName                                          = "TRADING NAME"
   val prefilledCateringAddress: CateringAddress                         =
     CateringAddress("004", Some("GORING ROAD"), "GORING-BY-SEA, WORTHING", Some("West sussex"), "BN12 4AX")
   val prefilledLettingAddress: LettingAddress                           =
@@ -93,6 +94,18 @@ trait FakeObjects {
   val baseFilled6011Session: Session = Session(referenceNumber, forType6011, prefilledAddress, token)
   val baseFilled6015Session: Session = Session(referenceNumber, forType6015, prefilledAddress, token)
   val baseFilled6016Session: Session = Session(referenceNumber, forType6016, prefilledAddress, token)
+
+  // Request reference number
+  val prefilledRequestRefNumCYA = RequestReferenceNumberDetails(
+    Some(RequestReferenceNumber(prefilledFakeTradingName, prefilledNoReferenceContactAddress)),
+    Some(
+      RequestReferenceNumberContactDetails(
+        prefilledFakeName,
+        ContactDetails(prefilledFakePhoneNo, prefilledFakeEmail),
+        Some("Additional Information")
+      )
+    )
+  )
 
   // Are your still connected sessions
   val prefilledStillConnectedDetailsYes: StillConnectedDetails  = StillConnectedDetails(
@@ -304,18 +317,18 @@ trait FakeObjects {
     totalPayrollCostSections = Seq(
       TotalPayrollCost(
         LocalDate.now(),
-        BigDecimal(1),
-        BigDecimal(2)
+        Some(BigDecimal(1)),
+        Some(BigDecimal(2))
       ),
       TotalPayrollCost(
         LocalDate.now().minusYears(1),
-        BigDecimal(1),
-        BigDecimal(2)
+        Some(BigDecimal(1)),
+        Some(BigDecimal(2))
       ),
       TotalPayrollCost(
         LocalDate.now().minusYears(2),
-        BigDecimal(1),
-        BigDecimal(2)
+        Some(BigDecimal(1)),
+        Some(BigDecimal(2))
       )
     ),
     fixedOperatingExpensesSections = Seq(
@@ -420,7 +433,8 @@ trait FakeObjects {
         prefilledAboutYourTradingHistory
           .copy(
             costOfSales = Seq(CostOfSales(LocalDate.now, None, None, None, None)),
-            otherCosts = Some(OtherCosts(otherCosts = Seq(OtherCost(LocalDate.now, None, None))))
+            otherCosts = Some(OtherCosts(otherCosts = Seq(OtherCost(LocalDate.now, None, None)))),
+            totalPayrollCostSections = Seq(TotalPayrollCost(LocalDate.now, None, None))
           )
       ),
       stillConnectedDetails = Some(prefilledStillConnectedDetailsYesToAll)
@@ -466,36 +480,44 @@ trait FakeObjects {
     Some(AnswerYes),
     Some(AnswerYes),
     0,
+    None,
     IndexedSeq(prefilledCateringOperationSectionYes),
     Some(AnswerYes),
     0,
+    None,
     IndexedSeq(prefilledLettingSectionYes)
   )
   val prefilledAboutFranchiseOrLettingsNo: AboutFranchisesOrLettings     = AboutFranchisesOrLettings(
     Some(AnswerNo),
     Some(AnswerNo),
     0,
+    None,
     IndexedSeq(prefilledCateringOperationSectionNo),
     Some(AnswerNo),
     0,
+    None,
     IndexedSeq(prefilledLettingSectionNo)
   )
   val prefilledAboutFranchiseOrLettings6015: AboutFranchisesOrLettings   = AboutFranchisesOrLettings(
     Some(AnswerYes),
     Some(AnswerYes),
     0,
+    None,
     IndexedSeq(prefilledCateringOperationSectionYes),
     Some(AnswerYes),
     0,
+    None,
     IndexedSeq(prefilledLettingSectionYes)
   )
   val prefilledAboutFranchiseOrLettingsNo6015: AboutFranchisesOrLettings = AboutFranchisesOrLettings(
     Some(AnswerNo),
     Some(AnswerNo),
     0,
+    None,
     IndexedSeq(prefilledCateringOperationSectionNo),
     Some(AnswerNo),
     0,
+    None,
     IndexedSeq(prefilledLettingSectionNo)
   )
 

@@ -51,7 +51,7 @@ abstract class FORDataCaptureController(cc: MessagesControllerComponents) extend
     request.body.asFormUrlEncoded.flatMap(_.get("save_button")).isDefined
 
   private def saveAsDraftRedirect(implicit request: Request[_]): Result = Redirect(
-    controllers.routes.SaveAsDraftController.customPassword(request.path)
+    controllers.routes.SaveAsDraftController.customPassword(request.uri)
   )
 
 }

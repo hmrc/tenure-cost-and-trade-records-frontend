@@ -48,6 +48,7 @@ object NumberUtil {
     def withScaleFull(scale: Int): String =
       bigDecimal.setScale(scale, HALF_UP).toString
 
+
   }
 
 }

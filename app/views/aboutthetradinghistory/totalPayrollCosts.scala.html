@@ -19,8 +19,9 @@
 @import models.pages.Summary
 @import java.time.LocalDate
 @import uk.gov.hmrc.govukfrontend.views.Implicits.RichInput
-@import util.DateUtil._
-
+@import util.DateUtil
+@import util.NumberUtil._
+@import actions.SessionRequest
 
 @this(layout: Layout,
         govukButton: GovukButton,
@@ -28,23 +29,42 @@
         govukInput: GovukInput,
         govukTable: GovukTable,
         govukInsetText: GovukInsetText,
-        govukDetails: GovukDetails
+        govukDetails: GovukDetails,
+        dateUtil: DateUtil
 )
 
-@(form: Form[Seq[TotalPayrollCost]], numOfColumns: Int, financialYears: Seq[LocalDate], summary: Summary)(implicit request: Request[_], messages: Messages)
+@(form: Form[Seq[TotalPayrollCost]], numOfColumns: Int, financialYears: Seq[LocalDate], summary: Summary, fromLocation: String = "")(implicit request: SessionRequest[_], messages: Messages)
 
-@columns = @{0 until numOfColumns}
+@columns = @{
+    request.sessionData.aboutTheTradingHistory.map(_.turnoverSections).fold(Seq.empty[Int])(_.indices)
+}
 
 @directorsRemunerationHeading = {
-    <p class="govuk-body">@messages("totalPayrollCosts.directorsRemuneration")</p>
-    <p class="govuk-body">@messages("totalPayrollCosts.directorsRemuneration.add")</p>
+    <p class="govuk-body govuk-!-font-weight-bold">
+        @messages("totalPayrollCosts.directorsRemuneration")
+        <span class="govuk-caption-m">@messages("totalPayrollCosts.directorsRemuneration.add")</span>
+    </p>
 }
+@totalHeading = {
+    <p class="govuk-body"><span class="govuk-!-font-weight-bold">@messages("totalPayrollCosts.total")</span></p>
+}
+
+@totalContent(idx: Int) = {
+    <span id="@{
+        "payrollTotal." + idx
+    }">@form.value.fold("")(_(idx).total.asMoney)</span>
+}
+
 @layout(
   pageHeading = messages("totalPayrollCosts.heading"),
   showSection = true,
     summary = Some(summary),
   sectionName = messages("label.section.aboutYourTradingHistory"),
-  backLinkUrl = controllers.aboutthetradinghistory.routes.CostOfSalesController.show().url,
+  backLinkUrl = fromLocation match {
+      case "TL" => controllers.routes.TaskListController.show().url + "#turnover"
+      case "IES" => controllers.aboutthetradinghistory.routes.IncomeExpenditureSummaryController.show().url
+      case _ =>controllers.aboutthetradinghistory.routes.CostOfSalesController.show().url
+  },
     theForm =  form
 ) {
 
@@ -55,34 +75,25 @@
           content = Text(messages("totalPayrollCosts.p2"))
       ))
       @govukTable(Table(
+          head = Some(
+              HeadCell(content = Text(messages("totalPayrollCosts.financialYearEnd"))) +:
+                      columns.map { idx =>
+                          HeadCell(content = Text(dateUtil.formatDayMonthAbbrYear(financialYears(idx))))
+                      }
+          ),
           rows = Seq(
-              TableRow(
-                  content = Text(messages("totalPayrollCosts.financialYearEnd"))
-              ) +:
-                      columns.map { idx  =>
-                          TableRow(
-                              content = HtmlContent(
-                                  govukInput(Input(
-                                      id = s"$idx.financial-year-end",
-                                      name = s"$idx.financial-year-end",
-                                      value = financialYears(idx).shortDate
-                                  ).withFormField(form(s"$idx.financial-year-end")))
-                              )
-                          )
-                      },
               TableRow(
                   content = Text(messages("totalPayrollCosts.managersAndStaff"))
               ) +: columns.map { idx  =>
                   TableRow(
                       content = HtmlContent(
                           govukInput(Input(
-                              id = s"$idx.managers-and-staff",
-                              name = s"$idx.managers-and-staff",
-                              value = form(s"$idx.managers-and-staff").value,
+                              name = s"totalPayrollCosts[$idx].managers-and-staff",
+                              value = form(s"totalPayrollCosts[$idx].managers-and-staff").value,
                               prefix = Some(PrefixOrSuffix(
                                   content = Text("£")
                               ))
-                          ).withFormField(form(s"$idx.managers-and-staff")))
+                          ).withFormField(form(s"totalPayrollCosts[$idx].managers-and-staff")))
                       )
                   )
               },
@@ -92,24 +103,30 @@
                   TableRow(
                       content = HtmlContent(
                           govukInput(Input(
-                              id = s"$idx.directors-remuneration",
-                              name = s"$idx.directors-remuneration",
-                              value = form(s"$idx.directors-remuneration").value,
+                              name = s"totalPayrollCosts[$idx].directors-remuneration",
+                              value = form(s"totalPayrollCosts[$idx].directors-remuneration").value,
                               prefix = Some(PrefixOrSuffix(
                                   content = Text("£")
                               ))
-                          ).withFormField(form(s"$idx.directors-remuneration")))
+                          ).withFormField(form(s"totalPayrollCosts[$idx].directors-remuneration")))
                       )
+                  )
+              },
+              TableRow(
+                  content = HtmlContent(totalHeading)
+              ) +: columns.map { idx =>
+                  TableRow(
+                      content = HtmlContent(totalContent(idx))
                   )
               }
           ),
           captionClasses = "govuk-table__caption--m",
-          firstCellIsHeader = false
+          firstCellIsHeader = true
       ))
       @includes.continueSaveAsDraftButtons(govukButton)
   }
 }
-
+<script src="@routes.Assets.versioned("javascripts/total-payroll-costs.js")"></script>
 
 
 

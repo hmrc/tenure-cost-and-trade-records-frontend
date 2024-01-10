@@ -19,7 +19,7 @@ package form.aboutfranchisesorlettings
 import form.DateMappings.requiredDateMapping
 import models.submissions.aboutfranchisesorlettings.CalculatingTheRent
 import play.api.data.Form
-import play.api.data.Forms.{mapping, nonEmptyText, text}
+import play.api.data.Forms.{mapping, text}
 import play.api.i18n.Messages
 
 object CalculatingTheRentForm {

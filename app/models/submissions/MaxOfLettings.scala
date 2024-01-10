@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,25 +16,12 @@
 
 package models.submissions
 
-import models.submissions.common.Address
-import play.api.libs.json._
+import play.api.libs.json.Json
 
-import java.time.Instant
-
-case class NotConnectedSubmission(
-  id: String,
-  forType: String,
-  address: Address,
-  fullName: String,
-  emailAddress: Option[String],
-  phoneNumber: Option[String],
-  additionalInformation: Option[String],
-  createdAt: Instant,
-  previouslyConnected: Boolean,
-  lang: Option[String] = None
+case class MaxOfLettings(
+  maxOfLettings: Boolean
 )
-object NotConnectedSubmission {
-  import uk.gov.hmrc.mongo.play.json.formats.MongoJavatimeFormats.Implicits._
-  implicit val format = Json.format[NotConnectedSubmission]
 
+object MaxOfLettings {
+  implicit val format = Json.format[MaxOfLettings]
 }

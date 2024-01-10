@@ -28,13 +28,19 @@ import views.html.aboutyouandtheproperty.checkYourAnswersAboutTheProperty
 import views.html.additionalinformation.{alternativeContactDetails, checkYourAnswersAdditionalInformation, contactDetailsQuestion, furtherInformationOrRemarks}
 import views.html.downloadFORTypeForm.{downloadPDF, downloadPDFReferenceNumber}
 import views.html.feedback.{feedback, feedbackThx}
-import views.html.requestReferenceNumber.{requestReferenceNumber, requestReferenceNumberContactDetails}
-import views.html.{confirmation, confirmationConnectionToProperty, confirmationNotConnected, login}
+import views.html.requestReferenceNumber.{checkYourAnswersRequestReferenceNumber, confirmationRequestReferenceNumber, requestReferenceNumber, requestReferenceNumberContactDetails}
+import views.html.{confirmation, confirmationConnectionToProperty, confirmationNotConnected, login, maxOfLettingsReached}
 
 trait FakeViews { this: GuiceOneAppPerSuite =>
 
   // Sign in
   lazy val loginView: login = app.injector.instanceOf[login]
+
+  // Request reference number
+  lazy val checkYourAnswersRequestReferenceNumberView: checkYourAnswersRequestReferenceNumber =
+    app.injector.instanceOf[checkYourAnswersRequestReferenceNumber]
+  lazy val confirmationRequestReferenceNumberView: confirmationRequestReferenceNumber         =
+    app.injector.instanceOf[confirmationRequestReferenceNumber]
 
   // Connection to the property
 
@@ -224,6 +230,10 @@ trait FakeViews { this: GuiceOneAppPerSuite =>
     app.injector.instanceOf[howIsCurrentRentFixed]
   lazy val checkYourAnswersAboutLeaseAndTenureView         =
     app.injector.instanceOf[checkYourAnswersAboutYourLeaseOrTenure]
+
+  // Max letting reached
+  lazy val maxOfLettingsReachedView =
+    app.injector.instanceOf[maxOfLettingsReached]
 
   // Additional information
   lazy val furtherInformationOrRemarksView: furtherInformationOrRemarks                     =

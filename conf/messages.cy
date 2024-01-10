@@ -1220,6 +1220,13 @@ totalPayrollCosts.financialYearEnd = Financial year end
 totalPayrollCosts.managersAndStaff = Managers and staff
 totalPayrollCosts.directorsRemuneration = Director's remuneration
 totalPayrollCosts.directorsRemuneration.add = (if applicable)
+totalPayrollCosts.total = Total payroll costs
+error.managers-and-staff.required = Enter 0 if you did not have any payroll costs for managers and staff in the year ending {0}
+error.managers-and-staff.range = The payroll costs for managers and staff in the year ending {0} must be a number, for example 100 or 100.00
+error.managers-and-staff.negative = The payroll costs for managers and staff in the year ending {0} cannot be a negative number
+error.directors-remuneration.required= Enter 0 if you did not have directors remuneration in the year ending {0}
+error.directors-remuneration.range = The directors remuneration in the year ending {0} must be a number, for example 100 or 100.00
+error.directors-remuneration.negative = The directors remuneration in the year ending {0} cannot be a negative number
 
 # VARIABLE OPERATING EXPENSES (FORM 6015)
 #########
@@ -1287,6 +1294,7 @@ incomeExpenditureSummary.totalGrossProfitsLabel = Total gross profits based on y
 incomeExpenditureSummary.totalPayrollCostLabel = Total payroll costs
 incomeExpenditureSummary.variableExpenses = Variable expenses
 incomeExpenditureSummary.fixedExpensesLabel = Fixed Expenses
+incomeExpenditureSummary.otherCostsLabel = Other costs
 incomeExpenditureSummary.totalNetProfitLabel = Total net profits based on your figures
 incomeExpenditureSummary.profitMargin = Profit margin based on your figures
 incomeExpenditureSummary.confirmation = I confirm that these figures are correct
@@ -1381,6 +1389,15 @@ key.ever.connected = Ever been connected to the property?
 key.contact.details = Contacts and additional information
 checkYourAnswersNotConnected.subheading1 = Connection to the property
 checkYourAnswersNotConnected.subheading2 = Your contact details
+
+# MAXIMUM OF 5 LETTINGS
+##################################
+maxOf5Lettings.heading = You have added the maximum of 5 lettings
+maxOf5Lettings.contact = If you have 6 or more lettings at your property, the VOA will contact you to collect information on the remaining lettings
+maxOf5Lettings.confirm = I confirm that I understand the VOA will contact me regarding the remaining lettings
+maxOf5Lettings.link = Check or update the 5 added businesses
+maxOf5Lettings.error = Please confirm that you understand the VOA will contact you regarding the remaining letters
+
 
 # About franchise or lettings CYA
 checkYourAnswers.heading = This is a holding page for the check your answers page

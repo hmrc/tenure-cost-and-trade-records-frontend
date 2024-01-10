@@ -18,54 +18,30 @@ package form.aboutthetradinghistory
 
 import models.submissions.aboutthetradinghistory.TotalPayrollCost
 import play.api.data.{Form, Mapping}
-import play.api.data.Forms.{bigDecimal, localDate, mapping}
-import play.api.data.validation.{Constraint, Invalid, Valid}
+import play.api.data.Forms._
+import play.api.data.Forms.{bigDecimal, ignored, localDate, mapping}
+import form.MappingSupport.{EnrichedSeq, turnoverSalesMappingWithYear}
+import play.api.i18n.Messages
 
 import java.time.LocalDate
 
 object TotalPayrollCostForm {
+  private def totalPayrollCostMapping(year: String)(implicit messages: Messages): Mapping[TotalPayrollCost] = mapping(
+    "financial-year-end"     -> ignored(LocalDate.EPOCH),
+    "managers-and-staff"     -> turnoverSalesMappingWithYear("managers-and-staff", year),
+    "directors-remuneration" -> turnoverSalesMappingWithYear("directors-remuneration", year)
+  )(TotalPayrollCost.apply)(TotalPayrollCost.unapply)
 
-  def totalPayrollCostForm(expectedNumberOfFinancialYears: Int): Form[Seq[TotalPayrollCost]] = {
-    val ukDateMappings                                = localDate("dd/MM/yyyy")
-    val dateTooEarlyConstraint: Constraint[LocalDate] = Constraint[LocalDate]("dateTooEarlyConstraint") { date =>
-      if (date.isAfter(LocalDate.of(1900, 1, 1))) Valid else Invalid("errorName")
+  def totalPayrollCostForm(years: Seq[String])(implicit messages: Messages): Form[Seq[TotalPayrollCost]] = {
+    val mappingPerYear = years.take(3).zipWithIndex.map { case (year, idx) =>
+      s"totalPayrollCosts[$idx]" -> totalPayrollCostMapping(year)
     }
-    val columnMapping: Mapping[TotalPayrollCost]      = mapping(
-      "financial-year-end"     -> ukDateMappings.verifying(dateTooEarlyConstraint, dateTooEarlyConstraint),
-      "managers-and-staff"     -> bigDecimal,
-      "directors-remuneration" -> bigDecimal
-    )(TotalPayrollCost.apply)(TotalPayrollCost.unapply)
-
-    Form {
-      expectedNumberOfFinancialYears match {
-        case 1                               =>
-          mapping("0" -> columnMapping)(section => Seq(section)) {
-            case Seq(section) => Some(section)
-            case _            => None
-          }
-        case 2                               =>
-          mapping(
-            "0" -> columnMapping,
-            "1" -> columnMapping
-          ) { case (first, second) => Seq(first, second) } {
-            case Seq(first, second) => Some((first, second))
-            case _                  => None
-          }
-        case 3                               =>
-          mapping(
-            "0" -> columnMapping,
-            "1" -> columnMapping,
-            "2" -> columnMapping
-          ) { case (first, second, third) => Seq(first, second, third) } {
-            case Seq(first, second, third) => Some((first, second, third))
-            case _                         => None
-          }
-        case incorrectNumberOfFinancialYears =>
-          throw new IllegalArgumentException(
-            s"$expectedNumberOfFinancialYears must be between 1 and 3, was: $incorrectNumberOfFinancialYears"
-          )
+    Form(
+      mappingPerYear match {
+        case Seq(a)       => mapping(a)(Seq(_))(_.headOption)
+        case Seq(a, b)    => mapping(a, b)(Seq(_, _))(_.toTuple2)
+        case Seq(a, b, c) => mapping(a, b, c)(Seq(_, _, _))(_.toTuple3)
       }
-    }
+    )
   }
-
 }
