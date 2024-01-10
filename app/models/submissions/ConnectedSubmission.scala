@@ -52,7 +52,7 @@ case class ConnectedSubmission(
 )
 
 object ConnectedSubmission {
-  import uk.gov.hmrc.mongo.play.json.formats.MongoJavatimeFormats.Implicits._
+
   implicit val format = Json.format[ConnectedSubmission]
 
   def apply(session: Session): ConnectedSubmission = ConnectedSubmission(
