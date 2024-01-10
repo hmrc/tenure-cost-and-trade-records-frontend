@@ -4,15 +4,28 @@
   padding-right: 0.5em;
 }
 
-.hmrc-overlap-full-width-parent {
-  height: 9em;
+.hmrc-overlap-columns-2-parent {
+  height: 12em;
 }
 
-.hmrc-overlap-full-width {
+.hmrc-overlap-columns-3-parent {
+  height: 11em;
+}
+
+.hmrc-overlap-columns-2 {
+  position: absolute;
+  width: 380px;
+}
+
+.hmrc-overlap-columns-3 {
   position: absolute;
   width: 555px;
 }
 
-.hmrc-overlap-full-width textarea {
+.hmrc-overlap-columns-2 textarea {
+  width: 380px;
+}
+
+.hmrc-overlap-columns-3 textarea {
   width: 555px;
 }

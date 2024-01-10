@@ -38,6 +38,10 @@
 
 @(form: Form[VariableOperatingExpensesSections])(implicit request: SessionRequest[_], messages: Messages)
 
+@columns = @{
+    request.sessionData.financialYearEndDates.size
+}
+
 @entertainmentHeading = {
     <p class="govuk-body govuk-!-font-weight-bold">
         @messages("variableOperatingExpenses.entertainment")
@@ -52,23 +56,31 @@
     </p>
 }
 
+@otherExpensesDetailsTextarea = @{
+    hmrcCharacterCount(
+        CharacterCount(
+            rows = 4,
+            maxLength = 2000,
+            errorMessage = form.errors.asTextErrorMessageForField("otherExpensesDetails"),
+            label = Label(
+                content = Text(messages("variableOperatingExpenses.otherExpensesDetails"))
+            )
+        ).withFormField(form("otherExpensesDetails"))
+    )
+}
+
 @otherExpensesDetailsContent(idx: Int) = {
-    <div class="hmrc-overlap-full-width-parent">
+@if(columns == 1) {
+    @otherExpensesDetailsTextarea
+} else {
+    <div class="hmrc-overlap-columns-@columns-parent">
     @if(idx == 0) {
-        <div class="hmrc-overlap-full-width">
-        @hmrcCharacterCount(
-            CharacterCount(
-                rows = 4,
-                maxLength = 2000,
-                errorMessage = form.errors.asTextErrorMessageForField("otherExpensesDetails"),
-                label = Label(
-                    content = Text(messages("variableOperatingExpenses.otherExpensesDetails"))
-                )
-            ).withFormField(form("otherExpensesDetails"))
-        )
+        <div class="hmrc-overlap-columns-@columns">
+        @otherExpensesDetailsTextarea
         </div>
     }
     </div>
+}
 }
 
 @totalContent(idx: Int) = {

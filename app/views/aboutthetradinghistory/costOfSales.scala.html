@@ -97,6 +97,10 @@
         <li>@messages("costOfSales.excluding.item4")</li>
     </ul>
 
+    @govukInsetText(InsetText(
+        content = Text(messages("turnover.inset"))
+    ))
+
     @govukDetails(Details(
         summary = Text(messages("costOfSales.details.link")),
         content = HtmlContent(detailsContent)
