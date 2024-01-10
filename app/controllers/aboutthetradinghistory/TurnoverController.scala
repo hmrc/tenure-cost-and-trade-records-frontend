@@ -79,10 +79,6 @@ class TurnoverController @Inject() (
             session
               .saveOrUpdate(updatedData)
               .map { _ =>
-                println("777777" * 20)
-                println(s"request is -> ${request}")
-                println(s"from is -> ${navigator.from}")
-                println("777777" * 20)
                 navigator.cyaPage
                   .filter(_ => navigator.from == "CYA" && aboutTheTradingHistory.costOfSales.head.drinks.isDefined)
                   .getOrElse(navigator.nextPage(TurnoverPageId, updatedData).apply(updatedData))
