@@ -30,8 +30,8 @@ class ContactDetailsQuestionControllerSpec extends TestBaseSpec {
   import utils.FormBindingTestAssertions._
 
   def contactDetailsQuestionController(
-                                        additionalInformation: Option[AdditionalInformation] = Some(prefilledAdditionalInformation)
-                                      ) =
+    additionalInformation: Option[AdditionalInformation] = Some(prefilledAdditionalInformation)
+  ) =
     new ContactDetailsQuestionController(
       stubMessagesControllerComponents(),
       additionalInformationNavigator,

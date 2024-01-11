@@ -45,7 +45,7 @@ class SensitiveAlternativeContactDetailsSpec extends AnyWordSpecLike with Matche
       val sensitiveAlternativeContactDetails = SensitiveAlternativeContactDetails(originalAlternativeContactDetails)
 
       sensitiveAlternativeContactDetails.alternativeContactAddress
-        .isInstanceOf[SensitiveAlternativeAddress]                                                shouldBe true
+        .isInstanceOf[SensitiveAlternativeAddress] shouldBe true
 
       sensitiveAlternativeContactDetails.decryptedValue shouldBe originalAlternativeContactDetails
     }

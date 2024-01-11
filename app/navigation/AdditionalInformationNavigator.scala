@@ -43,9 +43,9 @@ class AdditionalInformationNavigator @Inject() (audit: Audit) extends Navigator(
     }
   }
   override val routeMap: Map[Identifier, Session => Call]    = Map(
-    FurtherInformationId -> (_ =>
+    FurtherInformationId                    -> (_ =>
       controllers.additionalinformation.routes.CheckYourAnswersAdditionalInformationController.show()
-      ),
+    ),
     ContactDetailsQuestionId                -> contactDetailsQuestionRouting,
     AlternativeContactDetailsId             -> (_ => controllers.aboutyouandtheproperty.routes.AboutThePropertyController.show()),
     CheckYourAnswersAdditionalInformationId -> (_ => controllers.routes.TaskListController.show())
