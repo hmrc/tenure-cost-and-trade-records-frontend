@@ -47,22 +47,6 @@
     @includes.textInput(
       govukInput,
       theForm,
-      "alternativeContactFullName",
-      "govuk-!-width-two-thirds",
-      "fullName",
-      labelClasses = "govuk-!-font-weight-bold"
-    )
-
-    <p class="govuk-body"><b>@messages("label.contact.details")</b></p>
-
-    @includes.textInput(govukInput, theForm, "alternativeContactDetails.phone", "govuk-!-width-two-thirds", "phone")
-    @includes.textInput(govukInput, theForm, "alternativeContactDetails.email", "govuk-!-width-two-thirds", "email")
-
-    <p class="govuk-body"><b>@messages("label.alternativeContactDetails")</b></p>
-
-    @includes.textInput(
-      govukInput,
-      theForm,
       "alternativeContactAddress.buildingNameNumber",
       "govuk-!-width-two-thirds",
       "buildingNameNumber"

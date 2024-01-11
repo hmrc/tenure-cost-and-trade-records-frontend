@@ -41,9 +41,6 @@ class AlternativeContactDetailsViewSpec extends QuestionViewBehaviours[Alternati
 
     behave like pageWithTextFields(
       createViewUsingForm,
-      "alternativeContactFullName",
-      "alternativeContactDetails.phone",
-      "alternativeContactDetails.email",
       "alternativeContactAddress.buildingNameNumber",
       "alternativeContactAddress.town",
       "alternativeContactAddress.postcode"

@@ -25,11 +25,6 @@ import play.api.data.validation.Constraints.{maxLength, nonEmpty}
 object AlternativeContactDetailsForm {
   val alternativeContactDetailsForm: Form[AlternativeContactDetails] = Form(
     mapping(
-      "alternativeContactFullName" -> default(text, "").verifying(
-        nonEmpty(errorMessage = "error.fullNameAlternative.required"),
-        maxLength(50, "error.fullName.mexLength")
-      ),
-      "alternativeContactDetails"  -> alternativeContactDetailsMapping,
       "alternativeContactAddress"  -> alternativeAddressMapping
     )(AlternativeContactDetails.apply)(AlternativeContactDetails.unapply)
   )
