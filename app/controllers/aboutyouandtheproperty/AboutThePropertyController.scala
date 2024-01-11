@@ -107,15 +107,20 @@ class AboutThePropertyController @Inject() (
       }
     )
   }
-
-  private def getBackLink(answers: Session): String =
-    answers.additionalInformation.flatMap(_.altDetailsQuestion.map(_.contactDetailsQuestion.name)) match {
-      case Some("yes") =>
-        controllers.aboutyouandtheproperty.routes.EnforcementActionBeenTakenDetailsController.show().url
-      case Some("no")  => controllers.aboutyouandtheproperty.routes.EnforcementActionBeenTakenController.show().url
-      case _           =>
-        logger.warn(s"Back link for tied goods page reached with unknown enforcement taken value")
-        controllers.routes.TaskListController.show().url
+  private def backLink(answers: Session)(implicit request: Request[AnyContent]): String =
+    navigator.from match {
+      case "TL" => controllers.routes.TaskListController.show().url + "#about-the-property"
+      case _ =>
+        answers.additionalInformation.flatMap(
+          _.altDetailsQuestion.map(_.contactDetailsQuestion.name)
+        ) match {
+          case Some("yes") =>
+            controllers.additionalinformation.routes.AlternativeContactDetailsController.show.url
+          case Some("no") => controllers.additionalinformation.routes.ContactDetailsQuestionController.show.url
+          case _ =>
+            logger.warn(s"Back link for alternative contact page reached with unknown enforcement taken value")
+            controllers.routes.TaskListController.show().url
+        }
     }
-
+  
 }
