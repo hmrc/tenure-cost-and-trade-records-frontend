@@ -29,6 +29,7 @@ import repositories.SessionRepo
 import views.html.aboutfranchisesorlettings.cateringOperationOrLettingAccommodationRentDetails
 
 import javax.inject.{Inject, Named, Singleton}
+import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class LettingOtherPartOfPropertyDetailsRentController @Inject() (
@@ -37,7 +38,7 @@ class LettingOtherPartOfPropertyDetailsRentController @Inject() (
   cateringOperationOrLettingAccommodationRentDetailsView: cateringOperationOrLettingAccommodationRentDetails,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FORDataCaptureController(mcc)
+)(implicit ec: ExecutionContext) extends FORDataCaptureController(mcc)
     with I18nSupport {
 
   def show(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
@@ -83,14 +84,14 @@ class LettingOtherPartOfPropertyDetailsRentController @Inject() (
         ),
       data =>
         request.sessionData.aboutFranchisesOrLettings.fold(
-          Redirect(routes.LettingOtherPartOfPropertyDetailsController.show(None))
+          Future.successful(Redirect(routes.LettingOtherPartOfPropertyDetailsController.show(None)))
         ) { aboutFranchiseOrLettings =>
           val existingSections = aboutFranchiseOrLettings.lettingSections
           val updatedSections  = existingSections
             .updated(index, existingSections(index).copy(lettingOtherPartOfPropertyRentDetails = Some(data)))
           val updatedData      = updateAboutFranchisesOrLettings(_.copy(lettingSections = updatedSections))
-          session.saveOrUpdate(updatedData)
-          Redirect(navigator.nextPage(LettingAccommodationRentDetailsPageId, updatedData).apply(updatedData))
+          session.saveOrUpdate(updatedData).map{_ =>
+          Redirect(navigator.nextPage(LettingAccommodationRentDetailsPageId, updatedData).apply(updatedData))}
         }
     )
   }
