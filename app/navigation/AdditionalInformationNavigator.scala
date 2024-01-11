@@ -34,7 +34,7 @@ class AdditionalInformationNavigator @Inject() (audit: Audit) extends Navigator(
       _.altDetailsQuestion.map(_.contactDetailsQuestion.name)
     ) match {
       case Some("yes") => controllers.additionalinformation.routes.AlternativeContactDetailsController.show()
-      case Some("no")  => controllers.additionalinformation.routes.CheckYourAnswersAdditionalInformationController.show()
+      case Some("no")  => controllers.aboutyouandtheproperty.routes.AboutThePropertyController.show()
       case _           =>
         logger.warn(
           s"Navigation for alternative details question reached without correct selection of conditions by controller"
@@ -45,9 +45,7 @@ class AdditionalInformationNavigator @Inject() (audit: Audit) extends Navigator(
   override val routeMap: Map[Identifier, Session => Call]    = Map(
     FurtherInformationId                    -> (_ => controllers.additionalinformation.routes.ContactDetailsQuestionController.show()),
     ContactDetailsQuestionId                -> contactDetailsQuestionRouting,
-    AlternativeContactDetailsId             -> (_ =>
-      controllers.additionalinformation.routes.CheckYourAnswersAdditionalInformationController.show()
-    ),
+    AlternativeContactDetailsId             -> (_ => controllers.aboutyouandtheproperty.routes.AboutThePropertyController.show()),
     CheckYourAnswersAdditionalInformationId -> (_ => controllers.routes.TaskListController.show())
   )
 }

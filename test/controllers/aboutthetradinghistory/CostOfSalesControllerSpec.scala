@@ -31,7 +31,7 @@ class CostOfSalesControllerSpec extends TestBaseSpec {
   val sessionRequest           = SessionRequest(aboutYourTradingHistory6015YesSession, fakeRequest)
   val mockCostOfSalesNavigator = mock[AboutTheTradingHistoryNavigator]
   val mockCostOfSalesView      = mock[costOfSales]
-  when(mockCostOfSalesView.apply(any,any)(any, any)).thenReturn(HtmlFormat.empty)
+  when(mockCostOfSalesView.apply(any, any)(any, any)).thenReturn(HtmlFormat.empty)
 
   val costOfSalesController = new CostOfSalesController(
     stubMessagesControllerComponents(),

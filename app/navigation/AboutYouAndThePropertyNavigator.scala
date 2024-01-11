@@ -122,7 +122,7 @@ class AboutYouAndThePropertyNavigator @Inject() (audit: Audit) extends Navigator
   }
 
   override val routeMap: Map[Identifier, Session => Call] = Map(
-    AboutYouPageId                          -> (_ => controllers.aboutyouandtheproperty.routes.AboutThePropertyController.show()),
+    AboutYouPageId                          -> (_ => controllers.additionalinformation.routes.ContactDetailsQuestionController.show()),
     AboutThePropertyPageId                  -> (_ => controllers.aboutyouandtheproperty.routes.WebsiteForPropertyController.show()),
     WebsiteForPropertyPageId                -> websiteForPropertyRouting,
     PremisesLicenseGrantedId                -> premisesLicenseGrantedRouting,
