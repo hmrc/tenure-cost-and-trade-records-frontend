@@ -225,7 +225,7 @@
         Seq(
             SummaryListRow(
                 key = Key(HtmlContent(variableOperatingExpensesKeys)),
-                value = Value(HtmlContent(sectionAnswers.answers.fold("")(t => variableOperatingExpensesValuesTable(t.variableOperatingExpensesSections)))),
+                value = Value(HtmlContent(sectionAnswers.answers.fold("")(t => variableOperatingExpensesValuesTable(t.variableOperatingExpenses)))),
                 actions = Some(
                     Actions(items =
                         Seq(

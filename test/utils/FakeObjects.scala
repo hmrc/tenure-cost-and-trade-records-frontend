@@ -357,7 +357,7 @@ trait FakeObjects {
         BigDecimal(1)
       )
     ),
-    variableOperatingExpensesSections = Some(
+    variableOperatingExpenses = Some(
       VariableOperatingExpensesSections(
         Seq(
           VariableOperatingExpenses(
