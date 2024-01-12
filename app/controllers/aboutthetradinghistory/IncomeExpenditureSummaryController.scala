@@ -87,7 +87,7 @@ class IncomeExpenditureSummaryController @Inject() (
       val payrollCostEntry  = aboutTheTradingHistory.totalPayrollCostSections.find(_.financialYearEnd == finYearEnd).getOrElse(TotalPayrollCost(finYearEnd,None,None))
       val totalPayrollCosts = payrollCostEntry.total
 
-      val variableExpenses = aboutTheTradingHistory.variableOperatingExpensesSections
+      val variableExpenses = aboutTheTradingHistory.variableOperatingExpenses
         .flatMap(_.variableOperatingExpenses.find(_.financialYearEnd == finYearEnd).map(_.total))
         .getOrElse(zeroBigDecimal)
 

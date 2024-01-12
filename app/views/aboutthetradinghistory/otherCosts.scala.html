@@ -57,9 +57,11 @@
     <p class="govuk-body"><span class="govuk-!-font-weight-bold">@messages("otherCosts.total")</span></p>
 }
 
-@totalOtherCostContent(idx: Int) = {
-    <span id="@{"otherCostTotal." + idx}">
-    @theForm.value.fold("")(_.otherCosts.map(_.total).sum.asMoney)
+@totalContent(idx: Int) = {
+    <span
+    data-total-prefix="otherCosts[@idx]."
+    data-total-items="contributionsToHeadOffice,otherCosts">
+    @theForm.value.fold("")(_.otherCosts(idx).total.asMoney)
     </span>
 }
 
@@ -161,7 +163,7 @@
                   content = HtmlContent(totalHeading)
               ) +: columns.map { idx =>
                   TableRow(
-                      content = HtmlContent(totalOtherCostContent(idx))
+                      content = HtmlContent(totalContent(idx))
                   )
               }
           ),
@@ -171,8 +173,8 @@
 
       @includes.continueSaveAsDraftButtons(govukButton)
   }
+
+    <script src="@routes.Assets.versioned("javascripts/data-total.js")"></script>
+    <script src="@routes.Assets.versioned("javascripts/responsive-table.js")"></script>
+
 }
-
-<script src="@routes.Assets.versioned("javascripts/other-costs.js")"></script>
-
-

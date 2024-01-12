@@ -178,7 +178,7 @@
         @includes.taskListItem("variable-operating-expenses", "taskList.variableOperatingExpense",
          controllers.aboutthetradinghistory.routes.VariableOperatingExpensesController.show(),
          section3Completed,
-         session.aboutTheTradingHistory.flatMap(_.variableOperatingExpensesSections),
+         session.aboutTheTradingHistory.flatMap(_.variableOperatingExpenses),
          session.aboutTheTradingHistory.flatMap(_.totalPayrollCostSections).isEmpty
         )
 
@@ -186,7 +186,7 @@
          controllers.aboutthetradinghistory.routes.FixedOperatingExpensesController.show(),
          section3Completed,
          session.aboutTheTradingHistory.flatMap(_.fixedOperatingExpensesSections),
-         session.aboutTheTradingHistory.flatMap(_.variableOperatingExpensesSections).isEmpty
+         session.aboutTheTradingHistory.flatMap(_.variableOperatingExpenses).isEmpty
         )
 
         @includes.taskListItem("other-costs", "taskList.otherCosts",

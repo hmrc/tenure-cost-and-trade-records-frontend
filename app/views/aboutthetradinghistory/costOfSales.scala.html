@@ -69,9 +69,11 @@
 }
 
 @totalContent(idx: Int) = {
-    <span id="@{
-        "total." + idx
-    }">@form.value.fold("")(_(idx).total.asMoney)</span>
+    <span
+    data-total-prefix="costOfSales[@idx]."
+    data-total-items="accommodation,food,drinks,other">
+    @form.value.fold("")(_(idx).total.asMoney)
+    </span>
 }
 
 @costInputAttributes = @{
@@ -98,6 +100,10 @@
         <li>@messages("costOfSales.excluding.item3")</li>
         <li>@messages("costOfSales.excluding.item4")</li>
     </ul>
+
+    @govukInsetText(InsetText(
+        content = Text(messages("turnover.inset"))
+    ))
 
     @govukDetails(Details(
         summary = Text(messages("costOfSales.details.link")),
@@ -208,7 +214,8 @@
 
         @includes.continueSaveAsDraftButtons(govukButton)
     }
-}
 
-<script src="@routes.Assets.versioned("javascripts/responsive-table.js")"></script>
-<script src="@routes.Assets.versioned("javascripts/cost-of-sales.js")"></script>
+    <script src="@routes.Assets.versioned("javascripts/data-total.js")"></script>
+    <script src="@routes.Assets.versioned("javascripts/responsive-table.js")"></script>
+
+}

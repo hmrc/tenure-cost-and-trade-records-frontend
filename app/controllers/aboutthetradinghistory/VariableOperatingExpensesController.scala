@@ -48,7 +48,7 @@ class VariableOperatingExpensesController @Inject() (
       val yearEndDates = financialYearEndDates(tradingHistory)
       val years        = yearEndDates.map(_.getYear.toString)
 
-      val existingVoeSeq = tradingHistory.variableOperatingExpensesSections
+      val existingVoeSeq = tradingHistory.variableOperatingExpenses
         .fold(Seq.empty[VariableOperatingExpenses])(_.variableOperatingExpenses)
 
       val voeSeq =
@@ -60,10 +60,10 @@ class VariableOperatingExpensesController @Inject() (
           yearEndDates.map(VariableOperatingExpenses(_, None, None, None, None, None, None, None, None))
         }
 
-      val voeSections = tradingHistory.variableOperatingExpensesSections
+      val voeSections = tradingHistory.variableOperatingExpenses
         .fold(VariableOperatingExpensesSections(voeSeq))(_.copy(variableOperatingExpenses = voeSeq))
 
-      val updatedData = updateAboutTheTradingHistory(_.copy(variableOperatingExpensesSections = Some(voeSections)))
+      val updatedData = updateAboutTheTradingHistory(_.copy(variableOperatingExpenses = Some(voeSections)))
       session
         .saveOrUpdate(updatedData)
         .flatMap(_ =>
@@ -91,7 +91,7 @@ class VariableOperatingExpensesController @Inject() (
 
           val voeSections = data.copy(variableOperatingExpenses = voeSeq)
 
-          val updatedData = updateAboutTheTradingHistory(_.copy(variableOperatingExpensesSections = Some(voeSections)))
+          val updatedData = updateAboutTheTradingHistory(_.copy(variableOperatingExpenses = Some(voeSections)))
           session
             .saveOrUpdate(updatedData)
             .map(_ =>

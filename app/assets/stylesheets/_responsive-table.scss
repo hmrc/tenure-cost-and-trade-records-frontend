@@ -41,4 +41,25 @@
   .hmrc-responsive-table td:not(:first-child) .govuk-table th:first-child {
     display: table-cell;
   }
+
+  .hmrc-overlap-columns-2-parent,
+  .hmrc-overlap-columns-3-parent {
+    height: auto;
+  }
+
+  .hmrc-overlap-columns-2,
+  .hmrc-overlap-columns-3 {
+    position: static;
+    width: 100%;
+  }
+
+  .hmrc-overlap-columns-2 textarea,
+  .hmrc-overlap-columns-3 textarea {
+    width: 100%;
+  }
+
+  .hmrc-responsive-table td:not(:first-child) .govuk-table tr:has(div.hmrc-overlap-columns-2-parent),
+  .hmrc-responsive-table td:not(:first-child) .govuk-table tr:has(div.hmrc-overlap-columns-3-parent) {
+    display: none;
+  }
 }
