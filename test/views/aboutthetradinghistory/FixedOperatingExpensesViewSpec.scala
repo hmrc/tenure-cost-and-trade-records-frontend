@@ -32,8 +32,8 @@
 
 package views.aboutthetradinghistory
 
+import actions.SessionRequest
 import form.aboutthetradinghistory.FixedOperatingExpensesForm
-import models.pages.Summary
 import models.submissions.aboutthetradinghistory.FixedOperatingExpenses
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
@@ -47,15 +47,16 @@ class FixedOperatingExpensesViewSpec extends QuestionViewBehaviours[Seq[FixedOpe
   def fixedOperatingExpensesView = app.injector.instanceOf[views.html.aboutthetradinghistory.fixedOperatingExpenses]
 
   val messageKeyPrefix = "fixedOperatingExpenses"
+  val sessionRequest   = SessionRequest(baseFilled6015Session, fakeRequest)
 
   override val form = FixedOperatingExpensesForm.fixedOperatingExpensesForm(3)
 
   val fakeDates = Seq(LocalDate.of(2021, 4, 1), LocalDate.of(2022, 4, 1), LocalDate.of(2023, 4, 1))
 
-  def createView = () => fixedOperatingExpensesView(form, 3, fakeDates, Summary("99996010001"))(fakeRequest, messages)
+  def createView = () => fixedOperatingExpensesView(form)(sessionRequest, messages)
 
   def createViewUsingForm = (form: Form[Seq[FixedOperatingExpenses]]) =>
-    fixedOperatingExpensesView(form, 3, fakeDates, Summary("99996010001"))(fakeRequest, messages)
+    fixedOperatingExpensesView(form)(sessionRequest, messages)
 
   "Fixed Operating Expenses view" must {
 

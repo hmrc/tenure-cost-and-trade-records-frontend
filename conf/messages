@@ -907,7 +907,7 @@ rent.received.from.confirm.error = Please confirm this payment was not included 
 # CALCULATING THE RENT (6015/6016 0NLY)
 calculating.the.rent.for.heading = Calculating the rent for {0}
 calculating.the.rent.for.explain = Explain how the income received figure was calculated- for example, 10% of the total takings
-calculating.the.rent.for.explain.error = Plese explain how the income received figure was calculated
+calculating.the.rent.for.explain.error = Please explain how the income received figure was calculated
 calculating.the.rent.for.label = When was the rent fixed at its current rate?
 calculating.the.rent.for.error = Enter the date when the annual rent was fixed
 
@@ -1273,13 +1273,14 @@ error.variableExpenses.other.negative = The other expenses in the year ending {0
 # FIXED OPERATING EXPENSES (FORM 6015)
 #########
 fixedOperatingExpenses.heading = Fixed operating expenses
-fixedOperatingExpenses.p1 = Provide details of your fixed operating
+fixedOperatingExpenses.p1 = Provide details of your fixed operating expenses.
 fixedOperatingExpenses.p2 = All fields on this page are mandatory. If none of the categories are applicable, enter the number 0.
 fixedOperatingExpenses.rent = Rent
 fixedOperatingExpenses.businessRates = Business rates
 fixedOperatingExpenses.insurance = Insurance
 fixedOperatingExpenses.loanInterest = Loan interest
 fixedOperatingExpenses.depreciation = Depreciation
+fixedOperatingExpenses.total = Total fixed operating expenses
 
 # OTHER COSTS (FORM 6015)
 #########################

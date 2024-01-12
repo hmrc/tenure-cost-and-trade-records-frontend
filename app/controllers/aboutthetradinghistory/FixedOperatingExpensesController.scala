@@ -47,17 +47,11 @@ class FixedOperatingExpensesController @Inject() (
     request.sessionData.aboutTheTradingHistory
       .filter(_.occupationAndAccountingInformation.isDefined)
       .fold(Redirect(routes.AboutYourTradingHistoryController.show())) { aboutTheTradingHistory =>
-        val numberOfColumns                = aboutTheTradingHistory.turnoverSections.size
-        val financialYears: Seq[LocalDate] = aboutTheTradingHistory.turnoverSections.foldLeft(Seq.empty[LocalDate])(
-          (sequence, turnoverSection) => sequence :+ turnoverSection.financialYearEnd
-        )
+        val numberOfColumns = aboutTheTradingHistory.turnoverSections.size
         Ok(
           fixedOperatingExpensesView(
             fixedOperatingExpensesForm(numberOfColumns)
               .fill(aboutTheTradingHistory.fixedOperatingExpensesSections),
-            numberOfColumns,
-            financialYears,
-            request.sessionData.toSummary,
             navigator.from
           )
         )
@@ -68,19 +62,13 @@ class FixedOperatingExpensesController @Inject() (
     request.sessionData.aboutTheTradingHistory
       .filter(_.occupationAndAccountingInformation.isDefined)
       .fold(Future.successful(Redirect(routes.AboutYourTradingHistoryController.show()))) { aboutTheTradingHistory =>
-        val numberOfColumns                = aboutTheTradingHistory.turnoverSections.size
-        val financialYears: Seq[LocalDate] = aboutTheTradingHistory.turnoverSections.foldLeft(Seq.empty[LocalDate])(
-          (sequence, turnoverSection) => sequence :+ turnoverSection.financialYearEnd
-        )
+        val numberOfColumns = aboutTheTradingHistory.turnoverSections.size
         continueOrSaveAsDraft[Seq[FixedOperatingExpenses]](
           fixedOperatingExpensesForm(numberOfColumns),
           formWithErrors =>
             BadRequest(
               fixedOperatingExpensesView(
                 formWithErrors,
-                numberOfColumns,
-                financialYears,
-                request.sessionData.toSummary,
                 navigator.from
               )
             ),
