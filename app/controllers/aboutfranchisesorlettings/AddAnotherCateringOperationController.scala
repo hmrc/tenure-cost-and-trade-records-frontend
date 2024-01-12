@@ -44,7 +44,6 @@ class AddAnotherCateringOperationController @Inject() (
 
   def show(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     val existingSection = request.sessionData.aboutFranchisesOrLettings.flatMap(_.cateringOperationSections.lift(index))
-
     Future.successful(
       Ok(
         addAnotherCateringOperationOrLettingAccommodationView(
@@ -69,8 +68,8 @@ class AddAnotherCateringOperationController @Inject() (
 
       Future.successful(Redirect(redirectUrl))
     } else {
-
-      val fromCYA = request.sessionData.aboutFranchisesOrLettings.flatMap(_.fromCYA).getOrElse(false)
+      val fromCYA =
+        request.sessionData.aboutFranchisesOrLettings.flatMap(_.fromCYA).getOrElse(false) || navigator.from == "CYA"
       continueOrSaveAsDraft[AnswersYesNo](
         addAnotherCateringOperationForm,
         formWithErrors =>
@@ -85,31 +84,40 @@ class AddAnotherCateringOperationController @Inject() (
             )
           ),
         data =>
-          request.sessionData.aboutFranchisesOrLettings
-            .map(_.cateringOperationSections)
-            .filter(_.nonEmpty)
-            .fold(
-              Future.successful(
+          if (data == AnswerYes) {
+            val updatedData = updateAboutFranchisesOrLettings(
+              _.copy(
+                fromCYA = Some(fromCYA)
+              )
+            )
+            session.saveOrUpdate(updatedData)
+            Future.successful(Redirect(routes.CateringOperationDetailsController.show()))
+          } else {
+            request.sessionData.aboutFranchisesOrLettings
+              .map(_.cateringOperationSections)
+              .filter(_.nonEmpty)
+              .fold(
                 Redirect(
-                  if (data == AnswerYes) {
-                    routes.CateringOperationDetailsController.show()
-                  } else if (data == AnswerNo && fromCYA == true) {
+                  if (data == AnswerNo && fromCYA == true) {
                     routes.CheckYourAnswersAboutFranchiseOrLettingsController.show()
                   } else {
                     routes.LettingOtherPartOfPropertyController.show()
                   }
                 )
-              )
-            ) { existingSections =>
-              val updatedSections = existingSections.updated(
-                index,
-                existingSections(index).copy(addAnotherOperationToProperty = Some(data))
-              )
-              val updatedData     = updateAboutFranchisesOrLettings(_.copy(cateringOperationSections = updatedSections))
-              session.saveOrUpdate(updatedData).map { _ =>
+              ) { existingSections =>
+                val updatedSections = existingSections.updated(
+                  index,
+                  existingSections(index).copy(addAnotherOperationToProperty = Some(data))
+                )
+                val updatedData     = updateAboutFranchisesOrLettings(
+                  _.copy(
+                    cateringOperationSections = updatedSections
+                  )
+                )
+                session.saveOrUpdate(updatedData)
                 Redirect(navigator.nextPage(AddAnotherCateringOperationPageId, updatedData).apply(updatedData))
               }
-            }
+          }
       )
     }
   }

@@ -14,7 +14,6 @@
  * limitations under the License.
  *@
 
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
 @()(implicit messages: Messages)
 
 <div class="govuk-inset-text govuk-!-display-none-print">
@@ -25,13 +24,4 @@
         </p>
     </div>
 
-
-<script>
-        document.getElementById("printLinkParagraph").classList.remove("govuk-!-display-none");
-        document.getElementById("printLinkParagraph").setAttribute("aria-hidden", "false");
-        document.getElementById("printLink").addEventListener("click", function (event) {
-                    event.preventDefault();
-                    window.print();
-                }
-        );
-</script>
+<script src="@routes.Assets.versioned("javascripts/print-confirmation.js")"></script>

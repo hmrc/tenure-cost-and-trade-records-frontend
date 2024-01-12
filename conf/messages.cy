@@ -1242,7 +1242,8 @@ variableOperatingExpenses.entertainment = Entertainment
 variableOperatingExpenses.entertainment.p1 = Artiste fees, for example.
 variableOperatingExpenses.other = Other expenses
 variableOperatingExpenses.other.p1 = Include all other expenses not listed previously.
-variableOperatingExpenses.totalVariableOperatingExpenses = Total variable operating expenses
+variableOperatingExpenses.otherExpensesDetails = Give details of the items included in your other expenses
+variableOperatingExpenses.total = Total variable operating expenses
 error.variableExpenses.energyAndUtilities.required = Enter 0 if you did not have any energy and utilities expenses in the year ending {0}
 error.variableExpenses.energyAndUtilities.range = The energy and utilities expenses in the year ending {0} must be a number, for example 100 or 100.00
 error.variableExpenses.energyAndUtilities.negative = The energy and utilities expenses in the year ending {0} cannot be a negative number
@@ -1345,14 +1346,14 @@ error.furtherInformationOrRemarks.maxLength = Further information must be 2,000 
 
 # ALTERNATIVE DETAILS QUESTION
 ################################
-contactDetailsQuestion.heading = Would you like us to use alternative details if we need to contact you?
+contactDetailsQuestion.heading = Would you like us to use an alternative correspondence address if we need to contact you?
 hint.contactDetailsQuestion = You can either provide alternative contact details, or nominate someone else we should contact if we have any queries about this declaration.
 error.contactDetailsQuestion.missing= Select yes if you would like us to use alternative details
 
 # ALTERNATIVE CONTACT DETAILS
 #############################
-alternativeContactDetails.heading = Alternative contact details
-hint.alternativeContactDetails = Provide the details of the person you would like us to contact if we have any queries about the declaration.
+alternativeContactDetails.heading = Alternative correspondence address
+hint.alternativeContactDetails = If you would like us to contact you at a different address, give details here
 label.alternativeContactDetails = Correspondence address
 
 # TENANCY LEASE AGREEMENT EXPIRE (FORM 6011)
@@ -1507,6 +1508,8 @@ checkYourAnswersAboutTheTradingHistory.food = Food
 checkYourAnswersAboutTheTradingHistory.otherReceipts = Other receipts
 checkYourAnswersAboutTheTradingHistory.accommodation = Accommodation
 checkYourAnswersAboutTheTradingHistory.averageOccupancyRate = Average occupancy rate
+checkYourAnswersAboutTheTradingHistory.variableOperatingExpenses.other = Other
+checkYourAnswersAboutTheTradingHistory.variableOperatingExpenses.otherDetails = Other expenses details
 checkYourAnswersRequestReferenceNumber.heading = Check your answers – if you do not have a reference number
 checkYourAnswersRequestReferenceNumber.subheading1 = Property details
 checkYourAnswersRequestReferenceNumber.subheading2 = Your details

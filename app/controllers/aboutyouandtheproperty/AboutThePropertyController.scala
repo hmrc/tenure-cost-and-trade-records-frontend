@@ -19,12 +19,14 @@ package controllers.aboutyouandtheproperty
 import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
 import form.aboutyouandtheproperty.AboutThePropertyForm.aboutThePropertyForm
+import models.Session
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty.updateAboutYouAndTheProperty
 import models.submissions.aboutyouandtheproperty.PropertyDetails
 import navigation.AboutYouAndThePropertyNavigator
 import navigation.identifiers.AboutThePropertyPageId
+import play.api.Logging
 import play.api.i18n.I18nSupport
-import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Request}
 import repositories.SessionRepo
 import views.html.aboutyouandtheproperty.aboutTheProperty
 
@@ -39,7 +41,8 @@ class AboutThePropertyController @Inject() (
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
 ) extends FORDataCaptureController(mcc)
-    with I18nSupport {
+    with I18nSupport
+    with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Future.successful(
@@ -51,7 +54,7 @@ class AboutThePropertyController @Inject() (
           },
           request.sessionData.forType,
           request.sessionData.toSummary,
-          navigator.from
+          backLink(request.sessionData)
         )
       )
     )
@@ -65,7 +68,8 @@ class AboutThePropertyController @Inject() (
           aboutThePropertyView(
             formWithErrors,
             request.sessionData.forType,
-            request.sessionData.toSummary
+            request.sessionData.toSummary,
+            backLink(request.sessionData)
           )
         ),
       data => {
@@ -75,5 +79,21 @@ class AboutThePropertyController @Inject() (
       }
     )
   }
+
+  private def backLink(answers: Session)(implicit request: Request[AnyContent]): String =
+    navigator.from match {
+      case "TL" => controllers.routes.TaskListController.show().url + "#about-the-property"
+      case _    =>
+        answers.additionalInformation.flatMap(
+          _.altDetailsQuestion.map(_.contactDetailsQuestion.name)
+        ) match {
+          case Some("yes") =>
+            controllers.additionalinformation.routes.AlternativeContactDetailsController.show.url
+          case Some("no")  => controllers.additionalinformation.routes.ContactDetailsQuestionController.show.url
+          case _           =>
+            logger.warn(s"Back link for alternative contact page reached with unknown enforcement taken value")
+            controllers.routes.TaskListController.show().url
+        }
+    }
 
 }

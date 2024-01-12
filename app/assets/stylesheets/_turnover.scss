@@ -3,3 +3,29 @@
   min-width: 7em;
   padding-right: 0.5em;
 }
+
+.hmrc-overlap-columns-2-parent {
+  height: 12em;
+}
+
+.hmrc-overlap-columns-3-parent {
+  height: 11em;
+}
+
+.hmrc-overlap-columns-2 {
+  position: absolute;
+  width: 380px;
+}
+
+.hmrc-overlap-columns-3 {
+  position: absolute;
+  width: 555px;
+}
+
+.hmrc-overlap-columns-2 textarea {
+  width: 380px;
+}
+
+.hmrc-overlap-columns-3 textarea {
+  width: 555px;
+}
