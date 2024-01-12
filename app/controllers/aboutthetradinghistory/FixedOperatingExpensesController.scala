@@ -76,7 +76,13 @@ class FixedOperatingExpensesController @Inject() (
           fixedOperatingExpensesForm(numberOfColumns),
           formWithErrors =>
             BadRequest(
-              fixedOperatingExpensesView(formWithErrors, numberOfColumns, financialYears, request.sessionData.toSummary,navigator.from)
+              fixedOperatingExpensesView(
+                formWithErrors,
+                numberOfColumns,
+                financialYears,
+                request.sessionData.toSummary,
+                navigator.from
+              )
             ),
           success => {
             val updatedData = updateAboutTheTradingHistory(_.copy(fixedOperatingExpensesSections = success))

@@ -28,19 +28,21 @@ class AboutThePropertyViewSpec extends QuestionViewBehaviours[PropertyDetails] {
 
   val messageKeyPrefix = "aboutProperty"
 
+  val backLink = controllers.additionalinformation.routes.AlternativeContactDetailsController.show.url
+
   override val form: Form[PropertyDetails] = AboutThePropertyForm.aboutThePropertyForm
 
   def createView: () => Html = () =>
-    aboutThePropertyView(form, "FOR6010", Summary("99996010001"))(fakeRequest, messages)
+    aboutThePropertyView(form, "FOR6010", Summary("99996010001"), backLink)(fakeRequest, messages)
 
   def createViewUsingForm: Form[PropertyDetails] => Html = (form: Form[PropertyDetails]) =>
-    aboutThePropertyView(form, "FOR6010", Summary("99996010001"))(fakeRequest, messages)
+    aboutThePropertyView(form, "FOR6010", Summary("99996010001"), backLink)(fakeRequest, messages)
 
   def createView6015: () => Html = () =>
-    aboutThePropertyView(form, "FOR6015", Summary("99996010001"))(fakeRequest, messages)
+    aboutThePropertyView(form, "FOR6015", Summary("99996010001"), backLink)(fakeRequest, messages)
 
   def createViewUsingForm6015: Form[PropertyDetails] => Html = (form: Form[PropertyDetails]) =>
-    aboutThePropertyView(form, "FOR6015", Summary("99996010001"))(fakeRequest, messages)
+    aboutThePropertyView(form, "FOR6015", Summary("99996010001"), backLink)(fakeRequest, messages)
 
   "About the property view" must {
 
@@ -51,7 +53,7 @@ class AboutThePropertyViewSpec extends QuestionViewBehaviours[PropertyDetails] {
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText mustBe messages("back.link.label")
       val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.aboutyouandtheproperty.routes.AboutYouController.show().url
+      backlinkUrl mustBe controllers.additionalinformation.routes.AlternativeContactDetailsController.show().url
     }
 
     "Section heading is visible" in {
@@ -178,7 +180,7 @@ class AboutThePropertyViewSpec extends QuestionViewBehaviours[PropertyDetails] {
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText mustBe messages("back.link.label")
       val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.aboutyouandtheproperty.routes.AboutYouController.show().url
+      backlinkUrl mustBe controllers.additionalinformation.routes.AlternativeContactDetailsController.show().url
     }
 
     "Section heading is visible" in {

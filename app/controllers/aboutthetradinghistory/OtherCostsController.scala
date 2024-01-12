@@ -58,7 +58,7 @@ class OtherCostsController @Inject() (
       val filledForm  = form.fill(updatedOtherCosts)
       session
         .saveOrUpdate(updatedData)
-        .flatMap(_ => Ok(otherCostsView(filledForm,navigator.from)))
+        .flatMap(_ => Ok(otherCostsView(filledForm, navigator.from)))
     }
   }
 
@@ -82,7 +82,7 @@ class OtherCostsController @Inject() (
           }
           val updatedFormWithErrors = formWithErrors.copy(errors = updatedErrors)
 
-          BadRequest(otherCostsView(updatedFormWithErrors,navigator.from))
+          BadRequest(otherCostsView(updatedFormWithErrors, navigator.from))
         },
         data => {
           val updatedOtherCostWithDate = (data.otherCosts zip financialYearEndDates(aboutTheTradingHistory)).map {

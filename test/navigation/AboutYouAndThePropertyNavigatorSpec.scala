@@ -29,7 +29,7 @@ class AboutYouAndThePropertyNavigatorSpec extends TestBaseSpec {
         .nextPage(AboutYouPageId, aboutYouAndTheProperty6010YesSession)
         .apply(
           aboutYouAndTheProperty6010YesSession
-        ) mustBe controllers.aboutyouandtheproperty.routes.AboutThePropertyController
+        ) mustBe controllers.additionalinformation.routes.ContactDetailsQuestionController
         .show()
     }
 

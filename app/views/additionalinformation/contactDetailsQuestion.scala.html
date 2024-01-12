@@ -36,7 +36,7 @@
     sectionName = messages("label.section.additionalInformation"),
     backLinkUrl = { fromLocation match {
             case "TL" => controllers.routes.TaskListController.show().url+"#alternate-contact-details"
-            case _ => controllers.additionalinformation.routes.FurtherInformationOrRemarksController.show().url
+            case _ => controllers.aboutyouandtheproperty.routes.AboutYouController.show().url
         }
     },
     theForm = theForm
@@ -49,7 +49,6 @@
             "contactDetailsQuestion",
             "contactDetailsQuestion.heading",
             "govuk-fieldset__legend--l",
-            "hint.contactDetailsQuestion",
             isHeading = true
         )
         @includes.continueSaveAsDraftButtons(govukButton)

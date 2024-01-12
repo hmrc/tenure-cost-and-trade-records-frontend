@@ -16,6 +16,7 @@
 
 package controllers.additionalinformation
 
+import form.additionalinformation.ContactDetailsQuestionForm.contactDetailsQuestionForm
 import models.submissions.additionalinformation.AdditionalInformation
 import play.api.http.Status.{BAD_REQUEST, OK}
 import play.api.test.{FakeRequest, Helpers}
@@ -23,6 +24,10 @@ import play.api.test.Helpers.{contentType, status, stubMessagesControllerCompone
 import utils.TestBaseSpec
 
 class ContactDetailsQuestionControllerSpec extends TestBaseSpec {
+
+  import TestData._
+  import form.aboutyouandtheproperty.TiedForGoodsForm._
+  import utils.FormBindingTestAssertions._
 
   def contactDetailsQuestionController(
     additionalInformation: Option[AdditionalInformation] = Some(prefilledAdditionalInformation)
@@ -47,15 +52,33 @@ class ContactDetailsQuestionControllerSpec extends TestBaseSpec {
       Helpers.charset(result) shouldBe Some("utf-8")
     }
 
+    "SUBMIT /" should {
+      "throw a BAD_REQUEST if an empty form is submitted" in {
+        val res = contactDetailsQuestionController().submit(
+          FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)
+        )
+        status(res) shouldBe BAD_REQUEST
+      }
+    }
   }
 
-  "SUBMIT /" should {
-    "throw a BAD_REQUEST if an empty form is submitted" in {
-      val res = contactDetailsQuestionController().submit(
-        FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)
-      )
-      status(res) shouldBe BAD_REQUEST
+  "Contact details question form" should {
+    "error if tiedForGoods is missing" in {
+      val formData = baseFormData - errorKey.contactDetailsQuestion
+      val form     = contactDetailsQuestionForm.bind(formData)
+
+      mustContainError(errorKey.contactDetailsQuestion, "error.contactDetailsQuestion.missing", form)
     }
+  }
+
+  object TestData {
+    val errorKey: Object {
+      val contactDetailsQuestion: String
+    } = new {
+      val contactDetailsQuestion: String = "contactDetailsQuestion"
+    }
+
+    val baseFormData: Map[String, String] = Map("contactDetailsQuestion" -> "yes")
   }
 
 }

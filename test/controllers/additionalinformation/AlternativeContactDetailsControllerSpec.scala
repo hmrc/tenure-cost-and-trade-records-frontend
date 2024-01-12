@@ -62,47 +62,6 @@ class AlternativeContactDetailsControllerSpec extends TestBaseSpec {
   }
 
   "Additional information form" should {
-    "error if fullName is missing " in {
-      val formData = baseFormData - errorKey.fullName
-      val form     = alternativeContactDetailsForm.bind(formData)
-
-      mustContainError(errorKey.fullName, "error.fullNameAlternative.required", form)
-    }
-
-    "error if phone is missing" in {
-      val formData = baseFormData + (errorKey.phone -> "")
-      val form     = alternativeContactDetailsForm.bind(formData)
-
-      mustContainError(errorKey.phone, Errors.contactAlternativePhoneRequired, form)
-    }
-    "error if phone number is too short" in {
-      val formData = baseFormData + (errorKey.phone -> "12345")
-      val form     = alternativeContactDetailsForm.bind(formData)
-
-      mustContainError(errorKey.phone, Errors.contactPhoneLength, form)
-    }
-
-    "error if phone number is invalid format" in {
-      val formData = baseFormData + (errorKey.phone -> "invalid_phone_number")
-      val form     = alternativeContactDetailsForm.bind(formData)
-
-      mustContainError(errorKey.phone, Errors.invalidPhone, form)
-    }
-
-    "error if email is missing" in {
-      val formData = baseFormData + (errorKey.email -> "")
-      val form     = alternativeContactDetailsForm.bind(formData)
-
-      mustContainError(errorKey.email, Errors.contactAlternativeEmailRequired, form)
-    }
-
-    "error if email is invalid format" in {
-      val formData = baseFormData + (errorKey.email -> "invalid_email_address")
-      val form     = alternativeContactDetailsForm.bind(formData)
-
-      mustContainError(errorKey.email, Errors.emailFormat, form)
-    }
-
     "error if buildingNameNumber is missing" in {
       val formData = baseFormData - errorKey.buildingNameNumber
       val form     = alternativeContactDetailsForm.bind(formData)

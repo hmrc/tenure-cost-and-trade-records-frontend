@@ -65,6 +65,8 @@ trait FakeViews { this: GuiceOneAppPerSuite =>
     app.injector.instanceOf[confirmationVacantProperty]
   lazy val confirmation: confirmation                                                             =
     app.injector.instanceOf[confirmation]
+  lazy val confirmationRequestReferenceNumber: confirmationRequestReferenceNumber                 =
+    app.injector.instanceOf[confirmationRequestReferenceNumber]
   lazy val tradingNameOperatingFromProperty: tradingNameOperatingFromProperty                     =
     app.injector.instanceOf[tradingNameOperatingFromProperty]
   lazy val tradingNameOwnTheProperty: tradingNameOwnTheProperty                                   = app.injector.instanceOf[tradingNameOwnTheProperty]

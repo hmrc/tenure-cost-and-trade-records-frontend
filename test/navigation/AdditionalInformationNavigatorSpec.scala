@@ -49,7 +49,7 @@ class AdditionalInformationNavigatorSpec extends TestBaseSpec {
         .nextPage(FurtherInformationId, additionalInformationSession)
         .apply(
           additionalInformationSession
-        ) mustBe controllers.additionalinformation.routes.ContactDetailsQuestionController
+        ) mustBe controllers.additionalinformation.routes.CheckYourAnswersAdditionalInformationController
         .show()
     }
 
@@ -72,7 +72,7 @@ class AdditionalInformationNavigatorSpec extends TestBaseSpec {
         .nextPage(ContactDetailsQuestionId, additionalInformationSessionNo)
         .apply(
           additionalInformationSessionNo
-        ) mustBe controllers.additionalinformation.routes.CheckYourAnswersAdditionalInformationController.show()
+        ) mustBe controllers.aboutyouandtheproperty.routes.AboutThePropertyController.show()
     }
 
     "return a function that goes to task list page when CYA has been completed" in {
