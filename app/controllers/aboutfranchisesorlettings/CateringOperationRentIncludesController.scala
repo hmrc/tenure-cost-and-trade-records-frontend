@@ -38,7 +38,8 @@ class CateringOperationRentIncludesController @Inject() (
   cateringOperationOrLettingAccommodationDetailsCheckboxesView: cateringOperationOrLettingAccommodationRentIncludes,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext) extends FORDataCaptureController(mcc)
+)(implicit ec: ExecutionContext)
+    extends FORDataCaptureController(mcc)
     with I18nSupport {
 
   def show(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
@@ -87,8 +88,9 @@ class CateringOperationRentIncludesController @Inject() (
           currentSection.copy(itemsInRent = data)
         )
         val updatedSession  = updateAboutFranchisesOrLettings(_.copy(cateringOperationSections = updatedSections))
-        session.saveOrUpdate(updatedSession).map{_ =>
-        Redirect(navigator.nextPage(CateringOperationRentIncludesPageId, updatedSession).apply(updatedSession))}
+        session.saveOrUpdate(updatedSession).map { _ =>
+          Redirect(navigator.nextPage(CateringOperationRentIncludesPageId, updatedSession).apply(updatedSession))
+        }
       }
     )).getOrElse(startRedirect)
   }

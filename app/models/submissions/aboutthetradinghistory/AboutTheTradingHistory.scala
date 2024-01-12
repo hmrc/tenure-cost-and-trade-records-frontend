@@ -21,19 +21,19 @@ import models.Session
 import play.api.libs.json.Json
 
 case class AboutTheTradingHistory(
-                                   occupationAndAccountingInformation: Option[OccupationalAndAccountingInformation] = None,
-                                   turnoverSections: Seq[TurnoverSection] = Seq.empty,
-                                   turnoverSections1516: Seq[TurnoverSection1516] = Seq.empty,
-                                   grossProfitSections: Seq[GrossProfit] = Seq.empty,
-                                   costOfSales: Seq[CostOfSales] = Seq.empty,
-                                   fixedOperatingExpensesSections: Seq[FixedOperatingExpenses] = Seq.empty,
-                                   netProfit: Option[NetProfit] = None,
-                                   otherCosts: Option[OtherCosts] = None,
-                                   totalPayrollCostSections: Seq[TotalPayrollCost] = Seq.empty,
-                                   variableOperatingExpenses: Option[VariableOperatingExpensesSections] = None,
-                                   incomeExpenditureSummary: Option[IncomeExpenditureSummary] = None,
-                                   unusualCircumstances: Option[UnusualCircumstances] = None,
-                                   checkYourAnswersAboutTheTradingHistory: Option[CheckYourAnswersAboutTheTradingHistory] = None
+  occupationAndAccountingInformation: Option[OccupationalAndAccountingInformation] = None,
+  turnoverSections: Seq[TurnoverSection] = Seq.empty,
+  turnoverSections1516: Seq[TurnoverSection1516] = Seq.empty,
+  grossProfitSections: Seq[GrossProfit] = Seq.empty,
+  costOfSales: Seq[CostOfSales] = Seq.empty,
+  fixedOperatingExpensesSections: Seq[FixedOperatingExpenses] = Seq.empty,
+  netProfit: Option[NetProfit] = None,
+  otherCosts: Option[OtherCosts] = None,
+  totalPayrollCostSections: Seq[TotalPayrollCost] = Seq.empty,
+  variableOperatingExpenses: Option[VariableOperatingExpensesSections] = None,
+  incomeExpenditureSummary: Option[IncomeExpenditureSummary] = None,
+  unusualCircumstances: Option[UnusualCircumstances] = None,
+  checkYourAnswersAboutTheTradingHistory: Option[CheckYourAnswersAboutTheTradingHistory] = None
 )
 
 object AboutTheTradingHistory {
