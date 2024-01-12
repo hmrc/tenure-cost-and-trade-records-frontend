@@ -38,7 +38,8 @@ class AddAnotherLettingOtherPartOfPropertyController @Inject() (
   addAnotherCateringOperationOrLettingAccommodationView: addAnotherCateringOperationOrLettingAccommodation,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext) extends FORDataCaptureController(mcc)
+)(implicit ec: ExecutionContext)
+    extends FORDataCaptureController(mcc)
     with I18nSupport {
 
   def show(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
@@ -84,22 +85,25 @@ class AddAnotherLettingOtherPartOfPropertyController @Inject() (
           request.sessionData.aboutFranchisesOrLettings
             .map(_.lettingSections)
             .filter(_.nonEmpty)
-            .fold( Future.successful(
-              Redirect(
-                if (data.name == "yes") {
-                  routes.LettingOtherPartOfPropertyDetailsController.show()
-                } else {
-                  routes.CheckYourAnswersAboutFranchiseOrLettingsController.show()
-                }
-              ))
+            .fold(
+              Future.successful(
+                Redirect(
+                  if (data.name == "yes") {
+                    routes.LettingOtherPartOfPropertyDetailsController.show()
+                  } else {
+                    routes.CheckYourAnswersAboutFranchiseOrLettingsController.show()
+                  }
+                )
+              )
             ) { existingSections =>
               val updatedSections = existingSections.updated(
                 index,
                 existingSections(index).copy(addAnotherLettingToProperty = Some(data))
               )
               val updatedData     = updateAboutFranchisesOrLettings(_.copy(lettingSections = updatedSections))
-              session.saveOrUpdate(updatedData).map{_ =>
-              Redirect(navigator.nextPage(AddAnotherLettingAccommodationPageId, updatedData).apply(updatedData))}
+              session.saveOrUpdate(updatedData).map { _ =>
+                Redirect(navigator.nextPage(AddAnotherLettingAccommodationPageId, updatedData).apply(updatedData))
+              }
             }
       )
     }

@@ -71,7 +71,7 @@ class CalculatingTheRentForViewSpec extends QuestionViewBehaviours[CalculatingTh
     "contain date legend for label.dateInput" in {
       val doc    = asDocument(createViewUsingForm(form))
       val legend = doc.getElementsByClass("govuk-fieldset__legend govuk-!-font-weight-bold").text()
-      assert(legend == messages("label.dateInput"))
+      assert(legend == messages("calculating.the.rent.for.label"))
     }
 
     "contain date format hint for dateInput-hint" in {

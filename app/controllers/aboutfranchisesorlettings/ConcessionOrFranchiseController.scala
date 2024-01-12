@@ -38,7 +38,8 @@ class ConcessionOrFranchiseController @Inject() (
   rentFromConcessionsView: rentFromConcessions,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext) extends FORDataCaptureController(mcc)
+)(implicit ec: ExecutionContext)
+    extends FORDataCaptureController(mcc)
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
@@ -70,8 +71,9 @@ class ConcessionOrFranchiseController @Inject() (
         ),
       data => {
         val updatedData = updateAboutFranchisesOrLettings(_.copy(cateringConcessionOrFranchise = Some(data)))
-        session.saveOrUpdate(updatedData).map{_ =>
-        Redirect(navigator.nextPage(RentFromConcessionId, updatedData).apply(updatedData))}
+        session.saveOrUpdate(updatedData).map { _ =>
+          Redirect(navigator.nextPage(RentFromConcessionId, updatedData).apply(updatedData))
+        }
       }
     )
   }

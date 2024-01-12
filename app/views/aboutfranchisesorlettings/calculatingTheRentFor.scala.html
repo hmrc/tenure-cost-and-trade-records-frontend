@@ -60,7 +60,12 @@
                 errorMessage = theForm.errors.asTextErrorMessageForField("rentDetails"),
             ).withFormField(theForm("rentDetails"))
         )
-        @includes.dateFields(form = theForm, field = "dateInput", govukDate = govukDateInput, showDays = true)
+        @includes.dateFields(
+            form = theForm,
+            field = "dateInput",
+            govukDate = govukDateInput,
+            showDays = true,
+            label = messages("calculating.the.rent.for.label"))
 
         @includes.continueSaveAsDraftButtons(govukButton)
     }

@@ -907,7 +907,7 @@ rent.received.from.confirm.error = Please confirm this payment was not included 
 calculating.the.rent.for.heading = Calculating the rent for {0}
 calculating.the.rent.for.explain = Explain how the income received figure was calculated- for example, 10% of the total takings
 calculating.the.rent.for.explain.error = Plese explain how the income received figure was calculated
-calculating.the.rent.for. = When was the rent fixed at its current rate
+calculating.the.rent.for.label = When was the rent fixed at its current rate?
 calculating.the.rent.for.error = Enter the date when the annual rent was fixed
 
 # CATERING OPERATION OR LETTING ACCOMMODATION CHECKBOXES

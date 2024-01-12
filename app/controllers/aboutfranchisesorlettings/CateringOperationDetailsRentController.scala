@@ -86,16 +86,17 @@ class CateringOperationDetailsRentController @Inject() (
         ),
       data =>
         request.sessionData.aboutFranchisesOrLettings.fold(
-          Future.successful(Redirect(routes.CateringOperationDetailsController.show(None))
-        )) { aboutFranchisesOrLettings =>
+          Future.successful(Redirect(routes.CateringOperationDetailsController.show(None)))
+        ) { aboutFranchisesOrLettings =>
           val existingSections = aboutFranchisesOrLettings.cateringOperationSections
           val updatedSections  = existingSections.updated(
             index,
             existingSections(index).copy(cateringOperationRentDetails = Some(data))
           )
           val updatedData      = updateAboutFranchisesOrLettings(_.copy(cateringOperationSections = updatedSections))
-          session.saveOrUpdate(updatedData).map{_ =>
-          Redirect(navigator.nextPage(CateringOperationRentDetailsPageId, updatedData).apply(updatedData))}
+          session.saveOrUpdate(updatedData).map { _ =>
+            Redirect(navigator.nextPage(CateringOperationRentDetailsPageId, updatedData).apply(updatedData))
+          }
         }
     )
   }

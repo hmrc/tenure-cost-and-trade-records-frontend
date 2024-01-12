@@ -38,7 +38,8 @@ class LettingOtherPartOfPropertyDetailsController @Inject() (
   cateringOperationOrLettingAccommodationDetailsView: cateringOperationOrLettingAccommodationDetails,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext) extends FORDataCaptureController(mcc)
+)(implicit ec: ExecutionContext)
+    extends FORDataCaptureController(mcc)
     with I18nSupport {
 
   def show(index: Option[Int]): Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
@@ -96,8 +97,9 @@ class LettingOtherPartOfPropertyDetailsController @Inject() (
               .copy(lettingCurrentIndex = updatedSections._1, lettingSections = updatedSections._2)
           }
         val updatedData                      = updateAboutFranchisesOrLettings(_ => updatedAboutFranchisesOrLettings)
-        session.saveOrUpdate(updatedData).map{_ =>
-        Redirect(navigator.nextPage(LettingAccommodationDetailsPageId, updatedData).apply(updatedData))}
+        session.saveOrUpdate(updatedData).map { _ =>
+          Redirect(navigator.nextPage(LettingAccommodationDetailsPageId, updatedData).apply(updatedData))
+        }
       }
     )
   }

@@ -87,8 +87,9 @@ class CalculatingTheRentForController @Inject() (
             existingSections(index).copy(calculatingTheRent = Some(data))
           )
           val updatedData      = updateAboutFranchisesOrLettings(_.copy(cateringOperationSections = updatedSections))
-          session.saveOrUpdate(updatedData).map{_ =>
-          Redirect(navigator.nextPage(CalculatingTheRentForPageId, updatedData).apply(updatedData))}
+          session.saveOrUpdate(updatedData).map { _ =>
+            Redirect(navigator.nextPage(CalculatingTheRentForPageId, updatedData).apply(updatedData))
+          }
         }
     )
   }
