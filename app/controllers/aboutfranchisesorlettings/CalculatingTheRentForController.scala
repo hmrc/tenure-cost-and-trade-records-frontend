@@ -29,7 +29,7 @@ import repositories.SessionRepo
 import views.html.aboutfranchisesorlettings.calculatingTheRentFor
 
 import javax.inject.{Inject, Named}
-import scala.concurrent.ExecutionContext
+import scala.concurrent.{ExecutionContext, Future}
 
 class CalculatingTheRentForController @Inject() (
   mcc: MessagesControllerComponents,
@@ -79,7 +79,7 @@ class CalculatingTheRentForController @Inject() (
         ),
       data =>
         request.sessionData.aboutFranchisesOrLettings.fold(
-          Redirect(routes.CateringOperationDetailsController.show(None))
+          Future.successful(Redirect(routes.CateringOperationDetailsController.show(None)))
         ) { aboutFranchisesOrLettings =>
           val existingSections = aboutFranchisesOrLettings.cateringOperationSections
           val updatedSections  = existingSections.updated(
@@ -87,8 +87,8 @@ class CalculatingTheRentForController @Inject() (
             existingSections(index).copy(calculatingTheRent = Some(data))
           )
           val updatedData      = updateAboutFranchisesOrLettings(_.copy(cateringOperationSections = updatedSections))
-          session.saveOrUpdate(updatedData)
-          Redirect(navigator.nextPage(CalculatingTheRentForPageId, updatedData).apply(updatedData))
+          session.saveOrUpdate(updatedData).map{_ =>
+          Redirect(navigator.nextPage(CalculatingTheRentForPageId, updatedData).apply(updatedData))}
         }
     )
   }

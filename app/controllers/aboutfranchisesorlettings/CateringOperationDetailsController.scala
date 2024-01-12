@@ -31,6 +31,7 @@ import repositories.SessionRepo
 import views.html.aboutfranchisesorlettings.cateringOperationOrLettingAccommodationDetails
 
 import javax.inject.{Inject, Named, Singleton}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class CateringOperationDetailsController @Inject() (
@@ -39,7 +40,7 @@ class CateringOperationDetailsController @Inject() (
   cateringOperationDetailsView: cateringOperationOrLettingAccommodationDetails,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FORDataCaptureController(mcc)
+) (implicit ec: ExecutionContext) extends FORDataCaptureController(mcc)
     with I18nSupport {
 
   def show(index: Option[Int]): Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
@@ -120,8 +121,9 @@ class CateringOperationDetailsController @Inject() (
           }
 
         val updatedData = updateAboutFranchisesOrLettings(_ => updatedAboutFranchisesOrLettings)
-        session.saveOrUpdate(updatedData)
-        Redirect(navigator.nextPage(CateringOperationDetailsPageId, updatedData).apply(updatedData))
+        session.saveOrUpdate(updatedData).map { _ =>
+          Redirect(navigator.nextPage(CateringOperationDetailsPageId, updatedData).apply(updatedData))
+        }
       }
     )
   }
