@@ -18,21 +18,25 @@ package form.aboutfranchisesorlettings
 
 import form.DateMappings.requiredDateMapping
 import form.MappingSupport.currencyMapping
-import models.submissions.aboutfranchisesorlettings.LettingOtherPartOfPropertyRentDetails
+import models.submissions.aboutfranchisesorlettings.{LettingOtherPartOfPropertyRent6015Details, LettingOtherPartOfPropertyRentDetails}
 import play.api.data.Form
 import play.api.data.Forms._
 import play.api.data.format.Formats._
 import play.api.i18n.Messages
 
-object LettingOtherPartOfPropertyRentForm {
+object LettingOtherPartOfPropertyRent6015Form {
 
-  def lettingOtherPartOfPropertyRentForm(implicit messages: Messages): Form[LettingOtherPartOfPropertyRentDetails] =
+  def lettingOtherPartOfPropertyRent6015Form(implicit
+                                             messages: Messages
+                                            ): Form[LettingOtherPartOfPropertyRent6015Details] =
     Form(
       mapping(
-        "annualRent" -> currencyMapping(".annualRent"),
-        "dateInput" -> requiredDateMapping("lettingOtherPartOfPropertyFixedRentDate", allowPastDates = true)
-      )(LettingOtherPartOfPropertyRentDetails.apply)(
-        LettingOtherPartOfPropertyRentDetails.unapply
+        "annualRent"  -> currencyMapping(".annualRent"),
+        "dateInput"   -> requiredDateMapping("lettingOtherPartOfPropertyFixedRentDate", allowPastDates = true),
+        "declaration" -> of[Boolean]
+          .verifying(messages("rent.received.from.confirm.error"), value => value)
+      )(LettingOtherPartOfPropertyRent6015Details.apply)(
+        LettingOtherPartOfPropertyRent6015Details.unapply
       )
     )
 

@@ -53,6 +53,7 @@ class LettingOtherPartOfPropertyDetailsController @Inject() (
       cateringOperationOrLettingAccommodationDetailsView(
         existingDetails.fold(lettingOtherPartOfPropertyForm)(lettingOtherPartOfPropertyForm.fill),
         index,
+        "lettingDetails",
         "lettingOtherPartOfPropertyDetails",
         getBackLink(index),
         request.sessionData.toSummary,
@@ -69,6 +70,7 @@ class LettingOtherPartOfPropertyDetailsController @Inject() (
           cateringOperationOrLettingAccommodationDetailsView(
             formWithErrors,
             index,
+            "lettingDetails",
             "lettingOtherPartOfPropertyDetails",
             getBackLink(index),
             request.sessionData.toSummary,

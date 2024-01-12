@@ -16,18 +16,16 @@
 
 package models.submissions.aboutfranchisesorlettings
 
-import models.submissions.common.AnswersYesNo
 import play.api.libs.json.Json
 
-case class LettingSection(
-  lettingOtherPartOfPropertyInformationDetails: LettingOtherPartOfPropertyInformationDetails,
-  lettingOtherPartOfPropertyRentDetails: Option[LettingOtherPartOfPropertyRentDetails] = None,
-  lettingOtherPartOfPropertyRent6015Details: Option[LettingOtherPartOfPropertyRent6015Details] = None,
-  addAnotherLettingToProperty: Option[AnswersYesNo] = None,
-  itemsInRent: List[String] = List.empty
-)
+import java.time.LocalDate
 
-object LettingSection {
-  implicit val format = Json.format[LettingSection]
+case class LettingOtherPartOfPropertyRent6015Details(
+                                                      annualRent: BigDecimal,
+                                                      dateInput: LocalDate,
+                                                      declaration: Boolean
+                                                    )
+object LettingOtherPartOfPropertyRent6015Details {
+  implicit val format = Json.format[LettingOtherPartOfPropertyRent6015Details]
 
 }
