@@ -76,7 +76,13 @@ class TotalPayrollCostsController @Inject() (
           totalPayrollCostForm(years(aboutTheTradingHistory)),
           formWithErrors =>
             BadRequest(
-              totalPayrollCostsView(formWithErrors, numberOfColumns, financialYears, request.sessionData.toSummary,navigator.from)
+              totalPayrollCostsView(
+                formWithErrors,
+                numberOfColumns,
+                financialYears,
+                request.sessionData.toSummary,
+                navigator.from
+              )
             ),
           success => {
             val totalPaytollCosts =

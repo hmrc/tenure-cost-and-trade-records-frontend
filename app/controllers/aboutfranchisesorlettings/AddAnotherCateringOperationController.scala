@@ -38,7 +38,8 @@ class AddAnotherCateringOperationController @Inject() (
   addAnotherCateringOperationOrLettingAccommodationView: addAnotherCateringOperationOrLettingAccommodation,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext) extends FORDataCaptureController(mcc)
+)(implicit ec: ExecutionContext)
+    extends FORDataCaptureController(mcc)
     with I18nSupport {
 
   def show(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
@@ -89,23 +90,25 @@ class AddAnotherCateringOperationController @Inject() (
             .filter(_.nonEmpty)
             .fold(
               Future.successful(
-              Redirect(
-                if (data == AnswerYes) {
-                  routes.CateringOperationDetailsController.show()
-                } else if (data == AnswerNo && fromCYA == true) {
-                  routes.CheckYourAnswersAboutFranchiseOrLettingsController.show()
-                } else {
-                  routes.LettingOtherPartOfPropertyController.show()
-                }
-              ))
+                Redirect(
+                  if (data == AnswerYes) {
+                    routes.CateringOperationDetailsController.show()
+                  } else if (data == AnswerNo && fromCYA == true) {
+                    routes.CheckYourAnswersAboutFranchiseOrLettingsController.show()
+                  } else {
+                    routes.LettingOtherPartOfPropertyController.show()
+                  }
+                )
+              )
             ) { existingSections =>
               val updatedSections = existingSections.updated(
                 index,
                 existingSections(index).copy(addAnotherOperationToProperty = Some(data))
               )
               val updatedData     = updateAboutFranchisesOrLettings(_.copy(cateringOperationSections = updatedSections))
-              session.saveOrUpdate(updatedData).map{_ =>
-              Redirect(navigator.nextPage(AddAnotherCateringOperationPageId, updatedData).apply(updatedData))}
+              session.saveOrUpdate(updatedData).map { _ =>
+                Redirect(navigator.nextPage(AddAnotherCateringOperationPageId, updatedData).apply(updatedData))
+              }
             }
       )
     }

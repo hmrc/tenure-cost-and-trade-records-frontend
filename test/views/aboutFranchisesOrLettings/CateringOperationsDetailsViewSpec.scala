@@ -25,7 +25,7 @@ import views.behaviours.QuestionViewBehaviours
 
 class CateringOperationsDetailsViewSpec extends QuestionViewBehaviours[CateringOperationDetails] {
 
-  val messageKeyPrefix = "cateringOperationOrLettingAccommodationDetails"
+  val messageKeyPrefix     = "cateringOperationOrLettingAccommodationDetails"
   val messageKeyPrefix6015 = "concessionDetails"
 
   override val form = CateringOperationOrLettingAccommodationForm.cateringOperationOrLettingAccommodationForm

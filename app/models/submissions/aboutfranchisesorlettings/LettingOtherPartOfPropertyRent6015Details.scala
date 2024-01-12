@@ -21,10 +21,10 @@ import play.api.libs.json.Json
 import java.time.LocalDate
 
 case class LettingOtherPartOfPropertyRent6015Details(
-                                                      annualRent: BigDecimal,
-                                                      dateInput: LocalDate,
-                                                      declaration: Boolean
-                                                    )
+  annualRent: BigDecimal,
+  dateInput: LocalDate,
+  declaration: Boolean
+)
 object LettingOtherPartOfPropertyRent6015Details {
   implicit val format = Json.format[LettingOtherPartOfPropertyRent6015Details]
 

@@ -30,7 +30,7 @@ object LettingOtherPartOfPropertyRentForm {
     Form(
       mapping(
         "annualRent" -> currencyMapping(".annualRent"),
-        "dateInput" -> requiredDateMapping("lettingOtherPartOfPropertyFixedRentDate", allowPastDates = true)
+        "dateInput"  -> requiredDateMapping("lettingOtherPartOfPropertyFixedRentDate", allowPastDates = true)
       )(LettingOtherPartOfPropertyRentDetails.apply)(
         LettingOtherPartOfPropertyRentDetails.unapply
       )

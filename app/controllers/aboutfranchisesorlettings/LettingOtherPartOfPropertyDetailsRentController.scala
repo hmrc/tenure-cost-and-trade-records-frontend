@@ -39,7 +39,8 @@ class LettingOtherPartOfPropertyDetailsRentController @Inject() (
   cateringOperationOrLettingAccommodationRentDetailsView: cateringOperationOrLettingAccommodationRentDetails,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext) extends FORDataCaptureController(mcc)
+)(implicit ec: ExecutionContext)
+    extends FORDataCaptureController(mcc)
     with I18nSupport {
 
   def show(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
@@ -67,7 +68,7 @@ class LettingOtherPartOfPropertyDetailsRentController @Inject() (
   def submit(index: Int) = (Action andThen withSessionRefiner).async { implicit request =>
     val existingSection = request.sessionData.aboutFranchisesOrLettings.map(_.lettingSections).get(index)
 
-    val forType         = request.sessionData.forType
+    val forType = request.sessionData.forType
 
     if (forType.equals("FOR6015") || forType.equals("FOR6016")) {
       continueOrSaveAsDraft[LettingOtherPartOfPropertyRent6015Details](

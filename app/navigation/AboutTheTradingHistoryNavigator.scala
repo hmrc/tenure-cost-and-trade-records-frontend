@@ -33,22 +33,20 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
     Some(aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show())
 
   override def nextPage(id: Identifier, session: Session)(implicit
-                                                          hc: HeaderCarrier,
-                                                          request: Request[AnyContent]
+    hc: HeaderCarrier,
+    request: Request[AnyContent]
   ): Session => Call = {
     val nextPageFunc: Session => Call = super.nextPage(id, session)
-    session => {
+    session =>
       if (from(request) == "IES") {
         iesSpecificRoute(session)
       } else {
         nextPageFunc(session)
       }
-    }
   }
 
-  private def iesSpecificRoute(session: Session): Call = {
+  private def iesSpecificRoute(session: Session): Call =
     routes.IncomeExpenditureSummaryController.show()
-  }
 
   override val postponeCYARedirectPages: Set[String] = Set(
     aboutthetradinghistory.routes.FinancialYearEndController.show(),
