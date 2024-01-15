@@ -114,7 +114,7 @@ class LettingOtherPartOfPropertyController @Inject() (
       case _    =>
         answers.forType match {
           case ForTypes.for6015 | ForTypes.for6016 =>
-            Right(controllers.aboutfranchisesorlettings.routes.ConcessionOrFranchiseController.show().url)
+            Right(getBackLinkOfrSections(answers))
           case _                                   =>
             Right(getBackLinkOfrSections(answers))
         }

@@ -57,6 +57,28 @@ class VacantPropertiesViewSpec extends QuestionViewBehaviours[VacantProperties] 
       assert(sectionText == messages("label.section.connectionToTheProperty"))
     }
 
+    "contain vacant properties paragraph one" in {
+      val doc = asDocument(createView())
+      assert(doc.toString.contains(messages("vacantProperties.p1")))
+    }
+
+    "contain vacant properties paragraph two" in {
+      val doc = asDocument(createView())
+      assert(doc.toString.contains(messages("vacantProperties.p2")))
+    }
+
+    "contain vacant properties paragraph three" in {
+      val doc = asDocument(createView())
+      assert(doc.toString.contains(messages("vacantProperties.p3")))
+    }
+
+    "contains a list" in {
+      val doc = asDocument(createViewUsingForm(form))
+      assertContainsText(doc, messages("vacantProperties.item1"))
+      assertContainsText(doc, messages("vacantProperties.item2"))
+      assertContainsText(doc, messages("vacantProperties.item3"))
+    }
+
     "contain radio buttons for the value yes" in {
       val doc = asDocument(createViewUsingForm(form))
       assertContainsRadioButton(
