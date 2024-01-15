@@ -1286,6 +1286,21 @@ fixedOperatingExpenses.insurance = Insurance
 fixedOperatingExpenses.loanInterest = Loan interest
 fixedOperatingExpenses.depreciation = Depreciation
 fixedOperatingExpenses.total = Total fixed operating expenses
+error.fixedExpenses.rent.required = Enter 0 if you did not have any rent expenses in the year ending {0}
+error.fixedExpenses.rent.range = The rent expenses in the year ending {0} must be a number, for example 100 or 100.00
+error.fixedExpenses.rent.negative = The rent expenses in the year ending {0} cannot be a negative number
+error.fixedExpenses.businessRates.required = Enter 0 if you did not have any business rates expenses in the year ending {0}
+error.fixedExpenses.businessRates.range = The business rates expenses in the year ending {0} must be a number, for example 100 or 100.00
+error.fixedExpenses.businessRates.negative = The business rates expenses in the year ending {0} cannot be a negative number
+error.fixedExpenses.insurance.required = Enter 0 if you did not have any insurance expenses in the year ending {0}
+error.fixedExpenses.insurance.range = The insurance expenses in the year ending {0} must be a number, for example 100 or 100.00
+error.fixedExpenses.insurance.negative = The insurance expenses in the year ending {0} cannot be a negative number
+error.fixedExpenses.loanInterest.required = Enter 0 if you did not have any loan interest expenses in the year ending {0}
+error.fixedExpenses.loanInterest.range = The loan interest expenses in the year ending {0} must be a number, for example 100 or 100.00
+error.fixedExpenses.loanInterest.negative = The loan interest expenses in the year ending {0} cannot be a negative number
+error.fixedExpenses.depreciation.required = Enter 0 if you did not have any depreciation expenses in the year ending {0}
+error.fixedExpenses.depreciation.range = The depreciation expenses in the year ending {0} must be a number, for example 100 or 100.00
+error.fixedExpenses.depreciation.negative = The depreciation expenses in the year ending {0} cannot be a negative number
 
 # OTHER COSTS (FORM 6015)
 #########################

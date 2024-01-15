@@ -19,7 +19,6 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import uk.gov.hmrc.govukfrontend.views.Implicits.RichInput
 @import util.DateUtil
-@import util.DateUtil._
 
 @this(layout: Layout,
         govukButton: GovukButton,
@@ -62,16 +61,7 @@
                     @govukTable(Table(
                         head = Seq(
                             HeadCell(content = Text(messages("turnover.financialYearEnd"))),
-                            //HeadCell(content = Text(dateUtil.formatDayMonthAbbrYear(finYearEnd)))
-                            HeadCell(
-                                content = HtmlContent(
-                                    govukInput(Input(
-                                        id = s"$idx.financial-year-end",
-                                        name = s"$idx.financial-year-end",
-                                        value = finYearEnd.shortDate
-                                    ).withFormField(form(s"$idx.financial-year-end")))
-                                )
-                            )
+                            HeadCell(content = Text(dateUtil.formatDayMonthAbbrYear(finYearEnd)))
                         ),
                         firstCellIsHeader = true,
                         rows = Seq(
@@ -80,13 +70,10 @@
                                 TableRow(
                                     content = HtmlContent(
                                         govukInput(Input(
-                                            id = s"$idx.rent",
-                                            name = s"$idx.rent",
-                                            value = form(s"$idx.rent").value,
                                             prefix = Some(PrefixOrSuffix(
                                                 content = Text("£")
                                             ))
-                                        ).withFormField(form(s"$idx.rent")))
+                                        ).withFormField(form(s"fixedOperatingExpenses[$idx].rent")))
                                     )
                                 )
                             ),
@@ -95,13 +82,10 @@
                                 TableRow(
                                     content = HtmlContent(
                                         govukInput(Input(
-                                            id = s"$idx.business-rates",
-                                            name = s"$idx.business-rates",
-                                            value = form(s"$idx.business-rates").value,
                                             prefix = Some(PrefixOrSuffix(
                                                 content = Text("£")
                                             ))
-                                        ).withFormField(form(s"$idx.business-rates")))
+                                        ).withFormField(form(s"fixedOperatingExpenses[$idx].business-rates")))
                                     )
                                 )
                             ),
@@ -110,13 +94,10 @@
                                 TableRow(
                                     content = HtmlContent(
                                         govukInput(Input(
-                                            id = s"$idx.insurance",
-                                            name = s"$idx.insurance",
-                                            value = form(s"$idx.insurance").value,
                                             prefix = Some(PrefixOrSuffix(
                                                 content = Text("£")
                                             ))
-                                        ).withFormField(form(s"$idx.insurance")))
+                                        ).withFormField(form(s"fixedOperatingExpenses[$idx].insurance")))
                                     )
                                 )
                             ),
@@ -125,13 +106,10 @@
                                 TableRow(
                                     content = HtmlContent(
                                         govukInput(Input(
-                                            id = s"$idx.loan-interest",
-                                            name = s"$idx.loan-interest",
-                                            value = form(s"$idx.loan-interest").value,
                                             prefix = Some(PrefixOrSuffix(
                                                 content = Text("£")
                                             ))
-                                        ).withFormField(form(s"$idx.loan-interest")))
+                                        ).withFormField(form(s"fixedOperatingExpenses[$idx].loan-interest")))
                                     )
                                 )
                             ),
@@ -140,13 +118,10 @@
                                 TableRow(
                                     content = HtmlContent(
                                         govukInput(Input(
-                                            id = s"$idx.depreciation",
-                                            name = s"$idx.depreciation",
-                                            value = form(s"$idx.depreciation").value,
                                             prefix = Some(PrefixOrSuffix(
                                                 content = Text("£")
                                             ))
-                                        ).withFormField(form(s"$idx.depreciation")))
+                                        ).withFormField(form(s"fixedOperatingExpenses[$idx].depreciation")))
                                     )
                                 )
                             )
