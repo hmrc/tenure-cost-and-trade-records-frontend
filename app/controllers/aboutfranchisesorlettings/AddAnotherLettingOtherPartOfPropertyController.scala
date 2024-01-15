@@ -53,6 +53,7 @@ class AddAnotherLettingOtherPartOfPropertyController @Inject() (
             case _                        => addAnotherLettingForm
           },
           index,
+          "addAnotherLetting",
           "addAnotherLettingOtherPartOfProperty",
           controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyRentIncludesController.show(index).url,
           request.sessionData.toSummary
@@ -74,6 +75,7 @@ class AddAnotherLettingOtherPartOfPropertyController @Inject() (
             addAnotherCateringOperationOrLettingAccommodationView(
               formWithErrors,
               index,
+              "addAnotherLetting",
               "addAnotherLettingOtherPartOfProperty",
               controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyRentIncludesController
                 .show(index)

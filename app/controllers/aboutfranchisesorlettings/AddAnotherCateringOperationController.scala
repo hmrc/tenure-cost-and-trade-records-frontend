@@ -52,6 +52,7 @@ class AddAnotherCateringOperationController @Inject() (
             case _                         => addAnotherCateringOperationForm
           },
           index,
+          "addAnotherConcession",
           "addAnotherCateringOperation",
           controllers.aboutfranchisesorlettings.routes.CateringOperationRentIncludesController.show(index).url,
           request.sessionData.toSummary
@@ -76,6 +77,7 @@ class AddAnotherCateringOperationController @Inject() (
             addAnotherCateringOperationOrLettingAccommodationView(
               formWithErrors,
               index,
+              "addAnotherConcession",
               "addAnotherCateringOperation",
               controllers.aboutfranchisesorlettings.routes.CateringOperationRentIncludesController.show(index).url,
               request.sessionData.toSummary

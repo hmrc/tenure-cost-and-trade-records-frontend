@@ -18,9 +18,10 @@ package controllers.aboutfranchisesorlettings
 
 import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
+import form.aboutfranchisesorlettings.LettingOtherPartOfPropertyRent6015Form.lettingOtherPartOfPropertyRent6015Form
 import form.aboutfranchisesorlettings.LettingOtherPartOfPropertyRentForm.lettingOtherPartOfPropertyRentForm
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
-import models.submissions.aboutfranchisesorlettings.LettingOtherPartOfPropertyRentDetails
+import models.submissions.aboutfranchisesorlettings.{LettingOtherPartOfPropertyRent6015Details, LettingOtherPartOfPropertyRentDetails}
 import navigation.AboutFranchisesOrLettingsNavigator
 import navigation.identifiers.LettingAccommodationRentDetailsPageId
 import play.api.i18n.I18nSupport
@@ -66,36 +67,67 @@ class LettingOtherPartOfPropertyDetailsRentController @Inject() (
 
   def submit(index: Int) = (Action andThen withSessionRefiner).async { implicit request =>
     val existingSection = request.sessionData.aboutFranchisesOrLettings.map(_.lettingSections).get(index)
+    val forType = request.sessionData.forType
 
-    continueOrSaveAsDraft[LettingOtherPartOfPropertyRentDetails](
-      lettingOtherPartOfPropertyRentForm,
-      formWithErrors =>
-        BadRequest(
-          cateringOperationOrLettingAccommodationRentDetailsView(
-            formWithErrors,
-            index,
-            "lettingOtherPartOfPropertyRentDetails",
-            existingSection.lettingOtherPartOfPropertyInformationDetails.operatorName,
-            controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsController
-              .show(Some(index))
-              .url,
-            request.sessionData.toSummary,
-            request.sessionData.forType
-          )
-        ),
-      data =>
-        request.sessionData.aboutFranchisesOrLettings.fold(
-          Future.successful(Redirect(routes.LettingOtherPartOfPropertyDetailsController.show(None)))
-        ) { aboutFranchiseOrLettings =>
-          val existingSections = aboutFranchiseOrLettings.lettingSections
-          val updatedSections  = existingSections
-            .updated(index, existingSections(index).copy(lettingOtherPartOfPropertyRentDetails = Some(data)))
-          val updatedData      = updateAboutFranchisesOrLettings(_.copy(lettingSections = updatedSections))
-          session.saveOrUpdate(updatedData).map { _ =>
+    if (forType.equals("FOR6015") || forType.equals("FOR6016")) {
+      continueOrSaveAsDraft[LettingOtherPartOfPropertyRent6015Details](
+        lettingOtherPartOfPropertyRent6015Form,
+        formWithErrors =>
+          BadRequest(
+            cateringOperationOrLettingAccommodationRentDetailsView(
+              formWithErrors,
+              index,
+              "lettingOtherPartOfPropertyRentDetails",
+              existingSection.lettingOtherPartOfPropertyInformationDetails.operatorName,
+              controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsController
+                .show(Some(index))
+                .url,
+              request.sessionData.toSummary,
+              request.sessionData.forType
+            )
+          ),
+        data =>
+          request.sessionData.aboutFranchisesOrLettings.fold(
+            Redirect(routes.LettingOtherPartOfPropertyDetailsController.show(None))
+          ) { aboutFranchiseOrLettings =>
+            val existingSections = aboutFranchiseOrLettings.lettingSections
+            val updatedSections  = existingSections
+              .updated(index, existingSections(index).copy(lettingOtherPartOfPropertyRent6015Details = Some(data)))
+            val updatedData      = updateAboutFranchisesOrLettings(_.copy(lettingSections = updatedSections))
+            session.saveOrUpdate(updatedData)
             Redirect(navigator.nextPage(LettingAccommodationRentDetailsPageId, updatedData).apply(updatedData))
           }
-        }
-    )
+      )
+    } else {
+      continueOrSaveAsDraft[LettingOtherPartOfPropertyRentDetails](
+        lettingOtherPartOfPropertyRentForm,
+        formWithErrors =>
+          BadRequest(
+            cateringOperationOrLettingAccommodationRentDetailsView(
+              formWithErrors,
+              index,
+              "lettingOtherPartOfPropertyRentDetails",
+              existingSection.lettingOtherPartOfPropertyInformationDetails.operatorName,
+              controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsController
+                .show(Some(index))
+                .url,
+              request.sessionData.toSummary,
+              request.sessionData.forType
+            )
+          ),
+        data =>
+          request.sessionData.aboutFranchisesOrLettings.fold(
+            Redirect(routes.LettingOtherPartOfPropertyDetailsController.show(None))
+          ) { aboutFranchiseOrLettings =>
+            val existingSections = aboutFranchiseOrLettings.lettingSections
+            val updatedSections  = existingSections
+              .updated(index, existingSections(index).copy(lettingOtherPartOfPropertyRentDetails = Some(data)))
+            val updatedData      = updateAboutFranchisesOrLettings(_.copy(lettingSections = updatedSections))
+            session.saveOrUpdate(updatedData)
+            Redirect(navigator.nextPage(LettingAccommodationRentDetailsPageId, updatedData).apply(updatedData))
+          }
+      )
+    }
   }
 
 }

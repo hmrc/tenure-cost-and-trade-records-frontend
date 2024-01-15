@@ -26,7 +26,7 @@
 )
 
 
-@(theForm: Form[_], index: Option[Int], cateringOrLetting: String, backLink: String, summary: Summary, formType: String)(implicit request: Request[_], messages: Messages)
+@(theForm: Form[_], index: Option[Int], concessionOrLetting: String, cateringOrLetting: String, backLink: String, summary: Summary, formType: String)(implicit request: Request[_], messages: Messages)
 
 @typeConcession = @{formType == ForTypes.for6015 || formType == ForTypes.for6016}
 
@@ -35,8 +35,8 @@
             messages("label.section.aboutTheFranchiseLettings")
         }
     }
-@heading =@{
-        if(typeConcession) messages("concessionDetails.heading")  else {
+    @heading =@{
+        if(typeConcession) messages(s"${concessionOrLetting}.heading")  else {
             messages(s"${cateringOrLetting}.heading")
         }
     }
@@ -89,6 +89,24 @@
 
             @includes.continueSaveAsDraftButtons(govukButton)
         }
+    } else if(concessionOrLetting.equals("concessionDetails")) {
+    @formWithCSRF(action = controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController.submit(index), args = Symbol("class") -> "myForm", Symbol("id") -> "myFormId") {
+
+        @includes.textInput(govukInput, theForm, "lettingOperatorName", "govuk-input--width-20", "lettingOperatorName", labelClasses = "govuk-!-font-weight-bold")
+        @includes.textInput(govukInput, theForm, "lettingTypeOfBusiness", "govuk-input--width-20", "lettingTypeOfBusiness", labelClasses = "govuk-!-font-weight-bold", hintMsg = "lettingTypeOfBusiness")
+
+        <p class="govuk-body">
+            <b>@messages("label.correspondenceAddress")</b>
+        </p>
+
+        @includes.textInput(govukInput, theForm, "lettingAddress.buildingNameNumber", "govuk-input--width-20", "buildingNameNumber", formGroupClasses = "address-field-one address-fields")
+        @includes.textInput(govukInput, theForm, "lettingAddress.street1", "govuk-input--width-20", "street1", optional = true, formGroupClasses = "address-field-two address-fields")
+        @includes.textInput(govukInput, theForm, "lettingAddress.town", "govuk-input--width-20", "town", formGroupClasses = "address-field-three address-fields")
+        @includes.textInput(govukInput, theForm, "lettingAddress.county", "govuk-input--width-20", "county", optional = true, formGroupClasses = "address-field-four address-fields")
+        @includes.textInput(govukInput, theForm, "lettingAddress.postcode", "govuk-input--width-10", "postcode", formGroupClasses = "address-field-postcode")
+
+        @includes.continueSaveAsDraftButtons(govukButton)
+    }
     }
 }
 

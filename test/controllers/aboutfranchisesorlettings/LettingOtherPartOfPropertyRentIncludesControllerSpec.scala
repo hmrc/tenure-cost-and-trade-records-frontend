@@ -18,6 +18,7 @@ package controllers.aboutfranchisesorlettings
 
 import navigation.AboutFranchisesOrLettingsNavigator
 import play.api.http.Status
+import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import play.twirl.api.HtmlFormat
 import utils.TestBaseSpec
@@ -49,6 +50,15 @@ class LettingOtherPartOfPropertyRentIncludesControllerSpec extends TestBaseSpec 
       val result = lettingOtherPartOfPropertyDetailsCheckboxesController.show(0)(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
+    }
+  }
+
+  "SUBMIT /" should {
+    "throw a BAD_REQUEST if an empty form is submitted" in {
+      val res = lettingOtherPartOfPropertyDetailsCheckboxesController.submit(0)(
+        FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)
+      )
+      status(res) shouldBe BAD_REQUEST
     }
   }
 }

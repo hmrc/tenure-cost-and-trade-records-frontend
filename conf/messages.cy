@@ -861,6 +861,7 @@ error.howIsCurrentRentFixed.required = Select how the current rent was fixed
 #######################################
 cateringOperationOrLettingAccommodationDetails.heading = Provide the business’s details
 concessionDetails.heading = Provide the concession’s details
+lettingDetails.heading = Provide the tenant or operator’s details
 lettingOtherPartOfPropertyDetails.heading = Provide the tenant’s details
 fieldName.lettingOtherPartOfPropertyFixedRentDate = the date when the annual rent was fixed
 label.operatorName = Operator’s name
@@ -1421,9 +1422,13 @@ checkYourAnswersAboutFranchiseOrLettings.itemsInRent = Included in rent
 checkYourAnswersAboutFranchiseOrLettings.addBusiness = Add or remove business
 checkYourAnswersAboutFranchiseOrLettings.addedBusiness = You have added {0} business
 checkYourAnswersAboutFranchiseOrLettings.addedBusinessPlural = You have added {0} businesses
+checkYourAnswersAboutFranchiseOrLettings.addedSeparateBusiness = You have added {0} separate business
+checkYourAnswersAboutFranchiseOrLettings.addedSeparateBusinessPlural = You have added {0} separate businesses
 checkYourAnswersAboutFranchiseOrLettings.addLetting = Add or remove tenant
 checkYourAnswersAboutFranchiseOrLettings.addedLetting = You have added {0} tenant
 checkYourAnswersAboutFranchiseOrLettings.addedLettingPlural = You have added {0} tenants
+checkYourAnswersAboutFranchiseOrLettings.addedLetting6015 = You have added {0} letting
+checkYourAnswersAboutFranchiseOrLettings.addedLettingPlural6015 = You have added {0} lettings
 
 checkYourAnswersAboutYourLeaseOrTenure.heading = Check your answers – your lease or agreement
 checkYourAnswersAboutYourLeaseOrTenure.yourLandlord.heading = Your landlord
