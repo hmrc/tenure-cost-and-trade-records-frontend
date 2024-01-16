@@ -124,7 +124,7 @@
                         List(
                             SummaryListRow(
                                 Key(Text(messages("checkYourAnswersAboutFranchiseOrLettings.addedSeparateBusiness", (request.sessionData.aboutFranchisesOrLettings.flatMap(_.cateringOperationSections)).getOrElse(IndexedSeq.empty).length)), classes = "govuk-heading-m"),
-                                actions = Some(Actions(items = List(ActionItem((navigator.routeMap(CateringOperationRentIncludesPageId)(request.sessionData)).url, Text(messages("checkYourAnswersAboutFranchiseOrLettings.addBusiness"))))))
+                                actions = Some(Actions(items = List(ActionItem((navigator.routeMap(CateringOperationRentIncludesPageId)(request.sessionData)).url+"&from=CYA", Text(messages("checkYourAnswersAboutFranchiseOrLettings.addBusiness"))))))
                             )
                         )
                     ))
@@ -133,7 +133,7 @@
                         List(
                             SummaryListRow(
                                 Key(Text(messages("checkYourAnswersAboutFranchiseOrLettings.addedBusiness", (request.sessionData.aboutFranchisesOrLettings.flatMap(_.cateringOperationSections)).getOrElse(IndexedSeq.empty).length)), classes = "govuk-heading-m"),
-                                actions = Some(Actions(items = List(ActionItem((navigator.routeMap(CateringOperationRentIncludesPageId)(request.sessionData)).url, Text(messages("checkYourAnswersAboutFranchiseOrLettings.addBusiness"))))))
+                                actions = Some(Actions(items = List(ActionItem((navigator.routeMap(CateringOperationRentIncludesPageId)(request.sessionData)).url+"&from=CYA", Text(messages("checkYourAnswersAboutFranchiseOrLettings.addBusiness"))))))
                             )
                         )
                     ))
@@ -144,7 +144,7 @@
                         List(
                             SummaryListRow(
                                 Key(Text(messages("checkYourAnswersAboutFranchiseOrLettings.addedSeparateBusinessPlural", (request.sessionData.aboutFranchisesOrLettings.flatMap(_.cateringOperationSections)).getOrElse(IndexedSeq.empty).length)), classes = "govuk-heading-m"),
-                                actions = Some(Actions(items = List(ActionItem((navigator.routeMap(CateringOperationRentIncludesPageId)(request.sessionData)).url, Text(messages("checkYourAnswersAboutFranchiseOrLettings.addBusiness"))))))
+                                actions = Some(Actions(items = List(ActionItem((navigator.routeMap(CateringOperationRentIncludesPageId)(request.sessionData)).url+"&from=CYA", Text(messages("checkYourAnswersAboutFranchiseOrLettings.addBusiness"))))))
                             )
                         )
                     ))
@@ -153,7 +153,7 @@
                         List(
                             SummaryListRow(
                                 Key(Text(messages("checkYourAnswersAboutFranchiseOrLettings.addedBusinessPlural", (request.sessionData.aboutFranchisesOrLettings.flatMap(_.cateringOperationSections)).getOrElse(IndexedSeq.empty).length)), classes = "govuk-heading-m"),
-                                actions = Some(Actions(items = List(ActionItem((navigator.routeMap(CateringOperationRentIncludesPageId)(request.sessionData)).url, Text(messages("checkYourAnswersAboutFranchiseOrLettings.addBusiness"))))))
+                                actions = Some(Actions(items = List(ActionItem((navigator.routeMap(CateringOperationRentIncludesPageId)(request.sessionData)).url+"&from=CYA", Text(messages("checkYourAnswersAboutFranchiseOrLettings.addBusiness"))))))
                             )
                         )
                     ))
