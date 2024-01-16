@@ -16,8 +16,7 @@
 
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.html.components._
-@import models.submissions.additionalinformation.ContactDetailsQuestion
-@import models.pages.Summary
+@@import models.pages.Summary
 
 @this(layout: Layout,
         govukButton: GovukButton,
@@ -25,7 +24,7 @@
         formWithCSRF: FormWithCSRF
 )
 
-
+@import models.submissions.aboutyouandtheproperty.ContactDetailsQuestion
 @(theForm: Form[ContactDetailsQuestion], summary: Summary, fromLocation:String = "")(implicit request: Request[_], messages: Messages)
 
 @layout(

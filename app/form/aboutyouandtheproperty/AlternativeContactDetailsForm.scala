@@ -14,13 +14,17 @@
  * limitations under the License.
  */
 
-package models.submissions.additionalinformation
+package form.aboutyouandtheproperty
 
-import models.submissions.common.AnswersYesNo
-import play.api.libs.json.Json
+import form.MappingSupport.alternativeAddressMapping
+import models.submissions.aboutyouandtheproperty.AlternativeContactDetails
+import play.api.data.Form
+import play.api.data.Forms.mapping
 
-case class ContactDetailsQuestion(contactDetailsQuestion: AnswersYesNo)
-
-object ContactDetailsQuestion {
-  implicit val format = Json.format[ContactDetailsQuestion]
+object AlternativeContactDetailsForm {
+  val alternativeContactDetailsForm: Form[AlternativeContactDetails] = Form(
+    mapping(
+      "alternativeContactAddress" -> alternativeAddressMapping
+    )(AlternativeContactDetails.apply)(AlternativeContactDetails.unapply)
+  )
 }

@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-package controllers.additionalinformation
+package controllers.aboutyouandtheproperty
 
 import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
-import form.additionalinformation.AlternativeContactDetailsForm.alternativeContactDetailsForm
+import form.aboutyouandtheproperty.AlternativeContactDetailsForm.alternativeContactDetailsForm
+import models.submissions.aboutyouandtheproperty.AlternativeContactDetails
 import models.submissions.additionalinformation.AdditionalInformation.updateAdditionalInformation
-import models.submissions.additionalinformation.AlternativeContactDetails
 import navigation.AdditionalInformationNavigator
 import navigation.identifiers.AlternativeContactDetailsId
 import play.api.i18n.I18nSupport

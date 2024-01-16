@@ -16,9 +16,9 @@
 
 package views.additionalInformation
 
-import form.additionalinformation.AlternativeContactDetailsForm
+import form.aboutyouandtheproperty.AlternativeContactDetailsForm
 import models.pages.Summary
-import models.submissions.additionalinformation.AlternativeContactDetails
+import models.submissions.aboutyouandtheproperty.AlternativeContactDetails
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import play.twirl.api.Html

@@ -14,8 +14,7 @@
  * limitations under the License.
  *@
 
-@import models.submissions.additionalinformation.AlternativeContactDetails
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
+@@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
 @import models.pages.Summary
@@ -26,6 +25,7 @@
   formWithCSRF: FormWithCSRF
 )
 
+@import models.submissions.aboutyouandtheproperty.AlternativeContactDetails
 @(theForm: Form[AlternativeContactDetails], summary: Summary)(implicit request: Request[_], messages: Messages)
 
 @layout(

@@ -16,11 +16,12 @@
 
 package controllers.additionalinformation
 
+import controllers.aboutyouandtheproperty.AlternativeContactDetailsController
 import form.Errors
 import play.api.http.Status
 import play.api.test.Helpers._
 import utils.TestBaseSpec
-import form.additionalinformation.AlternativeContactDetailsForm.alternativeContactDetailsForm
+import form.aboutyouandtheproperty.AlternativeContactDetailsForm.alternativeContactDetailsForm
 import models.submissions.additionalinformation.AdditionalInformation
 import play.api.test.FakeRequest
 

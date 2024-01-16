@@ -14,9 +14,8 @@
  * limitations under the License.
  */
 
-package models.submissions.additionalinformation
+package models.submissions.aboutyouandtheproperty
 
-import models.submissions.common.{ContactDetails}
 import play.api.libs.json.Json
 
 case class AlternativeContactDetails(

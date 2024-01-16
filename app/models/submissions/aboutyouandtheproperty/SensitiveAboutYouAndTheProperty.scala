@@ -23,6 +23,8 @@ import uk.gov.hmrc.crypto.Sensitive
 
 case class SensitiveAboutYouAndTheProperty(
   customerDetails: Option[SensitiveCustomerDetails] = None,
+  altDetailsQuestion: Option[ContactDetailsQuestion] = None,
+  altContactInformation: Option[SensitiveAlternativeContactDetails] = None,
   propertyDetails: Option[PropertyDetails] = None,
   websiteForPropertyDetails: Option[WebsiteForPropertyDetails] = None,
   premisesLicenseGrantedDetail: Option[AnswersYesNo] = None,

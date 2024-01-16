@@ -17,13 +17,12 @@
 package models.submissions.additionalinformation
 
 import crypto.MongoCrypto
+import models.submissions.aboutyouandtheproperty.{ContactDetailsQuestion, SensitiveAlternativeContactDetails}
 import play.api.libs.json.{Json, OFormat}
 import uk.gov.hmrc.crypto.Sensitive
 
 case class SensitiveAdditionalInformation(
   furtherInformationOrRemarksDetails: Option[FurtherInformationOrRemarksDetails] = None,
-  altDetailsQuestion: Option[ContactDetailsQuestion] = None,
-  altContactInformation: Option[SensitiveAlternativeContactDetails] = None,
   checkYourAnswersAdditionalInformation: Option[CheckYourAnswersAdditionalInformation] = None
 ) extends Sensitive[AdditionalInformation] {
 

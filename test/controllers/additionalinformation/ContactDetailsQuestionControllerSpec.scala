@@ -16,7 +16,8 @@
 
 package controllers.additionalinformation
 
-import form.additionalinformation.ContactDetailsQuestionForm.contactDetailsQuestionForm
+import controllers.aboutyouandtheproperty.ContactDetailsQuestionController
+import form.aboutyouandtheproperty.ContactDetailsQuestionForm.contactDetailsQuestionForm
 import models.submissions.additionalinformation.AdditionalInformation
 import play.api.http.Status.{BAD_REQUEST, OK}
 import play.api.test.{FakeRequest, Helpers}

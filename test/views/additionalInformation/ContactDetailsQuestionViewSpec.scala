@@ -16,9 +16,9 @@
 
 package views.additionalInformation
 
-import form.additionalinformation.ContactDetailsQuestionForm
-import models.submissions.additionalinformation.ContactDetailsQuestion
+import form.aboutyouandtheproperty.ContactDetailsQuestionForm
 import models.pages.Summary
+import models.submissions.aboutyouandtheproperty.ContactDetailsQuestion
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours

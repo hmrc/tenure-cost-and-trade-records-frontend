@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package models.submissions.additionalinformation
+package models.submissions.aboutyouandtheproperty
 
 import crypto.MongoCrypto
 import play.api.libs.json.{Json, OFormat}
@@ -39,7 +39,6 @@ case class SensitiveAlternativeAddress(
 }
 
 object SensitiveAlternativeAddress {
-  import crypto.SensitiveFormats._
   implicit def format(implicit crypto: MongoCrypto): OFormat[SensitiveAlternativeAddress] =
     Json.format[SensitiveAlternativeAddress]
 

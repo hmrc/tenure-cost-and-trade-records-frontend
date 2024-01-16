@@ -23,8 +23,8 @@ import play.api.libs.json.JsObject
 import uk.gov.hmrc.http.HeaderCarrier
 import utils.TestBaseSpec
 import models.Session
-import models.submissions.additionalinformation.ContactDetailsQuestion
-import models.submissions.common.{AnswerNo}
+import models.submissions.aboutyouandtheproperty.ContactDetailsQuestion
+import models.submissions.common.AnswerNo
 
 import scala.concurrent.ExecutionContext
 

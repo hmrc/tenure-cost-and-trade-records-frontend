@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package models.submissions.additionalinformation
+package models.submissions.aboutyouandtheproperty
 
 import models.submissions.PrintableAddress
 import play.api.libs.json.Json

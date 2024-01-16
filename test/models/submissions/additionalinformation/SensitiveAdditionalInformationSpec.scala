@@ -20,6 +20,7 @@ import org.scalatest.wordspec.AnyWordSpecLike
 import org.scalatest.matchers.should.Matchers
 import play.api.Configuration
 import crypto.MongoCrypto
+import models.submissions.aboutyouandtheproperty.{AlternativeAddress, AlternativeContactDetails, SensitiveAlternativeContactDetails}
 import models.submissions.common.ContactDetails
 import uk.gov.hmrc.crypto.Sensitive.SensitiveString
 import utils.SensitiveTestHelper
