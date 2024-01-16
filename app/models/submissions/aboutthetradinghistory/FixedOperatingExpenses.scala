@@ -16,21 +16,28 @@
 
 package models.submissions.aboutthetradinghistory
 
-import play.api.libs.json.Json
+import play.api.libs.json.{Json, OFormat}
+
 import java.time.LocalDate
 
 case class FixedOperatingExpenses(
   financialYearEnd: LocalDate,
-  rent: BigDecimal,
-  businessRates: BigDecimal,
-  insurance: BigDecimal,
-  loanInterest: BigDecimal,
-  depreciation: BigDecimal
+  rent: Option[BigDecimal],
+  businessRates: Option[BigDecimal],
+  insurance: Option[BigDecimal],
+  loanInterest: Option[BigDecimal],
+  depreciation: Option[BigDecimal]
 ) {
-  def total = rent + businessRates + insurance + loanInterest + depreciation
+  def total: BigDecimal =
+    Seq(
+      rent,
+      businessRates,
+      insurance,
+      loanInterest,
+      depreciation
+    ).flatten.sum
 }
 
 object FixedOperatingExpenses {
-  implicit val format = Json.format[FixedOperatingExpenses]
-
+  implicit val format: OFormat[FixedOperatingExpenses] = Json.format[FixedOperatingExpenses]
 }

@@ -16,15 +16,15 @@
 
 package controllers.aboutthetradinghistory
 
-import actions.WithSessionRefiner
+import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.FixedOperatingExpensesForm.fixedOperatingExpensesForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.updateAboutTheTradingHistory
-import models.submissions.aboutthetradinghistory.FixedOperatingExpenses
+import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, FixedOperatingExpenses}
 import navigation.AboutTheTradingHistoryNavigator
 import navigation.identifiers.FixedOperatingExpensesId
 import play.api.i18n.I18nSupport
-import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Result}
 import repositories.SessionRepo
 import views.html.aboutthetradinghistory.fixedOperatingExpenses
 
@@ -43,56 +43,71 @@ class FixedOperatingExpensesController @Inject() (
     extends FORDataCaptureController(mcc)
     with I18nSupport {
 
-  def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
-    request.sessionData.aboutTheTradingHistory
-      .filter(_.occupationAndAccountingInformation.isDefined)
-      .fold(Redirect(routes.AboutYourTradingHistoryController.show())) { aboutTheTradingHistory =>
-        val numberOfColumns                = aboutTheTradingHistory.turnoverSections.size
-        val financialYears: Seq[LocalDate] = aboutTheTradingHistory.turnoverSections.foldLeft(Seq.empty[LocalDate])(
-          (sequence, turnoverSection) => sequence :+ turnoverSection.financialYearEnd
-        )
-        Ok(
-          fixedOperatingExpensesView(
-            fixedOperatingExpensesForm(numberOfColumns)
-              .fill(aboutTheTradingHistory.fixedOperatingExpensesSections),
-            numberOfColumns,
-            financialYears,
-            request.sessionData.toSummary,
-            navigator.from
+  def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    runWithSessionCheck { tradingHistory =>
+      val yearEndDates = financialYearEndDates(tradingHistory)
+      val years        = yearEndDates.map(_.getYear.toString)
+
+      val fixedOperatingExpenses =
+        if (tradingHistory.fixedOperatingExpensesSections.size == tradingHistory.turnoverSections.size) {
+          (tradingHistory.fixedOperatingExpensesSections zip yearEndDates).map { case (foe, finYearEnd) =>
+            foe.copy(financialYearEnd = finYearEnd)
+          }
+        } else {
+          yearEndDates.map(FixedOperatingExpenses(_, None, None, None, None, None))
+        }
+
+      val updatedData = updateAboutTheTradingHistory(_.copy(fixedOperatingExpensesSections = fixedOperatingExpenses))
+      session
+        .saveOrUpdate(updatedData)
+        .flatMap(_ =>
+          Ok(
+            fixedOperatingExpensesView(
+              fixedOperatingExpensesForm(years).fill(fixedOperatingExpenses),
+              navigator.from
+            )
           )
         )
-      }
+    }
   }
 
-  def submit = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    runWithSessionCheck { tradingHistory =>
+      val yearEndDates = financialYearEndDates(tradingHistory)
+      val years        = yearEndDates.map(_.getYear.toString)
+
+      continueOrSaveAsDraft[Seq[FixedOperatingExpenses]](
+        fixedOperatingExpensesForm(years),
+        formWithErrors => BadRequest(fixedOperatingExpensesView(formWithErrors, navigator.from)),
+        data => {
+          val fixedOperatingExpenses = (data zip yearEndDates).map { case (foe, finYearEnd) =>
+            foe.copy(financialYearEnd = finYearEnd)
+          }
+
+          val updatedData =
+            updateAboutTheTradingHistory(_.copy(fixedOperatingExpensesSections = fixedOperatingExpenses))
+          session
+            .saveOrUpdate(updatedData)
+            .map(_ =>
+              navigator.cyaPage
+                .filter(_ => navigator.from == "CYA" && tradingHistory.otherCosts.nonEmpty)
+                .getOrElse(navigator.nextPage(FixedOperatingExpensesId, updatedData).apply(updatedData))
+            )
+            .map(Redirect)
+        }
+      )
+    }
+  }
+
+  private def runWithSessionCheck(
+    action: AboutTheTradingHistory => Future[Result]
+  )(implicit request: SessionRequest[AnyContent]): Future[Result] =
     request.sessionData.aboutTheTradingHistory
       .filter(_.occupationAndAccountingInformation.isDefined)
-      .fold(Future.successful(Redirect(routes.AboutYourTradingHistoryController.show()))) { aboutTheTradingHistory =>
-        val numberOfColumns                = aboutTheTradingHistory.turnoverSections.size
-        val financialYears: Seq[LocalDate] = aboutTheTradingHistory.turnoverSections.foldLeft(Seq.empty[LocalDate])(
-          (sequence, turnoverSection) => sequence :+ turnoverSection.financialYearEnd
-        )
-        continueOrSaveAsDraft[Seq[FixedOperatingExpenses]](
-          fixedOperatingExpensesForm(numberOfColumns),
-          formWithErrors =>
-            BadRequest(
-              fixedOperatingExpensesView(
-                formWithErrors,
-                numberOfColumns,
-                financialYears,
-                request.sessionData.toSummary,
-                navigator.from
-              )
-            ),
-          success => {
-            val updatedData = updateAboutTheTradingHistory(_.copy(fixedOperatingExpensesSections = success))
-            session
-              .saveOrUpdate(updatedData)
-              .map(_ => Redirect(navigator.nextPage(FixedOperatingExpensesId, updatedData).apply(updatedData)))
-          }
-        )
-      }
+      .filter(_.turnoverSections.nonEmpty)
+      .fold(Future.successful(Redirect(routes.AboutYourTradingHistoryController.show())))(action)
 
-  }
+  private def financialYearEndDates(aboutTheTradingHistory: AboutTheTradingHistory): Seq[LocalDate] =
+    aboutTheTradingHistory.turnoverSections.map(_.financialYearEnd)
 
 }

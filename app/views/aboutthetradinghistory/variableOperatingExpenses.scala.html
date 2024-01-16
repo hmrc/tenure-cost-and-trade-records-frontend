@@ -91,6 +91,10 @@
     </span>
 }
 
+@inputAttributes = @{
+    Map("maxlength" -> "13")
+}
+
 @layout(
     pageHeading = messages("variableOperatingExpenses.heading"),
     showSection = true,
@@ -132,7 +136,8 @@
                                         govukInput(Input(
                                             prefix = Some(PrefixOrSuffix(
                                                 content = Text("£")
-                                            ))
+                                            )),
+                                            attributes = inputAttributes
                                         ).withFormField(form(s"variableOperatingExpenses.year[$idx].energy-and-utilities")))
                                     )
                                 )
@@ -144,7 +149,8 @@
                                         govukInput(Input(
                                             prefix = Some(PrefixOrSuffix(
                                                 content = Text("£")
-                                            ))
+                                            )),
+                                            attributes = inputAttributes
                                         ).withFormField(form(s"variableOperatingExpenses.year[$idx].cleaning-and-laundry")))
                                     )
                                 )
@@ -156,7 +162,8 @@
                                         govukInput(Input(
                                             prefix = Some(PrefixOrSuffix(
                                                 content = Text("£")
-                                            ))
+                                            )),
+                                            attributes = inputAttributes
                                         ).withFormField(form(s"variableOperatingExpenses.year[$idx].building-maintenance-and-repairs")))
                                     )
                                 )
@@ -168,7 +175,8 @@
                                         govukInput(Input(
                                             prefix = Some(PrefixOrSuffix(
                                                 content = Text("£")
-                                            ))
+                                            )),
+                                            attributes = inputAttributes
                                         ).withFormField(form(s"variableOperatingExpenses.year[$idx].fixtures-fittings-and-equipment")))
                                     )
                                 )
@@ -180,7 +188,8 @@
                                         govukInput(Input(
                                             prefix = Some(PrefixOrSuffix(
                                                 content = Text("£")
-                                            ))
+                                            )),
+                                            attributes = inputAttributes
                                         ).withFormField(form(s"variableOperatingExpenses.year[$idx].advertising-and-promotions")))
                                     )
                                 )
@@ -192,7 +201,8 @@
                                         govukInput(Input(
                                             prefix = Some(PrefixOrSuffix(
                                                 content = Text("£")
-                                            ))
+                                            )),
+                                            attributes = inputAttributes
                                         ).withFormField(form(s"variableOperatingExpenses.year[$idx].administration-and-sundries")))
                                     )
                                 )
@@ -204,7 +214,8 @@
                                         govukInput(Input(
                                             prefix = Some(PrefixOrSuffix(
                                                 content = Text("£")
-                                            ))
+                                            )),
+                                            attributes = inputAttributes
                                         ).withFormField(form(s"variableOperatingExpenses.year[$idx].entertainment")))
                                     )
                                 )
@@ -216,7 +227,8 @@
                                         govukInput(Input(
                                             prefix = Some(PrefixOrSuffix(
                                                 content = Text("£")
-                                            ))
+                                            )),
+                                            attributes = inputAttributes
                                         ).withFormField(form(s"variableOperatingExpenses.year[$idx].other")))
                                     )
                                 )
