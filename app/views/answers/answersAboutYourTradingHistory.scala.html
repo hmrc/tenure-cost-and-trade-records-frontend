@@ -301,11 +301,10 @@
 
 
 
+    @govukSummaryList(SummaryList(rows =
+        sectionAnswers.row("checkYourAnswersAboutTheTradingHistory.unusualCircumstances",
+            _.unusualCircumstances.map(_.unusualCircumstances),
+            aboutthetradinghistory.routes.UnusualCircumstancesController.show(), "unusualCircumstances")
+    ))
+
 }
-
-
-@govukSummaryList(SummaryList(rows =
-    sectionAnswers.row("checkYourAnswersAboutTheTradingHistory.unusualCircumstances",
-        _.unusualCircumstances.map(_.unusualCircumstances),
-        aboutthetradinghistory.routes.UnusualCircumstancesController.show(), "unusualCircumstances")
-))
