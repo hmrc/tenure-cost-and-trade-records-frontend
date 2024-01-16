@@ -87,9 +87,9 @@ class CheckYourAnswersAdditionalInformationController @Inject() (
   }
 
   private def getBackLink(answers: Session): String =
-    answers.additionalInformation.flatMap(_.altDetailsQuestion.map(_.contactDetailsQuestion.name)) match {
-      case Some("yes") => controllers.additionalinformation.routes.AlternativeContactDetailsController.show().url
-      case Some("no")  => controllers.additionalinformation.routes.ContactDetailsQuestionController.show().url
+    answers.aboutYouAndTheProperty.flatMap(_.altDetailsQuestion.map(_.contactDetailsQuestion.name)) match {
+      case Some("yes") => controllers.aboutyouandtheproperty.routes.AlternativeContactDetailsController.show().url
+      case Some("no")  => controllers.aboutyouandtheproperty.routes.ContactDetailsQuestionController.show().url
       case _           =>
         logger.warn(s"Back link for additional info CYA page reached with unknown alt details question value")
         controllers.routes.TaskListController.show().url

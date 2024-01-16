@@ -41,6 +41,8 @@ case class SensitiveAboutYouAndTheProperty(
 ) extends Sensitive[AboutYouAndTheProperty] {
   override def decryptedValue: AboutYouAndTheProperty = AboutYouAndTheProperty(
     customerDetails.map(_.decryptedValue),
+    altDetailsQuestion,
+    altContactInformation.map(_.decryptedValue),
     propertyDetails,
     websiteForPropertyDetails,
     premisesLicenseGrantedDetail,
@@ -65,6 +67,8 @@ object SensitiveAboutYouAndTheProperty {
   def apply(aboutYouAndTheProperty: AboutYouAndTheProperty): SensitiveAboutYouAndTheProperty =
     SensitiveAboutYouAndTheProperty(
       aboutYouAndTheProperty.customerDetails.map(SensitiveCustomerDetails(_)),
+      aboutYouAndTheProperty.altDetailsQuestion,
+      aboutYouAndTheProperty.altContactInformation.map(SensitiveAlternativeContactDetails(_)),
       aboutYouAndTheProperty.propertyDetails,
       aboutYouAndTheProperty.websiteForPropertyDetails,
       aboutYouAndTheProperty.premisesLicenseGrantedDetail,

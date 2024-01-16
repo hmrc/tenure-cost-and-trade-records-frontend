@@ -124,6 +124,13 @@
         section1Completed.isEmpty
        )
 
+
+       @includes.taskListItem("alternate-contact-details", "alternativeContactDetails.heading",
+        controllers.aboutyouandtheproperty.routes.ContactDetailsQuestionController.show(),
+        section6Completed,
+        session.aboutYouAndTheProperty.flatMap(_.altContactInformation),
+       )
+
        @includes.taskListItem("about-the-property", "checkYourAnswersAboutTheProperty.aboutProperty.heading",
         controllers.aboutyouandtheproperty.routes.AboutThePropertyController.show(),
         section2Completed,
@@ -318,13 +325,6 @@
         session.additionalInformation.flatMap(_.furtherInformationOrRemarksDetails),
         if (isLeaseHolder) section5Completed.isEmpty
         else section4Completed.isEmpty
-       )
-
-       @includes.taskListItem("alternate-contact-details", "alternativeContactDetails.heading",
-        controllers.additionalinformation.routes.ContactDetailsQuestionController.show(),
-        section6Completed,
-        session.additionalInformation.flatMap(_.altContactInformation),
-        session.additionalInformation.flatMap(_.furtherInformationOrRemarksDetails).isEmpty
        )
       </ul>
      </li>

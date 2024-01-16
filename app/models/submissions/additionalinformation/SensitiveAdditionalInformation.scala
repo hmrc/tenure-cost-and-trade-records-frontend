@@ -28,8 +28,6 @@ case class SensitiveAdditionalInformation(
 
   override def decryptedValue: AdditionalInformation = AdditionalInformation(
     furtherInformationOrRemarksDetails,
-    altDetailsQuestion,
-    altContactInformation.map(_.decryptedValue),
     checkYourAnswersAdditionalInformation
   )
 
@@ -43,8 +41,6 @@ object SensitiveAdditionalInformation {
   def apply(additionalInformation: AdditionalInformation): SensitiveAdditionalInformation =
     SensitiveAdditionalInformation(
       additionalInformation.furtherInformationOrRemarksDetails,
-      additionalInformation.altDetailsQuestion,
-      additionalInformation.altContactInformation.map(SensitiveAlternativeContactDetails(_)),
       additionalInformation.checkYourAnswersAdditionalInformation
     )
 }

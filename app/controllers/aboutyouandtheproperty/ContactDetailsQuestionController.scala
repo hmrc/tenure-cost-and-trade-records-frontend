@@ -20,13 +20,13 @@ import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
 import form.aboutyouandtheproperty.ContactDetailsQuestionForm.contactDetailsQuestionForm
 import models.submissions.aboutyouandtheproperty.ContactDetailsQuestion
-import models.submissions.additionalinformation.AdditionalInformation.updateAdditionalInformation
-import navigation.AdditionalInformationNavigator
+import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty.updateAboutYouAndTheProperty
+import navigation.AboutYouAndThePropertyNavigator
 import navigation.identifiers.ContactDetailsQuestionId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import views.html.additionalinformation.contactDetailsQuestion
+import views.html.aboutyouandtheproperty.contactDetailsQuestion
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
@@ -34,7 +34,7 @@ import scala.concurrent.Future
 @Singleton
 class ContactDetailsQuestionController @Inject() (
   mcc: MessagesControllerComponents,
-  navigator: AdditionalInformationNavigator,
+  navigator: AboutYouAndThePropertyNavigator,
   contactDetailsQuestionView: contactDetailsQuestion,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
@@ -45,7 +45,7 @@ class ContactDetailsQuestionController @Inject() (
     Future.successful(
       Ok(
         contactDetailsQuestionView(
-          request.sessionData.additionalInformation.flatMap(_.altDetailsQuestion) match {
+          request.sessionData.aboutYouAndTheProperty.flatMap(_.altDetailsQuestion) match {
             case Some(altDetailsQuestion) =>
               contactDetailsQuestionForm.fill(altDetailsQuestion)
             case _                        => contactDetailsQuestionForm
@@ -62,7 +62,7 @@ class ContactDetailsQuestionController @Inject() (
       contactDetailsQuestionForm,
       formWithErrors => BadRequest(contactDetailsQuestionView(formWithErrors, request.sessionData.toSummary)),
       data => {
-        val updatedData = updateAdditionalInformation(_.copy(altDetailsQuestion = Some(data)))
+        val updatedData = updateAboutYouAndTheProperty(_.copy(altDetailsQuestion = Some(data)))
         session.saveOrUpdate(updatedData)
         Redirect(navigator.nextPage(ContactDetailsQuestionId, updatedData).apply(updatedData))
       }

@@ -20,13 +20,13 @@ import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
 import form.aboutyouandtheproperty.AlternativeContactDetailsForm.alternativeContactDetailsForm
 import models.submissions.aboutyouandtheproperty.AlternativeContactDetails
-import models.submissions.additionalinformation.AdditionalInformation.updateAdditionalInformation
-import navigation.AdditionalInformationNavigator
+import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty.updateAboutYouAndTheProperty
+import navigation.AboutYouAndThePropertyNavigator
 import navigation.identifiers.AlternativeContactDetailsId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import views.html.additionalinformation.alternativeContactDetails
+import views.html.aboutyouandtheproperty.alternativeContactDetails
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
@@ -34,7 +34,7 @@ import scala.concurrent.Future
 @Singleton
 class AlternativeContactDetailsController @Inject() (
   mcc: MessagesControllerComponents,
-  navigator: AdditionalInformationNavigator,
+  navigator: AboutYouAndThePropertyNavigator,
   alternativeContactDetailsView: alternativeContactDetails,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
@@ -45,7 +45,7 @@ class AlternativeContactDetailsController @Inject() (
     Future.successful(
       Ok(
         alternativeContactDetailsView(
-          request.sessionData.additionalInformation.flatMap(_.altContactInformation) match {
+          request.sessionData.aboutYouAndTheProperty.flatMap(_.altContactInformation) match {
             case Some(altContactInformation) => alternativeContactDetailsForm.fill(altContactInformation)
             case _                           => alternativeContactDetailsForm
           },
@@ -60,7 +60,7 @@ class AlternativeContactDetailsController @Inject() (
       alternativeContactDetailsForm,
       formWithErrors => BadRequest(alternativeContactDetailsView(formWithErrors, request.sessionData.toSummary)),
       data => {
-        val updatedData = updateAdditionalInformation(_.copy(altContactInformation = Some(data)))
+        val updatedData = updateAboutYouAndTheProperty(_.copy(altContactInformation = Some(data)))
         session.saveOrUpdate(updatedData)
         Redirect(navigator.nextPage(AlternativeContactDetailsId, updatedData).apply(updatedData))
       }

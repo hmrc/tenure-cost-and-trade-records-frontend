@@ -29,25 +29,11 @@ class AdditionalInformationNavigator @Inject() (audit: Audit) extends Navigator(
   override def cyaPage: Option[Call] =
     Some(controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show())
 
-  private def contactDetailsQuestionRouting: Session => Call = answers => {
-    answers.additionalInformation.flatMap(
-      _.altDetailsQuestion.map(_.contactDetailsQuestion.name)
-    ) match {
-      case Some("yes") => controllers.additionalinformation.routes.AlternativeContactDetailsController.show()
-      case Some("no")  => controllers.aboutyouandtheproperty.routes.AboutThePropertyController.show()
-      case _           =>
-        logger.warn(
-          s"Navigation for alternative details question reached without correct selection of conditions by controller"
-        )
-        throw new RuntimeException("Invalid option exception for alternative details question routing")
-    }
-  }
+
   override val routeMap: Map[Identifier, Session => Call]    = Map(
     FurtherInformationId                    -> (_ =>
       controllers.additionalinformation.routes.CheckYourAnswersAdditionalInformationController.show()
     ),
-    ContactDetailsQuestionId                -> contactDetailsQuestionRouting,
-    AlternativeContactDetailsId             -> (_ => controllers.aboutyouandtheproperty.routes.AboutThePropertyController.show()),
     CheckYourAnswersAdditionalInformationId -> (_ => controllers.routes.TaskListController.show())
   )
 }

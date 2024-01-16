@@ -14,10 +14,11 @@
  * limitations under the License.
  *@
 
-@@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
 @import models.pages.Summary
+@import models.submissions.aboutyouandtheproperty.AlternativeContactDetails
 
 @this(layout: Layout,
   govukButton: GovukButton,
@@ -25,7 +26,7 @@
   formWithCSRF: FormWithCSRF
 )
 
-@import models.submissions.aboutyouandtheproperty.AlternativeContactDetails
+
 @(theForm: Form[AlternativeContactDetails], summary: Summary)(implicit request: Request[_], messages: Messages)
 
 @layout(
@@ -34,11 +35,11 @@
     showSection = true,
     summary = Some(summary),
     sectionName = messages("label.section.additionalInformation"),
-    backLinkUrl = controllers.additionalinformation.routes.ContactDetailsQuestionController.show.url,
+    backLinkUrl = controllers.aboutyouandtheproperty.routes.ContactDetailsQuestionController.show.url,
     theForm = theForm
 ) {
 
-  @formWithCSRF(action = controllers.additionalinformation.routes.AlternativeContactDetailsController.submit()) {
+  @formWithCSRF(action = controllers.aboutyouandtheproperty.routes.AlternativeContactDetailsController.submit()) {
 
     <h1 class="govuk-heading-l">@messages("alternativeContactDetails.heading")</h1>
 
