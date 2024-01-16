@@ -15,6 +15,7 @@
  *@
 
 @import uk.gov.hmrc.govukfrontend.views.html.components.{GovukButton, GovukPanel, GovukWarningText}
+@import actions.SessionRequest
 
 @this(
         layout: Layout,
@@ -23,12 +24,13 @@
         govukWarningText: GovukWarningText
 )
 
-@(backLinkUrl: Option[String])(implicit request: Request[_], messages: Messages)
+@(backLinkUrl: Option[String])(implicit request: SessionRequest[_], messages: Messages)
 
 @layout(
     pageHeading = messages("error.json.page.heading"),
     showH1 = true,
     withTimeoutDialog = false,
+    summary = Some(request.sessionData.toSummary),
     backLinkUrl = backLinkUrl
 ) {
 
