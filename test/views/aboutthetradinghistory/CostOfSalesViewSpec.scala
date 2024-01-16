@@ -30,7 +30,7 @@ class CostOfSalesViewSpec extends QuestionViewBehaviours[Seq[CostOfSales]] {
   val messageKeyPrefix = "costOfSales"
   val sessionRequest   = SessionRequest(baseFilled6015Session, fakeRequest)
 
-  override val form = CostOfSalesForm.costOfSalesForm
+  override val form = CostOfSalesForm.costOfSalesForm(Seq(2025, 2024, 2023).map(_.toString))(messages)
 
   def createView = () => costOfSalesView(form)(sessionRequest, messages)
 
@@ -49,13 +49,15 @@ class CostOfSalesViewSpec extends QuestionViewBehaviours[Seq[CostOfSales]] {
     }
 
     "Section heading is visible" in {
-      val doc      = asDocument(createViewUsingForm(form))
+      val form1    = CostOfSalesForm.costOfSalesForm(Seq("2025"))(messages)
+      val doc      = asDocument(createViewUsingForm(form1))
       val captions = doc.getElementsByClass("govuk-caption-m").eachText()
       assert(captions.contains(messages("label.section.aboutYourTradingHistory")))
     }
 
     "contain save and continue button with the value Save and Continue" in {
-      val doc         = asDocument(createViewUsingForm(form))
+      val form2       = CostOfSalesForm.costOfSalesForm(Seq("2025", "2024"))(messages)
+      val doc         = asDocument(createViewUsingForm(form2))
       val loginButton = doc.getElementById("continue").text()
       assert(loginButton == messages("button.label.continue"))
     }

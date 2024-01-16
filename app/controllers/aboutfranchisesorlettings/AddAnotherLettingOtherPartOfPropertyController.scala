@@ -29,7 +29,7 @@ import repositories.SessionRepo
 import views.html.aboutfranchisesorlettings._
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class AddAnotherLettingOtherPartOfPropertyController @Inject() (
@@ -38,7 +38,8 @@ class AddAnotherLettingOtherPartOfPropertyController @Inject() (
   addAnotherCateringOperationOrLettingAccommodationView: addAnotherCateringOperationOrLettingAccommodation,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FORDataCaptureController(mcc)
+)(implicit ec: ExecutionContext)
+    extends FORDataCaptureController(mcc)
     with I18nSupport {
 
   def show(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
@@ -52,6 +53,7 @@ class AddAnotherLettingOtherPartOfPropertyController @Inject() (
             case _                        => addAnotherLettingForm
           },
           index,
+          "addAnotherLetting",
           "addAnotherLettingOtherPartOfProperty",
           controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyRentIncludesController.show(index).url,
           request.sessionData.toSummary
@@ -61,42 +63,52 @@ class AddAnotherLettingOtherPartOfPropertyController @Inject() (
   }
 
   def submit(index: Int) = (Action andThen withSessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft[AnswersYesNo](
-      addAnotherLettingForm,
-      formWithErrors =>
-        BadRequest(
-          addAnotherCateringOperationOrLettingAccommodationView(
-            formWithErrors,
-            index,
-            "addAnotherLettingOtherPartOfProperty",
-            controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyRentIncludesController
-              .show(index)
-              .url,
-            request.sessionData.toSummary
-          )
-        ),
-      data =>
-        request.sessionData.aboutFranchisesOrLettings
-          .map(_.lettingSections)
-          .filter(_.nonEmpty)
-          .fold(
-            Redirect(
-              if (data.name == "yes") {
-                routes.LettingOtherPartOfPropertyDetailsController.show()
-              } else {
-                routes.CheckYourAnswersAboutFranchiseOrLettingsController.show()
-              }
-            )
-          ) { existingSections =>
-            val updatedSections = existingSections.updated(
+    if (request.sessionData.aboutFranchisesOrLettings.exists(_.lettingCurrentIndex >= 4)) {
+
+      val redirectUrl = controllers.routes.MaxOfLettingsReachedController.show(Some("franchiseLetting")).url
+      Future.successful(Redirect(redirectUrl))
+    } else {
+      continueOrSaveAsDraft[AnswersYesNo](
+        addAnotherLettingForm,
+        formWithErrors =>
+          BadRequest(
+            addAnotherCateringOperationOrLettingAccommodationView(
+              formWithErrors,
               index,
-              existingSections(index).copy(addAnotherLettingToProperty = Some(data))
+              "addAnotherLetting",
+              "addAnotherLettingOtherPartOfProperty",
+              controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyRentIncludesController
+                .show(index)
+                .url,
+              request.sessionData.toSummary
             )
-            val updatedData     = updateAboutFranchisesOrLettings(_.copy(lettingSections = updatedSections))
-            session.saveOrUpdate(updatedData)
-            Redirect(navigator.nextPage(AddAnotherLettingAccommodationPageId, updatedData).apply(updatedData))
-          }
-    )
+          ),
+        data =>
+          request.sessionData.aboutFranchisesOrLettings
+            .map(_.lettingSections)
+            .filter(_.nonEmpty)
+            .fold(
+              Future.successful(
+                Redirect(
+                  if (data.name == "yes") {
+                    routes.LettingOtherPartOfPropertyDetailsController.show()
+                  } else {
+                    routes.CheckYourAnswersAboutFranchiseOrLettingsController.show()
+                  }
+                )
+              )
+            ) { existingSections =>
+              val updatedSections = existingSections.updated(
+                index,
+                existingSections(index).copy(addAnotherLettingToProperty = Some(data))
+              )
+              val updatedData     = updateAboutFranchisesOrLettings(_.copy(lettingSections = updatedSections))
+              session.saveOrUpdate(updatedData).map { _ =>
+                Redirect(navigator.nextPage(AddAnotherLettingAccommodationPageId, updatedData).apply(updatedData))
+              }
+            }
+      )
+    }
   }
 
   def remove(idx: Int) = (Action andThen withSessionRefiner).async { implicit request =>

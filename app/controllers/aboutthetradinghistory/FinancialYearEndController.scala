@@ -21,7 +21,7 @@ import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.AccountingInformationForm.accountingInformationForm
 import models.submissions.Form6010.DayMonthsDuration
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.updateAboutTheTradingHistory
-import models.submissions.aboutthetradinghistory.{CostOfSales, OccupationalAndAccountingInformation, TurnoverSection}
+import models.submissions.aboutthetradinghistory.{CostOfSales, OccupationalAndAccountingInformation, TotalPayrollCost, TurnoverSection}
 import navigation.AboutTheTradingHistoryNavigator
 import navigation.identifiers.FinancialYearEndPageId
 import play.api.Logging
@@ -108,6 +108,14 @@ class FinancialYearEndController @Inject() (
               turnoverSections.map(_.financialYearEnd).map(CostOfSales(_, None, None, None, None))
             }
 
+            val totalPayrollCosts = if (aboutTheTradingHistory.totalPayrollCostSections.size == turnoverSections.size) {
+              (aboutTheTradingHistory.totalPayrollCostSections zip turnoverSections.map(_.financialYearEnd)).map {
+                case (totalPayrollCosts, finYearEnd) => totalPayrollCosts.copy(financialYearEnd = finYearEnd)
+              }
+            } else {
+              turnoverSections.map(_.financialYearEnd).map(TotalPayrollCost(_, None, None))
+            }
+
             val sectionCompleted = if (isFinancialYearsListUnchanged) {
               aboutTheTradingHistory.checkYourAnswersAboutTheTradingHistory
             } else {
@@ -119,6 +127,7 @@ class FinancialYearEndController @Inject() (
                 occupationAndAccountingInformation = Some(newOccupationAndAccounting),
                 turnoverSections = turnoverSections,
                 costOfSales = costOfSales,
+                totalPayrollCostSections = totalPayrollCosts,
                 checkYourAnswersAboutTheTradingHistory = sectionCompleted
               )
             )

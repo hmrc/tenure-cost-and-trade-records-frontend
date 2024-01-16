@@ -30,6 +30,8 @@ import models.submissions.notconnected.RemoveConnectionDetails
 import models.submissions.requestReferenceNumber.RequestReferenceNumberDetails
 import play.api.libs.json._
 
+import java.time.LocalDate
+
 // New session properties must be also added to class `UserData` and method `toUserData`
 case class Session(
   referenceNumber: String,
@@ -54,7 +56,10 @@ case class Session(
   /**
     * Returns only referenceNumber digits without slash or any other special char to use in endpoint path.
     */
-  def referenceNumberCleaned = referenceNumber.replaceAll("[^0-9]", "")
+  def referenceNumberCleaned: String = referenceNumber.replaceAll("[^0-9]", "")
+
+  def financialYearEndDates: Seq[(LocalDate, Int)] =
+    aboutTheTradingHistory.fold(Seq.empty[(LocalDate, Int)])(_.turnoverSections.map(_.financialYearEnd).zipWithIndex)
 
   def toUserData: UserData = UserData(
     referenceNumber,

@@ -24,11 +24,11 @@
 
 @(enableTimeoutDialog: Boolean)(implicit request: RequestHeader, messages: Messages)
 
-<link href='@routes.Assets.versioned("stylesheets/application.css")' media="all" rel="stylesheet" type="text/css" />
+<link href='@routes.Assets.versioned("stylesheets/app.min.css")' media="all" rel="stylesheet" type="text/css" />
 
 @if(enableTimeoutDialog) {
     @hmrcTimeoutDialogHelper(
         signOutUrl = routes.LoginController.logout.url,
-        timeoutUrl = routes.SaveAsDraftController.timeout(request.path).url
+        timeoutUrl = routes.SaveAsDraftController.timeout(request.uri).url
     )
 }

@@ -54,6 +54,36 @@ class NoReferenceNumberViewSpec extends QuestionViewBehaviours[RequestReferenceN
       backlinkUrl mustBe controllers.routes.LoginController.show().url
     }
 
+    "contain subheading" in {
+      val doc = asDocument(createView())
+      assert(doc.toString.contains(messages("requestReferenceNumber.subheading")))
+    }
+
+    "contain request reference number para one" in {
+      val doc = asDocument(createView())
+      assert(doc.toString.contains(messages("requestReferenceNumber.p1")))
+    }
+
+    "contain subheading 2" in {
+      val doc = asDocument(createView())
+      assert(doc.toString.contains(messages("requestReferenceNumber.subheading2")))
+    }
+
+    "contain request reference number para two" in {
+      val doc = asDocument(createView())
+      assert(doc.toString.contains(messages("requestReferenceNumber.p2")))
+    }
+
+    "contain request reference number para three" in {
+      val doc = asDocument(createView())
+      assert(doc.toString.contains(messages("requestReferenceNumber.p3")))
+    }
+
+    "contain subheading 3" in {
+      val doc = asDocument(createView())
+      assert(doc.toString.contains(messages("requestReferenceNumber.subheading3")))
+    }
+
     "contain an input for requestReferenceNumberBusinessTradingName" in {
       val doc = asDocument(createViewUsingForm(form))
       assertRenderedById(doc, "requestReferenceNumberBusinessTradingName")

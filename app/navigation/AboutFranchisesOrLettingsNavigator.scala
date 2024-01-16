@@ -88,7 +88,23 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit) extends Naviga
     session.aboutFranchisesOrLettings.map(_.cateringOperationCurrentIndex).getOrElse(0)
 
   private def cateringOperationsDetailsConditionsRouting: Session => Call = answers => {
-    controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsRentController
+    answers.forType match {
+      case ForTypes.for6015 | ForTypes.for6016 =>
+        controllers.aboutfranchisesorlettings.routes.RentReceivedFromController
+          .show(getCateringOperationsIndex(answers))
+      case _                                   =>
+        controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsRentController
+          .show(getCateringOperationsIndex(answers))
+    }
+  }
+
+  private def rentReceivedFromRouting: Session => Call = answers => {
+    controllers.aboutfranchisesorlettings.routes.CalculatingTheRentForController
+      .show(getCateringOperationsIndex(answers))
+  }
+
+  private def calculatingTheRentForRouting: Session => Call = answers => {
+    controllers.aboutfranchisesorlettings.routes.CateringOperationRentIncludesController
       .show(getCateringOperationsIndex(answers))
   }
 
@@ -103,28 +119,32 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit) extends Naviga
   }
 
   private def addAnotherCateringOperationsConditionsRouting: Session => Call = answers => {
-
     def getLastCateringOperationIndex(session: Session): Option[Int] =
       session.aboutFranchisesOrLettings.flatMap { aboutFranchiseOrLettings =>
         aboutFranchiseOrLettings.cateringOperationSections.lastOption.map(_ =>
           aboutFranchiseOrLettings.cateringOperationSections.size
         )
       }
-
-    val existingSection =
+    val fromCYA                                                      =
+      answers.aboutFranchisesOrLettings.flatMap(_.fromCYA).getOrElse(false)
+    val existingSection                                              =
       answers.aboutFranchisesOrLettings.flatMap(_.cateringOperationSections.lift(getCateringOperationsIndex(answers)))
     existingSection.flatMap(_.addAnotherOperationToProperty).get.name match {
       case "yes" =>
         controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController
           .show(getLastCateringOperationIndex(answers))
-      case "no"  => controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show()
+      case "no"  =>
+        if (fromCYA == true) {
+          controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show()
+        } else {
+          controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show()
+        }
       case _     =>
         logger.warn(
           s"Navigation for add another catering operation reached without correct selection of conditions by controller"
         )
         throw new RuntimeException("Invalid option exception for add another catering operation conditions routing")
     }
-
   }
 
   private def rentForConcessionsRouting: Session => Call = answers => {
@@ -192,12 +212,20 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit) extends Naviga
     CateringOperationRentDetailsPageId         -> cateringOperationsRentDetailsConditionsRouting,
     CateringOperationRentIncludesPageId        -> cateringOperationsRentIncludesConditionsRouting,
     AddAnotherCateringOperationPageId          -> addAnotherCateringOperationsConditionsRouting,
+    RentReceivedFromPageId                     -> rentReceivedFromRouting,
+    CalculatingTheRentForPageId                -> calculatingTheRentForRouting,
     LettingAccommodationPageId                 -> lettingAccommodationConditionsRouting,
     LettingAccommodationDetailsPageId          -> lettingsDetailsConditionsRouting,
     LettingAccommodationRentDetailsPageId      -> lettingsRentDetailsConditionsRouting,
     LettingAccommodationRentIncludesPageId     -> lettingsRentIncludesConditionsRouting,
     AddAnotherLettingAccommodationPageId       -> addAnotherLettingsConditionsRouting,
     RentFromConcessionId                       -> rentForConcessionsRouting,
+    MaxOfLettingsReachedCateringId             -> (_ =>
+      controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show()
+    ),
+    MaxOfLettingsReachedCurrentId              -> (_ =>
+      controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show()
+    ),
     CheckYourAnswersAboutFranchiseOrLettingsId -> (_ => controllers.routes.TaskListController.show())
   )
 }

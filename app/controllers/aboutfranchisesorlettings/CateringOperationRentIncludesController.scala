@@ -19,6 +19,7 @@ package controllers.aboutfranchisesorlettings
 import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
 import form.aboutfranchisesorlettings.CateringOperationOrLettingAccommodationRentIncludesForm.cateringOperationOrLettingAccommodationRentIncludesForm
+import models.ForTypes
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
 import navigation.AboutFranchisesOrLettingsNavigator
 import navigation.identifiers.CateringOperationRentIncludesPageId
@@ -28,6 +29,7 @@ import repositories.SessionRepo
 import views.html.aboutfranchisesorlettings.cateringOperationOrLettingAccommodationRentIncludes
 
 import javax.inject.{Inject, Named, Singleton}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class CateringOperationRentIncludesController @Inject() (
@@ -36,7 +38,8 @@ class CateringOperationRentIncludesController @Inject() (
   cateringOperationOrLettingAccommodationDetailsCheckboxesView: cateringOperationOrLettingAccommodationRentIncludes,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FORDataCaptureController(mcc)
+)(implicit ec: ExecutionContext)
+    extends FORDataCaptureController(mcc)
     with I18nSupport {
 
   def show(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
@@ -53,7 +56,7 @@ class CateringOperationRentIncludesController @Inject() (
             index,
             "cateringOperationOrLettingAccommodationCheckboxesDetails",
             currentSection.cateringOperationDetails.operatorName,
-            controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsRentController.show(index).url,
+            backlink(request.sessionData.forType, index),
             request.sessionData.toSummary,
             request.sessionData.forType
           )
@@ -74,7 +77,7 @@ class CateringOperationRentIncludesController @Inject() (
             index,
             "cateringOperationOrLettingAccommodationCheckboxesDetails",
             currentSection.cateringOperationDetails.operatorName,
-            controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsRentController.show(index).url,
+            backlink(request.sessionData.forType, index),
             request.sessionData.toSummary,
             request.sessionData.forType
           )
@@ -85,10 +88,22 @@ class CateringOperationRentIncludesController @Inject() (
           currentSection.copy(itemsInRent = data)
         )
         val updatedSession  = updateAboutFranchisesOrLettings(_.copy(cateringOperationSections = updatedSections))
-        session.saveOrUpdate(updatedSession)
-        Redirect(navigator.nextPage(CateringOperationRentIncludesPageId, updatedSession).apply(updatedSession))
+        session.saveOrUpdate(updatedSession).map { _ =>
+          Redirect(navigator.nextPage(CateringOperationRentIncludesPageId, updatedSession).apply(updatedSession))
+        }
       }
     )).getOrElse(startRedirect)
+  }
+
+  def backlink(forType: String, index: Int): String = {
+    val isForType6016Or6015 = forType == ForTypes.for6016 || forType == ForTypes.for6015
+
+    isForType6016Or6015 match {
+      case true  =>
+        controllers.aboutfranchisesorlettings.routes.CalculatingTheRentForController.show(index).url
+      case false =>
+        controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsRentController.show(index).url
+    }
   }
 
   private def startRedirect: Result = Redirect(routes.CateringOperationDetailsController.show(None))

@@ -19,8 +19,8 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import uk.gov.hmrc.govukfrontend.views.Implicits.RichInput
 @import util.DateUtil
+@import util.NumberUtil._
 
-@import java.time.LocalDate
 
 @this(layout: Layout,
         govukButton: GovukButton,
@@ -57,22 +57,39 @@
 }
 
 @alcoholicDrinksHeading = {
-@messages("turnover.alcoholicDrinks")
-    <span class="govuk-caption-m">@messages("turnover.alcoholicDrinksCaption")</span>
+    <p class="govuk-body govuk-!-font-weight-bold">
+        @messages("turnover.alcoholicDrinks")
+        <span class="govuk-caption-m">@messages("turnover.alcoholicDrinksCaption")</span>
+    </p>
 }
 
 @foodHeading = {
-@messages("turnover.food")
-    <span class="govuk-caption-m">@messages("turnover.foodCaption")</span>
+    <p class="govuk-body govuk-!-font-weight-bold">
+        @messages("turnover.food")
+        <span class="govuk-caption-m">@messages("turnover.foodCaption")</span>
+    </p>
 }
 
 @otherReceiptsHeading = {
-@messages("turnover.otherReceipts")
-    <span class="govuk-caption-m">@messages("turnover.otherReceiptsCaption")</span>
+    <p class="govuk-body govuk-!-font-weight-bold">
+        @messages("turnover.otherReceipts")
+        <span class="govuk-caption-m">@messages("turnover.otherReceiptsCaption")</span>
+    </p>
 }
+
 @totalSalesRevenueHeading = {
-@messages("turnover.totalSalesRevenue")
-    <span class="govuk-caption-m">@messages("turnover.totalSalesRevenueCaption")</span>
+    <p class="govuk-body govuk-!-font-weight-bold">
+        @messages("turnover.totalSalesRevenue")
+        <span class="govuk-caption-m">@messages("turnover.totalSalesRevenueCaption")</span>
+    </p>
+}
+
+@totalContent(idx: Int) = {
+    <span
+    data-total-prefix="@idx."
+    data-total-items="accommodation,food,alcoholic-drinks,other-receipts">
+    @form.value.fold("")(_(idx).total.asMoney)
+    </span>
 }
 
 @accommodationHeading = {
@@ -99,11 +116,6 @@
     request.sessionData.aboutTheTradingHistory.fold(Seq.empty[Int])(_.turnoverSections.indices)
 }
 
-@financialYearEndDates = @{
-    request.sessionData.aboutTheTradingHistory
-    .fold(Seq.empty[LocalDate])(_.turnoverSections.map(_.financialYearEnd)).zipWithIndex
-}
-
 @layout(
     pageHeading = if(forType == ForTypes.for6010 || forType == ForTypes.for6011) {
         messages("turnover.heading")
@@ -115,6 +127,8 @@
     sectionName = messages("label.section.aboutYourTradingHistory"),
     backLinkUrl = fromLocation match {
         case "TL" => controllers.routes.TaskListController.show().url + "#turnover"
+
+        case "IES" => controllers.aboutthetradinghistory.routes.IncomeExpenditureSummaryController.show().url
         case _ =>
             if(request.sessionData.aboutTheTradingHistory.flatMap(_.occupationAndAccountingInformation.flatMap(_.yearEndChanged)).contains(true)) {
                 controllers.aboutthetradinghistory.routes.FinancialYearEndDatesController.show().url
@@ -151,7 +165,7 @@
         <table class="hmrc-responsive-table">
             <tbody>
                 <tr>
-                @financialYearEndDates.map { case (finYearEnd, idx) =>
+                @request.sessionData.financialYearEndDates.map { case (finYearEnd, idx) =>
                 <td>
                     @govukTable(Table(
                         head = Seq(
@@ -159,10 +173,7 @@
                                 content = Text(messages("turnover.financialYearEnd"))
                             ),
                             HeadCell(
-                                content = Text(dateUtil.formatDayMonthAbbrYear(finYearEnd)),
-                                attributes = Map(
-                                    "style" -> "min-width: 10em;"
-                                )
+                                content = Text(dateUtil.formatDayMonthAbbrYear(finYearEnd))
                             )
                         ),
                         firstCellIsHeader = true,
@@ -304,9 +315,7 @@
                                     content = HtmlContent(totalSalesRevenueHeading)
                                 ),
                                 TableRow(
-                                    content = HtmlContent(
-                                        s"""<span id="total-sales-revenue-$idx" class="total-sales-revenue"></span>"""
-                                    )
+                                    content = HtmlContent(totalContent(idx))
                                 )
                             )
                         )
@@ -320,7 +329,7 @@
         @includes.continueSaveAsDraftButtons(govukButton)
     }
 
-}
+    <script src="@routes.Assets.versioned("javascripts/data-total.js")"></script>
+    <script src="@routes.Assets.versioned("javascripts/responsive-table.js")"></script>
 
-<script src="@routes.Assets.versioned("javascripts/responsive-table.js")"></script>
-<script src="@routes.Assets.versioned("javascripts/total-turnover.js")"></script>
+}

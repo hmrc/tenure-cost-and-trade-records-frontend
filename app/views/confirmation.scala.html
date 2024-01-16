@@ -57,25 +57,25 @@
         @answersAllSections()
     </div>
 
-    <p class="govuk-body">@messages("confirmation.unableToRetrieveAnswers")</p>
-
     <div class="govuk-!-display-none-print">
-    <ul class="govuk-list govuk-list--bullet">
-        <li>@{messages("confirmation.unableToRetrieveAnswers.list.1")}</li>
-        <li>@{messages("confirmation.unableToRetrieveAnswers.list.2")}</li>
-        <li>@{messages("confirmation.unableToRetrieveAnswers.list.3")}</li>
-    </ul>
+        <p class="govuk-body">@messages("confirmation.unableToRetrieveAnswers")</p>
 
-    <h2 class="govuk-heading-m">@messages("confirmation.whatNext")</h2>
-    <p class="govuk-body">@messages("confirmation.list.1")</p>
-    <p class="govuk-body">@messages("confirmation.list.2")</p>
+        <ul class="govuk-list govuk-list--bullet">
+            <li>@{messages("confirmation.unableToRetrieveAnswers.list.1")}</li>
+            <li>@{messages("confirmation.unableToRetrieveAnswers.list.2")}</li>
+            <li>@{messages("confirmation.unableToRetrieveAnswers.list.3")}</li>
+        </ul>
+
+        <h2 class="govuk-heading-m">@messages("confirmation.whatNext")</h2>
+        <p class="govuk-body">@messages("confirmation.list.1")</p>
+        <p class="govuk-body">@messages("confirmation.list.2")</p>
 
         <h2 class="govuk-heading-m">@messages("confirmation.businessRatesBill")</h2>
         <p class="govuk-body">@{HtmlContent(messages("confirmation.businessRatesBill.list.1")).asHtml}</p>
         <p class="govuk-body">@{HtmlContent(messages("confirmation.businessRatesBill.list.2")).asHtml}</p>
     </div>
 
-    <div class="no-print">
+    <div class="govuk-!-display-none-print">
 
         @formWithCSRF(
             action = routes.FeedbackController.feedbackConnectedSubmit,

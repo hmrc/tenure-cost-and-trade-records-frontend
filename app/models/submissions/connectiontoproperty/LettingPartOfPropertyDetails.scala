@@ -16,6 +16,7 @@
 
 package models.submissions.connectiontoproperty
 
+import models.submissions.MaxOfLettings
 import models.submissions.common.AnswersYesNo
 import play.api.libs.json.Json
 
@@ -23,7 +24,8 @@ case class LettingPartOfPropertyDetails(
   tenantDetails: TenantDetails,
   lettingPartOfPropertyRentDetails: Option[LettingPartOfPropertyRentDetails] = None,
   itemsIncludedInRent: List[String] = List.empty,
-  addAnotherLettingToProperty: Option[AnswersYesNo] = None
+  addAnotherLettingToProperty: Option[AnswersYesNo] = None,
+  maxOfLettings: Option[MaxOfLettings] = None
 )
 
 object LettingPartOfPropertyDetails {

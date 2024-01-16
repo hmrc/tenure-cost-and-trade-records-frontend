@@ -1,0 +1,72 @@
+@*
+ * Copyright 2023 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukDateInput
+@import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Label
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukCharacterCount
+@import uk.gov.hmrc.govukfrontend.views.Aliases.CharacterCount
+@import models.pages.Summary
+
+@this(layout: Layout,
+        govukButton: GovukButton,
+        govukDateInput: GovukDateInput,
+        govukCharacterCount: GovukCharacterCount,
+        formWithCSRF: FormWithCSRF
+)
+
+
+@(theForm: Form[_], index: Int,  operatorName: String, summary: Summary)(implicit request: Request[_], messages: Messages)
+
+@layout(
+    pageHeading = messages("calculating.the.rent.for.heading", operatorName),
+    showSection = true,
+    showH1 = false,
+    summary = Some(summary),
+    sectionName = messages("label.section.aboutTheFranchiseConcessions"),
+    backLinkUrl = controllers.aboutfranchisesorlettings.routes.RentReceivedFromController.show(index).url,
+    theForm = theForm
+) {
+    @formWithCSRF(action = controllers.aboutfranchisesorlettings.routes.CalculatingTheRentForController.submit(index)) {
+
+            <h1 class="govuk-heading-l">@messages("calculating.the.rent.for.heading", operatorName)</h1>
+
+        @govukCharacterCount(
+            CharacterCount(
+                id = "rentDetails",
+                name = "rentDetails",
+                maxLength = 1000,
+                label = Label(
+                    content = Text(messages("calculating.the.rent.for.explain")),
+                    classes = "govuk-label--s",
+                    isPageHeading = false
+                ),
+                errorMessage = theForm.errors.asTextErrorMessageForField("rentDetails"),
+            ).withFormField(theForm("rentDetails"))
+        )
+        @includes.dateFields(
+            form = theForm,
+            field = "dateInput",
+            govukDate = govukDateInput,
+            showDays = true,
+            label = messages("calculating.the.rent.for.label"))
+
+        @includes.continueSaveAsDraftButtons(govukButton)
+    }
+}

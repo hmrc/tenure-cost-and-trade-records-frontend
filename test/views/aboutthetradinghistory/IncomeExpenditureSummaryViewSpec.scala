@@ -17,7 +17,7 @@
 package views.aboutthetradinghistory
 
 import form.aboutthetradinghistory.IncomeExpenditureSummaryForm
-import models.pages.Summary
+import models.pages.{IncomeExpenditureEntry, Summary}
 import models.submissions.aboutthetradinghistory.IncomeExpenditureSummary
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
@@ -29,10 +29,11 @@ class IncomeExpenditureSummaryViewSpec extends QuestionViewBehaviours[IncomeExpe
 
   override val form = IncomeExpenditureSummaryForm.incomeExpenditureSummaryForm
 
-  def createView = () => incomeExpenditureSummaryView(form, Summary("99996010001"))(fakeRequest, messages)
+  def createView = () =>
+    incomeExpenditureSummaryView(form, Summary("99996010001"), createEnteries)(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[IncomeExpenditureSummary]) =>
-    incomeExpenditureSummaryView(form, Summary("99996010001"))(fakeRequest, messages)
+    incomeExpenditureSummaryView(form, Summary("99996010001"), createEnteries)(fakeRequest, messages)
 
   "income and expenditure summary view" must {
 
@@ -58,4 +59,25 @@ class IncomeExpenditureSummaryViewSpec extends QuestionViewBehaviours[IncomeExpe
       assert(loginButton == messages("button.label.continue"))
     }
   }
+
+  def createEnteries: Seq[IncomeExpenditureEntry] = Seq(
+    IncomeExpenditureEntry(
+      "2023-03-01",
+      10,
+      "turnoverUrl",
+      2,
+      "costOfSalesUrl",
+      8,
+      1,
+      "totalPayrollURL",
+      2,
+      "variableExpensesUrl",
+      1,
+      "fixedExpensesUrl",
+      1,
+      "otherCostsUrl",
+      3,
+      30
+    )
+  )
 }

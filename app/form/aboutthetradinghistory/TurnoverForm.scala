@@ -16,6 +16,7 @@
 
 package form.aboutthetradinghistory
 
+import form.MappingSupport.turnoverSalesMappingWithYear
 import models.submissions.aboutthetradinghistory.TurnoverSection
 import play.api.data.{Form, Mapping}
 import play.api.data.Forms.{ignored, mapping, optional}
@@ -32,19 +33,6 @@ object TurnoverForm {
   ): Form[Seq[TurnoverSection]] = {
 
     val salesMax = BigDecimal(1000000000000L)
-
-    def turnoverSalesMappingWithYear(field: String, year: String)(implicit
-      messages: Messages
-    ): Mapping[Option[BigDecimal]] = optional(
-      text
-        .verifying(messages(s"error.$field.range", year), s => Try(BigDecimal(s)).isSuccess)
-        .transform[BigDecimal](
-          s => BigDecimal(s),
-          _.toString
-        )
-        .verifying(messages(s"error.$field.negative", year), _ >= 0)
-        .verifying(messages(s"error.$field.range", year), _ <= salesMax)
-    ).verifying(messages(s"error.$field.required", year), _.isDefined)
 
     def averageOccupancyRateMapping(year: String)(implicit messages: Messages): Mapping[Option[BigDecimal]] = optional(
       text

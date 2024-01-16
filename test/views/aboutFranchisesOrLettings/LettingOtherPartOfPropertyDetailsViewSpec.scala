@@ -24,7 +24,8 @@ import views.behaviours.QuestionViewBehaviours
 import models.pages.Summary
 class LettingOtherPartOfPropertyDetailsViewSpec extends QuestionViewBehaviours[CateringOperationDetails] {
 
-  val messageKeyPrefix = "lettingOtherPartOfPropertyDetails"
+  val messageKeyPrefix     = "lettingOtherPartOfPropertyDetails"
+  val messageKeyPrefix6015 = "concessionDetails"
 
   override val form = CateringOperationOrLettingAccommodationForm.cateringOperationOrLettingAccommodationForm
 
@@ -32,6 +33,7 @@ class LettingOtherPartOfPropertyDetailsViewSpec extends QuestionViewBehaviours[C
     cateringOperationDetailsView(
       form,
       Some(0),
+      messageKeyPrefix6015,
       messageKeyPrefix,
       controllers.aboutfranchisesorlettings.routes.CateringOperationController.show().url,
       Summary("99996010001"),
@@ -42,6 +44,7 @@ class LettingOtherPartOfPropertyDetailsViewSpec extends QuestionViewBehaviours[C
     cateringOperationDetailsView(
       form,
       Some(0),
+      messageKeyPrefix6015,
       messageKeyPrefix,
       controllers.aboutfranchisesorlettings.routes.CateringOperationController.show().url,
       Summary("99996010001"),

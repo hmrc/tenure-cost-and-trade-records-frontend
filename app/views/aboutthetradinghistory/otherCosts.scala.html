@@ -34,7 +34,7 @@
         dateUtil: DateUtil
 )
 
-@(theForm: Form[OtherCosts], backLinkUrl: Option[String]= None, fromLocation: String = "")(implicit request: SessionRequest[_], messages: Messages)
+@(theForm: Form[OtherCosts], fromLocation: String = "")(implicit request: SessionRequest[_], messages: Messages)
 
 @detailsContent = {
     <p class="govuk-body">@messages("otherCosts.details.p1")</p>
@@ -57,9 +57,11 @@
     <p class="govuk-body"><span class="govuk-!-font-weight-bold">@messages("otherCosts.total")</span></p>
 }
 
-@totalOtherCostContent(idx: Int) = {
-    <span id="@{"otherCostTotal." + idx}">
-    @theForm.value.fold("")(_.otherCosts.map(_.total).sum.asMoney)
+@totalContent(idx: Int) = {
+    <span
+    data-total-prefix="otherCosts[@idx]."
+    data-total-items="contributionsToHeadOffice,otherCosts">
+    @theForm.value.fold("")(_.otherCosts(idx).total.asMoney)
     </span>
 }
 
@@ -77,7 +79,11 @@
   showSection = true,
   summary = Some(request.sessionData.toSummary),
   sectionName = messages("label.section.aboutYourTradingHistory"),
-  backLinkUrl = controllers.aboutthetradinghistory.routes.FixedOperatingExpensesController.show.url,
+  backLinkUrl = fromLocation match {
+      case "TL" => controllers.routes.TaskListController.show().url + "#turnover"
+      case "IES" => controllers.aboutthetradinghistory.routes.IncomeExpenditureSummaryController.show().url
+      case _ =>controllers.aboutthetradinghistory.routes.FixedOperatingExpensesController.show.url
+  },
   theForm = theForm
 ) {
     @detailsContent
@@ -157,7 +163,7 @@
                   content = HtmlContent(totalHeading)
               ) +: columns.map { idx =>
                   TableRow(
-                      content = HtmlContent(totalOtherCostContent(idx))
+                      content = HtmlContent(totalContent(idx))
                   )
               }
           ),
@@ -167,8 +173,8 @@
 
       @includes.continueSaveAsDraftButtons(govukButton)
   }
+
+    <script src="@routes.Assets.versioned("javascripts/data-total.js")"></script>
+    <script src="@routes.Assets.versioned("javascripts/responsive-table.js")"></script>
+
 }
-
-<script src="@routes.Assets.versioned("javascripts/other-costs.js")"></script>
-
-

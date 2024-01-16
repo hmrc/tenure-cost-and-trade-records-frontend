@@ -25,7 +25,8 @@ import views.behaviours.QuestionViewBehaviours
 
 class CateringOperationsDetailsViewSpec extends QuestionViewBehaviours[CateringOperationDetails] {
 
-  val messageKeyPrefix = "cateringOperationOrLettingAccommodationDetails"
+  val messageKeyPrefix     = "cateringOperationOrLettingAccommodationDetails"
+  val messageKeyPrefix6015 = "concessionDetails"
 
   override val form = CateringOperationOrLettingAccommodationForm.cateringOperationOrLettingAccommodationForm
 
@@ -33,6 +34,7 @@ class CateringOperationsDetailsViewSpec extends QuestionViewBehaviours[CateringO
     cateringOperationDetailsView(
       form,
       Some(0),
+      messageKeyPrefix6015,
       messageKeyPrefix,
       controllers.aboutfranchisesorlettings.routes.CateringOperationController.show().url,
       Summary("99996010001"),
@@ -43,6 +45,7 @@ class CateringOperationsDetailsViewSpec extends QuestionViewBehaviours[CateringO
     cateringOperationDetailsView(
       form,
       Some(0),
+      messageKeyPrefix6015,
       messageKeyPrefix,
       controllers.aboutfranchisesorlettings.routes.CateringOperationController.show().url,
       Summary("99996010001"),

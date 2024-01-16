@@ -36,11 +36,6 @@ class SensitiveAdditionalInformationSpec extends AnyWordSpecLike with Matchers w
         furtherInformationOrRemarksDetails = None,
         altContactInformation = Some(
           AlternativeContactDetails(
-            alternativeContactFullName = "John Doe",
-            alternativeContactDetails = ContactDetails(
-              phone = "1234567890",
-              email = "johndoe@example.com"
-            ),
             alternativeContactAddress = AlternativeAddress(
               buildingNameNumber = "123",
               street1 = Some("Street 1"),

@@ -905,6 +905,7 @@ error.howIsCurrentRentFixed.required = Select how the current rent was fixed
 #######################################
 cateringOperationOrLettingAccommodationDetails.heading = Provide the business’s details
 concessionDetails.heading = Provide the concession’s details
+lettingDetails.heading = Provide the tenant or operator’s details
 lettingOtherPartOfPropertyDetails.heading = Provide the tenant’s details
 fieldName.lettingOtherPartOfPropertyFixedRentDate = the date when the annual rent was fixed
 label.operatorName = Operator’s name
@@ -939,6 +940,21 @@ error.dateInput.month.required = The date the rent was fixed must include a mont
 error.dateInput.year.required = The date the rent was fixed must include a year
 error.sharedResponsibilities.required = Tell us how the responsibilities are shared
 
+# RENT RECEIVED (6015/6016 0NLY)
+rent.received.from.heading = Rent received from {0}
+rent.received.from.excluding.VAT = Annual rent payment excluding VAT
+rent.received.from.error = Enter the rent received
+rent.received.from.confirm = I confirm this payment was not included in the turnover figures
+rent.received.from.confirm.error = Please confirm this payment was not included in the turnover figures
+
+
+# CALCULATING THE RENT (6015/6016 0NLY)
+calculating.the.rent.for.heading = Calculating the rent for {0}
+calculating.the.rent.for.explain = Explain how the income received figure was calculated- for example, 10% of the total takings
+calculating.the.rent.for.explain.error = Plese explain how the income received figure was calculated
+calculating.the.rent.for.label = When was the rent fixed at its current rate?
+calculating.the.rent.for.error = Enter the date when the annual rent was fixed
+
 # CATERING OPERATION OR LETTING ACCOMMODATION CHECKBOXES
 ########################################################
 cateringOperationOrLettingAccommodationCheckboxesDetails.heading = Items included in your rent
@@ -960,9 +976,13 @@ addAnotherConcessionOrLetting.heading = You have added {0} separate business or 
 addAnotherCateringOperation.zeroBusinessOrFranchises.heading = You have removed all your separate business or franchises
 addAnotherLettingOtherPartOfProperty.zeroBusinessOrFranchises.heading = You have removed all your separate business or concessions
 addAnotherLettingOtherPartOfProperty.heading = You have added {0} letting
+addAnotherConcession.heading = You have added {0} separate business or concession
+addAnotherLetting.heading = You have added {0} letting
 label.addAnotherCateringOperation = Do you need to add another separate business or franchise?
 label.addAnotherConcessionOrLetting = Do you need to add another separate business or concession?
+label.addAnotherConcession = Do you need to add another separate business or concession?
 label.addAnotherLettingOtherPartOfProperty = Do you need to add another letting?
+label.addAnotherLetting = Do you need to add another letting?
 error.addAnotherSeparateBusinessOrFranchise.required = Select yes if you would like to add another business or franchise
 error.addAnotherLetting.required = Select yes if you would like to add another letting
 
@@ -1247,6 +1267,14 @@ totalPayrollCosts.financialYearEnd = Financial year end
 totalPayrollCosts.managersAndStaff = Managers and staff
 totalPayrollCosts.directorsRemuneration = Director's remuneration
 totalPayrollCosts.directorsRemuneration.add = (if applicable)
+totalPayrollCosts.total = Total payroll costs
+error.managers-and-staff.required = Enter 0 if you did not have any payroll costs for managers and staff in the year ending {0}
+error.managers-and-staff.range = The payroll costs for managers and staff in the year ending {0} must be a number, for example 100 or 100.00
+error.managers-and-staff.negative = The payroll costs for managers and staff in the year ending {0} cannot be a negative number
+error.directors-remuneration.required= Enter 0 if you did not have directors remuneration in the year ending {0}
+error.directors-remuneration.range = The directors remuneration in the year ending {0} must be a number, for example 100 or 100.00
+error.directors-remuneration.negative = The directors remuneration in the year ending {0} cannot be a negative number
+
 
 # VARIABLE OPERATING EXPENSES (FORM 6015)
 #########
@@ -1256,12 +1284,39 @@ variableOperatingExpenses.p2 = All fields on this page are mandatory. If none of
 variableOperatingExpenses.energyAndUtilities = Energy and utilities
 variableOperatingExpenses.cleaningAndLaundry = Cleaning and laundry
 variableOperatingExpenses.buildingMaintenanceAndRepairs = Building maintenance and repairs
-variableOperatingExpenses.fixturesFittingsAndEquipment = Repairs and renewal of fixtures and fittings, equipment etc
+variableOperatingExpenses.fixturesFittingsAndEquipment = Repairs and renewal of fixtures, fittings and other equipment
 variableOperatingExpenses.advertisingAndPromotions = Advertising, marketing and promotions
 variableOperatingExpenses.administrationAndSundries = Administration and sundries
 variableOperatingExpenses.entertainment = Entertainment
-variableOperatingExpenses.entertainment.p1 = Artiste fees, for example
-variableOperatingExpenses.totalVariableOperatingExpenses = Total variable operating expenses
+variableOperatingExpenses.entertainment.p1 = Artiste fees, for example.
+variableOperatingExpenses.other = Other expenses
+variableOperatingExpenses.other.p1 = Include all other expenses not listed previously.
+variableOperatingExpenses.otherExpensesDetails = Give details of the items included in your other expenses
+variableOperatingExpenses.total = Total variable operating expenses
+error.variableExpenses.energyAndUtilities.required = Enter 0 if you did not have any energy and utilities expenses in the year ending {0}
+error.variableExpenses.energyAndUtilities.range = The energy and utilities expenses in the year ending {0} must be a number, for example 100 or 100.00
+error.variableExpenses.energyAndUtilities.negative = The energy and utilities expenses in the year ending {0} cannot be a negative number
+error.variableExpenses.cleaningAndLaundry.required = Enter 0 if you did not have any cleaning and laundry expenses in the year ending {0}
+error.variableExpenses.cleaningAndLaundry.range = The cleaning and laundry expenses in the year ending {0} must be a number, for example 100 or 100.00
+error.variableExpenses.cleaningAndLaundry.negative = The cleaning and laundry expenses in the year ending {0} cannot be a negative number
+error.variableExpenses.buildingMaintenanceAndRepairs.required = Enter 0 if you did not have any building maintenance and repairs expenses in the year ending {0}
+error.variableExpenses.buildingMaintenanceAndRepairs.range = The building maintenance and repairs expenses in the year ending {0} must be a number, for example 100 or 100.00
+error.variableExpenses.buildingMaintenanceAndRepairs.negative = The building maintenance and repairs in the year ending {0} cannot be a negative number
+error.variableExpenses.fixturesFittingsAndEquipment.required = Enter 0 if you did not have any fixtures, fittings and other equipment expenses in the year ending {0}
+error.variableExpenses.fixturesFittingsAndEquipment.range = The fixtures, fittings and other equipment expenses in the year ending {0} must be a number, for example 100 or 100.00
+error.variableExpenses.fixturesFittingsAndEquipment.negative = The fixtures, fittings and other equipment expenses in the year ending {0} cannot be a negative number
+error.variableExpenses.advertisingAndPromotions.required = Enter 0 if you did not have any advertising, marketing and promotions expenses in the year ending {0}
+error.variableExpenses.advertisingAndPromotions.range = The advertising, marketing and promotions expenses in the year ending {0} must be a number, for example 100 or 100.00
+error.variableExpenses.advertisingAndPromotions.negative = The advertising, marketing and promotions expenses in the year ending {0} cannot be a negative number
+error.variableExpenses.administrationAndSundries.required = Enter 0 if you did not have any administration and sundries expenses in the year ending {0}
+error.variableExpenses.administrationAndSundries.range = The administration and sundries expenses in the year ending {0} must be a number, for example 100 or 100.00
+error.variableExpenses.administrationAndSundries.negative = The administration and sundries expenses in the year ending {0} cannot be a negative number
+error.variableExpenses.entertainment.required = Enter 0 if you did not have any entertainment expenses in the year ending {0}
+error.variableExpenses.entertainment.range = The entertainment expenses in the year ending {0} must be a number, for example 100 or 100.00
+error.variableExpenses.entertainment.negative = The entertainment expenses in the year ending {0} cannot be a negative number
+error.variableExpenses.other.required = Enter 0 if you did not have any other expenses in the year ending {0}
+error.variableExpenses.other.range = The other expenses in the year ending {0} must be a number, for example 100 or 100.00
+error.variableExpenses.other.negative = The other expenses in the year ending {0} cannot be a negative number
 
 # FIXED OPERATING EXPENSES (FORM 6015)
 #########
@@ -1293,7 +1348,19 @@ error.otherCostDetails.required = Enter a description of the items included in y
 
 # INCOME EXPENDITURE SUMMARY (FORM 6015)
 ########################################
-incomeExpenditureSummary.heading = Income and expediture summary - holding page
+incomeExpenditureSummary.heading = Income and expenditure summary
+incomeExpenditureSummary.financialYearEndLabel = Financial year end
+incomeExpenditureSummary.totalTurnoverLabel = Total turnover
+incomeExpenditureSummary.totalCostOfSalesLabel = Total cost of sales
+incomeExpenditureSummary.totalGrossProfitsLabel = Total gross profits based on your figures
+incomeExpenditureSummary.totalPayrollCostLabel = Total payroll costs
+incomeExpenditureSummary.variableExpenses = Variable expenses
+incomeExpenditureSummary.fixedExpensesLabel = Fixed Expenses
+incomeExpenditureSummary.otherCostsLabel = Other costs
+incomeExpenditureSummary.totalNetProfitLabel = Total net profits based on your figures
+incomeExpenditureSummary.profitMargin = Profit margin based on your figures
+incomeExpenditureSummary.confirmation = I confirm that these figures are correct
+error.incomeExpenditureSummary.required = Select if these figures are correct
 
 # UNUSUAL CIRCUMSTANCES (FORM 6015)
 ###################################
@@ -1341,14 +1408,14 @@ error.furtherInformationOrRemarks.maxLength = Further information must be 2,000 
 
 # ALTERNATIVE DETAILS QUESTION
 ################################
-contactDetailsQuestion.heading = Would you like us to use alternative details if we need to contact you?
+contactDetailsQuestion.heading = Would you like us to use an alternative correspondence address if we need to contact you?
 hint.contactDetailsQuestion = You can either provide alternative contact details, or nominate someone else we should contact if we have any queries about this declaration.
 error.contactDetailsQuestion.missing= Select yes if you would like us to use alternative details
 
 # ALTERNATIVE CONTACT DETAILS
 #############################
-alternativeContactDetails.heading = Alternative contact details
-hint.alternativeContactDetails = Provide the details of the person you would like us to contact if we have any queries about the declaration.
+alternativeContactDetails.heading = Alternative correspondence address
+hint.alternativeContactDetails = If you would like us to contact you at a different address, give details here
 label.alternativeContactDetails = Correspondence address
 
 # TENANCY LEASE AGREEMENT EXPIRE (FORM 6011)
@@ -1385,6 +1452,15 @@ key.contact.details = Contacts and additional information
 checkYourAnswersNotConnected.subheading1 = Connection to the property
 checkYourAnswersNotConnected.subheading2 = Your contact details
 
+# MAXIMUM OF 5 LETTINGS
+##################################
+
+maxOf5Lettings.heading = You have added the maximum of 5 lettings
+maxOf5Lettings.contact = If you have 6 or more lettings at your property, the VOA will contact you to collect information on the remaining lettings
+maxOf5Lettings.confirm = I confirm that I understand the VOA will contact me regarding the remaining lettings
+maxOf5Lettings.link = Check or update the 5 added businesses
+maxOf5Lettings.error = Please confirm that you understand the VOA will contact you regarding the remaining letters
+
 # About franchise or lettings CYA
 checkYourAnswers.heading = This is a holding page for the check your answers page
 checkYourAnswersAboutFranchiseOrLettings.heading = Check your answers – franchises or lettings
@@ -1400,14 +1476,20 @@ checkYourAnswersAboutFranchiseOrLettings.operatorName = Name and address
 checkYourAnswersAboutFranchiseOrLettings.lettingOperatorNumber = Tenant {0}
 checkYourAnswersAboutFranchiseOrLettings.lettingOperatorName = Name and address
 checkYourAnswersAboutFranchiseOrLettings.annualRent = Annual rent
+checkYourAnswersAboutFranchiseOrLettings.howRentWasCalculated = How rent was calculated
+checkYourAnswersAboutFranchiseOrLettings.rentNotIncluded = Not included in turnover
 checkYourAnswersAboutFranchiseOrLettings.dateSumFixed = Fixed on {0}
 checkYourAnswersAboutFranchiseOrLettings.itemsInRent = Included in rent
 checkYourAnswersAboutFranchiseOrLettings.addBusiness = Add or remove business
 checkYourAnswersAboutFranchiseOrLettings.addedBusiness = You have added {0} business
 checkYourAnswersAboutFranchiseOrLettings.addedBusinessPlural = You have added {0} businesses
+checkYourAnswersAboutFranchiseOrLettings.addedSeparateBusiness = You have added {0} separate business
+checkYourAnswersAboutFranchiseOrLettings.addedSeparateBusinessPlural = You have added {0} separate businesses
 checkYourAnswersAboutFranchiseOrLettings.addLetting = Add or remove tenant
 checkYourAnswersAboutFranchiseOrLettings.addedLetting = You have added {0} tenant
 checkYourAnswersAboutFranchiseOrLettings.addedLettingPlural = You have added {0} tenants
+checkYourAnswersAboutFranchiseOrLettings.addedLetting6015 = You have added {0} letting
+checkYourAnswersAboutFranchiseOrLettings.addedLettingPlural6015 = You have added {0} lettings
 
 checkYourAnswersAboutYourLeaseOrTenure.heading = Check your answers – your lease or agreement
 checkYourAnswersAboutYourLeaseOrTenure.yourLandlord.heading = Your landlord
@@ -1488,6 +1570,8 @@ checkYourAnswersAboutTheTradingHistory.food = Food
 checkYourAnswersAboutTheTradingHistory.otherReceipts = Other receipts
 checkYourAnswersAboutTheTradingHistory.accommodation = Accommodation
 checkYourAnswersAboutTheTradingHistory.averageOccupancyRate = Average occupancy rate
+checkYourAnswersAboutTheTradingHistory.variableOperatingExpenses.other = Other
+checkYourAnswersAboutTheTradingHistory.variableOperatingExpenses.otherDetails = Other expenses details
 checkYourAnswersRequestReferenceNumber.heading = Check your answers – if you do not have a reference number
 checkYourAnswersRequestReferenceNumber.subheading1 = Property details
 checkYourAnswersRequestReferenceNumber.subheading2 = Your details

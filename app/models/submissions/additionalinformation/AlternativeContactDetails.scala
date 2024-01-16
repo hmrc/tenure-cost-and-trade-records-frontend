@@ -20,8 +20,6 @@ import models.submissions.common.{ContactDetails}
 import play.api.libs.json.Json
 
 case class AlternativeContactDetails(
-  alternativeContactFullName: String,
-  alternativeContactDetails: ContactDetails,
   alternativeContactAddress: AlternativeAddress
 )
 

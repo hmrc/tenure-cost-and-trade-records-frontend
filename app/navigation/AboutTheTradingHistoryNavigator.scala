@@ -18,10 +18,12 @@ package navigation
 
 import connectors.Audit
 import controllers.aboutthetradinghistory
+import controllers.aboutthetradinghistory.routes
 import models.{ForTypes, Session}
 import navigation.identifiers._
-import play.api.mvc.Call
+import play.api.mvc.{AnyContent, Call, Request}
 import play.api.Logging
+import uk.gov.hmrc.http.HeaderCarrier
 
 import javax.inject.Inject
 
@@ -29,6 +31,22 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
 
   override def cyaPage: Option[Call] =
     Some(aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show())
+
+  override def nextPage(id: Identifier, session: Session)(implicit
+    hc: HeaderCarrier,
+    request: Request[AnyContent]
+  ): Session => Call = {
+    val nextPageFunc: Session => Call = super.nextPage(id, session)
+    session =>
+      if (from(request) == "IES") {
+        iesSpecificRoute(session)
+      } else {
+        nextPageFunc(session)
+      }
+  }
+
+  private def iesSpecificRoute(session: Session): Call =
+    routes.IncomeExpenditureSummaryController.show()
 
   override val postponeCYARedirectPages: Set[String] = Set(
     aboutthetradinghistory.routes.FinancialYearEndController.show(),

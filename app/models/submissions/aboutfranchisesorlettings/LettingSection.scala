@@ -22,6 +22,7 @@ import play.api.libs.json.Json
 case class LettingSection(
   lettingOtherPartOfPropertyInformationDetails: LettingOtherPartOfPropertyInformationDetails,
   lettingOtherPartOfPropertyRentDetails: Option[LettingOtherPartOfPropertyRentDetails] = None,
+  lettingOtherPartOfPropertyRent6015Details: Option[LettingOtherPartOfPropertyRent6015Details] = None,
   addAnotherLettingToProperty: Option[AnswersYesNo] = None,
   itemsInRent: List[String] = List.empty
 )

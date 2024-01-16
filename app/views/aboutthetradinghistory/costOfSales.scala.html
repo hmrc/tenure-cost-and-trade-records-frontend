@@ -21,7 +21,6 @@
 @import util.DateUtil
 @import util.NumberUtil._
 
-@import java.time.LocalDate
 
 @this(
         layout: Layout,
@@ -35,7 +34,7 @@
 )
 
 
-@(form: Form[Seq[CostOfSales]])(implicit request: SessionRequest[_], messages: Messages)
+@(form: Form[Seq[CostOfSales]],fromLocation:String = "")(implicit request: SessionRequest[_], messages: Messages)
 
 
 @detailsContent = {
@@ -70,13 +69,11 @@
 }
 
 @totalContent(idx: Int) = {
-    <span id="@{
-        "total." + idx
-    }">@form.value.fold("")(_(idx).total.asMoney)</span>
-}
-
-@columns = @{
-    request.sessionData.aboutTheTradingHistory.map(_.turnoverSections).fold(Seq.empty[Int])(_.indices)
+    <span
+    data-total-prefix="costOfSales[@idx]."
+    data-total-items="accommodation,food,drinks,other">
+    @form.value.fold("")(_(idx).total.asMoney)
+    </span>
 }
 
 @costInputAttributes = @{
@@ -88,7 +85,11 @@
     showSection = true,
     sectionName = messages("label.section.aboutYourTradingHistory"),
     summary = Some(request.sessionData.toSummary),
-    backLinkUrl = controllers.aboutthetradinghistory.routes.TurnoverController.show().url,
+    backLinkUrl = fromLocation match {
+        case "TL" => controllers.routes.TaskListController.show().url + "#turnover"
+        case "IES" => controllers.aboutthetradinghistory.routes.IncomeExpenditureSummaryController.show().url
+        case _ => controllers.aboutthetradinghistory.routes.TurnoverController.show().url
+    },
     theForm = form
 ) {
 
@@ -100,6 +101,10 @@
         <li>@messages("costOfSales.excluding.item4")</li>
     </ul>
 
+    @govukInsetText(InsetText(
+        content = Text(messages("turnover.inset"))
+    ))
+
     @govukDetails(Details(
         summary = Text(messages("costOfSales.details.link")),
         content = HtmlContent(detailsContent)
@@ -107,101 +112,110 @@
 
     @formWithCSRF(action = controllers.aboutthetradinghistory.routes.CostOfSalesController.submit()) {
 
-        @govukTable(Table(
-            rows = Seq(
-
-                TableRow(
-                    content = Text(messages("costOfSales.financialYearEnd")),
-                    classes = "govuk-!-font-weight-bold"
-                ) +:
-                        request.sessionData.aboutTheTradingHistory
-                        .fold(Seq.empty[LocalDate])(_.turnoverSections.map(_.financialYearEnd)).map { finYearEnd =>
-                            TableRow(
-                                content = Text(
-                                    dateUtil.formatDayMonthAbbrYear(finYearEnd)
+        <table class="hmrc-responsive-table">
+            <tbody>
+                <tr>
+                @request.sessionData.financialYearEndDates.map { case (finYearEnd, idx) =>
+                <td>
+                    @govukTable(Table(
+                        head = Seq(
+                            HeadCell(
+                                content = Text(messages("costOfSales.financialYearEnd"))
+                            ),
+                            HeadCell(
+                                content = Text(dateUtil.formatDayMonthAbbrYear(finYearEnd))
+                            )
+                        ),
+                        firstCellIsHeader = true,
+                        rows = Seq(
+                            Seq(
+                                TableRow(
+                                    content = HtmlContent(accommodationHeading)
+                                ),
+                                TableRow(
+                                    content = HtmlContent(
+                                        govukInput(
+                                            Input(
+                                                prefix = Some(PrefixOrSuffix(
+                                                    content = Text("£")
+                                                )),
+                                                attributes = costInputAttributes
+                                            ).withFormField(form(s"costOfSales[$idx].accommodation"))
+                                        )
+                                    )
+                                )
+                            ),
+                            Seq(
+                                TableRow(
+                                    content = HtmlContent(foodHeading)
+                                ),
+                                TableRow(
+                                    content = HtmlContent(
+                                        govukInput(
+                                            Input(
+                                                prefix = Some(PrefixOrSuffix(
+                                                    content = Text("£")
+                                                )),
+                                                attributes = costInputAttributes
+                                            ).withFormField(form(s"costOfSales[$idx].food"))
+                                        )
+                                    )
+                                )
+                            ),
+                            Seq(
+                                TableRow(
+                                    content = HtmlContent(drinksHeading)
+                                ),
+                                TableRow(
+                                    content = HtmlContent(
+                                        govukInput(
+                                            Input(
+                                                prefix = Some(PrefixOrSuffix(
+                                                    content = Text("£")
+                                                )),
+                                                attributes = costInputAttributes
+                                            ).withFormField(form(s"costOfSales[$idx].drinks"))
+                                        )
+                                    )
+                                )
+                            ),
+                            Seq(
+                                TableRow(
+                                    content = HtmlContent(otherHeading)
+                                ),
+                                TableRow(
+                                    content = HtmlContent(
+                                        govukInput(
+                                            Input(
+                                                prefix = Some(PrefixOrSuffix(
+                                                    content = Text("£")
+                                                )),
+                                                attributes = costInputAttributes
+                                            ).withFormField(form(s"costOfSales[$idx].other"))
+                                        )
+                                    )
+                                )
+                            ),
+                            Seq(
+                                TableRow(
+                                    content = HtmlContent(totalHeading)
+                                ),
+                                TableRow(
+                                    content = HtmlContent(totalContent(idx))
                                 )
                             )
-                        },
-                TableRow(
-                    content = HtmlContent(accommodationHeading)
-                ) +: columns.map { idx =>
-                    TableRow(
-                        content = HtmlContent(
-                            govukInput(
-                                Input(
-                                    prefix = Some(PrefixOrSuffix(
-                                        content = Text("£")
-                                    )),
-                                    attributes = costInputAttributes
-                                ).withFormField(form(s"costOfSales[$idx].accommodation"))
-                            )
                         )
-                    )
-                },
-                TableRow(
-                    content = HtmlContent(foodHeading)
-                ) +: columns.map { idx =>
-                    TableRow(
-                        content = HtmlContent(
-                            govukInput(
-                                Input(
-                                    prefix = Some(PrefixOrSuffix(
-                                        content = Text("£")
-                                    )),
-                                    attributes = costInputAttributes
-                                ).withFormField(form(s"costOfSales[$idx].food"))
-                            )
-                        )
-                    )
-                },
-                TableRow(
-                    content = HtmlContent(drinksHeading)
-                ) +: columns.map { idx =>
-                    TableRow(
-                        content = HtmlContent(
-                            govukInput(
-                                Input(
-                                    prefix = Some(PrefixOrSuffix(
-                                        content = Text("£")
-                                    )),
-                                    attributes = costInputAttributes
-                                ).withFormField(form(s"costOfSales[$idx].drinks"))
-                            )
-                        )
-                    )
-                },
-                TableRow(
-                    content = HtmlContent(otherHeading)
-                ) +: columns.map { idx =>
-                    TableRow(
-                        content = HtmlContent(
-                            govukInput(
-                                Input(
-                                    prefix = Some(PrefixOrSuffix(
-                                        content = Text("£")
-                                    )),
-                                    attributes = costInputAttributes
-                                ).withFormField(form(s"costOfSales[$idx].other"))
-                            )
-                        )
-                    )
-                },
-                TableRow(
-                    content = HtmlContent(totalHeading)
-                ) +:
-                        columns.map { idx =>
-                            TableRow(
-                                content = HtmlContent(totalContent(idx))
-                            )
-                        }
-            ),
-
-            captionClasses = "govuk-table__caption--m",
-            firstCellIsHeader = true
-        ))
+                    ))
+                </td>
+                }
+                </tr>
+            </tbody>
+        </table>
 
         @includes.continueSaveAsDraftButtons(govukButton)
     }
-}
 
-<script src="@routes.Assets.versioned("javascripts/cost-of-sales.js")"></script>
+    <script src="@routes.Assets.versioned("javascripts/data-total.js")"></script>
+    <script src="@routes.Assets.versioned("javascripts/responsive-table.js")"></script>
+
+}

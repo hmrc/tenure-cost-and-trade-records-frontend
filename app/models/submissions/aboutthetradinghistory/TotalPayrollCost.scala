@@ -22,9 +22,11 @@ import java.time.LocalDate
 
 case class TotalPayrollCost(
   financialYearEnd: LocalDate,
-  managersAndStaff: BigDecimal,
-  directorsRemuneration: BigDecimal
-)
+  managersAndStaff: Option[BigDecimal],
+  directorsRemuneration: Option[BigDecimal]
+) {
+  def total = Seq(managersAndStaff, directorsRemuneration).flatten.sum
+}
 
 object TotalPayrollCost {
   implicit val format = Json.format[TotalPayrollCost]

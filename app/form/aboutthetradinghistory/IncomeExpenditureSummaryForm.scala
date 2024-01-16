@@ -19,12 +19,15 @@ package form.aboutthetradinghistory
 import models.submissions.aboutthetradinghistory.IncomeExpenditureSummary
 import play.api.data.Form
 import play.api.data.Forms.{default, mapping, text}
+import play.api.data.validation.Constraints.nonEmpty
 
 object IncomeExpenditureSummaryForm {
 
   val incomeExpenditureSummaryForm = Form(
     mapping(
-      "incomeExpenditureSummary" -> default(text, "")
+      "incomeExpenditureSummary" -> default(text, "").verifying(
+        nonEmpty(errorMessage = "error.incomeExpenditureSummary.required")
+      )
     )(IncomeExpenditureSummary.apply)(IncomeExpenditureSummary.unapply)
   )
 }

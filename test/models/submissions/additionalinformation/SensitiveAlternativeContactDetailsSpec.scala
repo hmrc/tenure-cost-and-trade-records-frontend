@@ -33,11 +33,6 @@ class SensitiveAlternativeContactDetailsSpec extends AnyWordSpecLike with Matche
 
     "encrypt and decrypt sensitive fields correctly" in {
       val originalAlternativeContactDetails = AlternativeContactDetails(
-        alternativeContactFullName = "John Doe",
-        alternativeContactDetails = ContactDetails(
-          phone = "1234567890",
-          email = "johndoe@example.com"
-        ),
         alternativeContactAddress = AlternativeAddress(
           buildingNameNumber = "123",
           street1 = Some("Street 1"),
@@ -49,11 +44,8 @@ class SensitiveAlternativeContactDetailsSpec extends AnyWordSpecLike with Matche
 
       val sensitiveAlternativeContactDetails = SensitiveAlternativeContactDetails(originalAlternativeContactDetails)
 
-      sensitiveAlternativeContactDetails.alternativeContactFullName.isInstanceOf[SensitiveString] shouldBe true
-      sensitiveAlternativeContactDetails.alternativeContactDetails
-        .isInstanceOf[SensitiveContactDetails]                                                    shouldBe true
       sensitiveAlternativeContactDetails.alternativeContactAddress
-        .isInstanceOf[SensitiveAlternativeAddress]                                                shouldBe true
+        .isInstanceOf[SensitiveAlternativeAddress] shouldBe true
 
       sensitiveAlternativeContactDetails.decryptedValue shouldBe originalAlternativeContactDetails
     }

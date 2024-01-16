@@ -29,7 +29,7 @@ class OtherCostsControllerSpec extends TestBaseSpec {
   val sessionRequest          = SessionRequest(aboutYourTradingHistory6015YesSession, fakeRequest)
   val mockOtherCostsNavigator = mock[AboutTheTradingHistoryNavigator]
   val mockOtherCostsView      = mock[otherCosts]
-  when(mockOtherCostsView.apply(any, any, any)(any, any)).thenReturn(HtmlFormat.empty)
+  when(mockOtherCostsView.apply(any, any)(any, any)).thenReturn(HtmlFormat.empty)
 
   val otherCostsController = new OtherCostsController(
     stubMessagesControllerComponents(),

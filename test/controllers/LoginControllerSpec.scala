@@ -22,6 +22,7 @@ import models.audit.UserData
 import org.joda.time.DateTime
 import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.libs.json.{JsObject, Json, Writes}
+import play.api.mvc.Result
 import play.api.test.Helpers._
 import security.LoginToBackend.{Postcode, RefNumber, StartTime}
 import security.NoExistingDocument
@@ -98,6 +99,50 @@ class LoginControllerSpec extends TestBaseSpec {
       content should include("logout.header")
       content should include("""logout.paragraph""")
       content should include("""logout.loginAgain""")
+    }
+    "show locked out page" in {
+      val loginController = new LoginController(
+        inject[BackendConnector],
+        inject[Audit],
+        stubMessagesControllerComponents(),
+        inject[login],
+        loginToBackend,
+        inject[views.html.error.error],
+        inject[views.html.loginFailed],
+        inject[views.html.lockedOut],
+        inject[views.html.loggedOut],
+        preFilledSession,
+        StubSessionRepo(),
+        inject[views.html.testSign]
+      )
+
+      val result = loginController.lockedOut(fakeRequest)
+
+      status(result) shouldBe UNAUTHORIZED
+    }
+
+    "show login failed page" in {
+      val loginController = new LoginController(
+        inject[BackendConnector],
+        inject[Audit],
+        stubMessagesControllerComponents(),
+        inject[login],
+        loginToBackend,
+        inject[views.html.error.error],
+        inject[views.html.loginFailed],
+        inject[views.html.lockedOut],
+        inject[views.html.loggedOut],
+        preFilledSession,
+        StubSessionRepo(),
+        inject[views.html.testSign]
+      )
+
+      val attemptsRemaining = 1
+
+      val result: Future[Result] = loginController.loginFailed(attemptsRemaining)(fakeRequest)
+
+      status(result) shouldBe UNAUTHORIZED
+
     }
 
     "Audit successful login" in {
@@ -189,7 +234,7 @@ class LoginControllerSpec extends TestBaseSpec {
             aboutFranchisesOrLettings = Some(prefilledAboutFranchiseOrLettings),
             aboutLeaseOrAgreementPartOne = Some(prefilledAboutLeaseOrAgreementPartOne),
             aboutLeaseOrAgreementPartTwo = Some(prefilledAboutLeaseOrAgreementPartTwo),
-            None,
+            requestReferenceNumber = Some(prefilledRequestRefNumCYA),
             None
           )
         )
