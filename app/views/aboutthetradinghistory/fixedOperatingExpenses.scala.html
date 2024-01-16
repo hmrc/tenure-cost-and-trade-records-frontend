@@ -19,6 +19,7 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import uk.gov.hmrc.govukfrontend.views.Implicits.RichInput
 @import util.DateUtil
+@import util.NumberUtil._
 
 @this(layout: Layout,
         govukButton: GovukButton,
@@ -32,6 +33,19 @@
 
 
 @(form: Form[Seq[FixedOperatingExpenses]], fromLocation: String = "")(implicit request: SessionRequest[_], messages: Messages)
+
+
+@totalContent(idx: Int) = {
+    <span
+    data-total-prefix="fixedOperatingExpenses[@idx]."
+    data-total-items="rent,business-rates,insurance,loan-interest,depreciation">
+    @form.value.fold("")(_(idx).total.asMoney)
+    </span>
+}
+
+@inputAttributes = @{
+    Map("maxlength" -> "13")
+}
 
 @layout(
     pageHeading = messages("fixedOperatingExpenses.heading"),
@@ -72,7 +86,8 @@
                                         govukInput(Input(
                                             prefix = Some(PrefixOrSuffix(
                                                 content = Text("£")
-                                            ))
+                                            )),
+                                            attributes = inputAttributes
                                         ).withFormField(form(s"fixedOperatingExpenses[$idx].rent")))
                                     )
                                 )
@@ -84,7 +99,8 @@
                                         govukInput(Input(
                                             prefix = Some(PrefixOrSuffix(
                                                 content = Text("£")
-                                            ))
+                                            )),
+                                            attributes = inputAttributes
                                         ).withFormField(form(s"fixedOperatingExpenses[$idx].business-rates")))
                                     )
                                 )
@@ -96,7 +112,8 @@
                                         govukInput(Input(
                                             prefix = Some(PrefixOrSuffix(
                                                 content = Text("£")
-                                            ))
+                                            )),
+                                            attributes = inputAttributes
                                         ).withFormField(form(s"fixedOperatingExpenses[$idx].insurance")))
                                     )
                                 )
@@ -108,7 +125,8 @@
                                         govukInput(Input(
                                             prefix = Some(PrefixOrSuffix(
                                                 content = Text("£")
-                                            ))
+                                            )),
+                                            attributes = inputAttributes
                                         ).withFormField(form(s"fixedOperatingExpenses[$idx].loan-interest")))
                                     )
                                 )
@@ -120,9 +138,16 @@
                                         govukInput(Input(
                                             prefix = Some(PrefixOrSuffix(
                                                 content = Text("£")
-                                            ))
+                                            )),
+                                            attributes = inputAttributes
                                         ).withFormField(form(s"fixedOperatingExpenses[$idx].depreciation")))
                                     )
+                                )
+                            ),
+                            Seq(
+                                TableRow(content = Text(messages("fixedOperatingExpenses.total"))),
+                                TableRow(
+                                    content = HtmlContent(totalContent(idx))
                                 )
                             )
                         )
