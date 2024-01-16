@@ -18,6 +18,7 @@
 @import controllers.aboutthetradinghistory
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import models.submissions.aboutthetradinghistory.CostOfSales
+@import models.submissions.aboutthetradinghistory.FixedOperatingExpenses
 @import models.submissions.aboutthetradinghistory.TurnoverSection
 @import models.submissions.aboutthetradinghistory.VariableOperatingExpensesSections
 @import util.DateUtil
@@ -81,7 +82,7 @@
         messages("checkYourAnswersAboutTheTradingHistory.food"),
         messages("checkYourAnswersAboutTheTradingHistory.otherReceipts"),
         messages("checkYourAnswersAboutTheTradingHistory.accommodation"),
-        messages("checkYourAnswersAboutTheTradingHistory.averageOccupancyRate"),
+        messages("checkYourAnswersAboutTheTradingHistory.averageOccupancyRate")
     ).mkString("""<p class="govuk-body govuk-!-font-weight-bold">""", """</p> <p class="govuk-body govuk-!-font-weight-bold">""", "</p>")
 }
 
@@ -105,7 +106,7 @@
         messages("checkYourAnswersAboutTheTradingHistory.drinks"),
         messages("checkYourAnswersAboutTheTradingHistory.food"),
         messages("checkYourAnswersAboutTheTradingHistory.otherReceipts"),
-        messages("costOfSales.total"),
+        messages("costOfSales.total")
     ).mkString("""<p class="govuk-body govuk-!-font-weight-bold">""", """</p> <p class="govuk-body govuk-!-font-weight-bold">""", "</p>")
 }
 
@@ -143,9 +144,37 @@
         messages("variableOperatingExpenses.entertainment"),
         messages("checkYourAnswersAboutTheTradingHistory.variableOperatingExpenses.other"),
         // messages("checkYourAnswersAboutTheTradingHistory.variableOperatingExpenses.otherDetails"),
-        messages("variableOperatingExpenses.total"),
+        messages("variableOperatingExpenses.total")
     ).mkString("""<p class="govuk-body govuk-!-font-weight-bold">""", """</p> <p class="govuk-body govuk-!-font-weight-bold">""", "</p>")
 }
+
+@fixedOperatingExpensesValuesTable(fixedOperatingExpenses: Seq[FixedOperatingExpenses]) = @{
+    table(
+        fixedOperatingExpenses.map(foe => Seq(
+            dateUtil.formatDayMonthAbbrYear(foe.financialYearEnd),
+            foe.rent.getOrElse(zeroBigDecimal).asMoney,
+            foe.businessRates.getOrElse(zeroBigDecimal).asMoney,
+            foe.insurance.getOrElse(zeroBigDecimal).asMoney,
+            foe.loanInterest.getOrElse(zeroBigDecimal).asMoney,
+            foe.depreciation.getOrElse(zeroBigDecimal).asMoney,
+            foe.total.asMoney
+        ))
+    ).body
+}
+
+@fixedOperatingExpensesKeys = @{
+    Seq(
+        messages("checkYourAnswersAboutTheTradingHistory.financialYearEnd"),
+        messages("fixedOperatingExpenses.rent"),
+        messages("fixedOperatingExpenses.businessRates"),
+        messages("fixedOperatingExpenses.insurance"),
+        messages("fixedOperatingExpenses.loanInterest"),
+        messages("fixedOperatingExpenses.depreciation"),
+        messages("fixedOperatingExpenses.total")
+    ).mkString("""<p class="govuk-body govuk-!-font-weight-bold">""", """</p> <p class="govuk-body govuk-!-font-weight-bold">""", "</p>")
+}
+
+
 
 <h2 class="govuk-heading-m">@messages("aboutYourTradingHistory.heading")</h2>
 
@@ -243,6 +272,33 @@
             )
         )
     ))
+
+    <h2 class="govuk-heading-m">@messages("fixedOperatingExpenses.heading")</h2>
+
+    @govukSummaryList(SummaryList(rows =
+        Seq(
+            SummaryListRow(
+                key = Key(HtmlContent(fixedOperatingExpensesKeys)),
+                value = Value(HtmlContent(sectionAnswers.answers.fold("")(t => fixedOperatingExpensesValuesTable(t.fixedOperatingExpensesSections)))),
+                actions = Some(
+                    Actions(items =
+                        Seq(
+                            ActionItem(
+                                href = s"${aboutthetradinghistory.routes.FixedOperatingExpensesController.show().url}?from=CYA",
+                                content = Text(messages("label.change")),
+                                visuallyHiddenText = Some(messages("fixedOperatingExpenses.heading")),
+                                attributes = Map(
+                                    "aria-label" -> s"${messages("label.change")} ${messages("fixedOperatingExpenses.heading")}"
+                                )
+                            )
+                        )
+                    )
+                )
+            )
+        )
+    ))
+
+
 
 
 }
