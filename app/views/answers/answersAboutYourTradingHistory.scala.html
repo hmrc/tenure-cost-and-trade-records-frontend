@@ -19,6 +19,7 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import models.submissions.aboutthetradinghistory.CostOfSales
 @import models.submissions.aboutthetradinghistory.FixedOperatingExpenses
+@import models.submissions.aboutthetradinghistory.TotalPayrollCost
 @import models.submissions.aboutthetradinghistory.TurnoverSection
 @import models.submissions.aboutthetradinghistory.VariableOperatingExpensesSections
 @import util.DateUtil
@@ -107,6 +108,26 @@
         messages("checkYourAnswersAboutTheTradingHistory.food"),
         messages("checkYourAnswersAboutTheTradingHistory.otherReceipts"),
         messages("costOfSales.total")
+    ).mkString("""<p class="govuk-body govuk-!-font-weight-bold">""", """</p> <p class="govuk-body govuk-!-font-weight-bold">""", "</p>")
+}
+
+@payrollCostsValuesTable(totalPayrollCosts: Seq[TotalPayrollCost]) = @{
+    table(
+        totalPayrollCosts.map(payroll => Seq(
+            dateUtil.formatDayMonthAbbrYear(payroll.financialYearEnd),
+            payroll.managersAndStaff.getOrElse(zeroBigDecimal).asMoney,
+            payroll.directorsRemuneration.getOrElse(zeroBigDecimal).asMoney,
+            payroll.total.asMoney
+        ))
+    ).body
+}
+
+@payrollCostsKeys = @{
+    Seq(
+        messages("totalPayrollCosts.financialYearEnd"),
+        messages("totalPayrollCosts.managersAndStaff"),
+        messages("totalPayrollCosts.directorsRemuneration"),
+        messages("totalPayrollCosts.total")
     ).mkString("""<p class="govuk-body govuk-!-font-weight-bold">""", """</p> <p class="govuk-body govuk-!-font-weight-bold">""", "</p>")
 }
 
@@ -244,9 +265,30 @@
         )
     ))
 
+    <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutTheTradingHistory.totalPayrollCosts")</h2>
 
-
-
+    @govukSummaryList(SummaryList(rows =
+        Seq(
+            SummaryListRow(
+                key = Key(HtmlContent(payrollCostsKeys)),
+                value = Value(HtmlContent(sectionAnswers.answers.fold("")(t => payrollCostsValuesTable(t.totalPayrollCostSections)))),
+                actions = Some(
+                    Actions(items =
+                        Seq(
+                            ActionItem(
+                                href = s"${aboutthetradinghistory.routes.TotalPayrollCostsController.show().url}?from=CYA",
+                                content = Text(messages("label.change")),
+                                visuallyHiddenText = Some(messages("checkYourAnswersAboutTheTradingHistory.totalPayrollCosts")),
+                                attributes = Map(
+                                    "aria-label" -> s"${messages("label.change")} ${messages("checkYourAnswersAboutTheTradingHistory.totalPayrollCosts")}"
+                                )
+                            )
+                        )
+                    )
+                )
+            )
+        )
+    ))
 
     <h2 class="govuk-heading-m">@messages("variableOperatingExpenses.heading")</h2>
 
