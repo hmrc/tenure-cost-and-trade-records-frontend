@@ -46,18 +46,18 @@ class AlternativeContactDetailsViewSpec extends QuestionViewBehaviours[Alternati
       "alternativeContactAddress.postcode"
     )
 
-    "has a link marked with back.link.label leading to the task Page" in {
+    "has a link marked with back.link.label leading to the contact details page" in {
       val doc          = asDocument(createView())
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText mustBe messages("back.link.label")
       val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.additionalinformation.routes.ContactDetailsQuestionController.show().url
+      backlinkUrl mustBe controllers.aboutyouandtheproperty.routes.ContactDetailsQuestionController.show().url
     }
 
     "Section heading is visible" in {
       val doc         = asDocument(createViewUsingForm(form))
       val sectionText = doc.getElementsByClass("govuk-caption-m").text()
-      assert(sectionText == messages("label.section.additionalInformation"))
+      assert(sectionText == messages("label.section.aboutTheProperty"))
     }
 
     "contain an input for alternativeContactAddress.street1" in {

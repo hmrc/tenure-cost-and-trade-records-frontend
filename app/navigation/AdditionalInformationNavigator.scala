@@ -29,8 +29,7 @@ class AdditionalInformationNavigator @Inject() (audit: Audit) extends Navigator(
   override def cyaPage: Option[Call] =
     Some(controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show())
 
-
-  override val routeMap: Map[Identifier, Session => Call]    = Map(
+  override val routeMap: Map[Identifier, Session => Call] = Map(
     FurtherInformationId                    -> (_ =>
       controllers.additionalinformation.routes.CheckYourAnswersAdditionalInformationController.show()
     ),

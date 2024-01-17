@@ -35,7 +35,7 @@ class ContactDetailsQuestionControllerSpec extends TestBaseSpec {
   ) =
     new ContactDetailsQuestionController(
       stubMessagesControllerComponents(),
-      additionalInformationNavigator,
+      aboutYouAndThePropertyNavigator,
       contactDetailsQuestionView,
       preEnrichedActionRefiner(additionalInformation = additionalInformation),
       mockSessionRepo
@@ -64,7 +64,7 @@ class ContactDetailsQuestionControllerSpec extends TestBaseSpec {
   }
 
   "Contact details question form" should {
-    "error if tiedForGoods is missing" in {
+    "error if contact details question is missing" in {
       val formData = baseFormData - errorKey.contactDetailsQuestion
       val form     = contactDetailsQuestionForm.bind(formData)
 

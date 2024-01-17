@@ -122,11 +122,10 @@ class AboutYouAndThePropertyNavigator @Inject() (audit: Audit) extends Navigator
   }
 
   private def contactDetailsQuestionRouting: Session => Call = answers => {
-    answers.aboutYouAndTheProperty.flatMap(_.altDetailsQuestion.map(_.contactDetailsQuestion.name))
-    match {
+    answers.aboutYouAndTheProperty.flatMap(_.altDetailsQuestion.map(_.contactDetailsQuestion.name)) match {
       case Some("yes") => controllers.aboutyouandtheproperty.routes.AlternativeContactDetailsController.show()
-      case Some("no") => controllers.aboutyouandtheproperty.routes.AboutThePropertyController.show()
-      case _ =>
+      case Some("no")  => controllers.aboutyouandtheproperty.routes.AboutThePropertyController.show()
+      case _           =>
         logger.warn(
           s"Navigation for alternative details question reached without correct selection of conditions by controller"
         )

@@ -26,6 +26,15 @@ class AboutYouAndTheProperty6011NavigatorSpec extends TestBaseSpec {
 
     // See AboutYouAndThePropertyNavigatorSpec for generic parts of the journey
 
+    "return a function that goes to about the property when about you page has been completed" in {
+      aboutYouAndThePropertyNavigator
+        .nextPage(ContactDetailsQuestionId, aboutYouAndTheProperty6011NoSession)
+        .apply(
+          aboutYouAndTheProperty6011NoSession
+        ) mustBe controllers.aboutyouandtheproperty.routes.AboutThePropertyController
+        .show()
+    }
+
     "return a function that goes to licence activity page when about the property website page has been completed" in {
       aboutYouAndThePropertyNavigator
         .nextPage(WebsiteForPropertyPageId, aboutYouAndTheProperty6011NoSession)
@@ -64,6 +73,33 @@ class AboutYouAndTheProperty6011NavigatorSpec extends TestBaseSpec {
   }
 
   "About you and the property navigator for yes answers for 6010" when {
+
+    "return a function that goes to about the property when about you page has been completed" in {
+      aboutYouAndThePropertyNavigator
+        .nextPage(ContactDetailsQuestionId, aboutYouAndTheProperty6011YesSession)
+        .apply(
+          aboutYouAndTheProperty6011YesSession
+        ) mustBe controllers.aboutyouandtheproperty.routes.AlternativeContactDetailsController
+        .show()
+    }
+
+    "return a function that goes to about the property when about you page has been completed123" in {
+      aboutYouAndThePropertyNavigator
+        .nextPage(AlternativeContactDetailsId, aboutYouAndTheProperty6011YesSession)
+        .apply(
+          aboutYouAndTheProperty6011YesSession
+        ) mustBe controllers.aboutyouandtheproperty.routes.AboutThePropertyController
+        .show()
+    }
+
+    "123return a function that goes to about the property when about you page has been completed123" in {
+      aboutYouAndThePropertyNavigator
+        .nextPage(AboutThePropertyPageId, aboutYouAndTheProperty6011YesSession)
+        .apply(
+          aboutYouAndTheProperty6011YesSession
+        ) mustBe controllers.aboutyouandtheproperty.routes.WebsiteForPropertyController
+        .show()
+    }
 
     "return a function that goes to licence activity page when about the property website page has been completed" in {
       aboutYouAndThePropertyNavigator

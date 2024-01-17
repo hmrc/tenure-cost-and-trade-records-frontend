@@ -34,7 +34,7 @@ class AlternativeContactDetailsControllerSpec extends TestBaseSpec {
     additionalInformation: Option[AdditionalInformation] = Some(prefilledAdditionalInformation)
   ) = new AlternativeContactDetailsController(
     stubMessagesControllerComponents(),
-    additionalInformationNavigator,
+    aboutYouAndThePropertyNavigator,
     alternativeContactDetailsView,
     preEnrichedActionRefiner(additionalInformation = additionalInformation),
     mockSessionRepo

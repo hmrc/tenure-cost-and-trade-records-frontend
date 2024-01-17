@@ -21,4 +21,3 @@ case object FurtherInformationId extends Identifier { override def toString: Str
 case object CheckYourAnswersAdditionalInformationId extends Identifier {
   override def toString: String = "checkYourAnswersAdditionalInformationPage"
 }
-

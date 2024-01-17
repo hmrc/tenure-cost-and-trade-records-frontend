@@ -44,35 +44,13 @@ class AdditionalInformationNavigatorSpec extends TestBaseSpec {
         .apply(additionalInformationSession) mustBe controllers.routes.LoginController.show()
     }
 
-    "return a function that goes to  contact details question page when further information has been completed" in {
+    "return a function that goes to  CYA page when further information has been completed" in {
       navigator
         .nextPage(FurtherInformationId, additionalInformationSession)
         .apply(
           additionalInformationSession
         ) mustBe controllers.additionalinformation.routes.CheckYourAnswersAdditionalInformationController
         .show()
-    }
-
-    "return a function that goes to alternative contact details page when contact details question has been answered 'yes'" in {
-      navigator
-        .nextPage(ContactDetailsQuestionId, additionalInformationSession)
-        .apply(
-          additionalInformationSession
-        ) mustBe controllers.additionalinformation.routes.AlternativeContactDetailsController
-        .show()
-    }
-
-    "return a function that goes to CYA page when contact details question has been answered 'no'" in {
-      val additionalInformationSessionNo: Session =
-        stillConnectedDetailsYesSession.copy(additionalInformation =
-          Some(prefilledAdditionalInformation.copy(altDetailsQuestion = Some(ContactDetailsQuestion(AnswerNo))))
-        )
-
-      navigator
-        .nextPage(ContactDetailsQuestionId, additionalInformationSessionNo)
-        .apply(
-          additionalInformationSessionNo
-        ) mustBe controllers.aboutyouandtheproperty.routes.AboutThePropertyController.show()
     }
 
     "return a function that goes to task list page when CYA has been completed" in {
