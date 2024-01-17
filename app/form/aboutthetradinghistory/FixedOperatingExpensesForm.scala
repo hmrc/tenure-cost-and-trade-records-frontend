@@ -16,57 +16,37 @@
 
 package form.aboutthetradinghistory
 
+import form.MappingSupport._
 import models.submissions.aboutthetradinghistory.FixedOperatingExpenses
+import play.api.data.Forms.{ignored, mapping}
 import play.api.data.{Form, Mapping}
-import play.api.data.Forms.{bigDecimal, localDate, mapping}
-import play.api.data.validation.{Constraint, Invalid, Valid}
+import play.api.i18n.Messages
 
 import java.time.LocalDate
 
 object FixedOperatingExpensesForm {
-  def fixedOperatingExpensesForm(expectedNumberOfFinancialYears: Int): Form[Seq[FixedOperatingExpenses]] = {
-    val ukDateMappings                                 = localDate("dd/MM/yyyy")
-    val dateTooEarlyConstraint: Constraint[LocalDate]  = Constraint[LocalDate]("dateTooEarlyConstraint") { date =>
-      if (date.isAfter(LocalDate.of(1900, 1, 1))) Valid else Invalid("errorName")
-    }
-    val columnMapping: Mapping[FixedOperatingExpenses] = mapping(
-      "financial-year-end" -> ukDateMappings.verifying(dateTooEarlyConstraint, dateTooEarlyConstraint),
-      "rent"               -> bigDecimal,
-      "business-rates"     -> bigDecimal,
-      "insurance"          -> bigDecimal,
-      "loan-interest"      -> bigDecimal,
-      "depreciation"       -> bigDecimal
-    )(FixedOperatingExpenses.apply)(FixedOperatingExpenses.unapply)
 
-    Form {
-      expectedNumberOfFinancialYears match {
-        case 1                               =>
-          mapping("0" -> columnMapping)(section => Seq(section)) {
-            case Seq(section) => Some(section)
-            case _            => None
-          }
-        case 2                               =>
-          mapping(
-            "0" -> columnMapping,
-            "1" -> columnMapping
-          ) { case (first, second) => Seq(first, second) } {
-            case Seq(first, second) => Some((first, second))
-            case _                  => None
-          }
-        case 3                               =>
-          mapping(
-            "0" -> columnMapping,
-            "1" -> columnMapping,
-            "2" -> columnMapping
-          ) { case (first, second, third) => Seq(first, second, third) } {
-            case Seq(first, second, third) => Some((first, second, third))
-            case _                         => None
-          }
-        case incorrectNumberOfFinancialYears =>
-          throw new IllegalArgumentException(
-            s"$expectedNumberOfFinancialYears must be between 1 and 3, was: $incorrectNumberOfFinancialYears"
-          )
-      }
+  private def columnMapping(year: String)(implicit messages: Messages): Mapping[FixedOperatingExpenses] = mapping(
+    "financial-year-end" -> ignored(LocalDate.EPOCH),
+    "rent"               -> turnoverSalesMappingWithYear("fixedExpenses.rent", year),
+    "business-rates"     -> turnoverSalesMappingWithYear("fixedExpenses.businessRates", year),
+    "insurance"          -> turnoverSalesMappingWithYear("fixedExpenses.insurance", year),
+    "loan-interest"      -> turnoverSalesMappingWithYear("fixedExpenses.loanInterest", year),
+    "depreciation"       -> turnoverSalesMappingWithYear("fixedExpenses.depreciation", year)
+  )(FixedOperatingExpenses.apply)(FixedOperatingExpenses.unapply)
+
+  def fixedOperatingExpensesForm(years: Seq[String])(implicit messages: Messages): Form[Seq[FixedOperatingExpenses]] = {
+    val mappingPerYear = years.take(3).zipWithIndex.map { case (year, idx) =>
+      s"fixedOperatingExpenses[$idx]" -> columnMapping(year)
     }
+
+    Form(
+      mappingPerYear match {
+        case Seq(a)       => mapping(a)(Seq(_))(_.headOption)
+        case Seq(a, b)    => mapping(a, b)(Seq(_, _))(_.toTuple2)
+        case Seq(a, b, c) => mapping(a, b, c)(Seq(_, _, _))(_.toTuple3)
+      }
+    )
   }
+
 }

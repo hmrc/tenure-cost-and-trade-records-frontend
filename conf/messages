@@ -144,6 +144,10 @@ error.500.heading=There is a problem with the page and it cannot be displayed. P
 error.403.heading=The reference number you entered does not match our records. Please check and try again.
 error.409.heading=You cannot edit this information because it has already been submitted.
 error.409.body=You can email us at <a href="mailto:formhelp@voa.gov.uk">formhelp@voa.gov.uk</a> if you need further help.
+error.json.page.heading = Sorry, there is a problem with this service
+error.json.page.title = Sorry, there is a problem with this service
+error.json.page.p1 = We were unable to retrieve the answers you saved due to a problem with this service. Unfortunately, this means you must start your declaration again.
+error.json.page.start = Start again
 
 #LOGIN
 ##############################
@@ -951,7 +955,7 @@ rent.received.from.confirm.error = Please confirm this payment was not included 
 # CALCULATING THE RENT (6015/6016 0NLY)
 calculating.the.rent.for.heading = Calculating the rent for {0}
 calculating.the.rent.for.explain = Explain how the income received figure was calculated- for example, 10% of the total takings
-calculating.the.rent.for.explain.error = Plese explain how the income received figure was calculated
+calculating.the.rent.for.explain.error = Please explain how the income received figure was calculated
 calculating.the.rent.for.label = When was the rent fixed at its current rate?
 calculating.the.rent.for.error = Enter the date when the annual rent was fixed
 
@@ -1321,13 +1325,29 @@ error.variableExpenses.other.negative = The other expenses in the year ending {0
 # FIXED OPERATING EXPENSES (FORM 6015)
 #########
 fixedOperatingExpenses.heading = Fixed operating expenses
-fixedOperatingExpenses.p1 = Provide details of your fixed operating
+fixedOperatingExpenses.p1 = Provide details of your fixed operating expenses.
 fixedOperatingExpenses.p2 = All fields on this page are mandatory. If none of the categories are applicable, enter the number 0.
 fixedOperatingExpenses.rent = Rent
 fixedOperatingExpenses.businessRates = Business rates
 fixedOperatingExpenses.insurance = Insurance
 fixedOperatingExpenses.loanInterest = Loan interest
 fixedOperatingExpenses.depreciation = Depreciation
+fixedOperatingExpenses.total = Total fixed operating expenses
+error.fixedExpenses.rent.required = Enter 0 if you did not have any rent expenses in the year ending {0}
+error.fixedExpenses.rent.range = The rent expenses in the year ending {0} must be a number, for example 100 or 100.00
+error.fixedExpenses.rent.negative = The rent expenses in the year ending {0} cannot be a negative number
+error.fixedExpenses.businessRates.required = Enter 0 if you did not have any business rates expenses in the year ending {0}
+error.fixedExpenses.businessRates.range = The business rates expenses in the year ending {0} must be a number, for example 100 or 100.00
+error.fixedExpenses.businessRates.negative = The business rates expenses in the year ending {0} cannot be a negative number
+error.fixedExpenses.insurance.required = Enter 0 if you did not have any insurance expenses in the year ending {0}
+error.fixedExpenses.insurance.range = The insurance expenses in the year ending {0} must be a number, for example 100 or 100.00
+error.fixedExpenses.insurance.negative = The insurance expenses in the year ending {0} cannot be a negative number
+error.fixedExpenses.loanInterest.required = Enter 0 if you did not have any loan interest expenses in the year ending {0}
+error.fixedExpenses.loanInterest.range = The loan interest expenses in the year ending {0} must be a number, for example 100 or 100.00
+error.fixedExpenses.loanInterest.negative = The loan interest expenses in the year ending {0} cannot be a negative number
+error.fixedExpenses.depreciation.required = Enter 0 if you did not have any depreciation expenses in the year ending {0}
+error.fixedExpenses.depreciation.range = The depreciation expenses in the year ending {0} must be a number, for example 100 or 100.00
+error.fixedExpenses.depreciation.negative = The depreciation expenses in the year ending {0} cannot be a negative number
 
 # OTHER COSTS (FORM 6015)
 #########################

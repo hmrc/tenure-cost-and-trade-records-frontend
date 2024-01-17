@@ -18,12 +18,17 @@ GET         /invalid-form-type                                      controllers.
 GET         /timeout                                                controllers.SaveAsDraftController.timeout(path)
 GET         /sessiontimeout                                         controllers.SaveAsDraftController.sessionTimeout
 
+
 # SAVE AS DRAFT
 GET         /saved                                                  controllers.SaveAsDraftController.customPassword(path)
 POST        /saved                                                  controllers.SaveAsDraftController.saveAsDraft(path)
 GET         /saved/resume                                           controllers.SaveAsDraftController.loginToResume
 POST        /saved/resume                                           controllers.SaveAsDraftController.resume
 GET         /saved/startagain                                       controllers.SaveAsDraftController.startAgain
+
+# JSON Model ERROR
+
+GET         /error/resume                                           controllers.error.ErrorHandlerController.showJsonError
 
 # MAXIMUM OF LETTINGS REACHED
 

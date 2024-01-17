@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,28 +16,23 @@
 
 package models.submissions.aboutthetradinghistory
 
-import play.api.libs.json.{Json, OFormat}
+import play.api.libs.json.Json
 
-import java.time.LocalDate
+case class IncomeExpenditureSummaryData(
+  financialYearEnd: String,
+  totalTurnover: BigDecimal,
+  totalCostOfSales: BigDecimal,
+  totalGrossProfits: BigDecimal,
+  totalPayrollCost: BigDecimal,
+  variableExpenses: BigDecimal,
+  fixedExpenses: BigDecimal,
+  otherCost: BigDecimal,
+  totalNetProfit: BigDecimal,
+  profitMargin: BigDecimal
+)
 
-case class FixedOperatingExpenses(
-  financialYearEnd: LocalDate,
-  rent: Option[BigDecimal],
-  businessRates: Option[BigDecimal],
-  insurance: Option[BigDecimal],
-  loanInterest: Option[BigDecimal],
-  depreciation: Option[BigDecimal]
-) {
-  def total: BigDecimal =
-    Seq(
-      rent,
-      businessRates,
-      insurance,
-      loanInterest,
-      depreciation
-    ).flatten.sum
-}
+object IncomeExpenditureSummaryData {
 
-object FixedOperatingExpenses {
-  implicit val format: OFormat[FixedOperatingExpenses] = Json.format[FixedOperatingExpenses]
+  implicit val format = Json.format[IncomeExpenditureSummaryData]
+
 }
