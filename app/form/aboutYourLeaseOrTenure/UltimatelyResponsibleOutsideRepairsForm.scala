@@ -16,8 +16,8 @@
 
 package form.aboutYourLeaseOrTenure
 
-import form.MappingSupport.{buildingInsuranceType, insideRepairsType, outsideRepairsType}
-import models.submissions.aboutYourLeaseOrTenure.{UltimatelyResponsible, UltimatelyResponsibleOutsideRepairs}
+import form.MappingSupport.outsideRepairsType
+import models.submissions.aboutYourLeaseOrTenure.UltimatelyResponsibleOutsideRepairs
 import models.submissions.common.OutsideRepairsBoth
 import play.api.data.Form
 import play.api.data.Forms.{default, mapping, text}

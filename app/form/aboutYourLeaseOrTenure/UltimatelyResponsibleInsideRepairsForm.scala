@@ -16,13 +16,13 @@
 
 package form.aboutYourLeaseOrTenure
 
-import form.MappingSupport.{buildingInsuranceType, insideRepairsType, outsideRepairsType}
-import models.submissions.aboutYourLeaseOrTenure.{UltimatelyResponsible, UltimatelyResponsibleInsideRepairs}
+import form.MappingSupport.insideRepairsType
+import models.submissions.aboutYourLeaseOrTenure.UltimatelyResponsibleInsideRepairs
 import models.submissions.common.InsideRepairsBoth
 import play.api.data.Form
 import play.api.data.Forms.{default, mapping, text}
 import play.api.data.validation.Constraints.{maxLength, nonEmpty}
-import uk.gov.voa.play.form.ConditionalMappings.{mandatoryIfAnyEqual, mandatoryIfEqual}
+import uk.gov.voa.play.form.ConditionalMappings.mandatoryIfEqual
 
 object UltimatelyResponsibleInsideRepairsForm {
 

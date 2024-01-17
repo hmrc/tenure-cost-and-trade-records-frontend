@@ -16,14 +16,14 @@
 
 package controllers.error
 
-
 import play.api.http.Status
 import play.api.test.Helpers._
 import utils.TestBaseSpec
 
 class ErrorHandlerControllerSpec extends TestBaseSpec {
 
-  val errorHandlerController  = new ErrorHandlerController(preFilledSession,jsonErrorView = jsonErrorView, cc = stubMessagesControllerComponents())
+  val errorHandlerController =
+    new ErrorHandlerController(preFilledSession, jsonErrorView = jsonErrorView, cc = stubMessagesControllerComponents())
 
   "ErrorHandlerController GET /" should {
 
@@ -35,7 +35,7 @@ class ErrorHandlerControllerSpec extends TestBaseSpec {
     "return HTML" in {
       val result = errorHandlerController.showJsonError(fakeRequest)
       contentType(result) shouldBe Some("text/html")
-      charset(result) shouldBe Some("utf-8")
+      charset(result)     shouldBe Some("utf-8")
     }
   }
 }

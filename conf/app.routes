@@ -340,9 +340,6 @@ POST        /property-use-leaseback-arrangement                     controllers.
 GET         /what-is-your-rent-based-on                             controllers.aboutYourLeaseOrTenure.WhatIsYourRentBasedOnController.show()
 POST        /what-is-your-rent-based-on                             controllers.aboutYourLeaseOrTenure.WhatIsYourRentBasedOnController.submit()
 
-GET         /ultimately-responsible                                 controllers.aboutYourLeaseOrTenure.UltimatelyResponsibleController.show()
-POST        /ultimately-responsible                                 controllers.aboutYourLeaseOrTenure.UltimatelyResponsibleController.submit()
-
 GET         /ultimately-responsible-building-insurance              controllers.aboutYourLeaseOrTenure.UltimatelyResponsibleBuildingInsuranceController.show()
 POST        /ultimately-responsible-building-insurance              controllers.aboutYourLeaseOrTenure.UltimatelyResponsibleBuildingInsuranceController.submit()
 

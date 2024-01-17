@@ -16,9 +16,9 @@
 
 package views.aboutYourLeaseOrTenure
 
-import form.aboutYourLeaseOrTenure.{UltimatelyResponsibleForm, UltimatelyResponsibleInsideRepairsForm}
+import form.aboutYourLeaseOrTenure.UltimatelyResponsibleInsideRepairsForm
 import models.pages.Summary
-import models.submissions.aboutYourLeaseOrTenure.{UltimatelyResponsible, UltimatelyResponsibleInsideRepairs}
+import models.submissions.aboutYourLeaseOrTenure.UltimatelyResponsibleInsideRepairs
 import models.submissions.common._
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form

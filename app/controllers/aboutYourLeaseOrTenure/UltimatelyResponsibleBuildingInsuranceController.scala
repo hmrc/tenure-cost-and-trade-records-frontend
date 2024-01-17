@@ -18,16 +18,15 @@ package controllers.aboutYourLeaseOrTenure
 
 import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
-import form.aboutYourLeaseOrTenure.UltimatelyResponsibleForm.ultimatelyResponsibleForm
 import form.aboutYourLeaseOrTenure.UltimatelyResponsibleIBuildingInsuranceForm.ultimatelyResponsibleBuildingInsuranceForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo.updateAboutLeaseOrAgreementPartTwo
-import models.submissions.aboutYourLeaseOrTenure.{UltimatelyResponsible, UltimatelyResponsibleBuildingInsurance}
+import models.submissions.aboutYourLeaseOrTenure.UltimatelyResponsibleBuildingInsurance
 import navigation.AboutYourLeaseOrTenureNavigator
-import navigation.identifiers.{UltimatelyResponsibleBusinessInsurancePageId, UltimatelyResponsiblePageId}
+import navigation.identifiers.UltimatelyResponsibleBusinessInsurancePageId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import views.html.aboutYourLeaseOrTenure.{ultimatelyResponsible, ultimatelyResponsibleBuildingInsurance}
+import views.html.aboutYourLeaseOrTenure.ultimatelyResponsibleBuildingInsurance
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future

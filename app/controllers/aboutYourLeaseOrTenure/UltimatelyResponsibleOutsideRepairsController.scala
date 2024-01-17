@@ -20,13 +20,13 @@ import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.UltimatelyResponsibleOutsideRepairsForm.ultimatelyResponsibleOutsideRepairsForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo.updateAboutLeaseOrAgreementPartTwo
-import models.submissions.aboutYourLeaseOrTenure.{UltimatelyResponsible, UltimatelyResponsibleOutsideRepairs}
+import models.submissions.aboutYourLeaseOrTenure.UltimatelyResponsibleOutsideRepairs
 import navigation.AboutYourLeaseOrTenureNavigator
-import navigation.identifiers.{UltimatelyResponsibleOutsideRepairsPageId, UltimatelyResponsiblePageId}
+import navigation.identifiers.UltimatelyResponsibleOutsideRepairsPageId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import views.html.aboutYourLeaseOrTenure.{ultimatelyResponsible, ultimatelyResponsibleOutsideRepairs}
+import views.html.aboutYourLeaseOrTenure.ultimatelyResponsibleOutsideRepairs
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future

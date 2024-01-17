@@ -140,7 +140,7 @@ class LoginController @Inject() (
               .flatMap { _ =>
                 backendConnector.loadSubmissionDraft(cleanedRefNumber, hc).map {
                   case Some(_) => Redirect(controllers.routes.SaveAsDraftController.loginToResume)
-                  case _ => Redirect(startPage)
+                  case _       => Redirect(startPage)
                 }
               }
           case None    =>
@@ -166,11 +166,10 @@ class LoginController @Inject() (
           } else {
             Redirect(routes.LoginController.loginFailed(remainingAttempts))
           }
-      }.recoverWith{
-      case e:JsValidationException => {
+      }
+      .recoverWith { case e: JsValidationException =>
         Redirect(controllers.error.routes.ErrorHandlerController.showJsonError)
       }
-    }
 
   }
 
