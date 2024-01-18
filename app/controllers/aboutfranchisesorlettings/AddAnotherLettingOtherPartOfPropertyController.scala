@@ -19,14 +19,16 @@ package controllers.aboutfranchisesorlettings
 import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
 import form.aboutfranchisesorlettings.AddAnotherLettingOtherPartOfPropertyForm.addAnotherLettingForm
+import form.confirmableActionForm.confirmableActionForm
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
-import models.submissions.common.AnswersYesNo
+import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
 import navigation.AboutFranchisesOrLettingsNavigator
 import navigation.identifiers.AddAnotherLettingAccommodationPageId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import views.html.aboutfranchisesorlettings._
+import views.html.genericRemoveConfirmation
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
@@ -36,6 +38,7 @@ class AddAnotherLettingOtherPartOfPropertyController @Inject() (
   mcc: MessagesControllerComponents,
   navigator: AboutFranchisesOrLettingsNavigator,
   addAnotherCateringOperationOrLettingAccommodationView: addAnotherCateringOperationOrLettingAccommodation,
+  genericRemoveConfirmationView: genericRemoveConfirmation,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
 )(implicit ec: ExecutionContext)
@@ -111,16 +114,50 @@ class AddAnotherLettingOtherPartOfPropertyController @Inject() (
     }
   }
 
-  def remove(idx: Int) = (Action andThen withSessionRefiner).async { implicit request =>
-    request.sessionData.aboutFranchisesOrLettings.map(_.lettingSections).map { lettingSections =>
-      val updatedSections = lettingSections.patch(idx, Nil, 1)
-      session.saveOrUpdate(
-        updateAboutFranchisesOrLettings(
-          _.copy(lettingCurrentIndex = 0, lettingSections = updatedSections)
-        )
-      )
-    }
-    Redirect(routes.AddAnotherLettingOtherPartOfPropertyController.show(0))
-  }
+def remove(idx: Int) = (Action andThen withSessionRefiner).async { implicit request =>
+  request.sessionData.aboutFranchisesOrLettings.flatMap(_.lettingSections.lift(idx)).map { lettingSection =>
+    val name = lettingSection.lettingOtherPartOfPropertyInformationDetails.operatorName
+    Future.successful(Ok(genericRemoveConfirmationView(
+      confirmableActionForm, name,
+      "label.section.aboutTheFranchiseConcessions",
+      request.sessionData.toSummary,
+      idx,
+      controllers.aboutfranchisesorlettings.routes.AddAnotherLettingOtherPartOfPropertyController.performRemove(idx),
+      controllers.aboutfranchisesorlettings.routes.AddAnotherLettingOtherPartOfPropertyController.show(idx)
+    )))
+  }.getOrElse(Redirect(controllers.aboutfranchisesorlettings.routes.AddAnotherLettingOtherPartOfPropertyController.show(0)))
+}
 
+  def performRemove(idx: Int) = (Action andThen withSessionRefiner).async { implicit request =>
+    continueOrSaveAsDraft[AnswersYesNo](
+      confirmableActionForm,
+      formWithErrors =>
+        request.sessionData.aboutFranchisesOrLettings.flatMap(_.lettingSections.lift(idx)).map { lettingSection =>
+          val name = lettingSection.lettingOtherPartOfPropertyInformationDetails.operatorName
+          Future.successful(BadRequest(genericRemoveConfirmationView(
+            formWithErrors, name,
+            "label.section.aboutTheFranchiseConcessions",
+            request.sessionData.toSummary,
+            idx,
+            controllers.aboutfranchisesorlettings.routes.AddAnotherLettingOtherPartOfPropertyController.performRemove(idx),
+            controllers.aboutfranchisesorlettings.routes.AddAnotherLettingOtherPartOfPropertyController.show(idx)
+          )))
+        }.getOrElse(Redirect(controllers.aboutfranchisesorlettings.routes.AddAnotherLettingOtherPartOfPropertyController.show(0))),
+      {
+        case AnswerYes =>
+          request.sessionData.aboutFranchisesOrLettings.map(_.lettingSections).map { lettingSection =>
+            val updatedSections = lettingSection.patch(idx, Nil, 1)
+            session.saveOrUpdate(
+              updateAboutFranchisesOrLettings(
+                _.copy(lettingCurrentIndex = 0, lettingSections = updatedSections)
+              )
+            )
+          }
+          Redirect(controllers.aboutfranchisesorlettings.routes.AddAnotherLettingOtherPartOfPropertyController.show(0))
+        case AnswerNo => {
+          Redirect(controllers.aboutfranchisesorlettings.routes.AddAnotherLettingOtherPartOfPropertyController.show(idx))
+        }
+      }
+    )
+  }
 }

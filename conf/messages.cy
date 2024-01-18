@@ -234,6 +234,10 @@ downloadPdf.retry = If the system does not recognise your reference number, <a h
 downloadPdf.englishWelsh = PDF versions of this declaration are available in English and Welsh.
 downloadPdf.continueJourneyButton = Continue declaration online
 
+#GENERIC CONFIRMATION
+#####################
+genericRemoveConfirmation.heading = Are you sure you want to remove {0}?
+
 # ARE YOU STILL CONNECTED SECTION
 #################################
 
