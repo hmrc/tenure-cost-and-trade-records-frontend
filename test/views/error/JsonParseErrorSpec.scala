@@ -19,9 +19,9 @@ package views.error
 import actions.SessionRequest
 import views.behaviours.ViewBehaviours
 
-class JsonParseErrorSpec extends ViewBehaviours{
-  val sessionRequest   = SessionRequest(baseFilled6010Session, fakeRequest)
-  def createView = () => jsonErrorView(Some("backlinktologinpage"))(sessionRequest,messages)
+class JsonParseErrorSpec extends ViewBehaviours {
+  val sessionRequest = SessionRequest(baseFilled6010Session, fakeRequest)
+  def createView     = () => jsonErrorView(Some("backlinktologinpage"))(sessionRequest, messages)
 
   "JsonErrorView" must {
     "contain text " in {

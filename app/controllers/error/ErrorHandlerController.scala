@@ -29,7 +29,7 @@ import scala.concurrent.{ExecutionContext, Future}
   * @author Yuriy Tumakha
   */
 @Singleton
-class ErrorHandlerController @Inject()(
+class ErrorHandlerController @Inject() (
   withSessionRefiner: WithSessionRefiner,
   jsonErrorView: JsonParseError,
   cc: MessagesControllerComponents

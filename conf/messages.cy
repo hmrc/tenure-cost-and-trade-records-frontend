@@ -6,7 +6,7 @@ gov.name = GOV.UK
 phase.beta = BETA
 phase.text = This is a new service – <a href="{0}" class="govuk-link" rel="noreferrer noopener" target="_blank" id="betaFeedback">share your feedback</a> to help improve it.
 label.continue=Parhewch
-button.label.continue = Yn eich blaen
+button.label.continue = Parhau
 button.label.submit = Submit
 button.label.send = Accept and send
 back.link.label = Yn ôl
@@ -1033,7 +1033,7 @@ label.currentLeaseOrAgreementBegin.help = For example, 9 2017.
 intervalsOfRentReview.heading = Rent reviews
 intervalsOfRentReview.p1 = Provide details if your lease or agreement states your rent will be reviewed at any point.
 intervalsOfRentReview.p2 = Changes to your rent linked to your turnover, or indices such as the RPI, are not classed as rent reviews.
-intervalsOfRentReview.p2 = If your lease or agreement does not include any rent reviews, leave this page blank and select ‘save and continue’
+intervalsOfRentReview.p2 = If your lease or agreement does not include any rent reviews, leave this page blank and select ‘continue’
 intervalsOfRentReview.label = How often is the rent reviewed under the terms of the lease or agreement?
 hint.intervalsOfRentReview = Leave blank if the lease does not include any rent reviews.
 label.nextReview = When is the next rent review due?
