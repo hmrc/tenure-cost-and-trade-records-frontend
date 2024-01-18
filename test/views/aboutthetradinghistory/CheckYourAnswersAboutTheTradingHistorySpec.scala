@@ -36,14 +36,15 @@ class CheckYourAnswersAboutTheTradingHistorySpec
 
   val backLink: String = controllers.aboutthetradinghistory.routes.TurnoverController.show().url
 
-  val sessionRequest: SessionRequest[AnyContentAsEmpty.type] = SessionRequest(baseFilled6010Session, fakeRequest)
+  val sessionRequest: SessionRequest[AnyContentAsEmpty.type] =
+    SessionRequest(aboutYourTradingHistory6015YesSession, fakeRequest)
 
   def createView: () => Html = () =>
-    checkYourAnswersAboutTheTradingHistoryView(form, backLink, Summary("99996010001"))(sessionRequest, messages)
+    checkYourAnswersAboutTheTradingHistoryView(form, backLink, Summary("99996015001"))(sessionRequest, messages)
 
   def createViewUsingForm: Form[CheckYourAnswersAboutTheTradingHistory] => Html =
     (form: Form[CheckYourAnswersAboutTheTradingHistory]) =>
-      checkYourAnswersAboutTheTradingHistoryView(form, backLink, Summary("99996010001"))(sessionRequest, messages)
+      checkYourAnswersAboutTheTradingHistoryView(form, backLink, Summary("99996015001"))(sessionRequest, messages)
 
   "Check Your Answers About The Property view" must {
 

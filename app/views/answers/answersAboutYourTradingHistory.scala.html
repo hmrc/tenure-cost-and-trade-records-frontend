@@ -19,6 +19,7 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import models.submissions.aboutthetradinghistory.CostOfSales
 @import models.submissions.aboutthetradinghistory.FixedOperatingExpenses
+@import models.submissions.aboutthetradinghistory.OtherCosts
 @import models.submissions.aboutthetradinghistory.TotalPayrollCost
 @import models.submissions.aboutthetradinghistory.TurnoverSection
 @import models.submissions.aboutthetradinghistory.VariableOperatingExpensesSections
@@ -195,6 +196,26 @@
     ).mkString("""<p class="govuk-body govuk-!-font-weight-bold">""", """</p> <p class="govuk-body govuk-!-font-weight-bold">""", "</p>")
 }
 
+@otherCostsValuesTable(otherCosts: Option[OtherCosts]) = @{
+    table(
+        otherCosts.map(_.otherCosts).getOrElse(Seq()).map(otherCost => Seq(
+            dateUtil.formatDayMonthAbbrYear(otherCost.financialYearEnd),
+            otherCost.contributionsToHeadOffice.getOrElse(zeroBigDecimal).asMoney,
+            otherCost.otherCosts.getOrElse(zeroBigDecimal).asMoney,
+            otherCost.total.asMoney
+        ))
+    ).body
+}
+
+@otherCostsKeys = @{
+    Seq(
+        messages("otherCosts.financialYearEnd"),
+        messages("otherCosts.contributionToHeadOffice"),
+        messages("otherCosts.otherCosts"),
+        messages("otherCosts.total")
+    ).mkString("""<p class="govuk-body govuk-!-font-weight-bold">""", """</p> <p class="govuk-body govuk-!-font-weight-bold">""", "</p>")
+}
+
 
 
 <h2 class="govuk-heading-m">@messages("aboutYourTradingHistory.heading")</h2>
@@ -331,6 +352,31 @@
                                 visuallyHiddenText = Some(messages("fixedOperatingExpenses.heading")),
                                 attributes = Map(
                                     "aria-label" -> s"${messages("label.change")} ${messages("fixedOperatingExpenses.heading")}"
+                                )
+                            )
+                        )
+                    )
+                )
+            )
+        )
+    ))
+
+    <h2 class="govuk-heading-m">@messages("otherCosts.heading")</h2>
+
+    @govukSummaryList(SummaryList(rows =
+        Seq(
+            SummaryListRow(
+                key = Key(HtmlContent(otherCostsKeys)),
+                value = Value(HtmlContent(sectionAnswers.answers.fold("")(t => otherCostsValuesTable(t.otherCosts)))),
+                actions = Some(
+                    Actions(items =
+                        Seq(
+                            ActionItem(
+                                href = s"${aboutthetradinghistory.routes.OtherCostsController.show().url}?from=CYA",
+                                content = Text(messages("label.change")),
+                                visuallyHiddenText = Some(messages("otherCosts.heading")),
+                                attributes = Map(
+                                    "aria-label" -> s"${messages("label.change")} ${messages("otherCosts.heading")}"
                                 )
                             )
                         )
