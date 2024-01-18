@@ -38,7 +38,7 @@ trait FakeViews { this: GuiceOneAppPerSuite =>
   lazy val loginView: login = app.injector.instanceOf[login]
 
   // Error pages
-  lazy val jsonErrorView: JsonParseError                                                 = app.injector.instanceOf[JsonParseError]
+  lazy val jsonErrorView: JsonParseError                                                      = app.injector.instanceOf[JsonParseError]
   // Request reference number
   lazy val checkYourAnswersRequestReferenceNumberView: checkYourAnswersRequestReferenceNumber =
     app.injector.instanceOf[checkYourAnswersRequestReferenceNumber]
