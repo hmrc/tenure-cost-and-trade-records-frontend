@@ -6,7 +6,7 @@ gov.name = GOV.UK
 phase.beta = BETA
 phase.text = This is a new service – <a href="{0}" class="govuk-link" rel="noreferrer noopener" target="_blank" id="betaFeedback">share your feedback</a> to help improve it.
 label.continue=Parhewch
-button.label.continue = Yn eich blaen
+button.label.continue = Parhau
 button.label.submit = Submit
 button.label.send = Accept and send
 back.link.label = Yn ôl
@@ -1076,7 +1076,7 @@ label.currentLeaseOrAgreementBegin.help = For example, 9 2017.
 intervalsOfRentReview.heading = Rent reviews
 intervalsOfRentReview.p1 = Provide details if your lease or agreement states your rent will be reviewed at any point.
 intervalsOfRentReview.p2 = Changes to your rent linked to your turnover, or indices such as the RPI, are not classed as rent reviews.
-intervalsOfRentReview.p2 = If your lease or agreement does not include any rent reviews, leave this page blank and select ‘save and continue’
+intervalsOfRentReview.p2 = If your lease or agreement does not include any rent reviews, leave this page blank and select ‘continue’
 intervalsOfRentReview.label = How often is the rent reviewed under the terms of the lease or agreement?
 hint.intervalsOfRentReview = Leave blank if the lease does not include any rent reviews.
 label.nextReview = When is the next rent review due?
@@ -1590,8 +1590,8 @@ confirmation.unableToRetrieveAnswers.list.1 = retrieve your answers once you lea
 confirmation.unableToRetrieveAnswers.list.2 = access your answers from the confirmation email
 confirmation.unableToRetrieveAnswers.list.3 = request your answers from the Valuation Office Agency (VOA)
 confirmation.businessRatesBill = Your business rates bill
-confirmation.businessRatesBill.list.1 = You can see <a href="#" class="govuk-link" target="_blank">how your business rates are calculated (opens in new tab)</a> and go on to challenge your property’s rateable value if you think it’s wrong.
-confirmation.businessRatesBill.list.2 = Our <a href="#" class="govuk-link" target="_blank">guide to business rates relief (opens in new tab)</a> explains how some properties are eligible for discounts from their local council.
+confirmation.businessRatesBill.list.1 = You can see <a href="https://www.gov.uk/introduction-to-business-rates/how-your-rates-are-calculated" class="govuk-link" target="_blank">how your business rates are calculated (opens in new tab)</a> and go on to challenge your property’s rateable value if you think it’s wrong.
+confirmation.businessRatesBill.list.2 = Our <a href="https://www.gov.uk/apply-for-business-rate-relief" class="govuk-link" target="_blank">guide to business rates relief (opens in new tab)</a> explains how some properties are eligible for discounts from their local council.
 confirmation.whatNext = What happens next
 confirmation.list.1 = We have sent your declaration to the VOA. They made need to contact you to check some of the details.
 confirmation.list.2 = The VOA use the information provided to set rateable values for businesses in England and Wales. Your local council uses these rateable values to calculate your business rates bill.

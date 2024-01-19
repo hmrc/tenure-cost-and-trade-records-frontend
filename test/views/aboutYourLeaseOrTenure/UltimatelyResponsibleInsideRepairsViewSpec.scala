@@ -91,7 +91,43 @@ class UltimatelyResponsibleInsideRepairsViewSpec extends QuestionViewBehaviours[
       assertContainsText(doc, messages("label.both"))
     }
 
-    "contain save and continue button with the value Save and Continue" in {
+    "contain radio buttons for building insurance with the value landlord" in {
+      val doc = asDocument(createViewUsingForm(form))
+      assertContainsRadioButton(
+        doc,
+        "buildingInsurance",
+        "buildingInsurance",
+        BuildingInsuranceLandlord.name,
+        false
+      )
+      assertContainsText(doc, messages("label.landlord"))
+    }
+
+    "contain radio buttons for building insurance with the value tenant" in {
+      val doc = asDocument(createViewUsingForm(form))
+      assertContainsRadioButton(
+        doc,
+        "buildingInsurance-2",
+        "buildingInsurance",
+        BuildingInsuranceTenant.name,
+        false
+      )
+      assertContainsText(doc, messages("label.tenant"))
+    }
+
+    "contain radio buttons for building insurance with the value both" in {
+      val doc = asDocument(createViewUsingForm(form))
+      assertContainsRadioButton(
+        doc,
+        "buildingInsurance-3",
+        "buildingInsurance",
+        BuildingInsuranceBoth.name,
+        false
+      )
+      assertContainsText(doc, messages("label.both"))
+    }
+
+    "contain continue button with the value Continue" in {
       val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("continue").text()
       assert(loginButton == messages("button.label.continue"))
