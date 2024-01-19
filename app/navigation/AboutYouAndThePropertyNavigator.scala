@@ -30,6 +30,7 @@ class AboutYouAndThePropertyNavigator @Inject() (audit: Audit) extends Navigator
     Some(controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show())
 
   override val postponeCYARedirectPages: Set[String] = Set(
+    controllers.aboutyouandtheproperty.routes.AlternativeContactDetailsController.show(),
     controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedDetailsController.show(),
     controllers.aboutyouandtheproperty.routes.LicensableActivitiesDetailsController.show(),
     controllers.aboutyouandtheproperty.routes.PremisesLicenseConditionsDetailsController.show(),
