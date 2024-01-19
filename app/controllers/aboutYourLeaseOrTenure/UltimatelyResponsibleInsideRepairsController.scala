@@ -18,24 +18,24 @@ package controllers.aboutYourLeaseOrTenure
 
 import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
-import form.aboutYourLeaseOrTenure.UltimatelyResponsibleForm.ultimatelyResponsibleForm
-import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne
-import models.submissions.aboutYourLeaseOrTenure.UltimatelyResponsible
+import form.aboutYourLeaseOrTenure.UltimatelyResponsibleInsideRepairsForm.ultimatelyResponsibleInsideRepairsForm
+import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo.updateAboutLeaseOrAgreementPartTwo
+import models.submissions.aboutYourLeaseOrTenure.UltimatelyResponsibleInsideRepairs
 import navigation.AboutYourLeaseOrTenureNavigator
-import navigation.identifiers.UltimatelyResponsiblePageId
+import navigation.identifiers.UltimatelyResponsibleInsideRepairsPageId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import views.html.aboutYourLeaseOrTenure.ultimatelyResponsible
+import views.html.aboutYourLeaseOrTenure.ultimatelyResponsibleInsideRepairs
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class UltimatelyResponsibleController @Inject() (
+class UltimatelyResponsibleInsideRepairsController @Inject() (
   mcc: MessagesControllerComponents,
   navigator: AboutYourLeaseOrTenureNavigator,
-  ultimatelyResponsibleView: ultimatelyResponsible,
+  ultimatelyResponsibleIRView: ultimatelyResponsibleInsideRepairs,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
 ) extends FORDataCaptureController(mcc)
@@ -44,10 +44,10 @@ class UltimatelyResponsibleController @Inject() (
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Future.successful(
       Ok(
-        ultimatelyResponsibleView(
-          request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.ultimatelyResponsible) match {
-            case Some(ultimatelyResponsible) => ultimatelyResponsibleForm.fill(ultimatelyResponsible)
-            case _                           => ultimatelyResponsibleForm
+        ultimatelyResponsibleIRView(
+          request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.ultimatelyResponsibleInsideRepairs) match {
+            case Some(ultimatelyResponsibleIR) => ultimatelyResponsibleInsideRepairsForm.fill(ultimatelyResponsibleIR)
+            case _                             => ultimatelyResponsibleInsideRepairsForm
           },
           request.sessionData.toSummary
         )
@@ -56,13 +56,13 @@ class UltimatelyResponsibleController @Inject() (
   }
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft[UltimatelyResponsible](
-      ultimatelyResponsibleForm,
-      formWithErrors => BadRequest(ultimatelyResponsibleView(formWithErrors, request.sessionData.toSummary)),
+    continueOrSaveAsDraft[UltimatelyResponsibleInsideRepairs](
+      ultimatelyResponsibleInsideRepairsForm,
+      formWithErrors => BadRequest(ultimatelyResponsibleIRView(formWithErrors, request.sessionData.toSummary)),
       data => {
-        val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(ultimatelyResponsible = Some(data)))
+        val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(ultimatelyResponsibleInsideRepairs = Some(data)))
         session.saveOrUpdate(updatedData)
-        Redirect(navigator.nextPage(UltimatelyResponsiblePageId, updatedData).apply(updatedData))
+        Redirect(navigator.nextPage(UltimatelyResponsibleInsideRepairsPageId, updatedData).apply(updatedData))
       }
     )
   }

@@ -72,7 +72,7 @@ class HodSubmissionConnector @Inject() (config: ServicesConfig, appConfig: AppCo
       .PUT[NotConnectedSubmission, HttpResponse](
         url(s"submissions/notConnected/${cleanedRefNumber(refNumber)}"),
         submission
-      )(NotConnectedSubmission.format,HttpReads.Implicits.readRaw,headerCarrier,ec)
+      )(NotConnectedSubmission.format, HttpReads.Implicits.readRaw, headerCarrier, ec)
       .flatMap { response =>
         response.status match {
           case 201 => Future.successful(())
@@ -90,7 +90,7 @@ class HodSubmissionConnector @Inject() (config: ServicesConfig, appConfig: AppCo
       .PUT[ConnectedSubmission, HttpResponse](
         url(s"submissions/connected/${cleanedRefNumber(refNumber)}"),
         submission
-      )(ConnectedSubmission.format,HttpReads.Implicits.readRaw,headerCarrier,ec)
+      )(ConnectedSubmission.format, HttpReads.Implicits.readRaw, headerCarrier, ec)
       .flatMap { response =>
         response.status match {
           case 201 => Future.successful(())

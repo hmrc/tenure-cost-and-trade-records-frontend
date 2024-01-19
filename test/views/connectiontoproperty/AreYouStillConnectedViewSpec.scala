@@ -106,7 +106,7 @@ class AreYouStillConnectedViewSpec extends QuestionViewBehaviours[AddressConnect
       assertContainsText(doc, messages("label.no.nac.oes"))
     }
 
-    "contain save and continue button with the value Save and Continue" in {
+    "contain continue button with the value Continue" in {
       val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("continue").text()
       assert(loginButton == messages("button.label.continue"))

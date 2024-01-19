@@ -54,10 +54,6 @@ class AboutYourLeaseOrTenureIdentifiersSpec extends TestBaseSpec {
       assert(DoesRentPayablePageId.toString.equals("doesRentPayablePage"))
     }
 
-    "Identifier for ultimately responsible page" in {
-      assert(UltimatelyResponsiblePageId.toString.equals("ultimatelyResponsiblePage"))
-    }
-
     "Identifier for rent include trade services page" in {
       assert(RentIncludeTradeServicesPageId.toString.equals("rentIncludeTradeServicesPage"))
     }

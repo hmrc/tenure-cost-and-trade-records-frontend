@@ -18,14 +18,16 @@ package controllers.connectiontoproperty
 import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
 import form.connectiontoproperty.AddAnotherLettingPartOfPropertyForm.addAnotherLettingForm
+import form.confirmableActionForm.confirmableActionForm
 import models.submissions.connectiontoproperty.StillConnectedDetails.updateStillConnectedDetails
-import models.submissions.common.{AnswerNo, AnswersYesNo}
+import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
 import navigation.ConnectionToPropertyNavigator
 import navigation.identifiers.AddAnotherLettingPartOfPropertyPageId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import views.html.connectiontoproperty.addAnotherLettingPartOfProperty
+import views.html.genericRemoveConfirmation
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
@@ -35,6 +37,7 @@ class AddAnotherLettingPartOfPropertyController @Inject() (
   mcc: MessagesControllerComponents,
   navigator: ConnectionToPropertyNavigator,
   addAnotherLettingPartOfPropertyView: addAnotherLettingPartOfProperty,
+  genericRemoveConfirmationView: genericRemoveConfirmation,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
 )(implicit ec: ExecutionContext)
@@ -117,15 +120,49 @@ class AddAnotherLettingPartOfPropertyController @Inject() (
   }
 
   def remove(idx: Int) = (Action andThen withSessionRefiner).async { implicit request =>
-    request.sessionData.stillConnectedDetails.map(_.lettingPartOfPropertyDetails).map { lettingSections =>
-      val updatedSections = lettingSections.patch(idx, Nil, 1)
-      session.saveOrUpdate(
-        updateStillConnectedDetails(
-          _.copy(lettingPartOfPropertyDetailsIndex = 0, lettingPartOfPropertyDetails = updatedSections)
-        )
-      )
-    }
-    Redirect(routes.AddAnotherLettingPartOfPropertyController.show(0))
+    request.sessionData.stillConnectedDetails.flatMap(_.lettingPartOfPropertyDetails.lift(idx)).map { lettingSections =>
+      val name = lettingSections.tenantDetails.name
+      Future.successful(Ok(genericRemoveConfirmationView(
+        confirmableActionForm,name,
+        "label.section.connectionToTheProperty",
+        request.sessionData.toSummary,
+        idx,
+        routes.AddAnotherLettingPartOfPropertyController.performRemove(idx),
+        routes.AddAnotherLettingPartOfPropertyController.show(idx)
+      )))
+    }.getOrElse(Redirect(routes.AddAnotherLettingPartOfPropertyController.show(0)))
   }
 
+  def performRemove(idx:Int) = (Action andThen withSessionRefiner).async { implicit request =>
+    continueOrSaveAsDraft[AnswersYesNo](
+      confirmableActionForm,
+      formWithErrors =>
+    request.sessionData.stillConnectedDetails.flatMap(_.lettingPartOfPropertyDetails.lift(idx)).map { lettingSections =>
+      val name = lettingSections.tenantDetails.name
+      Future.successful(BadRequest(genericRemoveConfirmationView(
+        formWithErrors, name,
+        "label.section.connectionToTheProperty",
+        request.sessionData.toSummary,
+        idx,
+        routes.AddAnotherLettingPartOfPropertyController.performRemove(idx),
+        routes.AddAnotherLettingPartOfPropertyController.show(idx)
+      )))
+    }.getOrElse(Redirect(routes.AddAnotherLettingPartOfPropertyController.show(0))),
+      {
+        case AnswerYes =>
+        request.sessionData.stillConnectedDetails.map(_.lettingPartOfPropertyDetails).map { lettingSections =>
+          val updatedSections = lettingSections.patch(idx, Nil, 1)
+          session.saveOrUpdate(
+            updateStillConnectedDetails(
+              _.copy(lettingPartOfPropertyDetailsIndex = 0, lettingPartOfPropertyDetails = updatedSections)
+            )
+          )
+        }
+        Redirect(routes.AddAnotherLettingPartOfPropertyController.show(0))
+        case AnswerNo => {
+          Redirect(routes.AddAnotherLettingPartOfPropertyController.show(idx))
+        }
+      }
+    )
+    }
 }

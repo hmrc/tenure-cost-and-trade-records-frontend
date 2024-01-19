@@ -55,7 +55,7 @@ class CostOfSalesViewSpec extends QuestionViewBehaviours[Seq[CostOfSales]] {
       assert(captions.contains(messages("label.section.aboutYourTradingHistory")))
     }
 
-    "contain save and continue button with the value Save and Continue" in {
+    "contain continue button with the value Continue" in {
       val form2       = CostOfSalesForm.costOfSalesForm(Seq("2025", "2024"))(messages)
       val doc         = asDocument(createViewUsingForm(form2))
       val loginButton = doc.getElementById("continue").text()
