@@ -95,7 +95,7 @@ class LoginController @Inject() (
   def show: Action[AnyContent] = Action.async { implicit request =>
     val referenceNumberFromUrl = request.getQueryString("ref").getOrElse("")
     val form                   = loginForm.fill(LoginDetails(referenceNumberFromUrl, "", DateTime.now()))
-    Future.successful( Ok(login(form)))
+    Future.successful(Ok(login(form)))
   }
 
   def logout = (Action andThen withSessionRefiner).async { implicit request =>

@@ -30,7 +30,6 @@ class DownloadPDFController @Inject() (
 ) extends FrontendController(mcc) {
 
   def show(forType: String): Action[AnyContent] = Action.async { implicit request =>
-
     val referenceNumber = request.session.get("referenceNumber").getOrElse("")
 
     Future.successful(Ok(downloadPDFView(forType, referenceNumber)))

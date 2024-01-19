@@ -24,17 +24,19 @@ import views.behaviours.QuestionViewBehaviours
 
 class DownloadPDFViewSpec extends QuestionViewBehaviours[DownloadPDF] {
 
-  val messageKeyPrefix = "downloadPdf"
+  val messageKeyPrefix    = "downloadPdf"
+  val testReferenceNumber = "12345678"
 
   override val form = DownloadPDFForm.downloadPDFForm
 
-  def createView6010      = () => downloadPDFView("FOR6010")(fakeRequest, messages)
-  def createView6011      = () => downloadPDFView("FOR6011")(fakeRequest, messages)
-  def createView6015      = () => downloadPDFView("FOR6015")(fakeRequest, messages)
-  def createView6016      = () => downloadPDFView("FOR6016")(fakeRequest, messages)
-  def createViewNoForType = () => downloadPDFView("")(fakeRequest, messages)
+  def createView6010      = () => downloadPDFView("FOR6010", testReferenceNumber)(fakeRequest, messages)
+  def createView6011      = () => downloadPDFView("FOR6011", testReferenceNumber)(fakeRequest, messages)
+  def createView6015      = () => downloadPDFView("FOR6015", testReferenceNumber)(fakeRequest, messages)
+  def createView6016      = () => downloadPDFView("FOR6016", testReferenceNumber)(fakeRequest, messages)
+  def createViewNoForType = () => downloadPDFView("", testReferenceNumber)(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[DownloadPDF]) => downloadPDFView("FOR6010")(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[DownloadPDF]) =>
+    downloadPDFView("FOR6010", testReferenceNumber)(fakeRequest, messages)
 
   "download pdf view" must {
 
