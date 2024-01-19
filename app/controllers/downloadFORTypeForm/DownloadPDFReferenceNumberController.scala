@@ -48,7 +48,11 @@ class DownloadPDFReferenceNumberController @Inject() (
           connector
             .retrieveFORType(userData.downloadPDFReferenceNumber, hc)
             .flatMap { value =>
-              Future.successful(Redirect(controllers.downloadFORTypeForm.routes.DownloadPDFController.show(value)))
+              val sessionWithRefNum = request.session + ("referenceNumber" -> userData.downloadPDFReferenceNumber)
+              Future.successful(
+                Redirect(controllers.downloadFORTypeForm.routes.DownloadPDFController.show(value))
+                  .withSession(sessionWithRefNum)
+              )
             }
             .recover { case _ =>
               logger.error(s"Failed to retrieve a FOR Type for ${userData.downloadPDFReferenceNumber}")
