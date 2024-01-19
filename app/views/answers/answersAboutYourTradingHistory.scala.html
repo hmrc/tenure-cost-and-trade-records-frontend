@@ -17,8 +17,11 @@
 @import actions.SessionRequest
 @import controllers.aboutthetradinghistory
 @import uk.gov.hmrc.govukfrontend.views.html.components._
+@import models.submissions.aboutthetradinghistory.AboutTheTradingHistory
 @import models.submissions.aboutthetradinghistory.CostOfSales
 @import models.submissions.aboutthetradinghistory.FixedOperatingExpenses
+@import models.submissions.aboutthetradinghistory.OtherCosts
+@import models.submissions.aboutthetradinghistory.TotalPayrollCost
 @import models.submissions.aboutthetradinghistory.TurnoverSection
 @import models.submissions.aboutthetradinghistory.VariableOperatingExpensesSections
 @import util.DateUtil
@@ -110,6 +113,26 @@
     ).mkString("""<p class="govuk-body govuk-!-font-weight-bold">""", """</p> <p class="govuk-body govuk-!-font-weight-bold">""", "</p>")
 }
 
+@payrollCostsValuesTable(totalPayrollCosts: Seq[TotalPayrollCost]) = @{
+    table(
+        totalPayrollCosts.map(payroll => Seq(
+            dateUtil.formatDayMonthAbbrYear(payroll.financialYearEnd),
+            payroll.managersAndStaff.getOrElse(zeroBigDecimal).asMoney,
+            payroll.directorsRemuneration.getOrElse(zeroBigDecimal).asMoney,
+            payroll.total.asMoney
+        ))
+    ).body
+}
+
+@payrollCostsKeys = @{
+    Seq(
+        messages("checkYourAnswersAboutTheTradingHistory.financialYearEnd"),
+        messages("totalPayrollCosts.managersAndStaff"),
+        messages("totalPayrollCosts.directorsRemuneration"),
+        messages("totalPayrollCosts.total")
+    ).mkString("""<p class="govuk-body govuk-!-font-weight-bold">""", """</p> <p class="govuk-body govuk-!-font-weight-bold">""", "</p>")
+}
+
 @variableOperatingExpensesValuesTable(voeSections: Option[VariableOperatingExpensesSections]) = @{
     table(
         voeSections.fold(Seq.empty[Seq[String]])(
@@ -174,6 +197,51 @@
     ).mkString("""<p class="govuk-body govuk-!-font-weight-bold">""", """</p> <p class="govuk-body govuk-!-font-weight-bold">""", "</p>")
 }
 
+@otherCostsValuesTable(otherCosts: Option[OtherCosts]) = @{
+    table(
+        otherCosts.map(_.otherCosts).getOrElse(Seq()).map(otherCost => Seq(
+            dateUtil.formatDayMonthAbbrYear(otherCost.financialYearEnd),
+            otherCost.contributionsToHeadOffice.getOrElse(zeroBigDecimal).asMoney,
+            otherCost.otherCosts.getOrElse(zeroBigDecimal).asMoney,
+            otherCost.total.asMoney
+        ))
+    ).body
+}
+
+@otherCostsKeys = @{
+    Seq(
+        messages("checkYourAnswersAboutTheTradingHistory.financialYearEnd"),
+        messages("otherCosts.contributionToHeadOffice"),
+        messages("otherCosts.otherCosts"),
+        messages("otherCosts.total")
+    ).mkString("""<p class="govuk-body govuk-!-font-weight-bold">""", """</p> <p class="govuk-body govuk-!-font-weight-bold">""", "</p>")
+}
+
+@profitSummaryValuesTable(trading: AboutTheTradingHistory) = @{
+    table(
+        (trading.incomeExpenditureSummaryData zip trading.turnoverSections.map(_.financialYearEnd)).zipWithIndex.map {
+            case ((summary, finYearEnd), idx) => Seq(
+                dateUtil.formatDayMonthAbbrYear(finYearEnd),
+                summary.totalGrossProfits.asMoney,
+                summary.totalNetProfit.asMoney,
+                summary.profitMargin.withScale(2) + "% <br/> <br/> ",
+                Option.when(idx == 0)(
+                    trading.incomeExpenditureSummary.filter(_.incomeExpenditureSummary == "confirmed").fold("No")(_ => "Yes")
+                ).getOrElse(" ")
+            )
+        }
+    ).body
+}
+
+@profitSummaryKeys = @{
+    Seq(
+        messages("checkYourAnswersAboutTheTradingHistory.financialYearEnd"),
+        messages("checkYourAnswersAboutTheTradingHistory.totalGrossProfits"),
+        messages("checkYourAnswersAboutTheTradingHistory.totalNetProfits"),
+        messages("checkYourAnswersAboutTheTradingHistory.netProfitPercentage"),
+        messages("checkYourAnswersAboutTheTradingHistory.confirmProfitFigures")
+    ).mkString("""<p class="govuk-body govuk-!-font-weight-bold">""", """</p> <p class="govuk-body govuk-!-font-weight-bold">""", "</p>")
+}
 
 
 <h2 class="govuk-heading-m">@messages("aboutYourTradingHistory.heading")</h2>
@@ -244,9 +312,30 @@
         )
     ))
 
+    <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutTheTradingHistory.totalPayrollCosts")</h2>
 
-
-
+    @govukSummaryList(SummaryList(rows =
+        Seq(
+            SummaryListRow(
+                key = Key(HtmlContent(payrollCostsKeys)),
+                value = Value(HtmlContent(sectionAnswers.answers.fold("")(t => payrollCostsValuesTable(t.totalPayrollCostSections)))),
+                actions = Some(
+                    Actions(items =
+                        Seq(
+                            ActionItem(
+                                href = s"${aboutthetradinghistory.routes.TotalPayrollCostsController.show().url}?from=CYA",
+                                content = Text(messages("label.change")),
+                                visuallyHiddenText = Some(messages("checkYourAnswersAboutTheTradingHistory.totalPayrollCosts")),
+                                attributes = Map(
+                                    "aria-label" -> s"${messages("label.change")} ${messages("checkYourAnswersAboutTheTradingHistory.totalPayrollCosts")}"
+                                )
+                            )
+                        )
+                    )
+                )
+            )
+        )
+    ))
 
     <h2 class="govuk-heading-m">@messages("variableOperatingExpenses.heading")</h2>
 
@@ -298,8 +387,55 @@
         )
     ))
 
+    <h2 class="govuk-heading-m">@messages("otherCosts.heading")</h2>
 
+    @govukSummaryList(SummaryList(rows =
+        Seq(
+            SummaryListRow(
+                key = Key(HtmlContent(otherCostsKeys)),
+                value = Value(HtmlContent(sectionAnswers.answers.fold("")(t => otherCostsValuesTable(t.otherCosts)))),
+                actions = Some(
+                    Actions(items =
+                        Seq(
+                            ActionItem(
+                                href = s"${aboutthetradinghistory.routes.OtherCostsController.show().url}?from=CYA",
+                                content = Text(messages("label.change")),
+                                visuallyHiddenText = Some(messages("otherCosts.heading")),
+                                attributes = Map(
+                                    "aria-label" -> s"${messages("label.change")} ${messages("otherCosts.heading")}"
+                                )
+                            )
+                        )
+                    )
+                )
+            )
+        )
+    ))
 
+    <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutTheTradingHistory.profitSummary")</h2>
+
+    @govukSummaryList(SummaryList(rows =
+        Seq(
+            SummaryListRow(
+                key = Key(HtmlContent(profitSummaryKeys)),
+                value = Value(HtmlContent(sectionAnswers.answers.fold("")(t => profitSummaryValuesTable(t)))),
+                actions = Some(
+                    Actions(items =
+                        Seq(
+                            ActionItem(
+                                href = s"${aboutthetradinghistory.routes.IncomeExpenditureSummaryController.show().url}?from=CYA",
+                                content = Text(messages("label.change")),
+                                visuallyHiddenText = Some(messages("checkYourAnswersAboutTheTradingHistory.profitSummary")),
+                                attributes = Map(
+                                    "aria-label" -> s"${messages("label.change")} ${messages("checkYourAnswersAboutTheTradingHistory.profitSummary")}"
+                                )
+                            )
+                        )
+                    )
+                )
+            )
+        )
+    ))
 
     @govukSummaryList(SummaryList(rows =
         sectionAnswers.row("checkYourAnswersAboutTheTradingHistory.unusualCircumstances",
