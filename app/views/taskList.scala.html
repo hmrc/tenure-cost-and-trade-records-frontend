@@ -127,15 +127,17 @@
 
        @includes.taskListItem("alternate-contact-details", "alternativeContactDetails.heading",
         controllers.aboutyouandtheproperty.routes.ContactDetailsQuestionController.show(),
-        section6Completed,
+        section2Completed,
         session.aboutYouAndTheProperty.flatMap(_.altContactInformation),
+        session.aboutYouAndTheProperty.flatMap(_.customerDetails).isEmpty
+
        )
 
        @includes.taskListItem("about-the-property", "checkYourAnswersAboutTheProperty.aboutProperty.heading",
         controllers.aboutyouandtheproperty.routes.AboutThePropertyController.show(),
         section2Completed,
         session.aboutYouAndTheProperty.flatMap(_.propertyDetails),
-        session.aboutYouAndTheProperty.flatMap(_.customerDetails).isEmpty
+        session.aboutYouAndTheProperty.flatMap(_.altContactInformation).isEmpty
        )
 
        @includes.taskListItem("licensable-activities", "checkYourAnswersAboutTheProperty.license.heading",
