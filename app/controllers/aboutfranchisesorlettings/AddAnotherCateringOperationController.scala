@@ -94,7 +94,9 @@ class AddAnotherCateringOperationController @Inject() (
               )
             )
             session.saveOrUpdate(updatedData)
-            Future.successful(Redirect(controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController.show()))
+            Future.successful(
+              Redirect(controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController.show())
+            )
           } else {
             request.sessionData.aboutFranchisesOrLettings
               .map(_.cateringOperationSections)
@@ -102,7 +104,8 @@ class AddAnotherCateringOperationController @Inject() (
               .fold(
                 Redirect(
                   if (data == AnswerNo && fromCYA == true) {
-                    controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show()
+                    controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController
+                      .show()
                   } else {
                     controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show()
                   }
@@ -125,50 +128,67 @@ class AddAnotherCateringOperationController @Inject() (
     }
   }
 
-
   def remove(idx: Int) = (Action andThen withSessionRefiner).async { implicit request =>
-    request.sessionData.aboutFranchisesOrLettings.flatMap(_.cateringOperationSections.lift(idx)).map { cateringOperationSections =>
-      val name = cateringOperationSections.cateringOperationDetails.operatorName
-      Future.successful(Ok(genericRemoveConfirmationView(
-        confirmableActionForm, name,
-        "label.section.aboutTheFranchiseConcessions",
-        request.sessionData.toSummary,
-        idx,
-        controllers.aboutfranchisesorlettings.routes.AddAnotherCateringOperationController.performRemove(idx),
-        controllers.aboutfranchisesorlettings.routes.AddAnotherCateringOperationController.show(idx)
-      )))
-    }.getOrElse(Redirect(controllers.aboutfranchisesorlettings.routes.AddAnotherCateringOperationController.show(0)))
+    request.sessionData.aboutFranchisesOrLettings
+      .flatMap(_.cateringOperationSections.lift(idx))
+      .map { cateringOperationSections =>
+        val name = cateringOperationSections.cateringOperationDetails.operatorName
+        Future.successful(
+          Ok(
+            genericRemoveConfirmationView(
+              confirmableActionForm,
+              name,
+              "label.section.aboutTheFranchiseConcessions",
+              request.sessionData.toSummary,
+              idx,
+              controllers.aboutfranchisesorlettings.routes.AddAnotherCateringOperationController.performRemove(idx),
+              controllers.aboutfranchisesorlettings.routes.AddAnotherCateringOperationController.show(idx)
+            )
+          )
+        )
+      }
+      .getOrElse(Redirect(controllers.aboutfranchisesorlettings.routes.AddAnotherCateringOperationController.show(0)))
   }
 
   def performRemove(idx: Int) = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[AnswersYesNo](
       confirmableActionForm,
       formWithErrors =>
-        request.sessionData.aboutFranchisesOrLettings.flatMap(_.cateringOperationSections.lift(idx)).map { cateringOperationSections =>
-          val name = cateringOperationSections.cateringOperationDetails.operatorName
-          Future.successful(BadRequest(genericRemoveConfirmationView(
-            formWithErrors, name,
-            "label.section.aboutTheFranchiseConcessions",
-            request.sessionData.toSummary,
-            idx,
-            controllers.aboutfranchisesorlettings.routes.AddAnotherCateringOperationController.performRemove(idx),
-            controllers.aboutfranchisesorlettings.routes.AddAnotherCateringOperationController.show(idx)
-          )))
-        }.getOrElse(Redirect(controllers.aboutfranchisesorlettings.routes.AddAnotherCateringOperationController.show(0))),
-      {
-        case AnswerYes =>
-          request.sessionData.aboutFranchisesOrLettings.map(_.cateringOperationSections).map { cateringOperationSections =>
-            val updatedSections = cateringOperationSections.patch(idx, Nil, 1)
-            session.saveOrUpdate(
-              updateAboutFranchisesOrLettings(
-                _.copy(cateringOperationCurrentIndex = 0, cateringOperationSections = updatedSections)
+        request.sessionData.aboutFranchisesOrLettings
+          .flatMap(_.cateringOperationSections.lift(idx))
+          .map { cateringOperationSections =>
+            val name = cateringOperationSections.cateringOperationDetails.operatorName
+            Future.successful(
+              BadRequest(
+                genericRemoveConfirmationView(
+                  formWithErrors,
+                  name,
+                  "label.section.aboutTheFranchiseConcessions",
+                  request.sessionData.toSummary,
+                  idx,
+                  controllers.aboutfranchisesorlettings.routes.AddAnotherCateringOperationController.performRemove(idx),
+                  controllers.aboutfranchisesorlettings.routes.AddAnotherCateringOperationController.show(idx)
+                )
               )
             )
           }
+          .getOrElse(
+            Redirect(controllers.aboutfranchisesorlettings.routes.AddAnotherCateringOperationController.show(0))
+          ),
+      {
+        case AnswerYes =>
+          request.sessionData.aboutFranchisesOrLettings.map(_.cateringOperationSections).map {
+            cateringOperationSections =>
+              val updatedSections = cateringOperationSections.patch(idx, Nil, 1)
+              session.saveOrUpdate(
+                updateAboutFranchisesOrLettings(
+                  _.copy(cateringOperationCurrentIndex = 0, cateringOperationSections = updatedSections)
+                )
+              )
+          }
           Redirect(controllers.aboutfranchisesorlettings.routes.AddAnotherCateringOperationController.show(0))
-        case AnswerNo => {
+        case AnswerNo  =>
           Redirect(controllers.aboutfranchisesorlettings.routes.AddAnotherCateringOperationController.show(idx))
-        }
       }
     )
   }

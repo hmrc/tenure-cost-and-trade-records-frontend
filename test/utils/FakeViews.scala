@@ -47,7 +47,7 @@ trait FakeViews { this: GuiceOneAppPerSuite =>
     app.injector.instanceOf[confirmationRequestReferenceNumber]
 
   //generic confirmation page
-  lazy val genericRemoveConfirmationView                                                      = app.injector.instanceOf[genericRemoveConfirmation]
+  lazy val genericRemoveConfirmationView = app.injector.instanceOf[genericRemoveConfirmation]
   // Connection to the property
 
   lazy val areYouThirdPartyView: areYouThirdParty                                                 = app.injector.instanceOf[areYouThirdParty]
