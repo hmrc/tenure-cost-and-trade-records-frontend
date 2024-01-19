@@ -30,7 +30,7 @@ import views.html.downloadFORTypeForm.{downloadPDF, downloadPDFReferenceNumber}
 import views.html.error.JsonParseError
 import views.html.feedback.{feedback, feedbackThx}
 import views.html.requestReferenceNumber.{checkYourAnswersRequestReferenceNumber, confirmationRequestReferenceNumber, requestReferenceNumber, requestReferenceNumberContactDetails}
-import views.html.{confirmation, confirmationConnectionToProperty, confirmationNotConnected, login, maxOfLettingsReached}
+import views.html.{confirmation, confirmationConnectionToProperty, confirmationNotConnected, genericRemoveConfirmation, login, maxOfLettingsReached}
 
 trait FakeViews { this: GuiceOneAppPerSuite =>
 
@@ -45,6 +45,8 @@ trait FakeViews { this: GuiceOneAppPerSuite =>
   lazy val confirmationRequestReferenceNumberView: confirmationRequestReferenceNumber         =
     app.injector.instanceOf[confirmationRequestReferenceNumber]
 
+  //generic confirmation page
+  lazy val genericRemoveConfirmationView                                                      = app.injector.instanceOf[genericRemoveConfirmation]
   // Connection to the property
 
   lazy val areYouThirdPartyView: areYouThirdParty                                                 = app.injector.instanceOf[areYouThirdParty]
