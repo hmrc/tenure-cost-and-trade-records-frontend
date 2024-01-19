@@ -22,6 +22,7 @@ import play.api.http.Status
 import play.api.test.Helpers._
 import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
+import actions.SessionRequest
 
 class AddAnotherLettingOtherPartOfPropertyControllerSpec extends TestBaseSpec {
 
@@ -34,6 +35,7 @@ class AddAnotherLettingOtherPartOfPropertyControllerSpec extends TestBaseSpec {
       stubMessagesControllerComponents(),
       aboutFranchisesOrLettingsNavigator,
       addAnotherOperationConcessionFranchise,
+      genericRemoveConfirmationView,
       preEnrichedActionRefiner(aboutFranchisesOrLettings = aboutFranchisesOrLettings),
       mockSessionRepo
     )
@@ -67,6 +69,35 @@ class AddAnotherLettingOtherPartOfPropertyControllerSpec extends TestBaseSpec {
     }
   }
 
+  "Remove catering operation" should {
+    "render the removal confirmation page on remove" in {
+      val controller = addAnotherLettingOtherPartOfPropertyController()
+      val idxToRemove = 0
+      val sessionRequest = SessionRequest(sessionAboutFranchiseOrLetting6010YesSession, fakeRequest)
+      val result = controller.remove(idxToRemove)(sessionRequest)
+      status(result) shouldBe OK
+      contentType(result) shouldBe Some("text/html")
+    }
+
+    "handle form submission with 'Yes' and perform removal" in {
+      val controller = addAnotherLettingOtherPartOfPropertyController()
+      val idxToRemove = 0
+      val requestWithForm = fakeRequest.withFormUrlEncodedBody("genericRemoveConfirmation" -> "yes")
+      val sessionRequest = SessionRequest(sessionAboutFranchiseOrLetting6010YesSession, requestWithForm)
+      val result = controller.performRemove(idxToRemove)(sessionRequest)
+      status(result) shouldBe BAD_REQUEST
+
+    }
+
+    "handle form submission with 'No' and cancel removal" in {
+      val controller = addAnotherLettingOtherPartOfPropertyController()
+      val idxToRemove = 0
+      val requestWithForm = fakeRequest.withFormUrlEncodedBody("genericRemoveConfirmation" -> "no")
+      val result = controller.performRemove(idxToRemove)(requestWithForm)
+      status(result) shouldBe BAD_REQUEST
+    }
+
+  }
   object TestData {
     val errorKey: Object {
       val addAnotherLettingOtherPartOfProperty: String

@@ -16,36 +16,36 @@
 
 package controllers.aboutYourLeaseOrTenure
 
-import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
+import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo
 import navigation.AboutYourLeaseOrTenureNavigator
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import utils.TestBaseSpec
 
-class UltimatelyResponsibleControllerSpec extends TestBaseSpec {
+class UltimatelyResponsibleOutsideRepairsControllerSpec extends TestBaseSpec {
 
   val mockAboutYourLeaseOrTenureNavigator = mock[AboutYourLeaseOrTenureNavigator]
 
-  def ultimatelyResponsibleController(
-    aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
+  def ultimatelyResponsibleOutsideRepairsController(
+    aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwo)
   ) =
-    new UltimatelyResponsibleController(
+    new UltimatelyResponsibleOutsideRepairsController(
       stubMessagesControllerComponents(),
       mockAboutYourLeaseOrTenureNavigator,
-      ultimatelyResponsibleView,
-      preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
+      ultimatelyResponsibleOutsideRepairsView,
+      preEnrichedActionRefiner(aboutLeaseOrAgreementPartTwo = aboutLeaseOrAgreementPartTwo),
       mockSessionRepo
     )
 
   "GET /" should {
     "return 200" in {
-      val result = ultimatelyResponsibleController().show(fakeRequest)
+      val result = ultimatelyResponsibleOutsideRepairsController().show(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return HTML" in {
-      val result = ultimatelyResponsibleController().show(fakeRequest)
+      val result = ultimatelyResponsibleOutsideRepairsController().show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
@@ -54,7 +54,7 @@ class UltimatelyResponsibleControllerSpec extends TestBaseSpec {
   "SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
 
-      val res = ultimatelyResponsibleController().submit(
+      val res = ultimatelyResponsibleOutsideRepairsController().submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)
       )
       status(res) shouldBe BAD_REQUEST

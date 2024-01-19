@@ -340,27 +340,27 @@ trait FakeObjects {
     fixedOperatingExpensesSections = Seq(
       FixedOperatingExpenses(
         LocalDate.now(),
-        BigDecimal(1),
-        BigDecimal(1),
-        BigDecimal(1),
-        BigDecimal(1),
-        BigDecimal(1)
+        Some(BigDecimal(1)),
+        Some(BigDecimal(1)),
+        Some(BigDecimal(1)),
+        Some(BigDecimal(1)),
+        Some(BigDecimal(1))
       ),
       FixedOperatingExpenses(
         LocalDate.now().minusYears(1),
-        BigDecimal(1),
-        BigDecimal(1),
-        BigDecimal(1),
-        BigDecimal(1),
-        BigDecimal(1)
+        Some(BigDecimal(1)),
+        Some(BigDecimal(1)),
+        Some(BigDecimal(1)),
+        Some(BigDecimal(1)),
+        Some(BigDecimal(1))
       ),
       FixedOperatingExpenses(
         LocalDate.now().minusYears(2),
-        BigDecimal(1),
-        BigDecimal(1),
-        BigDecimal(1),
-        BigDecimal(1),
-        BigDecimal(1)
+        Some(BigDecimal(1)),
+        Some(BigDecimal(1)),
+        Some(BigDecimal(1)),
+        Some(BigDecimal(1)),
+        Some(BigDecimal(1))
       )
     ),
     variableOperatingExpenses = Some(

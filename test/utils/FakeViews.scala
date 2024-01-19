@@ -28,21 +28,26 @@ import views.html.aboutyouandtheproperty.checkYourAnswersAboutTheProperty
 import views.html.additionalinformation.{checkYourAnswersAdditionalInformation, furtherInformationOrRemarks}
 import views.html.aboutyouandtheproperty.{alternativeContactDetails, contactDetailsQuestion}
 import views.html.downloadFORTypeForm.{downloadPDF, downloadPDFReferenceNumber}
+import views.html.error.JsonParseError
 import views.html.feedback.{feedback, feedbackThx}
 import views.html.requestReferenceNumber.{checkYourAnswersRequestReferenceNumber, confirmationRequestReferenceNumber, requestReferenceNumber, requestReferenceNumberContactDetails}
-import views.html.{confirmation, confirmationConnectionToProperty, confirmationNotConnected, login, maxOfLettingsReached}
+import views.html.{confirmation, confirmationConnectionToProperty, confirmationNotConnected, genericRemoveConfirmation, login, maxOfLettingsReached}
 
 trait FakeViews { this: GuiceOneAppPerSuite =>
 
   // Sign in
   lazy val loginView: login = app.injector.instanceOf[login]
 
+  // Error pages
+  lazy val jsonErrorView: JsonParseError                                                      = app.injector.instanceOf[JsonParseError]
   // Request reference number
   lazy val checkYourAnswersRequestReferenceNumberView: checkYourAnswersRequestReferenceNumber =
     app.injector.instanceOf[checkYourAnswersRequestReferenceNumber]
   lazy val confirmationRequestReferenceNumberView: confirmationRequestReferenceNumber         =
     app.injector.instanceOf[confirmationRequestReferenceNumber]
 
+  //generic confirmation page
+  lazy val genericRemoveConfirmationView                                                      = app.injector.instanceOf[genericRemoveConfirmation]
   // Connection to the property
 
   lazy val areYouThirdPartyView: areYouThirdParty                                                 = app.injector.instanceOf[areYouThirdParty]
@@ -171,8 +176,12 @@ trait FakeViews { this: GuiceOneAppPerSuite =>
     app.injector.instanceOf[doesTheRentPayable]
   lazy val currentRentFirstPaidView                        =
     app.injector.instanceOf[currentRentFirstPaid]
-  lazy val ultimatelyResponsibleView                       =
-    app.injector.instanceOf[ultimatelyResponsible]
+  lazy val ultimatelyResponsibleInsideRepairsView          =
+    app.injector.instanceOf[ultimatelyResponsibleInsideRepairs]
+  lazy val ultimatelyResponsibleOutsideRepairsView         =
+    app.injector.instanceOf[ultimatelyResponsibleOutsideRepairs]
+  lazy val ultimatelyResponsibleBuildingInsuranceView      =
+    app.injector.instanceOf[ultimatelyResponsibleBuildingInsurance]
   lazy val intervalsOfRentReviewView                       =
     app.injector.instanceOf[intervalsOfRentReview]
   lazy val includedInYourRentView                          =

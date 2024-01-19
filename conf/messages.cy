@@ -6,7 +6,7 @@ gov.name = GOV.UK
 phase.beta = BETA
 phase.text = This is a new service – <a href="{0}" class="govuk-link" rel="noreferrer noopener" target="_blank" id="betaFeedback">share your feedback</a> to help improve it.
 label.continue=Parhewch
-button.label.continue = Yn eich blaen
+button.label.continue = Parhau
 button.label.submit = Submit
 button.label.send = Accept and send
 back.link.label = Yn ôl
@@ -143,6 +143,10 @@ error.500.heading=There is a problem with the page and it cannot be displayed. P
 error.403.heading=The reference number you entered does not match our records. Please check and try again.
 error.409.heading=You cannot edit this information because it has already been submitted.
 error.409.body=You can email us at <a href="mailto:formhelp@voa.gov.uk">formhelp@voa.gov.uk</a> if you need further help.
+error.json.page.heading = Sorry, there is a problem with this service
+error.json.page.title = Sorry, there is a problem with this service
+error.json.page.p1 = We were unable to retrieve the answers you saved due to a problem with this service. Unfortunately, this means you must start your declaration again.
+error.json.page.start = Start again
 
 #LOGIN
 ##############################
@@ -229,6 +233,10 @@ downloadPdf.no.download = Enter the reference number as it appears on the letter
 downloadPdf.retry = If the system does not recognise your reference number, <a href="https://www.gov.uk/contact-voa" class="govuk-link" target="_blank">contact the VOA</a>
 downloadPdf.englishWelsh = PDF versions of this declaration are available in English and Welsh.
 downloadPdf.continueJourneyButton = Continue declaration online
+
+#GENERIC CONFIRMATION
+#####################
+genericRemoveConfirmation.heading = Are you sure you want to remove {0}?
 
 # ARE YOU STILL CONNECTED SECTION
 #################################
@@ -755,6 +763,49 @@ error.outsideRepairs.required = Select who is responsible for outside repairs
 error.insideRepairs.required = Select who is responsible for the inside repairs
 error.buildingInsurance.required = Select who is responsible for the building insurance
 
+# ULTIMATELY RESPONSIBLE INSIDE REPAIRS
+#######################
+ultimatelyResponsibleIR.heading = Who is ultimately responsible for inside repairs to public and business areas?
+ultimatelyResponsibleIR.subheading = This could be either by direct payment, or by reimbursing the person who initially paid for the service.
+label.insideRepairs = Inside repairs to public and business areas
+label.insideRepairsShort = Inside repairs
+label.landlord = Landlord
+label.tenant = Tenant
+label.both = Both
+label.sharedResponsibilitiesIR = Give details of any shared responsibilities
+hint.sharedResponsibilitiesIR = For example, ‘business insurance costs are shared equally’, or ‘landlord covers 75% for outside repairs, tenant pays 25%’.
+error.sharedResponsibilitiesIR.maxLength = This must be 2000 characters or fewer
+error.sharedResponsibilitiesIR = This must be 2000 characters or fewer
+error.sharedResponsibilitiesIR.required = Please give details of any shared responsibilities for inside repairs to public and business areas
+
+# ULTIMATELY RESPONSIBLE OUTSIDE REPAIRS
+#######################
+ultimatelyResponsibleOR.heading = Who is ultimately responsible for outside repairs?
+ultimatelyResponsibleOR.subheading = This could be either by direct payment, or by reimbursing the person who initially paid for the service.
+label.outsideRepairs = Outside repairs
+label.landlord = Landlord
+label.tenant = Tenant
+label.both = Both
+label.sharedResponsibilitiesOR = Give details of any shared responsibilities
+hint.sharedResponsibilitiesOR = For example, ‘business insurance costs are shared equally’, or ‘landlord covers 75% for outside repairs, tenant pays 25%’.
+error.sharedResponsibilitiesOR.maxLength = This must be 2000 characters or fewer
+error.sharedResponsibilitiesOR = This must be 2000 characters or fewer
+error.sharedResponsibilitiesOR.required = Please give details of any shared responsibilities for outside repairs
+
+# ULTIMATELY RESPONSIBLE BUILDING INSURANCE
+#######################
+ultimatelyResponsibleBI.heading = Who is ultimately responsible for building insurance?
+ultimatelyResponsibleBI.subheading = This could be either by direct payment, or by reimbursing the person who initially paid for the service.
+label.buildingInsurance = Building insurance
+label.landlord = Landlord
+label.tenant = Tenant
+label.both = Both
+label.sharedResponsibilitiesBI = Give details of any shared responsibilities
+hint.sharedResponsibilitiesBI = For example, ‘business insurance costs are shared equally’, or ‘landlord covers 75% for outside repairs, tenant pays 25%’.
+error.sharedResponsibilitiesBi.maxLength = This must be 2000 characters or fewer
+error.sharedResponsibilitiesBI = This must be 2000 characters or fewer
+error.sharedResponsibilitiesBI.required = Please give details of any shared responsibilities for building insurance
+
 # RENT INCLUDE TRADE SERVICES
 ############################
 rentIncludeTradeServices.heading = Does the rent include any trade services provided by the landlord?
@@ -907,7 +958,7 @@ rent.received.from.confirm.error = Please confirm this payment was not included 
 # CALCULATING THE RENT (6015/6016 0NLY)
 calculating.the.rent.for.heading = Calculating the rent for {0}
 calculating.the.rent.for.explain = Explain how the income received figure was calculated- for example, 10% of the total takings
-calculating.the.rent.for.explain.error = Plese explain how the income received figure was calculated
+calculating.the.rent.for.explain.error = Please explain how the income received figure was calculated
 calculating.the.rent.for.label = When was the rent fixed at its current rate?
 calculating.the.rent.for.error = Enter the date when the annual rent was fixed
 
@@ -1029,7 +1080,7 @@ label.currentLeaseOrAgreementBegin.help = For example, 9 2017.
 intervalsOfRentReview.heading = Rent reviews
 intervalsOfRentReview.p1 = Provide details if your lease or agreement states your rent will be reviewed at any point.
 intervalsOfRentReview.p2 = Changes to your rent linked to your turnover, or indices such as the RPI, are not classed as rent reviews.
-intervalsOfRentReview.p2 = If your lease or agreement does not include any rent reviews, leave this page blank and select ‘save and continue’
+intervalsOfRentReview.p2 = If your lease or agreement does not include any rent reviews, leave this page blank and select ‘continue’
 intervalsOfRentReview.label = How often is the rent reviewed under the terms of the lease or agreement?
 hint.intervalsOfRentReview = Leave blank if the lease does not include any rent reviews.
 label.nextReview = When is the next rent review due?
@@ -1272,13 +1323,29 @@ error.variableExpenses.other.negative = The other expenses in the year ending {0
 # FIXED OPERATING EXPENSES (FORM 6015)
 #########
 fixedOperatingExpenses.heading = Fixed operating expenses
-fixedOperatingExpenses.p1 = Provide details of your fixed operating
+fixedOperatingExpenses.p1 = Provide details of your fixed operating expenses.
 fixedOperatingExpenses.p2 = All fields on this page are mandatory. If none of the categories are applicable, enter the number 0.
 fixedOperatingExpenses.rent = Rent
 fixedOperatingExpenses.businessRates = Business rates
 fixedOperatingExpenses.insurance = Insurance
 fixedOperatingExpenses.loanInterest = Loan interest
 fixedOperatingExpenses.depreciation = Depreciation
+fixedOperatingExpenses.total = Total fixed operating expenses
+error.fixedExpenses.rent.required = Enter 0 if you did not have any rent expenses in the year ending {0}
+error.fixedExpenses.rent.range = The rent expenses in the year ending {0} must be a number, for example 100 or 100.00
+error.fixedExpenses.rent.negative = The rent expenses in the year ending {0} cannot be a negative number
+error.fixedExpenses.businessRates.required = Enter 0 if you did not have any business rates expenses in the year ending {0}
+error.fixedExpenses.businessRates.range = The business rates expenses in the year ending {0} must be a number, for example 100 or 100.00
+error.fixedExpenses.businessRates.negative = The business rates expenses in the year ending {0} cannot be a negative number
+error.fixedExpenses.insurance.required = Enter 0 if you did not have any insurance expenses in the year ending {0}
+error.fixedExpenses.insurance.range = The insurance expenses in the year ending {0} must be a number, for example 100 or 100.00
+error.fixedExpenses.insurance.negative = The insurance expenses in the year ending {0} cannot be a negative number
+error.fixedExpenses.loanInterest.required = Enter 0 if you did not have any loan interest expenses in the year ending {0}
+error.fixedExpenses.loanInterest.range = The loan interest expenses in the year ending {0} must be a number, for example 100 or 100.00
+error.fixedExpenses.loanInterest.negative = The loan interest expenses in the year ending {0} cannot be a negative number
+error.fixedExpenses.depreciation.required = Enter 0 if you did not have any depreciation expenses in the year ending {0}
+error.fixedExpenses.depreciation.range = The depreciation expenses in the year ending {0} must be a number, for example 100 or 100.00
+error.fixedExpenses.depreciation.negative = The depreciation expenses in the year ending {0} cannot be a negative number
 
 # OTHER COSTS (FORM 6015)
 #########################
@@ -1455,7 +1522,9 @@ checkYourAnswersAboutYourLeaseOrTenure.tenancyLeaseAgreementExpire = Date lease 
 checkYourAnswersAboutYourLeaseOrTenure.whatRentIncludes.heading = What the rent includes
 checkYourAnswersAboutYourLeaseOrTenure.includedInYourRent = Charges included in the rent
 checkYourAnswersAboutYourLeaseOrTenure.itemsRentIncludesOrRelates = Items the rent includes or relates to
-checkYourAnswersAboutYourLeaseOrTenure.partyResponsibleForCosts = Party responsible for costs
+checkYourAnswersAboutYourLeaseOrTenure.partyResponsibleForCostsIR = Party responsible for inside repairs?
+checkYourAnswersAboutYourLeaseOrTenure.partyResponsibleForCostsOR = Party responsible for outside repairs?
+checkYourAnswersAboutYourLeaseOrTenure.partyResponsibleForCostsBI = Party responsible for building insurance?
 checkYourAnswersAboutYourLeaseOrTenure.rentIncludesTradeServices = Rent includes trade services?
 checkYourAnswersAboutYourLeaseOrTenure.descriptionOfTradeServices = Description of trade services
 checkYourAnswersAboutYourLeaseOrTenure.rentIncludeFixturesAndFittingsDetails = Rent includes equipment?
@@ -1525,8 +1594,8 @@ confirmation.unableToRetrieveAnswers.list.1 = retrieve your answers once you lea
 confirmation.unableToRetrieveAnswers.list.2 = access your answers from the confirmation email
 confirmation.unableToRetrieveAnswers.list.3 = request your answers from the Valuation Office Agency (VOA)
 confirmation.businessRatesBill = Your business rates bill
-confirmation.businessRatesBill.list.1 = You can see <a href="#" class="govuk-link" target="_blank">how your business rates are calculated (opens in new tab)</a> and go on to challenge your property’s rateable value if you think it’s wrong.
-confirmation.businessRatesBill.list.2 = Our <a href="#" class="govuk-link" target="_blank">guide to business rates relief (opens in new tab)</a> explains how some properties are eligible for discounts from their local council.
+confirmation.businessRatesBill.list.1 = You can see <a href="https://www.gov.uk/introduction-to-business-rates/how-your-rates-are-calculated" class="govuk-link" target="_blank">how your business rates are calculated (opens in new tab)</a> and go on to challenge your property’s rateable value if you think it’s wrong.
+confirmation.businessRatesBill.list.2 = Our <a href="https://www.gov.uk/apply-for-business-rate-relief" class="govuk-link" target="_blank">guide to business rates relief (opens in new tab)</a> explains how some properties are eligible for discounts from their local council.
 confirmation.whatNext = What happens next
 confirmation.list.1 = We have sent your declaration to the VOA. They made need to contact you to check some of the details.
 confirmation.list.2 = The VOA use the information provided to set rateable values for businesses in England and Wales. Your local council uses these rateable values to calculate your business rates bill.

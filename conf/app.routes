@@ -18,12 +18,17 @@ GET         /invalid-form-type                                      controllers.
 GET         /timeout                                                controllers.SaveAsDraftController.timeout(path)
 GET         /sessiontimeout                                         controllers.SaveAsDraftController.sessionTimeout
 
+
 # SAVE AS DRAFT
 GET         /saved                                                  controllers.SaveAsDraftController.customPassword(path)
 POST        /saved                                                  controllers.SaveAsDraftController.saveAsDraft(path)
 GET         /saved/resume                                           controllers.SaveAsDraftController.loginToResume
 POST        /saved/resume                                           controllers.SaveAsDraftController.resume
 GET         /saved/startagain                                       controllers.SaveAsDraftController.startAgain
+
+# JSON Model ERROR
+
+GET         /error/resume                                           controllers.error.ErrorHandlerController.showJsonError
 
 # MAXIMUM OF LETTINGS REACHED
 
@@ -94,6 +99,7 @@ POST        /letting-part-of-property-checkbox                      controllers.
 GET         /add-another-letting-part-of-property                   controllers.connectiontoproperty.AddAnotherLettingPartOfPropertyController.show(idx: Int)
 POST        /add-another-letting-part-of-property                   controllers.connectiontoproperty.AddAnotherLettingPartOfPropertyController.submit(idx: Int)
 GET         /remove-letting-part-of-property                        controllers.connectiontoproperty.AddAnotherLettingPartOfPropertyController.remove(idx: Int)
+POST        /remove-letting-part-of-property                        controllers.connectiontoproperty.AddAnotherLettingPartOfPropertyController.performRemove(idx: Int)
 
 # Not connected
 GET         /past-connection-type                                   controllers.notconnected.PastConnectionController.show()
@@ -208,6 +214,7 @@ POST        /catering-operation-rent-includes                       controllers.
 GET         /add-another-catering-operation                         controllers.aboutfranchisesorlettings.AddAnotherCateringOperationController.show(idx: Int)
 POST        /add-another-catering-operation                         controllers.aboutfranchisesorlettings.AddAnotherCateringOperationController.submit(idx: Int)
 GET         /remove-catering-operation                              controllers.aboutfranchisesorlettings.AddAnotherCateringOperationController.remove(idx: Int)
+POST        /remove-catering-operation                              controllers.aboutfranchisesorlettings.AddAnotherCateringOperationController.performRemove(idx: Int)
 
 GET         /letting-other-part-of-property-details                 controllers.aboutfranchisesorlettings.LettingOtherPartOfPropertyDetailsController.show(idx: Option[Int] ?= None)
 POST        /letting-other-part-of-property-details                 controllers.aboutfranchisesorlettings.LettingOtherPartOfPropertyDetailsController.submit(idx: Option[Int])
@@ -221,6 +228,7 @@ POST        /letting-other-part-of-property-checkbox                controllers.
 GET         /add-another-letting-other-part-of-property             controllers.aboutfranchisesorlettings.AddAnotherLettingOtherPartOfPropertyController.show(idx: Int)
 POST        /add-another-letting-other-part-of-property             controllers.aboutfranchisesorlettings.AddAnotherLettingOtherPartOfPropertyController.submit(idx: Int)
 GET         /remove-letting-other-part-of-property                  controllers.aboutfranchisesorlettings.AddAnotherLettingOtherPartOfPropertyController.remove(idx: Int)
+POST        /remove-letting-other-part-of-property                  controllers.aboutfranchisesorlettings.AddAnotherLettingOtherPartOfPropertyController.performRemove(idx: Int)
 
 # About your leace or tenure
 GET         /about-your-landlord                                    controllers.aboutYourLeaseOrTenure.AboutYourLandlordController.show()
@@ -335,8 +343,14 @@ POST        /property-use-leaseback-arrangement                     controllers.
 GET         /what-is-your-rent-based-on                             controllers.aboutYourLeaseOrTenure.WhatIsYourRentBasedOnController.show()
 POST        /what-is-your-rent-based-on                             controllers.aboutYourLeaseOrTenure.WhatIsYourRentBasedOnController.submit()
 
-GET         /ultimately-responsible                                 controllers.aboutYourLeaseOrTenure.UltimatelyResponsibleController.show()
-POST        /ultimately-responsible                                 controllers.aboutYourLeaseOrTenure.UltimatelyResponsibleController.submit()
+GET         /ultimately-responsible-building-insurance              controllers.aboutYourLeaseOrTenure.UltimatelyResponsibleBuildingInsuranceController.show()
+POST        /ultimately-responsible-building-insurance              controllers.aboutYourLeaseOrTenure.UltimatelyResponsibleBuildingInsuranceController.submit()
+
+GET         /ultimately-responsible-inside-repairs                  controllers.aboutYourLeaseOrTenure.UltimatelyResponsibleInsideRepairsController.show()
+POST        /ultimately-responsible-inside-repairs                  controllers.aboutYourLeaseOrTenure.UltimatelyResponsibleInsideRepairsController.submit()
+
+GET         /ultimately-responsible-outside-repairs                 controllers.aboutYourLeaseOrTenure.UltimatelyResponsibleOutsideRepairsController.show()
+POST        /ultimately-responsible-outside-repairs                 controllers.aboutYourLeaseOrTenure.UltimatelyResponsibleOutsideRepairsController.submit()
 
 GET         /connected-to-landlord                                  controllers.aboutYourLeaseOrTenure.ConnectedToLandlordController.show()
 POST        /connected-to-landlord                                  controllers.aboutYourLeaseOrTenure.ConnectedToLandlordController.submit()

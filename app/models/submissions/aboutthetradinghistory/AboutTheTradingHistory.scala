@@ -32,6 +32,7 @@ case class AboutTheTradingHistory(
   totalPayrollCostSections: Seq[TotalPayrollCost] = Seq.empty,
   variableOperatingExpenses: Option[VariableOperatingExpensesSections] = None,
   incomeExpenditureSummary: Option[IncomeExpenditureSummary] = None,
+  incomeExpenditureSummaryData: Seq[IncomeExpenditureSummaryData] = Seq.empty,
   unusualCircumstances: Option[UnusualCircumstances] = None,
   checkYourAnswersAboutTheTradingHistory: Option[CheckYourAnswersAboutTheTradingHistory] = None
 )

@@ -35,7 +35,7 @@ import play.api.mvc._
 import repositories.SessionRepo
 import security.NoExistingDocument
 import uk.gov.hmrc.http.HeaderNames.trueClientIp
-import uk.gov.hmrc.http.{HeaderCarrier, Upstream4xxResponse}
+import uk.gov.hmrc.http.{HeaderCarrier, JsValidationException, Upstream4xxResponse}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html._
 
@@ -137,12 +137,12 @@ class LoginController @Inject() (
           case Some(_) =>
             session
               .start(Session(referenceNumber, forNum, address, token))
-              .flatMap(_ =>
+              .flatMap { _ =>
                 backendConnector.loadSubmissionDraft(cleanedRefNumber, hc).map {
                   case Some(_) => Redirect(controllers.routes.SaveAsDraftController.loginToResume)
                   case _       => Redirect(startPage)
                 }
-              )
+              }
           case None    =>
             session
               .start(Session(referenceNumber, forNum, address, token))
@@ -166,6 +166,9 @@ class LoginController @Inject() (
           } else {
             Redirect(routes.LoginController.loginFailed(remainingAttempts))
           }
+      }
+      .recoverWith { case e: JsValidationException =>
+        Redirect(controllers.error.routes.ErrorHandlerController.showJsonError)
       }
 
   }

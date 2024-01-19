@@ -21,7 +21,7 @@ import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.IncomeExpenditureSummaryForm.incomeExpenditureSummaryForm
 import models.pages.IncomeExpenditureEntry
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.updateAboutTheTradingHistory
-import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, IncomeExpenditureSummary, TotalPayrollCost}
+import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, IncomeExpenditureSummary, IncomeExpenditureSummaryData, TotalPayrollCost}
 import navigation.AboutTheTradingHistoryNavigator
 import navigation.identifiers.IncomeExpenditureSummaryId
 import play.api.i18n.I18nSupport
@@ -68,7 +68,31 @@ class IncomeExpenditureSummaryController @Inject() (
         BadRequest(incomeExpenditureSummaryView(formWithErrors, request.sessionData.toSummary, entries))
       },
       data => {
-        val updatedData = updateAboutTheTradingHistory(_.copy(incomeExpenditureSummary = Some(data)))
+        val tradingHistoryData =
+          request.sessionData.aboutTheTradingHistory.map(createIncomeExpenditureEntries).getOrElse(Seq.empty)
+
+        val incomeExpenditureSummaryData: Seq[IncomeExpenditureSummaryData] = tradingHistoryData.map { entry =>
+          IncomeExpenditureSummaryData(
+            financialYearEnd = entry.financialYearEnd,
+            totalTurnover = entry.totalTurnover,
+            totalCostOfSales = entry.totalCostOfSales,
+            totalGrossProfits = entry.totalGrossProfits,
+            totalPayrollCost = entry.totalPayrollCost,
+            variableExpenses = entry.variableExpenses,
+            fixedExpenses = entry.fixedExpenses,
+            otherCost = entry.otherCost,
+            totalNetProfit = entry.totalNetProfit,
+            profitMargin = entry.profitMargin
+          )
+        }
+
+        val updatedData = updateAboutTheTradingHistory { currentAboutTheTradingHistory =>
+          currentAboutTheTradingHistory.copy(
+            incomeExpenditureSummary = Some(data),
+            incomeExpenditureSummaryData = incomeExpenditureSummaryData
+          )
+        }
+
         session
           .saveOrUpdate(updatedData)
           .map(_ => Redirect(navigator.nextPage(IncomeExpenditureSummaryId, updatedData).apply(updatedData)))

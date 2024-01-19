@@ -46,7 +46,9 @@ class RentIncludeTradeServiceViewSpec extends QuestionViewBehaviours[RentInclude
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText mustBe messages("back.link.label")
       val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.aboutYourLeaseOrTenure.routes.UltimatelyResponsibleController.show().url
+      backlinkUrl mustBe controllers.aboutYourLeaseOrTenure.routes.UltimatelyResponsibleBuildingInsuranceController
+        .show()
+        .url
     }
 
     "Section heading is visible" in {
@@ -79,7 +81,7 @@ class RentIncludeTradeServiceViewSpec extends QuestionViewBehaviours[RentInclude
       assertContainsText(doc, messages("label.no"))
     }
 
-    "contain save and continue button with the value Save and Continue" in {
+    "contain continue button with the value Continue" in {
       val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("continue").text()
       assert(loginButton == messages("button.label.continue"))

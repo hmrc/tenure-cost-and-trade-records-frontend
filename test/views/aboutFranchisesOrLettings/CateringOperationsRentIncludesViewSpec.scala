@@ -104,7 +104,7 @@ class CateringOperationsRentIncludesViewSpec extends QuestionViewBehaviours[List
 //      assertContainsText(doc, messages(s"checkbox.$messageKeyPrefix.insideRepairs"))
 //    }
 
-    "contain save and continue button with the value Save and Continue" in {
+    "contain continue button with the value Continue" in {
       val doc            = asDocument(createViewUsingForm(form))
       val continueButton = doc.getElementById("continue").text()
       assert(continueButton == messages("button.label.continue"))

@@ -34,7 +34,6 @@ case class AboutLeaseOrAgreementPartOne(
   currentLeaseOrAgreementBegin: Option[CurrentLeaseOrAgreementBegin] = None,
   includedInYourRentDetails: Option[IncludedInYourRentDetails] = None,
   doesTheRentPayable: Option[DoesTheRentPayable] = None,
-  ultimatelyResponsible: Option[UltimatelyResponsible] = None,
   sharedResponsibilitiesDetails: Option[SharedResponsibilitiesDetails] = None,
   rentIncludeTradeServicesDetails: Option[RentIncludeTradeServicesDetails] = None,
   rentIncludeTradeServicesInformation: Option[RentIncludeTradeServicesInformationDetails] = None,
