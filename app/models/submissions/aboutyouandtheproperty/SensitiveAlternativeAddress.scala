@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package models.submissions.additionalinformation
+package models.submissions.aboutyouandtheproperty
 
 import crypto.MongoCrypto
 import play.api.libs.json.{Json, OFormat}

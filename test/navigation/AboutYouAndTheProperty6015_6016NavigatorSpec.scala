@@ -26,6 +26,15 @@ class AboutYouAndTheProperty6015_6016NavigatorSpec extends TestBaseSpec {
 
     // See AboutYouAndThePropertyNavigatorSpec for generic parts of the journey
 
+    "return a function that goes to about the property contact details page when no is answered for contact details and has been completed" in {
+      aboutYouAndThePropertyNavigator
+        .nextPage(ContactDetailsQuestionId, aboutYouAndTheProperty6015NoSession)
+        .apply(
+          aboutYouAndTheProperty6010NoSession
+        ) mustBe controllers.aboutyouandtheproperty.routes.AboutThePropertyController
+        .show()
+    }
+
     "return a function that goes to licence granted page when about the property website page has been completed" in {
       aboutYouAndThePropertyNavigator
         .nextPage(WebsiteForPropertyPageId, aboutYouAndTheProperty6015NoSession)
@@ -46,6 +55,24 @@ class AboutYouAndTheProperty6015_6016NavigatorSpec extends TestBaseSpec {
   }
 
   "About you and the property navigator for yes answers for 6015" when {
+
+    "return a function that goes to alternative contact page when about the contact details page has been completed" in {
+      aboutYouAndThePropertyNavigator
+        .nextPage(ContactDetailsQuestionId, aboutYouAndTheProperty6015YesSession)
+        .apply(
+          aboutYouAndTheProperty6015YesSession
+        ) mustBe controllers.aboutyouandtheproperty.routes.AlternativeContactDetailsController
+        .show()
+    }
+
+    "123return a function that goes to alternative contact page when about the contact details page has been completed" in {
+      aboutYouAndThePropertyNavigator
+        .nextPage(AlternativeContactDetailsId, aboutYouAndTheProperty6015YesSession)
+        .apply(
+          aboutYouAndTheProperty6015YesSession
+        ) mustBe controllers.aboutyouandtheproperty.routes.AboutThePropertyController
+        .show()
+    }
 
     "return a function that goes to licence granted page when about the property website page has been completed" in {
       aboutYouAndThePropertyNavigator

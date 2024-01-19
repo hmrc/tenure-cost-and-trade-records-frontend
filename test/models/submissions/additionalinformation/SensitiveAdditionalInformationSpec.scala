@@ -20,7 +20,7 @@ import org.scalatest.wordspec.AnyWordSpecLike
 import org.scalatest.matchers.should.Matchers
 import play.api.Configuration
 import crypto.MongoCrypto
-import models.submissions.common.ContactDetails
+import models.submissions.aboutyouandtheproperty.{AlternativeAddress, AlternativeContactDetails, SensitiveAlternativeContactDetails}
 import uk.gov.hmrc.crypto.Sensitive.SensitiveString
 import utils.SensitiveTestHelper
 
@@ -34,26 +34,13 @@ class SensitiveAdditionalInformationSpec extends AnyWordSpecLike with Matchers w
     "encrypt and decrypt sensitive fields correctly" in {
       val originalAdditionalInformation = AdditionalInformation(
         furtherInformationOrRemarksDetails = None,
-        altContactInformation = Some(
-          AlternativeContactDetails(
-            alternativeContactAddress = AlternativeAddress(
-              buildingNameNumber = "123",
-              street1 = Some("Street 1"),
-              town = "Town",
-              county = Some("County"),
-              postcode = "12345"
-            )
-          )
-        ),
         checkYourAnswersAdditionalInformation = None
       )
 
       val sensitiveAdditionalInformation = SensitiveAdditionalInformation(originalAdditionalInformation)
 
       sensitiveAdditionalInformation.furtherInformationOrRemarksDetails
-        .isInstanceOf[Option[SensitiveString]]                    shouldBe true
-      sensitiveAdditionalInformation.altContactInformation
-        .isInstanceOf[Option[SensitiveAlternativeContactDetails]] shouldBe true
+        .isInstanceOf[Option[SensitiveString]] shouldBe true
 
       sensitiveAdditionalInformation.decryptedValue shouldBe originalAdditionalInformation
     }

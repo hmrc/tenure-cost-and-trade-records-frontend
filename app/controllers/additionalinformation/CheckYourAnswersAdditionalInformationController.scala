@@ -54,8 +54,7 @@ class CheckYourAnswersAdditionalInformationController @Inject() (
               checkYourAnswersAdditionalInformationForm.fill(checkYourAnswersAdditionalInformation)
             case _                                           => checkYourAnswersAdditionalInformationForm
           },
-          request.sessionData,
-          getBackLink(request.sessionData)
+          request.sessionData
         )
       )
     )
@@ -68,8 +67,7 @@ class CheckYourAnswersAdditionalInformationController @Inject() (
         BadRequest(
           checkYourAnswersAdditionalInformationView(
             formWithErrors,
-            request.sessionData,
-            getBackLink(request.sessionData)
+            request.sessionData
           )
         ),
       data => {
@@ -85,13 +83,4 @@ class CheckYourAnswersAdditionalInformationController @Inject() (
       }
     )
   }
-
-  private def getBackLink(answers: Session): String =
-    answers.additionalInformation.flatMap(_.altDetailsQuestion.map(_.contactDetailsQuestion.name)) match {
-      case Some("yes") => controllers.additionalinformation.routes.AlternativeContactDetailsController.show().url
-      case Some("no")  => controllers.additionalinformation.routes.ContactDetailsQuestionController.show().url
-      case _           =>
-        logger.warn(s"Back link for additional info CYA page reached with unknown alt details question value")
-        controllers.routes.TaskListController.show().url
-    }
 }

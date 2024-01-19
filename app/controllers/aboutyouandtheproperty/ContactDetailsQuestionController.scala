@@ -14,28 +14,28 @@
  * limitations under the License.
  */
 
-package controllers.additionalinformation
+package controllers.aboutyouandtheproperty
 
 import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
-import form.additionalinformation.AlternativeContactDetailsForm.alternativeContactDetailsForm
-import models.submissions.additionalinformation.AdditionalInformation.updateAdditionalInformation
-import models.submissions.additionalinformation.AlternativeContactDetails
-import navigation.AdditionalInformationNavigator
-import navigation.identifiers.AlternativeContactDetailsId
+import form.aboutyouandtheproperty.ContactDetailsQuestionForm.contactDetailsQuestionForm
+import models.submissions.aboutyouandtheproperty.ContactDetailsQuestion
+import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty.updateAboutYouAndTheProperty
+import navigation.AboutYouAndThePropertyNavigator
+import navigation.identifiers.ContactDetailsQuestionId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import views.html.additionalinformation.alternativeContactDetails
+import views.html.aboutyouandtheproperty.contactDetailsQuestion
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class AlternativeContactDetailsController @Inject() (
+class ContactDetailsQuestionController @Inject() (
   mcc: MessagesControllerComponents,
-  navigator: AdditionalInformationNavigator,
-  alternativeContactDetailsView: alternativeContactDetails,
+  navigator: AboutYouAndThePropertyNavigator,
+  contactDetailsQuestionView: contactDetailsQuestion,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
 ) extends FORDataCaptureController(mcc)
@@ -44,25 +44,27 @@ class AlternativeContactDetailsController @Inject() (
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Future.successful(
       Ok(
-        alternativeContactDetailsView(
-          request.sessionData.additionalInformation.flatMap(_.altContactInformation) match {
-            case Some(altContactInformation) => alternativeContactDetailsForm.fill(altContactInformation)
-            case _                           => alternativeContactDetailsForm
+        contactDetailsQuestionView(
+          request.sessionData.aboutYouAndTheProperty.flatMap(_.altDetailsQuestion) match {
+            case Some(altDetailsQuestion) =>
+              contactDetailsQuestionForm.fill(altDetailsQuestion)
+            case _                        => contactDetailsQuestionForm
           },
-          request.sessionData.toSummary
+          request.sessionData.toSummary,
+          navigator.from
         )
       )
     )
   }
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft[AlternativeContactDetails](
-      alternativeContactDetailsForm,
-      formWithErrors => BadRequest(alternativeContactDetailsView(formWithErrors, request.sessionData.toSummary)),
+    continueOrSaveAsDraft[ContactDetailsQuestion](
+      contactDetailsQuestionForm,
+      formWithErrors => BadRequest(contactDetailsQuestionView(formWithErrors, request.sessionData.toSummary)),
       data => {
-        val updatedData = updateAdditionalInformation(_.copy(altContactInformation = Some(data)))
+        val updatedData = updateAboutYouAndTheProperty(_.copy(altDetailsQuestion = Some(data)))
         session.saveOrUpdate(updatedData)
-        Redirect(navigator.nextPage(AlternativeContactDetailsId, updatedData).apply(updatedData))
+        Redirect(navigator.nextPage(ContactDetailsQuestionId, updatedData).apply(updatedData))
       }
     )
   }

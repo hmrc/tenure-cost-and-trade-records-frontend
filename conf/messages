@@ -803,7 +803,7 @@ label.tenant = Tenant
 label.both = Both
 label.sharedResponsibilitiesBI = Give details of any shared responsibilities
 hint.sharedResponsibilitiesBI = For example, ‘business insurance costs are shared equally’, or ‘landlord covers 75% for outside repairs, tenant pays 25%’.
-error.sharedResponsibilitiesBi.maxLength = This must be 2000 characters or fewer
+error.sharedResponsibilitiesBI.maxLength = This must be 2000 characters or fewer
 error.sharedResponsibilitiesBI = This must be 2000 characters or fewer
 error.sharedResponsibilitiesBI.required = Please give details of any shared responsibilities for building insurance
 

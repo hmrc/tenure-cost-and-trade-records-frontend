@@ -364,11 +364,11 @@ GET         /task-list                                              controllers.
 GET         /further-information-or-remarks                         controllers.additionalinformation.FurtherInformationOrRemarksController.show()
 POST        /further-information-or-remarks                         controllers.additionalinformation.FurtherInformationOrRemarksController.submit()
 
-GET         /contact-details-question                               controllers.additionalinformation.ContactDetailsQuestionController.show()
-POST        /contact-details-question                               controllers.additionalinformation.ContactDetailsQuestionController.submit()
+GET         /contact-details-question                               controllers.aboutyouandtheproperty.ContactDetailsQuestionController.show()
+POST        /contact-details-question                               controllers.aboutyouandtheproperty.ContactDetailsQuestionController.submit()
 
-GET         /alternate-contact-details                              controllers.additionalinformation.AlternativeContactDetailsController.show()
-POST        /alternate-contact-details                              controllers.additionalinformation.AlternativeContactDetailsController.submit()
+GET         /alternate-contact-details                              controllers.aboutyouandtheproperty.AlternativeContactDetailsController.show()
+POST        /alternate-contact-details                              controllers.aboutyouandtheproperty.AlternativeContactDetailsController.submit()
 
 GET         /check-your-answers-connection-to-property              controllers.connectiontoproperty.CheckYourAnswersConnectionToPropertyController.show()
 POST        /check-your-answers-connection-to-property              controllers.connectiontoproperty.CheckYourAnswersConnectionToPropertyController.submit()

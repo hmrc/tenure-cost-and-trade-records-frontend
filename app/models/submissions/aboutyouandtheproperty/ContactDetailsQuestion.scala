@@ -14,19 +14,13 @@
  * limitations under the License.
  */
 
-package form.additionalinformation
+package models.submissions.aboutyouandtheproperty
 
-import form.MappingSupport.createYesNoType
-import models.submissions.additionalinformation.ContactDetailsQuestion
-import play.api.data.Form
-import play.api.data.Forms.mapping
+import models.submissions.common.AnswersYesNo
+import play.api.libs.json.Json
 
-object ContactDetailsQuestionForm {
+case class ContactDetailsQuestion(contactDetailsQuestion: AnswersYesNo)
 
-  val contactDetailsQuestionForm = Form(
-    mapping(
-      "contactDetailsQuestion" -> createYesNoType("error.contactDetailsQuestion.missing")
-    )(ContactDetailsQuestion.apply)(ContactDetailsQuestion.unapply)
-  )
-
+object ContactDetailsQuestion {
+  implicit val format = Json.format[ContactDetailsQuestion]
 }

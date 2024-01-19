@@ -14,52 +14,54 @@
  * limitations under the License.
  */
 
-package views.additionalInformation
+package views.connectiontoproperty
 
-import form.aboutyouandtheproperty.ContactDetailsQuestionForm
+import form.connectiontoproperty.TradingNameOwnThePropertyForm
 import models.pages.Summary
-import models.submissions.aboutyouandtheproperty.ContactDetailsQuestion
+import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
+import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
 
-class ContactDetailsQuestionViewSpec extends QuestionViewBehaviours[ContactDetailsQuestion] {
+class TradingNameOwnThePropertyViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
 
-  val messageKeyPrefix = "contactDetailsQuestion"
+  val messageKeyPrefix = "tradingNameOwnTheProperty"
 
-  override val form = ContactDetailsQuestionForm.contactDetailsQuestionForm
+  override val form: Form[AnswersYesNo] = TradingNameOwnThePropertyForm.tradingNameOwnThePropertyForm
 
-  def createView = () => contactDetailsQuestionView(form, Summary("99996010001"))(fakeRequest, messages)
+  val backLink: String = controllers.connectiontoproperty.routes.TradingNameOperatingFromPropertyController.show().url
 
-  def createViewUsingForm = (form: Form[ContactDetailsQuestion]) =>
-    contactDetailsQuestionView(form, Summary("99996010001"))(fakeRequest, messages)
+  def createView: () => Html = () =>
+    tradingNameOwnThePropertyView(form, backLink, "", Summary("99996010001"))(fakeRequest, messages)
 
-  "Contact details question" must {
+  def createViewUsingForm: Form[AnswersYesNo] => Html = (form: Form[AnswersYesNo]) =>
+    tradingNameOwnThePropertyView(form, backLink, "", Summary("99996010001"))(fakeRequest, messages)
 
-    behave like normalPage(createView, messageKeyPrefix)
+  "Trading name own the property view" must {
 
-    "has a link marked as backLink leading further information or remarks Page" in {
+    "has a link marked with back.link.label leading to has enforcement action been taken Page" in {
       val doc          = asDocument(createView())
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText mustBe messages("back.link.label")
       val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.aboutyouandtheproperty.routes.AboutYouController.show.url
+      backlinkUrl mustBe controllers.connectiontoproperty.routes.TradingNameOperatingFromPropertyController.show().url
     }
 
     "Section heading is visible" in {
       val doc         = asDocument(createViewUsingForm(form))
       val sectionText = doc.getElementsByClass("govuk-caption-m").text()
-      assert(sectionText == messages("label.section.aboutTheProperty"))
+      assert(sectionText == messages("label.section.connectionToTheProperty"))
     }
 
     "contain radio buttons for the value yes" in {
       val doc = asDocument(createViewUsingForm(form))
       assertContainsRadioButton(
         doc,
-        "contactDetailsQuestion",
-        "contactDetailsQuestion",
-        "yes",
-        false
+        "tradingNameOwnTheProperty",
+        "tradingNameOwnTheProperty",
+        AnswerYes.name,
+        isChecked = false
       )
       assertContainsText(doc, messages("label.yes"))
     }
@@ -68,18 +70,24 @@ class ContactDetailsQuestionViewSpec extends QuestionViewBehaviours[ContactDetai
       val doc = asDocument(createViewUsingForm(form))
       assertContainsRadioButton(
         doc,
-        "contactDetailsQuestion-2",
-        "contactDetailsQuestion",
-        "no",
-        false
+        "tradingNameOwnTheProperty-2",
+        "tradingNameOwnTheProperty",
+        AnswerNo.name,
+        isChecked = false
       )
       assertContainsText(doc, messages("label.no"))
     }
 
-    "contain continue button with the value Continue" in {
+    "contain save and continue button with the value Save and Continue" in {
       val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("continue").text()
       assert(loginButton == messages("button.label.continue"))
+    }
+
+    "contain save as draft button with the value Save as draft" in {
+      val doc         = asDocument(createViewUsingForm(form))
+      val loginButton = doc.getElementById("save").text()
+      assert(loginButton == messages("button.label.save"))
     }
   }
 }

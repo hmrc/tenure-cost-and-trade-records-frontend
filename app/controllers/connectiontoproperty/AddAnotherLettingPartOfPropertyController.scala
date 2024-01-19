@@ -120,49 +120,64 @@ class AddAnotherLettingPartOfPropertyController @Inject() (
   }
 
   def remove(idx: Int) = (Action andThen withSessionRefiner).async { implicit request =>
-    request.sessionData.stillConnectedDetails.flatMap(_.lettingPartOfPropertyDetails.lift(idx)).map { lettingSections =>
-      val name = lettingSections.tenantDetails.name
-      Future.successful(Ok(genericRemoveConfirmationView(
-        confirmableActionForm,name,
-        "label.section.connectionToTheProperty",
-        request.sessionData.toSummary,
-        idx,
-        routes.AddAnotherLettingPartOfPropertyController.performRemove(idx),
-        routes.AddAnotherLettingPartOfPropertyController.show(idx)
-      )))
-    }.getOrElse(Redirect(routes.AddAnotherLettingPartOfPropertyController.show(0)))
+    request.sessionData.stillConnectedDetails
+      .flatMap(_.lettingPartOfPropertyDetails.lift(idx))
+      .map { lettingSections =>
+        val name = lettingSections.tenantDetails.name
+        Future.successful(
+          Ok(
+            genericRemoveConfirmationView(
+              confirmableActionForm,
+              name,
+              "label.section.connectionToTheProperty",
+              request.sessionData.toSummary,
+              idx,
+              routes.AddAnotherLettingPartOfPropertyController.performRemove(idx),
+              routes.AddAnotherLettingPartOfPropertyController.show(idx)
+            )
+          )
+        )
+      }
+      .getOrElse(Redirect(routes.AddAnotherLettingPartOfPropertyController.show(0)))
   }
 
-  def performRemove(idx:Int) = (Action andThen withSessionRefiner).async { implicit request =>
+  def performRemove(idx: Int) = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[AnswersYesNo](
       confirmableActionForm,
       formWithErrors =>
-    request.sessionData.stillConnectedDetails.flatMap(_.lettingPartOfPropertyDetails.lift(idx)).map { lettingSections =>
-      val name = lettingSections.tenantDetails.name
-      Future.successful(BadRequest(genericRemoveConfirmationView(
-        formWithErrors, name,
-        "label.section.connectionToTheProperty",
-        request.sessionData.toSummary,
-        idx,
-        routes.AddAnotherLettingPartOfPropertyController.performRemove(idx),
-        routes.AddAnotherLettingPartOfPropertyController.show(idx)
-      )))
-    }.getOrElse(Redirect(routes.AddAnotherLettingPartOfPropertyController.show(0))),
+        request.sessionData.stillConnectedDetails
+          .flatMap(_.lettingPartOfPropertyDetails.lift(idx))
+          .map { lettingSections =>
+            val name = lettingSections.tenantDetails.name
+            Future.successful(
+              BadRequest(
+                genericRemoveConfirmationView(
+                  formWithErrors,
+                  name,
+                  "label.section.connectionToTheProperty",
+                  request.sessionData.toSummary,
+                  idx,
+                  routes.AddAnotherLettingPartOfPropertyController.performRemove(idx),
+                  routes.AddAnotherLettingPartOfPropertyController.show(idx)
+                )
+              )
+            )
+          }
+          .getOrElse(Redirect(routes.AddAnotherLettingPartOfPropertyController.show(0))),
       {
         case AnswerYes =>
-        request.sessionData.stillConnectedDetails.map(_.lettingPartOfPropertyDetails).map { lettingSections =>
-          val updatedSections = lettingSections.patch(idx, Nil, 1)
-          session.saveOrUpdate(
-            updateStillConnectedDetails(
-              _.copy(lettingPartOfPropertyDetailsIndex = 0, lettingPartOfPropertyDetails = updatedSections)
+          request.sessionData.stillConnectedDetails.map(_.lettingPartOfPropertyDetails).map { lettingSections =>
+            val updatedSections = lettingSections.patch(idx, Nil, 1)
+            session.saveOrUpdate(
+              updateStillConnectedDetails(
+                _.copy(lettingPartOfPropertyDetailsIndex = 0, lettingPartOfPropertyDetails = updatedSections)
+              )
             )
-          )
-        }
-        Redirect(routes.AddAnotherLettingPartOfPropertyController.show(0))
-        case AnswerNo => {
+          }
+          Redirect(routes.AddAnotherLettingPartOfPropertyController.show(0))
+        case AnswerNo  =>
           Redirect(routes.AddAnotherLettingPartOfPropertyController.show(idx))
-        }
       }
     )
-    }
+  }
 }

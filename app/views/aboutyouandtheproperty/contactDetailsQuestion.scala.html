@@ -16,7 +16,7 @@
 
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.html.components._
-@import models.submissions.additionalinformation.ContactDetailsQuestion
+@import models.submissions.aboutyouandtheproperty.ContactDetailsQuestion
 @import models.pages.Summary
 
 @this(layout: Layout,
@@ -33,16 +33,16 @@
     showSection = true,
     showH1= false,
     summary = Some(summary),
-    sectionName = messages("label.section.additionalInformation"),
+    sectionName = messages("label.section.aboutTheProperty"),
     backLinkUrl = { fromLocation match {
-            case "TL" => controllers.routes.TaskListController.show().url+"#alternate-contact-details"
+            case "TL" => controllers.routes.TaskListController.show().url+"#contact-details-question"
             case _ => controllers.aboutyouandtheproperty.routes.AboutYouController.show().url
         }
     },
     theForm = theForm
 ) {
 
-    @formWithCSRF(action = controllers.additionalinformation.routes.ContactDetailsQuestionController.submit()) {
+    @formWithCSRF(action = controllers.aboutyouandtheproperty.routes.ContactDetailsQuestionController.submit()) {
         @includes.radioButtonsYesNo(
             govukRadios,
             theForm,

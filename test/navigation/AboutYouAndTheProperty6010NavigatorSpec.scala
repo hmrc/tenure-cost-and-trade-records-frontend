@@ -26,6 +26,15 @@ class AboutYouAndTheProperty6010NavigatorSpec extends TestBaseSpec {
 
     // See AboutYouAndThePropertyNavigatorSpec for generic parts of the journey
 
+    "return a function that goes to about the property contact details page when no is answered for contact details and has been completed" in {
+      aboutYouAndThePropertyNavigator
+        .nextPage(ContactDetailsQuestionId, aboutYouAndTheProperty6010NoSession)
+        .apply(
+          aboutYouAndTheProperty6010NoSession
+        ) mustBe controllers.aboutyouandtheproperty.routes.AboutThePropertyController
+        .show()
+    }
+
     "return a function that goes to licence activity page when about the property website page has been completed" in {
       aboutYouAndThePropertyNavigator
         .nextPage(WebsiteForPropertyPageId, aboutYouAndTheProperty6010NoSession)
