@@ -16,16 +16,14 @@
 
 package models.submissions.aboutYourLeaseOrTenure
 
-import models.submissions.common.{BuildingInsurance, InsideRepairs, OutsideRepairs}
+import models.submissions.common.BuildingInsurance
 import play.api.libs.json.Json
 
-case class UltimatelyResponsible(
-  outsideRepairs: OutsideRepairs,
-  insideRepairs: InsideRepairs,
+case class UltimatelyResponsibleBuildingInsurance(
   buildingInsurance: BuildingInsurance,
-  sharedResponsibilities: Option[String]
+  sharedResponsibilitiesBI: Option[String]
 )
 
-object UltimatelyResponsible {
-  implicit val format = Json.format[UltimatelyResponsible]
+object UltimatelyResponsibleBuildingInsurance {
+  implicit val format = Json.format[UltimatelyResponsibleBuildingInsurance]
 }

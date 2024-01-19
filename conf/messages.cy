@@ -763,6 +763,49 @@ error.outsideRepairs.required = Select who is responsible for outside repairs
 error.insideRepairs.required = Select who is responsible for the inside repairs
 error.buildingInsurance.required = Select who is responsible for the building insurance
 
+# ULTIMATELY RESPONSIBLE INSIDE REPAIRS
+#######################
+ultimatelyResponsibleIR.heading = Who is ultimately responsible for inside repairs to public and business areas?
+ultimatelyResponsibleIR.subheading = This could be either by direct payment, or by reimbursing the person who initially paid for the service.
+label.insideRepairs = Inside repairs to public and business areas
+label.insideRepairsShort = Inside repairs
+label.landlord = Landlord
+label.tenant = Tenant
+label.both = Both
+label.sharedResponsibilitiesIR = Give details of any shared responsibilities
+hint.sharedResponsibilitiesIR = For example, ‘business insurance costs are shared equally’, or ‘landlord covers 75% for outside repairs, tenant pays 25%’.
+error.sharedResponsibilitiesIR.maxLength = This must be 2000 characters or fewer
+error.sharedResponsibilitiesIR = This must be 2000 characters or fewer
+error.sharedResponsibilitiesIR.required = Please give details of any shared responsibilities for inside repairs to public and business areas
+
+# ULTIMATELY RESPONSIBLE OUTSIDE REPAIRS
+#######################
+ultimatelyResponsibleOR.heading = Who is ultimately responsible for outside repairs?
+ultimatelyResponsibleOR.subheading = This could be either by direct payment, or by reimbursing the person who initially paid for the service.
+label.outsideRepairs = Outside repairs
+label.landlord = Landlord
+label.tenant = Tenant
+label.both = Both
+label.sharedResponsibilitiesOR = Give details of any shared responsibilities
+hint.sharedResponsibilitiesOR = For example, ‘business insurance costs are shared equally’, or ‘landlord covers 75% for outside repairs, tenant pays 25%’.
+error.sharedResponsibilitiesOR.maxLength = This must be 2000 characters or fewer
+error.sharedResponsibilitiesOR = This must be 2000 characters or fewer
+error.sharedResponsibilitiesOR.required = Please give details of any shared responsibilities for outside repairs
+
+# ULTIMATELY RESPONSIBLE BUILDING INSURANCE
+#######################
+ultimatelyResponsibleBI.heading = Who is ultimately responsible for building insurance?
+ultimatelyResponsibleBI.subheading = This could be either by direct payment, or by reimbursing the person who initially paid for the service.
+label.buildingInsurance = Building insurance
+label.landlord = Landlord
+label.tenant = Tenant
+label.both = Both
+label.sharedResponsibilitiesBI = Give details of any shared responsibilities
+hint.sharedResponsibilitiesBI = For example, ‘business insurance costs are shared equally’, or ‘landlord covers 75% for outside repairs, tenant pays 25%’.
+error.sharedResponsibilitiesBi.maxLength = This must be 2000 characters or fewer
+error.sharedResponsibilitiesBI = This must be 2000 characters or fewer
+error.sharedResponsibilitiesBI.required = Please give details of any shared responsibilities for building insurance
+
 # RENT INCLUDE TRADE SERVICES
 ############################
 rentIncludeTradeServices.heading = Does the rent include any trade services provided by the landlord?
@@ -1479,7 +1522,9 @@ checkYourAnswersAboutYourLeaseOrTenure.tenancyLeaseAgreementExpire = Date lease 
 checkYourAnswersAboutYourLeaseOrTenure.whatRentIncludes.heading = What the rent includes
 checkYourAnswersAboutYourLeaseOrTenure.includedInYourRent = Charges included in the rent
 checkYourAnswersAboutYourLeaseOrTenure.itemsRentIncludesOrRelates = Items the rent includes or relates to
-checkYourAnswersAboutYourLeaseOrTenure.partyResponsibleForCosts = Party responsible for costs
+checkYourAnswersAboutYourLeaseOrTenure.partyResponsibleForCostsIR = Party responsible for inside repairs?
+checkYourAnswersAboutYourLeaseOrTenure.partyResponsibleForCostsOR = Party responsible for outside repairs?
+checkYourAnswersAboutYourLeaseOrTenure.partyResponsibleForCostsBI = Party responsible for building insurance?
 checkYourAnswersAboutYourLeaseOrTenure.rentIncludesTradeServices = Rent includes trade services?
 checkYourAnswersAboutYourLeaseOrTenure.descriptionOfTradeServices = Description of trade services
 checkYourAnswersAboutYourLeaseOrTenure.rentIncludeFixturesAndFittingsDetails = Rent includes equipment?

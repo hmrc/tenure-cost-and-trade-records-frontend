@@ -16,30 +16,30 @@
 
 package views.aboutYourLeaseOrTenure
 
-import form.aboutYourLeaseOrTenure.UltimatelyResponsibleForm
+import form.aboutYourLeaseOrTenure.UltimatelyResponsibleInsideRepairsForm
 import models.pages.Summary
-import models.submissions.aboutYourLeaseOrTenure.UltimatelyResponsible
+import models.submissions.aboutYourLeaseOrTenure.UltimatelyResponsibleInsideRepairs
 import models.submissions.common._
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class UltimatelyResponsibleViewSpec extends QuestionViewBehaviours[UltimatelyResponsible] {
+class UltimatelyResponsibleInsideRepairsViewSpec extends QuestionViewBehaviours[UltimatelyResponsibleInsideRepairs] {
 
-  val messageKeyPrefix = "ultimatelyResponsible"
+  val messageKeyPrefix = "ultimatelyResponsibleIR"
 
-  override val form = UltimatelyResponsibleForm.ultimatelyResponsibleForm
+  override val form = UltimatelyResponsibleInsideRepairsForm.ultimatelyResponsibleInsideRepairsForm
 
-  def createView = () => ultimatelyResponsibleView(form, Summary("99996010001"))(fakeRequest, messages)
+  def createView = () => ultimatelyResponsibleInsideRepairsView(form, Summary("99996010001"))(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[UltimatelyResponsible]) =>
-    ultimatelyResponsibleView(form, Summary("99996010001"))(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[UltimatelyResponsibleInsideRepairs]) =>
+    ultimatelyResponsibleInsideRepairsView(form, Summary("99996010001"))(fakeRequest, messages)
 
   "Ultimately responsible view" must {
 
     behave like normalPage(createView, messageKeyPrefix)
 
-    behave like pageWithTextFields(createViewUsingForm, "sharedResponsibilities")
+    behave like pageWithTextFields(createViewUsingForm, "sharedResponsibilitiesIR")
 
     "has a link marked with back.link.label leading to the does the rent payable Page" in {
       val doc          = asDocument(createView())
@@ -53,42 +53,6 @@ class UltimatelyResponsibleViewSpec extends QuestionViewBehaviours[UltimatelyRes
       val doc         = asDocument(createViewUsingForm(form))
       val sectionText = doc.getElementsByClass("govuk-caption-m").text()
       assert(sectionText == messages("label.section.aboutYourLeaseOrTenure"))
-    }
-
-    "contain radio buttons for outside repair with the value landlord" in {
-      val doc = asDocument(createViewUsingForm(form))
-      assertContainsRadioButton(
-        doc,
-        "outsideRepairs",
-        "outsideRepairs",
-        OutsideRepairsLandlord.name,
-        false
-      )
-      assertContainsText(doc, messages("label.landlord"))
-    }
-
-    "contain radio buttons for outside repair with the value tenant" in {
-      val doc = asDocument(createViewUsingForm(form))
-      assertContainsRadioButton(
-        doc,
-        "outsideRepairs-2",
-        "outsideRepairs",
-        OutsideRepairsTenant.name,
-        false
-      )
-      assertContainsText(doc, messages("label.tenant"))
-    }
-
-    "contain radio buttons for outside repair with the value both" in {
-      val doc = asDocument(createViewUsingForm(form))
-      assertContainsRadioButton(
-        doc,
-        "outsideRepairs-3",
-        "outsideRepairs",
-        OutsideRepairsBoth.name,
-        false
-      )
-      assertContainsText(doc, messages("label.both"))
     }
 
     "contain radio buttons for inside repair with the value landlord" in {
@@ -131,8 +95,8 @@ class UltimatelyResponsibleViewSpec extends QuestionViewBehaviours[UltimatelyRes
       val doc = asDocument(createViewUsingForm(form))
       assertContainsRadioButton(
         doc,
-        "buildingInsurance",
-        "buildingInsurance",
+        "insideRepairs",
+        "insideRepairs",
         BuildingInsuranceLandlord.name,
         false
       )
@@ -143,8 +107,8 @@ class UltimatelyResponsibleViewSpec extends QuestionViewBehaviours[UltimatelyRes
       val doc = asDocument(createViewUsingForm(form))
       assertContainsRadioButton(
         doc,
-        "buildingInsurance-2",
-        "buildingInsurance",
+        "insideRepairs-2",
+        "insideRepairs",
         BuildingInsuranceTenant.name,
         false
       )
@@ -155,8 +119,8 @@ class UltimatelyResponsibleViewSpec extends QuestionViewBehaviours[UltimatelyRes
       val doc = asDocument(createViewUsingForm(form))
       assertContainsRadioButton(
         doc,
-        "buildingInsurance-3",
-        "buildingInsurance",
+        "insideRepairs-3",
+        "insideRepairs",
         BuildingInsuranceBoth.name,
         false
       )
