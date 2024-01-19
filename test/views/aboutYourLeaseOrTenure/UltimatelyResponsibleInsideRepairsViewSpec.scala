@@ -95,8 +95,8 @@ class UltimatelyResponsibleInsideRepairsViewSpec extends QuestionViewBehaviours[
       val doc = asDocument(createViewUsingForm(form))
       assertContainsRadioButton(
         doc,
-        "buildingInsurance",
-        "buildingInsurance",
+        "insideRepairs",
+        "insideRepairs",
         BuildingInsuranceLandlord.name,
         false
       )
@@ -107,8 +107,8 @@ class UltimatelyResponsibleInsideRepairsViewSpec extends QuestionViewBehaviours[
       val doc = asDocument(createViewUsingForm(form))
       assertContainsRadioButton(
         doc,
-        "buildingInsurance-2",
-        "buildingInsurance",
+        "insideRepairs-2",
+        "insideRepairs",
         BuildingInsuranceTenant.name,
         false
       )
@@ -119,8 +119,8 @@ class UltimatelyResponsibleInsideRepairsViewSpec extends QuestionViewBehaviours[
       val doc = asDocument(createViewUsingForm(form))
       assertContainsRadioButton(
         doc,
-        "buildingInsurance-3",
-        "buildingInsurance",
+        "insideRepairs-3",
+        "insideRepairs",
         BuildingInsuranceBoth.name,
         false
       )
