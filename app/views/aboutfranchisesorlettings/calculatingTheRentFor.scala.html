@@ -35,7 +35,7 @@
 @(theForm: Form[_], index: Int,  operatorName: String, summary: Summary)(implicit request: Request[_], messages: Messages)
 
 @layout(
-    pageHeading = messages("calculating.the.rent.for.heading", operatorName),
+    pageHeading = messages("rent.received.from.heading", operatorName),
     showSection = true,
     showH1 = false,
     summary = Some(summary),
@@ -45,7 +45,7 @@
 ) {
     @formWithCSRF(action = controllers.aboutfranchisesorlettings.routes.CalculatingTheRentForController.submit(index)) {
 
-            <h1 class="govuk-heading-l">@messages("calculating.the.rent.for.heading", operatorName)</h1>
+            <h1 class="govuk-heading-l">@messages("rent.received.from.heading", operatorName)</h1>
 
         @govukCharacterCount(
             CharacterCount(
