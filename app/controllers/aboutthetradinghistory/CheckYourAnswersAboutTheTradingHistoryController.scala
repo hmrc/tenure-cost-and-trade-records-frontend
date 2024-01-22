@@ -88,7 +88,7 @@ class CheckYourAnswersAboutTheTradingHistoryController @Inject() (
     answers.forType match {
       case ForTypes.for6010 | ForTypes.for6011 | ForTypes.for6016 =>
         controllers.aboutthetradinghistory.routes.TurnoverController.show().url
-      case ForTypes.for6015                                       => controllers.aboutthetradinghistory.routes.NetProfitController.show().url
+      case ForTypes.for6015                                       => controllers.aboutthetradinghistory.routes.UnusualCircumstancesController.show().url
       case _                                                      =>
         logger.warn(s"Back link for enforcement action page reached with unknown enforcement taken value")
         controllers.routes.TaskListController.show().url
