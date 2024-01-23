@@ -53,6 +53,35 @@
     <span class="govuk-hint">@messages("otherCosts.otherCosts.p1")</span>
 }
 
+@otherCostDetailsTextarea = @{
+    govukCharacterCount(
+        CharacterCount(
+            id ="otherCostDetails",
+            name = "otherCostDetails",
+            rows = 3,
+            maxLength = 2000,
+            errorMessage = theForm.errors.asTextErrorMessageForField("otherCostDetails"),
+            label = Label(
+                content = Text(messages("otherCostDetails.hint"))
+            )
+        ).withFormField(theForm("otherCostDetails"))
+    )
+}
+
+@otherCostDetailsContent(idx: Int) = {
+@if(columns.size == 1) {
+    @otherCostDetailsTextarea
+} else {
+    <div class="hmrc-overlap-columns-@columns.size-parent">
+    @if(idx == 0) {
+        <div class="hmrc-overlap-columns-@columns.size">
+        @otherCostDetailsTextarea
+        </div>
+    }
+    </div>
+}
+
+}
 @totalHeading = {
     <p class="govuk-body"><span class="govuk-!-font-weight-bold">@messages("otherCosts.total")</span></p>
 }
@@ -91,88 +120,67 @@
         content = Text(messages("otherCosts.inset"))
     ))
 
-  @formWithCSRF(action = controllers.aboutthetradinghistory.routes.OtherCostsController.submit()) {
-
-      @govukTable(Table(
-          rows = Seq(
-              // Header Row for Financial Year End
-              TableRow(
-                  content = Text(messages("otherCosts.financialYearEnd")),
-                  classes = "govuk-!-font-weight-bold"
-              ) +: columns.map { idx =>
-                  TableRow(
-                      content = Text(
-                          dateUtil.formatDayMonthAbbrYear(request.sessionData.aboutTheTradingHistory.flatMap(_.otherCosts).map(_.otherCosts(idx).financialYearEnd).getOrElse(LocalDate.now))
-                      )
-                  )
-              },
-
-              // Row for Contributions to Head Office
-              TableRow(
-                  content = HtmlContent(contributionToHeadOfficeHeading)
-              ) +: columns.map { idx =>
-                  TableRow(
-                      content = HtmlContent(
-                          govukInput(
-                              Input(
-                                  prefix = Some(PrefixOrSuffix(
-                                      content = Text("£")
-                                  )),
-                                  attributes = costInputAttributes
-                              ).withFormField(theForm(s"otherCosts[$idx].contributionsToHeadOffice"))
-                          )
-                      )
-                  )
-              },
-
-              // Row for Other Costs
-              TableRow(
-                  content = HtmlContent(otherCostsHeading)
-              ) +: columns.map { idx =>
-                  TableRow(
-                      content = HtmlContent(
-                          govukInput(
-                              Input(
-                                  prefix = Some(PrefixOrSuffix(
-                                      content = Text("£")
-                                  )),
-                                  attributes = costInputAttributes
-                              ).withFormField(theForm(s"otherCosts[$idx].otherCosts"))
-                          )
-                      )
-                  )
-              },
-                      // Additional Cell for TextArea spanning across remaining columns
-                     Seq( TableRow(content = HtmlContent("")),TableRow(
-                          content = HtmlContent(
-      govukCharacterCount(
-          CharacterCount(
-              id = "otherCostDetails",
-              name = "otherCostDetails",
-              maxLength = 2000,
-              hint = Some(Hint(content = Text(messages("otherCostDetails.hint")))),
-              errorMessage = theForm.errors.asTextErrorMessageForField("otherCostDetails"),
-          ).withFormField(theForm("otherCostDetails"))
-      )
-      ),
-      colspan = Some(columns.size) // Adjust based on required span
-      )),
-
-              // Row for Total
-              TableRow(
-                  content = HtmlContent(totalHeading)
-              ) +: columns.map { idx =>
-                  TableRow(
-                      content = HtmlContent(totalContent(idx))
-                  )
-              }
-          ),
-          captionClasses = "govuk-table__caption--m",
-          firstCellIsHeader = true
-      ))
-
-      @includes.continueSaveAsDraftButtons(govukButton)
-  }
+    @formWithCSRF(action = controllers.aboutthetradinghistory.routes.OtherCostsController.submit()) {
+        <table class="hmrc-responsive-table">
+            <tbody>
+                <tr>
+                @request.sessionData.financialYearEndDates.map { case (finYearEnd, idx) =>
+                <td>
+                    @govukTable(Table(
+                        head = Seq(
+                            HeadCell(content = Text(messages("turnover.financialYearEnd"))),
+                            HeadCell(content = Text(dateUtil.formatDayMonthAbbrYear(finYearEnd)))
+                        ),
+                        firstCellIsHeader = true,
+                        rows = Seq(
+                            Seq(
+                                TableRow(content = Text(messages("otherCosts.contributionToHeadOffice"))),
+                                TableRow(
+                                    content = HtmlContent(
+                                        govukInput(Input(
+                                            prefix = Some(PrefixOrSuffix(
+                                                content = Text("£")
+                                            )),
+                                            attributes = costInputAttributes
+                                        ).withFormField(theForm(s"otherCosts[$idx].contributionsToHeadOffice")))
+                                    )
+                                )
+                            ),
+                            Seq(
+                                TableRow(content = HtmlContent(otherCostsHeading)),
+                                TableRow(
+                                    content = HtmlContent(
+                                        govukInput(Input(
+                                            prefix = Some(PrefixOrSuffix(
+                                                content = Text("£")
+                                            )),
+                                            attributes = costInputAttributes
+                                        ).withFormField(theForm(s"otherCosts[$idx].otherCosts")))
+                                    )
+                                )
+                            ),
+                            // Adding otherCostDetails row
+                            Seq(
+                                TableRow(),
+                                TableRow(
+                                    content = HtmlContent(otherCostDetailsContent(idx))
+                                )
+                            ),
+                            Seq(
+                                TableRow(content = Text(messages("otherCosts.total"))),
+                                TableRow(
+                                    content = HtmlContent(totalContent(idx))
+                                )
+                            )
+                        )
+                    ))
+                </td>
+                }
+                </tr>
+            </tbody>
+        </table>
+        @includes.continueSaveAsDraftButtons(govukButton)
+    }
 
     <script src="@routes.Assets.versioned("javascripts/data-total.js")"></script>
     <script src="@routes.Assets.versioned("javascripts/responsive-table.js")"></script>

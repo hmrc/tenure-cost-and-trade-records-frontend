@@ -20,6 +20,11 @@
   display: none;
 }
 
+.hmrc-responsive-table .govuk-table__header.no-border-bottom,
+.hmrc-responsive-table .govuk-table__cell.no-border-bottom {
+  border-bottom: none;
+}
+
 @media all and (max-width: 800px) {
   table.hmrc-responsive-table {
     width: 100%;
