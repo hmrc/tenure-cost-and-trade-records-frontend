@@ -24,8 +24,13 @@ object Errors {
 
   //address
   val addressRequired                   = "address.required"
-  val addressBuildingNameNumberRequired = "error.address.buildingName.required"
-  val addressTownCityRequired           = "error.address.townCity.required"
+  val addressBuildingNameNumberRequired = "error.buildingNameNumber.required"
+  val buildingMaxLength                 = "error.buildingNameNumber.maxLength"
+  val addressLine2Length                = "error.addressLineTwo.maxLength"
+  val addressTownLength                 = "error.townCity.maxLength"
+  val addressCountyLength               = "error.county.maxLength"
+  val addressTownCityRequired           = "error.townCity.required"
+  val addressCountyRequired             = "error.county.required"
   val addressPostcodeRequired           = "error.address.postcode.required"
   val postcodeRequired                  = "error.postcode.required"
   val postcodeInvalid                   = "error.postcode.invalid"
@@ -103,13 +108,17 @@ object Errors {
   val currentRentBasedOn = "error.currentRentBasedOn.required"
 
   //generic errors
-  val required        = "error.required"
-  val booleanMissing  = "error.boolean_missing"
-  val noValueSelected = "error.no_value_selected"
-  val maxLength       = "error.maxLength"
-  val invalidPhone    = "error.invalid_phone"
-  val invalidCurrency = "error.invalid_currency"
-  val password        = "error.invalid_password"
+  val required                   = "error.required"
+  val booleanMissing             = "error.boolean_missing"
+  val noValueSelected            = "error.no_value_selected"
+  val maxLength                  = "error.maxLength"
+  val invalidPhone               = "error.invalid_phone"
+  val invalidCharAddress1        = "error.invalidCharAddress1"
+  val invalidCharAddress2        = "error.invalidCharAddress2"
+  val invalidCharAddressTownCity = "error.invalidCharTownCity"
+  val invalidCharAddressCounty   = "error.invalidCharCounty"
+  val invalidCurrency            = "error.invalid_currency"
+  val password                   = "error.invalid_password"
 
   //numeric errors
   val invalidNumber      = "error.invalid_number"

@@ -16,14 +16,18 @@
 
 package form
 
+import form.AddressLine2Mapping.validateAddressLineTwo
 import form.AlternativeEmailMapping.validateAlternativeEmail
 import form.AlternativePhoneNumberMapping.validateAlternativePhoneNumber
+import form.BuildingNameNumberMapping.validateBuildingNameNumber
+import form.CountyMapping.validateCounty
 import form.EmailMapping.validateEmail
 import form.Form6010.ConditionalMapping.nonEmptyTextOr
 import models.submissions._
 import form.Formats._
 import form.Formats.userTypeFormat
 import form.PhoneNumberMapping.validatePhoneNumber
+import form.TownMapping.validateTown
 import models.submissions.Form6010._
 import models.submissions.aboutYourLeaseOrTenure._
 import models.submissions.aboutfranchisesorlettings._
@@ -218,28 +222,10 @@ object MappingSupport {
   )(LandlordAddress.apply)(LandlordAddress.unapply)
 
   def alternativeAddressMapping: Mapping[AlternativeAddress] = mapping(
-    "buildingNameNumber" -> default(text, "").verifying(
-      nonEmpty(errorMessage = "error.buildingNameNumber.required"),
-      maxLength(50, "error.buildingNameNumber.maxLength"),
-      pattern(invalidCharRegex.r, error = "error.invalidCharAddress1")
-    ),
-    "street1"            -> optional(
-      default(text, "").verifying(
-        maxLength(50, "error.addressLineTwo.maxLength"),
-        pattern(invalidCharRegex.r, error = "error.invalidCharAddress2")
-      )
-    ),
-    "town"               -> default(text, "").verifying(
-      nonEmpty(errorMessage = "error.townCity.required"),
-      maxLength(50, "error.townCity.maxLength"),
-      pattern(invalidCharRegex.r, error = "error.invalidCharTownCity")
-    ),
-    "county"             -> optional(
-      default(text, "").verifying(
-        maxLength(50, "error.county.maxLength"),
-        pattern(invalidCharRegex.r, error = "error.invalidCharCounty")
-      )
-    ),
+    "buildingNameNumber" -> validateBuildingNameNumber,
+    "street1"            -> optional(validateAddressLineTwo),
+    "town"               -> validateTown,
+    "county"             -> optional(validateCounty),
     "postcode"           -> postcode
   )(AlternativeAddress.apply)(AlternativeAddress.unapply)
 
