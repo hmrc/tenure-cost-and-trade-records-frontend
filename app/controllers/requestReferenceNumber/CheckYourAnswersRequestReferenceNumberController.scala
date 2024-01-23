@@ -33,6 +33,7 @@ import uk.gov.hmrc.play.http.HeaderCarrierConverter
 import views.html.requestReferenceNumber.{checkYourAnswersRequestReferenceNumber, confirmationRequestReferenceNumber}
 
 import java.time.Instant
+import java.util.UUID
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -119,6 +120,7 @@ class CheckYourAnswersRequestReferenceNumberController @Inject() (
     val sessionRequestRefNumDetails = sessionRequestRefNum.flatMap(_.requestReferenceContactDetails)
 
     val submission = RequestReferenceNumberSubmission(
+      UUID.randomUUID.toString,
       sessionRequestRefNumAddress.map(_.requestReferenceNumberBusinessTradingName).getOrElse(""),
       sessionRequestRefNumAddress.map(_.requestReferenceNumberAddress).get,
       sessionRequestRefNumDetails.map(_.requestReferenceNumberContactDetailsFullName).getOrElse(""),
