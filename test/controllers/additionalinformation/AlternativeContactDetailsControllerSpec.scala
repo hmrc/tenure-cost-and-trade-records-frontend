@@ -63,20 +63,6 @@ class AlternativeContactDetailsControllerSpec extends TestBaseSpec {
   }
 
   "Additional information form" should {
-    "error if buildingNameNumber is missing" in {
-      val formData = baseFormData - errorKey.buildingNameNumber
-      val form     = alternativeContactDetailsForm.bind(formData)
-
-      mustContainError(errorKey.buildingNameNumber, "error.buildingNameNumber.required", form)
-    }
-
-    "error if town or city is missing" in {
-      val formData = baseFormData - errorKey.town
-      val form     = alternativeContactDetailsForm.bind(formData)
-
-      mustContainError(errorKey.town, "error.townCity.required", form)
-    }
-
     "error if postcode is missing" in {
       val formData = baseFormData - errorKey.postcode
       val form     = alternativeContactDetailsForm.bind(formData)

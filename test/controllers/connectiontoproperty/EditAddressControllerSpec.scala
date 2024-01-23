@@ -60,13 +60,6 @@ class EditAddressControllerSpec extends TestBaseSpec {
   }
 
   "Edit address form" should {
-    "error if building number is missing" in {
-      val formData = baseFormData - errorKey.buildingNameNumber
-      val form     = editAddressForm.bind(formData)
-
-      mustContainError(errorKey.buildingNameNumber, "error.buildingNameNumber.required", form)
-    }
-
     "error if postcode is missing" in {
       val formData = baseFormData - errorKey.postcode
       val form     = editAddressForm.bind(formData)

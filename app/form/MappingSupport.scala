@@ -148,76 +148,26 @@ object MappingSupport {
     )(ContactDetails.apply)(ContactDetails.unapply)
 
   def addressMapping: Mapping[Address] = mapping(
-    "buildingNameNumber" -> default(text, "").verifying(
-      nonEmpty(errorMessage = "error.buildingNameNumber.required"),
-      maxLength(50, "error.buildingNameNumber.maxLength")
-    ),
-    "street1"            -> optional(
-      default(text, "").verifying(
-        maxLength(50, "error.addressLineTwo.maxLength")
-      )
-    ),
-    "town"               -> default(text, "").verifying(
-      nonEmpty(errorMessage = "error.townCity.required"),
-      maxLength(50, "error.buildingNameNumber.maxLength")
-    ),
-    "county"             -> optional(
-      default(text, "").verifying(
-        maxLength(50, "error.county.maxLength")
-      )
-    ),
+    "buildingNameNumber" -> validateBuildingNameNumber,
+    "street1"            -> optional(validateAddressLineTwo),
+    "town"               -> validateTown,
+    "county"             -> optional(validateCounty),
     "postcode"           -> postcode
   )(Address.apply)(Address.unapply)
 
   def requestReferenceNumberAddressMapping: Mapping[RequestReferenceNumberAddress] = mapping(
-    "buildingNameNumber" -> default(text, "").verifying(
-      nonEmpty(errorMessage = "error.buildingNameNumber.required"),
-      maxLength(50, "error.buildingNameNumber.maxLength"),
-      pattern(invalidCharRegex.r, error = "error.invalidCharAddress1")
-    ),
-    "street1"            -> optional(
-      default(text, "").verifying(
-        maxLength(50, "error.addressLineTwo.maxLength"),
-        pattern(invalidCharRegex.r, error = "error.invalidCharAddress2")
-      )
-    ),
-    "town"               -> default(text, "").verifying(
-      nonEmpty(errorMessage = "error.townCity.required"),
-      maxLength(50, "error.buildingNameNumber.maxLength"),
-      pattern(invalidCharRegex.r, error = "error.invalidCharTownCity")
-    ),
-    "county"             -> optional(
-      default(text, "").verifying(
-        maxLength(50, "error.county.maxLength"),
-        pattern(invalidCharRegex.r, error = "error.invalidCharCounty")
-      )
-    ),
+    "buildingNameNumber" -> validateBuildingNameNumber,
+    "street1"            -> optional(validateAddressLineTwo),
+    "town"               -> validateTown,
+    "county"             -> optional(validateCounty),
     "postcode"           -> nonEmptyTextOr("requestReferenceNumberAddress.postcode", postcode, "error.postcode.required")
   )(RequestReferenceNumberAddress.apply)(RequestReferenceNumberAddress.unapply)
 
   def landlordAddressMapping: Mapping[LandlordAddress] = mapping(
-    "buildingNameNumber" -> default(text, "").verifying(
-      nonEmpty(errorMessage = "error.buildingNameNumber.required"),
-      maxLength(50, "error.buildingNameNumber.maxLength"),
-      pattern(invalidCharRegex.r, error = "error.invalidCharAddress1")
-    ),
-    "street1"            -> optional(
-      default(text, "").verifying(
-        maxLength(50, "error.addressLineTwo.maxLength"),
-        pattern(invalidCharRegex.r, error = "error.invalidCharAddress2")
-      )
-    ),
-    "town"               -> default(text, "").verifying(
-      nonEmpty(errorMessage = "error.townCity.required"),
-      maxLength(50, "error.townCity.maxLength"),
-      pattern(invalidCharRegex.r, error = "error.invalidCharTownCity")
-    ),
-    "county"             -> optional(
-      default(text, "").verifying(
-        maxLength(50, "error.county.maxLength"),
-        pattern(invalidCharRegex.r, error = "error.invalidCharCounty")
-      )
-    ),
+    "buildingNameNumber" -> validateBuildingNameNumber,
+    "street1"            -> optional(validateAddressLineTwo),
+    "town"               -> validateTown,
+    "county"             -> optional(validateCounty),
     "postcode"           -> postcode
   )(LandlordAddress.apply)(LandlordAddress.unapply)
 
@@ -230,28 +180,10 @@ object MappingSupport {
   )(AlternativeAddress.apply)(AlternativeAddress.unapply)
 
   def cateringAddressMapping: Mapping[CateringAddress] = mapping(
-    "buildingNameNumber" -> default(text, "").verifying(
-      nonEmpty(errorMessage = "error.buildingNameNumber.required"),
-      maxLength(50, "error.buildingNameNumber.maxLength"),
-      pattern(invalidCharRegex.r, error = "error.invalidCharAddress1")
-    ),
-    "street1"            -> optional(
-      default(text, "").verifying(
-        maxLength(50, "error.addressLineTwo.maxLength"),
-        pattern(invalidCharRegex.r, error = "error.invalidCharAddress2")
-      )
-    ),
-    "town"               -> default(text, "").verifying(
-      nonEmpty(errorMessage = "error.townCity.required"),
-      maxLength(50, "error.townCity.maxLength"),
-      pattern(invalidCharRegex.r, error = "error.invalidCharTownCity")
-    ),
-    "county"             -> optional(
-      default(text, "").verifying(
-        maxLength(50, "error.county.maxLength"),
-        pattern(invalidCharRegex.r, error = "error.invalidCharCounty")
-      )
-    ),
+    "buildingNameNumber" -> validateBuildingNameNumber,
+    "street1"            -> optional(validateAddressLineTwo),
+    "town"               -> validateTown,
+    "county"             -> optional(validateCounty),
     "postcode"           -> postcode
   )(CateringAddress.apply)(CateringAddress.unapply)
 
@@ -282,54 +214,18 @@ object MappingSupport {
   )(LettingAddress.apply)(LettingAddress.unapply)
 
   def contactAddressMapping: Mapping[ContactDetailsAddress] = mapping(
-    "buildingNameNumber" -> default(text, "").verifying(
-      nonEmpty(errorMessage = "error.buildingNameNumber.required"),
-      maxLength(50, "error.buildingNameNumber.maxLength"),
-      pattern(invalidCharRegex.r, error = "error.invalidCharAddress1")
-    ),
-    "street1"            -> optional(
-      default(text, "").verifying(
-        maxLength(50, "error.addressLineTwo.maxLength"),
-        pattern(invalidCharRegex.r, error = "error.invalidCharAddress2")
-      )
-    ),
-    "town"               -> default(text, "").verifying(
-      nonEmpty(errorMessage = "error.town.required"),
-      maxLength(50, "error.town.maxLength"),
-      pattern(invalidCharRegex.r, error = "error.invalidCharTownCity")
-    ),
-    "county"             -> optional(
-      default(text, "").verifying(
-        maxLength(50, "error.county.maxLength"),
-        pattern(invalidCharRegex.r, error = "error.invalidCharCounty")
-      )
-    ),
+    "buildingNameNumber" -> validateBuildingNameNumber,
+    "street1"            -> optional(validateAddressLineTwo),
+    "town"               -> validateTown,
+    "county"             -> optional(validateCounty),
     "postcode"           -> postcode
   )(ContactDetailsAddress.apply)(ContactDetailsAddress.unapply)
 
   def editAddressMapping: Mapping[EditAddress] = mapping(
-    "buildingNameNumber" -> default(text, "").verifying(
-      nonEmpty(errorMessage = "error.buildingNameNumber.required"),
-      maxLength(50, "error.buildingNameNumber.maxLength"),
-      pattern(invalidCharRegex.r, error = "error.invalidCharAddress1")
-    ),
-    "street1"            -> optional(
-      default(text, "").verifying(
-        maxLength(50, "error.addressLineTwo.maxLength"),
-        pattern(invalidCharRegex.r, error = "error.invalidCharAddress2")
-      )
-    ),
-    "town"               -> default(text, "").verifying(
-      nonEmpty(errorMessage = "error.town.required"),
-      maxLength(50, "error.town.maxLength"),
-      pattern(invalidCharRegex.r, error = "error.invalidCharTownCity")
-    ),
-    "county"             -> optional(
-      default(text, "").verifying(
-        maxLength(50, "error.county.maxLength"),
-        pattern(invalidCharRegex.r, error = "error.invalidCharCounty")
-      )
-    ),
+    "buildingNameNumber" -> validateBuildingNameNumber,
+    "street1"            -> optional(validateAddressLineTwo),
+    "town"               -> validateTown,
+    "county"             -> optional(validateCounty),
     "postcode"           -> postcode
   )(EditAddress.apply)(EditAddress.unapply)
 
@@ -345,29 +241,11 @@ object MappingSupport {
   )(YourContactDetails.apply)(YourContactDetails.unapply)
 
   def correspondenceAddressMapping: Mapping[CorrespondenceAddress] = mapping(
-    "addressLineOne" -> default(text, "").verifying(
-      nonEmpty(errorMessage = "error.addressLineOne.required"),
-      maxLength(50, "error.addressLineOne.maxLength"),
-      pattern(invalidCharRegex.r, error = "error.invalidCharAddress1")
-    ),
-    "addressLineTwo" -> optional(
-      default(text, "").verifying(
-        maxLength(50, "error.addressLineTwo.maxLength"),
-        pattern(invalidCharRegex.r, error = "error.invalidCharAddress2")
-      )
-    ),
-    "town"           -> default(text, "").verifying(
-      nonEmpty(errorMessage = "error.townCity.required"),
-      maxLength(50, "error.town.maxLength"),
-      pattern(invalidCharRegex.r, error = "error.invalidCharTownCity")
-    ),
-    "county"         -> optional(
-      default(text, "").verifying(
-        maxLength(50, "error.county.maxLength"),
-        pattern(invalidCharRegex.r, error = "error.invalidCharCounty")
-      )
-    ),
-    "postcode"       -> postcode
+    "buildingNameNumber" -> validateBuildingNameNumber,
+    "street1"            -> optional(validateAddressLineTwo),
+    "town"               -> validateTown,
+    "county"             -> optional(validateCounty),
+    "postcode"           -> postcode
   )(CorrespondenceAddress.apply)(CorrespondenceAddress.unapply)
 
   def mandatoryBooleanWithError(message: String) =
