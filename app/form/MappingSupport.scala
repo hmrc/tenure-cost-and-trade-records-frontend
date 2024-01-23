@@ -188,28 +188,10 @@ object MappingSupport {
   )(CateringAddress.apply)(CateringAddress.unapply)
 
   def lettingOtherPartAddressMapping: Mapping[LettingAddress] = mapping(
-    "buildingNameNumber" -> default(text, "").verifying(
-      nonEmpty(errorMessage = "error.buildingNameNumber.required"),
-      maxLength(50, "error.buildingNameNumber.maxLength"),
-      pattern(invalidCharRegex.r, error = "error.invalidCharAddress1")
-    ),
-    "street1"            -> optional(
-      default(text, "").verifying(
-        maxLength(50, "error.addressLineTwo.maxLength"),
-        pattern(invalidCharRegex.r, error = "error.invalidCharAddress2")
-      )
-    ),
-    "town"               -> default(text, "").verifying(
-      nonEmpty(errorMessage = "error.townCity.required"),
-      maxLength(50, "error.townCity.maxLength"),
-      pattern(invalidCharRegex.r, error = "error.invalidCharTownCity")
-    ),
-    "county"             -> optional(
-      default(text, "").verifying(
-        maxLength(50, "error.county.maxLength"),
-        pattern(invalidCharRegex.r, error = "error.invalidCharCounty")
-      )
-    ),
+    "buildingNameNumber" -> validateBuildingNameNumber,
+    "street1" -> optional(validateAddressLineTwo),
+    "town" -> validateTown,
+    "county" -> optional(validateCounty),
     "postcode"           -> nonEmptyTextOr("lettingAddress.postcode", postcode, "error.postcode.required")
   )(LettingAddress.apply)(LettingAddress.unapply)
 

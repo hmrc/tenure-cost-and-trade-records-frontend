@@ -18,6 +18,7 @@ package controllers.additionalinformation
 
 import controllers.aboutyouandtheproperty.AlternativeContactDetailsController
 import form.Errors
+import form.Errors.addressBuildingNameNumberRequired
 import play.api.http.Status
 import play.api.test.Helpers._
 import utils.TestBaseSpec
@@ -63,6 +64,13 @@ class AlternativeContactDetailsControllerSpec extends TestBaseSpec {
   }
 
   "Additional information form" should {
+      "error if building name is missing" in {
+        val formData = baseFormData - errorKey.buildingNameNumber
+        val form = alternativeContactDetailsForm.bind(formData)
+
+        mustContainError(errorKey.buildingNameNumber, "error.buildingNameNumber.required", form)
+      }
+
     "error if postcode is missing" in {
       val formData = baseFormData - errorKey.postcode
       val form     = alternativeContactDetailsForm.bind(formData)
@@ -74,12 +82,7 @@ class AlternativeContactDetailsControllerSpec extends TestBaseSpec {
 
   object TestData {
     val errorKey = new {
-      val fullName: String   = "alternativeContactFullName"
-      val phone              = "alternativeContactDetails.phone"
-      val email              = "alternativeContactDetails.email"
-      val email1TooLong      = "contactDetails.email.email.tooLong"
-      val buildingNameNumber = "alternativeContactAddress.buildingNameNumber"
-      val town               = "alternativeContactAddress.town"
+      val buildingNameNumber = addressBuildingNameNumberRequired
       val postcode           = "alternativeContactAddress.postcode"
     }
 
