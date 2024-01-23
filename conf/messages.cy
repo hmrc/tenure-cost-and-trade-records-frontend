@@ -921,8 +921,9 @@ label.tradingName = Trading name
 label.typeOfBusiness = Describe the type of business
 label.lettingTypeOfBusiness = Description of letting
 hint.typeOfBusiness = For example, bed and breakfast, hotel, restaurant.
-hint.concessionTypeOfBusiness = For example, a restaurant, or leisure facilities
+hint.concessionTypeOfBusiness = For example, a restaurant, or leisure facilities.
 hint.lettingTypeOfBusiness = For example, a billboard, residential accommodation.
+hint.lettingTypeOfBusiness6015 = For example, a billboard or a telephone mast.
 label.correspondenceAddress = Correspondence address
 error.operatorName.required = Enter the name of the person or business renting the property
 error.operatorName.maxLength = Operator‘s name must be 50 characters or fewer
@@ -951,8 +952,8 @@ error.sharedResponsibilities.required = Tell us how the responsibilities are sha
 rent.received.from.heading = Rent received from {0}
 rent.received.from.excluding.VAT = Annual rent payment excluding VAT
 rent.received.from.error = Enter the rent received
-rent.received.from.confirm = I confirm this payment was not included in the turnover figures
-rent.received.from.confirm.error = Please confirm this payment was not included in the turnover figures
+rent.received.from.confirm = I confirm this payment was included in the turnover figures
+rent.received.from.confirm.error = Please confirm this payment was included in the turnover figures
 
 
 # CALCULATING THE RENT (6015/6016 0NLY)
@@ -1291,7 +1292,7 @@ variableOperatingExpenses.entertainment = Entertainment
 variableOperatingExpenses.entertainment.p1 = Artiste fees, for example.
 variableOperatingExpenses.other = Other expenses
 variableOperatingExpenses.other.p1 = Include all other expenses not listed previously.
-variableOperatingExpenses.otherExpensesDetails = Give details of the items included in your other expenses
+variableOperatingExpenses.otherExpensesDetails = Give details of the items included in your other expenses.
 variableOperatingExpenses.total = Total variable operating expenses
 error.variableExpenses.energyAndUtilities.required = Enter 0 if you did not have any energy and utilities expenses in the year ending {0}
 error.variableExpenses.energyAndUtilities.range = The energy and utilities expenses in the year ending {0} must be a number, for example 100 or 100.00
@@ -1347,9 +1348,23 @@ error.fixedExpenses.depreciation.negative = The depreciation expenses in the yea
 
 # OTHER COSTS (FORM 6015)
 #########################
-otherCosts.heading = Other costs - holding page
+otherCosts.heading = Other costs
+otherCosts.details.p1 = Provide details of all other costs that were deducted before calculating the net profit, but have not been previously declared.
+otherCosts.inset = All fields on this page are mandatory. If none of the categories are applicable, enter the number 0.
+otherCosts.financialYearEnd = Financial year end
+otherCosts.contributionToHeadOffice = Contributions to head office
+otherCosts.otherCosts = Other costs
+otherCosts.otherCosts.p1 = Include all other costs not listed previously.
+otherCostDetails.hint = Give details of the items included in your other costs
+otherCosts.total = Total other costs
+error.otherCosts.contributionsToHeadOffice.required = Enter 0 if you had no contributions to head office in the year ending {0}
+error.otherCosts.contributionsToHeadOffice.range = The contributions to head office for the year ending {0} must be a number like 100 or 100.00 and cannot be less than 0
+error.otherCosts.otherCosts.required = Enter 0 if you had no no other costs in the year ending {0}
+error.otherCosts.otherCosts.range = The other costs for the year ending {0} must be a number like 100 or 100.00 and cannot be less than 0
+error.otherCostDetails.required = Enter a description of the items included in your other costs
 
 # INCOME EXPENDITURE SUMMARY (FORM 6015)
+
 ########################################
 incomeExpenditureSummary.heading = Income and expenditure summary
 incomeExpenditureSummary.financialYearEndLabel = Financial year end
@@ -1368,7 +1383,7 @@ error.incomeExpenditureSummary.required = Select if these figures are correct
 # UNUSUAL CIRCUMSTANCES (FORM 6015)
 ###################################
 unusualCircumstances.heading = Describe any unusual circumstances that may have affected the turnover figures on the previous page
-unusualCircumstances.explain = Explain any abnormally high or low figures in your accounts - leave blank if not applicable
+unusualCircumstances.explain = Explain any abnormally high or low figures in your accounts – leave blank if not applicable.
 
 # NET PROFITS (FORM 6015)
 #########
@@ -1377,7 +1392,7 @@ netProfit.heading = This is a holding page for the net profits page
 # CONCESSIONS OR FRANCHISE (FORM 6015)
 #########
 concessionOrFranchise.heading = Rent from concessions
-p.concessionOrFranchise = You must declare any rental income received from allowing any separate business to operate from the property, for example restaurants or car hire kiosk. You will have the opportunity to add more than one business if required.
+p.concessionOrFranchise = You must declare any rental income received from allowing any separate business to operate from the property, for example restaurants or car hire kiosks. You will have the opportunity to add more than one business if required.
 label.concessionOrFranchise = Do you receive any rent from third-party business operating from part of the property?
 error.concessionOrFranchise.missing = Select yes if you receive any rent from third-party business operating from part of the property
 
@@ -1405,7 +1420,7 @@ label.correspondenceAddress = Correspondence address
 # FURTHER INFORMATION OR REMARKS
 ################################
 furtherInformationOrRemarks.heading = Further information or remarks
-hint.furtherInformationOrRemarks = Please provide further details if there was not enough room for you to complete your answers to any of the previous questions, or if any questions require further explanation or clarification.
+hint.furtherInformationOrRemarks = Provide further details if there was not enough room for you to complete your answers to any of the previous questions, or if any questions require further explanation or clarification.
 furtherInformationOrRemarksTasklist.heading = Additional relevant information
 error.furtherInformationOrRemarks.maxLength = Further information must be 2,000 characters or fewer
 
