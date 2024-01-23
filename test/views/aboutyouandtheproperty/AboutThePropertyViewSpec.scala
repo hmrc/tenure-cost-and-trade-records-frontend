@@ -201,7 +201,7 @@ class AboutThePropertyViewSpec extends QuestionViewBehaviours[PropertyDetails] {
       assertContainsText(doc, messages("propertyCurrentlyUsed.hotel"))
     }
 
-    "contain checkbox for the value health Spa" in {
+    "contain checkbox for the value Health spa" in {
       val doc = asDocument(createViewUsingForm6015(form))
       assertContainsCheckBox(
         doc,

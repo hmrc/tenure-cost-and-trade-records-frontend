@@ -478,7 +478,7 @@ propertyCurrentlyUsed.pubRestaurant = Pub or restaurant
 propertyCurrentlyUsed.licencedRestaurant = Licenced restaurant
 propertyCurrentlyUsed.hotel = Hotel
 propertyCurrentlyUsed.discoNightclub = Disco or nightclub
-propertyCurrentlyUsed.healthSpa = Health Spa
+propertyCurrentlyUsed.healthSpa = Health spa
 propertyCurrentlyUsed.lodgeAndRestaurant = Lodge and restaurant
 propertyCurrentlyUsed.conferenceCentre = Conference centre
 propertyCurrentlyUsed.other = Other
@@ -497,7 +497,7 @@ error.buildingOperatingHaveAWebsite.required = Select yes if the business has a 
 
 # PREMISES LICENSE GRANTED (6015,6016)
 ######################################
-premisesLicenseGranted.heading = Has the premises licence been granted for the property?
+premisesLicenseGranted.heading = Is there a current premises licence in place for the property?
 help.premisesLicenseGranted.title = Help with your premises licence
 help.premisesLicenseGranted.text = We’re interested to know if you’re permitted to serve alcohol under the terms of a premises licence, a personal licence, or a club premises certificate.
 error.premisesLicenseGranted.missing = Select yes if a premises licence has been granted
@@ -1043,12 +1043,12 @@ financialYearEnd.heading = Your financial year end
 label.financialYear = When does your current financial year end?
 financialYearEnd.yearEndChanged.legend = If your financial year end has changed
 financialYearEnd.yearEndChanged.hint = Use the checkbox if your financial year end has changed in the last 3 years. You will be taken to a separate page to declare the former year-end dates.
-financialYearEnd.yearEndChanged = My financial year end has changed in the last three years.
+financialYearEnd.yearEndChanged = My financial year end has changed in the last 3 years.
 fieldName.financialYear = the {0} when your current financial year ends
 
 # FINANCIAL YEAR-END DATES
 ##############################
-financialYearEndDates.heading = Amend your financial year-end dates
+financialYearEndDates.heading = Change your financial year-end dates
 financialYearEndDates.p1 = Adjust any of the dates displayed on this page to show the changes to your financial year end.
 financialYearEndDates.financialYear.label = Financial year ending {0}
 
@@ -1194,11 +1194,9 @@ turnover.weeks = weeks
 turnover.details = Help with completing turnover
 turnover.details.p1 = Do not include VAT in any of the figures you declare on this page.
 turnover.details.p2 = If you have not broken down your turnover into separate categories, or if you have recorded certain categories together - such as all food and drinks - you can declare them together in a single field.
-turnover.details.p3 = Your financial year end dates are pre-populated by the system. If your financial year end has changed during the period shown, you can edit these dates accordingly.
 turnover.details.6015.p1 = Do not include VAT in any of the figures you declare on this page. If you have not broken down your turnover into separate categories, or if you have recorded certain categories together - such as all food and drinks - you can declare them together in a single field.
 turnover.details.6015.p2 = If you have not broken down your turnover into separate categories, or if you have recorded certain categories together - such as all food and drinks - you can declare them together in a single field.
 turnover.details.6015.h1 = General guidance
-turnover.details.6015.h2 = Financial year end
 turnover.details.6015.h3 = Leisure Activities
 turnover.details.6015.p4 = You must declare any income received from leisure activities such as golf, fitness, or spa activities. Declare these in the ‘other’ category.
 turnover.details.6015.h4 = Income from franchises, concessions and lettings
@@ -1439,7 +1437,7 @@ error.contactDetailsQuestion.missing= Select yes if you would like us to use alt
 # ALTERNATIVE CONTACT DETAILS
 #############################
 alternativeContactDetails.heading = Alternative correspondence address
-hint.alternativeContactDetails = If you would like us to contact you at a different address, give details here
+hint.alternativeContactDetails = Give details if you would like us to contact you at a different address.
 label.alternativeContactDetails = Correspondence address
 
 # TENANCY LEASE AGREEMENT EXPIRE (FORM 6011)
@@ -1576,8 +1574,8 @@ checkYourAnswersAboutTheProperty.currentOccupier = Current Occupier
 checkYourAnswersAboutTheProperty.propertyUsage = Property use
 checkYourAnswersAboutTheProperty.hasWebsite = Website?
 checkYourAnswersAboutTheProperty.websiteAddress = Website address
-checkYourAnswersAboutTheProperty.license.heading = Your license
-checkYourAnswersAboutTheProperty.premisesLicenseGrantedDetail = Premises licence has been granted
+checkYourAnswersAboutTheProperty.license.heading = Your licence
+checkYourAnswersAboutTheProperty.premisesLicenseGrantedDetail = Premises licence?
 checkYourAnswersAboutTheProperty.premisesLicenseGrantedInformationDetails = Details of premises licence
 checkYourAnswersAboutTheProperty.licensableActivities = Licensable activities before 10:00 or after 23:30?
 checkYourAnswersAboutTheProperty.licensableActivitiesDetails = Description of licensable activities
