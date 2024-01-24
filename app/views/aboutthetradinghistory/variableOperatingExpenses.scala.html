@@ -221,7 +221,10 @@
                                 )
                             ),
                             Seq(
-                                TableRow(content = HtmlContent(otherHeading),classes = "no-border-bottom"),
+                                TableRow(
+                                    content = HtmlContent(otherHeading),
+                                    classes = "no-border-bottom"
+                                ),
                                 TableRow(
                                     content = HtmlContent(
                                         govukInput(Input(
@@ -230,7 +233,8 @@
                                             )),
                                             attributes = inputAttributes
                                         ).withFormField(form(s"variableOperatingExpenses.year[$idx].other")))
-                                    ), classes = "no-border-bottom"
+                                    ),
+                                    classes = "no-border-bottom"
                                 )
                             ),
                             Seq(

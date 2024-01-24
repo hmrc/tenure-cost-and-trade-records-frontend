@@ -20,7 +20,6 @@
 @import uk.gov.hmrc.govukfrontend.views.Implicits._
 @import util.DateUtil
 @import util.NumberUtil._
-@import java.time.LocalDate
 
 @this(layout: Layout,
         govukButton: GovukButton,
@@ -69,12 +68,12 @@
 }
 
 @otherCostDetailsContent(idx: Int) = {
-@if(columns.size == 1) {
+@if(columns == 1) {
     @otherCostDetailsTextarea
 } else {
-    <div class="hmrc-overlap-columns-@columns.size-parent">
+    <div class="hmrc-overlap-columns-@columns-parent">
     @if(idx == 0) {
-        <div class="hmrc-overlap-columns-@columns.size">
+        <div class="hmrc-overlap-columns-@columns">
         @otherCostDetailsTextarea
         </div>
     }
@@ -95,7 +94,7 @@
 }
 
 @columns = @{
-    request.sessionData.aboutTheTradingHistory.map(_.turnoverSections).fold(Seq.empty[Int])(_.indices)
+    request.sessionData.financialYearEndDates.size
 }
 
 
@@ -147,7 +146,10 @@
                                 )
                             ),
                             Seq(
-                                TableRow(content = HtmlContent(otherCostsHeading)),
+                                TableRow(
+                                    content = HtmlContent(otherCostsHeading),
+                                    classes = "no-border-bottom"
+                                ),
                                 TableRow(
                                     content = HtmlContent(
                                         govukInput(Input(
@@ -156,10 +158,10 @@
                                             )),
                                             attributes = costInputAttributes
                                         ).withFormField(theForm(s"otherCosts[$idx].otherCosts")))
-                                    )
+                                    ),
+                                    classes = "no-border-bottom"
                                 )
                             ),
-                            // Adding otherCostDetails row
                             Seq(
                                 TableRow(),
                                 TableRow(
