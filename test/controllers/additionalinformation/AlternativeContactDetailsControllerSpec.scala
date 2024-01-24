@@ -17,12 +17,12 @@
 package controllers.additionalinformation
 
 import controllers.aboutyouandtheproperty.AlternativeContactDetailsController
-import form.Errors
+import form.Errors.{addressBuildingNameNumberRequired, addressTownCityRequired}
 import play.api.http.Status
 import play.api.test.Helpers._
 import utils.TestBaseSpec
 import form.aboutyouandtheproperty.AlternativeContactDetailsForm.alternativeContactDetailsForm
-import models.submissions.additionalinformation.AdditionalInformation
+import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
 import play.api.test.FakeRequest
 
 class AlternativeContactDetailsControllerSpec extends TestBaseSpec {
@@ -31,12 +31,12 @@ class AlternativeContactDetailsControllerSpec extends TestBaseSpec {
   import utils.FormBindingTestAssertions.mustContainError
 
   def alternativeContactDetailsController(
-    additionalInformation: Option[AdditionalInformation] = Some(prefilledAdditionalInformation)
+    aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes)
   ) = new AlternativeContactDetailsController(
     stubMessagesControllerComponents(),
     aboutYouAndThePropertyNavigator,
     alternativeContactDetailsView,
-    preEnrichedActionRefiner(additionalInformation = additionalInformation),
+    preEnrichedActionRefiner(aboutYouAndTheProperty = aboutYouAndTheProperty),
     mockSessionRepo
   )
 
@@ -64,11 +64,19 @@ class AlternativeContactDetailsControllerSpec extends TestBaseSpec {
 
   "Additional information form" should {
     "error if buildingNameNumber is missing" in {
-      val formData = baseFormData - errorKey.buildingNameNumber
+      val formData = baseFormData - addressBuildingNameNumberRequired
       val form     = alternativeContactDetailsForm.bind(formData)
 
-      mustContainError(errorKey.buildingNameNumber, "error.buildingNameNumber.required", form)
+      mustContainError(addressBuildingNameNumberRequired, "error.buildingNameNumber.required", form)
     }
+
+    "error if town is missing" in {
+      val formData = baseFormData - addressTownCityRequired
+      val form = alternativeContactDetailsForm.bind(formData)
+
+      mustContainError(addressTownCityRequired, "error.town.required", form)
+    }
+
     "error if postcode is missing" in {
       val formData = baseFormData - errorKey.postcode
       val form     = alternativeContactDetailsForm.bind(formData)

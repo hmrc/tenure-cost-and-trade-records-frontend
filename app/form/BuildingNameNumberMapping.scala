@@ -17,51 +17,8 @@
 package form
 
 import play.api.data.Forms.text
-import play.api.data.format.Formatter
-import play.api.data.{FormError, Forms, Mapping}
 
 object BuildingNameNumberMapping {
-
-  def validateBuildingNameNumber(
-                requiredError: String = Errors.addressBuildingNameNumberRequired,
-                maxLengthError: String = Errors.buildingMaxLength,
-                formatError: String = Errors.invalidCharAddress1
-              ): Mapping[String] =
-    Forms.of[String](buildingFormatter(requiredError, maxLengthError, formatError))
-
-//  def isValid(postcode: String): Boolean = {
-//    val cleanedPostcode = postcode.replaceAll("\\s", "").toUpperCase
-//    val postcodeRegex =
-//      """^(GIR0AA|[A-Za-z][0-9]{1,2}|[A-Za-z][A-HJ-Y][0-9]{1,2}|[A-Za-z][0-9][A-Za-z]|[A-Za-z][A-HJ-Y][0-9][A-Za-z])[0-9][A-Za-z]{2}$"""
-//    cleanedPostcode.matches(postcodeRegex)
-//  }
-
-  def buildingFormatter(
-                         requiredError: String = "",
-                         maxLengthError: String = "",
-                         formatError: String = ""
-                       ): Formatter[String] = new Formatter[String] {
-
-    override def bind(key: String, data: Map[String, String]): Either[Seq[FormError], String] =
-      data.get(key).filter(_.trim.nonEmpty) match {
-        case None => Left(Seq(FormError(key, requiredError)))
-        case Some(rawLength) =>
-          val maxLength = rawLength.length
-        if(maxLength > 50) {
-          Left(Seq(FormError(key, maxLengthError)))
-        } else {
-          Right(maxLength == 0)
-        }
-
-      }
-
-    override def unbind(key: String, value: String): Map[String, String] = Map(key -> value)
-  }
-
-  val customPostcodeMapping = PostcodeMapping.postcode(
-    formatError = Errors.invalidPostcodeOnLetter
-  )
-
 
   def validateBuildingNameNumber = {
 
