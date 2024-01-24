@@ -65,6 +65,20 @@ class RequestReferenceNumberControllerSpec extends TestBaseSpec {
   }
 
   "Edit address form" should {
+    "error if building number is missing" in {
+      val formData = baseFormData - errorKey.buildingNameNumber
+      val form     = requestReferenceNumberForm.bind(formData)
+
+      mustContainError(errorKey.buildingNameNumber, "error.buildingNameNumber.required", form)
+    }
+
+    "error if town or city is missing" in {
+      val formData = baseFormData - errorKey.town
+      val form     = requestReferenceNumberForm.bind(formData)
+
+      mustContainError(errorKey.town, "error.townCity.required", form)
+    }
+
     "error if postcode is missing" in {
       val formData = baseFormData - errorKey.postcode
       val form     = requestReferenceNumberForm.bind(formData)

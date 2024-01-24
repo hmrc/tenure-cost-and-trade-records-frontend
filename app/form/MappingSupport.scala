@@ -98,7 +98,8 @@ object MappingSupport {
   val rent3Years: Mapping[RentThreeYears]       = Forms.of[RentThreeYears]
   val underReview: Mapping[UnderReview]         = Forms.of[UnderReview]
 
-  val postcode: Mapping[String] = PostcodeMapping.postcode()
+  val postcode: Mapping[String]       = PostcodeMapping.postcode()
+  val buildingNumber: Mapping[String] = BuildingNameNumberMapping.validateBuildingNameNumber
 
   val decimalRegex          = """^[0-9]{1,10}\.?[0-9]{0,2}$"""
   val cdbMaxCurrencyAmount  = 9999999.99
@@ -172,7 +173,7 @@ object MappingSupport {
   )(LandlordAddress.apply)(LandlordAddress.unapply)
 
   def alternativeAddressMapping: Mapping[AlternativeAddress] = mapping(
-    "buildingNameNumber" -> validateBuildingNameNumber,
+    "buildingNameNumber" -> buildingNumber,
     "street1"            -> optional(validateAddressLineTwo),
     "town"               -> validateTown,
     "county"             -> optional(validateCounty),
@@ -189,9 +190,9 @@ object MappingSupport {
 
   def lettingOtherPartAddressMapping: Mapping[LettingAddress] = mapping(
     "buildingNameNumber" -> validateBuildingNameNumber,
-    "street1" -> optional(validateAddressLineTwo),
-    "town" -> validateTown,
-    "county" -> optional(validateCounty),
+    "street1"            -> optional(validateAddressLineTwo),
+    "town"               -> validateTown,
+    "county"             -> optional(validateCounty),
     "postcode"           -> nonEmptyTextOr("lettingAddress.postcode", postcode, "error.postcode.required")
   )(LettingAddress.apply)(LettingAddress.unapply)
 
