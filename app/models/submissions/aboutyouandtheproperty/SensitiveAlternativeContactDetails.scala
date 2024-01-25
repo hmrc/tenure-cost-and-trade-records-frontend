@@ -14,14 +14,11 @@
  * limitations under the License.
  */
 
-package models.submissions.additionalinformation
+package models.submissions.aboutyouandtheproperty
 
 import crypto.MongoCrypto
-import models.submissions.common.{SensitiveContactDetails}
 import play.api.libs.json.{Json, OFormat}
 import uk.gov.hmrc.crypto.Sensitive
-import uk.gov.hmrc.crypto.Sensitive.SensitiveString
-import crypto.SensitiveFormats._
 
 case class SensitiveAlternativeContactDetails(
   alternativeContactAddress: SensitiveAlternativeAddress

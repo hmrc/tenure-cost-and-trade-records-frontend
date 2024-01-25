@@ -30,15 +30,15 @@ class CheckYourAnswersAdditionalInformationViewSpec
 
   override val form = CheckYourAnswersAdditionalInformationForm.checkYourAnswersAdditionalInformationForm
 
-  val backLink = controllers.additionalinformation.routes.AlternativeContactDetailsController.show().url
+  val backLink = controllers.additionalinformation.routes.FurtherInformationOrRemarksController.show().url
 
   val sessionRequest = SessionRequest(baseFilled6010Session, fakeRequest)
 
   def createView = () =>
-    checkYourAnswersAdditionalInformationView(form, notConnected6010NoSession, backLink)(sessionRequest, messages)
+    checkYourAnswersAdditionalInformationView(form, notConnected6010NoSession)(sessionRequest, messages)
 
   def createViewUsingForm = (form: Form[CheckYourAnswersAdditionalInformation]) =>
-    checkYourAnswersAdditionalInformationView(form, notConnected6010NoSession, backLink)(sessionRequest, messages)
+    checkYourAnswersAdditionalInformationView(form, notConnected6010NoSession)(sessionRequest, messages)
 
   "Check Your Answers Additional Information view" must {
 
@@ -49,7 +49,7 @@ class CheckYourAnswersAdditionalInformationViewSpec
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText mustBe messages("back.link.label")
       val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.additionalinformation.routes.AlternativeContactDetailsController.show().url
+      backlinkUrl mustBe controllers.additionalinformation.routes.FurtherInformationOrRemarksController.show().url
     }
 
     "Section heading is visible" in {

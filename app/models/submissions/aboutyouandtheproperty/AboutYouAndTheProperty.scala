@@ -23,6 +23,8 @@ import play.api.libs.json.Json
 
 case class AboutYouAndTheProperty(
   customerDetails: Option[CustomerDetails] = None,
+  altDetailsQuestion: Option[ContactDetailsQuestion] = None,
+  altContactInformation: Option[AlternativeContactDetails] = None,
   propertyDetails: Option[PropertyDetails] = None,
   websiteForPropertyDetails: Option[WebsiteForPropertyDetails] = None,
   premisesLicenseGrantedDetail: Option[AnswersYesNo] = None,

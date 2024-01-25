@@ -80,7 +80,6 @@ class TurnoverViewSpec extends QuestionViewBehaviours[Seq[TurnoverSection]] {
       val doc = asDocument(createView6015())
       assert(doc.toString.contains(messages("turnover.details.6015.p1")))
       assert(doc.toString.contains(messages("turnover.details.6015.p2")))
-      assert(doc.toString.contains(messages("turnover.details.6015.h2")))
       assert(doc.toString.contains(messages("turnover.details.6015.h3")))
       assert(doc.toString.contains(messages("turnover.details.6015.p4")))
       assert(doc.toString.contains(messages("turnover.details.6015.h4")))

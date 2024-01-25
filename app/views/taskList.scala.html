@@ -124,11 +124,20 @@
         section1Completed.isEmpty
        )
 
+
+       @includes.taskListItem("alternate-contact-details", "alternativeContactDetails.heading",
+        controllers.aboutyouandtheproperty.routes.ContactDetailsQuestionController.show(),
+        section2Completed,
+        session.aboutYouAndTheProperty.flatMap(_.altContactInformation),
+        session.aboutYouAndTheProperty.flatMap(_.customerDetails).isEmpty
+
+       )
+
        @includes.taskListItem("about-the-property", "checkYourAnswersAboutTheProperty.aboutProperty.heading",
         controllers.aboutyouandtheproperty.routes.AboutThePropertyController.show(),
         section2Completed,
         session.aboutYouAndTheProperty.flatMap(_.propertyDetails),
-        session.aboutYouAndTheProperty.flatMap(_.customerDetails).isEmpty
+        session.aboutYouAndTheProperty.flatMap(_.altContactInformation).isEmpty
        )
 
        @includes.taskListItem("licensable-activities", "checkYourAnswersAboutTheProperty.license.heading",
@@ -196,10 +205,10 @@
          session.aboutTheTradingHistory.flatMap(_.fixedOperatingExpensesSections).isEmpty
         )
 
-        @includes.taskListItem("net-profit", "taskList.profitSummary",
-         controllers.aboutthetradinghistory.routes.NetProfitController.show(),
+        @includes.taskListItem("income-expenditure-summary", "taskList.profitSummary",
+         controllers.aboutthetradinghistory.routes.IncomeExpenditureSummaryController.show(),
          section3Completed,
-         session.aboutTheTradingHistory.flatMap(_.netProfit),
+         session.aboutTheTradingHistory.flatMap(_.incomeExpenditureSummary),
          session.aboutTheTradingHistory.flatMap(_.otherCosts).isEmpty
         )
        }
@@ -318,13 +327,6 @@
         session.additionalInformation.flatMap(_.furtherInformationOrRemarksDetails),
         if (isLeaseHolder) section5Completed.isEmpty
         else section4Completed.isEmpty
-       )
-
-       @includes.taskListItem("alternate-contact-details", "alternativeContactDetails.heading",
-        controllers.additionalinformation.routes.ContactDetailsQuestionController.show(),
-        section6Completed,
-        session.additionalInformation.flatMap(_.altContactInformation),
-        session.additionalInformation.flatMap(_.furtherInformationOrRemarksDetails).isEmpty
        )
       </ul>
      </li>

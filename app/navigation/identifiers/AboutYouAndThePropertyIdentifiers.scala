@@ -18,6 +18,14 @@ package navigation.identifiers
 
 case object AboutYouPageId extends Identifier { override def toString: String = "aboutYouPage" }
 
+case object ContactDetailsQuestionId extends Identifier {
+  override def toString: String = "contactDetailsQuestionPage"
+}
+
+case object AlternativeContactDetailsId extends Identifier {
+  override def toString: String = "alternativeContactDetailsPage"
+}
+
 case object AboutThePropertyPageId extends Identifier { override def toString: String = "aboutThePropertyPage" }
 
 case object WebsiteForPropertyPageId extends Identifier { override def toString: String = "websiteForPropertyPage" }

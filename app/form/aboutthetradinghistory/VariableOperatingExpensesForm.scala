@@ -19,6 +19,7 @@ package form.aboutthetradinghistory
 import form.MappingSupport._
 import models.submissions.aboutthetradinghistory.{VariableOperatingExpenses, VariableOperatingExpensesSections}
 import play.api.data.Forms.{ignored, mapping, optional, text}
+import play.api.data.validation.{Constraint, Invalid, Valid, ValidationError}
 import play.api.data.{Form, Mapping}
 import play.api.i18n.Messages
 
@@ -58,6 +59,15 @@ object VariableOperatingExpensesForm {
     }
   }
 
+  private def otherExpensesDetailsRequired: Constraint[VariableOperatingExpensesSections] =
+    Constraint("constraints.otherExpensesDetailsRequired") { sections =>
+      if (sections.variableOperatingExpenses.exists(_.other.exists(_ > 0)) && sections.otherExpensesDetails.isEmpty) {
+        Invalid(Seq(ValidationError("error.variableExpenses.otherExpensesDetails.required")))
+      } else {
+        Valid
+      }
+    }
+
   def variableOperatingExpensesForm(
     years: Seq[String]
   )(implicit messages: Messages): Form[VariableOperatingExpensesSections] =
@@ -66,6 +76,7 @@ object VariableOperatingExpensesForm {
         "variableOperatingExpenses" -> variableOperatingExpensesSeq(years),
         "otherExpensesDetails"      -> optional(text(maxLength = 2000))
       )(VariableOperatingExpensesSections.apply)(VariableOperatingExpensesSections.unapply)
+        .verifying(otherExpensesDetailsRequired)
     }
 
 }

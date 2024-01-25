@@ -43,7 +43,8 @@
 
 @nameLabel = @{if(typeConcession) "tradingName"  else "operatorName" }
 
-@formHint =  @{if(typeConcession) "concessionTypeOfBusiness"  else "typeOfBusiness" }
+@formHintRent =  @{if(typeConcession) "concessionTypeOfBusiness"  else "typeOfBusiness" }
+@formHintLetting = @{if(typeConcession) "lettingTypeOfBusiness6015"  else "lettingTypeOfBusiness" }
 
 @layout(
     pageHeading = heading,
@@ -57,7 +58,7 @@
         @formWithCSRF(action = controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController.submit(index)) {
 
             @includes.textInput(govukInput, theForm, "operatorName", "govuk-input--width-20", nameLabel, labelClasses = "govuk-!-font-weight-bold")
-            @includes.textInput(govukInput, theForm, "typeOfBusiness", "govuk-input--width-20", "typeOfBusiness", labelClasses = "govuk-!-font-weight-bold", hintMsg = formHint)
+            @includes.textInput(govukInput, theForm, "typeOfBusiness", "govuk-input--width-20", "typeOfBusiness", labelClasses = "govuk-!-font-weight-bold", hintMsg = formHintRent)
 
             <p class="govuk-body">
                 <b>@messages("label.correspondenceAddress")</b>
@@ -75,7 +76,7 @@
         @formWithCSRF(action = controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsController.submit(index), args = Symbol("class") -> "myForm", Symbol("id") -> "myFormId") {
 
             @includes.textInput(govukInput, theForm, "lettingOperatorName", "govuk-input--width-20", "lettingOperatorName", labelClasses = "govuk-!-font-weight-bold")
-            @includes.textInput(govukInput, theForm, "lettingTypeOfBusiness", "govuk-input--width-20", "lettingTypeOfBusiness", labelClasses = "govuk-!-font-weight-bold", hintMsg = "lettingTypeOfBusiness")
+            @includes.textInput(govukInput, theForm, "lettingTypeOfBusiness", "govuk-input--width-20", "lettingTypeOfBusiness", labelClasses = "govuk-!-font-weight-bold", hintMsg = formHintLetting)
 
             <p class="govuk-body">
                 <b>@messages("label.correspondenceAddress")</b>

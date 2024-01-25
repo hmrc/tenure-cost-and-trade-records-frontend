@@ -43,8 +43,16 @@
         ("valueAsHtml", _ => None))
 ))
 
+<h2 class="govuk-heading-m">@messages("key.altContact.details")</h2>
+
 @govukSummaryList(SummaryList(rows =
-    sectionAnswersAdditionalInfo.conditionRow(
+    sectionAnswers.row("label.altDetails.question", _.altDetailsQuestion.map(_.contactDetailsQuestion.name).map(v => messages(s"label.$v")),
+        aboutyouandtheproperty.routes.ContactDetailsQuestionController.show(), "contactDetailsQuestion"
+    )
+))
+
+@govukSummaryList(SummaryList(rows =
+    sectionAnswers.conditionRow(
         _.altDetailsQuestion.map(_.contactDetailsQuestion.name).contains("yes"),
         "label.altDetails",
         _.altContactInformation.map { x =>
@@ -52,7 +60,7 @@
                 x.alternativeContactAddress.escapedHtml
             contactDetails
         },
-        additionalinformation.routes.AlternativeContactDetailsController.show(),
+        aboutyouandtheproperty.routes.AlternativeContactDetailsController.show(),
         "",
         ("valueAsHtml", _ => None)
     )

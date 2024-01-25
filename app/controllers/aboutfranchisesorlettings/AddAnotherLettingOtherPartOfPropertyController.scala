@@ -114,35 +114,59 @@ class AddAnotherLettingOtherPartOfPropertyController @Inject() (
     }
   }
 
-def remove(idx: Int) = (Action andThen withSessionRefiner).async { implicit request =>
-  request.sessionData.aboutFranchisesOrLettings.flatMap(_.lettingSections.lift(idx)).map { lettingSection =>
-    val name = lettingSection.lettingOtherPartOfPropertyInformationDetails.operatorName
-    Future.successful(Ok(genericRemoveConfirmationView(
-      confirmableActionForm, name,
-      "label.section.aboutTheFranchiseConcessions",
-      request.sessionData.toSummary,
-      idx,
-      controllers.aboutfranchisesorlettings.routes.AddAnotherLettingOtherPartOfPropertyController.performRemove(idx),
-      controllers.aboutfranchisesorlettings.routes.AddAnotherLettingOtherPartOfPropertyController.show(idx)
-    )))
-  }.getOrElse(Redirect(controllers.aboutfranchisesorlettings.routes.AddAnotherLettingOtherPartOfPropertyController.show(0)))
-}
+  def remove(idx: Int) = (Action andThen withSessionRefiner).async { implicit request =>
+    request.sessionData.aboutFranchisesOrLettings
+      .flatMap(_.lettingSections.lift(idx))
+      .map { lettingSection =>
+        val name = lettingSection.lettingOtherPartOfPropertyInformationDetails.operatorName
+        Future.successful(
+          Ok(
+            genericRemoveConfirmationView(
+              confirmableActionForm,
+              name,
+              "label.section.aboutTheFranchiseConcessions",
+              request.sessionData.toSummary,
+              idx,
+              controllers.aboutfranchisesorlettings.routes.AddAnotherLettingOtherPartOfPropertyController
+                .performRemove(idx),
+              controllers.aboutfranchisesorlettings.routes.AddAnotherLettingOtherPartOfPropertyController.show(idx)
+            )
+          )
+        )
+      }
+      .getOrElse(
+        Redirect(controllers.aboutfranchisesorlettings.routes.AddAnotherLettingOtherPartOfPropertyController.show(0))
+      )
+  }
 
   def performRemove(idx: Int) = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[AnswersYesNo](
       confirmableActionForm,
       formWithErrors =>
-        request.sessionData.aboutFranchisesOrLettings.flatMap(_.lettingSections.lift(idx)).map { lettingSection =>
-          val name = lettingSection.lettingOtherPartOfPropertyInformationDetails.operatorName
-          Future.successful(BadRequest(genericRemoveConfirmationView(
-            formWithErrors, name,
-            "label.section.aboutTheFranchiseConcessions",
-            request.sessionData.toSummary,
-            idx,
-            controllers.aboutfranchisesorlettings.routes.AddAnotherLettingOtherPartOfPropertyController.performRemove(idx),
-            controllers.aboutfranchisesorlettings.routes.AddAnotherLettingOtherPartOfPropertyController.show(idx)
-          )))
-        }.getOrElse(Redirect(controllers.aboutfranchisesorlettings.routes.AddAnotherLettingOtherPartOfPropertyController.show(0))),
+        request.sessionData.aboutFranchisesOrLettings
+          .flatMap(_.lettingSections.lift(idx))
+          .map { lettingSection =>
+            val name = lettingSection.lettingOtherPartOfPropertyInformationDetails.operatorName
+            Future.successful(
+              BadRequest(
+                genericRemoveConfirmationView(
+                  formWithErrors,
+                  name,
+                  "label.section.aboutTheFranchiseConcessions",
+                  request.sessionData.toSummary,
+                  idx,
+                  controllers.aboutfranchisesorlettings.routes.AddAnotherLettingOtherPartOfPropertyController
+                    .performRemove(idx),
+                  controllers.aboutfranchisesorlettings.routes.AddAnotherLettingOtherPartOfPropertyController.show(idx)
+                )
+              )
+            )
+          }
+          .getOrElse(
+            Redirect(
+              controllers.aboutfranchisesorlettings.routes.AddAnotherLettingOtherPartOfPropertyController.show(0)
+            )
+          ),
       {
         case AnswerYes =>
           request.sessionData.aboutFranchisesOrLettings.map(_.lettingSections).map { lettingSection =>
@@ -154,9 +178,10 @@ def remove(idx: Int) = (Action andThen withSessionRefiner).async { implicit requ
             )
           }
           Redirect(controllers.aboutfranchisesorlettings.routes.AddAnotherLettingOtherPartOfPropertyController.show(0))
-        case AnswerNo => {
-          Redirect(controllers.aboutfranchisesorlettings.routes.AddAnotherLettingOtherPartOfPropertyController.show(idx))
-        }
+        case AnswerNo  =>
+          Redirect(
+            controllers.aboutfranchisesorlettings.routes.AddAnotherLettingOtherPartOfPropertyController.show(idx)
+          )
       }
     )
   }

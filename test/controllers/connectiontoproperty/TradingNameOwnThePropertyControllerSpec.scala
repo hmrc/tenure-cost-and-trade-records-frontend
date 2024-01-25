@@ -33,7 +33,7 @@ class TradingNameOwnThePropertyControllerSpec extends TestBaseSpec {
     new TradingNameOwnThePropertyController(
       stubMessagesControllerComponents(),
       connectedToPropertyNavigator,
-      tradingNameOwnTheProperty,
+      tradingNameOwnThePropertyView,
       preEnrichedActionRefiner(stillConnectedDetails = stillConnectedDetails),
       mockSessionRepo
     )

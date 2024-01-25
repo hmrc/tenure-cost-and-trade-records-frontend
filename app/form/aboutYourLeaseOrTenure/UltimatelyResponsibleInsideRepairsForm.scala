@@ -34,7 +34,7 @@ object UltimatelyResponsibleInsideRepairsForm {
         InsideRepairsBoth.name,
         default(text, "").verifying(
           nonEmpty(errorMessage = "error.sharedResponsibilitiesIR.required"),
-          maxLength(100, "error.sharedResponsibilitiesIR.maxLength")
+          maxLength(2000, "error.sharedResponsibilitiesIR.maxLength")
         )
       )
     )(UltimatelyResponsibleInsideRepairs.apply)(UltimatelyResponsibleInsideRepairs.unapply)

@@ -44,8 +44,6 @@
 @if(forType == ForTypes.for6015 || forType == ForTypes.for6016) {
     <p class="govuk-body govuk-!-font-weight-bold">@messages("turnover.details.6015.h1")</p>
     <p class="govuk-body">@messages("turnover.details.6015.p1")</p>
-    <p class="govuk-body govuk-!-font-weight-bold">@messages("turnover.details.6015.h2")</p>
-    <p class="govuk-body">@messages("turnover.details.p3")</p>
     <p class="govuk-body govuk-!-font-weight-bold">@messages("turnover.details.6015.h3")</p>
     <p class="govuk-body">@messages("turnover.details.6015.p4")</p>
     <p class="govuk-body govuk-!-font-weight-bold">@messages("turnover.details.6015.h4")</p>
@@ -71,10 +69,19 @@
 }
 
 @otherReceiptsHeading = {
+@if(forType == ForTypes.for6010 || forType == ForTypes.for6011) {
+    <p class="govuk-body govuk-!-font-weight-bold">
+        @messages("turnover.otherReceipts")
+        <span class="govuk-caption-m">@messages("turnover.otherReceiptsCaption.60106011")</span>
+    </p>
+}
+
+@if(forType == ForTypes.for6015 || forType == ForTypes.for6016) {
     <p class="govuk-body govuk-!-font-weight-bold">
         @messages("turnover.otherReceipts")
         <span class="govuk-caption-m">@messages("turnover.otherReceiptsCaption")</span>
     </p>
+}
 }
 
 @totalSalesRevenueHeading = {
@@ -93,11 +100,32 @@
 }
 
 @accommodationHeading = {
-@messages("turnover.accommodation")
+@if(forType == ForTypes.for6010 || forType == ForTypes.for6011) {
+    <p class="govuk-body govuk-!-font-weight-bold">
+        @messages("turnover.accommodation")
+        <span class="govuk-caption-m">@messages("turnover.accommodationCaption")</span>
+    </p>
+}
+
+@if(forType == ForTypes.for6015 || forType == ForTypes.for6016) {
+    <p class="govuk-body govuk-!-font-weight-bold">
+        @messages("turnover.accommodation")
+    </p>
+}
 }
 
 @averageOccupancyRateHeading = {
-@messages("turnover.averageOccupancyRate")
+@if(forType == ForTypes.for6010 || forType == ForTypes.for6011) {
+    <p class="govuk-body govuk-!-font-weight-bold">
+        @messages("turnover.averageOccupancyRate")
+        <span class="govuk-caption-m">@messages("turnover.averageOccupancyRateCaption")</span>
+    </p>
+}
+@if(forType == ForTypes.for6015 || forType == ForTypes.for6016) {
+    <p class="govuk-body govuk-!-font-weight-bold">
+    @messages("turnover.averageOccupancyRate")
+    </p>
+}
 }
 
 @operatorName = @{

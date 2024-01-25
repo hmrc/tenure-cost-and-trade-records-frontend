@@ -25,7 +25,8 @@ import views.html.aboutconcessionsorlettings.rentFromConcessions
 import views.html.aboutfranchisesorlettings._
 import views.html.aboutthetradinghistory._
 import views.html.aboutyouandtheproperty.checkYourAnswersAboutTheProperty
-import views.html.additionalinformation.{alternativeContactDetails, checkYourAnswersAdditionalInformation, contactDetailsQuestion, furtherInformationOrRemarks}
+import views.html.additionalinformation.{checkYourAnswersAdditionalInformation, furtherInformationOrRemarks}
+import views.html.aboutyouandtheproperty.{alternativeContactDetails, contactDetailsQuestion}
 import views.html.downloadFORTypeForm.{downloadPDF, downloadPDFReferenceNumber}
 import views.html.error.JsonParseError
 import views.html.feedback.{feedback, feedbackThx}
@@ -46,7 +47,7 @@ trait FakeViews { this: GuiceOneAppPerSuite =>
     app.injector.instanceOf[confirmationRequestReferenceNumber]
 
   //generic confirmation page
-  lazy val genericRemoveConfirmationView                                                      = app.injector.instanceOf[genericRemoveConfirmation]
+  lazy val genericRemoveConfirmationView = app.injector.instanceOf[genericRemoveConfirmation]
   // Connection to the property
 
   lazy val areYouThirdPartyView: areYouThirdParty                                                 = app.injector.instanceOf[areYouThirdParty]
@@ -74,7 +75,7 @@ trait FakeViews { this: GuiceOneAppPerSuite =>
     app.injector.instanceOf[confirmationRequestReferenceNumber]
   lazy val tradingNameOperatingFromProperty: tradingNameOperatingFromProperty                     =
     app.injector.instanceOf[tradingNameOperatingFromProperty]
-  lazy val tradingNameOwnTheProperty: tradingNameOwnTheProperty                                   = app.injector.instanceOf[tradingNameOwnTheProperty]
+  lazy val tradingNameOwnThePropertyView: tradingNameOwnTheProperty                               = app.injector.instanceOf[tradingNameOwnTheProperty]
   lazy val tradingNamePayRentView: tradingNamePayingRent                                          = app.injector.instanceOf[tradingNamePayingRent]
   lazy val vacantPropertiesStartDateView: vacantPropertyStartDate                                 = app.injector.instanceOf[vacantPropertyStartDate]
   lazy val isRentReceivedFromLettingView: isRentReceivedFromLetting                               = app.injector.instanceOf[isRentReceivedFromLetting]

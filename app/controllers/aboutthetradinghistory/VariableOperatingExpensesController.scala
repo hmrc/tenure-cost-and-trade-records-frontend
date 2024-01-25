@@ -84,7 +84,17 @@ class VariableOperatingExpensesController @Inject() (
 
       continueOrSaveAsDraft[VariableOperatingExpensesSections](
         variableOperatingExpensesForm(years),
-        formWithErrors => BadRequest(variableOperativeExpensesView(formWithErrors, navigator.from)),
+        formWithErrors => {
+          val updatedErrors         = formWithErrors.errors.map { error =>
+            if (error.key.isEmpty && error.message == "error.variableExpenses.otherExpensesDetails.required") {
+              error.copy(key = "otherExpensesDetails")
+            } else {
+              error
+            }
+          }
+          val updatedFormWithErrors = formWithErrors.copy(errors = updatedErrors)
+          BadRequest(variableOperativeExpensesView(updatedFormWithErrors, navigator.from))
+        },
         data => {
           val voeSeq = (data.variableOperatingExpenses zip yearEndDates).map { case (voe, finYearEnd) =>
             voe.copy(financialYearEnd = finYearEnd)

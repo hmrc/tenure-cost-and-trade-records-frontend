@@ -16,7 +16,8 @@
 
 package controllers.additionalinformation
 
-import form.additionalinformation.ContactDetailsQuestionForm.contactDetailsQuestionForm
+import controllers.aboutyouandtheproperty.ContactDetailsQuestionController
+import form.aboutyouandtheproperty.ContactDetailsQuestionForm.contactDetailsQuestionForm
 import models.submissions.additionalinformation.AdditionalInformation
 import play.api.http.Status.{BAD_REQUEST, OK}
 import play.api.test.{FakeRequest, Helpers}
@@ -34,7 +35,7 @@ class ContactDetailsQuestionControllerSpec extends TestBaseSpec {
   ) =
     new ContactDetailsQuestionController(
       stubMessagesControllerComponents(),
-      additionalInformationNavigator,
+      aboutYouAndThePropertyNavigator,
       contactDetailsQuestionView,
       preEnrichedActionRefiner(additionalInformation = additionalInformation),
       mockSessionRepo
@@ -63,7 +64,7 @@ class ContactDetailsQuestionControllerSpec extends TestBaseSpec {
   }
 
   "Contact details question form" should {
-    "error if tiedForGoods is missing" in {
+    "error if contact details question is missing" in {
       val formData = baseFormData - errorKey.contactDetailsQuestion
       val form     = contactDetailsQuestionForm.bind(formData)
 

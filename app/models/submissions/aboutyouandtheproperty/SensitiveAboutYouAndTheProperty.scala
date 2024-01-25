@@ -23,6 +23,8 @@ import uk.gov.hmrc.crypto.Sensitive
 
 case class SensitiveAboutYouAndTheProperty(
   customerDetails: Option[SensitiveCustomerDetails] = None,
+  altDetailsQuestion: Option[ContactDetailsQuestion] = None,
+  altContactInformation: Option[SensitiveAlternativeContactDetails] = None,
   propertyDetails: Option[PropertyDetails] = None,
   websiteForPropertyDetails: Option[WebsiteForPropertyDetails] = None,
   premisesLicenseGrantedDetail: Option[AnswersYesNo] = None,
@@ -39,6 +41,8 @@ case class SensitiveAboutYouAndTheProperty(
 ) extends Sensitive[AboutYouAndTheProperty] {
   override def decryptedValue: AboutYouAndTheProperty = AboutYouAndTheProperty(
     customerDetails.map(_.decryptedValue),
+    altDetailsQuestion,
+    altContactInformation.map(_.decryptedValue),
     propertyDetails,
     websiteForPropertyDetails,
     premisesLicenseGrantedDetail,
@@ -63,6 +67,8 @@ object SensitiveAboutYouAndTheProperty {
   def apply(aboutYouAndTheProperty: AboutYouAndTheProperty): SensitiveAboutYouAndTheProperty =
     SensitiveAboutYouAndTheProperty(
       aboutYouAndTheProperty.customerDetails.map(SensitiveCustomerDetails(_)),
+      aboutYouAndTheProperty.altDetailsQuestion,
+      aboutYouAndTheProperty.altContactInformation.map(SensitiveAlternativeContactDetails(_)),
       aboutYouAndTheProperty.propertyDetails,
       aboutYouAndTheProperty.websiteForPropertyDetails,
       aboutYouAndTheProperty.premisesLicenseGrantedDetail,

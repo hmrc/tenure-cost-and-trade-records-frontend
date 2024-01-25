@@ -14,18 +14,19 @@
  * limitations under the License.
  */
 
-package form.additionalinformation
+package form.aboutyouandtheproperty
 
-import form.MappingSupport.{alternativeAddressMapping, alternativeContactDetailsMapping}
-import models.submissions.additionalinformation.AlternativeContactDetails
+import form.MappingSupport.createYesNoType
+import models.submissions.aboutyouandtheproperty.ContactDetailsQuestion
 import play.api.data.Form
-import play.api.data.Forms.{default, mapping, text}
-import play.api.data.validation.Constraints.{maxLength, nonEmpty}
+import play.api.data.Forms.mapping
 
-object AlternativeContactDetailsForm {
-  val alternativeContactDetailsForm: Form[AlternativeContactDetails] = Form(
+object ContactDetailsQuestionForm {
+
+  val contactDetailsQuestionForm = Form(
     mapping(
-      "alternativeContactAddress" -> alternativeAddressMapping
-    )(AlternativeContactDetails.apply)(AlternativeContactDetails.unapply)
+      "contactDetailsQuestion" -> createYesNoType("error.contactDetailsQuestion.missing")
+    )(ContactDetailsQuestion.apply)(ContactDetailsQuestion.unapply)
   )
+
 }
