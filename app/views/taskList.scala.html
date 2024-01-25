@@ -205,10 +205,10 @@
          session.aboutTheTradingHistory.flatMap(_.fixedOperatingExpensesSections).isEmpty
         )
 
-        @includes.taskListItem("net-profit", "taskList.profitSummary",
-         controllers.aboutthetradinghistory.routes.NetProfitController.show(),
+        @includes.taskListItem("income-expenditure-summary", "taskList.profitSummary",
+         controllers.aboutthetradinghistory.routes.IncomeExpenditureSummaryController.show(),
          section3Completed,
-         session.aboutTheTradingHistory.flatMap(_.netProfit),
+         session.aboutTheTradingHistory.flatMap(_.incomeExpenditureSummary),
          session.aboutTheTradingHistory.flatMap(_.otherCosts).isEmpty
         )
        }

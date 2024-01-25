@@ -59,7 +59,7 @@
 @otherExpensesDetailsTextarea = @{
     hmrcCharacterCount(
         CharacterCount(
-            rows = 4,
+            rows = 3,
             maxLength = 2000,
             errorMessage = form.errors.asTextErrorMessageForField("otherExpensesDetails"),
             label = Label(
@@ -221,7 +221,10 @@
                                 )
                             ),
                             Seq(
-                                TableRow(content = HtmlContent(otherHeading)),
+                                TableRow(
+                                    content = HtmlContent(otherHeading),
+                                    classes = "no-border-bottom"
+                                ),
                                 TableRow(
                                     content = HtmlContent(
                                         govukInput(Input(
@@ -230,7 +233,8 @@
                                             )),
                                             attributes = inputAttributes
                                         ).withFormField(form(s"variableOperatingExpenses.year[$idx].other")))
-                                    )
+                                    ),
+                                    classes = "no-border-bottom"
                                 )
                             ),
                             Seq(

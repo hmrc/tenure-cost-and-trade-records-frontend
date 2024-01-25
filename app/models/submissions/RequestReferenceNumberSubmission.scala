@@ -23,7 +23,8 @@ import play.api.libs.json.Json
 import java.time.Instant
 
 case class RequestReferenceNumberSubmission(
-  BusinessTradingName: String,
+  id: String,
+  businessTradingName: String,
   address: RequestReferenceNumberAddress,
   fullName: String,
   contactDetails: ContactDetails,
