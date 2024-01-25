@@ -66,15 +66,15 @@ class RequestReferenceNumberControllerSpec extends TestBaseSpec {
 
   "Edit address form" should {
     "error if building number is missing" in {
-      val formData = baseFormData
-      val form     = requestReferenceNumberForm.bind(formData)
+      val formDataWithEmptyBuildingNameNumber = baseFormData.updated(TestData.errorKey.buildingNameNumber, "")
+      val form                                = requestReferenceNumberForm.bind(formDataWithEmptyBuildingNameNumber)
 
       mustContainError(errorKey.buildingNameNumber, "error.buildingNameNumber.required", form)
     }
 
     "error if town or city is missing" in {
-      val formData = baseFormData
-      val form     = requestReferenceNumberForm.bind(formData)
+      val formDataWithEmptyTown = baseFormData.updated(TestData.errorKey.town, "")
+      val form                  = requestReferenceNumberForm.bind(formDataWithEmptyTown)
 
       mustContainError(errorKey.town, "error.townCity.required", form)
     }
@@ -95,9 +95,7 @@ class RequestReferenceNumberControllerSpec extends TestBaseSpec {
     }
 
     val baseFormData: Map[String, String] = Map(
-      "requestReferenceNumberAddress.buildingNameNumber" -> "",
-      "requestReferenceNumberAddress.town"               -> "",
-      "requestReferenceNumberAddress.postcode"           -> "BN12 4AX"
+      "requestReferenceNumberAddress.postcode" -> "BN12 4AX"
     )
   }
 }
