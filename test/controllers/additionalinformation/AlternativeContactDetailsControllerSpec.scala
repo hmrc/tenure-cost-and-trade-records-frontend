@@ -17,7 +17,7 @@
 package controllers.additionalinformation
 
 import controllers.aboutyouandtheproperty.AlternativeContactDetailsController
-import form.Errors.{addressBuildingNameNumberRequired, addressTownCityRequired}
+import form.Errors.addressBuildingNameNumberRequired
 import play.api.http.Status
 import play.api.test.Helpers._
 import utils.TestBaseSpec
@@ -64,17 +64,17 @@ class AlternativeContactDetailsControllerSpec extends TestBaseSpec {
 
   "Additional information form" should {
     "error if buildingNameNumber is missing" in {
-      val formData = baseFormData - addressBuildingNameNumberRequired
+      val formData = baseFormData
       val form     = alternativeContactDetailsForm.bind(formData)
 
-      mustContainError(addressBuildingNameNumberRequired, "error.buildingNameNumber.required", form)
+      mustContainError(errorKey.buildingNameNumber, "error.buildingNameNumber.required", form)
     }
 
     "error if town is missing" in {
-      val formData = baseFormData - addressTownCityRequired
-      val form = alternativeContactDetailsForm.bind(formData)
+      val formData = baseFormData
+      val form     = alternativeContactDetailsForm.bind(formData)
 
-      mustContainError(addressTownCityRequired, "error.town.required", form)
+      mustContainError(errorKey.town, "error.townCity.required", form)
     }
 
     "error if postcode is missing" in {
@@ -103,8 +103,8 @@ class AlternativeContactDetailsControllerSpec extends TestBaseSpec {
       "contactDetails.phone"                         -> "01234 123123",
       "contactDetails.email1"                        -> "blah.blah@test.com",
       "alternativeContactFullName"                   -> "Mr John Smith",
-      "alternativeContactAddress.buildingNameNumber" -> "001",
-      "alternativeContactAddress.town"               -> "Manchester",
+      "alternativeContactAddress.buildingNameNumber" -> "",
+      "alternativeContactAddress.town"               -> "",
       "alternativeContactAddress.postcode"           -> "BN12 4AX"
     )
   }

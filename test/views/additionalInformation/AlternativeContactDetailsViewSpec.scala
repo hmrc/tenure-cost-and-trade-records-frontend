@@ -42,8 +42,7 @@ class AlternativeContactDetailsViewSpec extends QuestionViewBehaviours[Alternati
     behave like pageWithTextFields(
       createViewUsingForm,
       "alternativeContactAddress.buildingNameNumber",
-      "alternativeContactAddress.town",
-      "alternativeContactAddress.postcode"
+      "alternativeContactAddress.town"
     )
 
     "has a link marked with back.link.label leading to the contact details page" in {
