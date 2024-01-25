@@ -17,12 +17,11 @@
 package controllers.additionalinformation
 
 import controllers.aboutyouandtheproperty.AlternativeContactDetailsController
-import form.Errors
 import play.api.http.Status
 import play.api.test.Helpers._
 import utils.TestBaseSpec
 import form.aboutyouandtheproperty.AlternativeContactDetailsForm.alternativeContactDetailsForm
-import models.submissions.additionalinformation.AdditionalInformation
+import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
 import play.api.test.FakeRequest
 
 class AlternativeContactDetailsControllerSpec extends TestBaseSpec {
@@ -31,12 +30,12 @@ class AlternativeContactDetailsControllerSpec extends TestBaseSpec {
   import utils.FormBindingTestAssertions.mustContainError
 
   def alternativeContactDetailsController(
-    additionalInformation: Option[AdditionalInformation] = Some(prefilledAdditionalInformation)
+    aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes)
   ) = new AlternativeContactDetailsController(
     stubMessagesControllerComponents(),
     aboutYouAndThePropertyNavigator,
     alternativeContactDetailsView,
-    preEnrichedActionRefiner(additionalInformation = additionalInformation),
+    preEnrichedActionRefiner(aboutYouAndTheProperty = aboutYouAndTheProperty),
     mockSessionRepo
   )
 
@@ -64,15 +63,15 @@ class AlternativeContactDetailsControllerSpec extends TestBaseSpec {
 
   "Additional information form" should {
     "error if buildingNameNumber is missing" in {
-      val formData = baseFormData - errorKey.buildingNameNumber
-      val form     = alternativeContactDetailsForm.bind(formData)
+      val formDataWithEmptyBuildingNameNumber = baseFormData.updated(TestData.errorKey.buildingNameNumber, "")
+      val form                                = alternativeContactDetailsForm.bind(formDataWithEmptyBuildingNameNumber)
 
       mustContainError(errorKey.buildingNameNumber, "error.buildingNameNumber.required", form)
     }
 
-    "error if town or city is missing" in {
-      val formData = baseFormData - errorKey.town
-      val form     = alternativeContactDetailsForm.bind(formData)
+    "error if town is missing" in {
+      val formDataWithEmptyTown = baseFormData.updated(TestData.errorKey.town, "")
+      val form                  = alternativeContactDetailsForm.bind(formDataWithEmptyTown)
 
       mustContainError(errorKey.town, "error.townCity.required", form)
     }
@@ -99,13 +98,11 @@ class AlternativeContactDetailsControllerSpec extends TestBaseSpec {
 
     val tooLongEmail                      = "email_too_long_for_validation_againt_business_rules_specify_but_DB_constraints@something.co.uk"
     val baseFormData: Map[String, String] = Map(
-      "contactDetails.phone"                         -> "12345678901",
-      "contactDetails.phone"                         -> "01234 123123",
-      "contactDetails.email1"                        -> "blah.blah@test.com",
-      "alternativeContactFullName"                   -> "Mr John Smith",
-      "alternativeContactAddress.buildingNameNumber" -> "001",
-      "alternativeContactAddress.town"               -> "Manchester",
-      "alternativeContactAddress.postcode"           -> "BN12 4AX"
+      "contactDetails.phone"               -> "12345678901",
+      "contactDetails.phone"               -> "01234 123123",
+      "contactDetails.email1"              -> "blah.blah@test.com",
+      "alternativeContactFullName"         -> "Mr John Smith",
+      "alternativeContactAddress.postcode" -> "BN12 4AX"
     )
   }
 
