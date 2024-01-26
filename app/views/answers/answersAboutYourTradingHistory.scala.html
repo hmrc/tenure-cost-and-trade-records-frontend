@@ -55,6 +55,12 @@
 }
 }
 
+@optionalParagraph(textOpt: Option[String]) = {
+    @textOpt.filter(_.trim.nonEmpty).map { text =>
+        <p class="govuk-body">@text</p>
+    }
+}
+
 @financialYearEndDatesTable(financialYearEndDates: Seq[LocalDate]) = @{
     table(
         financialYearEndDates.map(financialYearEnd => Seq(
@@ -136,8 +142,8 @@
 @variableOperatingExpensesValuesTable(voeSections: Option[VariableOperatingExpensesSections]) = @{
     table(
         voeSections.fold(Seq.empty[Seq[String]])(
-            _.variableOperatingExpenses.zipWithIndex.map {
-                case (voe, idx) => Seq(
+            _.variableOperatingExpenses.map { voe =>
+                Seq(
                     dateUtil.formatDayMonthAbbrYear(voe.financialYearEnd),
                     voe.energyAndUtilities.getOrElse(zeroBigDecimal).asMoney,
                     voe.cleaningAndLaundry.getOrElse(zeroBigDecimal).asMoney,
@@ -146,8 +152,18 @@
                     voe.advertisingAndPromotions.getOrElse(zeroBigDecimal).asMoney + "<br/> &nbsp;",
                     voe.administrationAndSundries.getOrElse(zeroBigDecimal).asMoney,
                     voe.entertainment.getOrElse(zeroBigDecimal).asMoney,
-                    voe.other.getOrElse(zeroBigDecimal).asMoney,
-                    // Option.when(idx == 0)(voeSections.flatMap(_.otherExpensesDetails)).flatten.getOrElse(" &nbsp; "),
+                    voe.other.getOrElse(zeroBigDecimal).asMoney
+                )
+            }
+        )
+    ).body + optionalParagraph(voeSections.flatMap(_.otherExpensesDetails)).body
+}
+
+@variableOperatingExpensesTotalValuesRow(voeSections: Option[VariableOperatingExpensesSections]) = @{
+    table(
+        voeSections.fold(Seq.empty[Seq[String]])(
+            _.variableOperatingExpenses.map { voe =>
+                Seq(
                     voe.total.asMoney
                 )
             }
@@ -165,9 +181,7 @@
         messages("variableOperatingExpenses.advertisingAndPromotions"),
         messages("variableOperatingExpenses.administrationAndSundries"),
         messages("variableOperatingExpenses.entertainment"),
-        messages("checkYourAnswersAboutTheTradingHistory.variableOperatingExpenses.other"),
-        // messages("checkYourAnswersAboutTheTradingHistory.variableOperatingExpenses.otherDetails"),
-        messages("variableOperatingExpenses.total")
+        messages("checkYourAnswersAboutTheTradingHistory.variableOperatingExpenses.other")
     ).mkString("""<p class="govuk-body govuk-!-font-weight-bold">""", """</p> <p class="govuk-body govuk-!-font-weight-bold">""", "</p>")
 }
 
@@ -202,7 +216,14 @@
         otherCosts.map(_.otherCosts).getOrElse(Seq()).map(otherCost => Seq(
             dateUtil.formatDayMonthAbbrYear(otherCost.financialYearEnd),
             otherCost.contributionsToHeadOffice.getOrElse(zeroBigDecimal).asMoney,
-            otherCost.otherCosts.getOrElse(zeroBigDecimal).asMoney,
+            otherCost.otherCosts.getOrElse(zeroBigDecimal).asMoney
+        ))
+    ).body + optionalParagraph(otherCosts.flatMap(_.otherCostDetails)).body
+}
+
+@otherCostsTotalValuesRow(otherCosts: Option[OtherCosts]) = @{
+    table(
+        otherCosts.map(_.otherCosts).getOrElse(Seq()).map(otherCost => Seq(
             otherCost.total.asMoney
         ))
     ).body
@@ -212,8 +233,7 @@
     Seq(
         messages("checkYourAnswersAboutTheTradingHistory.financialYearEnd"),
         messages("otherCosts.contributionToHeadOffice"),
-        messages("otherCosts.otherCosts"),
-        messages("otherCosts.total")
+        messages("otherCosts.otherCosts")
     ).mkString("""<p class="govuk-body govuk-!-font-weight-bold">""", """</p> <p class="govuk-body govuk-!-font-weight-bold">""", "</p>")
 }
 
@@ -357,7 +377,12 @@
                             )
                         )
                     )
-                )
+                ),
+                classes = "no-border-bottom"
+            ),
+            SummaryListRow(
+                key = Key(Text(messages("variableOperatingExpenses.total"))),
+                value = Value(HtmlContent(sectionAnswers.answers.fold("")(t => variableOperatingExpensesTotalValuesRow(t.variableOperatingExpenses))))
             )
         )
     ))
@@ -407,7 +432,12 @@
                             )
                         )
                     )
-                )
+                ),
+                classes = "no-border-bottom"
+            ),
+            SummaryListRow(
+                key = Key(Text(messages("otherCosts.total"))),
+                value = Value(HtmlContent(sectionAnswers.answers.fold("")(t => otherCostsTotalValuesRow(t.otherCosts))))
             )
         )
     ))
