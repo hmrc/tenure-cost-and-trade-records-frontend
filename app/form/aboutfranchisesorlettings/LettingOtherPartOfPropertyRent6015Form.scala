@@ -18,7 +18,7 @@ package form.aboutfranchisesorlettings
 
 import form.DateMappings.requiredDateMapping
 import form.MappingSupport.currencyMapping
-import models.submissions.aboutfranchisesorlettings.{LettingOtherPartOfPropertyRent6015Details, LettingOtherPartOfPropertyRentDetails}
+import models.submissions.aboutfranchisesorlettings.LettingOtherPartOfPropertyRent6015Details
 import play.api.data.Form
 import play.api.data.Forms._
 import play.api.data.format.Formats._

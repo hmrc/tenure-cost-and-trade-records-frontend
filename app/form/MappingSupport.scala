@@ -40,7 +40,7 @@ import models.{AnnualRent, NamedEnum, NamedEnumSupport}
 import play.api.data.Forms.{boolean, default, mapping, optional, text}
 import play.api.data.format.Formatter
 import play.api.data.validation.{Constraint, Invalid, Valid, ValidationError}
-import play.api.data.validation.Constraints.{maxLength, nonEmpty, pattern}
+import play.api.data.validation.Constraints.{maxLength, nonEmpty}
 import play.api.data.{FormError, Forms, Mapping}
 import play.api.i18n.Messages
 import util.NumberUtil.zeroBigDecimal

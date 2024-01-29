@@ -17,7 +17,6 @@
 package models.submissions.additionalinformation
 
 import crypto.MongoCrypto
-import models.submissions.aboutyouandtheproperty.{ContactDetailsQuestion, SensitiveAlternativeContactDetails}
 import play.api.libs.json.{Json, OFormat}
 import uk.gov.hmrc.crypto.Sensitive
 

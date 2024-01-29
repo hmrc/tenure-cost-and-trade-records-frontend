@@ -18,8 +18,7 @@ package form.aboutthetradinghistory
 
 import models.submissions.aboutthetradinghistory.TotalPayrollCost
 import play.api.data.{Form, Mapping}
-import play.api.data.Forms._
-import play.api.data.Forms.{bigDecimal, ignored, localDate, mapping}
+import play.api.data.Forms.{ignored, mapping}
 import form.MappingSupport.{EnrichedSeq, turnoverSalesMappingWithYear}
 import play.api.i18n.Messages
 
