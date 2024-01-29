@@ -16,7 +16,7 @@
 
 package form.aboutYourLeaseOrTenure
 
-import form.requestReferenceNumber.OptionalCurrencyMapping.currencyMappingOptional
+import form.requestReferenceNumber.OptionalCurrencyMapping.partOfAnnualRent
 import models.submissions.aboutYourLeaseOrTenure.RentIncludeFixturesOrFittingsInformationDetails
 import play.api.data.Form
 import play.api.data.Forms.mapping
@@ -24,12 +24,20 @@ import play.api.i18n.Messages
 
 object RentIncludeFixtureAndFittingDetailsForm {
 
-  def rentIncludeFixtureAndFittingsDetailsForm(annualRent: Option[BigDecimal] = None)(implicit
+  def rentIncludeFixtureAndFittingsDetailsForm(
+    annualRent: Option[BigDecimal] = None,
+    otherIncludedPartsSum: BigDecimal = 0
+  )(implicit
     messages: Messages
   ): Form[RentIncludeFixturesOrFittingsInformationDetails] = Form(
     mapping(
       "rentIncludeFixturesAndFittingsDetails" ->
-        currencyMappingOptional(messages("error.rentIncludeFixturesAndFittingsDetails.title"), annualRent)
-    )(RentIncludeFixturesOrFittingsInformationDetails.apply)(RentIncludeFixturesOrFittingsInformationDetails.unapply _)
+        partOfAnnualRent(
+          messages("error.rentIncludeFixturesAndFittingsDetails.title"),
+          annualRent,
+          otherIncludedPartsSum
+        )
+    )(RentIncludeFixturesOrFittingsInformationDetails.apply)(RentIncludeFixturesOrFittingsInformationDetails.unapply)
   )
+
 }

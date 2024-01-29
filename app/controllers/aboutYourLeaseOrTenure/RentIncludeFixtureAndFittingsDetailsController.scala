@@ -26,6 +26,7 @@ import navigation.identifiers.RentFixtureAndFittingsDetailsPageId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
+import util.NumberUtil.zeroBigDecimal
 import views.html.aboutYourLeaseOrTenure.rentIncludeFixtureAndFittingsDetails
 
 import javax.inject.{Inject, Named, Singleton}
@@ -57,9 +58,14 @@ class RentIncludeFixtureAndFittingsDetailsController @Inject() (
   }
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
-    val annualRent = request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.annualRent.map(_.amount))
+    val leaseOrAgreement1     = request.sessionData.aboutLeaseOrAgreementPartOne
+    val annualRent            = leaseOrAgreement1.flatMap(_.annualRent.map(_.amount))
+    val otherIncludedPartsSum = leaseOrAgreement1
+      .flatMap(_.rentIncludeTradeServicesInformation.flatMap(_.sumIncludedInRent))
+      .getOrElse(zeroBigDecimal)
+
     continueOrSaveAsDraft[RentIncludeFixturesOrFittingsInformationDetails](
-      rentIncludeFixtureAndFittingsDetailsForm(annualRent),
+      rentIncludeFixtureAndFittingsDetailsForm(annualRent, otherIncludedPartsSum),
       formWithErrors =>
         BadRequest(rentIncludeFixtureAndFittingsDetailsView(formWithErrors, request.sessionData.toSummary)),
       data => {
