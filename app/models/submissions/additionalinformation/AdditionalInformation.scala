@@ -18,7 +18,6 @@ package models.submissions.additionalinformation
 
 import actions.SessionRequest
 import models.Session
-import models.submissions.aboutyouandtheproperty.{AlternativeContactDetails, ContactDetailsQuestion}
 import play.api.libs.json.Json
 
 case class AdditionalInformation(

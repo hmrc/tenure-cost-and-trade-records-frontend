@@ -22,7 +22,7 @@ import models.submissions.common.OutsideRepairsBoth
 import play.api.data.Form
 import play.api.data.Forms.{default, mapping, text}
 import play.api.data.validation.Constraints.{maxLength, nonEmpty}
-import uk.gov.voa.play.form.ConditionalMappings.{mandatoryIfAnyEqual, mandatoryIfEqual}
+import uk.gov.voa.play.form.ConditionalMappings.mandatoryIfEqual
 
 object UltimatelyResponsibleOutsideRepairsForm {
 
