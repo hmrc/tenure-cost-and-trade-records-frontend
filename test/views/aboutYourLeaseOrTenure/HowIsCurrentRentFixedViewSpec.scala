@@ -137,5 +137,12 @@ class HowIsCurrentRentFixedViewSpec extends QuestionViewBehaviours[HowIsCurrentR
       val loginButton = doc.getElementById("continue").text()
       assert(loginButton == messages("button.label.continue"))
     }
+
+    "contain get help section" in {
+      val doc = asDocument(createView())
+      assert(doc.toString.contains(messages("help.rentActuallyAgreed.title")))
+      assert(doc.toString.contains(messages("help.rentActuallyAgreed.p1")))
+      assert(doc.toString.contains(messages("help.rentActuallyAgreed.p2")))
+    }
   }
 }
