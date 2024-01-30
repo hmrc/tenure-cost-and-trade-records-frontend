@@ -290,8 +290,8 @@ error.tradingNamePayingRent.missing = Select yes if the organisation pays rent o
 #######################################################
 areYouThirdParty.heading = Are you a third party?
 areYouThirdParty.title = Are you a third party working on behalf of {0}?
-hint.areYouThirdParty.yes = Choose ‘yes’ if you have been contracted by {0} to complete this declaration
-hint.areYouThirdParty.no = Choose ‘no’ if you are an owner, director, or direct employee of {0}, or you are completing this declaration on their behalf in an unofficial capacity
+hint.areYouThirdParty.yes = Choose ‘yes’ if you have been contracted by {0} to complete this declaration.
+hint.areYouThirdParty.no = Choose ‘no’ if you are an owner, director, or direct employee of {0}, or you are completing this declaration on their behalf in an unofficial capacity.
 error.areYouThirdParty.missing = Select yes if you are working on behalf of the organisation
 
 # VACANT PROPERTIES
@@ -325,7 +325,7 @@ checkYourAnswersConnectionToProperty.thirdParty = Third party?
 ############################
 vacantPropertyStartDate.heading = When did the property become vacant?
 label.startDateOfVacantProperty =
-label.startDateOfVacantProperty.help = For example 27 9 2017
+label.startDateOfVacantProperty.help = For example, 27 9 2017.
 fieldName.startDateOfVacantProperty = the date the property became vacant
 
 # LETTING INCOME - IS ANY RENT RECEIVED FROM LETTING
@@ -453,7 +453,7 @@ error.pastConnectionType = Select yes if you ever had a connection to the proper
 # REMOVE CONNECTION
 ###################
 removeConnection.heading = Provide your contact details
-removeConnection.subheading = We’ll only use these details if we need to contact you before removing your connection to this property
+removeConnection.subheading = We’ll only use these details if we need to contact you before removing your connection to this property.
 label.removeConnectionAdditionalInfo = Additional information
 hint.removeConnectionDetails.removeConnectionAdditionalInfo = For example, the date you last occupied the property.
 error.fullName.required = Enter your name
@@ -953,7 +953,7 @@ rent.received.from.confirm.error = Please confirm this payment was included in t
 
 # CALCULATING THE RENT (6015/6016 0NLY)
 calculating.the.rent.for.heading = Calculating the rent for {0}
-calculating.the.rent.for.explain = Explain how the income received figure was calculated- for example, 10% of the total takings
+calculating.the.rent.for.explain = Explain how the income received figure was calculated – for example, 10% of the total takings
 calculating.the.rent.for.explain.error = Please explain how the income received figure was calculated
 calculating.the.rent.for.label = When was the rent fixed at its current rate?
 calculating.the.rent.for.error = Enter the date when the annual rent was fixed
@@ -976,6 +976,9 @@ error.cateringOperationOrLettingAccommodationCheckboxesDetails.noneSelectedWithO
 #################################################################
 addAnotherCateringOperation.heading = You have added {0} separate business or franchise
 addAnotherConcessionOrLetting.heading = You have added {0} separate business or concession
+addAnotherCateringOperation.heading.plural = You have added {0} separate businesses or franchises
+addAnotherConcession.heading = You have added {0} separate business or concession
+addAnotherConcession.heading.plural = You have added {0} separate businesses or concessions
 addAnotherCateringOperation.zeroBusinessOrFranchises.heading = You have removed all your separate business or franchises
 addAnotherLettingOtherPartOfProperty.zeroBusinessOrFranchises.heading = You have removed all your separate business or concessions
 addAnotherLettingOtherPartOfProperty.heading = You have added {0} letting
@@ -1588,6 +1591,7 @@ checkYourAnswersAboutTheTradingHistory.food = Food
 checkYourAnswersAboutTheTradingHistory.otherReceipts = Other receipts
 checkYourAnswersAboutTheTradingHistory.accommodation = Accommodation
 checkYourAnswersAboutTheTradingHistory.averageOccupancyRate = Average occupancy rate
+checkYourAnswersAboutTheTradingHistory.totalSalesRevenue = Total sales revenue
 checkYourAnswersAboutTheTradingHistory.totalPayrollCosts = Payroll costs
 checkYourAnswersAboutTheTradingHistory.variableOperatingExpenses.other = Other
 checkYourAnswersAboutTheTradingHistory.variableOperatingExpenses.otherDetails = Other expenses details
@@ -1775,7 +1779,7 @@ error.fullName.maxLength = Full name must be 50 characters or fewer
 # Currency optional validation
 error.optCurrency.negative = {0} cannot be a negative number
 error.optCurrency.invalid = {0} must be a number, for example 100 or 100.00
-error.optCurrency.graterThanAnnualRent = {0} cannot be grater than the annual rent
+error.optCurrency.graterThanAnnualRent = {0} cannot be greater than the annual rent
 
 # Date fields validation
 error.date.required = Enter {0}
