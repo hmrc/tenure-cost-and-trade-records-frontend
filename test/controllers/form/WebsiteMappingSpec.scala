@@ -16,7 +16,6 @@
 
 package controllers.form
 
-import form.PhoneNumberMapping.validatePhoneNumber
 import form.WebsiteMapping.validateWebaddress
 import org.scalatest.matchers.should
 import org.scalatest.prop.TableDrivenPropertyChecks
@@ -36,6 +35,10 @@ class WebsiteMappingSpec extends AnyWordSpecLike with should.Matchers with Table
       val isInput = Table(
         ("web address", "validity"),
         ("www.test.com", true),
+        ("https://www.test.test.com", true),
+        ("http://www.test.com", true),
+        ("www.test@test.com", true),
+        ("https://www.test.com/", true),
         ("", false)
       )
 
@@ -50,5 +53,4 @@ class WebsiteMappingSpec extends AnyWordSpecLike with should.Matchers with Table
       }
     }
   }
-
 }
