@@ -98,7 +98,7 @@ class AboutThePropertyViewSpec extends QuestionViewBehaviours[PropertyDetails] {
       assertContainsText(doc, messages("propertyCurrentlyUsed.otherBar"))
     }
 
-    "contain radio buttons for the value pub or restaurant" in {
+    "contain radio buttons for the value pub and restaurant" in {
       val doc = asDocument(createViewUsingForm(form))
       assertContainsRadioButton(
         doc,

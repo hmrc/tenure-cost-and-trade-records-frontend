@@ -16,6 +16,7 @@
 
 package controllers.aboutYourLeaseOrTenure
 
+import form.aboutYourLeaseOrTenure.AboutTheLandlordForm.aboutTheLandlordForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
 import navigation.AboutYourLeaseOrTenureNavigator
 import play.api.http.Status
@@ -25,6 +26,9 @@ import play.api.test.Helpers._
 import utils.TestBaseSpec
 
 class AboutYourLandlordControllerSpec extends TestBaseSpec {
+
+  import TestData.{baseFormData, errorKey}
+  import utils.FormBindingTestAssertions.mustContainError
 
   val mockNavigator = mock[AboutYourLeaseOrTenureNavigator]
   def aboutYourLandlordController(
@@ -61,5 +65,34 @@ class AboutYourLandlordControllerSpec extends TestBaseSpec {
       )
       status(res) shouldBe BAD_REQUEST
     }
+  }
+
+  "Additional information form" should {
+    "error if buildingNameNumber is missing" in {
+      val formDataWithEmptyBuildingNameNumber = baseFormData.updated(TestData.errorKey.buildingNameNumber, "")
+      val form                                = aboutTheLandlordForm.bind(formDataWithEmptyBuildingNameNumber)
+
+      mustContainError(errorKey.buildingNameNumber, "error.buildingNameNumber.required", form)
+    }
+
+    "error if town is missing" in {
+      val formDataWithEmptyTown = baseFormData.updated(TestData.errorKey.town, "")
+      val form                  = aboutTheLandlordForm.bind(formDataWithEmptyTown)
+
+      mustContainError(errorKey.town, "error.townCity.required", form)
+    }
+  }
+
+  object TestData {
+    val errorKey = new {
+      val buildingNameNumber = "landlordAddress.buildingNameNumber"
+      val town               = "landlordAddress.town"
+      val postcode           = "alternativelandlordAddressContactAddress.postcode"
+    }
+
+    val tooLongEmail                      = "email_too_long_for_validation_againt_business_rules_specify_but_DB_constraints@something.co.uk"
+    val baseFormData: Map[String, String] = Map(
+      "landlordAddress.postcode" -> "BN12 4AX"
+    )
   }
 }

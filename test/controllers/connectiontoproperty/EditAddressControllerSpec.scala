@@ -61,8 +61,8 @@ class EditAddressControllerSpec extends TestBaseSpec {
 
   "Edit address form" should {
     "error if building number is missing" in {
-      val formData = baseFormData - errorKey.buildingNameNumber
-      val form     = editAddressForm.bind(formData)
+      val formDataWithEmptybuildingNameNumber = baseFormData.updated(TestData.errorKey.buildingNameNumber, "")
+      val form                                = editAddressForm.bind(formDataWithEmptybuildingNameNumber)
 
       mustContainError(errorKey.buildingNameNumber, "error.buildingNameNumber.required", form)
     }
@@ -82,8 +82,8 @@ class EditAddressControllerSpec extends TestBaseSpec {
     }
 
     val baseFormData: Map[String, String] = Map(
-      "buildingNameNumber" -> "001",
-      "postcode"           -> "BN12 4AX"
+      "editAddress.buildingNameNumber" -> "",
+      "editAddress.postcode"           -> "BN12 4AX"
     )
   }
 }

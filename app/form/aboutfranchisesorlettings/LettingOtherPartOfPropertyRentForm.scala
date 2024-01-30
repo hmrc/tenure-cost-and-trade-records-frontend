@@ -21,7 +21,6 @@ import form.MappingSupport.currencyMapping
 import models.submissions.aboutfranchisesorlettings.LettingOtherPartOfPropertyRentDetails
 import play.api.data.Form
 import play.api.data.Forms._
-import play.api.data.format.Formats._
 import play.api.i18n.Messages
 
 object LettingOtherPartOfPropertyRentForm {

@@ -200,74 +200,137 @@
 
 @if(sectionAnswers.answers.exists(a => a.rentOpenMarketValueDetails.isDefined || a.rentIncreasedAnnuallyWithRPIDetails.isDefined)) {
     <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutYourLeaseOrTenure.howRentWasCalculated.heading")</h2>
+    @if(forType == ForTypes.for6010 || forType == ForTypes.for6011) {
+        @govukSummaryList(SummaryList(rows =
+            sectionAnswers.row("checkYourAnswersAboutYourLeaseOrTenure.rentBasedOnOpenMarketValue",
+                _.rentOpenMarketValueDetails.map(_.rentOpenMarketValues.name).map(v => messages(s"label.$v")),
+                aboutYourLeaseOrTenure.routes.RentOpenMarketValueController.show(), "rentOpenMarketValue") ++
+                    sectionAnswers.conditionRow(
+                        _.rentOpenMarketValueDetails.map(_.rentOpenMarketValues.name).contains("no"),
+                        "checkYourAnswersAboutYourLeaseOrTenure.currentRentBasedOn",
+                        _.whatIsYourCurrentRentBasedOnDetails.map(r =>
+                            Seq(r.currentRentBasedOn.name).map(item => messages(s"label.currentRentBasedOn.$item"))
+                                    ++ r.describe.fold(Seq.empty[String])(d => Seq(Text(d).asHtml.body))
+                        ).map(_.mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>")),
+                        aboutYourLeaseOrTenure.routes.WhatIsYourRentBasedOnController.show(), "",
+                        ("valueAsHtml", _ => None)) ++
+                    sectionAnswers.row("checkYourAnswersAboutYourLeaseOrTenure.rentIncreasedAnnuallyWithIndex",
+                        _.rentIncreasedAnnuallyWithRPIDetails.map(_.rentIncreasedAnnuallyWithRPIDetails.name).map(v => messages(s"label.$v")),
+                        aboutYourLeaseOrTenure.routes.RentIncreaseAnnuallyWithRPIController.show(), "rentIncreasedAnnuallyWithRPIs") ++
+                    sectionAnswers2.row("checkYourAnswersAboutYourLeaseOrTenure.rentPayableVaryAccordingToTurnover",
+                        _.rentPayableVaryAccordingToGrossOrNetDetails.map(_.rentPayableVaryAccordingToGrossOrNets.name).map(v => messages(s"label.$v")),
+                        aboutYourLeaseOrTenure.routes.RentPayableVaryAccordingToGrossOrNetController.show(), "rentPayableVaryAccordingToGrossOrNet") ++
+                    sectionAnswers2.conditionRow(
+                        _.rentPayableVaryAccordingToGrossOrNetDetails.map(_.rentPayableVaryAccordingToGrossOrNets.name).contains("yes"),
+                        "checkYourAnswersAboutYourLeaseOrTenure.rentPayableVaryAccordingToTurnoverDetails",
+                        _.rentPayableVaryAccordingToGrossOrNetInformationDetails.map(_.rentPayableVaryAccordingToGrossOrNet),
+                        aboutYourLeaseOrTenure.routes.RentPayableVaryAccordingToGrossOrNetDetailsController.show(), "rentPayableVaryAccordingToGrossOrNetDetails") ++
 
-    @govukSummaryList(SummaryList(rows =
-        sectionAnswers.row("checkYourAnswersAboutYourLeaseOrTenure.rentBasedOnOpenMarketValue",
-            _.rentOpenMarketValueDetails.map(_.rentOpenMarketValues.name).map(v => messages(s"label.$v")),
-            aboutYourLeaseOrTenure.routes.RentOpenMarketValueController.show(), "rentOpenMarketValue") ++
-                sectionAnswers.conditionRow(
-                    _.rentOpenMarketValueDetails.map(_.rentOpenMarketValues.name).contains("no"),
-                    "checkYourAnswersAboutYourLeaseOrTenure.currentRentBasedOn",
-                    _.whatIsYourCurrentRentBasedOnDetails.map(r =>
-                        Seq(r.currentRentBasedOn.name).map(item => messages(s"label.currentRentBasedOn.$item"))
-                                ++ r.describe.fold(Seq.empty[String])(d => Seq(Text(d).asHtml.body))
-                    ).map(_.mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>")),
-                    aboutYourLeaseOrTenure.routes.WhatIsYourRentBasedOnController.show(), "",
-                    ("valueAsHtml", _ => None)) ++
-                sectionAnswers.row("checkYourAnswersAboutYourLeaseOrTenure.rentIncreasedAnnuallyWithIndex",
-                    _.rentIncreasedAnnuallyWithRPIDetails.map(_.rentIncreasedAnnuallyWithRPIDetails.name).map(v => messages(s"label.$v")),
-                    aboutYourLeaseOrTenure.routes.RentIncreaseAnnuallyWithRPIController.show(), "rentIncreasedAnnuallyWithRPIs") ++
-                sectionAnswers2.row("checkYourAnswersAboutYourLeaseOrTenure.rentPayableVaryAccordingToTurnover",
-                    _.rentPayableVaryAccordingToGrossOrNetDetails.map(_.rentPayableVaryAccordingToGrossOrNets.name).map(v => messages(s"label.$v")),
-                    aboutYourLeaseOrTenure.routes.RentPayableVaryAccordingToGrossOrNetController.show(), "rentPayableVaryAccordingToGrossOrNet") ++
-                sectionAnswers2.conditionRow(
-                    _.rentPayableVaryAccordingToGrossOrNetDetails.map(_.rentPayableVaryAccordingToGrossOrNets.name).contains("yes"),
-                    "checkYourAnswersAboutYourLeaseOrTenure.rentPayableVaryAccordingToTurnoverDetails",
-                    _.rentPayableVaryAccordingToGrossOrNetInformationDetails.map(_.rentPayableVaryAccordingToGrossOrNet),
-                    aboutYourLeaseOrTenure.routes.RentPayableVaryAccordingToGrossOrNetDetailsController.show(), "rentPayableVaryAccordingToGrossOrNetDetails") ++
-                sectionAnswers2.row("checkYourAnswersAboutYourLeaseOrTenure.rentPayableVaryOnQuantityOfDrinks",
-                    _.rentPayableVaryOnQuantityOfBeersDetails.map(_.rentPayableVaryOnQuantityOfBeersDetails.name).map(v => messages(s"label.$v")),
-                    aboutYourLeaseOrTenure.routes.RentPayableVaryOnQuantityOfBeersController.show(), "rentPayableVaryOnQuantityOfBeers") ++
-                sectionAnswers2.conditionRow(
-                    _.rentPayableVaryOnQuantityOfBeersDetails.map(_.rentPayableVaryOnQuantityOfBeersDetails.name).contains("yes"),
-                    "checkYourAnswersAboutYourLeaseOrTenure.rentPayableVaryOnQuantityOfDrinksDetails",
-                    _.rentPayableVaryOnQuantityOfBeersInformationDetails.map(_.rentPayableVaryOnQuantityOfBeersDetails),
-                    aboutYourLeaseOrTenure.routes.RentPayableVaryOnQuantityOfBeersDetailsController.show(), "rentPayableVaryOnQuantityOfBeersDetails") ++
-                sectionAnswers2.row("checkYourAnswersAboutYourLeaseOrTenure.howAndWhenRentWasFixed",
-                    _.howIsCurrentRentFixed.map(r =>
-                        Seq(messages(s"label.${r.currentRentFixed.name}"),
-                            dateUtil.formatDayMonthAbbrYear(r.rentActuallyAgreed)
-                        ).mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>")
-                    ),
-                    aboutYourLeaseOrTenure.routes.HowIsCurrentRentFixedController.show(), "",
-                    ("valueAsHtml", _ => None)) ++
-                sectionAnswers2.row("checkYourAnswersAboutYourLeaseOrTenure.methodUsedToFixCurrentRent",
-                    _.methodToFixCurrentRentDetails.map(_.methodToFixCurrentRent.name).map(m => messages(s"label.methodUsedToFixCurrentRent.$m")),
-                    aboutYourLeaseOrTenure.routes.MethodToFixCurrentRentController.show(), "methodUsedToFixCurrentRent") ++
-                sectionAnswers2.row("checkYourAnswersAboutYourLeaseOrTenure.intervalsOfRentReview",
-                    _.intervalsOfRentReview.map(r =>
-                        Seq(r.currentRentWithin12Months.map(Text(_).asHtml).getOrElse(""),
-                            r.intervalsOfRentReview.map(date => dateUtil.formatDayMonthAbbrYear(date)).getOrElse("")
-                        ).mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>")
-                    ),
-                    aboutYourLeaseOrTenure.routes.IntervalsOfRentReviewController.show(), "",
-                    ("valueAsHtml", _ => None)) ++
-                sectionAnswers2.row("checkYourAnswersAboutYourLeaseOrTenure.canRentBeReducedOnReview",
-                    _.canRentBeReducedOnReviewDetails.map(_.rentReducedOnReview.name).map(v => messages(s"label.$v")),
-                    aboutYourLeaseOrTenure.routes.CanRentBeReducedOnReviewController.show(), "rentReducedOnReview") ++
-                sectionAnswers2.row("checkYourAnswersAboutYourLeaseOrTenure.formerLeaseSurrenderedEarly",
-                    _.incentivesPaymentsConditionsDetails.map(_.formerLeaseSurrendered.name).map(v => messages(s"label.$v")),
-                    aboutYourLeaseOrTenure.routes.IncentivesPaymentsConditionsController.show(), "formerLeaseSurrendered") ++
-                sectionAnswers2.row("checkYourAnswersAboutYourLeaseOrTenure.disregardedAdditionsOrImprovements",
-                    _.tenantAdditionsDisregardedDetails.map(_.tenantAdditionalDisregarded.name).map(v => messages(s"label.$v")),
-                    aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController.show(), "tenantsAdditionsDisregarded") ++
-                sectionAnswers2.conditionRow(
-                    _.tenantAdditionsDisregardedDetails.map(_.tenantAdditionalDisregarded.name).contains("yes"),
-                    "checkYourAnswersAboutYourLeaseOrTenure.disregardedAdditionsOrImprovementsDetails",
-                    _.tenantsAdditionsDisregardedDetails.map(_.tenantsAdditionsDisregarded),
-                    aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedDetailsController.show(), "tenantsAdditionsDisregardedDetails")
+                    sectionAnswers2.row("checkYourAnswersAboutYourLeaseOrTenure.rentPayableVaryOnQuantityOfDrinks",
+                        _.rentPayableVaryOnQuantityOfBeersDetails.map(_.rentPayableVaryOnQuantityOfBeersDetails.name).map(v => messages(s"label.$v")),
+                        aboutYourLeaseOrTenure.routes.RentPayableVaryOnQuantityOfBeersController.show(), "rentPayableVaryOnQuantityOfBeers") ++
+                    sectionAnswers2.conditionRow(
+                        _.rentPayableVaryOnQuantityOfBeersDetails.map(_.rentPayableVaryOnQuantityOfBeersDetails.name).contains("yes"),
+                        "checkYourAnswersAboutYourLeaseOrTenure.rentPayableVaryOnQuantityOfDrinksDetails",
+                        _.rentPayableVaryOnQuantityOfBeersInformationDetails.map(_.rentPayableVaryOnQuantityOfBeersDetails),
+                        aboutYourLeaseOrTenure.routes.RentPayableVaryOnQuantityOfBeersDetailsController.show(), "rentPayableVaryOnQuantityOfBeersDetails") ++
+                    sectionAnswers2.row("checkYourAnswersAboutYourLeaseOrTenure.howAndWhenRentWasFixed",
+                        _.howIsCurrentRentFixed.map(r =>
+                            Seq(messages(s"label.${r.currentRentFixed.name}"),
+                                dateUtil.formatDayMonthAbbrYear(r.rentActuallyAgreed)
+                            ).mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>")
+                        ),
+                        aboutYourLeaseOrTenure.routes.HowIsCurrentRentFixedController.show(), "",
+                        ("valueAsHtml", _ => None)) ++
+                    sectionAnswers2.row("checkYourAnswersAboutYourLeaseOrTenure.methodUsedToFixCurrentRent",
+                        _.methodToFixCurrentRentDetails.map(_.methodToFixCurrentRent.name).map(m => messages(s"label.methodUsedToFixCurrentRent.$m")),
+                        aboutYourLeaseOrTenure.routes.MethodToFixCurrentRentController.show(), "methodUsedToFixCurrentRent") ++
+                    sectionAnswers2.row("checkYourAnswersAboutYourLeaseOrTenure.intervalsOfRentReview",
+                        _.intervalsOfRentReview.map(r =>
+                            Seq(r.currentRentWithin12Months.map(Text(_).asHtml).getOrElse(""),
+                                r.intervalsOfRentReview.map(date => dateUtil.formatDayMonthAbbrYear(date)).getOrElse("")
+                            ).mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>")
+                        ),
+                        aboutYourLeaseOrTenure.routes.IntervalsOfRentReviewController.show(), "",
+                        ("valueAsHtml", _ => None)) ++
+                    sectionAnswers2.row("checkYourAnswersAboutYourLeaseOrTenure.canRentBeReducedOnReview",
+                        _.canRentBeReducedOnReviewDetails.map(_.rentReducedOnReview.name).map(v => messages(s"label.$v")),
+                        aboutYourLeaseOrTenure.routes.CanRentBeReducedOnReviewController.show(), "rentReducedOnReview") ++
+                    sectionAnswers2.row("checkYourAnswersAboutYourLeaseOrTenure.formerLeaseSurrenderedEarly",
+                        _.incentivesPaymentsConditionsDetails.map(_.formerLeaseSurrendered.name).map(v => messages(s"label.$v")),
+                        aboutYourLeaseOrTenure.routes.IncentivesPaymentsConditionsController.show(), "formerLeaseSurrendered") ++
+                    sectionAnswers2.row("checkYourAnswersAboutYourLeaseOrTenure.disregardedAdditionsOrImprovements",
+                        _.tenantAdditionsDisregardedDetails.map(_.tenantAdditionalDisregarded.name).map(v => messages(s"label.$v")),
+                        aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController.show(), "tenantsAdditionsDisregarded") ++
+                    sectionAnswers2.conditionRow(
+                        _.tenantAdditionsDisregardedDetails.map(_.tenantAdditionalDisregarded.name).contains("yes"),
+                        "checkYourAnswersAboutYourLeaseOrTenure.disregardedAdditionsOrImprovementsDetails",
+                        _.tenantsAdditionsDisregardedDetails.map(_.tenantsAdditionsDisregarded),
+                        aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedDetailsController.show(), "tenantsAdditionsDisregardedDetails")
 
-    ))
+        ))
+    } else {
+        @govukSummaryList(SummaryList(rows =
+            sectionAnswers.row("checkYourAnswersAboutYourLeaseOrTenure.rentBasedOnOpenMarketValue",
+                _.rentOpenMarketValueDetails.map(_.rentOpenMarketValues.name).map(v => messages(s"label.$v")),
+                aboutYourLeaseOrTenure.routes.RentOpenMarketValueController.show(), "rentOpenMarketValue") ++
+                    sectionAnswers.conditionRow(
+                        _.rentOpenMarketValueDetails.map(_.rentOpenMarketValues.name).contains("no"),
+                        "checkYourAnswersAboutYourLeaseOrTenure.currentRentBasedOn",
+                        _.whatIsYourCurrentRentBasedOnDetails.map(r =>
+                            Seq(r.currentRentBasedOn.name).map(item => messages(s"label.currentRentBasedOn.$item"))
+                                    ++ r.describe.fold(Seq.empty[String])(d => Seq(Text(d).asHtml.body))
+                        ).map(_.mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>")),
+                        aboutYourLeaseOrTenure.routes.WhatIsYourRentBasedOnController.show(), "",
+                        ("valueAsHtml", _ => None)) ++
+                    sectionAnswers.row("checkYourAnswersAboutYourLeaseOrTenure.rentIncreasedAnnuallyWithIndex",
+                        _.rentIncreasedAnnuallyWithRPIDetails.map(_.rentIncreasedAnnuallyWithRPIDetails.name).map(v => messages(s"label.$v")),
+                        aboutYourLeaseOrTenure.routes.RentIncreaseAnnuallyWithRPIController.show(), "rentIncreasedAnnuallyWithRPIs") ++
+                    sectionAnswers2.row("checkYourAnswersAboutYourLeaseOrTenure.rentPayableVaryAccordingToTurnover",
+                        _.rentPayableVaryAccordingToGrossOrNetDetails.map(_.rentPayableVaryAccordingToGrossOrNets.name).map(v => messages(s"label.$v")),
+                        aboutYourLeaseOrTenure.routes.RentPayableVaryAccordingToGrossOrNetController.show(), "rentPayableVaryAccordingToGrossOrNet") ++
+                    sectionAnswers2.conditionRow(
+                        _.rentPayableVaryAccordingToGrossOrNetDetails.map(_.rentPayableVaryAccordingToGrossOrNets.name).contains("yes"),
+                        "checkYourAnswersAboutYourLeaseOrTenure.rentPayableVaryAccordingToTurnoverDetails",
+                        _.rentPayableVaryAccordingToGrossOrNetInformationDetails.map(_.rentPayableVaryAccordingToGrossOrNet),
+                        aboutYourLeaseOrTenure.routes.RentPayableVaryAccordingToGrossOrNetDetailsController.show(), "rentPayableVaryAccordingToGrossOrNetDetails") ++
+                    sectionAnswers2.row("checkYourAnswersAboutYourLeaseOrTenure.howAndWhenRentWasFixed",
+                        _.howIsCurrentRentFixed.map(r =>
+                            Seq(messages(s"label.${r.currentRentFixed.name}"),
+                                dateUtil.formatDayMonthAbbrYear(r.rentActuallyAgreed)
+                            ).mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>")
+                        ),
+                        aboutYourLeaseOrTenure.routes.HowIsCurrentRentFixedController.show(), "",
+                        ("valueAsHtml", _ => None)) ++
+                    sectionAnswers2.row("checkYourAnswersAboutYourLeaseOrTenure.methodUsedToFixCurrentRent",
+                        _.methodToFixCurrentRentDetails.map(_.methodToFixCurrentRent.name).map(m => messages(s"label.methodUsedToFixCurrentRent.$m")),
+                        aboutYourLeaseOrTenure.routes.MethodToFixCurrentRentController.show(), "methodUsedToFixCurrentRent") ++
+                    sectionAnswers2.row("checkYourAnswersAboutYourLeaseOrTenure.intervalsOfRentReview",
+                        _.intervalsOfRentReview.map(r =>
+                            Seq(r.currentRentWithin12Months.map(Text(_).asHtml).getOrElse(""),
+                                r.intervalsOfRentReview.map(date => dateUtil.formatDayMonthAbbrYear(date)).getOrElse("")
+                            ).mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>")
+                        ),
+                        aboutYourLeaseOrTenure.routes.IntervalsOfRentReviewController.show(), "",
+                        ("valueAsHtml", _ => None)) ++
+                    sectionAnswers2.row("checkYourAnswersAboutYourLeaseOrTenure.canRentBeReducedOnReview",
+                        _.canRentBeReducedOnReviewDetails.map(_.rentReducedOnReview.name).map(v => messages(s"label.$v")),
+                        aboutYourLeaseOrTenure.routes.CanRentBeReducedOnReviewController.show(), "rentReducedOnReview") ++
+                    sectionAnswers2.row("checkYourAnswersAboutYourLeaseOrTenure.formerLeaseSurrenderedEarly",
+                        _.incentivesPaymentsConditionsDetails.map(_.formerLeaseSurrendered.name).map(v => messages(s"label.$v")),
+                        aboutYourLeaseOrTenure.routes.IncentivesPaymentsConditionsController.show(), "formerLeaseSurrendered") ++
+                    sectionAnswers2.row("checkYourAnswersAboutYourLeaseOrTenure.disregardedAdditionsOrImprovements",
+                        _.tenantAdditionsDisregardedDetails.map(_.tenantAdditionalDisregarded.name).map(v => messages(s"label.$v")),
+                        aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController.show(), "tenantsAdditionsDisregarded") ++
+                    sectionAnswers2.conditionRow(
+                        _.tenantAdditionsDisregardedDetails.map(_.tenantAdditionalDisregarded.name).contains("yes"),
+                        "checkYourAnswersAboutYourLeaseOrTenure.disregardedAdditionsOrImprovementsDetails",
+                        _.tenantsAdditionsDisregardedDetails.map(_.tenantsAdditionsDisregarded),
+                        aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedDetailsController.show(), "tenantsAdditionsDisregardedDetails")
+
+        ))
+    }
+
 }
 
 @if(sectionAnswers2.answers.exists(a => a.payACapitalSumDetails.isDefined || a.paymentWhenLeaseIsGrantedDetails.isDefined)) {

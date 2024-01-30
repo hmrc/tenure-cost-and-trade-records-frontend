@@ -86,8 +86,8 @@
 
 @totalSalesRevenueHeading = {
     <p class="govuk-body govuk-!-font-weight-bold">
-        @messages("turnover.totalSalesRevenue")
-        <span class="govuk-caption-m">@messages("turnover.totalSalesRevenueCaption")</span>
+        @messages("turnover.totalSalesRevenue") <br>
+        <span>@messages("turnover.totalSalesRevenueCaption")</span>
     </p>
 }
 
@@ -339,10 +339,10 @@
 }
 
 @layout(
-    pageHeading = if(forType == ForTypes.for6010 || forType == ForTypes.for6011) {
-        messages("turnover.heading")
+    pageHeading = if(forType == ForTypes.for6015) {
+        messages("turnover.6105.heading")
     } else {
-        messages("turnover.6015.heading")
+        messages("turnover.heading")
     },
     showSection = true,
     summary = Some(request.sessionData.toSummary),

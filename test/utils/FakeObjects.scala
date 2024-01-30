@@ -44,21 +44,32 @@ trait FakeObjects {
     Address("001", Some("GORING ROAD"), "GORING-BY-SEA, WORTHING", Some("WEST SUSSEX"), "BN12 4AX")
   val token: String             = "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik="
 
-  val prefilledContactDetails: ContactDetails                            = ContactDetails("1234567890", "TestEmail@gmail.com")
-  val prefilledContactAddress: ContactDetailsAddress                     = ContactDetailsAddress(
+  val prefilledContactDetails: ContactDetails         = ContactDetails("1234567890", "TestEmail@gmail.com")
+  val prefilledContactAddress: ContactDetailsAddress  = ContactDetailsAddress(
     "004",
     Some("GORING ROAD"),
     "WORTHING",
     Some("West sussex"),
     "BN12 4AX"
   )
-  val prefilledAlternativeAddress: AlternativeAddress                    = AlternativeAddress(
+  val prefilledAlternativeAddress: AlternativeAddress = AlternativeAddress(
     "004",
     Some("GORING ROAD"),
     "WORTHING",
     Some("West sussex"),
     "BN12 4AX"
   )
+
+  val prefilledAlternativeCONTACTAddress: AlternativeContactDetails = AlternativeContactDetails(
+    AlternativeAddress(
+      "004",
+      Some("GORING ROAD"),
+      "WORTHING",
+      Some("West sussex"),
+      "BN12 4AX"
+    )
+  )
+
   val prefilledNoRefContactDetails: RequestReferenceNumberContactDetails =
     RequestReferenceNumberContactDetails("test", prefilledContactDetails, Some("test"))
 

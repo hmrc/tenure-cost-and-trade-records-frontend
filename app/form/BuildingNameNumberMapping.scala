@@ -18,18 +18,21 @@ package form
 
 import play.api.data.Forms.text
 
-object AlternativeEmailMapping {
+object BuildingNameNumberMapping {
 
-  // Valid formats: test@test.com | test.test@hotmail.com | test.account@digital.gov.uk |
+  def validateBuildingNameNumber = {
 
-  val invalidEmailRegex = """^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$"""
+    val invalidCharRegex = """^[0-9A-Za-z\s\-\,]+$"""
 
-  def validateAlternativeEmail =
+    def validBuildingNameNumberLength(bNN: String) = bNN.length <= 50
+
     text
-      .verifying(Errors.contactAlternativeEmailRequired, eA => eA.nonEmpty)
+      .verifying(Errors.addressBuildingNameNumberRequired, bNN => bNN.nonEmpty)
+      .verifying(Errors.buildingMaxLength, bNN => if (bNN.nonEmpty) validBuildingNameNumberLength(bNN) else true)
       .verifying(
-        Errors.emailFormat,
-        eA => if (eA.nonEmpty) eA.matches(invalidEmailRegex) else true
+        Errors.invalidCharAddress1,
+        bNN => if (bNN.nonEmpty && validBuildingNameNumberLength(bNN)) bNN.matches(invalidCharRegex) else true
       )
+  }
 
 }

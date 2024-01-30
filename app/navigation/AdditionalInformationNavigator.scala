@@ -19,7 +19,6 @@ package navigation
 import connectors.Audit
 import models.Session
 import navigation.identifiers._
-import play.api.i18n.Lang.logger
 import play.api.mvc.Call
 
 import javax.inject.Inject

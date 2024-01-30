@@ -290,8 +290,8 @@ error.tradingNamePayingRent.missing = Select yes if the organisation pays rent o
 #######################################################
 areYouThirdParty.heading = Are you a third party?
 areYouThirdParty.title = Are you a third party working on behalf of {0}?
-hint.areYouThirdParty.yes = Choose ‘yes’ if you have been contracted by {0} to complete this declaration
-hint.areYouThirdParty.no = Choose ‘no’ if you are an owner, director, or direct employee of {0}, or you are completing this declaration on their behalf in an unofficial capacity
+hint.areYouThirdParty.yes = Choose ‘yes’ if you have been contracted by {0} to complete this declaration.
+hint.areYouThirdParty.no = Choose ‘no’ if you are an owner, director, or direct employee of {0}, or you are completing this declaration on their behalf in an unofficial capacity.
 error.areYouThirdParty.missing = Select yes if you are working on behalf of the organisation
 
 # VACANT PROPERTIES
@@ -325,7 +325,7 @@ checkYourAnswersConnectionToProperty.thirdParty = Third party?
 ############################
 vacantPropertyStartDate.heading = When did the property become vacant?
 label.startDateOfVacantProperty =
-label.startDateOfVacantProperty.help = For example 27 9 2017
+label.startDateOfVacantProperty.help = For example, 27 9 2017.
 fieldName.startDateOfVacantProperty = the date the property became vacant
 
 # LETTING INCOME - IS ANY RENT RECEIVED FROM LETTING
@@ -453,7 +453,7 @@ error.pastConnectionType = Select yes if you ever had a connection to the proper
 # REMOVE CONNECTION
 ###################
 removeConnection.heading = Provide your contact details
-removeConnection.subheading = We’ll only use these details if we need to contact you before removing your connection to this property
+removeConnection.subheading = We’ll only use these details if we need to contact you before removing your connection to this property.
 label.removeConnectionAdditionalInfo = Additional information
 hint.removeConnectionDetails.removeConnectionAdditionalInfo = For example, the date you last occupied the property.
 error.fullName.required = Enter your name
@@ -473,7 +473,7 @@ hint.select.main = If your property has more than one use, select the main funct
 propertyCurrentlyUsed.publicHouse = Public house
 propertyCurrentlyUsed.wineCafeBar = Wine bar or cafe bar
 propertyCurrentlyUsed.otherBar = Other bar
-propertyCurrentlyUsed.pubRestaurant = Pub or restaurant
+propertyCurrentlyUsed.pubRestaurant = Pub and restaurant
 propertyCurrentlyUsed.licencedRestaurant = Licenced restaurant
 propertyCurrentlyUsed.hotel = Hotel
 propertyCurrentlyUsed.discoNightclub = Disco or nightclub
@@ -898,13 +898,8 @@ label.saleLeaseback = As part of a sale and leaseback transaction
 label.rentActuallyAgreed = When was the rent actually agreed or set?
 label.rentActuallyAgreed.help = For example, 27 9 2017.
 help.rentActuallyAgreed.title = If you’re not sure which date to use
-help.rentActuallyAgreed.p1 = The date when the rent was agreed or set is normally the date when:
-help.rentActuallyAgreed.list.p1 = a new lease or agreement is signed
-help.rentActuallyAgreed.list.p2 = an interim rent is established
-help.rentActuallyAgreed.list.p3 = a new rent is established following a rent review
-help.rentActuallyAgreed.list.p4 = a lease is renewed
-help.rentActuallyAgreed.list.p5 = a sale and leaseback is agreed
-help.rentActuallyAgreed.p2 = It may not necessarily be the date of occupation or the date a rent is first paid.
+help.rentActuallyAgreed.p1 = The date when the rent was agreed or set is normally the date when any of the listed options happened. It may not necessarily be the date of occupation, or the date the rent was first paid.
+help.rentActuallyAgreed.p2 = If you are still unsure, refer to your lease or agreement.
 fieldName.rentActuallyAgreed = the date when the current rent was agreed or set
 error.howIsCurrentRentFixed.required = Select how the current rent was fixed
 
@@ -958,7 +953,7 @@ rent.received.from.confirm.error = Please confirm this payment was included in t
 
 # CALCULATING THE RENT (6015/6016 0NLY)
 calculating.the.rent.for.heading = Calculating the rent for {0}
-calculating.the.rent.for.explain = Explain how the income received figure was calculated - for example, 10% of the total takings
+calculating.the.rent.for.explain = Explain how the income received figure was calculated – for example, 10% of the total takings
 calculating.the.rent.for.explain.error = Please explain how the income received figure was calculated
 calculating.the.rent.for.label = When was the rent fixed at its current rate?
 calculating.the.rent.for.error = Enter the date when the annual rent was fixed
@@ -980,11 +975,13 @@ error.cateringOperationOrLettingAccommodationCheckboxesDetails.noneSelectedWithO
 # ADD ANOTHER CATERING OPERATION OR LETTING ACCOMMODATION DETAILS
 #################################################################
 addAnotherCateringOperation.heading = You have added {0} separate business or franchise
+addAnotherCateringOperation.heading.plural = You have added {0} separate businesses or franchises
 addAnotherConcessionOrLetting.heading = You have added {0} separate business or concession
 addAnotherCateringOperation.zeroBusinessOrFranchises.heading = You have removed all your separate businesses or franchises
 addAnotherLettingOtherPartOfProperty.zeroBusinessOrFranchises.heading = You have removed all your separate businesses or concessions
 addAnotherLettingOtherPartOfProperty.heading = You have added {0} letting
-addAnotherConcession.heading = You have added {0} separate business{1} or concession
+addAnotherConcession.heading = You have added {0} separate business or concession
+addAnotherConcession.heading.plural = You have added {0} separate businesses or concessions
 addAnotherLetting.heading = You have added {0} letting
 label.addAnotherCateringOperation = Do you need to add another separate business or franchise?
 label.addAnotherConcessionOrLetting = Do you need to add another separate business or concession?
@@ -1085,7 +1082,7 @@ label.currentLeaseOrAgreementBegin.help = For example, 9 2017.
 intervalsOfRentReview.heading = Rent reviews
 intervalsOfRentReview.p1 = Provide details if your lease or agreement states your rent will be reviewed at any point.
 intervalsOfRentReview.p2 = Changes to your rent linked to your turnover, or indices such as the RPI, are not classed as rent reviews.
-intervalsOfRentReview.p2 = If your lease or agreement does not include any rent reviews, leave this page blank and select ‘continue’
+intervalsOfRentReview.p2 = If your lease or agreement does not include any rent reviews, leave this page blank and select ‘continue’.
 intervalsOfRentReview.label = How often is the rent reviewed under the terms of the lease or agreement?
 hint.intervalsOfRentReview = Leave blank if the lease does not include any rent reviews.
 label.nextReview = When is the next rent review due?
@@ -1597,6 +1594,7 @@ checkYourAnswersAboutTheTradingHistory.food = Food
 checkYourAnswersAboutTheTradingHistory.otherReceipts = Other receipts
 checkYourAnswersAboutTheTradingHistory.accommodation = Accommodation
 checkYourAnswersAboutTheTradingHistory.averageOccupancyRate = Average occupancy rate
+checkYourAnswersAboutTheTradingHistory.totalSalesRevenue = Total sales revenue
 checkYourAnswersAboutTheTradingHistory.totalPayrollCosts = Payroll costs
 checkYourAnswersAboutTheTradingHistory.variableOperatingExpenses.other = Other
 checkYourAnswersAboutTheTradingHistory.variableOperatingExpenses.otherDetails = Other expenses details
@@ -1784,7 +1782,7 @@ error.fullName.maxLength = Full name must be 50 characters or fewer
 # Currency optional validation
 error.optCurrency.negative = {0} cannot be a negative number
 error.optCurrency.invalid = {0} must be a number, for example 100 or 100.00
-error.optCurrency.graterThanAnnualRent = {0} cannot be grater than the annual rent
+error.optCurrency.graterThanAnnualRent = {0} cannot be greater than the annual rent
 
 # Date fields validation
 error.date.required = Enter {0}
