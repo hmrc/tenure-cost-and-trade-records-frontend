@@ -28,6 +28,7 @@ import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
+import util.NumberUtil.zeroBigDecimal
 import views.html.aboutYourLeaseOrTenure.currentAnnualRent
 
 import javax.inject.{Inject, Named, Singleton}
@@ -47,8 +48,8 @@ class CurrentAnnualRentController @Inject() (
     Ok(
       currentAnnualRentView(
         request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.annualRent) match {
-          case Some(annualRent) => currentAnnualRentForm.fill(annualRent)
-          case _                => currentAnnualRentForm
+          case Some(annualRent) => currentAnnualRentForm().fill(annualRent)
+          case _                => currentAnnualRentForm()
         },
         getBackLink(request.sessionData),
         request.sessionData.toSummary
@@ -56,9 +57,17 @@ class CurrentAnnualRentController @Inject() (
     )
   }
 
-  def submit = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    val includedPartsSum = request.sessionData.aboutLeaseOrAgreementPartOne
+      .fold(zeroBigDecimal)(leaseOrAgreement1 =>
+        Seq(
+          leaseOrAgreement1.rentIncludeTradeServicesInformation.flatMap(_.sumIncludedInRent),
+          leaseOrAgreement1.rentIncludeFixtureAndFittingsDetails.flatMap(_.sumIncludedInRent)
+        ).flatten.sum
+      )
+
     continueOrSaveAsDraft[AnnualRent](
-      currentAnnualRentForm,
+      currentAnnualRentForm(includedPartsSum),
       formWithErrors =>
         BadRequest(
           currentAnnualRentView(

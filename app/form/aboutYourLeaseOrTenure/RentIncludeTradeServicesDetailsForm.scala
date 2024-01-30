@@ -16,7 +16,7 @@
 
 package form.aboutYourLeaseOrTenure
 
-import form.requestReferenceNumber.OptionalCurrencyMapping.partOfAnnualRent
+import form.OptionalCurrencyMapping.partOfAnnualRent
 import models.submissions.aboutYourLeaseOrTenure.RentIncludeTradeServicesInformationDetails
 import play.api.data.Form
 import play.api.data.Forms.{default, mapping, text}

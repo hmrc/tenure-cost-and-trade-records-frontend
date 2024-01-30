@@ -16,17 +16,11 @@
 
 package form
 
-import form.requestReferenceNumber.OptionalCurrencyMapping
 import play.api.data.Form
 import play.api.data.Forms._
-import play.api.i18n.{Messages, MessagesApi}
-import play.api.test.Helpers.stubMessagesApi
 import utils.TestBaseSpec
 
 class OptionalCurrencyMappingSpec extends TestBaseSpec {
-
-  override implicit val messagesApi: MessagesApi = stubMessagesApi()
-  override implicit val messages: Messages       = messagesApi.preferred(Seq.empty)
 
   "currencyMappingOptional" should {
 

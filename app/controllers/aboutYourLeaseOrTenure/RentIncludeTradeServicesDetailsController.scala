@@ -57,7 +57,7 @@ class RentIncludeTradeServicesDetailsController @Inject() (
     )
   }
 
-  def submit = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     val leaseOrAgreement1     = request.sessionData.aboutLeaseOrAgreementPartOne
     val annualRent            = leaseOrAgreement1.flatMap(_.annualRent.map(_.amount))
     val otherIncludedPartsSum = leaseOrAgreement1

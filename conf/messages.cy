@@ -695,6 +695,7 @@ error.propertyUseLeasebackArrangement.missing = Select yes if you occupy the pro
 ##############################
 currentAnnualRent.heading = What is the current annual rent?
 hint.currentAnnualRent = For example, 32000.
+error.currentAnnualRent.lessThanIncludedPartsSum = The annual rent cannot be less than the combined sum {0} included to cover equipment and trade services
 
 # RENT OPEN MARKET VALUE
 #######################
