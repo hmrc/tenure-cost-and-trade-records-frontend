@@ -21,16 +21,18 @@ import play.api.data.Forms.text
 object WebsiteMapping {
 
   // Valid formats: test@test.com | test.test@hotmail.com | test.account@digital.gov.uk |
+  //                 https://www.test@test.com | http://www.test@test.com | www.test@test.com
+  //                 https://www.test@test.com/
 
-  val invalidWebaddressRegex =
-    """^[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&//=]*)$"""
+  val validWebAddressRegex =
+    """(https?://)?(www\.)?([a-zA-Z0-9]+([a-zA-Z0-9-]+)?(\.[a-zA-Z]{2,})+|([a-zA-Z0-9]+\.)?[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z]{2,})(/|$)""".stripMargin
 
   def validateWebaddress =
     text
       .verifying(Errors.webAddressBlank, wA => wA.nonEmpty)
       .verifying(
         Errors.webaddressFormat,
-        wA => if (wA.nonEmpty) wA.matches(invalidWebaddressRegex) else true
+        wA => if (wA.nonEmpty) wA.matches(validWebAddressRegex) else true
       )
 
 }
