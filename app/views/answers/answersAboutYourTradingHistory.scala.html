@@ -35,6 +35,7 @@
         dateUtil: DateUtil
 )
 
+
 @()(implicit request: SessionRequest[_], messages: Messages)
 
 @sectionAnswers = @{
@@ -83,6 +84,21 @@
     ).body
 }
 
+@turnoverValuesTable6016(turnoverSections: Seq[TurnoverSection]) = @{
+        table(
+            turnoverSections.map(t => Seq(
+                dateUtil.formatDayMonthAbbrYear(t.financialYearEnd),
+                s"${t.tradingPeriod} ${messages("turnover.weeks")}",
+                t.accommodation.getOrElse(zeroBigDecimal).asMoney,
+                t.averageOccupancyRate.getOrElse(zeroBigDecimal).withScale(2) + "%",
+                t.food.getOrElse(zeroBigDecimal).asMoney,
+                t.alcoholicDrinks.getOrElse(zeroBigDecimal).asMoney,
+                t.otherReceipts.getOrElse(zeroBigDecimal).asMoney,
+                t.total.asMoney
+            ))
+        ).body
+    }
+
 @turnoverKeys = @{
     Seq(
         messages("checkYourAnswersAboutTheTradingHistory.financialYearEnd"),
@@ -93,6 +109,36 @@
         messages("checkYourAnswersAboutTheTradingHistory.accommodation"),
         messages("checkYourAnswersAboutTheTradingHistory.averageOccupancyRate")
     ).mkString("""<p class="govuk-body govuk-!-font-weight-bold">""", """</p> <p class="govuk-body govuk-!-font-weight-bold">""", "</p>")
+}
+
+@turnoverKeys0616 = @{
+        Seq(
+            messages("checkYourAnswersAboutTheTradingHistory.financialYearEnd"),
+            messages("checkYourAnswersAboutTheTradingHistory.tradingPeriod"),
+            messages("checkYourAnswersAboutTheTradingHistory.accommodation"),
+            messages("checkYourAnswersAboutTheTradingHistory.averageOccupancyRate"),
+            messages("checkYourAnswersAboutTheTradingHistory.food"),
+            messages("checkYourAnswersAboutTheTradingHistory.drinks"),
+            messages("checkYourAnswersAboutTheTradingHistory.otherReceipts"),
+            messages("checkYourAnswersAboutTheTradingHistory.totalSalesRevenue")
+        ).mkString("""<p class="govuk-body govuk-!-font-weight-bold">""", """</p> <p class="govuk-body govuk-!-font-weight-bold">""", "</p>")
+    }
+
+@actions = @{
+    Some(
+        Actions(items =
+            Seq(
+                ActionItem(
+                    href = s"${aboutthetradinghistory.routes.TurnoverController.show().url}?from=CYA",
+                    content = Text(messages("label.change")),
+                    visuallyHiddenText = Some(messages("turnover.heading")),
+                    attributes = Map(
+                        "aria-label" -> s"${messages("label.change")} ${messages("turnover.heading")}"
+                    )
+                )
+            )
+        )
+    )
 }
 
 @costOfSalesValuesTable(costOfSales: Seq[CostOfSales]) = @{
@@ -283,28 +329,26 @@
 
 <h2 class="govuk-heading-m">@messages("turnover.heading")</h2>
 
-@govukSummaryList(SummaryList(rows =
-    Seq(
-        SummaryListRow(
-            key = Key(HtmlContent(turnoverKeys)),
-            value = Value(HtmlContent(sectionAnswers.answers.fold("")(t => turnoverValuesTable(t.turnoverSections)))),
-            actions = Some(
-                Actions(items =
-                    Seq(
-                        ActionItem(
-                            href = s"${aboutthetradinghistory.routes.TurnoverController.show().url}?from=CYA",
-                            content = Text(messages("label.change")),
-                            visuallyHiddenText = Some(messages("turnover.heading")),
-                            attributes = Map(
-                                "aria-label" -> s"${messages("label.change")} ${messages("turnover.heading")}"
-                            )
-                        )
+    @govukSummaryList(SummaryList(rows =
+        forType match {
+            case ForTypes.for6016 =>
+                Seq(
+                    SummaryListRow(
+                        key = Key(HtmlContent(turnoverKeys0616)),
+                        value = Value(HtmlContent(sectionAnswers.answers.fold("")(t => turnoverValuesTable6016(t.turnoverSections)))),
+                        actions = actions
                     )
                 )
-            )
-        )
-    )
-))
+            case _ =>
+                Seq(
+                    SummaryListRow(
+                        key = Key(HtmlContent(turnoverKeys)),
+                        value = Value(HtmlContent(sectionAnswers.answers.fold("")(t => turnoverValuesTable(t.turnoverSections)))),
+                        actions = actions
+                    )
+                )
+        }
+    ))
 
 @if(forType == ForTypes.for6015) {
     <h2 class="govuk-heading-m">@messages("costOfSales.heading")</h2>
