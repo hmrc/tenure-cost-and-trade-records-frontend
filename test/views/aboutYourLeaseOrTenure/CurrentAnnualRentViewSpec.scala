@@ -27,7 +27,7 @@ class CurrentAnnualRentViewSpec extends QuestionViewBehaviours[AnnualRent] {
 
   val messageKeyPrefix = "currentAnnualRent"
 
-  override val form = CurrentAnnualRentForm.currentAnnualRentForm
+  override val form = CurrentAnnualRentForm.currentAnnualRentForm()
 
   val backLink = controllers.aboutYourLeaseOrTenure.routes.TenancyLeaseAgreementController.show().url
 

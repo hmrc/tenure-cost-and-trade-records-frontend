@@ -20,14 +20,26 @@ import form.MappingSupport.currencyMapping
 import models.AnnualRent
 import play.api.data.Form
 import play.api.data.Forms.mapping
+import play.api.data.validation.{Constraint, Invalid, Valid, ValidationError}
+import util.NumberUtil._
 
 object CurrentAnnualRentForm {
 
   val cdbMaxCurrencyAmount = 9999999.99
 
-  val currentAnnualRentForm = Form(
+  def currentAnnualRentForm(includedPartsSum: BigDecimal = 0): Form[AnnualRent] = Form(
     mapping(
       "currentAnnualRent" -> currencyMapping()
+        .verifying(
+          Constraint[BigDecimal] { rent: BigDecimal =>
+            if (rent < includedPartsSum)
+              Invalid(
+                ValidationError("error.currentAnnualRent.lessThanIncludedPartsSum", includedPartsSum.asMoney)
+              )
+            else Valid
+          }
+        )
     )(AnnualRent.apply)(AnnualRent.unapply)
   )
+
 }

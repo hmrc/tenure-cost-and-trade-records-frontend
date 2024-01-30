@@ -16,7 +16,7 @@
 
 package form.aboutYourLeaseOrTenure
 
-import form.requestReferenceNumber.OptionalCurrencyMapping.currencyMappingOptional
+import form.OptionalCurrencyMapping.partOfAnnualRent
 import models.submissions.aboutYourLeaseOrTenure.RentIncludeTradeServicesInformationDetails
 import play.api.data.Form
 import play.api.data.Forms.{default, mapping, text}
@@ -25,12 +25,12 @@ import play.api.i18n.Messages
 
 object RentIncludeTradeServicesDetailsForm {
 
-  def rentIncludeTradeServicesDetailsForm(annualRent: Option[BigDecimal] = None)(implicit
-    messages: Messages
+  def rentIncludeTradeServicesDetailsForm(annualRent: Option[BigDecimal] = None, otherIncludedPartsSum: BigDecimal = 0)(
+    implicit messages: Messages
   ): Form[RentIncludeTradeServicesInformationDetails] = Form(
     mapping(
       "sumIncludedInRent" ->
-        currencyMappingOptional(messages("error.rentIncludeTradeServicesDetails.title"), annualRent),
+        partOfAnnualRent(messages("error.rentIncludeTradeServicesDetails.title"), annualRent, otherIncludedPartsSum),
       "describeServices"  ->
         default(text, "").verifying(
           nonEmpty(errorMessage = "error.describeServices.required"),
@@ -38,4 +38,5 @@ object RentIncludeTradeServicesDetailsForm {
         )
     )(RentIncludeTradeServicesInformationDetails.apply)(RentIncludeTradeServicesInformationDetails.unapply)
   )
+
 }

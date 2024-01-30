@@ -695,6 +695,7 @@ error.propertyUseLeasebackArrangement.missing = Select yes if you occupy the pro
 ##############################
 currentAnnualRent.heading = What is the current annual rent?
 hint.currentAnnualRent = For example, 32000.
+error.currentAnnualRent.lessThanIncludedPartsSum = The annual rent cannot be less than the combined sum {0} included to cover equipment and trade services
 
 # RENT OPEN MARKET VALUE
 #######################
@@ -1779,7 +1780,8 @@ error.fullName.maxLength = Full name must be 50 characters or fewer
 # Currency optional validation
 error.optCurrency.negative = {0} cannot be a negative number
 error.optCurrency.invalid = {0} must be a number, for example 100 or 100.00
-error.optCurrency.graterThanAnnualRent = {0} cannot be greater than the annual rent
+error.optCurrency.graterThanAnnualRent = {0} cannot be greater than the annual rent {1}
+error.includedPartsSum.graterThanAnnualRent = The combined sum {0} included to cover equipment and trade services cannot be greater than the annual rent {1}
 
 # Date fields validation
 error.date.required = Enter {0}

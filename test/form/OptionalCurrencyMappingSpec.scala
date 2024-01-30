@@ -16,21 +16,15 @@
 
 package form
 
-import form.requestReferenceNumber.OptionalCurrencyMapping
 import play.api.data.Form
 import play.api.data.Forms._
-import play.api.i18n.{Messages, MessagesApi}
-import play.api.test.Helpers.stubMessagesApi
 import utils.TestBaseSpec
 
 class OptionalCurrencyMappingSpec extends TestBaseSpec {
 
-  override implicit val messagesApi: MessagesApi = stubMessagesApi()
-  override implicit val messages: Messages       = messagesApi.preferred(Seq.empty)
-
   "currencyMappingOptional" should {
 
-    val testMapping = OptionalCurrencyMapping.currencyMappingOptional("test", Some(BigDecimal(100)))
+    val testMapping = OptionalCurrencyMapping.partOfAnnualRent("test", Some(BigDecimal(100)), 20)
 
     "evaluate empty input as valid" in {
       val form   = Form(single("amount" -> testMapping))
@@ -65,5 +59,13 @@ class OptionalCurrencyMappingSpec extends TestBaseSpec {
       result.errors.head.message shouldBe "error.optCurrency.graterThanAnnualRent"
     }
 
+    "invalidate case combined sum included to cover equipment and trade services greater than annualRent" in {
+      val form   = Form(single("amount" -> testMapping))
+      val result = form.bind(Map("amount" -> "81"))
+      result.errors                should not be empty
+      result.errors.head.message shouldBe "error.includedPartsSum.graterThanAnnualRent"
+    }
+
   }
+
 }

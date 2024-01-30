@@ -26,6 +26,7 @@ import navigation.identifiers.RentIncludeTradeServicesDetailsPageId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
+import util.NumberUtil.zeroBigDecimal
 import views.html.aboutYourLeaseOrTenure.rentIncludeTradeServicesDetails
 
 import javax.inject.{Inject, Named, Singleton}
@@ -56,10 +57,15 @@ class RentIncludeTradeServicesDetailsController @Inject() (
     )
   }
 
-  def submit = (Action andThen withSessionRefiner).async { implicit request =>
-    val annualRent = request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.annualRent.map(_.amount))
+  def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    val leaseOrAgreement1     = request.sessionData.aboutLeaseOrAgreementPartOne
+    val annualRent            = leaseOrAgreement1.flatMap(_.annualRent.map(_.amount))
+    val otherIncludedPartsSum = leaseOrAgreement1
+      .flatMap(_.rentIncludeFixtureAndFittingsDetails.flatMap(_.sumIncludedInRent))
+      .getOrElse(zeroBigDecimal)
+
     continueOrSaveAsDraft[RentIncludeTradeServicesInformationDetails](
-      rentIncludeTradeServicesDetailsForm(annualRent),
+      rentIncludeTradeServicesDetailsForm(annualRent, otherIncludedPartsSum),
       formWithErrors => BadRequest(rentIncludeTradeServicesDetailsView(formWithErrors, request.sessionData.toSummary)),
       data => {
         val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(rentIncludeTradeServicesInformation = Some(data)))
