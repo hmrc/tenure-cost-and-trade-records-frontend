@@ -17,8 +17,6 @@
 package form
 
 import form.AddressLine2Mapping.validateAddressLineTwo
-import form.AlternativeEmailMapping.validateAlternativeEmail
-import form.AlternativePhoneNumberMapping.validateAlternativePhoneNumber
 import form.BuildingNameNumberMapping.validateBuildingNameNumber
 import form.CountyMapping.validateCounty
 import form.EmailMapping.validateEmail
@@ -100,12 +98,10 @@ object MappingSupport {
 
   val postcode: Mapping[String] = PostcodeMapping.postcode()
 
-  val decimalRegex          = """^[0-9]{1,10}\.?[0-9]{0,2}$"""
-  val cdbMaxCurrencyAmount  = 9999999.99
-  val negativeAmount        = """^-\d+$"""
-  val spacesIntRegex: Regex = """^\-?\d{1,10}$""".r
-  val intRegex: Regex       = """^\d{1,3}$""".r
-  val invalidCharRegex      = """^[0-9A-Za-z\s\-\,]+$"""
+  val decimalRegex         = """^[0-9]{1,10}\.?[0-9]{0,2}$"""
+  val cdbMaxCurrencyAmount = 9999999.99
+  val intRegex: Regex      = """^\d{1,3}$""".r
+  val invalidCharRegex     = """^[0-9A-Za-z\s\-\,]+$"""
 
   lazy val annualRent: Mapping[AnnualRent] = mapping(
     "annualRentExcludingVat" -> currencyMapping(".annualRentExcludingVat")
@@ -139,12 +135,6 @@ object MappingSupport {
     mapping(
       "phone" -> validatePhoneNumber,
       "email" -> validateEmail
-    )(ContactDetails.apply)(ContactDetails.unapply)
-
-  val alternativeContactDetailsMapping: Mapping[ContactDetails] =
-    mapping(
-      "phone" -> validateAlternativePhoneNumber,
-      "email" -> validateAlternativeEmail
     )(ContactDetails.apply)(ContactDetails.unapply)
 
   def addressMapping: Mapping[Address] = mapping(
@@ -194,14 +184,6 @@ object MappingSupport {
     "county"             -> optional(validateCounty),
     "postcode"           -> nonEmptyTextOr("lettingAddress.postcode", postcode, "error.postcode.required")
   )(LettingAddress.apply)(LettingAddress.unapply)
-
-  def contactAddressMapping: Mapping[ContactDetailsAddress] = mapping(
-    "buildingNameNumber" -> validateBuildingNameNumber,
-    "street1"            -> optional(validateAddressLineTwo),
-    "town"               -> validateTown,
-    "county"             -> optional(validateCounty),
-    "postcode"           -> postcode
-  )(ContactDetailsAddress.apply)(ContactDetailsAddress.unapply)
 
   def editAddressMapping: Mapping[EditAddress] = mapping(
     "buildingNameNumber" -> validateBuildingNameNumber,

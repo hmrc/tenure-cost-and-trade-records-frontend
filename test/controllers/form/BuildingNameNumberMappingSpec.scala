@@ -32,6 +32,26 @@ class BuildingNameNumberMappingSpec extends AnyWordSpecLike with should.Matchers
 
   "buildingNameNumber validation" should {
 
+    "catch invalid length error" in new Setup {
+      val lengths = Table(
+        ("buildingNameNumber", "validity"),
+        ("ICantBelieveTheNameForThisTestIsMoreThanFiftyCharactersLong", false), //59
+        ("ICantBelieveTheNameForThisTestIsEvenMoreThanFiftyCharactersLong", false), //63
+        ("Test Business", true),
+        ("Business", true)
+      )
+
+      TableDrivenPropertyChecks.forAll(lengths) { (buildingNameNumber, isValid) =>
+        val res: Form[String] = form.bind(Map("buildingNameNumber" -> buildingNameNumber))
+
+        if (isValid) {
+          res.hasErrors shouldBe false
+        } else {
+          res.errors(0).message shouldBe "error.buildingNameNumber.maxLength"
+        }
+      }
+    }
+
     "catch mandatory condition" in new Setup {
       val isInput = Table(
         ("buildingNameNumber", "validity"),
