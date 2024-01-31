@@ -1496,6 +1496,7 @@ checkYourAnswersAboutFranchiseOrLettings.operatorName = Name and address
 checkYourAnswersAboutFranchiseOrLettings.lettingOperatorNumber = Tenant {0}
 checkYourAnswersAboutFranchiseOrLettings.lettingOperatorName = Name and address
 checkYourAnswersAboutFranchiseOrLettings.annualRent = Annual rent
+checkYourAnswersAboutFranchiseOrLettings.rentIncludedInTurnover = Included in turnover
 checkYourAnswersAboutFranchiseOrLettings.rentNotIncluded = Not included in turnover
 checkYourAnswersAboutFranchiseOrLettings.howRentWasCalculated = How rent was calculated
 checkYourAnswersAboutFranchiseOrLettings.dateSumFixed = Fixed on {0}
