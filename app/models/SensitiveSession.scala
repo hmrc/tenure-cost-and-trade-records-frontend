@@ -21,7 +21,7 @@ import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartTwo, 
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory
 import models.submissions.aboutyouandtheproperty.SensitiveAboutYouAndTheProperty
-import models.submissions.additionalinformation.SensitiveAdditionalInformation
+import models.submissions.additionalinformation.AdditionalInformation
 import models.submissions.common.SensitiveAddress
 import models.submissions.connectiontoproperty.SensitiveStillConnectedDetails
 import models.submissions.downloadFORTypeForm.DownloadPDFDetails
@@ -38,7 +38,7 @@ case class SensitiveSession(
   stillConnectedDetails: Option[SensitiveStillConnectedDetails] = None,
   removeConnectionDetails: Option[SensitiveRemoveConnectionDetails] = None,
   aboutYouAndTheProperty: Option[SensitiveAboutYouAndTheProperty] = None,
-  additionalInformation: Option[SensitiveAdditionalInformation] = None,
+  additionalInformation: Option[AdditionalInformation] = None,
   aboutTheTradingHistory: Option[AboutTheTradingHistory] = None,
   aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = None,
   aboutLeaseOrAgreementPartOne: Option[SensitiveAboutLeaseOrAgreementPartOne] = None,
@@ -57,7 +57,7 @@ case class SensitiveSession(
     stillConnectedDetails.map(_.decryptedValue),
     removeConnectionDetails.map(_.decryptedValue),
     aboutYouAndTheProperty.map(_.decryptedValue),
-    additionalInformation.map(_.decryptedValue),
+    additionalInformation,
     aboutTheTradingHistory,
     aboutFranchisesOrLettings,
     aboutLeaseOrAgreementPartOne.map(_.decryptedValue),
@@ -81,7 +81,7 @@ object SensitiveSession {
     session.stillConnectedDetails.map(SensitiveStillConnectedDetails(_)),
     session.removeConnectionDetails.map(SensitiveRemoveConnectionDetails(_)),
     session.aboutYouAndTheProperty.map(SensitiveAboutYouAndTheProperty(_)),
-    session.additionalInformation.map(SensitiveAdditionalInformation(_)),
+    session.additionalInformation,
     session.aboutTheTradingHistory,
     session.aboutFranchisesOrLettings,
     session.aboutLeaseOrAgreementPartOne.map(SensitiveAboutLeaseOrAgreementPartOne(_)),
