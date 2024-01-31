@@ -53,26 +53,26 @@ class LettingPartOfPropertyDetailsControllerSpec extends TestBaseSpec {
         val result = lettingPartOfPropertyDetailsControllerr().show(None)(fakeRequest)
         val html   = Jsoup.parse(contentAsString(result))
 
-        Option(html.getElementById("tenantName").`val`()).value                           shouldBe ""
-        Option(html.getElementById("descriptionOfLetting").`val`()).value                 shouldBe ""
-        Option(html.getElementById("correspondenceAddress.addressLineOne").`val`()).value shouldBe ""
-        Option(html.getElementById("correspondenceAddress.addressLineTwo").`val`()).value shouldBe ""
-        Option(html.getElementById("correspondenceAddress.town").`val`()).value           shouldBe ""
-        Option(html.getElementById("correspondenceAddress.county").`val`()).value         shouldBe ""
-        Option(html.getElementById("correspondenceAddress.postcode").`val`()).value       shouldBe ""
+        Option(html.getElementById("tenantName").`val`()).value                               shouldBe ""
+        Option(html.getElementById("descriptionOfLetting").`val`()).value                     shouldBe ""
+        Option(html.getElementById("correspondenceAddress.buildingNameNumber").`val`()).value shouldBe ""
+        Option(html.getElementById("correspondenceAddress.street1").`val`()).value            shouldBe ""
+        Option(html.getElementById("correspondenceAddress.town").`val`()).value               shouldBe ""
+        Option(html.getElementById("correspondenceAddress.county").`val`()).value             shouldBe ""
+        Option(html.getElementById("correspondenceAddress.postcode").`val`()).value           shouldBe ""
       }
       "given an index" which {
         "doesn't already exist in the session" in {
           val result = lettingPartOfPropertyDetailsControllerr().show(Some(2))(fakeRequest)
           val html   = Jsoup.parse(contentAsString(result))
 
-          Option(html.getElementById("tenantName").`val`()).value                           shouldBe ""
-          Option(html.getElementById("descriptionOfLetting").`val`()).value                 shouldBe ""
-          Option(html.getElementById("correspondenceAddress.addressLineOne").`val`()).value shouldBe ""
-          Option(html.getElementById("correspondenceAddress.addressLineTwo").`val`()).value shouldBe ""
-          Option(html.getElementById("correspondenceAddress.town").`val`()).value           shouldBe ""
-          Option(html.getElementById("correspondenceAddress.county").`val`()).value         shouldBe ""
-          Option(html.getElementById("correspondenceAddress.postcode").`val`()).value       shouldBe ""
+          Option(html.getElementById("tenantName").`val`()).value                               shouldBe ""
+          Option(html.getElementById("descriptionOfLetting").`val`()).value                     shouldBe ""
+          Option(html.getElementById("correspondenceAddress.buildingNameNumber").`val`()).value shouldBe ""
+          Option(html.getElementById("correspondenceAddress.street1").`val`()).value            shouldBe ""
+          Option(html.getElementById("correspondenceAddress.town").`val`()).value               shouldBe ""
+          Option(html.getElementById("correspondenceAddress.county").`val`()).value             shouldBe ""
+          Option(html.getElementById("correspondenceAddress.postcode").`val`()).value           shouldBe ""
         }
       }
     }
