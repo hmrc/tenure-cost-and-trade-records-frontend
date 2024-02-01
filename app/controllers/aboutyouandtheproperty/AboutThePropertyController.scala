@@ -18,17 +18,18 @@ package controllers.aboutyouandtheproperty
 
 import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
+import form.aboutyouandtheproperty.AboutTheProperty6030Form.aboutTheProperty6030Form
 import form.aboutyouandtheproperty.AboutThePropertyForm.aboutThePropertyForm
 import models.Session
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty.updateAboutYouAndTheProperty
-import models.submissions.aboutyouandtheproperty.PropertyDetails
+import models.submissions.aboutyouandtheproperty.{PropertyDetails, PropertyDetails6030}
 import navigation.AboutYouAndThePropertyNavigator
 import navigation.identifiers.AboutThePropertyPageId
 import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Request}
 import repositories.SessionRepo
-import views.html.aboutyouandtheproperty.aboutTheProperty
+import views.html.aboutyouandtheproperty.{aboutTheProperty, aboutTheProperty6030}
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
@@ -38,6 +39,7 @@ class AboutThePropertyController @Inject() (
   mcc: MessagesControllerComponents,
   navigator: AboutYouAndThePropertyNavigator,
   aboutThePropertyView: aboutTheProperty,
+  aboutTheProperty6030View: aboutTheProperty6030,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
 ) extends FORDataCaptureController(mcc)
@@ -61,23 +63,45 @@ class AboutThePropertyController @Inject() (
   }
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft[PropertyDetails](
-      aboutThePropertyForm,
-      formWithErrors =>
-        BadRequest(
-          aboutThePropertyView(
-            formWithErrors,
-            request.sessionData.forType,
-            request.sessionData.toSummary,
-            backLink(request.sessionData)
-          )
-        ),
-      data => {
-        val updatedData = updateAboutYouAndTheProperty(_.copy(propertyDetails = Some(data)))
-        session.saveOrUpdate(updatedData)
-        Redirect(navigator.nextPage(AboutThePropertyPageId, updatedData).apply(updatedData))
-      }
-    )
+    val forType         = request.sessionData.forType
+
+    if (forType.equals("FOR6030")) {
+      continueOrSaveAsDraft[PropertyDetails6030](
+        aboutTheProperty6030Form,
+        formWithErrors =>
+          BadRequest(
+            aboutTheProperty6030View(
+              formWithErrors,
+              request.sessionData.forType,
+              request.sessionData.toSummary,
+              backLink(request.sessionData)
+            )
+          ),
+        data => {
+          val updatedData = updateAboutYouAndTheProperty(_.copy(propertyDetails = Some(data)))
+          session.saveOrUpdate(updatedData)
+          Redirect(navigator.nextPage(AboutThePropertyPageId, updatedData).apply(updatedData))
+        }
+      )
+    } else {
+      continueOrSaveAsDraft[PropertyDetails](
+        aboutThePropertyForm,
+        formWithErrors =>
+          BadRequest(
+            aboutThePropertyView(
+              formWithErrors,
+              request.sessionData.forType,
+              request.sessionData.toSummary,
+              backLink(request.sessionData)
+            )
+          ),
+        data => {
+          val updatedData = updateAboutYouAndTheProperty(_.copy(propertyDetails = Some(data)))
+          session.saveOrUpdate(updatedData)
+          Redirect(navigator.nextPage(AboutThePropertyPageId, updatedData).apply(updatedData))
+        }
+      )
+    }
   }
 
   private def backLink(answers: Session)(implicit request: Request[AnyContent]): String =
