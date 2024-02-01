@@ -32,6 +32,26 @@ class TownMappingSpec extends AnyWordSpecLike with should.Matchers with TableDri
 
   "town validation" should {
 
+    "catch invalid length error" in new Setup {
+      val lengths = Table(
+        ("county", "validity"),
+        ("ICantBelieveTheNameForThisTestIsMoreThanFiftyCharactersLong", false), //59
+        ("ICantBelieveTheNameForThisTestIsEvenMoreThanFiftyCharactersLong", false), //63
+        ("Test County", true),
+        ("County", true)
+      )
+
+      TableDrivenPropertyChecks.forAll(lengths) { (town, isValid) =>
+        val res: Form[String] = form.bind(Map("town" -> town))
+
+        if (isValid) {
+          res.hasErrors shouldBe false
+        } else {
+          res.errors(0).message shouldBe "error.townCity.maxLength"
+        }
+      }
+    }
+
     "catch mandatory condition" in new Setup {
       val isInput = Table(
         ("town", "validity"),

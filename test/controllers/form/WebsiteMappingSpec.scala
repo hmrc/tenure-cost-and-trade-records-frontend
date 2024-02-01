@@ -31,6 +31,26 @@ class WebsiteMappingSpec extends AnyWordSpecLike with should.Matchers with Table
 
   "web address validation" should {
 
+    "catch invalid length error" in new Setup {
+      val lengths = Table(
+        ("websiteAddressForProperty", "validity"),
+        ("www", false),
+        ("www 23", false),
+        ("www.test.com", true),
+        ("www.test.co.uk", true)
+      )
+
+      TableDrivenPropertyChecks.forAll(lengths) { (websiteAddressForProperty, isValid) =>
+        val res: Form[String] = form.bind(Map("websiteAddressForProperty" -> websiteAddressForProperty))
+
+        if (isValid) {
+          res.hasErrors shouldBe false
+        } else {
+          res.errors(0).message shouldBe "error.webaddressFormat.required"
+        }
+      }
+    }
+
     "catch mandatory condition" in new Setup {
       val isInput = Table(
         ("web address", "validity"),
