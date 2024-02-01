@@ -14,7 +14,7 @@
  * limitations under the License.
  *@
 
-@import models.submissions.aboutyouandtheproperty.PropertyDetails6030
+@import models.submissions.aboutyouandtheproperty.PropertyDetailsString
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
@@ -33,7 +33,7 @@
 )
 
 
-@(theForm: Form[PropertyDetails6030], forType: String, summary: Summary, backLink: String)(implicit request: Request[_], messages: Messages)
+@(theForm: Form[PropertyDetailsString], forType: String, summary: Summary, backLink: String)(implicit request: Request[_], messages: Messages)
 
 @layout(
   pageHeading = messages("aboutProperty.heading"),
@@ -45,13 +45,13 @@
   theForm = theForm
 ) {
 
-  @formWithCSRF(action = controllers.aboutyouandtheproperty.routes.AboutThePropertyController.submit()) {
+  @formWithCSRF(action = controllers.aboutyouandtheproperty.routes.AboutThePropertyStringController.submit()) {
 
     @govukInput(Input(
-    id = "propertyCurrentlyUsed6030",
-    name = "propertyCurrentlyUsed6030",
-    value = theForm("propertyCurrentlyUsed6030").value,
-    errorMessage = theForm.errors.asTextErrorMessageForField("propertyCurrentlyUsed6030"),
+    id = "propertyCurrentlyUsedString",
+    name = "propertyCurrentlyUsedString",
+    value = theForm("propertyCurrentlyUsedString").value,
+    errorMessage = theForm.errors.asTextErrorMessageForField("propertyCurrentlyUsedString"),
     label = Label(
       content = Text(Messages("aboutProperty.heading")),
       classes = "govuk-label--l govuk-fieldset__legend--m",

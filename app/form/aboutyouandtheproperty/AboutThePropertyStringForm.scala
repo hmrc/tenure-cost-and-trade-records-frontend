@@ -19,16 +19,17 @@ package form.aboutyouandtheproperty
 import models.submissions.aboutyouandtheproperty._
 import play.api.data.Form
 import play.api.data.Forms.{default, mapping, optional, text}
-import play.api.data.validation.Constraints.maxLength
+import play.api.data.validation.Constraints.{maxLength, nonEmpty}
 
-object AboutTheProperty6030Form {
+object AboutThePropertyStringForm {
 
-  val aboutTheProperty6030Form: Form[PropertyDetails6030] = Form(
+  val aboutThePropertyStringForm: Form[PropertyDetailsString] = Form(
     mapping(
-      "propertyCurrentlyUsedOther" -> default(text, "").verifying(
-          maxLength(200, "error.propertyCurrentlyUsed.maxLength")
-        )
-    )(PropertyDetails6030.apply)(PropertyDetails6030.unapply)
+      "propertyCurrentlyUsedString" -> default(text, "").verifying(
+        nonEmpty(errorMessage = "error.propertyCurrentlyUsedString.required"),
+        maxLength(200, "error.propertyCurrentlyUsedString.maxLength")
+      )
+    )(PropertyDetailsString.apply)(PropertyDetailsString.unapply)
   )
 
 }

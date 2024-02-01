@@ -38,6 +38,18 @@ class AboutYouAndThePropertyNavigator @Inject() (audit: Audit) extends Navigator
     controllers.aboutyouandtheproperty.routes.TiedForGoodsDetailsController.show()
   ).map(_.url)
 
+  private def aboutThePropertyRouting: Session => Call = answers => {
+    if (
+      answers.forType
+        .equals(ForTypes.for6015) || answers.forType.equals(ForTypes.for6016)
+    ) {
+      controllers.aboutyouandtheproperty.routes.AboutThePropertyController.show()
+    } else if (answers.forType.equals(ForTypes.for6030)) {
+      controllers.aboutyouandtheproperty.routes.AboutThePropertyStringController.show()
+    } else
+      controllers.aboutyouandtheproperty.routes.AboutThePropertyController.show()
+  }
+
   private def websiteForPropertyRouting: Session => Call = answers => {
     if (
       answers.forType
@@ -125,7 +137,16 @@ class AboutYouAndThePropertyNavigator @Inject() (audit: Audit) extends Navigator
   private def contactDetailsQuestionRouting: Session => Call = answers => {
     answers.aboutYouAndTheProperty.flatMap(_.altDetailsQuestion.map(_.contactDetailsQuestion.name)) match {
       case Some("yes") => controllers.aboutyouandtheproperty.routes.AlternativeContactDetailsController.show()
-      case Some("no")  => controllers.aboutyouandtheproperty.routes.AboutThePropertyController.show()
+      case Some("no")  =>
+        if (
+          answers.forType
+            .equals(ForTypes.for6015) || answers.forType.equals(ForTypes.for6016)
+        ) {
+          controllers.aboutyouandtheproperty.routes.AboutThePropertyController.show()
+        } else if (answers.forType.equals(ForTypes.for6030)) {
+          controllers.aboutyouandtheproperty.routes.AboutThePropertyStringController.show()
+        } else
+          controllers.aboutyouandtheproperty.routes.AboutThePropertyController.show()
       case _           =>
         logger.warn(
           s"Navigation for alternative details question reached without correct selection of conditions by controller"
@@ -137,7 +158,7 @@ class AboutYouAndThePropertyNavigator @Inject() (audit: Audit) extends Navigator
   override val routeMap: Map[Identifier, Session => Call] = Map(
     AboutYouPageId                          -> (_ => controllers.aboutyouandtheproperty.routes.ContactDetailsQuestionController.show()),
     ContactDetailsQuestionId                -> contactDetailsQuestionRouting,
-    AlternativeContactDetailsId             -> (_ => controllers.aboutyouandtheproperty.routes.AboutThePropertyController.show()),
+    AlternativeContactDetailsId             -> aboutThePropertyRouting,
     AboutThePropertyPageId                  -> (_ => controllers.aboutyouandtheproperty.routes.WebsiteForPropertyController.show()),
     WebsiteForPropertyPageId                -> websiteForPropertyRouting,
     PremisesLicenseGrantedId                -> premisesLicenseGrantedRouting,

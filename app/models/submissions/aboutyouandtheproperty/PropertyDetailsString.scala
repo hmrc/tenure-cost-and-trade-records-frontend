@@ -18,10 +18,10 @@ package models.submissions.aboutyouandtheproperty
 
 import play.api.libs.json.Json
 
-case class PropertyDetails6030(
-  currentlyUsed6030: String
+case class PropertyDetailsString(
+  propertyDetailsString: String
 )
 
-object PropertyDetails6030 {
-  implicit val format = Json.format[PropertyDetails6030]
+object PropertyDetailsString {
+  implicit val format = Json.format[PropertyDetailsString]
 }

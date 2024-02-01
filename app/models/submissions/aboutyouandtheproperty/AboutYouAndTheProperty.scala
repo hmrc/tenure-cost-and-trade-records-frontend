@@ -26,7 +26,6 @@ case class AboutYouAndTheProperty(
   altDetailsQuestion: Option[ContactDetailsQuestion] = None,
   altContactInformation: Option[AlternativeContactDetails] = None,
   propertyDetails: Option[PropertyDetails] = None,
-  propertyDetails6030: Option[PropertyDetails6030] = None,
   websiteForPropertyDetails: Option[WebsiteForPropertyDetails] = None,
   premisesLicenseGrantedDetail: Option[AnswersYesNo] = None,
   premisesLicenseGrantedInformationDetails: Option[PremisesLicenseGrantedInformationDetails] = None,
@@ -38,7 +37,8 @@ case class AboutYouAndTheProperty(
   enforcementActionHasBeenTakenInformationDetails: Option[EnforcementActionHasBeenTakenInformationDetails] = None,
   tiedForGoods: Option[AnswersYesNo] = None,
   tiedForGoodsDetails: Option[TiedForGoodsInformationDetails] = None,
-  checkYourAnswersAboutTheProperty: Option[CheckYourAnswersAboutYourProperty] = None
+  checkYourAnswersAboutTheProperty: Option[CheckYourAnswersAboutYourProperty] = None,
+  propertyDetailsString: Option[PropertyDetailsString] = None //added for 6030 - February 2024
 )
 
 object AboutYouAndTheProperty {

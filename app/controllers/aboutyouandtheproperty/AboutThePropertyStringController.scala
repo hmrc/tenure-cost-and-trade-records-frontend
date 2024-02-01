@@ -18,26 +18,26 @@ package controllers.aboutyouandtheproperty
 
 import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
-import form.aboutyouandtheproperty.AboutThePropertyForm.aboutThePropertyForm
+import form.aboutyouandtheproperty.AboutThePropertyStringForm.aboutThePropertyStringForm
 import models.Session
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty.updateAboutYouAndTheProperty
-import models.submissions.aboutyouandtheproperty.PropertyDetails
+import models.submissions.aboutyouandtheproperty.PropertyDetailsString
 import navigation.AboutYouAndThePropertyNavigator
-import navigation.identifiers.AboutThePropertyPageId
+import navigation.identifiers.{AboutThePropertyPageId, AboutThePropertyStringPageId}
 import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Request}
 import repositories.SessionRepo
-import views.html.aboutyouandtheproperty.aboutTheProperty
+import views.html.aboutyouandtheproperty.aboutThePropertyString
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class AboutThePropertyController @Inject() (
+class AboutThePropertyStringController @Inject() (
   mcc: MessagesControllerComponents,
   navigator: AboutYouAndThePropertyNavigator,
-  aboutThePropertyView: aboutTheProperty,
+  aboutThePropertyStringView: aboutThePropertyString,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
 ) extends FORDataCaptureController(mcc)
@@ -47,10 +47,10 @@ class AboutThePropertyController @Inject() (
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Future.successful(
       Ok(
-        aboutThePropertyView(
-          request.sessionData.aboutYouAndTheProperty.flatMap(_.propertyDetails) match {
-            case Some(propertyDetails) => aboutThePropertyForm.fill(propertyDetails)
-            case _                     => aboutThePropertyForm
+        aboutThePropertyStringView(
+          request.sessionData.aboutYouAndTheProperty.flatMap(_.propertyDetailsString) match {
+            case Some(propertyDetailsString) => aboutThePropertyStringForm.fill(propertyDetailsString)
+            case _                           => aboutThePropertyStringForm
           },
           request.sessionData.forType,
           request.sessionData.toSummary,
@@ -61,11 +61,11 @@ class AboutThePropertyController @Inject() (
   }
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft[PropertyDetails](
-      aboutThePropertyForm,
+    continueOrSaveAsDraft[PropertyDetailsString](
+      aboutThePropertyStringForm,
       formWithErrors =>
         BadRequest(
-          aboutThePropertyView(
+          aboutThePropertyStringView(
             formWithErrors,
             request.sessionData.forType,
             request.sessionData.toSummary,
@@ -73,7 +73,7 @@ class AboutThePropertyController @Inject() (
           )
         ),
       data => {
-        val updatedData = updateAboutYouAndTheProperty(_.copy(propertyDetails = Some(data)))
+        val updatedData = updateAboutYouAndTheProperty(_.copy(propertyDetailsString = Some(data)))
         session.saveOrUpdate(updatedData)
         Redirect(navigator.nextPage(AboutThePropertyPageId, updatedData).apply(updatedData))
       }

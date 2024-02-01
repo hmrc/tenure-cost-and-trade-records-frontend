@@ -19,12 +19,14 @@ package controllers.aboutyouandtheproperty
 import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
 import form.aboutyouandtheproperty.WebsiteForPropertyForm.websiteForPropertyForm
+import models.{ForTypes, Session}
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty.updateAboutYouAndTheProperty
 import models.submissions.aboutyouandtheproperty.WebsiteForPropertyDetails
 import navigation.AboutYouAndThePropertyNavigator
 import navigation.identifiers.WebsiteForPropertyPageId
+import play.api.Logging
 import play.api.i18n.I18nSupport
-import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Request}
 import repositories.SessionRepo
 import views.html.aboutyouandtheproperty.websiteForProperty
 
@@ -39,7 +41,8 @@ class WebsiteForPropertyController @Inject() (
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
 ) extends FORDataCaptureController(mcc)
-    with I18nSupport {
+    with I18nSupport
+    with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Future.successful(
@@ -49,7 +52,8 @@ class WebsiteForPropertyController @Inject() (
             case Some(websiteForPropertyDetails) => websiteForPropertyForm.fill(websiteForPropertyDetails)
             case _                               => websiteForPropertyForm
           },
-          request.sessionData.toSummary
+          request.sessionData.toSummary,
+          backLink(request.sessionData)
         )
       )
     )
@@ -62,7 +66,8 @@ class WebsiteForPropertyController @Inject() (
         BadRequest(
           websiteForPropertyView(
             formWithErrors,
-            request.sessionData.toSummary
+            request.sessionData.toSummary,
+            backLink(request.sessionData)
           )
         ),
       data => {
@@ -73,4 +78,10 @@ class WebsiteForPropertyController @Inject() (
     )
   }
 
+  private def backLink(answers: Session): String =
+    answers.forType match {
+      case ForTypes.for6030 =>
+        controllers.aboutyouandtheproperty.routes.AboutThePropertyStringController.show().url
+      case _                => controllers.aboutyouandtheproperty.routes.AboutThePropertyController.show().url
+    }
 }

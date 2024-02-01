@@ -36,7 +36,7 @@
   formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[WebsiteForPropertyDetails], summary: Summary)(implicit request: Request[_], messages: Messages)
+@(theForm: Form[WebsiteForPropertyDetails], summary: Summary, backLink: String)(implicit request: Request[_], messages: Messages)
 
 @conditionalHTML = {
   @govukInput(
@@ -59,7 +59,8 @@
     summary = Some(summary),
     showAccountInfo = true,
   sectionName = messages("label.section.aboutTheProperty"),
-  backLinkUrl = controllers.aboutyouandtheproperty.routes.AboutThePropertyController.show.url,
+    backLinkUrl = backLink,
+//  backLinkUrl = controllers.aboutyouandtheproperty.routes.AboutThePropertyController.show.url,
   theForm = theForm
 ) {
 

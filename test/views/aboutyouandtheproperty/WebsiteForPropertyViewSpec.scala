@@ -28,12 +28,15 @@ class WebsiteForPropertyViewSpec extends QuestionViewBehaviours[WebsiteForProper
 
   val messageKeyPrefix = "buildingOperatingHaveAWebsite"
 
+  val backLink = controllers.aboutyouandtheproperty.routes.AboutThePropertyController.show().url
+
   override val form: Form[WebsiteForPropertyDetails] = WebsiteForPropertyForm.websiteForPropertyForm
 
-  def createView: () => Html = () => websiteForPropertyView(form, Summary("99996010001"))(fakeRequest, messages)
+  def createView: () => Html = () =>
+    websiteForPropertyView(form, Summary("99996010001"), backLink)(fakeRequest, messages)
 
   def createViewUsingForm: Form[WebsiteForPropertyDetails] => Html = (form: Form[WebsiteForPropertyDetails]) =>
-    websiteForPropertyView(form, Summary("99996010001"))(fakeRequest, messages)
+    websiteForPropertyView(form, Summary("99996010001"), backLink)(fakeRequest, messages)
 
   "Property website view" must {
 

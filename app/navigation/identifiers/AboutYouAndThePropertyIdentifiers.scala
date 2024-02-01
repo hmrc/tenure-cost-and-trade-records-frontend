@@ -28,6 +28,11 @@ case object AlternativeContactDetailsId extends Identifier {
 
 case object AboutThePropertyPageId extends Identifier { override def toString: String = "aboutThePropertyPage" }
 
+// 6030 page only
+case object AboutThePropertyStringPageId extends Identifier {
+  override def toString: String = "aboutThePropertyStringPage"
+}
+
 case object WebsiteForPropertyPageId extends Identifier { override def toString: String = "websiteForPropertyPage" }
 
 // 6015 page only

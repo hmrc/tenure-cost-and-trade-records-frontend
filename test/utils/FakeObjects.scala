@@ -233,7 +233,30 @@ trait FakeObjects {
     Some(AnswerYes),
     Some(TiedForGoodsInformationDetails(TiedForGoodsInformationDetailsFullTie))
   )
-  val prefilledAboutYouAndThePropertyNo: AboutYouAndTheProperty  = AboutYouAndTheProperty(
+
+  val prefilledAboutYouAndThePropertyYesString: AboutYouAndTheProperty = AboutYouAndTheProperty(
+    Some(CustomerDetails("Tobermory", ContactDetails(prefilledFakePhoneNo, prefilledFakeEmail))),
+    Some(ContactDetailsQuestion(AnswerYes)),
+    Some(
+      AlternativeContactDetails(prefilledAlternativeAddress)
+    ),
+    None,
+    Some(WebsiteForPropertyDetails(BuildingOperationHaveAWebsiteYes, Some("webAddress"))),
+    Some(AnswerYes),
+    Some(PremisesLicenseGrantedInformationDetails("Premises licence granted details")),
+    Some(AnswerYes),
+    Some(LicensableActivitiesInformationDetails("Licensable activities details")),
+    Some(AnswerYes),
+    Some(PremisesLicenseConditionsDetails("Premises license conditions details")),
+    Some(AnswerYes),
+    Some(EnforcementActionHasBeenTakenInformationDetails("Enforcement action taken details")),
+    Some(AnswerYes),
+    Some(TiedForGoodsInformationDetails(TiedForGoodsInformationDetailsFullTie)),
+    None,
+    Some(PropertyDetailsString("This property is a museum"))
+  )
+
+  val prefilledAboutYouAndThePropertyNo: AboutYouAndTheProperty = AboutYouAndTheProperty(
     Some(CustomerDetails("Tobermory", ContactDetails(prefilledFakePhoneNo, prefilledFakeEmail))),
     Some(ContactDetailsQuestion(AnswerNo)),
     None,
