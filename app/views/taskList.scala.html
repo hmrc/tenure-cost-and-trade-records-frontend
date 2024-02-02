@@ -176,7 +176,7 @@
         session.aboutTheTradingHistory.flatMap(_.occupationAndAccountingInformation).isEmpty
        )
 
-       @if(forType == ForTypes.for6015 || forType == ForTypes.for6016) {
+       @if(forType == ForTypes.for6015) {
         @includes.taskListItem("total-payroll-costs", "taskList.payrollCosts",
          controllers.aboutthetradinghistory.routes.TotalPayrollCostsController.show(),
          section3Completed,
