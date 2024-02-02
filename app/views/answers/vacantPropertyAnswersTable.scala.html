@@ -38,6 +38,18 @@
     sectionAnswers.answers.map(_.lettingPartOfPropertyDetails.size - 1).getOrElse(0) max 0
 }
 
+@lettingsSize = @{
+    sectionAnswers.answers.map(_.lettingPartOfPropertyDetails.size).getOrElse(0) max 0
+}
+
+@lettingsAddedMessage = @{
+  if (lettingsSize <= 1){
+      messages("checkYourAnswersConnectionToVacantProperty.addedLetting",lettingsSize)
+  }else{
+      messages("checkYourAnswersConnectionToVacantProperty.addedLettingPlural",lettingsSize)
+  }
+}
+
 @if(sectionAnswers.answers.exists(_.addressConnectionType.map(_.name).contains("yes-change-address"))) {
     <h2 class="govuk-heading-m">@messages("checkYourAnswersConnectionToVacantProperty.connectionStatus.heading")</h2>
 
@@ -65,6 +77,7 @@
 
 @if(sectionAnswers.answers.flatMap(_.isAnyRentReceived).contains(AnswerYes)) {
     @for((letting, idx) <- sectionAnswers.answers.map(_.lettingPartOfPropertyDetails).getOrElse(IndexedSeq.empty).zipWithIndex) {
+        <h2 class="govuk-heading-m">@messages("checkYourAnswersConnectionToVacantProperty.lettingOperatorNumber",idx+1)</h2>
         @govukSummaryList(SummaryList(rows =
             sectionAnswers.row("checkYourAnswersConnectionToVacantProperty.tenantDetails",
                 _ => Option(letting.tenantDetails.escapedHtml),
@@ -77,10 +90,18 @@
                         .map(item => messages(s"checkbox.lettingPartOfPropertyCheckboxesDetails.$item"))
                         .mkString("""<p class="govuk-body">""", "<br/> ", "</p>"),
                         connectiontoproperty.routes.LettingPartOfPropertyItemsIncludedInRentController.show(idx), "itemsInRent",
-                        ("valueAsHtml", _ => None)) ++
-                    sectionAnswers.row("checkYourAnswersConnectionToVacantProperty.addAnotherLetting", _ => letting.addAnotherLettingToProperty.map(_.name).map(v => messages(s"label.$v")), connectiontoproperty.routes.AddAnotherLettingPartOfPropertyController.show(lettingsLastIndex), "addAnotherLettingPartOfProperty")
+                        ("valueAsHtml", _ => None))
         ))
     }
+    @govukSummaryList(SummaryList(rows =
+        List(
+            SummaryListRow(
+                Key(Text(lettingsAddedMessage), classes = "govuk-heading-m"),
+                actions = Some(Actions(items = List(ActionItem(connectiontoproperty.routes.AddAnotherLettingPartOfPropertyController.show(lettingsLastIndex).url, Text(messages("checkYourAnswersConnectionToVacantProperty.addLetting"))))))
+            )
+        )
+    ))
+
 }
 
 <h2 class="govuk-heading-m">@messages("checkYourAnswersConnectionToVacantProperty.yourContactDetails.heading")</h2>

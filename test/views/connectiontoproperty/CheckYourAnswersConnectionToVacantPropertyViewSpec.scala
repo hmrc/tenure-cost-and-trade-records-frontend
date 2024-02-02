@@ -36,7 +36,8 @@ class CheckYourAnswersConnectionToVacantPropertyViewSpec
 
   val backLink: String = controllers.connectiontoproperty.routes.ProvideContactDetailsController.show().url
 
-  val sessionRequest: SessionRequest[AnyContentAsEmpty.type] = SessionRequest(baseFilled6010Session, fakeRequest)
+  val sessionRequest: SessionRequest[AnyContentAsEmpty.type] =
+    SessionRequest(stillConnectedDetailsYesToAllSession, fakeRequest)
 
   def createView: () => Html = () => checkYourAnswersConnectionToVacantProperty(backLink)(sessionRequest, messages)
 

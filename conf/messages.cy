@@ -416,6 +416,10 @@ checkYourAnswersConnectionToVacantProperty.annualRent = Annual rent
 checkYourAnswersConnectionToVacantProperty.fixedOn = Fixed on
 checkYourAnswersConnectionToVacantProperty.itemsInRent = Included in rent
 checkYourAnswersConnectionToVacantProperty.addAnotherLetting = Add another letting?
+checkYourAnswersConnectionToVacantProperty.lettingOperatorNumber = Letting {0}
+checkYourAnswersConnectionToVacantProperty.addedLetting = You have added {0} letting
+checkYourAnswersConnectionToVacantProperty.addedLettingPlural = You have added {0} lettings
+checkYourAnswersConnectionToVacantProperty.addLetting = Add or remove a letting
 
 # Confirmation Page Connection to Property
 ##########################################
