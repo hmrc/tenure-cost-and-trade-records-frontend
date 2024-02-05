@@ -18,26 +18,26 @@ package controllers.aboutyouandtheproperty
 
 import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
-import form.aboutyouandtheproperty.WebsiteForPropertyForm.websiteForPropertyForm
-import models.{ForTypes, Session}
+import form.aboutyouandtheproperty.AboutThePropertyStringForm.aboutThePropertyStringForm
+import models.Session
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty.updateAboutYouAndTheProperty
-import models.submissions.aboutyouandtheproperty.WebsiteForPropertyDetails
+import models.submissions.aboutyouandtheproperty.PropertyDetailsString
 import navigation.AboutYouAndThePropertyNavigator
-import navigation.identifiers.WebsiteForPropertyPageId
+import navigation.identifiers.{AboutThePropertyPageId, AboutThePropertyStringPageId}
 import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Request}
 import repositories.SessionRepo
-import views.html.aboutyouandtheproperty.websiteForProperty
+import views.html.aboutyouandtheproperty.aboutThePropertyString
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class WebsiteForPropertyController @Inject() (
+class AboutThePropertyStringController @Inject() (
   mcc: MessagesControllerComponents,
   navigator: AboutYouAndThePropertyNavigator,
-  websiteForPropertyView: websiteForProperty,
+  aboutThePropertyStringView: aboutThePropertyString,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
 ) extends FORDataCaptureController(mcc)
@@ -47,11 +47,12 @@ class WebsiteForPropertyController @Inject() (
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Future.successful(
       Ok(
-        websiteForPropertyView(
-          request.sessionData.aboutYouAndTheProperty.flatMap(_.websiteForPropertyDetails) match {
-            case Some(websiteForPropertyDetails) => websiteForPropertyForm.fill(websiteForPropertyDetails)
-            case _                               => websiteForPropertyForm
+        aboutThePropertyStringView(
+          request.sessionData.aboutYouAndTheProperty.flatMap(_.propertyDetailsString) match {
+            case Some(propertyDetailsString) => aboutThePropertyStringForm.fill(propertyDetailsString)
+            case _                           => aboutThePropertyStringForm
           },
+          request.sessionData.forType,
           request.sessionData.toSummary,
           backLink(request.sessionData)
         )
@@ -60,28 +61,39 @@ class WebsiteForPropertyController @Inject() (
   }
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft[WebsiteForPropertyDetails](
-      websiteForPropertyForm,
+    continueOrSaveAsDraft[PropertyDetailsString](
+      aboutThePropertyStringForm,
       formWithErrors =>
         BadRequest(
-          websiteForPropertyView(
+          aboutThePropertyStringView(
             formWithErrors,
+            request.sessionData.forType,
             request.sessionData.toSummary,
             backLink(request.sessionData)
           )
         ),
       data => {
-        val updatedData = updateAboutYouAndTheProperty(_.copy(websiteForPropertyDetails = Some(data)))
+        val updatedData = updateAboutYouAndTheProperty(_.copy(propertyDetailsString = Some(data)))
         session.saveOrUpdate(updatedData)
-        Redirect(navigator.nextPage(WebsiteForPropertyPageId, updatedData).apply(updatedData))
+        Redirect(navigator.nextPage(AboutThePropertyPageId, updatedData).apply(updatedData))
       }
     )
   }
 
-  private def backLink(answers: Session): String =
-    answers.forType match {
-      case ForTypes.for6030 =>
-        controllers.aboutyouandtheproperty.routes.AboutThePropertyStringController.show().url
-      case _                => controllers.aboutyouandtheproperty.routes.AboutThePropertyController.show().url
+  private def backLink(answers: Session)(implicit request: Request[AnyContent]): String =
+    navigator.from match {
+      case "TL" => controllers.routes.TaskListController.show().url + "#about-the-property"
+      case _    =>
+        answers.aboutYouAndTheProperty.flatMap(
+          _.altDetailsQuestion.map(_.contactDetailsQuestion.name)
+        ) match {
+          case Some("yes") =>
+            controllers.aboutyouandtheproperty.routes.AlternativeContactDetailsController.show.url
+          case Some("no")  => controllers.aboutyouandtheproperty.routes.ContactDetailsQuestionController.show.url
+          case _           =>
+            logger.warn(s"Back link for alternative contact page reached with unknown enforcement taken value")
+            controllers.routes.TaskListController.show().url
+        }
     }
+
 }

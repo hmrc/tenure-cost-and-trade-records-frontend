@@ -32,6 +32,12 @@
     SectionAnswersRowBuilder(request.sessionData.additionalInformation)
 }
 
+
+@forType = @{
+    request.sessionData.forType
+}
+
+
 <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutTheProperty.aboutYou.heading")</h2>
 
 @govukSummaryList(SummaryList(rows =
@@ -68,18 +74,16 @@
 
 <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutTheProperty.aboutProperty.heading")</h2>
 
+    @if(forType == ForTypes.for6030) {
 @govukSummaryList(SummaryList(rows =
-    sectionAnswers.row("checkYourAnswersAboutTheProperty.propertyUsage",
-        _.propertyDetails.map(
-            usage => s"${messages(s"propertyCurrentlyUsed.${usage.propertyCurrentlyUsed.name}")}"
-                    + sectionAnswers.answers.filter(_ => usage.currentlyUsedOtherField.isDefined).flatMap(_.propertyDetails.flatMap(_.currentlyUsedOtherField)).fold("")(v => s"<p class=\"govuk-body\">$v")
-        ).mkString("""<p class="govuk-body">""", """</p><p class="govuk-body">""", "</p>"),
-        aboutyouandtheproperty.routes.AboutThePropertyController.show(), "propertyCurrentlyUsed",
-        ("valueAsHtml", _ => None)) ++
+
+    sectionAnswers.row("checkYourAnswersAboutTheProperty.aboutProperty.heading",
+        _.propertyDetailsString.map(x => s"<p class=\"govuk-body\">${Text(x.propertyDetailsString).asHtml}</p>"),
+        aboutyouandtheproperty.routes.AboutThePropertyStringController.show(), "propertyCurrentlyUsedString", ("valueAsHtml", _ => None)) ++
             sectionAnswers.optionalRow(
                 "checkYourAnswersAboutTheProperty.hasWebsite",
                 _.websiteForPropertyDetails
-                .map(_.buildingOperatingHaveAWebsite).map(hasWebsite =>
+                        .map(_.buildingOperatingHaveAWebsite).map(hasWebsite =>
                     """<p class="govuk-body">""" + messages(s"label.${hasWebsite.name}") + "</p>"
                             + sectionAnswers.answers.filter(_ => hasWebsite.name == "yes").flatMap(
                         _.websiteForPropertyDetails.flatMap(_.websiteAddressForProperty)).fold("")(v => s"<p class=\"govuk-body\">$v</p>")),
@@ -87,7 +91,30 @@
                 "buildingOperatingHaveAWebsite",
                 ("valueAsHtml", _ => None)
             )
-))
+        ))
+
+    } else {
+        @govukSummaryList(SummaryList(rows =
+            sectionAnswers.row("checkYourAnswersAboutTheProperty.propertyUsage",
+                _.propertyDetails.map(
+                    usage => s"${messages(s"propertyCurrentlyUsed.${usage.propertyCurrentlyUsed.name}")}"
+                            + sectionAnswers.answers.filter(_ => usage.currentlyUsedOtherField.isDefined).flatMap(_.propertyDetails.flatMap(_.currentlyUsedOtherField)).fold("")(v => s"<p class=\"govuk-body\">$v")
+                ).mkString("""<p class="govuk-body">""", """</p><p class="govuk-body">""", "</p>"),
+                aboutyouandtheproperty.routes.AboutThePropertyController.show(), "propertyCurrentlyUsed",
+                ("valueAsHtml", _ => None)) ++
+                    sectionAnswers.optionalRow(
+                        "checkYourAnswersAboutTheProperty.hasWebsite",
+                        _.websiteForPropertyDetails
+                                .map(_.buildingOperatingHaveAWebsite).map(hasWebsite =>
+                            """<p class="govuk-body">""" + messages(s"label.${hasWebsite.name}") + "</p>"
+                                    + sectionAnswers.answers.filter(_ => hasWebsite.name == "yes").flatMap(
+                                _.websiteForPropertyDetails.flatMap(_.websiteAddressForProperty)).fold("")(v => s"<p class=\"govuk-body\">$v</p>")),
+                        aboutyouandtheproperty.routes.WebsiteForPropertyController.show(),
+                        "buildingOperatingHaveAWebsite",
+                        ("valueAsHtml", _ => None)
+                    )
+        ))
+    }
 
 @if(sectionAnswers.answers.flatMap(p => p.premisesLicenseGrantedDetail.orElse(p.licensableActivities).orElse(p.premisesLicenseConditions)).isDefined) {
     <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutTheProperty.license.heading")</h2>

@@ -40,6 +40,7 @@ trait FakeObjects {
   val forType6011: String       = "FOR6011"
   val forType6015: String       = "FOR6015"
   val forType6016: String       = "FOR6016"
+  val forType6030: String       = "FOR6030"
   val prefilledAddress: Address =
     Address("001", Some("GORING ROAD"), "GORING-BY-SEA, WORTHING", Some("WEST SUSSEX"), "BN12 4AX")
   val token: String             = "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik="
@@ -105,6 +106,7 @@ trait FakeObjects {
   val baseFilled6011Session: Session = Session(referenceNumber, forType6011, prefilledAddress, token)
   val baseFilled6015Session: Session = Session(referenceNumber, forType6015, prefilledAddress, token)
   val baseFilled6016Session: Session = Session(referenceNumber, forType6016, prefilledAddress, token)
+  val baseFilled6030Session: Session = Session(referenceNumber, forType6030, prefilledAddress, token)
 
   // Request reference number
   val prefilledRequestRefNumCYA = RequestReferenceNumberDetails(
@@ -193,6 +195,12 @@ trait FakeObjects {
     baseFilled6015Session.copy(stillConnectedDetails = Some(prefilledStillConnectedDetailsNo))
   val stillConnectedDetails6016YesSession: Session            =
     baseFilled6016Session.copy(stillConnectedDetails = Some(prefilledStillConnectedDetailsYes))
+
+  val stillConnectedDetails6030NoSession: Session  =
+    baseFilled6030Session.copy(stillConnectedDetails = Some(prefilledStillConnectedDetailsNo))
+  val stillConnectedDetails6030YesSession: Session =
+    baseFilled6030Session.copy(stillConnectedDetails = Some(prefilledStillConnectedDetailsYes))
+
   val stillConnectedDetails6016NoSession: Session             =
     baseFilled6016Session.copy(stillConnectedDetails = Some(prefilledStillConnectedDetailsNo))
   val stillConnectedDetailsConnectedDetailsNoSession: Session =
@@ -233,7 +241,49 @@ trait FakeObjects {
     Some(AnswerYes),
     Some(TiedForGoodsInformationDetails(TiedForGoodsInformationDetailsFullTie))
   )
-  val prefilledAboutYouAndThePropertyNo: AboutYouAndTheProperty  = AboutYouAndTheProperty(
+
+  val prefilledAboutYouAndThePropertyYesString: AboutYouAndTheProperty = AboutYouAndTheProperty(
+    Some(CustomerDetails("Tobermory", ContactDetails(prefilledFakePhoneNo, prefilledFakeEmail))),
+    Some(ContactDetailsQuestion(AnswerYes)),
+    Some(
+      AlternativeContactDetails(prefilledAlternativeAddress)
+    ),
+    None,
+    Some(WebsiteForPropertyDetails(BuildingOperationHaveAWebsiteYes, Some("webAddress"))),
+    Some(AnswerYes),
+    Some(PremisesLicenseGrantedInformationDetails("Premises licence granted details")),
+    Some(AnswerYes),
+    Some(LicensableActivitiesInformationDetails("Licensable activities details")),
+    Some(AnswerYes),
+    Some(PremisesLicenseConditionsDetails("Premises license conditions details")),
+    Some(AnswerYes),
+    Some(EnforcementActionHasBeenTakenInformationDetails("Enforcement action taken details")),
+    Some(AnswerYes),
+    Some(TiedForGoodsInformationDetails(TiedForGoodsInformationDetailsFullTie)),
+    None,
+    Some(PropertyDetailsString("This property is a museum"))
+  )
+
+  val prefilledAboutYouAndThePropertyNoString: AboutYouAndTheProperty = AboutYouAndTheProperty(
+    Some(CustomerDetails("Tobermory", ContactDetails(prefilledFakePhoneNo, prefilledFakeEmail))),
+    Some(ContactDetailsQuestion(AnswerNo)),
+    None,
+    None,
+    Some(WebsiteForPropertyDetails(BuildingOperationHaveAWebsiteYes, Some("webAddress"))),
+    Some(AnswerNo),
+    None,
+    Some(AnswerNo),
+    None,
+    Some(AnswerNo),
+    None,
+    Some(AnswerNo),
+    None,
+    Some(AnswerNo),
+    None,
+    None
+  )
+
+  val prefilledAboutYouAndThePropertyNo: AboutYouAndTheProperty = AboutYouAndTheProperty(
     Some(CustomerDetails("Tobermory", ContactDetails(prefilledFakePhoneNo, prefilledFakeEmail))),
     Some(ContactDetailsQuestion(AnswerNo)),
     None,
@@ -275,6 +325,10 @@ trait FakeObjects {
     stillConnectedDetails6016YesSession.copy(aboutYouAndTheProperty = Some(prefilledAboutYouAndThePropertyYes))
   val aboutYouAndTheProperty6016NoSession: Session  =
     stillConnectedDetails6016NoSession.copy(aboutYouAndTheProperty = Some(prefilledAboutYouAndThePropertyNo))
+  val aboutYouAndTheProperty6030YesSession: Session =
+    stillConnectedDetails6030YesSession.copy(aboutYouAndTheProperty = Some(prefilledAboutYouAndThePropertyYesString))
+  val aboutYouAndTheProperty6030NoSession: Session  =
+    stillConnectedDetails6030NoSession.copy(aboutYouAndTheProperty = Some(prefilledAboutYouAndThePropertyNoString))
 
   // Trading history
   val prefilledAboutYourTradingHistory: AboutTheTradingHistory = AboutTheTradingHistory(

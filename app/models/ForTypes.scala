@@ -22,6 +22,7 @@ object ForTypes {
   val for6011 = "FOR6011"
   val for6015 = "FOR6015"
   val for6016 = "FOR6016"
+  val for6030 = "FOR6030"
 
   def find(forType: String) = forTypes.get(forType.toUpperCase)
 

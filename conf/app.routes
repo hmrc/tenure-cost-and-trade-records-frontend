@@ -114,6 +114,10 @@ POST        /about-you                                              controllers.
 GET         /about-the-property                                     controllers.aboutyouandtheproperty.AboutThePropertyController.show()
 POST        /about-the-property                                     controllers.aboutyouandtheproperty.AboutThePropertyController.submit()
 
+# About the property 6030
+GET         /about-the-property-description                         controllers.aboutyouandtheproperty.AboutThePropertyStringController.show()
+POST        /about-the-property-description                         controllers.aboutyouandtheproperty.AboutThePropertyStringController.submit()
+
 GET         /website-for-property                                   controllers.aboutyouandtheproperty.WebsiteForPropertyController.show()
 POST        /website-for-property                                   controllers.aboutyouandtheproperty.WebsiteForPropertyController.submit()
 

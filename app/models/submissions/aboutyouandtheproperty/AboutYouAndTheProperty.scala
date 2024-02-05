@@ -37,7 +37,8 @@ case class AboutYouAndTheProperty(
   enforcementActionHasBeenTakenInformationDetails: Option[EnforcementActionHasBeenTakenInformationDetails] = None,
   tiedForGoods: Option[AnswersYesNo] = None,
   tiedForGoodsDetails: Option[TiedForGoodsInformationDetails] = None,
-  checkYourAnswersAboutTheProperty: Option[CheckYourAnswersAboutYourProperty] = None
+  checkYourAnswersAboutTheProperty: Option[CheckYourAnswersAboutYourProperty] = None,
+  propertyDetailsString: Option[PropertyDetailsString] = None //added for 6030 - February 2024
 )
 
 object AboutYouAndTheProperty {
