@@ -14,6 +14,7 @@
  * limitations under the License.
  *@
 
+@import actions.SessionRequest
 @import models.submissions.aboutthetradinghistory.UnusualCircumstances
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
@@ -29,10 +30,10 @@
 )
 
 
-@(theForm: Form[UnusualCircumstances], summary: Summary)(implicit request: Request[_], messages: Messages)
+@(theForm: Form[UnusualCircumstances], forType: String, summary: Summary)(implicit request: SessionRequest[_], messages: Messages)
 
 @layout(
-  pageHeading = messages("unusualCircumstances.heading"),
+    pageHeading = if(forType.equals(ForTypes.for6030)) { messages("unusualCircumstancesReceipts.heading") } else { messages("unusualCircumstances.heading") },
   showSection = true,
     summary = Some(summary),
   sectionName = messages("label.section.aboutYourTradingHistory"),
