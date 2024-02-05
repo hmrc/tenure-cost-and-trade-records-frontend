@@ -49,6 +49,7 @@ class UnusualCircumstancesController @Inject() (
           case Some(unusualCircumstances) => unusualCircumstancesForm.fill(unusualCircumstances)
           case _                          => unusualCircumstancesForm
         },
+        request.sessionData.forType,
         request.sessionData.toSummary
       )
     )
@@ -57,7 +58,10 @@ class UnusualCircumstancesController @Inject() (
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[UnusualCircumstances](
       unusualCircumstancesForm,
-      formWithErrors => BadRequest(unusualCircumstancesView(formWithErrors, request.sessionData.toSummary)),
+      formWithErrors =>
+        BadRequest(
+          unusualCircumstancesView(formWithErrors, request.sessionData.forType, request.sessionData.toSummary)
+        ),
       data => {
         val updatedData = updateAboutTheTradingHistory(_.copy(unusualCircumstances = Some(data)))
         session.saveOrUpdate(updatedData).map { _ =>

@@ -1394,6 +1394,7 @@ error.incomeExpenditureSummary.required = Select if these figures are correct
 # UNUSUAL CIRCUMSTANCES (FORM 6015)
 ###################################
 unusualCircumstances.heading = Describe any unusual circumstances that may have affected the turnover figures on the previous page
+unusualCircumstancesReceipts.heading = Describe any unusual circumstances that may have affected the receipts or visitor numbers on the previous page
 unusualCircumstances.explain = Explain any abnormally high or low figures in your accounts – leave blank if not applicable.
 
 # NET PROFITS (FORM 6015)
