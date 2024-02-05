@@ -56,6 +56,11 @@ class AboutThePropertyStringViewSpec extends QuestionViewBehaviours[PropertyDeta
       assert(sectionText == messages("label.section.aboutTheProperty"))
     }
 
+    "contain an input for how the property is used" in {
+      val doc = asDocument(createViewUsingForm(form))
+      assertRenderedById(doc, "propertyCurrentlyUsedString")
+    }
+
     "contain save as draft button with the value Save as draft" in {
       val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("save").text()

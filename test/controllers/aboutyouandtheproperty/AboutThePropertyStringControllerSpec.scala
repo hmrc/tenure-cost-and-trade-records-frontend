@@ -16,13 +16,17 @@
 
 package controllers.aboutyouandtheproperty
 
+import form.aboutyouandtheproperty.AboutThePropertyStringForm.aboutThePropertyStringForm
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
+import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
 
 class AboutThePropertyStringControllerSpec extends TestBaseSpec {
+
+  import TestData.{baseFormData, errorKey}
 
   def aboutThePropertyStringController(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYesString)
@@ -52,5 +56,26 @@ class AboutThePropertyStringControllerSpec extends TestBaseSpec {
         status(res) shouldBe BAD_REQUEST
       }
     }
+  }
+
+  "Licensable activities details form" should {
+    "error if choice is missing " in {
+      val formData = baseFormData - errorKey.propertyCurrentlyUsedString
+      val form     = aboutThePropertyStringForm.bind(formData)
+
+      mustContainError(errorKey.propertyCurrentlyUsedString, "error.propertyCurrentlyUsedString.required", form)
+    }
+  }
+
+  object TestData {
+    val errorKey: Object {
+      val propertyCurrentlyUsedString: String
+    } = new {
+      val propertyCurrentlyUsedString: String = "propertyCurrentlyUsedString"
+    }
+
+    val baseFormData: Map[String, String] = Map(
+      "propertyCurrentlyUsedString" -> "Test content"
+    )
   }
 }
