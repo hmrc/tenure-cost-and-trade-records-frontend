@@ -89,11 +89,11 @@ label.change = Change
 
 # COMMON HINTS
 ##############
-hint.select.all = Select all that apply
-hint.date.example = For example, 27 9 2017
-hint.month.year.example = For example, 9 2017
-hint.day.month.example = For example, 27 9
-hint.select.applicable = Select any that apply – leave blank if not applicable
+hint.select.all = Select all that apply.
+hint.date.example = For example, 27 9 2017.
+hint.month.year.example = For example, 9 2017.
+hint.day.month.example = For example, 04 05.
+hint.select.applicable = Select any that apply – leave blank if not applicable.
 
 # SECTION NAMES
 ###############
