@@ -140,20 +140,31 @@
         session.aboutYouAndTheProperty.flatMap(_.altContactInformation).isEmpty
        )
 
-       @includes.taskListItem("licensable-activities", "checkYourAnswersAboutTheProperty.license.heading",
-        if(forType == ForTypes.for6015 || forType == ForTypes.for6016) {
-         controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedController.show()
-        } else {
-         controllers.aboutyouandtheproperty.routes.LicensableActivitiesController.show()
-        },
-        section2Completed,
-        if(forType == ForTypes.for6015 || forType == ForTypes.for6016) {
-         session.aboutYouAndTheProperty.flatMap(_.premisesLicenseGrantedDetail)
-        } else {
-         session.aboutYouAndTheProperty.flatMap(_.licensableActivities)
-        },
-        session.aboutYouAndTheProperty.flatMap(_.propertyDetails).isEmpty
-       )
+       @if(forType == ForTypes.for6030 && !isLeaseHolder) {
+        @includes.taskListItem("licensable-activities", "checkYourAnswersAboutTheProperty.license.heading",
+         controllers.aboutyouandtheproperty.routes.LicensableActivitiesController.show(),
+         section2Completed,
+         session.aboutYouAndTheProperty.flatMap(_.licensableActivities),
+         session.aboutYouAndTheProperty.flatMap(_.propertyDetails).isEmpty
+        )
+       }
+
+       @if(forType != ForTypes.for6030) {
+        @includes.taskListItem("licensable-activities", "checkYourAnswersAboutTheProperty.license.heading",
+         if(forType == ForTypes.for6015 || forType == ForTypes.for6016) {
+          controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedController.show()
+         } else {
+          controllers.aboutyouandtheproperty.routes.LicensableActivitiesController.show()
+         },
+         section2Completed,
+         if(forType == ForTypes.for6015 || forType == ForTypes.for6016) {
+          session.aboutYouAndTheProperty.flatMap(_.premisesLicenseGrantedDetail)
+         } else {
+          session.aboutYouAndTheProperty.flatMap(_.licensableActivities)
+         },
+         session.aboutYouAndTheProperty.flatMap(_.propertyDetails).isEmpty
+        )
+       }
       </ul>
      </li>
 
@@ -216,7 +227,7 @@
      </li>
 
      <li>
-      @if(forType == ForTypes.for6010 || forType == ForTypes.for6011) {
+      @if(forType == ForTypes.for6010 || forType == ForTypes.for6011 || forType == ForTypes.for6030) {
         <h2 class="app-task-list__section">
         <span class="app-task-list__section-number">4.</span>
         @messages("label.section.aboutTheFranchiseLettings")
@@ -265,7 +276,7 @@
          section4Completed.isEmpty
         )
 
-        @if(forType == ForTypes.for6010 || forType == ForTypes.for6015 || forType == ForTypes.for6016) {
+        @if(forType == ForTypes.for6010 || forType == ForTypes.for6015 || forType == ForTypes.for6016 || forType == ForTypes.for6030) {
          @includes.taskListItem("lease-or-agreement-details", "checkYourAnswersAboutYourLeaseOrTenure.changesToYourLease.heading",
           controllers.aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.show(),
           section5Completed,
@@ -274,7 +285,7 @@
          )
         }
 
-        @if(forType == ForTypes.for6010 || forType == ForTypes.for6015 || forType == ForTypes.for6016) {
+        @if(forType == ForTypes.for6010 || forType == ForTypes.for6015 || forType == ForTypes.for6016 || forType == ForTypes.for6030) {
          @includes.taskListItem("leaseback-arrangement", "checkYourAnswersAboutYourLeaseOrTenure.leaseDetails.heading",
           controllers.aboutYourLeaseOrTenure.routes.PropertyUseLeasebackArrangementController.show(),
           section5Completed,
@@ -290,7 +301,7 @@
          )
         }
 
-        @if(forType == ForTypes.for6010 || forType == ForTypes.for6015 || forType == ForTypes.for6016) {
+        @if(forType == ForTypes.for6010 || forType == ForTypes.for6015 || forType == ForTypes.for6016 || forType == ForTypes.for6030) {
          @includes.taskListItem("included-in-your-rent", "checkYourAnswersAboutYourLeaseOrTenure.whatRentIncludes.heading",
           controllers.aboutYourLeaseOrTenure.routes.IncludedInYourRentController.show(),
           section5Completed,
