@@ -504,6 +504,20 @@ error.websiteAddressForProperty.required = Enter your web address
 error.webaddressFormat.required = Enter an address in the correct format, like www.example.com
 error.buildingOperatingHaveAWebsite.required = Select yes if the business has a website
 
+#CHARITY QUESTION PAGE (6030)
+########################
+charityQuestion.heading = Is the organisation currently operating from the property a charity?
+error.charityQuestion.missing = Select yes if the organisation currently operates from the property a charity
+
+# TRADING ACTIVITY (6030)
+#########################
+tradingActivity.heading = Trading activity
+tradingActivity.declare = As a charity, you must declare if any separate companies or trading enterprises carry out trading activities on the property. Examples of these activities could be selling goods in a gift shop or providing refreshments café.
+tradingActivity.question = Are any trading activities carried out on site?
+tradingActivity.hint = Give details of the trading activity and the name of the company or companies involved.
+error.tradingActivity.missing = Select yes if trading activities are carried out on site
+error.tradingActivity.details.missing = Enter details of trading activity
+
 # PREMISES LICENSE GRANTED (6015,6016)
 ######################################
 premisesLicenseGranted.heading = Is there a current premises licence in place for the property?

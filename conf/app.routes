@@ -118,6 +118,12 @@ POST        /about-the-property                                     controllers.
 GET         /about-the-property-description                         controllers.aboutyouandtheproperty.AboutThePropertyStringController.show()
 POST        /about-the-property-description                         controllers.aboutyouandtheproperty.AboutThePropertyStringController.submit()
 
+GET         /charity-question                                       controllers.aboutyouandtheproperty.CharityQuestionController.show()
+POST        /charity-question                                       controllers.aboutyouandtheproperty.CharityQuestionController.submit()
+
+GET         /trading-activity                                       controllers.aboutyouandtheproperty.TradingActivityController.show()
+POST        /trading-activity                                       controllers.aboutyouandtheproperty.TradingActivityController.submit()
+
 GET         /website-for-property                                   controllers.aboutyouandtheproperty.WebsiteForPropertyController.show()
 POST        /website-for-property                                   controllers.aboutyouandtheproperty.WebsiteForPropertyController.submit()
 

@@ -80,7 +80,7 @@
     sectionAnswers.row("checkYourAnswersAboutTheProperty.aboutProperty.heading",
         _.propertyDetailsString.map(x => s"<p class=\"govuk-body\">${Text(x.propertyDetailsString).asHtml}</p>"),
         aboutyouandtheproperty.routes.AboutThePropertyStringController.show(), "propertyCurrentlyUsedString", ("valueAsHtml", _ => None)) ++
-            sectionAnswers.optionalRow(
+    sectionAnswers.optionalRow(
                 "checkYourAnswersAboutTheProperty.hasWebsite",
                 _.websiteForPropertyDetails
                         .map(_.buildingOperatingHaveAWebsite).map(hasWebsite =>

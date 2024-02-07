@@ -22,6 +22,14 @@ case object ContactDetailsQuestionId extends Identifier {
   override def toString: String = "contactDetailsQuestionPage"
 }
 
+case object CharityQuestionPageId extends Identifier {
+  override def toString: String = "charityQuestionPage"
+}
+
+case object TradingActivityPageId extends Identifier {
+  override def toString: String = "tradingActivityPage"
+}
+
 case object AlternativeContactDetailsId extends Identifier {
   override def toString: String = "alternativeContactDetailsPage"
 }
