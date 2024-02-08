@@ -17,10 +17,11 @@
 package navigation
 
 import connectors.Audit
+import controllers.connectiontoproperty.routes
 import identifiers._
 import play.api.mvc.Call
 import models.Session
-import models.submissions.connectiontoproperty.{AddressConnectionTypeNo, VacantPropertiesDetailsYes}
+import models.submissions.connectiontoproperty.{AddressConnectionTypeNo, LettingPartOfPropertyDetails, VacantPropertiesDetailsYes}
 import play.api.Logging
 
 import javax.inject.Inject
@@ -91,8 +92,14 @@ class ConnectionToPropertyNavigator @Inject() (audit: Audit) extends Navigator(a
         answers.stillConnectedDetails.get.lettingPartOfPropertyDetails.isEmpty match {
           case true  => controllers.connectiontoproperty.routes.LettingPartOfPropertyDetailsController.show()
           case false =>
-            controllers.connectiontoproperty.routes.AddAnotherLettingPartOfPropertyController
-              .show(answers.stillConnectedDetails.get.lettingPartOfPropertyDetailsIndex)
+            val maybeLastDetail = answers.stillConnectedDetails.flatMap(_.lettingPartOfPropertyDetails.lastOption)
+            val idx             = getLettingPartOfPropertyDetailsIndex(answers)
+            maybeLastDetail match {
+              case Some(lastDetail) if isIncomplete(lastDetail) =>
+                getIncompleteSectionCall(lastDetail, idx)
+              case _                                            =>
+                controllers.connectiontoproperty.routes.AddAnotherLettingPartOfPropertyController.show(idx)
+            }
         }
       case Some("no")  => controllers.connectiontoproperty.routes.ProvideContactDetailsController.show()
       case _           =>
@@ -135,20 +142,40 @@ class ConnectionToPropertyNavigator @Inject() (audit: Audit) extends Navigator(a
     val existingSection = answers.stillConnectedDetails.flatMap(
       _.lettingPartOfPropertyDetails.lift(getLettingPartOfPropertyDetailsIndex(answers))
     )
-    existingSection.flatMap(_.addAnotherLettingToProperty).get.name match {
-      case "yes" => controllers.connectiontoproperty.routes.LettingPartOfPropertyDetailsController.show()
-      case "no"  =>
-        controllers.connectiontoproperty.routes.ProvideContactDetailsController.show()
-      case _     =>
-        logger.warn(
-          s"Navigation for add another letting part of property reached without correct selection of conditions by controller"
-        )
-        throw new RuntimeException(
-          "Invalid option exception for add another letting part of property conditions routing"
-        )
+    existingSection match {
+      case Some(existingSection) if isIncomplete(existingSection) =>
+        getIncompleteSectionCall(existingSection, getLettingPartOfPropertyDetailsIndex(answers))
+      case _                                                      =>
+        existingSection.flatMap(_.addAnotherLettingToProperty).get.name match {
+          case "yes" =>
+            controllers.connectiontoproperty.routes.LettingPartOfPropertyDetailsController
+              .show(Some(getLettingPartOfPropertyDetailsIndex(answers) + 1))
+          case "no"  =>
+            controllers.connectiontoproperty.routes.ProvideContactDetailsController.show()
+          case _     =>
+            logger.warn(
+              s"Navigation for add another letting part of property reached without correct selection of conditions by controller"
+            )
+            throw new RuntimeException(
+              "Invalid option exception for add another letting part of property conditions routing"
+            )
+        }
     }
   }
-  override val routeMap: Map[Identifier, Session => Call]          = Map(
+
+  private def isIncomplete(detail: LettingPartOfPropertyDetails): Boolean =
+    detail.tenantDetails == null ||
+      detail.lettingPartOfPropertyRentDetails.isEmpty ||
+      detail.itemsIncludedInRent.isEmpty
+
+  def getIncompleteSectionCall(detail: LettingPartOfPropertyDetails, idx: Int): Call =
+    if (detail.tenantDetails == null) routes.LettingPartOfPropertyDetailsController.show(Some(idx))
+    else if (detail.lettingPartOfPropertyRentDetails.isEmpty)
+      routes.LettingPartOfPropertyDetailsRentController.show(idx)
+    else if (detail.itemsIncludedInRent.isEmpty) routes.LettingPartOfPropertyItemsIncludedInRentController.show(idx)
+    else routes.LettingPartOfPropertyDetailsController.show(Some(idx))
+
+  override val routeMap: Map[Identifier, Session => Call] = Map(
     AreYouStillConnectedPageId                     -> areYouStillConnectedRouting,
     EditAddressPageId                              -> (_ => controllers.connectiontoproperty.routes.VacantPropertiesController.show()),
     ConnectionToPropertyPageId                     -> (_ => controllers.routes.TaskListController.show()),
