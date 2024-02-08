@@ -69,6 +69,26 @@ class SectionAnswersRowBuilderSpec extends TestBaseSpec {
       ) shouldBe expectedRow
     }
 
+    "return conditional-optional SummaryListRow if conditional value is true " in {
+      sectionAnswers.conditionalOptionalRow(
+        _.customerDetails.exists(_.fullName == "Tobermory"),
+        "label.fullName",
+        _.customerDetails.map(_.fullName),
+        aboutyouandtheproperty.routes.AboutYouController.show(),
+        "fullName"
+      ) shouldBe expectedRow
+    }
+
+    "return empty Set for conditional-optional SummaryListRow if conditional value is false " in {
+      sectionAnswers.conditionalOptionalRow(
+        _.customerDetails.exists(_.fullName == ""),
+        "label.fullName",
+        _.customerDetails.map(_.fullName),
+        aboutyouandtheproperty.routes.AboutYouController.show(),
+        "fullName"
+      ) shouldBe Seq.empty
+    }
+
     "return empty Set as value is None" in {
       sectionAnswers.optionalRow(
         "label.fullName",
