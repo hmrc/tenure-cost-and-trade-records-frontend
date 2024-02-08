@@ -16,16 +16,23 @@
 
 package controllers.downloadFORTypeForm
 
+import connectors.Audit
+import models.submissions.downloadFORTypeForm.DownloadPDFDetails
 import play.api.http.Status
 import play.api.test.Helpers._
 import utils.TestBaseSpec
 
 class DownloadPDFControllerSpec extends TestBaseSpec {
 
-  private def downloadPDFController() =
+  val audit = mock[Audit]
+  private def downloadPDFController(
+    downloadPDFDetails: Option[DownloadPDFDetails] = Some(prefilledDownloadPDFRef)
+  )         =
     new DownloadPDFController(
       stubMessagesControllerComponents(),
-      downloadPDFView
+      audit,
+      downloadPDFView,
+      preEnrichedActionRefiner(downloadPDFDetails = downloadPDFDetails)
     )
 
   "GET /" should {

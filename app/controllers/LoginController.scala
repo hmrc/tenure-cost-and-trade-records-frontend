@@ -16,12 +16,15 @@
 
 package controllers
 
-import actions.WithSessionRefiner
-import config.LoginToBackendAction
-import connectors.{Audit, BackendConnector}
+import actions.{SessionRequest, WithSessionRefiner}
+import config.{ErrorHandler, LoginToBackendAction}
+import connectors.{Audit, BackendConnector, SubmissionConnector}
 import controllers.LoginController.startPage
+import controllers.LoginController.startPage.absoluteURL
 import form.PostcodeMapping.customPostcodeMapping
 import form.Errors
+import models.audit.DownloadPDFAudit
+import models.submissions.ConnectedSubmission
 import models.submissions.common.Address
 import models.{ForTypes, Session}
 import org.joda.time.DateTime
@@ -30,13 +33,14 @@ import play.api.data.Form
 import play.api.data.Forms._
 import play.api.data.JodaForms._
 import play.api.i18n.I18nSupport
-import play.api.libs.json.{Format, Json}
+import play.api.libs.json.{Format, JsObject, Json}
 import play.api.mvc._
 import repositories.SessionRepo
 import security.NoExistingDocument
 import uk.gov.hmrc.http.HeaderNames.trueClientIp
 import uk.gov.hmrc.http.{HeaderCarrier, JsValidationException, Upstream4xxResponse}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
+import uk.gov.hmrc.play.http.HeaderCarrierConverter
 import views.html._
 
 import javax.inject.{Inject, Named, Singleton}
@@ -92,9 +96,13 @@ class LoginController @Inject() (
 
   import LoginController.loginForm
 
-  def show: Action[AnyContent] = Action.async { implicit request =>
+  def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     val referenceNumberFromUrl = request.getQueryString("ref").getOrElse("")
     val form                   = loginForm.fill(LoginDetails(referenceNumberFromUrl, "", DateTime.now()))
+    audit.sendExplicitAudit(
+      "ForRequestedFromContinue",
+      DownloadPDFAudit(referenceNumberFromUrl, request.sessionData.forType, request.uri)
+    )
     Future.successful(Ok(login(form)))
   }
 
