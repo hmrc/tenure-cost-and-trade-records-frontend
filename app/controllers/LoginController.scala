@@ -22,6 +22,7 @@ import connectors.{Audit, BackendConnector}
 import controllers.LoginController.startPage
 import form.PostcodeMapping.customPostcodeMapping
 import form.Errors
+import models.audit.DownloadPDFAudit
 import models.submissions.common.Address
 import models.{ForTypes, Session}
 import org.joda.time.DateTime
@@ -92,9 +93,15 @@ class LoginController @Inject() (
 
   import LoginController.loginForm
 
-  def show: Action[AnyContent] = Action.async { implicit request =>
+  def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     val referenceNumberFromUrl = request.getQueryString("ref").getOrElse("")
     val form                   = loginForm.fill(LoginDetails(referenceNumberFromUrl, "", DateTime.now()))
+
+    audit.sendExplicitAudit(
+      "ForRequestedFromContinue",
+      DownloadPDFAudit(request.sessionData.referenceNumber, request.sessionData.forType, request.uri)
+    )
+
     Future.successful(Ok(login(form)))
   }
 
