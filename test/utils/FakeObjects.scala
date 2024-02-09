@@ -599,7 +599,7 @@ trait FakeObjects {
     Some(AnswerYes),
     0,
     None,
-    IndexedSeq(prefilledCateringOperationSectionYes),
+    IndexedSeq(prefilledCateringOperationSectionIncompleteCateringRentDetails),
     Some(AnswerYes),
     0,
     None,
