@@ -112,6 +112,19 @@ case class SectionAnswersRowBuilder[T](answers: Option[T])(implicit messages: Me
       conditionalTextMapping: _*
     )
 
+  def conditionalOptionalRow(
+    condition: T => Boolean,
+    messageKey: String,
+    getAnswerValue: T => Option[String],
+    editPage: Call,
+    editField: String,
+    conditionalTextMapping: (String, T => Option[String])*
+  ): Seq[SummaryListRow] =
+    if (answers.exists(condition))
+      optionalRow(messageKey, getAnswerValue, editPage, editField, conditionalTextMapping: _*)
+    else
+      Seq.empty[SummaryListRow]
+
   def displayLabelsForYesAnswers(labelAnswerMap: Map[String, String]): String =
     labelAnswerMap.toSeq
       .flatMap(t => Option.when(t._2 == "yes")(messages(t._1)))

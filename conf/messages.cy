@@ -511,7 +511,7 @@ error.charityQuestion.missing = Select yes if the organisation currently operate
 # TRADING ACTIVITY (6030)
 #########################
 tradingActivity.heading = Trading activity
-tradingActivity.declare = As a charity, you must declare if any separate companies or trading enterprises carry out trading activities on the property. Examples of these activities could be selling goods in a gift shop or providing refreshments café.
+tradingActivity.declare = As a charity, you must declare if any separate companies or trading enterprises carry out trading activities on the property. Examples of these activities could be selling goods in a gift shop or providing refreshments in a café.
 tradingActivity.question = Are any trading activities carried out on site?
 tradingActivity.hint = Give details of the trading activity and the name of the company or companies involved.
 error.tradingActivity.missing = Select yes if trading activities are carried out on site
@@ -1596,6 +1596,8 @@ checkYourAnswersAboutTheProperty.aboutProperty.heading = How the property is use
 checkYourAnswersAboutTheProperty.currentOccupier = Current Occupier
 checkYourAnswersAboutTheProperty.propertyUsage = Property use
 checkYourAnswersAboutTheProperty.hasWebsite = Website?
+checkYourAnswersAboutTheProperty.charity = Charity?
+checkYourAnswersAboutTheProperty.trading = Trading activities by a separate company?
 checkYourAnswersAboutTheProperty.websiteAddress = Website address
 checkYourAnswersAboutTheProperty.license.heading = Your licence
 checkYourAnswersAboutTheProperty.premisesLicenseGrantedDetail = Premises licence?
