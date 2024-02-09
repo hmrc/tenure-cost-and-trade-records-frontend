@@ -74,7 +74,6 @@ abstract class Navigator @Inject() (
   }
 
   private def possibleCYARedirect(session: Session)(nextCall: Call)(implicit request: Request[AnyContent]): Call = {
-    println(s"&&&&&&&&&&&&&&& -> ${request.queryString.mkString(",")}")
     if (from == "CYA") {
       overrideRedirectIfFromCYA
         .find(entry => nextCall.url.contains(entry._1))
