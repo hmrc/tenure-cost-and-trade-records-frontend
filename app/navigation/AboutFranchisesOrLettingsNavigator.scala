@@ -18,6 +18,7 @@ package navigation
 
 import connectors.Audit
 import controllers.aboutfranchisesorlettings
+import models.submissions.aboutfranchisesorlettings.{CateringOperationSection, LettingSection}
 import models.{ForTypes, Session}
 import navigation.identifiers._
 import play.api.Logging
@@ -74,7 +75,13 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit) extends Naviga
 
   private def cateringOperationsConditionsRouting: Session => Call = answers => {
     answers.aboutFranchisesOrLettings.flatMap(_.cateringConcessionOrFranchise.map(_.name)) match {
-      case Some("yes") => controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController.show()
+      case Some("yes") =>
+        val maybeCatering = answers.aboutFranchisesOrLettings.flatMap(_.cateringOperationSections.lastOption)
+        val idx           = getCateringOperationsIndex(answers)
+        maybeCatering match {
+          case Some(catering) if isCateringDetailsIncomplete(catering) => getIncompleteCateringCall(catering, idx)
+          case _                                                       => controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController.show(Some(idx))
+        }
       case Some("no")  => controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show()
       case _           =>
         logger.warn(
@@ -86,6 +93,42 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit) extends Naviga
 
   private def getCateringOperationsIndex(session: Session): Int =
     session.aboutFranchisesOrLettings.map(_.cateringOperationCurrentIndex).getOrElse(0)
+
+  private def isCateringDetailsIncomplete(detail: CateringOperationSection): Boolean =
+    detail.cateringOperationDetails == null ||
+      detail.cateringOperationRentDetails.isEmpty ||
+      detail.itemsInRent.isEmpty
+
+  def getIncompleteCateringCall(detail: CateringOperationSection, idx: Int): Call =
+    if (detail.cateringOperationDetails == null)
+      controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController.show(Some(idx))
+    else if (detail.cateringOperationRentDetails.isEmpty)
+      controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsRentController.show(idx)
+    else if (detail.itemsInRent.isEmpty)
+      controllers.aboutfranchisesorlettings.routes.CateringOperationRentIncludesController.show(idx)
+    else controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController.show(Some(idx))
+
+  private def isLettingDetailIncomplete(detail: LettingSection, forType: String): Boolean = {
+    val isCommonConditionMet   = detail.lettingOtherPartOfPropertyInformationDetails == null || detail.itemsInRent.isEmpty
+    val isSpecificConditionMet = if (forType.equals("FOR6015") || forType.equals("FOR6016")) {
+      detail.lettingOtherPartOfPropertyRent6015Details.isEmpty
+    } else {
+      detail.lettingOtherPartOfPropertyRentDetails.isEmpty
+    }
+    isCommonConditionMet || isSpecificConditionMet
+  }
+  def getIncompleteLettingCall(detail: LettingSection, forType: String, idx: Int): Call = {
+    val for601516 = if (forType.equals("FOR6015") || forType.equals("FOR6016")) true else false
+    if (detail.lettingOtherPartOfPropertyInformationDetails == null)
+      controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsController.show(Some(idx))
+    else if (detail.lettingOtherPartOfPropertyRent6015Details.isEmpty && for601516)
+      controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsRentController.show(idx)
+    else if (detail.lettingOtherPartOfPropertyRentDetails.isEmpty && (!for601516))
+      controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsRentController.show(idx)
+    else if (detail.itemsInRent.isEmpty)
+      controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyRentIncludesController.show(idx)
+    else controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsController.show(Some(idx))
+  }
 
   private def cateringOperationsDetailsConditionsRouting: Session => Call = answers => {
     answers.forType match {
@@ -129,21 +172,26 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit) extends Naviga
       answers.aboutFranchisesOrLettings.flatMap(_.fromCYA).getOrElse(false)
     val existingSection                                              =
       answers.aboutFranchisesOrLettings.flatMap(_.cateringOperationSections.lift(getCateringOperationsIndex(answers)))
-    existingSection.flatMap(_.addAnotherOperationToProperty).get.name match {
-      case "yes" =>
-        controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController
-          .show(getLastCateringOperationIndex(answers))
-      case "no"  =>
-        if (fromCYA == true) {
-          controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show()
-        } else {
-          controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show()
+    existingSection match {
+      case Some(existingSection) if isCateringDetailsIncomplete(existingSection) =>
+        getIncompleteCateringCall(existingSection, getCateringOperationsIndex(answers))
+      case _                                                                     =>
+        existingSection.flatMap(_.addAnotherOperationToProperty).get.name match {
+          case "yes" =>
+            controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController
+              .show(getLastCateringOperationIndex(answers))
+          case "no"  =>
+            if (fromCYA == true) {
+              controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show()
+            } else {
+              controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show()
+            }
+          case _     =>
+            logger.warn(
+              s"Navigation for add another catering operation reached without correct selection of conditions by controller"
+            )
+            throw new RuntimeException("Invalid option exception for add another catering operation conditions routing")
         }
-      case _     =>
-        logger.warn(
-          s"Navigation for add another catering operation reached without correct selection of conditions by controller"
-        )
-        throw new RuntimeException("Invalid option exception for add another catering operation conditions routing")
     }
   }
 
@@ -162,7 +210,14 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit) extends Naviga
   private def lettingAccommodationConditionsRouting: Session => Call = answers => {
     answers.aboutFranchisesOrLettings.flatMap(_.lettingOtherPartOfProperty.map(_.name)) match {
       case Some("yes") =>
-        controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsController.show()
+        val maybeLetting = answers.aboutFranchisesOrLettings.flatMap(_.lettingSections.lastOption)
+        val idx          = getLettingsIndex(answers)
+        maybeLetting match {
+          case Some(letting) if isLettingDetailIncomplete(letting, answers.forType) =>
+            getIncompleteLettingCall(letting, answers.forType, idx)
+          case _                                                                    =>
+            controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsController.show(Some(idx))
+        }
       case Some("no")  =>
         controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show()
       case _           =>
@@ -193,15 +248,22 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit) extends Naviga
 
   private def addAnotherLettingsConditionsRouting: Session => Call = answers => {
     val existingSection = answers.aboutFranchisesOrLettings.flatMap(_.lettingSections.lift(getLettingsIndex(answers)))
-    existingSection.flatMap(_.addAnotherLettingToProperty).get.name match {
-      case "yes" => controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsController.show()
-      case "no"  =>
-        controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show()
-      case _     =>
-        logger.warn(
-          s"Navigation for add another letting reached without correct selection of conditions by controller"
-        )
-        throw new RuntimeException("Invalid option exception for add another letting conditions routing")
+    existingSection match {
+      case Some(letting) if isLettingDetailIncomplete(letting, answers.forType) =>
+        getIncompleteLettingCall(letting, answers.forType, getLettingsIndex(answers))
+      case _                                                                    =>
+        existingSection.flatMap(_.addAnotherLettingToProperty).get.name match {
+          case "yes" =>
+            controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsController
+              .show(Some(getLettingsIndex(answers) + 1))
+          case "no"  =>
+            controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show()
+          case _     =>
+            logger.warn(
+              s"Navigation for add another letting reached without correct selection of conditions by controller"
+            )
+            throw new RuntimeException("Invalid option exception for add another letting conditions routing")
+        }
     }
   }
 

@@ -197,7 +197,7 @@ class ConnectionToPropertyNavigatorSpec extends TestBaseSpec {
       .nextPage(AddAnotherLettingPartOfPropertyPageId, stillConnectedDetailsYesToAllSession)
       .apply(
         stillConnectedDetailsYesToAllSession
-      ) mustBe controllers.connectiontoproperty.routes.LettingPartOfPropertyDetailsController.show(None)
+      ) mustBe controllers.connectiontoproperty.routes.LettingPartOfPropertyDetailsController.show(Some(1))
   }
 
   "return a function that goes from CYA page to tasklist" in {

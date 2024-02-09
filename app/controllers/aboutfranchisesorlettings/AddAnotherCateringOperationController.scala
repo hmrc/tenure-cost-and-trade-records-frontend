@@ -76,7 +76,7 @@ class AddAnotherCateringOperationController @Inject() (
       continueOrSaveAsDraft[AnswersYesNo](
         addAnotherCateringOperationForm,
         formWithErrors =>
-          BadRequest(
+          (BadRequest(
             addAnotherCateringOperationOrLettingAccommodationView(
               formWithErrors,
               index,
@@ -85,23 +85,13 @@ class AddAnotherCateringOperationController @Inject() (
               controllers.aboutfranchisesorlettings.routes.CateringOperationRentIncludesController.show(index).url,
               request.sessionData.toSummary
             )
-          ),
+          )),
         data =>
-          if (data == AnswerYes) {
-            val updatedData = updateAboutFranchisesOrLettings(
-              _.copy(
-                fromCYA = Some(fromCYA)
-              )
-            )
-            session.saveOrUpdate(updatedData)
-            Future.successful(
-              Redirect(controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController.show())
-            )
-          } else {
-            request.sessionData.aboutFranchisesOrLettings
-              .map(_.cateringOperationSections)
-              .filter(_.nonEmpty)
-              .fold(
+          request.sessionData.aboutFranchisesOrLettings
+            .map(_.cateringOperationSections)
+            .filter(_.nonEmpty)
+            .fold(
+              Future.successful(
                 Redirect(
                   if (data == AnswerNo && fromCYA == true) {
                     controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController
@@ -110,20 +100,21 @@ class AddAnotherCateringOperationController @Inject() (
                     controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show()
                   }
                 )
-              ) { existingSections =>
-                val updatedSections = existingSections.updated(
-                  index,
-                  existingSections(index).copy(addAnotherOperationToProperty = Some(data))
+              )
+            ) { existingSections =>
+              val updatedSections = existingSections.updated(
+                index,
+                existingSections(index).copy(addAnotherOperationToProperty = Some(data))
+              )
+              val updatedData     = updateAboutFranchisesOrLettings(
+                _.copy(
+                  cateringOperationSections = updatedSections
                 )
-                val updatedData     = updateAboutFranchisesOrLettings(
-                  _.copy(
-                    cateringOperationSections = updatedSections
-                  )
-                )
-                session.saveOrUpdate(updatedData)
+              )
+              session.saveOrUpdate(updatedData).flatMap { _ =>
                 Redirect(navigator.nextPage(AddAnotherCateringOperationPageId, updatedData).apply(updatedData))
               }
-          }
+            }
       )
     }
   }
