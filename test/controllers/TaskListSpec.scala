@@ -64,6 +64,14 @@ class TaskListSpec extends TestBaseSpec {
       status(result)      shouldBe Status.OK
       contentType(result) shouldBe Some("text/html")
     }
+
+    "return HTML (6030)" in {
+      sessionRepo.saveOrUpdate(baseFilled6030Session)
+
+      val result = taskListController.show(fakeRequest)
+      status(result)      shouldBe Status.OK
+      contentType(result) shouldBe Some("text/html")
+    }
   }
 
 }

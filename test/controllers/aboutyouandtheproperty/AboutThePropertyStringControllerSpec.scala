@@ -58,7 +58,7 @@ class AboutThePropertyStringControllerSpec extends TestBaseSpec {
     }
   }
 
-  "Licensable activities details form" should {
+  "property currently used string form" should {
     "error if choice is missing " in {
       val formData = baseFormData - errorKey.propertyCurrentlyUsedString
       val form     = aboutThePropertyStringForm.bind(formData)
