@@ -16,6 +16,7 @@
 
 package controllers.aboutYourLeaseOrTenure
 
+import form.aboutYourLeaseOrTenure.UltimatelyResponsibleIBuildingInsuranceForm.ultimatelyResponsibleBuildingInsuranceForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo
 import navigation.AboutYourLeaseOrTenureNavigator
 import play.api.http.Status
@@ -24,6 +25,9 @@ import play.api.test.Helpers._
 import utils.TestBaseSpec
 
 class UltimatelyResponsibleBuildingInsuranceControllerSpec extends TestBaseSpec {
+
+  import TestData._
+  import utils.FormBindingTestAssertions._
 
   val mockAboutYourLeaseOrTenureNavigator = mock[AboutYourLeaseOrTenureNavigator]
 
@@ -59,5 +63,24 @@ class UltimatelyResponsibleBuildingInsuranceControllerSpec extends TestBaseSpec 
       )
       status(res) shouldBe BAD_REQUEST
     }
+  }
+
+  "Ultimately Responsible BI form" should {
+    "error if Ultimately Responsible BI is missing" in {
+      val formData = baseFormData - errorKey.ultimatelyResponsibleBI
+      val form     = ultimatelyResponsibleBuildingInsuranceForm.bind(formData)
+
+      mustContainError(errorKey.ultimatelyResponsibleBI, "error.buildingInsurance.required", form)
+    }
+  }
+
+  object TestData {
+    val errorKey: Object {
+      val ultimatelyResponsibleBI: String
+    } = new {
+      val ultimatelyResponsibleBI: String = "buildingInsurance"
+    }
+
+    val baseFormData: Map[String, String] = Map("buildingInsurance" -> "tenant")
   }
 }

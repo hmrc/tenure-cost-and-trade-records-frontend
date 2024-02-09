@@ -16,6 +16,7 @@
 
 package controllers.aboutYourLeaseOrTenure
 
+import form.aboutYourLeaseOrTenure.CanRentBeReducedOnReviewForm.canRentBeReducedOnReviewForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
 import play.api.http.Status
 import play.api.test.FakeRequest
@@ -24,6 +25,8 @@ import utils.TestBaseSpec
 
 class CanRentBeReducedOnReviewControllerSpec extends TestBaseSpec {
 
+  import TestData._
+  import utils.FormBindingTestAssertions._
   def canRentBeReducedOnReviewController(
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
   ) =
@@ -54,5 +57,24 @@ class CanRentBeReducedOnReviewControllerSpec extends TestBaseSpec {
       )
       status(res) shouldBe BAD_REQUEST
     }
+  }
+
+  "Can rent be reduced on review form" should {
+    "error if Can rent be reduced on review answer is missing" in {
+      val formData = baseFormData - errorKey.canRentBeReducedOnReview
+      val form     = canRentBeReducedOnReviewForm.bind(formData)
+
+      mustContainError(errorKey.canRentBeReducedOnReview, "error.canRentBeReducedOnReview.missing", form)
+    }
+  }
+
+  object TestData {
+    val errorKey: Object {
+      val canRentBeReducedOnReview: String
+    } = new {
+      val canRentBeReducedOnReview: String = "canRentBeReducedOnReview"
+    }
+
+    val baseFormData: Map[String, String] = Map("canRentBeReducedOnReviewz" -> "yes")
   }
 }

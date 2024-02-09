@@ -124,15 +124,6 @@
         section1Completed.isEmpty
        )
 
-
-       @includes.taskListItem("alternate-contact-details", "alternativeContactDetails.heading",
-        controllers.aboutyouandtheproperty.routes.ContactDetailsQuestionController.show(),
-        section2Completed,
-        session.aboutYouAndTheProperty.flatMap(_.altContactInformation),
-        session.aboutYouAndTheProperty.flatMap(_.customerDetails).isEmpty
-
-       )
-
        @includes.taskListItem("about-the-property", "checkYourAnswersAboutTheProperty.aboutProperty.heading",
         controllers.aboutyouandtheproperty.routes.AboutThePropertyController.show(),
         section2Completed,
