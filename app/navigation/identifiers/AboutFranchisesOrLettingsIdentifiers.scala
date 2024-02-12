@@ -80,6 +80,10 @@ case object AddAnotherLettingAccommodationPageId extends Identifier {
   override def toString: String = "addAnotherLettingAccommodationPage"
 }
 
+case object ConcessionOrFranchiseFeePageId extends Identifier {
+  override def toString: String = "concessionOrFranchiseFee"
+}
+
 case object CheckYourAnswersAboutFranchiseOrLettingsId extends Identifier {
   override def toString: String = "checkYourAnswersAboutFranchiseOrLettingsPage"
 }
