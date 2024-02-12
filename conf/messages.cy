@@ -654,6 +654,14 @@ franchiseLettings.list2 = rental income from letting other parts of the property
 franchiseLettings.subheading = Do you receive income from letting out parts of your property?
 error.franchiseOrLettings.missing = Select yes if you receive income from letting out parts of your property
 
+# FRANCHISE OR LETTINGS TIED TO PROPERTY (6030)
+#######################################
+franchiseLettingsIncome.heading = Do you receive rental income from any franchise or lettings?
+franchiseLettingsIncome.p1 = You must declare:
+franchiseLettingsIncome.list1 = any payments received instead of trading income from concessions or franchise agreements - for example, tearooms, vehicle charging points or car washes
+franchiseLettingsIncome.list2 = rent received from letting other parts of the property, including advertising billboards, telephone masts or car parking
+error.franchiseOrLettings.missing = Select yes if you receive income from letting out parts of your property
+
 # ABOUT YOUR LANDLORD
 ##############################
 aboutYourLandlord.heading = Your landlord
