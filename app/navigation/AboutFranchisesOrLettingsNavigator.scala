@@ -191,6 +191,9 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit) extends Naviga
     existingSection match {
       case Some(existingSection) if isCateringDetailsIncomplete(existingSection, answers.forType) =>
         getIncompleteCateringCall(existingSection, getCateringOperationsIndex(answers), answers.forType)
+      case None                                                                                   =>
+        controllers.aboutfranchisesorlettings.routes.AddAnotherCateringOperationController
+          .show(getCateringOperationsIndex(answers))
       case _                                                                                      =>
         existingSection.flatMap(_.addAnotherOperationToProperty).get.name match {
           case "yes" =>
