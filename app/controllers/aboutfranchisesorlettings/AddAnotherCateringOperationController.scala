@@ -110,7 +110,8 @@ class AddAnotherCateringOperationController @Inject() (
               )
               val updatedData     = updateAboutFranchisesOrLettings(
                 _.copy(
-                  cateringOperationSections = updatedSections
+                  cateringOperationSections = updatedSections,
+                  fromCYA = Some(fromCYA)
                 )
               )
               session.saveOrUpdate(updatedData).flatMap { _ =>
