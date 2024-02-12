@@ -185,14 +185,14 @@ class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec {
         ) mustBe controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController.show(Some(1))
     }
 
-    "return a function that goes to Add another Catering page when franchise rent includes has been completed yes" in {
+    "return a function that goes to Catering details page when adding another catering business yes" in {
       import play.api.test.Helpers._
       val requestFromCYA: FakeRequest[AnyContentAsEmpty.type] = FakeRequest("GET", "/?from=CYA")
       aboutFranchisesOrLettingsNavigator
         .nextPage(AddAnotherCateringOperationPageId, sessionAboutFranchiseOrLetting6010YesSession)(hc, requestFromCYA)
         .apply(
           sessionAboutFranchiseOrLetting6010YesSession
-        ) mustBe controllers.aboutfranchisesorlettings.routes.AddAnotherCateringOperationController.show(0)
+        ) mustBe controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController.show(Some(1))
     }
 
     "return a function that goes to lettings page when letting page has been completed no" in {

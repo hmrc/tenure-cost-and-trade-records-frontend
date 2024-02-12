@@ -44,7 +44,7 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit) extends Naviga
       aboutfranchisesorlettings.routes.CateringOperationDetailsController
         .show()
         .url,
-      cateringOperationsRentIncludesConditionsRouting
+      addAnotherCateringOperationsConditionsRouting
     ),
     (
       aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsController
@@ -106,7 +106,8 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit) extends Naviga
       detail.cateringOperationRentDetails.isEmpty ||
       detail.itemsInRent.isEmpty
     }
-  def getIncompleteCateringCall(detail: CateringOperationSection, idx: Int, forType: String): Call    =
+
+  def getIncompleteCateringCall(detail: CateringOperationSection, idx: Int, forType: String): Call =
     if (forType.equals("FOR6015") || forType.equals("FOR6016")) {
       if (detail.rentReceivedFrom.isEmpty)
         controllers.aboutfranchisesorlettings.routes.RentReceivedFromController.show(idx)
