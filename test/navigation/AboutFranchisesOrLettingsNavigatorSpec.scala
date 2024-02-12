@@ -113,13 +113,22 @@ class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec {
         ) mustBe controllers.aboutfranchisesorlettings.routes.CateringOperationRentIncludesController.show(0)
     }
 
-    "return a function that continue with incomplete section when catering detail page has been incomplete in" in {
+    "return a function that continue with incomplete section when catering detail page has been incomplete in 6015" in {
       aboutFranchisesOrLettingsNavigator
         .nextPage(CateringOperationPageId, sessionAboutFranchiseOrLetting6015SIncompleteCateringDetail)
         .apply(
           sessionAboutFranchiseOrLetting6015SIncompleteCateringDetail
+        ) mustBe controllers.aboutfranchisesorlettings.routes.RentReceivedFromController.show(0)
+    }
+
+    "return a function that continue with incomplete section when catering detail page has been incomplete in 6010" in {
+      aboutFranchisesOrLettingsNavigator
+        .nextPage(CateringOperationPageId, sessionAboutFranchiseOrLetting6010Incomplete)
+        .apply(
+          sessionAboutFranchiseOrLetting6010Incomplete
         ) mustBe controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsRentController.show(0)
     }
+
     "return a function that goes to concession or franchise page when franchise page has been completed no 6015" in {
       aboutFranchisesOrLettingsNavigator
         .nextPage(CateringOperationPageId, sessionAboutFranchiseOrLetting6015NoSession)
