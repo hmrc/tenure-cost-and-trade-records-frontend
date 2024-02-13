@@ -26,10 +26,6 @@ class AdditionalInformationIdentifiersSpec extends TestBaseSpec {
       assert(FurtherInformationId.toString.equals("furtherInformationPage"))
     }
 
-    "Identifier for alternative contact details page" in {
-      assert(AlternativeContactDetailsId.toString.equals("alternativeContactDetailsPage"))
-    }
-
     "Identifier for CYA page" in {
       assert(CheckYourAnswersAdditionalInformationId.toString.equals("checkYourAnswersAdditionalInformationPage"))
     }

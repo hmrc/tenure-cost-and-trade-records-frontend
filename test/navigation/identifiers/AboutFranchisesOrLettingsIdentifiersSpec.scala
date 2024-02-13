@@ -26,6 +26,14 @@ class AboutFranchisesOrLettingsIdentifiersSpec extends TestBaseSpec {
       assert(FranchiseOrLettingsTiedToPropertyId.toString.equals("franchiseOrLettingsTiedToPropertyPage"))
     }
 
+    "Identifier for rent from concession page" in {
+      assert(RentFromConcessionId.toString.equals("rentFromConcession"))
+    }
+
+    "Identifier for rent received from page" in {
+      assert(RentReceivedFromPageId.toString.equals("rentReceivedFromPage"))
+    }
+
     "Identifier for catering operations page" in {
       assert(CateringOperationPageId.toString.equals("cateringOperationPage"))
     }
@@ -38,12 +46,24 @@ class AboutFranchisesOrLettingsIdentifiersSpec extends TestBaseSpec {
       assert(CateringOperationRentDetailsPageId.toString.equals("cateringOperationRentDetailsPage"))
     }
 
+    "Identifier for calculating the rent for included page" in {
+      assert(CalculatingTheRentForPageId.toString.equals("calculatingTheRentForPage"))
+    }
+
     "Identifier for catering operations rent included page" in {
       assert(CateringOperationRentIncludesPageId.toString.equals("cateringOperationRentIncludesPage"))
     }
 
     "Identifier for add another catering operations page" in {
       assert(AddAnotherCateringOperationPageId.toString.equals("addAnotherCateringOperationPage"))
+    }
+
+    "Identifier for max number of lettings reached page" in {
+      assert(MaxOfLettingsReachedCateringId.toString.equals("MaxOfLettingsReachedCateringPage"))
+    }
+
+    "Identifier for max number of lettings page" in {
+      assert(MaxOfLettingsReachedCurrentId.toString.equals("MaxOfLettingsReachedCurrentPage"))
     }
 
     "Identifier for lettings page" in {
@@ -66,12 +86,13 @@ class AboutFranchisesOrLettingsIdentifiersSpec extends TestBaseSpec {
       assert(AddAnotherLettingAccommodationPageId.toString.equals("addAnotherLettingAccommodationPage"))
     }
 
+    "Identifier for concession or franchise fee page" in {
+      assert(ConcessionOrFranchiseFeePageId.toString.equals("concessionOrFranchiseFeePage"))
+    }
+
     "Identifier for cya franchise or lettings page" in {
       assert(CheckYourAnswersAboutFranchiseOrLettingsId.toString.equals("checkYourAnswersAboutFranchiseOrLettingsPage"))
     }
 
-    "Identifier for concession or franchise fee page" in {
-      assert(ConcessionOrFranchiseFeePageId.toString.equals("concessionOrFranchiseFeePage"))
-    }
   }
 }

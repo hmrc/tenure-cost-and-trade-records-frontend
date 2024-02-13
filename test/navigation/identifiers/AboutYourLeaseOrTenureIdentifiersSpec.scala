@@ -26,6 +26,14 @@ class AboutYourLeaseOrTenureIdentifiersSpec extends TestBaseSpec {
       assert(AboutTheLandlordPageId.toString.equals("aboutTheLandlordPage"))
     }
 
+    "Identifier for connected to landlord page" in {
+      assert(ConnectedToLandlordPageId.toString.equals("connectedToLandlordPage"))
+    }
+
+    "Identifier for connected to landlord details page" in {
+      assert(ConnectedToLandlordDetailsPageId.toString.equals("connectedToLandlordDetailsPage"))
+    }
+
     "Identifier for current annual rent page" in {
       assert(CurrentAnnualRentPageId.toString.equals("currentAnnualRentPage"))
     }
@@ -36,6 +44,10 @@ class AboutYourLeaseOrTenureIdentifiersSpec extends TestBaseSpec {
 
     "Identifier for current rent payable with 12 months page" in {
       assert(CurrentRentPayableWithin12monthsPageId.toString.equals("currentRentPayableWithin12monthsPage"))
+    }
+
+    "Identifier for property use leaseback agreement page" in {
+      assert(PropertyUseLeasebackAgreementId.toString.equals("propertyUseLeasebackAgreementPage"))
     }
 
     "Identifier for current rent first paid page" in {
@@ -54,11 +66,27 @@ class AboutYourLeaseOrTenureIdentifiersSpec extends TestBaseSpec {
       assert(DoesRentPayablePageId.toString.equals("doesRentPayablePage"))
     }
 
+    "Identifier for ultimately responsible business insurance page" in {
+      assert(UltimatelyResponsibleBusinessInsurancePageId.toString.equals("ultimatelyResponsibleBusinessInsurancePage"))
+    }
+
+    "Identifier for ultimately responsible inside repairs page" in {
+      assert(UltimatelyResponsibleInsideRepairsPageId.toString.equals("ultimatelyResponsibleInsideRepairsPage"))
+    }
+
+    "Identifier for ultimately responsible outside repairs page" in {
+      assert(UltimatelyResponsibleOutsideRepairsPageId.toString.equals("ultimatelyResponsibleOutsideRepairsPage"))
+    }
+
     "Identifier for rent include trade services page" in {
       assert(RentIncludeTradeServicesPageId.toString.equals("rentIncludeTradeServicesPage"))
     }
 
     "Identifier for rent include trade services details page" in {
+      assert(RentIncludesVatPageId.toString.equals("rentIncludesVatPage"))
+    }
+
+    "Identifier for rent include vat page" in {
       assert(RentIncludeTradeServicesDetailsPageId.toString.equals("rentIncludeTradeServicesDetailsPage"))
     }
 
