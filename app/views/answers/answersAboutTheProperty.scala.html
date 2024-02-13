@@ -48,30 +48,27 @@
         _.customerDetails.flatMap(x => s"<p class=\"govuk-body\">${Text(x.fullName).asHtml}</p><p class=\"govuk-body\">${x.contactDetails.email}</p><p class=\"govuk-body\">${x.contactDetails.phone}</p>"),
         aboutyouandtheproperty.routes.AboutYouController.show(),
         "fullName",
-        ("valueAsHtml", _ => None))
-))
+        ("valueAsHtml", _ => None)) ++
 
-<h2 class="govuk-heading-m">@messages("key.altContact.details")</h2>
-
-@govukSummaryList(SummaryList(rows =
-    sectionAnswers.row("label.altDetails.question", _.altDetailsQuestion.map(_.contactDetailsQuestion.name).map(v => messages(s"label.$v")),
-        aboutyouandtheproperty.routes.ContactDetailsQuestionController.show(), "contactDetailsQuestion"
-    )
-))
-
-@govukSummaryList(SummaryList(rows =
-    sectionAnswers.conditionRow(
-        _.altDetailsQuestion.map(_.contactDetailsQuestion.name).contains("yes"),
-        "label.altDetails",
-        _.altContactInformation.map { x =>
-            val contactDetails =
-                x.alternativeContactAddress.escapedHtml
-            contactDetails
-        },
-        aboutyouandtheproperty.routes.AlternativeContactDetailsController.show(),
-        "",
+    sectionAnswers.row(
+        "checkYourAnswersAboutTheProperty.alternative.address",
+        _.altDetailsQuestion.map(_.contactDetailsQuestion.name).map(v => messages(s"label.$v")),
+        aboutyouandtheproperty.routes.ContactDetailsQuestionController.show(),
+        "contactDetailsQuestion",
         ("valueAsHtml", _ => None)
-    )
+        ) ++
+
+    sectionAnswers.conditionRow(
+         _.altDetailsQuestion.map(_.contactDetailsQuestion.name).contains("yes"),
+         "label.altDetails",
+         _.altContactInformation.map { x =>
+            val contactDetails = x.alternativeContactAddress.escapedHtml
+                contactDetails
+                },
+         aboutyouandtheproperty.routes.AlternativeContactDetailsController.show(),
+         "",
+         ("valueAsHtml", _ => None)
+         )
 ))
 
 <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutTheProperty.aboutProperty.heading")</h2>
