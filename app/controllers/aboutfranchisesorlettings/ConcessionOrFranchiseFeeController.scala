@@ -33,7 +33,7 @@ import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.ExecutionContext
 
 @Singleton
-class ConcessionOrFranchiseFeeController @Inject()(
+class ConcessionOrFranchiseFeeController @Inject() (
   mcc: MessagesControllerComponents,
   navigator: AboutFranchisesOrLettingsNavigator,
   cateringOperationOrLettingAccommodationView: cateringOperationOrLettingAccommodation,
@@ -48,13 +48,12 @@ class ConcessionOrFranchiseFeeController @Inject()(
       case "TL" => controllers.routes.TaskListController.show().url + "#concession-or-franchise-fee"
       case _    => controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show().url
     }
-
     Ok(
       cateringOperationOrLettingAccommodationView(
         request.sessionData.aboutFranchisesOrLettings.flatMap(_.cateringOrFranchiseFee) match {
           case Some(cateringOrFranchiseFee) =>
             concessionOrFranchiseFeeForm.fill(cateringOrFranchiseFee)
-          case _                                             => concessionOrFranchiseFeeForm
+          case _                            => concessionOrFranchiseFeeForm
         },
         "concessionOrFranchiseFee",
         backLink,

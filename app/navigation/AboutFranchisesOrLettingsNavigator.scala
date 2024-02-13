@@ -60,7 +60,7 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit) extends Naviga
         answers.forType match {
           case ForTypes.for6015 | ForTypes.for6016 =>
             controllers.aboutfranchisesorlettings.routes.ConcessionOrFranchiseController.show()
-          case ForTypes.for6030 =>
+          case ForTypes.for6030                    =>
             controllers.aboutfranchisesorlettings.routes.ConcessionOrFranchiseFeeController.show()
           case _                                   =>
             controllers.aboutfranchisesorlettings.routes.CateringOperationController.show()
@@ -271,6 +271,10 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit) extends Naviga
 
   override val routeMap: Map[Identifier, Session => Call] = Map(
     FranchiseOrLettingsTiedToPropertyId        -> franchiseOrLettingConditionsRouting,
+    ConcessionOrFranchiseFeePageId             -> (_ =>
+      controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController
+        .show()
+    ),
     CateringOperationPageId                    -> cateringOperationsConditionsRouting,
     CateringOperationDetailsPageId             -> cateringOperationsDetailsConditionsRouting,
     CateringOperationRentDetailsPageId         -> cateringOperationsRentDetailsConditionsRouting,

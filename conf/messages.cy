@@ -707,6 +707,13 @@ cateringOperationOrLettingAccommodation.heading = Are any separate accommodation
 hint.cateringOperationOrLettingAccommodation = You will have the opportunity to add more than one business if required.
 error.cateringOperationOrLettingAccommodation.missing = Select yes if any separate catering or accommodation businesses are run from your property
 
+#CONCESSIONS OR FRANCHISE FEES (FORM 6030)
+############################
+concessionOrFranchiseFee.heading = Concession or franchise fees
+concessionOrFranchiseFee.label = Do you receive any fees from separate businesses operating from part of the property?
+concessionOrFranchiseFee.p1 = You must declare any fees you charge for allowing separate businesses to operate from the property, for example tea rooms or car washes. You will have the opportunity to add more than one business if required.
+error.concessionOrFranchiseFee.missing = Select yes if you receive any fees from separate businesses operating from part of the property
+
 # LETTING OTHER PART OF PROPERTY
 ##############################
 lettingOtherPartOfProperty.heading = Do you receive any rent from letting other parts of the property?

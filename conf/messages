@@ -713,7 +713,7 @@ error.cateringOperationOrLettingAccommodation.missing = Select yes if any separa
 concessionOrFranchiseFee.heading = Concession or franchise fees
 concessionOrFranchiseFee.label = Do you receive any fees from separate businesses operating from part of the property?
 concessionOrFranchiseFee.p1 = You must declare any fees you charge for allowing separate businesses to operate from the property, for example tea rooms or car washes. You will have the opportunity to add more than one business if required.
-error.concessionOrFranchiseFee.missing = Select yes if any rent is received from letting out parts of the property
+error.concessionOrFranchiseFee.missing = Select yes if you receive any fees from separate businesses operating from part of the property
 
 # LETTING OTHER PART OF PROPERTY
 ##############################

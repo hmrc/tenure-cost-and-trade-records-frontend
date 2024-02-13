@@ -107,7 +107,7 @@
    <p class="govuk-body">@messages("concessionOrFranchiseFee.p1")</p>
   }
 
-@if(for6015) {
+
   @govukRadios(
    Radios(
     name = s"${cateringOrLetting}",
@@ -125,25 +125,25 @@
     hint = hint,
    )
   )
-}
-     @if(for6030) {
-         @govukRadios(
-             Radios(
-                 name = "concessionOrFranchiseFee",
-                 idPrefix = Option("concessionOrFranchiseFee"),
-                 classes = "govuk-radios--inline",
-                 items = Seq(
-                     "yes" -> messages("label.yes"),
-                     "no" -> messages("label.no")
-                 ).map(radioItem => RadioItem(
-                     content = Text(radioItem._2),
-                     checked = radioItem._1.equals(theForm("concessionOrFranchiseFee").value.getOrElse("")),
-                     value = Option(radioItem._1))),
-                 errorMessage = theForm.errors.asTextErrorMessageForField("concessionOrFranchiseFee"),
-                 fieldset = Option(Fieldset(legend = legend))
-             )
-         )
-     }
+
+@*//     @if(for6030) {*@
+@*//         @govukRadios(*@
+@*//             Radios(*@
+@*//                 name = "concessionOrFranchiseFee",*@
+@*//                 idPrefix = Option("concessionOrFranchiseFee"),*@
+@*//                 classes = "govuk-radios--inline",*@
+@*//                 items = Seq(*@
+@*//                     "yes" -> messages("label.yes"),*@
+@*//                     "no" -> messages("label.no")*@
+@*//                 ).map(radioItem => RadioItem(*@
+@*//                     content = Text(radioItem._2),*@
+@*//                     checked = radioItem._1.equals(theForm("concessionOrFranchiseFee").value.getOrElse("")),*@
+@*//                     value = Option(radioItem._1))),*@
+@*//                 errorMessage = theForm.errors.asTextErrorMessageForField("concessionOrFranchiseFee"),*@
+@*//                 fieldset = Option(Fieldset(legend = legend))*@
+@*//             )*@
+@*//         )*@
+@*//     }*@
 
      @includes.continueSaveAsDraftButtons(govukButton)
  }

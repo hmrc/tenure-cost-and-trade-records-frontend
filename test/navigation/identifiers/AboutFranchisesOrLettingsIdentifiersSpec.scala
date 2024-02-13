@@ -69,5 +69,9 @@ class AboutFranchisesOrLettingsIdentifiersSpec extends TestBaseSpec {
     "Identifier for cya franchise or lettings page" in {
       assert(CheckYourAnswersAboutFranchiseOrLettingsId.toString.equals("checkYourAnswersAboutFranchiseOrLettingsPage"))
     }
+
+    "Identifier for concession or franchise fee page" in {
+      assert(ConcessionOrFranchiseFeePageId.toString.equals("concessionOrFranchiseFeePage"))
+    }
   }
 }
