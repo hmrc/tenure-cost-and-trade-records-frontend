@@ -55,6 +55,12 @@ class CostOfSalesViewSpec extends QuestionViewBehaviours[Seq[CostOfSales]] {
       assert(captions.contains(messages("label.section.aboutYourTradingHistory")))
     }
 
+    "contain get help section" in {
+      val doc = asDocument(createView())
+      assert(doc.toString.contains(messages("costOfSales.details.p1")))
+      assert(doc.toString.contains(messages("costOfSales.details.p2")))
+    }
+
     "contain continue button with the value Continue" in {
       val form2       = CostOfSalesForm.costOfSalesForm(Seq("2025", "2024"))(messages)
       val doc         = asDocument(createViewUsingForm(form2))

@@ -26,8 +26,29 @@ class AboutYouAndThePropertyIdentifiersSpec extends TestBaseSpec {
       assert(AboutYouPageId.toString.equals("aboutYouPage"))
     }
 
+    "Identifier for charity question page" in {
+      assert(CharityQuestionPageId.toString.equals("charityQuestionPage"))
+    }
+
+    "Identifier for contact details question page" in {
+      assert(ContactDetailsQuestionId.toString.equals("contactDetailsQuestionPage"))
+    }
+
+    "Identifier for trading activity page" in {
+      assert(TradingActivityPageId.toString.equals("tradingActivityPage"))
+    }
+
+    "Identifier for alt contact page" in {
+      assert(AlternativeContactDetailsId.toString.equals("alternativeContactDetailsPage"))
+    }
+
     "Identifier for about the property page" in {
       assert(AboutThePropertyPageId.toString.equals("aboutThePropertyPage"))
+    }
+
+    // 6030 page only
+    "Identifier for about the property string page" in {
+      assert(AboutThePropertyStringPageId.toString.equals("aboutThePropertyStringPage"))
     }
 
     "Identifier for website for property page" in {
