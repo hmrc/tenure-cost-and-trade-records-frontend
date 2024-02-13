@@ -654,6 +654,14 @@ franchiseLettings.list2 = rental income from letting other parts of the property
 franchiseLettings.subheading = Do you receive income from letting out parts of your property?
 error.franchiseOrLettings.missing = Select yes if you receive income from letting out parts of your property
 
+# FRANCHISE OR LETTINGS TIED TO PROPERTY (6030)
+#######################################
+franchiseLettingsIncome.heading = Do you receive rental income from any franchise or lettings?
+franchiseLettingsIncome.p1 = You must declare:
+franchiseLettingsIncome.list1 = any payments received instead of trading income from concessions or franchise agreements - for example, tearooms, vehicle charging points or car washes
+franchiseLettingsIncome.list2 = rent received from letting other parts of the property, including advertising billboards, telephone masts or car parking
+error.franchiseOrLettings.missing = Select yes if you receive income from letting out parts of your property
+
 # ABOUT YOUR LANDLORD
 ##############################
 aboutYourLandlord.heading = Your landlord
@@ -698,6 +706,13 @@ error.includedInYourRent.noneSelectedWithOther = Select any items included in yo
 cateringOperationOrLettingAccommodation.heading = Are any separate accommodation or catering businesses run from your property?
 hint.cateringOperationOrLettingAccommodation = You will have the opportunity to add more than one business if required.
 error.cateringOperationOrLettingAccommodation.missing = Select yes if any separate catering or accommodation businesses are run from your property
+
+#CONCESSIONS OR FRANCHISE FEES (FORM 6030)
+############################
+concessionOrFranchiseFee.heading = Concession or franchise fees
+concessionOrFranchiseFee.label = Do you receive any fees from separate businesses operating from part of the property?
+concessionOrFranchiseFee.p1 = You must declare any fees you charge for allowing separate businesses to operate from the property, for example tea rooms or car washes. You will have the opportunity to add more than one business if required.
+error.concessionOrFranchiseFee.missing = Select yes if you receive any fees from separate businesses operating from part of the property
 
 # LETTING OTHER PART OF PROPERTY
 ##############################

@@ -33,7 +33,8 @@ case class AboutFranchisesOrLettings(
   currentMaxOfLetting: Option[MaxOfLettings] = None,
   lettingSections: IndexedSeq[LettingSection] = IndexedSeq.empty,
   checkYourAnswersAboutFranchiseOrLettings: Option[CheckYourAnswersAboutFranchiseOrLettings] = None,
-  fromCYA: Option[Boolean] = None
+  fromCYA: Option[Boolean] = None,
+  cateringOrFranchiseFee: Option[AnswersYesNo] = None //added for 6030 journey - Feb 2024
 )
 
 object AboutFranchisesOrLettings {
