@@ -16,22 +16,28 @@
 
 package controllers.downloadFORTypeForm
 
+import connectors.Audit
+import models.audit.DownloadPDFAudit
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.downloadFORTypeForm.downloadPDF
 
 import javax.inject.{Inject, Singleton}
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class DownloadPDFController @Inject() (
   mcc: MessagesControllerComponents,
+  audit: Audit,
   downloadPDFView: downloadPDF
-) extends FrontendController(mcc) {
+  )(implicit ec: ExecutionContext) extends FrontendController(mcc) {
 
   def show(forType: String): Action[AnyContent] = Action.async { implicit request =>
     val referenceNumber = request.session.get("referenceNumber").getOrElse("")
-
+    audit.sendExplicitAudit(
+      "ForRequestedFromReference",
+      DownloadPDFAudit(referenceNumber, forType, request.uri)
+    )
     Future.successful(Ok(downloadPDFView(forType, referenceNumber)))
   }
 }
