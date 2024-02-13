@@ -1608,6 +1608,7 @@ checkYourAnswersAboutTheProperty.heading = Check your answers – about you and 
 checkYourAnswersAboutTheProperty.aboutYou.heading = Your contact details
 checkYourAnswersAboutTheProperty.contact.details = Contact details
 checkYourAnswersAboutTheProperty.aboutProperty.heading = How the property is used
+checkYourAnswersAboutTheProperty.alternative.address = Use alternative address?
 checkYourAnswersAboutTheProperty.currentOccupier = Current Occupier
 checkYourAnswersAboutTheProperty.propertyUsage = Property use
 checkYourAnswersAboutTheProperty.hasWebsite = Website?
