@@ -30,7 +30,8 @@ class DownloadPDFController @Inject() (
   mcc: MessagesControllerComponents,
   audit: Audit,
   downloadPDFView: downloadPDF
-  )(implicit ec: ExecutionContext) extends FrontendController(mcc) {
+)(implicit ec: ExecutionContext)
+    extends FrontendController(mcc) {
 
   def show(forType: String): Action[AnyContent] = Action.async { implicit request =>
     val referenceNumber = request.session.get("referenceNumber").getOrElse("")

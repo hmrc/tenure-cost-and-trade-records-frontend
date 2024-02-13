@@ -41,7 +41,7 @@
             <p class="govuk-body">
                 <a class="govuk-link" target="_blank" href=@messages("downloadPdf.6010.url")>@messages("downloadPdf.6010.label")</a>
             </p>
-            <a href="@routes.LoginController.show?ref=@referenceNumber" class="govuk-button" data-module="govuk-button" >@messages("downloadPdf.continueJourneyButton")</a>
+            <a href="@routes.LoginController.show?ref=@referenceNumber&forType=@forType" class="govuk-button" data-module="govuk-button" >@messages("downloadPdf.continueJourneyButton")</a>
         }
         case ForTypes.for6011 => {
             <h1 class="govuk-heading-l">@messages("downloadPdf.heading")</h1>
@@ -49,7 +49,7 @@
             <p class="govuk-body">
                 <a class="govuk-link" target="_blank" href=@messages("downloadPdf.6011.url")>@messages("downloadPdf.6011.label")</a>
             </p>
-            <a href="@routes.LoginController.show?ref=@referenceNumber" class="govuk-button" data-module="govuk-button" >@messages("downloadPdf.continueJourneyButton")</a>
+            <a href="@routes.LoginController.show?ref=@referenceNumber&forType=@forType" class="govuk-button" data-module="govuk-button" >@messages("downloadPdf.continueJourneyButton")</a>
         }
         case ForTypes.for6015 => {
             <h1 class="govuk-heading-l">@messages("downloadPdf.heading")</h1>
@@ -57,7 +57,7 @@
             <p class="govuk-body">
                 <a class="govuk-link" target="_blank" href=@messages("downloadPdf.6015.url")>@messages("downloadPdf.6015.label")</a>
             </p>
-            <a href="@routes.LoginController.show?ref=@referenceNumber" class="govuk-button" data-module="govuk-button" >@messages("downloadPdf.continueJourneyButton")</a>
+            <a href="@routes.LoginController.show?ref=@referenceNumber&forType=@forType" class="govuk-button" data-module="govuk-button" >@messages("downloadPdf.continueJourneyButton")</a>
         }
         case ForTypes.for6016 => {
             <h1 class="govuk-heading-l">@messages("downloadPdf.heading")</h1>
@@ -65,7 +65,7 @@
             <p class="govuk-body">
                 <a class="govuk-link" target="_blank" href=@messages("downloadPdf.6016.url")>@messages("downloadPdf.6016.label")</a>
             </p>
-            <a href="@routes.LoginController.show?ref=@referenceNumber" class="govuk-button" data-module="govuk-button" >@messages("downloadPdf.continueJourneyButton")</a>
+            <a href="@routes.LoginController.show?ref=@referenceNumber&forType=@forType" class="govuk-button" data-module="govuk-button" >@messages("downloadPdf.continueJourneyButton")</a>
         }
         case _ =>{
             <h2 class="govuk-heading-l">@{messages("downloadPdf.subheading")}</h2>
