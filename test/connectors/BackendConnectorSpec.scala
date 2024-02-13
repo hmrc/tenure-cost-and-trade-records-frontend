@@ -68,6 +68,21 @@ class BackendConnectorSpec extends TestBaseSpec with BeforeAndAfterAll {
 
   "BackendConnector" should {
 
+    "Login successfully given correct reference number and postcode" in {
+      val testID             = "99996010008"
+      val responseJsonString =
+        """
+          |{"forAuthToken":"Basic OTk5OTYwMTAwMDE6U2Vuc2l0aXZlKC4uLik=","forType":"FOR6010","address":{"buildingNameNumber":"001","street1":"GORING ROAD","street2":"GORING-BY-SEA, WORTHING","postcode":"BN12 4AX"}}
+          |""".stripMargin
+      stubFor(
+        post(urlEqualTo("/tenure-cost-and-trade-records/authenticate")).willReturn(
+          aResponse().withStatus(200).withBody(responseJsonString)
+        )
+      )
+      val result             = await(backendConnector.verifyCredentials(testID, "SomePostCode"))
+      result.forType shouldBe "FOR6010"
+    }
+
     "save SubmissionDraft successfully" in {
       val testId = "99996010004"
       stubFor(
