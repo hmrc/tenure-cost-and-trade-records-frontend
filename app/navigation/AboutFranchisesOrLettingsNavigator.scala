@@ -44,7 +44,7 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit) extends Naviga
       aboutfranchisesorlettings.routes.CateringOperationDetailsController
         .show()
         .url,
-      cateringOperationsRentIncludesConditionsRouting
+      addAnotherCateringOperationsConditionsRouting
     ),
     (
       aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsController
@@ -81,8 +81,9 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit) extends Naviga
         val maybeCatering = answers.aboutFranchisesOrLettings.flatMap(_.cateringOperationSections.lastOption)
         val idx           = getCateringOperationsIndex(answers)
         maybeCatering match {
-          case Some(catering) if isCateringDetailsIncomplete(catering) => getIncompleteCateringCall(catering, idx)
-          case _                                                       => controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController.show(Some(idx))
+          case Some(catering) if isCateringDetailsIncomplete(catering, answers.forType) =>
+            getIncompleteCateringCall(catering, idx, answers.forType)
+          case _                                                                        => controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController.show(Some(idx))
         }
       case Some("no")  => controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show()
       case _           =>
@@ -96,19 +97,34 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit) extends Naviga
   private def getCateringOperationsIndex(session: Session): Int =
     session.aboutFranchisesOrLettings.map(_.cateringOperationCurrentIndex).getOrElse(0)
 
-  private def isCateringDetailsIncomplete(detail: CateringOperationSection): Boolean =
-    detail.cateringOperationDetails == null ||
+  private def isCateringDetailsIncomplete(detail: CateringOperationSection, forType: String): Boolean =
+    if (forType.equals("FOR6015") || forType.equals("FOR6016")) {
+      detail.cateringOperationDetails == null ||
+      detail.rentReceivedFrom.isEmpty ||
+      detail.calculatingTheRent.isEmpty ||
+      detail.itemsInRent.isEmpty
+    } else {
+      detail.cateringOperationDetails == null ||
       detail.cateringOperationRentDetails.isEmpty ||
       detail.itemsInRent.isEmpty
+    }
 
-  def getIncompleteCateringCall(detail: CateringOperationSection, idx: Int): Call =
-    if (detail.cateringOperationDetails == null)
-      controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController.show(Some(idx))
-    else if (detail.cateringOperationRentDetails.isEmpty)
-      controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsRentController.show(idx)
-    else if (detail.itemsInRent.isEmpty)
-      controllers.aboutfranchisesorlettings.routes.CateringOperationRentIncludesController.show(idx)
-    else controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController.show(Some(idx))
+  def getIncompleteCateringCall(detail: CateringOperationSection, idx: Int, forType: String): Call =
+    if (forType.equals("FOR6015") || forType.equals("FOR6016")) {
+      if (detail.rentReceivedFrom.isEmpty)
+        controllers.aboutfranchisesorlettings.routes.RentReceivedFromController.show(idx)
+      else if (detail.calculatingTheRent.isEmpty)
+        controllers.aboutfranchisesorlettings.routes.CalculatingTheRentForController.show(idx)
+      else if (detail.itemsInRent.isEmpty)
+        controllers.aboutfranchisesorlettings.routes.CateringOperationRentIncludesController.show(idx)
+      else controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController.show(Some(idx))
+    } else {
+      if (detail.cateringOperationRentDetails.isEmpty)
+        controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsRentController.show(idx)
+      else if (detail.itemsInRent.isEmpty)
+        controllers.aboutfranchisesorlettings.routes.CateringOperationRentIncludesController.show(idx)
+      else controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController.show(Some(idx))
+    }
 
   private def isLettingDetailIncomplete(detail: LettingSection, forType: String): Boolean = {
     val isCommonConditionMet   = detail.lettingOtherPartOfPropertyInformationDetails == null || detail.itemsInRent.isEmpty
@@ -175,9 +191,12 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit) extends Naviga
     val existingSection                                              =
       answers.aboutFranchisesOrLettings.flatMap(_.cateringOperationSections.lift(getCateringOperationsIndex(answers)))
     existingSection match {
-      case Some(existingSection) if isCateringDetailsIncomplete(existingSection) =>
-        getIncompleteCateringCall(existingSection, getCateringOperationsIndex(answers))
-      case _                                                                     =>
+      case Some(existingSection) if isCateringDetailsIncomplete(existingSection, answers.forType) =>
+        getIncompleteCateringCall(existingSection, getCateringOperationsIndex(answers), answers.forType)
+      case None                                                                                   =>
+        controllers.aboutfranchisesorlettings.routes.AddAnotherCateringOperationController
+          .show(getCateringOperationsIndex(answers))
+      case _                                                                                      =>
         existingSection.flatMap(_.addAnotherOperationToProperty).get.name match {
           case "yes" =>
             controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController

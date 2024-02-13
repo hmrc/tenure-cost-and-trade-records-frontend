@@ -528,6 +528,11 @@ trait FakeObjects {
     Some(CalculatingTheRent("test", prefilledDateInput))
   )
 
+  val prefilledCateringOperationSectionIncompleteCateringRentDetails: CateringOperationSection =
+    CateringOperationSection(
+      CateringOperationDetails("Operator Name", "Type of Business", prefilledCateringAddress)
+    )
+
   val prefilledCateringOperationSectionNo: CateringOperationSection = CateringOperationSection(
     CateringOperationDetails("Operator Name", "Type of Business", prefilledCateringAddress),
     Some(CateringOperationRentDetails(BigDecimal(1500), prefilledDateInput)),
@@ -594,14 +599,14 @@ trait FakeObjects {
     Some(AnswerYes),
     0,
     None,
-    IndexedSeq(prefilledCateringOperationSectionYes),
+    IndexedSeq(prefilledCateringOperationSectionIncompleteCateringRentDetails),
     Some(AnswerYes),
     0,
     None,
     IndexedSeq(prefilledLettingSectionIncomplete)
   )
 
-  val prefilledAboutFranchiseOrLettingsNo: AboutFranchisesOrLettings             = AboutFranchisesOrLettings(
+  val prefilledAboutFranchiseOrLettingsNo: AboutFranchisesOrLettings                           = AboutFranchisesOrLettings(
     Some(AnswerNo),
     Some(AnswerNo),
     0,
@@ -612,7 +617,7 @@ trait FakeObjects {
     None,
     IndexedSeq(prefilledLettingSectionNo)
   )
-  val prefilledAboutFranchiseOrLettings6015: AboutFranchisesOrLettings           = AboutFranchisesOrLettings(
+  val prefilledAboutFranchiseOrLettings6015: AboutFranchisesOrLettings                         = AboutFranchisesOrLettings(
     Some(AnswerYes),
     Some(AnswerYes),
     0,
@@ -623,7 +628,7 @@ trait FakeObjects {
     None,
     IndexedSeq(prefilledLettingSectionYes)
   )
-  val prefilledIncompleteAboutFranchiseOrLettings6015: AboutFranchisesOrLettings = AboutFranchisesOrLettings(
+  val prefilledIncompleteAboutFranchiseOrLettings6015: AboutFranchisesOrLettings               = AboutFranchisesOrLettings(
     Some(AnswerYes),
     Some(AnswerYes),
     0,
@@ -634,6 +639,18 @@ trait FakeObjects {
     None,
     IndexedSeq(prefilledLettingSectionIncompleteLetting)
   )
+  val prefilledIncompleteCateringDetailAboutFranchiseOrLettings6015: AboutFranchisesOrLettings =
+    AboutFranchisesOrLettings(
+      Some(AnswerYes),
+      Some(AnswerYes),
+      0,
+      None,
+      IndexedSeq(prefilledCateringOperationSectionIncompleteCateringRentDetails),
+      Some(AnswerYes),
+      0,
+      None,
+      IndexedSeq(prefilledLettingSectionIncompleteLetting)
+    )
 
   val prefilledAboutFranchiseOrLettingsNo6015: AboutFranchisesOrLettings = AboutFranchisesOrLettings(
     Some(AnswerNo),
@@ -647,25 +664,29 @@ trait FakeObjects {
     IndexedSeq(prefilledLettingSectionNo)
   )
 
-  val sessionAboutFranchiseOrLetting6010YesSession: Session          =
+  val sessionAboutFranchiseOrLetting6010YesSession: Session                =
     aboutYouAndTheProperty6010YesSession.copy(aboutFranchisesOrLettings = Some(prefilledAboutFranchiseOrLettings))
-  val sessionAboutFranchiseOrLetting6010Incomplete: Session          =
+  val sessionAboutFranchiseOrLetting6010Incomplete: Session                =
     aboutYouAndTheProperty6010YesSession.copy(aboutFranchisesOrLettings =
       Some(prefilledAboutFranchiseOrLettingsIncompleteLetting)
     )
-  val sessionAboutFranchiseOrLetting6010NoSession: Session           =
+  val sessionAboutFranchiseOrLetting6010NoSession: Session                 =
     aboutYouAndTheProperty6010NoSession.copy(aboutFranchisesOrLettings = Some(prefilledAboutFranchiseOrLettingsNo))
-  val sessionAboutFranchiseOrLetting6015YesSession: Session          =
+  val sessionAboutFranchiseOrLetting6015YesSession: Session                =
     aboutYouAndTheProperty6015YesSession.copy(aboutFranchisesOrLettings = Some(prefilledAboutFranchiseOrLettings6015))
-  val sessionAboutFranchiseOrLetting6015SIncompleteCatering: Session =
+  val sessionAboutFranchiseOrLetting6015SIncompleteCatering: Session       =
     aboutYouAndTheProperty6015YesSession.copy(aboutFranchisesOrLettings =
       Some(prefilledIncompleteAboutFranchiseOrLettings6015)
     )
-  val sessionAboutFranchiseOrLetting6015SIncompleteLetting: Session  =
+  val sessionAboutFranchiseOrLetting6015SIncompleteCateringDetail: Session =
+    aboutYouAndTheProperty6015YesSession.copy(aboutFranchisesOrLettings =
+      Some(prefilledIncompleteCateringDetailAboutFranchiseOrLettings6015)
+    )
+  val sessionAboutFranchiseOrLetting6015SIncompleteLetting: Session        =
     aboutYouAndTheProperty6015YesSession.copy(aboutFranchisesOrLettings =
       Some(prefilledIncompleteAboutFranchiseOrLettings6015)
     )
-  val sessionAboutFranchiseOrLetting6015NoSession: Session           =
+  val sessionAboutFranchiseOrLetting6015NoSession: Session                 =
     aboutYouAndTheProperty6015NoSession.copy(aboutFranchisesOrLettings = Some(prefilledAboutFranchiseOrLettingsNo6015))
 
   // Additional information sessions

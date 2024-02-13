@@ -585,7 +585,7 @@ error.premisesLicenseConditions.missing = Select yes if your premises licence ha
 #####################################
 premisesLicenseConditionsDetails.heading = Describe the conditions restricting the use of all or parts of the property
 help.premisesLicenseConditionsDetails.title = Help with describing restrictions on the use of the property
-help.premisesLicenseConditionsDetails.heading = Describing restricting on the use of the property
+help.premisesLicenseConditionsDetails.heading = Describing restrictions on the use of the property
 help.premisesLicenseConditionsDetails.p1 = You’re only required to write a short description of the conditions we’re concerned with. Examples of acceptable descriptions include:
 help.premisesLicenseConditionsDetails.list.p1 = No drinks allowed on the terrace after 10pm
 help.premisesLicenseConditionsDetails.list.p2 = Only 200 people allowed in the function room at any time

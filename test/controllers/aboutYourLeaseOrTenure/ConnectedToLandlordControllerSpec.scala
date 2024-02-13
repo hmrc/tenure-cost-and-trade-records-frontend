@@ -16,6 +16,7 @@
 
 package controllers.aboutYourLeaseOrTenure
 
+import form.aboutYourLeaseOrTenure.ConnectedToLandlordForm.connectedToLandlordForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
 import navigation.AboutYourLeaseOrTenureNavigator
 import play.api.http.Status
@@ -24,6 +25,9 @@ import play.api.test.Helpers._
 import utils.TestBaseSpec
 
 class ConnectedToLandlordControllerSpec extends TestBaseSpec {
+
+  import TestData._
+  import utils.FormBindingTestAssertions._
 
   val mockAboutYourLeaseOrTenureNavigator = mock[AboutYourLeaseOrTenureNavigator]
 
@@ -58,5 +62,24 @@ class ConnectedToLandlordControllerSpec extends TestBaseSpec {
       )
       status(res) shouldBe BAD_REQUEST
     }
+  }
+
+  "Connected to landlord form" should {
+    "error if connected to landlord answer is missing" in {
+      val formData = baseFormData - errorKey.connectedToLandlord
+      val form     = connectedToLandlordForm.bind(formData)
+
+      mustContainError(errorKey.connectedToLandlord, "error.connectedToLandlord.missing", form)
+    }
+  }
+
+  object TestData {
+    val errorKey: Object {
+      val connectedToLandlord: String
+    } = new {
+      val connectedToLandlord: String = "connectedToLandlord"
+    }
+
+    val baseFormData: Map[String, String] = Map("connectedToLandlord" -> "yes")
   }
 }

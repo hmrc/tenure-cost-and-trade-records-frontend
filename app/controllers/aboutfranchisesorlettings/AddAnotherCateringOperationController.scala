@@ -96,6 +96,8 @@ class AddAnotherCateringOperationController @Inject() (
                   if (data == AnswerNo && fromCYA == true) {
                     controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController
                       .show()
+                  } else if (data == AnswerYes) {
+                    controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController.show()
                   } else {
                     controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show()
                   }
@@ -108,7 +110,8 @@ class AddAnotherCateringOperationController @Inject() (
               )
               val updatedData     = updateAboutFranchisesOrLettings(
                 _.copy(
-                  cateringOperationSections = updatedSections
+                  cateringOperationSections = updatedSections,
+                  fromCYA = Some(fromCYA)
                 )
               )
               session.saveOrUpdate(updatedData).flatMap { _ =>
