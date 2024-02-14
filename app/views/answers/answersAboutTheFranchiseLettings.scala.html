@@ -223,7 +223,6 @@
                     ))
                 }
             }
-
             @if(request.sessionData.aboutFranchisesOrLettings.flatMap(_.lettingSections).getOrElse(IndexedSeq.empty).length <= 1) {
                 @if(forType6015_6016) {
                     @govukSummaryList(SummaryList(rows =

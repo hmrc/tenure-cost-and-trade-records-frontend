@@ -57,7 +57,7 @@
 
 @formLabel =@{if (isConcession) messages(s"label.${concessionOrLetting}")  else messages(s"label.${cateringOrLetting}")}
 
-@pageHeading = @{messages(if (isConcession) s"$concessionOrLetting.heading$pluralSuffix"  else if  (operatorNames.size == 0) messages(s"${cateringOrLetting}.zeroBusinessOrFranchises.heading") else s"${cateringOrLetting}.heading$pluralSuffix", operatorNames.size)}
+@pageHeading = @{messages(if (isConcession) s"$concessionOrLetting.heading" else if  (operatorNames.size == 0) messages(s"$cateringOrLetting.zeroBusinessOrFranchises.heading") else s"$cateringOrLetting.heading" , operatorNames.size) + pluralSuffix}
 
 @isLettingOtherPartOfProperty = @{ cateringOrLetting.equals("addAnotherLettingOtherPartOfProperty") }
 
@@ -79,7 +79,7 @@
  }
 }
 
-@pluralSuffix = @{ if (operatorNames.size > 1) ".plural" else "" }
+@pluralSuffix = @{ if (operatorNames.size > 1) "s" else "" }
 
 @layout(
  pageHeading = pageHeading,
