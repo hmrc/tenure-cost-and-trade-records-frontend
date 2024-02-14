@@ -101,7 +101,7 @@ class LoginController @Inject() (
     forTypeFromURL match {
       case Some(forType) =>
         audit.sendExplicitAudit(
-          "ForRequestedFromReference",
+          "ForRequestedFromContinue",
           DownloadPDFAudit(referenceNumberFromUrl, forType, request.uri)
         )
       case _             => Future.successful(Ok(login(form)))
