@@ -107,6 +107,14 @@ class CheckYourAnswersAboutThePropertyController @Inject() (
             logger.warn(s"Back link for premises license page reached with unknown enforcement taken value")
             controllers.routes.TaskListController.show().url
         }
+      case ForTypes.for6030                    =>
+        answers.aboutYouAndTheProperty.flatMap(_.charityQuestion.map(_.name)) match {
+          case Some("yes") => controllers.aboutyouandtheproperty.routes.TradingActivityController.show().url
+          case Some("no")  => controllers.aboutyouandtheproperty.routes.CharityQuestionController.show().url
+          case _           =>
+            logger.warn(s"Backlink error, No value for charity question")
+            controllers.routes.TaskListController.show().url
+        }
       case _                                   => controllers.routes.LoginController.show().url
     }
 }
