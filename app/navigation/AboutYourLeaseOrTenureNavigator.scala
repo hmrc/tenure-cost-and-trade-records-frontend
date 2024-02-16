@@ -180,9 +180,9 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
 
   private def payableGrossOrNetDetailsRouting: Session => Call = answers => {
     answers.forType match {
-      case ForTypes.for6015 | ForTypes.for6016 =>
+      case ForTypes.for6015 | ForTypes.for6016 | ForTypes.for6030 =>
         controllers.aboutYourLeaseOrTenure.routes.HowIsCurrentRentFixedController.show()
-      case _                                   =>
+      case _                                                      =>
         controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryOnQuantityOfBeersController.show()
     }
   }
