@@ -19,12 +19,13 @@ package controllers.aboutYourLeaseOrTenure
 import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.PaymentWhenLeaseIsGrantedForm.paymentWhenLeaseIsGrantedForm
+import models.Session
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo.updateAboutLeaseOrAgreementPartTwo
 import models.submissions.aboutYourLeaseOrTenure.PaymentWhenLeaseIsGrantedDetails
 import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.PayWhenLeaseGrantedId
 import play.api.i18n.I18nSupport
-import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Request}
 import repositories.SessionRepo
 import views.html.aboutYourLeaseOrTenure.paymentWhenLeaseIsGranted
 
@@ -49,6 +50,7 @@ class PaymentWhenLeaseIsGrantedController @Inject() (
             case Some(data) => paymentWhenLeaseIsGrantedForm.fill(data)
             case _          => paymentWhenLeaseIsGrantedForm
           },
+          getBackLink(request.sessionData),
           request.sessionData.toSummary
         )
       )
@@ -58,7 +60,7 @@ class PaymentWhenLeaseIsGrantedController @Inject() (
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[PaymentWhenLeaseIsGrantedDetails](
       paymentWhenLeaseIsGrantedForm,
-      formWithErrors => BadRequest(paymentWhenLeaseIsGrantedView(formWithErrors, request.sessionData.toSummary)),
+      formWithErrors => BadRequest(paymentWhenLeaseIsGrantedView(formWithErrors, getBackLink(request.sessionData), request.sessionData.toSummary)),
       data => {
         val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(paymentWhenLeaseIsGrantedDetails = Some(data)))
         session.saveOrUpdate(updatedData)
@@ -66,5 +68,21 @@ class PaymentWhenLeaseIsGrantedController @Inject() (
       }
     )
   }
+
+  private def getBackLink(answers: Session)(implicit request: Request[AnyContent]): String =
+    navigator.from match {
+      case "TL" => controllers.routes.TaskListController.show().url + "#payment-when-lease-is-granted"
+      case _ =>
+        answers.aboutLeaseOrAgreementPartTwo.flatMap(
+          _.payACapitalSumDetails.map(_.capitalSumOrPremium.name)
+        ) match {
+          case Some("yes") =>
+            controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumDetailsController.show().url
+          case Some("no") => controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumController.show().url
+          case _ =>
+//            logger.warn(s"Back link for pay capital sum page reached with unknown tenants additions disregarded value")
+            controllers.routes.TaskListController.show().url
+        }
+    }
 
 }

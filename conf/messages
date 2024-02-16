@@ -903,6 +903,15 @@ payACapitalSum.heading = Did you pay a capital sum or premium for your lease or 
 hint.payACapitalSum = The sum could be paid to the landlord or a previous lessee.
 error.payACapitalSum.missing = Select yes if you paid a capital sum or premium for your lease
 
+# PAY A CAPITAL SUM DETAILS
+##################
+capitalSumPaidDetails.heading = Provide details of the captail sum paid
+capitalSumPaidDetails.p1 = You do not have to provide details if the rent has been reviewed since the payment was made.
+label.capitalSumPaidDetails = How much did you pay for your lease or agreement?
+label.capitalSumPaidDetailsDateInput = When was this sum paid?
+error.capitalSumPaidDetails.missing = Select yes if you paid a capital sum or premium for your lease
+error.required.annualRentExcludingVat.capitalSumPaidDetails = Please provide details of how much of the capital sum was paid
+
 # PAYMENT WHEN LEASE IS GRANTED
 ##############################
 receivePaymentWhenLeaseGranted.heading = Did you receive any payment when the lease was granted, or following assignment of the lease or agreement?

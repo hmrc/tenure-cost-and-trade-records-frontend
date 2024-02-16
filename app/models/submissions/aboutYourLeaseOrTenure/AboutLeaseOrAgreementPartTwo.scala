@@ -20,6 +20,7 @@ import actions.SessionRequest
 import models.Session
 import play.api.libs.json.Json
 
+//Currently 21 parameters in this case class, so only one more is allowed!
 case class AboutLeaseOrAgreementPartTwo(
   rentPayableVaryAccordingToGrossOrNetDetails: Option[RentPayableVaryAccordingToGrossOrNetDetails] = None,
   rentPayableVaryAccordingToGrossOrNetInformationDetails: Option[
@@ -35,6 +36,7 @@ case class AboutLeaseOrAgreementPartTwo(
   tenantAdditionsDisregardedDetails: Option[TenantAdditionsDisregardedDetails] = None,
   tenantsAdditionsDisregardedDetails: Option[TenantsAdditionsDisregardedDetails] = None,
   payACapitalSumDetails: Option[PayACapitalSumDetails] = None,
+  payACapitalSumInformationDetails: Option[PayACapitalSumInformationDetails] = None, //Added Feb 2024 - 6030 Journey
   paymentWhenLeaseIsGrantedDetails: Option[PaymentWhenLeaseIsGrantedDetails] = None,
   tenancyLeaseAgreementExpire: Option[TenancyLeaseAgreementExpire] = None,
   tenancyLeaseAgreementDetails: Option[TenancyLeaseAgreementDetails] = None,

@@ -231,6 +231,25 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
     }
   }
 
+  private def payCapitalSumRouting: Session => Call = answers => {
+    answers.aboutLeaseOrAgreementPartTwo.flatMap(
+      _.payACapitalSumDetails.map(_.capitalSumOrPremium.name)
+    ) match {
+      case Some("yes") =>
+        answers.forType match {
+          case ForTypes.for6030 => controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumDetailsController.show()
+          case _ => controllers.aboutYourLeaseOrTenure.routes.PaymentWhenLeaseIsGrantedController.show()
+        }
+      case Some("no") =>
+        controllers.aboutYourLeaseOrTenure.routes.PaymentWhenLeaseIsGrantedController.show()
+      case _ =>
+        logger.warn(
+          s"Navigation for pay capital sum without correct selection of conditions by controller"
+        )
+        throw new RuntimeException("Invalid option exception for pay capital sum routing")
+    }
+  }
+
   private def RPIRouting: Session => Call = answers => {
     controllers.aboutYourLeaseOrTenure.routes.RentIncreaseAnnuallyWithRPIController.show()
   }
@@ -302,7 +321,8 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
     TenantsAdditionsDisregardedDetailsId          -> (_ =>
       controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumController.show()
     ),
-    PayCapitalSumId                               -> (_ => controllers.aboutYourLeaseOrTenure.routes.PaymentWhenLeaseIsGrantedController.show()),
+    PayCapitalSumId                               -> payCapitalSumRouting,
+    PayCapitalSumDetailsId                        -> (_ => controllers.aboutYourLeaseOrTenure.routes.PaymentWhenLeaseIsGrantedController.show()),
     PayWhenLeaseGrantedId                         -> (_ =>
       controllers.aboutYourLeaseOrTenure.routes.LegalOrPlanningRestrictionsController.show()
     ),
