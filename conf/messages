@@ -1242,6 +1242,11 @@ turnover.details.6015.p4 = You must declare any income received from leisure act
 turnover.details.6015.h4 = Income from franchises, concessions and lettings
 turnover.details.6015.p5 = You must declare any income received from any franchise, concessions, or lettings attached to the property. This should be recorded in the appropriate turnover category.
 turnover.details.6015.p6 = For example, rental income from a restaurant concession should be declared under ‘food’.
+turnover.grossIncome = Gross income
+turnover.grossIncomeCaption.p1 = (excluding VAT)
+turnover.grossIncomeCaption.p2 = Excluding any payments received for concessions, franchises, licences or lettings.
+turnover.totalVisitorNumbers = Total visitor numbers
+turnover.totalVisitorNumbersCaption = Including concessions and free entries - enter 0 if the property is a car park.
 error.financialYearEnd.day.required = The financial year-end date must include a day
 error.financialYearEnd.month.required = The financial year-end date must include a month
 error.financialYearEnd.year.required = The financial year-end date must include a year
@@ -1260,6 +1265,13 @@ error.turnover.alcohol.sales.negative = Turnover from alcohol sales in the year 
 error.turnover.food.sales.negative = Turnover from food sales in the year ending {0} cannot be a negative number
 error.turnover.other.sales.negative = Turnover from other receipts in the year ending {0} cannot be a negative number
 error.turnover.accommodation.sales.negative = Turnover from accommodation in the year ending {0} cannot be a negative number
+error.turnover.grossIncome.required = Enter 0 if you did not have gross income in the year ending {0}
+error.turnover.grossIncome.range = Gross income in the year ending {0} must be a number, for example  100 or 100.00
+error.turnover.grossIncome.negative = Gross income in the year ending {0} cannot be a negative number
+error.totalVisitorNumber.required = Enter 0 if you did not have visitors in the year ending {0}
+error.totalVisitorNumber.nonNumeric = Total visitor numbers in the year ending {0} must be a number
+error.totalVisitorNumber.negative = Total visitor numbers in the year ending {0} cannot be a negative number
+
 # TURNOVER 6016
 #########
 turnover.p1.6016 = Provide us with details of your turnover. If the accounts do not relate to a whole year, or if you were not trading continuously, state the relevant number of weeks.
@@ -1653,6 +1665,9 @@ checkYourAnswersRequestReferenceNumber.heading = Check your answers – if you d
 checkYourAnswersRequestReferenceNumber.subheading1 = Property details
 checkYourAnswersRequestReferenceNumber.subheading2 = Your details
 checkYourAnswersAboutTheTradingHistory.unusualCircumstances = Unusual circumstances affecting the turnover
+checkYourAnswersAboutTheTradingHistory.unusualCircumstances.6030 = Factors influencing receipts
+checkYourAnswersAboutTheTradingHistory.grossIncome = Gross receipts
+checkYourAnswersAboutTheTradingHistory.totalVisitorNumbers = Total visitor numbers
 
 # Confirmation Page
 ###################

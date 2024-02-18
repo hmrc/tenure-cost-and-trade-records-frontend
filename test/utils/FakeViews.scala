@@ -124,6 +124,7 @@ trait FakeViews { this: GuiceOneAppPerSuite =>
   lazy val financialYearEndView: financialYearEnd                                             = app.injector.instanceOf[financialYearEnd]
   lazy val financialYearEndDatesView: financialYearEndDates                                   = app.injector.instanceOf[financialYearEndDates]
   lazy val turnoverView: turnover                                                             = app.injector.instanceOf[turnover]
+  lazy val turnover6030View: turnover6030                                                     = app.injector.instanceOf[turnover6030]
   lazy val incomeExpenditureSummaryView: incomeExpenditureSummary                             = app.injector.instanceOf[incomeExpenditureSummary]
   lazy val unusualCircumstancesView: unusualCircumstances                                     = app.injector.instanceOf[unusualCircumstances]
   lazy val checkYourAnswersAboutTheTradingHistoryView: checkYourAnswersAboutTheTradingHistory =

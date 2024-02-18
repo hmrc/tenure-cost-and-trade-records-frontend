@@ -31,7 +31,7 @@ class OtherCostsViewSpec extends QuestionViewBehaviours[OtherCosts] {
   val messageKeyPrefix = "otherCosts"
 
   override val form  = OtherCostsForm.form
-  val sessionRequest = SessionRequest(baseFilled6015Session, fakeRequest)
+  val sessionRequest = SessionRequest(aboutYourTradingHistory6015YesSession, fakeRequest)
 
   def createView = () => otherCostsView(form)(sessionRequest, messages)
 

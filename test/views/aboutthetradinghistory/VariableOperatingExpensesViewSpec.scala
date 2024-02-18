@@ -33,7 +33,7 @@ class VariableOperatingExpensesViewSpec extends QuestionViewBehaviours[VariableO
   val fakeDates = Seq(LocalDate.of(2021, 4, 1), LocalDate.of(2022, 4, 1), LocalDate.of(2023, 4, 1))
 
   val messageKeyPrefix = "variableOperatingExpenses"
-  val sessionRequest   = SessionRequest(baseFilled6015Session, fakeRequest)
+  val sessionRequest   = SessionRequest(aboutYourTradingHistory6015YesSession, fakeRequest)
 
   override val form = VariableOperatingExpensesForm.variableOperatingExpensesForm(Seq("2026", "2025", "2024"))(messages)
 
@@ -57,7 +57,7 @@ class VariableOperatingExpensesViewSpec extends QuestionViewBehaviours[VariableO
     "Section heading is visible" in {
       val doc         = asDocument(createViewUsingForm(form)) // govuk-caption-m
       val sectionText = doc.getElementsByClass("govuk-caption-m").text()
-      assert(sectionText == messages("label.section.aboutYourTradingHistory"))
+      assert(sectionText.contains(messages("label.section.aboutYourTradingHistory")))
     }
 
     "contain continue button with the value Continue" in {

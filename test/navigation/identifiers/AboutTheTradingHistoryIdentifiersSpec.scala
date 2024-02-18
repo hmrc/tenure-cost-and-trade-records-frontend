@@ -42,10 +42,6 @@ class AboutTheTradingHistoryIdentifiersSpec extends TestBaseSpec {
       assert(CostOfSalesId.toString.equals("costOfSales"))
     }
 
-    "Identifier for gross profit page" in {
-      assert(GrossProfitsId.toString.equals("grossProfit"))
-    }
-
     "Identifier for total payroll page" in {
       assert(TotalPayrollCostId.toString.equals("totalPayrollCost"))
     }
@@ -68,10 +64,6 @@ class AboutTheTradingHistoryIdentifiersSpec extends TestBaseSpec {
 
     "Identifier for unusual circumstances page" in {
       assert(UnusualCircumstancesId.toString.equals("unusualCircumstances"))
-    }
-
-    "Identifier for net profit page" in {
-      assert(NetProfitId.toString.equals("netProfit"))
     }
 
     "Identifier for check your answers about the trading history page" in {

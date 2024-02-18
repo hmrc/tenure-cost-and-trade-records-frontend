@@ -164,12 +164,12 @@ POST        /financial-year-end-dates                               controllers.
 GET         /turnover                                               controllers.aboutthetradinghistory.TurnoverController.show()
 POST        /turnover                                               controllers.aboutthetradinghistory.TurnoverController.submit()
 
+GET         /turnover-6030                                          controllers.aboutthetradinghistory.Turnover6030Controller.show()
+POST        /turnover-6030                                          controllers.aboutthetradinghistory.Turnover6030Controller.submit()
+
 # Form 6015 routing start
 GET         /cost-of-sales                                          controllers.aboutthetradinghistory.CostOfSalesController.show()
 POST        /cost-of-sales                                          controllers.aboutthetradinghistory.CostOfSalesController.submit()
-# NOT USED -check other forms before deleting
-GET         /gross-profits                                          controllers.aboutthetradinghistory.GrossProfitsController.show()
-POST        /gross-profits                                          controllers.aboutthetradinghistory.GrossProfitsController.submit()
 
 GET         /total-payroll-costs                                    controllers.aboutthetradinghistory.TotalPayrollCostsController.show()
 POST        /total-payroll-costs                                    controllers.aboutthetradinghistory.TotalPayrollCostsController.submit()
@@ -188,9 +188,7 @@ POST        /income-expenditure-summary                             controllers.
 
 GET         /unusual-circumstances                                  controllers.aboutthetradinghistory.UnusualCircumstancesController.show()
 POST        /unusual-circumstances                                  controllers.aboutthetradinghistory.UnusualCircumstancesController.submit()
-# NOT USED -check other forms before deleting
-GET         /net-profit                                             controllers.aboutthetradinghistory.NetProfitController.show()
-POST        /net-profit                                             controllers.aboutthetradinghistory.NetProfitController.submit()
+
 # Form 6015 routing end
 
 # About the francise or letting

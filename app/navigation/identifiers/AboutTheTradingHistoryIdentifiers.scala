@@ -36,10 +36,6 @@ case object CostOfSalesId extends Identifier {
   override def toString: String = "costOfSales"
 }
 
-case object GrossProfitsId extends Identifier {
-  override def toString: String = "grossProfit"
-}
-
 case object TotalPayrollCostId extends Identifier {
   override def toString: String = "totalPayrollCost"
 }
@@ -62,10 +58,6 @@ case object IncomeExpenditureSummaryId extends Identifier {
 
 case object UnusualCircumstancesId extends Identifier {
   override def toString: String = "unusualCircumstances"
-}
-
-case object NetProfitId extends Identifier {
-  override def toString: String = "netProfit"
 }
 
 case object CheckYourAnswersAboutTheTradingHistoryId extends Identifier {

@@ -44,7 +44,11 @@
 }
 
 @indices = @{
-    request.sessionData.aboutTheTradingHistory.fold(Seq.empty[Int])(_.turnoverSections.indices)
+  request.sessionData.forType match {
+      case ForTypes.for6030 => request.sessionData.aboutTheTradingHistory.fold(Seq.empty[Int])(_.turnoverSections6030.indices)
+      case _ => request.sessionData.aboutTheTradingHistory.fold(Seq.empty[Int])(_.turnoverSections.indices)
+  }
+
 }
 
 @layout(
