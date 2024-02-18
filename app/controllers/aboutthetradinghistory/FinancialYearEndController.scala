@@ -185,9 +185,6 @@ class FinancialYearEndController @Inject() (
     isFinancialYearEndDayUnchanged: Boolean,
     isFinancialYearsListUnchanged: Boolean
   )(implicit request: SessionRequest[AnyContent]) = {
-    println("******************")
-    println("6030")
-    println("******************")
     def turnoverSections6030 =
       if (isFinancialYearEndDayUnchanged && isFinancialYearsListUnchanged) {
         aboutTheTradingHistory.turnoverSections6030

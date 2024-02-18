@@ -59,9 +59,6 @@ class Turnover6030Controller @Inject() (
   }
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    println("*" * 80)
-    println(request.sessionData.aboutTheTradingHistory.get)
-    println("*" * 80)
     request.sessionData.aboutTheTradingHistory
       .filter(_.occupationAndAccountingInformation.isDefined)
       .fold(Future.successful(Redirect(routes.AboutYourTradingHistoryController.show()))) { aboutTheTradingHistory =>
