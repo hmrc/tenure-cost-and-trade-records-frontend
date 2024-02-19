@@ -26,8 +26,10 @@ object PayACapitalSumDetailsForm {
   def payACapitalSumDetailsForm(implicit messages: Messages): Form[PayACapitalSumInformationDetails] =
     Form(
       mapping(
-        "capitalSumPaidDetails" -> optional(currencyMapping(".capitalSumPaidDetails")),
-        "capitalSumPaidDetailsDateInput" -> optional(requiredDateMapping("cateringOrLettingFixedRentDate", allowPastDates = true))
+        "capitalSumPaidDetails"          -> optional(currencyMapping(".capitalSumPaidDetails")),
+        "capitalSumPaidDetailsDateInput" -> optional(
+          requiredDateMapping("capitalSumPaidDetails", allowPastDates = true)
+        )
       )(PayACapitalSumInformationDetails.apply)(
         PayACapitalSumInformationDetails.unapply
       )

@@ -21,8 +21,8 @@ import play.api.libs.json.Json
 import java.time.LocalDate
 
 case class PayACapitalSumInformationDetails(
-                                             capitalSumPaidDetails: Option[BigDecimal],
-                                             capitalSumPaidDetailsDateInput: Option[LocalDate]
+  capitalSumPaidDetails: Option[BigDecimal],
+  capitalSumPaidDetailsDateInput: Option[LocalDate]
 )
 
 object PayACapitalSumInformationDetails {

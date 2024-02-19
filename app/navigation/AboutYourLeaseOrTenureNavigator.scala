@@ -56,7 +56,7 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
     answers.forType match {
       case ForTypes.for6010 | ForTypes.for6011 | ForTypes.for6015 | ForTypes.for6016 | ForTypes.for6030 =>
         controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordController.show()
-      case _                                                                         =>
+      case _                                                                                            =>
         controllers.aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.show()
     }
   }
@@ -238,11 +238,11 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
       case Some("yes") =>
         answers.forType match {
           case ForTypes.for6030 => controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumDetailsController.show()
-          case _ => controllers.aboutYourLeaseOrTenure.routes.PaymentWhenLeaseIsGrantedController.show()
+          case _                => controllers.aboutYourLeaseOrTenure.routes.PaymentWhenLeaseIsGrantedController.show()
         }
-      case Some("no") =>
+      case Some("no")  =>
         controllers.aboutYourLeaseOrTenure.routes.PaymentWhenLeaseIsGrantedController.show()
-      case _ =>
+      case _           =>
         logger.warn(
           s"Navigation for pay capital sum without correct selection of conditions by controller"
         )
@@ -322,7 +322,9 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
       controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumController.show()
     ),
     PayCapitalSumId                               -> payCapitalSumRouting,
-    PayCapitalSumDetailsId                        -> (_ => controllers.aboutYourLeaseOrTenure.routes.PaymentWhenLeaseIsGrantedController.show()),
+    PayCapitalSumDetailsId                        -> (_ =>
+      controllers.aboutYourLeaseOrTenure.routes.PaymentWhenLeaseIsGrantedController.show()
+    ),
     PayWhenLeaseGrantedId                         -> (_ =>
       controllers.aboutYourLeaseOrTenure.routes.LegalOrPlanningRestrictionsController.show()
     ),

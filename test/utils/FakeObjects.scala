@@ -846,6 +846,14 @@ trait FakeObjects {
     legalOrPlanningRestrictions = Some(LegalOrPlanningRestrictions(AnswerYes))
   )
 
+  val prefilledAboutLeaseOrAgreementPayPartTwo = AboutLeaseOrAgreementPartTwo(
+    rentPayableVaryAccordingToGrossOrNetDetails = Some(RentPayableVaryAccordingToGrossOrNetDetails(AnswerYes)),
+    rentPayableVaryOnQuantityOfBeersDetails = Some(RentPayableVaryOnQuantityOfBeersDetails(AnswerYes)),
+    tenantAdditionsDisregardedDetails = Some(TenantAdditionsDisregardedDetails(AnswerYes)),
+    legalOrPlanningRestrictions = Some(LegalOrPlanningRestrictions(AnswerYes)),
+    payACapitalSumDetails = Some(PayACapitalSumDetails(AnswerYes))
+  )
+
   val prefilledAboutLeaseOrAgreementPartTwoNo = AboutLeaseOrAgreementPartTwo(
     rentPayableVaryAccordingToGrossOrNetDetails = Some(RentPayableVaryAccordingToGrossOrNetDetails(AnswerNo)),
     rentPayableVaryOnQuantityOfBeersDetails = Some(RentPayableVaryOnQuantityOfBeersDetails(AnswerNo)),

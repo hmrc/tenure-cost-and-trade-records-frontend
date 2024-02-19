@@ -33,7 +33,7 @@ class AboutYourLeaseOrTenure6010NavigatorSpec extends TestBaseSpec {
 
   val navigator = new AboutYourLeaseOrTenureNavigator(audit)
 
-  val session6010   = Session(
+  val session6010              = Session(
     "99996010004",
     "FOR6010",
     prefilledAddress,
@@ -41,13 +41,21 @@ class AboutYourLeaseOrTenure6010NavigatorSpec extends TestBaseSpec {
     aboutLeaseOrAgreementPartOne = Some(prefilledAboutLeaseOrAgreement6010Route),
     aboutLeaseOrAgreementPartTwo = Some(prefilledAboutLeaseOrAgreementPartTwo)
   )
-  val session6010No = Session(
+  val session6010No            = Session(
     "99996010004",
     "FOR6010",
     prefilledAddress,
     "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=",
     aboutLeaseOrAgreementPartOne = Some(prefilledAboutLeaseOrAgreementPartOneNo),
     aboutLeaseOrAgreementPartTwo = Some(prefilledAboutLeaseOrAgreementPartTwoNo)
+  )
+  val session6010PayNavigation = Session(
+    "99996010004",
+    "FOR6010",
+    prefilledAddress,
+    "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=",
+    aboutLeaseOrAgreementPartOne = Some(prefilledAboutLeaseOrAgreementPartOneNo),
+    aboutLeaseOrAgreementPartTwo = Some(prefilledAboutLeaseOrAgreementPayPartTwo)
   )
 
   implicit override val hc: HeaderCarrier = HeaderCarrier()
@@ -316,8 +324,11 @@ class AboutYourLeaseOrTenure6010NavigatorSpec extends TestBaseSpec {
 
     "return a function that goes to pay when lease granted page when pay a capital sum has been completed" in {
       navigator
-        .nextPage(PayCapitalSumId, session6010)
-        .apply(session6010) mustBe controllers.aboutYourLeaseOrTenure.routes.PaymentWhenLeaseIsGrantedController.show()
+        .nextPage(PayCapitalSumId, session6010PayNavigation)
+        .apply(
+          session6010PayNavigation
+        ) mustBe controllers.aboutYourLeaseOrTenure.routes.PaymentWhenLeaseIsGrantedController
+        .show()
     }
 
     "return a function that goes to legal or planning restrictions page when pay when lease granted has been completed" in {

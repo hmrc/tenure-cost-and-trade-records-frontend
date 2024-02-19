@@ -50,7 +50,7 @@ import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class PayACapitalSumDetailsController @Inject()(
+class PayACapitalSumDetailsController @Inject() (
   mcc: MessagesControllerComponents,
   navigator: AboutYourLeaseOrTenureNavigator,
   payACapitalSumDetailsView: payACapitalSumDetails,
@@ -79,7 +79,9 @@ class PayACapitalSumDetailsController @Inject()(
     continueOrSaveAsDraft[PayACapitalSumInformationDetails](
       payACapitalSumDetailsForm,
       formWithErrors =>
-        BadRequest(payACapitalSumDetailsView(formWithErrors, getBackLink(request.sessionData), request.sessionData.toSummary)),
+        BadRequest(
+          payACapitalSumDetailsView(formWithErrors, getBackLink(request.sessionData), request.sessionData.toSummary)
+        ),
       data => {
         val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(payACapitalSumInformationDetails = Some(data)))
         session.saveOrUpdate(updatedData)
