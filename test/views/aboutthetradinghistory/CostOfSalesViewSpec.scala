@@ -28,7 +28,7 @@ class CostOfSalesViewSpec extends QuestionViewBehaviours[Seq[CostOfSales]] {
   def costOfSalesView = app.injector.instanceOf[views.html.aboutthetradinghistory.costOfSales]
 
   val messageKeyPrefix = "costOfSales"
-  val sessionRequest   = SessionRequest(baseFilled6015Session, fakeRequest)
+  val sessionRequest   = SessionRequest(aboutYourTradingHistory6015YesSession, fakeRequest)
 
   override val form = CostOfSalesForm.costOfSalesForm(Seq(2025, 2024, 2023).map(_.toString))(messages)
 

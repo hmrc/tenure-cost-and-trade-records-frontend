@@ -1,0 +1,192 @@
+@*
+ * Copyright 2023 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import actions.SessionRequest
+@import models.submissions.aboutthetradinghistory.TurnoverSection6030
+@import uk.gov.hmrc.govukfrontend.views.html.components._
+@import uk.gov.hmrc.govukfrontend.views.Implicits.RichInput
+@import util.DateUtil
+@import util.NumberUtil._
+
+
+@this(layout: Layout,
+        govukButton: GovukButton,
+        formWithCSRF: FormWithCSRF,
+        govukInput: GovukInput,
+        govukDateInput: GovukDateInput,
+        govukTable: GovukTable,
+        govukInsetText: GovukInsetText,
+        govukDetails: GovukDetails,
+        dateUtil: DateUtil
+)
+
+@(form: Form[Seq[TurnoverSection6030]],fromLocation:String="")(implicit request: SessionRequest[_], messages: Messages)
+
+@grossIncomeHeading = {
+    <p class="govuk-body govuk-!-font-weight-bold">
+        @messages("turnover.grossIncome")
+        <span class="govuk-caption-m">@messages("turnover.grossIncomeCaption.p1") </br> @messages("turnover.grossIncomeCaption.p2")</span>
+    </p>
+}
+
+@totalVisitorNumbersHeading = {
+    <p class="govuk-body govuk-!-font-weight-bold">
+        @messages("turnover.totalVisitorNumbers") <br>
+        <span class="govuk-caption-m">@messages("turnover.totalVisitorNumbersCaption")</span>
+    </p>
+}
+
+@forType = @{
+    request.sessionData.forType
+}
+
+@indices = @{
+    request.sessionData.aboutTheTradingHistory.fold(Seq.empty[Int])(_.turnoverSections6030.indices)
+}
+
+    @tradingPeriodRow(idx: Int) = @{
+        Seq(
+            TableRow(
+                content = Text(messages("turnover.tradingPeriod"))
+            ),
+            TableRow(
+                content = HtmlContent(
+                    govukInput(Input(
+                        id = s"$idx.weeks",
+                        name = s"$idx.weeks",
+                        value = form(s"$idx.weeks").value,
+                        classes = "govuk-input--width-2",
+                        attributes = Map(
+                            "maxlength" -> "2",
+                            "aria-label" -> messages("turnover.tradingPeriod")
+                        ),
+                        suffix = Some(PrefixOrSuffix(
+                            content = Text(messages("turnover.weeks"))
+                        ))
+                    ).withFormField(form(s"$idx.weeks")))
+                )
+            )
+        )
+    }
+
+    @grossIncomeRow(idx: Int) = @{
+        Seq(
+            TableRow(
+                content = HtmlContent(grossIncomeHeading)
+            ),
+            TableRow(
+                content = HtmlContent(
+                    govukInput(Input(
+                        id = s"$idx.grossIncome",
+                        name = s"$idx.grossIncome",
+                        value = form(s"$idx.grossIncome").value,
+                        classes = "govuk-input--width-10",
+                        attributes = Map(
+                            "maxlength" -> "13",
+                            "aria-label" -> messages("turnover.grossIncome")
+                        ),
+                        prefix = Some(PrefixOrSuffix(
+                            content = Text("£")
+                        ))
+                    ).withFormField(form(s"$idx.grossIncome")))
+                )
+            )
+        )
+    }
+
+    @totalVisitorNumbersRow(idx: Int) = @{
+        Seq(
+            TableRow(
+                content = HtmlContent(totalVisitorNumbersHeading)
+            ),
+            TableRow(
+                content = HtmlContent(
+                    govukInput(Input(
+                        id = s"$idx.totalVisitorNumber",
+                        name = s"$idx.totalVisitorNumber",
+                        value = form(s"$idx.totalVisitorNumber").value,
+                        classes = "govuk-input--width-10",
+                        attributes = Map(
+                            "maxlength" -> "13",
+                            "aria-label" -> messages("turnover.totalVisitorNumber")
+                        )
+                    ).withFormField(form(s"$idx.totalVisitorNumber")))
+                )
+            )
+        )
+    }
+
+@renderRows(idx: Int) = @{
+    Seq(
+        tradingPeriodRow(idx),
+        grossIncomeRow(idx),
+        totalVisitorNumbersRow(idx)
+    )
+}
+
+@layout(
+    pageHeading = messages("turnover.heading"),
+    showSection = true,
+    summary = Some(request.sessionData.toSummary),
+    sectionName = messages("label.section.aboutYourTradingHistory"),
+    backLinkUrl = fromLocation match {
+        case "TL" => controllers.routes.TaskListController.show().url + "#turnover"
+
+        case "IES" => controllers.aboutthetradinghistory.routes.IncomeExpenditureSummaryController.show().url
+        case _ =>
+            if(request.sessionData.aboutTheTradingHistory.flatMap(_.occupationAndAccountingInformation.flatMap(_.yearEndChanged)).contains(true)) {
+                controllers.aboutthetradinghistory.routes.FinancialYearEndDatesController.show().url
+            } else {
+                controllers.aboutthetradinghistory.routes.FinancialYearEndController.show().url
+            }
+    },
+    fullWidth = true,
+    theForm = form
+) {
+
+    <p class="govuk-body">@messages("turnover.p1")</p>
+    @govukInsetText(InsetText(
+        content = Text(messages("turnover.inset"))
+    ))
+    @formWithCSRF(action = controllers.aboutthetradinghistory.routes.Turnover6030Controller.submit) {
+        <table class="hmrc-responsive-table">
+            <tbody>
+                <tr>
+                @request.sessionData.financialYearEndDates6030.map { case (finYearEnd, idx) =>
+                <td>
+                    @govukTable(Table(
+                        head = Seq(
+                            HeadCell(
+                                content = Text(messages("turnover.financialYearEnd"))
+                            ),
+                            HeadCell(
+                                content = Text(dateUtil.formatDayMonthAbbrYear(finYearEnd))
+                            )
+                        ),
+                        firstCellIsHeader = true,
+                        rows = renderRows(idx)
+                    ))
+                </td>
+                }
+                </tr>
+            </tbody>
+        </table>
+
+        @includes.continueSaveAsDraftButtons(govukButton)
+    }
+    <script src="@routes.Assets.versioned("javascripts/responsive-table.js")"></script>
+
+}

@@ -492,9 +492,33 @@ trait FakeObjects {
     )
   )
 
+  val prefilledAboutYourTradingHistory6030: AboutTheTradingHistory = AboutTheTradingHistory(
+    Some(OccupationalAndAccountingInformation(MonthsYearDuration(9, 2017), Some(DayMonthsDuration(27, 9)))),
+    Seq.empty,
+    Seq(
+      TurnoverSection6030(LocalDate.now(), 52, Some(BigDecimal(100)), Some(100)),
+      TurnoverSection6030(LocalDate.now().minusYears(1), 52, Some(BigDecimal(200)), Some(200)),
+      TurnoverSection6030(LocalDate.now().minusYears(2), 52, Some(BigDecimal(300)), Some(300))
+    ),
+    Seq.empty,
+    Seq.empty,
+    None,
+    Seq.empty,
+    None,
+    None,
+    Seq.empty,
+    Some(UnusualCircumstances("unusual circumstances"))
+  )
+
   val aboutYourTradingHistory6010YesSession: Session =
     aboutYouAndTheProperty6010YesSession.copy(
       aboutTheTradingHistory = Some(prefilledAboutYourTradingHistory),
+      stillConnectedDetails = Some(prefilledStillConnectedDetailsYesToAll)
+    )
+
+  val aboutYourTradingHistory6030YesSession: Session =
+    aboutYouAndTheProperty6030YesSession.copy(
+      aboutTheTradingHistory = Some(prefilledAboutYourTradingHistory6030),
       stillConnectedDetails = Some(prefilledStillConnectedDetailsYesToAll)
     )
 

@@ -55,23 +55,38 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
     aboutthetradinghistory.routes.CostOfSalesController.show()
   ).map(_.url)
 
-  private def financialYearEndRouting: Session => Call =
-    _.aboutTheTradingHistory.flatMap(_.occupationAndAccountingInformation.flatMap(_.yearEndChanged)) match {
-      case Some(true) => aboutthetradinghistory.routes.FinancialYearEndDatesController.show()
-      case _          => aboutthetradinghistory.routes.TurnoverController.show()
+  private def financialYearEndRouting: Session => Call = { s =>
+    s.aboutTheTradingHistory.flatMap(_.occupationAndAccountingInformation.flatMap(_.yearEndChanged)) match {
+      case Some(true) =>
+        aboutthetradinghistory.routes.FinancialYearEndDatesController.show()
+      case _          =>
+        s.forType match {
+          case ForTypes.for6030 =>
+            aboutthetradinghistory.routes.Turnover6030Controller.show()
+          case _                => aboutthetradinghistory.routes.TurnoverController.show()
+        }
+    }
+  }
+
+  private def financialYearEndDatesRouting: Session => Call =
+    _.forType match {
+      case ForTypes.for6030 => aboutthetradinghistory.routes.Turnover6030Controller.show()
+      case _                => aboutthetradinghistory.routes.TurnoverController.show()
     }
 
   private def turnoverRouting: Session => Call = answers => {
     if (answers.forType == ForTypes.for6015)
       aboutthetradinghistory.routes.CostOfSalesController.show()
-    else
+    else if (answers.forType == ForTypes.for6030) {
+      aboutthetradinghistory.routes.UnusualCircumstancesController.show()
+    } else
       aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show()
   }
 
   override val routeMap: Map[Identifier, Session => Call] = Map(
     AboutYourTradingHistoryPageId            -> (_ => aboutthetradinghistory.routes.FinancialYearEndController.show()),
     FinancialYearEndPageId                   -> financialYearEndRouting,
-    FinancialYearEndDatesPageId              -> (_ => aboutthetradinghistory.routes.TurnoverController.show()),
+    FinancialYearEndDatesPageId              -> financialYearEndDatesRouting,
     TurnoverPageId                           -> turnoverRouting,
     CostOfSalesId                            -> (_ => aboutthetradinghistory.routes.TotalPayrollCostsController.show()),
     TotalPayrollCostId                       -> (_ => aboutthetradinghistory.routes.VariableOperatingExpensesController.show()),

@@ -23,6 +23,7 @@
 @import models.submissions.aboutthetradinghistory.OtherCosts
 @import models.submissions.aboutthetradinghistory.TotalPayrollCost
 @import models.submissions.aboutthetradinghistory.TurnoverSection
+@import models.submissions.aboutthetradinghistory.TurnoverSection6030
 @import models.submissions.aboutthetradinghistory.VariableOperatingExpensesSections
 @import util.DateUtil
 @import util.NumberUtil._
@@ -70,6 +71,13 @@
     ).body
 }
 
+@financialYearEndDates(aboutTheTradingHistory: AboutTheTradingHistory) = @{
+    request.sessionData.forType match {
+        case ForTypes.for6030 => aboutTheTradingHistory.turnoverSections6030.map(_.financialYearEnd)
+        case _ => aboutTheTradingHistory.turnoverSections.map(_.financialYearEnd)
+    }
+}
+
 @turnoverValuesTable(turnoverSections: Seq[TurnoverSection]) = @{
     table(
         turnoverSections.map(t => Seq(
@@ -99,6 +107,17 @@
         ).body
     }
 
+    @turnoverValuesTable6030(turnoverSections: Seq[TurnoverSection6030]) = @{
+        table(
+            turnoverSections.map(t => Seq(
+                dateUtil.formatDayMonthAbbrYear(t.financialYearEnd),
+                s"${t.tradingPeriod} ${messages("turnover.weeks")}",
+                t.grossIncome.getOrElse(zeroBigDecimal).asMoney,
+                s"${t.totalVisitorNumbers.getOrElse(0)}"
+            ))
+        ).body
+    }
+
 @turnoverKeys = @{
     Seq(
         messages("checkYourAnswersAboutTheTradingHistory.financialYearEnd"),
@@ -124,6 +143,15 @@
         ).mkString("""<p class="govuk-body govuk-!-font-weight-bold">""", """</p> <p class="govuk-body govuk-!-font-weight-bold">""", "</p>")
     }
 
+    @turnoverKeys6030 = @{
+        Seq(
+            messages("checkYourAnswersAboutTheTradingHistory.financialYearEnd"),
+            messages("checkYourAnswersAboutTheTradingHistory.tradingPeriod"),
+            messages("checkYourAnswersAboutTheTradingHistory.grossIncome"),
+            messages("checkYourAnswersAboutTheTradingHistory.totalVisitorNumbers"),
+        ).mkString("""<p class="govuk-body govuk-!-font-weight-bold">""", """</p> <p class="govuk-body govuk-!-font-weight-bold">""", "</p>")
+    }
+
 @actions = @{
     Some(
         Actions(items =
@@ -140,7 +168,22 @@
         )
     )
 }
-
+    @actions6030 = @{
+        Some(
+            Actions(items =
+                Seq(
+                    ActionItem(
+                        href = s"${aboutthetradinghistory.routes.Turnover6030Controller.show().url}?from=CYA",
+                        content = Text(messages("label.change")),
+                        visuallyHiddenText = Some(messages("turnover.heading")),
+                        attributes = Map(
+                            "aria-label" -> s"${messages("label.change")} ${messages("turnover.heading")}"
+                        )
+                    )
+                )
+            )
+        )
+    }
 @costOfSalesValuesTable(costOfSales: Seq[CostOfSales]) = @{
     table(
         costOfSales.map(s => Seq(
@@ -322,7 +365,7 @@
                 aboutthetradinghistory.routes.FinancialYearEndController.show(), "financialYear.day") ++
 
             sectionAnswers.row("financialYearEndDates.heading",
-                _.fold("")(t => financialYearEndDatesTable(t.turnoverSections.map(_.financialYearEnd))),
+                _.fold("")(t => financialYearEndDatesTable(financialYearEndDates(t))),
                 aboutthetradinghistory.routes.FinancialYearEndDatesController.show(), "",
                 ("valueAsHtml", _ => None))
 ))
@@ -339,6 +382,14 @@
                         actions = actions
                     )
                 )
+            case ForTypes.for6030 =>
+                Seq(
+                    SummaryListRow(
+                        key = Key(HtmlContent(turnoverKeys6030)),
+                        value = Value(HtmlContent(sectionAnswers.answers.fold("")(t => turnoverValuesTable6030(t.turnoverSections6030)))),
+                        actions = actions6030
+                    )
+                )
             case _ =>
                 Seq(
                     SummaryListRow(
@@ -349,6 +400,14 @@
                 )
         }
     ))
+
+@if(forType == ForTypes.for6030) {
+    @govukSummaryList(SummaryList(rows =
+        sectionAnswers.row("checkYourAnswersAboutTheTradingHistory.unusualCircumstances.6030",
+            _.unusualCircumstances.map(_.unusualCircumstances),
+            aboutthetradinghistory.routes.UnusualCircumstancesController.show(), "unusualCircumstances")
+    ))
+}
 
 @if(forType == ForTypes.for6015) {
     <h2 class="govuk-heading-m">@messages("costOfSales.heading")</h2>

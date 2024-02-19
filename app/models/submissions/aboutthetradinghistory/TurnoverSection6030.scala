@@ -20,16 +20,12 @@ import play.api.libs.json.Json
 
 import java.time.LocalDate
 
-case class TurnoverSection1516(
+case class TurnoverSection6030(
   financialYearEnd: LocalDate,
   tradingPeriod: Int,
-  accommodation: BigDecimal,
-  averageOccupancyRate: BigDecimal,
-  food: BigDecimal,
-  drinks: BigDecimal,
-  other: BigDecimal,
-  totalSalesRevenue: BigDecimal
+  grossIncome: Option[BigDecimal],
+  totalVisitorNumbers: Option[Int]
 )
-object TurnoverSection1516 {
-  implicit val format = Json.format[TurnoverSection1516]
+object TurnoverSection6030 {
+  implicit val format = Json.format[TurnoverSection6030]
 }
