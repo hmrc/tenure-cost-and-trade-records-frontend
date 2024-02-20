@@ -17,7 +17,7 @@
 package models.submissions
 
 import models.Session
-import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartOne, AboutLeaseOrAgreementPartTwo}
+import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartOne, AboutLeaseOrAgreementPartThree, AboutLeaseOrAgreementPartTwo}
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
@@ -44,6 +44,7 @@ case class ConnectedSubmission(
   aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = None,
   aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = None,
   aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = None,
+  aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = None,
   saveAsDraftPassword: Option[String] = None,
   lastCYAPageUrl: Option[String] = None,
   requestReferenceNumberDetails: Option[RequestReferenceNumberDetails] = None,
@@ -68,6 +69,7 @@ object ConnectedSubmission {
     session.aboutFranchisesOrLettings,
     session.aboutLeaseOrAgreementPartOne,
     session.aboutLeaseOrAgreementPartTwo,
+    session.aboutLeaseOrAgreementPartThree,
     session.saveAsDraftPassword,
     session.lastCYAPageUrl,
     session.requestReferenceNumberDetails,

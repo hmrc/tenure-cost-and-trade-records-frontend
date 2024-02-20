@@ -140,3 +140,24 @@ case object TenancyLeaseAgreementExpirePageId extends Identifier {
 case object CheckYourAnswersAboutYourLeaseOrTenureId extends Identifier {
   override def toString: String = "checkYourAnswersAboutYourLeaseOrTenurePage"
 }
+
+// 6030 page only
+case object TradeServicesDescriptionId extends Identifier {
+  override def toString: String = "tradeServicesDescriptionPage"
+}
+
+case object TradeServicesListId extends Identifier {
+  override def toString: String = "tradeServicesListPage"
+}
+
+case object PaymentForTradeServicesId extends Identifier {
+  override def toString: String = "paymentForTradeServicesPage"
+}
+
+case object TradeServicesPaymentsId extends Identifier {
+  override def toString: String = "tradeServicesPaymentsPage"
+}
+
+case object TradeServicesPaymentsListId extends Identifier {
+  override def toString: String = "tradeServicesPaymentsListPage"
+}

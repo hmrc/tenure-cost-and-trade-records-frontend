@@ -273,6 +273,20 @@ POST        /does-the-rent-payable                                  controllers.
 GET         /rent-include-trade-services                            controllers.aboutYourLeaseOrTenure.RentIncludeTradeServicesController.show()
 POST        /rent-include-trade-services                            controllers.aboutYourLeaseOrTenure.RentIncludeTradeServicesController.submit()
 
+GET         /trade-services-description                             controllers.aboutYourLeaseOrTenure.TradeServicesDescriptionController.show(idx: Option[Int] ?= None)
+POST        /trade-services-description                             controllers.aboutYourLeaseOrTenure.TradeServicesDescriptionController.submit(idx: Option[Int])
+
+GET         /trade-services-payments                                controllers.aboutYourLeaseOrTenure.PaymentForTradeServicesController.show()
+POST        /trade-services-payments                                controllers.aboutYourLeaseOrTenure.PaymentForTradeServicesController.submit()
+
+
+GET         /trade-services-list                                    controllers.aboutYourLeaseOrTenure.TradeServicesListController.show(idx: Int)
+POST        /trade-services-list                                    controllers.aboutYourLeaseOrTenure.TradeServicesListController.submit(idx: Int)
+GET         /trade-services-remove                                  controllers.aboutYourLeaseOrTenure.TradeServicesListController.remove(idx: Int)
+POST        /trade-services-remove                                  controllers.aboutYourLeaseOrTenure.TradeServicesListController.performRemove(idx: Int)
+
+
+
 GET         /rent-include-trade-services-details                    controllers.aboutYourLeaseOrTenure.RentIncludeTradeServicesDetailsController.show()
 POST        /rent-include-trade-services-details                    controllers.aboutYourLeaseOrTenure.RentIncludeTradeServicesDetailsController.submit()
 

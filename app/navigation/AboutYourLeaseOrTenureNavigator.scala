@@ -18,6 +18,7 @@ package navigation
 
 import connectors.Audit
 import controllers.aboutYourLeaseOrTenure
+import models.submissions.common.{AnswerNo, AnswerYes}
 import models.{ForTypes, Session}
 import navigation.identifiers._
 import play.api.Logging
@@ -121,7 +122,11 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
     answers.aboutLeaseOrAgreementPartOne.flatMap(
       _.rentIncludeTradeServicesDetails.map(_.rentIncludeTradeServices.name)
     ) match {
-      case Some("yes") => controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesDetailsController.show()
+      case Some("yes") =>
+        answers.forType match {
+          case ForTypes.for6030 => controllers.aboutYourLeaseOrTenure.routes.TradeServicesDescriptionController.show()
+          case _                => controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesDetailsController.show()
+        }
       case Some("no")  => controllers.aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsController.show()
       case _           =>
         logger.warn(
@@ -250,9 +255,32 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
     }
   }
 
-  private def RPIRouting: Session => Call = answers => {
+  private def RPIRouting: Session => Call                      = answers => {
     controllers.aboutYourLeaseOrTenure.routes.RentIncreaseAnnuallyWithRPIController.show()
   }
+  private def tradeServicesDescriptionRouting: Session => Call = answers => {
+    controllers.aboutYourLeaseOrTenure.routes.TradeServicesListController.show(getIndexOfServices(answers))
+  }
+  private def tradeServicesListRouting: Session => Call        = answers => {
+    val existingSection =
+      answers.aboutLeaseOrAgreementPartThree.flatMap(_.tradeServices.lift(getIndexOfServices(answers)))
+    existingSection.flatMap(_.addAnotherService) match {
+      case Some(AnswerYes) =>
+        controllers.aboutYourLeaseOrTenure.routes.TradeServicesDescriptionController
+          .show(Some(getIndexOfServices(answers) + 1))
+      case Some(AnswerNo)  =>
+        controllers.aboutYourLeaseOrTenure.routes.PaymentForTradeServicesController.show()
+      case _               =>
+        logger.warn(
+          s"Navigation for add another service reached without correct selection of conditions by controller"
+        )
+        throw new RuntimeException("Invalid option exception for add another service conditions routing")
+    }
+
+  }
+
+  private def getIndexOfServices(session: Session): Int =
+    session.aboutLeaseOrAgreementPartThree.map(_.tradeServicesIndex).getOrElse(0)
 
   override val routeMap: Map[Identifier, Session => Call] = Map(
     AboutTheLandlordPageId                        -> aboutYourLandlordRouting,
@@ -332,6 +360,9 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
     LegalOrPlanningRestrictionDetailsId           -> (_ =>
       controllers.aboutYourLeaseOrTenure.routes.CheckYourAnswersAboutYourLeaseOrTenureController.show()
     ),
+    TradeServicesDescriptionId                    -> tradeServicesDescriptionRouting,
+    TradeServicesListId                           -> tradeServicesListRouting,
+    PaymentForTradeServicesId                     -> (_ => controllers.routes.TaskListController.show()),
     CheckYourAnswersAboutYourLeaseOrTenureId      -> (_ => controllers.routes.TaskListController.show())
   )
 }
