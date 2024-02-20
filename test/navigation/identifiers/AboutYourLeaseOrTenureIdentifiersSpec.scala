@@ -158,6 +158,10 @@ class AboutYourLeaseOrTenureIdentifiersSpec extends TestBaseSpec {
       assert(PayCapitalSumId.toString.equals("payCapitalSumPage"))
     }
 
+    "Identifier for pay capital sum details page" in {
+      assert(PayCapitalSumDetailsId.toString.equals("payCapitalSumDetailsPage"))
+    }
+
     "Identifier for pay when lease granted page" in {
       assert(PayWhenLeaseGrantedId.toString.equals("payWhenLeaseGrantedPage"))
     }

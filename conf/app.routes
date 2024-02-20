@@ -316,6 +316,9 @@ POST        /former-lease-surrendered                               controllers.
 GET         /pay-a-capital-sum                                      controllers.aboutYourLeaseOrTenure.PayACapitalSumController.show()
 POST        /pay-a-capital-sum                                      controllers.aboutYourLeaseOrTenure.PayACapitalSumController.submit()
 
+GET         /pay-a-capital-sum-details                              controllers.aboutYourLeaseOrTenure.PayACapitalSumDetailsController.show()
+POST        /pay-a-capital-sum-details                              controllers.aboutYourLeaseOrTenure.PayACapitalSumDetailsController.submit()
+
 GET         /receive-payment-when-lease-granted                     controllers.aboutYourLeaseOrTenure.PaymentWhenLeaseIsGrantedController.show()
 POST        /receive-payment-when-lease-granted                     controllers.aboutYourLeaseOrTenure.PaymentWhenLeaseIsGrantedController.submit()
 

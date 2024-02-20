@@ -879,7 +879,6 @@ error.rentIncludeFixturesAndFittings.missing = Select yes if the rent includes a
 rentIncludesVat.heading = Does the current annual rent include VAT?
 rentIncludesVat.error = Select yes if the rent includes VAT
 
-
 # RENT INCLUDE FIXTURES AND FITTINGS DETAILS
 ###########################################
 rentIncludeFixturesAndFittingsDetails.heading = What sum is included in the rent to cover the equipment provided by the landlord, excluding VAT?
@@ -901,6 +900,17 @@ error.canRentBeReducedOnReview.missing = Select yes if the rent can be reduced o
 payACapitalSum.heading = Did you pay a capital sum or premium for your lease or agreement, ignoring tenants’ inventory?
 hint.payACapitalSum = The sum could be paid to the landlord or a previous lessee.
 error.payACapitalSum.missing = Select yes if you paid a capital sum or premium for your lease
+
+# PAY A CAPITAL SUM DETAILS
+##################
+capitalSumPaidDetails.heading = Provide details of the capital sum paid
+capitalSumPaidDetails.p1 = You do not have to provide details if the rent has been reviewed since the payment was made.
+label.capitalSumPaidDetails = How much did you pay for your lease or agreement?
+label.capitalSumPaidDetailsDateInput = When was this sum paid?
+error.capitalSumPaidDetails.missing = Select yes if you paid a capital sum or premium for your lease
+error.required.annualRentExcludingVat.capitalSumPaidDetails = Please provide details of how much of the capital sum was paid
+error.invalid_currency.annualRent.capitalSumPaidDetails = The sum paid must be a number like 100 or 100.00 and cannot be less than 0
+fieldName.capitalSumPaidDetails = The date that the sum was paid
 
 # PAYMENT WHEN LEASE IS GRANTED
 ##############################

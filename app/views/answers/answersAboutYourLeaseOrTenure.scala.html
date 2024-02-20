@@ -340,6 +340,14 @@
         sectionAnswers2.row("checkYourAnswersAboutYourLeaseOrTenure.capitalSumOrPremium",
             _.payACapitalSumDetails.map(_.capitalSumOrPremium.name).map(v => messages(s"label.$v")),
             aboutYourLeaseOrTenure.routes.PayACapitalSumController.show(), "capitalSumOrPremium") ++
+                sectionAnswers2.row("checkYourAnswersAboutYourLeaseOrTenure.capitalSumOrPremiumDetails",
+                    _.payACapitalSumInformationDetails.map(r =>
+                        Seq(r.capitalSumPaidDetails.map(_.asMoney).getOrElse(""),
+                            r.capitalSumPaidDetailsDateInput.map(date => dateUtil.formatDayMonthAbbrYear(date)).getOrElse("")
+                        ).mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>")
+                    ),
+                    aboutYourLeaseOrTenure.routes.PayACapitalSumDetailsController.show(), "",
+                    ("valueAsHtml", _ => None)) ++
                 sectionAnswers2.row("checkYourAnswersAboutYourLeaseOrTenure.receivePaymentWhenLeaseGranted",
                     _.paymentWhenLeaseIsGrantedDetails.map(_.receivePaymentWhenLeaseGranted.name).map(v => messages(s"label.$v")),
                     aboutYourLeaseOrTenure.routes.PaymentWhenLeaseIsGrantedController.show(), "receivePaymentWhenLeaseGranted") ++
