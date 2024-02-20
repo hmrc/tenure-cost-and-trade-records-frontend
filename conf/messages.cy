@@ -468,7 +468,7 @@ error.fullName.required = Enter your name
 # ABOUT YOU
 ###########
 aboutYou.heading = Contact details
-aboutYou.subheading = These should be the contact details of the person completing this form. We will only use them to update you about your declaration.
+aboutYou.subheading = Provide your details or those of the person you would like us to contact if we have any queries about this declaration.
 
 # ABOUT THE PROPERTY
 ####################
