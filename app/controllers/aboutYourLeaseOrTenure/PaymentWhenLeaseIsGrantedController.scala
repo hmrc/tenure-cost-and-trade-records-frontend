@@ -83,8 +83,9 @@ class PaymentWhenLeaseIsGrantedController @Inject() (
         ) match {
           case Some("yes") =>
             answers.forType match {
-              case ForTypes.for6030 => controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumDetailsController.show().url
-              case _ => controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumController.show().url
+              case ForTypes.for6030 =>
+                controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumDetailsController.show().url
+              case _                => controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumController.show().url
             }
           case Some("no")  => controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumController.show().url
           case _           =>

@@ -41,16 +41,13 @@
 
 @layout(
   pageHeading = messages("capitalSumPaidDetails.heading"),
-  showH1 = false,
+  showH1 = true,
   showSection = true,
     summary = Some(summary),
   sectionName = messages("label.section.aboutYourLeaseOrTenure"),
   backLinkUrl = backLink,
   theForm = theForm
 ) {
-
-    <h1 class="govuk-heading-l">@messages("capitalSumPaidDetails.heading")</h1>
-
     <p class="govuk-body">@messages("capitalSumPaidDetails.p1")</p>
 
   @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumDetailsController.submit()) {

@@ -905,13 +905,13 @@ error.payACapitalSum.missing = Select yes if you paid a capital sum or premium f
 
 # PAY A CAPITAL SUM DETAILS
 ##################
-capitalSumPaidDetails.heading = Provide details of the captail sum paid
+capitalSumPaidDetails.heading = Provide details of the capital sum paid
 capitalSumPaidDetails.p1 = You do not have to provide details if the rent has been reviewed since the payment was made.
 label.capitalSumPaidDetails = How much did you pay for your lease or agreement?
 label.capitalSumPaidDetailsDateInput = When was this sum paid?
 error.capitalSumPaidDetails.missing = Select yes if you paid a capital sum or premium for your lease
 error.required.annualRentExcludingVat.capitalSumPaidDetails = Please provide details of how much of the capital sum was paid
-error.invalid_currency.annualRent.capitalSumPaidDetails = The annual rent must be a number like 100 or 100.00 and cannot be less than 0
+error.invalid_currency.annualRent.capitalSumPaidDetails = The sum paid must be a number like 100 or 100.00 and cannot be less than 0
 fieldName.capitalSumPaidDetails = The date that the sum was paid
 
 # PAYMENT WHEN LEASE IS GRANTED
@@ -922,7 +922,7 @@ error.receivePaymentWhenLeaseGranted.missing = Select yes if you received any pa
 
 # RENT INCREASE ANNUALLY WITH RPI
 ################################
-rentIncreasedAnnuallyWithRPIs.heading = Index-linked rent
+rentIncreasedAnnuallyWithRPIs.heading = Index-linked reThe annual rent must be a number like 100 or 100.00 and cannot be less than 0nt
 rentIncreasedAnnuallyWithRPIs.p1 = You must tell us if your rent increases in line with any indices such as the retail price index (RPI) or the consumer price index (CPI).
 rentIncreasedAnnuallyWithRPIs.subheading = Does the rent increase annually in line with any indices?
 label.rentIncreasedAnnuallyWithRPIs = Does the rent increase annually in line with the retail price index (RPI)?
@@ -1617,6 +1617,9 @@ checkYourAnswersAboutYourLeaseOrTenure.disregardedAdditionsOrImprovements = Disr
 checkYourAnswersAboutYourLeaseOrTenure.disregardedAdditionsOrImprovementsDetails = Description of disregarded improvements
 checkYourAnswersAboutYourLeaseOrTenure.exclusionsRestrictionsIncentives.heading = Exclusions, restrictions or incentives
 checkYourAnswersAboutYourLeaseOrTenure.capitalSumOrPremium = Capital sum paid for lease?
+checkYourAnswersAboutYourLeaseOrTenure.capitalSumOrPremiumDetails = Capital sum paid details
+checkYourAnswersAboutYourLeaseOrTenure.capitalSumOrPremiumPaid = How much was paid for lease or agreement?
+checkYourAnswersAboutYourLeaseOrTenure.capitalSumOrPremiumDateInput = When was this sum paid?
 checkYourAnswersAboutYourLeaseOrTenure.receivePaymentWhenLeaseGranted = Payment received when lease was granted?
 checkYourAnswersAboutYourLeaseOrTenure.otherFactorsAffectingRent = Other factors affecting the rent?
 checkYourAnswersAboutYourLeaseOrTenure.otherFactorsAffectingRentDetails = Description of factors affecting the rent

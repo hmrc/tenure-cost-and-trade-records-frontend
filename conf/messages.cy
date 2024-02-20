@@ -903,13 +903,13 @@ error.payACapitalSum.missing = Select yes if you paid a capital sum or premium f
 
 # PAY A CAPITAL SUM DETAILS
 ##################
-capitalSumPaidDetails.heading = Provide details of the captail sum paid
+capitalSumPaidDetails.heading = Provide details of the capital sum paid
 capitalSumPaidDetails.p1 = You do not have to provide details if the rent has been reviewed since the payment was made.
 label.capitalSumPaidDetails = How much did you pay for your lease or agreement?
 label.capitalSumPaidDetailsDateInput = When was this sum paid?
 error.capitalSumPaidDetails.missing = Select yes if you paid a capital sum or premium for your lease
 error.required.annualRentExcludingVat.capitalSumPaidDetails = Please provide details of how much of the capital sum was paid
-error.invalid_currency.annualRent.capitalSumPaidDetails = The annual rent must be a number like 100 or 100.00 and cannot be less than 0
+error.invalid_currency.annualRent.capitalSumPaidDetails = The sum paid must be a number like 100 or 100.00 and cannot be less than 0
 fieldName.capitalSumPaidDetails = The date that the sum was paid
 
 # PAYMENT WHEN LEASE IS GRANTED
