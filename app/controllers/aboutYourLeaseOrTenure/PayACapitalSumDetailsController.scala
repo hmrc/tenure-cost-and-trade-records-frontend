@@ -37,14 +37,14 @@ import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.PayACapitalSumDetailsForm.payACapitalSumDetailsForm
 import models.Session
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo.updateAboutLeaseOrAgreementPartTwo
-import models.submissions.aboutYourLeaseOrTenure.{PayACapitalSumDetails, PayACapitalSumInformationDetails}
+import models.submissions.aboutYourLeaseOrTenure.PayACapitalSumInformationDetails
 import navigation.AboutYourLeaseOrTenureNavigator
-import navigation.identifiers.{PayCapitalSumDetailsId, PayCapitalSumId}
+import navigation.identifiers.PayCapitalSumDetailsId
 import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Request}
 import repositories.SessionRepo
-import views.html.aboutYourLeaseOrTenure.{payACapitalSum, payACapitalSumDetails}
+import views.html.aboutYourLeaseOrTenure.payACapitalSumDetails
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future

@@ -23,7 +23,7 @@ import models.Session
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty.updateAboutYouAndTheProperty
 import models.submissions.aboutyouandtheproperty.PropertyDetailsString
 import navigation.AboutYouAndThePropertyNavigator
-import navigation.identifiers.{AboutThePropertyPageId, AboutThePropertyStringPageId}
+import navigation.identifiers.AboutThePropertyPageId
 import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Request}

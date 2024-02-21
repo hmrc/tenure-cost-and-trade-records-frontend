@@ -18,12 +18,11 @@ package controllers.aboutfranchisesorlettings
 
 import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
-import form.aboutfranchisesorlettings.CateringOperationForm.cateringOperationForm
 import form.aboutfranchisesorlettings.ConcessionOrFranchiseFeeForm.concessionOrFranchiseFeeForm
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
 import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
 import navigation.AboutFranchisesOrLettingsNavigator
-import navigation.identifiers.{CateringOperationPageId, ConcessionOrFranchiseFeePageId}
+import navigation.identifiers.ConcessionOrFranchiseFeePageId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
