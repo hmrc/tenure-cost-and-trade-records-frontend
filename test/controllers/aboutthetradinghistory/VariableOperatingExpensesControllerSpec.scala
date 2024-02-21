@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,39 +16,31 @@
 
 package controllers.aboutthetradinghistory
 
-import navigation.AboutTheTradingHistoryNavigator
-//import play.api.http.Status
-//import play.api.test.Helpers._
-//import play.twirl.api.HtmlFormat
+import play.api.http.Status
+import play.api.test.Helpers._
 import utils.TestBaseSpec
-//import views.html.aboutthetradinghistory.variableOperatingExpenses
 
 class VariableOperatingExpensesControllerSpec extends TestBaseSpec {
 
-  val mockVariableOperatingExpensesNavigator = mock[AboutTheTradingHistoryNavigator]
-  //TODO - Add test for controller that can mock View to be passed in to controller.
+  val variableOperatingExpensesController = new VariableOperatingExpensesController(
+    stubMessagesControllerComponents(),
+    aboutYourTradingHistoryNavigator,
+    variableOperatingExpensesView,
+    preEnrichedActionRefiner(aboutTheTradingHistory = Some(prefilledAboutYourTradingHistory)),
+    mockSessionRepo
+  )
 
-  //  val mockVariableOperatingExpensesView      = mock[variableOperatingExpenses]
-//  when(mockVariableOperatingExpensesView.apply(any, any)(any, any)).thenReturn(HtmlFormat.empty)
-//
-//  val variableOperatingExpensesController = new VariableOperatingExpensesController(
-//    stubMessagesControllerComponents(),
-//    mockVariableOperatingExpensesNavigator,
-//    mockVariableOperatingExpensesView,
-//    preFilledSession,
-//    mockSessionRepo
-//  )
-//
-//  "GET /" should {
-//    "return 200" in {
-//      val result = variableOperatingExpensesController.show(fakeRequest)
-//      status(result) shouldBe Status.OK
-//    }
-//
-//    "return HTML" in {
-//      val result = variableOperatingExpensesController.show(fakeRequest)
-//      contentType(result) shouldBe Some("text/html")
-//      charset(result)     shouldBe Some("utf-8")
-//    }
-//  }
+  "GET /" should {
+    "return 200" in {
+      val result = variableOperatingExpensesController.show(fakeRequest)
+      status(result) shouldBe Status.OK
+    }
+
+    "return HTML" in {
+      val result = variableOperatingExpensesController.show(fakeRequest)
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
+    }
+  }
+
 }

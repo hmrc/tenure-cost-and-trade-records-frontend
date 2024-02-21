@@ -27,8 +27,6 @@ import views.behaviours.QuestionViewBehaviours
 import java.time.LocalDate
 
 class TotalPayrollCostsViewSpec extends QuestionViewBehaviours[Seq[TotalPayrollCost]] {
-  //NOTE: this is a holding view test until the total payroll costs page is implemented
-  def totalPayrollCostsView = app.injector.instanceOf[views.html.aboutthetradinghistory.totalPayrollCosts]
 
   val sessionRequest = SessionRequest(aboutYourTradingHistory6015YesSession, fakeRequest)
 

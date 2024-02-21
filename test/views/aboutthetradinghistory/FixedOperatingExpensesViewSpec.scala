@@ -43,9 +43,6 @@ import views.behaviours.QuestionViewBehaviours
 import java.time.LocalDate
 
 class FixedOperatingExpensesViewSpec extends QuestionViewBehaviours[Seq[FixedOperatingExpenses]] {
-  //NOTE: this is a holding view test until the fixed operating expenses page is implemented
-
-  def fixedOperatingExpensesView = app.injector.instanceOf[views.html.aboutthetradinghistory.fixedOperatingExpenses]
 
   val messageKeyPrefix       = "fixedOperatingExpenses"
   private val sessionRequest = SessionRequest(baseFilled6015Session, fakeRequest)
