@@ -30,6 +30,18 @@
 
 @()(implicit request: SessionRequest[_], messages: Messages)
 
+@commenceWithinThreeYears = @{
+    request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.leaseOrAgreementYearsDetails.map(_.commenceWithinThreeYears.name))
+}
+
+@agreedReviewedAlteredThreeYears = @{
+    request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.leaseOrAgreementYearsDetails.map(_.agreedReviewedAlteredThreeYears.name))
+}
+
+@rentUnderReviewNegotiated = @{
+    request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.leaseOrAgreementYearsDetails.map(_.rentUnderReviewNegotiated.name))
+}
+
 
 @sectionAnswers = @{
     SectionAnswersRowBuilder(request.sessionData.aboutLeaseOrAgreementPartOne)
@@ -66,8 +78,36 @@
                 aboutYourLeaseOrTenure.routes.ConnectedToLandlordDetailsController.show(), "connectedToLandlordDetails")
 ))
 
-@if(sectionAnswers.answers.exists(a => a.leaseOrAgreementYearsDetails.isDefined || a.currentRentPayableWithin12Months.isDefined)) {
-    <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutYourLeaseOrTenure.changesToYourLease.heading")</h2>
+@if(commenceWithinThreeYears.equals(Some("no")) && agreedReviewedAlteredThreeYears.equals(Some("no")) && rentUnderReviewNegotiated.equals(Some("no"))) {
+
+    @if(sectionAnswers.answers.exists(a => a.leaseOrAgreementYearsDetails.isDefined || a.currentRentPayableWithin12Months.isDefined)) {
+        <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutYourLeaseOrTenure.changesToYourLease.heading")</h2>
+
+        @govukSummaryList(SummaryList(rows =
+            sectionAnswers.row("checkYourAnswersAboutYourLeaseOrTenure.leaseOrAgreementDetails",
+                _.leaseOrAgreementYearsDetails
+                        .map(l => (l.commenceWithinThreeYears.name, l.agreedReviewedAlteredThreeYears.name, l.rentUnderReviewNegotiated.name))
+                        .map {
+                    case (a, b, c) => Seq(messages(s"checkYourAnswersAboutYourLeaseOrTenure.commenceWithinThreeYears.$a"),
+                        messages(s"checkYourAnswersAboutYourLeaseOrTenure.agreedReviewedAlteredThreeYears.$b"),
+                        messages(s"checkYourAnswersAboutYourLeaseOrTenure.rentUnderReviewNegotiated.$c"))
+                            .mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>")
+                },
+                aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.show(), "",
+                ("valueAsHtml", _ => None)) ++
+                    sectionAnswers.optionalRow("checkYourAnswersAboutYourLeaseOrTenure.rentDueInNext12Months",
+                        _.currentRentPayableWithin12Months.map(r => Seq(
+                            messages(s"label.${r.currentRentWithin12Months.name}"),
+                            r.rentActuallyAgreed.map(x => messages("checkYourAnswersAboutYourLeaseOrTenure.nextReviewOrExpiryDate", r.rentActuallyAgreed.map(date => dateUtil.formatDayMonthAbbrYear(date).getOrElse("")).getOrElse(""))).getOrElse("")
+                        ).mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>")),
+                        aboutYourLeaseOrTenure.routes.CurrentRentPayableWithin12MonthsController.show(), "",
+                        ("valueAsHtml", _ => None))
+        ))
+    }
+} else {
+
+    @if(sectionAnswers.answers.exists(a => a.leaseOrAgreementYearsDetails.isDefined || a.currentRentPayableWithin12Months.isDefined)) {
+        <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutYourLeaseOrTenure.changesToYourLease.heading")</h2>
 
     @govukSummaryList(SummaryList(rows =
         sectionAnswers.row("checkYourAnswersAboutYourLeaseOrTenure.leaseOrAgreementDetails",
@@ -80,14 +120,7 @@
                 .mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>")
             },
             aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.show(), "",
-            ("valueAsHtml", _ => None)) ++
-                sectionAnswers.optionalRow("checkYourAnswersAboutYourLeaseOrTenure.rentDueInNext12Months",
-                    _.currentRentPayableWithin12Months.map(r => Seq(
-                        messages(s"label.${r.currentRentWithin12Months.name}"),
-                        r.rentActuallyAgreed.map(x => messages("checkYourAnswersAboutYourLeaseOrTenure.nextReviewOrExpiryDate", r.rentActuallyAgreed.map(date => dateUtil.formatDayMonthAbbrYear(date).getOrElse("")).getOrElse(""))).getOrElse("")
-                    ).mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>")),
-                    aboutYourLeaseOrTenure.routes.CurrentRentPayableWithin12MonthsController.show(), "",
-                    ("valueAsHtml", _ => None))
+            ("valueAsHtml", _ => None))
     ))
 }
 
@@ -360,4 +393,5 @@
                     _.legalOrPlanningRestrictionsDetails.map(_.legalPlanningRestrictions),
                     aboutYourLeaseOrTenure.routes.LegalOrPlanningRestrictionsDetailsController.show(), "legalOrPlanningRestrictionsDetails")
     ))
+}
 }
