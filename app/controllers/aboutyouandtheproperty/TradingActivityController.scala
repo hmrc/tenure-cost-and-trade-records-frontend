@@ -19,10 +19,8 @@ package controllers.aboutyouandtheproperty
 import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
 import form.aboutyouandtheproperty.TradingActivityForm.tradingActivityForm
-import form.aboutyouandtheproperty.WebsiteForPropertyForm.websiteForPropertyForm
-import models.{ForTypes, Session}
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty.updateAboutYouAndTheProperty
-import models.submissions.aboutyouandtheproperty.{TradingActivity, WebsiteForPropertyDetails}
+import models.submissions.aboutyouandtheproperty.TradingActivity
 import navigation.AboutYouAndThePropertyNavigator
 import navigation.identifiers.TradingActivityPageId
 import play.api.Logging

@@ -124,12 +124,22 @@
         section1Completed.isEmpty
        )
 
-       @includes.taskListItem("about-the-property", "checkYourAnswersAboutTheProperty.aboutProperty.heading",
-        controllers.aboutyouandtheproperty.routes.AboutThePropertyController.show(),
-        section2Completed,
-        session.aboutYouAndTheProperty.flatMap(_.propertyDetails),
-        session.aboutYouAndTheProperty.flatMap(_.altContactInformation).isEmpty
-       )
+       @if(forType != ForTypes.for6030) {
+        @includes.taskListItem("about-the-property", "checkYourAnswersAboutTheProperty.aboutProperty.heading",
+         controllers.aboutyouandtheproperty.routes.AboutThePropertyController.show(),
+         section2Completed,
+         session.aboutYouAndTheProperty.flatMap(_.propertyDetails),
+         session.aboutYouAndTheProperty.flatMap(_.customerDetails).isEmpty
+        )
+       } else {
+        @includes.taskListItem("about-the-property", "checkYourAnswersAboutTheProperty.aboutProperty.heading",
+         controllers.aboutyouandtheproperty.routes.AboutThePropertyStringController.show(),
+         section2Completed,
+         session.aboutYouAndTheProperty.flatMap(_.propertyDetails),
+         session.aboutYouAndTheProperty.flatMap(_.customerDetails).isEmpty
+        )
+       }
+
 
        @if(forType == ForTypes.for6030 && !isLeaseHolder) {
         @includes.taskListItem("licensable-activities", "checkYourAnswersAboutTheProperty.license.heading",

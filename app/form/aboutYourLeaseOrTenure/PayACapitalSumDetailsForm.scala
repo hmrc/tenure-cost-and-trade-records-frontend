@@ -17,8 +17,8 @@
 package form.aboutYourLeaseOrTenure
 
 import form.DateMappings.requiredDateMapping
-import form.MappingSupport.{createYesNoType, currencyMapping}
-import models.submissions.aboutYourLeaseOrTenure.{PayACapitalSumDetails, PayACapitalSumInformationDetails}
+import form.MappingSupport.currencyMapping
+import models.submissions.aboutYourLeaseOrTenure.PayACapitalSumInformationDetails
 import play.api.data.Form
 import play.api.data.Forms.{mapping, optional}
 import play.api.i18n.Messages

@@ -922,7 +922,7 @@ error.receivePaymentWhenLeaseGranted.missing = Select yes if you received any pa
 
 # RENT INCREASE ANNUALLY WITH RPI
 ################################
-rentIncreasedAnnuallyWithRPIs.heading = Index-linked reThe annual rent must be a number like 100 or 100.00 and cannot be less than 0nt
+rentIncreasedAnnuallyWithRPIs.heading = Index-linked rent
 rentIncreasedAnnuallyWithRPIs.p1 = You must tell us if your rent increases in line with any indices such as the retail price index (RPI) or the consumer price index (CPI).
 rentIncreasedAnnuallyWithRPIs.subheading = Does the rent increase annually in line with any indices?
 label.rentIncreasedAnnuallyWithRPIs = Does the rent increase annually in line with the retail price index (RPI)?

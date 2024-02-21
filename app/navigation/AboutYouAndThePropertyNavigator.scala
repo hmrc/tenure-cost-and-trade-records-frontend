@@ -17,7 +17,6 @@
 package navigation
 
 import connectors.Audit
-import models.submissions.aboutyouandtheproperty.TradingActivity
 import models.submissions.common.{AnswerNo, AnswerYes}
 import models.{ForTypes, Session}
 import navigation.identifiers._
