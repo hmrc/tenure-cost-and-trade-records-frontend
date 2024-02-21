@@ -16,7 +16,6 @@
 
 package security
 
-import connectors.Document
 import models.FORLoginResponse
 import models.submissions.common.Address
 import org.joda.time.DateTime
@@ -68,7 +67,6 @@ class LoginToBackendSpec extends UnitTest {
     val auth          = "YouAreLoggedInNow"
     val loginResponse = FORLoginResponse(auth, forType, testAddress)
     val now           = new DateTime(2015, 3, 2, 13, 20)
-    val savedDoc      = Document("savedDocument", now)
   }
 }
 

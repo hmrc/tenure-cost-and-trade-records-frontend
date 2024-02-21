@@ -26,9 +26,6 @@ import views.behaviours.QuestionViewBehaviours
 import java.time.LocalDate
 
 class VariableOperatingExpensesViewSpec extends QuestionViewBehaviours[VariableOperatingExpensesSections] {
-  // NOTE: this is a holding view test until the variable operating expenses page is implemented
-  def variableOperatingExpensesView =
-    app.injector.instanceOf[views.html.aboutthetradinghistory.variableOperatingExpenses]
 
   val fakeDates = Seq(LocalDate.of(2021, 4, 1), LocalDate.of(2022, 4, 1), LocalDate.of(2023, 4, 1))
 

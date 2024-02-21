@@ -35,16 +35,6 @@ class HodSubmissionConnector @Inject() (config: ServicesConfig, appConfig: AppCo
   val internalAuthToken: String = appConfig.internalAuthToken
   private def url(path: String) = s"$serviceUrl/tenure-cost-and-trade-records/$path"
 
-  private def handleHttpResponse: HttpReads[HttpResponse] = new HttpReads[HttpResponse] {
-    override def read(method: String, url: String, response: HttpResponse): HttpResponse =
-      response.status match {
-        case 400 => throw new BadRequestException(response.body)
-        case 401 => throw Upstream4xxResponse(response.body, 401, 401, response.headers)
-        case 409 => throw Upstream4xxResponse(response.body, 409, 409, response.headers)
-        case _   => HttpReads.Implicits.readRaw.read(method, url, response)
-      }
-  }
-
   private def cleanedRefNumber(refNumber: String) = refNumber.replaceAll("[^0-9]", "")
 
   override def submitRequestReferenceNumber(submission: RequestReferenceNumberSubmission)(implicit
