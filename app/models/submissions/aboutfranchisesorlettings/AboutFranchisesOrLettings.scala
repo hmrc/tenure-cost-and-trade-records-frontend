@@ -28,13 +28,15 @@ case class AboutFranchisesOrLettings(
   cateringOperationCurrentIndex: Int = 0,
   cateringMaxOfLettings: Option[MaxOfLettings] = None,
   cateringOperationSections: IndexedSeq[CateringOperationSection] = IndexedSeq.empty,
+  cateringOperationBusinessSections: IndexedSeq[CateringOperationBusinessSection] = IndexedSeq.empty,
   lettingOtherPartOfProperty: Option[AnswersYesNo] = None,
   lettingCurrentIndex: Int = 0,
   currentMaxOfLetting: Option[MaxOfLettings] = None,
   lettingSections: IndexedSeq[LettingSection] = IndexedSeq.empty,
   checkYourAnswersAboutFranchiseOrLettings: Option[CheckYourAnswersAboutFranchiseOrLettings] = None,
   fromCYA: Option[Boolean] = None,
-  cateringOrFranchiseFee: Option[AnswersYesNo] = None //added for 6030 journey - Feb 2024
+  cateringOrFranchiseFee: Option[AnswersYesNo] = None, //added for 6030 journey - Feb 2024
+  cateringOperationDetailsBusiness: Option[CateringOperationBusinessDetails] = None //added for 6030 journey - Feb 2024
 )
 
 object AboutFranchisesOrLettings {

@@ -207,6 +207,10 @@ POST        /letting-other-part-of-property                         controllers.
 GET         /catering-operation-details                             controllers.aboutfranchisesorlettings.CateringOperationDetailsController.show(idx: Option[Int] ?= None)
 POST        /catering-operation-details                             controllers.aboutfranchisesorlettings.CateringOperationDetailsController.submit(idx: Option[Int])
 
+GET         /catering-operation-business-details                    controllers.aboutfranchisesorlettings.CateringOperationBusinessDetailsController.show(idx: Option[Int] ?= None)
+POST        /catering-operation-business-details                    controllers.aboutfranchisesorlettings.CateringOperationBusinessDetailsController.submit(idx: Option[Int])
+
+
 GET         /catering-operation-rent                                controllers.aboutfranchisesorlettings.CateringOperationDetailsRentController.show(idx: Int)
 POST        /catering-operation-rent                                controllers.aboutfranchisesorlettings.CateringOperationDetailsRentController.submit(idx: Int)
 

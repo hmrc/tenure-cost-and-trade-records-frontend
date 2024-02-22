@@ -22,7 +22,6 @@ import utils.TestBaseSpec
 
 class FixedOperatingExpensesControllerSpec extends TestBaseSpec {
 
-
   val fixedOperatingExpensesController = new FixedOperatingExpensesController(
     stubMessagesControllerComponents(),
     aboutYourTradingHistoryNavigator,
