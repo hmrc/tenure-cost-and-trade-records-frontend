@@ -100,12 +100,14 @@ trait TestBaseSpec
 
   val preFilledSession: WithSessionRefiner =
     preEnrichedActionRefiner(
-      Some(prefilledStillConnectedDetailsYes),
-      Some(prefilledRemoveConnection),
-      Some(prefilledAboutYouAndThePropertyNo)
+      stillConnectedDetails = Some(prefilledStillConnectedDetailsYes),
+      removeConnectionDetails = Some(prefilledRemoveConnection),
+      aboutYouAndTheProperty = Some(prefilledAboutYouAndThePropertyNo)
     )
 
   def preEnrichedActionRefiner(
+    referenceNumber: String = "99996010004",
+    forType: String = "FOR6010",
     stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledStillConnectedDetailsYesToAll),
     removeConnectionDetails: Option[RemoveConnectionDetails] = Some(prefilledRemoveConnection),
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyNo),
@@ -124,8 +126,8 @@ trait TestBaseSpec
           Right(
             SessionRequest[A](
               Session(
-                "99996010004",
-                "FOR6010",
+                referenceNumber,
+                forType,
                 prefilledAddress,
                 "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=",
                 stillConnectedDetails = stillConnectedDetails,

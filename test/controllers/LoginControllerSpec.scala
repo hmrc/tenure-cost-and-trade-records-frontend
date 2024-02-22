@@ -19,7 +19,6 @@ package controllers
 import config.LoginToBackendAction
 import connectors.{Audit, BackendConnector}
 import models.audit.UserData
-import org.joda.time.DateTime
 import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.libs.json.{JsObject, Json, Writes}
 import play.api.mvc.Result
@@ -31,6 +30,7 @@ import uk.gov.hmrc.http.HeaderCarrier
 import utils.Helpers.fakeRequest2MessageRequest
 import views.html.login
 import utils.TestBaseSpec
+import util.DateUtil.nowInUK
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -156,7 +156,7 @@ class LoginControllerSpec extends TestBaseSpec {
       }
 
       val loginToBackend = mock[LoginToBackendAction]
-      val time           = DateTime.now()
+      val time           = nowInUK
       when(loginToBackend.apply(any[HeaderCarrier], any[ExecutionContext])).thenReturn(loginToBackendFunction)
 
       val loginController = new LoginController(
