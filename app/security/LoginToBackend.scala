@@ -18,16 +18,15 @@ package security
 
 import models.FORLoginResponse
 import models.submissions.common.Address
-import org.joda.time.DateTime
-
 import uk.gov.hmrc.http.HeaderCarrier
 
+import java.time.ZonedDateTime
 import scala.concurrent.{ExecutionContext, Future}
 
 object LoginToBackend {
   type RefNumber         = String
   type Postcode          = String
-  type StartTime         = DateTime
+  type StartTime         = ZonedDateTime
   type SessionID         = String
   type AuthToken         = String
   type LoginToBackend    = (RefNumber, Postcode, StartTime) => Future[LoginResult]

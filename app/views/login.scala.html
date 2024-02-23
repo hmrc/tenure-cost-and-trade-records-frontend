@@ -14,7 +14,7 @@
  * limitations under the License.
  *@
 
-@import org.joda.time.DateTime
+@import java.time.ZonedDateTime
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Text
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
@@ -83,11 +83,7 @@
             <a class="govuk-link" href=@controllers.downloadFORTypeForm.routes.DownloadPDFReferenceNumberController.show().url>@messages("label.downloadPdfReferenceNumberLogin")</a>
         </p>
 
-        @defining(DateTime.now.toString) { now =>
-            <input type="hidden" name="start-time" value="@now" />
-        }
-
-
+        <input type="hidden" name="start-time" value="@theForm("start-time").value" />
     }
 
 }

@@ -18,10 +18,10 @@ package security
 
 import models.FORLoginResponse
 import models.submissions.common.Address
-import org.joda.time.DateTime
 import uk.gov.hmrc.http.HeaderCarrier
 import utils.UnitTest
 
+import java.time.{ZoneOffset, ZonedDateTime}
 import scala.concurrent.ExecutionContext.Implicits.global
 
 class LoginToBackendSpec extends UnitTest {
@@ -66,7 +66,7 @@ class LoginToBackendSpec extends UnitTest {
     val forType       = "FOR6010"
     val auth          = "YouAreLoggedInNow"
     val loginResponse = FORLoginResponse(auth, forType, testAddress)
-    val now           = new DateTime(2015, 3, 2, 13, 20)
+    val now           = ZonedDateTime.of(2015, 3, 2, 13, 20, 0, 0, ZoneOffset.UTC)
   }
 }
 

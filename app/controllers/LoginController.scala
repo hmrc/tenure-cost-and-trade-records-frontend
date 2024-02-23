@@ -25,11 +25,9 @@ import form.Errors
 import models.audit.DownloadPDFAudit
 import models.submissions.common.Address
 import models.{ForTypes, Session}
-import org.joda.time.DateTime
 import play.api.Logging
 import play.api.data.Form
 import play.api.data.Forms._
-import play.api.data.JodaForms._
 import play.api.i18n.I18nSupport
 import play.api.libs.json.{Format, Json}
 import play.api.mvc._
@@ -38,12 +36,14 @@ import security.NoExistingDocument
 import uk.gov.hmrc.http.HeaderNames.trueClientIp
 import uk.gov.hmrc.http.{HeaderCarrier, JsValidationException, Upstream4xxResponse}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
+import util.DateUtil.nowInUK
 import views.html._
 
+import java.time.{ZoneOffset, ZonedDateTime}
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
 
-case class LoginDetails(referenceNumber: String, postcode: String, startTime: DateTime) {
+case class LoginDetails(referenceNumber: String, postcode: String, startTime: ZonedDateTime) {
 
   /**
     * Returns only referenceNumber digits without slash or any other special char to use in endpoint path.
@@ -64,7 +64,11 @@ object LoginController {
         }
       ),
       "postcode"        -> customPostcodeMapping,
-      "start-time"      -> jodaDate("yyyy-MM-dd'T'HH:mm:ss.SSSZ")
+      "start-time"      -> default(
+        localDateTime("yyyy-MM-dd'T'HH:mm:ss.SSS")
+          .transform[ZonedDateTime](_.atZone(ZoneOffset.UTC), _.toLocalDateTime),
+        nowInUK
+      )
     )(LoginDetails.apply)(LoginDetails.unapply)
   )
 
@@ -96,7 +100,7 @@ class LoginController @Inject() (
   def show: Action[AnyContent] = Action.async { implicit request =>
     val referenceNumberFromUrl = request.getQueryString("ref").getOrElse("")
     val forTypeFromURL         = request.getQueryString("forType")
-    val form                   = loginForm.fill(LoginDetails(referenceNumberFromUrl, "", DateTime.now()))
+    val form                   = loginForm.fill(LoginDetails(referenceNumberFromUrl, "", nowInUK))
 
     forTypeFromURL match {
       case Some(forType) =>
@@ -133,7 +137,7 @@ class LoginController @Inject() (
     Future.successful(Ok(test()))
   }
 
-  def verifyLogin(referenceNumber: String, postcode: String, startTime: DateTime)(implicit
+  def verifyLogin(referenceNumber: String, postcode: String, startTime: ZonedDateTime)(implicit
     r: MessagesRequest[AnyContent]
   ) = {
 

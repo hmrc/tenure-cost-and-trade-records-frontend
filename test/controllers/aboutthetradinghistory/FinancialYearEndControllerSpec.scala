@@ -16,25 +16,31 @@
 
 package controllers.aboutthetradinghistory
 
+import actions.SessionRequest
 import form.aboutthetradinghistory.AccountingInformationForm.accountingInformationForm
+import models.Session
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory
 import play.api.http.Status
+import play.api.libs.json.Writes
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
+import uk.gov.hmrc.http.HeaderCarrier
 import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
+
+import scala.concurrent.Future
 
 class FinancialYearEndControllerSpec extends TestBaseSpec {
 
   import TestData.{baseFormData, errorKey}
 
   def financialYearEndController(
-    aboutTheTradingHistory: Option[AboutTheTradingHistory] = Some(prefilledAboutYourTradingHistory)
+    forType:String = "FOR6010", aboutTheTradingHistory: Option[AboutTheTradingHistory] = Some(prefilledAboutYourTradingHistory)
   ) = new FinancialYearEndController(
     stubMessagesControllerComponents(),
     aboutYourTradingHistoryNavigator,
     financialYearEndView,
-    preEnrichedActionRefiner(aboutTheTradingHistory = aboutTheTradingHistory),
+    preEnrichedActionRefiner(forType = forType, aboutTheTradingHistory = aboutTheTradingHistory),
     mockSessionRepo
   )
 
@@ -99,6 +105,44 @@ class FinancialYearEndControllerSpec extends TestBaseSpec {
       val form     = accountingInformationForm(messages).bind(formData)
 
       mustContainError(errorKey.financialYearMonth, "error.date.month.invalid", form)
+    }
+  }
+
+  "submit" should {
+    "redirect to the next page when valid data is submitted" in {
+      // Arrange
+      val validFormData = Map(
+        "financialYear.day" -> "1",
+        "financialYear.month" -> "4",
+        "yearEndChanged" -> "true"
+      )
+      val request = FakeRequest(POST, "/your-route").withFormUrlEncodedBody(validFormData.toSeq: _*)
+      when(mockSessionRepo.saveOrUpdate(any[Session])(any[Writes[Session]],any[HeaderCarrier])).thenReturn(Future.successful(Right(())))
+
+      // Act
+      val result = financialYearEndController().submit(request)
+
+      // Assert
+      status(result) shouldBe SEE_OTHER
+      redirectLocation(result) shouldBe Some("/send-trade-and-cost-information/financial-year-end-dates")
+    }
+    "redirect to the next page when valid 6030 data is submitted" in {
+      // Arrange
+      val validFormData = Map(
+        "financialYear.day" -> "1",
+        "financialYear.month" -> "4",
+        "yearEndChanged" -> "true"
+      )
+      val request = FakeRequest(POST, "/your-route").withFormUrlEncodedBody(validFormData.toSeq: _*)
+      val sessionRequest = SessionRequest(aboutYourTradingHistory6030YesSession,request)
+      when(mockSessionRepo.saveOrUpdate(any[Session])(any[Writes[Session]], any[HeaderCarrier])).thenReturn(Future.successful(Right(())))
+
+      // Act
+      val result = financialYearEndController("FOR6030", Some(prefilledAboutYourTradingHistory6030)).submit(sessionRequest)
+
+      // Assert
+      status(result) shouldBe SEE_OTHER
+      redirectLocation(result) shouldBe Some("/send-trade-and-cost-information/financial-year-end-dates")
     }
   }
 

@@ -34,7 +34,7 @@ import uk.gov.hmrc.play.http.logging.Mdc
 import scala.concurrent.{ExecutionContext, Future}
 import scala.concurrent.duration._
 import java.time.Instant
-import uk.gov.hmrc.mongo.play.json.formats.{MongoJavatimeFormats, MongoJodaFormats}
+import uk.gov.hmrc.mongo.play.json.formats.{MongoJavatimeFormats}
 
 @Singleton
 class SessionRepository @Inject() (mongo: MongoComponent)(implicit
@@ -47,7 +47,6 @@ class SessionRepository @Inject() (mongo: MongoComponent)(implicit
       indexes =
         Seq(IndexModel(Indexes.ascending("createdAt"), IndexOptions().name("sessionTTL").expireAfter(2L, HOURS))),
       extraCodecs = Seq(
-        Codecs.playFormatCodec(MongoJodaFormats.dateTimeFormat),
         Codecs.playFormatCodec(MongoJavatimeFormats.instantFormat)
       )
     )
