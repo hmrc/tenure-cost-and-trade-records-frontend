@@ -20,7 +20,8 @@ import actions.SessionRequest
 import models.Session
 import models.submissions.MaxOfLettings
 import models.submissions.common.AnswersYesNo
-import play.api.libs.json.Json
+import play.api.libs.functional.syntax._
+import play.api.libs.json._
 
 case class AboutFranchisesOrLettings(
   franchisesOrLettingsTiedToProperty: Option[AnswersYesNo] = None,
@@ -28,7 +29,8 @@ case class AboutFranchisesOrLettings(
   cateringOperationCurrentIndex: Int = 0,
   cateringMaxOfLettings: Option[MaxOfLettings] = None,
   cateringOperationSections: IndexedSeq[CateringOperationSection] = IndexedSeq.empty,
-  cateringOperationBusinessSections: IndexedSeq[CateringOperationBusinessSection] = IndexedSeq.empty,
+  cateringOperationBusinessSections: IndexedSeq[CateringOperationBusinessSection] =
+    IndexedSeq.empty, //added for 6030 journey - Feb 2024
   lettingOtherPartOfProperty: Option[AnswersYesNo] = None,
   lettingCurrentIndex: Int = 0,
   currentMaxOfLetting: Option[MaxOfLettings] = None,
@@ -40,7 +42,25 @@ case class AboutFranchisesOrLettings(
 )
 
 object AboutFranchisesOrLettings {
-  implicit val format = Json.format[AboutFranchisesOrLettings]
+
+  implicit val aboutFranchisesOrLettingsReads: Reads[AboutFranchisesOrLettings] = (
+    (__ \ "franchisesOrLettingsTiedToProperty").readNullable[AnswersYesNo] and
+      (__ \ "cateringConcessionOrFranchise").readNullable[AnswersYesNo] and
+      (__ \ "cateringOperationCurrentIndex").read[Int] and
+      (__ \ "cateringMaxOfLettings").readNullable[MaxOfLettings] and
+      (__ \ "cateringOperationSections").read[IndexedSeq[CateringOperationSection]] and
+      (__ \ "cateringOperationBusinessSections").read[IndexedSeq[CateringOperationBusinessSection]] and
+      (__ \ "lettingOtherPartOfProperty").readNullable[AnswersYesNo] and
+      (__ \ "lettingCurrentIndex").read[Int] and
+      (__ \ "currentMaxOfLetting").readNullable[MaxOfLettings] and
+      (__ \ "lettingSections").read[IndexedSeq[LettingSection]] and
+      (__ \ "checkYourAnswersAboutFranchiseOrLettings").readNullable[CheckYourAnswersAboutFranchiseOrLettings] and
+      (__ \ "fromCYA").readNullable[Boolean] and
+      (__ \ "cateringOrFranchiseFee").readNullable[AnswersYesNo] and
+      (__ \ "cateringOperationDetailsBusiness").readNullable[CateringOperationBusinessDetails]
+  )(AboutFranchisesOrLettings.apply _)
+
+  implicit val format = Format(aboutFranchisesOrLettingsReads, Json.writes[AboutFranchisesOrLettings])
 
   def updateAboutFranchisesOrLettings(
     copy: AboutFranchisesOrLettings => AboutFranchisesOrLettings

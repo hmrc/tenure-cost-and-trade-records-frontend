@@ -545,6 +545,15 @@ trait FakeObjects {
     itemsInRent = List("Other")
   )
 
+  val prefilledCateringOperationBusinessSectionYes: CateringOperationBusinessSection = CateringOperationBusinessSection(
+    CateringOperationBusinessDetails("Operator Name", "Type of Business", "Describe business"),
+    Some(CateringOperationRentDetails(BigDecimal(1500), prefilledDateInput)),
+    Some(RentReceivedFrom(BigDecimal(1500), true)),
+    Some(CalculatingTheRent("test", prefilledDateInput)),
+    Some(AnswerYes),
+    itemsInRent = List("Other")
+  )
+
   val prefilledCateringOperationSectionIncompleteCatering: CateringOperationSection = CateringOperationSection(
     CateringOperationDetails("Operator Name", "Type of Business", prefilledCateringAddress),
     Some(CateringOperationRentDetails(BigDecimal(1500), prefilledDateInput)),
@@ -552,9 +561,22 @@ trait FakeObjects {
     Some(CalculatingTheRent("test", prefilledDateInput))
   )
 
+  val prefilledCateringOperationBusinessSectionIncompleteCatering: CateringOperationBusinessSection =
+    CateringOperationBusinessSection(
+      CateringOperationBusinessDetails("Operator Name", "Type of Business", "Describe business"),
+      Some(CateringOperationRentDetails(BigDecimal(1500), prefilledDateInput)),
+      Some(RentReceivedFrom(BigDecimal(1500), true)),
+      Some(CalculatingTheRent("test", prefilledDateInput))
+    )
+
   val prefilledCateringOperationSectionIncompleteCateringRentDetails: CateringOperationSection =
     CateringOperationSection(
       CateringOperationDetails("Operator Name", "Type of Business", prefilledCateringAddress)
+    )
+
+  val prefilledCateringBusinessOperationSectionIncompleteCateringRentDetails: CateringOperationBusinessSection =
+    CateringOperationBusinessSection(
+      CateringOperationBusinessDetails("Operator Name", "Type of Business", "Describe business")
     )
 
   val prefilledCateringOperationSectionNo: CateringOperationSection = CateringOperationSection(
@@ -565,7 +587,17 @@ trait FakeObjects {
     Some(AnswerNo),
     itemsInRent = List("Other")
   )
-  val prefilledLettingSectionYes: LettingSection                    = LettingSection(
+
+  val prefilledCateringOperationBusinessSectionNo: CateringOperationBusinessSection = CateringOperationBusinessSection(
+    CateringOperationBusinessDetails("Operator Name", "Type of Business", "Describe business"),
+    Some(CateringOperationRentDetails(BigDecimal(1500), prefilledDateInput)),
+    Some(RentReceivedFrom(BigDecimal(1500), true)),
+    Some(CalculatingTheRent("test", prefilledDateInput)),
+    Some(AnswerNo),
+    itemsInRent = List("Other")
+  )
+
+  val prefilledLettingSectionYes: LettingSection               = LettingSection(
     aboutfranchisesorlettings.LettingOtherPartOfPropertyInformationDetails(
       "Operator Name",
       "Type of Business",
@@ -576,7 +608,7 @@ trait FakeObjects {
     Some(AnswerYes),
     itemsInRent = List("Other")
   )
-  val prefilledLettingSectionIncompleteLetting: LettingSection      = LettingSection(
+  val prefilledLettingSectionIncompleteLetting: LettingSection = LettingSection(
     aboutfranchisesorlettings.LettingOtherPartOfPropertyInformationDetails(
       "Operator Name",
       "Type of Business",
@@ -585,7 +617,7 @@ trait FakeObjects {
     Some(LettingOtherPartOfPropertyRentDetails(BigDecimal(1500), prefilledDateInput)),
     Some(LettingOtherPartOfPropertyRent6015Details(BigDecimal(1500), prefilledDateInput, true))
   )
-  val prefilledLettingSectionIncomplete: LettingSection             = LettingSection(
+  val prefilledLettingSectionIncomplete: LettingSection        = LettingSection(
     aboutfranchisesorlettings.LettingOtherPartOfPropertyInformationDetails(
       "Operator Name",
       "Type of Business",
@@ -594,7 +626,7 @@ trait FakeObjects {
     Some(LettingOtherPartOfPropertyRentDetails(BigDecimal(1500), prefilledDateInput)),
     Some(LettingOtherPartOfPropertyRent6015Details(BigDecimal(1500), prefilledDateInput, true))
   )
-  val prefilledLettingSectionNo: LettingSection                     = LettingSection(
+  val prefilledLettingSectionNo: LettingSection                = LettingSection(
     aboutfranchisesorlettings.LettingOtherPartOfPropertyInformationDetails(
       "Operator Name",
       "Type of Business",
@@ -612,10 +644,15 @@ trait FakeObjects {
     0,
     None,
     IndexedSeq(prefilledCateringOperationSectionYes),
+    IndexedSeq(prefilledCateringOperationBusinessSectionYes),
     Some(AnswerYes),
     0,
     None,
-    IndexedSeq(prefilledLettingSectionYes)
+    IndexedSeq(prefilledLettingSectionYes),
+    None,
+    Some(false),
+    Some(AnswerYes),
+    None
   )
 
   val prefilledAboutFranchiseOrLettingsIncompleteLetting: AboutFranchisesOrLettings = AboutFranchisesOrLettings(
@@ -624,6 +661,7 @@ trait FakeObjects {
     0,
     None,
     IndexedSeq(prefilledCateringOperationSectionIncompleteCateringRentDetails),
+    IndexedSeq(prefilledCateringBusinessOperationSectionIncompleteCateringRentDetails),
     Some(AnswerYes),
     0,
     None,
@@ -636,6 +674,7 @@ trait FakeObjects {
     0,
     None,
     IndexedSeq(prefilledCateringOperationSectionNo),
+    IndexedSeq(prefilledCateringOperationBusinessSectionNo),
     Some(AnswerNo),
     0,
     None,
@@ -647,6 +686,7 @@ trait FakeObjects {
     0,
     None,
     IndexedSeq(prefilledCateringOperationSectionYes),
+    IndexedSeq(prefilledCateringOperationBusinessSectionYes),
     Some(AnswerYes),
     0,
     None,
@@ -658,6 +698,7 @@ trait FakeObjects {
     0,
     None,
     IndexedSeq(prefilledCateringOperationSectionIncompleteCatering),
+    IndexedSeq(prefilledCateringOperationBusinessSectionIncompleteCatering),
     Some(AnswerYes),
     0,
     None,
@@ -670,6 +711,7 @@ trait FakeObjects {
       0,
       None,
       IndexedSeq(prefilledCateringOperationSectionIncompleteCateringRentDetails),
+      IndexedSeq(prefilledCateringBusinessOperationSectionIncompleteCateringRentDetails),
       Some(AnswerYes),
       0,
       None,
@@ -682,6 +724,7 @@ trait FakeObjects {
     0,
     None,
     IndexedSeq(prefilledCateringOperationSectionNo),
+    IndexedSeq(prefilledCateringOperationBusinessSectionNo),
     Some(AnswerNo),
     0,
     None,
