@@ -35,7 +35,8 @@ class FinancialYearEndControllerSpec extends TestBaseSpec {
   import TestData.{baseFormData, errorKey}
 
   def financialYearEndController(
-    forType:String = "FOR6010", aboutTheTradingHistory: Option[AboutTheTradingHistory] = Some(prefilledAboutYourTradingHistory)
+    forType: String = "FOR6010",
+    aboutTheTradingHistory: Option[AboutTheTradingHistory] = Some(prefilledAboutYourTradingHistory)
   ) = new FinancialYearEndController(
     stubMessagesControllerComponents(),
     aboutYourTradingHistoryNavigator,
@@ -112,36 +113,39 @@ class FinancialYearEndControllerSpec extends TestBaseSpec {
     "redirect to the next page when valid data is submitted" in {
       // Arrange
       val validFormData = Map(
-        "financialYear.day" -> "1",
+        "financialYear.day"   -> "1",
         "financialYear.month" -> "4",
-        "yearEndChanged" -> "true"
+        "yearEndChanged"      -> "true"
       )
-      val request = FakeRequest(POST, "/your-route").withFormUrlEncodedBody(validFormData.toSeq: _*)
-      when(mockSessionRepo.saveOrUpdate(any[Session])(any[Writes[Session]],any[HeaderCarrier])).thenReturn(Future.successful(Right(())))
+      val request       = FakeRequest(POST, "/your-route").withFormUrlEncodedBody(validFormData.toSeq: _*)
+      when(mockSessionRepo.saveOrUpdate(any[Session])(any[Writes[Session]], any[HeaderCarrier]))
+        .thenReturn(Future.successful(Right(())))
 
       // Act
       val result = financialYearEndController().submit(request)
 
       // Assert
-      status(result) shouldBe SEE_OTHER
+      status(result)           shouldBe SEE_OTHER
       redirectLocation(result) shouldBe Some("/send-trade-and-cost-information/financial-year-end-dates")
     }
     "redirect to the next page when valid 6030 data is submitted" in {
       // Arrange
-      val validFormData = Map(
-        "financialYear.day" -> "1",
+      val validFormData  = Map(
+        "financialYear.day"   -> "1",
         "financialYear.month" -> "4",
-        "yearEndChanged" -> "true"
+        "yearEndChanged"      -> "true"
       )
-      val request = FakeRequest(POST, "/your-route").withFormUrlEncodedBody(validFormData.toSeq: _*)
-      val sessionRequest = SessionRequest(aboutYourTradingHistory6030YesSession,request)
-      when(mockSessionRepo.saveOrUpdate(any[Session])(any[Writes[Session]], any[HeaderCarrier])).thenReturn(Future.successful(Right(())))
+      val request        = FakeRequest(POST, "/your-route").withFormUrlEncodedBody(validFormData.toSeq: _*)
+      val sessionRequest = SessionRequest(aboutYourTradingHistory6030YesSession, request)
+      when(mockSessionRepo.saveOrUpdate(any[Session])(any[Writes[Session]], any[HeaderCarrier]))
+        .thenReturn(Future.successful(Right(())))
 
       // Act
-      val result = financialYearEndController("FOR6030", Some(prefilledAboutYourTradingHistory6030)).submit(sessionRequest)
+      val result =
+        financialYearEndController("FOR6030", Some(prefilledAboutYourTradingHistory6030)).submit(sessionRequest)
 
       // Assert
-      status(result) shouldBe SEE_OTHER
+      status(result)           shouldBe SEE_OTHER
       redirectLocation(result) shouldBe Some("/send-trade-and-cost-information/financial-year-end-dates")
     }
   }

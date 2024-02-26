@@ -17,6 +17,7 @@
 package controllers.aboutthetradinghistory
 
 import play.api.http.Status
+import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import utils.TestBaseSpec
 
@@ -40,6 +41,15 @@ class VariableOperatingExpensesControllerSpec extends TestBaseSpec {
       val result = variableOperatingExpensesController.show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
+    }
+  }
+
+  "SUBMIT /" should {
+    "throw a BAD_REQUEST if an empty form is submitted" in {
+      val res = variableOperatingExpensesController.submit(
+        FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)
+      )
+      status(res) shouldBe BAD_REQUEST
     }
   }
 
