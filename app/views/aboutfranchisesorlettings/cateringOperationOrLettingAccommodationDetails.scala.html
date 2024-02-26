@@ -30,6 +30,8 @@
 
 @typeConcession = @{formType == ForTypes.for6015 || formType == ForTypes.for6016}
 
+@typeBusinessDetails = @{formType == ForTypes.for6030}
+
 @label =@{
         if(typeConcession) messages("label.section.aboutTheFranchiseConcessions")  else {
             messages("label.section.aboutTheFranchiseLettings")
@@ -43,7 +45,7 @@
 
 @nameLabel = @{if(typeConcession) "tradingName"  else "operatorName" }
 
-@formHintRent =  @{if(typeConcession) "concessionTypeOfBusiness"  else "typeOfBusiness" }
+@formHintRent =  @{if(typeConcession) "concessionTypeOfBusiness" else if(typeBusinessDetails) "describeBusiness"  else "typeOfBusiness" }
 @formHintLetting = @{if(typeConcession) "lettingTypeOfBusiness6015"  else "lettingTypeOfBusiness" }
 
 @layout(
@@ -54,25 +56,39 @@
     backLinkUrl = backLink,
     theForm = theForm
 ) {
-    @if(cateringOrLetting.equals("cateringOperationOrLettingAccommodationDetails")) {
-        @formWithCSRF(action = controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController.submit(index)) {
+    @if(typeBusinessDetails) {
+        @formWithCSRF(action = controllers.aboutfranchisesorlettings.routes.CateringOperationBusinessDetailsController.submit(index)) {
 
             @includes.textInput(govukInput, theForm, "operatorName", "govuk-input--width-20", nameLabel, labelClasses = "govuk-!-font-weight-bold")
             @includes.textInput(govukInput, theForm, "typeOfBusiness", "govuk-input--width-20", "typeOfBusiness", labelClasses = "govuk-!-font-weight-bold", hintMsg = formHintRent)
+            @includes.textInput(govukInput, theForm, "howBusinessPropertyIsUsed", "govuk-input--width-20", "howBusinessPropertyIsUsed", labelClasses = "govuk-!-font-weight-bold")
 
-            <p class="govuk-body">
-                <b>@messages("label.correspondenceAddress")</b>
-            </p>
 
-            @includes.textInput(govukInput, theForm, "cateringAddress.buildingNameNumber", "govuk-input--width-20", "buildingNameNumber", formGroupClasses = "address-field-one address-fields")
-            @includes.textInput(govukInput, theForm, "cateringAddress.street1", "govuk-input--width-20", "street1", optional = true, formGroupClasses = "address-field-two address-fields")
-            @includes.textInput(govukInput, theForm, "cateringAddress.town", "govuk-input--width-20", "town", formGroupClasses = "address-field-three address-fields")
-            @includes.textInput(govukInput, theForm, "cateringAddress.county", "govuk-input--width-20", "county", optional = true, formGroupClasses = "address-field-four address-fields")
-            @includes.textInput(govukInput, theForm, "cateringAddress.postcode", "govuk-input--width-10", "postcode", formGroupClasses = "address-field-postcode")
 
             @includes.continueSaveAsDraftButtons(govukButton)
         }
-    } else if(cateringOrLetting.equals("lettingOtherPartOfPropertyDetails")) {
+
+    } else {
+
+        @if(cateringOrLetting.equals("cateringOperationOrLettingAccommodationDetails")) {
+            @formWithCSRF(action = controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController.submit(index)) {
+
+                @includes.textInput(govukInput, theForm, "operatorName", "govuk-input--width-20", nameLabel, labelClasses = "govuk-!-font-weight-bold")
+                @includes.textInput(govukInput, theForm, "typeOfBusiness", "govuk-input--width-20", "typeOfBusiness", labelClasses = "govuk-!-font-weight-bold", hintMsg = formHintRent)
+
+                <p class="govuk-body">
+                    <b>@messages("label.correspondenceAddress")</b>
+                </p>
+
+                @includes.textInput(govukInput, theForm, "cateringAddress.buildingNameNumber", "govuk-input--width-20", "buildingNameNumber", formGroupClasses = "address-field-one address-fields")
+                @includes.textInput(govukInput, theForm, "cateringAddress.street1", "govuk-input--width-20", "street1", optional = true, formGroupClasses = "address-field-two address-fields")
+                @includes.textInput(govukInput, theForm, "cateringAddress.town", "govuk-input--width-20", "town", formGroupClasses = "address-field-three address-fields")
+                @includes.textInput(govukInput, theForm, "cateringAddress.county", "govuk-input--width-20", "county", optional = true, formGroupClasses = "address-field-four address-fields")
+                @includes.textInput(govukInput, theForm, "cateringAddress.postcode", "govuk-input--width-10", "postcode", formGroupClasses = "address-field-postcode")
+
+                @includes.continueSaveAsDraftButtons(govukButton)
+            }
+        } else if(cateringOrLetting.equals("lettingOtherPartOfPropertyDetails")) {
         @formWithCSRF(action = controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsController.submit(index), args = Symbol("class") -> "myForm", Symbol("id") -> "myFormId") {
 
             @includes.textInput(govukInput, theForm, "lettingOperatorName", "govuk-input--width-20", "lettingOperatorName", labelClasses = "govuk-!-font-weight-bold")
@@ -90,24 +106,25 @@
 
             @includes.continueSaveAsDraftButtons(govukButton)
         }
-    } else if(concessionOrLetting.equals("concessionDetails")) {
-    @formWithCSRF(action = controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController.submit(index), args = Symbol("class") -> "myForm", Symbol("id") -> "myFormId") {
+        } else if(concessionOrLetting.equals("concessionDetails")) {
+        @formWithCSRF(action = controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController.submit(index), args = Symbol("class") -> "myForm", Symbol("id") -> "myFormId") {
 
-        @includes.textInput(govukInput, theForm, "lettingOperatorName", "govuk-input--width-20", "lettingOperatorName", labelClasses = "govuk-!-font-weight-bold")
-        @includes.textInput(govukInput, theForm, "lettingTypeOfBusiness", "govuk-input--width-20", "lettingTypeOfBusiness", labelClasses = "govuk-!-font-weight-bold", hintMsg = "lettingTypeOfBusiness")
+            @includes.textInput(govukInput, theForm, "lettingOperatorName", "govuk-input--width-20", "lettingOperatorName", labelClasses = "govuk-!-font-weight-bold")
+            @includes.textInput(govukInput, theForm, "lettingTypeOfBusiness", "govuk-input--width-20", "lettingTypeOfBusiness", labelClasses = "govuk-!-font-weight-bold", hintMsg = "lettingTypeOfBusiness")
 
-        <p class="govuk-body">
-            <b>@messages("label.correspondenceAddress")</b>
-        </p>
+            <p class="govuk-body">
+                <b>@messages("label.correspondenceAddress")</b>
+            </p>
 
-        @includes.textInput(govukInput, theForm, "lettingAddress.buildingNameNumber", "govuk-input--width-20", "buildingNameNumber", formGroupClasses = "address-field-one address-fields")
-        @includes.textInput(govukInput, theForm, "lettingAddress.street1", "govuk-input--width-20", "street1", optional = true, formGroupClasses = "address-field-two address-fields")
-        @includes.textInput(govukInput, theForm, "lettingAddress.town", "govuk-input--width-20", "town", formGroupClasses = "address-field-three address-fields")
-        @includes.textInput(govukInput, theForm, "lettingAddress.county", "govuk-input--width-20", "county", optional = true, formGroupClasses = "address-field-four address-fields")
-        @includes.textInput(govukInput, theForm, "lettingAddress.postcode", "govuk-input--width-10", "postcode", formGroupClasses = "address-field-postcode")
+            @includes.textInput(govukInput, theForm, "lettingAddress.buildingNameNumber", "govuk-input--width-20", "buildingNameNumber", formGroupClasses = "address-field-one address-fields")
+            @includes.textInput(govukInput, theForm, "lettingAddress.street1", "govuk-input--width-20", "street1", optional = true, formGroupClasses = "address-field-two address-fields")
+            @includes.textInput(govukInput, theForm, "lettingAddress.town", "govuk-input--width-20", "town", formGroupClasses = "address-field-three address-fields")
+            @includes.textInput(govukInput, theForm, "lettingAddress.county", "govuk-input--width-20", "county", optional = true, formGroupClasses = "address-field-four address-fields")
+            @includes.textInput(govukInput, theForm, "lettingAddress.postcode", "govuk-input--width-10", "postcode", formGroupClasses = "address-field-postcode")
 
-        @includes.continueSaveAsDraftButtons(govukButton)
-    }
+            @includes.continueSaveAsDraftButtons(govukButton)
+        }
+        }
     }
 }
 

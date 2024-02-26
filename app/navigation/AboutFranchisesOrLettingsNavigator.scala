@@ -18,7 +18,7 @@ package navigation
 
 import connectors.Audit
 import controllers.aboutfranchisesorlettings
-import models.submissions.aboutfranchisesorlettings.{CateringOperationSection, LettingSection}
+import models.submissions.aboutfranchisesorlettings.{CateringOperationBusinessSection, CateringOperationSection, LettingSection}
 import models.{ForTypes, Session}
 import navigation.identifiers._
 import play.api.Logging
@@ -78,15 +78,29 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit) extends Naviga
   private def cateringOperationsConditionsRouting: Session => Call = answers => {
     answers.aboutFranchisesOrLettings.flatMap(_.cateringConcessionOrFranchise.map(_.name)) match {
       case Some("yes") =>
-        val maybeCatering = answers.aboutFranchisesOrLettings.flatMap(_.cateringOperationSections.lastOption)
-        val idx           = getCateringOperationsIndex(answers)
-        maybeCatering match {
-          case Some(catering) if isCateringDetailsIncomplete(catering, answers.forType) =>
-            getIncompleteCateringCall(catering, idx, answers.forType)
-          case _                                                                        => controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController.show(Some(idx))
+        answers.forType match {
+          case ForTypes.for6010 | ForTypes.for6011 | ForTypes.for6015 | ForTypes.for6016 =>
+            val maybeCatering = answers.aboutFranchisesOrLettings.flatMap(_.cateringOperationSections.lastOption)
+            val idx           = getCateringOperationsIndex(answers)
+            maybeCatering match {
+              case Some(catering) if isCateringDetailsIncomplete(catering, answers.forType) =>
+                getIncompleteCateringCall(catering, idx, answers.forType)
+              case _                                                                        => controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController.show(Some(idx))
+            }
+          case ForTypes.for6030                                                          =>
+            val maybeCatering =
+              answers.aboutFranchisesOrLettings.flatMap(_.cateringOperationBusinessSections.lastOption)
+            val idx           = getCateringOperationsIndex(answers)
+            maybeCatering match {
+              case Some(catering) if isCateringBusinessDetailsIncomplete(catering, answers.forType) =>
+                getIncompleteBusinessCateringCall(catering, idx, answers.forType)
+              case _                                                                                =>
+                controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show()
+            }
         }
-      case Some("no")  => controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show()
-      case _           =>
+
+      case Some("no") => controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show()
+      case _          =>
         logger.warn(
           s"Navigation for catering operations reached without correct selection of conditions by controller"
         )
@@ -109,7 +123,36 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit) extends Naviga
       detail.itemsInRent.isEmpty
     }
 
+  private def isCateringBusinessDetailsIncomplete(detail: CateringOperationBusinessSection, forType: String): Boolean =
+    if (forType.equals("FOR6015") || forType.equals("FOR6016")) {
+      detail.cateringOperationBusinessDetails == null ||
+      detail.rentReceivedFrom.isEmpty ||
+      detail.calculatingTheRent.isEmpty ||
+      detail.itemsInRent.isEmpty
+    } else {
+      detail.cateringOperationBusinessDetails == null ||
+      detail.cateringOperationRentDetails.isEmpty ||
+      detail.itemsInRent.isEmpty
+    }
+
   def getIncompleteCateringCall(detail: CateringOperationSection, idx: Int, forType: String): Call =
+    if (forType.equals("FOR6015") || forType.equals("FOR6016")) {
+      if (detail.rentReceivedFrom.isEmpty)
+        controllers.aboutfranchisesorlettings.routes.RentReceivedFromController.show(idx)
+      else if (detail.calculatingTheRent.isEmpty)
+        controllers.aboutfranchisesorlettings.routes.CalculatingTheRentForController.show(idx)
+      else if (detail.itemsInRent.isEmpty)
+        controllers.aboutfranchisesorlettings.routes.CateringOperationRentIncludesController.show(idx)
+      else controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController.show(Some(idx))
+    } else {
+      if (detail.cateringOperationRentDetails.isEmpty)
+        controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsRentController.show(idx)
+      else if (detail.itemsInRent.isEmpty)
+        controllers.aboutfranchisesorlettings.routes.CateringOperationRentIncludesController.show(idx)
+      else controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController.show(Some(idx))
+    }
+
+  def getIncompleteBusinessCateringCall(detail: CateringOperationBusinessSection, idx: Int, forType: String): Call =
     if (forType.equals("FOR6015") || forType.equals("FOR6016")) {
       if (detail.rentReceivedFrom.isEmpty)
         controllers.aboutfranchisesorlettings.routes.RentReceivedFromController.show(idx)
@@ -291,10 +334,11 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit) extends Naviga
   override val routeMap: Map[Identifier, Session => Call] = Map(
     FranchiseOrLettingsTiedToPropertyId        -> franchiseOrLettingConditionsRouting,
     ConcessionOrFranchiseFeePageId             -> (_ =>
-      controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController
+      controllers.aboutfranchisesorlettings.routes.CateringOperationBusinessDetailsController
         .show()
     ),
     CateringOperationPageId                    -> cateringOperationsConditionsRouting,
+    CateringOperationBusinessPageId            -> (_ => controllers.routes.TaskListController.show()),
     CateringOperationDetailsPageId             -> cateringOperationsDetailsConditionsRouting,
     CateringOperationRentDetailsPageId         -> cateringOperationsRentDetailsConditionsRouting,
     CateringOperationRentIncludesPageId        -> cateringOperationsRentIncludesConditionsRouting,
