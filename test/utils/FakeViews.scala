@@ -28,7 +28,7 @@ import views.html.aboutyouandtheproperty.checkYourAnswersAboutTheProperty
 import views.html.additionalinformation.{checkYourAnswersAdditionalInformation, furtherInformationOrRemarks}
 import views.html.aboutyouandtheproperty.{alternativeContactDetails, contactDetailsQuestion}
 import views.html.downloadFORTypeForm.{downloadPDF, downloadPDFReferenceNumber}
-import views.html.error.JsonParseError
+import views.html.error.{JsonParseError, error}
 import views.html.feedback.{feedback, feedbackThx}
 import views.html.requestReferenceNumber.{checkYourAnswersRequestReferenceNumber, confirmationRequestReferenceNumber, requestReferenceNumber, requestReferenceNumberContactDetails}
 import views.html.{confirmation, confirmationConnectionToProperty, confirmationNotConnected, genericRemoveConfirmation, login, maxOfLettingsReached}
@@ -40,6 +40,7 @@ trait FakeViews { this: GuiceOneAppPerSuite =>
 
   // Error pages
   lazy val jsonErrorView: JsonParseError                                                      = app.injector.instanceOf[JsonParseError]
+  lazy val errorView: error                                                                   = app.injector.instanceOf[error]
   // Request reference number
   lazy val checkYourAnswersRequestReferenceNumberView: checkYourAnswersRequestReferenceNumber =
     app.injector.instanceOf[checkYourAnswersRequestReferenceNumber]
