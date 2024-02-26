@@ -47,4 +47,14 @@ class PayACapitalSumDetailsControllerSpec extends TestBaseSpec {
       charset(result)     shouldBe Some("utf-8")
     }
   }
+
+  "SUBMIT /" should {
+    "throw a See_Other if an empty form is submitted" in {
+
+      val res = payACapitalSumDetailsController().submit(
+        FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)
+      )
+      status(res) shouldBe SEE_OTHER
+    }
+  }
 }
