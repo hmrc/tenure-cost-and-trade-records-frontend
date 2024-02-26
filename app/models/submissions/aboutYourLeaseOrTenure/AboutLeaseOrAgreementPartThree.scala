@@ -18,12 +18,14 @@ package models.submissions.aboutYourLeaseOrTenure
 
 import actions.SessionRequest
 import models.Session
-import models.submissions.common.AnswersYesNo
+
 import play.api.libs.json.Json
 
 case class AboutLeaseOrAgreementPartThree(
   tradeServicesIndex: Int = 0,
+  servicesPaidIndex: Int = 0,
   tradeServices: IndexedSeq[TradeServices] = IndexedSeq.empty,
+  servicesPaid: IndexedSeq[ServicesPaid] = IndexedSeq.empty,
   paymentForTradeServices: Option[PaymentForTradeServices] = None
 )
 

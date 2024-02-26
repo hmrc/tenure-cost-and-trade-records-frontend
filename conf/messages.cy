@@ -875,6 +875,24 @@ paymentForTradeServices.heading = Is a separate payment made for any trade servi
 paymentForTradeServices.hint = For example, lighting, heating, cleaning of shared parts
 error.paymentForTradeServices.missing = Select yes if a separate payment is made for any trade services provided by the landlord
 
+# SERVICE PAID SEPARATELY
+############################
+servicePaidSeparately.heading = Describe the service which is paid for separately
+servicePaidSeparately.VAT = What is the annual charge for separately paid services, excluding VAT?
+servicePaidSeparately.describe = Describe the type of service
+servicePaidSeparately.describe.hint = For example, lighting, heating, cleaning of shared parts - you will have the opportunity to add additional services if required.
+servicePaidSeparately.describe.error = Please describe the type of service
+error.servicePaidSeparately.invalidCurrency = The sum must be a number like 100 or 100.00 and cannot be less than 0
+error.servicePaidSeparately.required = Please enter the annual charge for separately paid services
+
+# SERVICES PAID SEPARATELY LIST
+#####################################
+servicePaidSeparatelyList.heading = You have added {0} {1} provided by the landlord
+servicePaidSeparatelyList.service = service
+servicePaidSeparatelyList.services = services
+servicePaidSeparatelyList.label = Would you like to add another service?
+error.servicePaidSeparatelyList.required = Select yes if you would like to add another service
+
 # RENT INCLUDE TRADE SERVICES DETAILS
 ####################################
 rentIncludeTradeServicesDetails.heading = Trade services provided by the landlord

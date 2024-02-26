@@ -1,0 +1,118 @@
+@*
+ * Copyright 2024 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import actions.SessionRequest
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukSummaryList
+@import uk.gov.hmrc.govukfrontend.views.Aliases.SummaryList
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.Key
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Actions
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.ActionItem
+@import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Radios
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
+@import uk.gov.hmrc.govukfrontend.views.Aliases.RadioItem
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Fieldset
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Legend
+@import models.pages.Summary
+
+@this(layout: Layout,
+        govukButton: GovukButton,
+        govukRadios: GovukRadios,
+        govukSummaryList: GovukSummaryList,
+        formWithCSRF: FormWithCSRF
+)
+
+@(theForm: Form[_], index: Int, backLink: String, summary: Summary)(implicit request: SessionRequest[_], messages: Messages)
+
+
+@services = @{
+ request.sessionData.aboutLeaseOrAgreementPartThree.fold(Seq.empty[String]){
+  leaseDetails => leaseDetails.servicesPaid.map(_.details.description)
+ }
+}
+
+
+@service = @{ if (services.length > 1) messages("servicePaidSeparatelyList.service") else messages("servicePaidSeparatelyList.services") }
+
+@layout(
+ pageHeading = messages("servicePaidSeparatelyList.heading", services.length, service) ,
+ showSection = true,
+ summary = Some(summary),
+ sectionName = messages("label.section.aboutYourLeaseOrTenure"),
+ backLinkUrl = backLink,
+ theForm = theForm
+) {
+
+ @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyListController.submit(index)) {
+
+  @govukSummaryList(
+   SummaryList(
+    rows = services.zipWithIndex.map { case (operatorName, idx) =>
+     SummaryListRow(
+      key = Key(Text(operatorName), classes = "govuk-!-font-weight-regular"),
+      actions = Actions(
+       items = Seq(
+        ActionItem(
+         controllers.aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyListController.show(idx).url,
+         content = Text("Change")),
+        ActionItem(
+         controllers.aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyListController.remove(idx).url,
+         content = Text("Remove"))
+       ),
+       classes = "hmrc-summary-list__actions"
+      )
+     )
+    },
+    classes = "hmrc-list-with-actions hmrc-list-with-actions--short"
+   )
+  )
+
+  @govukRadios(
+   Radios(
+    name = "servicePaidSeparatelyList",
+    idPrefix = Option("servicePaidSeparatelyList"),
+    classes = "govuk-radios--inline",
+    items = Seq(
+     "yes" -> messages("label.yes"),
+     "no" -> messages("label.no")
+    ).map(radioItem => RadioItem(
+     content = Text(radioItem._2),
+     checked = radioItem._1.equals(theForm("addService").value.getOrElse("")),
+     value = Option(radioItem._1)
+    )
+    ),
+    errorMessage =  theForm.errors.asTextErrorMessageForField("addService"),
+    fieldset = Option(
+     Fieldset(
+      legend = Option(
+       Legend(
+        content = Text(messages("servicePaidSeparatelyList.label")),
+        classes = "govuk-!-font-weight-bold"
+       )
+      )
+     )
+    )
+   )
+  )
+
+  @includes.continueSaveAsDraftButtons(govukButton)
+ }
+
+}
