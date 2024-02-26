@@ -251,6 +251,12 @@ trait FakeViews { this: GuiceOneAppPerSuite =>
     app.injector.instanceOf[howIsCurrentRentFixed]
   lazy val checkYourAnswersAboutLeaseAndTenureView         =
     app.injector.instanceOf[checkYourAnswersAboutYourLeaseOrTenure]
+  lazy val paymentForTradeServicesView                     =
+    app.injector.instanceOf[paymentForTradeServices]
+  lazy val tradeServicesDescriptionView                    =
+    app.injector.instanceOf[tradeServicesDescription]
+  lazy val tradeServicesListView                           =
+    app.injector.instanceOf[tradeServicesList]
 
   // Max letting reached
   lazy val maxOfLettingsReachedView =

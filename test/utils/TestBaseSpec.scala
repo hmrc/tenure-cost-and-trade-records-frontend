@@ -18,7 +18,7 @@ package utils
 
 import actions.{SessionRequest, WithSessionRefiner}
 import config.AppConfig
-import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartOne, AboutLeaseOrAgreementPartTwo}
+import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartOne, AboutLeaseOrAgreementPartThree, AboutLeaseOrAgreementPartTwo}
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
 import models.submissions.aboutyouandtheproperty._
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory
@@ -116,6 +116,9 @@ trait TestBaseSpec
     aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = Some(prefilledAboutFranchiseOrLettings),
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne),
     aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwo),
+    aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
+      prefilledAboutLeaseOrAgreementPartThree
+    ),
     requestReferenceNumberDetails: Option[RequestReferenceNumberDetails] = Some(prefilledRequestRefNumCYA),
     downloadPDFDetails: Option[DownloadPDFDetails] = None
   ): WithSessionRefiner =
@@ -138,6 +141,7 @@ trait TestBaseSpec
                 aboutFranchisesOrLettings = aboutFranchisesOrLettings,
                 aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne,
                 aboutLeaseOrAgreementPartTwo = aboutLeaseOrAgreementPartTwo,
+                aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree,
                 requestReferenceNumberDetails = requestReferenceNumberDetails,
                 downloadPDFDetails = downloadPDFDetails
               ),

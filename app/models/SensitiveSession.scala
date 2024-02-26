@@ -17,7 +17,7 @@
 package models
 
 import crypto.MongoCrypto
-import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartTwo, SensitiveAboutLeaseOrAgreementPartOne}
+import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartThree, AboutLeaseOrAgreementPartTwo, SensitiveAboutLeaseOrAgreementPartOne}
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory
 import models.submissions.aboutyouandtheproperty.SensitiveAboutYouAndTheProperty
@@ -43,6 +43,7 @@ case class SensitiveSession(
   aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = None,
   aboutLeaseOrAgreementPartOne: Option[SensitiveAboutLeaseOrAgreementPartOne] = None,
   aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = None,
+  aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = None,
   saveAsDraftPassword: Option[String] = None,
   lastCYAPageUrl: Option[String] = None,
   requestReferenceNumberDetails: Option[SensitiveRequestReferenceNumber],
@@ -62,6 +63,7 @@ case class SensitiveSession(
     aboutFranchisesOrLettings,
     aboutLeaseOrAgreementPartOne.map(_.decryptedValue),
     aboutLeaseOrAgreementPartTwo,
+    aboutLeaseOrAgreementPartThree,
     saveAsDraftPassword,
     lastCYAPageUrl,
     requestReferenceNumberDetails.map(_.decryptedValue),
@@ -86,6 +88,7 @@ object SensitiveSession {
     session.aboutFranchisesOrLettings,
     session.aboutLeaseOrAgreementPartOne.map(SensitiveAboutLeaseOrAgreementPartOne(_)),
     session.aboutLeaseOrAgreementPartTwo,
+    session.aboutLeaseOrAgreementPartThree,
     session.saveAsDraftPassword,
     session.lastCYAPageUrl,
     session.requestReferenceNumberDetails.map(SensitiveRequestReferenceNumber(_)),

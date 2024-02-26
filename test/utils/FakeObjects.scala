@@ -927,6 +927,11 @@ trait FakeObjects {
     tenantAdditionsDisregardedDetails = Some(TenantAdditionsDisregardedDetails(AnswerNo)),
     legalOrPlanningRestrictions = Some(LegalOrPlanningRestrictions(AnswerNo))
   )
+  val prefilledAboutLeaseOrAgreementPartThree = AboutLeaseOrAgreementPartThree(
+    tradeServicesIndex = 1,
+    tradeServices = IndexedSeq(TradeServices(TradeServicesDetails(Some(100), "service-1"))),
+    paymentForTradeServices = Some(PaymentForTradeServices(AnswerYes))
+  )
 
   val prefilledRequestReferenceNumber = RequestReferenceNumberDetails(
     Some(RequestReferenceNumber(prefilledFakeName, prefilledNoReferenceContactAddress)),

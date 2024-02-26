@@ -16,7 +16,7 @@
 
 package models.audit
 
-import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartOne, AboutLeaseOrAgreementPartTwo}
+import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartOne, AboutLeaseOrAgreementPartThree, AboutLeaseOrAgreementPartTwo}
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory
@@ -43,6 +43,7 @@ case class UserData(
   aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings],
   aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne],
   aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo],
+  aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree],
   requestReferenceNumber: Option[RequestReferenceNumberDetails],
   downloadPDFDetails: Option[DownloadPDFDetails]
 )

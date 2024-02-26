@@ -851,6 +851,30 @@ rentIncludeTradeServices.heading = Does the rent include any trade services prov
 hint.rentIncludeTradeServices = For example, maintenance of trade fixtures and fittings, cellar services, marketing, staff training.
 error.rentIncludeTradeServices.missing = Select yes if the rent includes any trade services provided by the landlord
 
+# TRADE SERVICES DESCRIPTION
+############################
+tradeServiceDescription.heading = Describe the trade service provided by the landlord
+tradeServiceDescription.VAT = Where specifically itemised, what sum is included in the rent excluding VAT?
+tradeServiceDescription.hint = Leave blank if these are not specifically itemised.
+tradeServiceDescription.describe = Describe the type of service
+tradeServiceDescription.describe.hint = For example, lighting, heating, cleaning of shared parts - you will have the opportunity to add additional services if required.
+tradeServiceDescription.describe.error = Please describe the type of service
+error.tradeDescription.invalidCurrency = The sum must be a number like 100 or 100.00 and cannot be less than 0
+
+# TRADE SERVICES ADDED
+#####################################
+addTradeService.heading = You have added {0} {1} provided by the landlord
+addTradeService.service = service
+addTradeService.services = services
+addTradeService.label = Would you like to add another service?
+error.addTradeService.required = Select yes if you would like to add another service
+
+#PAYMENT FOR TRADE SERVICES
+####################################
+paymentForTradeServices.heading = Is a separate payment made for any trade services provided by the landlord?
+paymentForTradeServices.hint = For example, lighting, heating, cleaning of shared parts
+error.paymentForTradeServices.missing = Select yes if a separate payment is made for any trade services provided by the landlord
+
 # RENT INCLUDE TRADE SERVICES DETAILS
 ####################################
 rentIncludeTradeServicesDetails.heading = Trade services provided by the landlord
