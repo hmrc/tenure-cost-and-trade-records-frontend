@@ -88,7 +88,7 @@ class LettingOtherPartOfPropertyDetailsRentController @Inject() (
       }
     }
   }
-  def submit(index: Int) = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit(index: Int)                   = (Action andThen withSessionRefiner).async { implicit request =>
     val existingSection = request.sessionData.aboutFranchisesOrLettings.map(_.lettingSections).get(index)
     val forType         = request.sessionData.forType
 
