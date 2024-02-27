@@ -20,6 +20,7 @@ import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
 import form.aboutfranchisesorlettings.LettingOtherPartOfPropertyRent6015Form.lettingOtherPartOfPropertyRent6015Form
 import form.aboutfranchisesorlettings.LettingOtherPartOfPropertyRentForm.lettingOtherPartOfPropertyRentForm
+import models.ForTypes.{for6015, for6016}
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
 import models.submissions.aboutfranchisesorlettings.{LettingOtherPartOfPropertyRent6015Details, LettingOtherPartOfPropertyRentDetails}
 import navigation.AboutFranchisesOrLettingsNavigator
@@ -46,7 +47,7 @@ class LettingOtherPartOfPropertyDetailsRentController @Inject() (
   def show(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     val forType = request.sessionData.forType
 
-    if (forType.equals("FOR6015") || forType.equals("FOR6016")) {
+    if (forType.equals(for6015) || forType.equals(for6016)) {
       val existingSection = request.sessionData.aboutFranchisesOrLettings.flatMap(_.lettingSections.lift(index))
       existingSection.fold(Redirect(routes.LettingOtherPartOfPropertyDetailsController.show(None))) { lettingSection =>
         val lettingDetailsForm = lettingSection.lettingOtherPartOfPropertyRent6015Details.fold(
@@ -92,7 +93,7 @@ class LettingOtherPartOfPropertyDetailsRentController @Inject() (
     val existingSection = request.sessionData.aboutFranchisesOrLettings.map(_.lettingSections).get(index)
     val forType         = request.sessionData.forType
 
-    if (forType.equals("FOR6015") || forType.equals("FOR6016")) {
+    if (forType.equals(for6015) || forType.equals(for6016)) {
       continueOrSaveAsDraft[LettingOtherPartOfPropertyRent6015Details](
         lettingOtherPartOfPropertyRent6015Form,
         formWithErrors =>
