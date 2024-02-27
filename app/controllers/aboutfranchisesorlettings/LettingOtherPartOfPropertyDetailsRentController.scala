@@ -44,28 +44,51 @@ class LettingOtherPartOfPropertyDetailsRentController @Inject() (
     with I18nSupport {
 
   def show(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
-    val existingSection = request.sessionData.aboutFranchisesOrLettings.flatMap(_.lettingSections.lift(index))
-    existingSection.fold(Redirect(routes.LettingOtherPartOfPropertyDetailsController.show(None))) { lettingSection =>
-      val lettingDetailsForm = lettingSection.lettingOtherPartOfPropertyRentDetails.fold(
-        lettingOtherPartOfPropertyRentForm
-      )(lettingOtherPartOfPropertyRentForm.fill)
-      Ok(
-        cateringOperationOrLettingAccommodationRentDetailsView(
-          lettingDetailsForm,
-          index,
-          "lettingOtherPartOfPropertyRentDetails",
-          existingSection.get.lettingOtherPartOfPropertyInformationDetails.operatorName,
-          controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsController
-            .show(Some(index))
-            .url,
-          request.sessionData.toSummary,
-          request.sessionData.forType
+    val forType = request.sessionData.forType
+
+    if (forType.equals("FOR6015") || forType.equals("FOR6016")) {
+      val existingSection = request.sessionData.aboutFranchisesOrLettings.flatMap(_.lettingSections.lift(index))
+      existingSection.fold(Redirect(routes.LettingOtherPartOfPropertyDetailsController.show(None))) { lettingSection =>
+        val lettingDetailsForm = lettingSection.lettingOtherPartOfPropertyRent6015Details.fold(
+          lettingOtherPartOfPropertyRent6015Form
+        )(lettingOtherPartOfPropertyRent6015Form.fill)
+        Ok(
+          cateringOperationOrLettingAccommodationRentDetailsView(
+            lettingDetailsForm,
+            index,
+            "lettingOtherPartOfPropertyRentDetails",
+            existingSection.get.lettingOtherPartOfPropertyInformationDetails.operatorName,
+            controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsController
+              .show(Some(index))
+              .url,
+            request.sessionData.toSummary,
+            request.sessionData.forType
+          )
         )
-      )
+      }
+    } else {
+      val existingSection = request.sessionData.aboutFranchisesOrLettings.flatMap(_.lettingSections.lift(index))
+      existingSection.fold(Redirect(routes.LettingOtherPartOfPropertyDetailsController.show(None))) { lettingSection =>
+        val lettingDetailsForm = lettingSection.lettingOtherPartOfPropertyRentDetails.fold(
+          lettingOtherPartOfPropertyRentForm
+        )(lettingOtherPartOfPropertyRentForm.fill)
+        Ok(
+          cateringOperationOrLettingAccommodationRentDetailsView(
+            lettingDetailsForm,
+            index,
+            "lettingOtherPartOfPropertyRentDetails",
+            existingSection.get.lettingOtherPartOfPropertyInformationDetails.operatorName,
+            controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsController
+              .show(Some(index))
+              .url,
+            request.sessionData.toSummary,
+            request.sessionData.forType
+          )
+        )
+      }
     }
   }
-
-  def submit(index: Int) = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit(index: Int)                   = (Action andThen withSessionRefiner).async { implicit request =>
     val existingSection = request.sessionData.aboutFranchisesOrLettings.map(_.lettingSections).get(index)
     val forType         = request.sessionData.forType
 
