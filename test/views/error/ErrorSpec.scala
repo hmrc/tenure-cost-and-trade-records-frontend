@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,22 +14,20 @@
  * limitations under the License.
  */
 
-package form
+package views.error
 
-import play.api.data.Forms.text
+import actions.SessionRequest
+import views.behaviours.ViewBehaviours
 
-object CurrencyMapping {
+class ErrorSpec extends ViewBehaviours {
+  val sessionRequest = SessionRequest(baseFilled6010Session, fakeRequest)
+  def createView     = () => errorView(409)(sessionRequest, messages)
 
-  // Valid formats: test@test.com | test.test@hotmail.com | test.account@digital.gov.uk |
-
-  val invalidNumberRegex = """^-\d*\.?\d+$"""
-
-  def validateCurrency =
-    text
-      .verifying(Errors.annualRentExcludingVAT, vC => vC.nonEmpty)
-      .verifying(
-        Errors.emailFormat,
-        eA => if (eA.nonEmpty) eA.matches(invalidNumberRegex) else true
-      )
-
+  "errorView" must {
+    "contain text " in {
+      val doc = asDocument(createView())
+      assert(doc.toString.contains(messages("error.409.heading")))
+      assert(doc.toString.contains(messages("error.409.body")))
+    }
+  }
 }
