@@ -17,6 +17,7 @@
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Text
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
+@import actions.SessionRequest
 @import models.pages.Summary
 
 @this(
@@ -26,8 +27,7 @@
         formWithCSRF: FormWithCSRF
 )
 
-
-@(form: Form[_], backLink: String, source: String, summary: Summary)(implicit request: Request[_], messages: Messages)
+@(form: Form[_], backLink: String, businessOrFranchise: String, businessOrConcession: String, concessionOrFranchise: String, source: String, summary: Summary)(implicit request: SessionRequest[_], messages: Messages)
 
 
 @sectionName = @{
@@ -38,8 +38,31 @@
  }
 }
 
+
+@forType = @{request.sessionData.forType}
+@lettingsSection = @{request.sessionData.aboutFranchisesOrLettings.map(_.lettingOtherPartOfProperty.map(_.name.equals("yes")))}
+@businessSection = @{request.sessionData.aboutFranchisesOrLettings.map(_.cateringConcessionOrFranchise.map(_.name.equals("no")))}
+
+ @heading = @{
+  if(lettingsSection & businessSection) messages("maxOf5Lettings.heading") else
+  forType match {
+   case ForTypes.for6010 | ForTypes.for6011=> messages(s"maxOf5Lettings.${businessOrFranchise}.heading")
+   case ForTypes.for6015 | ForTypes.for6016 => messages(s"maxOf5Lettings.${businessOrConcession}.heading")
+   case ForTypes.for6030   => messages(s"maxOf5Lettings.${concessionOrFranchise}.heading")
+  }
+ }
+
+ @content = @{
+  if(lettingsSection & businessSection) messages("maxOf5Lettings.contact", "lettings") else
+  forType match {
+   case ForTypes.for6010 | ForTypes.for6011=> messages("maxOf5Lettings.contact", messages("maxOf5Lettings.businessOrFranchise.content"))
+   case ForTypes.for6015 | ForTypes.for6016 => messages("maxOf5Lettings.contact", messages("maxOf5Lettings.businessOrConcession.content"))
+   case ForTypes.for6030   => messages("maxOf5Lettings.contact", messages("maxOf5Lettings.concessionOrFranchise.content"))
+  }
+ }
+
 @layout(
- pageHeading = messages("maxOf5Lettings.heading") ,
+ pageHeading = heading ,
  sectionName = sectionName,
  showSection = true,
  backLinkUrl = backLink,
@@ -48,7 +71,7 @@
 ) {
 
 
-  <p class="govuk-body govuk-!-width-three-quarters">@messages("maxOf5Lettings.contact")</p>
+   <p class="govuk-body govuk-!-width-three-quarters">@messages(content)</p>
 
  @formWithCSRF(action = routes.MaxOfLettingsReachedController.submit(source)) {
   @govukCheckboxes(

@@ -52,6 +52,9 @@ class MaxOfLettingsReachedController @Inject() (
         maxOfLettingsReachedView(
           filledForm,
           backLink,
+          "businessOrFranchise",
+          "businessOrConcession",
+          "concessionOrFranchise",
           sourceOpt,
           request.sessionData.toSummary
         )
@@ -69,6 +72,9 @@ class MaxOfLettingsReachedController @Inject() (
           maxOfLettingsReachedView(
             formWithErrors,
             backLink,
+            "businessOrFranchise",
+            "businessOrConcession",
+            "concessionOrFranchise",
             sourceOpt,
             request.sessionData.toSummary
           )
