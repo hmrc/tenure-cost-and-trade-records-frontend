@@ -715,6 +715,11 @@ concessionOrFranchiseFee.heading = Concession or franchise fees
 concessionOrFranchiseFee.label = Do you receive any fees from separate businesses operating from part of the property?
 concessionOrFranchiseFee.p1 = You must declare any fees you charge for allowing separate businesses to operate from the property, for example tea rooms or car washes. You will have the opportunity to add more than one business if required.
 error.concessionOrFranchiseFee.missing = Select yes if you receive any fees from separate businesses operating from part of the property
+feeReceived.heading = Fee received from {0}
+error.feeReceived.concessionOrFranchiseFee.required = Enter 0 if you did not receive any fee in the year ending {0}
+error.feeReceived.concessionOrFranchiseFee.range = The fee received in the year ending {0} must be a number, for example 100 or 100.00
+error.feeReceived.concessionOrFranchiseFee.negative = The fee received in the year ending {0} cannot be a negative number
+error.feeReceived.feeCalculationDetails.required = Enter a description of how the fee was calculated
 
 # LETTING OTHER PART OF PROPERTY
 ##############################

@@ -16,23 +16,25 @@
 
 package controllers.aboutfranchisesorlettings
 
-import actions.WithSessionRefiner
+import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
+import controllers.aboutthetradinghistory.routes
 import form.aboutfranchisesorlettings.FeeReceivedForm.feeReceivedForm
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
-import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, CateringOperationBusinessDetails, CateringOperationBusinessSection}
+import models.submissions.aboutfranchisesorlettings.{CateringOperationBusinessSection, FeeReceived}
 import navigation.AboutFranchisesOrLettingsNavigator
 import navigation.identifiers.FeeReceivedPageId
 import play.api.i18n.I18nSupport
-import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import play.api.mvc._
 import repositories.SessionRepo
 import views.html.aboutfranchisesorlettings.feeReceived
 
+import java.time.LocalDate
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.ExecutionContext
+import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
-class FeeReceivedController @Inject()(
+class FeeReceivedController @Inject() (
   mcc: MessagesControllerComponents,
   navigator: AboutFranchisesOrLettingsNavigator,
   feeReceivedView: feeReceived,
@@ -42,78 +44,71 @@ class FeeReceivedController @Inject()(
     extends FORDataCaptureController(mcc)
     with I18nSupport {
 
-  def show(idx: Int): Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
-    val existingDetails: Option[CateringOperationBusinessDetails] = for {
-      existingAccommodationSections <-
-        request.sessionData.aboutFranchisesOrLettings.map(_.cateringOperationBusinessSections)
-      // lift turns exception-throwing access by index into an option-returning safe operation
-      requestedAccommodationSection <- existingAccommodationSections.lift(idx)
-    } yield requestedAccommodationSection.cateringOperationBusinessDetails
+  def show(idx: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    runWithSessionCheck(idx) { currentSection =>
+      val years = financialYearEndDates.map(_.getYear.toString)
 
-    Ok(
-      feeReceivedView(
-        existingDetails.fold(feeReceivedForm)(feeReceivedForm.fill),
-        idx,
-        "concessionDetails",
-        "cateringOperationOrLettingAccommodationDetails",
-        backLink(idx),
-        request.sessionData.toSummary,
-        request.sessionData.forType
+      Ok(
+        feeReceivedView(
+          currentSection.feeReceived.fold(feeReceivedForm(years))(feeReceivedForm(years).fill),
+          idx,
+          currentSection.cateringOperationBusinessDetails.operatorName,
+          backLink(idx).url
+        )
       )
-    )
+    }
   }
 
   def submit(idx: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft[CateringOperationBusinessDetails](
-      feeReceivedForm,
-      formWithErrors =>
-        BadRequest(
-          feeReceivedView(
-            formWithErrors,
-            idx,
-            "concessionDetails",
-            "cateringOperationOrLettingAccommodationDetails",
-            backLink(idx),
-            request.sessionData.toSummary,
-            request.sessionData.forType
-          )
-        ),
-      data => {
-        val ifFranchisesOrLettingsEmpty      = AboutFranchisesOrLettings(cateringOperationBusinessSections =
-          IndexedSeq(CateringOperationBusinessSection(cateringOperationBusinessDetails = data))
-        )
-        val updatedAboutFranchisesOrLettings =
-          request.sessionData.aboutFranchisesOrLettings.fold(ifFranchisesOrLettingsEmpty) { franchiseOrLettings =>
-            val existingSections                                                     = franchiseOrLettings.cateringOperationBusinessSections
-            val requestedSection                                                     = existingSections.lift(idx)
-            val updatedSections: (Int, IndexedSeq[CateringOperationBusinessSection]) =
-              requestedSection.fold {
-                val defaultSection   = CateringOperationBusinessSection(data)
-                val appendedSections = existingSections.appended(defaultSection)
-                appendedSections.indexOf(defaultSection) -> appendedSections
-              } { sectionToUpdate =>
-                val indexToUpdate = existingSections.indexOf(sectionToUpdate)
-                indexToUpdate -> existingSections.updated(
-                  indexToUpdate,
-                  sectionToUpdate.copy(cateringOperationBusinessDetails = data)
-                )
-              }
-            franchiseOrLettings
-              .copy(
-                cateringOperationCurrentIndex = updatedSections._1,
-                cateringOperationBusinessSections = updatedSections._2
-              )
-          }
+    runWithSessionCheck(idx) { currentSection =>
+      val years = financialYearEndDates.map(_.getYear.toString)
 
-        val updatedData = updateAboutFranchisesOrLettings(_ => updatedAboutFranchisesOrLettings)
-        session.saveOrUpdate(updatedData).map { _ =>
-          Redirect(navigator.nextPage(FeeReceivedPageId, updatedData).apply(updatedData))
+      continueOrSaveAsDraft[FeeReceived](
+        feeReceivedForm(years),
+        formWithErrors =>
+          BadRequest(
+            feeReceivedView(
+              formWithErrors,
+              idx,
+              currentSection.cateringOperationBusinessDetails.operatorName,
+              backLink(idx).url
+            )
+          ),
+        data => {
+          val updatedSections = request.sessionData.aboutFranchisesOrLettings
+            .map(_.cateringOperationBusinessSections)
+            .map(_.updated(idx, currentSection.copy(feeReceived = Some(data))))
+            .get
+
+          val updatedData = updateAboutFranchisesOrLettings(_.copy(cateringOperationBusinessSections = updatedSections))
+          session.saveOrUpdate(updatedData).map { _ =>
+            Redirect(navigator.nextPage(FeeReceivedPageId, updatedData).apply(updatedData))
+          }
         }
-      }
-    )
+      )
+
+      Redirect(navigator.nextPage(FeeReceivedPageId, request.sessionData).apply(request.sessionData)) // TODO: Remove
+    }
   }
 
-  private def backLink(idx: Int): String =
-    controllers.aboutfranchisesorlettings.routes.CateringOperationBusinessDetailsController.show(Some(idx)).url
+  private def runWithSessionCheck(idx: Int)(
+    action: CateringOperationBusinessSection => Future[Result]
+  )(implicit request: SessionRequest[AnyContent]): Future[Result] =
+    if (request.sessionData.aboutTheTradingHistory.map(_.turnoverSections6030).exists(_.nonEmpty)) {
+      request.sessionData.aboutFranchisesOrLettings
+        .filter(_.cateringOperationBusinessSections.nonEmpty)
+        .flatMap(_.cateringOperationBusinessSections.lift(idx))
+        .fold(Future.successful(Redirect(backLink(idx))))(action)
+    } else {
+      Redirect(routes.AboutYourTradingHistoryController.show())
+    }
+
+  def financialYearEndDates(implicit request: SessionRequest[AnyContent]): Seq[LocalDate] =
+    request.sessionData.aboutTheTradingHistory.fold(Seq.empty[LocalDate])(
+      _.turnoverSections6030.map(_.financialYearEnd)
+    )
+
+  private def backLink(idx: Int): Call =
+    controllers.aboutfranchisesorlettings.routes.CateringOperationBusinessDetailsController.show(Some(idx))
 
 }
