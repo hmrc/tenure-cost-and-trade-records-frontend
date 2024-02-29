@@ -25,8 +25,9 @@ import views.behaviours.ViewBehaviours
 
 class maxOfLettingsReachedViewSpec extends ViewBehaviours {
 
-  val messageKeyPrefix = "maxOf5Lettings"
-  val sessionRequest   = SessionRequest(baseFilled6010Session, fakeRequest)
+  val messageKeyPrefix = "maxOf5Lettings.businessOrFranchise"
+
+  val sessionRequest = SessionRequest(baseFilled6010Session, fakeRequest)
 
   val form       = MaxOfLettingsForm.maxOfLettingsForm(messages)
   def createView = () =>
@@ -57,9 +58,8 @@ class maxOfLettingsReachedViewSpec extends ViewBehaviours {
 
     "contain text" in {
       val doc = asDocument(createView())
-      assert(doc.toString.contains(messages("maxOf5Lettings.heading")))
-//      assert(doc.toString.contains(messages("maxOf5Lettings.contact")))
-//      assert(doc.toString.contains(messages("maxOf5Lettings.confirm")))
+      assert(doc.toString.contains(messages("maxOf5Lettings.businessOrFranchise.heading")))
+      assert(doc.toString.contains(messages("maxOf5Lettings.confirm")))
       assert(doc.toString.contains(messages("maxOf5Lettings.link")))
     }
     "contain continue button with the value Continue" in {
