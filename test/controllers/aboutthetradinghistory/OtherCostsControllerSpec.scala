@@ -19,7 +19,6 @@ package controllers.aboutthetradinghistory
 import actions.SessionRequest
 import navigation.AboutTheTradingHistoryNavigator
 import play.api.http.Status
-import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import play.twirl.api.HtmlFormat
 import utils.TestBaseSpec

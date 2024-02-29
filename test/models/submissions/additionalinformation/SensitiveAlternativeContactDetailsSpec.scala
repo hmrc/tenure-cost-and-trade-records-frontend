@@ -19,10 +19,8 @@ package models.submissions.additionalinformation
 import org.scalatest.wordspec.AnyWordSpecLike
 import org.scalatest.matchers.should.Matchers
 import play.api.Configuration
-import models.submissions.common._
 import crypto.MongoCrypto
 import models.submissions.aboutyouandtheproperty.{AlternativeAddress, AlternativeContactDetails, SensitiveAlternativeAddress, SensitiveAlternativeContactDetails}
-import uk.gov.hmrc.crypto.Sensitive.SensitiveString
 import utils.SensitiveTestHelper
 
 class SensitiveAlternativeContactDetailsSpec extends AnyWordSpecLike with Matchers with SensitiveTestHelper {

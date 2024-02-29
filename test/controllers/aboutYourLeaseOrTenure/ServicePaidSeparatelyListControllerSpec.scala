@@ -17,28 +17,27 @@
 package controllers.aboutYourLeaseOrTenure
 
 import actions.SessionRequest
-import form.aboutYourLeaseOrTenure.TradeServicesListForm.addAnotherServiceForm
+import form.aboutYourLeaseOrTenure.ServicePaidSeparatelyListForm.addServicePaidSeparatelyForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree
 import navigation.AboutYourLeaseOrTenureNavigator
-import play.api.http.Status
-import play.api.http.Status.{BAD_REQUEST, OK, SEE_OTHER}
+import play.api.http.Status._
 import play.api.test.Helpers.{charset, contentType, status, stubMessagesControllerComponents}
 import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
 
-class TradeServicesListControllerSpec extends TestBaseSpec {
+class ServicePaidSeparatelyListControllerSpec extends TestBaseSpec {
 
   import TestData._
 
-  def tradeServicesListController(
+  def servicePaidSeparatelyListController(
     aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
       prefilledAboutLeaseOrAgreementPartThree
     )
   ) =
-    new TradeServicesListController(
+    new ServicePaidSeparatelyListController(
       stubMessagesControllerComponents(),
       app.injector.instanceOf[AboutYourLeaseOrTenureNavigator],
-      tradeServicesListView,
+      servicePaidSeparatelyListView,
       genericRemoveConfirmationView,
       preEnrichedActionRefiner(aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree),
       mockSessionRepo
@@ -46,26 +45,26 @@ class TradeServicesListControllerSpec extends TestBaseSpec {
 
   "GET /" should {
     "return 200" in {
-      val result = tradeServicesListController().show(1)(fakeRequest)
-      status(result) shouldBe Status.OK
+      val result = servicePaidSeparatelyListController().show(1)(fakeRequest)
+      status(result) shouldBe OK
     }
 
     "return HTML" in {
-      val result = tradeServicesListController().show(1)(fakeRequest)
+      val result = servicePaidSeparatelyListController().show(1)(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
 
     "SUBMIT /" should {
       "throw a BAD_REQUEST if an empty form is submitted" in {
-        val result = tradeServicesListController().submit(1)(fakeRequest)
+        val result = servicePaidSeparatelyListController().submit(1)(fakeRequest)
         status(result) shouldBe BAD_REQUEST
       }
     }
 
     "REMOVE /" should {
       "redirect if an empty form is submitted" in {
-        val result = tradeServicesListController().remove(1)(fakeRequest)
+        val result = servicePaidSeparatelyListController().remove(1)(fakeRequest)
         status(result) shouldBe SEE_OTHER
       }
     }
@@ -74,7 +73,7 @@ class TradeServicesListControllerSpec extends TestBaseSpec {
 
   "Remove service" should {
     "render the removal confirmation page on remove" in {
-      val controller     = tradeServicesListController()
+      val controller     = servicePaidSeparatelyListController()
       val idxToRemove    = 0
       val sessionRequest = SessionRequest(stillConnectedDetails6030NoSession, fakeRequest)
       val result         = controller.remove(idxToRemove)(sessionRequest)
@@ -83,7 +82,7 @@ class TradeServicesListControllerSpec extends TestBaseSpec {
     }
 
     "handle form submission with 'Yes' and perform removal" in {
-      val controller      = tradeServicesListController()
+      val controller      = servicePaidSeparatelyListController()
       val idxToRemove     = 0
       val requestWithForm = fakeRequest.withFormUrlEncodedBody("genericRemoveConfirmation" -> "yes")
       val sessionRequest  = SessionRequest(stillConnectedDetails6030NoSession, requestWithForm)
@@ -92,7 +91,7 @@ class TradeServicesListControllerSpec extends TestBaseSpec {
     }
 
     "handle form submission with 'No' and cancel removal" in {
-      val controller      = tradeServicesListController()
+      val controller      = servicePaidSeparatelyListController()
       val idxToRemove     = 0
       val requestWithForm = fakeRequest.withFormUrlEncodedBody("genericRemoveConfirmation" -> "no")
       val result          = controller.performRemove(idxToRemove)(requestWithForm)
@@ -103,12 +102,12 @@ class TradeServicesListControllerSpec extends TestBaseSpec {
 
   "Trade services list form" should {
     "error if answer is missing" in {
-      val formData = baseFormData - errorKey.addTradeService
-      val form     = addAnotherServiceForm.bind(formData)
+      val formData = baseFormData - errorKey.addService
+      val form     = addServicePaidSeparatelyForm.bind(formData)
 
       mustContainError(
-        errorKey.addTradeService,
-        "error.addTradeService.required",
+        errorKey.addService,
+        "error.servicePaidSeparatelyList.required",
         form
       )
     }
@@ -116,12 +115,12 @@ class TradeServicesListControllerSpec extends TestBaseSpec {
 
   object TestData {
     val errorKey: Object {
-      val addTradeService: String
+      val addService: String
     } = new {
-      val addTradeService: String =
-        "tradeServicesList"
+      val addService: String =
+        "servicePaidSeparatelyList"
     }
 
-    val baseFormData: Map[String, String] = Map("tradeServicesList" -> "yes")
+    val baseFormData: Map[String, String] = Map("servicePaidSeparatelyList" -> "yes")
   }
 }

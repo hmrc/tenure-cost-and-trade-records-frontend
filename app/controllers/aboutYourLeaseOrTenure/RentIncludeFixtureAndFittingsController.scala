@@ -19,9 +19,10 @@ package controllers.aboutYourLeaseOrTenure
 import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.RentIncludeFixtureAndFittingsForm.rentIncludeFixturesAndFittingsForm
-import models.Session
+import models.{ForTypes, Session}
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne
 import models.submissions.aboutYourLeaseOrTenure.RentIncludeFixturesAndFittingsDetails
+import models.submissions.common.{AnswerNo, AnswerYes}
 import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.RentFixtureAndFittingsPageId
 import play.api.Logging
@@ -80,14 +81,31 @@ class RentIncludeFixtureAndFittingsController @Inject() (
     )
   }
 
-  private def getBackLink(answers: Session): String =
-    answers.aboutLeaseOrAgreementPartOne.flatMap(
-      _.rentIncludeTradeServicesDetails.map(_.rentIncludeTradeServices.name)
-    ) match {
-      case Some("yes") => controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesDetailsController.show().url
-      case Some("no")  => controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesController.show().url
-      case _           =>
-        logger.warn(s"Back link for fixture and fittings page reached with unknown trade services value")
-        controllers.routes.TaskListController.show().url
+  private def getBackLink(answers: Session): String = {
+
+    val index = answers.aboutLeaseOrAgreementPartThree.map(_.servicesPaidIndex).getOrElse(0)
+
+    answers.forType match {
+      case ForTypes.for6030 =>
+        answers.aboutLeaseOrAgreementPartThree.flatMap(_.paymentForTradeServices).map(_.paymentForTradeService) match {
+          case Some(AnswerYes) =>
+            controllers.aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyListController.show(index).url
+          case Some(AnswerNo)  => controllers.aboutYourLeaseOrTenure.routes.PaymentForTradeServicesController.show().url
+          case _               =>
+            logger.warn(s"Back link for fixture and fittings page reached with unknown payment trade services value")
+            controllers.routes.TaskListController.show().url
+        }
+      case _                =>
+        answers.aboutLeaseOrAgreementPartOne.flatMap(
+          _.rentIncludeTradeServicesDetails.map(_.rentIncludeTradeServices.name)
+        ) match {
+          case Some("yes") =>
+            controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesDetailsController.show().url
+          case Some("no")  => controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesController.show().url
+          case _           =>
+            logger.warn(s"Back link for fixture and fittings page reached with unknown trade services value")
+            controllers.routes.TaskListController.show().url
+        }
     }
+  }
 }

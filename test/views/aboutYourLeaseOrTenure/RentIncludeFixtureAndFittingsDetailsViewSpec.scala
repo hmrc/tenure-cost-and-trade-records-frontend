@@ -17,7 +17,6 @@
 package views.aboutYourLeaseOrTenure
 
 import form.aboutYourLeaseOrTenure.RentIncludeFixtureAndFittingDetailsForm
-import models.AnnualRent
 import models.pages.Summary
 import models.submissions.aboutYourLeaseOrTenure.RentIncludeFixturesOrFittingsInformationDetails
 import org.scalatest.matchers.must.Matchers._

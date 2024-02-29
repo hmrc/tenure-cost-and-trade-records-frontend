@@ -57,6 +57,11 @@ class CheckYourAnswersRequestReferenceNumberControllerSpec extends TestBaseSpec 
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
+
+    "confirmation return 200" in {
+      val result = checkYourAnswersRequestReferenceController().confirmation(fakeRequest)
+      status(result) shouldBe Status.OK
+    }
   }
 
   "SUBMIT /" should {

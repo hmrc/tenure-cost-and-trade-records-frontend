@@ -18,20 +18,16 @@ package form.aboutYourLeaseOrTenure
 
 import form.MappingSupport.createYesNoType
 import models.submissions.common.AnswersYesNo
-import play.api.data.Form
+import play.api.data.{Form, Mapping}
 import play.api.data.Forms.{mapping, optional}
 
-object TradeServicesListForm {
+object ServicePaidSeparatelyListForm {
 
-  lazy val addServiceForm: Form[AnswersYesNo] = Form(
-    addServiceMapping
-  )
-
-  val addServiceMapping = mapping(
-    "tradeServicesList" -> optional(createYesNoType("error.addTradeService.required"))
-      .verifying("error.addTradeService.required", _.nonEmpty)
+  val addServicePaidSeparatelyMapping: Mapping[AnswersYesNo] = mapping(
+    "servicePaidSeparatelyList" -> optional(createYesNoType("error.servicePaidSeparatelyList.required"))
+      .verifying("error.servicePaidSeparatelyList.required", _.nonEmpty)
       .transform[AnswersYesNo](_.get, Some(_))
   )(x => x)(b => Some(b))
 
-  val addAnotherServiceForm = Form(addServiceMapping)
+  val addServicePaidSeparatelyForm = Form(addServicePaidSeparatelyMapping)
 }

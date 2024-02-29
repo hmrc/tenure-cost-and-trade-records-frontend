@@ -16,9 +16,9 @@
 
 package views.aboutFranchisesOrLettings
 
-import form.aboutfranchisesorlettings.{CalculatingTheRentForm, CateringOperationOrLettingAccommodationRentForm}
+import form.aboutfranchisesorlettings.CalculatingTheRentForm
 import models.pages.Summary
-import models.submissions.aboutfranchisesorlettings.{CalculatingTheRent, CateringOperationRentDetails}
+import models.submissions.aboutfranchisesorlettings.CalculatingTheRent
 import org.scalatest.matchers.must.Matchers.convertToAnyMustWrapper
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours

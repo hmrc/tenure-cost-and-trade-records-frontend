@@ -259,15 +259,36 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
     controllers.aboutYourLeaseOrTenure.routes.RentIncreaseAnnuallyWithRPIController.show()
   }
   private def tradeServicesDescriptionRouting: Session => Call = answers => {
-    controllers.aboutYourLeaseOrTenure.routes.TradeServicesListController.show(getIndexOfServices(answers))
+    controllers.aboutYourLeaseOrTenure.routes.TradeServicesListController.show(getIndexOfTradeServices(answers))
   }
-  private def tradeServicesListRouting: Session => Call        = answers => {
+  private def servicePaidSeparatelyRouting: Session => Call    = answers => {
+    controllers.aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyListController.show(getIndexOfPaidServices(answers))
+  }
+
+  private def servicePaidSeparatelyListRouting: Session => Call = answers => {
     val existingSection =
-      answers.aboutLeaseOrAgreementPartThree.flatMap(_.tradeServices.lift(getIndexOfServices(answers)))
+      answers.aboutLeaseOrAgreementPartThree.flatMap(_.servicesPaid.lift(getIndexOfPaidServices(answers)))
+    existingSection.flatMap(_.addAnotherPaidService) match {
+      case Some(AnswerYes) =>
+        controllers.aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyController
+          .show(Some(getIndexOfPaidServices(answers) + 1))
+      case Some(AnswerNo)  =>
+        controllers.aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsController.show()
+      case _               =>
+        logger.warn(
+          s"Navigation for add another service paid separately reached without correct selection of conditions by controller"
+        )
+        throw new RuntimeException("Invalid option exception for add another service conditions routing")
+    }
+
+  }
+  private def tradeServicesListRouting: Session => Call         = answers => {
+    val existingSection =
+      answers.aboutLeaseOrAgreementPartThree.flatMap(_.tradeServices.lift(getIndexOfTradeServices(answers)))
     existingSection.flatMap(_.addAnotherService) match {
       case Some(AnswerYes) =>
         controllers.aboutYourLeaseOrTenure.routes.TradeServicesDescriptionController
-          .show(Some(getIndexOfServices(answers) + 1))
+          .show(Some(getIndexOfTradeServices(answers) + 1))
       case Some(AnswerNo)  =>
         controllers.aboutYourLeaseOrTenure.routes.PaymentForTradeServicesController.show()
       case _               =>
@@ -278,9 +299,23 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
     }
 
   }
+  private def paymentForTradeServicesRouting: Session => Call   = answers => {
+    answers.aboutLeaseOrAgreementPartThree.flatMap(_.paymentForTradeServices.map(_.paymentForTradeService)) match {
+      case Some(AnswerYes) => controllers.aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyController.show()
+      case Some(AnswerNo)  => controllers.aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsController.show
+      case _               =>
+        logger.warn(
+          s"Navigation for payment for trade services reached without correct selection of conditions by controller"
+        )
+        throw new RuntimeException("Invalid option exception for payment for trade services")
+    }
+  }
 
-  private def getIndexOfServices(session: Session): Int =
+  private def getIndexOfTradeServices(session: Session): Int =
     session.aboutLeaseOrAgreementPartThree.map(_.tradeServicesIndex).getOrElse(0)
+
+  private def getIndexOfPaidServices(session: Session): Int =
+    session.aboutLeaseOrAgreementPartThree.map(_.servicesPaidIndex).getOrElse(0)
 
   override val routeMap: Map[Identifier, Session => Call] = Map(
     AboutTheLandlordPageId                        -> aboutYourLandlordRouting,
@@ -362,7 +397,9 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
     ),
     TradeServicesDescriptionId                    -> tradeServicesDescriptionRouting,
     TradeServicesListId                           -> tradeServicesListRouting,
-    PaymentForTradeServicesId                     -> (_ => controllers.routes.TaskListController.show()),
+    ServicePaidSeparatelyId                       -> servicePaidSeparatelyRouting,
+    ServicePaidSeparatelyListId                   -> servicePaidSeparatelyListRouting,
+    PaymentForTradeServicesId                     -> paymentForTradeServicesRouting,
     CheckYourAnswersAboutYourLeaseOrTenureId      -> (_ => controllers.routes.TaskListController.show())
   )
 }

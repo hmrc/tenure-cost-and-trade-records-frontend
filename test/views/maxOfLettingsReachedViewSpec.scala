@@ -25,15 +25,26 @@ import views.behaviours.ViewBehaviours
 
 class maxOfLettingsReachedViewSpec extends ViewBehaviours {
 
-  val messageKeyPrefix = "maxOf5Lettings"
-  val sessionRequest   = SessionRequest(baseFilled6010Session, fakeRequest)
+  val messageKeyPrefix = "maxOf5Lettings.businessOrFranchise"
+
+  val sessionRequest = SessionRequest(baseFilled6010Session, fakeRequest)
 
   val form       = MaxOfLettingsForm.maxOfLettingsForm(messages)
   def createView = () =>
-    maxOfLettingsReachedView(form, "backLink", "connection", Summary("10000001"))(sessionRequest, messages)
+    maxOfLettingsReachedView(
+      form,
+      "backLink",
+      "connection",
+      Summary("10000001")
+    )(sessionRequest, messages)
 
   def createViewUsingForm = (form: Form[MaxOfLettings]) =>
-    maxOfLettingsReachedView(form, "backLink", "connection", Summary("99996010001"))(sessionRequest, messages)
+    maxOfLettingsReachedView(
+      form,
+      "backLink",
+      "connection",
+      Summary("99996010001")
+    )(sessionRequest, messages)
 
   "max of Lettings reached view" must {
 
@@ -41,8 +52,7 @@ class maxOfLettingsReachedViewSpec extends ViewBehaviours {
 
     "contain text" in {
       val doc = asDocument(createView())
-      assert(doc.toString.contains(messages("maxOf5Lettings.heading")))
-      assert(doc.toString.contains(messages("maxOf5Lettings.contact")))
+      assert(doc.toString.contains(messages("maxOf5Lettings.businessOrFranchise.heading")))
       assert(doc.toString.contains(messages("maxOf5Lettings.confirm")))
       assert(doc.toString.contains(messages("maxOf5Lettings.link")))
     }

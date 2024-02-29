@@ -17,7 +17,7 @@
 package controllers.requestReferenceNumber
 
 import form.requestReferenceNumber.RequestReferenceNumberForm.requestReferenceNumberForm
-import models.submissions.connectiontoproperty.StillConnectedDetails
+import models.submissions.requestReferenceNumber.RequestReferenceNumberDetails
 import play.api.http.Status
 import play.api.test.Helpers._
 import utils.TestBaseSpec
@@ -28,12 +28,22 @@ class RequestReferenceNumberControllerSpec extends TestBaseSpec {
   import utils.FormBindingTestAssertions.mustContainError
 
   def noReferenceNumberController(
-    stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledStillConnectedDetailsYes)
+    requestReferenceNumberDetails: Option[RequestReferenceNumberDetails] = Some(prefilledRequestRefNumCYA)
   ) = new RequestReferenceNumberController(
     stubMessagesControllerComponents(),
     requestReferenceNumberNavigator,
     requestReferenceAddressView,
-    preEnrichedActionRefiner(stillConnectedDetails = stillConnectedDetails),
+    preEnrichedActionRefiner(requestReferenceNumberDetails = requestReferenceNumberDetails),
+    mockSessionRepo
+  )
+
+  def noReferenceNumberControllerEmpty(
+    requestReferenceNumberDetails: Option[RequestReferenceNumberDetails] = None
+  ) = new RequestReferenceNumberController(
+    stubMessagesControllerComponents(),
+    requestReferenceNumberNavigator,
+    requestReferenceAddressView,
+    preEnrichedActionRefiner(requestReferenceNumberDetails = requestReferenceNumberDetails),
     mockSessionRepo
   )
 
@@ -52,6 +62,19 @@ class RequestReferenceNumberControllerSpec extends TestBaseSpec {
     "return 303" in {
       val result = noReferenceNumberController().startWithSession(fakeRequest)
       status(result) shouldBe Status.SEE_OTHER
+    }
+  }
+
+  "GET empty session" should {
+    "return 200" in {
+      val result = noReferenceNumberControllerEmpty().show(fakeRequest)
+      status(result) shouldBe Status.OK
+    }
+
+    "return HTML" in {
+      val result = noReferenceNumberControllerEmpty().show(fakeRequest)
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
     }
   }
 

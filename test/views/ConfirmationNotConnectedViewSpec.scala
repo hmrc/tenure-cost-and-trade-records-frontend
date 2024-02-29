@@ -16,10 +16,11 @@
 
 package views
 
-import controllers.{FeedbackFormMapper, LoginController, LoginDetails}
+import controllers.FeedbackFormMapper
 import form.Feedback
 import play.api.data.Form
-import views.behaviours.{QuestionViewBehaviours, ViewBehaviours}
+import play.twirl.api.Html
+import views.behaviours.ViewBehaviours
 
 class ConfirmationNotConnectedViewSpec extends ViewBehaviours {
 
@@ -27,9 +28,9 @@ class ConfirmationNotConnectedViewSpec extends ViewBehaviours {
 
 //  override val form = LoginController.loginForm
 
-  val form = FeedbackFormMapper.feedbackForm
+  val form: Form[Feedback] = FeedbackFormMapper.feedbackForm
 
-  def createView = () => confirmationNotConnectedView(form, baseFilled6010Session)(fakeRequest, messages)
+  def createView: () => Html = () => confirmationNotConnectedView(form, baseFilled6010Session)(fakeRequest, messages)
 
 //  def createViewUsingForm = () => confirmationNotConnectedView(baseFilled6010Session)(fakeRequest, messages)
 

@@ -16,7 +16,7 @@
 
 package views.aboutyouandtheproperty
 
-import form.aboutyouandtheproperty.{AboutThePropertyForm, AboutThePropertyStringForm}
+import form.aboutyouandtheproperty.AboutThePropertyStringForm
 import models.pages.Summary
 import models.submissions.aboutyouandtheproperty._
 import org.scalatest.matchers.must.Matchers._

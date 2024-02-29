@@ -1,5 +1,5 @@
-@*
- * Copyright 2023 HM Revenue & Customs
+/*
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,18 +12,16 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *@
+ */
 
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
+package models.submissions.aboutYourLeaseOrTenure
 
-@this(layout: Layout)
+import play.api.libs.json.Json
 
-@()(implicit request: Request[_],  messages: Messages)
-
-@layout(
-    pageHeading = messages("heading.login.lockedOut"),
-    withTimeoutDialog = false
-) {
-    <p class="govuk-body">@messages("error.login.lockedOut")</p>
-    <p class="govuk-body">@HtmlContent(messages("error.login.lockedOut.p1")).asHtml</p>
+case class ServicePaidSeparately(
+  annualCharge: BigDecimal,
+  description: String
+)
+object ServicePaidSeparately {
+  implicit val format = Json.format[ServicePaidSeparately]
 }

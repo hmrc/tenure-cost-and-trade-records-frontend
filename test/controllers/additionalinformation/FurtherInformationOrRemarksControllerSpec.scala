@@ -34,6 +34,16 @@ class FurtherInformationOrRemarksControllerSpec extends TestBaseSpec {
     mockSessionRepo
   )
 
+  def furtherInformationOrRemarksControllerEmpty(
+    additionalInformation: Option[AdditionalInformation] = None
+  ) = new FurtherInformationOrRemarksController(
+    stubMessagesControllerComponents(),
+    additionalInformationNavigator,
+    furtherInformationOrRemarksView,
+    preEnrichedActionRefiner(additionalInformation = additionalInformation),
+    mockSessionRepo
+  )
+
   "GET /" should {
     "return 200" in {
       val result = furtherInformationOrRemarksController().show(fakeRequest)
@@ -42,6 +52,15 @@ class FurtherInformationOrRemarksControllerSpec extends TestBaseSpec {
 
     "return HTML" in {
       val result = furtherInformationOrRemarksController().show(fakeRequest)
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
+    }
+  }
+
+  "GET / empty additional info" should {
+    "return html with 200" in {
+      val result = furtherInformationOrRemarksControllerEmpty().show(fakeRequest)
+      status(result)      shouldBe Status.OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }

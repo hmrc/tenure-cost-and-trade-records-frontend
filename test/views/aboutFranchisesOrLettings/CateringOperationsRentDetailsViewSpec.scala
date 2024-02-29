@@ -20,12 +20,8 @@ import form.aboutfranchisesorlettings.CateringOperationOrLettingAccommodationRen
 import models.submissions.aboutfranchisesorlettings.CateringOperationRentDetails
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
-import play.api.i18n.Lang
-import play.twirl.api.HtmlFormat
 import views.behaviours.QuestionViewBehaviours
 import models.pages.Summary
-
-import java.util.Locale
 
 class CateringOperationsRentDetailsViewSpec extends QuestionViewBehaviours[CateringOperationRentDetails] {
 

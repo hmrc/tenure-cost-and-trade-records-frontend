@@ -19,12 +19,8 @@ package views.aboutFranchisesOrLettings
 import form.aboutfranchisesorlettings.LettingOtherPartOfPropertyRentIncludesForm.lettingOtherPartOfPropertyRentIncludesForm
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
-import play.api.i18n.Lang
-import play.twirl.api.HtmlFormat
 import views.behaviours.QuestionViewBehaviours
 import models.pages.Summary
-
-import java.util.Locale
 
 class LettingOtherPartOfPropertyRentIncludesViewSpec extends QuestionViewBehaviours[List[String]] {
 
