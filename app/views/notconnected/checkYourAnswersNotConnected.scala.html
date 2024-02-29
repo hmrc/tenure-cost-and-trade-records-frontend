@@ -34,7 +34,7 @@
         pageHeading = messages("checkYourAnswersNotConnected.heading"),
         summary = Some(session.toSummary),
         fullWidth = true,
-        backLinkUrl = controllers.notconnected.routes.RemoveConnectionController.show.url
+        backLinkUrl = controllers.notconnected.routes.RemoveConnectionController.show().url
     ) {
 
         @formWithCSRF(action = controllers.notconnected.routes.CheckYourAnswersNotConnectedController.submit()) {

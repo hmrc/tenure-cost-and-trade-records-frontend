@@ -16,12 +16,12 @@
 
 package models.submissions.aboutthetradinghistory
 
-import play.api.libs.json.Json
+import play.api.libs.json.{Json, OFormat}
 
 case class OtherCosts(
   otherCosts: Seq[OtherCost] = Seq.empty,
   otherCostDetails: Option[String] = None
 )
 object OtherCosts {
-  implicit val format = Json.format[OtherCosts]
+  implicit val format: OFormat[OtherCosts] = Json.format[OtherCosts]
 }

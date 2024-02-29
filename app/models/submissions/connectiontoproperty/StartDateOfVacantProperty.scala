@@ -16,12 +16,12 @@
 
 package models.submissions.connectiontoproperty
 
-import play.api.libs.json.Json
+import play.api.libs.json.{Json, OFormat}
 
 import java.time.LocalDate
 
 case class StartDateOfVacantProperty(datePropertyBecomeVacant: LocalDate)
 
 object StartDateOfVacantProperty {
-  implicit val format = Json.format[StartDateOfVacantProperty]
+  implicit val format: OFormat[StartDateOfVacantProperty] = Json.format[StartDateOfVacantProperty]
 }

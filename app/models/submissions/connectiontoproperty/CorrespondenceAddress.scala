@@ -17,7 +17,7 @@
 package models.submissions.connectiontoproperty
 
 import models.submissions.PrintableAddress
-import play.api.libs.json.Json
+import play.api.libs.json.{Json, OFormat}
 
 case class CorrespondenceAddress(
   buildingNameNumber: String,
@@ -28,6 +28,6 @@ case class CorrespondenceAddress(
 ) extends PrintableAddress
 
 object CorrespondenceAddress {
-  implicit val format = Json.format[CorrespondenceAddress]
+  implicit val format: OFormat[CorrespondenceAddress] = Json.format[CorrespondenceAddress]
 
 }

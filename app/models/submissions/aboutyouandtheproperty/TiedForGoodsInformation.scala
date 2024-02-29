@@ -35,11 +35,11 @@ object TiedForGoodsInformationDetailsPartialTie extends TiedForGoodsInformation 
 object TiedForGoodsInformation extends NamedEnumSupport[TiedForGoodsInformation] {
   implicit val format: Format[TiedForGoodsInformation] = EnumFormat(TiedForGoodsInformation)
 
-  val all = List(
+  val all: Seq[TiedForGoodsInformation] = List(
     TiedForGoodsInformationDetailsFullTie,
     TiedForGoodsInformationDetailsBeerOnly,
     TiedForGoodsInformationDetailsPartialTie
   )
 
-  val key = all.head.key
+  val key: String = all.head.key
 }

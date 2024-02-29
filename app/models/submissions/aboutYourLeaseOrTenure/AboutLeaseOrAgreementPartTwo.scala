@@ -18,7 +18,7 @@ package models.submissions.aboutYourLeaseOrTenure
 
 import actions.SessionRequest
 import models.Session
-import play.api.libs.json.Json
+import play.api.libs.json.{Json, OFormat}
 
 //Currently 21 parameters in this case class, so only one more is allowed!
 case class AboutLeaseOrAgreementPartTwo(
@@ -48,7 +48,7 @@ case class AboutLeaseOrAgreementPartTwo(
 )
 
 object AboutLeaseOrAgreementPartTwo {
-  implicit val format = Json.format[AboutLeaseOrAgreementPartTwo]
+  implicit val format: OFormat[AboutLeaseOrAgreementPartTwo] = Json.format[AboutLeaseOrAgreementPartTwo]
 
   def updateAboutLeaseOrAgreementPartTwo(
     copy: AboutLeaseOrAgreementPartTwo => AboutLeaseOrAgreementPartTwo

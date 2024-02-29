@@ -45,7 +45,7 @@ class OtherCostsViewSpec extends QuestionViewBehaviours[OtherCosts] {
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText mustBe messages("back.link.label")
       val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.aboutthetradinghistory.routes.FixedOperatingExpensesController.show.url
+      backlinkUrl mustBe controllers.aboutthetradinghistory.routes.FixedOperatingExpensesController.show().url
     }
 
     "Section heading is visible" in {

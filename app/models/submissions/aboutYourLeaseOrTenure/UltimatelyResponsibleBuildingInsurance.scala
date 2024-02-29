@@ -17,7 +17,7 @@
 package models.submissions.aboutYourLeaseOrTenure
 
 import models.submissions.common.BuildingInsurance
-import play.api.libs.json.Json
+import play.api.libs.json.{Json, OFormat}
 
 case class UltimatelyResponsibleBuildingInsurance(
   buildingInsurance: BuildingInsurance,
@@ -25,5 +25,6 @@ case class UltimatelyResponsibleBuildingInsurance(
 )
 
 object UltimatelyResponsibleBuildingInsurance {
-  implicit val format = Json.format[UltimatelyResponsibleBuildingInsurance]
+  implicit val format: OFormat[UltimatelyResponsibleBuildingInsurance] =
+    Json.format[UltimatelyResponsibleBuildingInsurance]
 }

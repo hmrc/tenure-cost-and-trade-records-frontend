@@ -16,7 +16,7 @@
 
 package models.submissions.aboutyouandtheproperty
 
-import play.api.libs.json.Json
+import play.api.libs.json.{Json, OFormat}
 
 //TODO - this does not seem to have been set up to store the Partial tie text field, nor is there seemingly any validation to ensure the user has to set this.
 
@@ -26,6 +26,6 @@ case class TiedForGoodsInformationDetails(
 )
 
 object TiedForGoodsInformationDetails {
-  implicit val format = Json.format[TiedForGoodsInformationDetails]
+  implicit val format: OFormat[TiedForGoodsInformationDetails] = Json.format[TiedForGoodsInformationDetails]
 
 }

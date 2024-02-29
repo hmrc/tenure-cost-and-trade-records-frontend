@@ -16,12 +16,12 @@
 
 package models.submissions
 
-import play.api.libs.json.Json
+import play.api.libs.json.{Json, OFormat}
 
 case class MaxOfLettings(
   maxOfLettings: Boolean
 )
 
 object MaxOfLettings {
-  implicit val format = Json.format[MaxOfLettings]
+  implicit val format: OFormat[MaxOfLettings] = Json.format[MaxOfLettings]
 }

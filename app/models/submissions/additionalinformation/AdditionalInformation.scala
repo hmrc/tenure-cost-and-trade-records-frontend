@@ -18,7 +18,7 @@ package models.submissions.additionalinformation
 
 import actions.SessionRequest
 import models.Session
-import play.api.libs.json.Json
+import play.api.libs.json.{Json, OFormat}
 
 case class AdditionalInformation(
   furtherInformationOrRemarksDetails: Option[FurtherInformationOrRemarksDetails] = None,
@@ -26,7 +26,7 @@ case class AdditionalInformation(
 )
 
 object AdditionalInformation {
-  implicit val format = Json.format[AdditionalInformation]
+  implicit val format: OFormat[AdditionalInformation] = Json.format[AdditionalInformation]
 
   def updateAdditionalInformation(
     copy: AdditionalInformation => AdditionalInformation

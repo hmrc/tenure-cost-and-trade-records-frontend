@@ -17,7 +17,7 @@
 package models.submissions.aboutYourLeaseOrTenure
 
 import models.submissions.common.InsideRepairs
-import play.api.libs.json.Json
+import play.api.libs.json.{Json, OFormat}
 
 case class UltimatelyResponsibleInsideRepairs(
   insideRepairs: InsideRepairs,
@@ -25,5 +25,5 @@ case class UltimatelyResponsibleInsideRepairs(
 )
 
 object UltimatelyResponsibleInsideRepairs {
-  implicit val format = Json.format[UltimatelyResponsibleInsideRepairs]
+  implicit val format: OFormat[UltimatelyResponsibleInsideRepairs] = Json.format[UltimatelyResponsibleInsideRepairs]
 }

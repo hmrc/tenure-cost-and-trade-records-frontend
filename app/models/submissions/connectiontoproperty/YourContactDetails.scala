@@ -18,7 +18,7 @@ package models.submissions.connectiontoproperty
 
 import models.submissions.PrintableYourContactDetails
 import models.submissions.common.ContactDetails
-import play.api.libs.json.Json
+import play.api.libs.json.{Json, OFormat}
 
 case class YourContactDetails(
   fullName: String,
@@ -27,5 +27,5 @@ case class YourContactDetails(
 ) extends PrintableYourContactDetails
 
 object YourContactDetails {
-  implicit val format = Json.format[YourContactDetails]
+  implicit val format: OFormat[YourContactDetails] = Json.format[YourContactDetails]
 }

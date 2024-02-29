@@ -18,7 +18,7 @@ package models.submissions.aboutYourLeaseOrTenure
 
 import actions.SessionRequest
 import models.Session
-import play.api.libs.json.Json
+import play.api.libs.json.{Json, OFormat}
 
 case class AboutLeaseOrAgreementPartThree(
   tradeServicesIndex: Int = 0,
@@ -29,7 +29,7 @@ case class AboutLeaseOrAgreementPartThree(
 )
 
 object AboutLeaseOrAgreementPartThree {
-  implicit val format = Json.format[AboutLeaseOrAgreementPartThree]
+  implicit val format: OFormat[AboutLeaseOrAgreementPartThree] = Json.format[AboutLeaseOrAgreementPartThree]
 
   def updateAboutLeaseOrAgreementPartThree(
     copy: AboutLeaseOrAgreementPartThree => AboutLeaseOrAgreementPartThree

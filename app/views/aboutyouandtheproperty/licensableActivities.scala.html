@@ -36,7 +36,7 @@
   sectionName = messages("label.section.aboutTheProperty"),
   backLinkUrl = {fromLocation match {
       case "TL" => controllers.routes.TaskListController.show().url+"#licensable-activities"
-      case _ => controllers.aboutyouandtheproperty.routes.WebsiteForPropertyController.show.url
+      case _ => controllers.aboutyouandtheproperty.routes.WebsiteForPropertyController.show().url
   }},
   theForm = theForm
 ) {

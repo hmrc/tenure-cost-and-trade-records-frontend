@@ -17,7 +17,7 @@
 package models.submissions.notconnected
 
 import models.submissions.common.ContactDetails
-import play.api.libs.json.Json
+import play.api.libs.json.{Json, OFormat}
 
 case class RemoveConnectionsDetails(
   removeConnectionFullName: String,
@@ -26,6 +26,6 @@ case class RemoveConnectionsDetails(
 )
 
 object RemoveConnectionsDetails {
-  implicit val format = Json.format[RemoveConnectionsDetails]
+  implicit val format: OFormat[RemoveConnectionsDetails] = Json.format[RemoveConnectionsDetails]
 
 }

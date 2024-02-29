@@ -16,12 +16,13 @@
 
 package models.submissions.connectiontoproperty
 
-import play.api.libs.json.Json
+import play.api.libs.json.{Json, OFormat}
 
 case class CheckYourAnswersConnectionToVacantProperty(
   checkYourAnswersConnectionToVacantProperty: String
 )
 
 object CheckYourAnswersConnectionToVacantProperty {
-  implicit val format = Json.format[CheckYourAnswersConnectionToVacantProperty]
+  implicit val format: OFormat[CheckYourAnswersConnectionToVacantProperty] =
+    Json.format[CheckYourAnswersConnectionToVacantProperty]
 }

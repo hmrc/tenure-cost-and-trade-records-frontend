@@ -18,7 +18,7 @@ package models.submissions.connectiontoproperty
 
 import models.submissions.MaxOfLettings
 import models.submissions.common.AnswersYesNo
-import play.api.libs.json.Json
+import play.api.libs.json.{Json, OFormat}
 
 case class LettingPartOfPropertyDetails(
   tenantDetails: TenantDetails,
@@ -29,5 +29,5 @@ case class LettingPartOfPropertyDetails(
 )
 
 object LettingPartOfPropertyDetails {
-  implicit val format = Json.format[LettingPartOfPropertyDetails]
+  implicit val format: OFormat[LettingPartOfPropertyDetails] = Json.format[LettingPartOfPropertyDetails]
 }

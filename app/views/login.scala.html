@@ -41,7 +41,7 @@
 
     <p class="govuk-body">@messages("label.letter")</p>
 
-    @formWithCSRF(action = routes.LoginController.submit, args = 'novalidate -> "novalidate") {
+    @formWithCSRF(action = routes.LoginController.submit(), args = 'novalidate -> "novalidate") {
 
         @govukInput(
             Input(

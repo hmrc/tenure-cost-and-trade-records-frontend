@@ -29,7 +29,7 @@ class PayACapitalSumDetailsViewSpec extends QuestionViewBehaviours[PayACapitalSu
 
   override val form = PayACapitalSumDetailsForm.payACapitalSumDetailsForm(messages)
 
-  val backLink = controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController.show.url
+  val backLink = controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController.show().url
 
   def createView = () => payACapitalSumDetailsView(form, backLink, Summary("99996030001"))(fakeRequest, messages)
 
@@ -45,7 +45,7 @@ class PayACapitalSumDetailsViewSpec extends QuestionViewBehaviours[PayACapitalSu
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText mustBe messages("back.link.label")
       val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController.show.url
+      backlinkUrl mustBe controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController.show().url
     }
 
     "Section heading is visible" in {

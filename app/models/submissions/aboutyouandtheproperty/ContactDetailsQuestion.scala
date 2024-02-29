@@ -17,10 +17,10 @@
 package models.submissions.aboutyouandtheproperty
 
 import models.submissions.common.AnswersYesNo
-import play.api.libs.json.Json
+import play.api.libs.json.{Json, OFormat}
 
 case class ContactDetailsQuestion(contactDetailsQuestion: AnswersYesNo)
 
 object ContactDetailsQuestion {
-  implicit val format = Json.format[ContactDetailsQuestion]
+  implicit val format: OFormat[ContactDetailsQuestion] = Json.format[ContactDetailsQuestion]
 }

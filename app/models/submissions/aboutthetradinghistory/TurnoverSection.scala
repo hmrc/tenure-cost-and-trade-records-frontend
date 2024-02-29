@@ -16,7 +16,7 @@
 
 package models.submissions.aboutthetradinghistory
 
-import play.api.libs.json.Json
+import play.api.libs.json.{Json, OFormat}
 
 import java.time.LocalDate
 
@@ -29,9 +29,9 @@ case class TurnoverSection(
   accommodation: Option[BigDecimal],
   averageOccupancyRate: Option[BigDecimal]
 ) {
-  def total = Seq(alcoholicDrinks, accommodation, food, otherReceipts).flatten.sum
+  def total: BigDecimal = Seq(alcoholicDrinks, accommodation, food, otherReceipts).flatten.sum
 }
 
 object TurnoverSection {
-  implicit val format = Json.format[TurnoverSection]
+  implicit val format: OFormat[TurnoverSection] = Json.format[TurnoverSection]
 }

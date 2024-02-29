@@ -16,7 +16,7 @@
 
 package models.submissions.aboutfranchisesorlettings
 
-import play.api.libs.json.Json
+import play.api.libs.json.{Json, OFormat}
 
 case class LettingOtherPartOfPropertyInformationDetails(
   operatorName: String,
@@ -25,6 +25,7 @@ case class LettingOtherPartOfPropertyInformationDetails(
 )
 
 object LettingOtherPartOfPropertyInformationDetails {
-  implicit val format = Json.format[LettingOtherPartOfPropertyInformationDetails]
+  implicit val format: OFormat[LettingOtherPartOfPropertyInformationDetails] =
+    Json.format[LettingOtherPartOfPropertyInformationDetails]
 
 }

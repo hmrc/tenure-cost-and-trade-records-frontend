@@ -17,7 +17,7 @@
 package models.submissions.common
 
 import models.submissions.PrintableAddress
-import play.api.libs.json.Json
+import play.api.libs.json.{Json, OFormat}
 
 case class ContactDetailsAddress(
   buildingNameNumber: String,
@@ -28,5 +28,5 @@ case class ContactDetailsAddress(
 ) extends PrintableAddress
 
 object ContactDetailsAddress {
-  implicit val format = Json.format[ContactDetailsAddress]
+  implicit val format: OFormat[ContactDetailsAddress] = Json.format[ContactDetailsAddress]
 }

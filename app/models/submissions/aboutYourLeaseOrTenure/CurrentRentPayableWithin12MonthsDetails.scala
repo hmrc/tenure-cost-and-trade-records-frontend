@@ -32,8 +32,8 @@ object CurrentRentWithin12MonthsNo extends CurrentRentWithin12Months {
 object CurrentRentWithin12Months extends NamedEnumSupport[CurrentRentWithin12Months] {
   implicit val format: Format[CurrentRentWithin12Months] = EnumFormat(CurrentRentWithin12Months)
 
-  val all = List(CurrentRentWithin12MonthsYes, CurrentRentWithin12MonthsNo)
+  val all: Seq[CurrentRentWithin12Months] = List(CurrentRentWithin12MonthsYes, CurrentRentWithin12MonthsNo)
 
-  val key = all.head.key
+  val key: String = all.head.key
 
 }

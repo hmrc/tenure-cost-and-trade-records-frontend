@@ -41,7 +41,7 @@ object CurrentRentFixedSaleLeaseback extends CurrentRentFixed {
 object CurrentRentFixed extends NamedEnumSupport[CurrentRentFixed] {
   implicit val format: Format[CurrentRentFixed] = EnumFormat(CurrentRentFixed)
 
-  val all = List(
+  val all: Seq[CurrentRentFixed] = List(
     CurrentRentFixedNewLeaseAgreement,
     CurrentRentFixedInterimRent,
     CurrentRentFixedRentReview,
@@ -49,5 +49,5 @@ object CurrentRentFixed extends NamedEnumSupport[CurrentRentFixed] {
     CurrentRentFixedSaleLeaseback
   )
 
-  val key = all.head.key
+  val key: String = all.head.key
 }

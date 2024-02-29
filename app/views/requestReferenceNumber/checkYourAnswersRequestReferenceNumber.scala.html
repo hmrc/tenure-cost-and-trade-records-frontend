@@ -38,7 +38,7 @@
 @layout(
     pageHeading = messages("checkYourAnswersRequestReferenceNumber.heading"),
     fullWidth = true,
-    backLinkUrl = controllers.requestReferenceNumber.routes.RequestReferenceNumberContactDetailsController.show.url
+    backLinkUrl = controllers.requestReferenceNumber.routes.RequestReferenceNumberContactDetailsController.show().url
 ) {
 
     @formWithCSRF(action = controllers.requestReferenceNumber.routes.CheckYourAnswersRequestReferenceNumberController.submit()) {

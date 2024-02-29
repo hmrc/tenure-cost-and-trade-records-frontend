@@ -19,7 +19,7 @@ package models.submissions.aboutyouandtheproperty
 import actions.SessionRequest
 import models.Session
 import models.submissions.common.AnswersYesNo
-import play.api.libs.json.Json
+import play.api.libs.json.{Json, OFormat}
 
 case class AboutYouAndTheProperty(
   customerDetails: Option[CustomerDetails] = None,
@@ -44,7 +44,7 @@ case class AboutYouAndTheProperty(
 )
 
 object AboutYouAndTheProperty {
-  implicit val format = Json.format[AboutYouAndTheProperty]
+  implicit val format: OFormat[AboutYouAndTheProperty] = Json.format[AboutYouAndTheProperty]
 
   def updateAboutYouAndTheProperty(
     copy: AboutYouAndTheProperty => AboutYouAndTheProperty

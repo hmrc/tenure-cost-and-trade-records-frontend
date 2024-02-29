@@ -17,7 +17,7 @@
 package models.submissions.aboutyouandtheproperty
 
 import models.submissions.PrintableAddress
-import play.api.libs.json.Json
+import play.api.libs.json.{Json, OFormat}
 
 case class AlternativeAddress(
   buildingNameNumber: String,
@@ -28,5 +28,5 @@ case class AlternativeAddress(
 ) extends PrintableAddress
 
 object AlternativeAddress {
-  implicit val format = Json.format[AlternativeAddress]
+  implicit val format: OFormat[AlternativeAddress] = Json.format[AlternativeAddress]
 }

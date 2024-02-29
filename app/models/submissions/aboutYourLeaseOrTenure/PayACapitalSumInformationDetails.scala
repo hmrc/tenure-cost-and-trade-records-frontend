@@ -16,7 +16,7 @@
 
 package models.submissions.aboutYourLeaseOrTenure
 
-import play.api.libs.json.Json
+import play.api.libs.json.{Json, OFormat}
 
 import java.time.LocalDate
 
@@ -26,5 +26,5 @@ case class PayACapitalSumInformationDetails(
 )
 
 object PayACapitalSumInformationDetails {
-  implicit val format = Json.format[PayACapitalSumInformationDetails]
+  implicit val format: OFormat[PayACapitalSumInformationDetails] = Json.format[PayACapitalSumInformationDetails]
 }

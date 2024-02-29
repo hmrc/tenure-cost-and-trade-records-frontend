@@ -16,7 +16,7 @@
 
 package models.submissions.aboutYourLeaseOrTenure
 
-import play.api.libs.json.Json
+import play.api.libs.json.{Json, OFormat}
 
 case class AboutTheLandlord(
   landlordFullName: String,
@@ -24,5 +24,5 @@ case class AboutTheLandlord(
 )
 
 object AboutTheLandlord {
-  implicit val format = Json.format[AboutTheLandlord]
+  implicit val format: OFormat[AboutTheLandlord] = Json.format[AboutTheLandlord]
 }

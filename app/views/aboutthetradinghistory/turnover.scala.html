@@ -375,7 +375,7 @@
     }
     @* TODO - Reinstate paragraph when cut and paste functionality developed *@
     @*<p class="govuk-body">@messages("turnover.p2")</p>*@
-    @formWithCSRF(action = controllers.aboutthetradinghistory.routes.TurnoverController.submit) {
+    @formWithCSRF(action = controllers.aboutthetradinghistory.routes.TurnoverController.submit()) {
         @govukInsetText(InsetText(
             content = Text(messages("turnover.inset"))
         ))

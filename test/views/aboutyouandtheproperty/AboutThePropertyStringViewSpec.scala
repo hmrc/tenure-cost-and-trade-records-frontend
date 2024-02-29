@@ -28,7 +28,7 @@ class AboutThePropertyStringViewSpec extends QuestionViewBehaviours[PropertyDeta
 
   val messageKeyPrefix = "aboutProperty"
 
-  val backLink = controllers.aboutyouandtheproperty.routes.AlternativeContactDetailsController.show.url
+  val backLink = controllers.aboutyouandtheproperty.routes.AlternativeContactDetailsController.show().url
 
   override val form: Form[PropertyDetailsString] = AboutThePropertyStringForm.aboutThePropertyStringForm
 

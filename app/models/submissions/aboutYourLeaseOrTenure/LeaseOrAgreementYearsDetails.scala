@@ -16,7 +16,7 @@
 
 package models.submissions.aboutYourLeaseOrTenure
 
-import play.api.libs.json.Json
+import play.api.libs.json.{Json, OFormat}
 
 case class LeaseOrAgreementYearsDetails(
   commenceWithinThreeYears: TenancyThreeYears,
@@ -25,6 +25,6 @@ case class LeaseOrAgreementYearsDetails(
 )
 
 object LeaseOrAgreementYearsDetails {
-  implicit val format = Json.format[LeaseOrAgreementYearsDetails]
+  implicit val format: OFormat[LeaseOrAgreementYearsDetails] = Json.format[LeaseOrAgreementYearsDetails]
 
 }
