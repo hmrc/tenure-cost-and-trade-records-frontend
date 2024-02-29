@@ -16,7 +16,7 @@
 
 package models.submissions.Form6010
 
-import play.api.libs.json.Json
+import play.api.libs.json.{Json, OFormat}
 
 import java.time.MonthDay
 
@@ -28,6 +28,6 @@ case class DayMonthsDuration(days: Int, months: Int) {
 }
 
 object DayMonthsDuration {
-  implicit val format = Json.format[DayMonthsDuration]
+  implicit val format: OFormat[DayMonthsDuration] = Json.format[DayMonthsDuration]
 
 }

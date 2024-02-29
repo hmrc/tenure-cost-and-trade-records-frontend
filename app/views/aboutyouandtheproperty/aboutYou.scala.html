@@ -34,7 +34,7 @@
 
 @layout(
   pageHeading = messages("aboutYou.heading"),
-  backLinkUrl = controllers.routes.TaskListController.show.url,
+  backLinkUrl = controllers.routes.TaskListController.show().url,
   showSection = true,
     summary = Some(summary),
   sectionName = messages("label.section.aboutTheProperty"),

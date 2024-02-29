@@ -39,11 +39,11 @@ object MethodToFixCurrentRentsACourt extends MethodToFixCurrentRents {
 object MethodToFixCurrentRents extends NamedEnumSupport[MethodToFixCurrentRents] {
   implicit val format: Format[MethodToFixCurrentRents] = EnumFormat(MethodToFixCurrentRents)
 
-  val all = List(
+  val all: Seq[MethodToFixCurrentRents] = List(
     MethodToFixCurrentRentsAgreement,
     MethodToFixCurrentRentsArbitration,
     MethodToFixCurrentRentIndependentExpert,
     MethodToFixCurrentRentsACourt
   )
-  val key = all.head.key
+  val key: String                       = all.head.key
 }

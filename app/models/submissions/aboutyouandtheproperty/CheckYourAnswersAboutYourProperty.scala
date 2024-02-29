@@ -16,13 +16,13 @@
 
 package models.submissions.aboutyouandtheproperty
 
-import play.api.libs.json.Json
+import play.api.libs.json.{Json, OFormat}
 
 case class CheckYourAnswersAboutYourProperty(
   checkYourAnswersAboutYourProperty: String
 )
 
 object CheckYourAnswersAboutYourProperty {
-  implicit val format = Json.format[CheckYourAnswersAboutYourProperty]
+  implicit val format: OFormat[CheckYourAnswersAboutYourProperty] = Json.format[CheckYourAnswersAboutYourProperty]
 
 }

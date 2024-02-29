@@ -38,9 +38,9 @@ object OutsideRepairs extends NamedEnumSupport[OutsideRepairs] {
     OutsideRepairs
   )
 
-  val all = List(OutsideRepairsLandlord, OutsideRepairsTenant, OutsideRepairsBoth)
+  val all: Seq[OutsideRepairs] = List(OutsideRepairsLandlord, OutsideRepairsTenant, OutsideRepairsBoth)
 
-  val key = all.head.key
+  val key: String = all.head.key
 }
 
 sealed trait InsideRepairs extends NamedEnum {
@@ -62,9 +62,9 @@ object InsideRepairs extends NamedEnumSupport[InsideRepairs] {
     InsideRepairs
   )
 
-  val all = List(InsideRepairsLandlord, InsideRepairsTenant, InsideRepairsBoth)
+  val all: Seq[InsideRepairs] = List(InsideRepairsLandlord, InsideRepairsTenant, InsideRepairsBoth)
 
-  val key = all.head.key
+  val key: String = all.head.key
 }
 
 sealed trait BuildingInsurance extends NamedEnum {
@@ -86,7 +86,7 @@ object BuildingInsurance extends NamedEnumSupport[BuildingInsurance] {
     BuildingInsurance
   )
 
-  val all = List(BuildingInsuranceLandlord, BuildingInsuranceTenant, BuildingInsuranceBoth)
+  val all: Seq[BuildingInsurance] = List(BuildingInsuranceLandlord, BuildingInsuranceTenant, BuildingInsuranceBoth)
 
-  val key = all.head.key
+  val key: String = all.head.key
 }

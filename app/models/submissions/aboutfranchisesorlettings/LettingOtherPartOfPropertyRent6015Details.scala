@@ -16,7 +16,7 @@
 
 package models.submissions.aboutfranchisesorlettings
 
-import play.api.libs.json.Json
+import play.api.libs.json.{Json, OFormat}
 
 import java.time.LocalDate
 
@@ -26,6 +26,7 @@ case class LettingOtherPartOfPropertyRent6015Details(
   declaration: Boolean
 )
 object LettingOtherPartOfPropertyRent6015Details {
-  implicit val format = Json.format[LettingOtherPartOfPropertyRent6015Details]
+  implicit val format: OFormat[LettingOtherPartOfPropertyRent6015Details] =
+    Json.format[LettingOtherPartOfPropertyRent6015Details]
 
 }

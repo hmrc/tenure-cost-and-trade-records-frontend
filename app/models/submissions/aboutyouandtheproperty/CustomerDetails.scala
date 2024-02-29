@@ -17,7 +17,7 @@
 package models.submissions.aboutyouandtheproperty
 
 import models.submissions.common.ContactDetails
-import play.api.libs.json.Json
+import play.api.libs.json.{Json, OFormat}
 
 case class CustomerDetails(
   fullName: String,
@@ -25,6 +25,6 @@ case class CustomerDetails(
 )
 
 object CustomerDetails {
-  implicit val format = Json.format[CustomerDetails]
+  implicit val format: OFormat[CustomerDetails] = Json.format[CustomerDetails]
 
 }

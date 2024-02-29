@@ -35,9 +35,9 @@ object TenancyThreeYears extends NamedEnumSupport[TenancyThreeYears] {
     TenancyThreeYears
   )
 
-  val all = List(TenancyThreeYearsYes, TenancyThreeYearsNo)
+  val all: Seq[TenancyThreeYears] = List(TenancyThreeYearsYes, TenancyThreeYearsNo)
 
-  val key = all.head.key
+  val key: String = all.head.key
 }
 
 sealed trait RentThreeYears extends NamedEnum {
@@ -56,9 +56,9 @@ object RentThreeYears extends NamedEnumSupport[RentThreeYears] {
     RentThreeYears
   )
 
-  val all = List(RentThreeYearsYes, RentThreeYearsNo)
+  val all: Seq[RentThreeYears] = List(RentThreeYearsYes, RentThreeYearsNo)
 
-  val key = all.head.key
+  val key: String = all.head.key
 }
 
 sealed trait UnderReview extends NamedEnum {
@@ -77,7 +77,7 @@ object UnderReview extends NamedEnumSupport[UnderReview] {
     UnderReview
   )
 
-  val all = List(UnderReviewYes, UnderReviewNo)
+  val all: Seq[UnderReview] = List(UnderReviewYes, UnderReviewNo)
 
-  val key = all.head.key
+  val key: String = all.head.key
 }

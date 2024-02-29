@@ -16,7 +16,7 @@
 
 package models.submissions.aboutthetradinghistory
 
-import play.api.libs.json.Json
+import play.api.libs.json.{Json, OFormat}
 
 /**
   * @author Yuriy Tumakha
@@ -27,5 +27,5 @@ case class VariableOperatingExpensesSections(
 )
 
 object VariableOperatingExpensesSections {
-  implicit val format = Json.format[VariableOperatingExpensesSections]
+  implicit val format: OFormat[VariableOperatingExpensesSections] = Json.format[VariableOperatingExpensesSections]
 }

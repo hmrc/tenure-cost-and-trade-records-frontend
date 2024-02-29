@@ -38,12 +38,12 @@ object ConnectionToThePropertyOwnerAgent extends ConnectionToProperty {
 object ConnectionToProperty extends NamedEnumSupport[ConnectionToProperty] {
   implicit val format: Format[ConnectionToProperty] = EnumFormat(ConnectionToProperty)
 
-  val all = List(
+  val all: Seq[ConnectionToProperty] = List(
     ConnectionToThePropertyOccupierTrustee,
     ConnectionToThePropertyOwnerTrustee,
     ConnectionToThePropertyOccupierAgent,
     ConnectionToThePropertyOwnerAgent
   )
 
-  val key = all.head.key
+  val key: String = all.head.key
 }

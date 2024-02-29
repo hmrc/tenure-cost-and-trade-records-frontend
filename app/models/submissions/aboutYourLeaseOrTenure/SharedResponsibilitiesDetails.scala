@@ -16,12 +16,12 @@
 
 package models.submissions.aboutYourLeaseOrTenure
 
-import play.api.libs.json.Json
+import play.api.libs.json.{Json, OFormat}
 
 case class SharedResponsibilitiesDetails(
   sharedResponsibilities: String
 )
 
 object SharedResponsibilitiesDetails {
-  implicit val format = Json.format[SharedResponsibilitiesDetails]
+  implicit val format: OFormat[SharedResponsibilitiesDetails] = Json.format[SharedResponsibilitiesDetails]
 }

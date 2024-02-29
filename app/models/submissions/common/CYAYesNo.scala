@@ -35,7 +35,7 @@ object CYAYesNo extends NamedEnumSupport[CYAYesNo] {
     CYAYesNo
   )
 
-  val all = List(CYAYes, CYANo)
+  val all: Seq[CYAYesNo] = List(CYAYes, CYANo)
 
-  val key = all.head.key
+  val key: String = all.head.key
 }

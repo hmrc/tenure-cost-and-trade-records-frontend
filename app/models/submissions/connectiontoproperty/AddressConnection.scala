@@ -38,8 +38,9 @@ object AddressConnectionTypeYesChangeAddress extends AddressConnectionType {
 object AddressConnectionType extends NamedEnumSupport[AddressConnectionType] {
   implicit val format: Format[AddressConnectionType] = EnumFormat(AddressConnectionType)
 
-  override def all = List(AddressConnectionTypeYes, AddressConnectionTypeNo, AddressConnectionTypeYesChangeAddress)
+  override def all: Seq[AddressConnectionType] =
+    List(AddressConnectionTypeYes, AddressConnectionTypeNo, AddressConnectionTypeYesChangeAddress)
 
-  val key = all.head.key
+  val key: String = all.head.key
 
 }

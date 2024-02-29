@@ -16,7 +16,7 @@
 
 package models.submissions.aboutYourLeaseOrTenure
 
-import play.api.libs.json.Json
+import play.api.libs.json.{Json, OFormat}
 
 case class DoesTheRentPayable(
   rentPayable: List[String] = List.empty,
@@ -24,5 +24,5 @@ case class DoesTheRentPayable(
 )
 
 object DoesTheRentPayable {
-  implicit val format = Json.format[DoesTheRentPayable]
+  implicit val format: OFormat[DoesTheRentPayable] = Json.format[DoesTheRentPayable]
 }

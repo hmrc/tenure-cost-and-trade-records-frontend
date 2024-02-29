@@ -16,10 +16,10 @@
 
 package models.submissions.aboutYourLeaseOrTenure
 
-import play.api.libs.json.Json
+import play.api.libs.json.{Json, OFormat}
 
 case class MethodToFixCurrentRentDetails(methodToFixCurrentRent: MethodToFixCurrentRents)
 
 object MethodToFixCurrentRentDetails {
-  implicit val format = Json.format[MethodToFixCurrentRentDetails]
+  implicit val format: OFormat[MethodToFixCurrentRentDetails] = Json.format[MethodToFixCurrentRentDetails]
 }

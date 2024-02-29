@@ -56,14 +56,14 @@
   showSection = true,
   summary = Some(request.sessionData.toSummary),
   sectionName = messages("label.section.aboutYourTradingHistory"),
-  backLinkUrl = controllers.aboutthetradinghistory.routes.FinancialYearEndController.show.url,
+  backLinkUrl = controllers.aboutthetradinghistory.routes.FinancialYearEndController.show().url,
   fullWidth = true,
   theForm = form
 ) {
 
     <p class="govuk-body">@messages("financialYearEndDates.p1")</p>
 
-  @formWithCSRF(action = controllers.aboutthetradinghistory.routes.FinancialYearEndDatesController.submit) {
+  @formWithCSRF(action = controllers.aboutthetradinghistory.routes.FinancialYearEndDatesController.submit()) {
 
       @indices.map { idx  =>
           @financialYearEndContent(idx)

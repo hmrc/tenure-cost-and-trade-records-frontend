@@ -16,11 +16,11 @@
 
 package models.submissions.common
 
-import play.api.libs.json.Json
+import play.api.libs.json.{Json, OFormat}
 
 case class ContactDetails(phone: String, email: String)
 
 object ContactDetails {
-  implicit val format = Json.format[ContactDetails]
+  implicit val format: OFormat[ContactDetails] = Json.format[ContactDetails]
 
 }

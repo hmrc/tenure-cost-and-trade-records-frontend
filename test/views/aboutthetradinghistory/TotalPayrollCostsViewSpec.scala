@@ -49,7 +49,7 @@ class TotalPayrollCostsViewSpec extends QuestionViewBehaviours[Seq[TotalPayrollC
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText mustBe messages("back.link.label")
       val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.aboutthetradinghistory.routes.CostOfSalesController.show.url
+      backlinkUrl mustBe controllers.aboutthetradinghistory.routes.CostOfSalesController.show().url
     }
 
     "Page heading is visible" in {

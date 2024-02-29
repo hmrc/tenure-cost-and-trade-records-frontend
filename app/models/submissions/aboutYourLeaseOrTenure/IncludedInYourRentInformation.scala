@@ -39,12 +39,12 @@ object IncludedInYourRentInformation extends NamedEnumSupport[IncludedInYourRent
 
   implicit val format: Format[IncludedInYourRentInformation] = EnumFormat(IncludedInYourRentInformation)
 
-  val all = List(
+  val all: Seq[IncludedInYourRentInformation] = List(
     IncludedInYourRentInformationVat,
     IncludedInYourRentInformationNonDomesticRates,
     IncludedInYourRentInformationWaterCharges,
     IncludedInYourRentInformationNone
   )
 
-  val key = all.head.key
+  val key: String = all.head.key
 }

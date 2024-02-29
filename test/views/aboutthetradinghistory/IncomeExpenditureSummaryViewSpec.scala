@@ -44,11 +44,11 @@ class IncomeExpenditureSummaryViewSpec extends QuestionViewBehaviours[IncomeExpe
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText mustBe messages("back.link.label")
       val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.aboutthetradinghistory.routes.OtherCostsController.show.url
+      backlinkUrl mustBe controllers.aboutthetradinghistory.routes.OtherCostsController.show().url
     }
 
     "Section heading is visible" in {
-      val doc         = asDocument(createViewUsingForm(form)) // govuk-caption-m
+      val doc         = asDocument(createViewUsingForm(form))
       val sectionText = doc.getElementsByClass("govuk-caption-m").text()
       assert(sectionText == messages("label.section.aboutYourTradingHistory"))
     }

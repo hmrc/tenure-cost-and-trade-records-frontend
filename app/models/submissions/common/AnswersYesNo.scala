@@ -35,7 +35,7 @@ object AnswersYesNo extends NamedEnumSupport[AnswersYesNo] {
     AnswersYesNo
   )
 
-  val all = List(AnswerYes, AnswerNo)
+  val all: Seq[AnswersYesNo] = List(AnswerYes, AnswerNo)
 
-  val key = all.head.key
+  val key: String = all.head.key
 }

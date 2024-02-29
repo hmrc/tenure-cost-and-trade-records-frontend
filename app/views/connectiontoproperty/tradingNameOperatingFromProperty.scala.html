@@ -36,7 +36,7 @@
  sectionName = messages("label.section.connectionToTheProperty"),
  backLinkUrl = { fromLocation match {
   case "TL" => controllers.routes.TaskListController.show().url+"#name-of-operator-from-property"
-  case _  => controllers.connectiontoproperty.routes.VacantPropertiesController.show.url
+  case _  => controllers.connectiontoproperty.routes.VacantPropertiesController.show().url
  }
 
  },

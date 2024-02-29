@@ -29,7 +29,7 @@ object IncludeLicenseesNo extends IncludeLicensees {
 }
 
 object IncludeLicensee extends NamedEnumSupport[IncludeLicensees] {
-  val all = List(IncludeLicenseesYes, IncludeLicenseesNo)
+  val all: Seq[IncludeLicensees] = List(IncludeLicenseesYes, IncludeLicenseesNo)
 }
 
 sealed trait IncludeOtherProperties extends NamedEnum {
@@ -43,7 +43,7 @@ object IncludeOtherPropertiesNo extends IncludeOtherProperties {
 }
 
 object IncludeOtherProperty extends NamedEnumSupport[IncludeOtherProperties] {
-  val all = List(IncludeOtherPropertiesYes, IncludeOtherPropertiesNo)
+  val all: Seq[IncludeOtherProperties] = List(IncludeOtherPropertiesYes, IncludeOtherPropertiesNo)
 }
 
 sealed trait OnlyPartOfProperties extends NamedEnum {
@@ -57,7 +57,7 @@ object OnlyPartOfPropertiesNo extends OnlyPartOfProperties {
 }
 
 object OnlyPartOfProperty extends NamedEnumSupport[OnlyPartOfProperties] {
-  val all = List(OnlyPartOfPropertiesYes, OnlyPartOfPropertiesNo)
+  val all: Seq[OnlyPartOfProperties] = List(OnlyPartOfPropertiesYes, OnlyPartOfPropertiesNo)
 }
 
 sealed trait OnlyToLands extends NamedEnum {
@@ -71,7 +71,7 @@ object OnlyToLandsNo extends OnlyToLands {
 }
 
 object OnlyToLand extends NamedEnumSupport[OnlyToLands] {
-  val all = List(OnlyToLandsYes, OnlyToLandsNo)
+  val all: Seq[OnlyToLands] = List(OnlyToLandsYes, OnlyToLandsNo)
 }
 
 sealed trait ShellUnits extends NamedEnum {
@@ -85,5 +85,5 @@ object ShellUnitsNo extends ShellUnits {
 }
 
 object ShellUnit extends NamedEnumSupport[ShellUnits] {
-  val all = List(ShellUnitsYes, ShellUnitsNo)
+  val all: Seq[ShellUnits] = List(ShellUnitsYes, ShellUnitsNo)
 }

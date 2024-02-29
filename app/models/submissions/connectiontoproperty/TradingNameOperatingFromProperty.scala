@@ -16,10 +16,10 @@
 
 package models.submissions.connectiontoproperty
 
-import play.api.libs.json.Json
+import play.api.libs.json.{Json, OFormat}
 
 case class TradingNameOperatingFromProperty(tradingName: String)
 
 object TradingNameOperatingFromProperty {
-  implicit val format = Json.format[TradingNameOperatingFromProperty]
+  implicit val format: OFormat[TradingNameOperatingFromProperty] = Json.format[TradingNameOperatingFromProperty]
 }

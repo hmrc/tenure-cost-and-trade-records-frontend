@@ -16,7 +16,7 @@
 
 package models.submissions.aboutyouandtheproperty
 
-import play.api.libs.json.Json
+import play.api.libs.json.{Json, OFormat}
 
 case class WebsiteForPropertyDetails(
   buildingOperatingHaveAWebsite: BuildingOperationHaveAWebsite,
@@ -24,6 +24,6 @@ case class WebsiteForPropertyDetails(
 )
 
 object WebsiteForPropertyDetails {
-  implicit val format = Json.format[WebsiteForPropertyDetails]
+  implicit val format: OFormat[WebsiteForPropertyDetails] = Json.format[WebsiteForPropertyDetails]
 
 }

@@ -17,7 +17,7 @@
 package models.submissions.requestReferenceNumber
 
 import models.submissions.PrintableAddress
-import play.api.libs.json.Json
+import play.api.libs.json.{Json, OFormat}
 
 case class RequestReferenceNumberAddress(
   buildingNameNumber: String,
@@ -28,5 +28,5 @@ case class RequestReferenceNumberAddress(
 ) extends PrintableAddress
 
 object RequestReferenceNumberAddress {
-  implicit val format = Json.format[RequestReferenceNumberAddress]
+  implicit val format: OFormat[RequestReferenceNumberAddress] = Json.format[RequestReferenceNumberAddress]
 }

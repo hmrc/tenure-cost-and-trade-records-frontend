@@ -17,7 +17,7 @@
 package models.submissions.aboutfranchisesorlettings
 
 import models.submissions.common.AnswersYesNo
-import play.api.libs.json.Json
+import play.api.libs.json.{Json, OFormat}
 
 case class LettingSection(
   lettingOtherPartOfPropertyInformationDetails: LettingOtherPartOfPropertyInformationDetails,
@@ -28,6 +28,6 @@ case class LettingSection(
 )
 
 object LettingSection {
-  implicit val format = Json.format[LettingSection]
+  implicit val format: OFormat[LettingSection] = Json.format[LettingSection]
 
 }

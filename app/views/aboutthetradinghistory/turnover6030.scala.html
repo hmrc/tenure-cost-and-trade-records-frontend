@@ -161,7 +161,7 @@
     @govukInsetText(InsetText(
         content = Text(messages("turnover.inset"))
     ))
-    @formWithCSRF(action = controllers.aboutthetradinghistory.routes.Turnover6030Controller.submit) {
+    @formWithCSRF(action = controllers.aboutthetradinghistory.routes.Turnover6030Controller.submit()) {
         <table class="hmrc-responsive-table">
             <tbody>
                 <tr>

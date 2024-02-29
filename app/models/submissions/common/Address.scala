@@ -16,7 +16,7 @@
 
 package models.submissions.common
 
-import play.api.libs.json.Json
+import play.api.libs.json.{Json, OFormat}
 
 case class Address(
   buildingNameNumber: String,
@@ -45,5 +45,5 @@ case class Address(
 }
 
 object Address {
-  implicit val format = Json.format[Address]
+  implicit val format: OFormat[Address] = Json.format[Address]
 }

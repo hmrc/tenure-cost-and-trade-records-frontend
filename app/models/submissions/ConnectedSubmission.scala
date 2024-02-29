@@ -27,7 +27,7 @@ import models.submissions.connectiontoproperty.StillConnectedDetails
 import models.submissions.downloadFORTypeForm.DownloadPDFDetails
 import models.submissions.notconnected.RemoveConnectionDetails
 import models.submissions.requestReferenceNumber.RequestReferenceNumberDetails
-import play.api.libs.json.Json
+import play.api.libs.json.{Json, OFormat}
 
 import java.time.Instant
 
@@ -54,7 +54,7 @@ case class ConnectedSubmission(
 
 object ConnectedSubmission {
 
-  implicit val format = Json.format[ConnectedSubmission]
+  implicit val format: OFormat[ConnectedSubmission] = Json.format[ConnectedSubmission]
 
   def apply(session: Session): ConnectedSubmission = ConnectedSubmission(
     session.referenceNumber,

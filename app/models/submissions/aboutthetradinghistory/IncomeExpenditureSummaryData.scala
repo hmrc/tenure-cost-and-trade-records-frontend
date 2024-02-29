@@ -16,7 +16,7 @@
 
 package models.submissions.aboutthetradinghistory
 
-import play.api.libs.json.Json
+import play.api.libs.json.{Json, OFormat}
 
 case class IncomeExpenditureSummaryData(
   financialYearEnd: String,
@@ -33,6 +33,6 @@ case class IncomeExpenditureSummaryData(
 
 object IncomeExpenditureSummaryData {
 
-  implicit val format = Json.format[IncomeExpenditureSummaryData]
+  implicit val format: OFormat[IncomeExpenditureSummaryData] = Json.format[IncomeExpenditureSummaryData]
 
 }

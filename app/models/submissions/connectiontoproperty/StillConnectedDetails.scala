@@ -20,7 +20,7 @@ import actions.SessionRequest
 import models.Session
 import models.submissions.MaxOfLettings
 import models.submissions.common.AnswersYesNo
-import play.api.libs.json.Json
+import play.api.libs.json.{Json, OFormat}
 
 case class StillConnectedDetails(
   addressConnectionType: Option[AddressConnectionType] = None,
@@ -42,7 +42,7 @@ case class StillConnectedDetails(
 )
 
 object StillConnectedDetails {
-  implicit val format = Json.format[StillConnectedDetails]
+  implicit val format: OFormat[StillConnectedDetails] = Json.format[StillConnectedDetails]
 
   def updateStillConnectedDetails(
     copy: StillConnectedDetails => StillConnectedDetails
