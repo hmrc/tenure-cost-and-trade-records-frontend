@@ -16,7 +16,6 @@
 
 package controllers.aboutyouandtheproperty
 
-import form.Errors
 import form.aboutyouandtheproperty.TradingActivityForm.tradingActivityForm
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
 import play.api.http.Status._

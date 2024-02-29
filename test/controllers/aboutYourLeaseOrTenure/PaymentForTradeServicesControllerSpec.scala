@@ -16,9 +16,8 @@
 
 package controllers.aboutYourLeaseOrTenure
 
-import form.aboutYourLeaseOrTenure.ConnectedToLandlordForm.connectedToLandlordForm
 import form.aboutYourLeaseOrTenure.PaymentForTradeServicesForm.paymentForTradeServicesForm
-import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartOne, AboutLeaseOrAgreementPartThree}
+import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree
 import navigation.AboutYourLeaseOrTenureNavigator
 import play.api.http.Status
 import play.api.http.Status.BAD_REQUEST

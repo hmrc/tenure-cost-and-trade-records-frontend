@@ -18,7 +18,6 @@ package views.aboutthetradinghistory
 
 import actions.SessionRequest
 import form.aboutthetradinghistory.OtherCostsForm
-import models.pages.Summary
 import models.submissions.aboutthetradinghistory.OtherCosts
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form

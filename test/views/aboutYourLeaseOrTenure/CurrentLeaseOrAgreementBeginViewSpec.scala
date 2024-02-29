@@ -16,9 +16,9 @@
 
 package views.aboutYourLeaseOrTenure
 
-import form.aboutYourLeaseOrTenure.{CurrentLeaseOrAgreementBeginForm, CurrentRentFirstPaidForm}
+import form.aboutYourLeaseOrTenure.CurrentLeaseOrAgreementBeginForm
 import models.pages.Summary
-import models.submissions.aboutYourLeaseOrTenure.{CurrentLeaseOrAgreementBegin, CurrentRentFirstPaid}
+import models.submissions.aboutYourLeaseOrTenure.CurrentLeaseOrAgreementBegin
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours

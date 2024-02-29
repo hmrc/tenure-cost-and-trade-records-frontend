@@ -18,9 +18,7 @@ package views.connectiontoproperty
 
 import actions.SessionRequest
 import form.connectiontoproperty.CheckYourAnswersConnectionToPropertyForm
-import form.connectiontoproperty.CheckYourAnswersConnectionToPropertyForm.checkYourAnswersConnectionToPropertyForm
 import models.pages.Summary
-import models.submissions.aboutthetradinghistory.CheckYourAnswersAboutTheTradingHistory
 import models.submissions.connectiontoproperty.CheckYourAnswersConnectionToProperty
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form

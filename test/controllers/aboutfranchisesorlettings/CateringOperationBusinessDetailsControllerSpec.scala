@@ -18,7 +18,6 @@ package controllers.aboutfranchisesorlettings
 
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
 import navigation.AboutFranchisesOrLettingsNavigator
-import org.jsoup.Jsoup
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._

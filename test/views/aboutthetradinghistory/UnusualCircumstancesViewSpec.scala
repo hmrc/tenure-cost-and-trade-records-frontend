@@ -19,7 +19,7 @@ package views.aboutthetradinghistory
 import actions.SessionRequest
 import form.aboutthetradinghistory.UnusualCircumstancesForm
 import models.pages.Summary
-import models.submissions.aboutthetradinghistory.{OtherCosts, UnusualCircumstances}
+import models.submissions.aboutthetradinghistory.UnusualCircumstances
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours

@@ -18,8 +18,7 @@ package views.aboutYourLeaseOrTenure
 
 import form.aboutYourLeaseOrTenure.WhatIsYourCurrentRentBasedOnForm
 import models.pages.Summary
-import models.submissions.Form6010._
-import models.submissions.aboutYourLeaseOrTenure.{CurrentRentBasedOnFixedAmount, CurrentRentBasedOnIndexedToRPI, CurrentRentBasedOnOther, CurrentRentBasedOnPercentageOpenMarket, CurrentRentBasedOnPercentageTurnover, CurrentRentBasedOnSteppedRent, WhatIsYourCurrentRentBasedOnDetails}
+import models.submissions.aboutYourLeaseOrTenure._
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours

@@ -22,9 +22,6 @@ import org.scalatest.matchers.must.Matchers.convertToAnyMustWrapper
 import play.api.libs.json.JsObject
 import uk.gov.hmrc.http.HeaderCarrier
 import utils.TestBaseSpec
-import models.Session
-import models.submissions.aboutyouandtheproperty.ContactDetailsQuestion
-import models.submissions.common.AnswerNo
 
 import scala.concurrent.ExecutionContext
 

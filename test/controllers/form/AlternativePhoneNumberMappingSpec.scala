@@ -17,7 +17,6 @@
 package controllers.form
 
 import form.AlternativePhoneNumberMapping.validateAlternativePhoneNumber
-import form.PhoneNumberMapping.validatePhoneNumber
 import org.scalatest.matchers.should
 import org.scalatest.prop.TableDrivenPropertyChecks
 import org.scalatest.wordspec.AnyWordSpecLike
