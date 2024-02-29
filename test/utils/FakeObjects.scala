@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -547,6 +547,7 @@ trait FakeObjects {
 
   val prefilledCateringOperationBusinessSectionYes: CateringOperationBusinessSection = CateringOperationBusinessSection(
     CateringOperationBusinessDetails("Operator Name", "Type of Business", "Describe business"),
+    None,
     Some(CateringOperationRentDetails(BigDecimal(1500), prefilledDateInput)),
     Some(RentReceivedFrom(BigDecimal(1500), true)),
     Some(CalculatingTheRent("test", prefilledDateInput)),
@@ -564,6 +565,7 @@ trait FakeObjects {
   val prefilledCateringOperationBusinessSectionIncompleteCatering: CateringOperationBusinessSection =
     CateringOperationBusinessSection(
       CateringOperationBusinessDetails("Operator Name", "Type of Business", "Describe business"),
+      None,
       Some(CateringOperationRentDetails(BigDecimal(1500), prefilledDateInput)),
       Some(RentReceivedFrom(BigDecimal(1500), true)),
       Some(CalculatingTheRent("test", prefilledDateInput))
@@ -590,6 +592,7 @@ trait FakeObjects {
 
   val prefilledCateringOperationBusinessSectionNo: CateringOperationBusinessSection = CateringOperationBusinessSection(
     CateringOperationBusinessDetails("Operator Name", "Type of Business", "Describe business"),
+    None,
     Some(CateringOperationRentDetails(BigDecimal(1500), prefilledDateInput)),
     Some(RentReceivedFrom(BigDecimal(1500), true)),
     Some(CalculatingTheRent("test", prefilledDateInput)),
@@ -644,15 +647,14 @@ trait FakeObjects {
     0,
     None,
     IndexedSeq(prefilledCateringOperationSectionYes),
-    IndexedSeq(prefilledCateringOperationBusinessSectionYes),
+    Some(IndexedSeq(prefilledCateringOperationBusinessSectionYes)),
     Some(AnswerYes),
     0,
     None,
     IndexedSeq(prefilledLettingSectionYes),
     None,
     Some(false),
-    Some(AnswerYes),
-    None
+    Some(AnswerYes)
   )
 
   val prefilledAboutFranchiseOrLettingsIncompleteLetting: AboutFranchisesOrLettings = AboutFranchisesOrLettings(
@@ -661,7 +663,7 @@ trait FakeObjects {
     0,
     None,
     IndexedSeq(prefilledCateringOperationSectionIncompleteCateringRentDetails),
-    IndexedSeq(prefilledCateringBusinessOperationSectionIncompleteCateringRentDetails),
+    Some(IndexedSeq(prefilledCateringBusinessOperationSectionIncompleteCateringRentDetails)),
     Some(AnswerYes),
     0,
     None,
@@ -674,7 +676,7 @@ trait FakeObjects {
     0,
     None,
     IndexedSeq(prefilledCateringOperationSectionNo),
-    IndexedSeq(prefilledCateringOperationBusinessSectionNo),
+    Some(IndexedSeq(prefilledCateringOperationBusinessSectionNo)),
     Some(AnswerNo),
     0,
     None,
@@ -686,7 +688,7 @@ trait FakeObjects {
     0,
     None,
     IndexedSeq(prefilledCateringOperationSectionYes),
-    IndexedSeq(prefilledCateringOperationBusinessSectionYes),
+    Some(IndexedSeq(prefilledCateringOperationBusinessSectionYes)),
     Some(AnswerYes),
     0,
     None,
@@ -698,7 +700,7 @@ trait FakeObjects {
     0,
     None,
     IndexedSeq(prefilledCateringOperationSectionIncompleteCatering),
-    IndexedSeq(prefilledCateringOperationBusinessSectionIncompleteCatering),
+    Some(IndexedSeq(prefilledCateringOperationBusinessSectionIncompleteCatering)),
     Some(AnswerYes),
     0,
     None,
@@ -711,7 +713,7 @@ trait FakeObjects {
       0,
       None,
       IndexedSeq(prefilledCateringOperationSectionIncompleteCateringRentDetails),
-      IndexedSeq(prefilledCateringBusinessOperationSectionIncompleteCateringRentDetails),
+      Some(IndexedSeq(prefilledCateringBusinessOperationSectionIncompleteCateringRentDetails)),
       Some(AnswerYes),
       0,
       None,
@@ -724,7 +726,7 @@ trait FakeObjects {
     0,
     None,
     IndexedSeq(prefilledCateringOperationSectionNo),
-    IndexedSeq(prefilledCateringOperationBusinessSectionNo),
+    Some(IndexedSeq(prefilledCateringOperationBusinessSectionNo)),
     Some(AnswerNo),
     0,
     None,
@@ -845,7 +847,8 @@ trait FakeObjects {
         prefilledFirstOccupy,
         prefilledFinancialYear
       )
-    )
+    ),
+    turnoverSections6030 = Seq(TurnoverSection6030(LocalDate.now, 52, None, None))
   )
 
   val prefilledVacantProperties = StillConnectedDetails(
