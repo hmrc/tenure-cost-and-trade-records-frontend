@@ -17,9 +17,6 @@
 package navigation
 
 import connectors.Audit
-import models.Session
-import models.submissions.aboutyouandtheproperty.ContactDetailsQuestion
-import models.submissions.common.AnswerNo
 import navigation.identifiers._
 import org.scalatest.matchers.must.Matchers.convertToAnyMustWrapper
 import play.api.libs.json.JsObject

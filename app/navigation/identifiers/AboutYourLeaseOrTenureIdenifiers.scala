@@ -154,10 +154,10 @@ case object PaymentForTradeServicesId extends Identifier {
   override def toString: String = "paymentForTradeServicesPage"
 }
 
-case object TradeServicesPaymentsId extends Identifier {
-  override def toString: String = "tradeServicesPaymentsPage"
+case object ServicePaidSeparatelyId extends Identifier {
+  override def toString: String = "servicePaidSeparatelyPage"
 }
 
-case object TradeServicesPaymentsListId extends Identifier {
-  override def toString: String = "tradeServicesPaymentsListPage"
+case object ServicePaidSeparatelyListId extends Identifier {
+  override def toString: String = "servicePaidSeparatelyListPage"
 }

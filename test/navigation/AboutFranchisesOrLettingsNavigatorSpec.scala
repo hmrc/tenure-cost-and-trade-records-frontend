@@ -186,7 +186,6 @@ class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec {
     }
 
     "return a function that goes to Catering details page when adding another catering business yes" in {
-      import play.api.test.Helpers._
       val requestFromCYA: FakeRequest[AnyContentAsEmpty.type] = FakeRequest("GET", "/?from=CYA")
       aboutFranchisesOrLettingsNavigator
         .nextPage(AddAnotherCateringOperationPageId, sessionAboutFranchiseOrLetting6010YesSession)(hc, requestFromCYA)

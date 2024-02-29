@@ -18,7 +18,7 @@ package views.notconnected
 
 import form.notconnected.PastConnectionForm
 import models.pages.Summary
-import models.submissions.common.{Address, AnswerNo, AnswerYes}
+import models.submissions.common.{AnswerNo, AnswerYes}
 import models.submissions.notconnected.PastConnectionType
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form

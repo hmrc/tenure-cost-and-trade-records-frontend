@@ -18,8 +18,7 @@ package views.connectiontoproperty
 
 import form.connectiontoproperty.EditAddressForm
 import models.pages.Summary
-import models.submissions.common.{Address, ContactDetailsAddress}
-import models.submissions.connectiontoproperty.{EditAddress, EditTheAddress}
+import models.submissions.connectiontoproperty.EditTheAddress
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours

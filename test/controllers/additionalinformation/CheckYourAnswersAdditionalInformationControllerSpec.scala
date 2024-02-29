@@ -38,6 +38,16 @@ class CheckYourAnswersAdditionalInformationControllerSpec extends TestBaseSpec {
     mockSessionRepo
   )
 
+  def checkYourAdditionalInformationControllerEmpty(
+    additionalInformation: Option[AdditionalInformation] = None
+  ) = new CheckYourAnswersAdditionalInformationController(
+    stubMessagesControllerComponents(),
+    additionalInformationNavigator,
+    checkYourAnswersAdditionalInformationView,
+    preEnrichedActionRefiner(additionalInformation = additionalInformation),
+    mockSessionRepo
+  )
+
   "GET /" should {
     "return 200" in {
       val result = checkYourAdditionalInformationController().show(fakeRequest)
@@ -46,6 +56,15 @@ class CheckYourAnswersAdditionalInformationControllerSpec extends TestBaseSpec {
 
     "return HTML" in {
       val result = checkYourAdditionalInformationController().show(fakeRequest)
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
+    }
+  }
+
+  "GET / empty additional info" should {
+    "return html with 200" in {
+      val result = checkYourAdditionalInformationControllerEmpty().show(fakeRequest)
+      status(result)      shouldBe Status.OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }

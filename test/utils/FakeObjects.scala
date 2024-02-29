@@ -932,7 +932,9 @@ trait FakeObjects {
   )
   val prefilledAboutLeaseOrAgreementPartThree = AboutLeaseOrAgreementPartThree(
     tradeServicesIndex = 1,
+    servicesPaidIndex = 1,
     tradeServices = IndexedSeq(TradeServices(TradeServicesDetails(Some(100), "service-1"))),
+    servicesPaid = IndexedSeq(ServicesPaid(ServicePaidSeparately(100, "service-paid-1"))),
     paymentForTradeServices = Some(PaymentForTradeServices(AnswerYes))
   )
 

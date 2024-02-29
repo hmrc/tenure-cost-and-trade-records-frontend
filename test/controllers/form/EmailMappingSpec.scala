@@ -17,7 +17,6 @@
 package controllers.form
 
 import form.EmailMapping.validateEmail
-import form.WebsiteMapping.validateWebaddress
 import org.scalatest.matchers.should
 import org.scalatest.prop.TableDrivenPropertyChecks
 import org.scalatest.wordspec.AnyWordSpecLike

@@ -16,42 +16,42 @@
 
 package views.aboutYourLeaseOrTenure
 
-import form.aboutYourLeaseOrTenure.TradeServiceDescriptionForm
+import form.aboutYourLeaseOrTenure.ServicePaidSeparatelyForm
 import models.pages.Summary
-import models.submissions.aboutYourLeaseOrTenure.TradeServicesDetails
+import models.submissions.aboutYourLeaseOrTenure.ServicePaidSeparately
 import org.scalatest.matchers.must.Matchers.convertToAnyMustWrapper
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class TradeServicesDescriptionViewSpec extends QuestionViewBehaviours[TradeServicesDetails] {
+class ServicePaidSeparatelyViewSpec extends QuestionViewBehaviours[ServicePaidSeparately] {
 
-  val messageKeyPrefix = "tradeServiceDescription"
+  val messageKeyPrefix = "servicePaidSeparately"
 
-  override val form = TradeServiceDescriptionForm.tradeServicesDescriptionForm
+  override val form = ServicePaidSeparatelyForm.servicePaidSeparatelyForm
 
-  def createView = () => tradeServicesDescriptionView(form, None, Summary("99996010001"))(fakeRequest, messages)
+  def createView = () => servicePaidSeparatelyView(form, None, Summary("99996010001"))(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[TradeServicesDetails]) =>
-    tradeServicesDescriptionView(form, None, Summary("99996010001"))(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[ServicePaidSeparately]) =>
+    servicePaidSeparatelyView(form, None, Summary("99996010001"))(fakeRequest, messages)
 
-  "Trade services description view" should {
+  "Service paid separately view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 
-    "has a link marked with back.link.label leading to does the rent include any trade services Page" in {
+    "has a link marked with back.link.label leading to payment for trade services question page" in {
       val doc          = asDocument(createView())
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText mustBe messages("back.link.label")
       val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesController.show().url
+      backlinkUrl mustBe controllers.aboutYourLeaseOrTenure.routes.PaymentForTradeServicesController.show().url
     }
 
-    "contain currency field for the value trade services " in {
+    "contain currency field for the value annual charge for separately paid services" in {
       val doc = asDocument(createViewUsingForm(form))
-      assertRenderedById(doc, "sumExcludingVat")
+      assertRenderedById(doc, "annualCharge")
     }
 
-    "contain input for the service description" in {
+    "contain input for the separately paid service description" in {
       val doc = asDocument(createViewUsingForm(form))
       assertRenderedById(doc, "description")
     }

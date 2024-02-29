@@ -18,7 +18,6 @@ package views.aboutyouandtheproperty
 
 import actions.SessionRequest
 import form.aboutyouandtheproperty.CheckYourAnswersAboutThePropertyForm
-import models.Session
 import models.pages.Summary
 import models.submissions.aboutyouandtheproperty.CheckYourAnswersAboutYourProperty
 import org.scalatest.matchers.must.Matchers._

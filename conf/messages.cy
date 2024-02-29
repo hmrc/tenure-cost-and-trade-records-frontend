@@ -170,6 +170,7 @@ test.text = Welcome
 ##############################
 heading.login.loginFailed=The details you have entered do not match our records
 error.login.failed=Enter the reference number and postcode as they appear in the letter you received from the VOA.
+error.login.warning=<b>Warning:</b> You only have 1 remaining attempt to enter the correct details. For security, access to this service is withdrawn after 2 hours when you exceed the maximum number of incorrect login attempts.
 error.login.attemptsleft= You have {0} remaining attempts to enter the correct details before your account is locked for 2 hours.
 error.login.attemptsleftSubheading = If the system does not recognise you reference number, <a href="https://www.gov.uk/contact-voa" class="govuk-link" target="_blank">contact the VOA</a>
 error.login.1.attempt.left=You have one remaining attempt to enter the correct details before your account is locked for 2 hours.
@@ -880,6 +881,24 @@ paymentForTradeServices.heading = Is a separate payment made for any trade servi
 paymentForTradeServices.hint = For example, lighting, heating, cleaning of shared parts
 error.paymentForTradeServices.missing = Select yes if a separate payment is made for any trade services provided by the landlord
 
+# SERVICE PAID SEPARATELY
+############################
+servicePaidSeparately.heading = Describe the service which is paid for separately
+servicePaidSeparately.VAT = What is the annual charge for separately paid services, excluding VAT?
+servicePaidSeparately.describe = Describe the type of service
+servicePaidSeparately.describe.hint = For example, lighting, heating, cleaning of shared parts - you will have the opportunity to add additional services if required.
+servicePaidSeparately.describe.error = Please describe the type of service
+error.servicePaidSeparately.invalidCurrency = The sum must be a number like 100 or 100.00 and cannot be less than 0
+error.servicePaidSeparately.required = Please enter the annual charge for separately paid services
+
+# SERVICES PAID SEPARATELY LIST
+#####################################
+servicePaidSeparatelyList.heading = You have added {0} {1} provided by the landlord
+servicePaidSeparatelyList.service = service
+servicePaidSeparatelyList.services = services
+servicePaidSeparatelyList.label = Would you like to add another service?
+error.servicePaidSeparatelyList.required = Select yes if you would like to add another service
+
 # RENT INCLUDE TRADE SERVICES DETAILS
 ####################################
 rentIncludeTradeServicesDetails.heading = Trade services provided by the landlord
@@ -1565,11 +1584,17 @@ checkYourAnswersNotConnected.subheading2 = Your contact details
 # MAXIMUM OF 5 LETTINGS
 ##################################
 maxOf5Lettings.heading = You have added the maximum of 5 lettings
-maxOf5Lettings.contact = If you have 6 or more lettings at your property, the VOA will contact you to collect information on the remaining lettings
-maxOf5Lettings.confirm = I confirm that I understand the VOA will contact me regarding the remaining lettings
+maxOf5Lettings.content = lettings
+maxOf5Lettings.businessOrFranchise.heading = You have added the maximum of 5 separate businesses or franchises
+maxOf5Lettings.businessOrFranchise.content = businesses or franchises
+maxOf5Lettings.businessOrConcession.heading = You have added the maximum of 5 separate businesses or concessions
+maxOf5Lettings.businessOrConcession.content = businesses or concessions
+maxOf5Lettings.concessionOrFranchise.heading = You have added the maximum of 5 separate concessions or franchises
+maxOf5Lettings.concessionOrFranchise.content = concessions or franchises
+maxOf5Lettings.contact = If you have 6 or more {0} at your property, the VOA will contact you to collect information on the remaining lettings.
+maxOf5Lettings.confirm = I confirm that I understand the VOA will contact me regarding the remaining lettings.
 maxOf5Lettings.link = Check or update the 5 added businesses
 maxOf5Lettings.error = Please confirm that you understand the VOA will contact you regarding the remaining letters
-
 
 # About franchise or lettings CYA
 checkYourAnswers.heading = This is a holding page for the check your answers page
