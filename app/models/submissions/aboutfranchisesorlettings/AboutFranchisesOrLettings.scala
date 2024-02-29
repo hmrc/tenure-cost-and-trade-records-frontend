@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,8 +29,7 @@ case class AboutFranchisesOrLettings(
   cateringOperationCurrentIndex: Int = 0,
   cateringMaxOfLettings: Option[MaxOfLettings] = None,
   cateringOperationSections: IndexedSeq[CateringOperationSection] = IndexedSeq.empty,
-  cateringOperationBusinessSections: IndexedSeq[CateringOperationBusinessSection] =
-    IndexedSeq.empty, //added for 6030 journey - Feb 2024
+  cateringOperationBusinessSections: Option[IndexedSeq[CateringOperationBusinessSection]] = None, // 6030 journey
   lettingOtherPartOfProperty: Option[AnswersYesNo] = None,
   lettingCurrentIndex: Int = 0,
   currentMaxOfLetting: Option[MaxOfLettings] = None,
@@ -48,7 +47,7 @@ object AboutFranchisesOrLettings {
       (__ \ "cateringOperationCurrentIndex").read[Int] and
       (__ \ "cateringMaxOfLettings").readNullable[MaxOfLettings] and
       (__ \ "cateringOperationSections").read[IndexedSeq[CateringOperationSection]] and
-      (__ \ "cateringOperationBusinessSections").read[IndexedSeq[CateringOperationBusinessSection]] and
+      (__ \ "cateringOperationBusinessSections").readNullable[IndexedSeq[CateringOperationBusinessSection]] and
       (__ \ "lettingOtherPartOfProperty").readNullable[AnswersYesNo] and
       (__ \ "lettingCurrentIndex").read[Int] and
       (__ \ "currentMaxOfLetting").readNullable[MaxOfLettings] and

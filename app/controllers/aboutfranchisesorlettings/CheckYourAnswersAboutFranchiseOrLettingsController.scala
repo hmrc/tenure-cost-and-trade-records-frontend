@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -157,20 +157,20 @@ class CheckYourAnswersAboutFranchiseOrLettingsController @Inject() (
       }
 
     aboutFranchiseOrLettings match {
-      case AboutFranchisesOrLettings(Some(AnswerYes), Some(AnswerYes), _, _, _, _, _, _, _, _, _, _, _, _)
+      case AboutFranchisesOrLettings(Some(AnswerYes), Some(AnswerYes), _, _, _, _, _, _, _, _, _, _, _)
           if aboutFranchiseOrLettings.lettingSections.nonEmpty =>
         controllers.aboutfranchisesorlettings.routes.AddAnotherLettingOtherPartOfPropertyController
           .show(getLettingsIndex(session))
           .url
 
-      case AboutFranchisesOrLettings(Some(AnswerYes), Some(AnswerYes), _, _, _, _, _, _, _, _, _, _, _, _) =>
+      case AboutFranchisesOrLettings(Some(AnswerYes), Some(AnswerYes), _, _, _, _, _, _, _, _, _, _, _) =>
         controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show().url
 
-      case AboutFranchisesOrLettings(Some(AnswerYes), _, _, _, _, _, _, _, _, _, _, _, _, _)
+      case AboutFranchisesOrLettings(Some(AnswerYes), _, _, _, _, _, _, _, _, _, _, _, _)
           if isNoOrNone(aboutFranchiseOrLettings.lettingOtherPartOfProperty) =>
         controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show().url
 
-      case AboutFranchisesOrLettings(Some(AnswerYes), _, _, _, _, _, _, _, _, _, _, _, _, _)
+      case AboutFranchisesOrLettings(Some(AnswerYes), _, _, _, _, _, _, _, _, _, _, _, _)
           if aboutFranchiseOrLettings.cateringConcessionOrFranchise.contains(
             AnswerYes
           ) && aboutFranchiseOrLettings.cateringOperationSections.nonEmpty =>
@@ -178,11 +178,11 @@ class CheckYourAnswersAboutFranchiseOrLettingsController @Inject() (
           .show(getCateringsIndex(session))
           .url
 
-      case AboutFranchisesOrLettings(Some(AnswerYes), _, _, _, _, _, _, _, _, _, _, _, _, _)
+      case AboutFranchisesOrLettings(Some(AnswerYes), _, _, _, _, _, _, _, _, _, _, _, _)
           if aboutFranchiseOrLettings.cateringConcessionOrFranchise.contains(AnswerYes) =>
         controllers.aboutfranchisesorlettings.routes.ConcessionOrFranchiseController.show().url
 
-      case AboutFranchisesOrLettings(Some(AnswerNo), _, _, _, _, _, _, _, _, _, _, _, _, _) =>
+      case AboutFranchisesOrLettings(Some(AnswerNo), _, _, _, _, _, _, _, _, _, _, _, _) =>
         controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show().url
 
       case _ =>

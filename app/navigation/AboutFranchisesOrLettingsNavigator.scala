@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -89,7 +89,9 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit) extends Naviga
             }
           case ForTypes.for6030                                                          =>
             val maybeCatering =
-              answers.aboutFranchisesOrLettings.flatMap(_.cateringOperationBusinessSections.lastOption)
+              answers.aboutFranchisesOrLettings.flatMap(
+                _.cateringOperationBusinessSections.getOrElse(IndexedSeq.empty).lastOption
+              )
             val idx           = getCateringOperationsIndex(answers)
             maybeCatering match {
               case Some(catering) if isCateringBusinessDetailsIncomplete(catering, answers.forType) =>

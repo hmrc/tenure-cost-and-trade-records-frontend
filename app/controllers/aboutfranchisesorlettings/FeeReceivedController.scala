@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -76,11 +76,12 @@ class FeeReceivedController @Inject() (
           ),
         data => {
           val updatedSections = request.sessionData.aboutFranchisesOrLettings
-            .map(_.cateringOperationBusinessSections)
+            .map(_.cateringOperationBusinessSections.getOrElse(IndexedSeq.empty))
             .map(_.updated(idx, currentSection.copy(feeReceived = Some(data))))
             .get
 
-          val updatedData = updateAboutFranchisesOrLettings(_.copy(cateringOperationBusinessSections = updatedSections))
+          val updatedData =
+            updateAboutFranchisesOrLettings(_.copy(cateringOperationBusinessSections = Some(updatedSections)))
           session.saveOrUpdate(updatedData).map { _ =>
             Redirect(navigator.nextPage(FeeReceivedPageId, updatedData).apply(updatedData))
           }
@@ -97,7 +98,7 @@ class FeeReceivedController @Inject() (
     if (request.sessionData.aboutTheTradingHistory.map(_.turnoverSections6030).exists(_.nonEmpty)) {
       request.sessionData.aboutFranchisesOrLettings
         .filter(_.cateringOperationBusinessSections.nonEmpty)
-        .flatMap(_.cateringOperationBusinessSections.lift(idx))
+        .flatMap(_.cateringOperationBusinessSections.getOrElse(IndexedSeq.empty).lift(idx))
         .fold(Future.successful(Redirect(backLink(idx))))(action)
     } else {
       Redirect(routes.AboutYourTradingHistoryController.show())
