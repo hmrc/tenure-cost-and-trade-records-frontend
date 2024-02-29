@@ -119,9 +119,9 @@ class TradeServicesListControllerSpec extends TestBaseSpec {
       val addTradeService: String
     } = new {
       val addTradeService: String =
-        "addTradeService"
+        "tradeServicesList"
     }
 
-    val baseFormData: Map[String, String] = Map("addTradeService" -> "yes")
+    val baseFormData: Map[String, String] = Map("tradeServicesList" -> "yes")
   }
 }

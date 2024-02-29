@@ -273,7 +273,7 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
         controllers.aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyController
           .show(Some(getIndexOfPaidServices(answers) + 1))
       case Some(AnswerNo)  =>
-        controllers.aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyController.show()
+        controllers.aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsController.show()
       case _               =>
         logger.warn(
           s"Navigation for add another service paid separately reached without correct selection of conditions by controller"

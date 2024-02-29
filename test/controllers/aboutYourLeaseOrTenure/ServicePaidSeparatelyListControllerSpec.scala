@@ -118,9 +118,9 @@ class ServicePaidSeparatelyListControllerSpec extends TestBaseSpec {
       val addService: String
     } = new {
       val addService: String =
-        "addService"
+        "servicePaidSeparatelyList"
     }
 
-    val baseFormData: Map[String, String] = Map("addService" -> "yes")
+    val baseFormData: Map[String, String] = Map("servicePaidSeparatelyList" -> "yes")
   }
 }

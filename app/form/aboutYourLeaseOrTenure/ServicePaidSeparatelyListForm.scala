@@ -24,7 +24,7 @@ import play.api.data.Forms.{mapping, optional}
 object ServicePaidSeparatelyListForm {
 
   val addServicePaidSeparatelyMapping: Mapping[AnswersYesNo] = mapping(
-    "addService" -> optional(createYesNoType("error.servicePaidSeparatelyList.required"))
+    "servicePaidSeparatelyList" -> optional(createYesNoType("error.servicePaidSeparatelyList.required"))
       .verifying("error.servicePaidSeparatelyList.required", _.nonEmpty)
       .transform[AnswersYesNo](_.get, Some(_))
   )(x => x)(b => Some(b))

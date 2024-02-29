@@ -28,7 +28,7 @@ object TradeServicesListForm {
   )
 
   val addServiceMapping = mapping(
-    "addTradeService" -> optional(createYesNoType("error.addTradeService.required"))
+    "tradeServicesList" -> optional(createYesNoType("error.addTradeService.required"))
       .verifying("error.addTradeService.required", _.nonEmpty)
       .transform[AnswersYesNo](_.get, Some(_))
   )(x => x)(b => Some(b))
