@@ -34,9 +34,6 @@ class maxOfLettingsReachedViewSpec extends ViewBehaviours {
     maxOfLettingsReachedView(
       form,
       "backLink",
-      "businessOrFranchise",
-      "businessOrConcession",
-      "concessionOrFranchise",
       "connection",
       Summary("10000001")
     )(sessionRequest, messages)
@@ -45,9 +42,6 @@ class maxOfLettingsReachedViewSpec extends ViewBehaviours {
     maxOfLettingsReachedView(
       form,
       "backLink",
-      "businessOrFranchise",
-      "businessOrConcession",
-      "concessionOrFranchise",
       "connection",
       Summary("99996010001")
     )(sessionRequest, messages)
