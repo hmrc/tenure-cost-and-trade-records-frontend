@@ -17,9 +17,7 @@
 package views.requestReferenceNumber
 
 import actions.SessionRequest
-import form.additionalinformation.CheckYourAnswersAdditionalInformationForm
 import form.requestReferenceNumber.CheckYourAnswersRequestReferenceNumberForm
-import models.submissions.additionalinformation.CheckYourAnswersAdditionalInformation
 import models.submissions.requestReferenceNumber.CheckYourAnswersRequestReferenceNumber
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form

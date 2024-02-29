@@ -17,7 +17,6 @@
 package controllers.form
 
 import form.BuildingNameNumberMapping.validateBuildingNameNumber
-import form.TownMapping.validateTown
 import org.scalatest.matchers.should
 import org.scalatest.prop.TableDrivenPropertyChecks
 import org.scalatest.wordspec.AnyWordSpecLike

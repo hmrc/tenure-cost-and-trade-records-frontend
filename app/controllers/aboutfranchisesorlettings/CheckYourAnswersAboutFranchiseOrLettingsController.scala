@@ -132,7 +132,7 @@ class CheckYourAnswersAboutFranchiseOrLettingsController @Inject() (
             logger.warn(s"Back link for premises license page reached with unknown enforcement taken value")
             controllers.routes.TaskListController.show().url
         }
-      case _         =>
+      case _                                   =>
         logger.warn(s"Back link reached with unknown enforcement taken value")
         controllers.routes.TaskListController.show().url
     }

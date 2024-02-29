@@ -18,8 +18,7 @@ package views.connectiontoproperty
 
 import actions.SessionRequest
 import form.connectiontoproperty.CheckYourAnswersConnectionToVacantPropertyForm
-import models.pages.Summary
-import models.submissions.connectiontoproperty.{CheckYourAnswersConnectionToProperty, CheckYourAnswersConnectionToVacantProperty}
+import models.submissions.connectiontoproperty.CheckYourAnswersConnectionToVacantProperty
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import play.api.mvc.AnyContentAsEmpty
