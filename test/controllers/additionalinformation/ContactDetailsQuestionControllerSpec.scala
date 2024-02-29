@@ -27,7 +27,6 @@ import utils.TestBaseSpec
 class ContactDetailsQuestionControllerSpec extends TestBaseSpec {
 
   import TestData._
-  import form.aboutyouandtheproperty.TiedForGoodsForm._
   import utils.FormBindingTestAssertions._
 
   def contactDetailsQuestionController(

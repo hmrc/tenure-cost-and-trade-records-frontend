@@ -40,8 +40,6 @@ import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
 
-import java.time.LocalDate
-
 class FixedOperatingExpensesViewSpec extends QuestionViewBehaviours[Seq[FixedOperatingExpenses]] {
 
   val messageKeyPrefix       = "fixedOperatingExpenses"

@@ -18,7 +18,6 @@ package views.aboutYourLeaseOrTenure
 
 import form.aboutYourLeaseOrTenure.MethodToFixCurrentRentForm
 import models.pages.Summary
-import models.submissions.Form6010._
 import models.submissions.aboutYourLeaseOrTenure.{MethodToFixCurrentRentDetails, MethodToFixCurrentRentIndependentExpert, MethodToFixCurrentRentsACourt, MethodToFixCurrentRentsAgreement, MethodToFixCurrentRentsArbitration}
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form

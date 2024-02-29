@@ -18,7 +18,6 @@ package views.aboutthetradinghistory
 
 import actions.SessionRequest
 import form.aboutthetradinghistory.TurnoverForm
-import models.pages.Summary
 import models.submissions.aboutthetradinghistory.TurnoverSection
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form

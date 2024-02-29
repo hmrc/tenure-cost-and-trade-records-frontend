@@ -38,6 +38,26 @@ class ConnectionToThePropertyControllerSpec extends TestBaseSpec {
     mockSessionRepo
   )
 
+  def connectionToThePropertyControllerEditAddress(
+    stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledStillConnectedDetailsEdit)
+  ) = new ConnectionToThePropertyController(
+    stubMessagesControllerComponents(),
+    connectedToPropertyNavigator,
+    connectionToThePropertyView,
+    preEnrichedActionRefiner(stillConnectedDetails = stillConnectedDetails),
+    mockSessionRepo
+  )
+
+  def connectionToThePropertyControllerException(
+    stillConnectedDetails: Option[StillConnectedDetails] = None
+  ) = new ConnectionToThePropertyController(
+    stubMessagesControllerComponents(),
+    connectedToPropertyNavigator,
+    connectionToThePropertyView,
+    preEnrichedActionRefiner(stillConnectedDetails = stillConnectedDetails),
+    mockSessionRepo
+  )
+
   "GET /" should {
     "return 200" in {
       val result = connectionToThePropertyController().show(fakeRequest)
@@ -48,6 +68,28 @@ class ConnectionToThePropertyControllerSpec extends TestBaseSpec {
       val result = connectionToThePropertyController().show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
+    }
+  }
+
+  "GET edit address" should {
+    "return 200" in {
+      val result = connectionToThePropertyControllerEditAddress().show(fakeRequest)
+      status(result) shouldBe Status.OK
+    }
+
+    "return HTML" in {
+      val result = connectionToThePropertyControllerEditAddress().show(fakeRequest)
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
+    }
+  }
+
+  "GET empty still connected" should {
+    "return exception" in {
+      val result = connectionToThePropertyControllerException().show(fakeRequest)
+      result.failed.recover { case e: Exception =>
+        e.getMessage shouldBe "Navigation for connection to property page reached with error Unknown connection to property back link"
+      }
     }
   }
 

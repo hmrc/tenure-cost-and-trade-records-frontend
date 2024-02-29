@@ -16,11 +16,9 @@
 
 package views.connectiontoproperty
 
-import form.aboutyouandtheproperty.WebsiteForPropertyForm
 import form.connectiontoproperty.VacantPropertiesForm
 import models.pages.Summary
-import models.submissions.aboutyouandtheproperty.{BuildingOperationHaveAWebsiteNo, BuildingOperationHaveAWebsiteYes, WebsiteForPropertyDetails}
-import models.submissions.connectiontoproperty.{VacantProperties, VacantPropertiesDetails, VacantPropertiesDetailsNo, VacantPropertiesDetailsYes}
+import models.submissions.connectiontoproperty.{VacantProperties, VacantPropertiesDetailsNo, VacantPropertiesDetailsYes}
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import play.twirl.api.Html
