@@ -22,7 +22,9 @@ import play.api.libs.json.{Json, OFormat}
 
 case class AboutLeaseOrAgreementPartThree(
   tradeServicesIndex: Int = 0,
+  servicesPaidIndex: Int = 0,
   tradeServices: IndexedSeq[TradeServices] = IndexedSeq.empty,
+  servicesPaid: IndexedSeq[ServicesPaid] = IndexedSeq.empty,
   paymentForTradeServices: Option[PaymentForTradeServices] = None
 )
 

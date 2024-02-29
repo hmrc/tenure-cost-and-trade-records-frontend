@@ -22,12 +22,8 @@
 @(remainingAttempts: Int)(implicit request: Request[_], messages: Messages)
 
 @warningMessage = @{
-    if(remainingAttempts == 1) {
-        messages("error.login.1.attempt.left")
-    } else {
-        val remainingAttemptsAsWord = messages(remainingAttempts.toString)
-        messages("error.login.attemptsleft", remainingAttemptsAsWord)
-    }
+    val remainingAttemptsAsWord = messages(remainingAttempts.toString)
+    messages("error.login.attemptsleft", remainingAttemptsAsWord)
 }
 
 @layout(
@@ -36,10 +32,17 @@
     withTimeoutDialog = false
 ) {
 
-    <p class="govuk-body">@messages("heading.login.loginFailed")</p>
-    <p class="govuk-body">@messages("error.login.failed") @warningMessage</p>
-    <p class="govuk-body">@HtmlContent(messages("error.login.attemptsleftSubheading")).asHtml</p>
+    @if(remainingAttempts == 1){
+        <p class="govuk-body">@messages("error.login.failed")</p>
+        <p class="govuk-body">@HtmlContent(messages("error.login.warning")).asHtml</p>
+        <p class="govuk-body">@HtmlContent(messages("error.login.attemptsleftSubheading")).asHtml</p>
 
     <a href="@routes.LoginController.show()" class="govuk-button" data-module="govuk-button" >@messages("label.retryLogin")</a>
 
+    } else {
+        <p class="govuk-body">@messages("error.login.failed") @warningMessage</p>
+        <p class="govuk-body">@HtmlContent(messages("error.login.attemptsleftSubheading")).asHtml</p>
+
+        <a href="@routes.LoginController.show" class="govuk-button" data-module="govuk-button" >@messages("label.retryLogin")</a>
+    }
 }

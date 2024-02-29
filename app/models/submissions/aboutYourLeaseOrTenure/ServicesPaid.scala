@@ -14,24 +14,16 @@
  * limitations under the License.
  */
 
-package form.aboutYourLeaseOrTenure
+package models.submissions.aboutYourLeaseOrTenure
 
-import form.MappingSupport.createYesNoType
 import models.submissions.common.AnswersYesNo
-import play.api.data.Form
-import play.api.data.Forms.{mapping, optional}
+import play.api.libs.json.Json
 
-object TradeServicesListForm {
+case class ServicesPaid(
+  details: ServicePaidSeparately,
+  addAnotherPaidService: Option[AnswersYesNo] = None
+)
 
-  lazy val addServiceForm: Form[AnswersYesNo] = Form(
-    addServiceMapping
-  )
-
-  val addServiceMapping = mapping(
-    "tradeServicesList" -> optional(createYesNoType("error.addTradeService.required"))
-      .verifying("error.addTradeService.required", _.nonEmpty)
-      .transform[AnswersYesNo](_.get, Some(_))
-  )(x => x)(b => Some(b))
-
-  val addAnotherServiceForm = Form(addServiceMapping)
+object ServicesPaid {
+  implicit val format = Json.format[ServicesPaid]
 }
