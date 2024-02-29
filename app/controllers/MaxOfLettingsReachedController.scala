@@ -18,6 +18,7 @@ package controllers
 
 import actions.{SessionRequest, WithSessionRefiner}
 import form.MaxOfLettingsForm.maxOfLettingsForm
+import models.ForTypes
 import models.submissions.MaxOfLettings
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
 import models.submissions.connectiontoproperty.StillConnectedDetails.updateStillConnectedDetails
@@ -136,5 +137,4 @@ class MaxOfLettingsReachedController @Inject() (
           ""
         )
     }
-
 }
