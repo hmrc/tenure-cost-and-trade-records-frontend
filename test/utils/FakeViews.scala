@@ -31,12 +31,14 @@ import views.html.downloadFORTypeForm.{downloadPDF, downloadPDFReferenceNumber}
 import views.html.error.{JsonParseError, error}
 import views.html.feedback.{feedback, feedbackThx}
 import views.html.requestReferenceNumber.{checkYourAnswersRequestReferenceNumber, confirmationRequestReferenceNumber, requestReferenceNumber, requestReferenceNumberContactDetails}
-import views.html.{confirmation, confirmationConnectionToProperty, confirmationNotConnected, genericRemoveConfirmation, login, maxOfLettingsReached}
+import views.html.{confirmation, confirmationConnectionToProperty, confirmationNotConnected, genericRemoveConfirmation, login, maxOfLettingsReached, testSign}
 
 trait FakeViews { this: GuiceOneAppPerSuite =>
 
+  // Test sign
+  lazy val testSignView: testSign = app.injector.instanceOf[testSign]
   // Sign in
-  lazy val loginView: login = app.injector.instanceOf[login]
+  lazy val loginView: login       = app.injector.instanceOf[login]
 
   // Error pages
   lazy val jsonErrorView: JsonParseError                                                      = app.injector.instanceOf[JsonParseError]
