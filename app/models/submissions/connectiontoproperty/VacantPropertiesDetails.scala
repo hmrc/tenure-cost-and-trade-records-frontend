@@ -33,8 +33,8 @@ object VacantPropertiesDetails extends NamedEnumSupport[VacantPropertiesDetails]
 
   implicit val format: Format[VacantPropertiesDetails] = EnumFormat(VacantPropertiesDetails)
 
-  val all = List(VacantPropertiesDetailsYes, VacantPropertiesDetailsNo)
+  val all: Seq[VacantPropertiesDetails] = List(VacantPropertiesDetailsYes, VacantPropertiesDetailsNo)
 
-  val key = all.head.key
+  val key: String = all.head.key
 
 }

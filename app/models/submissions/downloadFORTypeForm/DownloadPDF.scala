@@ -16,12 +16,12 @@
 
 package models.submissions.downloadFORTypeForm
 
-import play.api.libs.json.Json
+import play.api.libs.json.{Json, OFormat}
 
 case class DownloadPDF(
   downloadPDF: String
 )
 
 object DownloadPDF {
-  implicit val format = Json.format[DownloadPDF]
+  implicit val format: OFormat[DownloadPDF] = Json.format[DownloadPDF]
 }

@@ -16,13 +16,14 @@
 
 package models.submissions.additionalinformation
 
-import play.api.libs.json.Json
+import play.api.libs.json.{Json, OFormat}
 
 case class CheckYourAnswersAdditionalInformation(
   checkYourAnswersAdditionalInformation: String
 )
 
 object CheckYourAnswersAdditionalInformation {
-  implicit val format = Json.format[CheckYourAnswersAdditionalInformation]
+  implicit val format: OFormat[CheckYourAnswersAdditionalInformation] =
+    Json.format[CheckYourAnswersAdditionalInformation]
 
 }

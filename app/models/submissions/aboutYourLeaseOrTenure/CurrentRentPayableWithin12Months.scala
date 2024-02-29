@@ -16,7 +16,7 @@
 
 package models.submissions.aboutYourLeaseOrTenure
 
-import play.api.libs.json.Json
+import play.api.libs.json.{Json, OFormat}
 
 import java.time.LocalDate
 
@@ -26,6 +26,6 @@ case class CurrentRentPayableWithin12Months(
 )
 
 object CurrentRentPayableWithin12Months {
-  implicit val format = Json.format[CurrentRentPayableWithin12Months]
+  implicit val format: OFormat[CurrentRentPayableWithin12Months] = Json.format[CurrentRentPayableWithin12Months]
 
 }

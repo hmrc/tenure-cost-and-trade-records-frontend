@@ -16,8 +16,10 @@
 
 package models.submissions.additionalinformation
 
-import play.api.libs.json.Json
+import play.api.libs.json.{Json, OFormat}
 
 case class FurtherInformationOrRemarksDetails(furtherInformationOrRemarksDetails: String)
 
-object FurtherInformationOrRemarksDetails { implicit val format = Json.format[FurtherInformationOrRemarksDetails] }
+object FurtherInformationOrRemarksDetails {
+  implicit val format: OFormat[FurtherInformationOrRemarksDetails] = Json.format[FurtherInformationOrRemarksDetails]
+}

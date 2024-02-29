@@ -46,7 +46,7 @@ class TenancyLeaseAgreementExpireViewSpec extends QuestionViewBehaviours[Tenancy
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText mustBe messages("back.link.label")
       val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.aboutYourLeaseOrTenure.routes.CurrentRentFirstPaidController.show.url
+      backlinkUrl mustBe controllers.aboutYourLeaseOrTenure.routes.CurrentRentFirstPaidController.show().url
     }
 
     "contain date format hint for tenancyLeaseAgreementExpire-hint" in {

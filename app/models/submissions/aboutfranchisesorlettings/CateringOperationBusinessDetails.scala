@@ -16,7 +16,7 @@
 
 package models.submissions.aboutfranchisesorlettings
 
-import play.api.libs.json.Json
+import play.api.libs.json.{Json, OFormat}
 
 case class CateringOperationBusinessDetails(
   operatorName: String,
@@ -25,6 +25,6 @@ case class CateringOperationBusinessDetails(
 )
 
 object CateringOperationBusinessDetails {
-  implicit val format = Json.format[CateringOperationBusinessDetails]
+  implicit val format: OFormat[CateringOperationBusinessDetails] = Json.format[CateringOperationBusinessDetails]
 
 }

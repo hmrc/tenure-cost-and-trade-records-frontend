@@ -18,7 +18,7 @@ package models.submissions
 
 import models.submissions.common.ContactDetails
 import models.submissions.requestReferenceNumber.RequestReferenceNumberAddress
-import play.api.libs.json.Json
+import play.api.libs.json.{Json, OFormat}
 
 import java.time.Instant
 
@@ -35,6 +35,6 @@ case class RequestReferenceNumberSubmission(
 
 object RequestReferenceNumberSubmission {
 
-  implicit val format = Json.format[RequestReferenceNumberSubmission]
+  implicit val format: OFormat[RequestReferenceNumberSubmission] = Json.format[RequestReferenceNumberSubmission]
 
 }

@@ -16,13 +16,14 @@
 
 package models.submissions.aboutYourLeaseOrTenure
 
-import play.api.libs.json.Json
+import play.api.libs.json.{Json, OFormat}
 
 case class ConnectedToLandlordInformationDetails(
   connectedToLandlordInformationDetails: String
 )
 
 object ConnectedToLandlordInformationDetails {
-  implicit val format = Json.format[ConnectedToLandlordInformationDetails]
+  implicit val format: OFormat[ConnectedToLandlordInformationDetails] =
+    Json.format[ConnectedToLandlordInformationDetails]
 
 }

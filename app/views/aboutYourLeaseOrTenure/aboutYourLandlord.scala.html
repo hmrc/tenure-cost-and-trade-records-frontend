@@ -45,7 +45,7 @@
  sectionName = messages("label.section.aboutYourLeaseOrTenure"),
  backLinkUrl = { fromLocation match {
    case "TL" => controllers.routes.TaskListController.show().url+"#about-your-landlord"
-   case _ => controllers.routes.TaskListController.show.url
+   case _ => controllers.routes.TaskListController.show().url
   }
  },
 

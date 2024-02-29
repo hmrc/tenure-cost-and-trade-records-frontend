@@ -16,7 +16,7 @@
 
 package models.submissions.aboutyouandtheproperty
 
-import play.api.libs.json.Json
+import play.api.libs.json.{Json, OFormat}
 
 case class PropertyDetails(
   propertyCurrentlyUsed: CurrentPropertyUsed,
@@ -24,5 +24,5 @@ case class PropertyDetails(
 )
 
 object PropertyDetails {
-  implicit val format = Json.format[PropertyDetails]
+  implicit val format: OFormat[PropertyDetails] = Json.format[PropertyDetails]
 }

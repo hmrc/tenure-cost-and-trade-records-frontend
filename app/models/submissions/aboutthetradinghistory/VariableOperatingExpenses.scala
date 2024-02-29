@@ -16,7 +16,7 @@
 
 package models.submissions.aboutthetradinghistory
 
-import play.api.libs.json.Json
+import play.api.libs.json.{Json, OFormat}
 
 import java.time.LocalDate
 
@@ -45,6 +45,6 @@ case class VariableOperatingExpenses(
 }
 
 object VariableOperatingExpenses {
-  implicit val format = Json.format[VariableOperatingExpenses]
+  implicit val format: OFormat[VariableOperatingExpenses] = Json.format[VariableOperatingExpenses]
 
 }

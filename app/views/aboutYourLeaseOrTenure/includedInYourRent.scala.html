@@ -42,7 +42,7 @@
  sectionName = messages("label.section.aboutYourLeaseOrTenure"),
  backLinkUrl = { fromLocation match {
      case "TL" => controllers.routes.TaskListController.show().url+"#included-in-your-rent"
-     case _ => controllers.aboutYourLeaseOrTenure.routes.CurrentLeaseOrAgreementBeginController.show.url
+     case _ => controllers.aboutYourLeaseOrTenure.routes.CurrentLeaseOrAgreementBeginController.show().url
     }
  },
  theForm = theForm

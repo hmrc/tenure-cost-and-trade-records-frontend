@@ -16,13 +16,14 @@
 
 package models.submissions.aboutyouandtheproperty
 
-import play.api.libs.json.Json
+import play.api.libs.json.{Json, OFormat}
 
 case class LicensableActivitiesInformationDetails(
   licensableActivitiesDetails: String
 )
 
 object LicensableActivitiesInformationDetails {
-  implicit val format = Json.format[LicensableActivitiesInformationDetails]
+  implicit val format: OFormat[LicensableActivitiesInformationDetails] =
+    Json.format[LicensableActivitiesInformationDetails]
 
 }

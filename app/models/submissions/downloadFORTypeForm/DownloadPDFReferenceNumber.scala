@@ -16,12 +16,12 @@
 
 package models.submissions.downloadFORTypeForm
 
-import play.api.libs.json.Json
+import play.api.libs.json.{Json, OFormat}
 
 case class DownloadPDFReferenceNumber(
   downloadPDFReferenceNumber: String
 )
 
 object DownloadPDFReferenceNumber {
-  implicit val format = Json.format[DownloadPDFReferenceNumber]
+  implicit val format: OFormat[DownloadPDFReferenceNumber] = Json.format[DownloadPDFReferenceNumber]
 }

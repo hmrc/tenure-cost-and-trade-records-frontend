@@ -17,7 +17,7 @@
 package models.submissions.notconnected
 
 import models.submissions.common.ContactDetails
-import play.api.libs.json.Json
+import play.api.libs.json.{Json, OFormat}
 
 case class NotConnectedContactDetails(
   fullName: String,
@@ -26,6 +26,6 @@ case class NotConnectedContactDetails(
 )
 
 object NotConnectedContactDetails {
-  implicit val format = Json.format[NotConnectedContactDetails]
+  implicit val format: OFormat[NotConnectedContactDetails] = Json.format[NotConnectedContactDetails]
 
 }

@@ -16,8 +16,9 @@
 
 package models.submissions.aboutthetradinghistory
 
-import play.api.libs.json.Json
+import play.api.libs.json.{Json, OFormat}
 import util.NumberUtil.zeroBigDecimal
+
 import java.time.LocalDate
 
 case class OtherCost(
@@ -29,5 +30,5 @@ case class OtherCost(
 }
 
 object OtherCost {
-  implicit val format = Json.format[OtherCost]
+  implicit val format: OFormat[OtherCost] = Json.format[OtherCost]
 }

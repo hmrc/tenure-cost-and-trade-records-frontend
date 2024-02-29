@@ -44,7 +44,7 @@ class VacantPropertyStartDateViewSpec extends QuestionViewBehaviours[StartDateOf
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText mustBe messages("back.link.label")
       val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.connectiontoproperty.routes.VacantPropertiesController.show.url
+      backlinkUrl mustBe controllers.connectiontoproperty.routes.VacantPropertiesController.show().url
     }
 
     "Section heading is visible" in {

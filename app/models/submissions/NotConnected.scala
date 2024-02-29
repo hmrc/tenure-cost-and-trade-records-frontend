@@ -27,6 +27,6 @@ case class NotConnected(
 
 object NotConnected {
 
-  implicit val format = Json.format[NotConnected]
+  implicit val format: OFormat[NotConnected] = Json.format[NotConnected]
 
 }

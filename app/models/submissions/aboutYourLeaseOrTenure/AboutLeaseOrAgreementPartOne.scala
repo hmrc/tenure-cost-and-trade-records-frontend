@@ -19,7 +19,7 @@ package models.submissions.aboutYourLeaseOrTenure
 import actions.SessionRequest
 import models.{AnnualRent, Session}
 import models.submissions.common.AnswersYesNo
-import play.api.libs.json.Json
+import play.api.libs.json.{Json, OFormat}
 
 //There are now 22 attributes in this case class, so no more can be added
 case class AboutLeaseOrAgreementPartOne(
@@ -47,7 +47,7 @@ case class AboutLeaseOrAgreementPartOne(
 )
 
 object AboutLeaseOrAgreementPartOne {
-  implicit val format = Json.format[AboutLeaseOrAgreementPartOne]
+  implicit val format: OFormat[AboutLeaseOrAgreementPartOne] = Json.format[AboutLeaseOrAgreementPartOne]
 
   def updateAboutLeaseOrAgreementPartOne(
     copy: AboutLeaseOrAgreementPartOne => AboutLeaseOrAgreementPartOne

@@ -37,7 +37,7 @@
   showSection = true,
     summary = Some(summary),
   sectionName = messages("label.section.aboutYourTradingHistory"),
-  backLinkUrl = controllers.aboutthetradinghistory.routes.IncomeExpenditureSummaryController.show.url,
+  backLinkUrl = controllers.aboutthetradinghistory.routes.IncomeExpenditureSummaryController.show().url,
 ) {
 
     <p class="govuk-body">@messages("unusualCircumstances.explain")</p>

@@ -44,7 +44,7 @@ class TenantsAdditionsDisregardedViewSpec extends QuestionViewBehaviours[TenantA
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText mustBe messages("back.link.label")
       val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.aboutYourLeaseOrTenure.routes.IncentivesPaymentsConditionsController.show.url
+      backlinkUrl mustBe controllers.aboutYourLeaseOrTenure.routes.IncentivesPaymentsConditionsController.show().url
     }
 
     "Section heading is visible" in {

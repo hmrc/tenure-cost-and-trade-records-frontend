@@ -17,7 +17,7 @@
 package models.submissions.requestReferenceNumber
 
 import models.submissions.common.ContactDetails
-import play.api.libs.json.Json
+import play.api.libs.json.{Json, OFormat}
 
 case class RequestReferenceNumberContactDetails(
   requestReferenceNumberContactDetailsFullName: String,
@@ -26,6 +26,7 @@ case class RequestReferenceNumberContactDetails(
 )
 
 object RequestReferenceNumberContactDetails {
-  implicit val format1 = Json.format[RequestReferenceNumberContactDetails]
+  implicit val format1: OFormat[RequestReferenceNumberContactDetails] =
+    Json.format[RequestReferenceNumberContactDetails]
 
 }

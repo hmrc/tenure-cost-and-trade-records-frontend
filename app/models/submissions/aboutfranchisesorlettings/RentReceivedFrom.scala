@@ -16,7 +16,7 @@
 
 package models.submissions.aboutfranchisesorlettings
 
-import play.api.libs.json.Json
+import play.api.libs.json.{Json, OFormat}
 
 case class RentReceivedFrom(
   annualRent: BigDecimal,
@@ -24,6 +24,6 @@ case class RentReceivedFrom(
 )
 
 object RentReceivedFrom {
-  implicit val format = Json.format[RentReceivedFrom]
+  implicit val format: OFormat[RentReceivedFrom] = Json.format[RentReceivedFrom]
 
 }

@@ -32,7 +32,7 @@ object PastConnectionTypeNo extends PastConnectionType {
 object PastConnectionType extends NamedEnumSupport[PastConnectionType] {
   implicit val format: Format[PastConnectionType] = EnumFormat(PastConnectionType)
 
-  val all = List(PastConnectionTypeYes, PastConnectionTypeNo)
+  val all: Seq[PastConnectionType] = List(PastConnectionTypeYes, PastConnectionTypeNo)
 
   val key: String = all.head.key
 }

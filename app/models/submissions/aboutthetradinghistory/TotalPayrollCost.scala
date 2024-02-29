@@ -16,7 +16,7 @@
 
 package models.submissions.aboutthetradinghistory
 
-import play.api.libs.json.Json
+import play.api.libs.json.{Json, OFormat}
 
 import java.time.LocalDate
 
@@ -25,10 +25,10 @@ case class TotalPayrollCost(
   managersAndStaff: Option[BigDecimal],
   directorsRemuneration: Option[BigDecimal]
 ) {
-  def total = Seq(managersAndStaff, directorsRemuneration).flatten.sum
+  def total: BigDecimal = Seq(managersAndStaff, directorsRemuneration).flatten.sum
 }
 
 object TotalPayrollCost {
-  implicit val format = Json.format[TotalPayrollCost]
+  implicit val format: OFormat[TotalPayrollCost] = Json.format[TotalPayrollCost]
 
 }

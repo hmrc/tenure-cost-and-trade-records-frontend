@@ -16,7 +16,7 @@
 
 package models.submissions.aboutthetradinghistory
 
-import play.api.libs.json.Json
+import play.api.libs.json.{Json, OFormat}
 
 import java.time.LocalDate
 
@@ -27,5 +27,5 @@ case class TurnoverSection6030(
   totalVisitorNumbers: Option[Int]
 )
 object TurnoverSection6030 {
-  implicit val format = Json.format[TurnoverSection6030]
+  implicit val format: OFormat[TurnoverSection6030] = Json.format[TurnoverSection6030]
 }

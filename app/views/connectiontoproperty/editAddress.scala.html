@@ -43,7 +43,7 @@
   showSection = true,
     sectionName = messages("label.section.connectionToTheProperty"),
     summary = Some(summary),
-  backLinkUrl = controllers.connectiontoproperty.routes.AreYouStillConnectedController.show.url,
+  backLinkUrl = controllers.connectiontoproperty.routes.AreYouStillConnectedController.show().url,
   theForm = theForm
 ) {
   @formWithCSRF(action = controllers.connectiontoproperty.routes.EditAddressController.submit()) {

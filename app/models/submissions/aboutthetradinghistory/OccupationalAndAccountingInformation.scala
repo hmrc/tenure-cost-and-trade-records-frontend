@@ -17,7 +17,7 @@
 package models.submissions.aboutthetradinghistory
 
 import models.submissions.Form6010.{DayMonthsDuration, MonthsYearDuration}
-import play.api.libs.json.Json
+import play.api.libs.json.{Json, OFormat}
 
 case class OccupationalAndAccountingInformation(
   firstOccupy: MonthsYearDuration,
@@ -25,6 +25,6 @@ case class OccupationalAndAccountingInformation(
   yearEndChanged: Option[Boolean] = Some(false)
 )
 object OccupationalAndAccountingInformation {
-  implicit val format = Json.format[OccupationalAndAccountingInformation]
+  implicit val format: OFormat[OccupationalAndAccountingInformation] = Json.format[OccupationalAndAccountingInformation]
 
 }

@@ -16,12 +16,12 @@
 
 package models.submissions.aboutYourLeaseOrTenure
 
-import play.api.libs.json.Json
+import play.api.libs.json.{Json, OFormat}
 
 import java.time.LocalDate
 
 case class IntervalsOfRentReview(currentRentWithin12Months: Option[String], intervalsOfRentReview: Option[LocalDate])
 
 object IntervalsOfRentReview {
-  implicit val format = Json.format[IntervalsOfRentReview]
+  implicit val format: OFormat[IntervalsOfRentReview] = Json.format[IntervalsOfRentReview]
 }

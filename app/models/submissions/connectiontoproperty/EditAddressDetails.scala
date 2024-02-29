@@ -17,7 +17,7 @@
 package models.submissions.connectiontoproperty
 
 import models.submissions.PrintableAddress
-import play.api.libs.json.Json
+import play.api.libs.json.{Json, OFormat}
 
 case class EditAddress(
   buildingNameNumber: String,
@@ -28,5 +28,5 @@ case class EditAddress(
 ) extends PrintableAddress
 
 object EditAddress {
-  implicit val format = Json.format[EditAddress]
+  implicit val format: OFormat[EditAddress] = Json.format[EditAddress]
 }
