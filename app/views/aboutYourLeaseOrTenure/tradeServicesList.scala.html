@@ -98,11 +98,11 @@
                     "no" -> messages("label.no")
                 ).map(radioItem => RadioItem(
                     content = Text(radioItem._2),
-                    checked = radioItem._1.equals(theForm("addTradeService").value.getOrElse("")),
+                    checked = radioItem._1.equals(theForm("tradeServicesList").value.getOrElse("")),
                     value = Option(radioItem._1)
                 )
                 ),
-                errorMessage =  theForm.errors.asTextErrorMessageForField("addTradeService"),
+                errorMessage =  theForm.errors.asTextErrorMessageForField("tradeServicesList"),
                 fieldset = Option(
                     Fieldset(
                         legend = Option(

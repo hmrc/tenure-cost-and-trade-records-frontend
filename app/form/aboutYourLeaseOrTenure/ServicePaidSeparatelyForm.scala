@@ -28,8 +28,8 @@ object ServicePaidSeparatelyForm {
       mapping(
         "annualCharge" ->
           text
-            .verifying(nonEmpty(errorMessage = "error.servicePaidSeparately.required"))
-            .verifying("error.servicePaidSeparately.invalidCurrency", s => s.matches("-?\\d+(\\.\\d+)?"))
+            .verifying("error.servicePaidSeparately.required", s => !s.isEmpty)
+            .verifying("error.servicePaidSeparately.invalidCurrency", s => s.isEmpty || s.matches("-?\\d+(\\.\\d+)?"))
             .transform[BigDecimal](s => BigDecimal(s.replace(",", "")), v => v.toString),
         "description"  ->
           text

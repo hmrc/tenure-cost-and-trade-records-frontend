@@ -94,11 +94,11 @@
      "no" -> messages("label.no")
     ).map(radioItem => RadioItem(
      content = Text(radioItem._2),
-     checked = radioItem._1.equals(theForm("addService").value.getOrElse("")),
+     checked = radioItem._1.equals(theForm("servicePaidSeparatelyList").value.getOrElse("")),
      value = Option(radioItem._1)
     )
     ),
-    errorMessage =  theForm.errors.asTextErrorMessageForField("addService"),
+    errorMessage =  theForm.errors.asTextErrorMessageForField("servicePaidSeparatelyList"),
     fieldset = Option(
      Fieldset(
       legend = Option(
