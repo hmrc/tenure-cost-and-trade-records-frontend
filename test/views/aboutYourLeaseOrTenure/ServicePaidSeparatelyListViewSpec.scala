@@ -17,31 +17,32 @@
 package views.aboutYourLeaseOrTenure
 
 import actions.SessionRequest
-import form.aboutYourLeaseOrTenure.TradeServicesListForm
+import form.aboutYourLeaseOrTenure.{ServicePaidSeparatelyListForm, TradeServicesListForm}
 import models.pages.Summary
 import models.submissions.common.AnswersYesNo
 import org.scalatest.matchers.must.Matchers.convertToAnyMustWrapper
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class TradeServicesListViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
+class ServicePaidSeparatelyListViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
 
-  val messageKeyPrefix = "addTradeService"
+  val messageKeyPrefix = "servicePaidSeparatelyList"
 
-  override val form = TradeServicesListForm.addAnotherServiceForm
+  override val form = ServicePaidSeparatelyListForm.addServicePaidSeparatelyForm
 
   val sessionRequest = SessionRequest(stillConnectedDetails6030YesSession, fakeRequest)
 
-  val backLink = controllers.aboutYourLeaseOrTenure.routes.TradeServicesDescriptionController.show().url
+  val backLink = controllers.aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyController.show().url
 
-  def createView = () => tradeServicesListView(form, 0, backLink, Summary("99996010001"))(sessionRequest, messages)
+  def createView = () =>
+    servicePaidSeparatelyListView(form, 0, backLink, Summary("99996010001"))(sessionRequest, messages)
 
   def createViewUsingForm = (form: Form[AnswersYesNo]) =>
-    tradeServicesListView(form, 0, backLink, Summary("99996010001"))(sessionRequest, messages)
+    servicePaidSeparatelyListView(form, 0, backLink, Summary("99996010001"))(sessionRequest, messages)
 
-  "Trade services list view" should {
+  "Services paid separately list view" should {
 
-    "has a link marked with back.link.label leading to the list of Describe the trade service provided by the landlord Page" in {
+    "has a link marked with back.link.label leading to the list of Describe the trade service which is paid for separately page" in {
       val doc          = asDocument(createView())
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText mustBe messages("back.link.label")
@@ -59,8 +60,8 @@ class TradeServicesListViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
       val doc = asDocument(createViewUsingForm(form))
       assertContainsRadioButton(
         doc,
-        "tradeServicesList",
-        "tradeServicesList",
+        "servicePaidSeparatelyList",
+        "servicePaidSeparatelyList",
         "yes",
         false
       )
@@ -71,8 +72,8 @@ class TradeServicesListViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
       val doc = asDocument(createViewUsingForm(form))
       assertContainsRadioButton(
         doc,
-        "tradeServicesList-2",
-        "tradeServicesList",
+        "servicePaidSeparatelyList-2",
+        "servicePaidSeparatelyList",
         "no",
         false
       )
