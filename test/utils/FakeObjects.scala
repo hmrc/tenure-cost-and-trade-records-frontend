@@ -847,7 +847,8 @@ trait FakeObjects {
         prefilledFirstOccupy,
         prefilledFinancialYear
       )
-    )
+    ),
+    turnoverSections6030 = Seq(TurnoverSection6030(LocalDate.now, 52, None, None))
   )
 
   val prefilledVacantProperties = StillConnectedDetails(
