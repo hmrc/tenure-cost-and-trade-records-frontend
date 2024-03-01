@@ -87,8 +87,6 @@ class FeeReceivedController @Inject() (
           }
         }
       )
-
-      Redirect(navigator.nextPage(FeeReceivedPageId, request.sessionData).apply(request.sessionData)) // TODO: Remove
     }
   }
 
