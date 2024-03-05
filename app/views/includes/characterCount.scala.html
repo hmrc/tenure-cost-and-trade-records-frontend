@@ -14,19 +14,16 @@
  * limitations under the License.
  *@
 
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Text
-@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
+@import uk.gov.hmrc.govukfrontend.views.Aliases.{CharacterCount, Hint, Text}
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukCharacterCount
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.label.Label
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Hint
-@import uk.gov.hmrc.govukfrontend.views.Aliases.CharacterCount
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
 
 @(govukCharacterCount: GovukCharacterCount,
         theForm: Form[_],
         id: String,
         maxLength: Int,
         optional: Boolean = false,
-        hintMsg: String = "")(implicit request: Request[_], messages: Messages)
+        hintMsg: String = "")(implicit messages: Messages)
 
 @govukCharacterCount(
     CharacterCount(
@@ -36,8 +33,8 @@
         maxLength = maxLength,
         value = theForm(id).value,
         errorMessage = theForm.errors.asTextErrorMessageForField(id),
-        hint = if(hintMsg.length > 0)
-            Some(Hint(content = Text(messages(s"hint.${hintMsg}"))))
+        hint = if(hintMsg.nonEmpty)
+            Some(Hint(content = Text(messages(s"hint.$hintMsg"))))
         else None
 
 ))

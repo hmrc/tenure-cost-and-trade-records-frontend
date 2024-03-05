@@ -31,7 +31,7 @@
         labelClasses: String = "",
         hintMsg: String = "",
         formGroupClasses: String = "",
-)(implicit request: Request[_], messages: Messages)
+)(implicit messages: Messages)
 
 @govukInput(Input(
     id=id,
@@ -42,11 +42,11 @@
     autocomplete=Some(autoCompleteLabel),
     formGroupClasses = formGroupClasses,
     label = if(optional)
-        Label(content = Text(s"${messages(s"label.${labelContent}")} ${messages("hintText.optional")}"), classes = labelClasses)
-    else Label(content = Text(messages(s"label.${labelContent}")), classes = labelClasses),
+        Label(content = Text(s"${messages(s"label.$labelContent")} ${messages("hintText.optional")}"), classes = labelClasses)
+    else Label(content = Text(messages(s"label.$labelContent")), classes = labelClasses),
     errorMessage = theForm.errors.asTextErrorMessageForField(id),
-    hint = if(hintMsg.length > 0)
-        Some(Hint(content = Text(messages(s"hint.${hintMsg}"))))
+    hint = if(hintMsg.nonEmpty)
+        Some(Hint(content = Text(messages(s"hint.$hintMsg"))))
     else None,
 ).withFormField(theForm(id)))
 
