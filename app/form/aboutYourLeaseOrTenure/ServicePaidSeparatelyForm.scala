@@ -18,7 +18,7 @@ package form.aboutYourLeaseOrTenure
 
 import models.submissions.aboutYourLeaseOrTenure.ServicePaidSeparately
 import play.api.data.Form
-import play.api.data.Forms.{default, mapping, nonEmptyText, text}
+import play.api.data.Forms.{mapping, text}
 import play.api.data.validation.Constraints.nonEmpty
 
 object ServicePaidSeparatelyForm {
@@ -28,7 +28,7 @@ object ServicePaidSeparatelyForm {
       mapping(
         "annualCharge" ->
           text
-            .verifying("error.servicePaidSeparately.required", s => !s.isEmpty)
+            .verifying("error.servicePaidSeparately.required", s => s.nonEmpty)
             .verifying("error.servicePaidSeparately.invalidCurrency", s => s.isEmpty || s.matches("-?\\d+(\\.\\d+)?"))
             .transform[BigDecimal](s => BigDecimal(s.replace(",", "")), v => v.toString),
         "description"  ->

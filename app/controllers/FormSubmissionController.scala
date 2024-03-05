@@ -87,7 +87,7 @@ class FormSubmissionController @Inject() (
 
   private def submitToBackend(
     session: Session
-  )(implicit hc: HeaderCarrier, request: SessionRequest[_]): Future[Unit] = {
+  )(implicit hc: HeaderCarrier): Future[Unit] = {
     val submission = ConnectedSubmission(session)
     submissionConnector.submitConnected(session.referenceNumber, submission)
   }

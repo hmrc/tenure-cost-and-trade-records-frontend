@@ -23,7 +23,7 @@ import play.api.mvc.MessagesControllerComponents
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.error.JsonParseError
 import javax.inject.{Inject, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
 /**
   * @author Yuriy Tumakha
@@ -33,8 +33,7 @@ class ErrorHandlerController @Inject() (
   withSessionRefiner: WithSessionRefiner,
   jsonErrorView: JsonParseError,
   cc: MessagesControllerComponents
-)(implicit ec: ExecutionContext)
-    extends FrontendController(cc)
+) extends FrontendController(cc)
     with I18nSupport {
 
   def showJsonError = (Action andThen withSessionRefiner).async { implicit request =>

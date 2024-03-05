@@ -37,7 +37,7 @@
 @for6030 = @{userType == ForTypes.for6030 || userType == ForTypes.for6016}
 
 @label =@{
-    if(userType == ForTypes.for6015 || userType == ForTypes.for6016) messages("label.section.aboutTheFranchiseConcessions")  else {
+    if(for6015) messages("label.section.aboutTheFranchiseConcessions")  else {
         messages("label.section.aboutTheFranchiseLettings")
     }
 }
