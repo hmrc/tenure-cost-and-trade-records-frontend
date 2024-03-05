@@ -71,7 +71,8 @@ class ConcessionOrFranchiseController @Inject() (
         ),
       data => {
         val isFromCYA   = navigator.from == "CYA"
-        val updatedData = updateAboutFranchisesOrLettings(_.copy(cateringConcessionOrFranchise = Some(data), fromCYA = Some(isFromCYA)))
+        val updatedData =
+          updateAboutFranchisesOrLettings(_.copy(cateringConcessionOrFranchise = Some(data), fromCYA = Some(isFromCYA)))
         session
           .saveOrUpdate(updatedData)
           .map { _ =>
@@ -84,7 +85,7 @@ class ConcessionOrFranchiseController @Inject() (
               )
               .getOrElse(navigator.nextPage(RentFromConcessionId, updatedData).apply(updatedData))
           }
-            .map(Redirect)
+          .map(Redirect)
       }
     )
   }

@@ -274,28 +274,28 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit) extends Naviga
           aboutFranchiseOrLettings.cateringOperationSections.size
         )
       }
-    val fromCYA =
+    val fromCYA                                                                =
       answers.aboutFranchisesOrLettings.flatMap(_.fromCYA).getOrElse(false)
-    val existingSection =
+    val existingSection                                                        =
       answers.aboutFranchisesOrLettings.flatMap(_.cateringOperationSections.lift(getCateringOperationsIndex(answers)))
     existingSection match {
       case Some(existingSection) if isCateringDetailsIncomplete(existingSection, answers.forType) =>
         getIncompleteCateringCall(existingSection, getCateringOperationsIndex(answers), answers.forType)
-      case None =>
+      case None                                                                                   =>
         controllers.aboutfranchisesorlettings.routes.AddAnotherCateringOperationController
           .show(getCateringOperationsIndex(answers))
-      case _ =>
+      case _                                                                                      =>
         existingSection.flatMap(_.addAnotherOperationToProperty).get.name match {
           case "yes" =>
             controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController
               .show(getLastCateringOperationConcessionIndex(answers))
-          case "no" =>
+          case "no"  =>
             if (fromCYA == true) {
               controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show()
             } else {
               controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show()
             }
-          case _ =>
+          case _     =>
             logger.warn(
               s"Navigation for add another catering operation reached without correct selection of conditions by controller"
             )

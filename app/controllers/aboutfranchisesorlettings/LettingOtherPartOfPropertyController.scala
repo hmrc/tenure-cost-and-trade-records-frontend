@@ -130,8 +130,10 @@ class LettingOtherPartOfPropertyController @Inject() (
         controllers.aboutfranchisesorlettings.routes.AddAnotherCateringOperationController.show(index).url
       case None        =>
         answers.forType match {
-          case ForTypes.for6015 | ForTypes.for6016 => controllers.aboutfranchisesorlettings.routes.ConcessionOrFranchiseController.show().url
-          case _ => controllers.aboutfranchisesorlettings.routes.CateringOperationController.show().url }
+          case ForTypes.for6015 | ForTypes.for6016 =>
+            controllers.aboutfranchisesorlettings.routes.ConcessionOrFranchiseController.show().url
+          case _                                   => controllers.aboutfranchisesorlettings.routes.CateringOperationController.show().url
+        }
     }
 
 }
