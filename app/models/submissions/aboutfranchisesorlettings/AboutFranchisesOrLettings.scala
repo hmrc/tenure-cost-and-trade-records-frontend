@@ -60,7 +60,8 @@ object AboutFranchisesOrLettings {
       (__ \ "cateringOperationDetailsBusiness").readNullable[CateringOperationBusinessDetails]
   )(AboutFranchisesOrLettings.apply _)
 
-  implicit val format = Format(aboutFranchisesOrLettingsReads, Json.writes[AboutFranchisesOrLettings])
+  implicit val format: Format[AboutFranchisesOrLettings] =
+    Format(aboutFranchisesOrLettingsReads, Json.writes[AboutFranchisesOrLettings])
 
   def updateAboutFranchisesOrLettings(
     copy: AboutFranchisesOrLettings => AboutFranchisesOrLettings

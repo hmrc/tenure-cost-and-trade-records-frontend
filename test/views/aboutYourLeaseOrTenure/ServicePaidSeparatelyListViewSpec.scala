@@ -17,7 +17,7 @@
 package views.aboutYourLeaseOrTenure
 
 import actions.SessionRequest
-import form.aboutYourLeaseOrTenure.{ServicePaidSeparatelyListForm, TradeServicesListForm}
+import form.aboutYourLeaseOrTenure.ServicePaidSeparatelyListForm
 import models.pages.Summary
 import models.submissions.common.AnswersYesNo
 import org.scalatest.matchers.must.Matchers.convertToAnyMustWrapper
