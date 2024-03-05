@@ -31,7 +31,7 @@
   classes: String = "",
   items: Seq[CheckboxItem],
   hint: String = ""
-)(implicit request: Request[_], messages: Messages)
+)(implicit messages: Messages)
 
 @govukCheckboxes(Checkboxes(
   fieldset =  Some(Fieldset(

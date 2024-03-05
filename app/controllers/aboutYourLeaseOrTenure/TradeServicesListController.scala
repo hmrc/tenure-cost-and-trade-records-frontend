@@ -31,7 +31,7 @@ import views.html.aboutYourLeaseOrTenure.tradeServicesList
 import views.html.genericRemoveConfirmation
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
 @Singleton
 class TradeServicesListController @Inject() (
@@ -41,8 +41,7 @@ class TradeServicesListController @Inject() (
   genericRemoveConfirmationView: genericRemoveConfirmation,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext)
-    extends FORDataCaptureController(mcc)
+) extends FORDataCaptureController(mcc)
     with I18nSupport {
 
   def show(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>

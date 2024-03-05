@@ -33,7 +33,7 @@
   hint: String = "",
   isHeading: Boolean = false,
   inline: Boolean = true
-)(implicit request: Request[_], messages: Messages)
+)(implicit messages: Messages)
 
 @govukRadios(Radios(
   fieldset =  Some(Fieldset(

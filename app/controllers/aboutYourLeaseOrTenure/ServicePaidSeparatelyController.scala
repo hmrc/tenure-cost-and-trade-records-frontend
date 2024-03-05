@@ -20,7 +20,7 @@ import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.ServicePaidSeparatelyForm.servicePaidSeparatelyForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree.updateAboutLeaseOrAgreementPartThree
-import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartThree, ServicePaidSeparately, ServicesPaid, TradeServices, TradeServicesDetails}
+import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartThree, ServicePaidSeparately, ServicesPaid}
 import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.ServicePaidSeparatelyId
 import play.api.i18n.I18nSupport

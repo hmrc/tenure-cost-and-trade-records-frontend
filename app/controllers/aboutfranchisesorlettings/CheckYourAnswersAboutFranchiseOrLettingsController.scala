@@ -137,17 +137,6 @@ class CheckYourAnswersAboutFranchiseOrLettingsController @Inject() (
         controllers.routes.TaskListController.show().url
     }
 
-  private def getUrlForLettingPartOfProperty(answers: Session) =
-    answers.aboutFranchisesOrLettings.flatMap(_.lettingOtherPartOfProperty.map(_.name)) match {
-      case Some("yes") =>
-        controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsController.show().url
-      case Some("no")  =>
-        controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show().url
-      case _           =>
-        logger.warn(s"Back link for premises license page reached with unknown enforcement taken value")
-        controllers.routes.TaskListController.show().url
-    }
-
   private def getBackUrlFor6010and6011(session: Session): String = {
     val aboutFranchiseOrLettings                          = session.aboutFranchisesOrLettings.get
     def isNoOrNone(answer: Option[AnswersYesNo]): Boolean =

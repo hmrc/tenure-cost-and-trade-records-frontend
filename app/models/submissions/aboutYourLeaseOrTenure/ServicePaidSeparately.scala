@@ -16,12 +16,12 @@
 
 package models.submissions.aboutYourLeaseOrTenure
 
-import play.api.libs.json.Json
+import play.api.libs.json.{Json, OFormat}
 
 case class ServicePaidSeparately(
   annualCharge: BigDecimal,
   description: String
 )
 object ServicePaidSeparately {
-  implicit val format = Json.format[ServicePaidSeparately]
+  implicit val format: OFormat[ServicePaidSeparately] = Json.format[ServicePaidSeparately]
 }

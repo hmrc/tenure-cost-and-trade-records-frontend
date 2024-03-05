@@ -53,10 +53,7 @@ abstract class Navigator @Inject() (
   /**
     * Get next page ignoring redirect back to CYA.
     */
-  def nextWithoutRedirectToCYA(id: Identifier, session: Session)(implicit
-    hc: HeaderCarrier,
-    request: Request[AnyContent]
-  ): Session => Call =
+  def nextWithoutRedirectToCYA(id: Identifier, session: Session)(implicit hc: HeaderCarrier): Session => Call =
     routeMap.getOrElse(id, defaultPage) andThen auditNextUrl(session)
 
   /**

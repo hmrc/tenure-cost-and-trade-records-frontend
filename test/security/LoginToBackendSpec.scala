@@ -18,7 +18,6 @@ package security
 
 import models.FORLoginResponse
 import models.submissions.common.Address
-import uk.gov.hmrc.http.HeaderCarrier
 import utils.UnitTest
 
 import java.time.{ZoneOffset, ZonedDateTime}
@@ -30,14 +29,10 @@ class LoginToBackendSpec extends UnitTest {
   type ReferenceNumber = String
 
   "Login to HOD with valid credentials" when {
-    implicit val hc = HeaderCarrier()
 
     "there is no previously stored document" should {
-//      var updated: (HeaderCarrier, ReferenceNumber, Document) = null
       val l = LoginToBackend(
         respondWith(refNum, postcode)(loginResponse)
-//        none,
-//        set[HeaderCarrier, ReferenceNumber, Document, Unit](updated = _)
       ) _
       val r = await(l(refNum, postcode, now))
 
@@ -50,11 +45,6 @@ class LoginToBackendSpec extends UnitTest {
           )
         )
       }
-
-//       "loads an empty document with the retrieved credentials into the session" in {
-//         set[HeaderCarrier, ReferenceNumber, Document, Unit](updated = _)
-//         assert(updated === ((hc, refNum, Document(refNum, now, address = Some(loginResponse.address)))))
-//       }
     }
   }
 

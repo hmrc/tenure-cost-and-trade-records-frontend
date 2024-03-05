@@ -140,10 +140,6 @@
     request.sessionData.forType
 }
 
-@indices = @{
-    request.sessionData.aboutTheTradingHistory.fold(Seq.empty[Int])(_.turnoverSections.indices)
-}
-
     @tradingPeriodRow(idx: Int) = @{
         Seq(
             TableRow(

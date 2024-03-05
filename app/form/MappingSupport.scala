@@ -34,12 +34,11 @@ import models.submissions.common.{Address, AnswersYesNo, BuildingInsurance, CYAY
 import models.submissions.connectiontoproperty.{AddressConnectionType, ConnectionToProperty, CorrespondenceAddress, EditAddress, VacantPropertiesDetails, YourContactDetails}
 import models.submissions.notconnected.PastConnectionType
 import models.submissions.requestReferenceNumber.RequestReferenceNumberAddress
-import models.{AnnualRent, NamedEnum, NamedEnumSupport}
+import models.AnnualRent
 import play.api.data.Forms.{boolean, default, mapping, optional, text}
-import play.api.data.format.Formatter
 import play.api.data.validation.{Constraint, Invalid, Valid, ValidationError}
 import play.api.data.validation.Constraints.{maxLength, nonEmpty}
-import play.api.data.{FormError, Forms, Mapping}
+import play.api.data.{Forms, Mapping}
 import play.api.i18n.Messages
 import util.NumberUtil.zeroBigDecimal
 

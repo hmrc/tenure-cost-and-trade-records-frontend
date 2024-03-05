@@ -18,7 +18,6 @@ package security
 
 import models.FORLoginResponse
 import models.submissions.common.Address
-import uk.gov.hmrc.http.HeaderCarrier
 
 import java.time.ZonedDateTime
 import scala.concurrent.{ExecutionContext, Future}
@@ -34,7 +33,7 @@ object LoginToBackend {
 
   def apply(
     v: VerifyCredentials
-  )(rn: RefNumber, pc: Postcode, st: StartTime)(implicit hc: HeaderCarrier, ec: ExecutionContext): Future[LoginResult] =
+  )(rn: RefNumber, pc: Postcode, st: StartTime)(implicit ec: ExecutionContext): Future[LoginResult] =
     for {
       lr <- v(rn, pc)
     } yield ned(

@@ -114,7 +114,7 @@ class CheckYourAnswersRequestReferenceNumberController @Inject() (
 
   private def submitRequestRefNumToBackend(
     session: Session
-  )(implicit hc: HeaderCarrier, request: SessionRequest[_], messages: Messages): Future[Unit] = {
+  )(implicit hc: HeaderCarrier, messages: Messages): Future[Unit] = {
     val sessionRequestRefNum        = session.requestReferenceNumberDetails
     val sessionRequestRefNumAddress = sessionRequestRefNum.flatMap(_.requestReferenceNumberAddress)
     val sessionRequestRefNumDetails = sessionRequestRefNum.flatMap(_.requestReferenceContactDetails)

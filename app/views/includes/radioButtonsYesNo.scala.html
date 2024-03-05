@@ -23,7 +23,7 @@
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.hint.Hint
 
-@(govukRadios: GovukRadios, theForm: Form[_], name: String, label: String, classes: String, hint: String = "", isHeading: Boolean = false)(implicit request: Request[_], messages: Messages)
+@(govukRadios: GovukRadios, theForm: Form[_], name: String, label: String, classes: String, hint: String = "", isHeading: Boolean = false)(implicit messages: Messages)
 
 @govukRadios(
   Radios(
