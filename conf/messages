@@ -231,6 +231,10 @@ downloadPdf.6015.url = https://www.gov.uk/government/publications/request-for-re
 downloadPdf.6015.label = VO6015 request for rental information: hotels (opens in a new tab)
 downloadPdf.6016.url = https://www.gov.uk/government/publications/request-for-rental-information-hotels-and-guest-houses
 downloadPdf.6016.label = VO6016 request for rental information: hotels and guest houses (opens in a new tab)
+downloadPdf.6020.url = https://www.gov.uk/government/publications/request-for-rental-information-petrol-filling-stations-occupier
+downloadPdf.6020.label = VO6020 request for rental information: petrol filling stations (occupier) (opens in a new tab)
+downloadPdf.6030.url = https://www.gov.uk/government/publications/request-for-rental-information-receipts-general-basic
+downloadPdf.6030.label = VO6030 request for rental information: receipts (general basic) (opens in a new tab)
 downloadPdf.subheading = The reference number you entered does not match our records
 downloadPdf.no.download = Enter the reference number as it appears on the letter you received from the VOA.
 downloadPdf.retry = If the system does not recognise your reference number, <a href="https://www.gov.uk/contact-voa" class="govuk-link" target="_blank">contact the VOA</a>
