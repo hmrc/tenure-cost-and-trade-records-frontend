@@ -275,21 +275,3 @@ object MappingSupport {
       .verifying(between(zeroBigDecimal, salesMax, s"error.$field.range"))
   ).verifying(s"error.$field.required", _.nonEmpty)
 }
-
-object EnumMapping {
-  def apply[T <: NamedEnum](named: NamedEnumSupport[T], defaultErrorMessageKey: String = Errors.noValueSelected) =
-    Forms.of[T](new Formatter[T] {
-
-      override val format = Some((defaultErrorMessageKey, Nil))
-
-      def bind(key: String, data: Map[String, String]): Either[Seq[FormError], T] = {
-        val resOpt = for {
-          keyVal        <- data.get(key)
-          enumTypeValue <- named.fromName(keyVal)
-        } yield Right(enumTypeValue)
-        resOpt.getOrElse(Left(Seq(FormError(key, defaultErrorMessageKey, Nil))))
-      }
-
-      def unbind(key: String, value: T): Map[String, String] = Map(key -> value.name)
-    })
-}
