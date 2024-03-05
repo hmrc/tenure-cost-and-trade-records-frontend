@@ -21,6 +21,7 @@ import play.api.libs.json.{Json, OFormat}
 
 case class CateringOperationBusinessSection(
   cateringOperationBusinessDetails: CateringOperationBusinessDetails,
+  feeReceived: Option[FeeReceived] = None,
   cateringOperationRentDetails: Option[CateringOperationRentDetails] = None,
   rentReceivedFrom: Option[RentReceivedFrom] = None,
   calculatingTheRent: Option[CalculatingTheRent] = None,

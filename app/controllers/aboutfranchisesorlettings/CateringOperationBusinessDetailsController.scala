@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -48,7 +48,9 @@ class CateringOperationBusinessDetailsController @Inject() (
     val existingDetails: Option[CateringOperationBusinessDetails] = for {
       requestedIndex                <- index
       existingAccommodationSections <-
-        request.sessionData.aboutFranchisesOrLettings.map(_.cateringOperationBusinessSections)
+        request.sessionData.aboutFranchisesOrLettings.map(
+          _.cateringOperationBusinessSections.getOrElse(IndexedSeq.empty)
+        )
       // lift turns exception-throwing access by index into an option-returning safe operation
       requestedAccommodationSection <- existingAccommodationSections.lift(requestedIndex)
     } yield requestedAccommodationSection.cateringOperationBusinessDetails
@@ -99,12 +101,13 @@ class CateringOperationBusinessDetailsController @Inject() (
         ),
       data => {
         val ifFranchisesOrLettingsEmpty      = AboutFranchisesOrLettings(cateringOperationBusinessSections =
-          IndexedSeq(CateringOperationBusinessSection(cateringOperationBusinessDetails = data))
+          Some(IndexedSeq(CateringOperationBusinessSection(cateringOperationBusinessDetails = data)))
         )
         val updatedAboutFranchisesOrLettings =
           request.sessionData.aboutFranchisesOrLettings.fold(ifFranchisesOrLettingsEmpty) { franchiseOrLettings =>
-            val existingSections                                                     = franchiseOrLettings.cateringOperationBusinessSections
-            val requestedSection                                                     = index.flatMap(existingSections.lift)
+            val existingSections = franchiseOrLettings.cateringOperationBusinessSections.getOrElse(IndexedSeq.empty)
+            val requestedSection = index.flatMap(existingSections.lift)
+
             val updatedSections: (Int, IndexedSeq[CateringOperationBusinessSection]) =
               requestedSection.fold {
                 val defaultSection   = CateringOperationBusinessSection(data)
@@ -120,7 +123,7 @@ class CateringOperationBusinessDetailsController @Inject() (
             franchiseOrLettings
               .copy(
                 cateringOperationCurrentIndex = updatedSections._1,
-                cateringOperationBusinessSections = updatedSections._2
+                cateringOperationBusinessSections = Some(updatedSections._2)
               )
           }
 
@@ -148,4 +151,5 @@ class CateringOperationBusinessDetailsController @Inject() (
             Right(controllers.aboutfranchisesorlettings.routes.CateringOperationController.show().url)
         }
     }
+
 }

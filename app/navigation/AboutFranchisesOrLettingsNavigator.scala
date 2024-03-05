@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -89,7 +89,9 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit) extends Naviga
             }
           case ForTypes.for6030                                                          =>
             val maybeCatering =
-              answers.aboutFranchisesOrLettings.flatMap(_.cateringOperationBusinessSections.lastOption)
+              answers.aboutFranchisesOrLettings.flatMap(
+                _.cateringOperationBusinessSections.getOrElse(IndexedSeq.empty).lastOption
+              )
             val idx           = getCateringOperationsIndex(answers)
             maybeCatering match {
               case Some(catering) if isCateringBusinessDetailsIncomplete(catering, answers.forType) =>
@@ -334,11 +336,15 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit) extends Naviga
   override val routeMap: Map[Identifier, Session => Call] = Map(
     FranchiseOrLettingsTiedToPropertyId        -> franchiseOrLettingConditionsRouting,
     ConcessionOrFranchiseFeePageId             -> (_ =>
-      controllers.aboutfranchisesorlettings.routes.CateringOperationBusinessDetailsController
-        .show()
+      aboutfranchisesorlettings.routes.CateringOperationBusinessDetailsController.show()
     ),
     CateringOperationPageId                    -> cateringOperationsConditionsRouting,
-    CateringOperationBusinessPageId            -> (_ => controllers.routes.TaskListController.show()),
+    CateringOperationBusinessPageId            -> (answers =>
+      aboutfranchisesorlettings.routes.FeeReceivedController.show(getCateringOperationsIndex(answers))
+    ),
+    FeeReceivedPageId                          -> (answers =>
+      aboutfranchisesorlettings.routes.AddAnotherCateringOperationController.show(getCateringOperationsIndex(answers))
+    ),
     CateringOperationDetailsPageId             -> cateringOperationsDetailsConditionsRouting,
     CateringOperationRentDetailsPageId         -> cateringOperationsRentDetailsConditionsRouting,
     CateringOperationRentIncludesPageId        -> cateringOperationsRentIncludesConditionsRouting,
