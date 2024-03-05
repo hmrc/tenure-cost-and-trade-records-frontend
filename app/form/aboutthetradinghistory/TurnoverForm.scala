@@ -32,8 +32,6 @@ object TurnoverForm {
     messages: Messages
   ): Form[Seq[TurnoverSection]] = {
 
-    val salesMax = BigDecimal(1000000000000L)
-
     def averageOccupancyRateMapping(year: String)(implicit messages: Messages): Mapping[Option[BigDecimal]] = optional(
       text
         .transform[BigDecimal](
@@ -60,7 +58,7 @@ object TurnoverForm {
       "other-receipts"         -> turnoverSalesMappingWithYear("turnover.other.sales", year),
       "accommodation"          -> turnoverSalesMappingWithYear("turnover.accommodation.sales", year),
       "average-occupancy-rate" -> averageOccupancyRateMapping(year)
-    )(TurnoverSection.apply)(TurnoverSection.unapply _)
+    )(TurnoverSection.apply)(TurnoverSection.unapply)
 
     val yearMappings = financialYearEndDates.map(date => columnMapping(date.getYear.toString))
 
@@ -68,12 +66,12 @@ object TurnoverForm {
       expectedNumberOfFinancialYears match {
         case 1 =>
           mapping(
-            "0" -> yearMappings(0)
+            "0" -> yearMappings.head
           )(Seq(_))(_.headOption)
 
         case 2 =>
           mapping(
-            "0" -> yearMappings(0),
+            "0" -> yearMappings.head,
             "1" -> yearMappings(1)
           )(Seq(_, _)) {
             case Seq(first, second) => Some(first, second)
@@ -82,7 +80,7 @@ object TurnoverForm {
 
         case 3 =>
           mapping(
-            "0" -> yearMappings(0),
+            "0" -> yearMappings.head,
             "1" -> yearMappings(1),
             "2" -> yearMappings(2)
           )(Seq(_, _, _)) {

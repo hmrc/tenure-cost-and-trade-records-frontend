@@ -302,7 +302,7 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
   private def paymentForTradeServicesRouting: Session => Call   = answers => {
     answers.aboutLeaseOrAgreementPartThree.flatMap(_.paymentForTradeServices.map(_.paymentForTradeService)) match {
       case Some(AnswerYes) => controllers.aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyController.show()
-      case Some(AnswerNo)  => controllers.aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsController.show
+      case Some(AnswerNo)  => controllers.aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsController.show()
       case _               =>
         logger.warn(
           s"Navigation for payment for trade services reached without correct selection of conditions by controller"

@@ -48,7 +48,7 @@ object TurnoverForm6030 {
           _.flatMap(str => Try(str.toInt).toOption),
           _.map(_.toString)
         )
-    )(TurnoverSection6030.apply)(TurnoverSection6030.unapply _)
+    )(TurnoverSection6030.apply)(TurnoverSection6030.unapply)
 
     val yearMappings = financialYearEndDates.map(date => columnMapping(date.getYear.toString))
 
@@ -56,12 +56,12 @@ object TurnoverForm6030 {
       expectedNumberOfFinancialYears match {
         case 1 =>
           mapping(
-            "0" -> yearMappings(0)
+            "0" -> yearMappings.head
           )(Seq(_))(_.headOption)
 
         case 2 =>
           mapping(
-            "0" -> yearMappings(0),
+            "0" -> yearMappings.head,
             "1" -> yearMappings(1)
           )(Seq(_, _)) {
             case Seq(first, second) => Some(first, second)
@@ -70,7 +70,7 @@ object TurnoverForm6030 {
 
         case 3 =>
           mapping(
-            "0" -> yearMappings(0),
+            "0" -> yearMappings.head,
             "1" -> yearMappings(1),
             "2" -> yearMappings(2)
           )(Seq(_, _, _)) {

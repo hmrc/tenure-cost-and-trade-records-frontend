@@ -43,6 +43,6 @@
         <p class="govuk-body">@messages("error.login.failed") @warningMessage</p>
         <p class="govuk-body">@HtmlContent(messages("error.login.attemptsleftSubheading")).asHtml</p>
 
-        <a href="@routes.LoginController.show" class="govuk-button" data-module="govuk-button" >@messages("label.retryLogin")</a>
+        <a href="@routes.LoginController.show()" class="govuk-button" data-module="govuk-button" >@messages("label.retryLogin")</a>
     }
 }

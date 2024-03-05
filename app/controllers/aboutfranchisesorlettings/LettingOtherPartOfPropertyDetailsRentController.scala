@@ -31,7 +31,6 @@ import repositories.SessionRepo
 import views.html.aboutfranchisesorlettings.cateringOperationOrLettingAccommodationRentDetails
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.ExecutionContext
 
 @Singleton
 class LettingOtherPartOfPropertyDetailsRentController @Inject() (
@@ -40,8 +39,7 @@ class LettingOtherPartOfPropertyDetailsRentController @Inject() (
   cateringOperationOrLettingAccommodationRentDetailsView: cateringOperationOrLettingAccommodationRentDetails,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext)
-    extends FORDataCaptureController(mcc)
+) extends FORDataCaptureController(mcc)
     with I18nSupport {
 
   def show(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>

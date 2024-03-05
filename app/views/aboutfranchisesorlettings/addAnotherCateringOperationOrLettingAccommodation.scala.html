@@ -51,8 +51,6 @@
 
 @isConcession = @{ forType == ForTypes.for6015 || forType == ForTypes.for6016 }
 
-@headingKey = @{if (isConcession) "addAnotherConcessionOrLetting.heading" else s"$cateringOrLetting.heading"}
-
 @label = @{if (isConcession) messages("label.section.aboutTheFranchiseConcessions")  else messages("label.section.aboutTheFranchiseLettings")}
 
 @formLabel =@{if (isConcession) messages(s"label.${concessionOrLetting}")  else messages(s"label.${cateringOrLetting}")}

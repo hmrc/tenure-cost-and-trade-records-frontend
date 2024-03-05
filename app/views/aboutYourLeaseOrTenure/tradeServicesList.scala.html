@@ -43,10 +43,6 @@
 
 @session = @{request.sessionData}
 
-@formAction = @{
-    controllers.aboutYourLeaseOrTenure.routes.TradeServicesListController.submit(index)
-}
-
 @numberOfServices = @{
     session.aboutLeaseOrAgreementPartThree.fold(Seq.empty[String]){
         fr => fr.tradeServices.map(_.details.description)

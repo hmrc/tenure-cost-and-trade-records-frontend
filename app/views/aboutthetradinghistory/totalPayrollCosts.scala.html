@@ -35,16 +35,6 @@
 
 @(form: Form[Seq[TotalPayrollCost]], numOfColumns: Int, financialYears: Seq[LocalDate], summary: Summary, fromLocation: String = "")(implicit request: SessionRequest[_], messages: Messages)
 
-@columns = @{
-    request.sessionData.aboutTheTradingHistory.map(_.turnoverSections).fold(Seq.empty[Int])(_.indices)
-}
-
-@directorsRemunerationHeading = {
-    <p class="govuk-body govuk-!-font-weight-bold">
-        @messages("totalPayrollCosts.directorsRemuneration")
-        <span class="govuk-caption-m">@messages("totalPayrollCosts.directorsRemuneration.add")</span>
-    </p>
-}
 @totalHeading = {
     <p class="govuk-body"><span class="govuk-!-font-weight-bold">@messages("totalPayrollCosts.total")</span></p>
 }

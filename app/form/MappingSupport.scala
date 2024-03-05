@@ -34,12 +34,11 @@ import models.submissions.common.{Address, AnswersYesNo, BuildingInsurance, CYAY
 import models.submissions.connectiontoproperty.{AddressConnectionType, ConnectionToProperty, CorrespondenceAddress, EditAddress, VacantPropertiesDetails, YourContactDetails}
 import models.submissions.notconnected.PastConnectionType
 import models.submissions.requestReferenceNumber.RequestReferenceNumberAddress
-import models.{AnnualRent, NamedEnum, NamedEnumSupport}
+import models.AnnualRent
 import play.api.data.Forms.{boolean, default, mapping, optional, text}
-import play.api.data.format.Formatter
 import play.api.data.validation.{Constraint, Invalid, Valid, ValidationError}
 import play.api.data.validation.Constraints.{maxLength, nonEmpty}
-import play.api.data.{FormError, Forms, Mapping}
+import play.api.data.{Forms, Mapping}
 import play.api.i18n.Messages
 import util.NumberUtil.zeroBigDecimal
 
@@ -274,22 +273,4 @@ object MappingSupport {
       .transform[BigDecimal](s => Try(BigDecimal(s)).getOrElse(-1), _.toString)
       .verifying(between(zeroBigDecimal, salesMax, s"error.$field.range"))
   ).verifying(s"error.$field.required", _.nonEmpty)
-}
-
-object EnumMapping {
-  def apply[T <: NamedEnum](named: NamedEnumSupport[T], defaultErrorMessageKey: String = Errors.noValueSelected) =
-    Forms.of[T](new Formatter[T] {
-
-      override val format = Some((defaultErrorMessageKey, Nil))
-
-      def bind(key: String, data: Map[String, String]): Either[Seq[FormError], T] = {
-        val resOpt = for {
-          keyVal        <- data.get(key)
-          enumTypeValue <- named.fromName(keyVal)
-        } yield Right(enumTypeValue)
-        resOpt.getOrElse(Left(Seq(FormError(key, defaultErrorMessageKey, Nil))))
-      }
-
-      def unbind(key: String, value: T): Map[String, String] = Map(key -> value.name)
-    })
 }

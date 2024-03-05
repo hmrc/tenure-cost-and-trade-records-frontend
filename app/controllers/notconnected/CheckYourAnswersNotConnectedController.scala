@@ -101,7 +101,7 @@ class CheckYourAnswersNotConnectedController @Inject() (
 
   private def submitToBackend(
     session: Session
-  )(implicit hc: HeaderCarrier, request: SessionRequest[_], messages: Messages): Future[Unit] = {
+  )(implicit hc: HeaderCarrier, messages: Messages): Future[Unit] = {
     val sessionRemoveConnection = session.removeConnectionDetails.flatMap(_.removeConnectionDetails)
 
     val submission = NotConnectedSubmission(

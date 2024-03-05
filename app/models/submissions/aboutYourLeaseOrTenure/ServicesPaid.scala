@@ -17,7 +17,7 @@
 package models.submissions.aboutYourLeaseOrTenure
 
 import models.submissions.common.AnswersYesNo
-import play.api.libs.json.Json
+import play.api.libs.json.{Json, OFormat}
 
 case class ServicesPaid(
   details: ServicePaidSeparately,
@@ -25,5 +25,5 @@ case class ServicesPaid(
 )
 
 object ServicesPaid {
-  implicit val format = Json.format[ServicesPaid]
+  implicit val format: OFormat[ServicesPaid] = Json.format[ServicesPaid]
 }
