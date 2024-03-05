@@ -28,6 +28,13 @@
 
 @(forType: String, referenceNumber: String)(implicit request: Request[_], messages: Messages)
 
+@removePrefix(forType: String) = @{forType.stripPrefix("FOR")}
+
+@downloadSection(forType: String) = {
+   <p class="govuk-body"><a class="govuk-link" target="_blank" href=@messages(s"downloadPdf.${removePrefix(forType)}.url")>@messages(s"downloadPdf.${removePrefix(forType)}.label")</a></p>
+        <a href="@routes.LoginController.show()?ref=@referenceNumber&forType=@forType" class="govuk-button" data-module="govuk-button">@messages("downloadPdf.continueJourneyButton")</a>
+    }
+
 @layout(
   pageHeading = messages("downloadPdf.heading"),
     showH1 = false,
@@ -35,39 +42,12 @@
 ) {
 
     @forType match {
-        case ForTypes.for6010 => {
+        case ForTypes.for6010 | ForTypes.for6011 | ForTypes.for6015 | ForTypes.for6016 | ForTypes.for6020 | ForTypes.for6030 => {
             <h1 class="govuk-heading-l">@messages("downloadPdf.heading")</h1>
             <p class="govuk-body">@messages("downloadPdf.englishWelsh")</p>
-            <p class="govuk-body">
-                <a class="govuk-link" target="_blank" href=@messages("downloadPdf.6010.url")>@messages("downloadPdf.6010.label")</a>
-            </p>
-            <a href="@routes.LoginController.show()?ref=@referenceNumber&forType=@forType" class="govuk-button" data-module="govuk-button" >@messages("downloadPdf.continueJourneyButton")</a>
+            @downloadSection(forType)
         }
-        case ForTypes.for6011 => {
-            <h1 class="govuk-heading-l">@messages("downloadPdf.heading")</h1>
-            <p class="govuk-body">@messages("downloadPdf.englishWelsh")</p>
-            <p class="govuk-body">
-                <a class="govuk-link" target="_blank" href=@messages("downloadPdf.6011.url")>@messages("downloadPdf.6011.label")</a>
-            </p>
-            <a href="@routes.LoginController.show()?ref=@referenceNumber&forType=@forType" class="govuk-button" data-module="govuk-button" >@messages("downloadPdf.continueJourneyButton")</a>
-        }
-        case ForTypes.for6015 => {
-            <h1 class="govuk-heading-l">@messages("downloadPdf.heading")</h1>
-            <p class="govuk-body">@messages("downloadPdf.englishWelsh")</p>
-            <p class="govuk-body">
-                <a class="govuk-link" target="_blank" href=@messages("downloadPdf.6015.url")>@messages("downloadPdf.6015.label")</a>
-            </p>
-            <a href="@routes.LoginController.show()?ref=@referenceNumber&forType=@forType" class="govuk-button" data-module="govuk-button" >@messages("downloadPdf.continueJourneyButton")</a>
-        }
-        case ForTypes.for6016 => {
-            <h1 class="govuk-heading-l">@messages("downloadPdf.heading")</h1>
-            <p class="govuk-body">@messages("downloadPdf.englishWelsh")</p>
-            <p class="govuk-body">
-                <a class="govuk-link" target="_blank" href=@messages("downloadPdf.6016.url")>@messages("downloadPdf.6016.label")</a>
-            </p>
-            <a href="@routes.LoginController.show()?ref=@referenceNumber&forType=@forType" class="govuk-button" data-module="govuk-button" >@messages("downloadPdf.continueJourneyButton")</a>
-        }
-        case _ =>{
+        case _                => {
             <h2 class="govuk-heading-l">@{messages("downloadPdf.subheading")}</h2>
             <p class="govuk-body">@messages("downloadPdf.no.download")</p>
             <p class="govuk-body">@HtmlContent(messages("downloadPdf.retry")).asHtml</p>
