@@ -1,5 +1,5 @@
 @*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,33 +15,112 @@
  *@
 
 @import actions.SessionRequest
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
-@import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
+@import uk.gov.hmrc.govukfrontend.views.html.components._
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
+@import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcCharacterCount
+@import uk.gov.hmrc.hmrcfrontend.views.html.components.CharacterCount
+@import uk.gov.hmrc.hmrcfrontend.views.Implicits.RichCharacterCount
+@import uk.gov.hmrc.govukfrontend.views.Implicits.RichInput
+@import util.DateUtil
 
 @this(
         layout: Layout,
+        formWithCSRF: FormWithCSRF,
         govukButton: GovukButton,
         govukInput: GovukInput,
-        formWithCSRF: FormWithCSRF
+        govukTable: GovukTable,
+        hmrcCharacterCount: HmrcCharacterCount,
+        dateUtil: DateUtil
 )
 
 
-@(theForm: Form[_], idx: Int, operatorName: String, backLink: String)(implicit request: SessionRequest[_], messages: Messages)
+@(form: Form[_], idx: Int, operatorName: String, backLink: String)(implicit request: SessionRequest[_], messages: Messages)
 
 @layout(
     pageHeading = messages("feeReceived.heading", operatorName),
     showSection = true,
     summary = Some(request.sessionData.toSummary),
-    sectionName = messages("label.section.aboutTheFranchiseConcessions"),
+    sectionName = messages("label.section.aboutTheFranchiseLettings"),
     backLinkUrl = backLink,
-    theForm = theForm
+    fullWidth = true,
+    theForm = form
 ) {
+
+    <p class="govuk-body govuk-!-width-two-thirds">@messages("feeReceived.p1")</p>
+
     @formWithCSRF(action = controllers.aboutfranchisesorlettings.routes.FeeReceivedController.submit(idx)) {
 
+        <table class="hmrc-responsive-table">
+            <tbody>
+                <tr>
+                @request.sessionData.financialYearEndDates6030.map { case (finYearEnd, idx) =>
+                <td>
 
-            @includes.continueSaveAsDraftButtons(govukButton)
+                    @govukTable(Table(
+                        head = Seq(
+                            HeadCell(content = Text(messages("turnover.financialYearEnd"))),
+                            HeadCell(content = Text(dateUtil.formatDayMonthAbbrYear(finYearEnd)))
+                        ),
+                        firstCellIsHeader = true,
+                        rows = Seq(
+                            Seq(
+                                TableRow(content = Text(messages("turnover.tradingPeriod"))),
+                                TableRow(
+                                    content = HtmlContent(
+                                        govukInput(Input(
+                                            classes = "govuk-input--width-2",
+                                            attributes = Map(
+                                                "maxlength" -> "2",
+                                                "aria-label" -> messages("turnover.tradingPeriod")
+                                            ),
+                                            suffix = Some(PrefixOrSuffix(
+                                                content = Text(messages("turnover.weeks"))
+                                            ))
+                                        ).withFormField(form(s"feeReceivedPerYear.year[$idx].tradingPeriod")))
+                                    )
+                                )
+                            ),
+                            Seq(
+                                TableRow(content = Text(messages("feeReceived.concessionOrFranchiseFee"))),
+                                TableRow(
+                                    content = HtmlContent(
+                                        govukInput(Input(
+                                            prefix = Some(PrefixOrSuffix(
+                                                content = Text("£")
+                                            )),
+                                            classes = "govuk-input--width-5",
+                                            attributes = Map(
+                                                "maxlength" -> "8",
+                                                "aria-label" -> messages("feeReceived.concessionOrFranchiseFee")
+                                            )
+                                        ).withFormField(form(s"feeReceivedPerYear.year[$idx].concessionOrFranchiseFee")))
+                                    )
+                                )
+                            )
+                        )
+                    ))
+                </td>
+                }
+                </tr>
+            </tbody>
+        </table>
 
+        @hmrcCharacterCount(
+            CharacterCount(
+                rows = 3,
+                maxLength = 2000,
+                errorMessage = form.errors.asTextErrorMessageForField("feeCalculationDetails"),
+                classes = "govuk-!-width-two-thirds",
+                label = Label(
+                    content = Text(messages("feeReceived.feeCalculationDetails")),
+                    classes = "govuk-!-font-weight-bold",
+                )
+            ).withFormField(form("feeCalculationDetails"))
+        )
+
+        @includes.continueSaveAsDraftButtons(govukButton)
     }
+
+    <script src="@routes.Assets.versioned("javascripts/responsive-table.js")"></script>
 
 }

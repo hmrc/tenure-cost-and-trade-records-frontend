@@ -21,7 +21,7 @@ import controllers.FORDataCaptureController
 import controllers.aboutthetradinghistory.routes
 import form.aboutfranchisesorlettings.FeeReceivedForm.feeReceivedForm
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
-import models.submissions.aboutfranchisesorlettings.{CateringOperationBusinessSection, FeeReceived}
+import models.submissions.aboutfranchisesorlettings.{CateringOperationBusinessSection, FeeReceived, FeeReceivedPerYear}
 import navigation.AboutFranchisesOrLettingsNavigator
 import navigation.identifiers.FeeReceivedPageId
 import play.api.i18n.I18nSupport
@@ -50,7 +50,9 @@ class FeeReceivedController @Inject() (
 
       Ok(
         feeReceivedView(
-          currentSection.feeReceived.fold(feeReceivedForm(years))(feeReceivedForm(years).fill),
+          currentSection.feeReceived
+            .filter(_.feeReceivedPerYear.size == years.size)
+            .fold(feeReceivedForm(years).fill(initialFeeReceived))(feeReceivedForm(years).fill),
           idx,
           currentSection.cateringOperationBusinessDetails.operatorName,
           backLink(idx).url
@@ -61,7 +63,8 @@ class FeeReceivedController @Inject() (
 
   def submit(idx: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     runWithSessionCheck(idx) { currentSection =>
-      val years = financialYearEndDates.map(_.getYear.toString)
+      val yearEndDates = financialYearEndDates
+      val years        = yearEndDates.map(_.getYear.toString)
 
       continueOrSaveAsDraft[FeeReceived](
         feeReceivedForm(years),
@@ -74,21 +77,28 @@ class FeeReceivedController @Inject() (
               backLink(idx).url
             )
           ),
-        data => {
-          val updatedSections = request.sessionData.aboutFranchisesOrLettings
-            .map(_.cateringOperationBusinessSections.getOrElse(IndexedSeq.empty))
-            .map(_.updated(idx, currentSection.copy(feeReceived = Some(data))))
-            .get
+        data =>
+          if (data.feeReceivedPerYear.size == yearEndDates.size) {
+            val feeReceivedSeq = (data.feeReceivedPerYear zip yearEndDates).map { case (feePerYear, finYearEnd) =>
+              feePerYear.copy(financialYearEnd = finYearEnd)
+            }
 
-          val updatedData =
-            updateAboutFranchisesOrLettings(_.copy(cateringOperationBusinessSections = Some(updatedSections)))
-          session.saveOrUpdate(updatedData).map { _ =>
-            Redirect(navigator.nextPage(FeeReceivedPageId, updatedData).apply(updatedData))
+            val updatedFeeReceived = data.copy(feeReceivedPerYear = feeReceivedSeq)
+
+            val updatedSections = request.sessionData.aboutFranchisesOrLettings
+              .map(_.cateringOperationBusinessSections.getOrElse(IndexedSeq.empty))
+              .map(_.updated(idx, currentSection.copy(feeReceived = Some(updatedFeeReceived))))
+              .get
+
+            val updatedData =
+              updateAboutFranchisesOrLettings(_.copy(cateringOperationBusinessSections = Some(updatedSections)))
+            session.saveOrUpdate(updatedData).map { _ =>
+              Redirect(navigator.nextPage(FeeReceivedPageId, updatedData).apply(updatedData))
+            }
+          } else {
+            Redirect(controllers.aboutfranchisesorlettings.routes.FeeReceivedController.show(idx))
           }
-        }
       )
-
-      Redirect(navigator.nextPage(FeeReceivedPageId, request.sessionData).apply(request.sessionData)) // TODO: Remove
     }
   }
 
@@ -104,7 +114,15 @@ class FeeReceivedController @Inject() (
       Redirect(routes.AboutYourTradingHistoryController.show())
     }
 
-  def financialYearEndDates(implicit request: SessionRequest[AnyContent]): Seq[LocalDate] =
+  private def initialFeeReceived(implicit request: SessionRequest[AnyContent]): FeeReceived =
+    FeeReceived(
+      request.sessionData.aboutTheTradingHistory
+        .fold(Seq.empty[FeeReceivedPerYear])(
+          _.turnoverSections6030.map(section => FeeReceivedPerYear(section.financialYearEnd, section.tradingPeriod))
+        )
+    )
+
+  private def financialYearEndDates(implicit request: SessionRequest[AnyContent]): Seq[LocalDate] =
     request.sessionData.aboutTheTradingHistory.fold(Seq.empty[LocalDate])(
       _.turnoverSections6030.map(_.financialYearEnd)
     )

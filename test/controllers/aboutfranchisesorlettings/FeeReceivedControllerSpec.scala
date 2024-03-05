@@ -50,8 +50,7 @@ class FeeReceivedControllerSpec extends TestBaseSpec {
       val res = feeReceivedController.submit(0)(
         FakeRequest().withFormUrlEncodedBody()
       )
-      status(res) shouldBe SEE_OTHER // TODO: replace by line below when FeeReceivedController implemented
-      // status(res) shouldBe BAD_REQUEST
+      status(res) shouldBe BAD_REQUEST
     }
   }
 
