@@ -189,9 +189,9 @@ class AboutThePropertyViewSpec extends QuestionViewBehaviours[PropertyDetails] {
       assert(sectionText == messages("label.section.aboutTheProperty"))
     }
 
-    "contain checkbox for the value hotel" in {
+    "contain radio buttons for the value hotel" in {
       val doc = asDocument(createViewUsingForm6015(form))
-      assertContainsCheckBox(
+      assertContainsRadioButton(
         doc,
         "propertyCurrentlyUsed",
         "propertyCurrentlyUsed",
@@ -201,9 +201,9 @@ class AboutThePropertyViewSpec extends QuestionViewBehaviours[PropertyDetails] {
       assertContainsText(doc, messages("propertyCurrentlyUsed.hotel"))
     }
 
-    "contain checkbox for the value Health spa" in {
+    "contain radio buttons for the value healthSpa" in {
       val doc = asDocument(createViewUsingForm6015(form))
-      assertContainsCheckBox(
+      assertContainsRadioButton(
         doc,
         "propertyCurrentlyUsed-2",
         "propertyCurrentlyUsed",
@@ -213,9 +213,9 @@ class AboutThePropertyViewSpec extends QuestionViewBehaviours[PropertyDetails] {
       assertContainsText(doc, messages("propertyCurrentlyUsed.healthSpa"))
     }
 
-    "contain checkbox for the value lodge and restaurant" in {
+    "contain radio buttons for the value lodgeAndRestaurant" in {
       val doc = asDocument(createViewUsingForm6015(form))
-      assertContainsCheckBox(
+      assertContainsRadioButton(
         doc,
         "propertyCurrentlyUsed-3",
         "propertyCurrentlyUsed",
@@ -225,9 +225,9 @@ class AboutThePropertyViewSpec extends QuestionViewBehaviours[PropertyDetails] {
       assertContainsText(doc, messages("propertyCurrentlyUsed.lodgeAndRestaurant"))
     }
 
-    "contain checkbox for the value conference centre" in {
+    "contain radio buttons for the value conferenceCentre" in {
       val doc = asDocument(createViewUsingForm6015(form))
-      assertContainsCheckBox(
+      assertContainsRadioButton(
         doc,
         "propertyCurrentlyUsed-4",
         "propertyCurrentlyUsed",
@@ -237,9 +237,9 @@ class AboutThePropertyViewSpec extends QuestionViewBehaviours[PropertyDetails] {
       assertContainsText(doc, messages("propertyCurrentlyUsed.conferenceCentre"))
     }
 
-    "contain checkbox for the value other" in {
+    "contain radio buttons for the value other" in {
       val doc = asDocument(createViewUsingForm6015(form))
-      assertContainsCheckBox(
+      assertContainsRadioButton(
         doc,
         "propertyCurrentlyUsed-5",
         "propertyCurrentlyUsed",
@@ -248,6 +248,66 @@ class AboutThePropertyViewSpec extends QuestionViewBehaviours[PropertyDetails] {
       )
       assertContainsText(doc, messages("propertyCurrentlyUsed.other"))
     }
+
+    //    "contain checkbox for the value hotel" in {
+    //      val doc = asDocument(createViewUsingForm6015(form))
+    //      assertContainsCheckBox(
+    //        doc,
+    //        "propertyCurrentlyUsed",
+    //        "propertyCurrentlyUsed",
+    //        CurrentPropertyHotel.name,
+//        isChecked = false
+//      )
+//      assertContainsText(doc, messages("propertyCurrentlyUsed.hotel"))
+//    }
+//
+//    "contain checkbox for the value Health spa" in {
+//      val doc = asDocument(createViewUsingForm6015(form))
+//      assertContainsCheckBox(
+//        doc,
+//        "propertyCurrentlyUsed-2",
+//        "propertyCurrentlyUsed",
+//        CurrentPropertyHealthSpa.name,
+//        isChecked = false
+//      )
+//      assertContainsText(doc, messages("propertyCurrentlyUsed.healthSpa"))
+//    }
+//
+//    "contain checkbox for the value lodge and restaurant" in {
+//      val doc = asDocument(createViewUsingForm6015(form))
+//      assertContainsCheckBox(
+//        doc,
+//        "propertyCurrentlyUsed-3",
+//        "propertyCurrentlyUsed",
+//        CurrentPropertyLodgeAndRestaurant.name,
+//        isChecked = false
+//      )
+//      assertContainsText(doc, messages("propertyCurrentlyUsed.lodgeAndRestaurant"))
+//    }
+//
+//    "contain checkbox for the value conference centre" in {
+//      val doc = asDocument(createViewUsingForm6015(form))
+//      assertContainsCheckBox(
+//        doc,
+//        "propertyCurrentlyUsed-4",
+//        "propertyCurrentlyUsed",
+//        CurrentPropertyConferenceCentre.name,
+//        isChecked = false
+//      )
+//      assertContainsText(doc, messages("propertyCurrentlyUsed.conferenceCentre"))
+//    }
+//
+//    "contain checkbox for the value other" in {
+//      val doc = asDocument(createViewUsingForm6015(form))
+//      assertContainsCheckBox(
+//        doc,
+//        "propertyCurrentlyUsed-5",
+//        "propertyCurrentlyUsed",
+//        CurrentPropertyOther.name,
+//        isChecked = false
+//      )
+//      assertContainsText(doc, messages("propertyCurrentlyUsed.other"))
+//    }
 
     "contain continue button with the value Continue" in {
       val doc         = asDocument(createViewUsingForm6015(form))
