@@ -63,7 +63,7 @@ label.no.na = No
 checkYourAnswersRadio.heading = Have you completed this section?
 checkYourAnswersRadio.yes = Yes, I’ve completed this section
 checkYourAnswersRadio.no = No, I’ll come back to it later
-error.checkYourAnswersRadio.required = Select whether you’ve completed this section
+error.checkYourAnswersRadio.required = Dewiswch ’ydw’ os ydych wedi llenwi’r adran hon
 
 # COMMON LABELS
 ###############
