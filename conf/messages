@@ -1644,6 +1644,8 @@ checkYourAnswersAboutFranchiseOrLettings.addedLetting = You have added {0} tenan
 checkYourAnswersAboutFranchiseOrLettings.addedLettingPlural = You have added {0} tenants
 checkYourAnswersAboutFranchiseOrLettings.addedLetting6015 = You have added {0} letting
 checkYourAnswersAboutFranchiseOrLettings.addedLettingPlural6015 = You have added {0} lettings
+checkYourAnswersAboutFranchiseOrLettings.feeReceived.concessionOrFranchiseFee.heading = Concession or franchise fee
+checkYourAnswersAboutFranchiseOrLettings.feeReceived.feeCalculationDetails = How the fee was calculated
 
 checkYourAnswersAboutYourLeaseOrTenure.heading = Check your answers – your lease or agreement
 checkYourAnswersAboutYourLeaseOrTenure.yourLandlord.heading = Your landlord
