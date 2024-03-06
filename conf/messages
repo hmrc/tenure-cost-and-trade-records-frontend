@@ -724,10 +724,10 @@ feeReceived.heading = Fee received from {0}
 feeReceived.p1 = If the fee received does not relate to a whole year, or the business was not trading continuously, state the relevant number of weeks.
 feeReceived.concessionOrFranchiseFee = Concession or franchise fee
 feeReceived.feeCalculationDetails = Explain how the fee was calculated - for example, 10% of the total takings
-error.feeReceived.concessionOrFranchiseFee.required = Enter 0 if you did not receive any fee in the year ending {0}
-error.feeReceived.concessionOrFranchiseFee.range = The fee received in the year ending {0} must be a number, for example 100 or 100.00
-error.feeReceived.concessionOrFranchiseFee.negative = The fee received in the year ending {0} cannot be a negative number
-error.feeReceived.feeCalculationDetails.required = Enter a description of how the fee was calculated
+error.feeReceived.concessionOrFranchiseFee.required = Enter 0 if you received no fees in the year ending {0}
+error.feeReceived.concessionOrFranchiseFee.range = Fee received in the year ending {0} must be a number like 100 or 100.00
+error.feeReceived.concessionOrFranchiseFee.negative = Fee received in the year ending {0} cannot be a negative number
+error.feeReceived.feeCalculationDetails.required = You must explain how the fee was calculated
 
 # LETTING OTHER PART OF PROPERTY
 ##############################
@@ -1919,7 +1919,7 @@ error.tiedType.required = Select which type of tie you have
 error.addressLineTwo.maxLength = Address line 2 must be 50 characters or fewer
 error.townCity.maxLength = Town or city name must be 50 characters or fewer
 error.county.maxLength = County name must be 50 characters or fewer
-error.weeksMapping.blank = Enter 0 if you are not trading in the year ending {0}
+error.weeksMapping.blank = Enter 0 if you were not trading in the year ending {0}
 error.weeksMapping.invalid = The trading period in the year ending {0} should be a number from 1 to 52
 error.fullName.maxLength = Full name must be 50 characters or fewer
 
