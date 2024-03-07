@@ -38,7 +38,7 @@
 )
 
 
-@(theForm: Form[TradeServicesDetails], index: Option[Int],  summary: Summary)(implicit request: Request[_], messages: Messages)
+@(theForm: Form[TradeServicesDetails], index: Option[Int], backLink: String,  summary: Summary)(implicit request: Request[_], messages: Messages)
 
 @layout(
     pageHeading = messages("tradeServiceDescription.heading"),
@@ -46,7 +46,7 @@
     showH1 = false,
     summary = Some(summary),
     sectionName = messages("label.section.aboutYourLeaseOrTenure"),
-    backLinkUrl = Some(controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesController.show().url),
+    backLinkUrl = backLink,
     theForm = theForm
 ) {
     @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.TradeServicesDescriptionController.submit(index)) {
