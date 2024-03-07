@@ -59,6 +59,21 @@ class AboutYouViewSpec extends QuestionViewBehaviours[CustomerDetails] {
       assert(doc.toString.contains(messages("aboutYou.subheading")))
     }
 
+    "contain an input for fullName" in {
+      val doc = asDocument(createViewUsingForm(form))
+      assertRenderedById(doc, "fullName")
+    }
+
+    "contain an input for contactDetails.phone" in {
+      val doc = asDocument(createViewUsingForm(form))
+      assertRenderedById(doc, "contactDetails.phone")
+    }
+
+    "contain an input for contactDetails.email" in {
+      val doc = asDocument(createViewUsingForm(form))
+      assertRenderedById(doc, "contactDetails.email")
+    }
+
     "contain continue button with the value Continue" in {
       val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("continue").text()

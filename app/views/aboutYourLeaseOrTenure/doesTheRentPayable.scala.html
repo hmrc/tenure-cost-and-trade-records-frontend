@@ -61,22 +61,27 @@
                 ),
                 items = Seq(
                     CheckboxItem(
+                        id = "proprietor",
                         content = Text(messages("checkbox.rentPayable.proprietor")),
                         value = "proprietor"
                     ),
                     CheckboxItem(
+                        id = "otherProperty",
                         content = Text(messages("checkbox.rentPayable.otherProperty")),
                         value = "otherProperty"
                     ),
                     CheckboxItem(
+                        id = "onlyPart",
                         content = Text(messages("checkbox.rentPayable.onlyPart")),
                         value = "onlyPart"
                     ),
                     CheckboxItem(
+                        id = "onlyLand",
                         content = Text(messages("checkbox.rentPayable.onlyLand")),
                         value = "onlyLand"
                     ),
                     CheckboxItem(
+                        id = "shellUnit",
                         content = Text(messages("checkbox.rentPayable.shellUnit")),
                         value = "shellUnit"
                     ),
@@ -84,6 +89,7 @@
                         divider = "or"
                     ),
                     CheckboxItem(
+                        id = "none",
                         content = Text(messages("checkbox.rentPayable.noneOfThese")),
                         value = "none",
                         behaviour = ExclusiveCheckbox

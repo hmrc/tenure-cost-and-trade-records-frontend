@@ -49,6 +49,12 @@ class TenancyLeaseAgreementExpireViewSpec extends QuestionViewBehaviours[Tenancy
       backlinkUrl mustBe controllers.aboutYourLeaseOrTenure.routes.CurrentRentFirstPaidController.show().url
     }
 
+    "Section heading is visible" in {
+      val doc         = asDocument(createViewUsingForm(form)) // govuk-caption-m
+      val sectionText = doc.getElementsByClass("govuk-caption-m").text()
+      assert(sectionText == messages("label.section.aboutYourLeaseOrTenure"))
+    }
+
     "contain date format hint for tenancyLeaseAgreementExpire-hint" in {
       val doc             = asDocument(createViewUsingForm(form))
       val firstOccupyHint = doc.getElementById("tenancyLeaseAgreementExpire-hint").text()

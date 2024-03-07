@@ -42,6 +42,10 @@ class AboutFranchisesOrLettingsIdentifiersSpec extends TestBaseSpec {
       assert(CateringOperationBusinessPageId.toString.equals("cateringOperationBusinessPage"))
     }
 
+    "Identifier for fee received page" in {
+      assert(FeeReceivedPageId.toString.equals("feeReceivedPage"))
+    }
+
     "Identifier for catering operations details page" in {
       assert(CateringOperationDetailsPageId.toString.equals("cateringOperationDetailsPage"))
     }
@@ -59,6 +63,10 @@ class AboutFranchisesOrLettingsIdentifiersSpec extends TestBaseSpec {
     }
 
     "Identifier for add another catering operations page" in {
+      assert(AddAnotherCateringOperationPageId.toString.equals("addAnotherCateringOperationPage"))
+    }
+
+    "Identifier for add another concession operation page" in {
       assert(AddAnotherCateringOperationPageId.toString.equals("addAnotherCateringOperationPage"))
     }
 
