@@ -46,6 +46,12 @@ class ServicePaidSeparatelyViewSpec extends QuestionViewBehaviours[ServicePaidSe
       backlinkUrl mustBe controllers.aboutYourLeaseOrTenure.routes.PaymentForTradeServicesController.show().url
     }
 
+    "Section heading is visible" in {
+      val doc         = asDocument(createViewUsingForm(form)) // govuk-caption-m
+      val sectionText = doc.getElementsByClass("govuk-caption-m").text()
+      assert(sectionText == messages("label.section.aboutYourLeaseOrTenure"))
+    }
+
     "contain currency field for the value annual charge for separately paid services" in {
       val doc = asDocument(createViewUsingForm(form))
       assertRenderedById(doc, "annualCharge")

@@ -53,6 +53,12 @@ class FinancialYearEndDatesViewSpec extends QuestionViewBehaviours[Seq[LocalDate
       backlinkUrl mustBe controllers.aboutthetradinghistory.routes.FinancialYearEndController.show().url
     }
 
+    "Section heading is visible" in {
+      val doc         = asDocument(createViewUsingForm(form))
+      val sectionText = doc.getElementsByClass("govuk-caption-m").text()
+      assert(sectionText == messages("label.section.aboutYourTradingHistory"))
+    }
+
     "contain date field for the value financial-year-end[0].date.day" in {
       val doc = asDocument(createViewUsingForm(form))
       assertContainsLabel(doc, "financial-year-end[0].date.day", "Day")

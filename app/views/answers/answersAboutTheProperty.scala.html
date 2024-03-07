@@ -68,7 +68,20 @@
 
 <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutTheProperty.aboutProperty.heading")</h2>
 
-    @if(forType == ForTypes.for6030) {
+@if(forType == ForTypes.for6020) {
+    @govukSummaryList(SummaryList(rows =
+
+        sectionAnswers.row(
+            "checkYourAnswersAboutTheProperty.propertyUsage",
+            _.propertyDetailsString.map(x => s"<p class=\"govuk-body\">${Text(x.propertyDetailsString).asHtml}</p>"),
+            aboutyouandtheproperty.routes.AboutThePropertyStringController.show(),
+            "propertyCurrentlyUsedString",
+            ("valueAsHtml", _ => None)
+        )
+    )
+    )
+
+} else if(forType == ForTypes.for6030) {
 @govukSummaryList(SummaryList(rows =
 
     sectionAnswers.row(

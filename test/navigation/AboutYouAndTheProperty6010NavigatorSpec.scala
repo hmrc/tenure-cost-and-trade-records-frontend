@@ -16,13 +16,30 @@
 
 package navigation
 
+import connectors.Audit
 import navigation.identifiers._
+import play.api.libs.json.JsObject
+import uk.gov.hmrc.http.HeaderCarrier
 import org.scalatest.matchers.must.Matchers.convertToAnyMustWrapper
 import utils.TestBaseSpec
 
+import scala.concurrent.ExecutionContext
+
 class AboutYouAndTheProperty6010NavigatorSpec extends TestBaseSpec {
 
+  val audit = mock[Audit]
+  doNothing.when(audit).sendExplicitAudit(any[String], any[JsObject])(any[HeaderCarrier], any[ExecutionContext])
+
+  val navigator = new AboutYouAndThePropertyNavigator(audit)
+
   "About you and the property navigator for no answers for 6010" when {
+
+    "go to sign in from an identifier that doesn't exist in the route map" in {
+      case object UnknownIdentifier extends Identifier
+      navigator
+        .nextPage(UnknownIdentifier, aboutYouAndTheProperty6010YesSession)
+        .apply(aboutYouAndTheProperty6010YesSession) mustBe controllers.routes.LoginController.show()
+    }
 
     // See AboutYouAndThePropertyNavigatorSpec for generic parts of the journey
 

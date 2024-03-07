@@ -50,6 +50,12 @@ class AboutYourTradingHistoryViewSpec extends QuestionViewBehaviours[MonthsYearD
       backlinkUrl mustBe controllers.routes.TaskListController.show().url
     }
 
+    "Section heading is visible" in {
+      val doc         = asDocument(createViewUsingForm(form))
+      val sectionText = doc.getElementsByClass("govuk-caption-m").text()
+      assert(sectionText == messages("label.section.aboutYourTradingHistory"))
+    }
+
     "contain date format hint for firstOccupy-hint" in {
       val doc             = asDocument(createViewUsingForm(form))
       val firstOccupyHint = doc.getElementById("firstOccupy-hint").text()

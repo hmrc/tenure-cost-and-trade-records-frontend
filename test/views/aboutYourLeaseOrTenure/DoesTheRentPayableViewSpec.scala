@@ -54,6 +54,42 @@ class DoesTheRentPayableViewSpec extends QuestionViewBehaviours[DoesTheRentPayab
       assert(sectionText == messages("label.section.aboutYourLeaseOrTenure"))
     }
 
+    "contain checkbox for the proprietor" in {
+      val doc = asDocument(createViewUsingForm(form))
+      assertContainsCheckBox(doc, "proprietor", "rentPayable[]", "proprietor", false)
+      assertContainsText(doc, messages("checkbox.rentPayable.proprietor"))
+    }
+
+    "contain checkbox for the otherProperty" in {
+      val doc = asDocument(createViewUsingForm(form))
+      assertContainsCheckBox(doc, "otherProperty", "rentPayable[]", "otherProperty", false)
+      assertContainsText(doc, messages("checkbox.rentPayable.otherProperty"))
+    }
+
+    "contain checkbox for the onlyPart" in {
+      val doc = asDocument(createViewUsingForm(form))
+      assertContainsCheckBox(doc, "onlyPart", "rentPayable[]", "onlyPart", false)
+      assertContainsText(doc, messages("checkbox.rentPayable.onlyPart"))
+    }
+
+    "contain checkbox for the onlyLand" in {
+      val doc = asDocument(createViewUsingForm(form))
+      assertContainsCheckBox(doc, "onlyLand", "rentPayable[]", "onlyLand", false)
+      assertContainsText(doc, messages("checkbox.rentPayable.onlyLand"))
+    }
+
+    "contain checkbox for the shellUnit" in {
+      val doc = asDocument(createViewUsingForm(form))
+      assertContainsCheckBox(doc, "shellUnit", "rentPayable[]", "shellUnit", false)
+      assertContainsText(doc, messages("checkbox.rentPayable.shellUnit"))
+    }
+
+    "contain checkbox for the none" in {
+      val doc = asDocument(createViewUsingForm(form))
+      assertContainsCheckBox(doc, "none", "rentPayable[]", "none", false)
+      assertContainsText(doc, messages("checkbox.rentPayable.noneOfThese"))
+    }
+
     "contain continue button with the value Continue" in {
       val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("continue").text()

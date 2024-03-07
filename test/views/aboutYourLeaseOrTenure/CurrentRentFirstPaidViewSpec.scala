@@ -48,6 +48,12 @@ class CurrentRentFirstPaidViewSpec extends QuestionViewBehaviours[CurrentRentFir
       backlinkUrl mustBe controllers.aboutYourLeaseOrTenure.routes.CurrentAnnualRentController.show().url
     }
 
+    "Section heading is visible" in {
+      val doc         = asDocument(createViewUsingForm(form)) // govuk-caption-m
+      val sectionText = doc.getElementsByClass("govuk-caption-m").text()
+      assert(sectionText == messages("label.section.aboutYourLeaseOrTenure"))
+    }
+
     "contain an subhead for page" in {
       val doc = asDocument(createViewUsingForm(form))
       assertContainsText(doc, messages("label.currentRentFirstPaid.p1"))

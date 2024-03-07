@@ -20,7 +20,7 @@ import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
 import form.aboutfranchisesorlettings.ConcessionOrFranchiseForm.concessionOrFranchiseForm
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
-import models.submissions.common.AnswersYesNo
+import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
 import navigation.AboutFranchisesOrLettingsNavigator
 import navigation.identifiers.RentFromConcessionId
 import play.api.i18n.I18nSupport
@@ -70,10 +70,22 @@ class ConcessionOrFranchiseController @Inject() (
           )
         ),
       data => {
-        val updatedData = updateAboutFranchisesOrLettings(_.copy(cateringConcessionOrFranchise = Some(data)))
-        session.saveOrUpdate(updatedData).map { _ =>
-          Redirect(navigator.nextPage(RentFromConcessionId, updatedData).apply(updatedData))
-        }
+        val isFromCYA   = navigator.from == "CYA"
+        val updatedData =
+          updateAboutFranchisesOrLettings(_.copy(cateringConcessionOrFranchise = Some(data), fromCYA = Some(isFromCYA)))
+        session
+          .saveOrUpdate(updatedData)
+          .map { _ =>
+            navigator.cyaPage
+              .filter(_ =>
+                isFromCYA && (data == AnswerNo ||
+                  request.sessionData.aboutFranchisesOrLettings
+                    .flatMap(_.cateringConcessionOrFranchise)
+                    .contains(AnswerYes))
+              )
+              .getOrElse(navigator.nextPage(RentFromConcessionId, updatedData).apply(updatedData))
+          }
+          .map(Redirect)
       }
     )
   }
