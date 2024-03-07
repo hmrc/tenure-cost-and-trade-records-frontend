@@ -115,6 +115,7 @@ class CheckYourAnswersAboutThePropertyController @Inject() (
             logger.warn(s"Backlink error, No value for charity question")
             controllers.routes.TaskListController.show().url
         }
+      case ForTypes.for6020 => controllers.aboutyouandtheproperty.routes.AboutThePropertyStringController.show().url
       case _                                   => controllers.routes.LoginController.show().url
     }
 }
