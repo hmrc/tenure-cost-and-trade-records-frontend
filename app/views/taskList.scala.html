@@ -150,7 +150,7 @@
         )
        }
 
-       @if(forType != ForTypes.for6030) {
+       @if(forType != ForTypes.for6030 && forType != ForTypes.for6020) {
         @includes.taskListItem("licensable-activities", "checkYourAnswersAboutTheProperty.license.heading",
          if(forType == ForTypes.for6015 || forType == ForTypes.for6016) {
           controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedController.show()

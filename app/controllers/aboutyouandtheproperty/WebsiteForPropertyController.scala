@@ -80,8 +80,8 @@ class WebsiteForPropertyController @Inject() (
 
   private def backLink(answers: Session): String =
     answers.forType match {
-      case ForTypes.for6030 =>
+      case ForTypes.for6030 | ForTypes.for6020 =>
         controllers.aboutyouandtheproperty.routes.AboutThePropertyStringController.show().url
-      case _                => controllers.aboutyouandtheproperty.routes.AboutThePropertyController.show().url
+      case _                                   => controllers.aboutyouandtheproperty.routes.AboutThePropertyController.show().url
     }
 }

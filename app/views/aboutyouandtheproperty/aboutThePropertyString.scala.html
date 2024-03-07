@@ -20,9 +20,7 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Label
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Input
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Text
+@import uk.gov.hmrc.govukfrontend.views.Aliases._
 @import models.pages.Summary
 
 @this(layout: Layout,
@@ -34,6 +32,14 @@
 
 
 @(theForm: Form[PropertyDetailsString], forType: String, summary: Summary, backLink: String)(implicit request: Request[_], messages: Messages)
+
+@for6020 = @{forType == ForTypes.for6020}
+
+@hint = @{
+    if(for6020) Some(Hint(content = Text(messages("hint.propertyCurrentlyUsedString"))))  else {
+        None
+    }
+}
 
 @layout(
   pageHeading = messages("aboutProperty.heading"),
@@ -56,7 +62,8 @@
       content = Text(Messages("aboutProperty.heading")),
       classes = "govuk-label--l govuk-fieldset__legend--m",
       isPageHeading = true
-    )
+    ),
+    hint = hint
   ))
 
     @includes.continueSaveAsDraftButtons(govukButton)

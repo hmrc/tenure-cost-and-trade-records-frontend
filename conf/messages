@@ -497,8 +497,9 @@ hint.other.use.propertyCurrentlyUsedOther = Describe the use of your property if
 hint.other.vacant.propertyCurrentlyUsedOther = Give details.
 error.propertyCurrentlyUsed.maxLength = Your description must be 200 characters or fewer
 
-# ABOUT THE PROPERTY STRING (6030)
+# ABOUT THE PROPERTY STRING (6020/6030)
 ####################
+hint.propertyCurrentlyUsedString = For example, petrol station, petrol station with living accommodation.
 error.propertyCurrentlyUsedString.required = You must describe how the property is used
 error.propertyCurrentlyUsedString.maxLength = How the property is currently used must be 200 characters or fewer
 

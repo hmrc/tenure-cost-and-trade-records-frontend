@@ -40,15 +40,21 @@ class AboutYouAndThePropertyNavigator @Inject() (audit: Audit) extends Navigator
   ).map(_.url)
 
   private def aboutThePropertyRouting: Session => Call = answers => {
-    if (
-      answers.forType
-        .equals(ForTypes.for6015) || answers.forType.equals(ForTypes.for6016)
-    ) {
+    val answersForType = answers.forType
+    if (answersForType.equals(ForTypes.for6015) || answers.forType.equals(ForTypes.for6016)) {
       controllers.aboutyouandtheproperty.routes.AboutThePropertyController.show()
-    } else if (answers.forType.equals(ForTypes.for6030)) {
+    } else if (answersForType.equals(ForTypes.for6020) || answersForType.equals(ForTypes.for6030)) {
       controllers.aboutyouandtheproperty.routes.AboutThePropertyStringController.show()
     } else
       controllers.aboutyouandtheproperty.routes.AboutThePropertyController.show()
+  }
+
+  private def aboutThePropertyDescriptionRouting: Session => Call = answers => {
+    val answersForType = answers.forType
+    if (answersForType.equals(ForTypes.for6020)) {
+      controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show()
+    } else
+      controllers.aboutyouandtheproperty.routes.WebsiteForPropertyController.show()
   }
 
   private def websiteForPropertyRouting: Session => Call     = answers => {
@@ -152,7 +158,7 @@ class AboutYouAndThePropertyNavigator @Inject() (audit: Audit) extends Navigator
             .equals(ForTypes.for6015) || answers.forType.equals(ForTypes.for6016)
         ) {
           controllers.aboutyouandtheproperty.routes.AboutThePropertyController.show()
-        } else if (answers.forType.equals(ForTypes.for6030)) {
+        } else if (answers.forType.equals(ForTypes.for6020) || answers.forType.equals(ForTypes.for6030)) {
           controllers.aboutyouandtheproperty.routes.AboutThePropertyStringController.show()
         } else
           controllers.aboutyouandtheproperty.routes.AboutThePropertyController.show()
@@ -168,7 +174,7 @@ class AboutYouAndThePropertyNavigator @Inject() (audit: Audit) extends Navigator
     AboutYouPageId                          -> (_ => controllers.aboutyouandtheproperty.routes.ContactDetailsQuestionController.show()),
     ContactDetailsQuestionId                -> contactDetailsQuestionRouting,
     AlternativeContactDetailsId             -> aboutThePropertyRouting,
-    AboutThePropertyPageId                  -> (_ => controllers.aboutyouandtheproperty.routes.WebsiteForPropertyController.show()),
+    AboutThePropertyPageId                  -> aboutThePropertyDescriptionRouting,
     WebsiteForPropertyPageId                -> websiteForPropertyRouting,
     CharityQuestionPageId                   -> charityQuestionRouting,
     TradingActivityPageId                   -> (_ =>
