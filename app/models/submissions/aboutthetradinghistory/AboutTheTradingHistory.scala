@@ -52,6 +52,7 @@ object AboutTheTradingHistory {
       (__ \ "incomeExpenditureSummary").readNullable[IncomeExpenditureSummary] and
       (__ \ "incomeExpenditureSummaryData").read[Seq[IncomeExpenditureSummaryData]] and
       (__ \ "unusualCircumstances").readNullable[UnusualCircumstances] and
+      (__ \ "electricVehicleChargingPoints").readNullable[ElectricVehicleChargingPoints] and
       (__ \ "checkYourAnswersAboutTheTradingHistory").readNullable[CheckYourAnswersAboutTheTradingHistory]
   )(AboutTheTradingHistory.apply _)
 

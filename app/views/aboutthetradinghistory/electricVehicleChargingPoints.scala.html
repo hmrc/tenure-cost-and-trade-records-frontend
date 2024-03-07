@@ -14,7 +14,7 @@
  * limitations under the License.
  *@
 
-@import models.submissions.aboutyouandtheproperty.WebsiteForPropertyDetails
+@import models.submissions.aboutthetradinghistory.ElectricVehicleChargingPoints
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.input.Input
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
@@ -36,14 +36,14 @@
   formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[WebsiteForPropertyDetails], summary: Summary, backLink: String)(implicit request: Request[_], messages: Messages)
+@(theForm: Form[ElectricVehicleChargingPoints], summary: Summary, backLink: String)(implicit request: Request[_], messages: Messages)
 
 @conditionalHTML = {
   @govukInput(
     Input(
       id = "spacesOrBays",
       name = "spacesOrBays",
-      classes = "govuk-input--width-20",
+      classes = "govuk-input--width-3",
       value = theForm("spacesOrBays").value,
       label = Label(
         content = Text(messages("spacesOrBays.textbox")),
@@ -54,7 +54,7 @@
 
 @layout(
   pageHeading = messages("electricVehicleChargingPoints.heading"),
-  showH1 = false,
+  showH1 = true,
   showSection = true,
     summary = Some(summary),
     showAccountInfo = true,
@@ -63,13 +63,16 @@
   theForm = theForm
 ) {
 
-  @formWithCSRF(action = controllers.aboutyouandtheproperty.routes.ElectricVehicleChargingPointsController.submit()) {
+  @formWithCSRF(action = controllers.aboutthetradinghistory.routes.ElectricVehicleChargingPointsController.submit()) {
+
+      <p class="govuk-body">@{messages("electricVehicleChargingPoints.p1")}</p>
+      <p class="govuk-body">@{messages("electricVehicleChargingPoints.p2")}</p>
 
     @govukRadios(Radios(
       fieldset = Some(Fieldset(
         legend = Some(Legend(
-          content = Text(messages("electricVehicleChargingPoints.heading")), isPageHeading = true,
-          classes = "govuk-fieldset__legend govuk-fieldset__legend--l",
+          content = Text(messages("label.electricVehicleChargingPoints")), isPageHeading = false,
+          classes = "govuk-fieldset__legend govuk-fieldset__legend--m",
         ))
       )),
       name = "electricVehicleChargingPoints",
@@ -86,6 +89,8 @@
       ),
       errorMessage = theForm.errors.asTextErrorMessageForField("electricVehicleChargingPoints")
     ).withFormField(theForm("electricVehicleChargingPoints")))
+
+
 
     @includes.continueSaveAsDraftButtons(govukButton)
   }

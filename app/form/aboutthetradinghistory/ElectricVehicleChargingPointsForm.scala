@@ -16,9 +16,10 @@
 
 package form.aboutthetradinghistory
 
-import form.MappingSupport.{buildingOperatingHaveAWebsiteType, createYesNoType}
-import form.WebsiteMapping.validateWebaddress
-import models.submissions.aboutyouandtheproperty.{BuildingOperationHaveAWebsiteYes, WebsiteForPropertyDetails}
+import form.ElectricVehicleChargingPointsMapping.validateSpacesOrBays
+import form.MappingSupport.createYesNoType
+import models.submissions.aboutthetradinghistory.ElectricVehicleChargingPoints
+import models.submissions.common.AnswerYes
 import play.api.data.Form
 import play.api.data.Forms.mapping
 import uk.gov.voa.play.form.ConditionalMappings.mandatoryIfEqual
@@ -28,11 +29,11 @@ object ElectricVehicleChargingPointsForm {
   val electricVehicleChargingPointsForm = Form(
     mapping(
       "electricVehicleChargingPoints" -> createYesNoType("error.electricVehicleChargingPoints.required"),
-      "spacesOrBays"     -> mandatoryIfEqual(
-        "spacesOrBays",
+      "spacesOrBays"                  -> mandatoryIfEqual(
+        "electricVehicleChargingPoints",
         AnswerYes.name,
-        validateWebaddress
+        validateSpacesOrBays
       )
-    )(WebsiteForPropertyDetails.apply)(WebsiteForPropertyDetails.unapply)
+    )(ElectricVehicleChargingPoints.apply)(ElectricVehicleChargingPoints.unapply)
   )
 }

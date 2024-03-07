@@ -14,17 +14,20 @@
  * limitations under the License.
  */
 
-package models.submissions.aboutthetradinghistory
+package form
 
-import models.submissions.common.AnswersYesNo
-import play.api.libs.json.{Json, OFormat}
+import play.api.data.Forms.text
 
-case class ElectricVehicleChargingPoints(
-  electricVehicleChargingPoint: AnswersYesNo,
-  spacesOrBays: Option[String]
-)
+object ElectricVehicleChargingPointsMapping {
 
-object ElectricVehicleChargingPoints {
-  implicit val format: OFormat[ElectricVehicleChargingPoints] = Json.format[ElectricVehicleChargingPoints]
+  val spacesOrBaysRegex = """^([0-9]\d{0,2})$"""
 
-}
+  def validateSpacesOrBays = {
+    text
+      .verifying(Errors.spacesOrBays, sB => sB.nonEmpty)
+      .verifying(
+        Errors.spacesOrBaysNumber,
+        sB => if (sB.nonEmpty) sB.matches(spacesOrBaysRegex) else true
+      )
+  }
+  }

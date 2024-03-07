@@ -97,6 +97,9 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
     UnusualCircumstancesId                   -> (_ =>
       aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show()
     ),
+    ElectricVehicleChargingPointsId          -> (_ =>
+      aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show()
+    ),
 //    NetProfitId                              -> (_ => aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show()),
     CheckYourAnswersAboutTheTradingHistoryId -> (_ => controllers.routes.TaskListController.show())
   )

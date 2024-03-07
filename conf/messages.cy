@@ -503,8 +503,14 @@ error.propertyCurrentlyUsedString.maxLength = How the property is currently used
 
 #ELECTRIC VEHICLE CHARGING POINTS (FORM 6020)
 ############################
-
-
+electricVehicleChargingPoints.heading = Electric Vehicle (EV) charging points
+electricVehicleChargingPoints.p1 = If you operate EV charging point spaces or bays which are not rented out to third parties, these must be included in your declaration.
+electricVehicleChargingPoints.p2 = Any EV charging points operated by third-party companies must be declared in the 'lettings' section of this declaration.
+label.electricVehicleChargingPoints = Do you operate any EV charging point spaces or bays?
+spacesOrBays.textbox = How many spaces or bays do you operate?
+error.spacesOrBays.required = Enter how many spaces or bays you operate
+error.electricVehicleChargingPoints.required = Select yes if you operate any EV charging point spaces or bays
+error.spacesOrBaysNumber.required=The number of spaces or bays you operate must be a number between 1 and 999
 
 # WEBSITE FOR PROPERTY
 ######################

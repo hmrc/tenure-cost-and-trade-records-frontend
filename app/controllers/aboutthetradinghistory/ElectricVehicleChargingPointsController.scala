@@ -22,6 +22,7 @@ import form.aboutthetradinghistory.ElectricVehicleChargingPointsForm.electricVeh
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.updateAboutTheTradingHistory
 import models.submissions.aboutthetradinghistory.ElectricVehicleChargingPoints
 import views.html.aboutthetradinghistory.electricVehicleChargingPoints
+import navigation.AboutTheTradingHistoryNavigator
 import models.{ForTypes, Session}
 import navigation.identifiers.ElectricVehicleChargingPointsId
 import play.api.Logging
@@ -33,9 +34,9 @@ import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class ElectricVehicleChargingPointsController @Inject()(
+class ElectricVehicleChargingPointsController @Inject() (
   mcc: MessagesControllerComponents,
-  navigator: AboutYourTradingHistoryNavigator,
+  navigator: AboutTheTradingHistoryNavigator,
   electricVehicleChargingPointsView: electricVehicleChargingPoints,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
@@ -48,8 +49,9 @@ class ElectricVehicleChargingPointsController @Inject()(
       Ok(
         electricVehicleChargingPointsView(
           request.sessionData.aboutTheTradingHistory.flatMap(_.electricVehicleChargingPoints) match {
-            case Some(electricVehicleChargingPoints) => electricVehicleChargingPointsForm.fill(electricVehicleChargingPoints)
-            case _                               => electricVehicleChargingPointsForm
+            case Some(electricVehicleChargingPoints) =>
+              electricVehicleChargingPointsForm.fill(electricVehicleChargingPoints)
+            case _                                   => electricVehicleChargingPointsForm
           },
           request.sessionData.toSummary,
           backLink(request.sessionData)

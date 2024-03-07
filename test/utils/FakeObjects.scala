@@ -492,6 +492,10 @@ trait FakeObjects {
     )
   )
 
+  val prefilledAboutYourTradingHistory6020: AboutTheTradingHistory = AboutTheTradingHistory(
+    electricVehicleChargingPoints = Some(ElectricVehicleChargingPoints(AnswerYes, Some("spaceOrBay")))
+  )
+
   val prefilledAboutYourTradingHistory6030: AboutTheTradingHistory = AboutTheTradingHistory(
     Some(OccupationalAndAccountingInformation(MonthsYearDuration(9, 2017), Some(DayMonthsDuration(27, 9)))),
     Seq.empty,

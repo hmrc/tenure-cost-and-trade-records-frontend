@@ -1534,8 +1534,22 @@ lettingsIncome.missing = Select yes if any rent is received from letting out par
 
 #ELECTRIC VEHICLE CHARGING POINTS (FORM 6020)
 ############################
+electricVehicleChargingPoints.heading = Electric Vehicle (EV) charging points
+electricVehicleChargingPoints.p1 = If you operate EV charging point spaces or bays which are not rented out to third parties, these must be included in your declaration.
+electricVehicleChargingPoints.p2 = Any EV charging points operated by third-party companies must be declared in the 'lettings' section of this declaration.
+label.electricVehicleChargingPoints = Do you operate any EV charging point spaces or bays?
+spacesOrBays.textbox = How many spaces or bays do you operate?
+error.spacesOrBays.required = Enter how many spaces or bays you operate
+error.electricVehicleChargingPoints.required = Select yes if you operate any EV charging point spaces or bays
+error.spacesOrBaysNumber.required=The number of spaces or bays you operate must be a number between 1 and 999
 
-
+# WEBSITE FOR PROPERTY
+######################
+buildingOperatingHaveAWebsite.heading = Does the business operating from the property have a website?
+websiteAddressForProperty.textbox = Enter website address
+error.websiteAddressForProperty.required = Enter your web address
+error.webaddressFormat.required = Enter an address in the correct format, like www.example.com
+error.buildingOperatingHaveAWebsite.required = Select yes if the business has a website
 
 # ADDITIONAL INFORMATION
 ########################
@@ -1753,6 +1767,8 @@ checkYourAnswersAboutTheTradingHistory.unusualCircumstances = Unusual circumstan
 checkYourAnswersAboutTheTradingHistory.unusualCircumstances.6030 = Factors influencing receipts
 checkYourAnswersAboutTheTradingHistory.grossIncome = Gross receipts
 checkYourAnswersAboutTheTradingHistory.totalVisitorNumbers = Total visitor numbers
+checkYourAnswersAboutTheTradingHistory.electricVehicleChargingPoints = EV Charging Points
+checkYourAnswersAboutTheTradingHistory.operateEV = Do you operate any EV charging points?
 
 # Confirmation Page
 ###################

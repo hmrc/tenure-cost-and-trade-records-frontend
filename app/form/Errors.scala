@@ -71,6 +71,10 @@ object Errors {
   val webAddressBlank               = "error.websiteAddressForProperty.required"
   val webaddressFormat              = "error.webaddressFormat.required"
 
+  //Electric Vehicle Charging Points
+  val spacesOrBays = "error.spacesOrBays.required"
+  val spacesOrBaysNumber = "error.spacesOrBaysNumber.required"
+
   //About The Property Errors
   val currentOccupierName   = "error.currentOccupierName.required"
   val propertyCurrentlyUsed = "error.currentPropertyUse.required"
