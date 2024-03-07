@@ -167,6 +167,9 @@ POST        /turnover                                               controllers.
 GET         /turnover-6030                                          controllers.aboutthetradinghistory.Turnover6030Controller.show()
 POST        /turnover-6030                                          controllers.aboutthetradinghistory.Turnover6030Controller.submit()
 
+GET         /electric-vehicles-charging-points                      controllers.aboutthetradinghistory.ElectricVehiclesChargingPointsController.show()
+POST        /electric-vehicles-charging-points                      controllers.aboutthetradinghistory.ElectricVehiclesChargingPointsController.submit()
+
 # Form 6015 routing start
 GET         /cost-of-sales                                          controllers.aboutthetradinghistory.CostOfSalesController.show()
 POST        /cost-of-sales                                          controllers.aboutthetradinghistory.CostOfSalesController.submit()

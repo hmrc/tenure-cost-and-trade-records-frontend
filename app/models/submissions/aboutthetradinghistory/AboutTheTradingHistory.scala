@@ -17,6 +17,7 @@
 package models.submissions.aboutthetradinghistory
 
 import actions.SessionRequest
+import controllers.aboutthetradinghistory.ElectricVehicleChargingPointsController
 import models.Session
 import play.api.libs.functional.syntax._
 import play.api.libs.json._
@@ -33,6 +34,7 @@ case class AboutTheTradingHistory(
   incomeExpenditureSummary: Option[IncomeExpenditureSummary] = None,
   incomeExpenditureSummaryData: Seq[IncomeExpenditureSummaryData] = Seq.empty,
   unusualCircumstances: Option[UnusualCircumstances] = None,
+  electricVehicleChargingPoints: Option[ElectricVehicleChargingPoints] = None, // added March 2024
   checkYourAnswersAboutTheTradingHistory: Option[CheckYourAnswersAboutTheTradingHistory] = None
 )
 

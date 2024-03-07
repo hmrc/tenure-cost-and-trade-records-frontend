@@ -501,6 +501,11 @@ hint.propertyCurrentlyUsedString = For example, petrol station, petrol station w
 error.propertyCurrentlyUsedString.required = You must describe how the property is used
 error.propertyCurrentlyUsedString.maxLength = How the property is currently used must be 200 characters or fewer
 
+#ELECTRIC VEHICLE CHARGING POINTS (FORM 6020)
+############################
+
+
+
 # WEBSITE FOR PROPERTY
 ######################
 buildingOperatingHaveAWebsite.heading = Does the business operating from the property have a website?
