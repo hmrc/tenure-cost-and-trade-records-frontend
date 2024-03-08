@@ -493,7 +493,7 @@ trait FakeObjects {
   )
 
   val prefilledAboutYourTradingHistory6020: AboutTheTradingHistory = AboutTheTradingHistory(
-    electricVehicleChargingPoints = Some(ElectricVehicleChargingPoints(AnswerYes, Some("spaceOrBay")))
+    electricVehicleChargingPoints = Some(ElectricVehicleChargingPoints(AnswerYes, Some(123)))
   )
 
   val prefilledAboutYourTradingHistory6030: AboutTheTradingHistory = AboutTheTradingHistory(

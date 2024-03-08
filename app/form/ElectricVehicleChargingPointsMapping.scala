@@ -27,17 +27,20 @@ object ElectricVehicleChargingPointsMapping {
   def validateSpacesOrBays =
     default(text, "")
       .verifying(nonNegativeNumberConstraint())
-      .verifying(maxLength(3, "error.tiedForGoodsDetailsText.maxLength"))
+      .transform[Int](
+        str => Try(str.toInt).getOrElse(-1),
+        int => int.toString
+      )
 
-
-  private def nonNegativeNumberConstraint(): Constraint[Option[String]] =
+  private def nonNegativeNumberConstraint(): Constraint[String] =
     Constraint("constraints.nonNegative")({
-      case Some(text) =>
+      case text =>
         Try(text.toDouble).toOption match {
-          case Some(num) if num >= 0 => Valid
-          case Some(_) => Invalid(ValidationError("error.totalVisitorNumber.negative"))
-          case None => Invalid(ValidationError("error.totalVisitorNumber.nonNumeric"))
+          case Some(num) if num >= 0 && num <= 999 => Valid
+          case Some(num) if num > 999              => Invalid(ValidationError("error.spacesOrBaysNumber.required"))
+          case Some(_)                             => Invalid(ValidationError("error.spacesOrBaysNumber.negative"))
+          case None                                => Invalid(ValidationError("error.spacesOrBaysNumber.nonNumeric"))
         }
-      case None => Invalid(ValidationError("error.totalVisitorNumber.required"))
+      case _    => Invalid(ValidationError("error.spacesOrBaysNumber.required"))
     })
 }

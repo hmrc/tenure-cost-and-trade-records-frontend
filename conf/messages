@@ -1541,7 +1541,9 @@ label.electricVehicleChargingPoints = Do you operate any EV charging point space
 spacesOrBays.textbox = How many spaces or bays do you operate?
 error.spacesOrBays.required = Enter how many spaces or bays you operate
 error.electricVehicleChargingPoints.required = Select yes if you operate any EV charging point spaces or bays
-error.spacesOrBaysNumber.required=The number of spaces or bays you operate must be a number between 1 and 999
+error.spacesOrBaysNumber.nonNumeric=The number of spaces or bays you operate must be a number between 1 and 999
+error.spacesOrBaysNumber.negative = The number of spaces or bays you operate cannot be a negative number
+error.spacesOrBaysNumber.required = The number of spaces or bays you operate must be a number between 1 and 999
 
 # WEBSITE FOR PROPERTY
 ######################

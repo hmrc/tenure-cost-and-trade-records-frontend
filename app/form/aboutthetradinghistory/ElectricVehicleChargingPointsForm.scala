@@ -38,7 +38,7 @@ object ElectricVehicleChargingPointsForm {
         "electricVehicleChargingPoints",
         AnswerYes.name,
         validateSpacesOrBays
-    )
+      )
     )(ElectricVehicleChargingPoints.apply)(ElectricVehicleChargingPoints.unapply)
   )
 }
