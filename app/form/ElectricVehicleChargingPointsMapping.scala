@@ -16,25 +16,19 @@
 
 package form
 
-import play.api.data.Forms.{optional, text}
+import play.api.data.Forms.{default, optional, text}
+import play.api.data.validation.Constraints.maxLength
 import play.api.data.validation.{Constraint, Invalid, Valid, ValidationError}
+
 import scala.util.Try
 
 object ElectricVehicleChargingPointsMapping {
 
-  val spacesOrBaysRegex = """^([0-9]\d{0,2})$"""
-
   def validateSpacesOrBays =
-    optional(text)
+    default(text, "")
       .verifying(nonNegativeNumberConstraint())
-      .transform[Option[Int]](
-        _.flatMap(str => Try(str.toInt).toOption),
-        _.map(_.toString)
-      )
-      .verifying(Errors.spacesOrBays, sB => sB.nonEmpty)
-      .verifying(
-        Errors.spacesOrBaysNumber, sB => sB.min == 0 && sB.max == 999
-      )
+      .verifying(maxLength(3, "error.tiedForGoodsDetailsText.maxLength"))
+
 
   private def nonNegativeNumberConstraint(): Constraint[Option[String]] =
     Constraint("constraints.nonNegative")({

@@ -22,7 +22,7 @@ import form.MappingSupport.createYesNoType
 import models.submissions.aboutthetradinghistory.ElectricVehicleChargingPoints
 import models.submissions.common.AnswerYes
 import play.api.data.Form
-import play.api.data.Forms.{mapping, number, optional, text}
+import play.api.data.Forms.{default, mapping, optional, text}
 import play.api.data.validation.Constraints.{maxLength, nonEmpty}
 import play.api.data.validation.{Constraint, Invalid, Valid, ValidationError}
 import uk.gov.voa.play.form.ConditionalMappings.mandatoryIfEqual
