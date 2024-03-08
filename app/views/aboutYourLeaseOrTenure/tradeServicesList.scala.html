@@ -70,7 +70,7 @@
                         actions = Actions(
                             items = Seq(
                                 ActionItem(
-                                    controllers.aboutYourLeaseOrTenure.routes.TradeServicesDescriptionController.show(idx).url,
+                                    s"${controllers.aboutYourLeaseOrTenure.routes.TradeServicesDescriptionController.show(idx).url}&from=Change",
                                     content = Text("Change")),
                                 ActionItem(
                                     controllers.aboutYourLeaseOrTenure.routes.TradeServicesListController.remove(idx).url,

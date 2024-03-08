@@ -16,7 +16,7 @@
 
 package controllers.aboutYourLeaseOrTenure
 
-import actions.WithSessionRefiner
+import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.TradeServiceDescriptionForm.tradeServicesDescriptionForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree.updateAboutLeaseOrAgreementPartThree
@@ -53,6 +53,7 @@ class TradeServicesDescriptionController @Inject() (
       tradeServicesDescriptionView(
         existingDetails.fold(tradeServicesDescriptionForm)(tradeServicesDescriptionForm.fill),
         index,
+        getBackLink(request, index.getOrElse(0)),
         request.sessionData.toSummary
       )
     )
@@ -66,6 +67,7 @@ class TradeServicesDescriptionController @Inject() (
           tradeServicesDescriptionView(
             formWithErrors,
             index,
+            getBackLink(request, index.getOrElse(0)),
             request.sessionData.toSummary
           )
         ),
@@ -97,4 +99,10 @@ class TradeServicesDescriptionController @Inject() (
       }
     )
   }
+
+  def getBackLink(request: SessionRequest[AnyContent], index: Int): String =
+    request.getQueryString("from") match {
+      case Some("Change") => controllers.aboutYourLeaseOrTenure.routes.TradeServicesListController.show(index).url
+      case _              => controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesController.show().url
+    }
 }
