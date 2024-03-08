@@ -21,7 +21,7 @@ import play.api.libs.json.{Json, OFormat}
 
 case class ElectricVehicleChargingPoints(
   electricVehicleChargingPoint: AnswersYesNo,
-  spacesOrBays: Option[String]
+  spacesOrBays: Option[Int]
 )
 
 object ElectricVehicleChargingPoints {

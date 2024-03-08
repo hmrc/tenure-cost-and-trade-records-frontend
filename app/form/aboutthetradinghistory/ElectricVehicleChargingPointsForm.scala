@@ -16,13 +16,18 @@
 
 package form.aboutthetradinghistory
 
+import controllers.toOpt
 import form.ElectricVehicleChargingPointsMapping.validateSpacesOrBays
 import form.MappingSupport.createYesNoType
 import models.submissions.aboutthetradinghistory.ElectricVehicleChargingPoints
 import models.submissions.common.AnswerYes
 import play.api.data.Form
-import play.api.data.Forms.mapping
+import play.api.data.Forms.{mapping, number, optional, text}
+import play.api.data.validation.Constraints.{maxLength, nonEmpty}
+import play.api.data.validation.{Constraint, Invalid, Valid, ValidationError}
 import uk.gov.voa.play.form.ConditionalMappings.mandatoryIfEqual
+
+import scala.util.Try
 
 object ElectricVehicleChargingPointsForm {
 
@@ -33,7 +38,7 @@ object ElectricVehicleChargingPointsForm {
         "electricVehicleChargingPoints",
         AnswerYes.name,
         validateSpacesOrBays
-      )
+    )
     )(ElectricVehicleChargingPoints.apply)(ElectricVehicleChargingPoints.unapply)
   )
 }

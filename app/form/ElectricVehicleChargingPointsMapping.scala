@@ -16,18 +16,34 @@
 
 package form
 
-import play.api.data.Forms.text
+import play.api.data.Forms.{optional, text}
+import play.api.data.validation.{Constraint, Invalid, Valid, ValidationError}
+import scala.util.Try
 
 object ElectricVehicleChargingPointsMapping {
 
   val spacesOrBaysRegex = """^([0-9]\d{0,2})$"""
 
-  def validateSpacesOrBays = {
-    text
+  def validateSpacesOrBays =
+    optional(text)
+      .verifying(nonNegativeNumberConstraint())
+      .transform[Option[Int]](
+        _.flatMap(str => Try(str.toInt).toOption),
+        _.map(_.toString)
+      )
       .verifying(Errors.spacesOrBays, sB => sB.nonEmpty)
       .verifying(
-        Errors.spacesOrBaysNumber,
-        sB => if (sB.nonEmpty) sB.matches(spacesOrBaysRegex) else true
+        Errors.spacesOrBaysNumber, sB => sB.min == 0 && sB.max == 999
       )
-  }
-  }
+
+  private def nonNegativeNumberConstraint(): Constraint[Option[String]] =
+    Constraint("constraints.nonNegative")({
+      case Some(text) =>
+        Try(text.toDouble).toOption match {
+          case Some(num) if num >= 0 => Valid
+          case Some(_) => Invalid(ValidationError("error.totalVisitorNumber.negative"))
+          case None => Invalid(ValidationError("error.totalVisitorNumber.nonNumeric"))
+        }
+      case None => Invalid(ValidationError("error.totalVisitorNumber.required"))
+    })
+}

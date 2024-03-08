@@ -72,7 +72,7 @@ object Errors {
   val webaddressFormat              = "error.webaddressFormat.required"
 
   //Electric Vehicle Charging Points
-  val spacesOrBays = "error.spacesOrBays.required"
+  val spacesOrBays       = "error.spacesOrBays.required"
   val spacesOrBaysNumber = "error.spacesOrBaysNumber.required"
 
   //About The Property Errors
