@@ -43,20 +43,19 @@ class ConnectedToLandlordController @Inject() (
     with I18nSupport
     with Logging {
 
-  def show: Action[AnyContent] = (Action andThen withSessionRefiner).async {
-    implicit request =>
-      Future.successful(
-        Ok(
-          connectedToLandlordView(
-            request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.connectedToLandlord) match {
-              case Some(connectedToLandlord) =>
-                connectedToLandlordForm.fill(connectedToLandlord)
-              case _                         => connectedToLandlordForm
-            },
-            request.sessionData.toSummary
-          )
+  def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    Future.successful(
+      Ok(
+        connectedToLandlordView(
+          request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.connectedToLandlord) match {
+            case Some(connectedToLandlord) =>
+              connectedToLandlordForm.fill(connectedToLandlord)
+            case _                         => connectedToLandlordForm
+          },
+          request.sessionData.toSummary
         )
       )
+    )
   }
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>

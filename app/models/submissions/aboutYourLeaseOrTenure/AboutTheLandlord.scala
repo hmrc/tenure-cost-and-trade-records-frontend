@@ -16,7 +16,8 @@
 
 package models.submissions.aboutYourLeaseOrTenure
 
-import play.api.libs.json.Json
+import play.api.libs.functional.syntax.{toFunctionalBuilderOps, unlift}
+import play.api.libs.json.{Format, JsPath, Json}
 
 case class AboutTheLandlord(
   landlordFullName: String,
@@ -27,5 +28,5 @@ object AboutTheLandlord {
   implicit val format: Format[AboutTheLandlord] = (
     (JsPath \ "landlordFullName").format[String] and
       (JsPath \ "landlordAddress").formatNullable[LandlordAddress]
-    )(AboutTheLandlord.apply, unlift(AboutTheLandlord.unapply))
+  )(AboutTheLandlord.apply, unlift(AboutTheLandlord.unapply))
 }

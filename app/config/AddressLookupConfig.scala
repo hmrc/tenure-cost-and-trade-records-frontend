@@ -56,19 +56,35 @@ class AddressLookupConfig @Inject() (messagesApi: MessagesApi) {
                       |          "navTitle": "${messagesApi("site.service_name")}"
                       |        },
                       |        "lookupPageLabels": {
-                      |          "title": "${messagesApi("aboutYourLeaseOrTenure.landlord.addressLookup.lookupPage.title")}",
-                      |          "heading": "${messagesApi("aboutYourLeaseOrTenure.landlord.addressLookup.lookupPage.heading")}"
+                      |          "title": "${messagesApi(
+      "aboutYourLeaseOrTenure.landlord.addressLookup.lookupPage.title"
+    )}",
+                      |          "heading": "${messagesApi(
+      "aboutYourLeaseOrTenure.landlord.addressLookup.lookupPage.heading"
+    )}"
                       |        },
                       |        "editPageLabels": {
                       |          "title": "${messagesApi("aboutYourLeaseOrTenure.landlord.addressLookup.editPage.title")}",
-                      |          "heading": "${messagesApi("aboutYourLeaseOrTenure.landlord.addressLookup.editPage.heading")}"
+                      |          "heading": "${messagesApi(
+      "aboutYourLeaseOrTenure.landlord.addressLookup.editPage.heading"
+    )}"
                       |        },
                       |        "confirmPageLabels": {
-                      |         "title": "${messagesApi("aboutYourLeaseOrTenure.landlord.addressLookup.confirmPageLabels.title")}",
-                      |         "heading": "${messagesApi("aboutYourLeaseOrTenure.landlord.addressLookup.confirmPageLabels.heading")}",
-                      |         "submitLabel": "${messagesApi("aboutYourLeaseOrTenure.landlord.addressLookup.confirmPageLabels.submitLabel")}",
-                      |         "searchAgainLinkText": "${messagesApi("aboutYourLeaseOrTenure.landlord.addressLookup.confirmPageLabels.searchAgainLinkText")}",
-                      |         "changeLinkText": "${messagesApi("aboutYourLeaseOrTenure.landlord.addressLookup.confirmPageLabels.changeLinkText")}"
+                      |         "title": "${messagesApi(
+      "aboutYourLeaseOrTenure.landlord.addressLookup.confirmPageLabels.title"
+    )}",
+                      |         "heading": "${messagesApi(
+      "aboutYourLeaseOrTenure.landlord.addressLookup.confirmPageLabels.heading"
+    )}",
+                      |         "submitLabel": "${messagesApi(
+      "aboutYourLeaseOrTenure.landlord.addressLookup.confirmPageLabels.submitLabel"
+    )}",
+                      |         "searchAgainLinkText": "${messagesApi(
+      "aboutYourLeaseOrTenure.landlord.addressLookup.confirmPageLabels.searchAgainLinkText"
+    )}",
+                      |         "changeLinkText": "${messagesApi(
+      "aboutYourLeaseOrTenure.landlord.addressLookup.confirmPageLabels.changeLinkText"
+    )}"
                       |        }
                       |      },
                       |      "cy": {
@@ -76,19 +92,37 @@ class AddressLookupConfig @Inject() (messagesApi: MessagesApi) {
                       |          "navTitle": "${messagesApi("site.service_name")(cy)}"
                       |        },
                       |        "lookupPageLabels": {
-                      |          "title": "${messagesApi("aboutYourLeaseOrTenure.landlord.addressLookup.lookupPage.title")(cy)}",
-                      |          "heading": "${messagesApi("aboutYourLeaseOrTenure.landlord.addressLookup.lookupPage.heading")(cy)}"
+                      |          "title": "${messagesApi(
+      "aboutYourLeaseOrTenure.landlord.addressLookup.lookupPage.title"
+    )(cy)}",
+                      |          "heading": "${messagesApi(
+      "aboutYourLeaseOrTenure.landlord.addressLookup.lookupPage.heading"
+    )(cy)}"
                       |        },
                       |        "editPageLabels": {
-                      |          "title": "${messagesApi("aboutYourLeaseOrTenure.landlord.addressLookup.editPage.title")(cy)}",
-                      |          "heading": "${messagesApi("aboutYourLeaseOrTenure.landlord.addressLookup.editPage.heading")(cy)}"
+                      |          "title": "${messagesApi(
+      "aboutYourLeaseOrTenure.landlord.addressLookup.editPage.title"
+    )(cy)}",
+                      |          "heading": "${messagesApi(
+      "aboutYourLeaseOrTenure.landlord.addressLookup.editPage.heading"
+    )(cy)}"
                       |        },
                       |        "confirmPageLabels": {
-                      |         "title": "${messagesApi("aboutYourLeaseOrTenure.landlord.addressLookup.confirmPageLabels.title")(cy)}",
-                      |         "heading": "${messagesApi("aboutYourLeaseOrTenure.landlord.addressLookup.confirmPageLabels.heading")(cy)}",
-                      |         "submitLabel": "${messagesApi("aboutYourLeaseOrTenure.landlord.addressLookup.confirmPageLabels.submitLabel")(cy)}",
-                      |         "searchAgainLinkText": "${messagesApi("aboutYourLeaseOrTenure.landlord.addressLookup.confirmPageLabels.searchAgainLinkText")(cy)}",
-                      |         "changeLinkText": "${messagesApi("aboutYourLeaseOrTenure.landlord.addressLookup.confirmPageLabels.changeLinkText")(cy)}"
+                      |         "title": "${messagesApi(
+      "aboutYourLeaseOrTenure.landlord.addressLookup.confirmPageLabels.title"
+    )(cy)}",
+                      |         "heading": "${messagesApi(
+      "aboutYourLeaseOrTenure.landlord.addressLookup.confirmPageLabels.heading"
+    )(cy)}",
+                      |         "submitLabel": "${messagesApi(
+      "aboutYourLeaseOrTenure.landlord.addressLookup.confirmPageLabels.submitLabel"
+    )(cy)}",
+                      |         "searchAgainLinkText": "${messagesApi(
+      "aboutYourLeaseOrTenure.landlord.addressLookup.confirmPageLabels.searchAgainLinkText"
+    )(cy)}",
+                      |         "changeLinkText": "${messagesApi(
+      "aboutYourLeaseOrTenure.landlord.addressLookup.confirmPageLabels.changeLinkText"
+    )(cy)}"
                       |        }
                       |      }
                       |    }

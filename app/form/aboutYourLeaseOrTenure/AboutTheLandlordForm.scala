@@ -29,11 +29,10 @@ object AboutTheLandlordForm {
         nonEmpty(errorMessage = "error.landlordFullName.required"),
         maxLength(50, "error.landlordFullName.maxLength")
       ),
-      "landlordAddress" -> optional(landlordAddressMapping)
+      "landlordAddress"  -> optional(landlordAddressMapping)
     )(AboutTheLandlord.apply)(AboutTheLandlord.unapply)
   )
 
-  def isValidLandlordAddress(landlordAddress: LandlordAddress): Boolean = {
-     landlordAddress.buildingNameNumber.nonEmpty && landlordAddress.town.nonEmpty && landlordAddress.postcode.nonEmpty
-  }
+  def isValidLandlordAddress(landlordAddress: LandlordAddress): Boolean =
+    landlordAddress.buildingNameNumber.nonEmpty && landlordAddress.town.nonEmpty && landlordAddress.postcode.nonEmpty
 }

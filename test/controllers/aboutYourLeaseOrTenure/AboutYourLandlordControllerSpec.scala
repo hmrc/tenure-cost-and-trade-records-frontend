@@ -35,11 +35,11 @@ class AboutYourLandlordControllerSpec extends TestBaseSpec {
   import TestData.{baseFormData, errorKey}
   import utils.FormBindingTestAssertions.mustContainError
 
-  val mockNavigator = mock[AboutYourLeaseOrTenureNavigator]
+  val mockNavigator              = mock[AboutYourLeaseOrTenureNavigator]
   val mockAddressLookupConnector = mock[AddressLookupConnector]
   def aboutYourLandlordController(
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
-  )                 =
+  )                              =
     new AboutYourLandlordController(
       stubMessagesControllerComponents(),
       mockNavigator,
@@ -82,7 +82,7 @@ class AboutYourLandlordControllerSpec extends TestBaseSpec {
         Some("id")
       )
       when(mockAddressLookupConnector.getAddress(any[String])(any[HeaderCarrier])).thenReturn(Future.successful(lookup))
-      val res = aboutYourLandlordController().addressLookupCallback("123")(fakeRequest)
+      val res    = aboutYourLandlordController().addressLookupCallback("123")(fakeRequest)
       status(res) shouldBe SEE_OTHER
     }
   }

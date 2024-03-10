@@ -20,7 +20,7 @@ import models.{Address, AddressLookup}
 import models.submissions.aboutYourLeaseOrTenure.LandlordAddress
 
 object AddressLookupUtil {
-  def getLandLordAddress(addressLookup: AddressLookup): LandlordAddress = {
+  def getLandLordAddress(addressLookup: AddressLookup): LandlordAddress =
     addressLookup match {
       case AddressLookup(Some(Address(Some(lines), postcode, _)), _, Some(_)) if lines.nonEmpty =>
         // With ID present, at least two lines are guaranteed
@@ -33,7 +33,6 @@ object AddressLookupUtil {
         )
 
       case AddressLookup(Some(Address(Some(lines), postcode, _)), _, None) =>
-
         lines.length match {
           case 1 =>
             LandlordAddress(
@@ -68,7 +67,7 @@ object AddressLookupUtil {
               postcode = postcode.getOrElse("Empty Postcode")
             )
         }
-      case _ =>
+      case _                                                               =>
         LandlordAddress(
           buildingNameNumber = "",
           street1 = None,
@@ -77,7 +76,5 @@ object AddressLookupUtil {
           postcode = "Empty Postcode"
         )
     }
-  }
-
 
 }

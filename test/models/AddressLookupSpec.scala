@@ -21,9 +21,8 @@ import play.api.libs.json.Json
 
 class AddressLookupSpec extends TestBaseSpec {
 
-  val testAddress = {
-    Json.parse(input =
-      """{
+  val testAddress =
+    Json.parse(input = """{
         |"auditRef": "e9e2fb3f-268f-4c4c-b928-3dc0b17259f2",
         |"address": {
         |   "lines": ["Line1","Line2","Line3","Line4"],
@@ -34,12 +33,11 @@ class AddressLookupSpec extends TestBaseSpec {
         |   }
         |}
         |}""".stripMargin)
-  }
 
   "AddressLookup" must {
     "return correct string format when passed asString from Json" in {
       val address: AddressLookup = testAddress.as[AddressLookup]
-      address.auditRef.map(_ shouldBe ("e9e2fb3f-268f-4c4c-b928-3dc0b17259f2"))
+      address.auditRef.map(_ shouldBe "e9e2fb3f-268f-4c4c-b928-3dc0b17259f2")
     }
   }
 }

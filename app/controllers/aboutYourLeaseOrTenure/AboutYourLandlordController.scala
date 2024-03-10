@@ -87,7 +87,7 @@ class AboutYourLandlordController @Inject() (
         navigator.from match {
           case "CYA" =>
             Redirect(controllers.aboutYourLeaseOrTenure.routes.CheckYourAnswersAboutYourLeaseOrTenureController.show())
-          case "TL" => Redirect(controllers.routes.TaskListController.show())
+          case "TL"  => Redirect(controllers.routes.TaskListController.show())
           case _     => Redirect(controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordController.show())
         }
       }
