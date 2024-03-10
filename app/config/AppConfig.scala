@@ -26,14 +26,14 @@ class AppConfig @Inject() (config: Configuration) {
   lazy val startPageRedirect = getBoolean("startPageRedirect")
   lazy val govukStartPage    = getString("govukStartPage")
 
-  lazy val cookiesUrl: String            = "https://www.tax.service.gov.uk/help/cookies"
-  lazy val privacyNoticeUrl: String      = "https://www.tax.service.gov.uk/help/privacy"
-  lazy val termsAndConditionsUrl: String = "https://www.tax.service.gov.uk/help/terms-and-conditions"
-  lazy val helpUsingGovUkUrl: String     = "https://www.gov.uk/help"
-  lazy val contactGovUkUrl: String       = "https://www.gov.uk/government/organisations/hm-revenue-customs/contact"
-  lazy val welshHelpUrl: String          = "https://www.gov.uk/cymraeg"
-  lazy val internalAuthToken: String     = getString("internalAuthToken")
-
+  lazy val cookiesUrl: String                  = "https://www.tax.service.gov.uk/help/cookies"
+  lazy val privacyNoticeUrl: String            = "https://www.tax.service.gov.uk/help/privacy"
+  lazy val termsAndConditionsUrl: String       = "https://www.tax.service.gov.uk/help/terms-and-conditions"
+  lazy val helpUsingGovUkUrl: String           = "https://www.gov.uk/help"
+  lazy val contactGovUkUrl: String             = "https://www.gov.uk/government/organisations/hm-revenue-customs/contact"
+  lazy val welshHelpUrl: String                = "https://www.gov.uk/cymraeg"
+  lazy val internalAuthToken: String           = getString("internalAuthToken")
+  lazy val tctrFrontendUrl: String             = getString("urls.tctrFrontend")
   private def getString(key: String): String   =
     config.getOptional[String](key).getOrElse(throw ConfigSettingMissing(key))
   private def getBoolean(key: String): Boolean =

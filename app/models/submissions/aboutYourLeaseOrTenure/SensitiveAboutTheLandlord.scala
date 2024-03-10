@@ -23,11 +23,11 @@ import uk.gov.hmrc.crypto.Sensitive.SensitiveString
 
 case class SensitiveAboutTheLandlord(
   landlordFullName: SensitiveString,
-  landlordAddress: SensitiveLandlordAddress
+  landlordAddress: Option[SensitiveLandlordAddress]
 ) extends Sensitive[AboutTheLandlord] {
   override def decryptedValue: AboutTheLandlord = AboutTheLandlord(
     landlordFullName.decryptedValue,
-    landlordAddress.decryptedValue
+    landlordAddress.map(_.decryptedValue)
   )
 }
 
@@ -38,6 +38,6 @@ object SensitiveAboutTheLandlord {
 
   def apply(aboutTheLandlord: AboutTheLandlord): SensitiveAboutTheLandlord = SensitiveAboutTheLandlord(
     SensitiveString(aboutTheLandlord.landlordFullName),
-    SensitiveLandlordAddress(aboutTheLandlord.landlordAddress)
+    aboutTheLandlord.landlordAddress.map(SensitiveLandlordAddress(_))
   )
 }

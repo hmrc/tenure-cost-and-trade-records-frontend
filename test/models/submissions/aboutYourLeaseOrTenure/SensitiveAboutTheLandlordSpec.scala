@@ -33,20 +33,20 @@ class SensitiveAboutTheLandlordSpec extends AnyWordSpecLike with Matchers with S
     "encrypt and decrypt sensitive fields correctly" in {
       val originalAboutTheLandlord = AboutTheLandlord(
         landlordFullName = "John Doe",
-        landlordAddress = LandlordAddress(
+        landlordAddress = Some(LandlordAddress(
           buildingNameNumber = "123",
           street1 = Some("Street 1"),
           town = "Town",
           county = Some("County"),
           postcode = "12345"
-        )
+        ))
       )
 
       val sensitiveAboutTheLandlord = SensitiveAboutTheLandlord(originalAboutTheLandlord)
 
       // Ensure the sensitive fields are encrypted
       sensitiveAboutTheLandlord.landlordFullName.isInstanceOf[SensitiveString]         shouldBe true
-      sensitiveAboutTheLandlord.landlordAddress.isInstanceOf[SensitiveLandlordAddress] shouldBe true
+      sensitiveAboutTheLandlord.landlordAddress.isInstanceOf[Option[SensitiveLandlordAddress]] shouldBe true
 
       // Ensure the sensitive fields are decrypted correctly
       sensitiveAboutTheLandlord.decryptedValue shouldBe originalAboutTheLandlord

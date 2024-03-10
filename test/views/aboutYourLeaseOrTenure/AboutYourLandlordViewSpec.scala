@@ -43,11 +43,6 @@ class AboutYourLandlordViewSpec extends QuestionViewBehaviours[AboutTheLandlord]
     behave like pageWithTextFields(
       createViewUsingForm,
       "landlordFullName",
-      "landlordAddress.buildingNameNumber",
-      "landlordAddress.street1",
-      "landlordAddress.town",
-      "landlordAddress.county",
-      "landlordAddress.postcode"
     )
 
     "has a link marked with back.link.label leading to the franchise or letting tied to property Page" in {

@@ -72,7 +72,8 @@ trait TestBaseSpec
       .configure(
         "metrics.jvm"                         -> false,
         "metrics.enabled"                     -> false,
-        "create-internal-auth-token-on-start" -> false
+        "create-internal-auth-token-on-start" -> false,
+        "urls.tctrFrontend" -> "someUrl"
       )
       .build()
 

@@ -18,7 +18,7 @@ package controllers.aboutYourLeaseOrTenure
 
 import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
-import form.aboutYourLeaseOrTenure.ConnectedToLandlordForm.connectedToLandlordForm
+import form.aboutYourLeaseOrTenure.ConnectedToLandlordForm.{baseConnectedToLandlordForm, connectedToLandlordForm}
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne
 import models.submissions.common.AnswersYesNo
 import navigation.AboutYourLeaseOrTenureNavigator
@@ -43,19 +43,20 @@ class ConnectedToLandlordController @Inject() (
     with I18nSupport
     with Logging {
 
-  def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    Future.successful(
-      Ok(
-        connectedToLandlordView(
-          request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.connectedToLandlord) match {
-            case Some(connectedToLandlord) =>
-              connectedToLandlordForm.fill(connectedToLandlord)
-            case _                         => connectedToLandlordForm
-          },
-          request.sessionData.toSummary
+  def show: Action[AnyContent] = (Action andThen withSessionRefiner).async {
+    implicit request =>
+      Future.successful(
+        Ok(
+          connectedToLandlordView(
+            request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.connectedToLandlord) match {
+              case Some(connectedToLandlord) =>
+                connectedToLandlordForm.fill(connectedToLandlord)
+              case _                         => connectedToLandlordForm
+            },
+            request.sessionData.toSummary
+          )
         )
       )
-    )
   }
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>

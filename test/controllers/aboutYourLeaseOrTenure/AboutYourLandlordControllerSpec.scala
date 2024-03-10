@@ -16,14 +16,19 @@
 
 package controllers.aboutYourLeaseOrTenure
 
+import connectors.AddressLookupConnector
 import form.aboutYourLeaseOrTenure.AboutTheLandlordForm.aboutTheLandlordForm
+import models.{Address, AddressLookup}
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
 import navigation.AboutYourLeaseOrTenureNavigator
 import play.api.http.Status
 import play.api.mvc.{AnyContent, Request}
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
+import uk.gov.hmrc.http.HeaderCarrier
 import utils.TestBaseSpec
+
+import scala.concurrent.Future
 
 class AboutYourLandlordControllerSpec extends TestBaseSpec {
 
@@ -31,6 +36,7 @@ class AboutYourLandlordControllerSpec extends TestBaseSpec {
   import utils.FormBindingTestAssertions.mustContainError
 
   val mockNavigator = mock[AboutYourLeaseOrTenureNavigator]
+  val mockAddressLookupConnector = mock[AddressLookupConnector]
   def aboutYourLandlordController(
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
   )                 =
@@ -38,6 +44,7 @@ class AboutYourLandlordControllerSpec extends TestBaseSpec {
       stubMessagesControllerComponents(),
       mockNavigator,
       aboutYourLandlordView,
+      mockAddressLookupConnector,
       preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
       mockSessionRepo
     )
@@ -64,6 +71,19 @@ class AboutYourLandlordControllerSpec extends TestBaseSpec {
         FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)
       )
       status(res) shouldBe BAD_REQUEST
+    }
+  }
+
+  "AddressLookup callback" should {
+    "REDIRECT to next page" in {
+      val lookup = AddressLookup(
+        Some(Address(Some(Seq("1 Main Street", "Metropolis", "Gotham City")), Some("12345"), None)),
+        Some("auditRef"),
+        Some("id")
+      )
+      when(mockAddressLookupConnector.getAddress(any[String])(any[HeaderCarrier])).thenReturn(Future.successful(lookup))
+      val res = aboutYourLandlordController().addressLookupCallback("123")(fakeRequest)
+      status(res) shouldBe SEE_OTHER
     }
   }
 
