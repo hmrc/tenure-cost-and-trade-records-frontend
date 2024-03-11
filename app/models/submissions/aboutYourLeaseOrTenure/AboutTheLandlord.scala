@@ -16,13 +16,17 @@
 
 package models.submissions.aboutYourLeaseOrTenure
 
-import play.api.libs.json.{Json, OFormat}
+import play.api.libs.functional.syntax.{toFunctionalBuilderOps, unlift}
+import play.api.libs.json.{Format, JsPath, Json}
 
 case class AboutTheLandlord(
   landlordFullName: String,
-  landlordAddress: LandlordAddress
+  landlordAddress: Option[LandlordAddress]
 )
 
 object AboutTheLandlord {
-  implicit val format: OFormat[AboutTheLandlord] = Json.format[AboutTheLandlord]
+  implicit val format: Format[AboutTheLandlord] = (
+    (JsPath \ "landlordFullName").format[String] and
+      (JsPath \ "landlordAddress").formatNullable[LandlordAddress]
+  )(AboutTheLandlord.apply, unlift(AboutTheLandlord.unapply))
 }

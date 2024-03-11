@@ -248,6 +248,7 @@ POST        /remove-letting-other-part-of-property                  controllers.
 # About your leace or tenure
 GET         /about-your-landlord                                    controllers.aboutYourLeaseOrTenure.AboutYourLandlordController.show()
 POST        /about-your-landlord                                    controllers.aboutYourLeaseOrTenure.AboutYourLandlordController.submit()
+GET         /landlord-address-callback                              controllers.aboutYourLeaseOrTenure.AboutYourLandlordController.addressLookupCallback(id: String ?= "")
 
 GET         /lease-or-agreement-details                             controllers.aboutYourLeaseOrTenure.LeaseOrAgreementYearsController.show()
 POST        /lease-or-agreement-details                             controllers.aboutYourLeaseOrTenure.LeaseOrAgreementYearsController.submit()

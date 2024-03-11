@@ -17,9 +17,9 @@
 package form.aboutYourLeaseOrTenure
 
 import form.MappingSupport.landlordAddressMapping
-import models.submissions.aboutYourLeaseOrTenure.AboutTheLandlord
+import models.submissions.aboutYourLeaseOrTenure.{AboutTheLandlord, LandlordAddress}
 import play.api.data.Form
-import play.api.data.Forms.{default, mapping, text}
+import play.api.data.Forms.{default, mapping, optional, text}
 import play.api.data.validation.Constraints.{maxLength, nonEmpty}
 
 object AboutTheLandlordForm {
@@ -29,7 +29,10 @@ object AboutTheLandlordForm {
         nonEmpty(errorMessage = "error.landlordFullName.required"),
         maxLength(50, "error.landlordFullName.maxLength")
       ),
-      "landlordAddress"  -> landlordAddressMapping
+      "landlordAddress"  -> optional(landlordAddressMapping)
     )(AboutTheLandlord.apply)(AboutTheLandlord.unapply)
   )
+
+  def isValidLandlordAddress(landlordAddress: LandlordAddress): Boolean =
+    landlordAddress.buildingNameNumber.nonEmpty && landlordAddress.town.nonEmpty && landlordAddress.postcode.nonEmpty
 }

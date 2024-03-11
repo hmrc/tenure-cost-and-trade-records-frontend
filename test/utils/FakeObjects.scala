@@ -798,7 +798,7 @@ trait FakeObjects {
   val prefilledAboutTheLandlord =
     AboutTheLandlord(
       prefilledFakeName,
-      prefilledLandlordAddress
+      Some(prefilledLandlordAddress)
     )
 
   val prefilledEditTheAddress =

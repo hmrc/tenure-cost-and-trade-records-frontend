@@ -35,12 +35,14 @@ class SensitiveAboutLeaseOrAgreementPartOneSpec extends AnyWordSpecLike with Mat
         aboutTheLandlord = Some(
           AboutTheLandlord(
             landlordFullName = "John Doe",
-            landlordAddress = LandlordAddress(
-              buildingNameNumber = "123",
-              street1 = Some("Street 1"),
-              town = "Town",
-              county = Some("County"),
-              postcode = "12345"
+            landlordAddress = Some(
+              LandlordAddress(
+                buildingNameNumber = "123",
+                street1 = Some("Street 1"),
+                town = "Town",
+                county = Some("County"),
+                postcode = "12345"
+              )
             )
           )
         )
