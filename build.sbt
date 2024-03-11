@@ -24,7 +24,6 @@ lazy val microservice = Project(appName, file("."))
     Assets / pipelineStages := Seq(digest),
     digest / includeFilter := GlobFilter("*.js") || GlobFilter("*.min.css")
   )
-  .configs(IntegrationTest)
 
 lazy val it =
   (project in file("it"))

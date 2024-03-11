@@ -24,27 +24,20 @@ object AppDependencies {
     "uk.gov.hmrc"       %% "crypto-json-play-30"        % cryptoJsonVersion
   )
 
-  private val allTestsScope = "test,it"
-
-  private val commonTests = Seq(
-    "uk.gov.hmrc"            %% "bootstrap-test-play-30" % bootstrapVersion         % allTestsScope,
-    "org.playframework"      %% "play-test"              % PlayVersion.current      % allTestsScope,
-    "org.scalatest"          %% "scalatest"              % scalatestVersion         % allTestsScope,
-    "org.scalatestplus.play" %% "scalatestplus-play"     % scalatestPlusPlayVersion % allTestsScope,
-    "com.vladsch.flexmark"    % "flexmark-all"           % flexMarkVersion          % allTestsScope, // for scalatest 3.2.x
-    "com.github.tomakehurst"  % "wiremock"               % wireMockVersion          % allTestsScope
+  private val test = Seq(
+    "uk.gov.hmrc"            %% "bootstrap-test-play-30"  % bootstrapVersion         % Test,
+    "org.playframework"      %% "play-test"               % PlayVersion.current      % Test,
+    "org.scalatest"          %% "scalatest"               % scalatestVersion         % Test,
+    "org.scalatestplus.play" %% "scalatestplus-play"      % scalatestPlusPlayVersion % Test,
+    "com.vladsch.flexmark"    % "flexmark-all"            % flexMarkVersion          % Test, // for scalatest 3.2.x
+    "com.github.tomakehurst"  % "wiremock"                % wireMockVersion          % Test,
+    "uk.gov.hmrc.mongo"      %% "hmrc-mongo-test-play-30" % mongoVersion             % Test,
+    "org.scalatestplus"      %% "scalacheck-1-17"         % "3.2.17.0"               % Test,
+    "org.scalatestplus"      %% "mockito-4-11"            % "3.2.17.0"               % Test,
+    "org.mockito"            %% "mockito-scala-scalatest" % mockitoScalaVersion      % Test,
+    "org.jsoup"               % "jsoup"                   % "1.16.1"                 % Test
   )
 
-  private val testOnly = Seq(
-    "uk.gov.hmrc.mongo" %% "hmrc-mongo-test-play-30" % mongoVersion        % Test,
-    "org.scalatestplus" %% "scalacheck-1-17"         % "3.2.17.0"          % Test,
-    "org.scalatestplus" %% "mockito-4-11"            % "3.2.17.0"          % Test,
-    "org.mockito"       %% "mockito-scala-scalatest" % mockitoScalaVersion % Test,
-    "org.jsoup"          % "jsoup"                   % "1.16.1"            % Test
-  )
-
-  private val integrationTestOnly = Seq()
-
-  val appDependencies: Seq[ModuleID] = compile ++ commonTests ++ testOnly ++ integrationTestOnly
+  val appDependencies: Seq[ModuleID] = compile ++ test
 
 }
