@@ -100,10 +100,10 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit) extends Naviga
               )
             val idx           = getCateringOperationsIndex(answers)
             maybeCatering match {
-              case Some(catering) if isCateringBusinessDetailsIncomplete(catering, answers.forType) =>
-                getIncompleteBusinessCateringCall(catering, idx, answers.forType)
-              case _                                                                                =>
-                controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show()
+              case Some(catering) if isCateringBusinessDetailsIncomplete6030(catering) =>
+                getIncompleteBusinessCateringCall6030(catering, idx)
+              case _ =>
+                controllers.aboutfranchisesorlettings.routes.CateringOperationBusinessDetailsController.show(Some(idx))
             }
         }
 
@@ -131,17 +131,8 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit) extends Naviga
       detail.itemsInRent.isEmpty
     }
 
-  private def isCateringBusinessDetailsIncomplete(detail: CateringOperationBusinessSection, forType: String): Boolean =
-    if (forType.equals("FOR6015") || forType.equals("FOR6016")) {
-      detail.cateringOperationBusinessDetails == null ||
-      detail.rentReceivedFrom.isEmpty ||
-      detail.calculatingTheRent.isEmpty ||
-      detail.itemsInRent.isEmpty
-    } else {
-      detail.cateringOperationBusinessDetails == null ||
-      detail.cateringOperationRentDetails.isEmpty ||
-      detail.itemsInRent.isEmpty
-    }
+  private def isCateringBusinessDetailsIncomplete6030(detail: CateringOperationBusinessSection): Boolean =
+    detail.feeReceived.isEmpty
 
   def getIncompleteCateringCall(detail: CateringOperationSection, idx: Int, forType: String): Call =
     if (forType.equals("FOR6015") || forType.equals("FOR6016")) {
@@ -160,21 +151,11 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit) extends Naviga
       else controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController.show(Some(idx))
     }
 
-  def getIncompleteBusinessCateringCall(detail: CateringOperationBusinessSection, idx: Int, forType: String): Call =
-    if (forType.equals("FOR6015") || forType.equals("FOR6016")) {
-      if (detail.rentReceivedFrom.isEmpty)
-        controllers.aboutfranchisesorlettings.routes.RentReceivedFromController.show(idx)
-      else if (detail.calculatingTheRent.isEmpty)
-        controllers.aboutfranchisesorlettings.routes.CalculatingTheRentForController.show(idx)
-      else if (detail.itemsInRent.isEmpty)
-        controllers.aboutfranchisesorlettings.routes.CateringOperationRentIncludesController.show(idx)
-      else controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController.show(Some(idx))
+  def getIncompleteBusinessCateringCall6030(detail: CateringOperationBusinessSection, idx: Int): Call =
+    if (detail.feeReceived.isEmpty) {
+      controllers.aboutfranchisesorlettings.routes.FeeReceivedController.show(idx)
     } else {
-      if (detail.cateringOperationRentDetails.isEmpty)
-        controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsRentController.show(idx)
-      else if (detail.itemsInRent.isEmpty)
-        controllers.aboutfranchisesorlettings.routes.CateringOperationRentIncludesController.show(idx)
-      else controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController.show(Some(idx))
+      controllers.aboutfranchisesorlettings.routes.CateringOperationBusinessDetailsController.show(Some(idx))
     }
 
   private def isLettingDetailIncomplete(detail: LettingSection, forType: String): Boolean = {
