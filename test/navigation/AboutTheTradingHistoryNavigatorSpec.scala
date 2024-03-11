@@ -17,6 +17,7 @@
 package navigation
 
 import connectors.Audit
+import controllers.aboutthetradinghistory
 import models.Session
 import models.submissions.common.ContactDetails
 import models.submissions.connectiontoproperty.{AddressConnectionTypeYes, StillConnectedDetails}
@@ -108,6 +109,15 @@ class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec {
       navigator
         .nextPage(FixedOperatingExpensesId, sessionAboutYou)
         .apply(sessionAboutYou) mustBe controllers.aboutthetradinghistory.routes.OtherCostsController.show()
+    }
+
+    "return a function that goes other costs page when fixed1 operating expenses has been completed" in {
+      navigator
+        .nextPage(ElectricVehicleChargingPointsId, sessionAboutYou)
+        .apply(
+          sessionAboutYou
+        ) mustBe controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController
+        .show()
     }
 
     "return a function that goes the task lists page when total payroll cost has been completed" in {

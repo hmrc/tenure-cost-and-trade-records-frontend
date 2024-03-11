@@ -1,0 +1,97 @@
+@*
+ * Copyright 2023 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import models.submissions.aboutthetradinghistory.ElectricVehicleChargingPoints
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.input.Input
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
+@import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Radios
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
+@import uk.gov.hmrc.govukfrontend.views.Aliases.RadioItem
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Fieldset
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Legend
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Label
+@import models.pages.Summary
+
+@this(layout: Layout,
+  govukButton: GovukButton,
+  govukRadios: GovukRadios,
+  govukInput: GovukInput,
+  formWithCSRF: FormWithCSRF
+)
+
+@(theForm: Form[ElectricVehicleChargingPoints], summary: Summary, backLink: String)(implicit request: Request[_], messages: Messages)
+
+@conditionalHTML = {
+  @govukInput(
+    Input(
+      id = "spacesOrBays",
+      name = "spacesOrBays",
+      classes = "govuk-input--width-3",
+      value = theForm("spacesOrBays").value,
+      label = Label(
+        content = Text(messages("spacesOrBays.textbox")),
+      )
+    )
+  )
+}
+
+@layout(
+  pageHeading = messages("electricVehicleChargingPoints.heading"),
+  showH1 = true,
+  showSection = true,
+    summary = Some(summary),
+    showAccountInfo = true,
+  sectionName = messages("label.section.aboutYourTradingHistory"),
+    backLinkUrl = backLink,
+  theForm = theForm
+) {
+
+  @formWithCSRF(action = controllers.aboutthetradinghistory.routes.ElectricVehicleChargingPointsController.submit()) {
+
+      <p class="govuk-body">@{messages("electricVehicleChargingPoints.p1")}</p>
+      <p class="govuk-body">@{messages("electricVehicleChargingPoints.p2")}</p>
+
+    @govukRadios(Radios(
+      fieldset = Some(Fieldset(
+        legend = Some(Legend(
+          content = Text(messages("label.electricVehicleChargingPoints")), isPageHeading = false,
+          classes = "govuk-fieldset__legend govuk-fieldset__legend--m",
+        ))
+      )),
+      name = "electricVehicleChargingPoints",
+      items = Seq(
+        RadioItem(
+          content = Text(messages("label.yes")),
+          value = Some("yes"),
+          conditionalHtml = Some(conditionalHTML)
+        ),
+        RadioItem(
+          content = Text(messages("label.no")),
+          value = Some("no")
+        )
+      ),
+      errorMessage = theForm.errors.asTextErrorMessageForField("electricVehicleChargingPoints")
+    ).withFormField(theForm("electricVehicleChargingPoints")))
+
+
+
+    @includes.continueSaveAsDraftButtons(govukButton)
+  }
+}

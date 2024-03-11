@@ -14,13 +14,17 @@
  * limitations under the License.
  */
 
-package models.submissions.aboutYourLeaseOrTenure
+package models.submissions.aboutthetradinghistory
 
 import models.submissions.common.AnswersYesNo
 import play.api.libs.json.{Json, OFormat}
 
-case class TenancyLeaseAgreementDetails(tenancyLeaseAgreements: AnswersYesNo)
+case class ElectricVehicleChargingPoints(
+  electricVehicleChargingPoint: AnswersYesNo,
+  spacesOrBays: Option[Int]
+)
 
-object TenancyLeaseAgreementDetails {
-  implicit val format: OFormat[TenancyLeaseAgreementDetails] = Json.format[TenancyLeaseAgreementDetails]
+object ElectricVehicleChargingPoints {
+  implicit val format: OFormat[ElectricVehicleChargingPoints] = Json.format[ElectricVehicleChargingPoints]
+
 }

@@ -23,7 +23,7 @@ import views.html.aboutyouandtheproperty._
 import views.html.aboutYourLeaseOrTenure._
 import views.html.aboutconcessionsorlettings.rentFromConcessions
 import views.html.aboutfranchisesorlettings._
-import views.html.aboutthetradinghistory.{variableOperatingExpenses, _}
+import views.html.aboutthetradinghistory.{electricVehicleChargingPoints, variableOperatingExpenses, _}
 import views.html.aboutyouandtheproperty.checkYourAnswersAboutTheProperty
 import views.html.additionalinformation.{checkYourAnswersAdditionalInformation, furtherInformationOrRemarks}
 import views.html.aboutyouandtheproperty.{alternativeContactDetails, contactDetailsQuestion}
@@ -133,6 +133,8 @@ trait FakeViews { this: GuiceOneAppPerSuite =>
   lazy val totalPayrollCostsView: totalPayrollCosts                                           = app.injector.instanceOf[totalPayrollCosts]
   lazy val incomeExpenditureSummaryView: incomeExpenditureSummary                             = app.injector.instanceOf[incomeExpenditureSummary]
   lazy val unusualCircumstancesView: unusualCircumstances                                     = app.injector.instanceOf[unusualCircumstances]
+  lazy val electricVehicleChargingPointsView: electricVehicleChargingPoints                   =
+    app.injector.instanceOf[electricVehicleChargingPoints]
   lazy val checkYourAnswersAboutTheTradingHistoryView: checkYourAnswersAboutTheTradingHistory =
     app.injector.instanceOf[checkYourAnswersAboutTheTradingHistory]
 
@@ -240,10 +242,10 @@ trait FakeViews { this: GuiceOneAppPerSuite =>
     app.injector.instanceOf[rentPayableVaryOnQuantityOfBeers]
   lazy val incentivesPaymentsConditionsView                =
     app.injector.instanceOf[incentivesPaymentsConditions]
-  lazy val tenancyLeaseAgreementView                       =
-    app.injector.instanceOf[tenancyLeaseAgreement]
   lazy val paymentWhenLeaseIsGrantedView                   =
     app.injector.instanceOf[paymentWhenLeaseIsGranted]
+  lazy val propertyUseLeasebackArrangementView             =
+    app.injector.instanceOf[propertyUseLeasebackArrangement]
   lazy val payACapitalSumView                              =
     app.injector.instanceOf[payACapitalSum]
   lazy val payACapitalSumDetailsView                       =

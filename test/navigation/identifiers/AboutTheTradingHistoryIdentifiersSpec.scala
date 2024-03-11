@@ -66,6 +66,10 @@ class AboutTheTradingHistoryIdentifiersSpec extends TestBaseSpec {
       assert(UnusualCircumstancesId.toString.equals("unusualCircumstances"))
     }
 
+    "Identifier for electric Vehicle Charging Points page" in {
+      assert(ElectricVehicleChargingPointsId.toString.equals("electricVehicleChargingPoints"))
+    }
+
     "Identifier for check your answers about the trading history page" in {
       assert(CheckYourAnswersAboutTheTradingHistoryId.toString.equals("checkYourAnswersAboutTheTradingHistory"))
     }

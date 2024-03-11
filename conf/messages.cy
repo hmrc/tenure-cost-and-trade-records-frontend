@@ -17,6 +17,8 @@ hintText.optional = (opsiynol)
 label.account.ref=Reference
 label.account.property=Property
 label.underReview=(under review)
+label.yes = Yes
+label.no = No
 
 # OTHER FOOTER LINKS:
 ########
@@ -501,6 +503,19 @@ hint.propertyCurrentlyUsedString = For example, petrol station, petrol station w
 error.propertyCurrentlyUsedString.required = You must describe how the property is used
 error.propertyCurrentlyUsedString.maxLength = How the property is currently used must be 200 characters or fewer
 
+#ELECTRIC VEHICLE CHARGING POINTS (FORM 6020)
+############################
+electricVehicleChargingPoints.heading = Electric Vehicle (EV) charging points
+electricVehicleChargingPoints.p1 = If you operate EV charging point spaces or bays which are not rented out to third parties, these must be included in your declaration.
+electricVehicleChargingPoints.p2 = Any EV charging points operated by third-party companies must be declared in the 'lettings' section of this declaration.
+label.electricVehicleChargingPoints = Do you operate any EV charging point spaces or bays?
+spacesOrBays.textbox = How many spaces or bays do you operate?
+error.spacesOrBays.required = Enter how many spaces or bays you operate
+error.electricVehicleChargingPoints.required = Select yes if you operate any EV charging point spaces or bays
+error.spacesOrBaysNumber.nonNumeric=The number of spaces or bays you operate must be a number between 1 and 999
+error.spacesOrBaysNumber.negative = The number of spaces or bays you operate cannot be a negative number
+error.spacesOrBaysNumber.required = The number of spaces or bays you operate must be a number between 1 and 999
+
 # WEBSITE FOR PROPERTY
 ######################
 buildingOperatingHaveAWebsite.heading = Does the business operating from the property have a website?
@@ -641,14 +656,6 @@ tiedForGoodsDetails.partialTie = Partial tie
 hint.partialTie = You have some flexibility to source certain items independently, for example guest ales or fine wines.
 partialTieConditional.textbox = Give details of your partial tie
 error.tiedForGoodsDetails.required = Select which type of tie you have
-
-# TENANCY LEASE AGREEMENT(USED ON 6010, 6015, 6016, 6030, 6032, 6033, 6034, 6035, 6036, 6037, 6038, 6043, 6049, 6056, 6057, 6066)
-##############################
-tenancyLeaseAgreement.heading = About the property
-label.tenancyLeaseAgreement = Do you hold a tenancy, lease or agreement to occupy?
-label.yes = Yes
-label.no = No
-error.tenancyLeaseAgreement.missing = Select yes if the tenancy, lease or agreement commenced in the last 3 years
 
 # FRANCHISE OR LETTINGS TIED TO PROPERTY
 #######################################
