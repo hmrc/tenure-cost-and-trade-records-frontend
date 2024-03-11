@@ -18,7 +18,7 @@ package controllers.aboutYourLeaseOrTenure
 
 import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
-import form.aboutYourLeaseOrTenure.ConnectedToLandlordForm.connectedToLandlordForm
+import form.aboutYourLeaseOrTenure.ConnectedToLandlordForm.{baseConnectedToLandlordForm, connectedToLandlordForm}
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne
 import models.submissions.common.AnswersYesNo
 import navigation.AboutYourLeaseOrTenureNavigator
