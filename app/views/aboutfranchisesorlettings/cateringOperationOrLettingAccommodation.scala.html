@@ -1,5 +1,5 @@
 @*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -46,12 +46,12 @@
 
 @heading = @{
   if(for6015) messages("lettingsIncome.heading")
-  else if(for6030) messages("concessionOrFranchiseFee.heading") else {
+  else if(for6030 && cateringOrLetting.equals("cateringOperationOrLettingAccommodation")) messages("concessionOrFranchiseFee.heading") else {
    messages(s"${cateringOrLetting}.heading")
   }
  }
 @hint = @{
- if(for6015 || for6030) None  else {
+ if(for6015 || (for6030 && cateringOrLetting.equals("cateringOperationOrLettingAccommodation")) ) None  else {
   Some(Hint(content = Text(messages(s"hint.${cateringOrLetting}"))))
  }
 }
@@ -62,7 +62,7 @@
     isPageHeading = false,
     classes = "govuk-!-font-weight-bold"
    ))
-  } else if(for6030){
+  } else if(for6030 && cateringOrLetting.equals("cateringOperationOrLettingAccommodation")){
       Option(Legend(
           content = Text(messages("concessionOrFranchiseFee.label")),
           isPageHeading = false,
@@ -79,7 +79,7 @@
 
 @layout(
  pageHeading = heading,
- showH1 = if(for6015 || for6030) true else false,
+ showH1 = if(for6015 || (for6030 && cateringOrLetting.equals("cateringOperationOrLettingAccommodation")) ) true else false,
  showSection = true,
  summary = Some(summary),
  sectionName = label,
@@ -103,7 +103,7 @@
    <p class="govuk-body">@messages("lettingsIncome.p1")</p>
   }
 
-  @if(for6030) {
+  @if(for6030 && cateringOrLetting.equals("cateringOperationOrLettingAccommodation")) {
    <p class="govuk-body">@messages("concessionOrFranchiseFee.p1")</p>
   }
 
@@ -125,25 +125,6 @@
     hint = hint,
    )
   )
-
-@*//     @if(for6030) {*@
-@*//         @govukRadios(*@
-@*//             Radios(*@
-@*//                 name = "concessionOrFranchiseFee",*@
-@*//                 idPrefix = Option("concessionOrFranchiseFee"),*@
-@*//                 classes = "govuk-radios--inline",*@
-@*//                 items = Seq(*@
-@*//                     "yes" -> messages("label.yes"),*@
-@*//                     "no" -> messages("label.no")*@
-@*//                 ).map(radioItem => RadioItem(*@
-@*//                     content = Text(radioItem._2),*@
-@*//                     checked = radioItem._1.equals(theForm("concessionOrFranchiseFee").value.getOrElse("")),*@
-@*//                     value = Option(radioItem._1))),*@
-@*//                 errorMessage = theForm.errors.asTextErrorMessageForField("concessionOrFranchiseFee"),*@
-@*//                 fieldset = Option(Fieldset(legend = legend))*@
-@*//             )*@
-@*//         )*@
-@*//     }*@
 
      @includes.continueSaveAsDraftButtons(govukButton)
  }

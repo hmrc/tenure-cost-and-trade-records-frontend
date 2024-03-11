@@ -1,5 +1,5 @@
 @*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -56,7 +56,7 @@
     backLinkUrl = backLink,
     theForm = theForm
 ) {
-    @if(typeBusinessDetails) {
+    @if(typeBusinessDetails && cateringOrLetting.equals("cateringOperationOrLettingAccommodationDetails")) {
         @formWithCSRF(action = controllers.aboutfranchisesorlettings.routes.CateringOperationBusinessDetailsController.submit(index)) {
 
             @includes.textInput(govukInput, theForm, "operatorName", "govuk-input--width-20", nameLabel, labelClasses = "govuk-!-font-weight-bold")
