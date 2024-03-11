@@ -73,6 +73,8 @@ class AboutYourLandlordController @Inject() (
         .flatMap(_.aboutTheLandlord.map(_.landlordFullName))
         .getOrElse("")
 
+      val maybeEditAddress        =
+        request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.aboutTheLandlord.map(_.landlordAddress.isDefined))
       val updatedAboutTheLandlord = AboutTheLandlord(
         landlordFullName = existingFullName,
         landlordAddress = Some(landlordAddress)
@@ -87,8 +89,13 @@ class AboutYourLandlordController @Inject() (
         navigator.from match {
           case "CYA" =>
             Redirect(controllers.aboutYourLeaseOrTenure.routes.CheckYourAnswersAboutYourLeaseOrTenureController.show())
-          case "TL"  => Redirect(controllers.routes.TaskListController.show())
-          case _     => Redirect(controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordController.show())
+          case "TL"  =>
+            maybeEditAddress match {
+              case Some(editAddress) if editAddress == true => Redirect(controllers.routes.TaskListController.show())
+              case _                                        => Redirect(controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordController.show())
+            }
+
+          case _ => Redirect(controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordController.show())
         }
       }
     }
@@ -99,10 +106,15 @@ class AboutYourLandlordController @Inject() (
       aboutTheLandlordForm,
       formWithErrors => BadRequest(aboutYourLandlordView(formWithErrors, request.sessionData.toSummary)),
       data => {
-
-        implicit val language: Lang = mcc.messagesApi.preferred(request).lang
-        val from                    = navigator.from
-        val updatedData             = updateAboutLeaseOrAgreementPartOne(_.copy(aboutTheLandlord = Some(data)))
+        val existingData: Option[AboutTheLandlord] =
+          request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.aboutTheLandlord)
+        val newData                                = existingData match {
+          case Some(landlord) => landlord.copy(landlordFullName = data.landlordFullName)
+          case _              => data
+        }
+        implicit val language: Lang                = mcc.messagesApi.preferred(request).lang
+        val from                                   = navigator.from
+        val updatedData                            = updateAboutLeaseOrAgreementPartOne(_.copy(aboutTheLandlord = Some(newData)))
         session.saveOrUpdate(updatedData)
         addressLookupConnector
           .initialise(routes.AboutYourLandlordController.addressLookupCallback(), from)
