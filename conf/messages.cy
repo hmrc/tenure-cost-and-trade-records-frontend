@@ -7,6 +7,7 @@ phase.beta = BETA
 phase.text = This is a new service – <a href="{0}" class="govuk-link" rel="noreferrer noopener" target="_blank" id="betaFeedback">share your feedback</a> to help improve it.
 label.continue=Parhewch
 button.label.continue = Parhau
+button.label.sendYourFeedback = Send your feedback
 button.label.submit = Submit
 button.label.send = Accept and send
 back.link.label = Yn ôl
@@ -1548,7 +1549,7 @@ label.correspondenceAddress = Correspondence address
 furtherInformationOrRemarks.heading = Further information or remarks
 hint.furtherInformationOrRemarks = Provide further details if there was not enough room for you to complete your answers to any of the previous questions, or if any questions require further explanation or clarification.
 furtherInformationOrRemarksTasklist.heading = Additional relevant information
-error.furtherInformationOrRemarks.maxLength = Further information must be 2,000 characters or fewer
+error.furtherInformationOrRemarks.maxLength = Mae’n rhaid i’r wybodaeth bellach fod yn 2,000 o gymeriadau neu lai
 
 # ALTERNATIVE DETAILS QUESTION
 ################################
