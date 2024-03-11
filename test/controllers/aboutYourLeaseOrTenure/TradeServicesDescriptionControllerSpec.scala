@@ -16,6 +16,7 @@
 
 package controllers.aboutYourLeaseOrTenure
 
+import actions.SessionRequest
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree
 import navigation.AboutYourLeaseOrTenureNavigator
 import org.jsoup.Jsoup
@@ -79,6 +80,22 @@ class TradeServicesDescriptionControllerSpec extends TestBaseSpec {
         )
         status(res) shouldBe BAD_REQUEST
       }
+    }
+
+    "getBackLink" should {
+
+      "return the correct backLink" in {
+        val controller = tradeServicesDescriptionController()
+        val result     = controller.getBackLink(SessionRequest(stillConnectedDetails6030NoSession, fakeRequest), 1)
+        result shouldBe controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesController.show().url
+      }
+      "return the correct backLink if view was accessed via 'Change' link" in {
+        val controller        = tradeServicesDescriptionController()
+        val requestWithChange = requestWithQueryParam(fakeRequest, "from=Change")
+        val result            = controller.getBackLink(SessionRequest(stillConnectedDetails6030NoSession, requestWithChange), 1)
+        result shouldBe controllers.aboutYourLeaseOrTenure.routes.TradeServicesListController.show(1).url
+      }
+
     }
   }
 }

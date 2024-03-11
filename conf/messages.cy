@@ -63,7 +63,7 @@ label.no.na = No
 checkYourAnswersRadio.heading = Have you completed this section?
 checkYourAnswersRadio.yes = Yes, I’ve completed this section
 checkYourAnswersRadio.no = No, I’ll come back to it later
-error.checkYourAnswersRadio.required = Select whether you’ve completed this section
+error.checkYourAnswersRadio.required = Dewiswch ’ydw’ os ydych wedi llenwi’r adran hon
 
 # COMMON LABELS
 ###############
@@ -736,10 +736,10 @@ feeReceived.heading = Fee received from {0}
 feeReceived.p1 = If the fee received does not relate to a whole year, or the business was not trading continuously, state the relevant number of weeks.
 feeReceived.concessionOrFranchiseFee = Concession or franchise fee
 feeReceived.feeCalculationDetails = Explain how the fee was calculated - for example, 10% of the total takings
-error.feeReceived.concessionOrFranchiseFee.required = Enter 0 if you did not receive any fee in the year ending {0}
-error.feeReceived.concessionOrFranchiseFee.range = The fee received in the year ending {0} must be a number, for example 100 or 100.00
-error.feeReceived.concessionOrFranchiseFee.negative = The fee received in the year ending {0} cannot be a negative number
-error.feeReceived.feeCalculationDetails.required = Enter a description of how the fee was calculated
+error.feeReceived.concessionOrFranchiseFee.required = Enter 0 if you received no fees in the year ending {0}
+error.feeReceived.concessionOrFranchiseFee.range = Fee received in the year ending {0} must be a number like 100 or 100.00
+error.feeReceived.concessionOrFranchiseFee.negative = Fee received in the year ending {0} cannot be a negative number
+error.feeReceived.feeCalculationDetails.required = You must explain how the fee was calculated
 
 # LETTING OTHER PART OF PROPERTY
 ##############################
@@ -1647,6 +1647,8 @@ checkYourAnswersAboutFranchiseOrLettings.addedLetting = You have added {0} tenan
 checkYourAnswersAboutFranchiseOrLettings.addedLettingPlural = You have added {0} tenants
 checkYourAnswersAboutFranchiseOrLettings.addedLetting6015 = You have added {0} letting
 checkYourAnswersAboutFranchiseOrLettings.addedLettingPlural6015 = You have added {0} lettings
+checkYourAnswersAboutFranchiseOrLettings.feeReceived.concessionOrFranchiseFee.heading = Concession or franchise fee
+checkYourAnswersAboutFranchiseOrLettings.feeReceived.feeCalculationDetails = How the fee was calculated
 
 checkYourAnswersAboutYourLeaseOrTenure.heading = Check your answers – your lease or agreement
 checkYourAnswersAboutYourLeaseOrTenure.yourLandlord.heading = Your landlord
@@ -1919,8 +1921,8 @@ error.tiedType.required = Select which type of tie you have
 error.addressLineTwo.maxLength = Address line 2 must be 50 characters or fewer
 error.townCity.maxLength = Town or city name must be 50 characters or fewer
 error.county.maxLength = County name must be 50 characters or fewer
-error.weeksMapping.blank = Enter 0 if you are not trading in the year ending {0}
-error.weeksMapping.invalid = The trading period in the year ending {0} should be a number from 1 to 52
+error.weeksMapping.blank = Nodwch 0 os nad oeddech yn masnachu yn ystod y flwyddyn a ddaeth i ben yn {0}
+error.weeksMapping.invalid = Mae’n rhaid i’r cyfnod masnachu yn ystod y flwyddyn a ddaeth i ben yn {0} fod yn rhif rhwng 1 a 52
 error.fullName.maxLength = Full name must be 50 characters or fewer
 
 # Currency optional validation

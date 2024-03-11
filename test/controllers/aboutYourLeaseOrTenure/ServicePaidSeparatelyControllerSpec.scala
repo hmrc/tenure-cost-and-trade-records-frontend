@@ -16,10 +16,12 @@
 
 package controllers.aboutYourLeaseOrTenure
 
+import actions.SessionRequest
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree
 import navigation.AboutYourLeaseOrTenureNavigator
 import org.jsoup.Jsoup
 import play.api.http.Status._
+import play.api.libs.json.Format.path
 import play.api.test.FakeRequest
 import play.api.test.Helpers.{charset, contentAsString, contentType, status, stubMessagesControllerComponents}
 import utils.TestBaseSpec
@@ -78,6 +80,22 @@ class ServicePaidSeparatelyControllerSpec extends TestBaseSpec {
         )
         status(res) shouldBe BAD_REQUEST
       }
+    }
+
+    "getBackLink" should {
+
+      "return the correct backLink" in {
+        val controller = servicePaidSeparatelyController()
+        val result     = controller.getBackLink(SessionRequest(stillConnectedDetails6030NoSession, fakeRequest), 1)
+        result shouldBe controllers.aboutYourLeaseOrTenure.routes.PaymentForTradeServicesController.show().url
+      }
+      "return the correct backLink if view was accessed via 'Change' link" in {
+        val controller        = servicePaidSeparatelyController()
+        val requestWithChange = requestWithQueryParam(fakeRequest, "from=Change")
+        val result            = controller.getBackLink(SessionRequest(stillConnectedDetails6030NoSession, requestWithChange), 1)
+        result shouldBe controllers.aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyListController.show(1).url
+      }
+
     }
   }
 }

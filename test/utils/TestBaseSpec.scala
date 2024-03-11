@@ -91,6 +91,9 @@ trait TestBaseSpec
 
   def servicesConfig: ServicesConfig = app.injector.instanceOf[ServicesConfig]
 
+  def requestWithQueryParam[A](fakeRequest: FakeRequest[A], queryParam: String): FakeRequest[A] =
+    FakeRequest(fakeRequest.method, s"${fakeRequest.uri}?$queryParam", fakeRequest.headers, fakeRequest.body)
+
   implicit def ec: ExecutionContext = app.injector.instanceOf[ExecutionContext]
 
   implicit val hc: HeaderCarrier = HeaderCarrier(sessionId = Some(SessionId("my-session")))

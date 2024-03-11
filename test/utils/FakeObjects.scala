@@ -551,7 +551,7 @@ trait FakeObjects {
 
   val prefilledCateringOperationBusinessSectionYes: CateringOperationBusinessSection = CateringOperationBusinessSection(
     CateringOperationBusinessDetails("Operator Name", "Type of Business", "Describe business"),
-    None,
+    Some(FeeReceived(Seq(FeeReceivedPerYear(LocalDate.now, 52, Some(1000))), Some("Fee calculation details"))),
     Some(CateringOperationRentDetails(BigDecimal(1500), prefilledDateInput)),
     Some(RentReceivedFrom(BigDecimal(1500), true)),
     Some(CalculatingTheRent("test", prefilledDateInput)),
@@ -761,6 +761,23 @@ trait FakeObjects {
     )
   val sessionAboutFranchiseOrLetting6015NoSession: Session                 =
     aboutYouAndTheProperty6015NoSession.copy(aboutFranchisesOrLettings = Some(prefilledAboutFranchiseOrLettingsNo6015))
+
+  val prefilledAboutFranchiseOrLettings6030: AboutFranchisesOrLettings = AboutFranchisesOrLettings(
+    Some(AnswerYes),
+    Some(AnswerYes),
+    0,
+    None,
+    IndexedSeq(prefilledCateringOperationSectionYes),
+    Some(IndexedSeq(prefilledCateringOperationBusinessSectionYes)),
+    Some(AnswerYes),
+    0,
+    None,
+    IndexedSeq(prefilledLettingSectionYes),
+    cateringOrFranchiseFee = Some(AnswerYes)
+  )
+
+  val sessionAboutFranchiseOrLetting6030YesSession: Session =
+    aboutYouAndTheProperty6030YesSession.copy(aboutFranchisesOrLettings = Some(prefilledAboutFranchiseOrLettings6030))
 
   // Additional information sessions
   val prefilledAdditionalInformation: AdditionalInformation = AdditionalInformation(
