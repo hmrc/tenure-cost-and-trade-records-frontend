@@ -91,7 +91,8 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit) extends Naviga
             maybeCatering match {
               case Some(catering) if isCateringDetailsIncomplete(catering, answers.forType) =>
                 getIncompleteCateringCall(catering, idx, answers.forType)
-              case _                                                                        => controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController.show(Some(idx))
+              case _                                                                        =>
+                controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController.show(Some(idx))
             }
           case ForTypes.for6030                                                          =>
             val maybeCatering =
@@ -102,7 +103,7 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit) extends Naviga
             maybeCatering match {
               case Some(catering) if isCateringBusinessDetailsIncomplete6030(catering) =>
                 getIncompleteBusinessCateringCall6030(catering, idx)
-              case _ =>
+              case _                                                                   =>
                 controllers.aboutfranchisesorlettings.routes.CateringOperationBusinessDetailsController.show(Some(idx))
             }
         }

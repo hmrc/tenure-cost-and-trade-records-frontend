@@ -552,11 +552,7 @@ trait FakeObjects {
   val prefilledCateringOperationBusinessSectionYes: CateringOperationBusinessSection = CateringOperationBusinessSection(
     CateringOperationBusinessDetails("Operator Name", "Type of Business", "Describe business"),
     Some(FeeReceived(Seq(FeeReceivedPerYear(LocalDate.now, 52, Some(1000))), Some("Fee calculation details"))),
-    Some(CateringOperationRentDetails(BigDecimal(1500), prefilledDateInput)),
-    Some(RentReceivedFrom(BigDecimal(1500), true)),
-    Some(CalculatingTheRent("test", prefilledDateInput)),
-    Some(AnswerYes),
-    itemsInRent = List("Other")
+    Some(AnswerYes)
   )
 
   val prefilledCateringOperationSectionIncompleteCatering: CateringOperationSection = CateringOperationSection(
@@ -568,11 +564,7 @@ trait FakeObjects {
 
   val prefilledCateringOperationBusinessSectionIncompleteCatering: CateringOperationBusinessSection =
     CateringOperationBusinessSection(
-      CateringOperationBusinessDetails("Operator Name", "Type of Business", "Describe business"),
-      None,
-      Some(CateringOperationRentDetails(BigDecimal(1500), prefilledDateInput)),
-      Some(RentReceivedFrom(BigDecimal(1500), true)),
-      Some(CalculatingTheRent("test", prefilledDateInput))
+      CateringOperationBusinessDetails("Operator Name", "Type of Business", "Describe business")
     )
 
   val prefilledCateringOperationSectionIncompleteCateringRentDetails: CateringOperationSection =
@@ -597,11 +589,7 @@ trait FakeObjects {
   val prefilledCateringOperationBusinessSectionNo: CateringOperationBusinessSection = CateringOperationBusinessSection(
     CateringOperationBusinessDetails("Operator Name", "Type of Business", "Describe business"),
     None,
-    Some(CateringOperationRentDetails(BigDecimal(1500), prefilledDateInput)),
-    Some(RentReceivedFrom(BigDecimal(1500), true)),
-    Some(CalculatingTheRent("test", prefilledDateInput)),
-    Some(AnswerNo),
-    itemsInRent = List("Other")
+    Some(AnswerNo)
   )
 
   val prefilledLettingSectionYes: LettingSection               = LettingSection(

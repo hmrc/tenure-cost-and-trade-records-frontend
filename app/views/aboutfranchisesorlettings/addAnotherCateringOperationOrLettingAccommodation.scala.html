@@ -1,5 +1,5 @@
 @*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,7 +30,6 @@
 @import uk.gov.hmrc.govukfrontend.views.Aliases.RadioItem
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Fieldset
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Legend
-@import uk.gov.hmrc.govukfrontend.views.Aliases.ErrorMessage
 @import models.pages.Summary
 
 @this(layout: Layout,
@@ -68,13 +67,23 @@
 }
 
 @operatorNames = @{
- session.aboutFranchisesOrLettings.fold(Seq.empty[String]){
-  fr => if (isLettingOtherPartOfProperty) {
-   fr.lettingSections.map(_.lettingOtherPartOfPropertyInformationDetails.operatorName)
-  } else {
-   fr.cateringOperationSections.map(_.cateringOperationDetails.operatorName)
+  session.aboutFranchisesOrLettings.fold(Seq.empty[String]) {
+   fr =>
+    forType match {
+     case ForTypes.for6030 =>
+      if(isLettingOtherPartOfProperty) {
+       fr.lettingSections.map(_.lettingOtherPartOfPropertyInformationDetails.operatorName)
+      } else {
+       fr.cateringOperationBusinessSections.fold(IndexedSeq.empty[String])(_.map(_.cateringOperationBusinessDetails.operatorName))
+      }
+     case _ =>
+      if(isLettingOtherPartOfProperty) {
+       fr.lettingSections.map(_.lettingOtherPartOfPropertyInformationDetails.operatorName)
+      } else {
+       fr.cateringOperationSections.map(_.cateringOperationDetails.operatorName)
+      }
+    }
   }
- }
 }
 
 @pluralSuffix = @{ if (operatorNames.size > 1) "s" else "" }
@@ -98,10 +107,19 @@
        actions = Actions(
         items = Seq(
          ActionItem(
-          href = if (isLettingOtherPartOfProperty) {
-           controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsController.show(idx).url
-          } else {
-           controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController.show(idx).url
+          href = forType match {
+           case ForTypes.for6030 =>
+            if (isLettingOtherPartOfProperty) {
+             controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsController.show(idx).url
+            } else {
+             controllers.aboutfranchisesorlettings.routes.CateringOperationBusinessDetailsController.show(idx).url
+            }
+           case _ =>
+            if (isLettingOtherPartOfProperty) {
+             controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsController.show(idx).url
+            } else {
+             controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController.show(idx).url
+            }
           },
           content = Text("Change")),
          ActionItem(
