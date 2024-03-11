@@ -53,6 +53,7 @@ class AddAnotherCateringOperationController @Inject() (
       franchisesOrLettingsData
         .flatMap(_.cateringOperationBusinessSections.flatMap(_.lift(index)))
         .flatMap(_.addAnotherOperationToProperty)
+        .orElse(if (navigator.from == "CYA") Some(AnswerNo) else None)
     } else {
       franchisesOrLettingsData
         .flatMap(_.cateringOperationSections.lift(index))
