@@ -17,6 +17,8 @@ hintText.optional = (opsiynol)
 label.account.ref=Reference
 label.account.property=Property
 label.underReview=(under review)
+label.yes = Yes
+label.no = No
 
 # OTHER FOOTER LINKS:
 ########
