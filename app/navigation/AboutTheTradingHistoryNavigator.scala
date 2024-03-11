@@ -19,6 +19,7 @@ package navigation
 import connectors.Audit
 import controllers.aboutthetradinghistory
 import controllers.aboutthetradinghistory.routes
+import models.submissions.common.{AnswerNo, AnswerYes}
 import models.{ForTypes, Session}
 import navigation.identifiers._
 import play.api.mvc.{AnyContent, Call, Request}
@@ -68,6 +69,18 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
     }
   }
 
+  private def bunkeredFuelQuestionRouting: Session => Call = answers => {
+    answers.aboutTheTradingHistory.flatMap(_.bunkeredFuelQuestion.map(_.bunkeredFuelQuestion)) match {
+      case Some(AnswerYes) => ???
+      case Some(AnswerNo)  => ???
+      case _               =>
+        logger.warn(
+          s"Navigation for bunkered fuel question reached without correct selection of conditions by controller"
+        )
+        throw new RuntimeException("Invalid option exception for bunkered fuel question")
+    }
+  }
+
   private def financialYearEndDatesRouting: Session => Call =
     _.forType match {
       case ForTypes.for6030 => aboutthetradinghistory.routes.Turnover6030Controller.show()
@@ -90,9 +103,11 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
     TurnoverPageId                           -> turnoverRouting,
     CostOfSalesId                            -> (_ => aboutthetradinghistory.routes.TotalPayrollCostsController.show()),
     TotalPayrollCostId                       -> (_ => aboutthetradinghistory.routes.VariableOperatingExpensesController.show()),
+    TotalFuelSoldId                          -> (_ => aboutthetradinghistory.routes.BunkeredFuelQuestionController.show()),
     VariableOperatingExpensesId              -> (_ => aboutthetradinghistory.routes.FixedOperatingExpensesController.show()),
     FixedOperatingExpensesId                 -> (_ => aboutthetradinghistory.routes.OtherCostsController.show()),
     OtherCostsId                             -> (_ => aboutthetradinghistory.routes.IncomeExpenditureSummaryController.show()),
+    BunkeredFuelQuestionId                   -> bunkeredFuelQuestionRouting,
     IncomeExpenditureSummaryId               -> (_ => aboutthetradinghistory.routes.UnusualCircumstancesController.show()),
     UnusualCircumstancesId                   -> (_ =>
       aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show()
