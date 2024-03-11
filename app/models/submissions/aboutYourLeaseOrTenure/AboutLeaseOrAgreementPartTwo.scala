@@ -39,7 +39,7 @@ case class AboutLeaseOrAgreementPartTwo(
   payACapitalSumInformationDetails: Option[PayACapitalSumInformationDetails] = None, //Added Feb 2024 - 6030 Journey
   paymentWhenLeaseIsGrantedDetails: Option[PaymentWhenLeaseIsGrantedDetails] = None,
   tenancyLeaseAgreementExpire: Option[TenancyLeaseAgreementExpire] = None,
-  tenancyLeaseAgreementDetails: Option[TenancyLeaseAgreementDetails] = None,
+//  tenancyLeaseAgreementDetails: Option[TenancyLeaseAgreementDetails] = None,
   legalOrPlanningRestrictions: Option[LegalOrPlanningRestrictions] = None,
   legalOrPlanningRestrictionsDetails: Option[LegalOrPlanningRestrictionsDetails] = None,
   ultimatelyResponsibleInsideRepairs: Option[UltimatelyResponsibleInsideRepairs] = None,

@@ -655,14 +655,6 @@ hint.partialTie = You have some flexibility to source certain items independentl
 partialTieConditional.textbox = Give details of your partial tie
 error.tiedForGoodsDetails.required = Select which type of tie you have
 
-# TENANCY LEASE AGREEMENT(USED ON 6010, 6015, 6016, 6030, 6032, 6033, 6034, 6035, 6036, 6037, 6038, 6043, 6049, 6056, 6057, 6066)
-##############################
-tenancyLeaseAgreement.heading = About the property
-label.tenancyLeaseAgreement = Do you hold a tenancy, lease or agreement to occupy?
-label.yes = Yes
-label.no = No
-error.tenancyLeaseAgreement.missing = Select yes if the tenancy, lease or agreement commenced in the last 3 years
-
 # FRANCHISE OR LETTINGS TIED TO PROPERTY
 #######################################
 franchiseLettings.heading = Rental income

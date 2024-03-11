@@ -195,9 +195,6 @@ POST        /unusual-circumstances                                  controllers.
 # Form 6015 routing end
 
 # About the francise or letting
-GET         /tenancy-lease-agreement                                controllers.aboutYourLeaseOrTenure.TenancyLeaseAgreementController.show()
-POST        /tenancy-lease-agreement                                controllers.aboutYourLeaseOrTenure.TenancyLeaseAgreementController.submit()
-
 GET         /franchise-or-lettings-tied-to-property                 controllers.aboutfranchisesorlettings.FranchiseOrLettingsTiedToPropertyController.show()
 POST        /franchise-or-lettings-tied-to-property                 controllers.aboutfranchisesorlettings.FranchiseOrLettingsTiedToPropertyController.submit()
 
