@@ -165,9 +165,7 @@
 
         }
 
-    }
-
-    @if(sectionAnswers.answers.flatMap(_.cateringConcessionOrFranchise).isDefined) {
+    } else if(sectionAnswers.answers.flatMap(_.cateringConcessionOrFranchise).isDefined) {
         <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutFranchiseOrLettings.separateBusinesses.heading")</h2>
 
         @govukSummaryList(SummaryList(rows =
