@@ -21,6 +21,7 @@ import models.submissions.aboutyouandtheproperty.TradingActivity
 import models.submissions.common.AnswerYes
 import play.api.data.Form
 import play.api.data.Forms.{mapping, text}
+import play.api.data.validation.Constraints.maxLength
 import uk.gov.voa.play.form.ConditionalMappings.mandatoryIfEqual
 
 object TradingActivityForm {
@@ -31,7 +32,9 @@ object TradingActivityForm {
       "tradingActivityDetails"  -> mandatoryIfEqual(
         "tradingActivityQuestion",
         AnswerYes.name,
-        text.verifying("error.tradingActivity.details.missing", details => details.nonEmpty)
+        text
+          .verifying("error.tradingActivity.details.missing", details => details.nonEmpty)
+          .verifying(maxLength(500, "error.tradingActivity.maxLength"))
       )
     )(TradingActivity.apply)(TradingActivity.unapply)
   )

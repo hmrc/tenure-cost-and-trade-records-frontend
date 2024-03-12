@@ -500,8 +500,8 @@ error.propertyCurrentlyUsed.maxLength = Your description must be 200 characters 
 # ABOUT THE PROPERTY STRING (6020/6030)
 ####################
 hint.propertyCurrentlyUsedString = For example, petrol station, petrol station with living accommodation.
-error.propertyCurrentlyUsedString.required = You must describe how the property is used
-error.propertyCurrentlyUsedString.maxLength = How the property is currently used must be 200 characters or fewer
+error.propertyCurrentlyUsedString.required = Enter the property’s current use
+error.propertyCurrentlyUsedString.maxLength = The property’s use must be described in 200 characters or fewer
 
 #ELECTRIC VEHICLE CHARGING POINTS (FORM 6020)
 ############################
@@ -520,14 +520,14 @@ error.spacesOrBaysNumber.required = The number of spaces or bays you operate mus
 ######################
 buildingOperatingHaveAWebsite.heading = Does the business operating from the property have a website?
 websiteAddressForProperty.textbox = Enter website address
-error.websiteAddressForProperty.required = Enter your web address
-error.webaddressFormat.required = Enter an address in the correct format, like www.example.com
-error.buildingOperatingHaveAWebsite.required = Select yes if the business has a website
+error.websiteAddressForProperty.required = Nodwch y cyfeiriad gwe
+error.webaddressFormat.required = Nodwch gyfeiriad gwe yn y fformat cywir, megis enwbusnes.cymru, neu www.cyfeiriad.co.uk
+error.buildingOperatingHaveAWebsite.required = Dewiswch ‘oes’ os oes gan y busnes wefan
 
 #CHARITY QUESTION PAGE (6030)
 ########################
 charityQuestion.heading = Is the organisation currently operating from the property a charity?
-error.charityQuestion.missing = Select yes if the organisation currently operates from the property a charity
+error.charityQuestion.missing = Select yes if the organisation is a charity
 
 # TRADING ACTIVITY (6030)
 #########################
@@ -536,7 +536,8 @@ tradingActivity.declare = As a charity, you must declare if any separate compani
 tradingActivity.question = Are any trading activities carried out on site?
 tradingActivity.hint = Give details of the trading activity and the name of the company or companies involved.
 error.tradingActivity.missing = Select yes if trading activities are carried out on site
-error.tradingActivity.details.missing = Enter details of trading activity
+error.tradingActivity.details.missing = Enter the details of the trading activity
+error.tradingActivity.maxLength = Your description of the trading activity must be 500 characters or fewer
 
 # PREMISES LICENSE GRANTED (6015,6016)
 ######################################
@@ -1554,7 +1555,7 @@ error.furtherInformationOrRemarks.maxLength = Further information must be 2,000 
 ################################
 contactDetailsQuestion.heading = Would you like us to use an alternative correspondence address if we need to contact you?
 hint.contactDetailsQuestion = You can either provide alternative contact details, or nominate someone else we should contact if we have any queries about this declaration.
-error.contactDetailsQuestion.missing= Select yes if you would like us to use alternative details
+error.contactDetailsQuestion.missing= Dewiswch ‘hoffwn’ os ydych am ddefnyddio manylion cyswllt eraill
 
 # ALTERNATIVE CONTACT DETAILS
 #############################
@@ -1870,10 +1871,10 @@ contactDetails.email1.email.tooLong=Email address must be 50 characters or fewer
 alternativeContact.contactDetails.email1.email.tooLong=Email address must be 50 characters or fewer
 error.contact.full.name.required = Please enter the full name
 error.alternativeContactName.required = Enter the alternative name
-error.contact.email.required = Enter your email address
+error.contact.email.required = Nodwch eich cyfeiriad e-bost
 error.contact.alternativeEmail.required = Enter your email address, or an alternative email address
 error.emailFormat.required = Nodwch gyfeiriad e-bost yn y fformat cywir, megis enw@enghraifft.com
-error.contact.phone.required = Enter your phone number
+error.contact.phone.required = Nodwch eich rhif ffôn
 error.contact.alternativePhone.required = Enter your phone number, or an alternative phone number
 error.contact.phone.invalidLength = Phone numbers must be between 10 and 20 characters long
 error.userType.required=Select your connection to the property
@@ -1889,7 +1890,7 @@ error.invalidCharCounty = Mae’n rhaid i enw’r sir gynnwys llythrennau, rhifa
 error.maxCurrencyAmountExceeded = Maximum amount exceeded - please contact the VOA
 error.maxCurrencyAmountExceeded.annualRent = Maximum amount exceeded - please contact the VOA
 error.invalid_phone=Nodwch rif ffôn, megis 01632 960000
-error.email=Enter an email in the correct format, like name@example.com
+error.email=Nodwch gyfeiriad e-bost yn y fformat cywir, megis enw@enghraifft.com
 error.isRelated=Select if you are still connected to the property, not connected to the property, or if the address needs to be updated
 error.date_must_be_in_past = Date must be in the past
 error.invalid_number = This must be a number
@@ -1921,8 +1922,9 @@ error.required.annualRentExcludingVat = Enter the annual rent
 error.char.count.maxLength = This must be 2000 characters or fewer
 error.townCity.required = Nodwch enw’r dref neu’r ddinas
 error.fullName.required = Enter your name
+error.fullNameContactDetails.required = Enter a contact name
 error.fullNameAlternative.required = Enter your name, or an alternative name
-error.fullName.mexLength = Full name must be 50 characters or fewer
+error.fullName.mexLength = The name must be 50 characters or fewer
 error.tiedType.required = Select which type of tie you have
 error.addressLineTwo.maxLength =  Mae’n rhaid i linell 2 y cyfeiriad fod yn 50 o gymeriadau neu lai
 error.townCity.maxLength = Mae’n rhaid i enw’r dref neu’r ddinas fod yn 50 o gymeriadau neu lai
@@ -1930,6 +1932,7 @@ error.county.maxLength = Mae’n rhaid i enw’r sir fod yn 50 o gymeriadau neu 
 error.weeksMapping.blank = Nodwch 0 os nad oeddech yn masnachu yn ystod y flwyddyn a ddaeth i ben yn {0}
 error.weeksMapping.invalid = Mae’n rhaid i’r cyfnod masnachu yn ystod y flwyddyn a ddaeth i ben yn {0} fod yn rhif rhwng 1 a 52
 error.fullName.maxLength = Full name must be 50 characters or fewer
+error.fullNameContactDetails.maxLength = The name must be 50 characters or fewer
 
 # Currency optional validation
 error.optCurrency.negative = {0} cannot be a negative number
