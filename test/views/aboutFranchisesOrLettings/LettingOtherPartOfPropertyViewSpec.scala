@@ -125,7 +125,7 @@ class LettingOtherPartOfPropertyViewSpec extends QuestionViewBehaviours[AnswersY
 
   "Letting other parts of property view 6030" must {
 
-    behave like normalPage(createView6030, messageKeyPrefix)
+    behave like normalPage(createView6030, messageKeyPrefix6030)
 
     "has a link marked with back.link.label leading to the franchise or letting tied to property Page" in {
       val doc          = asDocument(createView6030())
