@@ -64,14 +64,14 @@ class AboutYouControllerSpec extends TestBaseSpec {
       val formData = baseFormData - errorKey.fullName
       val form     = aboutYouForm.bind(formData)
 
-      mustContainError(errorKey.fullName, "error.fullName.required", form)
+      mustContainError(errorKey.fullName, "error.fullNameContactDetails.required", form)
     }
 
     "error if phone is missing" in {
       val formData = baseFormData + (errorKey.phone -> "")
       val form     = aboutYouForm.bind(formData)
 
-      mustContainError(errorKey.phone, Errors.contactPhoneRequired, form)
+      mustContainError(errorKey.phone, Errors.contactPhoneAboutYouRequired, form)
     }
     "error if phone number is too short" in {
       val formData = baseFormData + (errorKey.phone -> "12345")
@@ -91,7 +91,7 @@ class AboutYouControllerSpec extends TestBaseSpec {
       val formData = baseFormData + (errorKey.email -> "")
       val form     = aboutYouForm.bind(formData)
 
-      mustContainError(errorKey.email, Errors.contactEmailRequired, form)
+      mustContainError(errorKey.email, Errors.contactEmailAboutYouRequired, form)
     }
 
     "error if email is invalid format" in {
