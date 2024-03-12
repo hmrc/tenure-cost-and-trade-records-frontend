@@ -18,7 +18,6 @@ package form.aboutYourLeaseOrTenure
 
 import form.MappingSupport.createYesNoType
 import models.submissions.aboutYourLeaseOrTenure.PropertyUseLeasebackArrangement
-import models.submissions.common.AnswersYesNo
 import play.api.data.Form
 import play.api.data.Forms.mapping
 

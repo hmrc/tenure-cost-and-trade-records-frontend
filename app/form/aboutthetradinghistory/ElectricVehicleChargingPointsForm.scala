@@ -24,8 +24,6 @@ import play.api.data.Form
 import play.api.data.Forms.mapping
 import uk.gov.voa.play.form.ConditionalMappings.mandatoryIfEqual
 
-import scala.util.Try
-
 object ElectricVehicleChargingPointsForm {
 
   val electricVehicleChargingPointsForm = Form(

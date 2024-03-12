@@ -22,7 +22,6 @@ import form.aboutYourLeaseOrTenure.PropertyUseLeasebackArrangementForm.propertyU
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne
 import models.Session
 import models.submissions.aboutYourLeaseOrTenure.PropertyUseLeasebackArrangement
-import models.submissions.common.AnswersYesNo
 import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.PropertyUseLeasebackAgreementId
 import play.api.Logging

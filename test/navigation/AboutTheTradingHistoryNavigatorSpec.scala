@@ -17,7 +17,6 @@
 package navigation
 
 import connectors.Audit
-import controllers.aboutthetradinghistory
 import models.Session
 import models.submissions.common.ContactDetails
 import models.submissions.connectiontoproperty.{AddressConnectionTypeYes, StillConnectedDetails}

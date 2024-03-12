@@ -17,7 +17,6 @@
 package models.submissions.aboutthetradinghistory
 
 import actions.SessionRequest
-import controllers.aboutthetradinghistory.ElectricVehicleChargingPointsController
 import models.Session
 import play.api.libs.functional.syntax._
 import play.api.libs.json._

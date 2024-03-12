@@ -41,8 +41,8 @@ class AddressLookupConnectorSpec extends TestBaseSpec with WireMockHelper {
       .build()
 
   private lazy val connector: AddressLookupConnector = app.injector.instanceOf[AddressLookupConnector]
-  private implicit val language                      = Lang("en")
-  val call                                           = Call("GET", "/callback-url")
+  private implicit val language: Lang                = Lang("en")
+  val call: Call                                     = Call("GET", "/callback-url")
   val testResponseAddress: JsValue                   =
     Json.parse(input =
       "{\n\"auditRef\":\"e9e2fb3f-268f-4c4c-b928-3dc0b17259f2\",\n\"address\":{\n\"lines\":[\n\"Line1\",\n\"Line2\",\n\"Line3\",\n\"Line4\"\n],\n \"postcode\":\"NE1 1LX\",\n\"country\":{\n\"code\":\"GB\",\n\"name\":\"United Kingdom\"\n}\n}\n}"
