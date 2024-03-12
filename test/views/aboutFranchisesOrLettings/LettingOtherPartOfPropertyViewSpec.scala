@@ -27,8 +27,6 @@ class LettingOtherPartOfPropertyViewSpec extends QuestionViewBehaviours[AnswersY
 
   val messageKeyPrefix = "LettingOtherPartOfProperties"
 
-  val messageKeyPrefix6030 = "concessionOrFranchiseFee"
-
   override val form = LettingOtherPartOfPropertiesForm.lettingOtherPartOfPropertiesForm
   val form6030      = ConcessionOrFranchiseFeeForm.concessionOrFranchiseFeeForm
 
@@ -125,7 +123,7 @@ class LettingOtherPartOfPropertyViewSpec extends QuestionViewBehaviours[AnswersY
 
   "Letting other parts of property view 6030" must {
 
-    behave like normalPage(createView6030, messageKeyPrefix6030)
+    behave like normalPage(createView6030, messageKeyPrefix)
 
     "has a link marked with back.link.label leading to the franchise or letting tied to property Page" in {
       val doc          = asDocument(createView6030())
