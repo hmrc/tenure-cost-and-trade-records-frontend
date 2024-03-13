@@ -39,6 +39,16 @@ class PastConnectionControllerSpec extends TestBaseSpec {
     mockSessionRepo
   )
 
+  def pastConnectionControllerEmpty(
+    removeConnectionDetails: Option[RemoveConnectionDetails] = None
+  ) = new PastConnectionController(
+    stubMessagesControllerComponents(),
+    removeConnectionNavigator,
+    pastConnectionView,
+    preEnrichedActionRefiner(removeConnectionDetails = removeConnectionDetails),
+    mockSessionRepo
+  )
+
   "Premises licence conditions controller" should {
     "return 200" in {
       val result = pastConnectionController().show(fakeRequest)
@@ -47,6 +57,13 @@ class PastConnectionControllerSpec extends TestBaseSpec {
 
     "return HTML" in {
       val result = pastConnectionController().show(fakeRequest)
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
+    }
+
+    "return 200 for empty session" in {
+      val result = pastConnectionControllerEmpty().show(fakeRequest)
+      status(result)      shouldBe Status.OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }

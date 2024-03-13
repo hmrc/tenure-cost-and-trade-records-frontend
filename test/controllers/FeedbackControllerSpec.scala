@@ -25,6 +25,7 @@ import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.http.Status
+import play.api.http.Status._
 import play.api.test.FakeRequest
 import play.api.test.Helpers.{charset, contentAsString, contentType, redirectLocation, status}
 import uk.gov.hmrc.play.bootstrap.tools.Stubs.stubMessagesControllerComponents
@@ -119,6 +120,13 @@ class FeedbackControllerSpec
       }
     }
 
+    "SUBMIT connected feedback empty" should {
+      "throw a BAD_REQUEST if an empty form is submitted" in {
+        val res = feedbackController().feedbackConnectedSubmit(FakeRequest().withFormUrlEncodedBody(Seq.empty: _*))
+        status(res) shouldBe BAD_REQUEST
+      }
+    }
+
     "vacant property feedback is posted to audit" should {
       "return redirect to thx page SEE_OTHER" in {
         val result = feedbackController().feedbackVacantPropertySubmit()(
@@ -129,6 +137,13 @@ class FeedbackControllerSpec
         )
         status(result) shouldBe Status.SEE_OTHER
         redirectLocation(result) shouldBe Some(controllers.routes.FeedbackController.feedbackThx.url)
+      }
+    }
+
+    "SUBMIT vacant property feedback empty" should {
+      "throw a BAD_REQUEST if an empty form is submitted" in {
+        val res = feedbackController().feedbackVacantPropertySubmit(FakeRequest().withFormUrlEncodedBody(Seq.empty: _*))
+        status(res) shouldBe BAD_REQUEST
       }
     }
 
@@ -143,6 +158,13 @@ class FeedbackControllerSpec
         status(result) shouldBe Status.SEE_OTHER
         redirectLocation(result) shouldBe Some(controllers.routes.FeedbackController.feedbackThx.url)
       }
+    }
+  }
+
+  "SUBMIT not connected feedback empty" should {
+    "throw a BAD_REQUEST if an empty form is submitted" in {
+      val res = feedbackController().feedbackNotConnectedSubmit(FakeRequest().withFormUrlEncodedBody(Seq.empty: _*))
+      status(res) shouldBe BAD_REQUEST
     }
   }
 

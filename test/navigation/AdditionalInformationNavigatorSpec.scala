@@ -58,5 +58,14 @@ class AdditionalInformationNavigatorSpec extends TestBaseSpec {
         ) mustBe controllers.routes.TaskListController
         .show()
     }
+
+    "return the CYA url" in {
+      val result = navigator.cyaPage
+      result.map(
+        _.url shouldBe controllers.additionalinformation.routes.CheckYourAnswersAdditionalInformationController
+          .show()
+          .url
+      )
+    }
   }
 }

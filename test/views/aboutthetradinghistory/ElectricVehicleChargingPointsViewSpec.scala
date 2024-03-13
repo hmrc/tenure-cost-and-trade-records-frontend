@@ -17,10 +17,8 @@
 package views.aboutthetradinghistory
 
 import form.aboutthetradinghistory.ElectricVehicleChargingPointsForm
-import form.aboutyouandtheproperty.WebsiteForPropertyForm
 import models.pages.Summary
 import models.submissions.aboutthetradinghistory.ElectricVehicleChargingPoints
-import models.submissions.aboutyouandtheproperty.{BuildingOperationHaveAWebsiteNo, BuildingOperationHaveAWebsiteYes, WebsiteForPropertyDetails}
 import models.submissions.common.{AnswerNo, AnswerYes}
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form

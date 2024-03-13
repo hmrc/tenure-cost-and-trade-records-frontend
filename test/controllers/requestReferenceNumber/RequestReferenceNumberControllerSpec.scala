@@ -19,6 +19,7 @@ package controllers.requestReferenceNumber
 import form.requestReferenceNumber.RequestReferenceNumberForm.requestReferenceNumberForm
 import models.submissions.requestReferenceNumber.RequestReferenceNumberDetails
 import play.api.http.Status
+import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import utils.TestBaseSpec
 
@@ -26,6 +27,8 @@ class RequestReferenceNumberControllerSpec extends TestBaseSpec {
 
   import TestData.{baseFormData, errorKey}
   import utils.FormBindingTestAssertions.mustContainError
+
+  private val postRequest = FakeRequest("POST", "/")
 
   def noReferenceNumberController(
     requestReferenceNumberDetails: Option[RequestReferenceNumberDetails] = Some(prefilledRequestRefNumCYA)
@@ -63,16 +66,10 @@ class RequestReferenceNumberControllerSpec extends TestBaseSpec {
       val result = noReferenceNumberController().startWithSession(fakeRequest)
       status(result) shouldBe Status.SEE_OTHER
     }
-  }
 
-  "GET empty session" should {
-    "return 200" in {
+    "return 200 with empty session" in {
       val result = noReferenceNumberControllerEmpty().show(fakeRequest)
-      status(result) shouldBe Status.OK
-    }
-
-    "return HTML" in {
-      val result = noReferenceNumberControllerEmpty().show(fakeRequest)
+      status(result)      shouldBe Status.OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
@@ -84,6 +81,23 @@ class RequestReferenceNumberControllerSpec extends TestBaseSpec {
         fakeRequest.withFormUrlEncodedBody(Seq.empty: _*)
       )
       status(res) shouldBe BAD_REQUEST
+    }
+
+    "return redirect to next page for completed form SEE_OTHER" in {
+      val result = noReferenceNumberController().submit()(
+        postRequest.withFormUrlEncodedBody(
+          "requestReferenceNumberBusinessTradingName"        -> "Wombles Inc",
+          "requestReferenceNumberAddress.buildingNameNumber" -> "Building Name Number",
+          "requestReferenceNumberAddress.street1"            -> "",
+          "requestReferenceNumberAddress.town"               -> "Town",
+          "requestReferenceNumberAddress.county"             -> "",
+          "requestReferenceNumberAddress.postcode"           -> "BN12 4AX"
+        )
+      )
+      status(result) shouldBe Status.SEE_OTHER
+      redirectLocation(result) shouldBe Some(
+        controllers.requestReferenceNumber.routes.RequestReferenceNumberContactDetailsController.show().url
+      )
     }
   }
 

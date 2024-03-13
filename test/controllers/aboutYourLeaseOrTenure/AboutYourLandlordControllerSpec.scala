@@ -38,7 +38,7 @@ class AboutYourLandlordControllerSpec extends TestBaseSpec {
 
   val mockNavigator              = mock[AboutYourLeaseOrTenureNavigator]
   val mockAddressLookupConnector = mock[AddressLookupConnector]
-  val errorHandler: ErrorHandler                   = inject[ErrorHandler]
+  val errorHandler: ErrorHandler = inject[ErrorHandler]
   def aboutYourLandlordController(
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
   )                              =

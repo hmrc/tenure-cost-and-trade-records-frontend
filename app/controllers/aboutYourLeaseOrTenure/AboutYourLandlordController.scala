@@ -91,7 +91,7 @@ class AboutYourLandlordController @Inject() (
         navigator.from match {
           case "CYA" =>
             Redirect(controllers.aboutYourLeaseOrTenure.routes.CheckYourAnswersAboutYourLeaseOrTenureController.show())
-          case _ => Redirect(controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordController.show())
+          case _     => Redirect(controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordController.show())
         }
       }
     }
@@ -117,10 +117,11 @@ class AboutYourLandlordController @Inject() (
           .flatMap {
             case Some(url) =>
               Future.successful(SeeOther(url))
-            case None      => {
-              val failureReason = s"AddressLookup initialisation failed for ${request.sessionData.referenceNumber} - ${hc.sessionId.getOrElse("")}"
+            case None      =>
+              val failureReason =
+                s"AddressLookup initialisation failed for ${request.sessionData.referenceNumber} - ${hc.sessionId.getOrElse("")}"
               logger.error(failureReason)
-              Future.successful(InternalServerError(errorHandler.internalServerErrorTemplate(request)))}
+              Future.successful(InternalServerError(errorHandler.internalServerErrorTemplate(request)))
           }
       }
     )

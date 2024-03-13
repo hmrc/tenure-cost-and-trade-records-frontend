@@ -16,8 +16,7 @@
 
 package form
 
-import play.api.data.Forms.{default, optional, text}
-import play.api.data.validation.Constraints.maxLength
+import play.api.data.Forms.{default, text}
 import play.api.data.validation.{Constraint, Invalid, Valid, ValidationError}
 
 import scala.util.Try

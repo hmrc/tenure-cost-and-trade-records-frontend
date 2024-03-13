@@ -18,8 +18,8 @@ package views.aboutYourLeaseOrTenure
 
 import form.aboutYourLeaseOrTenure.PropertyUseLeasebackArrangementForm.propertyUseLeasebackArrangementForm
 import models.pages.Summary
-import models.submissions.aboutYourLeaseOrTenure.{PaymentWhenLeaseIsGrantedDetails, PropertyUseLeasebackArrangement}
-import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
+import models.submissions.aboutYourLeaseOrTenure.PropertyUseLeasebackArrangement
+import models.submissions.common.{AnswerNo, AnswerYes}
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
