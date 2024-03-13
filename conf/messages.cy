@@ -274,8 +274,8 @@ error.no.connection.selected = Select your connection to the property
 #NAME OF BUSINESS OPERATING FROM THE PROPERTY
 label.tradingNameFromProperty = Trading name
 tradingNameFromProperty.heading = What is the trading name of the business or organisation operating from the property?
-error.tradingNameFromProperty.required = Enter the trading name of the business or organisation
-error.tradingNameFromProperty.maxLength = The trading name must be 50 characters or fewer
+error.tradingNameFromProperty.required = Nodwch enw masnachu’r busnes neu’r sefydliad
+error.tradingNameFromProperty.maxLength = Mae’n rhaid i’r enw masnachu fod yn 50 o gymeriadau neu lai
 
 # DOES TRADING NAME OWN THE PROPERTY
 #####################################
@@ -283,7 +283,7 @@ tradingNameOwnTheProperty.heading = Do you own the property?
 hint.tradingNameOwnTheProperty = Only select ‘yes’ if you own the premises or land used by the business.
 tradingNameOwnTheProperty.title = Does {0} own the property?
 hint.tradingNameOwnTheProperty = Only select ‘yes’ if you own the premises or land used by the business.
-error.tradingNameOwnTheProperty.missing = Select yes if the organisation owns the property
+error.tradingNameOwnTheProperty.missing = Dewiswch ‘iawn’ os yw’r sefydliad yn berchen ar yr kiddo
 
 # DOES TRADING NAME PAY RENT ON THE PROPERTY
 ############################################
@@ -292,7 +292,7 @@ tradingNamePayingRent.title = Does {0} pay rent on the property?
 tradingNamePayingRent.p1 = You must declare whether you pay rent under the terms of your lease or agreement.
 tradingNamePayingRent.p2 = You should select ‘yes’ even if you pay rent under an informal agreement, or have a temporary rent-free agreement.
 tradingNamePayingRent.p3 = Select ‘no’ if the owner of the property allows you to occupy it on a permanent rent-free agreement.
-error.tradingNamePayingRent.missing = Select yes if the organisation pays rent on the property
+error.tradingNamePayingRent.missing = Dewiswch ‘iawn’ os yw’r sefydliad yn talu rhent ar yr eiddo
 
 # ARE YOU THIRD-PARTY WORKING ON BEHALF OF TRADING NAME
 #######################################################
@@ -300,7 +300,7 @@ areYouThirdParty.heading = Are you a third party?
 areYouThirdParty.title = Are you a third party working on behalf of {0}?
 hint.areYouThirdParty.yes = Choose ‘yes’ if you have been contracted by {0} to complete this declaration.
 hint.areYouThirdParty.no = Choose ‘no’ if you are an owner, director, or direct employee of {0}, or you are completing this declaration on their behalf in an unofficial capacity.
-error.areYouThirdParty.missing = Select yes if you are working on behalf of the organisation
+error.areYouThirdParty.missing = Dewiswch ‘ydw’ os ydych yn gweithredu ar ran y sefydliad
 
 # VACANT PROPERTIES
 ############################
@@ -312,7 +312,7 @@ vacantProperties.item1 = the business operating from there is closed temporarily
 vacantProperties.item2 = the property is empty, but there is a current lease, tenancy or agreement to occupy in place
 vacantProperties.item3 = the property is being used by an individual, business or organisation under an informal arrangement
 label.vacantProperties = Is the property currently vacant?
-error.vacantProperties.required = Select yes if the property is currently vacant
+error.vacantProperties.required = Dewiswch ‘ydy’ os yw’r eiddo yn wag ar hyn o bryd
 
 # CHECK YOUR ANSWERS CONNECTION TO PROPERTY
 ###########################################
@@ -334,14 +334,14 @@ checkYourAnswersConnectionToProperty.thirdParty = Third party?
 vacantPropertyStartDate.heading = When did the property become vacant?
 label.startDateOfVacantProperty =
 label.startDateOfVacantProperty.help = For example, 27 9 2017.
-fieldName.startDateOfVacantProperty = the date the property became vacant
+fieldName.startDateOfVacantProperty = Nodwch y dyddiad y daeth yr eiddo’n wag
 
 # LETTING INCOME - IS ANY RENT RECEIVED FROM LETTING
 ####################################################
 isRentReceivedFromLetting.heading = Letting income
 isRentReceivedFromLetting.label = Do you receive any rent from letting parts of your property?
 isRentReceivedFromLetting.p1 = You must declare any income received from letting parts of the property, for example advertising billboards, car parking or telephone masts. You will have the opportunity to add more than one letting if required.
-error.isRentReceivedFromLetting.missing = Select yes if any rent is received from letting out parts of the property
+error.isRentReceivedFromLetting.missing = Dewiswch ‘oes’ os oes unrhyw rent yn dod i law o roi rhannau o’r eiddo ar osod
 
 # CONNECTION TO PROPERTY TENANT DETAILS
 #######################################
@@ -351,13 +351,13 @@ label.descriptionOfLetting = Description of letting
 hint.descriptionOfLetting = For example, a billboard, residential accommodation.
 label.addressLineOne = Address line 1
 label.addressLineTwo = Address line 2
-error.tenantName.required = Enter the name of the person or business renting the property
-error.tenantName.maxLength = Tenant''s name must be 50 characters or fewer
-error.descriptionOfLetting.required = Enter a description of the letting
-error.descriptionOfLetting.maxLength = Description of letting must be 50 characters or fewer
-error.addressLineOne.required = Enter the first line of the address
-error.addressLineOne.maxLength = Address line 1 must be 50 characters or fewer
-error.addressLineTwo.maxLength = Address line 2 must be 50 characters or fewer
+error.tenantName.required = Nodwch enw’r person neu’r busnes sy’n rhentu’r eiddo
+error.tenantName.maxLength = Mae’n rhaid i enw’r tenant fod yn 50 o gymeriadau neu lai
+error.descriptionOfLetting.required = Nodwch ddisgrifiad o’r gosodiad
+error.descriptionOfLetting.maxLength = Mae’n rhaid i’r disgrifiad o’r gosodiad fod yn 50 o gymeriadau neu lai
+error.addressLineOne.required = Nodwch linell gyntaf y cyfeiriad
+error.addressLineOne.maxLength = Mae’n rhaid i linell 1 y cyfeiriad fod yn 50 o gymeriadau neu lai
+error.addressLineTwo.maxLength = Mae’n rhaid i linell 2 y cyfeiriad fod yn 50 o gymeriadau neu lai
 
 # CONNECTION TO PROPERTY ANNUAL RENT
 ###########################################
@@ -1051,8 +1051,8 @@ lettingOtherPartOfPropertyRentDetails.title = Annual rent for tenant
 label.annualRent = Annual rent payment excluding VAT
 label.dateInput = When was this sum fixed?
 fieldName.cateringOrLettingFixedRentDate = the date when the annual rent was fixed
-error.required.annualRentExcludingVat.annualRent = Enter the annual rent
-error.invalid_currency.annualRent.annualRent = The annual rent must be a number like 100 or 100.00 and cannot be less than 0
+error.required.annualRentExcludingVat.annualRent = Nodwch swm y rhent blynyddol
+error.invalid_currency.annualRent.annualRent = Mae’n rhaid i’r rhent blynyddol fod yn rhif, megis 100 neu 100.00
 error.dateInput.month.required = The date the rent was fixed must include a month
 error.dateInput.year.required = The date the rent was fixed must include a year
 error.sharedResponsibilities.required = Tell us how the responsibilities are shared
@@ -1083,8 +1083,8 @@ checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.outsideRepairs
 checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.insideRepairs = Inside repairs
 checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.noneOfThese = No, none of these are included in the rent
 checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.none = None
-error.cateringOperationOrLettingAccommodationCheckboxesDetails.required = Select any items included in your rent or select ’No, none of these items are included in the rent’
-error.cateringOperationOrLettingAccommodationCheckboxesDetails.noneSelectedWithOther = Select any items included in your rent or select ’No, none of these items are included in the rent’
+error.cateringOperationOrLettingAccommodationCheckboxesDetails.required = Dewiswch yr eitemau sydd wedi’u cynnwys yn eich rhent, neu dewiswch ‘Na, nid oes yr un o’r rhain wedi’u cynnwys yn y rhent’
+error.cateringOperationOrLettingAccommodationCheckboxesDetails.noneSelectedWithOther = Dewiswch yr eitemau sydd wedi’u cynnwys yn eich rhent, neu dewiswch ‘Na, nid oes yr un o’r rhain wedi’u cynnwys yn y rhent’
 
 # ADD ANOTHER CATERING OPERATION OR LETTING ACCOMMODATION DETAILS
 #################################################################
@@ -1100,7 +1100,7 @@ label.addAnotherCateringOperation = Do you need to add another separate business
 label.addAnotherConcessionOrLetting = Do you need to add another separate business or concession?
 label.addAnotherLettingOtherPartOfProperty = Do you need to add another letting?
 error.addAnotherSeparateBusinessOrFranchise.required = Select yes if you would like to add another business or franchise
-error.addAnotherLetting.required = Select yes if you would like to add another letting
+error.addAnotherLetting.required = Dewiswch ‘oes’ os ydych am ychwanegu gosodiad arall
 
 # TENANTS ADDITIONS DISREGARDED
 ###############################
@@ -1538,7 +1538,7 @@ label.furtherInformation = Further information or remarks
 key.altContact.details = Alternative contact details
 key.additionalInformation = Additional information
 label.altDetails.question= Use alternative contact details?
-label.altDetails = Alternative details
+label.altDetails = Alternative correspondence address
 key.altContact.details = Alternative contact details
 label.fullName = Full name
 label.telephoneNumber = Telephone number
@@ -1923,7 +1923,7 @@ error.invalid_currency.annualRent = The annual rent must be a number like 100 or
 error.required.annualRentExcludingVat = Enter the annual rent
 error.char.count.maxLength = This must be 2000 characters or fewer
 error.townCity.required = Nodwch enw’r dref neu’r ddinas
-error.fullName.required = Enter your name
+error.fullName.required = Nodwch eich enw
 error.fullNameContactDetails.required = Enter a contact name
 error.fullNameAlternative.required = Enter your name, or an alternative name
 error.fullName.mexLength = The name must be 50 characters or fewer
@@ -1935,6 +1935,7 @@ error.weeksMapping.blank = Nodwch 0 os nad oeddech yn masnachu yn ystod y flwydd
 error.weeksMapping.invalid = Mae’n rhaid i’r cyfnod masnachu yn ystod y flwyddyn a ddaeth i ben yn {0} fod yn rhif rhwng 1 a 52
 error.fullName.maxLength = Full name must be 50 characters or fewer
 error.fullNameContactDetails.maxLength = The name must be 50 characters or fewer
+error.confirmableAction.required = Select yes if you want to remove this item
 
 # Currency optional validation
 error.optCurrency.negative = {0} cannot be a negative number
@@ -1946,9 +1947,9 @@ error.includedPartsSum.graterThanAnnualRent = The combined sum {0} included to c
 error.date.required = Enter {0}
 error.date.mustInclude = {0} must include {1}
 error.date.invalid = {0} must be a real date
-error.date.day.invalid = The day must be a number from 1 to 31
-error.date.month.invalid = The month must be a number from 1 to 12
-error.date.year.invalid = The year must be a 4-digit number
+error.date.day.invalid = Mae’n rhaid i’r diwrnod fod yn rhif rhwng 1 a 31
+error.date.month.invalid = Mae’n rhaid i’r mis fod yn rhif rhwng 1 a 12
+error.date.year.invalid = Mae’n rhaid i’r flwyddyn fod yn rhif 4 digid
 error.date.before1900 = {0} must be after December 1899
 error.date.beforeToday = {0} cannot be in the past
 error.date.mustBeInPast = {0} must be today or in the past
