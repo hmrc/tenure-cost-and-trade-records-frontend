@@ -17,6 +17,7 @@
 package controllers.aboutYourLeaseOrTenure
 
 import actions.{SessionRequest, WithSessionRefiner}
+import config.ErrorHandler
 import connectors.AddressLookupConnector
 import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.AboutTheLandlordForm.aboutTheLandlordForm
@@ -27,6 +28,7 @@ import repositories.SessionRepo
 import views.html.aboutYourLeaseOrTenure.aboutYourLandlord
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne
 import models.submissions.aboutYourLeaseOrTenure.AboutTheLandlord
+import play.api.Logging
 import util.AddressLookupUtil
 
 import javax.inject.{Inject, Named, Singleton}
@@ -39,10 +41,12 @@ class AboutYourLandlordController @Inject() (
   aboutYourLandlordView: aboutYourLandlord,
   addressLookupConnector: AddressLookupConnector,
   withSessionRefiner: WithSessionRefiner,
+  errorHandler: ErrorHandler,
   @Named("session") val session: SessionRepo
 )(implicit ec: ExecutionContext)
     extends FORDataCaptureController(mcc)
-    with I18nSupport {
+    with I18nSupport
+    with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Future.successful(
@@ -73,8 +77,6 @@ class AboutYourLandlordController @Inject() (
         .flatMap(_.aboutTheLandlord.map(_.landlordFullName))
         .getOrElse("")
 
-      val maybeEditAddress        =
-        request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.aboutTheLandlord.map(_.landlordAddress.isDefined))
       val updatedAboutTheLandlord = AboutTheLandlord(
         landlordFullName = existingFullName,
         landlordAddress = Some(landlordAddress)
@@ -89,12 +91,6 @@ class AboutYourLandlordController @Inject() (
         navigator.from match {
           case "CYA" =>
             Redirect(controllers.aboutYourLeaseOrTenure.routes.CheckYourAnswersAboutYourLeaseOrTenureController.show())
-          case "TL"  =>
-            maybeEditAddress match {
-              case Some(editAddress) if editAddress == true => Redirect(controllers.routes.TaskListController.show())
-              case _                                        => Redirect(controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordController.show())
-            }
-
           case _ => Redirect(controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordController.show())
         }
       }
@@ -121,7 +117,10 @@ class AboutYourLandlordController @Inject() (
           .flatMap {
             case Some(url) =>
               Future.successful(SeeOther(url))
-            case None      => Future.successful(InternalServerError("Address lookup initialization failed"))
+            case None      => {
+              val failureReason = s"AddressLookup initialisation failed for ${request.sessionData.referenceNumber} - ${hc.sessionId.getOrElse("")}"
+              logger.error(failureReason)
+              Future.successful(InternalServerError(errorHandler.internalServerErrorTemplate(request)))}
           }
       }
     )

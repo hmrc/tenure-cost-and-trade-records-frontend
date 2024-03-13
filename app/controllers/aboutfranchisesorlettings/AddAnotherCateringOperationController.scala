@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,6 +20,7 @@ import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
 import form.aboutfranchisesorlettings.AddAnotherCateringOperationOrLettingAccommodationForm.addAnotherCateringOperationForm
 import form.confirmableActionForm.confirmableActionForm
+import models.ForTypes
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
 import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
 import navigation.AboutFranchisesOrLettingsNavigator
@@ -46,14 +47,23 @@ class AddAnotherCateringOperationController @Inject() (
     with I18nSupport {
 
   def show(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    val existingSection = request.sessionData.aboutFranchisesOrLettings.flatMap(_.cateringOperationSections.lift(index))
+    val franchisesOrLettingsData = request.sessionData.aboutFranchisesOrLettings
+
+    val addAnother = if (request.sessionData.forType == ForTypes.for6030) {
+      franchisesOrLettingsData
+        .flatMap(_.cateringOperationBusinessSections.flatMap(_.lift(index)))
+        .flatMap(_.addAnotherOperationToProperty)
+        .orElse(if (navigator.from == "CYA") Some(AnswerNo) else None)
+    } else {
+      franchisesOrLettingsData
+        .flatMap(_.cateringOperationSections.lift(index))
+        .flatMap(_.addAnotherOperationToProperty)
+    }
+
     Future.successful(
       Ok(
         addAnotherCateringOperationOrLettingAccommodationView(
-          existingSection.flatMap(_.addAnotherOperationToProperty) match {
-            case Some(addAnotherOperation) => addAnotherCateringOperationForm.fill(addAnotherOperation)
-            case _                         => addAnotherCateringOperationForm
-          },
+          addAnother.fold(addAnotherCateringOperationForm)(addAnotherCateringOperationForm.fill),
           index,
           "addAnotherConcession",
           "addAnotherCateringOperation",

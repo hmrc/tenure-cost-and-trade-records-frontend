@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2023 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,17 +14,22 @@
  * limitations under the License.
  */
 
-package models.submissions.aboutfranchisesorlettings
+package form
 
-import models.submissions.common.AnswersYesNo
-import play.api.libs.json.{Json, OFormat}
+import play.api.data.Forms.text
 
-case class CateringOperationBusinessSection(
-  cateringOperationBusinessDetails: CateringOperationBusinessDetails,
-  feeReceived: Option[FeeReceived] = None,
-  addAnotherOperationToProperty: Option[AnswersYesNo] = None
-)
+object AboutYouEmailMapping {
 
-object CateringOperationBusinessSection {
-  implicit val format: OFormat[CateringOperationBusinessSection] = Json.format
+  // Valid formats: test@test.com | test.test@hotmail.com | test.account@digital.gov.uk |
+
+  val invalidEmailRegex = """^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$"""
+
+  def validateAboutYouEmail =
+    text
+      .verifying(Errors.contactEmailAboutYouRequired, eA => eA.nonEmpty)
+      .verifying(
+        Errors.emailFormat,
+        eA => if (eA.nonEmpty) eA.matches(invalidEmailRegex) else true
+      )
+
 }

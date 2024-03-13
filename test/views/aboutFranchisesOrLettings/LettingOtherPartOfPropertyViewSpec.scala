@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,8 +26,6 @@ import models.pages.Summary
 class LettingOtherPartOfPropertyViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
 
   val messageKeyPrefix = "LettingOtherPartOfProperties"
-
-  val messageKeyPrefix6030 = "concessionOrFranchiseFee"
 
   override val form = LettingOtherPartOfPropertiesForm.lettingOtherPartOfPropertiesForm
   val form6030      = ConcessionOrFranchiseFeeForm.concessionOrFranchiseFeeForm
@@ -125,7 +123,7 @@ class LettingOtherPartOfPropertyViewSpec extends QuestionViewBehaviours[AnswersY
 
   "Letting other parts of property view 6030" must {
 
-    behave like normalPage(createView6030, messageKeyPrefix6030)
+    behave like normalPage(createView6030, messageKeyPrefix)
 
     "has a link marked with back.link.label leading to the franchise or letting tied to property Page" in {
       val doc          = asDocument(createView6030())

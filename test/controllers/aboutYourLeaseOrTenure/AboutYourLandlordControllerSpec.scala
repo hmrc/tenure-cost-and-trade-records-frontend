@@ -16,6 +16,7 @@
 
 package controllers.aboutYourLeaseOrTenure
 
+import config.ErrorHandler
 import connectors.AddressLookupConnector
 import form.aboutYourLeaseOrTenure.AboutTheLandlordForm.aboutTheLandlordForm
 import models.{Address, AddressLookup}
@@ -37,6 +38,7 @@ class AboutYourLandlordControllerSpec extends TestBaseSpec {
 
   val mockNavigator              = mock[AboutYourLeaseOrTenureNavigator]
   val mockAddressLookupConnector = mock[AddressLookupConnector]
+  val errorHandler: ErrorHandler                   = inject[ErrorHandler]
   def aboutYourLandlordController(
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
   )                              =
@@ -46,6 +48,7 @@ class AboutYourLandlordControllerSpec extends TestBaseSpec {
       aboutYourLandlordView,
       mockAddressLookupConnector,
       preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
+      errorHandler,
       mockSessionRepo
     )
 
