@@ -20,6 +20,7 @@ import form.Errors
 import form.requestReferenceNumber.RequestReferenceNumberContactDetailsForm.requestReferenceNumberContactDetailsForm
 import models.submissions.connectiontoproperty.StillConnectedDetails
 import play.api.http.Status
+import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import utils.TestBaseSpec
 
@@ -27,6 +28,8 @@ class NoReferenceNumberContactDetailsControllerSpec extends TestBaseSpec {
 
   import TestData.{baseFormData, errorKey}
   import utils.FormBindingTestAssertions.mustContainError
+
+  private val postRequest = FakeRequest("POST", "/")
 
   def requestReferenceNumberContactDetailsController(
     stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledStillConnectedDetailsYes)
@@ -57,6 +60,21 @@ class NoReferenceNumberContactDetailsControllerSpec extends TestBaseSpec {
         fakeRequest.withFormUrlEncodedBody(Seq.empty: _*)
       )
       status(res) shouldBe BAD_REQUEST
+    }
+
+    "return redirect to next page for completed form SEE_OTHER" in {
+      val result = requestReferenceNumberContactDetailsController().submit()(
+        postRequest.withFormUrlEncodedBody(
+          "requestReferenceNumberContactDetailsFullName"              -> "Contact Name",
+          "requestReferenceNumberContactDetails.phone"                -> "12345678902",
+          "requestReferenceNumberContactDetails.email"                -> "TestEmail@gmail.com",
+          "requestReferenceNumberContactDetailsAdditionalInformation" -> "Additional information"
+        )
+      )
+      status(result) shouldBe Status.SEE_OTHER
+      redirectLocation(result) shouldBe Some(
+        controllers.requestReferenceNumber.routes.CheckYourAnswersRequestReferenceNumberController.show().url
+      )
     }
   }
 

@@ -38,6 +38,14 @@ class LoginControllerSpec extends TestBaseSpec {
 
   val loginToBackend = mock[LoginToBackendAction]
 
+  "LoginDetails" should {
+    "reference number cleaned" in {
+      val loginDetails           = LoginDetails("12345678/123", "BN12 4AX", nowInUK)
+      val cleanedReferenceNumber = loginDetails.referenceNumberCleaned
+      cleanedReferenceNumber shouldBe "12345678123"
+    }
+  }
+
   override def fakeApplication(): play.api.Application =
     new GuiceApplicationBuilder()
       .configure(

@@ -69,6 +69,15 @@ class RequestReferenceNumberNavigatorSpec extends TestBaseSpec {
         ) mustBe controllers.requestReferenceNumber.routes.CheckYourAnswersRequestReferenceNumberController
         .confirmation()
     }
+
+    "return the CYA url" in {
+      val result = navigator.cyaPage
+      result.map(
+        _.url shouldBe controllers.requestReferenceNumber.routes.CheckYourAnswersRequestReferenceNumberController
+          .show()
+          .url
+      )
+    }
   }
 
 }

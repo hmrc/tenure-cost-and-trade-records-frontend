@@ -94,5 +94,10 @@ class RemoveConnectionNavigatorSpec extends TestBaseSpec {
         ) mustBe controllers.notconnected.routes.CheckYourAnswersNotConnectedController
         .show()
     }
+
+    "return the CYA url" in {
+      val result = navigator.cyaPage
+      result.map(_.url shouldBe controllers.notconnected.routes.CheckYourAnswersNotConnectedController.show().url)
+    }
   }
 }

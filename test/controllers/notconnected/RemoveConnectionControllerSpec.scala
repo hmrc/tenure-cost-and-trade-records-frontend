@@ -40,6 +40,16 @@ class RemoveConnectionControllerSpec extends TestBaseSpec {
     mockSessionRepo
   )
 
+  def removeConnectionControllerEmpty(
+    removeConnectionDetails: Option[RemoveConnectionDetails] = None
+  ) = new RemoveConnectionController(
+    stubMessagesControllerComponents(),
+    removeConnectionNavigator,
+    removeConnectionView,
+    preEnrichedActionRefiner(removeConnectionDetails = removeConnectionDetails),
+    mockSessionRepo
+  )
+
   "Remove connection controller" should {
     "return 200" in {
       val result = removeConnectionController().show(fakeRequest)
@@ -48,6 +58,13 @@ class RemoveConnectionControllerSpec extends TestBaseSpec {
 
     "return HTML" in {
       val result = removeConnectionController().show(fakeRequest)
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
+    }
+
+    "return 200 for empty session" in {
+      val result = removeConnectionControllerEmpty().show(fakeRequest)
+      status(result)      shouldBe Status.OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }

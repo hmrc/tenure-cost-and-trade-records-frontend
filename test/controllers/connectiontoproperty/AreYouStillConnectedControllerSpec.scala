@@ -38,6 +38,16 @@ class AreYouStillConnectedControllerSpec extends TestBaseSpec {
     mockSessionRepo
   )
 
+  def areYouStillConnectedControllerEmpty(
+    stillConnectedDetails: Option[StillConnectedDetails] = None
+  ) = new AreYouStillConnectedController(
+    stubMessagesControllerComponents(),
+    connectedToPropertyNavigator,
+    areYouStillConnectedView,
+    preEnrichedActionRefiner(stillConnectedDetails = stillConnectedDetails),
+    mockSessionRepo
+  )
+
   "GET /" should {
     "return 200" in {
       val result = areYouStillConnectedController().show(fakeRequest)
@@ -49,6 +59,13 @@ class AreYouStillConnectedControllerSpec extends TestBaseSpec {
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
+  }
+
+  "return 200 for empty session" in {
+    val result = areYouStillConnectedControllerEmpty().show(fakeRequest)
+    status(result)      shouldBe Status.OK
+    contentType(result) shouldBe Some("text/html")
+    charset(result)     shouldBe Some("utf-8")
   }
 
   "SUBMIT /" should {
