@@ -28,6 +28,7 @@ import repositories.SessionRepo
 import views.html.aboutYourLeaseOrTenure.aboutYourLandlord
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne
 import models.submissions.aboutYourLeaseOrTenure.AboutTheLandlord
+import play.api.Logging
 import util.AddressLookupUtil
 
 import javax.inject.{Inject, Named, Singleton}
@@ -44,7 +45,8 @@ class AboutYourLandlordController @Inject() (
   @Named("session") val session: SessionRepo
 )(implicit ec: ExecutionContext)
     extends FORDataCaptureController(mcc)
-    with I18nSupport {
+    with I18nSupport
+    with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Future.successful(
@@ -115,7 +117,10 @@ class AboutYourLandlordController @Inject() (
           .flatMap {
             case Some(url) =>
               Future.successful(SeeOther(url))
-            case None      => Future.successful(InternalServerError(errorHandler.internalServerErrorTemplate(request)))
+            case None      => {
+              val failureReason = s"AddressLookup initialisation failed for ${request.sessionData.referenceNumber} - ${hc.sessionId.getOrElse("")}"
+              logger.error(failureReason)
+              Future.successful(InternalServerError(errorHandler.internalServerErrorTemplate(request)))}
           }
       }
     )
