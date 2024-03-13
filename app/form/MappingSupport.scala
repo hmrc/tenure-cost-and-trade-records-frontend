@@ -16,6 +16,8 @@
 
 package form
 
+import form.AboutYouEmailMapping.validateAboutYouEmail
+import form.AboutYouPhoneNumberMapping.validateAboutYouPhoneNumber
 import form.AddressLine2Mapping.validateAddressLineTwo
 import form.BuildingNameNumberMapping.validateBuildingNameNumber
 import form.CountyMapping.validateCounty
@@ -95,7 +97,8 @@ object MappingSupport {
   val rent3Years: Mapping[RentThreeYears]       = Forms.of[RentThreeYears]
   val underReview: Mapping[UnderReview]         = Forms.of[UnderReview]
 
-  val postcode: Mapping[String] = PostcodeMapping.postcode()
+  val postcode: Mapping[String]                   = PostcodeMapping.postcode()
+  val postcodeAlternativeContact: Mapping[String] = PostcodeMapping.postcodeAlternativeContact()
 
   val decimalRegex         = """^[0-9]{1,10}\.?[0-9]{0,2}$"""
   val cdbMaxCurrencyAmount = 9999999.99
@@ -136,6 +139,12 @@ object MappingSupport {
       "email" -> validateEmail
     )(ContactDetails.apply)(ContactDetails.unapply)
 
+  val contactDetailsAboutYouMapping: Mapping[ContactDetails] =
+    mapping(
+      "phone" -> validateAboutYouPhoneNumber,
+      "email" -> validateAboutYouEmail
+    )(ContactDetails.apply)(ContactDetails.unapply)
+
   def addressMapping: Mapping[Address] = mapping(
     "buildingNameNumber" -> validateBuildingNameNumber,
     "street1"            -> optional(validateAddressLineTwo),
@@ -165,7 +174,7 @@ object MappingSupport {
     "street1"            -> optional(validateAddressLineTwo),
     "town"               -> validateTown,
     "county"             -> optional(validateCounty),
-    "postcode"           -> postcode
+    "postcode"           -> postcodeAlternativeContact
   )(AlternativeAddress.apply)(AlternativeAddress.unapply)
 
   def cateringAddressMapping: Mapping[CateringAddress] = mapping(

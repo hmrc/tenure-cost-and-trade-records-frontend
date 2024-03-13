@@ -28,6 +28,13 @@ object PostcodeMapping {
   ): Mapping[String] =
     Forms.of[String](postcodeFormatter(requiredError, maxLengthError, formatError))
 
+  def postcodeAlternativeContact(
+    requiredError: String = Errors.postcodeRequiredAlternativeContact,
+    maxLengthError: String = Errors.postcodeMaxLength,
+    formatError: String = Errors.postcodeInvalid
+  ): Mapping[String] =
+    Forms.of[String](postcodeFormatter(requiredError, maxLengthError, formatError))
+
   def isValid(postcode: String): Boolean = {
     val cleanedPostcode = postcode.replaceAll("\\s", "").toUpperCase
     val postcodeRegex   =

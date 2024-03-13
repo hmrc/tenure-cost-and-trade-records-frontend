@@ -80,7 +80,7 @@ class AlternativeContactDetailsControllerSpec extends TestBaseSpec {
       val formData = baseFormData - errorKey.postcode
       val form     = alternativeContactDetailsForm.bind(formData)
 
-      mustContainError(errorKey.postcode, "error.postcode.required", form)
+      mustContainError(errorKey.postcode, "error.postcodeAlternativeContact.required", form)
     }
 
   }
