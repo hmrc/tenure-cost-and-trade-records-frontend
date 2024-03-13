@@ -17,6 +17,7 @@
 package controllers.aboutYourLeaseOrTenure
 
 import actions.{SessionRequest, WithSessionRefiner}
+import config.ErrorHandler
 import connectors.AddressLookupConnector
 import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.AboutTheLandlordForm.aboutTheLandlordForm
@@ -39,6 +40,7 @@ class AboutYourLandlordController @Inject() (
   aboutYourLandlordView: aboutYourLandlord,
   addressLookupConnector: AddressLookupConnector,
   withSessionRefiner: WithSessionRefiner,
+  errorHandler: ErrorHandler,
   @Named("session") val session: SessionRepo
 )(implicit ec: ExecutionContext)
     extends FORDataCaptureController(mcc)
@@ -73,8 +75,6 @@ class AboutYourLandlordController @Inject() (
         .flatMap(_.aboutTheLandlord.map(_.landlordFullName))
         .getOrElse("")
 
-      val maybeEditAddress        =
-        request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.aboutTheLandlord.map(_.landlordAddress.isDefined))
       val updatedAboutTheLandlord = AboutTheLandlord(
         landlordFullName = existingFullName,
         landlordAddress = Some(landlordAddress)
@@ -89,12 +89,6 @@ class AboutYourLandlordController @Inject() (
         navigator.from match {
           case "CYA" =>
             Redirect(controllers.aboutYourLeaseOrTenure.routes.CheckYourAnswersAboutYourLeaseOrTenureController.show())
-          case "TL"  =>
-            maybeEditAddress match {
-              case Some(editAddress) if editAddress == true => Redirect(controllers.routes.TaskListController.show())
-              case _                                        => Redirect(controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordController.show())
-            }
-
           case _ => Redirect(controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordController.show())
         }
       }
@@ -121,7 +115,7 @@ class AboutYourLandlordController @Inject() (
           .flatMap {
             case Some(url) =>
               Future.successful(SeeOther(url))
-            case None      => Future.successful(InternalServerError("Address lookup initialization failed"))
+            case None      => Future.successful(InternalServerError(errorHandler.internalServerErrorTemplate(request)))
           }
       }
     )
