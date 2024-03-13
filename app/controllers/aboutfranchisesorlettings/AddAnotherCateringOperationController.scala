@@ -16,11 +16,12 @@
 
 package controllers.aboutfranchisesorlettings
 
-import actions.WithSessionRefiner
+import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
 import form.aboutfranchisesorlettings.AddAnotherCateringOperationOrLettingAccommodationForm.addAnotherCateringOperationForm
 import form.confirmableActionForm.confirmableActionForm
 import models.ForTypes
+import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
 import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
 import navigation.AboutFranchisesOrLettingsNavigator
@@ -46,10 +47,27 @@ class AddAnotherCateringOperationController @Inject() (
     extends FORDataCaptureController(mcc)
     with I18nSupport {
 
-  def show(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    val franchisesOrLettingsData = request.sessionData.aboutFranchisesOrLettings
+  private def franchisesOrLettingsData(implicit
+    request: SessionRequest[AnyContent]
+  ): Option[AboutFranchisesOrLettings] =
+    request.sessionData.aboutFranchisesOrLettings
 
-    val addAnother = if (request.sessionData.forType == ForTypes.for6030) {
+  private def forType(implicit request: SessionRequest[AnyContent]): String =
+    request.sessionData.forType
+
+  private def getOperatorName(idx: Int)(implicit request: SessionRequest[AnyContent]): Option[String] =
+    if (forType == ForTypes.for6030) {
+      franchisesOrLettingsData
+        .flatMap(_.cateringOperationBusinessSections.flatMap(_.lift(idx)))
+        .map(_.cateringOperationBusinessDetails.operatorName)
+    } else {
+      franchisesOrLettingsData
+        .flatMap(_.cateringOperationSections.lift(idx))
+        .map(_.cateringOperationDetails.operatorName)
+    }
+
+  def show(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    val addAnother = if (forType == ForTypes.for6030) {
       franchisesOrLettingsData
         .flatMap(_.cateringOperationBusinessSections.flatMap(_.lift(index)))
         .flatMap(_.addAnotherOperationToProperty)
@@ -75,14 +93,14 @@ class AddAnotherCateringOperationController @Inject() (
   }
 
   def submit(index: Int) = (Action andThen withSessionRefiner).async { implicit request =>
-    if (request.sessionData.aboutFranchisesOrLettings.exists(_.cateringOperationCurrentIndex >= 4)) {
+    if (franchisesOrLettingsData.exists(_.cateringOperationCurrentIndex >= 4)) {
 
       val redirectUrl = controllers.routes.MaxOfLettingsReachedController.show(Some("franchiseCatering")).url
 
       Future.successful(Redirect(redirectUrl))
     } else {
       val fromCYA =
-        request.sessionData.aboutFranchisesOrLettings.flatMap(_.fromCYA).getOrElse(false) || navigator.from == "CYA"
+        franchisesOrLettingsData.flatMap(_.fromCYA).getOrElse(false) || navigator.from == "CYA"
       continueOrSaveAsDraft[AnswersYesNo](
         addAnotherCateringOperationForm,
         formWithErrors =>
@@ -97,51 +115,58 @@ class AddAnotherCateringOperationController @Inject() (
             )
           )),
         data =>
-          request.sessionData.aboutFranchisesOrLettings
-            .map(_.cateringOperationSections)
-            .filter(_.nonEmpty)
-            .fold(
-              Future.successful(
-                Redirect(
-                  if (data == AnswerNo && fromCYA == true) {
-                    controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController
-                      .show()
-                  } else if (data == AnswerYes) {
-                    controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController.show()
-                  } else {
-                    controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show()
-                  }
-                )
-              )
-            ) { existingSections =>
-              val updatedSections = existingSections.updated(
-                index,
-                existingSections(index).copy(addAnotherOperationToProperty = Some(data))
-              )
-              val updatedData     = updateAboutFranchisesOrLettings(
-                _.copy(
-                  cateringOperationSections = updatedSections,
-                  fromCYA = Some(fromCYA)
-                )
-              )
-              session.saveOrUpdate(updatedData).flatMap { _ =>
-                Redirect(navigator.nextPage(AddAnotherCateringOperationPageId, updatedData).apply(updatedData))
-              }
+          if (forType == ForTypes.for6030) {
+            data match {
+              case AnswerYes =>
+                Redirect(controllers.aboutfranchisesorlettings.routes.CateringOperationBusinessDetailsController.show())
+              case _ =>
+                Redirect(navigator.nextPage(AddAnotherCateringOperationPageId, request.sessionData).apply(request.sessionData))
             }
+          } else {
+            franchisesOrLettingsData
+              .map(_.cateringOperationSections)
+              .filter(_.nonEmpty)
+              .fold(
+                Future.successful(
+                  Redirect(
+                    if (data == AnswerNo && fromCYA == true) {
+                      controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController
+                        .show()
+                    } else if (data == AnswerYes) {
+                      controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController.show()
+                    } else {
+                      controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show()
+                    }
+                  )
+                )
+              ) { existingSections =>
+                val updatedSections = existingSections.updated(
+                  index,
+                  existingSections(index).copy(addAnotherOperationToProperty = Some(data))
+                )
+                val updatedData = updateAboutFranchisesOrLettings(
+                  _.copy(
+                    cateringOperationSections = updatedSections,
+                    fromCYA = Some(fromCYA)
+                  )
+                )
+                session.saveOrUpdate(updatedData).flatMap { _ =>
+                  Redirect(navigator.nextPage(AddAnotherCateringOperationPageId, updatedData).apply(updatedData))
+                }
+              }
+          }
       )
     }
   }
 
   def remove(idx: Int) = (Action andThen withSessionRefiner).async { implicit request =>
-    request.sessionData.aboutFranchisesOrLettings
-      .flatMap(_.cateringOperationSections.lift(idx))
-      .map { cateringOperationSections =>
-        val name = cateringOperationSections.cateringOperationDetails.operatorName
+    getOperatorName(idx)
+      .map { operatorName =>
         Future.successful(
           Ok(
             genericRemoveConfirmationView(
               confirmableActionForm,
-              name,
+              operatorName,
               "label.section.aboutTheFranchiseConcessions",
               request.sessionData.toSummary,
               idx,
@@ -158,15 +183,13 @@ class AddAnotherCateringOperationController @Inject() (
     continueOrSaveAsDraft[AnswersYesNo](
       confirmableActionForm,
       formWithErrors =>
-        request.sessionData.aboutFranchisesOrLettings
-          .flatMap(_.cateringOperationSections.lift(idx))
-          .map { cateringOperationSections =>
-            val name = cateringOperationSections.cateringOperationDetails.operatorName
+        getOperatorName(idx)
+          .map { operatorName =>
             Future.successful(
               BadRequest(
                 genericRemoveConfirmationView(
                   formWithErrors,
-                  name,
+                  operatorName,
                   "label.section.aboutTheFranchiseConcessions",
                   request.sessionData.toSummary,
                   idx,
@@ -181,14 +204,25 @@ class AddAnotherCateringOperationController @Inject() (
           ),
       {
         case AnswerYes =>
-          request.sessionData.aboutFranchisesOrLettings.map(_.cateringOperationSections).map {
-            cateringOperationSections =>
-              val updatedSections = cateringOperationSections.patch(idx, Nil, 1)
-              session.saveOrUpdate(
-                updateAboutFranchisesOrLettings(
-                  _.copy(cateringOperationCurrentIndex = 0, cateringOperationSections = updatedSections)
+          forType match {
+            case ForTypes.for6030 =>
+              franchisesOrLettingsData.flatMap(_.cateringOperationBusinessSections).map { businessSections =>
+                val updatedSections = businessSections.patch(idx, Nil, 1)
+                session.saveOrUpdate(
+                  updateAboutFranchisesOrLettings(
+                    _.copy(cateringOperationCurrentIndex = 0, cateringOperationBusinessSections = Some(updatedSections))
+                  )
                 )
-              )
+              }
+            case _                =>
+              franchisesOrLettingsData.map(_.cateringOperationSections).map { cateringOperationSections =>
+                val updatedSections = cateringOperationSections.patch(idx, Nil, 1)
+                session.saveOrUpdate(
+                  updateAboutFranchisesOrLettings(
+                    _.copy(cateringOperationCurrentIndex = 0, cateringOperationSections = updatedSections)
+                  )
+                )
+              }
           }
           Redirect(controllers.aboutfranchisesorlettings.routes.AddAnotherCateringOperationController.show(0))
         case AnswerNo  =>
