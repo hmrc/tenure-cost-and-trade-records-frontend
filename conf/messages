@@ -1635,6 +1635,7 @@ checkYourAnswersAboutFranchiseOrLettings.heading = Check your answers – franch
 checkYourAnswersAboutConcessionsOrLettings.heading = Check your answers – concessions or lettings
 checkYourAnswersAboutFranchiseOrLettings.franchiseLettings.heading = Rental income
 checkYourAnswersAboutFranchiseOrLettings.franchiseLettings = Rental income?
+checkYourAnswersAboutFranchiseOrLettings.franchisesOrLettings = Franchises or lettings?
 checkYourAnswersAboutFranchiseOrLettings.separateBusinesses.heading = Separate businesses
 checkYourAnswersAboutFranchiseOrLettings.separateBusiness = Separate business run from the property?
 checkYourAnswersAboutFranchiseOrLettings.lettingsOtherPartOfProperties.heading = Lettings

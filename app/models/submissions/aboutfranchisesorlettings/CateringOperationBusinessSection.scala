@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,14 +22,9 @@ import play.api.libs.json.{Json, OFormat}
 case class CateringOperationBusinessSection(
   cateringOperationBusinessDetails: CateringOperationBusinessDetails,
   feeReceived: Option[FeeReceived] = None,
-  cateringOperationRentDetails: Option[CateringOperationRentDetails] = None,
-  rentReceivedFrom: Option[RentReceivedFrom] = None,
-  calculatingTheRent: Option[CalculatingTheRent] = None,
-  addAnotherOperationToProperty: Option[AnswersYesNo] = None,
-  itemsInRent: List[String] = List.empty
+  addAnotherOperationToProperty: Option[AnswersYesNo] = None
 )
 
 object CateringOperationBusinessSection {
-  implicit val format: OFormat[CateringOperationBusinessSection] = Json.format[CateringOperationBusinessSection]
-
+  implicit val format: OFormat[CateringOperationBusinessSection] = Json.format
 }
