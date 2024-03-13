@@ -119,8 +119,10 @@ class AddAnotherCateringOperationController @Inject() (
             data match {
               case AnswerYes =>
                 Redirect(controllers.aboutfranchisesorlettings.routes.CateringOperationBusinessDetailsController.show())
-              case _ =>
-                Redirect(navigator.nextPage(AddAnotherCateringOperationPageId, request.sessionData).apply(request.sessionData))
+              case _         =>
+                Redirect(
+                  navigator.nextPage(AddAnotherCateringOperationPageId, request.sessionData).apply(request.sessionData)
+                )
             }
           } else {
             franchisesOrLettingsData
@@ -144,7 +146,7 @@ class AddAnotherCateringOperationController @Inject() (
                   index,
                   existingSections(index).copy(addAnotherOperationToProperty = Some(data))
                 )
-                val updatedData = updateAboutFranchisesOrLettings(
+                val updatedData     = updateAboutFranchisesOrLettings(
                   _.copy(
                     cateringOperationSections = updatedSections,
                     fromCYA = Some(fromCYA)
