@@ -18,7 +18,6 @@ package controllers.requestReferenceNumber
 
 import form.Errors
 import form.requestReferenceNumber.RequestReferenceNumberContactDetailsForm.requestReferenceNumberContactDetailsForm
-import models.submissions.connectiontoproperty.StillConnectedDetails
 import models.submissions.requestReferenceNumber.RequestReferenceNumberDetails
 import play.api.http.Status
 import play.api.test.FakeRequest

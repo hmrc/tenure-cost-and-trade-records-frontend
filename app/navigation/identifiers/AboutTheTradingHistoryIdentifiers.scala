@@ -40,6 +40,10 @@ case object TotalPayrollCostId extends Identifier {
   override def toString: String = "totalPayrollCost"
 }
 
+case object TotalFuelSoldId extends Identifier {
+  override def toString: String = "totalPayrollCost"
+}
+
 case object VariableOperatingExpensesId extends Identifier {
   override def toString: String = "variableOperatingExpenses"
 }

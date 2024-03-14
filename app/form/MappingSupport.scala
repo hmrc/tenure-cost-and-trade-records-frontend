@@ -204,7 +204,7 @@ object MappingSupport {
   def yourContactDetailsMapping: Mapping[YourContactDetails] = mapping(
     "fullName"                                   -> default(text, "").verifying(
       nonEmpty(errorMessage = "error.fullName.required"),
-      maxLength(50, "error.fullName.maxLength")
+      maxLength(50, "error.fullNameProvideDetails.maxLength")
     ),
     "contactDetails"                             -> contactDetailsMapping,
     "provideContactDetailsAdditionalInformation" -> optional(
