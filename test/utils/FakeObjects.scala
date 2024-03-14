@@ -41,6 +41,7 @@ trait FakeObjects {
   val forType6015: String       = "FOR6015"
   val forType6016: String       = "FOR6016"
   val forType6030: String       = "FOR6030"
+  val forType6020: String       = "FOR6020"
   val prefilledAddress: Address =
     Address("001", Some("GORING ROAD"), "GORING-BY-SEA, WORTHING", Some("WEST SUSSEX"), "BN12 4AX")
   val token: String             = "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik="
@@ -107,6 +108,7 @@ trait FakeObjects {
   val baseFilled6015Session: Session = Session(referenceNumber, forType6015, prefilledAddress, token)
   val baseFilled6016Session: Session = Session(referenceNumber, forType6016, prefilledAddress, token)
   val baseFilled6030Session: Session = Session(referenceNumber, forType6030, prefilledAddress, token)
+  val baseFilled6020Session: Session = Session(referenceNumber, forType6020, prefilledAddress, token)
 
   // Request reference number
   val prefilledRequestRefNumCYA = RequestReferenceNumberDetails(
@@ -200,6 +202,11 @@ trait FakeObjects {
     baseFilled6030Session.copy(stillConnectedDetails = Some(prefilledStillConnectedDetailsNo))
   val stillConnectedDetails6030YesSession: Session =
     baseFilled6030Session.copy(stillConnectedDetails = Some(prefilledStillConnectedDetailsYes))
+
+  val stillConnectedDetails6020NoSession: Session  =
+    baseFilled6020Session.copy(stillConnectedDetails = Some(prefilledStillConnectedDetailsNo))
+  val stillConnectedDetails6020YesSession: Session =
+    baseFilled6020Session.copy(stillConnectedDetails = Some(prefilledStillConnectedDetailsYes))
 
   val stillConnectedDetails6016NoSession: Session             =
     baseFilled6016Session.copy(stillConnectedDetails = Some(prefilledStillConnectedDetailsNo))
@@ -325,6 +332,10 @@ trait FakeObjects {
     stillConnectedDetails6016YesSession.copy(aboutYouAndTheProperty = Some(prefilledAboutYouAndThePropertyYes))
   val aboutYouAndTheProperty6016NoSession: Session  =
     stillConnectedDetails6016NoSession.copy(aboutYouAndTheProperty = Some(prefilledAboutYouAndThePropertyNo))
+  val aboutYouAndTheProperty6020YesSession: Session =
+    stillConnectedDetails6020YesSession.copy(aboutYouAndTheProperty = Some(prefilledAboutYouAndThePropertyYes))
+  val aboutYouAndTheProperty6020NoSession: Session  =
+    stillConnectedDetails6020NoSession.copy(aboutYouAndTheProperty = Some(prefilledAboutYouAndThePropertyNo))
   val aboutYouAndTheProperty6030YesSession: Session =
     stillConnectedDetails6030YesSession.copy(aboutYouAndTheProperty = Some(prefilledAboutYouAndThePropertyYesString))
   val aboutYouAndTheProperty6030NoSession: Session  =
@@ -534,6 +545,17 @@ trait FakeObjects {
             costOfSales = Seq(CostOfSales(LocalDate.now, None, None, None, None)),
             otherCosts = Some(OtherCosts(otherCosts = Seq(OtherCost(LocalDate.now, None, None)))),
             totalPayrollCostSections = Seq(TotalPayrollCost(LocalDate.now, None, None))
+          )
+      ),
+      stillConnectedDetails = Some(prefilledStillConnectedDetailsYesToAll)
+    )
+
+  val aboutYourTradingHistory6020YesSession: Session =
+    aboutYouAndTheProperty6020YesSession.copy(
+      aboutTheTradingHistory = Some(
+        prefilledAboutYourTradingHistory
+          .copy(
+            totalFuelSold = Some(Seq(TotalFuelSold(LocalDate.now(), None)))
           )
       ),
       stillConnectedDetails = Some(prefilledStillConnectedDetailsYesToAll)

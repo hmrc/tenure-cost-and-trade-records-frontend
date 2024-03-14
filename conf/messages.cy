@@ -159,8 +159,8 @@ label.referenceNumber = Reference number
 hint.referenceNumber = For example, 1000001/101.
 label.postcode = Postcode
 hint.postcode = For example, AB12 3CD.
-error.invalid_refnum = Enter your reference number as it appears on your letter
-error.invalid_postcode_as_on_letter = Enter your postcode as it appears on your letter
+error.invalid_refnum = Nodwch eich cyfeirnod fel y mae’n ymddangos ar eich llythyr
+error.invalid_postcode_as_on_letter = Nodwch eich cod post fel y mae’n ymddangos ar eich llythyr
 label.requestReference = I do not have my reference number
 label.downloadPdfReferenceNumberLogin = Download a PDF version
 
@@ -460,7 +460,7 @@ list.vacantProperty.p3 = they require further information
 # ARE YOU STILL CONNECTED
 #########################
 pastConnectionType.heading = Have you ever had a connection to the property?
-error.pastConnectionType = Select yes if you ever had a connection to the property
+error.pastConnectionType = Dewiswch ‘iawn’ os ydych erioed wedi cael cysylltiad â’r eiddo
 
 # REMOVE CONNECTION
 ###################
@@ -1517,6 +1517,22 @@ unusualCircumstances.explain = Explain any abnormally high or low figures in you
 #########
 netProfit.heading = This is a holding page for the net profits page
 
+#TOTAL FUEL SOLD (FORM 6020)
+totalFuelSold.heading = What is the total volume of all fuel sold in the financial years shown?
+totalFuelSold.bunkered = Do not include bunkered fuel in these figures. If you sell bunkered fuel, where you only charge a handling fee, you’ll be asked about this separately.
+totalFuelSold.inset = All fields on this page are mandatory. If this is not applicable, enter the number 0.
+totalFuelSold.fuel.label = Petrol, diesel, LPG and other total fuel sales
+totalFuelSold.fuel.litres = litres
+error.totalFuelSold.required = Enter 0 if you did not sell any fuel in the year ending {0}
+error.totalFuelSold.range = Total volume of all fuel sold in the year ending {0} must be a number, for example 100 or 100.00
+
+#BUNKERED FUEL QUESTION (FORM 6020)
+
+bunkeredFuelQuestion.heading = Do you sell bunkered fuel, where you only charge a handling fee?
+error.bunkeredFuelQuestion.required = Select yes if you sell bunkered fuel, where you only charge a handling fee
+
+#########################
+
 # CONCESSIONS OR FRANCHISE (FORM 6015)
 #########
 concessionOrFranchise.heading = Rent from concessions
@@ -1893,7 +1909,7 @@ error.maxCurrencyAmountExceeded = Maximum amount exceeded - please contact the V
 error.maxCurrencyAmountExceeded.annualRent = Maximum amount exceeded - please contact the VOA
 error.invalid_phone=Nodwch rif ffôn, megis 01632 960000
 error.email=Nodwch gyfeiriad e-bost yn y fformat cywir, megis enw@enghraifft.com
-error.isRelated=Select if you are still connected to the property, not connected to the property, or if the address needs to be updated
+error.isRelated=Dewiswch a ydych yn dal i fod yn gysylltiedig â’r eiddo neu beidio, neu a oes angen diweddaru’r cyfeiriad
 error.date_must_be_in_past = Date must be in the past
 error.invalid_number = This must be a number
 error.date_before_1900 = Date must be on or after 1 January 1900

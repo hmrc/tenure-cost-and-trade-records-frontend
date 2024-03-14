@@ -89,7 +89,8 @@ class ConcessionOrFranchiseFeeController @Inject() (
                     .flatMap(_.cateringOrFranchiseFee)
                     .contains(AnswerYes))
               )
-              .getOrElse(navigator.nextPage(ConcessionOrFranchiseFeePageId, updatedData).apply(updatedData))
+              .orElse(Option.when(isFromCYA)(controllers.aboutfranchisesorlettings.routes.AddAnotherCateringOperationController.show(0)))
+              .getOrElse(navigator.nextWithoutRedirectToCYA(ConcessionOrFranchiseFeePageId, updatedData).apply(updatedData))
           }
           .map(Redirect)
       }

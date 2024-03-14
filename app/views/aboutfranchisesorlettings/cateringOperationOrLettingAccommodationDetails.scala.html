@@ -56,7 +56,7 @@
     backLinkUrl = backLink,
     theForm = theForm
 ) {
-    @if(typeBusinessDetails && cateringOrLetting.equals("concessionOrFranchiseFee")) {
+    @if(typeBusinessDetails && cateringOrLetting.equals("cateringOperationOrLettingAccommodationDetails")) {
         @formWithCSRF(action = controllers.aboutfranchisesorlettings.routes.CateringOperationBusinessDetailsController.submit(index)) {
 
             @includes.textInput(govukInput, theForm, "operatorName", "govuk-input--width-20", nameLabel, labelClasses = "govuk-!-font-weight-bold")
