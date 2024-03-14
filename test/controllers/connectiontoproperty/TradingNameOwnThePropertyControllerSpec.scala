@@ -38,15 +38,33 @@ class TradingNameOwnThePropertyControllerSpec extends TestBaseSpec {
       mockSessionRepo
     )
 
+  def tradingNameOwnThePropertyControllerNoOwner(
+    stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledStillConnectedDetailsYes)
+  ) =
+    new TradingNameOwnThePropertyController(
+      stubMessagesControllerComponents(),
+      connectedToPropertyNavigator,
+      tradingNameOwnThePropertyView,
+      preEnrichedActionRefiner(stillConnectedDetails = stillConnectedDetails),
+      mockSessionRepo
+    )
+
   "AreYouThirdPartyController GET /" should {
 
-    "return 200" in {
+    "return 200 with owner of the property present in session" in {
       val result = tradingNameOwnThePropertyController().show(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return HTML" in {
       val result = tradingNameOwnThePropertyController().show(fakeRequest)
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
+    }
+
+    "return 200 with owner of the property is not present" in {
+      val result = tradingNameOwnThePropertyControllerNoOwner().show(fakeRequest)
+      status(result)      shouldBe Status.OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }

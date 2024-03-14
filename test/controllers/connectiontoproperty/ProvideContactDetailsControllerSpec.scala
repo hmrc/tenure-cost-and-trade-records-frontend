@@ -39,16 +39,73 @@ class ProvideContactDetailsControllerSpec extends TestBaseSpec {
     mockSessionRepo
   )
 
+  def provideContactDetailsControllerYesRentReceivedNoLettings(
+    provideContactDetails: Option[StillConnectedDetails] = Some(prefilledStillConnectedDetailsYesRentReceivedNoLettings)
+  ) = new ProvideContactDetailsController(
+    stubMessagesControllerComponents(),
+    connectedToPropertyNavigator,
+    provideContactDetailsView,
+    preEnrichedActionRefiner(stillConnectedDetails = provideContactDetails),
+    mockSessionRepo
+  )
+
+  def provideContactDetailsControllerNoToAll(
+    provideContactDetails: Option[StillConnectedDetails] = Some(prefilledStillConnectedDetailsNoToAll)
+  ) = new ProvideContactDetailsController(
+    stubMessagesControllerComponents(),
+    connectedToPropertyNavigator,
+    provideContactDetailsView,
+    preEnrichedActionRefiner(stillConnectedDetails = provideContactDetails),
+    mockSessionRepo
+  )
+
+  def provideContactDetailsControllerNone(
+    provideContactDetails: Option[StillConnectedDetails] = None
+  ) = new ProvideContactDetailsController(
+    stubMessagesControllerComponents(),
+    connectedToPropertyNavigator,
+    provideContactDetailsView,
+    preEnrichedActionRefiner(stillConnectedDetails = provideContactDetails),
+    mockSessionRepo
+  )
+
   "Provide contact details controller" should {
-    "return 200" in {
+    "GET / return 200" in {
       val result = provideContactDetailsController().show(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
-    "return HTML" in {
+    "GET / return HTML" in {
       val result = provideContactDetailsController().show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
+    }
+
+    "GET / return 200 with no rent received and no lettings" in {
+      val result = provideContactDetailsControllerYesRentReceivedNoLettings().show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.connectiontoproperty.routes.AddAnotherLettingPartOfPropertyController.show(0).url
+      )
+    }
+
+    "GET / return 200 with no rent received" in {
+      val result = provideContactDetailsControllerNoToAll().show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.connectiontoproperty.routes.IsRentReceivedFromLettingController.show().url
+      )
+    }
+
+    "GET / return exception with none for rent received" in {
+      val result = provideContactDetailsControllerNone().show(fakeRequest)
+      result.failed.recover { case e: Exception =>
+        e.getMessage shouldBe " Navigation for provide your contact details page reached with error Unknown connection to property back link"
+      }
     }
 
     "SUBMIT /" should {

@@ -18,7 +18,7 @@ package controllers.requestReferenceNumber
 
 import form.Errors
 import form.requestReferenceNumber.RequestReferenceNumberContactDetailsForm.requestReferenceNumberContactDetailsForm
-import models.submissions.connectiontoproperty.StillConnectedDetails
+import models.submissions.requestReferenceNumber.RequestReferenceNumberDetails
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
@@ -32,12 +32,22 @@ class NoReferenceNumberContactDetailsControllerSpec extends TestBaseSpec {
   private val postRequest = FakeRequest("POST", "/")
 
   def requestReferenceNumberContactDetailsController(
-    stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledStillConnectedDetailsYes)
+    requestReferenceNumberDetails: Option[RequestReferenceNumberDetails] = Some(prefilledRequestRefNumCYA)
   ) = new RequestReferenceNumberContactDetailsController(
     stubMessagesControllerComponents(),
     requestReferenceNumberNavigator,
     requestReferenceNumberContactDetailsView,
-    preEnrichedActionRefiner(stillConnectedDetails = stillConnectedDetails),
+    preEnrichedActionRefiner(requestReferenceNumberDetails = requestReferenceNumberDetails),
+    mockSessionRepo
+  )
+
+  def requestReferenceNumberContactDetailsControllerBlank(
+    requestReferenceNumberDetails: Option[RequestReferenceNumberDetails] = Some(prefilledRequestRefNumBlank)
+  ) = new RequestReferenceNumberContactDetailsController(
+    stubMessagesControllerComponents(),
+    requestReferenceNumberNavigator,
+    requestReferenceNumberContactDetailsView,
+    preEnrichedActionRefiner(requestReferenceNumberDetails = requestReferenceNumberDetails),
     mockSessionRepo
   )
 
@@ -49,6 +59,13 @@ class NoReferenceNumberContactDetailsControllerSpec extends TestBaseSpec {
 
     "return HTML" in {
       val result = requestReferenceNumberContactDetailsController().show(fakeRequest)
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
+    }
+
+    "return 200 with empty session" in {
+      val result = requestReferenceNumberContactDetailsControllerBlank().show(fakeRequest)
+      status(result)      shouldBe Status.OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }

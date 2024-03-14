@@ -38,15 +38,33 @@ class IsRentReceivedFromLettingControllerSpec extends TestBaseSpec {
       mockSessionRepo
     )
 
+  def isRentReceivedFromLettingControllerNoAnyRentReceived(
+    stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledStillConnectedDetailsNoneOwnProperty)
+  ) =
+    new IsRentReceivedFromLettingController(
+      stubMessagesControllerComponents(),
+      connectedToPropertyNavigator,
+      isRentReceivedFromLettingView,
+      preEnrichedActionRefiner(stillConnectedDetails = stillConnectedDetails),
+      mockSessionRepo
+    )
+
   "IsRentReceivedFromLettingController GET /" should {
 
-    "return 200" in {
+    "return 200 when rent received is present in session" in {
       val result = isRentReceivedFromLettingController().show(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return HTML" in {
       val result = isRentReceivedFromLettingController().show(fakeRequest)
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
+    }
+
+    "return 200 when no rent received in session" in {
+      val result = isRentReceivedFromLettingControllerNoAnyRentReceived().show(fakeRequest)
+      status(result)      shouldBe Status.OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }

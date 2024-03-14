@@ -18,7 +18,6 @@ package controllers.connectiontoproperty
 
 import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
-import models.Session
 import models.submissions.common.AnswersYesNo
 import navigation.ConnectionToPropertyNavigator
 import play.api.Logging
@@ -50,10 +49,10 @@ class TradingNameOwnThePropertyController @Inject() (
       Ok(
         tradingNameOwnThePropertyView(
           ownThePropertyInSession match {
-            case Some(enforcementAction) => tradingNameOwnThePropertyForm.fill(enforcementAction)
-            case _                       => tradingNameOwnThePropertyForm
+            case Some(ownTheProperty) => tradingNameOwnThePropertyForm.fill(ownTheProperty)
+            case _                    => tradingNameOwnThePropertyForm
           },
-          getBackLink(request.sessionData),
+          getBackLink(),
           request.sessionData.stillConnectedDetails
             .flatMap(_.tradingNameOperatingFromProperty.map(_.tradingName))
             .getOrElse(""),
@@ -70,7 +69,7 @@ class TradingNameOwnThePropertyController @Inject() (
         BadRequest(
           tradingNameOwnThePropertyView(
             formWithErrors,
-            getBackLink(request.sessionData),
+            getBackLink(),
             request.sessionData.stillConnectedDetails
               .flatMap(_.tradingNameOperatingFromProperty.map(_.tradingName))
               .getOrElse(""),
@@ -97,6 +96,6 @@ class TradingNameOwnThePropertyController @Inject() (
   ): Option[AnswersYesNo] =
     request.sessionData.stillConnectedDetails.flatMap(_.tradingNameOwnTheProperty)
 
-  private def getBackLink(answers: Session): String =
+  private def getBackLink(): String =
     controllers.connectiontoproperty.routes.TradingNameOperatingFromPropertyController.show().url
 }

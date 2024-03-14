@@ -40,14 +40,32 @@ class TradingNameOperatingFromPropertyControllerSpec extends TestBaseSpec {
       mockSessionRepo
     )
 
+  def tradingNameOperatingFromPropertyControllerNoTradingName(
+    stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledStillConnectedDetailsYes)
+  ) =
+    new TradingNameOperatingFromPropertyController(
+      stubMessagesControllerComponents(),
+      connectedToPropertyNavigator,
+      tradingNameOperatingFromProperty,
+      preEnrichedActionRefiner(stillConnectedDetails = stillConnectedDetails),
+      mockSessionRepo
+    )
+
   "GET /" should {
-    "return 200" in {
+    "return 200 when trading name present in session" in {
       val result = tradingNameOperatingFromPropertyController().show(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return HTML" in {
       val result = tradingNameOperatingFromPropertyController().show(fakeRequest)
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
+    }
+
+    "return 200 when trading name present is not session" in {
+      val result = tradingNameOperatingFromPropertyControllerNoTradingName().show(fakeRequest)
+      status(result)      shouldBe Status.OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
