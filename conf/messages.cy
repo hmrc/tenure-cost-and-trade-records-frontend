@@ -404,7 +404,7 @@ provideContactDetails.title = Provide your contact details
 provideContactDetails.p1 = These should be the contact details of the person completing this form. We will only use them to update you about your declaration.
 provideContactDetailsAdditionalInformation.heading = Additional Information (optional)
 provideContactDetailsAdditionalInformation.hint = For example, the name of the previous owner or occupier.
-error.fullName.maxLength = Your name must be 50 characters or fewer
+error.fullNameProvideDetails.maxLength = Mae’n rhaid i’ch enw chi fod yn 50 o gymeriadau neu lai
 
 # CHECK YOUR ANSWERS VACANT PROPERTY SUBMISSION
 #############################################
