@@ -1033,7 +1033,8 @@ error.lettingTypeOfBusiness.maxLength = Description of letting must be 50 charac
 #BELOW IS FOR FORM 6030
 label.howBusinessPropertyIsUsed = Describe how the property is used
 hint.describeBusiness = For example, a tea room or car wash.
-error.howBusinessPropertyIsUsed.required = Enter a description of how the property is used
+error.howBusinessPropertyIsUsed.required = Enter a description of the property use
+error.howBusinessPropertyIsUsed.maxLength = Property use description must be 50 characters or fewer
 
 # CATERING OPERATION OR LETTING ACCOMMODATION RENT DETAILS
 ##########################################################
