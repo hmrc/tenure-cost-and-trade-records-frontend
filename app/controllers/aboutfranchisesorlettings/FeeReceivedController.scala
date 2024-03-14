@@ -108,7 +108,7 @@ class FeeReceivedController @Inject() (
     if (request.sessionData.aboutTheTradingHistory.map(_.turnoverSections6030).exists(_.nonEmpty)) {
       request.sessionData.aboutFranchisesOrLettings
         .filter(_.cateringOperationBusinessSections.nonEmpty)
-        .flatMap(_.cateringOperationBusinessSections.getOrElse(IndexedSeq.empty).lift(idx))
+        .flatMap(_.cateringOperationBusinessSections.flatMap(_.lift(idx)))
         .fold(Future.successful(Redirect(backLink(idx))))(action)
     } else {
       Redirect(routes.AboutYourTradingHistoryController.show())
