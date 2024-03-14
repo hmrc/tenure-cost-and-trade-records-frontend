@@ -335,7 +335,7 @@ checkYourAnswersConnectionToProperty.thirdParty = Third party?
 vacantPropertyStartDate.heading = When did the property become vacant?
 label.startDateOfVacantProperty =
 label.startDateOfVacantProperty.help = For example, 27 9 2017.
-fieldName.startDateOfVacantProperty = the date the property became vacant
+fieldName.startDateOfVacantProperty = the date when the property became vacant
 
 # LETTING INCOME - IS ANY RENT RECEIVED FROM LETTING
 ####################################################
@@ -1044,7 +1044,7 @@ lettingOtherPartOfPropertyRentDetails.title = Annual rent for tenant
 label.annualRent = Annual rent payment excluding VAT
 label.dateInput = When was this sum fixed?
 fieldName.cateringOrLettingFixedRentDate = the date when the annual rent was fixed
-error.required.annualRentExcludingVat.annualRent = Enter the annual rent
+error.required.annualRentExcludingVat.annualRent = Enter the annual rent amount
 error.invalid_currency.annualRent.annualRent = The annual rent must be a number like 100 or 100.00 and cannot be less than 0
 error.dateInput.month.required = The date the rent was fixed must include a month
 error.dateInput.year.required = The date the rent was fixed must include a year
@@ -1555,7 +1555,7 @@ label.furtherInformation = Further information or remarks
 key.altContact.details = Alternative contact details
 key.additionalInformation = Additional information
 label.altDetails.question= Use alternative contact details?
-label.altDetails = Alternative details
+label.altDetails = Alternative correspondence address
 key.altContact.details = Alternative contact details
 label.fullName = Full name
 label.telephoneNumber = Telephone number
@@ -1960,6 +1960,7 @@ error.weeksMapping.blank = Enter 0 if you were not trading in the year ending {0
 error.weeksMapping.invalid = The trading period in the year ending {0} should be a number from 1 to 52
 error.fullName.maxLength = Full name must be 50 characters or fewer
 error.fullNameContactDetails.maxLength = The name must be 50 characters or fewer
+error.confirmableAction.required = Select yes if you want to remove this item
 
 # Currency optional validation
 error.optCurrency.negative = {0} cannot be a negative number
