@@ -29,12 +29,12 @@ case class AboutTheTradingHistory(
   fixedOperatingExpensesSections: Seq[FixedOperatingExpenses] = Seq.empty,
   otherCosts: Option[OtherCosts] = None,
   totalPayrollCostSections: Seq[TotalPayrollCost] = Seq.empty,
-  totalFuelSold: Seq[TotalFuelSold] = Seq.empty,
   variableOperatingExpenses: Option[VariableOperatingExpensesSections] = None,
   incomeExpenditureSummary: Option[IncomeExpenditureSummary] = None,
   incomeExpenditureSummaryData: Seq[IncomeExpenditureSummaryData] = Seq.empty,
   unusualCircumstances: Option[UnusualCircumstances] = None,
   electricVehicleChargingPoints: Option[ElectricVehicleChargingPoints] = None, // added March 2024
+  totalFuelSold: Option[Seq[TotalFuelSold]] = None,
   bunkeredFuelQuestion: Option[BunkeredFuelQuestion] = None,
   checkYourAnswersAboutTheTradingHistory: Option[CheckYourAnswersAboutTheTradingHistory] = None
 )
@@ -49,12 +49,12 @@ object AboutTheTradingHistory {
       (__ \ "fixedOperatingExpensesSections").read[Seq[FixedOperatingExpenses]] and
       (__ \ "otherCosts").readNullable[OtherCosts] and
       (__ \ "totalPayrollCostSections").read[Seq[TotalPayrollCost]] and
-      (__ \ "totalFuelSold").read[Seq[TotalFuelSold]] and
       (__ \ "variableOperatingExpenses").readNullable[VariableOperatingExpensesSections] and
       (__ \ "incomeExpenditureSummary").readNullable[IncomeExpenditureSummary] and
       (__ \ "incomeExpenditureSummaryData").read[Seq[IncomeExpenditureSummaryData]] and
       (__ \ "unusualCircumstances").readNullable[UnusualCircumstances] and
       (__ \ "electricVehicleChargingPoints").readNullable[ElectricVehicleChargingPoints] and
+      (__ \ "totalFuelSold").readNullable[Seq[TotalFuelSold]] and
       (__ \ "bunkeredFuelQuestion").readNullable[BunkeredFuelQuestion] and
       (__ \ "checkYourAnswersAboutTheTradingHistory").readNullable[CheckYourAnswersAboutTheTradingHistory]
   )(AboutTheTradingHistory.apply _)

@@ -49,7 +49,7 @@ class TotalFuelSoldController @Inject() (
       .fold(Redirect(routes.AboutYourTradingHistoryController.show())) { aboutTheTradingHistory =>
         Ok(
           view(
-            totalFuelSoldForm(years(aboutTheTradingHistory)).fill(aboutTheTradingHistory.totalFuelSold),
+            totalFuelSoldForm(years(aboutTheTradingHistory)).fill(aboutTheTradingHistory.totalFuelSold.getOrElse(Seq.empty)),
             request.sessionData.toSummary
           )
         )
@@ -76,7 +76,7 @@ class TotalFuelSoldController @Inject() (
                 totalFuelSold.copy(financialYearEnd = finYearEnd)
               }
 
-            val updatedData = updateAboutTheTradingHistory(_.copy(totalFuelSold = totalFuelSold))
+            val updatedData = updateAboutTheTradingHistory(_.copy(totalFuelSold = Some(totalFuelSold)))
             session
               .saveOrUpdate(updatedData)
               .map(_ => Redirect(navigator.nextPage(TotalFuelSoldId, updatedData).apply(updatedData)))
