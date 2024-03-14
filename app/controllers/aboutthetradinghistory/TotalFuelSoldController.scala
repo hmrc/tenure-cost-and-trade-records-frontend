@@ -49,7 +49,8 @@ class TotalFuelSoldController @Inject() (
       .fold(Redirect(routes.AboutYourTradingHistoryController.show())) { aboutTheTradingHistory =>
         Ok(
           view(
-            totalFuelSoldForm(years(aboutTheTradingHistory)).fill(aboutTheTradingHistory.totalFuelSold.getOrElse(Seq.empty)),
+            totalFuelSoldForm(years(aboutTheTradingHistory))
+              .fill(aboutTheTradingHistory.totalFuelSold.getOrElse(Seq.empty)),
             request.sessionData.toSummary
           )
         )

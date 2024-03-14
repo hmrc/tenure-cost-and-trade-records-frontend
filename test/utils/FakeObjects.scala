@@ -519,7 +519,6 @@ trait FakeObjects {
     Seq.empty,
     None,
     Seq.empty,
-    Seq.empty,
     None,
     None,
     Seq.empty,
@@ -556,7 +555,7 @@ trait FakeObjects {
       aboutTheTradingHistory = Some(
         prefilledAboutYourTradingHistory
           .copy(
-            totalFuelSold = Seq(TotalFuelSold(LocalDate.now(), None))
+            totalFuelSold = Some(Seq(TotalFuelSold(LocalDate.now(), None)))
           )
       ),
       stillConnectedDetails = Some(prefilledStillConnectedDetailsYesToAll)
