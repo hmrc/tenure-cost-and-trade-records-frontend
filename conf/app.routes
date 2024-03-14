@@ -314,6 +314,14 @@ POST        /premises-license-granted-details                       controllers.
 GET         /concession-or-franchise                                controllers.aboutfranchisesorlettings.ConcessionOrFranchiseController.show()
 POST        /concession-or-franchise                                controllers.aboutfranchisesorlettings.ConcessionOrFranchiseController.submit()
 
+#Form 6020 routing
+
+GET         /total-fuel-sold                                        controllers.aboutthetradinghistory.TotalFuelSoldController.show()
+POST        /total-fuel-sold                                        controllers.aboutthetradinghistory.TotalFuelSoldController.submit()
+
+GET         /bunkered-fuel-question                                 controllers.aboutthetradinghistory.BunkeredFuelQuestionController.show()
+POST        /bunkered-fuel-question                                 controllers.aboutthetradinghistory.BunkeredFuelQuestionController.submit()
+
 #Form 6030 routing
 GET         /concession-or-franchise-fee                            controllers.aboutfranchisesorlettings.ConcessionOrFranchiseFeeController.show()
 POST        /concession-or-franchise-fee                            controllers.aboutfranchisesorlettings.ConcessionOrFranchiseFeeController.submit()
