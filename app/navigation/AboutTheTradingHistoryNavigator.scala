@@ -62,6 +62,7 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
         aboutthetradinghistory.routes.FinancialYearEndDatesController.show()
       case _          =>
         s.forType match {
+          case ForTypes.for6020 => aboutthetradinghistory.routes.TotalFuelSoldController.show()
           case ForTypes.for6030 =>
             aboutthetradinghistory.routes.Turnover6030Controller.show()
           case _                => aboutthetradinghistory.routes.TurnoverController.show()
@@ -71,8 +72,8 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
 
   private def bunkeredFuelQuestionRouting: Session => Call = answers => {
     answers.aboutTheTradingHistory.flatMap(_.bunkeredFuelQuestion.map(_.bunkeredFuelQuestion)) match {
-      case Some(AnswerYes) => ???
-      case Some(AnswerNo)  => ???
+      case Some(AnswerYes) => controllers.routes.TaskListController.show() // TODO the next screen is not present yet
+      case Some(AnswerNo)  => controllers.routes.TaskListController.show() //
       case _               =>
         logger.warn(
           s"Navigation for bunkered fuel question reached without correct selection of conditions by controller"
@@ -83,6 +84,7 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
 
   private def financialYearEndDatesRouting: Session => Call =
     _.forType match {
+      case ForTypes.for6020 => aboutthetradinghistory.routes.TotalFuelSoldController.show()
       case ForTypes.for6030 => aboutthetradinghistory.routes.Turnover6030Controller.show()
       case _                => aboutthetradinghistory.routes.TurnoverController.show()
     }
