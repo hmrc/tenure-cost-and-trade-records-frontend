@@ -37,14 +37,32 @@ class VacantPropertiesStartDateControllerSpec extends TestBaseSpec {
       mockSessionRepo
     )
 
+  def vacantPropertiesStartDateControllerNoStartDate(
+    stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledStillConnectedDetailsYes)
+  ) =
+    new VacantPropertiesStartDateController(
+      stubMessagesControllerComponents(),
+      connectedToPropertyNavigator,
+      vacantPropertiesStartDateView,
+      preEnrichedActionRefiner(stillConnectedDetails = stillConnectedDetails),
+      mockSessionRepo
+    )
+
   "GET /" should {
-    "return 200" in {
+    "return 200 vacant property start date present in session" in {
       val result = vacantPropertiesStartDateController().show()(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return HTML" in {
       val result = vacantPropertiesStartDateController().show()(fakeRequest)
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
+    }
+
+    "return 200 vacant property start date is not present in session" in {
+      val result = vacantPropertiesStartDateControllerNoStartDate().show()(fakeRequest)
+      status(result)      shouldBe Status.OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }

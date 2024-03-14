@@ -40,8 +40,8 @@ class RequestReferenceNumberControllerSpec extends TestBaseSpec {
     mockSessionRepo
   )
 
-  def noReferenceNumberControllerEmpty(
-    requestReferenceNumberDetails: Option[RequestReferenceNumberDetails] = None
+  def noReferenceNumberControllerBlank(
+    requestReferenceNumberDetails: Option[RequestReferenceNumberDetails] = Some(prefilledRequestRefNumBlank)
   ) = new RequestReferenceNumberController(
     stubMessagesControllerComponents(),
     requestReferenceNumberNavigator,
@@ -68,7 +68,7 @@ class RequestReferenceNumberControllerSpec extends TestBaseSpec {
     }
 
     "return 200 with empty session" in {
-      val result = noReferenceNumberControllerEmpty().show(fakeRequest)
+      val result = noReferenceNumberControllerBlank().show(fakeRequest)
       status(result)      shouldBe Status.OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")

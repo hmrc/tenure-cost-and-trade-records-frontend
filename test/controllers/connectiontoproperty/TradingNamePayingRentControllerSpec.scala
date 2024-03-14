@@ -38,15 +38,32 @@ class TradingNamePayingRentControllerSpec extends TestBaseSpec {
       mockSessionRepo
     )
 
+  def tradingNamePayingRentControllerNoPayingRent(
+    stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledStillConnectedDetailsNoneOwnProperty)
+  ) =
+    new TradingNamePayingRentController(
+      stubMessagesControllerComponents(),
+      connectedToPropertyNavigator,
+      tradingNamePayRentView,
+      preEnrichedActionRefiner(stillConnectedDetails = stillConnectedDetails),
+      mockSessionRepo
+    )
   "AreYouThirdPartyController GET /" should {
 
-    "return 200" in {
+    "return 200 trading name paying rent present in session" in {
       val result = tradingNamePayingRentController().show(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return HTML" in {
       val result = tradingNamePayingRentController().show(fakeRequest)
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
+    }
+
+    "return 200 trading name paying rent is not present in session" in {
+      val result = tradingNamePayingRentControllerNoPayingRent().show(fakeRequest)
+      status(result)      shouldBe Status.OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }

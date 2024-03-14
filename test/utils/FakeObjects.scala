@@ -109,7 +109,7 @@ trait FakeObjects {
   val baseFilled6030Session: Session = Session(referenceNumber, forType6030, prefilledAddress, token)
 
   // Request reference number
-  val prefilledRequestRefNumCYA = RequestReferenceNumberDetails(
+  val prefilledRequestRefNumCYA   = RequestReferenceNumberDetails(
     Some(RequestReferenceNumber(prefilledFakeTradingName, prefilledNoReferenceContactAddress)),
     Some(
       RequestReferenceNumberContactDetails(
@@ -117,18 +117,40 @@ trait FakeObjects {
         ContactDetails(prefilledFakePhoneNo, prefilledFakeEmail),
         Some("Additional Information")
       )
-    )
+    ),
+    Some(CheckYourAnswersRequestReferenceNumber("CYARequestRefNum"))
   )
+  val prefilledRequestRefNumBlank = RequestReferenceNumberDetails()
 
   // Are your still connected sessions
-  val prefilledStillConnectedDetailsYes: StillConnectedDetails  = StillConnectedDetails(
+  val prefilledStillConnectedDetailsYes: StillConnectedDetails                       = StillConnectedDetails(
     Some(AddressConnectionTypeYes),
     Some(ConnectionToThePropertyOccupierTrustee)
   )
-  val prefilledStillConnectedDetailsEdit: StillConnectedDetails = StillConnectedDetails(
+  val prefilledStillConnectedDetailsEdit: StillConnectedDetails                      = StillConnectedDetails(
     Some(AddressConnectionTypeYesChangeAddress),
     Some(ConnectionToThePropertyOccupierTrustee),
-    Some(prefilledEditTheAddress)
+    Some(prefilledEditTheAddress),
+    Some(VacantProperties(VacantPropertiesDetailsNo))
+  )
+  val prefilledStillConnectedDetailsNoneOwnProperty: StillConnectedDetails           = StillConnectedDetails(
+    Some(AddressConnectionTypeYesChangeAddress),
+    Some(ConnectionToThePropertyOccupierTrustee),
+    Some(prefilledEditTheAddress),
+    None,
+    Some(TradingNameOperatingFromProperty("ABC LTD"))
+  )
+  val prefilledStillConnectedDetailsYesRentReceivedNoLettings: StillConnectedDetails = StillConnectedDetails(
+    Some(AddressConnectionTypeNo),
+    Some(ConnectionToThePropertyOccupierAgent),
+    Some(EditTheAddress(EditAddress("Street 1", Some("Street 2"), "Town", Some("County"), "BN12 4AX"))),
+    Some(VacantProperties(VacantPropertiesDetailsNo)),
+    Some(TradingNameOperatingFromProperty("ABC LTD")),
+    Some(AnswerNo),
+    Some(AnswerNo),
+    Some(AnswerNo),
+    Some(StartDateOfVacantProperty((LocalDate.now()))),
+    Some(AnswerYes)
   )
 
   val prefilledStillConnectedDetailsYesToAll: StillConnectedDetails = StillConnectedDetails(
