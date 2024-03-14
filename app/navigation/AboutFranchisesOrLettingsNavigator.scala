@@ -106,6 +106,13 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit) extends Naviga
               case _                                                                   =>
                 controllers.aboutfranchisesorlettings.routes.CateringOperationBusinessDetailsController.show(Some(idx))
             }
+          case _                                                                         =>
+            logger.warn(
+              s"Navigation for franchise or letting reached without a valid FOR Type"
+            )
+            throw new RuntimeException(
+              "Invalid option exception for franchise or letting without a valid FOR Type routing"
+            )
         }
 
       case Some("no") => controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show()
