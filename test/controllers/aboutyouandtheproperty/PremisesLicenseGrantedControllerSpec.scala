@@ -38,14 +38,29 @@ class PremisesLicenseGrantedControllerSpec extends TestBaseSpec {
     mockSessionRepo
   )
 
+  def premisesLicenseGrantedControllerNone() = new PremisesLicenseGrantedController(
+    stubMessagesControllerComponents(),
+    aboutYouAndThePropertyNavigator,
+    premisesLicenceGrantedView,
+    preEnrichedActionRefiner(aboutYouAndTheProperty = None),
+    mockSessionRepo
+  )
+
   "Premises licence granted controller" should {
-    "return 200" in {
+    "GET / return 200 license granted in the session" in {
       val result = premisesLicenseGrantedController().show(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
-    "return HTML" in {
+    "GET / return HTML" in {
       val result = premisesLicenseGrantedController().show(fakeRequest)
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
+    }
+
+    "GET / return 200 no license granted in the session" in {
+      val result = premisesLicenseGrantedControllerNone().show(fakeRequest)
+      status(result)      shouldBe Status.OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }

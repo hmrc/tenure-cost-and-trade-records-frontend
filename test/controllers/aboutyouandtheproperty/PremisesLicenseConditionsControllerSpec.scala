@@ -38,16 +38,57 @@ class PremisesLicenseConditionsControllerSpec extends TestBaseSpec {
     mockSessionRepo
   )
 
+  def premisesLicenseControllerNo(
+    aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyNo)
+  ) = new PremisesLicenseConditionsController(
+    stubMessagesControllerComponents(),
+    aboutYouAndThePropertyNavigator,
+    premisesLicensableView,
+    preEnrichedActionRefiner(aboutYouAndTheProperty = aboutYouAndTheProperty),
+    mockSessionRepo
+  )
+
+  def premisesLicenseControllerNone() = new PremisesLicenseConditionsController(
+    stubMessagesControllerComponents(),
+    aboutYouAndThePropertyNavigator,
+    premisesLicensableView,
+    preEnrichedActionRefiner(aboutYouAndTheProperty = None),
+    mockSessionRepo
+  )
+
   "Premises licence conditions controller" should {
-    "return 200" in {
+    "GET / return 200 license conditions yes in the session" in {
       val result = premisesLicenseController().show(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
-    "return HTML" in {
+    "GET / return HTML" in {
       val result = premisesLicenseController().show(fakeRequest)
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutyouandtheproperty.routes.LicensableActivitiesDetailsController.show().url
+      )
+    }
+
+    "GET / return 200 license conditions no in the session" in {
+      val result = premisesLicenseControllerNo().show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutyouandtheproperty.routes.LicensableActivitiesController.show().url
+      )
+    }
+
+    "GET / return 200 no license conditions in the session" in {
+      val result = premisesLicenseControllerNone().show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.routes.TaskListController.show().url
+      )
     }
 
     "SUBMIT /" should {
