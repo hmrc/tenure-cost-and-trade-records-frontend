@@ -671,7 +671,7 @@ aboutYourLandlord.heading = Your landlord
 label.landlordFullName = Landlord’s name
 label.landlordAddress.address = Landlord’s address
 error.landlordFullName.required = If you do not know the landlord’s name, enter unknown
-error.landlordFullName.maxLength = Landlord's name must be 50 characters or fewer
+error.landlordFullName.maxLength = Landlord’s name must be 50 characters or fewer
 
 # LEASE OR AGREEMENT DETAILS COMMENCE WITHIN 3 YEARS
 ###################################################
@@ -807,8 +807,8 @@ label.tenant = Tenant
 label.both = Both
 label.sharedResponsibilities = Give details of any shared responsibilities
 hint.sharedResponsibilities = For example, ‘business insurance costs are shared equally’, or ‘landlord covers 75% for outside repairs, tenant pays 25%’.
-error.sharedResponsibilities.maxLength = This must be 2000 characters or fewer
-error.sharedResponsibilities = This must be 2000 characters or fewer
+error.sharedResponsibilities.maxLength = The description of any shared responsibilities must be 500 characters or fewer
+error.sharedResponsibilities = The description of any shared responsibilities must be 500 characters or fewer
 error.outsideRepairs.required = Select who is responsible for outside repairs
 error.insideRepairs.required = Select who is responsible for the inside repairs
 error.buildingInsurance.required = Select who is responsible for the building insurance
@@ -824,8 +824,8 @@ label.tenant = Tenant
 label.both = Both
 label.sharedResponsibilitiesIR = Give details of any shared responsibilities
 hint.sharedResponsibilitiesIR = For example, ‘business insurance costs are shared equally’, or ‘landlord covers 75% for outside repairs, tenant pays 25%’.
-error.sharedResponsibilitiesIR.maxLength = This must be 2000 characters or fewer
-error.sharedResponsibilitiesIR = This must be 2000 characters or fewer
+error.sharedResponsibilitiesIR.maxLength = The description of any shared responsibilities must be 500 characters or fewer
+error.sharedResponsibilitiesIR = The description of any shared responsibilities must be 500 characters or fewer
 error.sharedResponsibilitiesIR.required = Please give details of any shared responsibilities for inside repairs to public and business areas
 
 # ULTIMATELY RESPONSIBLE OUTSIDE REPAIRS
@@ -838,8 +838,8 @@ label.tenant = Tenant
 label.both = Both
 label.sharedResponsibilitiesOR = Give details of any shared responsibilities
 hint.sharedResponsibilitiesOR = For example, ‘business insurance costs are shared equally’, or ‘landlord covers 75% for outside repairs, tenant pays 25%’.
-error.sharedResponsibilitiesOR.maxLength = This must be 2000 characters or fewer
-error.sharedResponsibilitiesOR = This must be 2000 characters or fewer
+error.sharedResponsibilitiesOR.maxLength = The description of any shared responsibilities must be 500 characters or fewer
+error.sharedResponsibilitiesOR = The description of any shared responsibilities must be 500 characters or fewer
 error.sharedResponsibilitiesOR.required = Please give details of any shared responsibilities for outside repairs
 
 # ULTIMATELY RESPONSIBLE BUILDING INSURANCE
@@ -852,8 +852,8 @@ label.tenant = Tenant
 label.both = Both
 label.sharedResponsibilitiesBI = Give details of any shared responsibilities
 hint.sharedResponsibilitiesBI = For example, ‘business insurance costs are shared equally’, or ‘landlord covers 75% for outside repairs, tenant pays 25%’.
-error.sharedResponsibilitiesBI.maxLength = This must be 2000 characters or fewer
-error.sharedResponsibilitiesBI = This must be 2000 characters or fewer
+error.sharedResponsibilitiesBI.maxLength = The description of any shared responsibilities must be 500 characters or fewer
+error.sharedResponsibilitiesBI = The description of any shared responsibilities must be 500 characters or fewer
 error.sharedResponsibilitiesBI.required = Please give details of any shared responsibilities for building insurance
 
 # RENT INCLUDE TRADE SERVICES
@@ -869,8 +869,9 @@ tradeServiceDescription.VAT = Where specifically itemised, what sum is included 
 tradeServiceDescription.hint = Leave blank if these are not specifically itemised.
 tradeServiceDescription.describe = Describe the type of service
 tradeServiceDescription.describe.hint = For example, lighting, heating, cleaning of shared parts - you will have the opportunity to add additional services if required.
-tradeServiceDescription.describe.error = Please describe the type of service
+tradeServiceDescription.describe.error = Enter a description of the trade services provided by the landlord
 error.tradeDescription.invalidCurrency = The sum must be a number like 100 or 100.00 and cannot be less than 0
+error.tradeServiceDescription.maxLength = The description of the trade services must be 500 characters or fewer
 
 # TRADE SERVICES ADDED
 #####################################
@@ -878,7 +879,7 @@ addTradeService.heading = You have added {0} {1} provided by the landlord
 addTradeService.service = service
 addTradeService.services = services
 addTradeService.label = Would you like to add another service?
-error.addTradeService.required = Select yes if you would like to add another service
+error.addTradeService.required = Select yes if you would like to add another service provided by the landlord
 
 #PAYMENT FOR TRADE SERVICES
 ####################################
@@ -894,7 +895,7 @@ servicePaidSeparately.describe = Describe the type of service
 servicePaidSeparately.describe.hint = For example, lighting, heating, cleaning of shared parts - you will have the opportunity to add additional services if required.
 servicePaidSeparately.describe.error = Please describe the type of service
 error.servicePaidSeparately.invalidCurrency = The sum must be a number like 100 or 100.00 and cannot be less than 0
-error.servicePaidSeparately.required = Please enter the annual charge for separately paid services
+error.servicePaidSeparately.required = You must tell us the annual charge for the service which you pay for separately
 
 # SERVICES PAID SEPARATELY LIST
 #####################################
@@ -902,7 +903,7 @@ servicePaidSeparatelyList.heading = You have added {0} {1} provided by the landl
 servicePaidSeparatelyList.service = service
 servicePaidSeparatelyList.services = services
 servicePaidSeparatelyList.label = Would you like to add another service?
-error.servicePaidSeparatelyList.required = Select yes if you would like to add another service
+error.servicePaidSeparatelyList.required = Select yes if you would like to add another service which is paid for separately
 
 # RENT INCLUDE TRADE SERVICES DETAILS
 ####################################
@@ -915,7 +916,7 @@ label.describeServices = Describe the services provided
 rentIncludeTradeServicesDetailsTextBox.hint = For example, maintenance of fires, annual gas checks and cellar services.
 error.required.sumIncludedInRent = Please provide a value
 error.invalid_currency.sumIncludedInRent= Please provide a number
-error.describeServices.required = Enter a description of the trade services provided by the landlord
+error.describeServices.required = Enter a description of the trade service which you pay for separately
 error.describeServices.maxLength = The description of the trade services must be 500 characters or fewer
 error.rentIncludeTradeServicesDetails.title = Sum included to cover trade services
 
@@ -1959,7 +1960,7 @@ error.month.required = The date must include a month
 error.year.required = The date must include a year
 error.required.annualRent = Enter the annual rent excluding VAT
 error.invalid_currency.annualRent = The annual rent must be a number like 100 or 100.00 and cannot be less than 0
-error.required.annualRentExcludingVat = Enter the annual rent
+error.required.annualRentExcludingVat = Enter the annual rent amount
 error.char.count.maxLength = This must be 2000 characters or fewer
 error.townCity.required = Enter the name of the town or city
 error.fullName.required = Enter your name
