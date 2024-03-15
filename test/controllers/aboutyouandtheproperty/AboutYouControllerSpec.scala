@@ -39,14 +39,29 @@ class AboutYouControllerSpec extends TestBaseSpec {
     mockSessionRepo
   )
 
+  def aboutYouControllerNone() = new AboutYouController(
+    stubMessagesControllerComponents(),
+    aboutYouAndThePropertyNavigator,
+    aboutYouView,
+    preEnrichedActionRefiner(aboutYouAndTheProperty = None),
+    mockSessionRepo
+  )
+
   "About you controller" should {
-    "return 200" in {
+    "GET / return 200 about you in the session" in {
       val result = aboutYouController().show(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
-    "return HTML" in {
+    "GET / return HTML" in {
       val result = aboutYouController().show(fakeRequest)
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
+    }
+
+    "GET / return 200 no about you in the session" in {
+      val result = aboutYouControllerNone().show(fakeRequest)
+      status(result)      shouldBe Status.OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }

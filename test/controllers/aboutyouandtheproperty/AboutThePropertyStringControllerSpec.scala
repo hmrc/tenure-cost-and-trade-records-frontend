@@ -38,16 +38,57 @@ class AboutThePropertyStringControllerSpec extends TestBaseSpec {
     mockSessionRepo
   )
 
+  def aboutThePropertyStringControllerNo(
+    aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyNoString)
+  ) = new AboutThePropertyStringController(
+    stubMessagesControllerComponents(),
+    aboutYouAndThePropertyNavigator,
+    aboutThePropertyStringView,
+    preEnrichedActionRefiner(aboutYouAndTheProperty = aboutYouAndTheProperty),
+    mockSessionRepo
+  )
+
+  def aboutThePropertyStringControllerNone() = new AboutThePropertyStringController(
+    stubMessagesControllerComponents(),
+    aboutYouAndThePropertyNavigator,
+    aboutThePropertyStringView,
+    preEnrichedActionRefiner(aboutYouAndTheProperty = None),
+    mockSessionRepo
+  )
+
   "About the property controller" should {
-    "return 200" in {
+    "GET / return 200 about the property string with yes in the session" in {
       val result = aboutThePropertyStringController().show(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
-    "return HTML" in {
+    "GET / return HTML" in {
       val result = aboutThePropertyStringController().show(fakeRequest)
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutyouandtheproperty.routes.AlternativeContactDetailsController.show().url
+      )
+    }
+
+    "GET / return 200 about the property string with no in the session" in {
+      val result = aboutThePropertyStringControllerNo().show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutyouandtheproperty.routes.ContactDetailsQuestionController.show().url
+      )
+    }
+
+    "GET / return 200 no about the property string in the session" in {
+      val result = aboutThePropertyStringControllerNone().show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.routes.TaskListController.show().url
+      )
     }
 
     "SUBMIT /" should {

@@ -14,15 +14,14 @@
  * limitations under the License.
  */
 
-package controllers.additionalinformation
+package controllers.aboutyouandtheproperty
 
-import controllers.aboutyouandtheproperty.AlternativeContactDetailsController
-import play.api.http.Status
-import play.api.test.Helpers._
-import utils.TestBaseSpec
 import form.aboutyouandtheproperty.AlternativeContactDetailsForm.alternativeContactDetailsForm
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
+import play.api.http.Status
 import play.api.test.FakeRequest
+import play.api.test.Helpers._
+import utils.TestBaseSpec
 
 class AlternativeContactDetailsControllerSpec extends TestBaseSpec {
 
@@ -39,20 +38,35 @@ class AlternativeContactDetailsControllerSpec extends TestBaseSpec {
     mockSessionRepo
   )
 
-  "GET /" should {
-    "return 200" in {
+  def alternativeContactDetailsControllerNone() = new AlternativeContactDetailsController(
+    stubMessagesControllerComponents(),
+    aboutYouAndThePropertyNavigator,
+    alternativeContactDetailsView,
+    preEnrichedActionRefiner(aboutYouAndTheProperty = None),
+    mockSessionRepo
+  )
+
+  "GET / AlternativeContactDetailsController" should {
+    "GET / return 200 about you in the session" in {
       val result = alternativeContactDetailsController().show(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
-    "return HTML" in {
+    "GET / return HTML" in {
       val result = alternativeContactDetailsController().show(fakeRequest)
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
+    }
+
+    "GET / return 200 no about you in the session" in {
+      val result = alternativeContactDetailsControllerNone().show(fakeRequest)
+      status(result)      shouldBe Status.OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
   }
 
-  "SUBMIT /" should {
+  "SUBMIT / AlternativeContactDetailsController" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
       val result = alternativeContactDetailsController().submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)

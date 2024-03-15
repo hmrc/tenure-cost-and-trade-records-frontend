@@ -17,7 +17,7 @@
 package controllers.aboutyouandtheproperty
 
 import form.aboutyouandtheproperty.CharityQuestionForm.charityQuestionForm
-import models.submissions.additionalinformation.AdditionalInformation
+import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
 import play.api.http.Status._
 import play.api.test.Helpers.{contentType, status, stubMessagesControllerComponents}
 import play.api.test.{FakeRequest, Helpers}
@@ -28,24 +28,39 @@ class CharityQuestionControllerSpec extends TestBaseSpec {
   import utils.FormBindingTestAssertions._
 
   def charityQuestionController(
-    additionalInformation: Option[AdditionalInformation] = Some(prefilledAdditionalInformation)
+    aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes)
   ) =
     new CharityQuestionController(
       stubMessagesControllerComponents(),
       aboutYouAndThePropertyNavigator,
       charityQuestionView,
-      preEnrichedActionRefiner(additionalInformation = additionalInformation),
+      preEnrichedActionRefiner(aboutYouAndTheProperty = aboutYouAndTheProperty),
       mockSessionRepo
     )
 
+  def charityQuestionControllerNone() = new CharityQuestionController(
+    stubMessagesControllerComponents(),
+    aboutYouAndThePropertyNavigator,
+    charityQuestionView,
+    preEnrichedActionRefiner(aboutYouAndTheProperty = None),
+    mockSessionRepo
+  )
+
   "CharityQuestion controller" should {
-    "return 200" in {
+    "GET / return 200 charity question in the session" in {
       val result = charityQuestionController().show(fakeRequest)
       status(result) shouldBe OK
     }
 
-    "return HTML" in {
+    "GET / return HTML" in {
       val result = charityQuestionController().show(fakeRequest)
+      contentType(result)     shouldBe Some("text/html")
+      Helpers.charset(result) shouldBe Some("utf-8")
+    }
+
+    "GET / return 200 no charity question in the session" in {
+      val result = charityQuestionControllerNone().show(fakeRequest)
+      status(result)          shouldBe OK
       contentType(result)     shouldBe Some("text/html")
       Helpers.charset(result) shouldBe Some("utf-8")
     }

@@ -38,16 +38,57 @@ class EnforcementActionBeenTakenControllerSpec extends TestBaseSpec {
     mockSessionRepo
   )
 
+  def enforcementActionBeenTakenControllerNo(
+    aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyNo)
+  ) = new EnforcementActionBeenTakenController(
+    stubMessagesControllerComponents(),
+    aboutYouAndThePropertyNavigator,
+    enforcementActionsTakenView,
+    preEnrichedActionRefiner(aboutYouAndTheProperty = aboutYouAndTheProperty),
+    mockSessionRepo
+  )
+
+  def enforcementActionBeenTakenControllerNone() = new EnforcementActionBeenTakenController(
+    stubMessagesControllerComponents(),
+    aboutYouAndThePropertyNavigator,
+    enforcementActionsTakenView,
+    preEnrichedActionRefiner(aboutYouAndTheProperty = None),
+    mockSessionRepo
+  )
+
   "Enforcement action been taken controller" should {
-    "return 200" in {
+    "GET / return 200 enforcement action taken with yes in the session" in {
       val result = enforcementActionBeenTakenController().show(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
-    "return HTML" in {
+    "GET / return HTML" in {
       val result = enforcementActionBeenTakenController().show(fakeRequest)
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutyouandtheproperty.routes.PremisesLicenseConditionsDetailsController.show().url
+      )
+    }
+
+    "GET / return 200 enforcement action taken with no in the session" in {
+      val result = enforcementActionBeenTakenControllerNo().show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutyouandtheproperty.routes.PremisesLicenseConditionsController.show().url
+      )
+    }
+
+    "GET / return 200 no enforcement action taken in the session" in {
+      val result = enforcementActionBeenTakenControllerNone().show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.routes.TaskListController.show().url
+      )
     }
 
     "SUBMIT /" should {

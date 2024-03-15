@@ -14,14 +14,13 @@
  * limitations under the License.
  */
 
-package controllers.additionalinformation
+package controllers.aboutyouandtheproperty
 
-import controllers.aboutyouandtheproperty.ContactDetailsQuestionController
 import form.aboutyouandtheproperty.ContactDetailsQuestionForm.contactDetailsQuestionForm
-import models.submissions.additionalinformation.AdditionalInformation
+import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
 import play.api.http.Status.{BAD_REQUEST, OK}
-import play.api.test.{FakeRequest, Helpers}
 import play.api.test.Helpers.{contentType, status, stubMessagesControllerComponents}
+import play.api.test.{FakeRequest, Helpers}
 import utils.TestBaseSpec
 
 class ContactDetailsQuestionControllerSpec extends TestBaseSpec {
@@ -30,24 +29,39 @@ class ContactDetailsQuestionControllerSpec extends TestBaseSpec {
   import utils.FormBindingTestAssertions._
 
   def contactDetailsQuestionController(
-    additionalInformation: Option[AdditionalInformation] = Some(prefilledAdditionalInformation)
+    aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes)
   ) =
     new ContactDetailsQuestionController(
       stubMessagesControllerComponents(),
       aboutYouAndThePropertyNavigator,
       contactDetailsQuestionView,
-      preEnrichedActionRefiner(additionalInformation = additionalInformation),
+      preEnrichedActionRefiner(aboutYouAndTheProperty = aboutYouAndTheProperty),
       mockSessionRepo
     )
 
+  def contactDetailsQuestionControllerNone() = new ContactDetailsQuestionController(
+    stubMessagesControllerComponents(),
+    aboutYouAndThePropertyNavigator,
+    contactDetailsQuestionView,
+    preEnrichedActionRefiner(aboutYouAndTheProperty = None),
+    mockSessionRepo
+  )
+
   "ContactDetailsQuestion controller" should {
-    "return 200" in {
+    "GET / return 200 contact details in the session" in {
       val result = contactDetailsQuestionController().show(fakeRequest)
       status(result) shouldBe OK
     }
 
-    "return HTML" in {
+    "GET / return HTML" in {
       val result = contactDetailsQuestionController().show(fakeRequest)
+      contentType(result)     shouldBe Some("text/html")
+      Helpers.charset(result) shouldBe Some("utf-8")
+    }
+
+    "GET / return 200 no contact details in the session" in {
+      val result = contactDetailsQuestionControllerNone().show(fakeRequest)
+      status(result)          shouldBe OK
       contentType(result)     shouldBe Some("text/html")
       Helpers.charset(result) shouldBe Some("utf-8")
     }

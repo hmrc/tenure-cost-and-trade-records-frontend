@@ -251,6 +251,8 @@ trait FakeObjects {
     stillConnectedDetailsConnectedDetailsNoSession.copy(removeConnectionDetails = Some(prefilledNotConnectedYes))
 
   // About you and the property sessions
+  val prefilledAboutYouAndThePropertyBlank: AboutYouAndTheProperty = AboutYouAndTheProperty()
+
   val prefilledAboutYouAndThePropertyYes: AboutYouAndTheProperty = AboutYouAndTheProperty(
     Some(CustomerDetails("Tobermory", ContactDetails(prefilledFakePhoneNo, prefilledFakeEmail))),
     Some(ContactDetailsQuestion(AnswerYes)),
@@ -268,7 +270,10 @@ trait FakeObjects {
     Some(AnswerYes),
     Some(EnforcementActionHasBeenTakenInformationDetails("Enforcement action taken details")),
     Some(AnswerYes),
-    Some(TiedForGoodsInformationDetails(TiedForGoodsInformationDetailsFullTie))
+    Some(TiedForGoodsInformationDetails(TiedForGoodsInformationDetailsFullTie)),
+    checkYourAnswersAboutTheProperty = Some(CheckYourAnswersAboutYourProperty("Yes")),
+    charityQuestion = Some(AnswerYes),
+    tradingActivity = Some(TradingActivity(AnswerYes, Some("Trading activity details")))
   )
 
   val prefilledAboutYouAndThePropertyYesString: AboutYouAndTheProperty = AboutYouAndTheProperty(
@@ -327,7 +332,9 @@ trait FakeObjects {
     Some(AnswerNo),
     None,
     Some(AnswerNo),
-    None
+    None,
+    checkYourAnswersAboutTheProperty = Some(CheckYourAnswersAboutYourProperty("no")),
+    charityQuestion = Some(AnswerNo)
   )
 
   val prefilledProvideContactDetails: ProvideContactDetails = ProvideContactDetails(
