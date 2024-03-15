@@ -34,7 +34,7 @@ object UltimatelyResponsibleOutsideRepairsForm {
         OutsideRepairsBoth.name,
         default(text, "").verifying(
           nonEmpty(errorMessage = "error.sharedResponsibilitiesOR.required"),
-          maxLength(2000, "error.sharedResponsibilitiesOR.maxLength")
+          maxLength(500, "error.sharedResponsibilitiesOR.maxLength")
         )
       )
     )(UltimatelyResponsibleOutsideRepairs.apply)(UltimatelyResponsibleOutsideRepairs.unapply)

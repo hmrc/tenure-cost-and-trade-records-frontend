@@ -19,7 +19,7 @@ package form.aboutYourLeaseOrTenure
 import models.submissions.aboutYourLeaseOrTenure.ServicePaidSeparately
 import play.api.data.Form
 import play.api.data.Forms.{mapping, text}
-import play.api.data.validation.Constraints.nonEmpty
+import play.api.data.validation.Constraints.{maxLength, nonEmpty}
 
 object ServicePaidSeparatelyForm {
 
@@ -33,7 +33,9 @@ object ServicePaidSeparatelyForm {
             .transform[BigDecimal](s => BigDecimal(s.replace(",", "")), v => v.toString),
         "description"  ->
           text
-            .verifying(nonEmpty(errorMessage = "tradeServiceDescription.describe.error"))
+            .verifying(
+              nonEmpty(errorMessage = "tradeServiceDescription.describe.error"),
+              maxLength(500, "error.tradeServiceDescription.maxLength"))
       )(ServicePaidSeparately.apply)(ServicePaidSeparately.unapply)
     )
 
