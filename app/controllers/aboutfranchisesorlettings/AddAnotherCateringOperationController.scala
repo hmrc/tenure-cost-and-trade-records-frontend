@@ -116,14 +116,15 @@ class AddAnotherCateringOperationController @Inject() (
           )),
         data =>
           if (forType == ForTypes.for6030) {
-            data match {
-              case AnswerYes =>
-                Redirect(controllers.aboutfranchisesorlettings.routes.CateringOperationBusinessDetailsController.show())
-              case _         =>
-                Redirect(
-                  navigator.nextPage(AddAnotherCateringOperationPageId, request.sessionData).apply(request.sessionData)
-                )
-            }
+            Redirect(
+              if (data == AnswerNo && navigator.from == "CYA") {
+                controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show()
+              } else if (data == AnswerYes) {
+                controllers.aboutfranchisesorlettings.routes.CateringOperationBusinessDetailsController.show()
+              } else {
+                controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show()
+              }
+            )
           } else {
             franchisesOrLettingsData
               .map(_.cateringOperationSections)
