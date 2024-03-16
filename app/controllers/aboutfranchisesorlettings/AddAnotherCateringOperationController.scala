@@ -93,7 +93,7 @@ class AddAnotherCateringOperationController @Inject() (
   }
 
   def submit(index: Int) = (Action andThen withSessionRefiner).async { implicit request =>
-    if (franchisesOrLettingsData.exists(_.cateringOperationCurrentIndex >= 4)) {
+    if (franchisesOrLettingsData.exists(_.cateringOperationCurrentIndex >= 4) && navigator.from != "CYA") {
 
       val redirectUrl = controllers.routes.MaxOfLettingsReachedController.show(Some("franchiseCatering")).url
 

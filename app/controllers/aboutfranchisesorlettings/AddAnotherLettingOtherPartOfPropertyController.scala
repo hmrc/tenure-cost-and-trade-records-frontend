@@ -46,12 +46,14 @@ class AddAnotherLettingOtherPartOfPropertyController @Inject() (
     with I18nSupport {
 
   def show(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    val existingSection = request.sessionData.aboutFranchisesOrLettings.flatMap(_.lettingSections.lift(index))
+    val addAnother = request.sessionData.aboutFranchisesOrLettings
+      .flatMap(_.lettingSections.lift(index))
+      .flatMap(_.addAnotherLettingToProperty)
 
     Future.successful(
       Ok(
         addAnotherCateringOperationOrLettingAccommodationView(
-          existingSection.flatMap(_.addAnotherLettingToProperty) match {
+          Option.when(navigator.from == "CYA")(AnswerNo).orElse(addAnother) match {
             case Some(addAnotherLettings) => addAnotherLettingForm.fill(addAnotherLettings)
             case _                        => addAnotherLettingForm
           },
@@ -66,7 +68,7 @@ class AddAnotherLettingOtherPartOfPropertyController @Inject() (
   }
 
   def submit(index: Int) = (Action andThen withSessionRefiner).async { implicit request =>
-    if (request.sessionData.aboutFranchisesOrLettings.exists(_.lettingCurrentIndex >= 4)) {
+    if (request.sessionData.aboutFranchisesOrLettings.exists(_.lettingCurrentIndex >= 4) && navigator.from != "CYA") {
 
       val redirectUrl = controllers.routes.MaxOfLettingsReachedController.show(Some("franchiseLetting")).url
       Future.successful(Redirect(redirectUrl))
