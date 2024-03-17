@@ -881,8 +881,8 @@ tradeServiceDescription.heading = Trade services included in your rent
 tradeServiceDescription.p1 = Provide a short description on any trade services you receive from your landlord as part of your lease or agreement. Where specifically itemised, include how much of your rent goes towards those services.
 tradeServiceDescription.p2 = If more than one service is provided by your landlord as part of your lease or agreement, describe each one individually. You will have the opportunity to add additional services on the next page.
 tradeServiceDescription.describe = Describe the type of service provided by the landlord which is included in your rent
-tradeServiceDescription.describe.error = Enter a description of the trade services provided by the landlord
-error.tradeServiceDescription.maxLength = The description of the trade services must be 500 characters or fewer
+tradeServiceDescription.describe.error = Nodwch ddisgrifiad o’r gwasanaethau masnach a ddarperir gan y landlord
+error.tradeServiceDescription.maxLength = Mae’n rhaid i’r disgrifiad o’r gwasanaethau masnach fod yn 500 o gymeriadau neu lai
 
 # TRADE SERVICES ADDED
 #####################################
