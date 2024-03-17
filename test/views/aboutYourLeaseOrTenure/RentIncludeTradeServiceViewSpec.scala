@@ -32,10 +32,13 @@ class RentIncludeTradeServiceViewSpec extends QuestionViewBehaviours[RentInclude
 
   val backLink = controllers.aboutYourLeaseOrTenure.routes.AboutYourLandlordController.show().url
 
-  def createView = () => rentIncludeTradeServicesView(form, Summary("99996010001"))(fakeRequest, messages)
+  def createView = () => rentIncludeTradeServicesView(form, "FOR6010", Summary("99996010001"))(fakeRequest, messages)
+
+  def create6030View = () =>
+    rentIncludeTradeServicesView(form, "FOR6030", Summary("99996030001"))(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[RentIncludeTradeServicesDetails]) =>
-    rentIncludeTradeServicesView(form, Summary("99996010001"))(fakeRequest, messages)
+    rentIncludeTradeServicesView(form, "FOR6010", Summary("99996010001"))(fakeRequest, messages)
 
   "Rent include trade services view" must {
 
@@ -85,6 +88,18 @@ class RentIncludeTradeServiceViewSpec extends QuestionViewBehaviours[RentInclude
       val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("continue").text()
       assert(loginButton == messages("button.label.continue"))
+    }
+
+    "contain correct hint for 6030 type of form" in {
+      val doc  = asDocument(create6030View())
+      val hint = doc.getElementById("rentIncludeTradeServices-hint").text()
+      assert(hint == messages("hint.rentIncludeTradeServices.for6030"))
+    }
+
+    "contain correct hint for other types of form" in {
+      val doc  = asDocument(createViewUsingForm(form))
+      val hint = doc.getElementById("rentIncludeTradeServices-hint").text()
+      assert(hint == messages("hint.rentIncludeTradeServices"))
     }
   }
 }

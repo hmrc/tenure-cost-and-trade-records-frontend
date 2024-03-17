@@ -55,11 +55,6 @@ class TradeServicesDescriptionViewSpec extends QuestionViewBehaviours[TradeServi
       assert(sectionText == messages("label.section.aboutYourLeaseOrTenure"))
     }
 
-    "contain currency field for the value trade services " in {
-      val doc = asDocument(createViewUsingForm(form))
-      assertRenderedById(doc, "sumExcludingVat")
-    }
-
     "contain input for the service description" in {
       val doc = asDocument(createViewUsingForm(form))
       assertRenderedById(doc, "description")

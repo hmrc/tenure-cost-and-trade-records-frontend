@@ -26,8 +26,9 @@
         formWithCSRF: FormWithCSRF
 )
 
+@(theForm: Form[RentIncludeTradeServicesDetails], forType: String, summary: Summary)(implicit request: Request[_], messages: Messages)
 
-@(theForm: Form[RentIncludeTradeServicesDetails], summary: Summary)(implicit request: Request[_], messages: Messages)
+@hint = @{ if(forType == ForTypes.for6030) messages("hint.rentIncludeTradeServices.for6030") else messages( "hint.rentIncludeTradeServices")}
 
 @layout(
  pageHeading = messages("rentIncludeTradeServices.heading"),
@@ -41,7 +42,15 @@
 
   @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesController.submit()) {
 
-    @includes.radioButtonsYesNo(govukRadios, theForm, "rentIncludeTradeServices", "rentIncludeTradeServices.heading", "govuk-fieldset__legend--l", "hint.rentIncludeTradeServices", true)
+    @includes.radioButtonsYesNo(
+     govukRadios,
+     theForm,
+     "rentIncludeTradeServices",
+     "rentIncludeTradeServices.heading",
+     "govuk-fieldset__legend--l",
+     hint,
+     true
+    )
 
     @includes.continueSaveAsDraftButtons(govukButton)
   }
