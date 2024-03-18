@@ -58,8 +58,7 @@ class TradeServicesDescriptionControllerSpec extends TestBaseSpec {
         val result = tradeServicesDescriptionController().show(None)(fakeRequest)
         val html   = Jsoup.parse(contentAsString(result))
 
-        Option(html.getElementById("sumExcludingVat").`val`()).value shouldBe ""
-        Option(html.getElementById("description").`val`()).value     shouldBe ""
+        Option(html.getElementById("description").`val`()).value shouldBe ""
       }
 
       "given an index" which {
@@ -67,8 +66,7 @@ class TradeServicesDescriptionControllerSpec extends TestBaseSpec {
           val result = tradeServicesDescriptionController().show(Some(2))(fakeRequest)
           val html   = Jsoup.parse(contentAsString(result))
 
-          Option(html.getElementById("sumExcludingVat").`val`()).value shouldBe ""
-          Option(html.getElementById("description").`val`()).value     shouldBe ""
+          Option(html.getElementById("description").`val`()).value shouldBe ""
 
         }
       }

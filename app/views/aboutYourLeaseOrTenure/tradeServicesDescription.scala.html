@@ -43,7 +43,7 @@
 @layout(
     pageHeading = messages("tradeServiceDescription.heading"),
     showSection = true,
-    showH1 = false,
+    showH1 = true,
     summary = Some(summary),
     sectionName = messages("label.section.aboutYourLeaseOrTenure"),
     backLinkUrl = backLink,
@@ -51,32 +51,18 @@
 ) {
     @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.TradeServicesDescriptionController.submit(index)) {
 
-        <h1 class="govuk-heading-l">@messages("tradeServiceDescription.heading")</h1>
-
-        @hmrcCurrencyInput(
-            CurrencyInput(
-                id = "sumExcludingVat",
-                name = "sumExcludingVat",
-                value = theForm("sumExcludingVat").value,
-                classes = "govuk-input--width-10 total-annual-rent",
-                label = Label(
-                    content = Text(messages("tradeServiceDescription.VAT")),
-                    classes = "govuk-label--m"
-                ),
-                hint = Hint(content = Text(messages("tradeServiceDescription.hint"))),
-                errorMessage = theForm.errors.asTextErrorMessageForField("sumExcludingVat"),
-            )
-        )
+        <p class="govuk-body">@messages("tradeServiceDescription.p1")</p>
+        <p class="govuk-body ">@messages("tradeServiceDescription.p2")</p>
 
         @govukCharacterCount(
             CharacterCount(
                 id = "description",
                 name = "description",
                 maxLength = 500,
-                hint = Hint(content = Text(messages("tradeServiceDescription.describe.hint"))),
+                rows = 4,
                 label = Label(
                     content = Text(messages("tradeServiceDescription.describe")),
-                    classes = "govuk-label--m",
+                    classes = "govuk-label--m gov govuk-!-margin-bottom-6",
                     isPageHeading = false
                 ),
                 errorMessage = theForm.errors.asTextErrorMessageForField("description"),
