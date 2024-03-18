@@ -28,6 +28,8 @@
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.charactercount.CharacterCount
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.html.components._
+@import actions.SessionRequest
+
 
 
 @this(layout: Layout,
@@ -36,7 +38,6 @@
         formWithCSRF: FormWithCSRF,
         govukCharacterCount: GovukCharacterCount,
 )
-
 
 @(theForm: Form[TradeServicesDetails], index: Option[Int], backLink: String,  summary: Summary)(implicit request: Request[_], messages: Messages)
 
@@ -50,6 +51,7 @@
     theForm = theForm
 ) {
     @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.TradeServicesDescriptionController.submit(index)) {
+
 
         <h1 class="govuk-heading-l">@messages("tradeServiceDescription.heading")</h1>
 
