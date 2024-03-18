@@ -873,7 +873,7 @@ error.sharedResponsibilitiesBI.required = Enter a description of the shared resp
 rentIncludeTradeServices.heading = Does the rent include any trade services provided by the landlord?
 hint.rentIncludeTradeServices = For example, maintenance of trade fixtures and fittings, cellar services, marketing, staff training.
 hint.rentIncludeTradeServices.for6030 = For example, lighting, heating, cleaning of shared parts
-error.rentIncludeTradeServices.missing = Select yes if the rent includes any trade services provided by the landlord
+error.rentIncludeTradeServices.missing = Dewiswch ‘ydy’ os yw’r rhent yn cynnwys unrhyw wasanaethau masnach a ddarperir gan y landlord
 
 # TRADE SERVICES DESCRIPTION
 ############################
@@ -890,7 +890,7 @@ addTradeService.heading = You have added {0} {1} provided by the landlord
 addTradeService.service = service
 addTradeService.services = services
 addTradeService.label = Would you like to add another service which is included in the rent?
-error.rentIncludeTradeServices.missing = Dewiswch ‘ydy’ os yw’r rhent yn cynnwys unrhyw wasanaethau masnach a ddarperir gan y landlord
+error.addTradeService.required = Select yes if you would like to add another service provided by the landlord
 
 #PAYMENT FOR TRADE SERVICES
 ####################################
