@@ -890,7 +890,7 @@ addTradeService.heading = You have added {0} {1} provided by the landlord
 addTradeService.service = service
 addTradeService.services = services
 addTradeService.label = Would you like to add another service which is included in the rent?
-error.addTradeService.required = Select yes if you would like to add another service provided by the landlord
+error.rentIncludeTradeServices.missing = Dewiswch ‘ydy’ os yw’r rhent yn cynnwys unrhyw wasanaethau masnach a ddarperir gan y landlord
 
 #PAYMENT FOR TRADE SERVICES
 ####################################
