@@ -57,8 +57,7 @@ class ServicePaidSeparatelyControllerSpec extends TestBaseSpec {
         val result = servicePaidSeparatelyController().show(None)(fakeRequest)
         val html   = Jsoup.parse(contentAsString(result))
 
-        Option(html.getElementById("annualCharge").`val`()).value shouldBe ""
-        Option(html.getElementById("description").`val`()).value  shouldBe ""
+        Option(html.getElementById("description").`val`()).value shouldBe ""
       }
 
       "given an index" which {
@@ -66,8 +65,7 @@ class ServicePaidSeparatelyControllerSpec extends TestBaseSpec {
           val result = servicePaidSeparatelyController().show(Some(2))(fakeRequest)
           val html   = Jsoup.parse(contentAsString(result))
 
-          Option(html.getElementById("annualCharge").`val`()).value shouldBe ""
-          Option(html.getElementById("description").`val`()).value  shouldBe ""
+          Option(html.getElementById("description").`val`()).value shouldBe ""
 
         }
       }

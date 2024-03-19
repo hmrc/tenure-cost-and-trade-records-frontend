@@ -21,6 +21,7 @@ import play.api.libs.json.{Json, OFormat}
 
 case class ServicesPaid(
   details: ServicePaidSeparately,
+  annualCharge: Option[ServicePaidSeparatelyCharge] = None,
   addAnotherPaidService: Option[AnswersYesNo] = None
 )
 

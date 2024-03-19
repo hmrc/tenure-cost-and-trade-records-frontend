@@ -996,7 +996,7 @@ trait FakeObjects {
     tradeServicesIndex = 1,
     servicesPaidIndex = 1,
     tradeServices = IndexedSeq(TradeServices(TradeServicesDetails("service-1"))),
-    servicesPaid = IndexedSeq(ServicesPaid(ServicePaidSeparately(100, "service-paid-1"))),
+    servicesPaid = IndexedSeq(ServicesPaid(ServicePaidSeparately("service-paid-1"))),
     paymentForTradeServices = Some(PaymentForTradeServices(AnswerYes))
   )
 
