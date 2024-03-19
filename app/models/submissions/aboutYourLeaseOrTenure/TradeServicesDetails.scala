@@ -19,7 +19,6 @@ package models.submissions.aboutYourLeaseOrTenure
 import play.api.libs.json.{Json, OFormat}
 
 case class TradeServicesDetails(
-  sumExcludingVat: Option[BigDecimal] = None,
   description: String
 )
 object TradeServicesDetails {

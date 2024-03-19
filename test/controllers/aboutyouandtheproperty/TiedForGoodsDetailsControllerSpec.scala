@@ -39,14 +39,29 @@ class TiedForGoodsDetailsControllerSpec extends TestBaseSpec {
     mockSessionRepo
   )
 
+  def tiedForGoodsDetailsControllerNone() = new TiedForGoodsDetailsController(
+    stubMessagesControllerComponents(),
+    aboutYouAndThePropertyNavigator,
+    tiedForGoodsDetailsView,
+    preEnrichedActionRefiner(aboutYouAndTheProperty = None),
+    mockSessionRepo
+  )
+
   "Tied for goods details controller" should {
-    "return 200" in {
+    "return 200 tied goods details in the session" in {
       val result = tiedForGoodsDetailsController().show(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return HTML" in {
       val result = tiedForGoodsDetailsController().show(fakeRequest)
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
+    }
+
+    "return 200 no tied goods details in the session" in {
+      val result = tiedForGoodsDetailsControllerNone().show(fakeRequest)
+      status(result)      shouldBe Status.OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }

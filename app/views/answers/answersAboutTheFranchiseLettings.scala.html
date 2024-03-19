@@ -96,7 +96,7 @@
         @govukSummaryList(SummaryList(rows =
             sectionAnswers.optionalRow("checkYourAnswersAboutFranchiseOrLettings.separateBusiness",
                 _.cateringOrFranchiseFee.map(yesNo => messages(s"label.${yesNo.name}")),
-                navigator.routeMap(FranchiseOrLettingsTiedToPropertyId)(request.sessionData), "cateringOperationOrLettingAccommodation")
+                navigator.routeMap(FranchiseOrLettingsTiedToPropertyId)(request.sessionData), "concessionOrFranchiseFee")
         ))
 
         @if(sectionAnswers.answers.flatMap(_.cateringOrFranchiseFee).contains(AnswerYes)) {
@@ -332,7 +332,7 @@
                         List(
                             SummaryListRow(
                                 Key(Text(messages("checkYourAnswersAboutFranchiseOrLettings.addedLetting6015", request.sessionData.aboutFranchisesOrLettings.flatMap(_.lettingSections).getOrElse(IndexedSeq.empty).length)), classes = "govuk-heading-m"),
-                                actions = Some(Actions(items = List(ActionItem(navigator.routeMap(LettingAccommodationRentIncludesPageId)(request.sessionData).url, Text(messages("checkYourAnswersAboutFranchiseOrLettings.addLetting"))))))
+                                actions = Some(Actions(items = List(ActionItem(navigator.routeMap(LettingAccommodationRentIncludesPageId)(request.sessionData).url+"&from=CYA", Text(messages("checkYourAnswersAboutFranchiseOrLettings.addLetting"))))))
                             )
                         )
                     ))
@@ -341,7 +341,7 @@
                         List(
                             SummaryListRow(
                                 Key(Text(messages("checkYourAnswersAboutFranchiseOrLettings.addedLetting", request.sessionData.aboutFranchisesOrLettings.flatMap(_.lettingSections).getOrElse(IndexedSeq.empty).length)), classes = "govuk-heading-m"),
-                                actions = Some(Actions(items = List(ActionItem(navigator.routeMap(LettingAccommodationRentIncludesPageId)(request.sessionData).url, Text(messages("checkYourAnswersAboutFranchiseOrLettings.addLetting"))))))
+                                actions = Some(Actions(items = List(ActionItem(navigator.routeMap(LettingAccommodationRentIncludesPageId)(request.sessionData).url+"&from=CYA", Text(messages("checkYourAnswersAboutFranchiseOrLettings.addLetting"))))))
                             )
                         )
                     ))
@@ -352,7 +352,7 @@
                         List(
                             SummaryListRow(
                                 Key(Text(messages("checkYourAnswersAboutFranchiseOrLettings.addedLettingPlural6015", request.sessionData.aboutFranchisesOrLettings.flatMap(_.lettingSections).getOrElse(IndexedSeq.empty).length)), classes = "govuk-heading-m"),
-                                actions = Some(Actions(items = List(ActionItem((navigator.routeMap(LettingAccommodationRentIncludesPageId)(request.sessionData)).url, Text(messages("checkYourAnswersAboutFranchiseOrLettings.addLetting"))))))
+                                actions = Some(Actions(items = List(ActionItem(navigator.routeMap(LettingAccommodationRentIncludesPageId)(request.sessionData).url+"&from=CYA", Text(messages("checkYourAnswersAboutFranchiseOrLettings.addLetting"))))))
                             )
                         )
                     ))
@@ -361,7 +361,7 @@
                         List(
                             SummaryListRow(
                                 Key(Text(messages("checkYourAnswersAboutFranchiseOrLettings.addedLettingPlural", request.sessionData.aboutFranchisesOrLettings.flatMap(_.lettingSections).getOrElse(IndexedSeq.empty).length)), classes = "govuk-heading-m"),
-                                actions = Some(Actions(items = List(ActionItem(navigator.routeMap(LettingAccommodationRentIncludesPageId)(request.sessionData).url, Text(messages("checkYourAnswersAboutFranchiseOrLettings.addLetting"))))))
+                                actions = Some(Actions(items = List(ActionItem(navigator.routeMap(LettingAccommodationRentIncludesPageId)(request.sessionData).url+"&from=CYA", Text(messages("checkYourAnswersAboutFranchiseOrLettings.addLetting"))))))
                             )
                         )
                     ))

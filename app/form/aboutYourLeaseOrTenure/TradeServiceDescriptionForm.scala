@@ -25,12 +25,7 @@ object TradeServiceDescriptionForm {
   val tradeServicesDescriptionForm: Form[TradeServicesDetails] =
     Form(
       mapping(
-        "sumExcludingVat" -> optional(
-          text
-            .verifying("error.tradeDescription.invalidCurrency", s => s.matches("-?\\d+(\\.\\d+)?"))
-            .transform[BigDecimal](s => BigDecimal(s.replace(",", "")), v => v.toString)
-        ),
-        "description"     -> default(text, "")
+        "description" -> default(text, "")
           .verifying(
             nonEmpty(errorMessage = "tradeServiceDescription.describe.error"),
             maxLength(500, "error.tradeServiceDescription.maxLength")
