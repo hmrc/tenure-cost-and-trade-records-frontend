@@ -38,7 +38,7 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[RentIncludeFixturesOrFittingsInformationDetails], summary: Summary)(implicit request: SessionRequest[_], messages: Messages)
+@(theForm: Form[RentIncludeFixturesOrFittingsInformationDetails], summary: Summary)(implicit request: Request[_], messages: Messages)
 
 
 @layout(

@@ -30,10 +30,7 @@ object RentIncludeTradeServicesDetailsForm {
   ): Form[RentIncludeTradeServicesInformationDetails] = Form(
     mapping(
       "sumIncludedInRent" ->
-        partOfAnnualRent(
-          messages("error.rentIncludeTradeServicesDetails.title"),
-          annualRent,
-          otherIncludedPartsSum),
+        partOfAnnualRent(messages("error.rentIncludeTradeServicesDetails.title"), annualRent, otherIncludedPartsSum),
       "describeServices"  ->
         default(text, "").verifying(
           nonEmpty(errorMessage = "error.describeServices.required"),
