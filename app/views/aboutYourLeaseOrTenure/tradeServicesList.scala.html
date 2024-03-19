@@ -49,7 +49,7 @@
     }
 }
 
-@service = @{ if (numberOfServices.size > 1) messages("addTradeService.service") else messages("addTradeService.services") }
+@service = @{ if (numberOfServices.size > 1) messages("addTradeService.services") else messages("addTradeService.service") }
 
 @layout(
     pageHeading = messages("addTradeService.heading", numberOfServices.size, service) ,
