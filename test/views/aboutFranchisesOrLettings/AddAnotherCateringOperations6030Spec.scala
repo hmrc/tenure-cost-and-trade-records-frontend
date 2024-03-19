@@ -17,7 +17,7 @@
 package views.aboutFranchisesOrLettings
 
 import actions.SessionRequest
-import form.aboutfranchisesorlettings.AddAnotherLettingOtherPartOfPropertyForm
+import form.aboutfranchisesorlettings.AddAnotherCateringOperationOrLettingAccommodationForm
 import models.pages.Summary
 import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
 import org.scalatest.matchers.must.Matchers._
@@ -25,36 +25,36 @@ import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
 
-class AddAnotherLettingOtherPartOfPropertySpec extends QuestionViewBehaviours[AnswersYesNo] {
+class AddAnotherCateringOperations6030Spec extends QuestionViewBehaviours[AnswersYesNo] {
 
-  val messageKeyPrefix     = "addAnotherLettingOtherPartOfProperty"
-  val messageKeyPrefix6015 = "addAnotherLetting"
+  val messageKeyPrefix = "addAnotherCateringOperation"
 
-  override val form: Form[AnswersYesNo] = AddAnotherLettingOtherPartOfPropertyForm.addAnotherLettingForm
+  override val form: Form[AnswersYesNo] =
+    AddAnotherCateringOperationOrLettingAccommodationForm.addAnotherCateringOperationForm
 
-  val sessionRequest = SessionRequest(baseFilled6010Session, fakeRequest)
+  val sessionRequest = SessionRequest(baseFilled6030Session, fakeRequest)
 
   def createView: () => Html = () =>
     addAnotherOperationConcessionFranchise(
       form,
       0,
-      messageKeyPrefix6015,
-      messageKeyPrefix,
-      controllers.aboutfranchisesorlettings.routes.CateringOperationRentIncludesController.show(0).url,
-      Summary("99996010001")
+      "addAnotherConcession",
+      "addAnotherCateringOperation",
+      controllers.aboutfranchisesorlettings.routes.FeeReceivedController.show(0).url,
+      Summary("99996030001")
     )(sessionRequest, messages)
 
   def createViewUsingForm: Form[AnswersYesNo] => Html = (form: Form[AnswersYesNo]) =>
     addAnotherOperationConcessionFranchise(
       form,
       0,
-      messageKeyPrefix6015,
-      messageKeyPrefix,
-      controllers.aboutfranchisesorlettings.routes.CateringOperationRentIncludesController.show(0).url,
-      Summary("99996010001")
+      "addAnotherConcession",
+      "addAnotherCateringOperation",
+      controllers.aboutfranchisesorlettings.routes.FeeReceivedController.show(0).url,
+      Summary("99996030001")
     )(sessionRequest, messages)
 
-  "Add another letting part of property view" must {
+  "Add another catering operation view" must {
 
     behave like normalPageWithZeroBusinessOrLettings(createView, messageKeyPrefix, "0")
 
@@ -63,9 +63,7 @@ class AddAnotherLettingOtherPartOfPropertySpec extends QuestionViewBehaviours[An
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText mustBe messages("back.link.label")
       val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.aboutfranchisesorlettings.routes.CateringOperationRentIncludesController
-        .show(0)
-        .url
+      backlinkUrl mustBe controllers.aboutfranchisesorlettings.routes.FeeReceivedController.show(0).url
     }
 
     "Section heading is visible" in {
