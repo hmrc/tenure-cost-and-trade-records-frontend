@@ -25,33 +25,32 @@ import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
 
-class AddAnotherLettingOtherPartOfPropertySpec extends QuestionViewBehaviours[AnswersYesNo] {
+class AddAnotherLettingOtherPartOfProperty6030Spec extends QuestionViewBehaviours[AnswersYesNo] {
 
-  val messageKeyPrefix     = "addAnotherLettingOtherPartOfProperty"
-  val messageKeyPrefix6015 = "addAnotherLetting"
+  val messageKeyPrefix = "addAnotherLettingOtherPartOfProperty"
 
   override val form: Form[AnswersYesNo] = AddAnotherLettingOtherPartOfPropertyForm.addAnotherLettingForm
 
-  val sessionRequest = SessionRequest(baseFilled6010Session, fakeRequest)
+  val sessionRequest = SessionRequest(baseFilled6030Session, fakeRequest)
 
   def createView: () => Html = () =>
     addAnotherOperationConcessionFranchise(
       form,
       0,
-      messageKeyPrefix6015,
-      messageKeyPrefix,
+      "addAnotherLetting",
+      "addAnotherLettingOtherPartOfProperty",
       controllers.aboutfranchisesorlettings.routes.CateringOperationRentIncludesController.show(0).url,
-      Summary("99996010001")
+      Summary("99996030001")
     )(sessionRequest, messages)
 
   def createViewUsingForm: Form[AnswersYesNo] => Html = (form: Form[AnswersYesNo]) =>
     addAnotherOperationConcessionFranchise(
       form,
       0,
-      messageKeyPrefix6015,
-      messageKeyPrefix,
+      "addAnotherLetting",
+      "addAnotherLettingOtherPartOfProperty",
       controllers.aboutfranchisesorlettings.routes.CateringOperationRentIncludesController.show(0).url,
-      Summary("99996010001")
+      Summary("99996030001")
     )(sessionRequest, messages)
 
   "Add another letting part of property view" must {

@@ -1,5 +1,5 @@
 @*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -182,9 +182,17 @@
        )
 
        @includes.taskListItem("turnover", "turnover.heading",
-        controllers.aboutthetradinghistory.routes.TurnoverController.show(),
+        if(forType == ForTypes.for6030) {
+         controllers.aboutthetradinghistory.routes.Turnover6030Controller.show()
+        } else {
+         controllers.aboutthetradinghistory.routes.TurnoverController.show()
+        },
         section3Completed,
-        session.aboutTheTradingHistory.flatMap(_.turnoverSections),
+        if(forType == ForTypes.for6030) {
+         session.aboutTheTradingHistory.flatMap(_.turnoverSections6030)
+        } else {
+         session.aboutTheTradingHistory.flatMap(_.turnoverSections)
+        },
         session.aboutTheTradingHistory.flatMap(_.occupationAndAccountingInformation).isEmpty
        )
 

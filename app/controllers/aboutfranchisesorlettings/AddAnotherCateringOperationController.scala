@@ -85,7 +85,7 @@ class AddAnotherCateringOperationController @Inject() (
           index,
           "addAnotherConcession",
           "addAnotherCateringOperation",
-          controllers.aboutfranchisesorlettings.routes.CateringOperationRentIncludesController.show(index).url,
+          getBackLink(index),
           request.sessionData.toSummary
         )
       )
@@ -93,7 +93,7 @@ class AddAnotherCateringOperationController @Inject() (
   }
 
   def submit(index: Int) = (Action andThen withSessionRefiner).async { implicit request =>
-    if (franchisesOrLettingsData.exists(_.cateringOperationCurrentIndex >= 4)) {
+    if (franchisesOrLettingsData.exists(_.cateringOperationCurrentIndex >= 4) && navigator.from != "CYA") {
 
       val redirectUrl = controllers.routes.MaxOfLettingsReachedController.show(Some("franchiseCatering")).url
 
@@ -110,7 +110,7 @@ class AddAnotherCateringOperationController @Inject() (
               index,
               "addAnotherConcession",
               "addAnotherCateringOperation",
-              controllers.aboutfranchisesorlettings.routes.CateringOperationRentIncludesController.show(index).url,
+              getBackLink(index),
               request.sessionData.toSummary
             )
           )),
@@ -233,5 +233,14 @@ class AddAnotherCateringOperationController @Inject() (
       }
     )
   }
+
+  private def getBackLink(idx: Int)(implicit request: SessionRequest[AnyContent]): String =
+    if (navigator.from == "CYA") {
+      controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show().url
+    } else if (forType == ForTypes.for6030) {
+      controllers.aboutfranchisesorlettings.routes.FeeReceivedController.show(idx).url
+    } else {
+      controllers.aboutfranchisesorlettings.routes.CateringOperationRentIncludesController.show(idx).url
+    }
 
 }
