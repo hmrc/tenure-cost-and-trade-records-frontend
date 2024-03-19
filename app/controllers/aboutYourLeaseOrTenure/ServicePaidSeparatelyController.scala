@@ -51,7 +51,7 @@ class ServicePaidSeparatelyController @Inject() (
 
     Ok(
       view(
-        existingDetails.fold(servicePaidSeparatelyForm)(servicePaidSeparatelyForm.fill),
+        existingDetails.fold(servicePaidSeparatelyForm())(servicePaidSeparatelyForm().fill),
         index,
         getBackLink(request, index.getOrElse(0)),
         request.sessionData.toSummary
@@ -61,7 +61,7 @@ class ServicePaidSeparatelyController @Inject() (
 
   def submit(index: Option[Int]) = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[ServicePaidSeparately](
-      servicePaidSeparatelyForm,
+      servicePaidSeparatelyForm(),
       formWithErrors =>
         BadRequest(
           view(

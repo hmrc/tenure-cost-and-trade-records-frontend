@@ -896,7 +896,8 @@ servicePaidSeparately.describe.hint = For example, lighting, heating, cleaning o
 servicePaidSeparately.describe.error = Please describe the type of service
 error.servicePaidSeparately.invalidCurrency = The sum must be a number like 100 or 100.00 and cannot be less than 0
 error.servicePaidSeparately.required = You must tell us the annual charge for the service which you pay for separately
-error.servicesPaidSeparately.title = Sum included to cover trade services
+error.annualCharge.title = Sum included to cover trade services
+error.annualCharge.invalid = You must tell us the annual charge for the service which you pay for separately
 
 # SERVICES PAID SEPARATELY LIST
 #####################################

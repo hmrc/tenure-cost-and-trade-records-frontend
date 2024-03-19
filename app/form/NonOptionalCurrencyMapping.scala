@@ -26,20 +26,21 @@ import scala.util.{Failure, Success, Try}
 object NonOptionalCurrencyMapping {
 
   def partOfAnnualCharge(
-    errorTitle: String,
-    annualCharge: BigDecimal,
-    otherIncludedPartsSum: BigDecimal
-  ): Mapping[BigDecimal] =
-    default(text, "").verifying(
-      Constraint[Option[String]]("partOfAnnualRent") {
-        _.fold[ValidationResult](Valid)(value =>
-          Try(BigDecimal(value)) match {
-            case Success(amount) => validate(amount, otherIncludedPartsSum, Some(annualCharge), errorTitle)
-            case Failure(_)      => Invalid(ValidationError("error.optCurrency.invalid", errorTitle))
-          }
-        )
-      }
-    )
+                          errorTitle: String,
+                          annualCharge: Option[BigDecimal],
+                          otherIncludedPartsSum: BigDecimal
+                        ): Mapping[BigDecimal] =
+    text
+      .verifying("error.annualCharge.invalid", str => Try(BigDecimal(str)).isSuccess) // reject non numerics
+      .transform[BigDecimal]( // transform to BigDecimal
+        str => Try(BigDecimal(str)).getOrElse(BigDecimal(0)), // getOrElse can be removed as we know it is numeric from above. I'll leave that in for now.
+        bd => bd.toString // For display
+      )
+      .verifying(
+        Constraint[BigDecimal]("constraint.check") { bd =>
+          validate(bd, otherIncludedPartsSum, annualCharge, errorTitle) // validate as normal. No changes to validate
+        }
+      )
 
   private def validate(
     partOfRent: BigDecimal,

@@ -27,7 +27,7 @@ import play.api.i18n.Messages
 object ServicePaidSeparatelyForm {
 
   def servicePaidSeparatelyForm(
-                           annualRent: BigDecimal = 0,
+                           annualRent: Option[BigDecimal] = None,
                            annualCharge: BigDecimal = 0
                            )(implicit
                              messages: Messages
@@ -40,10 +40,6 @@ object ServicePaidSeparatelyForm {
             annualRent,
             annualCharge
           ),
-//          text
-//            .verifying("error.servicePaidSeparately.required", s => s.nonEmpty)
-//            .verifying("error.servicePaidSeparately.invalidCurrency", s => s.isEmpty || s.matches("-?\\d+(\\.\\d+)?"))
-//            .transform[BigDecimal](s => BigDecimal(s.replace(",", "")), v => v.toString),
         "description"  ->
           text
             .verifying(
