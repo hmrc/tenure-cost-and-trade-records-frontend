@@ -85,7 +85,7 @@ class AddAnotherCateringOperationController @Inject() (
           index,
           "addAnotherConcession",
           "addAnotherCateringOperation",
-          controllers.aboutfranchisesorlettings.routes.CateringOperationRentIncludesController.show(index).url,
+          getBackLink(index),
           request.sessionData.toSummary
         )
       )
@@ -110,7 +110,7 @@ class AddAnotherCateringOperationController @Inject() (
               index,
               "addAnotherConcession",
               "addAnotherCateringOperation",
-              controllers.aboutfranchisesorlettings.routes.CateringOperationRentIncludesController.show(index).url,
+              getBackLink(index),
               request.sessionData.toSummary
             )
           )),
@@ -233,5 +233,14 @@ class AddAnotherCateringOperationController @Inject() (
       }
     )
   }
+
+  private def getBackLink(idx: Int)(implicit request: SessionRequest[AnyContent]): String =
+    if (navigator.from == "CYA") {
+      controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show().url
+    } else if (forType == ForTypes.for6030) {
+      controllers.aboutfranchisesorlettings.routes.FeeReceivedController.show(idx).url
+    } else {
+      controllers.aboutfranchisesorlettings.routes.CateringOperationRentIncludesController.show(idx).url
+    }
 
 }

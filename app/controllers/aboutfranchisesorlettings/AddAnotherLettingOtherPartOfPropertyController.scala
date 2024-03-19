@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 
 package controllers.aboutfranchisesorlettings
 
-import actions.WithSessionRefiner
+import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
 import form.aboutfranchisesorlettings.AddAnotherLettingOtherPartOfPropertyForm.addAnotherLettingForm
 import form.confirmableActionForm.confirmableActionForm
@@ -60,7 +60,7 @@ class AddAnotherLettingOtherPartOfPropertyController @Inject() (
           index,
           "addAnotherLetting",
           "addAnotherLettingOtherPartOfProperty",
-          controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyRentIncludesController.show(index).url,
+          getBackLink(index),
           request.sessionData.toSummary
         )
       )
@@ -82,9 +82,7 @@ class AddAnotherLettingOtherPartOfPropertyController @Inject() (
               index,
               "addAnotherLetting",
               "addAnotherLettingOtherPartOfProperty",
-              controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyRentIncludesController
-                .show(index)
-                .url,
+              getBackLink(index),
               request.sessionData.toSummary
             )
           ),
@@ -187,4 +185,12 @@ class AddAnotherLettingOtherPartOfPropertyController @Inject() (
       }
     )
   }
+
+  private def getBackLink(idx: Int)(implicit request: SessionRequest[AnyContent]): String =
+    if (navigator.from == "CYA") {
+      controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show().url
+    } else {
+      controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyRentIncludesController.show(idx).url
+    }
+
 }
