@@ -16,35 +16,27 @@
 
 package form.aboutYourLeaseOrTenure
 
-import form.NonOptionalCurrencyMapping.partOfAnnualCharge
-import form.OptionalCurrencyMapping.partOfAnnualRent
 import models.submissions.aboutYourLeaseOrTenure.ServicePaidSeparately
 import play.api.data.Form
 import play.api.data.Forms.{mapping, text}
 import play.api.data.validation.Constraints.{maxLength, nonEmpty}
-import play.api.i18n.Messages
 
 object ServicePaidSeparatelyForm {
 
-  def servicePaidSeparatelyForm(
-                           annualRent: Option[BigDecimal] = None,
-                           annualCharge: BigDecimal = 0
-                           )(implicit
-                             messages: Messages
-                               ): Form[ServicePaidSeparately] =
+  val servicePaidSeparatelyForm: Form[ServicePaidSeparately] =
     Form(
       mapping(
         "annualCharge" ->
-          partOfAnnualCharge(
-            messages("error.annualCharge.title"),
-            annualRent,
-            annualCharge
-          ),
+          text
+            .verifying("error.servicePaidSeparately.required", s => s.nonEmpty)
+            .verifying("error.servicePaidSeparately.invalidCurrency", s => s.isEmpty || s.matches("-?\\d+(\\.\\d+)?"))
+            .transform[BigDecimal](s => BigDecimal(s.replace(",", "")), v => v.toString),
         "description"  ->
           text
             .verifying(
               nonEmpty(errorMessage = "tradeServiceDescription.describe.error"),
-              maxLength(500, "error.tradeServiceDescription.maxLength"))
+              maxLength(500, "error.tradeServiceDescription.maxLength")
+            )
       )(ServicePaidSeparately.apply)(ServicePaidSeparately.unapply)
     )
 

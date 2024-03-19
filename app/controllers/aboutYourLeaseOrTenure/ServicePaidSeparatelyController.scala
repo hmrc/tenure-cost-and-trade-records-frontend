@@ -44,14 +44,14 @@ class ServicePaidSeparatelyController @Inject() (
 
   def show(index: Option[Int]): Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     val existingDetails: Option[ServicePaidSeparately] = for {
-      idx                   <- index
-      existingServicesPaid  <- request.sessionData.aboutLeaseOrAgreementPartThree.map(_.servicesPaid)
+      idx <- index
+      existingServicesPaid <- request.sessionData.aboutLeaseOrAgreementPartThree.map(_.servicesPaid)
       requestedServicesPaid <- existingServicesPaid.lift(idx)
     } yield requestedServicesPaid.details
 
     Ok(
       view(
-        existingDetails.fold(servicePaidSeparatelyForm())(servicePaidSeparatelyForm().fill),
+        existingDetails.fold(servicePaidSeparatelyForm)(servicePaidSeparatelyForm.fill),
         index,
         getBackLink(request, index.getOrElse(0)),
         request.sessionData.toSummary
@@ -61,7 +61,7 @@ class ServicePaidSeparatelyController @Inject() (
 
   def submit(index: Option[Int]) = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[ServicePaidSeparately](
-      servicePaidSeparatelyForm(),
+      servicePaidSeparatelyForm,
       formWithErrors =>
         BadRequest(
           view(
@@ -76,10 +76,10 @@ class ServicePaidSeparatelyController @Inject() (
           request.sessionData.aboutLeaseOrAgreementPartThree.fold(
             AboutLeaseOrAgreementPartThree(servicesPaid = IndexedSeq(ServicesPaid(details = data)))
           ) { aboutLeaseOrAgreementPartThree =>
-            val existingSections                                 = aboutLeaseOrAgreementPartThree.servicesPaid
-            val requestedSection                                 = index.flatMap(existingSections.lift)
+            val existingSections = aboutLeaseOrAgreementPartThree.servicesPaid
+            val requestedSection = index.flatMap(existingSections.lift)
             val updatedSections: (Int, IndexedSeq[ServicesPaid]) = requestedSection.fold {
-              val defaultSection   = ServicesPaid(data)
+              val defaultSection = ServicesPaid(data)
               val appendedSections = existingSections.appended(defaultSection)
               appendedSections.indexOf(defaultSection) -> appendedSections
             } { sectionToUpdate =>
@@ -93,7 +93,7 @@ class ServicePaidSeparatelyController @Inject() (
                 servicesPaid = updatedSections._2
               )
           }
-        val updatedData    = updateAboutLeaseOrAgreementPartThree(_ => updatedDetails)
+        val updatedData = updateAboutLeaseOrAgreementPartThree(_ => updatedDetails)
         session.saveOrUpdate(updatedData)
         Redirect(navigator.nextPage(ServicePaidSeparatelyId, updatedData).apply(updatedData))
       }
@@ -104,6 +104,6 @@ class ServicePaidSeparatelyController @Inject() (
     request.getQueryString("from") match {
       case Some("Change") =>
         controllers.aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyListController.show(index).url
-      case _              => controllers.aboutYourLeaseOrTenure.routes.PaymentForTradeServicesController.show().url
+      case _ => controllers.aboutYourLeaseOrTenure.routes.PaymentForTradeServicesController.show().url
     }
 }
