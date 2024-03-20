@@ -16,22 +16,21 @@
 
 package form.aboutYourLeaseOrTenure
 
-import models.submissions.aboutYourLeaseOrTenure.ServicePaidSeparately
+import models.submissions.aboutYourLeaseOrTenure.ServicePaidSeparatelyCharge
 import play.api.data.Form
 import play.api.data.Forms.{mapping, text}
-import play.api.data.validation.Constraints.{maxLength, nonEmpty}
 
-object ServicePaidSeparatelyForm {
+object ServicePaidSeparatelyChargeForm {
 
-  val servicePaidSeparatelyForm: Form[ServicePaidSeparately] =
+  val servicePaidSeparatelyChargeForm: Form[ServicePaidSeparatelyCharge] =
     Form(
       mapping(
-        "description" ->
+        "annualCharge" ->
           text
-            .verifying(
-              nonEmpty(errorMessage = "servicePaidSeparately.describe.error"),
-              maxLength(500, "error.tradeServiceDescription.maxLength")
-            )
-      )(ServicePaidSeparately.apply)(ServicePaidSeparately.unapply)
+            .verifying("error.servicePaidSeparately.required", s => s.nonEmpty)
+            .verifying("error.servicePaidSeparately.invalidCurrency", s => s.isEmpty || s.matches("-?\\d+(\\.\\d+)?"))
+            .transform[BigDecimal](s => BigDecimal(s.replace(",", "")), v => v.toString)
+      )(ServicePaidSeparatelyCharge.apply)(ServicePaidSeparatelyCharge.unapply)
     )
+
 }

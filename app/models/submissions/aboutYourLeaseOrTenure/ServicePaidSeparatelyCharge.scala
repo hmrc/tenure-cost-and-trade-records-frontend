@@ -18,9 +18,10 @@ package models.submissions.aboutYourLeaseOrTenure
 
 import play.api.libs.json.{Json, OFormat}
 
-case class ServicePaidSeparately(
-  description: String
+case class ServicePaidSeparatelyCharge(
+  annualCharge: BigDecimal
 )
-object ServicePaidSeparately {
-  implicit val format: OFormat[ServicePaidSeparately] = Json.format[ServicePaidSeparately]
+
+object ServicePaidSeparatelyCharge {
+  implicit val format: OFormat[ServicePaidSeparatelyCharge] = Json.format[ServicePaidSeparatelyCharge]
 }

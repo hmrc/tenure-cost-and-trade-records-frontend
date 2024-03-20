@@ -56,7 +56,7 @@ class ServicePaidSeparatelyListController @Inject() (
             case _            => addServicePaidSeparatelyForm
           },
           index,
-          toServicePaidSeparately(index).url,
+          backLink(index),
           request.sessionData.toSummary
         )
       )
@@ -71,7 +71,7 @@ class ServicePaidSeparatelyListController @Inject() (
           view(
             formWithErrors,
             index,
-            toServicePaidSeparately(index).url,
+            backLink(index),
             request.sessionData.toSummary
           )
         ),
@@ -164,4 +164,7 @@ class ServicePaidSeparatelyListController @Inject() (
 
   private def toServicePaidSeparatelyList(index: Int): Call =
     controllers.aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyListController.show(index)
+
+  private def backLink(index: Int): String =
+    controllers.aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyChargeController.show(index).url
 }

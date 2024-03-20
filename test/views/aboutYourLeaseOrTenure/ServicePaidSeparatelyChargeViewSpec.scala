@@ -16,47 +16,45 @@
 
 package views.aboutYourLeaseOrTenure
 
-import form.aboutYourLeaseOrTenure.ServicePaidSeparatelyForm
+import form.aboutYourLeaseOrTenure.{ServicePaidSeparatelyChargeForm, ServicePaidSeparatelyForm}
 import models.pages.Summary
-import models.submissions.aboutYourLeaseOrTenure.ServicePaidSeparately
+import models.submissions.aboutYourLeaseOrTenure.{ServicePaidSeparately, ServicePaidSeparatelyCharge}
 import org.scalatest.matchers.must.Matchers.convertToAnyMustWrapper
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class ServicePaidSeparatelyViewSpec extends QuestionViewBehaviours[ServicePaidSeparately] {
+class ServicePaidSeparatelyChargeViewSpec extends QuestionViewBehaviours[ServicePaidSeparatelyCharge] {
 
-  val messageKeyPrefix = "servicePaidSeparately"
+  val messageKeyPrefix = "servicePaidSeparatelyCharge"
 
-  override val form = ServicePaidSeparatelyForm.servicePaidSeparatelyForm
+  override val form = ServicePaidSeparatelyChargeForm.servicePaidSeparatelyChargeForm
 
-  val backLink = controllers.aboutYourLeaseOrTenure.routes.PaymentForTradeServicesController.show().url
+  def createView = () => servicePaidSeparatelyChargeView(form, 1, Summary("99996010001"))(fakeRequest, messages)
 
-  def createView = () => servicePaidSeparatelyView(form, None, backLink, Summary("99996010001"))(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[ServicePaidSeparatelyCharge]) =>
+    servicePaidSeparatelyChargeView(form, 1, Summary("99996010001"))(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[ServicePaidSeparately]) =>
-    servicePaidSeparatelyView(form, None, backLink, Summary("99996010001"))(fakeRequest, messages)
-
-  "Service paid separately view" should {
+  "Service paid separately charge view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 
-    "has a link marked with back.link.label leading to payment for trade services question page" in {
+    "has a link marked with back.link.label leading to Service paid separately description page" in {
       val doc          = asDocument(createView())
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText mustBe messages("back.link.label")
       val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.aboutYourLeaseOrTenure.routes.PaymentForTradeServicesController.show().url
+      backlinkUrl mustBe controllers.aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyController.show(Some(1)).url
     }
 
     "Section heading is visible" in {
-      val doc         = asDocument(createViewUsingForm(form)) // govuk-caption-m
+      val doc         = asDocument(createViewUsingForm(form))
       val sectionText = doc.getElementsByClass("govuk-caption-m").text()
       assert(sectionText == messages("label.section.aboutYourLeaseOrTenure"))
     }
 
-    "contain input for the separately paid service description" in {
+    "contain input for the separately paid service charge" in {
       val doc = asDocument(createViewUsingForm(form))
-      assertRenderedById(doc, "description")
+      assertRenderedById(doc, "annualCharge")
     }
 
     "contain continue button with the value Continue" in {

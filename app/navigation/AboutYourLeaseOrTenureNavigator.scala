@@ -262,6 +262,11 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
     controllers.aboutYourLeaseOrTenure.routes.TradeServicesListController.show(getIndexOfTradeServices(answers))
   }
   private def servicePaidSeparatelyRouting: Session => Call    = answers => {
+    controllers.aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyChargeController
+      .show(getIndexOfPaidServices(answers))
+  }
+
+  private def servicePaidSeparatelyChargeRouting: Session => Call = answers => {
     controllers.aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyListController.show(getIndexOfPaidServices(answers))
   }
 
@@ -398,6 +403,7 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
     TradeServicesDescriptionId                    -> tradeServicesDescriptionRouting,
     TradeServicesListId                           -> tradeServicesListRouting,
     ServicePaidSeparatelyId                       -> servicePaidSeparatelyRouting,
+    ServicePaidSeparatelyChargeId                 -> servicePaidSeparatelyChargeRouting,
     ServicePaidSeparatelyListId                   -> servicePaidSeparatelyListRouting,
     PaymentForTradeServicesId                     -> paymentForTradeServicesRouting,
     CheckYourAnswersAboutYourLeaseOrTenureId      -> (_ => controllers.routes.TaskListController.show())

@@ -162,6 +162,10 @@ case object ServicePaidSeparatelyId extends Identifier {
   override def toString: String = "servicePaidSeparatelyPage"
 }
 
+case object ServicePaidSeparatelyChargeId extends Identifier {
+  override def toString: String = "servicePaidSeparatelyChargePage"
+}
+
 case object ServicePaidSeparatelyListId extends Identifier {
   override def toString: String = "servicePaidSeparatelyListPage"
 }

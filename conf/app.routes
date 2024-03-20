@@ -295,6 +295,9 @@ POST        /trade-services-remove                                  controllers.
 GET         /service-paid-separately                                controllers.aboutYourLeaseOrTenure.ServicePaidSeparatelyController.show(idx: Option[Int] ?= None)
 POST        /service-paid-separately                                controllers.aboutYourLeaseOrTenure.ServicePaidSeparatelyController.submit(idx: Option[Int])
 
+GET         /service-paid-separately-charge                         controllers.aboutYourLeaseOrTenure.ServicePaidSeparatelyChargeController.show(idx: Int)
+POST        /service-paid-separately-charge                         controllers.aboutYourLeaseOrTenure.ServicePaidSeparatelyChargeController.submit(idx: Int)
+
 GET         /service-paid-separately-list                           controllers.aboutYourLeaseOrTenure.ServicePaidSeparatelyListController.show(idx: Int)
 POST        /service-paid-separately-list                           controllers.aboutYourLeaseOrTenure.ServicePaidSeparatelyListController.submit(idx: Int)
 GET         /service-paid-separately-remove                         controllers.aboutYourLeaseOrTenure.ServicePaidSeparatelyListController.remove(idx: Int)

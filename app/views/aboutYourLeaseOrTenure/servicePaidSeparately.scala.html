@@ -40,12 +40,12 @@
 )
 
 
-@(theForm: Form[ServicePaidSeparately], index: Option[Int], backLink: String,   summary: Summary)(implicit request: Request[_], messages: Messages)
+@(theForm: Form[_], index: Option[Int], backLink: String,   summary: Summary)(implicit request: Request[_], messages: Messages)
 
 @layout(
     pageHeading = messages("servicePaidSeparately.heading"),
     showSection = true,
-    showH1 = false,
+    showH1 = true,
     summary = Some(summary),
     sectionName = messages("label.section.aboutYourLeaseOrTenure"),
     backLinkUrl = backLink,
@@ -53,38 +53,15 @@
 ) {
     @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyController.submit(index)) {
 
-        <h1 class="govuk-heading-l">@messages("servicePaidSeparately.heading")</h1>
-
-        @hmrcCurrencyInput(
-            CurrencyInput(
-                id = "annualCharge",
-                name = "annualCharge",
-                value = theForm("annualCharge").value,
-                classes = "govuk-input--width-10 total-annual-rent",
-                label = Label(
-                    content = Text(messages("servicePaidSeparately.VAT")),
-                    classes = "govuk-label--m"
-                ),
-                errorMessage = theForm.errors.asTextErrorMessageForField("annualCharge"),
-            )
-        )
-
         @govukCharacterCount(
             CharacterCount(
                 id = "description",
                 name = "description",
                 maxLength = 500,
                 hint = Hint(content = Text(messages("servicePaidSeparately.describe.hint"))),
-                label = Label(
-                    content = Text(messages("servicePaidSeparately.describe")),
-                    classes = "govuk-label--m",
-                    isPageHeading = false
-                ),
                 errorMessage = theForm.errors.asTextErrorMessageForField("description"),
             ).withFormField(theForm("description"))
         )
-
-
 
         @includes.continueSaveAsDraftButtons(govukButton)
     }
