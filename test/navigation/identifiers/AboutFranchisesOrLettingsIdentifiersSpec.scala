@@ -69,6 +69,9 @@ class AboutFranchisesOrLettingsIdentifiersSpec extends TestBaseSpec {
     "Identifier for add another concession operation page" in {
       assert(AddAnotherCateringOperationPageId.toString.equals("addAnotherCateringOperationPage"))
     }
+    "Identifier for add another concession page" in {
+      assert(AddAnotherConcessionPageId.toString.equals("addAnotherConcessionRoutingPage"))
+    }
 
     "Identifier for max number of lettings reached page" in {
       assert(MaxOfLettingsReachedCateringId.toString.equals("MaxOfLettingsReachedCateringPage"))

@@ -107,5 +107,8 @@ class ConnectedToPropertyIdentifiersSpec extends TestBaseSpec {
     "Identifier for cya connection to property page" in {
       assert(CheckYourAnswersConnectionToPropertyId.toString.equals("CheckYourAnswersConnectionToPropertyPage"))
     }
+    "Identifier for max letting  page" in {
+      assert(MaxOfLettingsReachedId.toString.equals("MaxOfLettingsReachedPage"))
+    }
   }
 }
