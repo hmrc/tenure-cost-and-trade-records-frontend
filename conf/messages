@@ -1981,7 +1981,7 @@ error.confirmableAction.required = Select yes if you want to remove this item
 # Currency optional validation
 error.optCurrency.negative = {0} cannot be a negative number
 error.optCurrency.invalid = {0} must be a number, for example 100 or 100.00
-error.optCurrency.graterThanAnnualRent = {0} cannot be greater than the annual rent {1}
+error.optCurrency.graterThanAnnualRent = {0} cannot be greater than the annual rent of {1}
 error.includedPartsSum.graterThanAnnualRent = The combined sum {0} included to cover equipment and trade services cannot be greater than the annual rent {1}
 
 # Date fields validation
