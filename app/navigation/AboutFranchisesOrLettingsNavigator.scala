@@ -51,12 +51,6 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit) extends Naviga
         .show()
         .url,
       addAnotherCateringOperationsConditionsRouting
-    ),
-    (
-      aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsController
-        .show()
-        .url,
-      lettingsRentIncludesConditionsRouting
     )
   )
 
