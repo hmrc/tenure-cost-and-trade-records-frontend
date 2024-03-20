@@ -107,7 +107,7 @@ class AddAnotherLettingOtherPartOfPropertyController @Inject() (
               )
               val updatedData     = updateAboutFranchisesOrLettings(_.copy(lettingSections = updatedSections))
               session.saveOrUpdate(updatedData).map { _ =>
-                Redirect(navigator.nextPage(AddAnotherLettingAccommodationPageId, updatedData).apply(updatedData))
+                Redirect(navigator.nextWithoutRedirectToCYA(AddAnotherLettingAccommodationPageId, updatedData).apply(updatedData))
               }
             }
       )
