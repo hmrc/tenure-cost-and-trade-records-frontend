@@ -91,11 +91,6 @@
     request.sessionData.financialYearEndDates.size
 }
 
-
-@costInputAttributes = @{
-    Map("maxlength" -> "13")
-}
-
 @layout(
   pageHeading = messages("otherCosts.heading"),
   showSection = true,
@@ -134,7 +129,10 @@
                                             prefix = Some(PrefixOrSuffix(
                                                 content = Text("£")
                                             )),
-                                            attributes = costInputAttributes
+                                            attributes = Map(
+                                                "maxlength" -> "13",
+                                                "aria-label" -> messages("otherCosts.contributionToHeadOffice")
+                                            ),
                                         ).withFormField(theForm(s"otherCosts[$idx].contributionsToHeadOffice")))
                                     )
                                 )
@@ -150,7 +148,10 @@
                                             prefix = Some(PrefixOrSuffix(
                                                 content = Text("£")
                                             )),
-                                            attributes = costInputAttributes
+                                            attributes = Map(
+                                                "maxlength" -> "13",
+                                                "aria-label" -> messages("otherCosts.otherCosts")
+                                            ),
                                         ).withFormField(theForm(s"otherCosts[$idx].otherCosts")))
                                     ),
                                     classes = "no-border-bottom"

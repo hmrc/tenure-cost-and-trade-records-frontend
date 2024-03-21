@@ -91,10 +91,6 @@
     </span>
 }
 
-@inputAttributes = @{
-    Map("maxlength" -> "13")
-}
-
 @layout(
     pageHeading = messages("variableOperatingExpenses.heading"),
     showSection = true,
@@ -137,7 +133,10 @@
                                             prefix = Some(PrefixOrSuffix(
                                                 content = Text("£")
                                             )),
-                                            attributes = inputAttributes
+                                            attributes = Map(
+                                                "maxlength" -> "13",
+                                                "aria-label" -> messages("variableOperatingExpenses.energyAndUtilities")
+                                            ),
                                         ).withFormField(form(s"variableOperatingExpenses.year[$idx].energy-and-utilities")))
                                     )
                                 )
@@ -150,7 +149,10 @@
                                             prefix = Some(PrefixOrSuffix(
                                                 content = Text("£")
                                             )),
-                                            attributes = inputAttributes
+                                            attributes = Map(
+                                                "maxlength" -> "13",
+                                                "aria-label" -> messages("variableOperatingExpenses.cleaningAndLaundry")
+                                            ),
                                         ).withFormField(form(s"variableOperatingExpenses.year[$idx].cleaning-and-laundry")))
                                     )
                                 )
@@ -163,7 +165,10 @@
                                             prefix = Some(PrefixOrSuffix(
                                                 content = Text("£")
                                             )),
-                                            attributes = inputAttributes
+                                            attributes = Map(
+                                                "maxlength" -> "13",
+                                                "aria-label" -> messages("variableOperatingExpenses.buildingMaintenanceAndRepairs")
+                                            ),
                                         ).withFormField(form(s"variableOperatingExpenses.year[$idx].building-maintenance-and-repairs")))
                                     )
                                 )
@@ -176,7 +181,10 @@
                                             prefix = Some(PrefixOrSuffix(
                                                 content = Text("£")
                                             )),
-                                            attributes = inputAttributes
+                                            attributes = Map(
+                                                "maxlength" -> "13",
+                                                "aria-label" -> messages("variableOperatingExpenses.fixturesFittingsAndEquipment")
+                                            ),
                                         ).withFormField(form(s"variableOperatingExpenses.year[$idx].fixtures-fittings-and-equipment")))
                                     )
                                 )
@@ -189,7 +197,10 @@
                                             prefix = Some(PrefixOrSuffix(
                                                 content = Text("£")
                                             )),
-                                            attributes = inputAttributes
+                                            attributes = Map(
+                                                "maxlength" -> "13",
+                                                "aria-label" -> messages("variableOperatingExpenses.advertisingAndPromotions")
+                                            ),
                                         ).withFormField(form(s"variableOperatingExpenses.year[$idx].advertising-and-promotions")))
                                     )
                                 )
@@ -202,7 +213,10 @@
                                             prefix = Some(PrefixOrSuffix(
                                                 content = Text("£")
                                             )),
-                                            attributes = inputAttributes
+                                            attributes = Map(
+                                                "maxlength" -> "13",
+                                                "aria-label" -> messages("variableOperatingExpenses.administrationAndSundries")
+                                            ),
                                         ).withFormField(form(s"variableOperatingExpenses.year[$idx].administration-and-sundries")))
                                     )
                                 )
@@ -215,7 +229,10 @@
                                             prefix = Some(PrefixOrSuffix(
                                                 content = Text("£")
                                             )),
-                                            attributes = inputAttributes
+                                            attributes = Map(
+                                                "maxlength" -> "13",
+                                                "aria-label" -> messages("variableOperatingExpenses.entertainment")
+                                            ),
                                         ).withFormField(form(s"variableOperatingExpenses.year[$idx].entertainment")))
                                     )
                                 )
@@ -231,7 +248,10 @@
                                             prefix = Some(PrefixOrSuffix(
                                                 content = Text("£")
                                             )),
-                                            attributes = inputAttributes
+                                            attributes = Map(
+                                                "maxlength" -> "13",
+                                                "aria-label" -> messages("variableOperatingExpenses.other")
+                                            ),
                                         ).withFormField(form(s"variableOperatingExpenses.year[$idx].other")))
                                     ),
                                     classes = "no-border-bottom"
