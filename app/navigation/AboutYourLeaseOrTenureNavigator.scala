@@ -127,7 +127,11 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
           case ForTypes.for6030 => controllers.aboutYourLeaseOrTenure.routes.TradeServicesDescriptionController.show()
           case _                => controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesDetailsController.show()
         }
-      case Some("no")  => controllers.aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsController.show()
+      case Some("no")  =>
+        answers.forType match {
+          case ForTypes.for6030 => controllers.aboutYourLeaseOrTenure.routes.PaymentForTradeServicesController.show()
+          case _                => controllers.aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsController.show()
+        }
       case _           =>
         logger.warn(
           s"Navigation for rent include trade services reached without correct selection of conditions by controller"
