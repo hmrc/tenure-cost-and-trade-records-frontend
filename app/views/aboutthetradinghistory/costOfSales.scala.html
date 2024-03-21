@@ -76,10 +76,6 @@
     </span>
 }
 
-@costInputAttributes = @{
-    Map("maxlength" -> "13")
-}
-
 @layout(
     pageHeading = messages("costOfSales.heading"),
     showSection = true,
@@ -139,7 +135,10 @@
                                                 prefix = Some(PrefixOrSuffix(
                                                     content = Text("£")
                                                 )),
-                                                attributes = costInputAttributes
+                                                attributes = Map(
+                                                    "maxlength" -> "13",
+                                                    "aria-label" -> messages("costOfSales.accommodation")
+                                                ),
                                             ).withFormField(form(s"costOfSales[$idx].accommodation"))
                                         )
                                     )
@@ -156,7 +155,10 @@
                                                 prefix = Some(PrefixOrSuffix(
                                                     content = Text("£")
                                                 )),
-                                                attributes = costInputAttributes
+                                                attributes = Map(
+                                                    "maxlength" -> "13",
+                                                    "aria-label" -> messages("costOfSales.food")
+                                                ),
                                             ).withFormField(form(s"costOfSales[$idx].food"))
                                         )
                                     )
@@ -173,7 +175,10 @@
                                                 prefix = Some(PrefixOrSuffix(
                                                     content = Text("£")
                                                 )),
-                                                attributes = costInputAttributes
+                                                attributes = Map(
+                                                    "maxlength" -> "13",
+                                                    "aria-label" -> messages("costOfSales.drinks")
+                                                ),
                                             ).withFormField(form(s"costOfSales[$idx].drinks"))
                                         )
                                     )
@@ -190,7 +195,10 @@
                                                 prefix = Some(PrefixOrSuffix(
                                                     content = Text("£")
                                                 )),
-                                                attributes = costInputAttributes
+                                                attributes = Map(
+                                                    "maxlength" -> "13",
+                                                    "aria-label" -> messages("costOfSales.otherSales")
+                                                ),
                                             ).withFormField(form(s"costOfSales[$idx].other"))
                                         )
                                     )

@@ -43,10 +43,6 @@
     </span>
 }
 
-@inputAttributes = @{
-    Map("maxlength" -> "13")
-}
-
 @layout(
     pageHeading = messages("fixedOperatingExpenses.heading"),
     showSection = true,
@@ -87,7 +83,10 @@
                                             prefix = Some(PrefixOrSuffix(
                                                 content = Text("£")
                                             )),
-                                            attributes = inputAttributes
+                                            attributes = Map(
+                                                "maxlength" -> "13",
+                                                "aria-label" -> messages("fixedOperatingExpenses.rent")
+                                            ),
                                         ).withFormField(form(s"fixedOperatingExpenses[$idx].rent")))
                                     )
                                 )
@@ -100,7 +99,10 @@
                                             prefix = Some(PrefixOrSuffix(
                                                 content = Text("£")
                                             )),
-                                            attributes = inputAttributes
+                                            attributes = Map(
+                                                "maxlength" -> "13",
+                                                "aria-label" -> messages("fixedOperatingExpenses.businessRates")
+                                            ),
                                         ).withFormField(form(s"fixedOperatingExpenses[$idx].business-rates")))
                                     )
                                 )
@@ -113,7 +115,10 @@
                                             prefix = Some(PrefixOrSuffix(
                                                 content = Text("£")
                                             )),
-                                            attributes = inputAttributes
+                                            attributes = Map(
+                                                "maxlength" -> "13",
+                                                "aria-label" -> messages("fixedOperatingExpenses.insurance")
+                                            ),
                                         ).withFormField(form(s"fixedOperatingExpenses[$idx].insurance")))
                                     )
                                 )
@@ -126,7 +131,10 @@
                                             prefix = Some(PrefixOrSuffix(
                                                 content = Text("£")
                                             )),
-                                            attributes = inputAttributes
+                                            attributes = Map(
+                                                "maxlength" -> "13",
+                                                "aria-label" -> messages("fixedOperatingExpenses.loanInterest")
+                                            ),
                                         ).withFormField(form(s"fixedOperatingExpenses[$idx].loan-interest")))
                                     )
                                 )
@@ -139,7 +147,10 @@
                                             prefix = Some(PrefixOrSuffix(
                                                 content = Text("£")
                                             )),
-                                            attributes = inputAttributes
+                                            attributes = Map(
+                                                "maxlength" -> "13",
+                                                "aria-label" -> messages("fixedOperatingExpenses.depreciation")
+                                            ),
                                         ).withFormField(form(s"fixedOperatingExpenses[$idx].depreciation")))
                                     )
                                 )

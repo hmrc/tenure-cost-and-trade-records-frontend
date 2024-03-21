@@ -21,7 +21,9 @@
 @import models.pages.Summary
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukCharacterCount
 @import uk.gov.hmrc.govukfrontend.views.Aliases.CharacterCount
+@import uk.gov.hmrc.govukfrontend.views.Aliases._
 @import uk.gov.hmrc.govukfrontend.views.Implicits.RichCharacterCount
+
 
 @this(layout: Layout,
         govukButton: GovukButton,
@@ -32,8 +34,10 @@
 
 @(theForm: Form[UnusualCircumstances], forType: String, summary: Summary)(implicit request: SessionRequest[_], messages: Messages)
 
+@heading = @{if(forType.equals(ForTypes.for6030)) { messages("unusualCircumstancesReceipts.heading") } else { messages("unusualCircumstances.heading") }}
+
 @layout(
-    pageHeading = if(forType.equals(ForTypes.for6030)) { messages("unusualCircumstancesReceipts.heading") } else { messages("unusualCircumstances.heading") },
+    pageHeading = heading,
   showSection = true,
     summary = Some(summary),
   sectionName = messages("label.section.aboutYourTradingHistory"),
@@ -48,6 +52,10 @@
               id = "unusualCircumstances",
               name = "unusualCircumstances",
               maxLength = 2000,
+              label = Label(
+                  classes = "govuk-label--l",
+                  isPageHeading = true
+              ),
           ).withFormField(theForm("unusualCircumstances"))
       )
 

@@ -47,10 +47,6 @@
     </span>
 }
 
-@costInputAttributes = @{
-    Map("maxlength" -> "13")
-}
-
 @layout(
   pageHeading = messages("totalPayrollCosts.heading"),
   showSection = true,
@@ -100,7 +96,10 @@
                                     prefix = Some(PrefixOrSuffix(
                                         content = Text("£")
                                     )),
-                                    attributes = costInputAttributes
+                                    attributes = Map(
+                                        "maxlength" -> "13",
+                                        "aria-label" -> messages("totalPayrollCosts.managersAndStaff")
+                                    ),
                                 ).withFormField(form(s"totalPayrollCosts[$idx].managers-and-staff"))
                     )
                     )
@@ -119,7 +118,10 @@
                                     prefix = Some(PrefixOrSuffix(
                                         content = Text("£")
                                     )),
-                                    attributes = costInputAttributes
+                                    attributes = Map(
+                                        "maxlength" -> "13",
+                                        "aria-label" -> messages("totalPayrollCosts.directorsRemuneration")
+                                    ),
                                 ).withFormField(form(s"totalPayrollCosts[$idx].directors-remuneration"))
                             )
                         )
