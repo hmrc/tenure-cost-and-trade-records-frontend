@@ -31,10 +31,13 @@ class RentPayableVaryAccordingToGrossOrNetViewSpec
 
   override val form = RentPayableVaryAccordingToGrossOrNetForm.rentPayableVaryAccordingToGrossOrNetForm
 
-  def createView = () => rentPayableVaryAccordingToGrossOrNetView(form, Summary("99996010001"))(fakeRequest, messages)
+  val backLink = controllers.aboutYourLeaseOrTenure.routes.RentIncreaseAnnuallyWithRPIController.show().url
+
+  def createView = () =>
+    rentPayableVaryAccordingToGrossOrNetView(form, backLink, Summary("99996010001"))(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[RentPayableVaryAccordingToGrossOrNetDetails]) =>
-    rentPayableVaryAccordingToGrossOrNetView(form, Summary("99996010001"))(fakeRequest, messages)
+    rentPayableVaryAccordingToGrossOrNetView(form, backLink, Summary("99996010001"))(fakeRequest, messages)
 
   "Rent payable vary on gross or net turnover view" must {
 

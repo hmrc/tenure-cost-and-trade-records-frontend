@@ -19,10 +19,12 @@ package controllers.aboutYourLeaseOrTenure
 import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.RentPayableVaryAccordingToGrossOrNetForm.rentPayableVaryAccordingToGrossOrNetForm
+import models.{ForTypes, Session}
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo.updateAboutLeaseOrAgreementPartTwo
 import models.submissions.aboutYourLeaseOrTenure.RentPayableVaryAccordingToGrossOrNetDetails
 import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.RentPayableVaryAccordingToGrossOrNetId
+import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
@@ -39,7 +41,8 @@ class RentPayableVaryAccordingToGrossOrNetController @Inject() (
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
 ) extends FORDataCaptureController(mcc)
-    with I18nSupport {
+    with I18nSupport
+    with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Future.successful(
@@ -51,6 +54,7 @@ class RentPayableVaryAccordingToGrossOrNetController @Inject() (
               rentPayableVaryAccordingToGrossOrNetForm.fill(rentPayableVaryAccordingToGrossOrNetDetails)
             case _                                                 => rentPayableVaryAccordingToGrossOrNetForm
           },
+          getBackLink(request.sessionData),
           request.sessionData.toSummary
         )
       )
@@ -61,7 +65,13 @@ class RentPayableVaryAccordingToGrossOrNetController @Inject() (
     continueOrSaveAsDraft[RentPayableVaryAccordingToGrossOrNetDetails](
       rentPayableVaryAccordingToGrossOrNetForm,
       formWithErrors =>
-        BadRequest(rentPayableVaryAccordingToGrossOrNetView(formWithErrors, request.sessionData.toSummary)),
+        BadRequest(
+          rentPayableVaryAccordingToGrossOrNetView(
+            formWithErrors,
+            getBackLink(request.sessionData),
+            request.sessionData.toSummary
+          )
+        ),
       data => {
         val updatedData =
           updateAboutLeaseOrAgreementPartTwo(_.copy(rentPayableVaryAccordingToGrossOrNetDetails = Some(data)))
@@ -71,4 +81,16 @@ class RentPayableVaryAccordingToGrossOrNetController @Inject() (
     )
   }
 
+  private def getBackLink(answers: Session): String =
+    answers.forType match {
+      case ForTypes.for6030                                                                             =>
+        controllers.aboutYourLeaseOrTenure.routes.WhatIsYourRentBasedOnController.show().url
+      case ForTypes.for6010 | ForTypes.for6011 | ForTypes.for6015 | ForTypes.for6016 | ForTypes.for6020 =>
+        controllers.aboutYourLeaseOrTenure.routes.RentIncreaseAnnuallyWithRPIController.show().url
+      case _                                                                                            =>
+        logger.warn(
+          s"Back link for rent payable vary according to gross or net page reached with unknown enforcement taken value"
+        )
+        controllers.routes.TaskListController.show().url
+    }
 }
