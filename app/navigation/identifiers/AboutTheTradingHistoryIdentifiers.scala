@@ -41,7 +41,15 @@ case object TotalPayrollCostId extends Identifier {
 }
 
 case object TotalFuelSoldId extends Identifier {
-  override def toString: String = "totalPayrollCost"
+  override def toString: String = "totalFuelSold"
+}
+
+case object BunkeredFuelQuestionId extends Identifier {
+  override def toString: String = "bunkeredFuelQuestionPage"
+}
+
+case object BunkeredFuelSoldId extends Identifier {
+  override def toString: String = "bunkeredFuelSoldPage"
 }
 
 case object VariableOperatingExpensesId extends Identifier {

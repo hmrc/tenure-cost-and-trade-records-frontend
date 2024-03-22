@@ -17,47 +17,49 @@
 package views.aboutthetradinghistory
 
 import actions.SessionRequest
-import form.aboutthetradinghistory.TotalFuelSoldForm
-import org.scalatest.matchers.must.Matchers.convertToAnyMustWrapper
+import form.aboutthetradinghistory.BunkeredFuelSoldForm
 import models.pages.Summary
-import models.submissions.aboutthetradinghistory.TotalFuelSold
+import models.submissions.aboutthetradinghistory.BunkeredFuelSold
+import org.scalatest.matchers.must.Matchers.convertToAnyMustWrapper
 import play.api.data.{Form, FormError}
 import views.behaviours.QuestionViewBehaviours
 
-class TotalFuelSoldViewSpec extends QuestionViewBehaviours[Seq[TotalFuelSold]] {
+import java.time.LocalDate
+
+class BunkeredFuelSoldViewSpec extends QuestionViewBehaviours[Seq[BunkeredFuelSold]] {
 
   val sessionRequest = SessionRequest(aboutYourTradingHistory6020YesSession, fakeRequest)
 
-  val messageKeyPrefix = "totalFuelSold"
+  val messageKeyPrefix = "bunkeredFuelSold"
 
-  override val form = TotalFuelSoldForm.totalFuelSoldForm(Seq(2025, 2024, 2023).map(_.toString))(messages)
-  def createView    = () => totalFuelSoldView(form, Summary("99996010001"))(sessionRequest, messages)
+  override val form = BunkeredFuelSoldForm.bunkeredFuelSoldForm(Seq(2023, 2022, 2021).map(_.toString))(messages)
+  def createView    = () => bunkeredFuelSoldView(form, Summary("99996010001"))(sessionRequest, messages)
 
-  def createViewUsingForm = (form: Form[Seq[TotalFuelSold]]) =>
-    totalFuelSoldView(form, Summary("99996020001"))(sessionRequest, messages)
+  def createViewUsingForm = (form: Form[Seq[BunkeredFuelSold]]) =>
+    bunkeredFuelSoldView(form, Summary("99996020001"))(sessionRequest, messages)
 
-  "Total Fuel Costs view" should {
+  "Bunkered Fuel Costs view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 
-    "has a link marked with back.link.label leading to your financial year end Page" in {
+    "has a link marked with back.link.label leading to your bunkered fuel question Page" in {
       val doc          = asDocument(createView())
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText mustBe messages("back.link.label")
       val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.aboutthetradinghistory.routes.FinancialYearEndController.show().url
+      backlinkUrl mustBe controllers.aboutthetradinghistory.routes.BunkeredFuelQuestionController.show().url
     }
 
     "Section heading is visible" in {
       val doc         = asDocument(createViewUsingForm(form))
-      val sectionText = doc.getElementsByClass("govuk-caption-m").text()
+      val sectionText = doc.getElementsByClass("govuk-caption-m").first().text()
       assert(sectionText == messages("label.section.aboutYourTradingHistory"))
     }
 
     "Page heading is visible" in {
-      val doc         = asDocument(createViewUsingForm(form)) // govuk-caption-m
+      val doc         = asDocument(createViewUsingForm(form))
       val sectionText = doc.getElementsByClass("govuk-heading-l").text()
-      assert(sectionText == messages("totalFuelSold.heading"))
+      assert(sectionText == messages("bunkeredFuelSold.heading"))
     }
 
     "contain continue button with the value Continue" in {
@@ -66,34 +68,35 @@ class TotalFuelSoldViewSpec extends QuestionViewBehaviours[Seq[TotalFuelSold]] {
       assert(loginButton == messages("button.label.continue"))
     }
 
-    "TotalFuelSoldForm" should {
+    "BunkeredFuelSoldForm" should {
+
       "reject empty values" in {
-        val form         = TotalFuelSoldForm.totalFuelSoldForm(Seq("2022", "2021"))(messages)
+        val form         = BunkeredFuelSoldForm.bunkeredFuelSoldForm(Seq("2022", "2021"))(messages)
         val formData     = Map(
-          "totalFuelSold-0" -> "",
-          "totalFuelSold-1" -> "100.50"
+          "bunkeredFuelSold-0" -> "",
+          "bunkeredFuelSold-1" -> "100.50"
         )
         val formWithData = form.bind(formData)
 
         formWithData.errors.size shouldBe 1
         formWithData.errors.head shouldBe FormError(
-          "totalFuelSold-0",
-          messages("error.totalFuelSold.required", 2022.toString)
+          "bunkeredFuelSold-0",
+          messages("error.bunkeredFuelSold.required", 2022.toString)
         )
       }
 
       "reject non-numeric values" in {
-        val form     = TotalFuelSoldForm.totalFuelSoldForm(Seq("2022"))(messages)
+        val form     = BunkeredFuelSoldForm.bunkeredFuelSoldForm(Seq("2022"))(messages)
         val formData = Map(
-          "totalFuelSold-0" -> "abc"
+          "bunkeredFuelSold-0" -> "abc"
         )
 
         val formWithData = form.bind(formData)
 
         formWithData.errors.size shouldBe 1
         formWithData.errors.head shouldBe FormError(
-          "totalFuelSold-0",
-          messages("error.totalFuelSold.range", 2022.toString)
+          "bunkeredFuelSold-0",
+          messages("error.bunkeredFuelSold.range", 2022.toString)
         )
       }
     }

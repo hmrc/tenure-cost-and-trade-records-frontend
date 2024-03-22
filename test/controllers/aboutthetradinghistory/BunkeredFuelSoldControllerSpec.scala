@@ -21,33 +21,33 @@ import play.api.http.Status._
 import play.api.test.Helpers.{charset, contentType, status, stubMessagesControllerComponents}
 import utils.TestBaseSpec
 
-class TotalFuelSoldControllerSpec extends TestBaseSpec {
+class BunkeredFuelSoldControllerSpec extends TestBaseSpec {
 
-  def totalFuelSoldController(
+  def bunkeredFuelSoldController(
     aboutTheTradingHistory: Option[AboutTheTradingHistory] = Some(prefilledAboutYourTradingHistory)
-  ) = new TotalFuelSoldController(
+  ) = new BunkeredFuelSoldController(
     stubMessagesControllerComponents(),
     aboutYourTradingHistoryNavigator,
-    totalFuelSoldView,
+    bunkeredFuelSoldView,
     preEnrichedActionRefiner(aboutTheTradingHistory = aboutTheTradingHistory),
     mockSessionRepo
   )
 
-  "Total fuel question controller" should {
+  "Bunkered fuel sold controller" should {
     "return 200" in {
-      val result = totalFuelSoldController().show(fakeRequest)
+      val result = bunkeredFuelSoldController().show(fakeRequest)
       status(result) shouldBe OK
     }
 
     "return HTML" in {
-      val result = totalFuelSoldController().show(fakeRequest)
+      val result = bunkeredFuelSoldController().show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
 
     "SUBMIT /" should {
       "throw a BAD_REQUEST if an empty form is submitted" in {
-        val res = totalFuelSoldController().submit(fakeRequest.withFormUrlEncodedBody(Seq.empty: _*))
+        val res = bunkeredFuelSoldController().submit(fakeRequest.withFormUrlEncodedBody(Seq.empty: _*))
         status(res) shouldBe BAD_REQUEST
       }
     }
