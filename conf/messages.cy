@@ -978,6 +978,7 @@ error.capitalSumPaidDetails.missing = Select yes if you paid a capital sum or pr
 error.required.annualRentExcludingVat.capitalSumPaidDetails = Please provide details of how much of the capital sum was paid
 error.invalid_currency.annualRent.capitalSumPaidDetails = The sum paid must be a number like 100 or 100.00 and cannot be less than 0
 fieldName.capitalSumPaidDetails = The date that the sum was paid
+error.maxCurrencyAmountExceeded.capitalSumPaidDetails = Capital sum cannot be greater than £9,999,999.99
 
 # PAYMENT WHEN LEASE IS GRANTED
 ##############################

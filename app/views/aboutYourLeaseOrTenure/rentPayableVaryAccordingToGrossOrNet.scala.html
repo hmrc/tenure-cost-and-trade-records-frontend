@@ -26,7 +26,7 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[RentPayableVaryAccordingToGrossOrNetDetails], summary: Summary)(implicit request: Request[_], messages: Messages)
+@(theForm: Form[RentPayableVaryAccordingToGrossOrNetDetails], backLink: String, summary: Summary)(implicit request: Request[_], messages: Messages)
 
 @layout(
  pageHeading = messages("rentPayableVaryAccordingToGrossOrNet.heading"),
@@ -34,7 +34,7 @@
  showSection = true,
  summary = Some(summary),
  sectionName = messages("label.section.aboutYourLeaseOrTenure"),
- backLinkUrl = controllers.aboutYourLeaseOrTenure.routes.RentIncreaseAnnuallyWithRPIController.show().url,
+ backLinkUrl = backLink,
  theForm = theForm
 ) {
 

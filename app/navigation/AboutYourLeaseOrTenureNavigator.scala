@@ -255,8 +255,13 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
     }
   }
 
-  private def RPIRouting: Session => Call                      = answers => {
-    controllers.aboutYourLeaseOrTenure.routes.RentIncreaseAnnuallyWithRPIController.show()
+  private def RPIRouting: Session => Call = answers => {
+    answers.forType match {
+      case ForTypes.for6030 =>
+        controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryAccordingToGrossOrNetController.show()
+      case _                => controllers.aboutYourLeaseOrTenure.routes.RentIncreaseAnnuallyWithRPIController.show()
+    }
+
   }
   private def tradeServicesDescriptionRouting: Session => Call = answers => {
     controllers.aboutYourLeaseOrTenure.routes.TradeServicesListController.show(getIndexOfTradeServices(answers))
