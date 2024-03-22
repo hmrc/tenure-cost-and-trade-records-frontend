@@ -945,6 +945,21 @@ trait FakeObjects {
       Some(WhatIsYourCurrentRentBasedOnDetails(CurrentRentBasedOnIndexedToRPI, Some("Test")))
   )
 
+  val prefilledAboutLeaseOrAgreement6030Route = AboutLeaseOrAgreementPartOne(
+    Some(prefilledAboutTheLandlord),
+    Some(AnswerYes),
+    Some(prefilledConnectedToLandlordDetails),
+    Some(prefilledLeaseOrAgreementYearsDetails),
+    Some(prefilledCurrentRentPayableWithin12Months),
+    Some(prefilledPropertyUseLeasebackArrangement),
+    Some(prefilledAnnualRent),
+    rentIncludeTradeServicesDetails = Some(RentIncludeTradeServicesDetails(AnswerYes)),
+    rentIncludeFixturesAndFittingsDetails = Some(RentIncludeFixturesAndFittingsDetails(AnswerYes)),
+    rentOpenMarketValueDetails = Some(RentOpenMarketValueDetails(AnswerYes)),
+    whatIsYourCurrentRentBasedOnDetails =
+      Some(WhatIsYourCurrentRentBasedOnDetails(CurrentRentBasedOnIndexedToRPI, Some("Test")))
+  )
+
   val prefilledAboutLeaseOrAgreementPartOne = AboutLeaseOrAgreementPartOne(
     Some(prefilledAboutTheLandlord),
     None,
@@ -972,6 +987,13 @@ trait FakeObjects {
   )
 
   val prefilledAboutLeaseOrAgreementPartTwo = AboutLeaseOrAgreementPartTwo(
+    rentPayableVaryAccordingToGrossOrNetDetails = Some(RentPayableVaryAccordingToGrossOrNetDetails(AnswerYes)),
+    rentPayableVaryOnQuantityOfBeersDetails = Some(RentPayableVaryOnQuantityOfBeersDetails(AnswerYes)),
+    tenantAdditionsDisregardedDetails = Some(TenantAdditionsDisregardedDetails(AnswerYes)),
+    legalOrPlanningRestrictions = Some(LegalOrPlanningRestrictions(AnswerYes))
+  )
+
+  val prefilledAboutLeaseOrAgreementPartTwo6030 = AboutLeaseOrAgreementPartTwo(
     rentPayableVaryAccordingToGrossOrNetDetails = Some(RentPayableVaryAccordingToGrossOrNetDetails(AnswerYes)),
     rentPayableVaryOnQuantityOfBeersDetails = Some(RentPayableVaryOnQuantityOfBeersDetails(AnswerYes)),
     tenantAdditionsDisregardedDetails = Some(TenantAdditionsDisregardedDetails(AnswerYes)),
