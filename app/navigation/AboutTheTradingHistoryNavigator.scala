@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -73,7 +73,7 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
   private def bunkeredFuelQuestionRouting: Session => Call = answers => {
     answers.aboutTheTradingHistory.flatMap(_.bunkeredFuelQuestion.map(_.bunkeredFuelQuestion)) match {
       case Some(AnswerYes) => controllers.routes.TaskListController.show() // TODO the next screen is not present yet
-      case Some(AnswerNo)  => controllers.routes.TaskListController.show() //
+      case Some(AnswerNo)  => controllers.aboutthetradinghistory.routes.NonFuelTurnoverController.show() // TODO
       case _               =>
         logger.warn(
           s"Navigation for bunkered fuel question reached without correct selection of conditions by controller"
@@ -89,14 +89,13 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
       case _                => aboutthetradinghistory.routes.TurnoverController.show()
     }
 
-  private def turnoverRouting: Session => Call = answers => {
-    if (answers.forType == ForTypes.for6015)
-      aboutthetradinghistory.routes.CostOfSalesController.show()
-    else if (answers.forType == ForTypes.for6030) {
-      aboutthetradinghistory.routes.UnusualCircumstancesController.show()
-    } else
-      aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show()
-  }
+  private def turnoverRouting: Session => Call =
+    _.forType match {
+      case ForTypes.for6015 => aboutthetradinghistory.routes.CostOfSalesController.show()
+      case ForTypes.for6020 => aboutthetradinghistory.routes.ElectricVehicleChargingPointsController.show()
+      case ForTypes.for6030 => aboutthetradinghistory.routes.UnusualCircumstancesController.show()
+      case _                => aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show()
+    }
 
   override val routeMap: Map[Identifier, Session => Call] = Map(
     AboutYourTradingHistoryPageId            -> (_ => aboutthetradinghistory.routes.FinancialYearEndController.show()),

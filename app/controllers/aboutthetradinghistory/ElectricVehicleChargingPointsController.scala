@@ -16,14 +16,13 @@
 
 package controllers.aboutthetradinghistory
 
-import actions.WithSessionRefiner
+import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.ElectricVehicleChargingPointsForm.electricVehicleChargingPointsForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.updateAboutTheTradingHistory
 import models.submissions.aboutthetradinghistory.ElectricVehicleChargingPoints
 import views.html.aboutthetradinghistory.electricVehicleChargingPoints
 import navigation.AboutTheTradingHistoryNavigator
-import models.{ForTypes, Session}
 import navigation.identifiers.ElectricVehicleChargingPointsId
 import play.api.Logging
 import play.api.i18n.I18nSupport
@@ -54,7 +53,7 @@ class ElectricVehicleChargingPointsController @Inject() (
             case _                                   => electricVehicleChargingPointsForm
           },
           request.sessionData.toSummary,
-          backLink(request.sessionData)
+          getBackLink
         )
       )
     )
@@ -68,7 +67,7 @@ class ElectricVehicleChargingPointsController @Inject() (
           electricVehicleChargingPointsView(
             formWithErrors,
             request.sessionData.toSummary,
-            backLink(request.sessionData)
+            getBackLink
           )
         ),
       data => {
@@ -79,10 +78,12 @@ class ElectricVehicleChargingPointsController @Inject() (
     )
   }
 
-  private def backLink(answers: Session): String =
-    answers.forType match {
-      case ForTypes.for6030 | ForTypes.for6020 =>
-        controllers.routes.LoginController.show().url
-      case _                                   => controllers.routes.LoginController.show().url
+  private def getBackLink(implicit request: SessionRequest[AnyContent]): String =
+    navigator.from match {
+      case "CYA" =>
+        controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
+      case "TL"  => controllers.routes.TaskListController.show().url + "#electric-vehicles-charging-points"
+      case _     => controllers.aboutthetradinghistory.routes.NonFuelTurnoverController.show().url
     }
+
 }

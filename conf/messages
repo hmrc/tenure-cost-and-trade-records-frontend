@@ -1365,6 +1365,11 @@ turnover.otherCaption.6016 = Including hire of function rooms, conference rooms 
 turnover.totalSales.6016 = Total sales revenue
 turnover.totalSalesCaption.6016 = Excluding VAT
 
+# TURNOVER 6020
+turnover.6020.heading = Non-fuel turnover
+turnover.6020.p1 = Provide details of any non-fuel income you may receive, excluding any letting income. You will be asked about letting income in later sections of this declaration.
+turnover.6020.inset = All fields on this page are mandatory. If this is not applicable, enter the number 0.
+
 # COST OF SALES
 costOfSales.heading = Cost of sales
 costOfSales.p1 = Provide details of your departmental cost of sales excluding:

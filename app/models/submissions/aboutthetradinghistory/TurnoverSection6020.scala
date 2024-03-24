@@ -21,8 +21,8 @@ import play.api.libs.json.{Json, OFormat}
 import java.time.LocalDate
 
 /**
- * Turnover excluding fuel or letting income.
- */
+  * Turnover excluding fuel or letting income.
+  */
 case class TurnoverSection6020(
   financialYearEnd: LocalDate,
   shop: Option[BigDecimal],

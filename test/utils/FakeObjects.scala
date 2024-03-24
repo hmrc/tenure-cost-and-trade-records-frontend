@@ -539,6 +539,7 @@ trait FakeObjects {
   val prefilledAboutYourTradingHistory6030: AboutTheTradingHistory = AboutTheTradingHistory(
     Some(OccupationalAndAccountingInformation(MonthsYearDuration(9, 2017), Some(DayMonthsDuration(27, 9)))),
     Seq.empty,
+    None,
     Seq(
       TurnoverSection6030(LocalDate.now(), 52, Some(BigDecimal(100)), Some(100)),
       TurnoverSection6030(LocalDate.now().minusYears(1), 52, Some(BigDecimal(200)), Some(200)),

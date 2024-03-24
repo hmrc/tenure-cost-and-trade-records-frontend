@@ -164,6 +164,9 @@ POST        /financial-year-end-dates                               controllers.
 GET         /turnover                                               controllers.aboutthetradinghistory.TurnoverController.show()
 POST        /turnover                                               controllers.aboutthetradinghistory.TurnoverController.submit()
 
+GET         /non-fuel-turnover                                      controllers.aboutthetradinghistory.NonFuelTurnoverController.show()
+POST        /non-fuel-turnover                                      controllers.aboutthetradinghistory.NonFuelTurnoverController.submit()
+
 GET         /turnover-6030                                          controllers.aboutthetradinghistory.Turnover6030Controller.show()
 POST        /turnover-6030                                          controllers.aboutthetradinghistory.Turnover6030Controller.submit()
 
