@@ -24,16 +24,20 @@ import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
 
-
-
-class addAnotherBunkerFuelCardDetailsViewSpec extends QuestionViewBehaviours[AnswersYesNo]{
-  val messageKeyPrefix     = "bunkFuelCardDetails"
-  val sessionRequest = SessionRequest(baseFilled6010Session, fakeRequest)
+class addAnotherBunkerFuelCardDetailsViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
+  val messageKeyPrefix                  = "bunkFuelCardDetails"
+  val sessionRequest                    = SessionRequest(baseFilled6010Session, fakeRequest)
   override val form: Form[AnswersYesNo] = addAnotherBunkerFuelCardsDetailsForm
 
-  def createView: () => Html = () => addAnotherBunkerFuelCardsDetailsView(form,0,controllers.aboutthetradinghistory.routes.BunkerFuelCardDetailsController.show().url,Summary("99996010001"))(sessionRequest,messages)
+  def createView: () => Html = () =>
+    addAnotherBunkerFuelCardsDetailsView(
+      form,
+      0,
+      controllers.aboutthetradinghistory.routes.BunkerFuelCardDetailsController.show().url,
+      Summary("99996010001")
+    )(sessionRequest, messages)
 
   "Catering add another bunker fuel cards details view" must {
-    behave like normalPageWithZeroDetails(createView, messageKeyPrefix,"zeroDetails","0")
+    behave like normalPageWithZeroDetails(createView, messageKeyPrefix, "zeroDetails", "0")
   }
 }

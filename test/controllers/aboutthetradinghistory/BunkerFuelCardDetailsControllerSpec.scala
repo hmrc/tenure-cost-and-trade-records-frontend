@@ -48,14 +48,16 @@ class BunkerFuelCardDetailsControllerSpec extends TestBaseSpec {
 
     "return HTML" in {
       val result = createBunkerFuelCardDetailsController().show(None)(fakeRequest)
-      contentType(result) shouldBe Some("text/html")
+      contentType(result)     shouldBe Some("text/html")
       Helpers.charset(result) shouldBe Some("utf-8")
     }
 
     "return prefilled HTML" in {
-      val result = createBunkerFuelCardDetailsController(prefilledAboutTheTradingHistoryForBunkerFuelCardsDetails).show(Some(0))(fakeRequest)
+      val result = createBunkerFuelCardDetailsController(prefilledAboutTheTradingHistoryForBunkerFuelCardsDetails).show(
+        Some(0)
+      )(fakeRequest)
       val html   = Jsoup.parse(contentAsString(result))
-      Option(html.getElementById("name").`val`()).value      shouldBe "Card 1"
+      Option(html.getElementById("name").`val`()).value shouldBe "Card 1"
     }
 
   }

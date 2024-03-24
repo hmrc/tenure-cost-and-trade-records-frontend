@@ -29,15 +29,14 @@ object BunkerFuelCardDetailsForm {
     if (value > 0) Valid else Invalid("error.handlingFee.mustBePositive")
   }
 
-  private def bigDecimalWithCustomError(errorMessage: String): Mapping[BigDecimal] = {
+  private def bigDecimalWithCustomError(errorMessage: String): Mapping[BigDecimal] =
     text
       .verifying(errorMessage, str => Try(BigDecimal(str)).isSuccess)
       .transform[BigDecimal](str => BigDecimal(str), _.toString)
-  }
 
   val bunkerFuelCardDetailsForm: Form[BunkerFuelCardDetails] = Form(
     mapping(
-      "name" -> default(text, "").verifying(
+      "name"        -> default(text, "").verifying(
         nonEmpty(errorMessage = "error.bunkerFuelCard.name.required"),
         maxLength(100, "error.bunkerFuelCardName.maxLength")
       ),

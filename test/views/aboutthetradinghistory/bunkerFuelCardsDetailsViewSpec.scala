@@ -22,14 +22,17 @@ import views.behaviours.QuestionViewBehaviours
 import form.aboutthetradinghistory.BunkerFuelCardDetailsForm.bunkerFuelCardDetailsForm
 import models.pages.Summary
 
-class bunkerFuelCardsDetailsViewSpec extends QuestionViewBehaviours[BunkerFuelCardDetails]{
+class bunkerFuelCardsDetailsViewSpec extends QuestionViewBehaviours[BunkerFuelCardDetails] {
   override val form: Form[BunkerFuelCardDetails] = bunkerFuelCardDetailsForm
-  val messageKeyPrefix     = "bunkerFuelCardDetails"
-  def createView = () =>
+  val messageKeyPrefix                           = "bunkerFuelCardDetails"
+  def createView                                 = () =>
     bunkerFuelCardDetailsView(
-      form,None, controllers.aboutthetradinghistory.routes.BunkeredFuelQuestionController.show().url,Summary("99996010001")
+      form,
+      None,
+      controllers.aboutthetradinghistory.routes.BunkeredFuelQuestionController.show().url,
+      Summary("99996010001")
     )(fakeRequest, messages)
   "Catering bunker fuel cards details view" must {
-    behave like normalPage(createView,messageKeyPrefix)
+    behave like normalPage(createView, messageKeyPrefix)
   }
 }

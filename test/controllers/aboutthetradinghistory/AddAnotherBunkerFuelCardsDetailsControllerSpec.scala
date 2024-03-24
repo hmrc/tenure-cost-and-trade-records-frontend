@@ -49,7 +49,7 @@ class AddAnotherBunkerFuelCardsDetailsControllerSpec extends TestBaseSpec {
 
   "return HTML" in {
     val result = createAddAnotherBunkerFuelCardsDetailsController().show(0)(fakeRequest)
-    contentType(result) shouldBe Some("text/html")
+    contentType(result)     shouldBe Some("text/html")
     Helpers.charset(result) shouldBe Some("utf-8")
   }
 
@@ -63,37 +63,44 @@ class AddAnotherBunkerFuelCardsDetailsControllerSpec extends TestBaseSpec {
   "Add another card details form" should {
     "error if addAnotherBunkerFuelCardsDetails is missing" in {
       val formData = baseFormData - errorKey.addAnotherBunkerFuelCardsDetails
-      val form = addAnotherBunkerFuelCardsDetailsForm.bind(formData)
+      val form     = addAnotherBunkerFuelCardsDetailsForm.bind(formData)
 
-      mustContainError(errorKey.addAnotherBunkerFuelCardsDetails, "error.addAnotherBunkerFuelCardsDetails.required", form)
+      mustContainError(
+        errorKey.addAnotherBunkerFuelCardsDetails,
+        "error.addAnotherBunkerFuelCardsDetails.required",
+        form
+      )
     }
   }
 
   "Remove bunker fuel card details" should {
     "render the removal confirmation page on remove" in {
-      val controller = createAddAnotherBunkerFuelCardsDetailsController(prefilledAboutTheTradingHistoryForBunkerFuelCardsDetails)
-      val idxToRemove = 0
+      val controller     =
+        createAddAnotherBunkerFuelCardsDetailsController(prefilledAboutTheTradingHistoryForBunkerFuelCardsDetails)
+      val idxToRemove    = 0
       val sessionRequest = SessionRequest(aboutYourTradingHistoryWithBunkerFuelCardsDetailsSession, fakeRequest)
-      val result = controller.remove(idxToRemove)(sessionRequest)
-      status(result) shouldBe OK
+      val result         = controller.remove(idxToRemove)(sessionRequest)
+      status(result)      shouldBe OK
       contentType(result) shouldBe Some("text/html")
     }
 
     "handle form submission with 'Yes' and perform removal" in {
-      val controller = createAddAnotherBunkerFuelCardsDetailsController(prefilledAboutTheTradingHistoryForBunkerFuelCardsDetails)
-      val idxToRemove = 0
+      val controller      =
+        createAddAnotherBunkerFuelCardsDetailsController(prefilledAboutTheTradingHistoryForBunkerFuelCardsDetails)
+      val idxToRemove     = 0
       val requestWithForm = fakeRequest.withFormUrlEncodedBody("genericRemoveConfirmation" -> "yes")
-      val sessionRequest = SessionRequest(aboutYourTradingHistoryWithBunkerFuelCardsDetailsSession, requestWithForm)
-      val result = controller.performRemove(idxToRemove)(sessionRequest)
+      val sessionRequest  = SessionRequest(aboutYourTradingHistoryWithBunkerFuelCardsDetailsSession, requestWithForm)
+      val result          = controller.performRemove(idxToRemove)(sessionRequest)
       status(result) shouldBe BAD_REQUEST
 
     }
 
     "handle form submission with 'No' and cancel removal" in {
-      val controller = createAddAnotherBunkerFuelCardsDetailsController(prefilledAboutTheTradingHistoryForBunkerFuelCardsDetails)
-      val idxToRemove = 0
+      val controller      =
+        createAddAnotherBunkerFuelCardsDetailsController(prefilledAboutTheTradingHistoryForBunkerFuelCardsDetails)
+      val idxToRemove     = 0
       val requestWithForm = fakeRequest.withFormUrlEncodedBody("genericRemoveConfirmation" -> "no")
-      val result = controller.performRemove(idxToRemove)(requestWithForm)
+      val result          = controller.performRemove(idxToRemove)(requestWithForm)
       status(result) shouldBe BAD_REQUEST
     }
 

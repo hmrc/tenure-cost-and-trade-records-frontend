@@ -174,17 +174,17 @@ trait ViewBehaviours extends ViewSpecBase {
     }
 
   def normalPageWithZeroDetails(
-                                            view: () => HtmlFormat.Appendable,
-                                            messageKeyPrefix: String,
-                                            messageSuffix:String,
-                                            messageExtra: String,
-                                            expectedGuidanceKeys: String*
-                                          ) =
+    view: () => HtmlFormat.Appendable,
+    messageKeyPrefix: String,
+    messageSuffix: String,
+    messageExtra: String,
+    expectedGuidanceKeys: String*
+  ) =
     "behave like a normal page" when {
       "rendered" must {
         "have the correct banner title" in {
-          val doc = asDocument(view())
-          val nav = Option {
+          val doc  = asDocument(view())
+          val nav  = Option {
             doc.getElementById("proposition-menu")
           }.getOrElse(
             doc
