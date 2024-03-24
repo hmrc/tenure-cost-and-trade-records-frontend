@@ -98,6 +98,21 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
       aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show()
   }
 
+  private def getAddAnotherBunkerFuelCardsDetailRouting(answers: Session): Call = {
+    val currentIndex: Option[Int] = answers.aboutTheTradingHistory.flatMap(_.bunkerFuelCardsDetails) match {
+      case Some(details) if details.nonEmpty => Some(details.size - 1) // Assuming the last entry is the current one
+      case _                                 => None
+    }
+    currentIndex match {
+      case Some(idx) =>
+        aboutthetradinghistory.routes.AddAnotherBunkerFuelCardsDetailsController.show(
+          idx
+        ) // Assuming there's a 'show' method to edit
+      case None      =>
+        aboutthetradinghistory.routes.AddAnotherBunkerFuelCardsDetailsController.show(0) // Fallback or start new
+    }
+  }
+
   override val routeMap: Map[Identifier, Session => Call] = Map(
     AboutYourTradingHistoryPageId            -> (_ => aboutthetradinghistory.routes.FinancialYearEndController.show()),
     FinancialYearEndPageId                   -> financialYearEndRouting,
@@ -110,6 +125,7 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
     FixedOperatingExpensesId                 -> (_ => aboutthetradinghistory.routes.OtherCostsController.show()),
     OtherCostsId                             -> (_ => aboutthetradinghistory.routes.IncomeExpenditureSummaryController.show()),
     BunkeredFuelQuestionId                   -> bunkeredFuelQuestionRouting,
+    BunkerFuelCardsDetailsId                 -> getAddAnotherBunkerFuelCardsDetailRouting,
     IncomeExpenditureSummaryId               -> (_ => aboutthetradinghistory.routes.UnusualCircumstancesController.show()),
     UnusualCircumstancesId                   -> (_ =>
       aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show()

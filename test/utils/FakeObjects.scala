@@ -590,6 +590,11 @@ trait FakeObjects {
       stillConnectedDetails = Some(prefilledStillConnectedDetailsYesToAll)
     )
 
+  val aboutYourTradingHistoryWithBunkerFuelCardsDetailsSession: Session =
+    aboutYourTradingHistory6020YesSession.copy(
+      aboutTheTradingHistory = prefilledAboutTheTradingHistoryForBunkerFuelCardsDetails
+    )
+
   // Franchises or lettings
   val prefilledCateringOperationSectionYes: CateringOperationSection = CateringOperationSection(
     CateringOperationDetails("Operator Name", "Type of Business", prefilledCateringAddress),
@@ -911,6 +916,14 @@ trait FakeObjects {
       )
     ),
     turnoverSections6030 = Seq(TurnoverSection6030(LocalDate.now, 52, None, None))
+  )
+
+  val prefilledAboutTheTradingHistoryForBunkerFuelCardsDetails = Some(
+    prefilledAboutTheTradingHistory.copy(bunkerFuelCardsDetails =
+      Some(
+        IndexedSeq(BunkerFuelCardsDetails(bunkerFuelCardDetails = BunkerFuelCardDetails("Card 1", 2)))
+      )
+    )
   )
 
   val prefilledVacantProperties = StillConnectedDetails(

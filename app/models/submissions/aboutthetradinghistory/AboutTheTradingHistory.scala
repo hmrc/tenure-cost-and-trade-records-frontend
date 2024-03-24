@@ -36,6 +36,7 @@ case class AboutTheTradingHistory(
   electricVehicleChargingPoints: Option[ElectricVehicleChargingPoints] = None, // added March 2024
   totalFuelSold: Option[Seq[TotalFuelSold]] = None,
   bunkeredFuelQuestion: Option[BunkeredFuelQuestion] = None,
+  bunkerFuelCardsDetails: Option[IndexedSeq[BunkerFuelCardsDetails]] = None,
   checkYourAnswersAboutTheTradingHistory: Option[CheckYourAnswersAboutTheTradingHistory] = None
 )
 
@@ -56,6 +57,7 @@ object AboutTheTradingHistory {
       (__ \ "electricVehicleChargingPoints").readNullable[ElectricVehicleChargingPoints] and
       (__ \ "totalFuelSold").readNullable[Seq[TotalFuelSold]] and
       (__ \ "bunkeredFuelQuestion").readNullable[BunkeredFuelQuestion] and
+      (__ \ "bunkerFuelCardsDetails").readNullable[IndexedSeq[BunkerFuelCardsDetails]] and
       (__ \ "checkYourAnswersAboutTheTradingHistory").readNullable[CheckYourAnswersAboutTheTradingHistory]
   )(AboutTheTradingHistory.apply _)
 

@@ -1534,6 +1534,21 @@ error.totalFuelSold.range = Total volume of all fuel sold in the year ending {0}
 bunkeredFuelQuestion.heading = Do you sell bunkered fuel, where you only charge a handling fee?
 error.bunkeredFuelQuestion.required = Select yes if you sell bunkered fuel, where you only charge a handling fee
 
+#BUNKER FUEL CARDS DETAILS (FORM 6020)
+bunkerFuelCardDetails.heading = Provide details of the bunker fuel cards you accept
+label.bunkerFuelCardName = Bunker fuel card name
+bunkerFuelCardDetails.handlingFee = Handling fee
+bunkerFuelCardDetails.handlingFee.unit = pence/litre
+error.bunkerFuelCard.name.required = Please provide name of bunker fuel card
+error.bunkerFuelCardName.maxLength = Bunker fuel card name cannot be more than 100 characters
+error.bunkerFuelCard.handlingFee.invalidFormat = Handling fee must be a number, for example 100
+
+#ADD ANOTHER BUNKER FUEL CARDS DETAILS (FROM 6020)
+label.bunkFuelCardDetails = Do you need to add another bunker fuel card?
+bunkFuelCardDetails.zeroDetails.heading = You have removed all your bunker fuel cards details
+bunkFuelCardDetails.heading = You have added {0} bunker fuel card detail
+error.addAnotherBunkerFuelCardsDetails.required = Select yes if you would like to add another bunker fuel card detail
+
 # CONCESSIONS OR FRANCHISE (FORM 6015)
 #########
 concessionOrFranchise.heading = Rent from concessions
