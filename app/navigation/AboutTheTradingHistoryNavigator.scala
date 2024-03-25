@@ -72,8 +72,8 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
 
   private def bunkeredFuelQuestionRouting: Session => Call = answers => {
     answers.aboutTheTradingHistory.flatMap(_.bunkeredFuelQuestion.map(_.bunkeredFuelQuestion)) match {
-      case Some(AnswerYes) => controllers.routes.TaskListController.show() // TODO the next screen is not present yet
-      case Some(AnswerNo)  => controllers.routes.TaskListController.show() //
+      case Some(AnswerYes) => aboutthetradinghistory.routes.BunkeredFuelSoldController.show()
+      case Some(AnswerNo)  => controllers.routes.TaskListController.show()
       case _               =>
         logger.warn(
           s"Navigation for bunkered fuel question reached without correct selection of conditions by controller"
@@ -125,6 +125,8 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
     FixedOperatingExpensesId                 -> (_ => aboutthetradinghistory.routes.OtherCostsController.show()),
     OtherCostsId                             -> (_ => aboutthetradinghistory.routes.IncomeExpenditureSummaryController.show()),
     BunkeredFuelQuestionId                   -> bunkeredFuelQuestionRouting,
+    BunkeredFuelSoldId                       -> (_ => controllers.routes.TaskListController.show()), // TODO next view is not available yet
+    BunkeredFuelSoldId                       -> (_ => aboutthetradinghistory.routes.BunkeredFuelQuestionController.show()),
     BunkerFuelCardsDetailsId                 -> getAddAnotherBunkerFuelCardsDetailRouting,
     IncomeExpenditureSummaryId               -> (_ => aboutthetradinghistory.routes.UnusualCircumstancesController.show()),
     UnusualCircumstancesId                   -> (_ =>

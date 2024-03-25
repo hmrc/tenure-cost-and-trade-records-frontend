@@ -89,6 +89,7 @@ label.phone = Telephone number
 label.email = Email address
 label.submitAnotherForm = Submit another form
 label.change = Change
+label.litres = litres
 
 # COMMON HINTS
 ##############
@@ -1521,18 +1522,31 @@ unusualCircumstances.explain = Explain any abnormally high or low figures in you
 netProfit.heading = This is a holding page for the net profits page
 
 #TOTAL FUEL SOLD (FORM 6020)
+############################
+
 totalFuelSold.heading = What is the total volume of all fuel sold in the financial years shown?
 totalFuelSold.bunkered = Do not include bunkered fuel in these figures. If you sell bunkered fuel, where you only charge a handling fee, you’ll be asked about this separately.
 totalFuelSold.inset = All fields on this page are mandatory. If this is not applicable, enter the number 0.
 totalFuelSold.fuel.label = Petrol, diesel, LPG and other total fuel sales
-totalFuelSold.fuel.litres = litres
 error.totalFuelSold.required = Enter 0 if you did not sell any fuel in the year ending {0}
 error.totalFuelSold.range = Total volume of all fuel sold in the year ending {0} must be a number, for example 100 or 100.00
 
 #BUNKERED FUEL QUESTION (FORM 6020)
+###################################
 
 bunkeredFuelQuestion.heading = Do you sell bunkered fuel, where you only charge a handling fee?
 error.bunkeredFuelQuestion.required = Select yes if you sell bunkered fuel, where you only charge a handling fee
+
+#BUNKERED FUEL SOLD (FORM6020)
+###############################
+
+bunkeredFuelSold.heading = How much bunkered fuel did you sell in the financial years shown?
+bunkeredFuelSold.innerText = All fields on this page are mandatory. If this is not applicable, enter the number 0.
+bunkeredFuelSold.financialYear.label = Financial year
+bunkeredFuelSold.bunkeredFuel.label = Bunkered fuel
+bunkeredFuelSold.bunkeredFuel.hint = Where only a handling fee is charged
+error.bunkeredFuelSold.required = Enter 0 if you did not sell any bunkered fuel in the year ending {0}
+error.bunkeredFuelSold.range = Total volume of all bunkered fuel sold in the year ending {0} must be a number, for example 100 or 100.00
 
 #BUNKER FUEL CARDS DETAILS (FORM 6020)
 bunkerFuelCardDetails.heading = Provide details of the bunker fuel cards you accept
