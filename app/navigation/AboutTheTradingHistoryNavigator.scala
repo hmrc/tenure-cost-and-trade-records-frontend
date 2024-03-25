@@ -73,8 +73,7 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
   private def bunkeredFuelQuestionRouting: Session => Call = answers => {
     answers.aboutTheTradingHistory.flatMap(_.bunkeredFuelQuestion.map(_.bunkeredFuelQuestion)) match {
       case Some(AnswerYes) => aboutthetradinghistory.routes.BunkeredFuelSoldController.show()
-      case Some(AnswerNo)  => // TODO: BST-86151 Customer credit accounts page
-        controllers.aboutthetradinghistory.routes.LowMarginFuelCardDetailsController.show()
+      case Some(AnswerNo)  => aboutthetradinghistory.routes.CustomerCreditAccountsController.show()
       case _               =>
         logger.warn(
           s"Navigation for bunkered fuel question reached without correct selection of conditions by controller"
@@ -141,6 +140,8 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
     OtherCostsId                             -> (_ => aboutthetradinghistory.routes.IncomeExpenditureSummaryController.show()),
     BunkeredFuelQuestionId                   -> bunkeredFuelQuestionRouting,
     BunkeredFuelSoldId                       -> (_ => aboutthetradinghistory.routes.BunkerFuelCardDetailsController.show(None)),
+    CustomerCreditAccountsId                 -> (_ => aboutthetradinghistory.routes.PercentageFromFuelCardsController.show()),
+    PercentageFromFuelCardsId                -> (_ => aboutthetradinghistory.routes.LowMarginFuelCardDetailsController.show()),
     BunkerFuelCardsDetailsId                 -> getAddAnotherBunkerFuelCardsDetailRouting,
     LowMarginFuelCardsDetailsId              -> getAddAnotherLowMarginFuelCardsDetailRouting,
     IncomeExpenditureSummaryId               -> (_ => aboutthetradinghistory.routes.UnusualCircumstancesController.show()),

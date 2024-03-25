@@ -90,6 +90,7 @@ label.email = Email address
 label.submitAnotherForm = Submit another form
 label.change = Change
 label.litres = litres
+label.percent = %
 
 # COMMON HINTS
 ##############
@@ -1540,14 +1541,18 @@ unusualCircumstances.explain = Explain any abnormally high or low figures in you
 #########
 netProfit.heading = This is a holding page for the net profits page
 
+#FORM 6020 COMMON
+#################
+
+common6020.inset = All fields on this page are mandatory. If this is not applicable, enter the number 0.
+common6020.creditCards.notInclude = This not include bunkered fuel, or fuel sales paid by debit or credit cards.
+
 #TOTAL FUEL SOLD (FORM 6020)
 ############################
 
 totalFuelSold.heading = What is the total volume of all fuel sold in the financial years shown?
 totalFuelSold.bunkered = Do not include bunkered fuel in these figures. If you sell bunkered fuel, where you only charge a handling fee, you’ll be asked about this separately.
-totalFuelSold.inset = All fields on this page are mandatory. If this is not applicable, enter the number 0.
 totalFuelSold.fuel.label = Petrol, diesel, LPG and other total fuel sales
-totalFuelSold.fuel.litres = litres
 error.totalFuelSold.required = Enter 0 if you did not sell any fuel in the year ending {0}
 error.totalFuelSold.range = Total volume of all fuel sold in the year ending {0} must be a number, for example 100 or 100.00
 
@@ -1557,13 +1562,10 @@ error.totalFuelSold.range = Total volume of all fuel sold in the year ending {0}
 bunkeredFuelQuestion.heading = Do you sell bunkered fuel, where you only charge a handling fee?
 error.bunkeredFuelQuestion.required = Select yes if you sell bunkered fuel, where you only charge a handling fee
 
-
 #BUNKERED FUEL SOLD (FORM6020)
 ###############################
 
 bunkeredFuelSold.heading = How much bunkered fuel did you sell in the financial years shown?
-bunkeredFuelSold.inset = All fields on this page are mandatory. If this is not applicable, enter the number 0.
-bunkeredFuelSold.financialYear.label = Financial year
 bunkeredFuelSold.bunkeredFuel.label = Bunkered fuel
 bunkeredFuelSold.bunkeredFuel.hint = Where only a handling fee is charged
 error.bunkeredFuelSold.required = Enter 0 if you did not sell any bunkered fuel in the year ending {0}
@@ -1601,6 +1603,24 @@ label.lowMarginFuelCardDetails = Do you need to add another low margin fuel card
 addAnotherLowMarginFuelCardDetails.zeroDetails.heading = You have removed all your low margin fuel cards details
 addAnotherLowMarginFuelCardDetails.heading = You have added {0} low margin fuel card detail
 error.addAnotherLowMarginFuelCardsDetails.required = Select yes if you would like to add another low margin fuel card detail
+
+# CUSTOMER CREDIT ACCOUNTS (FROM 6020)
+##########################
+customerCreditAcc.heading = Customer credit accounts
+customerCreditAcc.declare = You must declare how much fuel you sell through customer credit accounts. These are agreements where customers do not pay for their fuel at the point of sale. Instead, they pay for their total fuel use at set intervals, normally monthly.
+customerCreditAcc.notInclude = This not include bunkered fuel, or fuel sales paid by debit or credit cards.
+customerCreditAcc.percentage = What percentage of your total sales comes from customer credit accounts?
+customerCreditAcc.label = Percentage of fuel sales on customer credit accounts
+error.customerCreditAcc.required = Enter 0 if none of your total sales comes from customer credit account in the year ending {0}
+error.customerCreditAcc.range = The percentage of your total sales comes from customer credit account in the year ending {0} must be a number
+
+# PERCENTAGE FROM LOW MARGIN FUEL CARDS (FROM 6020)
+###################################################
+percentageFromFuelCards.heading = What percentage of the total fuel sales comes from the low-margin fuel cards?
+percentageFromFuelCards.bunkered = This does not include bunkered fuel, or fuel sales paid by debit or credit cards.
+percentageFromFuelCards.label = Percentage of fuel sales on low-margin fuel cards
+error.percentageFromFuelCards.required = Enter 0 if none of your total fuel sales comes from low-margin credit cards in the year ending {0}
+error.percentageFromFuelCards.range = The percentage of your total fuel sales comes from low-margin credit cards in the year ending {0} must be a number
 
 # CONCESSIONS OR FRANCHISE (FORM 6015)
 #########

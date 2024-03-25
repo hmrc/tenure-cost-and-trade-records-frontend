@@ -39,6 +39,8 @@ case class AboutTheTradingHistory(
   bunkeredFuelQuestion: Option[BunkeredFuelQuestion] = None,
   bunkeredFuelSold: Option[Seq[BunkeredFuelSold]] = None,
   bunkerFuelCardsDetails: Option[IndexedSeq[BunkerFuelCardsDetails]] = None,
+  customerCreditAccounts: Option[Seq[CustomerCreditAccounts]] = None,
+  percentageFromFuelCards: Option[Seq[PercentageFromFuelCards]] = None,
   lowMarginFuelCardsDetails: Option[IndexedSeq[LowMarginFuelCardsDetails]] = None,
   checkYourAnswersAboutTheTradingHistory: Option[CheckYourAnswersAboutTheTradingHistory] = None
 )
@@ -63,6 +65,8 @@ object AboutTheTradingHistory {
       (__ \ "bunkeredFuelQuestion").readNullable[BunkeredFuelQuestion] and
       (__ \ "bunkeredFuelSold").readNullable[Seq[BunkeredFuelSold]] and
       (__ \ "bunkerFuelCardsDetails").readNullable[IndexedSeq[BunkerFuelCardsDetails]] and
+      (__ \ "customerCreditAccounts").readNullable[Seq[CustomerCreditAccounts]] and
+      (__ \ "percentageFromFuelCards").readNullable[Seq[PercentageFromFuelCards]] and
       (__ \ "lowMarginFuelCardsDetails").readNullable[IndexedSeq[LowMarginFuelCardsDetails]] and
       (__ \ "checkYourAnswersAboutTheTradingHistory").readNullable[CheckYourAnswersAboutTheTradingHistory]
   )(AboutTheTradingHistory.apply _)
