@@ -112,6 +112,21 @@ class AreYouThirdPartyControllerSpec extends TestBaseSpec {
       }
     }
   }
+
+  "SUBMIT /" should {
+    "Throw a bad request if an empty form is submitted" in {
+      val result = areYouThirdPartyController().submit(FakeRequest().withFormUrlEncodedBody(Seq.empty: _*))
+      status(result) shouldBe BAD_REQUEST
+    }
+
+    "Throw a bad request if not empty form submitted and save data in the session" in {
+      val testData = Map("areYouThirdParty" -> "yes")
+      val result   = areYouThirdPartyController().submit(FakeRequest().withFormUrlEncodedBody(testData.toSeq: _*))
+
+      status(result) shouldBe BAD_REQUEST
+    }
+
+  }
 }
 
 object TestData {

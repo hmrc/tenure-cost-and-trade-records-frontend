@@ -22,6 +22,7 @@ import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import utils.TestBaseSpec
+import org.jsoup.Jsoup
 
 class CurrentRentFirstPaidControllerSpec extends TestBaseSpec {
 
@@ -48,6 +49,16 @@ class CurrentRentFirstPaidControllerSpec extends TestBaseSpec {
       val result = currentRentFirstPaidController().show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
+    }
+
+    "display the page with the fields prefilled in" when {
+      "exists within the session" in {
+        val result = currentRentFirstPaidController().show()(fakeRequest)
+        val html   = Jsoup.parse(contentAsString(result))
+        Option(html.getElementById("currentRentFirstPaid.day").`val`()).value   shouldBe "1"
+        Option(html.getElementById("currentRentFirstPaid.month").`val`()).value shouldBe "6"
+        Option(html.getElementById("currentRentFirstPaid.year").`val`()).value  shouldBe "2022"
+      }
     }
   }
 

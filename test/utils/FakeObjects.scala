@@ -968,6 +968,7 @@ trait FakeObjects {
     Some(prefilledCurrentRentPayableWithin12Months),
     Some(prefilledPropertyUseLeasebackArrangement),
     Some(prefilledAnnualRent),
+    currentRentFirstPaid = Some(CurrentRentFirstPaid(prefilledDateInput)),
     rentIncludeTradeServicesDetails = Some(RentIncludeTradeServicesDetails(AnswerYes)),
     rentIncludeFixturesAndFittingsDetails = Some(RentIncludeFixturesAndFittingsDetails(AnswerYes)),
     rentOpenMarketValueDetails = Some(RentOpenMarketValueDetails(AnswerYes))
@@ -989,15 +990,19 @@ trait FakeObjects {
   val prefilledAboutLeaseOrAgreementPartTwo = AboutLeaseOrAgreementPartTwo(
     rentPayableVaryAccordingToGrossOrNetDetails = Some(RentPayableVaryAccordingToGrossOrNetDetails(AnswerYes)),
     rentPayableVaryOnQuantityOfBeersDetails = Some(RentPayableVaryOnQuantityOfBeersDetails(AnswerYes)),
+    howIsCurrentRentFixed = Some(HowIsCurrentRentFixed(CurrentRentFixedInterimRent, prefilledDateInput)),
+    intervalsOfRentReview = Some(IntervalsOfRentReview(Some("test"), Some(prefilledDateInput))),
     tenantAdditionsDisregardedDetails = Some(TenantAdditionsDisregardedDetails(AnswerYes)),
-    legalOrPlanningRestrictions = Some(LegalOrPlanningRestrictions(AnswerYes))
+    legalOrPlanningRestrictions = Some(LegalOrPlanningRestrictions(AnswerYes)),
+    payACapitalSumInformationDetails = Some(PayACapitalSumInformationDetails(Some(123.12), Some(prefilledDateInput)))
   )
 
   val prefilledAboutLeaseOrAgreementPartTwo6030 = AboutLeaseOrAgreementPartTwo(
     rentPayableVaryAccordingToGrossOrNetDetails = Some(RentPayableVaryAccordingToGrossOrNetDetails(AnswerYes)),
     rentPayableVaryOnQuantityOfBeersDetails = Some(RentPayableVaryOnQuantityOfBeersDetails(AnswerYes)),
     tenantAdditionsDisregardedDetails = Some(TenantAdditionsDisregardedDetails(AnswerYes)),
-    legalOrPlanningRestrictions = Some(LegalOrPlanningRestrictions(AnswerYes))
+    legalOrPlanningRestrictions = Some(LegalOrPlanningRestrictions(AnswerYes)),
+    payACapitalSumInformationDetails = Some(PayACapitalSumInformationDetails(Some(123.12), Some(prefilledDateInput)))
   )
 
   val prefilledAboutLeaseOrAgreementPayPartTwo = AboutLeaseOrAgreementPartTwo(
