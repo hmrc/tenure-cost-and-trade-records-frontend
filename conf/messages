@@ -1552,18 +1552,36 @@ error.bunkeredFuelSold.range = Total volume of all bunkered fuel sold in the yea
 
 #BUNKER FUEL CARDS DETAILS (FORM 6020)
 bunkerFuelCardDetails.heading = Provide details of the bunker fuel cards you accept
+hint.bunkerFuelCardDetails = You will have the opportunity to add more bunker fuel cards if required.
 label.bunkerFuelCardName = Bunker fuel card name
 bunkerFuelCardDetails.handlingFee = Handling fee
 bunkerFuelCardDetails.handlingFee.unit = pence/litre
 error.bunkerFuelCard.name.required = Please provide name of bunker fuel card
 error.bunkerFuelCardName.maxLength = Bunker fuel card name cannot be more than 100 characters
 error.bunkerFuelCard.handlingFee.invalidFormat = Handling fee must be a number, for example 100
+error.handlingFee.mustBeNonNegative = Handling fee cannot be negative number
 
 #ADD ANOTHER BUNKER FUEL CARDS DETAILS (FROM 6020)
-label.bunkFuelCardDetails = Do you need to add another bunker fuel card?
-bunkFuelCardDetails.zeroDetails.heading = You have removed all your bunker fuel cards details
-bunkFuelCardDetails.heading = You have added {0} bunker fuel card detail
+label.addAnotherBunkerFuelCardDetails = Do you need to add another bunker fuel card?
+addAnotherBunkerFuelCardDetails.zeroDetails.heading = You have removed all your bunker fuel cards details
+addAnotherBunkerFuelCardDetails.heading = You have added {0} bunker fuel card detail
 error.addAnotherBunkerFuelCardsDetails.required = Select yes if you would like to add another bunker fuel card detail
+
+#LOW MARGIN FUEL CARDS DETAILS (FORM 6020)
+lowMarginFuelCardDetails.heading = Provide details of the low margin fuel cards you accept
+hint.lowMarginFuelCardDetails = You will have the opportunity to add more low margin fuel cards if required.
+label.lowMarginFuelCardName = Low margin fuel card name
+lowMarginFuelCardDetails.handlingFee = Handling fee
+lowMarginFuelCardDetails.handlingFee.unit = pence/litre
+error.lowMarginFuelCardDetails.name.required = Please provide name of low margin fuel card
+error.lowMarginFuelCardDetails.name.maxLength = Low margin fuel card name cannot be more than 100 characters
+error.lowMarginFuelCardDetails.handlingFee.invalidFormat = Handling fee must be a number, for example 100
+
+#ADD ANOTHER LOW MARGIN FUEL CARDS DETAILS (FROM 6020)
+label.lowMarginFuelCardDetails = Do you need to add another low margin fuel card?
+addAnotherLowMarginFuelCardDetails.zeroDetails.heading = You have removed all your low margin fuel cards details
+addAnotherLowMarginFuelCardDetails.heading = You have added {0} low margin fuel card detail
+error.addAnotherLowMarginFuelCardsDetails.required = Select yes if you would like to add another low margin fuel card detail
 
 # CONCESSIONS OR FRANCHISE (FORM 6015)
 #########

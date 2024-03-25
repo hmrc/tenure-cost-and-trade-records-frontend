@@ -16,7 +16,7 @@
 
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.html.components._
-@import models.submissions.aboutthetradinghistory.BunkerFuelCardDetails
+@import models.submissions.aboutthetradinghistory.LowMarginFuelCardDetail
 @import models.pages.Summary
 @import uk.gov.hmrc.govukfrontend.views.Implicits.RichInput
 
@@ -26,11 +26,10 @@
         formWithCSRF: FormWithCSRF
 )
 
-
-@(theForm: Form[BunkerFuelCardDetails],index: Option[Int], backlinkUrl: String, summary: Summary)(implicit request: Request[_], messages: Messages)
+@(theForm: Form[LowMarginFuelCardDetail],index: Option[Int], backlinkUrl: String, summary: Summary)(implicit request: Request[_], messages: Messages)
 
 @layout(
-    pageHeading = messages("bunkerFuelCardDetails.heading"),
+    pageHeading = messages("lowMarginFuelCardDetails.heading"),
     showH1 = true,
     showSection = true,
     summary = Some(summary),
@@ -38,10 +37,10 @@
     backLinkUrl = backlinkUrl,
     theForm = theForm,
 ) {
-    <p class="govuk-body">@messages("hint.bunkerFuelCardDetails")</p>
-    @formWithCSRF(action = controllers.aboutthetradinghistory.routes.BunkerFuelCardDetailsController.submit(index)) {
+    <p class="govuk-body">@messages("hint.lowMarginFuelCardDetails")</p>
+    @formWithCSRF(action = controllers.aboutthetradinghistory.routes.LowMarginFuelCardDetailsController.submit(index)) {
 
-        @includes.textInput(govukInput, theForm, "name", "govuk-input--width-20",labelContent = "bunkerFuelCardName", labelClasses = "govuk-!-font-weight-bold")
+        @includes.textInput(govukInput, theForm, "name", "govuk-input--width-20",labelContent = "lowMarginFuelCardName", labelClasses = "govuk-!-font-weight-bold")
 
         @govukInput(Input(
         id = s"handlingFee",
@@ -50,14 +49,14 @@
         classes = "govuk-input--width-2",
         attributes = Map(
         "maxlength" -> "15",
-        "aria-label" -> messages("bunkerFuelCardDetails.handlingFee")
+        "aria-label" -> messages("lowMarginFuelCardDetails.handlingFee")
         ),
         label = Label(
-            content = Text(Messages("bunkerFuelCardDetails.handlingFee")),
+            content = Text(Messages("lowMarginFuelCardDetails.handlingFee")),
             classes = "govuk-!-font-weight-bold"
         ),
         suffix = Some(PrefixOrSuffix(
-        content = Text(messages("bunkerFuelCardDetails.handlingFee.unit"))
+        content = Text(messages("lowMarginFuelCardDetails.handlingFee.unit"))
         ))
         ).withFormField(theForm(s"handlingFee")))
 
