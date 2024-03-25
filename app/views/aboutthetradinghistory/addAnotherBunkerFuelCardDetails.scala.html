@@ -1,0 +1,129 @@
+@*
+ * Copyright 2024 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import actions.SessionRequest
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukSummaryList
+@import uk.gov.hmrc.govukfrontend.views.Aliases.SummaryList
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.Key
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Actions
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.ActionItem
+@import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Radios
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
+@import uk.gov.hmrc.govukfrontend.views.Aliases.RadioItem
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Fieldset
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Legend
+@import models.pages.Summary
+
+@this(layout: Layout,
+        govukButton: GovukButton,
+        govukRadios: GovukRadios,
+        govukSummaryList: GovukSummaryList,
+        formWithCSRF: FormWithCSRF
+)
+
+
+@(theForm: Form[_], index: Int, backLink: String, summary: Summary)(implicit request: SessionRequest[_], messages: Messages)
+
+
+@session = @{ request.sessionData }
+
+@label =  @{messages("label.section.aboutYourTradingHistory")}
+
+@formLabel =@{messages(s"label.bunkFuelCardDetails")}
+
+@cardNames = @{
+  session.aboutTheTradingHistory.fold(Seq.empty[String]) {
+   fr =>fr.bunkerFuelCardsDetails.fold(IndexedSeq.empty[String])(_.map(_.bunkerFuelCardDetails.name))
+  }
+}
+
+@pluralSuffix = @{ if (cardNames.size > 1) "s" else "" }
+
+@pageHeading = @{messages(if  (cardNames.size == 0)  s"bunkFuelCardDetails.zeroDetails.heading" else s"bunkFuelCardDetails.heading",cardNames.size)+ pluralSuffix}
+
+@formAction = @{controllers.aboutthetradinghistory.routes.AddAnotherBunkerFuelCardsDetailsController.submit(index)}
+
+@layout(
+ pageHeading = pageHeading,
+ showSection = true,
+ summary = Some(summary),
+ sectionName = label,
+ backLinkUrl = backLink,
+ theForm = theForm
+) {
+
+ @formWithCSRF(action = formAction) {
+
+  @govukSummaryList(
+    SummaryList(
+     rows = cardNames.zipWithIndex.map { case (cardName, idx) =>
+      SummaryListRow(
+       key = Key(Text(cardName), classes = "govuk-!-font-weight-regular"),
+       actions = Actions(
+        items = Seq(
+         ActionItem(
+          href =
+             controllers.aboutthetradinghistory.routes.BunkerFuelCardDetailsController.show(idx).url,
+          content = Text("Change")),
+         ActionItem(
+          controllers.aboutthetradinghistory.routes.AddAnotherBunkerFuelCardsDetailsController.remove(idx).url,
+          content = Text("Remove"))
+        ),
+        classes = "hmrc-summary-list__actions"
+       )
+      )
+     },
+     classes = "hmrc-list-with-actions hmrc-list-with-actions--short"
+    )
+  )
+
+  @govukRadios(
+   Radios(
+    name = s"addAnotherBunkerFuelCardsDetails",
+    idPrefix = Option(s"addAnotherBunkerFuelCardsDetails"),
+    classes = "govuk-radios--inline",
+    items = Seq(
+     "yes" -> messages("label.yes"),
+     "no" -> messages("label.no")
+    ).map(radioItem => RadioItem(
+     content = Text(radioItem._2),
+     checked = radioItem._1.equals(theForm(s"addAnotherBunkerFuelCardsDetails").value.getOrElse("")),
+     value = Option(radioItem._1)
+    )
+    ),
+    errorMessage =  theForm.errors.asTextErrorMessageForField(s"addAnotherBunkerFuelCardsDetails"),
+    fieldset = Option(
+     Fieldset(
+      legend = Option(
+       Legend(
+        content = Text(formLabel),
+        classes = "govuk-!-font-weight-bold"
+       )
+      )
+     )
+    )
+   )
+  )
+
+  @includes.continueSaveAsDraftButtons(govukButton)
+ }
+
+}
