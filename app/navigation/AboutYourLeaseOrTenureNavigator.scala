@@ -406,6 +406,7 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
     ServicePaidSeparatelyChargeId                 -> servicePaidSeparatelyChargeRouting,
     ServicePaidSeparatelyListId                   -> servicePaidSeparatelyListRouting,
     PaymentForTradeServicesId                     -> paymentForTradeServicesRouting,
+    TypeOfTenureId                                -> (_ => controllers.aboutYourLeaseOrTenure.routes.AboutYourLandlordController.show()),
     CheckYourAnswersAboutYourLeaseOrTenureId      -> (_ => controllers.routes.TaskListController.show())
   )
 }

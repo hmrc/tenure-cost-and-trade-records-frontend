@@ -97,6 +97,7 @@ hint.date.example = For example, 27 9 2017.
 hint.month.year.example = For example, 9 2017.
 hint.day.month.example = For example, 04 05.
 hint.select.applicable = Select any that apply – leave blank if not applicable.
+hint.all.apply = Select all that apply.
 
 # SECTION NAMES
 ###############
@@ -678,12 +679,23 @@ franchiseLettingsIncome.list2 = rent received from letting other parts of the pr
 error.franchiseOrLettings.missing = Select yes if you receive income from letting out parts of your property
 
 # ABOUT YOUR LANDLORD
-##############################
+#####################
 aboutYourLandlord.heading = Your landlord
 label.landlordFullName = Landlord’s name
 label.landlordAddress.address = Landlord’s address
 error.landlordFullName.required = Os nad ydych yn gwybod enw’r landlord, nodwch ‘Anhysbys’
 error.landlordFullName.maxLength = Mae’n rhaid i enw’r landlord fod yn 50 o gymeriadau neu lai
+
+# TYPE OF TENURE
+################
+typeOfTenure.heading = Indicate your type of tenure
+label.typeOfTenure.heading = Give details if there is a combination of tenure types
+label.typeOfTenure.leasehold = Leasehold
+label.typeOfTenure.license = License
+label.typeOfTenure.tenancy = Tenancy
+label.typeOfTenure.long.leasehold = Long leasehold at ground rent
+error.typeOfTenure.required = Select any type of tenure applicable
+error.typeOfTenure.maxLength = Give details if there is a combination of tenure types must be 2000 characters or fewer
 
 # LEASE OR AGREEMENT DETAILS COMMENCE WITHIN 3 YEARS
 ###################################################
@@ -1666,6 +1678,7 @@ checkYourAnswersAboutFranchiseOrLettings.feeReceived.concessionOrFranchiseFee.he
 checkYourAnswersAboutFranchiseOrLettings.feeReceived.feeCalculationDetails = How the fee was calculated
 
 checkYourAnswersAboutYourLeaseOrTenure.heading = Check your answers – your lease or agreement
+checkYourAnswersAboutYourLeaseOrTenure.tenure.heading = Tenure
 checkYourAnswersAboutYourLeaseOrTenure.yourLandlord.heading = Your landlord
 checkYourAnswersAboutYourLeaseOrTenure.landlordDetails = Landlord’s details
 checkYourAnswersAboutYourLeaseOrTenure.connectedToLandlord = Connected to landlord?

@@ -16,9 +16,9 @@
 
 package views.aboutYourLeaseOrTenure
 
-import form.aboutYourLeaseOrTenure.{ServicePaidSeparatelyChargeForm, ServicePaidSeparatelyForm}
+import form.aboutYourLeaseOrTenure.ServicePaidSeparatelyChargeForm
 import models.pages.Summary
-import models.submissions.aboutYourLeaseOrTenure.{ServicePaidSeparately, ServicePaidSeparatelyCharge}
+import models.submissions.aboutYourLeaseOrTenure.ServicePaidSeparatelyCharge
 import org.scalatest.matchers.must.Matchers.convertToAnyMustWrapper
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours

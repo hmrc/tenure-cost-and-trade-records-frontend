@@ -169,3 +169,7 @@ case object ServicePaidSeparatelyChargeId extends Identifier {
 case object ServicePaidSeparatelyListId extends Identifier {
   override def toString: String = "servicePaidSeparatelyListPage"
 }
+
+case object TypeOfTenureId extends Identifier {
+  override def toString: String = "typeOfTenurePage"
+}
