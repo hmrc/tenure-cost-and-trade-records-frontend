@@ -125,8 +125,7 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
     FixedOperatingExpensesId                 -> (_ => aboutthetradinghistory.routes.OtherCostsController.show()),
     OtherCostsId                             -> (_ => aboutthetradinghistory.routes.IncomeExpenditureSummaryController.show()),
     BunkeredFuelQuestionId                   -> bunkeredFuelQuestionRouting,
-    BunkeredFuelSoldId                       -> (_ => controllers.routes.TaskListController.show()), // TODO next view is not available yet
-    BunkeredFuelSoldId                       -> (_ => aboutthetradinghistory.routes.BunkeredFuelQuestionController.show()),
+    BunkeredFuelSoldId                       -> (_ => aboutthetradinghistory.routes.BunkerFuelCardDetailsController.show(None)),
     BunkerFuelCardsDetailsId                 -> getAddAnotherBunkerFuelCardsDetailRouting,
     IncomeExpenditureSummaryId               -> (_ => aboutthetradinghistory.routes.UnusualCircumstancesController.show()),
     UnusualCircumstancesId                   -> (_ =>
