@@ -15,55 +15,53 @@
  *@
 
 @import uk.gov.hmrc.govukfrontend.views.html.components._
-@import models.submissions.aboutthetradinghistory.TotalFuelSold
+@import models.submissions.aboutthetradinghistory.BunkeredFuelSold
 @import uk.gov.hmrc.govukfrontend.views.Implicits.RichInput
 @import util.DateUtil
 @import actions.SessionRequest
 @import models.pages.Summary
 
 @this(layout: Layout,
-    govukButton: GovukButton,
-    formWithCSRF: FormWithCSRF,
-    govukInput: GovukInput,
-    govukDateInput: GovukDateInput,
-    govukTable: GovukTable,
-    govukInsetText: GovukInsetText,
-    govukDetails: GovukDetails,
-    dateUtil: DateUtil
+        govukButton: GovukButton,
+        formWithCSRF: FormWithCSRF,
+        govukInput: GovukInput,
+        govukDateInput: GovukDateInput,
+        govukTable: GovukTable,
+        govukInsetText: GovukInsetText,
+        govukDetails: GovukDetails,
+        dateUtil: DateUtil
 )
 
+@(form: Form[Seq[BunkeredFuelSold]], summary: Summary)(implicit request: SessionRequest[_], messages: Messages)
 
-@(form: Form[Seq[TotalFuelSold]], summary: Summary)(implicit request: SessionRequest[_], messages: Messages)
-
-@backlink =  @{request.sessionData.aboutTheTradingHistory.flatMap(_.occupationAndAccountingInformation.flatMap(_.yearEndChanged))
-match {
-    case Some(true) =>  controllers.aboutthetradinghistory.routes.FinancialYearEndDatesController.show().url
-    case Some(false) => controllers.aboutthetradinghistory.routes.FinancialYearEndController.show().url
-    }
+@bunkeredFuelRowContent = {
+    <p class="govuk-body govuk-!-font-weight-bold">
+        @messages("bunkeredFuelSold.bunkeredFuel.label") <br>
+        <span class="govuk-caption-m">@messages("bunkeredFuelSold.bunkeredFuel.hint")</span>
+    </p>
 }
 
 @layout(
-    pageHeading = messages("totalFuelSold.heading"),
+    pageHeading = messages("bunkeredFuelSold.heading"),
     showSection = true,
+    showH1  = false ,
     summary = Some(request.sessionData.toSummary),
     sectionName = messages("label.section.aboutYourTradingHistory"),
-    backLinkUrl = Some(backlink),
-    theForm = form,
+    backLinkUrl = Some(controllers.aboutthetradinghistory.routes.BunkeredFuelQuestionController.show().url),
     fullWidth = true,
-    showH1  = false
+    theForm = form
 ) {
 
-    @formWithCSRF(action = controllers.aboutthetradinghistory.routes.TotalFuelSoldController.submit()) {
 
-        <h1 class="govuk-heading-l govuk-!-width-three-quarters">@messages("totalFuelSold.heading")</h1>
+    @formWithCSRF(action = controllers.aboutthetradinghistory.routes.BunkeredFuelSoldController.submit()) {
 
-        <p class="govuk-body govuk-!-width-three-quarters">@messages("totalFuelSold.bunkered")</p>
+      <h1 class="govuk-heading-l govuk-!-width-three-quarters">@messages("bunkeredFuelSold.heading")</h1>
 
         @govukInsetText(InsetText(
-                content = Text(messages("totalFuelSold.inset"))
-            ))
+            content = Text(messages("bunkeredFuelSold.inset"))
+        ))
 
-        <table class="hmrc-responsive-table govuk-!-font-weight-regular">
+        <table class="hmrc-responsive-table govuk-!-font-weight-regular govuk-!-width-three-quarters">
             <tbody>
                 <tr>
                 @request.sessionData.financialYearEndDates.map { case (finYearEnd, idx) =>
@@ -71,7 +69,7 @@ match {
                     @govukTable(Table(
                         head = Seq(
                             HeadCell(
-                                content = Text(messages("turnover.financialYearEnd"))
+                                content = Text(messages("bunkeredFuelSold.financialYear.label"))
                             ),
                             HeadCell(
                                 content = Text(dateUtil.formatDayMonthAbbrYear(finYearEnd))
@@ -81,24 +79,23 @@ match {
                         rows = Seq(
                             Seq(
                                 TableRow(
-                                    content = Text(messages("totalFuelSold.fuel.label")),
-                                    classes = "govuk-!-font-weight-regular"
+                                    content = HtmlContent(bunkeredFuelRowContent)
 
                                 ),
                                 TableRow(
                                     content = HtmlContent(
                                         govukInput(Input(
-                                            id = s"totalFuelSold-$idx",
-                                            name = s"totalFuelSold-$idx",
-                                            value = form(s"totalFuelSold-$idx").value,
+                                            id = s"bunkeredFuelSold-$idx",
+                                            name = s"bunkeredFuelSold-$idx",
+                                            value = form(s"bunkeredFuelSold-$idx").value,
                                             classes = "govuk-input--width-5",
                                             attributes = Map(
-                                                "aria-label" -> messages("totalFuelSold.fuel.label")
+                                                "aria-label" -> messages("bunkeredFuelSold.bunkeredFuel.label")
                                             ),
                                             suffix = Some(PrefixOrSuffix(
                                                 content = Text(messages("label.litres"))
                                             ))
-                                        ).withFormField(form(s"totalFuelSold-$idx")))
+                                        ).withFormField(form(s"bunkeredFuelSold-$idx")))
                                     )
                                 )
                             )

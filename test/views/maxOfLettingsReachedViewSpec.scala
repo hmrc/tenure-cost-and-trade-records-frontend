@@ -21,13 +21,18 @@ import form.MaxOfLettingsForm
 import models.pages.Summary
 import models.submissions.MaxOfLettings
 import play.api.data.Form
+import play.api.mvc.{AnyContent, AnyContentAsEmpty}
+import play.twirl.api.Html
 import views.behaviours.ViewBehaviours
 
 class maxOfLettingsReachedViewSpec extends ViewBehaviours {
 
-  val messageKeyPrefix = "maxOf5Lettings.businessOrFranchise"
+  val messageKeyPrefix     = "maxOf5Lettings.businessOrFranchise"
+  val messageKeyPrefix6015 = "maxOf5Lettings.businessOrConcession"
 
   val sessionRequest = SessionRequest(baseFilled6010Session, fakeRequest)
+
+  val sessionRequest6015 = SessionRequest(baseFilled6015Session, fakeRequest)
 
   val form       = MaxOfLettingsForm.maxOfLettingsForm(messages)
   def createView = () =>
@@ -37,6 +42,15 @@ class maxOfLettingsReachedViewSpec extends ViewBehaviours {
       "connection",
       Summary("10000001")
     )(sessionRequest, messages)
+
+  def prepareView(sessionRequest: SessionRequest[_]): () => Html = { () =>
+    maxOfLettingsReachedView(
+      form,
+      "backLink",
+      "connection",
+      Summary("10000001")
+    )(sessionRequest, messages)
+  }
 
   def createViewUsingForm = (form: Form[MaxOfLettings]) =>
     maxOfLettingsReachedView(
@@ -67,5 +81,9 @@ class maxOfLettingsReachedViewSpec extends ViewBehaviours {
       val loginButton = doc.getElementById("save").text()
       assert(loginButton == messages("button.label.save"))
     }
+  }
+
+  "max of Lettings reached view for 6015" must {
+    behave like normalPage(prepareView(sessionRequest6015), messageKeyPrefix6015)
   }
 }

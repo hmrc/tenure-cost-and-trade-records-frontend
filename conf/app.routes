@@ -330,6 +330,17 @@ POST        /total-fuel-sold                                        controllers.
 GET         /bunkered-fuel-question                                 controllers.aboutthetradinghistory.BunkeredFuelQuestionController.show()
 POST        /bunkered-fuel-question                                 controllers.aboutthetradinghistory.BunkeredFuelQuestionController.submit()
 
+GET         /bunkered-fuel-sold                                     controllers.aboutthetradinghistory.BunkeredFuelSoldController.show()
+POST        /bunkered-fuel-sold                                     controllers.aboutthetradinghistory.BunkeredFuelSoldController.submit()
+
+GET         /bunker-fuel-cards-details                              controllers.aboutthetradinghistory.BunkerFuelCardDetailsController.show(idx: Option[Int] ?= None)
+POST        /bunker-fuel-cards-details                              controllers.aboutthetradinghistory.BunkerFuelCardDetailsController.submit(idx: Option[Int])
+
+GET         /add-another-bunker-fuel-cards-details                  controllers.aboutthetradinghistory.AddAnotherBunkerFuelCardsDetailsController.show(idx: Int)
+POST        /add-another-bunker-fuel-cards-details                  controllers.aboutthetradinghistory.AddAnotherBunkerFuelCardsDetailsController.submit(idx: Int)
+GET         /remove-bunker-fuel-cards-details                       controllers.aboutthetradinghistory.AddAnotherBunkerFuelCardsDetailsController.remove(idx: Int)
+POST        /remove-bunker-fuel-cards-details                       controllers.aboutthetradinghistory.AddAnotherBunkerFuelCardsDetailsController.performRemove(idx: Int)
+
 #Form 6030 routing
 GET         /concession-or-franchise-fee                            controllers.aboutfranchisesorlettings.ConcessionOrFranchiseFeeController.show()
 POST        /concession-or-franchise-fee                            controllers.aboutfranchisesorlettings.ConcessionOrFranchiseFeeController.submit()

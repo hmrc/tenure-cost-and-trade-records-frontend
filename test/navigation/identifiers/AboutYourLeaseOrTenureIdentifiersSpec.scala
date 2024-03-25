@@ -190,9 +190,6 @@ class AboutYourLeaseOrTenureIdentifiersSpec extends TestBaseSpec {
     "Identifier for service paid separately charge" in {
       assert(ServicePaidSeparatelyChargeId.toString.equals("servicePaidSeparatelyChargePage"))
     }
-    "Identifier for bunkered fuel question" in {
-      assert(BunkeredFuelQuestionId.toString.equals("bunkeredFuelQuestionPage"))
-    }
     "Identifier for payment for trade services" in {
       assert(PaymentForTradeServicesId.toString.equals("paymentForTradeServicesPage"))
     }
