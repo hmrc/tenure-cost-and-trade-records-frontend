@@ -36,6 +36,17 @@ class HowIsCurrentRentFixedControllerSpec extends TestBaseSpec {
       mockSessionRepo
     )
 
+  def howIsCurrentRentFixedNoDate(
+    aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwo)
+  ) =
+    new HowIsCurrentRentFixedController(
+      stubMessagesControllerComponents(),
+      aboutYourLeaseOrTenureNavigator,
+      howIsCurrentRentFixedView,
+      preEnrichedActionRefiner(aboutLeaseOrAgreementPartTwo = aboutLeaseOrAgreementPartTwo),
+      mockSessionRepo
+    )
+
   "GET /" should {
     "return 200" in {
       val result = howIsCurrentRentFixedController().show(fakeRequest)
@@ -48,13 +59,20 @@ class HowIsCurrentRentFixedControllerSpec extends TestBaseSpec {
       charset(result)     shouldBe Some("utf-8")
     }
 
+    "return 200 vacant property start date is not present in session" in {
+      val result = howIsCurrentRentFixedNoDate().show()(fakeRequest)
+      status(result)      shouldBe Status.OK
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
+    }
+
     "display the page with the fields prefilled in" when {
       "exists within the session" in {
         val result = howIsCurrentRentFixedController().show()(fakeRequest)
         val html   = Jsoup.parse(contentAsString(result))
-        Option(html.getElementById("startDateOfVacantProperty.day").`val`()).value   shouldBe "1"
-        Option(html.getElementById("startDateOfVacantProperty.month").`val`()).value shouldBe "6"
-        Option(html.getElementById("startDateOfVacantProperty.year").`val`()).value  shouldBe "2022"
+        Option(html.getElementById("rentActuallyAgreed.day").`val`()).value   shouldBe "1"
+        Option(html.getElementById("rentActuallyAgreed.month").`val`()).value shouldBe "6"
+        Option(html.getElementById("rentActuallyAgreed.year").`val`()).value  shouldBe "2022"
       }
     }
   }

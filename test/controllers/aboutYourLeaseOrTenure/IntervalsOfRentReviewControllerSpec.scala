@@ -36,6 +36,19 @@ class IntervalsOfRentReviewControllerSpec extends TestBaseSpec {
       mockSessionRepo
     )
 
+  def intervalsOfRentReviewNoStartDate(
+    aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(
+      prefilledAboutLeaseOrAgreementPartTwoNoDate
+    )
+  ) =
+    new IntervalsOfRentReviewController(
+      stubMessagesControllerComponents(),
+      aboutYourLeaseOrTenureNavigator,
+      intervalsOfRentReviewView,
+      preEnrichedActionRefiner(aboutLeaseOrAgreementPartTwo = aboutLeaseOrAgreementPartTwo),
+      mockSessionRepo
+    )
+
   "GET /" should {
     "return 200" in {
       val result = intervalsOfRentReviewController().show(fakeRequest)
@@ -44,6 +57,13 @@ class IntervalsOfRentReviewControllerSpec extends TestBaseSpec {
 
     "return HTML" in {
       val result = intervalsOfRentReviewController().show(fakeRequest)
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
+    }
+
+    "return 200 vacant property start date is not present in session" in {
+      val result = intervalsOfRentReviewNoStartDate().show()(fakeRequest)
+      status(result)      shouldBe Status.OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }

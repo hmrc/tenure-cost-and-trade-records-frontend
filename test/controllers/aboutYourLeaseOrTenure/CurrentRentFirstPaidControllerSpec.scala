@@ -39,6 +39,19 @@ class CurrentRentFirstPaidControllerSpec extends TestBaseSpec {
       mockSessionRepo
     )
 
+  def currentRentFirstPaidNoStartDate(
+    aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(
+      prefilledAboutLeaseOrAgreementPartOneNoStartDate
+    )
+  ) =
+    new CurrentRentFirstPaidController(
+      stubMessagesControllerComponents(),
+      mockAboutLeaseOrTenureNavigator,
+      currentRentFirstPaidView,
+      preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
+      mockSessionRepo
+    )
+
   "GET /" should {
     "return 200" in {
       val result = currentRentFirstPaidController().show(fakeRequest)
@@ -47,6 +60,13 @@ class CurrentRentFirstPaidControllerSpec extends TestBaseSpec {
 
     "return HTML" in {
       val result = currentRentFirstPaidController().show(fakeRequest)
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
+    }
+
+    "return 200 vacant property start date is not present in session" in {
+      val result = currentRentFirstPaidNoStartDate().show()(fakeRequest)
+      status(result)      shouldBe Status.OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
