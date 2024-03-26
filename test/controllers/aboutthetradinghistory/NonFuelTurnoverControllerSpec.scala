@@ -17,38 +17,39 @@
 package controllers.aboutthetradinghistory
 
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory
-import play.api.http.Status._
-import play.api.test.Helpers.{charset, contentType, status, stubMessagesControllerComponents}
+import play.api.http.Status
+import play.api.test.FakeRequest
+import play.api.test.Helpers._
 import utils.TestBaseSpec
 
-class TotalFuelSoldControllerSpec extends TestBaseSpec {
+class NonFuelTurnoverControllerSpec extends TestBaseSpec {
 
-  def totalFuelSoldController(
+  def nonFuelTurnoverController(
     aboutTheTradingHistory: Option[AboutTheTradingHistory] = Some(prefilledAboutYourTradingHistory6020)
-  ) = new TotalFuelSoldController(
+  ) = new NonFuelTurnoverController(
     stubMessagesControllerComponents(),
     aboutYourTradingHistoryNavigator,
-    totalFuelSoldView,
+    turnover6020View,
     preEnrichedActionRefiner(aboutTheTradingHistory = aboutTheTradingHistory),
     mockSessionRepo
   )
 
-  "Total fuel question controller" should {
+  "NonFuelTurnoverController" should {
     "return 200" in {
-      val result = totalFuelSoldController().show(fakeRequest)
-      status(result) shouldBe OK
+      val result = nonFuelTurnoverController().show(fakeRequest)
+      status(result) shouldBe Status.OK
     }
 
     "return HTML" in {
-      val result = totalFuelSoldController().show(fakeRequest)
+      val result = nonFuelTurnoverController().show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
 
     "SUBMIT /" should {
-      "throw a BAD_REQUEST if an empty form is submitted" in {
-        val res = totalFuelSoldController().submit(fakeRequest.withFormUrlEncodedBody(Seq.empty: _*))
-        status(res) shouldBe BAD_REQUEST
+      "return redirect 303 for empty turnoverSections" in {
+        val res = nonFuelTurnoverController().submit(FakeRequest().withFormUrlEncodedBody(Seq.empty: _*))
+        status(res) shouldBe SEE_OTHER
       }
     }
   }

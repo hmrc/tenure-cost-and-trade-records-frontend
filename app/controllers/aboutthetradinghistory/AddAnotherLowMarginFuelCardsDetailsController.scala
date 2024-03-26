@@ -102,7 +102,7 @@ class AddAnotherLowMarginFuelCardsDetailsController @Inject() (
             if (updatedCards.lastOption.flatMap(_.addAnotherLowMarginFuelCardDetails).contains(AnswerYes)) {
               Redirect(routes.LowMarginFuelCardDetailsController.show())
             } else {
-              Redirect(routes.CheckYourAnswersAboutTheTradingHistoryController.show())
+              Redirect(routes.NonFuelTurnoverController.show())
             }
           }
         }

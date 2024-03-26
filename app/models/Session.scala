@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -61,6 +61,11 @@ case class Session(
 
   def financialYearEndDates: Seq[(LocalDate, Int)] =
     aboutTheTradingHistory.fold(Seq.empty[(LocalDate, Int)])(_.turnoverSections.map(_.financialYearEnd).zipWithIndex)
+
+  def financialYearEndDates6020: Seq[(LocalDate, Int)] =
+    aboutTheTradingHistory.fold(Seq.empty[(LocalDate, Int)])(
+      _.turnoverSections6020.getOrElse(Seq()).map(_.financialYearEnd).zipWithIndex
+    )
 
   def financialYearEndDates6030: Seq[(LocalDate, Int)] =
     aboutTheTradingHistory.fold(Seq.empty[(LocalDate, Int)])(
