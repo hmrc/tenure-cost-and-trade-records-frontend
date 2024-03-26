@@ -49,10 +49,12 @@
     }
 }
 
+@headingZeroTrade = @{if (numberOfServices.size == 0) messages("addTradeServiceZero.heading") else messages("addTradeService.heading", numberOfServices.size, service)}
+
 @service = @{ if (numberOfServices.size > 1) messages("addTradeService.services") else messages("addTradeService.service") }
 
 @layout(
-    pageHeading = messages("addTradeService.heading", numberOfServices.size, service) ,
+    pageHeading = headingZeroTrade  ,
     showSection = true,
     summary = Some(summary),
     sectionName = messages("label.section.aboutYourLeaseOrTenure"),
