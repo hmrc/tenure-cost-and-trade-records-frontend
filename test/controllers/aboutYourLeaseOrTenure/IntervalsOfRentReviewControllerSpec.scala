@@ -16,7 +16,8 @@
 
 package controllers.aboutYourLeaseOrTenure
 
-import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
+import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartOne, AboutLeaseOrAgreementPartTwo}
+import org.jsoup.Jsoup
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
@@ -25,13 +26,26 @@ import utils.TestBaseSpec
 class IntervalsOfRentReviewControllerSpec extends TestBaseSpec {
 
   def intervalsOfRentReviewController(
-    aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
+    aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwo)
   ) =
     new IntervalsOfRentReviewController(
       stubMessagesControllerComponents(),
       aboutYourLeaseOrTenureNavigator,
       intervalsOfRentReviewView,
-      preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
+      preEnrichedActionRefiner(aboutLeaseOrAgreementPartTwo = aboutLeaseOrAgreementPartTwo),
+      mockSessionRepo
+    )
+
+  def intervalsOfRentReviewNoStartDate(
+    aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(
+      prefilledAboutLeaseOrAgreementPartTwoNoDate
+    )
+  ) =
+    new IntervalsOfRentReviewController(
+      stubMessagesControllerComponents(),
+      aboutYourLeaseOrTenureNavigator,
+      intervalsOfRentReviewView,
+      preEnrichedActionRefiner(aboutLeaseOrAgreementPartTwo = aboutLeaseOrAgreementPartTwo),
       mockSessionRepo
     )
 
@@ -45,6 +59,23 @@ class IntervalsOfRentReviewControllerSpec extends TestBaseSpec {
       val result = intervalsOfRentReviewController().show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
+    }
+
+    "return 200 vacant property start date is not present in session" in {
+      val result = intervalsOfRentReviewNoStartDate().show()(fakeRequest)
+      status(result)      shouldBe Status.OK
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
+    }
+
+    "display the page with the fields prefilled in" when {
+      "exists within the session" in {
+        val result = intervalsOfRentReviewController().show()(fakeRequest)
+        val html   = Jsoup.parse(contentAsString(result))
+        Option(html.getElementById("nextReview.day").`val`()).value   shouldBe "1"
+        Option(html.getElementById("nextReview.month").`val`()).value shouldBe "6"
+        Option(html.getElementById("nextReview.year").`val`()).value  shouldBe "2022"
+      }
     }
   }
 

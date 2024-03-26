@@ -51,6 +51,16 @@ class AboutYourLeaseOrTenure6030NavigatorSpec extends TestBaseSpec {
     aboutLeaseOrAgreementPartTwo = Some(prefilledAboutLeaseOrAgreementPartTwo6030)
   )
 
+  val session6030Full = Session(
+    "99996030004",
+    "FOR6030",
+    prefilledAddress,
+    "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=",
+    aboutLeaseOrAgreementPartOne = Some(prefilledAboutLeaseOrAgreement6030Route),
+    aboutLeaseOrAgreementPartTwo = Some(prefilledAboutLeaseOrAgreementPartTwoNo),
+    aboutLeaseOrAgreementPartThree = Some(prefilledAboutLeaseOrAgreementPartThree)
+  )
+
   val session6010No            = Session(
     "99996010004",
     "FOR6010",
@@ -388,6 +398,16 @@ class AboutYourLeaseOrTenure6030NavigatorSpec extends TestBaseSpec {
           session6010
         ) mustBe controllers.aboutYourLeaseOrTenure.routes.CheckYourAnswersAboutYourLeaseOrTenureController.show()
     }
+
+    "return a function that goes to services paid separately when payment for trade services has been completed" in {
+      navigator
+        .nextPage(PaymentForTradeServicesId, session6030Full)
+        .apply(
+          session6030Full
+        ) mustBe controllers.aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyController.show()
+    }
+
+    session6030Full
 
     "return a function that goes to task list page when CYA has been completed" in {
       navigator
