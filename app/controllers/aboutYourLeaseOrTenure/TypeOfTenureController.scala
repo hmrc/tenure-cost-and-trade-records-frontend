@@ -33,7 +33,7 @@ import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
-class TypeOfTenureController @Inject()(
+class TypeOfTenureController @Inject() (
   mcc: MessagesControllerComponents,
   navigator: AboutYourLeaseOrTenureNavigator,
   typeOfTenureView: typeOfTenure,
@@ -50,7 +50,7 @@ class TypeOfTenureController @Inject()(
         typeOfTenureView(
           request.sessionData.aboutLeaseOrAgreementPartThree.flatMap(_.typeOfTenure) match {
             case Some(typeOfTenure) => typeOfTenureForm.fill(typeOfTenure)
-            case _                      => typeOfTenureForm
+            case _                  => typeOfTenureForm
           },
           request.sessionData.toSummary,
           navigator.from
@@ -62,8 +62,7 @@ class TypeOfTenureController @Inject()(
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[TypeOfTenure](
       typeOfTenureForm,
-      formWithErrors =>
-        BadRequest(typeOfTenureView(formWithErrors, request.sessionData.toSummary)),
+      formWithErrors => BadRequest(typeOfTenureView(formWithErrors, request.sessionData.toSummary)),
       data => {
         val updatedData = updateAboutLeaseOrAgreementPartThree(_.copy(typeOfTenure = Some(data)))
         session.saveOrUpdate(updatedData)

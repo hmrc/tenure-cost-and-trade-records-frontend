@@ -20,7 +20,7 @@ import play.api.libs.json.{Format, Json}
 
 case class TypeOfTenure(
   typeOfTenure: List[String] = List.empty,
-  typeOfTenureDetails: String
+  typeOfTenureDetails: Option[String]
 )
 
 object TypeOfTenure {

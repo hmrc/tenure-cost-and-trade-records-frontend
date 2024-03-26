@@ -18,10 +18,8 @@ package form.aboutYourLeaseOrTenure
 
 import form.MappingSupport.nonEmptyList
 import models.submissions.aboutYourLeaseOrTenure.TypeOfTenure
-import play.api.data.{Form, Mapping}
-import play.api.data.Forms.{default, list, mapping, optional, text}
-import play.api.data.validation.Constraints.maxLength
-import uk.gov.voa.play.form.{Condition, ConditionalMapping, MandatoryOptionalMapping}
+import play.api.data.Form
+import play.api.data.Forms.{list, mapping, optional, text}
 
 object TypeOfTenureForm {
   val typeOfTenureForm: Form[TypeOfTenure] = Form(
@@ -29,23 +27,8 @@ object TypeOfTenureForm {
       "typeOfTenure"        -> list(text).verifying(
         nonEmptyList("error.typeOfTenure.required")
       ),
-      "typeOfTenureDetails" ->
-
-        default(text, "").verifying(
-          maxLength(2000, "error.typeOfTenure.maxLength")
-        )
-
-//          mandatoryTest("typeOfTenure", validateTest)
-
+      "typeOfTenureDetails" -> optional(text)
+        .verifying("error.typeOfTenure.maxLength", it => it.forall(_.length <= 2000))
     )(TypeOfTenure.apply)(TypeOfTenure.unapply)
   )
-
-  def mandatoryTest[T](fieldName: String, mapping: Mapping[String]): Mapping[String] = {
-    val condition: Condition = _.get(fieldName).map(_.size == 2).getOrElse(false)
-    ConditionalMapping(condition, mapping, "", Seq.empty) // MandatoryOptionalMapping(mapping, Nil)
-  }
-
-  def validateTest:Mapping[String] = default(text, "").verifying(maxLength(2000, "error.typeOfTenure.maxLength"))
-
-
 }
