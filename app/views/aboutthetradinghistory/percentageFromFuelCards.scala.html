@@ -59,7 +59,7 @@
         <table class="hmrc-responsive-table govuk-!-width-three-quarters">
             <tbody>
                 <tr>
-                @request.sessionData.financialYearEndDates.map { case (finYearEnd, idx) =>
+                @request.sessionData.financialYearEndDates6020.map { case (finYearEnd, idx) =>
                 <td>
                     @govukTable(Table(
                         head = Seq(
@@ -74,7 +74,7 @@
                         rows = Seq(
                             Seq(
                                 TableRow(
-                                    content = Text(messages("totalFuelSold.fuel.label")),
+                                    content = Text(messages("percentageFromFuelCards.label")),
                                     classes = "govuk-!-font-weight-regular"
 
                                 ),
@@ -86,7 +86,7 @@
                                             value = form(s"percentageFromFuelCards-$idx").value,
                                             classes = "govuk-input--width-5",
                                             attributes = Map(
-                                                "aria-label" -> messages("percentageFromFuelCards.fuel.label")
+                                                "aria-label" -> messages("percentageFromFuelCards.label")
                                             ),
                                             suffix = Some(PrefixOrSuffix(
                                                 content = Text(messages("label.litres"))

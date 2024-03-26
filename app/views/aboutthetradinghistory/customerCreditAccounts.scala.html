@@ -59,7 +59,7 @@
         <table class="hmrc-responsive-table govuk-!-width-three-quarters">
             <tbody>
                 <tr>
-                @request.sessionData.financialYearEndDates.map { case (finYearEnd, idx) =>
+                @request.sessionData.financialYearEndDates6020.map { case (finYearEnd, idx) =>
                 <td>
                     @govukTable(Table(
                         head = Seq(

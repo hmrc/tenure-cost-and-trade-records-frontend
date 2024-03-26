@@ -92,17 +92,17 @@ class CustomerCreditAccountsController @Inject() (
   }
 
   private def backLink(answers: Session)(implicit request: Request[AnyContent]): String =
-        answers.aboutTheTradingHistory.flatMap(_.bunkeredFuelQuestion).map(_.bunkeredFuelQuestion) match {
-          case Some(AnswerYes)=>
-            routes.AddAnotherBunkerFuelCardsDetailsController.show(0).url
-          case Some(AnswerNo) => routes.BunkeredFuelQuestionController.show().url
-          case _ =>
-            logger.warn(s"Back link for customer credit account page reached with unknown enforcement taken value")
-            controllers.routes.TaskListController.show().url
-        }
+    answers.aboutTheTradingHistory.flatMap(_.bunkeredFuelQuestion).map(_.bunkeredFuelQuestion) match {
+      case Some(AnswerYes) =>
+        routes.AddAnotherBunkerFuelCardsDetailsController.show(0).url
+      case Some(AnswerNo)  => routes.BunkeredFuelQuestionController.show().url
+      case _               =>
+        logger.warn(s"Back link for customer credit account page reached with unknown enforcement taken value")
+        controllers.routes.TaskListController.show().url
+    }
 
   private def financialYearEndDates(aboutTheTradingHistory: AboutTheTradingHistory): Seq[LocalDate] =
-    aboutTheTradingHistory.turnoverSections.map(_.financialYearEnd)
+    aboutTheTradingHistory.turnoverSections6020.getOrElse(Seq.empty).map(_.financialYearEnd)
 
   private def years(aboutTheTradingHistory: AboutTheTradingHistory): Seq[String] =
     financialYearEndDates(aboutTheTradingHistory).map(_.getYear.toString)

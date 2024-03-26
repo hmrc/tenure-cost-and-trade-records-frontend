@@ -30,7 +30,8 @@ class PercentageFromFuelCardsViewSpec extends QuestionViewBehaviours[Seq[Percent
 
   val messageKeyPrefix = "percentageFromFuelCards"
 
-  override val form = PercentageFromFuelCardsForm.percentageFromFuelCardsForm(Seq(2025, 2024, 2023).map(_.toString))(messages)
+  override val form =
+    PercentageFromFuelCardsForm.percentageFromFuelCardsForm(Seq(2025, 2024, 2023).map(_.toString))(messages)
   def createView    = () => percentageFromFuelCardsView(form, Summary("99996010001"))(sessionRequest, messages)
 
   def createViewUsingForm = (form: Form[Seq[PercentageFromFuelCards]]) =>

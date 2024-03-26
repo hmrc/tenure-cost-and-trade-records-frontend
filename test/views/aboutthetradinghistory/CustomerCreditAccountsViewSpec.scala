@@ -30,8 +30,14 @@ class CustomerCreditAccountsViewSpec extends QuestionViewBehaviours[Seq[Customer
 
   val messageKeyPrefix = "customerCreditAcc"
 
-  override val form = CustomerCreditAccountsForm.customerCreditAccountsForm(Seq(2025, 2024, 2023).map(_.toString))(messages)
-  def createView    = () => customerCreditAccountsView(form, "", Summary("99996010001"))(sessionRequest, messages)
+  override val form =
+    CustomerCreditAccountsForm.customerCreditAccountsForm(Seq(2025, 2024, 2023).map(_.toString))(messages)
+
+  val backLink = controllers.aboutthetradinghistory.routes.AddAnotherBunkerFuelCardsDetailsController
+    .show(0)
+    .url
+
+  def createView = () => customerCreditAccountsView(form, backLink, Summary("99996010001"))(sessionRequest, messages)
 
   def createViewUsingForm = (form: Form[Seq[CustomerCreditAccounts]]) =>
     customerCreditAccountsView(form, "", Summary("99996020001"))(sessionRequest, messages)
@@ -45,7 +51,7 @@ class CustomerCreditAccountsViewSpec extends QuestionViewBehaviours[Seq[Customer
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText mustBe messages("back.link.label")
       val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.aboutthetradinghistory.routes.AddAnotherBunkerFuelCardsDetailsController.show(0).url
+      backlinkUrl mustBe backLink
     }
 
     "Section heading is visible" in {
@@ -70,14 +76,14 @@ class CustomerCreditAccountsViewSpec extends QuestionViewBehaviours[Seq[Customer
       "reject empty values" in {
         val form         = CustomerCreditAccountsForm.customerCreditAccountsForm(Seq("2022", "2021"))(messages)
         val formData     = Map(
-          "customerCreditAcc-0" -> "",
-          "customerCreditAcc-1" -> "100"
+          "customerCreditAccounts-0" -> "",
+          "customerCreditAccounts-1" -> "100"
         )
         val formWithData = form.bind(formData)
 
         formWithData.errors.size shouldBe 1
         formWithData.errors.head shouldBe FormError(
-          "customerCreditAcc-0",
+          "customerCreditAccounts-0",
           messages("error.customerCreditAcc.required", 2022.toString)
         )
       }
@@ -85,14 +91,14 @@ class CustomerCreditAccountsViewSpec extends QuestionViewBehaviours[Seq[Customer
       "reject non-numeric values" in {
         val form     = CustomerCreditAccountsForm.customerCreditAccountsForm(Seq("2022"))(messages)
         val formData = Map(
-          "customerCreditAcc-0" -> "abc"
+          "customerCreditAccounts-0" -> "abc"
         )
 
         val formWithData = form.bind(formData)
 
         formWithData.errors.size shouldBe 1
         formWithData.errors.head shouldBe FormError(
-          "customerCreditAcc-0",
+          "customerCreditAccounts-0",
           messages("error.customerCreditAcc.range", 2022.toString)
         )
       }

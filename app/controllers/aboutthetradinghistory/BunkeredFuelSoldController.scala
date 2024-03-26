@@ -19,11 +19,10 @@ package controllers.aboutthetradinghistory
 import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.BunkeredFuelSoldForm.bunkeredFuelSoldForm
-import form.aboutthetradinghistory.TotalFuelSoldForm.totalFuelSoldForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.updateAboutTheTradingHistory
-import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, BunkeredFuelSold, TotalFuelSold}
+import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, BunkeredFuelSold}
 import navigation.AboutTheTradingHistoryNavigator
-import navigation.identifiers.{BunkeredFuelSoldId, TotalFuelSoldId}
+import navigation.identifiers.BunkeredFuelSoldId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo

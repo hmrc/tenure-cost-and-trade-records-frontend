@@ -52,5 +52,4 @@ class CustomerCreditAccountsControllerSpec extends TestBaseSpec {
       }
     }
   }
-
 }
