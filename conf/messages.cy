@@ -888,6 +888,7 @@ error.tradeServiceDescription.maxLength = Mae’n rhaid i’r disgrifiad o’r g
 # TRADE SERVICES ADDED
 #####################################
 addTradeService.heading = You have added {0} {1} provided by the landlord
+addTradeServiceZero.heading = You have removed all the services provided by your landlord
 addTradeService.service = service
 addTradeService.services = services
 addTradeService.label = Would you like to add another service which is included in the rent?
