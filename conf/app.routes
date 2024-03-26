@@ -338,6 +338,14 @@ POST        /add-another-bunker-fuel-cards-details                  controllers.
 GET         /remove-bunker-fuel-cards-details                       controllers.aboutthetradinghistory.AddAnotherBunkerFuelCardsDetailsController.remove(idx: Int)
 POST        /remove-bunker-fuel-cards-details                       controllers.aboutthetradinghistory.AddAnotherBunkerFuelCardsDetailsController.performRemove(idx: Int)
 
+GET         /low-margin-fuel-cards-details                          controllers.aboutthetradinghistory.LowMarginFuelCardDetailsController.show(idx: Option[Int] ?= None)
+POST        /low-margin-fuel-cards-details                          controllers.aboutthetradinghistory.LowMarginFuelCardDetailsController.submit(idx: Option[Int])
+
+GET         /add-another-low-margin-fuel-cards-details              controllers.aboutthetradinghistory.AddAnotherLowMarginFuelCardsDetailsController.show(idx: Int)
+POST        /add-another-low-margin-fuel-cards-details              controllers.aboutthetradinghistory.AddAnotherLowMarginFuelCardsDetailsController.submit(idx: Int)
+GET         /remove-low-margin-fuel-cards-details                   controllers.aboutthetradinghistory.AddAnotherLowMarginFuelCardsDetailsController.remove(idx: Int)
+POST        /remove-low-margin-fuel-cards-details                   controllers.aboutthetradinghistory.AddAnotherLowMarginFuelCardsDetailsController.performRemove(idx: Int)
+
 #Form 6030 routing
 GET         /concession-or-franchise-fee                            controllers.aboutfranchisesorlettings.ConcessionOrFranchiseFeeController.show()
 POST        /concession-or-franchise-fee                            controllers.aboutfranchisesorlettings.ConcessionOrFranchiseFeeController.submit()

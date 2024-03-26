@@ -595,6 +595,11 @@ trait FakeObjects {
       aboutTheTradingHistory = prefilledAboutTheTradingHistoryForBunkerFuelCardsDetails
     )
 
+  val aboutYourTradingHistoryWithLowMarginFuelCardsDetailsSession: Session =
+    aboutYourTradingHistory6020YesSession.copy(
+      aboutTheTradingHistory = prefilledAboutTheTradingHistoryForLowMarginFuelCardsDetails
+    )
+
   // Franchises or lettings
   val prefilledCateringOperationSectionYes: CateringOperationSection = CateringOperationSection(
     CateringOperationDetails("Operator Name", "Type of Business", prefilledCateringAddress),
@@ -918,10 +923,17 @@ trait FakeObjects {
     turnoverSections6030 = Seq(TurnoverSection6030(LocalDate.now, 52, None, None))
   )
 
-  val prefilledAboutTheTradingHistoryForBunkerFuelCardsDetails = Some(
+  val prefilledAboutTheTradingHistoryForBunkerFuelCardsDetails    = Some(
     prefilledAboutTheTradingHistory.copy(bunkerFuelCardsDetails =
       Some(
         IndexedSeq(BunkerFuelCardsDetails(bunkerFuelCardDetails = BunkerFuelCardDetails("Card 1", 2)))
+      )
+    )
+  )
+  val prefilledAboutTheTradingHistoryForLowMarginFuelCardsDetails = Some(
+    prefilledAboutTheTradingHistory.copy(lowMarginFuelCardsDetails =
+      Some(
+        IndexedSeq(LowMarginFuelCardsDetails(lowMarginFuelCardDetail = LowMarginFuelCardDetail("Low Margin Card", 2)))
       )
     )
   )
