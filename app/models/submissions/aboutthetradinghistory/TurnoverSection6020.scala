@@ -25,12 +25,12 @@ import java.time.LocalDate
   */
 case class TurnoverSection6020(
   financialYearEnd: LocalDate,
-  shop: Option[BigDecimal],
-  carWash: Option[BigDecimal],
-  jetWash: Option[BigDecimal],
-  lottery: Option[BigDecimal],
-  payPointOrZone: Option[BigDecimal],
-  otherIncome: Option[BigDecimal]
+  shop: Option[BigDecimal] = None,
+  carWash: Option[BigDecimal] = None,
+  jetWash: Option[BigDecimal] = None,
+  lottery: Option[BigDecimal] = None,
+  payPointOrZone: Option[BigDecimal] = None,
+  otherIncome: Option[BigDecimal] = None
 )
 
 object TurnoverSection6020 {

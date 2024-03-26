@@ -87,7 +87,7 @@ class TotalFuelSoldController @Inject() (
   }
 
   private def financialYearEndDates(aboutTheTradingHistory: AboutTheTradingHistory): Seq[LocalDate] =
-    aboutTheTradingHistory.turnoverSections.map(_.financialYearEnd)
+    aboutTheTradingHistory.turnoverSections6020.fold(Seq.empty[LocalDate])(_.map(_.financialYearEnd))
 
   private def years(aboutTheTradingHistory: AboutTheTradingHistory): Seq[String] =
     financialYearEndDates(aboutTheTradingHistory).map(_.getYear.toString)

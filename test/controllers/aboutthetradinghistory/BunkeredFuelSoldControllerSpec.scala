@@ -24,7 +24,7 @@ import utils.TestBaseSpec
 class BunkeredFuelSoldControllerSpec extends TestBaseSpec {
 
   def bunkeredFuelSoldController(
-    aboutTheTradingHistory: Option[AboutTheTradingHistory] = Some(prefilledAboutYourTradingHistory)
+    aboutTheTradingHistory: Option[AboutTheTradingHistory] = Some(prefilledAboutYourTradingHistory6020)
   ) = new BunkeredFuelSoldController(
     stubMessagesControllerComponents(),
     aboutYourTradingHistoryNavigator,

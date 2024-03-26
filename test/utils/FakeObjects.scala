@@ -533,6 +533,14 @@ trait FakeObjects {
   )
 
   val prefilledAboutYourTradingHistory6020: AboutTheTradingHistory = AboutTheTradingHistory(
+    Some(OccupationalAndAccountingInformation(MonthsYearDuration(9, 2017), Some(DayMonthsDuration(27, 9)))),
+    turnoverSections6020 = Some(
+      Seq(
+        TurnoverSection6020(LocalDate.now(), Some(BigDecimal(100)), Some(100)),
+        TurnoverSection6020(LocalDate.now().minusYears(1), Some(BigDecimal(200)), Some(200)),
+        TurnoverSection6020(LocalDate.now().minusYears(2), Some(BigDecimal(300)), Some(300))
+      )
+    ),
     electricVehicleChargingPoints = Some(ElectricVehicleChargingPoints(AnswerYes, Some(123)))
   )
 
@@ -916,6 +924,7 @@ trait FakeObjects {
         prefilledFinancialYear
       )
     ),
+    turnoverSections6020 = Some(Seq(TurnoverSection6020(LocalDate.now))),
     turnoverSections6030 = Seq(TurnoverSection6030(LocalDate.now, 52, None, None))
   )
 
