@@ -915,9 +915,10 @@ error.servicePaidSeparatelyCharge.required = You must tell us the annual charge 
 # SERVICES PAID SEPARATELY LIST
 #####################################
 servicePaidSeparatelyList.heading = You have added {0} {1} which you pay for separately
+servicePaidSeparatelyListZero.heading = You have removed all the services which you pay for separately
 servicePaidSeparatelyList.service = service
 servicePaidSeparatelyList.services = services
-servicePaidSeparatelyList.label = Would you like to add another service which you pay for separately?
+servicePaidSeparatelyList.label = Would you like to add another service?
 error.servicePaidSeparatelyList.required = Select yes if you would like to add another service which is paid for separately
 
 # RENT INCLUDE TRADE SERVICES DETAILS

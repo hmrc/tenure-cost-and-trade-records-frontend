@@ -41,18 +41,20 @@
 
 @(theForm: Form[_], index: Int, backLink: String, summary: Summary)(implicit request: SessionRequest[_], messages: Messages)
 
+@session = @{request.sessionData}
 
 @services = @{
- request.sessionData.aboutLeaseOrAgreementPartThree.fold(Seq.empty[String]){
-  leaseDetails => leaseDetails.servicesPaid.map(_.details.description)
+ session.aboutLeaseOrAgreementPartThree.fold(Seq.empty[String]){
+  servicePaid => servicePaid.servicesPaid.map(_.details.description)
  }
 }
 
+@headingZeroService= @{if (services.size == 0) messages("servicePaidSeparatelyListZero.heading") else messages("servicePaidSeparatelyList.heading", services.length, service) },
 
-@service = @{ if (services.length > 1) messages("servicePaidSeparatelyList.service") else messages("servicePaidSeparatelyList.services") }
+@service = @{ if (services.size > 1) messages("servicePaidSeparatelyList.services") else messages("servicePaidSeparatelyList.service") }
 
 @layout(
- pageHeading = messages("servicePaidSeparatelyList.heading", services.length, service) ,
+ pageHeading = headingZeroService,
  showSection = true,
  summary = Some(summary),
  sectionName = messages("label.section.aboutYourLeaseOrTenure"),
