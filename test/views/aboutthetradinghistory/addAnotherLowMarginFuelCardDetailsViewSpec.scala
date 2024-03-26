@@ -17,20 +17,20 @@
 package views.aboutthetradinghistory
 
 import actions.SessionRequest
-import models.submissions.common.AnswersYesNo
-import form.aboutthetradinghistory.AddAnotherBunkerFuelCardsDetailsForm.addAnotherBunkerFuelCardsDetailsForm
+import form.aboutthetradinghistory.AddAnotherLowMarginFuelCardsDetailsForm.addAnotherLowMarginFuelCardsDetailsForm
 import models.pages.Summary
+import models.submissions.common.AnswersYesNo
 import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
 
-class addAnotherBunkerFuelCardDetailsViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
-  val messageKeyPrefix                  = "addAnotherBunkerFuelCardDetails"
+class addAnotherLowMarginFuelCardDetailsViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
+  val messageKeyPrefix                  = "addAnotherLowMarginFuelCardDetails"
   val sessionRequest                    = SessionRequest(baseFilled6010Session, fakeRequest)
-  override val form: Form[AnswersYesNo] = addAnotherBunkerFuelCardsDetailsForm
+  override val form: Form[AnswersYesNo] = addAnotherLowMarginFuelCardsDetailsForm
 
   def createView: () => Html = () =>
-    addAnotherBunkerFuelCardsDetailsView(
+    addAnotherLowMarginFuelCardsDetailsView(
       form,
       0,
       controllers.aboutthetradinghistory.routes.BunkerFuelCardDetailsController.show().url,

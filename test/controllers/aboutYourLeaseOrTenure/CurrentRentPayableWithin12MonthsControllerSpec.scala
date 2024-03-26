@@ -18,6 +18,7 @@ package controllers.aboutYourLeaseOrTenure
 
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
 import navigation.AboutYourLeaseOrTenureNavigator
+import org.jsoup.Jsoup
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
@@ -27,6 +28,19 @@ class CurrentRentPayableWithin12MonthsControllerSpec extends TestBaseSpec {
 
   def currentRentPayableWithin12MonthsController(
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
+  ) =
+    new CurrentRentPayableWithin12MonthsController(
+      stubMessagesControllerComponents(),
+      mock[AboutYourLeaseOrTenureNavigator],
+      currentRentPayableWithin12MonthsView,
+      preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
+      mockSessionRepo
+    )
+
+  def currentRentPayableWithin12MonthsNoStartDate(
+    aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(
+      prefilledAboutLeaseOrAgreementPartOneNoStartDate
+    )
   ) =
     new CurrentRentPayableWithin12MonthsController(
       stubMessagesControllerComponents(),
@@ -46,6 +60,23 @@ class CurrentRentPayableWithin12MonthsControllerSpec extends TestBaseSpec {
       val result = currentRentPayableWithin12MonthsController().show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
+    }
+
+    "return 200 vacant property start date is not present in session" in {
+      val result = currentRentPayableWithin12MonthsNoStartDate().show()(fakeRequest)
+      status(result)      shouldBe Status.OK
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
+    }
+
+    "display the page with the fields prefilled in" when {
+      "exists within the session" in {
+        val result = currentRentPayableWithin12MonthsController().show()(fakeRequest)
+        val html   = Jsoup.parse(contentAsString(result))
+        Option(html.getElementById("dateReview.day").`val`()).value   shouldBe "1"
+        Option(html.getElementById("dateReview.month").`val`()).value shouldBe "6"
+        Option(html.getElementById("dateReview.year").`val`()).value  shouldBe "2022"
+      }
     }
   }
 

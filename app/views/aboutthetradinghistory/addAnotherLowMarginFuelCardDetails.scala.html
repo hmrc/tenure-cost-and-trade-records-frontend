@@ -47,19 +47,19 @@
 
 @label =  @{messages("label.section.aboutYourTradingHistory")}
 
-@formLabel =@{messages(s"label.addAnotherBunkerFuelCardDetails")}
+@formLabel =@{messages(s"label.lowMarginFuelCardDetails")}
 
 @cardNames = @{
   session.aboutTheTradingHistory.fold(Seq.empty[String]) {
-   fr =>fr.bunkerFuelCardsDetails.fold(IndexedSeq.empty[String])(_.map(_.bunkerFuelCardDetails.name))
+   fr =>fr.lowMarginFuelCardsDetails.fold(IndexedSeq.empty[String])(_.map(_.lowMarginFuelCardDetail.name))
   }
 }
 
 @pluralSuffix = @{ if (cardNames.size > 1) "s" else "" }
 
-@pageHeading = @{messages(if  (cardNames.size == 0)  s"addAnotherBunkerFuelCardDetails.zeroDetails.heading" else s"addAnotherBunkerFuelCardDetails.heading",cardNames.size)+ pluralSuffix}
+@pageHeading = @{messages(if  (cardNames.size == 0)  s"addAnotherLowMarginFuelCardDetails.zeroDetails.heading" else s"addAnotherLowMarginFuelCardDetails.heading",cardNames.size)+ pluralSuffix}
 
-@formAction = @{controllers.aboutthetradinghistory.routes.AddAnotherBunkerFuelCardsDetailsController.submit(index)}
+@formAction = @{controllers.aboutthetradinghistory.routes.AddAnotherLowMarginFuelCardsDetailsController.submit(index)}
 
 @layout(
  pageHeading = pageHeading,
@@ -81,10 +81,10 @@
         items = Seq(
          ActionItem(
           href =
-             controllers.aboutthetradinghistory.routes.BunkerFuelCardDetailsController.show(idx).url,
+             controllers.aboutthetradinghistory.routes.LowMarginFuelCardDetailsController.show(idx).url,
           content = Text("Change")),
          ActionItem(
-          controllers.aboutthetradinghistory.routes.AddAnotherBunkerFuelCardsDetailsController.remove(idx).url,
+          controllers.aboutthetradinghistory.routes.AddAnotherLowMarginFuelCardsDetailsController.remove(idx).url,
           content = Text("Remove"))
         ),
         classes = "hmrc-summary-list__actions"
@@ -97,19 +97,19 @@
 
   @govukRadios(
    Radios(
-    name = s"addAnotherBunkerFuelCardsDetails",
-    idPrefix = Option(s"addAnotherBunkerFuelCardsDetails"),
+    name = s"addAnotherLowMarginFuelCardsDetails",
+    idPrefix = Option(s"addAnotherLowMarginFuelCardsDetails"),
     classes = "govuk-radios--inline",
     items = Seq(
      "yes" -> messages("label.yes"),
      "no" -> messages("label.no")
     ).map(radioItem => RadioItem(
      content = Text(radioItem._2),
-     checked = radioItem._1.equals(theForm(s"addAnotherBunkerFuelCardsDetails").value.getOrElse("")),
+     checked = radioItem._1.equals(theForm(s"addAnotherLowMarginFuelCardsDetails").value.getOrElse("")),
      value = Option(radioItem._1)
     )
     ),
-    errorMessage =  theForm.errors.asTextErrorMessageForField(s"addAnotherBunkerFuelCardsDetails"),
+    errorMessage =  theForm.errors.asTextErrorMessageForField(s"addAnotherLowMarginFuelCardsDetails"),
     fieldset = Option(
      Fieldset(
       legend = Option(
