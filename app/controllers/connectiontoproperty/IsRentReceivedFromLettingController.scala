@@ -19,7 +19,6 @@ package controllers.connectiontoproperty
 import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
 import form.connectiontoproperty.isRentReceivedFromLettingForm.isRentReceivedFromLettingForm
-import models.Session
 import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
 import models.submissions.connectiontoproperty.StillConnectedDetails.updateStillConnectedDetails
 import navigation.ConnectionToPropertyNavigator
@@ -51,10 +50,10 @@ class IsRentReceivedFromLettingController @Inject() (
       Ok(
         isRentReceivedFromLettingView(
           request.sessionData.stillConnectedDetails.flatMap(_.isAnyRentReceived) match {
-            case Some(enforcementAction) => isRentReceivedFromLettingForm.fill(enforcementAction)
+            case Some(isAnyRentReceived) => isRentReceivedFromLettingForm.fill(isAnyRentReceived)
             case _                       => isRentReceivedFromLettingForm
           },
-          getBackLink(request.sessionData),
+          getBackLink(),
           request.sessionData.toSummary
         )
       )
@@ -68,7 +67,7 @@ class IsRentReceivedFromLettingController @Inject() (
         BadRequest(
           isRentReceivedFromLettingView(
             formWithErrors,
-            getBackLink(request.sessionData),
+            getBackLink(),
             request.sessionData.toSummary
           )
         ),
@@ -91,6 +90,6 @@ class IsRentReceivedFromLettingController @Inject() (
     )
   }
 
-  private def getBackLink(answers: Session): String =
+  private def getBackLink(): String =
     controllers.connectiontoproperty.routes.VacantPropertiesStartDateController.show().url
 }

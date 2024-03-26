@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 
 package controllers.aboutfranchisesorlettings
 
-import actions.WithSessionRefiner
+import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
 import form.aboutfranchisesorlettings.AddAnotherLettingOtherPartOfPropertyForm.addAnotherLettingForm
 import form.confirmableActionForm.confirmableActionForm
@@ -46,19 +46,21 @@ class AddAnotherLettingOtherPartOfPropertyController @Inject() (
     with I18nSupport {
 
   def show(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    val existingSection = request.sessionData.aboutFranchisesOrLettings.flatMap(_.lettingSections.lift(index))
+    val addAnother = request.sessionData.aboutFranchisesOrLettings
+      .flatMap(_.lettingSections.lift(index))
+      .flatMap(_.addAnotherLettingToProperty)
 
     Future.successful(
       Ok(
         addAnotherCateringOperationOrLettingAccommodationView(
-          existingSection.flatMap(_.addAnotherLettingToProperty) match {
+          Option.when(navigator.from == "CYA")(AnswerNo).orElse(addAnother) match {
             case Some(addAnotherLettings) => addAnotherLettingForm.fill(addAnotherLettings)
             case _                        => addAnotherLettingForm
           },
           index,
           "addAnotherLetting",
           "addAnotherLettingOtherPartOfProperty",
-          controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyRentIncludesController.show(index).url,
+          getBackLink(index),
           request.sessionData.toSummary
         )
       )
@@ -66,7 +68,7 @@ class AddAnotherLettingOtherPartOfPropertyController @Inject() (
   }
 
   def submit(index: Int) = (Action andThen withSessionRefiner).async { implicit request =>
-    if (request.sessionData.aboutFranchisesOrLettings.exists(_.lettingCurrentIndex >= 4)) {
+    if (request.sessionData.aboutFranchisesOrLettings.exists(_.lettingCurrentIndex >= 4) && navigator.from != "CYA") {
 
       val redirectUrl = controllers.routes.MaxOfLettingsReachedController.show(Some("franchiseLetting")).url
       Future.successful(Redirect(redirectUrl))
@@ -80,9 +82,7 @@ class AddAnotherLettingOtherPartOfPropertyController @Inject() (
               index,
               "addAnotherLetting",
               "addAnotherLettingOtherPartOfProperty",
-              controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyRentIncludesController
-                .show(index)
-                .url,
+              getBackLink(index),
               request.sessionData.toSummary
             )
           ),
@@ -107,7 +107,11 @@ class AddAnotherLettingOtherPartOfPropertyController @Inject() (
               )
               val updatedData     = updateAboutFranchisesOrLettings(_.copy(lettingSections = updatedSections))
               session.saveOrUpdate(updatedData).map { _ =>
-                Redirect(navigator.nextPage(AddAnotherLettingAccommodationPageId, updatedData).apply(updatedData))
+                Redirect(
+                  navigator
+                    .nextWithoutRedirectToCYA(AddAnotherLettingAccommodationPageId, updatedData)
+                    .apply(updatedData)
+                )
               }
             }
       )
@@ -185,4 +189,12 @@ class AddAnotherLettingOtherPartOfPropertyController @Inject() (
       }
     )
   }
+
+  private def getBackLink(idx: Int)(implicit request: SessionRequest[AnyContent]): String =
+    if (navigator.from == "CYA") {
+      controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show().url
+    } else {
+      controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyRentIncludesController.show(idx).url
+    }
+
 }

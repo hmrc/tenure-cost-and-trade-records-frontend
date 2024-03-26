@@ -181,5 +181,23 @@ class AboutYourLeaseOrTenureIdentifiersSpec extends TestBaseSpec {
     "Identifier for check your answers about your lease or tenure" in {
       assert(CheckYourAnswersAboutYourLeaseOrTenureId.toString.equals("checkYourAnswersAboutYourLeaseOrTenurePage"))
     }
+    "Identifier for service paid separately" in {
+      assert(ServicePaidSeparatelyId.toString.equals("servicePaidSeparatelyPage"))
+    }
+    "Identifier for service paid separately list" in {
+      assert(ServicePaidSeparatelyListId.toString.equals("servicePaidSeparatelyListPage"))
+    }
+    "Identifier for service paid separately charge" in {
+      assert(ServicePaidSeparatelyChargeId.toString.equals("servicePaidSeparatelyChargePage"))
+    }
+    "Identifier for payment for trade services" in {
+      assert(PaymentForTradeServicesId.toString.equals("paymentForTradeServicesPage"))
+    }
+    "Identifier for trade services description page" in {
+      assert(TradeServicesDescriptionId.toString.equals("tradeServicesDescriptionPage"))
+    }
+    "Identifier for trade services list" in {
+      assert(TradeServicesListId.toString.equals("tradeServicesListPage"))
+    }
   }
 }

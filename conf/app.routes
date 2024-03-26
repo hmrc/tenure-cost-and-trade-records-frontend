@@ -278,6 +278,8 @@ POST        /does-the-rent-payable                                  controllers.
 GET         /rent-include-trade-services                            controllers.aboutYourLeaseOrTenure.RentIncludeTradeServicesController.show()
 POST        /rent-include-trade-services                            controllers.aboutYourLeaseOrTenure.RentIncludeTradeServicesController.submit()
 
+# Form 6030 :
+
 GET         /trade-services-description                             controllers.aboutYourLeaseOrTenure.TradeServicesDescriptionController.show(idx: Option[Int] ?= None)
 POST        /trade-services-description                             controllers.aboutYourLeaseOrTenure.TradeServicesDescriptionController.submit(idx: Option[Int])
 
@@ -292,6 +294,9 @@ POST        /trade-services-remove                                  controllers.
 
 GET         /service-paid-separately                                controllers.aboutYourLeaseOrTenure.ServicePaidSeparatelyController.show(idx: Option[Int] ?= None)
 POST        /service-paid-separately                                controllers.aboutYourLeaseOrTenure.ServicePaidSeparatelyController.submit(idx: Option[Int])
+
+GET         /service-paid-separately-charge                         controllers.aboutYourLeaseOrTenure.ServicePaidSeparatelyChargeController.show(idx: Int)
+POST        /service-paid-separately-charge                         controllers.aboutYourLeaseOrTenure.ServicePaidSeparatelyChargeController.submit(idx: Int)
 
 GET         /service-paid-separately-list                           controllers.aboutYourLeaseOrTenure.ServicePaidSeparatelyListController.show(idx: Int)
 POST        /service-paid-separately-list                           controllers.aboutYourLeaseOrTenure.ServicePaidSeparatelyListController.submit(idx: Int)
@@ -321,6 +326,25 @@ POST        /total-fuel-sold                                        controllers.
 
 GET         /bunkered-fuel-question                                 controllers.aboutthetradinghistory.BunkeredFuelQuestionController.show()
 POST        /bunkered-fuel-question                                 controllers.aboutthetradinghistory.BunkeredFuelQuestionController.submit()
+
+GET         /bunkered-fuel-sold                                     controllers.aboutthetradinghistory.BunkeredFuelSoldController.show()
+POST        /bunkered-fuel-sold                                     controllers.aboutthetradinghistory.BunkeredFuelSoldController.submit()
+
+GET         /bunker-fuel-cards-details                              controllers.aboutthetradinghistory.BunkerFuelCardDetailsController.show(idx: Option[Int] ?= None)
+POST        /bunker-fuel-cards-details                              controllers.aboutthetradinghistory.BunkerFuelCardDetailsController.submit(idx: Option[Int])
+
+GET         /add-another-bunker-fuel-cards-details                  controllers.aboutthetradinghistory.AddAnotherBunkerFuelCardsDetailsController.show(idx: Int)
+POST        /add-another-bunker-fuel-cards-details                  controllers.aboutthetradinghistory.AddAnotherBunkerFuelCardsDetailsController.submit(idx: Int)
+GET         /remove-bunker-fuel-cards-details                       controllers.aboutthetradinghistory.AddAnotherBunkerFuelCardsDetailsController.remove(idx: Int)
+POST        /remove-bunker-fuel-cards-details                       controllers.aboutthetradinghistory.AddAnotherBunkerFuelCardsDetailsController.performRemove(idx: Int)
+
+GET         /low-margin-fuel-cards-details                          controllers.aboutthetradinghistory.LowMarginFuelCardDetailsController.show(idx: Option[Int] ?= None)
+POST        /low-margin-fuel-cards-details                          controllers.aboutthetradinghistory.LowMarginFuelCardDetailsController.submit(idx: Option[Int])
+
+GET         /add-another-low-margin-fuel-cards-details              controllers.aboutthetradinghistory.AddAnotherLowMarginFuelCardsDetailsController.show(idx: Int)
+POST        /add-another-low-margin-fuel-cards-details              controllers.aboutthetradinghistory.AddAnotherLowMarginFuelCardsDetailsController.submit(idx: Int)
+GET         /remove-low-margin-fuel-cards-details                   controllers.aboutthetradinghistory.AddAnotherLowMarginFuelCardsDetailsController.remove(idx: Int)
+POST        /remove-low-margin-fuel-cards-details                   controllers.aboutthetradinghistory.AddAnotherLowMarginFuelCardsDetailsController.performRemove(idx: Int)
 
 #Form 6030 routing
 GET         /concession-or-franchise-fee                            controllers.aboutfranchisesorlettings.ConcessionOrFranchiseFeeController.show()

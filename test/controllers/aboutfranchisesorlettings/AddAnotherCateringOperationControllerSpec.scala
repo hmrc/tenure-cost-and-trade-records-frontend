@@ -57,6 +57,13 @@ class AddAnotherCateringOperationControllerSpec extends TestBaseSpec {
         status(result) shouldBe BAD_REQUEST
       }
     }
+
+    "REMOVE /" should {
+      "redirect if an empty form is submitted" in {
+        val result = addAnotherCateringOperationOrLettingAccommodationController().remove(1)(fakeRequest)
+        status(result) shouldBe SEE_OTHER
+      }
+    }
   }
 
   "Catering operation form" should {

@@ -38,6 +38,28 @@ class AreYouThirdPartyControllerSpec extends TestBaseSpec {
       mockSessionRepo
     )
 
+  def areYouThirdPartyControllerNoOwnProperty(
+    stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledStillConnectedDetailsNoToAll)
+  ) =
+    new AreYouThirdPartyController(
+      stubMessagesControllerComponents(),
+      connectedToPropertyNavigator,
+      areYouThirdPartyView,
+      preEnrichedActionRefiner(stillConnectedDetails = stillConnectedDetails),
+      mockSessionRepo
+    )
+
+  def areYouThirdPartyControllerNoneOwnProperty(
+    stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledStillConnectedDetailsNoneOwnProperty)
+  ) =
+    new AreYouThirdPartyController(
+      stubMessagesControllerComponents(),
+      connectedToPropertyNavigator,
+      areYouThirdPartyView,
+      preEnrichedActionRefiner(stillConnectedDetails = stillConnectedDetails),
+      mockSessionRepo
+    )
+
   "AreYouThirdPartyController GET /" should {
 
     "return 200" in {
@@ -49,6 +71,26 @@ class AreYouThirdPartyControllerSpec extends TestBaseSpec {
       val result = areYouThirdPartyController().show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
+    }
+
+    "return HTML no value own property value" in {
+      val result = areYouThirdPartyControllerNoOwnProperty().show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.connectiontoproperty.routes.TradingNamePayingRentController.show().url
+      )
+    }
+
+    "return HTML none own property value" in {
+      val result = areYouThirdPartyControllerNoneOwnProperty().show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.connectiontoproperty.routes.ConnectionToThePropertyController.show().url
+      )
     }
   }
 
@@ -69,6 +111,21 @@ class AreYouThirdPartyControllerSpec extends TestBaseSpec {
         mustContainError(errorKey.areYouThirdParty, "error.areYouThirdParty.missing", form)
       }
     }
+  }
+
+  "SUBMIT /" should {
+    "Throw a bad request if an empty form is submitted" in {
+      val result = areYouThirdPartyController().submit(FakeRequest().withFormUrlEncodedBody(Seq.empty: _*))
+      status(result) shouldBe BAD_REQUEST
+    }
+
+    "Throw a bad request if not empty form submitted and save data in the session" in {
+      val testData = Map("areYouThirdParty" -> "yes")
+      val result   = areYouThirdPartyController().submit(FakeRequest().withFormUrlEncodedBody(testData.toSeq: _*))
+
+      status(result) shouldBe BAD_REQUEST
+    }
+
   }
 }
 

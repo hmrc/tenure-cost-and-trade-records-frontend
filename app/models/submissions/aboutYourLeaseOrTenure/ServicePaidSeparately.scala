@@ -19,7 +19,6 @@ package models.submissions.aboutYourLeaseOrTenure
 import play.api.libs.json.{Json, OFormat}
 
 case class ServicePaidSeparately(
-  annualCharge: BigDecimal,
   description: String
 )
 object ServicePaidSeparately {

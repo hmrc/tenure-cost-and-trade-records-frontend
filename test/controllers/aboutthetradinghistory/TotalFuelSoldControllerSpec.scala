@@ -33,7 +33,7 @@ class TotalFuelSoldControllerSpec extends TestBaseSpec {
     mockSessionRepo
   )
 
-  "About your trading history controller" should {
+  "Total fuel question controller" should {
     "return 200" in {
       val result = totalFuelSoldController().show(fakeRequest)
       status(result) shouldBe OK

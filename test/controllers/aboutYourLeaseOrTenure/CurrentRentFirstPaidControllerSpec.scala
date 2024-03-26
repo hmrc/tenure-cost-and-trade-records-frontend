@@ -22,6 +22,7 @@ import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import utils.TestBaseSpec
+import org.jsoup.Jsoup
 
 class CurrentRentFirstPaidControllerSpec extends TestBaseSpec {
 
@@ -29,6 +30,19 @@ class CurrentRentFirstPaidControllerSpec extends TestBaseSpec {
 
   def currentRentFirstPaidController(
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
+  ) =
+    new CurrentRentFirstPaidController(
+      stubMessagesControllerComponents(),
+      mockAboutLeaseOrTenureNavigator,
+      currentRentFirstPaidView,
+      preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
+      mockSessionRepo
+    )
+
+  def currentRentFirstPaidNoStartDate(
+    aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(
+      prefilledAboutLeaseOrAgreementPartOneNoStartDate
+    )
   ) =
     new CurrentRentFirstPaidController(
       stubMessagesControllerComponents(),
@@ -48,6 +62,23 @@ class CurrentRentFirstPaidControllerSpec extends TestBaseSpec {
       val result = currentRentFirstPaidController().show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
+    }
+
+    "return 200 vacant property start date is not present in session" in {
+      val result = currentRentFirstPaidNoStartDate().show()(fakeRequest)
+      status(result)      shouldBe Status.OK
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
+    }
+
+    "display the page with the fields prefilled in" when {
+      "exists within the session" in {
+        val result = currentRentFirstPaidController().show()(fakeRequest)
+        val html   = Jsoup.parse(contentAsString(result))
+        Option(html.getElementById("currentRentFirstPaid.day").`val`()).value   shouldBe "1"
+        Option(html.getElementById("currentRentFirstPaid.month").`val`()).value shouldBe "6"
+        Option(html.getElementById("currentRentFirstPaid.year").`val`()).value  shouldBe "2022"
+      }
     }
   }
 

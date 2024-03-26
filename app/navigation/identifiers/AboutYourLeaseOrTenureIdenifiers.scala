@@ -154,12 +154,12 @@ case object PaymentForTradeServicesId extends Identifier {
   override def toString: String = "paymentForTradeServicesPage"
 }
 
-case object BunkeredFuelQuestionId extends Identifier {
-  override def toString: String = "bunkeredFuelQuestionPage"
-}
-
 case object ServicePaidSeparatelyId extends Identifier {
   override def toString: String = "servicePaidSeparatelyPage"
+}
+
+case object ServicePaidSeparatelyChargeId extends Identifier {
+  override def toString: String = "servicePaidSeparatelyChargePage"
 }
 
 case object ServicePaidSeparatelyListId extends Identifier {

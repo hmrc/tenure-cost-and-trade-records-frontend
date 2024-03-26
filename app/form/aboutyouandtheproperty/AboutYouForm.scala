@@ -16,7 +16,7 @@
 
 package form.aboutyouandtheproperty
 
-import form.MappingSupport.{contactDetailsAboutYouMapping, contactDetailsMapping}
+import form.MappingSupport.contactDetailsAboutYouMapping
 import models.submissions.aboutyouandtheproperty.CustomerDetails
 import play.api.data.Form
 import play.api.data.Forms.{default, mapping, text}

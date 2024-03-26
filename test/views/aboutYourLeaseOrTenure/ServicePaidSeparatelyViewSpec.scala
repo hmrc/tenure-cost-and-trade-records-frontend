@@ -54,11 +54,6 @@ class ServicePaidSeparatelyViewSpec extends QuestionViewBehaviours[ServicePaidSe
       assert(sectionText == messages("label.section.aboutYourLeaseOrTenure"))
     }
 
-    "contain currency field for the value annual charge for separately paid services" in {
-      val doc = asDocument(createViewUsingForm(form))
-      assertRenderedById(doc, "annualCharge")
-    }
-
     "contain input for the separately paid service description" in {
       val doc = asDocument(createViewUsingForm(form))
       assertRenderedById(doc, "description")

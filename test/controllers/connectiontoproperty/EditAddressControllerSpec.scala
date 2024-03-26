@@ -37,6 +37,16 @@ class EditAddressControllerSpec extends TestBaseSpec {
     mockSessionRepo
   )
 
+  def editAddressControllerEditAddress(
+    stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledStillConnectedDetailsEdit)
+  ) = new EditAddressController(
+    stubMessagesControllerComponents(),
+    connectedToPropertyNavigator,
+    editAddressView,
+    preEnrichedActionRefiner(stillConnectedDetails = stillConnectedDetails),
+    mockSessionRepo
+  )
+
   "GET /" should {
     "return 200" in {
       val result = editAddressController().show(fakeRequest)
@@ -45,6 +55,13 @@ class EditAddressControllerSpec extends TestBaseSpec {
 
     "return HTML" in {
       val result = editAddressController().show(fakeRequest)
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
+    }
+
+    "return 200 edit address in session" in {
+      val result = editAddressControllerEditAddress().show(fakeRequest)
+      status(result)      shouldBe Status.OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }

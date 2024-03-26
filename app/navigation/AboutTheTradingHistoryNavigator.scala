@@ -72,8 +72,8 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
 
   private def bunkeredFuelQuestionRouting: Session => Call = answers => {
     answers.aboutTheTradingHistory.flatMap(_.bunkeredFuelQuestion.map(_.bunkeredFuelQuestion)) match {
-      case Some(AnswerYes) => controllers.routes.TaskListController.show() // TODO the next screen is not present yet
-      case Some(AnswerNo)  => controllers.routes.TaskListController.show() //
+      case Some(AnswerYes) => aboutthetradinghistory.routes.BunkeredFuelSoldController.show()
+      case Some(AnswerNo)  => controllers.routes.TaskListController.show()
       case _               =>
         logger.warn(
           s"Navigation for bunkered fuel question reached without correct selection of conditions by controller"
@@ -98,6 +98,36 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
       aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show()
   }
 
+  private def getAddAnotherBunkerFuelCardsDetailRouting(answers: Session): Call = {
+    val currentIndex: Option[Int] = answers.aboutTheTradingHistory.flatMap(_.bunkerFuelCardsDetails) match {
+      case Some(details) if details.nonEmpty => Some(details.size - 1) // Assuming the last entry is the current one
+      case _                                 => None
+    }
+    currentIndex match {
+      case Some(idx) =>
+        aboutthetradinghistory.routes.AddAnotherBunkerFuelCardsDetailsController.show(
+          idx
+        ) // Assuming there's a 'show' method to edit
+      case None      =>
+        aboutthetradinghistory.routes.AddAnotherBunkerFuelCardsDetailsController.show(0) // Fallback or start new
+    }
+  }
+
+  private def getAddAnotherLowMarginFuelCardsDetailRouting(answers: Session): Call = {
+    val currentIndex: Option[Int] = answers.aboutTheTradingHistory.flatMap(_.lowMarginFuelCardsDetails) match {
+      case Some(details) if details.nonEmpty => Some(details.size - 1) // Assuming the last entry is the current one
+      case _                                 => None
+    }
+    currentIndex match {
+      case Some(idx) =>
+        aboutthetradinghistory.routes.AddAnotherLowMarginFuelCardsDetailsController.show(
+          idx
+        ) // Assuming there's a 'show' method to edit
+      case None      =>
+        aboutthetradinghistory.routes.AddAnotherLowMarginFuelCardsDetailsController.show(0) // Fallback or start new
+    }
+  }
+
   override val routeMap: Map[Identifier, Session => Call] = Map(
     AboutYourTradingHistoryPageId            -> (_ => aboutthetradinghistory.routes.FinancialYearEndController.show()),
     FinancialYearEndPageId                   -> financialYearEndRouting,
@@ -110,6 +140,9 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
     FixedOperatingExpensesId                 -> (_ => aboutthetradinghistory.routes.OtherCostsController.show()),
     OtherCostsId                             -> (_ => aboutthetradinghistory.routes.IncomeExpenditureSummaryController.show()),
     BunkeredFuelQuestionId                   -> bunkeredFuelQuestionRouting,
+    BunkeredFuelSoldId                       -> (_ => aboutthetradinghistory.routes.BunkerFuelCardDetailsController.show(None)),
+    BunkerFuelCardsDetailsId                 -> getAddAnotherBunkerFuelCardsDetailRouting,
+    LowMarginFuelCardsDetailsId              -> getAddAnotherLowMarginFuelCardsDetailRouting,
     IncomeExpenditureSummaryId               -> (_ => aboutthetradinghistory.routes.UnusualCircumstancesController.show()),
     UnusualCircumstancesId                   -> (_ =>
       aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show()

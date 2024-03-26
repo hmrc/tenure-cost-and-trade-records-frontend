@@ -38,14 +38,29 @@ class TradingActivityControllerSpec extends TestBaseSpec {
     mockSessionRepo
   )
 
+  def tradingActivityControllerNone() = new TradingActivityController(
+    stubMessagesControllerComponents(),
+    aboutYouAndThePropertyNavigator,
+    tradingActivityView,
+    preEnrichedActionRefiner(aboutYouAndTheProperty = None),
+    mockSessionRepo
+  )
+
   "TradingActivityController controller" should {
-    "return 200" in {
+    "return 200 trading activity in the session" in {
       val result = tradingActivityController().show(fakeRequest)
       status(result) shouldBe OK
     }
 
     "return HTML" in {
       val result = tradingActivityController().show(fakeRequest)
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
+    }
+
+    "return 200 no trading activity in the session" in {
+      val result = tradingActivityControllerNone().show(fakeRequest)
+      status(result)      shouldBe OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }

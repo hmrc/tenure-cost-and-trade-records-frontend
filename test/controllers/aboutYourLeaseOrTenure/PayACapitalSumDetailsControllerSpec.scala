@@ -17,6 +17,7 @@
 package controllers.aboutYourLeaseOrTenure
 
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo
+import org.jsoup.Jsoup
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
@@ -26,6 +27,19 @@ class PayACapitalSumDetailsControllerSpec extends TestBaseSpec {
 
   def payACapitalSumDetailsController(
     aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwo)
+  ) =
+    new PayACapitalSumDetailsController(
+      stubMessagesControllerComponents(),
+      aboutYourLeaseOrTenureNavigator,
+      payACapitalSumDetailsView,
+      preEnrichedActionRefiner(aboutLeaseOrAgreementPartTwo = aboutLeaseOrAgreementPartTwo),
+      mockSessionRepo
+    )
+
+  def payACapitalSumDetailsNoDate(
+    aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(
+      prefilledAboutLeaseOrAgreementPartTwoNoDate
+    )
   ) =
     new PayACapitalSumDetailsController(
       stubMessagesControllerComponents(),
@@ -45,6 +59,23 @@ class PayACapitalSumDetailsControllerSpec extends TestBaseSpec {
       val result = payACapitalSumDetailsController().show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
+    }
+
+    "return 200 vacant property start date is not present in session" in {
+      val result = payACapitalSumDetailsNoDate().show()(fakeRequest)
+      status(result)      shouldBe Status.OK
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
+    }
+
+    "display the page with the fields prefilled in" when {
+      "exists within the session" in {
+        val result = payACapitalSumDetailsController().show()(fakeRequest)
+        val html   = Jsoup.parse(contentAsString(result))
+        Option(html.getElementById("capitalSumPaidDetailsDateInput.day").`val`()).value   shouldBe "1"
+        Option(html.getElementById("capitalSumPaidDetailsDateInput.month").`val`()).value shouldBe "6"
+        Option(html.getElementById("capitalSumPaidDetailsDateInput.year").`val`()).value  shouldBe "2022"
+      }
     }
   }
 

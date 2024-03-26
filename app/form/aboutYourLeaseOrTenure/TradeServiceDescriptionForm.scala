@@ -17,20 +17,19 @@
 package form.aboutYourLeaseOrTenure
 import models.submissions.aboutYourLeaseOrTenure.TradeServicesDetails
 import play.api.data.Form
-import play.api.data.Forms.{default, mapping, optional, text}
-import play.api.data.validation.Constraints.nonEmpty
+import play.api.data.Forms.{default, mapping, text}
+import play.api.data.validation.Constraints.{maxLength, nonEmpty}
 
 object TradeServiceDescriptionForm {
 
   val tradeServicesDescriptionForm: Form[TradeServicesDetails] =
     Form(
       mapping(
-        "sumExcludingVat" -> optional(
-          text
-            .verifying("error.tradeDescription.invalidCurrency", s => s.matches("-?\\d+(\\.\\d+)?"))
-            .transform[BigDecimal](s => BigDecimal(s.replace(",", "")), v => v.toString)
-        ),
-        "description"     -> default(text, "").verifying(nonEmpty(errorMessage = "tradeServiceDescription.describe.error"))
+        "description" -> default(text, "")
+          .verifying(
+            nonEmpty(errorMessage = "tradeServiceDescription.describe.error"),
+            maxLength(500, "error.tradeServiceDescription.maxLength")
+          )
       )(TradeServicesDetails.apply)(TradeServicesDetails.unapply)
     )
 

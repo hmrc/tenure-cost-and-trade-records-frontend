@@ -38,14 +38,29 @@ class LicensableActivitiesDetailsControllerSpec extends TestBaseSpec {
     mockSessionRepo
   )
 
+  def licensableActivitiesDetailsControllerNone() = new LicensableActivitiesDetailsController(
+    stubMessagesControllerComponents(),
+    aboutYouAndThePropertyNavigator,
+    licensableActivitiesDetailsView,
+    preEnrichedActionRefiner(aboutYouAndTheProperty = None),
+    mockSessionRepo
+  )
+
   "Licensable activities details controller" should {
-    "return 200" in {
+    "GET / return 200 licensable activities details in the session" in {
       val result = licensableActivitiesDetailsController().show(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
-    "return HTML" in {
+    "GET / return HTML" in {
       val result = licensableActivitiesDetailsController().show(fakeRequest)
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
+    }
+
+    "GET / return 200 no licensable activities details in the session" in {
+      val result = licensableActivitiesDetailsControllerNone().show(fakeRequest)
+      status(result)      shouldBe Status.OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }

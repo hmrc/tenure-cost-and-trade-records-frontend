@@ -89,6 +89,7 @@ label.phone = Telephone number
 label.email = Email address
 label.submitAnotherForm = Submit another form
 label.change = Change
+label.litres = litres
 
 # COMMON HINTS
 ##############
@@ -682,8 +683,8 @@ error.franchiseOrLettings.missing = Select yes if you receive income from lettin
 aboutYourLandlord.heading = Your landlord
 label.landlordFullName = Landlord’s name
 label.landlordAddress.address = Landlord’s address
-error.landlordFullName.required = If you do not know the landlord’s name, enter unknown
-error.landlordFullName.maxLength = Landlord's name must be 50 characters or fewer
+error.landlordFullName.required = Os nad ydych yn gwybod enw’r landlord, nodwch ‘Anhysbys’
+error.landlordFullName.maxLength = Mae’n rhaid i enw’r landlord fod yn 50 o gymeriadau neu lai
 
 # LEASE OR AGREEMENT DETAILS COMMENCE WITHIN 3 YEARS
 ###################################################
@@ -691,9 +692,9 @@ leaseOrAgreement.heading = Lease or agreement details
 label.commenceWithinThreeYears = Did the tenancy, lease or agreement commence within the last 3 years?
 label.agreedReviewedAlteredThreeYears  = Has the rent been agreed, reviewed or altered within the last 3 years?
 label.rentUnderReviewNegotiated  = Is the rent currently under review, or is a new lease or agreement being negotiated?
-error.tenancy3Years.required = Select yes if the tenancy, lease or agreement commenced in the last 3 years
-error.rent3Years.required = Select yes if the rent has been agreed, reviews or altered in the last 3 years
-error.underReview.required = Select yes if the rent is currently under review, or a new lease or agreement is being negotiated
+error.tenancy3Years.required = Dewiswch ‘do’ os dechreuodd y denantiaeth, y brydles neu’r cytundeb yn ystod y 3 blynedd diwethaf
+error.rent3Years.required = Dewiswch 'do’ os yw’r rhent wedi’i gytuno, ei adolygu neu ei newid yn ystod y 3 blynedd diwethaf
+error.underReview.required = Dewiswch ‘do’ os yw’r rhent yn cael ei adolygu ar hyn o bryd, neu os yw prydles neu gytundeb newydd yn destun trafodaeth
 
 # LEASE OR AGREEMENT DETAILS VAT
 ##############################
@@ -713,8 +714,8 @@ hint.includedInYourRent = Select all that apply.
 error.vat.missing = You must choose one
 error.nondomesticRates.missing = You must choose one
 error.waterCharges.missing = You must choose one
-error.includedInYourRent.required = Select any items included in your rent, or select ’No, none of these items are included in the rent’
-error.includedInYourRent.noneSelectedWithOther = Select any items included in your rent, or select ’No, none of these items are included in the rent’
+error.includedInYourRent.required = Dewiswch yr eitemau sydd wedi’u cynnwys yn eich rhent, neu dewiswch ‘Na, nid oes yr un o’r rhain wedi’u cynnwys yn y rhent’
+error.includedInYourRent.noneSelectedWithOther = Dewiswch yr eitemau sydd wedi’u cynnwys yn eich rhent, neu dewiswch ‘Na, nid oes yr un o’r rhain wedi’u cynnwys yn y rhent’
 
 # CATERING OPERATION OR LETTING ACCOMMODATION
 ############################################
@@ -750,7 +751,7 @@ propertyUseLeasebackArrangement.heading = Does {0} occupy the property using a l
 propertyUseLeasebackArrangement.title = Is there a leaseback arrangement?
 help.propertyUseLeasebackArrangement.title = Help with leaseback arrangements
 help.propertyUseLeasebackArrangement.p1 = In a leaseback arrangement, a business can sell their premises to an investor then lease it back for a specific amount of time. These agreements allow businesses to raise capital while maintaining the control of their former property, and often include buy-back options.
-error.propertyUseLeasebackArrangement.missing = Select yes if you occupy the property using a leaseback arrangement
+error.propertyUseLeasebackArrangement.missing = Dewiswch ‘ydy’ os ydych yn meddiannu’r eiddo gan ddefnyddio trefniant adlesu
 
 # CURRENT ANNUAL RENT
 ##############################
@@ -763,7 +764,7 @@ error.currentAnnualRent.lessThanIncludedPartsSum = The annual rent cannot be les
 rentOpenMarketValue.heading = When the current rent was agreed, was it based on the open market value at that time?
 help.rentOpenMarketValue.title = If you’re not sure what the rent is based on
 help.rentOpenMarketValue.p1 = If your rent is not based on open market value, it may simply be a fixed amount agreed between both parties, or linked to another factor. If you are unsure, it may be stipulated in your lease or agreement.
-error.rentOpenMarketValue.missing = Select yes if the rent was based on the open market value
+error.rentOpenMarketValue.missing = Dewiswch ‘oedd’ os cafodd y rhent ei bennu ar sail ei werth ar y farchnad agored
 
 # DOES THE RENT PAYABLE
 ######################
@@ -777,10 +778,10 @@ checkbox.rentPayable.noneOfThese = No, the rent payable does not include any of 
 checkbox.rentPayable.none = None
 label.detailsToQuestions = Additional information
 hint.detailsToQuestions = Give details if you want to tell us more about any options that may apply.
-error.doesTheRentPayable.required = Select any options included in the rent, or select ’No, the rent does not include any of these options’
-error.doesTheRentPayable.noneSelectedWithOther = Select any options included in the rent, or select ’No, the rent does not include any of these options’
+error.doesTheRentPayable.required = Dewiswch yr eitemau sydd wedi’u cynnwys yn eich rhent, neu dewiswch ‘Na, nid oes yr un o’r rhain wedi’u cynnwys yn y rhent’
+error.doesTheRentPayable.noneSelectedWithOther = Dewiswch yr eitemau sydd wedi’u cynnwys yn eich rhent, neu dewiswch ‘Na, nid oes yr un o’r rhain wedi’u cynnwys yn y rhent’
 error.detailsToQuestions.required = Please provide further information
-error.detailsToQuestions.maxLength = Additional information must be 500 characters or fewer
+error.detailsToQuestions.maxLength = Mae’n rhaid i’r wybodaeth ychwanegol fod yn 500 o gymeriadau neu lai
 
 # RENT PAYABLE VARY ON QUANTITY OF BEERS
 #######################################
@@ -797,14 +798,14 @@ error.rentPayableVaryOnQuantityOfBeersDetails.maxLength  = The description of ho
 # RENT PAYABLE VARY ACCORDING TO GROSS OR NET
 ############################################
 rentPayableVaryAccordingToGrossOrNet.heading = Does the rent payable vary according to the gross or net turnover of the business?
-error.rentPayableVaryAccordingToGrossOrNet.missing = Select yes if the rent varies according to your turnover
+error.rentPayableVaryAccordingToGrossOrNet.missing = Dewiswch ‘ydy’ os yw’r rhent yn amrywio yn ôl eich trosiant
 
 # RENT PAYABLE VARY ACCORDING TO GROSS OR NET DETAILS
 ####################################################
 rentPayableVaryAccordingToGrossOrNetDetails.heading = Describe how your rent payable is affected by your turnover
 label.rentPayableVaryAccordingToGrossOrNetDetails = For example, provide details of any base rate you may pay, plus any additional percentage increments when your turnover exceeds certain thresholds.
-error.rentPayableVaryAccordingToGrossOrNetDetails.required = Enter a description of how your turnover affects your rent
-error.rentPayableVaryAccordingToGrossOrNetDetails.maxLength  = The description of how your turnover affects your rent should be 500 characters or fewer
+error.rentPayableVaryAccordingToGrossOrNetDetails.required = Nodwch ddisgrifiad o sut mae’ch trosiant yn effeithio ar eich rhent
+error.rentPayableVaryAccordingToGrossOrNetDetails.maxLength  = Mae’n rhaid i’r disgrifiad o sut mae’ch trosiant yn effeithio ar eich rhent fod yn 500 o gymeriadau neu lai
 
 # ULTIMATELY RESPONSIBLE
 #######################
@@ -819,11 +820,11 @@ label.tenant = Tenant
 label.both = Both
 label.sharedResponsibilities = Give details of any shared responsibilities
 hint.sharedResponsibilities = For example, ‘business insurance costs are shared equally’, or ‘landlord covers 75% for outside repairs, tenant pays 25%’.
-error.sharedResponsibilities.maxLength = This must be 2000 characters or fewer
-error.sharedResponsibilities = This must be 2000 characters or fewer
-error.outsideRepairs.required = Select who is responsible for outside repairs
-error.insideRepairs.required = Select who is responsible for the inside repairs
-error.buildingInsurance.required = Select who is responsible for the building insurance
+error.sharedResponsibilities.maxLength = Mae’n rhaid i’r disgrifiad o unrhyw gyfrifoldebau ar y cyd fod yn 500 o gymeriadau neu lai
+error.sharedResponsibilities = Mae’n rhaid i’r disgrifiad o unrhyw gyfrifoldebau ar y cyd fod yn 500 o gymeriadau neu lai
+error.outsideRepairs.required = Dewiswch pwy sy’n gyfrifol am atgyweirio y tu allan
+error.insideRepairs.required = Dewiswch pwy sy’n gyfrifol am atgyweirio y tu mewn
+error.buildingInsurance.required = Dewiswch pwy sy’n gyfrifol am yr yswiriant adeiladau
 
 # ULTIMATELY RESPONSIBLE INSIDE REPAIRS
 #######################
@@ -836,9 +837,9 @@ label.tenant = Tenant
 label.both = Both
 label.sharedResponsibilitiesIR = Give details of any shared responsibilities
 hint.sharedResponsibilitiesIR = For example, ‘business insurance costs are shared equally’, or ‘landlord covers 75% for outside repairs, tenant pays 25%’.
-error.sharedResponsibilitiesIR.maxLength = This must be 2000 characters or fewer
-error.sharedResponsibilitiesIR = This must be 2000 characters or fewer
-error.sharedResponsibilitiesIR.required = Please give details of any shared responsibilities for inside repairs to public and business areas
+error.sharedResponsibilitiesIR.maxLength = Mae’n rhaid i’r disgrifiad o unrhyw gyfrifoldebau ar y cyd fod yn 500 o gymeriadau neu lai
+error.sharedResponsibilitiesIR = Mae’n rhaid i’r disgrifiad o unrhyw gyfrifoldebau ar y cyd fod yn 500 o gymeriadau neu lai
+error.sharedResponsibilitiesIR.required = Enter a description of the shared responsibilities
 
 # ULTIMATELY RESPONSIBLE OUTSIDE REPAIRS
 #######################
@@ -850,9 +851,9 @@ label.tenant = Tenant
 label.both = Both
 label.sharedResponsibilitiesOR = Give details of any shared responsibilities
 hint.sharedResponsibilitiesOR = For example, ‘business insurance costs are shared equally’, or ‘landlord covers 75% for outside repairs, tenant pays 25%’.
-error.sharedResponsibilitiesOR.maxLength = This must be 2000 characters or fewer
-error.sharedResponsibilitiesOR = This must be 2000 characters or fewer
-error.sharedResponsibilitiesOR.required = Please give details of any shared responsibilities for outside repairs
+error.sharedResponsibilitiesOR.maxLength = Mae’n rhaid i’r disgrifiad o unrhyw gyfrifoldebau ar y cyd fod yn 500 o gymeriadau neu lai
+error.sharedResponsibilitiesOR = Mae’n rhaid i’r disgrifiad o unrhyw gyfrifoldebau ar y cyd fod yn 500 o gymeriadau neu lai
+error.sharedResponsibilitiesOR.required = Enter a description of the shared responsibilities
 
 # ULTIMATELY RESPONSIBLE BUILDING INSURANCE
 #######################
@@ -864,57 +865,61 @@ label.tenant = Tenant
 label.both = Both
 label.sharedResponsibilitiesBI = Give details of any shared responsibilities
 hint.sharedResponsibilitiesBI = For example, ‘business insurance costs are shared equally’, or ‘landlord covers 75% for outside repairs, tenant pays 25%’.
-error.sharedResponsibilitiesBI.maxLength = This must be 2000 characters or fewer
-error.sharedResponsibilitiesBI = This must be 2000 characters or fewer
-error.sharedResponsibilitiesBI.required = Please give details of any shared responsibilities for building insurance
+error.sharedResponsibilitiesBI.maxLength = Mae’n rhaid i’r disgrifiad o unrhyw gyfrifoldebau ar y cyd fod yn 500 o gymeriadau neu lai
+error.sharedResponsibilitiesBI = Mae’n rhaid i’r disgrifiad o unrhyw gyfrifoldebau ar y cyd fod yn 500 o gymeriadau neu lai
+error.sharedResponsibilitiesBI.required = Enter a description of the shared responsibilities
 
 # RENT INCLUDE TRADE SERVICES
 ############################
 rentIncludeTradeServices.heading = Does the rent include any trade services provided by the landlord?
 hint.rentIncludeTradeServices = For example, maintenance of trade fixtures and fittings, cellar services, marketing, staff training.
-error.rentIncludeTradeServices.missing = Select yes if the rent includes any trade services provided by the landlord
+hint.rentIncludeTradeServices.for6030 = For example, lighting, heating, cleaning of shared parts.
+error.rentIncludeTradeServices.missing = Dewiswch ‘ydy’ os yw’r rhent yn cynnwys unrhyw wasanaethau masnach a ddarperir gan y landlord
 
 # TRADE SERVICES DESCRIPTION
 ############################
-tradeServiceDescription.heading = Describe the trade service provided by the landlord
-tradeServiceDescription.VAT = Where specifically itemised, what sum is included in the rent excluding VAT?
-tradeServiceDescription.hint = Leave blank if these are not specifically itemised.
-tradeServiceDescription.describe = Describe the type of service
-tradeServiceDescription.describe.hint = For example, lighting, heating, cleaning of shared parts - you will have the opportunity to add additional services if required.
-tradeServiceDescription.describe.error = Please describe the type of service
-error.tradeDescription.invalidCurrency = The sum must be a number like 100 or 100.00 and cannot be less than 0
+tradeServiceDescription.heading = Trade services included in your rent
+tradeServiceDescription.p1 = Provide a short description on any trade services you receive from your landlord as part of your lease or agreement. Where specifically itemised, include how much of your rent goes towards those services.
+tradeServiceDescription.p2 = If more than one service is provided by your landlord as part of your lease or agreement, describe each one individually. You will have the opportunity to add additional services on the next page.
+tradeServiceDescription.describe = Describe the type of service provided by the landlord which is included in your rent
+tradeServiceDescription.describe.error = Nodwch ddisgrifiad o’r gwasanaethau masnach a ddarperir gan y landlord
+error.tradeServiceDescription.maxLength = Mae’n rhaid i’r disgrifiad o’r gwasanaethau masnach fod yn 500 o gymeriadau neu lai
 
 # TRADE SERVICES ADDED
 #####################################
 addTradeService.heading = You have added {0} {1} provided by the landlord
+addTradeServiceZero.heading = You have removed all the services provided by your landlord
 addTradeService.service = service
 addTradeService.services = services
-addTradeService.label = Would you like to add another service?
-error.addTradeService.required = Select yes if you would like to add another service
+addTradeService.label = Would you like to add another service which is included in the rent?
+error.addTradeService.required = Select yes if you would like to add another service provided by the landlord
 
 #PAYMENT FOR TRADE SERVICES
 ####################################
 paymentForTradeServices.heading = Is a separate payment made for any trade services provided by the landlord?
-paymentForTradeServices.hint = For example, lighting, heating, cleaning of shared parts
+paymentForTradeServices.hint = For example, lighting, heating, cleaning of shared parts.
 error.paymentForTradeServices.missing = Select yes if a separate payment is made for any trade services provided by the landlord
 
 # SERVICE PAID SEPARATELY
 ############################
-servicePaidSeparately.heading = Describe the service which is paid for separately
-servicePaidSeparately.VAT = What is the annual charge for separately paid services, excluding VAT?
-servicePaidSeparately.describe = Describe the type of service
+servicePaidSeparately.heading = Describe the service you pay for separately
 servicePaidSeparately.describe.hint = For example, lighting, heating, cleaning of shared parts - you will have the opportunity to add additional services if required.
-servicePaidSeparately.describe.error = Please describe the type of service
-error.servicePaidSeparately.invalidCurrency = The sum must be a number like 100 or 100.00 and cannot be less than 0
-error.servicePaidSeparately.required = Please enter the annual charge for separately paid services
+servicePaidSeparately.describe.error = Please describe the type of service you pay for separately
+
+# SERVICE PAID SEPARATELY ANNUAL CHARGE
+########################################
+servicePaidSeparatelyCharge.heading = What is the annual charge for this separately paid service, excluding VAT?
+error.servicePaidSeparatelyCharge.invalidCurrency = The annual charge must be a number like 100 or 100.00 and cannot be less than 0
+error.servicePaidSeparatelyCharge.required = You must tell us the annual charge for the service which you pay for separately
 
 # SERVICES PAID SEPARATELY LIST
 #####################################
-servicePaidSeparatelyList.heading = You have added {0} {1} provided by the landlord
+servicePaidSeparatelyList.heading = You have added {0} {1} which you pay for separately
+servicePaidSeparatelyListZero.heading = You have removed all the services which you pay for separately
 servicePaidSeparatelyList.service = service
 servicePaidSeparatelyList.services = services
 servicePaidSeparatelyList.label = Would you like to add another service?
-error.servicePaidSeparatelyList.required = Select yes if you would like to add another service
+error.servicePaidSeparatelyList.required = Select yes if you would like to add another service which is paid for separately
 
 # RENT INCLUDE TRADE SERVICES DETAILS
 ####################################
@@ -927,8 +932,8 @@ label.describeServices = Describe the services provided
 rentIncludeTradeServicesDetailsTextBox.hint = For example, maintenance of fires, annual gas checks and cellar services.
 error.required.sumIncludedInRent = Please provide a value
 error.invalid_currency.sumIncludedInRent= Please provide a number
-error.describeServices.required = Enter a description of the trade services provided by the landlord
-error.describeServices.maxLength = The description of the trade services must be 500 characters or fewer
+error.describeServices.required = Nodwch ddisgrifiad o’r gwasanaethau masnach a ddarperir gan y landlord
+error.describeServices.maxLength = Mae’n rhaid i’r disgrifiad o’r gwasanaethau masnach fod yn 500 o gymeriadau neu lai
 error.rentIncludeTradeServicesDetails.title = Sum included to cover trade services
 
 # RENT INCLUDE FIXTURES AND FITTINGS
@@ -937,7 +942,7 @@ rentIncludeFixturesAndFittings.heading = Does the rent include any equipment bel
 hint.rentIncludeFixturesAndFittings = For example, any trade fixtures and fittings, plant and machinery, or furniture.
 error.required.rentIncludeFixturesAndFittings = Please provide a value
 error.invalid_currency.rentIncludeFixturesAndFittings = Please provide a number
-error.rentIncludeFixturesAndFittings.missing = Select yes if the rent includes any equipment belonging to the landlord
+error.rentIncludeFixturesAndFittings.missing = Dewiswch ‘ydy’ os yw’r rhent yn cynnwys unrhyw offer a ddarperir gan y landlord
 
 #RENT INCLUDES VAT
 #################
@@ -953,18 +958,18 @@ error.rentIncludeFixturesAndFittingsDetails.title = Sum included to cover equipm
 # INCENTIVES, PAYMENTS AND CONDITIONS
 ####################################
 formerLeaseSurrendered.heading = Was a former lease or agreement surrendered early as a condition of the present one being granted?
-error.formerLeaseSurrendered.missing = Select yes if a former lease or agreement was surrendered early
+error.formerLeaseSurrendered.missing = Dewiswch ‘do’ os ildiwyd prydles neu gytundeb blaenorol yn gynnar
 
 # CAN RENT BE REDUCED ON REVIEW
 ##############################
 canRentBeReducedOnReview.heading = Can the rent be reduced on review under the terms of the lease or agreement?
-error.canRentBeReducedOnReview.missing = Select yes if the rent can be reduced on review
+error.canRentBeReducedOnReview.missing = Dewiswch ‘oes’ os gall adolygiad arwain at ostyngiad yn eich rhent
 
 # PAY A CAPITAL SUM
 ##################
 payACapitalSum.heading = Did you pay a capital sum or premium for your lease or agreement, ignoring tenants’ inventory?
 hint.payACapitalSum = The sum could be paid to the landlord or a previous lessee.
-error.payACapitalSum.missing = Select yes if you paid a capital sum or premium for your lease
+error.payACapitalSum.missing = Dewiswch ‘do’ os gwnaethoch dalu swm cyfalaf neu bremiwm ar gyfer eich prydles
 
 # PAY A CAPITAL SUM DETAILS
 ##################
@@ -976,12 +981,13 @@ error.capitalSumPaidDetails.missing = Select yes if you paid a capital sum or pr
 error.required.annualRentExcludingVat.capitalSumPaidDetails = Please provide details of how much of the capital sum was paid
 error.invalid_currency.annualRent.capitalSumPaidDetails = The sum paid must be a number like 100 or 100.00 and cannot be less than 0
 fieldName.capitalSumPaidDetails = The date that the sum was paid
+error.maxCurrencyAmountExceeded.capitalSumPaidDetails = Capital sum cannot be greater than £9,999,999.99
 
 # PAYMENT WHEN LEASE IS GRANTED
 ##############################
 receivePaymentWhenLeaseGranted.heading = Did you receive any payment when the lease was granted, or following assignment of the lease or agreement?
 hint.receivePaymentWhenLeaseGranted = Select ‘no’ if your rent has been reviewed since you received the payment.
-error.receivePaymentWhenLeaseGranted.missing = Select yes if you received any payment when the lease was granted
+error.receivePaymentWhenLeaseGranted.missing = Dewiswch ‘do’ os cawsoch unrhyw daliad pan roddwyd y brydles
 
 # RENT INCREASE ANNUALLY WITH RPI
 ################################
@@ -989,7 +995,7 @@ rentIncreasedAnnuallyWithRPIs.heading = Index-linked rent
 rentIncreasedAnnuallyWithRPIs.p1 = You must tell us if your rent increases in line with any indices such as the retail price index (RPI) or the consumer price index (CPI).
 rentIncreasedAnnuallyWithRPIs.subheading = Does the rent increase annually in line with any indices?
 label.rentIncreasedAnnuallyWithRPIs = Does the rent increase annually in line with the retail price index (RPI)?
-error.rentIncreasedAnnuallyWithRPIs.missing = Select yes if your rent increases in line with an index
+error.rentIncreasedAnnuallyWithRPIs.missing = Dewiswch ‘ydy’ os yw’ch rhent yn codi yn unol â mynegai
 
 # METHOD USED TO FIX CURRENT RENT
 ################################
@@ -998,7 +1004,7 @@ label.methodUsedToFixCurrentRent.agreement = Agreement
 label.methodUsedToFixCurrentRent.arbitration = Arbitration
 label.methodUsedToFixCurrentRent.independentExpert = Independent expert
 label.methodUsedToFixCurrentRent.aCourt = A court
-error.methodToFixCurrentRents.required = Select how the current rent was agreed
+error.methodToFixCurrentRents.required = Dewiswch sut y cytunwyd ar y rhent presennol
 
 # HOW IS CURRENT RENT FIXED
 ##########################
@@ -1015,7 +1021,7 @@ help.rentActuallyAgreed.title = If you’re not sure when the rent was agreed
 help.rentActuallyAgreed.p1 = The date when the rent was agreed or set is normally the date when any of the listed options happened. It may not necessarily be the date of occupation, or the date the rent was first paid.
 help.rentActuallyAgreed.p2 = If you are still unsure, refer to your lease or agreement.
 fieldName.rentActuallyAgreed = the date when the current rent was agreed or set
-error.howIsCurrentRentFixed.required = Select how the current rent was fixed
+error.howIsCurrentRentFixed.required = Dewiswch sut cafodd y rhent presennol ei bennu
 
 # CATERING OPERATION OR LETTING DETAILS
 #######################################
@@ -1116,14 +1122,14 @@ tenantsAdditionsDisregarded.list1 = fitting out a shell
 tenantsAdditionsDisregarded.list2 = adding parking
 tenantsAdditionsDisregarded.list3 = upgrading accommodation
 tenantsAdditionsDisregarded.subheading = Were any tenants’ additions or improvements disregarded at the time the rent was agreed or determined?
-error.tenantsAdditionsDisregarded.missing = Select yes if any additions or improvements were disregarded
+error.tenantsAdditionsDisregarded.missing = Dewiswch ‘do’ os cafodd unrhyw ychwanegiadau neu welliannau eu diystyru
 
 ##TENANTS ADDITIONS DISREGARDED DETAILS
 #######################################
 tenantsAdditionsDisregardedDetails.heading = Describe the disregarded additions or improvements
 hint.tenantsAdditionsDisregardedDetails = Give a brief description of the work carried out and how much it cost.
-error.tenantsAdditionsDisregardedDetails.required = Enter a description of the disregarded additions or improvements
-error.tenantsAdditionsDisregardedDetails.maxLength = Description of the disregarded additions or improvements must be 500 characters or fewer
+error.tenantsAdditionsDisregardedDetails.required = Nodwch ddisgrifiad o’r ychwanegiadau neu welliannau a gafodd eu diystyru
+error.tenantsAdditionsDisregardedDetails.maxLength = Mae’n rhaid i’r disgrifiad o’r ychwanegiadau neu welliannau a gafodd eu diystyru fod yn 500 o gymeriadau neu lai
 
 # LEGAL PLANNING RESTRICTIONS
 #############################
@@ -1135,13 +1141,13 @@ legalOrPlanningRestrictions.list3 = unusual terms or conditions in the lease or 
 legalOrPlanningRestrictions.p2 = Typical examples would be a break clause in the lease or agreement, or an agreement which contracts out of certain rights included in the Landlord and Tenant Act.
 legalOrPlanningRestrictions.subheading = Are there any other factors that may have affected the rent payable?
 hint.legalOrPlanningRestrictions = For example, a break clause, contracting out of the Landlord and Tenant Act.
-error.legalOrPlanningRestrictions.missing = Select yes if any other factors may have affected the rent payable
+error.legalOrPlanningRestrictions.missing = Dewiswch ‘do’ os oes unrhyw ffactorau eraill a allai fod wedi effeithio ar y rhent sy’n daladwy
 
 # LEGAL PLANNING RESTRICTIONS DETAILS
 #####################################
 legalOrPlanningRestrictionsDetails.heading = Describe the other factors that may have affected the rent payable
-error.legalOrPlanningRestrictionsDetails.required = Enter a description of the other factors that may have affected the rent payable
-error.legalOrPlanningRestrictionsDetails.maxLength = The description of the other factors that may have affected the rent payable should be 500 characters or fewer
+error.legalOrPlanningRestrictionsDetails.required = Nodwch ddisgrifiad o’r ffactorau eraill a allai fod wedi effeithio ar y rhent sy’n daladwy
+error.legalOrPlanningRestrictionsDetails.maxLength = Mae’n rhaid i’r disgrifiad o’r ffactorau eraill a allai fod wedi effeithio ar y rhent sy’n daladwy fod yn 500 o gymeriadau neu lai
 
 # ABOUT YOUR TRADING HISTORY
 ##############################
@@ -1189,7 +1195,7 @@ currentLeaseOrAgreementBegin.subheading = When did the current lease or agreemen
 label.currentLeaseOrAgreementBegin = If the current lease was originally assigned to another party, tell us when it was started by them.
 label.grantedFor = How long was it granted for?
 hint.currentLeaseOrAgreementBegin = For example, 18 months, 1.5 years, or 1 year and 6 months.
-error.grantedFor.required = Enter the length of the current lease
+error.grantedFor.required = Nodwch hyd y brydles bresennol
 fieldName.leaseBegin = the date when the current lease began
 label.currentLeaseOrAgreementBegin.help = For example, 9 2017.
 
@@ -1204,7 +1210,7 @@ hint.intervalsOfRentReview = Leave blank if the lease does not include any rent 
 label.nextReview = When is the next rent review due?
 label.nextReview.help = For example, 27 9 2025
 fieldName.nextReview = the date when the next rent review is due
-error.intervalsOfRent.maxLength = Your rent-review frequency should be 100 characters or fewer
+error.intervalsOfRent.maxLength = Mae’n rhaid i’r amlder o ran eich adolygiad rhent fod yn 100 o gymeriadau neu lai
 error.currentLeaseOrAgreementBegin.required = Please provide at what intervals is the rent reviewed under the terms of the lease or agreement
 error.currentLeaseOrAgreementBegin.maxLength = This must be 1000 characters or fewer
 
@@ -1216,7 +1222,7 @@ currentRentPayableWithin12Months.p2 = Do not include any changes to your rent li
 currentRentPayableWithin12Months.subheading = Is the current rent payable due for review within the next 12 months?
 currentRentPayableWithin12Months.hint = Do not include any rent increases linked to turnover or the retail price index (RPI).
 label.dateReview = Date of next rent review, or expiry of existing lease
-error.currentRentPayableWithin12Months.required = Select yes if the current rent will be reviewed in the next 12 months
+error.currentRentPayableWithin12Months.required = Dewiswch ‘oes’ os bydd y rhent presennol yn cael ei adolygu yn ystod y 12 mis nesaf
 fieldName.dateReview = the date when the rent will be reviewed, or the lease expires
 label.currentRentPayableWithin12Months.help = For example, 27 9 2023 - leave blank if no rent reviews are due.
 
@@ -1523,18 +1529,46 @@ unusualCircumstances.explain = Explain any abnormally high or low figures in you
 netProfit.heading = This is a holding page for the net profits page
 
 #TOTAL FUEL SOLD (FORM 6020)
+############################
+
 totalFuelSold.heading = What is the total volume of all fuel sold in the financial years shown?
 totalFuelSold.bunkered = Do not include bunkered fuel in these figures. If you sell bunkered fuel, where you only charge a handling fee, you’ll be asked about this separately.
 totalFuelSold.inset = All fields on this page are mandatory. If this is not applicable, enter the number 0.
 totalFuelSold.fuel.label = Petrol, diesel, LPG and other total fuel sales
-totalFuelSold.fuel.litres = litres
 error.totalFuelSold.required = Enter 0 if you did not sell any fuel in the year ending {0}
 error.totalFuelSold.range = Total volume of all fuel sold in the year ending {0} must be a number, for example 100 or 100.00
 
 #BUNKERED FUEL QUESTION (FORM 6020)
+###################################
 
 bunkeredFuelQuestion.heading = Do you sell bunkered fuel, where you only charge a handling fee?
 error.bunkeredFuelQuestion.required = Select yes if you sell bunkered fuel, where you only charge a handling fee
+
+#BUNKERED FUEL SOLD (FORM6020)
+###############################
+
+bunkeredFuelSold.heading = How much bunkered fuel did you sell in the financial years shown?
+bunkeredFuelSold.innerText = All fields on this page are mandatory. If this is not applicable, enter the number 0.
+bunkeredFuelSold.financialYear.label = Financial year
+bunkeredFuelSold.bunkeredFuel.label = Bunkered fuel
+bunkeredFuelSold.bunkeredFuel.hint = Where only a handling fee is charged
+error.bunkeredFuelSold.required = Enter 0 if you did not sell any bunkered fuel in the year ending {0}
+error.bunkeredFuelSold.range = Total volume of all bunkered fuel sold in the year ending {0} must be a number, for example 100 or 100.00
+
+#BUNKER FUEL CARDS DETAILS (FORM 6020)
+bunkerFuelCardDetails.heading = Provide details of the bunker fuel cards you accept
+label.bunkerFuelCardName = Bunker fuel card name
+bunkerFuelCardDetails.handlingFee = Handling fee
+bunkerFuelCardDetails.handlingFee.unit = pence/litre
+error.bunkerFuelCard.name.required = Please provide name of bunker fuel card
+error.bunkerFuelCardName.maxLength = Bunker fuel card name cannot be more than 100 characters
+error.bunkerFuelCard.handlingFee.invalidFormat = Handling fee must be a number, for example 100
+
+#ADD ANOTHER BUNKER FUEL CARDS DETAILS (FROM 6020)
+label.bunkFuelCardDetails = Do you need to add another bunker fuel card?
+bunkFuelCardDetails.zeroDetails.heading = You have removed all your bunker fuel cards details
+bunkFuelCardDetails.heading = You have added {0} bunker fuel card detail
+error.addAnotherBunkerFuelCardsDetails.required = Select yes if you would like to add another bunker fuel card detail
 
 #########################
 
@@ -1603,9 +1637,9 @@ connectedToLandlord.heading = Other than contractually, are you connected to the
 # CONNECTED TO LANDLORD DETAILS
 ###############################
 connectedToLandlordDetails.heading = Describe your relationship to the landlord
-error.connectedToLandlord.missing = Select yes if you‘re connected to the landlord
-error.connectedToLandlordDetails.required = Enter a description of your relationship to the landlord
-error.connectedToLandlordDetails.maxLength = Your description of your relationship to the landlord must be 1,000 characters or fewer
+error.connectedToLandlord.missing = Dewiswch ‘ydw’ os oes gennych gysylltiad â’r landlord
+error.connectedToLandlordDetails.required = Nodwch ddisgrifiad o’ch perthynas â’r landlord
+error.connectedToLandlordDetails.maxLength = Mae’n rhaid i’r disgrifiad o’ch perthynas â’r landlord fod yn 1,000 o gymeriadau neu lai
 
 # CHECK YOUR ANSWERS
 ####################
@@ -1941,7 +1975,7 @@ error.month.required = The date must include a month
 error.year.required = The date must include a year
 error.required.annualRent = Enter the annual rent excluding VAT
 error.invalid_currency.annualRent = The annual rent must be a number like 100 or 100.00 and cannot be less than 0
-error.required.annualRentExcludingVat = Enter the annual rent
+error.required.annualRentExcludingVat = Nodwch swm y rhent blynyddol
 error.char.count.maxLength = This must be 2000 characters or fewer
 error.townCity.required = Nodwch enw’r dref neu’r ddinas
 error.fullName.required = Nodwch eich enw
@@ -1961,7 +1995,7 @@ error.confirmableAction.required = Select yes if you want to remove this item
 # Currency optional validation
 error.optCurrency.negative = {0} cannot be a negative number
 error.optCurrency.invalid = {0} must be a number, for example 100 or 100.00
-error.optCurrency.graterThanAnnualRent = {0} cannot be greater than the annual rent {1}
+error.optCurrency.graterThanAnnualRent = {0} cannot be greater than the annual rent of {1}
 error.includedPartsSum.graterThanAnnualRent = The combined sum {0} included to cover equipment and trade services cannot be greater than the annual rent {1}
 
 # Date fields validation

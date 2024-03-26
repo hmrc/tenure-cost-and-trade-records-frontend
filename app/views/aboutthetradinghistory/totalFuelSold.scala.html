@@ -48,16 +48,20 @@ match {
     summary = Some(request.sessionData.toSummary),
     sectionName = messages("label.section.aboutYourTradingHistory"),
     backLinkUrl = Some(backlink),
-    fullWidth = false,
-    theForm = form
+    theForm = form,
+    fullWidth = true,
+    showH1  = false
 ) {
 
-    <p class="govuk-body">@messages("totalFuelSold.bunkered")</p>
-
     @formWithCSRF(action = controllers.aboutthetradinghistory.routes.TotalFuelSoldController.submit()) {
+
+        <h1 class="govuk-heading-l govuk-!-width-three-quarters">@messages("totalFuelSold.heading")</h1>
+
+        <p class="govuk-body govuk-!-width-three-quarters">@messages("totalFuelSold.bunkered")</p>
+
         @govukInsetText(InsetText(
-            content = Text(messages("turnover.inset"))
-        ))
+                content = Text(messages("totalFuelSold.inset"))
+            ))
 
         <table class="hmrc-responsive-table govuk-!-font-weight-regular">
             <tbody>
@@ -92,7 +96,7 @@ match {
                                                 "aria-label" -> messages("totalFuelSold.fuel.label")
                                             ),
                                             suffix = Some(PrefixOrSuffix(
-                                                content = Text(messages("totalFuelSold.fuel.litres"))
+                                                content = Text(messages("label.litres"))
                                             ))
                                         ).withFormField(form(s"totalFuelSold-$idx")))
                                     )

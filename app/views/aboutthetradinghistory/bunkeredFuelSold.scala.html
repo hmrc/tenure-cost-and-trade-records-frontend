@@ -1,0 +1,114 @@
+@*
+ * Copyright 2023 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import uk.gov.hmrc.govukfrontend.views.html.components._
+@import models.submissions.aboutthetradinghistory.BunkeredFuelSold
+@import uk.gov.hmrc.govukfrontend.views.Implicits.RichInput
+@import util.DateUtil
+@import actions.SessionRequest
+@import models.pages.Summary
+
+@this(layout: Layout,
+        govukButton: GovukButton,
+        formWithCSRF: FormWithCSRF,
+        govukInput: GovukInput,
+        govukDateInput: GovukDateInput,
+        govukTable: GovukTable,
+        govukInsetText: GovukInsetText,
+        govukDetails: GovukDetails,
+        dateUtil: DateUtil
+)
+
+@(form: Form[Seq[BunkeredFuelSold]], summary: Summary)(implicit request: SessionRequest[_], messages: Messages)
+
+@bunkeredFuelRowContent = {
+    <p class="govuk-body govuk-!-font-weight-bold">
+        @messages("bunkeredFuelSold.bunkeredFuel.label") <br>
+        <span class="govuk-caption-m">@messages("bunkeredFuelSold.bunkeredFuel.hint")</span>
+    </p>
+}
+
+@layout(
+    pageHeading = messages("bunkeredFuelSold.heading"),
+    showSection = true,
+    showH1  = false ,
+    summary = Some(request.sessionData.toSummary),
+    sectionName = messages("label.section.aboutYourTradingHistory"),
+    backLinkUrl = Some(controllers.aboutthetradinghistory.routes.BunkeredFuelQuestionController.show().url),
+    fullWidth = true,
+    theForm = form
+) {
+
+
+    @formWithCSRF(action = controllers.aboutthetradinghistory.routes.BunkeredFuelSoldController.submit()) {
+
+      <h1 class="govuk-heading-l govuk-!-width-three-quarters">@messages("bunkeredFuelSold.heading")</h1>
+
+        @govukInsetText(InsetText(
+            content = Text(messages("bunkeredFuelSold.inset"))
+        ))
+
+        <table class="hmrc-responsive-table govuk-!-font-weight-regular govuk-!-width-three-quarters">
+            <tbody>
+                <tr>
+                @request.sessionData.financialYearEndDates.map { case (finYearEnd, idx) =>
+                <td>
+                    @govukTable(Table(
+                        head = Seq(
+                            HeadCell(
+                                content = Text(messages("bunkeredFuelSold.financialYear.label"))
+                            ),
+                            HeadCell(
+                                content = Text(dateUtil.formatDayMonthAbbrYear(finYearEnd))
+                            )
+                        ),
+                        firstCellIsHeader = true,
+                        rows = Seq(
+                            Seq(
+                                TableRow(
+                                    content = HtmlContent(bunkeredFuelRowContent)
+
+                                ),
+                                TableRow(
+                                    content = HtmlContent(
+                                        govukInput(Input(
+                                            id = s"bunkeredFuelSold-$idx",
+                                            name = s"bunkeredFuelSold-$idx",
+                                            value = form(s"bunkeredFuelSold-$idx").value,
+                                            classes = "govuk-input--width-5",
+                                            attributes = Map(
+                                                "aria-label" -> messages("bunkeredFuelSold.bunkeredFuel.label")
+                                            ),
+                                            suffix = Some(PrefixOrSuffix(
+                                                content = Text(messages("label.litres"))
+                                            ))
+                                        ).withFormField(form(s"bunkeredFuelSold-$idx")))
+                                    )
+                                )
+                            )
+                        )
+                    ))
+                </td>
+                }
+                </tr>
+            </tbody>
+        </table>
+        @includes.continueSaveAsDraftButtons(govukButton)
+        <script src="@routes.Assets.versioned("javascripts/data-total.js")"></script>
+        <script src="@routes.Assets.versioned("javascripts/responsive-table.js")"></script>
+    }
+
+}

@@ -38,16 +38,57 @@ class AboutThePropertyControllerSpec extends TestBaseSpec {
     mockSessionRepo
   )
 
+  def aboutThePropertyControllerNo(
+    aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyNo)
+  ) = new AboutThePropertyController(
+    stubMessagesControllerComponents(),
+    aboutYouAndThePropertyNavigator,
+    aboutThePropertyView,
+    preEnrichedActionRefiner(aboutYouAndTheProperty = aboutYouAndTheProperty),
+    mockSessionRepo
+  )
+
+  def aboutThePropertyControllerNone() = new AboutThePropertyController(
+    stubMessagesControllerComponents(),
+    aboutYouAndThePropertyNavigator,
+    aboutThePropertyView,
+    preEnrichedActionRefiner(aboutYouAndTheProperty = None),
+    mockSessionRepo
+  )
+
   "About the property controller" should {
-    "return 200" in {
+    "GET / return 200 about the property with yes in the session" in {
       val result = aboutThePropertyController().show(fakeRequest)
-      status(result) shouldBe Status.OK
+      status(result)        shouldBe Status.OK
+      contentAsString(result) should include(
+        controllers.aboutyouandtheproperty.routes.AlternativeContactDetailsController.show().url
+      )
     }
 
-    "return HTML" in {
+    "GET / return HTML" in {
       val result = aboutThePropertyController().show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
+    }
+
+    "GET / return 200 about the property with no in the session" in {
+      val result = aboutThePropertyControllerNo().show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutyouandtheproperty.routes.ContactDetailsQuestionController.show().url
+      )
+    }
+
+    "GET / return 200 no about the property in the session" in {
+      val result = aboutThePropertyControllerNone().show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.routes.TaskListController.show().url
+      )
     }
 
     "SUBMIT /" should {

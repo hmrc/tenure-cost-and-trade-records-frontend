@@ -17,6 +17,7 @@
 package controllers.aboutthetradinghistory
 
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory
+import org.jsoup.Jsoup
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._

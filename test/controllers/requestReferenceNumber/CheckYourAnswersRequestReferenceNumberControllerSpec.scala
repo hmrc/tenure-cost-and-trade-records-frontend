@@ -46,6 +46,20 @@ class CheckYourAnswersRequestReferenceNumberControllerSpec extends TestBaseSpec 
       mockSessionRepo
     )
 
+  def checkYourAnswersRequestReferenceControllerBlank(
+    requestReferenceNumberDetails: Option[RequestReferenceNumberDetails] = Some(prefilledRequestRefNumBlank)
+  ) =
+    new CheckYourAnswersRequestReferenceNumberController(
+      stubMessagesControllerComponents(),
+      inject[SubmissionConnector],
+      checkYourAnswersRequestReferenceNumberView,
+      confirmationRequestReferenceNumberView,
+      inject[ErrorHandler],
+      inject[Audit],
+      preEnrichedActionRefiner(requestReferenceNumberDetails = requestReferenceNumberDetails),
+      mockSessionRepo
+    )
+
   "GET /" should {
     "return 200" in {
       val result = checkYourAnswersRequestReferenceController().show(fakeRequest)
@@ -54,6 +68,13 @@ class CheckYourAnswersRequestReferenceNumberControllerSpec extends TestBaseSpec 
 
     "return HTML" in {
       val result = checkYourAnswersRequestReferenceController().show(fakeRequest)
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
+    }
+
+    "return 200 with empty session" in {
+      val result = checkYourAnswersRequestReferenceControllerBlank().show(fakeRequest)
+      status(result)      shouldBe Status.OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }

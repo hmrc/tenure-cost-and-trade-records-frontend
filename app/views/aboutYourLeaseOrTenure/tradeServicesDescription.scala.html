@@ -18,7 +18,6 @@
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
 @import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcCurrencyInput
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukDateInput
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Label
 @import uk.gov.hmrc.hmrcfrontend.views.viewmodels.currencyinput.CurrencyInput
@@ -26,9 +25,7 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukCharacterCount
 @import models.pages.Summary
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.charactercount.CharacterCount
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.html.components._
-
 
 @this(layout: Layout,
         govukButton: GovukButton,
@@ -37,13 +34,12 @@
         govukCharacterCount: GovukCharacterCount,
 )
 
-
 @(theForm: Form[TradeServicesDetails], index: Option[Int], backLink: String,  summary: Summary)(implicit request: Request[_], messages: Messages)
 
 @layout(
     pageHeading = messages("tradeServiceDescription.heading"),
     showSection = true,
-    showH1 = false,
+    showH1 = true,
     summary = Some(summary),
     sectionName = messages("label.section.aboutYourLeaseOrTenure"),
     backLinkUrl = backLink,
@@ -51,37 +47,24 @@
 ) {
     @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.TradeServicesDescriptionController.submit(index)) {
 
-        <h1 class="govuk-heading-l">@messages("tradeServiceDescription.heading")</h1>
-
-        @hmrcCurrencyInput(
-            CurrencyInput(
-                id = "sumExcludingVat",
-                name = "sumExcludingVat",
-                value = theForm("sumExcludingVat").value,
-                classes = "govuk-input--width-10 total-annual-rent",
-                label = Label(
-                    content = Text(messages("tradeServiceDescription.VAT")),
-                    classes = "govuk-label--m"
-                ),
-                hint = Hint(content = Text(messages("tradeServiceDescription.hint"))),
-                errorMessage = theForm.errors.asTextErrorMessageForField("sumExcludingVat"),
-            )
-        )
+        <p class="govuk-body">@messages("tradeServiceDescription.p1")</p>
+        <p class="govuk-body ">@messages("tradeServiceDescription.p2")</p>
 
         @govukCharacterCount(
             CharacterCount(
                 id = "description",
                 name = "description",
-                maxLength = 200,
-                hint = Hint(content = Text(messages("tradeServiceDescription.describe.hint"))),
+                maxLength = 500,
+                rows = 4,
                 label = Label(
                     content = Text(messages("tradeServiceDescription.describe")),
-                    classes = "govuk-label--m",
+                    classes = "govuk-label--m gov govuk-!-margin-bottom-6",
                     isPageHeading = false
                 ),
                 errorMessage = theForm.errors.asTextErrorMessageForField("description"),
             ).withFormField(theForm("description"))
         )
+
 
 
 

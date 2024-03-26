@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -44,7 +44,7 @@ class ConcessionOrFranchiseFeeController @Inject() (
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     val backLink = navigator.from match {
-      case "TL" => controllers.routes.TaskListController.show().url + "#concession-or-franchise-fee"
+      case "TL" => controllers.routes.TaskListController.show().url + "#catering-operation-or-letting-accommodation"
       case _    => controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show().url
     }
     Ok(
@@ -89,11 +89,18 @@ class ConcessionOrFranchiseFeeController @Inject() (
                     .flatMap(_.cateringOrFranchiseFee)
                     .contains(AnswerYes))
               )
-              .orElse(Option.when(isFromCYA)(controllers.aboutfranchisesorlettings.routes.AddAnotherCateringOperationController.show(0)))
-              .getOrElse(navigator.nextWithoutRedirectToCYA(ConcessionOrFranchiseFeePageId, updatedData).apply(updatedData))
+              .orElse(
+                Option.when(isFromCYA)(
+                  controllers.aboutfranchisesorlettings.routes.AddAnotherCateringOperationController.show(0)
+                )
+              )
+              .getOrElse(
+                navigator.nextWithoutRedirectToCYA(ConcessionOrFranchiseFeePageId, updatedData).apply(updatedData)
+              )
           }
           .map(Redirect)
       }
     )
   }
+
 }

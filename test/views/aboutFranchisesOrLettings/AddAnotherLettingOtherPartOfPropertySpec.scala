@@ -17,7 +17,7 @@
 package views.aboutFranchisesOrLettings
 
 import actions.SessionRequest
-import form.aboutfranchisesorlettings.AddAnotherCateringOperationOrLettingAccommodationForm
+import form.aboutfranchisesorlettings.AddAnotherLettingOtherPartOfPropertyForm
 import models.pages.Summary
 import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
 import org.scalatest.matchers.must.Matchers._
@@ -27,11 +27,10 @@ import views.behaviours.QuestionViewBehaviours
 
 class AddAnotherLettingOtherPartOfPropertySpec extends QuestionViewBehaviours[AnswersYesNo] {
 
-  val messageKeyPrefix     = "addAnotherSeparateBusinessOrFranchise"
+  val messageKeyPrefix     = "addAnotherLettingOtherPartOfProperty"
   val messageKeyPrefix6015 = "addAnotherLetting"
 
-  override val form: Form[AnswersYesNo] =
-    AddAnotherCateringOperationOrLettingAccommodationForm.addAnotherCateringOperationForm
+  override val form: Form[AnswersYesNo] = AddAnotherLettingOtherPartOfPropertyForm.addAnotherLettingForm
 
   val sessionRequest = SessionRequest(baseFilled6010Session, fakeRequest)
 

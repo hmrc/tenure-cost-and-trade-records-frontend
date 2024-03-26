@@ -132,7 +132,14 @@ trait FakeViews { this: GuiceOneAppPerSuite =>
   lazy val variableOperatingExpensesView: variableOperatingExpenses                           = app.injector.instanceOf[variableOperatingExpenses]
   lazy val totalPayrollCostsView: totalPayrollCosts                                           = app.injector.instanceOf[totalPayrollCosts]
   lazy val bunkeredFuelQuestionView: bunkeredFuelQuestion                                     = app.injector.instanceOf[bunkeredFuelQuestion]
+  lazy val bunkerFuelCardDetailsView: bunkerFuelCardsDetails                                  = app.injector.instanceOf[bunkerFuelCardsDetails]
+  lazy val addAnotherBunkerFuelCardsDetailsView: addAnotherBunkerFuelCardDetails              =
+    app.injector.instanceOf[addAnotherBunkerFuelCardDetails]
+  lazy val lowMarginFuelCardsDetailsView: lowMarginFuelCardsDetails                           = app.injector.instanceOf[lowMarginFuelCardsDetails]
+  lazy val addAnotherLowMarginFuelCardsDetailsView: addAnotherLowMarginFuelCardDetails        =
+    app.injector.instanceOf[addAnotherLowMarginFuelCardDetails]
   lazy val totalFuelSoldView: totalFuelSold                                                   = app.injector.instanceOf[totalFuelSold]
+  lazy val bunkeredFuelSoldView: bunkeredFuelSold                                             = app.injector.instanceOf[bunkeredFuelSold]
   lazy val incomeExpenditureSummaryView: incomeExpenditureSummary                             = app.injector.instanceOf[incomeExpenditureSummary]
   lazy val unusualCircumstancesView: unusualCircumstances                                     = app.injector.instanceOf[unusualCircumstances]
   lazy val electricVehicleChargingPointsView: electricVehicleChargingPoints                   =
@@ -268,6 +275,8 @@ trait FakeViews { this: GuiceOneAppPerSuite =>
     app.injector.instanceOf[tradeServicesList]
   lazy val servicePaidSeparatelyView                       =
     app.injector.instanceOf[servicePaidSeparately]
+  lazy val servicePaidSeparatelyChargeView                 =
+    app.injector.instanceOf[servicePaidSeparatelyCharge]
   lazy val servicePaidSeparatelyListView                   =
     app.injector.instanceOf[servicePaidSeparatelyList]
 

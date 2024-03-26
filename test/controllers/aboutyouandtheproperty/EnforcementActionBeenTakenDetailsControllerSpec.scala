@@ -38,14 +38,29 @@ class EnforcementActionBeenTakenDetailsControllerSpec extends TestBaseSpec {
     mockSessionRepo
   )
 
+  def enforcementActionBeenTakenDetailsControllerNone() = new EnforcementActionBeenTakenDetailsController(
+    stubMessagesControllerComponents(),
+    aboutYouAndThePropertyNavigator,
+    enforcemenntActionBeenTakenDetailsView,
+    preEnrichedActionRefiner(aboutYouAndTheProperty = None),
+    mockSessionRepo
+  )
+
   "Enforcement action been taken details controller" should {
-    "return 200" in {
+    "GET / return 200 c" in {
       val result = enforcementActionBeenTakenDetailsController().show(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
-    "return HTML" in {
+    "GET / return HTML" in {
       val result = enforcementActionBeenTakenDetailsController().show(fakeRequest)
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
+    }
+
+    "GET / return 200 no enforcement action details in the session" in {
+      val result = enforcementActionBeenTakenDetailsControllerNone().show(fakeRequest)
+      status(result)      shouldBe Status.OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }

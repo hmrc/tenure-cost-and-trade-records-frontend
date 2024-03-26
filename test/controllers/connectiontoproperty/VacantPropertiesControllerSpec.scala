@@ -38,16 +38,40 @@ class VacantPropertiesControllerSpec extends TestBaseSpec {
       mockSessionRepo
     )
 
+  def vacantPropertiesControllerNoVacantProperty(
+    stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledStillConnectedDetailsEdit)
+  ) =
+    new VacantPropertiesController(
+      stubMessagesControllerComponents(),
+      vacantPropertiesNavigator,
+      vacantPropertiesView,
+      preEnrichedActionRefiner(stillConnectedDetails = stillConnectedDetails),
+      mockSessionRepo
+    )
+
   "GET /" should {
-    "return 200" in {
+    "return 200 when vacant property is present in session" in {
       val result = vacantPropertiesController().show(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return HTML" in {
       val result = vacantPropertiesController().show(fakeRequest)
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.connectiontoproperty.routes.AreYouStillConnectedController.show().url
+      )
+    }
+
+    "return 200 when vacant property is not present in session" in {
+      val result = vacantPropertiesControllerNoVacantProperty().show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.connectiontoproperty.routes.EditAddressController.show().url
+      )
     }
   }
 

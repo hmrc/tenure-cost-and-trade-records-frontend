@@ -38,14 +38,29 @@ class PremisesLicenseConditionsDetailsControllerSpec extends TestBaseSpec {
     mockSessionRepo
   )
 
+  def premisesLicenseConditionsDetailsControllerNone() = new PremisesLicenseConditionsDetailsController(
+    stubMessagesControllerComponents(),
+    aboutYouAndThePropertyNavigator,
+    premisesLicenceConditionsDetailsView,
+    preEnrichedActionRefiner(aboutYouAndTheProperty = None),
+    mockSessionRepo
+  )
+
   "Premises License conditions details controller" should {
-    "return 200" in {
+    "return 200 license conditions details in the session" in {
       val result = premisesLicenseConditionsDetailsController().show(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return HTML" in {
       val result = premisesLicenseConditionsDetailsController().show(fakeRequest)
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
+    }
+
+    "return 200 no license conditions details in the session" in {
+      val result = premisesLicenseConditionsDetailsControllerNone().show(fakeRequest)
+      status(result)      shouldBe Status.OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }

@@ -111,7 +111,7 @@ trait FakeObjects {
   val baseFilled6020Session: Session = Session(referenceNumber, forType6020, prefilledAddress, token)
 
   // Request reference number
-  val prefilledRequestRefNumCYA = RequestReferenceNumberDetails(
+  val prefilledRequestRefNumCYA   = RequestReferenceNumberDetails(
     Some(RequestReferenceNumber(prefilledFakeTradingName, prefilledNoReferenceContactAddress)),
     Some(
       RequestReferenceNumberContactDetails(
@@ -119,18 +119,40 @@ trait FakeObjects {
         ContactDetails(prefilledFakePhoneNo, prefilledFakeEmail),
         Some("Additional Information")
       )
-    )
+    ),
+    Some(CheckYourAnswersRequestReferenceNumber("CYARequestRefNum"))
   )
+  val prefilledRequestRefNumBlank = RequestReferenceNumberDetails()
 
   // Are your still connected sessions
-  val prefilledStillConnectedDetailsYes: StillConnectedDetails  = StillConnectedDetails(
+  val prefilledStillConnectedDetailsYes: StillConnectedDetails                       = StillConnectedDetails(
     Some(AddressConnectionTypeYes),
     Some(ConnectionToThePropertyOccupierTrustee)
   )
-  val prefilledStillConnectedDetailsEdit: StillConnectedDetails = StillConnectedDetails(
+  val prefilledStillConnectedDetailsEdit: StillConnectedDetails                      = StillConnectedDetails(
     Some(AddressConnectionTypeYesChangeAddress),
     Some(ConnectionToThePropertyOccupierTrustee),
-    Some(prefilledEditTheAddress)
+    Some(prefilledEditTheAddress),
+    Some(VacantProperties(VacantPropertiesDetailsNo))
+  )
+  val prefilledStillConnectedDetailsNoneOwnProperty: StillConnectedDetails           = StillConnectedDetails(
+    Some(AddressConnectionTypeYesChangeAddress),
+    Some(ConnectionToThePropertyOccupierTrustee),
+    Some(prefilledEditTheAddress),
+    None,
+    Some(TradingNameOperatingFromProperty("ABC LTD"))
+  )
+  val prefilledStillConnectedDetailsYesRentReceivedNoLettings: StillConnectedDetails = StillConnectedDetails(
+    Some(AddressConnectionTypeNo),
+    Some(ConnectionToThePropertyOccupierAgent),
+    Some(EditTheAddress(EditAddress("Street 1", Some("Street 2"), "Town", Some("County"), "BN12 4AX"))),
+    Some(VacantProperties(VacantPropertiesDetailsNo)),
+    Some(TradingNameOperatingFromProperty("ABC LTD")),
+    Some(AnswerNo),
+    Some(AnswerNo),
+    Some(AnswerNo),
+    Some(StartDateOfVacantProperty((LocalDate.now()))),
+    Some(AnswerYes)
   )
 
   val prefilledStillConnectedDetailsYesToAll: StillConnectedDetails = StillConnectedDetails(
@@ -229,6 +251,8 @@ trait FakeObjects {
     stillConnectedDetailsConnectedDetailsNoSession.copy(removeConnectionDetails = Some(prefilledNotConnectedYes))
 
   // About you and the property sessions
+  val prefilledAboutYouAndThePropertyBlank: AboutYouAndTheProperty = AboutYouAndTheProperty()
+
   val prefilledAboutYouAndThePropertyYes: AboutYouAndTheProperty = AboutYouAndTheProperty(
     Some(CustomerDetails("Tobermory", ContactDetails(prefilledFakePhoneNo, prefilledFakeEmail))),
     Some(ContactDetailsQuestion(AnswerYes)),
@@ -246,7 +270,10 @@ trait FakeObjects {
     Some(AnswerYes),
     Some(EnforcementActionHasBeenTakenInformationDetails("Enforcement action taken details")),
     Some(AnswerYes),
-    Some(TiedForGoodsInformationDetails(TiedForGoodsInformationDetailsFullTie))
+    Some(TiedForGoodsInformationDetails(TiedForGoodsInformationDetailsFullTie)),
+    checkYourAnswersAboutTheProperty = Some(CheckYourAnswersAboutYourProperty("Yes")),
+    charityQuestion = Some(AnswerYes),
+    tradingActivity = Some(TradingActivity(AnswerYes, Some("Trading activity details")))
   )
 
   val prefilledAboutYouAndThePropertyYesString: AboutYouAndTheProperty = AboutYouAndTheProperty(
@@ -305,7 +332,9 @@ trait FakeObjects {
     Some(AnswerNo),
     None,
     Some(AnswerNo),
-    None
+    None,
+    checkYourAnswersAboutTheProperty = Some(CheckYourAnswersAboutYourProperty("no")),
+    charityQuestion = Some(AnswerNo)
   )
 
   val prefilledProvideContactDetails: ProvideContactDetails = ProvideContactDetails(
@@ -559,6 +588,16 @@ trait FakeObjects {
           )
       ),
       stillConnectedDetails = Some(prefilledStillConnectedDetailsYesToAll)
+    )
+
+  val aboutYourTradingHistoryWithBunkerFuelCardsDetailsSession: Session =
+    aboutYourTradingHistory6020YesSession.copy(
+      aboutTheTradingHistory = prefilledAboutTheTradingHistoryForBunkerFuelCardsDetails
+    )
+
+  val aboutYourTradingHistoryWithLowMarginFuelCardsDetailsSession: Session =
+    aboutYourTradingHistory6020YesSession.copy(
+      aboutTheTradingHistory = prefilledAboutTheTradingHistoryForLowMarginFuelCardsDetails
     )
 
   // Franchises or lettings
@@ -884,6 +923,21 @@ trait FakeObjects {
     turnoverSections6030 = Seq(TurnoverSection6030(LocalDate.now, 52, None, None))
   )
 
+  val prefilledAboutTheTradingHistoryForBunkerFuelCardsDetails    = Some(
+    prefilledAboutTheTradingHistory.copy(bunkerFuelCardsDetails =
+      Some(
+        IndexedSeq(BunkerFuelCardsDetails(bunkerFuelCardDetails = BunkerFuelCardDetails("Card 1", 2)))
+      )
+    )
+  )
+  val prefilledAboutTheTradingHistoryForLowMarginFuelCardsDetails = Some(
+    prefilledAboutTheTradingHistory.copy(lowMarginFuelCardsDetails =
+      Some(
+        IndexedSeq(LowMarginFuelCardsDetails(lowMarginFuelCardDetail = LowMarginFuelCardDetail("Low Margin Card", 2)))
+      )
+    )
+  )
+
   val prefilledVacantProperties = StillConnectedDetails(
     Some(AddressConnectionTypeYes),
     Some(ConnectionToThePropertyOccupierTrustee),
@@ -916,6 +970,21 @@ trait FakeObjects {
       Some(WhatIsYourCurrentRentBasedOnDetails(CurrentRentBasedOnIndexedToRPI, Some("Test")))
   )
 
+  val prefilledAboutLeaseOrAgreement6030Route = AboutLeaseOrAgreementPartOne(
+    Some(prefilledAboutTheLandlord),
+    Some(AnswerYes),
+    Some(prefilledConnectedToLandlordDetails),
+    Some(prefilledLeaseOrAgreementYearsDetails),
+    Some(prefilledCurrentRentPayableWithin12Months),
+    Some(prefilledPropertyUseLeasebackArrangement),
+    Some(prefilledAnnualRent),
+    rentIncludeTradeServicesDetails = Some(RentIncludeTradeServicesDetails(AnswerYes)),
+    rentIncludeFixturesAndFittingsDetails = Some(RentIncludeFixturesAndFittingsDetails(AnswerYes)),
+    rentOpenMarketValueDetails = Some(RentOpenMarketValueDetails(AnswerYes)),
+    whatIsYourCurrentRentBasedOnDetails =
+      Some(WhatIsYourCurrentRentBasedOnDetails(CurrentRentBasedOnIndexedToRPI, Some("Test")))
+  )
+
   val prefilledAboutLeaseOrAgreementPartOne = AboutLeaseOrAgreementPartOne(
     Some(prefilledAboutTheLandlord),
     None,
@@ -924,6 +993,21 @@ trait FakeObjects {
     Some(prefilledCurrentRentPayableWithin12Months),
     Some(prefilledPropertyUseLeasebackArrangement),
     Some(prefilledAnnualRent),
+    currentRentFirstPaid = Some(CurrentRentFirstPaid(prefilledDateInput)),
+    rentIncludeTradeServicesDetails = Some(RentIncludeTradeServicesDetails(AnswerYes)),
+    rentIncludeFixturesAndFittingsDetails = Some(RentIncludeFixturesAndFittingsDetails(AnswerYes)),
+    rentOpenMarketValueDetails = Some(RentOpenMarketValueDetails(AnswerYes))
+  )
+
+  val prefilledAboutLeaseOrAgreementPartOneNoStartDate = AboutLeaseOrAgreementPartOne(
+    Some(prefilledAboutTheLandlord),
+    None,
+    Some(prefilledConnectedToLandlordDetails),
+    Some(prefilledLeaseOrAgreementYearsDetails),
+    None,
+    Some(prefilledPropertyUseLeasebackArrangement),
+    Some(prefilledAnnualRent),
+    currentRentFirstPaid = Some(CurrentRentFirstPaid(prefilledDateInput)),
     rentIncludeTradeServicesDetails = Some(RentIncludeTradeServicesDetails(AnswerYes)),
     rentIncludeFixturesAndFittingsDetails = Some(RentIncludeFixturesAndFittingsDetails(AnswerYes)),
     rentOpenMarketValueDetails = Some(RentOpenMarketValueDetails(AnswerYes))
@@ -945,8 +1029,31 @@ trait FakeObjects {
   val prefilledAboutLeaseOrAgreementPartTwo = AboutLeaseOrAgreementPartTwo(
     rentPayableVaryAccordingToGrossOrNetDetails = Some(RentPayableVaryAccordingToGrossOrNetDetails(AnswerYes)),
     rentPayableVaryOnQuantityOfBeersDetails = Some(RentPayableVaryOnQuantityOfBeersDetails(AnswerYes)),
+    howIsCurrentRentFixed = Some(HowIsCurrentRentFixed(CurrentRentFixedInterimRent, prefilledDateInput)),
+    intervalsOfRentReview = Some(IntervalsOfRentReview(Some("test"), Some(prefilledDateInput))),
     tenantAdditionsDisregardedDetails = Some(TenantAdditionsDisregardedDetails(AnswerYes)),
-    legalOrPlanningRestrictions = Some(LegalOrPlanningRestrictions(AnswerYes))
+    legalOrPlanningRestrictions = Some(LegalOrPlanningRestrictions(AnswerYes)),
+    payACapitalSumInformationDetails = Some(PayACapitalSumInformationDetails(Some(123.12), Some(prefilledDateInput))),
+    tenancyLeaseAgreementExpire = Some(TenancyLeaseAgreementExpire(prefilledDateInput))
+  )
+
+  val prefilledAboutLeaseOrAgreementPartTwoNoDate = AboutLeaseOrAgreementPartTwo(
+    rentPayableVaryAccordingToGrossOrNetDetails = Some(RentPayableVaryAccordingToGrossOrNetDetails(AnswerYes)),
+    rentPayableVaryOnQuantityOfBeersDetails = Some(RentPayableVaryOnQuantityOfBeersDetails(AnswerYes)),
+    howIsCurrentRentFixed = Some(HowIsCurrentRentFixed(CurrentRentFixedInterimRent, prefilledDateInput)),
+    intervalsOfRentReview = Some(IntervalsOfRentReview(Some("test"), Some(prefilledDateInput))),
+    tenantAdditionsDisregardedDetails = Some(TenantAdditionsDisregardedDetails(AnswerYes)),
+    legalOrPlanningRestrictions = Some(LegalOrPlanningRestrictions(AnswerYes)),
+    payACapitalSumInformationDetails = Some(PayACapitalSumInformationDetails(Some(123.12), None)),
+    tenancyLeaseAgreementExpire = Some(TenancyLeaseAgreementExpire(prefilledDateInput))
+  )
+
+  val prefilledAboutLeaseOrAgreementPartTwo6030 = AboutLeaseOrAgreementPartTwo(
+    rentPayableVaryAccordingToGrossOrNetDetails = Some(RentPayableVaryAccordingToGrossOrNetDetails(AnswerYes)),
+    rentPayableVaryOnQuantityOfBeersDetails = Some(RentPayableVaryOnQuantityOfBeersDetails(AnswerYes)),
+    tenantAdditionsDisregardedDetails = Some(TenantAdditionsDisregardedDetails(AnswerYes)),
+    legalOrPlanningRestrictions = Some(LegalOrPlanningRestrictions(AnswerYes)),
+    payACapitalSumInformationDetails = Some(PayACapitalSumInformationDetails(Some(123.12), Some(prefilledDateInput)))
   )
 
   val prefilledAboutLeaseOrAgreementPayPartTwo = AboutLeaseOrAgreementPartTwo(
@@ -966,8 +1073,8 @@ trait FakeObjects {
   val prefilledAboutLeaseOrAgreementPartThree = AboutLeaseOrAgreementPartThree(
     tradeServicesIndex = 1,
     servicesPaidIndex = 1,
-    tradeServices = IndexedSeq(TradeServices(TradeServicesDetails(Some(100), "service-1"))),
-    servicesPaid = IndexedSeq(ServicesPaid(ServicePaidSeparately(100, "service-paid-1"))),
+    tradeServices = IndexedSeq(TradeServices(TradeServicesDetails("service-1"))),
+    servicesPaid = IndexedSeq(ServicesPaid(ServicePaidSeparately("service-paid-1"))),
     paymentForTradeServices = Some(PaymentForTradeServices(AnswerYes))
   )
 

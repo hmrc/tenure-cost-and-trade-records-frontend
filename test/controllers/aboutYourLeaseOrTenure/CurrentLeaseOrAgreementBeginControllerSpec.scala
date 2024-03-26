@@ -16,19 +16,36 @@
 
 package controllers.aboutYourLeaseOrTenure
 
+import form.aboutYourLeaseOrTenure.CurrentLeaseOrAgreementBeginForm.currentLeaseOrAgreementBeginForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
 import navigation.AboutYourLeaseOrTenureNavigator
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
+import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
 
 class CurrentLeaseOrAgreementBeginControllerSpec extends TestBaseSpec {
+
+  import TestData.{baseFormData, errorKey}
 
   val mockAboutLeaseOrTenureNavigator = mock[AboutYourLeaseOrTenureNavigator]
 
   def currentLeaseOrAgreementBeginController(
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
+  ) =
+    new CurrentLeaseOrAgreementBeginController(
+      stubMessagesControllerComponents(),
+      mockAboutLeaseOrTenureNavigator,
+      currentLeaseOrAgreementBeginView,
+      preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
+      mockSessionRepo
+    )
+
+  def currentLeaseOrAgreementBeginNoDate(
+    aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(
+      prefilledAboutLeaseOrAgreementPartOneNoStartDate
+    )
   ) =
     new CurrentLeaseOrAgreementBeginController(
       stubMessagesControllerComponents(),
@@ -49,6 +66,13 @@ class CurrentLeaseOrAgreementBeginControllerSpec extends TestBaseSpec {
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
+
+    "return 200 vacant property start date is not present in session" in {
+      val result = currentLeaseOrAgreementBeginNoDate().show()(fakeRequest)
+      status(result)      shouldBe Status.OK
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
+    }
   }
 
   "SUBMIT /" should {
@@ -59,5 +83,47 @@ class CurrentLeaseOrAgreementBeginControllerSpec extends TestBaseSpec {
       )
       status(res) shouldBe BAD_REQUEST
     }
+  }
+
+  "About your trading history form" should {
+    "error if first occupy month and year are missing " in {
+      val formData = baseFormData - errorKey.occupyMonth - errorKey.occupyYear
+      val form     = currentLeaseOrAgreementBeginForm(messages).bind(formData)
+
+      mustContainError(errorKey.occupyMonth, "error.date.required", form)
+    }
+
+    "error if first occupy month is missing " in {
+      val formData = baseFormData - errorKey.occupyMonth
+      val form     = currentLeaseOrAgreementBeginForm(messages).bind(formData)
+
+      mustContainError(errorKey.occupyMonth, "error.date.mustInclude", form)
+    }
+
+    "error if first occupy year is missing" in {
+      val formData = baseFormData - errorKey.occupyYear
+      val form     = currentLeaseOrAgreementBeginForm(messages).bind(formData)
+
+      mustContainError(errorKey.occupyYear, "error.date.mustInclude", form)
+    }
+  }
+
+  object TestData {
+    val errorKey: Object {
+      val occupyMonth: String
+      val occupyYear: String
+      val financialYearDay: String
+      val financialYearMonth: String
+    } = new {
+      val occupyMonth        = "leaseBegin.month"
+      val occupyYear         = "leaseBegin.year"
+      val financialYearDay   = "financialYear.day"
+      val financialYearMonth = "financialYear.month"
+    }
+
+    val baseFormData: Map[String, String] = Map(
+      "leaseBegin.month" -> "9",
+      "leaseBegin.year"  -> "2017"
+    )
   }
 }
