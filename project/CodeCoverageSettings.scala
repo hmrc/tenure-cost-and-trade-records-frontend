@@ -17,7 +17,6 @@ object CodeCoverageSettings {
     "config.InternalAuthTokenInitialiserImpl",
     "GraphiteStartUp",
     """.*\.Reverse[^.]*;""",
-    """views\.*""",
     ".*.template.scala",
     "testOnly.*",
     "testOnlyDoNotUseInAppConf.*"

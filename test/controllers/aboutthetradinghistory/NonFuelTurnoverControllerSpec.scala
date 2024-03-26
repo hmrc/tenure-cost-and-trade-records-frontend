@@ -17,39 +17,38 @@
 package controllers.aboutthetradinghistory
 
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory
-import org.jsoup.Jsoup
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import utils.TestBaseSpec
 
-class FinancialYearEndDatesControllerSpec extends TestBaseSpec {
+class NonFuelTurnoverControllerSpec extends TestBaseSpec {
 
-  def financialYearEndDatesController(
-    aboutTheTradingHistory: Option[AboutTheTradingHistory] = Some(prefilledAboutYourTradingHistory)
-  ) = new FinancialYearEndDatesController(
+  def nonFuelTurnoverController(
+    aboutTheTradingHistory: Option[AboutTheTradingHistory] = Some(prefilledAboutYourTradingHistory6020)
+  ) = new NonFuelTurnoverController(
     stubMessagesControllerComponents(),
     aboutYourTradingHistoryNavigator,
-    financialYearEndDatesView,
+    turnover6020View,
     preEnrichedActionRefiner(aboutTheTradingHistory = aboutTheTradingHistory),
     mockSessionRepo
   )
 
-  "FinancialYearEndDatesController" should {
+  "NonFuelTurnoverController" should {
     "return 200" in {
-      val result = financialYearEndDatesController().show(fakeRequest)
+      val result = nonFuelTurnoverController().show(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return HTML" in {
-      val result = financialYearEndDatesController().show(fakeRequest)
+      val result = nonFuelTurnoverController().show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
 
     "SUBMIT /" should {
       "return redirect 303 for empty turnoverSections" in {
-        val res = financialYearEndDatesController().submit(FakeRequest().withFormUrlEncodedBody(Seq.empty: _*))
+        val res = nonFuelTurnoverController().submit(FakeRequest().withFormUrlEncodedBody(Seq.empty: _*))
         status(res) shouldBe SEE_OTHER
       }
     }

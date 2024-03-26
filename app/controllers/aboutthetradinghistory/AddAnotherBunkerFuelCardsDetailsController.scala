@@ -102,7 +102,9 @@ class AddAnotherBunkerFuelCardsDetailsController @Inject() (
             if (updatedCards.lastOption.flatMap(_.addAnotherBunkerFuelCardDetails).contains(AnswerYes)) {
               Redirect(routes.BunkerFuelCardDetailsController.show())
             } else {
-              Redirect(routes.NonFuelTurnoverController.show()) // TODO: BST-86151 Customer credit accounts page
+              Redirect(
+                routes.LowMarginFuelCardDetailsController.show()
+              ) // TODO: BST-86151 Customer credit accounts page
             }
           }
         }

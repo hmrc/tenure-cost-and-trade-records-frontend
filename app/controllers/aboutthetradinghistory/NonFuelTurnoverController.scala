@@ -45,62 +45,60 @@ class NonFuelTurnoverController @Inject() (
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     runWithSessionCheck { aboutTheTradingHistory =>
-        val numberOfColumns = aboutTheTradingHistory.turnoverSections6020.getOrElse(Seq.empty).size
+      val numberOfColumns = aboutTheTradingHistory.turnoverSections6020.getOrElse(Seq.empty).size
 
-        Ok(
-          turnoverView(
-            turnoverForm6030(numberOfColumns, financialYearEndDates(aboutTheTradingHistory))
-              .fill(
-                aboutTheTradingHistory.turnoverSections6020
-                  .getOrElse(Seq.empty)
-                  .map(ts => TurnoverSection6030(ts.financialYearEnd, 52, None, None))
-              ),
-            getBackLink
-          )
+      Ok(
+        turnoverView(
+          turnoverForm6030(numberOfColumns, financialYearEndDates(aboutTheTradingHistory))
+            .fill(
+              aboutTheTradingHistory.turnoverSections6020
+                .getOrElse(Seq.empty)
+                .map(ts => TurnoverSection6030(ts.financialYearEnd, 52, None, None))
+            ),
+          getBackLink
         )
-      }
+      )
+    }
   }
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     runWithSessionCheck { aboutTheTradingHistory =>
-        val numberOfColumns = aboutTheTradingHistory.turnoverSections6020.getOrElse(Seq.empty).size
-        val yearEndDates    = financialYearEndDates(aboutTheTradingHistory)
+      val numberOfColumns = aboutTheTradingHistory.turnoverSections6020.getOrElse(Seq.empty).size
+      val yearEndDates    = financialYearEndDates(aboutTheTradingHistory)
 
-        continueOrSaveAsDraft[Seq[TurnoverSection6030]](
-          turnoverForm6030(numberOfColumns, yearEndDates),
-          formWithErrors => BadRequest(turnoverView(formWithErrors, getBackLink)),
-          success => {
-            val turnoverSections6020 =
-              (success zip yearEndDates).map { case (turnoverSection, finYearEnd) =>
-                turnoverSection.copy(financialYearEnd = finYearEnd)
-              }
+      continueOrSaveAsDraft[Seq[TurnoverSection6030]](
+        turnoverForm6030(numberOfColumns, yearEndDates),
+        formWithErrors => BadRequest(turnoverView(formWithErrors, getBackLink)),
+        success => {
+          val turnoverSections6020 =
+            (success zip yearEndDates).map { case (turnoverSection, finYearEnd) =>
+              turnoverSection.copy(financialYearEnd = finYearEnd)
+            }
 
 //            val updatedData = updateAboutTheTradingHistory(
 //              _.copy(
-//                turnoverSections6020 = turnoverSections6020
+//                turnoverSections6020 = Some(turnoverSections6020)
 //              )
 //            )
-            val updatedData = request.sessionData
+          val updatedData = request.sessionData
 
-            session
-              .saveOrUpdate(updatedData)
-              .map { _ =>
-                navigator.cyaPage
-                  .filter(_ =>
-                    navigator.from == "CYA" && aboutTheTradingHistory.electricVehicleChargingPoints.isDefined
-                  )
-                  .getOrElse(navigator.nextPage(TurnoverPageId, updatedData).apply(updatedData))
-              }
-              .map(Redirect)
-          }
-        )
-        Redirect(navigator.nextPage(TurnoverPageId, request.sessionData).apply(request.sessionData))
-      }
+          session
+            .saveOrUpdate(updatedData)
+            .map { _ =>
+              navigator.cyaPage
+                .filter(_ => navigator.from == "CYA" && aboutTheTradingHistory.electricVehicleChargingPoints.isDefined)
+                .getOrElse(navigator.nextPage(TurnoverPageId, updatedData).apply(updatedData))
+            }
+            .map(Redirect)
+        }
+      )
+      Redirect(navigator.nextPage(TurnoverPageId, request.sessionData).apply(request.sessionData))
+    }
   }
 
   private def runWithSessionCheck(
-                                   action: AboutTheTradingHistory => Future[Result]
-                                 )(implicit request: SessionRequest[AnyContent]): Future[Result] =
+    action: AboutTheTradingHistory => Future[Result]
+  )(implicit request: SessionRequest[AnyContent]): Future[Result] =
     request.sessionData.aboutTheTradingHistory
       .filter(_.occupationAndAccountingInformation.isDefined)
       .filter(_.turnoverSections6020.exists(_.nonEmpty))
@@ -114,8 +112,7 @@ class NonFuelTurnoverController @Inject() (
       case "CYA" =>
         controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
       case "TL"  => controllers.routes.TaskListController.show().url + "#non-fuel-turnover"
-      case _     => "low_margin_fuel_cards_page" // TODO: BST-86155 use low margin fuel cards page
-      // controllers.aboutthetradinghistory.routes.LowMarginFuelCardsController.show().url
+      case _     => controllers.aboutthetradinghistory.routes.AddAnotherLowMarginFuelCardsDetailsController.show(0).url
     }
 
 }

@@ -703,6 +703,22 @@ trait FakeObjects {
     itemsInRent = List("Other")
   )
 
+  val prefilledAboutFranchiseOrLettings6016: AboutFranchisesOrLettings = AboutFranchisesOrLettings(
+    Some(AnswerYes),
+    Some(AnswerYes),
+    0,
+    None,
+    IndexedSeq(prefilledCateringOperationSectionYes),
+    Some(IndexedSeq(prefilledCateringOperationBusinessSectionYes)),
+    Some(AnswerYes),
+    0,
+    None,
+    IndexedSeq(prefilledLettingSectionYes),
+    None,
+    Some(false),
+    Some(AnswerYes)
+  )
+
   val prefilledAboutFranchiseOrLettings: AboutFranchisesOrLettings = AboutFranchisesOrLettings(
     Some(AnswerYes),
     Some(AnswerYes),
