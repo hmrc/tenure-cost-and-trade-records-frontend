@@ -28,7 +28,8 @@ import scala.util.Try
 object CustomerCreditAccountsForm {
 
   def customerCreditAccountsForm(years: Seq[String])(implicit messages: Messages): Form[Seq[CustomerCreditAccounts]] = {
-    val mappingPerYear = years.take(3).zipWithIndex.map { case (year, idx) => "" -> customerCreditAccountsMapping(year, idx) }
+    val mappingPerYear =
+      years.take(3).zipWithIndex.map { case (year, idx) => "" -> customerCreditAccountsMapping(year, idx) }
 
     Form(
       mappingPerYear match {
@@ -39,7 +40,9 @@ object CustomerCreditAccountsForm {
     )
   }
 
-  private def customerCreditAccountsMapping(year: String, idx: Int)(implicit messages: Messages): Mapping[CustomerCreditAccounts] =
+  private def customerCreditAccountsMapping(year: String, idx: Int)(implicit
+    messages: Messages
+  ): Mapping[CustomerCreditAccounts] =
     mapping(
       "financial-year-end"           -> ignored(LocalDate.EPOCH),
       s"customerCreditAccounts-$idx" -> optional(

@@ -24,8 +24,8 @@ import utils.TestBaseSpec
 class CustomerCreditAccountsControllerSpec extends TestBaseSpec {
 
   def customerCreditAccountsController(
-     aboutTheTradingHistory: Option[AboutTheTradingHistory] = Some(prefilledAboutYourTradingHistory)
-     ) = new CustomerCreditAccountsController(
+    aboutTheTradingHistory: Option[AboutTheTradingHistory] = Some(prefilledAboutYourTradingHistory6020)
+  ) = new CustomerCreditAccountsController(
     stubMessagesControllerComponents(),
     aboutYourTradingHistoryNavigator,
     customerCreditAccountsView,

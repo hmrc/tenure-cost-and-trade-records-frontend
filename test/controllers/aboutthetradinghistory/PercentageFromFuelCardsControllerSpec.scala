@@ -24,7 +24,7 @@ import utils.TestBaseSpec
 class PercentageFromFuelCardsControllerSpec extends TestBaseSpec {
 
   def percentageFromFuelCards(
-    aboutTheTradingHistory: Option[AboutTheTradingHistory] = Some(prefilledAboutYourTradingHistory)
+    aboutTheTradingHistory: Option[AboutTheTradingHistory] = Some(prefilledAboutYourTradingHistory6020)
   ) = new PercentageFromFuelCardsController(
     stubMessagesControllerComponents(),
     aboutYourTradingHistoryNavigator,
