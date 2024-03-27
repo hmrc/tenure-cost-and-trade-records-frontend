@@ -21,7 +21,7 @@ import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.FinancialYearEndDatesForm.financialYearEndDatesForm
 import models.{ForTypes, Session}
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.updateAboutTheTradingHistory
-import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, CostOfSales, OccupationalAndAccountingInformation, TurnoverSection6020}
+import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, CostOfSales, OccupationalAndAccountingInformation}
 import navigation.AboutTheTradingHistoryNavigator
 import navigation.identifiers.FinancialYearEndDatesPageId
 import play.api.i18n.I18nSupport
