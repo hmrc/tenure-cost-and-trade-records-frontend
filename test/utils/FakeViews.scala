@@ -127,12 +127,20 @@ trait FakeViews { this: GuiceOneAppPerSuite =>
   lazy val financialYearEndView: financialYearEnd                                             = app.injector.instanceOf[financialYearEnd]
   lazy val financialYearEndDatesView: financialYearEndDates                                   = app.injector.instanceOf[financialYearEndDates]
   lazy val turnoverView: turnover                                                             = app.injector.instanceOf[turnover]
+  lazy val turnover6020View: turnover6020                                                     = app.injector.instanceOf[turnover6020]
   lazy val turnover6030View: turnover6030                                                     = app.injector.instanceOf[turnover6030]
   lazy val fixedOperatingExpensesView: fixedOperatingExpenses                                 = app.injector.instanceOf[fixedOperatingExpenses]
   lazy val variableOperatingExpensesView: variableOperatingExpenses                           = app.injector.instanceOf[variableOperatingExpenses]
   lazy val totalPayrollCostsView: totalPayrollCosts                                           = app.injector.instanceOf[totalPayrollCosts]
   lazy val bunkeredFuelQuestionView: bunkeredFuelQuestion                                     = app.injector.instanceOf[bunkeredFuelQuestion]
+  lazy val bunkerFuelCardDetailsView: bunkerFuelCardsDetails                                  = app.injector.instanceOf[bunkerFuelCardsDetails]
+  lazy val addAnotherBunkerFuelCardsDetailsView: addAnotherBunkerFuelCardDetails              =
+    app.injector.instanceOf[addAnotherBunkerFuelCardDetails]
+  lazy val lowMarginFuelCardsDetailsView: lowMarginFuelCardsDetails                           = app.injector.instanceOf[lowMarginFuelCardsDetails]
+  lazy val addAnotherLowMarginFuelCardsDetailsView: addAnotherLowMarginFuelCardDetails        =
+    app.injector.instanceOf[addAnotherLowMarginFuelCardDetails]
   lazy val totalFuelSoldView: totalFuelSold                                                   = app.injector.instanceOf[totalFuelSold]
+  lazy val bunkeredFuelSoldView: bunkeredFuelSold                                             = app.injector.instanceOf[bunkeredFuelSold]
   lazy val incomeExpenditureSummaryView: incomeExpenditureSummary                             = app.injector.instanceOf[incomeExpenditureSummary]
   lazy val unusualCircumstancesView: unusualCircumstances                                     = app.injector.instanceOf[unusualCircumstances]
   lazy val electricVehicleChargingPointsView: electricVehicleChargingPoints                   =

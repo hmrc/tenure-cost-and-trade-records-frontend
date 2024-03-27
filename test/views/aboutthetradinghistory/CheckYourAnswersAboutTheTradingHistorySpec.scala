@@ -39,8 +39,13 @@ class CheckYourAnswersAboutTheTradingHistorySpec
   val sessionRequest: SessionRequest[AnyContentAsEmpty.type] =
     SessionRequest(aboutYourTradingHistory6015YesSession, fakeRequest)
 
-  def createView: () => Html = () =>
+  val sessionRequestFor6020: SessionRequest[AnyContentAsEmpty.type] =
+    SessionRequest(aboutYourTradingHistory6020YesSession, fakeRequest)
+  def createView: () => Html                                        = () =>
     checkYourAnswersAboutTheTradingHistoryView(form, backLink, Summary("99996015001"))(sessionRequest, messages)
+
+  def createView6020: () => Html = () =>
+    checkYourAnswersAboutTheTradingHistoryView(form, backLink, Summary("99996020001"))(sessionRequestFor6020, messages)
 
   def createViewUsingForm: Form[CheckYourAnswersAboutTheTradingHistory] => Html =
     (form: Form[CheckYourAnswersAboutTheTradingHistory]) =>
@@ -69,5 +74,8 @@ class CheckYourAnswersAboutTheTradingHistorySpec
       val loginButton = doc.getElementById("continue").text()
       assert(loginButton == messages("button.label.continue"))
     }
+  }
+  "Check Your Answers About The Property view for 6020" must {
+    behave like normalPage(createView6020, messageKeyPrefix)
   }
 }

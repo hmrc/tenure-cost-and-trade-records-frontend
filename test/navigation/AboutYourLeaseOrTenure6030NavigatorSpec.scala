@@ -33,7 +33,7 @@ class AboutYourLeaseOrTenure6030NavigatorSpec extends TestBaseSpec {
 
   val navigator = new AboutYourLeaseOrTenureNavigator(audit)
 
-  val session6010              = Session(
+  val session6010 = Session(
     "99996010004",
     "FOR6010",
     prefilledAddress,
@@ -41,9 +41,37 @@ class AboutYourLeaseOrTenure6030NavigatorSpec extends TestBaseSpec {
     aboutLeaseOrAgreementPartOne = Some(prefilledAboutLeaseOrAgreement6010Route),
     aboutLeaseOrAgreementPartTwo = Some(prefilledAboutLeaseOrAgreementPartTwo)
   )
+
+  val session6030 = Session(
+    "99996030004",
+    "FOR6030",
+    prefilledAddress,
+    "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=",
+    aboutLeaseOrAgreementPartOne = Some(prefilledAboutLeaseOrAgreement6030Route),
+    aboutLeaseOrAgreementPartTwo = Some(prefilledAboutLeaseOrAgreementPartTwo6030)
+  )
+
+  val session6030Full = Session(
+    "99996030004",
+    "FOR6030",
+    prefilledAddress,
+    "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=",
+    aboutLeaseOrAgreementPartOne = Some(prefilledAboutLeaseOrAgreement6030Route),
+    aboutLeaseOrAgreementPartTwo = Some(prefilledAboutLeaseOrAgreementPartTwoNo),
+    aboutLeaseOrAgreementPartThree = Some(prefilledAboutLeaseOrAgreementPartThree)
+  )
+
   val session6010No            = Session(
     "99996010004",
     "FOR6010",
+    prefilledAddress,
+    "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=",
+    aboutLeaseOrAgreementPartOne = Some(prefilledAboutLeaseOrAgreementPartOneNo),
+    aboutLeaseOrAgreementPartTwo = Some(prefilledAboutLeaseOrAgreementPartTwoNo)
+  )
+  val session6030No            = Session(
+    "99996030004",
+    "FOR6030",
     prefilledAddress,
     "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=",
     aboutLeaseOrAgreementPartOne = Some(prefilledAboutLeaseOrAgreementPartOneNo),
@@ -150,7 +178,7 @@ class AboutYourLeaseOrTenure6030NavigatorSpec extends TestBaseSpec {
 
     "return a function that goes to fixture and fittings page when include trade services with no has been completed" in {
       navigator
-        .nextPage(RentIncludeTradeServicesPageId, session6010)
+        .nextPage(RentIncludeTradeServicesPageId, session6030)
         .apply(session6010No) mustBe controllers.aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsController
         .show()
     }
@@ -205,6 +233,15 @@ class AboutYourLeaseOrTenure6030NavigatorSpec extends TestBaseSpec {
         .apply(
           session6010
         ) mustBe controllers.aboutYourLeaseOrTenure.routes.RentIncreaseAnnuallyWithRPIController
+        .show()
+    }
+
+    "return a function that goes to increase by RPI when what rent based on has been completed 6030" in {
+      navigator
+        .nextPage(WhatRentBasedOnPageId, session6030)
+        .apply(
+          session6030
+        ) mustBe controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryAccordingToGrossOrNetController
         .show()
     }
 
@@ -361,6 +398,16 @@ class AboutYourLeaseOrTenure6030NavigatorSpec extends TestBaseSpec {
           session6010
         ) mustBe controllers.aboutYourLeaseOrTenure.routes.CheckYourAnswersAboutYourLeaseOrTenureController.show()
     }
+
+    "return a function that goes to services paid separately when payment for trade services has been completed" in {
+      navigator
+        .nextPage(PaymentForTradeServicesId, session6030Full)
+        .apply(
+          session6030Full
+        ) mustBe controllers.aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyController.show()
+    }
+
+    session6030Full
 
     "return a function that goes to task list page when CYA has been completed" in {
       navigator

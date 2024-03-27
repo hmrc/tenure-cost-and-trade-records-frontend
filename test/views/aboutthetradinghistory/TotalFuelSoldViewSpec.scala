@@ -21,7 +21,7 @@ import form.aboutthetradinghistory.TotalFuelSoldForm
 import org.scalatest.matchers.must.Matchers.convertToAnyMustWrapper
 import models.pages.Summary
 import models.submissions.aboutthetradinghistory.TotalFuelSold
-import play.api.data.Form
+import play.api.data.{Form, FormError}
 import views.behaviours.QuestionViewBehaviours
 
 class TotalFuelSoldViewSpec extends QuestionViewBehaviours[Seq[TotalFuelSold]] {
@@ -64,6 +64,38 @@ class TotalFuelSoldViewSpec extends QuestionViewBehaviours[Seq[TotalFuelSold]] {
       val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("continue").text()
       assert(loginButton == messages("button.label.continue"))
+    }
+
+    "TotalFuelSoldForm" should {
+      "reject empty values" in {
+        val form         = TotalFuelSoldForm.totalFuelSoldForm(Seq("2022", "2021"))(messages)
+        val formData     = Map(
+          "totalFuelSold-0" -> "",
+          "totalFuelSold-1" -> "100.50"
+        )
+        val formWithData = form.bind(formData)
+
+        formWithData.errors.size shouldBe 1
+        formWithData.errors.head shouldBe FormError(
+          "totalFuelSold-0",
+          messages("error.totalFuelSold.required", 2022.toString)
+        )
+      }
+
+      "reject non-numeric values" in {
+        val form     = TotalFuelSoldForm.totalFuelSoldForm(Seq("2022"))(messages)
+        val formData = Map(
+          "totalFuelSold-0" -> "abc"
+        )
+
+        val formWithData = form.bind(formData)
+
+        formWithData.errors.size shouldBe 1
+        formWithData.errors.head shouldBe FormError(
+          "totalFuelSold-0",
+          messages("error.totalFuelSold.range", 2022.toString)
+        )
+      }
     }
   }
 }

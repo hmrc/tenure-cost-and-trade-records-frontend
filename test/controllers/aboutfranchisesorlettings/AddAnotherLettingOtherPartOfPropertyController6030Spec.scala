@@ -58,6 +58,13 @@ class AddAnotherLettingOtherPartOfPropertyController6030Spec extends TestBaseSpe
         status(result) shouldBe BAD_REQUEST
       }
     }
+
+    "REMOVE /" should {
+      "redirect if an empty form is submitted" in {
+        val result = addAnotherLettingOtherPartOfPropertyController().remove(1)(fakeRequest)
+        status(result) shouldBe SEE_OTHER
+      }
+    }
   }
 
   "Add another letting accommodation form" should {

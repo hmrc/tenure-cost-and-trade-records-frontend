@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -72,8 +72,9 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
 
   private def bunkeredFuelQuestionRouting: Session => Call = answers => {
     answers.aboutTheTradingHistory.flatMap(_.bunkeredFuelQuestion.map(_.bunkeredFuelQuestion)) match {
-      case Some(AnswerYes) => controllers.routes.TaskListController.show() // TODO the next screen is not present yet
-      case Some(AnswerNo)  => controllers.routes.TaskListController.show() //
+      case Some(AnswerYes) => aboutthetradinghistory.routes.BunkeredFuelSoldController.show()
+      case Some(AnswerNo)  => // TODO: BST-86151 Customer credit accounts page
+        controllers.aboutthetradinghistory.routes.LowMarginFuelCardDetailsController.show()
       case _               =>
         logger.warn(
           s"Navigation for bunkered fuel question reached without correct selection of conditions by controller"
@@ -89,13 +90,42 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
       case _                => aboutthetradinghistory.routes.TurnoverController.show()
     }
 
-  private def turnoverRouting: Session => Call = answers => {
-    if (answers.forType == ForTypes.for6015)
-      aboutthetradinghistory.routes.CostOfSalesController.show()
-    else if (answers.forType == ForTypes.for6030) {
-      aboutthetradinghistory.routes.UnusualCircumstancesController.show()
-    } else
-      aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show()
+  private def turnoverRouting: Session => Call =
+    _.forType match {
+      case ForTypes.for6015 => aboutthetradinghistory.routes.CostOfSalesController.show()
+      case ForTypes.for6020 => aboutthetradinghistory.routes.ElectricVehicleChargingPointsController.show()
+      case ForTypes.for6030 => aboutthetradinghistory.routes.UnusualCircumstancesController.show()
+      case _                => aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show()
+    }
+
+  private def getAddAnotherBunkerFuelCardsDetailRouting(answers: Session): Call = {
+    val currentIndex: Option[Int] = answers.aboutTheTradingHistory.flatMap(_.bunkerFuelCardsDetails) match {
+      case Some(details) if details.nonEmpty => Some(details.size - 1) // Assuming the last entry is the current one
+      case _                                 => None
+    }
+    currentIndex match {
+      case Some(idx) =>
+        aboutthetradinghistory.routes.AddAnotherBunkerFuelCardsDetailsController.show(
+          idx
+        ) // Assuming there's a 'show' method to edit
+      case None      =>
+        aboutthetradinghistory.routes.AddAnotherBunkerFuelCardsDetailsController.show(0) // Fallback or start new
+    }
+  }
+
+  private def getAddAnotherLowMarginFuelCardsDetailRouting(answers: Session): Call = {
+    val currentIndex: Option[Int] = answers.aboutTheTradingHistory.flatMap(_.lowMarginFuelCardsDetails) match {
+      case Some(details) if details.nonEmpty => Some(details.size - 1) // Assuming the last entry is the current one
+      case _                                 => None
+    }
+    currentIndex match {
+      case Some(idx) =>
+        aboutthetradinghistory.routes.AddAnotherLowMarginFuelCardsDetailsController.show(
+          idx
+        ) // Assuming there's a 'show' method to edit
+      case None      =>
+        aboutthetradinghistory.routes.AddAnotherLowMarginFuelCardsDetailsController.show(0) // Fallback or start new
+    }
   }
 
   override val routeMap: Map[Identifier, Session => Call] = Map(
@@ -110,6 +140,9 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
     FixedOperatingExpensesId                 -> (_ => aboutthetradinghistory.routes.OtherCostsController.show()),
     OtherCostsId                             -> (_ => aboutthetradinghistory.routes.IncomeExpenditureSummaryController.show()),
     BunkeredFuelQuestionId                   -> bunkeredFuelQuestionRouting,
+    BunkeredFuelSoldId                       -> (_ => aboutthetradinghistory.routes.BunkerFuelCardDetailsController.show(None)),
+    BunkerFuelCardsDetailsId                 -> getAddAnotherBunkerFuelCardsDetailRouting,
+    LowMarginFuelCardsDetailsId              -> getAddAnotherLowMarginFuelCardsDetailRouting,
     IncomeExpenditureSummaryId               -> (_ => aboutthetradinghistory.routes.UnusualCircumstancesController.show()),
     UnusualCircumstancesId                   -> (_ =>
       aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show()

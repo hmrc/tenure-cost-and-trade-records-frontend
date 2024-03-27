@@ -17,7 +17,6 @@ object CodeCoverageSettings {
     "config.InternalAuthTokenInitialiserImpl",
     "GraphiteStartUp",
     """.*\.Reverse[^.]*;""",
-    """views\.*""",
     ".*.template.scala",
     "testOnly.*",
     "testOnlyDoNotUseInAppConf.*"
@@ -25,7 +24,7 @@ object CodeCoverageSettings {
 
   val settings: Seq[Setting[?]] = Seq(
     ScoverageKeys.coverageExcludedPackages := excludedPackages.mkString(";"),
-    ScoverageKeys.coverageMinimumStmtTotal := 81.2,
+    ScoverageKeys.coverageMinimumStmtTotal := 81.5,
     ScoverageKeys.coverageFailOnMinimum := true,
     ScoverageKeys.coverageHighlighting := true
   )

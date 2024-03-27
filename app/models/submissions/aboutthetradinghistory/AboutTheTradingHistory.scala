@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,6 +24,7 @@ import play.api.libs.json._
 case class AboutTheTradingHistory(
   occupationAndAccountingInformation: Option[OccupationalAndAccountingInformation] = None,
   turnoverSections: Seq[TurnoverSection] = Seq.empty,
+  turnoverSections6020: Option[Seq[TurnoverSection6020]] = None,
   turnoverSections6030: Seq[TurnoverSection6030] = Seq.empty,
   costOfSales: Seq[CostOfSales] = Seq.empty,
   fixedOperatingExpensesSections: Seq[FixedOperatingExpenses] = Seq.empty,
@@ -36,6 +37,9 @@ case class AboutTheTradingHistory(
   electricVehicleChargingPoints: Option[ElectricVehicleChargingPoints] = None, // added March 2024
   totalFuelSold: Option[Seq[TotalFuelSold]] = None,
   bunkeredFuelQuestion: Option[BunkeredFuelQuestion] = None,
+  bunkeredFuelSold: Option[Seq[BunkeredFuelSold]] = None,
+  bunkerFuelCardsDetails: Option[IndexedSeq[BunkerFuelCardsDetails]] = None,
+  lowMarginFuelCardsDetails: Option[IndexedSeq[LowMarginFuelCardsDetails]] = None,
   checkYourAnswersAboutTheTradingHistory: Option[CheckYourAnswersAboutTheTradingHistory] = None
 )
 
@@ -44,6 +48,7 @@ object AboutTheTradingHistory {
   implicit val aboutTheTradingHistoryReads: Reads[AboutTheTradingHistory] = (
     (__ \ "occupationAndAccountingInformation").readNullable[OccupationalAndAccountingInformation] and
       (__ \ "turnoverSections").read[Seq[TurnoverSection]] and
+      (__ \ "turnoverSections6020").readNullable[Seq[TurnoverSection6020]] and
       (__ \ "turnoverSections6030").readNullable[Seq[TurnoverSection6030]].map(_.getOrElse(Seq.empty)) and
       (__ \ "costOfSales").read[Seq[CostOfSales]] and
       (__ \ "fixedOperatingExpensesSections").read[Seq[FixedOperatingExpenses]] and
@@ -56,6 +61,9 @@ object AboutTheTradingHistory {
       (__ \ "electricVehicleChargingPoints").readNullable[ElectricVehicleChargingPoints] and
       (__ \ "totalFuelSold").readNullable[Seq[TotalFuelSold]] and
       (__ \ "bunkeredFuelQuestion").readNullable[BunkeredFuelQuestion] and
+      (__ \ "bunkeredFuelSold").readNullable[Seq[BunkeredFuelSold]] and
+      (__ \ "bunkerFuelCardsDetails").readNullable[IndexedSeq[BunkerFuelCardsDetails]] and
+      (__ \ "lowMarginFuelCardsDetails").readNullable[IndexedSeq[LowMarginFuelCardsDetails]] and
       (__ \ "checkYourAnswersAboutTheTradingHistory").readNullable[CheckYourAnswersAboutTheTradingHistory]
   )(AboutTheTradingHistory.apply _)
 

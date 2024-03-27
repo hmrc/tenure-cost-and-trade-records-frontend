@@ -73,5 +73,15 @@ class AboutTheTradingHistoryIdentifiersSpec extends TestBaseSpec {
     "Identifier for check your answers about the trading history page" in {
       assert(CheckYourAnswersAboutTheTradingHistoryId.toString.equals("checkYourAnswersAboutTheTradingHistory"))
     }
+
+    "Identifier for total fuel sold page" in {
+      assert(TotalFuelSoldId.toString.equals("totalFuelSold"))
+    }
+    "Identifier for bunkered fuel question" in {
+      assert(BunkeredFuelQuestionId.toString.equals("bunkeredFuelQuestionPage"))
+    }
+    "Identifier for bunkered fuel sold page" in {
+      assert(BunkeredFuelSoldId.toString.equals("bunkeredFuelSoldPage"))
+    }
   }
 }

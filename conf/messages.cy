@@ -89,6 +89,7 @@ label.phone = Telephone number
 label.email = Email address
 label.submitAnotherForm = Submit another form
 label.change = Change
+label.litres = litres
 
 # COMMON HINTS
 ##############
@@ -899,6 +900,7 @@ error.tradeServiceDescription.maxLength = Mae’n rhaid i’r disgrifiad o’r g
 # TRADE SERVICES ADDED
 #####################################
 addTradeService.heading = You have added {0} {1} provided by the landlord
+addTradeServiceZero.heading = You have removed all the services provided by your landlord
 addTradeService.service = service
 addTradeService.services = services
 addTradeService.label = Would you like to add another service which is included in the rent?
@@ -925,9 +927,10 @@ error.servicePaidSeparatelyCharge.required = You must tell us the annual charge 
 # SERVICES PAID SEPARATELY LIST
 #####################################
 servicePaidSeparatelyList.heading = You have added {0} {1} which you pay for separately
+servicePaidSeparatelyListZero.heading = You have removed all the services which you pay for separately
 servicePaidSeparatelyList.service = service
 servicePaidSeparatelyList.services = services
-servicePaidSeparatelyList.label = Would you like to add another service which you pay for separately?
+servicePaidSeparatelyList.label = Would you like to add another service?
 error.servicePaidSeparatelyList.required = Select yes if you would like to add another service which is paid for separately
 
 # RENT INCLUDE TRADE SERVICES DETAILS
@@ -990,6 +993,7 @@ error.capitalSumPaidDetails.missing = Select yes if you paid a capital sum or pr
 error.required.annualRentExcludingVat.capitalSumPaidDetails = Please provide details of how much of the capital sum was paid
 error.invalid_currency.annualRent.capitalSumPaidDetails = The sum paid must be a number like 100 or 100.00 and cannot be less than 0
 fieldName.capitalSumPaidDetails = The date that the sum was paid
+error.maxCurrencyAmountExceeded.capitalSumPaidDetails = Capital sum cannot be greater than £9,999,999.99
 
 # PAYMENT WHEN LEASE IS GRANTED
 ##############################
@@ -1376,6 +1380,11 @@ turnover.otherCaption.6016 = Including hire of function rooms, conference rooms 
 turnover.totalSales.6016 = Total sales revenue
 turnover.totalSalesCaption.6016 = Excluding VAT
 
+# TURNOVER 6020
+turnover.6020.heading = Non-fuel turnover
+turnover.6020.p1 = Provide details of any non-fuel income you may receive, excluding any letting income. You will be asked about letting income in later sections of this declaration.
+turnover.6020.inset = All fields on this page are mandatory. If this is not applicable, enter the number 0.
+
 # COST OF SALES
 costOfSales.heading = Cost of sales
 costOfSales.p1 = Provide details of your departmental cost of sales excluding:
@@ -1532,18 +1541,46 @@ unusualCircumstances.explain = Explain any abnormally high or low figures in you
 netProfit.heading = This is a holding page for the net profits page
 
 #TOTAL FUEL SOLD (FORM 6020)
+############################
+
 totalFuelSold.heading = What is the total volume of all fuel sold in the financial years shown?
 totalFuelSold.bunkered = Do not include bunkered fuel in these figures. If you sell bunkered fuel, where you only charge a handling fee, you’ll be asked about this separately.
 totalFuelSold.inset = All fields on this page are mandatory. If this is not applicable, enter the number 0.
 totalFuelSold.fuel.label = Petrol, diesel, LPG and other total fuel sales
-totalFuelSold.fuel.litres = litres
 error.totalFuelSold.required = Enter 0 if you did not sell any fuel in the year ending {0}
 error.totalFuelSold.range = Total volume of all fuel sold in the year ending {0} must be a number, for example 100 or 100.00
 
 #BUNKERED FUEL QUESTION (FORM 6020)
+###################################
 
 bunkeredFuelQuestion.heading = Do you sell bunkered fuel, where you only charge a handling fee?
 error.bunkeredFuelQuestion.required = Select yes if you sell bunkered fuel, where you only charge a handling fee
+
+#BUNKERED FUEL SOLD (FORM6020)
+###############################
+
+bunkeredFuelSold.heading = How much bunkered fuel did you sell in the financial years shown?
+bunkeredFuelSold.innerText = All fields on this page are mandatory. If this is not applicable, enter the number 0.
+bunkeredFuelSold.financialYear.label = Financial year
+bunkeredFuelSold.bunkeredFuel.label = Bunkered fuel
+bunkeredFuelSold.bunkeredFuel.hint = Where only a handling fee is charged
+error.bunkeredFuelSold.required = Enter 0 if you did not sell any bunkered fuel in the year ending {0}
+error.bunkeredFuelSold.range = Total volume of all bunkered fuel sold in the year ending {0} must be a number, for example 100 or 100.00
+
+#BUNKER FUEL CARDS DETAILS (FORM 6020)
+bunkerFuelCardDetails.heading = Provide details of the bunker fuel cards you accept
+label.bunkerFuelCardName = Bunker fuel card name
+bunkerFuelCardDetails.handlingFee = Handling fee
+bunkerFuelCardDetails.handlingFee.unit = pence/litre
+error.bunkerFuelCard.name.required = Please provide name of bunker fuel card
+error.bunkerFuelCardName.maxLength = Bunker fuel card name cannot be more than 100 characters
+error.bunkerFuelCard.handlingFee.invalidFormat = Handling fee must be a number, for example 100
+
+#ADD ANOTHER BUNKER FUEL CARDS DETAILS (FROM 6020)
+label.bunkFuelCardDetails = Do you need to add another bunker fuel card?
+bunkFuelCardDetails.zeroDetails.heading = You have removed all your bunker fuel cards details
+bunkFuelCardDetails.heading = You have added {0} bunker fuel card detail
+error.addAnotherBunkerFuelCardsDetails.required = Select yes if you would like to add another bunker fuel card detail
 
 #########################
 

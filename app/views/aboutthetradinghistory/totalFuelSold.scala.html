@@ -1,5 +1,5 @@
 @*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -48,21 +48,25 @@ match {
     summary = Some(request.sessionData.toSummary),
     sectionName = messages("label.section.aboutYourTradingHistory"),
     backLinkUrl = Some(backlink),
-    fullWidth = false,
-    theForm = form
+    theForm = form,
+    fullWidth = true,
+    showH1  = false
 ) {
 
-    <p class="govuk-body">@messages("totalFuelSold.bunkered")</p>
-
     @formWithCSRF(action = controllers.aboutthetradinghistory.routes.TotalFuelSoldController.submit()) {
+
+        <h1 class="govuk-heading-l govuk-!-width-three-quarters">@messages("totalFuelSold.heading")</h1>
+
+        <p class="govuk-body govuk-!-width-three-quarters">@messages("totalFuelSold.bunkered")</p>
+
         @govukInsetText(InsetText(
-            content = Text(messages("turnover.inset"))
-        ))
+                content = Text(messages("totalFuelSold.inset"))
+            ))
 
         <table class="hmrc-responsive-table govuk-!-font-weight-regular">
             <tbody>
                 <tr>
-                @request.sessionData.financialYearEndDates.map { case (finYearEnd, idx) =>
+                @request.sessionData.financialYearEndDates6020.map { case (finYearEnd, idx) =>
                 <td>
                     @govukTable(Table(
                         head = Seq(
@@ -92,7 +96,7 @@ match {
                                                 "aria-label" -> messages("totalFuelSold.fuel.label")
                                             ),
                                             suffix = Some(PrefixOrSuffix(
-                                                content = Text(messages("totalFuelSold.fuel.litres"))
+                                                content = Text(messages("label.litres"))
                                             ))
                                         ).withFormField(form(s"totalFuelSold-$idx")))
                                     )

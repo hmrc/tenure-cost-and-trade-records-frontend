@@ -164,6 +164,9 @@ POST        /financial-year-end-dates                               controllers.
 GET         /turnover                                               controllers.aboutthetradinghistory.TurnoverController.show()
 POST        /turnover                                               controllers.aboutthetradinghistory.TurnoverController.submit()
 
+GET         /non-fuel-turnover                                      controllers.aboutthetradinghistory.NonFuelTurnoverController.show()
+POST        /non-fuel-turnover                                      controllers.aboutthetradinghistory.NonFuelTurnoverController.submit()
+
 GET         /turnover-6030                                          controllers.aboutthetradinghistory.Turnover6030Controller.show()
 POST        /turnover-6030                                          controllers.aboutthetradinghistory.Turnover6030Controller.submit()
 
@@ -326,6 +329,25 @@ POST        /total-fuel-sold                                        controllers.
 
 GET         /bunkered-fuel-question                                 controllers.aboutthetradinghistory.BunkeredFuelQuestionController.show()
 POST        /bunkered-fuel-question                                 controllers.aboutthetradinghistory.BunkeredFuelQuestionController.submit()
+
+GET         /bunkered-fuel-sold                                     controllers.aboutthetradinghistory.BunkeredFuelSoldController.show()
+POST        /bunkered-fuel-sold                                     controllers.aboutthetradinghistory.BunkeredFuelSoldController.submit()
+
+GET         /bunker-fuel-cards-details                              controllers.aboutthetradinghistory.BunkerFuelCardDetailsController.show(idx: Option[Int] ?= None)
+POST        /bunker-fuel-cards-details                              controllers.aboutthetradinghistory.BunkerFuelCardDetailsController.submit(idx: Option[Int])
+
+GET         /add-another-bunker-fuel-cards-details                  controllers.aboutthetradinghistory.AddAnotherBunkerFuelCardsDetailsController.show(idx: Int)
+POST        /add-another-bunker-fuel-cards-details                  controllers.aboutthetradinghistory.AddAnotherBunkerFuelCardsDetailsController.submit(idx: Int)
+GET         /remove-bunker-fuel-cards-details                       controllers.aboutthetradinghistory.AddAnotherBunkerFuelCardsDetailsController.remove(idx: Int)
+POST        /remove-bunker-fuel-cards-details                       controllers.aboutthetradinghistory.AddAnotherBunkerFuelCardsDetailsController.performRemove(idx: Int)
+
+GET         /low-margin-fuel-cards-details                          controllers.aboutthetradinghistory.LowMarginFuelCardDetailsController.show(idx: Option[Int] ?= None)
+POST        /low-margin-fuel-cards-details                          controllers.aboutthetradinghistory.LowMarginFuelCardDetailsController.submit(idx: Option[Int])
+
+GET         /add-another-low-margin-fuel-cards-details              controllers.aboutthetradinghistory.AddAnotherLowMarginFuelCardsDetailsController.show(idx: Int)
+POST        /add-another-low-margin-fuel-cards-details              controllers.aboutthetradinghistory.AddAnotherLowMarginFuelCardsDetailsController.submit(idx: Int)
+GET         /remove-low-margin-fuel-cards-details                   controllers.aboutthetradinghistory.AddAnotherLowMarginFuelCardsDetailsController.remove(idx: Int)
+POST        /remove-low-margin-fuel-cards-details                   controllers.aboutthetradinghistory.AddAnotherLowMarginFuelCardsDetailsController.performRemove(idx: Int)
 
 GET         /type-of-tenure                                         controllers.aboutYourLeaseOrTenure.TypeOfTenureController.show()
 POST        /type-of-tenure                                         controllers.aboutYourLeaseOrTenure.TypeOfTenureController.submit()

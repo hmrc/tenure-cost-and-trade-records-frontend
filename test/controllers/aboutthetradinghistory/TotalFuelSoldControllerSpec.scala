@@ -24,7 +24,7 @@ import utils.TestBaseSpec
 class TotalFuelSoldControllerSpec extends TestBaseSpec {
 
   def totalFuelSoldController(
-    aboutTheTradingHistory: Option[AboutTheTradingHistory] = Some(prefilledAboutYourTradingHistory)
+    aboutTheTradingHistory: Option[AboutTheTradingHistory] = Some(prefilledAboutYourTradingHistory6020)
   ) = new TotalFuelSoldController(
     stubMessagesControllerComponents(),
     aboutYourTradingHistoryNavigator,
@@ -33,7 +33,7 @@ class TotalFuelSoldControllerSpec extends TestBaseSpec {
     mockSessionRepo
   )
 
-  "About your trading history controller" should {
+  "Total fuel question controller" should {
     "return 200" in {
       val result = totalFuelSoldController().show(fakeRequest)
       status(result) shouldBe OK
