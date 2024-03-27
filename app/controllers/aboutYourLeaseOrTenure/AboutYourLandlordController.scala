@@ -21,9 +21,10 @@ import config.ErrorHandler
 import connectors.AddressLookupConnector
 import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.AboutTheLandlordForm.aboutTheLandlordForm
+import models.{ForTypes, Session}
 import navigation.AboutYourLeaseOrTenureNavigator
 import play.api.i18n.{I18nSupport, Lang}
-import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Request}
 import repositories.SessionRepo
 import views.html.aboutYourLeaseOrTenure.aboutYourLandlord
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne
@@ -57,7 +58,7 @@ class AboutYourLandlordController @Inject() (
             case _                      => aboutTheLandlordForm
           },
           request.sessionData.toSummary,
-          navigator.from
+          getBackLink(request.sessionData)
         )
       )
     )
@@ -100,7 +101,10 @@ class AboutYourLandlordController @Inject() (
   private def saveAndForwardToAddressLookup()(implicit request: SessionRequest[AnyContent]) =
     continueOrSaveAsDraft[AboutTheLandlord](
       aboutTheLandlordForm,
-      formWithErrors => BadRequest(aboutYourLandlordView(formWithErrors, request.sessionData.toSummary)),
+      formWithErrors =>
+        BadRequest(
+          aboutYourLandlordView(formWithErrors, request.sessionData.toSummary, getBackLink(request.sessionData))
+        ),
       data => {
         val existingData: Option[AboutTheLandlord] =
           request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.aboutTheLandlord)
@@ -125,4 +129,13 @@ class AboutYourLandlordController @Inject() (
           }
       }
     )
+
+  private def getBackLink(answers: Session)(implicit request: Request[AnyContent]): String =
+    if (answers.forType == ForTypes.for6020)
+      controllers.aboutYourLeaseOrTenure.routes.TypeOfTenureController.show().url
+    else
+      navigator.from match {
+        case "TL" => controllers.routes.TaskListController.show().url + "#about-your-landlord"
+        case _    => controllers.routes.TaskListController.show().url
+      }
 }
