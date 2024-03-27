@@ -47,7 +47,7 @@ class TypeOfTenureControllerSpec extends TestBaseSpec {
       mockSessionRepo
     )
 
-  " TypeOfTenureController GET /"    should {
+  " TypeOfTenureController GET /" should {
     "return 200 with data in session" in {
       val result = typeOfTenureController().show(fakeRequest)
       status(result) shouldBe Status.OK
@@ -61,7 +61,7 @@ class TypeOfTenureControllerSpec extends TestBaseSpec {
 
     "return 200 with no data in session" in {
       val result = typeOfTenureControllerNone.show(fakeRequest)
-      status(result) shouldBe Status.OK
+      status(result)      shouldBe Status.OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
