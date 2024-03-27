@@ -28,7 +28,7 @@ object TypeOfTenureForm {
         nonEmptyList("error.typeOfTenure.required")
       ),
       "typeOfTenureDetails" -> optional(text)
-        .verifying("error.typeOfTenure.maxLength", it => it.forall(_.length <= 2000))
+        .verifying("error.typeOfTenureDetails.maxLength", it => it.forall(_.length <= 2000))
     )(TypeOfTenure.apply)(TypeOfTenure.unapply)
   )
 }
