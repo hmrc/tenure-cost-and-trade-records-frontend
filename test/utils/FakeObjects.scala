@@ -930,7 +930,7 @@ trait FakeObjects {
     Some(AnswerNo)
   )
 
-  val prefilledAboutLeaseOrAgreement6010Route = AboutLeaseOrAgreementPartOne(
+  val prefilledAboutLeaseOrAgreement6010Route: AboutLeaseOrAgreementPartOne = AboutLeaseOrAgreementPartOne(
     Some(prefilledAboutTheLandlord),
     Some(AnswerYes),
     Some(prefilledConnectedToLandlordDetails),
@@ -945,9 +945,9 @@ trait FakeObjects {
       Some(WhatIsYourCurrentRentBasedOnDetails(CurrentRentBasedOnIndexedToRPI, Some("Test")))
   )
 
-  val prefilledAboutLeaseOrAgreementPartOne = AboutLeaseOrAgreementPartOne(
+  val prefilledAboutLeaseOrAgreementPartOne: AboutLeaseOrAgreementPartOne = AboutLeaseOrAgreementPartOne(
     Some(prefilledAboutTheLandlord),
-    None,
+    Some(AnswerYes),
     Some(prefilledConnectedToLandlordDetails),
     Some(prefilledLeaseOrAgreementYearsDetails),
     Some(prefilledCurrentRentPayableWithin12Months),
@@ -958,7 +958,7 @@ trait FakeObjects {
     rentOpenMarketValueDetails = Some(RentOpenMarketValueDetails(AnswerYes))
   )
 
-  val prefilledAboutLeaseOrAgreementPartOneNo = AboutLeaseOrAgreementPartOne(
+  val prefilledAboutLeaseOrAgreementPartOneNo: AboutLeaseOrAgreementPartOne = AboutLeaseOrAgreementPartOne(
     Some(prefilledAboutTheLandlord),
     None,
     Some(prefilledConnectedToLandlordDetails),
@@ -971,14 +971,14 @@ trait FakeObjects {
     rentOpenMarketValueDetails = Some(RentOpenMarketValueDetails(AnswerNo))
   )
 
-  val prefilledAboutLeaseOrAgreementPartTwo = AboutLeaseOrAgreementPartTwo(
+  val prefilledAboutLeaseOrAgreementPartTwo: AboutLeaseOrAgreementPartTwo = AboutLeaseOrAgreementPartTwo(
     rentPayableVaryAccordingToGrossOrNetDetails = Some(RentPayableVaryAccordingToGrossOrNetDetails(AnswerYes)),
     rentPayableVaryOnQuantityOfBeersDetails = Some(RentPayableVaryOnQuantityOfBeersDetails(AnswerYes)),
     tenantAdditionsDisregardedDetails = Some(TenantAdditionsDisregardedDetails(AnswerYes)),
     legalOrPlanningRestrictions = Some(LegalOrPlanningRestrictions(AnswerYes))
   )
 
-  val prefilledAboutLeaseOrAgreementPayPartTwo = AboutLeaseOrAgreementPartTwo(
+  val prefilledAboutLeaseOrAgreementPayPartTwo: AboutLeaseOrAgreementPartTwo = AboutLeaseOrAgreementPartTwo(
     rentPayableVaryAccordingToGrossOrNetDetails = Some(RentPayableVaryAccordingToGrossOrNetDetails(AnswerYes)),
     rentPayableVaryOnQuantityOfBeersDetails = Some(RentPayableVaryOnQuantityOfBeersDetails(AnswerYes)),
     tenantAdditionsDisregardedDetails = Some(TenantAdditionsDisregardedDetails(AnswerYes)),
@@ -986,21 +986,22 @@ trait FakeObjects {
     payACapitalSumDetails = Some(PayACapitalSumDetails(AnswerYes))
   )
 
-  val prefilledAboutLeaseOrAgreementPartTwoNo = AboutLeaseOrAgreementPartTwo(
+  val prefilledAboutLeaseOrAgreementPartTwoNo: AboutLeaseOrAgreementPartTwo   = AboutLeaseOrAgreementPartTwo(
     rentPayableVaryAccordingToGrossOrNetDetails = Some(RentPayableVaryAccordingToGrossOrNetDetails(AnswerNo)),
     rentPayableVaryOnQuantityOfBeersDetails = Some(RentPayableVaryOnQuantityOfBeersDetails(AnswerNo)),
     tenantAdditionsDisregardedDetails = Some(TenantAdditionsDisregardedDetails(AnswerNo)),
     legalOrPlanningRestrictions = Some(LegalOrPlanningRestrictions(AnswerNo))
   )
-  val prefilledAboutLeaseOrAgreementPartThree = AboutLeaseOrAgreementPartThree(
+  val prefilledAboutLeaseOrAgreementPartThree: AboutLeaseOrAgreementPartThree = AboutLeaseOrAgreementPartThree(
     tradeServicesIndex = 1,
     servicesPaidIndex = 1,
     tradeServices = IndexedSeq(TradeServices(TradeServicesDetails("service-1"))),
     servicesPaid = IndexedSeq(ServicesPaid(ServicePaidSeparately("service-paid-1"))),
-    paymentForTradeServices = Some(PaymentForTradeServices(AnswerYes))
+    paymentForTradeServices = Some(PaymentForTradeServices(AnswerYes)),
+    typeOfTenure = Some(TypeOfTenure(List("license"), Some("Type of tenure details")))
   )
 
-  val prefilledRequestReferenceNumber = RequestReferenceNumberDetails(
+  val prefilledRequestReferenceNumber: RequestReferenceNumberDetails = RequestReferenceNumberDetails(
     Some(RequestReferenceNumber(prefilledFakeName, prefilledNoReferenceContactAddress)),
     Some(RequestReferenceNumberContactDetails(prefilledFakeName, prefilledContactDetails, Some("test"))),
     Some(CheckYourAnswersRequestReferenceNumber("CYA"))

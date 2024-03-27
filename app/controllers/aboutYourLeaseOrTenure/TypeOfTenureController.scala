@@ -30,7 +30,7 @@ import repositories.SessionRepo
 import views.html.aboutYourLeaseOrTenure.typeOfTenure
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
 @Singleton
 class TypeOfTenureController @Inject() (
@@ -39,8 +39,7 @@ class TypeOfTenureController @Inject() (
   typeOfTenureView: typeOfTenure,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext)
-    extends FORDataCaptureController(mcc)
+) extends FORDataCaptureController(mcc)
     with I18nSupport
     with Logging {
 

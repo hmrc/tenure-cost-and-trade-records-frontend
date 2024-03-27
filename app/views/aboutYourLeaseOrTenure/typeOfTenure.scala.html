@@ -60,36 +60,36 @@
      name = "typeOfTenure[]",
      items = Seq(
       CheckboxItem(
-       id = "vat",
+       id = "leasehold",
        content = Text(messages("label.typeOfTenure.leasehold")),
-       value = "vat"
+       value = "leasehold"
       ),
       CheckboxItem(
-       id = "nondomesticRates",
+       id = "license",
        content = Text(messages("label.typeOfTenure.license")),
-       value = "nondomesticRates"
+       value = "license"
       ),
       CheckboxItem(
-       id = "waterCharges",
+       id = "tenancy",
        content = Text(messages("label.typeOfTenure.tenancy")),
-       value = "waterCharges"
+       value = "tenancy"
       ),
       CheckboxItem(
-      id = "waterCharges",
+      id = "longLeasehold",
       content = Text(messages("label.typeOfTenure.long.leasehold")),
-      value = "waterCharges"
+      value = "longLeasehold"
       )
      ),
      hint = Hint(content = HtmlContent(messages("hint.all.apply")))
     ).withFormField(theForm("typeOfTenure"))
    )
 
-   <h2 class="govuk-heading-m">@messages("label.typeOfTenure.heading")</h2>
-
    @includes.textInputCharCount(
     govukCharacterCount,
     theForm,
     "typeOfTenureDetails",
+    "label.typeOfTenureDetails",
+    "govuk-!-font-weight-bold",
     charCount = 2000
    )
 

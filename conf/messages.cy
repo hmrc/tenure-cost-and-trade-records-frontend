@@ -689,13 +689,13 @@ error.landlordFullName.maxLength = Mae’n rhaid i enw’r landlord fod yn 50 o 
 # TYPE OF TENURE
 ################
 typeOfTenure.heading = Indicate your type of tenure
-label.typeOfTenure.heading = Give details if there is a combination of tenure types
 label.typeOfTenure.leasehold = Leasehold
 label.typeOfTenure.license = License
 label.typeOfTenure.tenancy = Tenancy
 label.typeOfTenure.long.leasehold = Long leasehold at ground rent
 error.typeOfTenure.required = Select any type of tenure applicable
-error.typeOfTenure.maxLength = Give details if there is a combination of tenure types must be 2000 characters or fewer
+label.typeOfTenureDetails = Give details if there is a combination of tenure types
+error.typeOfTenureDetails.maxLength = Give details if there is a combination of tenure types must be 2000 characters or fewer
 
 # LEASE OR AGREEMENT DETAILS COMMENCE WITHIN 3 YEARS
 ###################################################

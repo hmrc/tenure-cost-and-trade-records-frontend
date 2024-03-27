@@ -36,32 +36,70 @@ class AboutYourLandlordControllerSpec extends TestBaseSpec {
   import TestData.{baseFormData, errorKey}
   import utils.FormBindingTestAssertions.mustContainError
 
-  val mockNavigator              = mock[AboutYourLeaseOrTenureNavigator]
-  val mockAddressLookupConnector = mock[AddressLookupConnector]
-  val errorHandler: ErrorHandler = inject[ErrorHandler]
+  val mockNavigator: AboutYourLeaseOrTenureNavigator     = mock[AboutYourLeaseOrTenureNavigator]
+  val mockAddressLookupConnector: AddressLookupConnector = mock[AddressLookupConnector]
+  val errorHandler: ErrorHandler                         = inject[ErrorHandler]
+
   def aboutYourLandlordController(
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
-  )                              =
-    new AboutYourLandlordController(
-      stubMessagesControllerComponents(),
-      mockNavigator,
-      aboutYourLandlordView,
-      mockAddressLookupConnector,
-      preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
-      errorHandler,
-      mockSessionRepo
-    )
+  ) = new AboutYourLandlordController(
+    stubMessagesControllerComponents(),
+    mockNavigator,
+    aboutYourLandlordView,
+    mockAddressLookupConnector,
+    preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
+    errorHandler,
+    mockSessionRepo
+  )
 
-  "GET /" should {
-    "return 200" in {
+  def aboutYourLandlordController6020(
+    aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
+  ) = new AboutYourLandlordController(
+    stubMessagesControllerComponents(),
+    mockNavigator,
+    aboutYourLandlordView,
+    mockAddressLookupConnector,
+    preEnrichedActionRefiner(forType = forType6020, aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
+    errorHandler,
+    mockSessionRepo
+  )
+
+  def aboutYourLandlordControllerNone = new AboutYourLandlordController(
+    stubMessagesControllerComponents(),
+    mockNavigator,
+    aboutYourLandlordView,
+    mockAddressLookupConnector,
+    preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = None),
+    errorHandler,
+    mockSessionRepo
+  )
+
+  "AboutYourLandlordController GET /" should {
+    "return 200 with data in session" in {
       when(mockNavigator.from(any[Request[AnyContent]])).thenReturn("")
       val result = aboutYourLandlordController().show(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
-    "return HTML" in {
+    "return HTML with data in session" in {
       when(mockNavigator.from(any[Request[AnyContent]])).thenReturn("")
       val result = aboutYourLandlordController().show(fakeRequest)
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
+    }
+
+    "return 200 and HTML for 6020" in {
+      when(mockNavigator.from(any[Request[AnyContent]])).thenReturn("")
+      val result = aboutYourLandlordController6020().show(fakeRequest)
+      status(result)      shouldBe Status.OK
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
+    }
+
+    "return 200 and HTML for empty session" in {
+      when(mockNavigator.from(any[Request[AnyContent]])).thenReturn("")
+      val result = aboutYourLandlordControllerNone.show(fakeRequest)
+      status(result)      shouldBe Status.OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
@@ -90,32 +128,22 @@ class AboutYourLandlordControllerSpec extends TestBaseSpec {
     }
   }
 
-  "Additional information form" should {
-    "error if buildingNameNumber is missing" in {
-      val formDataWithEmptyBuildingNameNumber = baseFormData.updated(TestData.errorKey.buildingNameNumber, "")
-      val form                                = aboutTheLandlordForm.bind(formDataWithEmptyBuildingNameNumber)
+  "Landlord name form" should {
+    "error if landlord name is missing" in {
+      val formDataWithEmptyLandlordFullName = baseFormData.updated(TestData.errorKey.landlordFullName, "")
+      val form                              = aboutTheLandlordForm.bind(formDataWithEmptyLandlordFullName)
 
-      mustContainError(errorKey.buildingNameNumber, "error.buildingNameNumber.required", form)
-    }
-
-    "error if town is missing" in {
-      val formDataWithEmptyTown = baseFormData.updated(TestData.errorKey.town, "")
-      val form                  = aboutTheLandlordForm.bind(formDataWithEmptyTown)
-
-      mustContainError(errorKey.town, "error.townCity.required", form)
+      mustContainError(errorKey.landlordFullName, "error.landlordFullName.required", form)
     }
   }
 
   object TestData {
     val errorKey = new {
-      val buildingNameNumber = "landlordAddress.buildingNameNumber"
-      val town               = "landlordAddress.town"
-      val postcode           = "alternativelandlordAddressContactAddress.postcode"
+      val landlordFullName = "landlordFullName"
     }
 
-    val tooLongEmail                      = "email_too_long_for_validation_againt_business_rules_specify_but_DB_constraints@something.co.uk"
     val baseFormData: Map[String, String] = Map(
-      "landlordAddress.postcode" -> "BN12 4AX"
+      "landlordFullName" -> "Orinoco"
     )
   }
 }
