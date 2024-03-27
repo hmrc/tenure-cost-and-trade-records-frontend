@@ -722,7 +722,7 @@ feeReceived.p1 = If the fee received does not relate to a whole year, or the bus
 feeReceived.concessionOrFranchiseFee = Concession or franchise fee
 feeReceived.feeCalculationDetails = Explain how the fee was calculated - for example, 10% of the total takings
 error.feeReceived.concessionOrFranchiseFee.required = Enter 0 if you received no fees in the year ending {0}
-error.feeReceived.concessionOrFranchiseFee.range = Fee received in the year ending {0} must be a number like 100 or 100.00
+error.feeReceived.concessionOrFranchiseFee.range = Fee received in the year ending {0} must be a number like 100 or 100.00 and be greater than 0
 error.feeReceived.concessionOrFranchiseFee.negative = Fee received in the year ending {0} cannot be a negative number
 error.feeReceived.feeCalculationDetails.required = You must explain how the fee was calculated
 
@@ -1095,18 +1095,33 @@ error.cateringOperationOrLettingAccommodationCheckboxesDetails.noneSelectedWithO
 addAnotherCateringOperation.heading = You have added {0} separate business or franchise
 addAnotherCateringOperation.heading.plural = You have added {0} separate businesses or franchises
 addAnotherConcessionOrLetting.heading = You have added {0} separate business or concession
+
+addAnotherConcessionOrFranchise.heading = You have added {0} separate concession or franchise
+
 addAnotherCateringOperation.zeroBusinessOrFranchises.heading = You have removed all your separate business or franchises
 addAnotherLettingOtherPartOfProperty.zeroBusinessOrFranchises.heading = You have removed all your separate business or concessions
+
+addAnotherConcessionOrFranchise.zeroBusinessOrFranchises.heading = You have removed all your separate concessions or franchises
+
 addAnotherLettingOtherPartOfProperty.heading = You have added {0} letting
 addAnotherConcession.heading = You have added {0} separate business or concession
 addAnotherConcession.heading.plural = You have added {0} separate businesses or concessions
+
+addAnotherConcessionOrFranchise.heading.plural = You have added {0} separate concessions or franchises
+
 addAnotherLetting.heading = You have added {0} letting
 label.addAnotherCateringOperation = Do you need to add another separate business or franchise?
 label.addAnotherConcessionOrLetting = Do you need to add another separate business or concession?
 label.addAnotherConcession = Do you need to add another separate business or concession?
+
+label.addAnotherConcessionOrFranchise = Do you need to add another separate concession or franchise?
+
 label.addAnotherLettingOtherPartOfProperty = Do you need to add another letting?
 label.addAnotherLetting = Do you need to add another letting?
 error.addAnotherSeparateBusinessOrFranchise.required = Select yes if you would like to add another business or franchise
+
+error.addAnotherConcessionOrFranchise.required = Select yes if you need to add another separate concession or franchise
+
 error.addAnotherLetting.required = Select yes if you would like to add another letting
 
 # TENANTS ADDITIONS DISREGARDED
