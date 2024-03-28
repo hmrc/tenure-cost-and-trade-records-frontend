@@ -18,24 +18,25 @@ package controllers.aboutthetradinghistory
 
 import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
-import form.aboutthetradinghistory.BunkeredFuelSoldForm.bunkeredFuelSoldForm
+import form.aboutthetradinghistory.PercentageFromFuelCardsForm.percentageFromFuelCardsForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.updateAboutTheTradingHistory
-import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, BunkeredFuelSold}
+import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, PercentageFromFuelCards}
 import navigation.AboutTheTradingHistoryNavigator
-import navigation.identifiers.BunkeredFuelSoldId
+import navigation.identifiers.PercentageFromFuelCardsId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import views.html.aboutthetradinghistory.bunkeredFuelSold
+import views.html.aboutthetradinghistory.percentageFromFuelCards
 
 import java.time.LocalDate
-import javax.inject.{Inject, Named}
+import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
 
-class BunkeredFuelSoldController @Inject() (
+@Singleton
+class PercentageFromFuelCardsController @Inject() (
   mcc: MessagesControllerComponents,
   navigator: AboutTheTradingHistoryNavigator,
-  view: bunkeredFuelSold,
+  view: percentageFromFuelCards,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
 )(implicit ec: ExecutionContext)
@@ -48,8 +49,8 @@ class BunkeredFuelSoldController @Inject() (
       .fold(Redirect(routes.AboutYourTradingHistoryController.show())) { aboutTheTradingHistory =>
         Ok(
           view(
-            bunkeredFuelSoldForm(years(aboutTheTradingHistory))
-              .fill(aboutTheTradingHistory.bunkeredFuelSold.getOrElse(Seq.empty)),
+            percentageFromFuelCardsForm(years(aboutTheTradingHistory))
+              .fill(aboutTheTradingHistory.percentageFromFuelCards.getOrElse(Seq.empty)),
             request.sessionData.toSummary
           )
         )
@@ -61,8 +62,8 @@ class BunkeredFuelSoldController @Inject() (
     request.sessionData.aboutTheTradingHistory
       .filter(_.occupationAndAccountingInformation.isDefined)
       .fold(Future.successful(Redirect(routes.AboutYourTradingHistoryController.show()))) { aboutTheTradingHistory =>
-        continueOrSaveAsDraft[Seq[BunkeredFuelSold]](
-          bunkeredFuelSoldForm(years(aboutTheTradingHistory)),
+        continueOrSaveAsDraft[Seq[PercentageFromFuelCards]](
+          percentageFromFuelCardsForm(years(aboutTheTradingHistory)),
           formWithErrors =>
             BadRequest(
               view(
@@ -71,15 +72,15 @@ class BunkeredFuelSoldController @Inject() (
               )
             ),
           success => {
-            val bunkeredFuelSold =
-              (success zip financialYearEndDates(aboutTheTradingHistory)).map { case (bunkeredFuelSold, finYearEnd) =>
-                bunkeredFuelSold.copy(financialYearEnd = finYearEnd)
+            val cards =
+              (success zip financialYearEndDates(aboutTheTradingHistory)).map { case (card, finYearEnd) =>
+                card.copy(financialYearEnd = finYearEnd)
               }
 
-            val updatedData = updateAboutTheTradingHistory(_.copy(bunkeredFuelSold = Some(bunkeredFuelSold)))
+            val updatedData = updateAboutTheTradingHistory(_.copy(percentageFromFuelCards = Some(cards)))
             session
               .saveOrUpdate(updatedData)
-              .map(_ => Redirect(navigator.nextPage(BunkeredFuelSoldId, updatedData).apply(updatedData)))
+              .map(_ => Redirect(navigator.nextPage(PercentageFromFuelCardsId, updatedData).apply(updatedData)))
           }
         )
       }

@@ -101,9 +101,9 @@ class LowMarginFuelCardDetailsController @Inject() (
         if (idx > 0) {
           controllers.aboutthetradinghistory.routes.AddAnotherLowMarginFuelCardsDetailsController.show(idx - 1).url
         } else {
-          controllers.aboutthetradinghistory.routes.TotalFuelSoldController.show().url
+          controllers.aboutthetradinghistory.routes.PercentageFromFuelCardsController.show().url
         }
-      case _         => controllers.aboutthetradinghistory.routes.TotalFuelSoldController.show().url
+      case _         => controllers.aboutthetradinghistory.routes.PercentageFromFuelCardsController.show().url
     }
 
 }
