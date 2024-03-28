@@ -87,7 +87,6 @@ class NonFuelTurnoverController @Inject() (
             .map(Redirect)
         }
       )
-      Redirect(navigator.nextPage(TurnoverPageId, request.sessionData).apply(request.sessionData)) // TODO: Remove
     }
   }
 

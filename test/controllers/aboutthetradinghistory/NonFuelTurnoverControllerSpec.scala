@@ -47,9 +47,9 @@ class NonFuelTurnoverControllerSpec extends TestBaseSpec {
     }
 
     "SUBMIT /" should {
-      "return redirect 303 for empty turnoverSections" in {
+      "return 400 for empty turnoverSections" in {
         val res = nonFuelTurnoverController().submit(FakeRequest().withFormUrlEncodedBody(Seq.empty: _*))
-        status(res) shouldBe SEE_OTHER
+        status(res) shouldBe BAD_REQUEST
       }
     }
   }
