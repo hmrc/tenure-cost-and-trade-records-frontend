@@ -245,7 +245,7 @@ POST        /add-another-letting-other-part-of-property             controllers.
 GET         /remove-letting-other-part-of-property                  controllers.aboutfranchisesorlettings.AddAnotherLettingOtherPartOfPropertyController.remove(idx: Int)
 POST        /remove-letting-other-part-of-property                  controllers.aboutfranchisesorlettings.AddAnotherLettingOtherPartOfPropertyController.performRemove(idx: Int)
 
-# About your leace or tenure
+# About your lease or tenure
 GET         /about-your-landlord                                    controllers.aboutYourLeaseOrTenure.AboutYourLandlordController.show()
 POST        /about-your-landlord                                    controllers.aboutYourLeaseOrTenure.AboutYourLandlordController.submit()
 GET         /landlord-address-callback                              controllers.aboutYourLeaseOrTenure.AboutYourLandlordController.addressLookupCallback(id: String ?= "")
@@ -341,6 +341,12 @@ POST        /add-another-bunker-fuel-cards-details                  controllers.
 GET         /remove-bunker-fuel-cards-details                       controllers.aboutthetradinghistory.AddAnotherBunkerFuelCardsDetailsController.remove(idx: Int)
 POST        /remove-bunker-fuel-cards-details                       controllers.aboutthetradinghistory.AddAnotherBunkerFuelCardsDetailsController.performRemove(idx: Int)
 
+GET         /customer-credit-accounts                               controllers.aboutthetradinghistory.CustomerCreditAccountsController.show()
+POST        /customer-credit-accounts                               controllers.aboutthetradinghistory.CustomerCreditAccountsController.submit()
+
+GET         /percentage-from-fuel-cards                             controllers.aboutthetradinghistory.PercentageFromFuelCardsController.show()
+POST        /percentage-from-fuel-cards                             controllers.aboutthetradinghistory.PercentageFromFuelCardsController.submit()
+
 GET         /low-margin-fuel-cards-details                          controllers.aboutthetradinghistory.LowMarginFuelCardDetailsController.show(idx: Option[Int] ?= None)
 POST        /low-margin-fuel-cards-details                          controllers.aboutthetradinghistory.LowMarginFuelCardDetailsController.submit(idx: Option[Int])
 
@@ -348,6 +354,9 @@ GET         /add-another-low-margin-fuel-cards-details              controllers.
 POST        /add-another-low-margin-fuel-cards-details              controllers.aboutthetradinghistory.AddAnotherLowMarginFuelCardsDetailsController.submit(idx: Int)
 GET         /remove-low-margin-fuel-cards-details                   controllers.aboutthetradinghistory.AddAnotherLowMarginFuelCardsDetailsController.remove(idx: Int)
 POST        /remove-low-margin-fuel-cards-details                   controllers.aboutthetradinghistory.AddAnotherLowMarginFuelCardsDetailsController.performRemove(idx: Int)
+
+GET         /type-of-tenure                                         controllers.aboutYourLeaseOrTenure.TypeOfTenureController.show()
+POST        /type-of-tenure                                         controllers.aboutYourLeaseOrTenure.TypeOfTenureController.submit()
 
 #Form 6030 routing
 GET         /concession-or-franchise-fee                            controllers.aboutfranchisesorlettings.ConcessionOrFranchiseFeeController.show()

@@ -1,5 +1,5 @@
 @*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2023 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,55 +15,48 @@
  *@
 
 @import uk.gov.hmrc.govukfrontend.views.html.components._
-@import models.submissions.aboutthetradinghistory.TotalFuelSold
+@import models.submissions.aboutthetradinghistory.PercentageFromFuelCards
 @import uk.gov.hmrc.govukfrontend.views.Implicits.RichInput
 @import util.DateUtil
 @import actions.SessionRequest
 @import models.pages.Summary
 
 @this(layout: Layout,
-    govukButton: GovukButton,
-    formWithCSRF: FormWithCSRF,
-    govukInput: GovukInput,
-    govukDateInput: GovukDateInput,
-    govukTable: GovukTable,
-    govukInsetText: GovukInsetText,
-    govukDetails: GovukDetails,
-    dateUtil: DateUtil
+        govukButton: GovukButton,
+        formWithCSRF: FormWithCSRF,
+        govukInput: GovukInput,
+        govukDateInput: GovukDateInput,
+        govukTable: GovukTable,
+        govukInsetText: GovukInsetText,
+        govukDetails: GovukDetails,
+        dateUtil: DateUtil
 )
 
 
-@(form: Form[Seq[TotalFuelSold]], summary: Summary)(implicit request: SessionRequest[_], messages: Messages)
-
-@backlink =  @{request.sessionData.aboutTheTradingHistory.flatMap(_.occupationAndAccountingInformation.flatMap(_.yearEndChanged))
-match {
-    case Some(true) =>  controllers.aboutthetradinghistory.routes.FinancialYearEndDatesController.show().url
-    case Some(false) => controllers.aboutthetradinghistory.routes.FinancialYearEndController.show().url
-    }
-}
+@(form: Form[Seq[PercentageFromFuelCards]], summary: Summary)(implicit request: SessionRequest[_], messages: Messages)
 
 @layout(
-    pageHeading = messages("totalFuelSold.heading"),
+    pageHeading = messages("percentageFromFuelCards.heading"),
     showSection = true,
     summary = Some(request.sessionData.toSummary),
     sectionName = messages("label.section.aboutYourTradingHistory"),
-    backLinkUrl = Some(backlink),
+    backLinkUrl = Some(controllers.aboutthetradinghistory.routes.CustomerCreditAccountsController.show.url),
     theForm = form,
     fullWidth = true,
     showH1  = false
 ) {
 
-    @formWithCSRF(action = controllers.aboutthetradinghistory.routes.TotalFuelSoldController.submit()) {
+    @formWithCSRF(action = controllers.aboutthetradinghistory.routes.PercentageFromFuelCardsController.submit()) {
 
-        <h1 class="govuk-heading-l govuk-!-width-three-quarters">@messages("totalFuelSold.heading")</h1>
+        <h1 class="govuk-heading-l govuk-!-width-three-quarters">@messages("percentageFromFuelCards.heading")</h1>
 
-        <p class="govuk-body govuk-!-width-three-quarters">@messages("totalFuelSold.bunkered")</p>
+        <p class="govuk-body">@messages("percentageFromFuelCards.bunkered")</p>
 
         @govukInsetText(InsetText(
-                content = Text(messages("common6020.inset"))
-            ))
+            content = Text(messages("common6020.inset"))
+        ))
 
-        <table class="hmrc-responsive-table govuk-!-font-weight-regular govuk-!-width-one-half">
+        <table class="hmrc-responsive-table govuk-!-width-three-quarters">
             <tbody>
                 <tr>
                 @request.sessionData.financialYearEndDates6020.map { case (finYearEnd, idx) =>
@@ -81,25 +74,24 @@ match {
                         rows = Seq(
                             Seq(
                                 TableRow(
-                                    content = Text(messages("totalFuelSold.fuel.label")),
-                                    classes = "govuk-!-font-weight-regular govuk-!-width-one-half "
-
+                                    content = Text(messages("percentageFromFuelCards.label")),
+                                    classes = "govuk-!-font-weight-regular"
 
                                 ),
                                 TableRow(
                                     content = HtmlContent(
                                         govukInput(Input(
-                                            id = s"totalFuelSold-$idx",
-                                            name = s"totalFuelSold-$idx",
-                                            value = form(s"totalFuelSold-$idx").value,
+                                            id = s"percentageFromFuelCards-$idx",
+                                            name = s"percentageFromFuelCards-$idx",
+                                            value = form(s"percentageFromFuelCards-$idx").value,
                                             classes = "govuk-input--width-5",
                                             attributes = Map(
-                                                "aria-label" -> messages("totalFuelSold.fuel.label")
+                                                "aria-label" -> messages("percentageFromFuelCards.label")
                                             ),
                                             suffix = Some(PrefixOrSuffix(
                                                 content = Text(messages("label.litres"))
                                             ))
-                                        ).withFormField(form(s"totalFuelSold-$idx")))
+                                        ).withFormField(form(s"percentageFromFuelCards-$idx")))
                                     )
                                 )
                             )

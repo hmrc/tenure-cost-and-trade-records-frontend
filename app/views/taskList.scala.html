@@ -294,6 +294,15 @@
         <span class="app-task-list__section-number">5. </span> @messages("label.section.aboutYourLeaseOrTenure")
        </h2>
        <ul class="app-task-list__items">
+        @if(forType == ForTypes.for6020) {
+         @includes.taskListItem("type-of-tenure", "checkYourAnswersAboutYourLeaseOrTenure.tenure.heading",
+          controllers.aboutYourLeaseOrTenure.routes.TypeOfTenureController.show(),
+          section5Completed,
+          session.aboutLeaseOrAgreementPartOne.flatMap(_.aboutTheLandlord),
+          section4Completed.isEmpty
+         )
+        }
+
         @includes.taskListItem("about-your-landlord", "checkYourAnswersAboutYourLeaseOrTenure.yourLandlord.heading",
          controllers.aboutYourLeaseOrTenure.routes.AboutYourLandlordController.show(),
          section5Completed,

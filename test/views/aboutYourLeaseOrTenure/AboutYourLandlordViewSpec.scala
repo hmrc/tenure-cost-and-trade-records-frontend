@@ -28,13 +28,14 @@ class AboutYourLandlordViewSpec extends QuestionViewBehaviours[AboutTheLandlord]
   def aboutYourLandordView = app.injector.instanceOf[views.html.aboutYourLeaseOrTenure.aboutYourLandlord]
 
   val messageKeyPrefix = "aboutYourLandlord"
+  val backLink         = controllers.routes.TaskListController.show().url
 
   override val form = AboutTheLandlordForm.aboutTheLandlordForm
 
-  def createView = () => aboutYourLandordView(form, Summary("99996010001"))(fakeRequest, messages)
+  def createView = () => aboutYourLandordView(form, Summary("99996010001"), backLink)(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[AboutTheLandlord]) =>
-    aboutYourLandordView(form, Summary("99996010001"))(fakeRequest, messages)
+    aboutYourLandordView(form, Summary("99996010001"), backLink)(fakeRequest, messages)
 
   "About the landlord view" must {
 

@@ -60,6 +60,14 @@ case object LowMarginFuelCardsDetailsId extends Identifier {
   override def toString: String = "lowMarginFuelCardsDetailsPage"
 }
 
+case object CustomerCreditAccountsId extends Identifier {
+  override def toString: String = "customerCreditAccountsPage"
+}
+
+case object PercentageFromFuelCardsId extends Identifier {
+  override def toString: String = "percentageFromFuelCardsPage"
+}
+
 case object VariableOperatingExpensesId extends Identifier {
   override def toString: String = "variableOperatingExpenses"
 }

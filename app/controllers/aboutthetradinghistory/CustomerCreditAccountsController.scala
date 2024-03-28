@@ -18,24 +18,28 @@ package controllers.aboutthetradinghistory
 
 import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
-import form.aboutthetradinghistory.BunkeredFuelSoldForm.bunkeredFuelSoldForm
+import form.aboutthetradinghistory.CustomerCreditAccountsForm.customerCreditAccountsForm
+import models.Session
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.updateAboutTheTradingHistory
-import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, BunkeredFuelSold}
+import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, CustomerCreditAccounts}
+import models.submissions.common.{AnswerNo, AnswerYes}
 import navigation.AboutTheTradingHistoryNavigator
-import navigation.identifiers.BunkeredFuelSoldId
+import navigation.identifiers.CustomerCreditAccountsId
 import play.api.i18n.I18nSupport
-import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import play.api.i18n.Lang.logger.logger
+import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Request}
 import repositories.SessionRepo
-import views.html.aboutthetradinghistory.bunkeredFuelSold
+import views.html.aboutthetradinghistory.customerCreditAccounts
 
 import java.time.LocalDate
-import javax.inject.{Inject, Named}
+import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
 
-class BunkeredFuelSoldController @Inject() (
+@Singleton
+class CustomerCreditAccountsController @Inject() (
   mcc: MessagesControllerComponents,
   navigator: AboutTheTradingHistoryNavigator,
-  view: bunkeredFuelSold,
+  view: customerCreditAccounts,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
 )(implicit ec: ExecutionContext)
@@ -48,8 +52,9 @@ class BunkeredFuelSoldController @Inject() (
       .fold(Redirect(routes.AboutYourTradingHistoryController.show())) { aboutTheTradingHistory =>
         Ok(
           view(
-            bunkeredFuelSoldForm(years(aboutTheTradingHistory))
-              .fill(aboutTheTradingHistory.bunkeredFuelSold.getOrElse(Seq.empty)),
+            customerCreditAccountsForm(years(aboutTheTradingHistory))
+              .fill(aboutTheTradingHistory.customerCreditAccounts.getOrElse(Seq.empty)),
+            backLink(request.sessionData),
             request.sessionData.toSummary
           )
         )
@@ -61,29 +66,40 @@ class BunkeredFuelSoldController @Inject() (
     request.sessionData.aboutTheTradingHistory
       .filter(_.occupationAndAccountingInformation.isDefined)
       .fold(Future.successful(Redirect(routes.AboutYourTradingHistoryController.show()))) { aboutTheTradingHistory =>
-        continueOrSaveAsDraft[Seq[BunkeredFuelSold]](
-          bunkeredFuelSoldForm(years(aboutTheTradingHistory)),
+        continueOrSaveAsDraft[Seq[CustomerCreditAccounts]](
+          customerCreditAccountsForm(years(aboutTheTradingHistory)),
           formWithErrors =>
             BadRequest(
               view(
                 formWithErrors,
+                backLink(request.sessionData),
                 request.sessionData.toSummary
               )
             ),
           success => {
-            val bunkeredFuelSold =
-              (success zip financialYearEndDates(aboutTheTradingHistory)).map { case (bunkeredFuelSold, finYearEnd) =>
-                bunkeredFuelSold.copy(financialYearEnd = finYearEnd)
+            val accounts =
+              (success zip financialYearEndDates(aboutTheTradingHistory)).map { case (account, finYearEnd) =>
+                account.copy(financialYearEnd = finYearEnd)
               }
 
-            val updatedData = updateAboutTheTradingHistory(_.copy(bunkeredFuelSold = Some(bunkeredFuelSold)))
+            val updatedData = updateAboutTheTradingHistory(_.copy(customerCreditAccounts = Some(accounts)))
             session
               .saveOrUpdate(updatedData)
-              .map(_ => Redirect(navigator.nextPage(BunkeredFuelSoldId, updatedData).apply(updatedData)))
+              .map(_ => Redirect(navigator.nextPage(CustomerCreditAccountsId, updatedData).apply(updatedData)))
           }
         )
       }
   }
+
+  private def backLink(answers: Session)(implicit request: Request[AnyContent]): String =
+    answers.aboutTheTradingHistory.flatMap(_.bunkeredFuelQuestion).map(_.bunkeredFuelQuestion) match {
+      case Some(AnswerYes) =>
+        routes.AddAnotherBunkerFuelCardsDetailsController.show(0).url
+      case Some(AnswerNo)  => routes.BunkeredFuelQuestionController.show().url
+      case _               =>
+        logger.warn(s"Back link for customer credit account page reached with unknown enforcement taken value")
+        controllers.routes.TaskListController.show().url
+    }
 
   private def financialYearEndDates(aboutTheTradingHistory: AboutTheTradingHistory): Seq[LocalDate] =
     aboutTheTradingHistory.turnoverSections6020.getOrElse(Seq.empty).map(_.financialYearEnd)
