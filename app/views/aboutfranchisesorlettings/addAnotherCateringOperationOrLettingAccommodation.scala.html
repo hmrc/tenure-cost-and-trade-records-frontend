@@ -43,7 +43,6 @@
 @(theForm: Form[_], index: Int, concessionOrLetting: String, cateringOrLetting: String, backLink: String, summary: Summary)(implicit request: SessionRequest[_], messages: Messages)
 
 
-
 @session = @{ request.sessionData }
 
 @forType = @{ session.forType }
@@ -67,23 +66,23 @@
 }
 
 @operatorNames = @{
-  session.aboutFranchisesOrLettings.fold(Seq.empty[String]) {
-   fr =>
-    forType match {
-     case ForTypes.for6030 =>
-      if(isLettingOtherPartOfProperty) {
-       fr.lettingSections.map(_.lettingOtherPartOfPropertyInformationDetails.operatorName)
-      } else {
-       fr.cateringOperationBusinessSections.fold(IndexedSeq.empty[String])(_.map(_.cateringOperationBusinessDetails.operatorName))
-      }
-     case _ =>
-      if(isLettingOtherPartOfProperty) {
-       fr.lettingSections.map(_.lettingOtherPartOfPropertyInformationDetails.operatorName)
-      } else {
-       fr.cateringOperationSections.map(_.cateringOperationDetails.operatorName)
-      }
-    }
-  }
+ session.aboutFranchisesOrLettings.fold(Seq.empty[String]) {
+  fr =>
+   forType match {
+    case ForTypes.for6030 =>
+     if(isLettingOtherPartOfProperty) {
+      fr.lettingSections.map(_.lettingOtherPartOfPropertyInformationDetails.operatorName)
+     } else {
+      fr.cateringOperationBusinessSections.fold(IndexedSeq.empty[String])(_.map(_.cateringOperationBusinessDetails.operatorName))
+     }
+    case _ =>
+     if(isLettingOtherPartOfProperty) {
+      fr.lettingSections.map(_.lettingOtherPartOfPropertyInformationDetails.operatorName)
+     } else {
+      fr.cateringOperationSections.map(_.cateringOperationDetails.operatorName)
+     }
+   }
+ }
 }
 
 @pluralSuffix = @{ if (operatorNames.size > 1) "s" else "" }
@@ -100,42 +99,42 @@
  @formWithCSRF(action = formAction) {
 
   @govukSummaryList(
-    SummaryList(
-     rows = operatorNames.zipWithIndex.map { case (operatorName, idx) =>
-      SummaryListRow(
-       key = Key(Text(operatorName), classes = "govuk-!-font-weight-regular"),
-       actions = Actions(
-        items = Seq(
-         ActionItem(
-          href = forType match {
-           case ForTypes.for6030 =>
-            if (isLettingOtherPartOfProperty) {
-             controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsController.show(idx).url
-            } else {
-             controllers.aboutfranchisesorlettings.routes.CateringOperationBusinessDetailsController.show(idx).url
-            }
-           case _ =>
-            if (isLettingOtherPartOfProperty) {
-             controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsController.show(idx).url
-            } else {
-             controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController.show(idx).url
-            }
-          },
-          content = Text("Change")),
-         ActionItem(
-          href = if (isLettingOtherPartOfProperty) {
-           controllers.aboutfranchisesorlettings.routes.AddAnotherLettingOtherPartOfPropertyController.remove(idx).url
-          } else {
-           controllers.aboutfranchisesorlettings.routes.AddAnotherCateringOperationController.remove(idx).url
-          },
-          content = Text("Remove"))
-        ),
-        classes = "hmrc-summary-list__actions"
-       )
+   SummaryList(
+    rows = operatorNames.zipWithIndex.map { case (operatorName, idx) =>
+     SummaryListRow(
+      key = Key(Text(operatorName), classes = "govuk-!-font-weight-regular"),
+      actions = Actions(
+       items = Seq(
+        ActionItem(
+         href = forType match {
+          case ForTypes.for6030 =>
+           if (isLettingOtherPartOfProperty) {
+            controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsController.show(idx).url
+           } else {
+            controllers.aboutfranchisesorlettings.routes.CateringOperationBusinessDetailsController.show(idx).url
+           }
+          case _ =>
+           if (isLettingOtherPartOfProperty) {
+            controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsController.show(idx).url
+           } else {
+            controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController.show(idx).url
+           }
+         },
+         content = Text("Change")),
+        ActionItem(
+         href = if (isLettingOtherPartOfProperty) {
+          controllers.aboutfranchisesorlettings.routes.AddAnotherLettingOtherPartOfPropertyController.remove(idx).url
+         } else {
+          controllers.aboutfranchisesorlettings.routes.AddAnotherCateringOperationController.remove(idx).url
+         },
+         content = Text("Remove"))
+       ),
+       classes = "hmrc-summary-list__actions"
       )
-     },
-     classes = "hmrc-list-with-actions hmrc-list-with-actions--short"
-    )
+     )
+    },
+    classes = "hmrc-list-with-actions hmrc-list-with-actions--short"
+   )
   )
 
   @govukRadios(

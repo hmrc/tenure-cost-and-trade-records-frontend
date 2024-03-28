@@ -747,7 +747,7 @@ feeReceived.p1 = If the fee received does not relate to a whole year, or the bus
 feeReceived.concessionOrFranchiseFee = Concession or franchise fee
 feeReceived.feeCalculationDetails = Explain how the fee was calculated - for example, 10% of the total takings
 error.feeReceived.concessionOrFranchiseFee.required = Enter 0 if you received no fees in the year ending {0}
-error.feeReceived.concessionOrFranchiseFee.range = Fee received in the year ending {0} must be a number like 100 or 100.00
+error.feeReceived.concessionOrFranchiseFee.range = Fee received in the year ending {0} must be a number like 100 or 100.00 and and be greater than 0
 error.feeReceived.concessionOrFranchiseFee.negative = Fee received in the year ending {0} cannot be a negative number
 error.feeReceived.feeCalculationDetails.required = You must explain how the fee was calculated
 
@@ -755,7 +755,7 @@ error.feeReceived.feeCalculationDetails.required = You must explain how the fee 
 ##############################
 lettingOtherPartOfProperty.heading = Do you receive any rent from letting other parts of the property?
 hint.lettingOtherPartOfProperty = For example, advertising billboards, phones masts or car parking. You will have the opportunity to add additional lettings if required.
-error.lettingOtherPartOfProperty.missing = Select yes if any rent received from letting other parts of the property
+error.lettingOtherPartOfProperty.missing = Dewiswch ‘oes’ os oes unrhyw rent yn dod i law o roi rhannau o’r eiddo ar osod
 fieldName.lettingOtherPartOfPropertyFixedRentDate = the date when the annual rent was fixed
 
 # PROPERTY USE LEASEBACK ARRANGEMENT
@@ -1053,13 +1053,18 @@ hint.concessionTypeOfBusiness = For example, a restaurant, or leisure facilities
 hint.lettingTypeOfBusiness = For example, a billboard, residential accommodation.
 hint.lettingTypeOfBusiness6015 = For example, a billboard or a telephone mast.
 label.correspondenceAddress = Correspondence address
-error.operatorName.required = Enter the name of the person or business renting the property
+error.operatorName.required = Nodwch enw’r person neu’r busnes sy’n rhentu’r eiddo
 error.operatorName.maxLength = Operator‘s name must be 50 characters or fewer
 error.typeOfBusiness.required = Enter a description of the separate business
 error.typeOfBusiness.maxLength = Type of business must be 50 characters or fewer
-error.lettingTypeOfBusiness.required = Enter a description of the letting
-error.lettingOperatorName.maxLength = Tenant‘s name must be 50 characters or fewer
-error.lettingTypeOfBusiness.maxLength = Description of letting must be 50 characters or fewer
+error.lettingTypeOfBusiness.required = Nodwch ddisgrifiad o’r gosodiad
+error.lettingOperatorName.maxLength = Mae’n rhaid i enw’r tenant fod yn 50 o gymeriadau neu lai
+error.lettingTypeOfBusiness.maxLength = Mae’n rhaid i’r disgrifiad o’r gosodiad fod yn 50 o gymeriadau neu lai
+#BELOW IS FOR FORM 6030
+label.howBusinessPropertyIsUsed = Describe how the property is used
+hint.describeBusiness = For example, a tea room or car wash.
+error.howBusinessPropertyIsUsed.required = Enter a description of the property use
+error.howBusinessPropertyIsUsed.maxLength = Property use description must be 50 characters or fewer
 
 # CATERING OPERATION OR LETTING ACCOMMODATION RENT DETAILS
 ##########################################################
