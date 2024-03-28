@@ -85,7 +85,6 @@ class AddAnotherCateringOperationController @Inject() (
           index,
           "addAnotherConcession",
           "addAnotherCateringOperation",
-          "addAnotherConcessionOrFranchise",
           getBackLink(index),
           request.sessionData.toSummary
         )
@@ -111,7 +110,6 @@ class AddAnotherCateringOperationController @Inject() (
               index,
               "addAnotherConcession",
               "addAnotherCateringOperation",
-              "addAnotherConcessionOrFranchise",
               getBackLink(index),
               request.sessionData.toSummary
             )

@@ -1093,35 +1093,17 @@ error.cateringOperationOrLettingAccommodationCheckboxesDetails.noneSelectedWithO
 # ADD ANOTHER CATERING OPERATION OR LETTING ACCOMMODATION DETAILS
 #################################################################
 addAnotherCateringOperation.heading = You have added {0} separate business or franchise
-addAnotherCateringOperation.heading.plural = You have added {0} separate businesses or franchises
 addAnotherConcessionOrLetting.heading = You have added {0} separate business or concession
-
-addAnotherConcessionOrFranchise.heading = You have added {0} separate concession or franchise
-
-addAnotherCateringOperation.zeroBusinessOrFranchises.heading = You have removed all your separate business or franchises
-addAnotherLettingOtherPartOfProperty.zeroBusinessOrFranchises.heading = You have removed all your separate business or concessions
-
-addAnotherConcessionOrFranchise.zeroBusinessOrFranchises.heading = You have removed all your separate concessions or franchises
-
-addAnotherLettingOtherPartOfProperty.heading = You have added {0} letting
+addAnotherCateringOperation.heading.plural = You have added {0} separate businesses or franchises
 addAnotherConcession.heading = You have added {0} separate business or concession
 addAnotherConcession.heading.plural = You have added {0} separate businesses or concessions
-
-addAnotherConcessionOrFranchise.heading.plural = You have added {0} separate concessions or franchises
-
-addAnotherLetting.heading = You have added {0} letting
+addAnotherCateringOperation.zeroBusinessOrFranchises.heading = You have removed all your separate business or franchises
+addAnotherLettingOtherPartOfProperty.zeroBusinessOrFranchises.heading = You have removed all your separate business or concessions
+addAnotherLettingOtherPartOfProperty.heading = You have added {0} letting
 label.addAnotherCateringOperation = Do you need to add another separate business or franchise?
 label.addAnotherConcessionOrLetting = Do you need to add another separate business or concession?
-label.addAnotherConcession = Do you need to add another separate business or concession?
-
-label.addAnotherConcessionOrFranchise = Do you need to add another separate concession or franchise?
-
 label.addAnotherLettingOtherPartOfProperty = Do you need to add another letting?
-label.addAnotherLetting = Do you need to add another letting?
 error.addAnotherSeparateBusinessOrFranchise.required = Select yes if you would like to add another business or franchise
-
-error.addAnotherConcessionOrFranchise.required = Select yes if you need to add another separate concession or franchise
-
 error.addAnotherLetting.required = Select yes if you would like to add another letting
 
 # TENANTS ADDITIONS DISREGARDED

@@ -60,7 +60,6 @@ class AddAnotherLettingOtherPartOfPropertyController @Inject() (
           index,
           "addAnotherLetting",
           "addAnotherLettingOtherPartOfProperty",
-          "addAnotherConcessionOrFranchise",
           getBackLink(index),
           request.sessionData.toSummary
         )
@@ -83,7 +82,6 @@ class AddAnotherLettingOtherPartOfPropertyController @Inject() (
               index,
               "addAnotherLetting",
               "addAnotherLettingOtherPartOfProperty",
-              "addAnotherConcessionOrFranchise",
               getBackLink(index),
               request.sessionData.toSummary
             )
