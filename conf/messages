@@ -1902,6 +1902,7 @@ checkYourAnswersAboutTheTradingHistory.unusualCircumstances = Unusual circumstan
 checkYourAnswersAboutTheTradingHistory.unusualCircumstances.6030 = Factors influencing receipts
 checkYourAnswersAboutTheTradingHistory.grossIncome = Gross receipts
 checkYourAnswersAboutTheTradingHistory.totalVisitorNumbers = Total visitor numbers
+checkYourAnswersAboutTheTradingHistory.payPointOrZone = Paypoint or payzone
 checkYourAnswersAboutTheTradingHistory.electricVehicleChargingPoints = EV Charging Points
 checkYourAnswersAboutTheTradingHistory.operateEV = Do you operate any EV charging points?
 

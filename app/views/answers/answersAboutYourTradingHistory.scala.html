@@ -1,5 +1,5 @@
 @*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -73,6 +73,7 @@
 
 @financialYearEndDates(aboutTheTradingHistory: AboutTheTradingHistory) = @{
     request.sessionData.forType match {
+        case ForTypes.for6020 => aboutTheTradingHistory.turnoverSections6020.getOrElse(Seq.empty).map(_.financialYearEnd)
         case ForTypes.for6030 => aboutTheTradingHistory.turnoverSections6030.map(_.financialYearEnd)
         case _ => aboutTheTradingHistory.turnoverSections.map(_.financialYearEnd)
     }
@@ -370,7 +371,8 @@
                 ("valueAsHtml", _ => None))
 ))
 
-<h2 class="govuk-heading-m">@messages("turnover.heading")</h2>
+@if(!(Seq(ForTypes.for6020) contains forType)) {
+    <h2 class="govuk-heading-m">@messages("turnover.heading")</h2>
 
     @govukSummaryList(SummaryList(rows =
         forType match {
@@ -400,6 +402,7 @@
                 )
         }
     ))
+}
 
 @if(forType == ForTypes.for6030) {
     @govukSummaryList(SummaryList(rows =
@@ -410,6 +413,20 @@
 }
 
 @if(forType == ForTypes.for6020) {
+
+
+
+    <h2 class="govuk-heading-m">@messages("turnover.6020.heading")</h2>
+
+    @govukSummaryList(SummaryList(rows =
+        Seq(
+            SummaryListRow(
+                key = Key(HtmlContent(turnoverKeys6030)),
+                value = Value(HtmlContent(sectionAnswers.answers.fold("")(t => turnoverValuesTable6030(t.turnoverSections6030)))),
+                actions = actions6030
+            )
+        )
+    ))
 
     <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutTheTradingHistory.electricVehicleChargingPoints")</h2>
 
