@@ -20,7 +20,7 @@ import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.PropertyUseLeasebackArrangementForm.propertyUseLeasebackArrangementForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne
-import models.Session
+import models.{ForTypes, Session}
 import models.submissions.aboutYourLeaseOrTenure.PropertyUseLeasebackArrangement
 import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.PropertyUseLeasebackAgreementId
@@ -88,7 +88,17 @@ class PropertyUseLeasebackArrangementController @Inject() (
   private def getBackLink(answers: Session)(implicit request: Request[AnyContent]): String =
     navigator.from match {
       case "TL" => controllers.routes.TaskListController.show().url + "#leaseback-arrangement"
-      case _    => controllers.aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.show().url
+      case _    =>
+        answers.forType match {
+          case ForTypes.for6020 =>
+            answers.aboutLeaseOrAgreementPartOne.flatMap(_.connectedToLandlord.map(_.name)) match {
+              case Some("yes") =>
+                controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordDetailsController.show().url
+              case Some("no")  => controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordController.show().url
+            }
+          case _                =>
+            controllers.aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.show().url
+        }
     }
 
 }
