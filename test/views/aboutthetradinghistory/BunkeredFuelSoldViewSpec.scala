@@ -24,8 +24,6 @@ import org.scalatest.matchers.must.Matchers.convertToAnyMustWrapper
 import play.api.data.{Form, FormError}
 import views.behaviours.QuestionViewBehaviours
 
-import java.time.LocalDate
-
 class BunkeredFuelSoldViewSpec extends QuestionViewBehaviours[Seq[BunkeredFuelSold]] {
 
   val sessionRequest = SessionRequest(aboutYourTradingHistory6020YesSession, fakeRequest)

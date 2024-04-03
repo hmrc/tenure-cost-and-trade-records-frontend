@@ -27,7 +27,7 @@ import navigation.AboutTheTradingHistoryNavigator
 import navigation.identifiers.CustomerCreditAccountsId
 import play.api.i18n.I18nSupport
 import play.api.i18n.Lang.logger.logger
-import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Request}
+import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import views.html.aboutthetradinghistory.customerCreditAccounts
 
@@ -91,7 +91,7 @@ class CustomerCreditAccountsController @Inject() (
       }
   }
 
-  private def backLink(answers: Session)(implicit request: Request[AnyContent]): String =
+  private def backLink(answers: Session): String =
     answers.aboutTheTradingHistory.flatMap(_.bunkeredFuelQuestion).map(_.bunkeredFuelQuestion) match {
       case Some(AnswerYes) =>
         routes.AddAnotherBunkerFuelCardsDetailsController.show(0).url

@@ -18,7 +18,7 @@ package form.aboutthetradinghistory
 
 import models.submissions.aboutthetradinghistory.BunkerFuelCardDetails
 import play.api.data.{Form, Mapping}
-import play.api.data.Forms.{bigDecimal, default, mapping, text}
+import play.api.data.Forms.{default, mapping, text}
 import play.api.data.validation.Constraints.{maxLength, nonEmpty}
 import play.api.data.validation.{Constraint, Invalid, Valid}
 

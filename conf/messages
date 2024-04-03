@@ -1700,8 +1700,10 @@ tenancyLeaseAgreementExpire.item2 = fluctuations in any index to which your rent
 fieldName.tenancyLeaseAgreementExpire = the renewal or expiry date of the current lease
 
 # CONNECTED TO LANDLORD
-###########################################
+#######################
 connectedToLandlord.heading = Other than contractually, are you connected to the landlord in any way?
+connectedToLandlord.heading.6020 = Are you connected to the landlord in any way?
+hint.connectedToLandlord.6020 = This includes being tied to selling fuel supplied by your landlord.
 
 # CONNECTED TO LANDLORD DETAILS
 ###############################

@@ -16,7 +16,7 @@
 
 package controllers.aboutYourLeaseOrTenure
 
-import actions.{SessionRequest, WithSessionRefiner}
+import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.PaymentForTradeServicesForm.paymentForTradeServicesForm
 import models.{ForTypes, Session}
