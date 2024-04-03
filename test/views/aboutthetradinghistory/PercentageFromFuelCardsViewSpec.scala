@@ -17,9 +17,9 @@
 package views.aboutthetradinghistory
 
 import actions.SessionRequest
-import form.aboutthetradinghistory.{PercentageFromFuelCardsForm, TotalFuelSoldForm}
+import form.aboutthetradinghistory.PercentageFromFuelCardsForm
 import models.pages.Summary
-import models.submissions.aboutthetradinghistory.{PercentageFromFuelCards, TotalFuelSold}
+import models.submissions.aboutthetradinghistory.PercentageFromFuelCards
 import org.scalatest.matchers.must.Matchers.convertToAnyMustWrapper
 import play.api.data.{Form, FormError}
 import views.behaviours.QuestionViewBehaviours

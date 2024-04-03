@@ -21,7 +21,6 @@ import form.MaxOfLettingsForm
 import models.pages.Summary
 import models.submissions.MaxOfLettings
 import play.api.data.Form
-import play.api.mvc.{AnyContent, AnyContentAsEmpty}
 import play.twirl.api.Html
 import views.behaviours.ViewBehaviours
 
