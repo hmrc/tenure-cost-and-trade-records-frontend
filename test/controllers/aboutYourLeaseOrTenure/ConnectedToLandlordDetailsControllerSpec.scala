@@ -16,41 +16,58 @@
 
 package controllers.aboutYourLeaseOrTenure
 
+import form.aboutYourLeaseOrTenure.ConnectedToLandlordDetailsForm.connectedToLandlordDetailsForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
-import navigation.AboutYourLeaseOrTenureNavigator
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
+import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
 
 class ConnectedToLandlordDetailsControllerSpec extends TestBaseSpec {
 
-  val mockAboutYourLeaseOrTenureNavigator = mock[AboutYourLeaseOrTenureNavigator]
+  import TestData.{baseFormData, errorKey}
 
   def connectedToLandlordDetailsController(
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
   ) =
     new ConnectedToLandlordDetailsController(
       stubMessagesControllerComponents(),
-      mockAboutYourLeaseOrTenureNavigator,
+      aboutYourLeaseOrTenureNavigator,
       connectedToLandlordDetailsView,
       preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
       mockSessionRepo
     )
 
-  "GET /"    should {
-    "return 200" in {
+  def connectedToLandlordDetailsControllerNone = new ConnectedToLandlordDetailsController(
+    stubMessagesControllerComponents(),
+    aboutYourLeaseOrTenureNavigator,
+    connectedToLandlordDetailsView,
+    preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = None),
+    mockSessionRepo
+  )
+
+  "ConnectedToLandlordDetailsController GET /" should {
+    "return 200 with data in the session" in {
       val result = connectedToLandlordDetailsController().show(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
-    "return HTML" in {
+    "return HTML with data in the session" in {
       val result = connectedToLandlordDetailsController().show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
+
+    "return 200 and html with none in the session" in {
+      val result = connectedToLandlordDetailsControllerNone.show(fakeRequest)
+      status(result)      shouldBe Status.OK
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
+    }
   }
-  "SUBMIT /" should {
+
+  "ConnectedToLandlordDetailsController SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
 
       val res = connectedToLandlordDetailsController().submit(
@@ -58,5 +75,30 @@ class ConnectedToLandlordDetailsControllerSpec extends TestBaseSpec {
       )
       status(res) shouldBe BAD_REQUEST
     }
+  }
+
+  "Connected to landlord details form" should {
+    "error if choice is missing" in {
+      val formData = baseFormData - errorKey.connectedToLandlordDetails
+      val form     = connectedToLandlordDetailsForm.bind(formData)
+
+      mustContainError(
+        errorKey.connectedToLandlordDetails,
+        "error.connectedToLandlordDetails.required",
+        form
+      )
+    }
+  }
+
+  object TestData {
+    val errorKey: Object {
+      val connectedToLandlordDetails: String
+    } = new {
+      val connectedToLandlordDetails: String = "connectedToLandlordDetails"
+    }
+
+    val baseFormData: Map[String, String] = Map(
+      "connectedToLandlordDetails" -> "Test content"
+    )
   }
 }
