@@ -58,6 +58,7 @@ class AddAnotherLettingOtherPartOfPropertyController @Inject() (
             case _                        => addAnotherLettingForm
           },
           index,
+          "addAnotherLettingConcessionOrFranchise",
           "addAnotherLetting",
           "addAnotherLettingOtherPartOfProperty",
           getBackLink(index),
@@ -80,6 +81,7 @@ class AddAnotherLettingOtherPartOfPropertyController @Inject() (
             addAnotherCateringOperationOrLettingAccommodationView(
               formWithErrors,
               index,
+              "addAnotherLettingConcessionOrFranchise",
               "addAnotherLetting",
               "addAnotherLettingOtherPartOfProperty",
               getBackLink(index),

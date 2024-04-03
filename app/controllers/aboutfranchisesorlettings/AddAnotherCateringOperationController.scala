@@ -83,6 +83,7 @@ class AddAnotherCateringOperationController @Inject() (
         addAnotherCateringOperationOrLettingAccommodationView(
           addAnother.fold(addAnotherCateringOperationForm)(addAnotherCateringOperationForm.fill),
           index,
+          "addAnotherConcessionOrFranchise",
           "addAnotherConcession",
           "addAnotherCateringOperation",
           getBackLink(index),
@@ -108,6 +109,7 @@ class AddAnotherCateringOperationController @Inject() (
             addAnotherCateringOperationOrLettingAccommodationView(
               formWithErrors,
               index,
+              "addAnotherConcessionOrFranchise",
               "addAnotherConcession",
               "addAnotherCateringOperation",
               getBackLink(index),
