@@ -591,7 +591,7 @@ trait FakeObjects {
   val aboutYourTradingHistory6020YesSession: Session =
     aboutYouAndTheProperty6020YesSession.copy(
       aboutTheTradingHistory = Some(
-        prefilledAboutYourTradingHistory
+        prefilledAboutYourTradingHistory6020
           .copy(
             totalFuelSold = Some(Seq(TotalFuelSold(LocalDate.now(), None)))
           )

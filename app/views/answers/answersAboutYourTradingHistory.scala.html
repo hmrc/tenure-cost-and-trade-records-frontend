@@ -47,6 +47,14 @@
     request.sessionData.forType
 }
 
+@tableRow(values: Seq[String]) = {
+    @values.map { value =>
+        <div class="hmrc-turnover-table-column">
+            @value
+        </div>
+    }
+}
+
 @table(valuesGrid: Seq[Seq[String]]) = {
 @valuesGrid.map { values =>
     <div class="hmrc-turnover-table-column">
@@ -421,9 +429,73 @@
     @govukSummaryList(SummaryList(rows =
         Seq(
             SummaryListRow(
-                key = Key(HtmlContent(turnoverKeys6030)),
-                value = Value(HtmlContent(sectionAnswers.answers.fold("")(t => turnoverValuesTable6030(t.turnoverSections6030)))),
-                actions = actions6030
+                key = Key(Text(messages("turnover.financialYearEnd"))),
+                value = Value(HtmlContent(
+                    tableRow(sectionAnswers.answers.flatMap(_.turnoverSections6020)
+                    .fold(Seq.empty[String])(_.map(t => dateUtil.formatDayMonthAbbrYear(t.financialYearEnd)))).body
+                )),
+                actions = Some(
+                    Actions(items =
+                        Seq(
+                            ActionItem(
+                                href = s"${aboutthetradinghistory.routes.NonFuelTurnoverController.show()}?from=CYA",
+                                content = Text(messages("label.change")),
+                                visuallyHiddenText = Some(messages("turnover.6020.heading")),
+                                attributes = Map(
+                                    "aria-label" -> s"${messages("label.change")} ${messages("turnover.6020.heading")}"
+                                )
+                            )
+                        )
+                    )
+                ),
+                classes = "no-border-bottom"
+            ),
+            SummaryListRow(
+                key = Key(Text(messages("turnover.6020.shop"))),
+                value = Value(HtmlContent(
+                    tableRow(sectionAnswers.answers.flatMap(_.turnoverSections6020)
+                    .fold(Seq.empty[String])(_.map(_.shop.getOrElse(zeroBigDecimal).asMoney))).body
+                )),
+                classes = "no-border-bottom"
+            ),
+            SummaryListRow(
+                key = Key(Text(messages("turnover.6020.carWash"))),
+                value = Value(HtmlContent(
+                    tableRow(sectionAnswers.answers.flatMap(_.turnoverSections6020)
+                    .fold(Seq.empty[String])(_.map(_.carWash.getOrElse(zeroBigDecimal).asMoney))).body
+                )),
+                classes = "no-border-bottom"
+            ),
+            SummaryListRow(
+                key = Key(Text(messages("turnover.6020.jetWash"))),
+                value = Value(HtmlContent(
+                    tableRow(sectionAnswers.answers.flatMap(_.turnoverSections6020)
+                    .fold(Seq.empty[String])(_.map(_.jetWash.getOrElse(zeroBigDecimal).asMoney))).body
+                )),
+                classes = "no-border-bottom"
+            ),
+            SummaryListRow(
+                key = Key(Text(messages("turnover.6020.lottery"))),
+                value = Value(HtmlContent(
+                    tableRow(sectionAnswers.answers.flatMap(_.turnoverSections6020)
+                    .fold(Seq.empty[String])(_.map(_.lottery.getOrElse(zeroBigDecimal).asMoney))).body
+                )),
+                classes = "no-border-bottom"
+            ),
+            SummaryListRow(
+                key = Key(Text(messages("checkYourAnswersAboutTheTradingHistory.payPointOrZone"))),
+                value = Value(HtmlContent(
+                    tableRow(sectionAnswers.answers.flatMap(_.turnoverSections6020)
+                    .fold(Seq.empty[String])(_.map(_.payPointOrZone.getOrElse(zeroBigDecimal).asMoney))).body
+                )),
+                classes = "no-border-bottom"
+            ),
+            SummaryListRow(
+                key = Key(Text(messages("turnover.6020.otherIncome"))),
+                value = Value(HtmlContent(
+                    tableRow(sectionAnswers.answers.flatMap(_.turnoverSections6020)
+                    .fold(Seq.empty[String])(_.map(_.otherIncome.getOrElse(zeroBigDecimal).asMoney))).body
+                ))
             )
         )
     ))
