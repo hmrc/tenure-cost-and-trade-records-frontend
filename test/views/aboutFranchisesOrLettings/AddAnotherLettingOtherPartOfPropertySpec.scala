@@ -29,6 +29,7 @@ class AddAnotherLettingOtherPartOfPropertySpec extends QuestionViewBehaviours[An
 
   val messageKeyPrefix     = "addAnotherLettingOtherPartOfProperty"
   val messageKeyPrefix6015 = "addAnotherLetting"
+  val messageKeyPrefix6030 = "addAnotherLettingConcessionOrFranchise"
 
   override val form: Form[AnswersYesNo] = AddAnotherLettingOtherPartOfPropertyForm.addAnotherLettingForm
 
@@ -38,6 +39,7 @@ class AddAnotherLettingOtherPartOfPropertySpec extends QuestionViewBehaviours[An
     addAnotherOperationConcessionFranchise(
       form,
       0,
+      messageKeyPrefix6030,
       messageKeyPrefix6015,
       messageKeyPrefix,
       controllers.aboutfranchisesorlettings.routes.CateringOperationRentIncludesController.show(0).url,
@@ -48,6 +50,7 @@ class AddAnotherLettingOtherPartOfPropertySpec extends QuestionViewBehaviours[An
     addAnotherOperationConcessionFranchise(
       form,
       0,
+      messageKeyPrefix6030,
       messageKeyPrefix6015,
       messageKeyPrefix,
       controllers.aboutfranchisesorlettings.routes.CateringOperationRentIncludesController.show(0).url,

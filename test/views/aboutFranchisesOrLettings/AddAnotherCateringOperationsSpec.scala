@@ -29,6 +29,7 @@ class AddAnotherCateringOperationsSpec extends QuestionViewBehaviours[AnswersYes
 
   val messageKeyPrefix     = "addAnotherSeparateBusinessOrFranchise"
   val messageKeyPrefix6015 = "addAnotherConcession"
+  val messageKeyPrefix6030 = "addAnotherConcessionOrFranchise"
 
   override val form: Form[AnswersYesNo] =
     AddAnotherCateringOperationOrLettingAccommodationForm.addAnotherCateringOperationForm
@@ -39,6 +40,7 @@ class AddAnotherCateringOperationsSpec extends QuestionViewBehaviours[AnswersYes
     addAnotherOperationConcessionFranchise(
       form,
       0,
+      messageKeyPrefix6030,
       messageKeyPrefix6015,
       messageKeyPrefix,
       controllers.aboutfranchisesorlettings.routes.CateringOperationRentIncludesController.show(0).url,
@@ -49,6 +51,7 @@ class AddAnotherCateringOperationsSpec extends QuestionViewBehaviours[AnswersYes
     addAnotherOperationConcessionFranchise(
       form,
       0,
+      messageKeyPrefix6030,
       messageKeyPrefix6015,
       messageKeyPrefix,
       controllers.aboutfranchisesorlettings.routes.CateringOperationRentIncludesController.show(0).url,
