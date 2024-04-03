@@ -19,8 +19,7 @@ package controllers.aboutthetradinghistory
 import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.TurnoverForm6030.turnoverForm6030
-import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.updateAboutTheTradingHistory
-import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, TurnoverSection6020, TurnoverSection6030}
+import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, TurnoverSection6030}
 import navigation.AboutTheTradingHistoryNavigator
 import navigation.identifiers.TurnoverPageId
 import play.api.i18n.I18nSupport
