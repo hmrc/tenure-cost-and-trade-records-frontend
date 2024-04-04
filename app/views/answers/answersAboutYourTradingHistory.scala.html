@@ -1,5 +1,5 @@
 @*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -47,6 +47,14 @@
     request.sessionData.forType
 }
 
+@tableRow(values: Seq[String]) = {
+    @values.map { value =>
+        <div class="hmrc-turnover-table-column">
+            @value
+        </div>
+    }
+}
+
 @table(valuesGrid: Seq[Seq[String]]) = {
 @valuesGrid.map { values =>
     <div class="hmrc-turnover-table-column">
@@ -73,6 +81,7 @@
 
 @financialYearEndDates(aboutTheTradingHistory: AboutTheTradingHistory) = @{
     request.sessionData.forType match {
+        case ForTypes.for6020 => aboutTheTradingHistory.turnoverSections6020.getOrElse(Seq.empty).map(_.financialYearEnd)
         case ForTypes.for6030 => aboutTheTradingHistory.turnoverSections6030.map(_.financialYearEnd)
         case _ => aboutTheTradingHistory.turnoverSections.map(_.financialYearEnd)
     }
@@ -370,7 +379,8 @@
                 ("valueAsHtml", _ => None))
 ))
 
-<h2 class="govuk-heading-m">@messages("turnover.heading")</h2>
+@if(!(Seq(ForTypes.for6020) contains forType)) {
+    <h2 class="govuk-heading-m">@messages("turnover.heading")</h2>
 
     @govukSummaryList(SummaryList(rows =
         forType match {
@@ -400,6 +410,7 @@
                 )
         }
     ))
+}
 
 @if(forType == ForTypes.for6030) {
     @govukSummaryList(SummaryList(rows =
@@ -410,6 +421,84 @@
 }
 
 @if(forType == ForTypes.for6020) {
+
+
+
+    <h2 class="govuk-heading-m">@messages("turnover.6020.heading")</h2>
+
+    @govukSummaryList(SummaryList(rows =
+        Seq(
+            SummaryListRow(
+                key = Key(Text(messages("turnover.financialYearEnd"))),
+                value = Value(HtmlContent(
+                    tableRow(sectionAnswers.answers.flatMap(_.turnoverSections6020)
+                    .fold(Seq.empty[String])(_.map(t => dateUtil.formatDayMonthAbbrYear(t.financialYearEnd)))).body
+                )),
+                actions = Some(
+                    Actions(items =
+                        Seq(
+                            ActionItem(
+                                href = s"${aboutthetradinghistory.routes.NonFuelTurnoverController.show()}?from=CYA",
+                                content = Text(messages("label.change")),
+                                visuallyHiddenText = Some(messages("turnover.6020.heading")),
+                                attributes = Map(
+                                    "aria-label" -> s"${messages("label.change")} ${messages("turnover.6020.heading")}"
+                                )
+                            )
+                        )
+                    )
+                ),
+                classes = "no-border-bottom"
+            ),
+            SummaryListRow(
+                key = Key(Text(messages("turnover.6020.shop"))),
+                value = Value(HtmlContent(
+                    tableRow(sectionAnswers.answers.flatMap(_.turnoverSections6020)
+                    .fold(Seq.empty[String])(_.map(_.shop.getOrElse(zeroBigDecimal).asMoney))).body
+                )),
+                classes = "no-border-bottom"
+            ),
+            SummaryListRow(
+                key = Key(Text(messages("turnover.6020.carWash"))),
+                value = Value(HtmlContent(
+                    tableRow(sectionAnswers.answers.flatMap(_.turnoverSections6020)
+                    .fold(Seq.empty[String])(_.map(_.carWash.getOrElse(zeroBigDecimal).asMoney))).body
+                )),
+                classes = "no-border-bottom"
+            ),
+            SummaryListRow(
+                key = Key(Text(messages("turnover.6020.jetWash"))),
+                value = Value(HtmlContent(
+                    tableRow(sectionAnswers.answers.flatMap(_.turnoverSections6020)
+                    .fold(Seq.empty[String])(_.map(_.jetWash.getOrElse(zeroBigDecimal).asMoney))).body
+                )),
+                classes = "no-border-bottom"
+            ),
+            SummaryListRow(
+                key = Key(Text(messages("turnover.6020.lottery"))),
+                value = Value(HtmlContent(
+                    tableRow(sectionAnswers.answers.flatMap(_.turnoverSections6020)
+                    .fold(Seq.empty[String])(_.map(_.lottery.getOrElse(zeroBigDecimal).asMoney))).body
+                )),
+                classes = "no-border-bottom"
+            ),
+            SummaryListRow(
+                key = Key(Text(messages("checkYourAnswersAboutTheTradingHistory.payPointOrZone"))),
+                value = Value(HtmlContent(
+                    tableRow(sectionAnswers.answers.flatMap(_.turnoverSections6020)
+                    .fold(Seq.empty[String])(_.map(_.payPointOrZone.getOrElse(zeroBigDecimal).asMoney))).body
+                )),
+                classes = "no-border-bottom"
+            ),
+            SummaryListRow(
+                key = Key(Text(messages("turnover.6020.otherIncome"))),
+                value = Value(HtmlContent(
+                    tableRow(sectionAnswers.answers.flatMap(_.turnoverSections6020)
+                    .fold(Seq.empty[String])(_.map(_.otherIncome.getOrElse(zeroBigDecimal).asMoney))).body
+                ))
+            )
+        )
+    ))
 
     <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutTheTradingHistory.electricVehicleChargingPoints")</h2>
 
