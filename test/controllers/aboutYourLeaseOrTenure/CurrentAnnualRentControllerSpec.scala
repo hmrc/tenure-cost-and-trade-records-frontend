@@ -16,8 +16,8 @@
 
 package controllers.aboutYourLeaseOrTenure
 
+import models.ForTypes
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
-import navigation.AboutYourLeaseOrTenureNavigator
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
@@ -25,33 +25,82 @@ import utils.TestBaseSpec
 
 class CurrentAnnualRentControllerSpec extends TestBaseSpec {
 
-  val mockAboutYourLeaseOrTenureNavigator = mock[AboutYourLeaseOrTenureNavigator]
-
   def connectionToThePropertyController(
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
   ) =
     new CurrentAnnualRentController(
       stubMessagesControllerComponents(),
-      mockAboutYourLeaseOrTenureNavigator,
+      aboutYourLeaseOrTenureNavigator,
       currentAnnualRentView,
       preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
       mockSessionRepo
     )
 
-  "GET /" should {
-    "return 200" in {
+  def connectionToThePropertyController6011Yes(
+    aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
+  ) =
+    new CurrentAnnualRentController(
+      stubMessagesControllerComponents(),
+      aboutYourLeaseOrTenureNavigator,
+      currentAnnualRentView,
+      preEnrichedActionRefiner(forType = ForTypes.for6011, aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
+      mockSessionRepo
+    )
+
+  def connectionToThePropertyController6011No(
+    aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOneNo)
+  ) =
+    new CurrentAnnualRentController(
+      stubMessagesControllerComponents(),
+      aboutYourLeaseOrTenureNavigator,
+      currentAnnualRentView,
+      preEnrichedActionRefiner(forType = ForTypes.for6011, aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
+      mockSessionRepo
+    )
+
+  def connectionToThePropertyControllerNone = new CurrentAnnualRentController(
+    stubMessagesControllerComponents(),
+    aboutYourLeaseOrTenureNavigator,
+    currentAnnualRentView,
+    preEnrichedActionRefiner(forType = ForTypes.for6011, aboutLeaseOrAgreementPartOne = None),
+    mockSessionRepo
+  )
+
+  "CurrentAnnualRentController GET /" should {
+    "return 200 with data in the session" in {
       val result = connectionToThePropertyController().show(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
-    "return HTML" in {
+    "return HTML with data in the session" in {
       val result = connectionToThePropertyController().show(fakeRequest)
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
+    }
+
+    "return 200 and HTML for 6011 with yes in the session" in {
+      val result = connectionToThePropertyController6011Yes().show(fakeRequest)
+      status(result)      shouldBe Status.OK
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
+    }
+
+    "return 200 and HTML for 6011 with no in the session" in {
+      val result = connectionToThePropertyController6011No().show(fakeRequest)
+      status(result)      shouldBe Status.OK
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
+    }
+
+    "return 200 and HTML with none in the session" in {
+      val result = connectionToThePropertyControllerNone.show(fakeRequest)
+      status(result)      shouldBe Status.OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
   }
 
-  "SUBMIT /" should {
+  "CurrentAnnualRentController SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
       val res = connectionToThePropertyController().submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)

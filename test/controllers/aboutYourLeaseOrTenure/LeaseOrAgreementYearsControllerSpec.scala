@@ -32,24 +32,59 @@ class LeaseOrAgreementYearsControllerSpec extends TestBaseSpec {
   ) =
     new LeaseOrAgreementYearsController(
       stubMessagesControllerComponents(),
-      mockAboutYourLeaseOrTenureNavigator,
+      aboutYourLeaseOrTenureNavigator,
       leaseOrAgreementYearsView,
       preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
       mockSessionRepo
     )
 
-  "GET /"    should {
-    "return 200" in {
+  def leaseOrAgreementYearsControllerNo(
+    aboutLeaseOrAgreementPartOneNo: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOneNo)
+  ) =
+    new LeaseOrAgreementYearsController(
+      stubMessagesControllerComponents(),
+      aboutYourLeaseOrTenureNavigator,
+      leaseOrAgreementYearsView,
+      preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOneNo),
+      mockSessionRepo
+    )
+
+  def leaseOrAgreementYearsControllerNone =
+    new LeaseOrAgreementYearsController(
+      stubMessagesControllerComponents(),
+      aboutYourLeaseOrTenureNavigator,
+      leaseOrAgreementYearsView,
+      preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = None),
+      mockSessionRepo
+    )
+
+  "LeaseOrAgreementYearsController GET /" should {
+    "return 200 with yes data in the session" in {
       val result = leaseOrAgreementYearsController().show(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
-    "return HTML" in {
+    "return HTML with yes data in the session" in {
       val result = leaseOrAgreementYearsController().show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
+
+    "return 200 and HTML with no data in the session" in {
+      val result = leaseOrAgreementYearsControllerNo().show(fakeRequest)
+      status(result)      shouldBe Status.OK
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
+    }
+
+    "return 200 and HTML with none data in the session" in {
+      val result = leaseOrAgreementYearsControllerNone.show(fakeRequest)
+      status(result)      shouldBe Status.OK
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
+    }
   }
+
   "SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
 

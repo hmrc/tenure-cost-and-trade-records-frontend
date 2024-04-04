@@ -16,7 +16,7 @@
 
 package controllers.aboutYourLeaseOrTenure
 
-import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
+import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
@@ -25,17 +25,25 @@ import utils.TestBaseSpec
 class RentPayableVaryOnQuantityOfBeersDetailsControllerSpec extends TestBaseSpec {
 
   def rentPayableVaryOnQuantityOfBeersDetailsController(
-    aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
+    aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwo)
   ) =
     new RentPayableVaryOnQuantityOfBeersDetailsController(
       stubMessagesControllerComponents(),
       aboutYourLeaseOrTenureNavigator,
       rentPayableVaryOnQuantityOfBeersDetailsView,
-      preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
+      preEnrichedActionRefiner(aboutLeaseOrAgreementPartTwo = aboutLeaseOrAgreementPartTwo),
       mockSessionRepo
     )
 
-  "GET /" should {
+  def rentPayableVaryOnQuantityOfBeersDetailsControllerNone = new RentPayableVaryOnQuantityOfBeersDetailsController(
+    stubMessagesControllerComponents(),
+    aboutYourLeaseOrTenureNavigator,
+    rentPayableVaryOnQuantityOfBeersDetailsView,
+    preEnrichedActionRefiner(aboutLeaseOrAgreementPartTwo = None),
+    mockSessionRepo
+  )
+
+  "RentPayableVaryOnQuantityOfBeersDetailsController GET /" should {
     "return 200" in {
       val result = rentPayableVaryOnQuantityOfBeersDetailsController().show(fakeRequest)
       status(result) shouldBe Status.OK
@@ -46,9 +54,16 @@ class RentPayableVaryOnQuantityOfBeersDetailsControllerSpec extends TestBaseSpec
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
+
+    "return 200 and HTML with none in the session" in {
+      val result = rentPayableVaryOnQuantityOfBeersDetailsControllerNone.show(fakeRequest)
+      status(result)      shouldBe Status.OK
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
+    }
   }
 
-  "SUBMIT /" should {
+  "RentPayableVaryOnQuantityOfBeersDetailsController SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
       val res = rentPayableVaryOnQuantityOfBeersDetailsController().submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)

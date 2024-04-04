@@ -16,7 +16,7 @@
 
 package controllers.aboutYourLeaseOrTenure
 
-import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
+import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
@@ -25,23 +25,39 @@ import utils.TestBaseSpec
 class RentPayableVaryOnQuantityOfBeersControllerSpec extends TestBaseSpec {
 
   def rentPayableVaryOnQuantityOfBeersController(
-    aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
+    aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwo)
   ) =
     new RentPayableVaryOnQuantityOfBeersController(
       stubMessagesControllerComponents(),
       aboutYourLeaseOrTenureNavigator,
       rentPayableVaryOnQuantityOfBeersView,
-      preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
+      preEnrichedActionRefiner(aboutLeaseOrAgreementPartTwo = aboutLeaseOrAgreementPartTwo),
       mockSessionRepo
     )
+
+  def rentPayableVaryOnQuantityOfBeersControllerNone = new RentPayableVaryOnQuantityOfBeersController(
+    stubMessagesControllerComponents(),
+    aboutYourLeaseOrTenureNavigator,
+    rentPayableVaryOnQuantityOfBeersView,
+    preEnrichedActionRefiner(aboutLeaseOrAgreementPartTwo = None),
+    mockSessionRepo
+  )
+
   "RentPayableVaryOnQuantityOfBeers controller" should {
-    "return 200" in {
+    "return 200 for rent payable vary on quantity of beer" in {
       val result = rentPayableVaryOnQuantityOfBeersController().show(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
-    "return HTML" in {
+    "return HTML for rent payable vary on quantity of beer" in {
       val result = rentPayableVaryOnQuantityOfBeersController().show(fakeRequest)
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
+    }
+
+    "return 200 and HTML with none for rent payable vary on quantity of beer" in {
+      val result = rentPayableVaryOnQuantityOfBeersControllerNone.show(fakeRequest)
+      status(result)      shouldBe Status.OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
