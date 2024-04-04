@@ -16,7 +16,7 @@
 
 package controllers.aboutYourLeaseOrTenure
 
-import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartOne, AboutLeaseOrAgreementPartTwo}
+import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo
 import org.jsoup.Jsoup
 import play.api.http.Status
 import play.api.test.FakeRequest

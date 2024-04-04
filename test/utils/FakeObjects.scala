@@ -30,7 +30,7 @@ import models.submissions.connectiontoproperty._
 import models.submissions.connectiontoproperty.StartDateOfVacantProperty
 import models.submissions.downloadFORTypeForm.{DownloadPDF, DownloadPDFDetails, DownloadPDFReferenceNumber}
 import models.submissions.notconnected.{PastConnectionTypeYes, RemoveConnectionDetails, RemoveConnectionsDetails}
-import models.submissions.requestReferenceNumber.{CheckYourAnswersRequestReferenceNumber, RequestReferenceNumber, RequestReferenceNumberAddress, RequestReferenceNumberContactDetails, RequestReferenceNumberDetails}
+import models.submissions.requestReferenceNumber._
 
 import java.time.{Instant, LocalDate}
 
@@ -1041,7 +1041,7 @@ trait FakeObjects {
 
   val prefilledAboutLeaseOrAgreementPartOneNo: AboutLeaseOrAgreementPartOne = AboutLeaseOrAgreementPartOne(
     Some(prefilledAboutTheLandlord),
-    None,
+    Some(AnswerNo),
     Some(prefilledConnectedToLandlordDetails),
     Some(prefilledLeaseOrAgreementYearsDetailsNo),
     Some(prefilledCurrentRentPayableWithin12Months),

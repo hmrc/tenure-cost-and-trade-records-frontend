@@ -19,7 +19,7 @@ package views.aboutyouandtheproperty
 import form.aboutyouandtheproperty.ContactDetailsQuestionForm
 import models.pages.Summary
 import models.submissions.aboutyouandtheproperty.ContactDetailsQuestion
-import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
+import models.submissions.common.{AnswerNo, AnswerYes}
 import org.scalatest.matchers.must.Matchers.convertToAnyMustWrapper
 import play.api.data.Form
 import play.twirl.api.Html

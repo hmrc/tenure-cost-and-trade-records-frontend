@@ -17,7 +17,8 @@
 package controllers.aboutYourLeaseOrTenure
 
 import form.aboutYourLeaseOrTenure.PropertyUseLeasebackArrangementForm.propertyUseLeasebackArrangementForm
-import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo
+import models.ForTypes
+import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
 import play.api.http.Status
 import play.api.http.Status.BAD_REQUEST
 import play.api.test.FakeRequest
@@ -28,32 +29,81 @@ import utils.TestBaseSpec
 class PropertyUseLeasebackArrangementControllerSpec extends TestBaseSpec {
   import TestData._
   def propertyUseLeasebackAgreementController(
-    aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwo)
+    aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
   ) =
     new PropertyUseLeasebackArrangementController(
       stubMessagesControllerComponents(),
       aboutYourLeaseOrTenureNavigator,
       propertyUseLeasebackAgreementView,
-      preEnrichedActionRefiner(aboutLeaseOrAgreementPartTwo = aboutLeaseOrAgreementPartTwo),
+      preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
       mockSessionRepo
     )
 
-  "AreYouThirdPartyController GET /" should {
+  def propertyUseLeasebackAgreementController6020Yes(
+    aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
+  ) =
+    new PropertyUseLeasebackArrangementController(
+      stubMessagesControllerComponents(),
+      aboutYourLeaseOrTenureNavigator,
+      propertyUseLeasebackAgreementView,
+      preEnrichedActionRefiner(forType = ForTypes.for6020, aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
+      mockSessionRepo
+    )
 
-    "return 200" in {
+  def propertyUseLeasebackAgreementController6020No(
+    aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOneNo)
+  ) =
+    new PropertyUseLeasebackArrangementController(
+      stubMessagesControllerComponents(),
+      aboutYourLeaseOrTenureNavigator,
+      propertyUseLeasebackAgreementView,
+      preEnrichedActionRefiner(forType = ForTypes.for6020, aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
+      mockSessionRepo
+    )
+
+  def propertyUseLeasebackAgreementControllerNone = new PropertyUseLeasebackArrangementController(
+    stubMessagesControllerComponents(),
+    aboutYourLeaseOrTenureNavigator,
+    propertyUseLeasebackAgreementView,
+    preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = None),
+    mockSessionRepo
+  )
+
+  "PropertyUseLeasebackArrangementController GET /" should {
+    "return 200 with data in the session" in {
       val result = propertyUseLeasebackAgreementController().show(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
-    "return HTML" in {
+    "return HTML with data in the session" in {
       val result = propertyUseLeasebackAgreementController().show(fakeRequest)
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
+    }
+
+    "return 200 and html 6020 yes data in the session" in {
+      val result = propertyUseLeasebackAgreementController6020Yes().show(fakeRequest)
+      status(result)      shouldBe Status.OK
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
+    }
+
+    "return 200 and html 6020 no data in the session" in {
+      val result = propertyUseLeasebackAgreementController6020No().show(fakeRequest)
+      status(result)      shouldBe Status.OK
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
+    }
+
+    "return 200 and html with none in the session" in {
+      val result = propertyUseLeasebackAgreementControllerNone.show(fakeRequest)
+      status(result)      shouldBe Status.OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
   }
 
-  "AreYouThirdPartyController POST /" should {
-
+  "PropertyUseLeasebackArrangementController POST /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
       val res = propertyUseLeasebackAgreementController().submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)

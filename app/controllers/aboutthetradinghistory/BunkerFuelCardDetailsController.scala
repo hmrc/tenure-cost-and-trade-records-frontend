@@ -19,7 +19,6 @@ package controllers.aboutthetradinghistory
 import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.BunkerFuelCardDetailsForm.bunkerFuelCardDetailsForm
-import models.Session
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.updateAboutTheTradingHistory
 import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, BunkerFuelCardDetails, BunkerFuelCardsDetails}
 import navigation.AboutTheTradingHistoryNavigator

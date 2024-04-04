@@ -15,23 +15,16 @@
  *@
 
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 @import uk.gov.hmrc.govukfrontend.views.html.components._
-@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Radios
-@import uk.gov.hmrc.govukfrontend.views.Aliases.RadioItem
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Fieldset
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Legend
 @import models.pages.Summary
 
 @this(layout: Layout,
         govukButton: GovukButton,
         govukRadios: GovukRadios,
-        govukErrorSummary: GovukErrorSummary,
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[_], summary: Summary)(implicit request: Request[_], messages: Messages)
+@(theForm: Form[_], summary: Summary, forType: String)(implicit request: Request[_], messages: Messages)
 
 @layout(
  pageHeading = messages("connectedToLandlord.heading"),
@@ -45,27 +38,15 @@
 
  @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordController.submit()) {
 
-  @govukRadios(Radios(
-   fieldset = Some(Fieldset(
-    legend = Some(Legend(
-     content = Text(messages("connectedToLandlord.heading")), isPageHeading = true,
-     classes = "govuk-fieldset__legend govuk-fieldset__legend--l",
-    ))
-   )),
-   name = "connectedToLandlord",
-   classes = "govuk-radios--inline",
-   items = Seq(
-    RadioItem(
-     content = Text(messages("label.yes")),
-     value = Some("yes")
-    ),
-    RadioItem(
-     content = Text(messages("label.no")),
-     value = Some("no")
-    )
-   ),
-   errorMessage = theForm.errors.asTextErrorMessageForField("connectedToLandlord")
-  ).withFormField(theForm("connectedToLandlord")))
+  @includes.radioButtonsYesNo(
+   govukRadios,
+   theForm,
+   "connectedToLandlord",
+   if (forType == ForTypes.for6020) "connectedToLandlord.heading.6020" else "connectedToLandlord.heading",
+   "govuk-fieldset__legend--l",
+   isHeading = true,
+   hint = if (forType == ForTypes.for6020) "hint.connectedToLandlord.6020" else ""
+  )
 
   @includes.continueSaveAsDraftButtons(govukButton)
  }

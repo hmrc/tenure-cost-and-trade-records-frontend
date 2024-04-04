@@ -17,9 +17,7 @@
 package views.connectiontoproperty
 
 import form.connectiontoproperty.TradingNameOperatingFromPropertyForm
-import form.connectiontoproperty.TradingNameOperatingFromPropertyForm.tradingNameOperatingFromProperty
 import models.pages.Summary
-import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
 import models.submissions.connectiontoproperty.TradingNameOperatingFromProperty
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form

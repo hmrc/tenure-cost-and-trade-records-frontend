@@ -68,8 +68,9 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
       case Some("no")  =>
         answers.forType match {
           case ForTypes.for6011 => controllers.aboutYourLeaseOrTenure.routes.CurrentAnnualRentController.show()
+          case ForTypes.for6020 =>
+            controllers.aboutYourLeaseOrTenure.routes.PropertyUseLeasebackArrangementController.show()
           case _                => controllers.aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.show()
-
         }
       case _           =>
         logger.warn(
@@ -83,6 +84,8 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
     answers.forType match {
       case ForTypes.for6011 =>
         controllers.aboutYourLeaseOrTenure.routes.CurrentAnnualRentController.show()
+      case ForTypes.for6020 =>
+        controllers.aboutYourLeaseOrTenure.routes.PropertyUseLeasebackArrangementController.show()
       case _                =>
         controllers.aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.show()
     }

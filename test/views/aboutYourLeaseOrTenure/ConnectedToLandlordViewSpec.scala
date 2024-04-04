@@ -17,6 +17,7 @@
 package views.aboutYourLeaseOrTenure
 
 import form.aboutYourLeaseOrTenure.ConnectedToLandlordForm
+import models.ForTypes
 import models.pages.Summary
 import models.submissions.common.AnswersYesNo
 import org.scalatest.matchers.must.Matchers._
@@ -28,10 +29,10 @@ class ConnectedToLandlordViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
   val messageKeyPrefix = "connectedToLandlord"
 
   override val form = ConnectedToLandlordForm.connectedToLandlordForm
-  def createView    = () => connectedToLandlordView(form, Summary("99996010001"))(fakeRequest, messages)
+  def createView    = () => connectedToLandlordView(form, Summary("99996010001"), ForTypes.for6010)(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[AnswersYesNo]) =>
-    connectedToLandlordView(form, Summary("99996010001"))(fakeRequest, messages)
+    connectedToLandlordView(form, Summary("99996010001"), ForTypes.for6010)(fakeRequest, messages)
 
   "Connected to landlord view" must {
 
