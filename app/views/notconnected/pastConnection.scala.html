@@ -16,8 +16,9 @@
 
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
+@import uk.gov.hmrc.govukfrontend.views.Aliases.RadioItem
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
-
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 @import models.pages.Summary
 
 @this(layout: Layout,
@@ -25,6 +26,7 @@
   govukRadios: GovukRadios,
   formWithCSRF: FormWithCSRF
 )
+
 
 @(theForm: Form[_], summary: Summary)(implicit request: Request[_], messages: Messages)
 
@@ -46,10 +48,11 @@
       theForm,
       "pastConnectionType",
       "pastConnectionType.heading",
+      "label.yes.ydw",
+      "label.no.nac.ydw",
       "govuk-fieldset__legend--l",
       isHeading = true
     )
-
       @includes.continueSaveAsDraftButtons(govukButton)
   }
 }

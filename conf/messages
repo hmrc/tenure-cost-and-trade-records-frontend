@@ -405,9 +405,9 @@ error.addAnotherLetting.required = Select yes if you would like to add another l
 ##############################
 provideContactDetails.heading = Provide your contact details
 provideContactDetails.title = Provide your contact details
-provideContactDetails.p1 = These should be the contact details of the person completing this form. We will only use them to update you about your declaration.
+provideContactDetails.p1 = We'll only use these details if we need to contact you before removing your connection to this property
 provideContactDetailsAdditionalInformation.heading = Additional Information (optional)
-provideContactDetailsAdditionalInformation.hint = For example, the name of the previous owner or occupier.
+provideContactDetailsAdditionalInformation.hint = [For example, the date you last occupied the property]
 error.fullName.maxLength = Your name must be 50 characters or fewer
 
 # CHECK YOUR ANSWERS VACANT PROPERTY SUBMISSION
