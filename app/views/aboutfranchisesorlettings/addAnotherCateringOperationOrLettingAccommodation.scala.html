@@ -58,7 +58,8 @@
 
 @pageHeading = @{messages(
  if (isConcession) s"$concessionOrLetting.heading"
- else if (isConcession6030 && operatorNames.size > 0) s"$concessionOrFranchise.heading"
+ else if (isConcession6030 && operatorNames.size > 0 && isConcession6030 && operatorNames.size < 1) s"$concessionOrFranchise.heading"
+ else if (isConcession6030 && operatorNames.size > 1) s"$concessionOrFranchise.heading.plural"
  else if(operatorNames.size == 0 && !isConcession6030) messages(s"$cateringOrLetting.zeroBusinessOrFranchises.heading")
   else if (operatorNames.size == 0 && isConcession6030) messages(s"$concessionOrFranchise.zeroBusinessOrFranchises.heading")
   else s"$cateringOrLetting.heading" , operatorNames.size) + pluralSuffix}
@@ -94,6 +95,7 @@
 }
 
 @pluralSuffix = @{ if (operatorNames.size > 1) "s" else "" }
+ @pluralSuffix6030 = @{ if (isConcession6030 && operatorNames.size > 1) "addAnotherConcessionOrFranchise.heading.plural" }
 
 @layout(
  pageHeading = pageHeading,
