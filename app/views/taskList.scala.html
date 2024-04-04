@@ -181,20 +181,35 @@
         section2Completed.isEmpty
        )
 
-       @includes.taskListItem("turnover", "turnover.heading",
-        if(forType == ForTypes.for6030) {
-         controllers.aboutthetradinghistory.routes.Turnover6030Controller.show()
-        } else {
-         controllers.aboutthetradinghistory.routes.TurnoverController.show()
-        },
-        section3Completed,
-        if(forType == ForTypes.for6030) {
-         session.aboutTheTradingHistory.flatMap(_.turnoverSections6030)
-        } else {
-         session.aboutTheTradingHistory.flatMap(_.turnoverSections)
-        },
-        session.aboutTheTradingHistory.flatMap(_.occupationAndAccountingInformation).isEmpty
-       )
+       @if(!(Seq(ForTypes.for6020) contains forType)) {
+
+        @includes.taskListItem("turnover", "turnover.heading",
+         if(forType == ForTypes.for6030) {
+          controllers.aboutthetradinghistory.routes.Turnover6030Controller.show()
+         } else {
+          controllers.aboutthetradinghistory.routes.TurnoverController.show()
+         },
+         section3Completed,
+         if(forType == ForTypes.for6030) {
+          session.aboutTheTradingHistory.flatMap(_.turnoverSections6030)
+         } else {
+          session.aboutTheTradingHistory.flatMap(_.turnoverSections)
+         },
+         session.aboutTheTradingHistory.flatMap(_.occupationAndAccountingInformation).isEmpty
+        )
+
+       }
+
+       @if(forType == ForTypes.for6020) {
+
+        @includes.taskListItem("non-fuel-turnover", "turnover.6020.heading",
+         controllers.aboutthetradinghistory.routes.NonFuelTurnoverController.show(),
+         section3Completed,
+         session.aboutTheTradingHistory.flatMap(_.turnoverSections6020),
+         session.aboutTheTradingHistory.flatMap(_.occupationAndAccountingInformation).isEmpty
+        )
+
+       }
 
        @if(forType == ForTypes.for6015) {
         @includes.taskListItem("total-payroll-costs", "taskList.payrollCosts",
