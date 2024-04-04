@@ -6,7 +6,7 @@ gov.name = GOV.UK
 phase.beta = BETA
 phase.text = This is a new service – <a href="{0}" class="govuk-link" rel="noreferrer noopener" target="_blank" id="betaFeedback">share your feedback</a> to help improve it.
 label.continue=Parhewch
-button.label.continue = Parhau
+button.label.continue = Yn eich blaen
 button.label.sendYourFeedback = Send your feedback
 button.label.submit = Submit
 button.label.send = Derbyn ac anfon
