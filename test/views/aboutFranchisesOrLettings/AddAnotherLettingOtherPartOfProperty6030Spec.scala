@@ -27,7 +27,9 @@ import views.behaviours.QuestionViewBehaviours
 
 class AddAnotherLettingOtherPartOfProperty6030Spec extends QuestionViewBehaviours[AnswersYesNo] {
 
-  val messageKeyPrefix = "addAnotherLettingOtherPartOfProperty"
+  val messageKeyPrefix     = "addAnotherLettingOtherPartOfProperty"
+  val messageKeyPrefix6015 = "addAnotherLetting"
+  val messageKeyPrefix6030 = "addAnotherLettingConcessionOrFranchise"
 
   override val form: Form[AnswersYesNo] = AddAnotherLettingOtherPartOfPropertyForm.addAnotherLettingForm
 
@@ -37,8 +39,9 @@ class AddAnotherLettingOtherPartOfProperty6030Spec extends QuestionViewBehaviour
     addAnotherOperationConcessionFranchise(
       form,
       0,
-      "addAnotherLetting",
-      "addAnotherLettingOtherPartOfProperty",
+      messageKeyPrefix6030,
+      messageKeyPrefix6015,
+      messageKeyPrefix,
       controllers.aboutfranchisesorlettings.routes.CateringOperationRentIncludesController.show(0).url,
       Summary("99996030001")
     )(sessionRequest, messages)
@@ -47,15 +50,16 @@ class AddAnotherLettingOtherPartOfProperty6030Spec extends QuestionViewBehaviour
     addAnotherOperationConcessionFranchise(
       form,
       0,
-      "addAnotherLetting",
-      "addAnotherLettingOtherPartOfProperty",
+      messageKeyPrefix6030,
+      messageKeyPrefix6015,
+      messageKeyPrefix,
       controllers.aboutfranchisesorlettings.routes.CateringOperationRentIncludesController.show(0).url,
       Summary("99996030001")
     )(sessionRequest, messages)
 
   "Add another letting part of property view" must {
 
-    behave like normalPageWithZeroBusinessOrLettings(createView, messageKeyPrefix, "0")
+    behave like normalPageWithZeroBusinessOrLettings(createView, messageKeyPrefix6030, "0")
 
     "has a link marked with back.link.label leading to the franchise or letting tied to property Page" in {
       val doc          = asDocument(createView())

@@ -1112,6 +1112,14 @@ error.cateringOperationOrLettingAccommodationCheckboxesDetails.noneSelectedWithO
 
 # ADD ANOTHER CATERING OPERATION OR LETTING ACCOMMODATION DETAILS
 #################################################################
+addAnotherConcessionOrFranchise.zeroBusinessOrFranchises.heading = You have removed all your separate concessions or franchises
+addAnotherConcessionOrFranchise.heading = You have added {0} separate concession or franchise
+addAnotherConcessionOrFranchise.heading.plural = You have added {0} separate concessions or franchise
+label.addAnotherConcessionOrFranchise = Do you need to add another separate concession or franchise?
+addAnotherLettingConcessionOrFranchise.zeroBusinessOrFranchises.heading = You have removed all your separate business or franchises
+label.addAnotherLettingConcessionOrFranchise = Do you need to add another letting?
+addAnotherLettingConcessionOrFranchise.zeroBusinessOrFranchises.heading = You have removed all your lettings
+addAnotherLettingConcessionOrFranchise.heading.plural = You have added {0} letting
 addAnotherCateringOperation.heading = You have added {0} separate business or franchise
 addAnotherConcessionOrLetting.heading = You have added {0} separate business or concession
 addAnotherCateringOperation.heading.plural = You have added {0} separate businesses or franchises
@@ -1120,6 +1128,9 @@ addAnotherConcession.heading.plural = You have added {0} separate businesses or 
 addAnotherCateringOperation.zeroBusinessOrFranchises.heading = You have removed all your separate business or franchises
 addAnotherLettingOtherPartOfProperty.zeroBusinessOrFranchises.heading = You have removed all your separate business or concessions
 addAnotherLettingOtherPartOfProperty.heading = You have added {0} letting
+addAnotherLettingConcessionOrFranchise.heading = You have added {0} letting
+addAnotherConcession.heading.plural = You have added {0} separate businesses or concessions
+addAnotherLetting.heading = You have added {0} letting
 label.addAnotherCateringOperation = Do you need to add another separate business or franchise?
 label.addAnotherConcessionOrLetting = Do you need to add another separate business or concession?
 label.addAnotherLettingOtherPartOfProperty = Do you need to add another letting?

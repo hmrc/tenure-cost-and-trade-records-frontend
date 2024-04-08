@@ -40,20 +40,29 @@
 )
 
 
-@(theForm: Form[_], index: Int, concessionOrLetting: String, cateringOrLetting: String, backLink: String, summary: Summary)(implicit request: SessionRequest[_], messages: Messages)
-
+@(theForm: Form[_], index: Int, concessionOrFranchise: String, concessionOrLetting: String, cateringOrLetting: String, backLink: String, summary: Summary)(implicit request: SessionRequest[_], messages: Messages)
 
 @session = @{ request.sessionData }
 
 @forType = @{ session.forType }
 
 @isConcession = @{ forType == ForTypes.for6015 || forType == ForTypes.for6016 }
+@isConcession6030 = @{ forType == ForTypes.for6030 }
 
 @label = @{if (isConcession) messages("label.section.aboutTheFranchiseConcessions")  else messages("label.section.aboutTheFranchiseLettings")}
 
-@formLabel =@{if (isConcession) messages(s"label.${concessionOrLetting}")  else messages(s"label.${cateringOrLetting}")}
+@formLabel =@{
+ if (isConcession) messages(s"label.${concessionOrLetting}")
+ else if (isConcession6030) messages(s"label.${concessionOrFranchise}")
+ else messages(s"label.${cateringOrLetting}")}
 
-@pageHeading = @{messages(if (isConcession) s"$concessionOrLetting.heading" else if  (operatorNames.size == 0) messages(s"$cateringOrLetting.zeroBusinessOrFranchises.heading") else s"$cateringOrLetting.heading" , operatorNames.size) + pluralSuffix}
+@pageHeading = @{messages(
+ if (isConcession) s"$concessionOrLetting.heading"
+ else if (isConcession6030 && operatorNames.size == 1) s"$concessionOrFranchise.heading"
+ else if (isConcession6030 && operatorNames.size > 1) s"$concessionOrFranchise.heading.plural"
+ else if(operatorNames.size == 0 && !isConcession6030) messages(s"$cateringOrLetting.zeroBusinessOrFranchises.heading")
+  else if (operatorNames.size == 0 && isConcession6030) messages(s"$concessionOrFranchise.zeroBusinessOrFranchises.heading")
+  else s"$cateringOrLetting.heading" , operatorNames.size) + pluralSuffix}
 
 @isLettingOtherPartOfProperty = @{ cateringOrLetting.equals("addAnotherLettingOtherPartOfProperty") }
 
@@ -86,6 +95,7 @@
 }
 
 @pluralSuffix = @{ if (operatorNames.size > 1) "s" else "" }
+ @pluralSuffix6030 = @{ if (isConcession6030 && operatorNames.size > 1) "addAnotherConcessionOrFranchise.heading.plural" }
 
 @layout(
  pageHeading = pageHeading,

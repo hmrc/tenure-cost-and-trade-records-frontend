@@ -27,7 +27,9 @@ import views.behaviours.QuestionViewBehaviours
 
 class AddAnotherCateringOperations6030Spec extends QuestionViewBehaviours[AnswersYesNo] {
 
-  val messageKeyPrefix = "addAnotherCateringOperation"
+  val messageKeyPrefix     = "addAnotherCateringOperation"
+  val messageKeyPrefix6015 = "addAnotherConcession"
+  val messageKeyPrefix6030 = "addAnotherConcessionOrFranchise"
 
   override val form: Form[AnswersYesNo] =
     AddAnotherCateringOperationOrLettingAccommodationForm.addAnotherCateringOperationForm
@@ -38,8 +40,9 @@ class AddAnotherCateringOperations6030Spec extends QuestionViewBehaviours[Answer
     addAnotherOperationConcessionFranchise(
       form,
       0,
-      "addAnotherConcession",
-      "addAnotherCateringOperation",
+      messageKeyPrefix6030,
+      messageKeyPrefix6015,
+      messageKeyPrefix,
       controllers.aboutfranchisesorlettings.routes.FeeReceivedController.show(0).url,
       Summary("99996030001")
     )(sessionRequest, messages)
@@ -48,15 +51,16 @@ class AddAnotherCateringOperations6030Spec extends QuestionViewBehaviours[Answer
     addAnotherOperationConcessionFranchise(
       form,
       0,
-      "addAnotherConcession",
-      "addAnotherCateringOperation",
+      messageKeyPrefix6030,
+      messageKeyPrefix6015,
+      messageKeyPrefix,
       controllers.aboutfranchisesorlettings.routes.FeeReceivedController.show(0).url,
       Summary("99996030001")
     )(sessionRequest, messages)
 
   "Add another catering operation view" must {
 
-    behave like normalPageWithZeroBusinessOrLettings(createView, messageKeyPrefix, "0")
+    behave like normalPageWithZeroBusinessOrLettings(createView, messageKeyPrefix6030, "0")
 
     "has a link marked with back.link.label leading to the franchise or letting tied to property Page" in {
       val doc          = asDocument(createView())
