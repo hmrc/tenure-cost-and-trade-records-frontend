@@ -52,7 +52,15 @@ class CurrentRentFirstPaidControllerSpec extends TestBaseSpec {
       mockSessionRepo
     )
 
-  "GET /" should {
+  def currentRentFirstPaidController6011None = new CurrentRentFirstPaidController(
+    stubMessagesControllerComponents(),
+    mockAboutLeaseOrTenureNavigator,
+    currentRentFirstPaidView,
+    preEnrichedActionRefiner(forType = "FOR6011", aboutLeaseOrAgreementPartOne = None),
+    mockSessionRepo
+  )
+
+  "CurrentRentFirstPaidController GET /" should {
     "return 200" in {
       val result = currentRentFirstPaidController().show(fakeRequest)
       status(result) shouldBe Status.OK
@@ -64,8 +72,15 @@ class CurrentRentFirstPaidControllerSpec extends TestBaseSpec {
       charset(result)     shouldBe Some("utf-8")
     }
 
-    "return 200 vacant property start date is not present in session" in {
+    "return 200 and HTML vacant property start date is not present in session" in {
       val result = currentRentFirstPaidNoStartDate().show()(fakeRequest)
+      status(result)      shouldBe Status.OK
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
+    }
+
+    "return 200 and HTML with None in session for 6011" in {
+      val result = currentRentFirstPaidController6011None.show()(fakeRequest)
       status(result)      shouldBe Status.OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
@@ -82,7 +97,7 @@ class CurrentRentFirstPaidControllerSpec extends TestBaseSpec {
     }
   }
 
-  "SUBMIT /" should {
+  "CurrentRentFirstPaidController SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
 
       val res = currentRentFirstPaidController().submit(

@@ -36,8 +36,8 @@ class HowIsCurrentRentFixedControllerSpec extends TestBaseSpec {
       mockSessionRepo
     )
 
-  def howIsCurrentRentFixedNoDate(
-    aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwo)
+  def howIsCurrentRentFixedControllerNo(
+    aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwoNo)
   ) =
     new HowIsCurrentRentFixedController(
       stubMessagesControllerComponents(),
@@ -47,20 +47,88 @@ class HowIsCurrentRentFixedControllerSpec extends TestBaseSpec {
       mockSessionRepo
     )
 
-  "GET /" should {
-    "return 200" in {
+  def howIsCurrentRentFixedControllerNone =
+    new HowIsCurrentRentFixedController(
+      stubMessagesControllerComponents(),
+      aboutYourLeaseOrTenureNavigator,
+      howIsCurrentRentFixedView,
+      preEnrichedActionRefiner(aboutLeaseOrAgreementPartTwo = None),
+      mockSessionRepo
+    )
+
+  def howIsCurrentRentFixedController6015(
+    aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwo)
+  ) =
+    new HowIsCurrentRentFixedController(
+      stubMessagesControllerComponents(),
+      aboutYourLeaseOrTenureNavigator,
+      howIsCurrentRentFixedView,
+      preEnrichedActionRefiner(forType = "FOR6015", aboutLeaseOrAgreementPartTwo = aboutLeaseOrAgreementPartTwo),
+      mockSessionRepo
+    )
+
+  def howIsCurrentRentFixedController6015No(
+    aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwoNo)
+  ) =
+    new HowIsCurrentRentFixedController(
+      stubMessagesControllerComponents(),
+      aboutYourLeaseOrTenureNavigator,
+      howIsCurrentRentFixedView,
+      preEnrichedActionRefiner(forType = "FOR6015", aboutLeaseOrAgreementPartTwo = aboutLeaseOrAgreementPartTwo),
+      mockSessionRepo
+    )
+
+  def howIsCurrentRentFixedController6015None =
+    new HowIsCurrentRentFixedController(
+      stubMessagesControllerComponents(),
+      aboutYourLeaseOrTenureNavigator,
+      howIsCurrentRentFixedView,
+      preEnrichedActionRefiner(forType = "FOR6015", aboutLeaseOrAgreementPartTwo = None),
+      mockSessionRepo
+    )
+
+  "HowIsCurrentRentFixedController GET /" should {
+    "return 200 vacant property yes in session" in {
       val result = howIsCurrentRentFixedController().show(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
-    "return HTML" in {
+    "return HTML vacant property yes in session" in {
       val result = howIsCurrentRentFixedController().show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
 
-    "return 200 vacant property start date is not present in session" in {
-      val result = howIsCurrentRentFixedNoDate().show()(fakeRequest)
+    "return 200 and HTML vacant property no in session" in {
+      val result = howIsCurrentRentFixedControllerNo().show()(fakeRequest)
+      status(result)      shouldBe Status.OK
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
+    }
+
+    "return 200 and HTML vacant property none in session" in {
+      val result = howIsCurrentRentFixedControllerNone.show()(fakeRequest)
+      status(result)      shouldBe Status.OK
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
+    }
+
+    "return 200 and HTML vacant property yes in session for 6015" in {
+      val result = howIsCurrentRentFixedController6015().show(fakeRequest)
+      status(result)      shouldBe Status.OK
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
+    }
+
+    "return 200 and HTML vacant property no in session for 6015" in {
+      val result = howIsCurrentRentFixedController6015No().show()(fakeRequest)
+      status(result)      shouldBe Status.OK
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
+    }
+
+    "return 200 and HTML vacant property none in session for 6015" in {
+      val result = howIsCurrentRentFixedController6015None.show()(fakeRequest)
       status(result)      shouldBe Status.OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
@@ -77,7 +145,7 @@ class HowIsCurrentRentFixedControllerSpec extends TestBaseSpec {
     }
   }
 
-  "SUBMIT /" should {
+  "HowIsCurrentRentFixedController SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
       val res = howIsCurrentRentFixedController().submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)
