@@ -1103,6 +1103,7 @@ trait FakeObjects {
     servicesPaidIndex = 1,
     tradeServices = IndexedSeq(TradeServices(TradeServicesDetails("service-1"))),
     servicesPaid = IndexedSeq(ServicesPaid(ServicePaidSeparately("service-paid-1"))),
+    carParking = Some(CarParking(Some(AnswerYes), Some(CarParkingSpaces(1, 2, 3)), Some(AnswerNo))),
     paymentForTradeServices = Some(PaymentForTradeServices(AnswerYes)),
     typeOfTenure = Some(TypeOfTenure(List("license"), Some("Type of tenure details")))
   )
