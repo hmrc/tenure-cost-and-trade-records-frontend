@@ -6,15 +6,15 @@ gov.name = GOV.UK
 phase.beta = BETA
 phase.text = This is a new service – <a href="{0}" class="govuk-link" rel="noreferrer noopener" target="_blank" id="betaFeedback">share your feedback</a> to help improve it.
 label.continue=Parhewch
-button.label.continue = Parhau
+button.label.continue = Yn eich blaen
 button.label.sendYourFeedback = Send your feedback
 button.label.submit = Submit
-button.label.send = Accept and send
+button.label.send = Derbyn ac anfon
 back.link.label = Yn ôl
 button.label.save = Cadw fel drafft
 label.checkTheForm = Mae problem wedi codi
 error.title = Gwall:
-hintText.optional = (opsiynol)
+hintText.optional = (dewisol)
 label.account.ref=Reference
 label.account.property=Property
 label.underReview=(under review)
@@ -40,26 +40,26 @@ sessionTimeout.button=Mewngofnodwch eto
 
 # WELSH YES/NO
 ##############
-label.yes.oes=Yes
-label.no.nac.oes=No
-label.yes.ie=Yes
-label.no.nage=No
-label.yes.ydy=Yes
-label.no.nac.ydy=No
-label.yes.ydw=Yes
-label.no.nac.ydw=No
-label.yes.ydw.ydy=Yes
-label.no.nac.ydw.ydy=No
-label.yes.gall=Yes
-label.no.na.all=No
-label.yes.do=Yes
-label.no.naddo=No
-label.yes.ydyn=Yes
-label.no.nac.ydyn=No
-label.yes.oedd=Yes
-label.no.nac.oedd=No
-label.yes.iawn = Yes
-label.no.na = No
+label.yes.oes=Oes
+label.no.nac.oes=Nac oes
+label.yes.ie=Ie
+label.no.nage=Nage
+label.yes.ydy=Ydy
+label.no.nac.ydy=Nac ydy
+label.yes.ydw=Ydw
+label.no.nac.ydw=Nac ydw
+label.yes.ydw.ydy=Ydw/Ydy
+label.no.nac.ydw.ydy=Nac ydw/Nac ydy
+label.yes.gall=Gall
+label.no.na.all=Na all
+label.yes.do=Do
+label.no.naddo=Naddo
+label.yes.ydyn=Ydyn
+label.no.nac.ydyn=Nac ydyn
+label.yes.oedd=Oedd
+label.no.nac.oedd=Nac oedd
+label.yes.iawn = Iawn
+label.no.na = Na
 
 #CYA RADIO BUTTONS
 ##############
@@ -83,10 +83,10 @@ label.town = Town or city
 label.county = County
 label.postcode = Postcode
 label.any.apply = Select any that apply
-label.fullName = Full name
+label.fullName = Enw llawn
 label.contact.details = Contact details
-label.phone = Telephone number
-label.email = Email address
+label.phone = Rhif ffôn
+label.email = Cyfeiriad e-bost
 label.submitAnotherForm = Submit another form
 label.change = Change
 label.litres = litres
@@ -103,7 +103,7 @@ hint.all.apply = Select all that apply.
 
 # SECTION NAMES
 ###############
-label.section.connectionToTheProperty = Connection to the property
+label.section.connectionToTheProperty = Amdanoch chi a’r eiddo
 label.section.aboutTheProperty = About you and the property
 label.section.aboutYourTradingHistory = Trading history
 label.section.aboutTheFranchiseLettings = Franchises or lettings
@@ -462,15 +462,15 @@ list.vacantProperty.p3 = they require further information
 
 # ARE YOU STILL CONNECTED
 #########################
-pastConnectionType.heading = Have you ever had a connection to the property?
+pastConnectionType.heading = Ydych chi erioed wedi cael cysylltiad â’r eiddo?
 error.pastConnectionType = Dewiswch ‘iawn’ os ydych erioed wedi cael cysylltiad â’r eiddo
 
 # REMOVE CONNECTION
 ###################
-removeConnection.heading = Provide your contact details
-removeConnection.subheading = We’ll only use these details if we need to contact you before removing your connection to this property.
-label.removeConnectionAdditionalInfo = Additional information
-hint.removeConnectionDetails.removeConnectionAdditionalInfo = For example, the date you last occupied the property.
+removeConnection.heading = Rhowch eich manylion cyswllt
+removeConnection.subheading = Dim ond os bydd angen i ni gysylltu â chi cyn dileu’ch cysylltiad â’r eiddo hwn y byddwn yn defnyddio’r manylion hyn.
+label.removeConnectionAdditionalInfo = Gwybodaeth ychwanegol
+hint.removeConnectionDetails.removeConnectionAdditionalInfo = Er enghraifft, y dyddiad y gwnaethoch feddiannu’r eiddo ddiwethaf.
 error.fullName.required = Enter your name
 
 # ABOUT YOU AND PROPERTY SECTION
@@ -1298,9 +1298,9 @@ taskList.variableOperatingExpense = Variable operating expense
 taskList.fixedOperatingExpenses = Fixed operating expenses
 taskList.otherCosts = Other costs
 taskList.profitSummary = Profit summary
-declaration.heading = Now send your declaration
-declaration.information = By submitting this declaration you are confirming that, to the best of your knowledge, the details you are providing are correct.
-hint.declaration = You could be taken to court if you submit false information.
+declaration.heading = Nawr anfonwch eich datganiad
+declaration.information = Drwy gyflwyno’r datganiad hwn, rydych yn cadarnhau, hyd eithaf eich gwybodaeth, fod y manylion rydych chi’n eu darparu yn gywir.
+hint.declaration = Gellid mynd â chi i’r llys os ydych yn cyflwyno gwybodaeth anwir
 
 # COST OF SALES OR GROSS PROFIT
 #########
@@ -1673,7 +1673,6 @@ key.additionalInformation = Additional information
 label.altDetails.question= Use alternative contact details?
 label.altDetails = Alternative correspondence address
 key.altContact.details = Alternative contact details
-label.fullName = Full name
 label.telephoneNumber = Telephone number
 label.emailAddress = Email address
 label.correspondenceAddress = Correspondence address
@@ -1726,12 +1725,12 @@ error.connectedToLandlordDetails.maxLength = Mae’n rhaid i’r disgrifiad o’
 
 # NOT CONNECTED
 ###############
-checkYourAnswersNotConnected.heading = Check your answers – no connection to the property
-key.still.connected = Connected to the property?
-key.ever.connected = Ever been connected to the property?
-key.contact.details = Contacts and additional information
-checkYourAnswersNotConnected.subheading1 = Connection to the property
-checkYourAnswersNotConnected.subheading2 = Your contact details
+checkYourAnswersNotConnected.heading = Gwiriwch eich atebion – dim cysylltiad â’r eiddo
+key.still.connected = Cysylltiad â’r eiddo?
+key.ever.connected = Ydych chi erioed wedi cael cysylltiad â’r eiddo?
+key.contact.details = Manylion cyswllt a gwybodaeth ychwanegol
+checkYourAnswersNotConnected.subheading1 = Cysylltiad â’r eiddo
+checkYourAnswersNotConnected.subheading2 = Eich manylion cyswllt
 
 # MAXIMUM OF 5 LETTINGS
 ##################################

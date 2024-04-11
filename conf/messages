@@ -1702,7 +1702,6 @@ key.additionalInformation = Additional information
 label.altDetails.question= Use alternative contact details?
 label.altDetails = Alternative correspondence address
 key.altContact.details = Alternative contact details
-label.fullName = Full name
 label.telephoneNumber = Telephone number
 label.emailAddress = Email address
 label.correspondenceAddress = Correspondence address
