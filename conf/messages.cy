@@ -1729,7 +1729,7 @@ checkYourAnswersNotConnected.heading = Gwiriwch eich atebion – dim cysylltiad 
 key.still.connected = Cysylltiad â’r eiddo?
 key.ever.connected = Ydych chi erioed wedi cael cysylltiad â’r eiddo?
 key.contact.details = Manylion cyswllt a gwybodaeth ychwanegol
-checkYourAnswersNotConnected.subheading1 = Cysylltiad â’r eiddo
+checkYourAnswersNotConnected.subheading1 = Statws o ran cysylltiad
 checkYourAnswersNotConnected.subheading2 = Eich manylion cyswllt
 
 # MAXIMUM OF 5 LETTINGS

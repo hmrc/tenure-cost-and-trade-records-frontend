@@ -1758,7 +1758,7 @@ checkYourAnswersNotConnected.heading = Check your answers – no connection to t
 key.still.connected = Connected to the property?
 key.ever.connected = Ever been connected to the property?
 key.contact.details = Contacts and additional information
-checkYourAnswersNotConnected.subheading1 = Connection to the property
+checkYourAnswersNotConnected.subheading1 = Connection status
 checkYourAnswersNotConnected.subheading2 = Your contact details
 
 # MAXIMUM OF 5 LETTINGS
