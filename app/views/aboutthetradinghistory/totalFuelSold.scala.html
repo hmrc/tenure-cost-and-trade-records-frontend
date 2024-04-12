@@ -33,21 +33,14 @@
 )
 
 
-@(form: Form[Seq[TotalFuelSold]], summary: Summary)(implicit request: SessionRequest[_], messages: Messages)
-
-@backlink =  @{request.sessionData.aboutTheTradingHistory.flatMap(_.occupationAndAccountingInformation.flatMap(_.yearEndChanged))
-match {
-    case Some(true) =>  controllers.aboutthetradinghistory.routes.FinancialYearEndDatesController.show().url
-    case Some(false) => controllers.aboutthetradinghistory.routes.FinancialYearEndController.show().url
-    }
-}
+@(form: Form[Seq[TotalFuelSold]], backLink: String, summary: Summary)(implicit request: SessionRequest[_], messages: Messages)
 
 @layout(
     pageHeading = messages("totalFuelSold.heading"),
     showSection = true,
     summary = Some(request.sessionData.toSummary),
     sectionName = messages("label.section.aboutYourTradingHistory"),
-    backLinkUrl = Some(backlink),
+    backLinkUrl = Some(backLink),
     theForm = form,
     fullWidth = true,
     showH1  = false

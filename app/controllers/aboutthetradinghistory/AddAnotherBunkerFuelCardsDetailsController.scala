@@ -24,6 +24,7 @@ import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.updateAb
 import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, BunkerFuelCardsDetails}
 import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
 import navigation.AboutTheTradingHistoryNavigator
+import navigation.identifiers.AddAnotherBunkerFuelCardsDetailsId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Result}
 import repositories.SessionRepo
@@ -67,7 +68,7 @@ class AddAnotherBunkerFuelCardsDetailsController @Inject() (
         addAnotherBunkerFuelCardsDetailsView(
           addAnother.fold(addAnotherBunkerFuelCardsDetailsForm)(addAnotherBunkerFuelCardsDetailsForm.fill),
           index,
-          controllers.aboutthetradinghistory.routes.BunkerFuelCardDetailsController.show(Some(index)).url,
+          calculateBackLink(request, index),
           request.sessionData.toSummary
         )
       )
@@ -83,7 +84,7 @@ class AddAnotherBunkerFuelCardsDetailsController @Inject() (
             addAnotherBunkerFuelCardsDetailsView(
               formWithErrors,
               index,
-              routes.BunkerFuelCardDetailsController.show(Some(index)).url,
+              calculateBackLink(request, index),
               request.sessionData.toSummary
             )
           )
@@ -102,7 +103,9 @@ class AddAnotherBunkerFuelCardsDetailsController @Inject() (
             if (updatedCards.lastOption.flatMap(_.addAnotherBunkerFuelCardDetails).contains(AnswerYes)) {
               Redirect(routes.BunkerFuelCardDetailsController.show())
             } else {
-              Redirect(routes.CustomerCreditAccountsController.show())
+              Redirect(
+                navigator.nextPage(AddAnotherBunkerFuelCardsDetailsId, updatedSessionData).apply(updatedSessionData)
+              )
             }
           }
         }
@@ -185,5 +188,12 @@ class AddAnotherBunkerFuelCardsDetailsController @Inject() (
       }
     )
   }
+
+  private def calculateBackLink(implicit request: SessionRequest[AnyContent], index: Int) =
+    navigator.from match {
+      case "CYA" =>
+        controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
+      case _     => controllers.aboutthetradinghistory.routes.BunkerFuelCardDetailsController.show(Some(index)).url
+    }
 
 }

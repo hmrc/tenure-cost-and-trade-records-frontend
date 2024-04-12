@@ -52,6 +52,7 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
   override val postponeCYARedirectPages: Set[String] = Set(
     aboutthetradinghistory.routes.FinancialYearEndController.show(),
     aboutthetradinghistory.routes.FinancialYearEndDatesController.show(),
+    aboutthetradinghistory.routes.BunkeredFuelSoldController.show(),
     aboutthetradinghistory.routes.TurnoverController.show(),
     aboutthetradinghistory.routes.CostOfSalesController.show()
   ).map(_.url)
@@ -143,6 +144,8 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
     CustomerCreditAccountsId                 -> (_ => aboutthetradinghistory.routes.PercentageFromFuelCardsController.show()),
     PercentageFromFuelCardsId                -> (_ => aboutthetradinghistory.routes.LowMarginFuelCardDetailsController.show()),
     BunkerFuelCardsDetailsId                 -> getAddAnotherBunkerFuelCardsDetailRouting,
+    AddAnotherBunkerFuelCardsDetailsId       -> (_ => aboutthetradinghistory.routes.CustomerCreditAccountsController.show()),
+    AddAnotherLowMarginFuelCardsDetailsId    -> (_ => aboutthetradinghistory.routes.NonFuelTurnoverController.show()),
     LowMarginFuelCardsDetailsId              -> getAddAnotherLowMarginFuelCardsDetailRouting,
     IncomeExpenditureSummaryId               -> (_ => aboutthetradinghistory.routes.UnusualCircumstancesController.show()),
     UnusualCircumstancesId                   -> (_ =>

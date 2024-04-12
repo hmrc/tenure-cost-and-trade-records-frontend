@@ -56,8 +56,16 @@ case object BunkerFuelCardsDetailsId extends Identifier {
   override def toString: String = "bunkerFuelCardsDetailsPage"
 }
 
+case object AddAnotherBunkerFuelCardsDetailsId extends Identifier {
+  override def toString: String = "addAnotherBunkerFuelCardsDetailsPage"
+}
+
 case object LowMarginFuelCardsDetailsId extends Identifier {
   override def toString: String = "lowMarginFuelCardsDetailsPage"
+}
+
+case object AddAnotherLowMarginFuelCardsDetailsId extends Identifier {
+  override def toString: String = "addAnotherLowMarginFuelCardsDetailsPage"
 }
 
 case object CustomerCreditAccountsId extends Identifier {

@@ -16,7 +16,7 @@
 
 package controllers.aboutthetradinghistory
 
-import actions.WithSessionRefiner
+import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.TotalFuelSoldForm.totalFuelSoldForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.updateAboutTheTradingHistory
@@ -51,6 +51,7 @@ class TotalFuelSoldController @Inject() (
           view(
             totalFuelSoldForm(years(aboutTheTradingHistory))
               .fill(aboutTheTradingHistory.totalFuelSold.getOrElse(Seq.empty)),
+            calculateBackLink(request),
             request.sessionData.toSummary
           )
         )
@@ -68,6 +69,7 @@ class TotalFuelSoldController @Inject() (
             BadRequest(
               view(
                 formWithErrors,
+                calculateBackLink(request),
                 request.sessionData.toSummary
               )
             ),
@@ -85,6 +87,21 @@ class TotalFuelSoldController @Inject() (
         )
       }
   }
+
+  private def calculateBackLink(implicit request: SessionRequest[AnyContent]) =
+    navigator.from match {
+      case "CYA" =>
+        controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
+      case "TL"  => controllers.routes.TaskListController.show().url + "#total-fuel-sold"
+      case _     =>
+        request.sessionData.aboutTheTradingHistory.flatMap(
+          _.occupationAndAccountingInformation.flatMap(_.yearEndChanged)
+        ) match {
+          case Some(true)  => controllers.aboutthetradinghistory.routes.FinancialYearEndDatesController.show().url
+          case Some(false) => controllers.aboutthetradinghistory.routes.FinancialYearEndController.show().url
+          case _           => controllers.routes.TaskListController.show().url
+        }
+    }
 
   private def financialYearEndDates(aboutTheTradingHistory: AboutTheTradingHistory): Seq[LocalDate] =
     aboutTheTradingHistory.turnoverSections6020.fold(Seq.empty[LocalDate])(_.map(_.financialYearEnd))

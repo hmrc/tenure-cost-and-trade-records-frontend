@@ -33,14 +33,14 @@
 )
 
 
-@(form: Form[Seq[PercentageFromFuelCards]], summary: Summary)(implicit request: SessionRequest[_], messages: Messages)
+@(form: Form[Seq[PercentageFromFuelCards]], backLink: String, summary: Summary)(implicit request: SessionRequest[_], messages: Messages)
 
 @layout(
     pageHeading = messages("percentageFromFuelCards.heading"),
     showSection = true,
     summary = Some(request.sessionData.toSummary),
     sectionName = messages("label.section.aboutYourTradingHistory"),
-    backLinkUrl = Some(controllers.aboutthetradinghistory.routes.CustomerCreditAccountsController.show().url),
+    backLinkUrl = backLink,
     theForm = form,
     fullWidth = true,
     showH1  = false

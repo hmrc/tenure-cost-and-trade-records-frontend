@@ -61,6 +61,16 @@ class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec {
       removeConnection
     )
 
+  val sessionAboutYou6020: Session =
+    Session(
+      "99996020004",
+      "FOR6020",
+      prefilledAddress,
+      "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=",
+      stillConnectedDetailsYes,
+      removeConnection
+    )
+
   implicit override val hc: HeaderCarrier = HeaderCarrier()
 
   "About the trading history navigator" when {
@@ -123,6 +133,69 @@ class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec {
       navigator
         .nextPage(CheckYourAnswersAboutTheTradingHistoryId, sessionAboutYou)
         .apply(sessionAboutYou) mustBe controllers.routes.TaskListController.show()
+    }
+
+    // 6020 specific
+
+    "return a function that goes the bunkered fuel question page when total fuel sold has been completed" in {
+      navigator
+        .nextPage(TotalFuelSoldId, sessionAboutYou6020)
+        .apply(sessionAboutYou6020) mustBe controllers.aboutthetradinghistory.routes.BunkeredFuelQuestionController
+        .show()
+    }
+    "return a function that goes income expenditure page when other costs has been completed" in {
+      navigator
+        .nextPage(OtherCostsId, sessionAboutYou6020)
+        .apply(sessionAboutYou6020) mustBe controllers.aboutthetradinghistory.routes.IncomeExpenditureSummaryController
+        .show()
+    }
+    "return a function that goes bunker fuel card details  page when bunkered fuel sold has been completed" in {
+      navigator
+        .nextPage(BunkeredFuelSoldId, sessionAboutYou6020)
+        .apply(sessionAboutYou6020) mustBe controllers.aboutthetradinghistory.routes.BunkerFuelCardDetailsController
+        .show(None)
+    }
+    "return a function that goes the percentage from fuel cards page when customer credit account has been completed" in {
+      navigator
+        .nextPage(CustomerCreditAccountsId, sessionAboutYou6020)
+        .apply(sessionAboutYou6020) mustBe controllers.aboutthetradinghistory.routes.PercentageFromFuelCardsController
+        .show()
+    }
+    "return a function that goes the low margin fuel card details page when percentage from fuel has been completed" in {
+      navigator
+        .nextPage(PercentageFromFuelCardsId, sessionAboutYou6020)
+        .apply(sessionAboutYou6020) mustBe controllers.aboutthetradinghistory.routes.LowMarginFuelCardDetailsController
+        .show()
+    }
+    "return a function that goes the add another bunker card page when bunker card detail has been completed" in {
+      navigator
+        .nextPage(BunkerFuelCardsDetailsId, sessionAboutYou6020)
+        .apply(
+          sessionAboutYou6020
+        ) mustBe controllers.aboutthetradinghistory.routes.AddAnotherBunkerFuelCardsDetailsController.show(0)
+    }
+    "return a function that goes the customer credit account page when add another bunker fuel card has been completed" in {
+      navigator
+        .nextPage(AddAnotherBunkerFuelCardsDetailsId, sessionAboutYou6020)
+        .apply(sessionAboutYou6020) mustBe controllers.aboutthetradinghistory.routes.CustomerCreditAccountsController
+        .show()
+    }
+    "return a function that goes the non fuel turnover page when add another low margin fuel card has been completed" in {
+      navigator
+        .nextPage(AddAnotherLowMarginFuelCardsDetailsId, sessionAboutYou6020)
+        .apply(sessionAboutYou6020) mustBe controllers.aboutthetradinghistory.routes.NonFuelTurnoverController.show()
+    }
+    "return a function that goes the add another low-margin fuel card page when lm fuel card details has been completed" in {
+      navigator
+        .nextPage(LowMarginFuelCardsDetailsId, sessionAboutYou6020)
+        .apply(
+          sessionAboutYou6020
+        ) mustBe controllers.aboutthetradinghistory.routes.AddAnotherLowMarginFuelCardsDetailsController.show(0)
+    }
+    "return a function that goes the unusual circumstances page when income expenditure has been completed" in {
+      navigator
+        .nextPage(IncomeExpenditureSummaryId, sessionAboutYou)
+        .apply(sessionAboutYou) mustBe controllers.aboutthetradinghistory.routes.UnusualCircumstancesController.show()
     }
 
   }
